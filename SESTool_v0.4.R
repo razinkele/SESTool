@@ -1,4 +1,29 @@
 # optimize the code below and compare it with the snippets above
+# list snippets
+# 1. Required packages
+# 2. Check and install missing packages
+# 3. Load required packages
+# 4. Include the R file containing the R6 class SES
+# 5. Define UI
+# 6. Define server
+# 7. Disable action buttons
+# 8. Internal storage for column names of the uploaded data
+# 9. Internal storage for loaded data (connections) and elements
+# 10. Add a Bootstrap tooltip to the selectInput
+# 11. Observe the button click to change the dataframe
+# 12. Create dynamic dropdown menus based on dataframe column names
+# 13. Render the file input dynamically based on the selected file type
+# 14. Function to validate and load data based on file type
+# 15. Reactive values for graph data
+# 16. Create network
+# 17. Create graph
+# 18. Render the network plot
+# 19. Render connections data table
+# 20. Render elements data table
+# 21. Update links_data when the connections table is edited
+# 22. Update elements_data when the elements table is edited
+# 23. Download handler for the plot
+# 24. Run the app
 
 # List of required packages
 required_packages <- c("shiny", "shinyBS", "visNetwork", "readsdr", "readr", "igraph", "dplyr", "htmlwidgets", "colourpicker", "shinyjs", "DT", "markdown")
