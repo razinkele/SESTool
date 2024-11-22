@@ -1,3 +1,15 @@
+# optimize the code below
+# outline for the code below
+# 1. Load necessary libraries
+# 2. Define the SES class
+# 3. Define the public methods of the SES class
+# 4. Example usage
+# 5. Run the example code if the script is executed directly
+# 6. Return the SES class
+    
+
+
+
 # Load necessary libraries
 library(readxl)
 library(R6)
@@ -158,17 +170,17 @@ SES <- R6Class("SES",
         id = unique(c(self$edges$from, self$edges$to))
       )
       self$nodes$title <- paste0("<p><b>", 1:self$nnodes, "</b><br>Node !</p>")
-      #### specific for Madeira 
+      #### specific for Madeira
       if (file_path == "MadeiraImportant.xlsx") {
-        print('assigning groups manually to 10 nodes :')
+        print("assigning groups manually to 10 nodes :")
         # "Conservation" "Protected.Areas" "Large.scale.tourism""Pollution" "Sanitation""Disturbance""Economy"                    "Nature"       "Habitats" "Charismatic.landscape"
-        self$nodes$group <- c("Drivers","Marine processes", "Pressures",  "Pressures","Drivers","Pressures","Societal Goods and Benefits","Marine processes", "Marine processes",  "Ecosystem Services")
+        self$nodes$group <- c("Drivers", "Marine processes", "Pressures", "Pressures", "Drivers", "Pressures", "Societal Goods and Benefits", "Marine processes", "Marine processes", "Ecosystem Services")
       } else {
         # random group assignment
         self$nodes$group <- sample(defaultGroups, self$nnodes, replace = TRUE)
       }
-        
-     
+
+
       self$nodes$title <- self$nodes$id
       print("Nodes column names:")
 
@@ -176,21 +188,22 @@ SES <- R6Class("SES",
       print(self$nodes)
       # Create the iGraph graph object
       self$g <- graph_from_data_frame(d = self$edges, vertices = self$nodes, directed = TRUE)
-      self
       self$create_network()
     },
     create_network = function() {
-      groupname <- "Nothing so far"
       # arrows for the legend
-      ledges <- data.frame(color = c("green", "red"), 
-                           label = c("positive", "negative"), arrows =c("to", "to"), 
-                           font.align = "top") 
+      ledges <- data.frame(
+        color = c("green", "red"),
+        label = c("positive", "negative"), arrows = c("to", "to"),
+        font.align = "top"
+      )
       self$network <- visNetwork(self$nodes, self$edges) %>%
         visEdges(arrows = "to") %>%
         set_VisGroups() %>%
-        visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>% 
-        visLegend(#addNodes = addNodes,
-          addEdges = ledges, useGroups = TRUE) 
+        visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
+        visLegend( # addNodes = addNodes,
+          addEdges = ledges, useGroups = TRUE
+        )
     },
     net_indices = function() {
       V(self$g)$betweenness_centrality <- betweenness(self$g, v = V(self$g), directed = TRUE)
