@@ -147,7 +147,11 @@ ui <- fluidPage(
           DTOutput("dataTable")
         ),
         tabPanel(
-          "Help",
+          "Tool Help",
+          includeMarkdown("tool.md")
+        ),
+        tabPanel(
+          "SES Help",
           includeMarkdown("guidance.md")
         )
       )
