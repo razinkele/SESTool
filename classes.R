@@ -85,7 +85,9 @@ partial_fit <- function(data, column, char_array, new_column) {
 defaultGroups <- c("Marine processes", "Pressures", "Ecosystem Services", "Societal Goods and Benefits", "Actvities", "Drivers")
 # All shapes available in visNetwork package for nodes with labels outside the nodes
 shapes <- c("hexagon", "diamond", "ellipse", "square", "dot", "triangle", "triangleDown")
-# Define the SES class
+
+# Define the SES class ----
+
 SES <- R6Class("SES",
   public = list(
     nodes = NULL,
@@ -94,14 +96,28 @@ SES <- R6Class("SES",
     nedges = NULL,
     network = NULL,
     title = NULL,
-    directed = FALSE, # Whether the network is directed
+    groups = FALSE,
+    directed = TRUE, # Whether the network is directed
     bowtie = NULL, # Bowtie components
     dpsir = NULL, # DPSIR components
     dpsirwrm = NULL, # DPSIR-WRM components
-    g = NULL,
+    g = NULL,  # iGraph object
     initialize = function(file_path, nodes_sheet = 1, edges_sheet = 2) {
-      # self$nodes <- read_excel(file_path, sheet = nodes_sheet)
-      self$edges <- read_excel(file_path, sheet = edges_sheet)
+
+      # check whether the file contains one or twoo sheets
+      # if one sheet, then the first sheet is the nodes
+      # if two sheets, then the first sheet is the nodes and the second sheet is the edges
+      if (length(readxl::excel_sheets(file_path)) == 1) 
+        {   # read the file with one sheet
+        self$nodes <- NULL
+        self$edges <- read_excel(file_path)
+        } 
+      else 
+        { # read the file with two sheets
+        self$nodes <- read_excel(file_path, sheet = nodes_sheet)
+        self$edges <- read_excel(file_path, sheet = edges_sheet)
+      }
+      # Check for the presence of "from" and "to" columns in the edges data frame
       print("Edges column names:")
       print(colnames(self$edges))
       # Ensure the column names in edges are "from" and "to"
@@ -111,16 +127,22 @@ SES <- R6Class("SES",
       self$nedges <- nrow(self$edges)
       print("Edges column names:")
       print(colnames(self$edges))
-      # Check for the presence of "strength" or "Strength" column and rename it to "width"
+      # Check for the presence of "strength","Strength"
+      # or "Values" column and rename it to "width"
       if ("strength" %in% names(self$edges)) {
         self$edges$width <- self$edges$strength
         self$edges$strength <- NULL
       } else if ("Strength" %in% names(self$edges)) {
         self$edges$width <- self$edges$Strength
         self$edges$Strength <- NULL
-      } else if ("Width" %in% names(self$edges)) {
+      } 
+      else if ("Width" %in% names(self$edges)) {
         self$edges$width <- self$edges$Width
         self$edges$Width <- NULL
+      }
+      else if ("Values" %in% names(self$edges)) {
+        self$edges$width <- self$edges$Values
+        self$edges$Values <- NULL
       }
       # Check if the "width" column is numeric
       if (!is.numeric(self$edges$width)) {
@@ -165,11 +187,53 @@ SES <- R6Class("SES",
 
       # Convert the factor to numeric
       self$edges$width <- as.numeric(as.character(self$edges$width))
-
-      self$nodes <- data.frame(
-        id = unique(c(self$edges$from, self$edges$to))
-      )
+      
+      # Nodes ----
+      # Create nodes frame with unique node ids from edges
+      nodes <- data.frame(id = unique(c(self$edges$from, self$edges$to)))
+      # Find rows in elements where the first column values 
+      # are not in elements read from the first sheet
+      if (!is.null(self$nodes)) {
+        self$nodes <- as.data.frame(self$nodes)
+        nodes[, 1] <- as.character(nodes[, 1])
+        #self$nodes[, 1] <- as.character(self$nodes[, 1])
+        print("Calculated Nodes")
+        print( nodes[, 1])
+        print("Existing Nodes")
+        print(self$nodes[, 1])
+        print("End Existing Nodes")
+        str(nodes[, 1])
+        print("End Calculated Nodes structure")
+        str(self$nodes[, 1])
+        print("End Existing Nodes structure")
+        # Find rows in elements where the first column values 
+        # are not in elements read from the first sheet
+        new_rows <- nodes[!nodes[, 1] %in% self$nodes[, 1], ]
+        print("New rows:")
+        print(new_rows)
+        print("End New rows:")
+      } 
+      
+      # if self$nodes is not null, merge it with the nodes frame
+      if (!is.null(NULL)) {
+        print("Merge nodes:")
+        print(colnames(nodes))
+        print(colnames(self$nodes))
+        # print first column of dataframe self$nodes
+        colnames(self$nodes[1]) <- id
+        print(self$nodes$id)
+        print(nodes$id)
+        self$nodes <- merge(nodes, self$nodes, by = "id", all.x = TRUE)
+        print(self$nodes)
+      }
+      else {
+        self$nodes <- nodes
+      }
+      # if the title column is not present, create it
       self$nodes$title <- paste0("<p><b>", 1:self$nnodes, "</b><br>Node !</p>")
+      
+      
+      # Assign groups to nodes based on the node names ----
       #### specific for Madeira
       if (file_path == "MadeiraImportant.xlsx") {
         print("assigning groups manually to 10 nodes :")
@@ -202,7 +266,7 @@ SES <- R6Class("SES",
         set_VisGroups() %>%
         visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
         visLegend( # addNodes = addNodes,
-          addEdges = ledges, useGroups = TRUE
+          addEdges = ledges, useGroups = self$groups
         )
     },
     net_indices = function() {
@@ -211,8 +275,8 @@ SES <- R6Class("SES",
       V(self$g)$closeness <- closeness(self$g, vids = V(self$g), mode = "in")
       V(self$g)$eigen_centrality <- eigen_centrality(self$g, directed = TRUE, scale = FALSE, weights = NULL, options = NULL)
       V(self$g)$page_rank <- page_rank(self$g, vids = V(self$g), directed = TRUE, damping = 0.85, personalized = NULL, weights = NULL, options = NULL)
-      V(self$g)$hub_score <- hub_score(self$g, vids = V(self$g), weights = NULL, scale = TRUE)
-      V(self$g)$authority_score <- authority_score(self$g, vids = V(self$g), weights = NULL, scale = TRUE)
+      # V(self$g)$hub_score <- hub_score(self$g, vids = V(self$g), weights = NULL, scale = TRUE)
+      # V(self$g)$authority_score <- authority_score(self$g, vids = V(self$g), weights = NULL, scale = TRUE)
       V(self$g)$transitivity <- transitivity(self$g, type = c("local", "global", "average"))
       V(self$g)$clustering <- clustering(self$g, mode = "all")
       V(self$g)$diameter <- diameter(self$g, directed = TRUE, weights = NULL)
@@ -234,14 +298,22 @@ SES <- R6Class("SES",
   )
 )
 
-# Example usage
+# test the class
 if (sys.nframe() == 0) {
+  
   # This code runs only if the script is executed directly.
   print("Executed directly.")
-  # file_path <- "Simplified final map SES.xlsx"
-  file_path <- "MadeiraImportant.xlsx"
+  # Define the data file path
+  #data_filename <- "Simplified final map SES.xlsx"
+  data_filename <- "Faroe_May2024.xlsx"
+  #data_filename <- "Azores_V3_May2024.xlsx" # bad file
+  file_path <- file.path(getwd(),"data",data_filename)
+  print(file_path)
+  # read and initialise the class SES object
   ses <- SES$new(file_path)
+  
   # ses$net_indices()
+  
   ses$plot_network()
 } else {
   print("This script is being sourced.")

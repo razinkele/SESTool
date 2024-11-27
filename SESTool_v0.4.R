@@ -307,7 +307,7 @@ server <- function(input, output, session) {
         print(df)
         print("Excel file loaded successfully nodes and edges printed above")
       }
-    } 
+    }
     else if (file_type == "graphml") {
     # Read GraphML data as an igraph object ----
       df <- tryCatch(read_graph(file, format = "graphml"), error = function(e) NULL)
@@ -319,8 +319,8 @@ server <- function(input, output, session) {
     links_data(if (is.null(df)) NULL else df)
     # if excel file is loaded, store the nodes data from ses object
     if (xl) elements_data(if (is.null(nodes)) NULL else nodes)
-    
-   
+
+
     # enable action buttons if SES is loaded
     enable("change_df")
     enable("createNetwork")
@@ -345,8 +345,8 @@ server <- function(input, output, session) {
     if (xl) {
       print("--------excel links data below --------------------------------------")
       print(data)
-    } else 
-    {
+    } else
+    { 
       # change first column name to 'from' and second to 'to'
       colnames(data)[1:2] <- c("from", "to")
       # Create nodes dataframe using the unique values in 'from' and 'to' columns if not from ses
@@ -376,7 +376,7 @@ server <- function(input, output, session) {
     if (xl) {
       nodes <- elements_data()
       edges <- links_data()
-    } else 
+    } else
       {
       # change first column name to 'from' and second to 'to'
       colnames(data)[1:2] <- c("from", "to")
@@ -408,8 +408,8 @@ server <- function(input, output, session) {
       # edges$arrows <- input$edgeStyle
       edges$arrows <- "to"
       # edges$color <- if (input$useEdgeColor && "edge_color" %in% names(data)) data$edge_color else NULL
-    } else 
-    {
+    } else
+    { 
       print("----------------Creating edges dataframe from read CSV file -------------------")
       # Create edges dataframe from the uploaded data
       edges <- data.frame(from = data$from, to = data$to)
@@ -423,16 +423,16 @@ server <- function(input, output, session) {
     }
     # common for both excel & csv ----
     # Add tooltips to nodes and edges
-    
-   
+
+
     # Save the edges into the links_data reactive variable
     links_data(edges)
     # Calculate the number of nodes and edges
-    nedges <- nrow(edges)
-    nnodes <- nrow(nodes)
+    nrow(edges)
+    nrow(nodes)
     # tooltip (html or character), when the mouse is above
     print("Creating tooltips for nodes and edges")
-    
+
     edges$title <- paste0("<p><b>", edges$Frequency, "</b><br>Frequency</p>")
     nodes$title <- paste0("<p><b>", nodes$group, "</b><br>Group</p>")
     print("Nodes column names:")
