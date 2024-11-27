@@ -79,7 +79,7 @@ ui <- fluidPage(
       # src = "file:///C:/Users/arturas.baziukas/OneDrive%20-%20ku.lt/HORIZON%20EUROPE/Marine-SABRES/BowTie/MSabres.png",
       # src = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/shiny.png",
       # src = "https://raw.githubusercontent.com/razinkele/SESTool/main/images/MSabres.png",
-      src = "https://raw.githubusercontent.com/razinkele/SESTool/main/01%20marinesabres_logo_transparent.png",
+      src = "https://raw.githubusercontent.com/razinkele/SESTool/main/images/01%20marinesabres_logo_transparent.png",
       height = "70px",
       style = "margin-left: 3px;"
     ),
