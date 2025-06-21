@@ -1,10 +1,11 @@
 # app.R - SES Tool with Intelligent Group Assignment and Loop Analysis
 # Modified to work with utils.R AI-powered node classification and analysis.R loop analysis
+# FIXED: Corrected showNotification types and removed Change groups & Visualization sections
 
 # List of required packages
 required_packages <- c("shiny", "shinyBS", "visNetwork", "readsdr", "readr", "igraph", 
-                       "dplyr", "htmlwidgets", "colourpicker", "shinyjs", "DT", 
-                       "markdown", "stringdist", "LoopAnalyst")
+                      "dplyr", "htmlwidgets", "colourpicker", "shinyjs", "DT", 
+                      "markdown", "stringdist", "LoopAnalyst")
 
 # Function to check and install packages
 install_if_missing <- function(package) {
@@ -176,23 +177,11 @@ ui <- fluidPage(
       
       # Dropdown list for selecting file format
       selectInput("fileType", "Select File Format:",
-                  choices = c("XLSX" = "xlsx", "CSV" = "csv", "GraphML" = "graphml")
+        choices = c("XLSX" = "xlsx", "CSV" = "csv", "GraphML" = "graphml")
       ),
       
       # Dynamic file upload button based on dropdown selection
       uiOutput("dynamicUploadButton"),
-      
-      # Data Configuration
-      h4("⚙️ Configuration", class = "section-header"),
-      
-      actionButton("change_df", "Change groups & links", 
-                   title = "Group and links width field selection", 
-                   class = "btn-primary btn-block"),
-      
-      # dropdown menu to select column for width/strength
-      uiOutput("strength"),
-      # dropdown menu to select column for group
-      uiOutput("group"),
       
       hr(),
       
@@ -200,67 +189,46 @@ ui <- fluidPage(
       h4("🌐 Network Creation", class = "section-header"),
       
       actionButton("createNetwork", "Create Network", 
-                   title = "Create network from the uploaded links table", 
-                   class = "btn-primary btn-block"),
+                  title = "Create network from the uploaded links table", 
+                  class = "btn-primary btn-block"),
       
       actionButton("createGraph", "Create/Update Graph", 
-                   class = "btn-primary btn-block"),
+                  class = "btn-primary btn-block"),
       
       # Intelligent Assignment Section
       div(class = "intelligent-section",
-          h5("🧠 AI Group Assignment", style = "color: white; margin-top: 0;"),
-          
-          if (UTILS_AVAILABLE) {
-            tagList(
-              actionButton("intelligentAssign", "🚀 Auto-Assign Groups", 
-                           title = "Automatically assign nodes to SES groups using AI", 
-                           class = "btn-block"),
-              
-              br(),
-              
-              sliderInput("confidenceThreshold", "Confidence Threshold:", 
-                          min = 0.1, max = 1.0, value = 0.5, step = 0.1,
-                          width = "100%"),
-              
-              fluidRow(
-                column(6,
-                       actionButton("testClassification", "🧪 Test AI", 
-                                    class = "btn-secondary btn-sm btn-block")
-                ),
-                column(6,
-                       actionButton("debugTest", "📊 Demo", 
-                                    class = "btn-warning btn-sm btn-block")
-                )
+        h5("🧠 AI Group Assignment", style = "color: white; margin-top: 0;"),
+        
+        if (UTILS_AVAILABLE) {
+          tagList(
+            actionButton("intelligentAssign", "🚀 Auto-Assign Groups", 
+                        title = "Automatically assign nodes to SES groups using AI", 
+                        class = "btn-block"),
+            
+            br(),
+            
+            sliderInput("confidenceThreshold", "Confidence Threshold:", 
+                       min = 0.1, max = 1.0, value = 0.5, step = 0.1,
+                       width = "100%"),
+            
+            fluidRow(
+              column(6,
+                actionButton("testClassification", "🧪 Test AI", 
+                            class = "btn-secondary btn-sm btn-block")
+              ),
+              column(6,
+                actionButton("debugTest", "📊 Demo", 
+                            class = "btn-warning btn-sm btn-block")
               )
             )
-          } else {
-            div(style = "text-align: center; color: white;",
-                p("⚠️ AI features require utils.R"),
-                p("Place utils.R in project directory", style = "font-size: 12px;")
-            )
-          }
+          )
+        } else {
+          div(style = "text-align: center; color: white;",
+              p("⚠️ AI features require utils.R"),
+              p("Place utils.R in project directory", style = "font-size: 12px;")
+          )
+        }
       ),
-      
-      hr(),
-      
-      # Visualization Options
-      h4("🎨 Visualization", class = "section-header"),
-      
-      selectInput("nodeShape", "Node Shape:", 
-                  choices = c("dot", "square", "triangle", "diamond"), 
-                  selected = "dot"),
-      
-      selectInput("edgeStyle", "Edge Style:", 
-                  choices = c("to", "from", "middle"), 
-                  selected = "to"),
-      
-      sliderInput("edgeWidth", "Edge Width:", min = 1, max = 10, value = 1),
-      
-      checkboxInput("showLabels", "Show Labels", value = TRUE),
-      checkboxInput("useGroupShapes", "Use Group Shapes", value = TRUE),
-      checkboxInput("useEdgeWeight", "Use Edge Weights", value = TRUE),
-      checkboxInput("useEdgeColor", "Use Edge Colors", value = TRUE),
-      checkboxInput("showLegend", "Show Legend", value = TRUE),
       
       hr(),
       
@@ -294,7 +262,7 @@ ui <- fluidPage(
       ),
       
       tabsetPanel(
-        id = "main_tabs",  # Added ID for tab switching
+        id = "main_tabs",
         
         # Network Graph Tab
         tabPanel(
@@ -308,19 +276,19 @@ ui <- fluidPage(
           br(),
           fluidRow(
             column(3,
-                   checkboxInput("showDebugInfo", "Show Debug Info", value = FALSE)
+              checkboxInput("showDebugInfo", "Show Debug Info", value = FALSE)
             ),
             column(3,
-                   downloadButton("downloadData", "Export Data", 
-                                  class = "btn-outline-primary btn-sm")
+              downloadButton("downloadData", "Export Data", 
+                           class = "btn-outline-primary btn-sm")
             ),
             column(3,
-                   actionButton("resetLayout", "Reset Layout", 
-                                class = "btn-outline-secondary btn-sm")
+              actionButton("resetLayout", "Reset Layout", 
+                          class = "btn-outline-secondary btn-sm")
             ),
             column(3,
-                   actionButton("refreshGraph", "Refresh Graph", 
-                                class = "btn-outline-success btn-sm")
+              actionButton("refreshGraph", "Refresh Graph", 
+                          class = "btn-outline-success btn-sm")
             )
           )
         ),
@@ -335,16 +303,16 @@ ui <- fluidPage(
             tagList(
               fluidRow(
                 column(6,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("📊 Group Distribution", style = "margin-top: 0;"),
-                           DTOutput("groupAnalysisTable")
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("📊 Group Distribution", style = "margin-top: 0;"),
+                    DTOutput("groupAnalysisTable")
+                  )
                 ),
                 column(6,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("📈 Classification Summary", style = "margin-top: 0;"),
-                           verbatimTextOutput("classificationSummary")
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("📈 Classification Summary", style = "margin-top: 0;"),
+                    verbatimTextOutput("classificationSummary")
+                  )
                 )
               ),
               
@@ -352,10 +320,10 @@ ui <- fluidPage(
               
               fluidRow(
                 column(12,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("⚠️ Low Confidence Assignments", style = "margin-top: 0;"),
-                           DTOutput("lowConfidenceTable")
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("⚠️ Low Confidence Assignments", style = "margin-top: 0;"),
+                    DTOutput("lowConfidenceTable")
+                  )
                 )
               ),
               
@@ -363,28 +331,28 @@ ui <- fluidPage(
               
               fluidRow(
                 column(6,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("📋 AI System Info", style = "margin-top: 0;"),
-                           actionButton("exportRules", "📄 Export Rules", 
-                                        class = "btn-info btn-sm"),
-                           br(), br(),
-                           div(style = "max-height: 300px; overflow-y: auto; background: #f8f9fa; padding: 10px; border-radius: 4px;",
-                               verbatimTextOutput("aiSystemInfo")
-                           )
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("📋 AI System Info", style = "margin-top: 0;"),
+                    actionButton("exportRules", "📄 Export Rules", 
+                               class = "btn-info btn-sm"),
+                    br(), br(),
+                    div(style = "max-height: 300px; overflow-y: auto; background: #f8f9fa; padding: 10px; border-radius: 4px;",
+                        verbatimTextOutput("aiSystemInfo")
+                    )
+                  )
                 ),
                 column(6,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("💡 Quick Actions", style = "margin-top: 0;"),
-                           actionButton("rerunClassification", "🔄 Re-run Classification", 
-                                        class = "btn-primary btn-sm btn-block"),
-                           br(),
-                           actionButton("adjustThreshold", "⚙️ Optimize Threshold", 
-                                        class = "btn-secondary btn-sm btn-block"),
-                           br(),
-                           actionButton("exportAnalysis", "📊 Export Analysis", 
-                                        class = "btn-success btn-sm btn-block")
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("💡 Quick Actions", style = "margin-top: 0;"),
+                    actionButton("rerunClassification", "🔄 Re-run Classification", 
+                               class = "btn-primary btn-sm btn-block"),
+                    br(),
+                    actionButton("adjustThreshold", "⚙️ Optimize Threshold", 
+                               class = "btn-secondary btn-sm btn-block"),
+                    br(),
+                    actionButton("exportAnalysis", "📊 Export Analysis", 
+                               class = "btn-success btn-sm btn-block")
+                  )
                 )
               )
             )
@@ -413,26 +381,26 @@ ui <- fluidPage(
             tagList(
               fluidRow(
                 column(12,
-                       div(style = "background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;",
-                           h4("🔄 Causal Loop Analysis", style = "margin: 0 0 10px 0;"),
-                           p("Analyze feedback loops, system stability, and key pathways in your social-ecological network.", 
-                             style = "margin: 0;")
-                       )
+                  div(style = "background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;",
+                    h4("🔄 Causal Loop Analysis", style = "margin: 0 0 10px 0;"),
+                    p("Analyze feedback loops, system stability, and key pathways in your social-ecological network.", 
+                      style = "margin: 0;")
+                  )
                 )
               ),
               
               fluidRow(
                 column(6,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("📋 Analysis Summary", style = "margin-top: 0;"),
-                           verbatimTextOutput("loopAnalysisSummary")
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("📋 Analysis Summary", style = "margin-top: 0;"),
+                    verbatimTextOutput("loopAnalysisSummary")
+                  )
                 ),
                 column(6,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("📊 System Metrics", style = "margin-top: 0;"),
-                           DTOutput("systemMetricsTable")
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("📊 System Metrics", style = "margin-top: 0;"),
+                    DTOutput("systemMetricsTable")
+                  )
                 )
               ),
               
@@ -440,10 +408,10 @@ ui <- fluidPage(
               
               fluidRow(
                 column(12,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("🔁 Feedback Loops Visualization", style = "margin-top: 0;"),
-                           plotOutput("loopVisualization", height = "400px")
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("🔁 Feedback Loops Visualization", style = "margin-top: 0;"),
+                    plotOutput("loopVisualization", height = "400px")
+                  )
                 )
               ),
               
@@ -451,16 +419,16 @@ ui <- fluidPage(
               
               fluidRow(
                 column(6,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("⭐ Node Importance", style = "margin-top: 0;"),
-                           DTOutput("nodeImportanceTable")
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("⭐ Node Importance", style = "margin-top: 0;"),
+                    DTOutput("nodeImportanceTable")
+                  )
                 ),
                 column(6,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("🎯 Key Pathways", style = "margin-top: 0;"),
-                           DTOutput("keyPathwaysTable")
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("🎯 Key Pathways", style = "margin-top: 0;"),
+                    DTOutput("keyPathwaysTable")
+                  )
                 )
               ),
               
@@ -468,10 +436,10 @@ ui <- fluidPage(
               
               fluidRow(
                 column(12,
-                       div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
-                           h4("🔍 Loop Details", style = "margin-top: 0;"),
-                           DTOutput("loopDetailsTable")
-                       )
+                  div(style = "border: 1px solid #dee2e6; border-radius: 8px; padding: 15px;",
+                    h4("🔍 Loop Details", style = "margin-top: 0;"),
+                    DTOutput("loopDetailsTable")
+                  )
                 )
               ),
               
@@ -479,29 +447,29 @@ ui <- fluidPage(
               
               fluidRow(
                 column(12,
-                       div(style = "text-align: center;",
-                           downloadButton("downloadLoopReport", "📥 Download Full Report", 
-                                          class = "btn-primary"),
-                           " ",
-                           downloadButton("downloadAdjMatrix", "📊 Download Adjacency Matrix", 
-                                          class = "btn-secondary"),
-                           " ",
-                           downloadButton("downloadLoopMetrics", "📈 Download All Metrics", 
-                                          class = "btn-info")
-                       )
+                  div(style = "text-align: center;",
+                    downloadButton("downloadLoopReport", "📥 Download Full Report", 
+                                  class = "btn-primary"),
+                    " ",
+                    downloadButton("downloadAdjMatrix", "📊 Download Adjacency Matrix", 
+                                  class = "btn-secondary"),
+                    " ",
+                    downloadButton("downloadLoopMetrics", "📈 Download All Metrics", 
+                                  class = "btn-info")
+                  )
                 )
               )
             )
           } else {
             div(class = "alert alert-warning", style = "margin: 20px;",
-                h4("⚠️ Loop Analysis Unavailable"),
-                p("The loop analysis features require the analysis.R file to be present in your project directory."),
-                p("To enable loop analysis:"),
-                tags$ol(
-                  tags$li("Download analysis.R from the provided files"),
-                  tags$li("Place it in the same directory as app.R"),
-                  tags$li("Restart the application")
-                )
+              h4("⚠️ Loop Analysis Unavailable"),
+              p("The loop analysis features require the analysis.R file to be present in your project directory."),
+              p("To enable loop analysis:"),
+              tags$ol(
+                tags$li("Download analysis.R from the provided files"),
+                tags$li("Place it in the same directory as app.R"),
+                tags$li("Restart the application")
+              )
             )
           }
         ),
@@ -578,14 +546,14 @@ ui <- fluidPage(
                 
                 h5("Core SES Components:"),
                 div(style = "background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;",
-                    tags$ul(
-                      tags$li(strong("🔵 Marine Processes:"), "Biological, chemical, and physical ocean processes (currents, productivity, biodiversity)"),
-                      tags$li(strong("🟩 Pressures:"), "Human-induced stresses (pollution, overfishing, climate change, habitat destruction)"),
-                      tags$li(strong("🔺 Ecosystem Services:"), "Benefits ecosystems provide (fish production, climate regulation, coastal protection)"),
-                      tags$li(strong("🔻 Societal Goods & Benefits:"), "Direct human benefits (food security, livelihoods, recreation, cultural values)"),
-                      tags$li(strong("♦️ Activities:"), "Human activities affecting the system (fishing, shipping, tourism, development)"),
-                      tags$li(strong("⬡ Drivers:"), "Underlying forces of change (population growth, economic development, governance, technology)")
-                    )
+                  tags$ul(
+                    tags$li(strong("🔵 Marine Processes:"), "Biological, chemical, and physical ocean processes (currents, productivity, biodiversity)"),
+                    tags$li(strong("🟩 Pressures:"), "Human-induced stresses (pollution, overfishing, climate change, habitat destruction)"),
+                    tags$li(strong("🔺 Ecosystem Services:"), "Benefits ecosystems provide (fish production, climate regulation, coastal protection)"),
+                    tags$li(strong("🔻 Societal Goods & Benefits:"), "Direct human benefits (food security, livelihoods, recreation, cultural values)"),
+                    tags$li(strong("♦️ Activities:"), "Human activities affecting the system (fishing, shipping, tourism, development)"),
+                    tags$li(strong("⬡ Drivers:"), "Underlying forces of change (population growth, economic development, governance, technology)")
+                  )
                 ),
                 
                 h5("SES Analysis Principles:"),
@@ -619,7 +587,6 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   # Disable action buttons initially
   disable("Run analyses")
-  disable("change_df")
   disable("createNetwork")
   disable("createGraph")
   if (UTILS_AVAILABLE) {
@@ -633,7 +600,7 @@ server <- function(input, output, session) {
   excel <- reactiveVal(FALSE)
   graph_data <- reactiveVal(NULL)
   classification_results <- reactiveVal(NULL)
-  loop_analysis_results <- reactiveVal(NULL)  # Added for loop analysis
+  loop_analysis_results <- reactiveVal(NULL)
   
   # Add a Bootstrap tooltip
   bsTooltip("fileType", "Select file format for your network data", placement = "right", trigger = "hover")
@@ -685,50 +652,24 @@ server <- function(input, output, session) {
     paste(info, collapse = "\n")
   })
   
-  # Observe the button click to change the dataframe
-  observeEvent(input$change_df, {
-    req(links_data())
-    req(current_df)
-    df <- current_df()
-    df1 <- links_data()
-    if (identical(current_df(), df1)) {
-      current_df(df)
-    } else {
-      current_df(df1)
-    }
-  })
-  
-  # Create dynamic dropdown menus based on dataframe column names
-  output$strength <- renderUI({
-    req(current_df())
-    df <- current_df()
-    selectInput("strength", "Strength variable:", choices = names(df))
-  })
-  
-  output$group <- renderUI({
-    req(current_df())
-    df <- current_df()
-    selectInput("group", "Group variable:", choices = names(df))
-  })
-  
   # Render the file input dynamically based on the selected file type
   output$dynamicUploadButton <- renderUI({
     req(input$fileType)
     
     file_icon <- switch(input$fileType,
-                        "xlsx" = "📊",
-                        "csv" = "📄", 
-                        "graphml" = "🕸️")
+                       "xlsx" = "📊",
+                       "csv" = "📄", 
+                       "graphml" = "🕸️")
     
     fileInput("file", 
-              paste(file_icon, "Upload", toupper(input$fileType), "File"),
-              accept = switch(input$fileType,
-                              "xlsx" = ".xlsx",
-                              "csv" = ".csv",
-                              "graphml" = ".graphml"
-              ))
+             paste(file_icon, "Upload", toupper(input$fileType), "File"),
+             accept = switch(input$fileType,
+               "xlsx" = ".xlsx",
+               "csv" = ".csv",
+               "graphml" = ".graphml"
+             ))
   })
-  
+
   # Enhanced file upload observer
   observeEvent(input$file, {
     req(input$file)
@@ -736,13 +677,13 @@ server <- function(input, output, session) {
     file_type <- input$fileType
     
     print(paste("Processing file:", input$file$name))
-    
+
     # Initialize variables
     status <- NULL
     df <- NULL
     nodes <- NULL
     xl <- FALSE
-    
+
     # Show loading notification
     id <- showNotification("🔄 Loading file...", type = "default", duration = NULL)
     
@@ -780,8 +721,8 @@ server <- function(input, output, session) {
           excel(TRUE)
           xl <- TRUE
           status <- ifelse(UTILS_AVAILABLE, 
-                           "✅ Excel file loaded with AI group assignment", 
-                           "✅ Excel file loaded successfully")
+                          "✅ Excel file loaded with AI group assignment", 
+                          "✅ Excel file loaded successfully")
           print("Excel file processed successfully")
         } else {
           status <- "❌ Invalid Excel file - no edges found"
@@ -825,7 +766,6 @@ server <- function(input, output, session) {
       }
       
       # Enable action buttons
-      enable("change_df")
       enable("createNetwork")
       enable("createGraph")
       if (UTILS_AVAILABLE) {
@@ -866,7 +806,7 @@ server <- function(input, output, session) {
     
     showNotification("✅ Network structure created successfully!", type = "message")
   })
-  
+
   # Intelligent group assignment observer
   if (UTILS_AVAILABLE) {
     observeEvent(input$intelligentAssign, {
@@ -913,9 +853,9 @@ server <- function(input, output, session) {
       
       showNotification(
         HTML(paste("🎉 <strong>AI Assignment Complete!</strong><br>",
-                   "✅ High confidence:", high_conf, "<br>",
-                   "⚠️ Medium confidence:", med_conf, "<br>", 
-                   "❌ Low confidence:", low_conf)),
+                  "✅ High confidence:", high_conf, "<br>",
+                  "⚠️ Medium confidence:", med_conf, "<br>", 
+                  "❌ Low confidence:", low_conf)),
         type = "message",
         duration = 10
       )
@@ -927,8 +867,8 @@ server <- function(input, output, session) {
       }
     })
   }
-  
-  # Enhanced create graph observer
+
+  # Enhanced create graph observer - SIMPLIFIED (removed visualization options)
   observeEvent(input$createGraph, {
     req(links_data())
     data <- links_data()
@@ -940,7 +880,6 @@ server <- function(input, output, session) {
       return()
     }
     
-    strength <- input$strength
     print("Creating graph visualization...")
     
     # Process nodes and edges based on data source
@@ -995,25 +934,25 @@ server <- function(input, output, session) {
         nodes$group <- "Unclassified"
       }
       
-      # Add visual properties
-      nodes$Name <- if (input$showLabels) as.character(nodes$id) else ""
-      nodes$shape <- input$nodeShape
+      # Add visual properties with default values
+      nodes$Name <- as.character(nodes$id)  # Always show labels
+      nodes$shape <- "dot"  # Default shape
       
       # Save nodes
       elements_data(nodes)
       
-      # Create edges dataframe
+      # Create edges dataframe with default values
       edges <- data.frame(from = data$from, to = data$to, stringsAsFactors = FALSE)
-      edges$width <- if (input$useEdgeWeight && "weight" %in% names(data)) {
+      edges$width <- if ("weight" %in% names(data)) {
         as.numeric(data$weight)
       } else {
-        input$edgeWidth
+        2  # Default edge width
       }
-      edges$arrows <- input$edgeStyle
-      edges$color <- if (input$useEdgeColor && "edge_color" %in% names(data)) {
+      edges$arrows <- "to"  # Default arrow style
+      edges$color <- if ("edge_color" %in% names(data)) {
         data$edge_color
       } else {
-        "gray"
+        "gray"  # Default color
       }
     }
     
@@ -1032,9 +971,9 @@ server <- function(input, output, session) {
     # Enhanced node tooltips with confidence
     if ("group_confidence" %in% names(nodes)) {
       conf_level <- cut(nodes$group_confidence, 
-                        breaks = c(0, 0.4, 0.7, 1), 
-                        labels = c("Low", "Medium", "High"),
-                        include.lowest = TRUE)
+                       breaks = c(0, 0.4, 0.7, 1), 
+                       labels = c("Low", "Medium", "High"),
+                       include.lowest = TRUE)
       
       nodes$title <- paste0(
         "<p><b>", nodes$id, "</b><br>",
@@ -1054,7 +993,7 @@ server <- function(input, output, session) {
     print(paste("Graph created successfully:", nrow(nodes), "nodes,", nrow(edges), "edges"))
     showNotification("🎨 Graph visualization created successfully!", type = "message")
   })
-  
+
   # Enhanced network rendering
   output$network <- renderVisNetwork({
     req(graph_data())
@@ -1092,9 +1031,9 @@ server <- function(input, output, session) {
           Shiny.onInputChange('clicked_node', nodes.nodes[0]);
         }"
       )
-    
-    # Add legend if requested
-    if (input$showLegend) {
+
+    # Always add legend if groups are available
+    if ("group" %in% colnames(data$nodes)) {
       net <- net %>% visLegend(
         width = 0.2, 
         position = "right", 
@@ -1104,7 +1043,7 @@ server <- function(input, output, session) {
         stepY = 65
       )
     }
-    
+
     print("Network visualization rendered")
     net
   })
@@ -1147,10 +1086,10 @@ server <- function(input, output, session) {
     } else {
       showNotification(
         HTML(paste("✅ <strong>Loop Analysis Complete!</strong><br>",
-                   "🔁 Loops found:", ifelse(is.null(analysis_results$n_loops), "N/A", analysis_results$n_loops), "<br>",
-                   "📊 System stability:", ifelse(is.null(analysis_results$stable), "N/A", 
-                                                  ifelse(analysis_results$stable, "Stable", "Unstable")))),
-        type = "success", 
+                  "🔁 Loops found:", ifelse(is.null(analysis_results$n_loops), "N/A", analysis_results$n_loops), "<br>",
+                  "📊 System stability:", ifelse(is.null(analysis_results$stable), "N/A", 
+                                               ifelse(analysis_results$stable, "Stable", "Unstable")))),
+        type = "message", 
         duration = 8
       )
       
@@ -1159,7 +1098,7 @@ server <- function(input, output, session) {
     }
   })
   
-  # Loop analysis output renderers
+  # Loop analysis output renderers (unchanged)
   output$loopAnalysisSummary <- renderText({
     req(loop_analysis_results())
     create_loop_report(loop_analysis_results())
@@ -1339,7 +1278,7 @@ server <- function(input, output, session) {
     }
   })
   
-  # Loop analysis download handlers
+  # Loop analysis download handlers (unchanged)
   output$downloadLoopReport <- downloadHandler(
     filename = function() {
       paste0("loop_analysis_report_", Sys.Date(), ".txt")
@@ -1439,8 +1378,8 @@ server <- function(input, output, session) {
         }
         
         datatable(group_summary, 
-                  options = list(pageLength = 10, dom = 't'),
-                  rownames = FALSE) %>%
+                 options = list(pageLength = 10, dom = 't'),
+                 rownames = FALSE) %>%
           formatStyle(
             'Group',
             backgroundColor = styleEqual(
@@ -1451,7 +1390,7 @@ server <- function(input, output, session) {
           )
       }
     })
-    
+
     output$classificationSummary <- renderText({
       req(elements_data())
       
@@ -1486,7 +1425,7 @@ server <- function(input, output, session) {
         "📊 No group data available\n\n💡 Upload data or use AI assignment to get started"
       }
     })
-    
+
     output$lowConfidenceTable <- renderDT({
       req(elements_data())
       
@@ -1495,15 +1434,15 @@ server <- function(input, output, session) {
         
         if (nrow(low_conf) > 0) {
           datatable(low_conf, 
-                    options = list(pageLength = 10),
-                    rownames = FALSE) %>%
+                   options = list(pageLength = 10),
+                   rownames = FALSE) %>%
             formatStyle(
               'group_confidence',
               backgroundColor = styleInterval(c(0.4, 0.6), c('#ffebee', '#fff3e0', '#e8f5e8'))
             )
         } else {
           datatable(data.frame(Message = "🎉 No low confidence assignments found!"), 
-                    options = list(dom = 't'), rownames = FALSE)
+                   options = list(dom = 't'), rownames = FALSE)
         }
       }
     })
@@ -1528,14 +1467,14 @@ server <- function(input, output, session) {
           "🔧 Current Settings:\n",
           "Threshold: ", input$confidenceThreshold, "\n",
           "Mode: ", ifelse(input$confidenceThreshold >= 0.7, "Strict", 
-                           ifelse(input$confidenceThreshold >= 0.4, "Balanced", "Permissive"))
+                          ifelse(input$confidenceThreshold >= 0.4, "Balanced", "Permissive"))
         )
       } else {
         "⚠️ AI system not fully loaded"
       }
     })
   }
-  
+
   # Test functions
   if (UTILS_AVAILABLE) {
     observeEvent(input$debugTest, {
@@ -1545,16 +1484,16 @@ server <- function(input, output, session) {
         id = c("Commercial fishing", "Ocean acidification", "Fish production", 
                "Tourism revenue", "Coral reef ecosystem", "Plastic pollution"),
         description = c("Large-scale fishing operations", "pH reduction in seawater",
-                        "Marine food provision", "Income from coastal tourism",
-                        "Coral reef habitat and biodiversity", "Marine plastic waste"),
+                       "Marine food provision", "Income from coastal tourism",
+                       "Coral reef habitat and biodiversity", "Marine plastic waste"),
         stringsAsFactors = FALSE
       )
       
       test_edges <- data.frame(
         from = c("Commercial fishing", "Ocean acidification", "Fish production", 
-                 "Coral reef ecosystem", "Plastic pollution"),
+                "Coral reef ecosystem", "Plastic pollution"),
         to = c("Ocean acidification", "Fish production", "Tourism revenue",
-               "Fish production", "Ocean acidification"),
+              "Fish production", "Ocean acidification"),
         weight = c(0.8, 0.7, 0.9, 0.6, 0.5),
         arrows = rep("to", 5),
         stringsAsFactors = FALSE
@@ -1565,9 +1504,9 @@ server <- function(input, output, session) {
       graph_data(list(nodes = test_nodes, edges = test_edges))
       
       showNotification("🧪 Demo data loaded! Try 'Auto-Assign Groups' to see AI in action.", 
-                       type = "message", duration = 8)
+                      type = "message", duration = 8)
     })
-    
+
     observeEvent(input$testClassification, {
       if (exists("test_classification_system")) {
         withProgress(message = "🧪 Testing AI classification system...", value = 0, {
@@ -1578,8 +1517,8 @@ server <- function(input, output, session) {
         
         showNotification(
           HTML(paste("🧪 <strong>AI System Test Results:</strong><br>",
-                     "✅ Accuracy:", round(results$accuracy * 100, 1), "%<br>",
-                     "📊 Avg Confidence:", round(results$average_confidence, 3))),
+                    "✅ Accuracy:", round(results$accuracy * 100, 1), "%<br>",
+                    "📊 Avg Confidence:", round(results$average_confidence, 3))),
           type = "message",
           duration = 10
         )
@@ -1611,17 +1550,17 @@ server <- function(input, output, session) {
   output$dataTable <- renderDT({
     req(links_data())
     datatable(links_data(), 
-              editable = TRUE,
-              options = list(scrollX = TRUE, pageLength = 15))
+             editable = TRUE,
+             options = list(scrollX = TRUE, pageLength = 15))
   })
-  
+
   output$EldataTable <- renderDT({
     req(elements_data())
     datatable(elements_data(), 
-              editable = TRUE,
-              options = list(scrollX = TRUE, pageLength = 15))
+             editable = TRUE,
+             options = list(scrollX = TRUE, pageLength = 15))
   })
-  
+
   # Update reactive data when tables are edited
   observeEvent(input$dataTable_cell_edit, {
     info <- input$dataTable_cell_edit
@@ -1629,14 +1568,14 @@ server <- function(input, output, session) {
     links_data(updated_data)
     showNotification("📝 Connections data updated", type = "message")
   })
-  
+
   observeEvent(input$EldataTable_cell_edit, {
     info <- input$EldataTable_cell_edit
     updated_data <- editData(elements_data(), info)
     elements_data(updated_data)
     showNotification("📝 Elements data updated", type = "message")
   })
-  
+
   # Enhanced download handler
   output$downloadPlot <- downloadHandler(
     filename = function() {
@@ -1654,8 +1593,8 @@ server <- function(input, output, session) {
           visPhysics(stabilization = TRUE) %>%
           visInteraction(navigationButtons = TRUE, hover = TRUE) %>%
           set_VisGroups()
-        
-        if (input$showLegend) {
+
+        if ("group" %in% colnames(graph_data()$nodes)) {
           net <- net %>% visLegend(width = 0.15, position = "right", main = "Node Groups")
         }
         

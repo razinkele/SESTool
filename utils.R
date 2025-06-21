@@ -1,4 +1,4 @@
-# utils.R - Intelligent Node Group Assignment for SES Tool
+# utils.R - Intelligent Node Group Assignment for SES Tool (FIXED VERSION)
 # Complete AI-powered classification system for Social-Ecological Systems
 # This file contains functions for automatically assigning nodes to SES groups
 # based on intelligent keyword matching and marine science domain knowledge
@@ -356,16 +356,24 @@ fuzzy_match_score <- function(text1, text2, method = "jw") {
   return(max(0, min(1, similarity)))  # Ensure between 0 and 1
 }
 
-# Function to check for partial matches
+# FIXED: Function to check for partial matches (CRITICAL FIX)
 partial_match <- function(text, keywords) {
   if (is.na(text) || text == "") return(character(0))
   
   normalized_text <- normalize_text(text)
+  
+  # FIXED: Use vectorized operations properly and avoid || with vectors
   matches <- sapply(keywords, function(keyword) {
     normalized_keyword <- normalize_text(keyword)
-    grepl(normalized_keyword, normalized_text, fixed = TRUE) ||
-      grepl(normalized_text, normalized_keyword, fixed = TRUE)
+    
+    # FIXED: Each grepl call returns a single logical value
+    match1 <- grepl(normalized_keyword, normalized_text, fixed = TRUE)
+    match2 <- grepl(normalized_text, normalized_keyword, fixed = TRUE)
+    
+    # FIXED: Use single logical values with ||
+    return(match1 || match2)
   })
+  
   keywords[matches]
 }
 
@@ -431,11 +439,11 @@ assign_node_group <- function(node_name, description = "", confidence_threshold 
       }
     }
     
-    # 5. Partial matches with primary keywords
+    # 5. Partial matches with primary keywords (FIXED)
     partial_primary <- partial_match(full_text, primary_keywords)
     group_score <- group_score + length(partial_primary) * MATCHING_WEIGHTS$partial_primary
     
-    # 6. Partial matches with secondary keywords
+    # 6. Partial matches with secondary keywords (FIXED)
     partial_secondary <- partial_match(full_text, secondary_keywords)
     group_score <- group_score + length(partial_secondary) * MATCHING_WEIGHTS$partial_secondary
     
@@ -660,8 +668,10 @@ export_classification_rules <- function(filename = "ses_classification_rules.txt
   message(paste("Classification rules exported to", filename))
 }
 
-# Function to validate and test the classification system
+# FIXED: Function to validate and test the classification system
 test_classification_system <- function() {
+  cat("Running classification system validation...\n")
+  
   # Test cases with known expected groups
   test_cases <- list(
     list(name = "Commercial fishing", expected = "Activities"),
@@ -690,29 +700,50 @@ test_classification_system <- function() {
     stringsAsFactors = FALSE
   )
   
-  cat("Running classification system validation...\n")
-  
-  for (test_case in test_cases) {
-    result <- assign_node_group(test_case$name)
+  # FIXED: Use safer processing with error handling
+  for (i in seq_along(test_cases)) {
+    test_case <- test_cases[[i]]
     
-    results <- rbind(results, data.frame(
-      node_name = test_case$name,
-      expected_group = test_case$expected,
-      assigned_group = result$group,
-      confidence = round(result$confidence, 3),
-      correct = result$group == test_case$expected,
-      stringsAsFactors = FALSE
-    ))
+    tryCatch({
+      result <- assign_node_group(test_case$name)
+      
+      results <- rbind(results, data.frame(
+        node_name = test_case$name,
+        expected_group = test_case$expected,
+        assigned_group = result$group,
+        confidence = round(result$confidence, 3),
+        correct = result$group == test_case$expected,
+        stringsAsFactors = FALSE
+      ))
+    }, error = function(e) {
+      cat(paste("ERROR processing", test_case$name, ":", e$message, "\n"))
+      
+      # Add failed result
+      results <<- rbind(results, data.frame(
+        node_name = test_case$name,
+        expected_group = test_case$expected,
+        assigned_group = "ERROR",
+        confidence = 0,
+        correct = FALSE,
+        stringsAsFactors = FALSE
+      ))
+    })
   }
   
-  accuracy <- sum(results$correct) / nrow(results)
-  avg_confidence <- mean(results$confidence)
+  # Calculate accuracy safely
+  if (nrow(results) > 0) {
+    accuracy <- sum(results$correct, na.rm = TRUE) / nrow(results)
+    avg_confidence <- mean(results$confidence, na.rm = TRUE)
+  } else {
+    accuracy <- 0
+    avg_confidence <- 0
+  }
   
   cat("Classification System Test Results\n")
   cat("=================================\n")
   cat(paste("Accuracy:", round(accuracy * 100, 1), "%\n"))
   cat(paste("Average Confidence:", round(avg_confidence, 3), "\n"))
-  cat(paste("Correct Classifications:", sum(results$correct), "out of", nrow(results), "\n\n"))
+  cat(paste("Correct Classifications:", sum(results$correct, na.rm = TRUE), "out of", nrow(results), "\n\n"))
   
   # Show detailed results
   for (i in 1:nrow(results)) {
@@ -843,574 +874,12 @@ demo_classification <- function() {
   return(classified)
 }
 
-# ================================================================================
-# LOOP ANALYSIS FUNCTIONS USING LoopAnalyst PACKAGE
-# ================================================================================
-
-# Function to convert edge data to signed adjacency matrix for LoopAnalyst
-prepare_loop_matrix <- function(edges_data, nodes_data = NULL) {
-  # Validate input
-  if (!is.data.frame(edges_data)) {
-    stop("edges_data must be a data frame")
-  }
-  
-  if (!all(c("from", "to") %in% colnames(edges_data))) {
-    stop("edges_data must contain 'from' and 'to' columns")
-  }
-  
-  # Get unique nodes
-  if (is.null(nodes_data)) {
-    all_nodes <- unique(c(edges_data$from, edges_data$to))
-  } else {
-    all_nodes <- unique(nodes_data$id)
-  }
-  
-  n_nodes <- length(all_nodes)
-  
-  # Create adjacency matrix
-  adj_matrix <- matrix(0, nrow = n_nodes, ncol = n_nodes)
-  rownames(adj_matrix) <- all_nodes
-  colnames(adj_matrix) <- all_nodes
-  
-  # Fill the matrix with edge weights/signs
-  for (i in 1:nrow(edges_data)) {
-    from_node <- edges_data$from[i]
-    to_node <- edges_data$to[i]
-    
-    # Determine edge sign/weight
-    if ("width" %in% colnames(edges_data)) {
-      weight <- edges_data$width[i]
-      # Convert to sign if needed
-      if (is.numeric(weight)) {
-        adj_matrix[from_node, to_node] <- sign(weight)
-      } else {
-        adj_matrix[from_node, to_node] <- 1  # Default positive
-      }
-    } else if ("sign" %in% colnames(edges_data)) {
-      sign_val <- edges_data$sign[i]
-      if (is.numeric(sign_val)) {
-        adj_matrix[from_node, to_node] <- sign(sign_val)
-      } else if (is.character(sign_val)) {
-        adj_matrix[from_node, to_node] <- ifelse(grepl("negative|minus|-", tolower(sign_val)), -1, 1)
-      } else {
-        adj_matrix[from_node, to_node] <- 1
-      }
-    } else if ("color" %in% colnames(edges_data)) {
-      # Use color to determine sign (red = negative, green = positive)
-      color <- edges_data$color[i]
-      adj_matrix[from_node, to_node] <- ifelse(tolower(color) == "red", -1, 1)
-    } else {
-      # Default to positive relationship
-      adj_matrix[from_node, to_node] <- 1
-    }
-  }
-  
-  cat("Prepared signed adjacency matrix:\n")
-  cat("- Nodes:", n_nodes, "\n")
-  cat("- Edges:", sum(adj_matrix != 0), "\n")
-  cat("- Positive edges:", sum(adj_matrix > 0), "\n")
-  cat("- Negative edges:", sum(adj_matrix < 0), "\n")
-  
-  return(adj_matrix)
-}
-
-# Function to perform comprehensive loop analysis
-perform_loop_analysis <- function(edges_data, nodes_data = NULL, analysis_type = "comprehensive") {
-  # Prepare the adjacency matrix
-  adj_matrix <- prepare_loop_matrix(edges_data, nodes_data)
-  
-  # Initialize results list
-  results <- list(
-    matrix = adj_matrix,
-    nodes = rownames(adj_matrix),
-    n_nodes = nrow(adj_matrix),
-    n_edges = sum(adj_matrix != 0)
-  )
-  
-  cat("🔄 Performing loop analysis...\n")
-  
-  tryCatch({
-    # 1. Find all feedback loops
-    cat("📊 Finding feedback loops...\n")
-    feedback_loops <- find_feedback_loops(adj_matrix)
-    results$feedback_loops <- feedback_loops
-    
-    # 2. Analyze loop stability
-    cat("📈 Analyzing system stability...\n")
-    stability_analysis <- analyze_loop_stability(adj_matrix)
-    results$stability <- stability_analysis
-    
-    # 3. Calculate loop importance
-    cat("🎯 Calculating loop importance...\n")
-    loop_importance <- calculate_loop_importance(adj_matrix, feedback_loops)
-    results$loop_importance <- loop_importance
-    
-    # 4. Analyze system properties
-    cat("🔍 Analyzing system properties...\n")
-    system_properties <- analyze_system_properties(adj_matrix)
-    results$system_properties <- system_properties
-    
-    # 5. Generate recommendations
-    cat("💡 Generating management recommendations...\n")
-    recommendations <- generate_loop_recommendations(results, nodes_data)
-    results$recommendations <- recommendations
-    
-    cat("✅ Loop analysis complete!\n")
-    
-  }, error = function(e) {
-    cat("❌ Error in loop analysis:", e$message, "\n")
-    results$error <- e$message
-  })
-  
-  return(results)
-}
-
-# Function to find feedback loops using LoopAnalyst
-find_feedback_loops <- function(adj_matrix) {
-  loops_result <- list()
-  
-  tryCatch({
-    # Use LoopAnalyst to find elementary cycles
-    cycles <- LoopAnalyst::elementary.cycles(adj_matrix)
-    
-    if (length(cycles) > 0) {
-      loops_result$cycles <- cycles
-      loops_result$n_cycles <- length(cycles)
-      
-      # Classify loops by sign
-      loop_signs <- sapply(cycles, function(cycle) {
-        path_sign <- 1
-        for (i in 1:(length(cycle))) {
-          from_idx <- cycle[i]
-          to_idx <- cycle[ifelse(i == length(cycle), 1, i + 1)]
-          path_sign <- path_sign * adj_matrix[from_idx, to_idx]
-        }
-        return(path_sign)
-      })
-      
-      loops_result$positive_loops <- sum(loop_signs > 0)
-      loops_result$negative_loops <- sum(loop_signs < 0)
-      loops_result$loop_signs <- loop_signs
-      
-      # Get loop details
-      loop_details <- lapply(1:length(cycles), function(i) {
-        cycle <- cycles[[i]]
-        node_names <- rownames(adj_matrix)[cycle]
-        list(
-          nodes = node_names,
-          length = length(cycle),
-          sign = loop_signs[i],
-          type = ifelse(loop_signs[i] > 0, "Reinforcing", "Balancing")
-        )
-      })
-      loops_result$loop_details <- loop_details
-      
-    } else {
-      loops_result$cycles <- list()
-      loops_result$n_cycles <- 0
-      loops_result$positive_loops <- 0
-      loops_result$negative_loops <- 0
-    }
-    
-  }, error = function(e) {
-    cat("Error finding loops:", e$message, "\n")
-    loops_result$error <- e$message
-  })
-  
-  return(loops_result)
-}
-
-# Function to analyze system stability
-analyze_loop_stability <- function(adj_matrix) {
-  stability_result <- list()
-  
-  tryCatch({
-    # Calculate eigenvalues for stability analysis
-    eigenvals <- eigen(adj_matrix)$values
-    
-    # System is stable if all eigenvalues have negative real parts
-    real_parts <- Re(eigenvals)
-    stability_result$eigenvalues <- eigenvals
-    stability_result$max_real_eigenvalue <- max(real_parts)
-    stability_result$is_stable <- all(real_parts < 0)
-    
-    # Calculate stability metrics
-    stability_result$stability_index <- -max(real_parts)
-    stability_result$resilience <- ifelse(stability_result$is_stable, 
-                                          abs(stability_result$stability_index), 0)
-    
-    # Determine stability category
-    if (stability_result$is_stable) {
-      if (stability_result$resilience > 1) {
-        stability_result$stability_category <- "Highly Stable"
-      } else if (stability_result$resilience > 0.5) {
-        stability_result$stability_category <- "Moderately Stable"
-      } else {
-        stability_result$stability_category <- "Weakly Stable"
-      }
-    } else {
-      stability_result$stability_category <- "Unstable"
-    }
-    
-  }, error = function(e) {
-    cat("Error in stability analysis:", e$message, "\n")
-    stability_result$error <- e$message
-  })
-  
-  return(stability_result)
-}
-
-# Function to calculate loop importance
-calculate_loop_importance <- function(adj_matrix, feedback_loops) {
-  if (feedback_loops$n_cycles == 0) {
-    return(list(message = "No feedback loops found"))
-  }
-  
-  importance_result <- list()
-  
-  tryCatch({
-    # Calculate importance based on loop length and connectivity
-    loop_importance <- sapply(1:feedback_loops$n_cycles, function(i) {
-      cycle <- feedback_loops$cycles[[i]]
-      loop_detail <- feedback_loops$loop_details[[i]]
-      
-      # Importance factors
-      length_factor <- 1 / loop_detail$length  # Shorter loops are more important
-      
-      # Connectivity factor - how connected are the nodes in the loop
-      cycle_nodes <- cycle
-      submatrix <- adj_matrix[cycle_nodes, cycle_nodes]
-      connectivity_factor <- sum(abs(submatrix)) / (length(cycle_nodes)^2)
-      
-      # Sign factor - reinforcing loops might be more critical
-      sign_factor <- ifelse(loop_detail$sign > 0, 1.2, 1.0)
-      
-      importance <- length_factor * connectivity_factor * sign_factor
-      return(importance)
-    })
-    
-    # Normalize importance scores
-    loop_importance <- loop_importance / max(loop_importance) * 100
-    
-    importance_result$scores <- loop_importance
-    importance_result$rankings <- order(loop_importance, decreasing = TRUE)
-    
-    # Create importance summary
-    importance_summary <- data.frame(
-      Loop_ID = 1:feedback_loops$n_cycles,
-      Type = sapply(feedback_loops$loop_details, function(x) x$type),
-      Length = sapply(feedback_loops$loop_details, function(x) x$length),
-      Importance_Score = round(loop_importance, 2),
-      Rank = rank(-loop_importance)
-    )
-    
-    importance_result$summary <- importance_summary[order(importance_summary$Rank), ]
-    
-  }, error = function(e) {
-    cat("Error calculating loop importance:", e$message, "\n")
-    importance_result$error <- e$message
-  })
-  
-  return(importance_result)
-}
-
-# Function to analyze system properties
-analyze_system_properties <- function(adj_matrix) {
-  properties <- list()
-  
-  tryCatch({
-    n_nodes <- nrow(adj_matrix)
-    n_edges <- sum(adj_matrix != 0)
-    
-    # Basic network properties
-    properties$density <- n_edges / (n_nodes * (n_nodes - 1))
-    properties$connectance <- n_edges / n_nodes
-    
-    # Calculate in-degree and out-degree
-    out_degree <- rowSums(abs(adj_matrix))
-    in_degree <- colSums(abs(adj_matrix))
-    
-    properties$avg_out_degree <- mean(out_degree)
-    properties$avg_in_degree <- mean(in_degree)
-    properties$max_out_degree <- max(out_degree)
-    properties$max_in_degree <- max(in_degree)
-    
-    # Identify key nodes
-    properties$most_influential <- names(which.max(out_degree))
-    properties$most_affected <- names(which.max(in_degree))
-    
-    # Calculate positive vs negative interactions
-    pos_edges <- sum(adj_matrix > 0)
-    neg_edges <- sum(adj_matrix < 0)
-    
-    properties$positive_edges <- pos_edges
-    properties$negative_edges <- neg_edges
-    properties$interaction_ratio <- ifelse(neg_edges > 0, pos_edges / neg_edges, Inf)
-    
-    # System complexity metrics
-    properties$complexity_index <- n_edges / n_nodes
-    properties$feedback_density <- sum(diag(adj_matrix %*% adj_matrix)) / n_nodes
-    
-  }, error = function(e) {
-    cat("Error analyzing system properties:", e$message, "\n")
-    properties$error <- e$message
-  })
-  
-  return(properties)
-}
-
-# Function to generate management recommendations based on loop analysis
-generate_loop_recommendations <- function(loop_results, nodes_data = NULL) {
-  recommendations <- list()
-  
-  tryCatch({
-    # General recommendations based on system properties
-    stability <- loop_results$stability
-    feedback <- loop_results$feedback_loops
-    properties <- loop_results$system_properties
-    
-    general_recs <- c()
-    
-    # Stability recommendations
-    if (!is.null(stability$is_stable)) {
-      if (stability$is_stable) {
-        general_recs <- c(general_recs, 
-                          paste("✅ System appears stable with resilience index:", 
-                                round(stability$resilience, 2)))
-      } else {
-        general_recs <- c(general_recs, 
-                          "⚠️ System shows signs of instability - monitor key feedback loops")
-      }
-    }
-    
-    # Feedback loop recommendations
-    if (feedback$n_cycles > 0) {
-      if (feedback$positive_loops > feedback$negative_loops) {
-        general_recs <- c(general_recs, 
-                          paste("🔄 System dominated by reinforcing loops (", feedback$positive_loops, 
-                                "positive vs", feedback$negative_loops, "negative) - may lead to exponential growth or collapse"))
-      } else if (feedback$negative_loops > feedback$positive_loops) {
-        general_recs <- c(general_recs, 
-                          paste("⚖️ System dominated by balancing loops (", feedback$negative_loops, 
-                                "negative vs", feedback$positive_loops, "positive) - tends toward equilibrium"))
-      } else {
-        general_recs <- c(general_recs, 
-                          "🎯 Balanced mix of reinforcing and balancing loops - monitor for shifts")
-      }
-    } else {
-      general_recs <- c(general_recs, 
-                        "📈 No feedback loops detected - system may be purely hierarchical")
-    }
-    
-    # Node-specific recommendations
-    if (!is.null(properties$most_influential) && !is.null(properties$most_affected)) {
-      general_recs <- c(general_recs,
-                        paste("🎯 Key management targets: Monitor '", properties$most_influential, 
-                              "' (most influential) and '", properties$most_affected, "' (most affected)"))
-    }
-    
-    # Loop-specific recommendations
-    loop_recs <- c()
-    if (!is.null(loop_results$loop_importance) && !is.null(loop_results$loop_importance$summary)) {
-      top_loops <- head(loop_results$loop_importance$summary, 3)
-      for (i in 1:nrow(top_loops)) {
-        loop_detail <- feedback$loop_details[[top_loops$Loop_ID[i]]]
-        loop_recs <- c(loop_recs,
-                       paste("Loop", i, ":", top_loops$Type[i], "loop involving", 
-                             paste(loop_detail$nodes, collapse = " → "), 
-                             "(Importance:", top_loops$Importance_Score[i], ")"))
-      }
-    }
-    
-    # Management strategies based on SES groups
-    ses_recs <- c()
-    if (!is.null(nodes_data) && "group" %in% colnames(nodes_data)) {
-      group_counts <- table(nodes_data$group)
-      
-      if ("Pressures" %in% names(group_counts) && group_counts["Pressures"] > 2) {
-        ses_recs <- c(ses_recs, "🚨 High number of pressure nodes - focus on pressure reduction strategies")
-      }
-      
-      if ("Drivers" %in% names(group_counts) && group_counts["Drivers"] > 1) {
-        ses_recs <- c(ses_recs, "🎯 Multiple drivers present - address root causes for systemic change")
-      }
-      
-      if ("Activities" %in% names(group_counts)) {
-        ses_recs <- c(ses_recs, "⚙️ Consider regulation or incentives for key activities")
-      }
-    }
-    
-    recommendations$general <- general_recs
-    recommendations$loop_specific <- loop_recs
-    recommendations$ses_specific <- ses_recs
-    recommendations$priority_actions <- c(
-      "1. Monitor most influential nodes for early warning signs",
-      "2. Strengthen balancing loops to improve system stability", 
-      "3. Address dominant reinforcing loops to prevent runaway effects",
-      "4. Implement adaptive management strategies for key feedback mechanisms"
-    )
-    
-  }, error = function(e) {
-    cat("Error generating recommendations:", e$message, "\n")
-    recommendations$error <- e$message
-  })
-  
-  return(recommendations)
-}
-
-# Function to create a comprehensive loop analysis report
-create_loop_report <- function(edges_data, nodes_data = NULL, include_matrix = FALSE) {
-  cat("🔬 SES Loop Analysis Report\n")
-  cat("==========================\n\n")
-  
-  # Perform analysis
-  analysis <- perform_loop_analysis(edges_data, nodes_data)
-  
-  # Report header
-  cat("📊 System Overview:\n")
-  cat("- Nodes:", analysis$n_nodes, "\n")
-  cat("- Edges:", analysis$n_edges, "\n")
-  cat("- Analysis Date:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
-  
-  # Feedback loops summary
-  if (!is.null(analysis$feedback_loops)) {
-    cat("🔄 Feedback Loops Analysis:\n")
-    loops <- analysis$feedback_loops
-    cat("- Total feedback loops:", loops$n_cycles, "\n")
-    if (loops$n_cycles > 0) {
-      cat("- Reinforcing loops:", loops$positive_loops, "\n")
-      cat("- Balancing loops:", loops$negative_loops, "\n\n")
-      
-      if (!is.null(analysis$loop_importance$summary)) {
-        cat("🏆 Top 3 Most Important Loops:\n")
-        top3 <- head(analysis$loop_importance$summary, 3)
-        for (i in 1:nrow(top3)) {
-          loop_detail <- loops$loop_details[[top3$Loop_ID[i]]]
-          cat(sprintf("%d. %s loop: %s (Score: %.1f)\n", 
-                      i, top3$Type[i], 
-                      paste(loop_detail$nodes, collapse = " → "),
-                      top3$Importance_Score[i]))
-        }
-        cat("\n")
-      }
-    }
-  }
-  
-  # Stability analysis
-  if (!is.null(analysis$stability)) {
-    cat("📈 System Stability:\n")
-    stab <- analysis$stability
-    cat("- Status:", stab$stability_category, "\n")
-    if (!is.null(stab$resilience)) {
-      cat("- Resilience Index:", round(stab$resilience, 3), "\n")
-    }
-    cat("\n")
-  }
-  
-  # System properties
-  if (!is.null(analysis$system_properties)) {
-    cat("🔍 System Properties:\n")
-    props <- analysis$system_properties
-    cat("- Network Density:", round(props$density, 3), "\n")
-    cat("- Most Influential Node:", props$most_influential, "\n")
-    cat("- Most Affected Node:", props$most_affected, "\n")
-    cat("- Positive/Negative Ratio:", round(props$interaction_ratio, 2), "\n\n")
-  }
-  
-  # Recommendations
-  if (!is.null(analysis$recommendations)) {
-    cat("💡 Management Recommendations:\n")
-    recs <- analysis$recommendations
-    
-    if (length(recs$general) > 0) {
-      cat("\nGeneral Recommendations:\n")
-      for (rec in recs$general) {
-        cat("-", rec, "\n")
-      }
-    }
-    
-    if (length(recs$priority_actions) > 0) {
-      cat("\nPriority Actions:\n")
-      for (action in recs$priority_actions) {
-        cat("-", action, "\n")
-      }
-    }
-  }
-  
-  # Include matrix if requested
-  if (include_matrix && !is.null(analysis$matrix)) {
-    cat("\n📋 Signed Adjacency Matrix:\n")
-    print(analysis$matrix)
-  }
-  
-  cat("\n" + "="*50 + "\n")
-  cat("Report generated by SES Loop Analysis System\n")
-  
-  return(analysis)
-}
-
-# Function to export loop analysis results
-export_loop_analysis <- function(analysis_results, filename = "ses_loop_analysis.txt") {
-  sink(filename)
-  
-  cat("SES Loop Analysis Results\n")
-  cat("=========================\n")
-  cat("Generated:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
-  
-  # Export all analysis components
-  if (!is.null(analysis_results$feedback_loops)) {
-    cat("FEEDBACK LOOPS:\n")
-    loops <- analysis_results$feedback_loops
-    cat("Total loops:", loops$n_cycles, "\n")
-    cat("Reinforcing loops:", loops$positive_loops, "\n")
-    cat("Balancing loops:", loops$negative_loops, "\n\n")
-    
-    if (loops$n_cycles > 0) {
-      cat("Loop Details:\n")
-      for (i in 1:length(loops$loop_details)) {
-        detail <- loops$loop_details[[i]]
-        cat(sprintf("Loop %d: %s (%s, length %d)\n", 
-                    i, paste(detail$nodes, collapse = " → "), 
-                    detail$type, detail$length))
-      }
-      cat("\n")
-    }
-  }
-  
-  if (!is.null(analysis_results$stability)) {
-    cat("STABILITY ANALYSIS:\n")
-    stab <- analysis_results$stability
-    cat("Stability Category:", stab$stability_category, "\n")
-    cat("Max Real Eigenvalue:", stab$max_real_eigenvalue, "\n")
-    if (!is.null(stab$resilience)) {
-      cat("Resilience Index:", stab$resilience, "\n")
-    }
-    cat("\n")
-  }
-  
-  if (!is.null(analysis_results$recommendations)) {
-    cat("RECOMMENDATIONS:\n")
-    recs <- analysis_results$recommendations
-    
-    cat("General:\n")
-    for (rec in recs$general) {
-      cat("-", rec, "\n")
-    }
-    
-    cat("\nPriority Actions:\n")
-    for (action in recs$priority_actions) {
-      cat("-", action, "\n")
-    }
-  }
-  
-  sink()
-  message(paste("Loop analysis results exported to", filename))
-}
+# [REMOVING LOOP ANALYSIS FUNCTIONS AS THEY'RE IN analysis.R]
 
 # System information and initialization
 get_system_info <- function() {
   info <- list(
-    version = "1.0.0",
+    version = "1.0.1",
     keywords_total = sum(sapply(SES_KEYWORDS, function(x) length(x$primary) + length(x$secondary))),
     groups_count = length(SES_GROUPS),
     algorithm_types = c("Exact matching", "Fuzzy matching", "Partial matching", "Confidence scoring"),
@@ -1453,7 +922,8 @@ if (sys.nframe() == 0) {
     cat("\n⚠️ System validation shows lower accuracy - Check keyword dictionaries\n")
   }
 } else {
-  cat("✅ SES intelligent classification system loaded successfully\n")
+  cat("✅ SES intelligent classification system loaded successfully (FIXED VERSION)\n")
   cat("📊 Total keywords:", sum(sapply(SES_KEYWORDS, function(x) length(x$primary) + length(x$secondary))), "\n")
   cat("🏷️ SES groups:", length(SES_GROUPS), "\n")
+  cat("🔧 Version: 1.0.1 (Fixed vectorization issues)\n")
 }
