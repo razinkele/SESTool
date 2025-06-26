@@ -50,6 +50,16 @@ if (file.exists("analysis.R")) {
   ANALYSIS_AVAILABLE <- FALSE
 }
 
+# Include the loop generator plugin
+if (file.exists("loop_generator.R")) {
+  source("loop_generator.R")
+  cat("✅ Loop generator plugin loaded successfully.\n")
+  LOOP_GENERATOR_AVAILABLE <- TRUE
+} else {
+  warning("⚠️ loop_generator.R not found - loop generation will not be available")
+  LOOP_GENERATOR_AVAILABLE <- FALSE
+}
+
 # Define UI
 ui <- fluidPage(
   useShinyjs(),
@@ -163,6 +173,12 @@ ui <- fluidPage(
         tags$span("🔄 Loop Analysis", class = "ai-badge")
       } else {
         tags$span("⚠️ No Loops", class = "basic-badge")
+      },
+      " ",
+      if (LOOP_GENERATOR_AVAILABLE) {
+        tags$span("🎯 Loop Generator", class = "ai-badge")
+      } else {
+        tags$span("⚠️ No Generator", class = "basic-badge")
       }
     )
   )),
@@ -229,6 +245,64 @@ ui <- fluidPage(
           )
         }
       ),
+      
+      hr(),
+      
+      # Loop Network Generator Plugin
+      if (LOOP_GENERATOR_AVAILABLE) {
+        div(class = "intelligent-section", style = "background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);",
+          h5("🔄 Loop Network Generator", style = "color: white; margin-top: 0;"),
+          
+          selectInput("loopTemplate", "Network Template:",
+                     choices = list(
+                       "Simple Marine Loop" = "simple_marine",
+                       "Complex Fisheries System" = "complex_fisheries", 
+                       "Coastal Tourism Loop" = "coastal_tourism",
+                       "Climate-Ecosystem Loop" = "climate_ecosystem",
+                       "Pollution Impact Chain" = "pollution_chain",
+                       "Multiple Feedback System" = "multi_feedback"
+                     ),
+                     selected = "simple_marine",
+                     width = "100%"),
+          
+          fluidRow(
+            column(6,
+              numericInput("loopSize", "Network Size:", 
+                          value = 8, min = 6, max = 20, step = 1,
+                          width = "100%")
+            ),
+            column(6,
+              numericInput("loopComplexity", "Loop Count:", 
+                          value = 2, min = 1, max = 5, step = 1,
+                          width = "100%")
+            )
+          ),
+          
+          actionButton("generateLoopNetwork", "🎯 Generate Loop Network", 
+                      class = "btn-block", 
+                      style = "background: rgba(255,255,255,0.9); color: #333; font-weight: bold;"),
+          
+          br(),
+          
+          fluidRow(
+            column(6,
+              actionButton("addRandomLoop", "➕ Add Loop", 
+                          class = "btn-secondary btn-sm btn-block",
+                          style = "background: rgba(255,255,255,0.7); color: #333;")
+            ),
+            column(6,
+              actionButton("showLoopInfo", "ℹ️ Loop Info", 
+                          class = "btn-info btn-sm btn-block",
+                          style = "background: rgba(255,255,255,0.7); color: #333;")
+            )
+          )
+        )
+      } else {
+        div(class = "alert alert-warning", style = "margin: 10px 0; padding: 10px;",
+            h6("🔄 Loop Generator Unavailable"),
+            p("The loop generator plugin requires loop_generator.R", style = "margin: 0; font-size: 12px;")
+        )
+      },
       
       hr(),
       
@@ -1546,6 +1620,115 @@ server <- function(input, output, session) {
     })
   }
   
+  # Loop Network Generator Functions (only if plugin available)
+  if (LOOP_GENERATOR_AVAILABLE) {
+    
+    # Loop Network Generator Observers
+    observeEvent(input$generateLoopNetwork, {
+      withProgress(message = "🎯 Generating loop network...", value = 0, {
+        incProgress(0.3, detail = "Creating network structure...")
+        
+        # Generate network data using plugin
+        network_data <- generate_loop_network(
+          template = input$loopTemplate,
+          size = input$loopSize,
+          complexity = input$loopComplexity,
+          add_noise = TRUE
+        )
+        
+        incProgress(0.6, detail = "Applying SES groups...")
+        
+        # Apply intelligent groups if available
+        if (UTILS_AVAILABLE) {
+          tryCatch({
+            classified_nodes <- assign_multiple_groups(
+              network_data$nodes,
+              name_column = "id",
+              confidence_threshold = 0.3,  # Lower threshold for generated data
+              add_confidence = TRUE
+            )
+            network_data$nodes <- classified_nodes
+          }, error = function(e) {
+            print(paste("Error in intelligent assignment:", e$message))
+          })
+        }
+        
+        incProgress(0.9, detail = "Finalizing visualization...")
+        
+        # Store the data
+        elements_data(network_data$nodes)
+        links_data(network_data$edges)
+        excel(FALSE)
+        
+        # Enable buttons
+        enable("createNetwork")
+        enable("createGraph")
+        if (UTILS_AVAILABLE) {
+          enable("intelligentAssign")
+        }
+        enable("Run analyses")
+        
+        incProgress(1.0, detail = "Complete!")
+      })
+      
+      showNotification(
+        HTML(paste("🎯 <strong>Loop Network Generated!</strong><br>",
+                  "📊 Template:", network_data$template_name, "<br>",
+                  "🔗 Nodes:", input$loopSize, "<br>",
+                  "🔄 Loops Created:", network_data$actual_loops, "<br>",
+                  "💡 Click 'Create Network' then 'Create Graph' to visualize")),
+        type = "message",
+        duration = 8
+      )
+    })
+    
+    observeEvent(input$addRandomLoop, {
+      req(elements_data(), links_data())
+      
+      nodes <- elements_data()
+      edges <- links_data()
+      
+      if (nrow(nodes) < 3) {
+        showNotification("❌ Need at least 3 nodes to create a loop", type = "error")
+        return()
+      }
+      
+      # Use plugin function to add random loop
+      tryCatch({
+        updated_edges <- add_random_loop(nodes, edges)
+        
+        # Update data
+        links_data(updated_edges)
+        
+        showNotification(
+          "➕ Random loop added to network! Update the graph to see changes.",
+          type = "message",
+          duration = 6
+        )
+      }, error = function(e) {
+        showNotification(paste("❌ Error adding loop:", e$message), type = "error")
+      })
+    })
+    
+    observeEvent(input$showLoopInfo, {
+      req(elements_data(), links_data())
+      
+      nodes <- elements_data()
+      edges <- links_data()
+      
+      # Use plugin function to analyze structure
+      analysis <- analyze_network_structure(edges, nodes)
+      
+      showNotification(
+        HTML(paste("<strong>🔍 Network Analysis:</strong><br>",
+                  gsub("\n", "<br>", analysis$summary), "<br>",
+                  "💡 Run 'CLD loop analysis' for detailed loop detection!")),
+        type = "default",
+        duration = 12
+      )
+    })
+  }
+  
   # Data table outputs
   output$dataTable <- renderDT({
     req(links_data())
@@ -1645,6 +1828,11 @@ if (ANALYSIS_AVAILABLE) {
   cat("✅ Loop analysis: ENABLED\n")
 } else {
   cat("⚠️ Loop analysis: DISABLED (analysis.R not found)\n")
+}
+if (LOOP_GENERATOR_AVAILABLE) {
+  cat("✅ Loop network generator: ENABLED\n")
+} else {
+  cat("⚠️ Loop network generator: DISABLED (loop_generator.R not found)\n")
 }
 cat("🌐 Starting Shiny server...\n")
 
