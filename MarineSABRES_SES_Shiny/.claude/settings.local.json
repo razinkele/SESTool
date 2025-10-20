@@ -5,7 +5,18 @@
       "Read(//c/Users/DELL/OneDrive - ku.lt/HORIZON_EUROPE/Marine-SABRES/SESToolbox/**)",
       "Bash(git add MarineSABRES_SES_Shiny/)",
       "Bash(git rm --cached MarineSABRES_SES_Shiny)",
-      "Bash(git rm --cached -f MarineSABRES_SES_Shiny)"
+      "Bash(git rm --cached -f MarineSABRES_SES_Shiny)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd MarineSABRES Shiny App with Kumu-style CLD visualization\n\nComplete Shiny application for Marine SES Analysis with:\n\n## Features\n- Interactive ISA data entry for DAPSI(W)R(M) framework\n- CLD visualization with custom octagon shapes matching Kumu style\n- Network analysis tools and feedback loop detection\n- PIMS stakeholder engagement module\n- Response options and scenario analysis\n- Export functionality (Excel, CSV, JSON, RData, HTML, PNG, PDF)\n- Comprehensive user guide and help system\n\n## Kumu Style Implementation\n- Custom octagon SVG for Drivers element\n- Hexagon shape for Activities\n- All 6 element types with correct colors and shapes\n- Node labels positioned outside shapes\n- Proper edge colors for positive/negative connections\n\n## Technical Stack\n- R Shiny framework\n- visNetwork for interactive network visualization\n- DT for data tables\n- OpenXLSX for Excel export\n- Modular architecture with separate modules\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git config windows.appendAtomically false)",
+      "Bash(git commit -m \"Add MarineSABRES Shiny App with Kumu-style CLD visualization\")",
+      "Bash(git push origin main)",
+      "Bash(git pull --no-rebase origin main)",
+      "Bash(git pull --no-rebase --allow-unrelated-histories origin main)",
+      "Bash(git add .gitignore SESToolbox.Rproj)",
+      "Bash(git commit -m \"Update gitignore and project config\")",
+      "Bash(git checkout --ours .gitignore LICENSE README.md classes.R tool.md data/MadeiraImportant.xlsx)",
+      "Bash(git add .)",
+      "Bash(git commit -m \"Merge remote changes, keep local versions\")"
     ],
     "deny": [],
     "ask": []
