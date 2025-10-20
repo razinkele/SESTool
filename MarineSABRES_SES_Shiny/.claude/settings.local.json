@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git push)",
+      "Read(//c/Users/DELL/OneDrive - ku.lt/HORIZON_EUROPE/Marine-SABRES/SESToolbox/**)",
+      "Bash(git add MarineSABRES_SES_Shiny/)",
+      "Bash(git rm --cached MarineSABRES_SES_Shiny)",
+      "Bash(git rm --cached -f MarineSABRES_SES_Shiny)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

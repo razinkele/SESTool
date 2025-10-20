@@ -1,0 +1,453 @@
+/* custom.css */
+/* Custom styling for MarineSABRES SES Shiny Application */
+
+/* ============================================================================
+   GENERAL STYLING
+   ============================================================================ */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+h2 {
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* ============================================================================
+   BOXES AND PANELS
+   ============================================================================ */
+
+.well {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.box {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.box-header {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+
+.btn {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn-block {
+  margin-bottom: 10px;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+.btn-success {
+  background-color: #27ae60;
+  border-color: #27ae60;
+}
+
+.btn-success:hover {
+  background-color: #229954;
+  border-color: #229954;
+}
+
+.btn-warning {
+  background-color: #f39c12;
+  border-color: #f39c12;
+}
+
+.btn-warning:hover {
+  background-color: #e67e22;
+  border-color: #e67e22;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+  border-color: #c0392b;
+}
+
+/* ============================================================================
+   VALUE BOXES
+   ============================================================================ */
+
+.small-box {
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.small-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.small-box .icon {
+  font-size: 60px;
+  opacity: 0.3;
+}
+
+/* ============================================================================
+   TABLES
+   ============================================================================ */
+
+.dataTables_wrapper {
+  padding: 15px;
+}
+
+.dataTables_wrapper table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dataTables_wrapper table thead th {
+  background-color: #34495e;
+  color: white;
+  font-weight: 600;
+  border-bottom: 2px solid #2c3e50;
+}
+
+.dataTables_wrapper table tbody tr:hover {
+  background-color: #ecf0f1;
+  cursor: pointer;
+}
+
+/* ============================================================================
+   FORMS
+   ============================================================================ */
+
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #bdc3c7;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 8px;
+}
+
+/* ============================================================================
+   SIDEBAR
+   ============================================================================ */
+
+.sidebar-menu > li.active > a {
+  border-left: 4px solid #3498db;
+  background-color: #2c3e50;
+}
+
+.sidebar-menu > li > a {
+  transition: all 0.3s ease;
+}
+
+.sidebar-menu > li > a:hover {
+  background-color: #34495e;
+  border-left: 4px solid #3498db;
+}
+
+.sidebar {
+  background-color: #2c3e50;
+}
+
+/* ============================================================================
+   NETWORK VISUALIZATION
+   ============================================================================ */
+
+.vis-network {
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+/* Tooltip styling */
+.vis-tooltip {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid #95a5a6;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 13px;
+  max-width: 300px;
+}
+
+/* ============================================================================
+   PROGRESS BARS
+   ============================================================================ */
+
+.progress {
+  height: 25px;
+  border-radius: 8px;
+  background-color: #ecf0f1;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+  border-radius: 8px;
+  transition: width 0.6s ease;
+  font-weight: 600;
+}
+
+/* ============================================================================
+   TABS
+   ============================================================================ */
+
+.nav-tabs {
+  border-bottom: 2px solid #dee2e6;
+}
+
+.nav-tabs > li > a {
+  border-radius: 8px 8px 0 0;
+  transition: all 0.3s ease;
+}
+
+.nav-tabs > li.active > a {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+  font-weight: 600;
+}
+
+.nav-tabs > li > a:hover {
+  background-color: #ecf0f1;
+  border-color: #bdc3c7;
+}
+
+/* ============================================================================
+   ALERTS AND NOTIFICATIONS
+   ============================================================================ */
+
+.shiny-notification {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-size: 14px;
+  padding: 15px 20px;
+}
+
+.shiny-notification-error {
+  background-color: #e74c3c;
+  color: white;
+  border-left: 5px solid #c0392b;
+}
+
+.shiny-notification-warning {
+  background-color: #f39c12;
+  color: white;
+  border-left: 5px solid #e67e22;
+}
+
+.shiny-notification-message {
+  background-color: #27ae60;
+  color: white;
+  border-left: 5px solid #229954;
+}
+
+/* ============================================================================
+   DAPSI(W)R(M) COLOR CODING
+   ============================================================================ */
+
+.element-drivers {
+  color: #FF8C00;
+  font-weight: 600;
+}
+
+.element-activities {
+  color: #DC143C;
+  font-weight: 600;
+}
+
+.element-pressures {
+  color: #9370DB;
+  font-weight: 600;
+}
+
+.element-mpf {
+  color: #4169E1;
+  font-weight: 600;
+}
+
+.element-ecosystem-services {
+  color: #32CD32;
+  font-weight: 600;
+}
+
+.element-goods-benefits {
+  color: #FFD700;
+  font-weight: 600;
+}
+
+/* ============================================================================
+   VERBATIM OUTPUT
+   ============================================================================ */
+
+pre {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  border: 1px solid #34495e;
+  border-radius: 8px;
+  padding: 15px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+}
+
+/* ============================================================================
+   LOADING SPINNER
+   ============================================================================ */
+
+.shiny-spinner-output-container {
+  margin: 20px 0;
+}
+
+/* ============================================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 10px;
+  }
+  
+  .box {
+    margin-bottom: 15px;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
+}
+
+/* ============================================================================
+   CUSTOM UTILITY CLASSES
+   ============================================================================ */
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
+.padding-20 {
+  padding: 20px;
+}
+
+/* ============================================================================
+   ICONS
+   ============================================================================ */
+
+.fa, .fas, .far, .fal, .fab {
+  margin-right: 8px;
+}
+
+/* Header icons */
+h2 .fa, h2 .fas {
+  color: #3498db;
+  margin-right: 12px;
+}
+
+/* ============================================================================
+   HOVER EFFECTS
+   ============================================================================ */
+
+.hoverable {
+  transition: all 0.3s ease;
+}
+
+.hoverable:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ============================================================================
+   SCROLLBARS (WebKit browsers)
+   ============================================================================ */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ecf0f1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #95a5a6;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7f8c8d;
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+
+@media print {
+  .sidebar,
+  .navbar,
+  .btn,
+  .no-print {
+    display: none !important;
+  }
+  
+  .content-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .box {
+    page-break-inside: avoid;
+  }
+}

@@ -76,9 +76,6 @@ ui <- fluidPage(
   titlePanel(div(
     style = "display: flex; align-items: center; gap: 3px;",
     img(
-      # src = "file:///C:/Users/arturas.baziukas/OneDrive%20-%20ku.lt/HORIZON%20EUROPE/Marine-SABRES/BowTie/MSabres.png",
-      # src = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/shiny.png",
-      # src = "https://raw.githubusercontent.com/razinkele/SESTool/main/images/MSabres.png",
       src = "https://raw.githubusercontent.com/razinkele/SESTool/main/images/01%20marinesabres_logo_transparent.png",
       height = "70px",
       style = "margin-left: 3px;"
@@ -89,13 +86,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       width = 3,
-      # Groups & links strength field selection button
-
-      # actionButton("change_df", "Change groups & links", title = "Group and links width field selection", style = "float: left;"),
-
-      # File upload button
-
-      # Dropdown list for selecting file format
+        # Dropdown list for selecting file format
       selectInput("fileType", "Select File Format:",
         choices = c("XLSX" = "xlsx", "CSV" = "csv", "GraphML" = "graphml")
       ),
@@ -108,18 +99,21 @@ ui <- fluidPage(
       uiOutput("groups", style = "float: left;"),
       # dropdown menu to select column for group
       uiOutput("group"),
+      # dropdown menu to select column for element selection
+      uiOutput("select_element"),
       hr(),
       actionButton("createNetwork", "Create Network", title = "Create network from the uploaded links table", style = "margin-top: 35px;", class = "btn-primary btn-block"),
       actionButton("createGraph", "Create/Update Graph", class = "btn-primary btn-block"),
       hr(),
-      # selectInput("shapes", "Select Category:", choices = NULL),
-
-      # sliderInput("edgeWidth", "Edge Width", min = 1, max = 10, value = 1),
+      uiOutput("threshold"),
+      #sliderInput("threshold", "Select nodes", min = 1, max = 10, value = 1),
       checkboxInput("showLabels", "Show Labels", value = TRUE),
       checkboxInput("useGroupShapes", "Use Group Shapes", value = TRUE),
       checkboxInput("useEdgeWeight", "Use Edge Weights", value = TRUE),
       checkboxInput("useEdgeColor", "Use Edge Colors", value = TRUE),
       checkboxInput("showLegend", "Show Legend", value = TRUE),
+      checkboxInput("selection", "Select nodes", value = FALSE),
+     
       actionButton("Run analyses", "Run CLD loop analysis", class = "btn-primary btn-block"),
       hr(),
       downloadButton("downloadPlot", "Save Plot as HTML", class = "btn-success btn-block"),
@@ -133,6 +127,7 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel(
           "Network Graph",
+          # textOutput("slider_value"),
           div(
             class = "network-container",
             visNetworkOutput("network", height = "600px")
@@ -188,6 +183,23 @@ server <- function(input, output, session) {
       current_df(df1)
     }
   })
+  # Create the slider UI dynamically based on checkbox input
+  output$threshold <- renderUI({
+    if (input$selection) {
+      sliderInput("threshold", "Select nodes:", 
+                  min = 0, 
+                  max = 100, 
+                  value = 50)
+    }
+  })
+  # Display the value of the slider
+  output$slider_value <- renderText({
+    if (input$selection) {
+      paste("Slider value is:", input$threshold)
+    } else {
+      "Slider is not displayed."
+    }
+  })
   # Create dynamic dropdown menus based on dataframe column names
   output$strength <- renderUI({
     req(current_df())
@@ -195,19 +207,29 @@ server <- function(input, output, session) {
     selectInput("strength", "Strength variable:", choices = names(df))
     # print(input$strength)
   })
-
+  # Display the value of the slider
+  output$slider_value <- renderText({
+    if (input$show_slider) {
+      paste("Slider value is:", input$threshold)
+    } else {
+      "Slider is not displayed."
+    }
+  })
+  # Select element group column dropdown menu
   output$group <- renderUI({
     req(current_df())
     df <- current_df()
     selectInput("group", "Group variable:", choices = names(df))
     # print(input$group)
   })
-  # populate the shapes selectInput
-  # observe({
-  #   req(links_data())
-  #   df <- links_data()
-  #   updateSelectInput(session, "shape", choices = colnames(df))
-  # })
+  # Select element group column dropdown menu
+  output$group <- renderUI({
+    req(current_df())
+    df <- current_df()
+    selectInput("select_element", "Select by:", choices = names(df))
+    # print(input$group)
+  })
+  
   # Render the file input dynamically based on the selected file type
   # Dynamic input button based on file type selection ----
   output$dynamicUploadButton <- renderUI({
@@ -487,9 +509,17 @@ server <- function(input, output, session) {
 
     # Add legend if requested
     if (input$showLegend) {
-      net <- net %>% visLegend(width = 0.2, position = "right", main = "Groups")
+      net <- net %>% visLegend(width = 0.2, position = "right", main = "Element Groups")
     }
-
+    #  use group shapes if requested
+    if (input$useGroupShapes) {
+      # net <- net %>% visLegend(width = 0.2, position = "right", main = "Element Groups")
+    }
+    # Add labels to nodes if requested
+    if (input$selection) {
+      # net <- net %>% visLegend(width = 0.2, position = "right", main = "Element Groups")
+    }
+    # Return the network plot
     net
   })
   # here go the two tabs with 2 tables  (elements and connections)
@@ -519,7 +549,7 @@ server <- function(input, output, session) {
     elements_data(updated_data)
   })
 
-  # Download handler for the plot ------
+  # Download handler for the plot only for html format save ------
   output$downloadPlot <- downloadHandler(
     filename = function() {
       "network_plot.html"

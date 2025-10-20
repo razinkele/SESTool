@@ -1,0 +1,81 @@
+@settings {
+  template: causal-loop;
+}
+
+@controls {
+  bottom {
+    filter {
+      target: element;
+      by: "element type";
+      as: buttons;
+      multiple: true;
+      default: show-all;
+    }
+  }
+
+  top {
+    sna-dashboard {
+      metrics: element-count, connection-count, density, average-degree;
+    }
+  }
+}
+
+/* Goods and benefits */
+element["element type"="good and benefit"] {
+  color: #fff1a2;
+  shape: triangle;
+}
+
+/* Ecosystem Service */
+element["element type"="Ecosystem Service"] {
+  color: #313695;
+  shape: square;
+}
+
+/* Marine Processes and Functioning */
+element["element type"="Marine Process and Function"] {
+  color: #bce2ee;
+  shape: pill;
+}
+
+/* Pressures */
+element["element type"="Pressure"] {
+  color: #fec05a;
+  shape: diamond;
+}
+
+/* Activities */
+element["element type"="Activity"] {
+  color: #5abc67;
+  shape: hexagon;
+}
+
+/* Drivers */
+element["element type"="Driver"] {
+  color: #776db3;
+  shape: octagon;
+}
+
+connection["type"="+"] {
+  color: #80b8d7;
+}
+
+connection["type"="-"] {
+  color: #dc131e;
+}
+
+connection["strength"="strong positive"] {
+  size: 30;
+}
+
+connection["strength"="medium positive"] {
+  size: 15;
+}
+
+connection["strength"="strong negative"] {
+  size: 30;
+}
+
+connection["description"="medium negative"] {
+  size: 15;
+}

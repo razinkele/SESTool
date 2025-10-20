@@ -1,0 +1,2410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarineSABRES User Guide</title>
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: #24292e;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: white;
+  padding: 50px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+h1 {
+  font-size: 2.5em;
+  color: #667eea;
+  border-bottom: 3px solid #667eea;
+  padding-bottom: 10px;
+  margin-top: 40px;
+}
+h2 {
+  font-size: 2em;
+  color: #764ba2;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 8px;
+  margin-top: 35px;
+}
+h3 {
+  font-size: 1.5em;
+  color: #555;
+  margin-top: 25px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+}
+table th {
+  background: #667eea;
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+code {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: Consolas, monospace;
+  font-size: 90%;
+}
+pre {
+  background: #2d2d2d;
+  color: #f8f8f2;
+  padding: 20px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+a {
+  color: #667eea;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+ul, ol {
+  padding-left: 30px;
+}
+li {
+  margin-bottom: 8px;
+}
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  margin: 40px 0;
+}
+strong {
+  color: #667eea;
+}
+.back-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #667eea;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+.back-top:hover {
+  background: #764ba2;
+  transform: translateY(-3px);
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1 id="marinesabres-ses-tool-complete-user-guide">MarineSABRES SES Tool - Complete User Guide</h1>
+<p><strong>Version:</strong> 1.0
+<strong>Last Updated:</strong> October 20, 2025
+<strong>Project:</strong> Marine Social-Ecological Systems Analysis Tool</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-introduction">Introduction</a></li>
+<li><a href="#2-getting-started">Getting Started</a></li>
+<li><a href="#3-dashboard-overview">Dashboard Overview</a></li>
+<li><a href="#4-pims-module">PIMS Module</a></li>
+<li><a href="#5-isa-data-entry">ISA Data Entry</a></li>
+<li><a href="#6-cld-visualization">CLD Visualization</a></li>
+<li><a href="#7-analysis-tools">Analysis Tools</a></li>
+<li><a href="#8-response--validation">Response &amp; Validation</a></li>
+<li><a href="#9-export--reports">Export &amp; Reports</a></li>
+<li><a href="#10-workflows--best-practices">Workflows &amp; Best Practices</a></li>
+<li><a href="#11-troubleshooting">Troubleshooting</a></li>
+<li><a href="#12-glossary">Glossary</a></li>
+</ol>
+<hr />
+<h2 id="1-introduction">1. Introduction</h2>
+<h3 id="1-1-what-is-the-marinesabres-ses-tool">1.1 What is the MarineSABRES SES Tool?</h3>
+<p>The MarineSABRES Social-Ecological Systems (SES) Analysis Tool is a comprehensive Shiny application designed to support participatory analysis of marine social-ecological systems. It implements the <strong>DAPSI(W)R(M) framework</strong> (Drivers-Activities-Pressures-State changes-(Welfare impacts)-Responses-(Measures)) and Integrated Systems Analysis (ISA) methodology.</p>
+<h3 id="1-2-key-features">1.2 Key Features</h3>
+<ul>
+<li><strong>Project Information Management System (PIMS)</strong>: Manage project metadata, stakeholders, resources, and evaluation</li>
+<li><strong>Integrated Systems Analysis (ISA)</strong>: 13-exercise structured approach to SES analysis</li>
+<li><strong>Causal Loop Diagram (CLD)</strong>: Interactive visualization of system dynamics</li>
+<li><strong>Loop Detection</strong>: Automatic identification of reinforcing and balancing feedback loops</li>
+<li><strong>Response Planning</strong>: Prioritize and plan management interventions</li>
+<li><strong>Stakeholder Management</strong>: Power-Interest analysis and engagement planning</li>
+<li><strong>Export &amp; Reports</strong>: Comprehensive data export and report generation</li>
+</ul>
+<h3 id="1-3-target-users">1.3 Target Users</h3>
+<ul>
+<li>Marine resource managers</li>
+<li>Policy analysts</li>
+<li>Environmental consultants</li>
+<li>Researchers in marine social-ecological systems</li>
+<li>Stakeholder engagement facilitators</li>
+</ul>
+<h3 id="1-4-system-requirements">1.4 System Requirements</h3>
+<ul>
+<li>R (version 4.0 or higher)</li>
+<li>Modern web browser (Chrome, Firefox, Edge, Safari)</li>
+<li>Internet connection (for initial setup only)</li>
+</ul>
+<hr />
+<h2 id="2-getting-started">2. Getting Started</h2>
+<h3 id="2-1-launching-the-application">2.1 Launching the Application</h3>
+<p><strong>Option 1: Using run_app.R</strong></p>
+<pre><code class="language-r">cd /path/to/MarineSABRES_SES_Shiny
+Rscript run_app.R
+</code></pre>
+<p><strong>Option 2: Direct launch</strong></p>
+<pre><code class="language-r">setwd(&quot;/path/to/MarineSABRES_SES_Shiny&quot;)
+shiny::runApp()
+</code></pre>
+<p><strong>Option 3: RStudio</strong></p>
+<ul>
+<li>Open <code>app.R</code> in RStudio</li>
+<li>Click “Run App” button</li>
+</ul>
+<h3 id="2-2-first-time-setup">2.2 First-Time Setup</h3>
+<ol>
+<li>
+<p><strong>Create a New Project:</strong></p>
+<ul>
+<li>Navigate to PIMS → Project Setup</li>
+<li>Enter project name</li>
+<li>Select demonstration area</li>
+<li>Define focal issue</li>
+<li>Save project information</li>
+</ul>
+</li>
+<li>
+<p><strong>Load Example Data (Optional):</strong></p>
+<ul>
+<li>Use “Load Project” button in sidebar</li>
+<li>Select <code>data/example_baltic_sea_fisheries.rds</code></li>
+<li>Explore pre-populated data</li>
+</ul>
+</li>
+<li>
+<p><strong>Save Your Work:</strong></p>
+<ul>
+<li>Use “Save Project” button regularly</li>
+<li>Files are saved as <code>.rds</code> format</li>
+<li>Include project name and date in filename</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-3-user-interface-overview">2.3 User Interface Overview</h3>
+<p><strong>Header:</strong></p>
+<ul>
+<li>MarineSABRES logo and title</li>
+<li>Help button (opens user guide)</li>
+<li>User information</li>
+</ul>
+<p><strong>Sidebar Menu:</strong></p>
+<ul>
+<li>Dashboard</li>
+<li>PIMS Module (5 sub-menus)</li>
+<li>ISA Data Entry</li>
+<li>CLD Visualization</li>
+<li>Analysis Tools (4 sub-menus)</li>
+<li>Response &amp; Validation (3 sub-menus)</li>
+<li>Export &amp; Reports</li>
+<li>Quick Actions (Save/Load)</li>
+<li>Progress indicator</li>
+</ul>
+<p><strong>Main Panel:</strong></p>
+<ul>
+<li>Content area for selected module</li>
+<li>Interactive tables, plots, and forms</li>
+</ul>
+<hr />
+<h2 id="3-dashboard-overview">3. Dashboard Overview</h2>
+<h3 id="3-1-dashboard-components">3.1 Dashboard Components</h3>
+<p><strong>Value Boxes (Top Row):</strong></p>
+<ul>
+<li><strong>Total Elements</strong>: Count of all DAPSI(W)R(M) elements</li>
+<li><strong>Connections</strong>: Number of causal links in CLD</li>
+<li><strong>Loops Detected</strong>: Feedback loops identified</li>
+<li><strong>Completion</strong>: Overall project progress percentage</li>
+</ul>
+<p><strong>Project Overview Box:</strong></p>
+<ul>
+<li>Project ID</li>
+<li>Creation and modification dates</li>
+<li>Demonstration area</li>
+<li>Focal issue</li>
+<li>Status summary</li>
+</ul>
+<p><strong>Quick Access Box:</strong></p>
+<ul>
+<li>Recent activities</li>
+<li>Shortcuts to incomplete tasks</li>
+</ul>
+<p><strong>CLD Preview:</strong></p>
+<ul>
+<li>Mini network visualization</li>
+<li>Quick view of system structure</li>
+</ul>
+<h3 id="3-2-navigation-tips">3.2 Navigation Tips</h3>
+<ul>
+<li>Click sidebar items to navigate between modules</li>
+<li>Use browser back button with caution (may cause data loss)</li>
+<li>Save work before switching major modules</li>
+<li>Use breadcrumbs in help modals</li>
+</ul>
+<hr />
+<h2 id="4-pims-module">4. PIMS Module</h2>
+<p>The Process &amp; Information Management System (PIMS) provides project-level management functions.</p>
+<h3 id="4-1-project-setup">4.1 Project Setup</h3>
+<p><strong>Purpose:</strong> Initialize project metadata and scope</p>
+<p><strong>How to Use:</strong></p>
+<ol>
+<li>Navigate to PIMS → Project Setup</li>
+<li>Complete all fields:
+<ul>
+<li><strong>Project Name</strong>: Descriptive title</li>
+<li><strong>Demonstration Area</strong>: Select from predefined list or enter custom</li>
+<li><strong>Focal Issue</strong>: Main problem/opportunity being addressed</li>
+<li><strong>Definition Statement</strong>: Project objectives and scope</li>
+<li><strong>Temporal Scale</strong>: Time period of analysis</li>
+<li><strong>Spatial Scale</strong>: Geographic extent</li>
+<li><strong>System in Focus</strong>: System boundaries description</li>
+</ul>
+</li>
+<li>Click “Save” button</li>
+<li>Verify in “Current Status” panel</li>
+</ol>
+<p><strong>Best Practices:</strong></p>
+<ul>
+<li>Be specific in focal issue description</li>
+<li>Define clear system boundaries</li>
+<li>Include stakeholder perspectives in definition</li>
+</ul>
+<h3 id="4-2-stakeholder-management">4.2 Stakeholder Management</h3>
+<p><strong>Purpose:</strong> Identify, analyze, and manage project stakeholders</p>
+<h4 id="4-2-1-stakeholder-register">4.2.1 Stakeholder Register</h4>
+<p><strong>Adding Stakeholders:</strong></p>
+<ol>
+<li>Navigate to PIMS → Stakeholders → Stakeholder Register tab</li>
+<li>Fill in form:
+<ul>
+<li><strong>Stakeholder ID</strong>: Unique identifier (auto-generated)</li>
+<li><strong>Name</strong>: Organization or individual name</li>
+<li><strong>Type</strong>: Government / NGO / Private / Community / Research</li>
+<li><strong>Power</strong>: High / Medium / Low</li>
+<li><strong>Interest</strong>: High / Medium / Low</li>
+<li><strong>Attitude</strong>: Supportive / Neutral / Opposed</li>
+<li><strong>Contact</strong>: Email or phone</li>
+<li><strong>Notes</strong>: Additional information</li>
+</ul>
+</li>
+<li>Click “Add Stakeholder”</li>
+<li>View in table below</li>
+</ol>
+<p><strong>Editing/Deleting:</strong></p>
+<ul>
+<li>Select row(s) in table</li>
+<li>Click “Edit Selected” or “Delete Selected”</li>
+<li>Confirm changes</li>
+</ul>
+<h4 id="4-2-2-power-interest-analysis">4.2.2 Power-Interest Analysis</h4>
+<p><strong>Purpose:</strong> Visualize stakeholder influence and engagement needs</p>
+<p><strong>How to Read the Grid:</strong></p>
+<ul>
+<li><strong>Top Right (Key Players)</strong>: High power, high interest → Engage closely, collaborate</li>
+<li><strong>Top Left (Keep Satisfied)</strong>: High power, low interest → Keep informed of progress</li>
+<li><strong>Bottom Right (Keep Informed)</strong>: Low power, high interest → Consult regularly</li>
+<li><strong>Bottom Left (Monitor)</strong>: Low power, low interest → Monitor passively</li>
+</ul>
+<p><strong>Interactive Features:</strong></p>
+<ul>
+<li>Click on points to view stakeholder details</li>
+<li>Colored by attitude (green=supportive, gray=neutral, red=opposed)</li>
+<li>Sized by importance</li>
+</ul>
+<p><strong>Strategic Actions:</strong></p>
+<ul>
+<li>Focus resources on Key Players</li>
+<li>Don’t overburden low-priority stakeholders</li>
+<li>Plan engagement appropriate to quadrant</li>
+</ul>
+<h4 id="4-2-3-engagement-planning">4.2.3 Engagement Planning</h4>
+<p><strong>Purpose:</strong> Plan stakeholder engagement activities</p>
+<p><strong>IAP2 Engagement Spectrum:</strong></p>
+<ol>
+<li><strong>Inform</strong>: One-way communication</li>
+<li><strong>Consult</strong>: Get feedback</li>
+<li><strong>Involve</strong>: Work directly with stakeholders</li>
+<li><strong>Collaborate</strong>: Partner in decision-making</li>
+<li><strong>Empower</strong>: Place final decision-making in stakeholder hands</li>
+</ol>
+<p><strong>Adding Activities:</strong></p>
+<ol>
+<li>Go to Engagement Planning tab</li>
+<li>Select stakeholder from dropdown</li>
+<li>Choose engagement level</li>
+<li>Set planned/actual dates</li>
+<li>Describe activity</li>
+<li>Track outcomes</li>
+<li>Click “Add Activity”</li>
+</ol>
+<p><strong>Monitoring:</strong></p>
+<ul>
+<li>View engagement history table</li>
+<li>Check completion rates</li>
+<li>Identify gaps in engagement</li>
+</ul>
+<h4 id="4-2-4-communication-plan">4.2.4 Communication Plan</h4>
+<p><strong>Purpose:</strong> Log and track stakeholder communications</p>
+<p><strong>Recording Communications:</strong></p>
+<ol>
+<li>Go to Communication Plan tab</li>
+<li>Select stakeholder</li>
+<li>Choose communication type (Meeting / Email / Phone / Workshop / Report)</li>
+<li>Set date</li>
+<li>Add notes and outcomes</li>
+<li>Click “Add Communication”</li>
+</ol>
+<p><strong>Uses:</strong></p>
+<ul>
+<li>Maintain audit trail</li>
+<li>Track information sharing</li>
+<li>Plan follow-up actions</li>
+</ul>
+<h4 id="4-2-5-analysis-amp-reports">4.2.5 Analysis &amp; Reports</h4>
+<p><strong>Purpose:</strong> Generate stakeholder analysis insights</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Stakeholder statistics by type, power, interest</li>
+<li>Engagement activity counts</li>
+<li>Communication frequency charts</li>
+<li>Excel export of all stakeholder data</li>
+</ul>
+<p><strong>Exporting:</strong></p>
+<ul>
+<li>Click “Export to Excel” button</li>
+<li>Multi-sheet workbook includes:
+<ul>
+<li>Stakeholder register</li>
+<li>Engagement activities</li>
+<li>Communication log</li>
+<li>Summary statistics</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-3-resources-amp-risks">4.3 Resources &amp; Risks</h3>
+<p><strong>Status:</strong> Placeholder (not yet implemented)</p>
+<p><strong>Planned Features:</strong></p>
+<ul>
+<li>Resource allocation tracking</li>
+<li>Budget management</li>
+<li>Risk register</li>
+<li>Risk mitigation planning</li>
+</ul>
+<h3 id="4-4-data-management">4.4 Data Management</h3>
+<p><strong>Status:</strong> Placeholder (not yet implemented)</p>
+<p><strong>Planned Features:</strong></p>
+<ul>
+<li>Data provenance tracking</li>
+<li>Version control</li>
+<li>Data quality checks</li>
+<li>Import/export history</li>
+<li>Metadata management</li>
+</ul>
+<h3 id="4-5-evaluation">4.5 Evaluation</h3>
+<p><strong>Status:</strong> Placeholder (not yet implemented)</p>
+<p><strong>Planned Features:</strong></p>
+<ul>
+<li>Process evaluation framework</li>
+<li>Outcome tracking</li>
+<li>Success indicators</li>
+<li>Lessons learned documentation</li>
+</ul>
+<hr />
+<h2 id="5-isa-data-entry">5. ISA Data Entry</h2>
+<p>The Integrated Systems Analysis (ISA) module implements a 13-exercise structured approach to mapping social-ecological systems using the DAPSI(W)R(M) framework.</p>
+<h3 id="5-1-overview-of-13-exercises">5.1 Overview of 13 Exercises</h3>
+<table>
+<thead>
+<tr>
+<th>Exercise</th>
+<th>Name</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ex 0</td>
+<td>Case Study Scoping</td>
+<td>Define system boundaries</td>
+</tr>
+<tr>
+<td>Ex 1</td>
+<td>Goods &amp; Benefits</td>
+<td>Identify ecosystem services benefits</td>
+</tr>
+<tr>
+<td>Ex 2a</td>
+<td>Ecosystem Services</td>
+<td>Link services to benefits</td>
+</tr>
+<tr>
+<td>Ex 2b</td>
+<td>Marine Processes &amp; Functioning</td>
+<td>Identify ecological processes</td>
+</tr>
+<tr>
+<td>Ex 3</td>
+<td>Pressures</td>
+<td>Identify human-induced pressures</td>
+</tr>
+<tr>
+<td>Ex 4</td>
+<td>Activities</td>
+<td>Identify human activities</td>
+</tr>
+<tr>
+<td>Ex 5</td>
+<td>Drivers</td>
+<td>Identify underlying drivers</td>
+</tr>
+<tr>
+<td>Ex 6</td>
+<td>Loop Closure</td>
+<td>Connect benefits back to activities</td>
+</tr>
+<tr>
+<td>Ex 7-9</td>
+<td>CLD Creation</td>
+<td>Build causal loop diagram</td>
+</tr>
+<tr>
+<td>Ex 10</td>
+<td>System Dynamics</td>
+<td>Analyze behavior over time</td>
+</tr>
+<tr>
+<td>Ex 11</td>
+<td>BOT Graphs</td>
+<td>Visualize trends</td>
+</tr>
+<tr>
+<td>Ex 12</td>
+<td>Validation</td>
+<td>Verify with stakeholders</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-2-getting-help">5.2 Getting Help</h3>
+<p>Each exercise tab has a <strong>Help button</strong> (question mark icon) that opens detailed guidance including:</p>
+<ul>
+<li>Purpose and objectives</li>
+<li>What to include</li>
+<li>Examples</li>
+<li>Tips for success</li>
+<li>Links to further resources</li>
+</ul>
+<h3 id="5-3-exercise-0-case-study-scoping">5.3 Exercise 0: Case Study Scoping</h3>
+<p><strong>Purpose:</strong> Define the geographic, temporal, and thematic scope of your analysis</p>
+<p><strong>Key Questions:</strong></p>
+<ol>
+<li>What is the focal issue or management question?</li>
+<li>What are the spatial boundaries?</li>
+<li>What is the time period of analysis?</li>
+<li>Who are the key stakeholders?</li>
+</ol>
+<p><strong>How to Complete:</strong></p>
+<ol>
+<li>Navigate to ISA Data Entry → Exercise 0</li>
+<li>Read the scoping questions</li>
+<li>Write responses in text areas</li>
+<li>Click “Save Scoping”</li>
+<li>Review summary</li>
+</ol>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Be specific about boundaries</li>
+<li>Consider stakeholder perspectives</li>
+<li>Align with PIMS Project Setup</li>
+</ul>
+<h3 id="5-4-exercise-1-goods-amp-benefits">5.4 Exercise 1: Goods &amp; Benefits</h3>
+<p><strong>Purpose:</strong> Identify and classify the goods and benefits that people derive from the marine ecosystem</p>
+<p><strong>CRUD Operations:</strong></p>
+<ul>
+<li><strong>Create</strong>: Click “Add” button, fill form, save</li>
+<li><strong>Read</strong>: View table below form</li>
+<li><strong>Update</strong>: Select row, click “Edit”, modify, save</li>
+<li><strong>Delete</strong>: Select row(s), click “Delete”, confirm</li>
+</ul>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><strong>ID</strong>: Auto-generated (e.g., GB001)</li>
+<li><strong>Name</strong>: Clear, specific name (e.g., “Commercial cod catch”)</li>
+<li><strong>Type</strong>: Provisioning / Regulating / Cultural / Supporting</li>
+<li><strong>Stakeholder</strong>: Who benefits?</li>
+<li><strong>Importance</strong>: High / Medium / Low</li>
+<li><strong>Trend</strong>: Increasing / Stable / Decreasing</li>
+<li><strong>Description</strong>: Additional details</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul>
+<li><strong>Provisioning</strong>: Fish catch, seaweed harvest, genetic resources</li>
+<li><strong>Regulating</strong>: Storm protection, water purification, climate regulation</li>
+<li><strong>Cultural</strong>: Recreation, aesthetic value, cultural heritage</li>
+<li><strong>Supporting</strong>: Nutrient cycling, habitat provision, biodiversity</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Start with obvious benefits</li>
+<li>Consider multiple stakeholder perspectives</li>
+<li>Be specific (e.g., “Cod catch” not “Fish”)</li>
+<li>Include both market and non-market values</li>
+</ul>
+<h3 id="5-5-exercise-2a-ecosystem-services">5.5 Exercise 2a: Ecosystem Services</h3>
+<p><strong>Purpose:</strong> Identify the ecosystem services that provide the goods and benefits</p>
+<p><strong>Relationship:</strong> Services (Ex 2a) → Benefits (Ex 1)</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Fish stock biomass → Commercial fish catch</li>
+<li>Coastal wetlands → Storm surge protection</li>
+<li>Water clarity → Recreational diving</li>
+</ul>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><strong>ID</strong>: Auto-generated (e.g., ES001)</li>
+<li><strong>Name</strong>: Ecosystem service name</li>
+<li><strong>Type</strong>: Provisioning / Regulating / Cultural / Supporting</li>
+<li><strong>Linked to G&amp;B</strong>: Which benefit does this support?</li>
+<li><strong>Description</strong>: How the service provides the benefit</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>One service can support multiple benefits</li>
+<li>Think about ecological functions</li>
+<li>Consider service condition and trends</li>
+</ul>
+<h3 id="5-6-exercise-2b-marine-processes-amp-functioning">5.6 Exercise 2b: Marine Processes &amp; Functioning</h3>
+<p><strong>Purpose:</strong> Identify the underlying ecological processes that generate ecosystem services</p>
+<p><strong>Relationship:</strong> Processes (Ex 2b) → Services (Ex 2a) → Benefits (Ex 1)</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Primary production → Fish stock biomass</li>
+<li>Sediment stabilization → Water quality</li>
+<li>Nutrient cycling → Primary production</li>
+</ul>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><strong>ID</strong>: Auto-generated (e.g., MP001)</li>
+<li><strong>Name</strong>: Process name</li>
+<li><strong>Type</strong>: Biological / Chemical / Physical</li>
+<li><strong>Linked to ES</strong>: Which service does this support?</li>
+<li><strong>Sensitivity</strong>: High / Medium / Low (to disturbance)</li>
+<li><strong>Description</strong>: Process details</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Focus on key processes</li>
+<li>Consider process interactions</li>
+<li>Note sensitivity to changes</li>
+</ul>
+<h3 id="5-7-exercise-3-pressures">5.7 Exercise 3: Pressures</h3>
+<p><strong>Purpose:</strong> Identify human-induced pressures that affect marine processes and functioning</p>
+<p><strong>Relationship:</strong> Pressures (Ex 3) affect Processes (Ex 2b)</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Overfishing → Reduced fish biomass</li>
+<li>Nutrient pollution → Eutrophication</li>
+<li>Physical disturbance → Habitat degradation</li>
+<li>Climate change → Temperature increase</li>
+</ul>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><strong>ID</strong>: Auto-generated (e.g., P001)</li>
+<li><strong>Name</strong>: Pressure name</li>
+<li><strong>Type</strong>: Physical / Chemical / Biological / Other</li>
+<li><strong>Intensity</strong>: High / Medium / Low</li>
+<li><strong>Affected Element</strong>: Which process is impacted?</li>
+<li><strong>Impact Type</strong>: Positive / Negative</li>
+<li><strong>Description</strong>: Pressure details</li>
+</ul>
+<p><strong>Pressure Categories (MSFD):</strong></p>
+<ul>
+<li>Biological (e.g., removal of species, introduction of pathogens)</li>
+<li>Physical loss (e.g., sealing, coastal defense)</li>
+<li>Physical disturbance (e.g., abrasion, noise)</li>
+<li>Input of substances (e.g., nutrients, contaminants)</li>
+<li>Input of litter</li>
+<li>Input of energy (e.g., heat, light, noise)</li>
+<li>Changes in hydrological conditions</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Be specific about pressure source</li>
+<li>Quantify intensity if possible</li>
+<li>Consider cumulative effects</li>
+<li>Note spatial and temporal patterns</li>
+</ul>
+<h3 id="5-8-exercise-4-activities">5.8 Exercise 4: Activities</h3>
+<p><strong>Purpose:</strong> Identify human activities that generate pressures</p>
+<p><strong>Relationship:</strong> Activities (Ex 4) → Pressures (Ex 3)</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Commercial fishing → Overfishing pressure</li>
+<li>Urban wastewater → Nutrient pollution</li>
+<li>Shipping → Oil pollution, noise, strikes</li>
+<li>Coastal development → Habitat loss</li>
+</ul>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><strong>ID</strong>: Auto-generated (e.g., A001)</li>
+<li><strong>Name</strong>: Activity name</li>
+<li><strong>Sector</strong>: Fisheries / Tourism / Shipping / Industry / Other</li>
+<li><strong>Scale</strong>: Local / Regional / National / International</li>
+<li><strong>Generates Pressure</strong>: Link to pressure(s)</li>
+<li><strong>Description</strong>: Activity details</li>
+</ul>
+<p><strong>Activity Sectors:</strong></p>
+<ul>
+<li>Capture fisheries (commercial, recreational)</li>
+<li>Aquaculture</li>
+<li>Tourism and recreation</li>
+<li>Shipping and transport</li>
+<li>Energy (renewables, oil &amp; gas)</li>
+<li>Urban development</li>
+<li>Agriculture (coastal runoff)</li>
+<li>Industry and manufacturing</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>One activity can generate multiple pressures</li>
+<li>Consider activity intensity and frequency</li>
+<li>Note seasonal patterns</li>
+<li>Include both direct and indirect activities</li>
+</ul>
+<h3 id="5-9-exercise-5-drivers">5.9 Exercise 5: Drivers</h3>
+<p><strong>Purpose:</strong> Identify underlying socio-economic drivers that motivate activities</p>
+<p><strong>Relationship:</strong> Drivers (Ex 5) → Activities (Ex 4)</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Economic growth → Increased fishing effort</li>
+<li>Population growth → Coastal development</li>
+<li>Climate change → Changing fish distributions</li>
+<li>Policy/regulations → Activity changes</li>
+<li>Market demand → Harvest intensity</li>
+<li>Technological innovation → New activities</li>
+</ul>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><strong>ID</strong>: Auto-generated (e.g., D001)</li>
+<li><strong>Name</strong>: Driver name</li>
+<li><strong>Type</strong>: Economic / Social / Technological / Environmental / Policy</li>
+<li><strong>Trend</strong>: Increasing / Stable / Decreasing</li>
+<li><strong>Influences Activity</strong>: Link to activity(ies)</li>
+<li><strong>Description</strong>: Driver details</li>
+</ul>
+<p><strong>Driver Categories:</strong></p>
+<ul>
+<li><strong>Economic</strong>: Market prices, subsidies, economic growth</li>
+<li><strong>Social</strong>: Population, demographics, cultural values</li>
+<li><strong>Technological</strong>: Efficiency, innovation, access</li>
+<li><strong>Environmental</strong>: Climate change, extreme events</li>
+<li><strong>Policy</strong>: Regulations, governance, enforcement</li>
+<li><strong>Institutional</strong>: Property rights, management systems</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Think about root causes</li>
+<li>Consider global vs local drivers</li>
+<li>Note driver interactions</li>
+<li>Include enabling and constraining factors</li>
+</ul>
+<h3 id="5-10-exercise-6-loop-closure">5.10 Exercise 6: Loop Closure</h3>
+<p><strong>Purpose:</strong> Identify feedback loops where ecosystem changes influence human activities</p>
+<p><strong>Relationship:</strong> Benefits (Ex 1) → Activities (Ex 4) [feedback]</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Reduced fish catch → Increased fishing effort (compensatory behavior)</li>
+<li>Improved water quality → Increased tourism</li>
+<li>Habitat degradation → Reduced fishing (adaptive behavior)</li>
+</ul>
+<p><strong>Fields:</strong></p>
+<ul>
+<li><strong>From</strong>: Starting element</li>
+<li><strong>To</strong>: Destination element</li>
+<li><strong>Link Type</strong>: Positive (+) / Negative (-)</li>
+<li><strong>Lag Time</strong>: Immediate / Short / Medium / Long</li>
+<li><strong>Description</strong>: Explain the causal mechanism</li>
+</ul>
+<p><strong>Link Types:</strong></p>
+<ul>
+<li><strong>Positive (+)</strong>: Both move in same direction
+<ul>
+<li>Fish abundance ↑ → Fishing effort ↑</li>
+</ul>
+</li>
+<li><strong>Negative (-)</strong>: Move in opposite directions
+<ul>
+<li>Fish abundance ↓ → Fishing effort ↑ (compensation)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Focus on significant feedbacks</li>
+<li>Consider time lags</li>
+<li>Note adaptive vs maladaptive responses</li>
+<li>Include management responses</li>
+</ul>
+<h3 id="5-11-exercises-7-9-cld-creation">5.11 Exercises 7-9: CLD Creation</h3>
+<p><strong>Purpose:</strong> Compile all elements and connections into a Causal Loop Diagram</p>
+<p><strong>Exercise 7: Compile All Elements</strong></p>
+<ul>
+<li>Review all entered data</li>
+<li>Check for completeness</li>
+<li>Identify missing links</li>
+<li>Verify element names and IDs</li>
+</ul>
+<p><strong>Exercise 8: Define Additional Connections</strong></p>
+<ul>
+<li>Add connections not captured in previous exercises</li>
+<li>Consider indirect relationships</li>
+<li>Note connection strength and certainty</li>
+</ul>
+<p><strong>Exercise 9: Export to Kumu</strong></p>
+<ul>
+<li>Generate Kumu-compatible JSON</li>
+<li>Copy export code</li>
+<li>Import to kumu.io for advanced visualization</li>
+<li>Apply styling (see Kumu Code Style guide)</li>
+</ul>
+<p><strong>Using Kumu:</strong></p>
+<ol>
+<li>Go to kumu.io and create account (free)</li>
+<li>Create new project</li>
+<li>Import → JSON</li>
+<li>Paste export code</li>
+<li>Apply template styling</li>
+<li>Customize colors, layout, filters</li>
+<li>Share with stakeholders</li>
+</ol>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Start simple, add complexity gradually</li>
+<li>Use consistent element naming</li>
+<li>Color-code by element type</li>
+<li>Add connection labels</li>
+<li>Create views for different audiences</li>
+</ul>
+<h3 id="5-12-exercise-10-system-dynamics">5.12 Exercise 10: System Dynamics</h3>
+<p><strong>Purpose:</strong> Analyze system behavior and identify leverage points</p>
+<p><strong>Key Questions:</strong></p>
+<ol>
+<li>What are the dominant feedback loops?</li>
+<li>Which loops are reinforcing (R) vs balancing (B)?</li>
+<li>Where are the delays?</li>
+<li>What are the leverage points for intervention?</li>
+</ol>
+<p><strong>Leverage Points (Meadows):</strong></p>
+<ol>
+<li>Constants, parameters (weak)</li>
+<li>Size of buffers</li>
+<li>Structure of material stocks and flows</li>
+<li>Length of delays</li>
+<li>Strength of balancing loops</li>
+<li>Strength of reinforcing loops (strong)</li>
+</ol>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Use Loop Detection tool (Analysis Tools)</li>
+<li>Identify tipping points</li>
+<li>Consider unintended consequences</li>
+<li>Map temporal dynamics</li>
+</ul>
+<h3 id="5-13-exercise-11-bot-graphs">5.13 Exercise 11: BOT Graphs</h3>
+<p><strong>Purpose:</strong> Visualize Behavior Over Time for key indicators</p>
+<p><strong>Creating BOT Graphs:</strong></p>
+<ol>
+<li>Navigate to Exercise 11 tab</li>
+<li>Click “Add BOT Graph”</li>
+<li>Select indicator (from any element)</li>
+<li>Enter time series data:
+<ul>
+<li>Year</li>
+<li>Value</li>
+<li>(Optional) Uncertainty range</li>
+</ul>
+</li>
+<li>Choose graph type:
+<ul>
+<li>Line plot (trends)</li>
+<li>Bar chart (comparisons)</li>
+<li>Area chart (cumulative)</li>
+</ul>
+</li>
+<li>Add annotations for events</li>
+<li>Click “Create Graph”</li>
+</ol>
+<p><strong>Graph Interpretation:</strong></p>
+<ul>
+<li><strong>Linear trends</strong>: Steady change</li>
+<li><strong>Exponential growth</strong>: Reinforcing loop dominance</li>
+<li><strong>S-curves</strong>: Growth then stabilization</li>
+<li><strong>Oscillations</strong>: Balancing loop with delays</li>
+<li><strong>Decline</strong>: Resource depletion, overshoot</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Use historical data when available</li>
+<li>Include multiple indicators</li>
+<li>Note data quality and gaps</li>
+<li>Connect trends to system structure</li>
+<li>Identify regime shifts</li>
+</ul>
+<h3 id="5-14-exercise-12-validation">5.14 Exercise 12: Validation</h3>
+<p><strong>Purpose:</strong> Verify system representation with stakeholders and experts</p>
+<p><strong>Validation Methods:</strong></p>
+<ol>
+<li><strong>Face validity</strong>: Does it “look right” to experts?</li>
+<li><strong>Stakeholder review</strong>: Do stakeholders recognize their reality?</li>
+<li><strong>Structural validity</strong>: Are relationships correct?</li>
+<li><strong>Behavioral validity</strong>: Do trends match observations?</li>
+</ol>
+<p><strong>Validation Process:</strong></p>
+<ol>
+<li>Prepare presentation materials:
+<ul>
+<li>CLD visualization</li>
+<li>Key feedback loops</li>
+<li>BOT graphs</li>
+<li>System narrative</li>
+</ul>
+</li>
+<li>Conduct validation workshop:
+<ul>
+<li>Present system diagram</li>
+<li>Walk through causal chains</li>
+<li>Solicit feedback</li>
+<li>Document concerns and corrections</li>
+</ul>
+</li>
+<li>Revise based on input</li>
+<li>Document validation steps</li>
+</ol>
+<p><strong>Documentation Fields:</strong></p>
+<ul>
+<li><strong>Validation Method</strong>: Workshop / Interview / Review</li>
+<li><strong>Date</strong>: When conducted</li>
+<li><strong>Participants</strong>: Who provided input</li>
+<li><strong>Findings</strong>: What was validated or questioned</li>
+<li><strong>Changes Made</strong>: How diagram was revised</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Use non-technical language</li>
+<li>Start with familiar parts of system</li>
+<li>Encourage critical feedback</li>
+<li>Note areas of uncertainty</li>
+<li>Iterate as needed</li>
+</ul>
+<h3 id="5-15-data-management-tab">5.15 Data Management Tab</h3>
+<p><strong>Purpose:</strong> Import, export, and manage ISA data</p>
+<p><strong>Features:</strong></p>
+<p><strong>Import Data:</strong></p>
+<ul>
+<li>Upload Excel workbook with ISA data</li>
+<li>Template available for download</li>
+<li>Validates data structure</li>
+<li>Merges with existing data</li>
+</ul>
+<p><strong>Export Data:</strong></p>
+<ul>
+<li>Download all ISA data as Excel</li>
+<li>Multi-sheet workbook (one per element type)</li>
+<li>Includes metadata and timestamp</li>
+<li>Compatible with re-import</li>
+</ul>
+<p><strong>Clear Data:</strong></p>
+<ul>
+<li>Reset all ISA data</li>
+<li>Confirmation required</li>
+<li>Cannot be undone (save project first!)</li>
+</ul>
+<p><strong>Quick Actions:</strong></p>
+<ul>
+<li>View data summary</li>
+<li>Check for orphaned elements</li>
+<li>Verify linkages</li>
+<li>Export to Kumu</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Export data regularly</li>
+<li>Use consistent naming conventions</li>
+<li>Validate before sharing</li>
+<li>Keep backup copies</li>
+</ul>
+<hr />
+<h2 id="6-cld-visualization">6. CLD Visualization</h2>
+<h3 id="6-1-purpose">6.1 Purpose</h3>
+<p>The CLD Visualization module provides an interactive network visualization of your Causal Loop Diagram, allowing you to explore system structure and dynamics.</p>
+<h3 id="6-2-generating-the-cld">6.2 Generating the CLD</h3>
+<p><strong>Prerequisites:</strong></p>
+<ul>
+<li>Complete ISA Exercises 1-6</li>
+<li>Define connections between elements</li>
+</ul>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>Navigate to ISA Data Entry → Exercise 9 OR go directly to CLD Visualization</li>
+<li>Click “Generate CLD” button</li>
+<li>Wait for network to render (may take a few seconds for large systems)</li>
+</ol>
+<h3 id="6-3-viewing-the-network">6.3 Viewing the Network</h3>
+<p><strong>Network Components:</strong></p>
+<ul>
+<li><strong>Nodes</strong>: System elements (circles)</li>
+<li><strong>Edges</strong>: Causal relationships (arrows)</li>
+<li><strong>Colors</strong>: Element types (Drivers=purple, Activities=blue, Pressures=red, etc.)</li>
+<li><strong>Arrow colors</strong>: Positive links=green, Negative links=red</li>
+</ul>
+<p><strong>Interaction:</strong></p>
+<ul>
+<li><strong>Hover</strong>: View node details</li>
+<li><strong>Click node</strong>: Highlight connections</li>
+<li><strong>Click edge</strong>: View link details</li>
+<li><strong>Drag</strong>: Move nodes manually</li>
+<li><strong>Scroll</strong>: Zoom in/out</li>
+<li><strong>Click-drag background</strong>: Pan view</li>
+</ul>
+<h3 id="6-4-layout-algorithms">6.4 Layout Algorithms</h3>
+<p><strong>Fruchterman-Reingold (Default):</strong></p>
+<ul>
+<li>Force-directed layout</li>
+<li>Minimizes edge crossing</li>
+<li>Good for general structure</li>
+</ul>
+<p><strong>Hierarchical:</strong></p>
+<ul>
+<li>Top-to-bottom organization</li>
+<li>Shows flow from drivers to benefits</li>
+<li>Good for presenting DAPSI(W)R(M) sequence</li>
+</ul>
+<p><strong>Circular:</strong></p>
+<ul>
+<li>Nodes arranged in circle</li>
+<li>Good for showing feedback loops</li>
+<li>Equal emphasis on all elements</li>
+</ul>
+<p><strong>Changing Layout:</strong></p>
+<ol>
+<li>Use layout dropdown menu</li>
+<li>Select desired algorithm</li>
+<li>Click “Apply Layout”</li>
+<li>Network will rearrange</li>
+</ol>
+<h3 id="6-5-filtering-and-highlighting">6.5 Filtering and Highlighting</h3>
+<p><strong>Filter by Element Type:</strong></p>
+<ul>
+<li>Check/uncheck boxes in legend</li>
+<li>Hide/show element categories</li>
+<li>Simplify complex diagrams</li>
+</ul>
+<p><strong>Highlight Neighbors:</strong></p>
+<ul>
+<li>Click on node</li>
+<li>Connected nodes highlighted</li>
+<li>Indirect connections dimmed</li>
+<li>Reset by clicking background</li>
+</ul>
+<p><strong>Search:</strong></p>
+<ul>
+<li>Type element name in search box</li>
+<li>Matching nodes highlighted</li>
+<li>Use to locate specific elements quickly</li>
+</ul>
+<h3 id="6-6-network-statistics">6.6 Network Statistics</h3>
+<p><strong>Displayed Metrics:</strong></p>
+<ul>
+<li><strong>Nodes</strong>: Total element count</li>
+<li><strong>Edges</strong>: Total connection count</li>
+<li><strong>Density</strong>: Proportion of possible connections</li>
+<li><strong>Average Degree</strong>: Mean connections per node</li>
+<li><strong>Components</strong>: Number of disconnected sub-networks</li>
+</ul>
+<p><strong>Interpreting Metrics:</strong></p>
+<ul>
+<li>High density: Highly interconnected system</li>
+<li>Low density: Sparse connections, consider missing links</li>
+<li>Multiple components: Disconnected subsystems</li>
+<li>High degree nodes: Key leverage points</li>
+</ul>
+<h3 id="6-7-exporting-the-cld">6.7 Exporting the CLD</h3>
+<p><strong>Export to Image:</strong></p>
+<ul>
+<li>Go to Export &amp; Reports module</li>
+<li>Select “Export Visualization”</li>
+<li>Choose format (PNG, SVG, PDF, HTML)</li>
+<li>Set dimensions</li>
+<li>Download</li>
+</ul>
+<p><strong>Export to Kumu:</strong></p>
+<ul>
+<li>Click “Export to Kumu” button</li>
+<li>Copy generated JSON code</li>
+<li>Go to kumu.io</li>
+<li>Create new project and import JSON</li>
+<li>Apply styling (see Kumu Code Style guide in www folder)</li>
+</ul>
+<hr />
+<h2 id="7-analysis-tools">7. Analysis Tools</h2>
+<h3 id="7-1-loop-detection">7.1 Loop Detection</h3>
+<p><strong>Purpose:</strong> Automatically identify and classify feedback loops in your system</p>
+<h4 id="7-1-1-detecting-loops">7.1.1 Detecting Loops</h4>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>Navigate to Analysis Tools → Loop Detection</li>
+<li>Go to “Detect Loops” tab</li>
+<li>Set parameters:
+<ul>
+<li><strong>Max Loop Length</strong>: 3-8 elements (start with 4-5)</li>
+<li><strong>Min Loop Length</strong>: Usually 2-3</li>
+</ul>
+</li>
+<li>Click “Detect Loops” button</li>
+<li>Wait for analysis to complete</li>
+</ol>
+<p><strong>What Happens:</strong></p>
+<ul>
+<li>Algorithm searches for all closed paths</li>
+<li>Each path returning to start = one loop</li>
+<li>Loops classified by polarity (R or B)</li>
+<li>Results displayed in table</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Start with shorter max length (4-5)</li>
+<li>Longer loops take more time to compute</li>
+<li>Large systems may have hundreds of loops</li>
+<li>Focus on dominant loops (covered in tab 4)</li>
+</ul>
+<h4 id="7-1-2-loop-classification">7.1.2 Loop Classification</h4>
+<p><strong>Purpose:</strong> View distribution of reinforcing vs balancing loops</p>
+<p><strong>Reinforcing Loops (R):</strong></p>
+<ul>
+<li>Amplify change</li>
+<li>Even number of negative links (0, 2, 4…)</li>
+<li>Drive growth or collapse</li>
+<li>Can lead to runaway dynamics</li>
+<li>Examples:
+<ul>
+<li>Population growth</li>
+<li>Fish stock collapse (overfishing)</li>
+<li>Economic growth</li>
+</ul>
+</li>
+</ul>
+<p><strong>Balancing Loops (B):</strong></p>
+<ul>
+<li>Seek equilibrium</li>
+<li>Odd number of negative links (1, 3, 5…)</li>
+<li>Stabilize system</li>
+<li>Goal-seeking behavior</li>
+<li>Examples:
+<ul>
+<li>Predator-prey regulation</li>
+<li>Price-demand adjustment</li>
+<li>Homeostasis</li>
+</ul>
+</li>
+</ul>
+<p><strong>Bar Chart:</strong></p>
+<ul>
+<li>Green = Reinforcing loops</li>
+<li>Red = Balancing loops</li>
+<li>Shows count of each type</li>
+</ul>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>R-dominated: System prone to growth/collapse</li>
+<li>B-dominated: System seeks stability</li>
+<li>Balanced: Complex dynamics, potential for surprises</li>
+</ul>
+<h4 id="7-1-3-loop-details">7.1.3 Loop Details</h4>
+<p><strong>Purpose:</strong> Examine specific loops in detail</p>
+<p><strong>Loop Table Columns:</strong></p>
+<ul>
+<li><strong>Loop ID</strong>: Unique identifier</li>
+<li><strong>Type</strong>: R or B</li>
+<li><strong>Length</strong>: Number of elements</li>
+<li><strong>Elements</strong>: Element IDs in loop</li>
+<li><strong>Polarity Count</strong>: Number of negative links</li>
+</ul>
+<p><strong>Viewing Details:</strong></p>
+<ol>
+<li>Select loop from dropdown</li>
+<li>View loop properties:
+<ul>
+<li>Element sequence</li>
+<li>Link polarities</li>
+<li>Total polarity</li>
+</ul>
+</li>
+<li>See loop path description</li>
+</ol>
+<p><strong>Loop Narrative:</strong></p>
+<ul>
+<li>Read the causal chain</li>
+<li>Identify the “story” of the loop</li>
+<li>Consider time lags</li>
+<li>Think about intervention points</li>
+</ul>
+<h4 id="7-1-4-dominant-loops">7.1.4 Dominant Loops</h4>
+<p><strong>Purpose:</strong> Identify the most influential loops</p>
+<p><strong>Dominance Metrics:</strong></p>
+<ul>
+<li><strong>Loop Occurrence</strong>: How many times each loop appears</li>
+<li><strong>Element Participation</strong>: How many loops each element participates in</li>
+</ul>
+<p><strong>Most Influential Loops:</strong></p>
+<ul>
+<li>Sorted by occurrence</li>
+<li>These loops have strongest effect on system behavior</li>
+<li>Target for management interventions</li>
+</ul>
+<p><strong>Most Connected Elements:</strong></p>
+<ul>
+<li>Sorted by participation count</li>
+<li>Elements in many loops = leverage points</li>
+<li>Changes here ripple through system</li>
+</ul>
+<p><strong>Strategic Implications:</strong></p>
+<ul>
+<li>Focus interventions on dominant loops</li>
+<li>Target highly connected elements</li>
+<li>Consider multiplier effects</li>
+<li>Anticipate unintended consequences</li>
+</ul>
+<h4 id="7-1-5-export-loops">7.1.5 Export Loops</h4>
+<p><strong>Purpose:</strong> Export loop analysis results</p>
+<p><strong>Excel Export Includes:</strong></p>
+<ul>
+<li>Loop inventory (all detected loops)</li>
+<li>Loop classification (R vs B)</li>
+<li>Dominance rankings</li>
+<li>Element participation</li>
+<li>Summary statistics</li>
+</ul>
+<p><strong>Uses:</strong></p>
+<ul>
+<li>Share with stakeholders</li>
+<li>Include in reports</li>
+<li>Further analysis in Excel/R</li>
+<li>Archive analysis results</li>
+</ul>
+<h3 id="7-2-network-metrics">7.2 Network Metrics</h3>
+<p><strong>Status:</strong> Placeholder (not yet implemented)</p>
+<p><strong>Planned Features:</strong></p>
+<ul>
+<li>Centrality measures (degree, betweenness, closeness)</li>
+<li>Network density and clustering</li>
+<li>Key node identification</li>
+<li>Structural importance metrics</li>
+<li>Community detection</li>
+</ul>
+<h3 id="7-3-bot-analysis">7.3 BOT Analysis</h3>
+<p><strong>Status:</strong> Placeholder (basic functionality exists in ISA Exercise 11)</p>
+<p><strong>Planned Features:</strong></p>
+<ul>
+<li>Advanced time series analysis</li>
+<li>Trend detection</li>
+<li>Regime shift identification</li>
+<li>Cross-correlation analysis</li>
+<li>Forecasting tools</li>
+</ul>
+<h3 id="7-4-simplification-tools">7.4 Simplification Tools</h3>
+<p><strong>Status:</strong> Placeholder (not yet implemented)</p>
+<p><strong>Planned Features:</strong></p>
+<ul>
+<li>CLD simplification algorithms</li>
+<li>Aggregation of similar nodes</li>
+<li>Edge filtering by strength</li>
+<li>Core loop extraction</li>
+<li>Modular decomposition</li>
+</ul>
+<hr />
+<h2 id="8-response-amp-validation">8. Response &amp; Validation</h2>
+<h3 id="8-1-response-measures">8.1 Response Measures</h3>
+<p><strong>Purpose:</strong> Document, prioritize, and plan management interventions</p>
+<h4 id="8-1-1-response-register">8.1.1 Response Register</h4>
+<p><strong>Purpose:</strong> Maintain inventory of potential management responses</p>
+<p><strong>Adding Response Measures:</strong></p>
+<ol>
+<li>Navigate to Response &amp; Validation → Response Measures</li>
+<li>Go to “Response Register” tab</li>
+<li>Fill in form:
+<ul>
+<li><strong>Measure ID</strong>: Auto-generated (e.g., RM001)</li>
+<li><strong>Name</strong>: Short descriptive name</li>
+<li><strong>Type</strong>: Regulatory / Economic / Advisory / Technical</li>
+<li><strong>Description</strong>: What does this measure do?</li>
+<li><strong>Mechanism</strong>: How will it work?</li>
+<li><strong>Target Element</strong>: Which system element does it address?</li>
+<li><strong>Effectiveness</strong>: High / Medium / Low / Unknown</li>
+<li><strong>Feasibility</strong>: High / Medium / Low</li>
+<li><strong>Cost</strong>: Scale 1-10 (1=very low, 10=very high)</li>
+<li><strong>Responsible Party</strong>: Who implements?</li>
+<li><strong>Barriers</strong>: What obstacles exist?</li>
+<li><strong>Notes</strong>: Additional information</li>
+</ul>
+</li>
+<li>Click “Add Measure”</li>
+</ol>
+<p><strong>Response Types:</strong></p>
+<ul>
+<li><strong>Regulatory</strong>: Laws, regulations, permits, zoning</li>
+<li><strong>Economic</strong>: Taxes, subsidies, payments, incentives</li>
+<li><strong>Advisory</strong>: Education, guidance, voluntary agreements</li>
+<li><strong>Technical</strong>: Research, monitoring, technology</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>Catch quotas (Regulatory)</li>
+<li>Marine protected areas (Regulatory)</li>
+<li>Ecosystem service payments (Economic)</li>
+<li>Gear restrictions (Technical/Regulatory)</li>
+<li>Stakeholder forums (Advisory)</li>
+<li>Best practice guidelines (Advisory)</li>
+</ul>
+<p><strong>CRUD Operations:</strong></p>
+<ul>
+<li><strong>View</strong>: Table displays all measures</li>
+<li><strong>Edit</strong>: Select row, modify form, click “Update”</li>
+<li><strong>Delete</strong>: Select row(s), click “Delete”, confirm</li>
+</ul>
+<h4 id="8-1-2-impact-assessment">8.1.2 Impact Assessment</h4>
+<p><strong>Purpose:</strong> Link response measures to system problems they address</p>
+<p><strong>Adding Impact Linkages:</strong></p>
+<ol>
+<li>Go to “Impact Assessment” tab</li>
+<li>Select response measure from dropdown</li>
+<li>Select target problem (pressure, activity, driver)</li>
+<li>Choose expected impact:
+<ul>
+<li>Eliminates</li>
+<li>Significantly reduces</li>
+<li>Moderately reduces</li>
+<li>Slightly reduces</li>
+<li>No effect</li>
+<li>Increases (unintended)</li>
+</ul>
+</li>
+<li>Add supporting evidence</li>
+<li>Click “Add Impact Linkage”</li>
+</ol>
+<p><strong>Impact Assessment Matrix:</strong></p>
+<ul>
+<li>Rows = Response measures</li>
+<li>Columns = Problems addressed</li>
+<li>Cells = Impact level</li>
+</ul>
+<p><strong>Uses:</strong></p>
+<ul>
+<li>Identify most effective measures</li>
+<li>Reveal measures with multiple benefits</li>
+<li>Spot potential conflicts</li>
+<li>Prioritize based on impact</li>
+</ul>
+<h4 id="8-1-3-prioritization">8.1.3 Prioritization</h4>
+<p><strong>Purpose:</strong> Rank response measures using multi-criteria analysis</p>
+<p><strong>Criteria:</strong></p>
+<ul>
+<li><strong>Effectiveness</strong>: Expected impact on target problem</li>
+<li><strong>Feasibility</strong>: Technical, political, social feasibility</li>
+<li><strong>Cost</strong>: Financial and resource requirements</li>
+</ul>
+<p><strong>Setting Criteria Weights:</strong></p>
+<ol>
+<li>Go to “Prioritization” tab</li>
+<li>Adjust sliders:
+<ul>
+<li>Effectiveness weight (0-100%)</li>
+<li>Feasibility weight (0-100%)</li>
+<li>Cost weight (0-100%)</li>
+</ul>
+</li>
+<li>Weights must sum to 100%</li>
+<li>Click “Recalculate Priorities”</li>
+</ol>
+<p><strong>Priority Score Calculation:</strong></p>
+<pre><code>Priority Score = (w_eff × Effectiveness/3) + (w_feas × Feasibility/3) + (w_cost × Cost/10)
+</code></pre>
+<p>Where:</p>
+<ul>
+<li>w_eff, w_feas, w_cost = user-defined weights</li>
+<li>Effectiveness, Feasibility: High=3, Medium=2, Low=1</li>
+<li>Cost: inverse scale (low cost = high score)</li>
+</ul>
+<p><strong>Interpreting Scores:</strong></p>
+<ul>
+<li>Score range: 0-100</li>
+<li>Higher = higher priority</li>
+<li>Ranked in descending order</li>
+</ul>
+<p><strong>Priority Categories:</strong></p>
+<ul>
+<li><strong>High Priority</strong>: Score &gt; 70</li>
+<li><strong>Medium Priority</strong>: Score 40-70</li>
+<li><strong>Low Priority</strong>: Score &lt; 40</li>
+</ul>
+<p><strong>Prioritization Matrix:</strong></p>
+<ul>
+<li>Scatter plot: Effectiveness vs Feasibility</li>
+<li>Point size: Cost (larger = more expensive)</li>
+<li>Color: Priority level</li>
+<li>Quadrant interpretation:
+<ul>
+<li>Top-right: “Quick wins” (high effectiveness, high feasibility)</li>
+<li>Top-left: “Major projects” (high effectiveness, low feasibility)</li>
+<li>Bottom-right: “Fill-ins” (low effectiveness, high feasibility)</li>
+<li>Bottom-left: “Avoid” (low effectiveness, low feasibility)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Sensitivity Analysis:</strong></p>
+<ul>
+<li>Adjust weights to test robustness</li>
+<li>See which measures remain high priority</li>
+<li>Identify measures sensitive to criteria</li>
+</ul>
+<h4 id="8-1-4-implementation-plan">8.1.4 Implementation Plan</h4>
+<p><strong>Purpose:</strong> Schedule and track implementation of priority measures</p>
+<p><strong>Adding Milestones:</strong></p>
+<ol>
+<li>Go to “Implementation Plan” tab</li>
+<li>Select response measure</li>
+<li>Add milestone:
+<ul>
+<li><strong>Description</strong>: What needs to happen (e.g., “Draft regulation”)</li>
+<li><strong>Target Date</strong>: Planned completion</li>
+<li><strong>Status</strong>: Not Started / In Progress / Completed / Delayed</li>
+<li><strong>Notes</strong>: Progress updates</li>
+</ul>
+</li>
+<li>Click “Add Milestone”</li>
+</ol>
+<p><strong>Timeline View:</strong></p>
+<ul>
+<li>Gantt-style visualization</li>
+<li>Measures on y-axis</li>
+<li>Time on x-axis</li>
+<li>Color-coded by status</li>
+</ul>
+<p><strong>Tracking Progress:</strong></p>
+<ul>
+<li>Update milestone status regularly</li>
+<li>Add actual completion dates</li>
+<li>Note delays and reasons</li>
+<li>Adjust subsequent milestones</li>
+</ul>
+<p><strong>Implementation Checklist:</strong></p>
+<ul>
+<li><input type="checkbox" /> Secure funding</li>
+<li><input type="checkbox" /> Obtain approvals</li>
+<li><input type="checkbox" /> Engage stakeholders</li>
+<li><input type="checkbox" /> Develop detailed design</li>
+<li><input type="checkbox" /> Pilot test</li>
+<li><input type="checkbox" /> Full implementation</li>
+<li><input type="checkbox" /> Monitor and evaluate</li>
+<li><input type="checkbox" /> Adapt based on results</li>
+</ul>
+<h4 id="8-1-5-export-response-data">8.1.5 Export Response Data</h4>
+<p><strong>Purpose:</strong> Export response measures analysis</p>
+<p><strong>Excel Export Includes:</strong></p>
+<ul>
+<li>Response measure register</li>
+<li>Impact assessment matrix</li>
+<li>Priority scores</li>
+<li>Implementation plan</li>
+<li>Summary statistics</li>
+</ul>
+<p><strong>Uses:</strong></p>
+<ul>
+<li>Management plan documentation</li>
+<li>Stakeholder reporting</li>
+<li>Decision support</li>
+<li>Archive analysis</li>
+</ul>
+<h3 id="8-2-scenario-builder">8.2 Scenario Builder</h3>
+<p><strong>Status:</strong> Placeholder (not yet implemented)</p>
+<p><strong>Planned Features:</strong></p>
+<ul>
+<li>What-if scenario creation</li>
+<li>Driver manipulation</li>
+<li>Response combination testing</li>
+<li>Scenario comparison</li>
+<li>Impact prediction</li>
+<li>Uncertainty analysis</li>
+</ul>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li>Test policy combinations</li>
+<li>Explore climate change impacts</li>
+<li>Assess adaptive strategies</li>
+<li>Communicate trade-offs</li>
+</ul>
+<h3 id="8-3-validation">8.3 Validation</h3>
+<p><strong>Status:</strong> Placeholder (basic functionality exists in ISA Exercise 12)</p>
+<p><strong>Planned Features:</strong></p>
+<ul>
+<li>Structured validation protocols</li>
+<li>Stakeholder feedback forms</li>
+<li>Expert elicitation tools</li>
+<li>Confidence scoring</li>
+<li>Validation documentation</li>
+<li>Version control</li>
+</ul>
+<hr />
+<h2 id="9-export-amp-reports">9. Export &amp; Reports</h2>
+<h3 id="9-1-data-export">9.1 Data Export</h3>
+<p><strong>Purpose:</strong> Export project data in various formats for external use</p>
+<h4 id="9-1-1-export-formats">9.1.1 Export Formats</h4>
+<p><strong>Excel (.xlsx):</strong></p>
+<ul>
+<li><strong>Best for:</strong> Data analysis, sharing with non-R users</li>
+<li><strong>Structure:</strong> Multi-sheet workbook
+<ul>
+<li>Each sheet = one data component</li>
+<li>Formatted tables with headers</li>
+<li>Includes metadata</li>
+</ul>
+</li>
+<li><strong>Sheets:</strong>
+<ul>
+<li>Project info</li>
+<li>Metadata</li>
+<li>Goods &amp; Benefits</li>
+<li>Ecosystem Services</li>
+<li>Marine Processes</li>
+<li>Pressures</li>
+<li>Activities</li>
+<li>Drivers</li>
+<li>CLD Nodes</li>
+<li>CLD Edges</li>
+<li>CLD Loops</li>
+<li>BOT Data</li>
+<li>Stakeholders</li>
+<li>Response Measures</li>
+<li>Analysis Results</li>
+</ul>
+</li>
+</ul>
+<p><strong>CSV (.csv):</strong></p>
+<ul>
+<li><strong>Best for:</strong> Simple data tables, import to other tools</li>
+<li><strong>Limitation:</strong> Exports only one main table (Goods &amp; Benefits by default)</li>
+<li><strong>Uses:</strong> GIS integration, statistical software, database import</li>
+</ul>
+<p><strong>JSON (.json):</strong></p>
+<ul>
+<li><strong>Best for:</strong> Web applications, APIs, structured data</li>
+<li><strong>Structure:</strong> Hierarchical nested format</li>
+<li><strong>Uses:</strong> Integration with other software, archiving, version control</li>
+</ul>
+<p><strong>R Data (.RData):</strong></p>
+<ul>
+<li><strong>Best for:</strong> Re-opening in R, preserving data structures</li>
+<li><strong>Structure:</strong> Complete R object with all list structures</li>
+<li><strong>Uses:</strong> Continuing analysis in R, sharing with R users</li>
+</ul>
+<h4 id="9-1-2-selecting-components">9.1.2 Selecting Components</h4>
+<p><strong>Available Components:</strong></p>
+<ul>
+<li><input type="checkbox" /> Project Metadata</li>
+<li><input type="checkbox" /> PIMS Data</li>
+<li><input type="checkbox" /> ISA Data</li>
+<li><input type="checkbox" /> CLD Data</li>
+<li><input type="checkbox" /> Analysis Results</li>
+<li><input type="checkbox" /> Response Measures</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li>Select only needed components to reduce file size</li>
+<li>Include metadata for context</li>
+<li>Export regularly as backup</li>
+</ul>
+<h4 id="9-1-3-export-process">9.1.3 Export Process</h4>
+<ol>
+<li>Navigate to Export &amp; Reports</li>
+<li>Go to “Export Data” box</li>
+<li>Select format from dropdown</li>
+<li>Check components to include</li>
+<li>Click “Download Data” button</li>
+<li>Save file with descriptive name (include date)</li>
+</ol>
+<h3 id="9-2-visualization-export">9.2 Visualization Export</h3>
+<p><strong>Purpose:</strong> Export CLD visualizations in various formats</p>
+<h4 id="9-2-1-export-formats">9.2.1 Export Formats</h4>
+<p><strong>HTML (.html):</strong></p>
+<ul>
+<li><strong>Best for:</strong> Interactive sharing, web embedding</li>
+<li><strong>Features:</strong>
+<ul>
+<li>Fully interactive (zoom, pan, hover)</li>
+<li>Works in any browser</li>
+<li>Self-contained file</li>
+<li>Navigation buttons</li>
+<li>Legend included</li>
+</ul>
+</li>
+<li><strong>Uses:</strong> Presentations, websites, stakeholder review</li>
+</ul>
+<p><strong>PNG (.png):</strong></p>
+<ul>
+<li><strong>Best for:</strong> Reports, presentations, publications</li>
+<li><strong>Features:</strong>
+<ul>
+<li>Raster image (resolution-dependent)</li>
+<li>Transparent background option</li>
+<li>High resolution (150 dpi)</li>
+</ul>
+</li>
+<li><strong>Uses:</strong> Documents, slides, quick sharing</li>
+</ul>
+<p><strong>SVG (.svg):</strong></p>
+<ul>
+<li><strong>Best for:</strong> Publications, posters, scalable graphics</li>
+<li><strong>Features:</strong>
+<ul>
+<li>Vector format (infinite zoom)</li>
+<li>Small file size</li>
+<li>Editable in Illustrator/Inkscape</li>
+<li>Crisp at any size</li>
+</ul>
+</li>
+<li><strong>Uses:</strong> Scientific publications, high-quality prints</li>
+</ul>
+<p><strong>PDF (.pdf):</strong></p>
+<ul>
+<li><strong>Best for:</strong> Formal reports, printing</li>
+<li><strong>Features:</strong>
+<ul>
+<li>Vector format</li>
+<li>Universal compatibility</li>
+<li>Embeds in documents</li>
+</ul>
+</li>
+<li><strong>Uses:</strong> Report appendices, archival</li>
+</ul>
+<h4 id="9-2-2-setting-dimensions">9.2.2 Setting Dimensions</h4>
+<p><strong>Width &amp; Height:</strong></p>
+<ul>
+<li>Default: 1200 × 900 pixels</li>
+<li>Range: 400-4000 pixels</li>
+<li><strong>Tips:</strong>
+<ul>
+<li>Larger = higher quality but bigger files</li>
+<li>Square (1:1) for social media</li>
+<li>Widescreen (16:9) for presentations</li>
+<li>Portrait (9:16) for posters</li>
+</ul>
+</li>
+</ul>
+<p><strong>Recommended Sizes:</strong></p>
+<ul>
+<li>Presentation slide: 1920 × 1080 (HD)</li>
+<li>Full-page report: 2400 × 1800</li>
+<li>Social media: 1200 × 1200</li>
+<li>Poster: 3600 × 2700</li>
+</ul>
+<h4 id="9-2-3-export-process">9.2.3 Export Process</h4>
+<ol>
+<li>Navigate to Export &amp; Reports</li>
+<li>Go to “Export Visualizations” box</li>
+<li>Select format</li>
+<li>Set width and height</li>
+<li>Click “Download Visualization”</li>
+<li>Wait for rendering (may take 5-10 seconds)</li>
+<li>Save file</li>
+</ol>
+<p><strong>Troubleshooting:</strong></p>
+<ul>
+<li>If export fails, try smaller dimensions</li>
+<li>Ensure CLD has been generated first</li>
+<li>Check browser doesn’t block downloads</li>
+<li>For HTML, open in browser to test</li>
+</ul>
+<h3 id="9-3-report-generation">9.3 Report Generation</h3>
+<p><strong>Purpose:</strong> Generate comprehensive analysis reports</p>
+<h4 id="9-3-1-report-types">9.3.1 Report Types</h4>
+<p><strong>Executive Summary:</strong></p>
+<ul>
+<li><strong>Length:</strong> 2-3 pages</li>
+<li><strong>Audience:</strong> Decision-makers, managers</li>
+<li><strong>Content:</strong>
+<ul>
+<li>Project overview</li>
+<li>Key findings (bullet points)</li>
+<li>System statistics</li>
+<li>High-priority recommendations</li>
+</ul>
+</li>
+<li><strong>Use:</strong> Board presentations, policy briefs</li>
+</ul>
+<p><strong>Technical Report:</strong></p>
+<ul>
+<li><strong>Length:</strong> 10-15 pages</li>
+<li><strong>Audience:</strong> Analysts, researchers</li>
+<li><strong>Content:</strong>
+<ul>
+<li>Detailed DAPSI(W)R(M) analysis</li>
+<li>Element counts by type</li>
+<li>Network metrics</li>
+<li>Feedback loop analysis</li>
+<li>Data tables</li>
+</ul>
+</li>
+<li><strong>Use:</strong> Scientific documentation, peer review</li>
+</ul>
+<p><strong>Stakeholder Presentation:</strong></p>
+<ul>
+<li><strong>Length:</strong> 5-7 pages</li>
+<li><strong>Audience:</strong> Community, stakeholders</li>
+<li><strong>Content:</strong>
+<ul>
+<li>System overview (plain language)</li>
+<li>Key insights (visual)</li>
+<li>Opportunities for action</li>
+<li>Engagement opportunities</li>
+</ul>
+</li>
+<li><strong>Use:</strong> Community meetings, workshops</li>
+</ul>
+<p><strong>Full Project Report:</strong></p>
+<ul>
+<li><strong>Length:</strong> 20-30 pages</li>
+<li><strong>Audience:</strong> Project team, funders</li>
+<li><strong>Content:</strong>
+<ul>
+<li>Complete project documentation</li>
+<li>All data tables</li>
+<li>All analyses</li>
+<li>Visualizations</li>
+<li>Recommendations</li>
+<li>Appendices</li>
+</ul>
+</li>
+<li><strong>Use:</strong> Final deliverables, archiving</li>
+</ul>
+<h4 id="9-3-2-report-formats">9.3.2 Report Formats</h4>
+<p><strong>HTML:</strong></p>
+<ul>
+<li><strong>Best for:</strong> Online viewing, interactive</li>
+<li><strong>Features:</strong>
+<ul>
+<li>Table of contents</li>
+<li>Floating TOC navigation</li>
+<li>Embedded plots</li>
+<li>Hyperlinks</li>
+</ul>
+</li>
+<li><strong>Opens in:</strong> Web browser</li>
+</ul>
+<p><strong>PDF:</strong></p>
+<ul>
+<li><strong>Best for:</strong> Printing, formal distribution</li>
+<li><strong>Features:</strong>
+<ul>
+<li>Professional formatting</li>
+<li>Page numbers</li>
+<li>Bookmarks</li>
+</ul>
+</li>
+<li><strong>Requires:</strong> Pandoc + LaTeX installation</li>
+</ul>
+<p><strong>Word (.docx):</strong></p>
+<ul>
+<li><strong>Best for:</strong> Editing, collaboration</li>
+<li><strong>Features:</strong>
+<ul>
+<li>Editable text and tables</li>
+<li>Compatible with MS Word</li>
+<li>Easy formatting changes</li>
+</ul>
+</li>
+<li><strong>Requires:</strong> Pandoc installation</li>
+</ul>
+<h4 id="9-3-3-report-options">9.3.3 Report Options</h4>
+<p><strong>Include Visualizations:</strong></p>
+<ul>
+<li><input type="checkbox" checked="" /> Checked: Embeds CLD images</li>
+<li><input type="checkbox" /> Unchecked: Text and tables only</li>
+<li><strong>Note:</strong> Increases file size and generation time</li>
+</ul>
+<p><strong>Include Data Tables:</strong></p>
+<ul>
+<li><input type="checkbox" checked="" /> Checked: Includes data tables in report</li>
+<li><input type="checkbox" /> Unchecked: Summary statistics only</li>
+<li><strong>Note:</strong> Full tables make report longer but more complete</li>
+</ul>
+<h4 id="9-3-4-generation-process">9.3.4 Generation Process</h4>
+<ol>
+<li>Navigate to Export &amp; Reports</li>
+<li>Go to “Generate Report” box</li>
+<li>Select report type</li>
+<li>Select format (HTML/PDF/Word)</li>
+<li>Check options (visualizations, data tables)</li>
+<li>Click “Generate Report” button</li>
+<li>Wait for generation (10-30 seconds)
+<ul>
+<li>Progress modal shows “Generating…”</li>
+</ul>
+</li>
+<li>When complete, modal shows “Download Report” button</li>
+<li>Click to download report file</li>
+<li>Close modal</li>
+</ol>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>R package <code>rmarkdown</code> (installed with app)</li>
+<li>For PDF: Pandoc + LaTeX (tinytex)</li>
+<li>For Word: Pandoc</li>
+</ul>
+<p><strong>Troubleshooting:</strong></p>
+<ul>
+<li>If generation fails, try simpler report type</li>
+<li>Check error message in notification</li>
+<li>Try HTML format first (most reliable)</li>
+<li>For PDF errors, install tinytex: <code>tinytex::install_tinytex()</code></li>
+</ul>
+<hr />
+<h2 id="10-workflows-amp-best-practices">10. Workflows &amp; Best Practices</h2>
+<h3 id="10-1-recommended-workflow">10.1 Recommended Workflow</h3>
+<p><strong>Phase 1: Project Setup (Days 1-2)</strong></p>
+<ol>
+<li>Create project in PIMS</li>
+<li>Define focal issue and scope</li>
+<li>Add stakeholders</li>
+<li>Set up engagement plan</li>
+</ol>
+<p><strong>Phase 2: ISA Data Entry (Days 3-10)</strong></p>
+<ol>
+<li>Complete Exercise 0 (Scoping)</li>
+<li>Identify Goods &amp; Benefits (Ex 1)</li>
+<li>Map Ecosystem Services (Ex 2a)</li>
+<li>Identify Marine Processes (Ex 2b)</li>
+<li>Document Pressures (Ex 3)</li>
+<li>List Activities (Ex 4)</li>
+<li>Identify Drivers (Ex 5)</li>
+<li>Close loops (Ex 6)</li>
+<li>Generate CLD (Ex 7-9)</li>
+</ol>
+<p><strong>Phase 3: Analysis (Days 11-15)</strong></p>
+<ol>
+<li>Visualize CLD</li>
+<li>Detect feedback loops</li>
+<li>Identify dominant loops</li>
+<li>Create BOT graphs (Ex 10-11)</li>
+<li>Analyze system dynamics</li>
+</ol>
+<p><strong>Phase 4: Validation (Days 16-18)</strong></p>
+<ol>
+<li>Prepare validation materials</li>
+<li>Conduct stakeholder workshop (Ex 12)</li>
+<li>Revise based on feedback</li>
+<li>Finalize CLD</li>
+</ol>
+<p><strong>Phase 5: Response Planning (Days 19-22)</strong></p>
+<ol>
+<li>Brainstorm response measures</li>
+<li>Add to Response Register</li>
+<li>Assess impacts</li>
+<li>Prioritize measures</li>
+<li>Create implementation plan</li>
+</ol>
+<p><strong>Phase 6: Reporting (Days 23-25)</strong></p>
+<ol>
+<li>Export data and visualizations</li>
+<li>Generate reports</li>
+<li>Prepare presentations</li>
+<li>Share with stakeholders</li>
+</ol>
+<h3 id="10-2-participatory-approach">10.2 Participatory Approach</h3>
+<p><strong>Pre-Workshop:</strong></p>
+<ul>
+<li>Gather background data</li>
+<li>Identify key stakeholders</li>
+<li>Pre-populate some elements (optional)</li>
+</ul>
+<p><strong>Workshop Day 1: System Mapping</strong></p>
+<ul>
+<li>Exercise 0: Define scope together</li>
+<li>Exercises 1-5: Brainstorm elements
+<ul>
+<li>Use sticky notes or digital whiteboard</li>
+<li>Group by element type</li>
+<li>Prioritize most important</li>
+</ul>
+</li>
+<li>Enter data in tool during breaks</li>
+</ul>
+<p><strong>Workshop Day 2: Connections</strong></p>
+<ul>
+<li>Exercise 6-8: Define connections
+<ul>
+<li>Draw links between elements</li>
+<li>Discuss causal mechanisms</li>
+<li>Agree on polarity</li>
+</ul>
+</li>
+<li>Generate CLD</li>
+<li>Review and refine</li>
+</ul>
+<p><strong>Workshop Day 3: Analysis &amp; Response</strong></p>
+<ul>
+<li>Present loop detection results</li>
+<li>Discuss system behavior</li>
+<li>Identify leverage points</li>
+<li>Brainstorm response measures</li>
+<li>Prioritize as group</li>
+</ul>
+<p><strong>Post-Workshop:</strong></p>
+<ul>
+<li>Finalize documentation</li>
+<li>Generate validation report</li>
+<li>Circulate for final review</li>
+<li>Prepare final outputs</li>
+</ul>
+<h3 id="10-3-data-quality-tips">10.3 Data Quality Tips</h3>
+<p><strong>Element Naming:</strong></p>
+<ul>
+<li>Be specific and concrete</li>
+<li>Use consistent terminology</li>
+<li>Avoid jargon (or define in notes)</li>
+<li>Keep names short (3-5 words)</li>
+</ul>
+<p><strong>Connection Quality:</strong></p>
+<ul>
+<li>Only include direct causal relationships</li>
+<li>Specify time lags in notes</li>
+<li>Note uncertainty levels</li>
+<li>Cite evidence where possible</li>
+</ul>
+<p><strong>Completeness:</strong></p>
+<ul>
+<li>Balance breadth and depth</li>
+<li>20-50 elements often sufficient</li>
+<li>Focus on focal issue</li>
+<li>Can always add more later</li>
+</ul>
+<p><strong>Documentation:</strong></p>
+<ul>
+<li>Use Description fields liberally</li>
+<li>Note data sources</li>
+<li>Record assumptions</li>
+<li>Document stakeholder input</li>
+</ul>
+<h3 id="10-4-common-pitfalls-to-avoid">10.4 Common Pitfalls to Avoid</h3>
+<p><strong>Scope Creep:</strong></p>
+<ul>
+<li>Keep focused on focal issue</li>
+<li>Don’t try to map entire ecosystem</li>
+<li>Can create multiple projects if needed</li>
+</ul>
+<p><strong>Over-Connection:</strong></p>
+<ul>
+<li>Not every element connects to every other</li>
+<li>Focus on strong, direct relationships</li>
+<li>Too many weak links obscure structure</li>
+</ul>
+<p><strong>Under-Connection:</strong></p>
+<ul>
+<li>Don’t miss important feedbacks</li>
+<li>Consider indirect pathways</li>
+<li>Ask “what else influences this?”</li>
+</ul>
+<p><strong>Biased Perspective:</strong></p>
+<ul>
+<li>Include diverse stakeholders</li>
+<li>Check for missing voices</li>
+<li>Challenge assumptions</li>
+<li>Seek contrary evidence</li>
+</ul>
+<p><strong>Analysis Paralysis:</strong></p>
+<ul>
+<li>Start simple, add complexity</li>
+<li>Iterate rather than perfect</li>
+<li>Use tool to facilitate discussion</li>
+<li>Accept uncertainty</li>
+</ul>
+<p><strong>Forgetting the Goal:</strong></p>
+<ul>
+<li>Keep focal issue central</li>
+<li>Prioritize actionable insights</li>
+<li>Connect to decision needs</li>
+<li>Communicate clearly</li>
+</ul>
+<h3 id="10-5-saving-and-version-control">10.5 Saving and Version Control</h3>
+<p><strong>Regular Saving:</strong></p>
+<ul>
+<li>Save after each major data entry session</li>
+<li>Use descriptive filenames: <code>ProjectName_YYYYMMDD.rds</code></li>
+<li>Keep previous versions (don’t overwrite)</li>
+</ul>
+<p><strong>Backup Strategy:</strong></p>
+<ul>
+<li>Save to multiple locations</li>
+<li>Cloud storage (Dropbox, OneDrive)</li>
+<li>Email to self after workshops</li>
+<li>Export to Excel as backup</li>
+</ul>
+<p><strong>Version Naming:</strong></p>
+<ul>
+<li>Use semantic versioning: v1.0, v1.1, v2.0</li>
+<li>Or date-based: 2025-10-20</li>
+<li>Add suffix for milestones: “pre-validation”, “final”</li>
+</ul>
+<p><strong>Change Log:</strong></p>
+<ul>
+<li>Keep text file documenting changes</li>
+<li>Note what was added/modified/deleted</li>
+<li>Record reason for changes</li>
+<li>Track stakeholder feedback</li>
+</ul>
+<hr />
+<h2 id="11-troubleshooting">11. Troubleshooting</h2>
+<h3 id="11-1-common-issues">11.1 Common Issues</h3>
+<h4 id="issue-app-won-t-start">Issue: App Won’t Start</h4>
+<p><strong>Symptoms:</strong></p>
+<ul>
+<li>Error messages on startup</li>
+<li>R console shows error</li>
+<li>Browser doesn’t open</li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Check R version (need 4.0+): <code>R.version.string</code></li>
+<li>Update packages: <code>update.packages()</code></li>
+<li>Reinstall required packages (see global.R)</li>
+<li>Check for port conflicts (try different port)</li>
+<li>Clear R workspace: <code>rm(list=ls())</code></li>
+<li>Restart R session</li>
+</ol>
+<h4 id="issue-data-not-saving">Issue: Data Not Saving</h4>
+<p><strong>Symptoms:</strong></p>
+<ul>
+<li>Click “Save” but data disappears on reload</li>
+<li>Load project button shows old data</li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Check you clicked “Save” in form (not just filled fields)</li>
+<li>Verify project data reactive is updating</li>
+<li>Check R console for error messages</li>
+<li>Use “Save Project” in sidebar (not browser save)</li>
+<li>Try exporting to Excel as workaround</li>
+</ol>
+<h4 id="issue-cld-won-t-generate">Issue: CLD Won’t Generate</h4>
+<p><strong>Symptoms:</strong></p>
+<ul>
+<li>“Generate CLD” button does nothing</li>
+<li>Error message appears</li>
+<li>Network viewer stays empty</li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Ensure you have elements in Ex 1-5</li>
+<li>Check you have defined connections (Ex 6-8)</li>
+<li>Look for orphaned elements (no connections)</li>
+<li>Verify element IDs are unique</li>
+<li>Check R console for error details</li>
+<li>Try simplifying (remove some elements temporarily)</li>
+</ol>
+<h4 id="issue-loop-detection-fails">Issue: Loop Detection Fails</h4>
+<p><strong>Symptoms:</strong></p>
+<ul>
+<li>“Detect Loops” button does nothing</li>
+<li>Analysis takes forever</li>
+<li>Error: “out of memory”</li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Reduce max loop length to 4 or 5</li>
+<li>Simplify CLD (reduce elements/connections)</li>
+<li>Increase R memory: <code>memory.limit(size=8000)</code> (Windows)</li>
+<li>Run on more powerful computer</li>
+<li>Focus on subsystem of interest</li>
+</ol>
+<h4 id="issue-export-fails">Issue: Export Fails</h4>
+<p><strong>Symptoms:</strong></p>
+<ul>
+<li>Download button does nothing</li>
+<li>Error message on export</li>
+<li>File is empty or corrupt</li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Check browser allows downloads</li>
+<li>Try different export format</li>
+<li>Reduce data size (uncheck some components)</li>
+<li>For reports, try HTML first (most robust)</li>
+<li>Check PDF prerequisites (Pandoc, LaTeX)</li>
+<li>Check R console for error messages</li>
+</ol>
+<h4 id="issue-visualization-too-slow">Issue: Visualization Too Slow</h4>
+<p><strong>Symptoms:</strong></p>
+<ul>
+<li>CLD rendering very slow</li>
+<li>Browser becomes unresponsive</li>
+<li>Interactions laggy</li>
+</ul>
+<p><strong>Solutions:</strong></p>
+<ol>
+<li>Reduce number of elements in view</li>
+<li>Use filters to show subset</li>
+<li>Export to static image instead</li>
+<li>Use simpler layout algorithm</li>
+<li>Close other browser tabs</li>
+<li>Try different browser (Chrome usually faster)</li>
+</ol>
+<h3 id="11-2-error-messages">11.2 Error Messages</h3>
+<p><strong>”‘names’ attribute must be same length as vector”</strong></p>
+<ul>
+<li><strong>Cause:</strong> Empty data frame passed to setNames()</li>
+<li><strong>Solution:</strong> Ensure data exists before exporting/analyzing</li>
+<li><strong>Fixed in:</strong> October 20, 2025 update</li>
+</ul>
+<p><strong>“Object not found”</strong></p>
+<ul>
+<li><strong>Cause:</strong> Reactive value not yet initialized</li>
+<li><strong>Solution:</strong> Check prerequisites (e.g., generate CLD before loop detection)</li>
+</ul>
+<p><strong>“Argument is of length zero”</strong></p>
+<ul>
+<li><strong>Cause:</strong> Operation on empty vector</li>
+<li><strong>Solution:</strong> Add data before running analysis</li>
+</ul>
+<p><strong>“Cannot open file”</strong></p>
+<ul>
+<li><strong>Cause:</strong> File path issue or permissions</li>
+<li><strong>Solution:</strong> Check file path, ensure write permissions</li>
+</ul>
+<h3 id="11-3-performance-optimization">11.3 Performance Optimization</h3>
+<p><strong>For Large Systems (&gt;100 elements):</strong></p>
+<ul>
+<li>Use filters to view subsets</li>
+<li>Export to Kumu for complex visualization</li>
+<li>Limit max loop length (≤5)</li>
+<li>Close other applications</li>
+<li>Run overnight batch jobs for intensive analyses</li>
+</ul>
+<p><strong>For Workshops:</strong></p>
+<ul>
+<li>Pre-load example data for demos</li>
+<li>Test all features before workshop</li>
+<li>Have backup (PDF printouts)</li>
+<li>Use stable internet connection</li>
+<li>Save frequently during data entry</li>
+</ul>
+<h3 id="11-4-getting-help">11.4 Getting Help</h3>
+<p><strong>In-App Help:</strong></p>
+<ul>
+<li>Click ? icon on any exercise tab</li>
+<li>View tooltips (hover over labels)</li>
+<li>Check Data Management tab documentation</li>
+</ul>
+<p><strong>External Resources:</strong></p>
+<ul>
+<li>User Guide (this document): www/ISA_User_Guide.md</li>
+<li>Kumu Code Style: www/Kumu_Code_Style.txt</li>
+<li>Module Status: MODULE_STATUS.md</li>
+<li>Example Data: data/EXAMPLE_README.md</li>
+</ul>
+<p><strong>Technical Support:</strong></p>
+<ul>
+<li>Check GitHub issues</li>
+<li>Contact MarineSABRES team</li>
+<li>Consult R Shiny documentation</li>
+<li>Review package documentation</li>
+</ul>
+<hr />
+<h2 id="12-glossary">12. Glossary</h2>
+<h3 id="a">A</h3>
+<p><strong>Activity</strong>
+Human actions that generate pressures on marine systems (e.g., fishing, shipping, coastal development).</p>
+<p><strong>Adjacency Matrix</strong>
+Mathematical representation of network connections; rows and columns are nodes, cells indicate edges.</p>
+<h3 id="b">B</h3>
+<p><strong>Balancing Loop (B)</strong>
+Feedback loop that seeks equilibrium and resists change. Characterized by odd number of negative links. Also called negative feedback loop.</p>
+<p><strong>BOT (Behaviour Over Time)</strong>
+Graphs showing how system variables change over time. Used to identify trends, cycles, and regime shifts.</p>
+<h3 id="c">C</h3>
+<p><strong>Causal Loop Diagram (CLD)</strong>
+Visual representation of system structure showing elements (nodes) and causal relationships (edges) with polarity.</p>
+<p><strong>Centrality</strong>
+Measure of node importance in network. Types include degree (number of connections), betweenness (bridging position), closeness (average distance to others).</p>
+<h3 id="d">D</h3>
+<p><strong>DAPSI(W)R(M) Framework</strong>
+Drivers-Activities-Pressures-State changes-(Welfare impacts)-Responses-(Measures). Causal chain framework for analyzing human impacts on marine ecosystems and management responses.</p>
+<p><strong>Driver</strong>
+Underlying socio-economic factors that motivate human activities (e.g., economic growth, population, technology, policy).</p>
+<h3 id="e">E</h3>
+<p><strong>Ecosystem Service</strong>
+Benefits people obtain from ecosystems. Categories: Provisioning (food, water), Regulating (climate, water quality), Cultural (recreation, aesthetic), Supporting (nutrient cycling, habitat).</p>
+<p><strong>Edge</strong>
+Connection or link between two nodes in a network. In CLD, represents causal relationship with polarity (+ or -).</p>
+<h3 id="f">F</h3>
+<p><strong>Feedback Loop</strong>
+Closed path in CLD where a change propagates through system and returns to affect original variable. Can be reinforcing (R) or balancing (B).</p>
+<p><strong>Focal Issue</strong>
+Main management question or problem being addressed in the SES analysis.</p>
+<h3 id="g">G</h3>
+<p><strong>Goods and Benefits</strong>
+Specific benefits that people derive from ecosystem services (e.g., fish catch, storm protection, recreation).</p>
+<h3 id="i">I</h3>
+<p><strong>IAP2 Spectrum</strong>
+International Association for Public Participation spectrum of engagement levels: Inform, Consult, Involve, Collaborate, Empower.</p>
+<p><strong>ISA (Integrated Systems Analysis)</strong>
+Structured participatory method for mapping social-ecological systems using 13 exercises following DAPSI(W)R(M) framework.</p>
+<h3 id="k">K</h3>
+<p><strong>Kumu</strong>
+Web-based platform (kumu.io) for creating interactive visualizations of networks and systems maps. Used for advanced CLD visualization.</p>
+<h3 id="l">L</h3>
+<p><strong>Leverage Point</strong>
+Place in system where small intervention can produce large change. High-leverage points often involve system structure, delays, or feedback loops.</p>
+<p><strong>Link</strong>
+See Edge.</p>
+<p><strong>Loop Dominance</strong>
+Relative strength or influence of different feedback loops. Dominant loops drive overall system behavior.</p>
+<h3 id="m">M</h3>
+<p><strong>Marine Process</strong>
+Ecological processes and functions that generate ecosystem services (e.g., primary production, nutrient cycling, habitat provision).</p>
+<p><strong>MSFD</strong>
+Marine Strategy Framework Directive (EU). Provides standardized pressure categories.</p>
+<h3 id="n">N</h3>
+<p><strong>Negative Link (-)</strong>
+Causal relationship where variables move in opposite directions. If A increases, B decreases (all else equal).</p>
+<p><strong>Node</strong>
+Element or variable in a network or CLD. Represents measurable quantity or concept.</p>
+<h3 id="p">P</h3>
+<p><strong>PIMS</strong>
+Process &amp; Information Management System. Project management component including stakeholder management, resources, data, and evaluation.</p>
+<p><strong>Polarity</strong>
+Sign of causal relationship: Positive (+) means variables move together; Negative (-) means they move in opposite directions.</p>
+<p><strong>Positive Link (+)</strong>
+Causal relationship where variables move in same direction. If A increases, B increases (all else equal).</p>
+<p><strong>Power-Interest Grid</strong>
+Stakeholder analysis matrix classifying stakeholders by power (influence) and interest (stake) to guide engagement strategy.</p>
+<p><strong>Pressure</strong>
+Direct human-induced stress on marine system (e.g., fishing mortality, nutrient input, habitat disturbance).</p>
+<h3 id="r">R</h3>
+<p><strong>Reinforcing Loop (R)</strong>
+Feedback loop that amplifies change. Characterized by even number of negative links (0, 2, 4…). Also called positive feedback loop.</p>
+<p><strong>Response (Measure)</strong>
+Management intervention designed to address drivers, activities, or pressures. Part of DAPSI(W)R(M) framework.</p>
+<h3 id="s">S</h3>
+<p><strong>SES (Social-Ecological System)</strong>
+Integrated system of people and nature, emphasizing human-environment interactions and feedbacks.</p>
+<p><strong>State (Change)</strong>
+Condition of ecosystem or its components (e.g., water quality, species abundance, habitat extent). In DAPSI(W)R(M), changes result from pressures.</p>
+<p><strong>Stakeholder</strong>
+Individual or organization with interest or stake in the system. May be affected by or able to affect outcomes.</p>
+<h3 id="t">T</h3>
+<p><strong>Time Lag</strong>
+Delay between cause and effect in causal relationship. Important for understanding system dynamics.</p>
+<h3 id="v">V</h3>
+<p><strong>Validation</strong>
+Process of verifying system representation with stakeholders, experts, and empirical data.</p>
+<p><strong>Variable</strong>
+See Node.</p>
+<h3 id="w">W</h3>
+<p><strong>Welfare (Impact)</strong>
+Effects of state changes on human well-being (e.g., income, health, cultural values). In DAPSI(W)R(M), connects ecosystem state to human benefits.</p>
+<p><strong>Workflow</strong>
+Recommended sequence of steps for conducting SES analysis from project setup through reporting.</p>
+<hr />
+<h2 id="appendix-a-keyboard-shortcuts">Appendix A: Keyboard Shortcuts</h2>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save Project</td>
+<td>Ctrl+S (if implemented)</td>
+</tr>
+<tr>
+<td>Zoom In (CLD)</td>
+<td>Scroll up / +</td>
+</tr>
+<tr>
+<td>Zoom Out (CLD)</td>
+<td>Scroll down / -</td>
+</tr>
+<tr>
+<td>Reset Zoom</td>
+<td>Double-click background</td>
+</tr>
+<tr>
+<td>Pan View</td>
+<td>Click and drag background</td>
+</tr>
+<tr>
+<td>Select Multiple Rows</td>
+<td>Shift+Click</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-b-file-formats">Appendix B: File Formats</h2>
+<h3 id="rds-format-rds">RDS Format (.rds)</h3>
+<ul>
+<li>Native R data format</li>
+<li>Preserves all data structures</li>
+<li>Compact file size</li>
+<li>Can only be opened in R</li>
+</ul>
+<h3 id="excel-format-xlsx">Excel Format (.xlsx)</h3>
+<ul>
+<li>Multi-sheet workbook</li>
+<li>Each sheet = one data table</li>
+<li>Can be edited in Excel</li>
+<li>Compatible with re-import</li>
+</ul>
+<h3 id="json-format-json">JSON Format (.json)</h3>
+<ul>
+<li>Text-based structured data</li>
+<li>Hierarchical organization</li>
+<li>Human-readable</li>
+<li>Web-compatible</li>
+</ul>
+<h3 id="csv-format-csv">CSV Format (.csv)</h3>
+<ul>
+<li>Plain text comma-separated</li>
+<li>Simple table format</li>
+<li>Universal compatibility</li>
+<li>No metadata preservation</li>
+</ul>
+<hr />
+<h2 id="appendix-c-color-schemes">Appendix C: Color Schemes</h2>
+<h3 id="element-type-colors-cld">Element Type Colors (CLD):</h3>
+<ul>
+<li><strong>Drivers</strong>: Purple (#9B59B6)</li>
+<li><strong>Activities</strong>: Blue (#3498DB)</li>
+<li><strong>Pressures</strong>: Red (#E74C3C)</li>
+<li><strong>State</strong>: Yellow (#F39C12)</li>
+<li><strong>Welfare</strong>: Orange (#E67E22)</li>
+<li><strong>Responses</strong>: Green (#27AE60)</li>
+</ul>
+<h3 id="link-polarity-colors">Link Polarity Colors:</h3>
+<ul>
+<li><strong>Positive (+)</strong>: Green (#06D6A0)</li>
+<li><strong>Negative (-)</strong>: Red (#E63946)</li>
+</ul>
+<h3 id="loop-type-colors">Loop Type Colors:</h3>
+<ul>
+<li><strong>Reinforcing</strong>: Green (#06D6A0)</li>
+<li><strong>Balancing</strong>: Red (#E63946)</li>
+</ul>
+<h3 id="priority-colors">Priority Colors:</h3>
+<ul>
+<li><strong>High</strong>: Green</li>
+<li><strong>Medium</strong>: Yellow</li>
+<li><strong>Low</strong>: Orange</li>
+</ul>
+<hr />
+<h2 id="appendix-d-quick-reference-card">Appendix D: Quick Reference Card</h2>
+<h3 id="essential-steps">Essential Steps:</h3>
+<ol>
+<li><strong>Setup</strong>: PIMS → Project Setup</li>
+<li><strong>Stakeholders</strong>: PIMS → Stakeholders → Add</li>
+<li><strong>Elements</strong>: ISA → Ex 1-5 → Add elements</li>
+<li><strong>Connections</strong>: ISA → Ex 6-8 → Define links</li>
+<li><strong>Visualize</strong>: CLD Visualization → Generate</li>
+<li><strong>Analyze</strong>: Analysis Tools → Loop Detection</li>
+<li><strong>Respond</strong>: Response Measures → Add measures → Prioritize</li>
+<li><strong>Export</strong>: Export &amp; Reports → Download</li>
+</ol>
+<h3 id="critical-buttons">Critical Buttons:</h3>
+<ul>
+<li><strong>Save Project</strong>: Sidebar (bottom)</li>
+<li><strong>Add</strong> (element): Form in each ISA exercise</li>
+<li><strong>Generate CLD</strong>: CLD Visualization module</li>
+<li><strong>Detect Loops</strong>: Analysis Tools → Loop Detection</li>
+<li><strong>Export to Excel</strong>: Various modules</li>
+<li><strong>Download Data</strong>: Export &amp; Reports</li>
+</ul>
+<h3 id="key-concepts">Key Concepts:</h3>
+<ul>
+<li><strong>R loop</strong>: Amplifies change (growth/collapse)</li>
+<li><strong>B loop</strong>: Seeks balance (stability)</li>
+<li><strong>+ link</strong>: Variables move together</li>
+<li><strong>- link</strong>: Variables move opposite</li>
+</ul>
+<hr />
+<h2 id="document-information">Document Information</h2>
+<p><strong>Document Title:</strong> MarineSABRES SES Tool - Complete User Guide
+<strong>Version:</strong> 1.0
+<strong>Date:</strong> October 20, 2025
+<strong>Authors:</strong> MarineSABRES Development Team
+<strong>Contact:</strong> [Your contact information]
+<strong>License:</strong> [Your license]</p>
+<p><strong>Revision History:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Changes</th>
+<th>Author</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>2025-10-20</td>
+<td>Initial comprehensive guide</td>
+<td>MarineSABRES Team</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Acknowledgments:</strong>
+This tool and guide were developed as part of the MarineSABRES Horizon Europe project. We acknowledge contributions from domain experts, stakeholders, and the R Shiny community.</p>
+<p><strong>Citation:</strong>
+If using this tool in research or reports, please cite as:</p>
+<pre><code>MarineSABRES Team (2025). MarineSABRES Social-Ecological Systems Analysis Tool: User Guide. Version 1.0.
+</code></pre>
+<hr />
+<p><strong>End of User Guide</strong></p>
+
+</div>
+<a href="#" class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑</a>
+</body>
+</html>

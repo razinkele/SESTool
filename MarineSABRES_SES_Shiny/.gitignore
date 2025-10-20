@@ -1,0 +1,83 @@
+# R and RStudio files
+.Rhistory
+.RData
+.Rproj.user
+.Rproj
+*.Rproj
+
+# Shiny specific
+rsconnect/
+packrat/
+.secrets
+
+# R package build files
+*.tar.gz
+*.Rcheck/
+
+# Temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+installation_log.txt
+
+# Data files (optional - uncomment if you don't want to track user data)
+# data/user_projects/
+# data/*.rds
+
+# Output and export files
+exports/
+output/
+reports/*.html
+reports/*.pdf
+reports/*.docx
+
+# Cache directories
+cache/
+temp/
+tmp/
+
+# Environment variables
+.env
+.Renviron
+
+# IDE specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# Documentation build files
+docs/_build/
+docs/.doctrees/
+
+# Backup files
+*.bak
+*.backup
+*_backup.*
+
+# Large files
+*.zip
+*.tar
+*.gz
+
+# Sensitive information
+passwords.txt
+credentials.json
+api_keys.txt
+
+# Testing
+tests/testthat/_snaps/
