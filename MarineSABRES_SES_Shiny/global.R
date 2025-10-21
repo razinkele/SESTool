@@ -30,6 +30,7 @@ suppressPackageStartupMessages({
   library(ggplot2)
   library(plotly)
   library(dygraphs)
+  library(xts)
   
   # Project management
   library(timevis)
