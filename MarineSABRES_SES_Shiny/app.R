@@ -215,7 +215,22 @@ ui <- dashboardPage(
             solidHeader = TRUE,
             width = 12,
             height = 500,
-            visNetworkOutput("dashboard_network_preview", height = "450px")
+            conditionalPanel(
+              condition = "output.has_cld_data",
+              visNetworkOutput("dashboard_network_preview", height = "450px")
+            ),
+            conditionalPanel(
+              condition = "!output.has_cld_data",
+              div(
+                style = "text-align: center; padding: 100px 20px;",
+                icon("project-diagram", class = "fa-4x", style = "color: #ccc; margin-bottom: 20px;"),
+                h4("No CLD Generated Yet", style = "color: #999;"),
+                p("Build your Causal Loop Diagram from the ISA data to visualize system connections."),
+                actionButton("dashboard_build_network", "Build Network from ISA Data",
+                            icon = icon("network-wired"), class = "btn-primary btn-lg",
+                            style = "margin-top: 15px;")
+              )
+            )
           )
         )
       ),
@@ -433,7 +448,17 @@ server <- function(input, output, session) {
     data <- project_data()
     # Count non-empty adjacency matrix cells
     n_connections <- 0
-    
+
+    if(!is.null(data$data$isa_data$adjacency_matrices)) {
+      adj_matrices <- data$data$isa_data$adjacency_matrices
+      for(mat_name in names(adj_matrices)) {
+        mat <- adj_matrices[[mat_name]]
+        if(!is.null(mat) && is.matrix(mat)) {
+          n_connections <- n_connections + sum(!is.na(mat) & mat != "", na.rm = TRUE)
+        }
+      }
+    }
+
     valueBox(
       n_connections,
       "Connections",
@@ -483,14 +508,30 @@ server <- function(input, output, session) {
       p("CLD Generated: ", if(!is.null(data$data$cld$nodes)) "Yes" else "No")
     )
   })
-  
+
+  # Check if CLD data exists
+  output$has_cld_data <- reactive({
+    nodes <- project_data()$data$cld$nodes
+    !is.null(nodes) && nrow(nodes) > 0 && all(c("id", "label") %in% names(nodes))
+  })
+  outputOptions(output, "has_cld_data", suspendWhenHidden = FALSE)
+
   # Mini CLD preview on dashboard
   output$dashboard_network_preview <- renderVisNetwork({
-    req(project_data()$data$cld$nodes)
-    
     nodes <- project_data()$data$cld$nodes
     edges <- project_data()$data$cld$edges
-    
+
+    # Check if CLD has been generated
+    if(is.null(nodes) || nrow(nodes) == 0) {
+      return(NULL)
+    }
+
+    # Validate nodes have required columns for visNetwork
+    required_cols <- c("id", "label")
+    if(!all(required_cols %in% names(nodes))) {
+      return(NULL)
+    }
+
     visNetwork(nodes, edges, height = "100%") %>%
       visIgraphLayout(layout = "layout_with_fr") %>%
       visOptions(
@@ -501,6 +542,13 @@ server <- function(input, output, session) {
         navigationButtons = FALSE,
         hover = TRUE
       )
+  })
+
+  # Build network button handler on dashboard
+  observeEvent(input$dashboard_build_network, {
+    # Navigate to CLD visualization tab
+    updateTabItems(session, "sidebar_menu", "cld_viz")
+    showNotification("Navigate to CLD Visualization to build your network", type = "message", duration = 3)
   })
   
   # ========== SAVE/LOAD PROJECT ==========
