@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  marinesabres-shiny:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    container_name: marinesabres-ses-tool
+    restart: unless-stopped
+    ports:
+      - "3838:3838"
+    volumes:
+      # Mount data directory for persistence
+      - ../data:/srv/shiny-server/marinesabres/data
+      # Mount logs directory
+      - ./logs:/var/log/shiny-server
+    environment:
+      - APPLICATION_LOGS_TO_STDOUT=true
+      - SHINY_LOG_STDERR=1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3838"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - marinesabres-network
+
+networks:
+  marinesabres-network:
+    driver: bridge
+
+volumes:
+  shiny-logs:

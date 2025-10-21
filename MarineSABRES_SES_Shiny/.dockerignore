@@ -1,0 +1,46 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# IDE files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+.vscode
+.idea
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+*.swp
+*.swo
+*~
+
+# Deployment files (not needed in container)
+deployment/logs
+deployment/*.tar.gz
+
+# Documentation drafts
+*.draft.md
+
+# Local test data
+test_data/
+temp/
+
+# R session data
+.Rdata
+.httr-oauth
+
+# Node modules (if any)
+node_modules/
+
+# Python cache (if any)
+__pycache__/
+*.pyc
