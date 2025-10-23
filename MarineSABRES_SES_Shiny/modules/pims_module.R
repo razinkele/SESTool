@@ -219,152 +219,22 @@ pims_evaluation_server <- function(id, project_data_reactive) {
 }
 
 # ============================================================================
-# PLACEHOLDER MODULES FOR ISA DATA ENTRY
+# NOTE: MODULE IMPLEMENTATIONS MOVED TO DEDICATED FILES
 # ============================================================================
-
-# Exercise 0
-isa_ex0_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(
-    h2("Exercise 0: Unfolding Complexity"),
-    p("Define system boundaries and prioritize impacts."),
-    hr(),
-    p("To be implemented")
-  )
-}
-
-isa_ex0_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {
-    return(reactive(project_data_reactive()))
-  })
-}
-
-# Exercise 1
-isa_ex1_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(
-    h2("Exercise 1: Goods & Benefits"),
-    p("Specify goods and benefits related to impacts on welfare."),
-    hr(),
-    p("To be implemented")
-  )
-}
-
-isa_ex1_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {
-    return(reactive(project_data_reactive()))
-  })
-}
-
-# Similar placeholders for Exercise 2-7
-isa_ex2_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(h2("Exercise 2: State Changes"), p("To be implemented"))
-}
-
-isa_ex2_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {
-    return(reactive(project_data_reactive()))
-  })
-}
-
-isa_ex3_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(h2("Exercise 3: Pressures"), p("To be implemented"))
-}
-
-isa_ex3_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {
-    return(reactive(project_data_reactive()))
-  })
-}
-
-isa_ex4_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(h2("Exercise 4: Activities"), p("To be implemented"))
-}
-
-isa_ex4_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {
-    return(reactive(project_data_reactive()))
-  })
-}
-
-isa_ex5_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(h2("Exercise 5: Drivers"), p("To be implemented"))
-}
-
-isa_ex5_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {
-    return(reactive(project_data_reactive()))
-  })
-}
-
-isa_ex67_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(h2("Exercise 6-7: Close the Loop"), p("To be implemented"))
-}
-
-isa_ex67_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {
-    return(reactive(project_data_reactive()))
-  })
-}
-
+#
+# ISA Data Entry Exercises 0-12:
+#   → Fully implemented in modules/isa_data_entry_module.R (1,854 lines)
+#
+# Analysis Modules:
+#   → Loop Detection: modules/analysis_tools_module.R (lines 1-757)
+#   → Network Metrics: modules/analysis_tools_module.R (lines 758-775) - PLACEHOLDER
+#   → BOT Analysis: modules/analysis_tools_module.R (lines 777-794) - PLACEHOLDER
+#   → Simplification: modules/analysis_tools_module.R (lines 796-813) - PLACEHOLDER
+#
+# Response Modules:
+#   → Response Measures: modules/response_module.R (lines 1-653) - COMPLETE
+#   → Scenario Builder: modules/response_module.R (lines 654-671) - PLACEHOLDER
+#   → Validation: modules/response_module.R (lines 673-690) - PLACEHOLDER
+#
+# This file contains only PIMS modules (Project, Stakeholders, Resources, Data, Evaluation)
 # ============================================================================
-# PLACEHOLDER MODULES FOR ANALYSIS
-# ============================================================================
-
-analysis_metrics_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(h2("Network Metrics"), p("To be implemented"))
-}
-
-analysis_metrics_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {})
-}
-
-# analysis_loops_ui and analysis_loops_server now implemented in analysis_tools_module.R
-
-analysis_bot_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(h2("BOT Analysis"), p("To be implemented"))
-}
-
-analysis_bot_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {})
-}
-
-analysis_simplify_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(h2("Simplification Tools"), p("To be implemented"))
-}
-
-analysis_simplify_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {})
-}
-
-# ============================================================================
-# PLACEHOLDER MODULES FOR RESPONSE & VALIDATION
-# ============================================================================
-
-# response_measures_ui and response_measures_server now implemented in response_module.R
-
-response_scenarios_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(h2("Scenario Builder"), p("To be implemented"))
-}
-
-response_scenarios_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {})
-}
-
-response_validation_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(h2("Validation"), p("To be implemented"))
-}
-
-response_validation_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {})
-}
