@@ -35,6 +35,7 @@ source("modules/isa_data_entry_module.R", local = TRUE)
 source("modules/cld_visualization_module.R", local = TRUE)
 source("modules/analysis_tools_module.R", local = TRUE)
 source("modules/response_module.R", local = TRUE)
+source("modules/scenario_builder_module.R", local = TRUE)  # Scenario Builder
 # source("modules/response_validation_module.R", local = TRUE)  # Not implemented yet
 
 # ============================================================================
@@ -452,7 +453,7 @@ ui <- dashboardPage(
       
       # ==================== RESPONSE & VALIDATION ====================
       tabItem(tabName = "response_measures", response_measures_ui("resp_meas")),
-      tabItem(tabName = "response_scenarios", response_scenarios_ui("resp_scen")),
+      tabItem(tabName = "response_scenarios", scenario_builder_ui("scenario_builder")),
       tabItem(tabName = "response_validation", response_validation_ui("resp_val")),
       
       # ==================== EXPORT ====================
@@ -715,7 +716,7 @@ server <- function(input, output, session) {
   
   # Response & validation modules
   response_measures_server("resp_meas", project_data)
-  response_scenarios_server("resp_scen", project_data)
+  scenario_builder_server("scenario_builder", project_data)
   response_validation_server("resp_val", project_data)
   
   # ========== DASHBOARD ==========

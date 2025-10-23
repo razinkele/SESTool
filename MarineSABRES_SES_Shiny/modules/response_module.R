@@ -651,23 +651,18 @@ response_measures_server <- function(id, project_data_reactive) {
 }
 
 # ============================================================================
-# SCENARIO BUILDER MODULE (Placeholder)
+# SCENARIO BUILDER MODULE
 # ============================================================================
-
-response_scenarios_ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(
-    h2("Scenario Builder"),
-    p("Create 'what-if' scenarios to explore effects of different response measures."),
-    p(strong("Status:"), "Implementation in progress. Requires Response Measures module to be populated first.")
-  )
-}
-
-response_scenarios_server <- function(id, project_data_reactive) {
-  moduleServer(id, function(input, output, session) {
-    # Placeholder
-  })
-}
+# NOTE: Scenario Builder has been moved to dedicated file:
+#       modules/scenario_builder_module.R
+#
+# The scenario_builder_ui() and scenario_builder_server() functions are now
+# in that file and provide full implementation of:
+# - Scenario management (create, edit, delete)
+# - Network modifications (add/remove nodes and links)
+# - Impact prediction and analysis
+# - Scenario comparison
+# ============================================================================
 
 # ============================================================================
 # VALIDATION MODULE (Placeholder - basic validation in ISA Exercise 12)
