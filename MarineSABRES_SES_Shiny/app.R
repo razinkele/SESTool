@@ -8,9 +8,27 @@
 source("global.R", local = TRUE)
 
 # ============================================================================
+# HELPER FUNCTIONS
+# ============================================================================
+
+# Add tooltip to menu items via JavaScript
+add_menu_tooltip <- function(menu_item, tooltip_text) {
+  menu_item$children[[1]]$attribs$`data-tooltip` <- tooltip_text
+  return(menu_item)
+}
+
+# Add tooltip to submenu items
+add_submenu_tooltip <- function(submenu_item, tooltip_text) {
+  submenu_item$children[[1]]$attribs$`data-tooltip` <- tooltip_text
+  return(submenu_item)
+}
+
+# ============================================================================
 # SOURCE MODULES
 # ============================================================================
 
+source("modules/entry_point_module.R", local = TRUE)  # Entry Point guidance system
+source("modules/ai_isa_assistant_module.R", local = TRUE)  # AI-Assisted ISA Creation
 source("modules/pims_module.R", local = TRUE)
 source("modules/pims_stakeholder_module.R", local = TRUE)
 source("modules/isa_data_entry_module.R", local = TRUE)
@@ -34,18 +52,31 @@ ui <- dashboardPage(
       tags$span("SES Tool", style = "font-size: 18px; vertical-align: middle;")
     ),
     titleWidth = 300,
-    
-    # User info and help
+
+    # Settings button for language selector
     tags$li(
       class = "dropdown",
       tags$a(
         href = "#",
-        icon("question-circle"),
-        "Help",
-        onclick = "window.open('user_guide.html', '_blank')"
+        id = "open_settings_modal",
+        icon("globe"),
+        textOutput("current_language_display", inline = TRUE),
+        style = "cursor: pointer;"
       )
     ),
-    
+
+    # User info and help
+    tags$li(
+      class = "dropdown",
+      tags$a(
+        href = "user_guide.html",
+        target = "_blank",
+        icon("question-circle"),
+        "Help",
+        style = "cursor: pointer;"
+      )
+    ),
+
     tags$li(
       class = "dropdown",
       tags$a(
@@ -59,62 +90,137 @@ ui <- dashboardPage(
   # ========== SIDEBAR ==========
   dashboardSidebar(
     width = 300,
-    
+
     sidebarMenu(
       id = "sidebar_menu",
-      
-      menuItem(
-        "Dashboard",
-        tabName = "dashboard",
-        icon = icon("dashboard")
+
+      add_menu_tooltip(
+        menuItem(
+          "Getting Started",
+          tabName = "entry_point",
+          icon = icon("compass")
+        ),
+        "Guided entry point to find the right tools for your marine management needs"
       ),
-      
-      menuItem(
-        "PIMS Module",
-        tabName = "pims",
-        icon = icon("project-diagram"),
-        menuSubItem("Project Setup", tabName = "pims_project"),
-        menuSubItem("Stakeholders", tabName = "pims_stakeholders"),
-        menuSubItem("Resources & Risks", tabName = "pims_resources"),
-        menuSubItem("Data Management", tabName = "pims_data"),
-        menuSubItem("Evaluation", tabName = "pims_evaluation")
+
+      add_menu_tooltip(
+        menuItem(
+          "Dashboard",
+          tabName = "dashboard",
+          icon = icon("dashboard")
+        ),
+        "Overview of your project status and key metrics"
       ),
-      
-      menuItem(
-        "ISA Data Entry",
-        tabName = "isa",
-        icon = icon("edit")
+
+      add_menu_tooltip(
+        menuItem(
+          "PIMS Module",
+          tabName = "pims",
+          icon = icon("project-diagram"),
+          add_submenu_tooltip(
+            menuSubItem("Project Setup", tabName = "pims_project"),
+            "Define project goals, scope, and basic information"
+          ),
+          add_submenu_tooltip(
+            menuSubItem("Stakeholders", tabName = "pims_stakeholders"),
+            "Identify and manage stakeholders and their interests"
+          ),
+          add_submenu_tooltip(
+            menuSubItem("Resources & Risks", tabName = "pims_resources"),
+            "Track project resources, timeline, and potential risks"
+          ),
+          add_submenu_tooltip(
+            menuSubItem("Data Management", tabName = "pims_data"),
+            "Manage data sources, quality, and documentation"
+          ),
+          add_submenu_tooltip(
+            menuSubItem("Evaluation", tabName = "pims_evaluation"),
+            "Evaluate project progress and outcomes"
+          )
+        ),
+        "Project Information Management System for planning and tracking"
       ),
-      
-      menuItem(
-        "CLD Visualization",
-        tabName = "cld_viz",
-        icon = icon("project-diagram")
+
+      add_menu_tooltip(
+        menuItem(
+          "AI ISA Assistant",
+          tabName = "ai_isa",
+          icon = icon("robot")
+        ),
+        "AI-guided stepwise questions to build your DAPSI(W)R(M) model easily"
       ),
-      
-      menuItem(
-        "Analysis Tools",
-        tabName = "analysis",
-        icon = icon("chart-line"),
-        menuSubItem("Network Metrics", tabName = "analysis_metrics"),
-        menuSubItem("Loop Detection", tabName = "analysis_loops"),
-        menuSubItem("BOT Analysis", tabName = "analysis_bot"),
-        menuSubItem("Simplification", tabName = "analysis_simplify")
+
+      add_menu_tooltip(
+        menuItem(
+          "ISA Data Entry",
+          tabName = "isa",
+          icon = icon("edit")
+        ),
+        "Enter and manage DAPSI(W)R(M) framework elements and connections"
       ),
-      
-      menuItem(
-        "Response & Validation",
-        tabName = "response",
-        icon = icon("tasks"),
-        menuSubItem("Response Measures", tabName = "response_measures"),
-        menuSubItem("Scenario Builder", tabName = "response_scenarios"),
-        menuSubItem("Validation", tabName = "response_validation")
+
+      add_menu_tooltip(
+        menuItem(
+          "CLD Visualization",
+          tabName = "cld_viz",
+          icon = icon("project-diagram")
+        ),
+        "Interactive Causal Loop Diagram visualization of your SES network"
       ),
-      
-      menuItem(
-        "Export & Reports",
-        tabName = "export",
-        icon = icon("download")
+
+      add_menu_tooltip(
+        menuItem(
+          "Analysis Tools",
+          tabName = "analysis",
+          icon = icon("chart-line"),
+          add_submenu_tooltip(
+            menuSubItem("Network Metrics", tabName = "analysis_metrics"),
+            "Calculate centrality, density, and other network statistics"
+          ),
+          add_submenu_tooltip(
+            menuSubItem("Loop Detection", tabName = "analysis_loops"),
+            "Identify feedback loops and causal pathways in your network"
+          ),
+          add_submenu_tooltip(
+            menuSubItem("BOT Analysis", tabName = "analysis_bot"),
+            "Behavior Over Time analysis and temporal dynamics"
+          ),
+          add_submenu_tooltip(
+            menuSubItem("Simplification", tabName = "analysis_simplify"),
+            "Simplify complex networks while preserving key structures"
+          )
+        ),
+        "Advanced network analysis and metrics tools for your SES model"
+      ),
+
+      add_menu_tooltip(
+        menuItem(
+          "Response & Validation",
+          tabName = "response",
+          icon = icon("tasks"),
+          add_submenu_tooltip(
+            menuSubItem("Response Measures", tabName = "response_measures"),
+            "Define and design management responses and interventions"
+          ),
+          add_submenu_tooltip(
+            menuSubItem("Scenario Builder", tabName = "response_scenarios"),
+            "Build and compare alternative future scenarios"
+          ),
+          add_submenu_tooltip(
+            menuSubItem("Validation", tabName = "response_validation"),
+            "Validate model structure and behavior with stakeholders"
+          )
+        ),
+        "Design response measures, build scenarios, and validate your model"
+      ),
+
+      add_menu_tooltip(
+        menuItem(
+          "Export & Reports",
+          tabName = "export",
+          icon = icon("download")
+        ),
+        "Export data and generate comprehensive analysis reports"
       ),
       
       hr(),
@@ -140,13 +246,27 @@ ui <- dashboardPage(
           "save_project",
           "Save Project",
           icon = icon("save"),
-          class = "btn-primary btn-block"
+          class = "btn-primary btn-block",
+          title = "Save your current project data to a file"
+        ),
+        bsTooltip(
+          id = "save_project",
+          title = "Save your current project data, including all PIMS, ISA entries, and analysis results",
+          placement = "right",
+          trigger = "hover"
         ),
         actionButton(
           "load_project",
           "Load Project",
           icon = icon("folder-open"),
-          class = "btn-secondary btn-block"
+          class = "btn-secondary btn-block",
+          title = "Load a previously saved project"
+        ),
+        bsTooltip(
+          id = "load_project",
+          title = "Load a previously saved project file to continue your work",
+          placement = "right",
+          trigger = "hover"
         )
       )
     )
@@ -154,28 +274,101 @@ ui <- dashboardPage(
   
   # ========== BODY ==========
   dashboardBody(
-    
-    # Custom CSS
+
+    # Custom CSS and JavaScript
     tags$head(
-      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+      tags$style(HTML("
+        /* Persistent loading overlay */
+        #language-loading-overlay {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.95);
+          z-index: 99999;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        }
+        #language-loading-overlay.active {
+          display: flex !important;
+        }
+        .loading-spinner {
+          font-size: 48px;
+          color: #3c8dbc;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .loading-message {
+          margin-top: 20px;
+          font-size: 24px;
+          color: #3c8dbc;
+          font-weight: bold;
+        }
+        .loading-submessage {
+          margin-top: 10px;
+          font-size: 14px;
+          color: #666;
+        }
+      ")),
+      tags$script(HTML("
+        $(document).ready(function() {
+          // Add tooltips to menu items using data-tooltip attributes
+          // This ensures tooltips work even after dynamic updates
+          Shiny.addCustomMessageHandler('updateTooltips', function(message) {
+            $('.sidebar-menu li a[data-toggle=\"tooltip\"]').tooltip();
+          });
+
+          // Open settings modal when clicking the language selector
+          $('#open_settings_modal').on('click', function(e) {
+            e.preventDefault();
+            Shiny.setInputValue('show_settings_modal', Math.random());
+          });
+
+          // Show persistent loading overlay for language change
+          Shiny.addCustomMessageHandler('showLanguageLoading', function(message) {
+            // Remove any existing overlay
+            $('#language-loading-overlay').remove();
+
+            // Create new overlay
+            var overlay = $('<div id=\"language-loading-overlay\" class=\"active\">' +
+              '<div class=\"loading-spinner\"><i class=\"fa fa-spinner fa-spin\"></i></div>' +
+              '<div class=\"loading-message\"><i class=\"fa fa-globe\"></i> ' + message.text + '</div>' +
+              '<div class=\"loading-submessage\">Please wait while the application reloads...</div>' +
+              '</div>');
+
+            // Append to body
+            $('body').append(overlay);
+          });
+        });
+      "))
     ),
-    
+
     # Enable shinyjs
     useShinyjs(),
     
     tabItems(
-      
+
+      # ==================== ENTRY POINT (GETTING STARTED) ====================
+      tabItem(tabName = "entry_point", entry_point_ui("entry_pt")),
+
       # ==================== DASHBOARD ====================
       tabItem(
         tabName = "dashboard",
-        
+
         fluidRow(
           column(12,
-            h2("MarineSABRES Social-Ecological Systems Analysis Tool"),
-            p("Welcome to the computer-assisted SES creation and analysis platform.")
+            h2(i18n$t("MarineSABRES Social-Ecological Systems Analysis Tool")),
+            p(i18n$t("Welcome to the computer-assisted SES creation and analysis platform."))
           )
         ),
-        
+
         fluidRow(
           # Summary boxes
           valueBoxOutput("total_elements_box", width = 3),
@@ -183,34 +376,34 @@ ui <- dashboardPage(
           valueBoxOutput("loops_detected_box", width = 3),
           valueBoxOutput("completion_box", width = 3)
         ),
-        
+
         fluidRow(
           # Project overview
           box(
-            title = "Project Overview",
+            title = i18n$t("Project Overview"),
             status = "primary",
             solidHeader = TRUE,
             width = 6,
             height = 400,
             uiOutput("project_overview_ui")
           ),
-          
+
           # Quick access
           box(
-            title = "Quick Access",
+            title = i18n$t("Quick Access"),
             status = "info",
             solidHeader = TRUE,
             width = 6,
             height = 400,
-            h4("Recent Activities"),
+            h4(i18n$t("Recent Activities")),
             uiOutput("recent_activities_ui")
           )
         ),
-        
+
         fluidRow(
           # Mini CLD preview
           box(
-            title = "CLD Preview",
+            title = i18n$t("CLD Preview"),
             status = "success",
             solidHeader = TRUE,
             width = 12,
@@ -224,9 +417,9 @@ ui <- dashboardPage(
               div(
                 style = "text-align: center; padding: 100px 20px;",
                 icon("project-diagram", class = "fa-4x", style = "color: #ccc; margin-bottom: 20px;"),
-                h4("No CLD Generated Yet", style = "color: #999;"),
-                p("Build your Causal Loop Diagram from the ISA data to visualize system connections."),
-                actionButton("dashboard_build_network", "Build Network from ISA Data",
+                h4(i18n$t("No CLD Generated Yet"), style = "color: #999;"),
+                p(i18n$t("Build your Causal Loop Diagram from the ISA data to visualize system connections.")),
+                actionButton("dashboard_build_network", i18n$t("Build Network from ISA Data"),
                             icon = icon("network-wired"), class = "btn-primary btn-lg",
                             style = "margin-top: 15px;")
               )
@@ -234,7 +427,7 @@ ui <- dashboardPage(
           )
         )
       ),
-      
+
       # ==================== PIMS MODULE ====================
       tabItem(tabName = "pims_project", pims_project_ui("pims_proj")),
       tabItem(tabName = "pims_stakeholders", pimsStakeholderUI("pims_stake")),
@@ -242,9 +435,12 @@ ui <- dashboardPage(
       tabItem(tabName = "pims_data", pims_data_ui("pims_dm")),
       tabItem(tabName = "pims_evaluation", pims_evaluation_ui("pims_eval")),
       
+      # ==================== AI ISA ASSISTANT ====================
+      tabItem(tabName = "ai_isa", ai_isa_assistant_ui("ai_isa_mod")),
+
       # ==================== ISA DATA ENTRY ====================
       tabItem(tabName = "isa", isaDataEntryUI("isa_module")),
-      
+
       # ==================== CLD VISUALIZATION ====================
       tabItem(tabName = "cld_viz", cld_viz_ui("cld_visual")),
       
@@ -392,19 +588,109 @@ ui <- dashboardPage(
 # ============================================================================
 
 server <- function(input, output, session) {
-  
+
   # ========== REACTIVE VALUES ==========
-  
+
   # Main project data
   project_data <- reactiveVal(init_session_data())
-  
+
   # User info
   output$user_info <- renderText({
     paste("User:", Sys.info()["user"])
   })
-  
+
+  # Current language display
+  output$current_language_display <- renderText({
+    current_lang <- if(!is.null(i18n$get_translation_language())) {
+      i18n$get_translation_language()
+    } else {
+      "en"
+    }
+    AVAILABLE_LANGUAGES[[current_lang]]$name
+  })
+
+  # ========== LANGUAGE SETTINGS MODAL ==========
+
+  # Show settings modal when button is clicked
+  observeEvent(input$show_settings_modal, {
+    current_lang <- if(!is.null(i18n$get_translation_language())) {
+      i18n$get_translation_language()
+    } else {
+      "en"
+    }
+
+    showModal(modalDialog(
+      title = tags$h3(icon("cog"), " Application Settings"),
+      size = "m",
+      easyClose = TRUE,
+      footer = tagList(
+        modalButton("Cancel"),
+        actionButton("apply_language_change", "Apply Changes", class = "btn-primary", icon = icon("check"))
+      ),
+
+      tags$div(
+        style = "padding: 20px;",
+
+        tags$h4(icon("globe"), " Interface Language"),
+        tags$p("Select your preferred language for the application interface. Click 'Apply Changes' to reload the application with the new language."),
+        tags$br(),
+
+        selectInput(
+          "settings_language_selector",
+          label = tags$strong("Language:"),
+          choices = setNames(
+            names(AVAILABLE_LANGUAGES),
+            sapply(AVAILABLE_LANGUAGES, function(x) paste(x$flag, x$name))
+          ),
+          selected = current_lang,
+          width = "100%"
+        ),
+
+        tags$div(
+          class = "alert alert-info",
+          style = "margin-top: 20px;",
+          icon("info-circle"),
+          tags$strong(" Note: "),
+          "The application will reload to apply the language changes. Your current work will be preserved."
+        )
+      )
+    ))
+  })
+
+  # Handle Apply button click in settings modal
+  observeEvent(input$apply_language_change, {
+    req(input$settings_language_selector)
+
+    new_lang <- input$settings_language_selector
+
+    # Update the translator language
+    shiny.i18n::update_lang(new_lang, session)
+    i18n$set_translation_language(new_lang)
+
+    # Get language name for notifications
+    lang_name <- AVAILABLE_LANGUAGES[[new_lang]]$name
+
+    # Close the modal
+    removeModal()
+
+    # Show persistent JavaScript loading overlay
+    session$sendCustomMessage("showLanguageLoading", list(
+      text = paste0("Changing language to ", lang_name, "...")
+    ))
+
+    # Log language change
+    cat(paste0("[", Sys.time(), "] INFO: Language changed to: ", new_lang, "\n"))
+
+    # Reload the session to apply language changes
+    # The overlay will persist until the page actually reloads
+    session$reload()
+  })
+
   # ========== CALL MODULE SERVERS ==========
-  
+
+  # Entry Point module - pass session for sidebar navigation
+  entry_point_server("entry_pt", project_data, parent_session = session)
+
   # PIMS modules
   pims_project_data <- pims_project_server("pims_proj", project_data)
   pims_stakeholders_data <- pimsStakeholderServer("pims_stake", project_data)
@@ -412,9 +698,12 @@ server <- function(input, output, session) {
   pims_data_data <- pims_data_server("pims_dm", project_data)
   pims_evaluation_data <- pims_evaluation_server("pims_eval", project_data)
   
+  # AI ISA Assistant module
+  ai_isa_assistant_server("ai_isa_mod", project_data)
+
   # ISA data entry module
   isa_data <- isaDataEntryServer("isa_module", project_data)
-  
+
   # CLD visualization
   cld_viz_server("cld_visual", project_data)
   
@@ -435,10 +724,10 @@ server <- function(input, output, session) {
   output$total_elements_box <- renderValueBox({
     data <- project_data()
     n_elements <- length(unlist(data$data$isa_data))
-    
+
     valueBox(
       n_elements,
-      "Total Elements",
+      i18n$t("Total Elements"),
       icon = icon("circle"),
       color = "blue"
     )
@@ -461,31 +750,31 @@ server <- function(input, output, session) {
 
     valueBox(
       n_connections,
-      "Connections",
+      i18n$t("Connections"),
       icon = icon("arrow-right"),
       color = "green"
     )
   })
-  
+
   output$loops_detected_box <- renderValueBox({
     data <- project_data()
     n_loops <- nrow(data$data$cld$loops %||% data.frame())
-    
+
     valueBox(
       n_loops,
-      "Loops Detected",
+      i18n$t("Loops Detected"),
       icon = icon("refresh"),
       color = "orange"
     )
   })
-  
+
   output$completion_box <- renderValueBox({
     # Calculate completion percentage
     completion <- 0
-    
+
     valueBox(
       paste0(completion, "%"),
-      "Completion",
+      i18n$t("Completion"),
       icon = icon("check-circle"),
       color = "purple"
     )
@@ -494,18 +783,18 @@ server <- function(input, output, session) {
   # Project overview
   output$project_overview_ui <- renderUI({
     data <- project_data()
-    
+
     tagList(
-      p(strong("Project ID:"), data$project_id),
-      p(strong("Created:"), format_date_display(data$created_at)),
-      p(strong("Last Modified:"), format_date_display(data$last_modified)),
-      p(strong("Demonstration Area:"), data$data$metadata$da_site %||% "Not set"),
-      p(strong("Focal Issue:"), data$data$metadata$focal_issue %||% "Not defined"),
+      p(strong(i18n$t("Project ID:")), data$project_id),
+      p(strong(i18n$t("Created:")), format_date_display(data$created_at)),
+      p(strong(i18n$t("Last Modified:")), format_date_display(data$last_modified)),
+      p(strong(i18n$t("Demonstration Area:")), data$data$metadata$da_site %||% i18n$t("Not set")),
+      p(strong(i18n$t("Focal Issue:")), data$data$metadata$focal_issue %||% i18n$t("Not defined")),
       hr(),
-      h4("Status Summary"),
-      p("PIMS Setup: ", if(length(data$data$pims) > 0) "Complete" else "Incomplete"),
-      p("ISA Data Entry: ", "In Progress"),
-      p("CLD Generated: ", if(!is.null(data$data$cld$nodes)) "Yes" else "No")
+      h4(i18n$t("Status Summary")),
+      p(i18n$t("PIMS Setup:"), " ", if(length(data$data$pims) > 0) i18n$t("Complete") else i18n$t("Incomplete")),
+      p(i18n$t("ISA Data Entry:"), " ", i18n$t("In Progress")),
+      p(i18n$t("CLD Generated:"), " ", if(!is.null(data$data$cld$nodes)) i18n$t("Yes") else i18n$t("No"))
     )
   })
 

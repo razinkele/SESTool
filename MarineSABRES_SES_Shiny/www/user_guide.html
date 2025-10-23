@@ -120,10 +120,30 @@ strong {
   background: #764ba2;
   transform: translateY(-3px);
 }
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #764ba2;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.close-button:hover {
+  background: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container" style="position: relative;">
+<a href="javascript:window.close()" class="close-button">✕ Close Help</a>
 <h1 id="marinesabres-ses-tool-complete-user-guide">MarineSABRES SES Tool - Complete User Guide</h1>
 <p><strong>Version:</strong> 1.0
 <strong>Last Updated:</strong> October 20, 2025

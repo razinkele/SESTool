@@ -178,6 +178,7 @@ h2 {
 
 .sidebar-menu > li > a {
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .sidebar-menu > li > a:hover {
@@ -187,6 +188,78 @@ h2 {
 
 .sidebar {
   background-color: #2c3e50;
+}
+
+/* Menu item tooltips */
+.sidebar-menu > li > a[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 15px;
+  background-color: rgba(52, 73, 94, 0.95);
+  color: #ecf0f1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 400;
+  z-index: 10000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  pointer-events: none;
+  border: 1px solid #3498db;
+}
+
+.sidebar-menu > li > a[data-tooltip]:hover::before {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 8px;
+  border: 7px solid transparent;
+  border-right-color: rgba(52, 73, 94, 0.95);
+  z-index: 10001;
+  pointer-events: none;
+}
+
+/* Submenu item tooltips */
+.treeview-menu > li > a[data-tooltip] {
+  position: relative;
+}
+
+.treeview-menu > li > a[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 15px;
+  background-color: rgba(52, 73, 94, 0.95);
+  color: #ecf0f1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 400;
+  z-index: 10000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  pointer-events: none;
+  border: 1px solid #3498db;
+}
+
+.treeview-menu > li > a[data-tooltip]:hover::before {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 8px;
+  border: 7px solid transparent;
+  border-right-color: rgba(52, 73, 94, 0.95);
+  z-index: 10001;
+  pointer-events: none;
 }
 
 /* ============================================================================

@@ -25,6 +25,10 @@ required_packages <- c(
   "shinydashboard",
   "shinyWidgets",
   "shinyjs",
+  "shinyBS",
+
+  # Internationalization
+  "shiny.i18n",
 
   # Data manipulation
   "tidyverse",

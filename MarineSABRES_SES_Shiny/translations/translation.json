@@ -1,0 +1,478 @@
+{
+    "languages": [
+        "en",
+        "es",
+        "fr",
+        "de",
+        "lt"
+    ],
+    "translation": [
+        {
+            "en": "Welcome to the MarineSABRES Toolbox",
+            "es": "Bienvenido a la Caja de Herramientas MarineSABRES",
+            "fr": "Bienvenue dans la Boîte à Outils MarineSABRES",
+            "de": "Willkommen bei der MarineSABRES Toolbox",
+            "lt": "Sveiki atvykę į MarineSABRES įrankių rinkinį"
+        },
+        {
+            "en": "This guidance system will help you find the right tools for your marine management needs.",
+            "es": "Este sistema de orientación le ayudará a encontrar las herramientas adecuadas para sus necesidades de gestión marina.",
+            "fr": "Ce système d'orientation vous aidera à trouver les bons outils pour vos besoins en gestion marine.",
+            "de": "Dieses Orientierungssystem hilft Ihnen, die richtigen Werkzeuge für Ihre Meeresmanagement-Bedürfnisse zu finden.",
+            "lt": "Ši orientavimo sistema padės jums rasti tinkamas priemones jūrų valdymo poreikiams."
+        },
+        {
+            "en": "What is your main marine management question?",
+            "es": "¿Cuál es su principal pregunta sobre gestión marina?",
+            "fr": "Quelle est votre principale question sur la gestion marine?",
+            "de": "Was ist Ihre Hauptfrage zum Meeresmanagement?",
+            "lt": "Koks yra jūsų pagrindinis jūrų valdymo klausimas?"
+        },
+        {
+            "en": "Guided Pathway",
+            "es": "Ruta Guiada",
+            "fr": "Parcours Guidé",
+            "de": "Geführter Pfad",
+            "lt": "Vedamas kelias"
+        },
+        {
+            "en": "Step-by-step guidance through the entry points",
+            "es": "Orientación paso a paso a través de los puntos de entrada",
+            "fr": "Orientation étape par étape à travers les points d'entrée",
+            "de": "Schritt-für-Schritt-Anleitung durch die Einstiegspunkte",
+            "lt": "Nuoseklus vedimas per įėjimo taškus"
+        },
+        {
+            "en": "Start Guided Journey",
+            "es": "Comenzar Viaje Guiado",
+            "fr": "Commencer le Parcours Guidé",
+            "de": "Geführte Reise Starten",
+            "lt": "Pradėti vedamą kelionę"
+        },
+        {
+            "en": "Quick Access",
+            "es": "Acceso Rápido",
+            "fr": "Accès Rapide",
+            "de": "Schnellzugriff",
+            "lt": "Greita prieiga"
+        },
+        {
+            "en": "I know what tool I need",
+            "es": "Sé qué herramienta necesito",
+            "fr": "Je sais quel outil j'ai besoin",
+            "de": "Ich weiß, welches Werkzeug ich brauche",
+            "lt": "Žinau, kokios priemonės man reikia"
+        },
+        {
+            "en": "Browse Tools",
+            "es": "Explorar Herramientas",
+            "fr": "Parcourir les Outils",
+            "de": "Werkzeuge Durchsuchen",
+            "lt": "Naršyti priemones"
+        },
+        {
+            "en": "Entry Point 0: Who Are You?",
+            "es": "Punto de Entrada 0: ¿Quién Eres?",
+            "fr": "Point d'Entrée 0: Qui Êtes-Vous?",
+            "de": "Einstiegspunkt 0: Wer Sind Sie?",
+            "lt": "Įėjimo taškas 0: Kas jūs?"
+        },
+        {
+            "en": "Select your role in marine management",
+            "es": "Seleccione su rol en la gestión marina",
+            "fr": "Sélectionnez votre rôle dans la gestion marine",
+            "de": "Wählen Sie Ihre Rolle im Meeresmanagement",
+            "lt": "Pasirinkite savo vaidmenį jūrų valdyme"
+        },
+        {
+            "en": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
+            "es": "Su rol nos ayuda a recomendar las herramientas y flujos de trabajo más relevantes para su contexto de gestión marina.",
+            "fr": "Votre rôle nous aide à recommander les outils et flux de travail les plus pertinents pour votre contexte de gestion marine.",
+            "de": "Ihre Rolle hilft uns, die relevantesten Werkzeuge und Arbeitsabläufe für Ihren Meeresmanagement-Kontext zu empfehlen.",
+            "lt": "Jūsų vaidmuo padeda mums rekomenduoti tinkamiausias priemones ir darbo eigas jūsų jūrų valdymo kontekstui."
+        },
+        {
+            "en": "Entry Point 1: Why Do You Care?",
+            "es": "Punto de Entrada 1: ¿Por Qué Te Importa?",
+            "fr": "Point d'Entrée 1: Pourquoi Cela Vous Importe?",
+            "de": "Einstiegspunkt 1: Warum Interessiert Es Sie?",
+            "lt": "Įėjimo taškas 1: Kodėl jums rūpi?"
+        },
+        {
+            "en": "What basic human need drives your question?",
+            "es": "¿Qué necesidad humana básica impulsa su pregunta?",
+            "fr": "Quel besoin humain fondamental motive votre question?",
+            "de": "Welches grundlegende menschliche Bedürfnis treibt Ihre Frage an?",
+            "lt": "Koks pagrindinis žmogaus poreikis skatina jūsų klausimą?"
+        },
+        {
+            "en": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
+            "es": "Comprender la necesidad humana fundamental detrás de su pregunta ayuda a identificar servicios ecosistémicos relevantes y prioridades de gestión.",
+            "fr": "Comprendre le besoin humain fondamental derrière votre question aide à identifier les services écosystémiques pertinents et les priorités de gestion.",
+            "de": "Das Verständnis des grundlegenden menschlichen Bedürfnisses hinter Ihrer Frage hilft, relevante Ökosystemleistungen und Management-Prioritäten zu identifizieren.",
+            "lt": "Supratimas pagrindinio žmogaus poreikio už jūsų klausimo padeda nustatyti svarbias ekosistemų paslaugas ir valdymo prioritetus."
+        },
+        {
+            "en": "EP2: Activity Sectors",
+            "es": "EP2: Sectores de Actividad",
+            "fr": "EP2: Secteurs d'Activité",
+            "de": "EP2: Aktivitätssektoren",
+            "lt": "EP2: Veiklos sektoriai"
+        },
+        {
+            "en": "Select all that apply (multiple selection allowed)",
+            "es": "Seleccione todos los que correspondan (se permite selección múltiple)",
+            "fr": "Sélectionnez tout ce qui s'applique (sélection multiple autorisée)",
+            "de": "Wählen Sie alle zutreffenden aus (Mehrfachauswahl möglich)",
+            "lt": "Pasirinkite visus tinkamus (galima kelių pasirinkimas)"
+        },
+        {
+            "en": "Select the human activities relevant to your marine management question. These represent the 'Drivers' and 'Activities' in the DAPSI(W)R(M) framework.",
+            "es": "Seleccione las actividades humanas relevantes para su pregunta de gestión marina. Estas representan los 'Impulsores' y 'Actividades' en el marco DAPSI(W)R(M).",
+            "fr": "Sélectionnez les activités humaines pertinentes pour votre question de gestion marine. Elles représentent les 'Moteurs' et 'Activités' dans le cadre DAPSI(W)R(M).",
+            "de": "Wählen Sie die für Ihre Meeresmanagement-Frage relevanten menschlichen Aktivitäten. Diese repräsentieren die 'Treiber' und 'Aktivitäten' im DAPSI(W)R(M)-Rahmen.",
+            "lt": "Pasirinkite žmogaus veiklą, susijusią su jūsų jūrų valdymo klausimu. Tai atspindi 'Varomąsias jėgas' ir 'Veiklą' DAPSI(W)R(M) sistemoje."
+        },
+        {
+            "en": "EP3: Risks & Hazards",
+            "es": "EP3: Riesgos y Peligros",
+            "fr": "EP3: Risques et Dangers",
+            "de": "EP3: Risiken & Gefahren",
+            "lt": "EP3: Rizikos ir pavojai"
+        },
+        {
+            "en": "Select the environmental pressures, risks, or hazards you're concerned about. These represent 'Pressures' and 'State changes' in the DAPSI(W)R(M) framework.",
+            "es": "Seleccione las presiones ambientales, riesgos o peligros que le preocupan. Estos representan 'Presiones' y 'Cambios de estado' en el marco DAPSI(W)R(M).",
+            "fr": "Sélectionnez les pressions environnementales, risques ou dangers qui vous préoccupent. Ils représentent les 'Pressions' et 'Changements d'état' dans le cadre DAPSI(W)R(M).",
+            "de": "Wählen Sie die Umweltbelastungen, Risiken oder Gefahren aus, die Sie beunruhigen. Diese repräsentieren 'Belastungen' und 'Zustandsänderungen' im DAPSI(W)R(M)-Rahmen.",
+            "lt": "Pasirinkite aplinkos spaudimus, rizikas ar pavojus, kurie jus jaudina. Tai atspindi 'Spaudimus' ir 'Būklės pokyčius' DAPSI(W)R(M) sistemoje.",
+            "pt": "Selecione as pressões ambientais, riscos ou perigos que o preocupam. Estes representam 'Pressões' e 'Mudanças de estado' no quadro DAPSI(W)R(M).",
+            "it": "Seleziona le pressioni ambientali, i rischi o i pericoli che ti preoccupano. Questi rappresentano 'Pressioni' e 'Cambiamenti di stato' nel framework DAPSI(W)R(M)."
+        },
+        {
+            "en": "Entry Point 4: Knowledge Domain",
+            "es": "Punto de Entrada 4: Dominio del Conocimiento",
+            "fr": "Point d'Entrée 4: Domaine de Connaissance",
+            "de": "Einstiegspunkt 4: Wissensbereich",
+            "lt": "Įėjimo taškas 4: Žinių sritis",
+            "pt": "Ponto de Entrada 4: Domínio de Conhecimento",
+            "it": "Punto di Ingresso 4: Ambito di Conoscenza"
+        },
+        {
+            "en": "What topic areas are you interested in? (Select all that apply)",
+            "es": "¿Qué áreas temáticas le interesan? (Seleccione todas las que correspondan)",
+            "fr": "Quels domaines thématiques vous intéressent? (Sélectionnez tout ce qui s'applique)",
+            "de": "An welchen Themenbereichen sind Sie interessiert? (Wählen Sie alle zutreffenden aus)",
+            "lt": "Kokios teminės sritys jus domina? (Pasirinkite visas tinkamas)",
+            "pt": "Que áreas temáticas lhe interessam? (Selecione todas as que se aplicam)",
+            "it": "Quali aree tematiche ti interessano? (Seleziona tutte quelle applicabili)"
+        },
+        {
+            "en": "Select the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks.",
+            "es": "Seleccione los dominios de conocimiento y enfoques analíticos relevantes para su pregunta. Esto ayuda a emparejarle con herramientas y marcos de análisis apropiados.",
+            "fr": "Sélectionnez les domaines de connaissance et approches analytiques pertinents pour votre question. Cela aide à vous associer aux outils et cadres d'analyse appropriés.",
+            "de": "Wählen Sie die für Ihre Frage relevanten Wissensbereiche und analytischen Ansätze. Dies hilft, Sie mit geeigneten Analysewerkzeugen und -rahmen zu verbinden.",
+            "lt": "Pasirinkite žinių sritis ir analitinius metodus, susijusius su jūsų klausimu. Tai padeda susieti jus su tinkamomis analizės priemonėmis ir sistemomis.",
+            "pt": "Selecione os domínios de conhecimento e abordagens analíticas relevantes para a sua questão. Isto ajuda a combiná-lo com ferramentas e quadros de análise apropriados.",
+            "it": "Seleziona gli ambiti di conoscenza e gli approcci analitici rilevanti per la tua domanda. Questo aiuta a abbinarti con strumenti e framework di analisi appropriati."
+        },
+        {
+            "en": "Skip",
+            "es": "Saltar",
+            "fr": "Passer",
+            "de": "Überspringen",
+            "lt": "Praleisti"
+        },
+        {
+            "en": "Back",
+            "es": "Atrás",
+            "fr": "Retour",
+            "de": "Zurück",
+            "lt": "Atgal"
+        },
+        {
+            "en": "Continue",
+            "es": "Continuar",
+            "fr": "Continuer",
+            "de": "Weiter",
+            "lt": "Tęsti"
+        },
+        {
+            "en": "Get Recommendations",
+            "es": "Obtener Recomendaciones",
+            "fr": "Obtenir des Recommandations",
+            "de": "Empfehlungen Erhalten",
+            "lt": "Gauti rekomendacijas",
+            "pt": "Obter Recomendações",
+            "it": "Ottieni Raccomandazioni"
+        },
+        {
+            "en": "Recommended Tools for Your Marine Management Question",
+            "es": "Herramientas Recomendadas para su Pregunta de Gestión Marina",
+            "fr": "Outils Recommandés pour Votre Question de Gestion Marine",
+            "de": "Empfohlene Werkzeuge für Ihre Meeresmanagement-Frage",
+            "lt": "Rekomenduojamos priemonės jūsų jūrų valdymo klausimui",
+            "pt": "Ferramentas Recomendadas para a Sua Questão de Gestão Marinha",
+            "it": "Strumenti Raccomandati per la Tua Domanda di Gestione Marina"
+        },
+        {
+            "en": "Your Pathway Summary",
+            "es": "Resumen de su Ruta",
+            "fr": "Résumé de Votre Parcours",
+            "de": "Zusammenfassung Ihres Pfades",
+            "lt": "Jūsų kelio santrauka",
+            "pt": "Resumo do Seu Percurso",
+            "it": "Riepilogo del Tuo Percorso"
+        },
+        {
+            "en": "Role:",
+            "es": "Rol:",
+            "fr": "Rôle:",
+            "de": "Rolle:",
+            "lt": "Vaidmuo:",
+            "pt": "Papel:",
+            "it": "Ruolo:"
+        },
+        {
+            "en": "Need:",
+            "es": "Necesidad:",
+            "fr": "Besoin:",
+            "de": "Bedürfnis:",
+            "lt": "Poreikis:",
+            "pt": "Necessidade:",
+            "it": "Necessità:"
+        },
+        {
+            "en": "Activities:",
+            "es": "Actividades:",
+            "fr": "Activités:",
+            "de": "Aktivitäten:",
+            "lt": "Veiklos:"
+        },
+        {
+            "en": "Risks:",
+            "es": "Riesgos:",
+            "fr": "Risques:",
+            "de": "Risiken:",
+            "lt": "Rizikos:",
+            "pt": "Riscos:",
+            "it": "Rischi:"
+        },
+        {
+            "en": "Topics:",
+            "es": "Temas:",
+            "fr": "Sujets:",
+            "de": "Themen:",
+            "lt": "Temos:",
+            "pt": "Tópicos:",
+            "it": "Argomenti:"
+        },
+        {
+            "en": "Recommended Workflow:",
+            "es": "Flujo de Trabajo Recomendado:",
+            "fr": "Flux de Travail Recommandé:",
+            "de": "Empfohlener Arbeitsablauf:",
+            "lt": "Rekomenduojama darbo eiga:",
+            "pt": "Fluxo de Trabalho Recomendado:",
+            "it": "Flusso di Lavoro Raccomandato:"
+        },
+        {
+            "en": "Follow this sequence of tools to address your marine management question:",
+            "es": "Siga esta secuencia de herramientas para abordar su pregunta de gestión marina:",
+            "fr": "Suivez cette séquence d'outils pour répondre à votre question de gestion marine:",
+            "de": "Folgen Sie dieser Abfolge von Werkzeugen, um Ihre Meeresmanagement-Frage zu beantworten:",
+            "lt": "Sekite šią priemonių seką, kad išspręstumėte savo jūrų valdymo klausimą:",
+            "pt": "Siga esta sequência de ferramentas para abordar a sua questão de gestão marinha:",
+            "it": "Segui questa sequenza di strumenti per affrontare la tua domanda di gestione marina:"
+        },
+        {
+            "en": "START HERE",
+            "es": "COMENZAR AQUÍ",
+            "fr": "COMMENCER ICI",
+            "de": "HIER BEGINNEN",
+            "lt": "PRADĖKITE ČIA",
+            "pt": "COMEÇAR AQUI",
+            "it": "INIZIA QUI"
+        },
+        {
+            "en": "NEXT STEP",
+            "es": "SIGUIENTE PASO",
+            "fr": "ÉTAPE SUIVANTE",
+            "de": "NÄCHSTER SCHRITT",
+            "lt": "KITAS ŽINGSNIS",
+            "pt": "PRÓXIMO PASSO",
+            "it": "PROSSIMO PASSO"
+        },
+        {
+            "en": "ALSO RELEVANT",
+            "es": "TAMBIÉN RELEVANTE",
+            "fr": "ÉGALEMENT PERTINENT",
+            "de": "AUCH RELEVANT",
+            "lt": "TAIP PAT SVARBU",
+            "pt": "TAMBÉM RELEVANTE",
+            "it": "ANCHE RILEVANTE"
+        },
+        {
+            "en": "Skill:",
+            "es": "Habilidad:",
+            "fr": "Compétence:",
+            "de": "Fähigkeit:",
+            "lt": "Įgūdis:",
+            "pt": "Habilidade:",
+            "it": "Abilità:"
+        },
+        {
+            "en": "Suggested Workflow:",
+            "es": "Flujo de Trabajo Sugerido:",
+            "fr": "Flux de Travail Suggéré:",
+            "de": "Vorgeschlagener Arbeitsablauf:",
+            "lt": "Siūloma darbo eiga:",
+            "pt": "Fluxo de Trabalho Sugerido:",
+            "it": "Flusso di Lavoro Suggerito:"
+        },
+        {
+            "en": "Start with PIMS:",
+            "es": "Comenzar con PIMS:",
+            "fr": "Commencer avec PIMS:",
+            "de": "Beginnen Sie mit PIMS:",
+            "lt": "Pradėkite su PIMS:",
+            "pt": "Começar com PIMS:",
+            "it": "Inizia con PIMS:"
+        },
+        {
+            "en": "Define your project goals, stakeholders, and timeline",
+            "es": "Defina los objetivos de su proyecto, las partes interesadas y el cronograma",
+            "fr": "Définissez vos objectifs de projet, parties prenantes et calendrier",
+            "de": "Definieren Sie Ihre Projektziele, Stakeholder und Zeitplan",
+            "lt": "Apibrėžkite projekto tikslus, suinteresuotas šalis ir laikotarpį",
+            "pt": "Defina os objetivos do seu projeto, partes interessadas e cronograma",
+            "it": "Definisci gli obiettivi del progetto, gli stakeholder e la timeline"
+        },
+        {
+            "en": "Build your SES model:",
+            "es": "Construya su modelo SES:",
+            "fr": "Construisez votre modèle SES:",
+            "de": "Erstellen Sie Ihr SES-Modell:",
+            "lt": "Sukurkite savo SES modelį:",
+            "pt": "Construa o seu modelo SES:",
+            "it": "Costruisci il tuo modello SES:"
+        },
+        {
+            "en": "Use ISA Data Entry to map DAPSI(W)R(M) elements",
+            "es": "Use la entrada de datos ISA para mapear elementos DAPSI(W)R(M)",
+            "fr": "Utilisez la saisie de données ISA pour cartographier les éléments DAPSI(W)R(M)",
+            "de": "Verwenden Sie ISA-Dateneingabe, um DAPSI(W)R(M)-Elemente zu kartieren",
+            "lt": "Naudokite ISA duomenų įvedimą DAPSI(W)R(M) elementams susieti",
+            "pt": "Use a Entrada de Dados ISA para mapear elementos DAPSI(W)R(M)",
+            "it": "Usa l'Inserimento Dati ISA per mappare gli elementi DAPSI(W)R(M)"
+        },
+        {
+            "en": "Visualize & Analyze:",
+            "es": "Visualizar y Analizar:",
+            "fr": "Visualiser et Analyser:",
+            "de": "Visualisieren & Analysieren:",
+            "lt": "Vizualizuoti ir analizuoti:",
+            "pt": "Visualizar e Analisar:",
+            "it": "Visualizza e Analizza:"
+        },
+        {
+            "en": "Create CLD networks and run analysis tools",
+            "es": "Cree redes CLD y ejecute herramientas de análisis",
+            "fr": "Créez des réseaux CLD et exécutez des outils d'analyse",
+            "de": "Erstellen Sie CLD-Netzwerke und führen Sie Analysewerkzeuge aus",
+            "lt": "Sukurkite CLD tinklus ir paleiskite analizės priemones",
+            "pt": "Crie redes CLD e execute ferramentas de análise",
+            "it": "Crea reti CLD ed esegui strumenti di analisi"
+        },
+        {
+            "en": "Refine & Communicate:",
+            "es": "Refinar y Comunicar:",
+            "fr": "Affiner et Communiquer:",
+            "de": "Verfeinern & Kommunizieren:",
+            "lt": "Patobulinti ir komunikuoti:",
+            "pt": "Refinar e Comunicar:",
+            "it": "Raffinare e Comunicare:"
+        },
+        {
+            "en": "Simplify models and develop management scenarios",
+            "es": "Simplifique modelos y desarrolle escenarios de gestión",
+            "fr": "Simplifiez les modèles et développez des scénarios de gestion",
+            "de": "Vereinfachen Sie Modelle und entwickeln Sie Management-Szenarien",
+            "lt": "Supaprastinkite modelius ir sukurkite valdymo scenarijus",
+            "pt": "Simplifique modelos e desenvolva cenários de gestão",
+            "it": "Semplifica i modelli e sviluppa scenari di gestione"
+        },
+        {
+            "en": "Start Over",
+            "es": "Comenzar de Nuevo",
+            "fr": "Recommencer",
+            "de": "Von Vorne Beginnen",
+            "lt": "Pradėti iš naujo",
+            "pt": "Recomeçar",
+            "it": "Ricomincia"
+        },
+        {
+            "en": "Begin a new pathway from the welcome screen",
+            "es": "Comenzar una nueva ruta desde la pantalla de bienvenida",
+            "fr": "Commencer un nouveau parcours depuis l'écran d'accueil",
+            "de": "Einen neuen Pfad vom Willkommensbildschirm aus beginnen",
+            "lt": "Pradėti naują kelią nuo pasveikimo ekrano",
+            "pt": "Iniciar um novo percurso a partir do ecrã de boas-vindas",
+            "it": "Inizia un nuovo percorso dalla schermata di benvenuto"
+        },
+        {
+            "en": "Export Pathway Report",
+            "es": "Exportar Informe de Ruta",
+            "fr": "Exporter le Rapport de Parcours",
+            "de": "Pfadbericht Exportieren",
+            "lt": "Eksportuoti kelio ataskaitą",
+            "pt": "Exportar Relatório de Percurso",
+            "it": "Esporta Rapporto Percorso"
+        },
+        {
+            "en": "Download a PDF summary of your pathway and recommendations",
+            "es": "Descargue un resumen en PDF de su ruta y recomendaciones",
+            "fr": "Téléchargez un résumé PDF de votre parcours et recommandations",
+            "de": "Laden Sie eine PDF-Zusammenfassung Ihres Pfades und Ihrer Empfehlungen herunter",
+            "lt": "Atsisiųskite PDF santrauką savo kelio ir rekomendacijų",
+            "pt": "Descarregue um resumo em PDF do seu percurso e recomendações",
+            "it": "Scarica un riepilogo PDF del tuo percorso e delle raccomandazioni"
+        },
+        {
+            "en": "Your Progress:",
+            "es": "Su Progreso:",
+            "fr": "Votre Progression:",
+            "de": "Ihr Fortschritt:",
+            "lt": "Jūsų pažanga:",
+            "pt": "O Seu Progresso:",
+            "it": "Il Tuo Progresso:"
+        },
+        {
+            "en": "Welcome",
+            "es": "Bienvenida",
+            "fr": "Bienvenue",
+            "de": "Willkommen",
+            "lt": "Sveiki",
+            "pt": "Bem-vindo",
+            "it": "Benvenuto"
+        },
+        {
+            "en": "Language",
+            "es": "Idioma",
+            "fr": "Langue",
+            "de": "Sprache",
+            "lt": "Kalba",
+            "pt": "Idioma",
+            "it": "Lingua"
+        },
+        {
+            "en": "Select Language",
+            "es": "Seleccionar Idioma",
+            "fr": "Sélectionner la Langue",
+            "de": "Sprache Wählen",
+            "lt": "Pasirinkite kalbą",
+            "pt": "Selecionar Idioma",
+            "it": "Seleziona Lingua"
+        }
+    ]
+}
