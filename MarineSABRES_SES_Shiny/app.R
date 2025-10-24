@@ -462,8 +462,8 @@ ui <- dashboardPage(
         
         fluidRow(
           column(12,
-            h2("Export & Reports"),
-            p("Export your data, visualizations, and generate comprehensive reports.")
+            h2(i18n$t("Export & Reports")),
+            p(i18n$t("Export your data, visualizations, and generate comprehensive reports."))
           )
         ),
         
@@ -724,7 +724,9 @@ server <- function(input, output, session) {
   # Value boxes
   output$total_elements_box <- renderValueBox({
     data <- project_data()
-    n_elements <- length(unlist(data$data$isa_data))
+    # Use safe accessor to prevent crashes on missing data
+    isa_data <- safe_get_nested(data, "data", "isa_data", default = list())
+    n_elements <- length(unlist(isa_data))
 
     valueBox(
       n_elements,
@@ -736,11 +738,13 @@ server <- function(input, output, session) {
   
   output$total_connections_box <- renderValueBox({
     data <- project_data()
-    # Count non-empty adjacency matrix cells
+    # Count non-empty adjacency matrix cells with safe access
     n_connections <- 0
 
-    if(!is.null(data$data$isa_data$adjacency_matrices)) {
-      adj_matrices <- data$data$isa_data$adjacency_matrices
+    adj_matrices <- safe_get_nested(data, "data", "isa_data", "adjacency_matrices",
+                                    default = list())
+
+    if(length(adj_matrices) > 0) {
       for(mat_name in names(adj_matrices)) {
         mat <- adj_matrices[[mat_name]]
         if(!is.null(mat) && is.matrix(mat)) {
@@ -759,7 +763,9 @@ server <- function(input, output, session) {
 
   output$loops_detected_box <- renderValueBox({
     data <- project_data()
-    n_loops <- nrow(data$data$cld$loops %||% data.frame())
+    # Use safe accessor for loops data
+    loops <- safe_get_nested(data, "data", "cld", "loops", default = data.frame())
+    n_loops <- if(is.data.frame(loops)) nrow(loops) else 0
 
     valueBox(
       n_loops,
