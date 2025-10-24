@@ -484,10 +484,13 @@ ui <- dashboardPage(
             checkboxGroupInput(
               "export_data_components",
               i18n$t("Select Components:"),
-              choices = setNames(
-                c("metadata", "pims", "isa_data", "cld", "analysis", "responses"),
-                c(i18n$t("Project Metadata"), i18n$t("PIMS Data"), i18n$t("ISA Data"),
-                  i18n$t("CLD Data"), i18n$t("Analysis Results"), i18n$t("Response Measures"))
+              choices = c(
+                "metadata" = i18n$t("Project Metadata"),
+                "pims" = i18n$t("PIMS Data"),
+                "isa_data" = i18n$t("ISA Data"),
+                "cld" = i18n$t("CLD Data"),
+                "analysis" = i18n$t("Analysis Results"),
+                "responses" = i18n$t("Response Measures")
               ),
               selected = c("metadata", "isa_data", "cld")
             ),
@@ -540,10 +543,11 @@ ui <- dashboardPage(
             selectInput(
               "report_type",
               i18n$t("Report Type:"),
-              choices = setNames(
-                c("executive", "technical", "presentation", "full"),
-                c(i18n$t("Executive Summary"), i18n$t("Technical Report"),
-                  i18n$t("Stakeholder Presentation"), i18n$t("Full Project Report"))
+              choices = c(
+                "executive" = i18n$t("Executive Summary"),
+                "technical" = i18n$t("Technical Report"),
+                "presentation" = i18n$t("Stakeholder Presentation"),
+                "full" = i18n$t("Full Project Report")
               )
             ),
 
