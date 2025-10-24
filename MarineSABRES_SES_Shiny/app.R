@@ -97,7 +97,7 @@ ui <- dashboardPage(
 
       add_menu_tooltip(
         menuItem(
-          "Getting Started",
+          i18n$t("Getting Started"),
           tabName = "entry_point",
           icon = icon("compass")
         ),
@@ -106,7 +106,7 @@ ui <- dashboardPage(
 
       add_menu_tooltip(
         menuItem(
-          "Dashboard",
+          i18n$t("Dashboard"),
           tabName = "dashboard",
           icon = icon("dashboard")
         ),
@@ -115,27 +115,27 @@ ui <- dashboardPage(
 
       add_menu_tooltip(
         menuItem(
-          "PIMS Module",
+          i18n$t("PIMS Module"),
           tabName = "pims",
           icon = icon("project-diagram"),
           add_submenu_tooltip(
-            menuSubItem("Project Setup", tabName = "pims_project"),
+            menuSubItem(i18n$t("Project Setup"), tabName = "pims_project"),
             "Define project goals, scope, and basic information"
           ),
           add_submenu_tooltip(
-            menuSubItem("Stakeholders", tabName = "pims_stakeholders"),
+            menuSubItem(i18n$t("Stakeholders"), tabName = "pims_stakeholders"),
             "Identify and manage stakeholders and their interests"
           ),
           add_submenu_tooltip(
-            menuSubItem("Resources & Risks", tabName = "pims_resources"),
+            menuSubItem(i18n$t("Resources & Risks"), tabName = "pims_resources"),
             "Track project resources, timeline, and potential risks"
           ),
           add_submenu_tooltip(
-            menuSubItem("Data Management", tabName = "pims_data"),
+            menuSubItem(i18n$t("Data Management"), tabName = "pims_data"),
             "Manage data sources, quality, and documentation"
           ),
           add_submenu_tooltip(
-            menuSubItem("Evaluation", tabName = "pims_evaluation"),
+            menuSubItem(i18n$t("Evaluation"), tabName = "pims_evaluation"),
             "Evaluate project progress and outcomes"
           )
         ),
@@ -144,7 +144,7 @@ ui <- dashboardPage(
 
       add_menu_tooltip(
         menuItem(
-          "AI ISA Assistant",
+          i18n$t("AI ISA Assistant"),
           tabName = "ai_isa",
           icon = icon("robot")
         ),
@@ -153,7 +153,7 @@ ui <- dashboardPage(
 
       add_menu_tooltip(
         menuItem(
-          "ISA Data Entry",
+          i18n$t("ISA Data Entry"),
           tabName = "isa",
           icon = icon("edit")
         ),
@@ -162,7 +162,7 @@ ui <- dashboardPage(
 
       add_menu_tooltip(
         menuItem(
-          "CLD Visualization",
+          i18n$t("CLD Visualization"),
           tabName = "cld_viz",
           icon = icon("project-diagram")
         ),
@@ -171,23 +171,23 @@ ui <- dashboardPage(
 
       add_menu_tooltip(
         menuItem(
-          "Analysis Tools",
+          i18n$t("Analysis Tools"),
           tabName = "analysis",
           icon = icon("chart-line"),
           add_submenu_tooltip(
-            menuSubItem("Network Metrics", tabName = "analysis_metrics"),
+            menuSubItem(i18n$t("Network Metrics"), tabName = "analysis_metrics"),
             "Calculate centrality, density, and other network statistics"
           ),
           add_submenu_tooltip(
-            menuSubItem("Loop Detection", tabName = "analysis_loops"),
+            menuSubItem(i18n$t("Loop Detection"), tabName = "analysis_loops"),
             "Identify feedback loops and causal pathways in your network"
           ),
           add_submenu_tooltip(
-            menuSubItem("BOT Analysis", tabName = "analysis_bot"),
+            menuSubItem(i18n$t("BOT Analysis"), tabName = "analysis_bot"),
             "Behavior Over Time analysis and temporal dynamics"
           ),
           add_submenu_tooltip(
-            menuSubItem("Simplification", tabName = "analysis_simplify"),
+            menuSubItem(i18n$t("Simplification"), tabName = "analysis_simplify"),
             "Simplify complex networks while preserving key structures"
           )
         ),
@@ -196,19 +196,19 @@ ui <- dashboardPage(
 
       add_menu_tooltip(
         menuItem(
-          "Response & Validation",
+          i18n$t("Response & Validation"),
           tabName = "response",
           icon = icon("tasks"),
           add_submenu_tooltip(
-            menuSubItem("Response Measures", tabName = "response_measures"),
+            menuSubItem(i18n$t("Response Measures"), tabName = "response_measures"),
             "Define and design management responses and interventions"
           ),
           add_submenu_tooltip(
-            menuSubItem("Scenario Builder", tabName = "response_scenarios"),
+            menuSubItem(i18n$t("Scenario Builder"), tabName = "response_scenarios"),
             "Build and compare alternative future scenarios"
           ),
           add_submenu_tooltip(
-            menuSubItem("Validation", tabName = "response_validation"),
+            menuSubItem(i18n$t("Validation"), tabName = "response_validation"),
             "Validate model structure and behavior with stakeholders"
           )
         ),
@@ -217,7 +217,7 @@ ui <- dashboardPage(
 
       add_menu_tooltip(
         menuItem(
-          "Export & Reports",
+          i18n$t("Export Data"),
           tabName = "export",
           icon = icon("download")
         ),
@@ -245,27 +245,27 @@ ui <- dashboardPage(
         h5("Quick Actions"),
         actionButton(
           "save_project",
-          "Save Project",
+          i18n$t("Save Project"),
           icon = icon("save"),
           class = "btn-primary btn-block",
-          title = "Save your current project data to a file"
+          title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results")
         ),
         bsTooltip(
           id = "save_project",
-          title = "Save your current project data, including all PIMS, ISA entries, and analysis results",
+          title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results"),
           placement = "right",
           trigger = "hover"
         ),
         actionButton(
           "load_project",
-          "Load Project",
+          i18n$t("Load Project"),
           icon = icon("folder-open"),
           class = "btn-secondary btn-block",
-          title = "Load a previously saved project"
+          title = i18n$t("Load a previously saved project")
         ),
         bsTooltip(
           id = "load_project",
-          title = "Load a previously saved project file to continue your work",
+          title = i18n$t("Load a previously saved project"),
           placement = "right",
           trigger = "hover"
         )
