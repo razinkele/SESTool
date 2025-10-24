@@ -891,10 +891,10 @@ validate_project_structure <- function(data) {
     return(FALSE)
   }
 
-  # Required top-level keys
-  required_keys <- c("project_id", "project_name", "data", "created", "last_modified")
+  # Essential keys (must have)
+  essential_keys <- c("project_id", "project_name", "data")
 
-  if (!all(required_keys %in% names(data))) {
+  if (!all(essential_keys %in% names(data))) {
     return(FALSE)
   }
 
@@ -912,13 +912,25 @@ validate_project_structure <- function(data) {
     return(FALSE)
   }
 
-  # Dates should be POSIXct or convertible
-  if (!inherits(data$created, "POSIXct") && !is.character(data$created)) {
+  # Date validation - accept both 'created' and 'created_at' field names
+  has_created <- "created" %in% names(data)
+  has_created_at <- "created_at" %in% names(data)
+
+  if (!has_created && !has_created_at) {
     return(FALSE)
   }
 
-  if (!inherits(data$last_modified, "POSIXct") && !is.character(data$last_modified)) {
+  # Validate the date field that exists
+  created_field <- if (has_created) data$created else data$created_at
+  if (!inherits(created_field, "POSIXct") && !is.character(created_field)) {
     return(FALSE)
+  }
+
+  # Validate last_modified if present (optional for backward compatibility)
+  if ("last_modified" %in% names(data)) {
+    if (!inherits(data$last_modified, "POSIXct") && !is.character(data$last_modified)) {
+      return(FALSE)
+    }
   }
 
   return(TRUE)
