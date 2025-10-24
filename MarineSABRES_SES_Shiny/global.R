@@ -78,6 +78,9 @@ AVAILABLE_LANGUAGES <- list(
 # SOURCE HELPER FUNCTIONS
 # ============================================================================
 
+# UI helper functions
+source("functions/ui_helpers.R", local = TRUE)
+
 # Data structure functions
 source("functions/data_structure.R", local = TRUE)
 
