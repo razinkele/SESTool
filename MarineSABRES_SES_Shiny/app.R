@@ -857,12 +857,40 @@ server <- function(input, output, session) {
   
   output$confirm_save <- downloadHandler(
     filename = function() {
-      paste0(input$save_project_name, "_", Sys.Date(), ".rds")
+      # Sanitize filename to prevent path traversal
+      safe_name <- sanitize_filename(input$save_project_name)
+      paste0(safe_name, "_", Sys.Date(), ".rds")
     },
     content = function(file) {
-      saveRDS(project_data(), file)
-      removeModal()
-      showNotification("Project saved successfully!", type = "message")
+      tryCatch({
+        # Validate data structure before saving
+        data <- project_data()
+        if (!is.list(data) || !all(c("project_id", "data") %in% names(data))) {
+          showNotification("Error: Invalid project data structure",
+                          type = "error", duration = 10)
+          return(NULL)
+        }
+
+        # Save with error handling
+        saveRDS(data, file)
+
+        # Verify saved file
+        if (!file.exists(file) || file.size(file) == 0) {
+          showNotification("Error: File save failed or file is empty",
+                          type = "error", duration = 10)
+          return(NULL)
+        }
+
+        removeModal()
+        showNotification("Project saved successfully!", type = "message")
+
+      }, error = function(e) {
+        showNotification(
+          paste("Error saving project:", e$message),
+          type = "error",
+          duration = 10
+        )
+      })
     }
   )
   
@@ -880,12 +908,34 @@ server <- function(input, output, session) {
   
   observeEvent(input$confirm_load, {
     req(input$load_project_file)
-    
-    loaded_data <- readRDS(input$load_project_file$datapath)
-    project_data(loaded_data)
-    
-    removeModal()
-    showNotification("Project loaded successfully!", type = "message")
+
+    tryCatch({
+      # Load RDS file
+      loaded_data <- readRDS(input$load_project_file$datapath)
+
+      # Validate project structure
+      if (!validate_project_structure(loaded_data)) {
+        showNotification(
+          "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
+          type = "error",
+          duration = 10
+        )
+        return()
+      }
+
+      # Load validated data
+      project_data(loaded_data)
+
+      removeModal()
+      showNotification("Project loaded successfully!", type = "message")
+
+    }, error = function(e) {
+      showNotification(
+        paste("Error loading project:", e$message),
+        type = "error",
+        duration = 10
+      )
+    })
   })
   
   # ========== EXPORT HANDLERS ==========

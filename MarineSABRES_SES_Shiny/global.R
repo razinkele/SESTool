@@ -820,6 +820,128 @@ init_session_data <- function() {
 }
 
 # ============================================================================
+# SECURITY & VALIDATION HELPER FUNCTIONS
+# ============================================================================
+
+# Sanitize color values to prevent XSS
+sanitize_color <- function(color) {
+  if (is.null(color) || !is.character(color) || length(color) != 1) {
+    return("#cccccc")  # Safe default
+  }
+
+  # Whitelist of valid colors used in the application
+  valid_colors <- c(
+    "#776db3", "#5abc67", "#fec05a", "#bce2ee", "#313695", "#fff1a2",
+    "#cccccc", "#d73027", "#f46d43", "#fdae61", "#fee08b", "#d9ef8b",
+    "#a6d96a", "#66bd63", "#1a9850", "#3288bd", "#5e4fa2"
+  )
+
+  # Check if color is in whitelist
+  if (color %in% valid_colors) {
+    return(color)
+  }
+
+  # Validate hex color format (#RRGGBB)
+  if (grepl("^#[0-9A-Fa-f]{6}$", color)) {
+    return(color)
+  }
+
+  # Validate RGB format (rgb(r,g,b))
+  if (grepl("^rgb\\([0-9]{1,3},\\s*[0-9]{1,3},\\s*[0-9]{1,3}\\)$", color)) {
+    return(color)
+  }
+
+  # Return safe default if validation fails
+  return("#cccccc")
+}
+
+# Sanitize filename to prevent path traversal
+sanitize_filename <- function(name) {
+  if (is.null(name) || !is.character(name) || length(name) != 1) {
+    return("project")
+  }
+
+  # Remove path separators and dangerous characters
+  name <- gsub("[/\\\\:*?\"<>|]", "", name)
+
+  # Keep only alphanumeric, underscore, hyphen, space
+  name <- gsub("[^A-Za-z0-9_\\- ]", "", name)
+
+  # Trim whitespace
+  name <- trimws(name)
+
+  # Truncate to reasonable length
+  name <- substr(name, 1, 50)
+
+  # Ensure not empty
+  if (nchar(name) == 0) {
+    name <- "project"
+  }
+
+  return(name)
+}
+
+# Validate project data structure
+validate_project_structure <- function(data) {
+  # Check if data is a list
+  if (!is.list(data)) {
+    return(FALSE)
+  }
+
+  # Required top-level keys
+  required_keys <- c("project_id", "project_name", "data", "created", "last_modified")
+
+  if (!all(required_keys %in% names(data))) {
+    return(FALSE)
+  }
+
+  # Check that data is a list
+  if (!is.list(data$data)) {
+    return(FALSE)
+  }
+
+  # Basic type validation
+  if (!is.character(data$project_id) || length(data$project_id) != 1) {
+    return(FALSE)
+  }
+
+  if (!is.character(data$project_name) || length(data$project_name) != 1) {
+    return(FALSE)
+  }
+
+  # Dates should be POSIXct or convertible
+  if (!inherits(data$created, "POSIXct") && !is.character(data$created)) {
+    return(FALSE)
+  }
+
+  if (!inherits(data$last_modified, "POSIXct") && !is.character(data$last_modified)) {
+    return(FALSE)
+  }
+
+  return(TRUE)
+}
+
+# Safe nested data accessor
+safe_get_nested <- function(data, ..., default = NULL) {
+  keys <- list(...)
+  result <- data
+
+  for (key in keys) {
+    if (is.null(result)) {
+      return(default)
+    }
+
+    if (is.list(result) && key %in% names(result)) {
+      result <- result[[key]]
+    } else {
+      return(default)
+    }
+  }
+
+  return(result)
+}
+
+# ============================================================================
 # APPLICATION SETTINGS
 # ============================================================================
 

@@ -403,7 +403,7 @@ render_ep1 <- function(ns, rv) {
         div(
           class = if(!is.null(rv$ep1_selected) && rv$ep1_selected == need$id) "ep-card selected" else "ep-card",
           onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'})", ns("ep1_need_click"), need$id),
-          style = sprintf("border-left: 5px solid %s;", need$color),
+          style = sprintf("border-left: 5px solid %s;", sanitize_color(need$color)),
           `data-toggle` = "tooltip",
           `data-placement` = "top",
           title = paste0(need$label, ": ", need$description),
