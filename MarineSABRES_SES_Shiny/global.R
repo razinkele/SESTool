@@ -70,7 +70,9 @@ AVAILABLE_LANGUAGES <- list(
   "es" = list(name = "Español", flag = "🇪🇸"),
   "fr" = list(name = "Français", flag = "🇫🇷"),
   "de" = list(name = "Deutsch", flag = "🇩🇪"),
-  "lt" = list(name = "Lietuvių", flag = "🇱🇹")
+  "lt" = list(name = "Lietuvių", flag = "🇱🇹"),
+  "pt" = list(name = "Português", flag = "🇵🇹"),
+  "it" = list(name = "Italiano", flag = "🇮🇹")
 )
 
 # ============================================================================

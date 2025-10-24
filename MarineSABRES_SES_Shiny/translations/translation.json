@@ -4,7 +4,9 @@
         "es",
         "fr",
         "de",
-        "lt"
+        "lt",
+        "pt",
+        "it"
     ],
     "translation": [
         {
@@ -12,133 +14,171 @@
             "es": "Bienvenido a la Caja de Herramientas MarineSABRES",
             "fr": "Bienvenue dans la Boîte à Outils MarineSABRES",
             "de": "Willkommen bei der MarineSABRES Toolbox",
-            "lt": "Sveiki atvykę į MarineSABRES įrankių rinkinį"
+            "lt": "Sveiki atvykę į MarineSABRES įrankių rinkinį",
+            "pt": "Bem-vindo à Caixa de Ferramentas MarineSABRES",
+            "it": "Benvenuto nella Toolbox MarineSABRES"
         },
         {
             "en": "This guidance system will help you find the right tools for your marine management needs.",
             "es": "Este sistema de orientación le ayudará a encontrar las herramientas adecuadas para sus necesidades de gestión marina.",
             "fr": "Ce système d'orientation vous aidera à trouver les bons outils pour vos besoins en gestion marine.",
             "de": "Dieses Orientierungssystem hilft Ihnen, die richtigen Werkzeuge für Ihre Meeresmanagement-Bedürfnisse zu finden.",
-            "lt": "Ši orientavimo sistema padės jums rasti tinkamas priemones jūrų valdymo poreikiams."
+            "lt": "Ši orientavimo sistema padės jums rasti tinkamas priemones jūrų valdymo poreikiams.",
+            "pt": "Este sistema de orientação irá ajudá-lo a encontrar as ferramentas certas para as suas necessidades de gestão marinha.",
+            "it": "Questo sistema di orientamento ti aiuterà a trovare gli strumenti giusti per le tue esigenze di gestione marina."
         },
         {
             "en": "What is your main marine management question?",
             "es": "¿Cuál es su principal pregunta sobre gestión marina?",
             "fr": "Quelle est votre principale question sur la gestion marine?",
             "de": "Was ist Ihre Hauptfrage zum Meeresmanagement?",
-            "lt": "Koks yra jūsų pagrindinis jūrų valdymo klausimas?"
+            "lt": "Koks yra jūsų pagrindinis jūrų valdymo klausimas?",
+            "pt": "Qual é a sua principal questão de gestão marinha?",
+            "it": "Qual è la tua principale domanda sulla gestione marina?"
         },
         {
             "en": "Guided Pathway",
             "es": "Ruta Guiada",
             "fr": "Parcours Guidé",
             "de": "Geführter Pfad",
-            "lt": "Vedamas kelias"
+            "lt": "Vedamas kelias",
+            "pt": "Percurso Guiado",
+            "it": "Percorso Guidato"
         },
         {
             "en": "Step-by-step guidance through the entry points",
             "es": "Orientación paso a paso a través de los puntos de entrada",
             "fr": "Orientation étape par étape à travers les points d'entrée",
             "de": "Schritt-für-Schritt-Anleitung durch die Einstiegspunkte",
-            "lt": "Nuoseklus vedimas per įėjimo taškus"
+            "lt": "Nuoseklus vedimas per įėjimo taškus",
+            "pt": "Orientação passo a passo através dos pontos de entrada",
+            "it": "Guida passo dopo passo attraverso i punti di ingresso"
         },
         {
             "en": "Start Guided Journey",
             "es": "Comenzar Viaje Guiado",
             "fr": "Commencer le Parcours Guidé",
             "de": "Geführte Reise Starten",
-            "lt": "Pradėti vedamą kelionę"
+            "lt": "Pradėti vedamą kelionę",
+            "pt": "Iniciar Percurso Guiado",
+            "it": "Inizia il Percorso Guidato"
         },
         {
             "en": "Quick Access",
             "es": "Acceso Rápido",
             "fr": "Accès Rapide",
             "de": "Schnellzugriff",
-            "lt": "Greita prieiga"
+            "lt": "Greita prieiga",
+            "pt": "Acesso Rápido",
+            "it": "Accesso Rapido"
         },
         {
             "en": "I know what tool I need",
             "es": "Sé qué herramienta necesito",
             "fr": "Je sais quel outil j'ai besoin",
             "de": "Ich weiß, welches Werkzeug ich brauche",
-            "lt": "Žinau, kokios priemonės man reikia"
+            "lt": "Žinau, kokios priemonės man reikia",
+            "pt": "Sei qual ferramenta preciso",
+            "it": "So quale strumento mi serve"
         },
         {
             "en": "Browse Tools",
             "es": "Explorar Herramientas",
             "fr": "Parcourir les Outils",
             "de": "Werkzeuge Durchsuchen",
-            "lt": "Naršyti priemones"
+            "lt": "Naršyti priemones",
+            "pt": "Explorar Ferramentas",
+            "it": "Esplora Strumenti"
         },
         {
             "en": "Entry Point 0: Who Are You?",
             "es": "Punto de Entrada 0: ¿Quién Eres?",
             "fr": "Point d'Entrée 0: Qui Êtes-Vous?",
             "de": "Einstiegspunkt 0: Wer Sind Sie?",
-            "lt": "Įėjimo taškas 0: Kas jūs?"
+            "lt": "Įėjimo taškas 0: Kas jūs?",
+            "pt": "Ponto de Entrada 0: Quem É Você?",
+            "it": "Punto di Ingresso 0: Chi Sei?"
         },
         {
             "en": "Select your role in marine management",
             "es": "Seleccione su rol en la gestión marina",
             "fr": "Sélectionnez votre rôle dans la gestion marine",
             "de": "Wählen Sie Ihre Rolle im Meeresmanagement",
-            "lt": "Pasirinkite savo vaidmenį jūrų valdyme"
+            "lt": "Pasirinkite savo vaidmenį jūrų valdyme",
+            "pt": "Selecione o seu papel na gestão marinha",
+            "it": "Seleziona il tuo ruolo nella gestione marina"
         },
         {
             "en": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
             "es": "Su rol nos ayuda a recomendar las herramientas y flujos de trabajo más relevantes para su contexto de gestión marina.",
             "fr": "Votre rôle nous aide à recommander les outils et flux de travail les plus pertinents pour votre contexte de gestion marine.",
             "de": "Ihre Rolle hilft uns, die relevantesten Werkzeuge und Arbeitsabläufe für Ihren Meeresmanagement-Kontext zu empfehlen.",
-            "lt": "Jūsų vaidmuo padeda mums rekomenduoti tinkamiausias priemones ir darbo eigas jūsų jūrų valdymo kontekstui."
+            "lt": "Jūsų vaidmuo padeda mums rekomenduoti tinkamiausias priemones ir darbo eigas jūsų jūrų valdymo kontekstui.",
+            "pt": "O seu papel ajuda-nos a recomendar as ferramentas e fluxos de trabalho mais relevantes para o seu contexto de gestão marinha.",
+            "it": "Il tuo ruolo ci aiuta a raccomandare gli strumenti e i flussi di lavoro più rilevanti per il tuo contesto di gestione marina."
         },
         {
             "en": "Entry Point 1: Why Do You Care?",
             "es": "Punto de Entrada 1: ¿Por Qué Te Importa?",
             "fr": "Point d'Entrée 1: Pourquoi Cela Vous Importe?",
             "de": "Einstiegspunkt 1: Warum Interessiert Es Sie?",
-            "lt": "Įėjimo taškas 1: Kodėl jums rūpi?"
+            "lt": "Įėjimo taškas 1: Kodėl jums rūpi?",
+            "pt": "Ponto de Entrada 1: Por Que Se Importa?",
+            "it": "Punto di Ingresso 1: Perché Ti Importa?"
         },
         {
             "en": "What basic human need drives your question?",
             "es": "¿Qué necesidad humana básica impulsa su pregunta?",
             "fr": "Quel besoin humain fondamental motive votre question?",
             "de": "Welches grundlegende menschliche Bedürfnis treibt Ihre Frage an?",
-            "lt": "Koks pagrindinis žmogaus poreikis skatina jūsų klausimą?"
+            "lt": "Koks pagrindinis žmogaus poreikis skatina jūsų klausimą?",
+            "pt": "Que necessidade humana básica impulsiona a sua questão?",
+            "it": "Quale bisogno umano fondamentale guida la tua domanda?"
         },
         {
             "en": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
             "es": "Comprender la necesidad humana fundamental detrás de su pregunta ayuda a identificar servicios ecosistémicos relevantes y prioridades de gestión.",
             "fr": "Comprendre le besoin humain fondamental derrière votre question aide à identifier les services écosystémiques pertinents et les priorités de gestion.",
             "de": "Das Verständnis des grundlegenden menschlichen Bedürfnisses hinter Ihrer Frage hilft, relevante Ökosystemleistungen und Management-Prioritäten zu identifizieren.",
-            "lt": "Supratimas pagrindinio žmogaus poreikio už jūsų klausimo padeda nustatyti svarbias ekosistemų paslaugas ir valdymo prioritetus."
+            "lt": "Supratimas pagrindinio žmogaus poreikio už jūsų klausimo padeda nustatyti svarbias ekosistemų paslaugas ir valdymo prioritetus.",
+            "pt": "Compreender a necessidade humana fundamental por trás da sua questão ajuda a identificar serviços ecossistémicos relevantes e prioridades de gestão.",
+            "it": "Comprendere il bisogno umano fondamentale dietro la tua domanda aiuta a identificare i servizi ecosistemici rilevanti e le priorità di gestione."
         },
         {
             "en": "EP2: Activity Sectors",
             "es": "EP2: Sectores de Actividad",
             "fr": "EP2: Secteurs d'Activité",
             "de": "EP2: Aktivitätssektoren",
-            "lt": "EP2: Veiklos sektoriai"
+            "lt": "EP2: Veiklos sektoriai",
+            "pt": "EP2: Setores de Atividade",
+            "it": "EP2: Settori di Attività"
         },
         {
             "en": "Select all that apply (multiple selection allowed)",
             "es": "Seleccione todos los que correspondan (se permite selección múltiple)",
             "fr": "Sélectionnez tout ce qui s'applique (sélection multiple autorisée)",
             "de": "Wählen Sie alle zutreffenden aus (Mehrfachauswahl möglich)",
-            "lt": "Pasirinkite visus tinkamus (galima kelių pasirinkimas)"
+            "lt": "Pasirinkite visus tinkamus (galima kelių pasirinkimas)",
+            "pt": "Selecione todos os que se aplicam (seleção múltipla permitida)",
+            "it": "Seleziona tutte quelle applicabili (selezione multipla consentita)"
         },
         {
             "en": "Select the human activities relevant to your marine management question. These represent the 'Drivers' and 'Activities' in the DAPSI(W)R(M) framework.",
             "es": "Seleccione las actividades humanas relevantes para su pregunta de gestión marina. Estas representan los 'Impulsores' y 'Actividades' en el marco DAPSI(W)R(M).",
             "fr": "Sélectionnez les activités humaines pertinentes pour votre question de gestion marine. Elles représentent les 'Moteurs' et 'Activités' dans le cadre DAPSI(W)R(M).",
             "de": "Wählen Sie die für Ihre Meeresmanagement-Frage relevanten menschlichen Aktivitäten. Diese repräsentieren die 'Treiber' und 'Aktivitäten' im DAPSI(W)R(M)-Rahmen.",
-            "lt": "Pasirinkite žmogaus veiklą, susijusią su jūsų jūrų valdymo klausimu. Tai atspindi 'Varomąsias jėgas' ir 'Veiklą' DAPSI(W)R(M) sistemoje."
+            "lt": "Pasirinkite žmogaus veiklą, susijusią su jūsų jūrų valdymo klausimu. Tai atspindi 'Varomąsias jėgas' ir 'Veiklą' DAPSI(W)R(M) sistemoje.",
+            "pt": "Seleccione las actividades humanas relevantes para su pregunta de gestión marina. Estas representan los 'Impulsores' y 'Actividades' en el marco DAPSI(W)R(M).",
+            "it": "Sélectionnez les activités humaines pertinentes pour votre question de gestion marine. Elles représentent les 'Moteurs' et 'Activités' dans le cadre DAPSI(W)R(M)."
         },
         {
             "en": "EP3: Risks & Hazards",
             "es": "EP3: Riesgos y Peligros",
             "fr": "EP3: Risques et Dangers",
             "de": "EP3: Risiken & Gefahren",
-            "lt": "EP3: Rizikos ir pavojai"
+            "lt": "EP3: Rizikos ir pavojai",
+            "pt": "EP3: Riscos e Perigos",
+            "it": "EP3: Rischi e Pericoli"
         },
         {
             "en": "Select the environmental pressures, risks, or hazards you're concerned about. These represent 'Pressures' and 'State changes' in the DAPSI(W)R(M) framework.",
@@ -181,21 +221,27 @@
             "es": "Saltar",
             "fr": "Passer",
             "de": "Überspringen",
-            "lt": "Praleisti"
+            "lt": "Praleisti",
+            "pt": "Ignorar",
+            "it": "Salta"
         },
         {
             "en": "Back",
             "es": "Atrás",
             "fr": "Retour",
             "de": "Zurück",
-            "lt": "Atgal"
+            "lt": "Atgal",
+            "pt": "Voltar",
+            "it": "Indietro"
         },
         {
             "en": "Continue",
             "es": "Continuar",
             "fr": "Continuer",
             "de": "Weiter",
-            "lt": "Tęsti"
+            "lt": "Tęsti",
+            "pt": "Continuar",
+            "it": "Continua"
         },
         {
             "en": "Get Recommendations",
@@ -247,7 +293,9 @@
             "es": "Actividades:",
             "fr": "Activités:",
             "de": "Aktivitäten:",
-            "lt": "Veiklos:"
+            "lt": "Veiklos:",
+            "pt": "Atividades:",
+            "it": "Attività:"
         },
         {
             "en": "Risks:",
