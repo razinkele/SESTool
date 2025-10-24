@@ -109,6 +109,9 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL)
 
     # ========== MAIN CONTENT RENDERER ==========
     output$main_content <- renderUI({
+      # Add reactive dependency on current language to trigger re-render when language changes
+      current_lang <- i18n$get_translation_language()
+
       if (rv$current_screen == "welcome") {
         render_welcome_screen(session$ns)
       } else if (rv$current_screen == "guided") {
