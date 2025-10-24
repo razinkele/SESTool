@@ -469,113 +469,109 @@ ui <- dashboardPage(
         
         fluidRow(
           box(
-            title = "Export Data",
+            title = i18n$t("Export Data"),
             status = "primary",
             solidHeader = TRUE,
             width = 6,
-            
+
             selectInput(
               "export_data_format",
-              "Select Format:",
-              choices = c("Excel (.xlsx)", "CSV (.csv)", "JSON (.json)", 
+              i18n$t("Select Format:"),
+              choices = c("Excel (.xlsx)", "CSV (.csv)", "JSON (.json)",
                          "R Data (.RData)")
             ),
-            
+
             checkboxGroupInput(
               "export_data_components",
-              "Select Components:",
-              choices = c(
-                "Project Metadata" = "metadata",
-                "PIMS Data" = "pims",
-                "ISA Data" = "isa_data",
-                "CLD Data" = "cld",
-                "Analysis Results" = "analysis",
-                "Response Measures" = "responses"
+              i18n$t("Select Components:"),
+              choices = setNames(
+                c("metadata", "pims", "isa_data", "cld", "analysis", "responses"),
+                c(i18n$t("Project Metadata"), i18n$t("PIMS Data"), i18n$t("ISA Data"),
+                  i18n$t("CLD Data"), i18n$t("Analysis Results"), i18n$t("Response Measures"))
               ),
               selected = c("metadata", "isa_data", "cld")
             ),
-            
-            downloadButton("download_data", "Download Data", 
+
+            downloadButton("download_data", i18n$t("Download Data"),
                           class = "btn-primary")
           ),
           
           box(
-            title = "Export Visualizations",
+            title = i18n$t("Export Visualizations"),
             status = "info",
             solidHeader = TRUE,
             width = 6,
-            
+
             selectInput(
               "export_viz_format",
-              "Select Format:",
-              choices = c("PNG (.png)", "SVG (.svg)", "HTML (.html)", 
+              i18n$t("Select Format:"),
+              choices = c("PNG (.png)", "SVG (.svg)", "HTML (.html)",
                          "PDF (.pdf)")
             ),
-            
+
             numericInput(
               "export_viz_width",
-              "Width (pixels):",
+              i18n$t("Width (pixels):"),
               value = 1200,
               min = 400,
               max = 4000
             ),
-            
+
             numericInput(
               "export_viz_height",
-              "Height (pixels):",
+              i18n$t("Height (pixels):"),
               value = 900,
               min = 300,
               max = 3000
             ),
-            
-            downloadButton("download_viz", "Download Visualization", 
+
+            downloadButton("download_viz", i18n$t("Download Visualization"),
                           class = "btn-info")
           )
         ),
         
         fluidRow(
           box(
-            title = "Generate Report",
+            title = i18n$t("Generate Report"),
             status = "success",
             solidHeader = TRUE,
             width = 12,
-            
+
             selectInput(
               "report_type",
-              "Report Type:",
-              choices = c(
-                "Executive Summary" = "executive",
-                "Technical Report" = "technical",
-                "Stakeholder Presentation" = "presentation",
-                "Full Project Report" = "full"
+              i18n$t("Report Type:"),
+              choices = setNames(
+                c("executive", "technical", "presentation", "full"),
+                c(i18n$t("Executive Summary"), i18n$t("Technical Report"),
+                  i18n$t("Stakeholder Presentation"), i18n$t("Full Project Report"))
               )
             ),
-            
+
             selectInput(
               "report_format",
-              "Report Format:",
+              i18n$t("Report Format:"),
               choices = c("HTML", "PDF", "Word")
             ),
-            
+
             checkboxInput(
               "report_include_viz",
-              "Include Visualizations",
+              i18n$t("Include Visualizations"),
               value = TRUE
             ),
-            
+
             checkboxInput(
               "report_include_data",
-              "Include Data Tables",
+              i18n$t("Include Data Tables"),
               value = TRUE
             ),
-            
+
             actionButton(
               "generate_report",
-              "Generate Report",
+              i18n$t("Generate Report"),
               icon = icon("file-alt"),
               class = "btn-success"
             ),
-            
+
             uiOutput("report_status")
           )
         )
