@@ -679,6 +679,27 @@ isaDataEntryServer <- function(id, global_data) {
           ))
         }
       }
+
+      # Validate data before saving
+      validation_errors <- validate_isa_data(gb_df, "Exercise 1: Goods & Benefits",
+                                            required_cols = c("ID", "Name", "Type"))
+
+      if (length(validation_errors) > 0) {
+        showModal(modalDialog(
+          title = tags$div(icon("exclamation-triangle"), " Validation Errors"),
+          tags$div(
+            tags$p(strong("Please fix the following issues before saving:")),
+            tags$ul(
+              lapply(validation_errors, function(err) tags$li(err))
+            )
+          ),
+          easyClose = TRUE,
+          footer = modalButton("OK")
+        ))
+        return()
+      }
+
+      # Save if validation passes
       isa_data$goods_benefits <- gb_df
       showNotification(paste("Exercise 1 saved:", nrow(gb_df), "Goods & Benefits"), type = "message")
     })

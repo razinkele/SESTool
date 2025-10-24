@@ -957,6 +957,59 @@ safe_get_nested <- function(data, ..., default = NULL) {
   return(result)
 }
 
+# Validate ISA exercise data
+# Generic validation for ISA data frames
+# @param data data.frame - The data frame to validate
+# @param exercise_name character - Name of the exercise for error messages
+# @param required_cols character vector - Required column names
+# @return character vector of error messages (empty if valid)
+validate_isa_data <- function(data, exercise_name, required_cols = c("ID", "Name")) {
+  errors <- c()
+
+  # Check if data is a data frame
+  if (!is.data.frame(data)) {
+    errors <- c(errors, paste(exercise_name, "data must be a data frame"))
+    return(errors)
+  }
+
+  # Check if at least one entry exists
+  if (nrow(data) == 0) {
+    errors <- c(errors, paste(exercise_name, "must have at least one entry"))
+    return(errors)
+  }
+
+  # Check required columns exist
+  missing_cols <- setdiff(required_cols, names(data))
+  if (length(missing_cols) > 0) {
+    errors <- c(errors, paste(exercise_name, "missing required columns:",
+                             paste(missing_cols, collapse = ", ")))
+  }
+
+  # Check for empty names
+  if ("Name" %in% names(data)) {
+    empty_names <- is.na(data$Name) | data$Name == "" | trimws(data$Name) == ""
+    if (any(empty_names)) {
+      errors <- c(errors, paste(exercise_name, "has", sum(empty_names), "entries with empty names"))
+    }
+
+    # Check for duplicate names
+    if (any(duplicated(data$Name[!empty_names]))) {
+      dupe_names <- data$Name[duplicated(data$Name) & !empty_names]
+      errors <- c(errors, paste(exercise_name, "has duplicate names:",
+                               paste(unique(dupe_names), collapse = ", ")))
+    }
+  }
+
+  # Check ID column if it exists
+  if ("ID" %in% names(data)) {
+    if (any(is.na(data$ID) | data$ID == "")) {
+      errors <- c(errors, paste(exercise_name, "has entries with missing IDs"))
+    }
+  }
+
+  return(errors)
+}
+
 # ============================================================================
 # APPLICATION SETTINGS
 # ============================================================================
