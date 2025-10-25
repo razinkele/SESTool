@@ -1386,9 +1386,49 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
           list(name = "Monitoring and enforcement programs", description = "", timestamp = Sys.time())
         )
       )
+
+      # Add example connections
+      rv$suggested_connections <- list(
+        # Drivers → Activities
+        list(from = "Food security", to = "Commercial fishing", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 1),
+        list(from = "Economic development", to = "Commercial fishing", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "strong", matrix = "a_d", from_index = 2, to_index = 1),
+        list(from = "Economic development", to = "Recreational fishing", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "medium", matrix = "a_d", from_index = 2, to_index = 2),
+        # Activities → Pressures
+        list(from = "Commercial fishing", to = "Overfishing", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "strong", matrix = "p_a", from_index = 1, to_index = 1),
+        list(from = "Commercial fishing", to = "Bycatch of non-target species", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "medium", matrix = "p_a", from_index = 1, to_index = 2),
+        list(from = "Recreational fishing", to = "Overfishing", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "weak", matrix = "p_a", from_index = 2, to_index = 1),
+        # Pressures → States
+        list(from = "Overfishing", to = "Declining fish stocks", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 1, to_index = 1),
+        list(from = "Overfishing", to = "Altered food webs", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 1, to_index = 2),
+        list(from = "Bycatch of non-target species", to = "Altered food webs", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 2, to_index = 2),
+        # States → Impacts
+        list(from = "Declining fish stocks", to = "Reduced fish catch", from_category = "states", to_category = "impacts",
+             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 1, to_index = 1),
+        list(from = "Altered food webs", to = "Loss of biodiversity value", from_category = "states", to_category = "impacts",
+             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 2, to_index = 2),
+        # Impacts → Welfare
+        list(from = "Reduced fish catch", to = "Loss of livelihoods for fishers", from_category = "impacts", to_category = "welfare",
+             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 1, to_index = 1),
+        list(from = "Reduced fish catch", to = "Food insecurity", from_category = "impacts", to_category = "welfare",
+             polarity = "-", strength = "medium", matrix = "gb_es", from_index = 1, to_index = 2),
+        list(from = "Loss of biodiversity value", to = "Loss of livelihoods for fishers", from_category = "impacts", to_category = "welfare",
+             polarity = "-", strength = "weak", matrix = "gb_es", from_index = 2, to_index = 1)
+      )
+
+      # Mark all connections as approved
+      rv$approved_connections <- seq_along(rv$suggested_connections)
       rv$current_step <- 10  # Mark as complete
       removeModal()
-      showNotification("Overfishing template loaded! You can now preview or modify it.", type = "message", duration = 5)
+      showNotification("Overfishing template loaded with example connections! You can now preview or modify it.", type = "message", duration = 5)
     })
 
     # Template: Marine Pollution
@@ -1433,9 +1473,51 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
           list(name = "Education and awareness campaigns", description = "", timestamp = Sys.time())
         )
       )
+
+      # Add example connections
+      rv$suggested_connections <- list(
+        # Drivers → Activities
+        list(from = "Economic development", to = "Coastal development", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 1),
+        list(from = "Economic development", to = "Tourism", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 2),
+        list(from = "Consumer demand", to = "Tourism", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "medium", matrix = "a_d", from_index = 2, to_index = 2),
+        list(from = "Economic development", to = "Shipping", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 3),
+        # Activities → Pressures
+        list(from = "Coastal development", to = "Marine litter and plastics", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "medium", matrix = "p_a", from_index = 1, to_index = 1),
+        list(from = "Tourism", to = "Marine litter and plastics", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "strong", matrix = "p_a", from_index = 2, to_index = 1),
+        list(from = "Shipping", to = "Marine litter and plastics", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "medium", matrix = "p_a", from_index = 3, to_index = 1),
+        list(from = "Coastal development", to = "Chemical pollution", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "weak", matrix = "p_a", from_index = 1, to_index = 2),
+        # Pressures → States
+        list(from = "Marine litter and plastics", to = "Water quality decline", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 1, to_index = 1),
+        list(from = "Marine litter and plastics", to = "Habitat degradation", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 1, to_index = 2),
+        list(from = "Chemical pollution", to = "Water quality decline", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 2, to_index = 1),
+        # States → Impacts
+        list(from = "Water quality decline", to = "Reduced water quality for recreation", from_category = "states", to_category = "impacts",
+             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 1, to_index = 2),
+        list(from = "Habitat degradation", to = "Loss of tourism revenue", from_category = "states", to_category = "impacts",
+             polarity = "-", strength = "medium", matrix = "es_mpf", from_index = 2, to_index = 1),
+        # Impacts → Welfare
+        list(from = "Reduced water quality for recreation", to = "Health impacts from contamination", from_category = "impacts", to_category = "welfare",
+             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 2, to_index = 1),
+        list(from = "Loss of tourism revenue", to = "Economic losses in tourism", from_category = "impacts", to_category = "welfare",
+             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 1, to_index = 2)
+      )
+
+      # Mark all connections as approved
+      rv$approved_connections <- seq_along(rv$suggested_connections)
       rv$current_step <- 10
       removeModal()
-      showNotification("Marine Pollution template loaded!", type = "message", duration = 5)
+      showNotification("Marine Pollution template loaded with example connections!", type = "message", duration = 5)
     })
 
     # Template: Coastal Tourism
@@ -1479,9 +1561,49 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
           list(name = "Certification schemes for sustainable tourism", description = "", timestamp = Sys.time())
         )
       )
+
+      # Add example connections
+      rv$suggested_connections <- list(
+        # Drivers → Activities
+        list(from = "Recreation and leisure", to = "Tourism and recreation", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 1),
+        list(from = "Economic development", to = "Tourism and recreation", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "medium", matrix = "a_d", from_index = 2, to_index = 1),
+        list(from = "Economic development", to = "Coastal development (hotels, infrastructure)", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "strong", matrix = "a_d", from_index = 2, to_index = 2),
+        # Activities → Pressures
+        list(from = "Tourism and recreation", to = "Physical habitat damage", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "medium", matrix = "p_a", from_index = 1, to_index = 1),
+        list(from = "Tourism and recreation", to = "Pollution from tourists", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "strong", matrix = "p_a", from_index = 1, to_index = 2),
+        list(from = "Coastal development (hotels, infrastructure)", to = "Physical habitat damage", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "strong", matrix = "p_a", from_index = 2, to_index = 1),
+        # Pressures → States
+        list(from = "Physical habitat damage", to = "Habitat degradation", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 1, to_index = 1),
+        list(from = "Physical habitat damage", to = "Loss of biodiversity", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 1, to_index = 2),
+        list(from = "Pollution from tourists", to = "Habitat degradation", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 2, to_index = 1),
+        # States → Impacts
+        list(from = "Habitat degradation", to = "Reduced coastal protection", from_category = "states", to_category = "impacts",
+             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 1, to_index = 1),
+        list(from = "Loss of biodiversity", to = "Loss of cultural and aesthetic value", from_category = "states", to_category = "impacts",
+             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 2, to_index = 2),
+        # Impacts → Welfare
+        list(from = "Reduced coastal protection", to = "Reduced quality of life for residents", from_category = "impacts", to_category = "welfare",
+             polarity = "-", strength = "medium", matrix = "gb_es", from_index = 1, to_index = 1),
+        list(from = "Loss of cultural and aesthetic value", to = "Reduced quality of life for residents", from_category = "impacts", to_category = "welfare",
+             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 2, to_index = 1),
+        list(from = "Loss of cultural and aesthetic value", to = "Loss of cultural identity", from_category = "impacts", to_category = "welfare",
+             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 2, to_index = 2)
+      )
+
+      # Mark all connections as approved
+      rv$approved_connections <- seq_along(rv$suggested_connections)
       rv$current_step <- 10
       removeModal()
-      showNotification("Coastal Tourism template loaded!", type = "message", duration = 5)
+      showNotification("Coastal Tourism template loaded with example connections!", type = "message", duration = 5)
     })
 
     # Template: Climate Change
@@ -1525,9 +1647,51 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
           list(name = "Research funding for reef resilience", description = "", timestamp = Sys.time())
         )
       )
+
+      # Add example connections
+      rv$suggested_connections <- list(
+        # Drivers → Activities
+        list(from = "Energy needs", to = "Greenhouse gas emissions", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 1),
+        list(from = "Economic development", to = "Greenhouse gas emissions", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "strong", matrix = "a_d", from_index = 2, to_index = 1),
+        list(from = "Economic development", to = "Coastal development", from_category = "drivers", to_category = "activities",
+             polarity = "+", strength = "medium", matrix = "a_d", from_index = 2, to_index = 2),
+        # Activities → Pressures
+        list(from = "Greenhouse gas emissions", to = "Ocean temperature rise", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "strong", matrix = "p_a", from_index = 1, to_index = 1),
+        list(from = "Greenhouse gas emissions", to = "Ocean acidification", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "strong", matrix = "p_a", from_index = 1, to_index = 2),
+        list(from = "Coastal development", to = "Ocean temperature rise", from_category = "activities", to_category = "pressures",
+             polarity = "+", strength = "weak", matrix = "p_a", from_index = 2, to_index = 1),
+        # Pressures → States
+        list(from = "Ocean temperature rise", to = "Coral bleaching", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 1, to_index = 1),
+        list(from = "Ocean temperature rise", to = "Loss of coral reef ecosystem", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 1, to_index = 2),
+        list(from = "Ocean acidification", to = "Coral bleaching", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 2, to_index = 1),
+        list(from = "Ocean acidification", to = "Loss of coral reef ecosystem", from_category = "pressures", to_category = "states",
+             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 2, to_index = 2),
+        # States → Impacts
+        list(from = "Coral bleaching", to = "Loss of fisheries productivity", from_category = "states", to_category = "impacts",
+             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 1, to_index = 1),
+        list(from = "Loss of coral reef ecosystem", to = "Loss of fisheries productivity", from_category = "states", to_category = "impacts",
+             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 2, to_index = 1),
+        list(from = "Loss of coral reef ecosystem", to = "Reduced coastal protection from storms", from_category = "states", to_category = "impacts",
+             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 2, to_index = 2),
+        # Impacts → Welfare
+        list(from = "Loss of fisheries productivity", to = "Loss of livelihoods for fishing communities", from_category = "impacts", to_category = "welfare",
+             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 1, to_index = 1),
+        list(from = "Reduced coastal protection from storms", to = "Increased vulnerability to storms", from_category = "impacts", to_category = "welfare",
+             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 2, to_index = 2)
+      )
+
+      # Mark all connections as approved
+      rv$approved_connections <- seq_along(rv$suggested_connections)
       rv$current_step <- 10
       removeModal()
-      showNotification("Climate Change template loaded!", type = "message", duration = 5)
+      showNotification("Climate Change template loaded with example connections!", type = "message", duration = 5)
     })
 
     # Handle save to ISA
