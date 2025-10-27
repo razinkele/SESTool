@@ -1,0 +1,34 @@
+{
+  "version": "1.2.0",
+  "version_name": "Confidence & UI Enhancement Release",
+  "release_date": "2025-10-27",
+  "release_type": "minor",
+  "status": "stable",
+  "minimum_r_version": "4.4.1",
+  "changelog_url": "CHANGELOG.md",
+  "documentation_version": "1.2.0",
+  "api_version": "1.0",
+  "database_version": "1.0",
+  "breaking_changes": false,
+  "security_updates": false,
+  "features": [
+    "Confidence property system (1-5 scale) with visual feedback",
+    "Collapsible sidebar for CLD visualization with toggle button",
+    "About dialog with comprehensive version and system information",
+    "Streamlined CLD visualization interface (removed 258 lines of clutter)",
+    "Interactive confidence filtering with slider control",
+    "Global constants for consistent configuration (DRY principle)",
+    "Comprehensive testing framework (87 confidence tests, all passing)",
+    "Enhanced user experience with smooth animations"
+  ],
+  "contributors": [
+    "Claude AI Assistant",
+    "MarineSABRES Team"
+  ],
+  "build_info": {
+    "build_date": "2025-10-27",
+    "build_environment": "development",
+    "git_branch": "main",
+    "git_commit": "TBD"
+  }
+}

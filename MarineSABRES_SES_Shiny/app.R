@@ -2,6 +2,12 @@
 # Main application file for MarineSABRES SES Shiny Application
 
 # ============================================================================
+# FIX: Disable devmode to prevent shiny.i18n JavaScript double-loading
+# ============================================================================
+options(shiny.minified = TRUE)
+options(shiny.autoreload = FALSE)
+
+# ============================================================================
 # LOAD GLOBAL ENVIRONMENT
 # ============================================================================
 
@@ -28,10 +34,12 @@ add_submenu_tooltip <- function(submenu_item, tooltip_text) {
 # ============================================================================
 
 source("modules/entry_point_module.R", local = TRUE)  # Entry Point guidance system
+source("modules/create_ses_module.R", local = TRUE)  # NEW: Consolidated Create SES module
+source("modules/template_ses_module.R", local = TRUE)  # NEW: Template-based SES creation
 source("modules/ai_isa_assistant_module.R", local = TRUE)  # AI-Assisted ISA Creation
+source("modules/isa_data_entry_module.R", local = TRUE)  # Standard ISA Data Entry
 source("modules/pims_module.R", local = TRUE)
 source("modules/pims_stakeholder_module.R", local = TRUE)
-source("modules/isa_data_entry_module.R", local = TRUE)
 source("modules/cld_visualization_module.R", local = TRUE)
 source("modules/analysis_tools_module.R", local = TRUE)
 source("modules/response_module.R", local = TRUE)
@@ -46,12 +54,7 @@ ui <- dashboardPage(
   
   # ========== HEADER ==========
   dashboardHeader(
-    title = tags$div(
-      tags$img(src = "img/01 marinesabres_logo_transparent.png",
-               height = "40px",
-               style = "margin-top: -10px; margin-right: 10px;"),
-      tags$span("SES Tool", style = "font-size: 18px; vertical-align: middle;")
-    ),
+    title = "MarineSABRES SES Toolbox",
     titleWidth = 300,
 
     # Settings button for language selector
@@ -74,6 +77,18 @@ ui <- dashboardPage(
         target = "_blank",
         icon("question-circle"),
         "Help",
+        style = "cursor: pointer;"
+      )
+    ),
+
+    # About button
+    tags$li(
+      class = "dropdown",
+      tags$a(
+        href = "#",
+        id = "open_about_modal",
+        icon("info-circle"),
+        "About",
         style = "cursor: pointer;"
       )
     ),
@@ -144,20 +159,27 @@ ui <- dashboardPage(
 
       add_menu_tooltip(
         menuItem(
-          i18n$t("AI ISA Assistant"),
-          tabName = "ai_isa",
-          icon = icon("robot")
+          i18n$t("Create SES"),
+          tabName = "create_ses",
+          icon = icon("layer-group"),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Choose Method"), tabName = "create_ses_choose"),
+            "Select how you want to create your Social-Ecological System"
+          ),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Standard Entry"), tabName = "create_ses_standard"),
+            "Traditional form-based ISA data entry"
+          ),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("AI Assistant"), tabName = "create_ses_ai"),
+            "Guided question-based SES creation"
+          ),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Template-Based"), tabName = "create_ses_template"),
+            "Start from pre-built SES templates"
+          )
         ),
-        "AI-guided stepwise questions to build your DAPSI(W)R(M) model easily"
-      ),
-
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("ISA Data Entry"),
-          tabName = "isa",
-          icon = icon("edit")
-        ),
-        "Enter and manage DAPSI(W)R(M) framework elements and connections"
+        "Create your Social-Ecological System using structured methods"
       ),
 
       add_menu_tooltip(
@@ -226,18 +248,18 @@ ui <- dashboardPage(
       
       hr(),
       
-      # Progress indicator
-      div(
-        style = "padding: 15px;",
-        h5("Project Progress"),
-        progressBar(
-          id = "project_progress",
-          value = 0,
-          total = 100,
-          display_pct = TRUE,
-          status = "info"
-        )
-      ),
+      # Progress indicator (temporarily disabled for debugging)
+      # div(
+      #   style = "padding: 15px;",
+      #   h5("Project Progress"),
+      #   progressBar(
+      #     id = "project_progress",
+      #     value = 0,
+      #     total = 100,
+      #     display_pct = TRUE,
+      #     status = "info"
+      #   )
+      # ),
       
       # Quick actions
       div(
@@ -278,7 +300,9 @@ ui <- dashboardPage(
 
     # Custom CSS and JavaScript
     tags$head(
+      tags$title("MarineSABRES SES Toolbox"),
       tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+      tags$link(rel = "stylesheet", type = "text/css", href = "isa-panels-fix.css"),
       tags$style(HTML("
         /* Persistent loading overlay */
         #language-loading-overlay {
@@ -353,7 +377,95 @@ ui <- dashboardPage(
 
     # Enable shinyjs
     useShinyjs(),
-    
+
+    # Force ISA input styling
+    tags$script(HTML("
+      // Function to fix ISA input styling - minimal approach
+      function forceISAInputStyling() {
+        // Fix inputs and textareas with full styling
+        var inputSelectors = [
+          '#isa_module-gb_entries input',
+          '#isa_module-gb_entries textarea',
+          '#isa_module-es_entries input',
+          '#isa_module-es_entries textarea',
+          '#isa_module-mpf_entries input',
+          '#isa_module-mpf_entries textarea',
+          '#isa_module-p_entries input',
+          '#isa_module-p_entries textarea',
+          '#isa_module-a_entries input',
+          '#isa_module-a_entries textarea',
+          '#isa_module-d_entries input',
+          '#isa_module-d_entries textarea',
+          '.isa-entry-panel input',
+          '.isa-entry-panel textarea'
+        ].join(', ');
+
+        $(inputSelectors).each(function() {
+          $(this).css({
+            'color': '#000000',
+            'background-color': '#ffffff',
+            'opacity': '1',
+            '-webkit-text-fill-color': '#000000',
+            'filter': 'none'
+          });
+        });
+
+        // Minimal fix for selects - just color and opacity, no borders or fonts
+        var selectSelectors = [
+          '#isa_module-gb_entries select',
+          '#isa_module-es_entries select',
+          '#isa_module-mpf_entries select',
+          '#isa_module-p_entries select',
+          '#isa_module-a_entries select',
+          '#isa_module-d_entries select',
+          '.isa-entry-panel select'
+        ].join(', ');
+
+        $(selectSelectors).each(function() {
+          $(this).css({
+            'color': '#000000',
+            'background-color': '#ffffff',
+            'opacity': '1',
+            'filter': 'none'
+          });
+        });
+
+        // CRITICAL: Remove recalculating class that makes things look gray
+        $('#isa_module-gb_entries, #isa_module-es_entries, #isa_module-mpf_entries, #isa_module-p_entries, #isa_module-a_entries, #isa_module-d_entries').removeClass('recalculating');
+        $('.isa-entry-panel').closest('.recalculating').removeClass('recalculating');
+      }
+
+      // Run on page load
+      $(document).ready(function() {
+        forceISAInputStyling();
+
+        // Re-run whenever DOM changes (for dynamically added panels)
+        var observer = new MutationObserver(function(mutations) {
+          forceISAInputStyling();
+        });
+
+        // Observe all ISA entries containers
+        var targets = ['gb_entries', 'es_entries', 'mpf_entries', 'p_entries', 'a_entries', 'd_entries'];
+        var prefixes = ['isa_module', 'isa_data_entry'];
+        prefixes.forEach(function(prefix) {
+          targets.forEach(function(id) {
+            var element = document.getElementById(prefix + '-' + id);
+            if (element) {
+              observer.observe(element, { childList: true, subtree: true });
+            }
+          });
+        });
+
+        // Also run every 500ms for the first 5 seconds (ensure it catches everything)
+        var counter = 0;
+        var interval = setInterval(function() {
+          forceISAInputStyling();
+          counter++;
+          if (counter >= 10) clearInterval(interval);
+        }, 500);
+      });
+    ")),
+
     tabItems(
 
       # ==================== ENTRY POINT (GETTING STARTED) ====================
@@ -435,12 +547,19 @@ ui <- dashboardPage(
       tabItem(tabName = "pims_resources", pims_resources_ui("pims_res")),
       tabItem(tabName = "pims_data", pims_data_ui("pims_dm")),
       tabItem(tabName = "pims_evaluation", pims_evaluation_ui("pims_eval")),
-      
-      # ==================== AI ISA ASSISTANT ====================
-      tabItem(tabName = "ai_isa", ai_isa_assistant_ui("ai_isa_mod")),
 
-      # ==================== ISA DATA ENTRY ====================
-      tabItem(tabName = "isa", isaDataEntryUI("isa_module")),
+      # ==================== CREATE SES ====================
+      # Choose Method
+      tabItem(tabName = "create_ses_choose", create_ses_ui("create_ses_main")),
+
+      # Standard Entry
+      tabItem(tabName = "create_ses_standard", isaDataEntryUI("isa_module")),
+
+      # AI Assistant
+      tabItem(tabName = "create_ses_ai", ai_isa_assistant_ui("ai_isa_mod")),
+
+      # Template-Based
+      tabItem(tabName = "create_ses_template", template_ses_ui("template_ses")),
 
       # ==================== CLD VISUALIZATION ====================
       tabItem(tabName = "cld_viz", cld_viz_ui("cld_visual")),
@@ -687,6 +806,134 @@ server <- function(input, output, session) {
     session$reload()
   })
 
+  # ========== ABOUT MODAL ==========
+
+  # Show about modal when button is clicked
+  observeEvent(input$open_about_modal, {
+    # Read version info
+    version_info <- jsonlite::fromJSON("VERSION_INFO.json")
+
+    showModal(modalDialog(
+      title = tags$h3(icon("info-circle"), " About MarineSABRES SES Toolbox"),
+      size = "l",
+      easyClose = TRUE,
+      footer = modalButton("Close"),
+
+      tags$div(
+        style = "padding: 20px;",
+
+        # Application Info
+        tags$div(
+          class = "well",
+          tags$h4(icon("cube"), " Application Information"),
+          tags$table(
+            class = "table table-condensed",
+            style = "margin-bottom: 0;",
+            tags$tr(
+              tags$td(tags$strong("Version:")),
+              tags$td(
+                tags$span(
+                  style = "font-size: 18px; color: #3c8dbc; font-weight: bold;",
+                  version_info$version
+                ),
+                tags$span(
+                  class = "label label-success",
+                  style = "margin-left: 10px;",
+                  version_info$status
+                )
+              )
+            ),
+            tags$tr(
+              tags$td(tags$strong("Release Name:")),
+              tags$td(version_info$version_name)
+            ),
+            tags$tr(
+              tags$td(tags$strong("Release Date:")),
+              tags$td(version_info$release_date)
+            ),
+            tags$tr(
+              tags$td(tags$strong("Release Type:")),
+              tags$td(
+                tags$span(
+                  class = if(version_info$release_type == "major") "label label-danger"
+                        else if(version_info$release_type == "minor") "label label-warning"
+                        else "label label-info",
+                  version_info$release_type
+                )
+              )
+            )
+          )
+        ),
+
+        # Features
+        tags$div(
+          class = "well",
+          tags$h4(icon("star"), " Key Features"),
+          tags$ul(
+            lapply(version_info$features, function(feature) {
+              tags$li(feature)
+            })
+          )
+        ),
+
+        # Technical Info
+        tags$div(
+          class = "well",
+          tags$h4(icon("cogs"), " Technical Information"),
+          tags$table(
+            class = "table table-condensed",
+            style = "margin-bottom: 0;",
+            tags$tr(
+              tags$td(tags$strong("Minimum R Version:")),
+              tags$td(version_info$minimum_r_version)
+            ),
+            tags$tr(
+              tags$td(tags$strong("Current R Version:")),
+              tags$td(paste(R.version$major, R.version$minor, sep = "."))
+            ),
+            tags$tr(
+              tags$td(tags$strong("Platform:")),
+              tags$td(R.version$platform)
+            ),
+            tags$tr(
+              tags$td(tags$strong("Git Branch:")),
+              tags$td(version_info$build_info$git_branch)
+            )
+          )
+        ),
+
+        # Contributors
+        tags$div(
+          class = "well",
+          tags$h4(icon("users"), " Contributors"),
+          tags$ul(
+            lapply(version_info$contributors, function(contributor) {
+              tags$li(contributor)
+            })
+          )
+        ),
+
+        # Links
+        tags$div(
+          class = "alert alert-info",
+          icon("book"),
+          tags$strong(" Documentation: "),
+          tags$a(
+            href = "#",
+            onclick = "window.open('user_guide.html', '_blank'); return false;",
+            "User Guide",
+            style = "margin-right: 15px;"
+          ),
+          tags$a(
+            href = "#",
+            onclick = sprintf("window.open('%s', '_blank'); return false;", version_info$changelog_url),
+            "Changelog"
+          )
+        )
+      )
+    ))
+  })
+
   # ========== CALL MODULE SERVERS ==========
 
   # Entry Point module - pass session for sidebar navigation
@@ -699,10 +946,17 @@ server <- function(input, output, session) {
   pims_data_data <- pims_data_server("pims_dm", project_data)
   pims_evaluation_data <- pims_evaluation_server("pims_eval", project_data)
   
+  # ==================== CREATE SES MODULES ====================
+  # Main Create SES module (method selector)
+  create_ses_server("create_ses_main", project_data, session)
+
+  # Template-based SES module
+  template_ses_server("template_ses", project_data, session)
+
   # AI ISA Assistant module
   ai_isa_assistant_server("ai_isa_mod", project_data)
 
-  # ISA data entry module
+  # ISA data entry module (Standard Entry)
   isa_data <- isaDataEntryServer("isa_module", project_data)
 
   # CLD visualization
@@ -723,75 +977,107 @@ server <- function(input, output, session) {
   
   # Value boxes
   output$total_elements_box <- renderValueBox({
-    data <- project_data()
-    # Use safe accessor to prevent crashes on missing data
-    isa_data <- safe_get_nested(data, "data", "isa_data", default = list())
-    n_elements <- length(unlist(isa_data))
+    tryCatch({
+      data <- project_data()
+      isa_data <- safe_get_nested(data, "data", "isa_data", default = list())
+      n_elements <- length(unlist(isa_data))
 
-    valueBox(
-      n_elements,
-      i18n$t("Total Elements"),
-      icon = icon("circle"),
-      color = "blue"
-    )
+      valueBox(n_elements, i18n$t("Total Elements"), icon = icon("circle"), color = "blue")
+    }, error = function(e) {
+      valueBox(0, "Error", icon = icon("times"), color = "red")
+    })
   })
-  
+
   output$total_connections_box <- renderValueBox({
-    data <- project_data()
-    # Count non-empty adjacency matrix cells with safe access
-    n_connections <- 0
+    tryCatch({
+      data <- project_data()
+      n_connections <- 0
+      adj_matrices <- safe_get_nested(data, "data", "isa_data", "adjacency_matrices", default = list())
 
-    adj_matrices <- safe_get_nested(data, "data", "isa_data", "adjacency_matrices",
-                                    default = list())
-
-    if(length(adj_matrices) > 0) {
-      for(mat_name in names(adj_matrices)) {
-        mat <- adj_matrices[[mat_name]]
-        if(!is.null(mat) && is.matrix(mat)) {
-          n_connections <- n_connections + sum(!is.na(mat) & mat != "", na.rm = TRUE)
+      if(length(adj_matrices) > 0) {
+        for(mat_name in names(adj_matrices)) {
+          mat <- adj_matrices[[mat_name]]
+          if(!is.null(mat) && is.matrix(mat)) {
+            n_connections <- n_connections + sum(!is.na(mat) & mat != "", na.rm = TRUE)
+          }
         }
       }
-    }
 
-    valueBox(
-      n_connections,
-      i18n$t("Connections"),
-      icon = icon("arrow-right"),
-      color = "green"
-    )
+      valueBox(n_connections, i18n$t("Connections"), icon = icon("arrow-right"), color = "green")
+    }, error = function(e) {
+      valueBox(0, "Error", icon = icon("times"), color = "red")
+    })
   })
 
   output$loops_detected_box <- renderValueBox({
-    data <- project_data()
-    # Use safe accessor for loops data
-    loops <- safe_get_nested(data, "data", "cld", "loops", default = data.frame())
-    n_loops <- if(is.data.frame(loops)) nrow(loops) else 0
+    tryCatch({
+      data <- project_data()
+      loops <- safe_get_nested(data, "data", "cld", "loops", default = data.frame())
+      n_loops <- if(is.data.frame(loops)) nrow(loops) else 0
 
-    valueBox(
-      n_loops,
-      i18n$t("Loops Detected"),
-      icon = icon("refresh"),
-      color = "orange"
-    )
+      valueBox(n_loops, i18n$t("Loops Detected"), icon = icon("refresh"), color = "orange")
+    }, error = function(e) {
+      valueBox(0, "Error", icon = icon("times"), color = "red")
+    })
   })
 
   output$completion_box <- renderValueBox({
-    # Calculate completion percentage
-    completion <- 0
+    tryCatch({
+      data <- project_data()
+      completion <- 0
 
-    valueBox(
-      paste0(completion, "%"),
-      i18n$t("Completion"),
-      icon = icon("check-circle"),
-      color = "purple"
-    )
+      # Check if ISA data exists (6 components × 6.67% = 40%)
+      isa_score <- 0
+      if (!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) isa_score <- isa_score + 6.67
+      if (!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) isa_score <- isa_score + 6.67
+      if (!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) isa_score <- isa_score + 6.67
+      if (!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) isa_score <- isa_score + 6.67
+      if (!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) isa_score <- isa_score + 6.67
+      if (!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) isa_score <- isa_score + 6.65
+      completion <- completion + isa_score
+
+      # Check if connections exist (30%)
+      adj_matrices <- safe_get_nested(data, "data", "isa_data", "adjacency_matrices", default = list())
+      n_connections <- 0
+      if (length(adj_matrices) > 0) {
+        for (mat_name in names(adj_matrices)) {
+          mat <- adj_matrices[[mat_name]]
+          if (!is.null(mat) && is.matrix(mat)) {
+            n_connections <- n_connections + sum(!is.na(mat) & mat != "", na.rm = TRUE)
+          }
+        }
+      }
+      if (n_connections > 0) completion <- completion + 30
+
+      # Check if CLD generated (30%)
+      if (!is.null(data$data$cld$nodes) && nrow(data$data$cld$nodes) > 0) {
+        completion <- completion + 30
+      }
+
+      completion <- round(completion)
+
+      valueBox(
+        paste0(completion, "%"),
+        i18n$t("Completion"),
+        icon = icon("check-circle"),
+        color = if(completion >= 75) "green" else if(completion >= 40) "yellow" else "purple"
+      )
+    }, error = function(e) {
+      valueBox("0%", "Error", icon = icon("times"), color = "red")
+    })
   })
   
   # Project overview
   output$project_overview_ui <- renderUI({
-    data <- project_data()
+    tryCatch({
+      data <- project_data()
 
-    tagList(
+      cat("\nDEBUG: Rendering project_overview_ui\n")
+      cat("DEBUG: ISA data structure:\n")
+      cat("  - goods_benefits rows:", nrow(data$data$isa_data$goods_benefits %||% data.frame()), "\n")
+      cat("  - ecosystem_services rows:", nrow(data$data$isa_data$ecosystem_services %||% data.frame()), "\n")
+
+      tagList(
       p(strong(i18n$t("Project ID:")), data$project_id),
       p(strong(i18n$t("Created:")), format_date_display(data$created_at)),
       p(strong(i18n$t("Last Modified:")), format_date_display(data$last_modified)),
@@ -800,9 +1086,53 @@ server <- function(input, output, session) {
       hr(),
       h4(i18n$t("Status Summary")),
       p(i18n$t("PIMS Setup:"), " ", if(length(data$data$pims) > 0) i18n$t("Complete") else i18n$t("Incomplete")),
-      p(i18n$t("ISA Data Entry:"), " ", i18n$t("In Progress")),
+      hr(),
+      h5(i18n$t("ISA Data Entry:")),
+      tags$ul(style = "list-style-type: none; padding-left: 10px;",
+        tags$li(
+          icon(if(!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) "check" else "times",
+               class = if(!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) "text-success" else "text-muted"),
+          " ", i18n$t("Goods & Benefits:"), " ",
+          if(!is.null(data$data$isa_data$goods_benefits)) nrow(data$data$isa_data$goods_benefits) else 0, " ", i18n$t("entries")),
+        tags$li(
+          icon(if(!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) "check" else "times",
+               class = if(!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) "text-success" else "text-muted"),
+          " ", i18n$t("Ecosystem Services:"), " ",
+          if(!is.null(data$data$isa_data$ecosystem_services)) nrow(data$data$isa_data$ecosystem_services) else 0, " ", i18n$t("entries")),
+        tags$li(
+          icon(if(!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) "check" else "times",
+               class = if(!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) "text-success" else "text-muted"),
+          " ", i18n$t("Marine Processes:"), " ",
+          if(!is.null(data$data$isa_data$marine_processes)) nrow(data$data$isa_data$marine_processes) else 0, " ", i18n$t("entries")),
+        tags$li(
+          icon(if(!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) "check" else "times",
+               class = if(!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) "text-success" else "text-muted"),
+          " ", i18n$t("Pressures:"), " ",
+          if(!is.null(data$data$isa_data$pressures)) nrow(data$data$isa_data$pressures) else 0, " ", i18n$t("entries")),
+        tags$li(
+          icon(if(!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) "check" else "times",
+               class = if(!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) "text-success" else "text-muted"),
+          " ", i18n$t("Activities:"), " ",
+          if(!is.null(data$data$isa_data$activities)) nrow(data$data$isa_data$activities) else 0, " ", i18n$t("entries")),
+        tags$li(
+          icon(if(!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) "check" else "times",
+               class = if(!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) "text-success" else "text-muted"),
+          " ", i18n$t("Drivers:"), " ",
+          if(!is.null(data$data$isa_data$drivers)) nrow(data$data$isa_data$drivers) else 0, " ", i18n$t("entries"))
+      ),
+      hr(),
       p(i18n$t("CLD Generated:"), " ", if(!is.null(data$data$cld$nodes)) i18n$t("Yes") else i18n$t("No"))
     )
+    }, error = function(e) {
+      cat("\n!!! ERROR in project_overview_ui:\n")
+      cat("Error message:", conditionMessage(e), "\n")
+      cat("Call stack:\n")
+      print(sys.calls())
+      # Return error message to UI
+      tagList(
+        p(style = "color: red;", "Error rendering dashboard:", conditionMessage(e))
+      )
+    })
   })
 
   # Check if CLD data exists
