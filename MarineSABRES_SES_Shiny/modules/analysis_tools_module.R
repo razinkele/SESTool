@@ -669,21 +669,524 @@ analysis_loops_server <- function(id, project_data_reactive) {
 }
 
 # ============================================================================
-# NETWORK METRICS MODULE (Placeholder for future implementation)
+# NETWORK METRICS MODULE
 # ============================================================================
 
 analysis_metrics_ui <- function(id) {
   ns <- NS(id)
+
   fluidPage(
-    h2("Network Metrics Analysis"),
-    p("Advanced network centrality and connectivity analysis."),
-    p(strong("Status:"), "Implementation in progress...")
+    h2(icon("chart-network"), " Network Metrics Analysis"),
+    p("Calculate and visualize centrality metrics to identify key nodes and understand network structure."),
+
+    # Check if CLD exists
+    uiOutput(ns("cld_check_ui")),
+
+    # Main metrics interface (shown only if CLD exists)
+    uiOutput(ns("metrics_main_ui"))
   )
 }
 
 analysis_metrics_server <- function(id, project_data_reactive) {
   moduleServer(id, function(input, output, session) {
-    # Placeholder
+    ns <- session$ns
+
+    # Reactive values for metrics
+    metrics_rv <- reactiveValues(
+      calculated_metrics = NULL,
+      node_metrics_df = NULL
+    )
+
+    # Check if CLD data exists
+    output$cld_check_ui <- renderUI({
+      req(project_data_reactive())
+
+      data <- project_data_reactive()
+
+      if (is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
+        div(
+          class = "alert alert-warning",
+          icon("exclamation-triangle"), " ",
+          strong("No CLD data found."),
+          p("Please generate a CLD network first using:", style = "margin-top: 10px;"),
+          tags$ol(
+            tags$li("Navigate to 'ISA Data Entry' and complete your SES model"),
+            tags$li("Go to 'CLD Visualization' and click 'Generate CLD'"),
+            tags$li("Return here to analyze network metrics")
+          )
+        )
+      } else {
+        NULL  # CLD exists, show main UI
+      }
+    })
+
+    # Main metrics UI
+    output$metrics_main_ui <- renderUI({
+      req(project_data_reactive())
+
+      data <- project_data_reactive()
+      if (is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
+        return(NULL)
+      }
+
+      tagList(
+        fluidRow(
+          column(12,
+            actionButton(ns("calculate_metrics"),
+                        "Calculate Network Metrics",
+                        icon = icon("calculator"),
+                        class = "btn-primary btn-lg")
+          )
+        ),
+
+        hr(),
+
+        # Results section (shown after calculation)
+        uiOutput(ns("metrics_results_ui"))
+      )
+    })
+
+    # Calculate metrics
+    observeEvent(input$calculate_metrics, {
+      req(project_data_reactive())
+
+      tryCatch({
+        data <- project_data_reactive()
+        nodes <- data$data$cld$nodes
+        edges <- data$data$cld$edges
+
+        # Calculate metrics
+        metrics <- calculate_network_metrics(nodes, edges)
+
+        # Store results
+        metrics_rv$calculated_metrics <- metrics
+
+        # Create node-level metrics dataframe
+        node_metrics_df <- data.frame(
+          ID = nodes$id,
+          Label = nodes$label,
+          Type = nodes$group,
+          Degree = metrics$degree,
+          InDegree = metrics$indegree,
+          OutDegree = metrics$outdegree,
+          Betweenness = round(metrics$betweenness, 2),
+          Closeness = round(metrics$closeness, 4),
+          Eigenvector = round(metrics$eigenvector, 4),
+          PageRank = round(metrics$pagerank, 4),
+          stringsAsFactors = FALSE
+        )
+
+        metrics_rv$node_metrics_df <- node_metrics_df
+
+        showNotification(
+          "Network metrics calculated successfully!",
+          type = "message",
+          duration = 3
+        )
+
+      }, error = function(e) {
+        showNotification(
+          paste("Error calculating metrics:", e$message),
+          type = "error",
+          duration = 10
+        )
+      })
+    })
+
+    # Metrics results UI
+    output$metrics_results_ui <- renderUI({
+      req(metrics_rv$calculated_metrics)
+
+      metrics <- metrics_rv$calculated_metrics
+
+      tagList(
+        # Network-level metrics
+        fluidRow(
+          column(12,
+            h3(icon("network-wired"), " Network-Level Metrics")
+          )
+        ),
+
+        fluidRow(
+          valueBox(
+            value = metrics$nodes,
+            subtitle = "Total Nodes",
+            icon = icon("circle"),
+            color = "blue",
+            width = 3
+          ),
+          valueBox(
+            value = metrics$edges,
+            subtitle = "Total Edges",
+            icon = icon("arrow-right"),
+            color = "green",
+            width = 3
+          ),
+          valueBox(
+            value = round(metrics$density, 3),
+            subtitle = "Network Density",
+            icon = icon("project-diagram"),
+            color = "purple",
+            width = 3
+          ),
+          valueBox(
+            value = metrics$diameter,
+            subtitle = "Network Diameter",
+            icon = icon("arrows-alt"),
+            color = "orange",
+            width = 3
+          )
+        ),
+
+        fluidRow(
+          column(6,
+            wellPanel(
+              h5(icon("info-circle"), " Average Path Length"),
+              h3(round(metrics$avg_path_length, 2)),
+              p(class = "text-muted", "Average shortest path between any two nodes")
+            )
+          ),
+          column(6,
+            wellPanel(
+              h5(icon("percentage"), " Network Connectivity"),
+              h3(paste0(round(metrics$density * 100, 1), "%")),
+              p(class = "text-muted", "Percentage of possible connections that exist")
+            )
+          )
+        ),
+
+        hr(),
+
+        # Node-level metrics
+        fluidRow(
+          column(12,
+            h3(icon("users"), " Node-Level Centrality Metrics")
+          )
+        ),
+
+        fluidRow(
+          column(12,
+            tabsetPanel(
+              id = ns("metrics_tabs"),
+
+              # Metrics Table
+              tabPanel(
+                title = tagList(icon("table"), " All Metrics"),
+                br(),
+                DTOutput(ns("metrics_table")),
+                br(),
+                downloadButton(ns("download_metrics"),
+                              "Download Metrics (Excel)",
+                              class = "btn-success")
+              ),
+
+              # Visualizations
+              tabPanel(
+                title = tagList(icon("chart-bar"), " Visualizations"),
+                br(),
+                fluidRow(
+                  column(6,
+                    selectInput(ns("viz_metric"),
+                               "Select Metric to Visualize:",
+                               choices = c(
+                                 "Degree Centrality" = "Degree",
+                                 "Betweenness Centrality" = "Betweenness",
+                                 "Closeness Centrality" = "Closeness",
+                                 "Eigenvector Centrality" = "Eigenvector",
+                                 "PageRank" = "PageRank"
+                               ),
+                               selected = "Degree")
+                  ),
+                  column(6,
+                    numericInput(ns("top_n_nodes"),
+                                "Show Top N Nodes:",
+                                value = 10,
+                                min = 5,
+                                max = 50,
+                                step = 5)
+                  )
+                ),
+                fluidRow(
+                  column(12,
+                    plotOutput(ns("metrics_barplot"), height = "500px")
+                  )
+                ),
+                hr(),
+                fluidRow(
+                  column(6,
+                    wellPanel(
+                      h5("Metric Comparison"),
+                      plotOutput(ns("metrics_comparison"), height = "400px")
+                    )
+                  ),
+                  column(6,
+                    wellPanel(
+                      h5("Metric Distribution"),
+                      plotOutput(ns("metrics_histogram"), height = "400px")
+                    )
+                  )
+                )
+              ),
+
+              # Key Nodes
+              tabPanel(
+                title = tagList(icon("star"), " Key Nodes"),
+                br(),
+                h4("Most Important Nodes by Different Metrics"),
+                fluidRow(
+                  column(6,
+                    wellPanel(
+                      h5(icon("arrows-alt-h"), " Highest Degree"),
+                      p(class = "text-muted", "Nodes with most connections"),
+                      tableOutput(ns("top_degree"))
+                    )
+                  ),
+                  column(6,
+                    wellPanel(
+                      h5(icon("route"), " Highest Betweenness"),
+                      p(class = "text-muted", "Bridge nodes connecting communities"),
+                      tableOutput(ns("top_betweenness"))
+                    )
+                  )
+                ),
+                fluidRow(
+                  column(6,
+                    wellPanel(
+                      h5(icon("compress-arrows-alt"), " Highest Closeness"),
+                      p(class = "text-muted", "Nodes closest to all others"),
+                      tableOutput(ns("top_closeness"))
+                    )
+                  ),
+                  column(6,
+                    wellPanel(
+                      h5(icon("crown"), " Highest PageRank"),
+                      p(class = "text-muted", "Most influential nodes"),
+                      tableOutput(ns("top_pagerank"))
+                    )
+                  )
+                )
+              ),
+
+              # Interpretation Guide
+              tabPanel(
+                title = tagList(icon("question-circle"), " Guide"),
+                br(),
+                h4("Understanding Network Metrics"),
+
+                wellPanel(
+                  h5(icon("info-circle"), " Network-Level Metrics"),
+                  tags$dl(
+                    tags$dt("Network Density"),
+                    tags$dd("Proportion of actual connections to possible connections. Higher density indicates more interconnected system."),
+
+                    tags$dt("Network Diameter"),
+                    tags$dd("Longest shortest path between any two nodes. Indicates how far information needs to travel."),
+
+                    tags$dt("Average Path Length"),
+                    tags$dd("Average steps needed to reach any node from any other node.")
+                  )
+                ),
+
+                wellPanel(
+                  h5(icon("users"), " Node Centrality Metrics"),
+                  tags$dl(
+                    tags$dt("Degree Centrality"),
+                    tags$dd("Number of direct connections. High degree = well-connected hub."),
+
+                    tags$dt("Betweenness Centrality"),
+                    tags$dd("How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck."),
+
+                    tags$dt("Closeness Centrality"),
+                    tags$dd("How close a node is to all other nodes. High closeness = can quickly reach or be reached by others."),
+
+                    tags$dt("Eigenvector Centrality"),
+                    tags$dd("Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs."),
+
+                    tags$dt("PageRank"),
+                    tags$dd("Google's algorithm: importance based on quality and quantity of incoming connections.")
+                  )
+                ),
+
+                wellPanel(
+                  h5(icon("lightbulb"), " Practical Applications"),
+                  tags$ul(
+                    tags$li(strong("High Degree:"), " Target for broad interventions"),
+                    tags$li(strong("High Betweenness:"), " Leverage points for system change"),
+                    tags$li(strong("High Closeness:"), " Efficient information spreaders"),
+                    tags$li(strong("High PageRank:"), " Most influential system components")
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    })
+
+    # Metrics table
+    output$metrics_table <- renderDT({
+      req(metrics_rv$node_metrics_df)
+
+      datatable(
+        metrics_rv$node_metrics_df,
+        options = list(
+          pageLength = 15,
+          scrollX = TRUE,
+          order = list(list(3, 'desc'))  # Sort by Degree descending
+        ),
+        rownames = FALSE,
+        filter = 'top'
+      ) %>%
+        formatStyle(
+          'Degree',
+          background = styleColorBar(metrics_rv$node_metrics_df$Degree, 'lightblue'),
+          backgroundSize = '100% 90%',
+          backgroundRepeat = 'no-repeat',
+          backgroundPosition = 'center'
+        )
+    })
+
+    # Metrics bar plot
+    output$metrics_barplot <- renderPlot({
+      req(metrics_rv$node_metrics_df, input$viz_metric, input$top_n_nodes)
+
+      df <- metrics_rv$node_metrics_df
+      metric_col <- input$viz_metric
+      top_n <- min(input$top_n_nodes, nrow(df))
+
+      # Get top N nodes by selected metric
+      df_sorted <- df[order(-df[[metric_col]]), ][1:top_n, ]
+
+      # Create bar plot
+      par(mar = c(5, 12, 4, 2))
+      barplot(
+        rev(df_sorted[[metric_col]]),
+        names.arg = rev(df_sorted$Label),
+        horiz = TRUE,
+        las = 1,
+        col = colorRampPalette(c("#3498db", "#e74c3c"))(top_n),
+        main = paste("Top", top_n, "Nodes by", metric_col),
+        xlab = metric_col,
+        cex.names = 0.8
+      )
+    })
+
+    # Metrics comparison plot
+    output$metrics_comparison <- renderPlot({
+      req(metrics_rv$node_metrics_df)
+
+      df <- metrics_rv$node_metrics_df
+
+      # Normalize metrics to 0-1 scale for comparison
+      df_norm <- df
+      df_norm$Degree_norm <- df$Degree / max(df$Degree)
+      df_norm$Betweenness_norm <- df$Betweenness / max(df$Betweenness)
+      df_norm$PageRank_norm <- df$PageRank / max(df$PageRank)
+
+      # Get top 10 by degree
+      top10 <- df_norm[order(-df_norm$Degree), ][1:min(10, nrow(df_norm)), ]
+
+      # Create comparison plot
+      plot(top10$Degree_norm, top10$Betweenness_norm,
+           xlim = c(0, 1), ylim = c(0, 1),
+           xlab = "Degree (normalized)",
+           ylab = "Betweenness (normalized)",
+           main = "Degree vs Betweenness Centrality",
+           pch = 19,
+           cex = top10$PageRank_norm * 3 + 0.5,
+           col = adjustcolor("#3498db", alpha = 0.6))
+
+      text(top10$Degree_norm, top10$Betweenness_norm,
+           labels = top10$Label,
+           pos = 3,
+           cex = 0.7)
+
+      abline(h = 0.5, v = 0.5, col = "gray", lty = 2)
+    })
+
+    # Metrics histogram
+    output$metrics_histogram <- renderPlot({
+      req(metrics_rv$node_metrics_df, input$viz_metric)
+
+      df <- metrics_rv$node_metrics_df
+      metric_col <- input$viz_metric
+      values <- df[[metric_col]]
+
+      hist(values,
+           breaks = 20,
+           col = "#3498db",
+           border = "white",
+           main = paste("Distribution of", metric_col),
+           xlab = metric_col,
+           ylab = "Frequency")
+
+      abline(v = mean(values), col = "red", lwd = 2, lty = 2)
+      abline(v = median(values), col = "darkgreen", lwd = 2, lty = 2)
+
+      legend("topright",
+             legend = c("Mean", "Median"),
+             col = c("red", "darkgreen"),
+             lty = 2,
+             lwd = 2)
+    })
+
+    # Top nodes tables
+    output$top_degree <- renderTable({
+      req(metrics_rv$node_metrics_df)
+      df <- metrics_rv$node_metrics_df[order(-metrics_rv$node_metrics_df$Degree), ][1:5, c("Label", "Type", "Degree")]
+      df
+    })
+
+    output$top_betweenness <- renderTable({
+      req(metrics_rv$node_metrics_df)
+      df <- metrics_rv$node_metrics_df[order(-metrics_rv$node_metrics_df$Betweenness), ][1:5, c("Label", "Type", "Betweenness")]
+      df
+    })
+
+    output$top_closeness <- renderTable({
+      req(metrics_rv$node_metrics_df)
+      df <- metrics_rv$node_metrics_df[order(-metrics_rv$node_metrics_df$Closeness), ][1:5, c("Label", "Type", "Closeness")]
+      df
+    })
+
+    output$top_pagerank <- renderTable({
+      req(metrics_rv$node_metrics_df)
+      df <- metrics_rv$node_metrics_df[order(-metrics_rv$node_metrics_df$PageRank), ][1:5, c("Label", "Type", "PageRank")]
+      df
+    })
+
+    # Download handler
+    output$download_metrics <- downloadHandler(
+      filename = function() {
+        paste0("Network_Metrics_", Sys.Date(), ".xlsx")
+      },
+      content = function(file) {
+        req(metrics_rv$node_metrics_df, metrics_rv$calculated_metrics)
+
+        wb <- createWorkbook()
+
+        # Add node-level metrics sheet
+        addWorksheet(wb, "Node_Metrics")
+        writeData(wb, "Node_Metrics", metrics_rv$node_metrics_df)
+
+        # Add network-level metrics sheet
+        network_metrics_df <- data.frame(
+          Metric = c("Nodes", "Edges", "Density", "Diameter", "Avg Path Length"),
+          Value = c(
+            metrics_rv$calculated_metrics$nodes,
+            metrics_rv$calculated_metrics$edges,
+            round(metrics_rv$calculated_metrics$density, 4),
+            metrics_rv$calculated_metrics$diameter,
+            round(metrics_rv$calculated_metrics$avg_path_length, 4)
+          )
+        )
+        addWorksheet(wb, "Network_Metrics")
+        writeData(wb, "Network_Metrics", network_metrics_df)
+
+        saveWorkbook(wb, file, overwrite = TRUE)
+      }
+    )
+
   })
 }
 
