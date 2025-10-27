@@ -600,9 +600,17 @@ render_recommendations_screen <- function(ns, rv) {
         h4(icon("lightbulb"), " ", i18n$t("Suggested Workflow:")),
         tags$ol(
           tags$li(strong(i18n$t("Start with PIMS:"), " "), i18n$t("Define your project goals, stakeholders, and timeline")),
-          tags$li(strong(i18n$t("Build your SES model:"), " "), i18n$t("Use ISA Data Entry to map DAPSI(W)R(M) elements")),
-          tags$li(strong(i18n$t("Visualize & Analyze:"), " "), i18n$t("Create CLD networks and run analysis tools")),
+          tags$li(strong(i18n$t("Quick start option:"), " "), "Use Create SES with templates or AI assistant for rapid model building (beginner-friendly)"),
+          tags$li(strong(i18n$t("Build your SES model:"), " "), "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection"),
+          tags$li(strong(i18n$t("Visualize & Analyze:"), " "), "Create CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools"),
           tags$li(strong(i18n$t("Refine & Communicate:"), " "), i18n$t("Simplify models and develop management scenarios"))
+        ),
+        tags$div(
+          class = "alert alert-info",
+          style = "margin-top: 15px; margin-bottom: 0;",
+          icon("star"), " ",
+          tags$strong("New in v1.2.0: "),
+          "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research."
         )
       ),
 
@@ -639,14 +647,25 @@ get_tool_recommendations <- function(rv) {
     )
   }
 
+  # Create SES - Quick start with templates or AI
+  tools[[length(tools) + 1]] <- list(
+    id = "create_ses",
+    name = "Create SES (Quick Start)",
+    description = "Quickly build your SES model using pre-built templates (fisheries, tourism, aquaculture, pollution, climate) or AI-assisted creation. Perfect for getting started fast or learning the framework.",
+    time_required = "15-45 minutes",
+    skill_level = "Beginner",
+    use_case = "Fast SES creation with templates or AI",
+    menu_id = "create_ses"
+  )
+
   # ISA Data Entry - Core tool for all pathways
   tools[[length(tools) + 1]] <- list(
     id = "isa",
     name = "ISA Data Entry (DAPSI(W)R(M) Framework)",
-    description = "Build your social-ecological system model by entering Drivers, Activities, Pressures, State changes, Impacts, Welfare effects, Responses, and Measures. The foundation for all system analysis.",
+    description = "Build your social-ecological system model by entering Drivers, Activities, Pressures, State changes, Impacts, Welfare effects, Responses, and Measures. Now with confidence levels (1-5) for connections to track data quality and certainty. The foundation for all system analysis.",
     time_required = "1-3 hours",
     skill_level = "Intermediate",
-    use_case = "SES model construction",
+    use_case = "Detailed SES model construction with confidence tracking",
     menu_id = "isa"
   )
 
@@ -654,10 +673,10 @@ get_tool_recommendations <- function(rv) {
   tools[[length(tools) + 1]] <- list(
     id = "cld",
     name = "CLD Network Visualization",
-    description = "Visualize your SES as an interactive causal loop diagram. Explore connections between elements and identify feedback mechanisms.",
+    description = "Visualize your SES as an interactive causal loop diagram with collapsible controls and confidence-based visual feedback. Filter by confidence levels, explore connections, and identify feedback mechanisms. Clean, focused interface for maximum visualization space.",
     time_required = "15-30 minutes",
     skill_level = "Beginner-Intermediate",
-    use_case = "System visualization & communication",
+    use_case = "Interactive system visualization with confidence filtering",
     menu_id = "cld_viz"
   )
 
