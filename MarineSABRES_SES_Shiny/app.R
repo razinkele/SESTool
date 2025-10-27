@@ -356,6 +356,12 @@ ui <- dashboardPage(
             Shiny.setInputValue('show_settings_modal', Math.random());
           });
 
+          // Open about modal when clicking the about button
+          $('#open_about_modal').on('click', function(e) {
+            e.preventDefault();
+            Shiny.setInputValue('show_about_modal', Math.random());
+          });
+
           // Show persistent loading overlay for language change
           Shiny.addCustomMessageHandler('showLanguageLoading', function(message) {
             // Remove any existing overlay
@@ -809,7 +815,7 @@ server <- function(input, output, session) {
   # ========== ABOUT MODAL ==========
 
   # Show about modal when button is clicked
-  observeEvent(input$open_about_modal, {
+  observeEvent(input$show_about_modal, {
     # Read version info
     version_info <- jsonlite::fromJSON("VERSION_INFO.json")
 
