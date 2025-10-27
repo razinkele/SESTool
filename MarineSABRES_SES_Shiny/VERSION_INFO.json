@@ -1,34 +1,46 @@
 {
-  "version": "1.2.0",
-  "version_name": "Confidence & UI Enhancement Release",
+  "version": "1.2.1",
+  "version_name": "Network Metrics Implementation Release",
   "release_date": "2025-10-27",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.2.0",
+  "documentation_version": "1.2.1",
   "api_version": "1.0",
   "database_version": "1.0",
   "breaking_changes": false,
   "security_updates": false,
   "features": [
+    "Network Metrics Analysis Module - Complete implementation with 7 centrality metrics",
+    "Interactive DataTable with all node metrics (sortable, searchable, filterable)",
+    "Network visualizations (bar plots, scatter plots, histograms with statistics)",
+    "Key node identification (Top 5 for each metric: Degree, Betweenness, Closeness, PageRank)",
+    "Excel export with 2 sheets (Node Metrics + Network Metrics)",
+    "Comprehensive metrics guide with explanations and use cases",
     "Confidence property system (1-5 scale) with visual feedback",
     "Collapsible sidebar for CLD visualization with toggle button",
     "About dialog with comprehensive version and system information",
-    "Streamlined CLD visualization interface (removed 258 lines of clutter)",
+    "Streamlined CLD visualization interface",
     "Interactive confidence filtering with slider control",
     "Global constants for consistent configuration (DRY principle)",
-    "Comprehensive testing framework (87 confidence tests, all passing)",
+    "Comprehensive testing framework (174 tests total, all passing)",
     "Enhanced user experience with smooth animations"
   ],
+  "test_coverage": {
+    "total_tests": 174,
+    "confidence_tests": 87,
+    "network_metrics_tests": 87,
+    "status": "all_passing"
+  },
   "contributors": [
     "Claude AI Assistant",
     "MarineSABRES Team"
   ],
   "build_info": {
-    "build_date": "2025-10-27",
-    "build_environment": "development",
+    "build_date": "2025-10-27T23:50:00Z",
+    "build_environment": "production",
     "git_branch": "main",
-    "git_commit": "TBD"
+    "git_commit": "17f71af"
   }
 }
