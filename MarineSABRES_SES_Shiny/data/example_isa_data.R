@@ -197,9 +197,9 @@ example_isa_data <- list(
     
     # Goods & Benefits -> Drivers (closing the loop)
     d_gb = matrix(
-      c("", "+weak", "",          # GB_1 -> D_1,2,3,4
-        "+medium", "", "+weak",    # GB_2 -> D_1,2,3,4
-        "", "", ""),               # GB_3 -> D_1,2,3,4
+      c("", "+weak", "", "",          # GB_1 -> D_1,2,3,4
+        "+medium", "", "+weak", "",    # GB_2 -> D_1,2,3,4
+        "", "", "", ""),               # GB_3 -> D_1,2,3,4
       nrow = 3, ncol = 4, byrow = TRUE,
       dimnames = list(
         c("Commercial Fish Catch", "Tourism Revenue", "Coastal Protection"),

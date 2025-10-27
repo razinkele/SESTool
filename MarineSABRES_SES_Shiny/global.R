@@ -55,6 +55,30 @@ suppressPackageStartupMessages({
 }
 
 # ============================================================================
+# VERSION MANAGEMENT
+# ============================================================================
+
+# Read version from VERSION file (single source of truth)
+APP_VERSION <- tryCatch({
+  version_text <- readLines("VERSION", warn = FALSE)[1]
+  trimws(version_text)
+}, error = function(e) {
+  "1.0.0-unknown"  # Fallback if VERSION file not found
+})
+
+# Read detailed version info from VERSION_INFO.json
+VERSION_INFO <- tryCatch({
+  jsonlite::fromJSON("VERSION_INFO.json")
+}, error = function(e) {
+  list(
+    version = APP_VERSION,
+    version_name = "Unknown",
+    status = "unknown",
+    release_date = as.character(Sys.Date())
+  )
+})
+
+# ============================================================================
 # INTERNATIONALIZATION (i18n) CONFIGURATION
 # ============================================================================
 
@@ -647,6 +671,30 @@ CONNECTION_STRENGTH <- c("strong", "medium", "weak")
 # Connection polarity options
 CONNECTION_POLARITY <- c("+", "-")
 
+# Connection confidence levels (1-5 scale)
+CONFIDENCE_LEVELS <- 1:5
+
+# Connection confidence labels
+CONFIDENCE_LABELS <- c(
+  "1" = "Very Low",
+  "2" = "Low",
+  "3" = "Medium",
+  "4" = "High",
+  "5" = "Very High"
+)
+
+# Connection confidence opacity mapping (for visual feedback)
+CONFIDENCE_OPACITY <- c(
+  "1" = 0.3,
+  "2" = 0.5,
+  "3" = 0.7,
+  "4" = 0.85,
+  "5" = 1.0
+)
+
+# Default confidence level
+CONFIDENCE_DEFAULT <- 3
+
 # Ecosystem service categories
 ECOSYSTEM_SERVICE_CATEGORIES <- c(
   "Provisioning",
@@ -713,16 +761,34 @@ is_valid_email <- function(email) {
   grepl("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", email)
 }
 
-# Convert adjacency matrix value to list
+# Convert adjacency matrix value to list with confidence
+# Format: "+strong:4" or "-medium:3" where :X is confidence (1-5)
+# If confidence is omitted, defaults to CONFIDENCE_DEFAULT (medium confidence)
 parse_connection_value <- function(value) {
   if (is.na(value) || value == "") {
     return(NULL)
   }
-  
-  polarity <- substr(value, 1, 1)
-  strength <- substr(value, 2, nchar(value))
-  
-  list(polarity = polarity, strength = strength)
+
+  # Check if confidence is included (format: "+strong:4")
+  if (grepl(":", value)) {
+    parts <- strsplit(value, ":")[[1]]
+    polarity_strength <- parts[1]
+    confidence <- as.integer(parts[2])
+
+    # Validate confidence is within allowed range
+    if (is.na(confidence) || !confidence %in% CONFIDENCE_LEVELS) {
+      confidence <- CONFIDENCE_DEFAULT  # Default if invalid
+    }
+  } else {
+    # No confidence specified, use default
+    polarity_strength <- value
+    confidence <- CONFIDENCE_DEFAULT
+  }
+
+  polarity <- substr(polarity_strength, 1, 1)
+  strength <- substr(polarity_strength, 2, nchar(polarity_strength))
+
+  list(polarity = polarity, strength = strength, confidence = confidence)
 }
 
 # ============================================================================
@@ -809,10 +875,11 @@ log_message <- function(message, level = "INFO") {
 init_session_data <- function() {
   list(
     project_id = generate_id("PROJ"),
+    project_name = "New Project",
     created_at = Sys.time(),
     last_modified = Sys.time(),
     user = Sys.info()["user"],
-    version = "1.0",
+    version = APP_VERSION,
     data = list(
       metadata = list(),
       pims = list(),
@@ -869,7 +936,7 @@ sanitize_filename <- function(name) {
   name <- gsub("[/\\\\:*?\"<>|]", "", name)
 
   # Keep only alphanumeric, underscore, hyphen, space
-  name <- gsub("[^A-Za-z0-9_\\- ]", "", name)
+  name <- gsub("[^A-Za-z0-9_ -]", "", name)
 
   # Trim whitespace
   name <- trimws(name)
@@ -1034,4 +1101,6 @@ if (file.exists("data/example_isa_data.R")) {
 
 log_message("Global environment loaded successfully")
 log_message(paste("Loaded", length(DAPSIWRM_ELEMENTS), "DAPSI(W)R(M) element types"))
-log_message(paste("Application version:", "1.0"))
+log_message(paste("Application version:", APP_VERSION))
+log_message(paste("Version name:", VERSION_INFO$version_name))
+log_message(paste("Release status:", VERSION_INFO$status))

@@ -118,11 +118,25 @@ create_back_button <- function(ns, id, label = "Back") {
 
 #' Create standardized info box with icon and message
 #'
-#' @param message Message text
+#' @param message Message text (or title if content is provided)
 #' @param type Type of alert: "info", "success", "warning", "danger"
 #' @param icon_name Icon name (auto-selected based on type if NULL)
+#' @param title Optional title (for compatibility)
+#' @param content Optional content (for compatibility)
+#' @param icon Optional icon (for compatibility)
 #' @return A div containing the formatted alert
-create_info_box <- function(message, type = "info", icon_name = NULL) {
+create_info_box <- function(message = NULL, type = "info", icon_name = NULL,
+                            title = NULL, content = NULL, icon = NULL) {
+  # Handle both old and new signatures for compatibility
+  if (!is.null(title) && !is.null(content)) {
+    # New signature: title, content, icon
+    message_text <- paste0(tags$strong(title), tags$br(), content)
+    if (!is.null(icon)) icon_name <- icon
+  } else {
+    # Old signature: message, type, icon_name
+    message_text <- message
+  }
+
   # Auto-select icon based on type
   if (is.null(icon_name)) {
     icon_name <- switch(type,
@@ -138,7 +152,7 @@ create_info_box <- function(message, type = "info", icon_name = NULL) {
     class = paste("alert alert", type, sep = "-"),
     icon(icon_name),
     " ",
-    message
+    message_text
   )
 }
 
@@ -365,5 +379,153 @@ create_validation_message <- function(errors, type = "error") {
     tags$ul(
       lapply(errors, function(err) tags$li(err))
     )
+  )
+}
+
+# ============================================================================
+# ADDITIONAL HELPER FUNCTIONS (for testing compatibility)
+# ============================================================================
+
+#' Create a value card for displaying metrics
+#'
+#' @param value Numeric value to display
+#' @param title Card title
+#' @param icon Icon name
+#' @param color Color class (default: "primary")
+#' @return A div containing the value card
+create_value_card <- function(value, title, icon, color = "primary") {
+  div(
+    class = paste0("value-card bg-", color),
+    style = "padding: 20px; border-radius: 5px; text-align: center;",
+    div(
+      icon(icon, class = "fa-3x"),
+      style = "margin-bottom: 10px;"
+    ),
+    h3(value, style = "margin: 10px 0;"),
+    p(title, style = "margin: 0;")
+  )
+}
+
+#' Create an action button with tooltip
+#'
+#' @param inputId Button input ID
+#' @param label Button label
+#' @param tooltip Tooltip text
+#' @param icon Button icon
+#' @param class Button CSS class
+#' @return An actionButton with tooltip
+create_action_button_with_tooltip <- function(inputId, label, tooltip,
+                                               icon = NULL, class = "btn-primary") {
+  btn <- actionButton(inputId, label, icon = icon, class = class)
+  add_tooltip(btn, tooltip)
+}
+
+#' Format number for display with thousand separators
+#'
+#' @param number Number to format
+#' @return Formatted string
+format_number_display <- function(number) {
+  format(number, big.mark = ",", scientific = FALSE)
+}
+
+#' Create a tooltip element
+#'
+#' @param element_id Element ID to attach tooltip to
+#' @param text Tooltip text
+#' @param placement Placement ("top", "bottom", "left", "right")
+#' @return A script tag for tooltip
+create_tooltip <- function(element_id, text, placement = "top") {
+  tags$script(HTML(sprintf(
+    "$('#%s').tooltip({title: '%s', placement: '%s'});",
+    element_id, text, placement
+  )))
+}
+
+#' Create a progress indicator
+#'
+#' @param current Current value
+#' @param total Total value
+#' @param label Progress label
+#' @return A div containing progress bar
+create_progress_indicator <- function(current, total, label = NULL) {
+  percentage <- round((current / total) * 100)
+
+  div(
+    class = "progress-wrapper",
+    if (!is.null(label)) {
+      div(class = "progress-label", label, style = "margin-bottom: 5px;")
+    },
+    div(
+      class = "progress",
+      div(
+        class = "progress-bar",
+        role = "progressbar",
+        style = sprintf("width: %d%%;", percentage),
+        `aria-valuenow` = current,
+        `aria-valuemin` = 0,
+        `aria-valuemax` = total,
+        sprintf("%d%%", percentage)
+      )
+    )
+  )
+}
+
+#' Create a notification box
+#'
+#' @param message Notification message
+#' @param type Type: "info", "success", "warning", "danger"
+#' @return A div containing the notification
+create_notification_box <- function(message, type = "info") {
+  create_info_box(message = message, type = type)
+}
+
+#' Create a collapsible section
+#'
+#' @param title Section title
+#' @param content Section content
+#' @param collapsed Start collapsed (default: FALSE)
+#' @return A collapsible div
+create_collapsible_section <- function(title, content, collapsed = FALSE) {
+  panel_id <- paste0("collapse_", gsub("[^A-Za-z0-9]", "_", title))
+
+  div(
+    class = "panel panel-default",
+    div(
+      class = "panel-heading",
+      role = "button",
+      `data-toggle` = "collapse",
+      `data-target` = paste0("#", panel_id),
+      style = "cursor: pointer;",
+      h4(class = "panel-title", title)
+    ),
+    div(
+      id = panel_id,
+      class = if (collapsed) "panel-collapse collapse" else "panel-collapse collapse in",
+      div(class = "panel-body", content)
+    )
+  )
+}
+
+#' Format percentage for display
+#'
+#' @param value Decimal value (0-1)
+#' @param digits Number of decimal places (default: 1)
+#' @return Formatted percentage string
+format_percentage <- function(value, digits = 1) {
+  paste0(round(value * 100, digits), "%")
+}
+
+#' Create help text element
+#'
+#' @param text Help text content
+#' @param icon_name Icon to use (default: "question-circle")
+#' @return A span containing help text
+create_help_text <- function(text, icon_name = "question-circle") {
+  span(
+    class = "help-text text-muted",
+    style = "font-size: 0.9em;",
+    icon(icon_name),
+    " ",
+    text
   )
 }

@@ -197,72 +197,98 @@ create_node_tooltip <- function(name, indicator, group, extra = NULL) {
 #' @param adjacency_matrices List of adjacency matrices
 #' @return Data frame with edge attributes for visNetwork
 create_edges_df <- function(isa_data, adjacency_matrices) {
-  
+
   edges <- data.frame(
     from = character(),
     to = character(),
     arrows = character(),
     color = character(),
     width = numeric(),
+    opacity = numeric(),
     title = character(),
     polarity = character(),
     strength = character(),
+    confidence = integer(),
     label = character(),
     font.size = numeric(),
     stringsAsFactors = FALSE
   )
-  
+
+  # Get actual element counts for validation
+  n_gb <- if(!is.null(isa_data$goods_benefits)) nrow(isa_data$goods_benefits) else 0
+  n_es <- if(!is.null(isa_data$ecosystem_services)) nrow(isa_data$ecosystem_services) else 0
+  n_mpf <- if(!is.null(isa_data$marine_processes)) nrow(isa_data$marine_processes) else 0
+  n_p <- if(!is.null(isa_data$pressures)) nrow(isa_data$pressures) else 0
+  n_a <- if(!is.null(isa_data$activities)) nrow(isa_data$activities) else 0
+  n_d <- if(!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0
+
   # Process each adjacency matrix
+  # NOTE: Template matrices are defined with rows=target and cols=source,
+  # but process_adjacency_matrix expects rows=source and cols=target.
+  # So we transpose each matrix before processing.
+
   if (!is.null(adjacency_matrices$gb_es)) {
     edges_gb_es <- process_adjacency_matrix(
-      adjacency_matrices$gb_es,
+      t(adjacency_matrices$gb_es),  # Transpose: GB×ES → ES×GB
       from_prefix = "ES",
-      to_prefix = "GB"
+      to_prefix = "GB",
+      expected_rows = n_es,
+      expected_cols = n_gb
     )
     edges <- bind_rows(edges, edges_gb_es)
   }
-  
+
   if (!is.null(adjacency_matrices$es_mpf)) {
     edges_es_mpf <- process_adjacency_matrix(
-      adjacency_matrices$es_mpf,
+      t(adjacency_matrices$es_mpf),  # Transpose: ES×MPF → MPF×ES
       from_prefix = "MPF",
-      to_prefix = "ES"
+      to_prefix = "ES",
+      expected_rows = n_mpf,
+      expected_cols = n_es
     )
     edges <- bind_rows(edges, edges_es_mpf)
   }
-  
+
   if (!is.null(adjacency_matrices$mpf_p)) {
     edges_mpf_p <- process_adjacency_matrix(
-      adjacency_matrices$mpf_p,
+      t(adjacency_matrices$mpf_p),  # Transpose: MPF×P → P×MPF
       from_prefix = "P",
-      to_prefix = "MPF"
+      to_prefix = "MPF",
+      expected_rows = n_p,
+      expected_cols = n_mpf
     )
     edges <- bind_rows(edges, edges_mpf_p)
   }
-  
+
   if (!is.null(adjacency_matrices$p_a)) {
     edges_p_a <- process_adjacency_matrix(
-      adjacency_matrices$p_a,
+      t(adjacency_matrices$p_a),  # Transpose: P×A → A×P
       from_prefix = "A",
-      to_prefix = "P"
+      to_prefix = "P",
+      expected_rows = n_a,
+      expected_cols = n_p
     )
     edges <- bind_rows(edges, edges_p_a)
   }
-  
+
   if (!is.null(adjacency_matrices$a_d)) {
     edges_a_d <- process_adjacency_matrix(
-      adjacency_matrices$a_d,
+      t(adjacency_matrices$a_d),  # Transpose: A×D → D×A
       from_prefix = "D",
-      to_prefix = "A"
+      to_prefix = "A",
+      expected_rows = n_d,
+      expected_cols = n_a
     )
     edges <- bind_rows(edges, edges_a_d)
   }
-  
+
   if (!is.null(adjacency_matrices$d_gb)) {
     edges_d_gb <- process_adjacency_matrix(
-      adjacency_matrices$d_gb,
+      t(adjacency_matrices$d_gb),  # Transpose: D×GB → GB×D
       from_prefix = "GB",
-      to_prefix = "D"
+      to_prefix = "D",
+      expected_rows = n_gb,
+      expected_cols = n_d
     )
     edges <- bind_rows(edges, edges_d_gb)
   }
@@ -271,21 +297,43 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
 }
 
 #' Process adjacency matrix into edges dataframe
-#' 
+#'
 #' @param adj_matrix Matrix with connection values
 #' @param from_prefix Prefix for source nodes
 #' @param to_prefix Prefix for target nodes
+#' @param expected_rows Expected number of rows (optional validation)
+#' @param expected_cols Expected number of columns (optional validation)
 #' @return Data frame with edge attributes
-process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix) {
-  
+process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
+                                     expected_rows = NULL, expected_cols = NULL) {
+
   edges <- data.frame()
-  
+
   if (is.null(adj_matrix) || !is.matrix(adj_matrix)) {
     return(edges)
   }
-  
-  for (i in 1:nrow(adj_matrix)) {
-    for (j in 1:ncol(adj_matrix)) {
+
+  # Validate matrix dimensions against expected counts
+  if (!is.null(expected_rows) && nrow(adj_matrix) != expected_rows) {
+    warning(sprintf(
+      "Adjacency matrix dimension mismatch: %s->%s matrix has %d rows but %d %s elements exist. Using min(%d, %d).",
+      from_prefix, to_prefix, nrow(adj_matrix), expected_rows, from_prefix, nrow(adj_matrix), expected_rows
+    ))
+  }
+
+  if (!is.null(expected_cols) && ncol(adj_matrix) != expected_cols) {
+    warning(sprintf(
+      "Adjacency matrix dimension mismatch: %s->%s matrix has %d cols but %d %s elements exist. Using min(%d, %d).",
+      from_prefix, to_prefix, ncol(adj_matrix), expected_cols, to_prefix, ncol(adj_matrix), expected_cols
+    ))
+  }
+
+  # Use minimum of matrix dimensions and expected counts to avoid referencing non-existent nodes
+  max_rows <- if (!is.null(expected_rows)) min(nrow(adj_matrix), expected_rows) else nrow(adj_matrix)
+  max_cols <- if (!is.null(expected_cols)) min(ncol(adj_matrix), expected_cols) else ncol(adj_matrix)
+
+  for (i in 1:max_rows) {
+    for (j in 1:max_cols) {
       value <- adj_matrix[i, j]
       
       if (!is.na(value) && value != "") {
@@ -296,29 +344,49 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix) {
           # Determine edge properties
           width_map <- c("strong" = 4, "medium" = 2.5, "weak" = 1.5)
           edge_width <- width_map[connection$strength]
-          
+
           # Color based on polarity
           edge_color <- ifelse(
             connection$polarity == "+",
             EDGE_COLORS$reinforcing,
             EDGE_COLORS$opposing
           )
-          
-          # Create edge
+
+          # Adjust opacity based on confidence (1=low, 5=high)
+          edge_opacity <- CONFIDENCE_OPACITY[as.character(connection$confidence)]
+
+          # Get row/column names with fallback to generic names
+          from_name <- if (!is.null(rownames(adj_matrix)) && length(rownames(adj_matrix)) >= i) {
+            rownames(adj_matrix)[i]
+          } else {
+            paste0(from_prefix, "_", i)
+          }
+
+          to_name <- if (!is.null(colnames(adj_matrix)) && length(colnames(adj_matrix)) >= j) {
+            colnames(adj_matrix)[j]
+          } else {
+            paste0(to_prefix, "_", j)
+          }
+
+          # Apply opacity to edge color using alpha channel
+          edge_color_with_opacity <- adjustcolor(edge_color, alpha.f = edge_opacity)
           edge <- data.frame(
             from = paste0(from_prefix, "_", i),
             to = paste0(to_prefix, "_", j),
             arrows = "to",
-            color = edge_color,
+            color = edge_color_with_opacity,
             width = edge_width,
+            opacity = edge_opacity,  # Store for potential use
             title = create_edge_tooltip(
-              rownames(adj_matrix)[i],
-              colnames(adj_matrix)[j],
+              from_name,
+              to_name,
               connection$polarity,
-              connection$strength
+              connection$strength,
+              connection$confidence
             ),
             polarity = connection$polarity,
             strength = connection$strength,
+            confidence = connection$confidence,
             label = connection$polarity,
             font.size = 10,
             stringsAsFactors = FALSE
@@ -334,22 +402,27 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix) {
 }
 
 #' Create HTML tooltip for edge
-#' 
+#'
 #' @param from_name Source node name
 #' @param to_name Target node name
 #' @param polarity Connection polarity
 #' @param strength Connection strength
+#' @param confidence Connection confidence (1-5, optional)
 #' @return HTML string for tooltip
-create_edge_tooltip <- function(from_name, to_name, polarity, strength) {
+create_edge_tooltip <- function(from_name, to_name, polarity, strength, confidence = CONFIDENCE_DEFAULT) {
   polarity_text <- ifelse(polarity == "+", "Reinforcing", "Opposing")
-  
+
+  # Get confidence label from global constant
+  confidence_text <- CONFIDENCE_LABELS[as.character(confidence)]
+
   sprintf(
     "<div style='padding: 8px;'>
       <b>%s → %s</b><br>
       Polarity: %s (%s)<br>
-      Strength: %s
+      Strength: %s<br>
+      Confidence: %s (%d/5)
     </div>",
-    from_name, to_name, polarity, polarity_text, strength
+    from_name, to_name, polarity, polarity_text, strength, confidence_text, confidence
   )
 }
 
@@ -538,12 +611,26 @@ filter_by_polarity <- function(edges, polarity) {
 }
 
 #' Filter edges by strength
-#' 
+#'
 #' @param edges Edges dataframe
 #' @param strength Vector of strengths to keep
 #' @return Filtered edges dataframe
 filter_by_strength <- function(edges, strength) {
   edges %>% filter(strength %in% strength)
+}
+
+#' Filter edges by minimum confidence level
+#'
+#' @param edges Edges dataframe
+#' @param min_confidence Minimum confidence level (1-5)
+#' @return Filtered edges dataframe
+filter_by_confidence <- function(edges, min_confidence) {
+  # Handle case where confidence column might not exist
+  if (!"confidence" %in% names(edges)) {
+    return(edges)
+  }
+
+  edges %>% filter(confidence >= min_confidence)
 }
 
 # ============================================================================

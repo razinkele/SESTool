@@ -2,6 +2,24 @@
 /* Custom styling for MarineSABRES SES Shiny Application */
 
 /* ============================================================================
+   HEADER STYLING
+   ============================================================================ */
+
+/* Add logo to header title */
+.skin-blue .main-header .logo {
+  background-image: url('img/01 marinesabres_logo_transparent.png');
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  background-size: 40px;
+  padding-left: 65px !important;
+  font-size: 18px;
+}
+
+.skin-blue .main-header .navbar {
+  background-color: #3c8dbc;
+}
+
+/* ============================================================================
    GENERAL STYLING
    ============================================================================ */
 
@@ -152,19 +170,173 @@ h2 {
 
 .form-control {
   border-radius: 6px;
-  border: 1px solid #bdc3c7;
+  border: 2px solid #3498db !important;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
 }
 
 .form-control:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+  border-color: #2980b9 !important;
+  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.35) !important;
+  background-color: #ffffff !important;
+  outline: none !important;
 }
 
 .form-group label {
   font-weight: 600;
   color: #34495e;
   margin-bottom: 8px;
+}
+
+/* ISA Data Entry Panels - Force active appearance */
+.well > .row {
+  margin-bottom: 10px;
+}
+
+/* Target all input types in ISA panels */
+.well input[type="text"],
+.well input[type="number"],
+.well input[type="email"],
+.well input[type="date"],
+.well textarea,
+.well select {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  color: #2c3e50 !important;
+  cursor: text !important;
+  border: 2px solid #3498db !important;
+  font-weight: 500 !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Specific fix for select dropdowns */
+.well select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233498db' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 12px !important;
+  padding-right: 30px !important;
+  cursor: pointer !important;
+}
+
+/* Hover states for better visual feedback */
+.well input[type="text"]:hover,
+.well input[type="number"]:hover,
+.well input[type="email"]:hover,
+.well input[type="date"]:hover,
+.well textarea:hover,
+.well select:hover {
+  border-color: #2980b9 !important;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3) !important;
+}
+
+/* Focus states */
+.well input[type="text"]:focus,
+.well input[type="number"]:focus,
+.well input[type="email"]:focus,
+.well input[type="date"]:focus,
+.well textarea:focus,
+.well select:focus {
+  border-color: #2980b9 !important;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.5) !important;
+  outline: none !important;
+}
+
+/* Placeholder text styling */
+.well input::placeholder,
+.well textarea::placeholder {
+  color: #95a5a6 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+}
+
+/* ULTRA AGGRESSIVE FIX - Make ISA fields clearly editable */
+/* This overrides ALL Bootstrap and Shiny defaults */
+#isa_data_entry-gb_entries .well,
+#isa_data_entry-es_entries .well,
+#isa_data_entry-mpf_entries .well,
+#isa_data_entry-p_entries .well,
+#isa_data_entry-a_entries .well,
+#isa_data_entry-d_entries .well {
+  background-color: #f0f8ff !important;
+  border: 2px solid #3498db !important;
+  box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2) !important;
+}
+
+#isa_data_entry-gb_entries input,
+#isa_data_entry-gb_entries select,
+#isa_data_entry-gb_entries textarea,
+#isa_data_entry-es_entries input,
+#isa_data_entry-es_entries select,
+#isa_data_entry-es_entries textarea,
+#isa_data_entry-mpf_entries input,
+#isa_data_entry-mpf_entries select,
+#isa_data_entry-mpf_entries textarea,
+#isa_data_entry-p_entries input,
+#isa_data_entry-p_entries select,
+#isa_data_entry-p_entries textarea,
+#isa_data_entry-a_entries input,
+#isa_data_entry-a_entries select,
+#isa_data_entry-a_entries textarea,
+#isa_data_entry-d_entries input,
+#isa_data_entry-d_entries select,
+#isa_data_entry-d_entries textarea {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+  border: 2px solid #3498db !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  padding: 8px 12px !important;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* Make it VERY obvious when hovering */
+#isa_data_entry-gb_entries input:hover,
+#isa_data_entry-gb_entries select:hover,
+#isa_data_entry-gb_entries textarea:hover,
+#isa_data_entry-es_entries input:hover,
+#isa_data_entry-es_entries select:hover,
+#isa_data_entry-es_entries textarea:hover {
+  background-color: #fffacd !important;
+  border-color: #f39c12 !important;
+  box-shadow: 0 0 10px rgba(243, 156, 18, 0.5) !important;
+}
+
+/* Make it EXTREMELY obvious when focused/typing */
+#isa_data_entry-gb_entries input:focus,
+#isa_data_entry-gb_entries select:focus,
+#isa_data_entry-gb_entries textarea:focus,
+#isa_data_entry-es_entries input:focus,
+#isa_data_entry-es_entries select:focus,
+#isa_data_entry-es_entries textarea:focus {
+  background-color: #fffacd !important;
+  border-color: #27ae60 !important;
+  box-shadow: 0 0 15px rgba(39, 174, 96, 0.6) !important;
+  outline: 3px solid rgba(39, 174, 96, 0.3) !important;
+}
+
+/* Also target Exercise 0 fields */
+#isa_data_entry-case_name,
+#isa_data_entry-case_description,
+#isa_data_entry-geographic_scope,
+#isa_data_entry-temporal_scope,
+#isa_data_entry-welfare_impacts,
+#isa_data_entry-key_stakeholders {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #3498db !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #000000 !important;
 }
 
 /* ============================================================================

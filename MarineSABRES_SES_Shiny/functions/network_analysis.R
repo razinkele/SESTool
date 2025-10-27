@@ -8,37 +8,86 @@ library(igraph)
 # ============================================================================
 
 #' Calculate all network metrics
-#' 
-#' @param nodes Nodes dataframe
-#' @param edges Edges dataframe
+#'
+#' @param nodes Nodes dataframe OR igraph object
+#' @param edges Edges dataframe (optional if nodes is an igraph object)
 #' @return List of metric vectors
-calculate_network_metrics <- function(nodes, edges) {
-  
-  # Create igraph object
-  g <- create_igraph_from_data(nodes, edges)
-  
+calculate_network_metrics <- function(nodes, edges = NULL) {
+
+  # Handle different input types
+  if (inherits(nodes, "igraph")) {
+    # If nodes is actually an igraph object
+    g <- nodes
+  } else {
+    # Create igraph object from data
+    g <- create_igraph_from_data(nodes, edges)
+  }
+
   # Calculate metrics
+  if (vcount(g) == 0) {
+    return(list(
+      nodes = 0,
+      edges = 0,
+      density = 0,
+      diameter = 0,
+      avg_path_length = 0
+    ))
+  }
+
+  # Calculate graph-level metrics
   metrics <- list(
+    nodes = vcount(g),
+    edges = ecount(g),
+    density = edge_density(g),
+    diameter = tryCatch(diameter(g, directed = TRUE), error = function(e) 0),
+    avg_path_length = tryCatch(mean_distance(g, directed = TRUE), error = function(e) 0),
+    # Node-level centrality metrics
     degree = degree(g, mode = "all"),
     indegree = degree(g, mode = "in"),
     outdegree = degree(g, mode = "out"),
     betweenness = betweenness(g, directed = TRUE),
     closeness = closeness(g, mode = "all"),
-    eigenvector = eigen_centrality(g, directed = TRUE)$vector,
+    eigenvector = tryCatch(eigen_centrality(g, directed = TRUE)$vector, error = function(e) rep(0, vcount(g))),
     pagerank = page_rank(g)$vector
   )
-  
+
   return(metrics)
 }
 
 #' Create igraph object from nodes and edges
-#' 
+#'
 #' @param nodes Nodes dataframe
 #' @param edges Edges dataframe
 #' @return igraph object
 create_igraph_from_data <- function(nodes, edges) {
+
+  # Validate that all edges reference existing nodes
+  valid_node_ids <- nodes$id
+
+  # Filter edges to only include those referencing existing nodes
+  valid_edges <- edges %>%
+    filter(from %in% valid_node_ids & to %in% valid_node_ids)
+
+  if (nrow(valid_edges) < nrow(edges)) {
+    invalid_count <- nrow(edges) - nrow(valid_edges)
+    warning(sprintf(
+      "Removed %d edges referencing non-existent nodes. Check data consistency.",
+      invalid_count
+    ))
+  }
+
+  if (nrow(valid_edges) == 0) {
+    stop("No valid edges found after filtering. Cannot create graph.")
+  }
+
+  # Select required columns, include confidence if present
+  required_cols <- c("from", "to", "polarity", "strength")
+  if ("confidence" %in% names(valid_edges)) {
+    required_cols <- c(required_cols, "confidence")
+  }
+
   graph_from_data_frame(
-    edges[, c("from", "to", "polarity", "strength")],
+    valid_edges[, required_cols, drop = FALSE],
     directed = TRUE,
     vertices = nodes
   )
@@ -52,7 +101,7 @@ create_igraph_from_data <- function(nodes, edges) {
 calculate_micmac <- function(nodes, edges) {
   
   # Create adjacency matrix
-  adj <- create_adjacency_matrix(nodes, edges)
+  adj <- create_numeric_adjacency_matrix(nodes, edges)
   
   # Calculate direct influence and exposure
   influence_direct <- rowSums(adj != 0)
@@ -85,23 +134,23 @@ calculate_micmac <- function(nodes, edges) {
   return(micmac)
 }
 
-#' Create adjacency matrix from edges
-#' 
+#' Create numeric adjacency matrix from edges
+#'
 #' @param nodes Nodes dataframe
 #' @param edges Edges dataframe
-#' @return Matrix
-create_adjacency_matrix <- function(nodes, edges) {
+#' @return Numeric matrix
+create_numeric_adjacency_matrix <- function(nodes, edges) {
   n <- nrow(nodes)
   adj <- matrix(0, nrow = n, ncol = n)
   rownames(adj) <- nodes$id
   colnames(adj) <- nodes$id
-  
+
   for (i in 1:nrow(edges)) {
     from_idx <- which(nodes$id == edges$from[i])
     to_idx <- which(nodes$id == edges$to[i])
     adj[from_idx, to_idx] <- 1
   }
-  
+
   return(adj)
 }
 
@@ -226,26 +275,42 @@ normalize_cycle <- function(cycle) {
 }
 
 #' Classify loop type (reinforcing or balancing)
-#' 
-#' @param loop_nodes Vector of node IDs in loop
-#' @param edges Edges dataframe
-#' @return "R" for reinforcing, "B" for balancing
-classify_loop_type <- function(loop_nodes, edges) {
-  
+#'
+#' @param loop_nodes Vector of node IDs in loop OR list with path and edge_types
+#' @param edges Edges dataframe (optional if loop_nodes is a list)
+#' @return "reinforcing" or "balancing" (or "R"/"B" for legacy)
+classify_loop_type <- function(loop_nodes, edges = NULL) {
+
+  # Handle different input types
+  if (is.list(loop_nodes) && !is.null(loop_nodes$edge_types)) {
+    # New interface: list with path and edge_types
+    edge_types <- loop_nodes$edge_types
+    n_negative <- sum(edge_types == "-")
+
+    # Even number of negatives = Reinforcing
+    # Odd number of negatives = Balancing
+    return(ifelse(n_negative %% 2 == 0, "reinforcing", "balancing"))
+  }
+
+  # Old interface: vector of node IDs and edges dataframe
+  if (is.null(edges)) {
+    stop("edges parameter is required when loop_nodes is a vector")
+  }
+
   # Count negative edges in the loop
   n_negative <- 0
-  
+
   for (i in 1:length(loop_nodes)) {
     from_id <- loop_nodes[i]
     to_id <- loop_nodes[(i %% length(loop_nodes)) + 1]
-    
+
     edge <- edges %>% filter(from == from_id, to == to_id)
-    
+
     if (nrow(edge) > 0 && edge$polarity == "-") {
       n_negative <- n_negative + 1
     }
   }
-  
+
   # Even number of negatives = Reinforcing
   # Odd number of negatives = Balancing
   ifelse(n_negative %% 2 == 0, "R", "B")
@@ -400,14 +465,20 @@ encapsulate_siso_variables <- function(nodes, edges, siso_info) {
       n_negative = (polarity_in == "-") + (polarity_out == "-"),
       polarity = ifelse(n_negative %% 2 == 0, "+", "-"),
       strength = "medium",  # Default for bridge edges
+      confidence = CONFIDENCE_DEFAULT,  # Default confidence for BOT edges
       arrows = "to",
-      color = ifelse(polarity == "+", EDGE_COLORS$reinforcing, EDGE_COLORS$opposing),
+      # Apply opacity based on confidence
+      opacity = CONFIDENCE_OPACITY[as.character(CONFIDENCE_DEFAULT)],
+      color = adjustcolor(
+        ifelse(polarity == "+", EDGE_COLORS$reinforcing, EDGE_COLORS$opposing),
+        alpha.f = CONFIDENCE_OPACITY[as.character(CONFIDENCE_DEFAULT)]
+      ),
       width = 2.5,
       title = "Encapsulated connection",
       label = polarity,
       font.size = 10
     ) %>%
-    select(from, to, arrows, color, width, title, polarity, strength, label, font.size)
+    select(from, to, arrows, color, width, opacity, title, polarity, strength, confidence, label, font.size)
   
   # Remove old edges and add bridge edges
   edges_updated <- edges %>%

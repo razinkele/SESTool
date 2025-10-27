@@ -238,112 +238,26 @@ analysis_loops_server <- function(id, project_data_reactive) {
 
       if(is.null(isa_data)) return(NULL)
 
-      # Create edge list from ISA data
-      edges <- data.frame(from = character(), to = character(),
-                         type = character(), polarity = character(),
-                         stringsAsFactors = FALSE)
+      # Use the existing helper functions to build nodes and edges
+      # These functions properly handle adjacency matrices from templates
+      nodes <- create_nodes_df(isa_data)
+      edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
 
-      # G&B -> ES connections
-      if(!is.null(isa_data$ecosystem_services) && nrow(isa_data$ecosystem_services) > 0) {
-        for(i in 1:nrow(isa_data$ecosystem_services)) {
-          linked <- isa_data$ecosystem_services$LinkedGB[i]
-          if(!is.na(linked) && linked != "") {
-            gb_id <- gsub(":.*", "", linked)
-            es_id <- isa_data$ecosystem_services$ID[i]
-            edges <- rbind(edges, data.frame(
-              from = gb_id, to = es_id,
-              type = "GB_to_ES", polarity = "+",
-              stringsAsFactors = FALSE
-            ))
-          }
-        }
+      if(is.null(nodes) || nrow(nodes) == 0 || is.null(edges) || nrow(edges) == 0) {
+        return(NULL)
       }
 
-      # ES -> MPF connections
-      if(!is.null(isa_data$marine_processes) && nrow(isa_data$marine_processes) > 0) {
-        for(i in 1:nrow(isa_data$marine_processes)) {
-          linked <- isa_data$marine_processes$LinkedES[i]
-          if(!is.na(linked) && linked != "") {
-            es_id <- gsub(":.*", "", linked)
-            mpf_id <- isa_data$marine_processes$ID[i]
-            edges <- rbind(edges, data.frame(
-              from = es_id, to = mpf_id,
-              type = "ES_to_MPF", polarity = "+",
-              stringsAsFactors = FALSE
-            ))
-          }
-        }
-      }
+      # Create igraph object with both nodes and edges
+      g <- graph_from_data_frame(
+        d = edges %>% select(from, to, polarity),
+        directed = TRUE,
+        vertices = nodes %>% select(id, label, group)
+      )
 
-      # MPF -> P connections (note: pressures NEGATIVELY affect processes)
-      if(!is.null(isa_data$pressures) && nrow(isa_data$pressures) > 0) {
-        for(i in 1:nrow(isa_data$pressures)) {
-          linked <- isa_data$pressures$LinkedMPF[i]
-          if(!is.na(linked) && linked != "") {
-            mpf_id <- gsub(":.*", "", linked)
-            p_id <- isa_data$pressures$ID[i]
-            edges <- rbind(edges, data.frame(
-              from = p_id, to = mpf_id,
-              type = "P_to_MPF", polarity = "-",
-              stringsAsFactors = FALSE
-            ))
-          }
-        }
-      }
-
-      # P -> A connections
-      if(!is.null(isa_data$activities) && nrow(isa_data$activities) > 0) {
-        for(i in 1:nrow(isa_data$activities)) {
-          linked <- isa_data$activities$LinkedP[i]
-          if(!is.na(linked) && linked != "") {
-            p_id <- gsub(":.*", "", linked)
-            a_id <- isa_data$activities$ID[i]
-            edges <- rbind(edges, data.frame(
-              from = a_id, to = p_id,
-              type = "A_to_P", polarity = "+",
-              stringsAsFactors = FALSE
-            ))
-          }
-        }
-      }
-
-      # A -> D connections
-      if(!is.null(isa_data$drivers) && nrow(isa_data$drivers) > 0) {
-        for(i in 1:nrow(isa_data$drivers)) {
-          linked <- isa_data$drivers$LinkedA[i]
-          if(!is.na(linked) && linked != "") {
-            a_id <- gsub(":.*", "", linked)
-            d_id <- isa_data$drivers$ID[i]
-            edges <- rbind(edges, data.frame(
-              from = d_id, to = a_id,
-              type = "D_to_A", polarity = "+",
-              stringsAsFactors = FALSE
-            ))
-          }
-        }
-      }
-
-      # Loop connections (D -> G&B)
-      if(!is.null(isa_data$loop_connections) && nrow(isa_data$loop_connections) > 0) {
-        for(i in 1:nrow(isa_data$loop_connections)) {
-          d_id <- isa_data$loop_connections$DriverID[i]
-          gb_id <- isa_data$loop_connections$GBID[i]
-          polarity <- ifelse(isa_data$loop_connections$Effect[i] == "Positive", "+", "-")
-          edges <- rbind(edges, data.frame(
-            from = d_id, to = gb_id,
-            type = "D_to_GB", polarity = polarity,
-            stringsAsFactors = FALSE
-          ))
-        }
-      }
-
-      if(nrow(edges) == 0) return(NULL)
-
-      # Create igraph object
-      g <- graph_from_data_frame(edges, directed = TRUE)
+      # Add edge attributes
       E(g)$polarity <- edges$polarity
 
-      return(list(graph = g, edges = edges))
+      return(list(graph = g, edges = edges, nodes = nodes))
     })
 
     # Detect Loops ----

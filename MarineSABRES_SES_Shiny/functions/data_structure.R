@@ -18,7 +18,7 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
     created_at = Sys.time(),
     last_modified = Sys.time(),
     user = Sys.info()["user"],
-    version = "1.0",
+    version = ifelse(exists("APP_VERSION"), APP_VERSION, "1.0"),
     
     data = list(
       # Project metadata
@@ -242,21 +242,30 @@ create_empty_element_df <- function(element_type) {
 # ============================================================================
 
 #' Create empty adjacency matrix
-#' 
+#'
 #' @param from_elements Vector of source element names
 #' @param to_elements Vector of target element names
 #' @return Matrix with empty cells
 create_empty_adjacency_matrix <- function(from_elements, to_elements) {
-  
+
   if (length(from_elements) == 0 || length(to_elements) == 0) {
     return(matrix(nrow = 0, ncol = 0))
   }
-  
+
   mat <- matrix("", nrow = length(from_elements), ncol = length(to_elements))
   rownames(mat) <- from_elements
   colnames(mat) <- to_elements
-  
+
   return(mat)
+}
+
+#' Create adjacency matrix (alias for create_empty_adjacency_matrix)
+#'
+#' @param row_names Vector of row names
+#' @param col_names Vector of column names
+#' @return Matrix with empty cells
+create_adjacency_matrix <- function(row_names, col_names) {
+  create_empty_adjacency_matrix(row_names, col_names)
 }
 
 #' Convert adjacency matrix to edge list
@@ -335,7 +344,7 @@ validate_project_data <- function(project_data) {
   
   # Validate ISA data
   if (!is.null(project_data$data$isa_data)) {
-    isa_errors <- validate_isa_data(project_data$data$isa_data)
+    isa_errors <- validate_isa_structure(project_data$data$isa_data)
     errors <- c(errors, isa_errors)
   }
   
@@ -351,18 +360,18 @@ validate_project_data <- function(project_data) {
   )
 }
 
-#' Validate ISA data
-#' 
+#' Validate ISA data structure
+#'
 #' @param isa_data ISA data list
 #' @return Character vector of errors
-validate_isa_data <- function(isa_data) {
-  
+validate_isa_structure <- function(isa_data) {
+
   errors <- c()
-  
+
   # Check each element type
-  element_types <- c("goods_benefits", "ecosystem_services", 
+  element_types <- c("goods_benefits", "ecosystem_services",
                     "marine_processes", "pressures", "activities", "drivers")
-  
+
   for (elem_type in element_types) {
     if (!is.null(isa_data[[elem_type]])) {
       elem_errors <- validate_element_data(isa_data[[elem_type]], elem_type)
@@ -371,13 +380,13 @@ validate_isa_data <- function(isa_data) {
       }
     }
   }
-  
+
   # Check adjacency matrices consistency
   if (!is.null(isa_data$adjacency_matrices)) {
     adj_errors <- validate_adjacency_matrices(isa_data)
     errors <- c(errors, adj_errors)
   }
-  
+
   return(errors)
 }
 

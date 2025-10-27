@@ -927,6 +927,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
               to_name = elements$activities[[j]]$name,
               polarity = "+",
               strength = "medium",
+              confidence = CONFIDENCE_DEFAULT,  # Default confidence for auto-generated connections
               rationale = paste(elements$drivers[[i]]$name, "drives", elements$activities[[j]]$name),
               matrix = "a_d"
             )
@@ -947,6 +948,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
               to_name = elements$pressures[[j]]$name,
               polarity = "+",
               strength = "medium",
+              confidence = CONFIDENCE_DEFAULT,  # Default confidence for auto-generated connections
               rationale = paste(elements$activities[[i]]$name, "causes", elements$pressures[[j]]$name),
               matrix = "p_a"
             )
@@ -967,6 +969,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
               to_name = elements$states[[j]]$name,
               polarity = "-",
               strength = "medium",
+              confidence = 3,
               rationale = paste(elements$pressures[[i]]$name, "negatively affects", elements$states[[j]]$name),
               matrix = "mpf_p"
             )
@@ -987,6 +990,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
               to_name = elements$impacts[[j]]$name,
               polarity = "-",
               strength = "medium",
+              confidence = 3,
               rationale = paste(elements$states[[i]]$name, "impacts", elements$impacts[[j]]$name),
               matrix = "es_mpf"
             )
@@ -1007,6 +1011,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
               to_name = elements$welfare[[j]]$name,
               polarity = "-",
               strength = "medium",
+              confidence = 3,
               rationale = paste(elements$impacts[[i]]$name, "reduces", elements$welfare[[j]]$name),
               matrix = "gb_es"
             )
@@ -1027,6 +1032,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
               to_name = elements$pressures[[j]]$name,
               polarity = "-",
               strength = "medium",
+              confidence = 3,
               rationale = paste(elements$responses[[i]]$name, "aims to reduce", elements$pressures[[j]]$name),
               matrix = "p_r"  # Note: This may need to be added to the system
             )
@@ -1047,6 +1053,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
               to_name = elements$responses[[j]]$name,
               polarity = "+",
               strength = "medium",
+              confidence = 3,
               rationale = paste(elements$measures[[i]]$name, "supports", elements$responses[[j]]$name),
               matrix = "r_m"  # Note: This may need to be added to the system
             )
@@ -1703,93 +1710,133 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
       # CLD expects separate dataframes for each category
 
       # Create drivers dataframe
+      # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$drivers) > 0) {
         current_data$data$isa_data$drivers <- data.frame(
-          name = sapply(rv$elements$drivers, function(x) x$name),
-          description = sapply(rv$elements$drivers, function(x) x$description %||% ""),
-          indicator = "",
+          ID = paste0("D", sprintf("%03d", seq_along(rv$elements$drivers))),
+          Name = sapply(rv$elements$drivers, function(x) x$name),
+          Type = "Driver",
+          Description = sapply(rv$elements$drivers, function(x) x$description %||% ""),
+          Stakeholder = "",
+          Importance = "",
+          Trend = "",
           stringsAsFactors = FALSE
         )
       } else {
         current_data$data$isa_data$drivers <- data.frame(
-          name = character(), description = character(), indicator = character(),
+          ID = character(), Name = character(), Type = character(),
+          Description = character(), Stakeholder = character(),
+          Importance = character(), Trend = character(),
           stringsAsFactors = FALSE
         )
       }
 
       # Create activities dataframe
+      # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$activities) > 0) {
         current_data$data$isa_data$activities <- data.frame(
-          name = sapply(rv$elements$activities, function(x) x$name),
-          description = sapply(rv$elements$activities, function(x) x$description %||% ""),
-          indicator = "",
-          scale = "",
+          ID = paste0("A", sprintf("%03d", seq_along(rv$elements$activities))),
+          Name = sapply(rv$elements$activities, function(x) x$name),
+          Type = "Activity",
+          Description = sapply(rv$elements$activities, function(x) x$description %||% ""),
+          Stakeholder = "",
+          Importance = "",
+          Trend = "",
           stringsAsFactors = FALSE
         )
       } else {
         current_data$data$isa_data$activities <- data.frame(
-          name = character(), description = character(), indicator = character(),
-          scale = character(), stringsAsFactors = FALSE
+          ID = character(), Name = character(), Type = character(),
+          Description = character(), Stakeholder = character(),
+          Importance = character(), Trend = character(),
+          stringsAsFactors = FALSE
         )
       }
 
       # Create pressures dataframe
+      # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$pressures) > 0) {
         current_data$data$isa_data$pressures <- data.frame(
-          name = sapply(rv$elements$pressures, function(x) x$name),
-          description = sapply(rv$elements$pressures, function(x) x$description %||% ""),
-          indicator = "",
-          type = "",
+          ID = paste0("P", sprintf("%03d", seq_along(rv$elements$pressures))),
+          Name = sapply(rv$elements$pressures, function(x) x$name),
+          Type = "Pressure",
+          Description = sapply(rv$elements$pressures, function(x) x$description %||% ""),
+          Stakeholder = "",
+          Importance = "",
+          Trend = "",
           stringsAsFactors = FALSE
         )
       } else {
         current_data$data$isa_data$pressures <- data.frame(
-          name = character(), description = character(), indicator = character(),
-          type = character(), stringsAsFactors = FALSE
+          ID = character(), Name = character(), Type = character(),
+          Description = character(), Stakeholder = character(),
+          Importance = character(), Trend = character(),
+          stringsAsFactors = FALSE
         )
       }
 
       # Create marine_processes dataframe (states)
+      # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$states) > 0) {
         current_data$data$isa_data$marine_processes <- data.frame(
-          name = sapply(rv$elements$states, function(x) x$name),
-          description = sapply(rv$elements$states, function(x) x$description %||% ""),
-          indicator = "",
+          ID = paste0("MPF", sprintf("%03d", seq_along(rv$elements$states))),
+          Name = sapply(rv$elements$states, function(x) x$name),
+          Type = "State Change",
+          Description = sapply(rv$elements$states, function(x) x$description %||% ""),
+          Stakeholder = "",
+          Importance = "",
+          Trend = "",
           stringsAsFactors = FALSE
         )
       } else {
         current_data$data$isa_data$marine_processes <- data.frame(
-          name = character(), description = character(), indicator = character(),
+          ID = character(), Name = character(), Type = character(),
+          Description = character(), Stakeholder = character(),
+          Importance = character(), Trend = character(),
           stringsAsFactors = FALSE
         )
       }
 
       # Create ecosystem_services dataframe (impacts)
+      # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$impacts) > 0) {
         current_data$data$isa_data$ecosystem_services <- data.frame(
-          name = sapply(rv$elements$impacts, function(x) x$name),
-          description = sapply(rv$elements$impacts, function(x) x$description %||% ""),
-          indicator = "",
+          ID = paste0("ES", sprintf("%03d", seq_along(rv$elements$impacts))),
+          Name = sapply(rv$elements$impacts, function(x) x$name),
+          Type = "Impact",
+          Description = sapply(rv$elements$impacts, function(x) x$description %||% ""),
+          Stakeholder = "",
+          Importance = "",
+          Trend = "",
           stringsAsFactors = FALSE
         )
       } else {
         current_data$data$isa_data$ecosystem_services <- data.frame(
-          name = character(), description = character(), indicator = character(),
+          ID = character(), Name = character(), Type = character(),
+          Description = character(), Stakeholder = character(),
+          Importance = character(), Trend = character(),
           stringsAsFactors = FALSE
         )
       }
 
       # Create goods_benefits dataframe (welfare)
+      # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$welfare) > 0) {
         current_data$data$isa_data$goods_benefits <- data.frame(
-          name = sapply(rv$elements$welfare, function(x) x$name),
-          description = sapply(rv$elements$welfare, function(x) x$description %||% ""),
-          indicator = "",
+          ID = paste0("GB", sprintf("%03d", seq_along(rv$elements$welfare))),
+          Name = sapply(rv$elements$welfare, function(x) x$name),
+          Type = "Welfare",
+          Description = sapply(rv$elements$welfare, function(x) x$description %||% ""),
+          Stakeholder = "",
+          Importance = "",
+          Trend = "",
           stringsAsFactors = FALSE
         )
       } else {
         current_data$data$isa_data$goods_benefits <- data.frame(
-          name = character(), description = character(), indicator = character(),
+          ID = character(), Name = character(), Type = character(),
+          Description = character(), Stakeholder = character(),
+          Importance = character(), Trend = character(),
           stringsAsFactors = FALSE
         )
       }
@@ -1898,7 +1945,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive) {
         # Fill matrices with approved connections
         for (conn_idx in rv$approved_connections) {
           conn <- rv$suggested_connections[[conn_idx]]
-          value <- paste0(conn$polarity, conn$strength)
+          # Format: "+strength:confidence"
+          confidence <- conn$confidence %||% CONFIDENCE_DEFAULT  # Default if not present
+          value <- paste0(conn$polarity, conn$strength, ":", confidence)
 
           # Determine which matrix and indices
           if (conn$matrix == "a_d" && !is.null(current_data$data$isa_data$adjacency_matrices$a_d)) {

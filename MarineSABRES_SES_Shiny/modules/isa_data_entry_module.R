@@ -510,6 +510,9 @@ isaDataEntryServer <- function(id, global_data) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
+    # Source validation helpers
+    source("functions/module_validation_helpers.R", local = TRUE)
+
     # Reactive values to store all ISA data ----
     isa_data <- reactiveValues(
       # Exercise 0
@@ -599,6 +602,8 @@ isaDataEntryServer <- function(id, global_data) {
         DriverID = character(),
         GBID = character(),
         Effect = character(),
+        Strength = character(),
+        Confidence = integer(),
         Mechanism = character(),
         stringsAsFactors = FALSE
       ),
@@ -620,41 +625,81 @@ isaDataEntryServer <- function(id, global_data) {
 
     # Exercise 0: Save case information ----
     observeEvent(input$save_ex0, {
-      isa_data$case_info <- list(
-        name = input$case_name,
-        description = input$case_description,
-        geographic_scope = input$geographic_scope,
-        temporal_scope = input$temporal_scope,
-        welfare_impacts = input$welfare_impacts,
-        key_stakeholders = input$key_stakeholders
+      # Validate all Exercise 0 inputs
+      validations <- list(
+        validate_text_input(input$case_name, "Case Study Name",
+                           required = TRUE, min_length = 3, max_length = 200,
+                           session = session),
+        validate_text_input(input$case_description, "Case Description",
+                           required = TRUE, min_length = 10, max_length = 1000,
+                           session = session),
+        validate_text_input(input$geographic_scope, "Geographic Scope",
+                           required = TRUE, min_length = 3,
+                           session = session),
+        validate_text_input(input$temporal_scope, "Temporal Scope",
+                           required = TRUE, min_length = 3,
+                           session = session),
+        validate_text_input(input$welfare_impacts, "Welfare Impacts",
+                           required = FALSE, max_length = 2000,
+                           session = session),
+        validate_text_input(input$key_stakeholders, "Key Stakeholders",
+                           required = FALSE, max_length = 1000,
+                           session = session)
       )
+
+      # Check all validations
+      if (!validate_all(validations, session)) {
+        return()  # Stop if validation fails
+      }
+
+      # All valid - save data with cleaned values
+      isa_data$case_info <- list(
+        name = validations[[1]]$value,
+        description = validations[[2]]$value,
+        geographic_scope = validations[[3]]$value,
+        temporal_scope = validations[[4]]$value,
+        welfare_impacts = if (!is.null(validations[[5]]$value)) validations[[5]]$value else "",
+        key_stakeholders = if (!is.null(validations[[6]]$value)) validations[[6]]$value else ""
+      )
+
       showNotification("Exercise 0 saved successfully!", type = "message")
+      log_message("Exercise 0 case information saved", "INFO")
     })
 
     # Exercise 1: Goods & Benefits ----
     observeEvent(input$add_gb, {
       isa_data$gb_counter <- isa_data$gb_counter + 1
+      current_id <- isa_data$gb_counter
+
       insertUI(
         selector = paste0("#", ns("gb_entries")),
         where = "beforeEnd",
-        ui = wellPanel(
-          id = ns(paste0("gb_panel_", isa_data$gb_counter)),
+        ui = div(
+          id = ns(paste0("gb_panel_", current_id)),
+          class = "isa-entry-panel",
+          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("gb_name_", isa_data$gb_counter)), "Name:", placeholder = "e.g., Fish catch")),
-            column(3, selectInput(ns(paste0("gb_type_", isa_data$gb_counter)), "Type:",
+            column(3, textInput(ns(paste0("gb_name_", current_id)), "Name:", placeholder = "e.g., Fish catch")),
+            column(3, selectInput(ns(paste0("gb_type_", current_id)), "Type:",
                                  choices = c("Provisioning", "Regulating", "Cultural", "Supporting"))),
-            column(6, textInput(ns(paste0("gb_desc_", isa_data$gb_counter)), "Description:"))
+            column(6, textInput(ns(paste0("gb_desc_", current_id)), "Description:"))
           ),
           fluidRow(
-            column(3, textInput(ns(paste0("gb_stakeholder_", isa_data$gb_counter)), "Stakeholder:")),
-            column(3, selectInput(ns(paste0("gb_importance_", isa_data$gb_counter)), "Importance:",
+            column(3, textInput(ns(paste0("gb_stakeholder_", current_id)), "Stakeholder:")),
+            column(3, selectInput(ns(paste0("gb_importance_", current_id)), "Importance:",
                                  choices = c("High", "Medium", "Low"))),
-            column(3, selectInput(ns(paste0("gb_trend_", isa_data$gb_counter)), "Trend:",
+            column(3, selectInput(ns(paste0("gb_trend_", current_id)), "Trend:",
                                  choices = c("Increasing", "Stable", "Decreasing", "Unknown"))),
-            column(3, actionButton(ns(paste0("gb_remove_", isa_data$gb_counter)), "Remove", class = "btn-danger btn-sm"))
+            column(3, actionButton(ns(paste0("gb_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
           )
         )
       )
+
+      # Add remove button handler for this entry
+      observeEvent(input[[paste0("gb_remove_", current_id)]], {
+        removeUI(selector = paste0("#", ns(paste0("gb_panel_", current_id))))
+        showNotification("Entry removed", type = "message", duration = 2)
+      }, ignoreInit = TRUE, once = TRUE)
     })
 
     output$gb_table <- renderDT({
@@ -662,28 +707,71 @@ isaDataEntryServer <- function(id, global_data) {
     })
 
     observeEvent(input$save_ex1, {
-      # Collect all GB entries
+      # Check if at least one entry exists
+      if (isa_data$gb_counter == 0) {
+        showNotification("Please add at least one Good/Benefit entry before saving.",
+                        type = "warning", session = session)
+        return()
+      }
+
+      # Collect and validate all GB entries
       gb_df <- data.frame()
+      validation_errors <- c()
+
       for(i in 1:isa_data$gb_counter) {
         name_val <- input[[paste0("gb_name_", i)]]
-        if(!is.null(name_val) && name_val != "") {
-          gb_df <- rbind(gb_df, data.frame(
-            ID = paste0("GB", sprintf("%03d", i)),
-            Name = name_val,
-            Type = input[[paste0("gb_type_", i)]],
-            Description = input[[paste0("gb_desc_", i)]],
-            Stakeholder = input[[paste0("gb_stakeholder_", i)]],
-            Importance = input[[paste0("gb_importance_", i)]],
-            Trend = input[[paste0("gb_trend_", i)]],
-            stringsAsFactors = FALSE
-          ))
+        type_val <- input[[paste0("gb_type_", i)]]
+        desc_val <- input[[paste0("gb_desc_", i)]]
+        stakeholder_val <- input[[paste0("gb_stakeholder_", i)]]
+        importance_val <- input[[paste0("gb_importance_", i)]]
+        trend_val <- input[[paste0("gb_trend_", i)]]
+
+        # Skip removed entries (where name is NULL)
+        if(is.null(name_val)) next
+
+        # Only validate and include entries with a name
+        if(name_val != "") {
+          # Validate this entry
+          entry_validations <- list(
+            validate_text_input(name_val, paste0("G&B ", i, " Name"),
+                               required = TRUE, min_length = 2, max_length = 200,
+                               session = NULL),  # Don't show notification per entry
+            validate_select_input(type_val, paste0("G&B ", i, " Type"),
+                                 required = TRUE,
+                                 valid_choices = c("Provisioning", "Regulating", "Cultural", "Supporting"),
+                                 session = NULL),
+            validate_text_input(desc_val, paste0("G&B ", i, " Description"),
+                               required = FALSE, max_length = 500,
+                               session = NULL),
+            validate_text_input(stakeholder_val, paste0("G&B ", i, " Stakeholder"),
+                               required = FALSE, max_length = 200,
+                               session = NULL)
+          )
+
+          # Collect validation errors
+          for (v in entry_validations) {
+            if (!v$valid) {
+              validation_errors <- c(validation_errors, v$message)
+            }
+          }
+
+          # Add to data frame if individual validations pass
+          if (all(sapply(entry_validations, function(v) v$valid))) {
+            gb_df <- rbind(gb_df, data.frame(
+              ID = paste0("GB", sprintf("%03d", i)),
+              Name = entry_validations[[1]]$value,
+              Type = entry_validations[[2]]$value,
+              Description = if (!is.null(entry_validations[[3]]$value)) entry_validations[[3]]$value else "",
+              Stakeholder = if (!is.null(entry_validations[[4]]$value)) entry_validations[[4]]$value else "",
+              Importance = importance_val,
+              Trend = trend_val,
+              stringsAsFactors = FALSE
+            ))
+          }
         }
       }
 
-      # Validate data before saving
-      validation_errors <- validate_isa_data(gb_df, "Exercise 1: Goods & Benefits",
-                                            required_cols = c("ID", "Name", "Type"))
-
+      # Show validation errors if any
       if (length(validation_errors) > 0) {
         showModal(modalDialog(
           title = tags$div(icon("exclamation-triangle"), " Validation Errors"),
@@ -699,35 +787,54 @@ isaDataEntryServer <- function(id, global_data) {
         return()
       }
 
-      # Save if validation passes
+      # Check if we have at least one valid entry
+      if (nrow(gb_df) == 0) {
+        showNotification("Please add at least one valid Good/Benefit entry.",
+                        type = "warning", session = session)
+        return()
+      }
+
+      # Save if all validations pass
       isa_data$goods_benefits <- gb_df
-      showNotification(paste("Exercise 1 saved:", nrow(gb_df), "Goods & Benefits"), type = "message")
+      showNotification(paste("Exercise 1 saved:", nrow(gb_df), "Goods & Benefits"),
+                      type = "message", session = session)
+      log_message(paste("Exercise 1 saved with", nrow(gb_df), "entries"), "INFO")
     })
 
     # Exercise 2a: Ecosystem Services ----
     observeEvent(input$add_es, {
       isa_data$es_counter <- isa_data$es_counter + 1
+      current_id <- isa_data$es_counter
+
       insertUI(
         selector = paste0("#", ns("es_entries")),
         where = "beforeEnd",
-        ui = wellPanel(
-          id = ns(paste0("es_panel_", isa_data$es_counter)),
+        ui = div(
+          id = ns(paste0("es_panel_", current_id)),
+          class = "isa-entry-panel",
+          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("es_name_", isa_data$es_counter)), "Name:", placeholder = "e.g., Fish production")),
-            column(3, selectInput(ns(paste0("es_type_", isa_data$es_counter)), "ES Type:",
+            column(3, textInput(ns(paste0("es_name_", current_id)), "Name:", placeholder = "e.g., Fish production")),
+            column(3, selectInput(ns(paste0("es_type_", current_id)), "ES Type:",
                                  choices = c("Provisioning", "Regulating", "Cultural", "Supporting"))),
-            column(6, textInput(ns(paste0("es_desc_", isa_data$es_counter)), "Description:"))
+            column(6, textInput(ns(paste0("es_desc_", current_id)), "Description:"))
           ),
           fluidRow(
-            column(4, selectInput(ns(paste0("es_linkedgb_", isa_data$es_counter)), "Linked to G&B:",
+            column(3, selectInput(ns(paste0("es_linkedgb_", current_id)), "Linked to G&B:",
                                  choices = c("", paste0(isa_data$goods_benefits$ID, ": ", isa_data$goods_benefits$Name)))),
-            column(4, textInput(ns(paste0("es_mechanism_", isa_data$es_counter)), "Mechanism:")),
-            column(3, selectInput(ns(paste0("es_confidence_", isa_data$es_counter)), "Confidence:",
+            column(3, textInput(ns(paste0("es_mechanism_", current_id)), "Mechanism:")),
+            column(4, selectInput(ns(paste0("es_confidence_", current_id)), "Confidence:",
                                  choices = c("High", "Medium", "Low"))),
-            column(1, actionButton(ns(paste0("es_remove_", isa_data$es_counter)), "X", class = "btn-danger btn-sm"))
+            column(2, actionButton(ns(paste0("es_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
           )
         )
       )
+
+      # Add remove button handler for this entry
+      observeEvent(input[[paste0("es_remove_", current_id)]], {
+        removeUI(selector = paste0("#", ns(paste0("es_panel_", current_id))))
+        showNotification("Entry removed", type = "message", duration = 2)
+      }, ignoreInit = TRUE, once = TRUE)
     })
 
     output$es_table <- renderDT({
@@ -735,49 +842,133 @@ isaDataEntryServer <- function(id, global_data) {
     })
 
     observeEvent(input$save_ex2a, {
+      # Check if at least one entry exists
+      if (isa_data$es_counter == 0) {
+        showNotification("Please add at least one Ecosystem Service entry before saving.",
+                        type = "warning", session = session)
+        return()
+      }
+
+      # Collect and validate all ES entries
       es_df <- data.frame()
+      validation_errors <- c()
+
       for(i in 1:isa_data$es_counter) {
         name_val <- input[[paste0("es_name_", i)]]
-        if(!is.null(name_val) && name_val != "") {
-          es_df <- rbind(es_df, data.frame(
-            ID = paste0("ES", sprintf("%03d", i)),
-            Name = name_val,
-            Type = input[[paste0("es_type_", i)]],
-            Description = input[[paste0("es_desc_", i)]],
-            LinkedGB = input[[paste0("es_linkedgb_", i)]],
-            Mechanism = input[[paste0("es_mechanism_", i)]],
-            Confidence = input[[paste0("es_confidence_", i)]],
-            stringsAsFactors = FALSE
-          ))
+        type_val <- input[[paste0("es_type_", i)]]
+        desc_val <- input[[paste0("es_desc_", i)]]
+        linkedgb_val <- input[[paste0("es_linkedgb_", i)]]
+        mechanism_val <- input[[paste0("es_mechanism_", i)]]
+        confidence_val <- input[[paste0("es_confidence_", i)]]
+
+        # Skip removed entries
+        if(is.null(name_val)) next
+
+        # Only validate and include entries with a name
+        if(name_val != "") {
+          # Validate this entry
+          entry_validations <- list(
+            validate_text_input(name_val, paste0("ES ", i, " Name"),
+                               required = TRUE, min_length = 2, max_length = 200,
+                               session = NULL),
+            validate_select_input(type_val, paste0("ES ", i, " Type"),
+                                 required = TRUE,
+                                 valid_choices = c("Provisioning", "Regulating", "Cultural", "Supporting"),
+                                 session = NULL),
+            validate_text_input(desc_val, paste0("ES ", i, " Description"),
+                               required = FALSE, max_length = 500,
+                               session = NULL),
+            validate_text_input(mechanism_val, paste0("ES ", i, " Mechanism"),
+                               required = FALSE, max_length = 300,
+                               session = NULL)
+          )
+
+          # Collect validation errors
+          for (v in entry_validations) {
+            if (!v$valid) {
+              validation_errors <- c(validation_errors, v$message)
+            }
+          }
+
+          # Add to data frame if validations pass
+          if (all(sapply(entry_validations, function(v) v$valid))) {
+            es_df <- rbind(es_df, data.frame(
+              ID = paste0("ES", sprintf("%03d", i)),
+              Name = entry_validations[[1]]$value,
+              Type = entry_validations[[2]]$value,
+              Description = if (!is.null(entry_validations[[3]]$value)) entry_validations[[3]]$value else "",
+              LinkedGB = linkedgb_val,
+              Mechanism = if (!is.null(entry_validations[[4]]$value)) entry_validations[[4]]$value else "",
+              Confidence = confidence_val,
+              stringsAsFactors = FALSE
+            ))
+          }
         }
       }
+
+      # Show validation errors if any
+      if (length(validation_errors) > 0) {
+        showModal(modalDialog(
+          title = tags$div(icon("exclamation-triangle"), " Validation Errors"),
+          tags$div(
+            tags$p(strong("Please fix the following issues before saving:")),
+            tags$ul(
+              lapply(validation_errors, function(err) tags$li(err))
+            )
+          ),
+          easyClose = TRUE,
+          footer = modalButton("OK")
+        ))
+        return()
+      }
+
+      # Check if we have at least one valid entry
+      if (nrow(es_df) == 0) {
+        showNotification("Please add at least one valid Ecosystem Service entry.",
+                        type = "warning", session = session)
+        return()
+      }
+
+      # Save if all validations pass
       isa_data$ecosystem_services <- es_df
-      showNotification(paste("Exercise 2a saved:", nrow(es_df), "Ecosystem Services"), type = "message")
+      showNotification(paste("Exercise 2a saved:", nrow(es_df), "Ecosystem Services"),
+                      type = "message", session = session)
+      log_message(paste("Exercise 2a saved with", nrow(es_df), "entries"), "INFO")
     })
 
     # Exercise 2b: Marine Processes and Functioning ----
     observeEvent(input$add_mpf, {
-      isa_data$mpf_counter <- isa_data$mpf_counter + 1
+      current_id <- isa_data$mpf_counter + 1
+      isa_data$mpf_counter <- current_id
+
       insertUI(
         selector = paste0("#", ns("mpf_entries")),
         where = "beforeEnd",
-        ui = wellPanel(
-          id = ns(paste0("mpf_panel_", isa_data$mpf_counter)),
+        ui = div(
+          id = ns(paste0("mpf_panel_", current_id)),
+          class = "isa-entry-panel",
+          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("mpf_name_", isa_data$mpf_counter)), "Name:", placeholder = "e.g., Primary production")),
-            column(3, selectInput(ns(paste0("mpf_type_", isa_data$mpf_counter)), "Process Type:",
+            column(3, textInput(ns(paste0("mpf_name_", current_id)), "Name:", placeholder = "e.g., Primary production")),
+            column(3, selectInput(ns(paste0("mpf_type_", current_id)), "Process Type:",
                                  choices = c("Biological", "Chemical", "Physical", "Ecological"))),
-            column(6, textInput(ns(paste0("mpf_desc_", isa_data$mpf_counter)), "Description:"))
+            column(6, textInput(ns(paste0("mpf_desc_", current_id)), "Description:"))
           ),
           fluidRow(
-            column(4, selectInput(ns(paste0("mpf_linkedes_", isa_data$mpf_counter)), "Linked to ES:",
+            column(3, selectInput(ns(paste0("mpf_linkedes_", current_id)), "Linked to ES:",
                                  choices = c("", paste0(isa_data$ecosystem_services$ID, ": ", isa_data$ecosystem_services$Name)))),
-            column(4, textInput(ns(paste0("mpf_mechanism_", isa_data$mpf_counter)), "Mechanism:")),
-            column(3, textInput(ns(paste0("mpf_spatial_", isa_data$mpf_counter)), "Spatial Scale:")),
-            column(1, actionButton(ns(paste0("mpf_remove_", isa_data$mpf_counter)), "X", class = "btn-danger btn-sm"))
+            column(3, textInput(ns(paste0("mpf_mechanism_", current_id)), "Mechanism:")),
+            column(4, textInput(ns(paste0("mpf_spatial_", current_id)), "Spatial Scale:")),
+            column(2, actionButton(ns(paste0("mpf_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
           )
         )
       )
+
+      # Add remove button handler for this entry
+      observeEvent(input[[paste0("mpf_remove_", current_id)]], {
+        removeUI(selector = paste0("#", ns(paste0("mpf_panel_", current_id))))
+        showNotification("Entry removed", type = "message", duration = 2)
+      }, ignoreInit = TRUE, once = TRUE)
     })
 
     output$mpf_table <- renderDT({
@@ -807,29 +998,39 @@ isaDataEntryServer <- function(id, global_data) {
 
     # Exercise 3: Pressures ----
     observeEvent(input$add_p, {
-      isa_data$p_counter <- isa_data$p_counter + 1
+      current_id <- isa_data$p_counter + 1
+      isa_data$p_counter <- current_id
+
       insertUI(
         selector = paste0("#", ns("p_entries")),
         where = "beforeEnd",
-        ui = wellPanel(
-          id = ns(paste0("p_panel_", isa_data$p_counter)),
+        ui = div(
+          id = ns(paste0("p_panel_", current_id)),
+          class = "isa-entry-panel",
+          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("p_name_", isa_data$p_counter)), "Name:", placeholder = "e.g., Nutrient enrichment")),
-            column(3, selectInput(ns(paste0("p_type_", isa_data$p_counter)), "Pressure Type:",
+            column(3, textInput(ns(paste0("p_name_", current_id)), "Name:", placeholder = "e.g., Nutrient enrichment")),
+            column(3, selectInput(ns(paste0("p_type_", current_id)), "Pressure Type:",
                                  choices = c("Physical", "Chemical", "Biological", "Multiple"))),
-            column(6, textInput(ns(paste0("p_desc_", isa_data$p_counter)), "Description:"))
+            column(6, textInput(ns(paste0("p_desc_", current_id)), "Description:"))
           ),
           fluidRow(
-            column(3, selectInput(ns(paste0("p_linkedmpf_", isa_data$p_counter)), "Linked to MPF:",
+            column(3, selectInput(ns(paste0("p_linkedmpf_", current_id)), "Linked to MPF:",
                                  choices = c("", paste0(isa_data$marine_processes$ID, ": ", isa_data$marine_processes$Name)))),
-            column(3, selectInput(ns(paste0("p_intensity_", isa_data$p_counter)), "Intensity:",
+            column(3, selectInput(ns(paste0("p_intensity_", current_id)), "Intensity:",
                                  choices = c("High", "Medium", "Low", "Unknown"))),
-            column(2, textInput(ns(paste0("p_spatial_", isa_data$p_counter)), "Spatial:")),
-            column(2, textInput(ns(paste0("p_temporal_", isa_data$p_counter)), "Temporal:")),
-            column(2, actionButton(ns(paste0("p_remove_", isa_data$p_counter)), "X", class = "btn-danger btn-sm"))
+            column(2, textInput(ns(paste0("p_spatial_", current_id)), "Spatial:")),
+            column(2, textInput(ns(paste0("p_temporal_", current_id)), "Temporal:")),
+            column(2, actionButton(ns(paste0("p_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
           )
         )
       )
+
+      # Add remove button handler for this entry
+      observeEvent(input[[paste0("p_remove_", current_id)]], {
+        removeUI(selector = paste0("#", ns(paste0("p_panel_", current_id))))
+        showNotification("Entry removed", type = "message", duration = 2)
+      }, ignoreInit = TRUE, once = TRUE)
     })
 
     output$p_table <- renderDT({
@@ -860,29 +1061,39 @@ isaDataEntryServer <- function(id, global_data) {
 
     # Exercise 4: Activities ----
     observeEvent(input$add_a, {
-      isa_data$a_counter <- isa_data$a_counter + 1
+      current_id <- isa_data$a_counter + 1
+      isa_data$a_counter <- current_id
+
       insertUI(
         selector = paste0("#", ns("a_entries")),
         where = "beforeEnd",
-        ui = wellPanel(
-          id = ns(paste0("a_panel_", isa_data$a_counter)),
+        ui = div(
+          id = ns(paste0("a_panel_", current_id)),
+          class = "isa-entry-panel",
+          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("a_name_", isa_data$a_counter)), "Name:", placeholder = "e.g., Commercial fishing")),
-            column(3, selectInput(ns(paste0("a_sector_", isa_data$a_counter)), "Sector:",
+            column(3, textInput(ns(paste0("a_name_", current_id)), "Name:", placeholder = "e.g., Commercial fishing")),
+            column(3, selectInput(ns(paste0("a_sector_", current_id)), "Sector:",
                                  choices = c("Fisheries", "Aquaculture", "Tourism", "Shipping", "Energy", "Mining", "Other"))),
-            column(6, textInput(ns(paste0("a_desc_", isa_data$a_counter)), "Description:"))
+            column(6, textInput(ns(paste0("a_desc_", current_id)), "Description:"))
           ),
           fluidRow(
-            column(4, selectInput(ns(paste0("a_linkedp_", isa_data$a_counter)), "Linked to Pressure:",
+            column(3, selectInput(ns(paste0("a_linkedp_", current_id)), "Linked to Pressure:",
                                  choices = c("", paste0(isa_data$pressures$ID, ": ", isa_data$pressures$Name)))),
-            column(3, selectInput(ns(paste0("a_scale_", isa_data$a_counter)), "Scale:",
+            column(3, selectInput(ns(paste0("a_scale_", current_id)), "Scale:",
                                  choices = c("Local", "Regional", "National", "International"))),
-            column(3, selectInput(ns(paste0("a_frequency_", isa_data$a_counter)), "Frequency:",
+            column(4, selectInput(ns(paste0("a_frequency_", current_id)), "Frequency:",
                                  choices = c("Continuous", "Seasonal", "Occasional", "One-time"))),
-            column(2, actionButton(ns(paste0("a_remove_", isa_data$a_counter)), "X", class = "btn-danger btn-sm"))
+            column(2, actionButton(ns(paste0("a_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
           )
         )
       )
+
+      # Add remove button handler for this entry
+      observeEvent(input[[paste0("a_remove_", current_id)]], {
+        removeUI(selector = paste0("#", ns(paste0("a_panel_", current_id))))
+        showNotification("Entry removed", type = "message", duration = 2)
+      }, ignoreInit = TRUE, once = TRUE)
     })
 
     output$a_table <- renderDT({
@@ -912,29 +1123,39 @@ isaDataEntryServer <- function(id, global_data) {
 
     # Exercise 5: Drivers ----
     observeEvent(input$add_d, {
-      isa_data$d_counter <- isa_data$d_counter + 1
+      current_id <- isa_data$d_counter + 1
+      isa_data$d_counter <- current_id
+
       insertUI(
         selector = paste0("#", ns("d_entries")),
         where = "beforeEnd",
-        ui = wellPanel(
-          id = ns(paste0("d_panel_", isa_data$d_counter)),
+        ui = div(
+          id = ns(paste0("d_panel_", current_id)),
+          class = "isa-entry-panel",
+          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("d_name_", isa_data$d_counter)), "Name:", placeholder = "e.g., Economic growth")),
-            column(3, selectInput(ns(paste0("d_type_", isa_data$d_counter)), "Driver Type:",
+            column(3, textInput(ns(paste0("d_name_", current_id)), "Name:", placeholder = "e.g., Economic growth")),
+            column(3, selectInput(ns(paste0("d_type_", current_id)), "Driver Type:",
                                  choices = c("Economic", "Social", "Technological", "Political", "Environmental", "Demographic"))),
-            column(6, textInput(ns(paste0("d_desc_", isa_data$d_counter)), "Description:"))
+            column(6, textInput(ns(paste0("d_desc_", current_id)), "Description:"))
           ),
           fluidRow(
-            column(4, selectInput(ns(paste0("d_linkeda_", isa_data$d_counter)), "Linked to Activity:",
+            column(3, selectInput(ns(paste0("d_linkeda_", current_id)), "Linked to Activity:",
                                  choices = c("", paste0(isa_data$activities$ID, ": ", isa_data$activities$Name)))),
-            column(3, selectInput(ns(paste0("d_trend_", isa_data$d_counter)), "Trend:",
+            column(3, selectInput(ns(paste0("d_trend_", current_id)), "Trend:",
                                  choices = c("Increasing", "Stable", "Decreasing", "Cyclical", "Uncertain"))),
-            column(3, selectInput(ns(paste0("d_control_", isa_data$d_counter)), "Controllability:",
+            column(4, selectInput(ns(paste0("d_control_", current_id)), "Controllability:",
                                  choices = c("High", "Medium", "Low", "None"))),
-            column(2, actionButton(ns(paste0("d_remove_", isa_data$d_counter)), "X", class = "btn-danger btn-sm"))
+            column(2, actionButton(ns(paste0("d_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
           )
         )
       )
+
+      # Add remove button handler for this entry
+      observeEvent(input[[paste0("d_remove_", current_id)]], {
+        removeUI(selector = paste0("#", ns(paste0("d_panel_", current_id))))
+        showNotification("Entry removed", type = "message", duration = 2)
+      }, ignoreInit = TRUE, once = TRUE)
     })
 
     output$d_table <- renderDT({
@@ -962,6 +1183,61 @@ isaDataEntryServer <- function(id, global_data) {
       showNotification(paste("Exercise 5 saved:", nrow(d_df), "Drivers"), type = "message")
     })
 
+    # Exercise 6: Loop connections UI ----
+    output$loop_connections <- renderUI({
+      req(isa_data$drivers, isa_data$goods_benefits)
+
+      if (nrow(isa_data$drivers) == 0 || nrow(isa_data$goods_benefits) == 0) {
+        return(p("Please complete Exercises 1 and 5 first to create Goods & Benefits and Drivers."))
+      }
+
+      driver_choices <- setNames(isa_data$drivers$ID,
+                                 paste0(isa_data$drivers$ID, ": ", isa_data$drivers$Name))
+      gb_choices <- setNames(isa_data$goods_benefits$ID,
+                            paste0(isa_data$goods_benefits$ID, ": ", isa_data$goods_benefits$Name))
+
+      tagList(
+        fluidRow(
+          column(3,
+            selectInput(ns("loop_driver"), "Driver:", choices = driver_choices)
+          ),
+          column(1,
+            div(style = "text-align: center; padding-top: 25px;", "→")
+          ),
+          column(3,
+            selectInput(ns("loop_gb"), "Goods/Benefit:", choices = gb_choices)
+          ),
+          column(2,
+            selectInput(ns("loop_effect"), "Effect:",
+                       choices = c("Positive" = "+", "Negative" = "-"))
+          ),
+          column(2,
+            selectInput(ns("loop_strength"), "Strength:",
+                       choices = c("Weak" = "weak", "Medium" = "medium", "Strong" = "strong"))
+          ),
+          column(1,
+            br(),
+            actionButton(ns("add_loop"), "Add", icon = icon("plus"), class = "btn-success btn-sm")
+          )
+        ),
+        fluidRow(
+          column(12,
+            sliderInput(ns("loop_confidence"), "Confidence Level:",
+                       min = 1, max = 5, value = 3, step = 1,
+                       ticks = TRUE,
+                       post = c(" - Very Low", " - Low", " - Medium", " - High", " - Very High")[3])
+          )
+        ),
+        hr(),
+        fluidRow(
+          column(12,
+            h5("Current Loop Connections:"),
+            DTOutput(ns("loop_connections_table"))
+          )
+        )
+      )
+    })
+
     # Exercise 6: Loop closure visualization ----
     output$loop_diagram <- renderPlot({
       # Placeholder for loop closure diagram
@@ -969,6 +1245,78 @@ isaDataEntryServer <- function(id, global_data) {
            xlab = "System Components", ylab = "Connections",
            type = "n")
       text(5, 5, "Loop diagram will be generated\nfrom your data entries", cex = 1.5)
+    })
+
+    # Add loop connection ----
+    observeEvent(input$add_loop, {
+      req(input$loop_driver, input$loop_gb, input$loop_effect, input$loop_strength, input$loop_confidence)
+
+      new_connection <- data.frame(
+        DriverID = input$loop_driver,
+        GBID = input$loop_gb,
+        Effect = input$loop_effect,
+        Strength = input$loop_strength,
+        Confidence = input$loop_confidence,
+        Mechanism = "",
+        stringsAsFactors = FALSE
+      )
+
+      rv$loop_connections <- rbind(rv$loop_connections, new_connection)
+      showNotification("Loop connection added", type = "message")
+    })
+
+    # Display loop connections table ----
+    output$loop_connections_table <- renderDT({
+      if (nrow(rv$loop_connections) == 0) {
+        return(data.frame(Message = "No loop connections yet"))
+      }
+
+      rv$loop_connections %>%
+        mutate(
+          Connection = paste0(DriverID, " → ", GBID),
+          Polarity = ifelse(Effect == "+", "Positive", "Negative"),
+          ConfidenceLabel = c("Very Low", "Low", "Medium", "High", "Very High")[Confidence]
+        ) %>%
+        select(Connection, Polarity, Strength, ConfidenceLabel) %>%
+        rename(`Confidence` = ConfidenceLabel)
+    }, options = list(pageLength = 5, dom = 't'), rownames = FALSE)
+
+    # Save Exercise 6 ----
+    observeEvent(input$save_ex6, {
+      isa_data$loop_connections <- rv$loop_connections
+
+      # Convert loop_connections to d_gb adjacency matrix
+      if (nrow(rv$loop_connections) > 0) {
+        n_drivers <- nrow(isa_data$drivers)
+        n_gb <- nrow(isa_data$goods_benefits)
+
+        # Initialize empty matrix
+        d_gb_matrix <- matrix("", nrow = n_gb, ncol = n_drivers)
+        rownames(d_gb_matrix) <- isa_data$goods_benefits$ID
+        colnames(d_gb_matrix) <- isa_data$drivers$ID
+
+        # Fill matrix with connections
+        for (i in 1:nrow(rv$loop_connections)) {
+          conn <- rv$loop_connections[i, ]
+          gb_idx <- which(isa_data$goods_benefits$ID == conn$GBID)
+          d_idx <- which(isa_data$drivers$ID == conn$DriverID)
+
+          if (length(gb_idx) > 0 && length(d_idx) > 0) {
+            # Format: "effect+strength:confidence"
+            value <- paste0(conn$Effect, conn$Strength, ":", conn$Confidence)
+            d_gb_matrix[gb_idx, d_idx] <- value
+          }
+        }
+
+        # Store in adjacency_matrices
+        if (is.null(isa_data$adjacency_matrices)) {
+          isa_data$adjacency_matrices <- list()
+        }
+        isa_data$adjacency_matrices$d_gb <- d_gb_matrix
+      }
+
+      showNotification(paste("Exercise 6 saved:", nrow(rv$loop_connections), "loop connections"),
+                      type = "message")
     })
 
     # BOT Graphs ----

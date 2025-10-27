@@ -998,6 +998,429 @@
             "lt": "Įkelti anksčiau išsaugotą projektą",
             "pt": "Carregar um projeto guardado anteriormente",
             "it": "Carica un progetto salvato in precedenza"
+        },
+        {
+            "en": "Create SES",
+            "es": "Crear SES",
+            "fr": "Créer SES",
+            "de": "SES erstellen",
+            "lt": "Sukurti SES",
+            "pt": "Criar SES",
+            "it": "Crea SES"
+        },
+        {
+            "en": "Choose Method",
+            "es": "Elegir Método",
+            "fr": "Choisir la Méthode",
+            "de": "Methode wählen",
+            "lt": "Pasirinkti metodą",
+            "pt": "Escolher Método",
+            "it": "Scegli Metodo"
+        },
+        {
+            "en": "Standard Entry",
+            "es": "Entrada Estándar",
+            "fr": "Saisie Standard",
+            "de": "Standardeingabe",
+            "lt": "Standartinė įvestis",
+            "pt": "Entrada Padrão",
+            "it": "Inserimento Standard"
+        },
+        {
+            "en": "AI Assistant",
+            "es": "Asistente IA",
+            "fr": "Assistant IA",
+            "de": "KI-Assistent",
+            "lt": "AI asistentas",
+            "pt": "Assistente IA",
+            "it": "Assistente IA"
+        },
+        {
+            "en": "Template-Based",
+            "es": "Basado en Plantillas",
+            "fr": "Basé sur des Modèles",
+            "de": "Vorlagenbasiert",
+            "lt": "Pagrįsta šablonais",
+            "pt": "Baseado em Modelos",
+            "it": "Basato su Modelli"
+        },
+        {
+            "en": "Create Your Social-Ecological System",
+            "es": "Cree su Sistema Socio-Ecológico",
+            "fr": "Créez votre Système Socio-Écologique",
+            "de": "Erstellen Sie Ihr Sozial-Ökologisches System",
+            "lt": "Sukurkite savo socialinę-ekologinę sistemą",
+            "pt": "Crie o seu Sistema Socio-Ecológico",
+            "it": "Crea il tuo Sistema Socio-Ecologico"
+        },
+        {
+            "en": "Choose the method that best fits your experience level and project needs",
+            "es": "Elija el método que mejor se adapte a su nivel de experiencia y necesidades del proyecto",
+            "fr": "Choisissez la méthode qui correspond le mieux à votre niveau d'expérience et aux besoins de votre projet",
+            "de": "Wählen Sie die Methode, die am besten zu Ihrem Erfahrungsniveau und Ihren Projektanforderungen passt",
+            "lt": "Pasirinkite metodą, geriausiai atitinkantį jūsų patirties lygį ir projekto poreikius",
+            "pt": "Escolha o método que melhor se adapta ao seu nível de experiência e necessidades do projeto",
+            "it": "Scegli il metodo più adatto al tuo livello di esperienza e alle esigenze del progetto"
+        },
+        {
+            "en": "Proceed to Selected Method",
+            "es": "Continuar al Método Seleccionado",
+            "fr": "Passer à la Méthode Sélectionnée",
+            "de": "Zur ausgewählten Methode fortfahren",
+            "lt": "Pereiti prie pasirinkto metodo",
+            "pt": "Prosseguir para o Método Selecionado",
+            "it": "Procedi al Metodo Selezionato"
+        },
+        {
+            "en": "You selected:",
+            "es": "Usted seleccionó:",
+            "fr": "Vous avez sélectionné:",
+            "de": "Sie haben ausgewählt:",
+            "lt": "Jūs pasirinkote:",
+            "pt": "Você selecionou:",
+            "it": "Hai selezionato:"
+        },
+        {
+            "en": "Method Comparison",
+            "es": "Comparación de Métodos",
+            "fr": "Comparaison des Méthodes",
+            "de": "Methodenvergleich",
+            "lt": "Metodų palyginimas",
+            "pt": "Comparação de Métodos",
+            "it": "Confronto dei Metodi"
+        },
+        {
+            "en": "Beginner",
+            "es": "Principiante",
+            "fr": "Débutant",
+            "de": "Anfänger",
+            "lt": "Pradedantysis",
+            "pt": "Iniciante",
+            "it": "Principiante"
+        },
+        {
+            "en": "Intermediate",
+            "es": "Intermedio",
+            "fr": "Intermédiaire",
+            "de": "Fortgeschritten",
+            "lt": "Vidutinis",
+            "pt": "Intermédio",
+            "it": "Intermedio"
+        },
+        {
+            "en": "Advanced",
+            "es": "Avanzado",
+            "fr": "Avancé",
+            "de": "Fortgeschritten",
+            "lt": "Pažengęs",
+            "pt": "Avançado",
+            "it": "Avanzato"
+        },
+        {
+            "en": "Recommended",
+            "es": "Recomendado",
+            "fr": "Recommandé",
+            "de": "Empfohlen",
+            "lt": "Rekomenduojama",
+            "pt": "Recomendado",
+            "it": "Consigliato"
+        },
+        {
+            "en": "Quick Start",
+            "es": "Inicio Rápido",
+            "fr": "Démarrage Rapide",
+            "de": "Schnellstart",
+            "lt": "Greitas startas",
+            "pt": "Início Rápido",
+            "it": "Avvio Rapido"
+        },
+        {
+            "en": "Structured",
+            "es": "Estructurado",
+            "fr": "Structuré",
+            "de": "Strukturiert",
+            "lt": "Struktūrizuotas",
+            "pt": "Estruturado",
+            "it": "Strutturato"
+        },
+        {
+            "en": "Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology.",
+            "es": "Enfoque tradicional basado en formularios siguiendo el marco DAPSI(W)R(M). Perfecto para usuarios familiarizados con la metodología ISA.",
+            "fr": "Approche traditionnelle basée sur des formulaires suivant le cadre DAPSI(W)R(M). Parfait pour les utilisateurs familiers avec la méthodologie ISA.",
+            "de": "Traditioneller formularbasierter Ansatz nach dem DAPSI(W)R(M)-Framework. Perfekt für Benutzer, die mit der ISA-Methodik vertraut sind.",
+            "lt": "Tradicinis formomis pagrįstas požiūris pagal DAPSI(W)R(M) sistemą. Puikiai tinka vartotojams, susipažinusiems su ISA metodika.",
+            "pt": "Abordagem tradicional baseada em formulários seguindo a estrutura DAPSI(W)R(M). Perfeito para usuários familiarizados com a metodologia ISA.",
+            "it": "Approccio tradizionale basato su moduli seguendo il framework DAPSI(W)R(M). Perfetto per utenti esperti della metodologia ISA."
+        },
+        {
+            "en": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.",
+            "es": "Orientación inteligente basada en preguntas que le ayuda a construir su modelo SES a través de indicaciones conversacionales y sugerencias.",
+            "fr": "Guidage intelligent basé sur des questions qui vous aide à construire votre modèle SES grâce à des invites conversationnelles et des suggestions.",
+            "de": "Intelligente fragenbasierte Anleitung, die Ihnen hilft, Ihr SES-Modell durch konversationelle Eingabeaufforderungen und Vorschläge zu erstellen.",
+            "lt": "Inteligentus klausimais pagrįstas vadovavimas, padedantis sukurti SES modelį per pokalbio raginimus ir pasiūlymus.",
+            "pt": "Orientação inteligente baseada em perguntas que ajuda a construir o seu modelo SES através de sugestões conversacionais.",
+            "it": "Guida intelligente basata su domande che ti aiuta a costruire il tuo modello SES attraverso suggerimenti conversazionali."
+        },
+        {
+            "en": "Start from pre-built templates based on common marine management scenarios. Customize to fit your specific case.",
+            "es": "Comience con plantillas predefinidas basadas en escenarios comunes de gestión marina. Personalice para adaptarse a su caso específico.",
+            "fr": "Commencez avec des modèles prédéfinis basés sur des scénarios de gestion marine courants. Personnalisez pour correspondre à votre cas spécifique.",
+            "de": "Beginnen Sie mit vorgefertigten Vorlagen basierend auf gängigen Meeresmanagement-Szenarien. Passen Sie sie an Ihren spezifischen Fall an.",
+            "lt": "Pradėkite nuo iš anksto paruoštų šablonų, pagrįstų įprastais jūrų valdymo scenarijais. Pritaikykite pagal savo specifinį atvejį.",
+            "pt": "Comece com modelos pré-construídos baseados em cenários comuns de gestão marinha. Personalize para se adequar ao seu caso específico.",
+            "it": "Inizia con modelli predefiniti basati su scenari comuni di gestione marina. Personalizza per adattarli al tuo caso specifico."
+        },
+        {
+            "en": "Step-by-step guided exercises",
+            "es": "Ejercicios guiados paso a paso",
+            "fr": "Exercices guidés étape par étape",
+            "de": "Schritt-für-Schritt-Übungen",
+            "lt": "Žingsnis po žingsnio vedami pratimai",
+            "pt": "Exercícios guiados passo a passo",
+            "it": "Esercizi guidati passo dopo passo"
+        },
+        {
+            "en": "Complete control over all elements",
+            "es": "Control completo sobre todos los elementos",
+            "fr": "Contrôle complet sur tous les éléments",
+            "de": "Vollständige Kontrolle über alle Elemente",
+            "lt": "Visiškas kontrolė virš visų elementų",
+            "pt": "Controle completo sobre todos os elementos",
+            "it": "Controllo completo su tutti gli elementi"
+        },
+        {
+            "en": "Detailed data validation",
+            "es": "Validación detallada de datos",
+            "fr": "Validation détaillée des données",
+            "de": "Detaillierte Datenvalidierung",
+            "lt": "Išsamus duomenų tikrinimas",
+            "pt": "Validação detalhada de dados",
+            "it": "Validazione dettagliata dei dati"
+        },
+        {
+            "en": "Direct framework implementation",
+            "es": "Implementación directa del marco",
+            "fr": "Implémentation directe du cadre",
+            "de": "Direkte Framework-Implementierung",
+            "lt": "Tiesioginė sistemos įgyvendinimas",
+            "pt": "Implementação direta da estrutura",
+            "it": "Implementazione diretta del framework"
+        },
+        {
+            "en": "Export-ready data structure",
+            "es": "Estructura de datos lista para exportar",
+            "fr": "Structure de données prête à exporter",
+            "de": "Exportbereite Datenstruktur",
+            "lt": "Eksportui paruošta duomenų struktūra",
+            "pt": "Estrutura de dados pronta para exportar",
+            "it": "Struttura dati pronta per l'esportazione"
+        },
+        {
+            "en": "Interactive Q&A workflow",
+            "es": "Flujo de trabajo interactivo de preguntas y respuestas",
+            "fr": "Flux de travail interactif de questions-réponses",
+            "de": "Interaktiver Frage-Antwort-Workflow",
+            "lt": "Interaktyvus klausimų ir atsakymų srautas",
+            "pt": "Fluxo de trabalho interativo de perguntas e respostas",
+            "it": "Flusso di lavoro interattivo Q&A"
+        },
+        {
+            "en": "Context-aware suggestions",
+            "es": "Sugerencias sensibles al contexto",
+            "fr": "Suggestions contextuelles",
+            "de": "Kontextbezogene Vorschläge",
+            "lt": "Kontekstui pritaikyti pasiūlymai",
+            "pt": "Sugestões sensíveis ao contexto",
+            "it": "Suggerimenti contestuali"
+        },
+        {
+            "en": "Automatic element generation",
+            "es": "Generación automática de elementos",
+            "fr": "Génération automatique d'éléments",
+            "de": "Automatische Elementgenerierung",
+            "lt": "Automatinis elementų generavimas",
+            "pt": "Geração automática de elementos",
+            "it": "Generazione automatica di elementi"
+        },
+        {
+            "en": "Learning-friendly approach",
+            "es": "Enfoque amigable para el aprendizaje",
+            "fr": "Approche conviviale pour l'apprentissage",
+            "de": "Lernfreundlicher Ansatz",
+            "lt": "Mokymui palankus požiūris",
+            "pt": "Abordagem amigável à aprendizagem",
+            "it": "Approccio favorevole all'apprendimento"
+        },
+        {
+            "en": "Built-in examples",
+            "es": "Ejemplos integrados",
+            "fr": "Exemples intégrés",
+            "de": "Integrierte Beispiele",
+            "lt": "Integruoti pavyzdžiai",
+            "pt": "Exemplos integrados",
+            "it": "Esempi integrati"
+        },
+        {
+            "en": "Pre-populated frameworks",
+            "es": "Marcos prepoblados",
+            "fr": "Cadres pré-remplis",
+            "de": "Vorbefüllte Frameworks",
+            "lt": "Iš anksto užpildytos sistemos",
+            "pt": "Estruturas pré-preenchidas",
+            "it": "Framework pre-popolati"
+        },
+        {
+            "en": "Domain-specific templates",
+            "es": "Plantillas específicas del dominio",
+            "fr": "Modèles spécifiques au domaine",
+            "de": "Domänenspezifische Vorlagen",
+            "lt": "Srities specifiniai šablonai",
+            "pt": "Modelos específicos do domínio",
+            "it": "Modelli specifici del dominio"
+        },
+        {
+            "en": "Ready-to-customize elements",
+            "es": "Elementos listos para personalizar",
+            "fr": "Éléments prêts à personnaliser",
+            "de": "Anpassbare Elemente",
+            "lt": "Paruošti pritaikymui elementai",
+            "pt": "Elementos prontos para personalizar",
+            "it": "Elementi pronti da personalizzare"
+        },
+        {
+            "en": "Fastest setup time",
+            "es": "Tiempo de configuración más rápido",
+            "fr": "Temps de configuration le plus rapide",
+            "de": "Schnellste Einrichtungszeit",
+            "lt": "Greičiausias nustatymo laikas",
+            "pt": "Tempo de configuração mais rápido",
+            "it": "Tempo di configurazione più veloce"
+        },
+        {
+            "en": "Example connections included",
+            "es": "Conexiones de ejemplo incluidas",
+            "fr": "Connexions d'exemple incluses",
+            "de": "Beispielverbindungen enthalten",
+            "lt": "Įtraukti ryšių pavyzdžiai",
+            "pt": "Conexões de exemplo incluídas",
+            "it": "Connessioni di esempio incluse"
+        },
+        {
+            "en": "Best for:",
+            "es": "Mejor para:",
+            "fr": "Idéal pour:",
+            "de": "Am besten für:",
+            "lt": "Geriausiai tinka:",
+            "pt": "Melhor para:",
+            "it": "Ideale per:"
+        },
+        {
+            "en": "Experienced users, academic research, detailed documentation",
+            "es": "Usuarios experimentados, investigación académica, documentación detallada",
+            "fr": "Utilisateurs expérimentés, recherche académique, documentation détaillée",
+            "de": "Erfahrene Benutzer, akademische Forschung, detaillierte Dokumentation",
+            "lt": "Patyrę vartotojai, akademiniai tyrimai, išsami dokumentacija",
+            "pt": "Utilizadores experientes, pesquisa académica, documentação detalhada",
+            "it": "Utenti esperti, ricerca accademica, documentazione dettagliata"
+        },
+        {
+            "en": "Beginners, first-time users, exploratory analysis",
+            "es": "Principiantes, usuarios primerizos, análisis exploratorio",
+            "fr": "Débutants, nouveaux utilisateurs, analyse exploratoire",
+            "de": "Anfänger, Erstbenutzer, explorative Analyse",
+            "lt": "Pradedantieji, pirmą kartą naudojantys, tyrinėjamoji analizė",
+            "pt": "Iniciantes, utilizadores pela primeira vez, análise exploratória",
+            "it": "Principianti, utenti alle prime armi, analisi esplorativa"
+        },
+        {
+            "en": "Quick prototyping, common scenarios, time-constrained projects",
+            "es": "Prototipado rápido, escenarios comunes, proyectos con restricciones de tiempo",
+            "fr": "Prototypage rapide, scénarios courants, projets à contraintes de temps",
+            "de": "Schnelles Prototyping, gängige Szenarien, zeitkritische Projekte",
+            "lt": "Greitas prototipavimas, įprasti scenarijai, laiko apriboti projektai",
+            "pt": "Prototipagem rápida, cenários comuns, projetos com restrições de tempo",
+            "it": "Prototipazione rapida, scenari comuni, progetti con vincoli di tempo"
+        },
+        {
+            "en": "Time to Start",
+            "es": "Tiempo para Comenzar",
+            "fr": "Temps de Démarrage",
+            "de": "Startzeit",
+            "lt": "Laikas pradėti",
+            "pt": "Tempo para Começar",
+            "it": "Tempo di Avvio"
+        },
+        {
+            "en": "Learning Curve",
+            "es": "Curva de Aprendizaje",
+            "fr": "Courbe d'Apprentissage",
+            "de": "Lernkurve",
+            "lt": "Mokymosi kreivė",
+            "pt": "Curva de Aprendizagem",
+            "it": "Curva di Apprendimento"
+        },
+        {
+            "en": "Flexibility",
+            "es": "Flexibilidad",
+            "fr": "Flexibilité",
+            "de": "Flexibilität",
+            "lt": "Lankstumas",
+            "pt": "Flexibilidade",
+            "it": "Flessibilità"
+        },
+        {
+            "en": "Guidance Level",
+            "es": "Nivel de Orientación",
+            "fr": "Niveau de Guidage",
+            "de": "Anleitungsniveau",
+            "lt": "Vadovavimo lygis",
+            "pt": "Nível de Orientação",
+            "it": "Livello di Guida"
+        },
+        {
+            "en": "Customization",
+            "es": "Personalización",
+            "fr": "Personnalisation",
+            "de": "Anpassung",
+            "lt": "Pritaikymas",
+            "pt": "Personalização",
+            "it": "Personalizzazione"
+        },
+        {
+            "en": "Need Help Choosing?",
+            "es": "¿Necesita Ayuda para Elegir?",
+            "fr": "Besoin d'Aide pour Choisir?",
+            "de": "Brauchen Sie Hilfe bei der Auswahl?",
+            "lt": "Reikia pagalbos pasirenkant?",
+            "pt": "Precisa de Ajuda para Escolher?",
+            "it": "Hai Bisogno di Aiuto per Scegliere?"
+        },
+        {
+            "en": "New to SES modeling?",
+            "es": "¿Nuevo en el modelado SES?",
+            "fr": "Nouveau dans la modélisation SES?",
+            "de": "Neu in der SES-Modellierung?",
+            "lt": "Naujas SES modeliavime?",
+            "pt": "Novo na modelagem SES?",
+            "it": "Nuovo alla modellazione SES?"
+        },
+        {
+            "en": "Have existing framework knowledge?",
+            "es": "¿Tiene conocimientos del marco existente?",
+            "fr": "Avez-vous une connaissance du cadre existant?",
+            "de": "Haben Sie vorhandenes Framework-Wissen?",
+            "lt": "Turite sistemos žinių?",
+            "pt": "Tem conhecimento da estrutura existente?",
+            "it": "Hai conoscenze del framework esistente?"
+        },
+        {
+            "en": "Working on a time-sensitive project?",
+            "es": "¿Trabaja en un proyecto urgente?",
+            "fr": "Travaillez-vous sur un projet urgent?",
+            "de": "Arbeiten Sie an einem zeitkritischen Projekt?",
+            "lt": "Dirbate su laiko jautriu projektu?",
+            "pt": "A trabalhar num projeto urgente?",
+            "it": "Lavori su un progetto urgente?"
         }
     ]
 }

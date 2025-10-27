@@ -150,13 +150,37 @@ export_project_excel <- function(project_data, file_path) {
     export_isa_to_workbook(wb, project_data$data$isa_data)
   }
   
+  # CLD Nodes
+  if (!is.null(project_data$data$cld$nodes) &&
+      is.data.frame(project_data$data$cld$nodes) &&
+      nrow(project_data$data$cld$nodes) > 0) {
+    addWorksheet(wb, "CLD_Nodes")
+    writeData(wb, "CLD_Nodes", project_data$data$cld$nodes)
+  }
+
+  # CLD Edges (with confidence column)
+  if (!is.null(project_data$data$cld$edges) &&
+      is.data.frame(project_data$data$cld$edges) &&
+      nrow(project_data$data$cld$edges) > 0) {
+    addWorksheet(wb, "CLD_Edges")
+
+    # Select relevant columns for export
+    edge_cols <- c("from", "to", "polarity", "strength")
+    if ("confidence" %in% names(project_data$data$cld$edges)) {
+      edge_cols <- c(edge_cols, "confidence")
+    }
+
+    edges_export <- project_data$data$cld$edges[, edge_cols, drop = FALSE]
+    writeData(wb, "CLD_Edges", edges_export)
+  }
+
   # Loops
-  if (!is.null(project_data$data$cld$loops) && 
+  if (!is.null(project_data$data$cld$loops) &&
       nrow(project_data$data$cld$loops) > 0) {
     addWorksheet(wb, "Feedback_Loops")
     writeData(wb, "Feedback_Loops", project_data$data$cld$loops)
   }
-  
+
   # Response measures
   if (!is.null(project_data$data$responses$measures) && 
       nrow(project_data$data$responses$measures) > 0) {
