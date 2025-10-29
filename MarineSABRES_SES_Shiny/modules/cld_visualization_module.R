@@ -322,7 +322,8 @@ cld_viz_server <- function(id, project_data_reactive) {
       metrics = NULL,
       filtered_nodes = NULL,
       filtered_edges = NULL,
-      sidebar_visible = TRUE
+      sidebar_visible = TRUE,
+      isa_hash = NULL  # Cache hash to track ISA data changes
     )
 
     # === TOGGLE SIDEBAR ===
@@ -399,23 +400,40 @@ cld_viz_server <- function(id, project_data_reactive) {
       })
     })
 
-    # === CREATE NODES AND EDGES ===
+    # === CREATE NODES AND EDGES (WITH CACHING) ===
     observe({
       req(project_data_reactive())
-      
+
       isa_data <- project_data_reactive()$data$isa_data
-      
+
       if (!is.null(isa_data) && length(isa_data) > 0) {
-        rv$nodes <- create_nodes_df(isa_data)
-        rv$edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
-        
-        # Update focus node choices
-        if (!is.null(rv$nodes)) {
-          updateSelectInput(
-            session,
-            "focus_node",
-            choices = setNames(rv$nodes$id, rv$nodes$label)
-          )
+        # Create a simple hash by concatenating row counts from all ISA tables
+        # This is much lighter than computing a cryptographic hash
+        isa_signature <- paste(
+          nrow(isa_data$drivers %||% data.frame()),
+          nrow(isa_data$activities %||% data.frame()),
+          nrow(isa_data$pressures %||% data.frame()),
+          nrow(isa_data$marine_processes %||% data.frame()),
+          nrow(isa_data$ecosystem_services %||% data.frame()),
+          nrow(isa_data$goods_benefits %||% data.frame()),
+          sep = "-"
+        )
+
+        if (is.null(rv$isa_hash) || rv$isa_hash != isa_signature) {
+          # ISA data changed - rebuild network
+          rv$nodes <- create_nodes_df(isa_data)
+          rv$edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+          rv$isa_hash <- isa_signature
+          rv$metrics <- NULL  # Invalidate cached metrics
+
+          # Update focus node choices
+          if (!is.null(rv$nodes)) {
+            updateSelectInput(
+              session,
+              "focus_node",
+              choices = setNames(rv$nodes$id, rv$nodes$label)
+            )
+          }
         }
       }
     })

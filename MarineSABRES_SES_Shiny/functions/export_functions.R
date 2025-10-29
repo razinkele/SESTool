@@ -1,8 +1,6 @@
 # functions/export_functions.R
 # Export and reporting functions
-
-library(rmarkdown)
-library(htmlwidgets)
+# Note: rmarkdown and htmlwidgets are loaded in global.R
 
 # ============================================================================
 # VISUALIZATION EXPORT FUNCTIONS

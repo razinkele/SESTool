@@ -1,7 +1,6 @@
 # functions/network_analysis.R
 # Network analysis functions for loop detection and metrics calculation
-
-library(igraph)
+# Note: igraph is loaded in global.R
 
 # ============================================================================
 # NETWORK METRICS FUNCTIONS

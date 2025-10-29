@@ -1073,11 +1073,6 @@ server <- function(input, output, session) {
     tryCatch({
       data <- project_data()
 
-      cat("\nDEBUG: Rendering project_overview_ui\n")
-      cat("DEBUG: ISA data structure:\n")
-      cat("  - goods_benefits rows:", nrow(data$data$isa_data$goods_benefits %||% data.frame()), "\n")
-      cat("  - ecosystem_services rows:", nrow(data$data$isa_data$ecosystem_services %||% data.frame()), "\n")
-
       tagList(
       p(strong(i18n$t("Project ID:")), data$project_id),
       p(strong(i18n$t("Created:")), format_date_display(data$created_at)),
@@ -1387,7 +1382,7 @@ server <- function(input, output, session) {
 
       } else if(format == "PNG (.png)" || format == "SVG (.svg)" || format == "PDF (.pdf)") {
         # For static exports, create an igraph object and plot
-        require(igraph)
+        # Note: igraph is already loaded in global.R
 
         # Create igraph object
         g <- graph_from_data_frame(d = edges, vertices = nodes, directed = TRUE)

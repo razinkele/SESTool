@@ -1,8 +1,7 @@
 # Analysis Tools Module
 # Advanced analysis features for CLD and SES analysis
 # Includes: Loop Detection, Network Metrics, BOT Analysis, Simplification
-
-library(igraph)
+# Note: igraph is loaded in global.R
 
 # ============================================================================
 # LOOP DETECTION MODULE
