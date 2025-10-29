@@ -88,6 +88,22 @@ cld_viz_ui <- function(id) {
         border: none !important;
         background: transparent !important;
       }
+      /* Fix navigation buttons positioning and styling */
+      .cld-network-container .vis-navigation {
+        position: absolute !important;
+        z-index: 999 !important;
+      }
+      .cld-network-container .vis-button {
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid #ccc !important;
+        border-radius: 4px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+        cursor: pointer !important;
+      }
+      .cld-network-container .vis-button:hover {
+        background: rgba(255, 255, 255, 1) !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+      }
     ")),
 
     # Collapsible Sidebar
