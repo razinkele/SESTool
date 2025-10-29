@@ -279,12 +279,6 @@ cld_viz_ui <- function(id) {
       id = ns("main_content"),
       class = "cld-main-content",
 
-      h2(
-        icon("project-diagram"),
-        " Causal Loop Diagram Visualization",
-        style = "margin-top: 0;"
-      ),
-
       # Network Visualization (no extra box wrapper)
       div(
         class = "cld-network-container",
