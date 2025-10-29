@@ -64,10 +64,8 @@ cld_viz_ui <- function(id) {
         padding-bottom: 8px;
       }
       .cld-network-container {
-        background: white;
-        border-radius: 4px;
         padding: 0;
-        border: 1px solid #ddd;
+        margin: 0;
       }
     ")),
 
