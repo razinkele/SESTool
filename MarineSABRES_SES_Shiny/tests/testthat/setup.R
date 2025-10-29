@@ -2,9 +2,10 @@
 # Test setup and configuration
 # This file runs before all tests
 
+# Note: Only testthat is loaded here. All other packages (shiny, igraph, dplyr, etc.)
+# are loaded via global.R below. Individual test files should NOT load packages
+# that are already in global.R - this causes redundancy and slower test execution.
 library(testthat)
-library(shiny)
-library(igraph)
 
 # Suppress warnings during tests
 options(warn = -1)

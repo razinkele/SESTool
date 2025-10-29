@@ -1,8 +1,6 @@
 # helpers.R
 # Test utilities and helper functions for testing
-
-library(shiny)
-library(igraph)
+# Note: Packages are loaded in setup.R via global.R
 
 #' Create mock ISA data for testing
 #'

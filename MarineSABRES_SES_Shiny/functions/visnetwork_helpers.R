@@ -670,37 +670,94 @@ apply_metric_sizing <- function(nodes, metric_values,
 # ============================================================================
 
 #' Export visNetwork as standalone HTML
-#' 
+#'
 #' @param visnet visNetwork object
 #' @param file Output file path
 #' @return NULL (side effect: saves file)
 export_visnetwork_html <- function(visnet, file) {
-  htmlwidgets::saveWidget(
-    visnet %>% visInteraction(navigationButtons = TRUE),
-    file,
-    selfcontained = TRUE
-  )
+  tryCatch({
+    # Input validation
+    if (is.null(visnet)) {
+      stop("visNetwork object is NULL")
+    }
+    if (!inherits(visnet, "visNetwork")) {
+      stop("Object must be a visNetwork object")
+    }
+    if (missing(file) || is.null(file) || file == "") {
+      stop("Output file path must be specified")
+    }
+
+    # Create output directory if it doesn't exist
+    output_dir <- dirname(file)
+    if (!dir.exists(output_dir)) {
+      dir.create(output_dir, recursive = TRUE)
+    }
+
+    htmlwidgets::saveWidget(
+      visnet %>% visInteraction(navigationButtons = TRUE),
+      file,
+      selfcontained = TRUE
+    )
+
+    message("HTML exported successfully to: ", file)
+
+  }, error = function(e) {
+    stop(paste("Error exporting visNetwork to HTML:", e$message))
+  })
 }
 
 #' Export visNetwork as PNG
-#' 
+#'
 #' @param visnet visNetwork object
 #' @param file Output file path
 #' @param width Image width in pixels
 #' @param height Image height in pixels
 #' @return NULL (side effect: saves file)
 export_visnetwork_png <- function(visnet, file, width = 1200, height = 900) {
-  require(webshot)
-  
-  # Save as HTML first
-  temp_html <- tempfile(fileext = ".html")
-  export_visnetwork_html(visnet, temp_html)
-  
-  # Convert to PNG
-  webshot::webshot(temp_html, file, vwidth = width, vheight = height)
-  
-  # Clean up
-  unlink(temp_html)
+  tryCatch({
+    # Check if webshot is available (optional dependency)
+    if (!requireNamespace("webshot", quietly = TRUE)) {
+      stop("Package 'webshot' is required for PNG export. Install with: install.packages('webshot')")
+    }
+
+    # Input validation
+    if (is.null(visnet)) {
+      stop("visNetwork object is NULL")
+    }
+    if (!inherits(visnet, "visNetwork")) {
+      stop("Object must be a visNetwork object")
+    }
+    if (missing(file) || is.null(file) || file == "") {
+      stop("Output file path must be specified")
+    }
+    if (!is.numeric(width) || width <= 0) {
+      stop("Width must be a positive number")
+    }
+    if (!is.numeric(height) || height <= 0) {
+      stop("Height must be a positive number")
+    }
+
+    # Create output directory if it doesn't exist
+    output_dir <- dirname(file)
+    if (!dir.exists(output_dir)) {
+      dir.create(output_dir, recursive = TRUE)
+    }
+
+    # Save as HTML first
+    temp_html <- tempfile(fileext = ".html")
+    export_visnetwork_html(visnet, temp_html)
+
+    # Convert to PNG
+    webshot::webshot(temp_html, file, vwidth = width, vheight = height)
+
+    # Clean up
+    unlink(temp_html)
+
+    message("PNG exported successfully to: ", file)
+
+  }, error = function(e) {
+    stop(paste("Error exporting visNetwork to PNG:", e$message))
+  })
 }
 
 # ============================================================================
