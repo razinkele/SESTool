@@ -5,6 +5,37 @@
 # UI FUNCTION
 # ============================================================================
 
+#' CLD Visualization Module UI
+#'
+#' Creates the user interface for the Causal Loop Diagram visualization module.
+#' Includes a collapsible sidebar with controls for layout, filtering, search,
+#' focus mode, and node sizing, along with a main panel for the network visualization.
+#'
+#' @param id Character string. Module namespace ID.
+#'
+#' @return A Shiny UI element containing the CLD visualization interface.
+#'
+#' @details
+#' The UI features:
+#' \itemize{
+#'   \item Collapsible left sidebar with smooth CSS transitions
+#'   \item Layout controls (hierarchical, physics-based, circular)
+#'   \item Filters for element types, polarity, strength, and confidence
+#'   \item Search and highlight functionality
+#'   \item Focus mode to isolate nodes and their neighbors
+#'   \item Node sizing based on centrality metrics
+#'   \item Floating toggle button for sidebar visibility
+#'   \item Frameless visNetwork canvas with legend
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' ui <- fluidPage(
+#'   cld_viz_ui("cld_module")
+#' )
+#' }
+#'
+#' @export
 cld_viz_ui <- function(id) {
   ns <- NS(id)
 
@@ -308,6 +339,49 @@ cld_viz_ui <- function(id) {
 # SERVER FUNCTION
 # ============================================================================
 
+#' CLD Visualization Module Server
+#'
+#' Server logic for the Causal Loop Diagram visualization module.
+#' Handles network generation, filtering, layout, search, focus mode,
+#' and interactive updates based on user controls.
+#'
+#' @param id Character string. Module namespace ID (must match UI function).
+#' @param project_data_reactive Reactive expression returning project data structure
+#'   containing ISA data. Expected structure:
+#'   \code{list(data = list(isa_data = list(...)))}
+#'
+#' @return Server module (no return value, side effects only).
+#'
+#' @details
+#' The server implements:
+#' \itemize{
+#'   \item Sidebar collapse/expand with CSS class toggling
+#'   \item CLD generation from ISA data with error handling
+#'   \item Efficient network caching using ISA data signatures
+#'   \item Real-time filtering by element type, polarity, strength, confidence
+#'   \item Layout algorithms: hierarchical, physics-based, circular
+#'   \item Node search and highlight functionality
+#'   \item Focus mode to show node neighborhoods
+#'   \item Dynamic node sizing based on centrality metrics
+#'   \item Interactive network updates via visNetworkProxy
+#' }
+#'
+#' Performance optimizations:
+#' \itemize{
+#'   \item Network only rebuilt when ISA data changes (signature-based caching)
+#'   \item Metrics cached and invalidated only when network changes
+#'   \item Proxy updates for filtering to avoid full re-renders
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' server <- function(input, output, session) {
+#'   project_data <- reactiveVal(init_session_data())
+#'   cld_viz_server("cld_module", project_data)
+#' }
+#' }
+#'
+#' @export
 cld_viz_server <- function(id, project_data_reactive) {
   moduleServer(id, function(input, output, session) {
 

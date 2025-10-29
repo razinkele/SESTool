@@ -7,6 +7,27 @@
 # LOOP DETECTION MODULE
 # ============================================================================
 
+#' Loop Detection Analysis Module UI
+#'
+#' Creates the user interface for feedback loop detection and analysis in the CLD.
+#' Displays detected loops with their types (reinforcing/balancing) and allows
+#' filtering and visualization.
+#'
+#' @param id Character string. Module namespace ID.
+#'
+#' @return A Shiny UI element for loop detection interface.
+#'
+#' @details
+#' Features:
+#' \itemize{
+#'   \item Detect all feedback loops in the CLD
+#'   \item Classify loops as reinforcing or balancing
+#'   \item Display loop details with node sequences
+#'   \item Filter loops by type and length
+#'   \item Visualize selected loops in the network
+#' }
+#'
+#' @export
 analysis_loops_ui <- function(id) {
   ns <- NS(id)
 
@@ -217,6 +238,27 @@ analysis_loops_ui <- function(id) {
   )
 }
 
+#' Loop Detection Analysis Module Server
+#'
+#' Server logic for detecting and analyzing feedback loops in the Causal Loop Diagram.
+#' Implements loop detection algorithms, classification, and visualization.
+#'
+#' @param id Character string. Module namespace ID (must match UI function).
+#' @param project_data_reactive Reactive expression returning project data with CLD nodes/edges.
+#'
+#' @return Server module (no return value, side effects only).
+#'
+#' @details
+#' Implements:
+#' \itemize{
+#'   \item Feedback loop detection using igraph cycle finding
+#'   \item Loop classification (reinforcing vs balancing based on edge polarity)
+#'   \item Interactive loop table with details
+#'   \item Loop visualization in network
+#'   \item Export functionality for loop data
+#' }
+#'
+#' @export
 analysis_loops_server <- function(id, project_data_reactive) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
