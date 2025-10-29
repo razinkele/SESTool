@@ -510,8 +510,7 @@ isaDataEntryServer <- function(id, global_data) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    # Source validation helpers
-    source("functions/module_validation_helpers.R", local = TRUE)
+    # Note: Module validation helpers are loaded in global.R
 
     # Reactive values to store all ISA data ----
     isa_data <- reactiveValues(

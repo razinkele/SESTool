@@ -93,44 +93,70 @@ create_igraph_from_data <- function(nodes, edges) {
 }
 
 #' Calculate MICMAC analysis
-#' 
+#'
 #' @param nodes Nodes dataframe
 #' @param edges Edges dataframe
 #' @return Dataframe with influence and exposure scores
 calculate_micmac <- function(nodes, edges) {
-  
-  # Create adjacency matrix
-  adj <- create_numeric_adjacency_matrix(nodes, edges)
-  
-  # Calculate direct influence and exposure
-  influence_direct <- rowSums(adj != 0)
-  exposure_direct <- colSums(adj != 0)
-  
-  # Calculate indirect influence (matrix multiplication)
-  adj_squared <- adj %*% adj
-  influence_indirect <- rowSums(adj_squared != 0)
-  exposure_indirect <- colSums(adj_squared != 0)
-  
-  # Total influence and exposure
-  micmac <- data.frame(
-    node_id = nodes$id,
-    influence = influence_direct + influence_indirect,
-    exposure = exposure_direct + exposure_indirect,
-    stringsAsFactors = FALSE
-  )
-  
-  # Classify nodes into quadrants
-  median_influence <- median(micmac$influence)
-  median_exposure <- median(micmac$exposure)
-  
-  micmac$quadrant <- case_when(
-    micmac$influence > median_influence & micmac$exposure > median_exposure ~ "Relay",
-    micmac$influence > median_influence & micmac$exposure <= median_exposure ~ "Influential",
-    micmac$influence <= median_influence & micmac$exposure > median_exposure ~ "Dependent",
-    TRUE ~ "Autonomous"
-  )
-  
-  return(micmac)
+
+  tryCatch({
+    # Input validation
+    if (is.null(nodes) || nrow(nodes) == 0) {
+      stop("Nodes dataframe is empty or NULL")
+    }
+    if (is.null(edges) || nrow(edges) == 0) {
+      warning("Edges dataframe is empty - returning zero influence/exposure")
+      return(data.frame(
+        node_id = nodes$id,
+        influence = 0,
+        exposure = 0,
+        quadrant = "Autonomous",
+        stringsAsFactors = FALSE
+      ))
+    }
+    if (!"id" %in% names(nodes)) {
+      stop("Nodes dataframe must have 'id' column")
+    }
+    if (!all(c("from", "to") %in% names(edges))) {
+      stop("Edges dataframe must have 'from' and 'to' columns")
+    }
+
+    # Create adjacency matrix
+    adj <- create_numeric_adjacency_matrix(nodes, edges)
+
+    # Calculate direct influence and exposure
+    influence_direct <- rowSums(adj != 0)
+    exposure_direct <- colSums(adj != 0)
+
+    # Calculate indirect influence (matrix multiplication)
+    adj_squared <- adj %*% adj
+    influence_indirect <- rowSums(adj_squared != 0)
+    exposure_indirect <- colSums(adj_squared != 0)
+
+    # Total influence and exposure
+    micmac <- data.frame(
+      node_id = nodes$id,
+      influence = influence_direct + influence_indirect,
+      exposure = exposure_direct + exposure_indirect,
+      stringsAsFactors = FALSE
+    )
+
+    # Classify nodes into quadrants
+    median_influence <- median(micmac$influence)
+    median_exposure <- median(micmac$exposure)
+
+    micmac$quadrant <- case_when(
+      micmac$influence > median_influence & micmac$exposure > median_exposure ~ "Relay",
+      micmac$influence > median_influence & micmac$exposure <= median_exposure ~ "Influential",
+      micmac$influence <= median_influence & micmac$exposure > median_exposure ~ "Dependent",
+      TRUE ~ "Autonomous"
+    )
+
+    return(micmac)
+
+  }, error = function(e) {
+    stop(paste("Error in MICMAC analysis:", e$message))
+  })
 }
 
 #' Create numeric adjacency matrix from edges
@@ -139,18 +165,50 @@ calculate_micmac <- function(nodes, edges) {
 #' @param edges Edges dataframe
 #' @return Numeric matrix
 create_numeric_adjacency_matrix <- function(nodes, edges) {
-  n <- nrow(nodes)
-  adj <- matrix(0, nrow = n, ncol = n)
-  rownames(adj) <- nodes$id
-  colnames(adj) <- nodes$id
 
-  for (i in 1:nrow(edges)) {
-    from_idx <- which(nodes$id == edges$from[i])
-    to_idx <- which(nodes$id == edges$to[i])
-    adj[from_idx, to_idx] <- 1
-  }
+  tryCatch({
+    # Input validation
+    if (is.null(nodes) || nrow(nodes) == 0) {
+      stop("Nodes dataframe is empty or NULL")
+    }
+    if (is.null(edges) || nrow(edges) == 0) {
+      # Return empty matrix if no edges
+      n <- nrow(nodes)
+      adj <- matrix(0, nrow = n, ncol = n)
+      rownames(adj) <- nodes$id
+      colnames(adj) <- nodes$id
+      return(adj)
+    }
+    if (!"id" %in% names(nodes)) {
+      stop("Nodes dataframe must have 'id' column")
+    }
+    if (!all(c("from", "to") %in% names(edges))) {
+      stop("Edges dataframe must have 'from' and 'to' columns")
+    }
 
-  return(adj)
+    n <- nrow(nodes)
+    adj <- matrix(0, nrow = n, ncol = n)
+    rownames(adj) <- nodes$id
+    colnames(adj) <- nodes$id
+
+    for (i in 1:nrow(edges)) {
+      from_idx <- which(nodes$id == edges$from[i])
+      to_idx <- which(nodes$id == edges$to[i])
+
+      # Validate indices
+      if (length(from_idx) == 0 || length(to_idx) == 0) {
+        warning(paste("Edge", i, "references non-existent node. Skipping."))
+        next
+      }
+
+      adj[from_idx, to_idx] <- 1
+    }
+
+    return(adj)
+
+  }, error = function(e) {
+    stop(paste("Error creating adjacency matrix:", e$message))
+  })
 }
 
 # ============================================================================

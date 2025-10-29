@@ -120,6 +120,9 @@ source("functions/visnetwork_helpers.R", local = TRUE)
 # Export functions
 source("functions/export_functions.R", local = TRUE)
 
+# Module validation helpers
+source("functions/module_validation_helpers.R", local = TRUE)
+
 # ============================================================================
 # GLOBAL VARIABLES AND CONSTANTS
 # ============================================================================
