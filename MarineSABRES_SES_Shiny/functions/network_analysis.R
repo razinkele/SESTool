@@ -278,7 +278,7 @@ normalize_cycle <- function(cycle) {
 #'
 #' @param loop_nodes Vector of node IDs in loop OR list with path and edge_types
 #' @param edges Edges dataframe (optional if loop_nodes is a list)
-#' @return "reinforcing" or "balancing" (or "R"/"B" for legacy)
+#' @return "Reinforcing" or "Balancing" (capitalized, consistent format)
 classify_loop_type <- function(loop_nodes, edges = NULL) {
 
   # Handle different input types
@@ -289,7 +289,7 @@ classify_loop_type <- function(loop_nodes, edges = NULL) {
 
     # Even number of negatives = Reinforcing
     # Odd number of negatives = Balancing
-    return(ifelse(n_negative %% 2 == 0, "reinforcing", "balancing"))
+    return(ifelse(n_negative %% 2 == 0, "Reinforcing", "Balancing"))
   }
 
   # Old interface: vector of node IDs and edges dataframe
@@ -313,7 +313,7 @@ classify_loop_type <- function(loop_nodes, edges = NULL) {
 
   # Even number of negatives = Reinforcing
   # Odd number of negatives = Balancing
-  ifelse(n_negative %% 2 == 0, "R", "B")
+  ifelse(n_negative %% 2 == 0, "Reinforcing", "Balancing")
 }
 
 #' Process detected cycles into loops dataframe

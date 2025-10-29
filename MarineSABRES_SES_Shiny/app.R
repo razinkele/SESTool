@@ -29,6 +29,183 @@ add_submenu_tooltip <- function(submenu_item, tooltip_text) {
   return(submenu_item)
 }
 
+# Generate sidebar menu (dynamic, responds to language changes)
+generate_sidebar_menu <- function() {
+  sidebarMenu(
+    id = "sidebar_menu",
+
+    add_menu_tooltip(
+      menuItem(
+        i18n$t("Getting Started"),
+        tabName = "entry_point",
+        icon = icon("compass")
+      ),
+      i18n$t("Guided entry point to find the right tools for your marine management needs")
+    ),
+
+    add_menu_tooltip(
+      menuItem(
+        i18n$t("Dashboard"),
+        tabName = "dashboard",
+        icon = icon("dashboard")
+      ),
+      i18n$t("Overview of your project status and key metrics")
+    ),
+
+    add_menu_tooltip(
+      menuItem(
+        i18n$t("PIMS Module"),
+        tabName = "pims",
+        icon = icon("project-diagram"),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Project Setup"), tabName = "pims_project"),
+          "Define project goals, scope, and basic information"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Stakeholders"), tabName = "pims_stakeholders"),
+          "Identify and manage stakeholders and their interests"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Resources & Risks"), tabName = "pims_resources"),
+          "Track project resources, timeline, and potential risks"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Data Management"), tabName = "pims_data"),
+          "Manage data sources, quality, and documentation"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Evaluation"), tabName = "pims_evaluation"),
+          "Evaluate project progress and outcomes"
+        )
+      ),
+      "Project Information Management System for planning and tracking"
+    ),
+
+    add_menu_tooltip(
+      menuItem(
+        i18n$t("Create SES"),
+        tabName = "create_ses",
+        icon = icon("layer-group"),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Choose Method"), tabName = "create_ses_choose"),
+          "Select how you want to create your Social-Ecological System"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Standard Entry"), tabName = "create_ses_standard"),
+          "Traditional form-based ISA data entry"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("AI Assistant"), tabName = "create_ses_ai"),
+          "Guided question-based SES creation"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Template-Based"), tabName = "create_ses_template"),
+          "Start from pre-built SES templates"
+        )
+      ),
+      "Create your Social-Ecological System using structured methods"
+    ),
+
+    add_menu_tooltip(
+      menuItem(
+        i18n$t("CLD Visualization"),
+        tabName = "cld_viz",
+        icon = icon("project-diagram")
+      ),
+      "Interactive Causal Loop Diagram visualization of your SES network"
+    ),
+
+    add_menu_tooltip(
+      menuItem(
+        i18n$t("Analysis Tools"),
+        tabName = "analysis",
+        icon = icon("chart-line"),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Network Metrics"), tabName = "analysis_metrics"),
+          "Calculate centrality, density, and other network statistics"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Loop Detection"), tabName = "analysis_loops"),
+          "Identify feedback loops and causal pathways in your network"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("BOT Analysis"), tabName = "analysis_bot"),
+          "Behavior Over Time analysis and temporal dynamics"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Simplification"), tabName = "analysis_simplify"),
+          "Simplify complex networks while preserving key structures"
+        )
+      ),
+      "Advanced network analysis and metrics tools for your SES model"
+    ),
+
+    add_menu_tooltip(
+      menuItem(
+        i18n$t("Response & Validation"),
+        tabName = "response",
+        icon = icon("tasks"),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Response Measures"), tabName = "response_measures"),
+          "Define and design management responses and interventions"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Scenario Builder"), tabName = "response_scenarios"),
+          "Build and compare alternative future scenarios"
+        ),
+        add_submenu_tooltip(
+          menuSubItem(i18n$t("Validation"), tabName = "response_validation"),
+          "Validate model structure and behavior with stakeholders"
+        )
+      ),
+      "Design response measures, build scenarios, and validate your model"
+    ),
+
+    add_menu_tooltip(
+      menuItem(
+        i18n$t("Export Data"),
+        tabName = "export",
+        icon = icon("download")
+      ),
+      "Export data and generate comprehensive analysis reports"
+    ),
+
+    hr(),
+
+    # Quick actions
+    div(
+      style = "padding: 15px;",
+      h5(i18n$t("Quick Actions")),
+      actionButton(
+        "save_project",
+        i18n$t("Save Project"),
+        icon = icon("save"),
+        class = "btn-primary btn-block",
+        title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results")
+      ),
+      bsTooltip(
+        id = "save_project",
+        title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results"),
+        placement = "right",
+        trigger = "hover"
+      ),
+      actionButton(
+        "load_project",
+        i18n$t("Load Project"),
+        icon = icon("folder-open"),
+        class = "btn-secondary btn-block",
+        title = i18n$t("Load a previously saved project")
+      ),
+      bsTooltip(
+        id = "load_project",
+        title = i18n$t("Load a previously saved project"),
+        placement = "right",
+        trigger = "hover"
+      )
+    )
+  )
+}
+
 # ============================================================================
 # SOURCE MODULES
 # ============================================================================
@@ -107,192 +284,8 @@ ui <- dashboardPage(
   dashboardSidebar(
     width = 300,
 
-    sidebarMenu(
-      id = "sidebar_menu",
-
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("Getting Started"),
-          tabName = "entry_point",
-          icon = icon("compass")
-        ),
-        "Guided entry point to find the right tools for your marine management needs"
-      ),
-
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("Dashboard"),
-          tabName = "dashboard",
-          icon = icon("dashboard")
-        ),
-        "Overview of your project status and key metrics"
-      ),
-
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("PIMS Module"),
-          tabName = "pims",
-          icon = icon("project-diagram"),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Project Setup"), tabName = "pims_project"),
-            "Define project goals, scope, and basic information"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Stakeholders"), tabName = "pims_stakeholders"),
-            "Identify and manage stakeholders and their interests"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Resources & Risks"), tabName = "pims_resources"),
-            "Track project resources, timeline, and potential risks"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Data Management"), tabName = "pims_data"),
-            "Manage data sources, quality, and documentation"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Evaluation"), tabName = "pims_evaluation"),
-            "Evaluate project progress and outcomes"
-          )
-        ),
-        "Project Information Management System for planning and tracking"
-      ),
-
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("Create SES"),
-          tabName = "create_ses",
-          icon = icon("layer-group"),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Choose Method"), tabName = "create_ses_choose"),
-            "Select how you want to create your Social-Ecological System"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Standard Entry"), tabName = "create_ses_standard"),
-            "Traditional form-based ISA data entry"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("AI Assistant"), tabName = "create_ses_ai"),
-            "Guided question-based SES creation"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Template-Based"), tabName = "create_ses_template"),
-            "Start from pre-built SES templates"
-          )
-        ),
-        "Create your Social-Ecological System using structured methods"
-      ),
-
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("CLD Visualization"),
-          tabName = "cld_viz",
-          icon = icon("project-diagram")
-        ),
-        "Interactive Causal Loop Diagram visualization of your SES network"
-      ),
-
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("Analysis Tools"),
-          tabName = "analysis",
-          icon = icon("chart-line"),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Network Metrics"), tabName = "analysis_metrics"),
-            "Calculate centrality, density, and other network statistics"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Loop Detection"), tabName = "analysis_loops"),
-            "Identify feedback loops and causal pathways in your network"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("BOT Analysis"), tabName = "analysis_bot"),
-            "Behavior Over Time analysis and temporal dynamics"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Simplification"), tabName = "analysis_simplify"),
-            "Simplify complex networks while preserving key structures"
-          )
-        ),
-        "Advanced network analysis and metrics tools for your SES model"
-      ),
-
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("Response & Validation"),
-          tabName = "response",
-          icon = icon("tasks"),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Response Measures"), tabName = "response_measures"),
-            "Define and design management responses and interventions"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Scenario Builder"), tabName = "response_scenarios"),
-            "Build and compare alternative future scenarios"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Validation"), tabName = "response_validation"),
-            "Validate model structure and behavior with stakeholders"
-          )
-        ),
-        "Design response measures, build scenarios, and validate your model"
-      ),
-
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("Export Data"),
-          tabName = "export",
-          icon = icon("download")
-        ),
-        "Export data and generate comprehensive analysis reports"
-      ),
-      
-      hr(),
-      
-      # Progress indicator (temporarily disabled for debugging)
-      # div(
-      #   style = "padding: 15px;",
-      #   h5("Project Progress"),
-      #   progressBar(
-      #     id = "project_progress",
-      #     value = 0,
-      #     total = 100,
-      #     display_pct = TRUE,
-      #     status = "info"
-      #   )
-      # ),
-      
-      # Quick actions
-      div(
-        style = "padding: 15px;",
-        h5("Quick Actions"),
-        actionButton(
-          "save_project",
-          i18n$t("Save Project"),
-          icon = icon("save"),
-          class = "btn-primary btn-block",
-          title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results")
-        ),
-        bsTooltip(
-          id = "save_project",
-          title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results"),
-          placement = "right",
-          trigger = "hover"
-        ),
-        actionButton(
-          "load_project",
-          i18n$t("Load Project"),
-          icon = icon("folder-open"),
-          class = "btn-secondary btn-block",
-          title = i18n$t("Load a previously saved project")
-        ),
-        bsTooltip(
-          id = "load_project",
-          title = i18n$t("Load a previously saved project"),
-          placement = "right",
-          trigger = "hover"
-        )
-      )
-    )
+    # Dynamic sidebar menu that updates when language changes
+    sidebarMenuOutput("dynamic_sidebar")
   ),
   
   # ========== BODY ==========
@@ -303,6 +296,32 @@ ui <- dashboardPage(
       tags$title("MarineSABRES SES Toolbox"),
       tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
       tags$link(rel = "stylesheet", type = "text/css", href = "isa-panels-fix.css"),
+
+      # Language persistence JavaScript
+      tags$script(HTML("
+        // On page load, check if language needs to be set from localStorage
+        $(document).ready(function() {
+          // Check if language is already in URL
+          var urlParams = new URLSearchParams(window.location.search);
+          var urlLang = urlParams.get('language');
+
+          if (!urlLang) {
+            // No language in URL, check localStorage
+            var savedLang = localStorage.getItem('marinesabres_language');
+            if (savedLang && savedLang !== 'en') {
+              // Redirect with language parameter
+              window.location.search = '?language=' + savedLang;
+            }
+          }
+        });
+
+        // Function to save language and reload with query parameter
+        Shiny.addCustomMessageHandler('saveLanguageAndReload', function(lang) {
+          localStorage.setItem('marinesabres_language', lang);
+          window.location.search = '?language=' + lang;
+        });
+      ")),
+
       tags$style(HTML("
         /* Persistent loading overlay */
         #language-loading-overlay {
@@ -517,33 +536,6 @@ ui <- dashboardPage(
             h4(i18n$t("Recent Activities")),
             uiOutput("recent_activities_ui")
           )
-        ),
-
-        fluidRow(
-          # Mini CLD preview
-          box(
-            title = i18n$t("CLD Preview"),
-            status = "success",
-            solidHeader = TRUE,
-            width = 12,
-            height = 500,
-            conditionalPanel(
-              condition = "output.has_cld_data",
-              visNetworkOutput("dashboard_network_preview", height = "450px")
-            ),
-            conditionalPanel(
-              condition = "!output.has_cld_data",
-              div(
-                style = "text-align: center; padding: 100px 20px;",
-                icon("project-diagram", class = "fa-4x", style = "color: #ccc; margin-bottom: 20px;"),
-                h4(i18n$t("No CLD Generated Yet"), style = "color: #999;"),
-                p(i18n$t("Build your Causal Loop Diagram from the ISA data to visualize system connections.")),
-                actionButton("dashboard_build_network", i18n$t("Build Network from ISA Data"),
-                            icon = icon("network-wired"), class = "btn-primary btn-lg",
-                            style = "margin-top: 15px;")
-              )
-            )
-          )
         )
       ),
 
@@ -720,6 +712,13 @@ server <- function(input, output, session) {
   # Main project data
   project_data <- reactiveVal(init_session_data())
 
+  # ========== DYNAMIC SIDEBAR MENU ==========
+  # Renders sidebar menu dynamically based on current language
+  # This allows the menu to update when language changes
+  output$dynamic_sidebar <- renderMenu({
+    generate_sidebar_menu()
+  })
+
   # User info
   output$user_info <- renderText({
     paste("User:", Sys.info()["user"])
@@ -799,16 +798,12 @@ server <- function(input, output, session) {
     # Close the modal
     removeModal()
 
-    # Show persistent JavaScript loading overlay
-    session$sendCustomMessage("showLanguageLoading", list(
-      text = paste0("Changing language to ", lang_name, "...")
-    ))
-
     # Log language change
     cat(paste0("[", Sys.time(), "] INFO: Language changed to: ", new_lang, "\n"))
 
-    # Reload the session to apply language changes
-    # The overlay will persist until the page actually reloads
+    # Note: Sidebar menu will update automatically via renderMenu()
+    # Reload session to update all UI elements
+    Sys.sleep(0.5)  # Brief delay to ensure language change is processed
     session$reload()
   })
 
@@ -1141,48 +1136,6 @@ server <- function(input, output, session) {
     })
   })
 
-  # Check if CLD data exists
-  output$has_cld_data <- reactive({
-    nodes <- project_data()$data$cld$nodes
-    !is.null(nodes) && nrow(nodes) > 0 && all(c("id", "label") %in% names(nodes))
-  })
-  outputOptions(output, "has_cld_data", suspendWhenHidden = FALSE)
-
-  # Mini CLD preview on dashboard
-  output$dashboard_network_preview <- renderVisNetwork({
-    nodes <- project_data()$data$cld$nodes
-    edges <- project_data()$data$cld$edges
-
-    # Check if CLD has been generated
-    if(is.null(nodes) || nrow(nodes) == 0) {
-      return(NULL)
-    }
-
-    # Validate nodes have required columns for visNetwork
-    required_cols <- c("id", "label")
-    if(!all(required_cols %in% names(nodes))) {
-      return(NULL)
-    }
-
-    visNetwork(nodes, edges, height = "100%") %>%
-      visIgraphLayout(layout = "layout_with_fr") %>%
-      visOptions(
-        highlightNearest = TRUE,
-        nodesIdSelection = FALSE
-      ) %>%
-      visInteraction(
-        navigationButtons = FALSE,
-        hover = TRUE
-      )
-  })
-
-  # Build network button handler on dashboard
-  observeEvent(input$dashboard_build_network, {
-    # Navigate to CLD visualization tab
-    updateTabItems(session, "sidebar_menu", "cld_viz")
-    showNotification("Navigate to CLD Visualization to build your network", type = "message", duration = 3)
-  })
-  
   # ========== SAVE/LOAD PROJECT ==========
   
   observeEvent(input$save_project, {

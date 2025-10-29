@@ -84,7 +84,7 @@ test_that("loop type classification works", {
   )
 
   type1 <- classify_loop_type(loop_info1)
-  expect_equal(type1, "reinforcing")
+  expect_equal(type1, "Reinforcing")
 
   # Test balancing loop (odd number of negative links)
   loop_info2 <- list(
@@ -93,7 +93,7 @@ test_that("loop type classification works", {
   )
 
   type2 <- classify_loop_type(loop_info2)
-  expect_equal(type2, "balancing")
+  expect_equal(type2, "Balancing")
 })
 
 test_that("network metrics calculation works", {

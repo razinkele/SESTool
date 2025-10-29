@@ -1,0 +1,88 @@
+# GitHub Actions workflow for automated testing
+name: R Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        r-version: ['4.2', '4.3', '4.4']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.r-version }}
+
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+
+      - name: Install system dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev
+
+      - name: Install R dependencies
+        run: |
+          install.packages(c("testthat", "shiny", "shinydashboard", "shinyWidgets", "shinyjs", "shinyBS"))
+          install.packages(c("tidyverse", "DT", "openxlsx", "jsonlite"))
+          install.packages(c("igraph", "visNetwork", "ggraph", "tidygraph"))
+          install.packages(c("ggplot2", "plotly", "dygraphs", "xts"))
+          install.packages(c("timevis", "rmarkdown", "htmlwidgets", "shiny.i18n"))
+          install.packages(c("covr", "R6"))
+        shell: Rscript {0}
+
+      - name: Session info
+        run: |
+          options(width = 100)
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info(pkgs, include_base = TRUE)
+        shell: Rscript {0}
+
+      - name: Run tests
+        run: |
+          library(testthat)
+          test_dir("tests/testthat", reporter = "progress")
+        shell: Rscript {0}
+
+      - name: Test coverage
+        if: runner.os == 'Linux' && matrix.r-version == '4.3'
+        run: |
+          library(covr)
+          coverage <- package_coverage(type = "tests", quiet = FALSE)
+          print(coverage)
+          codecov(coverage = coverage)
+        shell: Rscript {0}
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results-${{ matrix.os }}-${{ matrix.r-version }}
+          path: tests/testthat/*.Rout*

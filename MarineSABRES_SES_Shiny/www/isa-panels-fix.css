@@ -1,0 +1,257 @@
+/* ============================================================================
+   ISA DATA ENTRY PANELS - COMPREHENSIVE FIX FOR "DISABLED" APPEARANCE
+   ============================================================================
+
+   ROOT CAUSE ANALYSIS:
+   - Shiny's wellPanel() creates div.well.well-sm with Bootstrap styling
+   - Default well background: #f5f5f5 (light gray) - looks "disabled"
+   - Default form-control background: often inherits gray from parent
+   - Bootstrap adds subtle shadows and borders that make fields look inactive
+   - CRITICAL: Shiny "recalculating" class adds gray filter/opacity
+
+   SOLUTION:
+   - Override ALL Bootstrap defaults for ISA entry panels
+   - Force bright, high-contrast styling
+   - Add visual feedback for interactivity
+   - Remove recalculating class effects
+   ============================================================================ */
+
+/* CRITICAL: Remove Shiny recalculating effect on ISA containers */
+#isa_module-gb_entries.recalculating,
+#isa_module-es_entries.recalculating,
+#isa_module-mpf_entries.recalculating,
+#isa_module-p_entries.recalculating,
+#isa_module-a_entries.recalculating,
+#isa_module-d_entries.recalculating,
+#isa_module-gb_entries.recalculating *,
+#isa_module-es_entries.recalculating *,
+#isa_module-mpf_entries.recalculating *,
+#isa_module-p_entries.recalculating *,
+#isa_module-a_entries.recalculating *,
+#isa_module-d_entries.recalculating *,
+.shiny-html-output.recalculating .isa-entry-panel,
+.shiny-html-output.recalculating .isa-entry-panel * {
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  color: #000000 !important;
+}
+
+/* STEP 1: Fix the wellPanel containers (the gray boxes) */
+/* Target all dynamically created entry panels */
+/* NOTE: Module ID is isa_module NOT isa_data_entry */
+div[id^="isa_module-gb_panel_"],
+div[id^="isa_module-es_panel_"],
+div[id^="isa_module-mpf_panel_"],
+div[id^="isa_module-p_panel_"],
+div[id^="isa_module-a_panel_"],
+div[id^="isa_module-d_panel_"],
+div[id^="isa_data_entry-gb_panel_"],
+div[id^="isa_data_entry-es_panel_"],
+div[id^="isa_data_entry-mpf_panel_"],
+div[id^="isa_data_entry-p_panel_"],
+div[id^="isa_data_entry-a_panel_"],
+div[id^="isa_data_entry-d_panel_"] {
+  /* Bright white background instead of gray */
+  background-color: #ffffff !important;
+
+  /* Subtle border to show it's a panel */
+  border: 1px solid #dee2e6 !important;
+
+  /* Remove Bootstrap's subtle shadow */
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3) !important;
+
+  /* Ensure full opacity */
+  opacity: 1 !important;
+
+  /* Add some padding for breathing room */
+  padding: 20px !important;
+
+  /* Rounded corners */
+  border-radius: 8px !important;
+
+  /* Spacing between panels */
+  margin-bottom: 15px !important;
+}
+
+/* STEP 2: Fix input and textarea fields */
+div[id^="isa_module-gb_panel_"] input,
+div[id^="isa_module-gb_panel_"] textarea,
+div[id^="isa_module-es_panel_"] input,
+div[id^="isa_module-es_panel_"] textarea,
+div[id^="isa_module-mpf_panel_"] input,
+div[id^="isa_module-mpf_panel_"] textarea,
+div[id^="isa_module-p_panel_"] input,
+div[id^="isa_module-p_panel_"] textarea,
+div[id^="isa_module-a_panel_"] input,
+div[id^="isa_module-a_panel_"] textarea,
+div[id^="isa_module-d_panel_"] input,
+div[id^="isa_module-d_panel_"] textarea,
+.isa-entry-panel input,
+.isa-entry-panel textarea,
+input.shinyjs-resettable,
+textarea.shinyjs-resettable {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* STEP 3: Minimal fix for select elements - use native browser styling */
+div[id^="isa_module-gb_panel_"] select,
+div[id^="isa_module-es_panel_"] select,
+div[id^="isa_module-mpf_panel_"] select,
+div[id^="isa_module-p_panel_"] select,
+div[id^="isa_module-a_panel_"] select,
+div[id^="isa_module-d_panel_"] select,
+.isa-entry-panel select,
+select.shinyjs-resettable {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  /* Keep native browser appearance for dropdowns */
+}
+
+/* STEP 4: Hover effects - only for inputs/textarea */
+div[id^="isa_module-gb_panel_"] input:hover,
+div[id^="isa_module-gb_panel_"] textarea:hover,
+div[id^="isa_module-es_panel_"] input:hover,
+div[id^="isa_module-es_panel_"] textarea:hover,
+div[id^="isa_module-mpf_panel_"] input:hover,
+div[id^="isa_module-mpf_panel_"] textarea:hover,
+div[id^="isa_module-p_panel_"] input:hover,
+div[id^="isa_module-p_panel_"] textarea:hover,
+div[id^="isa_module-a_panel_"] input:hover,
+div[id^="isa_module-a_panel_"] textarea:hover,
+div[id^="isa_module-d_panel_"] input:hover,
+div[id^="isa_module-d_panel_"] textarea:hover {
+  border-color: #80bdff !important;
+}
+
+/* STEP 5: Focus effects - only for inputs/textarea */
+div[id^="isa_module-gb_panel_"] input:focus,
+div[id^="isa_module-gb_panel_"] textarea:focus,
+div[id^="isa_module-es_panel_"] input:focus,
+div[id^="isa_module-es_panel_"] textarea:focus,
+div[id^="isa_module-mpf_panel_"] input:focus,
+div[id^="isa_module-mpf_panel_"] textarea:focus,
+div[id^="isa_module-p_panel_"] input:focus,
+div[id^="isa_module-p_panel_"] textarea:focus,
+div[id^="isa_module-a_panel_"] input:focus,
+div[id^="isa_module-a_panel_"] textarea:focus,
+div[id^="isa_module-d_panel_"] input:focus,
+div[id^="isa_module-d_panel_"] textarea:focus {
+  border-color: #80bdff !important;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+  outline: none !important;
+}
+
+/* STEP 6: Fix placeholder text */
+div[id^="isa_module-gb_panel_"] input::placeholder,
+div[id^="isa_module-gb_panel_"] textarea::placeholder,
+div[id^="isa_module-es_panel_"] input::placeholder,
+div[id^="isa_module-es_panel_"] textarea::placeholder,
+div[id^="isa_module-mpf_panel_"] input::placeholder,
+div[id^="isa_module-mpf_panel_"] textarea::placeholder,
+div[id^="isa_module-p_panel_"] input::placeholder,
+div[id^="isa_module-p_panel_"] textarea::placeholder,
+div[id^="isa_module-a_panel_"] input::placeholder,
+div[id^="isa_module-a_panel_"] textarea::placeholder,
+div[id^="isa_module-d_panel_"] input::placeholder,
+div[id^="isa_module-d_panel_"] textarea::placeholder,
+div[id^="isa_data_entry-gb_panel_"] input::placeholder,
+div[id^="isa_data_entry-gb_panel_"] textarea::placeholder,
+div[id^="isa_data_entry-es_panel_"] input::placeholder,
+div[id^="isa_data_entry-es_panel_"] textarea::placeholder {
+  color: #95a5a6 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  font-weight: normal !important;
+}
+
+/* STEP 7: Fix labels to make them clear */
+div[id^="isa_module-gb_panel_"] label,
+div[id^="isa_module-es_panel_"] label,
+div[id^="isa_module-mpf_panel_"] label,
+div[id^="isa_module-p_panel_"] label,
+div[id^="isa_module-a_panel_"] label,
+div[id^="isa_module-d_panel_"] label,
+div[id^="isa_data_entry-gb_panel_"] label,
+div[id^="isa_data_entry-es_panel_"] label {
+  font-weight: 700 !important;
+  color: #2c3e50 !important;
+  font-size: 13px !important;
+  margin-bottom: 5px !important;
+  display: block !important;
+}
+
+/* STEP 8: Ensure buttons stay visible */
+div[id^="isa_module-gb_panel_"] button,
+div[id^="isa_module-es_panel_"] button,
+div[id^="isa_module-mpf_panel_"] button,
+div[id^="isa_module-p_panel_"] button,
+div[id^="isa_module-a_panel_"] button,
+div[id^="isa_module-d_panel_"] button,
+div[id^="isa_data_entry-gb_panel_"] button,
+div[id^="isa_data_entry-es_panel_"] button {
+  opacity: 1 !important;
+  font-weight: 600 !important;
+}
+
+/* STEP 9: Fix Exercise 0 fields (not dynamically created) */
+#isa_data_entry-case_name,
+#isa_data_entry-case_description,
+#isa_data_entry-geographic_scope,
+#isa_data_entry-temporal_scope,
+#isa_data_entry-welfare_impacts,
+#isa_data_entry-key_stakeholders {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #3498db !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #000000 !important;
+  padding: 10px 12px !important;
+}
+
+#isa_data_entry-case_name:hover,
+#isa_data_entry-case_description:hover,
+#isa_data_entry-geographic_scope:hover,
+#isa_data_entry-temporal_scope:hover,
+#isa_data_entry-welfare_impacts:hover,
+#isa_data_entry-key_stakeholders:hover {
+  background-color: #fffacd !important;
+  border-color: #f39c12 !important;
+  box-shadow: 0 0 10px rgba(243, 156, 18, 0.5) !important;
+}
+
+#isa_data_entry-case_name:focus,
+#isa_data_entry-case_description:focus,
+#isa_data_entry-geographic_scope:focus,
+#isa_data_entry-temporal_scope:focus,
+#isa_data_entry-welfare_impacts:focus,
+#isa_data_entry-key_stakeholders:focus {
+  background-color: #fffacd !important;
+  border-color: #27ae60 !important;
+  box-shadow: 0 0 15px rgba(39, 174, 96, 0.6) !important;
+  outline: none !important;
+}
+
+/* STEP 10: Override any .well class defaults that might interfere */
+.well .form-control,
+.well input.form-control,
+.well select.form-control,
+.well textarea.form-control {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+  border-color: #3498db !important;
+}
+
+/* ============================================================================
+   END OF ISA PANELS FIX
+   ============================================================================ */

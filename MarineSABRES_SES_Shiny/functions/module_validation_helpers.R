@@ -620,3 +620,112 @@ validate_email <- function(email, field_name = "Email", required = TRUE, session
     session = session
   )
 }
+
+# ============================================================================
+# DATA FRAME VALIDATION
+# ============================================================================
+
+#' Validate data frame columns
+#'
+#' Checks if a data frame has required columns
+#'
+#' @param df Data frame to validate
+#' @param required_cols Character vector of required column names
+#' @param df_name Human-readable name for the data frame (for error messages)
+#' @param case_sensitive Logical, should column matching be case-sensitive? (default: TRUE)
+#' @param session Shiny session for notifications
+#' @return List with valid (logical), message (character), and missing_cols (character vector)
+#' @examples
+#' # Check if data has required columns
+#' result <- validate_dataframe_columns(my_data, c("Year", "Value"), "Time series data")
+#' if (!result$valid) {
+#'   print(result$message)
+#' }
+validate_dataframe_columns <- function(df, required_cols, df_name = "Data frame",
+                                      case_sensitive = TRUE, session = NULL) {
+
+  tryCatch({
+
+    # Check if df exists and is a data frame
+    if (is.null(df)) {
+      msg <- paste(df_name, "is NULL")
+      if (!is.null(session)) {
+        showNotification(msg, type = "error", session = session)
+      }
+      return(list(valid = FALSE, message = msg, missing_cols = required_cols))
+    }
+
+    if (!is.data.frame(df)) {
+      msg <- paste(df_name, "is not a data frame")
+      if (!is.null(session)) {
+        showNotification(msg, type = "error", session = session)
+      }
+      return(list(valid = FALSE, message = msg, missing_cols = required_cols))
+    }
+
+    # Check if df has any rows
+    if (nrow(df) == 0) {
+      msg <- paste(df_name, "is empty")
+      if (!is.null(session)) {
+        showNotification(msg, type = "warning", session = session)
+      }
+      return(list(valid = FALSE, message = msg, missing_cols = required_cols))
+    }
+
+    # Get column names
+    df_cols <- names(df)
+
+    # Check for required columns
+    if (case_sensitive) {
+      missing_cols <- setdiff(required_cols, df_cols)
+    } else {
+      # Case-insensitive matching
+      df_cols_lower <- tolower(df_cols)
+      required_cols_lower <- tolower(required_cols)
+      missing_cols_lower <- setdiff(required_cols_lower, df_cols_lower)
+
+      # Map back to original required column names
+      missing_cols <- required_cols[required_cols_lower %in% missing_cols_lower]
+    }
+
+    # If columns are missing, return error
+    if (length(missing_cols) > 0) {
+      if (length(missing_cols) == 1) {
+        msg <- paste(df_name, "must have column:", missing_cols)
+      } else {
+        msg <- paste(df_name, "must have columns:", paste(missing_cols, collapse = ", "))
+      }
+
+      if (!is.null(session)) {
+        showNotification(msg, type = "error", session = session)
+      }
+
+      return(list(valid = FALSE, message = msg, missing_cols = missing_cols))
+    }
+
+    # All checks passed
+    return(list(valid = TRUE, message = NULL, missing_cols = character(0)))
+
+  }, error = function(e) {
+    log_message(paste("Error validating data frame columns:", e$message), "ERROR")
+    msg <- paste("Validation error for", df_name)
+    if (!is.null(session)) {
+      showNotification(msg, type = "error", session = session)
+    }
+    return(list(valid = FALSE, message = msg, missing_cols = required_cols))
+  })
+}
+
+#' Validate data frame columns (shorthand)
+#'
+#' Quick validation for required columns, returns logical
+#'
+#' @param df Data frame to validate
+#' @param required_cols Character vector of required column names
+#' @param df_name Human-readable name for the data frame
+#' @param session Shiny session
+#' @return Logical indicating if all required columns exist
+has_required_columns <- function(df, required_cols, df_name = "Data", session = NULL) {
+  result <- validate_dataframe_columns(df, required_cols, df_name, session = session)
+  return(result$valid)
+}

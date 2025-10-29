@@ -234,7 +234,7 @@ analysis_loops_server <- function(id, project_data_reactive) {
     build_graph_from_isa <- reactive({
       req(project_data_reactive())
 
-      isa_data <- project_data_reactive()$isa_data
+      isa_data <- project_data_reactive()$data$isa_data
 
       if(is.null(isa_data)) return(NULL)
 
@@ -263,17 +263,21 @@ analysis_loops_server <- function(id, project_data_reactive) {
     # Detect Loops ----
     observeEvent(input$detect_loops, {
 
-      output$detection_status <- renderText("Detecting loops...")
+      output$detection_status <- renderText(i18n$t("analysis_detecting_loops"))
 
       graph_data <- build_graph_from_isa()
 
       if(is.null(graph_data)) {
-        output$detection_status <- renderText("Error: No graph data available. Please complete ISA data entry first.")
-        showNotification("No ISA data found. Complete exercises first.", type = "error")
+        output$detection_status <- renderText(i18n$t("analysis_no_graph_data"))
+        showNotification(i18n$t("analysis_no_isa_data"), type = "error")
         return()
       }
 
       g <- graph_data$graph
+
+      # Log basic graph info for monitoring
+      cat(sprintf("[Loop Detection] Analyzing graph: %d vertices, %d edges\n",
+                  vcount(g), ecount(g)))
 
       # Find all simple cycles (loops)
       # Note: This can be computationally expensive for large graphs
@@ -282,31 +286,46 @@ analysis_loops_server <- function(id, project_data_reactive) {
         all_loops <- list()
         vertices <- V(g)
 
-        # For each vertex, find paths back to itself
+        # For each vertex, find cycles by checking paths from neighbors back to vertex
         for(i in 1:length(vertices)) {
           incProgress(1/length(vertices), detail = paste("Checking vertex", i))
 
           vertex <- vertices[i]
+          vertex_name <- V(g)$name[vertex]
 
-          # Find all simple paths from vertex back to itself
-          paths <- tryCatch({
-            all_simple_paths(g, from = vertex, to = vertex,
-                            mode = "out",
-                            cutoff = input$max_loop_length)
-          }, error = function(e) list())
+          # Get all outgoing neighbors of this vertex
+          neighbors <- neighbors(g, vertex, mode = "out")
 
-          if(length(paths) > 0) {
-            for(path in paths) {
-              if(length(path) >= 2) {  # At least 2 nodes for a loop
-                all_loops <- c(all_loops, list(path))
+          if(length(neighbors) == 0) next
+
+          # For each neighbor, find paths back to the original vertex
+          for(neighbor in neighbors) {
+            # Find all simple paths from neighbor back to vertex
+            # This creates a cycle: vertex -> neighbor -> ... -> vertex
+            paths <- tryCatch({
+              all_simple_paths(g, from = neighbor, to = vertex,
+                              mode = "out",
+                              cutoff = input$max_loop_length - 1)  # -1 because we add vertex at start
+            }, error = function(e) {
+              cat("Error finding paths from", V(g)$name[neighbor], "to", vertex_name, ":", conditionMessage(e), "\n")
+              list()
+            })
+
+            if(length(paths) > 0) {
+              for(path in paths) {
+                # Add the original vertex at the beginning to complete the cycle
+                complete_cycle <- c(vertex, path)
+                if(length(complete_cycle) >= 2) {  # At least 2 nodes for a loop
+                  all_loops <- c(all_loops, list(complete_cycle))
+                }
               }
             }
           }
         }
 
         if(length(all_loops) == 0) {
-          output$detection_status <- renderText("No loops detected. Try closing more feedback connections in Exercise 6.")
-          showNotification("No loops found. Add loop connections in Exercise 6.", type = "warning")
+          output$detection_status <- renderText(i18n$t("analysis_no_loops_detected"))
+          showNotification(i18n$t("analysis_no_loops_found"), type = "warning")
           return()
         }
 
@@ -332,7 +351,7 @@ analysis_loops_server <- function(id, project_data_reactive) {
             to_node <- loop[j+1]
 
             # Find edge polarity
-            edge_id <- get.edge.ids(g, c(from_node, to_node))
+            edge_id <- get_edge_ids(g, c(from_node, to_node))
             if(edge_id > 0) {
               polarity <- E(g)$polarity[edge_id]
               if(polarity == "-") negative_count <- negative_count + 1
@@ -341,7 +360,9 @@ analysis_loops_server <- function(id, project_data_reactive) {
 
           # Even number of negative links = Reinforcing
           # Odd number = Balancing
-          loop_type <- ifelse(negative_count %% 2 == 0, "Reinforcing", "Balancing")
+          loop_type <- ifelse(negative_count %% 2 == 0,
+                             i18n$t("analysis_reinforcing"),
+                             i18n$t("analysis_balancing"))
           loop_polarity <- ifelse(negative_count %% 2 == 0, "R", "B")
 
           loop_info <- rbind(loop_info, data.frame(
@@ -350,7 +371,7 @@ analysis_loops_server <- function(id, project_data_reactive) {
             Elements = paste(loop_names, collapse = " → "),
             Type = loop_type,
             Polarity = loop_polarity,
-            Description = paste(loop_type, "loop with", length(loop)-1, "elements"),
+            Description = paste(loop_type, i18n$t("analysis_loop_with"), length(loop)-1, i18n$t("analysis_elements")),
             stringsAsFactors = FALSE
           ))
         }
@@ -364,7 +385,7 @@ analysis_loops_server <- function(id, project_data_reactive) {
           paste("Detection complete! Found", nrow(loop_info), "loops.")
         )
 
-        showNotification(paste("Found", nrow(loop_info), "feedback loops!"),
+        showNotification(paste(i18n$t("analysis_found"), nrow(loop_info), i18n$t("analysis_feedback_loops")),
                         type = "message")
       })
     })
@@ -469,33 +490,51 @@ analysis_loops_server <- function(id, project_data_reactive) {
       loop_idx <- as.integer(gsub("L", "", input$selected_loop))
       loop <- loop_data$all_loops[[loop_idx]]
 
-      # Create subgraph for this loop
-      loop_nodes <- names(loop)
+      # Get vertex IDs and labels from igraph vertex indices
+      loop_vertex_ids <- V(loop_data$graph)$name[loop]
+      loop_vertex_labels <- V(loop_data$graph)$label[loop]
 
-      # Prepare nodes
+      # Ensure unique nodes
+      unique_indices <- !duplicated(loop_vertex_ids)
+      unique_ids <- loop_vertex_ids[unique_indices]
+      unique_labels <- loop_vertex_labels[unique_indices]
+
+      # Prepare nodes with proper descriptive labels
       nodes_df <- data.frame(
-        id = loop_nodes,
-        label = loop_nodes,
+        id = unique_ids,
+        label = unique_labels,  # Use descriptive labels instead of IDs
         color = "#2B7CE9",
         shape = "dot",
-        size = 20
+        size = 20,
+        stringsAsFactors = FALSE
       )
 
-      # Prepare edges
+      # Prepare edges (including closing the loop)
       edges_list <- list()
-      for(i in 1:(length(loop)-1)) {
-        from_node <- loop[i]
-        to_node <- loop[i+1]
+      loop_length <- length(loop_vertex_ids)
 
-        edge_id <- get.edge.ids(loop_data$graph, c(from_node, to_node))
+      for(i in 1:loop_length) {
+        from_node_idx <- loop[i]
+        # Close the loop: last node connects back to first
+        to_node_idx <- if(i == loop_length) loop[1] else loop[i+1]
+
+        from_name <- V(loop_data$graph)$name[from_node_idx]
+        to_name <- V(loop_data$graph)$name[to_node_idx]
+
+        # Get edge polarity
+        edge_id <- tryCatch({
+          get_edge_ids(loop_data$graph, c(from_node_idx, to_node_idx))
+        }, error = function(e) 0)
+
         polarity <- if(edge_id > 0) E(loop_data$graph)$polarity[edge_id] else "+"
 
         edges_list[[i]] <- data.frame(
-          from = names(from_node),
-          to = names(to_node),
+          from = from_name,
+          to = to_name,
           arrows = "to",
           color = ifelse(polarity == "+", "#06D6A0", "#E63946"),
-          label = polarity
+          label = polarity,
+          stringsAsFactors = FALSE
         )
       }
 
@@ -676,8 +715,11 @@ analysis_metrics_ui <- function(id) {
   ns <- NS(id)
 
   fluidPage(
-    h2(icon("chart-network"), " Network Metrics Analysis"),
-    p("Calculate and visualize centrality metrics to identify key nodes and understand network structure."),
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
+    h2(icon("chart-network"), " ", i18n$t("Network Metrics Analysis")),
+    p(i18n$t("Calculate and visualize centrality metrics to identify key nodes and understand network structure.")),
 
     # Check if CLD exists
     uiOutput(ns("cld_check_ui")),
@@ -703,16 +745,16 @@ analysis_metrics_server <- function(id, project_data_reactive) {
 
       data <- project_data_reactive()
 
-      if (is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
+      if (is.null(data$data$cld) || is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
         div(
           class = "alert alert-warning",
           icon("exclamation-triangle"), " ",
-          strong("No CLD data found."),
-          p("Please generate a CLD network first using:", style = "margin-top: 10px;"),
+          strong(i18n$t("No CLD data found.")),
+          p(i18n$t("Please generate a CLD network first using:"), style = "margin-top: 10px;"),
           tags$ol(
-            tags$li("Navigate to 'ISA Data Entry' and complete your SES model"),
-            tags$li("Go to 'CLD Visualization' and click 'Generate CLD'"),
-            tags$li("Return here to analyze network metrics")
+            tags$li(i18n$t("Navigate to 'ISA Data Entry' and complete your SES model")),
+            tags$li(i18n$t("Go to 'CLD Visualization' and click 'Generate CLD'")),
+            tags$li(i18n$t("Return here to analyze network metrics"))
           )
         )
       } else {
@@ -725,7 +767,7 @@ analysis_metrics_server <- function(id, project_data_reactive) {
       req(project_data_reactive())
 
       data <- project_data_reactive()
-      if (is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
+      if (is.null(data$data$cld) || is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
         return(NULL)
       }
 
@@ -733,7 +775,7 @@ analysis_metrics_server <- function(id, project_data_reactive) {
         fluidRow(
           column(12,
             actionButton(ns("calculate_metrics"),
-                        "Calculate Network Metrics",
+                        i18n$t("Calculate Network Metrics"),
                         icon = icon("calculator"),
                         class = "btn-primary btn-lg")
           )
@@ -748,10 +790,11 @@ analysis_metrics_server <- function(id, project_data_reactive) {
 
     # Calculate metrics
     observeEvent(input$calculate_metrics, {
-      req(project_data_reactive())
+      # Cache reactive value once to avoid race conditions
+      data <- project_data_reactive()
+      req(data, data$data, data$data$cld, data$data$cld$nodes, data$data$cld$edges)
 
       tryCatch({
-        data <- project_data_reactive()
         nodes <- data$data$cld$nodes
         edges <- data$data$cld$edges
 
@@ -779,14 +822,14 @@ analysis_metrics_server <- function(id, project_data_reactive) {
         metrics_rv$node_metrics_df <- node_metrics_df
 
         showNotification(
-          "Network metrics calculated successfully!",
+          i18n$t("Network metrics calculated successfully!"),
           type = "message",
           duration = 3
         )
 
       }, error = function(e) {
         showNotification(
-          paste("Error calculating metrics:", e$message),
+          paste(i18n$t("Error calculating metrics:"), e$message),
           type = "error",
           duration = 10
         )
@@ -803,35 +846,35 @@ analysis_metrics_server <- function(id, project_data_reactive) {
         # Network-level metrics
         fluidRow(
           column(12,
-            h3(icon("network-wired"), " Network-Level Metrics")
+            h3(icon("network-wired"), paste(" ", i18n$t("Network Summary")))
           )
         ),
 
         fluidRow(
           valueBox(
             value = metrics$nodes,
-            subtitle = "Total Nodes",
+            subtitle = i18n$t("Total Nodes"),
             icon = icon("circle"),
             color = "blue",
             width = 3
           ),
           valueBox(
             value = metrics$edges,
-            subtitle = "Total Edges",
+            subtitle = i18n$t("Total Edges"),
             icon = icon("arrow-right"),
             color = "green",
             width = 3
           ),
           valueBox(
             value = round(metrics$density, 3),
-            subtitle = "Network Density",
+            subtitle = i18n$t("Network Density"),
             icon = icon("project-diagram"),
             color = "purple",
             width = 3
           ),
           valueBox(
             value = metrics$diameter,
-            subtitle = "Network Diameter",
+            subtitle = i18n$t("Network Diameter"),
             icon = icon("arrows-alt"),
             color = "orange",
             width = 3
@@ -841,16 +884,16 @@ analysis_metrics_server <- function(id, project_data_reactive) {
         fluidRow(
           column(6,
             wellPanel(
-              h5(icon("info-circle"), " Average Path Length"),
+              h5(icon("info-circle"), paste(" ", i18n$t("Average Path Length"))),
               h3(round(metrics$avg_path_length, 2)),
-              p(class = "text-muted", "Average shortest path between any two nodes")
+              p(class = "text-muted", i18n$t("Average shortest path between any two nodes"))
             )
           ),
           column(6,
             wellPanel(
-              h5(icon("percentage"), " Network Connectivity"),
+              h5(icon("percentage"), paste(" ", i18n$t("Network Connectivity"))),
               h3(paste0(round(metrics$density * 100, 1), "%")),
-              p(class = "text-muted", "Percentage of possible connections that exist")
+              p(class = "text-muted", i18n$t("Percentage of possible connections that exist"))
             )
           )
         ),
@@ -860,7 +903,7 @@ analysis_metrics_server <- function(id, project_data_reactive) {
         # Node-level metrics
         fluidRow(
           column(12,
-            h3(icon("users"), " Node-Level Centrality Metrics")
+            h3(icon("users"), paste(" ", i18n$t("Node-Level Centrality Metrics")))
           )
         ),
 
@@ -871,23 +914,23 @@ analysis_metrics_server <- function(id, project_data_reactive) {
 
               # Metrics Table
               tabPanel(
-                title = tagList(icon("table"), " All Metrics"),
+                title = tagList(icon("table"), paste(" ", i18n$t("All Metrics"))),
                 br(),
                 DTOutput(ns("metrics_table")),
                 br(),
                 downloadButton(ns("download_metrics"),
-                              "Download Metrics (Excel)",
+                              i18n$t("Download Network Metrics"),
                               class = "btn-success")
               ),
 
               # Visualizations
               tabPanel(
-                title = tagList(icon("chart-bar"), " Visualizations"),
+                title = tagList(icon("chart-bar"), paste(" ", i18n$t("Visualizations"))),
                 br(),
                 fluidRow(
                   column(6,
                     selectInput(ns("viz_metric"),
-                               "Select Metric to Visualize:",
+                               i18n$t("Select Metric"),
                                choices = c(
                                  "Degree Centrality" = "Degree",
                                  "Betweenness Centrality" = "Betweenness",
@@ -899,7 +942,7 @@ analysis_metrics_server <- function(id, project_data_reactive) {
                   ),
                   column(6,
                     numericInput(ns("top_n_nodes"),
-                                "Show Top N Nodes:",
+                                i18n$t("Top N Nodes"),
                                 value = 10,
                                 min = 5,
                                 max = 50,
@@ -915,13 +958,13 @@ analysis_metrics_server <- function(id, project_data_reactive) {
                 fluidRow(
                   column(6,
                     wellPanel(
-                      h5("Metric Comparison"),
+                      h5(i18n$t("Comparison Plot - Degree vs Betweenness")),
                       plotOutput(ns("metrics_comparison"), height = "400px")
                     )
                   ),
                   column(6,
                     wellPanel(
-                      h5("Metric Distribution"),
+                      h5(i18n$t("Distribution Histogram")),
                       plotOutput(ns("metrics_histogram"), height = "400px")
                     )
                   )
@@ -930,21 +973,21 @@ analysis_metrics_server <- function(id, project_data_reactive) {
 
               # Key Nodes
               tabPanel(
-                title = tagList(icon("star"), " Key Nodes"),
+                title = tagList(icon("star"), paste(" ", i18n$t("Key Nodes"))),
                 br(),
-                h4("Most Important Nodes by Different Metrics"),
+                h4(i18n$t("Most Important Nodes by Different Metrics")),
                 fluidRow(
                   column(6,
                     wellPanel(
-                      h5(icon("arrows-alt-h"), " Highest Degree"),
-                      p(class = "text-muted", "Nodes with most connections"),
+                      h5(icon("arrows-alt-h"), paste(" ", i18n$t("Top 5 Nodes by Degree"))),
+                      p(class = "text-muted", i18n$t("Most connected nodes in the network")),
                       tableOutput(ns("top_degree"))
                     )
                   ),
                   column(6,
                     wellPanel(
-                      h5(icon("route"), " Highest Betweenness"),
-                      p(class = "text-muted", "Bridge nodes connecting communities"),
+                      h5(icon("route"), paste(" ", i18n$t("Top 5 Nodes by Betweenness"))),
+                      p(class = "text-muted", i18n$t("Critical bridge nodes connecting different parts")),
                       tableOutput(ns("top_betweenness"))
                     )
                   )
@@ -952,15 +995,15 @@ analysis_metrics_server <- function(id, project_data_reactive) {
                 fluidRow(
                   column(6,
                     wellPanel(
-                      h5(icon("compress-arrows-alt"), " Highest Closeness"),
-                      p(class = "text-muted", "Nodes closest to all others"),
+                      h5(icon("compress-arrows-alt"), paste(" ", i18n$t("Top 5 Nodes by Closeness"))),
+                      p(class = "text-muted", i18n$t("Most central nodes with shortest paths to others")),
                       tableOutput(ns("top_closeness"))
                     )
                   ),
                   column(6,
                     wellPanel(
-                      h5(icon("crown"), " Highest PageRank"),
-                      p(class = "text-muted", "Most influential nodes"),
+                      h5(icon("crown"), paste(" ", i18n$t("Top 5 Nodes by PageRank"))),
+                      p(class = "text-muted", i18n$t("Most influential nodes based on incoming connections")),
                       tableOutput(ns("top_pagerank"))
                     )
                   )
@@ -969,51 +1012,51 @@ analysis_metrics_server <- function(id, project_data_reactive) {
 
               # Interpretation Guide
               tabPanel(
-                title = tagList(icon("question-circle"), " Guide"),
+                title = tagList(icon("question-circle"), paste(" ", i18n$t("Guide"))),
                 br(),
-                h4("Understanding Network Metrics"),
+                h4(i18n$t("Understanding Centrality Metrics")),
 
                 wellPanel(
-                  h5(icon("info-circle"), " Network-Level Metrics"),
+                  h5(icon("info-circle"), paste(" ", i18n$t("Network-Level Metrics"))),
                   tags$dl(
-                    tags$dt("Network Density"),
-                    tags$dd("Proportion of actual connections to possible connections. Higher density indicates more interconnected system."),
+                    tags$dt(i18n$t("Network Density")),
+                    tags$dd(i18n$t("Proportion of actual connections to possible connections. Higher density indicates more interconnected system.")),
 
-                    tags$dt("Network Diameter"),
-                    tags$dd("Longest shortest path between any two nodes. Indicates how far information needs to travel."),
+                    tags$dt(i18n$t("Network Diameter")),
+                    tags$dd(i18n$t("Longest shortest path between any two nodes. Indicates how far information needs to travel.")),
 
-                    tags$dt("Average Path Length"),
-                    tags$dd("Average steps needed to reach any node from any other node.")
+                    tags$dt(i18n$t("Average Path Length")),
+                    tags$dd(i18n$t("Average steps needed to reach any node from any other node."))
                   )
                 ),
 
                 wellPanel(
-                  h5(icon("users"), " Node Centrality Metrics"),
+                  h5(icon("users"), paste(" ", i18n$t("Node Centrality Metrics"))),
                   tags$dl(
-                    tags$dt("Degree Centrality"),
-                    tags$dd("Number of direct connections. High degree = well-connected hub."),
+                    tags$dt(i18n$t("Degree Centrality")),
+                    tags$dd(i18n$t("Number of direct connections. High degree = well-connected hub.")),
 
-                    tags$dt("Betweenness Centrality"),
-                    tags$dd("How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck."),
+                    tags$dt(i18n$t("Betweenness Centrality")),
+                    tags$dd(i18n$t("How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck.")),
 
-                    tags$dt("Closeness Centrality"),
-                    tags$dd("How close a node is to all other nodes. High closeness = can quickly reach or be reached by others."),
+                    tags$dt(i18n$t("Closeness Centrality")),
+                    tags$dd(i18n$t("How close a node is to all other nodes. High closeness = can quickly reach or be reached by others.")),
 
-                    tags$dt("Eigenvector Centrality"),
-                    tags$dd("Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs."),
+                    tags$dt(i18n$t("Eigenvector Centrality")),
+                    tags$dd(i18n$t("Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs.")),
 
-                    tags$dt("PageRank"),
-                    tags$dd("Google's algorithm: importance based on quality and quantity of incoming connections.")
+                    tags$dt(i18n$t("PageRank")),
+                    tags$dd(i18n$t("Google's algorithm: importance based on quality and quantity of incoming connections."))
                   )
                 ),
 
                 wellPanel(
-                  h5(icon("lightbulb"), " Practical Applications"),
+                  h5(icon("lightbulb"), paste(" ", i18n$t("Practical Applications"))),
                   tags$ul(
-                    tags$li(strong("High Degree:"), " Target for broad interventions"),
-                    tags$li(strong("High Betweenness:"), " Leverage points for system change"),
-                    tags$li(strong("High Closeness:"), " Efficient information spreaders"),
-                    tags$li(strong("High PageRank:"), " Most influential system components")
+                    tags$li(strong(i18n$t("High Degree:")), paste(" ", i18n$t("Target for broad interventions"))),
+                    tags$li(strong(i18n$t("High Betweenness:")), paste(" ", i18n$t("Leverage points for system change"))),
+                    tags$li(strong(i18n$t("High Closeness:")), paste(" ", i18n$t("Efficient information spreaders"))),
+                    tags$li(strong(i18n$t("High PageRank:")), paste(" ", i18n$t("Most influential system components")))
                   )
                 )
               )
@@ -1065,7 +1108,7 @@ analysis_metrics_server <- function(id, project_data_reactive) {
         horiz = TRUE,
         las = 1,
         col = colorRampPalette(c("#3498db", "#e74c3c"))(top_n),
-        main = paste("Top", top_n, "Nodes by", metric_col),
+        main = i18n$t("Bar Plot - Top Nodes by Selected Metric"),
         xlab = metric_col,
         cex.names = 0.8
       )
@@ -1089,9 +1132,9 @@ analysis_metrics_server <- function(id, project_data_reactive) {
       # Create comparison plot
       plot(top10$Degree_norm, top10$Betweenness_norm,
            xlim = c(0, 1), ylim = c(0, 1),
-           xlab = "Degree (normalized)",
-           ylab = "Betweenness (normalized)",
-           main = "Degree vs Betweenness Centrality",
+           xlab = i18n$t("Degree Centrality"),
+           ylab = i18n$t("Betweenness Centrality"),
+           main = i18n$t("Comparison Plot - Degree vs Betweenness"),
            pch = 19,
            cex = top10$PageRank_norm * 3 + 0.5,
            col = adjustcolor("#3498db", alpha = 0.6))
@@ -1100,6 +1143,11 @@ analysis_metrics_server <- function(id, project_data_reactive) {
            labels = top10$Label,
            pos = 3,
            cex = 0.7)
+
+      legend("topright",
+             legend = i18n$t("Bubble size represents PageRank"),
+             bty = "n",
+             cex = 0.8)
 
       abline(h = 0.5, v = 0.5, col = "gray", lty = 2)
     })
@@ -1116,15 +1164,15 @@ analysis_metrics_server <- function(id, project_data_reactive) {
            breaks = 20,
            col = "#3498db",
            border = "white",
-           main = paste("Distribution of", metric_col),
+           main = i18n$t("Distribution Histogram"),
            xlab = metric_col,
-           ylab = "Frequency")
+           ylab = i18n$t("Frequency"))
 
       abline(v = mean(values), col = "red", lwd = 2, lty = 2)
       abline(v = median(values), col = "darkgreen", lwd = 2, lty = 2)
 
       legend("topright",
-             legend = c("Mean", "Median"),
+             legend = c(i18n$t("Mean"), i18n$t("Median")),
              col = c("red", "darkgreen"),
              lty = 2,
              lwd = 2)
@@ -1375,7 +1423,7 @@ analysis_bot_server <- function(id, project_data_reactive) {
       bot_rv$timeseries_data <- rbind(bot_rv$timeseries_data, new_point)
       bot_rv$timeseries_data <- bot_rv$timeseries_data[order(bot_rv$timeseries_data$Year), ]
 
-      showNotification("Data point added successfully!", type = "message")
+      showNotification(i18n$t("analysis_data_added"), type = "message")
     })
 
     # CSV upload
@@ -1384,15 +1432,15 @@ analysis_bot_server <- function(id, project_data_reactive) {
 
       tryCatch({
         uploaded <- read.csv(input$upload_csv$datapath)
-        if(all(c("Year", "Value") %in% names(uploaded))) {
+        if(has_required_columns(uploaded, c("Year", "Value"))) {
           bot_rv$timeseries_data <- uploaded[, c("Year", "Value")]
           bot_rv$timeseries_data <- bot_rv$timeseries_data[order(bot_rv$timeseries_data$Year), ]
-          showNotification("CSV data loaded successfully!", type = "message")
+          showNotification(i18n$t("analysis_csv_loaded"), type = "message")
         } else {
-          showNotification("CSV must have 'Year' and 'Value' columns!", type = "error")
+          showNotification(i18n$t("analysis_csv_columns_error"), type = "error")
         }
       }, error = function(e) {
-        showNotification(paste("Error loading CSV:", e$message), type = "error")
+        showNotification(paste(i18n$t("analysis_error_loading_csv"), e$message), type = "error")
       })
     })
 
@@ -1403,9 +1451,9 @@ analysis_bot_server <- function(id, project_data_reactive) {
 
       data <- project_data_reactive()
       if(!is.null(data$data$isa_data$bot_data) && nrow(data$data$isa_data$bot_data) > 0) {
-        # Assuming BOT data has Year and Value columns
+        # Load BOT data if it has the required Year and Value columns
         bot_data <- data$data$isa_data$bot_data
-        if(all(c("Year", "Value") %in% names(bot_data))) {
+        if(has_required_columns(bot_data, c("Year", "Value"))) {
           bot_rv$timeseries_data <- bot_data[, c("Year", "Value")]
           bot_rv$timeseries_data <- bot_rv$timeseries_data[order(bot_rv$timeseries_data$Year), ]
         }
@@ -1415,7 +1463,7 @@ analysis_bot_server <- function(id, project_data_reactive) {
     # Clear data
     observeEvent(input$clear_data, {
       bot_rv$timeseries_data <- data.frame(Year = integer(), Value = numeric())
-      showNotification("All data cleared", type = "warning")
+      showNotification(i18n$t("analysis_data_cleared"), type = "warning")
     })
 
     # Time series plot with dygraphs
