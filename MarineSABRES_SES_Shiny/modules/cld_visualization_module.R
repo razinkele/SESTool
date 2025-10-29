@@ -11,60 +11,98 @@ cld_viz_ui <- function(id) {
   tagList(
     useShinyjs(),  # Enable shinyjs for sidebar toggle
 
-    fluidPage(
-      # Page Header with Toggle Button
-      fluidRow(
-        column(10,
-          h2(icon("project-diagram"), " Causal Loop Diagram Visualization")
-        ),
-        column(2,
-          actionButton(
-            ns("toggle_sidebar"),
-            "Toggle Controls",
-            icon = icon("bars"),
-            class = "btn-primary btn-sm pull-right",
-            style = "margin-top: 15px;"
-          )
-        ),
-        column(12, hr())
-      ),
+    tags$style(HTML("
+      .cld-sidebar {
+        position: fixed;
+        left: 0;
+        top: 50px;
+        bottom: 0;
+        width: 280px;
+        background-color: #f4f4f4;
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 15px;
+        transition: margin-left 0.3s;
+        z-index: 900;
+      }
+      .cld-sidebar.hidden {
+        margin-left: -280px;
+      }
+      .cld-main-content {
+        margin-left: 280px;
+        padding: 20px;
+        transition: margin-left 0.3s;
+      }
+      .cld-main-content.expanded {
+        margin-left: 0;
+      }
+      .cld-toggle-btn {
+        position: fixed;
+        left: 280px;
+        top: 60px;
+        z-index: 1000;
+        transition: left 0.3s;
+      }
+      .cld-toggle-btn.collapsed {
+        left: 10px;
+      }
+      .control-section {
+        background: white;
+        border-radius: 4px;
+        padding: 12px;
+        margin-bottom: 10px;
+        border: 1px solid #e0e0e0;
+      }
+      .control-section h5 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 8px;
+      }
+      .cld-network-container {
+        background: white;
+        border-radius: 4px;
+        padding: 0;
+        border: 1px solid #ddd;
+      }
+    ")),
 
-      # Sidebar Layout with Collapsible Sidebar
-      sidebarLayout(
-        # === COLLAPSIBLE SIDEBAR (LEFT) ===
-        sidebarPanel(
-          id = ns("sidebar"),
-          width = 3,
-          style = "height: 800px; overflow-y: auto; position: fixed; width: 23%;",
+    # Collapsible Sidebar
+    div(
+      id = ns("sidebar"),
+      class = "cld-sidebar",
 
-        # Generate CLD Button
-        h4(icon("network-wired"), " CLD Generation"),
+      # Generate Button
+      div(
+        class = "control-section",
         actionButton(
           ns("generate_cld_btn"),
-          "Generate CLD from ISA Data",
+          "Generate CLD from ISA",
           icon = icon("magic"),
-          class = "btn-success btn-block",
-          style = "margin-bottom: 10px;"
-        ),
-        p(class = "text-muted small", "Click to build network from ISA exercises"),
+          class = "btn-success btn-block"
+        )
+      ),
 
-        hr(),
-
-        # Layout Controls
-        h4(icon("cogs"), " Layout"),
+      # Layout Controls
+      div(
+        class = "control-section",
+        h5(icon("cogs"), " Layout"),
         selectInput(
           ns("layout_type"),
-          "Algorithm:",
+          NULL,
           choices = c(
             "Hierarchical (DAPSI)" = "hierarchical",
             "Physics-based" = "physics",
             "Circular" = "circular",
-            "Manual Arrangement" = "manual"
+            "Manual" = "manual"
           ),
           selected = "hierarchical"
         ),
 
-        # Hierarchical options
         conditionalPanel(
           condition = sprintf("input['%s'] == 'hierarchical'", ns("layout_type")),
           ns = ns,
@@ -81,133 +119,159 @@ cld_viz_ui <- function(id) {
           ),
           sliderInput(
             ns("level_separation"),
-            "Level Spacing:",
+            "Spacing:",
             min = 50,
             max = 300,
             value = 150,
             step = 10
           )
-        ),
+        )
+      ),
 
-        hr(),
-
-        # Filter Controls
-        h4(icon("filter"), " Filters"),
-        checkboxGroupInput(
+      # Filter Controls
+      div(
+        class = "control-section",
+        h5(icon("filter"), " Filters"),
+        selectInput(
           ns("element_types"),
-          "Element Types:",
+          "Elements:",
           choices = DAPSIWRM_ELEMENTS,
-          selected = DAPSIWRM_ELEMENTS
+          selected = DAPSIWRM_ELEMENTS,
+          multiple = TRUE,
+          selectize = TRUE
         ),
-
-        checkboxGroupInput(
+        selectInput(
           ns("polarity_filter"),
-          "Connection Polarity:",
+          "Polarity:",
           choices = c("Reinforcing (+)" = "+", "Opposing (-)" = "-"),
-          selected = c("+", "-")
+          selected = c("+", "-"),
+          multiple = TRUE
         ),
-
-        checkboxGroupInput(
+        selectInput(
           ns("strength_filter"),
-          "Connection Strength:",
+          "Strength:",
           choices = CONNECTION_STRENGTH,
-          selected = CONNECTION_STRENGTH
+          selected = CONNECTION_STRENGTH,
+          multiple = TRUE
         ),
-
         sliderInput(
           ns("confidence_filter"),
-          "Minimum Confidence Level:",
+          "Min Confidence:",
           min = min(CONFIDENCE_LEVELS),
           max = max(CONFIDENCE_LEVELS),
           value = min(CONFIDENCE_LEVELS),
-          step = 1,
-          ticks = TRUE
-        ),
+          step = 1
+        )
+      ),
 
-        hr(),
-
-        # Search & Highlight
-        h4(icon("search"), " Search"),
+      # Search & Highlight
+      div(
+        class = "control-section",
+        h5(icon("search"), " Search"),
         textInput(
           ns("search_node"),
-          "Node Name:",
-          placeholder = "Type to search..."
+          NULL,
+          placeholder = "Search nodes..."
         ),
-        actionButton(
-          ns("highlight_btn"),
-          "Highlight",
-          icon = icon("lightbulb"),
-          class = "btn-primary btn-sm btn-block"
-        ),
-        actionButton(
-          ns("clear_highlight_btn"),
-          "Clear",
-          icon = icon("eraser"),
-          class = "btn-secondary btn-sm btn-block"
-        ),
+        fluidRow(
+          column(6,
+            actionButton(
+              ns("highlight_btn"),
+              "Highlight",
+              icon = icon("lightbulb"),
+              class = "btn-primary btn-sm btn-block"
+            )
+          ),
+          column(6,
+            actionButton(
+              ns("clear_highlight_btn"),
+              "Clear",
+              icon = icon("eraser"),
+              class = "btn-secondary btn-sm btn-block"
+            )
+          )
+        )
+      ),
 
-        hr(),
-
-        # Focus Mode
-        h4(icon("bullseye"), " Focus Mode"),
+      # Focus Mode
+      div(
+        class = "control-section",
+        h5(icon("bullseye"), " Focus"),
         selectInput(
           ns("focus_node"),
-          "Select Node:",
+          "Node:",
           choices = NULL
         ),
         sliderInput(
           ns("focus_degree"),
-          "Neighborhood Degree:",
+          "Degree:",
           min = 1,
           max = 5,
           value = 2
         ),
-        actionButton(
-          ns("apply_focus_btn"),
-          "Apply Focus",
-          icon = icon("compress"),
-          class = "btn-info btn-sm btn-block"
-        ),
-        actionButton(
-          ns("reset_focus_btn"),
-          "Reset View",
-          icon = icon("expand"),
-          class = "btn-secondary btn-sm btn-block"
-        ),
+        fluidRow(
+          column(6,
+            actionButton(
+              ns("apply_focus_btn"),
+              "Apply",
+              icon = icon("compress"),
+              class = "btn-info btn-sm btn-block"
+            )
+          ),
+          column(6,
+            actionButton(
+              ns("reset_focus_btn"),
+              "Reset",
+              icon = icon("expand"),
+              class = "btn-secondary btn-sm btn-block"
+            )
+          )
+        )
+      ),
 
-        hr(),
-
-        # Node Sizing
-        h4(icon("chart-bar"), " Node Sizing"),
+      # Node Sizing
+      div(
+        class = "control-section",
+        h5(icon("chart-bar"), " Node Size"),
         selectInput(
           ns("node_size_metric"),
-          "Size By:",
+          NULL,
           choices = c(
             "Default" = "default",
-            "Degree Centrality" = "degree",
+            "Degree" = "degree",
             "Betweenness" = "betweenness",
             "Closeness" = "closeness",
             "Eigenvector" = "eigenvector"
           )
         )
+      )
+    ),
+
+    # Toggle Button
+    actionButton(
+      ns("toggle_sidebar"),
+      icon("bars"),
+      class = "btn-primary btn-sm cld-toggle-btn",
+      title = "Toggle Controls"
+    ),
+
+    # Main Content
+    div(
+      id = ns("main_content"),
+      class = "cld-main-content",
+
+      h2(
+        icon("project-diagram"),
+        " Causal Loop Diagram Visualization",
+        style = "margin-top: 0;"
       ),
 
-      # === MAIN PANEL (RIGHT) ===
-      mainPanel(
-        width = 9,
-        style = "margin-left: 25%;",
-
-        # Network Visualization
-        box(
-          title = tagList(icon("diagram-project"), " Network Diagram"),
-          status = "primary",
-          solidHeader = TRUE,
-          width = 12,
-          visNetworkOutput(ns("network"), height = "750px")
-        )
+      # Network Visualization (no extra box wrapper)
+      div(
+        class = "cld-network-container",
+        visNetworkOutput(ns("network"), height = "750px")
       )
     )
-    )  # Close fluidPage
   )  # Close tagList
 }
 
@@ -235,7 +299,18 @@ cld_viz_server <- function(id, project_data_reactive) {
     # === TOGGLE SIDEBAR ===
     observeEvent(input$toggle_sidebar, {
       rv$sidebar_visible <- !rv$sidebar_visible
-      shinyjs::toggle(id = "sidebar", anim = TRUE, animType = "slide")
+
+      if(rv$sidebar_visible) {
+        # Show sidebar
+        shinyjs::removeClass(id = "sidebar", class = "hidden")
+        shinyjs::removeClass(id = "toggle_sidebar", class = "collapsed")
+        shinyjs::removeClass(id = "main_content", class = "expanded")
+      } else {
+        # Hide sidebar
+        shinyjs::addClass(id = "sidebar", class = "hidden")
+        shinyjs::addClass(id = "toggle_sidebar", class = "collapsed")
+        shinyjs::addClass(id = "main_content", class = "expanded")
+      }
     })
 
     # === GENERATE CLD FROM ISA DATA ===
