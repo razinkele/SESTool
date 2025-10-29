@@ -67,6 +67,27 @@ cld_viz_ui <- function(id) {
         padding: 0;
         margin: 0;
       }
+      /* Remove all frames from visNetwork elements */
+      .cld-network-container .vis-network {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+      }
+      .cld-network-container canvas {
+        border: none !important;
+        box-shadow: none !important;
+      }
+      /* Remove frame from legend */
+      .cld-network-container .vis-legend {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+      }
+      .cld-network-container .vis-legend-text {
+        border: none !important;
+        background: transparent !important;
+      }
     ")),
 
     # Collapsible Sidebar
