@@ -62,6 +62,21 @@ cld_viz_ui <- function(id) {
         border: none !important;
         background: transparent !important;
       }
+      /* Style control sections inside box */
+      .cld-controls-box h5 {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        margin-top: 5px;
+      }
+      .cld-controls-box hr {
+        margin-top: 20px;
+        margin-bottom: 15px;
+        border-top: 1px solid #e0e0e0;
+      }
+      .cld-controls-box .form-group {
+        margin-bottom: 15px;
+      }
     ")),
 
     fluidRow(
@@ -69,169 +84,174 @@ cld_viz_ui <- function(id) {
       column(
         width = 3,
 
-      # Generate Button
-      wellPanel(
-        actionButton(
-          ns("generate_cld_btn"),
-          "Generate CLD from ISA",
-          icon = icon("magic"),
-          class = "btn-success btn-block"
-        )
-      ),
+        # Collapsible controls box
+        box(
+          width = NULL,
+          title = tagList(icon("sliders"), " CLD Controls"),
+          status = "primary",
+          solidHeader = TRUE,
+          collapsible = TRUE,
+          collapsed = FALSE,
+          class = "cld-controls-box",
 
-      # Layout Controls
-      wellPanel(
-        h5(icon("cogs"), " Layout"),
-        selectInput(
-          ns("layout_type"),
-          NULL,
-          choices = c(
-            "Hierarchical (DAPSI)" = "hierarchical",
-            "Physics-based" = "physics",
-            "Circular" = "circular",
-            "Manual" = "manual"
+          # Generate Button
+          actionButton(
+            ns("generate_cld_btn"),
+            "Generate CLD from ISA",
+            icon = icon("magic"),
+            class = "btn-success btn-block",
+            style = "margin-bottom: 15px;"
           ),
-          selected = "hierarchical"
-        ),
 
-        conditionalPanel(
-          condition = sprintf("input['%s'] == 'hierarchical'", ns("layout_type")),
-          ns = ns,
+          # Layout Controls
+          hr(),
+          h5(icon("cogs"), " Layout"),
           selectInput(
-            ns("hierarchy_direction"),
-            "Direction:",
+            ns("layout_type"),
+            NULL,
             choices = c(
-              "Down-Up" = "DU",
-              "Up-Down" = "UD",
-              "Left-Right" = "LR",
-              "Right-Left" = "RL"
+              "Hierarchical (DAPSI)" = "hierarchical",
+              "Physics-based" = "physics",
+              "Circular" = "circular",
+              "Manual" = "manual"
             ),
-            selected = "DU"
+            selected = "hierarchical"
+          ),
+
+          conditionalPanel(
+            condition = sprintf("input['%s'] == 'hierarchical'", ns("layout_type")),
+            ns = ns,
+            selectInput(
+              ns("hierarchy_direction"),
+              "Direction:",
+              choices = c(
+                "Down-Up" = "DU",
+                "Up-Down" = "UD",
+                "Left-Right" = "LR",
+                "Right-Left" = "RL"
+              ),
+              selected = "DU"
+            ),
+            sliderInput(
+              ns("level_separation"),
+              "Spacing:",
+              min = 50,
+              max = 300,
+              value = 150,
+              step = 10
+            )
+          ),
+
+          # Filter Controls
+          hr(),
+          h5(icon("filter"), " Filters"),
+          selectInput(
+            ns("element_types"),
+            "Elements:",
+            choices = DAPSIWRM_ELEMENTS,
+            selected = DAPSIWRM_ELEMENTS,
+            multiple = TRUE,
+            selectize = TRUE
+          ),
+          selectInput(
+            ns("polarity_filter"),
+            "Polarity:",
+            choices = c("Reinforcing (+)" = "+", "Opposing (-)" = "-"),
+            selected = c("+", "-"),
+            multiple = TRUE
+          ),
+          selectInput(
+            ns("strength_filter"),
+            "Strength:",
+            choices = CONNECTION_STRENGTH,
+            selected = CONNECTION_STRENGTH,
+            multiple = TRUE
           ),
           sliderInput(
-            ns("level_separation"),
-            "Spacing:",
-            min = 50,
-            max = 300,
-            value = 150,
-            step = 10
-          )
-        )
-      ),
+            ns("confidence_filter"),
+            "Min Confidence:",
+            min = min(CONFIDENCE_LEVELS),
+            max = max(CONFIDENCE_LEVELS),
+            value = min(CONFIDENCE_LEVELS),
+            step = 1
+          ),
 
-      # Filter Controls
-      wellPanel(
-        h5(icon("filter"), " Filters"),
-        selectInput(
-          ns("element_types"),
-          "Elements:",
-          choices = DAPSIWRM_ELEMENTS,
-          selected = DAPSIWRM_ELEMENTS,
-          multiple = TRUE,
-          selectize = TRUE
-        ),
-        selectInput(
-          ns("polarity_filter"),
-          "Polarity:",
-          choices = c("Reinforcing (+)" = "+", "Opposing (-)" = "-"),
-          selected = c("+", "-"),
-          multiple = TRUE
-        ),
-        selectInput(
-          ns("strength_filter"),
-          "Strength:",
-          choices = CONNECTION_STRENGTH,
-          selected = CONNECTION_STRENGTH,
-          multiple = TRUE
-        ),
-        sliderInput(
-          ns("confidence_filter"),
-          "Min Confidence:",
-          min = min(CONFIDENCE_LEVELS),
-          max = max(CONFIDENCE_LEVELS),
-          value = min(CONFIDENCE_LEVELS),
-          step = 1
-        )
-      ),
-
-      # Search & Highlight
-      wellPanel(
-        h5(icon("search"), " Search"),
-        textInput(
-          ns("search_node"),
-          NULL,
-          placeholder = "Search nodes..."
-        ),
-        fluidRow(
-          column(6,
-            actionButton(
-              ns("highlight_btn"),
-              "Highlight",
-              icon = icon("lightbulb"),
-              class = "btn-primary btn-block"
+          # Search & Highlight
+          hr(),
+          h5(icon("search"), " Search"),
+          textInput(
+            ns("search_node"),
+            NULL,
+            placeholder = "Search nodes..."
+          ),
+          fluidRow(
+            column(6,
+              actionButton(
+                ns("highlight_btn"),
+                "Highlight",
+                icon = icon("lightbulb"),
+                class = "btn-primary btn-block"
+              )
+            ),
+            column(6,
+              actionButton(
+                ns("clear_highlight_btn"),
+                "Clear",
+                icon = icon("eraser"),
+                class = "btn-default btn-block"
+              )
             )
           ),
-          column(6,
-            actionButton(
-              ns("clear_highlight_btn"),
-              "Clear",
-              icon = icon("eraser"),
-              class = "btn-default btn-block"
-            )
-          )
-        )
-      ),
 
-      # Focus Mode
-      wellPanel(
-        h5(icon("bullseye"), " Focus"),
-        selectInput(
-          ns("focus_node"),
-          "Node:",
-          choices = NULL
-        ),
-        sliderInput(
-          ns("focus_degree"),
-          "Degree:",
-          min = 1,
-          max = 5,
-          value = 2
-        ),
-        fluidRow(
-          column(6,
-            actionButton(
-              ns("apply_focus_btn"),
-              "Apply",
-              icon = icon("compress"),
-              class = "btn-info btn-block"
+          # Focus Mode
+          hr(),
+          h5(icon("bullseye"), " Focus"),
+          selectInput(
+            ns("focus_node"),
+            "Node:",
+            choices = NULL
+          ),
+          sliderInput(
+            ns("focus_degree"),
+            "Degree:",
+            min = 1,
+            max = 5,
+            value = 2
+          ),
+          fluidRow(
+            column(6,
+              actionButton(
+                ns("apply_focus_btn"),
+                "Apply",
+                icon = icon("compress"),
+                class = "btn-info btn-block"
+              )
+            ),
+            column(6,
+              actionButton(
+                ns("reset_focus_btn"),
+                "Reset",
+                icon = icon("expand"),
+                class = "btn-default btn-block"
+              )
             )
           ),
-          column(6,
-            actionButton(
-              ns("reset_focus_btn"),
-              "Reset",
-              icon = icon("expand"),
-              class = "btn-default btn-block"
+
+          # Node Sizing
+          hr(),
+          h5(icon("chart-bar"), " Node Size"),
+          selectInput(
+            ns("node_size_metric"),
+            NULL,
+            choices = c(
+              "Default" = "default",
+              "Degree" = "degree",
+              "Betweenness" = "betweenness",
+              "Closeness" = "closeness",
+              "Eigenvector" = "eigenvector"
             )
           )
-        )
-      ),
-
-      # Node Sizing
-      wellPanel(
-        h5(icon("chart-bar"), " Node Size"),
-        selectInput(
-          ns("node_size_metric"),
-          NULL,
-          choices = c(
-            "Default" = "default",
-            "Degree" = "degree",
-            "Betweenness" = "betweenness",
-            "Closeness" = "closeness",
-            "Eigenvector" = "eigenvector"
-          )
-        )
-      )
+        )  # Close box
       ),  # Close column(width = 3)
 
       # Main content column with network visualization
