@@ -481,7 +481,7 @@ apply_standard_styling <- function(visnet) {
     ) %>%
     # Interaction options
     visInteraction(
-      navigationButtons = TRUE,
+      navigationButtons = FALSE,  # Disabled: causes layout issues in dashboard
       keyboard = TRUE,
       hover = TRUE,
       tooltipDelay = 100,

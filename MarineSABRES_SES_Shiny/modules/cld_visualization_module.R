@@ -40,48 +40,7 @@ cld_viz_ui <- function(id) {
   ns <- NS(id)
 
   tagList(
-    useShinyjs(),  # Enable shinyjs for sidebar toggle
-
     tags$style(HTML("
-      .cld-sidebar {
-        position: fixed;
-        left: 0;
-        top: 50px;
-        bottom: 0;
-        width: 280px;
-        background-color: #f4f4f4;
-        border-right: 1px solid #ddd;
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding: 15px;
-        transition: margin-left 0.3s;
-        z-index: 900;
-      }
-      .cld-sidebar.hidden {
-        margin-left: -280px;
-      }
-      .cld-main-content {
-        margin-left: 280px;
-        padding: 20px;
-        transition: margin-left 0.3s;
-      }
-      .cld-main-content.expanded {
-        margin-left: 0;
-      }
-      .cld-toggle-btn {
-        position: fixed;
-        left: 280px;
-        top: 60px;
-        z-index: 1000;
-        transition: left 0.3s;
-      }
-      .cld-toggle-btn.collapsed {
-        left: 10px;
-      }
-      .cld-network-container {
-        padding: 0;
-        margin: 0;
-      }
       /* Remove all frames from visNetwork elements */
       .cld-network-container .vis-network {
         border: none !important;
@@ -103,28 +62,12 @@ cld_viz_ui <- function(id) {
         border: none !important;
         background: transparent !important;
       }
-      /* Fix navigation buttons positioning and styling */
-      .cld-network-container .vis-navigation {
-        position: absolute !important;
-        z-index: 999 !important;
-      }
-      .cld-network-container .vis-button {
-        background: rgba(255, 255, 255, 0.9) !important;
-        border: 1px solid #ccc !important;
-        border-radius: 4px !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
-        cursor: pointer !important;
-      }
-      .cld-network-container .vis-button:hover {
-        background: rgba(255, 255, 255, 1) !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
-      }
     ")),
 
-    # Collapsible Sidebar
-    div(
-      id = ns("sidebar"),
-      class = "cld-sidebar",
+    fluidRow(
+      # Left sidebar column with controls
+      column(
+        width = 3,
 
       # Generate Button
       wellPanel(
@@ -289,27 +232,24 @@ cld_viz_ui <- function(id) {
           )
         )
       )
-    ),
+      ),  # Close column(width = 3)
 
-    # Toggle Button
-    actionButton(
-      ns("toggle_sidebar"),
-      icon("bars"),
-      class = "btn-primary btn-sm cld-toggle-btn",
-      title = "Toggle Controls"
-    ),
-
-    # Main Content
-    div(
-      id = ns("main_content"),
-      class = "cld-main-content",
-
-      # Network Visualization (no extra box wrapper)
-      div(
-        class = "cld-network-container",
-        visNetworkOutput(ns("network"), height = "750px")
+      # Main content column with network visualization
+      column(
+        width = 9,
+        box(
+          width = NULL,
+          status = "primary",
+          solidHeader = FALSE,
+          title = NULL,
+          # Network Visualization
+          div(
+            class = "cld-network-container",
+            visNetworkOutput(ns("network"), height = "700px")
+          )
+        )
       )
-    )
+    )  # Close fluidRow
   )  # Close tagList
 }
 
@@ -333,7 +273,6 @@ cld_viz_ui <- function(id) {
 #' @details
 #' The server implements:
 #' \itemize{
-#'   \item Sidebar collapse/expand with CSS class toggling
 #'   \item CLD generation from ISA data with error handling
 #'   \item Efficient network caching using ISA data signatures
 #'   \item Real-time filtering by element type, polarity, strength, confidence
@@ -374,26 +313,8 @@ cld_viz_server <- function(id, project_data_reactive) {
       metrics = NULL,
       filtered_nodes = NULL,
       filtered_edges = NULL,
-      sidebar_visible = TRUE,
       isa_hash = NULL  # Cache hash to track ISA data changes
     )
-
-    # === TOGGLE SIDEBAR ===
-    observeEvent(input$toggle_sidebar, {
-      rv$sidebar_visible <- !rv$sidebar_visible
-
-      if(rv$sidebar_visible) {
-        # Show sidebar
-        shinyjs::removeClass(id = "sidebar", class = "hidden")
-        shinyjs::removeClass(id = "toggle_sidebar", class = "collapsed")
-        shinyjs::removeClass(id = "main_content", class = "expanded")
-      } else {
-        # Hide sidebar
-        shinyjs::addClass(id = "sidebar", class = "hidden")
-        shinyjs::addClass(id = "toggle_sidebar", class = "collapsed")
-        shinyjs::addClass(id = "main_content", class = "expanded")
-      }
-    })
 
     # === GENERATE CLD FROM ISA DATA ===
     observeEvent(input$generate_cld_btn, {
