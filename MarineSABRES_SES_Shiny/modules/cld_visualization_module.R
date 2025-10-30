@@ -412,6 +412,26 @@ cld_viz_server <- function(id, project_data_reactive) {
           return()
         }
 
+        # Validate adjacency matrices dimensions before building CLD
+        if (!is.null(isa_data$adjacency_matrices)) {
+          validation_errors <- validate_adjacency_matrices(isa_data)
+
+          if (length(validation_errors) > 0) {
+            showNotification(
+              HTML(paste0(
+                "<strong>Adjacency Matrix Dimension Errors:</strong><br/>",
+                paste(validation_errors, collapse = "<br/>"),
+                "<br/><br/>",
+                "<em>The CLD will be generated using the available data, ",
+                "but some connections may be missing. ",
+                "Please check your ISA data and adjacency matrices.</em>"
+              )),
+              type = "warning",
+              duration = 15
+            )
+          }
+        }
+
         # Build nodes and edges
         nodes_df <- create_nodes_df(isa_data)
         edges_df <- create_edges_df(isa_data, isa_data$adjacency_matrices)

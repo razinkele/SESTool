@@ -429,21 +429,86 @@ validate_adjacency_matrices <- function(isa_data) {
   
   errors <- c()
   
-  # Check gb_es matrix
+  # Get element counts
+  n_gb <- if (!is.null(isa_data$goods_benefits)) nrow(isa_data$goods_benefits) else 0
+  n_es <- if (!is.null(isa_data$ecosystem_services)) nrow(isa_data$ecosystem_services) else 0
+  n_mpf <- if (!is.null(isa_data$marine_processes)) nrow(isa_data$marine_processes) else 0
+  n_p <- if (!is.null(isa_data$pressures)) nrow(isa_data$pressures) else 0
+  n_a <- if (!is.null(isa_data$activities)) nrow(isa_data$activities) else 0
+  n_d <- if (!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0
+
+  # Check GB-ES matrix (Goods & Benefits <- Ecosystem Services)
+  # Matrix format: rows=GB, cols=ES (GB × ES)
   if (!is.null(isa_data$adjacency_matrices$gb_es)) {
-    n_gb <- nrow(isa_data$goods_benefits)
-    n_es <- nrow(isa_data$ecosystem_services)
     mat <- isa_data$adjacency_matrices$gb_es
-    
-    if (nrow(mat) != n_es || ncol(mat) != n_gb) {
-      errors <- c(errors, 
-        sprintf("GB-ES matrix dimensions (%d x %d) don't match elements (%d x %d)",
-                nrow(mat), ncol(mat), n_es, n_gb))
+
+    if (nrow(mat) != n_gb || ncol(mat) != n_es) {
+      errors <- c(errors,
+        sprintf("GB-ES matrix dimensions (%d rows × %d cols) don't match elements (%d GB × %d ES)",
+                nrow(mat), ncol(mat), n_gb, n_es))
     }
   }
-  
-  # Similar checks for other matrices...
-  
+
+  # Check ES-MPF matrix (Ecosystem Services <- Marine Processes)
+  # Matrix format: rows=ES, cols=MPF (ES × MPF)
+  if (!is.null(isa_data$adjacency_matrices$es_mpf)) {
+    mat <- isa_data$adjacency_matrices$es_mpf
+
+    if (nrow(mat) != n_es || ncol(mat) != n_mpf) {
+      errors <- c(errors,
+        sprintf("ES-MPF matrix dimensions (%d rows × %d cols) don't match elements (%d ES × %d MPF)",
+                nrow(mat), ncol(mat), n_es, n_mpf))
+    }
+  }
+
+  # Check MPF-P matrix (Marine Processes <- Pressures)
+  # Matrix format: rows=MPF, cols=P (MPF × P)
+  if (!is.null(isa_data$adjacency_matrices$mpf_p)) {
+    mat <- isa_data$adjacency_matrices$mpf_p
+
+    if (nrow(mat) != n_mpf || ncol(mat) != n_p) {
+      errors <- c(errors,
+        sprintf("MPF-P matrix dimensions (%d rows × %d cols) don't match elements (%d MPF × %d P)",
+                nrow(mat), ncol(mat), n_mpf, n_p))
+    }
+  }
+
+  # Check P-A matrix (Pressures <- Activities)
+  # Matrix format: rows=P, cols=A (P × A)
+  if (!is.null(isa_data$adjacency_matrices$p_a)) {
+    mat <- isa_data$adjacency_matrices$p_a
+
+    if (nrow(mat) != n_p || ncol(mat) != n_a) {
+      errors <- c(errors,
+        sprintf("P-A matrix dimensions (%d rows × %d cols) don't match elements (%d P × %d A)",
+                nrow(mat), ncol(mat), n_p, n_a))
+    }
+  }
+
+  # Check A-D matrix (Activities <- Drivers)
+  # Matrix format: rows=A, cols=D (A × D)
+  if (!is.null(isa_data$adjacency_matrices$a_d)) {
+    mat <- isa_data$adjacency_matrices$a_d
+
+    if (nrow(mat) != n_a || ncol(mat) != n_d) {
+      errors <- c(errors,
+        sprintf("A-D matrix dimensions (%d rows × %d cols) don't match elements (%d A × %d D)",
+                nrow(mat), ncol(mat), n_a, n_d))
+    }
+  }
+
+  # Check D-GB matrix (Drivers <- Goods & Benefits)
+  # Matrix format: rows=D, cols=GB (D × GB)
+  if (!is.null(isa_data$adjacency_matrices$d_gb)) {
+    mat <- isa_data$adjacency_matrices$d_gb
+
+    if (nrow(mat) != n_d || ncol(mat) != n_gb) {
+      errors <- c(errors,
+        sprintf("D-GB matrix dimensions (%d rows × %d cols) don't match elements (%d D × %d GB)",
+                nrow(mat), ncol(mat), n_d, n_gb))
+    }
+  }
+
   return(errors)
 }
 
