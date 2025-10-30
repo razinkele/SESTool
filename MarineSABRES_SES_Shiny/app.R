@@ -295,7 +295,7 @@ ui <- dashboardPage(
     tags$head(
       tags$title("MarineSABRES SES Toolbox"),
       tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
-      tags$link(rel = "stylesheet", type = "text/css", href = "isa-panels-fix.css"),
+      tags$link(rel = "stylesheet", type = "text/css", href = "isa-forms.css"),
 
       # Language persistence JavaScript
       tags$script(HTML("

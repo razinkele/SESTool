@@ -1,0 +1,475 @@
+/* ============================================================================
+   ISA DATA ENTRY FORMS - CONSOLIDATED STYLING
+   ============================================================================
+
+   PURPOSE:
+   This file contains all styling for ISA (Institutional, Systems, Actors)
+   data entry forms throughout the application.
+
+   ROOT CAUSE OF STYLING ISSUES:
+   - Shiny's wellPanel() creates div.well with Bootstrap's default gray background
+   - Default form-control background inherits gray, making fields look disabled
+   - Shiny's "recalculating" class adds gray filter/opacity during updates
+   - Bootstrap's subtle shadows make inactive-looking fields
+
+   SOLUTION:
+   - Override all Bootstrap defaults with bright, high-contrast styling
+   - Remove recalculating class effects
+   - Add clear visual feedback for interactivity (hover, focus)
+   - Support both module namespaces (isa_module and isa_data_entry)
+
+   ============================================================================ */
+
+/* ============================================================================
+   SECTION 1: RECALCULATING CLASS FIXES
+   ============================================================================
+   Prevent Shiny's recalculating effect from making forms look disabled
+   ============================================================================ */
+
+#isa_module-gb_entries.recalculating,
+#isa_module-es_entries.recalculating,
+#isa_module-mpf_entries.recalculating,
+#isa_module-p_entries.recalculating,
+#isa_module-a_entries.recalculating,
+#isa_module-d_entries.recalculating,
+#isa_data_entry-gb_entries.recalculating,
+#isa_data_entry-es_entries.recalculating,
+#isa_data_entry-mpf_entries.recalculating,
+#isa_data_entry-p_entries.recalculating,
+#isa_data_entry-a_entries.recalculating,
+#isa_data_entry-d_entries.recalculating,
+#isa_module-gb_entries.recalculating *,
+#isa_module-es_entries.recalculating *,
+#isa_module-mpf_entries.recalculating *,
+#isa_module-p_entries.recalculating *,
+#isa_module-a_entries.recalculating *,
+#isa_module-d_entries.recalculating *,
+#isa_data_entry-gb_entries.recalculating *,
+#isa_data_entry-es_entries.recalculating *,
+#isa_data_entry-mpf_entries.recalculating *,
+#isa_data_entry-p_entries.recalculating *,
+#isa_data_entry-a_entries.recalculating *,
+#isa_data_entry-d_entries.recalculating *,
+.shiny-html-output.recalculating .isa-entry-panel,
+.shiny-html-output.recalculating .isa-entry-panel * {
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  color: #000000 !important;
+}
+
+/* ============================================================================
+   SECTION 2: WELL PANEL CONTAINERS
+   ============================================================================
+   Fix the gray wellPanel boxes that contain ISA entry forms
+   ============================================================================ */
+
+/* General well styling */
+.well > .row {
+  margin-bottom: 10px;
+}
+
+/* Dynamically created entry panels (both module namespaces) */
+div[id^="isa_module-gb_panel_"],
+div[id^="isa_module-es_panel_"],
+div[id^="isa_module-mpf_panel_"],
+div[id^="isa_module-p_panel_"],
+div[id^="isa_module-a_panel_"],
+div[id^="isa_module-d_panel_"],
+div[id^="isa_data_entry-gb_panel_"],
+div[id^="isa_data_entry-es_panel_"],
+div[id^="isa_data_entry-mpf_panel_"],
+div[id^="isa_data_entry-p_panel_"],
+div[id^="isa_data_entry-a_panel_"],
+div[id^="isa_data_entry-d_panel_"] {
+  background-color: #ffffff !important;
+  border: 1px solid #dee2e6 !important;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3) !important;
+  opacity: 1 !important;
+  padding: 20px !important;
+  border-radius: 8px !important;
+  margin-bottom: 15px !important;
+}
+
+/* Container divs for each ISA category */
+#isa_data_entry-gb_entries .well,
+#isa_data_entry-es_entries .well,
+#isa_data_entry-mpf_entries .well,
+#isa_data_entry-p_entries .well,
+#isa_data_entry-a_entries .well,
+#isa_data_entry-d_entries .well {
+  background-color: #f0f8ff !important;
+  border: 2px solid #3498db !important;
+  box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2) !important;
+}
+
+/* ============================================================================
+   SECTION 3: INPUT, TEXTAREA, SELECT BASE STYLING
+   ============================================================================
+   Make all form controls look clearly editable with white backgrounds
+   ============================================================================ */
+
+/* General well input styling - all types */
+.well input[type="text"],
+.well input[type="number"],
+.well input[type="email"],
+.well input[type="date"],
+.well textarea,
+.well select {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  color: #2c3e50 !important;
+  cursor: text !important;
+  border: 2px solid #3498db !important;
+  font-weight: 500 !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Dynamically created panel inputs */
+div[id^="isa_module-gb_panel_"] input,
+div[id^="isa_module-gb_panel_"] textarea,
+div[id^="isa_module-es_panel_"] input,
+div[id^="isa_module-es_panel_"] textarea,
+div[id^="isa_module-mpf_panel_"] input,
+div[id^="isa_module-mpf_panel_"] textarea,
+div[id^="isa_module-p_panel_"] input,
+div[id^="isa_module-p_panel_"] textarea,
+div[id^="isa_module-a_panel_"] input,
+div[id^="isa_module-a_panel_"] textarea,
+div[id^="isa_module-d_panel_"] input,
+div[id^="isa_module-d_panel_"] textarea,
+.isa-entry-panel input,
+.isa-entry-panel textarea,
+input.shinyjs-resettable,
+textarea.shinyjs-resettable {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* Container-specific input styling */
+#isa_data_entry-gb_entries input,
+#isa_data_entry-gb_entries select,
+#isa_data_entry-gb_entries textarea,
+#isa_data_entry-es_entries input,
+#isa_data_entry-es_entries select,
+#isa_data_entry-es_entries textarea,
+#isa_data_entry-mpf_entries input,
+#isa_data_entry-mpf_entries select,
+#isa_data_entry-mpf_entries textarea,
+#isa_data_entry-p_entries input,
+#isa_data_entry-p_entries select,
+#isa_data_entry-p_entries textarea,
+#isa_data_entry-a_entries input,
+#isa_data_entry-a_entries select,
+#isa_data_entry-a_entries textarea,
+#isa_data_entry-d_entries input,
+#isa_data_entry-d_entries select,
+#isa_data_entry-d_entries textarea {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+  border: 2px solid #3498db !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  padding: 8px 12px !important;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* ============================================================================
+   SECTION 4: SELECT DROPDOWN STYLING
+   ============================================================================
+   Custom dropdown arrow and styling for select elements
+   ============================================================================ */
+
+/* General well select styling with custom arrow */
+.well select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233498db' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 10px center !important;
+  background-size: 12px !important;
+  padding-right: 30px !important;
+  cursor: pointer !important;
+}
+
+/* Dynamically created panel selects - use native browser styling */
+div[id^="isa_module-gb_panel_"] select,
+div[id^="isa_module-es_panel_"] select,
+div[id^="isa_module-mpf_panel_"] select,
+div[id^="isa_module-p_panel_"] select,
+div[id^="isa_module-a_panel_"] select,
+div[id^="isa_module-d_panel_"] select,
+.isa-entry-panel select,
+select.shinyjs-resettable {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* ============================================================================
+   SECTION 5: HOVER STATES
+   ============================================================================
+   Visual feedback when hovering over form fields
+   ============================================================================ */
+
+/* General well hover states */
+.well input[type="text"]:hover,
+.well input[type="number"]:hover,
+.well input[type="email"]:hover,
+.well input[type="date"]:hover,
+.well textarea:hover,
+.well select:hover {
+  border-color: #2980b9 !important;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3) !important;
+}
+
+/* Dynamically created panel hover states */
+div[id^="isa_module-gb_panel_"] input:hover,
+div[id^="isa_module-gb_panel_"] textarea:hover,
+div[id^="isa_module-es_panel_"] input:hover,
+div[id^="isa_module-es_panel_"] textarea:hover,
+div[id^="isa_module-mpf_panel_"] input:hover,
+div[id^="isa_module-mpf_panel_"] textarea:hover,
+div[id^="isa_module-p_panel_"] input:hover,
+div[id^="isa_module-p_panel_"] textarea:hover,
+div[id^="isa_module-a_panel_"] input:hover,
+div[id^="isa_module-a_panel_"] textarea:hover,
+div[id^="isa_module-d_panel_"] input:hover,
+div[id^="isa_module-d_panel_"] textarea:hover {
+  border-color: #80bdff !important;
+}
+
+/* Container-specific hover states - light yellow highlight */
+#isa_data_entry-gb_entries input:hover,
+#isa_data_entry-gb_entries select:hover,
+#isa_data_entry-gb_entries textarea:hover,
+#isa_data_entry-es_entries input:hover,
+#isa_data_entry-es_entries select:hover,
+#isa_data_entry-es_entries textarea:hover,
+#isa_data_entry-mpf_entries input:hover,
+#isa_data_entry-mpf_entries select:hover,
+#isa_data_entry-mpf_entries textarea:hover,
+#isa_data_entry-p_entries input:hover,
+#isa_data_entry-p_entries select:hover,
+#isa_data_entry-p_entries textarea:hover,
+#isa_data_entry-a_entries input:hover,
+#isa_data_entry-a_entries select:hover,
+#isa_data_entry-a_entries textarea:hover,
+#isa_data_entry-d_entries input:hover,
+#isa_data_entry-d_entries select:hover,
+#isa_data_entry-d_entries textarea:hover {
+  background-color: #fffacd !important;
+  border-color: #f39c12 !important;
+  box-shadow: 0 0 10px rgba(243, 156, 18, 0.5) !important;
+}
+
+/* ============================================================================
+   SECTION 6: FOCUS STATES
+   ============================================================================
+   Visual feedback when typing in form fields
+   ============================================================================ */
+
+/* General well focus states */
+.well input[type="text"]:focus,
+.well input[type="number"]:focus,
+.well input[type="email"]:focus,
+.well input[type="date"]:focus,
+.well textarea:focus,
+.well select:focus {
+  border-color: #2980b9 !important;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.5) !important;
+  outline: none !important;
+}
+
+/* Dynamically created panel focus states */
+div[id^="isa_module-gb_panel_"] input:focus,
+div[id^="isa_module-gb_panel_"] textarea:focus,
+div[id^="isa_module-es_panel_"] input:focus,
+div[id^="isa_module-es_panel_"] textarea:focus,
+div[id^="isa_module-mpf_panel_"] input:focus,
+div[id^="isa_module-mpf_panel_"] textarea:focus,
+div[id^="isa_module-p_panel_"] input:focus,
+div[id^="isa_module-p_panel_"] textarea:focus,
+div[id^="isa_module-a_panel_"] input:focus,
+div[id^="isa_module-a_panel_"] textarea:focus,
+div[id^="isa_module-d_panel_"] input:focus,
+div[id^="isa_module-d_panel_"] textarea:focus {
+  border-color: #80bdff !important;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+  outline: none !important;
+}
+
+/* Container-specific focus states - green highlight */
+#isa_data_entry-gb_entries input:focus,
+#isa_data_entry-gb_entries select:focus,
+#isa_data_entry-gb_entries textarea:focus,
+#isa_data_entry-es_entries input:focus,
+#isa_data_entry-es_entries select:focus,
+#isa_data_entry-es_entries textarea:focus,
+#isa_data_entry-mpf_entries input:focus,
+#isa_data_entry-mpf_entries select:focus,
+#isa_data_entry-mpf_entries textarea:focus,
+#isa_data_entry-p_entries input:focus,
+#isa_data_entry-p_entries select:focus,
+#isa_data_entry-p_entries textarea:focus,
+#isa_data_entry-a_entries input:focus,
+#isa_data_entry-a_entries select:focus,
+#isa_data_entry-a_entries textarea:focus,
+#isa_data_entry-d_entries input:focus,
+#isa_data_entry-d_entries select:focus,
+#isa_data_entry-d_entries textarea:focus {
+  background-color: #fffacd !important;
+  border-color: #27ae60 !important;
+  box-shadow: 0 0 15px rgba(39, 174, 96, 0.6) !important;
+  outline: 3px solid rgba(39, 174, 96, 0.3) !important;
+}
+
+/* ============================================================================
+   SECTION 7: PLACEHOLDER TEXT STYLING
+   ============================================================================
+   Style placeholder text in inputs and textareas
+   ============================================================================ */
+
+/* General well placeholder styling */
+.well input::placeholder,
+.well textarea::placeholder {
+  color: #95a5a6 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+}
+
+/* Dynamically created panel placeholders */
+div[id^="isa_module-gb_panel_"] input::placeholder,
+div[id^="isa_module-gb_panel_"] textarea::placeholder,
+div[id^="isa_module-es_panel_"] input::placeholder,
+div[id^="isa_module-es_panel_"] textarea::placeholder,
+div[id^="isa_module-mpf_panel_"] input::placeholder,
+div[id^="isa_module-mpf_panel_"] textarea::placeholder,
+div[id^="isa_module-p_panel_"] input::placeholder,
+div[id^="isa_module-p_panel_"] textarea::placeholder,
+div[id^="isa_module-a_panel_"] input::placeholder,
+div[id^="isa_module-a_panel_"] textarea::placeholder,
+div[id^="isa_module-d_panel_"] input::placeholder,
+div[id^="isa_module-d_panel_"] textarea::placeholder,
+div[id^="isa_data_entry-gb_panel_"] input::placeholder,
+div[id^="isa_data_entry-gb_panel_"] textarea::placeholder,
+div[id^="isa_data_entry-es_panel_"] input::placeholder,
+div[id^="isa_data_entry-es_panel_"] textarea::placeholder {
+  color: #95a5a6 !important;
+  opacity: 0.7 !important;
+  font-style: italic !important;
+  font-weight: normal !important;
+}
+
+/* ============================================================================
+   SECTION 8: LABEL STYLING
+   ============================================================================
+   Make labels clear and readable
+   ============================================================================ */
+
+div[id^="isa_module-gb_panel_"] label,
+div[id^="isa_module-es_panel_"] label,
+div[id^="isa_module-mpf_panel_"] label,
+div[id^="isa_module-p_panel_"] label,
+div[id^="isa_module-a_panel_"] label,
+div[id^="isa_module-d_panel_"] label,
+div[id^="isa_data_entry-gb_panel_"] label,
+div[id^="isa_data_entry-es_panel_"] label {
+  font-weight: 700 !important;
+  color: #2c3e50 !important;
+  font-size: 13px !important;
+  margin-bottom: 5px !important;
+  display: block !important;
+}
+
+/* ============================================================================
+   SECTION 9: BUTTON STYLING
+   ============================================================================
+   Ensure buttons in ISA panels stay visible and styled
+   ============================================================================ */
+
+div[id^="isa_module-gb_panel_"] button,
+div[id^="isa_module-es_panel_"] button,
+div[id^="isa_module-mpf_panel_"] button,
+div[id^="isa_module-p_panel_"] button,
+div[id^="isa_module-a_panel_"] button,
+div[id^="isa_module-d_panel_"] button,
+div[id^="isa_data_entry-gb_panel_"] button,
+div[id^="isa_data_entry-es_panel_"] button {
+  opacity: 1 !important;
+  font-weight: 600 !important;
+}
+
+/* ============================================================================
+   SECTION 10: EXERCISE 0 SPECIFIC FIELDS
+   ============================================================================
+   Style the static fields in Exercise 0 (case overview)
+   ============================================================================ */
+
+#isa_data_entry-case_name,
+#isa_data_entry-case_description,
+#isa_data_entry-geographic_scope,
+#isa_data_entry-temporal_scope,
+#isa_data_entry-welfare_impacts,
+#isa_data_entry-key_stakeholders {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #3498db !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #000000 !important;
+  padding: 10px 12px !important;
+}
+
+#isa_data_entry-case_name:hover,
+#isa_data_entry-case_description:hover,
+#isa_data_entry-geographic_scope:hover,
+#isa_data_entry-temporal_scope:hover,
+#isa_data_entry-welfare_impacts:hover,
+#isa_data_entry-key_stakeholders:hover {
+  background-color: #fffacd !important;
+  border-color: #f39c12 !important;
+  box-shadow: 0 0 10px rgba(243, 156, 18, 0.5) !important;
+}
+
+#isa_data_entry-case_name:focus,
+#isa_data_entry-case_description:focus,
+#isa_data_entry-geographic_scope:focus,
+#isa_data_entry-temporal_scope:focus,
+#isa_data_entry-welfare_impacts:focus,
+#isa_data_entry-key_stakeholders:focus {
+  background-color: #fffacd !important;
+  border-color: #27ae60 !important;
+  box-shadow: 0 0 15px rgba(39, 174, 96, 0.6) !important;
+  outline: none !important;
+}
+
+/* ============================================================================
+   SECTION 11: BOOTSTRAP .well CLASS OVERRIDES
+   ============================================================================
+   Final catch-all to override any Bootstrap defaults
+   ============================================================================ */
+
+.well .form-control,
+.well input.form-control,
+.well select.form-control,
+.well textarea.form-control {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+  border-color: #3498db !important;
+}
+
+/* ============================================================================
+   END OF ISA FORMS CONSOLIDATED STYLING
+   ============================================================================ */
