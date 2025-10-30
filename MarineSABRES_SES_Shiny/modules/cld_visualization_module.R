@@ -78,22 +78,6 @@ cld_viz_ui <- function(id) {
       .cld-toggle-btn.collapsed {
         left: 10px;
       }
-      .control-section {
-        background: white;
-        border-radius: 4px;
-        padding: 12px;
-        margin-bottom: 10px;
-        border: 1px solid #e0e0e0;
-      }
-      .control-section h5 {
-        margin-top: 0;
-        margin-bottom: 10px;
-        font-size: 14px;
-        font-weight: 600;
-        color: #333;
-        border-bottom: 1px solid #e0e0e0;
-        padding-bottom: 8px;
-      }
       .cld-network-container {
         padding: 0;
         margin: 0;
@@ -143,8 +127,7 @@ cld_viz_ui <- function(id) {
       class = "cld-sidebar",
 
       # Generate Button
-      div(
-        class = "control-section",
+      wellPanel(
         actionButton(
           ns("generate_cld_btn"),
           "Generate CLD from ISA",
@@ -154,8 +137,7 @@ cld_viz_ui <- function(id) {
       ),
 
       # Layout Controls
-      div(
-        class = "control-section",
+      wellPanel(
         h5(icon("cogs"), " Layout"),
         selectInput(
           ns("layout_type"),
@@ -195,8 +177,7 @@ cld_viz_ui <- function(id) {
       ),
 
       # Filter Controls
-      div(
-        class = "control-section",
+      wellPanel(
         h5(icon("filter"), " Filters"),
         selectInput(
           ns("element_types"),
@@ -231,8 +212,7 @@ cld_viz_ui <- function(id) {
       ),
 
       # Search & Highlight
-      div(
-        class = "control-section",
+      wellPanel(
         h5(icon("search"), " Search"),
         textInput(
           ns("search_node"),
@@ -245,7 +225,7 @@ cld_viz_ui <- function(id) {
               ns("highlight_btn"),
               "Highlight",
               icon = icon("lightbulb"),
-              class = "btn-primary btn-sm btn-block"
+              class = "btn-primary btn-block"
             )
           ),
           column(6,
@@ -253,15 +233,14 @@ cld_viz_ui <- function(id) {
               ns("clear_highlight_btn"),
               "Clear",
               icon = icon("eraser"),
-              class = "btn-secondary btn-sm btn-block"
+              class = "btn-default btn-block"
             )
           )
         )
       ),
 
       # Focus Mode
-      div(
-        class = "control-section",
+      wellPanel(
         h5(icon("bullseye"), " Focus"),
         selectInput(
           ns("focus_node"),
@@ -281,7 +260,7 @@ cld_viz_ui <- function(id) {
               ns("apply_focus_btn"),
               "Apply",
               icon = icon("compress"),
-              class = "btn-info btn-sm btn-block"
+              class = "btn-info btn-block"
             )
           ),
           column(6,
@@ -289,15 +268,14 @@ cld_viz_ui <- function(id) {
               ns("reset_focus_btn"),
               "Reset",
               icon = icon("expand"),
-              class = "btn-secondary btn-sm btn-block"
+              class = "btn-default btn-block"
             )
           )
         )
       ),
 
       # Node Sizing
-      div(
-        class = "control-section",
+      wellPanel(
         h5(icon("chart-bar"), " Node Size"),
         selectInput(
           ns("node_size_metric"),
