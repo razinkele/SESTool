@@ -129,7 +129,7 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL)
     })
 
     observeEvent(input$start_quick, {
-      showNotification("Navigate using the main menu to access tools directly", type = "message")
+      showNotification(i18n$t("ep_notify_use_main_menu"), type = "message")
     })
 
     # ========== EP0 ACTIONS ==========
@@ -141,7 +141,7 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL)
       if (!is.null(rv$ep0_selected)) {
         rv$current_step <- 1
       } else {
-        showNotification("Please select your role or skip", type = "warning")
+        showNotification(i18n$t("ep_notify_select_role"), type = "warning")
       }
     })
 
@@ -163,7 +163,7 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL)
       if (!is.null(rv$ep1_selected)) {
         rv$current_step <- 2
       } else {
-        showNotification("Please select a need or skip", type = "warning")
+        showNotification(i18n$t("ep_notify_select_need"), type = "warning")
       }
     })
 
@@ -241,7 +241,7 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL)
               updateTabItems(parent_session, "sidebar_menu", tool$menu_id)
 
               showNotification(
-                paste0("Navigating to ", tool$name),
+                sprintf(i18n$t("ep_notify_navigating_to"), tool$name),
                 type = "message",
                 duration = 2
               )
@@ -361,12 +361,12 @@ render_ep0 <- function(ns, rv) {
           onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'})", ns("ep0_role_click"), role$id),
           `data-toggle` = "tooltip",
           `data-placement` = "top",
-          title = if(!is.null(role$typical_tasks)) paste(i18n$t("Typical tasks:"), role$typical_tasks) else role$description,
+          title = if(!is.null(role$typical_tasks)) paste(i18n$t("Typical tasks:"), role$typical_tasks) else i18n$t(role$description),
           fluidRow(
             column(2, icon(role$icon, class = "fa-3x", style = "color: #3498db;")),
             column(10,
-              h4(role$label),
-              p(role$description)
+              h4(i18n$t(role$label)),
+              p(i18n$t(role$description))
             )
           )
         )
@@ -409,9 +409,9 @@ render_ep1 <- function(ns, rv) {
           style = sprintf("border-left: 5px solid %s;", sanitize_color(need$color)),
           `data-toggle` = "tooltip",
           `data-placement` = "top",
-          title = paste0(need$label, ": ", need$description),
-          h4(need$label),
-          p(need$description)
+          title = paste0(i18n$t(need$label), ": ", i18n$t(need$description)),
+          h4(i18n$t(need$label)),
+          p(i18n$t(need$description))
         )
       }),
 
@@ -449,7 +449,7 @@ render_ep23 <- function(ns, rv) {
       p(class = "text-muted", style = "font-size: 0.9em;", i18n$t("Select all that apply (multiple selection allowed)")),
       checkboxGroupInput(ns("ep2_activities"), NULL,
         choices = setNames(sapply(EP2_ACTIVITY_SECTORS, function(x) x$id),
-                          sapply(EP2_ACTIVITY_SECTORS, function(x) x$label)),
+                          sapply(EP2_ACTIVITY_SECTORS, function(x) i18n$t(x$label))),
         selected = rv$ep2_selected)
     ),
     column(6,
@@ -465,7 +465,7 @@ render_ep23 <- function(ns, rv) {
       p(class = "text-muted", style = "font-size: 0.9em;", i18n$t("Select all that apply (multiple selection allowed)")),
       checkboxGroupInput(ns("ep3_risks"), NULL,
         choices = setNames(sapply(EP3_RISKS_HAZARDS, function(x) x$id),
-                          sapply(EP3_RISKS_HAZARDS, function(x) x$label)),
+                          sapply(EP3_RISKS_HAZARDS, function(x) i18n$t(x$label))),
         selected = rv$ep3_selected)
     ),
     column(12,
@@ -505,7 +505,7 @@ render_ep4 <- function(ns, rv) {
 
       checkboxGroupInput(ns("ep4_topics"), NULL,
         choices = setNames(sapply(EP4_TOPICS, function(x) x$id),
-                          sapply(EP4_TOPICS, function(x) x$label)),
+                          sapply(EP4_TOPICS, function(x) i18n$t(x$label))),
         selected = rv$ep4_selected),
 
       br(),
@@ -545,18 +545,18 @@ render_recommendations_screen <- function(ns, rv) {
 
         tags$ul(
           if (!is.null(rv$ep0_selected)) tags$li(strong(i18n$t("Role:"), " "),
-            EP0_MANAGER_ROLES[[which(sapply(EP0_MANAGER_ROLES, function(x) x$id) == rv$ep0_selected)]]$label),
+            i18n$t(EP0_MANAGER_ROLES[[which(sapply(EP0_MANAGER_ROLES, function(x) x$id) == rv$ep0_selected)]]$label)),
           if (!is.null(rv$ep1_selected)) tags$li(strong(i18n$t("Need:"), " "),
-            EP1_BASIC_NEEDS[[which(sapply(EP1_BASIC_NEEDS, function(x) x$id) == rv$ep1_selected)]]$label),
+            i18n$t(EP1_BASIC_NEEDS[[which(sapply(EP1_BASIC_NEEDS, function(x) x$id) == rv$ep1_selected)]]$label)),
           if (length(rv$ep2_selected) > 0) tags$li(strong(i18n$t("Activities:"), " "),
             paste(sapply(rv$ep2_selected, function(id)
-              EP2_ACTIVITY_SECTORS[[which(sapply(EP2_ACTIVITY_SECTORS, function(x) x$id) == id)]]$label), collapse = ", ")),
+              i18n$t(EP2_ACTIVITY_SECTORS[[which(sapply(EP2_ACTIVITY_SECTORS, function(x) x$id) == id)]]$label)), collapse = ", ")),
           if (length(rv$ep3_selected) > 0) tags$li(strong(i18n$t("Risks:"), " "),
             paste(sapply(rv$ep3_selected, function(id)
-              EP3_RISKS_HAZARDS[[which(sapply(EP3_RISKS_HAZARDS, function(x) x$id) == id)]]$label), collapse = ", ")),
+              i18n$t(EP3_RISKS_HAZARDS[[which(sapply(EP3_RISKS_HAZARDS, function(x) x$id) == id)]]$label)), collapse = ", ")),
           if (length(rv$ep4_selected) > 0) tags$li(strong(i18n$t("Topics:"), " "),
             paste(sapply(rv$ep4_selected, function(id)
-              EP4_TOPICS[[which(sapply(EP4_TOPICS, function(x) x$id) == id)]]$label), collapse = ", "))
+              i18n$t(EP4_TOPICS[[which(sapply(EP4_TOPICS, function(x) x$id) == id)]]$label)), collapse = ", "))
         )
       ),
 
@@ -568,7 +568,9 @@ render_recommendations_screen <- function(ns, rv) {
         tool <- recommended_tools[[i]]
         priority_class <- if (i == 1) "success" else if (i == 2) "info" else "warning"
         priority_icon <- if (i == 1) "star" else if (i == 2) "check-circle" else "tools"
-        priority_label <- if (i == 1) "START HERE" else if (i == 2) "NEXT STEP" else "ALSO RELEVANT"
+        priority_label <- if (i == 1) i18n$t("ep_priority_start_here")
+                          else if (i == 2) i18n$t("ep_priority_next_step")
+                          else i18n$t("ep_priority_also_relevant")
 
         div(
           class = paste0("alert alert-", priority_class),
@@ -600,30 +602,30 @@ render_recommendations_screen <- function(ns, rv) {
         h4(icon("lightbulb"), " ", i18n$t("Suggested Workflow:")),
         tags$ol(
           tags$li(strong(i18n$t("Start with PIMS:"), " "), i18n$t("Define your project goals, stakeholders, and timeline")),
-          tags$li(strong(i18n$t("Quick start option:"), " "), "Use Create SES with templates or AI assistant for rapid model building (beginner-friendly)"),
-          tags$li(strong(i18n$t("Build your SES model:"), " "), "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection"),
-          tags$li(strong(i18n$t("Visualize & Analyze:"), " "), "Create CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools"),
+          tags$li(strong(i18n$t("Quick start option:"), " "), i18n$t("Use Create SES with templates or AI assistant for rapid model building (beginner-friendly)")),
+          tags$li(strong(i18n$t("Build your SES model:"), " "), i18n$t("Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection")),
+          tags$li(strong(i18n$t("Visualize & Analyze:"), " "), i18n$t("Create CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools")),
           tags$li(strong(i18n$t("Refine & Communicate:"), " "), i18n$t("Simplify models and develop management scenarios"))
         ),
         tags$div(
           class = "alert alert-info",
           style = "margin-top: 15px; margin-bottom: 0;",
           icon("star"), " ",
-          tags$strong("New in v1.2.0: "),
-          "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research."
+          tags$strong(i18n$t("New in v1.2.0:"), " "),
+          i18n$t("Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research.")
         )
       ),
 
       br(),
       fluidRow(
         column(6,
-          actionButton(ns("start_over"), "Start Over", icon = icon("redo"), class = "btn-secondary btn-block",
-                      `data-toggle` = "tooltip", title = "Begin a new pathway from the welcome screen")
+          actionButton(ns("start_over"), i18n$t("Start Over"), icon = icon("redo"), class = "btn-secondary btn-block",
+                      `data-toggle` = "tooltip", title = i18n$t("ep_tooltip_begin_new_pathway"))
         ),
         column(6,
-          actionButton(ns("export_pathway"), "Export Pathway Report", icon = icon("download"),
+          actionButton(ns("export_pathway"), i18n$t("Export Pathway Report"), icon = icon("download"),
                       class = "btn-info btn-block",
-                      `data-toggle` = "tooltip", title = "Download a PDF summary of your pathway and recommendations")
+                      `data-toggle` = "tooltip", title = i18n$t("ep_tooltip_download_pdf"))
         )
       )
     )

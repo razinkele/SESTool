@@ -63,6 +63,7 @@ Desktop.ini
 # Documentation build files
 docs/_build/
 docs/.doctrees/
+docs/development/
 
 # Backup files
 *.bak
