@@ -10,496 +10,13 @@ isaDataEntryUI <- function(id) {
   tagList(
     fluidRow(
       column(12,
-        div(style = "display: flex; justify-content: space-between; align-items: center;",
-          div(
-            h3("Integrated Systems Analysis (ISA) Data Entry"),
-            p("Follow the structured exercises to build your marine Social-Ecological System analysis."),
-            p(strong("Framework:"), "DAPSI(W)R(M) - Drivers, Activities, Pressures, State (Impact on Welfare), Responses (as Measures)")
-          ),
-          div(style = "margin-top: 10px;",
-            actionButton(ns("help_main"), "ISA Framework Guide",
-                        icon = icon("question-circle"),
-                        class = "btn btn-info btn-lg")
-          )
-        )
+        uiOutput(ns("isa_header"))
       )
     ),
 
     fluidRow(
       column(12,
-        tabsetPanel(id = ns("isa_tabs"),
-
-          # Exercise 0: Unfolding Complexity ----
-          tabPanel("Exercise 0: Complexity",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Unfolding Complexity and Impacts on Welfare"),
-              actionButton(ns("help_ex0"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Purpose:"), "Understand the complexity of your case study and identify impacts on human welfare."),
-              p("This preliminary exercise helps you explore the full scope of your system before detailed analysis.")
-            ),
-
-            fluidRow(
-              column(6,
-                h5("Case Study Context"),
-                textInput(ns("case_name"), "Case Study Name:", placeholder = "e.g., Baltic Sea fisheries"),
-                textAreaInput(ns("case_description"), "Brief Description:",
-                             placeholder = "Describe your marine case study context...",
-                             rows = 4),
-                textInput(ns("geographic_scope"), "Geographic Scope:", placeholder = "e.g., Baltic Sea, North Atlantic"),
-                textInput(ns("temporal_scope"), "Temporal Scope:", placeholder = "e.g., 2000-2024")
-              ),
-              column(6,
-                h5("Initial Complexity Mapping"),
-                textAreaInput(ns("welfare_impacts"), "Identified Welfare Impacts:",
-                             placeholder = "List key impacts on human welfare you've observed...",
-                             rows = 4),
-                textAreaInput(ns("key_stakeholders"), "Key Stakeholders:",
-                             placeholder = "Who is affected? Who makes decisions?",
-                             rows = 4)
-              )
-            ),
-
-            actionButton(ns("save_ex0"), "Save Exercise 0", class = "btn-primary"),
-            hr()
-          ),
-
-          # Exercise 1: Goods and Benefits ----
-          tabPanel("Exercise 1: Goods & Benefits",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Specifying Goods and Benefits (G&B)"),
-              actionButton(ns("help_ex1"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Purpose:"), "Identify and classify the goods and benefits derived from marine ecosystems."),
-              p("Complete columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification.")
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Add Goods and Benefits"),
-                actionButton(ns("add_gb"), "Add Good/Benefit", icon = icon("plus"), class = "btn-success"),
-                hr(),
-                uiOutput(ns("gb_entries"))
-              )
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Current Goods and Benefits"),
-                DTOutput(ns("gb_table"))
-              )
-            ),
-
-            actionButton(ns("save_ex1"), "Save Exercise 1", class = "btn-primary"),
-            hr()
-          ),
-
-          # Exercise 2a: Ecosystem Services ----
-          tabPanel("Exercise 2a: Ecosystem Services",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Ecosystem Services (ES) affecting Goods and Benefits"),
-              actionButton(ns("help_ex2a"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Purpose:"), "Identify ecosystem services that contribute to each Good/Benefit."),
-              p("Complete columns L-R in the Master Data Sheet. Link ES to the G&B identified in Exercise 1.")
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Add Ecosystem Services"),
-                actionButton(ns("add_es"), "Add Ecosystem Service", icon = icon("plus"), class = "btn-success"),
-                hr(),
-                uiOutput(ns("es_entries"))
-              )
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Current Ecosystem Services"),
-                DTOutput(ns("es_table"))
-              )
-            ),
-
-            actionButton(ns("save_ex2a"), "Save Exercise 2a", class = "btn-primary"),
-            hr()
-          ),
-
-          # Exercise 2b: Marine Processes and Functioning ----
-          tabPanel("Exercise 2b: Marine Processes",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Marine Processes and Functioning (MPF)"),
-              actionButton(ns("help_ex2b"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Purpose:"), "Identify marine processes that support ecosystem services."),
-              p("Complete columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a.")
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Add Marine Processes and Functioning"),
-                actionButton(ns("add_mpf"), "Add Marine Process", icon = icon("plus"), class = "btn-success"),
-                hr(),
-                uiOutput(ns("mpf_entries"))
-              )
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Current Marine Processes"),
-                DTOutput(ns("mpf_table"))
-              )
-            ),
-
-            actionButton(ns("save_ex2b"), "Save Exercise 2b", class = "btn-primary"),
-            hr()
-          ),
-
-          # Exercise 3: Pressures ----
-          tabPanel("Exercise 3: Pressures",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Specifying Pressures on State Changes"),
-              actionButton(ns("help_ex3"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Purpose:"), "Identify pressures that affect marine processes and ecosystem state."),
-              p("Complete columns AC-AM in the Master Data Sheet. Link Pressures to MPF from Exercise 2b.")
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Add Pressures"),
-                actionButton(ns("add_p"), "Add Pressure", icon = icon("plus"), class = "btn-success"),
-                hr(),
-                uiOutput(ns("p_entries"))
-              )
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Current Pressures"),
-                DTOutput(ns("p_table"))
-              )
-            ),
-
-            actionButton(ns("save_ex3"), "Save Exercise 3", class = "btn-primary"),
-            hr()
-          ),
-
-          # Exercise 4: Activities ----
-          tabPanel("Exercise 4: Activities",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Specifying Activities affecting Pressures"),
-              actionButton(ns("help_ex4"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Purpose:"), "Identify human activities that generate pressures on the marine environment."),
-              p("Complete columns AO-AY in the Master Data Sheet. Link Activities to Pressures from Exercise 3.")
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Add Activities"),
-                actionButton(ns("add_a"), "Add Activity", icon = icon("plus"), class = "btn-success"),
-                hr(),
-                uiOutput(ns("a_entries"))
-              )
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Current Activities"),
-                DTOutput(ns("a_table"))
-              )
-            ),
-
-            actionButton(ns("save_ex4"), "Save Exercise 4", class = "btn-primary"),
-            hr()
-          ),
-
-          # Exercise 5: Drivers ----
-          tabPanel("Exercise 5: Drivers",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Drivers giving rise to Activities"),
-              actionButton(ns("help_ex5"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Purpose:"), "Identify the underlying drivers that motivate human activities."),
-              p("Complete columns BC-BK in the Master Data Sheet. Link Drivers to Activities from Exercise 4.")
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Add Drivers"),
-                actionButton(ns("add_d"), "Add Driver", icon = icon("plus"), class = "btn-success"),
-                hr(),
-                uiOutput(ns("d_entries"))
-              )
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Current Drivers"),
-                DTOutput(ns("d_table"))
-              )
-            ),
-
-            actionButton(ns("save_ex5"), "Save Exercise 5", class = "btn-primary"),
-            hr()
-          ),
-
-          # Exercise 6: Closing the Loop ----
-          tabPanel("Exercise 6: Closing Loop",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Closing the Loop: Drivers to Goods & Benefits"),
-              actionButton(ns("help_ex6"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Purpose:"), "Complete the feedback loop by linking Drivers back to Goods & Benefits."),
-              p("This creates the circular DAPSI(W)R(M) framework showing how drivers ultimately affect welfare.")
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Driver to Goods/Benefits Connections"),
-                p("Select drivers and the goods/benefits they influence (positively or negatively):"),
-                uiOutput(ns("loop_connections"))
-              )
-            ),
-
-            fluidRow(
-              column(12,
-                h5("Loop Closure Summary"),
-                plotOutput(ns("loop_diagram"), height = "400px")
-              )
-            ),
-
-            actionButton(ns("save_ex6"), "Save Exercise 6", class = "btn-primary"),
-            hr()
-          ),
-
-          # Exercises 7-9: CLD Creation ----
-          tabPanel("Exercises 7-9: CLD",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Causal Loop Diagram Creation and Export"),
-              actionButton(ns("help_ex789"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Exercise 7:"), "Creating Impact-based CLD in Kumu"),
-              p(strong("Exercise 8:"), "Moving from Causal Logic Chains to Causal Loops"),
-              p(strong("Exercise 9:"), "Exporting CLD for further analysis")
-            ),
-
-            fluidRow(
-              column(6,
-                h5("Adjacency Matrix Review"),
-                p("Review the connections between DAPSI(W)R(M) elements:"),
-                selectInput(ns("adj_matrix_select"), "Select Matrix Type:",
-                           choices = c("Goods/Benefits to ES" = "gb_es",
-                                     "ES to MPF" = "es_mpf",
-                                     "MPF to Pressures" = "mpf_p",
-                                     "Pressures to Activities" = "p_a",
-                                     "Activities to Drivers" = "a_d",
-                                     "Drivers to Goods/Benefits" = "d_gb")),
-                DTOutput(ns("adj_matrix_view"))
-              ),
-              column(6,
-                h5("Kumu Export Options"),
-                p("Prepare data for import into Kumu visualization software:"),
-                checkboxGroupInput(ns("export_options"), "Include in Export:",
-                                  choices = c("Elements (nodes)" = "elements",
-                                            "Connections (edges)" = "connections",
-                                            "Element attributes" = "attributes",
-                                            "Loop identifiers" = "loops"),
-                                  selected = c("elements", "connections")),
-                br(),
-                downloadButton(ns("download_kumu"), "Download Kumu CSV Files", class = "btn-info"),
-                br(), br(),
-                downloadButton(ns("download_excel"), "Download Complete Excel Workbook", class = "btn-success")
-              )
-            ),
-
-            actionButton(ns("save_ex789"), "Save Exercises 7-9", class = "btn-primary"),
-            hr()
-          ),
-
-          # Exercises 10-12: Analysis and Validation ----
-          tabPanel("Exercises 10-12: Analysis",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Clarifying, Metrics, and Validation"),
-              actionButton(ns("help_ex101112"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Exercise 10:"), "Clarifying - Endogenisation and Encapsulation"),
-              p(strong("Exercise 11:"), "Metrics, Root Causes, and Leverage Points"),
-              p(strong("Exercise 12:"), "Presenting and Validating Results")
-            ),
-
-            # Exercise 10: Clarifying
-            h5("Exercise 10: Clarifying the CLD"),
-            fluidRow(
-              column(6,
-                textAreaInput(ns("endogenisation_notes"), "Endogenisation Notes:",
-                             placeholder = "What external factors should be brought inside the system boundary?",
-                             rows = 4)
-              ),
-              column(6,
-                textAreaInput(ns("encapsulation_notes"), "Encapsulation Notes:",
-                             placeholder = "What detailed processes can be simplified or grouped?",
-                             rows = 4)
-              )
-            ),
-
-            hr(),
-
-            # Exercise 11: Metrics and Leverage
-            h5("Exercise 11: Metrics and Leverage Points"),
-            fluidRow(
-              column(6,
-                h6("Root Causes Identified"),
-                uiOutput(ns("root_causes_ui"))
-              ),
-              column(6,
-                h6("Leverage Points"),
-                uiOutput(ns("leverage_points_ui"))
-              )
-            ),
-
-            hr(),
-
-            # Exercise 12: Validation
-            h5("Exercise 12: Presenting and Validating"),
-            fluidRow(
-              column(12,
-                textAreaInput(ns("validation_notes"), "Validation Notes:",
-                             placeholder = "Record stakeholder feedback, validation workshop results, expert reviews...",
-                             rows = 6),
-                checkboxGroupInput(ns("validation_status"), "Validation Completed:",
-                                  choices = c("Internal team review" = "internal",
-                                            "Stakeholder workshop" = "stakeholder",
-                                            "Expert peer review" = "expert",
-                                            "Final approval" = "final"))
-              )
-            ),
-
-            actionButton(ns("save_ex101112"), "Save Exercises 10-12", class = "btn-primary"),
-            hr()
-          ),
-
-          # BOT Graphs ----
-          tabPanel("BOT Graphs",
-            div(style = "display: flex; justify-content: space-between; align-items: center;",
-              h4("Behaviour Over Time (BOT) Graphs"),
-              actionButton(ns("help_bot"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
-            ),
-            wellPanel(
-              p(strong("Purpose:"), "Visualize how indicators change over time to understand system dynamics.")
-            ),
-
-            fluidRow(
-              column(4,
-                selectInput(ns("bot_element_type"), "Element Type:",
-                           choices = c("Goods & Benefits" = "gb",
-                                     "Ecosystem Services" = "es",
-                                     "Marine Processes" = "mpf",
-                                     "Pressures" = "p",
-                                     "Activities" = "a",
-                                     "Drivers" = "d")),
-                uiOutput(ns("bot_element_select")),
-                br(),
-                h6("Add Time Series Data"),
-                numericInput(ns("bot_year"), "Year:", value = 2024, min = 1900, max = 2100),
-                numericInput(ns("bot_value"), "Value:", value = 0),
-                textInput(ns("bot_unit"), "Unit:", placeholder = "e.g., tonnes, %, index"),
-                actionButton(ns("add_bot_point"), "Add Data Point", icon = icon("plus"))
-              ),
-              column(8,
-                h5("Time Series Plot"),
-                plotOutput(ns("bot_plot"), height = "400px"),
-                br(),
-                h6("Current Data"),
-                DTOutput(ns("bot_data_table"))
-              )
-            ),
-
-            actionButton(ns("save_bot"), "Save BOT Data", class = "btn-primary"),
-            hr()
-          ),
-
-          # Data Management ----
-          tabPanel("Data Management",
-            h4("Import/Export and Data Management"),
-
-            fluidRow(
-              column(12,
-                wellPanel(
-                  h5("Documentation"),
-                  p("Comprehensive guides for using the ISA Data Entry module:"),
-                  fluidRow(
-                    column(4,
-                      tags$a(
-                        class = "btn btn-info btn-block",
-                        href = "ISA_User_Guide.md",
-                        target = "_blank",
-                        icon("book"),
-                        " Open User Guide"
-                      )
-                    ),
-                    column(4,
-                      downloadButton(ns("download_guidance_pdf"), "ISA Guidance Document (PDF)", class = "btn-info btn-block")
-                    ),
-                    column(4,
-                      tags$a(
-                        class = "btn btn-info btn-block",
-                        href = "Kumu_Code_Style.txt",
-                        target = "_blank",
-                        icon("code"),
-                        " Kumu Styling Code"
-                      )
-                    )
-                  )
-                )
-              )
-            ),
-
-            hr(),
-
-            fluidRow(
-              column(6,
-                wellPanel(
-                  h5("Import Data"),
-                  p("Load existing ISA data from Excel workbook:"),
-                  fileInput(ns("import_file"), "Choose Excel File (.xlsx):",
-                           accept = c(".xlsx")),
-                  actionButton(ns("import_data"), "Import Data", class = "btn-warning")
-                )
-              ),
-              column(6,
-                wellPanel(
-                  h5("Export Data"),
-                  p("Save current ISA analysis to Excel workbook:"),
-                  textInput(ns("export_filename"), "Filename:", value = "ISA_Export"),
-                  downloadButton(ns("export_data"), "Export to Excel", class = "btn-success")
-                )
-              )
-            ),
-
-            hr(),
-
-            fluidRow(
-              column(12,
-                wellPanel(
-                  h5("Reset Data"),
-                  p(strong("Warning:"), "This will clear all entered data. This action cannot be undone."),
-                  actionButton(ns("reset_confirm"), "Reset All Data", class = "btn-danger")
-                )
-              )
-            )
-          )
-        )
+        uiOutput(ns("isa_tabs_ui"))
       )
     )
   )
@@ -622,6 +139,559 @@ isaDataEntryServer <- function(id, global_data) {
       validation = list()
     )
 
+    # Render ISA header ----
+    output$isa_header <- renderUI({
+      div(style = "display: flex; justify-content: space-between; align-items: center;",
+        div(
+          h3(i18n$t("Integrated Systems Analysis (ISA) Data Entry")),
+          p(i18n$t("Follow the structured exercises to build your marine Social-Ecological System analysis.")),
+          p(strong(i18n$t("Framework:")), " ", i18n$t("DAPSI(W)R(M) - Drivers, Activities, Pressures, State (Impact on Welfare), Responses (as Measures)"))
+        ),
+        div(style = "margin-top: 10px;",
+          actionButton(ns("help_main"), i18n$t("ISA Framework Guide"),
+                      icon = icon("question-circle"),
+                      class = "btn btn-info btn-lg")
+        )
+      )
+    })
+
+    # Render tab panel UI with translated titles ----
+    output$isa_tabs_ui <- renderUI({
+      tabsetPanel(id = ns("isa_tabs"),
+        tabPanel(i18n$t("Exercise 0: Complexity"),
+          uiOutput(ns("exercise_0_content"))
+        ),
+        tabPanel(i18n$t("Exercise 1: Goods & Benefits"),
+          uiOutput(ns("exercise_1_content"))
+        ),
+        tabPanel(i18n$t("Exercise 2a: Ecosystem Services"),
+          uiOutput(ns("exercise_2a_content"))
+        ),
+        tabPanel(i18n$t("Exercise 2b: Marine Processes"),
+          uiOutput(ns("exercise_2b_content"))
+        ),
+        tabPanel(i18n$t("Exercise 3: Pressures"),
+          uiOutput(ns("exercise_3_content"))
+        ),
+        tabPanel(i18n$t("Exercise 4: Activities"),
+          uiOutput(ns("exercise_4_content"))
+        ),
+        tabPanel(i18n$t("Exercise 5: Drivers"),
+          uiOutput(ns("exercise_5_content"))
+        ),
+        tabPanel(i18n$t("Exercise 6: Closing Loop"),
+          uiOutput(ns("exercise_6_content"))
+        ),
+        tabPanel(i18n$t("Exercises 7-9: CLD"),
+          uiOutput(ns("exercise_789_content"))
+        ),
+        tabPanel(i18n$t("Exercises 10-12: Analysis"),
+          uiOutput(ns("exercise_101112_content"))
+        ),
+        tabPanel(i18n$t("BOT Graphs"),
+          uiOutput(ns("bot_graphs_content"))
+        ),
+        tabPanel(i18n$t("Data Management"),
+          uiOutput(ns("data_management_content"))
+        )
+      )
+    })
+
+    # Render Exercise 0 content ----
+    output$exercise_0_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Unfolding Complexity and Impacts on Welfare")),
+          actionButton(ns("help_ex0"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Purpose:")), " ", i18n$t("Understand the complexity of your case study and identify impacts on human welfare.")),
+          p(i18n$t("This preliminary exercise helps you explore the full scope of your system before detailed analysis."))
+        ),
+
+        fluidRow(
+          column(6,
+            h5(i18n$t("Case Study Context")),
+            textInput(ns("case_name"), i18n$t("Case Study Name:"), placeholder = i18n$t("e.g., Baltic Sea fisheries")),
+            textAreaInput(ns("case_description"), i18n$t("Brief Description:"),
+                         placeholder = i18n$t("Describe your marine case study context..."),
+                         rows = 4),
+            textInput(ns("geographic_scope"), i18n$t("Geographic Scope:"), placeholder = i18n$t("e.g., Baltic Sea, North Atlantic")),
+            textInput(ns("temporal_scope"), i18n$t("Temporal Scope:"), placeholder = i18n$t("e.g., 2000-2024"))
+          ),
+          column(6,
+            h5(i18n$t("Initial Complexity Mapping")),
+            textAreaInput(ns("welfare_impacts"), i18n$t("Identified Welfare Impacts:"),
+                         placeholder = i18n$t("List key impacts on human welfare you've observed..."),
+                         rows = 4),
+            textAreaInput(ns("key_stakeholders"), i18n$t("Key Stakeholders:"),
+                         placeholder = i18n$t("Who is affected? Who makes decisions?"),
+                         rows = 4)
+          )
+        ),
+
+        actionButton(ns("save_ex0"), i18n$t("Save Exercise 0"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render Exercise 1 content ----
+    output$exercise_1_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Specifying Goods and Benefits (G&B)")),
+          actionButton(ns("help_ex1"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Purpose:")), " ", i18n$t("Identify and classify the goods and benefits derived from marine ecosystems.")),
+          p(i18n$t("Complete columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification."))
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Add Goods and Benefits")),
+            actionButton(ns("add_gb"), i18n$t("Add Good/Benefit"), icon = icon("plus"), class = "btn-success"),
+            hr(),
+            uiOutput(ns("gb_entries"))
+          )
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Current Goods and Benefits")),
+            DTOutput(ns("gb_table"))
+          )
+        ),
+
+        actionButton(ns("save_ex1"), i18n$t("Save Exercise 1"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render Exercise 2a content ----
+    output$exercise_2a_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Ecosystem Services (ES) affecting Goods and Benefits")),
+          actionButton(ns("help_ex2a"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Purpose:")), " ", i18n$t("Identify ecosystem services that contribute to each Good/Benefit.")),
+          p(i18n$t("Complete columns L-R in the Master Data Sheet. Link ES to the G&B identified in Exercise 1."))
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Add Ecosystem Services")),
+            actionButton(ns("add_es"), i18n$t("Add Ecosystem Service"), icon = icon("plus"), class = "btn-success"),
+            hr(),
+            uiOutput(ns("es_entries"))
+          )
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Current Ecosystem Services")),
+            DTOutput(ns("es_table"))
+          )
+        ),
+
+        actionButton(ns("save_ex2a"), i18n$t("Save Exercise 2a"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render Exercise 2b content ----
+    output$exercise_2b_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Marine Processes and Functioning (MPF)")),
+          actionButton(ns("help_ex2b"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Purpose:")), " ", i18n$t("Identify marine processes that support ecosystem services.")),
+          p(i18n$t("Complete columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a."))
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Add Marine Processes and Functioning")),
+            actionButton(ns("add_mpf"), i18n$t("Add Marine Process"), icon = icon("plus"), class = "btn-success"),
+            hr(),
+            uiOutput(ns("mpf_entries"))
+          )
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Current Marine Processes")),
+            DTOutput(ns("mpf_table"))
+          )
+        ),
+
+        actionButton(ns("save_ex2b"), i18n$t("Save Exercise 2b"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render Exercise 3 content ----
+    output$exercise_3_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Specifying Pressures on State Changes")),
+          actionButton(ns("help_ex3"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Purpose:")), " ", i18n$t("Identify pressures that affect marine processes and ecosystem state.")),
+          p(i18n$t("Complete columns AC-AM in the Master Data Sheet. Link Pressures to MPF from Exercise 2b."))
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Add Pressures")),
+            actionButton(ns("add_p"), i18n$t("Add Pressure"), icon = icon("plus"), class = "btn-success"),
+            hr(),
+            uiOutput(ns("p_entries"))
+          )
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Current Pressures")),
+            DTOutput(ns("p_table"))
+          )
+        ),
+
+        actionButton(ns("save_ex3"), i18n$t("Save Exercise 3"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render Exercise 4 content ----
+    output$exercise_4_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Specifying Activities affecting Pressures")),
+          actionButton(ns("help_ex4"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Purpose:")), " ", i18n$t("Identify human activities that generate pressures on the marine environment.")),
+          p(i18n$t("Complete columns AO-AY in the Master Data Sheet. Link Activities to Pressures from Exercise 3."))
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Add Activities")),
+            actionButton(ns("add_a"), i18n$t("Add Activity"), icon = icon("plus"), class = "btn-success"),
+            hr(),
+            uiOutput(ns("a_entries"))
+          )
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Current Activities")),
+            DTOutput(ns("a_table"))
+          )
+        ),
+
+        actionButton(ns("save_ex4"), i18n$t("Save Exercise 4"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render Exercise 5 content ----
+    output$exercise_5_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Drivers giving rise to Activities")),
+          actionButton(ns("help_ex5"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Purpose:")), " ", i18n$t("Identify the underlying drivers that motivate human activities.")),
+          p(i18n$t("Complete columns BC-BK in the Master Data Sheet. Link Drivers to Activities from Exercise 4."))
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Add Drivers")),
+            actionButton(ns("add_d"), i18n$t("Add Driver"), icon = icon("plus"), class = "btn-success"),
+            hr(),
+            uiOutput(ns("d_entries"))
+          )
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Current Drivers")),
+            DTOutput(ns("d_table"))
+          )
+        ),
+
+        actionButton(ns("save_ex5"), i18n$t("Save Exercise 5"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render Exercise 6 content ----
+    output$exercise_6_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Closing the Loop: Drivers to Goods & Benefits")),
+          actionButton(ns("help_ex6"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Purpose:")), " ", i18n$t("Complete the feedback loop by linking Drivers back to Goods & Benefits.")),
+          p(i18n$t("This creates the circular DAPSI(W)R(M) framework showing how drivers ultimately affect welfare."))
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Driver to Goods/Benefits Connections")),
+            p(i18n$t("Select drivers and the goods/benefits they influence (positively or negatively):")),
+            uiOutput(ns("loop_connections"))
+          )
+        ),
+
+        fluidRow(
+          column(12,
+            h5(i18n$t("Loop Closure Summary")),
+            plotOutput(ns("loop_diagram"), height = "400px")
+          )
+        ),
+
+        actionButton(ns("save_ex6"), i18n$t("Save Exercise 6"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render Exercises 7-9 content ----
+    output$exercise_789_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Causal Loop Diagram Creation and Export")),
+          actionButton(ns("help_ex789"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Exercise 7:")), " ", i18n$t("Creating Impact-based CLD in Kumu")),
+          p(strong(i18n$t("Exercise 8:")), " ", i18n$t("Moving from Causal Logic Chains to Causal Loops")),
+          p(strong(i18n$t("Exercise 9:")), " ", i18n$t("Exporting CLD for further analysis"))
+        ),
+
+        fluidRow(
+          column(6,
+            h5(i18n$t("Adjacency Matrix Review")),
+            p(i18n$t("Review the connections between DAPSI(W)R(M) elements:")),
+            selectInput(ns("adj_matrix_select"), i18n$t("Select Matrix Type:"),
+                       choices = c("Goods/Benefits to ES" = "gb_es",
+                                 "ES to MPF" = "es_mpf",
+                                 "MPF to Pressures" = "mpf_p",
+                                 "Pressures to Activities" = "p_a",
+                                 "Activities to Drivers" = "a_d",
+                                 "Drivers to Goods/Benefits" = "d_gb")),
+            DTOutput(ns("adj_matrix_view"))
+          ),
+          column(6,
+            h5(i18n$t("Kumu Export Options")),
+            p(i18n$t("Prepare data for import into Kumu visualization software:")),
+            checkboxGroupInput(ns("export_options"), i18n$t("Include in Export:"),
+                              choices = c("Elements (nodes)" = "elements",
+                                        "Connections (edges)" = "connections",
+                                        "Element attributes" = "attributes",
+                                        "Loop identifiers" = "loops"),
+                              selected = c("elements", "connections")),
+            br(),
+            downloadButton(ns("download_kumu"), i18n$t("Download Kumu CSV Files"), class = "btn-info"),
+            br(), br(),
+            downloadButton(ns("download_excel"), i18n$t("Download Complete Excel Workbook"), class = "btn-success")
+          )
+        ),
+
+        actionButton(ns("save_ex789"), i18n$t("Save Exercises 7-9"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render Exercises 10-12 content ----
+    output$exercise_101112_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Clarifying, Metrics, and Validation")),
+          actionButton(ns("help_ex101112"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Exercise 10:")), " ", i18n$t("Clarifying - Endogenisation and Encapsulation")),
+          p(strong(i18n$t("Exercise 11:")), " ", i18n$t("Metrics, Root Causes, and Leverage Points")),
+          p(strong(i18n$t("Exercise 12:")), " ", i18n$t("Presenting and Validating Results"))
+        ),
+
+        # Exercise 10: Clarifying
+        h5(i18n$t("Exercise 10: Clarifying the CLD")),
+        fluidRow(
+          column(6,
+            textAreaInput(ns("endogenisation_notes"), i18n$t("Endogenisation Notes:"),
+                         placeholder = i18n$t("What external factors should be brought inside the system boundary?"),
+                         rows = 4)
+          ),
+          column(6,
+            textAreaInput(ns("encapsulation_notes"), i18n$t("Encapsulation Notes:"),
+                         placeholder = i18n$t("What detailed processes can be simplified or grouped?"),
+                         rows = 4)
+          )
+        ),
+
+        hr(),
+
+        # Exercise 11: Metrics and Leverage
+        h5(i18n$t("Exercise 11: Metrics and Leverage Points")),
+        fluidRow(
+          column(6,
+            h6(i18n$t("Root Causes Identified")),
+            uiOutput(ns("root_causes_ui"))
+          ),
+          column(6,
+            h6(i18n$t("Leverage Points")),
+            uiOutput(ns("leverage_points_ui"))
+          )
+        ),
+
+        hr(),
+
+        # Exercise 12: Validation
+        h5(i18n$t("Exercise 12: Presenting and Validating")),
+        fluidRow(
+          column(12,
+            textAreaInput(ns("validation_notes"), i18n$t("Validation Notes:"),
+                         placeholder = i18n$t("Record stakeholder feedback, validation workshop results, expert reviews..."),
+                         rows = 6),
+            checkboxGroupInput(ns("validation_status"), i18n$t("Validation Completed:"),
+                              choices = c("Internal team review" = "internal",
+                                        "Stakeholder workshop" = "stakeholder",
+                                        "Expert peer review" = "expert",
+                                        "Final approval" = "final"))
+          )
+        ),
+
+        actionButton(ns("save_ex101112"), i18n$t("Save Exercises 10-12"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render BOT Graphs content ----
+    output$bot_graphs_content <- renderUI({
+      tagList(
+        div(style = "display: flex; justify-content: space-between; align-items: center;",
+          h4(i18n$t("Behaviour Over Time (BOT) Graphs")),
+          actionButton(ns("help_bot"), i18n$t("Help"), icon = icon("question-circle"), class = "btn-info btn-sm")
+        ),
+        wellPanel(
+          p(strong(i18n$t("Purpose:")), " ", i18n$t("Visualize how indicators change over time to understand system dynamics."))
+        ),
+
+        fluidRow(
+          column(4,
+            selectInput(ns("bot_element_type"), i18n$t("Element Type:"),
+                       choices = c("Goods & Benefits" = "gb",
+                                 "Ecosystem Services" = "es",
+                                 "Marine Processes" = "mpf",
+                                 "Pressures" = "p",
+                                 "Activities" = "a",
+                                 "Drivers" = "d")),
+            uiOutput(ns("bot_element_select")),
+            br(),
+            h6(i18n$t("Add Time Series Data")),
+            numericInput(ns("bot_year"), i18n$t("Year:"), value = 2024, min = 1900, max = 2100),
+            numericInput(ns("bot_value"), i18n$t("Value:"), value = 0),
+            textInput(ns("bot_unit"), i18n$t("Unit:"), placeholder = i18n$t("e.g., tonnes, %, index")),
+            actionButton(ns("add_bot_point"), i18n$t("Add Data Point"), icon = icon("plus"))
+          ),
+          column(8,
+            h5(i18n$t("Time Series Plot")),
+            plotOutput(ns("bot_plot"), height = "400px"),
+            br(),
+            h6(i18n$t("Current Data")),
+            DTOutput(ns("bot_data_table"))
+          )
+        ),
+
+        actionButton(ns("save_bot"), i18n$t("Save BOT Data"), class = "btn-primary"),
+        hr()
+      )
+    })
+
+    # Render Data Management content ----
+    output$data_management_content <- renderUI({
+      tagList(
+        h4(i18n$t("Import/Export and Data Management")),
+
+        fluidRow(
+          column(12,
+            wellPanel(
+              h5(i18n$t("Documentation")),
+              p(i18n$t("Comprehensive guides for using the ISA Data Entry module:")),
+              fluidRow(
+                column(4,
+                  tags$a(
+                    class = "btn btn-info btn-block",
+                    href = "ISA_User_Guide.md",
+                    target = "_blank",
+                    icon("book"),
+                    " ", i18n$t("Open User Guide")
+                  )
+                ),
+                column(4,
+                  downloadButton(ns("download_guidance_pdf"), i18n$t("ISA Guidance Document (PDF)"), class = "btn-info btn-block")
+                ),
+                column(4,
+                  tags$a(
+                    class = "btn btn-info btn-block",
+                    href = "Kumu_Code_Style.txt",
+                    target = "_blank",
+                    icon("code"),
+                    " ", i18n$t("Kumu Styling Code")
+                  )
+                )
+              )
+            )
+          )
+        ),
+
+        hr(),
+
+        fluidRow(
+          column(6,
+            wellPanel(
+              h5(i18n$t("Import Data")),
+              p(i18n$t("Load existing ISA data from Excel workbook:")),
+              fileInput(ns("import_file"), i18n$t("Choose Excel File (.xlsx):"),
+                       accept = c(".xlsx")),
+              actionButton(ns("import_data"), i18n$t("Import Data"), class = "btn-warning")
+            )
+          ),
+          column(6,
+            wellPanel(
+              h5(i18n$t("Export Data")),
+              p(i18n$t("Save current ISA analysis to Excel workbook:")),
+              textInput(ns("export_filename"), i18n$t("Filename:"), value = "ISA_Export"),
+              downloadButton(ns("export_data"), i18n$t("Export to Excel"), class = "btn-success")
+            )
+          )
+        ),
+
+        hr(),
+
+        fluidRow(
+          column(12,
+            wellPanel(
+              h5(i18n$t("Reset Data")),
+              p(strong(i18n$t("Warning:")), " ", i18n$t("This will clear all entered data. This action cannot be undone.")),
+              actionButton(ns("reset_confirm"), i18n$t("Reset All Data"), class = "btn-danger")
+            )
+          )
+        )
+      )
+    })
+
     # Exercise 0: Save case information ----
     observeEvent(input$save_ex0, {
       # Validate all Exercise 0 inputs
@@ -678,18 +748,18 @@ isaDataEntryServer <- function(id, global_data) {
           class = "isa-entry-panel",
           style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("gb_name_", current_id)), "Name:", placeholder = "e.g., Fish catch")),
-            column(3, selectInput(ns(paste0("gb_type_", current_id)), "Type:",
+            column(3, textInput(ns(paste0("gb_name_", current_id)), i18n$t("Name:"), placeholder = i18n$t("e.g., Fish catch"))),
+            column(3, selectInput(ns(paste0("gb_type_", current_id)), i18n$t("Type:"),
                                  choices = c("Provisioning", "Regulating", "Cultural", "Supporting"))),
-            column(6, textInput(ns(paste0("gb_desc_", current_id)), "Description:"))
+            column(6, textInput(ns(paste0("gb_desc_", current_id)), i18n$t("Description:")))
           ),
           fluidRow(
-            column(3, textInput(ns(paste0("gb_stakeholder_", current_id)), "Stakeholder:")),
-            column(3, selectInput(ns(paste0("gb_importance_", current_id)), "Importance:",
+            column(3, textInput(ns(paste0("gb_stakeholder_", current_id)), i18n$t("Stakeholder:"))),
+            column(3, selectInput(ns(paste0("gb_importance_", current_id)), i18n$t("Importance:"),
                                  choices = c("High", "Medium", "Low"))),
-            column(3, selectInput(ns(paste0("gb_trend_", current_id)), "Trend:",
+            column(3, selectInput(ns(paste0("gb_trend_", current_id)), i18n$t("Trend:"),
                                  choices = c("Increasing", "Stable", "Decreasing", "Unknown"))),
-            column(3, actionButton(ns(paste0("gb_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
+            column(3, actionButton(ns(paste0("gb_remove_", current_id)), i18n$t("Remove"), class = "btn-danger btn-sm"))
           )
         )
       )
@@ -813,18 +883,18 @@ isaDataEntryServer <- function(id, global_data) {
           class = "isa-entry-panel",
           style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("es_name_", current_id)), "Name:", placeholder = "e.g., Fish production")),
-            column(3, selectInput(ns(paste0("es_type_", current_id)), "ES Type:",
+            column(3, textInput(ns(paste0("es_name_", current_id)), i18n$t("Name:"), placeholder = i18n$t("e.g., Fish production"))),
+            column(3, selectInput(ns(paste0("es_type_", current_id)), i18n$t("ES Type:"),
                                  choices = c("Provisioning", "Regulating", "Cultural", "Supporting"))),
-            column(6, textInput(ns(paste0("es_desc_", current_id)), "Description:"))
+            column(6, textInput(ns(paste0("es_desc_", current_id)), i18n$t("Description:")))
           ),
           fluidRow(
-            column(3, selectInput(ns(paste0("es_linkedgb_", current_id)), "Linked to G&B:",
+            column(3, selectInput(ns(paste0("es_linkedgb_", current_id)), i18n$t("Linked to G&B:"),
                                  choices = c("", paste0(isa_data$goods_benefits$ID, ": ", isa_data$goods_benefits$Name)))),
-            column(3, textInput(ns(paste0("es_mechanism_", current_id)), "Mechanism:")),
-            column(4, selectInput(ns(paste0("es_confidence_", current_id)), "Confidence:",
+            column(3, textInput(ns(paste0("es_mechanism_", current_id)), i18n$t("Mechanism:"))),
+            column(4, selectInput(ns(paste0("es_confidence_", current_id)), i18n$t("Confidence:"),
                                  choices = c("High", "Medium", "Low"))),
-            column(2, actionButton(ns(paste0("es_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
+            column(2, actionButton(ns(paste0("es_remove_", current_id)), i18n$t("Remove"), class = "btn-danger btn-sm"))
           )
         )
       )
@@ -948,17 +1018,17 @@ isaDataEntryServer <- function(id, global_data) {
           class = "isa-entry-panel",
           style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("mpf_name_", current_id)), "Name:", placeholder = "e.g., Primary production")),
-            column(3, selectInput(ns(paste0("mpf_type_", current_id)), "Process Type:",
+            column(3, textInput(ns(paste0("mpf_name_", current_id)), i18n$t("Name:"), placeholder = i18n$t("e.g., Primary production"))),
+            column(3, selectInput(ns(paste0("mpf_type_", current_id)), i18n$t("Process Type:"),
                                  choices = c("Biological", "Chemical", "Physical", "Ecological"))),
-            column(6, textInput(ns(paste0("mpf_desc_", current_id)), "Description:"))
+            column(6, textInput(ns(paste0("mpf_desc_", current_id)), i18n$t("Description:")))
           ),
           fluidRow(
-            column(3, selectInput(ns(paste0("mpf_linkedes_", current_id)), "Linked to ES:",
+            column(3, selectInput(ns(paste0("mpf_linkedes_", current_id)), i18n$t("Linked to ES:"),
                                  choices = c("", paste0(isa_data$ecosystem_services$ID, ": ", isa_data$ecosystem_services$Name)))),
-            column(3, textInput(ns(paste0("mpf_mechanism_", current_id)), "Mechanism:")),
-            column(4, textInput(ns(paste0("mpf_spatial_", current_id)), "Spatial Scale:")),
-            column(2, actionButton(ns(paste0("mpf_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
+            column(3, textInput(ns(paste0("mpf_mechanism_", current_id)), i18n$t("Mechanism:"))),
+            column(4, textInput(ns(paste0("mpf_spatial_", current_id)), i18n$t("Spatial Scale:"))),
+            column(2, actionButton(ns(paste0("mpf_remove_", current_id)), i18n$t("Remove"), class = "btn-danger btn-sm"))
           )
         )
       )
@@ -1008,19 +1078,19 @@ isaDataEntryServer <- function(id, global_data) {
           class = "isa-entry-panel",
           style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("p_name_", current_id)), "Name:", placeholder = "e.g., Nutrient enrichment")),
-            column(3, selectInput(ns(paste0("p_type_", current_id)), "Pressure Type:",
+            column(3, textInput(ns(paste0("p_name_", current_id)), i18n$t("Name:"), placeholder = i18n$t("e.g., Nutrient enrichment"))),
+            column(3, selectInput(ns(paste0("p_type_", current_id)), i18n$t("Pressure Type:"),
                                  choices = c("Physical", "Chemical", "Biological", "Multiple"))),
-            column(6, textInput(ns(paste0("p_desc_", current_id)), "Description:"))
+            column(6, textInput(ns(paste0("p_desc_", current_id)), i18n$t("Description:")))
           ),
           fluidRow(
-            column(3, selectInput(ns(paste0("p_linkedmpf_", current_id)), "Linked to MPF:",
+            column(3, selectInput(ns(paste0("p_linkedmpf_", current_id)), i18n$t("Linked to MPF:"),
                                  choices = c("", paste0(isa_data$marine_processes$ID, ": ", isa_data$marine_processes$Name)))),
-            column(3, selectInput(ns(paste0("p_intensity_", current_id)), "Intensity:",
+            column(3, selectInput(ns(paste0("p_intensity_", current_id)), i18n$t("Intensity:"),
                                  choices = c("High", "Medium", "Low", "Unknown"))),
-            column(2, textInput(ns(paste0("p_spatial_", current_id)), "Spatial:")),
-            column(2, textInput(ns(paste0("p_temporal_", current_id)), "Temporal:")),
-            column(2, actionButton(ns(paste0("p_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
+            column(2, textInput(ns(paste0("p_spatial_", current_id)), i18n$t("Spatial:"))),
+            column(2, textInput(ns(paste0("p_temporal_", current_id)), i18n$t("Temporal:"))),
+            column(2, actionButton(ns(paste0("p_remove_", current_id)), i18n$t("Remove"), class = "btn-danger btn-sm"))
           )
         )
       )
@@ -1071,19 +1141,19 @@ isaDataEntryServer <- function(id, global_data) {
           class = "isa-entry-panel",
           style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("a_name_", current_id)), "Name:", placeholder = "e.g., Commercial fishing")),
-            column(3, selectInput(ns(paste0("a_sector_", current_id)), "Sector:",
+            column(3, textInput(ns(paste0("a_name_", current_id)), i18n$t("Name:"), placeholder = i18n$t("e.g., Commercial fishing"))),
+            column(3, selectInput(ns(paste0("a_sector_", current_id)), i18n$t("Sector:"),
                                  choices = c("Fisheries", "Aquaculture", "Tourism", "Shipping", "Energy", "Mining", "Other"))),
-            column(6, textInput(ns(paste0("a_desc_", current_id)), "Description:"))
+            column(6, textInput(ns(paste0("a_desc_", current_id)), i18n$t("Description:")))
           ),
           fluidRow(
-            column(3, selectInput(ns(paste0("a_linkedp_", current_id)), "Linked to Pressure:",
+            column(3, selectInput(ns(paste0("a_linkedp_", current_id)), i18n$t("Linked to Pressure:"),
                                  choices = c("", paste0(isa_data$pressures$ID, ": ", isa_data$pressures$Name)))),
-            column(3, selectInput(ns(paste0("a_scale_", current_id)), "Scale:",
+            column(3, selectInput(ns(paste0("a_scale_", current_id)), i18n$t("Scale:"),
                                  choices = c("Local", "Regional", "National", "International"))),
-            column(4, selectInput(ns(paste0("a_frequency_", current_id)), "Frequency:",
+            column(4, selectInput(ns(paste0("a_frequency_", current_id)), i18n$t("Frequency:"),
                                  choices = c("Continuous", "Seasonal", "Occasional", "One-time"))),
-            column(2, actionButton(ns(paste0("a_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
+            column(2, actionButton(ns(paste0("a_remove_", current_id)), i18n$t("Remove"), class = "btn-danger btn-sm"))
           )
         )
       )
@@ -1133,19 +1203,19 @@ isaDataEntryServer <- function(id, global_data) {
           class = "isa-entry-panel",
           style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
           fluidRow(
-            column(3, textInput(ns(paste0("d_name_", current_id)), "Name:", placeholder = "e.g., Economic growth")),
-            column(3, selectInput(ns(paste0("d_type_", current_id)), "Driver Type:",
+            column(3, textInput(ns(paste0("d_name_", current_id)), i18n$t("Name:"), placeholder = i18n$t("e.g., Economic growth"))),
+            column(3, selectInput(ns(paste0("d_type_", current_id)), i18n$t("Driver Type:"),
                                  choices = c("Economic", "Social", "Technological", "Political", "Environmental", "Demographic"))),
-            column(6, textInput(ns(paste0("d_desc_", current_id)), "Description:"))
+            column(6, textInput(ns(paste0("d_desc_", current_id)), i18n$t("Description:")))
           ),
           fluidRow(
-            column(3, selectInput(ns(paste0("d_linkeda_", current_id)), "Linked to Activity:",
+            column(3, selectInput(ns(paste0("d_linkeda_", current_id)), i18n$t("Linked to Activity:"),
                                  choices = c("", paste0(isa_data$activities$ID, ": ", isa_data$activities$Name)))),
-            column(3, selectInput(ns(paste0("d_trend_", current_id)), "Trend:",
+            column(3, selectInput(ns(paste0("d_trend_", current_id)), i18n$t("Trend:"),
                                  choices = c("Increasing", "Stable", "Decreasing", "Cyclical", "Uncertain"))),
-            column(4, selectInput(ns(paste0("d_control_", current_id)), "Controllability:",
+            column(4, selectInput(ns(paste0("d_control_", current_id)), i18n$t("Controllability:"),
                                  choices = c("High", "Medium", "Low", "None"))),
-            column(2, actionButton(ns(paste0("d_remove_", current_id)), "Remove", class = "btn-danger btn-sm"))
+            column(2, actionButton(ns(paste0("d_remove_", current_id)), i18n$t("Remove"), class = "btn-danger btn-sm"))
           )
         )
       )
@@ -1187,7 +1257,7 @@ isaDataEntryServer <- function(id, global_data) {
       req(isa_data$drivers, isa_data$goods_benefits)
 
       if (nrow(isa_data$drivers) == 0 || nrow(isa_data$goods_benefits) == 0) {
-        return(p("Please complete Exercises 1 and 5 first to create Goods & Benefits and Drivers."))
+        return(p(i18n$t("Please complete Exercises 1 and 5 first to create Goods & Benefits and Drivers.")))
       }
 
       driver_choices <- setNames(isa_data$drivers$ID,
@@ -1198,30 +1268,30 @@ isaDataEntryServer <- function(id, global_data) {
       tagList(
         fluidRow(
           column(3,
-            selectInput(ns("loop_driver"), "Driver:", choices = driver_choices)
+            selectInput(ns("loop_driver"), i18n$t("Driver:"), choices = driver_choices)
           ),
           column(1,
             div(style = "text-align: center; padding-top: 25px;", "→")
           ),
           column(3,
-            selectInput(ns("loop_gb"), "Goods/Benefit:", choices = gb_choices)
+            selectInput(ns("loop_gb"), i18n$t("Goods/Benefit:"), choices = gb_choices)
           ),
           column(2,
-            selectInput(ns("loop_effect"), "Effect:",
+            selectInput(ns("loop_effect"), i18n$t("Effect:"),
                        choices = c("Positive" = "+", "Negative" = "-"))
           ),
           column(2,
-            selectInput(ns("loop_strength"), "Strength:",
+            selectInput(ns("loop_strength"), i18n$t("Strength:"),
                        choices = c("Weak" = "weak", "Medium" = "medium", "Strong" = "strong"))
           ),
           column(1,
             br(),
-            actionButton(ns("add_loop"), "Add", icon = icon("plus"), class = "btn-success btn-sm")
+            actionButton(ns("add_loop"), i18n$t("Add"), icon = icon("plus"), class = "btn-success btn-sm")
           )
         ),
         fluidRow(
           column(12,
-            sliderInput(ns("loop_confidence"), "Confidence Level:",
+            sliderInput(ns("loop_confidence"), i18n$t("Confidence Level:"),
                        min = 1, max = 5, value = 3, step = 1,
                        ticks = TRUE,
                        post = c(" - Very Low", " - Low", " - Medium", " - High", " - Very High")[3])
@@ -1230,7 +1300,7 @@ isaDataEntryServer <- function(id, global_data) {
         hr(),
         fluidRow(
           column(12,
-            h5("Current Loop Connections:"),
+            h5(i18n$t("Current Loop Connections:")),
             DTOutput(ns("loop_connections_table"))
           )
         )
@@ -1330,7 +1400,17 @@ isaDataEntryServer <- function(id, global_data) {
         "d" = paste0(isa_data$drivers$ID, ": ", isa_data$drivers$Name),
         character(0)
       )
-      selectInput(ns("bot_element"), "Select Element:", choices = choices)
+      selectInput(ns("bot_element"), i18n$t("Select Element:"), choices = choices)
+    })
+
+    # Exercise 11: Root Causes UI ----
+    output$root_causes_ui <- renderUI({
+      p(i18n$t("Root causes analysis will be displayed here based on your CLD structure."))
+    })
+
+    # Exercise 11: Leverage Points UI ----
+    output$leverage_points_ui <- renderUI({
+      p(i18n$t("Leverage points analysis will be displayed here based on your system dynamics."))
     })
 
     output$bot_plot <- renderPlot({

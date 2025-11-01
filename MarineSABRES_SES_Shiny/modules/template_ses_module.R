@@ -605,41 +605,17 @@ template_ses_ui <- function(id) {
 
     div(class = "template-container",
       # Header
-      fluidRow(
-        column(12,
-          div(style = "text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; margin-bottom: 30px;",
-            h2(icon("clone"), " ", i18n$t("Template-Based SES Creation")),
-            p(style = "font-size: 16px;", i18n$t("Choose a pre-built template that matches your scenario and customize it to your needs"))
-          )
-        )
-      ),
+      uiOutput(ns("template_header")),
 
       # Template selection
       fluidRow(
         column(8,
-          h4(icon("folder-open"), " ", i18n$t("Available Templates")),
+          uiOutput(ns("templates_heading")),
           uiOutput(ns("template_cards"))
         ),
 
         column(4,
-          conditionalPanel(
-            condition = sprintf("input['%s'] != null", ns("template_selected")),
-            wellPanel(
-              style = "position: sticky; top: 20px;",
-              h5(icon("eye"), " ", i18n$t("Template Preview")),
-              uiOutput(ns("template_preview")),
-              hr(),
-              actionButton(ns("use_template"),
-                           i18n$t("Use This Template"),
-                           icon = icon("check"),
-                           class = "btn btn-success btn-block btn-lg"),
-              br(),
-              actionButton(ns("customize_template"),
-                           i18n$t("Customize Before Using"),
-                           icon = icon("edit"),
-                           class = "btn btn-primary btn-block")
-            )
-          )
+          uiOutput(ns("template_sidebar"))
         )
       )
     )
@@ -658,6 +634,44 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
     rv <- reactiveValues(
       selected_template = NULL
     )
+
+    # Render header
+    output$template_header <- renderUI({
+      fluidRow(
+        column(12,
+          div(style = "text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; margin-bottom: 30px;",
+            h2(icon("clone"), " ", i18n$t("Template-Based SES Creation")),
+            p(style = "font-size: 16px;", i18n$t("Choose a pre-built template that matches your scenario and customize it to your needs"))
+          )
+        )
+      )
+    })
+
+    # Render templates heading
+    output$templates_heading <- renderUI({
+      h4(icon("folder-open"), " ", i18n$t("Available Templates"))
+    })
+
+    # Render template sidebar
+    output$template_sidebar <- renderUI({
+      if (!is.null(rv$selected_template)) {
+        wellPanel(
+          style = "position: sticky; top: 20px;",
+          h5(icon("eye"), " ", i18n$t("Template Preview")),
+          uiOutput(ns("template_preview")),
+          hr(),
+          actionButton(ns("use_template"),
+                       i18n$t("Use This Template"),
+                       icon = icon("check"),
+                       class = "btn btn-success btn-block btn-lg"),
+          br(),
+          actionButton(ns("customize_template"),
+                       i18n$t("Customize Before Using"),
+                       icon = icon("edit"),
+                       class = "btn btn-primary btn-block")
+        )
+      }
+    })
 
     # Render template cards
     output$template_cards <- renderUI({
