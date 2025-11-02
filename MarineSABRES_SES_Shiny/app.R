@@ -569,9 +569,9 @@ ui <- dashboardPage(
       tabItem(tabName = "analysis_simplify", analysis_simplify_ui("analysis_simp")),
       
       # ==================== RESPONSE & VALIDATION ====================
-      tabItem(tabName = "response_measures", response_measures_ui("resp_meas")),
+      tabItem(tabName = "response_measures", response_measures_ui("resp_meas", i18n)),
       tabItem(tabName = "response_scenarios", scenario_builder_ui("scenario_builder")),
-      tabItem(tabName = "response_validation", response_validation_ui("resp_val")),
+      tabItem(tabName = "response_validation", response_validation_ui("resp_val", i18n)),
       
       # ==================== EXPORT ====================
       tabItem(
@@ -970,7 +970,7 @@ server <- function(input, output, session) {
   analysis_simplify_server("analysis_simp", project_data)
   
   # Response & validation modules
-  response_measures_server("resp_meas", project_data)
+  response_measures_server("resp_meas", project_data, i18n)
   scenario_builder_server("scenario_builder", project_data)
   response_validation_server("resp_val", project_data)
   

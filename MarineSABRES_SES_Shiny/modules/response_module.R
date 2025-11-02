@@ -6,7 +6,7 @@
 # RESPONSE MEASURES MODULE
 # ============================================================================
 
-response_measures_ui <- function(id) {
+response_measures_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
@@ -14,11 +14,11 @@ response_measures_ui <- function(id) {
       column(12,
         div(style = "display: flex; justify-content: space-between; align-items: center;",
           div(
-            h3("Response Measures (R & M)"),
-            p("Identify management interventions and policy responses to address system challenges.")
+            h3(i18n$t("Response Measures (R & M)")),
+            p(i18n$t("Identify management interventions and policy responses to address system challenges."))
           ),
           div(style = "margin-top: 10px;",
-            actionButton(ns("help_response"), "Response Guide",
+            actionButton(ns("help_response"), i18n$t("Response Guide"),
                         icon = icon("question-circle"),
                         class = "btn btn-info btn-lg")
           )
@@ -33,76 +33,76 @@ response_measures_ui <- function(id) {
         tabsetPanel(id = ns("response_tabs"),
 
           # Tab 1: Identify Response Measures ----
-          tabPanel("Response Register",
-            h4("Management Measures and Policy Interventions"),
-            p("Document responses to address pressures, activities, and drivers in your system."),
+          tabPanel(i18n$t("Response Register"),
+            h4(i18n$t("Management Measures and Policy Interventions")),
+            p(i18n$t("Document responses to address pressures, activities, and drivers in your system.")),
 
             wellPanel(
-              h5("Add Response Measure"),
+              h5(i18n$t("Add Response Measure")),
               fluidRow(
                 column(3,
-                  textInput(ns("rm_name"), "Response Name:",
-                           placeholder = "e.g., Fishing quota reduction")
+                  textInput(ns("rm_name"), i18n$t("Response Name:"),
+                           placeholder = i18n$t("e.g., Fishing quota reduction"))
                 ),
                 column(3,
-                  selectInput(ns("rm_type"), "Response Type:",
-                             choices = c("", "Regulatory", "Economic", "Educational",
-                                       "Technical", "Institutional", "Voluntary", "Mixed"))
+                  selectInput(ns("rm_type"), i18n$t("Response Type:"),
+                             choices = c("", i18n$t("Regulatory"), i18n$t("Economic"), i18n$t("Educational"),
+                                       i18n$t("Technical"), i18n$t("Institutional"), i18n$t("Voluntary"), i18n$t("Mixed")))
                 ),
                 column(3,
-                  selectInput(ns("rm_target"), "Targets:",
-                             choices = c("", "Drivers", "Activities", "Pressures",
-                                       "State", "Multiple Levels"))
+                  selectInput(ns("rm_target"), i18n$t("Targets:"),
+                             choices = c("", i18n$t("Drivers"), i18n$t("Activities"), i18n$t("Pressures"),
+                                       i18n$t("State"), i18n$t("Multiple Levels")))
                 ),
                 column(3,
-                  selectInput(ns("rm_status"), "Implementation Status:",
-                             choices = c("Proposed", "Planned", "Implemented",
-                                       "Partially Implemented", "Abandoned"))
+                  selectInput(ns("rm_status"), i18n$t("Implementation Status:"),
+                             choices = c(i18n$t("Proposed"), i18n$t("Planned"), i18n$t("Implemented"),
+                                       i18n$t("Partially Implemented"), i18n$t("Abandoned")))
                 )
               ),
               fluidRow(
                 column(6,
-                  textAreaInput(ns("rm_description"), "Description:",
-                               placeholder = "What does this measure do?",
+                  textAreaInput(ns("rm_description"), i18n$t("Description:"),
+                               placeholder = i18n$t("What does this measure do?"),
                                rows = 3)
                 ),
                 column(6,
-                  textAreaInput(ns("rm_mechanism"), "Mechanism of Action:",
-                               placeholder = "How will this intervention work?",
+                  textAreaInput(ns("rm_mechanism"), i18n$t("Mechanism of Action:"),
+                               placeholder = i18n$t("How will this intervention work?"),
                                rows = 3)
                 )
               ),
               fluidRow(
                 column(3,
-                  textInput(ns("rm_target_element"), "Target Element ID:",
+                  textInput(ns("rm_target_element"), i18n$t("Target Element ID:"),
                            placeholder = "e.g., A001, D002")
                 ),
                 column(3,
-                  selectInput(ns("rm_effectiveness"), "Expected Effectiveness:",
-                             choices = c("", "High", "Medium", "Low", "Unknown"))
+                  selectInput(ns("rm_effectiveness"), i18n$t("Expected Effectiveness:"),
+                             choices = c("", i18n$t("High"), i18n$t("Medium"), i18n$t("Low"), i18n$t("Unknown")))
                 ),
                 column(3,
-                  selectInput(ns("rm_feasibility"), "Feasibility:",
-                             choices = c("", "High", "Medium", "Low"))
+                  selectInput(ns("rm_feasibility"), i18n$t("Feasibility:"),
+                             choices = c("", i18n$t("High"), i18n$t("Medium"), i18n$t("Low")))
                 ),
                 column(3,
-                  numericInput(ns("rm_cost"), "Estimated Cost (relative):",
+                  numericInput(ns("rm_cost"), i18n$t("Estimated Cost (relative):"),
                               value = 5, min = 1, max = 10)
                 )
               ),
               fluidRow(
                 column(6,
-                  textAreaInput(ns("rm_stakeholders"), "Responsible Stakeholders:",
-                               placeholder = "Who implements this measure?",
+                  textAreaInput(ns("rm_stakeholders"), i18n$t("Responsible Stakeholders:"),
+                               placeholder = i18n$t("Who implements this measure?"),
                                rows = 2)
                 ),
                 column(6,
-                  textAreaInput(ns("rm_barriers"), "Implementation Barriers:",
-                               placeholder = "What obstacles exist?",
+                  textAreaInput(ns("rm_barriers"), i18n$t("Implementation Barriers:"),
+                               placeholder = i18n$t("What obstacles exist?"),
                                rows = 2)
                 )
               ),
-              actionButton(ns("add_response"), "Add Response Measure",
+              actionButton(ns("add_response"), i18n$t("Add Response Measure"),
                           icon = icon("plus"), class = "btn-success")
             ),
 
@@ -110,52 +110,52 @@ response_measures_ui <- function(id) {
 
             fluidRow(
               column(12,
-                h5("Response Measures Register"),
+                h5(i18n$t("Response Measures Register")),
                 DTOutput(ns("response_table")),
                 br(),
-                actionButton(ns("delete_response"), "Delete Selected",
+                actionButton(ns("delete_response"), i18n$t("Delete Selected"),
                             icon = icon("trash"), class = "btn-danger")
               )
             )
           ),
 
           # Tab 2: Impact Matrix ----
-          tabPanel("Impact Assessment",
-            h4("Response Measure Impact Matrix"),
-            p("Assess which measures address which problems in your system."),
+          tabPanel(i18n$t("Impact Assessment"),
+            h4(i18n$t("Response Measure Impact Matrix")),
+            p(i18n$t("Assess which measures address which problems in your system.")),
 
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Create Impact Linkage"),
+                  h5(i18n$t("Create Impact Linkage")),
                   fluidRow(
                     column(4,
-                      selectInput(ns("impact_response"), "Select Response:",
+                      selectInput(ns("impact_response"), i18n$t("Select Response:"),
                                  choices = NULL)
                     ),
                     column(4,
-                      selectInput(ns("impact_problem"), "Addresses Problem:",
-                                 choices = c("", "Specific Pressure", "Specific Activity",
-                                           "Specific Driver", "System-wide Issue"))
+                      selectInput(ns("impact_problem"), i18n$t("Addresses Problem:"),
+                                 choices = c("", i18n$t("Specific Pressure"), i18n$t("Specific Activity"),
+                                           i18n$t("Specific Driver"), i18n$t("System-wide Issue")))
                     ),
                     column(4,
-                      textInput(ns("impact_element_id"), "Problem Element ID:",
+                      textInput(ns("impact_element_id"), i18n$t("Problem Element ID:"),
                                placeholder = "e.g., P001, A002")
                     )
                   ),
                   fluidRow(
                     column(4,
-                      selectInput(ns("impact_strength"), "Impact Strength:",
-                                 choices = c("", "Strong", "Moderate", "Weak"))
+                      selectInput(ns("impact_strength"), i18n$t("Impact Strength:"),
+                                 choices = c("", i18n$t("Strong"), i18n$t("Moderate"), i18n$t("Weak")))
                     ),
                     column(4,
-                      selectInput(ns("impact_timeframe"), "Timeframe:",
-                                 choices = c("", "Immediate", "Short-term (1-3y)",
-                                           "Medium-term (3-10y)", "Long-term (>10y)"))
+                      selectInput(ns("impact_timeframe"), i18n$t("Timeframe:"),
+                                 choices = c("", i18n$t("Immediate"), i18n$t("Short-term (1-3y)"),
+                                           i18n$t("Medium-term (3-10y)"), i18n$t("Long-term (>10y)")))
                     ),
                     column(4,
                       br(),
-                      actionButton(ns("add_impact"), "Add Impact Link",
+                      actionButton(ns("add_impact"), i18n$t("Add Impact Link"),
                                   icon = icon("link"), class = "btn-primary")
                     )
                   )
@@ -167,7 +167,7 @@ response_measures_ui <- function(id) {
 
             fluidRow(
               column(12,
-                h5("Impact Matrix"),
+                h5(i18n$t("Impact Matrix")),
                 DTOutput(ns("impact_matrix_table"))
               )
             ),
@@ -177,7 +177,7 @@ response_measures_ui <- function(id) {
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Visual Impact Matrix"),
+                  h5(i18n$t("Visual Impact Matrix")),
                   plotOutput(ns("impact_heatmap"), height = "500px")
                 )
               )
@@ -185,27 +185,27 @@ response_measures_ui <- function(id) {
           ),
 
           # Tab 3: Prioritization ----
-          tabPanel("Prioritization",
-            h4("Response Measure Prioritization"),
-            p("Evaluate and rank measures based on effectiveness, feasibility, and cost."),
+          tabPanel(i18n$t("Prioritization"),
+            h4(i18n$t("Response Measure Prioritization")),
+            p(i18n$t("Evaluate and rank measures based on effectiveness, feasibility, and cost.")),
 
             fluidRow(
               column(6,
                 wellPanel(
-                  h5("Prioritization Criteria Weighting"),
-                  sliderInput(ns("weight_effectiveness"), "Effectiveness Weight:",
+                  h5(i18n$t("Prioritization Criteria Weighting")),
+                  sliderInput(ns("weight_effectiveness"), i18n$t("Effectiveness Weight:"),
                              min = 0, max = 1, value = 0.4, step = 0.1),
-                  sliderInput(ns("weight_feasibility"), "Feasibility Weight:",
+                  sliderInput(ns("weight_feasibility"), i18n$t("Feasibility Weight:"),
                              min = 0, max = 1, value = 0.3, step = 0.1),
-                  sliderInput(ns("weight_cost"), "Cost Weight (inverse):",
+                  sliderInput(ns("weight_cost"), i18n$t("Cost Weight (inverse):"),
                              min = 0, max = 1, value = 0.3, step = 0.1),
-                  actionButton(ns("calculate_priority"), "Calculate Priority Scores",
+                  actionButton(ns("calculate_priority"), i18n$t("Calculate Priority Scores"),
                               class = "btn-primary btn-block")
                 )
               ),
               column(6,
                 wellPanel(
-                  h5("Priority Ranking"),
+                  h5(i18n$t("Priority Ranking")),
                   verbatimTextOutput(ns("priority_summary"))
                 )
               )
@@ -215,7 +215,7 @@ response_measures_ui <- function(id) {
 
             fluidRow(
               column(12,
-                h5("Prioritized Response Measures"),
+                h5(i18n$t("Prioritized Response Measures")),
                 DTOutput(ns("priority_table"))
               )
             ),
@@ -225,13 +225,13 @@ response_measures_ui <- function(id) {
             fluidRow(
               column(6,
                 wellPanel(
-                  h5("Effectiveness vs. Feasibility"),
+                  h5(i18n$t("Effectiveness vs. Feasibility")),
                   plotOutput(ns("ef_plot"), height = "400px")
                 )
               ),
               column(6,
                 wellPanel(
-                  h5("Cost vs. Expected Impact"),
+                  h5(i18n$t("Cost vs. Expected Impact")),
                   plotOutput(ns("cost_impact_plot"), height = "400px")
                 )
               )
@@ -239,37 +239,37 @@ response_measures_ui <- function(id) {
           ),
 
           # Tab 4: Implementation Planning ----
-          tabPanel("Implementation Plan",
-            h4("Response Implementation Roadmap"),
+          tabPanel(i18n$t("Implementation Plan"),
+            h4(i18n$t("Response Implementation Roadmap")),
 
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Add Implementation Milestone"),
+                  h5(i18n$t("Add Implementation Milestone")),
                   fluidRow(
                     column(4,
-                      selectInput(ns("impl_response"), "Response Measure:",
+                      selectInput(ns("impl_response"), i18n$t("Response Measure:"),
                                  choices = NULL)
                     ),
                     column(4,
-                      textInput(ns("impl_milestone"), "Milestone:",
-                               placeholder = "e.g., Legislation passed")
+                      textInput(ns("impl_milestone"), i18n$t("Milestone:"),
+                               placeholder = i18n$t("e.g., Legislation passed"))
                     ),
                     column(4,
-                      dateInput(ns("impl_date"), "Target Date:",
+                      dateInput(ns("impl_date"), i18n$t("Target Date:"),
                                value = Sys.Date() + 365)
                     )
                   ),
                   fluidRow(
                     column(8,
-                      textAreaInput(ns("impl_notes"), "Notes/Actions Required:",
+                      textAreaInput(ns("impl_notes"), i18n$t("Notes/Actions Required:"),
                                    rows = 2)
                     ),
                     column(4,
-                      selectInput(ns("impl_status"), "Status:",
-                                 choices = c("Pending", "In Progress", "Completed", "Delayed")),
+                      selectInput(ns("impl_status"), i18n$t("Status:"),
+                                 choices = c(i18n$t("Pending"), i18n$t("In Progress"), i18n$t("Completed"), i18n$t("Delayed"))),
                       br(),
-                      actionButton(ns("add_milestone"), "Add Milestone",
+                      actionButton(ns("add_milestone"), i18n$t("Add Milestone"),
                                   class = "btn-success")
                     )
                   )
@@ -281,7 +281,7 @@ response_measures_ui <- function(id) {
 
             fluidRow(
               column(12,
-                h5("Implementation Timeline"),
+                h5(i18n$t("Implementation Timeline")),
                 DTOutput(ns("implementation_table"))
               )
             ),
@@ -291,7 +291,7 @@ response_measures_ui <- function(id) {
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Gantt Chart (Simplified)"),
+                  h5(i18n$t("Gantt Chart (Simplified)")),
                   plotOutput(ns("gantt_plot"), height = "400px")
                 )
               )
@@ -299,27 +299,27 @@ response_measures_ui <- function(id) {
           ),
 
           # Tab 5: Export ----
-          tabPanel("Export",
-            h4("Export Response Analysis"),
+          tabPanel(i18n$t("Export"),
+            h4(i18n$t("Export Response Analysis")),
 
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Download Response Documentation"),
+                  h5(i18n$t("Download Response Documentation")),
                   fluidRow(
                     column(4,
                       downloadButton(ns("download_response_excel"),
-                                    "Download Response Data (Excel)",
+                                    i18n$t("Download Response Data (Excel)"),
                                     class = "btn-success btn-block")
                     ),
                     column(4,
                       downloadButton(ns("download_priority_report"),
-                                    "Download Priority Report (PDF)",
+                                    i18n$t("Download Priority Report (PDF)"),
                                     class = "btn-info btn-block")
                     ),
                     column(4,
                       downloadButton(ns("download_implementation_plan"),
-                                    "Download Implementation Plan",
+                                    i18n$t("Download Implementation Plan"),
                                     class = "btn-warning btn-block")
                     )
                   )
@@ -333,7 +333,7 @@ response_measures_ui <- function(id) {
   )
 }
 
-response_measures_server <- function(id, project_data_reactive) {
+response_measures_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -410,7 +410,7 @@ response_measures_server <- function(id, project_data_reactive) {
       updateTextAreaInput(session, "rm_stakeholders", value = "")
       updateTextAreaInput(session, "rm_barriers", value = "")
 
-      showNotification("Response measure added!", type = "message")
+      showNotification(i18n$t("Response measure added!"), type = "message")
     })
 
     # Response Table ----
@@ -426,7 +426,7 @@ response_measures_server <- function(id, project_data_reactive) {
       selected <- input$response_table_rows_selected
       if(!is.null(selected) && length(selected) > 0) {
         response_data$measures <- response_data$measures[-selected, ]
-        showNotification("Deleted response measure(s)", type = "warning")
+        showNotification(i18n$t("Deleted response measure(s)"), type = "warning")
       }
     })
 
@@ -458,7 +458,7 @@ response_measures_server <- function(id, project_data_reactive) {
       )
 
       response_data$impacts <- rbind(response_data$impacts, new_row)
-      showNotification("Impact linkage added!", type = "message")
+      showNotification(i18n$t("Impact linkage added!"), type = "message")
     })
 
     # Impact Matrix Table ----
@@ -522,19 +522,19 @@ response_measures_server <- function(id, project_data_reactive) {
       valid <- !is.na(eff_num) & !is.na(feas_num)
 
       if(sum(valid) == 0) {
-        plot(1, 1, type = "n", main = "Add effectiveness and feasibility ratings")
+        plot(1, 1, type = "n", main = i18n$t("Add effectiveness and feasibility ratings"))
         return()
       }
 
       plot(feas_num[valid], eff_num[valid],
            xlim = c(0.5, 3.5), ylim = c(0.5, 3.5),
-           xlab = "Feasibility", ylab = "Effectiveness",
-           main = "Response Measure Prioritization Matrix",
+           xlab = i18n$t("Feasibility"), ylab = i18n$t("Effectiveness"),
+           main = i18n$t("Response Measure Prioritization Matrix"),
            pch = 19, cex = 2, col = "#457B9D",
            xaxt = "n", yaxt = "n")
 
-      axis(1, at = 1:3, labels = c("Low", "Medium", "High"))
-      axis(2, at = 1:3, labels = c("Low", "Medium", "High"))
+      axis(1, at = 1:3, labels = c(i18n$t("Low"), i18n$t("Medium"), i18n$t("High")))
+      axis(2, at = 1:3, labels = c(i18n$t("Low"), i18n$t("Medium"), i18n$t("High")))
 
       abline(h = 2, v = 2, col = "gray", lty = 2)
 
@@ -543,10 +543,10 @@ response_measures_server <- function(id, project_data_reactive) {
            measures$ID[valid], pos = 3, cex = 0.7)
 
       # Quadrant labels
-      text(2.5, 2.5, "High Priority\n(Effective & Feasible)", cex = 0.9, col = "darkgreen")
-      text(1.25, 2.5, "Effective but\nDifficult", cex = 0.9, col = "darkorange")
-      text(2.5, 1.25, "Easy but\nLimited Impact", cex = 0.9, col = "darkorange")
-      text(1.25, 1.25, "Low Priority", cex = 0.9, col = "darkred")
+      text(2.5, 2.5, i18n$t("High Priority\n(Effective & Feasible)"), cex = 0.9, col = "darkgreen")
+      text(1.25, 2.5, i18n$t("Effective but\nDifficult"), cex = 0.9, col = "darkorange")
+      text(2.5, 1.25, i18n$t("Easy but\nLimited Impact"), cex = 0.9, col = "darkorange")
+      text(1.25, 1.25, i18n$t("Low Priority"), cex = 0.9, col = "darkred")
     })
 
     # Add Milestone ----
@@ -567,7 +567,7 @@ response_measures_server <- function(id, project_data_reactive) {
       updateTextInput(session, "impl_milestone", value = "")
       updateTextAreaInput(session, "impl_notes", value = "")
 
-      showNotification("Milestone added!", type = "message")
+      showNotification(i18n$t("Milestone added!"), type = "message")
     })
 
     # Implementation Table ----
@@ -599,50 +599,50 @@ response_measures_server <- function(id, project_data_reactive) {
     # Help Modal ----
     observeEvent(input$help_response, {
       showModal(modalDialog(
-        title = "Response Measures Guide",
+        title = i18n$t("Response Measures Guide"),
         size = "l",
         easyClose = TRUE,
 
-        h4("Completing DAPSI(W)R(M)"),
-        p("Response measures (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems."),
+        h4(i18n$t("Completing DAPSI(W)R(M)")),
+        p(i18n$t("Response measures (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems.")),
 
         hr(),
-        h5("Types of Response Measures"),
+        h5(i18n$t("Types of Response Measures")),
 
         tags$ul(
-          tags$li(strong("Regulatory:"), "Laws, quotas, protected areas, bans"),
-          tags$li(strong("Economic:"), "Taxes, subsidies, payments for ecosystem services"),
-          tags$li(strong("Educational:"), "Awareness campaigns, training, capacity building"),
-          tags$li(strong("Technical:"), "New technologies, best practices, innovation"),
-          tags$li(strong("Institutional:"), "Governance reforms, co-management, partnerships"),
-          tags$li(strong("Voluntary:"), "Certification, codes of conduct, stewardship")
+          tags$li(strong(i18n$t("Regulatory:")), i18n$t("Laws, quotas, protected areas, bans")),
+          tags$li(strong(i18n$t("Economic:")), i18n$t("Taxes, subsidies, payments for ecosystem services")),
+          tags$li(strong(i18n$t("Educational:")), i18n$t("Awareness campaigns, training, capacity building")),
+          tags$li(strong(i18n$t("Technical:")), i18n$t("New technologies, best practices, innovation")),
+          tags$li(strong(i18n$t("Institutional:")), i18n$t("Governance reforms, co-management, partnerships")),
+          tags$li(strong(i18n$t("Voluntary:")), i18n$t("Certification, codes of conduct, stewardship"))
         ),
 
         hr(),
-        h5("Intervention Points"),
+        h5(i18n$t("Intervention Points")),
 
         tags$ul(
-          tags$li(strong("Drivers:"), "Address root causes (most leverage but hardest)"),
-          tags$li(strong("Activities:"), "Regulate what people do (direct but may face resistance)"),
-          tags$li(strong("Pressures:"), "Mitigate impacts (symptomatic treatment)"),
-          tags$li(strong("State:"), "Restore ecosystems (expensive, slow)")
+          tags$li(strong(i18n$t("Drivers:")), i18n$t("Address root causes (most leverage but hardest)")),
+          tags$li(strong(i18n$t("Activities:")), i18n$t("Regulate what people do (direct but may face resistance)")),
+          tags$li(strong(i18n$t("Pressures:")), i18n$t("Mitigate impacts (symptomatic treatment)")),
+          tags$li(strong(i18n$t("State:")), i18n$t("Restore ecosystems (expensive, slow)"))
         ),
 
         hr(),
-        h5("Prioritization Criteria"),
+        h5(i18n$t("Prioritization Criteria")),
 
         tags$ul(
-          tags$li(strong("Effectiveness:"), "Will it solve the problem?"),
-          tags$li(strong("Feasibility:"), "Can it be implemented (political, social, technical)?"),
-          tags$li(strong("Cost:"), "What resources are required?"),
-          tags$li(strong("Timeframe:"), "How quickly will it have effects?"),
-          tags$li(strong("Co-benefits:"), "Does it address multiple issues?")
+          tags$li(strong(i18n$t("Effectiveness:")), i18n$t("Will it solve the problem?")),
+          tags$li(strong(i18n$t("Feasibility:")), i18n$t("Can it be implemented (political, social, technical)?")),
+          tags$li(strong(i18n$t("Cost:")), i18n$t("What resources are required?")),
+          tags$li(strong(i18n$t("Timeframe:")), i18n$t("How quickly will it have effects?")),
+          tags$li(strong(i18n$t("Co-benefits:")), i18n$t("Does it address multiple issues?"))
         ),
 
         hr(),
-        p(em("Effective responses address feedback loops and leverage points identified in your ISA analysis.")),
+        p(em(i18n$t("Effective responses address feedback loops and leverage points identified in your ISA analysis."))),
 
-        footer = modalButton("Close")
+        footer = modalButton(i18n$t("Close"))
       ))
     })
 
@@ -668,12 +668,12 @@ response_measures_server <- function(id, project_data_reactive) {
 # VALIDATION MODULE (Placeholder - basic validation in ISA Exercise 12)
 # ============================================================================
 
-response_validation_ui <- function(id) {
+response_validation_ui <- function(id, i18n) {
   ns <- NS(id)
   fluidPage(
-    h2("Model Validation"),
-    p("Track validation activities and model confidence assessment."),
-    p(strong("Status:"), "Basic validation tracking available in ISA Exercise 12. Advanced features coming soon.")
+    h2(i18n$t("Model Validation")),
+    p(i18n$t("Track validation activities and model confidence assessment.")),
+    p(strong(i18n$t("Status:")), i18n$t("Basic validation tracking available in ISA Exercise 12. Advanced features coming soon."))
   )
 }
 
