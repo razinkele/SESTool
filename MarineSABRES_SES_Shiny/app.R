@@ -570,7 +570,7 @@ ui <- dashboardPage(
       
       # ==================== RESPONSE & VALIDATION ====================
       tabItem(tabName = "response_measures", response_measures_ui("resp_meas", i18n)),
-      tabItem(tabName = "response_scenarios", scenario_builder_ui("scenario_builder")),
+      tabItem(tabName = "response_scenarios", scenario_builder_ui("scenario_builder", i18n)),
       tabItem(tabName = "response_validation", response_validation_ui("resp_val", i18n)),
       
       # ==================== EXPORT ====================
@@ -971,7 +971,7 @@ server <- function(input, output, session) {
   
   # Response & validation modules
   response_measures_server("resp_meas", project_data, i18n)
-  scenario_builder_server("scenario_builder", project_data)
+  scenario_builder_server("scenario_builder", project_data, i18n)
   response_validation_server("resp_val", project_data)
   
   # ========== DASHBOARD ==========
