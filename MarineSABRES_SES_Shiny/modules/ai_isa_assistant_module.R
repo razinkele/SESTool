@@ -610,14 +610,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
       }
     })
 
-    # Render progress bar
-    output$progress_bar <- renderUI({
-      progress_pct <- round((rv$current_step / length(QUESTION_FLOW)) * 100)
-      div(class = "progress-fill",
-          style = paste0("width: ", progress_pct, "%;"),
-          paste0(progress_pct, "%")
-      )
-    })
+    # Note: progress_bar is rendered later (see line 1170) with better calculation using rv$total_steps
 
     # Render conversation
     output$conversation <- renderUI({
@@ -1128,7 +1121,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
 
     # Move to next step
     move_to_next_step <- function() {
-      rv$current_step <- rv$current_step + 1
+      # Check if we can move forward before incrementing
+      if (rv$current_step < length(QUESTION_FLOW)) {
+        rv$current_step <- rv$current_step + 1
+      }
 
       if (rv$current_step < length(QUESTION_FLOW)) {
         # Add next question
