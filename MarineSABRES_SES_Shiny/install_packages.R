@@ -28,17 +28,19 @@ if (r_version < 4.0) {
   warning("R version 4.0.0 or higher is recommended. Current version: ", R.version.string)
 }
 
-cat("\nStep 1/5: Installing Core Shiny Packages...\n")
+cat("\nStep 1/6: Installing Core Shiny Packages...\n")
 cat("------------------------------------------------------------\n")
 core_packages <- c(
   "shiny",
   "shinydashboard",
   "shinyWidgets",
-  "shinyjs"
+  "shinyjs",
+  "shinyBS",
+  "shiny.i18n"
 )
 install_if_missing(core_packages)
 
-cat("\nStep 2/5: Installing Data Manipulation Packages...\n")
+cat("\nStep 2/6: Installing Data Manipulation Packages...\n")
 cat("------------------------------------------------------------\n")
 data_packages <- c(
   "tidyverse",
@@ -52,7 +54,7 @@ data_packages <- c(
 )
 install_if_missing(data_packages)
 
-cat("\nStep 3/5: Installing Network Analysis Packages...\n")
+cat("\nStep 3/6: Installing Network Analysis Packages...\n")
 cat("------------------------------------------------------------\n")
 network_packages <- c(
   "igraph",
@@ -62,7 +64,7 @@ network_packages <- c(
 )
 install_if_missing(network_packages)
 
-cat("\nStep 4/5: Installing Visualization Packages...\n")
+cat("\nStep 4/6: Installing Visualization Packages...\n")
 cat("------------------------------------------------------------\n")
 viz_packages <- c(
   "ggplot2",
@@ -72,7 +74,7 @@ viz_packages <- c(
 )
 install_if_missing(viz_packages)
 
-cat("\nStep 5/5: Installing Export and Reporting Packages...\n")
+cat("\nStep 5/6: Installing Export and Reporting Packages...\n")
 cat("------------------------------------------------------------\n")
 export_packages <- c(
   "rmarkdown",
@@ -82,8 +84,22 @@ export_packages <- c(
 )
 install_if_missing(export_packages)
 
-# Install webshot and phantomjs for PNG export
-cat("\nInstalling webshot for PNG export functionality...\n")
+cat("\nStep 6/6: Installing Additional Dependencies...\n")
+cat("------------------------------------------------------------\n")
+additional_packages <- c(
+  "xts",
+  "zoo",
+  "lubridate",
+  "stringr",
+  "tibble",
+  "webshot",
+  "R6",
+  "sessioninfo"
+)
+install_if_missing(additional_packages)
+
+# Install phantomjs for PNG export
+cat("\nInstalling phantomjs for PNG export functionality...\n")
 cat("------------------------------------------------------------\n")
 if (!requireNamespace("webshot", quietly = TRUE)) {
   install.packages("webshot")
@@ -111,7 +127,7 @@ cat("\n=========================================================================
 cat("Installation Verification\n")
 cat("================================================================================\n\n")
 
-all_packages <- c(core_packages, data_packages, network_packages, viz_packages, export_packages, "webshot")
+all_packages <- c(core_packages, data_packages, network_packages, viz_packages, export_packages, additional_packages)
 missing_packages <- c()
 
 for (pkg in all_packages) {

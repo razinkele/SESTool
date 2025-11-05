@@ -46,9 +46,44 @@ This R Shiny application digitizes and streamlines the Integrated Systems Analys
 - Stakeholder presentation generator
 - Validation questionnaire and feedback collection
 
+### 5. Internationalization (i18n)
+- Full multi-language support with 1,073 translations
+- Supported languages:
+  - English
+  - Spanish (Español)
+  - French (Français)
+  - German (Deutsch)
+  - Lithuanian (Lietuvių)
+  - Portuguese (Português)
+  - Italian (Italiano)
+- Instant language switching without page reload
+- All UI elements, menus, and messages translated
+- Reactive language updates across all modules
+
 ## Installation
 
 ### Prerequisites
+
+**Minimum R Version:** 4.4.1 or higher
+
+### Quick Installation (Automated)
+
+Run the automated installation script:
+
+```r
+setwd("path/to/MarineSABRES_SES_Shiny")
+source("install_packages.R")
+```
+
+This will install all required packages in 6 steps:
+1. Core Shiny packages (including `shiny.i18n` for internationalization)
+2. Data manipulation packages
+3. Network analysis packages
+4. Visualization packages
+5. Export and reporting packages
+6. Additional dependencies
+
+### Manual Installation
 
 ```r
 # Install required R packages
@@ -58,49 +93,78 @@ install.packages(c(
   "shinydashboard",
   "shinyWidgets",
   "shinyjs",
-  
+  "shinyBS",
+  "shiny.i18n",
+
   # Data management
   "DT",
   "tidyverse",
   "openxlsx",
   "jsonlite",
-  
+
   # Network visualization and analysis
   "igraph",
   "visNetwork",
   "ggraph",
   "tidygraph",
-  
+
   # Plotting
   "ggplot2",
   "plotly",
   "dygraphs",
-  
+
+  # Time series and data handling
+  "xts",
+  "zoo",
+  "lubridate",
+  "stringr",
+  "tibble",
+
   # Project management
   "timevis",
-  
+
   # Export/Reporting
   "rmarkdown",
   "htmlwidgets",
-  "webshot"
+  "webshot",
+  "knitr",
+  "htmltools",
+
+  # Additional
+  "R6",
+  "sessioninfo"
 ))
 
 # For webshot (screenshot functionality)
 webshot::install_phantomjs()
 ```
 
-### Setup
+### Running the Application
 
-1. Clone or download this repository
-2. Open R/RStudio
-3. Set working directory to the project folder:
-   ```r
-   setwd("path/to/MarineSABRES_SES_Shiny")
-   ```
-4. Run the application:
-   ```r
-   shiny::runApp()
-   ```
+#### Option 1: Interactive Launcher (Recommended)
+
+```r
+setwd("path/to/MarineSABRES_SES_Shiny")
+source("run_app.R")
+```
+
+The interactive launcher provides options to:
+- Launch in default browser
+- Specify custom port
+- Display mode (fullscreen)
+
+#### Option 2: Direct Launch
+
+```r
+setwd("path/to/MarineSABRES_SES_Shiny")
+shiny::runApp()
+```
+
+#### Option 3: Custom Port
+
+```r
+shiny::runApp(port = 4000, host = "0.0.0.0")
+```
 
 ## Project Structure
 
@@ -233,9 +297,10 @@ Identify influential, relay, dependent, and autonomous elements
 If you use this application in your research, please cite:
 
 ```
-MarineSABRES Project (2024). MarineSABRES SES Shiny Application: 
-Computer-Assisted Social-Ecological Systems Analysis Tool. 
-Version 1.0. EU Horizon Europe Project.
+MarineSABRES Project (2025). MarineSABRES SES Shiny Application:
+Computer-Assisted Social-Ecological Systems Analysis Tool.
+Version 1.3.0 - Complete Internationalization Release.
+EU Horizon Europe Project.
 ```
 
 ## References
@@ -258,6 +323,27 @@ For questions, issues, or contributions:
 This application was developed as part of the MarineSABRES project, funded by the EU Horizon Europe programme.
 
 ## Version History
+
+### Version 1.3.0 (November 2025) - "Complete Internationalization Release"
+- **Full internationalization** with 1,073 translations across 7 languages
+- Complete multi-language support for all modules
+- Reactive UI pattern for instant language switching
+- Fixed hardcoded strings and namespace issues
+- Optimized language change animation timing
+- Clean project structure with organized codebase
+- Network metrics analysis with 7 centrality metrics
+- Interactive DataTable with node metrics
+- Enhanced confidence property system
+- All modal dialogs and notifications fully translated
+
+### Version 1.2.0 (October 2025) - "Confidence & UI Enhancement Release"
+- Confidence property system (1-5 scale) for CLD edges
+- Visual feedback through edge opacity
+- Interactive confidence filtering
+- About dialog with comprehensive version information
+- Collapsible sidebar in CLD visualization
+- Streamlined CLD interface
+- Comprehensive testing framework (174 tests)
 
 ### Version 1.0 (2024)
 - Initial release

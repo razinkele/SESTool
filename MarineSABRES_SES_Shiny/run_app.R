@@ -48,9 +48,26 @@ cat("✓ All required packages are available\n\n")
 
 # Display application info
 cat("Application Information:\n")
-cat("  Version: 1.0.0\n")
+
+# Read version from VERSION_INFO.json
+version_info <- tryCatch({
+  jsonlite::fromJSON("VERSION_INFO.json")
+}, error = function(e) {
+  list(version = "Unknown", version_name = "", status = "")
+})
+
+cat("  Version:", version_info$version, "-", version_info$version_name, "\n")
+cat("  Status:", toupper(version_info$status), "\n")
 cat("  R Version:", R.version.string, "\n")
-cat("  Working Directory:", getwd(), "\n\n")
+cat("  Working Directory:", getwd(), "\n")
+
+# Check minimum R version
+min_r_version <- as.numeric(gsub("(\\d+\\.\\d+).*", "\\1", version_info$minimum_r_version))
+current_r_version <- as.numeric(paste0(R.version$major, ".", R.version$minor))
+if (current_r_version < min_r_version) {
+  cat("  ⚠ WARNING: R version", version_info$minimum_r_version, "or higher is recommended\n")
+}
+cat("\n")
 
 # Launch options
 cat("Launch Options:\n")
