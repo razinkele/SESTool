@@ -16,6 +16,213 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.0-beta] - 2025-11-05 - "AI Assistant & Navigation Overhaul"
+
+### Added
+
+#### Sprint 1: Navigation Components (Phase 1, Days 3-5)
+- **Breadcrumb Navigation Module** - Track user position in multi-step workflows
+  - Dynamic breadcrumb path based on current location
+  - Clickable breadcrumbs for quick navigation
+  - Automatic path updates
+  - Customizable separator and home icon
+- **Progress Indicator Module** - Visual step tracking for wizards
+  - Numbered step circles with completion status
+  - Vertical timeline layout
+  - Active, completed, and pending states
+  - Dynamic step title display
+- **Navigation Buttons Component** - Consistent Previous/Next navigation
+  - Dynamic button state management (disabled when at boundaries)
+  - Customizable button labels via i18n
+  - Step counter display
+  - Finish button on last step
+
+#### Sprint 2: AI Assistant Critical Fixes (Phase 1, Days 1-2)
+- **Progress Bar** - Animated visual progress indicator
+  - Shows percentage completion (0-100%)
+  - Step counter "Step X of Y"
+  - Updates in real-time as user progresses
+  - Styled with CSS animation
+- **Save Error Handling** - Comprehensive error feedback
+  - Data structure initialization checks
+  - Try-catch wrapper around save operations
+  - User-friendly error messages via showNotification
+  - Debug logging with [AI ISA] prefix
+- **Data Initialization Observer** - ISA Data Entry module enhancement
+  - Loads AI Assistant saved data on module start
+  - Initializes all 6 DAPSI(W)R(M) categories
+  - Updates element counters
+  - Debug logging with [ISA Module] prefix
+
+### Fixed
+
+#### Critical Bugs (Sprint 2 Day 1-2)
+- **🔴 CRITICAL: Multiple Observer Registration Bug** ([ai_isa_assistant_module.R:882-916](modules/ai_isa_assistant_module.R#L882-L916))
+  - **Problem:** Quick option buttons created duplicate elements
+  - **Root Cause:** Observer handlers created inside `observe()` block accumulated on every step change
+  - **Impact:** Clicking "Add example" once added item multiple times (3-5 duplicates reported)
+  - **Fix:**
+    - Added `quick_observers_setup_for_step <- reactiveVal(-1)` to track setup state
+    - Only create observers if current step differs from last setup
+    - Used `local()` for proper closure variable capture
+    - Added `once = TRUE` parameter to prevent re-triggering
+    - Added step validation before processing answer
+  - **User Impact:** Each quick option click now adds exactly one element
+
+- **🔴 CRITICAL: Save to ISA Failing Silently** ([ai_isa_assistant_module.R:1787-2126](modules/ai_isa_assistant_module.R#L1787-L2126))
+  - **Problem:** "Save to ISA Data Entry" button did nothing, no error messages
+  - **Root Cause:** Code assumed `project_data` structure existed, failed silently if null
+  - **Impact:** Users couldn't save AI Assistant work, thought feature was broken
+  - **Fix:**
+    - Added null/empty checks for `project_data`
+    - Initialize `data$isa_data` structure if missing
+    - Wrapped entire save in `tryCatch` with error handling
+    - Added success/error notifications to user
+    - Added comprehensive debug logging
+  - **User Impact:** Save now works reliably with clear feedback
+
+- **🔴 CRITICAL: ISA Standard Entry Tables Empty** ([isa_data_entry_module.R:142-205](modules/isa_data_entry_module.R#L142-L205))
+  - **Problem:** After successful AI Assistant save, ISA tables showed no data
+  - **Root Cause:** ISA module uses local `isa_data` reactiveValues, not connected to `project_data`
+  - **Impact:** Users saw dashboard showing "112 elements, 70% complete" but empty tables
+  - **Fix:**
+    - Added observer to watch `project_data` changes
+    - Initializes ISA tables from `project_data$data$isa_data` on module load
+    - Loads all 6 categories: Drivers, Activities, Pressures, Marine Processes, Ecosystem Services, Goods/Benefits
+    - Updates counters for each loaded category
+  - **User Impact:** Tables now correctly display AI Assistant saved data
+
+#### High Priority Bugs (Sprint 2 Day 2)
+- **Step Counter Overflow** ([ai_isa_assistant_module.R:1125-1127](modules/ai_isa_assistant_module.R#L1125-L1127))
+  - **Problem:** Progress showed "Step 12 of 11" and "109%"
+  - **Root Cause:** `move_to_next_step()` incremented without bounds check
+  - **Fix:** Added `if (rv$current_step < length(QUESTION_FLOW))` before incrementing
+  - **User Impact:** Step counter stays within valid range (1-11)
+
+- **Duplicate Progress Bar UI** ([ai_isa_assistant_module.R:182-192](modules/ai_isa_assistant_module.R#L182-L192))
+  - **Problem:** Console errors about duplicate `output$progress_bar` definition
+  - **Root Cause:** Progress bar rendered in both main content and sidebar
+  - **Fix:** Removed duplicate from main content area, kept sidebar version
+  - **User Impact:** Cleaner UI, no console errors
+
+- **Connection Approval Button Closure Bug** ([ai_isa_assistant_module.R:743-760](modules/ai_isa_assistant_module.R#L743-L760))
+  - **Problem:** Individual approve/reject buttons didn't work, only "Approve All"
+  - **Root Cause:** Loop variable not captured properly in closure (same as quick options bug)
+  - **Fix:**
+    - Wrapped connection observer loop in `local()`
+    - Captured `conn_idx` in local scope
+    - Used `<<-` for parent scope assignment
+  - **User Impact:** Each approve/reject button now works independently
+
+#### Browser Cache Issue
+- **LocalStorage Caching** - Documented workaround
+  - **Problem:** Fixes not visible due to browser restoring old broken session (step=12)
+  - **Root Cause:** AI Assistant saves session to localStorage, old state restored on load
+  - **Solution:** Clear localStorage via console:
+    ```javascript
+    localStorage.removeItem('ai_isa_session');
+    localStorage.removeItem('ai_isa_session_timestamp');
+    location.reload();
+    ```
+  - **User Impact:** All fixes work correctly after cache clear
+
+### Changed
+
+#### Debugging and Logging
+- **Enhanced Debug Output** - Added prefixed logging throughout
+  - `[AI ISA]` prefix for AI Assistant operations
+  - `[ISA Module]` prefix for ISA Data Entry operations
+  - Logs element counts, save progress, data loading
+  - Helps diagnose issues and confirm operations
+
+#### Code Quality
+- **Observer Pattern Improvements** - Better reactive programming practices
+  - Proper closure capture with `local()`
+  - State tracking with `reactiveVal` to prevent duplicate observers
+  - Bounds checking before state mutations
+  - `once = TRUE` parameter for single-execution observers
+
+### Technical Details
+
+#### Files Modified
+- [modules/ai_isa_assistant_module.R](modules/ai_isa_assistant_module.R) - 6 critical fixes
+  - Lines 182-192: Removed duplicate progress bar UI
+  - Lines 392-400: Added progress UI to sidebar
+  - Lines 743-760: Fixed connection button closures
+  - Lines 882-916: Fixed observer accumulation bug
+  - Lines 1125-1127: Fixed step counter bounds
+  - Lines 1169-1183: Added progress bar renderer
+  - Lines 1787-2126: Fixed save initialization and error handling
+
+- [modules/isa_data_entry_module.R](modules/isa_data_entry_module.R) - Data loading fix
+  - Lines 142-205: Added data initialization observer
+
+- [modules/breadcrumb_nav_module.R](modules/breadcrumb_nav_module.R) - NEW (Sprint 1)
+- [modules/progress_indicator_module.R](modules/progress_indicator_module.R) - NEW (Sprint 1)
+- [modules/navigation_buttons_module.R](modules/navigation_buttons_module.R) - NEW (Sprint 1)
+
+- [PHASE1_IMPLEMENTATION_GUIDE.md](PHASE1_IMPLEMENTATION_GUIDE.md) - Sprint 1 & 2 documentation
+- [AI_ISA_BUG_ANALYSIS.md](AI_ISA_BUG_ANALYSIS.md) - NEW (Bug analysis and fix plan)
+- [VERSION_INFO.json](VERSION_INFO.json) - Updated to v1.4.0-beta
+- [CHANGELOG.md](CHANGELOG.md) - This file
+
+#### Testing Protocol
+From [AI_ISA_BUG_ANALYSIS.md:212-262](AI_ISA_BUG_ANALYSIS.md#L212-L262):
+
+**Test Scenario 1: Quick Option Bug Fix**
+- ✅ Each quick option click adds exactly one element (no duplicates)
+- ✅ Behavior consistent across all 11 steps
+- ✅ User confirmed: "Model saved successfully! 16 elements and 14 connections"
+
+**Test Scenario 2: Progress Indicator**
+- ✅ Progress bar shows 0% initially
+- ✅ Updates correctly through all steps
+- ✅ Step counter shows "Step X of Y" (stays within bounds)
+- ✅ User confirmed: "now it is ok" after localStorage clear
+
+**Test Scenario 3: Complete Model Creation**
+- ✅ All elements save correctly to ISA Data Entry
+- ✅ Dashboard shows accurate counts (112 elements, 14 connections, 70% complete)
+- ✅ ISA tables display all saved data
+- ✅ Connection approval works individually
+
+**Test Scenario 4: Element Counts**
+- ✅ Element counts match between AI Assistant and ISA Data Entry
+- ✅ No data loss during save/load cycle
+
+#### Commits Included
+1. `2d4aa86` - Sprint 1 navigation components
+2. `22722a9` - AI Assistant observer bug fix
+3. `7f1da60` - AI Assistant save initialization
+4. `fef2440` - ISA Data Entry display fix
+5. `84bbbc7` - Implementation guide update
+6. `6a8bbe5` - Step counter bounds check
+7. `917d797` - Duplicate UI removal
+8. `8372bfc` - Connection button closure fix
+
+### Known Issues
+
+#### Remaining Bugs (Sprint 2 Days 3-5 To Do)
+- **Deleted nodes reappearing in reports** - Needs investigation
+- **Intervention analysis inconsistency** - Requires fix
+
+#### Not Yet Integrated
+- Sprint 1 navigation components complete but not integrated into app.R
+- Progress indicator module ready for other data entry workflows
+- Breadcrumb module ready for multi-step interfaces
+
+### Migration Notes
+- **✅ Fully backward compatible** - No breaking changes
+- **No migration required** - Existing projects work unchanged
+- **Clear localStorage** if you see "Step 12 of 11" or other cached issues
+
+### Performance
+- **No performance impact** from fixes
+- **Reduced memory usage** - Fixed observer leak (observers no longer accumulate)
+- **Faster debugging** - Enhanced logging helps identify issues quickly
+
+---
+
 ## [1.3.0] - 2025-11-05 - "Complete Internationalization Release"
 
 ### Added

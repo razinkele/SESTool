@@ -1,9 +1,9 @@
 {
-  "version": "1.3.0",
-  "version_name": "Complete Internationalization Release",
+  "version": "1.4.0-beta",
+  "version_name": "AI Assistant & Navigation Overhaul",
   "release_date": "2025-11-05",
   "release_type": "minor",
-  "status": "stable",
+  "status": "beta",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
   "documentation_version": "1.3.0",
@@ -12,22 +12,23 @@
   "breaking_changes": false,
   "security_updates": false,
   "features": [
+    "AI Assistant Critical Bug Fixes (Sprint 2 Days 1-2)",
+    "Fixed multiple observer registration bug causing duplicate element additions",
+    "Fixed AI Assistant save initialization and error handling",
+    "Added step counter and animated progress bar to AI Assistant",
+    "Fixed ISA Data Entry module to display AI Assistant saved data",
+    "Fixed step counter overflow (Step 12 of 11 bug)",
+    "Fixed connection approval button closure capture",
+    "Sprint 1 Navigation Components (ready to integrate)",
+    "Breadcrumb navigation module for multi-step workflows",
+    "Progress indicator module with step tracking",
+    "Navigation buttons component with dynamic state management",
     "Complete internationalization across all modules (1,073 translations)",
     "Support for 7 languages: English, Spanish, French, German, Lithuanian, Portuguese, Italian",
     "Reactive UI pattern for dynamic language switching without full page reload",
     "All modal dialogs and notifications fully translated",
-    "Fixed hardcoded English strings in main app (13 locations)",
-    "Optimized language change animation timing",
-    "Fixed AI ISA Assistant sidebar namespace issue",
-    "Complete Create SES module internationalization with reactive UI",
-    "Entry Point module navigation notifications in all languages",
-    "Clean project structure with organized codebase",
     "Network Metrics Analysis Module with 7 centrality metrics",
     "Interactive DataTable with all node metrics (sortable, searchable, filterable)",
-    "Network visualizations (bar plots, scatter plots, histograms with statistics)",
-    "Key node identification (Top 5 for each metric)",
-    "Excel export with comprehensive metrics",
-    "Comprehensive metrics guide with explanations and use cases",
     "Confidence property system (1-5 scale) with visual feedback",
     "Collapsible sidebar for CLD visualization",
     "About dialog with version and system information"
@@ -57,9 +58,9 @@
     "MarineSABRES Team"
   ],
   "build_info": {
-    "build_date": "2025-11-05T08:50:00Z",
-    "build_environment": "production",
+    "build_date": "2025-11-05T12:00:00Z",
+    "build_environment": "beta",
     "git_branch": "main",
-    "git_commit": "7b94c09"
+    "git_commit": "8372bfc"
   }
 }
