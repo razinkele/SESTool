@@ -441,7 +441,121 @@ After fixes:
 
 ---
 
-### 🐛 Day 4-5: Critical Bug Fixes
+### ✅ Day 2: ISA Data Entry Display Fix
+
+**Status:** COMPLETED
+
+#### Problem Identified
+
+From user feedback:
+- "when in isa standard entry no data in the tables after ai assistant even the dashboard shows 112 total elements 14 connections, 70% completion"
+- AI Assistant was successfully saving data to `project_data$data$isa_data`
+- Dashboard confirmed elements were saved
+- BUT: ISA Standard Entry tables remained empty
+
+#### Root Cause
+
+**Data Flow Mismatch:**
+```
+AI Assistant → project_data$data$isa_data (global)
+                       ↓ (NO CONNECTION)
+ISA Module → isa_data (local reactiveValues) → Tables
+```
+
+**The Problem:**
+- ISA Data Entry module uses local `isa_data <- reactiveValues()` for table data
+- Tables render from this local state: `renderDT(isa_data$drivers)`
+- AI Assistant saves to global `project_data`
+- No initialization code to load global data into local state
+- Result: Data exists but isn't displayed
+
+#### Fix Implemented
+
+**Added Data Initialization Observer** ([modules/isa_data_entry_module.R:142-205](modules/isa_data_entry_module.R#L142-L205))
+
+```r
+# Initialize ISA data from project_data if it exists (e.g., from AI Assistant)
+data_initialized <- reactiveVal(FALSE)
+
+observe({
+  cat("[ISA Module] Checking for existing project data...\n")
+
+  project <- global_data()
+
+  if (!is.null(project) && !is.null(project$data) && !is.null(project$data$isa_data)) {
+    isa_saved <- project$data$isa_data
+    cat("[ISA Module] Found saved ISA data in project\n")
+
+    # Load all categories
+    if (!is.null(isa_saved$drivers) && nrow(isa_saved$drivers) > 0) {
+      cat(sprintf("[ISA Module] Loading %d drivers\n", nrow(isa_saved$drivers)))
+      isa_data$drivers <- isa_saved$drivers
+      isa_data$d_counter <- nrow(isa_saved$drivers)
+    }
+
+    # ... similar for activities, pressures, marine_processes,
+    #     ecosystem_services, goods_benefits
+
+    cat("[ISA Module] Data loading complete\n")
+    data_initialized(TRUE)
+  }
+})
+```
+
+**Key Features:**
+- Watches `global_data()` (project_data) for changes
+- Automatically loads data when it exists
+- Initializes all DAPSI(W)R(M) tables
+- Updates counters for each category
+- Debug logging with `[ISA Module]` prefix
+- Runs once on module load and when data changes
+
+#### Files Modified
+
+1. **modules/isa_data_entry_module.R** (commit: fef2440)
+   - Lines 142-205: Added data initialization observer
+   - Loads 6 data categories from AI Assistant
+   - Syncs counters with loaded data
+
+#### Testing Protocol
+
+**Test Complete Workflow:**
+1. Start AI ISA Assistant
+2. Complete workflow, adding elements at each step
+3. Click "Save to ISA Data Entry"
+4. ✅ Verify success notification appears
+5. Navigate to "ISA Standard Entry" module
+6. Open Drivers tab
+7. ✅ Verify drivers table shows saved data
+8. Check Activities, Pressures, etc. tabs
+9. ✅ Verify all tables populated correctly
+10. Check element counts match sidebar from AI Assistant
+
+**Console Output to Verify:**
+```
+[AI ISA] Save to ISA clicked
+[AI ISA] Saving 2 drivers, 2 activities, 2 pressures...
+[AI ISA] Project data updated successfully
+[ISA Module] Checking for existing project data...
+[ISA Module] Found saved ISA data in project
+[ISA Module] Loading 2 drivers
+[ISA Module] Loading 2 activities
+[ISA Module] Loading 2 pressures
+[ISA Module] Data loading complete
+```
+
+#### Expected Results
+
+After fix:
+- ✅ AI Assistant saves data successfully
+- ✅ ISA Standard Entry tables display saved data
+- ✅ Element counts match between modules
+- ✅ No data loss
+- ✅ Tables update automatically when navigating from AI Assistant
+
+---
+
+### 🐛 Day 3-5: Remaining Bug Fixes
 
 **Status:** PENDING
 
