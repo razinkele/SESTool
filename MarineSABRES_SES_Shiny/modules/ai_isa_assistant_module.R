@@ -389,6 +389,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
         width = 12,
         collapsible = TRUE,
 
+        # Progress indicator
+        div(class = "step-indicator",
+          icon("tasks"), " ",
+          sprintf(i18n$t("Step %d of %d"), rv$current_step, rv$total_steps)
+        ),
+
+        # Progress bar
+        uiOutput(ns("progress_bar")),
+
+        hr(),
+
         h4(icon("chart-line"), " ", i18n$t("Elements Created:")),
         uiOutput(ns("elements_summary")),
 
@@ -879,18 +890,38 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
       updateTextAreaInput(session, "user_input", value = "")
     })
 
-    # Handle quick select - Dynamic observer for all quick option buttons
-    observe({
-      if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
-        step_info <- QUESTION_FLOW[[rv$current_step + 1]]
+    # Handle quick select - Fixed observer pattern to prevent duplicates
+    # Track which quick option observers have been set up for current step
+    quick_observers_setup_for_step <- reactiveVal(-1)
 
-        if (!is.null(step_info$examples)) {
-          lapply(seq_along(step_info$examples), function(i) {
-            observeEvent(input[[paste0("quick_opt_", i)]], {
-              example <- step_info$examples[i]
-              process_answer(example)
-            }, ignoreInit = TRUE)
-          })
+    # Create observers for quick option buttons (only once per step)
+    observe({
+      current_step <- rv$current_step
+
+      # Only set up new observers if we haven't already for this step
+      if (current_step != quick_observers_setup_for_step()) {
+        if (current_step >= 0 && current_step < length(QUESTION_FLOW)) {
+          step_info <- QUESTION_FLOW[[current_step + 1]]
+
+          if (!is.null(step_info$examples)) {
+            # Set up observers for this step's buttons
+            lapply(seq_along(step_info$examples), function(i) {
+              local({
+                button_id <- paste0("quick_opt_", i)
+                example_text <- step_info$examples[i]
+
+                observeEvent(input[[button_id]], {
+                  # Only process if still on the same step
+                  if (rv$current_step == current_step) {
+                    process_answer(example_text)
+                  }
+                }, ignoreInit = TRUE, once = TRUE)
+              })
+            })
+          }
+
+          # Mark this step as having observers set up
+          quick_observers_setup_for_step(current_step)
         }
       }
     })
@@ -1134,6 +1165,22 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
       shinyjs::runjs(sprintf("document.getElementById('%s').scrollTop = document.getElementById('%s').scrollHeight",
                             session$ns("chat_container"), session$ns("chat_container")))
     }
+
+    # Render progress bar
+    output$progress_bar <- renderUI({
+      progress_pct <- if (rv$total_steps > 0) {
+        round((rv$current_step / rv$total_steps) * 100)
+      } else {
+        0
+      }
+
+      div(class = "progress-bar-custom",
+        div(class = "progress-fill",
+          style = sprintf("width: %d%%;", progress_pct),
+          sprintf("%d%%", progress_pct)
+        )
+      )
+    })
 
     # Render elements summary
     output$elements_summary <- renderUI({
