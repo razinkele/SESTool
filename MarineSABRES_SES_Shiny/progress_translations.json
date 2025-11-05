@@ -1,0 +1,50 @@
+{
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "translation": [
+    {
+      "en": "Step %d",
+      "es": "Paso %d",
+      "fr": "Étape %d",
+      "de": "Schritt %d",
+      "lt": "Žingsnis %d",
+      "pt": "Passo %d",
+      "it": "Passo %d"
+    },
+    {
+      "en": "Step %d of %d",
+      "es": "Paso %d de %d",
+      "fr": "Étape %d sur %d",
+      "de": "Schritt %d von %d",
+      "lt": "Žingsnis %d iš %d",
+      "pt": "Passo %d de %d",
+      "it": "Passo %d di %d"
+    },
+    {
+      "en": "Previous",
+      "es": "Anterior",
+      "fr": "Précédent",
+      "de": "Zurück",
+      "lt": "Ankstesnis",
+      "pt": "Anterior",
+      "it": "Precedente"
+    },
+    {
+      "en": "Next",
+      "es": "Siguiente",
+      "fr": "Suivant",
+      "de": "Weiter",
+      "lt": "Kitas",
+      "pt": "Próximo",
+      "it": "Successivo"
+    },
+    {
+      "en": "Finish",
+      "es": "Finalizar",
+      "fr": "Terminer",
+      "de": "Fertig",
+      "lt": "Baigti",
+      "pt": "Concluir",
+      "it": "Termina"
+    }
+  ]
+}
