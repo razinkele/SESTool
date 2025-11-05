@@ -305,56 +305,139 @@ server <- function(input, output, session) {
 
 ## Sprint 2: AI Assistant Fix and Bug Fixes (Week 2)
 
-### 📋 Day 1-3: AI Assistant Overhaul (Phase 1)
+### ✅ Day 1: AI Assistant Critical Bug Fixes
 
-**Status:** PENDING
+**Status:** COMPLETED
 
-#### Current Problems
-- Only provides list of elements, not integrated model
-- Zero elements in final DAPSI(W)R(M) output
-- No guidance on next steps
-- Bug: adding everything instead of selected items
+#### Problems Identified
 
-#### Solution Design
+From user feedback and code analysis:
+1. **Multiple Observer Bug:** Quick option buttons creating duplicate observers
+   - Each step change was creating new observers without removing old ones
+   - Result: Clicking once added items multiple times
+   - Classic Shiny anti-pattern causing "adding everything instead of selected"
 
-**Phase 1 Goals:**
-1. Fix element generation to produce actual DAPSI(W)R(M) elements
-2. Add step-by-step guidance
-3. Show progress indicator
-4. Fix selection bug
+2. **No Progress Visibility:** Users couldn't see where they were in workflow
+   - Progress bar CSS existed but wasn't rendered
+   - No step counter
+   - Users felt lost in process
 
-**New AI Assistant Flow:**
+3. **Save Function:** Actually works correctly
+   - Elements ARE saved to ISA Data Entry
+   - "Zero elements" issue was side effect of duplicate bug
+   - Data corruption from multiple additions
 
+#### Fixes Implemented
+
+**Fix #1: Refactored Observer Pattern** (Lines 882-916)
+
+```r
+# Before (BUGGY):
+observe({
+  # Re-creates observers every step - ACCUMULATES!
+  lapply(..., function(i) {
+    observeEvent(input[[...]], {...})
+  })
+})
+
+# After (FIXED):
+quick_observers_setup_for_step <- reactiveVal(-1)
+
+observe({
+  current_step <- rv$current_step
+  # Only setup NEW observers if not already done for this step
+  if (current_step != quick_observers_setup_for_step()) {
+    lapply(seq_along(step_info$examples), function(i) {
+      local({  # Proper closure
+        button_id <- paste0("quick_opt_", i)
+        example_text <- step_info$examples[i]
+
+        observeEvent(input[[button_id]], {
+          if (rv$current_step == current_step) {  # Validate still on step
+            process_answer(example_text)
+          }
+        }, ignoreInit = TRUE, once = TRUE)  # Fire only once per step
+      })
+    })
+    quick_observers_setup_for_step(current_step)
+  }
+})
 ```
-┌─────────────────────────────────────────────────┐
-│ AI Assistant - Building Your Model              │
-│ Progress: ███████░░░░░░░░░░░░░░░░ Step 3 of 7  │
-├─────────────────────────────────────────────────┤
-│                                                  │
-│ Step 3: Identifying Ecosystem Services          │
-│                                                  │
-│ Based on your input, I've identified these      │
-│ ecosystem services:                              │
-│                                                  │
-│ [ ✓ ] Fish provision                           │
-│ [ ✓ ] Water filtration                         │
-│ [ ✓ ] Coastal protection                       │
-│ [   ] Nutrient cycling                         │
-│ [   ] Carbon sequestration                     │
-│                                                  │
-│ Select the ones relevant to your system         │
-│                                                  │
-│ [Add Custom Service]    [Next: Marine Processes]│
-└─────────────────────────────────────────────────┘
-```
 
-**Implementation Tasks:**
-- [ ] Rewrite AI prompt to generate structured DAPSI(W)R(M) data
-- [ ] Add progress tracking (Step X of 7)
-- [ ] Implement checkbox selection (fix "add everything" bug)
-- [ ] Add preview before committing elements
-- [ ] Generate connections between levels
-- [ ] Add "Edit" capability for each step
+**Key Improvements:**
+- Track which step observers were created for
+- Only create observers ONCE per step
+- Use `local()` for proper variable capture
+- Add `once = TRUE` to prevent re-triggering
+- Validate current step before processing
+
+**Fix #2: Active Progress Indicator** (Lines 392-400, 1169-1183)
+
+Added to sidebar:
+- Step counter: "Step X of Y"
+- Visual progress bar (0-100%)
+- Updates dynamically as user progresses
+- Uses existing CSS styles
+
+#### Files Modified
+
+1. **modules/ai_isa_assistant_module.R**
+   - Lines 882-916: Fixed observer pattern
+   - Lines 392-400: Added progress UI to sidebar
+   - Lines 1169-1183: Added progress bar renderer
+
+2. **AI_ISA_BUG_ANALYSIS.md** (new)
+   - Root cause analysis
+   - Testing protocol
+   - Implementation details
+
+#### Testing Protocol
+
+**Test 1: Quick Option Single-Click**
+1. Start AI Assistant
+2. Navigate to Drivers step
+3. Click "Food security" quick option
+4. ✅ Verify ONLY ONE element added (not 2, 3, or more)
+5. Click another quick option
+6. ✅ Verify ONLY ONE element added
+7. Proceed through all steps
+8. ✅ Verify each click adds exactly one element
+
+**Test 2: Progress Bar**
+1. Start AI Assistant (Step 0/11 = 0%)
+2. Answer first question
+3. ✅ Verify progress shows "Step 1 of 11" and ~9%
+4. Continue through workflow
+5. ✅ Verify progress updates at each step
+6. Complete workflow
+7. ✅ Verify progress shows 100%
+
+**Test 3: Full Workflow**
+1. Complete entire AI Assistant workflow
+2. Add elements at each step using quick options
+3. ✅ Verify element counts in sidebar match additions
+4. Click "Save to ISA Data Entry"
+5. Navigate to ISA Data Entry
+6. ✅ Verify all elements present in correct categories
+7. ✅ Verify no duplicates
+
+#### Expected Results
+
+After fixes:
+- ✅ Each quick option click adds exactly ONE element
+- ✅ No duplicate elements
+- ✅ Progress clearly visible throughout workflow
+- ✅ Elements save correctly to ISA Data Entry
+- ✅ Model is complete and usable
+- ✅ User confidence restored
+
+#### Remaining Tasks (Day 2-3)
+
+**Still To Do:**
+- [ ] Add save confirmation modal with element preview
+- [ ] Improve step title display (show what each step is)
+- [ ] Add connection visualization
+- [ ] Integrate Sprint 1 progress module (optional enhancement)
 
 ---
 

@@ -1781,8 +1781,39 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
 
     # Handle save to ISA
     observeEvent(input$save_to_isa, {
-      # Get current project data
-      current_data <- project_data_reactive()
+      cat("[AI ISA] Save to ISA clicked\n")
+
+      tryCatch({
+        # Get current project data
+        current_data <- project_data_reactive()
+        cat("[AI ISA] Retrieved project data\n")
+
+        # Initialize data structure if it doesn't exist
+        if (is.null(current_data) || length(current_data) == 0) {
+          cat("[AI ISA] Initializing new project data structure\n")
+          current_data <- list(
+            data = list(
+              isa_data = list()
+            ),
+            last_modified = Sys.time()
+          )
+        }
+
+        # Ensure isa_data structure exists
+        if (is.null(current_data$data)) {
+          cat("[AI ISA] Initializing data container\n")
+          current_data$data <- list(isa_data = list())
+        }
+        if (is.null(current_data$data$isa_data)) {
+          cat("[AI ISA] Initializing isa_data container\n")
+          current_data$data$isa_data <- list()
+        }
+
+        cat(sprintf("[AI ISA] Saving %d drivers, %d activities, %d pressures, %d states, %d impacts, %d welfare, %d responses, %d measures\n",
+                   length(rv$elements$drivers), length(rv$elements$activities),
+                   length(rv$elements$pressures), length(rv$elements$states),
+                   length(rv$elements$impacts), length(rv$elements$welfare),
+                   length(rv$elements$responses), length(rv$elements$measures)))
 
       # Convert AI Assistant elements to ISA dataframe format
       # CLD expects separate dataframes for each category
@@ -2053,30 +2084,45 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
       )
       current_data$last_modified <- Sys.time()
 
-      # Update the reactive value
-      project_data_reactive(current_data)
+        # Update the reactive value
+        cat("[AI ISA] Updating project_data reactive\n")
+        project_data_reactive(current_data)
+        cat("[AI ISA] Project data updated successfully\n")
 
-      # Count total elements
-      total_elements <- sum(
-        length(rv$elements$drivers),
-        length(rv$elements$activities),
-        length(rv$elements$pressures),
-        length(rv$elements$states),
-        length(rv$elements$impacts),
-        length(rv$elements$welfare),
-        length(rv$elements$responses),
-        length(rv$elements$measures)
-      )
+        # Count total elements
+        total_elements <- sum(
+          length(rv$elements$drivers),
+          length(rv$elements$activities),
+          length(rv$elements$pressures),
+          length(rv$elements$states),
+          length(rv$elements$impacts),
+          length(rv$elements$welfare),
+          length(rv$elements$responses),
+          length(rv$elements$measures)
+        )
 
-      # Count connections
-      n_connections <- length(rv$approved_connections)
+        # Count connections
+        n_connections <- length(rv$approved_connections)
 
-      showNotification(
-        paste0(i18n$t("Model saved successfully!"), " ", total_elements, " ", i18n$t("elements and"), " ",
-               n_connections, " ", i18n$t("connections transferred to ISA Data Entry.")),
-        type = "message",
-        duration = 5
-      )
+        cat(sprintf("[AI ISA] Save completed: %d elements, %d connections\n", total_elements, n_connections))
+
+        showNotification(
+          paste0(i18n$t("Model saved successfully!"), " ", total_elements, " ", i18n$t("elements and"), " ",
+                 n_connections, " ", i18n$t("connections transferred to ISA Data Entry.")),
+          type = "message",
+          duration = 5
+        )
+
+      }, error = function(e) {
+        cat(sprintf("[AI ISA ERROR] Save failed: %s\n", e$message))
+        cat(sprintf("[AI ISA ERROR] Call stack: %s\n", paste(sys.calls(), collapse = "\n")))
+
+        showNotification(
+          paste0(i18n$t("Error saving model:"), " ", e$message),
+          type = "error",
+          duration = 10
+        )
+      })
     })
 
   })
