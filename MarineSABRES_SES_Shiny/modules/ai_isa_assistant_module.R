@@ -740,21 +740,24 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
 
       if (length(rv$suggested_connections) > 0) {
         for (i in seq_along(rv$suggested_connections)) {
-          # Approve observer
-          approve_obs <- observeEvent(input[[paste0("approve_conn_", i)]], {
+          local({
+            # Capture index in closure
             conn_idx <- i
-            if (!(conn_idx %in% isolate(rv$approved_connections))) {
-              rv$approved_connections <- c(isolate(rv$approved_connections), conn_idx)
-            }
-          }, ignoreInit = TRUE)
-          new_observers[[length(new_observers) + 1]] <- approve_obs
 
-          # Reject observer
-          reject_obs <- observeEvent(input[[paste0("reject_conn_", i)]], {
-            conn_idx <- i
-            rv$approved_connections <- setdiff(isolate(rv$approved_connections), conn_idx)
-          }, ignoreInit = TRUE)
-          new_observers[[length(new_observers) + 1]] <- reject_obs
+            # Approve observer
+            approve_obs <- observeEvent(input[[paste0("approve_conn_", conn_idx)]], {
+              if (!(conn_idx %in% isolate(rv$approved_connections))) {
+                rv$approved_connections <- c(isolate(rv$approved_connections), conn_idx)
+              }
+            }, ignoreInit = TRUE)
+            new_observers[[length(new_observers) + 1]] <<- approve_obs
+
+            # Reject observer
+            reject_obs <- observeEvent(input[[paste0("reject_conn_", conn_idx)]], {
+              rv$approved_connections <- setdiff(isolate(rv$approved_connections), conn_idx)
+            }, ignoreInit = TRUE)
+            new_observers[[length(new_observers) + 1]] <<- reject_obs
+          })
         }
       }
 
