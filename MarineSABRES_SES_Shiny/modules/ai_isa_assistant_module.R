@@ -179,17 +179,7 @@ ai_isa_assistant_ui <- function(id, i18n) {
       )
     ),
 
-    # Progress indicator
-    fluidRow(
-      column(12,
-        div(class = "step-indicator",
-          uiOutput(ns("step_title"))
-        ),
-        div(class = "progress-bar-custom",
-          uiOutput(ns("progress_bar"))
-        )
-      )
-    ),
+    # Note: Progress indicator is shown in sidebar (see sidebar_panel section)
 
     hr(),
 
