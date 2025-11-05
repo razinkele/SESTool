@@ -548,13 +548,13 @@ ui <- dashboardPage(
 
       # ==================== CREATE SES ====================
       # Choose Method
-      tabItem(tabName = "create_ses_choose", create_ses_ui("create_ses_main")),
+      tabItem(tabName = "create_ses_choose", create_ses_ui("create_ses_main", i18n)),
 
       # Standard Entry
       tabItem(tabName = "create_ses_standard", isaDataEntryUI("isa_module")),
 
       # AI Assistant
-      tabItem(tabName = "create_ses_ai", ai_isa_assistant_ui("ai_isa_mod")),
+      tabItem(tabName = "create_ses_ai", ai_isa_assistant_ui("ai_isa_mod", i18n)),
 
       # Template-Based
       tabItem(tabName = "create_ses_template", template_ses_ui("template_ses")),
@@ -749,15 +749,15 @@ server <- function(input, output, session) {
       size = "m",
       easyClose = TRUE,
       footer = tagList(
-        modalButton("Cancel"),
-        actionButton("apply_language_change", "Apply Changes", class = "btn-primary", icon = icon("check"))
+        modalButton(i18n$t("Cancel")),
+        actionButton("apply_language_change", i18n$t("Apply Changes"), class = "btn-primary", icon = icon("check"))
       ),
 
       tags$div(
         style = "padding: 20px;",
 
-        tags$h4(icon("globe"), " Interface Language"),
-        tags$p("Select your preferred language for the application interface. Click 'Apply Changes' to reload the application with the new language."),
+        tags$h4(icon("globe"), " ", i18n$t("Interface Language")),
+        tags$p(i18n$t("Select your preferred language for the application interface. Click 'Apply Changes' to reload the application with the new language.")),
         tags$br(),
 
         selectInput(
@@ -788,22 +788,37 @@ server <- function(input, output, session) {
 
     new_lang <- input$settings_language_selector
 
-    # Update the translator language
-    shiny.i18n::update_lang(new_lang, session)
-    i18n$set_translation_language(new_lang)
-
     # Get language name for notifications
     lang_name <- AVAILABLE_LANGUAGES[[new_lang]]$name
-
-    # Close the modal
-    removeModal()
 
     # Log language change
     cat(paste0("[", Sys.time(), "] INFO: Language changed to: ", new_lang, "\n"))
 
+    # Close the modal first
+    removeModal()
+
+    # Show loading overlay with translated message
+    loading_messages <- list(
+      en = "Changing Language",
+      es = "Cambiando Idioma",
+      fr = "Changement de Langue",
+      de = "Sprache Ändern",
+      lt = "Keičiama Kalba",
+      pt = "Mudando Idioma",
+      it = "Cambio Lingua"
+    )
+
+    session$sendCustomMessage(
+      type = "showLanguageLoading",
+      message = list(text = loading_messages[[new_lang]])
+    )
+
+    # Update the translator language
+    shiny.i18n::update_lang(new_lang, session)
+    i18n$set_translation_language(new_lang)
+
     # Note: Sidebar menu will update automatically via renderMenu()
-    # Reload session to update all UI elements
-    Sys.sleep(0.5)  # Brief delay to ensure language change is processed
+    # Reload session immediately to update all UI elements
     session$reload()
   })
 
@@ -818,7 +833,7 @@ server <- function(input, output, session) {
       title = tags$h3(icon("info-circle"), " About MarineSABRES SES Toolbox"),
       size = "l",
       easyClose = TRUE,
-      footer = modalButton("Close"),
+      footer = modalButton(i18n$t("Close")),
 
       tags$div(
         style = "padding: 20px;",
@@ -949,13 +964,13 @@ server <- function(input, output, session) {
   
   # ==================== CREATE SES MODULES ====================
   # Main Create SES module (method selector)
-  create_ses_server("create_ses_main", project_data, session)
+  create_ses_server("create_ses_main", project_data, session, i18n)
 
   # Template-based SES module
   template_ses_server("template_ses", project_data, session)
 
   # AI ISA Assistant module
-  ai_isa_assistant_server("ai_isa_mod", project_data)
+  ai_isa_assistant_server("ai_isa_mod", project_data, i18n)
 
   # ISA data entry module (Standard Entry)
   isa_data <- isaDataEntryServer("isa_module", project_data)
@@ -1126,7 +1141,7 @@ server <- function(input, output, session) {
       print(sys.calls())
       # Return error message to UI
       tagList(
-        p(style = "color: red;", "Error rendering dashboard:", conditionMessage(e))
+        p(style = "color: red;", i18n$t("Error rendering dashboard:"), " ", conditionMessage(e))
       )
     })
   })
@@ -1136,10 +1151,10 @@ server <- function(input, output, session) {
   observeEvent(input$save_project, {
     showModal(modalDialog(
       title = "Save Project",
-      textInput("save_project_name", "Project Name:", 
+      textInput("save_project_name", "Project Name:",
                value = project_data()$project_id),
       footer = tagList(
-        modalButton("Cancel"),
+        modalButton(i18n$t("Cancel")),
         downloadButton("confirm_save", "Save")
       )
     ))
@@ -1186,12 +1201,12 @@ server <- function(input, output, session) {
   
   observeEvent(input$load_project, {
     showModal(modalDialog(
-      title = "Load Project",
-      fileInput("load_project_file", "Choose RDS File:",
+      title = i18n$t("Load Project"),
+      fileInput("load_project_file", i18n$t("Choose RDS File:"),
                accept = ".rds"),
       footer = tagList(
-        modalButton("Cancel"),
-        actionButton("confirm_load", "Load")
+        modalButton(i18n$t("Cancel")),
+        actionButton("confirm_load", i18n$t("Load"))
       )
     ))
   })
@@ -1493,12 +1508,12 @@ server <- function(input, output, session) {
       removeModal()
 
       showModal(modalDialog(
-        title = "Report Generated Successfully",
+        title = i18n$t("Report Generated Successfully"),
         tags$div(
-          p("Your report has been generated successfully."),
-          downloadButton("download_report_file", "Download Report", class = "btn-success")
+          p(i18n$t("Your report has been generated successfully.")),
+          downloadButton("download_report_file", i18n$t("Download Report"), class = "btn-success")
         ),
-        footer = modalButton("Close")
+        footer = modalButton(i18n$t("Close"))
       ))
 
       # Store output file path for download

@@ -241,7 +241,7 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL)
               updateTabItems(parent_session, "sidebar_menu", tool$menu_id)
 
               showNotification(
-                sprintf(i18n$t("ep_notify_navigating_to"), tool$name),
+                sprintf(i18n$t("Navigating to %s..."), tool$name),
                 type = "message",
                 duration = 2
               )

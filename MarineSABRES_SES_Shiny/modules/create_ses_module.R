@@ -7,7 +7,7 @@
 # UI FUNCTION
 # ============================================================================
 
-create_ses_ui <- function(id) {
+create_ses_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
@@ -155,141 +155,8 @@ create_ses_ui <- function(id) {
       "))
     ),
 
-    div(class = "create-ses-container",
-      # Header Section
-      div(class = "header-section",
-        h2(icon("layer-group"), " ", i18n$t("Create Your Social-Ecological System")),
-        p(i18n$t("Choose the method that best fits your experience level and project needs"))
-      ),
-
-      # Method Selection Cards
-      fluidRow(
-        column(4,
-          div(class = "method-card", id = ns("card_standard"),
-              onclick = sprintf("Shiny.setInputValue('%s', 'standard', {priority: 'event'})", ns("method_selected")),
-            div(class = "method-icon",
-              icon("edit", class = "fa-3x")
-            ),
-            div(class = "method-title", i18n$t("Standard Entry")),
-            div(
-              span(class = "method-badge intermediate", i18n$t("Intermediate")),
-              span(class = "method-badge", i18n$t("Structured"))
-            ),
-            div(class = "method-description",
-              i18n$t("Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology.")
-            ),
-            tags$ul(class = "method-features",
-              tags$li(i18n$t("Step-by-step guided exercises")),
-              tags$li(i18n$t("Complete control over all elements")),
-              tags$li(i18n$t("Detailed data validation")),
-              tags$li(i18n$t("Direct framework implementation")),
-              tags$li(i18n$t("Export-ready data structure"))
-            ),
-            div(style = "text-align: center; margin-top: 20px;",
-              tags$strong(i18n$t("Best for:")),
-              " ",
-              i18n$t("Experienced users, academic research, detailed documentation")
-            )
-          )
-        ),
-
-        column(4,
-          div(class = "method-card", id = ns("card_ai"),
-              onclick = sprintf("Shiny.setInputValue('%s', 'ai', {priority: 'event'})", ns("method_selected")),
-            div(class = "method-icon",
-              icon("robot", class = "fa-3x")
-            ),
-            div(class = "method-title", i18n$t("AI Assistant")),
-            div(
-              span(class = "method-badge beginner", i18n$t("Beginner")),
-              span(class = "method-badge recommended", i18n$t("Recommended"))
-            ),
-            div(class = "method-description",
-              i18n$t("Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.")
-            ),
-            tags$ul(class = "method-features",
-              tags$li(i18n$t("Interactive Q&A workflow")),
-              tags$li(i18n$t("Context-aware suggestions")),
-              tags$li(i18n$t("Automatic element generation")),
-              tags$li(i18n$t("Learning-friendly approach")),
-              tags$li(i18n$t("Built-in examples"))
-            ),
-            div(style = "text-align: center; margin-top: 20px;",
-              tags$strong(i18n$t("Best for:")),
-              " ",
-              i18n$t("Beginners, first-time users, exploratory analysis")
-            )
-          )
-        ),
-
-        column(4,
-          div(class = "method-card", id = ns("card_template"),
-              onclick = sprintf("Shiny.setInputValue('%s', 'template', {priority: 'event'})", ns("method_selected")),
-            div(class = "method-icon",
-              icon("clone", class = "fa-3x")
-            ),
-            div(class = "method-title", i18n$t("Template-Based")),
-            div(
-              span(class = "method-badge beginner", i18n$t("Beginner")),
-              span(class = "method-badge", i18n$t("Quick Start"))
-            ),
-            div(class = "method-description",
-              i18n$t("Start from pre-built templates based on common marine management scenarios. Customize to fit your specific case.")
-            ),
-            tags$ul(class = "method-features",
-              tags$li(i18n$t("Pre-populated frameworks")),
-              tags$li(i18n$t("Domain-specific templates")),
-              tags$li(i18n$t("Ready-to-customize elements")),
-              tags$li(i18n$t("Fastest setup time")),
-              tags$li(i18n$t("Example connections included"))
-            ),
-            div(style = "text-align: center; margin-top: 20px;",
-              tags$strong(i18n$t("Best for:")),
-              " ",
-              i18n$t("Quick prototyping, common scenarios, time-constrained projects")
-            )
-          )
-        )
-      ),
-
-      # Selection feedback and proceed button
-      fluidRow(
-        column(12, style = "text-align: center; margin-top: 30px;",
-          uiOutput(ns("selection_feedback")),
-          br(),
-          actionButton(ns("proceed"),
-                       i18n$t("Proceed to Selected Method"),
-                       icon = icon("arrow-right"),
-                       class = "proceed-button",
-                       disabled = TRUE)
-        )
-      ),
-
-      # Comparison section
-      hr(style = "margin: 50px 0;"),
-
-      div(class = "comparison-table",
-        h4(icon("table"), " ", i18n$t("Method Comparison"), style = "text-align: center; margin-bottom: 20px;"),
-        tableOutput(ns("comparison_table"))
-      ),
-
-      # Help section
-      fluidRow(
-        column(12,
-          wellPanel(
-            style = "background: #f8f9fa; border-left: 4px solid #667eea;",
-            h5(icon("lightbulb"), " ", i18n$t("Need Help Choosing?")),
-            p(tags$strong(i18n$t("New to SES modeling?")), " Start with the ", tags$strong(i18n$t("AI Assistant")),
-              " for guided learning and gentle introduction to the framework."),
-            p(tags$strong(i18n$t("Have existing framework knowledge?")), " Use ", tags$strong(i18n$t("Standard Entry")),
-              " for maximum control and detailed customization."),
-            p(tags$strong(i18n$t("Working on a time-sensitive project?")), " Try ", tags$strong(i18n$t("Template-Based")),
-              " to jumpstart your analysis with proven structures."),
-            p(strong("Not sure?"), " You can always switch methods later or combine approaches!")
-          )
-        )
-      )
-    )
+    # Reactive UI container
+    uiOutput(ns("main_content"))
   )
 }
 
@@ -297,7 +164,7 @@ create_ses_ui <- function(id) {
 # SERVER FUNCTION
 # ============================================================================
 
-create_ses_server <- function(id, project_data_reactive, parent_session = NULL) {
+create_ses_server <- function(id, project_data_reactive, parent_session = NULL, i18n) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -305,6 +172,145 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL) 
     rv <- reactiveValues(
       selected_method = NULL
     )
+
+    # Render reactive UI
+    output$main_content <- renderUI({
+      div(class = "create-ses-container",
+        # Header Section
+        div(class = "header-section",
+          h2(icon("layer-group"), " ", i18n$t("Create Your Social-Ecological System")),
+          p(i18n$t("Choose the method that best fits your experience level and project needs"))
+        ),
+
+        # Method Selection Cards
+        fluidRow(
+          column(4,
+            div(class = "method-card", id = ns("card_standard"),
+                onclick = sprintf("Shiny.setInputValue('%s', 'standard', {priority: 'event'})", ns("method_selected")),
+              div(class = "method-icon",
+                icon("edit", class = "fa-3x")
+              ),
+              div(class = "method-title", i18n$t("Standard Entry")),
+              div(
+                span(class = "method-badge intermediate", i18n$t("Intermediate")),
+                span(class = "method-badge", i18n$t("Structured"))
+              ),
+              div(class = "method-description",
+                i18n$t("Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology.")
+              ),
+              tags$ul(class = "method-features",
+                tags$li(i18n$t("Step-by-step guided exercises")),
+                tags$li(i18n$t("Complete control over all elements")),
+                tags$li(i18n$t("Detailed data validation")),
+                tags$li(i18n$t("Direct framework implementation")),
+                tags$li(i18n$t("Export-ready data structure"))
+              ),
+              div(style = "text-align: center; margin-top: 20px;",
+                tags$strong(i18n$t("Best for:")),
+                " ",
+                i18n$t("Experienced users, academic research, detailed documentation")
+              )
+            )
+          ),
+
+          column(4,
+            div(class = "method-card", id = ns("card_ai"),
+                onclick = sprintf("Shiny.setInputValue('%s', 'ai', {priority: 'event'})", ns("method_selected")),
+              div(class = "method-icon",
+                icon("robot", class = "fa-3x")
+              ),
+              div(class = "method-title", i18n$t("AI Assistant")),
+              div(
+                span(class = "method-badge beginner", i18n$t("Beginner")),
+                span(class = "method-badge recommended", i18n$t("Recommended"))
+              ),
+              div(class = "method-description",
+                i18n$t("Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.")
+              ),
+              tags$ul(class = "method-features",
+                tags$li(i18n$t("Interactive Q&A workflow")),
+                tags$li(i18n$t("Context-aware suggestions")),
+                tags$li(i18n$t("Automatic element generation")),
+                tags$li(i18n$t("Learning-friendly approach")),
+                tags$li(i18n$t("Built-in examples"))
+              ),
+              div(style = "text-align: center; margin-top: 20px;",
+                tags$strong(i18n$t("Best for:")),
+                " ",
+                i18n$t("Beginners, first-time users, exploratory analysis")
+              )
+            )
+          ),
+
+          column(4,
+            div(class = "method-card", id = ns("card_template"),
+                onclick = sprintf("Shiny.setInputValue('%s', 'template', {priority: 'event'})", ns("method_selected")),
+              div(class = "method-icon",
+                icon("clone", class = "fa-3x")
+              ),
+              div(class = "method-title", i18n$t("Template-Based")),
+              div(
+                span(class = "method-badge beginner", i18n$t("Beginner")),
+                span(class = "method-badge", i18n$t("Quick Start"))
+              ),
+              div(class = "method-description",
+                i18n$t("Start from pre-built templates based on common marine management scenarios. Customize to fit your specific case.")
+              ),
+              tags$ul(class = "method-features",
+                tags$li(i18n$t("Pre-populated frameworks")),
+                tags$li(i18n$t("Domain-specific templates")),
+                tags$li(i18n$t("Ready-to-customize elements")),
+                tags$li(i18n$t("Fastest setup time")),
+                tags$li(i18n$t("Example connections included"))
+              ),
+              div(style = "text-align: center; margin-top: 20px;",
+                tags$strong(i18n$t("Best for:")),
+                " ",
+                i18n$t("Quick prototyping, common scenarios, time-constrained projects")
+              )
+            )
+          )
+        ),
+
+        # Selection feedback and proceed button
+        fluidRow(
+          column(12, style = "text-align: center; margin-top: 30px;",
+            uiOutput(ns("selection_feedback")),
+            br(),
+            actionButton(ns("proceed"),
+                         i18n$t("Proceed to Selected Method"),
+                         icon = icon("arrow-right"),
+                         class = "proceed-button",
+                         disabled = TRUE)
+          )
+        ),
+
+        # Comparison section
+        hr(style = "margin: 50px 0;"),
+
+        div(class = "comparison-table",
+          h4(icon("table"), " ", i18n$t("Method Comparison"), style = "text-align: center; margin-bottom: 20px;"),
+          tableOutput(ns("comparison_table"))
+        ),
+
+        # Help section
+        fluidRow(
+          column(12,
+            wellPanel(
+              style = "background: #f8f9fa; border-left: 4px solid #667eea;",
+              h5(icon("lightbulb"), " ", i18n$t("Need Help Choosing?")),
+              p(tags$strong(i18n$t("New to SES modeling?")), " Start with the ", tags$strong(i18n$t("AI Assistant")),
+                " for guided learning and gentle introduction to the framework."),
+              p(tags$strong(i18n$t("Have existing framework knowledge?")), " Use ", tags$strong(i18n$t("Standard Entry")),
+                " for maximum control and detailed customization."),
+              p(tags$strong(i18n$t("Working on a time-sensitive project?")), " Try ", tags$strong(i18n$t("Template-Based")),
+                " to jumpstart your analysis with proven structures."),
+              p(strong("Not sure?"), " You can always switch methods later or combine approaches!")
+            )
+          )
+        )
+      )
+    })
 
     # Track method selection
     observeEvent(input$method_selected, {
