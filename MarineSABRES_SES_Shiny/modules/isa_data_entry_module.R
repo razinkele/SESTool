@@ -139,6 +139,71 @@ isaDataEntryServer <- function(id, global_data) {
       validation = list()
     )
 
+    # Initialize ISA data from project_data if it exists (e.g., from AI Assistant) ----
+    # This observer loads saved data when the module starts or when project_data changes
+    data_initialized <- reactiveVal(FALSE)
+
+    observe({
+      cat("[ISA Module] Checking for existing project data...\n")
+
+      project <- global_data()
+
+      if (!is.null(project) && !is.null(project$data) && !is.null(project$data$isa_data)) {
+        isa_saved <- project$data$isa_data
+        cat("[ISA Module] Found saved ISA data in project\n")
+
+        # Load Drivers
+        if (!is.null(isa_saved$drivers) && nrow(isa_saved$drivers) > 0) {
+          cat(sprintf("[ISA Module] Loading %d drivers\n", nrow(isa_saved$drivers)))
+          isa_data$drivers <- isa_saved$drivers
+          isa_data$d_counter <- nrow(isa_saved$drivers)
+        }
+
+        # Load Activities
+        if (!is.null(isa_saved$activities) && nrow(isa_saved$activities) > 0) {
+          cat(sprintf("[ISA Module] Loading %d activities\n", nrow(isa_saved$activities)))
+          isa_data$activities <- isa_saved$activities
+          isa_data$a_counter <- nrow(isa_saved$activities)
+        }
+
+        # Load Pressures
+        if (!is.null(isa_saved$pressures) && nrow(isa_saved$pressures) > 0) {
+          cat(sprintf("[ISA Module] Loading %d pressures\n", nrow(isa_saved$pressures)))
+          isa_data$pressures <- isa_saved$pressures
+          isa_data$p_counter <- nrow(isa_saved$pressures)
+        }
+
+        # Load Marine Processes
+        if (!is.null(isa_saved$marine_processes) && nrow(isa_saved$marine_processes) > 0) {
+          cat(sprintf("[ISA Module] Loading %d marine processes\n", nrow(isa_saved$marine_processes)))
+          isa_data$marine_processes <- isa_saved$marine_processes
+          isa_data$mpf_counter <- nrow(isa_saved$marine_processes)
+        }
+
+        # Load Ecosystem Services
+        if (!is.null(isa_saved$ecosystem_services) && nrow(isa_saved$ecosystem_services) > 0) {
+          cat(sprintf("[ISA Module] Loading %d ecosystem services\n", nrow(isa_saved$ecosystem_services)))
+          isa_data$ecosystem_services <- isa_saved$ecosystem_services
+          isa_data$es_counter <- nrow(isa_saved$ecosystem_services)
+        }
+
+        # Load Goods & Benefits
+        if (!is.null(isa_saved$goods_benefits) && nrow(isa_saved$goods_benefits) > 0) {
+          cat(sprintf("[ISA Module] Loading %d goods/benefits\n", nrow(isa_saved$goods_benefits)))
+          isa_data$goods_benefits <- isa_saved$goods_benefits
+          isa_data$gb_counter <- nrow(isa_saved$goods_benefits)
+        }
+
+        # Note: responses and measures from AI Assistant don't map to ISA Data Entry
+        # They would need to be handled separately or shown in a different section
+
+        cat("[ISA Module] Data loading complete\n")
+        data_initialized(TRUE)
+      } else {
+        cat("[ISA Module] No saved ISA data found - starting fresh\n")
+      }
+    })
+
     # Render ISA header ----
     output$isa_header <- renderUI({
       div(style = "display: flex; justify-content: space-between; align-items: center;",
