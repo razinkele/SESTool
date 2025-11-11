@@ -3026,12 +3026,16 @@ analysis_leverage_ui <- function(id) {
             DT::dataTableOutput(ns("leverage_table"))
           ),
 
-          # Visualization Tab
+          # Network Visualization Tab
           tabPanel(
-            title = tagList(icon("chart-bar"), " Visualization"),
-            value = "viz",
+            title = tagList(icon("project-diagram"), " Network View"),
+            value = "network",
             br(),
-            plotOutput(ns("leverage_plot"), height = "500px")
+            div(
+              style = "background: #f8f9fa; padding: 10px; border-radius: 5px; margin-bottom: 15px;",
+              icon("info-circle"), " Node sizes reflect composite leverage scores. Larger nodes = higher leverage."
+            ),
+            visNetworkOutput(ns("leverage_network"), height = "600px")
           ),
 
           # Interpretation Tab
@@ -3224,31 +3228,72 @@ analysis_leverage_server <- function(id, project_data_reactive) {
         )
     })
 
-    # Leverage visualization
-    output$leverage_plot <- renderPlot({
+    # Leverage network visualization
+    output$leverage_network <- renderVisNetwork({
       req(rv$leverage_results)
 
-      df <- rv$leverage_results
+      project_data <- project_data_reactive()
+      isa_data <- project_data$data$isa_data
+      req(isa_data)
 
-      # Create bar plot
-      df$Name <- factor(df$Name, levels = rev(df$Name))
+      # Build network
+      nodes <- create_nodes_df(isa_data)
+      edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
 
-      ggplot(df, aes(x = Name, y = Composite_Score)) +
-        geom_col(aes(fill = Composite_Score), show.legend = FALSE) +
-        scale_fill_gradient(low = "#FFC107", high = "#4CAF50") +
-        coord_flip() +
-        labs(
-          title = "Top Leverage Points in SES Network",
-          subtitle = paste("Based on combined Betweenness, Eigenvector, and PageRank centrality"),
-          x = NULL,
-          y = "Composite Influence Score"
-        ) +
-        theme_minimal(base_size = 14) +
-        theme(
-          plot.title = element_text(face = "bold", size = 16),
-          plot.subtitle = element_text(color = "gray40", size = 11),
-          panel.grid.major.y = element_blank(),
-          panel.grid.minor = element_blank()
+      # Map leverage scores to nodes
+      leverage_df <- rv$leverage_results
+      leverage_lookup <- setNames(leverage_df$Composite_Score, leverage_df$ID)
+
+      # Normalize scores to node sizes (10-50 range)
+      min_score <- min(leverage_df$Composite_Score)
+      max_score <- max(leverage_df$Composite_Score)
+
+      nodes$leverage_score <- leverage_lookup[nodes$id]
+      nodes$leverage_score[is.na(nodes$leverage_score)] <- 0
+
+      # Scale node sizes based on leverage score
+      nodes$size <- 10 + (nodes$leverage_score - min_score) / (max_score - min_score) * 40
+
+      # Color nodes by leverage score (gradient from yellow to green)
+      nodes$color.background <- colorRampPalette(c("#FFC107", "#4CAF50"))(100)[
+        pmax(1, pmin(100, round((nodes$leverage_score - min_score) / (max_score - min_score) * 99) + 1))
+      ]
+      nodes$color.border <- "#2b7ce9"
+      nodes$color.highlight.background <- "#D2E5FF"
+      nodes$color.highlight.border <- "#2b7ce9"
+
+      # Add title with score to node labels
+      nodes$title <- paste0(
+        "<b>", nodes$label, "</b><br>",
+        "Type: ", nodes$element_type, "<br>",
+        "Leverage Score: ", round(nodes$leverage_score, 3)
+      )
+
+      # Build visNetwork (edges already in correct format)
+      visNetwork(nodes, edges, width = "100%", height = "600px") %>%
+        visNodes(
+          shape = "dot",
+          font = list(size = 14),
+          borderWidth = 2
+        ) %>%
+        visEdges(
+          arrows = "to",
+          smooth = list(enabled = TRUE, type = "continuous")
+        ) %>%
+        visOptions(
+          highlightNearest = list(enabled = TRUE, degree = 1, hover = TRUE),
+          nodesIdSelection = FALSE
+        ) %>%
+        visInteraction(
+          navigationButtons = TRUE,
+          hover = TRUE,
+          tooltipDelay = 100
+        ) %>%
+        visLayout(randomSeed = 42) %>%
+        visPhysics(
+          stabilization = list(iterations = 200),
+          solver = "forceAtlas2Based",
+          forceAtlas2Based = list(gravitationalConstant = -50, springLength = 100)
         )
     })
 
