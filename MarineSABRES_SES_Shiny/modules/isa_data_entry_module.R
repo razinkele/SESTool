@@ -228,6 +228,22 @@ isaDataEntryServer <- function(id, global_data) {
           isa_data$gb_counter <- nrow(isa_saved$goods_benefits)
         }
 
+        # Load adjacency matrices if they exist
+        if (!is.null(isa_saved$adjacency_matrices)) {
+          cat("[ISA Module] Loading adjacency matrices\n")
+          isa_data$adjacency_matrices <- isa_saved$adjacency_matrices
+
+          # Count non-empty connections
+          n_connections <- 0
+          for (matrix_name in names(isa_saved$adjacency_matrices)) {
+            mat <- isa_saved$adjacency_matrices[[matrix_name]]
+            if (!is.null(mat) && is.matrix(mat)) {
+              n_connections <- n_connections + sum(mat != "", na.rm = TRUE)
+            }
+          }
+          cat(sprintf("[ISA Module] Loaded %d connections from adjacency matrices\n", n_connections))
+        }
+
         # Note: responses and measures from AI Assistant don't map to ISA Data Entry
         # They would need to be handled separately or shown in a different section
 

@@ -165,7 +165,51 @@ create_nodes_df <- function(isa_data) {
 
     nodes <- bind_rows(nodes, driver_nodes)
   }
-  
+
+  # Responses (Level 6)
+  if (!is.null(isa_data$responses) && nrow(isa_data$responses) > 0) {
+    response_nodes <- isa_data$responses %>%
+      mutate(
+        id = paste0("R_", row_number()),
+        label = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else as.character(row_number()),
+        indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
+        title = create_node_tooltip(label, indicator, "Responses"),
+        group = "Responses",
+        level = 6,
+        shape = "triangle",
+        image = NA_character_,
+        color = "#9C27B0",  # Purple color for responses
+        size = 25,
+        font.size = 12,
+        leverage_score = NA_real_
+      ) %>%
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
+
+    nodes <- bind_rows(nodes, response_nodes)
+  }
+
+  # Measures (Level 7)
+  if (!is.null(isa_data$measures) && nrow(isa_data$measures) > 0) {
+    measure_nodes <- isa_data$measures %>%
+      mutate(
+        id = paste0("M_", row_number()),
+        label = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else as.character(row_number()),
+        indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
+        title = create_node_tooltip(label, indicator, "Measures"),
+        group = "Measures",
+        level = 7,
+        shape = "star",
+        image = NA_character_,
+        color = "#E91E63",  # Pink color for measures
+        size = 25,
+        font.size = 12,
+        leverage_score = NA_real_
+      ) %>%
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
+
+    nodes <- bind_rows(nodes, measure_nodes)
+  }
+
   return(nodes)
 }
 
@@ -205,6 +249,8 @@ create_node_tooltip <- function(name, indicator, group, extra = NULL) {
 #' @return Data frame with edge attributes for visNetwork
 create_edges_df <- function(isa_data, adjacency_matrices) {
 
+  cat("[CREATE_EDGES] Starting create_edges_df\n")
+
   edges <- data.frame(
     from = character(),
     to = character(),
@@ -228,6 +274,18 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   n_p <- if(!is.null(isa_data$pressures)) nrow(isa_data$pressures) else 0
   n_a <- if(!is.null(isa_data$activities)) nrow(isa_data$activities) else 0
   n_d <- if(!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0
+  n_r <- if(!is.null(isa_data$responses)) nrow(isa_data$responses) else 0
+  n_m <- if(!is.null(isa_data$measures)) nrow(isa_data$measures) else 0
+
+  cat(sprintf("[CREATE_EDGES] Element counts: GB=%d, ES=%d, MPF=%d, P=%d, A=%d, D=%d, R=%d, M=%d\n",
+             n_gb, n_es, n_mpf, n_p, n_a, n_d, n_r, n_m))
+
+  if (is.null(adjacency_matrices)) {
+    cat("[CREATE_EDGES] adjacency_matrices is NULL!\n")
+    return(edges)
+  }
+
+  cat(sprintf("[CREATE_EDGES] Matrix names: %s\n", paste(names(adjacency_matrices), collapse=", ")))
 
   # Process each adjacency matrix
   # NOTE: Template matrices are defined with rows=target and cols=source,
@@ -299,7 +357,34 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     )
     edges <- bind_rows(edges, edges_d_gb)
   }
-  
+
+  # Responses → Pressures matrix
+  if (!is.null(adjacency_matrices$p_r)) {
+    edges_p_r <- process_adjacency_matrix(
+      t(adjacency_matrices$p_r),  # Transpose: P×R → R×P
+      from_prefix = "R",
+      to_prefix = "P",
+      expected_rows = n_r,
+      expected_cols = n_p
+    )
+    edges <- bind_rows(edges, edges_p_r)
+  }
+
+  # Measures → Responses matrix
+  if (!is.null(adjacency_matrices$r_m)) {
+    cat("[CREATE_EDGES] Processing r_m matrix\n")
+    edges_r_m <- process_adjacency_matrix(
+      t(adjacency_matrices$r_m),  # Transpose: R×M → M×R
+      from_prefix = "M",
+      to_prefix = "R",
+      expected_rows = n_m,
+      expected_cols = n_r
+    )
+    cat(sprintf("[CREATE_EDGES] r_m returned %d edges\n", nrow(edges_r_m)))
+    edges <- bind_rows(edges, edges_r_m)
+  }
+
+  cat(sprintf("[CREATE_EDGES] Total edges: %d\n", nrow(edges)))
   return(edges)
 }
 

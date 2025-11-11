@@ -1285,7 +1285,18 @@ server <- function(input, output, session) {
     tryCatch({
       data <- project_data()
       isa_data <- safe_get_nested(data, "data", "isa_data", default = list())
-      n_elements <- length(unlist(isa_data))
+
+      # Count rows in each DAPSIWRM dataframe
+      n_elements <- sum(
+        nrow(isa_data$drivers %||% data.frame()),
+        nrow(isa_data$activities %||% data.frame()),
+        nrow(isa_data$pressures %||% data.frame()),
+        nrow(isa_data$marine_processes %||% data.frame()),
+        nrow(isa_data$ecosystem_services %||% data.frame()),
+        nrow(isa_data$goods_benefits %||% data.frame()),
+        nrow(isa_data$responses %||% data.frame()),
+        nrow(isa_data$measures %||% data.frame())
+      )
 
       valueBox(n_elements, i18n$t("Total Elements"), icon = icon("circle"), color = "blue")
     }, error = function(e) {
@@ -1847,11 +1858,23 @@ generate_report_content <- function(data, report_type, include_viz, include_data
                   "**Last Modified:** ", format(data$last_modified, "%Y-%m-%d"), "\n\n")
 
   if(report_type == "executive") {
+    # Count elements correctly by summing rows in each dataframe
+    n_elements <- sum(
+      nrow(data$data$isa_data$drivers %||% data.frame()),
+      nrow(data$data$isa_data$activities %||% data.frame()),
+      nrow(data$data$isa_data$pressures %||% data.frame()),
+      nrow(data$data$isa_data$marine_processes %||% data.frame()),
+      nrow(data$data$isa_data$ecosystem_services %||% data.frame()),
+      nrow(data$data$isa_data$goods_benefits %||% data.frame()),
+      nrow(data$data$isa_data$responses %||% data.frame()),
+      nrow(data$data$isa_data$measures %||% data.frame())
+    )
+
     content <- paste0(
       "# Executive Summary\n\n",
       "This report provides a high-level overview of the social-ecological system analysis.\n\n",
       "## Key Findings\n\n",
-      "- System elements identified: ", length(unlist(data$data$isa_data)), "\n",
+      "- System elements identified: ", n_elements, "\n",
       "- Feedback loops detected: ", nrow(data$data$cld$loops %||% data.frame()), "\n",
       "- Stakeholders involved: ", nrow(data$data$pims$stakeholders %||% data.frame()), "\n\n"
     )

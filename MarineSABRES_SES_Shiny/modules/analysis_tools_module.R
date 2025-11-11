@@ -3232,69 +3232,91 @@ analysis_leverage_server <- function(id, project_data_reactive) {
     output$leverage_network <- renderVisNetwork({
       req(rv$leverage_results)
 
-      project_data <- project_data_reactive()
-      isa_data <- project_data$data$isa_data
-      req(isa_data)
+      tryCatch({
+        project_data <- project_data_reactive()
+        isa_data <- project_data$data$isa_data
+        req(isa_data)
 
-      # Build network
-      nodes <- create_nodes_df(isa_data)
-      edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+        cat("[LEVERAGE NET] Building network visualization\n")
 
-      # Map leverage scores to nodes
-      leverage_df <- rv$leverage_results
-      leverage_lookup <- setNames(leverage_df$Composite_Score, leverage_df$ID)
+        # Build network
+        nodes <- create_nodes_df(isa_data)
+        edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
 
-      # Normalize scores to node sizes (10-50 range)
-      min_score <- min(leverage_df$Composite_Score)
-      max_score <- max(leverage_df$Composite_Score)
+        cat("[LEVERAGE NET] Nodes:", nrow(nodes), "Edges:", nrow(edges), "\n")
 
-      nodes$leverage_score <- leverage_lookup[nodes$id]
-      nodes$leverage_score[is.na(nodes$leverage_score)] <- 0
+        # Map leverage scores to nodes
+        leverage_df <- rv$leverage_results
+        leverage_lookup <- setNames(leverage_df$Composite_Score, leverage_df$ID)
 
-      # Scale node sizes based on leverage score
-      nodes$size <- 10 + (nodes$leverage_score - min_score) / (max_score - min_score) * 40
+        cat("[LEVERAGE NET] Leverage results:", nrow(leverage_df), "rows\n")
 
-      # Color nodes by leverage score (gradient from yellow to green)
-      nodes$color.background <- colorRampPalette(c("#FFC107", "#4CAF50"))(100)[
-        pmax(1, pmin(100, round((nodes$leverage_score - min_score) / (max_score - min_score) * 99) + 1))
-      ]
-      nodes$color.border <- "#2b7ce9"
-      nodes$color.highlight.background <- "#D2E5FF"
-      nodes$color.highlight.border <- "#2b7ce9"
+        # Add leverage scores to nodes
+        nodes$leverage_score <- leverage_lookup[nodes$id]
+        nodes$leverage_score[is.na(nodes$leverage_score)] <- 0
 
-      # Add title with score to node labels
-      nodes$title <- paste0(
-        "<b>", nodes$label, "</b><br>",
-        "Type: ", nodes$element_type, "<br>",
-        "Leverage Score: ", round(nodes$leverage_score, 3)
-      )
+        cat("[LEVERAGE NET] Score range:", min(nodes$leverage_score), "to", max(nodes$leverage_score), "\n")
 
-      # Build visNetwork (edges already in correct format)
-      visNetwork(nodes, edges, width = "100%", height = "600px") %>%
-        visNodes(
-          shape = "dot",
-          font = list(size = 14),
-          borderWidth = 2
-        ) %>%
-        visEdges(
-          arrows = "to",
-          smooth = list(enabled = TRUE, type = "continuous")
-        ) %>%
-        visOptions(
-          highlightNearest = list(enabled = TRUE, degree = 1, hover = TRUE),
-          nodesIdSelection = FALSE
-        ) %>%
-        visInteraction(
-          navigationButtons = TRUE,
-          hover = TRUE,
-          tooltipDelay = 100
-        ) %>%
-        visLayout(randomSeed = 42) %>%
-        visPhysics(
-          stabilization = list(iterations = 200),
-          solver = "forceAtlas2Based",
-          forceAtlas2Based = list(gravitationalConstant = -50, springLength = 100)
+        # Normalize scores to node sizes (15-60 range for better visibility)
+        min_score <- min(nodes$leverage_score, na.rm = TRUE)
+        max_score <- max(nodes$leverage_score, na.rm = TRUE)
+
+        # Override node sizes based on leverage score
+        if (max_score > min_score) {
+          nodes$size <- 15 + ((nodes$leverage_score - min_score) / (max_score - min_score)) * 45
+        } else {
+          nodes$size <- 30  # Default size if all scores are equal
+        }
+
+        # Override node colors by leverage score (gradient from yellow to green)
+        if (max_score > min_score) {
+          score_normalized <- (nodes$leverage_score - min_score) / (max_score - min_score)
+          color_idx <- pmax(1, pmin(100, round(score_normalized * 99) + 1))
+          nodes$color <- colorRampPalette(c("#FFC107", "#4CAF50"))(100)[color_idx]
+        } else {
+          nodes$color <- "#4CAF50"
+        }
+
+        # Override tooltips to include leverage score
+        nodes$title <- paste0(
+          "<b>", nodes$label, "</b><br>",
+          "Type: ", nodes$group, "<br>",
+          "Leverage Score: ", sprintf("%.3f", nodes$leverage_score)
         )
+
+        cat("[LEVERAGE NET] Size range:", min(nodes$size), "to", max(nodes$size), "\n")
+
+        cat("[LEVERAGE NET] Rendering network\n")
+
+        # Build visNetwork (edges already in correct format)
+        visNetwork(nodes, edges, width = "100%", height = "600px") %>%
+          visNodes(
+            shape = "dot",
+            font = list(size = 14)
+          ) %>%
+          visEdges(
+            arrows = "to",
+            smooth = list(enabled = TRUE, type = "continuous")
+          ) %>%
+          visOptions(
+            highlightNearest = list(enabled = TRUE, degree = 1, hover = TRUE),
+            nodesIdSelection = FALSE
+          ) %>%
+          visInteraction(
+            navigationButtons = TRUE,
+            hover = TRUE,
+            tooltipDelay = 100
+          ) %>%
+          visLayout(randomSeed = 42) %>%
+          visPhysics(
+            stabilization = list(iterations = 200),
+            solver = "forceAtlas2Based",
+            forceAtlas2Based = list(gravitationalConstant = -50, springLength = 100)
+          )
+      }, error = function(e) {
+        cat("[LEVERAGE NET ERROR]:", conditionMessage(e), "\n")
+        return(NULL)
+      })
     })
 
     # Interpretation guide

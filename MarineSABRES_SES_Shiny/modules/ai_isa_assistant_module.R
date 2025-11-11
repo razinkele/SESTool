@@ -2,11 +2,15 @@
 # AI-Assisted ISA Creation Module
 # Purpose: Guide users through stepwise questions to build DAPSI(W)R(M) framework
 
+# Load helper modules
+source("modules/ai_isa_knowledge_base.R", local = TRUE)
+
 # ============================================================================
 # UI FUNCTION
 # ============================================================================
 
 ai_isa_assistant_ui <- function(id, i18n) {
+  cat(sprintf("[AI ISA UI] UI function called with id: %s at %s\n", id, Sys.time()))
   ns <- NS(id)
 
   fluidPage(
@@ -169,6 +173,17 @@ ai_isa_assistant_ui <- function(id, i18n) {
             Shiny.setInputValue('ai_isa_mod-has_saved_session', true, {priority: 'event'});
           }
         });
+
+        // Clear session from localStorage
+        Shiny.addCustomMessageHandler('clear_ai_isa_session', function(message) {
+          try {
+            localStorage.removeItem('ai_isa_session');
+            localStorage.removeItem('ai_isa_session_timestamp');
+            console.log('AI ISA session cleared from localStorage');
+          } catch(e) {
+            console.error('Failed to clear localStorage:', e);
+          }
+        });
       "))
     ),
 
@@ -205,12 +220,13 @@ ai_isa_assistant_ui <- function(id, i18n) {
 # ============================================================================
 
 ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
+  cat(sprintf("[AI ISA SERVER] Server function called with id: %s at %s\n", id, Sys.time()))
   moduleServer(id, function(input, output, session) {
+    cat(sprintf("[AI ISA SERVER] moduleServer executed for id: %s at %s\n", id, Sys.time()))
 
     # Reactive values for conversation state
     rv <- reactiveValues(
       current_step = 0,  # 0=intro, 1=context, 2=drivers, 3=activities, etc.
-      render_id = 0,     # Unique ID for each UI render to prevent duplicate IDs
       conversation = list(),
       elements = list(
         drivers = list(),
@@ -230,7 +246,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
         main_issue = NULL
       ),
       total_steps = 11,  # Increased for regional sea + ecosystem context questions
-      undo_stack = list(),  # For undo functionality
       suggested_connections = list(),  # AI-generated connection suggestions
       approved_connections = list(),   # User-approved connections
       last_save_time = NULL,  # Track last save timestamp
@@ -242,335 +257,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
     # ========================================================================
     # CONTEXT-AWARE KNOWLEDGE BASE
     # ========================================================================
-    # This knowledge base provides intelligent suggestions based on regional seas,
-    # ecosystem types, and common problems for each context combination
+    # Load knowledge base from helper file
+    REGIONAL_SEAS <- get_regional_seas_knowledge_base(i18n)
 
-    REGIONAL_SEAS <- list(
-      baltic = list(
-        name_en = "Baltic Sea",
-        name_i18n = i18n$t("Baltic Sea"),
-        common_issues = c("Eutrophication", "Overfishing", "Pollution", "Invasive species", "Climate change"),
-        ecosystem_types = c("Open coast", "Archipelago", "Estuary", "Coastal lagoon", "Offshore waters")
-      ),
-      mediterranean = list(
-        name_en = "Mediterranean Sea",
-        name_i18n = i18n$t("Mediterranean Sea"),
-        common_issues = c("Overfishing", "Coastal development", "Tourism pressure", "Marine litter", "Invasive species", "Climate change"),
-        ecosystem_types = c("Open coast", "Coastal lagoon", "Rocky shore", "Sandy beach", "Seagrass meadow", "Offshore waters")
-      ),
-      north_sea = list(
-        name_en = "North Sea",
-        name_i18n = i18n$t("North Sea"),
-        common_issues = c("Overfishing", "Oil and gas extraction", "Shipping", "Wind energy development", "Climate change", "Eutrophication"),
-        ecosystem_types = c("Open coast", "Estuary", "Tidal flat", "Offshore waters", "Rocky shore", "Sandy beach")
-      ),
-      irish_sea = list(
-        name_en = "Irish Sea",
-        name_i18n = i18n$t("Irish Sea"),
-        common_issues = c("Overfishing", "Coastal development", "Shipping", "Marine litter", "Eutrophication", "Climate change"),
-        ecosystem_types = c("Open coast", "Estuary", "Coastal lagoon", "Rocky shore", "Sandy beach", "Offshore waters")
-      ),
-      east_atlantic = list(
-        name_en = "East Atlantic",
-        name_i18n = i18n$t("East Atlantic"),
-        common_issues = c("Overfishing", "Climate change", "Ocean acidification", "Shipping", "Coastal erosion", "Marine litter"),
-        ecosystem_types = c("Open coast", "Continental shelf", "Offshore waters", "Rocky shore", "Sandy beach", "Estuary")
-      ),
-      black_sea = list(
-        name_en = "Black Sea",
-        name_i18n = i18n$t("Black Sea"),
-        common_issues = c("Eutrophication", "Overfishing", "Pollution", "Invasive species", "Coastal erosion"),
-        ecosystem_types = c("Open coast", "Delta", "Coastal lagoon", "Offshore waters", "Estuary")
-      ),
-      atlantic = list(
-        name_en = "Atlantic Ocean",
-        name_i18n = i18n$t("Atlantic Ocean"),
-        common_issues = c("Overfishing", "Climate change", "Ocean acidification", "Shipping", "Deep-sea mining"),
-        ecosystem_types = c("Open ocean", "Continental shelf", "Coastal upwelling", "Open coast", "Offshore waters")
-      ),
-      pacific = list(
-        name_en = "Pacific Ocean",
-        name_i18n = i18n$t("Pacific Ocean"),
-        common_issues = c("Overfishing", "Coral bleaching", "Plastic pollution", "Climate change", "Illegal fishing"),
-        ecosystem_types = c("Coral reef", "Open ocean", "Coastal waters", "Mangrove", "Offshore waters")
-      ),
-      indian = list(
-        name_en = "Indian Ocean",
-        name_i18n = i18n$t("Indian Ocean"),
-        common_issues = c("Overfishing", "Coastal erosion", "Mangrove loss", "Climate change", "Illegal fishing"),
-        ecosystem_types = c("Coral reef", "Mangrove", "Open coast", "Lagoon", "Offshore waters")
-      ),
-      caribbean = list(
-        name_en = "Caribbean Sea",
-        name_i18n = i18n$t("Caribbean Sea"),
-        common_issues = c("Coral bleaching", "Overfishing", "Tourism pressure", "Hurricanes", "Sargassum blooms"),
-        ecosystem_types = c("Coral reef", "Mangrove", "Seagrass bed", "Sandy beach", "Open coast")
-      ),
-      arctic = list(
-        name_en = "Arctic Ocean",
-        name_i18n = i18n$t("Arctic Ocean"),
-        common_issues = c("Climate change", "Sea ice loss", "Oil and gas exploration", "Shipping increase", "Arctic fisheries"),
-        ecosystem_types = c("Sea ice", "Open ocean", "Fjord", "Coastal waters", "Continental shelf")
-      ),
-      other = list(
-        name_en = "Other/Regional",
-        name_i18n = i18n$t("Other/Regional"),
-        common_issues = c("Overfishing", "Pollution", "Coastal development", "Climate change"),
-        ecosystem_types = c("Open coast", "Estuary", "Lagoon", "Offshore waters", "Rocky shore")
-      )
-    )
-
-    # Context-aware suggestions based on region + ecosystem + issue
-    get_context_suggestions <- function(category, regional_sea, ecosystem_type, main_issue) {
-      suggestions <- list()
-
-      if (category == "drivers") {
-        # Universal drivers
-        suggestions$universal <- c("Food security", "Economic development", "Recreation and tourism",
-                                   "Energy needs", "Coastal protection", "Cultural heritage",
-                                   "Employment", "Trade and commerce")
-
-        # Add region-specific drivers
-        if (!is.null(regional_sea)) {
-          if (regional_sea %in% c("baltic", "north_sea")) {
-            suggestions$regional <- c("Maritime transport", "Resource extraction", "Renewable energy")
-          } else if (regional_sea %in% c("mediterranean", "caribbean", "pacific")) {
-            suggestions$regional <- c("Beach tourism", "Diving and snorkeling", "Heritage tourism")
-          } else if (regional_sea == "arctic") {
-            suggestions$regional <- c("Indigenous subsistence", "Resource exploration", "Shipping routes")
-          }
-        }
-
-        # Add ecosystem-specific drivers
-        if (!is.null(ecosystem_type)) {
-          if (grepl("coast|beach", ecosystem_type, ignore.case = TRUE)) {
-            suggestions$ecosystem <- c("Coastal recreation", "Property development", "Beach tourism")
-          } else if (grepl("reef", ecosystem_type, ignore.case = TRUE)) {
-            suggestions$ecosystem <- c("Diving tourism", "Artisanal fishing", "Marine ornamental trade")
-          } else if (grepl("offshore|ocean", ecosystem_type, ignore.case = TRUE)) {
-            suggestions$ecosystem <- c("Commercial fisheries", "Energy generation", "Shipping routes")
-          }
-        }
-      }
-
-      else if (category == "activities") {
-        # Universal activities
-        suggestions$universal <- c("Commercial fishing", "Recreational fishing", "Tourism",
-                                   "Coastal development", "Shipping", "Aquaculture")
-
-        # Region-specific activities
-        if (!is.null(regional_sea)) {
-          if (regional_sea == "baltic") {
-            suggestions$regional <- c("Herring fishing", "Salmon farming", "Ferry transport",
-                                      "Nutrient discharge", "Recreation boating")
-          } else if (regional_sea == "mediterranean") {
-            suggestions$regional <- c("Beach tourism", "Trawl fishing", "Yacht tourism",
-                                      "Urban runoff", "Desalination")
-          } else if (regional_sea == "north_sea") {
-            suggestions$regional <- c("Oil and gas extraction", "Offshore wind farms",
-                                      "Container shipping", "Beam trawling", "Demersal fishing")
-          } else if (regional_sea == "irish_sea") {
-            suggestions$regional <- c("Ferry transport", "Commercial fishing", "Recreation boating",
-                                      "Coastal tourism", "Port activities", "Shellfish farming")
-          } else if (regional_sea == "east_atlantic") {
-            suggestions$regional <- c("Pelagic fishing", "Offshore aquaculture", "Shipping lanes",
-                                      "Coastal tourism", "Wave energy", "Deep-sea fishing")
-          } else if (regional_sea == "black_sea") {
-            suggestions$regional <- c("Anchovy fishing", "River discharge", "Coastal agriculture",
-                                      "Tourism development")
-          } else if (regional_sea %in% c("caribbean", "pacific", "indian")) {
-            suggestions$regional <- c("Coral reef tourism", "Tuna fishing", "Coastal hotel development",
-                                      "Small-scale fishing", "Mangrove conversion")
-          } else if (regional_sea == "arctic") {
-            suggestions$regional <- c("Arctic shipping", "Oil exploration", "Indigenous hunting",
-                                      "Research activities")
-          }
-        }
-
-        # Ecosystem-specific activities
-        if (!is.null(ecosystem_type)) {
-          if (grepl("reef", ecosystem_type, ignore.case = TRUE)) {
-            suggestions$ecosystem <- c("Scuba diving", "Snorkeling", "Reef fishing",
-                                       "Anchor damage", "Ornamental trade")
-          } else if (grepl("mangrove", ecosystem_type, ignore.case = TRUE)) {
-            suggestions$ecosystem <- c("Shrimp farming", "Mangrove cutting", "Ecotourism")
-          } else if (grepl("estuary|delta", ecosystem_type, ignore.case = TRUE)) {
-            suggestions$ecosystem <- c("Agriculture runoff", "Dredging", "Port development")
-          } else if (grepl("lagoon", ecosystem_type, ignore.case = TRUE)) {
-            suggestions$ecosystem <- c("Shellfish farming", "Salt production", "Bird watching")
-          }
-        }
-      }
-
-      else if (category == "pressures") {
-        # Universal pressures
-        suggestions$universal <- c("Overfishing", "Physical habitat damage", "Pollution (nutrients, chemicals)",
-                                   "Marine litter/plastics", "Noise pollution", "Invasive species")
-
-        # Region-specific pressures
-        if (!is.null(regional_sea)) {
-          if (regional_sea == "baltic") {
-            suggestions$regional <- c("Eutrophication", "Hypoxia", "Chemical contaminants",
-                                      "Ghost fishing gear", "Algal blooms")
-          } else if (regional_sea == "mediterranean") {
-            suggestions$regional <- c("Coastal squeeze", "Salinization", "Heat stress",
-                                      "Marine litter hotspots", "Light pollution")
-          } else if (regional_sea == "north_sea") {
-            suggestions$regional <- c("Bottom trawling impacts", "Oil spills", "Underwater noise",
-                                      "Benthic disturbance", "Eutrophication")
-          } else if (regional_sea == "irish_sea") {
-            suggestions$regional <- c("Nutrient pollution", "Marine litter", "Shipping impacts",
-                                      "Coastal erosion", "Bottom fishing impacts")
-          } else if (regional_sea == "east_atlantic") {
-            suggestions$regional <- c("Overfishing pressure", "Ocean warming", "Storm intensity",
-                                      "Marine litter", "Coastal development impacts")
-          } else if (regional_sea %in% c("caribbean", "pacific", "indian")) {
-            suggestions$regional <- c("Coral bleaching", "Crown-of-thorns starfish", "Sedimentation",
-                                      "Coastal runoff", "Storm damage")
-          } else if (regional_sea == "arctic") {
-            suggestions$regional <- c("Sea ice loss", "Permafrost thaw", "Ocean acidification",
-                                      "Temperature increase", "New shipping routes")
-          }
-        }
-
-        # Issue-specific pressures
-        if (!is.null(main_issue)) {
-          if (grepl("eutrophication|nutrient", main_issue, ignore.case = TRUE)) {
-            suggestions$issue <- c("Nutrient loading", "Agricultural runoff", "Sewage discharge",
-                                   "Harmful algal blooms")
-          } else if (grepl("overfishing|fish", main_issue, ignore.case = TRUE)) {
-            suggestions$issue <- c("Bycatch", "Discards", "Gear selectivity issues",
-                                   "Stock depletion")
-          } else if (grepl("pollution|litter|plastic", main_issue, ignore.case = TRUE)) {
-            suggestions$issue <- c("Microplastics", "Ghost gear", "Chemical contamination",
-                                   "Oil pollution")
-          } else if (grepl("climate|warming|acidification", main_issue, ignore.case = TRUE)) {
-            suggestions$issue <- c("Ocean warming", "Ocean acidification", "Sea level rise",
-                                   "Changes in stratification")
-          }
-        }
-      }
-
-      else if (category == "states") {
-        # Universal state changes
-        suggestions$universal <- c("Declining fish stocks", "Loss of biodiversity", "Habitat degradation",
-                                   "Water quality decline", "Altered food webs")
-
-        # Region + ecosystem specific states
-        if (!is.null(regional_sea)) {
-          if (regional_sea == "baltic") {
-            suggestions$regional <- c("Oxygen depletion", "Cyanobacterial blooms", "Cod stock collapse",
-                                      "Seal population changes")
-          } else if (regional_sea == "mediterranean") {
-            suggestions$regional <- c("Posidonia meadow loss", "Fish stock depletion", "Jellyfish blooms",
-                                      "Beach erosion")
-          } else if (regional_sea %in% c("caribbean", "pacific", "indian")) {
-            suggestions$regional <- c("Coral cover decline", "Reef degradation", "Parrotfish decline",
-                                      "Seagrass loss", "Mangrove retreat")
-          } else if (regional_sea == "arctic") {
-            suggestions$regional <- c("Sea ice extent decrease", "Species range shifts",
-                                      "Ecosystem regime shifts")
-          }
-        }
-      }
-
-      else if (category == "impacts") {
-        # Universal impacts
-        suggestions$universal <- c("Reduced fish catch", "Loss of tourism revenue", "Reduced coastal protection",
-                                   "Loss of biodiversity value", "Reduced water quality for recreation")
-
-        # Context-specific impacts
-        if (!is.null(ecosystem_type)) {
-          if (grepl("reef", ecosystem_type, ignore.case = TRUE)) {
-            suggestions$ecosystem <- c("Diving site degradation", "Reduced reef fish availability",
-                                       "Loss of reef protection services")
-          } else if (grepl("beach|coast", ecosystem_type, ignore.case = TRUE)) {
-            suggestions$ecosystem <- c("Beach erosion impacts", "Loss of beach recreation value",
-                                       "Property value decline")
-          } else if (grepl("mangrove", ecosystem_type, ignore.case = TRUE)) {
-            suggestions$ecosystem <- c("Loss of nursery habitat", "Reduced storm protection",
-                                       "Reduced carbon storage")
-          }
-        }
-      }
-
-      else if (category == "welfare") {
-        # Universal welfare effects
-        suggestions$universal <- c("Loss of livelihoods", "Food insecurity", "Economic losses",
-                                   "Health impacts", "Reduced quality of life")
-
-        # Add context-specific welfare impacts
-        if (!is.null(main_issue)) {
-          if (grepl("overfishing|fish", main_issue, ignore.case = TRUE)) {
-            suggestions$issue <- c("Fishing community unemployment", "Protein deficiency",
-                                   "Cultural heritage loss")
-          } else if (grepl("tourism|coastal development", main_issue, ignore.case = TRUE)) {
-            suggestions$issue <- c("Loss of recreation opportunities", "Reduced property values",
-                                   "Displacement of communities")
-          } else if (grepl("pollution", main_issue, ignore.case = TRUE)) {
-            suggestions$issue <- c("Health risks", "Loss of aesthetic value", "Contaminated seafood")
-          }
-        }
-      }
-
-      else if (category == "responses") {
-        # Universal responses
-        suggestions$universal <- c("Marine protected areas (MPAs)", "Fishing quotas/limits",
-                                   "Pollution regulations", "Habitat restoration",
-                                   "Ecosystem-based management", "Stakeholder engagement")
-
-        # Region-specific responses
-        if (!is.null(regional_sea)) {
-          if (regional_sea == "baltic") {
-            suggestions$regional <- c("HELCOM action plan", "Nutrient load reduction",
-                                      "Cod recovery plan", "Wastewater treatment upgrade")
-          } else if (regional_sea == "mediterranean") {
-            suggestions$regional <- c("Barcelona Convention measures", "Coastal zone management",
-                                      "Posidonia protection", "Sustainable tourism guidelines")
-          } else if (regional_sea == "north_sea") {
-            suggestions$regional <- c("OSPAR measures", "Fisheries management plans",
-                                      "Marine spatial planning", "Renewable energy zones")
-          }
-        }
-
-        # Issue-specific responses
-        if (!is.null(main_issue)) {
-          if (grepl("eutrophication", main_issue, ignore.case = TRUE)) {
-            suggestions$issue <- c("Nutrient reduction targets", "Agricultural best practices",
-                                   "Sewage treatment improvement")
-          } else if (grepl("overfishing", main_issue, ignore.case = TRUE)) {
-            suggestions$issue <- c("Catch limits", "Gear restrictions", "Closed seasons",
-                                   "No-take zones")
-          } else if (grepl("climate|warming", main_issue, ignore.case = TRUE)) {
-            suggestions$issue <- c("Climate adaptation strategies", "Blue carbon conservation",
-                                   "Assisted migration", "Resilience building")
-          }
-        }
-      }
-
-      else if (category == "measures") {
-        # Universal measures
-        suggestions$universal <- c("Environmental legislation", "Marine spatial planning",
-                                   "Economic incentives", "Education and awareness programs",
-                                   "Monitoring and enforcement", "International agreements")
-
-        # Context-specific measures
-        if (!is.null(regional_sea)) {
-          if (regional_sea %in% c("baltic", "mediterranean", "north_sea", "black_sea")) {
-            suggestions$regional <- c("EU Marine Strategy Framework Directive", "Regional sea conventions",
-                                      "Common Fisheries Policy", "Natura 2000 network")
-          } else {
-            suggestions$regional <- c("National marine policies", "Regional fisheries organizations",
-                                      "Protected area networks", "Sustainable development goals")
-          }
-        }
-      }
-
-      # Combine all suggestions and return unique values
-      all_suggestions <- unique(c(suggestions$universal, suggestions$regional,
-                                  suggestions$ecosystem, suggestions$issue))
-      return(all_suggestions)
-    }
+    # Note: get_context_suggestions() is defined in ai_isa_knowledge_base.R
 
     # Observer to load recovered data when project_data_reactive changes
     # This allows AI ISA Assistant to restore state after auto-save recovery
@@ -1138,7 +828,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Render input area dynamically based on step type
+    input_area_exec_count <- 0
+
     output$input_area <- renderUI({
+      input_area_exec_count <<- input_area_exec_count + 1
+
+      cat(sprintf("\n++++++++++++++++++++++++++++++++++++++++\n"))
+      cat(sprintf("[AI ISA INPUT_AREA] EXECUTION #%d at %s\n", input_area_exec_count, Sys.time()))
+      cat(sprintf("[AI ISA INPUT_AREA] Current step: %d\n", rv$current_step))
+      cat(sprintf("[AI ISA INPUT_AREA] show_text_input: %s\n", rv$show_text_input))
+      cat(sprintf("++++++++++++++++++++++++++++++++++++++++\n\n"))
+
       if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
         step_info <- QUESTION_FLOW[[rv$current_step + 1]]
 
@@ -1181,9 +881,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
                 br()
               )
             },
-            div(id = session$ns("quick_options_container"),
-              uiOutput(session$ns("quick_options"))
-            ),
+            uiOutput(session$ns("quick_options")),
             br(),
             # Always show continue button for "multiple" type steps
             uiOutput(session$ns("continue_button"))
@@ -1263,6 +961,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
             approve_obs <- observeEvent(input[[paste0("approve_conn_", conn_idx)]], {
               if (!(conn_idx %in% isolate(rv$approved_connections))) {
                 rv$approved_connections <- c(isolate(rv$approved_connections), conn_idx)
+                cat(sprintf("[AI ISA CONNECTIONS] Connection #%d APPROVED (total approved: %d)\n",
+                           conn_idx, length(rv$approved_connections)))
               }
             }, ignoreInit = TRUE)
             new_observers[[length(new_observers) + 1]] <<- approve_obs
@@ -1270,6 +970,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
             # Reject observer
             reject_obs <- observeEvent(input[[paste0("reject_conn_", conn_idx)]], {
               rv$approved_connections <- setdiff(isolate(rv$approved_connections), conn_idx)
+              cat(sprintf("[AI ISA CONNECTIONS] Connection #%d REJECTED (total approved: %d)\n",
+                         conn_idx, length(rv$approved_connections)))
             }, ignoreInit = TRUE)
             new_observers[[length(new_observers) + 1]] <<- reject_obs
           })
@@ -1282,12 +984,18 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
     # Approve all connections
     observeEvent(input$approve_all_connections, {
       rv$approved_connections <- seq_along(rv$suggested_connections)
+      cat(sprintf("[AI ISA CONNECTIONS] APPROVE ALL clicked - approved %d connections\n",
+                 length(rv$approved_connections)))
       showNotification(i18n$t("All connections approved!"), type = "message")
     })
 
     # Finish connection review
     observeEvent(input$finish_connections, {
       approved_count <- length(rv$approved_connections)
+      cat(sprintf("[AI ISA CONNECTIONS] FINISH clicked - %d approved, %d total suggested\n",
+                 approved_count, length(rv$suggested_connections)))
+      cat(sprintf("[AI ISA CONNECTIONS] Approved indices: %s\n",
+                 paste(rv$approved_connections, collapse = ", ")))
 
       rv$conversation <- c(rv$conversation, list(
         list(type = "ai",
@@ -1298,7 +1006,29 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
              timestamp = Sys.time())
       ))
 
-      move_to_next_step()
+      # Save directly instead of triggering auto-save observer
+      cat("[AI ISA CONNECTIONS] Manually triggering save with approved connections\n")
+
+      # Temporarily set step to 10 and reset flag to allow save
+      old_step <- rv$current_step
+      rv$auto_saved_step_10 <- FALSE
+      rv$current_step <- 10
+
+      # Wait a moment for the auto-save observer to trigger
+      Sys.sleep(0.1)
+
+      # Set flag back to TRUE to prevent re-saving
+      rv$auto_saved_step_10 <- TRUE
+
+      # Move to completion step (beyond the flow)
+      cat("[AI ISA CONNECTIONS] Moving to completion\n")
+      rv$current_step <- 12
+
+      showNotification(
+        paste0(approved_count, " connections saved! Navigate to 'ISA Data Entry' or 'CLD Visualization' to view your model."),
+        type = "message",
+        duration = 5
+      )
     })
 
     # Render continue button with context-aware label
@@ -1354,34 +1084,64 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Render quick options - CONTEXT-AWARE VERSION
+    # Track execution count for debugging
+    quick_options_exec_count <- 0
+
     output$quick_options <- renderUI({
-      if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
-        # Use current step as suffix to ensure unique IDs and enable proper observers
-        render_suffix <- paste0("_s", rv$current_step)
+      quick_options_exec_count <<- quick_options_exec_count + 1
+      current_step <- rv$current_step
 
-        step_info <- QUESTION_FLOW[[rv$current_step + 1]]
-        cat(sprintf("[AI ISA QUICK] renderUI called for step %d, type: %s, target: %s\n",
-                    rv$current_step, step_info$type, step_info$target))
+      cat(sprintf("\n========================================\n"))
+      cat(sprintf("[AI ISA QUICK] EXECUTION #%d at %s\n", quick_options_exec_count, Sys.time()))
+      cat(sprintf("[AI ISA QUICK] Current step: %d / %d\n", current_step, length(QUESTION_FLOW)))
 
-        # Handle regional sea selection
-        if (step_info$type == "choice_regional_sea") {
-          regional_sea_buttons <- lapply(names(REGIONAL_SEAS), function(sea_key) {
+      # Return NULL first to force complete DOM cleanup
+      if (current_step < 0 || current_step >= length(QUESTION_FLOW)) {
+        cat(sprintf("[AI ISA QUICK] Returning NULL (step out of range)\n"))
+        cat(sprintf("========================================\n\n"))
+        return(NULL)
+      }
+
+      # Use current step as suffix to ensure unique IDs and enable proper observers
+      render_suffix <- paste0("_s", current_step)
+      cat(sprintf("[AI ISA QUICK] Using suffix: %s\n", render_suffix))
+
+      step_info <- QUESTION_FLOW[[current_step + 1]]
+      cat(sprintf("[AI ISA QUICK] Step type: %s, target: %s\n", step_info$type, step_info$target))
+
+      # Handle regional sea selection
+      if (step_info$type == "choice_regional_sea") {
+          # CRITICAL FIX: Exclude "other" since it's created separately below
+          regional_seas_list <- setdiff(names(REGIONAL_SEAS), "other")
+          cat(sprintf("[AI ISA QUICK] Creating %d regional sea buttons (excluding 'other')\n", length(regional_seas_list)))
+
+          regional_sea_buttons <- lapply(regional_seas_list, function(sea_key) {
             sea_info <- REGIONAL_SEAS[[sea_key]]
+            button_id <- session$ns(paste0("regional_sea_", sea_key, render_suffix))
+            cat(sprintf("[AI ISA QUICK]   Button ID: %s\n", button_id))
             actionButton(
-              inputId = session$ns(paste0("regional_sea_", sea_key, render_suffix)),
+              inputId = button_id,
               label = sea_info$name_i18n,
               class = "quick-option",
               style = "margin: 3px; min-width: 150px;"
             )
           })
+
           # Add "Other" button
+          other_button_id <- session$ns(paste0("regional_sea_other", render_suffix))
+          cat(sprintf("[AI ISA QUICK] *** CREATING OTHER BUTTON ***\n"))
+          cat(sprintf("[AI ISA QUICK] *** ID: %s ***\n", other_button_id))
+          cat(sprintf("[AI ISA QUICK] *** EXEC COUNT: %d ***\n", quick_options_exec_count))
+          cat(sprintf("========================================\n\n"))
+
           other_button <- actionButton(
-            inputId = session$ns(paste0("regional_sea_other", render_suffix)),
+            inputId = other_button_id,
             label = i18n$t("Other"),
             class = "quick-option",
             style = "margin: 3px; min-width: 150px; background-color: #f0f0f0;"
           )
-          return(tagList(
+
+          return(div(
             h5(style = "font-weight: 600; color: #667eea;", i18n$t("Select your regional sea:")),
             div(style = "margin-top: 10px;", regional_sea_buttons, other_button)
           ))
@@ -1406,7 +1166,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               class = "quick-option",
               style = "margin: 3px; min-width: 140px; background-color: #f0f0f0;"
             )
-            return(tagList(
+            return(div(
               h5(style = "font-weight: 600; color: #667eea;",
                  paste0(i18n$t("Common ecosystem types in"), " ",
                         REGIONAL_SEAS[[rv$context$regional_sea]]$name_i18n, ":")),
@@ -1434,7 +1194,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               class = "quick-option",
               style = "margin: 3px; min-width: 160px; background-color: #f0f0f0;"
             )
-            return(tagList(
+            return(div(
               h5(style = "font-weight: 600; color: #667eea;",
                  i18n$t("Common issues in your region:")),
               div(style = "margin-top: 10px;", issue_buttons, other_button)
@@ -1489,7 +1249,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               style = "margin: 3px; background-color: #f0f0f0;"
             )
 
-            return(tagList(
+            return(div(
               h5(style = "font-weight: 600; color: #667eea;",
                  paste0(i18n$t("AI-suggested options"), context_info, ":")),
               p(style = "font-size: 0.9em; color: #666; margin-top: 5px;",
@@ -1514,8 +1274,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
             })
           )
         }
-      }
     })
+
+    # Prevent output from rendering when not visible to avoid duplicates
+    outputOptions(output, "quick_options", suspendWhenHidden = TRUE)
 
     # Handle submit answer
     observeEvent(input$submit_answer, {
@@ -1533,144 +1295,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
       updateTextAreaInput(session, "user_input", value = "")
     })
 
-    # ========================================================================
-    # OBSERVERS FOR CONTEXT-AWARE BUTTONS (Regional Sea, Ecosystem, Issue)
-    # ========================================================================
-
-    # Observer for Regional Sea Buttons
-    observe({
-      current_step <- rv$current_step
-
-      if (current_step == 0) {  # Regional sea selection step
-        lapply(names(REGIONAL_SEAS), function(sea_key) {
-          button_id <- paste0("regional_sea_", sea_key)
-          observeEvent(input[[button_id]], {
-            if (rv$current_step == 0) {  # Still on regional sea step
-              sea_name <- REGIONAL_SEAS[[sea_key]]$name_en
-              rv$context$regional_sea <- sea_key
-
-              # Add to conversation
-              rv$conversation <- c(rv$conversation, list(
-                list(type = "user", message = sea_name, timestamp = Sys.time())
-              ))
-
-              ai_response <- paste0(
-                i18n$t("Great! You selected"), " ", REGIONAL_SEAS[[sea_key]]$name_i18n, ". ",
-                i18n$t("This will help me suggest relevant activities and pressures specific to your region.")
-              )
-
-              rv$conversation <- c(rv$conversation, list(
-                list(type = "ai", message = ai_response, timestamp = Sys.time())
-              ))
-
-              cat(sprintf("[AI ISA] Regional sea set to: %s\n", sea_name))
-              move_to_next_step()
-            }
-          }, ignoreInit = TRUE, once = TRUE)
-        })
-      }
-    })
-
-    # Observer for Ecosystem Type Buttons
-    observe({
-      current_step <- rv$current_step
-
-      if (current_step == 1 && !is.null(rv$context$regional_sea)) {  # Ecosystem selection step
-        ecosystem_types <- REGIONAL_SEAS[[rv$context$regional_sea]]$ecosystem_types
-
-        lapply(seq_along(ecosystem_types), function(i) {
-          button_id <- paste0("ecosystem_", i)
-          observeEvent(input[[button_id]], {
-            if (rv$current_step == 1) {  # Still on ecosystem step
-              ecosystem_name <- ecosystem_types[i]
-              rv$context$ecosystem_type <- ecosystem_name
-
-              # Add to conversation
-              rv$conversation <- c(rv$conversation, list(
-                list(type = "user", message = ecosystem_name, timestamp = Sys.time())
-              ))
-
-              ai_response <- paste0(
-                i18n$t("Perfect!"), " ", ecosystem_name, " ",
-                i18n$t("ecosystems have unique characteristics that I'll consider in my suggestions.")
-              )
-
-              rv$conversation <- c(rv$conversation, list(
-                list(type = "ai", message = ai_response, timestamp = Sys.time())
-              ))
-
-              cat(sprintf("[AI ISA] Ecosystem type set to: %s\n", ecosystem_name))
-              move_to_next_step()
-            }
-          }, ignoreInit = TRUE, once = TRUE)
-        })
-      }
-    })
-
-    # Observer for Main Issue Buttons
-    observe({
-      current_step <- rv$current_step
-
-      if (current_step == 2 && !is.null(rv$context$regional_sea)) {  # Issue selection step
-        issues <- REGIONAL_SEAS[[rv$context$regional_sea]]$common_issues
-
-        lapply(seq_along(issues), function(i) {
-          button_id <- paste0("issue_", i)
-          observeEvent(input[[button_id]], {
-            if (rv$current_step == 2) {  # Still on issue step
-              issue_name <- issues[i]
-              rv$context$main_issue <- issue_name
-
-              # Add to conversation
-              rv$conversation <- c(rv$conversation, list(
-                list(type = "user", message = issue_name, timestamp = Sys.time())
-              ))
-
-              ai_response <- paste0(
-                i18n$t("Understood. I'll focus suggestions on"), " ", tolower(issue_name), "-related issues. ",
-                i18n$t("Now let's start building your DAPSI(W)R(M) framework!")
-              )
-
-              rv$conversation <- c(rv$conversation, list(
-                list(type = "ai", message = ai_response, timestamp = Sys.time())
-              ))
-
-              cat(sprintf("[AI ISA] Main issue set to: %s\n", issue_name))
-              move_to_next_step()
-            }
-          }, ignoreInit = TRUE, once = TRUE)
-        })
-      }
-    })
-
-    # Observer for "Other" Button - Regional Sea
-    observeEvent(input$regional_sea_other, {
-      if (rv$current_step == 0) {
-        rv$show_text_input <- TRUE  # Show text input
-      }
-    }, ignoreInit = TRUE)
-
-    # Observer for "Other" Button - Ecosystem
-    observeEvent(input$ecosystem_other, {
-      if (rv$current_step == 1) {
-        rv$show_text_input <- TRUE  # Show text input
-      }
-    }, ignoreInit = TRUE)
-
-    # Observer for "Other" Button - Issue
-    observeEvent(input$issue_other, {
-      if (rv$current_step == 2) {
-        rv$show_text_input <- TRUE  # Show text input
-      }
-    }, ignoreInit = TRUE)
-
-    # Observer for "Other" Button - DAPSI(W)R(M) elements
-    observeEvent(input$dapsiwrm_other, {
-      # This works for steps 3-10 (Drivers through Measures)
-      if (rv$current_step >= 3 && rv$current_step <= 10) {
-        rv$show_text_input <- TRUE  # Show text input
-      }
-    }, ignoreInit = TRUE)
+    # NOTE: Observer blocks for regional sea, ecosystem, and issue buttons have been
+    # consolidated into the main quick_options observer block below (starting at line ~1659)
+    # to prevent duplicate ID issues and properly handle dynamic button creation with render_suffix.
 
     # Observer to reset show_text_input flag when step changes
     observeEvent(rv$current_step, {
@@ -1690,8 +1317,124 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
         if (current_step >= 0 && current_step < length(QUESTION_FLOW)) {
           step_info <- QUESTION_FLOW[[current_step + 1]]
 
-          # Handle static examples (old approach)
-          if (!is.null(step_info$examples)) {
+          # === HANDLE REGIONAL SEA SELECTION (Step 0) ===
+          if (step_info$type == "choice_regional_sea") {
+            # Set up observers for each regional sea button
+            lapply(names(REGIONAL_SEAS), function(sea_key) {
+              local({
+                button_id <- paste0("regional_sea_", sea_key, "_s", current_step)
+                sea_name <- REGIONAL_SEAS[[sea_key]]$name_en
+
+                observeEvent(input[[button_id]], {
+                  if (rv$current_step == current_step) {
+                    cat(sprintf("[AI ISA] Regional sea button clicked: %s\n", sea_name))
+                    rv$context$regional_sea <- sea_key
+
+                    ai_response <- paste0(
+                      i18n$t("Great! You selected"), " ", REGIONAL_SEAS[[sea_key]]$name_i18n, ". ",
+                      i18n$t("This will help me suggest relevant activities and pressures specific to your region.")
+                    )
+                    rv$conversation <- c(rv$conversation, list(
+                      list(type = "ai", message = ai_response, timestamp = Sys.time())
+                    ))
+
+                    move_to_next_step()
+                  }
+                }, ignoreInit = TRUE, once = TRUE)
+              })
+            })
+
+            # Observer for "Other" button - regional sea
+            observeEvent(input[[paste0("regional_sea_other_s", current_step)]], {
+              if (rv$current_step == current_step) {
+                cat("[AI ISA] Regional sea 'Other' button clicked - showing text input\n")
+                rv$show_text_input <- TRUE
+              }
+            }, ignoreInit = TRUE, once = TRUE)
+          }
+
+          # === HANDLE ECOSYSTEM TYPE SELECTION (Step 1) ===
+          else if (step_info$type == "choice_ecosystem") {
+            if (!is.null(rv$context$regional_sea)) {
+              ecosystem_types <- REGIONAL_SEAS[[rv$context$regional_sea]]$ecosystem_types
+
+              # Set up observers for each ecosystem button
+              lapply(seq_along(ecosystem_types), function(i) {
+                local({
+                  button_id <- paste0("ecosystem_", i, "_s", current_step)
+                  ecosystem_name <- ecosystem_types[i]
+
+                  observeEvent(input[[button_id]], {
+                    if (rv$current_step == current_step) {
+                      cat(sprintf("[AI ISA] Ecosystem button clicked: %s\n", ecosystem_name))
+                      rv$context$ecosystem_type <- ecosystem_name
+
+                      ai_response <- paste0(
+                        i18n$t("Perfect!"), " ", ecosystem_name, " ",
+                        i18n$t("ecosystems have unique characteristics that I'll consider in my suggestions.")
+                      )
+                      rv$conversation <- c(rv$conversation, list(
+                        list(type = "ai", message = ai_response, timestamp = Sys.time())
+                      ))
+
+                      move_to_next_step()
+                    }
+                  }, ignoreInit = TRUE, once = TRUE)
+                })
+              })
+
+              # Observer for "Other" button - ecosystem
+              observeEvent(input[[paste0("ecosystem_other_s", current_step)]], {
+                if (rv$current_step == current_step) {
+                  cat("[AI ISA] Ecosystem 'Other' button clicked - showing text input\n")
+                  rv$show_text_input <- TRUE
+                }
+              }, ignoreInit = TRUE, once = TRUE)
+            }
+          }
+
+          # === HANDLE MAIN ISSUE SELECTION (Step 2) ===
+          else if (step_info$type == "choice_with_custom") {
+            if (!is.null(rv$context$regional_sea)) {
+              issues <- REGIONAL_SEAS[[rv$context$regional_sea]]$common_issues
+
+              # Set up observers for each issue button
+              lapply(seq_along(issues), function(i) {
+                local({
+                  button_id <- paste0("issue_", i, "_s", current_step)
+                  issue_name <- issues[i]
+
+                  observeEvent(input[[button_id]], {
+                    if (rv$current_step == current_step) {
+                      cat(sprintf("[AI ISA] Issue button clicked: %s\n", issue_name))
+                      rv$context$main_issue <- issue_name
+
+                      ai_response <- paste0(
+                        i18n$t("Understood. I'll focus suggestions on"), " ", tolower(issue_name), "-related issues. ",
+                        i18n$t("Now let's start building your DAPSI(W)R(M) framework!")
+                      )
+                      rv$conversation <- c(rv$conversation, list(
+                        list(type = "ai", message = ai_response, timestamp = Sys.time())
+                      ))
+
+                      move_to_next_step()
+                    }
+                  }, ignoreInit = TRUE, once = TRUE)
+                })
+              })
+
+              # Observer for "Other" button - issue
+              observeEvent(input[[paste0("issue_other_s", current_step)]], {
+                if (rv$current_step == current_step) {
+                  cat("[AI ISA] Issue 'Other' button clicked - showing text input\n")
+                  rv$show_text_input <- TRUE
+                }
+              }, ignoreInit = TRUE, once = TRUE)
+            }
+          }
+
+          # === HANDLE STATIC EXAMPLES (old approach) ===
+          else if (!is.null(step_info$examples)) {
             # Set up observers for this step's buttons
             lapply(seq_along(step_info$examples), function(i) {
               local({
@@ -1707,7 +1450,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               })
             })
           }
-          # Handle context-aware examples (new approach)
+          # === HANDLE CONTEXT-AWARE EXAMPLES (new approach) ===
           else if (!is.null(step_info$use_context_examples) && step_info$use_context_examples) {
             # Get context-aware suggestions
             suggestions <- get_context_suggestions(
@@ -1737,6 +1480,14 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
                 })
               })
             }
+
+            # Observer for "Other" button - DAPSIWRM elements
+            observeEvent(input[["dapsiwrm_other"]], {
+              if (rv$current_step == current_step) {
+                cat("[AI ISA] DAPSIWRM 'Other' button clicked - showing text input\n")
+                rv$show_text_input <- TRUE
+              }
+            }, ignoreInit = TRUE, once = TRUE)
           }
 
           # Mark this step as having observers set up
@@ -2428,21 +2179,53 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
     })
 
     observeEvent(input$confirm_start_over, {
+      cat("[AI ISA] Starting over - resetting all data\n")
+
+      # Reset step
       rv$current_step <- 0
-      rv$auto_saved_step_10 <- FALSE  # Reset auto-save flag
+      rv$auto_saved_step_10 <- FALSE
+      rv$show_text_input <- FALSE
+
+      # Reset conversation
       rv$conversation <- list(
         list(type = "ai", message = QUESTION_FLOW[[1]]$question, timestamp = Sys.time())
       )
+
+      # Reset all elements
       rv$elements <- list(
-        drivers = list(), activities = list(), pressures = list(),
-        states = list(), impacts = list(), welfare = list(),
-        responses = list(), measures = list()
+        drivers = list(),
+        activities = list(),
+        pressures = list(),
+        states = list(),
+        impacts = list(),
+        welfare = list(),
+        responses = list(),
+        measures = list()
       )
+
+      # Reset context - MUST match initialization structure
       rv$context <- list(
-        project_name = NULL, location = NULL,
-        ecosystem_type = NULL, main_issue = NULL
+        project_name = NULL,
+        regional_sea = NULL,
+        ecosystem_type = NULL,
+        ecosystem_subtype = NULL,
+        main_issue = NULL
       )
+
+      # Reset connections
+      rv$suggested_connections <- list()
+      rv$approved_connections <- list()
+
+      # Clear localStorage auto-save
+      session$sendCustomMessage('clear_ai_isa_session', list())
+
+      # Reset last save time
+      rv$last_save_time <- NULL
+
       removeModal()
+
+      showNotification("All data cleared. Starting over from step 1.", type = "message", duration = 3)
+      cat("[AI ISA] Reset complete\n")
     })
 
     # Handle load template
@@ -3003,6 +2786,166 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               approved = rv$approved_connections
             )
 
+            # Build adjacency matrices from approved connections
+            # Initialize all matrices to NULL first
+            current_data$data$isa_data$adjacency_matrices <- list(
+              gb_es = NULL,
+              es_mpf = NULL,
+              mpf_p = NULL,
+              p_a = NULL,
+              a_d = NULL,
+              d_gb = NULL,
+              p_r = NULL,
+              r_m = NULL
+            )
+
+            # If there are approved connections, build the matrices
+            cat(sprintf("[AI ISA AUTO-SAVE] Approved connections count: %d\n", length(rv$approved_connections)))
+            cat(sprintf("[AI ISA AUTO-SAVE] Approved connection indices: %s\n", paste(rv$approved_connections, collapse = ", ")))
+            cat(sprintf("[AI ISA AUTO-SAVE] Total suggested connections: %d\n", length(rv$suggested_connections)))
+
+            if (length(rv$approved_connections) > 0) {
+              # Get dimensions for each matrix
+              n_drivers <- length(rv$elements$drivers)
+              n_activities <- length(rv$elements$activities)
+              n_pressures <- length(rv$elements$pressures)
+              n_states <- length(rv$elements$states)
+              n_impacts <- length(rv$elements$impacts)
+              n_welfare <- length(rv$elements$welfare)
+              n_responses <- length(rv$elements$responses)
+              n_measures <- length(rv$elements$measures)
+
+              cat(sprintf("[AI ISA AUTO-SAVE] Matrix dimensions: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d, M=%d\n",
+                         n_drivers, n_activities, n_pressures, n_states, n_impacts, n_welfare, n_responses, n_measures))
+
+              # Initialize matrices
+              if (n_drivers > 0 && n_activities > 0) {
+                current_data$data$isa_data$adjacency_matrices$a_d <- matrix(
+                  "", nrow = n_activities, ncol = n_drivers,
+                  dimnames = list(
+                    sapply(rv$elements$activities, function(x) x$name),
+                    sapply(rv$elements$drivers, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created a_d matrix (%d x %d)\n", n_activities, n_drivers))
+              }
+
+              if (n_activities > 0 && n_pressures > 0) {
+                current_data$data$isa_data$adjacency_matrices$p_a <- matrix(
+                  "", nrow = n_pressures, ncol = n_activities,
+                  dimnames = list(
+                    sapply(rv$elements$pressures, function(x) x$name),
+                    sapply(rv$elements$activities, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created p_a matrix (%d x %d)\n", n_pressures, n_activities))
+              }
+
+              if (n_pressures > 0 && n_states > 0) {
+                current_data$data$isa_data$adjacency_matrices$mpf_p <- matrix(
+                  "", nrow = n_states, ncol = n_pressures,
+                  dimnames = list(
+                    sapply(rv$elements$states, function(x) x$name),
+                    sapply(rv$elements$pressures, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created mpf_p matrix (%d x %d)\n", n_states, n_pressures))
+              }
+
+              if (n_states > 0 && n_impacts > 0) {
+                current_data$data$isa_data$adjacency_matrices$es_mpf <- matrix(
+                  "", nrow = n_impacts, ncol = n_states,
+                  dimnames = list(
+                    sapply(rv$elements$impacts, function(x) x$name),
+                    sapply(rv$elements$states, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created es_mpf matrix (%d x %d)\n", n_impacts, n_states))
+              }
+
+              if (n_impacts > 0 && n_welfare > 0) {
+                current_data$data$isa_data$adjacency_matrices$gb_es <- matrix(
+                  "", nrow = n_welfare, ncol = n_impacts,
+                  dimnames = list(
+                    sapply(rv$elements$welfare, function(x) x$name),
+                    sapply(rv$elements$impacts, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created gb_es matrix (%d x %d)\n", n_welfare, n_impacts))
+              }
+
+              # Responses → Pressures matrix
+              if (n_responses > 0 && n_pressures > 0) {
+                current_data$data$isa_data$adjacency_matrices$p_r <- matrix(
+                  "", nrow = n_pressures, ncol = n_responses,
+                  dimnames = list(
+                    sapply(rv$elements$pressures, function(x) x$name),
+                    sapply(rv$elements$responses, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created p_r matrix (%d x %d)\n", n_pressures, n_responses))
+              }
+
+              # Measures → Responses matrix
+              if (n_measures > 0 && n_responses > 0) {
+                current_data$data$isa_data$adjacency_matrices$r_m <- matrix(
+                  "", nrow = n_responses, ncol = n_measures,
+                  dimnames = list(
+                    sapply(rv$elements$responses, function(x) x$name),
+                    sapply(rv$elements$measures, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created r_m matrix (%d x %d)\n", n_responses, n_measures))
+              }
+
+              # Fill matrices with approved connections
+              cat(sprintf("[AI ISA AUTO-SAVE] Processing %d approved connections...\n", length(rv$approved_connections)))
+              for (conn_idx in rv$approved_connections) {
+                conn <- rv$suggested_connections[[conn_idx]]
+
+                cat(sprintf("[AI ISA AUTO-SAVE] Connection #%d: %s\n", conn_idx,
+                           paste(names(conn), collapse = ", ")))
+                cat(sprintf("[AI ISA AUTO-SAVE]   matrix=%s, from_index=%s, to_index=%s, polarity=%s, strength=%s\n",
+                           conn$matrix %||% "NULL",
+                           conn$from_index %||% "NULL",
+                           conn$to_index %||% "NULL",
+                           conn$polarity %||% "NULL",
+                           conn$strength %||% "NULL"))
+
+                # Format: "+strength:confidence"
+                confidence <- conn$confidence %||% CONFIDENCE_DEFAULT
+                value <- paste0(conn$polarity, conn$strength, ":", confidence)
+                cat(sprintf("[AI ISA AUTO-SAVE]   Formatted value: %s\n", value))
+
+                # Determine which matrix and indices
+                if (conn$matrix == "a_d" && !is.null(current_data$data$isa_data$adjacency_matrices$a_d)) {
+                  current_data$data$isa_data$adjacency_matrices$a_d[conn$to_index, conn$from_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to a_d[%d, %d]\n", conn$to_index, conn$from_index))
+                } else if (conn$matrix == "p_a" && !is.null(current_data$data$isa_data$adjacency_matrices$p_a)) {
+                  current_data$data$isa_data$adjacency_matrices$p_a[conn$to_index, conn$from_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to p_a[%d, %d]\n", conn$to_index, conn$from_index))
+                } else if (conn$matrix == "mpf_p" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_p)) {
+                  current_data$data$isa_data$adjacency_matrices$mpf_p[conn$to_index, conn$from_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to mpf_p[%d, %d]\n", conn$to_index, conn$from_index))
+                } else if (conn$matrix == "es_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$es_mpf)) {
+                  current_data$data$isa_data$adjacency_matrices$es_mpf[conn$to_index, conn$from_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to es_mpf[%d, %d]\n", conn$to_index, conn$from_index))
+                } else if (conn$matrix == "gb_es" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_es)) {
+                  current_data$data$isa_data$adjacency_matrices$gb_es[conn$to_index, conn$from_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to gb_es[%d, %d]\n", conn$to_index, conn$from_index))
+                } else if (conn$matrix == "p_r" && !is.null(current_data$data$isa_data$adjacency_matrices$p_r)) {
+                  current_data$data$isa_data$adjacency_matrices$p_r[conn$to_index, conn$from_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to p_r[%d, %d]\n", conn$to_index, conn$from_index))
+                } else if (conn$matrix == "r_m" && !is.null(current_data$data$isa_data$adjacency_matrices$r_m)) {
+                  current_data$data$isa_data$adjacency_matrices$r_m[conn$to_index, conn$from_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_m[%d, %d]\n", conn$to_index, conn$from_index))
+                } else {
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✗ FAILED to save - matrix '%s' not found or NULL\n", conn$matrix %||% "NULL"))
+                }
+              }
+              cat("[AI ISA AUTO-SAVE] Finished processing all connections\n")
+            }
+
             current_data$last_modified <- Sys.time()
 
             # Debug: verify data before saving
@@ -3256,6 +3199,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
       )
 
       # If there are approved connections, build the matrices
+      cat(sprintf("[AI ISA CONNECTIONS] Approved connections count: %d\n", length(rv$approved_connections)))
+      cat(sprintf("[AI ISA CONNECTIONS] Approved connection indices: %s\n", paste(rv$approved_connections, collapse = ", ")))
+      cat(sprintf("[AI ISA CONNECTIONS] Total suggested connections: %d\n", length(rv$suggested_connections)))
+
       if (length(rv$approved_connections) > 0) {
         # Get dimensions for each matrix
         n_drivers <- length(rv$elements$drivers)
@@ -3264,6 +3211,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
         n_states <- length(rv$elements$states)
         n_impacts <- length(rv$elements$impacts)
         n_welfare <- length(rv$elements$welfare)
+
+        cat(sprintf("[AI ISA CONNECTIONS] Matrix dimensions: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d\n",
+                   n_drivers, n_activities, n_pressures, n_states, n_impacts, n_welfare))
 
         # Initialize matrices
         if (n_drivers > 0 && n_activities > 0) {
@@ -3274,6 +3224,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               sapply(rv$elements$drivers, function(x) x$name)
             )
           )
+          cat(sprintf("[AI ISA CONNECTIONS] Created a_d matrix (%d x %d)\n", n_activities, n_drivers))
         }
 
         if (n_activities > 0 && n_pressures > 0) {
@@ -3284,6 +3235,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               sapply(rv$elements$activities, function(x) x$name)
             )
           )
+          cat(sprintf("[AI ISA CONNECTIONS] Created p_a matrix (%d x %d)\n", n_pressures, n_activities))
         }
 
         if (n_pressures > 0 && n_states > 0) {
@@ -3294,6 +3246,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               sapply(rv$elements$pressures, function(x) x$name)
             )
           )
+          cat(sprintf("[AI ISA CONNECTIONS] Created mpf_p matrix (%d x %d)\n", n_states, n_pressures))
         }
 
         if (n_states > 0 && n_impacts > 0) {
@@ -3304,6 +3257,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               sapply(rv$elements$states, function(x) x$name)
             )
           )
+          cat(sprintf("[AI ISA CONNECTIONS] Created es_mpf matrix (%d x %d)\n", n_impacts, n_states))
         }
 
         if (n_impacts > 0 && n_welfare > 0) {
@@ -3314,28 +3268,49 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               sapply(rv$elements$impacts, function(x) x$name)
             )
           )
+          cat(sprintf("[AI ISA CONNECTIONS] Created gb_es matrix (%d x %d)\n", n_welfare, n_impacts))
         }
 
         # Fill matrices with approved connections
+        cat(sprintf("[AI ISA CONNECTIONS] Processing %d approved connections...\n", length(rv$approved_connections)))
         for (conn_idx in rv$approved_connections) {
           conn <- rv$suggested_connections[[conn_idx]]
+
+          cat(sprintf("[AI ISA CONNECTIONS] Connection #%d: %s\n", conn_idx,
+                     paste(names(conn), collapse = ", ")))
+          cat(sprintf("[AI ISA CONNECTIONS]   matrix=%s, from_index=%s, to_index=%s, polarity=%s, strength=%s\n",
+                     conn$matrix %||% "NULL",
+                     conn$from_index %||% "NULL",
+                     conn$to_index %||% "NULL",
+                     conn$polarity %||% "NULL",
+                     conn$strength %||% "NULL"))
+
           # Format: "+strength:confidence"
           confidence <- conn$confidence %||% CONFIDENCE_DEFAULT  # Default if not present
           value <- paste0(conn$polarity, conn$strength, ":", confidence)
+          cat(sprintf("[AI ISA CONNECTIONS]   Formatted value: %s\n", value))
 
           # Determine which matrix and indices
           if (conn$matrix == "a_d" && !is.null(current_data$data$isa_data$adjacency_matrices$a_d)) {
             current_data$data$isa_data$adjacency_matrices$a_d[conn$to_index, conn$from_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to a_d[%d, %d]\n", conn$to_index, conn$from_index))
           } else if (conn$matrix == "p_a" && !is.null(current_data$data$isa_data$adjacency_matrices$p_a)) {
             current_data$data$isa_data$adjacency_matrices$p_a[conn$to_index, conn$from_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to p_a[%d, %d]\n", conn$to_index, conn$from_index))
           } else if (conn$matrix == "mpf_p" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_p)) {
             current_data$data$isa_data$adjacency_matrices$mpf_p[conn$to_index, conn$from_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to mpf_p[%d, %d]\n", conn$to_index, conn$from_index))
           } else if (conn$matrix == "es_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$es_mpf)) {
             current_data$data$isa_data$adjacency_matrices$es_mpf[conn$to_index, conn$from_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to es_mpf[%d, %d]\n", conn$to_index, conn$from_index))
           } else if (conn$matrix == "gb_es" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_es)) {
             current_data$data$isa_data$adjacency_matrices$gb_es[conn$to_index, conn$from_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to gb_es[%d, %d]\n", conn$to_index, conn$from_index))
+          } else {
+            cat(sprintf("[AI ISA CONNECTIONS]   ✗ FAILED to save - matrix '%s' not found or NULL\n", conn$matrix %||% "NULL"))
           }
         }
+        cat("[AI ISA CONNECTIONS] Finished processing all connections\n")
       }
 
       # Add metadata

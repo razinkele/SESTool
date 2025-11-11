@@ -260,7 +260,18 @@ cld_viz_server <- function(id, project_data_reactive) {
       isa_data <- project_data$data$isa_data
 
       if (!is.null(isa_data) && length(isa_data) > 0) {
-        # Create signature that includes ISA data AND CLD state (including leverage scores)
+        # Count connections from adjacency matrices
+        n_connections <- 0
+        if (!is.null(isa_data$adjacency_matrices)) {
+          for (matrix_name in names(isa_data$adjacency_matrices)) {
+            mat <- isa_data$adjacency_matrices[[matrix_name]]
+            if (!is.null(mat) && is.matrix(mat)) {
+              n_connections <- n_connections + sum(mat != "", na.rm = TRUE)
+            }
+          }
+        }
+
+        # Create signature that includes ISA data AND connection count
         isa_signature <- paste(
           nrow(isa_data$drivers %||% data.frame()),
           nrow(isa_data$activities %||% data.frame()),
@@ -268,6 +279,7 @@ cld_viz_server <- function(id, project_data_reactive) {
           nrow(isa_data$marine_processes %||% data.frame()),
           nrow(isa_data$ecosystem_services %||% data.frame()),
           nrow(isa_data$goods_benefits %||% data.frame()),
+          n_connections,  # Add connection count to signature
           sep = "-"
         )
 
@@ -296,11 +308,9 @@ cld_viz_server <- function(id, project_data_reactive) {
             # Use existing CLD nodes (preserves leverage scores and other analysis results)
             cat("[CLD VIZ] Using existing CLD nodes with analysis results\n")
             rv$nodes <- project_data$data$cld$nodes
-            rv$edges <- if (!is.null(project_data$data$cld$edges)) {
-              project_data$data$cld$edges
-            } else {
-              create_edges_df(isa_data, isa_data$adjacency_matrices)
-            }
+            # Always rebuild edges from adjacency matrices (they are the source of truth)
+            rv$edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+            cat(sprintf("[CLD VIZ] Rebuilt edges from adjacency matrices: %d edges\n", nrow(rv$edges)))
           } else {
             # No CLD exists yet - build from ISA data
             cat("[CLD VIZ] Building new CLD from ISA data\n")
