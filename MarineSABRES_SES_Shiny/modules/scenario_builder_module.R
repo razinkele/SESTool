@@ -491,6 +491,10 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       idx <- which(sapply(scenario_list, function(s) s$id == active_scenario$id))
       scenario_list[[idx]]$modifications$nodes_added[[length(scenario_list[[idx]]$modifications$nodes_added) + 1]] <- new_node
       scenario_list[[idx]]$modified <- Sys.time()
+
+      # Invalidate cached analysis results since modifications changed
+      scenario_list[[idx]]$results <- NULL
+
       scenarios(scenario_list)
 
       save_scenarios_to_project()
@@ -513,6 +517,10 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         input$node_to_remove
       )
       scenario_list[[idx]]$modified <- Sys.time()
+
+      # Invalidate cached analysis results since modifications changed
+      scenario_list[[idx]]$results <- NULL
+
       scenarios(scenario_list)
 
       save_scenarios_to_project()
@@ -578,6 +586,10 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       idx <- which(sapply(scenario_list, function(s) s$id == active_scenario$id))
       scenario_list[[idx]]$modifications$links_added[[length(scenario_list[[idx]]$modifications$links_added) + 1]] <- new_link
       scenario_list[[idx]]$modified <- Sys.time()
+
+      # Invalidate cached analysis results since modifications changed
+      scenario_list[[idx]]$results <- NULL
+
       scenarios(scenario_list)
 
       save_scenarios_to_project()
@@ -600,6 +612,10 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         input$link_to_remove
       )
       scenario_list[[idx]]$modified <- Sys.time()
+
+      # Invalidate cached analysis results since modifications changed
+      scenario_list[[idx]]$results <- NULL
+
       scenarios(scenario_list)
 
       save_scenarios_to_project()
@@ -1179,20 +1195,77 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         is_added <- any(sapply(modifications$nodes_added, function(n) n$id == node_id))
         is_removed <- node_id %in% modifications$nodes_removed
 
-        # Check if connected links were modified
-        connected_links_added <- any(sapply(modifications$links_added,
-                                           function(l) l$from == node_id || l$to == node_id))
+        # If node was removed, it has negative impact
+        if (is_removed) {
+          node_label <- get_node_label_by_id(node_id, scenario$nodes)
+          return(data.frame(
+            node = node_label,
+            impact_magnitude = 3,
+            impact_direction = "negative",
+            reason = i18n$t("scenario_node_marked_for_removal"),
+            stringsAsFactors = FALSE
+          ))
+        }
 
-        # Simple impact scoring
+        # Check for connected links
+        added_links <- modifications$links_added
+        removed_links <- modifications$links_removed
+
+        # Links where this node is involved
+        connected_links_added <- sapply(added_links, function(l) {
+          l$from == node_id || l$to == node_id
+        })
+
+        connected_links_removed <- sapply(removed_links, function(l) {
+          l$from == node_id || l$to == node_id
+        })
+
+        # Calculate impact
         impact_magnitude <- 0
         impact_direction <- "neutral"
+        reason <- ""
 
         if (is_added) {
+          # New node added - positive impact
           impact_magnitude <- 3
           impact_direction <- "positive"
-        } else if (connected_links_added) {
+          reason <- i18n$t("scenario_new_node_added")
+
+        } else if (any(connected_links_added)) {
+          # Links added involving this node
+          # Consider polarity of links
+          link_polarities <- sapply(added_links[connected_links_added], function(l) {
+            if (is.null(l$polarity)) "+" else l$polarity
+          })
+
+          positive_links <- sum(link_polarities == "+")
+          negative_links <- sum(link_polarities == "-")
+
+          if (positive_links > negative_links) {
+            impact_magnitude <- 2
+            impact_direction <- "positive"
+            reason <- sprintf(i18n$t("scenario_positive_links_added"), positive_links)
+          } else if (negative_links > positive_links) {
+            impact_magnitude <- 2
+            impact_direction <- "negative"
+            reason <- sprintf(i18n$t("scenario_negative_links_added"), negative_links)
+          } else {
+            impact_magnitude <- 1
+            impact_direction <- "mixed"
+            reason <- sprintf(i18n$t("scenario_mixed_links_added"), length(link_polarities))
+          }
+
+        } else if (any(connected_links_removed)) {
+          # Links removed involving this node - negative impact
           impact_magnitude <- 2
-          impact_direction <- "positive"
+          impact_direction <- "negative"
+          reason <- sprintf(i18n$t("scenario_links_removed"), sum(connected_links_removed))
+
+        } else {
+          # No direct modifications to this node
+          impact_magnitude <- 0
+          impact_direction <- "neutral"
+          reason <- i18n$t("scenario_no_direct_modifications")
         }
 
         node_label <- get_node_label_by_id(node_id, scenario$nodes)
@@ -1201,8 +1274,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
           node = node_label,
           impact_magnitude = impact_magnitude,
           impact_direction = impact_direction,
-          reason = ifelse(is_added, i18n$t("scenario_new_node_added"),
-                         ifelse(connected_links_added, i18n$t("scenario_connected_to_new_links"), i18n$t("scenario_indirect_effect"))),
+          reason = reason,
           stringsAsFactors = FALSE
         )
       })

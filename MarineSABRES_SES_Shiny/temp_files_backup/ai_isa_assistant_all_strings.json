@@ -1,0 +1,226 @@
+{
+  "ui_headers": [
+    "AI-Assisted ISA Creation",
+    "Let me guide you step-by-step through building your DAPSI(W)R(M) model."
+  ],
+  "progress_panel": [
+    "Your SES Model Progress",
+    "Elements Created:",
+    "Framework Flow:",
+    "Current Framework:",
+    "Drivers:",
+    "Activities:",
+    "Pressures:",
+    "State Changes:",
+    "Impacts:",
+    "Welfare:",
+    "Responses:",
+    "Measures:",
+    "Total elements created"
+  ],
+  "session_management": [
+    "Session Management",
+    "Save Progress",
+    "Save your current progress to browser storage",
+    "Load Saved",
+    "Restore your last saved session",
+    "Auto-saved",
+    "seconds ago",
+    "minutes ago",
+    "Not yet saved",
+    "Session saved successfully!",
+    "Session restored successfully!",
+    "No saved session found.",
+    "A previous session was found. Click 'Load Saved' to restore it."
+  ],
+  "main_buttons": [
+    "Preview Model",
+    "Save to ISA Data Entry",
+    "Load Example Template",
+    "Start Over"
+  ],
+  "step_titles": [
+    "Welcome & Introduction",
+    "Ecosystem Context",
+    "Main Issue Identification",
+    "Drivers - Societal Needs",
+    "Activities - Human Actions",
+    "Pressures - Environmental Stressors",
+    "State Changes - Ecosystem Effects",
+    "Impacts - Effects on Ecosystem Services",
+    "Welfare - Human Well-being Effects",
+    "Responses - Management Actions",
+    "Measures - Policy Instruments",
+    "Connection Review"
+  ],
+  "step_questions": [
+    "Hello! I'm your AI assistant for creating a DAPSI(W)R(M) model. I'll guide you through a series of questions to build your social-ecological system model. Let's start with the basics: What is the name or location of your marine project or study area?",
+    "Great! Now, what type of marine ecosystem are you studying?",
+    "What is the main environmental or management issue you're addressing?",
+    "Let's identify the DRIVERS - these are the basic human needs or societal demands driving activities in your area. What are the main societal needs? (e.g., Food security, Economic development, Recreation, Energy needs)",
+    "Now let's identify ACTIVITIES - the human actions taken to meet those needs. What activities are happening in your marine area? (e.g., Fishing, Aquaculture, Shipping, Tourism)",
+    "What PRESSURES do these activities put on the marine environment? (e.g., Overfishing, Pollution, Habitat destruction)",
+    "How do these pressures change the STATE of the marine ecosystem? (e.g., Declining fish stocks, Loss of biodiversity, Degraded water quality)",
+    "What are the IMPACTS on ecosystem services and benefits? How do these changes affect what the ocean provides? (e.g., Reduced fish catch, Loss of tourism revenue)",
+    "How do these impacts affect human WELFARE and well-being? (e.g., Loss of livelihoods, Health impacts, Reduced quality of life)",
+    "What RESPONSES or management actions are being taken (or could be taken) to address these issues? (e.g., Marine protected areas, Fishing quotas, Pollution regulations)",
+    "Finally, what specific MEASURES or policy instruments support these responses? (e.g., Laws, Economic incentives, Education programs)",
+    "Great! Now I'll suggest logical connections between the elements you've identified. These connections represent causal relationships in your social-ecological system. You can review and approve/reject each suggestion."
+  ],
+  "ecosystem_types": [
+    "Coastal waters",
+    "Open ocean",
+    "Estuaries",
+    "Coral reefs",
+    "Mangroves",
+    "Seagrass beds",
+    "Deep sea",
+    "Other"
+  ],
+  "driver_examples": [
+    "Food security",
+    "Economic development",
+    "Recreation and tourism",
+    "Energy needs",
+    "Coastal protection",
+    "Cultural heritage"
+  ],
+  "activity_examples": [
+    "Commercial fishing",
+    "Recreational fishing",
+    "Aquaculture",
+    "Shipping/Transport",
+    "Tourism",
+    "Coastal development",
+    "Renewable energy (wind/wave)",
+    "Oil & gas extraction"
+  ],
+  "pressure_examples": [
+    "Overfishing",
+    "Bycatch",
+    "Physical habitat damage",
+    "Pollution (nutrients, chemicals)",
+    "Noise pollution",
+    "Marine litter/plastics",
+    "Temperature changes",
+    "Ocean acidification"
+  ],
+  "state_examples": [
+    "Declining fish stocks",
+    "Loss of biodiversity",
+    "Habitat degradation",
+    "Water quality decline",
+    "Altered food webs",
+    "Invasive species",
+    "Loss of ecosystem resilience"
+  ],
+  "impact_examples": [
+    "Reduced fish catch",
+    "Loss of tourism revenue",
+    "Reduced coastal protection",
+    "Loss of biodiversity value",
+    "Reduced water quality for recreation",
+    "Loss of cultural services"
+  ],
+  "welfare_examples": [
+    "Loss of livelihoods",
+    "Food insecurity",
+    "Economic losses",
+    "Health impacts",
+    "Loss of cultural identity",
+    "Reduced quality of life",
+    "Social conflicts"
+  ],
+  "response_examples": [
+    "Marine protected areas (MPAs)",
+    "Fishing quotas/limits",
+    "Pollution regulations",
+    "Habitat restoration",
+    "Sustainable fishing practices",
+    "Ecosystem-based management",
+    "Stakeholder engagement",
+    "Monitoring programs"
+  ],
+  "measure_examples": [
+    "Environmental legislation",
+    "Marine spatial planning",
+    "Economic incentives (subsidies, taxes)",
+    "Education and awareness programs",
+    "Certification schemes (MSC, etc.)",
+    "International agreements",
+    "Monitoring and enforcement",
+    "Research funding"
+  ],
+  "connection_ui": [
+    "Review Suggested Connections",
+    "Approve or reject each connection. You can modify the strength and polarity if needed.",
+    "Approve All",
+    "Finish & Continue",
+    "No connections to review.",
+    "Reject",
+    "Approve",
+    "All connections approved!"
+  ],
+  "input_ui": [
+    "Type your answer here...",
+    "Submit Answer",
+    "Quick options (click to add):"
+  ],
+  "navigation_buttons": [
+    "Skip This Question",
+    "Continue to Activities",
+    "Continue to Pressures",
+    "Continue to State Changes",
+    "Continue to Impacts",
+    "Continue to Welfare",
+    "Continue to Responses",
+    "Continue to Measures",
+    "Continue",
+    "Finish"
+  ],
+  "step_display": [
+    "Step",
+    "of",
+    "Complete! Review your model"
+  ],
+  "modal_dialogs": [
+    "Restore Previous Session?",
+    "Found a saved session from",
+    "Do you want to restore it?",
+    "Yes, Restore",
+    "Cancel",
+    "Confirm Start Over",
+    "Are you sure you want to start over? All current progress will be lost.",
+    "Yes, Start Over",
+    "Choose a pre-built scenario:",
+    "Overfishing in Coastal Waters",
+    "Marine Pollution & Plastics",
+    "Coastal Tourism Impacts",
+    "Climate Change & Coral Reefs"
+  ],
+  "ai_messages": [
+    "Thank you! Moving to the next question...",
+    "Excellent work! You've completed your DAPSI(W)R(M) model with connections. Review the summary on the right, and when ready, click 'Save to ISA Data Entry' to transfer your model to the main ISA module.",
+    "I've identified",
+    "potential connections based on the DAPSI(W)R(M) framework logic. Review each connection below and approve or reject them."
+  ],
+  "dynamic_messages": [
+    "✓ Added",
+    "total",
+    "Click quick options to add more, or click the green button to continue.",
+    "Great! You've approved",
+    "connections out of",
+    "suggested connections",
+    "These connections will be included in your saved ISA data."
+  ],
+  "notification_messages": [
+    "Model saved! Navigate to 'ISA Data Entry' to see your elements.",
+    "Overfishing template loaded with example connections! You can now preview or modify it.",
+    "Marine Pollution template loaded with example connections!",
+    "Coastal Tourism template loaded with example connections!",
+    "Climate Change template loaded with example connections!",
+    "Model saved successfully!",
+    "elements and",
+    "connections transferred to ISA Data Entry."
+  ]
+}

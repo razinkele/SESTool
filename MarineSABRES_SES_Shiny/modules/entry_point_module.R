@@ -280,7 +280,11 @@ render_welcome_screen <- function(ns) {
         fluidRow(
           column(6,
             div(
-              class = "ep-card",
+              class = "ep-card start-here-highlight",
+              div(
+                class = "start-here-badge",
+                icon("star"), " ", i18n$t("START HERE")
+              ),
               h3(icon("route"), " ", i18n$t("Guided Pathway")),
               p(i18n$t("Step-by-step guidance through the entry points")),
               actionButton(ns("start_guided"), i18n$t("Start Guided Journey"),

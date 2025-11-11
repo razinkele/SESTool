@@ -1,0 +1,1606 @@
+{
+  "translation": [
+    {
+      "en": "AI-Assisted ISA Creation",
+      "es": "Creación de ISA asistida por IA",
+      "fr": "Création ISA assistée par l'IA",
+      "de": "KI-gestützte ISA-Erstellung",
+      "lt": "ISA kūrimas su dirbtiniu intelektu",
+      "pt": "Criação de ISA assistida por IA",
+      "it": "Creazione ISA assistita dall'intelligenza artificiale"
+    },
+    {
+      "en": "Let me guide you step-by-step through building your DAPSI(W)R(M) model.",
+      "es": "Permítame guiarle paso a paso en la construcción de su modelo DAPSI(W)R(M).",
+      "fr": "Laissez-moi vous guider étape par étape dans la création de votre modèle DAPSI(W)R(M).",
+      "de": "Lassen Sie sich von mir Schritt für Schritt durch den Aufbau Ihres DAPSI(W)R(M)-Modells führen.",
+      "lt": "Leiskite man žingsnis po žingsnio padėti jums sukurti savo DAPSI(W)R(M) modelį.",
+      "pt": "Deixe-me guiá-lo passo a passo na construção de seu modelo DAPSI(W)R(M).",
+      "it": "Lascia che ti guidi passo dopo passo nella costruzione del tuo modello DAPSI(W)R(M)."
+    },
+    {
+      "en": "Your SES Model Progress",
+      "es": "El progreso de su modelo SES",
+      "fr": "Progrès de votre modèle SES",
+      "de": "Ihr SES-Modellfortschritt",
+      "lt": "Jūsų SES modelio pažanga",
+      "pt": "O progresso do seu modelo SES",
+      "it": "I progressi del tuo modello SES"
+    },
+    {
+      "en": "Elements Created:",
+      "es": "Elementos creados:",
+      "fr": "Éléments créés :",
+      "de": "Erstellte Elemente:",
+      "lt": "Sukurti elementai:",
+      "pt": "Elementos criados:",
+      "it": "Elementi creati:"
+    },
+    {
+      "en": "Framework Flow:",
+      "es": "Flujo del marco:",
+      "fr": "Flux du cadre :",
+      "de": "Framework-Ablauf:",
+      "lt": "Sistemos srautas:",
+      "pt": "Fluxo da estrutura:",
+      "it": "Flusso della struttura:"
+    },
+    {
+      "en": "Current Framework:",
+      "es": "Marco actual:",
+      "fr": "Cadre actuel :",
+      "de": "Aktueller Rahmen:",
+      "lt": "Dabartinė sistema:",
+      "pt": "Quadro Atual:",
+      "it": "Quadro attuale:"
+    },
+    {
+      "en": "Drivers:",
+      "es": "Conductores:",
+      "fr": "Pilotes :",
+      "de": "Treiber:",
+      "lt": "Vairuotojai:",
+      "pt": "Motoristas:",
+      "it": "Driver:"
+    },
+    {
+      "en": "Activities:",
+      "es": "Actividades:",
+      "fr": "Activités:",
+      "de": "Aktivitäten:",
+      "lt": "Veikla:",
+      "pt": "Atividades:",
+      "it": "Attività:"
+    },
+    {
+      "en": "Pressures:",
+      "es": "Presiones:",
+      "fr": "Pressions :",
+      "de": "Drücke:",
+      "lt": "Slėgiai:",
+      "pt": "Pressões:",
+      "it": "Pressioni:"
+    },
+    {
+      "en": "State Changes:",
+      "es": "Cambios de estado:",
+      "fr": "Changements d'état :",
+      "de": "Zustandsänderungen:",
+      "lt": "Būsenos pakeitimai:",
+      "pt": "Mudanças de estado:",
+      "it": "Cambiamenti di stato:"
+    },
+    {
+      "en": "Impacts:",
+      "es": "Impactos:",
+      "fr": "Impacts :",
+      "de": "Auswirkungen:",
+      "lt": "Poveikis:",
+      "pt": "Impactos:",
+      "it": "Impatti:"
+    },
+    {
+      "en": "Welfare:",
+      "es": "Bienestar:",
+      "fr": "Bien-être:",
+      "de": "Wohlfahrt:",
+      "lt": "Gerovė:",
+      "pt": "Bem-estar:",
+      "it": "Benessere:"
+    },
+    {
+      "en": "Responses:",
+      "es": "Respuestas:",
+      "fr": "Réponses :",
+      "de": "Antworten:",
+      "lt": "Atsakymai:",
+      "pt": "Respostas:",
+      "it": "Risposte:"
+    },
+    {
+      "en": "Measures:",
+      "es": "Medidas:",
+      "fr": "Mesures:",
+      "de": "Maßnahmen:",
+      "lt": "Priemonės:",
+      "pt": "Medidas:",
+      "it": "Misure:"
+    },
+    {
+      "en": "Total elements created",
+      "es": "Elementos totales creados",
+      "fr": "Total des éléments créés",
+      "de": "Insgesamt erstellte Elemente",
+      "lt": "Iš viso sukurta elementų",
+      "pt": "Total de elementos criados",
+      "it": "Totale elementi creati"
+    },
+    {
+      "en": "Session Management",
+      "es": "Gestión de sesiones",
+      "fr": "Gestion des sessions",
+      "de": "Sitzungsverwaltung",
+      "lt": "Seansų valdymas",
+      "pt": "Gerenciamento de sessão",
+      "it": "Gestione della sessione"
+    },
+    {
+      "en": "Save Progress",
+      "es": "Guardar progreso",
+      "fr": "Enregistrer la progression",
+      "de": "Fortschritt speichern",
+      "lt": "Išsaugoti pažangą",
+      "pt": "Salvar progresso",
+      "it": "Salva progressi"
+    },
+    {
+      "en": "Save your current progress to browser storage",
+      "es": "Guarde su progreso actual en el almacenamiento del navegador",
+      "fr": "Enregistrez votre progression actuelle dans le stockage du navigateur",
+      "de": "Speichern Sie Ihren aktuellen Fortschritt im Browserspeicher",
+      "lt": "Išsaugokite dabartinę eigą naršyklės saugykloje",
+      "pt": "Salve seu progresso atual no armazenamento do navegador",
+      "it": "Salva i tuoi progressi attuali nella memoria del browser"
+    },
+    {
+      "en": "Load Saved",
+      "es": "Cargar guardado",
+      "fr": "Charge enregistrée",
+      "de": "Laden gespeichert",
+      "lt": "Įkėlimas išsaugotas",
+      "pt": "Carga salva",
+      "it": "Carica salvato"
+    },
+    {
+      "en": "Restore your last saved session",
+      "es": "Restaura tu última sesión guardada",
+      "fr": "Restaurez votre dernière session enregistrée",
+      "de": "Stellen Sie Ihre letzte gespeicherte Sitzung wieder her",
+      "lt": "Atkurkite paskutinę išsaugotą seansą",
+      "pt": "Restaure sua última sessão salva",
+      "it": "Ripristina l'ultima sessione salvata"
+    },
+    {
+      "en": "Auto-saved",
+      "es": "Guardado automáticamente",
+      "fr": "Enregistré automatiquement",
+      "de": "Automatisch gespeichert",
+      "lt": "Automatiškai išsaugota",
+      "pt": "Salvo automaticamente",
+      "it": "Salvato automaticamente"
+    },
+    {
+      "en": "seconds ago",
+      "es": "hace segundos",
+      "fr": "il y a quelques secondes",
+      "de": "vor Sekunden",
+      "lt": "prieš sekundes",
+      "pt": "segundos atrás",
+      "it": "secondi fa"
+    },
+    {
+      "en": "minutes ago",
+      "es": "hace minutos",
+      "fr": "il y a quelques minutes",
+      "de": "vor Minuten",
+      "lt": "prieš minutes",
+      "pt": "minutos atrás",
+      "it": "minuti fa"
+    },
+    {
+      "en": "Not yet saved",
+      "es": "Aún no guardado",
+      "fr": "Pas encore enregistré",
+      "de": "Noch nicht gespeichert",
+      "lt": "Dar neišsaugota",
+      "pt": "Ainda não salvo",
+      "it": "Non ancora salvato"
+    },
+    {
+      "en": "Session saved successfully!",
+      "es": "¡Sesión guardada exitosamente!",
+      "fr": "Session enregistrée avec succès !",
+      "de": "Sitzung erfolgreich gespeichert!",
+      "lt": "Sesija sėkmingai išsaugota!",
+      "pt": "Sessão salva com sucesso!",
+      "it": "Sessione salvata con successo!"
+    },
+    {
+      "en": "Session restored successfully!",
+      "es": "¡Sesión restaurada exitosamente!",
+      "fr": "Session restaurée avec succès !",
+      "de": "Sitzung erfolgreich wiederhergestellt!",
+      "lt": "Sesija sėkmingai atkurta!",
+      "pt": "Sessão restaurada com sucesso!",
+      "it": "Sessione ripristinata con successo!"
+    },
+    {
+      "en": "No saved session found.",
+      "es": "No se encontró ninguna sesión guardada.",
+      "fr": "Aucune session enregistrée trouvée.",
+      "de": "Keine gespeicherte Sitzung gefunden.",
+      "lt": "Nerasta jokių išsaugotų seansų.",
+      "pt": "Nenhuma sessão salva encontrada.",
+      "it": "Nessuna sessione salvata trovata."
+    },
+    {
+      "en": "A previous session was found. Click 'Load Saved' to restore it.",
+      "es": "Se encontró una sesión anterior. Haga clic en 'Cargar guardado' para restaurarlo.",
+      "fr": "Une session précédente a été trouvée. Cliquez sur « Charger enregistré » pour le restaurer.",
+      "de": "Eine frühere Sitzung wurde gefunden. Klicken Sie auf „Gespeichert laden“, um es wiederherzustellen.",
+      "lt": "Buvo rasta ankstesnė sesija. Spustelėkite „Įkelti išsaugotą“, kad ją atkurtumėte.",
+      "pt": "Uma sessão anterior foi encontrada. Clique em 'Carregar salvo' para restaurá-lo.",
+      "it": "È stata trovata una sessione precedente. Fare clic su \"Carica salvato\" per ripristinarlo."
+    },
+    {
+      "en": "Preview Model",
+      "es": "Vista previa del modelo",
+      "fr": "Modèle d'aperçu",
+      "de": "Vorschaumodell",
+      "lt": "Peržiūros modelis",
+      "pt": "Modelo de visualização",
+      "it": "Anteprima del modello"
+    },
+    {
+      "en": "Save to ISA Data Entry",
+      "es": "Guardar en entrada de datos ISA",
+      "fr": "Enregistrer dans la saisie de données ISA",
+      "de": "In ISA Data Entry speichern",
+      "lt": "Išsaugoti ISA duomenų įvedime",
+      "pt": "Salvar na entrada de dados ISA",
+      "it": "Salva in immissione dati ISA"
+    },
+    {
+      "en": "Load Example Template",
+      "es": "Cargar plantilla de ejemplo",
+      "fr": "Charger un exemple de modèle",
+      "de": "Beispielvorlage laden",
+      "lt": "Įkelti šablono pavyzdį",
+      "pt": "Carregar modelo de exemplo",
+      "it": "Carica modello di esempio"
+    },
+    {
+      "en": "Start Over",
+      "es": "Empezar de nuevo",
+      "fr": "Recommencer",
+      "de": "Beginnen Sie von vorne",
+      "lt": "Pradėti iš naujo",
+      "pt": "Recomeçar",
+      "it": "Ricominciare"
+    },
+    {
+      "en": "Welcome & Introduction",
+      "es": "Bienvenida e introducción",
+      "fr": "Bienvenue et présentation",
+      "de": "Begrüßung und Einführung",
+      "lt": "Sveiki atvykę ir įvadas",
+      "pt": "Bem-vindo e introdução",
+      "it": "Benvenuto e introduzione"
+    },
+    {
+      "en": "Ecosystem Context",
+      "es": "Contexto del ecosistema",
+      "fr": "Contexte de l'écosystème",
+      "de": "Ökosystemkontext",
+      "lt": "Ekosistemos kontekstas",
+      "pt": "Contexto do ecossistema",
+      "it": "Contesto ecosistemico"
+    },
+    {
+      "en": "Main Issue Identification",
+      "es": "Identificación del problema principal",
+      "fr": "Identification du problème principal",
+      "de": "Identifizierung des Hauptproblems",
+      "lt": "Pagrindinės problemos identifikavimas",
+      "pt": "Identificação do problema principal",
+      "it": "Identificazione del problema principale"
+    },
+    {
+      "en": "Drivers - Societal Needs",
+      "es": "Impulsores: necesidades sociales",
+      "fr": "Facteurs - Besoins sociétaux",
+      "de": "Treiber – gesellschaftliche Bedürfnisse",
+      "lt": "Vairuotojai – visuomenės poreikiai",
+      "pt": "Motivadores - Necessidades Sociais",
+      "it": "Driver: bisogni della società"
+    },
+    {
+      "en": "Activities - Human Actions",
+      "es": "Actividades - Acciones Humanas",
+      "fr": "Activités - Actions humaines",
+      "de": "Aktivitäten – Menschliches Handeln",
+      "lt": "Veikla – Žmogaus veiksmai",
+      "pt": "Atividades - Ações Humanas",
+      "it": "Attività - Azioni umane"
+    },
+    {
+      "en": "Pressures - Environmental Stressors",
+      "es": "Presiones: factores estresantes ambientales",
+      "fr": "Pressions – Facteurs de stress environnementaux",
+      "de": "Belastungen – Umweltstressoren",
+      "lt": "Spaudimai – aplinkos veiksniai",
+      "pt": "Pressões - Estressores Ambientais",
+      "it": "Pressioni - Fattori di stress ambientale"
+    },
+    {
+      "en": "State Changes - Ecosystem Effects",
+      "es": "Cambios de estado: efectos en el ecosistema",
+      "fr": "Changements d'état - Effets sur l'écosystème",
+      "de": "Zustandsänderungen – Auswirkungen auf das Ökosystem",
+      "lt": "Būsenos pokyčiai – ekosistemų poveikis",
+      "pt": "Mudanças de Estado - Efeitos Ecossistêmicos",
+      "it": "Cambiamenti di stato - Effetti sull'ecosistema"
+    },
+    {
+      "en": "Impacts - Effects on Ecosystem Services",
+      "es": "Impactos - Efectos sobre los servicios ecosistémicos",
+      "fr": "Impacts - Effets sur les services écosystémiques",
+      "de": "Auswirkungen – Auswirkungen auf Ökosystemleistungen",
+      "lt": "Poveikis – poveikis ekosistemų paslaugoms",
+      "pt": "Impactos - Efeitos nos Serviços Ecossistêmicos",
+      "it": "Impatti – Effetti sui Servizi Ecosistemici"
+    },
+    {
+      "en": "Welfare - Human Well-being Effects",
+      "es": "Bienestar - Efectos sobre el bienestar humano",
+      "fr": "Bien-être - Effets sur le bien-être humain",
+      "de": "Wohlfahrt – Auswirkungen auf das menschliche Wohlbefinden",
+      "lt": "Gerovė – žmogaus gerovės poveikis",
+      "pt": "Bem-estar - Efeitos no bem-estar humano",
+      "it": "Welfare: effetti sul benessere umano"
+    },
+    {
+      "en": "Responses - Management Actions",
+      "es": "Respuestas - Acciones de gestión",
+      "fr": "Réponses – Mesures de gestion",
+      "de": "Antworten – Managementmaßnahmen",
+      "lt": "Atsakymai – valdymo veiksmai",
+      "pt": "Respostas - Ações de Gestão",
+      "it": "Risposte - Azioni di gestione"
+    },
+    {
+      "en": "Measures - Policy Instruments",
+      "es": "Medidas - Instrumentos de política",
+      "fr": "Mesures - Instruments politiques",
+      "de": "Maßnahmen – Politikinstrumente",
+      "lt": "Priemonės – politikos priemonės",
+      "pt": "Medidas - Instrumentos Políticos",
+      "it": "Misure – Strumenti politici"
+    },
+    {
+      "en": "Connection Review",
+      "es": "Revisión de conexión",
+      "fr": "Examen de la connexion",
+      "de": "Verbindungsüberprüfung",
+      "lt": "Ryšio apžvalga",
+      "pt": "Revisão de conexão",
+      "it": "Revisione della connessione"
+    },
+    {
+      "en": "Hello! I'm your AI assistant for creating a DAPSI(W)R(M) model. I'll guide you through a series of questions to build your social-ecological system model. Let's start with the basics: What is the name or location of your marine project or study area?",
+      "es": "¡Hola! Soy tu asistente de IA para crear un modelo DAPSI(W)R(M). Lo guiaré a través de una serie de preguntas para construir su modelo de sistema socioecológico. Comencemos con lo básico: ¿Cuál es el nombre o la ubicación de su proyecto marino o área de estudio?",
+      "fr": "Bonjour! Je suis votre assistant IA pour créer un modèle DAPSI(W)R(M). Je vais vous guider à travers une série de questions pour construire votre modèle de système socio-écologique. Commençons par l'essentiel : quel est le nom ou l'emplacement de votre projet marin ou de votre zone d'étude ?",
+      "de": "Hallo! Ich bin Ihr KI-Assistent für die Erstellung eines DAPSI(W)R(M)-Modells. Ich werde Sie durch eine Reihe von Fragen führen, um Ihr sozial-ökologisches Systemmodell aufzubauen. Beginnen wir mit den Grundlagen: Wie lautet der Name oder Standort Ihres Meeresprojekts oder Untersuchungsgebiets?",
+      "lt": "Sveiki! Esu jūsų AI padėjėjas kuriant DAPSI(W)R(M) modelį. Pateiksiu jums keletą klausimų, kad sukurtumėte socialinės ir ekologinės sistemos modelį. Pradėkime nuo pagrindų: koks yra jūsų jūrų projekto arba studijų srities pavadinimas arba vieta?",
+      "pt": "Olá! Sou seu assistente de IA para criar um modelo DAPSI(W)R(M). Vou guiá-lo através de uma série de perguntas para construir seu modelo de sistema socioecológico. Vamos começar com o básico: Qual é o nome ou localização do seu projeto marinho ou área de estudo?",
+      "it": "Ciao! Sono il tuo assistente AI per la creazione di un modello DAPSI(W)R(M). Ti guiderò attraverso una serie di domande per costruire il tuo modello di sistema socio-ecologico. Cominciamo dalle basi: qual è il nome o l'ubicazione del tuo progetto marino o area di studio?"
+    },
+    {
+      "en": "Great! Now, what type of marine ecosystem are you studying?",
+      "es": "¡Excelente! Ahora bien, ¿qué tipo de ecosistema marino estás estudiando?",
+      "fr": "Super! Maintenant, quel type d’écosystème marin étudiez-vous ?",
+      "de": "Großartig! Welche Art von Meeresökosystem untersuchen Sie nun?",
+      "lt": "Puiku! Kokio tipo jūrų ekosistemą studijuojate?",
+      "pt": "Ótimo! Agora, que tipo de ecossistema marinho você está estudando?",
+      "it": "Grande! Ora, che tipo di ecosistema marino stai studiando?"
+    },
+    {
+      "en": "What is the main environmental or management issue you're addressing?",
+      "es": "¿Cuál es el principal problema ambiental o de gestión que está abordando?",
+      "fr": "Quel est le principal problème environnemental ou de gestion que vous abordez ?",
+      "de": "Was ist das wichtigste Umwelt- oder Managementproblem, mit dem Sie sich befassen?",
+      "lt": "Kokia yra pagrindinė aplinkosaugos ar valdymo problema, kurią sprendžiate?",
+      "pt": "Qual é a principal questão ambiental ou de gestão que você está abordando?",
+      "it": "Qual è il principale problema ambientale o gestionale che stai affrontando?"
+    },
+    {
+      "en": "Let's identify the DRIVERS - these are the basic human needs or societal demands driving activities in your area. What are the main societal needs? (e.g., Food security, Economic development, Recreation, Energy needs)",
+      "es": "Identifiquemos los IMPULSORES: estas son las necesidades humanas básicas o las demandas sociales que impulsan las actividades en su área. ¿Cuáles son las principales necesidades de la sociedad? (por ejemplo, seguridad alimentaria, desarrollo económico, recreación, necesidades energéticas)",
+      "fr": "Identifions les MOTEURS : il s'agit des besoins humains fondamentaux ou des exigences sociétales qui motivent les activités dans votre région. Quels sont les principaux besoins sociétaux ? (par exemple, sécurité alimentaire, développement économique, loisirs, besoins énergétiques)",
+      "de": "Lassen Sie uns die TREIBER identifizieren – das sind die grundlegenden menschlichen Bedürfnisse oder gesellschaftlichen Anforderungen, die die Aktivitäten in Ihrer Region bestimmen. Was sind die wichtigsten gesellschaftlichen Bedürfnisse? (z. B. Ernährungssicherheit, wirtschaftliche Entwicklung, Erholung, Energiebedarf)",
+      "lt": "Išsiaiškinkime VAIRUOTOJAS – tai pagrindiniai žmogaus poreikiai arba visuomenės poreikiai, susiję su vairavimo veikla jūsų vietovėje. Kokie yra pagrindiniai visuomenės poreikiai? (pvz., maisto saugumas, ekonominė plėtra, poilsis, energijos poreikiai)",
+      "pt": "Vamos identificar os MOTIVOS - estas são as necessidades humanas básicas ou demandas sociais que impulsionam as atividades em sua área. Quais são as principais necessidades da sociedade? (por exemplo, segurança alimentar, desenvolvimento económico, recreação, necessidades energéticas)",
+      "it": "Identifichiamo i DRIVER: questi sono i bisogni umani fondamentali o le richieste sociali che guidano le attività nella tua zona. Quali sono i principali bisogni sociali? (ad es. Sicurezza alimentare, Sviluppo economico, Attività ricreative, Fabbisogno energetico)"
+    },
+    {
+      "en": "Now let's identify ACTIVITIES - the human actions taken to meet those needs. What activities are happening in your marine area? (e.g., Fishing, Aquaculture, Shipping, Tourism)",
+      "es": "Ahora identifiquemos ACTIVIDADES: las acciones humanas tomadas para satisfacer esas necesidades. ¿Qué actividades están sucediendo en su área marina? (por ejemplo, pesca, acuicultura, transporte marítimo, turismo)",
+      "fr": "Identifions maintenant les ACTIVITÉS – les actions humaines entreprises pour répondre à ces besoins. Quelles activités se déroulent dans votre zone marine ? (par exemple, pêche, aquaculture, transport maritime, tourisme)",
+      "de": "Lassen Sie uns nun AKTIVITÄTEN identifizieren – die menschlichen Maßnahmen, die ergriffen werden, um diese Bedürfnisse zu erfüllen. Welche Aktivitäten finden in Ihrem Meeresgebiet statt? (z. B. Fischerei, Aquakultur, Schifffahrt, Tourismus)",
+      "lt": "Dabar nustatykime VEIKSMUS – žmogaus veiksmus, kurių imamasi tiems poreikiams patenkinti. Kokia veikla vyksta jūsų jūrų zonoje? (pvz., žvejyba, akvakultūra, laivyba, turizmas)",
+      "pt": "Agora vamos identificar ATIVIDADES – as ações humanas realizadas para atender a essas necessidades. Que atividades estão acontecendo na sua área marinha? (por exemplo, pesca, aquicultura, navegação, turismo)",
+      "it": "Ora identifichiamo le ATTIVITÀ: le azioni umane intraprese per soddisfare tali bisogni. Quali attività si svolgono nella vostra area marina? (ad es. Pesca, Acquacoltura, Navigazione, Turismo)"
+    },
+    {
+      "en": "What PRESSURES do these activities put on the marine environment? (e.g., Overfishing, Pollution, Habitat destruction)",
+      "es": "¿Qué PRESIONES ejercen estas actividades sobre el medio marino? (por ejemplo, sobrepesca, contaminación, destrucción del hábitat)",
+      "fr": "Quelles PRESSIONS ces activités exercent-elles sur le milieu marin ? (par exemple, surpêche, pollution, destruction de l'habitat)",
+      "de": "Welchen DRUCK üben diese Aktivitäten auf die Meeresumwelt aus? (z. B. Überfischung, Umweltverschmutzung, Zerstörung von Lebensräumen)",
+      "lt": "Kokį spaudimą ši veikla daro jūrų aplinkai? (pvz., pernelyg intensyvi žvejyba, tarša, buveinių naikinimas)",
+      "pt": "Que PRESSÕES estas atividades exercem sobre o ambiente marinho? (por exemplo, pesca excessiva, poluição, destruição de habitat)",
+      "it": "Quali PRESSIONI esercitano queste attività sull’ambiente marino? (ad esempio, pesca eccessiva, inquinamento, distruzione dell'habitat)"
+    },
+    {
+      "en": "How do these pressures change the STATE of the marine ecosystem? (e.g., Declining fish stocks, Loss of biodiversity, Degraded water quality)",
+      "es": "¿Cómo cambian estas presiones el ESTADO del ecosistema marino? (por ejemplo, disminución de las poblaciones de peces, pérdida de biodiversidad, calidad del agua degradada)",
+      "fr": "Comment ces pressions modifient-elles l’ÉTAT de l’écosystème marin ? (par exemple, déclin des stocks de poissons, perte de biodiversité, qualité de l'eau dégradée)",
+      "de": "Wie verändern diese Belastungen den ZUSTAND des Meeresökosystems? (z. B. Rückgang der Fischbestände, Verlust der Artenvielfalt, verschlechterte Wasserqualität)",
+      "lt": "Kaip šie spaudimai keičia jūrų ekosistemos BŪKLĘ? (pvz., mažėjantys žuvų ištekliai, biologinės įvairovės nykimas, pablogėjusi vandens kokybė)",
+      "pt": "Como é que estas pressões alteram o ESTADO do ecossistema marinho? (por exemplo, declínio dos estoques pesqueiros, perda de biodiversidade, degradação da qualidade da água)",
+      "it": "In che modo queste pressioni modificano lo STATO dell'ecosistema marino? (ad es., Diminuzione degli stock ittici, Perdita di biodiversità, Degrado della qualità dell'acqua)"
+    },
+    {
+      "en": "What are the IMPACTS on ecosystem services and benefits? How do these changes affect what the ocean provides? (e.g., Reduced fish catch, Loss of tourism revenue)",
+      "es": "¿Cuáles son los IMPACTOS sobre los servicios y beneficios de los ecosistemas? ¿Cómo afectan estos cambios lo que proporciona el océano? (por ejemplo, reducción de la captura de peces, pérdida de ingresos por turismo)",
+      "fr": "Quels sont les IMPACTS sur les services et bénéfices écosystémiques ? Comment ces changements affectent-ils ce que fournit l’océan ? (par exemple, réduction des prises de poisson, perte de revenus touristiques)",
+      "de": "Welche AUSWIRKUNGEN ergeben sich für Ökosystemleistungen und -vorteile? Wie wirken sich diese Veränderungen auf das Angebot des Ozeans aus? (z. B. verringerter Fischfang, Verlust von Tourismuseinnahmen)",
+      "lt": "Koks yra POVEIKIS ekosistemų paslaugoms ir naudai? Kaip šie pokyčiai įtakoja tai, ką suteikia vandenynas? (pvz., Sumažėjęs žuvies kiekis, prarastos pajamos iš turizmo)",
+      "pt": "Quais são os IMPACTOS nos serviços e benefícios ecossistémicos? Como essas mudanças afetam o que o oceano fornece? (por exemplo, redução da captura de peixe, perda de receitas do turismo)",
+      "it": "Quali sono gli IMPATTI sui servizi e benefici ecosistemici? In che modo questi cambiamenti influenzano ciò che fornisce l’oceano? (ad esempio, riduzione della cattura di pesce, perdita di entrate turistiche)"
+    },
+    {
+      "en": "How do these impacts affect human WELFARE and well-being? (e.g., Loss of livelihoods, Health impacts, Reduced quality of life)",
+      "es": "¿Cómo afectan estos impactos al BIENESTAR y al bienestar humano? (por ejemplo, pérdida de medios de vida, impactos en la salud, reducción de la calidad de vida)",
+      "fr": "Comment ces impacts affectent-ils le BIEN-ÊTRE et le bien-être humain ? (par exemple, perte des moyens de subsistance, impacts sur la santé, qualité de vie réduite)",
+      "de": "Wie wirken sich diese Auswirkungen auf das Wohlergehen und Wohlbefinden der Menschen aus? (z. B. Verlust der Lebensgrundlage, Auswirkungen auf die Gesundheit, verminderte Lebensqualität)",
+      "lt": "Kaip šie poveikiai veikia žmogaus GEROVĖS ir gerovę? (pvz., pragyvenimo šaltinių praradimas, poveikis sveikatai, pablogėjusi gyvenimo kokybė)",
+      "pt": "Como é que estes impactos afectam o BEM-ESTAR e o bem-estar humano? (por exemplo, perda de meios de subsistência, impactos na saúde, redução da qualidade de vida)",
+      "it": "In che modo questi impatti influiscono sul WELFARE e sul benessere umano? (ad esempio, perdita di mezzi di sussistenza, impatti sulla salute, riduzione della qualità della vita)"
+    },
+    {
+      "en": "What RESPONSES or management actions are being taken (or could be taken) to address these issues? (e.g., Marine protected areas, Fishing quotas, Pollution regulations)",
+      "es": "¿Qué RESPUESTAS o acciones de gestión se están adoptando (o podrían adoptarse) para abordar estas cuestiones? (por ejemplo, áreas marinas protegidas, cuotas de pesca, regulaciones sobre contaminación)",
+      "fr": "Quelles RÉPONSES ou mesures de gestion sont prises (ou pourraient être prises) pour résoudre ces problèmes ? (par exemple, zones marines protégées, quotas de pêche, réglementations sur la pollution)",
+      "de": "Welche ANTWORTEN oder Managementmaßnahmen werden ergriffen (oder könnten ergriffen werden), um diese Probleme anzugehen? (z. B. Meeresschutzgebiete, Fangquoten, Verschmutzungsvorschriften)",
+      "lt": "Kokių ATSAKYMŲ ar valdymo veiksmų imamasi (ar gali būti imtasi) siekiant išspręsti šias problemas? (pvz., saugomos jūrų teritorijos, žvejybos kvotos, taršos taisyklės)",
+      "pt": "Que RESPOSTAS ou ações de gestão estão a ser tomadas (ou poderiam ser tomadas) para resolver estas questões? (por exemplo, áreas marinhas protegidas, cotas de pesca, regulamentos sobre poluição)",
+      "it": "Quali RISPOSTE o azioni di gestione vengono intraprese (o potrebbero essere intraprese) per affrontare questi problemi? (es. Aree marine protette, Quote di pesca, Normative sull'inquinamento)"
+    },
+    {
+      "en": "Finally, what specific MEASURES or policy instruments support these responses? (e.g., Laws, Economic incentives, Education programs)",
+      "es": "Finalmente, ¿qué MEDIDAS o instrumentos de política específicos apoyan estas respuestas? (por ejemplo, leyes, incentivos económicos, programas educativos)",
+      "fr": "Enfin, quelles MESURES ou instruments politiques spécifiques soutiennent ces réponses ? (par exemple, lois, incitations économiques, programmes éducatifs)",
+      "de": "Welche konkreten MASSNAHMEN oder politischen Instrumente unterstützen diese Reaktionen schließlich? (z. B. Gesetze, wirtschaftliche Anreize, Bildungsprogramme)",
+      "lt": "Galiausiai, kokios konkrečios PRIEMONĖS ar politikos priemonės palaiko šiuos atsakymus? (pvz., įstatymai, ekonominės paskatos, švietimo programos)",
+      "pt": "Finalmente, que MEDIDAS específicas ou instrumentos políticos apoiam estas respostas? (por exemplo, leis, incentivos econômicos, programas educacionais)",
+      "it": "Infine, quali MISURE specifiche o strumenti politici supportano queste risposte? (ad esempio, leggi, incentivi economici, programmi educativi)"
+    },
+    {
+      "en": "Great! Now I'll suggest logical connections between the elements you've identified. These connections represent causal relationships in your social-ecological system. You can review and approve/reject each suggestion.",
+      "es": "¡Excelente! Ahora sugeriré conexiones lógicas entre los elementos que has identificado. Estas conexiones representan relaciones causales en su sistema socioecológico. Puedes revisar y aprobar/rechazar cada sugerencia.",
+      "fr": "Super! Je vais maintenant suggérer des liens logiques entre les éléments que vous avez identifiés. Ces connexions représentent des relations causales dans votre système socio-écologique. Vous pouvez examiner et approuver/rejeter chaque suggestion.",
+      "de": "Großartig! Jetzt schlage ich logische Verbindungen zwischen den von Ihnen identifizierten Elementen vor. Diese Zusammenhänge stellen kausale Zusammenhänge in Ihrem sozial-ökologischen System dar. Sie können jeden Vorschlag überprüfen und genehmigen/ablehnen.",
+      "lt": "Puiku! Dabar aš pasiūlysiu loginius ryšius tarp jūsų nustatytų elementų. Šie ryšiai atspindi priežastinius ryšius jūsų socialinėje ir ekologinėje sistemoje. Galite peržiūrėti ir patvirtinti / atmesti kiekvieną pasiūlymą.",
+      "pt": "Ótimo! Agora vou sugerir conexões lógicas entre os elementos que você identificou. Essas conexões representam relações causais em seu sistema socioecológico. Você pode revisar e aprovar/rejeitar cada sugestão.",
+      "it": "Grande! Adesso ti suggerirò dei collegamenti logici tra gli elementi che hai individuato. Queste connessioni rappresentano relazioni causali nel vostro sistema socio-ecologico. Puoi rivedere e approvare/rifiutare ogni suggerimento."
+    },
+    {
+      "en": "Coastal waters",
+      "es": "Aguas costeras",
+      "fr": "Eaux côtières",
+      "de": "Küstengewässer",
+      "lt": "Pakrantės vandenys",
+      "pt": "Águas costeiras",
+      "it": "Acque costiere"
+    },
+    {
+      "en": "Open ocean",
+      "es": "mar abierto",
+      "fr": "Océan ouvert",
+      "de": "Offener Ozean",
+      "lt": "Atviras vandenynas",
+      "pt": "Oceano aberto",
+      "it": "Oceano aperto"
+    },
+    {
+      "en": "Estuaries",
+      "es": "estuarios",
+      "fr": "Estuaires",
+      "de": "Flussmündungen",
+      "lt": "Estuarijos",
+      "pt": "Estuários",
+      "it": "Estuari"
+    },
+    {
+      "en": "Coral reefs",
+      "es": "Arrecifes de coral",
+      "fr": "Récifs coralliens",
+      "de": "Korallenriffe",
+      "lt": "Koraliniai rifai",
+      "pt": "Recifes de coral",
+      "it": "Barriere coralline"
+    },
+    {
+      "en": "Mangroves",
+      "es": "Manglares",
+      "fr": "Mangroves",
+      "de": "Mangroven",
+      "lt": "Mangrovės",
+      "pt": "Manguezais",
+      "it": "Mangrovie"
+    },
+    {
+      "en": "Seagrass beds",
+      "es": "Camas de pastos marinos",
+      "fr": "Les herbiers marins",
+      "de": "Seegraswiesen",
+      "lt": "Jūros žolių lysvės",
+      "pt": "Camas de ervas marinhas",
+      "it": "Letti di fanerogame marine"
+    },
+    {
+      "en": "Deep sea",
+      "es": "mar profundo",
+      "fr": "Mer profonde",
+      "de": "Tiefsee",
+      "lt": "Gili jūra",
+      "pt": "Mar profundo",
+      "it": "Mare profondo"
+    },
+    {
+      "en": "Other",
+      "es": "Otro",
+      "fr": "Autre",
+      "de": "Andere",
+      "lt": "Kita",
+      "pt": "Outro",
+      "it": "Altro"
+    },
+    {
+      "en": "Food security",
+      "es": "Seguridad alimentaria",
+      "fr": "Sécurité alimentaire",
+      "de": "Ernährungssicherheit",
+      "lt": "Maisto saugumas",
+      "pt": "Segurança alimentar",
+      "it": "Sicurezza alimentare"
+    },
+    {
+      "en": "Economic development",
+      "es": "Desarrollo económico",
+      "fr": "Développement économique",
+      "de": "Wirtschaftsentwicklung",
+      "lt": "Ekonominė plėtra",
+      "pt": "Desenvolvimento econômico",
+      "it": "Sviluppo economico"
+    },
+    {
+      "en": "Recreation and tourism",
+      "es": "Recreación y turismo",
+      "fr": "Loisirs et tourisme",
+      "de": "Erholung und Tourismus",
+      "lt": "Poilsis ir turizmas",
+      "pt": "Recreação e turismo",
+      "it": "Ricreazione e turismo"
+    },
+    {
+      "en": "Energy needs",
+      "es": "Necesidades energéticas",
+      "fr": "Besoins énergétiques",
+      "de": "Energiebedarf",
+      "lt": "Energijos poreikiai",
+      "pt": "Necessidades energéticas",
+      "it": "Fabbisogno energetico"
+    },
+    {
+      "en": "Coastal protection",
+      "es": "Protección costera",
+      "fr": "Protection des côtes",
+      "de": "Küstenschutz",
+      "lt": "Pakrantės apsauga",
+      "pt": "Proteção costeira",
+      "it": "Protezione costiera"
+    },
+    {
+      "en": "Cultural heritage",
+      "es": "Herencia cultural",
+      "fr": "Patrimoine culturel",
+      "de": "Kulturelles Erbe",
+      "lt": "Kultūros paveldas",
+      "pt": "Património cultural",
+      "it": "Patrimonio culturale"
+    },
+    {
+      "en": "Commercial fishing",
+      "es": "pesca comercial",
+      "fr": "Pêche commerciale",
+      "de": "Kommerzieller Fischfang",
+      "lt": "Verslinė žvejyba",
+      "pt": "Pesca comercial",
+      "it": "Pesca commerciale"
+    },
+    {
+      "en": "Recreational fishing",
+      "es": "pesca recreativa",
+      "fr": "Pêche récréative",
+      "de": "Freizeitfischen",
+      "lt": "Pramoginė žvejyba",
+      "pt": "Pesca recreativa",
+      "it": "Pesca ricreativa"
+    },
+    {
+      "en": "Aquaculture",
+      "es": "Acuicultura",
+      "fr": "Aquaculture",
+      "de": "Aquakultur",
+      "lt": "Akvakultūra",
+      "pt": "Aquicultura",
+      "it": "Acquacoltura"
+    },
+    {
+      "en": "Shipping/Transport",
+      "es": "Envío/Transporte",
+      "fr": "Expédition/Transport",
+      "de": "Versand/Transport",
+      "lt": "Siuntimas/transportavimas",
+      "pt": "Envio/Transporte",
+      "it": "Spedizione/Trasporto"
+    },
+    {
+      "en": "Tourism",
+      "es": "Turismo",
+      "fr": "Tourisme",
+      "de": "Tourismus",
+      "lt": "Turizmas",
+      "pt": "Turismo",
+      "it": "Turismo"
+    },
+    {
+      "en": "Coastal development",
+      "es": "Desarrollo costero",
+      "fr": "Développement côtier",
+      "de": "Küstenentwicklung",
+      "lt": "Pakrantės plėtra",
+      "pt": "Desenvolvimento costeiro",
+      "it": "Sviluppo costiero"
+    },
+    {
+      "en": "Renewable energy (wind/wave)",
+      "es": "Energía renovable (viento/olas)",
+      "fr": "Énergie renouvelable (vent/vagues)",
+      "de": "Erneuerbare Energie (Wind/Welle)",
+      "lt": "Atsinaujinanti energija (vėjas / banga)",
+      "pt": "Energia renovável (vento/ondas)",
+      "it": "Energia rinnovabile (vento/onda)"
+    },
+    {
+      "en": "Oil & gas extraction",
+      "es": "Extracción de petróleo y gas",
+      "fr": "Extraction de pétrole et de gaz",
+      "de": "Öl- und Gasförderung",
+      "lt": "Naftos ir dujų gavyba",
+      "pt": "Extração de petróleo e gás",
+      "it": "Estrazione di petrolio e gas"
+    },
+    {
+      "en": "Overfishing",
+      "es": "Sobrepesca",
+      "fr": "Surpêche",
+      "de": "Überfischung",
+      "lt": "Perteklinė žvejyba",
+      "pt": "Pesca excessiva",
+      "it": "Pesca eccessiva"
+    },
+    {
+      "en": "Bycatch",
+      "es": "captura incidental",
+      "fr": "Prise accessoire",
+      "de": "Beifang",
+      "lt": "Priegauda",
+      "pt": "Captura acidental",
+      "it": "Cattura accessoria"
+    },
+    {
+      "en": "Physical habitat damage",
+      "es": "Daño físico al hábitat",
+      "fr": "Dommages à l’habitat physique",
+      "de": "Physischer Lebensraumschaden",
+      "lt": "Fizinė buveinių žala",
+      "pt": "Danos físicos ao habitat",
+      "it": "Danni all'habitat fisico"
+    },
+    {
+      "en": "Pollution (nutrients, chemicals)",
+      "es": "Contaminación (nutrientes, productos químicos)",
+      "fr": "Pollution (nutriments, produits chimiques)",
+      "de": "Verschmutzung (Nährstoffe, Chemikalien)",
+      "lt": "Tarša (maistinės medžiagos, chemikalai)",
+      "pt": "Poluição (nutrientes, produtos químicos)",
+      "it": "Inquinamento (nutrienti, sostanze chimiche)"
+    },
+    {
+      "en": "Noise pollution",
+      "es": "Contaminación acústica",
+      "fr": "Pollution sonore",
+      "de": "Lärmbelästigung",
+      "lt": "Triukšmo tarša",
+      "pt": "Poluição sonora",
+      "it": "Inquinamento acustico"
+    },
+    {
+      "en": "Marine litter/plastics",
+      "es": "Basura marina/plásticos",
+      "fr": "Déchets/plastiques marins",
+      "de": "Meeresmüll/Kunststoffe",
+      "lt": "Jūrų šiukšlės / plastikai",
+      "pt": "Lixo marinho/plásticos",
+      "it": "Rifiuti marini/plastica"
+    },
+    {
+      "en": "Temperature changes",
+      "es": "Cambios de temperatura",
+      "fr": "Changements de température",
+      "de": "Temperaturänderungen",
+      "lt": "Temperatūros pokyčiai",
+      "pt": "Mudanças de temperatura",
+      "it": "Cambiamenti di temperatura"
+    },
+    {
+      "en": "Ocean acidification",
+      "es": "Acidificación del océano",
+      "fr": "Acidification des océans",
+      "de": "Versauerung der Ozeane",
+      "lt": "Vandenyno rūgštėjimas",
+      "pt": "Acidificação dos oceanos",
+      "it": "Acidificazione degli oceani"
+    },
+    {
+      "en": "Declining fish stocks",
+      "es": "Disminución de las poblaciones de peces",
+      "fr": "Des stocks de poissons en déclin",
+      "de": "Rückgang der Fischbestände",
+      "lt": "Mažėjantys žuvų ištekliai",
+      "pt": "Estoques de peixes em declínio",
+      "it": "Stock ittici in diminuzione"
+    },
+    {
+      "en": "Loss of biodiversity",
+      "es": "Pérdida de biodiversidad",
+      "fr": "Perte de biodiversité",
+      "de": "Verlust der Artenvielfalt",
+      "lt": "Biologinės įvairovės praradimas",
+      "pt": "Perda de biodiversidade",
+      "it": "Perdita di biodiversità"
+    },
+    {
+      "en": "Habitat degradation",
+      "es": "Degradación del hábitat",
+      "fr": "Dégradation de l'habitat",
+      "de": "Verschlechterung des Lebensraums",
+      "lt": "Buveinių degradacija",
+      "pt": "Degradação do habitat",
+      "it": "Degrado dell'habitat"
+    },
+    {
+      "en": "Water quality decline",
+      "es": "Disminución de la calidad del agua",
+      "fr": "Baisse de la qualité de l'eau",
+      "de": "Verschlechterung der Wasserqualität",
+      "lt": "Vandens kokybės pablogėjimas",
+      "pt": "Declínio da qualidade da água",
+      "it": "Declino della qualità dell'acqua"
+    },
+    {
+      "en": "Altered food webs",
+      "es": "Redes alimentarias alteradas",
+      "fr": "Réseaux alimentaires modifiés",
+      "de": "Veränderte Nahrungsnetze",
+      "lt": "Pakeisti maisto tinklai",
+      "pt": "Teias alimentares alteradas",
+      "it": "Reti alimentari alterate"
+    },
+    {
+      "en": "Invasive species",
+      "es": "Especies invasoras",
+      "fr": "Espèces envahissantes",
+      "de": "Invasive Arten",
+      "lt": "Invazinės rūšys",
+      "pt": "Espécies invasoras",
+      "it": "Specie invasive"
+    },
+    {
+      "en": "Loss of ecosystem resilience",
+      "es": "Pérdida de resiliencia de los ecosistemas",
+      "fr": "Perte de résilience des écosystèmes",
+      "de": "Verlust der Widerstandsfähigkeit des Ökosystems",
+      "lt": "Ekosistemos atsparumo praradimas",
+      "pt": "Perda de resiliência do ecossistema",
+      "it": "Perdita di resilienza dell’ecosistema"
+    },
+    {
+      "en": "Reduced fish catch",
+      "es": "Captura de peces reducida",
+      "fr": "Prise de poisson réduite",
+      "de": "Reduzierter Fischfang",
+      "lt": "Sumažintas žuvų laimikis",
+      "pt": "Redução da captura de peixes",
+      "it": "Cattura di pesce ridotta"
+    },
+    {
+      "en": "Loss of tourism revenue",
+      "es": "Pérdida de ingresos por turismo",
+      "fr": "Perte de revenus touristiques",
+      "de": "Verlust von Tourismuseinnahmen",
+      "lt": "Turizmo pajamų praradimas",
+      "pt": "Perda de receitas do turismo",
+      "it": "Perdita di entrate turistiche"
+    },
+    {
+      "en": "Reduced coastal protection",
+      "es": "Protección costera reducida",
+      "fr": "Protection côtière réduite",
+      "de": "Reduzierter Küstenschutz",
+      "lt": "Sumažinta pakrančių apsauga",
+      "pt": "Proteção costeira reduzida",
+      "it": "Protezione costiera ridotta"
+    },
+    {
+      "en": "Loss of biodiversity value",
+      "es": "Pérdida de valor de la biodiversidad",
+      "fr": "Perte de valeur de la biodiversité",
+      "de": "Verlust des Werts der biologischen Vielfalt",
+      "lt": "Biologinės įvairovės vertės praradimas",
+      "pt": "Perda do valor da biodiversidade",
+      "it": "Perdita di valore della biodiversità"
+    },
+    {
+      "en": "Reduced water quality for recreation",
+      "es": "Reducción de la calidad del agua para recreación.",
+      "fr": "Qualité de l’eau réduite pour les loisirs",
+      "de": "Reduzierte Wasserqualität für Erholungszwecke",
+      "lt": "Sumažėjusi vandens kokybė poilsiui",
+      "pt": "Redução da qualidade da água para recreação",
+      "it": "Ridotta qualità dell'acqua per attività ricreative"
+    },
+    {
+      "en": "Loss of cultural services",
+      "es": "Pérdida de servicios culturales.",
+      "fr": "Perte de services culturels",
+      "de": "Verlust kultureller Dienstleistungen",
+      "lt": "Kultūros paslaugų praradimas",
+      "pt": "Perda de serviços culturais",
+      "it": "Perdita di servizi culturali"
+    },
+    {
+      "en": "Loss of livelihoods",
+      "es": "Pérdida de medios de vida",
+      "fr": "Perte de moyens de subsistance",
+      "de": "Verlust der Lebensgrundlage",
+      "lt": "Pragyvenimo šaltinių praradimas",
+      "pt": "Perda de meios de subsistência",
+      "it": "Perdita di mezzi di sussistenza"
+    },
+    {
+      "en": "Food insecurity",
+      "es": "Inseguridad alimentaria",
+      "fr": "Insécurité alimentaire",
+      "de": "Ernährungsunsicherheit",
+      "lt": "Maisto trūkumas",
+      "pt": "Insegurança alimentar",
+      "it": "Insicurezza alimentare"
+    },
+    {
+      "en": "Economic losses",
+      "es": "Pérdidas económicas",
+      "fr": "Pertes économiques",
+      "de": "Wirtschaftliche Verluste",
+      "lt": "Ekonominiai nuostoliai",
+      "pt": "Perdas econômicas",
+      "it": "Perdite economiche"
+    },
+    {
+      "en": "Health impacts",
+      "es": "Impactos en la salud",
+      "fr": "Impacts sur la santé",
+      "de": "Auswirkungen auf die Gesundheit",
+      "lt": "Poveikis sveikatai",
+      "pt": "Impactos na saúde",
+      "it": "Impatti sulla salute"
+    },
+    {
+      "en": "Loss of cultural identity",
+      "es": "Pérdida de identidad cultural",
+      "fr": "Perte d'identité culturelle",
+      "de": "Verlust der kulturellen Identität",
+      "lt": "Kultūrinio tapatumo praradimas",
+      "pt": "Perda de identidade cultural",
+      "it": "Perdita di identità culturale"
+    },
+    {
+      "en": "Reduced quality of life",
+      "es": "Calidad de vida reducida",
+      "fr": "Qualité de vie réduite",
+      "de": "Reduzierte Lebensqualität",
+      "lt": "Sumažėjusi gyvenimo kokybė",
+      "pt": "Qualidade de vida reduzida",
+      "it": "Qualità della vita ridotta"
+    },
+    {
+      "en": "Social conflicts",
+      "es": "Conflictos sociales",
+      "fr": "Conflits sociaux",
+      "de": "Soziale Konflikte",
+      "lt": "Socialiniai konfliktai",
+      "pt": "Conflitos sociais",
+      "it": "Conflitti sociali"
+    },
+    {
+      "en": "Marine protected areas (MPAs)",
+      "es": "Áreas marinas protegidas (AMP)",
+      "fr": "Aires marines protégées (AMP)",
+      "de": "Meeresschutzgebiete (MPAs)",
+      "lt": "Saugomos jūrų teritorijos (MPA)",
+      "pt": "Áreas Marinhas Protegidas (AMPs)",
+      "it": "Aree marine protette (AMP)"
+    },
+    {
+      "en": "Fishing quotas/limits",
+      "es": "Cuotas/límites de pesca",
+      "fr": "Quotas/limites de pêche",
+      "de": "Fangquoten/-beschränkungen",
+      "lt": "Žvejybos kvotos/limitai",
+      "pt": "Cotas/limites de pesca",
+      "it": "Quote/limiti di pesca"
+    },
+    {
+      "en": "Pollution regulations",
+      "es": "Regulaciones de contaminación",
+      "fr": "Réglementation sur la pollution",
+      "de": "Schadstoffvorschriften",
+      "lt": "Taršos reglamentai",
+      "pt": "Regulamentos de poluição",
+      "it": "Norme sull'inquinamento"
+    },
+    {
+      "en": "Habitat restoration",
+      "es": "Restauración del hábitat",
+      "fr": "Restauration de l'habitat",
+      "de": "Wiederherstellung des Lebensraums",
+      "lt": "Buveinių atkūrimas",
+      "pt": "Restauração de habitat",
+      "it": "Ripristino dell'habitat"
+    },
+    {
+      "en": "Sustainable fishing practices",
+      "es": "Prácticas de pesca sostenibles",
+      "fr": "Pratiques de pêche durables",
+      "de": "Nachhaltige Fischereipraktiken",
+      "lt": "Tvari žvejybos praktika",
+      "pt": "Práticas de pesca sustentáveis",
+      "it": "Pratiche di pesca sostenibili"
+    },
+    {
+      "en": "Ecosystem-based management",
+      "es": "Gestión basada en ecosistemas",
+      "fr": "Gestion écosystémique",
+      "de": "Ökosystembasiertes Management",
+      "lt": "Ekosistemomis pagrįstas valdymas",
+      "pt": "Gestão baseada em ecossistemas",
+      "it": "Gestione basata sull'ecosistema"
+    },
+    {
+      "en": "Stakeholder engagement",
+      "es": "Participación de las partes interesadas",
+      "fr": "Engagement des parties prenantes",
+      "de": "Einbindung der Stakeholder",
+      "lt": "Suinteresuotųjų šalių įtraukimas",
+      "pt": "Envolvimento das partes interessadas",
+      "it": "Coinvolgimento delle parti interessate"
+    },
+    {
+      "en": "Monitoring programs",
+      "es": "Programas de seguimiento",
+      "fr": "Programmes de surveillance",
+      "de": "Überwachungsprogramme",
+      "lt": "Stebėjimo programos",
+      "pt": "Programas de monitoramento",
+      "it": "Programmi di monitoraggio"
+    },
+    {
+      "en": "Environmental legislation",
+      "es": "Legislación ambiental",
+      "fr": "Législation environnementale",
+      "de": "Umweltgesetzgebung",
+      "lt": "Aplinkos teisės aktai",
+      "pt": "Legislação ambiental",
+      "it": "Legislazione ambientale"
+    },
+    {
+      "en": "Marine spatial planning",
+      "es": "Ordenación del espacio marino",
+      "fr": "Aménagement de l'espace marin",
+      "de": "Meeresraumplanung",
+      "lt": "Jūrų erdvinis planavimas",
+      "pt": "Ordenamento do espaço marinho",
+      "it": "Pianificazione dello spazio marino"
+    },
+    {
+      "en": "Economic incentives (subsidies, taxes)",
+      "es": "Incentivos económicos (subsidios, impuestos)",
+      "fr": "Incitations économiques (subventions, taxes)",
+      "de": "Wirtschaftliche Anreize (Subventionen, Steuern)",
+      "lt": "Ekonominės paskatos (subsidijos, mokesčiai)",
+      "pt": "Incentivos econômicos (subsídios, impostos)",
+      "it": "Incentivi economici (sussidi, tasse)"
+    },
+    {
+      "en": "Education and awareness programs",
+      "es": "Programas de educación y sensibilización.",
+      "fr": "Programmes d’éducation et de sensibilisation",
+      "de": "Bildungs- und Sensibilisierungsprogramme",
+      "lt": "Švietimo ir informavimo programos",
+      "pt": "Programas de educação e conscientização",
+      "it": "Programmi di educazione e sensibilizzazione"
+    },
+    {
+      "en": "Certification schemes (MSC, etc.)",
+      "es": "Esquemas de certificación (MSC, etc.)",
+      "fr": "Systèmes de certification (MSC, etc.)",
+      "de": "Zertifizierungssysteme (MSC usw.)",
+      "lt": "Sertifikavimo schemos (MSC ir kt.)",
+      "pt": "Esquemas de certificação (MSC, etc.)",
+      "it": "Schemi di certificazione (MSC, ecc.)"
+    },
+    {
+      "en": "International agreements",
+      "es": "Acuerdos internacionales",
+      "fr": "Accords internationaux",
+      "de": "Internationale Abkommen",
+      "lt": "Tarptautiniai susitarimai",
+      "pt": "Acordos internacionais",
+      "it": "Accordi internazionali"
+    },
+    {
+      "en": "Monitoring and enforcement",
+      "es": "Monitoreo y cumplimiento",
+      "fr": "Surveillance et application",
+      "de": "Überwachung und Durchsetzung",
+      "lt": "Stebėsena ir vykdymas",
+      "pt": "Monitoramento e fiscalização",
+      "it": "Monitoraggio e applicazione"
+    },
+    {
+      "en": "Research funding",
+      "es": "Financiación de la investigación",
+      "fr": "Financement de la recherche",
+      "de": "Forschungsförderung",
+      "lt": "Mokslinių tyrimų finansavimas",
+      "pt": "Financiamento de pesquisa",
+      "it": "Finanziamenti alla ricerca"
+    },
+    {
+      "en": "Review Suggested Connections",
+      "es": "Revisar las conexiones sugeridas",
+      "fr": "Examiner les connexions suggérées",
+      "de": "Überprüfen Sie die vorgeschlagenen Verbindungen",
+      "lt": "Peržiūrėkite siūlomus ryšius",
+      "pt": "Revise as conexões sugeridas",
+      "it": "Esaminare le connessioni suggerite"
+    },
+    {
+      "en": "Approve or reject each connection. You can modify the strength and polarity if needed.",
+      "es": "Aprobar o rechazar cada conexión. Puede modificar la fuerza y ​​la polaridad si es necesario.",
+      "fr": "Approuvez ou rejetez chaque connexion. Vous pouvez modifier la force et la polarité si nécessaire.",
+      "de": "Genehmigen Sie jede Verbindung oder lehnen Sie sie ab. Sie können die Stärke und Polarität bei Bedarf ändern.",
+      "lt": "Patvirtinkite arba atmeskite kiekvieną ryšį. Jei reikia, galite pakeisti stiprumą ir poliškumą.",
+      "pt": "Aprove ou rejeite cada conexão. Você pode modificar a força e a polaridade, se necessário.",
+      "it": "Approva o rifiuta ogni connessione. Se necessario, è possibile modificare la forza e la polarità."
+    },
+    {
+      "en": "Approve All",
+      "es": "Aprobar todo",
+      "fr": "Tout approuver",
+      "de": "Alle genehmigen",
+      "lt": "Patvirtinti viską",
+      "pt": "Aprovar tudo",
+      "it": "Approva tutto"
+    },
+    {
+      "en": "Finish & Continue",
+      "es": "Finalizar y continuar",
+      "fr": "Terminer et continuer",
+      "de": "Beenden und fortfahren",
+      "lt": "Baigti ir tęsti",
+      "pt": "Concluir e continuar",
+      "it": "Termina e continua"
+    },
+    {
+      "en": "No connections to review.",
+      "es": "No hay conexiones para revisar.",
+      "fr": "Aucune connexion à vérifier.",
+      "de": "Keine Verbindungen zum Überprüfen.",
+      "lt": "Nėra ryšių, kuriuos būtų galima peržiūrėti.",
+      "pt": "Não há conexões para revisar.",
+      "it": "Nessuna connessione da rivedere."
+    },
+    {
+      "en": "Reject",
+      "es": "Rechazar",
+      "fr": "Rejeter",
+      "de": "Ablehnen",
+      "lt": "Atmesti",
+      "pt": "Rejeitar",
+      "it": "Rifiutare"
+    },
+    {
+      "en": "Approve",
+      "es": "Aprobar",
+      "fr": "Approuver",
+      "de": "Genehmigen",
+      "lt": "Patvirtinti",
+      "pt": "Aprovar",
+      "it": "Approvare"
+    },
+    {
+      "en": "All connections approved!",
+      "es": "¡Todas las conexiones aprobadas!",
+      "fr": "Toutes les connexions approuvées !",
+      "de": "Alle Anschlüsse genehmigt!",
+      "lt": "Visos jungtys patvirtintos!",
+      "pt": "Todas as conexões aprovadas!",
+      "it": "Tutti i collegamenti approvati!"
+    },
+    {
+      "en": "Type your answer here...",
+      "es": "Escribe tu respuesta aquí...",
+      "fr": "Tapez votre réponse ici...",
+      "de": "Geben Sie hier Ihre Antwort ein...",
+      "lt": "Įvesk savo atsakymą čia...",
+      "pt": "Digite sua resposta aqui...",
+      "it": "Scrivi la tua risposta qui..."
+    },
+    {
+      "en": "Submit Answer",
+      "es": "Enviar respuesta",
+      "fr": "Soumettre la réponse",
+      "de": "Antwort absenden",
+      "lt": "Pateikti atsakymą",
+      "pt": "Enviar resposta",
+      "it": "Invia risposta"
+    },
+    {
+      "en": "Quick options (click to add):",
+      "es": "Opciones rápidas (haga clic para agregar):",
+      "fr": "Options rapides (cliquez pour ajouter) :",
+      "de": "Schnelloptionen (zum Hinzufügen klicken):",
+      "lt": "Greitos parinktys (spustelėkite, kad pridėtumėte):",
+      "pt": "Opções rápidas (clique para adicionar):",
+      "it": "Opzioni rapide (clicca per aggiungere):"
+    },
+    {
+      "en": "Skip This Question",
+      "es": "Saltar esta pregunta",
+      "fr": "Passer cette question",
+      "de": "Überspringen Sie diese Frage",
+      "lt": "Praleiskite šį klausimą",
+      "pt": "Pule esta pergunta",
+      "it": "Salta questa domanda"
+    },
+    {
+      "en": "Continue to Activities",
+      "es": "Continuar a Actividades",
+      "fr": "Continuer vers les activités",
+      "de": "Weiter zu Aktivitäten",
+      "lt": "Toliau eikite į „Veikla“.",
+      "pt": "Continuar para Atividades",
+      "it": "Continua alle Attività"
+    },
+    {
+      "en": "Continue to Pressures",
+      "es": "Continuar con Presiones",
+      "fr": "Continuer vers Pressions",
+      "de": "Weiter zu Belastungen",
+      "lt": "Toliau eikite į Slėgiai",
+      "pt": "Continuar para Pressões",
+      "it": "Continua a Pressioni"
+    },
+    {
+      "en": "Continue to State Changes",
+      "es": "Continuar con los cambios de estado",
+      "fr": "Continuer à indiquer les modifications",
+      "de": "Weiter zu Statusänderungen",
+      "lt": "Tęskite būsenos pakeitimus",
+      "pt": "Continuar para Mudanças de Estado",
+      "it": "Continua con Cambiamenti di stato"
+    },
+    {
+      "en": "Continue to Impacts",
+      "es": "Continuar a Impactos",
+      "fr": "Continuer vers Impacts",
+      "de": "Weiter zu Auswirkungen",
+      "lt": "Toliau eikite į „Poveikis“.",
+      "pt": "Continuar para Impactos",
+      "it": "Continua su Impatti"
+    },
+    {
+      "en": "Continue to Welfare",
+      "es": "Continuar a Bienestar",
+      "fr": "Continuer vers l'aide sociale",
+      "de": "Weiter zu Wohlfahrt",
+      "lt": "Toliau į Gerovė",
+      "pt": "Continuar para o bem-estar",
+      "it": "Continua su Welfare"
+    },
+    {
+      "en": "Continue to Responses",
+      "es": "Continuar a Respuestas",
+      "fr": "Continuer vers les réponses",
+      "de": "Weiter zu Antworten",
+      "lt": "Toliau eikite į atsakymus",
+      "pt": "Continuar para as respostas",
+      "it": "Continua con le risposte"
+    },
+    {
+      "en": "Continue to Measures",
+      "es": "Continuar a Medidas",
+      "fr": "Continuer vers les mesures",
+      "de": "Weiter zu Maßnahmen",
+      "lt": "Toliau eikite į Priemonės",
+      "pt": "Continuar para Medidas",
+      "it": "Continua con Misure"
+    },
+    {
+      "en": "Continue",
+      "es": "Continuar",
+      "fr": "Continuer",
+      "de": "Weitermachen",
+      "lt": "Tęsti",
+      "pt": "Continuar",
+      "it": "Continuare"
+    },
+    {
+      "en": "Finish",
+      "es": "Finalizar",
+      "fr": "Finition",
+      "de": "Beenden",
+      "lt": "Baigti",
+      "pt": "Terminar",
+      "it": "Fine"
+    },
+    {
+      "en": "Step",
+      "es": "Paso",
+      "fr": "Étape",
+      "de": "Schritt",
+      "lt": "Žingsnis",
+      "pt": "Etapa",
+      "it": "Fare un passo"
+    },
+    {
+      "en": "of",
+      "es": "de",
+      "fr": "de",
+      "de": "von",
+      "lt": "iš",
+      "pt": "de",
+      "it": "Di"
+    },
+    {
+      "en": "Complete! Review your model",
+      "es": "¡Completo! Revisa tu modelo",
+      "fr": "Complet! Vérifiez votre modèle",
+      "de": "Vollständig! Überprüfen Sie Ihr Modell",
+      "lt": "Užbaigta! Peržiūrėkite savo modelį",
+      "pt": "Completo! Revise seu modelo",
+      "it": "Completare! Rivedi il tuo modello"
+    },
+    {
+      "en": "Restore Previous Session?",
+      "es": "¿Restaurar la sesión anterior?",
+      "fr": "Restaurer la session précédente ?",
+      "de": "Vorherige Sitzung wiederherstellen?",
+      "lt": "Atkurti ankstesnę sesiją?",
+      "pt": "Restaurar sessão anterior?",
+      "it": "Ripristinare la sessione precedente?"
+    },
+    {
+      "en": "Found a saved session from",
+      "es": "Encontré una sesión guardada de",
+      "fr": "Trouvé une session enregistrée à partir de",
+      "de": "Eine gespeicherte Sitzung von gefunden",
+      "lt": "Rasta išsaugota sesija iš",
+      "pt": "Encontrou uma sessão salva de",
+      "it": "Trovato una sessione salvata da"
+    },
+    {
+      "en": "Do you want to restore it?",
+      "es": "¿Quieres restaurarlo?",
+      "fr": "Voulez-vous le restaurer ?",
+      "de": "Möchten Sie es wiederherstellen?",
+      "lt": "Ar norite jį atkurti?",
+      "pt": "Você quer restaurá-lo?",
+      "it": "Vuoi ripristinarlo?"
+    },
+    {
+      "en": "Yes, Restore",
+      "es": "Sí, restaurar",
+      "fr": "Oui, restaurer",
+      "de": "Ja, Wiederherstellen",
+      "lt": "Taip, Atkurti",
+      "pt": "Sim, restaurar",
+      "it": "Sì, ripristina"
+    },
+    {
+      "en": "Cancel",
+      "es": "Cancelar",
+      "fr": "Annuler",
+      "de": "Stornieren",
+      "lt": "Atšaukti",
+      "pt": "Cancelar",
+      "it": "Cancellare"
+    },
+    {
+      "en": "Confirm Start Over",
+      "es": "Confirmar empezar de nuevo",
+      "fr": "Confirmer le redémarrage",
+      "de": "Bestätigen Sie „Neu starten“.",
+      "lt": "Patvirtinkite Pradėti iš naujo",
+      "pt": "Confirme o recomeço",
+      "it": "Conferma Ricomincia"
+    },
+    {
+      "en": "Are you sure you want to start over? All current progress will be lost.",
+      "es": "¿Estás seguro de que quieres empezar de nuevo? Todo el progreso actual se perderá.",
+      "fr": "Êtes-vous sûr de vouloir recommencer ? Tous les progrès actuels seront perdus.",
+      "de": "Sind Sie sicher, dass Sie von vorne beginnen möchten? Alle aktuellen Fortschritte gehen verloren.",
+      "lt": "Ar tikrai norite pradėti iš naujo? Visa dabartinė pažanga bus prarasta.",
+      "pt": "Tem certeza de que deseja recomeçar? Todo o progresso atual será perdido.",
+      "it": "Sei sicuro di voler ricominciare da capo? Tutti i progressi attuali andranno persi."
+    },
+    {
+      "en": "Yes, Start Over",
+      "es": "Sí, empezar de nuevo",
+      "fr": "Oui, recommencer",
+      "de": "Ja, fangen Sie von vorne an",
+      "lt": "Taip, pradėti iš naujo",
+      "pt": "Sim, recomeçar",
+      "it": "Sì, ricomincia da capo"
+    },
+    {
+      "en": "Choose a pre-built scenario:",
+      "es": "Elija un escenario prediseñado:",
+      "fr": "Choisissez un scénario prédéfini :",
+      "de": "Wählen Sie ein vorgefertigtes Szenario:",
+      "lt": "Pasirinkite iš anksto sukurtą scenarijų:",
+      "pt": "Escolha um cenário pré-construído:",
+      "it": "Scegli uno scenario predefinito:"
+    },
+    {
+      "en": "Overfishing in Coastal Waters",
+      "es": "Sobrepesca en aguas costeras",
+      "fr": "Surpêche dans les eaux côtières",
+      "de": "Überfischung in Küstengewässern",
+      "lt": "Perteklinė žvejyba pakrantės vandenyse",
+      "pt": "Pesca excessiva em águas costeiras",
+      "it": "Pesca eccessiva nelle acque costiere"
+    },
+    {
+      "en": "Marine Pollution & Plastics",
+      "es": "Contaminación marina y plásticos",
+      "fr": "Pollution marine et plastiques",
+      "de": "Meeresverschmutzung und Kunststoffe",
+      "lt": "Jūros tarša ir plastikai",
+      "pt": "Poluição Marinha e Plásticos",
+      "it": "Inquinamento marino e plastica"
+    },
+    {
+      "en": "Coastal Tourism Impacts",
+      "es": "Impactos del turismo costero",
+      "fr": "Impacts du tourisme côtier",
+      "de": "Auswirkungen des Küstentourismus",
+      "lt": "Pakrantės turizmo poveikis",
+      "pt": "Impactos do Turismo Costeiro",
+      "it": "Impatti del turismo costiero"
+    },
+    {
+      "en": "Climate Change & Coral Reefs",
+      "es": "Cambio climático y arrecifes de coral",
+      "fr": "Changement climatique et récifs coralliens",
+      "de": "Klimawandel und Korallenriffe",
+      "lt": "Klimato kaita ir koraliniai rifai",
+      "pt": "Mudanças Climáticas e Recifes de Coral",
+      "it": "Cambiamenti climatici e barriere coralline"
+    },
+    {
+      "en": "Thank you! Moving to the next question...",
+      "es": "¡Gracias! Pasando a la siguiente pregunta...",
+      "fr": "Merci! Passons à la question suivante...",
+      "de": "Danke schön! Weiter zur nächsten Frage...",
+      "lt": "Ačiū! Pereinant prie kito klausimo...",
+      "pt": "Obrigado! Passando para a próxima pergunta...",
+      "it": "Grazie! Passando alla domanda successiva..."
+    },
+    {
+      "en": "Excellent work! You've completed your DAPSI(W)R(M) model with connections. Review the summary on the right, and when ready, click 'Save to ISA Data Entry' to transfer your model to the main ISA module.",
+      "es": "¡Excelente trabajo! Has completado tu modelo DAPSI(W)R(M) con conexiones. Revise el resumen a la derecha y, cuando esté listo, haga clic en \"Guardar en entrada de datos ISA\" para transferir su modelo al módulo ISA principal.",
+      "fr": "Excellent travail ! Vous avez terminé votre modèle DAPSI(W)R(M) avec des connexions. Consultez le résumé sur la droite et lorsque vous êtes prêt, cliquez sur « Enregistrer dans la saisie de données ISA » pour transférer votre modèle vers le module ISA principal.",
+      "de": "Ausgezeichnete Arbeit! Sie haben Ihr DAPSI(W)R(M)-Modell mit Anschlüssen fertiggestellt. Sehen Sie sich die Zusammenfassung auf der rechten Seite an und klicken Sie, wenn Sie fertig sind, auf „In ISA-Dateneingabe speichern“, um Ihr Modell in das ISA-Hauptmodul zu übertragen.",
+      "lt": "Puikus darbas! Užbaigėte DAPSI(W)R(M) modelį su jungtimis. Peržiūrėkite santrauką dešinėje ir, kai būsite pasiruošę, spustelėkite „Išsaugoti į ISA duomenų įvedimą“, kad perkeltumėte modelį į pagrindinį ISA modulį.",
+      "pt": "Excelente trabalho! Você completou seu modelo DAPSI(W)R(M) com conexões. Revise o resumo à direita e, quando estiver pronto, clique em 'Salvar na entrada de dados ISA' para transferir seu modelo para o módulo ISA principal.",
+      "it": "Ottimo lavoro! Hai completato il tuo modello DAPSI(W)R(M) con le connessioni. Esamina il riepilogo a destra e, quando sei pronto, fai clic su \"Salva in ISA Data Entry\" per trasferire il tuo modello nel modulo ISA principale."
+    },
+    {
+      "en": "I've identified",
+      "es": "me he identificado",
+      "fr": "j'ai identifié",
+      "de": "Ich habe mich identifiziert",
+      "lt": "Aš atpažinau",
+      "pt": "eu identifiquei",
+      "it": "Ho identificato"
+    },
+    {
+      "en": "potential connections based on the DAPSI(W)R(M) framework logic. Review each connection below and approve or reject them.",
+      "es": "conexiones potenciales basadas en la lógica del marco DAPSI(W)R(M). Revise cada conexión a continuación y apruebe o rechace.",
+      "fr": "connexions potentielles basées sur la logique du cadre DAPSI(W)R(M). Examinez chaque connexion ci-dessous et approuvez-les ou rejetez-les.",
+      "de": "mögliche Verbindungen basierend auf der DAPSI(W)R(M)-Framework-Logik. Überprüfen Sie jede Verbindung unten und genehmigen oder lehnen Sie sie ab.",
+      "lt": "potencialūs ryšiai, pagrįsti DAPSI(W)R(M) sistemos logika. Peržiūrėkite kiekvieną toliau pateiktą ryšį ir patvirtinkite arba atmeskite juos.",
+      "pt": "conexões potenciais baseadas na lógica da estrutura DAPSI(W)R(M). Revise cada conexão abaixo e aprove ou rejeite-as.",
+      "it": "potenziali connessioni basate sulla logica del framework DAPSI(W)R(M). Esamina ciascuna connessione di seguito e approvala o rifiutala."
+    },
+    {
+      "en": "✓ Added",
+      "es": "✓ Agregado",
+      "fr": "✓ Ajouté",
+      "de": "✓ Hinzugefügt",
+      "lt": "✓ Pridėta",
+      "pt": "✓ Adicionado",
+      "it": "✓ Aggiunto"
+    },
+    {
+      "en": "total",
+      "es": "total",
+      "fr": "total",
+      "de": "gesamt",
+      "lt": "viso",
+      "pt": "total",
+      "it": "totale"
+    },
+    {
+      "en": "Click quick options to add more, or click the green button to continue.",
+      "es": "Haga clic en opciones rápidas para agregar más o haga clic en el botón verde para continuar.",
+      "fr": "Cliquez sur les options rapides pour en ajouter davantage ou cliquez sur le bouton vert pour continuer.",
+      "de": "Klicken Sie auf Schnelloptionen, um weitere hinzuzufügen, oder klicken Sie auf die grüne Schaltfläche, um fortzufahren.",
+      "lt": "Spustelėkite greitąsias parinktis, kad pridėtumėte daugiau, arba spustelėkite žalią mygtuką, kad tęstumėte.",
+      "pt": "Clique nas opções rápidas para adicionar mais ou clique no botão verde para continuar.",
+      "it": "Fai clic sulle opzioni rapide per aggiungerne altre oppure fai clic sul pulsante verde per continuare."
+    },
+    {
+      "en": "Great! You've approved",
+      "es": "¡Excelente! Has aprobado",
+      "fr": "Super! Vous avez approuvé",
+      "de": "Großartig! Sie haben zugestimmt",
+      "lt": "Puiku! Jūs patvirtinote",
+      "pt": "Ótimo! Você aprovou",
+      "it": "Grande! Hai approvato"
+    },
+    {
+      "en": "connections out of",
+      "es": "conexiones fuera de",
+      "fr": "connexions hors de",
+      "de": "Verbindungen aus",
+      "lt": "jungtys išjungtos",
+      "pt": "conexões fora de",
+      "it": "connessioni fuori"
+    },
+    {
+      "en": "suggested connections",
+      "es": "conexiones sugeridas",
+      "fr": "connexions suggérées",
+      "de": "vorgeschlagene Verbindungen",
+      "lt": "siūlomi ryšiai",
+      "pt": "conexões sugeridas",
+      "it": "collegamenti suggeriti"
+    },
+    {
+      "en": "These connections will be included in your saved ISA data.",
+      "es": "Estas conexiones se incluirán en sus datos ISA guardados.",
+      "fr": "Ces connexions seront incluses dans vos données ISA enregistrées.",
+      "de": "Diese Verbindungen werden in Ihre gespeicherten ISA-Daten übernommen.",
+      "lt": "Šie ryšiai bus įtraukti į išsaugotus ISA duomenis.",
+      "pt": "Essas conexões serão incluídas nos dados ISA salvos.",
+      "it": "Queste connessioni verranno incluse nei dati ISA salvati."
+    },
+    {
+      "en": "Model saved! Navigate to 'ISA Data Entry' to see your elements.",
+      "es": "¡Modelo guardado! Navegue hasta 'Entrada de datos ISA' para ver sus elementos.",
+      "fr": "Modèle enregistré ! Accédez à « ISA Data Entry » pour voir vos éléments.",
+      "de": "Modell gespeichert! Navigieren Sie zu „ISA Data Entry“, um Ihre Elemente anzuzeigen.",
+      "lt": "Modelis išsaugotas! Eikite į „ISA Data Entry“, kad pamatytumėte savo elementus.",
+      "pt": "Modelo salvo! Navegue até 'ISA Data Entry' para ver seus elementos.",
+      "it": "Modello salvato! Passare a \"ISA Data Entry\" per vedere i tuoi elementi."
+    },
+    {
+      "en": "Overfishing template loaded with example connections! You can now preview or modify it.",
+      "es": "¡Plantilla de sobrepesca cargada con conexiones de ejemplo! Ahora puede obtener una vista previa o modificarlo.",
+      "fr": "Modèle de surpêche chargé d'exemples de connexions ! Vous pouvez maintenant le prévisualiser ou le modifier.",
+      "de": "Overfishing-Vorlage voller Beispielverbindungen! Sie können es jetzt in der Vorschau anzeigen oder ändern.",
+      "lt": "Perteklinės žvejybos šablonas įkeltas su jungčių pavyzdžiais! Dabar galite jį peržiūrėti arba modifikuoti.",
+      "pt": "Modelo de sobrepesca carregado com exemplos de conexões! Agora você pode visualizá-lo ou modificá-lo.",
+      "it": "Modello di pesca eccessiva caricato con connessioni di esempio! Ora puoi visualizzarlo in anteprima o modificarlo."
+    },
+    {
+      "en": "Marine Pollution template loaded with example connections!",
+      "es": "¡Plantilla de contaminación marina cargada con conexiones de ejemplo!",
+      "fr": "Modèle de pollution marine chargé d'exemples de connexions !",
+      "de": "Vorlage zur Meeresverschmutzung mit Beispielverbindungen!",
+      "lt": "Jūros taršos šablonas su jungčių pavyzdžiais!",
+      "pt": "Modelo de Poluição Marinha carregado com exemplos de conexões!",
+      "it": "Modello di inquinamento marino caricato con collegamenti di esempio!"
+    },
+    {
+      "en": "Coastal Tourism template loaded with example connections!",
+      "es": "¡Plantilla de turismo costero cargada con conexiones de ejemplo!",
+      "fr": "Modèle de tourisme côtier chargé d'exemples de connexions !",
+      "de": "Vorlage für Küstentourismus mit zahlreichen Beispielverbindungen!",
+      "lt": "Pakrančių turizmo šablonas su jungčių pavyzdžiais!",
+      "pt": "Modelo de Turismo Costeiro carregado com exemplos de conexões!",
+      "it": "Modello di turismo costiero caricato con collegamenti di esempio!"
+    },
+    {
+      "en": "Climate Change template loaded with example connections!",
+      "es": "¡Plantilla de cambio climático cargada con conexiones de ejemplo!",
+      "fr": "Modèle sur le changement climatique chargé d'exemples de connexions !",
+      "de": "Vorlage zum Klimawandel mit vielen Beispielverbindungen!",
+      "lt": "Klimato kaitos šablonas įkeltas su jungčių pavyzdžiais!",
+      "pt": "Modelo de Mudanças Climáticas carregado com exemplos de conexões!",
+      "it": "Modello sul cambiamento climatico caricato con collegamenti di esempio!"
+    },
+    {
+      "en": "Model saved successfully!",
+      "es": "¡Modelo guardado exitosamente!",
+      "fr": "Modèle enregistré avec succès !",
+      "de": "Modell erfolgreich gespeichert!",
+      "lt": "Modelis sėkmingai išsaugotas!",
+      "pt": "Modelo salvo com sucesso!",
+      "it": "Modello salvato con successo!"
+    },
+    {
+      "en": "elements and",
+      "es": "elementos y",
+      "fr": "éléments et",
+      "de": "Elemente und",
+      "lt": "elementai ir",
+      "pt": "elementos e",
+      "it": "elementi e"
+    },
+    {
+      "en": "connections transferred to ISA Data Entry.",
+      "es": "conexiones transferidas a ISA Data Entry.",
+      "fr": "connexions transférées vers ISA Data Entry.",
+      "de": "Verbindungen werden an ISA Data Entry übertragen.",
+      "lt": "jungtys, perkeltos į ISA Data Entry.",
+      "pt": "conexões transferidas para o ISA Data Entry.",
+      "it": "connessioni trasferite a ISA Data Entry."
+    }
+  ]
+}

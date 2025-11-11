@@ -1,0 +1,292 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "en": "Beach cleanup programs",
+      "es": "Programas de limpieza de playas.",
+      "fr": "Programmes de nettoyage des plages",
+      "de": "Strandreinigungsprogramme",
+      "lt": "Paplūdimio valymo programos",
+      "pt": "Programas de limpeza de praias",
+      "it": "Programmi di pulizia delle spiagge"
+    },
+    {
+      "en": "Bycatch of non-target species",
+      "es": "Captura incidental de especies no objetivo",
+      "fr": "Prises accessoires d'espèces non ciblées",
+      "de": "Beifang von Nichtzielarten",
+      "lt": "Netikslinių rūšių priegauda",
+      "pt": "Captura acidental de espécies não-alvo",
+      "it": "Catture accessorie di specie non bersaglio"
+    },
+    {
+      "en": "Certification schemes for sustainable tourism",
+      "es": "Esquemas de certificación para el turismo sostenible",
+      "fr": "Programmes de certification pour le tourisme durable",
+      "de": "Zertifizierungssysteme für nachhaltigen Tourismus",
+      "lt": "Darnaus turizmo sertifikavimo schemos",
+      "pt": "Esquemas de certificação para turismo sustentável",
+      "it": "Schemi di certificazione per il turismo sostenibile"
+    },
+    {
+      "en": "Chemical pollution",
+      "es": "Contaminación química",
+      "fr": "Pollution chimique",
+      "de": "Chemische Verschmutzung",
+      "lt": "Cheminė tarša",
+      "pt": "Poluição química",
+      "it": "Inquinamento chimico"
+    },
+    {
+      "en": "Climate Change Impacts on Coral Reefs",
+      "es": "Impactos del cambio climático en los arrecifes de coral",
+      "fr": "Impacts du changement climatique sur les récifs coralliens",
+      "de": "Auswirkungen des Klimawandels auf Korallenriffe",
+      "lt": "Klimato kaitos poveikis koraliniams rifams",
+      "pt": "Impactos das mudanças climáticas nos recifes de coral",
+      "it": "Impatti dei cambiamenti climatici sulle barriere coralline"
+    },
+    {
+      "en": "Coastal development (hotels, infrastructure)",
+      "es": "Desarrollo costero (hoteles, infraestructura)",
+      "fr": "Développement côtier (hôtels, infrastructures)",
+      "de": "Küstenentwicklung (Hotels, Infrastruktur)",
+      "lt": "Pakrantės plėtra (viešbučiai, infrastruktūra)",
+      "pt": "Desenvolvimento costeiro (hotéis, infraestrutura)",
+      "it": "Sviluppo costiero (hotel, infrastrutture)"
+    },
+    {
+      "en": "Coastal Tourism Management",
+      "es": "Gestión del Turismo Costero",
+      "fr": "Gestion du tourisme côtier",
+      "de": "Küstentourismusmanagement",
+      "lt": "Pakrantės turizmo valdymas",
+      "pt": "Gestão de Turismo Costeiro",
+      "it": "Gestione del turismo costiero"
+    },
+    {
+      "en": "Coastal zone management",
+      "es": "Gestión de zonas costeras",
+      "fr": "Gestion des zones côtières",
+      "de": "Küstenzonenmanagement",
+      "lt": "Pakrantės zonos valdymas",
+      "pt": "Gestão da zona costeira",
+      "it": "Gestione della zona costiera"
+    },
+    {
+      "en": "Consumer demand",
+      "es": "Demanda del consumidor",
+      "fr": "Demande des consommateurs",
+      "de": "Verbrauchernachfrage",
+      "lt": "Vartotojų paklausa",
+      "pt": "Demanda do consumidor",
+      "it": "Domanda dei consumatori"
+    },
+    {
+      "en": "Coral bleaching from rising temperatures",
+      "es": "Blanqueamiento de corales por el aumento de temperaturas",
+      "fr": "Blanchiment des coraux à cause de la hausse des températures",
+      "de": "Korallenbleiche durch steigende Temperaturen",
+      "lt": "Koralų balinimas nuo kylančios temperatūros",
+      "pt": "Branqueamento de corais devido ao aumento das temperaturas",
+      "it": "Sbiancamento dei coralli dovuto all'aumento delle temperature"
+    },
+    {
+      "en": "Declining fish stocks due to overfishing",
+      "es": "Disminución de las poblaciones de peces debido a la sobrepesca",
+      "fr": "Diminution des stocks de poissons due à la surpêche",
+      "de": "Sinkende Fischbestände aufgrund von Überfischung",
+      "lt": "Mažėjantys žuvų ištekliai dėl pernelyg intensyvios žvejybos",
+      "pt": "Diminuição dos estoques de peixes devido à sobrepesca",
+      "it": "Diminuzione degli stock ittici a causa della pesca eccessiva"
+    },
+    {
+      "en": "Economic losses in tourism",
+      "es": "Pérdidas económicas en el turismo",
+      "fr": "Pertes économiques dans le tourisme",
+      "de": "Wirtschaftliche Verluste im Tourismus",
+      "lt": "Ekonominiai nuostoliai turizmo srityje",
+      "pt": "Perdas econômicas no turismo",
+      "it": "Perdite economiche nel turismo"
+    },
+    {
+      "en": "Education and awareness campaigns",
+      "es": "Campañas de educación y sensibilización.",
+      "fr": "Campagnes d’éducation et de sensibilisation",
+      "de": "Aufklärungs- und Sensibilisierungskampagnen",
+      "lt": "Švietimo ir informavimo kampanijos",
+      "pt": "Campanhas de educação e conscientização",
+      "it": "Campagne di educazione e sensibilizzazione"
+    },
+    {
+      "en": "Fisheries legislation",
+      "es": "Legislación pesquera",
+      "fr": "Législation sur la pêche",
+      "de": "Fischereigesetzgebung",
+      "lt": "Žuvininkystės teisės aktai",
+      "pt": "Legislação das pescas",
+      "it": "Legislazione sulla pesca"
+    },
+    {
+      "en": "Fishing quotas and limits",
+      "es": "Cuotas y límites de pesca",
+      "fr": "Quotas et limites de pêche",
+      "de": "Fangquoten und -grenzen",
+      "lt": "Žvejybos kvotos ir limitai",
+      "pt": "Cotas e limites de pesca",
+      "it": "Quote e limiti di pesca"
+    },
+    {
+      "en": "Health impacts from contamination",
+      "es": "Impactos en la salud por la contaminación",
+      "fr": "Impacts sur la santé de la contamination",
+      "de": "Gesundheitliche Auswirkungen durch Kontamination",
+      "lt": "Užteršimo poveikis sveikatai",
+      "pt": "Impactos na saúde da contaminação",
+      "it": "Impatti sulla salute derivanti dalla contaminazione"
+    },
+    {
+      "en": "Loss of cultural and aesthetic value",
+      "es": "Pérdida de valor cultural y estético.",
+      "fr": "Perte de valeur culturelle et esthétique",
+      "de": "Verlust des kulturellen und ästhetischen Wertes",
+      "lt": "Kultūrinės ir estetinės vertės praradimas",
+      "pt": "Perda de valor cultural e estético",
+      "it": "Perdita di valore culturale ed estetico"
+    },
+    {
+      "en": "Loss of livelihoods for fishers",
+      "es": "Pérdida de medios de vida para los pescadores",
+      "fr": "Perte de moyens de subsistance pour les pêcheurs",
+      "de": "Verlust der Lebensgrundlage der Fischer",
+      "lt": "Žvejų pragyvenimo šaltiniai",
+      "pt": "Perda de meios de subsistência para os pescadores",
+      "it": "Perdita di mezzi di sussistenza per i pescatori"
+    },
+    {
+      "en": "Marine litter and plastics",
+      "es": "Basura marina y plásticos",
+      "fr": "Déchets marins et plastiques",
+      "de": "Meeresmüll und Plastik",
+      "lt": "Jūrų šiukšlės ir plastikai",
+      "pt": "Lixo marinho e plásticos",
+      "it": "Rifiuti marini e plastica"
+    },
+    {
+      "en": "Marine Plastic Pollution",
+      "es": "Contaminación marina por plástico",
+      "fr": "Pollution plastique marine",
+      "de": "Meeresverschmutzung durch Plastik",
+      "lt": "Jūrų plastiko tarša",
+      "pt": "Poluição Plástica Marinha",
+      "it": "Inquinamento da plastica marina"
+    },
+    {
+      "en": "Marine protected areas",
+      "es": "Áreas marinas protegidas",
+      "fr": "Aires marines protégées",
+      "de": "Meeresschutzgebiete",
+      "lt": "Saugomos jūrų teritorijos",
+      "pt": "Áreas marinhas protegidas",
+      "it": "Aree marine protette"
+    },
+    {
+      "en": "Monitoring and enforcement programs",
+      "es": "Programas de seguimiento y aplicación de la ley",
+      "fr": "Programmes de surveillance et d’application",
+      "de": "Überwachungs- und Durchsetzungsprogramme",
+      "lt": "Stebėsenos ir vykdymo programos",
+      "pt": "Programas de monitoramento e fiscalização",
+      "it": "Programmi di monitoraggio e applicazione"
+    },
+    {
+      "en": "Overfishing Management",
+      "es": "Gestión de la sobrepesca",
+      "fr": "Gestion de la surpêche",
+      "de": "Überfischungsmanagement",
+      "lt": "Perteklinės žvejybos valdymas",
+      "pt": "Gestão da sobrepesca",
+      "it": "Gestione della pesca eccessiva"
+    },
+    {
+      "en": "Plastic pollution and marine litter",
+      "es": "Contaminación plástica y basura marina",
+      "fr": "Pollution plastique et déchets marins",
+      "de": "Plastikverschmutzung und Meeresmüll",
+      "lt": "Plastiko tarša ir jūros šiukšlės",
+      "pt": "Poluição plástica e lixo marinho",
+      "it": "Inquinamento da plastica e rifiuti marini"
+    },
+    {
+      "en": "Pollution from tourists",
+      "es": "Contaminación por turistas",
+      "fr": "Pollution des touristes",
+      "de": "Verschmutzung durch Touristen",
+      "lt": "Tarša iš turistų",
+      "pt": "Poluição de turistas",
+      "it": "Inquinamento da turisti"
+    },
+    {
+      "en": "Recreation and leisure",
+      "es": "Recreación y ocio",
+      "fr": "Loisirs et loisirs",
+      "de": "Erholung und Freizeit",
+      "lt": "Poilsis ir laisvalaikis",
+      "pt": "Recreação e lazer",
+      "it": "Ricreazione e tempo libero"
+    },
+    {
+      "en": "Reduced quality of life for residents",
+      "es": "Reducción de la calidad de vida de los residentes.",
+      "fr": "Qualité de vie réduite pour les résidents",
+      "de": "Reduzierte Lebensqualität für die Bewohner",
+      "lt": "Sumažėjusi gyventojų gyvenimo kokybė",
+      "pt": "Redução da qualidade de vida dos moradores",
+      "it": "Ridotta qualità della vita per i residenti"
+    },
+    {
+      "en": "Shipping",
+      "es": "Envío",
+      "fr": "Expédition",
+      "de": "Versand",
+      "lt": "Siuntimas",
+      "pt": "Envio",
+      "it": "Spedizione"
+    },
+    {
+      "en": "Sustainable tourism practices",
+      "es": "Prácticas de turismo sostenible",
+      "fr": "Pratiques du tourisme durable",
+      "de": "Nachhaltige Tourismuspraktiken",
+      "lt": "Darnaus turizmo praktika",
+      "pt": "Práticas de turismo sustentável",
+      "it": "Pratiche di turismo sostenibile"
+    },
+    {
+      "en": "Tourism and recreation",
+      "es": "Turismo y recreación",
+      "fr": "Tourisme et loisirs",
+      "de": "Tourismus und Erholung",
+      "lt": "Turizmas ir poilsis",
+      "pt": "Turismo e recreação",
+      "it": "Turismo e ricreazione"
+    },
+    {
+      "en": "Tourism impacts on coastal ecosystems",
+      "es": "Impactos del turismo en los ecosistemas costeros",
+      "fr": "Impacts du tourisme sur les écosystèmes côtiers",
+      "de": "Auswirkungen des Tourismus auf Küstenökosysteme",
+      "lt": "Turizmo poveikis pakrančių ekosistemoms",
+      "pt": "Impactos do turismo nos ecossistemas costeiros",
+      "it": "Impatti del turismo sugli ecosistemi costieri"
+    }
+  ]
+}

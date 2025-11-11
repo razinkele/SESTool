@@ -1,0 +1,92 @@
+[
+  {
+    "en": "Continue to EP1",
+    "es": "Continuar a EP1",
+    "fr": "Continuer vers EP1",
+    "de": "Weiter zu EP1",
+    "lt": "Tęsti į EP1",
+    "pt": "Continuar para EP1",
+    "it": "Continua a EP1"
+  },
+  {
+    "en": "Start Over",
+    "es": "Comenzar de Nuevo",
+    "fr": "Recommencer",
+    "de": "Von Vorne Beginnen",
+    "lt": "Pradėti Iš Naujo",
+    "pt": "Recomeçar",
+    "it": "Ricomincia"
+  },
+  {
+    "en": "Export Pathway Report",
+    "es": "Exportar Informe de Ruta",
+    "fr": "Exporter le Rapport de Parcours",
+    "de": "Pfadbericht Exportieren",
+    "lt": "Eksportuoti Kelio Ataskaitą",
+    "pt": "Exportar Relatório de Percurso",
+    "it": "Esporta Rapporto del Percorso"
+  },
+  {
+    "en": "Go to",
+    "es": "Ir a",
+    "fr": "Aller à",
+    "de": "Gehe zu",
+    "lt": "Eiti į",
+    "pt": "Ir para",
+    "it": "Vai a"
+  },
+  {
+    "en": "Quick start option:",
+    "es": "Opción de inicio rápido:",
+    "fr": "Option de démarrage rapide :",
+    "de": "Schnellstartoption:",
+    "lt": "Greito pradžios parinktis:",
+    "pt": "Opção de início rápido:",
+    "it": "Opzione di avvio rapido:"
+  },
+  {
+    "en": "Use Create SES with templates or AI assistant for rapid model building (beginner-friendly)",
+    "es": "Use Crear SES con plantillas o asistente de IA para la construcción rápida de modelos (amigable para principiantes)",
+    "fr": "Utilisez Créer SES avec des modèles ou un assistant IA pour une construction rapide de modèles (convivial pour les débutants)",
+    "de": "Verwenden Sie SES Erstellen mit Vorlagen oder KI-Assistenten für schnelle Modellierung (anfängerfreundlich)",
+    "lt": "Naudokite Kurti SES su šablonais arba DI asistentu greitai modeliui sukurti (patogus pradedantiesiems)",
+    "pt": "Use Criar SES com modelos ou assistente de IA para construção rápida de modelos (amigável para iniciantes)",
+    "it": "Usa Crea SES con modelli o assistente IA per una rapida costruzione del modello (adatto ai principianti)"
+  },
+  {
+    "en": "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection",
+    "es": "Use Entrada de Datos ISA para mapear elementos DAPSI(W)R(M) con niveles de confianza (1-5) para cada conexión",
+    "fr": "Utilisez la Saisie de Données ISA pour cartographier les éléments DAPSI(W)R(M) avec des niveaux de confiance (1-5) pour chaque connexion",
+    "de": "Verwenden Sie ISA-Dateneingabe, um DAPSI(W)R(M)-Elemente mit Vertrauensstufen (1-5) für jede Verbindung zu kartieren",
+    "lt": "Naudokite ISA duomenų įvedimą DAPSI(W)R(M) elementams susieti su pasitikėjimo lygiais (1-5) kiekvienam ryšiui",
+    "pt": "Use Entrada de Dados ISA para mapear elementos DAPSI(W)R(M) com níveis de confiança (1-5) para cada conexão",
+    "it": "Usa Inserimento Dati ISA per mappare elementi DAPSI(W)R(M) con livelli di confidenza (1-5) per ogni connessione"
+  },
+  {
+    "en": "Create CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools",
+    "es": "Cree redes CLD con retroalimentación visual basada en confianza, filtre por confianza y ejecute herramientas de análisis",
+    "fr": "Créez des réseaux CLD avec des retours visuels basés sur la confiance, filtrez par confiance et exécutez des outils d'analyse",
+    "de": "Erstellen Sie CLD-Netzwerke mit vertrauensbasiertem visuellem Feedback, filtern Sie nach Vertrauen und führen Sie Analysetools aus",
+    "lt": "Sukurkite CLD tinklus su pasitikėjimu pagrįstu vaizdiniu grįžtamuoju ryšiu, filtruokite pagal pasitikėjimą ir vykdykite analizės įrankius",
+    "pt": "Crie redes CLD com feedback visual baseado em confiança, filtre por confiança e execute ferramentas de análise",
+    "it": "Crea reti CLD con feedback visivo basato sulla confidenza, filtra per confidenza ed esegui strumenti di analisi"
+  },
+  {
+    "en": "New in v1.2.0:",
+    "es": "Nuevo en v1.2.0:",
+    "fr": "Nouveau dans v1.2.0 :",
+    "de": "Neu in v1.2.0:",
+    "lt": "Nauja v1.2.0:",
+    "pt": "Novo na v1.2.0:",
+    "it": "Novità della v1.2.0:"
+  },
+  {
+    "en": "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research.",
+    "es": "El sistema de propiedades de confianza le permite rastrear la calidad y certeza de los datos. Los bordes con baja confianza aparecen más transparentes, ayudándole a identificar áreas que necesitan más investigación.",
+    "fr": "Le système de propriétés de confiance vous permet de suivre la qualité et la certitude des données. Les arêtes avec une faible confiance apparaissent plus transparentes, vous aidant à identifier les zones nécessitant plus de recherche.",
+    "de": "Das Vertrauenseigenschaftssystem ermöglicht es Ihnen, Datenqualität und Sicherheit zu verfolgen. Kanten mit geringem Vertrauen erscheinen transparenter und helfen Ihnen, Bereiche zu identifizieren, die mehr Forschung benötigen.",
+    "lt": "Pasitikėjimo savybių sistema leidžia sekti duomenų kokybę ir tikrumą. Mažo pasitikėjimo kraštai atrodo skaidresni, padeda nustatyti sritis, kurioms reikia daugiau tyrimų.",
+    "pt": "O sistema de propriedades de confiança permite rastrear a qualidade e certeza dos dados. Bordas com baixa confiança aparecem mais transparentes, ajudando a identificar áreas que precisam de mais pesquisa.",
+    "it": "Il sistema di proprietà di confidenza ti consente di tracciare qualità e certezza dei dati. I bordi con bassa confidenza appaiono più trasparenti, aiutandoti a identificare aree che necessitano di ulteriori ricerche."
+  }
+]

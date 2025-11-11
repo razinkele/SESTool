@@ -1,0 +1,122 @@
+{
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "translation": [
+    {
+      "en": "Cancel",
+      "es": "Cancelar",
+      "fr": "Annuler",
+      "de": "Abbrechen",
+      "lt": "Atšaukti",
+      "pt": "Cancelar",
+      "it": "Annulla"
+    },
+    {
+      "en": "Close",
+      "es": "Cerrar",
+      "fr": "Fermer",
+      "de": "Schließen",
+      "lt": "Uždaryti",
+      "pt": "Fechar",
+      "it": "Chiudi"
+    },
+    {
+      "en": "Apply Changes",
+      "es": "Aplicar Cambios",
+      "fr": "Appliquer les Modifications",
+      "de": "Änderungen Anwenden",
+      "lt": "Pritaikyti Pakeitimus",
+      "pt": "Aplicar Alterações",
+      "it": "Applica Modifiche"
+    },
+    {
+      "en": "Load",
+      "es": "Cargar",
+      "fr": "Charger",
+      "de": "Laden",
+      "lt": "Įkelti",
+      "pt": "Carregar",
+      "it": "Carica"
+    },
+    {
+      "en": "Interface Language",
+      "es": "Idioma de la Interfaz",
+      "fr": "Langue de l'Interface",
+      "de": "Oberflächensprache",
+      "lt": "Sąsajos Kalba",
+      "pt": "Idioma da Interface",
+      "it": "Lingua dell'Interfaccia"
+    },
+    {
+      "en": "Select your preferred language for the application interface. Click 'Apply Changes' to reload the application with the new language.",
+      "es": "Seleccione su idioma preferido para la interfaz de la aplicación. Haga clic en 'Aplicar Cambios' para recargar la aplicación con el nuevo idioma.",
+      "fr": "Sélectionnez votre langue préférée pour l'interface de l'application. Cliquez sur 'Appliquer les Modifications' pour recharger l'application avec la nouvelle langue.",
+      "de": "Wählen Sie Ihre bevorzugte Sprache für die Anwendungsoberfläche. Klicken Sie auf 'Änderungen Anwenden', um die Anwendung mit der neuen Sprache neu zu laden.",
+      "lt": "Pasirinkite pageidaujamą programos sąsajos kalbą. Spustelėkite 'Pritaikyti Pakeitimus', kad perkrautumėte programą su nauja kalba.",
+      "pt": "Selecione o seu idioma preferido para a interface da aplicação. Clique em 'Aplicar Alterações' para recarregar a aplicação com o novo idioma.",
+      "it": "Seleziona la tua lingua preferita per l'interfaccia dell'applicazione. Clicca su 'Applica Modifiche' per ricaricare l'applicazione con la nuova lingua."
+    },
+    {
+      "en": "Save Project",
+      "es": "Guardar Proyecto",
+      "fr": "Enregistrer le Projet",
+      "de": "Projekt Speichern",
+      "lt": "Išsaugoti Projektą",
+      "pt": "Guardar Projeto",
+      "it": "Salva Progetto"
+    },
+    {
+      "en": "Load Project",
+      "es": "Cargar Proyecto",
+      "fr": "Charger le Projet",
+      "de": "Projekt Laden",
+      "lt": "Įkelti Projektą",
+      "pt": "Carregar Projeto",
+      "it": "Carica Progetto"
+    },
+    {
+      "en": "Report Generated Successfully",
+      "es": "Informe Generado Exitosamente",
+      "fr": "Rapport Généré avec Succès",
+      "de": "Bericht Erfolgreich Erstellt",
+      "lt": "Ataskaita Sėkmingai Sugeneruota",
+      "pt": "Relatório Gerado com Sucesso",
+      "it": "Rapporto Generato con Successo"
+    },
+    {
+      "en": "Your report has been generated successfully.",
+      "es": "Su informe se ha generado exitosamente.",
+      "fr": "Votre rapport a été généré avec succès.",
+      "de": "Ihr Bericht wurde erfolgreich erstellt.",
+      "lt": "Jūsų ataskaita buvo sėkmingai sugeneruota.",
+      "pt": "O seu relatório foi gerado com sucesso.",
+      "it": "Il tuo rapporto è stato generato con successo."
+    },
+    {
+      "en": "Download Report",
+      "es": "Descargar Informe",
+      "fr": "Télécharger le Rapport",
+      "de": "Bericht Herunterladen",
+      "lt": "Atsisiųsti Ataskaitą",
+      "pt": "Baixar Relatório",
+      "it": "Scarica Rapporto"
+    },
+    {
+      "en": "Error rendering dashboard:",
+      "es": "Error al renderizar el panel:",
+      "fr": "Erreur lors du rendu du tableau de bord:",
+      "de": "Fehler beim Rendern des Dashboards:",
+      "lt": "Klaida atvaizdavimo skydelyje:",
+      "pt": "Erro ao renderizar o painel:",
+      "it": "Errore nel rendering della dashboard:"
+    },
+    {
+      "en": "Choose RDS File:",
+      "es": "Elegir Archivo RDS:",
+      "fr": "Choisir le Fichier RDS:",
+      "de": "RDS-Datei Wählen:",
+      "lt": "Pasirinkti RDS Failą:",
+      "pt": "Escolher Ficheiro RDS:",
+      "it": "Scegli File RDS:"
+    }
+  ]
+}

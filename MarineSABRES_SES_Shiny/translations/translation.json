@@ -1,5 +1,13 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
   "translation": [
     {
       "en": "Welcome to the MarineSABRES Toolbox",
@@ -812,13 +820,13 @@
       "it": "Inserimento Dati ISA"
     },
     {
-      "en": "CLD Visualization",
-      "es": "Visualización CLD",
-      "fr": "Visualisation CLD",
-      "de": "CLD-Visualisierung",
-      "lt": "CLD vizualizacija",
-      "pt": "Visualização CLD",
-      "it": "Visualizzazione CLD"
+      "en": "SES Visualization",
+      "es": "Visualización SES",
+      "fr": "Visualisation SES",
+      "de": "SES-Visualisierung",
+      "lt": "SES vizualizacija",
+      "pt": "Visualização SES",
+      "it": "Visualizzazione SES"
     },
     {
       "en": "Analysis Tools",
@@ -846,6 +854,15 @@
       "lt": "Ciklų aptikimas",
       "pt": "Deteção de Ciclos",
       "it": "Rilevamento Cicli"
+    },
+    {
+      "en": "Leverage Point Analysis",
+      "es": "Análisis de Puntos de Apalancamiento",
+      "fr": "Analyse des Points de Levier",
+      "de": "Hebelpunkt-Analyse",
+      "lt": "Svertų taškų analizė",
+      "pt": "Análise de Pontos de Alavancagem",
+      "it": "Analisi dei Punti di Leva"
     },
     {
       "en": "BOT Analysis",
@@ -1028,6 +1045,15 @@
       "it": "Assistente IA"
     },
     {
+      "en": "AI guided SES creation",
+      "es": "Creación SES guiada por IA",
+      "fr": "Création SES guidée par IA",
+      "de": "KI-geführte SES-Erstellung",
+      "lt": "AI vadovaujama SES kūrimas",
+      "pt": "Criação SES guiada por IA",
+      "it": "Creazione SES guidata da IA"
+    },
+    {
       "en": "Template-Based",
       "es": "Basado en Plantillas",
       "fr": "Basé sur des Modèles",
@@ -1035,6 +1061,15 @@
       "lt": "Pagrįsta šablonais",
       "pt": "Baseado em Modelos",
       "it": "Basato su Modelli"
+    },
+    {
+      "en": "Template based SES creation",
+      "es": "Creación SES basada en plantillas",
+      "fr": "Création SES basée sur des modèles",
+      "de": "Vorlagenbasierte SES-Erstellung",
+      "lt": "SES kūrimas pagal šablonus",
+      "pt": "Criação SES baseada em modelos",
+      "it": "Creazione SES basata su modelli"
     },
     {
       "en": "Create Your Social-Ecological System",
@@ -3861,33 +3896,6 @@
       "lt": "Pasirinkite vaidmenį, kad tęstumėte",
       "pt": "Por favor selecione um papel para continuar",
       "it": "Seleziona un ruolo per continuare"
-    },
-    {
-      "en": "ep_priority_start_here",
-      "es": "COMENZAR AQUÍ",
-      "fr": "COMMENCER ICI",
-      "de": "HIER BEGINNEN",
-      "lt": "PRADĖTI ČIA",
-      "pt": "COMEÇAR AQUI",
-      "it": "INIZIA QUI"
-    },
-    {
-      "en": "ep_priority_next_step",
-      "es": "SIGUIENTE PASO",
-      "fr": "ÉTAPE SUIVANTE",
-      "de": "NÄCHSTER SCHRITT",
-      "lt": "KITAS ŽINGSNIS",
-      "pt": "PRÓXIMO PASSO",
-      "it": "PROSSIMO PASSO"
-    },
-    {
-      "en": "ep_priority_also_relevant",
-      "es": "TAMBIÉN RELEVANTE",
-      "fr": "ÉGALEMENT PERTINENT",
-      "de": "AUCH RELEVANT",
-      "lt": "TAIP PAT SVARBU",
-      "pt": "TAMBÉM RELEVANTE",
-      "it": "ANCHE RILEVANTE"
     },
     {
       "en": "Exercise 0: Complexity",
@@ -9846,6 +9854,213 @@
       "lt": "Kitas",
       "pt": "Próximo",
       "it": "Successivo"
+    },
+    {
+      "en": "Save simplified network to project",
+      "es": "Guardar red simplificada en el proyecto",
+      "fr": "Enregistrer le réseau simplifié dans le projet",
+      "de": "Vereinfachtes Netzwerk im Projekt speichern",
+      "lt": "Išsaugoti supaprastintą tinklą projekte",
+      "pt": "Salvar rede simplificada no projeto",
+      "it": "Salva rete semplificata nel progetto"
+    },
+    {
+      "en": "Warning: This will permanently modify your CLD data. Consider saving project first.",
+      "es": "Advertencia: esto modificará permanentemente sus datos CLD. Considere guardar el proyecto primero.",
+      "fr": "Avertissement : cela modifiera définitivement vos données CLD. Envisagez d'enregistrer le projet d'abord.",
+      "de": "Warnung: Dies ändert Ihre CLD-Daten dauerhaft. Erwägen Sie, das Projekt zuerst zu speichern.",
+      "lt": "Įspėjimas: tai visam laikui pakeis jūsų CLD duomenis. Pirmiausia išsaugokite projektą.",
+      "pt": "Aviso: isso modificará permanentemente seus dados CLD. Considere salvar o projeto primeiro.",
+      "it": "Avviso: questo modificherà permanentemente i dati CLD. Considera di salvare il progetto prima."
+    },
+    {
+      "en": "Simplified network saved to project",
+      "es": "Red simplificada guardada en el proyecto",
+      "fr": "Réseau simplifié enregistré dans le projet",
+      "de": "Vereinfachtes Netzwerk im Projekt gespeichert",
+      "lt": "Supaprastintas tinklas išsaugotas projekte",
+      "pt": "Rede simplificada salva no projeto",
+      "it": "Rete semplificata salvata nel progetto"
+    },
+    {
+      "en": "Simplification applied and saved to project",
+      "es": "Simplificación aplicada y guardada en el proyecto",
+      "fr": "Simplification appliquée et enregistrée dans le projet",
+      "de": "Vereinfachung angewendet und im Projekt gespeichert",
+      "lt": "Supaprastinimas pritaikytas ir išsaugotas projekte",
+      "pt": "Simplificação aplicada e salva no projeto",
+      "it": "Semplificazione applicata e salvata nel progetto"
+    },
+    {
+      "en": "Simplification applied successfully!",
+      "es": "Simplificación aplicada exitosamente",
+      "fr": "Simplification appliquée avec succès",
+      "de": "Vereinfachung erfolgreich angewendet",
+      "lt": "Supaprastinimas sėkmingai pritaikytas",
+      "pt": "Simplificação aplicada com sucesso",
+      "it": "Semplificazione applicata con successo"
+    },
+    {
+      "en": "Restore Original Network",
+      "es": "Restaurar red original",
+      "fr": "Restaurer le réseau original",
+      "de": "Originalnetzwerk wiederherstellen",
+      "lt": "Atkurti pradinį tinklą",
+      "pt": "Restaurar rede original",
+      "it": "Ripristina rete originale"
+    },
+    {
+      "en": "This will restore the network before any saved simplification",
+      "es": "Esto restaurará la red antes de cualquier simplificación guardada",
+      "fr": "Cela restaurera le réseau avant toute simplification enregistrée",
+      "de": "Dadurch wird das Netzwerk vor gespeicherten Vereinfachungen wiederhergestellt",
+      "lt": "Tai atkurs tinklą prieš bet kokius išsaugotus supaprastinimus",
+      "pt": "Isso restaurará a rede antes de qualquer simplificação salva",
+      "it": "Questo ripristinerà la rete prima di qualsiasi semplificazione salvata"
+    },
+    {
+      "en": "Original network restored successfully",
+      "es": "Red original restaurada exitosamente",
+      "fr": "Réseau original restauré avec succès",
+      "de": "Originalnetzwerk erfolgreich wiederhergestellt",
+      "lt": "Pradinis tinklas sėkmingai atkurtas",
+      "pt": "Rede original restaurada com sucesso",
+      "it": "Rete originale ripristinata con successo"
+    },
+    {
+      "en": "No original network to restore",
+      "es": "No hay red original para restaurar",
+      "fr": "Aucun réseau original à restaurer",
+      "de": "Kein Originalnetzwerk zum Wiederherstellen",
+      "lt": "Nėra pradinio tinklo atkūrimui",
+      "pt": "Nenhuma rede original para restaurar",
+      "it": "Nessuna rete originale da ripristinare"
+    },
+    {
+      "en": "Preview exogenous nodes before removal",
+      "es": "Vista previa de nodos exógenos antes de la eliminación",
+      "fr": "Aperçu des nœuds exogènes avant suppression",
+      "de": "Vorschau exogener Knoten vor Entfernung",
+      "lt": "Peržiūrėti išorinius mazgus prieš pašalinant",
+      "pt": "Visualizar nós exógenos antes da remoção",
+      "it": "Anteprima nodi esogeni prima della rimozione"
+    },
+    {
+      "en": "%d positive link(s) added",
+      "es": "%d enlace(s) positivo(s) agregado(s)",
+      "fr": "%d lien(s) positif(s) ajouté(s)",
+      "de": "%d positive(r) Link(s) hinzugefügt",
+      "lt": "Pridėta %d teigiamų(-as) ryšių(-ys)",
+      "pt": "%d link(s) positivo(s) adicionado(s)",
+      "it": "%d link positivo/i aggiunto/i"
+    },
+    {
+      "en": "%d negative link(s) added",
+      "es": "%d enlace(s) negativo(s) agregado(s)",
+      "fr": "%d lien(s) négatif(s) ajouté(s)",
+      "de": "%d negative(r) Link(s) hinzugefügt",
+      "lt": "Pridėta %d neigiamų(-as) ryšių(-ys)",
+      "pt": "%d link(s) negativo(s) adicionado(s)",
+      "it": "%d link negativo/i aggiunto/i"
+    },
+    {
+      "en": "%d links added (mixed polarity)",
+      "es": "%d enlaces agregados (polaridad mixta)",
+      "fr": "%d liens ajoutés (polarité mixte)",
+      "de": "%d Links hinzugefügt (gemischte Polarität)",
+      "lt": "Pridėta %d ryšių (mišri polarybė)",
+      "pt": "%d links adicionados (polaridade mista)",
+      "it": "%d link aggiunti (polarità mista)"
+    },
+    {
+      "en": "%d link(s) removed",
+      "es": "%d enlace(s) eliminado(s)",
+      "fr": "%d lien(s) supprimé(s)",
+      "de": "%d Link(s) entfernt",
+      "lt": "Pašalinta %d ryšių(-ys)",
+      "pt": "%d link(s) removido(s)",
+      "it": "%d link rimosso/i"
+    },
+    {
+      "en": "No direct modifications",
+      "es": "Sin modificaciones directas",
+      "fr": "Aucune modification directe",
+      "de": "Keine direkten Änderungen",
+      "lt": "Nėra tiesioginių pakeitimų",
+      "pt": "Sem modificações diretas",
+      "it": "Nessuna modifica diretta"
+    },
+    {
+      "en": "Settings",
+      "es": "Configuración",
+      "fr": "Paramètres",
+      "de": "Einstellungen",
+      "lt": "Nustatymai",
+      "pt": "Configurações",
+      "it": "Impostazioni"
+    },
+    {
+      "en": "User Experience Level",
+      "es": "Nivel de Experiencia del Usuario",
+      "fr": "Niveau d'Expérience Utilisateur",
+      "de": "Benutzererfahrungsstufe",
+      "lt": "Naudotojo patirties lygis",
+      "pt": "Nível de Experiência do Usuário",
+      "it": "Livello di Esperienza Utente"
+    },
+    {
+      "en": "Expert",
+      "es": "Experto",
+      "fr": "Expert",
+      "de": "Experte",
+      "lt": "Ekspertas",
+      "pt": "Especialista",
+      "it": "Esperto"
+    },
+    {
+      "en": "Simplified interface for first-time users. Shows essential tools only.",
+      "es": "Interfaz simplificada para nuevos usuarios. Muestra solo herramientas esenciales.",
+      "fr": "Interface simplifiée pour les nouveaux utilisateurs. Affiche uniquement les outils essentiels.",
+      "de": "Vereinfachte Benutzeroberfläche für Erstbenutzer. Zeigt nur wesentliche Werkzeuge.",
+      "lt": "Supaprastinta sąsaja pradedantiesiems. Rodo tik esminius įrankius.",
+      "pt": "Interface simplificada para novos usuários. Mostra apenas ferramentas essenciais.",
+      "it": "Interfaccia semplificata per nuovi utenti. Mostra solo strumenti essenziali."
+    },
+    {
+      "en": "Standard interface for regular users. Shows most tools and features.",
+      "es": "Interfaz estándar para usuarios regulares. Muestra la mayoría de herramientas y funciones.",
+      "fr": "Interface standard pour les utilisateurs réguliers. Affiche la plupart des outils et fonctionnalités.",
+      "de": "Standardbenutzeroberfläche für regelmäßige Benutzer. Zeigt die meisten Werkzeuge und Funktionen.",
+      "lt": "Standartinė sąsaja įprastiems naudotojams. Rodo daugumą įrankių ir funkcijų.",
+      "pt": "Interface padrão para usuários regulares. Mostra a maioria das ferramentas e recursos.",
+      "it": "Interfaccia standard per utenti abituali. Mostra la maggior parte degli strumenti e delle funzionalità."
+    },
+    {
+      "en": "Advanced interface showing all tools, technical terminology, and advanced options.",
+      "es": "Interfaz avanzada que muestra todas las herramientas, terminología técnica y opciones avanzadas.",
+      "fr": "Interface avancée affichant tous les outils, la terminologie technique et les options avancées.",
+      "de": "Erweiterte Benutzeroberfläche mit allen Werkzeugen, technischer Terminologie und erweiterten Optionen.",
+      "lt": "Išplėstinė sąsaja, rodanti visus įrankius, techninę terminologiją ir išplėstines parinktis.",
+      "pt": "Interface avançada mostrando todas as ferramentas, terminologia técnica e opções avançadas.",
+      "it": "Interfaccia avanzata che mostra tutti gli strumenti, terminologia tecnica e opzioni avanzate."
+    },
+    {
+      "en": "Select your experience level with marine ecosystem modeling:",
+      "es": "Seleccione su nivel de experiencia con modelado de ecosistemas marinos:",
+      "fr": "Sélectionnez votre niveau d'expérience avec la modélisation des écosystèmes marins:",
+      "de": "Wählen Sie Ihre Erfahrungsstufe mit Meeresökosystemmodellierung:",
+      "lt": "Pasirinkite savo patirties lygį su jūrų ekosistemų modeliavimu:",
+      "pt": "Selecione seu nível de experiência com modelagem de ecossistemas marinhos:",
+      "it": "Seleziona il tuo livello di esperienza con la modellazione degli ecosistemi marini:"
+    },
+    {
+      "en": "The application will reload to apply the new user experience level.",
+      "es": "La aplicación se recargará para aplicar el nuevo nivel de experiencia del usuario.",
+      "fr": "L'application se rechargera pour appliquer le nouveau niveau d'expérience utilisateur.",
+      "de": "Die Anwendung wird neu geladen, um die neue Benutzererfahrungsstufe anzuwenden.",
+      "lt": "Programa bus perkrauta, kad būtų pritaikytas naujas naudotojo patirties lygis.",
+      "pt": "A aplicação será recarregada para aplicar o novo nível de experiência do usuário.",
+      "it": "L'applicazione si ricaricherà per applicare il nuovo livello di esperienza utente."
     }
   ]
 }

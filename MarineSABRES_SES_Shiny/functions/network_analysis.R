@@ -3,6 +3,31 @@
 # Note: igraph is loaded in global.R
 
 # ============================================================================
+# CONSTANTS - Define defaults if not already loaded from global.R
+# ============================================================================
+
+if (!exists("CONFIDENCE_DEFAULT")) {
+  CONFIDENCE_DEFAULT <- 3
+}
+
+if (!exists("CONFIDENCE_OPACITY")) {
+  CONFIDENCE_OPACITY <- c(
+    "1" = 0.3,
+    "2" = 0.5,
+    "3" = 0.7,
+    "4" = 0.9,
+    "5" = 1.0
+  )
+}
+
+if (!exists("EDGE_COLORS")) {
+  EDGE_COLORS <- list(
+    reinforcing = "#80b8d7",  # Light blue
+    opposing = "#dc131e"      # Red
+  )
+}
+
+# ============================================================================
 # NETWORK METRICS FUNCTIONS
 # ============================================================================
 
@@ -216,89 +241,154 @@ create_numeric_adjacency_matrix <- function(nodes, edges) {
 # ============================================================================
 
 #' Find all simple cycles in the network
-#' 
+#'
 #' @param nodes Nodes dataframe
 #' @param edges Edges dataframe
 #' @param max_length Maximum cycle length to detect
+#' @param max_cycles Maximum number of cycles to find (default 1000)
 #' @return List of cycles (vectors of node IDs)
-find_all_cycles <- function(nodes, edges, max_length = 10) {
-  
+find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
+
   # Create igraph object
   g <- create_igraph_from_data(nodes, edges)
-  
+
   # Get all strongly connected components
   scc <- components(g, mode = "strong")
-  
+
   cycles <- list()
-  
+
+  # Warn about large components
+  comp_sizes <- table(scc$membership)
+  max_comp_size <- max(comp_sizes)
+
+  if (max_comp_size > 50) {
+    warning(sprintf(
+      "Large strongly connected component detected (%d nodes). This may cause slow performance or timeout. Consider simplifying the network.",
+      max_comp_size
+    ))
+  }
+
   # Process each component
   for (comp_id in unique(scc$membership)) {
+    # Stop if we've reached the cycle limit
+    if (length(cycles) >= max_cycles) break
+
     comp_nodes <- which(scc$membership == comp_id)
-    
-    if (length(comp_nodes) > 1) {
-      # Extract subgraph
+    comp_size <- length(comp_nodes)
+
+    if (comp_size > 1) {
+      # Extract subgraph once
       subg <- induced_subgraph(g, comp_nodes)
-      
+
+      # Skip very large components that will cause exponential explosion
+      # Use very strict limits for large components
+      if (comp_size > 30) {
+        edge_count <- ecount(subg)
+        edge_density <- edge_count / (comp_size * (comp_size - 1))
+
+        # Very strict limits based on empirical testing
+        # 40 nodes with 7.69% density (120 edges) still hangs
+        max_density <- if (comp_size > 50) 0.02 else if (comp_size > 40) 0.04 else if (comp_size > 35) 0.06 else 0.08
+
+        if (edge_density > max_density) {
+          warning(sprintf(
+            "Skipping large dense component (%d nodes, %d edges, %.1f%% density) to prevent hanging. Reduce network complexity or use simplification tools.",
+            comp_size, edge_count, edge_density * 100
+          ))
+          next
+        }
+      }
+
+      # Calculate remaining cycle budget
+      remaining_cycles <- max_cycles - length(cycles)
+
       # Find cycles in this component
-      comp_cycles <- find_cycles_dfs(subg, max_length)
-      
+      comp_cycles <- find_cycles_dfs(subg, max_length, max_cycles = remaining_cycles)
+
       cycles <- c(cycles, comp_cycles)
     }
   }
-  
+
   return(cycles)
 }
 
 #' Find cycles using depth-first search
-#' 
+#'
 #' @param graph igraph object
 #' @param max_length Maximum cycle length
+#' @param max_cycles Maximum number of cycles to find (default 1000)
 #' @return List of cycles
-find_cycles_dfs <- function(graph, max_length) {
-  
+find_cycles_dfs <- function(graph, max_length, max_cycles = 1000) {
+
   cycles <- list()
   visited <- rep(FALSE, vcount(graph))
   stack <- integer(0)
-  
+  in_stack <- rep(FALSE, vcount(graph))  # Fast O(1) stack lookup
+
+  # Use a hash environment for O(1) signature lookup
+  cycle_signatures <- new.env(hash = TRUE, parent = emptyenv())
+
   # DFS visit function
   dfs_visit <- function(v, depth = 1) {
+    # Stop if we've found enough cycles
+    if (length(cycles) >= max_cycles) return()
+
     if (depth > max_length) return()
-    
+
     visited[v] <<- TRUE
     stack <<- c(stack, v)
-    
+    in_stack[v] <<- TRUE  # Mark node as in current path
+
     # Get neighbors
     neighbors <- neighbors(graph, v, mode = "out")
-    
+
     for (neighbor in neighbors) {
+      # Stop if we've found enough cycles
+      if (length(cycles) >= max_cycles) break
+
       neighbor_idx <- as.integer(neighbor)
-      
-      # Check if we've completed a cycle
-      if (neighbor_idx %in% stack) {
+
+      # Check if we've completed a cycle (O(1) lookup now!)
+      if (in_stack[neighbor_idx]) {
         # Found a cycle
         cycle_start <- which(stack == neighbor_idx)
         cycle <- stack[cycle_start:length(stack)]
-        
-        # Add to cycles list if not duplicate
-        if (!is_duplicate_cycle(cycle, cycles)) {
+
+        # Fast duplicate check using hash environment (O(1) lookup)
+        normalized <- normalize_cycle(cycle)
+        signature <- paste(normalized, collapse = "-")
+
+        if (!exists(signature, envir = cycle_signatures, inherits = FALSE)) {
           cycles <<- c(cycles, list(cycle))
+          assign(signature, TRUE, envir = cycle_signatures)
         }
       } else if (!visited[neighbor_idx]) {
-        # Continue DFS
-        dfs_visit(neighbor_idx, depth + 1)
+        # Continue DFS only if we haven't exceeded depth
+        if (depth < max_length) {
+          dfs_visit(neighbor_idx, depth + 1)
+        }
       }
     }
-    
+
     # Backtrack
     stack <<- stack[-length(stack)]
+    in_stack[v] <<- FALSE  # Remove from current path
     visited[v] <<- FALSE
   }
-  
+
   # Start DFS from each node
   for (v in 1:vcount(graph)) {
+    # Stop if we've found enough cycles
+    if (length(cycles) >= max_cycles) break
+
     dfs_visit(v)
   }
-  
+
+  # Warn if limit reached
+  if (length(cycles) >= max_cycles) {
+    warning(sprintf("Cycle detection stopped after finding %d cycles (limit reached). Network may contain more cycles.", max_cycles))
+  }
+
   return(cycles)
 }
 
@@ -334,9 +424,10 @@ normalize_cycle <- function(cycle) {
 #' Classify loop type (reinforcing or balancing)
 #'
 #' @param loop_nodes Vector of node IDs in loop OR list with path and edge_types
-#' @param edges Edges dataframe (optional if loop_nodes is a list)
+#' @param edges Edges dataframe OR edge lookup table (optional if loop_nodes is a list)
+#' @param edge_lookup Optional: pre-computed edge lookup table for performance
 #' @return "Reinforcing" or "Balancing" (capitalized, consistent format)
-classify_loop_type <- function(loop_nodes, edges = NULL) {
+classify_loop_type <- function(loop_nodes, edges = NULL, edge_lookup = NULL) {
 
   # Handle different input types
   if (is.list(loop_nodes) && !is.null(loop_nodes$edge_types)) {
@@ -350,20 +441,25 @@ classify_loop_type <- function(loop_nodes, edges = NULL) {
   }
 
   # Old interface: vector of node IDs and edges dataframe
-  if (is.null(edges)) {
-    stop("edges parameter is required when loop_nodes is a vector")
+  if (is.null(edges) && is.null(edge_lookup)) {
+    stop("edges or edge_lookup parameter is required when loop_nodes is a vector")
   }
 
-  # Count negative edges in the loop
+  # Create edge lookup if not provided (for backwards compatibility)
+  if (is.null(edge_lookup) && !is.null(edges)) {
+    edge_lookup <- create_edge_lookup_table(edges)
+  }
+
+  # Count negative edges in the loop using fast lookup
   n_negative <- 0
 
   for (i in 1:length(loop_nodes)) {
     from_id <- loop_nodes[i]
     to_id <- loop_nodes[(i %% length(loop_nodes)) + 1]
 
-    edge <- edges %>% filter(from == from_id, to == to_id)
+    edge_key <- paste(from_id, to_id, sep = "->")
 
-    if (nrow(edge) > 0 && edge$polarity == "-") {
+    if (!is.null(edge_lookup[[edge_key]]) && edge_lookup[[edge_key]] == "-") {
       n_negative <- n_negative + 1
     }
   }
@@ -373,40 +469,86 @@ classify_loop_type <- function(loop_nodes, edges = NULL) {
   ifelse(n_negative %% 2 == 0, "Reinforcing", "Balancing")
 }
 
+#' Create edge lookup table for fast edge polarity access
+#'
+#' @param edges Edges dataframe with from, to, and polarity columns
+#' @return Named list for O(1) edge polarity lookup
+create_edge_lookup_table <- function(edges) {
+  lookup <- list()
+
+  for (i in 1:nrow(edges)) {
+    key <- paste(edges$from[i], edges$to[i], sep = "->")
+    lookup[[key]] <- edges$polarity[i]
+  }
+
+  return(lookup)
+}
+
 #' Process detected cycles into loops dataframe
-#' 
+#'
 #' @param cycles List of cycles (node indices)
 #' @param nodes Nodes dataframe
 #' @param edges Edges dataframe
 #' @param g igraph object
 #' @return Dataframe with loop information
 process_cycles_to_loops <- function(cycles, nodes, edges, g) {
-  
+
+  if (length(cycles) == 0) {
+    return(data.frame(
+      LoopID = integer(0),
+      Name = character(0),
+      Type = character(0),
+      Length = integer(0),
+      Elements = character(0),
+      NodeIDs = character(0),
+      Significance = character(0),
+      Story = character(0),
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  # Create lookup tables for performance (O(1) access instead of O(n) filtering)
+  node_label_lookup <- setNames(nodes$label, nodes$id)
+  edge_lookup <- create_edge_lookup_table(edges)
+
+  # Process cycles in batches for progress monitoring on large datasets
+  batch_size <- 100
+  n_cycles <- length(cycles)
+  n_batches <- ceiling(n_cycles / batch_size)
+
+  if (n_cycles > batch_size) {
+    cat(sprintf("[Loop Processing] Processing %d loops in %d batches\n", n_cycles, n_batches))
+  }
+
   loops_list <- lapply(seq_along(cycles), function(i) {
+    # Progress monitoring for large datasets
+    if (i %% batch_size == 0 && n_cycles > batch_size) {
+      cat(sprintf("[Loop Processing] Processed %d/%d loops (%.1f%%)\n",
+                  i, n_cycles, (i/n_cycles)*100))
+    }
+
     cycle <- cycles[[i]]
-    
-    # Get node IDs and labels
+
+    # Get node IDs and labels using fast lookup
     node_ids <- V(g)[cycle]$name
-    node_labels <- nodes %>% 
-      filter(id %in% node_ids) %>% 
-      pull(label)
-    
-    # Determine loop type
-    loop_type <- classify_loop_type(node_ids, edges)
-    
+    node_labels <- node_label_lookup[node_ids]
+
+    # Determine loop type using pre-computed edge lookup
+    loop_type <- classify_loop_type(node_ids, edge_lookup = edge_lookup)
+
     data.frame(
-      loop_id = i,
-      name = paste0("Loop_", i),
-      type = loop_type,
-      length = length(node_ids),
-      elements = paste(node_labels, collapse = " → "),
-      node_ids = paste(node_ids, collapse = ","),
-      significance = NA_character_,
-      story = NA_character_,
+      LoopID = i,
+      Name = paste0("Loop_", i),
+      Type = loop_type,
+      Length = length(node_ids),
+      Elements = paste(node_labels, collapse = " → "),
+      NodeIDs = paste(node_ids, collapse = ","),
+      Significance = NA_character_,
+      Story = NA_character_,
       stringsAsFactors = FALSE
     )
   })
-  
+
   bind_rows(loops_list)
 }
 
@@ -637,10 +779,143 @@ find_all_paths <- function(nodes, edges, from_id, to_id, max_length = 10) {
 #' @param degree Neighborhood degree (1 = direct neighbors)
 #' @return Vector of neighbor node IDs
 get_neighborhood <- function(nodes, edges, node_id, degree = 1) {
-  
+
   g <- create_igraph_from_data(nodes, edges)
-  
+
   neighbors <- ego(g, order = degree, nodes = node_id, mode = "all")[[1]]
-  
+
   V(g)[neighbors]$name
+}
+
+# ============================================================================
+# LEVERAGE POINT ANALYSIS
+# ============================================================================
+
+#' Safe Scale Helper Function
+#'
+#' Safely scales a numeric vector, handling cases with zero variance
+#'
+#' @param x Numeric vector to scale
+#' @return Scaled vector (or original if sd is 0)
+safe_scale <- function(x) {
+  if (sd(x, na.rm = TRUE) == 0) {
+    return(rep(0, length(x)))
+  }
+  scale(x)[,1]
+}
+
+#' Calculate All Centrality Metrics for Nodes
+#'
+#' Computes multiple centrality measures for each node in the network
+#'
+#' @param g An igraph object
+#' @return A data frame with centrality metrics
+calculate_all_centralities <- function(g) {
+
+  if (vcount(g) == 0) {
+    return(data.frame(
+      Node = integer(0),
+      Name = character(0),
+      Degree = numeric(0),
+      In_Degree = numeric(0),
+      Out_Degree = numeric(0),
+      Betweenness = numeric(0),
+      Closeness = numeric(0),
+      Eigenvector = numeric(0),
+      PageRank = numeric(0),
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  # Safe centrality calculation with fallbacks
+  safe_betweenness <- tryCatch(
+    betweenness(g, directed = TRUE),
+    error = function(e) rep(0, vcount(g))
+  )
+
+  safe_closeness <- tryCatch(
+    closeness(g, mode = "all"),
+    error = function(e) rep(0, vcount(g))
+  )
+
+  safe_eigenvector <- tryCatch(
+    eigen_centrality(g, directed = TRUE)$vector,
+    error = function(e) rep(0, vcount(g))
+  )
+
+  safe_pagerank <- tryCatch(
+    page_rank(g)$vector,
+    error = function(e) rep(0, vcount(g))
+  )
+
+  data.frame(
+    Node = 1:vcount(g),
+    Name = if (!is.null(V(g)$label)) V(g)$label else if (!is.null(V(g)$name)) V(g)$name else paste("Node", 1:vcount(g)),
+    Degree = degree(g),
+    In_Degree = degree(g, mode = "in"),
+    Out_Degree = degree(g, mode = "out"),
+    Betweenness = safe_betweenness,
+    Closeness = safe_closeness,
+    Eigenvector = safe_eigenvector,
+    PageRank = safe_pagerank,
+    stringsAsFactors = FALSE
+  )
+}
+
+#' Identify Leverage Points in Network
+#'
+#' Identifies the most influential nodes that could serve as intervention points
+#' based on a composite score of betweenness, eigenvector, and PageRank centrality.
+#'
+#' @param nodes Nodes dataframe OR igraph object
+#' @param edges Edges dataframe (optional if nodes is an igraph object)
+#' @param top_n Number of top leverage points to return (default: 10)
+#'
+#' @return A data frame of top N nodes sorted by composite_score (descending),
+#'   including all centrality metrics
+#'
+#' @details
+#' The composite score is calculated as the sum of scaled betweenness, eigenvector
+#' centrality, and PageRank. Higher scores indicate nodes that are critical for
+#' information flow, have high influence, and connect important parts of the network.
+#'
+#' @export
+identify_leverage_points <- function(nodes, edges = NULL, top_n = 10) {
+
+  # Handle different input types
+  if (inherits(nodes, "igraph")) {
+    # If nodes is actually an igraph object
+    g <- nodes
+  } else {
+    # Create igraph object from data
+    g <- create_igraph_from_data(nodes, edges)
+  }
+
+  if (vcount(g) == 0) {
+    return(data.frame(
+      Node = integer(0),
+      Name = character(0),
+      Degree = numeric(0),
+      In_Degree = numeric(0),
+      Out_Degree = numeric(0),
+      Betweenness = numeric(0),
+      Closeness = numeric(0),
+      Eigenvector = numeric(0),
+      PageRank = numeric(0),
+      Composite_Score = numeric(0),
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  # Calculate centralities
+  centralities <- calculate_all_centralities(g)
+
+  # Calculate composite score for leverage points
+  centralities$Composite_Score <- safe_scale(centralities$Betweenness) +
+                                   safe_scale(centralities$Eigenvector) +
+                                   safe_scale(centralities$PageRank)
+
+  # Sort by composite score and return top N
+  leverage_points <- centralities[order(-centralities$Composite_Score), ]
+  return(head(leverage_points, min(top_n, nrow(leverage_points))))
 }

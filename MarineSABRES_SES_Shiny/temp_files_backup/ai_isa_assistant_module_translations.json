@@ -1,0 +1,607 @@
+{
+  "translation": {
+    "ai_isa_title": {
+      "en": "AI-Assisted ISA Creation",
+      "es": "Creación de ISA Asistida por IA",
+      "fr": "Création ISA Assistée par IA",
+      "de": "KI-gestützte ISA-Erstellung",
+      "lt": "Dirbtinio Intelekto Padedama ISA Kūrimas",
+      "pt": "Criação de ISA Assistida por IA",
+      "it": "Creazione ISA Assistita da IA"
+    },
+    "ai_isa_guide_intro": {
+      "en": "Let me guide you step-by-step through building your DAPSI(W)R(M) model.",
+      "es": "Permítame guiarlo paso a paso en la construcción de su modelo DAPSI(W)R(M).",
+      "fr": "Laissez-moi vous guider étape par étape dans la construction de votre modèle DAPSI(W)R(M).",
+      "de": "Lassen Sie mich Sie Schritt für Schritt durch den Aufbau Ihres DAPSI(W)R(M)-Modells führen.",
+      "lt": "Leiskite man žingsnis po žingsnio nukreipti jus kuriant DAPSI(W)R(M) modelį.",
+      "pt": "Deixe-me guiá-lo passo a passo na construção do seu modelo DAPSI(W)R(M).",
+      "it": "Lascia che ti guidi passo dopo passo nella costruzione del tuo modello DAPSI(W)R(M)."
+    },
+    "ai_isa_your_ses_model": {
+      "en": "Your SES Model Progress",
+      "es": "Progreso de su Modelo SES",
+      "fr": "Progrès de Votre Modèle SES",
+      "de": "Ihr SES-Modell-Fortschritt",
+      "lt": "Jūsų SES Modelio Pažanga",
+      "pt": "Progresso do Seu Modelo SES",
+      "it": "Progressi del Tuo Modello SES"
+    },
+    "ai_isa_elements_created": {
+      "en": "Elements Created:",
+      "es": "Elementos Creados:",
+      "fr": "Éléments Créés:",
+      "de": "Erstellte Elemente:",
+      "lt": "Sukurti Elementai:",
+      "pt": "Elementos Criados:",
+      "it": "Elementi Creati:"
+    },
+    "ai_isa_framework_flow": {
+      "en": "Framework Flow:",
+      "es": "Flujo del Marco:",
+      "fr": "Flux du Cadre:",
+      "de": "Framework-Fluss:",
+      "lt": "Sistemos Srautas:",
+      "pt": "Fluxo da Estrutura:",
+      "it": "Flusso del Framework:"
+    },
+    "ai_isa_current_framework": {
+      "en": "Current Framework:",
+      "es": "Marco Actual:",
+      "fr": "Cadre Actuel:",
+      "de": "Aktuelles Framework:",
+      "lt": "Dabartinė Sistema:",
+      "pt": "Estrutura Atual:",
+      "it": "Framework Attuale:"
+    },
+    "ai_isa_drivers": {
+      "en": "Drivers:",
+      "es": "Impulsores:",
+      "fr": "Moteurs:",
+      "de": "Treiber:",
+      "lt": "Varomosios Jėgos:",
+      "pt": "Impulsionadores:",
+      "it": "Fattori Trainanti:"
+    },
+    "ai_isa_activities": {
+      "en": "Activities:",
+      "es": "Actividades:",
+      "fr": "Activités:",
+      "de": "Aktivitäten:",
+      "lt": "Veiklos:",
+      "pt": "Atividades:",
+      "it": "Attività:"
+    },
+    "ai_isa_pressures": {
+      "en": "Pressures:",
+      "es": "Presiones:",
+      "fr": "Pressions:",
+      "de": "Belastungen:",
+      "lt": "Spaudimai:",
+      "pt": "Pressões:",
+      "it": "Pressioni:"
+    },
+    "ai_isa_state_changes": {
+      "en": "State Changes:",
+      "es": "Cambios de Estado:",
+      "fr": "Changements d'État:",
+      "de": "Zustandsänderungen:",
+      "lt": "Būsenos Pokyčiai:",
+      "pt": "Mudanças de Estado:",
+      "it": "Cambiamenti di Stato:"
+    },
+    "ai_isa_impacts": {
+      "en": "Impacts:",
+      "es": "Impactos:",
+      "fr": "Impacts:",
+      "de": "Auswirkungen:",
+      "lt": "Poveikiai:",
+      "pt": "Impactos:",
+      "it": "Impatti:"
+    },
+    "ai_isa_welfare": {
+      "en": "Welfare:",
+      "es": "Bienestar:",
+      "fr": "Bien-être:",
+      "de": "Wohlfahrt:",
+      "lt": "Gerovė:",
+      "pt": "Bem-Estar:",
+      "it": "Benessere:"
+    },
+    "ai_isa_responses": {
+      "en": "Responses:",
+      "es": "Respuestas:",
+      "fr": "Réponses:",
+      "de": "Reaktionen:",
+      "lt": "Atsakai:",
+      "pt": "Respostas:",
+      "it": "Risposte:"
+    },
+    "ai_isa_measures": {
+      "en": "Measures:",
+      "es": "Medidas:",
+      "fr": "Mesures:",
+      "de": "Maßnahmen:",
+      "lt": "Priemonės:",
+      "pt": "Medidas:",
+      "it": "Misure:"
+    },
+    "ai_isa_session_management": {
+      "en": "Session Management",
+      "es": "Gestión de Sesiones",
+      "fr": "Gestion de Session",
+      "de": "Sitzungsverwaltung",
+      "lt": "Sesijos Valdymas",
+      "pt": "Gestão de Sessão",
+      "it": "Gestione Sessione"
+    },
+    "ai_isa_save_progress": {
+      "en": "Save Progress",
+      "es": "Guardar Progreso",
+      "fr": "Enregistrer les Progrès",
+      "de": "Fortschritt Speichern",
+      "lt": "Išsaugoti Pažangą",
+      "pt": "Salvar Progresso",
+      "it": "Salva Progressi"
+    },
+    "ai_isa_save_progress_tooltip": {
+      "en": "Save your current progress to browser storage",
+      "es": "Guarde su progreso actual en el almacenamiento del navegador",
+      "fr": "Enregistrez votre progression actuelle dans le stockage du navigateur",
+      "de": "Speichern Sie Ihren aktuellen Fortschritt im Browser-Speicher",
+      "lt": "Išsaugokite savo dabartinę pažangą naršyklės saugykloje",
+      "pt": "Salve seu progresso atual no armazenamento do navegador",
+      "it": "Salva i tuoi progressi attuali nell'archivio del browser"
+    },
+    "ai_isa_load_saved": {
+      "en": "Load Saved",
+      "es": "Cargar Guardado",
+      "fr": "Charger Enregistré",
+      "de": "Gespeicherte Laden",
+      "lt": "Įkelti Išsaugotą",
+      "pt": "Carregar Salvo",
+      "it": "Carica Salvato"
+    },
+    "ai_isa_load_saved_tooltip": {
+      "en": "Restore your last saved session",
+      "es": "Restaure su última sesión guardada",
+      "fr": "Restaurez votre dernière session enregistrée",
+      "de": "Stellen Sie Ihre zuletzt gespeicherte Sitzung wieder her",
+      "lt": "Atkurkite savo paskutinę išsaugotą sesiją",
+      "pt": "Restaure sua última sessão salva",
+      "it": "Ripristina la tua ultima sessione salvata"
+    },
+    "ai_isa_preview_model": {
+      "en": "Preview Model",
+      "es": "Vista Previa del Modelo",
+      "fr": "Aperçu du Modèle",
+      "de": "Modell Vorschau",
+      "lt": "Peržiūrėti Modelį",
+      "pt": "Visualizar Modelo",
+      "it": "Anteprima Modello"
+    },
+    "ai_isa_save_to_isa": {
+      "en": "Save to ISA Data Entry",
+      "es": "Guardar en Entrada de Datos ISA",
+      "fr": "Enregistrer dans Saisie de Données ISA",
+      "de": "In ISA-Dateneingabe Speichern",
+      "lt": "Išsaugoti į ISA Duomenų Įvedimą",
+      "pt": "Salvar na Entrada de Dados ISA",
+      "it": "Salva nell'Inserimento Dati ISA"
+    },
+    "ai_isa_load_template": {
+      "en": "Load Example Template",
+      "es": "Cargar Plantilla de Ejemplo",
+      "fr": "Charger un Modèle d'Exemple",
+      "de": "Beispielvorlage Laden",
+      "lt": "Įkelti Pavyzdinį Šabloną",
+      "pt": "Carregar Modelo de Exemplo",
+      "it": "Carica Modello di Esempio"
+    },
+    "ai_isa_start_over": {
+      "en": "Start Over",
+      "es": "Empezar de Nuevo",
+      "fr": "Recommencer",
+      "de": "Neu Beginnen",
+      "lt": "Pradėti Iš Naujo",
+      "pt": "Recomeçar",
+      "it": "Ricomincia"
+    },
+    "ai_isa_auto_saved": {
+      "en": "Auto-saved",
+      "es": "Autoguardado",
+      "fr": "Enregistré automatiquement",
+      "de": "Automatisch gespeichert",
+      "lt": "Automatiškai išsaugota",
+      "pt": "Salvo automaticamente",
+      "it": "Salvato automaticamente"
+    },
+    "ai_isa_seconds_ago": {
+      "en": "seconds ago",
+      "es": "hace segundos",
+      "fr": "il y a quelques secondes",
+      "de": "vor Sekunden",
+      "lt": "prieš sekundes",
+      "pt": "segundos atrás",
+      "it": "secondi fa"
+    },
+    "ai_isa_minutes_ago": {
+      "en": "minutes ago",
+      "es": "hace minutos",
+      "fr": "il y a quelques minutes",
+      "de": "vor Minuten",
+      "lt": "prieš minutes",
+      "pt": "minutos atrás",
+      "it": "minuti fa"
+    },
+    "ai_isa_not_yet_saved": {
+      "en": "Not yet saved",
+      "es": "Aún no guardado",
+      "fr": "Pas encore enregistré",
+      "de": "Noch nicht gespeichert",
+      "lt": "Dar neišsaugota",
+      "pt": "Ainda não salvo",
+      "it": "Non ancora salvato"
+    },
+    "ai_isa_session_saved": {
+      "en": "Session saved successfully!",
+      "es": "¡Sesión guardada exitosamente!",
+      "fr": "Session enregistrée avec succès!",
+      "de": "Sitzung erfolgreich gespeichert!",
+      "lt": "Sesija sėkmingai išsaugota!",
+      "pt": "Sessão salva com sucesso!",
+      "it": "Sessione salvata con successo!"
+    },
+    "ai_isa_restore_session": {
+      "en": "Restore Previous Session?",
+      "es": "¿Restaurar Sesión Anterior?",
+      "fr": "Restaurer la Session Précédente?",
+      "de": "Vorherige Sitzung Wiederherstellen?",
+      "lt": "Atkurti Ankstesnę Sesiją?",
+      "pt": "Restaurar Sessão Anterior?",
+      "it": "Ripristinare Sessione Precedente?"
+    },
+    "ai_isa_found_saved_session": {
+      "en": "Found a saved session from",
+      "es": "Se encontró una sesión guardada de",
+      "fr": "Session enregistrée trouvée du",
+      "de": "Gespeicherte Sitzung gefunden vom",
+      "lt": "Rasta išsaugota sesija iš",
+      "pt": "Sessão salva encontrada de",
+      "it": "Trovata sessione salvata dal"
+    },
+    "ai_isa_restore_question": {
+      "en": "Do you want to restore it?",
+      "es": "¿Desea restaurarla?",
+      "fr": "Voulez-vous la restaurer?",
+      "de": "Möchten Sie sie wiederherstellen?",
+      "lt": "Ar norite ją atkurti?",
+      "pt": "Você quer restaurá-la?",
+      "it": "Vuoi ripristinarla?"
+    },
+    "ai_isa_yes_restore": {
+      "en": "Yes, Restore",
+      "es": "Sí, Restaurar",
+      "fr": "Oui, Restaurer",
+      "de": "Ja, Wiederherstellen",
+      "lt": "Taip, Atkurti",
+      "pt": "Sim, Restaurar",
+      "it": "Sì, Ripristina"
+    },
+    "ai_isa_cancel": {
+      "en": "Cancel",
+      "es": "Cancelar",
+      "fr": "Annuler",
+      "de": "Abbrechen",
+      "lt": "Atšaukti",
+      "pt": "Cancelar",
+      "it": "Annulla"
+    },
+    "ai_isa_no_saved_session": {
+      "en": "No saved session found.",
+      "es": "No se encontró sesión guardada.",
+      "fr": "Aucune session enregistrée trouvée.",
+      "de": "Keine gespeicherte Sitzung gefunden.",
+      "lt": "Nerasta išsaugotos sesijos.",
+      "pt": "Nenhuma sessão salva encontrada.",
+      "it": "Nessuna sessione salvata trovata."
+    },
+    "ai_isa_session_restored": {
+      "en": "Session restored successfully!",
+      "es": "¡Sesión restaurada exitosamente!",
+      "fr": "Session restaurée avec succès!",
+      "de": "Sitzung erfolgreich wiederhergestellt!",
+      "lt": "Sesija sėkmingai atkurta!",
+      "pt": "Sessão restaurada com sucesso!",
+      "it": "Sessione ripristinata con successo!"
+    },
+    "ai_isa_previous_session_found": {
+      "en": "A previous session was found. Click 'Load Saved' to restore it.",
+      "es": "Se encontró una sesión anterior. Haga clic en 'Cargar Guardado' para restaurarla.",
+      "fr": "Une session précédente a été trouvée. Cliquez sur 'Charger Enregistré' pour la restaurer.",
+      "de": "Eine vorherige Sitzung wurde gefunden. Klicken Sie auf 'Gespeicherte Laden', um sie wiederherzustellen.",
+      "lt": "Rasta ankstesnė sesija. Spustelėkite 'Įkelti Išsaugotą', kad ją atkurtumėte.",
+      "pt": "Uma sessão anterior foi encontrada. Clique em 'Carregar Salvo' para restaurá-la.",
+      "it": "È stata trovata una sessione precedente. Clicca su 'Carica Salvato' per ripristinarla."
+    },
+    "ai_isa_type_answer": {
+      "en": "Type your answer here...",
+      "es": "Escriba su respuesta aquí...",
+      "fr": "Tapez votre réponse ici...",
+      "de": "Geben Sie hier Ihre Antwort ein...",
+      "lt": "Įveskite atsakymą čia...",
+      "pt": "Digite sua resposta aqui...",
+      "it": "Digita la tua risposta qui..."
+    },
+    "ai_isa_submit_answer": {
+      "en": "Submit Answer",
+      "es": "Enviar Respuesta",
+      "fr": "Soumettre la Réponse",
+      "de": "Antwort Senden",
+      "lt": "Pateikti Atsakymą",
+      "pt": "Enviar Resposta",
+      "it": "Invia Risposta"
+    },
+    "ai_isa_quick_options": {
+      "en": "Quick options (click to add):",
+      "es": "Opciones rápidas (haga clic para agregar):",
+      "fr": "Options rapides (cliquez pour ajouter):",
+      "de": "Schnelloptionen (zum Hinzufügen klicken):",
+      "lt": "Greitos parinktys (spustelėkite, kad pridėtumėte):",
+      "pt": "Opções rápidas (clique para adicionar):",
+      "it": "Opzioni rapide (clicca per aggiungere):"
+    },
+    "ai_isa_review_connections": {
+      "en": "Review Suggested Connections",
+      "es": "Revisar Conexiones Sugeridas",
+      "fr": "Examiner les Connexions Suggérées",
+      "de": "Vorgeschlagene Verbindungen Überprüfen",
+      "lt": "Peržiūrėti Siūlomus Ryšius",
+      "pt": "Revisar Conexões Sugeridas",
+      "it": "Rivedi Connessioni Suggerite"
+    },
+    "ai_isa_approve_reject": {
+      "en": "Approve or reject each connection. You can modify the strength and polarity if needed.",
+      "es": "Apruebe o rechace cada conexión. Puede modificar la fuerza y polaridad si es necesario.",
+      "fr": "Approuvez ou rejetez chaque connexion. Vous pouvez modifier la force et la polarité si nécessaire.",
+      "de": "Genehmigen oder ablehnen Sie jede Verbindung. Sie können Stärke und Polarität bei Bedarf ändern.",
+      "lt": "Patvirtinkite arba atmeskite kiekvieną ryšį. Jei reikia, galite pakeisti stiprumą ir polarumą.",
+      "pt": "Aprove ou rejeite cada conexão. Você pode modificar a força e polaridade se necessário.",
+      "it": "Approva o rifiuta ogni connessione. Puoi modificare forza e polarità se necessario."
+    },
+    "ai_isa_approve_all": {
+      "en": "Approve All",
+      "es": "Aprobar Todo",
+      "fr": "Tout Approuver",
+      "de": "Alle Genehmigen",
+      "lt": "Patvirtinti Viską",
+      "pt": "Aprovar Tudo",
+      "it": "Approva Tutto"
+    },
+    "ai_isa_finish_continue": {
+      "en": "Finish & Continue",
+      "es": "Finalizar y Continuar",
+      "fr": "Terminer et Continuer",
+      "de": "Beenden & Weiter",
+      "lt": "Baigti ir Tęsti",
+      "pt": "Finalizar e Continuar",
+      "it": "Termina e Continua"
+    },
+    "ai_isa_approve": {
+      "en": "Approve",
+      "es": "Aprobar",
+      "fr": "Approuver",
+      "de": "Genehmigen",
+      "lt": "Patvirtinti",
+      "pt": "Aprovar",
+      "it": "Approva"
+    },
+    "ai_isa_reject": {
+      "en": "Reject",
+      "es": "Rechazar",
+      "fr": "Rejeter",
+      "de": "Ablehnen",
+      "lt": "Atmesti",
+      "pt": "Rejeitar",
+      "it": "Rifiuta"
+    },
+    "ai_isa_all_connections_approved": {
+      "en": "All connections approved!",
+      "es": "¡Todas las conexiones aprobadas!",
+      "fr": "Toutes les connexions approuvées!",
+      "de": "Alle Verbindungen genehmigt!",
+      "lt": "Visi ryšiai patvirtinti!",
+      "pt": "Todas as conexões aprovadas!",
+      "it": "Tutte le connessioni approvate!"
+    },
+    "ai_isa_model_preview": {
+      "en": "Your DAPSI(W)R(M) Model Preview",
+      "es": "Vista Previa de su Modelo DAPSI(W)R(M)",
+      "fr": "Aperçu de Votre Modèle DAPSI(W)R(M)",
+      "de": "Vorschau Ihres DAPSI(W)R(M)-Modells",
+      "lt": "Jūsų DAPSI(W)R(M) Modelio Peržiūra",
+      "pt": "Visualização do Seu Modelo DAPSI(W)R(M)",
+      "it": "Anteprima del Tuo Modello DAPSI(W)R(M)"
+    },
+    "ai_isa_project_info": {
+      "en": "Project Information",
+      "es": "Información del Proyecto",
+      "fr": "Informations sur le Projet",
+      "de": "Projektinformationen",
+      "lt": "Projekto Informacija",
+      "pt": "Informações do Projeto",
+      "it": "Informazioni sul Progetto"
+    },
+    "ai_isa_project_location": {
+      "en": "Project/Location:",
+      "es": "Proyecto/Ubicación:",
+      "fr": "Projet/Localisation:",
+      "de": "Projekt/Standort:",
+      "lt": "Projektas/Vieta:",
+      "pt": "Projeto/Localização:",
+      "it": "Progetto/Posizione:"
+    },
+    "ai_isa_ecosystem_type": {
+      "en": "Ecosystem Type:",
+      "es": "Tipo de Ecosistema:",
+      "fr": "Type d'Écosystème:",
+      "de": "Ökosystemtyp:",
+      "lt": "Ekosistemos Tipas:",
+      "pt": "Tipo de Ecossistema:",
+      "it": "Tipo di Ecosistema:"
+    },
+    "ai_isa_main_issue": {
+      "en": "Main Issue:",
+      "es": "Tema Principal:",
+      "fr": "Question Principale:",
+      "de": "Hauptthema:",
+      "lt": "Pagrindinė Problema:",
+      "pt": "Questão Principal:",
+      "it": "Questione Principale:"
+    },
+    "ai_isa_total_elements": {
+      "en": "Total elements:",
+      "es": "Total de elementos:",
+      "fr": "Total des éléments:",
+      "de": "Gesamtelemente:",
+      "lt": "Iš viso elementų:",
+      "pt": "Total de elementos:",
+      "it": "Elementi totali:"
+    },
+    "ai_isa_close": {
+      "en": "Close",
+      "es": "Cerrar",
+      "fr": "Fermer",
+      "de": "Schließen",
+      "lt": "Uždaryti",
+      "pt": "Fechar",
+      "it": "Chiudi"
+    },
+    "ai_isa_model_saved": {
+      "en": "Model saved! Navigate to 'ISA Data Entry' to see your elements.",
+      "es": "¡Modelo guardado! Navegue a 'Entrada de Datos ISA' para ver sus elementos.",
+      "fr": "Modèle enregistré! Accédez à 'Saisie de Données ISA' pour voir vos éléments.",
+      "de": "Modell gespeichert! Navigieren Sie zu 'ISA-Dateneingabe', um Ihre Elemente zu sehen.",
+      "lt": "Modelis išsaugotas! Pereikite į 'ISA Duomenų Įvedimą', kad pamatytumėte savo elementus.",
+      "pt": "Modelo salvo! Navegue até 'Entrada de Dados ISA' para ver seus elementos.",
+      "it": "Modello salvato! Naviga su 'Inserimento Dati ISA' per vedere i tuoi elementi."
+    },
+    "ai_isa_confirm_start_over": {
+      "en": "Confirm Start Over",
+      "es": "Confirmar Empezar de Nuevo",
+      "fr": "Confirmer Recommencer",
+      "de": "Neu Beginnen Bestätigen",
+      "lt": "Patvirtinti Pradėjimą Iš Naujo",
+      "pt": "Confirmar Recomeçar",
+      "it": "Conferma Ricomincia"
+    },
+    "ai_isa_confirm_start_over_msg": {
+      "en": "Are you sure you want to start over? All current progress will be lost.",
+      "es": "¿Está seguro de que desea empezar de nuevo? Se perderá todo el progreso actual.",
+      "fr": "Êtes-vous sûr de vouloir recommencer? Tous les progrès actuels seront perdus.",
+      "de": "Sind Sie sicher, dass Sie neu beginnen möchten? Der gesamte aktuelle Fortschritt geht verloren.",
+      "lt": "Ar tikrai norite pradėti iš naujo? Visa dabartinė pažanga bus prarasta.",
+      "pt": "Tem certeza de que deseja recomeçar? Todo o progresso atual será perdido.",
+      "it": "Sei sicuro di voler ricominciare? Tutti i progressi attuali andranno persi."
+    },
+    "ai_isa_yes_start_over": {
+      "en": "Yes, Start Over",
+      "es": "Sí, Empezar de Nuevo",
+      "fr": "Oui, Recommencer",
+      "de": "Ja, Neu Beginnen",
+      "lt": "Taip, Pradėti Iš Naujo",
+      "pt": "Sim, Recomeçar",
+      "it": "Sì, Ricomincia"
+    },
+    "ai_isa_load_example": {
+      "en": "Load Example Template",
+      "es": "Cargar Plantilla de Ejemplo",
+      "fr": "Charger un Modèle d'Exemple",
+      "de": "Beispielvorlage Laden",
+      "lt": "Įkelti Pavyzdinį Šabloną",
+      "pt": "Carregar Modelo de Exemplo",
+      "it": "Carica Modello di Esempio"
+    },
+    "ai_isa_choose_scenario": {
+      "en": "Choose a pre-built scenario:",
+      "es": "Elija un escenario predefinido:",
+      "fr": "Choisissez un scénario prédéfini:",
+      "de": "Wählen Sie ein vorgefertigtes Szenario:",
+      "lt": "Pasirinkite iš anksto paruoštą scenarijų:",
+      "pt": "Escolha um cenário pré-construído:",
+      "it": "Scegli uno scenario precostruito:"
+    },
+    "ai_isa_overfishing": {
+      "en": "Overfishing in Coastal Waters",
+      "es": "Sobrepesca en Aguas Costeras",
+      "fr": "Surpêche dans les Eaux Côtières",
+      "de": "Überfischung in Küstengewässern",
+      "lt": "Peržvejyba Pakrančių Vandenyse",
+      "pt": "Sobrepesca em Águas Costeiras",
+      "it": "Sovrapesca nelle Acque Costiere"
+    },
+    "ai_isa_pollution": {
+      "en": "Marine Pollution & Plastics",
+      "es": "Contaminación Marina y Plásticos",
+      "fr": "Pollution Marine et Plastiques",
+      "de": "Meeresverschmutzung & Kunststoffe",
+      "lt": "Jūrų Tarša ir Plastikai",
+      "pt": "Poluição Marinha e Plásticos",
+      "it": "Inquinamento Marino e Plastiche"
+    },
+    "ai_isa_tourism": {
+      "en": "Coastal Tourism Impacts",
+      "es": "Impactos del Turismo Costero",
+      "fr": "Impacts du Tourisme Côtier",
+      "de": "Auswirkungen des Küstentourismus",
+      "lt": "Pakrančių Turizmo Poveikiai",
+      "pt": "Impactos do Turismo Costeiro",
+      "it": "Impatti del Turismo Costiero"
+    },
+    "ai_isa_climate": {
+      "en": "Climate Change & Coral Reefs",
+      "es": "Cambio Climático y Arrecifes de Coral",
+      "fr": "Changement Climatique et Récifs Coralliens",
+      "de": "Klimawandel & Korallenriffe",
+      "lt": "Klimato Kaita ir Koraliniai Rifai",
+      "pt": "Mudança Climática e Recifes de Coral",
+      "it": "Cambiamento Climatico e Barriere Coralline"
+    },
+    "ai_isa_template_loaded": {
+      "en": "template loaded with example connections!",
+      "es": "plantilla cargada con conexiones de ejemplo!",
+      "fr": "modèle chargé avec des connexions d'exemple!",
+      "de": "Vorlage mit Beispielverbindungen geladen!",
+      "lt": "šablonas įkeltas su pavyzdiniais ryšiais!",
+      "pt": "modelo carregado com conexões de exemplo!",
+      "it": "modello caricato con connessioni di esempio!"
+    },
+    "ai_isa_model_saved_complete": {
+      "en": "Model saved successfully!",
+      "es": "¡Modelo guardado exitosamente!",
+      "fr": "Modèle enregistré avec succès!",
+      "de": "Modell erfolgreich gespeichert!",
+      "lt": "Modelis sėkmingai išsaugotas!",
+      "pt": "Modelo salvo com sucesso!",
+      "it": "Modello salvato con successo!"
+    },
+    "ai_isa_elements_connections": {
+      "en": "elements and",
+      "es": "elementos y",
+      "fr": "éléments et",
+      "de": "Elemente und",
+      "lt": "elementai ir",
+      "pt": "elementos e",
+      "it": "elementi e"
+    },
+    "ai_isa_connections_transferred": {
+      "en": "connections transferred to ISA Data Entry.",
+      "es": "conexiones transferidas a Entrada de Datos ISA.",
+      "fr": "connexions transférées vers Saisie de Données ISA.",
+      "de": "Verbindungen auf ISA-Dateneingabe übertragen.",
+      "lt": "ryšiai perkelti į ISA Duomenų Įvedimą.",
+      "pt": "conexões transferidas para Entrada de Dados ISA.",
+      "it": "connessioni trasferite all'Inserimento Dati ISA."
+    }
+  }
+}

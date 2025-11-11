@@ -1,0 +1,72 @@
+Policy Creator
+Policy Implementer (Regulator)
+Policy Advisor
+Activity Manager (Regulator)
+Activity Advisor
+eNGO Worker
+Fisher (Influencer)
+Other Industry (Influencer)
+SME (Influencer)
+Educator/Researcher
+Welfare
+Resource Provision
+Employment & Resource Use
+Relaxation & Enjoyment
+Physical Restructuring
+Non-Living Resource Extraction
+Energy Production
+Living Resource Extraction
+Living Resource Cultivation
+Transport
+Urban & Industrial Uses
+Tourism & Leisure
+Security/Defense
+Education & Research
+Conservation & Restoration
+Multiple/Mixed Use
+Hydrological Hazards
+Physiographic - Natural (Chronic)
+Physiographic - Human (Chronic)
+Physiographic - Acute
+Climatological - Acute
+Climatological - Chronic
+Tectonic - Acute
+Tectonic - Chronic
+Biological - Microbial
+Biological - Macrobial
+Technological - Introduced
+Technological - Extractive
+Chemical - Acute
+Chemical - Chronic
+Geopolitical - Acute
+Geopolitical - Chronic
+Basic Concepts & Fundamental Understanding
+Ecosystem Structure & Functioning
+Ecosystem Services (natural domain)
+Biodiversity Loss (habitats & species)
+Non-Indigenous Species
+Climate Change
+Other Anthropogenic Effects
+Ecosystem Recovery & Remediation
+Fisheries - Economics Aspects
+Other Resource Extraction (energy, space)
+Economic Aspects - Societal Goods & Benefits
+Governance & Management
+Policy Derivation
+Policy Implementation
+Marine Conservation
+Marine Planning
+Societal & Cultural Considerations
+Marine Citizenship
+Scientific Skills, Mapping, Evidence & Data
+Methods, Techniques, Tools
+Ecologically Sustainable
+Technologically Feasible
+Economically Viable
+Socially Desirable/Tolerable
+Legally Permissible
+Administratively Achievable
+Politically Expedient
+Ethically Defensible/Morally Correct
+Culturally Inclusive
+Effectively Communicable

@@ -14,9 +14,23 @@ isaDataEntryUI <- function(id) {
       )
     ),
 
+    # Navigation: Breadcrumb and Progress Bar
+    fluidRow(
+      column(12,
+        uiOutput(ns("navigation_ui"))
+      )
+    ),
+
     fluidRow(
       column(12,
         uiOutput(ns("isa_tabs_ui"))
+      )
+    ),
+
+    # Navigation: Previous/Next Buttons
+    fluidRow(
+      column(12,
+        uiOutput(ns("nav_buttons_ui"))
       )
     )
   )
@@ -143,6 +157,26 @@ isaDataEntryServer <- function(id, global_data) {
     # This observer loads saved data when the module starts or when project_data changes
     data_initialized <- reactiveVal(FALSE)
 
+    # Navigation state ----
+    # Define tab structure for navigation
+    tab_names <- c(
+      "Exercise 0: Complexity",
+      "Exercise 1: Goods & Benefits",
+      "Exercise 2a: Ecosystem Services",
+      "Exercise 2b: Marine Processes",
+      "Exercise 3: Pressures",
+      "Exercise 4: Activities",
+      "Exercise 5: Drivers",
+      "Exercise 6: Closing Loop",
+      "Exercises 7-9: CLD",
+      "Exercises 10-12: Analysis",
+      "BOT Graphs",
+      "Data Management"
+    )
+
+    # Track current exercise (1-indexed, 1 = Exercise 0)
+    current_exercise <- reactiveVal(1)
+
     observe({
       cat("[ISA Module] Checking for existing project data...\n")
 
@@ -260,6 +294,96 @@ isaDataEntryServer <- function(id, global_data) {
           uiOutput(ns("data_management_content"))
         )
       )
+    })
+
+    # Render Navigation UI (breadcrumb + progress bar) ----
+    output$navigation_ui <- renderUI({
+      current <- current_exercise()
+      total <- length(tab_names)
+
+      tagList(
+        # Breadcrumb
+        create_breadcrumb(
+          items = list(
+            list(label = "Home", icon = "home"),
+            list(label = "ISA Data Entry", icon = "clipboard"),
+            list(label = tab_names[current])
+          ),
+          i18n = i18n
+        ),
+
+        # Progress Bar
+        create_progress_bar(
+          current = current,
+          total = total,
+          title = "Exercise Progress",
+          i18n = i18n
+        )
+      )
+    })
+
+    # Render Navigation Buttons ----
+    output$nav_buttons_ui <- renderUI({
+      current <- current_exercise()
+      total <- length(tab_names)
+
+      create_nav_buttons(
+        ns = ns,
+        show_back = current > 1,
+        show_next = current < total,
+        back_enabled = current > 1,
+        next_enabled = current < total,
+        next_label = if (current == total - 1) "Finish" else "Next",
+        i18n = i18n
+      )
+    })
+
+    # Navigation Observers ----
+    # Handle Back button click
+    observeEvent(input$nav_back, {
+      current <- current_exercise()
+      if (current > 1) {
+        new_index <- current - 1
+        current_exercise(new_index)
+
+        # Update tabsetPanel to show previous tab
+        updateTabsetPanel(
+          session = session,
+          inputId = "isa_tabs",
+          selected = i18n$t(tab_names[new_index])
+        )
+      }
+    })
+
+    # Handle Next button click
+    observeEvent(input$nav_next, {
+      current <- current_exercise()
+      total <- length(tab_names)
+      if (current < total) {
+        new_index <- current + 1
+        current_exercise(new_index)
+
+        # Update tabsetPanel to show next tab
+        updateTabsetPanel(
+          session = session,
+          inputId = "isa_tabs",
+          selected = i18n$t(tab_names[new_index])
+        )
+      }
+    })
+
+    # Sync current_exercise when user manually clicks tabs
+    observe({
+      tab <- input$isa_tabs
+      if (!is.null(tab)) {
+        # Find which tab is selected based on translated name
+        translated_names <- sapply(tab_names, function(name) i18n$t(name))
+        index <- which(translated_names == tab)
+
+        if (length(index) > 0) {
+          current_exercise(index[1])
+        }
+      }
     })
 
     # Render Exercise 0 content ----
@@ -1395,17 +1519,17 @@ isaDataEntryServer <- function(id, global_data) {
         stringsAsFactors = FALSE
       )
 
-      rv$loop_connections <- rbind(rv$loop_connections, new_connection)
+      isa_data$loop_connections <- rbind(isa_data$loop_connections, new_connection)
       showNotification("Loop connection added", type = "message")
     })
 
     # Display loop connections table ----
     output$loop_connections_table <- renderDT({
-      if (nrow(rv$loop_connections) == 0) {
+      if (nrow(isa_data$loop_connections) == 0) {
         return(data.frame(Message = "No loop connections yet"))
       }
 
-      rv$loop_connections %>%
+      isa_data$loop_connections %>%
         mutate(
           Connection = paste0(DriverID, " → ", GBID),
           Polarity = ifelse(Effect == "+", "Positive", "Negative"),
@@ -1417,10 +1541,10 @@ isaDataEntryServer <- function(id, global_data) {
 
     # Save Exercise 6 ----
     observeEvent(input$save_ex6, {
-      isa_data$loop_connections <- rv$loop_connections
+      # loop_connections already in isa_data (no need to copy from rv)
 
       # Convert loop_connections to d_gb adjacency matrix
-      if (nrow(rv$loop_connections) > 0) {
+      if (nrow(isa_data$loop_connections) > 0) {
         n_drivers <- nrow(isa_data$drivers)
         n_gb <- nrow(isa_data$goods_benefits)
 
@@ -1430,8 +1554,8 @@ isaDataEntryServer <- function(id, global_data) {
         colnames(d_gb_matrix) <- isa_data$drivers$ID
 
         # Fill matrix with connections
-        for (i in 1:nrow(rv$loop_connections)) {
-          conn <- rv$loop_connections[i, ]
+        for (i in 1:nrow(isa_data$loop_connections)) {
+          conn <- isa_data$loop_connections[i, ]
           gb_idx <- which(isa_data$goods_benefits$ID == conn$GBID)
           d_idx <- which(isa_data$drivers$ID == conn$DriverID)
 
@@ -1449,7 +1573,7 @@ isaDataEntryServer <- function(id, global_data) {
         isa_data$adjacency_matrices$d_gb <- d_gb_matrix
       }
 
-      showNotification(paste("Exercise 6 saved:", nrow(rv$loop_connections), "loop connections"),
+      showNotification(paste("Exercise 6 saved:", nrow(isa_data$loop_connections), "loop connections"),
                       type = "message")
     })
 

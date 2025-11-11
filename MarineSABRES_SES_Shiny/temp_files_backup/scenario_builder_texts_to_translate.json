@@ -1,0 +1,1028 @@
+[
+  {
+    "en": " Direction",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": " Impact",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": " more loops",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": " nodes)",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "... and ",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Activity",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Add",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Add New Link",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Add New Node",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Add/Modify Links",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Add/Modify Nodes",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Affected Feedback Loops",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Analyzing network topology...",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Are you sure you want to delete this scenario? This action cannot be undone.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Baseline",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Cancel",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Cannot create self-loop",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Change",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Changed Nodes",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "changes",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Click 'Run Impact Analysis' in the Configure tab to analyze this scenario.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Compare Scenarios",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Complete!",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Configure",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Configure: ",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Confirm Delete",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Connected to new links",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Create",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Create and analyze what-if scenarios by modifying your CLD network.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Create New Scenario",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "DAPSI(W)R(M) Category:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Delete",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Describe what this scenario represents...",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Description:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Detecting feedback loops...",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Driver",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "e.g., Increased Fishing Pressure",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "e.g., New fishing regulation",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Feedback Loops",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "From Node:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Impact",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Impact Analysis",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Impact analysis complete",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Impact Analysis Not Run Yet",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Impact Analysis: ",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Impact Comparison",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "impact_direction",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "impact_magnitude",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Indirect effect",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Link added to scenario",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Link marked for removal",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Links",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Links: ",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Loop (",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Loops: ",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Management",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Metric",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "negative",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Negative (-)",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Network Statistics Comparison",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Network Topology Changes",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "neutral",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "New node added",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "New Scenario",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "No CLD Network Found",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "No feedback loops detected in this scenario.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "No modifications yet",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "No scenarios yet. Create one to get started.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "node",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Node",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Node added to scenario",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Node Label:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Node marked for removal",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Nodes",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Nodes: ",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Not Enough Scenarios",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Please go to the CLD Visualization module to create your network.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Please select two different scenarios to compare.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Polarity:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "positive",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Positive (+)",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Predicted Impacts",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Predicting impacts...",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Pressure",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Preview Network",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "reason",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Remove Link",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Remove Links",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Remove Node",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Remove Nodes",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Response",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Run Impact Analysis",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Run impact analysis on at least 2 scenarios to compare them.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Running impact analysis...",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Scenario",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Scenario A:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Scenario B:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Scenario Builder",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Scenario created successfully",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Scenario deleted",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Scenario Name:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Scenarios",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Scenarios Not Analyzed",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Select a scenario from the list or create a new one to get started.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Select link to remove:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Select node to remove:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Select...",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "State",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "To Node:",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Total Links",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Total Nodes",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "Welfare",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "You need at least 2 scenarios to compare. Create more scenarios to use this feature.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  },
+  {
+    "en": "You need to create a Causal Loop Diagram first before building scenarios.",
+    "es": "",
+    "fr": "",
+    "de": "",
+    "lt": "",
+    "pt": "",
+    "it": ""
+  }
+]

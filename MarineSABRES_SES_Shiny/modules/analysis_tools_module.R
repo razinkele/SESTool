@@ -64,9 +64,16 @@ analysis_loops_ui <- function(id) {
                 column(4,
                   h5("Detection Parameters"),
                   numericInput(ns("max_loop_length"), "Maximum Loop Length:",
-                              value = 10, min = 3, max = 20),
+                              value = 8, min = 3, max = 15,
+                              step = 1),
+                  numericInput(ns("max_cycles"), "Maximum Cycles to Find:",
+                              value = 500, min = 50, max = 2000,
+                              step = 50),
                   checkboxInput(ns("include_self_loops"), "Include Self-Loops", value = FALSE),
                   checkboxInput(ns("filter_trivial"), "Filter Trivial Loops", value = TRUE),
+                  tags$small(class = "text-muted",
+                    "Note: Lower values prevent hanging on complex networks"),
+                  br(), br(),
                   actionButton(ns("detect_loops"), "Detect Loops",
                               icon = icon("search"),
                               class = "btn-primary btn-lg btn-block")
@@ -304,130 +311,249 @@ analysis_loops_server <- function(id, project_data_reactive) {
     # Detect Loops ----
     observeEvent(input$detect_loops, {
 
+      cat("═══════════════════════════════════════════════════════════════════\n")
+      cat("[LOOP DETECTION] Button clicked at", format(Sys.time(), "%H:%M:%S"), "\n")
+      cat("═══════════════════════════════════════════════════════════════════\n")
+
       output$detection_status <- renderText(i18n$t("analysis_detecting_loops"))
+
+      # DIAGNOSTIC: Step 1 - Build graph
+      cat("[STEP 1/7] Building graph from ISA data...\n")
+      step_start <- Sys.time()
 
       graph_data <- build_graph_from_isa()
 
       if(is.null(graph_data)) {
+        cat("[ERROR] No graph data available\n")
         output$detection_status <- renderText(i18n$t("analysis_no_graph_data"))
         showNotification(i18n$t("analysis_no_isa_data"), type = "error")
         return()
       }
 
       g <- graph_data$graph
+      nodes <- graph_data$nodes
+      edges <- graph_data$edges
+
+      step_elapsed <- as.numeric(Sys.time() - step_start, units = "secs")
+      cat(sprintf("[STEP 1/7] ✓ Graph built in %.3f seconds\n", step_elapsed))
 
       # Log basic graph info for monitoring
-      cat(sprintf("[Loop Detection] Analyzing graph: %d vertices, %d edges\n",
-                  vcount(g), ecount(g)))
+      cat(sprintf("[GRAPH INFO] Nodes: %d, Edges: %d\n", vcount(g), ecount(g)))
+      cat(sprintf("[GRAPH INFO] Density: %.4f\n", edge_density(g)))
 
-      # Find all simple cycles (loops)
-      # Note: This can be computationally expensive for large graphs
-      withProgress(message = 'Detecting loops...', value = 0, {
+      # DIAGNOSTIC: Step 2 - Analyze SCC structure
+      cat("[STEP 2/7] Analyzing strongly connected components...\n")
+      step_start <- Sys.time()
 
-        all_loops <- list()
-        vertices <- V(g)
+      scc <- components(g, mode = "strong")
+      comp_sizes <- table(scc$membership)
+      max_comp_size <- max(comp_sizes)
 
-        # For each vertex, find cycles by checking paths from neighbors back to vertex
-        for(i in 1:length(vertices)) {
-          incProgress(1/length(vertices), detail = paste("Checking vertex", i))
+      step_elapsed <- as.numeric(Sys.time() - step_start, units = "secs")
+      cat(sprintf("[STEP 2/7] ✓ SCC analysis completed in %.3f seconds\n", step_elapsed))
+      cat(sprintf("[SCC INFO] Number of components: %d\n", length(unique(scc$membership))))
+      cat(sprintf("[SCC INFO] Largest component: %d nodes\n", max_comp_size))
+      cat(sprintf("[SCC INFO] Average component size: %.1f nodes\n", mean(comp_sizes)))
 
-          vertex <- vertices[i]
-          vertex_name <- V(g)$name[vertex]
-
-          # Get all outgoing neighbors of this vertex
-          neighbors <- neighbors(g, vertex, mode = "out")
-
-          if(length(neighbors) == 0) next
-
-          # For each neighbor, find paths back to the original vertex
-          for(neighbor in neighbors) {
-            # Find all simple paths from neighbor back to vertex
-            # This creates a cycle: vertex -> neighbor -> ... -> vertex
-            paths <- tryCatch({
-              all_simple_paths(g, from = neighbor, to = vertex,
-                              mode = "out",
-                              cutoff = input$max_loop_length - 1)  # -1 because we add vertex at start
-            }, error = function(e) {
-              cat("Error finding paths from", V(g)$name[neighbor], "to", vertex_name, ":", conditionMessage(e), "\n")
-              list()
-            })
-
-            if(length(paths) > 0) {
-              for(path in paths) {
-                # Add the original vertex at the beginning to complete the cycle
-                complete_cycle <- c(vertex, path)
-                if(length(complete_cycle) >= 2) {  # At least 2 nodes for a loop
-                  all_loops <- c(all_loops, list(complete_cycle))
-                }
-              }
-            }
-          }
-        }
-
-        if(length(all_loops) == 0) {
-          output$detection_status <- renderText(i18n$t("analysis_no_loops_detected"))
-          showNotification(i18n$t("analysis_no_loops_found"), type = "warning")
-          return()
-        }
-
-        # Calculate loop polarity
-        loop_info <- data.frame(
-          LoopID = character(),
-          Length = integer(),
-          Elements = character(),
-          Type = character(),
-          Polarity = character(),
-          Description = character(),
-          stringsAsFactors = FALSE
+      # Check for reasonable graph size to prevent hanging
+      if(vcount(g) > 100 || ecount(g) > 500) {
+        cat("[WARNING] Large network detected - may take longer\n")
+        showNotification(
+          paste0("Large network detected: ", vcount(g), " nodes, ", ecount(g), " edges. ",
+                 "Loop detection may take longer. Consider reducing max_cycles or max_loop_length."),
+          type = "warning",
+          duration = 8
         )
+      }
 
-        for(i in 1:length(all_loops)) {
-          loop <- all_loops[[i]]
-          loop_names <- names(loop)
+      if(vcount(g) > 300 || ecount(g) > 1500) {
+        cat("[ERROR] Network too large - refusing to process\n")
+        output$detection_status <- renderText("Graph too large for reliable loop detection. Please simplify the network first.")
+        showNotification(
+          "Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.",
+          type = "error",
+          duration = 15
+        )
+        return()
+      }
 
-          # Calculate polarity
-          negative_count <- 0
-          for(j in 1:(length(loop)-1)) {
-            from_node <- loop[j]
-            to_node <- loop[j+1]
+      # Use optimized loop detection algorithm from network_analysis.R
+      withProgress(message = 'Detecting loops (this may take 10-30 seconds)...', value = 0, {
 
-            # Find edge polarity
-            edge_id <- get_edge_ids(g, c(from_node, to_node))
-            if(edge_id > 0) {
-              polarity <- E(g)$polarity[edge_id]
-              if(polarity == "-") negative_count <- negative_count + 1
-            }
+        incProgress(0.1, detail = "Preparing detection parameters...")
+        Sys.sleep(0.1)  # Force UI update
+
+        # Use the optimized find_all_cycles function which uses strongly connected components
+        tryCatch({
+          # DIAGNOSTIC: Step 3 - Prepare parameters
+          cat("[STEP 3/7] Preparing detection parameters...\n")
+
+          # Get max_cycles from user input, with sensible default
+          max_cycles_limit <- if(!is.null(input$max_cycles) && input$max_cycles > 0) {
+            input$max_cycles
+          } else {
+            500
           }
 
-          # Even number of negative links = Reinforcing
-          # Odd number = Balancing
-          loop_type <- ifelse(negative_count %% 2 == 0,
-                             i18n$t("analysis_reinforcing"),
-                             i18n$t("analysis_balancing"))
-          loop_polarity <- ifelse(negative_count %% 2 == 0, "R", "B")
+          # Limit max_loop_length to prevent hanging
+          safe_max_length <- min(input$max_loop_length, 8)  # Cap at 8 to prevent exponential explosion
 
-          loop_info <- rbind(loop_info, data.frame(
-            LoopID = paste0("L", sprintf("%03d", i)),
-            Length = length(loop) - 1,
-            Elements = paste(loop_names, collapse = " → "),
-            Type = loop_type,
-            Polarity = loop_polarity,
-            Description = paste(loop_type, i18n$t("analysis_loop_with"), length(loop)-1, i18n$t("analysis_elements")),
-            stringsAsFactors = FALSE
-          ))
-        }
+          cat(sprintf("[STEP 3/7] ✓ Parameters set: max_length=%d (requested: %d), max_cycles=%d\n",
+                      safe_max_length, input$max_loop_length, max_cycles_limit))
 
-        loop_data$loops <- loop_info
-        loop_data$graph <- g
-        loop_data$all_loops <- all_loops
-        loop_data$detection_complete <- TRUE
+          incProgress(0.1, detail = "Analyzing components...")
+          Sys.sleep(0.1)  # Force UI update
 
-        output$detection_status <- renderText(
-          paste("Detection complete! Found", nrow(loop_info), "loops.")
-        )
+          incProgress(0.1, detail = "Finding cycles (please wait)...")
+          Sys.sleep(0.1)  # Force UI update
 
-        showNotification(paste(i18n$t("analysis_found"), nrow(loop_info), i18n$t("analysis_feedback_loops")),
-                        type = "message")
+          # Run with timeout to prevent hanging
+          all_loops <- NULL
+          error_occurred <- FALSE
+
+          # DIAGNOSTIC: Step 4 - Run cycle detection
+          cat("[STEP 4/7] Starting cycle detection...\n")
+          cat(sprintf("[TIMING] Detection start: %s\n", format(Sys.time(), "%H:%M:%S.%OS3")))
+          step_start <- Sys.time()
+
+          tryCatch({
+            # Set a reasonable timeout (30 seconds)
+            setTimeLimit(cpu = 30, elapsed = 30, transient = TRUE)
+            cat("[TIMEOUT] Set to 30 seconds\n")
+
+            all_loops <- find_all_cycles(
+              nodes, edges,
+              max_length = safe_max_length,
+              max_cycles = max_cycles_limit
+            )
+
+            # Reset time limit
+            setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
+            cat("[TIMEOUT] Reset\n")
+
+            step_elapsed <- as.numeric(Sys.time() - step_start, units = "secs")
+            cat(sprintf("[STEP 4/7] ✓ Cycle detection completed in %.3f seconds\n", step_elapsed))
+            cat(sprintf("[RESULT] Found %d cycles\n", ifelse(is.null(all_loops), 0, length(all_loops))))
+          }, error = function(e) {
+            # Reset time limit
+            setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
+
+            step_elapsed <- as.numeric(Sys.time() - step_start, units = "secs")
+            cat(sprintf("[STEP 4/7] ✗ ERROR after %.3f seconds: %s\n", step_elapsed, e$message))
+
+            if (grepl("time limit", e$message, ignore.case = TRUE)) {
+              cat("[ERROR] Timeout occurred\n")
+              showNotification(
+                "Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.",
+                type = "error",
+                duration = 10
+              )
+            } else {
+              cat(sprintf("[ERROR] Exception: %s\n", e$message))
+              showNotification(
+                paste("Error during loop detection:", e$message),
+                type = "error",
+                duration = 10
+              )
+            }
+            error_occurred <<- TRUE
+          })
+
+          if (error_occurred || is.null(all_loops)) {
+            cat("[ABORT] Detection failed or timed out\n")
+            output$detection_status <- renderText("Loop detection failed or timed out.")
+            return()
+          }
+
+          incProgress(0.1, detail = "Processing detected loops...")
+          Sys.sleep(0.1)  # Force UI update
+
+          if(length(all_loops) == 0) {
+            cat("[INFO] No loops found in network\n")
+            output$detection_status <- renderText(i18n$t("analysis_no_loops_detected"))
+            showNotification(i18n$t("analysis_no_loops_found"), type = "warning")
+            return()
+          }
+
+          # DIAGNOSTIC: Step 5 - Limit loops for display
+          cat("[STEP 5/7] Limiting loops for display...\n")
+          max_loops_display <- 500
+          original_count <- length(all_loops)
+
+          if(length(all_loops) > max_loops_display) {
+            cat(sprintf("[INFO] Limiting from %d to %d loops\n", original_count, max_loops_display))
+            showNotification(
+              paste0("Found ", length(all_loops), " loops. Displaying first ", max_loops_display, " loops."),
+              type = "warning",
+              duration = 10
+            )
+            all_loops <- all_loops[1:max_loops_display]
+          }
+          cat(sprintf("[STEP 5/7] ✓ Will process %d loops\n", length(all_loops)))
+
+          incProgress(0.1, detail = "Processing loop details...")
+          Sys.sleep(0.1)  # Force UI update
+
+          # DIAGNOSTIC: Step 6 - Process loops to dataframe
+          cat("[STEP 6/7] Processing cycles to dataframe...\n")
+          step_start <- Sys.time()
+
+          loop_info <- process_cycles_to_loops(all_loops, nodes, edges, g)
+
+          step_elapsed <- as.numeric(Sys.time() - step_start, units = "secs")
+          cat(sprintf("[STEP 6/7] ✓ Processing completed in %.3f seconds\n", step_elapsed))
+          cat(sprintf("[RESULT] Created dataframe with %d rows\n", nrow(loop_info)))
+
+          incProgress(0.2, detail = "Finalizing results...")
+          Sys.sleep(0.1)  # Force UI update
+
+          # DIAGNOSTIC: Step 7 - Save results
+          cat("[STEP 7/7] Saving results...\n")
+          step_start <- Sys.time()
+
+          loop_data$loops <- loop_info
+          loop_data$graph <- g
+          loop_data$all_loops <- all_loops
+          loop_data$detection_complete <- TRUE
+
+          # Save loop results to project_data for CLD visualization
+          project_data <- project_data_reactive()
+          if(is.null(project_data$data$analysis)) {
+            project_data$data$analysis <- list()
+          }
+          project_data$data$analysis$loops <- list(
+            loop_info = loop_info,
+            all_loops = all_loops
+          )
+          project_data$last_modified <- Sys.time()
+          project_data_reactive(project_data)
+
+          step_elapsed <- as.numeric(Sys.time() - step_start, units = "secs")
+          cat(sprintf("[STEP 7/7] ✓ Results saved in %.3f seconds\n", step_elapsed))
+
+          output$detection_status <- renderText(
+            paste("Detection complete! Found", nrow(loop_info), "loops.")
+          )
+
+          showNotification(
+            paste(i18n$t("analysis_found"), nrow(loop_info), i18n$t("analysis_feedback_loops")),
+            type = "message"
+          )
+
+          cat("═══════════════════════════════════════════════════════════════════\n")
+          cat("[LOOP DETECTION] Completed successfully at", format(Sys.time(), "%H:%M:%S"), "\n")
+          cat(sprintf("[SUMMARY] Total loops found: %d\n", nrow(loop_info)))
+          cat("═══════════════════════════════════════════════════════════════════\n\n")
+
+        }, error = function(e) {
+          output$detection_status <- renderText(paste("Error during loop detection:", conditionMessage(e)))
+          showNotification(
+            paste("Loop detection failed:", conditionMessage(e)),
+            type = "error",
+            duration = 10
+          )
+          cat("[Loop Detection ERROR]:", conditionMessage(e), "\n")
+        })
       })
     })
 
@@ -1858,7 +1984,7 @@ analysis_simplify_ui <- function(id) {
               ),
               checkboxInput(
                 ns("exogenous_preview"),
-                label = "Preview exogenous nodes before removal",
+                label = i18n$t("preview_exogenous_nodes_before_removal"),
                 value = TRUE
               )
             )
@@ -1999,11 +2125,37 @@ analysis_simplify_ui <- function(id) {
 
           br(),
 
+          # Save to project option
+          checkboxInput(
+            ns("save_to_project"),
+            i18n$t("save_simplification_to_project"),
+            value = FALSE
+          ),
+          helpText(i18n$t("save_simplification_warning")),
+
+          br(),
+
           # Export simplified network
           downloadButton(
             ns("export_simplified"),
             "Export Simplified Network",
             class = "btn-success btn-block"
+          ),
+
+          br(),
+          br(),
+
+          # Restore original network (only show if network was saved with simplifications)
+          conditionalPanel(
+            condition = "output.has_saved_simplification",
+            ns = ns,
+            actionButton(
+              ns("restore_original"),
+              i18n$t("restore_original_network"),
+              icon = icon("history"),
+              class = "btn-danger btn-block"
+            ),
+            helpText(i18n$t("restore_original_warning"))
           )
         )
       ),
@@ -2478,10 +2630,39 @@ analysis_simplify_server <- function(id, project_data_reactive) {
         rv$removed_edges <- all_removed_edges
         rv$simplification_history <- history
         rv$has_simplified <- TRUE
+
+        # Save to project if checkbox is checked
+        if (isTRUE(input$save_to_project)) {
+          data <- project_data_reactive()
+
+          # Store original for undo capability (only if not already stored)
+          if (is.null(data$data$cld$original_nodes)) {
+            data$data$cld$original_nodes <- data$data$cld$nodes
+            data$data$cld$original_edges <- data$data$cld$edges
+          }
+
+          # Save simplified network
+          data$data$cld$nodes <- rv$simplified_nodes
+          data$data$cld$edges <- rv$simplified_edges
+          data$data$cld$removed_nodes <- rv$removed_nodes
+          data$data$cld$simplification_history <- rv$simplification_history
+          data$last_modified <- Sys.time()
+
+          project_data_reactive(data)
+
+          showNotification(
+            i18n$t("simplified_network_saved"),
+            type = "success",
+            duration = 4
+          )
+        }
       })
 
       showNotification(
-        "Simplification applied successfully!",
+        ifelse(isTRUE(input$save_to_project),
+          i18n$t("simplification_applied_and_saved"),
+          i18n$t("simplification_applied")
+        ),
         type = "message",
         duration = 3
       )
@@ -2502,6 +2683,56 @@ analysis_simplify_server <- function(id, project_data_reactive) {
         duration = 3
       )
     })
+
+    # ========== RESTORE ORIGINAL NETWORK (UNDO PERMANENT SAVE) ==========
+    observeEvent(input$restore_original, {
+      data <- project_data_reactive()
+
+      # Check if there's a saved original to restore
+      if (!is.null(data$data$cld$original_nodes)) {
+        # Restore the original network
+        data$data$cld$nodes <- data$data$cld$original_nodes
+        data$data$cld$edges <- data$data$cld$original_edges
+
+        # Clear backup and simplification data
+        data$data$cld$original_nodes <- NULL
+        data$data$cld$original_edges <- NULL
+        data$data$cld$removed_nodes <- NULL
+        data$data$cld$simplification_history <- NULL
+        data$last_modified <- Sys.time()
+
+        project_data_reactive(data)
+
+        # Also reset the local reactive values
+        rv$original_nodes <- data$data$cld$nodes
+        rv$original_edges <- data$data$cld$edges
+        rv$simplified_nodes <- data$data$cld$nodes
+        rv$simplified_edges <- data$data$cld$edges
+        rv$removed_nodes <- data.frame()
+        rv$removed_edges <- data.frame()
+        rv$simplification_history <- list()
+        rv$has_simplified <- FALSE
+
+        showNotification(
+          i18n$t("original_network_restored"),
+          type = "success",
+          duration = 4
+        )
+      } else {
+        showNotification(
+          i18n$t("no_original_to_restore"),
+          type = "warning",
+          duration = 3
+        )
+      }
+    })
+
+    # ========== OUTPUT FOR CONDITIONAL PANEL ==========
+    output$has_saved_simplification <- reactive({
+      data <- project_data_reactive()
+      !is.null(data$data$cld$original_nodes)
+    })
+    outputOptions(output, "has_saved_simplification", suspendWhenHidden = FALSE)
 
     # ========== VISUALIZATIONS ==========
 
@@ -2728,6 +2959,350 @@ analysis_simplify_server <- function(id, project_data_reactive) {
         )
       }
     )
+
+  })
+}
+
+# ============================================================================
+# LEVERAGE POINT ANALYSIS MODULE
+# ============================================================================
+
+#' Leverage Point Analysis UI
+#'
+#' @param id Module ID
+#' @return UI elements
+analysis_leverage_ui <- function(id) {
+  ns <- NS(id)
+
+  fluidPage(
+    h2(icon("bullseye"), " Leverage Point Analysis"),
+    p("Identify the most influential nodes in your network that could serve as key intervention points."),
+
+    hr(),
+
+    fluidRow(
+      column(4,
+        wellPanel(
+          h4(icon("sliders-h"), " Analysis Settings"),
+          sliderInput(
+            ns("top_n"),
+            "Number of Top Nodes:",
+            min = 5,
+            max = 20,
+            value = 10,
+            step = 1
+          ),
+          actionButton(
+            ns("calculate_leverage"),
+            "Calculate Leverage Points",
+            icon = icon("calculator"),
+            class = "btn-primary btn-block"
+          ),
+          br(),
+          div(
+            style = "background: #e8f4f8; padding: 10px; border-radius: 5px; border-left: 4px solid #17a2b8;",
+            h5(icon("info-circle"), " About Leverage Points"),
+            p("Leverage points are nodes that have the highest potential for system-wide impact based on:"),
+            tags$ul(
+              tags$li(strong("Betweenness:"), " Control over information flow"),
+              tags$li(strong("Eigenvector:"), " Connection to other important nodes"),
+              tags$li(strong("PageRank:"), " Overall importance in the network")
+            )
+          )
+        )
+      ),
+
+      column(8,
+        tabsetPanel(
+          id = ns("leverage_tabs"),
+
+          # Results Tab
+          tabPanel(
+            title = tagList(icon("list"), " Leverage Points"),
+            value = "results",
+            br(),
+            uiOutput(ns("leverage_status")),
+            br(),
+            DT::dataTableOutput(ns("leverage_table"))
+          ),
+
+          # Visualization Tab
+          tabPanel(
+            title = tagList(icon("chart-bar"), " Visualization"),
+            value = "viz",
+            br(),
+            plotOutput(ns("leverage_plot"), height = "500px")
+          ),
+
+          # Interpretation Tab
+          tabPanel(
+            title = tagList(icon("lightbulb"), " Interpretation"),
+            value = "interpretation",
+            br(),
+            uiOutput(ns("interpretation_ui"))
+          )
+        )
+      )
+    )
+  )
+}
+
+#' Leverage Point Analysis Server
+#'
+#' @param id Module ID
+#' @param project_data_reactive Reactive project data
+#' @return Server logic
+analysis_leverage_server <- function(id, project_data_reactive) {
+  moduleServer(id, function(input, output, session) {
+
+    # Reactive values
+    rv <- reactiveValues(
+      leverage_results = NULL,
+      has_data = FALSE
+    )
+
+    # Check if data exists - check ISA data directly like loop analysis does
+    observe({
+      project_data <- project_data_reactive()
+
+      # Check for ISA data (same approach as loop analysis)
+      isa_data <- project_data$data$isa_data
+
+      if (!is.null(isa_data)) {
+        # Try to build nodes/edges from ISA data to check if we have sufficient data
+        nodes <- create_nodes_df(isa_data)
+        edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+
+        rv$has_data <- !is.null(nodes) && nrow(nodes) > 0 &&
+                       !is.null(edges) && nrow(edges) > 0
+      } else {
+        rv$has_data <- FALSE
+      }
+    })
+
+    # Calculate leverage points
+    observeEvent(input$calculate_leverage, {
+      req(rv$has_data)
+
+      project_data <- project_data_reactive()
+
+      withProgress(message = "Analyzing leverage points...", value = 0, {
+
+        tryCatch({
+          incProgress(0.2, detail = "Building network from ISA data...")
+
+          # Build nodes and edges from ISA data (same approach as loop analysis)
+          isa_data <- project_data$data$isa_data
+          nodes <- create_nodes_df(isa_data)
+          edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+
+          incProgress(0.4, detail = "Creating network graph...")
+
+          # Calculate leverage points for all nodes
+          all_centralities <- calculate_all_centralities(
+            graph_from_data_frame(
+              edges %>% select(from, to, polarity),
+              directed = TRUE,
+              vertices = nodes %>% select(id, label, group)
+            )
+          )
+
+          # Add composite scores
+          all_centralities$Composite_Score <- safe_scale(all_centralities$Betweenness) +
+                                               safe_scale(all_centralities$Eigenvector) +
+                                               safe_scale(all_centralities$PageRank)
+
+          incProgress(0.6, detail = "Ranking nodes...")
+
+          # Get top leverage points
+          leverage_df <- all_centralities[order(-all_centralities$Composite_Score), ]
+          leverage_df <- head(leverage_df, min(input$top_n, nrow(leverage_df)))
+
+          # Store results
+          rv$leverage_results <- leverage_df
+
+          incProgress(0.8, detail = "Updating node attributes...")
+
+          # Update nodes with leverage scores - match by label since that's what centralities uses
+          nodes$leverage_score <- NA_real_
+          for (i in 1:nrow(all_centralities)) {
+            node_label <- all_centralities$Name[i]
+            node_score <- all_centralities$Composite_Score[i]
+            node_idx <- which(nodes$label == node_label)
+            if (length(node_idx) > 0) {
+              nodes$leverage_score[node_idx[1]] <- node_score
+            }
+          }
+
+          # Save updated nodes AND edges back to project_data
+          project_data <- project_data_reactive()
+          project_data$data$cld$nodes <- nodes
+          project_data$data$cld$edges <- edges  # Also save edges
+          project_data$last_modified <- Sys.time()
+          project_data_reactive(project_data)
+
+          incProgress(1.0, detail = "Complete!")
+
+          showNotification(
+            paste("Found", nrow(leverage_df), "leverage points! Scores saved to CLD nodes."),
+            type = "message",
+            duration = 3
+          )
+
+        }, error = function(e) {
+          showNotification(
+            paste("Error analyzing leverage points:", e$message),
+            type = "error",
+            duration = 10
+          )
+        })
+      })
+    })
+
+    # Status output
+    output$leverage_status <- renderUI({
+      if (!rv$has_data) {
+        div(
+          class = "alert alert-warning",
+          icon("exclamation-triangle"), " ",
+          strong("No network data available."),
+          " Please create your SES network first using the ",
+          tags$em("Create SES"),
+          " menu."
+        )
+      } else if (is.null(rv$leverage_results)) {
+        div(
+          class = "alert alert-info",
+          icon("info-circle"), " ",
+          "Click ", strong("Calculate Leverage Points"), " to analyze your network."
+        )
+      } else {
+        div(
+          class = "alert alert-success",
+          icon("check-circle"), " ",
+          strong(sprintf("Found %d leverage points", nrow(rv$leverage_results))),
+          " - Nodes are ranked by their composite influence score."
+        )
+      }
+    })
+
+    # Leverage points table
+    output$leverage_table <- DT::renderDataTable({
+      req(rv$leverage_results)
+
+      df <- rv$leverage_results
+
+      # Format for display
+      df_display <- data.frame(
+        Rank = 1:nrow(df),
+        Node = df$Name,
+        `Composite Score` = round(df$Composite_Score, 3),
+        Betweenness = round(df$Betweenness, 2),
+        Eigenvector = round(df$Eigenvector, 3),
+        PageRank = round(df$PageRank, 3),
+        `In-Degree` = df$In_Degree,
+        `Out-Degree` = df$Out_Degree,
+        check.names = FALSE
+      )
+
+      DT::datatable(
+        df_display,
+        options = list(
+          pageLength = 15,
+          scrollX = TRUE,
+          dom = 't',
+          ordering = FALSE
+        ),
+        rownames = FALSE
+      ) %>%
+        DT::formatStyle(
+          'Composite Score',
+          background = DT::styleColorBar(df_display$`Composite Score`, '#4CAF50'),
+          backgroundSize = '100% 80%',
+          backgroundRepeat = 'no-repeat',
+          backgroundPosition = 'center'
+        )
+    })
+
+    # Leverage visualization
+    output$leverage_plot <- renderPlot({
+      req(rv$leverage_results)
+
+      df <- rv$leverage_results
+
+      # Create bar plot
+      df$Name <- factor(df$Name, levels = rev(df$Name))
+
+      ggplot(df, aes(x = Name, y = Composite_Score)) +
+        geom_col(aes(fill = Composite_Score), show.legend = FALSE) +
+        scale_fill_gradient(low = "#FFC107", high = "#4CAF50") +
+        coord_flip() +
+        labs(
+          title = "Top Leverage Points in SES Network",
+          subtitle = paste("Based on combined Betweenness, Eigenvector, and PageRank centrality"),
+          x = NULL,
+          y = "Composite Influence Score"
+        ) +
+        theme_minimal(base_size = 14) +
+        theme(
+          plot.title = element_text(face = "bold", size = 16),
+          plot.subtitle = element_text(color = "gray40", size = 11),
+          panel.grid.major.y = element_blank(),
+          panel.grid.minor = element_blank()
+        )
+    })
+
+    # Interpretation guide
+    output$interpretation_ui <- renderUI({
+      req(rv$leverage_results)
+
+      top_node <- rv$leverage_results$Name[1]
+      top_score <- round(rv$leverage_results$Composite_Score[1], 2)
+
+      tagList(
+        div(
+          class = "well",
+          style = "background: #f8f9fa;",
+
+          h4(icon("star"), " Top Leverage Point"),
+          p(
+            strong(top_node),
+            sprintf(" has the highest composite score (%.2f) and represents the most strategic intervention point in your network.", top_score)
+          ),
+
+          hr(),
+
+          h4(icon("chart-line"), " Understanding the Metrics"),
+
+          h5(icon("exchange-alt"), " Betweenness Centrality"),
+          p("Measures how often a node lies on the shortest path between other nodes. High betweenness means the node controls information flow and serves as a bridge."),
+
+          h5(icon("network-wired"), " Eigenvector Centrality"),
+          p("Measures a node's influence based on the importance of its neighbors. A node with high eigenvector centrality is connected to other important nodes."),
+
+          h5(icon("sitemap"), " PageRank"),
+          p("Originally developed for web pages, PageRank measures importance based on incoming connections and the importance of source nodes."),
+
+          hr(),
+
+          h4(icon("lightbulb"), " Intervention Strategies"),
+          tags$ul(
+            tags$li(
+              strong("Direct Intervention: "), "Focus management actions directly on high-leverage nodes"
+            ),
+            tags$li(
+              strong("Monitoring: "), "Track changes in leverage points as early warning indicators"
+            ),
+            tags$li(
+              strong("Policy Design: "), "Design policies that strengthen or weaken connections to leverage points"
+            ),
+            tags$li(
+              strong("Stakeholder Engagement: "), "Prioritize engagement with actors associated with these nodes"
+            )
+          )
+        )
+      )
+    })
 
   })
 }

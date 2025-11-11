@@ -1,0 +1,323 @@
+A - Activities:
+Add
+Add Activities
+Add Activity
+Add Data Point
+Add Driver
+Add Drivers
+Add Ecosystem Service
+Add Ecosystem Services
+Add Good/Benefit
+Add Goods and Benefits
+Add Marine Process
+Add Marine Processes and Functioning
+Add Pressure
+Add Pressures
+Add Time Series Data
+Additional Resources
+Adjacency Matrix Review
+Agriculture:
+Aquaculture:
+BOT Graphs
+BOT graphs show how key indicators change over time, revealing important dynamics like trends,
+          cycles, delays, and tipping points in your social-ecological system.
+Balancing (Negative) Loops:
+Behaviour Over Time (BOT) Graphs
+Biological:
+Brief Description:
+Case Study Context
+Case Study Name:
+Case:
+Categories of Marine Activities
+Causal Loop Diagram Creation and Export
+Chemical:
+Clarifying, Metrics, and Validation
+Closing the Loop: Drivers to Goods & Benefits
+Communication:
+Complete User Guide:
+Complete columns AC-AM in the Master Data Sheet. Link Pressures to MPF from Exercise 2b.
+Complete columns AO-AY in the Master Data Sheet. Link Activities to Pressures from Exercise 3.
+Complete columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification.
+Complete columns BC-BK in the Master Data Sheet. Link Drivers to Activities from Exercise 4.
+Complete columns L-R in the Master Data Sheet. Link ES to the G&B identified in Exercise 1.
+Complete columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a.
+Complete the DAPSI(W)R(M) feedback loop by identifying how Drivers are influenced by or respond to
+          changes in Goods & Benefits. This creates the circular causality that characterizes social-ecological systems.
+Comprehensive guides for using the ISA Data Entry module:
+Confidence:
+Controllability:
+Cultural:
+Current Activities
+Current Data
+Current Drivers
+Current Ecosystem Services
+Current Goods and Benefits
+Current Loop Connections:
+Current Marine Processes
+Current Pressures
+Cycles:
+D - Drivers:
+DAPSI(W)R(M)
+Data Management
+Data Sources
+Data Validation:
+Define Your Case Study:
+Delay Estimation:
+Delays:
+Demographic:
+Describe your marine case study context...
+Description:
+Direct drivers:
+Direct vs Indirect Drivers
+Documentation
+Driver to Goods/Benefits Connections
+Driver:
+Drivers giving rise to Activities
+ES - Ecosystem Services:
+Ecological:
+Economic:
+Ecosystem Service:
+Ecosystem Services (ES) affecting Goods and Benefits
+Ecosystem Services vs Goods & Benefits
+Edges:
+Effect:
+Element Type:
+Encapsulation Notes:
+Encapsulation:
+Endogenisation Notes:
+Endogenisation:
+Energy:
+Environmental:
+Example
+Example:
+Examples
+Examples of Activity → Pressure Links
+Examples of Driver → Activity Links
+Examples of ES → G&B Links
+Examples of Loop Closures
+Examples of MPF → ES Links
+Examples of Pressure → MPF Links
+Examples of Useful BOT Graphs
+Exercise 0:
+Exercise 0: Complexity
+Exercise 0: Unfolding Complexity and Impacts on Welfare
+Exercise 10:
+Exercise 10: Clarifying - Endogenisation and Encapsulation
+Exercise 10: Clarifying the CLD
+Exercise 11:
+Exercise 11: Metrics and Leverage Points
+Exercise 11: Metrics, Root Causes, and Leverage Points
+Exercise 12:
+Exercise 12: Presenting and Validating
+Exercise 12: Presenting and Validating Results
+Exercise 1: Goods & Benefits
+Exercise 1: Specifying Goods and Benefits (G&B)
+Exercise 2a: Ecosystem Services
+Exercise 2a: Ecosystem Services (ES) affecting Goods and Benefits
+Exercise 2b: Marine Processes
+Exercise 2b: Marine Processes and Functioning (MPF)
+Exercise 3: Pressures
+Exercise 3: Specifying Pressures on State Changes
+Exercise 4: Activities
+Exercise 4: Specifying Activities affecting Pressures
+Exercise 5: Drivers
+Exercise 5: Drivers giving rise to Activities
+Exercise 6:
+Exercise 6: Closing Loop
+Exercise 6: Closing the Loop - Drivers to Goods & Benefits
+Exercise 7:
+Exercise 7: Creating Impact-based CLD in Kumu
+Exercise 8:
+Exercise 8: Moving from Causal Logic Chains to Causal Loops
+Exercise 9:
+Exercise 9: Exporting CLD for Further Analysis
+Exercises 1-5:
+Exercises 10-12:
+Exercises 10-12: Analysis
+Exercises 10-12: Clarifying, Metrics, and Validation
+Exercises 7-9:
+Exercises 7-9: CLD
+Exercises 7-9: Causal Loop Diagram Creation and Export
+Expert Review:
+Export Data
+Feedback Loop Evidence:
+Filename:
+Fisheries:
+Follow the structured exercises to build your marine Social-Ecological System analysis.
+For each Good/Benefit, specify:
+Framework:
+Frequency:
+Geographic Scope:
+Good/Benefit:
+Goods/Benefit:
+Help
+Historical Validation:
+Hypothesis Testing:
+ISA Framework Guide
+ISA Framework Guide - DAPSI(W)R(M)
+Identified Welfare Impacts:
+Identify Key Stakeholders:
+Identify Welfare Impacts:
+Identify and classify the goods and benefits that people derive from the marine ecosystem.
+          These represent the 'W' (Welfare) component of DAPSI(W)R(M).
+Identify connections where:
+Identify the ecosystem services that underpin and contribute to each Good/Benefit identified in Exercise 1.
+          This establishes the link between ecosystem functioning and human welfare.
+Identify the fundamental marine ecological processes and functions that support ecosystem services.
+          This digs deeper into the biophysical system that underpins human benefits.
+Identify the human activities that generate the pressures on the marine environment.
+          Activities are what people actually DO in the marine system.
+Identify the pressures (direct stressors) that affect marine processes and functioning.
+          Pressures are the mechanism through which human activities impact the ecosystem state.
+Identify the underlying drivers - the fundamental social, economic, technological, and policy forces
+          that motivate and enable human activities. Understanding drivers is key to identifying leverage points for change.
+Import Data
+Import/Export and Data Management
+Importance:
+Indirect drivers:
+Infrastructure:
+Initial Complexity Mapping
+Integrated Systems Analysis (ISA) Data Entry
+Intensity:
+Internal Review:
+Key Principles
+Key Stakeholders:
+Kumu Export Options
+Leverage Point Identification:
+Leverage Points
+Linked to Activity:
+Linked to ES:
+Linked to G&B:
+Linked to MPF:
+Linked to Pressure:
+List key impacts on human welfare you've observed...
+Load existing ISA data from Excel workbook:
+Loop Closure Summary
+Loop type:
+Loops:
+M - Measures:
+MPF - Marine Processes & Functioning:
+Marine Processes and Functioning (MPF)
+Meadows' Leverage Points:
+Mechanism:
+Metrics and Indicators:
+Mining:
+Multiple:
+Name:
+Nodes:
+Overview
+Overview of the Integrated Systems Analysis Framework
+P - Pressures:
+Physical:
+Plateaus:
+Please complete Exercises 1 and 5 first to create Goods & Benefits and Drivers.
+Please fix the following issues before saving:
+Polarity:
+Policy Evaluation:
+Political:
+Prepare data for import into Kumu visualization software:
+Presentation Tips:
+Provisioning:
+Purpose
+Purpose:
+R - Responses:
+Record stakeholder feedback, validation workshop results, expert reviews...
+Regulating:
+Reinforcing (Positive) Loops:
+Reset All Data
+Reset Data
+Review the connections between DAPSI(W)R(M) elements:
+Root Cause Analysis:
+Root Causes Identified
+S - State Changes:
+Save BOT Data
+Save Exercise 0
+Save Exercise 1
+Save Exercise 2a
+Save Exercise 2b
+Save Exercise 3
+Save Exercise 4
+Save Exercise 5
+Save Exercise 6
+Save Exercises 10-12
+Save Exercises 7-9
+Save current ISA analysis to Excel workbook:
+Scale:
+Scenario Exploration:
+Sector:
+Select Element:
+Select Matrix Type:
+Select drivers and the goods/benefits they influence (positively or negatively):
+Set Geographic Scope:
+Set Temporal Scope:
+Shipping:
+Social:
+Spatial Scale:
+Spatial:
+Specifying Activities affecting Pressures
+Specifying Goods and Benefits (G&B)
+Specifying Pressures on State Changes
+Stakeholder Workshops:
+Stakeholder:
+Stakeholders:
+Steps:
+Strength:
+Supporting:
+Technological:
+Temporal Scope:
+Temporal:
+The ISA Process
+These exercises guide you through creating, refining, and exporting Causal Loop Diagrams (CLDs)
+          that visualize the structure and dynamics of your social-ecological system.
+These final exercises focus on refining your analysis, identifying leverage points for intervention,
+          and validating your findings with stakeholders and experts.
+This creates the circular DAPSI(W)R(M) framework showing how drivers ultimately affect welfare.
+This preliminary exercise helps you explore the full scope of your system before detailed analysis.
+This preliminary exercise helps you understand the full complexity of your marine social-ecological system
+          before diving into detailed analysis. It sets the context and boundaries for your ISA.
+This tool guides you through a systematic 13-exercise process:
+Thresholds:
+Time Series Plot
+Tips
+Tips for Effective CLDs
+Tourism & Recreation:
+Trend:
+Trends:
+Type:
+Types of Drivers
+Types of Feedback Loops
+Types of Goods & Benefits
+Types of Marine Processes
+Types of Patterns to Look For
+Types of Pressures
+Understanding Causal Loop Diagrams
+Understanding the distinction:
+Unfolding Complexity and Impacts on Welfare
+Unit:
+Using BOT Graphs in Analysis
+Validation Approaches:
+Validation Checklist
+Validation Notes:
+Value:
+W - (Impact on) Welfare:
+Warning:
+Waste:
+Welfare Impacts:
+What detailed processes can be simplified or grouped?
+What external factors should be brought inside the system boundary?
+What to Create
+What to Do
+What to Include
+Who is affected? Who makes decisions?
+Why Loop Closure Matters
+Year:
+e.g., 2000-2024
+e.g., Baltic Sea fisheries
+e.g., Baltic Sea, North Atlantic
+e.g., Commercial fishing
+e.g., Economic growth
+e.g., Fish catch
+e.g., Fish production
+e.g., Nutrient enrichment
+e.g., Primary production
+e.g., tonnes, %, index

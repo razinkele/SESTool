@@ -1,6 +1,6 @@
 # app.R
 # Main application file for MarineSABRES SES Shiny Application
-
+  
 # ============================================================================
 # FIX: Disable devmode to prevent shiny.i18n JavaScript double-loading
 # ============================================================================
@@ -29,152 +29,266 @@ add_submenu_tooltip <- function(submenu_item, tooltip_text) {
   return(submenu_item)
 }
 
-# Generate sidebar menu (dynamic, responds to language changes)
-generate_sidebar_menu <- function() {
-  sidebarMenu(
-    id = "sidebar_menu",
+# Helper function to determine if menu item should be shown based on user level
+should_show_menu_item <- function(item_name, user_level) {
+  # Beginner: Only show essential items
+  if (user_level == "beginner") {
+    beginner_items <- c(
+      "Getting Started",
+      "Dashboard",
+      "Create SES",  # Will show AI guided and Template based creation
+      "SES Visualization",
+      "Analysis Tools",  # Will show Loop Detection and Leverage Point Analysis only
+      "Export Data"
+    )
+    return(item_name %in% beginner_items)
+  }
 
-    add_menu_tooltip(
-      menuItem(
-        i18n$t("Getting Started"),
-        tabName = "entry_point",
-        icon = icon("compass")
-      ),
-      i18n$t("Guided entry point to find the right tools for your marine management needs")
-    ),
+  # Intermediate: Show everything (same as Expert for now)
+  if (user_level == "intermediate") {
+    return(TRUE)
+  }
 
-    add_menu_tooltip(
-      menuItem(
-        i18n$t("Dashboard"),
-        tabName = "dashboard",
-        icon = icon("dashboard")
-      ),
-      i18n$t("Overview of your project status and key metrics")
-    ),
+  # Expert: Show everything
+  return(TRUE)
+}
 
-    add_menu_tooltip(
-      menuItem(
-        i18n$t("PIMS Module"),
-        tabName = "pims",
-        icon = icon("project-diagram"),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Project Setup"), tabName = "pims_project"),
-          "Define project goals, scope, and basic information"
-        ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Stakeholders"), tabName = "pims_stakeholders"),
-          "Identify and manage stakeholders and their interests"
-        ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Resources & Risks"), tabName = "pims_resources"),
-          "Track project resources, timeline, and potential risks"
-        ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Data Management"), tabName = "pims_data"),
-          "Manage data sources, quality, and documentation"
-        ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Evaluation"), tabName = "pims_evaluation"),
-          "Evaluate project progress and outcomes"
-        )
-      ),
-      "Project Information Management System for planning and tracking"
-    ),
+# Generate sidebar menu (dynamic, responds to language changes and user level)
+generate_sidebar_menu <- function(user_level = "intermediate") {
+  # Initialize menu items list
+  menu_items <- list()
 
-    add_menu_tooltip(
-      menuItem(
-        i18n$t("Create SES"),
-        tabName = "create_ses",
-        icon = icon("layer-group"),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Choose Method"), tabName = "create_ses_choose"),
-          "Select how you want to create your Social-Ecological System"
+  # Getting Started (all levels)
+  if (should_show_menu_item("Getting Started", user_level)) {
+    menu_items <- c(menu_items, list(
+      add_menu_tooltip(
+        menuItem(
+          i18n$t("Getting Started"),
+          tabName = "entry_point",
+          icon = icon("compass")
         ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Standard Entry"), tabName = "create_ses_standard"),
-          "Traditional form-based ISA data entry"
+        i18n$t("Guided entry point to find the right tools for your marine management needs")
+      )
+    ))
+  }
+
+  # Dashboard (all levels)
+  if (should_show_menu_item("Dashboard", user_level)) {
+    menu_items <- c(menu_items, list(
+      add_menu_tooltip(
+        menuItem(
+          i18n$t("Dashboard"),
+          tabName = "dashboard",
+          icon = icon("dashboard")
         ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("AI Assistant"), tabName = "create_ses_ai"),
-          "Guided question-based SES creation"
+        i18n$t("Overview of your project status and key metrics")
+      )
+    ))
+  }
+
+  # PIMS Module (intermediate and expert only)
+  if (should_show_menu_item("PIMS Module", user_level)) {
+    menu_items <- c(menu_items, list(
+      add_menu_tooltip(
+        menuItem(
+          i18n$t("PIMS Module"),
+          tabName = "pims",
+          icon = icon("project-diagram"),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Project Setup"), tabName = "pims_project"),
+            "Define project goals, scope, and basic information"
+          ),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Stakeholders"), tabName = "pims_stakeholders"),
+            "Identify and manage stakeholders and their interests"
+          ),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Resources & Risks"), tabName = "pims_resources"),
+            "Track project resources, timeline, and potential risks"
+          ),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Data Management"), tabName = "pims_data"),
+            "Manage data sources, quality, and documentation"
+          ),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Evaluation"), tabName = "pims_evaluation"),
+            "Evaluate project progress and outcomes"
+          )
         ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Template-Based"), tabName = "create_ses_template"),
+        "Project Information Management System for planning and tracking"
+      )
+    ))
+  }
+
+  # Create SES (all levels, but beginner shows simplified menu)
+  if (should_show_menu_item("Create SES", user_level)) {
+    if (user_level == "beginner") {
+      # Beginner: Show AI guided and Template based creation as direct links
+      menu_items <- c(menu_items, list(
+        add_menu_tooltip(
+          menuItem(
+            i18n$t("AI guided SES creation"),
+            tabName = "create_ses_ai",
+            icon = icon("robot")
+          ),
+          "Guided question-based SES creation with AI assistance"
+        ),
+        add_menu_tooltip(
+          menuItem(
+            i18n$t("Template based SES creation"),
+            tabName = "create_ses_template",
+            icon = icon("file-alt")
+          ),
           "Start from pre-built SES templates"
         )
-      ),
-      "Create your Social-Ecological System using structured methods"
-    ),
-
-    add_menu_tooltip(
-      menuItem(
-        i18n$t("CLD Visualization"),
-        tabName = "cld_viz",
-        icon = icon("project-diagram")
-      ),
-      "Interactive Causal Loop Diagram visualization of your SES network"
-    ),
-
-    add_menu_tooltip(
-      menuItem(
-        i18n$t("Analysis Tools"),
-        tabName = "analysis",
-        icon = icon("chart-line"),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Network Metrics"), tabName = "analysis_metrics"),
-          "Calculate centrality, density, and other network statistics"
-        ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Loop Detection"), tabName = "analysis_loops"),
-          "Identify feedback loops and causal pathways in your network"
-        ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("BOT Analysis"), tabName = "analysis_bot"),
-          "Behavior Over Time analysis and temporal dynamics"
-        ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Simplification"), tabName = "analysis_simplify"),
-          "Simplify complex networks while preserving key structures"
+      ))
+    } else {
+      # Intermediate/Expert: Show full Create SES menu with all methods
+      menu_items <- c(menu_items, list(
+        add_menu_tooltip(
+          menuItem(
+            i18n$t("Create SES"),
+            tabName = "create_ses",
+            icon = icon("layer-group"),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("Choose Method"), tabName = "create_ses_choose"),
+              "Select how you want to create your Social-Ecological System"
+            ),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("Standard Entry"), tabName = "create_ses_standard"),
+              "Traditional form-based ISA data entry"
+            ),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("AI Assistant"), tabName = "create_ses_ai"),
+              "Guided question-based SES creation"
+            ),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("Template-Based"), tabName = "create_ses_template"),
+              "Start from pre-built SES templates"
+            )
+          ),
+          "Create your Social-Ecological System using structured methods"
         )
-      ),
-      "Advanced network analysis and metrics tools for your SES model"
-    ),
+      ))
+    }
+  }
 
-    add_menu_tooltip(
-      menuItem(
-        i18n$t("Response & Validation"),
-        tabName = "response",
-        icon = icon("tasks"),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Response Measures"), tabName = "response_measures"),
-          "Define and design management responses and interventions"
+  # SES Visualization (all levels)
+  if (should_show_menu_item("SES Visualization", user_level)) {
+    menu_items <- c(menu_items, list(
+      add_menu_tooltip(
+        menuItem(
+          i18n$t("SES Visualization"),
+          tabName = "cld_viz",
+          icon = icon("project-diagram")
         ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Scenario Builder"), tabName = "response_scenarios"),
-          "Build and compare alternative future scenarios"
-        ),
-        add_submenu_tooltip(
-          menuSubItem(i18n$t("Validation"), tabName = "response_validation"),
-          "Validate model structure and behavior with stakeholders"
+        "Interactive visualization of your Social-Ecological System network"
+      )
+    ))
+  }
+
+  # Analysis Tools (all levels, but beginners see only key analyses)
+  if (should_show_menu_item("Analysis Tools", user_level)) {
+    if (user_level == "beginner") {
+      # Beginner: Show only Loop Detection and Leverage Point Analysis
+      menu_items <- c(menu_items, list(
+        add_menu_tooltip(
+          menuItem(
+            i18n$t("Analysis Tools"),
+            tabName = "analysis",
+            icon = icon("chart-line"),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("Loop Detection"), tabName = "analysis_loops"),
+              "Identify feedback loops and causal pathways in your network"
+            ),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("Leverage Point Analysis"), tabName = "analysis_leverage"),
+              "Find key intervention points in your SES network"
+            )
+          ),
+          "Essential network analysis tools for understanding your SES"
         )
-      ),
-      "Design response measures, build scenarios, and validate your model"
-    ),
+      ))
+    } else {
+      # Intermediate/Expert: Show all analysis tools
+      menu_items <- c(menu_items, list(
+        add_menu_tooltip(
+          menuItem(
+            i18n$t("Analysis Tools"),
+            tabName = "analysis",
+            icon = icon("chart-line"),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("Network Metrics"), tabName = "analysis_metrics"),
+              "Calculate centrality, density, and other network statistics"
+            ),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("Loop Detection"), tabName = "analysis_loops"),
+              "Identify feedback loops and causal pathways in your network"
+            ),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("Leverage Point Analysis"), tabName = "analysis_leverage"),
+              "Find key intervention points in your SES network"
+            ),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("BOT Analysis"), tabName = "analysis_bot"),
+              "Behavior Over Time analysis and temporal dynamics"
+            ),
+            add_submenu_tooltip(
+              menuSubItem(i18n$t("Simplification"), tabName = "analysis_simplify"),
+              "Simplify complex networks while preserving key structures"
+            )
+          ),
+          "Advanced network analysis and metrics tools for your SES model"
+        )
+      ))
+    }
+  }
 
-    add_menu_tooltip(
-      menuItem(
-        i18n$t("Export Data"),
-        tabName = "export",
-        icon = icon("download")
-      ),
-      "Export data and generate comprehensive analysis reports"
-    ),
+  # Response & Validation (intermediate and expert only)
+  if (should_show_menu_item("Response & Validation", user_level)) {
+    menu_items <- c(menu_items, list(
+      add_menu_tooltip(
+        menuItem(
+          i18n$t("Response & Validation"),
+          tabName = "response",
+          icon = icon("tasks"),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Response Measures"), tabName = "response_measures"),
+            "Define and design management responses and interventions"
+          ),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Scenario Builder"), tabName = "response_scenarios"),
+            "Build and compare alternative future scenarios"
+          ),
+          add_submenu_tooltip(
+            menuSubItem(i18n$t("Validation"), tabName = "response_validation"),
+            "Validate model structure and behavior with stakeholders"
+          )
+        ),
+        "Design response measures, build scenarios, and validate your model"
+      )
+    ))
+  }
 
+  # Export Data (all levels)
+  if (should_show_menu_item("Export Data", user_level)) {
+    menu_items <- c(menu_items, list(
+      add_menu_tooltip(
+        menuItem(
+          i18n$t("Export Data"),
+          tabName = "export",
+          icon = icon("download")
+        ),
+        "Export data and generate comprehensive analysis reports"
+      )
+    ))
+  }
+
+  # Add horizontal rule and Quick Actions (all levels)
+  menu_items <- c(menu_items, list(
     hr(),
-
-    # Quick actions
     div(
-      style = "padding: 15px;",
+      style = "padding: 15px; text-align: center;",
       h5(i18n$t("Quick Actions")),
       actionButton(
         "save_project",
@@ -203,7 +317,10 @@ generate_sidebar_menu <- function() {
         trigger = "hover"
       )
     )
-  )
+  ))
+
+  # Build and return the dynamic menu
+  do.call(sidebarMenu, c(list(id = "sidebar_menu"), menu_items))
 }
 
 # ============================================================================
@@ -234,19 +351,44 @@ ui <- dashboardPage(
     title = "MarineSABRES SES Toolbox",
     titleWidth = 300,
 
-    # Settings button for language selector
+    # Settings dropdown (consolidates Language + User Level + About)
     tags$li(
-      class = "dropdown",
+      class = "dropdown settings-dropdown",
       tags$a(
         href = "#",
-        id = "open_settings_modal",
-        icon("globe"),
-        textOutput("current_language_display", inline = TRUE),
-        style = "cursor: pointer;"
+        id = "settings_dropdown_toggle",
+        class = "settings-dropdown-toggle",
+        icon("cog"),
+        tags$span("Settings"),
+        tags$span(class = "caret", style = "margin-left: 5px;")
+      ),
+      tags$div(
+        class = "settings-dropdown-menu",
+        tags$a(
+          href = "#",
+          id = "open_settings_modal",
+          class = "action-button",
+          icon("globe"),
+          i18n$t("Language")
+        ),
+        tags$a(
+          href = "#",
+          id = "open_user_level_modal",
+          class = "action-button",
+          icon("user-cog"),
+          i18n$t("User Experience Level")
+        ),
+        tags$a(
+          href = "#",
+          id = "open_about_modal",
+          class = "action-button",
+          icon("info-circle"),
+          "About"
+        )
       )
     ),
 
-    # User info and help
+    # Help button
     tags$li(
       class = "dropdown",
       tags$a(
@@ -258,18 +400,7 @@ ui <- dashboardPage(
       )
     ),
 
-    # About button
-    tags$li(
-      class = "dropdown",
-      tags$a(
-        href = "#",
-        id = "open_about_modal",
-        icon("info-circle"),
-        "About",
-        style = "cursor: pointer;"
-      )
-    ),
-
+    # User info
     tags$li(
       class = "dropdown",
       tags$a(
@@ -320,6 +451,38 @@ ui <- dashboardPage(
           localStorage.setItem('marinesabres_language', lang);
           window.location.search = '?language=' + lang;
         });
+
+        // Settings dropdown functionality
+        $(document).ready(function() {
+          // Settings dropdown toggle
+          $('#settings_dropdown_toggle').on('click', function(e) {
+            e.preventDefault();
+            $('.settings-dropdown').toggleClass('open');
+          });
+
+          // Close dropdown when clicking outside
+          $(document).on('click', function(e) {
+            if (!$(e.target).closest('.settings-dropdown').length) {
+              $('.settings-dropdown').removeClass('open');
+            }
+          });
+
+          // Close dropdown when clicking a menu item
+          $('.settings-dropdown-menu a').on('click', function() {
+            $('.settings-dropdown').removeClass('open');
+          });
+        });
+
+        // Custom message handler for saving user level
+        Shiny.addCustomMessageHandler('save_user_level', function(message) {
+          saveUserLevel(message.level);
+        });
+
+        // Function to save user level and reload
+        function saveUserLevel(level) {
+          localStorage.setItem('marinesabres_user_level', level);
+          window.location.search = '?user_level=' + level;
+        }
       ")),
 
       tags$style(HTML("
@@ -491,6 +654,12 @@ ui <- dashboardPage(
       });
     ")),
 
+    # User level script (for localStorage)
+    uiOutput("user_level_script"),
+
+    # Auto-save indicator (fixed position overlay)
+    auto_save_indicator_ui("auto_save"),
+
     tabItems(
 
       # ==================== ENTRY POINT (GETTING STARTED) ====================
@@ -565,6 +734,7 @@ ui <- dashboardPage(
       # ==================== ANALYSIS ====================
       tabItem(tabName = "analysis_metrics", analysis_metrics_ui("analysis_met")),
       tabItem(tabName = "analysis_loops", analysis_loops_ui("analysis_loop")),
+      tabItem(tabName = "analysis_leverage", analysis_leverage_ui("analysis_lev")),
       tabItem(tabName = "analysis_bot", analysis_bot_ui("analysis_b")),
       tabItem(tabName = "analysis_simplify", analysis_simplify_ui("analysis_simp")),
       
@@ -712,11 +882,19 @@ server <- function(input, output, session) {
   # Main project data
   project_data <- reactiveVal(init_session_data())
 
+  # User experience level (beginner/intermediate/expert)
+  # Default to intermediate for existing users
+  user_level <- reactiveVal("intermediate")
+
+  # ========== AUTO-SAVE MODULE ==========
+  # Initialize auto-save functionality
+  auto_save_server("auto_save", project_data, i18n)
+
   # ========== DYNAMIC SIDEBAR MENU ==========
-  # Renders sidebar menu dynamically based on current language
-  # This allows the menu to update when language changes
+  # Renders sidebar menu dynamically based on current language and user level
+  # This allows the menu to update when language or user level changes
   output$dynamic_sidebar <- renderMenu({
-    generate_sidebar_menu()
+    generate_sidebar_menu(user_level())
   })
 
   # User info
@@ -733,6 +911,38 @@ server <- function(input, output, session) {
     }
     AVAILABLE_LANGUAGES[[current_lang]]$name
   })
+
+  # ========== USER LEVEL STATE MANAGEMENT ==========
+
+  # Load user level from query parameter on startup
+  observe({
+    query <- parseQueryString(session$clientData$url_search)
+    if (!is.null(query$user_level) && query$user_level %in% c("beginner", "intermediate", "expert")) {
+      user_level(query$user_level)
+      cat(sprintf("[USER-LEVEL] Loaded from URL: %s\n", query$user_level))
+    }
+  })
+
+  # JavaScript to load/save user level from/to localStorage
+  output$user_level_script <- renderUI({
+    tags$script(HTML("
+      // Load user level from localStorage on startup
+      $(document).ready(function() {
+        var savedLevel = localStorage.getItem('marinesabres_user_level');
+        if (savedLevel && ['beginner', 'intermediate', 'expert'].includes(savedLevel)) {
+          Shiny.setInputValue('initial_user_level', savedLevel);
+        }
+      });
+    "))
+  })
+
+  # Update user level from localStorage
+  observeEvent(input$initial_user_level, {
+    if (!is.null(input$initial_user_level)) {
+      user_level(input$initial_user_level)
+      cat(sprintf("[USER-LEVEL] Loaded from localStorage: %s\n", input$initial_user_level))
+    }
+  }, once = TRUE)
 
   # ========== LANGUAGE SETTINGS MODAL ==========
 
@@ -820,6 +1030,84 @@ server <- function(input, output, session) {
     # Note: Sidebar menu will update automatically via renderMenu()
     # Reload session immediately to update all UI elements
     session$reload()
+  })
+
+  # ========== USER LEVEL MODAL ==========
+
+  # Show user level modal
+  observeEvent(input$open_user_level_modal, {
+    showModal(modalDialog(
+      title = tags$h3(icon("user-cog"), " ", i18n$t("User Experience Level")),
+      size = "m",
+      easyClose = FALSE,
+
+      tags$div(
+        style = "padding: 10px;",
+
+        tags$p(
+          style = "margin-bottom: 20px; font-size: 14px;",
+          i18n$t("Select your experience level with marine ecosystem modeling:")
+        ),
+
+        # Single radio button group with all choices
+        radioButtons(
+          "user_level_selector",
+          label = NULL,
+          choices = setNames(
+            c("beginner", "intermediate", "expert"),
+            c(
+              paste("\U0001F7E2", i18n$t("Beginner"), "-", i18n$t("Simplified interface for first-time users. Shows essential tools only.")),
+              paste("\U0001F7E1", i18n$t("Intermediate"), "-", i18n$t("Standard interface for regular users. Shows most tools and features.")),
+              paste("\U0001F534", i18n$t("Expert"), "-", i18n$t("Advanced interface showing all tools, technical terminology, and advanced options."))
+            )
+          ),
+          selected = user_level(),
+          width = "100%"
+        ),
+
+        tags$hr(),
+
+        tags$p(
+          style = "font-size: 12px; color: #666; margin-top: 15px;",
+          icon("info-circle"), " ",
+          i18n$t("The application will reload to apply the new user experience level.")
+        )
+      ),
+
+      footer = tagList(
+        actionButton("cancel_user_level", i18n$t("Cancel"), class = "btn-default"),
+        actionButton("apply_user_level", i18n$t("Apply Changes"), class = "btn-primary", icon = icon("check"))
+      )
+    ))
+  })
+
+  # Apply user level changes
+  observeEvent(input$apply_user_level, {
+    req(input$user_level_selector)
+
+    new_level <- input$user_level_selector
+
+    # Log the change
+    cat(sprintf("[USER-LEVEL] Changing from %s to %s\n", user_level(), new_level))
+
+    # Save to localStorage and reload via JavaScript
+    session$sendCustomMessage(
+      type = "save_user_level",
+      message = list(level = new_level)
+    )
+
+    removeModal()
+
+    showNotification(
+      i18n$t("Applying new user experience level..."),
+      type = "message",
+      duration = 2
+    )
+  })
+
+  # Cancel user level changes
+  observeEvent(input$cancel_user_level, {
+    removeModal()
   })
 
   # ========== ABOUT MODAL ==========
@@ -981,6 +1269,7 @@ server <- function(input, output, session) {
   # Analysis modules
   analysis_metrics_server("analysis_met", project_data)
   analysis_loops_server("analysis_loop", project_data)
+  analysis_leverage_server("analysis_lev", project_data)
   analysis_bot_server("analysis_b", project_data)
   analysis_simplify_server("analysis_simp", project_data)
   

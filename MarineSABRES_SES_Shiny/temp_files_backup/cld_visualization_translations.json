@@ -1,0 +1,416 @@
+[
+  {
+    "en": "CLD Controls",
+    "es": "Controles CLD",
+    "fr": "Contrôles CLD",
+    "de": "CLD-Steuerungen",
+    "lt": "CLD valdikliai",
+    "pt": "Controles CLD",
+    "it": "Controlli CLD"
+  },
+  {
+    "en": "Generate CLD from ISA",
+    "es": "Generar CLD desde ISA",
+    "fr": "Générer CLD depuis ISA",
+    "de": "CLD aus ISA generieren",
+    "lt": "Generuoti CLD iš ISA",
+    "pt": "Gerar CLD a partir de ISA",
+    "it": "Genera CLD da ISA"
+  },
+  {
+    "en": "Layout",
+    "es": "Diseño",
+    "fr": "Disposition",
+    "de": "Layout",
+    "lt": "Išdėstymas",
+    "pt": "Layout",
+    "it": "Layout"
+  },
+  {
+    "en": "Hierarchical (DAPSI)",
+    "es": "Jerárquico (DAPSI)",
+    "fr": "Hiérarchique (DAPSI)",
+    "de": "Hierarchisch (DAPSI)",
+    "lt": "Hierarchinis (DAPSI)",
+    "pt": "Hierárquico (DAPSI)",
+    "it": "Gerarchico (DAPSI)"
+  },
+  {
+    "en": "Physics-based",
+    "es": "Basado en física",
+    "fr": "Basé sur la physique",
+    "de": "Physikbasiert",
+    "lt": "Fizikos pagrįstas",
+    "pt": "Baseado em física",
+    "it": "Basato sulla fisica"
+  },
+  {
+    "en": "Circular",
+    "es": "Circular",
+    "fr": "Circulaire",
+    "de": "Kreisförmig",
+    "lt": "Apskritiminis",
+    "pt": "Circular",
+    "it": "Circolare"
+  },
+  {
+    "en": "Manual",
+    "es": "Manual",
+    "fr": "Manuel",
+    "de": "Manuell",
+    "lt": "Rankinis",
+    "pt": "Manual",
+    "it": "Manuale"
+  },
+  {
+    "en": "Direction:",
+    "es": "Dirección:",
+    "fr": "Direction:",
+    "de": "Richtung:",
+    "lt": "Kryptis:",
+    "pt": "Direção:",
+    "it": "Direzione:"
+  },
+  {
+    "en": "Down-Up",
+    "es": "Abajo-Arriba",
+    "fr": "Bas-Haut",
+    "de": "Unten-Oben",
+    "lt": "Žemyn-Aukštyn",
+    "pt": "Baixo-Cima",
+    "it": "Basso-Alto"
+  },
+  {
+    "en": "Up-Down",
+    "es": "Arriba-Abajo",
+    "fr": "Haut-Bas",
+    "de": "Oben-Unten",
+    "lt": "Aukštyn-Žemyn",
+    "pt": "Cima-Baixo",
+    "it": "Alto-Basso"
+  },
+  {
+    "en": "Left-Right",
+    "es": "Izquierda-Derecha",
+    "fr": "Gauche-Droite",
+    "de": "Links-Rechts",
+    "lt": "Kairė-Dešinė",
+    "pt": "Esquerda-Direita",
+    "it": "Sinistra-Destra"
+  },
+  {
+    "en": "Right-Left",
+    "es": "Derecha-Izquierda",
+    "fr": "Droite-Gauche",
+    "de": "Rechts-Links",
+    "lt": "Dešinė-Kairė",
+    "pt": "Direita-Esquerda",
+    "it": "Destra-Sinistra"
+  },
+  {
+    "en": "Spacing:",
+    "es": "Espaciado:",
+    "fr": "Espacement:",
+    "de": "Abstand:",
+    "lt": "Tarpai:",
+    "pt": "Espaçamento:",
+    "it": "Spaziatura:"
+  },
+  {
+    "en": "Filters",
+    "es": "Filtros",
+    "fr": "Filtres",
+    "de": "Filter",
+    "lt": "Filtrai",
+    "pt": "Filtros",
+    "it": "Filtri"
+  },
+  {
+    "en": "Elements:",
+    "es": "Elementos:",
+    "fr": "Éléments:",
+    "de": "Elemente:",
+    "lt": "Elementai:",
+    "pt": "Elementos:",
+    "it": "Elementi:"
+  },
+  {
+    "en": "Polarity:",
+    "es": "Polaridad:",
+    "fr": "Polarité:",
+    "de": "Polarität:",
+    "lt": "Poliariškumas:",
+    "pt": "Polaridade:",
+    "it": "Polarità:"
+  },
+  {
+    "en": "Reinforcing (+)",
+    "es": "Refuerzo (+)",
+    "fr": "Renforcement (+)",
+    "de": "Verstärkend (+)",
+    "lt": "Stiprinantis (+)",
+    "pt": "Reforço (+)",
+    "it": "Rafforzamento (+)"
+  },
+  {
+    "en": "Opposing (-)",
+    "es": "Oposición (-)",
+    "fr": "Opposition (-)",
+    "de": "Gegensätzlich (-)",
+    "lt": "Priešingas (-)",
+    "pt": "Oposição (-)",
+    "it": "Opposizione (-)"
+  },
+  {
+    "en": "Strength:",
+    "es": "Intensidad:",
+    "fr": "Force:",
+    "de": "Stärke:",
+    "lt": "Stiprumas:",
+    "pt": "Força:",
+    "it": "Forza:"
+  },
+  {
+    "en": "Min Confidence:",
+    "es": "Confianza mín:",
+    "fr": "Confiance min:",
+    "de": "Min. Vertrauen:",
+    "lt": "Min. pasitikėjimas:",
+    "pt": "Confiança mín:",
+    "it": "Confidenza min:"
+  },
+  {
+    "en": "Search",
+    "es": "Buscar",
+    "fr": "Rechercher",
+    "de": "Suchen",
+    "lt": "Paieška",
+    "pt": "Pesquisar",
+    "it": "Cerca"
+  },
+  {
+    "en": "Search nodes...",
+    "es": "Buscar nodos...",
+    "fr": "Rechercher des nœuds...",
+    "de": "Knoten suchen...",
+    "lt": "Ieškoti mazgų...",
+    "pt": "Pesquisar nós...",
+    "it": "Cerca nodi..."
+  },
+  {
+    "en": "Highlight",
+    "es": "Resaltar",
+    "fr": "Mettre en évidence",
+    "de": "Hervorheben",
+    "lt": "Paryškinti",
+    "pt": "Destacar",
+    "it": "Evidenzia"
+  },
+  {
+    "en": "Clear",
+    "es": "Limpiar",
+    "fr": "Effacer",
+    "de": "Löschen",
+    "lt": "Išvalyti",
+    "pt": "Limpar",
+    "it": "Cancella"
+  },
+  {
+    "en": "Focus",
+    "es": "Enfoque",
+    "fr": "Focus",
+    "de": "Fokus",
+    "lt": "Fokusas",
+    "pt": "Foco",
+    "it": "Focus"
+  },
+  {
+    "en": "Node:",
+    "es": "Nodo:",
+    "fr": "Nœud:",
+    "de": "Knoten:",
+    "lt": "Mazgas:",
+    "pt": "Nó:",
+    "it": "Nodo:"
+  },
+  {
+    "en": "Degree:",
+    "es": "Grado:",
+    "fr": "Degré:",
+    "de": "Grad:",
+    "lt": "Laipsnis:",
+    "pt": "Grau:",
+    "it": "Grado:"
+  },
+  {
+    "en": "Apply",
+    "es": "Aplicar",
+    "fr": "Appliquer",
+    "de": "Anwenden",
+    "lt": "Taikyti",
+    "pt": "Aplicar",
+    "it": "Applica"
+  },
+  {
+    "en": "Reset",
+    "es": "Restablecer",
+    "fr": "Réinitialiser",
+    "de": "Zurücksetzen",
+    "lt": "Atkurti",
+    "pt": "Redefinir",
+    "it": "Ripristina"
+  },
+  {
+    "en": "Node Size",
+    "es": "Tamaño de nodo",
+    "fr": "Taille du nœud",
+    "de": "Knotengröße",
+    "lt": "Mazgo dydis",
+    "pt": "Tamanho do nó",
+    "it": "Dimensione nodo"
+  },
+  {
+    "en": "Default",
+    "es": "Predeterminado",
+    "fr": "Par défaut",
+    "de": "Standard",
+    "lt": "Numatytasis",
+    "pt": "Padrão",
+    "it": "Predefinito"
+  },
+  {
+    "en": "Degree",
+    "es": "Grado",
+    "fr": "Degré",
+    "de": "Grad",
+    "lt": "Laipsnis",
+    "pt": "Grau",
+    "it": "Grado"
+  },
+  {
+    "en": "Betweenness",
+    "es": "Intermediación",
+    "fr": "Intermédiarité",
+    "de": "Zwischenzentralität",
+    "lt": "Tarpininkavimas",
+    "pt": "Intermediação",
+    "it": "Intermediazione"
+  },
+  {
+    "en": "Closeness",
+    "es": "Cercanía",
+    "fr": "Proximité",
+    "de": "Nähezentralität",
+    "lt": "Artumas",
+    "pt": "Proximidade",
+    "it": "Vicinanza"
+  },
+  {
+    "en": "Eigenvector",
+    "es": "Vector propio",
+    "fr": "Vecteur propre",
+    "de": "Eigenvektor",
+    "lt": "Tikrinė vektorius",
+    "pt": "Autovetor",
+    "it": "Autovettore"
+  },
+  {
+    "en": "No ISA data found. Please complete ISA exercises first.",
+    "es": "No se encontraron datos de ISA. Por favor, complete los ejercicios de ISA primero.",
+    "fr": "Aucune donnée ISA trouvée. Veuillez d'abord compléter les exercices ISA.",
+    "de": "Keine ISA-Daten gefunden. Bitte füllen Sie zuerst die ISA-Übungen aus.",
+    "lt": "ISA duomenų nerasta. Pirmiausia užbaikite ISA užduotis.",
+    "pt": "Nenhum dado ISA encontrado. Por favor, complete os exercícios ISA primeiro.",
+    "it": "Nessun dato ISA trovato. Si prega di completare prima gli esercizi ISA."
+  },
+  {
+    "en": "Adjacency Matrix Dimension Errors:",
+    "es": "Errores de dimensión de matriz de adyacencia:",
+    "fr": "Erreurs de dimension de la matrice d'adjacence:",
+    "de": "Fehler in den Dimensionen der Adjazenzmatrix:",
+    "lt": "Gretimumo matricos matmenų klaidos:",
+    "pt": "Erros de dimensão da matriz de adjacência:",
+    "it": "Errori di dimensione della matrice di adiacenza:"
+  },
+  {
+    "en": "The CLD will be generated using the available data, but some connections may be missing. Please check your ISA data and adjacency matrices.",
+    "es": "El CLD se generará usando los datos disponibles, pero algunas conexiones pueden faltar. Por favor, verifique sus datos de ISA y matrices de adyacencia.",
+    "fr": "Le CLD sera généré en utilisant les données disponibles, mais certaines connexions peuvent manquer. Veuillez vérifier vos données ISA et matrices d'adjacence.",
+    "de": "Das CLD wird mit den verfügbaren Daten generiert, aber einige Verbindungen könnten fehlen. Bitte überprüfen Sie Ihre ISA-Daten und Adjazenzmatrizen.",
+    "lt": "CLD bus sugeneruotas naudojant turimus duomenis, tačiau kai kurie ryšiai gali trūkti. Patikrinkite savo ISA duomenis ir gretimumo matricas.",
+    "pt": "O CLD será gerado usando os dados disponíveis, mas algumas conexões podem estar faltando. Por favor, verifique seus dados ISA e matrizes de adjacência.",
+    "it": "Il CLD verrà generato utilizzando i dati disponibili, ma alcune connessioni potrebbero mancare. Si prega di controllare i dati ISA e le matrici di adiacenza."
+  },
+  {
+    "en": "Could not generate network. Please add elements in ISA exercises.",
+    "es": "No se pudo generar la red. Por favor, agregue elementos en los ejercicios de ISA.",
+    "fr": "Impossible de générer le réseau. Veuillez ajouter des éléments dans les exercices ISA.",
+    "de": "Netzwerk konnte nicht generiert werden. Bitte fügen Sie Elemente in den ISA-Übungen hinzu.",
+    "lt": "Nepavyko sugeneruoti tinklo. Pridėkite elementų ISA užduotyse.",
+    "pt": "Não foi possível gerar a rede. Por favor, adicione elementos nos exercícios ISA.",
+    "it": "Impossibile generare la rete. Si prega di aggiungere elementi negli esercizi ISA."
+  },
+  {
+    "en": "CLD generated successfully!",
+    "es": "¡CLD generado exitosamente!",
+    "fr": "CLD généré avec succès!",
+    "de": "CLD erfolgreich generiert!",
+    "lt": "CLD sėkmingai sugeneruotas!",
+    "pt": "CLD gerado com sucesso!",
+    "it": "CLD generato con successo!"
+  },
+  {
+    "en": "nodes and",
+    "es": "nodos y",
+    "fr": "nœuds et",
+    "de": "Knoten und",
+    "lt": "mazgai ir",
+    "pt": "nós e",
+    "it": "nodi e"
+  },
+  {
+    "en": "edges created.",
+    "es": "aristas creadas.",
+    "fr": "arêtes créées.",
+    "de": "Kanten erstellt.",
+    "lt": "kraštai sukurti.",
+    "pt": "arestas criadas.",
+    "it": "archi creati."
+  },
+  {
+    "en": "Error generating CLD:",
+    "es": "Error al generar CLD:",
+    "fr": "Erreur lors de la génération du CLD:",
+    "de": "Fehler beim Generieren von CLD:",
+    "lt": "Klaida generuojant CLD:",
+    "pt": "Erro ao gerar CLD:",
+    "it": "Errore nella generazione di CLD:"
+  },
+  {
+    "en": "Found",
+    "es": "Encontrado",
+    "fr": "Trouvé",
+    "de": "Gefunden",
+    "lt": "Rasta",
+    "pt": "Encontrado",
+    "it": "Trovato"
+  },
+  {
+    "en": "matching node(s)",
+    "es": "nodo(s) coincidente(s)",
+    "fr": "nœud(s) correspondant(s)",
+    "de": "übereinstimmende(r) Knoten",
+    "lt": "atitinkantis(-ys) mazgas(-ai)",
+    "pt": "nó(s) correspondente(s)",
+    "it": "nodo(i) corrispondente(i)"
+  },
+  {
+    "en": "No matching nodes found",
+    "es": "No se encontraron nodos coincidentes",
+    "fr": "Aucun nœud correspondant trouvé",
+    "de": "Keine übereinstimmenden Knoten gefunden",
+    "lt": "Atitinkančių mazgų nerasta",
+    "pt": "Nenhum nó correspondente encontrado",
+    "it": "Nessun nodo corrispondente trovato"
+  }
+]

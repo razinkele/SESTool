@@ -123,6 +123,12 @@ source("functions/export_functions.R", local = TRUE)
 # Module validation helpers
 source("functions/module_validation_helpers.R", local = TRUE)
 
+# Navigation helpers (breadcrumbs, progress bars, nav buttons)
+source("modules/navigation_helpers.R", local = TRUE)
+
+# Auto-save module
+source("modules/auto_save_module.R", local = TRUE)
+
 # ============================================================================
 # GLOBAL VARIABLES AND CONSTANTS
 # ============================================================================

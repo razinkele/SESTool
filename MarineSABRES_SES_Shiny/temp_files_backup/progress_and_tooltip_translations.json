@@ -1,0 +1,209 @@
+[
+  {
+    "en": "EP0: Role",
+    "es": "EP0: Rol",
+    "fr": "EP0: Rôle",
+    "de": "EP0: Rolle",
+    "lt": "EP0: Vaidmuo",
+    "pt": "EP0: Papel",
+    "it": "EP0: Ruolo"
+  },
+  {
+    "en": "EP1: Need",
+    "es": "EP1: Necesidad",
+    "fr": "EP1: Besoin",
+    "de": "EP1: Bedürfnis",
+    "lt": "EP1: Poreikis",
+    "pt": "EP1: Necessidade",
+    "it": "EP1: Necessità"
+  },
+  {
+    "en": "EP2-3: Context",
+    "es": "EP2-3: Contexto",
+    "fr": "EP2-3: Contexte",
+    "de": "EP2-3: Kontext",
+    "lt": "EP2-3: Kontekstas",
+    "pt": "EP2-3: Contexto",
+    "it": "EP2-3: Contesto"
+  },
+  {
+    "en": "EP4: Topic",
+    "es": "EP4: Tema",
+    "fr": "EP4: Sujet",
+    "de": "EP4: Thema",
+    "lt": "EP4: Tema",
+    "pt": "EP4: Tópico",
+    "it": "EP4: Argomento"
+  },
+  {
+    "en": "Tools",
+    "es": "Herramientas",
+    "fr": "Outils",
+    "de": "Werkzeuge",
+    "lt": "Įrankiai",
+    "pt": "Ferramentas",
+    "it": "Strumenti"
+  },
+  {
+    "en": "Typical tasks:",
+    "es": "Tareas típicas:",
+    "fr": "Tâches typiques:",
+    "de": "Typische Aufgaben:",
+    "lt": "Įprastinės užduotys:",
+    "pt": "Tarefas típicas:",
+    "it": "Compiti tipici:"
+  },
+  {
+    "en": "Skip if you're not sure or want to see all options",
+    "es": "Saltar si no está seguro o quiere ver todas las opciones",
+    "fr": "Passer si vous n'êtes pas sûr ou voulez voir toutes les options",
+    "de": "Überspringen, wenn Sie unsicher sind oder alle Optionen sehen möchten",
+    "lt": "Praleisti, jei nesate tikri arba norite matyti visas parinktis",
+    "pt": "Ignorar se não tiver certeza ou quiser ver todas as opções",
+    "it": "Salta se non sei sicuro o vuoi vedere tutte le opzioni"
+  },
+  {
+    "en": "Proceed to identify your basic human needs",
+    "es": "Continuar para identificar sus necesidades humanas básicas",
+    "fr": "Continuer pour identifier vos besoins humains fondamentaux",
+    "de": "Fahren Sie fort, um Ihre grundlegenden menschlichen Bedürfnisse zu identifizieren",
+    "lt": "Tęskite, kad nustatytumėte savo pagrindinius žmogaus poreikius",
+    "pt": "Continuar para identificar as suas necessidades humanas básicas",
+    "it": "Procedi per identificare i tuoi bisogni umani fondamentali"
+  },
+  {
+    "en": "Return to role selection",
+    "es": "Volver a la selección de rol",
+    "fr": "Retour à la sélection de rôle",
+    "de": "Zurück zur Rollenauswahl",
+    "lt": "Grįžti į vaidmens pasirinkimą",
+    "pt": "Voltar à seleção de papel",
+    "it": "Torna alla selezione del ruolo"
+  },
+  {
+    "en": "Skip if multiple needs apply or you're unsure",
+    "es": "Saltar si se aplican múltiples necesidades o no está seguro",
+    "fr": "Passer si plusieurs besoins s'appliquent ou si vous n'êtes pas sûr",
+    "de": "Überspringen, wenn mehrere Bedürfnisse zutreffen oder Sie unsicher sind",
+    "lt": "Praleisti, jei taikomi keli poreikiai arba nesate tikri",
+    "pt": "Ignorar se várias necessidades se aplicarem ou não tiver certeza",
+    "it": "Salta se si applicano più esigenze o non sei sicuro"
+  },
+  {
+    "en": "Proceed to specify activities and risks",
+    "es": "Continuar para especificar actividades y riesgos",
+    "fr": "Continuer pour spécifier les activités et les risques",
+    "de": "Fahren Sie fort, um Aktivitäten und Risiken zu spezifizieren",
+    "lt": "Tęskite, kad nurodytumėte veiklas ir rizikas",
+    "pt": "Continuar para especificar atividades e riscos",
+    "it": "Procedi per specificare attività e rischi"
+  },
+  {
+    "en": "Return to basic needs",
+    "es": "Volver a las necesidades básicas",
+    "fr": "Retour aux besoins fondamentaux",
+    "de": "Zurück zu den grundlegenden Bedürfnissen",
+    "lt": "Grįžti į pagrindinius poreikius",
+    "pt": "Voltar às necessidades básicas",
+    "it": "Torna ai bisogni fondamentali"
+  },
+  {
+    "en": "Skip if you want to explore all activities and risks",
+    "es": "Saltar si desea explorar todas las actividades y riesgos",
+    "fr": "Passer si vous voulez explorer toutes les activités et risques",
+    "de": "Überspringen, wenn Sie alle Aktivitäten und Risiken erkunden möchten",
+    "lt": "Praleisti, jei norite ištirti visas veiklas ir rizikas",
+    "pt": "Ignorar se quiser explorar todas as atividades e riscos",
+    "it": "Salta se vuoi esplorare tutte le attività e i rischi"
+  },
+  {
+    "en": "Proceed to select knowledge topics",
+    "es": "Continuar para seleccionar temas de conocimiento",
+    "fr": "Continuer pour sélectionner les sujets de connaissance",
+    "de": "Fahren Sie fort, um Wissensthemen auszuwählen",
+    "lt": "Tęskite, kad pasirinktumėte žinių temas",
+    "pt": "Continuar para selecionar tópicos de conhecimento",
+    "it": "Procedi per selezionare gli argomenti di conoscenza"
+  },
+  {
+    "en": "Return to activities and risks",
+    "es": "Volver a actividades y riesgos",
+    "fr": "Retour aux activités et risques",
+    "de": "Zurück zu Aktivitäten und Risiken",
+    "lt": "Grįžti į veiklas ir rizikas",
+    "pt": "Voltar às atividades e riscos",
+    "it": "Torna alle attività e ai rischi"
+  },
+  {
+    "en": "Skip to see all available tools",
+    "es": "Saltar para ver todas las herramientas disponibles",
+    "fr": "Passer pour voir tous les outils disponibles",
+    "de": "Überspringen, um alle verfügbaren Werkzeuge zu sehen",
+    "lt": "Praleisti, kad pamatytumėte visas prieinamas priemones",
+    "pt": "Ignorar para ver todas as ferramentas disponíveis",
+    "it": "Salta per vedere tutti gli strumenti disponibili"
+  },
+  {
+    "en": "Get personalized tool recommendations based on your pathway",
+    "es": "Obtener recomendaciones de herramientas personalizadas basadas en su ruta",
+    "fr": "Obtenir des recommandations d'outils personnalisées basées sur votre parcours",
+    "de": "Erhalten Sie personalisierte Werkzeugempfehlungen basierend auf Ihrem Pfad",
+    "lt": "Gaukite pritaikytus įrankių rekomendacijas pagal jūsų kelią",
+    "pt": "Obter recomendações de ferramentas personalizadas com base no seu percurso",
+    "it": "Ottieni raccomandazioni di strumenti personalizzate in base al tuo percorso"
+  },
+  {
+    "en": "ep_tooltip_begin_new_pathway",
+    "es": "Comenzar una nueva ruta desde el inicio",
+    "fr": "Commencer un nouveau parcours depuis le début",
+    "de": "Einen neuen Pfad von Anfang an beginnen",
+    "lt": "Pradėti naują kelią nuo pradžių",
+    "pt": "Iniciar um novo percurso desde o início",
+    "it": "Inizia un nuovo percorso dall'inizio"
+  },
+  {
+    "en": "ep_tooltip_download_pdf",
+    "es": "Descargar un informe PDF de su ruta recomendada",
+    "fr": "Télécharger un rapport PDF de votre parcours recommandé",
+    "de": "Laden Sie einen PDF-Bericht Ihres empfohlenen Pfades herunter",
+    "lt": "Atsisiųsti PDF ataskaitą apie rekomenduojamą kelią",
+    "pt": "Descarregar um relatório PDF do seu percurso recomendado",
+    "it": "Scarica un rapporto PDF del tuo percorso raccomandato"
+  },
+  {
+    "en": "ep_notify_select_role",
+    "es": "Por favor seleccione un rol para continuar",
+    "fr": "Veuillez sélectionner un rôle pour continuer",
+    "de": "Bitte wählen Sie eine Rolle aus, um fortzufahren",
+    "lt": "Pasirinkite vaidmenį, kad tęstumėte",
+    "pt": "Por favor selecione um papel para continuar",
+    "it": "Seleziona un ruolo per continuare"
+  },
+  {
+    "en": "ep_priority_start_here",
+    "es": "COMENZAR AQUÍ",
+    "fr": "COMMENCER ICI",
+    "de": "HIER BEGINNEN",
+    "lt": "PRADĖTI ČIA",
+    "pt": "COMEÇAR AQUI",
+    "it": "INIZIA QUI"
+  },
+  {
+    "en": "ep_priority_next_step",
+    "es": "SIGUIENTE PASO",
+    "fr": "ÉTAPE SUIVANTE",
+    "de": "NÄCHSTER SCHRITT",
+    "lt": "KITAS ŽINGSNIS",
+    "pt": "PRÓXIMO PASSO",
+    "it": "PROSSIMO PASSO"
+  },
+  {
+    "en": "ep_priority_also_relevant",
+    "es": "TAMBIÉN RELEVANTE",
+    "fr": "ÉGALEMENT PERTINENT",
+    "de": "AUCH RELEVANT",
+    "lt": "TAIP PAT SVARBU",
+    "pt": "TAMBÉM RELEVANTE",
+    "it": "ANCHE RILEVANTE"
+  }
+]

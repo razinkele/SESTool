@@ -24,6 +24,7 @@ create_nodes_df <- function(isa_data) {
     size = numeric(),
     font.size = numeric(),
     indicator = character(),
+    leverage_score = numeric(),
     stringsAsFactors = FALSE
   )
   
@@ -41,9 +42,10 @@ create_nodes_df <- function(isa_data) {
         image = NA_character_,
         color = ELEMENT_COLORS[["Goods & Benefits"]],
         size = 30,
-        font.size = 14
+        font.size = 14,
+        leverage_score = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
 
     nodes <- bind_rows(nodes, gb_nodes)
   }
@@ -63,8 +65,9 @@ create_nodes_df <- function(isa_data) {
         color = ELEMENT_COLORS[["Ecosystem Services"]],
         size = 25,
         font.size = 12,
+        leverage_score = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
 
     nodes <- bind_rows(nodes, es_nodes)
   }
@@ -84,8 +87,9 @@ create_nodes_df <- function(isa_data) {
         color = ELEMENT_COLORS[["Marine Processes & Functioning"]],
         size = 25,
         font.size = 12,
+        leverage_score = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
 
     nodes <- bind_rows(nodes, mpf_nodes)
   }
@@ -108,8 +112,9 @@ create_nodes_df <- function(isa_data) {
         color = ELEMENT_COLORS[["Pressures"]],
         size = 25,
         font.size = 12,
+        leverage_score = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
 
     nodes <- bind_rows(nodes, pressure_nodes)
   }
@@ -132,8 +137,9 @@ create_nodes_df <- function(isa_data) {
         color = ELEMENT_COLORS[["Activities"]],
         size = 25,
         font.size = 12,
+        leverage_score = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
 
     nodes <- bind_rows(nodes, activity_nodes)
   }
@@ -153,8 +159,9 @@ create_nodes_df <- function(isa_data) {
         color = NA_character_,  # Color handled by SVG
         size = 30,
         font.size = 14,
+        leverage_score = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
 
     nodes <- bind_rows(nodes, driver_nodes)
   }

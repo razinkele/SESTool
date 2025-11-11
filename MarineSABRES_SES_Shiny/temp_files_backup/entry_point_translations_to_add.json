@@ -1,0 +1,458 @@
+[
+  {
+    "en": "Your Progress:",
+    "es": "Su Progreso:",
+    "fr": "Votre Progression:",
+    "de": "Ihr Fortschritt:",
+    "pt": "Seu Progresso:",
+    "it": "Il Tuo Progresso:"
+  },
+  {
+    "en": "EP0: Role",
+    "es": "EP0: Rol",
+    "fr": "EP0: Rôle",
+    "de": "EP0: Rolle",
+    "pt": "EP0: Papel",
+    "it": "EP0: Ruolo"
+  },
+  {
+    "en": "EP1: Need",
+    "es": "EP1: Necesidad",
+    "fr": "EP1: Besoin",
+    "de": "EP1: Bedarf",
+    "pt": "EP1: Necessidade",
+    "it": "EP1: Necessità"
+  },
+  {
+    "en": "EP2-3: Context",
+    "es": "EP2-3: Contexto",
+    "fr": "EP2-3: Contexte",
+    "de": "EP2-3: Kontext",
+    "pt": "EP2-3: Contexto",
+    "it": "EP2-3: Contesto"
+  },
+  {
+    "en": "EP4: Topic",
+    "es": "EP4: Tema",
+    "fr": "EP4: Sujet",
+    "de": "EP4: Thema",
+    "pt": "EP4: Tópico",
+    "it": "EP4: Argomento"
+  },
+  {
+    "en": "e.g., How can we reduce fishing impacts while maintaining livelihoods?",
+    "es": "ej., ¿Cómo podemos reducir los impactos de la pesca manteniendo los medios de vida?",
+    "fr": "par ex., Comment réduire les impacts de la pêche tout en maintenant les moyens de subsistance?",
+    "de": "z.B., Wie können wir die Auswirkungen der Fischerei reduzieren und gleichzeitig den Lebensunterhalt sichern?",
+    "pt": "ex., Como podemos reduzir os impactos da pesca mantendo os meios de subsistência?",
+    "it": "es., Come possiamo ridurre gli impatti della pesca mantenendo i mezzi di sussistenza?"
+  },
+  {
+    "en": "Entry Point 0: Who Are You?",
+    "es": "Punto de Entrada 0: ¿Quién Eres?",
+    "fr": "Point d'Entrée 0: Qui Êtes-Vous?",
+    "de": "Einstiegspunkt 0: Wer Sind Sie?",
+    "pt": "Ponto de Entrada 0: Quem é Você?",
+    "it": "Punto di Ingresso 0: Chi Sei?"
+  },
+  {
+    "en": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
+    "es": "Su rol nos ayuda a recomendar las herramientas y flujos de trabajo más relevantes para su contexto de gestión marina.",
+    "fr": "Votre rôle nous aide à recommander les outils et flux de travail les plus pertinents pour votre contexte de gestion marine.",
+    "de": "Ihre Rolle hilft uns, die relevantesten Tools und Workflows für Ihren Meeresmanagementkontext zu empfehlen.",
+    "pt": "Seu papel nos ajuda a recomendar as ferramentas e fluxos de trabalho mais relevantes para seu contexto de gestão marinha.",
+    "it": "Il tuo ruolo ci aiuta a raccomandare gli strumenti e i flussi di lavoro più rilevanti per il tuo contesto di gestione marina."
+  },
+  {
+    "en": "Select your role in marine management",
+    "es": "Seleccione su rol en la gestión marina",
+    "fr": "Sélectionnez votre rôle dans la gestion marine",
+    "de": "Wählen Sie Ihre Rolle im Meeresmanagement",
+    "pt": "Selecione seu papel na gestão marinha",
+    "it": "Seleziona il tuo ruolo nella gestione marina"
+  },
+  {
+    "en": "Typical tasks:",
+    "es": "Tareas típicas:",
+    "fr": "Tâches typiques:",
+    "de": "Typische Aufgaben:",
+    "pt": "Tarefas típicas:",
+    "it": "Compiti tipici:"
+  },
+  {
+    "en": "Skip",
+    "es": "Omitir",
+    "fr": "Passer",
+    "de": "Überspringen",
+    "pt": "Pular",
+    "it": "Salta"
+  },
+  {
+    "en": "Skip if you're not sure or want to see all options",
+    "es": "Omitir si no está seguro o desea ver todas las opciones",
+    "fr": "Passer si vous n'êtes pas sûr ou souhaitez voir toutes les options",
+    "de": "Überspringen, wenn Sie unsicher sind oder alle Optionen sehen möchten",
+    "pt": "Pular se não tiver certeza ou quiser ver todas as opções",
+    "it": "Salta se non sei sicuro o vuoi vedere tutte le opzioni"
+  },
+  {
+    "en": "Continue to EP1",
+    "es": "Continuar a EP1",
+    "fr": "Continuer vers EP1",
+    "de": "Weiter zu EP1",
+    "pt": "Continuar para EP1",
+    "it": "Continua a EP1"
+  },
+  {
+    "en": "Proceed to identify your basic human needs",
+    "es": "Proceda a identificar sus necesidades humanas básicas",
+    "fr": "Procédez à l'identification de vos besoins humains fondamentaux",
+    "de": "Fahren Sie fort, um Ihre grundlegenden menschlichen Bedürfnisse zu identifizieren",
+    "pt": "Prossiga para identificar suas necessidades humanas básicas",
+    "it": "Procedi per identificare i tuoi bisogni umani fondamentali"
+  },
+  {
+    "en": "Entry Point 1: Why Do You Care?",
+    "es": "Punto de Entrada 1: ¿Por Qué Te Importa?",
+    "fr": "Point d'Entrée 1: Pourquoi Vous en Souciez-Vous?",
+    "de": "Einstiegspunkt 1: Warum Ist Ihnen Das Wichtig?",
+    "pt": "Ponto de Entrada 1: Por Que Você Se Importa?",
+    "it": "Punto di Ingresso 1: Perché Ti Importa?"
+  },
+  {
+    "en": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
+    "es": "Comprender la necesidad humana fundamental detrás de su pregunta ayuda a identificar servicios ecosistémicos relevantes y prioridades de gestión.",
+    "fr": "Comprendre le besoin humain fondamental derrière votre question aide à identifier les services écosystémiques pertinents et les priorités de gestion.",
+    "de": "Das Verständnis des grundlegenden menschlichen Bedürfnisses hinter Ihrer Frage hilft, relevante Ökosystemleistungen und Managementprioritäten zu identifizieren.",
+    "pt": "Entender a necessidade humana fundamental por trás de sua pergunta ajuda a identificar serviços ecossistêmicos relevantes e prioridades de gestão.",
+    "it": "Comprendere il bisogno umano fondamentale dietro la tua domanda aiuta a identificare i servizi ecosistemici rilevanti e le priorità di gestione."
+  },
+  {
+    "en": "What basic human need drives your question?",
+    "es": "¿Qué necesidad humana básica impulsa su pregunta?",
+    "fr": "Quel besoin humain fondamental motive votre question?",
+    "de": "Welches grundlegende menschliche Bedürfnis treibt Ihre Frage an?",
+    "pt": "Qual necessidade humana básica impulsiona sua pergunta?",
+    "it": "Quale bisogno umano fondamentale guida la tua domanda?"
+  },
+  {
+    "en": "Back",
+    "es": "Atrás",
+    "fr": "Retour",
+    "de": "Zurück",
+    "pt": "Voltar",
+    "it": "Indietro"
+  },
+  {
+    "en": "Return to role selection",
+    "es": "Volver a la selección de rol",
+    "fr": "Retourner à la sélection de rôle",
+    "de": "Zurück zur Rollenauswahl",
+    "pt": "Retornar à seleção de papel",
+    "it": "Torna alla selezione del ruolo"
+  },
+  {
+    "en": "Skip if multiple needs apply or you're unsure",
+    "es": "Omitir si aplican múltiples necesidades o no está seguro",
+    "fr": "Passer si plusieurs besoins s'appliquent ou si vous n'êtes pas sûr",
+    "de": "Überspringen, wenn mehrere Bedürfnisse zutreffen oder Sie unsicher sind",
+    "pt": "Pular se múltiplas necessidades se aplicam ou se você não tem certeza",
+    "it": "Salta se si applicano più necessità o se non sei sicuro"
+  },
+  {
+    "en": "Continue",
+    "es": "Continuar",
+    "fr": "Continuer",
+    "de": "Fortfahren",
+    "pt": "Continuar",
+    "it": "Continua"
+  },
+  {
+    "en": "Proceed to specify activities and risks",
+    "es": "Proceda a especificar actividades y riesgos",
+    "fr": "Procédez à la spécification des activités et des risques",
+    "de": "Fahren Sie fort, um Aktivitäten und Risiken zu spezifizieren",
+    "pt": "Prossiga para especificar atividades e riscos",
+    "it": "Procedi per specificare attività e rischi"
+  },
+  {
+    "en": "EP2: Activity Sectors",
+    "es": "EP2: Sectores de Actividad",
+    "fr": "EP2: Secteurs d'Activité",
+    "de": "EP2: Aktivitätssektoren",
+    "pt": "EP2: Setores de Atividade",
+    "it": "EP2: Settori di Attività"
+  },
+  {
+    "en": "Select the human activities relevant to your marine management question. These represent the 'Drivers' and 'Activities' in the DAPSI(W)R(M) framework.",
+    "es": "Seleccione las actividades humanas relevantes para su pregunta de gestión marina. Estas representan los 'Impulsores' y 'Actividades' en el marco DAPSI(W)R(M).",
+    "fr": "Sélectionnez les activités humaines pertinentes pour votre question de gestion marine. Celles-ci représentent les 'Moteurs' et 'Activités' dans le cadre DAPSI(W)R(M).",
+    "de": "Wählen Sie die für Ihre Frage zum Meeresmanagement relevanten menschlichen Aktivitäten aus. Diese repräsentieren die 'Treiber' und 'Aktivitäten' im DAPSI(W)R(M)-Framework.",
+    "pt": "Selecione as atividades humanas relevantes para sua pergunta de gestão marinha. Estas representam os 'Impulsores' e 'Atividades' no framework DAPSI(W)R(M).",
+    "it": "Seleziona le attività umane rilevanti per la tua domanda di gestione marina. Queste rappresentano i 'Fattori trainanti' e 'Attività' nel framework DAPSI(W)R(M)."
+  },
+  {
+    "en": "Select all that apply (multiple selection allowed)",
+    "es": "Seleccione todo lo que corresponda (selección múltiple permitida)",
+    "fr": "Sélectionnez tout ce qui s'applique (sélection multiple autorisée)",
+    "de": "Wählen Sie alles Zutreffende aus (Mehrfachauswahl erlaubt)",
+    "pt": "Selecione tudo que se aplica (seleção múltipla permitida)",
+    "it": "Seleziona tutto ciò che si applica (selezione multipla consentita)"
+  },
+  {
+    "en": "EP3: Risks & Hazards",
+    "es": "EP3: Riesgos y Peligros",
+    "fr": "EP3: Risques et Dangers",
+    "de": "EP3: Risiken und Gefahren",
+    "pt": "EP3: Riscos e Perigos",
+    "it": "EP3: Rischi e Pericoli"
+  },
+  {
+    "en": "Select the environmental pressures, risks, or hazards you're concerned about. These represent 'Pressures' and 'State changes' in the DAPSI(W)R(M) framework.",
+    "es": "Seleccione las presiones ambientales, riesgos o peligros que le preocupan. Estos representan 'Presiones' y 'Cambios de estado' en el marco DAPSI(W)R(M).",
+    "fr": "Sélectionnez les pressions environnementales, risques ou dangers qui vous préoccupent. Ceux-ci représentent les 'Pressions' et 'Changements d'état' dans le cadre DAPSI(W)R(M).",
+    "de": "Wählen Sie die Umweltbelastungen, Risiken oder Gefahren aus, die Sie betreffen. Diese repräsentieren 'Belastungen' und 'Zustandsänderungen' im DAPSI(W)R(M)-Framework.",
+    "pt": "Selecione as pressões ambientais, riscos ou perigos que lhe preocupam. Estes representam 'Pressões' e 'Mudanças de estado' no framework DAPSI(W)R(M).",
+    "it": "Seleziona le pressioni ambientali, i rischi o i pericoli che ti preoccupano. Questi rappresentano 'Pressioni' e 'Cambiamenti di stato' nel framework DAPSI(W)R(M)."
+  },
+  {
+    "en": "Return to basic needs",
+    "es": "Volver a las necesidades básicas",
+    "fr": "Retourner aux besoins fondamentaux",
+    "de": "Zurück zu den Grundbedürfnissen",
+    "pt": "Retornar às necessidades básicas",
+    "it": "Torna ai bisogni fondamentali"
+  },
+  {
+    "en": "Skip if you want to explore all activities and risks",
+    "es": "Omitir si desea explorar todas las actividades y riesgos",
+    "fr": "Passer si vous souhaitez explorer toutes les activités et risques",
+    "de": "Überspringen, wenn Sie alle Aktivitäten und Risiken erkunden möchten",
+    "pt": "Pular se quiser explorar todas as atividades e riscos",
+    "it": "Salta se vuoi esplorare tutte le attività e i rischi"
+  },
+  {
+    "en": "Proceed to select knowledge topics",
+    "es": "Proceda a seleccionar temas de conocimiento",
+    "fr": "Procédez à la sélection des sujets de connaissances",
+    "de": "Fahren Sie fort, um Wissensthemen auszuwählen",
+    "pt": "Prossiga para selecionar tópicos de conhecimento",
+    "it": "Procedi per selezionare gli argomenti di conoscenza"
+  },
+  {
+    "en": "Entry Point 4: Knowledge Domain",
+    "es": "Punto de Entrada 4: Dominio de Conocimiento",
+    "fr": "Point d'Entrée 4: Domaine de Connaissance",
+    "de": "Einstiegspunkt 4: Wissensdomäne",
+    "pt": "Ponto de Entrada 4: Domínio de Conhecimento",
+    "it": "Punto di Ingresso 4: Dominio di Conoscenza"
+  },
+  {
+    "en": "Select the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks.",
+    "es": "Seleccione los dominios de conocimiento y enfoques analíticos relevantes para su pregunta. Esto ayuda a emparejarlo con herramientas de análisis y marcos apropiados.",
+    "fr": "Sélectionnez les domaines de connaissance et approches analytiques pertinents pour votre question. Cela aide à vous associer aux outils d'analyse et cadres appropriés.",
+    "de": "Wählen Sie die für Ihre Frage relevanten Wissensdomänen und analytischen Ansätze aus. Dies hilft, Sie mit geeigneten Analysetools und Frameworks zu verbinden.",
+    "pt": "Selecione os domínios de conhecimento e abordagens analíticas relevantes para sua pergunta. Isso ajuda a combiná-lo com ferramentas de análise e frameworks apropriados.",
+    "it": "Seleziona i domini di conoscenza e gli approcci analitici rilevanti per la tua domanda. Questo aiuta ad abbinarti con strumenti di analisi e framework appropriati."
+  },
+  {
+    "en": "What topic areas are you interested in? (Select all that apply)",
+    "es": "¿En qué áreas temáticas está interesado? (Seleccione todo lo que corresponda)",
+    "fr": "Quels domaines thématiques vous intéressent? (Sélectionnez tout ce qui s'applique)",
+    "de": "An welchen Themenbereichen sind Sie interessiert? (Wählen Sie alles Zutreffende aus)",
+    "pt": "Em quais áreas temáticas você está interessado? (Selecione tudo que se aplica)",
+    "it": "Quali aree tematiche ti interessano? (Seleziona tutto ciò che si applica)"
+  },
+  {
+    "en": "Return to activities and risks",
+    "es": "Volver a actividades y riesgos",
+    "fr": "Retourner aux activités et risques",
+    "de": "Zurück zu Aktivitäten und Risiken",
+    "pt": "Retornar a atividades e riscos",
+    "it": "Torna ad attività e rischi"
+  },
+  {
+    "en": "Skip to see all available tools",
+    "es": "Omitir para ver todas las herramientas disponibles",
+    "fr": "Passer pour voir tous les outils disponibles",
+    "de": "Überspringen, um alle verfügbaren Tools anzuzeigen",
+    "pt": "Pular para ver todas as ferramentas disponíveis",
+    "it": "Salta per vedere tutti gli strumenti disponibili"
+  },
+  {
+    "en": "Get Recommendations",
+    "es": "Obtener Recomendaciones",
+    "fr": "Obtenir des Recommandations",
+    "de": "Empfehlungen Erhalten",
+    "pt": "Obter Recomendações",
+    "it": "Ottieni Raccomandazioni"
+  },
+  {
+    "en": "Get personalized tool recommendations based on your pathway",
+    "es": "Obtenga recomendaciones de herramientas personalizadas según su ruta",
+    "fr": "Obtenez des recommandations d'outils personnalisées en fonction de votre parcours",
+    "de": "Erhalten Sie personalisierte Tool-Empfehlungen basierend auf Ihrem Pfad",
+    "pt": "Obtenha recomendações de ferramentas personalizadas com base em sua jornada",
+    "it": "Ottieni raccomandazioni di strumenti personalizzate in base al tuo percorso"
+  },
+  {
+    "en": "Recommended Tools for Your Marine Management Question",
+    "es": "Herramientas Recomendadas para su Pregunta de Gestión Marina",
+    "fr": "Outils Recommandés pour Votre Question de Gestion Marine",
+    "de": "Empfohlene Tools für Ihre Meeresmanagementfrage",
+    "pt": "Ferramentas Recomendadas para sua Pergunta de Gestão Marinha",
+    "it": "Strumenti Raccomandati per la Tua Domanda di Gestione Marina"
+  },
+  {
+    "en": "Your Pathway Summary",
+    "es": "Resumen de su Ruta",
+    "fr": "Résumé de Votre Parcours",
+    "de": "Zusammenfassung Ihres Pfads",
+    "pt": "Resumo de sua Jornada",
+    "it": "Riepilogo del Tuo Percorso"
+  },
+  {
+    "en": "Role:",
+    "es": "Rol:",
+    "fr": "Rôle:",
+    "de": "Rolle:",
+    "pt": "Papel:",
+    "it": "Ruolo:"
+  },
+  {
+    "en": "Need:",
+    "es": "Necesidad:",
+    "fr": "Besoin:",
+    "de": "Bedarf:",
+    "pt": "Necessidade:",
+    "it": "Necessità:"
+  },
+  {
+    "en": "Activities:",
+    "es": "Actividades:",
+    "fr": "Activités:",
+    "de": "Aktivitäten:",
+    "pt": "Atividades:",
+    "it": "Attività:"
+  },
+  {
+    "en": "Risks:",
+    "es": "Riesgos:",
+    "fr": "Risques:",
+    "de": "Risiken:",
+    "pt": "Riscos:",
+    "it": "Rischi:"
+  },
+  {
+    "en": "Topics:",
+    "es": "Temas:",
+    "fr": "Sujets:",
+    "de": "Themen:",
+    "pt": "Tópicos:",
+    "it": "Argomenti:"
+  },
+  {
+    "en": "Recommended Workflow:",
+    "es": "Flujo de Trabajo Recomendado:",
+    "fr": "Flux de Travail Recommandé:",
+    "de": "Empfohlener Workflow:",
+    "pt": "Fluxo de Trabalho Recomendado:",
+    "it": "Flusso di Lavoro Raccomandato:"
+  },
+  {
+    "en": "Follow this sequence of tools to address your marine management question:",
+    "es": "Siga esta secuencia de herramientas para abordar su pregunta de gestión marina:",
+    "fr": "Suivez cette séquence d'outils pour répondre à votre question de gestion marine:",
+    "de": "Folgen Sie dieser Tool-Sequenz, um Ihre Meeresmanagementfrage zu beantworten:",
+    "pt": "Siga esta sequência de ferramentas para abordar sua pergunta de gestão marinha:",
+    "it": "Segui questa sequenza di strumenti per affrontare la tua domanda di gestione marina:"
+  },
+  {
+    "en": "Skill:",
+    "es": "Habilidad:",
+    "fr": "Compétence:",
+    "de": "Fähigkeit:",
+    "pt": "Habilidade:",
+    "it": "Abilità:"
+  },
+  {
+    "en": "Go to",
+    "es": "Ir a",
+    "fr": "Aller à",
+    "de": "Gehe zu",
+    "pt": "Ir para",
+    "it": "Vai a"
+  },
+  {
+    "en": "Suggested Workflow:",
+    "es": "Flujo de Trabajo Sugerido:",
+    "fr": "Flux de Travail Suggéré:",
+    "de": "Vorgeschlagener Workflow:",
+    "pt": "Fluxo de Trabalho Sugerido:",
+    "it": "Flusso di Lavoro Suggerito:"
+  },
+  {
+    "en": "Start with PIMS:",
+    "es": "Comenzar con PIMS:",
+    "fr": "Commencer avec PIMS:",
+    "de": "Beginnen Sie mit PIMS:",
+    "pt": "Comece com PIMS:",
+    "it": "Inizia con PIMS:"
+  },
+  {
+    "en": "Define your project goals, stakeholders, and timeline",
+    "es": "Defina los objetivos del proyecto, partes interesadas y cronograma",
+    "fr": "Définissez les objectifs du projet, les parties prenantes et le calendrier",
+    "de": "Definieren Sie Projektziele, Stakeholder und Zeitplan",
+    "pt": "Defina os objetivos do projeto, partes interessadas e cronograma",
+    "it": "Definisci gli obiettivi del progetto, gli stakeholder e la tempistica"
+  },
+  {
+    "en": "Build your SES model:",
+    "es": "Construya su modelo SES:",
+    "fr": "Construisez votre modèle SES:",
+    "de": "Erstellen Sie Ihr SES-Modell:",
+    "pt": "Construa seu modelo SES:",
+    "it": "Costruisci il tuo modello SES:"
+  },
+  {
+    "en": "Use ISA Data Entry to map DAPSI(W)R(M) elements",
+    "es": "Use la Entrada de Datos ISA para mapear los elementos DAPSI(W)R(M)",
+    "fr": "Utilisez la Saisie de Données ISA pour cartographier les éléments DAPSI(W)R(M)",
+    "de": "Verwenden Sie die ISA-Dateneingabe, um DAPSI(W)R(M)-Elemente zu kartieren",
+    "pt": "Use a Entrada de Dados ISA para mapear elementos DAPSI(W)R(M)",
+    "it": "Usa l'Inserimento Dati ISA per mappare gli elementi DAPSI(W)R(M)"
+  },
+  {
+    "en": "Visualize & Analyze:",
+    "es": "Visualizar y Analizar:",
+    "fr": "Visualiser et Analyser:",
+    "de": "Visualisieren & Analysieren:",
+    "pt": "Visualizar e Analisar:",
+    "it": "Visualizza e Analizza:"
+  },
+  {
+    "en": "Create CLD networks and run analysis tools",
+    "es": "Cree redes CLD y ejecute herramientas de análisis",
+    "fr": "Créez des réseaux CLD et exécutez des outils d'analyse",
+    "de": "Erstellen Sie CLD-Netzwerke und führen Sie Analysetools aus",
+    "pt": "Crie redes CLD e execute ferramentas de análise",
+    "it": "Crea reti CLD ed esegui strumenti di analisi"
+  },
+  {
+    "en": "Refine & Communicate:",
+    "es": "Refinar y Comunicar:",
+    "fr": "Affiner et Communiquer:",
+    "de": "Verfeinern & Kommunizieren:",
+    "pt": "Refinar e Comunicar:",
+    "it": "Raffinare e Comunicare:"
+  },
+  {
+    "en": "Simplify models and develop management scenarios",
+    "es": "Simplificar modelos y desarrollar escenarios de gestión",
+    "fr": "Simplifier les modèles et développer des scénarios de gestion",
+    "de": "Modelle vereinfachen und Managementszenarien entwickeln",
+    "pt": "Simplifique modelos e desenvolva cenários de gestão",
+    "it": "Semplifica i modelli e sviluppa scenari di gestione"
+  }
+]

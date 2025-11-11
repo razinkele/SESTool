@@ -1,0 +1,337 @@
+{
+  "translation": {
+    "pims_project_setup": {
+      "en": "Project Setup",
+      "es": "Configuración del Proyecto",
+      "fr": "Configuration du Projet",
+      "de": "Projekteinrichtung",
+      "lt": "Projekto Nustatymai",
+      "pt": "Configuração do Projeto",
+      "it": "Configurazione del Progetto"
+    },
+    "pims_initialize_project": {
+      "en": "Initialize your MarineSABRES project with basic information.",
+      "es": "Inicialice su proyecto MarineSABRES con información básica.",
+      "fr": "Initialisez votre projet MarineSABRES avec les informations de base.",
+      "de": "Initialisieren Sie Ihr MarineSABRES-Projekt mit grundlegenden Informationen.",
+      "lt": "Inicializuokite savo MarineSABRES projektą su pagrindine informacija.",
+      "pt": "Inicialize seu projeto MarineSABRES com informações básicas.",
+      "it": "Inizializza il tuo progetto MarineSABRES con informazioni di base."
+    },
+    "pims_project_information": {
+      "en": "Project Information",
+      "es": "Información del Proyecto",
+      "fr": "Informations sur le Projet",
+      "de": "Projektinformationen",
+      "lt": "Projekto Informacija",
+      "pt": "Informações do Projeto",
+      "it": "Informazioni sul Progetto"
+    },
+    "pims_project_name": {
+      "en": "Project Name:",
+      "es": "Nombre del Proyecto:",
+      "fr": "Nom du Projet:",
+      "de": "Projektname:",
+      "lt": "Projekto Pavadinimas:",
+      "pt": "Nome do Projeto:",
+      "it": "Nome del Progetto:"
+    },
+    "pims_enter_project_name": {
+      "en": "Enter project name...",
+      "es": "Ingrese el nombre del proyecto...",
+      "fr": "Entrez le nom du projet...",
+      "de": "Projektnamen eingeben...",
+      "lt": "Įveskite projekto pavadinimą...",
+      "pt": "Digite o nome do projeto...",
+      "it": "Inserisci il nome del progetto..."
+    },
+    "pims_demonstration_area": {
+      "en": "Demonstration Area:",
+      "es": "Área de Demostración:",
+      "fr": "Zone de Démonstration:",
+      "de": "Demonstrationsbereich:",
+      "lt": "Demonstracijos Sritis:",
+      "pt": "Área de Demonstração:",
+      "it": "Area di Dimostrazione:"
+    },
+    "pims_focal_issue": {
+      "en": "Focal Issue:",
+      "es": "Tema Principal:",
+      "fr": "Question Principale:",
+      "de": "Brennpunktthema:",
+      "lt": "Pagrindinė Problema:",
+      "pt": "Questão Principal:",
+      "it": "Questione Focale:"
+    },
+    "pims_describe_main_issue": {
+      "en": "Describe the main issue...",
+      "es": "Describa el tema principal...",
+      "fr": "Décrivez la question principale...",
+      "de": "Beschreiben Sie das Hauptproblem...",
+      "lt": "Aprašykite pagrindinę problemą...",
+      "pt": "Descreva a questão principal...",
+      "it": "Descrivi la questione principale..."
+    },
+    "pims_definition_statement": {
+      "en": "Definition Statement:",
+      "es": "Declaración de Definición:",
+      "fr": "Déclaration de Définition:",
+      "de": "Definitionserklärung:",
+      "lt": "Apibrėžimo Pareiškimas:",
+      "pt": "Declaração de Definição:",
+      "it": "Dichiarazione di Definizione:"
+    },
+    "pims_project_definition": {
+      "en": "Project definition and objectives...",
+      "es": "Definición y objetivos del proyecto...",
+      "fr": "Définition et objectifs du projet...",
+      "de": "Projektdefinition und -ziele...",
+      "lt": "Projekto apibrėžimas ir tikslai...",
+      "pt": "Definição e objetivos do projeto...",
+      "it": "Definizione e obiettivi del progetto..."
+    },
+    "pims_save": {
+      "en": "Save",
+      "es": "Guardar",
+      "fr": "Enregistrer",
+      "de": "Speichern",
+      "lt": "Išsaugoti",
+      "pt": "Salvar",
+      "it": "Salva"
+    },
+    "pims_system_scope": {
+      "en": "System Scope",
+      "es": "Alcance del Sistema",
+      "fr": "Portée du Système",
+      "de": "Systemumfang",
+      "lt": "Sistemos Apimtis",
+      "pt": "Escopo do Sistema",
+      "it": "Ambito del Sistema"
+    },
+    "pims_temporal_scale": {
+      "en": "Temporal Scale:",
+      "es": "Escala Temporal:",
+      "fr": "Échelle Temporelle:",
+      "de": "Zeitskala:",
+      "lt": "Laiko Skalė:",
+      "pt": "Escala Temporal:",
+      "it": "Scala Temporale:"
+    },
+    "pims_daily": {
+      "en": "Daily",
+      "es": "Diaria",
+      "fr": "Quotidienne",
+      "de": "Täglich",
+      "lt": "Kasdien",
+      "pt": "Diária",
+      "it": "Giornaliera"
+    },
+    "pims_monthly": {
+      "en": "Monthly",
+      "es": "Mensual",
+      "fr": "Mensuelle",
+      "de": "Monatlich",
+      "lt": "Kas Mėnesį",
+      "pt": "Mensal",
+      "it": "Mensile"
+    },
+    "pims_yearly": {
+      "en": "Yearly",
+      "es": "Anual",
+      "fr": "Annuelle",
+      "de": "Jährlich",
+      "lt": "Kasmet",
+      "pt": "Anual",
+      "it": "Annuale"
+    },
+    "pims_decadal": {
+      "en": "Decadal",
+      "es": "Decenal",
+      "fr": "Décennale",
+      "de": "Dekadisch",
+      "lt": "Dešimtmetis",
+      "pt": "Decenal",
+      "it": "Decennale"
+    },
+    "pims_spatial_scale": {
+      "en": "Spatial Scale:",
+      "es": "Escala Espacial:",
+      "fr": "Échelle Spatiale:",
+      "de": "Räumliche Skala:",
+      "lt": "Erdvinė Skalė:",
+      "pt": "Escala Espacial:",
+      "it": "Scala Spaziale:"
+    },
+    "pims_system_in_focus": {
+      "en": "System in Focus:",
+      "es": "Sistema en Foco:",
+      "fr": "Système en Focus:",
+      "de": "System im Fokus:",
+      "lt": "Sistema Fokusuota:",
+      "pt": "Sistema em Foco:",
+      "it": "Sistema in Focus:"
+    },
+    "pims_describe_system_boundaries": {
+      "en": "Describe the system boundaries...",
+      "es": "Describa los límites del sistema...",
+      "fr": "Décrivez les limites du système...",
+      "de": "Beschreiben Sie die Systemgrenzen...",
+      "lt": "Aprašykite sistemos ribas...",
+      "pt": "Descreva os limites do sistema...",
+      "it": "Descrivi i confini del sistema..."
+    },
+    "pims_current_status": {
+      "en": "Current Status",
+      "es": "Estado Actual",
+      "fr": "Statut Actuel",
+      "de": "Aktueller Status",
+      "lt": "Dabartinė Būsena",
+      "pt": "Status Atual",
+      "it": "Stato Attuale"
+    },
+    "pims_project_info_saved": {
+      "en": "Project information saved",
+      "es": "Información del proyecto guardada",
+      "fr": "Informations du projet enregistrées",
+      "de": "Projektinformationen gespeichert",
+      "lt": "Projekto informacija išsaugota",
+      "pt": "Informações do projeto salvas",
+      "it": "Informazioni del progetto salvate"
+    },
+    "pims_stakeholder_management": {
+      "en": "Stakeholder Management",
+      "es": "Gestión de Partes Interesadas",
+      "fr": "Gestion des Parties Prenantes",
+      "de": "Stakeholder-Management",
+      "lt": "Suinteresuotųjų Šalių Valdymas",
+      "pt": "Gestão de Partes Interessadas",
+      "it": "Gestione degli Stakeholder"
+    },
+    "pims_add_stakeholder": {
+      "en": "Add Stakeholder",
+      "es": "Agregar Parte Interesada",
+      "fr": "Ajouter une Partie Prenante",
+      "de": "Stakeholder hinzufügen",
+      "lt": "Pridėti Suinteresuotąją Šalį",
+      "pt": "Adicionar Parte Interessada",
+      "it": "Aggiungi Stakeholder"
+    },
+    "pims_add_stakeholder_functionality": {
+      "en": "Add stakeholder functionality to be implemented",
+      "es": "Se implementará la funcionalidad para agregar partes interesadas",
+      "fr": "Fonctionnalité d'ajout de parties prenantes à implémenter",
+      "de": "Stakeholder-Hinzufügen-Funktion wird implementiert",
+      "lt": "Suinteresuotųjų šalių pridėjimo funkcija bus įgyvendinta",
+      "pt": "Funcionalidade de adicionar partes interessadas a ser implementada",
+      "it": "Funzionalità di aggiunta stakeholder da implementare"
+    },
+    "pims_resources_and_risks": {
+      "en": "Resources & Risks",
+      "es": "Recursos y Riesgos",
+      "fr": "Ressources et Risques",
+      "de": "Ressourcen & Risiken",
+      "lt": "Ištekliai ir Rizikos",
+      "pt": "Recursos e Riscos",
+      "it": "Risorse e Rischi"
+    },
+    "pims_manage_resources": {
+      "en": "Manage project resources and track risks.",
+      "es": "Gestione los recursos del proyecto y rastree los riesgos.",
+      "fr": "Gérez les ressources du projet et suivez les risques.",
+      "de": "Projektressourcen verwalten und Risiken verfolgen.",
+      "lt": "Valdykite projekto išteklius ir stebėkite rizikas.",
+      "pt": "Gerencie recursos do projeto e rastreie riscos.",
+      "it": "Gestisci le risorse del progetto e traccia i rischi."
+    },
+    "pims_resources": {
+      "en": "Resources",
+      "es": "Recursos",
+      "fr": "Ressources",
+      "de": "Ressourcen",
+      "lt": "Ištekliai",
+      "pt": "Recursos",
+      "it": "Risorse"
+    },
+    "pims_resource_management_tbi": {
+      "en": "Resource management to be implemented",
+      "es": "Gestión de recursos por implementar",
+      "fr": "Gestion des ressources à implémenter",
+      "de": "Ressourcenverwaltung wird implementiert",
+      "lt": "Išteklių valdymas bus įgyvendintas",
+      "pt": "Gestão de recursos a ser implementada",
+      "it": "Gestione risorse da implementare"
+    },
+    "pims_risks": {
+      "en": "Risks",
+      "es": "Riesgos",
+      "fr": "Risques",
+      "de": "Risiken",
+      "lt": "Rizikos",
+      "pt": "Riscos",
+      "it": "Rischi"
+    },
+    "pims_risk_management_tbi": {
+      "en": "Risk management to be implemented",
+      "es": "Gestión de riesgos por implementar",
+      "fr": "Gestion des risques à implémenter",
+      "de": "Risikomanagement wird implementiert",
+      "lt": "Rizikų valdymas bus įgyvendintas",
+      "pt": "Gestão de riscos a ser implementada",
+      "it": "Gestione rischi da implementare"
+    },
+    "pims_data_management": {
+      "en": "Data Management",
+      "es": "Gestión de Datos",
+      "fr": "Gestion des Données",
+      "de": "Datenverwaltung",
+      "lt": "Duomenų Valdymas",
+      "pt": "Gestão de Dados",
+      "it": "Gestione dei Dati"
+    },
+    "pims_data_management_plan": {
+      "en": "Data management plan and provenance tracking.",
+      "es": "Plan de gestión de datos y seguimiento de procedencia.",
+      "fr": "Plan de gestion des données et suivi de la provenance.",
+      "de": "Datenmanagementplan und Herkunftsverfolgung.",
+      "lt": "Duomenų valdymo planas ir kilmės sekimas.",
+      "pt": "Plano de gestão de dados e rastreamento de proveniência.",
+      "it": "Piano di gestione dei dati e tracciamento della provenienza."
+    },
+    "pims_data_functionality_tbi": {
+      "en": "Data management functionality to be implemented",
+      "es": "Funcionalidad de gestión de datos por implementar",
+      "fr": "Fonctionnalité de gestion des données à implémenter",
+      "de": "Datenverwaltungsfunktion wird implementiert",
+      "lt": "Duomenų valdymo funkcija bus įgyvendinta",
+      "pt": "Funcionalidade de gestão de dados a ser implementada",
+      "it": "Funzionalità di gestione dati da implementare"
+    },
+    "pims_evaluation": {
+      "en": "Evaluation",
+      "es": "Evaluación",
+      "fr": "Évaluation",
+      "de": "Bewertung",
+      "lt": "Vertinimas",
+      "pt": "Avaliação",
+      "it": "Valutazione"
+    },
+    "pims_evaluation_framework": {
+      "en": "Process and outcome evaluation framework.",
+      "es": "Marco de evaluación de procesos y resultados.",
+      "fr": "Cadre d'évaluation des processus et des résultats.",
+      "de": "Rahmen für Prozess- und Ergebnisbewertung.",
+      "lt": "Procesų ir rezultatų vertinimo sistema.",
+      "pt": "Quadro de avaliação de processos e resultados.",
+      "it": "Quadro di valutazione dei processi e dei risultati."
+    },
+    "pims_evaluation_functionality_tbi": {
+      "en": "Evaluation functionality to be implemented",
+      "es": "Funcionalidad de evaluación por implementar",
+      "fr": "Fonctionnalité d'évaluation à implémenter",
+      "de": "Bewertungsfunktion wird implementiert",
+      "lt": "Vertinimo funkcija bus įgyvendinta",
+      "pt": "Funcionalidade de avaliação a ser implementada",
+      "it": "Funzionalità di valutazione da implementare"
+    }
+  }
+}

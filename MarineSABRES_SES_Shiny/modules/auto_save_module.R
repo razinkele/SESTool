@@ -6,60 +6,105 @@
 auto_save_indicator_ui <- function(id) {
   ns <- NS(id)
 
-  tags$div(
-    id = ns("save_indicator_container"),
-    class = "auto-save-indicator",
-    style = "position: fixed; bottom: 20px; right: 20px; z-index: 9999;",
+  tagList(
+    # JavaScript handlers
+    tags$script(HTML(sprintf("
+      // Handle auto-save to localStorage
+      Shiny.addCustomMessageHandler('autosave_to_localstorage', function(message) {
+        try {
+          localStorage.setItem('marinesabres_autosave_session', message.session_id);
+          localStorage.setItem('marinesabres_autosave_data', message.data);
+          localStorage.setItem('marinesabres_autosave_timestamp', message.timestamp);
+          console.log('[AUTO-SAVE] Saved to localStorage at', new Date(message.timestamp * 1000));
+        } catch(e) {
+          console.error('[AUTO-SAVE] localStorage save failed:', e);
+        }
+      });
 
-    # CSS for the indicator
-    tags$style(HTML("
-      .auto-save-indicator {
-        background: white;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 10px 15px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-      }
+      // Handle save indicator updates
+      Shiny.addCustomMessageHandler('update_save_indicator', function(message) {
+        $('#%s').text(message.icon);
+        $('#%s').text(message.text);
+        $('#%s').text(message.time);
 
-      .auto-save-indicator.saving {
-        background: #fff3cd;
-        border-color: #ffc107;
-      }
+        // Update indicator styling
+        var container = $('.auto-save-indicator');
+        container.removeClass('saving saved error');
 
-      .auto-save-indicator.saved {
-        background: #d4edda;
-        border-color: #28a745;
-      }
+        if (message.status === 'saving') {
+          container.addClass('saving');
+        } else if (message.status === 'saved') {
+          container.addClass('saved');
+        } else if (message.status === 'error') {
+          container.addClass('error');
+        }
+      });
 
-      .auto-save-indicator.error {
-        background: #f8d7da;
-        border-color: #dc3545;
-      }
+      // Handle page reload after recovery
+      Shiny.addCustomMessageHandler('reload_page', function(message) {
+        console.log('[AUTO-SAVE] Reloading page in ' + message.delay + 'ms...');
+        setTimeout(function() {
+          location.reload();
+        }, message.delay);
+      });
+    ", ns("status_icon"), ns("status_text"), ns("status_time")))),
 
-      .save-status-icon {
-        margin-right: 8px;
-        font-size: 16px;
-      }
+    # Save indicator div
+    tags$div(
+      id = ns("save_indicator_container"),
+      class = "auto-save-indicator",
+      style = "position: fixed; bottom: 20px; right: 20px; z-index: 9999;",
 
-      .save-status-text {
-        font-size: 13px;
-        color: #333;
-      }
+      # CSS for the indicator
+      tags$style(HTML("
+        .auto-save-indicator {
+          background: white;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 10px 15px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          transition: all 0.3s ease;
+        }
 
-      .save-status-time {
-        font-size: 11px;
-        color: #666;
-        margin-top: 3px;
-      }
-    ")),
+        .auto-save-indicator.saving {
+          background: #fff3cd;
+          border-color: #ffc107;
+        }
 
-    # Save indicator content
-    div(
-      class = "save-indicator-content",
-      span(class = "save-status-icon", id = ns("status_icon")),
-      span(class = "save-status-text", id = ns("status_text"), "Initializing..."),
-      div(class = "save-status-time", id = ns("status_time"), "")
+        .auto-save-indicator.saved {
+          background: #d4edda;
+          border-color: #28a745;
+        }
+
+        .auto-save-indicator.error {
+          background: #f8d7da;
+          border-color: #dc3545;
+        }
+
+        .save-status-icon {
+          margin-right: 8px;
+          font-size: 16px;
+        }
+
+        .save-status-text {
+          font-size: 13px;
+          color: #333;
+        }
+
+        .save-status-time {
+          font-size: 11px;
+          color: #666;
+          margin-top: 3px;
+        }
+      ")),
+
+      # Save indicator content
+      div(
+        class = "save-indicator-content",
+        span(class = "save-status-icon", id = ns("status_icon")),
+        span(class = "save-status-text", id = ns("status_text"), "Initializing..."),
+        div(class = "save-status-time", id = ns("status_time"), "")
+      )
     )
   )
 }
@@ -75,7 +120,10 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
       save_status = "initialized",  # initialized, saving, saved, error
       error_message = NULL,
       save_count = 0,
-      is_enabled = TRUE
+      is_enabled = TRUE,
+      recovery_pending = FALSE,  # Prevents auto-save until user handles recovery modal
+      data_dirty = FALSE,  # Track if data has changed since last save
+      last_data_hash = NULL  # Hash of last saved data to detect changes
     )
 
     # Get temp directory for auto-saves
@@ -84,6 +132,9 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
       dir.create(temp_dir, recursive = TRUE)
     }
 
+    # Debug: log temp directory location
+    cat(sprintf("[AUTO-SAVE] Using temp directory: %s\n", temp_dir))
+
     # Function to generate unique session ID
     session_id <- paste0("session_", format(Sys.time(), "%Y%m%d_%H%M%S"), "_",
                         sample(1000:9999, 1))
@@ -91,6 +142,13 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
     # Function to perform auto-save
     perform_auto_save <- function() {
       if (!auto_save$is_enabled) return()
+
+      # CRITICAL: Don't auto-save if recovery modal is pending
+      # This prevents overwriting the good recovery file with empty data
+      if (auto_save$recovery_pending) {
+        cat("[AUTO-SAVE] Skipping auto-save - recovery modal pending\n")
+        return()
+      }
 
       tryCatch({
         # Update status to saving
@@ -105,6 +163,23 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
           auto_save$save_status <- "initialized"
           updateSaveIndicator()
           return()
+        }
+
+        # Debug: log what we're about to save
+        if (!is.null(current_data$data) && !is.null(current_data$data$isa_data)) {
+          isa <- current_data$data$isa_data
+          cat(sprintf("[AUTO-SAVE] Saving ISA data with %d element types\n", length(isa)))
+          if (length(isa) > 0) {
+            for (name in names(isa)) {
+              if (is.data.frame(isa[[name]])) {
+                cat(sprintf("[AUTO-SAVE]   %s: %d rows\n", name, nrow(isa[[name]])))
+              }
+            }
+          } else {
+            cat("[AUTO-SAVE]   isa_data is EMPTY list\n")
+          }
+        } else {
+          cat("[AUTO-SAVE] WARNING: isa_data is NULL or missing\n")
         }
 
         # Add auto-save metadata
@@ -138,10 +213,15 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
         auto_save$save_status <- "saved"
         auto_save$last_save_time <- Sys.time()
         auto_save$save_count <- auto_save$save_count + 1
+
+        # Update hash and clear dirty flag after successful save
+        auto_save$last_data_hash <- digest::digest(current_data)
+        auto_save$data_dirty <- FALSE
+
         updateSaveIndicator()
 
         # Log save event
-        cat(sprintf("[AUTO-SAVE] Saved at %s (Count: %d)\n",
+        cat(sprintf("[AUTO-SAVE] Saved at %s (Count: %d) - data now clean\n",
                    format(Sys.time(), "%H:%M:%S"),
                    auto_save$save_count))
 
@@ -201,30 +281,47 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
       )
     }
 
-    # Auto-save timer - triggers every 30 seconds
+    # Auto-save timer - checks every 30 seconds, only saves if data changed
     observe({
       invalidateLater(30000)  # 30 seconds
-      perform_auto_save()
+      isolate({
+        # Only save if data has changed since last save
+        if (auto_save$data_dirty && auto_save$is_enabled && !auto_save$recovery_pending) {
+          perform_auto_save()
+        }
+      })
     })
 
-    # Also save on any data change (debounced)
+    # Mark data as dirty when project_data changes (no infinite loop - just sets flag)
     observeEvent(project_data_reactive(), {
-      # Debounce: only save if last save was > 5 seconds ago
-      if (!is.null(auto_save$last_save_time)) {
-        time_since_save <- as.numeric(difftime(Sys.time(), auto_save$last_save_time, units = "secs"))
-        if (time_since_save < 5) {
-          return()
+      data <- project_data_reactive()
+
+      # Calculate hash of current data
+      if (!is.null(data)) {
+        current_hash <- digest::digest(data)
+
+        # Only mark dirty if hash has changed
+        if (is.null(auto_save$last_data_hash) || current_hash != auto_save$last_data_hash) {
+          auto_save$data_dirty <- TRUE
+          cat(sprintf("[AUTO-SAVE] Data changed, marked as dirty\n"))
+
+          # Immediate save on first data load (when last_data_hash is NULL)
+          if (is.null(auto_save$last_data_hash)) {
+            cat("[AUTO-SAVE] First data detected - performing immediate save\n")
+            perform_auto_save()
+          }
         }
       }
-      perform_auto_save()
-    }, ignoreInit = TRUE)
+    })
 
     # Update indicator display every 10 seconds
     observe({
       invalidateLater(10000)  # 10 seconds
-      if (auto_save$save_status == "saved") {
-        updateSaveIndicator()
-      }
+      isolate({
+        if (auto_save$save_status == "saved") {
+          updateSaveIndicator()
+        }
+      })
     })
 
     # Check for recoverable session on startup
@@ -238,6 +335,10 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
 
         # Only offer recovery if file is less than 24 hours old
         if (time_diff < 24) {
+          # CRITICAL: Set flag to prevent auto-save from overwriting recovery file
+          auto_save$recovery_pending <- TRUE
+          cat("[AUTO-SAVE] Recovery file found - blocking auto-save until user decision\n")
+
           # Show recovery modal
           showModal(modalDialog(
             title = tags$h4(icon("exclamation-triangle"), " ",
@@ -279,6 +380,10 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
 
     # Handle recovery confirmation
     observeEvent(input$confirm_recovery, {
+      # Clear recovery pending flag to allow auto-save to resume
+      auto_save$recovery_pending <- FALSE
+      cat("[AUTO-SAVE] Recovery confirmed - auto-save will resume after page reload\n")
+
       latest_file <- file.path(temp_dir, "latest_autosave.rds")
 
       tryCatch({
@@ -287,21 +392,45 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
         # Remove auto-save metadata before returning
         recovered_data$autosave_metadata <- NULL
 
-        # Update the project data
-        # This assumes project_data_reactive is a reactiveVal that can be updated
-        # You'll need to adjust this based on your actual implementation
+        # Update the project data reactiveVal
+        project_data_reactive(recovered_data)
+
+        # Log recovery
+        cat(sprintf("[AUTO-SAVE] Data recovered from %s\n", latest_file))
+
+        # Count total elements across all categories (use nrow for dataframes)
+        total_recovered <- sum(
+          nrow(recovered_data$data$isa_data$drivers %||% data.frame()),
+          nrow(recovered_data$data$isa_data$activities %||% data.frame()),
+          nrow(recovered_data$data$isa_data$pressures %||% data.frame()),
+          nrow(recovered_data$data$isa_data$marine_processes %||% data.frame()),
+          nrow(recovered_data$data$isa_data$ecosystem_services %||% data.frame()),
+          nrow(recovered_data$data$isa_data$goods_benefits %||% data.frame()),
+          nrow(recovered_data$data$isa_data$responses %||% data.frame()),
+          nrow(recovered_data$data$isa_data$measures %||% data.frame())
+        )
+        cat(sprintf("[AUTO-SAVE] Recovered %d total elements\n", total_recovered))
+
+        # Delete the recovery file to prevent infinite loop on reload
+        if (file.exists(latest_file)) {
+          file.remove(latest_file)
+          cat("[AUTO-SAVE] Recovery file deleted to prevent loop\n")
+        }
+
         showNotification(
           i18n$t("Data recovered successfully!"),
           type = "message",
-          duration = 5
+          duration = 3
         )
 
         removeModal()
 
-        # Return recovered data (you'll need to handle this in your main app)
-        session$userData$recovered_data <- recovered_data
+        # NOTE: No page reload needed! Data is already in project_data_reactive()
+        # and all module observers have already detected and loaded it.
+        # Page reload would destroy the session we just recovered!
 
       }, error = function(e) {
+        cat(sprintf("[AUTO-SAVE ERROR] Recovery failed: %s\n", e$message))
         showNotification(
           paste(i18n$t("Recovery failed:"), e$message),
           type = "error",
@@ -312,6 +441,10 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
 
     # Handle recovery dismissal
     observeEvent(input$discard_recovery, {
+      # Clear recovery pending flag to allow auto-save to resume
+      auto_save$recovery_pending <- FALSE
+      cat("[AUTO-SAVE] Recovery discarded - auto-save resumed\n")
+
       removeModal()
       # Delete the recovery file
       latest_file <- file.path(temp_dir, "latest_autosave.rds")
@@ -343,44 +476,3 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
   })
 }
 
-# JavaScript handlers for localStorage and UI updates
-auto_save_js <- function() {
-  tags$script(HTML("
-    // Handle auto-save to localStorage
-    Shiny.addCustomMessageHandler('autosave_to_localstorage', function(message) {
-      try {
-        localStorage.setItem('marinesabres_autosave_session', message.session_id);
-        localStorage.setItem('marinesabres_autosave_data', message.data);
-        localStorage.setItem('marinesabres_autosave_timestamp', message.timestamp);
-        console.log('[AUTO-SAVE] Saved to localStorage at', new Date(message.timestamp * 1000));
-      } catch(e) {
-        console.error('[AUTO-SAVE] localStorage save failed:', e);
-      }
-    });
-
-    // Handle save indicator updates
-    Shiny.addCustomMessageHandler('update_save_indicator', function(message) {
-      $('#status_icon').text(message.icon);
-      $('#status_text').text(message.text);
-      $('#status_time').text(message.time);
-
-      // Update indicator styling
-      var container = $('.auto-save-indicator');
-      container.removeClass('saving saved error');
-
-      if (message.status === 'saving') {
-        container.addClass('saving');
-      } else if (message.status === 'saved') {
-        container.addClass('saved');
-      } else if (message.status === 'error') {
-        container.addClass('error');
-      }
-    });
-
-    // Clear localStorage on explicit user logout/close
-    window.addEventListener('beforeunload', function(e) {
-      // Note: Don't clear here - we want to keep the backup
-      // localStorage will be cleared only on successful recovery or user choice
-    });
-  "))
-}
