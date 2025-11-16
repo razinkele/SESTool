@@ -20,6 +20,11 @@ packrat/
 *~
 .DS_Store
 Thumbs.db
+nul
+_ul*
+temp_*.txt
+temp_*.json
+*.tmp
 
 # Log files
 *.log
@@ -40,6 +45,8 @@ reports/*.docx
 cache/
 temp/
 tmp/
+temp_*/
+temp_files_backup/
 
 # Environment variables
 .env

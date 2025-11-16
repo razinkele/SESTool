@@ -61,7 +61,22 @@
       "Bash(cmd /c \"taskkill /F /PID 3296\")",
       "Bash(grep:*)",
       "Bash(del test_loop_detection_fix.R)",
-      "Bash(del nul)"
+      "Bash(del nul)",
+      "Bash(cmd /c \"taskkill /F /IM Rscript.exe /T & taskkill /F /IM R.exe /T\")",
+      "Bash(cmd /c \"taskkill /F /IM R.exe /T\")",
+      "Bash(cmd /c \"taskkill /F /PID 20748\")",
+      "Bash(cmd /c \"taskkill /IM Rscript.exe /F /T\")",
+      "Bash(cmd /c \"taskkill /IM R.exe /F /T\")",
+      "Bash(del \"modules\\connection_review_module.R\")",
+      "Bash(cat:*)",
+      "Bash(del:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(cmd /c \"taskkill /F /PID 2956\")",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(python3:*)",
+      "Bash(do grep -A2 \"create_help_observer\" \"$f\")",
+      "Bash(cmd /c \"taskkill /F /T /PID 2956\")"
     ],
     "deny": [],
     "ask": []

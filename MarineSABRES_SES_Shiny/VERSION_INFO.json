@@ -1,17 +1,33 @@
 {
-  "version": "1.4.0",
-  "version_name": "AI Assistant & Navigation Overhaul",
-  "release_date": "2025-11-16",
+  "version": "1.5.0",
+  "version_name": "i18n Fixes & Deployment Enhancement",
+  "release_date": "2025-11-17",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.4.0",
+  "documentation_version": "1.5.0",
   "api_version": "1.0",
   "database_version": "1.0",
   "breaking_changes": false,
   "security_updates": false,
   "features": [
+    "✅ I18N FIXES - Auto-save status display (shows correct enabled/disabled state)",
+    "✅ I18N FIXES - Header menu translations (Settings, About, Bookmark)",
+    "✅ I18N FIXES - Settings submenu translations (Application Settings, User Experience Level)",
+    "✅ I18N FIXES - All sidebar menu items properly translated",
+    "✅ I18N FIXES - Translation validation (1,196 entries, 0 duplicates)",
+    "✅ I18N FIXES - All 7 languages complete (en, es, fr, de, lt, pt, it)",
+    "✅ DEPLOYMENT - Pre-deployment validation script (20 automated checks)",
+    "✅ DEPLOYMENT - Docker configuration enhanced (translations volume mount)",
+    "✅ DEPLOYMENT - Comprehensive deployment checklist",
+    "✅ DEPLOYMENT - Integration with deploy.sh (automated validation)",
+    "✅ DEPLOYMENT - Enhanced .dockerignore (reduced image size)",
+    "✅ CODEBASE - Cleanup of 30+ temporary files and backups",
+    "✅ CODEBASE - Reorganized test files to tests/manual/",
+    "✅ CODEBASE - Removed all _ul* temporary directories",
+    "✅ CODEBASE - Enhanced .gitignore patterns",
+    "✅ CODEBASE - Final size: 32.3 MB (optimized)",
     "✅ AUTO-SAVE SYSTEM - Comprehensive auto-save with browser localStorage and RDS backups (Sprint 1)",
     "✅ AUTO-SAVE - Session recovery modal with restore/discard options",
     "✅ AUTO-SAVE - Visual save status indicators (saving, saved, error)",
@@ -82,12 +98,14 @@
     "total_tests": 174,
     "confidence_tests": 87,
     "network_metrics_tests": 87,
+    "pre_deployment_checks": 20,
     "status": "all_passing"
   },
   "internationalization": {
-    "total_translations": 1099,
+    "total_translations": 1196,
     "languages": 7,
-    "new_translation_keys_added": 26,
+    "new_translation_keys_added": 4,
+    "duplicate_entries_fixed": 24,
     "modules_internationalized": [
       "AI ISA Assistant",
       "Create SES (all 3 methods)",
@@ -97,22 +115,37 @@
       "Response Measures & Validation",
       "Scenario Builder",
       "Analysis Tools",
-      "Main App (header, sidebar, modals)"
+      "Main App (header, sidebar, modals)",
+      "Header Menu (Settings, About, Bookmark)",
+      "Auto-save Status Indicators"
     ],
     "status": "complete"
+  },
+  "deployment": {
+    "pre_deploy_validation": "deployment/pre-deploy-check.R",
+    "deployment_checklist": "deployment/DEPLOYMENT_CHECKLIST.md",
+    "docker_ready": true,
+    "shiny_server_ready": true,
+    "status": "production_ready"
   },
   "contributors": [
     "Claude Code",
     "MarineSABRES Team"
   ],
   "build_info": {
-    "build_date": "2025-11-08T15:50:00Z",
-    "build_environment": "beta",
-    "git_branch": "main",
-    "last_git_commit": "a052be8"
+    "build_date": "2025-11-17T15:30:00Z",
+    "build_environment": "production",
+    "git_branch": "refactor/i18n-fix",
+    "last_git_commit": "pending"
   },
   "documentation": {
     "completion_status": "V1.4.0_COMPLETION_STATUS.md",
+    "i18n_fixes": "I18N_COMPREHENSIVE_FIXES.md",
+    "deployment_guide": "deployment/DEPLOYMENT_GUIDE.md",
+    "deployment_checklist": "deployment/DEPLOYMENT_CHECKLIST.md",
+    "deployment_update": "deployment/DEPLOYMENT_UPDATE_SUMMARY.md",
+    "codebase_cleanup": "docs/CODEBASE_CLEANUP_SUMMARY.md",
+    "pre_deploy_check": "deployment/pre-deploy-check.R",
     "ai_assistant": "AI_ISA_ASSISTANT_COMPLETE.md",
     "navigation": "NAVIGATION_INTEGRATION_COMPLETE.md",
     "bug_fixes_intervention": "INTERVENTION_ANALYSIS_FIXES_COMPLETE.md",

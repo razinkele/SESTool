@@ -80,6 +80,18 @@ cld_viz_ui <- function(id) {
     ")),
 
     fluidRow(
+      column(12,
+        create_module_header(
+          ns = ns,
+          title_key = "Causal Loop Diagram Visualization",
+          subtitle_key = "Interactive network visualization of your social-ecological system",
+          help_id = "help_cld",
+          i18n = i18n
+        )
+      )
+    ),
+
+    fluidRow(
       # Left sidebar column with controls
       column(
         width = 3,
@@ -229,7 +241,7 @@ cld_viz_ui <- function(id) {
 #' }
 #'
 #' @export
-cld_viz_server <- function(id, project_data_reactive) {
+cld_viz_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
 
     # === REACTIVE VALUES ===
@@ -657,6 +669,31 @@ cld_viz_server <- function(id, project_data_reactive) {
           visUpdateEdges(reset_edges)
       }
     })
+
+    # === HELP MODAL ===
+    create_help_observer(
+      input, "help_cld", "cld_guide_title",
+      tagList(
+        h4(i18n$t("cld_guide_what_is_cld_title")),
+        p(i18n$t("cld_guide_what_is_cld_p1")),
+        p(i18n$t("cld_guide_what_is_cld_p2")),
+        hr(),
+        h4(i18n$t("cld_guide_how_to_read_title")),
+        tags$ul(
+          tags$li(strong(i18n$t("nodes_label")), i18n$t("cld_guide_nodes_desc")),
+          tags$li(strong(i18n$t("edges_label")), i18n$t("cld_guide_edges_desc")),
+          tags$li(strong(i18n$t("polarity_label")), i18n$t("cld_guide_polarity_desc"))
+        ),
+        hr(),
+        h4(i18n$t("cld_guide_controls_title")),
+        tags$ul(
+          tags$li(strong(i18n$t("layout_label")), i18n$t("cld_guide_layout_desc")),
+          tags$li(strong(i18n$t("highlight_leverage_label")), i18n$t("cld_guide_leverage_desc")),
+          tags$li(strong(i18n$t("highlight_loop_label")), i18n$t("cld_guide_loop_desc"))
+        )
+      ),
+      i18n
+    )
 
   })
 }

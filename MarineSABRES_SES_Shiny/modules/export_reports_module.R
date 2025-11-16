@@ -1,3 +1,6 @@
+library(shiny)
+library(shinydashboard)
+
 # modules/export_reports_module.R
 # Export & Reports Module
 # Purpose: Handle data export, visualization export, and report generation
@@ -15,8 +18,13 @@ export_reports_ui <- function(id, i18n) {
   tagList(
     fluidRow(
       column(12,
-        h2(i18n$t("Export & Reports")),
-        p(i18n$t("Export your data, visualizations, and generate comprehensive reports."))
+        create_module_header(
+          ns = ns,
+          title_key = "Export & Reports",
+          subtitle_key = "Export your data, visualizations, and generate comprehensive reports.",
+          help_id = "help_export",
+          i18n = i18n
+        )
       )
     ),
 
@@ -210,29 +218,33 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
         # Render the report
         # Ensure report_format is a simple character string
         report_format_safe <- as.character(report_format)[1]
-        cat("[EXPORT] report_format:", report_format, "class:", class(report_format), "\n")
+        cat("[EXPORT] report_format:", report_format, "class:",
+            class(report_format), "\n")
         cat("[EXPORT] report_format_safe:", report_format_safe, "\n")
         flush.console()
 
         output_format <- switch(report_format_safe,
-                                "HTML" = "html_document",
-                                "PDF" = "pdf_document",
-                                "Word" = "word_document",
-                                "html_document"  # default
+          "HTML" = "html_document",
+          "PDF" = "pdf_document",
+          "Word" = "word_document",
+          "html_document"  # default
         )
 
         output_ext <- switch(report_format_safe,
-                            "HTML" = ".html",
-                            "PDF" = ".pdf",
-                            "Word" = ".docx",
-                            ".html"  # default
+          "HTML" = ".html",
+          "PDF" = ".pdf",
+          "Word" = ".docx",
+          ".html"  # default
         )
 
         output_file <- tempfile(fileext = output_ext)
 
-        cat("[EXPORT] output_format:", output_format, "class:", class(output_format), "\n")
-        cat("[EXPORT] output_file:", output_file, "class:", class(output_file), "\n")
-        cat("[EXPORT] rmd_file:", rmd_file, "class:", class(rmd_file), "\n")
+        cat("[EXPORT] output_format:", output_format, "class:",
+            class(output_format), "\n")
+        cat("[EXPORT] output_file:", output_file, "class:",
+            class(output_file), "\n")
+        cat("[EXPORT] rmd_file:", rmd_file, "class:",
+            class(rmd_file), "\n")
         flush.console()
 
         cat("[EXPORT] About to call rmarkdown::render()...\n")
@@ -258,11 +270,10 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
           cat("[EXPORT] Opening HTML report in browser...\n")
           browseURL(output_file)
 
-          showNotification(
-            i18n$t("Report opened in your browser! You can also download it below."),
-            type = "message",
-            duration = 5
+          msg <- i18n$t(
+            "Report opened in your browser! You can also download it below."
           )
+          showNotification(msg, type = "message", duration = 5)
 
           # Still show download option
           showModal(modalDialog(
@@ -347,8 +358,25 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
       },
       content = function(file) {
         # Implement visualization export logic
-        showNotification("Visualization export not yet implemented", type = "warning")
+        showNotification(
+          "Visualization export not yet implemented",
+          type = "warning"
+        )
       }
+    )
+
+    # Help Modal ----
+    create_help_observer(
+      input, "help_export", "export_guide_title",
+      tagList(
+        h4(i18n$t("export_guide_data_title")),
+        p(i18n$t("export_guide_data_p1")),
+        h4(i18n$t("export_guide_viz_title")),
+        p(i18n$t("export_guide_viz_p1")),
+        h4(i18n$t("export_guide_reports_title")),
+        p(i18n$t("export_guide_reports_p1"))
+      ),
+      i18n
     )
   })
 }

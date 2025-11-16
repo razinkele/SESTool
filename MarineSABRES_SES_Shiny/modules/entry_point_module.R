@@ -6,7 +6,7 @@
 # UI FUNCTION
 # ============================================================================
 
-entry_point_ui <- function(id) {
+entry_point_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
@@ -105,7 +105,7 @@ entry_point_ui <- function(id) {
 # SERVER FUNCTION
 # ============================================================================
 
-entry_point_server <- function(id, project_data_reactive, parent_session = NULL, user_level_reactive = NULL) {
+entry_point_server <- function(id, project_data_reactive, i18n, parent_session = NULL, user_level_reactive = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive values to track state
@@ -129,11 +129,11 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL,
       current_user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
 
       if (rv$current_screen == "welcome") {
-        render_welcome_screen(session$ns)
+        render_welcome_screen(session$ns, i18n)
       } else if (rv$current_screen == "guided") {
-        render_guided_screen(session$ns, rv, input)
+        render_guided_screen(session$ns, rv, input, i18n)
       } else if (rv$current_screen == "recommendations") {
-        render_recommendations_screen(session$ns, rv, current_user_level)
+        render_recommendations_screen(session$ns, rv, current_user_level, i18n)
       }
     })
 
@@ -372,7 +372,7 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL,
 # UI HELPER FUNCTIONS
 # ============================================================================
 
-render_welcome_screen <- function(ns) {
+render_welcome_screen <- function(ns, i18n) {
   fluidRow(
     column(12,
       div(
@@ -417,7 +417,7 @@ render_welcome_screen <- function(ns) {
   )
 }
 
-render_guided_screen <- function(ns, rv, input) {
+render_guided_screen <- function(ns, rv, input, i18n) {
   tagList(
     # Progress tracker
     fluidRow(
@@ -444,18 +444,18 @@ render_guided_screen <- function(ns, rv, input) {
 
     # Render current step
     if (rv$current_step == 0) {
-      render_ep0(ns, rv)
+      render_ep0(ns, rv, i18n)
     } else if (rv$current_step == 1) {
-      render_ep1(ns, rv)
+      render_ep1(ns, rv, i18n)
     } else if (rv$current_step == 2) {
-      render_ep23(ns, rv)
+      render_ep23(ns, rv, i18n)
     } else if (rv$current_step == 4) {
-      render_ep4(ns, rv)
+      render_ep4(ns, rv, i18n)
     }
   )
 }
 
-render_ep0 <- function(ns, rv) {
+render_ep0 <- function(ns, rv, i18n) {
   fluidRow(
     column(12,
       div(
@@ -502,7 +502,7 @@ render_ep0 <- function(ns, rv) {
   )
 }
 
-render_ep1 <- function(ns, rv) {
+render_ep1 <- function(ns, rv, i18n) {
   fluidRow(
     column(12,
       div(
@@ -549,7 +549,7 @@ render_ep1 <- function(ns, rv) {
   )
 }
 
-render_ep23 <- function(ns, rv) {
+render_ep23 <- function(ns, rv, i18n) {
   fluidRow(
     column(6,
       div(
@@ -603,7 +603,7 @@ render_ep23 <- function(ns, rv) {
   )
 }
 
-render_ep4 <- function(ns, rv) {
+render_ep4 <- function(ns, rv, i18n) {
   fluidRow(
     column(12,
       div(
@@ -643,7 +643,7 @@ render_ep4 <- function(ns, rv) {
   )
 }
 
-render_recommendations_screen <- function(ns, rv, user_level = "intermediate") {
+render_recommendations_screen <- function(ns, rv, user_level = "intermediate", i18n) {
   # Get recommended tools based on pathway and user level
   recommended_tools <- get_tool_recommendations(rv, user_level)
 

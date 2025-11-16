@@ -107,7 +107,7 @@ AVAILABLE_LANGUAGES <- list(
 # ============================================================================
 
 # UI helper functions
-source("functions/ui_helpers.R", local = TRUE)
+source("functions/ui_helpers.R")
 
 # Data structure functions
 source("functions/data_structure.R", local = TRUE)
@@ -120,6 +120,9 @@ source("functions/visnetwork_helpers.R", local = TRUE)
 
 # Export functions
 source("functions/export_functions.R", local = TRUE)
+
+# Report generation functions
+source("functions/report_generation.R", local = TRUE)
 
 # Module validation helpers
 source("functions/module_validation_helpers.R", local = TRUE)

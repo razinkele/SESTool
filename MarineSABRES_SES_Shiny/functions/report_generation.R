@@ -3,6 +3,27 @@
 # Purpose: Centralized functions for generating various report types
 
 # ============================================================================
+# HELPER FUNCTIONS
+# ============================================================================
+
+#' Get loop data from project data (handles both old and new storage locations)
+#'
+#' @param data Project data object
+#' @return Dataframe of loop information or NULL
+get_loop_data <- function(data) {
+  # Check new location first: data$data$analysis$loops$loop_info
+  if (!is.null(data$data$analysis$loops$loop_info)) {
+    return(data$data$analysis$loops$loop_info)
+  }
+  # Fall back to legacy location: data$data$cld$loops
+  if (!is.null(data$data$cld$loops)) {
+    return(data$data$cld$loops)
+  }
+  # No loops found
+  return(NULL)
+}
+
+# ============================================================================
 # REPORT CONTENT GENERATION
 # ============================================================================
 
@@ -215,9 +236,10 @@ generate_executive_content <- function(data) {
   cat("  [Executive] da_site:", da_site, "class:", class(da_site), "\n")
   cat("  [Executive] focal_issue:", focal_issue, "class:", class(focal_issue), "\n")
 
-  # Safely count loops and stakeholders to avoid list issues
-  n_loops <- if (!is.null(data$data$cld$loops) && is.data.frame(data$data$cld$loops)) {
-    as.integer(nrow(data$data$cld$loops))
+  # Safely count loops using helper function
+  loops_data <- get_loop_data(data)
+  n_loops <- if (!is.null(loops_data) && is.data.frame(loops_data)) {
+    as.integer(nrow(loops_data))
   } else {
     0L
   }
@@ -315,6 +337,328 @@ generate_technical_content <- function(data) {
   return(content)
 }
 
+# ============================================================================
+# CONTEXT-SPECIFIC RECOMMENDATION GENERATORS
+# ============================================================================
+
+#' Generate context-specific strategic recommendations based on analysis outputs
+#'
+#' @param data Project data object
+#' @param top_leverage Top leverage point nodes
+#' @param high_in High in-degree nodes (Receivers)
+#' @param high_out High out-degree nodes (Drivers)
+#' @param high_between High betweenness nodes (Connectors)
+#' @param loops_data Loop analysis dataframe
+#' @return Character string with context-specific recommendations
+generate_strategic_recommendations <- function(data, top_leverage, high_in, high_out, high_between, loops_data) {
+  recs <- character(0)
+
+  # Analyze top leverage points for specific recommendations
+  if (!is.null(top_leverage) && is.data.frame(top_leverage) && nrow(top_leverage) > 0) {
+    top_3 <- head(top_leverage, 3)
+    recs <- c(recs, paste0(
+      "1. **Priority Intervention Points**: Target the following high-leverage nodes:\n",
+      paste(sapply(1:min(3, nrow(top_3)), function(i) {
+        paste0("   - **", top_3$label[i], "**: ",
+               "Leverage score ", round(top_3$leverage_score[i], 2),
+               " (", top_3$in_degree[i], " influences in, ",
+               top_3$out_degree[i], " influences out). ",
+               if (top_3$out_degree[i] > top_3$in_degree[i]) {
+                 "Strong driver - intervening here will cascade through the system."
+               } else if (top_3$in_degree[i] > top_3$out_degree[i]) {
+                 "Key indicator - changes here reflect broader system shifts."
+               } else {
+                 "Balanced influence - critical connector in the system."
+               })
+      }), collapse = "\n"),
+      "\n\n"
+    ))
+  }
+
+  # Analyze Driver nodes for specific intervention targets
+  if (!is.null(high_out) && is.data.frame(high_out) && nrow(high_out) > 0) {
+    driver_names <- paste(head(high_out$label, 3), collapse = ", ")
+    avg_outd <- round(mean(high_out$out_degree, na.rm = TRUE), 1)
+    recs <- c(recs, paste0(
+      "2. **Cascading Intervention Strategy**: Focus on Driver nodes (",
+      driver_names, ") which each influence an average of ", avg_outd,
+      " other system elements. Interventions targeting these nodes will have ",
+      "multiplicative effects across the system. Recommended actions:\n",
+      "   - Conduct detailed impact assessments for each Driver node\n",
+      "   - Design interventions that strengthen positive outgoing influences\n",
+      "   - Monitor downstream effects after any Driver node interventions\n\n"
+    ))
+  }
+
+  # Analyze Receiver nodes for monitoring strategy
+  if (!is.null(high_in) && is.data.frame(high_in) && nrow(high_in) > 0) {
+    receiver_names <- paste(head(high_in$label, 3), collapse = ", ")
+    avg_ind <- round(mean(high_in$in_degree, na.rm = TRUE), 1)
+    recs <- c(recs, paste0(
+      "3. **Early Warning Monitoring System**: Establish monitoring protocols for ",
+      "Receiver nodes (", receiver_names, ") which are each influenced by an average of ",
+      avg_ind, " system elements. These nodes serve as sensitive indicators:\n",
+      "   - Set up regular monitoring intervals for these indicators\n",
+      "   - Establish baseline and threshold values for each Receiver\n",
+      "   - Use changes in Receivers to detect early system shifts\n\n"
+    ))
+  }
+
+  # Analyze loop composition for system dynamics recommendations
+  if (!is.null(loops_data) && nrow(loops_data) > 0) {
+    n_reinforcing <- sum(loops_data$Type == "Reinforcing", na.rm = TRUE)
+    n_balancing <- sum(loops_data$Type == "Balancing", na.rm = TRUE)
+    total_loops <- nrow(loops_data)
+    pct_reinforcing <- round(n_reinforcing / total_loops * 100, 1)
+
+    if (pct_reinforcing > 70) {
+      recs <- c(recs, paste0(
+        "4. **High Reinforcing Loop Alert** (", pct_reinforcing, "% of loops): ",
+        "The system is heavily dominated by reinforcing feedback, indicating:\n",
+        "   - High risk of rapid, accelerating changes (tipping points)\n",
+        "   - Need for stabilization mechanisms to prevent runaway dynamics\n",
+        "   - Recommended: Strengthen balancing feedbacks through regulatory interventions\n",
+        "   - Recommended: Implement early warning systems for exponential trends\n",
+        "   - Recommended: Design 'circuit breaker' interventions to interrupt acceleration\n\n"
+      ))
+    } else if (pct_reinforcing < 30) {
+      recs <- c(recs, paste0(
+        "4. **High Balancing Loop System** (", 100 - pct_reinforcing, "% balancing): ",
+        "The system shows strong self-regulation, but this creates challenges:\n",
+        "   - Interventions will face significant resistance from balancing mechanisms\n",
+        "   - System will tend to return to previous states after disturbances\n",
+        "   - Recommended: Design persistent, sustained interventions rather than one-off actions\n",
+        "   - Recommended: Identify and work with balancing loops rather than against them\n",
+        "   - Recommended: Focus on shifting equilibrium points rather than fighting homeostasis\n\n"
+      ))
+    } else {
+      recs <- c(recs, paste0(
+        "4. **Balanced Loop Structure** (", pct_reinforcing, "% reinforcing, ",
+        100 - pct_reinforcing, "% balancing): The system shows moderate stability:\n",
+        "   - Expect both change potential and self-regulation\n",
+        "   - Interventions should leverage reinforcing loops for desired changes\n",
+        "   - Balancing loops can be used to stabilize improvements\n",
+        "   - Recommended: Map which loops affect your intervention targets\n",
+        "   - Recommended: Design interventions that work with loop dynamics\n\n"
+      ))
+    }
+  }
+
+  # Analyze Connector nodes for resilience
+  if (!is.null(high_between) && is.data.frame(high_between) && nrow(high_between) > 0) {
+    connector_names <- paste(head(high_between$label, 3), collapse = ", ")
+    recs <- c(recs, paste0(
+      "5. **System Resilience Protection**: Protect Connector nodes (",
+      connector_names, ") which bridge different parts of the system:\n",
+      "   - Avoid interventions that would remove or isolate these nodes\n",
+      "   - Consider these nodes when assessing intervention impacts\n",
+      "   - Strengthen connections around these critical bridges\n",
+      "   - Use these nodes as communication pathways for system-wide changes\n\n"
+    ))
+  }
+
+  # If no recommendations were generated, provide a fallback message
+  if (length(recs) == 0) {
+    return(paste0(
+      "**Note**: Context-specific strategic recommendations require:\n",
+      "- Leverage point analysis to be completed\n",
+      "- Loop detection analysis to be completed\n\n",
+      "Please run these analyses to generate targeted recommendations.\n\n"
+    ))
+  }
+
+  paste(recs, collapse = "")
+}
+
+#' Generate context-specific management recommendations based on system analysis
+#'
+#' @param data Project data object
+#' @param nodes All CLD nodes
+#' @param loops_data Loop analysis dataframe
+#' @param n_stakeholders Number of stakeholders
+#' @return Character string with context-specific management recommendations
+generate_management_recommendations <- function(data, nodes, loops_data, n_stakeholders) {
+  recs <- character(0)
+
+  # Validate inputs
+  if (is.null(nodes) || !is.data.frame(nodes) || nrow(nodes) == 0) {
+    return("No network data available for generating specific recommendations.\n\n")
+  }
+
+  # Calculate network characteristics
+  n_nodes <- nrow(nodes)
+  n_edges <- if (!is.null(data$data$cld$edges) && is.data.frame(data$data$cld$edges)) {
+    nrow(data$data$cld$edges)
+  } else {
+    0
+  }
+  density <- if (n_nodes > 1) n_edges / (n_nodes * (n_nodes - 1)) else 0
+
+  # 1. INTERVENTION DESIGN based on network density
+  if (density < 0.1) {
+    recs <- c(recs, paste0(
+      "1. **Intervention Design** (Sparse Network, Density: ", round(density, 3), "):\n",
+      "   - The low network connectivity (", round(density * 100, 1), "% of possible connections) ",
+      "suggests a modular system\n",
+      "   - **Action**: Design targeted interventions for specific subsystems\n",
+      "   - **Action**: Expect limited spillover effects between modules\n",
+      "   - **Action**: Consider strengthening key cross-module connections if system integration is desired\n",
+      "   - **Advantage**: Interventions can be tested in isolated parts with minimal system-wide risk\n\n"
+    ))
+  } else if (density < 0.3) {
+    recs <- c(recs, paste0(
+      "1. **Intervention Design** (Moderate Connectivity, Density: ", round(density, 3), "):\n",
+      "   - The moderate network connectivity (", round(density * 100, 1), "% of possible connections) ",
+      "suggests interconnected subsystems\n",
+      "   - **Action**: Design interventions considering immediate neighbors and secondary effects\n",
+      "   - **Action**: Map 2-3 step impact pathways from intervention points\n",
+      "   - **Action**: Expect some spillover but not full system-wide propagation\n",
+      "   - **Caution**: Monitor for unintended consequences in connected subsystems\n\n"
+    ))
+  } else {
+    recs <- c(recs, paste0(
+      "1. **Intervention Design** (High Connectivity, Density: ", round(density, 3), "):\n",
+      "   - The high network connectivity (", round(density * 100, 1), "% of possible connections) ",
+      "indicates a tightly coupled system\n",
+      "   - **Warning**: Any intervention will likely affect the entire system\n",
+      "   - **Action**: Conduct comprehensive impact assessments before any changes\n",
+      "   - **Action**: Use scenario analysis to explore cascading effects\n",
+      "   - **Action**: Consider pilot interventions with careful monitoring\n",
+      "   - **Advantage**: System-wide changes can be achieved through strategic single interventions\n\n"
+    ))
+  }
+
+  # 2. MONITORING STRATEGY based on leverage points
+  if ("leverage_score" %in% names(nodes) && "in_degree" %in% names(nodes)) {
+    high_leverage <- nodes[!is.na(nodes$leverage_score) & nodes$leverage_score > quantile(nodes$leverage_score, 0.75, na.rm = TRUE), ]
+    high_in <- nodes[!is.na(nodes$in_degree) & nodes$in_degree >= quantile(nodes$in_degree, 0.75, na.rm = TRUE), ]
+
+    if (!is.null(high_in) && is.data.frame(high_in) && nrow(high_in) > 0) {
+      top_indicators <- paste(head(high_in$label, 5), collapse = ", ")
+      avg_influences <- round(mean(high_in$in_degree, na.rm = TRUE), 1)
+
+      recs <- c(recs, paste0(
+        "2. **Monitoring Strategy** (Data-Driven Indicator Selection):\n",
+        "   - Establish monitoring for the following high-sensitivity indicators:\n",
+        "     ", top_indicators, "\n",
+        "   - These nodes each integrate signals from an average of ", avg_influences, " system elements\n",
+        "   - **Action**: Set up quarterly monitoring protocols for these specific indicators\n",
+        "   - **Action**: Establish baseline values and alert thresholds\n",
+        "   - **Action**: Create a dashboard tracking these nodes as system health metrics\n\n"
+      ))
+    }
+  }
+
+  # 3. ADAPTIVE MANAGEMENT based on loop dynamics
+  if (!is.null(loops_data) && nrow(loops_data) > 0) {
+    n_reinforcing <- sum(loops_data$Type == "Reinforcing", na.rm = TRUE)
+    n_balancing <- sum(loops_data$Type == "Balancing", na.rm = TRUE)
+
+    # Calculate average loop length - handle different column names
+    if ("Path" %in% names(loops_data) && !all(is.na(loops_data$Path))) {
+      loop_lengths <- nchar(gsub("[^→]", "", loops_data$Path)) + 1
+    } else if ("Elements" %in% names(loops_data) && !all(is.na(loops_data$Elements))) {
+      loop_lengths <- nchar(gsub("[^→]", "", loops_data$Elements)) + 1
+    } else if ("Length" %in% names(loops_data) && !all(is.na(loops_data$Length))) {
+      loop_lengths <- loops_data$Length
+    } else {
+      # Fallback: use default
+      loop_lengths <- rep(4, nrow(loops_data))
+    }
+    avg_loop_length <- round(mean(loop_lengths, na.rm = TRUE), 1)
+
+    # Handle NaN case
+    if (is.nan(avg_loop_length) || is.na(avg_loop_length)) {
+      avg_loop_length <- 4  # Default reasonable value
+    }
+
+    if (avg_loop_length < 4) {
+      time_scale <- "rapid (days to weeks)"
+    } else if (avg_loop_length < 6) {
+      time_scale <- "moderate (weeks to months)"
+    } else {
+      time_scale <- "slow (months to years)"
+    }
+
+    recs <- c(recs, paste0(
+      "3. **Adaptive Management** (Loop-Informed Strategy):\n",
+      "   - System contains ", n_reinforcing, " reinforcing and ", n_balancing, " balancing loops\n",
+      "   - Average loop length of ", avg_loop_length, " nodes suggests ", time_scale, " feedback response\n",
+      "   - **Action**: Time intervention assessments to match feedback cycle duration\n",
+      if (n_reinforcing > n_balancing) {
+        paste0("   - **Critical**: Monitor for accelerating trends due to reinforcing loop dominance\n",
+               "   - **Action**: Implement 'speed limits' or caps to prevent runaway dynamics\n",
+               "   - **Action**: Prepare rapid response protocols for exponential changes\n")
+      } else {
+        paste0("   - **Action**: Plan for sustained, persistent interventions to overcome balancing resistance\n",
+               "   - **Action**: Work with existing balancing loops to stabilize desired states\n",
+               "   - **Action**: Shift equilibrium points rather than fighting homeostatic pressures\n")
+      },
+      "\n"
+    ))
+  }
+
+  # 4. STAKEHOLDER ENGAGEMENT based on leverage points and stakeholder count
+  if (n_stakeholders > 0 && "leverage_score" %in% names(nodes)) {
+    # Order by leverage score and handle NA values
+    valid_leverage <- nodes[!is.na(nodes$leverage_score), ]
+    if (nrow(valid_leverage) > 0) {
+      high_leverage_top5 <- head(valid_leverage[order(-valid_leverage$leverage_score), ], 5)
+    } else {
+      high_leverage_top5 <- head(nodes, 5)
+    }
+
+    recs <- c(recs, paste0(
+      "4. **Stakeholder Engagement** (Strategic Alignment):\n",
+      "   - ", n_stakeholders, " stakeholders identified in the system\n",
+      "   - **Action**: Prioritize engaging stakeholders connected to top leverage points:\n",
+      "     ", paste(high_leverage_top5$label, collapse = ", "), "\n",
+      "   - **Action**: Use system maps to facilitate shared understanding with stakeholders\n",
+      "   - **Action**: Co-design interventions with stakeholders who manage Driver nodes\n",
+      "   - **Action**: Engage stakeholders as monitors for Receiver node indicators\n",
+      "   - **Action**: Build stakeholder coalitions around specific leverage point interventions\n\n"
+    ))
+  } else if (n_stakeholders > 0) {
+    recs <- c(recs, paste0(
+      "4. **Stakeholder Engagement**:\n",
+      "   - ", n_stakeholders, " stakeholders identified in the system\n",
+      "   - **Action**: Map stakeholder interests to system components\n",
+      "   - **Action**: Use participatory system mapping to build shared understanding\n",
+      "   - **Action**: Identify stakeholder roles in monitoring and intervention\n\n"
+    ))
+  }
+
+  # 5. NEXT STEPS - specific and actionable
+  recs <- c(recs, paste0(
+    "### Immediate Next Steps\n\n",
+    "1. **Validation Workshop**: Convene domain experts and stakeholders to validate:\n",
+    "   - The identified top leverage points and their rankings\n",
+    "   - The loop pathways and their reinforcing/balancing classification\n",
+    "   - The network structure and key connections\n\n",
+    "2. **Intervention Design Sessions**: For the top 3 leverage points, develop:\n",
+    "   - Specific intervention options (3-5 alternatives per leverage point)\n",
+    "   - Theory of change mapping how interventions propagate through loops\n",
+    "   - Risk assessment for unintended consequences\n",
+    "   - Success metrics and monitoring indicators\n\n",
+    "3. **Monitoring Protocol Development**:\n",
+    "   - Establish data collection procedures for identified Receiver nodes\n",
+    "   - Set baseline values and alert thresholds\n",
+    "   - Create reporting dashboards for system health tracking\n",
+    "   - Define monitoring frequency based on feedback loop timing\n\n",
+    "4. **Pilot Intervention Selection**:\n",
+    "   - Select 1-2 high-leverage, low-risk intervention points for initial testing\n",
+    "   - Design monitoring to detect both intended and unintended effects\n",
+    "   - Establish clear success criteria and decision points for scaling\n",
+    "   - Plan adaptive management responses to unexpected outcomes\n\n",
+    "5. **Stakeholder Communication Plan**:\n",
+    "   - Develop system visualizations for different stakeholder audiences\n",
+    "   - Schedule engagement sessions around priority leverage points\n",
+    "   - Create feedback mechanisms for stakeholder input during implementation\n\n"
+  ))
+
+  paste(recs, collapse = "")
+}
+
 #' Generate stakeholder presentation content
 #'
 #' @param data Project data object
@@ -370,8 +714,10 @@ generate_full_content <- function(data) {
     0L
   }
 
-  n_loops <- if (!is.null(data$data$cld$loops) && is.data.frame(data$data$cld$loops)) {
-    as.integer(nrow(data$data$cld$loops))
+  # Get loop count using helper function
+  loops_data <- get_loop_data(data)
+  n_loops <- if (!is.null(loops_data) && is.data.frame(loops_data)) {
+    as.integer(nrow(loops_data))
   } else {
     0L
   }
@@ -403,9 +749,16 @@ generate_full_content <- function(data) {
 
   # ========== DETAILED LOOP ANALYSIS ==========
   cat("  [Full] DEBUG - Starting loop analysis section...\n")
-  loops_section <- if (!is.null(data$data$cld$loops) && nrow(data$data$cld$loops) > 0) {
+  # Check both possible locations: data$data$analysis$loops$loop_info (new) or data$data$cld$loops (legacy)
+  loops_data <- if (!is.null(data$data$analysis$loops$loop_info)) {
+    data$data$analysis$loops$loop_info
+  } else {
+    data$data$cld$loops
+  }
+  
+  loops_section <- if (!is.null(loops_data) && nrow(loops_data) > 0) {
     cat("  [Full] DEBUG - Loops data exists, processing...\n")
-    loops <- data$data$cld$loops
+    loops <- loops_data
     cat("  [Full] DEBUG - loops is.data.frame:", is.data.frame(loops), "nrow:", nrow(loops), "\n")
 
     n_reinforcing <- sum(loops$Type == "Reinforcing", na.rm = TRUE)
@@ -413,11 +766,29 @@ generate_full_content <- function(data) {
     cat("  [Full] DEBUG - n_reinforcing:", n_reinforcing, "class:", class(n_reinforcing), "\n")
     cat("  [Full] DEBUG - n_balancing:", n_balancing, "class:", class(n_balancing), "\n")
 
-    # Analyze loop lengths
-    loop_lengths <- nchar(gsub("[^→]", "", loops$Path)) + 1
+    # Analyze loop lengths - handle both Path and Elements columns
+    if ("Path" %in% names(loops) && !all(is.na(loops$Path))) {
+      loop_lengths <- nchar(gsub("[^→]", "", loops$Path)) + 1
+    } else if ("Elements" %in% names(loops) && !all(is.na(loops$Elements))) {
+      loop_lengths <- nchar(gsub("[^→]", "", loops$Elements)) + 1
+    } else if ("Length" %in% names(loops) && !all(is.na(loops$Length))) {
+      loop_lengths <- loops$Length
+    } else {
+      # Fallback: estimate from loop data or use default
+      loop_lengths <- rep(4, nrow(loops))  # Default reasonable loop length
+    }
+
     avg_length <- round(mean(loop_lengths, na.rm = TRUE), 1)
-    max_length <- max(loop_lengths, na.rm = TRUE)
-    min_length <- min(loop_lengths, na.rm = TRUE)
+    # Handle NaN for avg_length
+    if (is.nan(avg_length) || is.na(avg_length)) avg_length <- 4
+
+    max_length <- if (length(loop_lengths[!is.na(loop_lengths)]) > 0) max(loop_lengths, na.rm = TRUE) else avg_length
+    min_length <- if (length(loop_lengths[!is.na(loop_lengths)]) > 0) min(loop_lengths, na.rm = TRUE) else avg_length
+
+    # Ensure min/max are valid
+    if (is.infinite(max_length) || is.na(max_length)) max_length <- avg_length
+    if (is.infinite(min_length) || is.na(min_length)) min_length <- avg_length
+
     cat("  [Full] DEBUG - avg_length:", avg_length, "class:", class(avg_length), "\n")
     cat("  [Full] DEBUG - max_length:", max_length, "class:", class(max_length), "\n")
     cat("  [Full] DEBUG - min_length:", min_length, "class:", class(min_length), "\n")
@@ -427,15 +798,29 @@ generate_full_content <- function(data) {
     cat("  [Full] DEBUG - top_loops_idx:", paste(top_loops_idx, collapse=", "), "\n")
 
     cat("  [Full] DEBUG - Building top_loops_text with sapply...\n")
-    top_loops_text <- paste(sapply(top_loops_idx, function(i) {
-      # Calculate ellipsis separately to avoid if-else in paste0
-      path_ellipsis <- if(nchar(loops$Path[i]) > 80) "..." else ""
-      cat("    [sapply iter] Loop", i, "Type:", loops$Type[i], "class:", class(loops$Type[i]), "\n")
-      cat("    [sapply iter] loop_lengths[", i, "]:", loop_lengths[i], "class:", class(loop_lengths[i]), "\n")
-      cat("    [sapply iter] path_ellipsis class:", class(path_ellipsis), "\n")
-      paste0("   - **Loop ", i, "** (", loops$Type[i], ", ", loop_lengths[i], " nodes): ",
-             substr(loops$Path[i], 1, 80), path_ellipsis, "\n")
-    }), collapse = "")
+    # Determine which column to use for path display
+    path_col <- if ("Path" %in% names(loops)) {
+      "Path"
+    } else if ("Elements" %in% names(loops)) {
+      "Elements"
+    } else {
+      NULL
+    }
+
+    top_loops_text <- if (!is.null(path_col) && length(top_loops_idx) > 0) {
+      paste(sapply(top_loops_idx, function(i) {
+        # Calculate ellipsis separately to avoid if-else in paste0
+        path_text <- if (!is.na(loops[[path_col]][i])) as.character(loops[[path_col]][i]) else "Unknown path"
+        path_ellipsis <- if(nchar(path_text) > 80) "..." else ""
+        cat("    [sapply iter] Loop", i, "Type:", loops$Type[i], "class:", class(loops$Type[i]), "\n")
+        cat("    [sapply iter] loop_lengths[", i, "]:", loop_lengths[i], "class:", class(loop_lengths[i]), "\n")
+        cat("    [sapply iter] path_ellipsis class:", class(path_ellipsis), "\n")
+        paste0("   - **Loop ", i, "** (", loops$Type[i], ", ", loop_lengths[i], " nodes): ",
+               substr(path_text, 1, 80), path_ellipsis, "\n")
+      }), collapse = "")
+    } else {
+      paste0("   - ", nrow(loops), " feedback loops detected (details require path information)\n")
+    }
     cat("  [Full] DEBUG - top_loops_text created, class:", class(top_loops_text), "\n")
 
     # Calculate system implications separately to avoid if-else in paste0
@@ -533,6 +918,9 @@ generate_full_content <- function(data) {
       drivers_text <- if (nrow(high_out) > 0) paste0(":\n   ", paste(head(high_out$label, 3), collapse = ", "), "\n") else "\n"
       connectors_text <- if (nrow(high_between) > 0) paste0(":\n   ", paste(head(high_between$label, 3), collapse = ", "), "\n") else "\n"
 
+      # Generate context-specific strategic recommendations
+      strategic_recs <- generate_strategic_recommendations(data, top_leverage, high_in, high_out, high_between, loops_data)
+
       paste0(
         "## Leverage Point Analysis\n\n",
         "### Overview\n\n",
@@ -547,10 +935,7 @@ generate_full_content <- function(data) {
         "**Connectors** (High betweenness, ", nrow(high_between), " nodes): These bridge different system parts", connectors_text,
         "   → *Management implication*: Critical for maintaining system connectivity\n\n",
         "### Strategic Recommendations\n\n",
-        "1. **Priority interventions**: Focus on top 3-5 leverage points for maximum impact\n",
-        "2. **Monitoring network**: Track Receiver nodes as early warning indicators\n",
-        "3. **Intervention targets**: Use Driver nodes to initiate desired changes\n",
-        "4. **System coherence**: Protect Connector nodes to maintain system integrity\n\n"
+        strategic_recs
       )
     } else {
       "## Leverage Point Analysis\n\n⚠️ No leverage point analysis performed yet. Run leverage point detection to identify high-impact intervention points.\n\n"
@@ -616,32 +1001,18 @@ generate_full_content <- function(data) {
   cat("  [Full] stakeholder_section class:", class(stakeholder_section), "\n")
 
   # ========== MANAGEMENT RECOMMENDATIONS ==========
+  # Generate context-specific management recommendations
+  n_stakeholders <- if (!is.null(data$data$pims$stakeholders) && nrow(data$data$pims$stakeholders) > 0) {
+    nrow(data$data$pims$stakeholders)
+  } else {
+    0L
+  }
+
   recommendations_section <- paste0(
     "## Management Recommendations\n\n",
     "### Strategic Priorities\n\n",
     "Based on the system analysis, the following management priorities are recommended:\n\n",
-    "1. **Intervention Design**\n",
-    "   - Target top leverage points identified in the analysis\n",
-    "   - Consider feedback loop dynamics when designing interventions\n",
-    "   - Account for system density and interconnectedness\n\n",
-    "2. **Monitoring Strategy**\n",
-    "   - Track nodes with high in-degree as system state indicators\n",
-    "   - Monitor reinforcing loops for early warning signals\n",
-    "   - Measure network connectivity changes over time\n\n",
-    "3. **Adaptive Management**\n",
-    "   - Use balancing loops to stabilize desired outcomes\n",
-    "   - Manage reinforcing loops to prevent unintended amplification\n",
-    "   - Maintain system connector nodes to preserve resilience\n\n",
-    "4. **Stakeholder Engagement**\n",
-    "   - Involve stakeholders linked to high-leverage nodes\n",
-    "   - Communicate system feedback dynamics\n",
-    "   - Build shared understanding of system behavior\n\n",
-    "### Next Steps\n\n",
-    "1. Validate loop and leverage point analyses with domain experts\n",
-    "2. Develop detailed intervention strategies for priority leverage points\n",
-    "3. Establish monitoring protocols for key indicators\n",
-    "4. Design adaptive management experiments to test interventions\n",
-    "5. Engage stakeholders in participatory scenario planning\n\n"
+    generate_management_recommendations(data, nodes, loops_data, n_stakeholders)
   )
 
   # ========== COMBINE ALL SECTIONS ==========

@@ -225,7 +225,7 @@ ai_isa_assistant_ui <- function(id, i18n) {
     # Main content
     fluidRow(
       column(12,
-        uiOutput(ns("module_header"))
+        create_module_header(ns, "AI-Assisted ISA Creation", "Let me guide you step-by-step through building your DAPSI(W)R(M) model.", "ai_isa_help", i18n)
       )
     ),
 
@@ -599,13 +599,14 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       }
     })
 
-    # ========== REACTIVE HEADER ==========
-
-    output$module_header <- renderUI({
-      tagList(
-        h2(icon("robot"), " ", i18n$t("AI-Assisted Socio-Ecological System Creation"))
-      )
-    })
+    # ========== HELP MODAL ==========
+    create_help_observer(
+      input,
+      "ai_isa_help",
+      "AI Assistant Help",
+      i18n$t("This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step."),
+      i18n
+    )
 
     # ========== REACTIVE SIDEBAR ==========
 

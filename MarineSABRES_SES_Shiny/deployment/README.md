@@ -2,13 +2,29 @@
 
 This directory contains all necessary files for deploying the MarineSABRES Social-Ecological Systems Analysis Tool to production servers.
 
+## 📋 Pre-Deployment Check
+
+**NEW:** Before deploying, run the validation script:
+
+```bash
+cd deployment
+Rscript pre-deploy-check.R
+```
+
+This validates:
+- All required files and directories
+- Translation JSON validity
+- R package dependencies
+- R syntax in core files
+- Common deployment issues
+
 ## Quick Start
 
 ### Docker Deployment (Recommended)
 
 ```bash
 cd deployment
-docker-compose up -d
+./deploy.sh --docker
 ```
 
 Access at: http://localhost:3838
@@ -17,7 +33,7 @@ Access at: http://localhost:3838
 
 ```bash
 cd deployment
-sudo bash deploy.sh --shiny-server
+sudo ./deploy.sh --shiny-server
 ```
 
 Access at: http://your-server:3838/marinesabres
@@ -28,6 +44,7 @@ Access at: http://your-server:3838/marinesabres
 deployment/
 ├── README.md                    # This file
 ├── DEPLOYMENT_GUIDE.md          # Comprehensive deployment documentation
+├── pre-deploy-check.R           # Pre-deployment validation script
 ├── Dockerfile                   # Docker container configuration
 ├── docker-compose.yml           # Docker Compose orchestration
 ├── shiny-server.conf            # Shiny Server configuration
@@ -37,12 +54,23 @@ deployment/
 
 ## File Descriptions
 
+### pre-deploy-check.R (NEW)
+Validation script that checks:
+- Required files (app.R, global.R, constants.R, translations)
+- Required directories (modules, functions, www, data, translations)
+- Translation JSON structure and duplicates
+- R package dependencies
+- R syntax validity
+- Large files and temporary files
+
+Run this before every deployment to catch issues early.
+
 ### Dockerfile
 Docker image definition for containerized deployment. Includes:
 - R 4.4.1 base image
 - All system dependencies
 - All R package dependencies
-- Application files
+- Application files (including translations)
 - Shiny Server configuration
 
 ### docker-compose.yml

@@ -1,0 +1,1339 @@
+{
+  "template_name": "Caribbean Island - Comprehensive SES Template",
+  "template_description": "Comprehensive Social-Ecological System template for Caribbean islands focusing on major marine and coastal challenges including Sargassum invasions, coral reef degradation, chemical contamination, habitat loss, and overfishing",
+  "regional_context": {
+    "region": "Caribbean Sea",
+    "location": "Lesser Antilles",
+    "ecosystem_types": ["Coral reef", "Mangrove", "Seagrass meadow", "Coastal lagoon", "Sandy beach", "Open coast"],
+    "main_issues": ["Sargassum blooms", "Coral bleaching", "Chemical contamination", "Habitat degradation", "Overfishing"]
+  },
+  "metadata": {
+    "created_date": "2025-11-13",
+    "version": "1.0",
+    "source": "Based on comprehensive analysis of Caribbean marine environmental challenges 2011-2023",
+    "applicable_regions": ["Caribbean Sea", "Lesser Antilles", "Tropical island systems"]
+  },
+  "dapsiwrm_framework": {
+    "drivers": [
+      {
+        "id": "D1",
+        "name": "Food security needs",
+        "description": "Population demand for fish and seafood as protein source and traditional diet component",
+        "category": "Basic human needs",
+        "intensity": "High",
+        "related_issues": ["Overfishing", "Contaminated fisheries"]
+      },
+      {
+        "id": "D2",
+        "name": "Economic development aspirations",
+        "description": "Need for economic growth, employment, and income generation in island economy",
+        "category": "Economic development",
+        "intensity": "High",
+        "related_issues": ["Tourism development", "Fisheries expansion"]
+      },
+      {
+        "id": "D3",
+        "name": "Tourism demand",
+        "description": "Global demand for tropical beach vacations, diving, and eco-tourism experiences",
+        "category": "Recreation and culture",
+        "intensity": "Very high",
+        "related_issues": ["Coastal development", "Reef damage", "Beach quality"]
+      },
+      {
+        "id": "D4",
+        "name": "Agricultural production needs",
+        "description": "Demand for banana, sugarcane, and other tropical crop exports and local consumption",
+        "category": "Food production",
+        "intensity": "High",
+        "related_issues": ["Pesticide use", "Nutrient runoff"]
+      },
+      {
+        "id": "D5",
+        "name": "Climate change adaptation needs",
+        "description": "Need to adapt to rising temperatures, sea level rise, and extreme weather events",
+        "category": "Climate adaptation",
+        "intensity": "High",
+        "related_issues": ["Coastal protection", "Ecosystem resilience"]
+      },
+      {
+        "id": "D6",
+        "name": "Housing and infrastructure needs",
+        "description": "Growing population demand for coastal housing, roads, and urban infrastructure",
+        "category": "Settlement",
+        "intensity": "Medium",
+        "related_issues": ["Coastal urbanization", "Habitat loss"]
+      },
+      {
+        "id": "D7",
+        "name": "Energy and waste management needs",
+        "description": "Population needs for electricity, water treatment, and waste disposal services",
+        "category": "Basic services",
+        "intensity": "Medium",
+        "related_issues": ["Wastewater discharge", "Coastal pollution"]
+      }
+    ],
+    "activities": [
+      {
+        "id": "A1",
+        "name": "Banana plantation agriculture (historical)",
+        "description": "Intensive banana cultivation using chlordecone pesticide (1972-1993) and ongoing agricultural practices",
+        "sector": "Agriculture",
+        "scale": "Large-scale commercial",
+        "drivers": ["D4"],
+        "related_issues": ["Chemical contamination", "Nutrient runoff"]
+      },
+      {
+        "id": "A2",
+        "name": "Small-scale artisanal fishing",
+        "description": "Traditional and commercial fishing for reef fish, spiny lobster, queen conch, and other marine species",
+        "sector": "Fisheries",
+        "scale": "Artisanal/small-scale",
+        "drivers": ["D1", "D2"],
+        "related_issues": ["Overfishing", "Bycatch", "Equipment damage from Sargassum"]
+      },
+      {
+        "id": "A3",
+        "name": "Beach tourism and coastal recreation",
+        "description": "Beach resorts, hotels, restaurants, and recreational beach activities for tourists and residents",
+        "sector": "Tourism",
+        "scale": "Large-scale commercial",
+        "drivers": ["D3", "D2"],
+        "related_issues": ["Beach fouling by Sargassum", "Reef trampling"]
+      },
+      {
+        "id": "A4",
+        "name": "Scuba diving and snorkeling",
+        "description": "Underwater tourism activities on coral reefs and marine sites",
+        "sector": "Tourism",
+        "scale": "Commercial/recreational",
+        "drivers": ["D3"],
+        "related_issues": ["Reef damage from anchoring", "Tourist impacts"]
+      },
+      {
+        "id": "A5",
+        "name": "Wastewater discharge",
+        "description": "Release of treated and untreated sewage from urban areas and tourism facilities into coastal waters",
+        "sector": "Urban services",
+        "scale": "Municipal",
+        "drivers": ["D6", "D7"],
+        "related_issues": ["Nutrient pollution", "Heavy metal contamination"]
+      },
+      {
+        "id": "A6",
+        "name": "Coastal urbanization and construction",
+        "description": "Building of hotels, housing, roads, and infrastructure in coastal zones; land reclamation",
+        "sector": "Development",
+        "scale": "Large-scale",
+        "drivers": ["D6", "D3"],
+        "related_issues": ["Habitat destruction", "Sedimentation", "Mangrove loss"]
+      },
+      {
+        "id": "A7",
+        "name": "Boat traffic and anchoring",
+        "description": "Commercial and recreational vessel operations, mooring, and anchoring near reefs and seagrass beds",
+        "sector": "Maritime transport",
+        "scale": "Commercial/recreational",
+        "drivers": ["D3", "D1"],
+        "related_issues": ["Physical reef damage", "Seagrass destruction", "Sargassum in engines"]
+      },
+      {
+        "id": "A8",
+        "name": "Dredging operations",
+        "description": "Harbor maintenance, navigation channel deepening, and coastal development dredging",
+        "sector": "Maritime infrastructure",
+        "scale": "Industrial",
+        "drivers": ["D2", "D6"],
+        "related_issues": ["Sedimentation", "Habitat destruction"]
+      },
+      {
+        "id": "A9",
+        "name": "Sargassum cleanup and disposal",
+        "description": "Municipal efforts to collect, transport, and dispose of beached Sargassum seaweed",
+        "sector": "Coastal management",
+        "scale": "Municipal",
+        "drivers": ["D3", "D2"],
+        "related_issues": ["Financial burden", "Waste management challenges"]
+      },
+      {
+        "id": "A10",
+        "name": "Illegal, unreported, and unregulated (IUU) fishing",
+        "description": "Fishing activities that violate regulations, quotas, or protected areas; unreported catches",
+        "sector": "Fisheries",
+        "scale": "Small-scale/opportunistic",
+        "drivers": ["D1", "D2"],
+        "related_issues": ["Stock depletion", "Enforcement challenges"]
+      },
+      {
+        "id": "A11",
+        "name": "Agricultural runoff",
+        "description": "Surface water flow from agricultural lands carrying nutrients, pesticides, and sediments to coastal areas",
+        "sector": "Agriculture",
+        "scale": "Watershed-level",
+        "drivers": ["D4"],
+        "related_issues": ["Eutrophication", "Chlordecone contamination", "Sedimentation"]
+      }
+    ],
+    "pressures": [
+      {
+        "id": "P1",
+        "name": "Nutrient enrichment and eutrophication",
+        "description": "Excess nitrogen and phosphorus from wastewater, agricultural runoff, and distant sources (Amazon Basin, African rivers) fueling algal blooms",
+        "type": "Chemical pollution",
+        "source_activities": ["A5", "A11"],
+        "spatial_scale": "Regional to ocean-basin",
+        "temporal_pattern": "Continuous with seasonal peaks",
+        "intensity": "Very high"
+      },
+      {
+        "id": "P2",
+        "name": "Chlordecone and pesticide contamination",
+        "description": "Persistent legacy contamination from chlordecone pesticide (1972-1993) leaching from soils into rivers and coastal waters",
+        "type": "Toxic chemical pollution",
+        "source_activities": ["A1", "A11"],
+        "spatial_scale": "Island-wide",
+        "temporal_pattern": "Persistent (decades-long)",
+        "intensity": "High"
+      },
+      {
+        "id": "P3",
+        "name": "Heavy metal pollution",
+        "description": "Accumulation of heavy metals in marine sediments from industrial discharges and leaky sewage systems",
+        "type": "Toxic pollution",
+        "source_activities": ["A5", "A6"],
+        "spatial_scale": "Coastal zones",
+        "temporal_pattern": "Continuous",
+        "intensity": "Medium to high"
+      },
+      {
+        "id": "P4",
+        "name": "Sedimentation",
+        "description": "Suspended sediments from agricultural runoff, construction, and dredging smothering coral reefs and seagrass beds",
+        "type": "Physical pollution",
+        "source_activities": ["A6", "A8", "A11"],
+        "spatial_scale": "Coastal zones",
+        "temporal_pattern": "Episodic (storms) and continuous",
+        "intensity": "High"
+      },
+      {
+        "id": "P5",
+        "name": "Elevated sea surface temperatures",
+        "description": "Rising ocean temperatures due to global climate change causing thermal stress to marine organisms",
+        "type": "Climate change",
+        "source_activities": ["Global greenhouse gas emissions"],
+        "spatial_scale": "Regional to global",
+        "temporal_pattern": "Increasing trend with seasonal peaks",
+        "intensity": "High and increasing"
+      },
+      {
+        "id": "P6",
+        "name": "Ocean acidification",
+        "description": "Increased CO₂ absorption lowering ocean pH and reducing carbonate availability for calcifying organisms",
+        "type": "Climate change",
+        "source_activities": ["Global greenhouse gas emissions"],
+        "spatial_scale": "Global",
+        "temporal_pattern": "Long-term increasing trend",
+        "intensity": "Medium and increasing"
+      },
+      {
+        "id": "P7",
+        "name": "Altered ocean circulation patterns",
+        "description": "Changes in currents (North Equatorial Recirculation Region) transporting Sargassum toward Caribbean",
+        "type": "Climate change",
+        "source_activities": ["Global climate change"],
+        "spatial_scale": "Ocean-basin",
+        "temporal_pattern": "Long-term shift since 2011",
+        "intensity": "High"
+      },
+      {
+        "id": "P8",
+        "name": "Overfishing and fishing pressure",
+        "description": "Excessive removal of target species (reef fish, lobster, conch) exceeding sustainable levels",
+        "type": "Resource extraction",
+        "source_activities": ["A2", "A10"],
+        "spatial_scale": "Coastal and offshore waters",
+        "temporal_pattern": "Continuous",
+        "intensity": "High"
+      },
+      {
+        "id": "P9",
+        "name": "Bycatch and incidental mortality",
+        "description": "Unintended capture and killing of non-target species including turtles, juvenile fish, and other marine life",
+        "type": "Resource extraction",
+        "source_activities": ["A2", "A10"],
+        "spatial_scale": "Fishing grounds",
+        "temporal_pattern": "Continuous",
+        "intensity": "Medium"
+      },
+      {
+        "id": "P10",
+        "name": "Physical damage to benthic habitats",
+        "description": "Direct mechanical destruction of coral reefs, seagrass beds, and mangroves from anchoring, dredging, trampling, and construction",
+        "type": "Physical disturbance",
+        "source_activities": ["A4", "A6", "A7", "A8"],
+        "spatial_scale": "Coastal zones",
+        "temporal_pattern": "Episodic and continuous",
+        "intensity": "High"
+      },
+      {
+        "id": "P11",
+        "name": "Habitat loss and fragmentation",
+        "description": "Conversion and removal of mangroves, wetlands, and coastal vegetation for development",
+        "type": "Habitat loss",
+        "source_activities": ["A6"],
+        "spatial_scale": "Coastal zones",
+        "temporal_pattern": "Progressive",
+        "intensity": "High"
+      },
+      {
+        "id": "P12",
+        "name": "Introduction of invasive species",
+        "description": "Establishment of non-native species (e.g., lionfish) that disrupt native ecosystems",
+        "type": "Biological disturbance",
+        "source_activities": ["A7", "Global shipping"],
+        "spatial_scale": "Island-wide",
+        "temporal_pattern": "Ongoing since introduction",
+        "intensity": "Medium to high"
+      },
+      {
+        "id": "P13",
+        "name": "Hydrogen sulfide emissions from decomposing Sargassum",
+        "description": "Release of toxic H₂S gas from Sargassum decomposition on beaches and in shallow waters",
+        "type": "Air and water pollution",
+        "source_activities": ["Natural Sargassum influx"],
+        "spatial_scale": "Coastal areas",
+        "temporal_pattern": "Seasonal (bloom-dependent)",
+        "intensity": "Very high during blooms"
+      }
+    ],
+    "states": [
+      {
+        "id": "S1",
+        "name": "Massive Sargassum seaweed accumulation",
+        "description": "Recurrent influxes (since 2011) of thick Sargassum mats washing ashore and accumulating in coastal waters",
+        "ecosystem_component": "Pelagic and coastal ecosystems",
+        "pressures": ["P1", "P5", "P7"],
+        "indicator": "Volume of Sargassum biomass on beaches (tons/year)",
+        "baseline": "Minimal pre-2011",
+        "current_status": "Massive and recurrent (millions of tons)",
+        "trend": "Increasing frequency and intensity"
+      },
+      {
+        "id": "S2",
+        "name": "Widespread coral bleaching and mortality",
+        "description": "Severe coral bleaching episodes (especially 2023) causing extensive coral death and reef degradation",
+        "ecosystem_component": "Coral reefs",
+        "pressures": ["P5", "P6", "P1", "P4"],
+        "indicator": "Percent coral cover and bleaching prevalence",
+        "baseline": "Healthy reefs pre-1980s",
+        "current_status": "Severely degraded, low coral cover",
+        "trend": "Declining"
+      },
+      {
+        "id": "S3",
+        "name": "Contamination of marine sediments and biota",
+        "description": "Persistent chlordecone and heavy metal contamination in coastal sediments, fish, and seafood",
+        "ecosystem_component": "Sediments and marine organisms",
+        "pressures": ["P2", "P3"],
+        "indicator": "Chlordecone and heavy metal concentrations in sediment and tissue (μg/kg)",
+        "baseline": "Uncontaminated pre-1972",
+        "current_status": "High contamination in multiple zones",
+        "trend": "Slowly declining but persistent"
+      },
+      {
+        "id": "S4",
+        "name": "Loss and degradation of mangrove forests",
+        "description": "Reduction in mangrove extent and health due to urbanization, pollution, and physical damage",
+        "ecosystem_component": "Mangrove ecosystems",
+        "pressures": ["P11", "P4", "P1", "P10"],
+        "indicator": "Mangrove area (hectares) and canopy health",
+        "baseline": "Extensive mangrove coverage historically",
+        "current_status": "Significantly reduced and fragmented",
+        "trend": "Declining"
+      },
+      {
+        "id": "S5",
+        "name": "Seagrass meadow decline",
+        "description": "Loss of seagrass beds due to sedimentation, pollution, physical damage, and Sargassum smothering",
+        "ecosystem_component": "Seagrass ecosystems",
+        "pressures": ["P4", "P1", "P10"],
+        "indicator": "Seagrass coverage area and density",
+        "baseline": "Extensive meadows historically",
+        "current_status": "Reduced coverage and patchiness",
+        "trend": "Declining"
+      },
+      {
+        "id": "S6",
+        "name": "Depleted fish stocks",
+        "description": "Declining populations of key commercial species (spiny lobster, queen conch, reef fish) due to overfishing",
+        "ecosystem_component": "Fish and shellfish populations",
+        "pressures": ["P8", "P9"],
+        "indicator": "Catch per unit effort (CPUE), stock biomass estimates",
+        "baseline": "Abundant stocks pre-1980s",
+        "current_status": "Overfished, low abundance",
+        "trend": "Declining"
+      },
+      {
+        "id": "S7",
+        "name": "Disrupted ecological balance from invasive species",
+        "description": "Lionfish and other invasive species altering predator-prey dynamics and competing with native species",
+        "ecosystem_component": "Reef fish communities",
+        "pressures": ["P12"],
+        "indicator": "Lionfish density, native fish diversity",
+        "baseline": "No invasive predators historically",
+        "current_status": "Widespread lionfish presence",
+        "trend": "Stable at high invasive density"
+      },
+      {
+        "id": "S8",
+        "name": "Reduced water quality in coastal zones",
+        "description": "Elevated turbidity, nutrient levels, and pollutant concentrations in nearshore waters",
+        "ecosystem_component": "Coastal water column",
+        "pressures": ["P1", "P2", "P3", "P4"],
+        "indicator": "Water clarity (Secchi depth), nutrient concentrations, pollutant levels",
+        "baseline": "Clear, oligotrophic waters historically",
+        "current_status": "Degraded water quality in many areas",
+        "trend": "Variable, generally declining"
+      },
+      {
+        "id": "S9",
+        "name": "Increased coastal erosion",
+        "description": "Accelerated shoreline erosion due to loss of protective coral reefs, mangroves, and seagrass beds",
+        "ecosystem_component": "Coastal geomorphology",
+        "pressures": ["P5", "P10", "P11"],
+        "indicator": "Shoreline retreat rate (m/year)",
+        "baseline": "Stable coastlines with natural protection",
+        "current_status": "Active erosion in multiple locations",
+        "trend": "Increasing"
+      },
+      {
+        "id": "S10",
+        "name": "Altered reef structural complexity",
+        "description": "Reduction in three-dimensional reef structure due to coral mortality, bioerosion, and lack of recovery",
+        "ecosystem_component": "Coral reef architecture",
+        "pressures": ["P5", "P6", "P1", "P4", "P10"],
+        "indicator": "Reef rugosity index, structural complexity score",
+        "baseline": "Complex three-dimensional structures",
+        "current_status": "Flattened, simplified reef structures",
+        "trend": "Declining"
+      }
+    ],
+    "impacts": [
+      {
+        "id": "I1",
+        "name": "Loss of nursery and breeding habitat for fish",
+        "description": "Degradation of mangroves, seagrass beds, and coral reefs reduces essential habitat for juvenile fish and spawning grounds",
+        "affected_service": "Supporting services - Habitat provision",
+        "states": ["S2", "S4", "S5", "S10"],
+        "magnitude": "High",
+        "affected_species": "Commercial fish, lobster, conch, reef fish"
+      },
+      {
+        "id": "I2",
+        "name": "Reduced fisheries productivity",
+        "description": "Declining fish stocks and degraded habitats result in lower catch rates and smaller fish sizes",
+        "affected_service": "Provisioning services - Food production",
+        "states": ["S6", "S1", "S2"],
+        "magnitude": "Very high",
+        "economic_value": "Millions in lost annual catch"
+      },
+      {
+        "id": "I3",
+        "name": "Contaminated seafood production",
+        "description": "Chlordecone and heavy metal contamination renders fish and shellfish unsafe for consumption in certain areas",
+        "affected_service": "Provisioning services - Food production",
+        "states": ["S3"],
+        "magnitude": "High",
+        "health_risk": "Carcinogenic and endocrine disruption"
+      },
+      {
+        "id": "I4",
+        "name": "Degraded beach and coastal aesthetics",
+        "description": "Sargassum accumulation creates foul odors, unattractive appearance, and unpleasant beach conditions",
+        "affected_service": "Cultural services - Recreation and tourism",
+        "states": ["S1"],
+        "magnitude": "Very high",
+        "seasonal_pattern": "Peak during Sargassum bloom seasons"
+      },
+      {
+        "id": "I5",
+        "name": "Reduced diving and snorkeling quality",
+        "description": "Coral bleaching, reef degradation, and reduced biodiversity diminish underwater tourism experiences",
+        "affected_service": "Cultural services - Recreation and ecotourism",
+        "states": ["S2", "S10", "S7"],
+        "magnitude": "High",
+        "affected_sector": "Dive tourism operators"
+      },
+      {
+        "id": "I6",
+        "name": "Loss of natural coastal protection",
+        "description": "Degraded reefs, mangroves, and seagrass provide less buffering against waves, storm surge, and coastal flooding",
+        "affected_service": "Regulating services - Coastal protection",
+        "states": ["S2", "S4", "S5", "S9"],
+        "magnitude": "High",
+        "vulnerability": "Increased flooding and storm damage risk"
+      },
+      {
+        "id": "I7",
+        "name": "Reduced carbon sequestration capacity",
+        "description": "Loss of mangroves, seagrass meadows, and living corals reduces blue carbon storage and CO₂ uptake",
+        "affected_service": "Regulating services - Climate regulation",
+        "states": ["S4", "S5", "S2"],
+        "magnitude": "Medium",
+        "global_relevance": "Contributes to climate change feedback"
+      },
+      {
+        "id": "I8",
+        "name": "Degraded water purification capacity",
+        "description": "Loss of filtering organisms (corals, sponges) and seagrass/mangrove systems reduces natural water quality maintenance",
+        "affected_service": "Regulating services - Water purification",
+        "states": ["S2", "S4", "S5", "S8"],
+        "magnitude": "Medium to high"
+      },
+      {
+        "id": "I9",
+        "name": "Biodiversity loss",
+        "description": "Ecosystem degradation causes decline in endemic and endangered species (turtles, fish, corals, marine mammals)",
+        "affected_service": "Supporting services - Biodiversity",
+        "states": ["S2", "S4", "S5", "S6", "S7"],
+        "magnitude": "High",
+        "conservation_status": "Multiple threatened species affected"
+      },
+      {
+        "id": "I10",
+        "name": "Public health hazards from Sargassum decomposition",
+        "description": "Hydrogen sulfide emissions cause respiratory irritation and health risks for coastal residents and workers",
+        "affected_service": "Human health",
+        "states": ["S1"],
+        "magnitude": "Medium to high",
+        "vulnerable_groups": "Cleanup workers, coastal residents, asthmatics"
+      }
+    ],
+    "welfare": [
+      {
+        "id": "W1",
+        "name": "Decline in tourism revenue",
+        "description": "Reduced tourist arrivals and expenditures due to degraded beaches, foul odors, bleached reefs, and poor water quality",
+        "human_wellbeing_dimension": "Economic well-being",
+        "impacts": ["I4", "I5"],
+        "affected_population": "Tourism workers, hotel operators, restaurants, tour guides",
+        "magnitude": "Very high",
+        "economic_loss": "Millions of euros annually",
+        "social_distribution": "Disproportionately affects coastal communities"
+      },
+      {
+        "id": "W2",
+        "name": "Loss of fishing income and food security",
+        "description": "Reduced catches and fishing bans in contaminated zones lead to income loss and reduced access to traditional protein sources",
+        "human_wellbeing_dimension": "Economic and nutritional well-being",
+        "impacts": ["I2", "I3"],
+        "affected_population": "Artisanal fishers, fishing families, coastal communities",
+        "magnitude": "High",
+        "social_distribution": "Most severe for small-scale fishers with limited alternatives",
+        "food_security": "Reduced access to affordable local seafood"
+      },
+      {
+        "id": "W3",
+        "name": "Public health risks from contaminated seafood",
+        "description": "Exposure to chlordecone and heavy metals through fish consumption poses carcinogenic and endocrine disruption risks",
+        "human_wellbeing_dimension": "Physical health",
+        "impacts": ["I3"],
+        "affected_population": "Seafood consumers, especially frequent fish eaters",
+        "magnitude": "High",
+        "health_outcomes": "Potential cancer, hormonal disorders, developmental effects",
+        "vulnerable_groups": "Children, pregnant women, subsistence fishers"
+      },
+      {
+        "id": "W4",
+        "name": "Respiratory health impacts from Sargassum",
+        "description": "Hydrogen sulfide exposure causes respiratory irritation, headaches, and exacerbation of asthma",
+        "human_wellbeing_dimension": "Physical health",
+        "impacts": ["I10"],
+        "affected_population": "Coastal residents, cleanup workers, beachgoers",
+        "magnitude": "Medium to high",
+        "health_outcomes": "Respiratory symptoms, reduced quality of life during blooms",
+        "vulnerable_groups": "Asthmatics, elderly, outdoor workers"
+      },
+      {
+        "id": "W5",
+        "name": "Job losses in tourism and fishing sectors",
+        "description": "Economic decline in tourism and fisheries leads to unemployment and reduced job opportunities",
+        "human_wellbeing_dimension": "Economic security and employment",
+        "impacts": ["I2", "I4", "I5"],
+        "affected_population": "Tourism workers, fishers, service industry employees",
+        "magnitude": "High",
+        "social_outcomes": "Unemployment, economic insecurity, out-migration"
+      },
+      {
+        "id": "W6",
+        "name": "Increased coastal flooding and property damage",
+        "description": "Loss of natural coastal protection increases vulnerability to storm surge, flooding, and erosion of homes and infrastructure",
+        "human_wellbeing_dimension": "Safety and property security",
+        "impacts": ["I6"],
+        "affected_population": "Coastal residents, property owners, municipalities",
+        "magnitude": "High",
+        "economic_damage": "Property losses, infrastructure damage, relocation costs",
+        "climate_risk": "Increasing with sea level rise and storm intensity"
+      },
+      {
+        "id": "W7",
+        "name": "Financial burden on municipalities",
+        "description": "Coastal cleanup, Sargassum disposal, and coastal protection measures strain municipal budgets",
+        "human_wellbeing_dimension": "Public finances and services",
+        "impacts": ["I4", "I6"],
+        "affected_population": "All residents (through taxes and reduced public services)",
+        "magnitude": "High",
+        "annual_cost": "Millions of euros for cleanup and management",
+        "opportunity_cost": "Diverted funds from other public services"
+      },
+      {
+        "id": "W8",
+        "name": "Loss of cultural heritage and traditional livelihoods",
+        "description": "Decline of traditional fishing culture, maritime knowledge, and cultural connection to marine resources",
+        "human_wellbeing_dimension": "Cultural identity and heritage",
+        "impacts": ["I2", "I9"],
+        "affected_population": "Traditional fishing communities, indigenous/local culture bearers",
+        "magnitude": "Medium to high",
+        "cultural_outcomes": "Erosion of traditional knowledge, loss of cultural practices",
+        "intergenerational": "Reduced transmission of maritime culture to youth"
+      },
+      {
+        "id": "W9",
+        "name": "Erosion of social trust and environmental justice concerns",
+        "description": "Legacy of chlordecone contamination creates distrust in government, food safety, and environmental management",
+        "human_wellbeing_dimension": "Social cohesion and trust",
+        "impacts": ["I3"],
+        "affected_population": "All residents, especially historically affected agricultural workers",
+        "magnitude": "Medium",
+        "social_outcomes": "Reduced institutional trust, social conflict, justice demands",
+        "ethical_dimension": "Disproportionate burden on vulnerable populations"
+      },
+      {
+        "id": "W10",
+        "name": "Reduced quality of life and well-being",
+        "description": "Combined effects of environmental degradation, health risks, economic stress, and cultural loss reduce overall life satisfaction",
+        "human_wellbeing_dimension": "Overall quality of life",
+        "impacts": ["I1", "I2", "I3", "I4", "I5", "I6", "I9", "I10"],
+        "affected_population": "All island residents, particularly coastal communities",
+        "magnitude": "High",
+        "psychological_impact": "Stress, anxiety about future, sense of loss"
+      }
+    ],
+    "responses": [
+      {
+        "id": "R1",
+        "name": "Satellite-based Sargassum early warning system",
+        "description": "Real-time monitoring and prediction of Sargassum blooms using satellite imagery to enable proactive management",
+        "response_type": "Monitoring and assessment",
+        "target_pressures": ["P1", "P5", "P7"],
+        "target_impacts": ["I4", "I10"],
+        "implementation_level": "Regional/national",
+        "stakeholders": ["Meteorological services", "Environmental agencies", "Municipalities"],
+        "effectiveness": "Medium - enables preparation but doesn't prevent blooms",
+        "status": "Implemented and ongoing"
+      },
+      {
+        "id": "R2",
+        "name": "Coastal barriers and Sargassum collection systems",
+        "description": "Physical barriers and collection equipment to intercept Sargassum before it reaches beaches",
+        "response_type": "Engineering/infrastructure",
+        "target_pressures": ["Direct management of S1"],
+        "target_impacts": ["I4", "I10"],
+        "implementation_level": "Local/municipal",
+        "stakeholders": ["Municipalities", "Coastal property owners"],
+        "effectiveness": "Medium - effective locally but costly and labor-intensive",
+        "status": "Pilot projects and selective implementation"
+      },
+      {
+        "id": "R3",
+        "name": "Sargassum recycling and valorization programs",
+        "description": "Converting collected Sargassum into compost, fertilizers, biogas, or other value-added products with toxin control",
+        "response_type": "Circular economy/resource recovery",
+        "target_pressures": ["Waste management from S1"],
+        "target_impacts": ["I4"],
+        "implementation_level": "Local to national",
+        "stakeholders": ["Waste management companies", "Agricultural sector", "Research institutions"],
+        "effectiveness": "Low to medium - technical challenges with toxins and economics",
+        "status": "Experimental/pilot phase"
+      },
+      {
+        "id": "R4",
+        "name": "Marine Protected Areas (MPAs)",
+        "description": "Establishment and enforcement of no-take zones and restricted-use areas to protect coral reefs and critical habitats",
+        "response_type": "Spatial management",
+        "target_pressures": ["P8", "P9", "P10"],
+        "target_impacts": ["I1", "I2", "I9"],
+        "implementation_level": "National/local",
+        "stakeholders": ["Environmental agencies", "Fisheries department", "Coastal communities"],
+        "effectiveness": "Medium to high - if well-enforced",
+        "status": "Partially implemented, enforcement variable"
+      },
+      {
+        "id": "R5",
+        "name": "Coral restoration and reef gardening programs",
+        "description": "Active restoration through coral nurseries, transplantation of resilient species, and reef rehabilitation",
+        "response_type": "Ecological restoration",
+        "target_pressures": ["Addressing S2, S10"],
+        "target_impacts": ["I5", "I6", "I9"],
+        "implementation_level": "Local",
+        "stakeholders": ["NGOs", "Research institutions", "Dive operators", "Volunteers"],
+        "effectiveness": "Low to medium - limited scale, climate challenges",
+        "status": "Multiple pilot projects"
+      },
+      {
+        "id": "R6",
+        "name": "Improved wastewater treatment infrastructure",
+        "description": "Upgrading sewage treatment plants and expanding coverage to reduce nutrient and pollutant discharge",
+        "response_type": "Infrastructure improvement",
+        "target_pressures": ["P1", "P3"],
+        "target_impacts": ["I8"],
+        "implementation_level": "Municipal/national",
+        "stakeholders": ["Water utilities", "Government", "EU funding programs"],
+        "effectiveness": "High - if widely implemented",
+        "status": "Ongoing investments, incomplete coverage"
+      },
+      {
+        "id": "R7",
+        "name": "Agricultural runoff and pollution control",
+        "description": "Best management practices, buffer zones, and sustainable agriculture to reduce nutrient and pesticide runoff",
+        "response_type": "Land management",
+        "target_pressures": ["P1", "P2", "P4"],
+        "target_impacts": ["I8", "I3"],
+        "implementation_level": "Farm to watershed level",
+        "stakeholders": ["Agricultural extension", "Farmers", "Environmental agencies"],
+        "effectiveness": "Medium to high - requires behavior change and enforcement",
+        "status": "Promoted but inconsistently applied"
+      },
+      {
+        "id": "R8",
+        "name": "Chlordecone soil remediation and phytoremediation",
+        "description": "Active efforts to decontaminate soils and reduce chlordecone leaching through remediation technologies",
+        "response_type": "Environmental remediation",
+        "target_pressures": ["P2"],
+        "target_impacts": ["I3"],
+        "implementation_level": "Site-specific to regional",
+        "stakeholders": ["Research institutions", "Agricultural agencies", "Government"],
+        "effectiveness": "Low - chlordecone highly persistent, slow progress",
+        "status": "Research and limited field trials"
+      },
+      {
+        "id": "R9",
+        "name": "Seafood contamination monitoring and fishing zone restrictions",
+        "description": "Regular testing of fish and shellfish; clear labeling of safe fishing zones and consumption advisories",
+        "response_type": "Monitoring and regulation",
+        "target_pressures": ["Management of S3"],
+        "target_impacts": ["I3"],
+        "implementation_level": "National",
+        "stakeholders": ["Food safety agencies", "Fisheries department", "Health authorities"],
+        "effectiveness": "Medium - protects consumers but limits fishing",
+        "status": "Active and ongoing"
+      },
+      {
+        "id": "R10",
+        "name": "Sustainable fisheries management plans",
+        "description": "Catch limits, closed seasons, gear restrictions, and size limits to rebuild fish stocks",
+        "response_type": "Fisheries regulation",
+        "target_pressures": ["P8", "P9"],
+        "target_impacts": ["I2"],
+        "implementation_level": "National/regional",
+        "stakeholders": ["Fisheries department", "Fishing cooperatives", "Regional fisheries organizations"],
+        "effectiveness": "Medium to high - if enforced and complied with",
+        "status": "Partially implemented, enforcement challenges"
+      },
+      {
+        "id": "R11",
+        "name": "Community-based fisheries surveillance and enforcement",
+        "description": "Engaging local fishers and communities in monitoring, reporting IUU fishing, and co-management",
+        "response_type": "Participatory management",
+        "target_pressures": ["P8", "P10"],
+        "target_impacts": ["I2"],
+        "implementation_level": "Local",
+        "stakeholders": ["Fishing communities", "NGOs", "Coast guard"],
+        "effectiveness": "Medium - builds local capacity and compliance",
+        "status": "Emerging approach, limited coverage"
+      },
+      {
+        "id": "R12",
+        "name": "Aquaculture development",
+        "description": "Promoting sustainable marine and coastal aquaculture to diversify livelihoods and reduce pressure on wild stocks",
+        "response_type": "Alternative livelihood",
+        "target_pressures": ["P8"],
+        "target_impacts": ["I2"],
+        "implementation_level": "Local to national",
+        "stakeholders": ["Aquaculture operators", "Fishers", "Government"],
+        "effectiveness": "Medium - requires careful site selection and management",
+        "status": "Limited development, potential for expansion"
+      },
+      {
+        "id": "R13",
+        "name": "Mangrove and seagrass restoration programs",
+        "description": "Active planting and restoration of mangrove forests and seagrass meadows to rebuild critical habitats",
+        "response_type": "Ecological restoration",
+        "target_pressures": ["Addressing S4, S5"],
+        "target_impacts": ["I1", "I6", "I7", "I8"],
+        "implementation_level": "Local",
+        "stakeholders": ["NGOs", "Community groups", "Government agencies"],
+        "effectiveness": "Medium to high - if suitable sites and sustained effort",
+        "status": "Multiple restoration projects ongoing"
+      },
+      {
+        "id": "R14",
+        "name": "Coastal land-use planning and buffer zones",
+        "description": "Strict zoning regulations, setbacks from shore, and enforcement of coastal buffer zones to prevent habitat destruction",
+        "response_type": "Spatial planning and regulation",
+        "target_pressures": ["P11", "P10", "P4"],
+        "target_impacts": ["I6", "I8"],
+        "implementation_level": "Municipal to national",
+        "stakeholders": ["Planning authorities", "Municipalities", "Developers"],
+        "effectiveness": "High - if enforced",
+        "status": "Policies exist but enforcement variable"
+      },
+      {
+        "id": "R15",
+        "name": "Invasive species control (e.g., lionfish removal)",
+        "description": "Targeted removal campaigns, bounty programs, and monitoring to control invasive lionfish populations",
+        "response_type": "Invasive species management",
+        "target_pressures": ["P12"],
+        "target_impacts": ["I9"],
+        "implementation_level": "Local to regional",
+        "stakeholders": ["Dive operators", "Fishers", "Environmental NGOs"],
+        "effectiveness": "Low to medium - difficult to eradicate, requires ongoing effort",
+        "status": "Active removal programs, limited population control"
+      },
+      {
+        "id": "R16",
+        "name": "Sustainable tourism certification and best practices",
+        "description": "Promoting responsible diving, anchoring, and beach use through education, certification, and operator standards",
+        "response_type": "Education and behavioral change",
+        "target_pressures": ["P10"],
+        "target_impacts": ["I5"],
+        "implementation_level": "Industry-led with government support",
+        "stakeholders": ["Tourism operators", "Dive centers", "Hotel associations"],
+        "effectiveness": "Medium - depends on voluntary compliance and consumer demand",
+        "status": "Voluntary programs, variable uptake"
+      },
+      {
+        "id": "R17",
+        "name": "Climate adaptation planning and coastal defense enhancement",
+        "description": "Strengthening coastal defenses, restoring natural barriers, and planning for sea level rise and storm impacts",
+        "response_type": "Climate adaptation",
+        "target_pressures": ["P5", "P6"],
+        "target_impacts": ["I6"],
+        "implementation_level": "National to local",
+        "stakeholders": ["Government", "Municipalities", "Engineers", "Environmental agencies"],
+        "effectiveness": "Medium to high - combines hard and soft approaches",
+        "status": "Planning phase, some implementation"
+      },
+      {
+        "id": "R18",
+        "name": "Public awareness and environmental education campaigns",
+        "description": "Educating residents and visitors about marine conservation, contamination risks, and sustainable practices",
+        "response_type": "Education and communication",
+        "target_pressures": ["Multiple - behavioral change"],
+        "target_impacts": ["Multiple"],
+        "implementation_level": "Island-wide",
+        "stakeholders": ["Schools", "NGOs", "Media", "Government"],
+        "effectiveness": "Low to medium - long-term behavior change",
+        "status": "Ongoing various initiatives"
+      },
+      {
+        "id": "R19",
+        "name": "Regional Caribbean cooperation and knowledge sharing",
+        "description": "Collaboration with neighboring islands and regional organizations to share data, technologies, and best practices",
+        "response_type": "Regional cooperation",
+        "target_pressures": ["Multiple - coordinated response"],
+        "target_impacts": ["Multiple"],
+        "implementation_level": "Regional/international",
+        "stakeholders": ["OECS", "UNEP", "CAR-SPAW", "National governments"],
+        "effectiveness": "Medium - enhances capacity but requires coordination",
+        "status": "Active participation in regional networks"
+      },
+      {
+        "id": "R20",
+        "name": "Research and continuous monitoring programs",
+        "description": "Long-term monitoring of water quality, coral health, fish stocks, and pollutant levels to inform adaptive management",
+        "response_type": "Research and monitoring",
+        "target_pressures": ["All - knowledge base"],
+        "target_impacts": ["All - informed management"],
+        "implementation_level": "National with international collaboration",
+        "stakeholders": ["Research institutions", "Universities", "Government agencies"],
+        "effectiveness": "High - enables evidence-based management",
+        "status": "Ongoing but requires sustained funding"
+      },
+      {
+        "id": "R21",
+        "name": "Financial compensation and livelihood diversification for affected fishers",
+        "description": "Economic support and training programs to help fishers transition to alternative livelihoods (eco-tourism, aquaculture)",
+        "response_type": "Social and economic support",
+        "target_pressures": ["Addressing welfare impacts"],
+        "target_impacts": ["I2", "I3"],
+        "implementation_level": "National",
+        "stakeholders": ["Government", "Social services", "Fishers associations"],
+        "effectiveness": "Medium - reduces hardship but requires sustained support",
+        "status": "Limited programs, ad-hoc assistance"
+      }
+    ],
+    "measures": [
+      {
+        "id": "M1",
+        "name": "Marine Protected Area legislation and enforcement",
+        "description": "Legal framework establishing MPAs, no-take zones, and enforcement mechanisms with penalties for violations",
+        "measure_type": "Regulatory/legal",
+        "supports_responses": ["R4"],
+        "implementing_agency": "Ministry of Environment, Maritime authorities",
+        "legal_basis": "National marine protection laws, EU directives",
+        "budget": "Moderate - patrol vessels, personnel, monitoring",
+        "implementation_status": "Enacted, enforcement variable"
+      },
+      {
+        "id": "M2",
+        "name": "Fisheries quotas and seasonal closures",
+        "description": "Regulatory measures setting catch limits, minimum sizes, and seasonal fishing restrictions for overfished species",
+        "measure_type": "Regulatory",
+        "supports_responses": ["R10"],
+        "implementing_agency": "Fisheries department",
+        "legal_basis": "Fisheries management act",
+        "budget": "Low to moderate - monitoring and enforcement",
+        "implementation_status": "Partially implemented"
+      },
+      {
+        "id": "M3",
+        "name": "Wastewater treatment infrastructure funding",
+        "description": "Public investment and EU co-financing for construction and upgrade of sewage treatment facilities",
+        "measure_type": "Economic/infrastructure investment",
+        "supports_responses": ["R6"],
+        "implementing_agency": "Water utilities, Ministry of Infrastructure",
+        "legal_basis": "EU Water Framework Directive, national water quality standards",
+        "budget": "High - millions of euros",
+        "implementation_status": "Ongoing multi-year program"
+      },
+      {
+        "id": "M4",
+        "name": "Coastal development setback regulations",
+        "description": "Zoning laws requiring minimum distance from shoreline for new construction and prohibiting development in sensitive areas",
+        "measure_type": "Regulatory/spatial planning",
+        "supports_responses": ["R14"],
+        "implementing_agency": "Planning department, Municipalities",
+        "legal_basis": "Coastal zone management act",
+        "budget": "Low - administrative costs",
+        "implementation_status": "Enacted, enforcement inconsistent"
+      },
+      {
+        "id": "M5",
+        "name": "Agricultural best management practices subsidies",
+        "description": "Financial incentives for farmers adopting sustainable practices, buffer zones, and reduced chemical use",
+        "measure_type": "Economic incentive",
+        "supports_responses": ["R7"],
+        "implementing_agency": "Ministry of Agriculture, EU Common Agricultural Policy",
+        "legal_basis": "Agri-environment programs",
+        "budget": "Moderate - subsidy payments",
+        "implementation_status": "Available but limited uptake"
+      },
+      {
+        "id": "M6",
+        "name": "Sargassum emergency response funding",
+        "description": "Dedicated municipal and national budget allocation for Sargassum collection, disposal, and management operations",
+        "measure_type": "Economic/budgetary",
+        "supports_responses": ["R2", "R3"],
+        "implementing_agency": "Municipalities, Ministry of Environment",
+        "legal_basis": "Emergency environmental management provisions",
+        "budget": "High - millions annually during bloom seasons",
+        "implementation_status": "Ongoing annual allocation"
+      },
+      {
+        "id": "M7",
+        "name": "Contaminated zone fishing bans",
+        "description": "Legally enforceable prohibitions on fishing and shellfish harvesting in chlordecone and heavy metal contaminated areas",
+        "measure_type": "Regulatory",
+        "supports_responses": ["R9"],
+        "implementing_agency": "Food safety agency, Fisheries department",
+        "legal_basis": "Food safety regulations, public health law",
+        "budget": "Low - signage and enforcement",
+        "implementation_status": "Active in multiple zones"
+      },
+      {
+        "id": "M8",
+        "name": "Seafood contamination monitoring program",
+        "description": "Mandatory regular testing of commercial fish and shellfish for chlordecone, heavy metals, and other contaminants",
+        "measure_type": "Monitoring and enforcement",
+        "supports_responses": ["R9"],
+        "implementing_agency": "Food safety laboratory, Health ministry",
+        "legal_basis": "Food safety standards",
+        "budget": "Moderate - laboratory, personnel, testing costs",
+        "implementation_status": "Ongoing systematic program"
+      },
+      {
+        "id": "M9",
+        "name": "Coral reef monitoring and research funding",
+        "description": "Government and international grants for long-term coral health monitoring, bleaching surveys, and restoration research",
+        "measure_type": "Research funding",
+        "supports_responses": ["R20", "R5"],
+        "implementing_agency": "Research councils, Universities, NGOs",
+        "legal_basis": "Marine science and conservation programs",
+        "budget": "Moderate - research grants",
+        "implementation_status": "Ongoing but needs expansion"
+      },
+      {
+        "id": "M10",
+        "name": "Sustainable tourism certification schemes",
+        "description": "Voluntary certification programs for dive operators, hotels, and tour companies meeting environmental standards",
+        "measure_type": "Voluntary/market-based",
+        "supports_responses": ["R16"],
+        "implementing_agency": "Tourism board, Industry associations",
+        "legal_basis": "Voluntary industry standards",
+        "budget": "Low - industry-funded",
+        "implementation_status": "Available, variable participation"
+      },
+      {
+        "id": "M11",
+        "name": "Mangrove and coastal habitat protection ordinances",
+        "description": "Local regulations prohibiting mangrove cutting, wetland filling, and development in critical coastal habitats",
+        "measure_type": "Regulatory/local ordinance",
+        "supports_responses": ["R14", "R13"],
+        "implementing_agency": "Municipalities, Environmental agency",
+        "legal_basis": "Environmental protection laws",
+        "budget": "Low - administrative enforcement",
+        "implementation_status": "Variable by municipality"
+      },
+      {
+        "id": "M12",
+        "name": "Ecosystem restoration project grants",
+        "description": "Competitive funding for NGOs and community groups undertaking coral, mangrove, or seagrass restoration projects",
+        "measure_type": "Economic/grant program",
+        "supports_responses": ["R5", "R13"],
+        "implementing_agency": "Environment ministry, EU LIFE program",
+        "legal_basis": "Environmental conservation funding programs",
+        "budget": "Moderate - project-based",
+        "implementation_status": "Active but limited funding"
+      },
+      {
+        "id": "M13",
+        "name": "Invasive species removal incentive programs",
+        "description": "Bounties or payments for lionfish removal; support for lionfish culinary promotion and market development",
+        "measure_type": "Economic incentive",
+        "supports_responses": ["R15"],
+        "implementing_agency": "Fisheries department, Tourism board",
+        "legal_basis": "Invasive species management programs",
+        "budget": "Low - bounty payments",
+        "implementation_status": "Pilot programs"
+      },
+      {
+        "id": "M14",
+        "name": "Regional Caribbean cooperation agreements",
+        "description": "Formal participation in regional frameworks (OECS, CAR-SPAW Protocol) for marine conservation and data sharing",
+        "measure_type": "International agreement",
+        "supports_responses": ["R19"],
+        "implementing_agency": "Foreign affairs, Environment ministry",
+        "legal_basis": "International treaties and protocols",
+        "budget": "Low - membership fees, coordination",
+        "implementation_status": "Active participation"
+      },
+      {
+        "id": "M15",
+        "name": "Climate adaptation national strategy",
+        "description": "Comprehensive policy framework for climate change adaptation including coastal protection and ecosystem-based approaches",
+        "measure_type": "Policy framework",
+        "supports_responses": ["R17"],
+        "implementing_agency": "National climate change committee",
+        "legal_basis": "Paris Agreement commitments, national climate law",
+        "budget": "High - multi-sector investment",
+        "implementation_status": "Strategy developed, implementation beginning"
+      },
+      {
+        "id": "M16",
+        "name": "Fisher compensation and transition support fund",
+        "description": "Financial assistance for fishers affected by contamination bans and stock declines; training for alternative livelihoods",
+        "measure_type": "Economic/social support",
+        "supports_responses": ["R21"],
+        "implementing_agency": "Social services, Fisheries department",
+        "legal_basis": "Social welfare and economic transition programs",
+        "budget": "Moderate - compensation payments, training",
+        "implementation_status": "Limited availability, case-by-case"
+      },
+      {
+        "id": "M17",
+        "name": "Environmental education curriculum mandate",
+        "description": "Required marine and environmental education in schools; public awareness campaigns on conservation",
+        "measure_type": "Education policy",
+        "supports_responses": ["R18"],
+        "implementing_agency": "Ministry of Education, NGOs",
+        "legal_basis": "National education standards",
+        "budget": "Low to moderate - materials, teacher training",
+        "implementation_status": "Partially implemented"
+      },
+      {
+        "id": "M18",
+        "name": "Sargassum valorization research and development grants",
+        "description": "Funding for innovation in Sargassum processing, biogas production, and safe agricultural use",
+        "measure_type": "Research and development funding",
+        "supports_responses": ["R3"],
+        "implementing_agency": "Research councils, EU Horizon programs",
+        "legal_basis": "Innovation and circular economy programs",
+        "budget": "Moderate - R&D grants",
+        "implementation_status": "Active research projects"
+      },
+      {
+        "id": "M19",
+        "name": "Integrated Coastal Zone Management (ICZM) framework",
+        "description": "Comprehensive policy integrating land and marine management to align pollution control, habitat protection, and development",
+        "measure_type": "Policy framework/governance",
+        "supports_responses": ["All responses - coordinating mechanism"],
+        "implementing_agency": "Inter-ministerial ICZM committee",
+        "legal_basis": "ICZM protocol, EU ICZM recommendations",
+        "budget": "Moderate - coordination and planning",
+        "implementation_status": "Framework adopted, implementation variable"
+      },
+      {
+        "id": "M20",
+        "name": "Mooring buoy installation program",
+        "description": "Installation of fixed mooring buoys at popular dive sites to prevent anchor damage to coral reefs",
+        "measure_type": "Infrastructure",
+        "supports_responses": ["R16"],
+        "implementing_agency": "Maritime authorities, Dive associations",
+        "legal_basis": "Marine conservation regulations",
+        "budget": "Low to moderate - buoy installation and maintenance",
+        "implementation_status": "Limited coverage, expanding"
+      }
+    ]
+  },
+  "connections": [
+    {
+      "from_type": "driver",
+      "from_id": "D4",
+      "to_type": "activity",
+      "to_id": "A1",
+      "description": "Agricultural production needs drive banana plantation activities"
+    },
+    {
+      "from_type": "driver",
+      "from_id": "D1",
+      "to_type": "activity",
+      "to_id": "A2",
+      "description": "Food security needs drive artisanal fishing"
+    },
+    {
+      "from_type": "driver",
+      "from_id": "D3",
+      "to_type": "activity",
+      "to_id": "A3",
+      "description": "Tourism demand drives beach tourism and coastal recreation"
+    },
+    {
+      "from_type": "driver",
+      "from_id": "D3",
+      "to_type": "activity",
+      "to_id": "A4",
+      "description": "Tourism demand drives diving and snorkeling activities"
+    },
+    {
+      "from_type": "driver",
+      "from_id": "D6",
+      "to_type": "activity",
+      "to_id": "A6",
+      "description": "Housing needs drive coastal urbanization"
+    },
+    {
+      "from_type": "activity",
+      "from_id": "A1",
+      "to_type": "pressure",
+      "to_id": "P2",
+      "description": "Banana plantations cause chlordecone contamination"
+    },
+    {
+      "from_type": "activity",
+      "from_id": "A11",
+      "to_type": "pressure",
+      "to_id": "P1",
+      "description": "Agricultural runoff causes nutrient enrichment"
+    },
+    {
+      "from_type": "activity",
+      "from_id": "A5",
+      "to_type": "pressure",
+      "to_id": "P1",
+      "description": "Wastewater discharge causes nutrient pollution"
+    },
+    {
+      "from_type": "activity",
+      "from_id": "A2",
+      "to_type": "pressure",
+      "to_id": "P8",
+      "description": "Artisanal fishing creates fishing pressure"
+    },
+    {
+      "from_type": "activity",
+      "from_id": "A6",
+      "to_type": "pressure",
+      "to_id": "P11",
+      "description": "Coastal urbanization causes habitat loss"
+    },
+    {
+      "from_type": "pressure",
+      "from_id": "P1",
+      "to_type": "state",
+      "to_id": "S1",
+      "description": "Nutrient enrichment fuels Sargassum blooms"
+    },
+    {
+      "from_type": "pressure",
+      "from_id": "P5",
+      "to_type": "state",
+      "to_id": "S2",
+      "description": "Elevated temperatures cause coral bleaching"
+    },
+    {
+      "from_type": "pressure",
+      "from_id": "P2",
+      "to_type": "state",
+      "to_id": "S3",
+      "description": "Chlordecone causes sediment and biota contamination"
+    },
+    {
+      "from_type": "pressure",
+      "from_id": "P11",
+      "to_type": "state",
+      "to_id": "S4",
+      "description": "Habitat loss causes mangrove degradation"
+    },
+    {
+      "from_type": "pressure",
+      "from_id": "P8",
+      "to_type": "state",
+      "to_id": "S6",
+      "description": "Overfishing depletes fish stocks"
+    },
+    {
+      "from_type": "state",
+      "from_id": "S2",
+      "to_type": "impact",
+      "to_id": "I1",
+      "description": "Coral degradation reduces nursery habitat"
+    },
+    {
+      "from_type": "state",
+      "from_id": "S6",
+      "to_type": "impact",
+      "to_id": "I2",
+      "description": "Depleted stocks reduce fisheries productivity"
+    },
+    {
+      "from_type": "state",
+      "from_id": "S3",
+      "to_type": "impact",
+      "to_id": "I3",
+      "description": "Contamination creates unsafe seafood"
+    },
+    {
+      "from_type": "state",
+      "from_id": "S1",
+      "to_type": "impact",
+      "to_id": "I4",
+      "description": "Sargassum accumulation degrades beach aesthetics"
+    },
+    {
+      "from_type": "state",
+      "from_id": "S2",
+      "to_type": "impact",
+      "to_id": "I5",
+      "description": "Bleached reefs reduce diving quality"
+    },
+    {
+      "from_type": "state",
+      "from_id": "S4",
+      "to_type": "impact",
+      "to_id": "I6",
+      "description": "Mangrove loss reduces coastal protection"
+    },
+    {
+      "from_type": "impact",
+      "from_id": "I4",
+      "to_type": "welfare",
+      "to_id": "W1",
+      "description": "Degraded beaches reduce tourism revenue"
+    },
+    {
+      "from_type": "impact",
+      "from_id": "I2",
+      "to_type": "welfare",
+      "to_id": "W2",
+      "description": "Reduced fisheries harm fishing income"
+    },
+    {
+      "from_type": "impact",
+      "from_id": "I3",
+      "to_type": "welfare",
+      "to_id": "W3",
+      "description": "Contaminated seafood creates health risks"
+    },
+    {
+      "from_type": "impact",
+      "from_id": "I6",
+      "to_type": "welfare",
+      "to_id": "W6",
+      "description": "Loss of protection increases flooding"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R1",
+      "to_type": "pressure",
+      "to_id": "P1",
+      "description": "Early warning system addresses Sargassum transport (indirect via P7)"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R4",
+      "to_type": "pressure",
+      "to_id": "P8",
+      "description": "MPAs reduce fishing pressure"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R6",
+      "to_type": "pressure",
+      "to_id": "P1",
+      "description": "Wastewater treatment reduces nutrient pollution"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R10",
+      "to_type": "pressure",
+      "to_id": "P8",
+      "description": "Fisheries management reduces overfishing"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R13",
+      "to_type": "state",
+      "to_id": "S4",
+      "description": "Mangrove restoration rebuilds habitats"
+    },
+    {
+      "from_type": "measure",
+      "from_id": "M1",
+      "to_type": "response",
+      "to_id": "R4",
+      "description": "MPA legislation enables protected areas"
+    },
+    {
+      "from_type": "measure",
+      "from_id": "M2",
+      "to_type": "response",
+      "to_id": "R10",
+      "description": "Quotas and closures enable fisheries management"
+    },
+    {
+      "from_type": "measure",
+      "from_id": "M3",
+      "to_type": "response",
+      "to_id": "R6",
+      "description": "Infrastructure funding enables wastewater treatment"
+    },
+    {
+      "from_type": "measure",
+      "from_id": "M7",
+      "to_type": "response",
+      "to_id": "R9",
+      "description": "Fishing bans protect public health from contamination"
+    }
+  ],
+  "usage_notes": "This template represents the complex, multi-faceted marine environmental challenges facing Caribbean islands. It can be adapted for other tropical island contexts by adjusting specific regional seas, ecosystem types, and local pollutants. The template emphasizes the interconnected nature of problems (Sargassum, coral bleaching, contamination, overfishing, habitat loss) and the need for integrated coastal zone management approaches."
+}

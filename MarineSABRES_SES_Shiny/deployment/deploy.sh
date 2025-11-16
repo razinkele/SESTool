@@ -27,6 +27,26 @@ echo " MarineSABRES SES Tool - Deployment Script"
 echo "================================================================================"
 echo ""
 
+# Run pre-deployment checks
+print_status "Running pre-deployment checks..."
+if command -v Rscript &> /dev/null; then
+    cd "$(dirname "$0")"
+    if Rscript pre-deploy-check.R; then
+        print_success "Pre-deployment checks passed"
+    else
+        print_warning "Pre-deployment checks found issues"
+        read -p "Continue with deployment anyway? (y/N) " -n 1 -r
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            print_error "Deployment cancelled"
+            exit 1
+        fi
+    fi
+    cd ..
+else
+    print_warning "Rscript not found, skipping pre-deployment checks"
+fi
+
 # Check if running as root for shiny-server deployment
 if [[ "$DEPLOY_METHOD" == "--shiny-server" ]] && [[ $EUID -ne 0 ]]; then
    echo -e "${RED}ERROR: This script must be run as root for Shiny Server deployment${NC}"

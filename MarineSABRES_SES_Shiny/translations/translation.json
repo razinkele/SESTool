@@ -991,6 +991,24 @@
       "it": "Carica Progetto"
     },
     {
+      "en": "Prepare Report",
+      "es": "Preparar Informe",
+      "fr": "Préparer le Rapport",
+      "de": "Bericht Vorbereiten",
+      "lt": "Parengti ataskaitą",
+      "pt": "Preparar Relatório",
+      "it": "Prepara Report"
+    },
+    {
+      "en": "About",
+      "es": "Acerca de",
+      "fr": "À propos",
+      "de": "Über",
+      "lt": "Apie",
+      "pt": "Sobre",
+      "it": "Informazioni"
+    },
+    {
       "en": "Save your current project data, including all PIMS, ISA entries, and analysis results",
       "es": "Guarde los datos de su proyecto actual, incluidas todas las entradas PIMS, ISA y los resultados de análisis",
       "fr": "Enregistrez les données de votre projet actuel, y compris toutes les entrées PIMS, ISA et les résultats d'analyse",
@@ -9721,6 +9739,15 @@
       "it": "Salvataggio automatico attivato"
     },
     {
+      "en": "Auto-save disabled",
+      "es": "Guardado automático desactivado",
+      "fr": "Sauvegarde automatique désactivée",
+      "de": "Auto-Speichern deaktiviert",
+      "lt": "Automatinis išsaugojimas išjungtas",
+      "pt": "Salvamento automático desativado",
+      "it": "Salvataggio automatico disattivato"
+    },
+    {
       "en": "Unsaved Work Detected",
       "es": "Trabajo no Guardado Detectado",
       "fr": "Travail non Enregistré Détecté",
@@ -9998,6 +10025,15 @@
       "lt": "Nustatymai",
       "pt": "Configurações",
       "it": "Impostazioni"
+    },
+    {
+      "en": "Application Settings",
+      "es": "Configuración de la Aplicación",
+      "fr": "Paramètres de l'Application",
+      "de": "Anwendungseinstellungen",
+      "lt": "Programos nustatymai",
+      "pt": "Configurações da Aplicação",
+      "it": "Impostazioni dell'Applicazione"
     },
     {
       "en": "User Experience Level",
@@ -10322,6 +10358,420 @@
       "lt": "Pradžia",
       "pt": "Início",
       "it": "Inizio"
+    },
+    {
+      "en": "Baltic Sea",
+      "es": "Mar Báltico",
+      "fr": "Mer Baltique",
+      "de": "Ostsee",
+      "lt": "Baltijos jūra",
+      "pt": "Mar Báltico",
+      "it": "Mar Baltico"
+    },
+    {
+      "en": "Mediterranean Sea",
+      "es": "Mar Mediterráneo",
+      "fr": "Mer Méditerranée",
+      "de": "Mittelmeer",
+      "lt": "Viduržemio jūra",
+      "pt": "Mar Mediterrâneo",
+      "it": "Mar Mediterraneo"
+    },
+    {
+      "en": "North Sea",
+      "es": "Mar del Norte",
+      "fr": "Mer du Nord",
+      "de": "Nordsee",
+      "lt": "Šiaurės jūra",
+      "pt": "Mar do Norte",
+      "it": "Mare del Nord"
+    },
+    {
+      "en": "Irish Sea",
+      "es": "Mar de Irlanda",
+      "fr": "Mer d'Irlande",
+      "de": "Irische See",
+      "lt": "Airijos jūra",
+      "pt": "Mar da Irlanda",
+      "it": "Mare d'Irlanda"
+    },
+    {
+      "en": "East Atlantic",
+      "es": "Atlántico Oriental",
+      "fr": "Atlantique Est",
+      "de": "Ostatlantik",
+      "lt": "Rytų Atlanto vandenynas",
+      "pt": "Atlântico Leste",
+      "it": "Atlantico Orientale"
+    },
+    {
+      "en": "Black Sea",
+      "es": "Mar Negro",
+      "fr": "Mer Noire",
+      "de": "Schwarzes Meer",
+      "lt": "Juodoji jūra",
+      "pt": "Mar Negro",
+      "it": "Mar Nero"
+    },
+    {
+      "en": "Atlantic Ocean",
+      "es": "Océano Atlántico",
+      "fr": "Océan Atlantique",
+      "de": "Atlantischer Ozean",
+      "lt": "Atlanto vandenynas",
+      "pt": "Oceano Atlântico",
+      "it": "Oceano Atlantico"
+    },
+    {
+      "en": "Pacific Ocean",
+      "es": "Océano Pacífico",
+      "fr": "Océan Pacifique",
+      "de": "Pazifischer Ozean",
+      "lt": "Ramusis vandenynas",
+      "pt": "Oceano Pacífico",
+      "it": "Oceano Pacifico"
+    },
+    {
+      "en": "Indian Ocean",
+      "es": "Océano Índico",
+      "fr": "Océan Indien",
+      "de": "Indischer Ozean",
+      "lt": "Indijos vandenynas",
+      "pt": "Oceano Índico",
+      "it": "Oceano Indiano"
+    },
+    {
+      "en": "Caribbean Sea",
+      "es": "Mar Caribe",
+      "fr": "Mer des Caraïbes",
+      "de": "Karibisches Meer",
+      "lt": "Karibų jūra",
+      "pt": "Mar do Caribe",
+      "it": "Mar dei Caraibi"
+    },
+    {
+      "en": "Arctic Ocean",
+      "es": "Océano Ártico",
+      "fr": "Océan Arctique",
+      "de": "Arktischer Ozean",
+      "lt": "Arkties vandenynas",
+      "pt": "Oceano Ártico",
+      "it": "Oceano Artico"
+    },
+    {
+      "en": "Other/Regional",
+      "es": "Otro/Regional",
+      "fr": "Autre/Régional",
+      "de": "Andere/Regional",
+      "lt": "Kitas/Regioninis",
+      "pt": "Outro/Regional",
+      "it": "Altro/Regionale"
+    },
+    {
+      "en": "Regional Sea Context",
+      "es": "Contexto del Mar Regional",
+      "fr": "Contexte de la Mer Régionale",
+      "de": "Regionaler Meereskontext",
+      "lt": "Regioninės jūros kontekstas",
+      "pt": "Contexto do Mar Regional",
+      "it": "Contesto del Mare Regionale"
+    },
+    {
+      "en": "Hello! I'm your AI assistant for creating a DAPSI(W)R(M) model. Let's start by selecting your regional sea or ocean. This helps me provide relevant suggestions for your area.",
+      "es": "¡Hola! Soy su asistente de IA para crear un modelo DAPSI(W)R(M). Comencemos seleccionando su mar u océano regional. Esto me ayuda a proporcionar sugerencias relevantes para su área.",
+      "fr": "Bonjour ! Je suis votre assistant IA pour créer un modèle DAPSI(W)R(M). Commençons par sélectionner votre mer ou océan régional. Cela m'aide à fournir des suggestions pertinentes pour votre région.",
+      "de": "Hallo! Ich bin Ihr KI-Assistent zur Erstellung eines DAPSI(W)R(M)-Modells. Beginnen wir mit der Auswahl Ihres regionalen Meeres oder Ozeans. Dies hilft mir, relevante Vorschläge für Ihr Gebiet zu machen.",
+      "lt": "Sveiki! Esu jūsų dirbtinio intelekto asistentas, padedantis kurti DAPSI(W)R(M) modelį. Pradėkime pasirinkdami regioninę jūrą ar vandenyną. Tai padės man pateikti aktualius pasiūlymus jūsų regionui.",
+      "pt": "Olá! Sou seu assistente de IA para criar um modelo DAPSI(W)R(M). Vamos começar selecionando seu mar ou oceano regional. Isso me ajuda a fornecer sugestões relevantes para sua área.",
+      "it": "Ciao! Sono il tuo assistente AI per creare un modello DAPSI(W)R(M). Iniziamo selezionando il tuo mare o oceano regionale. Questo mi aiuta a fornire suggerimenti pertinenti per la tua area."
+    },
+    {
+      "en": "Ecosystem Type",
+      "es": "Tipo de Ecosistema",
+      "fr": "Type d'Écosystème",
+      "de": "Ökosystemtyp",
+      "lt": "Ekosistemos tipas",
+      "pt": "Tipo de Ecossistema",
+      "it": "Tipo di Ecosistema"
+    },
+    {
+      "en": "What type of marine ecosystem are you studying?",
+      "es": "¿Qué tipo de ecosistema marino está estudiando?",
+      "fr": "Quel type d'écosystème marin étudiez-vous ?",
+      "de": "Welchen Typ von Meeresökosystem untersuchen Sie?",
+      "lt": "Kokio tipo jūrų ekosistemą tyrinėjate?",
+      "pt": "Que tipo de ecossistema marinho você está estudando?",
+      "it": "Che tipo di ecosistema marino stai studiando?"
+    },
+    {
+      "en": "Preview",
+      "es": "Vista previa",
+      "fr": "Aperçu",
+      "de": "Vorschau",
+      "lt": "Peržiūra",
+      "pt": "Visualizar",
+      "it": "Anteprima"
+    },
+    {
+      "en": "Actions",
+      "es": "Acciones",
+      "fr": "Actions",
+      "de": "Aktionen",
+      "lt": "Veiksmai",
+      "pt": "Ações",
+      "it": "Azioni"
+    },
+    {
+      "en": "Review",
+      "es": "Revisar",
+      "fr": "Réviser",
+      "de": "Überprüfen",
+      "lt": "Peržiūrėti",
+      "pt": "Revisar",
+      "it": "Rivedere"
+    },
+    {
+      "en": "Customize",
+      "es": "Personalizar",
+      "fr": "Personnaliser",
+      "de": "Anpassen",
+      "lt": "Pritaikyti",
+      "pt": "Personalizar",
+      "it": "Personalizzare"
+    },
+    {
+      "en": "Preview all template connections before loading. Review connections to understand the causal links in the SES model.",
+      "es": "Previsualice todas las conexiones de plantilla antes de cargar. Revise las conexiones para comprender los enlaces causales en el modelo SES.",
+      "fr": "Prévisualisez toutes les connexions du modèle avant le chargement. Examinez les connexions pour comprendre les liens causals dans le modèle SES.",
+      "de": "Vorschau aller Vorlagenverbindungen vor dem Laden. Überprüfen Sie die Verbindungen, um die kausalen Verknüpfungen im SES-Modell zu verstehen.",
+      "lt": "Peržiūrėkite visus šablono ryšius prieš įkeliant. Peržiūrėkite ryšius, kad suprastumėte priežastinius ryšius SES modelyje.",
+      "pt": "Visualize todas as conexões do modelo antes de carregar. Revise as conexões para entender os vínculos causais no modelo SES.",
+      "it": "Visualizza in anteprima tutte le connessioni del modello prima del caricamento. Rivedi le connessioni per comprendere i collegamenti causali nel modello SES."
+    },
+    {
+      "en": "Load the template as-is without reviewing connections. All predefined connections will be imported directly into your project.",
+      "es": "Cargue la plantilla tal cual sin revisar las conexiones. Todas las conexiones predefinidas se importarán directamente a su proyecto.",
+      "fr": "Chargez le modèle tel quel sans examiner les connexions. Toutes les connexions prédéfinies seront importées directement dans votre projet.",
+      "de": "Laden Sie die Vorlage unverändert ohne Überprüfung der Verbindungen. Alle vordefinierten Verbindungen werden direkt in Ihr Projekt importiert.",
+      "lt": "Įkelkite šabloną tokį, koks yra, neperžiūrėdami ryšių. Visi iš anksto apibrėžti ryšiai bus tiesiogiai importuoti į jūsų projektą.",
+      "pt": "Carregue o modelo como está sem revisar as conexões. Todas as conexões predefinidas serão importadas diretamente para seu projeto.",
+      "it": "Carica il modello così com'è senza rivedere le connessioni. Tutte le connessioni predefinite verranno importate direttamente nel tuo progetto."
+    },
+    {
+      "en": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project.",
+      "es": "Revise y personalice las conexiones de plantilla. Apruebe, rechace o modifique conexiones individuales antes de cargarlas en su proyecto.",
+      "fr": "Examinez et personnalisez les connexions du modèle. Approuvez, rejetez ou modifiez les connexions individuelles avant de les charger dans votre projet.",
+      "de": "Überprüfen und passen Sie Vorlagenverbindungen an. Genehmigen, ablehnen oder ändern Sie einzelne Verbindungen, bevor Sie sie in Ihr Projekt laden.",
+      "lt": "Peržiūrėkite ir pritaikykite šablono ryšius. Patvirtinkite, atmeskite arba modifikuokite atskirus ryšius prieš įkeliant į savo projektą.",
+      "pt": "Revise e personalize as conexões do modelo. Aprove, rejeite ou modifique conexões individuais antes de carregar em seu projeto.",
+      "it": "Rivedi e personalizza le connessioni del modello. Approva, rifiuta o modifica le singole connessioni prima di caricarle nel tuo progetto."
+    },
+    {
+      "en": "View detailed preview",
+      "es": "Ver vista previa detallada",
+      "fr": "Voir l'aperçu détaillé",
+      "de": "Detaillierte Vorschau anzeigen",
+      "lt": "Peržiūrėti išsamią peržiūrą",
+      "pt": "Ver visualização detalhada",
+      "it": "Visualizza anteprima dettagliata"
+    },
+    {
+      "en": "Switch Template?",
+      "es": "¿Cambiar plantilla?",
+      "fr": "Changer de modèle ?",
+      "de": "Vorlage wechseln?",
+      "lt": "Pakeisti šabloną?",
+      "pt": "Trocar modelo?",
+      "it": "Cambiare modello?"
+    },
+    {
+      "en": "You are about to switch to a different template.",
+      "es": "Está a punto de cambiar a una plantilla diferente.",
+      "fr": "Vous êtes sur le point de passer à un modèle différent.",
+      "de": "Sie sind dabei, zu einer anderen Vorlage zu wechseln.",
+      "lt": "Ketinate pereiti prie kito šablono.",
+      "pt": "Você está prestes a mudar para um modelo diferente.",
+      "it": "Stai per passare a un modello diverso."
+    },
+    {
+      "en": "All work on the current template will be lost, including:",
+      "es": "Se perderá todo el trabajo en la plantilla actual, incluyendo:",
+      "fr": "Tout le travail sur le modèle actuel sera perdu, y compris :",
+      "de": "Alle Arbeiten an der aktuellen Vorlage gehen verloren, einschließlich:",
+      "lt": "Visi dabartinio šablono darbai bus prarasti, įskaitant:",
+      "pt": "Todo o trabalho no modelo atual será perdido, incluindo:",
+      "it": "Tutto il lavoro sul modello corrente andrà perso, incluso:"
+    },
+    {
+      "en": "Connection reviews and amendments",
+      "es": "Revisiones y modificaciones de conexiones",
+      "fr": "Examens et modifications de connexions",
+      "de": "Verbindungsüberprüfungen und -änderungen",
+      "lt": "Ryšių peržiūros ir pataisymai",
+      "pt": "Revisões e alterações de conexões",
+      "it": "Revisioni e modifiche delle connessioni"
+    },
+    {
+      "en": "Approved and rejected connections",
+      "es": "Conexiones aprobadas y rechazadas",
+      "fr": "Connexions approuvées et rejetées",
+      "de": "Genehmigte und abgelehnte Verbindungen",
+      "lt": "Patvirtinti ir atmesti ryšiai",
+      "pt": "Conexões aprovadas e rejeitadas",
+      "it": "Connessioni approvate e rifiutate"
+    },
+    {
+      "en": "Any customizations made",
+      "es": "Cualquier personalización realizada",
+      "fr": "Toutes les personnalisations effectuées",
+      "de": "Alle vorgenommenen Anpassungen",
+      "lt": "Visi atlikti pritaikymai",
+      "pt": "Quaisquer personalizações feitas",
+      "it": "Qualsiasi personalizzazione effettuata"
+    },
+    {
+      "en": "This action cannot be undone.",
+      "es": "Esta acción no se puede deshacer.",
+      "fr": "Cette action ne peut pas être annulée.",
+      "de": "Diese Aktion kann nicht rückgängig gemacht werden.",
+      "lt": "Šio veiksmo negalima atšaukti.",
+      "pt": "Esta ação não pode ser desfeita.",
+      "it": "Questa azione non può essere annullata."
+    },
+    {
+      "en": "Are you sure you want to start from scratch with the new template?",
+      "es": "¿Está seguro de que desea comenzar desde cero con la nueva plantilla?",
+      "fr": "Êtes-vous sûr de vouloir recommencer à zéro avec le nouveau modèle ?",
+      "de": "Sind Sie sicher, dass Sie mit der neuen Vorlage von vorne beginnen möchten?",
+      "lt": "Ar tikrai norite pradėti iš naujo su nauju šablonu?",
+      "pt": "Tem certeza de que deseja começar do zero com o novo modelo?",
+      "it": "Sei sicuro di voler ricominciare da zero con il nuovo modello?"
+    },
+    {
+      "en": "Yes, Switch Template",
+      "es": "Sí, cambiar plantilla",
+      "fr": "Oui, changer de modèle",
+      "de": "Ja, Vorlage wechseln",
+      "lt": "Taip, pakeisti šabloną",
+      "pt": "Sim, trocar modelo",
+      "it": "Sì, cambia modello"
+    },
+    {
+      "en": "Template switched. Starting fresh.",
+      "es": "Plantilla cambiada. Comenzando de nuevo.",
+      "fr": "Modèle changé. Redémarrage.",
+      "de": "Vorlage gewechselt. Neustart.",
+      "lt": "Šablonas pakeistas. Pradedama iš naujo.",
+      "pt": "Modelo trocado. Começando do zero.",
+      "it": "Modello cambiato. Ripartenza da zero."
+    },
+    {
+      "en": "This template includes %d predefined connections between elements.",
+      "es": "Esta plantilla incluye %d conexiones predefinidas entre elementos.",
+      "fr": "Ce modèle inclut %d connexions prédéfinies entre les éléments.",
+      "de": "Diese Vorlage enthält %d vordefinierte Verbindungen zwischen Elementen.",
+      "lt": "Šis šablonas apima %d iš anksto apibrėžtų ryšių tarp elementų.",
+      "pt": "Este modelo inclui %d conexões predefinidas entre elementos.",
+      "it": "Questo modello include %d connessioni predefinite tra elementi."
+    },
+    {
+      "en": "Select This Template",
+      "es": "Seleccionar esta plantilla",
+      "fr": "Sélectionner ce modèle",
+      "de": "Diese Vorlage auswählen",
+      "lt": "Pasirinkti šį šabloną",
+      "pt": "Selecionar este modelo",
+      "it": "Seleziona questo modello"
+    },
+    {
+      "en": "... and %d more",
+      "es": "... y %d más",
+      "fr": "... et %d de plus",
+      "de": "... und %d weitere",
+      "lt": "... ir dar %d",
+      "pt": "... e mais %d",
+      "it": "... e altri %d"
+    },
+    {
+      "en": "None defined",
+      "es": "Ninguno definido",
+      "fr": "Aucun défini",
+      "de": "Keine definiert",
+      "lt": "Nėra apibrėžta",
+      "pt": "Nenhum definido",
+      "it": "Nessuno definito"
+    },
+    {
+      "en": "AI Assistant Help",
+      "es": "Ayuda del Asistente de IA",
+      "fr": "Aide de l'Assistant IA",
+      "de": "KI-Assistent Hilfe",
+      "lt": "DI asistento pagalba",
+      "pt": "Ajuda do Assistente de IA",
+      "it": "Aiuto Assistente IA"
+    },
+    {
+      "en": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
+      "es": "Este asistente impulsado por IA le ayuda a crear su marco DAPSI(W)R(M) a través de una conversación interactiva. Simplemente responda las preguntas y el asistente le guiará en cada paso.",
+      "fr": "Cet assistant alimenté par l'IA vous aide à créer votre cadre DAPSI(W)R(M) grâce à une conversation interactive. Répondez simplement aux questions et l'assistant vous guidera à chaque étape.",
+      "de": "Dieser KI-gestützte Assistent hilft Ihnen, Ihr DAPSI(W)R(M)-Framework durch interaktive Konversation zu erstellen. Beantworten Sie einfach die Fragen und der Assistent führt Sie durch jeden Schritt.",
+      "lt": "Šis dirbtinio intelekto asistentas padeda sukurti DAPSI(W)R(M) sistemą interaktyvia kalba. Tiesiog atsakykite į klausimus, o asistentas jus ves per kiekvieną žingsnį.",
+      "pt": "Este assistente alimentado por IA ajuda você a criar sua estrutura DAPSI(W)R(M) através de conversação interativa. Simplesmente responda às perguntas e o assistente irá guiá-lo em cada etapa.",
+      "it": "Questo assistente basato sull'intelligenza artificiale ti aiuta a creare il tuo framework DAPSI(W)R(M) attraverso una conversazione interattiva. Rispondi semplicemente alle domande e l'assistente ti guiderà in ogni passaggio."
+    },
+    {
+      "en": "tailored for",
+      "es": "adaptado para",
+      "fr": "adapté pour",
+      "de": "angepasst für",
+      "lt": "pritaikytas",
+      "pt": "adaptado para",
+      "it": "adattato per"
+    },
+    {
+      "en": "Other (enter your own)",
+      "es": "Otro (ingrese el suyo)",
+      "fr": "Autre (saisissez le vôtre)",
+      "de": "Andere (geben Sie Ihre eigene ein)",
+      "lt": "Kitas (įveskite savo)",
+      "pt": "Outro (insira o seu)",
+      "it": "Altro (inserisci il tuo)"
+    },
+    {
+      "en": "AI-suggested options",
+      "es": "Opciones sugeridas por IA",
+      "fr": "Options suggérées par l'IA",
+      "de": "KI-vorgeschlagene Optionen",
+      "lt": "DI siūlomos parinktys",
+      "pt": "Opções sugeridas por IA",
+      "it": "Opzioni suggerite dall'IA"
+    },
+    {
+      "en": "Connections:",
+      "es": "Conexiones:",
+      "fr": "Connexions :",
+      "de": "Verbindungen:",
+      "lt": "Ryšiai:",
+      "pt": "Conexões:",
+      "it": "Connessioni:"
+    },
+    {
+      "en": "Confidence:",
+      "es": "Confianza:",
+      "fr": "Confiance :",
+      "de": "Vertrauen:",
+      "lt": "Pasitikėjimas:",
+      "pt": "Confiança:",
+      "it": "Confidenza:"
+    },
+    {
+      "en": "Amend",
+      "es": "Modificar",
+      "fr": "Modifier",
+      "de": "Ändern",
+      "lt": "Keisti",
+      "pt": "Alterar",
+      "it": "Modificare"
     }
   ]
 }

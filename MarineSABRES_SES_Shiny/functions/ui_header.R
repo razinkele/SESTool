@@ -25,7 +25,7 @@ build_dashboard_header <- function(i18n) {
         id = "settings_dropdown_toggle",
         class = "settings-dropdown-toggle",
         icon("cog"),
-        tags$span("Settings"),
+        tags$span(i18n$t("Settings")),
         tags$span(class = "caret", style = "margin-left: 5px;")
       ),
       tags$div(
@@ -49,7 +49,7 @@ build_dashboard_header <- function(i18n) {
           id = "open_about_modal",
           class = "action-button",
           icon("info-circle"),
-          "About"
+          i18n$t("About")
         )
       )
     ),
@@ -61,7 +61,7 @@ build_dashboard_header <- function(i18n) {
         href = "user_guide.html",
         target = "_blank",
         icon("book"),
-        "About",
+        i18n$t("About"),
         style = "cursor: pointer;"
       )
     ),
@@ -73,9 +73,9 @@ build_dashboard_header <- function(i18n) {
         href = "#",
         id = "bookmark_btn",
         icon("bookmark"),
-        "Bookmark",
+        i18n$t("Bookmark"),
         style = "cursor: pointer;",
-        title = "Save current state as bookmark"
+        title = i18n$t("Save current state as bookmark")
       )
     ),
 

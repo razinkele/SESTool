@@ -178,8 +178,13 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
       div(class = "create-ses-container",
         # Header Section
         div(class = "header-section",
-          h2(icon("layer-group"), " ", i18n$t("Create Your Social-Ecological System")),
-          p(i18n$t("Choose the method that best fits your experience level and project needs"))
+          create_module_header(
+            ns = ns,
+            title_key = "Create Your Social-Ecological System",
+            subtitle_key = "Choose the method that best fits your experience level and project needs",
+            help_id = "help_create_ses",
+            i18n = i18n
+          )
         ),
 
         # Method Selection Cards
@@ -396,6 +401,21 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
         }
       }
     })
+
+    # Help Modal ----
+    create_help_observer(
+      input, "help_create_ses", "create_ses_guide_title",
+      tagList(
+        h4(i18n$t("create_ses_guide_methods_title")),
+        p(i18n$t("create_ses_guide_methods_p1")),
+        tags$ul(
+          tags$li(strong(i18n$t("Standard Entry")), ": ", i18n$t("create_ses_guide_standard_desc")),
+          tags$li(strong(i18n$t("AI Assistant")), ": ", i18n$t("create_ses_guide_ai_desc")),
+          tags$li(strong(i18n$t("Template-Based")), ": ", i18n$t("create_ses_guide_template_desc"))
+        )
+      ),
+      i18n
+    )
 
     # Return selected method for parent to access
     return(reactive({ rv$selected_method }))

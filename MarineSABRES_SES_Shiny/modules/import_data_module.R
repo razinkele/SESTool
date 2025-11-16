@@ -63,10 +63,7 @@ import_data_ui <- function(id, i18n) {
     ),
 
     # Header
-    div(class = "import-header",
-      h2(icon("file-alt"), " ", i18n$t("Import Data from Excel")),
-      p(i18n$t("Import your social-ecological system data from an Excel file"))
-    ),
+    create_module_header(ns, "import_data_title", "import_data_subtitle", "import_data_help", i18n),
 
     # Instructions
     div(class = "import-container",
@@ -463,6 +460,15 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         updateTabItems(session = parent_session, "tabs", "dashboard")
       }
     }
+
+    # ========== HELP MODAL ==========
+    create_help_observer(
+      input,
+      "import_data_help",
+      "import_data_help_title",
+      tagList(p(i18n$t("import_data_help_content"))),
+      i18n
+    )
 
   })
 }

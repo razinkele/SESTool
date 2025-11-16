@@ -45,7 +45,7 @@ source("modules/response_module.R", local = TRUE)
 source("modules/scenario_builder_module.R", local = TRUE)  # Scenario Builder
 source("modules/prepare_report_module.R", local = TRUE)  # Report preparation (comprehensive)
 source("modules/export_reports_module.R", local = TRUE)  # Export & Reports (simple)
-# source("modules/response_validation_module.R", local = TRUE)  # Not implemented yet
+# source("modules/response_validation_module.R", local = FALSE)  # Not implemented yet
 
 # ============================================================================
 # UI
@@ -127,7 +127,7 @@ ui <- dashboardPage(
     tabItems(
 
       # ==================== ENTRY POINT (GETTING STARTED) ====================
-      tabItem(tabName = "entry_point", entry_point_ui("entry_pt")),
+      tabItem(tabName = "entry_point", entry_point_ui("entry_pt", i18n)),
 
       # ==================== DASHBOARD ====================
       tabItem(
@@ -205,11 +205,11 @@ ui <- dashboardPage(
       ),
 
       # ==================== PIMS MODULE ====================
-      tabItem(tabName = "pims_project", pims_project_ui("pims_proj")),
-      tabItem(tabName = "pims_stakeholders", pimsStakeholderUI("pims_stake")),
-      tabItem(tabName = "pims_resources", pims_resources_ui("pims_res")),
-      tabItem(tabName = "pims_data", pims_data_ui("pims_dm")),
-      tabItem(tabName = "pims_evaluation", pims_evaluation_ui("pims_eval")),
+      tabItem(tabName = "pims_project", pims_project_ui("pims_proj", i18n)),
+      tabItem(tabName = "pims_stakeholders", pimsStakeholderUI("pims_stake", i18n)),
+      tabItem(tabName = "pims_resources", pims_resources_ui("pims_res", i18n)),
+      tabItem(tabName = "pims_data", pims_data_ui("pims_dm", i18n)),
+      tabItem(tabName = "pims_evaluation", pims_evaluation_ui("pims_eval", i18n)),
 
       # ==================== CREATE SES ====================
       # Choose Method
@@ -222,7 +222,7 @@ ui <- dashboardPage(
       tabItem(tabName = "create_ses_ai", ai_isa_assistant_ui("ai_isa_mod", i18n)),
 
       # Template-Based
-      tabItem(tabName = "create_ses_template", template_ses_ui("template_ses")),
+      tabItem(tabName = "create_ses_template", template_ses_ui("template_ses", i18n)),
 
       # ==================== CLD VISUALIZATION ====================
       tabItem(tabName = "cld_viz", cld_viz_ui("cld_visual")),
@@ -540,21 +540,21 @@ server <- function(input, output, session) {
   # ========== CALL MODULE SERVERS ==========
 
   # Entry Point module - pass session for sidebar navigation and user level
-  entry_point_server("entry_pt", project_data, parent_session = session, user_level_reactive = user_level)
+  entry_point_server("entry_pt", project_data, i18n, parent_session = session, user_level_reactive = user_level)
 
   # PIMS modules
-  pims_project_data <- pims_project_server("pims_proj", project_data)
-  pims_stakeholders_data <- pimsStakeholderServer("pims_stake", project_data)
-  pims_resources_data <- pims_resources_server("pims_res", project_data)
-  pims_data_data <- pims_data_server("pims_dm", project_data)
-  pims_evaluation_data <- pims_evaluation_server("pims_eval", project_data)
+  pims_project_data <- pims_project_server("pims_proj", project_data, i18n)
+  pims_stakeholders_data <- pimsStakeholderServer("pims_stake", project_data, i18n)
+  pims_resources_data <- pims_resources_server("pims_res", project_data, i18n)
+  pims_data_data <- pims_data_server("pims_dm", project_data, i18n)
+  pims_evaluation_data <- pims_evaluation_server("pims_eval", project_data, i18n)
   
   # ==================== CREATE SES MODULES ====================
   # Main Create SES module (method selector)
   create_ses_server("create_ses_main", project_data, session, i18n)
 
   # Template-based SES module
-  template_ses_server("template_ses", project_data, session, event_bus)
+  template_ses_server("template_ses", project_data, session, event_bus, i18n)
 
   # AI ISA Assistant module
   ai_isa_assistant_server("ai_isa_mod", project_data, i18n, event_bus, autosave_enabled)
@@ -567,7 +567,7 @@ server <- function(input, output, session) {
   
   # Analysis modules
   analysis_metrics_server("analysis_met", project_data)
-  analysis_loops_server("analysis_loop", project_data)
+  analysis_loops_server("analysis_loop", project_data, i18n)
   analysis_leverage_server("analysis_lev", project_data)
   analysis_bot_server("analysis_b", project_data)
   analysis_simplify_server("analysis_simp", project_data)

@@ -2,24 +2,18 @@
 # Process and Information Management System - Stakeholder Identification and Engagement
 # Based on MarineSABRES Simple SES DRAFT Guidance
 
+library(shiny)
+library(DT)
+library(openxlsx)
+
 # Module UI ----
-pimsStakeholderUI <- function(id) {
+pimsStakeholderUI <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
     fluidRow(
       column(12,
-        div(style = "display: flex; justify-content: space-between; align-items: center;",
-          div(
-            h3("PIMS: Stakeholder Identification and Engagement"),
-            p("Identify, analyze, and manage stakeholders for your marine social-ecological system project.")
-          ),
-          div(style = "margin-top: 10px;",
-            actionButton(ns("help_stakeholder"), "Stakeholder Guide",
-                        icon = icon("question-circle"),
-                        class = "btn btn-info btn-lg")
-          )
-        )
+        create_module_header(ns, "pims_stakeholder_title", "pims_stakeholder_subtitle", "pims_stakeholder_help", i18n)
       )
     ),
 
@@ -340,7 +334,7 @@ pimsStakeholderUI <- function(id) {
 }
 
 # Module Server ----
-pimsStakeholderServer <- function(id, global_data) {
+pimsStakeholderServer <- function(id, global_data, i18n) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -737,64 +731,13 @@ pimsStakeholderServer <- function(id, global_data) {
     )
 
     # Help Modal ----
-    observeEvent(input$help_stakeholder, {
-      showModal(modalDialog(
-        title = "PIMS: Stakeholder Identification and Engagement Guide",
-        size = "l",
-        easyClose = TRUE,
-
-        h4("Purpose"),
-        p("Effective stakeholder engagement is critical for marine ecosystem management. No single stakeholder has a complete view of the system - only by bringing diverse stakeholders together can we approach a holistic understanding."),
-
-        hr(),
-        h5("Key Concepts"),
-
-        tags$ul(
-          tags$li(strong("Stakeholder:"), "Anyone affected by or who can affect the marine social-ecological system"),
-          tags$li(strong("Power:"), "Ability to influence decisions and outcomes"),
-          tags$li(strong("Interest:"), "Level of concern or impact from the system"),
-          tags$li(strong("Engagement Level:"), "How deeply stakeholders should be involved")
-        ),
-
-        hr(),
-        h5("Using the Power-Interest Grid"),
-
-        tags$ul(
-          tags$li(strong("Key Players (High Power, High Interest):"), "Engage closely, involve in decision-making"),
-          tags$li(strong("Keep Satisfied (High Power, Low Interest):"), "Keep satisfied but don't overwhelm with communication"),
-          tags$li(strong("Keep Informed (Low Power, High Interest):"), "Keep informed and consult regarding their interests"),
-          tags$li(strong("Monitor (Low Power, Low Interest):"), "Monitor with minimum effort, inform via general communications")
-        ),
-
-        hr(),
-        h5("Engagement Levels (IAP2 Spectrum)"),
-
-        tags$ul(
-          tags$li(strong("Inform:"), "Provide information to stakeholders"),
-          tags$li(strong("Consult:"), "Obtain feedback on analysis, alternatives, decisions"),
-          tags$li(strong("Involve:"), "Work with stakeholders to ensure concerns are understood"),
-          tags$li(strong("Collaborate:"), "Partner with stakeholders in decision-making"),
-          tags$li(strong("Empower:"), "Place final decision-making in hands of stakeholders")
-        ),
-
-        hr(),
-        h5("Workflow"),
-
-        tags$ol(
-          tags$li(strong("Identify:"), "Add all relevant stakeholders to the register"),
-          tags$li(strong("Analyze:"), "Assess power and interest, visualize on grid"),
-          tags$li(strong("Plan:"), "Develop engagement strategy based on classification"),
-          tags$li(strong("Engage:"), "Conduct and document engagement activities"),
-          tags$li(strong("Communicate:"), "Maintain ongoing communication"),
-          tags$li(strong("Review:"), "Analyze coverage and adjust strategy")
-        ),
-
-        hr(),
-        p(em("Remember: Stakeholder engagement is an ongoing process, not a one-time activity.")),
-
-        footer = modalButton("Close")
-      ))
-    })
+    create_help_observer(
+      input,
+      "pims_stakeholder_help",
+      "pims_stakeholder_help_title",
+      tagList(p(i18n$t("pims_stakeholder_help_content"))),
+      i18n
+    )
 
     # Return reactive data
     return(reactive({ stakeholder_data }))

@@ -29,10 +29,19 @@ deployment/*.tar.gz
 
 # Documentation drafts
 *.draft.md
+*.md
+!README.md
+!translations/README.md
 
 # Local test data
 test_data/
 temp/
+temp_*/
+Documents/
+scripts/
+tests/
+_ul*
+nul
 
 # R session data
 .Rdata

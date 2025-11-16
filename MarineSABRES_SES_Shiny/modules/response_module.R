@@ -1,3 +1,5 @@
+library(shiny)
+
 # Response and Validation Module
 # Implements Response (as Measures) for complete DAPSI(W)R(M) framework
 # Includes: Response Measures, Scenario Builder, Validation
@@ -12,17 +14,7 @@ response_measures_ui <- function(id, i18n) {
   tagList(
     fluidRow(
       column(12,
-        div(style = "display: flex; justify-content: space-between; align-items: center;",
-          div(
-            h3(i18n$t("Response Measures (R & M)")),
-            p(i18n$t("Identify management interventions and policy responses to address system challenges."))
-          ),
-          div(style = "margin-top: 10px;",
-            actionButton(ns("help_response"), i18n$t("Response Guide"),
-                        icon = icon("question-circle"),
-                        class = "btn btn-info btn-lg")
-          )
-        )
+        create_module_header(ns, "Response Measures (R & M)", "Identify management interventions and policy responses to address system challenges.", "help_response", i18n)
       )
     ),
 
@@ -596,19 +588,12 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
       }
     )
 
-    # Help Modal ----
-    observeEvent(input$help_response, {
-      showModal(modalDialog(
-        title = i18n$t("Response Measures Guide"),
-        size = "l",
-        easyClose = TRUE,
-
+    create_help_observer(input, "help_response", "response_measures_help_title",
+      tagList(
         h4(i18n$t("Completing DAPSI(W)R(M)")),
         p(i18n$t("Response measures (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems.")),
-
         hr(),
         h5(i18n$t("Types of Response Measures")),
-
         tags$ul(
           tags$li(strong(i18n$t("Regulatory:")), i18n$t("Laws, quotas, protected areas, bans")),
           tags$li(strong(i18n$t("Economic:")), i18n$t("Taxes, subsidies, payments for ecosystem services")),
@@ -617,20 +602,16 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
           tags$li(strong(i18n$t("Institutional:")), i18n$t("Governance reforms, co-management, partnerships")),
           tags$li(strong(i18n$t("Voluntary:")), i18n$t("Certification, codes of conduct, stewardship"))
         ),
-
         hr(),
         h5(i18n$t("Intervention Points")),
-
         tags$ul(
           tags$li(strong(i18n$t("Drivers:")), i18n$t("Address root causes (most leverage but hardest)")),
           tags$li(strong(i18n$t("Activities:")), i18n$t("Regulate what people do (direct but may face resistance)")),
           tags$li(strong(i18n$t("Pressures:")), i18n$t("Mitigate impacts (symptomatic treatment)")),
           tags$li(strong(i18n$t("State:")), i18n$t("Restore ecosystems (expensive, slow)"))
         ),
-
         hr(),
         h5(i18n$t("Prioritization Criteria")),
-
         tags$ul(
           tags$li(strong(i18n$t("Effectiveness:")), i18n$t("Will it solve the problem?")),
           tags$li(strong(i18n$t("Feasibility:")), i18n$t("Can it be implemented (political, social, technical)?")),
@@ -638,13 +619,9 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
           tags$li(strong(i18n$t("Timeframe:")), i18n$t("How quickly will it have effects?")),
           tags$li(strong(i18n$t("Co-benefits:")), i18n$t("Does it address multiple issues?"))
         ),
-
         hr(),
-        p(em(i18n$t("Effective responses address feedback loops and leverage points identified in your ISA analysis."))),
-
-        footer = modalButton(i18n$t("Close"))
-      ))
-    })
+        p(em(i18n$t("Effective responses address feedback loops and leverage points identified in your ISA analysis.")))
+      ), i18n)
 
     return(reactive({ response_data }))
   })

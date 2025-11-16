@@ -52,10 +52,12 @@ RUN R -e "install.packages(c( \
 COPY app.R /srv/shiny-server/marinesabres/
 COPY global.R /srv/shiny-server/marinesabres/
 COPY run_app.R /srv/shiny-server/marinesabres/
+COPY constants.R /srv/shiny-server/marinesabres/
 COPY modules/ /srv/shiny-server/marinesabres/modules/
 COPY functions/ /srv/shiny-server/marinesabres/functions/
 COPY www/ /srv/shiny-server/marinesabres/www/
 COPY data/ /srv/shiny-server/marinesabres/data/
+COPY translations/ /srv/shiny-server/marinesabres/translations/
 
 # Set permissions
 RUN chown -R shiny:shiny /srv/shiny-server/marinesabres

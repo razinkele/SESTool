@@ -32,23 +32,13 @@ analysis_loops_ui <- function(id) {
   ns <- NS(id)
 
   tagList(
-    fluidRow(
-      column(12,
-        div(style = "display: flex; justify-content: space-between; align-items: center;",
-          div(
-            h3("Feedback Loop Detection and Analysis"),
-            p("Automatically identify and analyze feedback loops in your Causal Loop Diagram.")
-          ),
-          div(style = "margin-top: 10px;",
-            actionButton(ns("help_loops"), "Loop Analysis Guide",
-                        icon = icon("question-circle"),
-                        class = "btn btn-info btn-lg")
-          )
-        )
-      )
+    create_module_header(
+      ns = ns,
+      title_key = "Feedback Loop Detection and Analysis",
+      subtitle_key = "Automatically identify and analyze feedback loops in your Causal Loop Diagram.",
+      help_id = "help_loops",
+      i18n = i18n
     ),
-
-    hr(),
 
     fluidRow(
       column(12,
@@ -266,7 +256,7 @@ analysis_loops_ui <- function(id) {
 #' }
 #'
 #' @export
-analysis_loops_server <- function(id, project_data_reactive) {
+analysis_loops_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -853,60 +843,51 @@ analysis_loops_server <- function(id, project_data_reactive) {
     )
 
     # Help Modal ----
-    observeEvent(input$help_loops, {
-      showModal(modalDialog(
-        title = "Feedback Loop Detection and Analysis Guide",
-        size = "l",
-        easyClose = TRUE,
-
-        h4("What are Feedback Loops?"),
-        p("Feedback loops are circular causal pathways where an element influences itself through a chain of other elements. They are fundamental to understanding system dynamics."),
-
+    create_help_observer(
+      input = input,
+      input_id = "help_loops",
+      title_key = "Feedback Loop Detection and Analysis Guide",
+      content = tagList(
+        h4(i18n$t("what_are_feedback_loops")),
+        p(i18n$t("feedback_loops_explanation")),
         hr(),
-        h5("Loop Types"),
-
+        h5(i18n$t("loop_types_title")),
         tags$ul(
-          tags$li(strong("Reinforcing Loops (R):"), "Amplify change - exponential growth or decline"),
+          tags$li(strong(i18n$t("reinforcing_loops_title")), i18n$t("reinforcing_loops_description")),
           tags$ul(
-            tags$li("Even number of negative (-) links"),
-            tags$li("Create virtuous cycles or vicious cycles"),
-            tags$li("Example: More fish → More fishing → Even more fishing pressure")
+            tags$li(i18n$t("reinforcing_loops_rule")),
+            tags$li(i18n$t("reinforcing_loops_behavior")),
+            tags$li(i18n$t("reinforcing_loops_example"))
           ),
-          tags$li(strong("Balancing Loops (B):"), "Counteract change - seek equilibrium"),
+          tags$li(strong(i18n$t("balancing_loops_title")), i18n$t("balancing_loops_description")),
           tags$ul(
-            tags$li("Odd number of negative (-) links"),
-            tags$li("Self-regulate and maintain stability"),
-            tags$li("Example: Declining quality → Reduced demand → Less pressure → Quality improves")
+            tags$li(i18n$t("balancing_loops_rule")),
+            tags$li(i18n$t("balancing_loops_behavior")),
+            tags$li(i18n$t("balancing_loops_example"))
           )
         ),
-
         hr(),
-        h5("How to Use This Tool"),
-
+        h5(i18n$t("how_to_use_tool_title")),
         tags$ol(
-          tags$li(strong("Complete ISA Exercise 6:"), "Create loop closure connections (Drivers → Goods/Benefits)"),
-          tags$li(strong("Set Parameters:"), "Choose maximum loop length to search"),
-          tags$li(strong("Detect Loops:"), "Click 'Detect Loops' to run analysis"),
-          tags$li(strong("Review Results:"), "Examine reinforcing and balancing loops"),
-          tags$li(strong("Analyze Details:"), "Study individual loops and their behavior"),
-          tags$li(strong("Export:"), "Download results for documentation")
+          tags$li(strong(i18n$t("how_to_use_step1_strong")), i18n$t("how_to_use_step1_text")),
+          tags$li(strong(i18n$t("how_to_use_step2_strong")), i18n$t("how_to_use_step2_text")),
+          tags$li(strong(i18n$t("how_to_use_step3_strong")), i18n$t("how_to_use_step3_text")),
+          tags$li(strong(i18n$t("how_to_use_step4_strong")), i18n$t("how_to_use_step4_text")),
+          tags$li(strong(i18n$t("how_to_use_step5_strong")), i18n$t("how_to_use_step5_text")),
+          tags$li(strong(i18n$t("how_to_use_step6_strong")), i18n$t("how_to_use_step6_text"))
         ),
-
         hr(),
-        h5("Understanding Results"),
-
+        h5(i18n$t("understanding_results_title")),
         tags$ul(
-          tags$li(strong("Loop Length:"), "Number of elements in the loop (shorter often more influential)"),
-          tags$li(strong("Dominance Score:"), "Relative importance of loop in system behavior"),
-          tags$li(strong("Element Participation:"), "Which elements appear in most loops (leverage points)")
+          tags$li(strong(i18n$t("loop_length_title")), i18n$t("loop_length_description")),
+          tags$li(strong(i18n$t("dominance_score_title")), i18n$t("dominance_score_description")),
+          tags$li(strong(i18n$t("element_participation_title")), i18n$t("element_participation_description"))
         ),
-
         hr(),
-        p(em("Feedback loops are where small changes can have large system-wide effects - identify them to find leverage points for management interventions.")),
-
-        footer = modalButton("Close")
-      ))
-    })
+        p(em(i18n$t("feedback_loops_leverage_point_summary")))
+      ),
+      i18n = i18n
+    )
 
     return(reactive({ loop_data }))
   })

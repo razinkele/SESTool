@@ -282,8 +282,14 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
         text <- i18n$t("Save failed")
         time_text <- auto_save$error_message
       } else {
-        icon <- "💾"
-        text <- i18n$t("Auto-save enabled")
+        # Check if auto-save is actually enabled
+        if (auto_save$is_enabled) {
+          icon <- "💾"
+          text <- i18n$t("Auto-save enabled")
+        } else {
+          icon <- "💾"
+          text <- i18n$t("Auto-save disabled")
+        }
         time_text <- ""
       }
 
@@ -478,6 +484,8 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
     # Initialize - check for recovery on module load
     isolate({
       check_for_recovery()
+      # Update indicator to show initial status
+      updateSaveIndicator()
     })
 
     # Return control functions

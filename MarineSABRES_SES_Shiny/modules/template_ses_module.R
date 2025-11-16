@@ -1,3 +1,6 @@
+library(shiny)
+library(shinyjs)
+
 # modules/template_ses_module.R
 # Template-Based SES Creation Module
 # Purpose: Allow users to start from pre-built SES templates
@@ -681,7 +684,7 @@ ses_templates <- list(
 # UI FUNCTION
 # ============================================================================
 
-template_ses_ui <- function(id) {
+template_ses_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
@@ -802,7 +805,7 @@ template_ses_ui <- function(id) {
 # SERVER FUNCTION
 # ============================================================================
 
-template_ses_server <- function(id, project_data_reactive, parent_session = NULL, event_bus = NULL) {
+template_ses_server <- function(id, project_data_reactive, parent_session = NULL, event_bus = NULL, i18n) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -817,13 +820,12 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
 
     # Render header
     output$template_header <- renderUI({
-      fluidRow(
-        column(12,
-          div(style = "text-align: center; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; margin-bottom: 30px;",
-            h2(icon("clone"), " ", i18n$t("Template-Based SES Creation")),
-            p(style = "font-size: 16px;", i18n$t("Choose a pre-built template that matches your scenario and customize it to your needs"))
-          )
-        )
+      create_module_header(
+        ns = ns,
+        title_key = "Template-Based SES Creation",
+        subtitle_key = "Choose a pre-built template that matches your scenario and customize it to your needs",
+        help_id = "help_template_ses",
+        i18n = i18n
       )
     })
 
@@ -894,7 +896,16 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
               )
             ),
             column(9,
-              div(class = "template-name", i18n$t(template$name_key)),
+              div(style = "display: flex; justify-content: space-between; align-items: center;",
+                div(class = "template-name", i18n$t(template$name_key)),
+                actionButton(ns(paste0("preview_", template_id)),
+                            NULL,
+                            icon = icon("eye"),
+                            class = "btn btn-link btn-sm",
+                            style = "padding: 2px 8px; color: #666;",
+                            title = i18n$t("View detailed preview"),
+                            onclick = "event.stopPropagation();")
+              ),
               div(class = "template-description", i18n$t(template$description_key)),
               span(class = "template-category-badge", i18n$t(template$category_key))
             )
@@ -1000,6 +1011,220 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
       removeModal()
     })
 
+    # Preview button observers for each template
+    lapply(names(ses_templates), function(template_id) {
+      observeEvent(input[[paste0("preview_", template_id)]], {
+        template <- ses_templates[[template_id]]
+
+        # Show detailed preview modal
+        showModal(modalDialog(
+          title = tags$h3(icon(template$icon), " ", i18n$t(template$name_key)),
+          size = "l",
+          easyClose = TRUE,
+
+          tags$div(
+            style = "padding: 20px;",
+
+            # Description
+            tags$div(
+              style = "background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;",
+              tags$p(
+                style = "font-size: 15px; margin: 0;",
+                tags$strong(i18n$t("Description:")), " ",
+                i18n$t(template$description_key)
+              ),
+              tags$p(
+                style = "font-size: 13px; margin: 10px 0 0 0; color: #666;",
+                tags$span(class = "badge", style = "background: #667eea; color: white;",
+                          i18n$t(template$category_key))
+              )
+            ),
+
+            # Template contents in columns
+            fluidRow(
+              column(6,
+                tags$div(
+                  style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px;",
+                  tags$h5(icon("arrow-down"), " ", i18n$t("Drivers"), " (", nrow(template$drivers), ")",
+                          style = "color: #667eea; margin-top: 0;"),
+                  if (nrow(template$drivers) > 0) {
+                    lapply(1:min(5, nrow(template$drivers)), function(i) {
+                      tags$div(
+                        style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
+                        tags$strong(template$drivers$Name[i]),
+                        tags$br(),
+                        tags$small(style = "color: #666;", template$drivers$Description[i])
+                      )
+                    })
+                  } else {
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                  },
+                  if (nrow(template$drivers) > 5) {
+                    tags$small(style = "color: #666; font-style: italic;",
+                              sprintf(i18n$t("... and %d more"), nrow(template$drivers) - 5))
+                  }
+                ),
+
+                tags$div(
+                  style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px;",
+                  tags$h5(icon("exclamation-triangle"), " ", i18n$t("Pressures"), " (", nrow(template$pressures), ")",
+                          style = "color: #dc3545; margin-top: 0;"),
+                  if (nrow(template$pressures) > 0) {
+                    lapply(1:min(5, nrow(template$pressures)), function(i) {
+                      tags$div(
+                        style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
+                        tags$strong(template$pressures$Name[i]),
+                        tags$br(),
+                        tags$small(style = "color: #666;", template$pressures$Description[i])
+                      )
+                    })
+                  } else {
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                  },
+                  if (nrow(template$pressures) > 5) {
+                    tags$small(style = "color: #666; font-style: italic;",
+                              sprintf(i18n$t("... and %d more"), nrow(template$pressures) - 5))
+                  }
+                ),
+
+                tags$div(
+                  style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px;",
+                  tags$h5(icon("leaf"), " ", i18n$t("Ecosystem Services"), " (", nrow(template$ecosystem_services), ")",
+                          style = "color: #28a745; margin-top: 0;"),
+                  if (nrow(template$ecosystem_services) > 0) {
+                    lapply(1:min(5, nrow(template$ecosystem_services)), function(i) {
+                      tags$div(
+                        style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
+                        tags$strong(template$ecosystem_services$Name[i]),
+                        tags$br(),
+                        tags$small(style = "color: #666;", template$ecosystem_services$Description[i])
+                      )
+                    })
+                  } else {
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                  },
+                  if (nrow(template$ecosystem_services) > 5) {
+                    tags$small(style = "color: #666; font-style: italic;",
+                              sprintf(i18n$t("... and %d more"), nrow(template$ecosystem_services) - 5))
+                  }
+                )
+              ),
+
+              column(6,
+                tags$div(
+                  style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px;",
+                  tags$h5(icon("running"), " ", i18n$t("Activities"), " (", nrow(template$activities), ")",
+                          style = "color: #ffc107; margin-top: 0;"),
+                  if (nrow(template$activities) > 0) {
+                    lapply(1:min(5, nrow(template$activities)), function(i) {
+                      tags$div(
+                        style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
+                        tags$strong(template$activities$Name[i]),
+                        tags$br(),
+                        tags$small(style = "color: #666;", template$activities$Description[i])
+                      )
+                    })
+                  } else {
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                  },
+                  if (nrow(template$activities) > 5) {
+                    tags$small(style = "color: #666; font-style: italic;",
+                              sprintf(i18n$t("... and %d more"), nrow(template$activities) - 5))
+                  }
+                ),
+
+                tags$div(
+                  style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px;",
+                  tags$h5(icon("fish"), " ", i18n$t("Marine Processes and Functions"), " (", nrow(template$marine_processes), ")",
+                          style = "color: #17a2b8; margin-top: 0;"),
+                  if (nrow(template$marine_processes) > 0) {
+                    lapply(1:min(5, nrow(template$marine_processes)), function(i) {
+                      tags$div(
+                        style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
+                        tags$strong(template$marine_processes$Name[i]),
+                        tags$br(),
+                        tags$small(style = "color: #666;", template$marine_processes$Description[i])
+                      )
+                    })
+                  } else {
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                  },
+                  if (nrow(template$marine_processes) > 5) {
+                    tags$small(style = "color: #666; font-style: italic;",
+                              sprintf(i18n$t("... and %d more"), nrow(template$marine_processes) - 5))
+                  }
+                ),
+
+                tags$div(
+                  style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px;",
+                  tags$h5(icon("heart"), " ", i18n$t("Welfare"), " (", nrow(template$goods_benefits), ")",
+                          style = "color: #e83e8c; margin-top: 0;"),
+                  if (nrow(template$goods_benefits) > 0) {
+                    lapply(1:min(5, nrow(template$goods_benefits)), function(i) {
+                      tags$div(
+                        style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
+                        tags$strong(template$goods_benefits$Name[i]),
+                        tags$br(),
+                        tags$small(style = "color: #666;", template$goods_benefits$Description[i])
+                      )
+                    })
+                  } else {
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                  },
+                  if (nrow(template$goods_benefits) > 5) {
+                    tags$small(style = "color: #666; font-style: italic;",
+                              sprintf(i18n$t("... and %d more"), nrow(template$goods_benefits) - 5))
+                  }
+                )
+              )
+            ),
+
+            # Connection statistics
+            tags$div(
+              style = "background: #e3f2fd; padding: 15px; border-radius: 8px; margin-top: 20px;",
+              tags$h5(icon("link"), " ", i18n$t("Connections"), style = "margin-top: 0; color: #1976d2;"),
+              tags$p(
+                style = "margin: 0;",
+                sprintf(i18n$t("This template includes %d predefined connections between elements."),
+                        length(parse_template_connections(template)))
+              )
+            )
+          ),
+
+          footer = tagList(
+            actionButton(ns(paste0("select_from_preview_", template_id)),
+                        i18n$t("Select This Template"),
+                        class = "btn-primary",
+                        icon = icon("check")),
+            tags$button(
+              type = "button",
+              class = "btn btn-default",
+              `data-dismiss` = "modal",
+              i18n$t("Close")
+            )
+          )
+        ))
+      })
+
+      # Handle selection from preview modal
+      observeEvent(input[[paste0("select_from_preview_", template_id)]], {
+        rv$selected_template <- template_id
+        removeModal()
+
+        # Update card styling
+        shinyjs::runjs(sprintf("
+          $('.template-card').removeClass('selected');
+          $('#%s').addClass('selected');
+        ", ns(paste0("card_", template_id))))
+
+        showNotification(
+          sprintf(i18n$t("Template '%s' selected"), i18n$t(ses_templates[[template_id]]$name_key)),
+          type = "message",
+          duration = 2
+        )
+      })
+    })
+
     # Template preview (full version - not used in current layout)
     output$template_preview <- renderUI({
       req(rv$selected_template)
@@ -1059,6 +1284,22 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
       )
     })
 
+    # Help Modal ----
+    create_help_observer(
+      input, "help_template_ses", "template_ses_guide_title",
+      tagList(
+        h4(i18n$t("template_ses_guide_what_is_title")),
+        p(i18n$t("template_ses_guide_what_is_p1")),
+        h4(i18n$t("template_ses_guide_how_to_use_title")),
+        tags$ol(
+          tags$li(i18n$t("template_ses_guide_step1")),
+          tags$li(i18n$t("template_ses_guide_step2")),
+          tags$li(i18n$t("template_ses_guide_step3"))
+        )
+      ),
+      i18n
+    )
+
     # Helper function to parse template adjacency matrices into connections
     parse_template_connections <- function(template) {
       connections <- list()
@@ -1066,19 +1307,33 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
       if (is.null(template$adjacency_matrices)) return(connections)
 
       # Map matrix names to connection types
+      # Matrix naming convention: [from]_[to] (e.g., a_d means Activity → Driver)
       matrix_type_map <- list(
-        a_d = list(from = "driver", to = "activity"),
+        # Activities ↔ Drivers
+        a_d = list(from = "activity", to = "driver"),
         d_a = list(from = "driver", to = "activity"),
-        p_a = list(from = "activity", to = "pressure"),
+
+        # Pressures ↔ Activities
+        p_a = list(from = "pressure", to = "activity"),
         a_p = list(from = "activity", to = "pressure"),
-        mpf_p = list(from = "pressure", to = "marine_process"),
+
+        # Marine Processes ↔ Pressures
+        mpf_p = list(from = "marine_process", to = "pressure"),
         p_mpf = list(from = "pressure", to = "marine_process"),
-        es_mpf = list(from = "marine_process", to = "ecosystem_service"),
+
+        # Ecosystem Services ↔ Marine Processes
+        es_mpf = list(from = "ecosystem_service", to = "marine_process"),
         mpf_es = list(from = "marine_process", to = "ecosystem_service"),
-        gb_es = list(from = "ecosystem_service", to = "goods_benefit"),
+
+        # Goods & Benefits ↔ Ecosystem Services
+        gb_es = list(from = "goods_benefit", to = "ecosystem_service"),
         es_gb = list(from = "ecosystem_service", to = "goods_benefit"),
-        d_gb = list(from = "goods_benefit", to = "driver"),
+
+        # Drivers ↔ Goods & Benefits (feedback loops)
+        d_gb = list(from = "driver", to = "goods_benefit"),
         gb_d = list(from = "goods_benefit", to = "driver"),
+
+        # Responses
         r_d = list(from = "response", to = "driver"),
         r_a = list(from = "response", to = "activity"),
         r_p = list(from = "response", to = "pressure")
@@ -1195,7 +1450,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
       showNotification(
         sprintf(i18n$t("Template %s loaded!"), i18n$t(template$name_key)),
         type = "message",
-        duration = 5
+               duration = 5
       )
 
       debug_log("Notification shown", "TEMPLATE")
