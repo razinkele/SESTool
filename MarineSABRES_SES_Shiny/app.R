@@ -14,314 +14,18 @@ options(shiny.autoreload = FALSE)
 source("global.R", local = TRUE)
 
 # ============================================================================
-# HELPER FUNCTIONS
+# LOAD HELPER FUNCTIONS
 # ============================================================================
 
-# Add tooltip to menu items via JavaScript
-add_menu_tooltip <- function(menu_item, tooltip_text) {
-  menu_item$children[[1]]$attribs$`data-tooltip` <- tooltip_text
-  return(menu_item)
-}
+source("functions/report_generation.R", local = TRUE)
 
-# Add tooltip to submenu items
-add_submenu_tooltip <- function(submenu_item, tooltip_text) {
-  submenu_item$children[[1]]$attribs$`data-tooltip` <- tooltip_text
-  return(submenu_item)
-}
+# Load UI components
+source("functions/ui_header.R", local = TRUE)
+source("functions/ui_sidebar.R", local = TRUE)
 
-# Helper function to determine if menu item should be shown based on user level
-should_show_menu_item <- function(item_name, user_level) {
-  # Beginner: Only show essential items
-  if (user_level == "beginner") {
-    beginner_items <- c(
-      "Getting Started",
-      "Dashboard",
-      "Create SES",  # Will show AI guided and Template based creation
-      "SES Visualization",
-      "Analysis Tools",  # Will show Loop Detection and Leverage Point Analysis only
-      "Export Data"
-    )
-    return(item_name %in% beginner_items)
-  }
-
-  # Intermediate: Show everything (same as Expert for now)
-  if (user_level == "intermediate") {
-    return(TRUE)
-  }
-
-  # Expert: Show everything
-  return(TRUE)
-}
-
-# Generate sidebar menu (dynamic, responds to language changes and user level)
-generate_sidebar_menu <- function(user_level = "intermediate") {
-  # Initialize menu items list
-  menu_items <- list()
-
-  # Getting Started (all levels)
-  if (should_show_menu_item("Getting Started", user_level)) {
-    menu_items <- c(menu_items, list(
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("Getting Started"),
-          tabName = "entry_point",
-          icon = icon("compass")
-        ),
-        i18n$t("Guided entry point to find the right tools for your marine management needs")
-      )
-    ))
-  }
-
-  # Dashboard (all levels)
-  if (should_show_menu_item("Dashboard", user_level)) {
-    menu_items <- c(menu_items, list(
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("Dashboard"),
-          tabName = "dashboard",
-          icon = icon("dashboard")
-        ),
-        i18n$t("Overview of your project status and key metrics")
-      )
-    ))
-  }
-
-  # PIMS Module (intermediate and expert only)
-  if (should_show_menu_item("PIMS Module", user_level)) {
-    menu_items <- c(menu_items, list(
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("PIMS Module"),
-          tabName = "pims",
-          icon = icon("project-diagram"),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Project Setup"), tabName = "pims_project"),
-            "Define project goals, scope, and basic information"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Stakeholders"), tabName = "pims_stakeholders"),
-            "Identify and manage stakeholders and their interests"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Resources & Risks"), tabName = "pims_resources"),
-            "Track project resources, timeline, and potential risks"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Data Management"), tabName = "pims_data"),
-            "Manage data sources, quality, and documentation"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Evaluation"), tabName = "pims_evaluation"),
-            "Evaluate project progress and outcomes"
-          )
-        ),
-        "Project Information Management System for planning and tracking"
-      )
-    ))
-  }
-
-  # Create SES (all levels, but beginner shows simplified menu)
-  if (should_show_menu_item("Create SES", user_level)) {
-    if (user_level == "beginner") {
-      # Beginner: Show AI guided and Template based creation as direct links
-      menu_items <- c(menu_items, list(
-        add_menu_tooltip(
-          menuItem(
-            i18n$t("AI guided SES creation"),
-            tabName = "create_ses_ai",
-            icon = icon("robot")
-          ),
-          "Guided question-based SES creation with AI assistance"
-        ),
-        add_menu_tooltip(
-          menuItem(
-            i18n$t("Template based SES creation"),
-            tabName = "create_ses_template",
-            icon = icon("file-alt")
-          ),
-          "Start from pre-built SES templates"
-        )
-      ))
-    } else {
-      # Intermediate/Expert: Show full Create SES menu with all methods
-      menu_items <- c(menu_items, list(
-        add_menu_tooltip(
-          menuItem(
-            i18n$t("Create SES"),
-            tabName = "create_ses",
-            icon = icon("layer-group"),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("Choose Method"), tabName = "create_ses_choose"),
-              "Select how you want to create your Social-Ecological System"
-            ),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("Standard Entry"), tabName = "create_ses_standard"),
-              "Traditional form-based ISA data entry"
-            ),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("AI Assistant"), tabName = "create_ses_ai"),
-              "Guided question-based SES creation"
-            ),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("Template-Based"), tabName = "create_ses_template"),
-              "Start from pre-built SES templates"
-            )
-          ),
-          "Create your Social-Ecological System using structured methods"
-        )
-      ))
-    }
-  }
-
-  # SES Visualization (all levels)
-  if (should_show_menu_item("SES Visualization", user_level)) {
-    menu_items <- c(menu_items, list(
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("SES Visualization"),
-          tabName = "cld_viz",
-          icon = icon("project-diagram")
-        ),
-        "Interactive visualization of your Social-Ecological System network"
-      )
-    ))
-  }
-
-  # Analysis Tools (all levels, but beginners see only key analyses)
-  if (should_show_menu_item("Analysis Tools", user_level)) {
-    if (user_level == "beginner") {
-      # Beginner: Show only Loop Detection and Leverage Point Analysis
-      menu_items <- c(menu_items, list(
-        add_menu_tooltip(
-          menuItem(
-            i18n$t("Analysis Tools"),
-            tabName = "analysis",
-            icon = icon("chart-line"),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("Loop Detection"), tabName = "analysis_loops"),
-              "Identify feedback loops and causal pathways in your network"
-            ),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("Leverage Point Analysis"), tabName = "analysis_leverage"),
-              "Find key intervention points in your SES network"
-            )
-          ),
-          "Essential network analysis tools for understanding your SES"
-        )
-      ))
-    } else {
-      # Intermediate/Expert: Show all analysis tools
-      menu_items <- c(menu_items, list(
-        add_menu_tooltip(
-          menuItem(
-            i18n$t("Analysis Tools"),
-            tabName = "analysis",
-            icon = icon("chart-line"),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("Network Metrics"), tabName = "analysis_metrics"),
-              "Calculate centrality, density, and other network statistics"
-            ),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("Loop Detection"), tabName = "analysis_loops"),
-              "Identify feedback loops and causal pathways in your network"
-            ),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("Leverage Point Analysis"), tabName = "analysis_leverage"),
-              "Find key intervention points in your SES network"
-            ),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("BOT Analysis"), tabName = "analysis_bot"),
-              "Behavior Over Time analysis and temporal dynamics"
-            ),
-            add_submenu_tooltip(
-              menuSubItem(i18n$t("Simplification"), tabName = "analysis_simplify"),
-              "Simplify complex networks while preserving key structures"
-            )
-          ),
-          "Advanced network analysis and metrics tools for your SES model"
-        )
-      ))
-    }
-  }
-
-  # Response & Validation (intermediate and expert only)
-  if (should_show_menu_item("Response & Validation", user_level)) {
-    menu_items <- c(menu_items, list(
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("Response & Validation"),
-          tabName = "response",
-          icon = icon("tasks"),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Response Measures"), tabName = "response_measures"),
-            "Define and design management responses and interventions"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Scenario Builder"), tabName = "response_scenarios"),
-            "Build and compare alternative future scenarios"
-          ),
-          add_submenu_tooltip(
-            menuSubItem(i18n$t("Validation"), tabName = "response_validation"),
-            "Validate model structure and behavior with stakeholders"
-          )
-        ),
-        "Design response measures, build scenarios, and validate your model"
-      )
-    ))
-  }
-
-  # Export Data (all levels)
-  if (should_show_menu_item("Export Data", user_level)) {
-    menu_items <- c(menu_items, list(
-      add_menu_tooltip(
-        menuItem(
-          i18n$t("Export Data"),
-          tabName = "export",
-          icon = icon("download")
-        ),
-        "Export data and generate comprehensive analysis reports"
-      )
-    ))
-  }
-
-  # Add horizontal rule and Quick Actions (all levels)
-  menu_items <- c(menu_items, list(
-    hr(),
-    div(
-      style = "padding: 15px; text-align: center;",
-      h5(i18n$t("Quick Actions")),
-      actionButton(
-        "save_project",
-        i18n$t("Save Project"),
-        icon = icon("save"),
-        class = "btn-primary btn-block",
-        title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results")
-      ),
-      bsTooltip(
-        id = "save_project",
-        title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results"),
-        placement = "right",
-        trigger = "hover"
-      ),
-      actionButton(
-        "load_project",
-        i18n$t("Load Project"),
-        icon = icon("folder-open"),
-        class = "btn-secondary btn-block",
-        title = i18n$t("Load a previously saved project")
-      ),
-      bsTooltip(
-        id = "load_project",
-        title = i18n$t("Load a previously saved project"),
-        placement = "right",
-        trigger = "hover"
-      )
-    )
-  ))
-
-  # Build and return the dynamic menu
-  do.call(sidebarMenu, c(list(id = "sidebar_menu"), menu_items))
-}
+# Load server components
+source("server/modals.R", local = TRUE)
+source("server/dashboard.R", local = TRUE)
 
 # ============================================================================
 # SOURCE MODULES
@@ -331,6 +35,7 @@ source("modules/entry_point_module.R", local = TRUE)  # Entry Point guidance sys
 source("modules/create_ses_module.R", local = TRUE)  # NEW: Consolidated Create SES module
 source("modules/template_ses_module.R", local = TRUE)  # NEW: Template-based SES creation
 source("modules/ai_isa_assistant_module.R", local = TRUE)  # AI-Assisted ISA Creation
+source("modules/import_data_module.R", local = TRUE)  # Import Data from Excel
 source("modules/isa_data_entry_module.R", local = TRUE)  # Standard ISA Data Entry
 source("modules/pims_module.R", local = TRUE)
 source("modules/pims_stakeholder_module.R", local = TRUE)
@@ -338,6 +43,8 @@ source("modules/cld_visualization_module.R", local = TRUE)
 source("modules/analysis_tools_module.R", local = TRUE)
 source("modules/response_module.R", local = TRUE)
 source("modules/scenario_builder_module.R", local = TRUE)  # Scenario Builder
+source("modules/prepare_report_module.R", local = TRUE)  # Report preparation (comprehensive)
+source("modules/export_reports_module.R", local = TRUE)  # Export & Reports (simple)
 # source("modules/response_validation_module.R", local = TRUE)  # Not implemented yet
 
 # ============================================================================
@@ -347,69 +54,7 @@ source("modules/scenario_builder_module.R", local = TRUE)  # Scenario Builder
 ui <- dashboardPage(
   
   # ========== HEADER ==========
-  dashboardHeader(
-    title = "MarineSABRES SES Toolbox",
-    titleWidth = 300,
-
-    # Settings dropdown (consolidates Language + User Level + About)
-    tags$li(
-      class = "dropdown settings-dropdown",
-      tags$a(
-        href = "#",
-        id = "settings_dropdown_toggle",
-        class = "settings-dropdown-toggle",
-        icon("cog"),
-        tags$span("Settings"),
-        tags$span(class = "caret", style = "margin-left: 5px;")
-      ),
-      tags$div(
-        class = "settings-dropdown-menu",
-        tags$a(
-          href = "#",
-          id = "open_settings_modal",
-          class = "action-button",
-          icon("globe"),
-          i18n$t("Language")
-        ),
-        tags$a(
-          href = "#",
-          id = "open_user_level_modal",
-          class = "action-button",
-          icon("user-cog"),
-          i18n$t("User Experience Level")
-        ),
-        tags$a(
-          href = "#",
-          id = "open_about_modal",
-          class = "action-button",
-          icon("info-circle"),
-          "About"
-        )
-      )
-    ),
-
-    # Help button
-    tags$li(
-      class = "dropdown",
-      tags$a(
-        href = "user_guide.html",
-        target = "_blank",
-        icon("question-circle"),
-        "Help",
-        style = "cursor: pointer;"
-      )
-    ),
-
-    # User info
-    tags$li(
-      class = "dropdown",
-      tags$a(
-        href = "#",
-        icon("user"),
-        textOutput("user_info", inline = TRUE)
-      )
-    )
-  ),
+  build_dashboard_header(i18n),
   
   # ========== SIDEBAR ==========
   dashboardSidebar(
@@ -427,63 +72,7 @@ ui <- dashboardPage(
       tags$title("MarineSABRES SES Toolbox"),
       tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
       tags$link(rel = "stylesheet", type = "text/css", href = "isa-forms.css"),
-
-      # Language persistence JavaScript
-      tags$script(HTML("
-        // On page load, check if language needs to be set from localStorage
-        $(document).ready(function() {
-          // Check if language is already in URL
-          var urlParams = new URLSearchParams(window.location.search);
-          var urlLang = urlParams.get('language');
-
-          if (!urlLang) {
-            // No language in URL, check localStorage
-            var savedLang = localStorage.getItem('marinesabres_language');
-            if (savedLang && savedLang !== 'en') {
-              // Redirect with language parameter
-              window.location.search = '?language=' + savedLang;
-            }
-          }
-        });
-
-        // Function to save language and reload with query parameter
-        Shiny.addCustomMessageHandler('saveLanguageAndReload', function(lang) {
-          localStorage.setItem('marinesabres_language', lang);
-          window.location.search = '?language=' + lang;
-        });
-
-        // Settings dropdown functionality
-        $(document).ready(function() {
-          // Settings dropdown toggle
-          $('#settings_dropdown_toggle').on('click', function(e) {
-            e.preventDefault();
-            $('.settings-dropdown').toggleClass('open');
-          });
-
-          // Close dropdown when clicking outside
-          $(document).on('click', function(e) {
-            if (!$(e.target).closest('.settings-dropdown').length) {
-              $('.settings-dropdown').removeClass('open');
-            }
-          });
-
-          // Close dropdown when clicking a menu item
-          $('.settings-dropdown-menu a').on('click', function() {
-            $('.settings-dropdown').removeClass('open');
-          });
-        });
-
-        // Custom message handler for saving user level
-        Shiny.addCustomMessageHandler('save_user_level', function(message) {
-          saveUserLevel(message.level);
-        });
-
-        // Function to save user level and reload
-        function saveUserLevel(level) {
-          localStorage.setItem('marinesabres_user_level', level);
-          window.location.search = '?user_level=' + level;
-        }
-      ")),
+      tags$script(src = "custom.js"),
 
       tags$style(HTML("
         /* Persistent loading overlay */
@@ -523,136 +112,11 @@ ui <- dashboardPage(
           font-size: 14px;
           color: #666;
         }
-      ")),
-      tags$script(HTML("
-        $(document).ready(function() {
-          // Add tooltips to menu items using data-tooltip attributes
-          // This ensures tooltips work even after dynamic updates
-          Shiny.addCustomMessageHandler('updateTooltips', function(message) {
-            $('.sidebar-menu li a[data-toggle=\"tooltip\"]').tooltip();
-          });
-
-          // Open settings modal when clicking the language selector
-          $('#open_settings_modal').on('click', function(e) {
-            e.preventDefault();
-            Shiny.setInputValue('show_settings_modal', Math.random());
-          });
-
-          // Open about modal when clicking the about button
-          $('#open_about_modal').on('click', function(e) {
-            e.preventDefault();
-            Shiny.setInputValue('show_about_modal', Math.random());
-          });
-
-          // Show persistent loading overlay for language change
-          Shiny.addCustomMessageHandler('showLanguageLoading', function(message) {
-            // Remove any existing overlay
-            $('#language-loading-overlay').remove();
-
-            // Create new overlay
-            var overlay = $('<div id=\"language-loading-overlay\" class=\"active\">' +
-              '<div class=\"loading-spinner\"><i class=\"fa fa-spinner fa-spin\"></i></div>' +
-              '<div class=\"loading-message\"><i class=\"fa fa-globe\"></i> ' + message.text + '</div>' +
-              '<div class=\"loading-submessage\">Please wait while the application reloads...</div>' +
-              '</div>');
-
-            // Append to body
-            $('body').append(overlay);
-          });
-        });
       "))
     ),
 
     # Enable shinyjs
     useShinyjs(),
-
-    # Force ISA input styling
-    tags$script(HTML("
-      // Function to fix ISA input styling - minimal approach
-      function forceISAInputStyling() {
-        // Fix inputs and textareas with full styling
-        var inputSelectors = [
-          '#isa_module-gb_entries input',
-          '#isa_module-gb_entries textarea',
-          '#isa_module-es_entries input',
-          '#isa_module-es_entries textarea',
-          '#isa_module-mpf_entries input',
-          '#isa_module-mpf_entries textarea',
-          '#isa_module-p_entries input',
-          '#isa_module-p_entries textarea',
-          '#isa_module-a_entries input',
-          '#isa_module-a_entries textarea',
-          '#isa_module-d_entries input',
-          '#isa_module-d_entries textarea',
-          '.isa-entry-panel input',
-          '.isa-entry-panel textarea'
-        ].join(', ');
-
-        $(inputSelectors).each(function() {
-          $(this).css({
-            'color': '#000000',
-            'background-color': '#ffffff',
-            'opacity': '1',
-            '-webkit-text-fill-color': '#000000',
-            'filter': 'none'
-          });
-        });
-
-        // Minimal fix for selects - just color and opacity, no borders or fonts
-        var selectSelectors = [
-          '#isa_module-gb_entries select',
-          '#isa_module-es_entries select',
-          '#isa_module-mpf_entries select',
-          '#isa_module-p_entries select',
-          '#isa_module-a_entries select',
-          '#isa_module-d_entries select',
-          '.isa-entry-panel select'
-        ].join(', ');
-
-        $(selectSelectors).each(function() {
-          $(this).css({
-            'color': '#000000',
-            'background-color': '#ffffff',
-            'opacity': '1',
-            'filter': 'none'
-          });
-        });
-
-        // CRITICAL: Remove recalculating class that makes things look gray
-        $('#isa_module-gb_entries, #isa_module-es_entries, #isa_module-mpf_entries, #isa_module-p_entries, #isa_module-a_entries, #isa_module-d_entries').removeClass('recalculating');
-        $('.isa-entry-panel').closest('.recalculating').removeClass('recalculating');
-      }
-
-      // Run on page load
-      $(document).ready(function() {
-        forceISAInputStyling();
-
-        // Re-run whenever DOM changes (for dynamically added panels)
-        var observer = new MutationObserver(function(mutations) {
-          forceISAInputStyling();
-        });
-
-        // Observe all ISA entries containers
-        var targets = ['gb_entries', 'es_entries', 'mpf_entries', 'p_entries', 'a_entries', 'd_entries'];
-        var prefixes = ['isa_module', 'isa_data_entry'];
-        prefixes.forEach(function(prefix) {
-          targets.forEach(function(id) {
-            var element = document.getElementById(prefix + '-' + id);
-            if (element) {
-              observer.observe(element, { childList: true, subtree: true });
-            }
-          });
-        });
-
-        // Also run every 500ms for the first 5 seconds (ensure it catches everything)
-        var counter = 0;
-        var interval = setInterval(function() {
-          forceISAInputStyling();
-          counter++;
-          if (counter >= 10) clearInterval(interval);
-        }, 500);
-      });
-    ")),
 
     # User level script (for localStorage)
     uiOutput("user_level_script"),
@@ -692,18 +156,50 @@ ui <- dashboardPage(
             solidHeader = TRUE,
             width = 6,
             height = 400,
-            uiOutput("project_overview_ui")
+            tags$div(
+              style = "overflow-y: auto; max-height: 330px; padding: 5px;",
+              uiOutput("project_overview_ui")
+            )
           ),
 
-          # Quick access
+          # Status summary
           box(
-            title = i18n$t("Quick Access"),
-            status = "info",
+            title = i18n$t("Status Summary"),
+            status = "success",
             solidHeader = TRUE,
             width = 6,
             height = 400,
-            h4(i18n$t("Recent Activities")),
-            uiOutput("recent_activities_ui")
+
+            # Project status indicators
+            tags$div(
+              style = "overflow-y: auto; max-height: 330px; padding: 5px;",
+
+              # ISA Data Status
+              tags$div(
+                style = "margin-bottom: 10px; padding: 8px; background: #f8f9fa; border-radius: 5px;",
+                tags$h5(style = "margin-bottom: 8px; font-size: 14px;",
+                  icon("database"), " ", i18n$t("ISA Data Status")),
+                uiOutput("status_isa_elements"),
+                uiOutput("status_isa_connections")
+              ),
+
+              # CLD Status
+              tags$div(
+                style = "margin-bottom: 10px; padding: 8px; background: #f8f9fa; border-radius: 5px;",
+                tags$h5(style = "margin-bottom: 8px; font-size: 14px;",
+                  icon("project-diagram"), " ", i18n$t("CLD Status")),
+                uiOutput("status_cld_nodes"),
+                uiOutput("status_cld_edges")
+              ),
+
+              # Analysis Status
+              tags$div(
+                style = "padding: 8px; background: #f8f9fa; border-radius: 5px;",
+                tags$h5(style = "margin-bottom: 8px; font-size: 14px;",
+                  icon("chart-line"), " ", i18n$t("Analysis Status")),
+                uiOutput("status_analysis_complete")
+              )
+            )
           )
         )
       ),
@@ -742,131 +238,18 @@ ui <- dashboardPage(
       tabItem(tabName = "response_measures", response_measures_ui("resp_meas", i18n)),
       tabItem(tabName = "response_scenarios", scenario_builder_ui("scenario_builder", i18n)),
       tabItem(tabName = "response_validation", response_validation_ui("resp_val", i18n)),
-      
+
+      # ==================== IMPORT DATA ====================
+      tabItem(tabName = "import_data", import_data_ui("import_data_mod", i18n)),
+
       # ==================== EXPORT ====================
       tabItem(
         tabName = "export",
-        
-        fluidRow(
-          column(12,
-            h2(i18n$t("Export & Reports")),
-            p(i18n$t("Export your data, visualizations, and generate comprehensive reports."))
-          )
-        ),
-        
-        fluidRow(
-          box(
-            title = i18n$t("Export Data"),
-            status = "primary",
-            solidHeader = TRUE,
-            width = 6,
+        export_reports_ui("export_reports_mod", i18n)
+      ),
 
-            selectInput(
-              "export_data_format",
-              i18n$t("Select Format:"),
-              choices = c("Excel (.xlsx)", "CSV (.csv)", "JSON (.json)",
-                         "R Data (.RData)")
-            ),
-
-            checkboxGroupInput(
-              "export_data_components",
-              i18n$t("Select Components:"),
-              choices = c(
-                "metadata" = i18n$t("Project Metadata"),
-                "pims" = i18n$t("PIMS Data"),
-                "isa_data" = i18n$t("ISA Data"),
-                "cld" = i18n$t("CLD Data"),
-                "analysis" = i18n$t("Analysis Results"),
-                "responses" = i18n$t("Response Measures")
-              ),
-              selected = c("metadata", "isa_data", "cld")
-            ),
-
-            downloadButton("download_data", i18n$t("Download Data"),
-                          class = "btn-primary")
-          ),
-          
-          box(
-            title = i18n$t("Export Visualizations"),
-            status = "info",
-            solidHeader = TRUE,
-            width = 6,
-
-            selectInput(
-              "export_viz_format",
-              i18n$t("Select Format:"),
-              choices = c("PNG (.png)", "SVG (.svg)", "HTML (.html)",
-                         "PDF (.pdf)")
-            ),
-
-            numericInput(
-              "export_viz_width",
-              i18n$t("Width (pixels):"),
-              value = 1200,
-              min = 400,
-              max = 4000
-            ),
-
-            numericInput(
-              "export_viz_height",
-              i18n$t("Height (pixels):"),
-              value = 900,
-              min = 300,
-              max = 3000
-            ),
-
-            downloadButton("download_viz", i18n$t("Download Visualization"),
-                          class = "btn-info")
-          )
-        ),
-        
-        fluidRow(
-          box(
-            title = i18n$t("Generate Report"),
-            status = "success",
-            solidHeader = TRUE,
-            width = 12,
-
-            selectInput(
-              "report_type",
-              i18n$t("Report Type:"),
-              choices = c(
-                "executive" = i18n$t("Executive Summary"),
-                "technical" = i18n$t("Technical Report"),
-                "presentation" = i18n$t("Stakeholder Presentation"),
-                "full" = i18n$t("Full Project Report")
-              )
-            ),
-
-            selectInput(
-              "report_format",
-              i18n$t("Report Format:"),
-              choices = c("HTML", "PDF", "Word")
-            ),
-
-            checkboxInput(
-              "report_include_viz",
-              i18n$t("Include Visualizations"),
-              value = TRUE
-            ),
-
-            checkboxInput(
-              "report_include_data",
-              i18n$t("Include Data Tables"),
-              value = TRUE
-            ),
-
-            actionButton(
-              "generate_report",
-              i18n$t("Generate Report"),
-              icon = icon("file-alt"),
-              class = "btn-success"
-            ),
-
-            uiOutput("report_status")
-          )
-        )
-      )
+      # ==================== PREPARE REPORT ====================
+      tabItem(tabName = "prepare_report", prepare_report_ui("prep_report"))
     )
   )
 )
@@ -877,6 +260,19 @@ ui <- dashboardPage(
 
 server <- function(input, output, session) {
 
+  cat("\n")
+  cat("=====================================\n")
+  cat("APP RESTARTED - NEW SESSION STARTING\n")
+  cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n")
+  cat("Report generation functions loaded:", exists("generate_report_content"), "\n")
+  cat("=====================================\n")
+  cat("\n")
+
+  # ========== BOOKMARKING SETUP ==========
+  # Enable bookmarking for this session
+  setBookmarkExclude(c("save_project", "load_project", "confirm_save",
+                       "confirm_load", "trigger_bookmark"))
+
   # ========== REACTIVE VALUES ==========
 
   # Main project data
@@ -886,15 +282,200 @@ server <- function(input, output, session) {
   # Default to intermediate for existing users
   user_level <- reactiveVal("intermediate")
 
+  # Auto-save enabled flag (controls AI ISA Assistant auto-save)
+  # Default to FALSE to avoid accidental overwrites
+  autosave_enabled <- reactiveVal(FALSE)
+
+  # ========== REACTIVE EVENT BUS ==========
+  # Create event bus for reactive data pipeline
+  event_bus <- create_event_bus()
+
+  # ========== BOOKMARKING HANDLERS ==========
+
+  # Save state when bookmark button is clicked
+  observeEvent(input$trigger_bookmark, {
+    session$doBookmark()
+  })
+
+  # Save app state for bookmarking
+  onBookmark(function(state) {
+    cat("[BOOKMARK] Saving app state...\n")
+
+    # Save user level
+    state$values$user_level <- user_level()
+
+    # Save current tab
+    if (!is.null(input$sidebar_menu)) {
+      state$values$active_tab <- input$sidebar_menu
+      cat("[BOOKMARK] Saved active tab:", input$sidebar_menu, "\n")
+    }
+
+    # Save autosave setting
+    state$values$autosave_enabled <- autosave_enabled()
+
+    # Save project data (serialized as JSON for URL safety)
+    # Note: Only save essential data to avoid URL length limits
+    data <- project_data()
+
+    # Save metadata
+    if (!is.null(data$data$metadata)) {
+      state$values$metadata_da_site <- data$data$metadata$da_site
+      state$values$metadata_focal_issue <- data$data$metadata$focal_issue
+    }
+
+    # Indicate if ISA data exists
+    state$values$has_isa_data <- !is.null(data$data$isa_data$goods_benefits) &&
+                                  nrow(data$data$isa_data$goods_benefits) > 0
+
+    # Indicate if CLD exists
+    state$values$has_cld_data <- !is.null(data$data$cld$nodes) &&
+                                  nrow(data$data$cld$nodes) > 0
+
+    cat("[BOOKMARK] State saved successfully\n")
+
+    # Show bookmark modal with URL
+    showModal(modalDialog(
+      title = tags$h3(icon("bookmark"), " Bookmark Created"),
+      size = "l",
+      easyClose = TRUE,
+      footer = modalButton(i18n$t("Close")),
+
+      tags$div(
+        style = "padding: 20px;",
+
+        tags$h4(icon("check-circle"), " Your bookmark has been created!"),
+        tags$p("Copy the URL below to save your current application state:"),
+
+        tags$div(
+          class = "well",
+          style = "background: #f8f9fa; padding: 15px; margin: 20px 0;",
+          tags$textarea(
+            id = "bookmark_url",
+            class = "form-control",
+            rows = 4,
+            readonly = "readonly",
+            style = "font-family: monospace; font-size: 12px; resize: vertical;",
+            session$getCurrentUrl()
+          )
+        ),
+
+        tags$button(
+          id = "copy_bookmark_btn",
+          class = "btn btn-primary btn-block",
+          icon("copy"),
+          " Copy URL to Clipboard",
+          onclick = "
+            var textarea = document.getElementById('bookmark_url');
+            textarea.select();
+            document.execCommand('copy');
+            $(this).html('<i class=\"fa fa-check\"></i> Copied!');
+            setTimeout(() => {
+              $(this).html('<i class=\"fa fa-copy\"></i> Copy URL to Clipboard');
+            }, 2000);
+          "
+        ),
+
+        tags$hr(),
+
+        tags$div(
+          class = "alert alert-info",
+          icon("info-circle"),
+          tags$strong(" Note: "),
+          "This bookmark saves your current view and settings. To save your complete project data, use the 'Save Project' button in the sidebar."
+        ),
+
+        tags$h5("What's saved in this bookmark:"),
+        tags$ul(
+          tags$li("Current tab/page location"),
+          tags$li("User experience level"),
+          tags$li("Language preference"),
+          tags$li("Auto-save settings"),
+          tags$li("Selected demonstration area and focal issue")
+        )
+      )
+    ))
+  })
+
+  # Restore state from bookmark
+  onRestore(function(state) {
+    cat("[BOOKMARK] Restoring app state...\n")
+
+    # Restore user level
+    if (!is.null(state$values$user_level)) {
+      user_level(state$values$user_level)
+      cat("[BOOKMARK] Restored user level:", state$values$user_level, "\n")
+    }
+
+    # Restore autosave setting
+    if (!is.null(state$values$autosave_enabled)) {
+      autosave_enabled(state$values$autosave_enabled)
+      cat("[BOOKMARK] Restored autosave setting:", state$values$autosave_enabled, "\n")
+    }
+
+    # Restore metadata if saved
+    if (!is.null(state$values$metadata_da_site) || !is.null(state$values$metadata_focal_issue)) {
+      data <- project_data()
+      if (!is.null(state$values$metadata_da_site)) {
+        data$data$metadata$da_site <- state$values$metadata_da_site
+      }
+      if (!is.null(state$values$metadata_focal_issue)) {
+        data$data$metadata$focal_issue <- state$values$metadata_focal_issue
+      }
+      project_data(data)
+      cat("[BOOKMARK] Restored metadata\n")
+    }
+
+    # Restore active tab
+    if (!is.null(state$values$active_tab)) {
+      # Use updateTabItems to switch to saved tab
+      updateTabItems(session, "sidebar_menu", state$values$active_tab)
+      cat("[BOOKMARK] Restored active tab:", state$values$active_tab, "\n")
+    }
+
+    # Show restoration notification
+    showNotification(
+      HTML(paste0(
+        icon("bookmark"), " ",
+        i18n$t("Bookmark restored successfully!")
+      )),
+      type = "message",
+      duration = 5
+    )
+
+    cat("[BOOKMARK] State restored successfully\n")
+  })
+
+  # Restore tab after bookmark URL is loaded
+  observeEvent(input$sidebar_menu, {
+    query <- parseQueryString(session$clientData$url_search)
+    if ("_state_id_" %in% names(query)) {
+      # This is a bookmarked session, log it
+      cat("[BOOKMARK] Bookmarked session detected\n")
+    }
+  }, once = TRUE)
+
   # ========== AUTO-SAVE MODULE ==========
   # Initialize auto-save functionality
-  auto_save_server("auto_save", project_data, i18n)
+  # Pass autosave_enabled reactive so module respects user's setting
+  auto_save_server("auto_save", project_data, i18n, autosave_enabled)
 
   # ========== DYNAMIC SIDEBAR MENU ==========
   # Renders sidebar menu dynamically based on current language and user level
   # This allows the menu to update when language or user level changes
   output$dynamic_sidebar <- renderMenu({
-    generate_sidebar_menu(user_level())
+    tryCatch({
+      cat("[SIDEBAR] Rendering dynamic sidebar...\n")
+      cat(sprintf("[SIDEBAR] User level: %s\n", user_level()))
+      menu <- generate_sidebar_menu(user_level(), i18n)
+      cat("[SIDEBAR] Sidebar generated successfully\n")
+      menu
+    }, error = function(e) {
+      cat(sprintf("[SIDEBAR] ERROR: %s\n", e$message))
+      # Return a minimal sidebar on error
+      sidebarMenu(
+        menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"))
+      )
+    })
   })
 
   # User info
@@ -944,304 +525,22 @@ server <- function(input, output, session) {
     }
   }, once = TRUE)
 
-  # ========== LANGUAGE SETTINGS MODAL ==========
+  # ========== MODAL HANDLERS ==========
+  # Modals extracted to server/modals.R for better maintainability
 
-  # Show settings modal when button is clicked
-  observeEvent(input$show_settings_modal, {
-    current_lang <- if(!is.null(i18n$get_translation_language())) {
-      i18n$get_translation_language()
-    } else {
-      "en"
-    }
+  # Setup language settings modal
+  setup_language_modal_handlers(input, output, session, i18n, autosave_enabled, AVAILABLE_LANGUAGES)
 
-    showModal(modalDialog(
-      title = tags$h3(icon("cog"), " Application Settings"),
-      size = "m",
-      easyClose = TRUE,
-      footer = tagList(
-        modalButton(i18n$t("Cancel")),
-        actionButton("apply_language_change", i18n$t("Apply Changes"), class = "btn-primary", icon = icon("check"))
-      ),
+  # Setup user level modal
+  setup_user_level_modal_handlers(input, output, session, user_level, i18n)
 
-      tags$div(
-        style = "padding: 20px;",
-
-        tags$h4(icon("globe"), " ", i18n$t("Interface Language")),
-        tags$p(i18n$t("Select your preferred language for the application interface. Click 'Apply Changes' to reload the application with the new language.")),
-        tags$br(),
-
-        selectInput(
-          "settings_language_selector",
-          label = tags$strong("Language:"),
-          choices = setNames(
-            names(AVAILABLE_LANGUAGES),
-            sapply(AVAILABLE_LANGUAGES, function(x) paste(x$flag, x$name))
-          ),
-          selected = current_lang,
-          width = "100%"
-        ),
-
-        tags$div(
-          class = "alert alert-info",
-          style = "margin-top: 20px;",
-          icon("info-circle"),
-          tags$strong(" Note: "),
-          "The application will reload to apply the language changes. Your current work will be preserved."
-        )
-      )
-    ))
-  })
-
-  # Handle Apply button click in settings modal
-  observeEvent(input$apply_language_change, {
-    req(input$settings_language_selector)
-
-    new_lang <- input$settings_language_selector
-
-    # Get language name for notifications
-    lang_name <- AVAILABLE_LANGUAGES[[new_lang]]$name
-
-    # Log language change
-    cat(paste0("[", Sys.time(), "] INFO: Language changed to: ", new_lang, "\n"))
-
-    # Close the modal first
-    removeModal()
-
-    # Show loading overlay with translated message
-    loading_messages <- list(
-      en = "Changing Language",
-      es = "Cambiando Idioma",
-      fr = "Changement de Langue",
-      de = "Sprache Ändern",
-      lt = "Keičiama Kalba",
-      pt = "Mudando Idioma",
-      it = "Cambio Lingua"
-    )
-
-    session$sendCustomMessage(
-      type = "showLanguageLoading",
-      message = list(text = loading_messages[[new_lang]])
-    )
-
-    # Update the translator language
-    shiny.i18n::update_lang(new_lang, session)
-    i18n$set_translation_language(new_lang)
-
-    # Note: Sidebar menu will update automatically via renderMenu()
-    # Reload session immediately to update all UI elements
-    session$reload()
-  })
-
-  # ========== USER LEVEL MODAL ==========
-
-  # Show user level modal
-  observeEvent(input$open_user_level_modal, {
-    showModal(modalDialog(
-      title = tags$h3(icon("user-cog"), " ", i18n$t("User Experience Level")),
-      size = "m",
-      easyClose = FALSE,
-
-      tags$div(
-        style = "padding: 10px;",
-
-        tags$p(
-          style = "margin-bottom: 20px; font-size: 14px;",
-          i18n$t("Select your experience level with marine ecosystem modeling:")
-        ),
-
-        # Single radio button group with all choices
-        radioButtons(
-          "user_level_selector",
-          label = NULL,
-          choices = setNames(
-            c("beginner", "intermediate", "expert"),
-            c(
-              paste("\U0001F7E2", i18n$t("Beginner"), "-", i18n$t("Simplified interface for first-time users. Shows essential tools only.")),
-              paste("\U0001F7E1", i18n$t("Intermediate"), "-", i18n$t("Standard interface for regular users. Shows most tools and features.")),
-              paste("\U0001F534", i18n$t("Expert"), "-", i18n$t("Advanced interface showing all tools, technical terminology, and advanced options."))
-            )
-          ),
-          selected = user_level(),
-          width = "100%"
-        ),
-
-        tags$hr(),
-
-        tags$p(
-          style = "font-size: 12px; color: #666; margin-top: 15px;",
-          icon("info-circle"), " ",
-          i18n$t("The application will reload to apply the new user experience level.")
-        )
-      ),
-
-      footer = tagList(
-        actionButton("cancel_user_level", i18n$t("Cancel"), class = "btn-default"),
-        actionButton("apply_user_level", i18n$t("Apply Changes"), class = "btn-primary", icon = icon("check"))
-      )
-    ))
-  })
-
-  # Apply user level changes
-  observeEvent(input$apply_user_level, {
-    req(input$user_level_selector)
-
-    new_level <- input$user_level_selector
-
-    # Log the change
-    cat(sprintf("[USER-LEVEL] Changing from %s to %s\n", user_level(), new_level))
-
-    # Save to localStorage and reload via JavaScript
-    session$sendCustomMessage(
-      type = "save_user_level",
-      message = list(level = new_level)
-    )
-
-    removeModal()
-
-    showNotification(
-      i18n$t("Applying new user experience level..."),
-      type = "message",
-      duration = 2
-    )
-  })
-
-  # Cancel user level changes
-  observeEvent(input$cancel_user_level, {
-    removeModal()
-  })
-
-  # ========== ABOUT MODAL ==========
-
-  # Show about modal when button is clicked
-  observeEvent(input$show_about_modal, {
-    # Read version info
-    version_info <- jsonlite::fromJSON("VERSION_INFO.json")
-
-    showModal(modalDialog(
-      title = tags$h3(icon("info-circle"), " About MarineSABRES SES Toolbox"),
-      size = "l",
-      easyClose = TRUE,
-      footer = modalButton(i18n$t("Close")),
-
-      tags$div(
-        style = "padding: 20px;",
-
-        # Application Info
-        tags$div(
-          class = "well",
-          tags$h4(icon("cube"), " Application Information"),
-          tags$table(
-            class = "table table-condensed",
-            style = "margin-bottom: 0;",
-            tags$tr(
-              tags$td(tags$strong("Version:")),
-              tags$td(
-                tags$span(
-                  style = "font-size: 18px; color: #3c8dbc; font-weight: bold;",
-                  version_info$version
-                ),
-                tags$span(
-                  class = "label label-success",
-                  style = "margin-left: 10px;",
-                  version_info$status
-                )
-              )
-            ),
-            tags$tr(
-              tags$td(tags$strong("Release Name:")),
-              tags$td(version_info$version_name)
-            ),
-            tags$tr(
-              tags$td(tags$strong("Release Date:")),
-              tags$td(version_info$release_date)
-            ),
-            tags$tr(
-              tags$td(tags$strong("Release Type:")),
-              tags$td(
-                tags$span(
-                  class = if(version_info$release_type == "major") "label label-danger"
-                        else if(version_info$release_type == "minor") "label label-warning"
-                        else "label label-info",
-                  version_info$release_type
-                )
-              )
-            )
-          )
-        ),
-
-        # Features
-        tags$div(
-          class = "well",
-          tags$h4(icon("star"), " Key Features"),
-          tags$ul(
-            lapply(version_info$features, function(feature) {
-              tags$li(feature)
-            })
-          )
-        ),
-
-        # Technical Info
-        tags$div(
-          class = "well",
-          tags$h4(icon("cogs"), " Technical Information"),
-          tags$table(
-            class = "table table-condensed",
-            style = "margin-bottom: 0;",
-            tags$tr(
-              tags$td(tags$strong("Minimum R Version:")),
-              tags$td(version_info$minimum_r_version)
-            ),
-            tags$tr(
-              tags$td(tags$strong("Current R Version:")),
-              tags$td(paste(R.version$major, R.version$minor, sep = "."))
-            ),
-            tags$tr(
-              tags$td(tags$strong("Platform:")),
-              tags$td(R.version$platform)
-            ),
-            tags$tr(
-              tags$td(tags$strong("Git Branch:")),
-              tags$td(version_info$build_info$git_branch)
-            )
-          )
-        ),
-
-        # Contributors
-        tags$div(
-          class = "well",
-          tags$h4(icon("users"), " Contributors"),
-          tags$ul(
-            lapply(version_info$contributors, function(contributor) {
-              tags$li(contributor)
-            })
-          )
-        ),
-
-        # Links
-        tags$div(
-          class = "alert alert-info",
-          icon("book"),
-          tags$strong(" Documentation: "),
-          tags$a(
-            href = "#",
-            onclick = "window.open('user_guide.html', '_blank'); return false;",
-            "User Guide",
-            style = "margin-right: 15px;"
-          ),
-          tags$a(
-            href = "#",
-            onclick = sprintf("window.open('%s', '_blank'); return false;", version_info$changelog_url),
-            "Changelog"
-          )
-        )
-      )
-    ))
-  })
+  # Setup about modal
+  setup_about_modal_handlers(input, output, session, i18n)
 
   # ========== CALL MODULE SERVERS ==========
 
-  # Entry Point module - pass session for sidebar navigation
-  entry_point_server("entry_pt", project_data, parent_session = session)
+  # Entry Point module - pass session for sidebar navigation and user level
+  entry_point_server("entry_pt", project_data, parent_session = session, user_level_reactive = user_level)
 
   # PIMS modules
   pims_project_data <- pims_project_server("pims_proj", project_data)
@@ -1255,13 +554,13 @@ server <- function(input, output, session) {
   create_ses_server("create_ses_main", project_data, session, i18n)
 
   # Template-based SES module
-  template_ses_server("template_ses", project_data, session)
+  template_ses_server("template_ses", project_data, session, event_bus)
 
   # AI ISA Assistant module
-  ai_isa_assistant_server("ai_isa_mod", project_data, i18n)
+  ai_isa_assistant_server("ai_isa_mod", project_data, i18n, event_bus, autosave_enabled)
 
   # ISA data entry module (Standard Entry)
-  isa_data <- isaDataEntryServer("isa_module", project_data)
+  isa_data <- isaDataEntryServer("isa_module", project_data, event_bus)
 
   # CLD visualization
   cld_viz_server("cld_visual", project_data)
@@ -1277,174 +576,25 @@ server <- function(input, output, session) {
   response_measures_server("resp_meas", project_data, i18n)
   scenario_builder_server("scenario_builder", project_data, i18n)
   response_validation_server("resp_val", project_data)
-  
+
+  # Import Data module
+  import_data_server("import_data_mod", project_data, i18n, session, event_bus)
+
+  # Export & Reports module (simple)
+  export_reports_server("export_reports_mod", project_data, i18n)
+
+  # Prepare Report module (comprehensive)
+  prepare_report_server("prep_report", project_data)
+
+  # ========== REACTIVE DATA PIPELINE ==========
+  # Setup event-based reactive pipeline for automatic data propagation
+  # ISA changes → auto-regenerate CLD → auto-invalidate analysis
+  setup_reactive_pipeline(project_data, event_bus)
+
   # ========== DASHBOARD ==========
-  
-  # Value boxes
-  output$total_elements_box <- renderValueBox({
-    tryCatch({
-      data <- project_data()
-      isa_data <- safe_get_nested(data, "data", "isa_data", default = list())
+  # Dashboard logic extracted to server/dashboard.R for better maintainability
 
-      # Count rows in each DAPSIWRM dataframe
-      n_elements <- sum(
-        nrow(isa_data$drivers %||% data.frame()),
-        nrow(isa_data$activities %||% data.frame()),
-        nrow(isa_data$pressures %||% data.frame()),
-        nrow(isa_data$marine_processes %||% data.frame()),
-        nrow(isa_data$ecosystem_services %||% data.frame()),
-        nrow(isa_data$goods_benefits %||% data.frame()),
-        nrow(isa_data$responses %||% data.frame()),
-        nrow(isa_data$measures %||% data.frame())
-      )
-
-      valueBox(n_elements, i18n$t("Total Elements"), icon = icon("circle"), color = "blue")
-    }, error = function(e) {
-      valueBox(0, "Error", icon = icon("times"), color = "red")
-    })
-  })
-
-  output$total_connections_box <- renderValueBox({
-    tryCatch({
-      data <- project_data()
-      n_connections <- 0
-      adj_matrices <- safe_get_nested(data, "data", "isa_data", "adjacency_matrices", default = list())
-
-      if(length(adj_matrices) > 0) {
-        for(mat_name in names(adj_matrices)) {
-          mat <- adj_matrices[[mat_name]]
-          if(!is.null(mat) && is.matrix(mat)) {
-            n_connections <- n_connections + sum(!is.na(mat) & mat != "", na.rm = TRUE)
-          }
-        }
-      }
-
-      valueBox(n_connections, i18n$t("Connections"), icon = icon("arrow-right"), color = "green")
-    }, error = function(e) {
-      valueBox(0, "Error", icon = icon("times"), color = "red")
-    })
-  })
-
-  output$loops_detected_box <- renderValueBox({
-    tryCatch({
-      data <- project_data()
-      loops <- safe_get_nested(data, "data", "cld", "loops", default = data.frame())
-      n_loops <- if(is.data.frame(loops)) nrow(loops) else 0
-
-      valueBox(n_loops, i18n$t("Loops Detected"), icon = icon("refresh"), color = "orange")
-    }, error = function(e) {
-      valueBox(0, "Error", icon = icon("times"), color = "red")
-    })
-  })
-
-  output$completion_box <- renderValueBox({
-    tryCatch({
-      data <- project_data()
-      completion <- 0
-
-      # Check if ISA data exists (6 components × 6.67% = 40%)
-      isa_score <- 0
-      if (!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) isa_score <- isa_score + 6.67
-      if (!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) isa_score <- isa_score + 6.67
-      if (!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) isa_score <- isa_score + 6.67
-      if (!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) isa_score <- isa_score + 6.67
-      if (!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) isa_score <- isa_score + 6.67
-      if (!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) isa_score <- isa_score + 6.65
-      completion <- completion + isa_score
-
-      # Check if connections exist (30%)
-      adj_matrices <- safe_get_nested(data, "data", "isa_data", "adjacency_matrices", default = list())
-      n_connections <- 0
-      if (length(adj_matrices) > 0) {
-        for (mat_name in names(adj_matrices)) {
-          mat <- adj_matrices[[mat_name]]
-          if (!is.null(mat) && is.matrix(mat)) {
-            n_connections <- n_connections + sum(!is.na(mat) & mat != "", na.rm = TRUE)
-          }
-        }
-      }
-      if (n_connections > 0) completion <- completion + 30
-
-      # Check if CLD generated (30%)
-      if (!is.null(data$data$cld$nodes) && nrow(data$data$cld$nodes) > 0) {
-        completion <- completion + 30
-      }
-
-      completion <- round(completion)
-
-      valueBox(
-        paste0(completion, "%"),
-        i18n$t("Completion"),
-        icon = icon("check-circle"),
-        color = if(completion >= 75) "green" else if(completion >= 40) "yellow" else "purple"
-      )
-    }, error = function(e) {
-      valueBox("0%", "Error", icon = icon("times"), color = "red")
-    })
-  })
-  
-  # Project overview
-  output$project_overview_ui <- renderUI({
-    tryCatch({
-      data <- project_data()
-
-      tagList(
-      p(strong(i18n$t("Project ID:")), data$project_id),
-      p(strong(i18n$t("Created:")), format_date_display(data$created_at)),
-      p(strong(i18n$t("Last Modified:")), format_date_display(data$last_modified)),
-      p(strong(i18n$t("Demonstration Area:")), data$data$metadata$da_site %||% i18n$t("Not set")),
-      p(strong(i18n$t("Focal Issue:")), data$data$metadata$focal_issue %||% i18n$t("Not defined")),
-      hr(),
-      h4(i18n$t("Status Summary")),
-      p(i18n$t("PIMS Setup:"), " ", if(length(data$data$pims) > 0) i18n$t("Complete") else i18n$t("Incomplete")),
-      hr(),
-      h5(i18n$t("ISA Data Entry:")),
-      tags$ul(style = "list-style-type: none; padding-left: 10px;",
-        tags$li(
-          icon(if(!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) "check" else "times",
-               class = if(!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) "text-success" else "text-muted"),
-          " ", i18n$t("Goods & Benefits:"), " ",
-          if(!is.null(data$data$isa_data$goods_benefits)) nrow(data$data$isa_data$goods_benefits) else 0, " ", i18n$t("entries")),
-        tags$li(
-          icon(if(!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) "check" else "times",
-               class = if(!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) "text-success" else "text-muted"),
-          " ", i18n$t("Ecosystem Services:"), " ",
-          if(!is.null(data$data$isa_data$ecosystem_services)) nrow(data$data$isa_data$ecosystem_services) else 0, " ", i18n$t("entries")),
-        tags$li(
-          icon(if(!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) "check" else "times",
-               class = if(!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) "text-success" else "text-muted"),
-          " ", i18n$t("Marine Processes:"), " ",
-          if(!is.null(data$data$isa_data$marine_processes)) nrow(data$data$isa_data$marine_processes) else 0, " ", i18n$t("entries")),
-        tags$li(
-          icon(if(!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) "check" else "times",
-               class = if(!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) "text-success" else "text-muted"),
-          " ", i18n$t("Pressures:"), " ",
-          if(!is.null(data$data$isa_data$pressures)) nrow(data$data$isa_data$pressures) else 0, " ", i18n$t("entries")),
-        tags$li(
-          icon(if(!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) "check" else "times",
-               class = if(!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) "text-success" else "text-muted"),
-          " ", i18n$t("Activities:"), " ",
-          if(!is.null(data$data$isa_data$activities)) nrow(data$data$isa_data$activities) else 0, " ", i18n$t("entries")),
-        tags$li(
-          icon(if(!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) "check" else "times",
-               class = if(!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) "text-success" else "text-muted"),
-          " ", i18n$t("Drivers:"), " ",
-          if(!is.null(data$data$isa_data$drivers)) nrow(data$data$isa_data$drivers) else 0, " ", i18n$t("entries"))
-      ),
-      hr(),
-      p(i18n$t("CLD Generated:"), " ", if(!is.null(data$data$cld$nodes)) i18n$t("Yes") else i18n$t("No"))
-    )
-    }, error = function(e) {
-      cat("\n!!! ERROR in project_overview_ui:\n")
-      cat("Error message:", conditionMessage(e), "\n")
-      cat("Call stack:\n")
-      print(sys.calls())
-      # Return error message to UI
-      tagList(
-        p(style = "color: red;", i18n$t("Error rendering dashboard:"), " ", conditionMessage(e))
-      )
-    })
-  })
+  setup_dashboard_rendering(input, output, session, project_data, i18n)
 
   # ========== SAVE/LOAD PROJECT ==========
   
@@ -1747,206 +897,10 @@ server <- function(input, output, session) {
   # ========== REPORT GENERATION ==========
 
   # Report status output
-  output$report_status <- renderUI({
-    tags$div(
-      style = "margin-top: 20px;",
-      id = "report_status_div"
-    )
-  })
-
-  # Generate report button
-  observeEvent(input$generate_report, {
-    # Show progress
-    showModal(modalDialog(
-      title = "Generating Report",
-      "Please wait while your report is being generated...",
-      footer = NULL,
-      easyClose = FALSE
-    ))
-
-    data <- project_data()
-    report_type <- input$report_type
-    report_format <- input$report_format
-    include_viz <- input$report_include_viz
-    include_data <- input$report_include_data
-
-    tryCatch({
-      # Create a temporary Rmd file
-      rmd_file <- tempfile(fileext = ".Rmd")
-
-      # Generate report content based on type
-      report_content <- generate_report_content(
-        data = data,
-        report_type = report_type,
-        include_viz = include_viz,
-        include_data = include_data
-      )
-
-      writeLines(report_content, rmd_file)
-
-      # Render the report
-      output_format <- switch(report_format,
-        "HTML" = "html_document",
-        "PDF" = "pdf_document",
-        "Word" = "word_document"
-      )
-
-      output_file <- tempfile(fileext = switch(report_format,
-        "HTML" = ".html",
-        "PDF" = ".pdf",
-        "Word" = ".docx"
-      ))
-
-      rmarkdown::render(
-        input = rmd_file,
-        output_format = output_format,
-        output_file = output_file,
-        quiet = TRUE
-      )
-
-      # Copy to downloads or show success
-      removeModal()
-
-      showModal(modalDialog(
-        title = i18n$t("Report Generated Successfully"),
-        tags$div(
-          p(i18n$t("Your report has been generated successfully.")),
-          downloadButton("download_report_file", i18n$t("Download Report"), class = "btn-success")
-        ),
-        footer = modalButton(i18n$t("Close"))
-      ))
-
-      # Store output file path for download
-      output$download_report_file <- downloadHandler(
-        filename = function() {
-          paste0("MarineSABRES_Report_", report_type, "_", Sys.Date(),
-                 switch(report_format,
-                   "HTML" = ".html",
-                   "PDF" = ".pdf",
-                   "Word" = ".docx"))
-        },
-        content = function(file) {
-          file.copy(output_file, file)
-        }
-      )
-
-    }, error = function(e) {
-      removeModal()
-      showNotification(paste("Error generating report:", e$message), type = "error", duration = 10)
-    })
-  })
 
 }
 
-# ============================================================================
-# HELPER FUNCTION FOR REPORT GENERATION
-# ============================================================================
-
-generate_report_content <- function(data, report_type, include_viz, include_data) {
-
-  header <- paste0("---\ntitle: 'MarineSABRES SES Analysis Report'\n",
-                   "subtitle: '", report_type, " Report'\n",
-                   "date: '", format(Sys.Date(), "%B %d, %Y"), "'\n",
-                   "output:\n  html_document:\n    toc: true\n    toc_float: true\n",
-                   "---\n\n")
-
-  intro <- paste0("# Project Overview\n\n",
-                  "**Project:** ", data$project_name, "\n\n",
-                  "**Demonstration Area:** ", data$data$metadata$da_site %||% "Not specified", "\n\n",
-                  "**Focal Issue:** ", data$data$metadata$focal_issue %||% "Not defined", "\n\n",
-                  "**Created:** ", format(data$created_at, "%Y-%m-%d"), "\n\n",
-                  "**Last Modified:** ", format(data$last_modified, "%Y-%m-%d"), "\n\n")
-
-  if(report_type == "executive") {
-    # Count elements correctly by summing rows in each dataframe
-    n_elements <- sum(
-      nrow(data$data$isa_data$drivers %||% data.frame()),
-      nrow(data$data$isa_data$activities %||% data.frame()),
-      nrow(data$data$isa_data$pressures %||% data.frame()),
-      nrow(data$data$isa_data$marine_processes %||% data.frame()),
-      nrow(data$data$isa_data$ecosystem_services %||% data.frame()),
-      nrow(data$data$isa_data$goods_benefits %||% data.frame()),
-      nrow(data$data$isa_data$responses %||% data.frame()),
-      nrow(data$data$isa_data$measures %||% data.frame())
-    )
-
-    content <- paste0(
-      "# Executive Summary\n\n",
-      "This report provides a high-level overview of the social-ecological system analysis.\n\n",
-      "## Key Findings\n\n",
-      "- System elements identified: ", n_elements, "\n",
-      "- Feedback loops detected: ", nrow(data$data$cld$loops %||% data.frame()), "\n",
-      "- Stakeholders involved: ", nrow(data$data$pims$stakeholders %||% data.frame()), "\n\n"
-    )
-  } else if(report_type == "technical") {
-    content <- paste0(
-      "# Technical Analysis\n\n",
-      "## DAPSI(W)R(M) Framework Elements\n\n",
-      "### Drivers\n\n",
-      if(!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) {
-        paste0("Identified ", nrow(data$data$isa_data$drivers), " drivers in the system.\n\n")
-      } else {
-        "No drivers data available.\n\n"
-      },
-      "### Activities\n\n",
-      if(!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) {
-        paste0("Identified ", nrow(data$data$isa_data$activities), " activities.\n\n")
-      } else {
-        "No activities data available.\n\n"
-      },
-      "### Pressures\n\n",
-      if(!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) {
-        paste0("Identified ", nrow(data$data$isa_data$pressures), " pressures.\n\n")
-      } else {
-        "No pressures data available.\n\n"
-      }
-    )
-  } else if(report_type == "presentation") {
-    content <- paste0(
-      "# Stakeholder Presentation\n\n",
-      "## System Overview\n\n",
-      "This analysis examines the social-ecological system in ",
-      data$data$metadata$da_site %||% "the study area", ".\n\n",
-      "## Key Insights\n\n",
-      "- Multiple interconnected system components\n",
-      "- Feedback loops influencing system behavior\n",
-      "- Management opportunities identified\n\n"
-    )
-  } else {
-    # Full report
-    content <- paste0(
-      "# Complete System Analysis\n\n",
-      "## ISA Data Entry Results\n\n",
-      "### Goods and Benefits\n\n",
-      if(!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) {
-        paste0("```{r echo=FALSE}\n",
-               "knitr::kable(head(data$data$isa_data$goods_benefits))\n",
-               "```\n\n")
-      } else {
-        "No data available.\n\n"
-      },
-      "## Causal Loop Diagram\n\n",
-      if(!is.null(data$data$cld$nodes) && nrow(data$data$cld$nodes) > 0) {
-        paste0("The CLD contains ", nrow(data$data$cld$nodes), " nodes and ",
-               nrow(data$data$cld$edges %||% data.frame()), " connections.\n\n")
-      } else {
-        "No CLD generated yet.\n\n"
-      },
-      "## Stakeholder Analysis\n\n",
-      if(!is.null(data$data$pims$stakeholders) && nrow(data$data$pims$stakeholders) > 0) {
-        paste0(nrow(data$data$pims$stakeholders), " stakeholders identified.\n\n")
-      } else {
-        "No stakeholder data available.\n\n"
-      }
-    )
-  }
-
-  footer <- paste0("\n\n---\n\n",
-                   "*Report generated by MarineSABRES SES Tool*\n\n",
-                   "*", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "*\n")
-
-  return(paste0(header, intro, content, footer))
-}
+# Note: Report generation functions now loaded from functions/report_generation.R
 
 # ============================================================================
 # RUN APPLICATION

@@ -145,14 +145,14 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
 
     # Issue-specific
-    if (!is.null(main_issue)) {
-      if (grepl("fish", main_issue, ignore.case = TRUE)) {
+    if (length(main_issue) > 0) {
+      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Trawling", "Long-line fishing", "Purse seining", "Fish farming")
-      } else if (grepl("eutroph|nutrient", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("eutroph|nutrient", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Agriculture runoff", "Sewage discharge", "Aquaculture waste")
-      } else if (grepl("pollution|litter", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("pollution|litter", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Plastic disposal", "Wastewater discharge", "Ship emissions")
-      } else if (grepl("tourism", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("tourism", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Beach development", "Hotel construction", "Cruise tourism")
       }
     }
@@ -177,12 +177,12 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
 
     # Issue-specific
-    if (!is.null(main_issue)) {
-      if (grepl("eutroph", main_issue, ignore.case = TRUE)) {
+    if (length(main_issue) > 0) {
+      if (any(grepl("eutroph", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Nitrogen loading", "Phosphorus loading", "Organic enrichment", "Algal blooms")
-      } else if (grepl("fish", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Stock depletion", "Bycatch", "Trawl damage", "Discarding")
-      } else if (grepl("climate", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("climate", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Ocean warming", "Ocean acidification", "Sea level rise")
       }
     }
@@ -237,12 +237,12 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
 
     # Issue-specific
-    if (!is.null(main_issue)) {
-      if (grepl("fish", main_issue, ignore.case = TRUE)) {
+    if (length(main_issue) > 0) {
+      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Livelihood loss", "Food security threats", "Economic decline")
-      } else if (grepl("eutroph|nutrient", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("eutroph|nutrient", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Recreation value loss", "Drinking water contamination", "Shellfish harvest closures")
-      } else if (grepl("tourism", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("tourism", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Aesthetic value loss", "Revenue decline", "Employment loss")
       }
     }
@@ -254,12 +254,12 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
                                "Displacement", "Recreational opportunities loss")
 
     # Issue-specific
-    if (!is.null(main_issue)) {
-      if (grepl("fish", main_issue, ignore.case = TRUE)) {
+    if (length(main_issue) > 0) {
+      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Fisher income loss", "Protein source loss", "Traditional livelihoods decline")
-      } else if (grepl("tourism", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("tourism", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Tourism employment loss", "Local business decline", "Community well-being impacts")
-      } else if (grepl("climate", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("climate", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Displacement risk", "Property loss", "Livelihood disruption")
       }
     }
@@ -284,12 +284,12 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
 
     # Issue-specific
-    if (!is.null(main_issue)) {
-      if (grepl("fish", main_issue, ignore.case = TRUE)) {
+    if (length(main_issue) > 0) {
+      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Catch limits", "Fishing gear restrictions", "Stock recovery zones", "Aquaculture alternatives")
-      } else if (grepl("eutroph", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("eutroph", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Agricultural best practices", "Wastewater treatment", "Buffer zones")
-      } else if (grepl("climate", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("climate", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Carbon reduction", "Climate adaptation planning", "Coastal defense")
       }
     }
@@ -314,12 +314,12 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
 
     # Issue-specific
-    if (!is.null(main_issue)) {
-      if (grepl("fish", main_issue, ignore.case = TRUE)) {
+    if (length(main_issue) > 0) {
+      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Total Allowable Catch", "Fishing licenses", "Gear restrictions", "Bycatch reduction devices")
-      } else if (grepl("eutroph", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("eutroph", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Fertilizer regulations", "Sewage treatment standards", "Agricultural subsidies reform")
-      } else if (grepl("pollution|litter", main_issue, ignore.case = TRUE)) {
+      } else if (any(grepl("pollution|litter", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Plastic ban legislation", "Waste collection systems", "Producer responsibility")
       }
     }

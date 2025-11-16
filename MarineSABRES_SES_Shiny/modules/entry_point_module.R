@@ -60,7 +60,7 @@ entry_point_ui <- function(id) {
           border-color: #27ae60;
         }
       ")),
-      # Initialize Bootstrap tooltips
+      # Initialize Bootstrap tooltips and download handler
       tags$script(HTML("
         $(document).ready(function() {
           // Initialize tooltips on page load
@@ -71,6 +71,19 @@ entry_point_ui <- function(id) {
             setTimeout(function() {
               $('[data-toggle=\"tooltip\"]').tooltip();
             }, 100);
+          });
+
+          // Handle pathway report download
+          Shiny.addCustomMessageHandler('download_pathway_report', function(message) {
+            var blob = new Blob([message.content], {type: 'text/plain'});
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = message.filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
           });
         });
 
@@ -92,7 +105,7 @@ entry_point_ui <- function(id) {
 # SERVER FUNCTION
 # ============================================================================
 
-entry_point_server <- function(id, project_data_reactive, parent_session = NULL) {
+entry_point_server <- function(id, project_data_reactive, parent_session = NULL, user_level_reactive = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive values to track state
@@ -112,12 +125,15 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL)
       # Add reactive dependency on current language to trigger re-render when language changes
       current_lang <- i18n$get_translation_language()
 
+      # Get current user level (default to intermediate if not provided)
+      current_user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
+
       if (rv$current_screen == "welcome") {
         render_welcome_screen(session$ns)
       } else if (rv$current_screen == "guided") {
         render_guided_screen(session$ns, rv, input)
       } else if (rv$current_screen == "recommendations") {
-        render_recommendations_screen(session$ns, rv)
+        render_recommendations_screen(session$ns, rv, current_user_level)
       }
     })
 
@@ -222,6 +238,101 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL)
       rv$ep4_selected <- c()
     })
 
+    # ========== EXPORT PATHWAY REPORT ==========
+    observeEvent(input$export_pathway, {
+      tryCatch({
+        # Get current user level (default to intermediate if not provided)
+        current_user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
+
+        # Get recommended tools
+        recommended_tools <- get_tool_recommendations(rv, current_user_level)
+
+        # Create pathway summary text
+        pathway_summary <- c()
+
+        if (!is.null(rv$ep0_selected)) {
+          role_label <- EP0_MANAGER_ROLES[[which(sapply(EP0_MANAGER_ROLES, function(x) x$id) == rv$ep0_selected)]]$label
+          pathway_summary <- c(pathway_summary, paste("Role:", i18n$t(role_label)))
+        }
+
+        if (!is.null(rv$ep1_selected)) {
+          need_label <- EP1_BASIC_NEEDS[[which(sapply(EP1_BASIC_NEEDS, function(x) x$id) == rv$ep1_selected)]]$label
+          pathway_summary <- c(pathway_summary, paste("Need:", i18n$t(need_label)))
+        }
+
+        if (length(rv$ep2_selected) > 0) {
+          activity_labels <- sapply(rv$ep2_selected, function(id) {
+            i18n$t(EP2_ACTIVITY_SECTORS[[which(sapply(EP2_ACTIVITY_SECTORS, function(x) x$id) == id)]]$label)
+          })
+          pathway_summary <- c(pathway_summary, paste("Activities:", paste(activity_labels, collapse = ", ")))
+        }
+
+        if (length(rv$ep3_selected) > 0) {
+          risk_labels <- sapply(rv$ep3_selected, function(id) {
+            i18n$t(EP3_RISKS_HAZARDS[[which(sapply(EP3_RISKS_HAZARDS, function(x) x$id) == id)]]$label)
+          })
+          pathway_summary <- c(pathway_summary, paste("Risks:", paste(risk_labels, collapse = ", ")))
+        }
+
+        if (length(rv$ep4_selected) > 0) {
+          topic_labels <- sapply(rv$ep4_selected, function(id) {
+            i18n$t(EP4_TOPICS[[which(sapply(EP4_TOPICS, function(x) x$id) == id)]]$label)
+          })
+          pathway_summary <- c(pathway_summary, paste("Topics:", paste(topic_labels, collapse = ", ")))
+        }
+
+        # Create tools summary
+        tools_summary <- sapply(seq_along(recommended_tools), function(i) {
+          tool <- recommended_tools[[i]]
+          sprintf("%d. %s\n   %s\n   Time: %s | Skill: %s\n",
+                  i, tool$name, tool$description, tool$time_required, tool$skill_level)
+        })
+
+        # Combine into report text
+        report_text <- paste0(
+          "=== MarineSABRES Entry Point Pathway Report ===\n\n",
+          "Generated: ", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n",
+          "YOUR PATHWAY:\n",
+          paste(pathway_summary, collapse = "\n"), "\n\n",
+          "RECOMMENDED TOOLS:\n",
+          paste(tools_summary, collapse = "\n"), "\n\n",
+          "SUGGESTED WORKFLOW:\n",
+          "1. Start with PIMS: Define your project goals, stakeholders, and timeline\n",
+          "2. Quick start option: Use Create SES with templates or AI assistant\n",
+          "3. Build your SES model: Use ISA Data Entry to map DAPSI(W)R(M) elements\n",
+          "4. Visualize & Analyze: Create CLD networks and run analysis tools\n",
+          "5. Refine & Communicate: Simplify models and develop scenarios\n"
+        )
+
+        # Create temporary file
+        temp_file <- tempfile(fileext = ".txt")
+        writeLines(report_text, temp_file)
+
+        # Download the file
+        session$sendCustomMessage(
+          type = "download_pathway_report",
+          message = list(
+            filename = paste0("pathway_report_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".txt"),
+            content = report_text
+          )
+        )
+
+        showNotification(
+          i18n$t("Pathway report generated successfully!"),
+          type = "message",
+          duration = 3
+        )
+
+      }, error = function(e) {
+        showNotification(
+          paste(i18n$t("Error generating pathway report:"), e$message),
+          type = "error",
+          duration = 5
+        )
+        cat(sprintf("[ENTRY POINT] Error generating pathway report: %s\n", e$message))
+      })
+    })
+
     # ========== TOOL NAVIGATION OBSERVERS ==========
     # These handle the "Go to [Tool]" buttons on the recommendations screen
     # Since the parent_session is needed to update the sidebar menu, we only
@@ -231,7 +342,10 @@ entry_point_server <- function(id, project_data_reactive, parent_session = NULL)
       # Observe tool navigation buttons dynamically
       observe({
         if (rv$current_screen == "recommendations") {
-          recommended_tools <- get_tool_recommendations(rv)
+          # Get current user level (default to intermediate if not provided)
+          current_user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
+
+          recommended_tools <- get_tool_recommendations(rv, current_user_level)
 
           lapply(recommended_tools, function(tool) {
             btn_id <- paste0("goto_", tool$id)
@@ -263,19 +377,6 @@ render_welcome_screen <- function(ns) {
     column(12,
       div(
         class = "jumbotron",
-        h1(icon("compass"), " ", i18n$t("Welcome to the MarineSABRES Toolbox")),
-        p(class = "lead", i18n$t("This guidance system will help you find the right tools for your marine management needs.")),
-        hr(),
-
-        textAreaInput(
-          ns("user_question"),
-          h4(i18n$t("What is your main marine management question?")),
-          placeholder = i18n$t("e.g., How can we reduce fishing impacts while maintaining livelihoods?"),
-          rows = 3,
-          width = "100%"
-        ),
-
-        br(),
 
         fluidRow(
           column(6,
@@ -300,6 +401,16 @@ render_welcome_screen <- function(ns) {
                           icon = icon("tools"), class = "btn-success btn-lg btn-block")
             )
           )
+        ),
+
+        br(),
+
+        textAreaInput(
+          ns("user_question"),
+          h4(i18n$t("What is your main marine management question?")),
+          placeholder = i18n$t("e.g., How can we reduce fishing impacts while maintaining livelihoods?"),
+          rows = 3,
+          width = "100%"
         )
       )
     )
@@ -532,9 +643,9 @@ render_ep4 <- function(ns, rv) {
   )
 }
 
-render_recommendations_screen <- function(ns, rv) {
-  # Get recommended tools based on pathway
-  recommended_tools <- get_tool_recommendations(rv)
+render_recommendations_screen <- function(ns, rv, user_level = "intermediate") {
+  # Get recommended tools based on pathway and user level
+  recommended_tools <- get_tool_recommendations(rv, user_level)
 
   fluidRow(
     column(12,
@@ -636,8 +747,70 @@ render_recommendations_screen <- function(ns, rv) {
   )
 }
 
-# Helper function to recommend tools based on user pathway
-get_tool_recommendations <- function(rv) {
+# Helper function to recommend tools based on user pathway and experience level
+get_tool_recommendations <- function(rv, user_level = "intermediate") {
+  tools <- list()
+
+  # BEGINNER LEVEL: Simplify recommendations - focus on quick start tools
+  if (user_level == "beginner") {
+    # For beginners, prioritize AI Assistant and Template creation
+    tools[[length(tools) + 1]] <- list(
+      id = "create_ses_ai",
+      name = "AI-Guided SES Creation",
+      description = "Interactive AI assistant asks you questions and builds your SES model automatically. Perfect for first-time users - no prior knowledge needed!",
+      time_required = "20-40 minutes",
+      skill_level = "Beginner",
+      use_case = "Guided SES creation with AI assistance",
+      menu_id = "create_ses_ai"
+    )
+
+    tools[[length(tools) + 1]] <- list(
+      id = "create_ses_template",
+      name = "Template-Based SES Creation",
+      description = "Start from pre-built templates for common marine scenarios: fisheries, tourism, aquaculture, pollution, or climate change. Customize to your needs.",
+      time_required = "15-30 minutes",
+      skill_level = "Beginner",
+      use_case = "Quick start with templates",
+      menu_id = "create_ses_template"
+    )
+
+    # CLD Visualization
+    tools[[length(tools) + 1]] <- list(
+      id = "cld",
+      name = "SES Visualization",
+      description = "See your SES as an interactive network diagram. Explore connections, filter by confidence, and understand your system visually.",
+      time_required = "10-20 minutes",
+      skill_level = "Beginner",
+      use_case = "Visual exploration of your SES",
+      menu_id = "cld_viz"
+    )
+
+    # Only show Loop Detection for beginners
+    tools[[length(tools) + 1]] <- list(
+      id = "loops",
+      name = "Loop Detection",
+      description = "Discover feedback loops in your system - the circular cause-and-effect patterns that drive system behavior.",
+      time_required = "15-30 minutes",
+      skill_level = "Beginner",
+      use_case = "Identify system feedback mechanisms",
+      menu_id = "analysis_loops"
+    )
+
+    # Leverage Points for beginners
+    tools[[length(tools) + 1]] <- list(
+      id = "leverage",
+      name = "Leverage Point Analysis",
+      description = "Find the most influential points in your system where small changes can have big impacts.",
+      time_required = "20-30 minutes",
+      skill_level = "Beginner",
+      use_case = "Identify key intervention points",
+      menu_id = "analysis_leverage"
+    )
+
+    return(tools)
+  }
+
+  # INTERMEDIATE/EXPERT LEVEL: Full recommendations based on pathway
   tools <- list()
 
   # PIMS - Recommended for project planning (especially for policy creators, advisors, educators)
@@ -661,7 +834,7 @@ get_tool_recommendations <- function(rv) {
     time_required = "15-45 minutes",
     skill_level = "Beginner",
     use_case = "Fast SES creation with templates or AI",
-    menu_id = "create_ses"
+    menu_id = "create_ses_choose"
   )
 
   # ISA Data Entry - Core tool for all pathways
@@ -672,7 +845,7 @@ get_tool_recommendations <- function(rv) {
     time_required = "1-3 hours",
     skill_level = "Intermediate",
     use_case = "Detailed SES model construction with confidence tracking",
-    menu_id = "isa"
+    menu_id = "create_ses_standard"
   )
 
   # CLD Visualization - Follows ISA
@@ -729,16 +902,16 @@ get_tool_recommendations <- function(rv) {
       )
     }
 
-    # If Governance/Policy selected → Response & Validation
+    # If Governance/Policy selected → Scenario Builder
     if (any(grepl("policy_|governance|marine_planning", topic_ids))) {
       tools[[length(tools) + 1]] <- list(
-        id = "response",
-        name = "Response Measures & Validation",
-        description = "Design management scenarios and validate responses. Evaluate effectiveness of different management measures using stakeholder input.",
+        id = "scenarios",
+        name = "Scenario Builder",
+        description = "Build and compare alternative future scenarios. Design management interventions and analyze their impacts on your SES network.",
         time_required = "1-2 hours",
         skill_level = "Advanced",
         use_case = "Management scenario development",
-        menu_id = "response_validation"
+        menu_id = "response_scenarios"
       )
     }
   }

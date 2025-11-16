@@ -37,7 +37,7 @@ isaDataEntryUI <- function(id) {
 }
 
 # Module Server ----
-isaDataEntryServer <- function(id, global_data) {
+isaDataEntryServer <- function(id, global_data, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

@@ -288,72 +288,74 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   cat(sprintf("[CREATE_EDGES] Matrix names: %s\n", paste(names(adjacency_matrices), collapse=", ")))
 
   # Process each adjacency matrix
-  # NOTE: Template matrices are defined with rows=target and cols=source,
-  # but process_adjacency_matrix expects rows=source and cols=target.
-  # So we transpose each matrix before processing.
+  # MATRIX CONVENTION: All matrices use SOURCE×TARGET format
+  # - Matrix name: source_target (e.g., "es_gb" means ES→GB)
+  # - Matrix structure: rows=SOURCE elements, cols=TARGET elements
+  # - Cell [i,j]: Connection from SOURCE[i] to TARGET[j]
+  # Example: gb_es matrix has rows=GB elements, cols=ES elements (GB→ES connections)
 
   if (!is.null(adjacency_matrices$gb_es)) {
     edges_gb_es <- process_adjacency_matrix(
-      t(adjacency_matrices$gb_es),  # Transpose: GB×ES → ES×GB
-      from_prefix = "ES",
-      to_prefix = "GB",
-      expected_rows = n_es,
-      expected_cols = n_gb
+      adjacency_matrices$gb_es,  # GB×ES (rows=GB, cols=ES): GB→ES connections
+      from_prefix = "GB",
+      to_prefix = "ES",
+      expected_rows = n_gb,
+      expected_cols = n_es
     )
     edges <- bind_rows(edges, edges_gb_es)
   }
 
   if (!is.null(adjacency_matrices$es_mpf)) {
     edges_es_mpf <- process_adjacency_matrix(
-      t(adjacency_matrices$es_mpf),  # Transpose: ES×MPF → MPF×ES
-      from_prefix = "MPF",
-      to_prefix = "ES",
-      expected_rows = n_mpf,
-      expected_cols = n_es
+      adjacency_matrices$es_mpf,  # ES×MPF (rows=ES, cols=MPF): ES→MPF connections
+      from_prefix = "ES",
+      to_prefix = "MPF",
+      expected_rows = n_es,
+      expected_cols = n_mpf
     )
     edges <- bind_rows(edges, edges_es_mpf)
   }
 
   if (!is.null(adjacency_matrices$mpf_p)) {
     edges_mpf_p <- process_adjacency_matrix(
-      t(adjacency_matrices$mpf_p),  # Transpose: MPF×P → P×MPF
-      from_prefix = "P",
-      to_prefix = "MPF",
-      expected_rows = n_p,
-      expected_cols = n_mpf
+      adjacency_matrices$mpf_p,  # MPF×P (rows=MPF, cols=P): MPF→P connections
+      from_prefix = "MPF",
+      to_prefix = "P",
+      expected_rows = n_mpf,
+      expected_cols = n_p
     )
     edges <- bind_rows(edges, edges_mpf_p)
   }
 
   if (!is.null(adjacency_matrices$p_a)) {
     edges_p_a <- process_adjacency_matrix(
-      t(adjacency_matrices$p_a),  # Transpose: P×A → A×P
-      from_prefix = "A",
-      to_prefix = "P",
-      expected_rows = n_a,
-      expected_cols = n_p
+      adjacency_matrices$p_a,  # P×A (rows=P, cols=A): P→A connections
+      from_prefix = "P",
+      to_prefix = "A",
+      expected_rows = n_p,
+      expected_cols = n_a
     )
     edges <- bind_rows(edges, edges_p_a)
   }
 
   if (!is.null(adjacency_matrices$a_d)) {
     edges_a_d <- process_adjacency_matrix(
-      t(adjacency_matrices$a_d),  # Transpose: A×D → D×A
-      from_prefix = "D",
-      to_prefix = "A",
-      expected_rows = n_d,
-      expected_cols = n_a
+      adjacency_matrices$a_d,  # A×D (rows=A, cols=D): A→D connections
+      from_prefix = "A",
+      to_prefix = "D",
+      expected_rows = n_a,
+      expected_cols = n_d
     )
     edges <- bind_rows(edges, edges_a_d)
   }
 
   if (!is.null(adjacency_matrices$d_gb)) {
     edges_d_gb <- process_adjacency_matrix(
-      t(adjacency_matrices$d_gb),  # Transpose: D×GB → GB×D
-      from_prefix = "GB",
-      to_prefix = "D",
-      expected_rows = n_gb,
-      expected_cols = n_d
+      adjacency_matrices$d_gb,  # D×GB (rows=D, cols=GB): D→GB connections
+      from_prefix = "D",
+      to_prefix = "GB",
+      expected_rows = n_d,
+      expected_cols = n_gb
     )
     edges <- bind_rows(edges, edges_d_gb)
   }
@@ -361,11 +363,11 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   # Responses → Pressures matrix
   if (!is.null(adjacency_matrices$p_r)) {
     edges_p_r <- process_adjacency_matrix(
-      t(adjacency_matrices$p_r),  # Transpose: P×R → R×P
-      from_prefix = "R",
-      to_prefix = "P",
-      expected_rows = n_r,
-      expected_cols = n_p
+      adjacency_matrices$p_r,  # P×R (rows=P, cols=R): P→R connections
+      from_prefix = "P",
+      to_prefix = "R",
+      expected_rows = n_p,
+      expected_cols = n_r
     )
     edges <- bind_rows(edges, edges_p_r)
   }
@@ -374,14 +376,57 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   if (!is.null(adjacency_matrices$r_m)) {
     cat("[CREATE_EDGES] Processing r_m matrix\n")
     edges_r_m <- process_adjacency_matrix(
-      t(adjacency_matrices$r_m),  # Transpose: R×M → M×R
-      from_prefix = "M",
-      to_prefix = "R",
-      expected_rows = n_m,
-      expected_cols = n_r
+      adjacency_matrices$r_m,  # R×M (rows=R, cols=M): R→M connections
+      from_prefix = "R",
+      to_prefix = "M",
+      expected_rows = n_r,
+      expected_cols = n_m
     )
     cat(sprintf("[CREATE_EDGES] r_m returned %d edges\n", nrow(edges_r_m)))
     edges <- bind_rows(edges, edges_r_m)
+  }
+
+  # Process any additional non-standard matrices that weren't handled above
+  standard_matrices <- c("gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb", "p_r", "r_m")
+  additional_matrices <- setdiff(names(adjacency_matrices), standard_matrices)
+
+  if (length(additional_matrices) > 0) {
+    cat(sprintf("[CREATE_EDGES] Processing %d additional non-standard matrices: %s\n",
+                length(additional_matrices), paste(additional_matrices, collapse = ", ")))
+
+    # Mapping from abbreviations to prefixes
+    abbrev_to_prefix <- c(
+      "gb" = "GB", "es" = "ES", "mpf" = "MPF", "p" = "P",
+      "a" = "A", "d" = "D", "r" = "R", "m" = "M"
+    )
+
+    for (matrix_name in additional_matrices) {
+      if (!is.null(adjacency_matrices[[matrix_name]])) {
+        # Parse matrix name: SOURCE_TARGET format (e.g., "mpf_mpf" or "mpf_a")
+        parts <- strsplit(matrix_name, "_")[[1]]
+        if (length(parts) == 2) {
+          from_abbrev <- parts[1]
+          to_abbrev <- parts[2]
+
+          from_prefix <- abbrev_to_prefix[[from_abbrev]]
+          to_prefix <- abbrev_to_prefix[[to_abbrev]]
+
+          if (!is.null(from_prefix) && !is.null(to_prefix)) {
+            cat(sprintf("[CREATE_EDGES] Processing additional matrix %s (%s -> %s)\n",
+                        matrix_name, from_prefix, to_prefix))
+
+            edges_additional <- process_adjacency_matrix(
+              adjacency_matrices[[matrix_name]],  # No transpose needed - already SOURCE×TARGET
+              from_prefix = from_prefix,
+              to_prefix = to_prefix
+            )
+
+            cat(sprintf("[CREATE_EDGES] %s returned %d edges\n", matrix_name, nrow(edges_additional)))
+            edges <- bind_rows(edges, edges_additional)
+          }
+        }
+      }
+    }
   }
 
   cat(sprintf("[CREATE_EDGES] Total edges: %d\n", nrow(edges)))

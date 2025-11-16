@@ -792,6 +792,21 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       req(active_scenario)
       req(project_data_reactive())
 
+      # Validate modifications first
+      validation <- validate_modifications(
+        baseline_cld = project_data_reactive()$data$cld,
+        modifications = active_scenario$modifications
+      )
+
+      if (!validation$valid) {
+        showNotification(
+          paste(i18n$t("Validation errors:"), paste(validation$errors, collapse = "; ")),
+          type = "error",
+          duration = 5
+        )
+        return()
+      }
+
       withProgress(message = i18n$t("scenario_running_impact_analysis"), {
 
         # Apply scenario modifications to baseline CLD
@@ -1104,6 +1119,50 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       project_data_reactive(data)
     }
 
+    # Validate scenario modifications
+    validate_modifications <- function(baseline_cld, modifications) {
+      errors <- character()
+
+      # Check for conflicts: can't add and remove same node
+      if (length(modifications$nodes_added) > 0 && length(modifications$nodes_removed) > 0) {
+        added_ids <- sapply(modifications$nodes_added, function(n) n$id)
+        conflicts <- intersect(added_ids, modifications$nodes_removed)
+        if (length(conflicts) > 0) {
+          errors <- c(errors, sprintf(i18n$t("Conflicting modifications for nodes: %s"), paste(conflicts, collapse = ", ")))
+        }
+      }
+
+      # Check that removed nodes exist in baseline
+      for (node_id in modifications$nodes_removed) {
+        if (!(node_id %in% baseline_cld$nodes$id)) {
+          errors <- c(errors, sprintf(i18n$t("Cannot remove non-existent node: %s"), node_id))
+        }
+      }
+
+      # Check that added links reference valid nodes
+      for (link in modifications$links_added) {
+        # Check in baseline + added nodes
+        all_node_ids <- c(
+          baseline_cld$nodes$id,
+          sapply(modifications$nodes_added, function(n) n$id)
+        )
+        # Exclude removed nodes
+        all_node_ids <- setdiff(all_node_ids, modifications$nodes_removed)
+
+        if (!(link$from %in% all_node_ids)) {
+          errors <- c(errors, sprintf(i18n$t("Link references non-existent 'from' node: %s"), link$from))
+        }
+        if (!(link$to %in% all_node_ids)) {
+          errors <- c(errors, sprintf(i18n$t("Link references non-existent 'to' node: %s"), link$to))
+        }
+      }
+
+      list(
+        valid = length(errors) == 0,
+        errors = errors
+      )
+    }
+
     # Apply scenario modifications to network
     apply_scenario_modifications <- function(baseline_cld, modifications) {
       # Copy baseline
@@ -1120,14 +1179,37 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
       # Add nodes
       if (length(modifications$nodes_added) > 0) {
+        # Get baseline column structure
+        baseline_cols <- names(baseline_cld$nodes)
+
         new_nodes <- do.call(rbind, lapply(modifications$nodes_added, function(n) {
-          data.frame(
+          # Create base node with required columns
+          new_node <- data.frame(
             id = n$id,
             label = n$label,
             dapsi = n$dapsi,
             description = ifelse(is.null(n$description), "", n$description),
             stringsAsFactors = FALSE
           )
+
+          # Add any missing columns from baseline with default values
+          for (col in baseline_cols) {
+            if (!(col %in% names(new_node))) {
+              if (col == "group") {
+                new_node[[col]] <- n$dapsi  # Use DAPSI as group
+              } else if (col == "color") {
+                new_node[[col]] <- "#999999"  # Default gray
+              } else if (col == "size") {
+                new_node[[col]] <- 20  # Default size
+              } else if (col == "confidence") {
+                new_node[[col]] <- 3  # Default confidence
+              } else {
+                new_node[[col]] <- NA  # Default NA for other columns
+              }
+            }
+          }
+
+          new_node
         }))
         nodes <- rbind(nodes, new_nodes)
       }
@@ -1170,18 +1252,43 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
     # Calculate network statistics
     calculate_network_stats <- function(network) {
+      loops <- detect_feedback_loops(network)
       list(
         total_nodes = nrow(network$nodes),
         total_links = nrow(network$edges),
-        total_loops = 0  # Will be updated by loop detection
+        total_loops = loops$count
       )
     }
 
-    # Detect feedback loops (simplified version)
+    # Detect feedback loops
     detect_feedback_loops <- function(network) {
-      # This is a placeholder - would need full loop detection algorithm
-      # For now, return empty list
-      list()
+      # Convert to igraph
+      if (is.null(network$edges) || nrow(network$edges) == 0) {
+        return(list(count = 0, edges = list()))
+      }
+
+      tryCatch({
+        g <- igraph::graph_from_data_frame(
+          d = network$edges[, c("from", "to")],
+          directed = TRUE,
+          vertices = network$nodes$id
+        )
+
+        # Find feedback arcs (creates cycle basis)
+        feedback_arcs <- igraph::feedback_arc_set(g, algo = "approx_eades")
+
+        if (length(feedback_arcs) > 0) {
+          list(
+            count = length(feedback_arcs),
+            edges = feedback_arcs
+          )
+        } else {
+          list(count = 0, edges = list())
+        }
+      }, error = function(e) {
+        cat(sprintf("[SCENARIO BUILDER] Loop detection error: %s\n", e$message))
+        list(count = 0, edges = list())
+      })
     }
 
     # Predict impacts

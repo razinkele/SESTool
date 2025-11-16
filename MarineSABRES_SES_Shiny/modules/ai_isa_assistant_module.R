@@ -95,6 +95,41 @@ ai_isa_assistant_ui <- function(id, i18n) {
           transform: translateY(-2px);
           box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+        .quick-option.selected {
+          background: #667eea;
+          color: white;
+          border-color: #5568d3;
+          box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+        }
+        .quick-option.selected::after {
+          content: ' ✓';
+          font-weight: bold;
+        }
+        .ai-breadcrumb {
+          background: #f8f9fa;
+          padding: 10px 15px;
+          border-radius: 8px;
+          margin-bottom: 15px;
+          font-size: 0.9em;
+        }
+        .ai-breadcrumb a {
+          color: #667eea;
+          text-decoration: none;
+          cursor: pointer;
+          transition: color 0.2s ease;
+        }
+        .ai-breadcrumb a:hover {
+          color: #5568d3;
+          text-decoration: underline;
+        }
+        .ai-breadcrumb .separator {
+          margin: 0 8px;
+          color: #999;
+        }
+        .ai-breadcrumb .current {
+          color: #333;
+          font-weight: 600;
+        }
         .dapsiwrm-diagram {
           background: white;
           border: 2px solid #e0e0e0;
@@ -219,7 +254,7 @@ ai_isa_assistant_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
+ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus = NULL, autosave_enabled_reactive = NULL) {
   cat(sprintf("[AI ISA SERVER] Server function called with id: %s at %s\n", id, Sys.time()))
   moduleServer(id, function(input, output, session) {
     cat(sprintf("[AI ISA SERVER] moduleServer executed for id: %s at %s\n", id, Sys.time()))
@@ -243,15 +278,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
         regional_sea = NULL,
         ecosystem_type = NULL,
         ecosystem_subtype = NULL,
-        main_issue = NULL
+        main_issue = character(0)  # Changed to vector for multiple selections
       ),
+      selected_issues = character(0),  # Track selected issues for UI highlighting
       total_steps = 11,  # Increased for regional sea + ecosystem context questions
       suggested_connections = list(),  # AI-generated connection suggestions
       approved_connections = list(),   # User-approved connections
       last_save_time = NULL,  # Track last save timestamp
       auto_save_enabled = TRUE,  # Auto-save toggle
       auto_saved_step_10 = FALSE,  # Flag to prevent auto-save infinite loop
-      show_text_input = FALSE  # Flag to show text input when "Other" is selected
+      show_text_input = FALSE,  # Flag to show text input when "Other" is selected
+      render_counter = 0  # Counter to force UI re-render for selection highlighting
     )
 
     # ========================================================================
@@ -463,8 +500,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
         step = 2,
         title_key = "main_issue",
         title = i18n$t("Main Issue Identification"),
-        question = i18n$t("What is the main environmental or management issue you're addressing?"),
-        type = "choice_with_custom",
+        question = i18n$t("What are the main environmental or management issues you're addressing? (Select all that apply)"),
+        type = "choice_with_custom_multiple",  # Changed to support multiple selections
         target = "main_issue"
       ),
       list(
@@ -587,31 +624,71 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
           sprintf(i18n$t("Step %d of %d"), rv$current_step, rv$total_steps)
         ),
 
+        # Breadcrumb navigation
+        uiOutput(ns("breadcrumb_nav")),
+
         # Progress bar
         uiOutput(ns("progress_bar")),
 
         hr(),
 
-        h4(icon("chart-line"), " ", i18n$t("Elements Created:")),
-        uiOutput(ns("elements_summary")),
-
-        hr(),
-
-        h4(icon("sitemap"), " ", i18n$t("Framework Flow:")),
-        uiOutput(ns("dapsiwrm_diagram")),
-
-        hr(),
-
         h4(icon("network-wired"), " ", i18n$t("Current Framework:")),
-        tags$ul(
-          tags$li(strong(i18n$t("Drivers:")), " ", textOutput(ns("count_drivers"), inline = TRUE)),
-          tags$li(strong(i18n$t("Activities:")), " ", textOutput(ns("count_activities"), inline = TRUE)),
-          tags$li(strong(i18n$t("Pressures:")), " ", textOutput(ns("count_pressures"), inline = TRUE)),
-          tags$li(strong(i18n$t("State Changes:")), " ", textOutput(ns("count_states"), inline = TRUE)),
-          tags$li(strong(i18n$t("Impacts:")), " ", textOutput(ns("count_impacts"), inline = TRUE)),
-          tags$li(strong(i18n$t("Welfare:")), " ", textOutput(ns("count_welfare"), inline = TRUE)),
-          tags$li(strong(i18n$t("Responses:")), " ", textOutput(ns("count_responses"), inline = TRUE)),
-          tags$li(strong(i18n$t("Measures:")), " ", textOutput(ns("count_measures"), inline = TRUE))
+        tags$div(
+          style = "margin-left: 10px;",
+          tags$div(
+            style = "margin-bottom: 5px;",
+            actionLink(ns("link_drivers"),
+                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Drivers:")), " ", textOutput(ns("count_drivers"), inline = TRUE)),
+                      style = "color: #007bff;")
+          ),
+          tags$div(
+            style = "margin-bottom: 5px;",
+            actionLink(ns("link_activities"),
+                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Activities:")), " ", textOutput(ns("count_activities"), inline = TRUE)),
+                      style = "color: #007bff;")
+          ),
+          tags$div(
+            style = "margin-bottom: 5px;",
+            actionLink(ns("link_pressures"),
+                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Pressures:")), " ", textOutput(ns("count_pressures"), inline = TRUE)),
+                      style = "color: #007bff;")
+          ),
+          tags$div(
+            style = "margin-bottom: 5px;",
+            actionLink(ns("link_states"),
+                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("State Changes:")), " ", textOutput(ns("count_states"), inline = TRUE)),
+                      style = "color: #007bff;")
+          ),
+          tags$div(
+            style = "margin-bottom: 5px;",
+            actionLink(ns("link_impacts"),
+                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Impacts:")), " ", textOutput(ns("count_impacts"), inline = TRUE)),
+                      style = "color: #007bff;")
+          ),
+          tags$div(
+            style = "margin-bottom: 5px;",
+            actionLink(ns("link_welfare"),
+                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Welfare:")), " ", textOutput(ns("count_welfare"), inline = TRUE)),
+                      style = "color: #007bff;")
+          ),
+          tags$div(
+            style = "margin-bottom: 5px;",
+            actionLink(ns("link_responses"),
+                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Responses:")), " ", textOutput(ns("count_responses"), inline = TRUE)),
+                      style = "color: #007bff;")
+          ),
+          tags$div(
+            style = "margin-bottom: 5px;",
+            actionLink(ns("link_measures"),
+                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Measures:")), " ", textOutput(ns("count_measures"), inline = TRUE)),
+                      style = "color: #007bff;")
+          ),
+          tags$div(
+            style = "margin-bottom: 5px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #ddd;",
+            actionLink(ns("link_connections"),
+                      tagList(icon("project-diagram"), " ", strong(i18n$t("Connections:")), " ", textOutput(ns("count_connections"), inline = TRUE)),
+                      style = "color: #28a745; font-weight: bold;")
+          )
         ),
 
         hr(),
@@ -804,6 +881,24 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
 
     # Note: progress_bar is rendered later (see line 1170) with better calculation using rv$total_steps
 
+    # Helper function to highlight keywords in question text
+    highlight_keywords <- function(text) {
+      # Keywords to highlight (DAPSI(W)R(M) components)
+      keywords <- c("DRIVERS", "ACTIVITIES", "PRESSURES", "STATE", "IMPACTS",
+                   "WELFARE", "RESPONSES", "MEASURES")
+
+      # Highlight each keyword found in the text
+      for (keyword in keywords) {
+        if (grepl(keyword, text, fixed = TRUE)) {
+          # Wrap keyword in span with bold and purple color
+          highlighted <- sprintf('<span style="font-weight: bold; color: #667eea;">%s</span>', keyword)
+          text <- gsub(keyword, highlighted, text, fixed = TRUE)
+        }
+      }
+
+      return(HTML(text))
+    }
+
     # Render conversation - only show current question, not the entire history
     output$conversation <- renderUI({
       if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
@@ -814,7 +909,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
           div(style = "color: #667eea; font-weight: 600;",
             icon("robot"), " AI Assistant"
           ),
-          p(step_info$question)
+          p(highlight_keywords(step_info$question))
         )
       } else {
         # Show completion message
@@ -831,12 +926,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
     input_area_exec_count <- 0
 
     output$input_area <- renderUI({
+      # Force re-render when render_counter changes (used for selection highlighting)
+      # Store in temp variable to avoid multiple reactive reads
+      counter_val <- rv$render_counter
+
       input_area_exec_count <<- input_area_exec_count + 1
 
       cat(sprintf("\n++++++++++++++++++++++++++++++++++++++++\n"))
       cat(sprintf("[AI ISA INPUT_AREA] EXECUTION #%d at %s\n", input_area_exec_count, Sys.time()))
       cat(sprintf("[AI ISA INPUT_AREA] Current step: %d\n", rv$current_step))
       cat(sprintf("[AI ISA INPUT_AREA] show_text_input: %s\n", rv$show_text_input))
+      cat(sprintf("[AI ISA INPUT_AREA] Render counter: %d\n", counter_val))
       cat(sprintf("++++++++++++++++++++++++++++++++++++++++\n\n"))
 
       if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
@@ -904,37 +1004,168 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
           style = paste0("border: 2px solid ",
                         if(is_approved) "#28a745" else "#ddd",
                         "; border-radius: 8px; padding: 15px; margin: 10px 0; background: ",
-                        if(is_approved) "#d4edda" else "white"),
-          fluidRow(
-            column(8,
-              div(
-                strong(paste0(conn$from_name, " → ", conn$to_name)),
-                br(),
-                span(style = "color: #666; font-size: 0.9em;",
-                     icon("arrow-right"), " ", conn$rationale),
-                br(),
-                span(style = "font-size: 0.85em;",
-                     i18n$t("Polarity:"), " ", span(style = paste0("color: ", if(conn$polarity == "+") "green" else "red"),
-                                       conn$polarity), " | ",
-                     i18n$t("Strength:"), " ", conn$strength)
+                        if(is_approved) "#d4edda" else "white",
+                        "; max-width: 500px;"),
+
+          # Connection header
+          div(
+            style = "margin-bottom: 15px;",
+            strong(
+              style = "font-size: 1.1em;",
+              conn$from_name, " ",
+              span(
+                style = "color: #666; font-weight: normal;",
+                textOutput(session$ns(paste0("polarity_text_", i)), inline = TRUE)
+              ),
+              " ", conn$to_name
+            )
+          ),
+
+          # Two sliders stacked vertically - narrower with tooltips
+          div(
+            style = "margin-bottom: 10px;",
+            div(
+              style = "display: flex; align-items: center; gap: 5px;",
+              strong(i18n$t("Strength:"), " ", textOutput(session$ns(paste0("strength_val_", i)), inline = TRUE)),
+              tags$span(
+                icon("info-circle"),
+                style = "color: #17a2b8; cursor: help;",
+                title = "1: Very Weak - Minimal influence\n2: Weak - Small influence\n3: Medium - Moderate influence\n4: Strong - Significant influence\n5: Very Strong - Major influence",
+                `data-toggle` = "tooltip",
+                `data-placement` = "top"
               )
             ),
-            column(4,
+            sliderInput(
+              session$ns(paste0("strength_", i)),
+              label = NULL,
+              min = 1,
+              max = 5,
+              value = if(conn$strength == "weak") 2 else if(conn$strength == "medium") 3 else if(conn$strength == "strong") 4 else 3,
+              step = 1,
+              ticks = TRUE,
+              width = "100%"
+            )
+          ),
+
+          div(
+            style = "margin-bottom: 15px;",
+            div(
+              style = "display: flex; align-items: center; gap: 5px;",
+              strong(i18n$t("Confidence:"), " ", textOutput(session$ns(paste0("conf_val_", i)), inline = TRUE)),
+              tags$span(
+                icon("info-circle"),
+                style = "color: #17a2b8; cursor: help;",
+                title = "1: Very Low - Highly uncertain\n2: Low - Uncertain with limited evidence\n3: Medium - Moderately certain\n4: High - Confident with good evidence\n5: Very High - Highly confident, well-established",
+                `data-toggle` = "tooltip",
+                `data-placement` = "top"
+              )
+            ),
+            sliderInput(
+              session$ns(paste0("confidence_", i)),
+              label = NULL,
+              min = 1,
+              max = 5,
+              value = conn$confidence %||% 3,
+              step = 1,
+              ticks = TRUE,
+              width = "100%"
+            )
+          ),
+
+          # Action buttons with polarity switch aligned - all same height
+          div(
+            style = "display: flex; align-items: center; gap: 10px;",
+            div(
+              style = "width: 110px;",
+              actionButton(session$ns(paste0("amend_conn_", i)),
+                          i18n$t("Amend"),
+                          icon = icon("edit"),
+                          class = "btn-warning btn-sm",
+                          style = "width: 100%; height: 32px; padding: 6px 8px;")
+            ),
+            div(
+              style = "width: 110px;",
               if (is_approved) {
                 actionButton(session$ns(paste0("reject_conn_", i)),
                             i18n$t("Reject"),
                             icon = icon("times"),
-                            class = "btn-danger btn-sm btn-block")
+                            class = "btn-danger btn-sm",
+                            style = "width: 100%; height: 32px; padding: 6px 8px;")
               } else {
                 actionButton(session$ns(paste0("approve_conn_", i)),
                             i18n$t("Approve"),
                             icon = icon("check"),
-                            class = "btn-success btn-sm btn-block")
+                            class = "btn-success btn-sm",
+                            style = "width: 100%; height: 32px; padding: 6px 8px;")
               }
+            ),
+            div(
+              style = "width: 110px; display: flex; align-items: center; justify-content: flex-end;",
+              if(is_approved) {
+                span(style = "font-size: 0.85em; color: green; margin-right: 5px;", icon("check-circle"))
+              } else {
+                ""
+              },
+              shinyWidgets::switchInput(
+                inputId = session$ns(paste0("polarity_", i)),
+                value = conn$polarity == "+",
+                onLabel = "+",
+                offLabel = "-",
+                onStatus = "success",
+                offStatus = "danger",
+                size = "small",
+                width = "60px"
+              )
             )
           )
         )
       })
+    })
+
+    # Render slider value displays
+    observe({
+      if (length(rv$suggested_connections) > 0) {
+        lapply(seq_along(rv$suggested_connections), function(i) {
+          local({
+            idx <- i
+
+            # Strength value display
+            output[[paste0("strength_val_", idx)]] <- renderText({
+              val <- input[[paste0("strength_", idx)]]
+              if (is.null(val)) return("")
+              strength_labels <- c("1" = "Very Weak", "2" = "Weak", "3" = "Medium", "4" = "Strong", "5" = "Very Strong")
+              paste0("(", strength_labels[as.character(val)], ")")
+            })
+
+            # Confidence value display
+            output[[paste0("conf_val_", idx)]] <- renderText({
+              val <- input[[paste0("confidence_", idx)]]
+              if (is.null(val)) return("")
+              paste0("(", val, "/5)")
+            })
+
+            # Polarity text display (changes with switch)
+            output[[paste0("polarity_text_", idx)]] <- renderText({
+              polarity_val <- input[[paste0("polarity_", idx)]]
+              if (is.null(polarity_val)) {
+                # Use initial connection polarity
+                conn <- rv$suggested_connections[[idx]]
+                if (conn$polarity == "+") {
+                  return("drives/increases")
+                } else {
+                  return("affects/reduces")
+                }
+              }
+              # Switch is TRUE for positive, FALSE for negative
+              if (isTRUE(polarity_val)) {
+                "drives/increases"
+              } else {
+                "affects/reduces"
+              }
+            })
+          })
+        })
+      }
     })
 
     # Storage for observer handles to prevent duplicates
@@ -974,6 +1205,47 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
                          conn_idx, length(rv$approved_connections)))
             }, ignoreInit = TRUE)
             new_observers[[length(new_observers) + 1]] <<- reject_obs
+
+            # Amend observer
+            amend_obs <- observeEvent(input[[paste0("amend_conn_", conn_idx)]], {
+              # Get current slider/switch values
+              polarity_val <- input[[paste0("polarity_", conn_idx)]]
+              strength_val <- input[[paste0("strength_", conn_idx)]]
+              confidence_val <- input[[paste0("confidence_", conn_idx)]]
+
+              # Debug logging
+              cat(sprintf("[AI ISA AMEND DEBUG] Connection #%d - Raw polarity_val: %s (class: %s)\n",
+                         conn_idx,
+                         if(is.null(polarity_val)) "NULL" else as.character(polarity_val),
+                         if(is.null(polarity_val)) "NULL" else class(polarity_val)))
+
+              # Convert values - handle NULL polarity by keeping original
+              if (is.null(polarity_val)) {
+                polarity <- rv$suggested_connections[[conn_idx]]$polarity
+                cat(sprintf("[AI ISA AMEND DEBUG] Polarity is NULL, using original: %s\n", polarity))
+              } else {
+                polarity <- if(isTRUE(polarity_val)) "+" else "-"
+                cat(sprintf("[AI ISA AMEND DEBUG] Polarity converted from %s to %s\n", polarity_val, polarity))
+              }
+
+              strength_labels <- c("1" = "very weak", "2" = "weak", "3" = "medium", "4" = "strong", "5" = "very strong")
+              strength <- strength_labels[as.character(strength_val)]
+
+              # Update the connection in suggested_connections
+              rv$suggested_connections[[conn_idx]]$polarity <- polarity
+              rv$suggested_connections[[conn_idx]]$strength <- strength
+              rv$suggested_connections[[conn_idx]]$confidence <- confidence_val
+
+              cat(sprintf("[AI ISA CONNECTIONS] Connection #%d AMENDED: polarity=%s, strength=%s, confidence=%d\n",
+                         conn_idx, polarity, strength, confidence_val))
+
+              showNotification(
+                paste0(i18n$t("Connection"), " #", conn_idx, " ", i18n$t("updated successfully!")),
+                type = "message",
+                duration = 2
+              )
+            }, ignoreInit = TRUE)
+            new_observers[[length(new_observers) + 1]] <<- amend_obs
           })
         }
       }
@@ -1006,21 +1278,254 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
              timestamp = Sys.time())
       ))
 
-      # Save directly instead of triggering auto-save observer
-      cat("[AI ISA CONNECTIONS] Manually triggering save with approved connections\n")
+      # Save directly with approved connections - don't rely on auto-save observer
+      cat("[AI ISA CONNECTIONS] Directly saving with approved connections\n")
 
-      # Temporarily set step to 10 and reset flag to allow save
-      old_step <- rv$current_step
-      rv$auto_saved_step_10 <- FALSE
-      rv$current_step <- 10
+      # Get current project data
+      current_data <- project_data_reactive()
+      if (is.null(current_data$data)) {
+        current_data$data <- list()
+      }
+      if (is.null(current_data$data$isa_data)) {
+        current_data$data$isa_data <- list()
+      }
 
-      # Wait a moment for the auto-save observer to trigger
-      Sys.sleep(0.1)
+      # Convert element lists to dataframes with proper structure and save
+      current_data$data$isa_data$drivers <- if (length(rv$elements$drivers) > 0) {
+        data.frame(
+          ID = paste0("D", sprintf("%03d", seq_along(rv$elements$drivers))),
+          Name = sapply(rv$elements$drivers, function(x) x$name),
+          Type = "Driver",
+          Description = sapply(rv$elements$drivers, function(x) x$description %||% ""),
+          Stakeholder = "", Importance = "", Trend = "",
+          stringsAsFactors = FALSE
+        )
+      } else { NULL }
 
-      # Set flag back to TRUE to prevent re-saving
+      current_data$data$isa_data$activities <- if (length(rv$elements$activities) > 0) {
+        data.frame(
+          ID = paste0("A", sprintf("%03d", seq_along(rv$elements$activities))),
+          Name = sapply(rv$elements$activities, function(x) x$name),
+          Type = "Activity",
+          Description = sapply(rv$elements$activities, function(x) x$description %||% ""),
+          Stakeholder = "", Importance = "", Trend = "",
+          stringsAsFactors = FALSE
+        )
+      } else { NULL }
+
+      current_data$data$isa_data$pressures <- if (length(rv$elements$pressures) > 0) {
+        data.frame(
+          ID = paste0("P", sprintf("%03d", seq_along(rv$elements$pressures))),
+          Name = sapply(rv$elements$pressures, function(x) x$name),
+          Type = "Pressure",
+          Description = sapply(rv$elements$pressures, function(x) x$description %||% ""),
+          Stakeholder = "", Importance = "", Trend = "",
+          stringsAsFactors = FALSE
+        )
+      } else { NULL }
+
+      current_data$data$isa_data$marine_processes <- if (length(rv$elements$states) > 0) {
+        data.frame(
+          ID = paste0("MPF", sprintf("%03d", seq_along(rv$elements$states))),
+          Name = sapply(rv$elements$states, function(x) x$name),
+          Type = "State",
+          Description = sapply(rv$elements$states, function(x) x$description %||% ""),
+          Indicator = "", Baseline = "", Target = "", Trend = "",
+          stringsAsFactors = FALSE
+        )
+      } else { NULL }
+
+      current_data$data$isa_data$ecosystem_services <- if (length(rv$elements$impacts) > 0) {
+        data.frame(
+          ID = paste0("ES", sprintf("%03d", seq_along(rv$elements$impacts))),
+          Name = sapply(rv$elements$impacts, function(x) x$name),
+          Type = "Impact",
+          Description = sapply(rv$elements$impacts, function(x) x$description %||% ""),
+          Indicator = "", Baseline = "", Target = "", Trend = "",
+          stringsAsFactors = FALSE
+        )
+      } else { NULL }
+
+      current_data$data$isa_data$goods_benefits <- if (length(rv$elements$welfare) > 0) {
+        data.frame(
+          ID = paste0("GB", sprintf("%03d", seq_along(rv$elements$welfare))),
+          Name = sapply(rv$elements$welfare, function(x) x$name),
+          Type = "Welfare",
+          Description = sapply(rv$elements$welfare, function(x) x$description %||% ""),
+          Indicator = "", Baseline = "", Target = "", Trend = "",
+          stringsAsFactors = FALSE
+        )
+      } else { NULL }
+
+      current_data$data$isa_data$responses <- if (length(rv$elements$responses) > 0) {
+        data.frame(
+          ID = paste0("R", sprintf("%03d", seq_along(rv$elements$responses))),
+          Name = sapply(rv$elements$responses, function(x) x$name),
+          Type = "Response",
+          Description = sapply(rv$elements$responses, function(x) x$description %||% ""),
+          Stakeholder = "", Status = "", Effectiveness = "",
+          stringsAsFactors = FALSE
+        )
+      } else { NULL }
+
+      current_data$data$isa_data$measures <- if (length(rv$elements$measures) > 0) {
+        data.frame(
+          ID = paste0("M", sprintf("%03d", seq_along(rv$elements$measures))),
+          Name = sapply(rv$elements$measures, function(x) x$name),
+          Type = "Measure",
+          Description = sapply(rv$elements$measures, function(x) x$description %||% ""),
+          Stakeholder = "", Status = "", Effectiveness = "",
+          stringsAsFactors = FALSE
+        )
+      } else { NULL }
+
+      # Build adjacency matrices from approved connections
+      cat(sprintf("[AI ISA CONNECTIONS SAVE] Building matrices for %d approved connections\n", approved_count))
+
+      # Get element counts
+      n_drivers <- length(rv$elements$drivers)
+      n_activities <- length(rv$elements$activities)
+      n_pressures <- length(rv$elements$pressures)
+      n_states <- length(rv$elements$states)
+      n_impacts <- length(rv$elements$impacts)
+      n_welfare <- length(rv$elements$welfare)
+      n_responses <- length(rv$elements$responses)
+      n_measures <- length(rv$elements$measures)
+
+      # Initialize adjacency matrices list
+      current_data$data$isa_data$adjacency_matrices <- list(
+        gb_es = NULL, es_mpf = NULL, mpf_p = NULL,
+        p_a = NULL, a_d = NULL, d_gb = NULL,
+        p_r = NULL, r_m = NULL
+      )
+
+      # Create matrices if elements exist
+      if (n_welfare > 0 && n_drivers > 0) {
+        current_data$data$isa_data$adjacency_matrices$d_gb <- matrix(
+          "", nrow = n_drivers, ncol = n_welfare,
+          dimnames = list(
+            sapply(rv$elements$drivers, function(x) x$name),
+            sapply(rv$elements$welfare, function(x) x$name)
+          )
+        )
+      }
+
+      if (n_drivers > 0 && n_activities > 0) {
+        current_data$data$isa_data$adjacency_matrices$a_d <- matrix(
+          "", nrow = n_activities, ncol = n_drivers,
+          dimnames = list(
+            sapply(rv$elements$activities, function(x) x$name),
+            sapply(rv$elements$drivers, function(x) x$name)
+          )
+        )
+      }
+
+      if (n_activities > 0 && n_pressures > 0) {
+        current_data$data$isa_data$adjacency_matrices$p_a <- matrix(
+          "", nrow = n_pressures, ncol = n_activities,
+          dimnames = list(
+            sapply(rv$elements$pressures, function(x) x$name),
+            sapply(rv$elements$activities, function(x) x$name)
+          )
+        )
+      }
+
+      if (n_pressures > 0 && n_states > 0) {
+        current_data$data$isa_data$adjacency_matrices$mpf_p <- matrix(
+          "", nrow = n_states, ncol = n_pressures,
+          dimnames = list(
+            sapply(rv$elements$states, function(x) x$name),
+            sapply(rv$elements$pressures, function(x) x$name)
+          )
+        )
+      }
+
+      if (n_states > 0 && n_impacts > 0) {
+        current_data$data$isa_data$adjacency_matrices$es_mpf <- matrix(
+          "", nrow = n_impacts, ncol = n_states,
+          dimnames = list(
+            sapply(rv$elements$impacts, function(x) x$name),
+            sapply(rv$elements$states, function(x) x$name)
+          )
+        )
+      }
+
+      if (n_impacts > 0 && n_welfare > 0) {
+        current_data$data$isa_data$adjacency_matrices$gb_es <- matrix(
+          "", nrow = n_welfare, ncol = n_impacts,
+          dimnames = list(
+            sapply(rv$elements$welfare, function(x) x$name),
+            sapply(rv$elements$impacts, function(x) x$name)
+          )
+        )
+      }
+
+      if (n_responses > 0 && n_pressures > 0) {
+        current_data$data$isa_data$adjacency_matrices$p_r <- matrix(
+          "", nrow = n_pressures, ncol = n_responses,
+          dimnames = list(
+            sapply(rv$elements$pressures, function(x) x$name),
+            sapply(rv$elements$responses, function(x) x$name)
+          )
+        )
+      }
+
+      if (n_measures > 0 && n_responses > 0) {
+        current_data$data$isa_data$adjacency_matrices$r_m <- matrix(
+          "", nrow = n_responses, ncol = n_measures,
+          dimnames = list(
+            sapply(rv$elements$responses, function(x) x$name),
+            sapply(rv$elements$measures, function(x) x$name)
+          )
+        )
+      }
+
+      # Fill matrices with approved connections
+      if (length(rv$approved_connections) > 0) {
+        for (conn_idx in rv$approved_connections) {
+          conn <- rv$suggested_connections[[conn_idx]]
+          confidence <- conn$confidence %||% 3
+          value <- paste0(conn$polarity, conn$strength, ":", confidence)
+
+          if (conn$matrix == "a_d" && !is.null(current_data$data$isa_data$adjacency_matrices$a_d)) {
+            current_data$data$isa_data$adjacency_matrices$a_d[conn$to_index, conn$from_index] <- value
+          } else if (conn$matrix == "p_a" && !is.null(current_data$data$isa_data$adjacency_matrices$p_a)) {
+            current_data$data$isa_data$adjacency_matrices$p_a[conn$to_index, conn$from_index] <- value
+          } else if (conn$matrix == "mpf_p" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_p)) {
+            current_data$data$isa_data$adjacency_matrices$mpf_p[conn$to_index, conn$from_index] <- value
+          } else if (conn$matrix == "es_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$es_mpf)) {
+            current_data$data$isa_data$adjacency_matrices$es_mpf[conn$to_index, conn$from_index] <- value
+          } else if (conn$matrix == "gb_es" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_es)) {
+            current_data$data$isa_data$adjacency_matrices$gb_es[conn$to_index, conn$from_index] <- value
+          } else if (conn$matrix == "d_gb" && !is.null(current_data$data$isa_data$adjacency_matrices$d_gb)) {
+            current_data$data$isa_data$adjacency_matrices$d_gb[conn$to_index, conn$from_index] <- value
+          } else if (conn$matrix == "p_r" && !is.null(current_data$data$isa_data$adjacency_matrices$p_r)) {
+            current_data$data$isa_data$adjacency_matrices$p_r[conn$to_index, conn$from_index] <- value
+          } else if (conn$matrix == "r_m" && !is.null(current_data$data$isa_data$adjacency_matrices$r_m)) {
+            current_data$data$isa_data$adjacency_matrices$r_m[conn$to_index, conn$from_index] <- value
+          }
+        }
+      }
+
+      # Count total connections saved
+      n_connections <- 0
+      for (matrix_name in names(current_data$data$isa_data$adjacency_matrices)) {
+        mat <- current_data$data$isa_data$adjacency_matrices[[matrix_name]]
+        if (!is.null(mat) && is.matrix(mat)) {
+          n_filled <- sum(mat != "", na.rm = TRUE)
+          if (n_filled > 0) {
+            cat(sprintf("[AI ISA CONNECTIONS SAVE] Matrix %s: %d connections\n", matrix_name, n_filled))
+          }
+          n_connections <- n_connections + n_filled
+        }
+      }
+      cat(sprintf("[AI ISA CONNECTIONS SAVE] Total connections saved: %d\n", n_connections))
+
+      # Update project data
+      project_data_reactive(current_data)
+
+      # Mark as saved and move to completion
       rv$auto_saved_step_10 <- TRUE
-
-      # Move to completion step (beyond the flow)
       cat("[AI ISA CONNECTIONS] Moving to completion\n")
       rv$current_step <- 12
 
@@ -1175,7 +1680,52 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
           }
         }
 
-        # Handle main issue with suggestions
+        # Handle main issue with suggestions (multiple selection)
+        else if (step_info$type == "choice_with_custom_multiple") {
+          if (!is.null(rv$context$regional_sea)) {
+            issues <- REGIONAL_SEAS[[rv$context$regional_sea]]$common_issues
+            issue_buttons <- lapply(seq_along(issues), function(i) {
+              # Check if this issue is already selected
+              is_selected <- issues[i] %in% rv$selected_issues
+              button_class <- if (is_selected) "quick-option selected" else "quick-option"
+
+              actionButton(
+                inputId = session$ns(paste0("issue_", i, render_suffix)),
+                label = issues[i],
+                class = button_class,
+                style = "margin: 3px; min-width: 160px;"
+              )
+            })
+            # Add "Other" button
+            other_button <- actionButton(
+              inputId = session$ns(paste0("issue_other", render_suffix)),
+              label = i18n$t("Other"),
+              class = "quick-option",
+              style = "margin: 3px; min-width: 160px; background-color: #f0f0f0;"
+            )
+            # Add Continue button if at least one issue selected
+            continue_button <- NULL
+            if (length(rv$selected_issues) > 0) {
+              continue_button <- actionButton(
+                inputId = session$ns(paste0("continue_issues", render_suffix)),
+                label = paste0(i18n$t("Continue with"), " ", length(rv$selected_issues), " ",
+                              i18n$t("selected issue(s)")),
+                class = "btn btn-success",
+                style = "margin: 10px 3px; min-width: 200px;",
+                icon = icon("arrow-right")
+              )
+            }
+            return(div(
+              h5(style = "font-weight: 600; color: #667eea;",
+                 i18n$t("Common issues in your region:")),
+              p(style = "font-size: 0.9em; color: #666; margin-top: 5px;",
+                i18n$t("Click to select/deselect. Multiple selections allowed.")),
+              div(style = "margin-top: 10px;", issue_buttons, other_button),
+              if (!is.null(continue_button)) div(style = "margin-top: 10px;", continue_button)
+            ))
+          }
+        }
+        # Keep backward compatibility for single choice
         else if (step_info$type == "choice_with_custom") {
           if (!is.null(rv$context$regional_sea)) {
             issues <- REGIONAL_SEAS[[rv$context$regional_sea]]$common_issues
@@ -1223,10 +1773,16 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
             display_suggestions <- if (length(suggestions) > 12) suggestions[1:12] else suggestions
 
             suggestion_buttons <- lapply(seq_along(display_suggestions), function(i) {
+              suggestion_name <- display_suggestions[i]
+              # Check if this suggestion is already in the elements list
+              element_names <- sapply(rv$elements[[step_info$target]], function(e) e$name)
+              is_selected <- suggestion_name %in% element_names
+              button_class <- if (is_selected) "quick-option selected" else "quick-option"
+
               actionButton(
                 inputId = session$ns(paste0("quick_opt_", i)),
-                label = display_suggestions[i],
-                class = "quick-option",
+                label = suggestion_name,
+                class = button_class,
                 style = "margin: 3px;"
               )
             })
@@ -1253,7 +1809,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               h5(style = "font-weight: 600; color: #667eea;",
                  paste0(i18n$t("AI-suggested options"), context_info, ":")),
               p(style = "font-size: 0.9em; color: #666; margin-top: 5px;",
-                i18n$t("Click to add")),
+                i18n$t("Click to select/deselect. Multiple selections allowed.")),
               div(style = "margin-top: 10px;", suggestion_buttons, other_button)
             ))
           }
@@ -1393,7 +1949,69 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
             }
           }
 
-          # === HANDLE MAIN ISSUE SELECTION (Step 2) ===
+          # === HANDLE MAIN ISSUE SELECTION - MULTIPLE (Step 2) ===
+          else if (step_info$type == "choice_with_custom_multiple") {
+            if (!is.null(rv$context$regional_sea)) {
+              issues <- REGIONAL_SEAS[[rv$context$regional_sea]]$common_issues
+
+              # Set up observers for each issue button (toggle selection)
+              lapply(seq_along(issues), function(i) {
+                local({
+                  button_id <- paste0("issue_", i, "_s", current_step)
+                  issue_name <- issues[i]
+
+                  observeEvent(input[[button_id]], {
+                    if (rv$current_step == current_step) {
+                      # Toggle selection
+                      if (issue_name %in% rv$selected_issues) {
+                        # Deselect
+                        cat(sprintf("[AI ISA] Issue deselected: %s\n", issue_name))
+                        rv$selected_issues <- setdiff(rv$selected_issues, issue_name)
+                      } else {
+                        # Select
+                        cat(sprintf("[AI ISA] Issue selected: %s\n", issue_name))
+                        rv$selected_issues <- c(rv$selected_issues, issue_name)
+                      }
+
+                      # Force UI re-render by incrementing render counter
+                      rv$render_counter <- (rv$render_counter %||% 0) + 1
+                    }
+                  }, ignoreInit = TRUE)
+                })
+              })
+
+              # Observer for "Other" button - issue
+              observeEvent(input[[paste0("issue_other_s", current_step)]], {
+                if (rv$current_step == current_step) {
+                  cat("[AI ISA] Issue 'Other' button clicked - showing text input\n")
+                  rv$show_text_input <- TRUE
+                }
+              }, ignoreInit = TRUE, once = TRUE)
+
+              # Observer for Continue button
+              observeEvent(input[[paste0("continue_issues_s", current_step)]], {
+                if (rv$current_step == current_step && length(rv$selected_issues) > 0) {
+                  cat(sprintf("[AI ISA] Continuing with %d selected issues\n", length(rv$selected_issues)))
+
+                  # Save selected issues to context
+                  rv$context$main_issue <- rv$selected_issues
+
+                  # Create AI response
+                  issue_list <- paste(rv$selected_issues, collapse = ", ")
+                  ai_response <- paste0(
+                    i18n$t("Great! I'll focus suggestions on these issues: "), issue_list, ". ",
+                    i18n$t("Now let's start building your DAPSI(W)R(M) framework!")
+                  )
+                  rv$conversation <- c(rv$conversation, list(
+                    list(type = "ai", message = ai_response, timestamp = Sys.time())
+                  ))
+
+                  move_to_next_step()
+                }
+              }, ignoreInit = TRUE, once = TRUE)
+            }
+          }
+          # === HANDLE MAIN ISSUE SELECTION - SINGLE (backward compatibility) ===
           else if (step_info$type == "choice_with_custom") {
             if (!is.null(rv$context$regional_sea)) {
               issues <- REGIONAL_SEAS[[rv$context$regional_sea]]$common_issues
@@ -1464,7 +2082,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               # Limit to first 12 suggestions to match UI
               display_suggestions <- if (length(suggestions) > 12) suggestions[1:12] else suggestions
 
-              # Set up observers for context-aware suggestion buttons
+              # Set up observers for context-aware suggestion buttons (toggle selection)
               lapply(seq_along(display_suggestions), function(i) {
                 local({
                   button_id <- paste0("quick_opt_", i)
@@ -1473,10 +2091,32 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
                   observeEvent(input[[button_id]], {
                     # Only process if still on the same step
                     if (rv$current_step == current_step) {
-                      cat(sprintf("[AI ISA QUICK] Button %s clicked: %s\n", button_id, suggestion_text))
-                      process_answer(suggestion_text)
+                      # Check if this suggestion is already added
+                      element_names <- sapply(rv$elements[[step_info$target]], function(e) e$name)
+                      is_already_added <- suggestion_text %in% element_names
+
+                      if (is_already_added) {
+                        # Remove (deselect)
+                        cat(sprintf("[AI ISA QUICK] Removing %s from %s\n", suggestion_text, step_info$target))
+                        rv$elements[[step_info$target]] <- Filter(
+                          function(e) e$name != suggestion_text,
+                          rv$elements[[step_info$target]]
+                        )
+                      } else {
+                        # Add (select)
+                        cat(sprintf("[AI ISA QUICK] Adding %s to %s\n", suggestion_text, step_info$target))
+                        new_element <- list(
+                          name = suggestion_text,
+                          description = "",
+                          timestamp = Sys.time()
+                        )
+                        rv$elements[[step_info$target]] <- c(rv$elements[[step_info$target]], list(new_element))
+                      }
+
+                      # Force UI re-render to update button classes
+                      rv$render_counter <- (rv$render_counter %||% 0) + 1
                     }
-                  }, ignoreInit = TRUE, once = TRUE)
+                  }, ignoreInit = TRUE)
                 })
               })
             }
@@ -1731,11 +2371,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
     # Generate logical connections based on DAPSI(W)R(M) framework
     generate_connections <- function(elements) {
       connections <- list()
+      MAX_CONNECTIONS <- 50  # Limit to prevent browser freeze
+
+      cat(sprintf("[AI ISA CONNECTIONS] Generating connections (max: %d)...\n", MAX_CONNECTIONS))
 
       # D → A (Drivers → Activities): Intelligent polarity detection
-      if (length(elements$drivers) > 0 && length(elements$activities) > 0) {
+      if (length(elements$drivers) > 0 && length(elements$activities) > 0 && length(connections) < MAX_CONNECTIONS) {
         for (i in seq_along(elements$drivers)) {
           for (j in seq_along(elements$activities)) {
+            if (length(connections) >= MAX_CONNECTIONS) break
             polarity <- detect_polarity(elements$drivers[[i]]$name, elements$activities[[j]]$name, "drivers", "activities")
             connections[[length(connections) + 1]] <- list(
               from_type = "drivers",
@@ -1751,13 +2395,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               matrix = "a_d"
             )
           }
+          if (length(connections) >= MAX_CONNECTIONS) break
         }
       }
 
       # A → P (Activities → Pressures): Intelligent polarity detection
-      if (length(elements$activities) > 0 && length(elements$pressures) > 0) {
+      if (length(elements$activities) > 0 && length(elements$pressures) > 0 && length(connections) < MAX_CONNECTIONS) {
         for (i in seq_along(elements$activities)) {
           for (j in seq_along(elements$pressures)) {
+            if (length(connections) >= MAX_CONNECTIONS) break
             polarity <- detect_polarity(elements$activities[[i]]$name, elements$pressures[[j]]$name, "activities", "pressures")
             connections[[length(connections) + 1]] <- list(
               from_type = "activities",
@@ -1773,13 +2419,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               matrix = "p_a"
             )
           }
+          if (length(connections) >= MAX_CONNECTIONS) break
         }
       }
 
       # P → S (Pressures → States): Intelligent polarity detection
-      if (length(elements$pressures) > 0 && length(elements$states) > 0) {
+      if (length(elements$pressures) > 0 && length(elements$states) > 0 && length(connections) < MAX_CONNECTIONS) {
         for (i in seq_along(elements$pressures)) {
           for (j in seq_along(elements$states)) {
+            if (length(connections) >= MAX_CONNECTIONS) break
             polarity <- detect_polarity(elements$pressures[[i]]$name, elements$states[[j]]$name, "pressures", "states")
             connections[[length(connections) + 1]] <- list(
               from_type = "pressures",
@@ -1795,13 +2443,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               matrix = "mpf_p"
             )
           }
+          if (length(connections) >= MAX_CONNECTIONS) break
         }
       }
 
       # S → I (States → Impacts): Intelligent polarity detection
-      if (length(elements$states) > 0 && length(elements$impacts) > 0) {
+      if (length(elements$states) > 0 && length(elements$impacts) > 0 && length(connections) < MAX_CONNECTIONS) {
         for (i in seq_along(elements$states)) {
           for (j in seq_along(elements$impacts)) {
+            if (length(connections) >= MAX_CONNECTIONS) break
             polarity <- detect_polarity(elements$states[[i]]$name, elements$impacts[[j]]$name, "states", "impacts")
             connections[[length(connections) + 1]] <- list(
               from_type = "states",
@@ -1817,13 +2467,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               matrix = "es_mpf"
             )
           }
+          if (length(connections) >= MAX_CONNECTIONS) break
         }
       }
 
       # I → W (Impacts → Welfare): Intelligent polarity detection
-      if (length(elements$impacts) > 0 && length(elements$welfare) > 0) {
+      if (length(elements$impacts) > 0 && length(elements$welfare) > 0 && length(connections) < MAX_CONNECTIONS) {
         for (i in seq_along(elements$impacts)) {
           for (j in seq_along(elements$welfare)) {
+            if (length(connections) >= MAX_CONNECTIONS) break
             polarity <- detect_polarity(elements$impacts[[i]]$name, elements$welfare[[j]]$name, "impacts", "welfare")
             connections[[length(connections) + 1]] <- list(
               from_type = "impacts",
@@ -1839,13 +2491,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               matrix = "gb_es"
             )
           }
+          if (length(connections) >= MAX_CONNECTIONS) break
         }
       }
 
       # R → P (Responses → Pressures): Intelligent polarity detection
-      if (length(elements$responses) > 0 && length(elements$pressures) > 0) {
+      if (length(elements$responses) > 0 && length(elements$pressures) > 0 && length(connections) < MAX_CONNECTIONS) {
         for (i in seq_along(elements$responses)) {
           for (j in seq_along(elements$pressures)) {
+            if (length(connections) >= MAX_CONNECTIONS) break
             polarity <- detect_polarity(elements$responses[[i]]$name, elements$pressures[[j]]$name, "responses", "pressures")
             connections[[length(connections) + 1]] <- list(
               from_type = "responses",
@@ -1861,13 +2515,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               matrix = "p_r"
             )
           }
+          if (length(connections) >= MAX_CONNECTIONS) break
         }
       }
 
       # M → R (Measures → Responses): Intelligent polarity detection
-      if (length(elements$measures) > 0 && length(elements$responses) > 0) {
+      if (length(elements$measures) > 0 && length(elements$responses) > 0 && length(connections) < MAX_CONNECTIONS) {
         for (i in seq_along(elements$measures)) {
           for (j in seq_along(elements$responses)) {
+            if (length(connections) >= MAX_CONNECTIONS) break
             polarity <- detect_polarity(elements$measures[[i]]$name, elements$responses[[j]]$name, "measures", "responses")
             connections[[length(connections) + 1]] <- list(
               from_type = "measures",
@@ -1883,7 +2539,202 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
               matrix = "r_m"
             )
           }
+          if (length(connections) >= MAX_CONNECTIONS) break
         }
+      }
+
+      # ========================================================================
+      # FEEDBACK LOOPS - Additional logical connections
+      # ========================================================================
+
+      # W → D (Welfare/Goods & Benefits → Drivers): Feedback loop
+      # E.g., "Increased local wellbeing drives policy changes" or "Economic benefits drive further investment"
+      if (length(elements$welfare) > 0 && length(elements$drivers) > 0) {
+        for (i in seq_along(elements$welfare)) {
+          for (j in seq_along(elements$drivers)) {
+            polarity <- detect_polarity(elements$welfare[[i]]$name, elements$drivers[[j]]$name, "welfare", "drivers")
+            connections[[length(connections) + 1]] <- list(
+              from_type = "welfare",
+              from_index = i,
+              from_name = elements$welfare[[i]]$name,
+              to_type = "drivers",
+              to_index = j,
+              to_name = elements$drivers[[j]]$name,
+              polarity = polarity,
+              strength = "medium",
+              confidence = 3,
+              rationale = paste(elements$welfare[[i]]$name, if(polarity == "+") "reinforces" else "reduces", elements$drivers[[j]]$name),
+              matrix = "d_gb"  # Feedback: goods/benefits back to drivers
+            )
+          }
+        }
+      }
+
+      # W → R (Welfare/Goods & Benefits → Responses): Feedback loop
+      # E.g., "Improved public health drives policy responses" or "Economic losses trigger management actions"
+      if (length(elements$welfare) > 0 && length(elements$responses) > 0) {
+        for (i in seq_along(elements$welfare)) {
+          for (j in seq_along(elements$responses)) {
+            polarity <- detect_polarity(elements$welfare[[i]]$name, elements$responses[[j]]$name, "welfare", "responses")
+            connections[[length(connections) + 1]] <- list(
+              from_type = "welfare",
+              from_index = i,
+              from_name = elements$welfare[[i]]$name,
+              to_type = "responses",
+              to_index = j,
+              to_name = elements$responses[[j]]$name,
+              polarity = polarity,
+              strength = "medium",
+              confidence = 3,
+              rationale = paste(elements$welfare[[i]]$name, if(polarity == "+") "motivates" else "reduces", elements$responses[[j]]$name),
+              matrix = "r_gb"  # Feedback: goods/benefits to responses
+            )
+          }
+        }
+      }
+
+      # W → M (Welfare/Goods & Benefits → Measures): Feedback loop
+      # E.g., "Declining fisheries income drives implementation of quotas"
+      if (length(elements$welfare) > 0 && length(elements$measures) > 0) {
+        for (i in seq_along(elements$welfare)) {
+          for (j in seq_along(elements$measures)) {
+            polarity <- detect_polarity(elements$welfare[[i]]$name, elements$measures[[j]]$name, "welfare", "measures")
+            connections[[length(connections) + 1]] <- list(
+              from_type = "welfare",
+              from_index = i,
+              from_name = elements$welfare[[i]]$name,
+              to_type = "measures",
+              to_index = j,
+              to_name = elements$measures[[j]]$name,
+              polarity = polarity,
+              strength = "medium",
+              confidence = 3,
+              rationale = paste(elements$welfare[[i]]$name, if(polarity == "+") "drives implementation of" else "reduces need for", elements$measures[[j]]$name),
+              matrix = "m_gb"  # Feedback: goods/benefits to measures
+            )
+          }
+        }
+      }
+
+      # R → D (Responses → Drivers): Feedback loop
+      # E.g., "Conservation policies drive public awareness" or "Management responses reduce economic drivers"
+      if (length(elements$responses) > 0 && length(elements$drivers) > 0) {
+        for (i in seq_along(elements$responses)) {
+          for (j in seq_along(elements$drivers)) {
+            polarity <- detect_polarity(elements$responses[[i]]$name, elements$drivers[[j]]$name, "responses", "drivers")
+            connections[[length(connections) + 1]] <- list(
+              from_type = "responses",
+              from_index = i,
+              from_name = elements$responses[[i]]$name,
+              to_type = "drivers",
+              to_index = j,
+              to_name = elements$drivers[[j]]$name,
+              polarity = polarity,
+              strength = "medium",
+              confidence = 3,
+              rationale = paste(elements$responses[[i]]$name, if(polarity == "+") "strengthens" else "mitigates", elements$drivers[[j]]$name),
+              matrix = "d_r"  # Feedback: responses to drivers
+            )
+          }
+        }
+      }
+
+      # R → A (Responses → Activities): Feedback loop
+      # E.g., "Fishing regulations reduce fishing activity" or "Protected areas limit tourism"
+      if (length(elements$responses) > 0 && length(elements$activities) > 0) {
+        for (i in seq_along(elements$responses)) {
+          for (j in seq_along(elements$activities)) {
+            polarity <- detect_polarity(elements$responses[[i]]$name, elements$activities[[j]]$name, "responses", "activities")
+            connections[[length(connections) + 1]] <- list(
+              from_type = "responses",
+              from_index = i,
+              from_name = elements$responses[[i]]$name,
+              to_type = "activities",
+              to_index = j,
+              to_name = elements$activities[[j]]$name,
+              polarity = polarity,
+              strength = "medium",
+              confidence = 3,
+              rationale = paste(elements$responses[[i]]$name, if(polarity == "-") "restricts" else "enables", elements$activities[[j]]$name),
+              matrix = "a_r"  # Feedback: responses to activities
+            )
+          }
+        }
+      }
+
+      # M → D (Measures → Drivers): Feedback loop
+      # E.g., "Quota systems reduce economic pressure" or "Awareness campaigns increase environmental concern"
+      if (length(elements$measures) > 0 && length(elements$drivers) > 0) {
+        for (i in seq_along(elements$measures)) {
+          for (j in seq_along(elements$drivers)) {
+            polarity <- detect_polarity(elements$measures[[i]]$name, elements$drivers[[j]]$name, "measures", "drivers")
+            connections[[length(connections) + 1]] <- list(
+              from_type = "measures",
+              from_index = i,
+              from_name = elements$measures[[i]]$name,
+              to_type = "drivers",
+              to_index = j,
+              to_name = elements$drivers[[j]]$name,
+              polarity = polarity,
+              strength = "medium",
+              confidence = 3,
+              rationale = paste(elements$measures[[i]]$name, if(polarity == "+") "strengthens" else "reduces", elements$drivers[[j]]$name),
+              matrix = "d_m"  # Feedback: measures to drivers
+            )
+          }
+        }
+      }
+
+      # M → A (Measures → Activities): Feedback loop
+      # E.g., "Catch limits reduce fishing effort" or "Marine protected areas restrict tourism activities"
+      if (length(elements$measures) > 0 && length(elements$activities) > 0) {
+        for (i in seq_along(elements$measures)) {
+          for (j in seq_along(elements$activities)) {
+            polarity <- detect_polarity(elements$measures[[i]]$name, elements$activities[[j]]$name, "measures", "activities")
+            connections[[length(connections) + 1]] <- list(
+              from_type = "measures",
+              from_index = i,
+              from_name = elements$measures[[i]]$name,
+              to_type = "activities",
+              to_index = j,
+              to_name = elements$activities[[j]]$name,
+              polarity = polarity,
+              strength = "medium",
+              confidence = 3,
+              rationale = paste(elements$measures[[i]]$name, if(polarity == "-") "limits" else "supports", elements$activities[[j]]$name),
+              matrix = "a_m"  # Feedback: measures to activities
+            )
+          }
+        }
+      }
+
+      # M → P (Measures → Pressures): Feedback loop
+      # E.g., "Wastewater treatment reduces pollution" or "Fishing bans reduce overfishing pressure"
+      if (length(elements$measures) > 0 && length(elements$pressures) > 0) {
+        for (i in seq_along(elements$measures)) {
+          for (j in seq_along(elements$pressures)) {
+            polarity <- detect_polarity(elements$measures[[i]]$name, elements$pressures[[j]]$name, "measures", "pressures")
+            connections[[length(connections) + 1]] <- list(
+              from_type = "measures",
+              from_index = i,
+              from_name = elements$measures[[i]]$name,
+              to_type = "pressures",
+              to_index = j,
+              to_name = elements$pressures[[j]]$name,
+              polarity = polarity,
+              strength = "medium",
+              confidence = 3,
+              rationale = paste(elements$measures[[i]]$name, if(polarity == "-") "mitigates" else "increases", elements$pressures[[j]]$name),
+              matrix = "p_m"  # Feedback: measures to pressures
+            )
+          }
+        }
+      }
+
+      # Log final count and warn if limit reached
+      cat(sprintf("[AI ISA CONNECTIONS] Generated %d connections\n", length(connections)))
+      if (length(connections) >= MAX_CONNECTIONS) {
+        cat(sprintf("[AI ISA CONNECTIONS] WARNING: Connection limit reached (%d). Some connections were not generated to prevent browser freeze.\n", MAX_CONNECTIONS))
       }
 
       return(connections)
@@ -1960,6 +2811,84 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
                             session$ns("chat_container"), session$ns("chat_container")))
     }
 
+    # Render breadcrumb navigation
+    output$breadcrumb_nav <- renderUI({
+      if (rv$current_step <= 0) return(NULL)
+
+      # Build breadcrumb trail
+      breadcrumbs <- list()
+
+      # Home/Start
+      breadcrumbs[[1]] <- tags$a(
+        href = "#",
+        onclick = sprintf("Shiny.setInputValue('%s', Math.random())", session$ns("goto_start")),
+        icon("home"),
+        " ",
+        i18n$t("Start")
+      )
+
+      # Add previous steps up to current
+      for (i in 1:min(rv$current_step, length(QUESTION_FLOW))) {
+        step_info <- QUESTION_FLOW[[i]]
+        breadcrumbs[[length(breadcrumbs) + 1]] <- tags$span(class = "separator", "›")
+
+        if (i < rv$current_step) {
+          # Clickable - can go back
+          breadcrumbs[[length(breadcrumbs) + 1]] <- tags$a(
+            href = "#",
+            onclick = sprintf("Shiny.setInputValue('%s', %d)", session$ns("goto_step"), i - 1),
+            step_info$title
+          )
+        } else {
+          # Current step - not clickable
+          breadcrumbs[[length(breadcrumbs) + 1]] <- tags$span(
+            class = "current",
+            step_info$title
+          )
+        }
+      }
+
+      div(class = "ai-breadcrumb", breadcrumbs)
+    })
+
+    # Handle breadcrumb navigation - go to start
+    observeEvent(input$goto_start, {
+      cat("[AI ISA] Breadcrumb: Returning to start\n")
+      rv$current_step <- 0
+      rv$selected_issues <- character(0)
+    })
+
+    # Handle breadcrumb navigation - go to specific step
+    observeEvent(input$goto_step, {
+      target_step <- input$goto_step
+      if (!is.null(target_step) && target_step >= 0 && target_step < rv$current_step) {
+        cat(sprintf("[AI ISA] Breadcrumb: Going back to step %d from step %d\n",
+                   target_step, rv$current_step))
+        rv$current_step <- target_step
+
+        # Restore selected issues if going back to issue selection step (current_step==1 shows QUESTION_FLOW[[2]])
+        if (target_step == 1) {
+          # Restore from context
+          if (length(rv$context$main_issue) > 0) {
+            rv$selected_issues <- rv$context$main_issue
+            cat(sprintf("[AI ISA] Breadcrumb: Restored %d selected issues: %s\n",
+                       length(rv$selected_issues),
+                       paste(rv$selected_issues, collapse=", ")))
+          } else {
+            rv$selected_issues <- character(0)
+            cat("[AI ISA] Breadcrumb: No issues in context to restore\n")
+          }
+        } else if (target_step < 1) {
+          # Clear selected issues if going before issue selection
+          rv$selected_issues <- character(0)
+          cat("[AI ISA] Breadcrumb: Cleared selected issues (before step 1)\n")
+        }
+
+        # Force UI re-render
+        rv$render_counter <- (rv$render_counter %||% 0) + 1
+      }
+    })
+
     # Render progress bar
     output$progress_bar <- renderUI({
       progress_pct <- if (rv$total_steps > 0) {
@@ -2004,6 +2933,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
     output$count_welfare <- renderText({ length(rv$elements$welfare) })
     output$count_responses <- renderText({ length(rv$elements$responses) })
     output$count_measures <- renderText({ length(rv$elements$measures) })
+    output$count_connections <- renderText({ length(rv$approved_connections) })
 
     # Render DAPSI(W)R(M) flow diagram
     output$dapsiwrm_diagram <- renderUI({
@@ -2134,12 +3064,48 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
         },
 
         hr(),
+
+        # Connections
+        if (length(rv$approved_connections) > 0) {
+          div(
+            h4(style = "color: #28a745;", icon("project-diagram"), " ",
+               i18n$t("Connections"), " (", length(rv$approved_connections), ")"),
+            tags$div(
+              style = "max-height: 300px; overflow-y: auto; padding: 10px; background: #f8f9fa; border-radius: 5px;",
+              tags$ul(
+                style = "list-style-type: none; padding-left: 0;",
+                lapply(rv$approved_connections, function(conn_idx) {
+                  conn <- rv$suggested_connections[[conn_idx]]
+                  tags$li(
+                    style = "margin-bottom: 8px; padding: 5px; background: white; border-radius: 3px;",
+                    icon("link"),
+                    " ",
+                    strong(conn$from_name),
+                    " ",
+                    span(style = "color: #666;",
+                         if(conn$polarity == "+") "→" else "⊸"),
+                    " ",
+                    strong(conn$to_name),
+                    tags$br(),
+                    span(style = "font-size: 0.85em; color: #666; margin-left: 20px;",
+                         i18n$t("Strength:"), " ", conn$strength, ", ",
+                         i18n$t("Confidence:"), " ", conn$confidence %||% 3)
+                  )
+                })
+              )
+            ),
+            hr()
+          )
+        },
+
         p(class = "text-muted",
           i18n$t("Total elements:"), " ",
           sum(length(rv$elements$drivers), length(rv$elements$activities),
               length(rv$elements$pressures), length(rv$elements$states),
               length(rv$elements$impacts), length(rv$elements$welfare),
-              length(rv$elements$responses), length(rv$elements$measures)))
+              length(rv$elements$responses), length(rv$elements$measures)),
+          " | ",
+          i18n$t("Total connections:"), " ", length(rv$approved_connections))
       )
 
       showModal(modalDialog(
@@ -2216,6 +3182,22 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
       rv$suggested_connections <- list()
       rv$approved_connections <- list()
 
+      # Clear project data (if saved)
+      current_data <- project_data_reactive()
+      if (!is.null(current_data$data$isa_data)) {
+        cat("[AI ISA] Clearing saved project ISA data\n")
+        current_data$data$isa_data <- NULL
+        current_data$data$cld <- list(nodes = NULL, edges = NULL)
+        current_data$data$metadata$data_source <- NULL
+        current_data$last_modified <- Sys.time()
+        project_data_reactive(current_data)
+
+        # Emit ISA change event to clear CLD
+        if (!is.null(event_bus)) {
+          event_bus$emit_isa_change()
+        }
+      }
+
       # Clear localStorage auto-save
       session$sendCustomMessage('clear_ai_isa_session', list())
 
@@ -2226,6 +3208,130 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
 
       showNotification("All data cleared. Starting over from step 1.", type = "message", duration = 3)
       cat("[AI ISA] Reset complete\n")
+    })
+
+    # Framework element link observers - show element details in modal
+    observeEvent(input$link_drivers, {
+      if (length(rv$elements$drivers) > 0) {
+        showModal(modalDialog(
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Drivers")),
+          tags$ul(lapply(rv$elements$drivers, function(d) tags$li(strong(d$name)))),
+          size = "m",
+          easyClose = TRUE,
+          footer = modalButton(i18n$t("Close"))
+        ))
+      }
+    })
+
+    observeEvent(input$link_activities, {
+      if (length(rv$elements$activities) > 0) {
+        showModal(modalDialog(
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Activities")),
+          tags$ul(lapply(rv$elements$activities, function(a) tags$li(strong(a$name)))),
+          size = "m",
+          easyClose = TRUE,
+          footer = modalButton(i18n$t("Close"))
+        ))
+      }
+    })
+
+    observeEvent(input$link_pressures, {
+      if (length(rv$elements$pressures) > 0) {
+        showModal(modalDialog(
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Pressures")),
+          tags$ul(lapply(rv$elements$pressures, function(p) tags$li(strong(p$name)))),
+          size = "m",
+          easyClose = TRUE,
+          footer = modalButton(i18n$t("Close"))
+        ))
+      }
+    })
+
+    observeEvent(input$link_states, {
+      if (length(rv$elements$states) > 0) {
+        showModal(modalDialog(
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("State Changes")),
+          tags$ul(lapply(rv$elements$states, function(s) tags$li(strong(s$name)))),
+          size = "m",
+          easyClose = TRUE,
+          footer = modalButton(i18n$t("Close"))
+        ))
+      }
+    })
+
+    observeEvent(input$link_impacts, {
+      if (length(rv$elements$impacts) > 0) {
+        showModal(modalDialog(
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Impacts")),
+          tags$ul(lapply(rv$elements$impacts, function(i) tags$li(strong(i$name)))),
+          size = "m",
+          easyClose = TRUE,
+          footer = modalButton(i18n$t("Close"))
+        ))
+      }
+    })
+
+    observeEvent(input$link_welfare, {
+      if (length(rv$elements$welfare) > 0) {
+        showModal(modalDialog(
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Welfare")),
+          tags$ul(lapply(rv$elements$welfare, function(w) tags$li(strong(w$name)))),
+          size = "m",
+          easyClose = TRUE,
+          footer = modalButton(i18n$t("Close"))
+        ))
+      }
+    })
+
+    observeEvent(input$link_responses, {
+      if (length(rv$elements$responses) > 0) {
+        showModal(modalDialog(
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Responses")),
+          tags$ul(lapply(rv$elements$responses, function(r) tags$li(strong(r$name)))),
+          size = "m",
+          easyClose = TRUE,
+          footer = modalButton(i18n$t("Close"))
+        ))
+      }
+    })
+
+    observeEvent(input$link_measures, {
+      if (length(rv$elements$measures) > 0) {
+        showModal(modalDialog(
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Measures")),
+          tags$ul(lapply(rv$elements$measures, function(m) tags$li(strong(m$name)))),
+          size = "m",
+          easyClose = TRUE,
+          footer = modalButton(i18n$t("Close"))
+        ))
+      }
+    })
+
+    observeEvent(input$link_connections, {
+      if (length(rv$approved_connections) > 0) {
+        # Build list of approved connections with details
+        conn_list <- lapply(rv$approved_connections, function(idx) {
+          conn <- rv$suggested_connections[[idx]]
+          tags$li(
+            strong(conn$from_name), " ",
+            span(style = "color: #666;", if(conn$polarity == "+") "→" else "⊸"), " ",
+            strong(conn$to_name),
+            tags$br(),
+            span(style = "font-size: 0.9em; color: #666;",
+                 "Strength: ", conn$strength, ", Confidence: ", conn$confidence %||% 3)
+          )
+        })
+
+        showModal(modalDialog(
+          title = tagList(icon("project-diagram"), " ", i18n$t("Approved Connections")),
+          tags$ul(conn_list),
+          size = "l",
+          easyClose = TRUE,
+          footer = modalButton(i18n$t("Close"))
+        ))
+      } else {
+        showNotification("No connections approved yet.", type = "warning", duration = 2)
+      }
     })
 
     # Handle load template
@@ -2621,8 +3727,22 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
 
         # Use isolate() to prevent reactive loop when updating project_data_reactive
         isolate({
+          # Check if auto-save is enabled
+          if (!is.null(autosave_enabled_reactive) && !autosave_enabled_reactive()) {
+            cat("[AI ISA SAVE] Skipping auto-save - auto-save is disabled in settings\n")
+            return()
+          }
+
           # Check if we've already auto-saved (prevent duplicate saves)
           if (!isTRUE(rv$auto_saved_step_10)) {
+            # Check if data was loaded from template - if so, skip auto-save
+            current_data <- project_data_reactive()
+            if (!is.null(current_data$data$metadata$source) &&
+                current_data$data$metadata$source %in% c("template_direct_load", "template_reviewed_load")) {
+              cat("[AI ISA SAVE] Skipping auto-save - data is from template load\n")
+              return()
+            }
+
             total_elements <- sum(
               length(rv$elements$drivers), length(rv$elements$activities),
               length(rv$elements$pressures), length(rv$elements$states),
@@ -2787,24 +3907,37 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n) {
             )
 
             # Build adjacency matrices from approved connections
-            # Initialize all matrices to NULL first
-            current_data$data$isa_data$adjacency_matrices <- list(
-              gb_es = NULL,
-              es_mpf = NULL,
-              mpf_p = NULL,
-              p_a = NULL,
-              a_d = NULL,
-              d_gb = NULL,
-              p_r = NULL,
-              r_m = NULL
-            )
+            # Check if data came from Excel import - if so, preserve existing matrices
+            data_source <- if (!is.null(current_data$data$metadata$data_source)) current_data$data$metadata$data_source else "ai_assistant"
+
+            if (data_source == "excel_import") {
+              cat("[AI ISA AUTO-SAVE] Data from Excel import detected - preserving existing adjacency matrices\n")
+              # Don't overwrite adjacency matrices from imported data
+              # Just ensure the structure exists
+              if (is.null(current_data$data$isa_data$adjacency_matrices)) {
+                current_data$data$isa_data$adjacency_matrices <- list()
+              }
+            } else {
+              # Initialize all matrices to NULL first for AI-generated data
+              current_data$data$isa_data$adjacency_matrices <- list(
+                gb_es = NULL,
+                es_mpf = NULL,
+                mpf_p = NULL,
+                p_a = NULL,
+                a_d = NULL,
+                d_gb = NULL,
+                p_r = NULL,
+                r_m = NULL
+              )
+            }
 
             # If there are approved connections, build the matrices
             cat(sprintf("[AI ISA AUTO-SAVE] Approved connections count: %d\n", length(rv$approved_connections)))
             cat(sprintf("[AI ISA AUTO-SAVE] Approved connection indices: %s\n", paste(rv$approved_connections, collapse = ", ")))
             cat(sprintf("[AI ISA AUTO-SAVE] Total suggested connections: %d\n", length(rv$suggested_connections)))
 
-            if (length(rv$approved_connections) > 0) {
+            # Only build matrices from approved connections if data is NOT from Excel import
+            if (data_source != "excel_import" && length(rv$approved_connections) > 0) {
               # Get dimensions for each matrix
               n_drivers <- length(rv$elements$drivers)
               n_activities <- length(rv$elements$activities)

@@ -100,8 +100,16 @@ create_igraph_from_data <- function(nodes, edges) {
     ))
   }
 
+  # Handle case with no edges - create graph with nodes only
   if (nrow(valid_edges) == 0) {
-    stop("No valid edges found after filtering. Cannot create graph.")
+    cat("[NETWORK_ANALYSIS] No edges found, creating graph with nodes only\n")
+    # Create graph with no edges
+    g <- igraph::graph_from_data_frame(
+      d = data.frame(from = character(0), to = character(0)),
+      vertices = nodes,
+      directed = TRUE
+    )
+    return(g)
   }
 
   # Select required columns, include confidence if present

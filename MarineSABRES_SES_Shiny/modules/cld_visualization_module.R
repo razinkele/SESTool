@@ -87,7 +87,7 @@ cld_viz_ui <- function(id) {
         # Collapsible controls box
         box(
           width = NULL,
-          title = tagList(icon("sliders"), " CLD Controls"),
+          title = tagList(icon("sliders"), " Visualisation Controls"),
           status = "primary",
           solidHeader = TRUE,
           collapsible = TRUE,

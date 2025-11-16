@@ -20,6 +20,7 @@ suppressPackageStartupMessages({
   library(DT)
   library(openxlsx)
   library(jsonlite)
+  library(digest)  # For ISA change detection in reactive pipeline
 
   # Network visualization and analysis
   library(igraph)
@@ -123,6 +124,12 @@ source("functions/export_functions.R", local = TRUE)
 # Module validation helpers
 source("functions/module_validation_helpers.R", local = TRUE)
 
+# Error handling and validation
+source("functions/error_handling.R", local = TRUE)
+
+# Reactive pipeline (event-based data flow)
+source("functions/reactive_pipeline.R", local = TRUE)
+
 # Navigation helpers (breadcrumbs, progress bars, nav buttons)
 source("modules/navigation_helpers.R", local = TRUE)
 
@@ -130,8 +137,55 @@ source("modules/navigation_helpers.R", local = TRUE)
 source("modules/auto_save_module.R", local = TRUE)
 
 # ============================================================================
+# DEBUG MODE CONFIGURATION
+# ============================================================================
+
+# Enable/disable debug logging via environment variable
+# Set MARINESABRES_DEBUG=TRUE in .Renviron or before running the app to enable debug logs
+# Default is FALSE for production use
+DEBUG_MODE <- Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE"
+
+#' Debug logging helper function
+#'
+#' Conditionally prints debug messages based on DEBUG_MODE flag.
+#' In production (DEBUG_MODE=FALSE), these calls are silently skipped.
+#'
+#' @param message Character string to log
+#' @param context Optional context string (e.g., "TEMPLATE", "NETWORK_ANALYSIS")
+#' @export
+debug_log <- function(message, context = NULL) {
+  if (DEBUG_MODE) {
+    if (!is.null(context)) {
+      cat(sprintf("[%s] %s\n", context, message))
+    } else {
+      cat(message, "\n")
+    }
+  }
+}
+
+# Print debug mode status on startup
+if (DEBUG_MODE) {
+  cat("═══════════════════════════════════════════════════════════\n")
+  cat("  DEBUG MODE ENABLED - Verbose logging is active\n")
+  cat("  Set MARINESABRES_DEBUG=FALSE to disable debug logs\n")
+  cat("═══════════════════════════════════════════════════════════\n\n")
+} else {
+  cat("Production mode - Debug logging disabled\n")
+  cat("Set MARINESABRES_DEBUG=TRUE to enable verbose logging\n\n")
+}
+
+# ============================================================================
 # GLOBAL VARIABLES AND CONSTANTS
 # ============================================================================
+
+# Reactive pipeline debouncing (milliseconds)
+# Delay before triggering CLD regeneration after ISA changes
+# Prevents excessive regenerations during rapid consecutive edits
+ISA_DEBOUNCE_MS <- as.numeric(Sys.getenv("MARINESABRES_ISA_DEBOUNCE_MS", "500"))
+
+if (DEBUG_MODE) {
+  cat(sprintf("ISA debounce delay: %d ms\n", ISA_DEBOUNCE_MS))
+}
 
 # DAPSI(W)R(M) element types
 DAPSIWRM_ELEMENTS <- c(

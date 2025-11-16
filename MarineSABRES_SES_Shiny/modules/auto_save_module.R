@@ -110,7 +110,7 @@ auto_save_indicator_ui <- function(id) {
 }
 
 # Server Function
-auto_save_server <- function(id, project_data_reactive, i18n) {
+auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_reactive = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -134,6 +134,24 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
 
     # Debug: log temp directory location
     cat(sprintf("[AUTO-SAVE] Using temp directory: %s\n", temp_dir))
+
+    # Sync internal is_enabled flag with external autosave_enabled reactive
+    # This ensures the module respects the user's auto-save preference from settings
+    if (!is.null(autosave_enabled_reactive)) {
+      observeEvent(autosave_enabled_reactive(), {
+        enabled <- autosave_enabled_reactive()
+        auto_save$is_enabled <- enabled
+        cat(sprintf("[AUTO-SAVE] Settings updated - auto-save %s\n",
+                   if(enabled) "ENABLED" else "DISABLED"))
+      })
+
+      # Initialize with current value
+      isolate({
+        auto_save$is_enabled <- autosave_enabled_reactive()
+        cat(sprintf("[AUTO-SAVE] Initialized with auto-save %s\n",
+                   if(auto_save$is_enabled) "ENABLED" else "DISABLED"))
+      })
+    }
 
     # Function to generate unique session ID
     session_id <- paste0("session_", format(Sys.time(), "%Y%m%d_%H%M%S"), "_",
@@ -303,12 +321,16 @@ auto_save_server <- function(id, project_data_reactive, i18n) {
         # Only mark dirty if hash has changed
         if (is.null(auto_save$last_data_hash) || current_hash != auto_save$last_data_hash) {
           auto_save$data_dirty <- TRUE
-          cat(sprintf("[AUTO-SAVE] Data changed, marked as dirty\n"))
 
-          # Immediate save on first data load (when last_data_hash is NULL)
-          if (is.null(auto_save$last_data_hash)) {
-            cat("[AUTO-SAVE] First data detected - performing immediate save\n")
-            perform_auto_save()
+          # Only log and save if auto-save is enabled
+          if (auto_save$is_enabled) {
+            cat(sprintf("[AUTO-SAVE] Data changed, marked as dirty\n"))
+
+            # Immediate save on first data load (when last_data_hash is NULL)
+            if (is.null(auto_save$last_data_hash)) {
+              cat("[AUTO-SAVE] First data detected - performing immediate save\n")
+              perform_auto_save()
+            }
           }
         }
       }

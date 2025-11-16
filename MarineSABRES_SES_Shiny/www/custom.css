@@ -1006,3 +1006,119 @@ h2 .fa, h2 .fas {
     page-break-inside: avoid;
   }
 }
+
+/* ============================================================================
+   BOOKMARK BUTTON STYLING
+   ============================================================================ */
+
+/* Bookmark button in header */
+#bookmark_btn {
+  transition: all 0.3s ease;
+}
+
+#bookmark_btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+#bookmark_btn i {
+  margin-right: 5px;
+  color: #f39c12;
+}
+
+#bookmark_btn:hover i {
+  color: #f1c40f;
+  animation: bookmark-pulse 0.6s ease-in-out;
+}
+
+@keyframes bookmark-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Bookmark modal styling */
+#bookmark_url {
+  word-break: break-all;
+  background-color: #ffffff;
+  border: 2px dashed #3498db;
+}
+
+#copy_bookmark_btn {
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+#copy_bookmark_btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* ============================================================================
+   ISA (INTERACTIVE SUSTAINABILITY ASSESSMENT) FORM STYLING
+   ============================================================================ */
+
+/*
+ * FIX: Override Shiny's 'recalculating' class for ISA form elements.
+ * This prevents inputs from becoming greyed out and unresponsive during
+ * reactive updates, which was previously handled by a JavaScript hack.
+ * We now use CSS to ensure the inputs remain interactive and visually consistent.
+ */
+
+.isa-entry-panel input,
+.isa-entry-panel textarea,
+.isa-entry-panel select,
+[id^="isa_module-"][id$="_entries"] input,
+[id^="isa_module-"][id$="_entries"] textarea,
+[id^="isa_module-"][id$="_entries"] select {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #000000 !important;
+  filter: none !important;
+}
+
+/* Ensure that even when a parent is 'recalculating', the form elements are not dimmed */
+.recalculating .isa-entry-panel input,
+.recalculating .isa-entry-panel textarea,
+.recalculating .isa-entry-panel select,
+.recalculating [id^="isa_module-"][id$="_entries"] input,
+.recalculating [id^="isa_module-"][id$="_entries"] textarea,
+.recalculating [id^="isa_module-"][id$="_entries"] select {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* ============================================================================
+   PIPELINE STATUS INDICATOR
+   ============================================================================ */
+
+.pipeline-status {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  color: #ffffff;
+  background-color: #f39c12; /* Warning color */
+  border-radius: 3px;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #f39c12;
+  }
+  50% {
+    background-color: #e67e22;
+  }
+  100% {
+    background-color: #f39c12;
+  }
+}
+
+.hoverable {
+  transition: all 0.3s ease;
+}

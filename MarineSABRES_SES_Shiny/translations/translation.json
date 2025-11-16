@@ -10061,6 +10061,267 @@
       "lt": "Programa bus perkrauta, kad būtų pritaikytas naujas naudotojo patirties lygis.",
       "pt": "A aplicação será recarregada para aplicar o novo nível de experiência do usuário.",
       "it": "L'applicazione si ricaricherà per applicare il nuovo livello di esperienza utente."
+    },
+    {
+      "en": "Validation errors:",
+      "es": "Errores de validación:",
+      "fr": "Erreurs de validation:",
+      "de": "Validierungsfehler:",
+      "lt": "Tikrinimo klaidos:",
+      "pt": "Erros de validação:",
+      "it": "Errori di validazione:"
+    },
+    {
+      "en": "Conflicting modifications for nodes: %s",
+      "es": "Modificaciones conflictivas para nodos: %s",
+      "fr": "Modifications conflictuelles pour les nœuds: %s",
+      "de": "Widersprüchliche Änderungen für Knoten: %s",
+      "lt": "Prieštaringi pakeitimai mazgams: %s",
+      "pt": "Modificações conflitantes para nós: %s",
+      "it": "Modifiche in conflitto per i nodi: %s"
+    },
+    {
+      "en": "Cannot remove non-existent node: %s",
+      "es": "No se puede eliminar un nodo inexistente: %s",
+      "fr": "Impossible de supprimer un nœud inexistant: %s",
+      "de": "Kann nicht vorhandenen Knoten nicht entfernen: %s",
+      "lt": "Negalima pašalinti neegzistuojančio mazgo: %s",
+      "pt": "Não é possível remover nó inexistente: %s",
+      "it": "Impossibile rimuovere un nodo inesistente: %s"
+    },
+    {
+      "en": "Link references non-existent 'from' node: %s",
+      "es": "El enlace hace referencia a un nodo 'desde' inexistente: %s",
+      "fr": "Le lien fait référence à un nœud 'source' inexistant: %s",
+      "de": "Verbindung referenziert nicht vorhandenen 'Von'-Knoten: %s",
+      "lt": "Nuoroda nurodo neegzistuojantį 'iš' mazgą: %s",
+      "pt": "Link referencia nó 'de' inexistente: %s",
+      "it": "Il collegamento fa riferimento a un nodo 'da' inesistente: %s"
+    },
+    {
+      "en": "Link references non-existent 'to' node: %s",
+      "es": "El enlace hace referencia a un nodo 'hacia' inexistente: %s",
+      "fr": "Le lien fait référence à un nœud 'destination' inexistant: %s",
+      "de": "Verbindung referenziert nicht vorhandenen 'Zu'-Knoten: %s",
+      "lt": "Nuoroda nurodo neegzistuojantį 'į' mazgą: %s",
+      "pt": "Link referencia nó 'para' inexistente: %s",
+      "it": "Il collegamento fa riferimento a un nodo 'a' inesistente: %s"
+    },
+    {
+      "en": "Caribbean Island",
+      "es": "Isla Caribeña",
+      "fr": "Île des Caraïbes",
+      "de": "Karibische Insel",
+      "lt": "Karibų Sala",
+      "pt": "Ilha do Caribe",
+      "it": "Isola Caraibica"
+    },
+    {
+      "en": "Multi-stress Caribbean island system: Sargassum blooms, coral bleaching, contamination, overfishing",
+      "es": "Sistema insular caribeño multiestresante: floraciones de Sargassum, blanqueamiento de corales, contaminación, sobrepesca",
+      "fr": "Système insulaire caribéen multi-stress: proliférations de Sargasses, blanchissement des coraux, contamination, surpêche",
+      "de": "Karibisches Inselsystem mit Mehrfachbelastung: Sargassum-Blüten, Korallenbleiche, Verschmutzung, Überfischung",
+      "lt": "Daugelio stresų Karibų salų sistema: Sargassum žydėjimas, koralų balinimas, tarša, peržvejojimas",
+      "pt": "Sistema insular caribenho multi-estresse: floração de Sargassum, branqueamento de corais, contaminação, sobrepesca",
+      "it": "Sistema insulare caraibico multi-stress: fioriture di Sargassum, sbiancamento dei coralli, contaminazione, sovrapesca"
+    },
+    {
+      "en": "Multi-Stressor",
+      "es": "Multi-Estresor",
+      "fr": "Multi-Stress",
+      "de": "Mehrfachbelastung",
+      "lt": "Daugelio Stresorių",
+      "pt": "Multi-Estresse",
+      "it": "Multi-Stress"
+    },
+    {
+      "en": "Bookmark",
+      "es": "Marcador",
+      "fr": "Marque-page",
+      "de": "Lesezeichen",
+      "lt": "Žymė",
+      "pt": "Marcador",
+      "it": "Segnalibro"
+    },
+    {
+      "en": "Save current state as bookmark",
+      "es": "Guardar estado actual como marcador",
+      "fr": "Enregistrer l'état actuel comme marque-page",
+      "de": "Aktuellen Status als Lesezeichen speichern",
+      "lt": "Išsaugoti dabartinę būseną kaip žymę",
+      "pt": "Salvar estado atual como marcador",
+      "it": "Salva stato corrente come segnalibro"
+    },
+    {
+      "en": "Bookmark Created",
+      "es": "Marcador Creado",
+      "fr": "Marque-page Créé",
+      "de": "Lesezeichen Erstellt",
+      "lt": "Žymė Sukurta",
+      "pt": "Marcador Criado",
+      "it": "Segnalibro Creato"
+    },
+    {
+      "en": "Your bookmark has been created!",
+      "es": "¡Su marcador ha sido creado!",
+      "fr": "Votre marque-page a été créé!",
+      "de": "Ihr Lesezeichen wurde erstellt!",
+      "lt": "Jūsų žymė buvo sukurta!",
+      "pt": "Seu marcador foi criado!",
+      "it": "Il tuo segnalibro è stato creato!"
+    },
+    {
+      "en": "Copy the URL below to save your current application state:",
+      "es": "Copie la URL a continuación para guardar el estado actual de su aplicación:",
+      "fr": "Copiez l'URL ci-dessous pour enregistrer l'état actuel de votre application:",
+      "de": "Kopieren Sie die URL unten, um Ihren aktuellen Anwendungszustand zu speichern:",
+      "lt": "Nukopijuokite žemiau esantį URL, kad išsaugotumėte dabartinę programos būseną:",
+      "pt": "Copie o URL abaixo para salvar o estado atual de sua aplicação:",
+      "it": "Copia l'URL qui sotto per salvare lo stato corrente della tua applicazione:"
+    },
+    {
+      "en": "Copy URL to Clipboard",
+      "es": "Copiar URL al Portapapeles",
+      "fr": "Copier l'URL dans le Presse-papiers",
+      "de": "URL in Zwischenablage kopieren",
+      "lt": "Kopijuoti URL į iškarpinę",
+      "pt": "Copiar URL para Área de Transferência",
+      "it": "Copia URL negli Appunti"
+    },
+    {
+      "en": "Copied!",
+      "es": "¡Copiado!",
+      "fr": "Copié!",
+      "de": "Kopiert!",
+      "lt": "Nukopijuota!",
+      "pt": "Copiado!",
+      "it": "Copiato!"
+    },
+    {
+      "en": "This bookmark saves your current view and settings. To save your complete project data, use the 'Save Project' button in the sidebar.",
+      "es": "Este marcador guarda su vista y configuración actuales. Para guardar los datos completos de su proyecto, use el botón 'Guardar Proyecto' en la barra lateral.",
+      "fr": "Ce marque-page enregistre votre vue et vos paramètres actuels. Pour enregistrer les données complètes de votre projet, utilisez le bouton 'Enregistrer le Projet' dans la barre latérale.",
+      "de": "Dieses Lesezeichen speichert Ihre aktuelle Ansicht und Einstellungen. Um Ihre vollständigen Projektdaten zu speichern, verwenden Sie die Schaltfläche 'Projekt speichern' in der Seitenleiste.",
+      "lt": "Ši žymė išsaugo jūsų dabartinį rodinį ir nustatymus. Norėdami išsaugoti visus projekto duomenis, naudokite šoninėje juostoje esantį mygtuką 'Išsaugoti Projektą'.",
+      "pt": "Este marcador salva sua visualização e configurações atuais. Para salvar os dados completos do seu projeto, use o botão 'Salvar Projeto' na barra lateral.",
+      "it": "Questo segnalibro salva la tua visualizzazione e le impostazioni correnti. Per salvare i dati completi del progetto, usa il pulsante 'Salva Progetto' nella barra laterale."
+    },
+    {
+      "en": "What's saved in this bookmark:",
+      "es": "Qué se guarda en este marcador:",
+      "fr": "Ce qui est enregistré dans ce marque-page:",
+      "de": "Was in diesem Lesezeichen gespeichert wird:",
+      "lt": "Kas išsaugota šioje žymėje:",
+      "pt": "O que é salvo neste marcador:",
+      "it": "Cosa viene salvato in questo segnalibro:"
+    },
+    {
+      "en": "Current tab/page location",
+      "es": "Ubicación de la pestaña/página actual",
+      "fr": "Emplacement de l'onglet/page actuel",
+      "de": "Aktuelle Tab-/Seitenposition",
+      "lt": "Dabartinė skirtuką/puslapio vieta",
+      "pt": "Localização da aba/página atual",
+      "it": "Posizione della scheda/pagina corrente"
+    },
+    {
+      "en": "User experience level",
+      "es": "Nivel de experiencia del usuario",
+      "fr": "Niveau d'expérience utilisateur",
+      "de": "Benutzererfahrungsstufe",
+      "lt": "Vartotojo patirties lygis",
+      "pt": "Nível de experiência do usuário",
+      "it": "Livello di esperienza utente"
+    },
+    {
+      "en": "Language preference",
+      "es": "Preferencia de idioma",
+      "fr": "Préférence de langue",
+      "de": "Spracheinstellung",
+      "lt": "Kalbos nuostata",
+      "pt": "Preferência de idioma",
+      "it": "Preferenza lingua"
+    },
+    {
+      "en": "Auto-save settings",
+      "es": "Configuración de guardado automático",
+      "fr": "Paramètres d'enregistrement automatique",
+      "de": "Auto-Speicher-Einstellungen",
+      "lt": "Automatinio išsaugojimo nustatymai",
+      "pt": "Configurações de salvamento automático",
+      "it": "Impostazioni di salvataggio automatico"
+    },
+    {
+      "en": "Selected demonstration area and focal issue",
+      "es": "Área de demostración y tema focal seleccionados",
+      "fr": "Zone de démonstration et question centrale sélectionnées",
+      "de": "Ausgewählter Demonstrationsbereich und Schwerpunktthema",
+      "lt": "Pasirinkta demonstracinė sritis ir pagrindinė problema",
+      "pt": "Área de demonstração e questão focal selecionadas",
+      "it": "Area dimostrativa e questione focale selezionate"
+    },
+    {
+      "en": "Bookmark restored successfully!",
+      "es": "¡Marcador restaurado con éxito!",
+      "fr": "Marque-page restauré avec succès!",
+      "de": "Lesezeichen erfolgreich wiederhergestellt!",
+      "lt": "Žymė sėkmingai atkurta!",
+      "pt": "Marcador restaurado com sucesso!",
+      "it": "Segnalibro ripristinato con successo!"
+    },
+    {
+      "en": "What are the main environmental or management issues you're addressing? (Select all that apply)",
+      "es": "¿Cuáles son los principales problemas ambientales o de gestión que está abordando? (Seleccione todos los que correspondan)",
+      "fr": "Quels sont les principaux problèmes environnementaux ou de gestion que vous abordez? (Sélectionnez toutes les réponses qui s'appliquent)",
+      "de": "Was sind die wichtigsten Umwelt- oder Managementprobleme, die Sie angehen? (Wählen Sie alle zutreffenden aus)",
+      "lt": "Kokios yra pagrindinės aplinkosaugos ar valdymo problemos, kurias sprendžiate? (Pasirinkite visas tinkamas)",
+      "pt": "Quais são as principais questões ambientais ou de gestão que você está abordando? (Selecione todas as que se aplicam)",
+      "it": "Quali sono le principali questioni ambientali o gestionali che stai affrontando? (Seleziona tutte quelle applicabili)"
+    },
+    {
+      "en": "Click to select/deselect. Multiple selections allowed.",
+      "es": "Haga clic para seleccionar/deseleccionar. Se permiten selecciones múltiples.",
+      "fr": "Cliquez pour sélectionner/désélectionner. Sélections multiples autorisées.",
+      "de": "Klicken Sie zum Auswählen/Abwählen. Mehrfachauswahl zulässig.",
+      "lt": "Spustelėkite, kad pasirinktumėte/atšauktumėte. Leidžiama kelių pasirinkimų.",
+      "pt": "Clique para selecionar/desmarcar. Múltiplas seleções permitidas.",
+      "it": "Fai clic per selezionare/deselezionare. Selezioni multiple consentite."
+    },
+    {
+      "en": "Continue with",
+      "es": "Continuar con",
+      "fr": "Continuer avec",
+      "de": "Weiter mit",
+      "lt": "Tęsti su",
+      "pt": "Continuar com",
+      "it": "Continua con"
+    },
+    {
+      "en": "selected issue(s)",
+      "es": "problema(s) seleccionado(s)",
+      "fr": "problème(s) sélectionné(s)",
+      "de": "ausgewählte(s) Problem(e)",
+      "lt": "pasirinkta(-os) problema(-os)",
+      "pt": "questão/questões selecionada(s)",
+      "it": "problema/i selezionato/i"
+    },
+    {
+      "en": "Great! I'll focus suggestions on these issues: ",
+      "es": "¡Genial! Me centraré en estas cuestiones: ",
+      "fr": "Génial ! Je me concentrerai sur ces questions : ",
+      "de": "Großartig! Ich werde mich auf diese Themen konzentrieren: ",
+      "lt": "Puiku! Sutelksiu dėmesį į šias problemas: ",
+      "pt": "Ótimo! Vou focar nessas questões: ",
+      "it": "Ottimo! Mi concentrerò su questi problemi: "
+    },
+    {
+      "en": "Start",
+      "es": "Inicio",
+      "fr": "Début",
+      "de": "Start",
+      "lt": "Pradžia",
+      "pt": "Início",
+      "it": "Inizio"
     }
   ]
 }

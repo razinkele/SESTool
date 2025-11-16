@@ -243,9 +243,15 @@ create_empty_element_df <- function(element_type) {
 
 #' Create empty adjacency matrix
 #'
+#' MATRIX CONVENTION: All matrices use SOURCE×TARGET format
+#' - Matrix name: source_target (e.g., "es_gb" means ES→GB)
+#' - Matrix structure: rows=SOURCE elements, cols=TARGET elements
+#' - Cell [i,j]: Connection from SOURCE[i] to TARGET[j]
+#' - This convention eliminates the need for matrix transpositions
+#'
 #' @param from_elements Vector of source element names
 #' @param to_elements Vector of target element names
-#' @return Matrix with empty cells
+#' @return Matrix with empty cells, rows=from_elements, cols=to_elements
 create_empty_adjacency_matrix <- function(from_elements, to_elements) {
 
   if (length(from_elements) == 0 || length(to_elements) == 0) {
