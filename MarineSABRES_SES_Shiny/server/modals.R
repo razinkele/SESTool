@@ -356,8 +356,36 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
           tags$a(
             href = "#",
             onclick = "window.open('user_guide.html', '_blank'); return false;",
-            "User Guide",
+            "Quick Guide",
             style = "margin-right: 15px;"
+          ),
+          tags$a(
+            href = "#",
+            onclick = "window.open('docs/MarineSABRES_User_Manual_EN.html', '_blank'); return false;",
+            "📘 Manual (EN HTML)",
+            style = "margin-right: 15px;",
+            title = "Comprehensive 75-page English manual - HTML version"
+          ),
+          tags$a(
+            href = "#",
+            onclick = "window.open('docs/MarineSABRES_User_Manual_EN.pdf', '_blank'); return false;",
+            "📕 Manual (EN PDF)",
+            style = "margin-right: 15px;",
+            title = "Comprehensive 75-page English manual - PDF version"
+          ),
+          tags$a(
+            href = "#",
+            onclick = "window.open('docs/MarineSABRES_User_Manual_FR.html', '_blank'); return false;",
+            "📗 Manuel (FR HTML)",
+            style = "margin-right: 15px;",
+            title = "Manuel français complet de 75 pages - version HTML"
+          ),
+          tags$a(
+            href = "#",
+            onclick = "window.open('docs/MarineSABRES_User_Manual_FR.pdf', '_blank'); return false;",
+            "📙 Manuel (FR PDF)",
+            style = "margin-right: 15px;",
+            title = "Manuel français complet de 75 pages - version PDF"
           ),
           tags$a(
             href = "#",
