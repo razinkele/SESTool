@@ -209,7 +209,8 @@ ELEMENT_COLORS <- list(
   "Marine Processes & Functioning" = "#bce2ee",    # Light Blue (Kumu style)
   "Ecosystem Services" = "#313695",                # Dark Blue (Kumu style)
   "Goods & Benefits" = "#fff1a2",                  # Light Yellow (Kumu style)
-  "Responses" = "#9C27B0"                          # Purple for management responses
+  "Responses" = "#9C27B0",                         # Purple for management responses
+  "Measures" = "#795548"                           # Brown for management measures/instruments
 )
 
 # Node shapes for each element type (following Kumu style guide)
@@ -223,7 +224,8 @@ ELEMENT_SHAPES <- list(
   "Marine Processes & Functioning" = "dot",      # Kumu: pill → dot (circular, label outside)
   "Ecosystem Services" = "square",               # Kumu: square (EXACT MATCH!)
   "Goods & Benefits" = "triangle",               # Kumu: triangle (EXACT MATCH!)
-  "Responses" = "triangleDown"                   # Inverted triangle for management responses
+  "Responses" = "triangleDown",                  # Inverted triangle for management responses
+  "Measures" = "box"                             # Box shape for management measures/instruments
 )
 
 # Edge colors (following Kumu style guide)

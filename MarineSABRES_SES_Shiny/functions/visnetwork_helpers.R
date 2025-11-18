@@ -242,6 +242,30 @@ create_nodes_df <- function(isa_data) {
     nodes <- bind_rows(nodes, response_nodes)
   }
 
+  # Measures (Level 4 - positioned to the right, enables responses)
+  if (!is.null(isa_data$measures) && nrow(isa_data$measures) > 0) {
+    measure_nodes <- isa_data$measures %>%
+      mutate(
+        id = paste0("M_", row_number()),
+        label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else as.character(row_number()),
+        label = sapply(label_raw, wrap_label),
+        indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
+        title = create_node_tooltip(label_raw, indicator, "Measures"),
+        group = "Measures",
+        level = 4,  # Same level as Activities but on right side
+        shape = ELEMENT_SHAPES[["Measures"]],
+        image = NA_character_,
+        color = ELEMENT_COLORS[["Measures"]],
+        size = 25,
+        font.size = 12,
+        leverage_score = NA_real_,
+        x = 500  # Further right than Responses
+      ) %>%
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
+
+    nodes <- bind_rows(nodes, measure_nodes)
+  }
+
   return(nodes)
 }
 
@@ -307,9 +331,10 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   n_a <- if(!is.null(isa_data$activities)) nrow(isa_data$activities) else 0
   n_d <- if(!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0
   n_r <- if(!is.null(isa_data$responses)) nrow(isa_data$responses) else 0
+  n_m <- if(!is.null(isa_data$measures)) nrow(isa_data$measures) else 0
 
-  cat(sprintf("[CREATE_EDGES] Element counts: GB=%d, ES=%d, MPF=%d, P=%d, A=%d, D=%d, R=%d\n",
-             n_gb, n_es, n_mpf, n_p, n_a, n_d, n_r))
+  cat(sprintf("[CREATE_EDGES] Element counts: GB=%d, ES=%d, MPF=%d, P=%d, A=%d, D=%d, R=%d, M=%d\n",
+             n_gb, n_es, n_mpf, n_p, n_a, n_d, n_r, n_m))
 
   if (is.null(adjacency_matrices)) {
     cat("[CREATE_EDGES] adjacency_matrices is NULL!\n")
@@ -467,6 +492,18 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     edges <- bind_rows(edges, edges_r_p)
   }
 
+  # 11. Measures → Responses (management instruments enable response actions)
+  if (!is.null(adjacency_matrices$m_r)) {
+    edges_m_r <- process_adjacency_matrix(
+      adjacency_matrices$m_r,  # M×R (rows=M, cols=R): M→R connections
+      from_prefix = "M",
+      to_prefix = "R",
+      expected_rows = n_m,
+      expected_cols = n_r
+    )
+    edges <- bind_rows(edges, edges_m_r)
+  }
+
   # === LEGACY/BACKWARD COMPATIBILITY ===
   # Support old matrix names for existing projects (will be converted on load)
   
@@ -564,9 +601,9 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     # New DAPSIWRM forward flow
     "d_a", "a_p", "p_mp", "p_mpf", "mp_es", "mpf_es", "es_gb", "gb_d",
     # Response measures
-    "gb_r", "r_d", "r_a", "r_p",
+    "gb_r", "r_d", "r_a", "r_p", "m_r",
     # Legacy backward flow (for compatibility)
-    "gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb", "p_r"
+    "gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb", "p_r", "r_m"
   )
   additional_matrices <- setdiff(names(adjacency_matrices), standard_matrices)
 
@@ -577,7 +614,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     # Mapping from abbreviations to prefixes
     abbrev_to_prefix <- c(
       "gb" = "GB", "es" = "ES", "mpf" = "MPF", "p" = "P",
-      "a" = "A", "d" = "D", "r" = "R"
+      "a" = "A", "d" = "D", "r" = "R", "m" = "M"
     )
 
     for (matrix_name in additional_matrices) {
