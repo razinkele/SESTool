@@ -242,24 +242,24 @@ create_nodes_df <- function(isa_data) {
     nodes <- bind_rows(nodes, response_nodes)
   }
 
-  # Measures (Level 4 - positioned to the right, enables responses)
+  # Measures (treated as responses with different color)
   if (!is.null(isa_data$measures) && nrow(isa_data$measures) > 0) {
     measure_nodes <- isa_data$measures %>%
       mutate(
-        id = paste0("M_", row_number()),
+        id = paste0("R_", nrow(isa_data$responses) + row_number()),  # Continue R_ numbering
         label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else as.character(row_number()),
         label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(label_raw, indicator, "Measures"),
         group = "Measures",
-        level = 4,  # Same level as Activities but on right side
-        shape = ELEMENT_SHAPES[["Measures"]],
+        level = 3,  # Same level as Responses
+        shape = ELEMENT_SHAPES[["Responses"]],  # Same shape as responses
         image = NA_character_,
-        color = ELEMENT_COLORS[["Measures"]],
+        color = ELEMENT_COLORS[["Measures"]],  # Different color
         size = 25,
         font.size = 12,
         leverage_score = NA_real_,
-        x = 500  # Further right than Responses
+        x = 400  # Same x as Responses
       ) %>%
       select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
 
@@ -492,16 +492,9 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     edges <- bind_rows(edges, edges_r_p)
   }
 
-  # 11. Measures → Responses (management instruments enable response actions)
+  # Note: M→R connections are skipped as measures are treated as responses (not separate nodes)
   if (!is.null(adjacency_matrices$m_r)) {
-    edges_m_r <- process_adjacency_matrix(
-      adjacency_matrices$m_r,  # M×R (rows=M, cols=R): M→R connections
-      from_prefix = "M",
-      to_prefix = "R",
-      expected_rows = n_m,
-      expected_cols = n_r
-    )
-    edges <- bind_rows(edges, edges_m_r)
+    cat("[CREATE_EDGES] Skipping m_r matrix - measures are treated as responses\n")
   }
 
   # === LEGACY/BACKWARD COMPATIBILITY ===
@@ -601,9 +594,9 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     # New DAPSIWRM forward flow
     "d_a", "a_p", "p_mp", "p_mpf", "mp_es", "mpf_es", "es_gb", "gb_d",
     # Response measures
-    "gb_r", "r_d", "r_a", "r_p", "m_r",
-    # Legacy backward flow (for compatibility)
-    "gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb", "p_r", "r_m"
+    "gb_r", "r_d", "r_a", "r_p",
+    # Legacy/deprecated (measures treated as responses)
+    "gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb", "p_r", "r_m", "m_r"
   )
   additional_matrices <- setdiff(names(adjacency_matrices), standard_matrices)
 
