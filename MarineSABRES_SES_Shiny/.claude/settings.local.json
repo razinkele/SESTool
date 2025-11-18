@@ -78,7 +78,8 @@
       "Bash(do grep -A2 \"create_help_observer\" \"$f\")",
       "Bash(cmd /c \"taskkill /F /T /PID 2956\")",
       "Bash(pandoc:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(modules/template_ses_module_ui_server.txt)"
     ],
     "deny": [],
     "ask": []

@@ -58,10 +58,21 @@ build_adjacency_matrix <- function(connections, from_elements, to_elements,
   mat <- matrix("", nrow = length(from_elements), ncol = length(to_elements),
                 dimnames = list(from_names, to_names))
 
-  # Filter connections for this matrix (case-insensitive comparison)
+  # Normalize type names to handle different conventions
+  normalize_type <- function(type) {
+    type_lower <- tolower(type)
+    # Map variations to canonical names
+    if (type_lower %in% c("state", "marineprocess", "marine_process")) return("state")
+    if (type_lower %in% c("impact", "ecosystemservice", "ecosystem_service")) return("impact")
+    if (type_lower %in% c("goodsbenefit", "goods_benefit", "welfare")) return("welfare")
+    if (type_lower %in% c("enmp", "pressure")) return("pressure")
+    return(type_lower)
+  }
+  
+  # Filter connections for this matrix (normalized comparison)
   relevant_connections <- Filter(function(conn) {
-    tolower(conn$from_type) == tolower(from_type) &&
-    tolower(conn$to_type) == tolower(to_type)
+    normalize_type(conn$from_type) == normalize_type(from_type) &&
+    normalize_type(conn$to_type) == normalize_type(to_type)
   }, connections)
 
   # Fill matrix
@@ -143,6 +154,9 @@ load_template_from_json <- function(json_path) {
 
     # Handle responses
     responses_df <- json_elements_to_df(fw$responses, "Response")
+    
+    # Handle measures
+    measures_df <- json_elements_to_df(fw$measures, "Measure")
 
     # Extract connections
     connections <- json_data$connections %||% list()
@@ -155,57 +169,56 @@ load_template_from_json <- function(json_path) {
       # D → A (Drivers to Activities)
       adjacency_matrices$d_a <- build_adjacency_matrix(
         connections, drivers_df$ID, activities_df$ID,
-        "Driver", "Activity", drivers_df$Name, activities_df$Name
+        "driver", "activity", drivers_df$Name, activities_df$Name
       )
 
       # A → P (Activities to Pressures)
       if (nrow(pressures_df) > 0) {
         adjacency_matrices$a_p <- build_adjacency_matrix(
           connections, activities_df$ID, pressures_df$ID,
-          "Activity", "Pressure", activities_df$Name, pressures_df$Name
+          "activity", "pressure", activities_df$Name, pressures_df$Name
         )
       }
 
-      # P → MPF (Pressures to Marine Processes)
+      # P → MPF (Pressures to Marine Processes/States)
       if (nrow(marine_processes_df) > 0 && nrow(pressures_df) > 0) {
         adjacency_matrices$p_mpf <- build_adjacency_matrix(
           connections, pressures_df$ID, marine_processes_df$ID,
-          "Pressure", "MarineProcess", pressures_df$Name, marine_processes_df$Name
+          "pressure", "state", pressures_df$Name, marine_processes_df$Name
         )
       }
 
-      # MPF → ES (Marine Processes to Ecosystem Services)
+      # MPF → ES (Marine Processes/States to Ecosystem Services/Impacts)
       if (nrow(ecosystem_services_df) > 0 && nrow(marine_processes_df) > 0) {
         adjacency_matrices$mpf_es <- build_adjacency_matrix(
           connections, marine_processes_df$ID, ecosystem_services_df$ID,
-          "MarineProcess", "EcosystemService", marine_processes_df$Name, ecosystem_services_df$Name
+          "state", "impact", marine_processes_df$Name, ecosystem_services_df$Name
         )
       }
 
-      # ES → GB (Ecosystem Services to Goods & Benefits / Welfare)
+      # ES → GB (Ecosystem Services/Impacts to Goods & Benefits/Welfare)
       if (nrow(goods_benefits_df) > 0 && nrow(ecosystem_services_df) > 0) {
-        # Try both "Welfare" and "GoodsBenefits" as type names
         adjacency_matrices$es_gb <- build_adjacency_matrix(
           connections, ecosystem_services_df$ID, goods_benefits_df$ID,
-          "EcosystemService", "Welfare", ecosystem_services_df$Name, goods_benefits_df$Name
+          "impact", "welfare", ecosystem_services_df$Name, goods_benefits_df$Name
         )
       }
 
-      # GB → D (Goods & Benefits to Drivers - feedback)
+      # GB → D (Goods & Benefits/Welfare to Drivers - feedback)
       if (nrow(goods_benefits_df) > 0 && nrow(drivers_df) > 0) {
         adjacency_matrices$gb_d <- build_adjacency_matrix(
           connections, goods_benefits_df$ID, drivers_df$ID,
-          "Welfare", "Driver", goods_benefits_df$Name, drivers_df$Name
+          "welfare", "driver", goods_benefits_df$Name, drivers_df$Name
         )
       }
 
       # Response matrices (if responses exist)
       if (nrow(responses_df) > 0) {
-        # GB → R (Goods & Benefits to Responses)
+        # GB → R (Goods & Benefits/Welfare to Responses)
         if (nrow(goods_benefits_df) > 0) {
           adjacency_matrices$gb_r <- build_adjacency_matrix(
             connections, goods_benefits_df$ID, responses_df$ID,
-            "Welfare", "Response", goods_benefits_df$Name, responses_df$Name
+            "welfare", "response", goods_benefits_df$Name, responses_df$Name
           )
         }
 
@@ -213,7 +226,7 @@ load_template_from_json <- function(json_path) {
         if (nrow(drivers_df) > 0) {
           adjacency_matrices$r_d <- build_adjacency_matrix(
             connections, responses_df$ID, drivers_df$ID,
-            "Response", "Driver", responses_df$Name, drivers_df$Name
+            "response", "driver", responses_df$Name, drivers_df$Name
           )
         }
 
@@ -221,7 +234,7 @@ load_template_from_json <- function(json_path) {
         if (nrow(activities_df) > 0) {
           adjacency_matrices$r_a <- build_adjacency_matrix(
             connections, responses_df$ID, activities_df$ID,
-            "Response", "Activity", responses_df$Name, activities_df$Name
+            "response", "activity", responses_df$Name, activities_df$Name
           )
         }
 
@@ -229,9 +242,26 @@ load_template_from_json <- function(json_path) {
         if (nrow(pressures_df) > 0) {
           adjacency_matrices$r_p <- build_adjacency_matrix(
             connections, responses_df$ID, pressures_df$ID,
-            "Response", "Pressure", responses_df$Name, pressures_df$Name
+            "response", "pressure", responses_df$Name, pressures_df$Name
           )
         }
+        
+        # R → S (Responses to States) - direct restoration
+        if (nrow(marine_processes_df) > 0) {
+          adjacency_matrices$r_mpf <- build_adjacency_matrix(
+            connections, responses_df$ID, marine_processes_df$ID,
+            "response", "state", responses_df$Name, marine_processes_df$Name
+          )
+        }
+      }
+      
+      # Measure matrices (if measures exist)
+      if (nrow(measures_df) > 0 && nrow(responses_df) > 0) {
+        # M → R (Measures to Responses)
+        adjacency_matrices$m_r <- build_adjacency_matrix(
+          connections, measures_df$ID, responses_df$ID,
+          "measure", "response", measures_df$Name, responses_df$Name
+        )
       }
     }
 
@@ -292,6 +322,11 @@ load_template_from_json <- function(json_path) {
     # Add responses if they exist
     if (nrow(responses_df) > 0) {
       template$responses <- responses_df
+    }
+    
+    # Add measures if they exist
+    if (nrow(measures_df) > 0) {
+      template$measures <- measures_df
     }
 
     return(template)
