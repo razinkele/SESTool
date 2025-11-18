@@ -32,14 +32,26 @@ RUN R -e "install.packages(c( \
     'shinydashboard', \
     'shinyWidgets', \
     'shinyjs', \
+    'shinyBS', \
+    'shiny.i18n', \
     'tidyverse', \
+    'dplyr', \
+    'tidyr', \
+    'readr', \
+    'purrr', \
+    'tibble', \
+    'stringr', \
+    'forcats', \
+    'lubridate', \
     'DT', \
     'openxlsx', \
     'jsonlite', \
+    'digest', \
     'igraph', \
     'visNetwork', \
     'ggraph', \
     'tidygraph', \
+    'ggplot2', \
     'plotly', \
     'dygraphs', \
     'xts', \
@@ -53,11 +65,19 @@ COPY app.R /srv/shiny-server/marinesabres/
 COPY global.R /srv/shiny-server/marinesabres/
 COPY run_app.R /srv/shiny-server/marinesabres/
 COPY constants.R /srv/shiny-server/marinesabres/
+COPY io.R /srv/shiny-server/marinesabres/
+COPY utils.R /srv/shiny-server/marinesabres/
+COPY VERSION /srv/shiny-server/marinesabres/
+COPY VERSION_INFO.json /srv/shiny-server/marinesabres/
+COPY version_manager.R /srv/shiny-server/marinesabres/
 COPY modules/ /srv/shiny-server/marinesabres/modules/
 COPY functions/ /srv/shiny-server/marinesabres/functions/
+COPY scripts/ /srv/shiny-server/marinesabres/scripts/
+COPY server/ /srv/shiny-server/marinesabres/server/
 COPY www/ /srv/shiny-server/marinesabres/www/
 COPY data/ /srv/shiny-server/marinesabres/data/
 COPY translations/ /srv/shiny-server/marinesabres/translations/
+COPY docs/ /srv/shiny-server/marinesabres/docs/
 
 # Set permissions
 RUN chown -R shiny:shiny /srv/shiny-server/marinesabres

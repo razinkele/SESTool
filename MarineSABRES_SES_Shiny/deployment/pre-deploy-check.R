@@ -47,6 +47,11 @@ required_files <- c(
   "global.R",
   "run_app.R",
   "constants.R",
+  "io.R",
+  "utils.R",
+  "VERSION",
+  "VERSION_INFO.json",
+  "version_manager.R",
   "translations/translation.json"
 )
 
@@ -66,6 +71,7 @@ cat("\n[2] Checking Required Directories...\n")
 required_dirs <- c(
   "modules",
   "functions",
+  "server",
   "www",
   "data",
   "translations"
@@ -77,6 +83,13 @@ for (dir in required_dirs) {
   } else {
     print_check(paste("Directory:", dir), "ERROR", "Directory not found")
   }
+}
+
+# Check optional directories
+if (dir.exists("docs")) {
+  print_check("Directory: docs (optional)", "PASS")
+} else {
+  print_check("Directory: docs (optional)", "WARN", "Documentation directory not found")
 }
 
 # ============================================================================
@@ -136,9 +149,10 @@ cat("\n[4] Checking R Package Dependencies...\n")
 
 required_packages <- c(
   "shiny", "shinydashboard", "shinyWidgets", "shinyjs", "shinyBS",
-  "shiny.i18n", "tidyverse", "DT", "openxlsx", "jsonlite",
-  "igraph", "visNetwork", "ggraph", "tidygraph",
-  "plotly", "dygraphs", "xts", "timevis", "rmarkdown", "htmlwidgets"
+  "shiny.i18n", "tidyverse", "dplyr", "tidyr", "readr", "purrr",
+  "tibble", "stringr", "forcats", "lubridate", "DT", "openxlsx",
+  "jsonlite", "digest", "igraph", "visNetwork", "ggraph", "tidygraph",
+  "ggplot2", "plotly", "dygraphs", "xts", "timevis", "rmarkdown", "htmlwidgets"
 )
 
 missing_packages <- c()
@@ -164,7 +178,7 @@ if (length(missing_packages) == 0) {
 # ============================================================================
 cat("\n[5] Checking R Syntax...\n")
 
-r_files <- c("app.R", "global.R", "run_app.R", "constants.R")
+r_files <- c("app.R", "global.R", "run_app.R", "constants.R", "io.R", "utils.R", "version_manager.R")
 
 for (file in r_files) {
   if (file.exists(file)) {

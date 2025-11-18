@@ -94,6 +94,12 @@ $(document).ready(function() {
     // Append to body
     $('body').append(overlay);
   });
+
+  // Open report in new window/tab
+  Shiny.addCustomMessageHandler('openReport', function(message) {
+    // Open the report URL in a new window/tab
+    window.open(message.url, '_blank');
+  });
 });
 
 

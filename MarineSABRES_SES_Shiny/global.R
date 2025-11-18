@@ -193,11 +193,12 @@ if (DEBUG_MODE) {
 # DAPSI(W)R(M) element types
 DAPSIWRM_ELEMENTS <- c(
   "Drivers",
-  "Activities", 
+  "Activities",
   "Pressures",
   "Marine Processes & Functioning",
   "Ecosystem Services",
-  "Goods & Benefits"
+  "Goods & Benefits",
+  "Responses"
 )
 
 # Color scheme for DAPSI(W)R(M) elements
@@ -207,7 +208,8 @@ ELEMENT_COLORS <- list(
   "Pressures" = "#fec05a",                         # Orange (Kumu style)
   "Marine Processes & Functioning" = "#bce2ee",    # Light Blue (Kumu style)
   "Ecosystem Services" = "#313695",                # Dark Blue (Kumu style)
-  "Goods & Benefits" = "#fff1a2"                   # Light Yellow (Kumu style)
+  "Goods & Benefits" = "#fff1a2",                  # Light Yellow (Kumu style)
+  "Responses" = "#9C27B0"                          # Purple for management responses
 )
 
 # Node shapes for each element type (following Kumu style guide)
@@ -220,7 +222,8 @@ ELEMENT_SHAPES <- list(
   "Pressures" = "diamond",                       # Kumu: diamond (EXACT MATCH!)
   "Marine Processes & Functioning" = "dot",      # Kumu: pill → dot (circular, label outside)
   "Ecosystem Services" = "square",               # Kumu: square (EXACT MATCH!)
-  "Goods & Benefits" = "triangle"                # Kumu: triangle (EXACT MATCH!)
+  "Goods & Benefits" = "triangle",               # Kumu: triangle (EXACT MATCH!)
+  "Responses" = "triangleDown"                   # Inverted triangle for management responses
 )
 
 # Edge colors (following Kumu style guide)

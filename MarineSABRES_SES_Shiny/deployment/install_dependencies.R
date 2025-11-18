@@ -43,6 +43,7 @@ required_packages <- c(
   "DT",
   "openxlsx",
   "jsonlite",
+  "digest",
 
   # Network visualization and analysis
   "igraph",

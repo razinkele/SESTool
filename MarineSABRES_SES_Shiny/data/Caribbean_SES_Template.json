@@ -870,6 +870,66 @@
         "stakeholders": ["Government", "Social services", "Fishers associations"],
         "effectiveness": "Medium - reduces hardship but requires sustained support",
         "status": "Limited programs, ad-hoc assistance"
+      },
+      {
+        "id": "R22",
+        "name": "Blue economy innovation and entrepreneurship programs",
+        "description": "Supporting development of marine-based businesses including Sargassum processing, sustainable seafood products, marine biotechnology, and eco-friendly marine services",
+        "response_type": "Economic development and innovation",
+        "target_pressures": ["Addressing multiple pressures through sustainable alternatives"],
+        "target_impacts": ["I2", "I4"],
+        "implementation_level": "National to local",
+        "stakeholders": ["Government", "Business development agencies", "Entrepreneurs", "Research institutions"],
+        "effectiveness": "Medium to high - creates new economic opportunities while addressing environmental issues",
+        "status": "Emerging initiatives, requires scaling"
+      },
+      {
+        "id": "R23",
+        "name": "Community-based marine monitoring and citizen science programs",
+        "description": "Engaging local communities, fishers, and residents in systematic monitoring of water quality, marine life, beach conditions, and Sargassum arrival through mobile apps and training",
+        "response_type": "Participatory monitoring and engagement",
+        "target_pressures": ["All - enhanced knowledge and early detection"],
+        "target_impacts": ["Multiple - improved management through local knowledge"],
+        "implementation_level": "Local with regional coordination",
+        "stakeholders": ["Community groups", "NGOs", "Research institutions", "Environmental agencies"],
+        "effectiveness": "Medium to high - increases monitoring coverage and community ownership",
+        "status": "Pilot programs in select communities"
+      },
+      {
+        "id": "R24",
+        "name": "Comprehensive livelihood diversification and skills training",
+        "description": "Broad-based training programs in eco-tourism guiding, sustainable aquaculture, marine crafts, coastal services, and environmental monitoring for coastal communities",
+        "response_type": "Alternative livelihood development",
+        "target_pressures": ["P8", "P10"],
+        "target_impacts": ["I2"],
+        "implementation_level": "Local to national",
+        "stakeholders": ["Vocational training centers", "Government", "NGOs", "Private sector", "Community organizations"],
+        "effectiveness": "Medium to high - reduces pressure on marine resources and increases resilience",
+        "status": "Limited availability, needs expansion"
+      },
+      {
+        "id": "R25",
+        "name": "Community-based ecotourism development",
+        "description": "Supporting local communities to develop and manage small-scale ecotourism operations including kayaking, bird watching, cultural tours, mangrove tours, and homestays with benefit-sharing mechanisms",
+        "response_type": "Sustainable tourism and community development",
+        "target_pressures": ["P8", "P10", "P11"],
+        "target_impacts": ["I4", "I5", "I9"],
+        "implementation_level": "Local",
+        "stakeholders": ["Community groups", "Tourism board", "NGOs", "Small business owners"],
+        "effectiveness": "Medium to high - provides income while incentivizing conservation",
+        "status": "Various community initiatives, needs support and coordination"
+      },
+      {
+        "id": "R26",
+        "name": "Local environmental management capacity building",
+        "description": "Training programs for local government staff, community leaders, and stakeholders in integrated coastal zone management, environmental impact assessment, and adaptive management practices",
+        "response_type": "Institutional capacity development",
+        "target_pressures": ["All - improved governance and management"],
+        "target_impacts": ["All - more effective responses"],
+        "implementation_level": "Municipal to national",
+        "stakeholders": ["Government training institutes", "Universities", "International organizations", "Local authorities"],
+        "effectiveness": "High - enables better long-term management",
+        "status": "Ad-hoc training, needs systematic approach"
       }
     ],
     "measures": [
@@ -1092,6 +1152,61 @@
         "legal_basis": "Marine conservation regulations",
         "budget": "Low to moderate - buoy installation and maintenance",
         "implementation_status": "Limited coverage, expanding"
+      },
+      {
+        "id": "M21",
+        "name": "Blue economy development fund and business support",
+        "description": "Dedicated funding mechanism providing grants, low-interest loans, and technical assistance for marine-based sustainable businesses and social enterprises",
+        "measure_type": "Economic/financial instrument",
+        "supports_responses": ["R22"],
+        "implementing_agency": "Ministry of Economy, Development banks, Business support agencies",
+        "legal_basis": "Blue economy strategy, SME development programs",
+        "budget": "High - revolving fund with public and EU co-financing",
+        "implementation_status": "Planning phase, some pilot funding available"
+      },
+      {
+        "id": "M22",
+        "name": "Community monitoring program grants and technical support",
+        "description": "Grant program for community groups to establish monitoring networks; provision of equipment, mobile apps, training, and data management support",
+        "measure_type": "Economic/capacity building",
+        "supports_responses": ["R23"],
+        "implementing_agency": "Environment ministry, Research institutions, NGOs",
+        "legal_basis": "Citizen science and participatory monitoring policies",
+        "budget": "Moderate - equipment, training, data platform costs",
+        "implementation_status": "Pilot grants available, needs expansion"
+      },
+      {
+        "id": "M23",
+        "name": "Vocational training subsidies and business development support",
+        "description": "Government-subsidized training programs in marine trades, eco-tourism, aquaculture, and environmental services; includes business planning and startup support",
+        "measure_type": "Economic/education",
+        "supports_responses": ["R24", "R21"],
+        "implementing_agency": "Ministry of Labor, Vocational training institutes, Economic development agencies",
+        "legal_basis": "Employment and skills development programs, EU Social Fund",
+        "budget": "Moderate to high - training subsidies, business grants",
+        "implementation_status": "Limited programs, needs scaling and marine focus"
+      },
+      {
+        "id": "M24",
+        "name": "Community ecotourism licensing and benefit-sharing framework",
+        "description": "Streamlined licensing process for community ecotourism operators; regulations ensuring revenue sharing with local communities and environmental conservation funds",
+        "measure_type": "Regulatory/governance",
+        "supports_responses": ["R25"],
+        "implementing_agency": "Tourism board, Municipalities, Community development agencies",
+        "legal_basis": "Tourism development act, community enterprise regulations",
+        "budget": "Low - administrative and capacity support",
+        "implementation_status": "Framework under development"
+      },
+      {
+        "id": "M25",
+        "name": "Environmental management capacity building and certification program",
+        "description": "Systematic training and certification for local government environmental officers in coastal management, environmental assessment, and enforcement; includes study tours and peer learning",
+        "measure_type": "Capacity building/institutional",
+        "supports_responses": ["R26"],
+        "implementing_agency": "Public service training institute, Universities, Regional organizations",
+        "legal_basis": "Public service capacity development programs",
+        "budget": "Moderate - training delivery, materials, certification",
+        "implementation_status": "Ad-hoc training exists, needs formalization"
       }
     ]
   },
@@ -1307,6 +1422,153 @@
       "description": "Mangrove restoration rebuilds habitats"
     },
     {
+      "from_type": "welfare",
+      "from_id": "W1",
+      "to_type": "response",
+      "to_id": "R1",
+      "description": "Tourism revenue decline triggers Sargassum early warning system"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W1",
+      "to_type": "response",
+      "to_id": "R2",
+      "description": "Tourism losses drive coastal Sargassum collection systems"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W2",
+      "to_type": "response",
+      "to_id": "R10",
+      "description": "Fishing income loss triggers sustainable fisheries management"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W2",
+      "to_type": "response",
+      "to_id": "R21",
+      "description": "Loss of fishing livelihoods drives financial compensation programs"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W3",
+      "to_type": "response",
+      "to_id": "R9",
+      "description": "Health risks trigger seafood contamination monitoring"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W3",
+      "to_type": "response",
+      "to_id": "R8",
+      "description": "Public health concerns drive chlordecone soil remediation"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W6",
+      "to_type": "response",
+      "to_id": "R17",
+      "description": "Coastal flooding risk triggers climate adaptation planning"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W6",
+      "to_type": "response",
+      "to_id": "R13",
+      "description": "Property damage drives mangrove and seagrass restoration"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W7",
+      "to_type": "response",
+      "to_id": "R3",
+      "description": "Municipal cleanup costs drive Sargassum valorization programs"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W10",
+      "to_type": "response",
+      "to_id": "R18",
+      "description": "Quality of life decline triggers public awareness campaigns"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R10",
+      "to_type": "activity",
+      "to_id": "A2",
+      "description": "Fisheries management regulates artisanal fishing practices"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R11",
+      "to_type": "activity",
+      "to_id": "A2",
+      "description": "Community surveillance controls fishing activity"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R16",
+      "to_type": "activity",
+      "to_id": "A3",
+      "description": "Sustainable tourism certification regulates beach tourism"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R16",
+      "to_type": "activity",
+      "to_id": "A4",
+      "description": "Best practices guide diving and snorkeling activities"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R14",
+      "to_type": "activity",
+      "to_id": "A6",
+      "description": "Coastal land-use planning restricts urbanization"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R7",
+      "to_type": "activity",
+      "to_id": "A11",
+      "description": "Agricultural pollution control regulates farming practices"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R12",
+      "to_type": "driver",
+      "to_id": "D1",
+      "description": "Aquaculture development provides alternative to meet food security needs"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R21",
+      "to_type": "driver",
+      "to_id": "D2",
+      "description": "Livelihood diversification addresses economic development needs"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R16",
+      "to_type": "driver",
+      "to_id": "D3",
+      "description": "Sustainable tourism practices shape tourism demand"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R17",
+      "to_type": "driver",
+      "to_id": "D5",
+      "description": "Climate adaptation planning addresses adaptation needs"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R14",
+      "to_type": "driver",
+      "to_id": "D6",
+      "description": "Coastal planning manages housing and infrastructure needs"
+    },
+    {
       "from_type": "measure",
       "from_id": "M1",
       "to_type": "response",
@@ -1333,6 +1595,167 @@
       "to_type": "response",
       "to_id": "R9",
       "description": "Fishing bans protect public health from contamination"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W2",
+      "to_type": "response",
+      "to_id": "R22",
+      "description": "Loss of fishing income triggers blue economy innovation programs"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W5",
+      "to_type": "response",
+      "to_id": "R22",
+      "description": "Job losses drive blue economy entrepreneurship development"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W10",
+      "to_type": "response",
+      "to_id": "R23",
+      "description": "Quality of life concerns trigger community-based monitoring programs"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W2",
+      "to_type": "response",
+      "to_id": "R24",
+      "description": "Loss of fishing income drives livelihood diversification training"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W5",
+      "to_type": "response",
+      "to_id": "R24",
+      "description": "Job losses trigger comprehensive skills training programs"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W1",
+      "to_type": "response",
+      "to_id": "R25",
+      "description": "Tourism revenue decline drives community ecotourism development"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W8",
+      "to_type": "response",
+      "to_id": "R25",
+      "description": "Loss of cultural heritage triggers community-based ecotourism"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W9",
+      "to_type": "response",
+      "to_id": "R26",
+      "description": "Erosion of social trust drives capacity building for better governance"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R22",
+      "to_type": "driver",
+      "to_id": "D2",
+      "description": "Blue economy programs provide sustainable economic development pathway"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R24",
+      "to_type": "driver",
+      "to_id": "D1",
+      "description": "Livelihood diversification addresses food security through sustainable alternatives"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R24",
+      "to_type": "driver",
+      "to_id": "D2",
+      "description": "Skills training addresses economic development needs sustainably"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R25",
+      "to_type": "driver",
+      "to_id": "D3",
+      "description": "Community ecotourism shapes sustainable tourism demand"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R24",
+      "to_type": "activity",
+      "to_id": "A2",
+      "description": "Livelihood training reduces dependence on intensive fishing"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R25",
+      "to_type": "activity",
+      "to_id": "A3",
+      "description": "Community ecotourism provides sustainable alternative to mass beach tourism"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R25",
+      "to_type": "activity",
+      "to_id": "A4",
+      "description": "Ecotourism development promotes responsible diving and snorkeling"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R23",
+      "to_type": "pressure",
+      "to_id": "P8",
+      "description": "Community monitoring helps detect and reduce overfishing"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R23",
+      "to_type": "pressure",
+      "to_id": "P1",
+      "description": "Citizen science monitors nutrient pollution and water quality"
+    },
+    {
+      "from_type": "response",
+      "from_id": "R22",
+      "to_type": "state",
+      "to_id": "S1",
+      "description": "Blue economy innovations address Sargassum through valorization"
+    },
+    {
+      "from_type": "measure",
+      "from_id": "M21",
+      "to_type": "response",
+      "to_id": "R22",
+      "description": "Blue economy fund enables business development and innovation"
+    },
+    {
+      "from_type": "measure",
+      "from_id": "M22",
+      "to_type": "response",
+      "to_id": "R23",
+      "description": "Monitoring grants enable community-based citizen science"
+    },
+    {
+      "from_type": "measure",
+      "from_id": "M23",
+      "to_type": "response",
+      "to_id": "R24",
+      "description": "Training subsidies enable livelihood diversification"
+    },
+    {
+      "from_type": "measure",
+      "from_id": "M24",
+      "to_type": "response",
+      "to_id": "R25",
+      "description": "Ecotourism licensing framework enables community tourism development"
+    },
+    {
+      "from_type": "measure",
+      "from_id": "M25",
+      "to_type": "response",
+      "to_id": "R26",
+      "description": "Capacity building program enables local environmental management"
     }
   ],
   "usage_notes": "This template represents the complex, multi-faceted marine environmental challenges facing Caribbean islands. It can be adapted for other tropical island contexts by adjusting specific regional seas, ecosystem types, and local pollutants. The template emphasizes the interconnected nature of problems (Sargassum, coral bleaching, contamination, overfishing, habitat loss) and the need for integrated coastal zone management approaches."

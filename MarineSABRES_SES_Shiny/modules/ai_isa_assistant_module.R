@@ -270,8 +270,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         states = list(),
         impacts = list(),
         welfare = list(),
-        responses = list(),
-        measures = list()
+        responses = list()  # Combined responses and measures (R/M in DAPSI(W)R(M))
       ),
       context = list(
         project_name = NULL,
@@ -281,7 +280,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         main_issue = character(0)  # Changed to vector for multiple selections
       ),
       selected_issues = character(0),  # Track selected issues for UI highlighting
-      total_steps = 11,  # Increased for regional sea + ecosystem context questions
+      total_steps = 10,  # Updated: merged responses and measures into one step
       suggested_connections = list(),  # AI-generated connection suggestions
       approved_connections = list(),   # User-approved connections
       last_save_time = NULL,  # Track last save timestamp
@@ -328,20 +327,18 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             !is.null(isa_data$marine_processes) && nrow(isa_data$marine_processes) > 0,
             !is.null(isa_data$ecosystem_services) && nrow(isa_data$ecosystem_services) > 0,
             !is.null(isa_data$goods_benefits) && nrow(isa_data$goods_benefits) > 0,
-            !is.null(isa_data$responses) && nrow(isa_data$responses) > 0,
-            !is.null(isa_data$measures) && nrow(isa_data$measures) > 0
+            !is.null(isa_data$responses) && nrow(isa_data$responses) > 0
           )
 
           # Debug: print each element count
-          cat(sprintf("[AI ISA] Element counts - drivers: %d, activities: %d, pressures: %d, states: %d, impacts: %d, welfare: %d, responses: %d, measures: %d\n",
+          cat(sprintf("[AI ISA] Element counts - drivers: %d, activities: %d, pressures: %d, states: %d, impacts: %d, welfare: %d, responses: %d\n",
             if(!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0,
             if(!is.null(isa_data$activities)) nrow(isa_data$activities) else 0,
             if(!is.null(isa_data$pressures)) nrow(isa_data$pressures) else 0,
             if(!is.null(isa_data$marine_processes)) nrow(isa_data$marine_processes) else 0,
             if(!is.null(isa_data$ecosystem_services)) nrow(isa_data$ecosystem_services) else 0,
             if(!is.null(isa_data$goods_benefits)) nrow(isa_data$goods_benefits) else 0,
-            if(!is.null(isa_data$responses)) nrow(isa_data$responses) else 0,
-            if(!is.null(isa_data$measures)) nrow(isa_data$measures) else 0
+            if(!is.null(isa_data$responses)) nrow(isa_data$responses) else 0
           ))
 
           cat(sprintf("[AI ISA] has_data check result: %s\n", has_data))
@@ -427,17 +424,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               })
             }
 
-            # Measures
-            if (!is.null(isa_data$measures) && nrow(isa_data$measures) > 0) {
-              rv$elements$measures <- lapply(1:nrow(isa_data$measures), function(i) {
-                list(
-                  name = isa_data$measures$Name[i],
-                  description = isa_data$measures$Description[i] %||% "",
-                  timestamp = Sys.time()
-                )
-              })
-            }
-
             # Load metadata/context if available
             if (!is.null(isa_data$metadata)) {
               rv$context$project_name <- isa_data$metadata$project_name %||% NULL
@@ -464,8 +450,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               length(rv$elements$states),
               length(rv$elements$impacts),
               length(rv$elements$welfare),
-              length(rv$elements$responses),
-              length(rv$elements$measures)
+              length(rv$elements$responses)
             )
 
             cat(sprintf("[AI ISA] Recovered %d elements into AI ISA Assistant UI\n", total_recovered))
@@ -561,23 +546,14 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 9,
         title_key = "responses",
-        title = i18n$t("Responses - Management Actions"),
-        question = i18n$t("What RESPONSES or management actions are being taken (or could be taken) to address these issues?"),
+        title = i18n$t("Response Measures - Management & Policy"),
+        question = i18n$t("What RESPONSE MEASURES (management actions, policies, regulations) are being taken (or could be taken) to address these issues?"),
         type = "multiple",
         target = "responses",
         use_context_examples = TRUE
       ),
       list(
         step = 10,
-        title_key = "measures",
-        title = i18n$t("Measures - Policy Instruments"),
-        question = i18n$t("Finally, what specific MEASURES or policy instruments support these responses?"),
-        type = "multiple",
-        target = "measures",
-        use_context_examples = TRUE
-      ),
-      list(
-        step = 11,
         title_key = "connection_review",
         title = i18n$t("Connection Review"),
         question = i18n$t("Great! Now I'll suggest logical connections between the elements you've identified. These connections represent causal relationships in your social-ecological system. You can review and approve/reject each suggestion."),
@@ -675,13 +651,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           tags$div(
             style = "margin-bottom: 5px;",
             actionLink(ns("link_responses"),
-                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Responses:")), " ", textOutput(ns("count_responses"), inline = TRUE)),
-                      style = "color: #007bff;")
-          ),
-          tags$div(
-            style = "margin-bottom: 5px;",
-            actionLink(ns("link_measures"),
-                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Measures:")), " ", textOutput(ns("count_measures"), inline = TRUE)),
+                      tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Response Measures:")), " ", textOutput(ns("count_responses"), inline = TRUE)),
                       style = "color: #007bff;")
           ),
           tags$div(
@@ -754,7 +724,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         rv$current_step <- data$current_step %||% 0
         rv$elements <- data$elements %||% list(drivers=list(), activities=list(), pressures=list(),
                                                 states=list(), impacts=list(), welfare=list(),
-                                                responses=list(), measures=list())
+                                                responses=list())
         rv$context <- data$context %||% list(project_name=NULL, location=NULL,
                                               ecosystem_type=NULL, main_issue=NULL)
         rv$suggested_connections <- data$suggested_connections %||% list()
@@ -886,7 +856,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     highlight_keywords <- function(text) {
       # Keywords to highlight (DAPSI(W)R(M) components)
       keywords <- c("DRIVERS", "ACTIVITIES", "PRESSURES", "STATE", "IMPACTS",
-                   "WELFARE", "RESPONSES", "MEASURES")
+                   "WELFARE", "RESPONSES")
 
       # Highlight each keyword found in the text
       for (keyword in keywords) {
@@ -1369,17 +1339,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         )
       } else { NULL }
 
-      current_data$data$isa_data$measures <- if (length(rv$elements$measures) > 0) {
-        data.frame(
-          ID = paste0("M", sprintf("%03d", seq_along(rv$elements$measures))),
-          Name = sapply(rv$elements$measures, function(x) x$name),
-          Type = "Measure",
-          Description = sapply(rv$elements$measures, function(x) x$description %||% ""),
-          Stakeholder = "", Status = "", Effectiveness = "",
-          stringsAsFactors = FALSE
-        )
-      } else { NULL }
-
       # Build adjacency matrices from approved connections
       cat(sprintf("[AI ISA CONNECTIONS SAVE] Building matrices for %d approved connections\n", approved_count))
 
@@ -1391,92 +1350,123 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       n_impacts <- length(rv$elements$impacts)
       n_welfare <- length(rv$elements$welfare)
       n_responses <- length(rv$elements$responses)
-      n_measures <- length(rv$elements$measures)
 
-      # Initialize adjacency matrices list
+      # Initialize adjacency matrices list (NEW DAPSIWRM forward causal flow)
       current_data$data$isa_data$adjacency_matrices <- list(
-        gb_es = NULL, es_mpf = NULL, mpf_p = NULL,
-        p_a = NULL, a_d = NULL, d_gb = NULL,
-        p_r = NULL, r_m = NULL
+        d_a = NULL, a_p = NULL, p_mpf = NULL,
+        mpf_es = NULL, es_gb = NULL, gb_d = NULL,
+        gb_r = NULL, r_d = NULL, r_a = NULL, r_p = NULL
       )
 
-      # Create matrices if elements exist
-      if (n_welfare > 0 && n_drivers > 0) {
-        current_data$data$isa_data$adjacency_matrices$d_gb <- matrix(
-          "", nrow = n_drivers, ncol = n_welfare,
+      # Create matrices with forward causal flow (SOURCE×TARGET format)
+      # Matrix convention: matrix[source_row, target_col] = connection from source to target
+      
+      # 1. Drivers → Activities (D→A)
+      if (n_drivers > 0 && n_activities > 0) {
+        current_data$data$isa_data$adjacency_matrices$d_a <- matrix(
+          "", nrow = n_drivers, ncol = n_activities,
           dimnames = list(
             sapply(rv$elements$drivers, function(x) x$name),
-            sapply(rv$elements$welfare, function(x) x$name)
-          )
-        )
-      }
-
-      if (n_drivers > 0 && n_activities > 0) {
-        current_data$data$isa_data$adjacency_matrices$a_d <- matrix(
-          "", nrow = n_activities, ncol = n_drivers,
-          dimnames = list(
-            sapply(rv$elements$activities, function(x) x$name),
-            sapply(rv$elements$drivers, function(x) x$name)
-          )
-        )
-      }
-
-      if (n_activities > 0 && n_pressures > 0) {
-        current_data$data$isa_data$adjacency_matrices$p_a <- matrix(
-          "", nrow = n_pressures, ncol = n_activities,
-          dimnames = list(
-            sapply(rv$elements$pressures, function(x) x$name),
             sapply(rv$elements$activities, function(x) x$name)
           )
         )
       }
 
-      if (n_pressures > 0 && n_states > 0) {
-        current_data$data$isa_data$adjacency_matrices$mpf_p <- matrix(
-          "", nrow = n_states, ncol = n_pressures,
+      # 2. Activities → Pressures (A→P)
+      if (n_activities > 0 && n_pressures > 0) {
+        current_data$data$isa_data$adjacency_matrices$a_p <- matrix(
+          "", nrow = n_activities, ncol = n_pressures,
           dimnames = list(
-            sapply(rv$elements$states, function(x) x$name),
+            sapply(rv$elements$activities, function(x) x$name),
             sapply(rv$elements$pressures, function(x) x$name)
           )
         )
       }
 
-      if (n_states > 0 && n_impacts > 0) {
-        current_data$data$isa_data$adjacency_matrices$es_mpf <- matrix(
-          "", nrow = n_impacts, ncol = n_states,
+      # 3. Pressures → Marine Processes/Functioning (P→MPF)
+      if (n_pressures > 0 && n_states > 0) {
+        current_data$data$isa_data$adjacency_matrices$p_mpf <- matrix(
+          "", nrow = n_pressures, ncol = n_states,
           dimnames = list(
-            sapply(rv$elements$impacts, function(x) x$name),
+            sapply(rv$elements$pressures, function(x) x$name),
             sapply(rv$elements$states, function(x) x$name)
           )
         )
       }
 
-      if (n_impacts > 0 && n_welfare > 0) {
-        current_data$data$isa_data$adjacency_matrices$gb_es <- matrix(
-          "", nrow = n_welfare, ncol = n_impacts,
+      # 4. Marine Processes → Ecosystem Services (MPF→ES)
+      if (n_states > 0 && n_impacts > 0) {
+        current_data$data$isa_data$adjacency_matrices$mpf_es <- matrix(
+          "", nrow = n_states, ncol = n_impacts,
           dimnames = list(
-            sapply(rv$elements$welfare, function(x) x$name),
+            sapply(rv$elements$states, function(x) x$name),
             sapply(rv$elements$impacts, function(x) x$name)
           )
         )
       }
 
-      if (n_responses > 0 && n_pressures > 0) {
-        current_data$data$isa_data$adjacency_matrices$p_r <- matrix(
-          "", nrow = n_pressures, ncol = n_responses,
+      # 5. Ecosystem Services → Goods/Benefits (ES→GB)
+      if (n_impacts > 0 && n_welfare > 0) {
+        current_data$data$isa_data$adjacency_matrices$es_gb <- matrix(
+          "", nrow = n_impacts, ncol = n_welfare,
           dimnames = list(
-            sapply(rv$elements$pressures, function(x) x$name),
+            sapply(rv$elements$impacts, function(x) x$name),
+            sapply(rv$elements$welfare, function(x) x$name)
+          )
+        )
+      }
+
+      # 6. Goods/Benefits → Drivers feedback (GB→D)
+      if (n_welfare > 0 && n_drivers > 0) {
+        current_data$data$isa_data$adjacency_matrices$gb_d <- matrix(
+          "", nrow = n_welfare, ncol = n_drivers,
+          dimnames = list(
+            sapply(rv$elements$welfare, function(x) x$name),
+            sapply(rv$elements$drivers, function(x) x$name)
+          )
+        )
+      }
+
+      # 7. Goods/Benefits → Responses (GB→R)
+      if (n_welfare > 0 && n_responses > 0) {
+        current_data$data$isa_data$adjacency_matrices$gb_r <- matrix(
+          "", nrow = n_welfare, ncol = n_responses,
+          dimnames = list(
+            sapply(rv$elements$welfare, function(x) x$name),
             sapply(rv$elements$responses, function(x) x$name)
           )
         )
       }
 
-      if (n_measures > 0 && n_responses > 0) {
-        current_data$data$isa_data$adjacency_matrices$r_m <- matrix(
-          "", nrow = n_responses, ncol = n_measures,
+      # 8. Responses → Drivers (R→D management)
+      if (n_responses > 0 && n_drivers > 0) {
+        current_data$data$isa_data$adjacency_matrices$r_d <- matrix(
+          "", nrow = n_responses, ncol = n_drivers,
           dimnames = list(
             sapply(rv$elements$responses, function(x) x$name),
-            sapply(rv$elements$measures, function(x) x$name)
+            sapply(rv$elements$drivers, function(x) x$name)
+          )
+        )
+      }
+
+      # 9. Responses → Activities (R→A management)
+      if (n_responses > 0 && n_activities > 0) {
+        current_data$data$isa_data$adjacency_matrices$r_a <- matrix(
+          "", nrow = n_responses, ncol = n_activities,
+          dimnames = list(
+            sapply(rv$elements$responses, function(x) x$name),
+            sapply(rv$elements$activities, function(x) x$name)
+          )
+        )
+      }
+
+      # 10. Responses → Pressures (R→P management)
+      if (n_responses > 0 && n_pressures > 0) {
+        current_data$data$isa_data$adjacency_matrices$r_p <- matrix(
+          "", nrow = n_responses, ncol = n_pressures,
+          dimnames = list(
+            sapply(rv$elements$responses, function(x) x$name),
+            sapply(rv$elements$pressures, function(x) x$name)
           )
         )
       }
@@ -1488,22 +1478,27 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           confidence <- conn$confidence %||% 3
           value <- paste0(conn$polarity, conn$strength, ":", confidence)
 
-          if (conn$matrix == "a_d" && !is.null(current_data$data$isa_data$adjacency_matrices$a_d)) {
-            current_data$data$isa_data$adjacency_matrices$a_d[conn$to_index, conn$from_index] <- value
-          } else if (conn$matrix == "p_a" && !is.null(current_data$data$isa_data$adjacency_matrices$p_a)) {
-            current_data$data$isa_data$adjacency_matrices$p_a[conn$to_index, conn$from_index] <- value
-          } else if (conn$matrix == "mpf_p" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_p)) {
-            current_data$data$isa_data$adjacency_matrices$mpf_p[conn$to_index, conn$from_index] <- value
-          } else if (conn$matrix == "es_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$es_mpf)) {
-            current_data$data$isa_data$adjacency_matrices$es_mpf[conn$to_index, conn$from_index] <- value
-          } else if (conn$matrix == "gb_es" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_es)) {
-            current_data$data$isa_data$adjacency_matrices$gb_es[conn$to_index, conn$from_index] <- value
-          } else if (conn$matrix == "d_gb" && !is.null(current_data$data$isa_data$adjacency_matrices$d_gb)) {
-            current_data$data$isa_data$adjacency_matrices$d_gb[conn$to_index, conn$from_index] <- value
-          } else if (conn$matrix == "p_r" && !is.null(current_data$data$isa_data$adjacency_matrices$p_r)) {
-            current_data$data$isa_data$adjacency_matrices$p_r[conn$to_index, conn$from_index] <- value
-          } else if (conn$matrix == "r_m" && !is.null(current_data$data$isa_data$adjacency_matrices$r_m)) {
-            current_data$data$isa_data$adjacency_matrices$r_m[conn$to_index, conn$from_index] <- value
+          # NEW: Forward causal flow matrices use [from_index, to_index] (SOURCE×TARGET)
+          if (conn$matrix == "d_a" && !is.null(current_data$data$isa_data$adjacency_matrices$d_a)) {
+            current_data$data$isa_data$adjacency_matrices$d_a[conn$from_index, conn$to_index] <- value
+          } else if (conn$matrix == "a_p" && !is.null(current_data$data$isa_data$adjacency_matrices$a_p)) {
+            current_data$data$isa_data$adjacency_matrices$a_p[conn$from_index, conn$to_index] <- value
+          } else if (conn$matrix == "p_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$p_mpf)) {
+            current_data$data$isa_data$adjacency_matrices$p_mpf[conn$from_index, conn$to_index] <- value
+          } else if (conn$matrix == "mpf_es" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_es)) {
+            current_data$data$isa_data$adjacency_matrices$mpf_es[conn$from_index, conn$to_index] <- value
+          } else if (conn$matrix == "es_gb" && !is.null(current_data$data$isa_data$adjacency_matrices$es_gb)) {
+            current_data$data$isa_data$adjacency_matrices$es_gb[conn$from_index, conn$to_index] <- value
+          } else if (conn$matrix == "gb_d" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_d)) {
+            current_data$data$isa_data$adjacency_matrices$gb_d[conn$from_index, conn$to_index] <- value
+          } else if (conn$matrix == "gb_r" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_r)) {
+            current_data$data$isa_data$adjacency_matrices$gb_r[conn$from_index, conn$to_index] <- value
+          } else if (conn$matrix == "r_d" && !is.null(current_data$data$isa_data$adjacency_matrices$r_d)) {
+            current_data$data$isa_data$adjacency_matrices$r_d[conn$from_index, conn$to_index] <- value
+          } else if (conn$matrix == "r_a" && !is.null(current_data$data$isa_data$adjacency_matrices$r_a)) {
+            current_data$data$isa_data$adjacency_matrices$r_a[conn$from_index, conn$to_index] <- value
+          } else if (conn$matrix == "r_p" && !is.null(current_data$data$isa_data$adjacency_matrices$r_p)) {
+            current_data$data$isa_data$adjacency_matrices$r_p[conn$from_index, conn$to_index] <- value
           }
         }
       }
@@ -1594,12 +1589,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     quick_options_exec_count <- 0
 
     output$quick_options <- renderUI({
+      # Force re-render when render_counter changes (used for selection highlighting)
+      # Store in temp variable to avoid multiple reactive reads
+      counter_val <- rv$render_counter
+
       quick_options_exec_count <<- quick_options_exec_count + 1
       current_step <- rv$current_step
 
       cat(sprintf("\n========================================\n"))
       cat(sprintf("[AI ISA QUICK] EXECUTION #%d at %s\n", quick_options_exec_count, Sys.time()))
       cat(sprintf("[AI ISA QUICK] Current step: %d / %d\n", current_step, length(QUESTION_FLOW)))
+      cat(sprintf("[AI ISA QUICK] Render counter: %d\n", counter_val))
 
       # Return NULL first to force complete DOM cleanup
       if (current_step < 0 || current_step >= length(QUESTION_FLOW)) {
@@ -2299,14 +2299,14 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # Check if source is a mitigation action
       from_is_mitigation <- any(sapply(mitigation_keywords, function(kw) grepl(kw, from_lower)))
 
-      # Special case: Responses/Measures → Pressures
-      if ((from_type %in% c("responses", "measures")) && to_type == "pressures") {
-        # Responses/measures typically reduce pressures
+      # Special case: Response Measures → Pressures
+      if (from_type == "responses" && to_type == "pressures") {
+        # Response measures typically reduce pressures
         return("-")
       }
 
-      # Special case: Responses/Measures → States
-      if ((from_type %in% c("responses", "measures")) && to_type == "states") {
+      # Special case: Response Measures → States
+      if (from_type == "responses" && to_type == "states") {
         # If state is negative (decline, loss), response reduces it → "-"
         # If state is positive (recovery, increase), response increases it → "+"
         if (to_is_negative) {
@@ -2520,30 +2520,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         }
       }
 
-      # M → R (Measures → Responses): Intelligent polarity detection
-      if (length(elements$measures) > 0 && length(elements$responses) > 0 && length(connections) < MAX_CONNECTIONS) {
-        for (i in seq_along(elements$measures)) {
-          for (j in seq_along(elements$responses)) {
-            if (length(connections) >= MAX_CONNECTIONS) break
-            polarity <- detect_polarity(elements$measures[[i]]$name, elements$responses[[j]]$name, "measures", "responses")
-            connections[[length(connections) + 1]] <- list(
-              from_type = "measures",
-              from_index = i,
-              from_name = elements$measures[[i]]$name,
-              to_type = "responses",
-              to_index = j,
-              to_name = elements$responses[[j]]$name,
-              polarity = polarity,
-              strength = "medium",
-              confidence = 3,
-              rationale = paste(elements$measures[[i]]$name, "supports", elements$responses[[j]]$name),
-              matrix = "r_m"
-            )
-          }
-          if (length(connections) >= MAX_CONNECTIONS) break
-        }
-      }
-
       # ========================================================================
       # FEEDBACK LOOPS - Additional logical connections
       # ========================================================================
@@ -2594,24 +2570,24 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         }
       }
 
-      # W → M (Welfare/Goods & Benefits → Measures): Feedback loop
+      # W → R (Welfare/Goods & Benefits → Response Measures): Feedback loop
       # E.g., "Declining fisheries income drives implementation of quotas"
-      if (length(elements$welfare) > 0 && length(elements$measures) > 0) {
+      if (length(elements$welfare) > 0 && length(elements$responses) > 0) {
         for (i in seq_along(elements$welfare)) {
-          for (j in seq_along(elements$measures)) {
-            polarity <- detect_polarity(elements$welfare[[i]]$name, elements$measures[[j]]$name, "welfare", "measures")
+          for (j in seq_along(elements$responses)) {
+            polarity <- detect_polarity(elements$welfare[[i]]$name, elements$responses[[j]]$name, "welfare", "responses")
             connections[[length(connections) + 1]] <- list(
               from_type = "welfare",
               from_index = i,
               from_name = elements$welfare[[i]]$name,
-              to_type = "measures",
+              to_type = "responses",
               to_index = j,
-              to_name = elements$measures[[j]]$name,
+              to_name = elements$responses[[j]]$name,
               polarity = polarity,
               strength = "medium",
               confidence = 3,
-              rationale = paste(elements$welfare[[i]]$name, if(polarity == "+") "drives implementation of" else "reduces need for", elements$measures[[j]]$name),
-              matrix = "m_gb"  # Feedback: goods/benefits to measures
+              rationale = paste(elements$welfare[[i]]$name, if(polarity == "+") "drives implementation of" else "reduces need for", elements$responses[[j]]$name),
+              matrix = "gb_r"  # Feedback: goods/benefits to response measures
             )
           }
         }
@@ -2663,75 +2639,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         }
       }
 
-      # M → D (Measures → Drivers): Feedback loop
-      # E.g., "Quota systems reduce economic pressure" or "Awareness campaigns increase environmental concern"
-      if (length(elements$measures) > 0 && length(elements$drivers) > 0) {
-        for (i in seq_along(elements$measures)) {
-          for (j in seq_along(elements$drivers)) {
-            polarity <- detect_polarity(elements$measures[[i]]$name, elements$drivers[[j]]$name, "measures", "drivers")
-            connections[[length(connections) + 1]] <- list(
-              from_type = "measures",
-              from_index = i,
-              from_name = elements$measures[[i]]$name,
-              to_type = "drivers",
-              to_index = j,
-              to_name = elements$drivers[[j]]$name,
-              polarity = polarity,
-              strength = "medium",
-              confidence = 3,
-              rationale = paste(elements$measures[[i]]$name, if(polarity == "+") "strengthens" else "reduces", elements$drivers[[j]]$name),
-              matrix = "d_m"  # Feedback: measures to drivers
-            )
-          }
-        }
-      }
-
-      # M → A (Measures → Activities): Feedback loop
-      # E.g., "Catch limits reduce fishing effort" or "Marine protected areas restrict tourism activities"
-      if (length(elements$measures) > 0 && length(elements$activities) > 0) {
-        for (i in seq_along(elements$measures)) {
-          for (j in seq_along(elements$activities)) {
-            polarity <- detect_polarity(elements$measures[[i]]$name, elements$activities[[j]]$name, "measures", "activities")
-            connections[[length(connections) + 1]] <- list(
-              from_type = "measures",
-              from_index = i,
-              from_name = elements$measures[[i]]$name,
-              to_type = "activities",
-              to_index = j,
-              to_name = elements$activities[[j]]$name,
-              polarity = polarity,
-              strength = "medium",
-              confidence = 3,
-              rationale = paste(elements$measures[[i]]$name, if(polarity == "-") "limits" else "supports", elements$activities[[j]]$name),
-              matrix = "a_m"  # Feedback: measures to activities
-            )
-          }
-        }
-      }
-
-      # M → P (Measures → Pressures): Feedback loop
-      # E.g., "Wastewater treatment reduces pollution" or "Fishing bans reduce overfishing pressure"
-      if (length(elements$measures) > 0 && length(elements$pressures) > 0) {
-        for (i in seq_along(elements$measures)) {
-          for (j in seq_along(elements$pressures)) {
-            polarity <- detect_polarity(elements$measures[[i]]$name, elements$pressures[[j]]$name, "measures", "pressures")
-            connections[[length(connections) + 1]] <- list(
-              from_type = "measures",
-              from_index = i,
-              from_name = elements$measures[[i]]$name,
-              to_type = "pressures",
-              to_index = j,
-              to_name = elements$pressures[[j]]$name,
-              polarity = polarity,
-              strength = "medium",
-              confidence = 3,
-              rationale = paste(elements$measures[[i]]$name, if(polarity == "-") "mitigates" else "increases", elements$pressures[[j]]$name),
-              matrix = "p_m"  # Feedback: measures to pressures
-            )
-          }
-        }
-      }
-
       # Log final count and warn if limit reached
       cat(sprintf("[AI ISA CONNECTIONS] Generated %d connections\n", length(connections)))
       if (length(connections) >= MAX_CONNECTIONS) {
@@ -2762,15 +2669,14 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             length(rv$elements$states),
             length(rv$elements$impacts),
             length(rv$elements$welfare),
-            length(rv$elements$responses),
-            length(rv$elements$measures)
+            length(rv$elements$responses)
           )
 
           if (total_elements == 0) {
             # No elements - show helpful message
             message <- paste0(
               i18n$t("I notice you haven't added any elements yet!"), " ",
-              i18n$t("To create connections, you need to add at least some Drivers, Activities, Pressures, States, Impacts, Welfare, Responses, or Measures."), " ",
+              i18n$t("To create connections, you need to add at least some Drivers, Activities, Pressures, States, Impacts, Welfare, or Response Measures."), " ",
               i18n$t("Please go back through the previous steps and add elements by clicking the suggested options or entering your own text.")
             )
           } else {
@@ -2915,8 +2821,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         length(rv$elements$states),
         length(rv$elements$impacts),
         length(rv$elements$welfare),
-        length(rv$elements$responses),
-        length(rv$elements$measures)
+        length(rv$elements$responses)
       )
 
       div(
@@ -2933,7 +2838,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     output$count_impacts <- renderText({ length(rv$elements$impacts) })
     output$count_welfare <- renderText({ length(rv$elements$welfare) })
     output$count_responses <- renderText({ length(rv$elements$responses) })
-    output$count_measures <- renderText({ length(rv$elements$measures) })
     output$count_connections <- renderText({ length(rv$approved_connections) })
 
     # Render DAPSI(W)R(M) flow diagram
@@ -2958,10 +2862,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           paste0("W: ", length(rv$elements$welfare))),
         div(class = "dapsiwrm-arrow", "↑"),
         div(class = "dapsiwrm-box", style = "background: #f0f0f0; border-color: #66c2a5; color: #66c2a5;",
-          paste0("R: ", length(rv$elements$responses))),
-        div(class = "dapsiwrm-arrow", "↑"),
-        div(class = "dapsiwrm-box", style = "background: #f0f0f0; border-color: #3288bd; color: #3288bd;",
-          paste0("M: ", length(rv$elements$measures)))
+          paste0("R/M: ", length(rv$elements$responses)))
       )
     })
 
@@ -3047,19 +2948,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Responses
         if (length(rv$elements$responses) > 0) {
           div(
-            h4(style = "color: #66c2a5;", icon("shield-alt"), " ", i18n$t("Responses (Management Actions)")),
+            h4(style = "color: #66c2a5;", icon("shield-alt"), " ", i18n$t("Response Measures (Management & Policy)")),
             tags$ul(
               lapply(rv$elements$responses, function(r) tags$li(r$name))
-            )
-          )
-        },
-
-        # Measures
-        if (length(rv$elements$measures) > 0) {
-          div(
-            h4(style = "color: #3288bd;", icon("gavel"), " ", i18n$t("Measures (Policy Instruments)")),
-            tags$ul(
-              lapply(rv$elements$measures, function(m) tags$li(m$name))
             )
           )
         },
@@ -3104,7 +2995,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           sum(length(rv$elements$drivers), length(rv$elements$activities),
               length(rv$elements$pressures), length(rv$elements$states),
               length(rv$elements$impacts), length(rv$elements$welfare),
-              length(rv$elements$responses), length(rv$elements$measures)),
+              length(rv$elements$responses)),
           " | ",
           i18n$t("Total connections:"), " ", length(rv$approved_connections))
       )
@@ -3166,8 +3057,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         states = list(),
         impacts = list(),
         welfare = list(),
-        responses = list(),
-        measures = list()
+        responses = list()
       )
 
       # Reset context - MUST match initialization structure
@@ -3296,18 +3186,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       }
     })
 
-    observeEvent(input$link_measures, {
-      if (length(rv$elements$measures) > 0) {
-        showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Measures")),
-          tags$ul(lapply(rv$elements$measures, function(m) tags$li(strong(m$name)))),
-          size = "m",
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("Close"))
-        ))
-      }
-    })
-
     observeEvent(input$link_connections, {
       if (length(rv$approved_connections) > 0) {
         # Build list of approved connections with details
@@ -3399,10 +3277,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         responses = list(
           list(name = "Fishing quotas and limits", description = "", timestamp = Sys.time()),
           list(name = "Marine protected areas", description = "", timestamp = Sys.time())
-        ),
-        measures = list(
-          list(name = "Fisheries legislation", description = "", timestamp = Sys.time()),
-          list(name = "Monitoring and enforcement programs", description = "", timestamp = Sys.time())
         )
       )
 
@@ -3486,10 +3360,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         responses = list(
           list(name = "Pollution regulations", description = "", timestamp = Sys.time()),
           list(name = "Beach cleanup programs", description = "", timestamp = Sys.time())
-        ),
-        measures = list(
-          list(name = "Environmental legislation", description = "", timestamp = Sys.time()),
-          list(name = "Education and awareness campaigns", description = "", timestamp = Sys.time())
         )
       )
 
@@ -3574,10 +3444,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         responses = list(
           list(name = "Sustainable tourism practices", description = "", timestamp = Sys.time()),
           list(name = "Coastal zone management", description = "", timestamp = Sys.time())
-        ),
-        measures = list(
-          list(name = "Marine spatial planning", description = "", timestamp = Sys.time()),
-          list(name = "Certification schemes for sustainable tourism", description = "", timestamp = Sys.time())
         )
       )
 
@@ -3660,10 +3526,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         responses = list(
           list(name = "Climate change mitigation", description = "", timestamp = Sys.time()),
           list(name = "Coral reef restoration", description = "", timestamp = Sys.time())
-        ),
-        measures = list(
-          list(name = "International climate agreements", description = "", timestamp = Sys.time()),
-          list(name = "Research funding for reef resilience", description = "", timestamp = Sys.time())
         )
       )
 
@@ -3748,15 +3610,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               length(rv$elements$drivers), length(rv$elements$activities),
               length(rv$elements$pressures), length(rv$elements$states),
               length(rv$elements$impacts), length(rv$elements$welfare),
-              length(rv$elements$responses), length(rv$elements$measures)
+              length(rv$elements$responses)
             )
 
-            cat(sprintf("[AI ISA SAVE] Total elements: %d (D:%d A:%d P:%d S:%d I:%d W:%d R:%d M:%d)\n",
+            cat(sprintf("[AI ISA SAVE] Total elements: %d (D:%d A:%d P:%d S:%d I:%d W:%d R/M:%d)\n",
                         total_elements,
                         length(rv$elements$drivers), length(rv$elements$activities),
                         length(rv$elements$pressures), length(rv$elements$states),
                         length(rv$elements$impacts), length(rv$elements$welfare),
-                        length(rv$elements$responses), length(rv$elements$measures)))
+                        length(rv$elements$responses)))
 
             if (total_elements > 0) {
               cat("[AI ISA] Auto-saving generated ISA framework to project data\n")
@@ -3889,18 +3751,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                         stringsAsFactors = FALSE)
             }
 
-            current_data$data$isa_data$measures <- if (length(rv$elements$measures) > 0) {
-              data.frame(
-                Name = sapply(rv$elements$measures, function(x) x$name),
-                Description = sapply(rv$elements$measures, function(x) x$description %||% ""),
-                Indicator = "",
-                stringsAsFactors = FALSE
-              )
-            } else {
-              data.frame(Name = character(), Description = character(), Indicator = character(),
-                        stringsAsFactors = FALSE)
-            }
-
             # Save connections (for AI ISA Assistant recovery)
             current_data$data$isa_data$connections <- list(
               suggested = rv$suggested_connections,
@@ -3920,15 +3770,18 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               }
             } else {
               # Initialize all matrices to NULL first for AI-generated data
+              # NEW DAPSIWRM forward causal flow
               current_data$data$isa_data$adjacency_matrices <- list(
-                gb_es = NULL,
-                es_mpf = NULL,
-                mpf_p = NULL,
-                p_a = NULL,
-                a_d = NULL,
-                d_gb = NULL,
-                p_r = NULL,
-                r_m = NULL
+                d_a = NULL,
+                a_p = NULL,
+                p_mpf = NULL,
+                mpf_es = NULL,
+                es_gb = NULL,
+                gb_d = NULL,
+                gb_r = NULL,
+                r_d = NULL,
+                r_a = NULL,
+                r_p = NULL
               )
             }
 
@@ -3947,89 +3800,130 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               n_impacts <- length(rv$elements$impacts)
               n_welfare <- length(rv$elements$welfare)
               n_responses <- length(rv$elements$responses)
-              n_measures <- length(rv$elements$measures)
 
-              cat(sprintf("[AI ISA AUTO-SAVE] Matrix dimensions: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d, M=%d\n",
-                         n_drivers, n_activities, n_pressures, n_states, n_impacts, n_welfare, n_responses, n_measures))
+              cat(sprintf("[AI ISA AUTO-SAVE] Matrix dimensions: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R/M=%d\n",
+                         n_drivers, n_activities, n_pressures, n_states, n_impacts, n_welfare, n_responses))
 
-              # Initialize matrices
+              # Initialize matrices with forward causal flow (SOURCE×TARGET format)
+              
+              # 1. Drivers → Activities (D→A)
               if (n_drivers > 0 && n_activities > 0) {
-                current_data$data$isa_data$adjacency_matrices$a_d <- matrix(
-                  "", nrow = n_activities, ncol = n_drivers,
+                current_data$data$isa_data$adjacency_matrices$d_a <- matrix(
+                  "", nrow = n_drivers, ncol = n_activities,
                   dimnames = list(
-                    sapply(rv$elements$activities, function(x) x$name),
-                    sapply(rv$elements$drivers, function(x) x$name)
-                  )
-                )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created a_d matrix (%d x %d)\n", n_activities, n_drivers))
-              }
-
-              if (n_activities > 0 && n_pressures > 0) {
-                current_data$data$isa_data$adjacency_matrices$p_a <- matrix(
-                  "", nrow = n_pressures, ncol = n_activities,
-                  dimnames = list(
-                    sapply(rv$elements$pressures, function(x) x$name),
+                    sapply(rv$elements$drivers, function(x) x$name),
                     sapply(rv$elements$activities, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created p_a matrix (%d x %d)\n", n_pressures, n_activities))
+                cat(sprintf("[AI ISA AUTO-SAVE] Created d_a matrix (%d x %d)\n", n_drivers, n_activities))
               }
 
-              if (n_pressures > 0 && n_states > 0) {
-                current_data$data$isa_data$adjacency_matrices$mpf_p <- matrix(
-                  "", nrow = n_states, ncol = n_pressures,
+              # 2. Activities → Pressures (A→P)
+              if (n_activities > 0 && n_pressures > 0) {
+                current_data$data$isa_data$adjacency_matrices$a_p <- matrix(
+                  "", nrow = n_activities, ncol = n_pressures,
                   dimnames = list(
-                    sapply(rv$elements$states, function(x) x$name),
+                    sapply(rv$elements$activities, function(x) x$name),
                     sapply(rv$elements$pressures, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created mpf_p matrix (%d x %d)\n", n_states, n_pressures))
+                cat(sprintf("[AI ISA AUTO-SAVE] Created a_p matrix (%d x %d)\n", n_activities, n_pressures))
               }
 
-              if (n_states > 0 && n_impacts > 0) {
-                current_data$data$isa_data$adjacency_matrices$es_mpf <- matrix(
-                  "", nrow = n_impacts, ncol = n_states,
+              # 3. Pressures → Marine Processes (P→MPF)
+              if (n_pressures > 0 && n_states > 0) {
+                current_data$data$isa_data$adjacency_matrices$p_mpf <- matrix(
+                  "", nrow = n_pressures, ncol = n_states,
                   dimnames = list(
-                    sapply(rv$elements$impacts, function(x) x$name),
+                    sapply(rv$elements$pressures, function(x) x$name),
                     sapply(rv$elements$states, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created es_mpf matrix (%d x %d)\n", n_impacts, n_states))
+                cat(sprintf("[AI ISA AUTO-SAVE] Created p_mpf matrix (%d x %d)\n", n_pressures, n_states))
               }
 
-              if (n_impacts > 0 && n_welfare > 0) {
-                current_data$data$isa_data$adjacency_matrices$gb_es <- matrix(
-                  "", nrow = n_welfare, ncol = n_impacts,
+              # 4. Marine Processes → Ecosystem Services (MPF→ES)
+              if (n_states > 0 && n_impacts > 0) {
+                current_data$data$isa_data$adjacency_matrices$mpf_es <- matrix(
+                  "", nrow = n_states, ncol = n_impacts,
                   dimnames = list(
-                    sapply(rv$elements$welfare, function(x) x$name),
+                    sapply(rv$elements$states, function(x) x$name),
                     sapply(rv$elements$impacts, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created gb_es matrix (%d x %d)\n", n_welfare, n_impacts))
+                cat(sprintf("[AI ISA AUTO-SAVE] Created mpf_es matrix (%d x %d)\n", n_states, n_impacts))
               }
 
-              # Responses → Pressures matrix
-              if (n_responses > 0 && n_pressures > 0) {
-                current_data$data$isa_data$adjacency_matrices$p_r <- matrix(
-                  "", nrow = n_pressures, ncol = n_responses,
+              # 5. Ecosystem Services → Goods/Benefits (ES→GB)
+              if (n_impacts > 0 && n_welfare > 0) {
+                current_data$data$isa_data$adjacency_matrices$es_gb <- matrix(
+                  "", nrow = n_impacts, ncol = n_welfare,
                   dimnames = list(
-                    sapply(rv$elements$pressures, function(x) x$name),
+                    sapply(rv$elements$impacts, function(x) x$name),
+                    sapply(rv$elements$welfare, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created es_gb matrix (%d x %d)\n", n_impacts, n_welfare))
+              }
+
+              # 6. Goods/Benefits → Drivers feedback (GB→D)
+              if (n_welfare > 0 && n_drivers > 0) {
+                current_data$data$isa_data$adjacency_matrices$gb_d <- matrix(
+                  "", nrow = n_welfare, ncol = n_drivers,
+                  dimnames = list(
+                    sapply(rv$elements$welfare, function(x) x$name),
+                    sapply(rv$elements$drivers, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created gb_d matrix (%d x %d)\n", n_welfare, n_drivers))
+              }
+
+              # 7. Goods/Benefits → Responses (GB→R)
+              if (n_welfare > 0 && n_responses > 0) {
+                current_data$data$isa_data$adjacency_matrices$gb_r <- matrix(
+                  "", nrow = n_welfare, ncol = n_responses,
+                  dimnames = list(
+                    sapply(rv$elements$welfare, function(x) x$name),
+                    sapply(rv$elements$responses, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created gb_r matrix (%d x %d)\n", n_welfare, n_responses))
+              }
+
+              # 8. Responses → Drivers (R→D management)
+              if (n_responses > 0 && n_drivers > 0) {
+                current_data$data$isa_data$adjacency_matrices$r_d <- matrix(
+                  "", nrow = n_responses, ncol = n_drivers,
+                  dimnames = list(
+                    sapply(rv$elements$responses, function(x) x$name),
+                    sapply(rv$elements$drivers, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created r_d matrix (%d x %d)\n", n_responses, n_drivers))
+              }
+
+              # 9. Responses → Activities (R→A management)
+              if (n_responses > 0 && n_activities > 0) {
+                current_data$data$isa_data$adjacency_matrices$r_a <- matrix(
+                  "", nrow = n_responses, ncol = n_activities,
+                  dimnames = list(
+                    sapply(rv$elements$responses, function(x) x$name),
+                    sapply(rv$elements$activities, function(x) x$name)
+                  )
+                )
+                cat(sprintf("[AI ISA AUTO-SAVE] Created r_a matrix (%d x %d)\n", n_responses, n_activities))
+              }
+
+              # 10. Responses → Pressures (R→P management)
+              if (n_responses > 0 && n_pressures > 0) {
+                current_data$data$isa_data$adjacency_matrices$r_p <- matrix(
+                  "", nrow = n_responses, ncol = n_pressures,
+                  dimnames = list(
+                    sapply(rv$elements$responses, function(x) x$name),
                     sapply(rv$elements$responses, function(x) x$name)
                   )
                 )
                 cat(sprintf("[AI ISA AUTO-SAVE] Created p_r matrix (%d x %d)\n", n_pressures, n_responses))
-              }
-
-              # Measures → Responses matrix
-              if (n_measures > 0 && n_responses > 0) {
-                current_data$data$isa_data$adjacency_matrices$r_m <- matrix(
-                  "", nrow = n_responses, ncol = n_measures,
-                  dimnames = list(
-                    sapply(rv$elements$responses, function(x) x$name),
-                    sapply(rv$elements$measures, function(x) x$name)
-                  )
-                )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created r_m matrix (%d x %d)\n", n_responses, n_measures))
               }
 
               # Fill matrices with approved connections
@@ -4051,28 +3945,37 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                 value <- paste0(conn$polarity, conn$strength, ":", confidence)
                 cat(sprintf("[AI ISA AUTO-SAVE]   Formatted value: %s\n", value))
 
-                # Determine which matrix and indices
-                if (conn$matrix == "a_d" && !is.null(current_data$data$isa_data$adjacency_matrices$a_d)) {
-                  current_data$data$isa_data$adjacency_matrices$a_d[conn$to_index, conn$from_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to a_d[%d, %d]\n", conn$to_index, conn$from_index))
-                } else if (conn$matrix == "p_a" && !is.null(current_data$data$isa_data$adjacency_matrices$p_a)) {
-                  current_data$data$isa_data$adjacency_matrices$p_a[conn$to_index, conn$from_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to p_a[%d, %d]\n", conn$to_index, conn$from_index))
-                } else if (conn$matrix == "mpf_p" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_p)) {
-                  current_data$data$isa_data$adjacency_matrices$mpf_p[conn$to_index, conn$from_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to mpf_p[%d, %d]\n", conn$to_index, conn$from_index))
-                } else if (conn$matrix == "es_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$es_mpf)) {
-                  current_data$data$isa_data$adjacency_matrices$es_mpf[conn$to_index, conn$from_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to es_mpf[%d, %d]\n", conn$to_index, conn$from_index))
-                } else if (conn$matrix == "gb_es" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_es)) {
-                  current_data$data$isa_data$adjacency_matrices$gb_es[conn$to_index, conn$from_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to gb_es[%d, %d]\n", conn$to_index, conn$from_index))
-                } else if (conn$matrix == "p_r" && !is.null(current_data$data$isa_data$adjacency_matrices$p_r)) {
-                  current_data$data$isa_data$adjacency_matrices$p_r[conn$to_index, conn$from_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to p_r[%d, %d]\n", conn$to_index, conn$from_index))
-                } else if (conn$matrix == "r_m" && !is.null(current_data$data$isa_data$adjacency_matrices$r_m)) {
-                  current_data$data$isa_data$adjacency_matrices$r_m[conn$to_index, conn$from_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_m[%d, %d]\n", conn$to_index, conn$from_index))
+                # Determine which matrix and indices (NEW: forward flow uses [from, to])
+                if (conn$matrix == "d_a" && !is.null(current_data$data$isa_data$adjacency_matrices$d_a)) {
+                  current_data$data$isa_data$adjacency_matrices$d_a[conn$from_index, conn$to_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to d_a[%d, %d]\n", conn$from_index, conn$to_index))
+                } else if (conn$matrix == "a_p" && !is.null(current_data$data$isa_data$adjacency_matrices$a_p)) {
+                  current_data$data$isa_data$adjacency_matrices$a_p[conn$from_index, conn$to_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to a_p[%d, %d]\n", conn$from_index, conn$to_index))
+                } else if (conn$matrix == "p_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$p_mpf)) {
+                  current_data$data$isa_data$adjacency_matrices$p_mpf[conn$from_index, conn$to_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to p_mpf[%d, %d]\n", conn$from_index, conn$to_index))
+                } else if (conn$matrix == "mpf_es" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_es)) {
+                  current_data$data$isa_data$adjacency_matrices$mpf_es[conn$from_index, conn$to_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to mpf_es[%d, %d]\n", conn$from_index, conn$to_index))
+                } else if (conn$matrix == "es_gb" && !is.null(current_data$data$isa_data$adjacency_matrices$es_gb)) {
+                  current_data$data$isa_data$adjacency_matrices$es_gb[conn$from_index, conn$to_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to es_gb[%d, %d]\n", conn$from_index, conn$to_index))
+                } else if (conn$matrix == "gb_d" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_d)) {
+                  current_data$data$isa_data$adjacency_matrices$gb_d[conn$from_index, conn$to_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to gb_d[%d, %d]\n", conn$from_index, conn$to_index))
+                } else if (conn$matrix == "gb_r" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_r)) {
+                  current_data$data$isa_data$adjacency_matrices$gb_r[conn$from_index, conn$to_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to gb_r[%d, %d]\n", conn$from_index, conn$to_index))
+                } else if (conn$matrix == "r_d" && !is.null(current_data$data$isa_data$adjacency_matrices$r_d)) {
+                  current_data$data$isa_data$adjacency_matrices$r_d[conn$from_index, conn$to_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_d[%d, %d]\n", conn$from_index, conn$to_index))
+                } else if (conn$matrix == "r_a" && !is.null(current_data$data$isa_data$adjacency_matrices$r_a)) {
+                  current_data$data$isa_data$adjacency_matrices$r_a[conn$from_index, conn$to_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_a[%d, %d]\n", conn$from_index, conn$to_index))
+                } else if (conn$matrix == "r_p" && !is.null(current_data$data$isa_data$adjacency_matrices$r_p)) {
+                  current_data$data$isa_data$adjacency_matrices$r_p[conn$from_index, conn$to_index] <- value
+                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_p[%d, %d]\n", conn$from_index, conn$to_index))
                 } else {
                   cat(sprintf("[AI ISA AUTO-SAVE]   ✗ FAILED to save - matrix '%s' not found or NULL\n", conn$matrix %||% "NULL"))
                 }
@@ -4151,11 +4054,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           current_data$data$isa_data <- list()
         }
 
-        cat(sprintf("[AI ISA] Manual saving %d drivers, %d activities, %d pressures, %d states, %d impacts, %d welfare, %d responses, %d measures\n",
+        cat(sprintf("[AI ISA] Manual saving %d drivers, %d activities, %d pressures, %d states, %d impacts, %d welfare, %d response measures\n",
                    length(rv$elements$drivers), length(rv$elements$activities),
                    length(rv$elements$pressures), length(rv$elements$states),
                    length(rv$elements$impacts), length(rv$elements$welfare),
-                   length(rv$elements$responses), length(rv$elements$measures)))
+                   length(rv$elements$responses)))
 
       # Convert AI Assistant elements to ISA dataframe format
       # CLD expects separate dataframes for each category
@@ -4307,29 +4210,19 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         )
       }
 
-      # Create measures dataframe
-      if (length(rv$elements$measures) > 0) {
-        current_data$data$isa_data$measures <- data.frame(
-          name = sapply(rv$elements$measures, function(x) x$name),
-          description = sapply(rv$elements$measures, function(x) x$description %||% ""),
-          indicator = "",
-          stringsAsFactors = FALSE
-        )
-      } else {
-        current_data$data$isa_data$measures <- data.frame(
-          name = character(), description = character(), indicator = character(),
-          stringsAsFactors = FALSE
-        )
-      }
-
       # Build adjacency matrices from approved connections
+      # NEW DAPSIWRM forward causal flow
       current_data$data$isa_data$adjacency_matrices <- list(
-        gb_es = NULL,
-        es_mpf = NULL,
-        mpf_p = NULL,
-        p_a = NULL,
-        a_d = NULL,
-        d_gb = NULL
+        d_a = NULL,
+        a_p = NULL,
+        p_mpf = NULL,
+        mpf_es = NULL,
+        es_gb = NULL,
+        gb_d = NULL,
+        gb_r = NULL,
+        r_d = NULL,
+        r_a = NULL,
+        r_p = NULL
       )
 
       # If there are approved connections, build the matrices
@@ -4345,64 +4238,131 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         n_states <- length(rv$elements$states)
         n_impacts <- length(rv$elements$impacts)
         n_welfare <- length(rv$elements$welfare)
+        n_responses <- length(rv$elements$responses)
 
-        cat(sprintf("[AI ISA CONNECTIONS] Matrix dimensions: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d\n",
-                   n_drivers, n_activities, n_pressures, n_states, n_impacts, n_welfare))
+        cat(sprintf("[AI ISA CONNECTIONS] Matrix dimensions: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d\n",
+                   n_drivers, n_activities, n_pressures, n_states, n_impacts, n_welfare, n_responses))
 
-        # Initialize matrices
+        # Initialize matrices with forward causal flow (SOURCE×TARGET format)
+        
+        # 1. Drivers → Activities (D→A)
         if (n_drivers > 0 && n_activities > 0) {
-          current_data$data$isa_data$adjacency_matrices$a_d <- matrix(
-            "", nrow = n_activities, ncol = n_drivers,
+          current_data$data$isa_data$adjacency_matrices$d_a <- matrix(
+            "", nrow = n_drivers, ncol = n_activities,
             dimnames = list(
-              sapply(rv$elements$activities, function(x) x$name),
-              sapply(rv$elements$drivers, function(x) x$name)
-            )
-          )
-          cat(sprintf("[AI ISA CONNECTIONS] Created a_d matrix (%d x %d)\n", n_activities, n_drivers))
-        }
-
-        if (n_activities > 0 && n_pressures > 0) {
-          current_data$data$isa_data$adjacency_matrices$p_a <- matrix(
-            "", nrow = n_pressures, ncol = n_activities,
-            dimnames = list(
-              sapply(rv$elements$pressures, function(x) x$name),
+              sapply(rv$elements$drivers, function(x) x$name),
               sapply(rv$elements$activities, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created p_a matrix (%d x %d)\n", n_pressures, n_activities))
+          cat(sprintf("[AI ISA CONNECTIONS] Created d_a matrix (%d x %d)\n", n_drivers, n_activities))
         }
 
-        if (n_pressures > 0 && n_states > 0) {
-          current_data$data$isa_data$adjacency_matrices$mpf_p <- matrix(
-            "", nrow = n_states, ncol = n_pressures,
+        # 2. Activities → Pressures (A→P)
+        if (n_activities > 0 && n_pressures > 0) {
+          current_data$data$isa_data$adjacency_matrices$a_p <- matrix(
+            "", nrow = n_activities, ncol = n_pressures,
             dimnames = list(
-              sapply(rv$elements$states, function(x) x$name),
+              sapply(rv$elements$activities, function(x) x$name),
               sapply(rv$elements$pressures, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created mpf_p matrix (%d x %d)\n", n_states, n_pressures))
+          cat(sprintf("[AI ISA CONNECTIONS] Created a_p matrix (%d x %d)\n", n_activities, n_pressures))
         }
 
-        if (n_states > 0 && n_impacts > 0) {
-          current_data$data$isa_data$adjacency_matrices$es_mpf <- matrix(
-            "", nrow = n_impacts, ncol = n_states,
+        # 3. Pressures → Marine Processes (P→MPF)
+        if (n_pressures > 0 && n_states > 0) {
+          current_data$data$isa_data$adjacency_matrices$p_mpf <- matrix(
+            "", nrow = n_pressures, ncol = n_states,
             dimnames = list(
-              sapply(rv$elements$impacts, function(x) x$name),
+              sapply(rv$elements$pressures, function(x) x$name),
               sapply(rv$elements$states, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created es_mpf matrix (%d x %d)\n", n_impacts, n_states))
+          cat(sprintf("[AI ISA CONNECTIONS] Created p_mpf matrix (%d x %d)\n", n_pressures, n_states))
         }
 
-        if (n_impacts > 0 && n_welfare > 0) {
-          current_data$data$isa_data$adjacency_matrices$gb_es <- matrix(
-            "", nrow = n_welfare, ncol = n_impacts,
+        # 4. Marine Processes → Ecosystem Services (MPF→ES)
+        if (n_states > 0 && n_impacts > 0) {
+          current_data$data$isa_data$adjacency_matrices$mpf_es <- matrix(
+            "", nrow = n_states, ncol = n_impacts,
             dimnames = list(
-              sapply(rv$elements$welfare, function(x) x$name),
+              sapply(rv$elements$states, function(x) x$name),
               sapply(rv$elements$impacts, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created gb_es matrix (%d x %d)\n", n_welfare, n_impacts))
+          cat(sprintf("[AI ISA CONNECTIONS] Created mpf_es matrix (%d x %d)\n", n_states, n_impacts))
+        }
+
+        # 5. Ecosystem Services → Goods/Benefits (ES→GB)
+        if (n_impacts > 0 && n_welfare > 0) {
+          current_data$data$isa_data$adjacency_matrices$es_gb <- matrix(
+            "", nrow = n_impacts, ncol = n_welfare,
+            dimnames = list(
+              sapply(rv$elements$impacts, function(x) x$name),
+              sapply(rv$elements$welfare, function(x) x$name)
+            )
+          )
+          cat(sprintf("[AI ISA CONNECTIONS] Created es_gb matrix (%d x %d)\n", n_impacts, n_welfare))
+        }
+
+        # 6. Goods/Benefits → Drivers feedback (GB→D)
+        if (n_welfare > 0 && n_drivers > 0) {
+          current_data$data$isa_data$adjacency_matrices$gb_d <- matrix(
+            "", nrow = n_welfare, ncol = n_drivers,
+            dimnames = list(
+              sapply(rv$elements$welfare, function(x) x$name),
+              sapply(rv$elements$drivers, function(x) x$name)
+            )
+          )
+          cat(sprintf("[AI ISA CONNECTIONS] Created gb_d matrix (%d x %d)\n", n_welfare, n_drivers))
+        }
+
+        # 7. Goods/Benefits → Responses (GB→R)
+        if (n_welfare > 0 && n_responses > 0) {
+          current_data$data$isa_data$adjacency_matrices$gb_r <- matrix(
+            "", nrow = n_welfare, ncol = n_responses,
+            dimnames = list(
+              sapply(rv$elements$welfare, function(x) x$name),
+              sapply(rv$elements$responses, function(x) x$name)
+            )
+          )
+          cat(sprintf("[AI ISA CONNECTIONS] Created gb_r matrix (%d x %d)\n", n_welfare, n_responses))
+        }
+
+        # 8. Responses → Drivers (R→D management)
+        if (n_responses > 0 && n_drivers > 0) {
+          current_data$data$isa_data$adjacency_matrices$r_d <- matrix(
+            "", nrow = n_responses, ncol = n_drivers,
+            dimnames = list(
+              sapply(rv$elements$responses, function(x) x$name),
+              sapply(rv$elements$drivers, function(x) x$name)
+            )
+          )
+          cat(sprintf("[AI ISA CONNECTIONS] Created r_d matrix (%d x %d)\n", n_responses, n_drivers))
+        }
+
+        # 9. Responses → Activities (R→A management)
+        if (n_responses > 0 && n_activities > 0) {
+          current_data$data$isa_data$adjacency_matrices$r_a <- matrix(
+            "", nrow = n_responses, ncol = n_activities,
+            dimnames = list(
+              sapply(rv$elements$responses, function(x) x$name),
+              sapply(rv$elements$activities, function(x) x$name)
+            )
+          )
+          cat(sprintf("[AI ISA CONNECTIONS] Created r_a matrix (%d x %d)\n", n_responses, n_activities))
+        }
+
+        # 10. Responses → Pressures (R→P management)
+        if (n_responses > 0 && n_pressures > 0) {
+          current_data$data$isa_data$adjacency_matrices$r_p <- matrix(
+            "", nrow = n_responses, ncol = n_pressures,
+            dimnames = list(
+              sapply(rv$elements$responses, function(x) x$name),
+              sapply(rv$elements$pressures, function(x) x$name)
+            )
+          )
+          cat(sprintf("[AI ISA CONNECTIONS] Created r_p matrix (%d x %d)\n", n_responses, n_pressures))
         }
 
         # Fill matrices with approved connections
@@ -4424,22 +4384,37 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           value <- paste0(conn$polarity, conn$strength, ":", confidence)
           cat(sprintf("[AI ISA CONNECTIONS]   Formatted value: %s\n", value))
 
-          # Determine which matrix and indices
-          if (conn$matrix == "a_d" && !is.null(current_data$data$isa_data$adjacency_matrices$a_d)) {
-            current_data$data$isa_data$adjacency_matrices$a_d[conn$to_index, conn$from_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to a_d[%d, %d]\n", conn$to_index, conn$from_index))
-          } else if (conn$matrix == "p_a" && !is.null(current_data$data$isa_data$adjacency_matrices$p_a)) {
-            current_data$data$isa_data$adjacency_matrices$p_a[conn$to_index, conn$from_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to p_a[%d, %d]\n", conn$to_index, conn$from_index))
-          } else if (conn$matrix == "mpf_p" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_p)) {
-            current_data$data$isa_data$adjacency_matrices$mpf_p[conn$to_index, conn$from_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to mpf_p[%d, %d]\n", conn$to_index, conn$from_index))
-          } else if (conn$matrix == "es_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$es_mpf)) {
-            current_data$data$isa_data$adjacency_matrices$es_mpf[conn$to_index, conn$from_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to es_mpf[%d, %d]\n", conn$to_index, conn$from_index))
-          } else if (conn$matrix == "gb_es" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_es)) {
-            current_data$data$isa_data$adjacency_matrices$gb_es[conn$to_index, conn$from_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to gb_es[%d, %d]\n", conn$to_index, conn$from_index))
+          # Determine which matrix and indices (NEW: forward flow uses [from, to])
+          if (conn$matrix == "d_a" && !is.null(current_data$data$isa_data$adjacency_matrices$d_a)) {
+            current_data$data$isa_data$adjacency_matrices$d_a[conn$from_index, conn$to_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to d_a[%d, %d]\n", conn$from_index, conn$to_index))
+          } else if (conn$matrix == "a_p" && !is.null(current_data$data$isa_data$adjacency_matrices$a_p)) {
+            current_data$data$isa_data$adjacency_matrices$a_p[conn$from_index, conn$to_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to a_p[%d, %d]\n", conn$from_index, conn$to_index))
+          } else if (conn$matrix == "p_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$p_mpf)) {
+            current_data$data$isa_data$adjacency_matrices$p_mpf[conn$from_index, conn$to_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to p_mpf[%d, %d]\n", conn$from_index, conn$to_index))
+          } else if (conn$matrix == "mpf_es" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_es)) {
+            current_data$data$isa_data$adjacency_matrices$mpf_es[conn$from_index, conn$to_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to mpf_es[%d, %d]\n", conn$from_index, conn$to_index))
+          } else if (conn$matrix == "es_gb" && !is.null(current_data$data$isa_data$adjacency_matrices$es_gb)) {
+            current_data$data$isa_data$adjacency_matrices$es_gb[conn$from_index, conn$to_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to es_gb[%d, %d]\n", conn$from_index, conn$to_index))
+          } else if (conn$matrix == "gb_d" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_d)) {
+            current_data$data$isa_data$adjacency_matrices$gb_d[conn$from_index, conn$to_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to gb_d[%d, %d]\n", conn$from_index, conn$to_index))
+          } else if (conn$matrix == "gb_r" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_r)) {
+            current_data$data$isa_data$adjacency_matrices$gb_r[conn$from_index, conn$to_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to gb_r[%d, %d]\n", conn$from_index, conn$to_index))
+          } else if (conn$matrix == "r_d" && !is.null(current_data$data$isa_data$adjacency_matrices$r_d)) {
+            current_data$data$isa_data$adjacency_matrices$r_d[conn$from_index, conn$to_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to r_d[%d, %d]\n", conn$from_index, conn$to_index))
+          } else if (conn$matrix == "r_a" && !is.null(current_data$data$isa_data$adjacency_matrices$r_a)) {
+            current_data$data$isa_data$adjacency_matrices$r_a[conn$from_index, conn$to_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to r_a[%d, %d]\n", conn$from_index, conn$to_index))
+          } else if (conn$matrix == "r_p" && !is.null(current_data$data$isa_data$adjacency_matrices$r_p)) {
+            current_data$data$isa_data$adjacency_matrices$r_p[conn$from_index, conn$to_index] <- value
+            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to r_p[%d, %d]\n", conn$from_index, conn$to_index))
           } else {
             cat(sprintf("[AI ISA CONNECTIONS]   ✗ FAILED to save - matrix '%s' not found or NULL\n", conn$matrix %||% "NULL"))
           }
@@ -4471,8 +4446,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           length(rv$elements$states),
           length(rv$elements$impacts),
           length(rv$elements$welfare),
-          length(rv$elements$responses),
-          length(rv$elements$measures)
+          length(rv$elements$responses)
         )
 
         # Count connections

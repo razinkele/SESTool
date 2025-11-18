@@ -14,6 +14,15 @@ options(shiny.autoreload = FALSE)
 source("global.R", local = TRUE)
 
 # ============================================================================
+# REGISTER RESOURCE PATHS
+# ============================================================================
+
+# Make docs directory accessible for serving user manuals (only if it exists)
+if (dir.exists("docs")) {
+  addResourcePath("docs", "docs")
+}
+
+# ============================================================================
 # LOAD HELPER FUNCTIONS
 # ============================================================================
 

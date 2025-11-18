@@ -206,8 +206,7 @@ generate_executive_content <- function(data) {
     count_rows(data$data$isa_data$marine_processes),
     count_rows(data$data$isa_data$ecosystem_services),
     count_rows(data$data$isa_data$goods_benefits),
-    count_rows(data$data$isa_data$responses),
-    count_rows(data$data$isa_data$measures)
+    count_rows(data$data$isa_data$responses)
   )
   cat("  [Executive] Total elements:", n_elements, "\n")
 

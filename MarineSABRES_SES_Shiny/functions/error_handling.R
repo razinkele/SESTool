@@ -81,7 +81,7 @@ validate_isa_data <- function(isa_data) {
   # Check for DAPSIWRM components
   required_components <- c("drivers", "activities", "pressures",
                           "marine_processes", "ecosystem_services",
-                          "goods_benefits", "responses", "measures")
+                          "goods_benefits", "responses")
 
   missing_components <- setdiff(required_components, names(isa_data))
   if (length(missing_components) > 0) {

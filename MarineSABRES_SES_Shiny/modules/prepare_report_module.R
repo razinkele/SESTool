@@ -265,18 +265,31 @@ prepare_report_server <- function(id, project_data_reactive) {
         )
         cat("[HTML REPORT] Report rendered to HTML successfully!\n")
 
-        # Offer download
-        showModal(modalDialog(
-          title = "Report Generated Successfully",
-          tags$p("Your HTML report has been generated successfully."),
-          tags$p(tags$strong("File location:"), temp_file),
-          footer = tagList(
-            downloadButton(session$ns("download_html"), "Download Report"),
-            modalButton("Close")
-          ),
-          easyClose = TRUE,
-          size = "m"
-        ))
+        # Copy to www directory so it can be served by Shiny
+        www_dir <- file.path(getwd(), "www", "reports")
+        if (!dir.exists(www_dir)) {
+          dir.create(www_dir, recursive = TRUE)
+        }
+
+        # Create unique filename
+        report_filename <- paste0("report_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".html")
+        www_file <- file.path(www_dir, report_filename)
+        file.copy(temp_file, www_file, overwrite = TRUE)
+
+        # Create relative URL for Shiny
+        report_url <- paste0("reports/", report_filename)
+
+        # Open in new window using JavaScript
+        session$sendCustomMessage(
+          type = "openReport",
+          message = list(url = report_url)
+        )
+
+        showNotification(
+          "Report opened in a new window!",
+          type = "message",
+          duration = 5
+        )
 
         # Store temp file path for download
         rv$html_report_path <- temp_file
@@ -306,53 +319,82 @@ prepare_report_server <- function(id, project_data_reactive) {
       tryCatch({
         data <- project_data_reactive()
 
-        # First generate HTML
-        report_html <- generate_html_report(
-          data = data,
-          title = input$report_title,
-          author = input$report_author,
-          sections = input$report_sections
-        )
+        # Check if LaTeX is available
+        latex_available <- tryCatch({
+          tinytex::tinytex_root()
+          TRUE
+        }, error = function(e) {
+          # Check system LaTeX
+          tryCatch({
+            system("pdflatex --version", intern = TRUE, ignore.stderr = TRUE)
+            TRUE
+          }, error = function(e2) {
+            FALSE
+          })
+        })
 
-        # Save HTML to temp file
-        temp_html <- tempfile(fileext = ".html")
-        writeLines(report_html, temp_html)
-
-        # Convert to PDF using pagedown if available
-        if (requireNamespace("pagedown", quietly = TRUE)) {
-          temp_pdf <- tempfile(fileext = ".pdf")
-          pagedown::chrome_print(temp_html, output = temp_pdf)
-
-          showModal(modalDialog(
-            title = "PDF Report Generated Successfully",
-            tags$p("Your PDF report has been generated successfully."),
-            tags$p(tags$strong("File location:"), temp_pdf),
-            footer = tagList(
-              downloadButton(session$ns("download_pdf"), "Download Report"),
-              modalButton("Close")
-            ),
-            easyClose = TRUE,
-            size = "m"
-          ))
-
-          rv$pdf_report_path <- temp_pdf
-
-        } else {
-          # Fallback: offer HTML download
+        if (!latex_available) {
+          # LaTeX not available - show helpful message
           showModal(modalDialog(
             title = "PDF Generation Not Available",
-            tags$p("PDF generation requires the 'pagedown' package and Chrome/Chromium browser."),
-            tags$p("Would you like to download the HTML version instead?"),
+            tags$div(
+              tags$p(icon("exclamation-triangle", class = "text-warning", style = "font-size: 2em;")),
+              tags$h4("PDF generation requires LaTeX"),
+              tags$hr(),
+              tags$p("PDF reports require a LaTeX distribution. You have two options:"),
+              tags$h5("Option 1: Install TinyTeX (Recommended)"),
+              tags$p("Run these commands in R:"),
+              tags$pre("install.packages('tinytex')\ntinytex::install_tinytex()"),
+              tags$h5("Option 2: Use HTML Report"),
+              tags$p("Generate an HTML report instead, which you can:"),
+              tags$ul(
+                tags$li("View in your browser"),
+                tags$li("Print to PDF using your browser's print function (Ctrl+P → Save as PDF)")
+              )
+            ),
             footer = tagList(
-              downloadButton(session$ns("download_html_fallback"), "Download HTML"),
+              actionButton(session$ns("generate_html_instead"), "Generate HTML Report Instead",
+                          class = "btn-primary"),
               modalButton("Cancel")
             ),
             easyClose = TRUE,
-            size = "m"
+            size = "l"
           ))
-
-          rv$html_report_path <- temp_html
+          return()
         }
+
+        # Generate markdown content
+        report_md <- generate_report_content(
+          data = data,
+          report_type = "full",
+          include_viz = TRUE,
+          include_data = FALSE
+        )
+
+        # Render to PDF
+        rmd_file <- tempfile(fileext = ".Rmd")
+        writeLines(report_md, rmd_file)
+
+        temp_pdf <- tempfile(fileext = ".pdf")
+        rmarkdown::render(
+          input = rmd_file,
+          output_format = "pdf_document",
+          output_file = temp_pdf,
+          quiet = FALSE
+        )
+
+        showModal(modalDialog(
+          title = "PDF Report Generated Successfully",
+          tags$p("Your PDF report has been generated successfully."),
+          footer = tagList(
+            downloadButton(session$ns("download_pdf"), "Download Report"),
+            modalButton("Close")
+          ),
+          easyClose = TRUE,
+          size = "m"
+        ))
+
+        rv$pdf_report_path <- temp_pdf
 
       }, error = function(e) {
         showNotification(
@@ -361,6 +403,13 @@ prepare_report_server <- function(id, project_data_reactive) {
           duration = 10
         )
       })
+    })
+
+    # Handler for "Generate HTML Instead" button in PDF error modal
+    observeEvent(input$generate_html_instead, {
+      removeModal()
+      # Trigger HTML generation
+      shinyjs::click("generate_html")
     })
 
     observeEvent(input$generate_word, {
@@ -648,9 +697,8 @@ generate_html_report <- function(data, title, author, sections) {
     n_ecosystem <- if (!is.null(data$data$isa_data$ecosystem_services)) as.integer(nrow(data$data$isa_data$ecosystem_services)) else 0L
     n_goods <- if (!is.null(data$data$isa_data$goods_benefits)) as.integer(nrow(data$data$isa_data$goods_benefits)) else 0L
     n_responses <- if (!is.null(data$data$isa_data$responses)) as.integer(nrow(data$data$isa_data$responses)) else 0L
-    n_measures <- if (!is.null(data$data$isa_data$measures)) as.integer(nrow(data$data$isa_data$measures)) else 0L
 
-    n_elements <- as.integer(n_drivers + n_activities + n_pressures + n_marine + n_ecosystem + n_goods + n_responses + n_measures)
+    n_elements <- as.integer(n_drivers + n_activities + n_pressures + n_marine + n_ecosystem + n_goods + n_responses)
     n_nodes <- if (!is.null(data$data$cld$nodes)) as.integer(nrow(data$data$cld$nodes)) else 0L
     n_edges <- if (!is.null(data$data$cld$edges)) as.integer(nrow(data$data$cld$edges)) else 0L
     n_loops <- if (!is.null(data$data$analysis$loops)) as.integer(length(data$data$analysis$loops)) else 0L
@@ -812,20 +860,6 @@ generate_html_report <- function(data, title, author, sections) {
       html <- c(html, "  </table>")
     }
 
-    # Measures
-    if (!is.null(data$data$isa_data$measures) && nrow(data$data$isa_data$measures) > 0) {
-      html <- c(html,
-        "  <h3>Measures</h3>",
-        "  <table>",
-        "    <tr><th>ID</th><th>Name</th><th>Description</th></tr>"
-      )
-      for (i in 1:nrow(data$data$isa_data$measures)) {
-        row <- data$data$isa_data$measures[i, ]
-        desc <- if (!is.null(row$Description) && !is.na(row$Description)) row$Description else ""
-        html <- c(html, paste0("    <tr><td>", row$ID, "</td><td>", row$Name, "</td><td>", desc, "</td></tr>"))
-      }
-      html <- c(html, "  </table>")
-    }
   }
 
   # Loop Analysis
@@ -989,9 +1023,8 @@ generate_word_report <- function(data, title, author, sections, output_file) {
     n_ecosystem <- if (!is.null(data$data$isa_data$ecosystem_services)) nrow(data$data$isa_data$ecosystem_services) else 0
     n_goods <- if (!is.null(data$data$isa_data$goods_benefits)) nrow(data$data$isa_data$goods_benefits) else 0
     n_responses <- if (!is.null(data$data$isa_data$responses)) nrow(data$data$isa_data$responses) else 0
-    n_measures <- if (!is.null(data$data$isa_data$measures)) nrow(data$data$isa_data$measures) else 0
 
-    n_elements <- n_drivers + n_activities + n_pressures + n_marine + n_ecosystem + n_goods + n_responses + n_measures
+    n_elements <- n_drivers + n_activities + n_pressures + n_marine + n_ecosystem + n_goods + n_responses
     n_nodes <- if (!is.null(data$data$cld$nodes)) nrow(data$data$cld$nodes) else 0
     n_edges <- if (!is.null(data$data$cld$edges)) nrow(data$data$cld$edges) else 0
     n_loops <- if (!is.null(data$data$analysis$loops)) length(data$data$analysis$loops) else 0
@@ -1084,16 +1117,6 @@ generate_word_report <- function(data, title, author, sections, output_file) {
       doc <- officer::body_add_par(doc, "", style = "Normal")
     }
 
-    # Measures
-    if (!is.null(data$data$isa_data$measures) && nrow(data$data$isa_data$measures) > 0) {
-      doc <- officer::body_add_par(doc, "Measures", style = "heading 3")
-      if (requireNamespace("flextable", quietly = TRUE)) {
-        ft <- flextable::flextable(data$data$isa_data$measures[, c("ID", "Name", "Description")])
-        ft <- flextable::theme_vanilla(ft)
-        doc <- flextable::body_add_flextable(doc, ft)
-      }
-      doc <- officer::body_add_par(doc, "", style = "Normal")
-    }
   }
 
   # Loop Analysis
@@ -1224,9 +1247,8 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
     n_ecosystem <- if (!is.null(data$data$isa_data$ecosystem_services)) nrow(data$data$isa_data$ecosystem_services) else 0
     n_goods <- if (!is.null(data$data$isa_data$goods_benefits)) nrow(data$data$isa_data$goods_benefits) else 0
     n_responses <- if (!is.null(data$data$isa_data$responses)) nrow(data$data$isa_data$responses) else 0
-    n_measures <- if (!is.null(data$data$isa_data$measures)) nrow(data$data$isa_data$measures) else 0
 
-    n_elements <- n_drivers + n_activities + n_pressures + n_marine + n_ecosystem + n_goods + n_responses + n_measures
+    n_elements <- n_drivers + n_activities + n_pressures + n_marine + n_ecosystem + n_goods + n_responses
 
     project_name <- if (!is.null(data$data$metadata$project_name)) data$data$metadata$project_name else "Unnamed Project"
     n_nodes <- if (!is.null(data$data$cld$nodes)) nrow(data$data$cld$nodes) else 0
@@ -1310,14 +1332,6 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
       ppt <- officer::ph_with(ppt, value = as.character(responses_text), location = officer::ph_location_type(type = "body"))
     }
 
-    # Measures
-    if (!is.null(data$data$isa_data$measures) && nrow(data$data$isa_data$measures) > 0) {
-      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- officer::ph_with(ppt, value = "ISA Framework: Measures", location = officer::ph_location_type(type = "title"))
-
-      measures_text <- paste(paste("-", as.character(data$data$isa_data$measures$Name)), collapse = "\n")
-      ppt <- officer::ph_with(ppt, value = as.character(measures_text), location = officer::ph_location_type(type = "body"))
-    }
   }
 
   # Feedback Loops

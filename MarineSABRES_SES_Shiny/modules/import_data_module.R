@@ -555,7 +555,6 @@ convert_excel_to_isa <- function(elements, connections) {
     ecosystem_services = NULL,
     goods_benefits = NULL,
     responses = NULL,
-    measures = NULL,
     adjacency_matrices = list()
   )
 
@@ -568,7 +567,7 @@ convert_excel_to_isa <- function(elements, connections) {
     "Ecosystem Service" = "ecosystem_services",
     "Good and Benefit" = "goods_benefits",
     "Response" = "responses",
-    "Measure" = "measures"
+    "Measure" = "responses"  # Measures are now merged with responses
   )
 
   # Process each element type
@@ -622,8 +621,7 @@ build_adjacency_matrices_from_connections <- function(elements, connections, typ
     "marine_processes" = "mpf",
     "ecosystem_services" = "es",
     "goods_benefits" = "gb",
-    "responses" = "r",
-    "measures" = "m"
+    "responses" = "r"
   )
 
   # Find all unique category pairs that exist in the connections

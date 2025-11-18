@@ -40,6 +40,9 @@ output/
 reports/*.html
 reports/*.pdf
 reports/*.docx
+www/reports/*.html
+www/reports/*.pdf
+www/reports/*.docx
 
 # Cache directories
 cache/

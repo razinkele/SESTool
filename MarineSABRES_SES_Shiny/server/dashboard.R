@@ -34,8 +34,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
         nrow(isa_data$marine_processes %||% data.frame()),
         nrow(isa_data$ecosystem_services %||% data.frame()),
         nrow(isa_data$goods_benefits %||% data.frame()),
-        nrow(isa_data$responses %||% data.frame()),
-        nrow(isa_data$measures %||% data.frame())
+        nrow(isa_data$responses %||% data.frame())
       )
 
       valueBox(n_elements, i18n$t("Total Elements"), icon = icon("circle"), color = "blue")
@@ -186,7 +185,12 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
             icon(if(!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) "check" else "times",
                  class = if(!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) "text-success" else "text-muted"),
             " ", i18n$t("Goods & Benefits:"), " ",
-            tags$strong(if(!is.null(data$data$isa_data$goods_benefits)) nrow(data$data$isa_data$goods_benefits) else 0))
+            tags$strong(if(!is.null(data$data$isa_data$goods_benefits)) nrow(data$data$isa_data$goods_benefits) else 0)),
+          tags$li(style = "margin-bottom: 3px;",
+            icon(if(!is.null(data$data$isa_data$responses) && nrow(data$data$isa_data$responses) > 0) "check" else "times",
+                 class = if(!is.null(data$data$isa_data$responses) && nrow(data$data$isa_data$responses) > 0) "text-success" else "text-muted"),
+            " ", i18n$t("Responses:"), " ",
+            tags$strong(if(!is.null(data$data$isa_data$responses)) nrow(data$data$isa_data$responses) else 0))
         ),
         tags$hr(style = "margin: 10px 0;"),
         tags$p(style = "margin-bottom: 5px; font-size: 13px;",
@@ -229,8 +233,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       nrow(data$data$isa_data$marine_processes %||% data.frame()),
       nrow(data$data$isa_data$ecosystem_services %||% data.frame()),
       nrow(data$data$isa_data$goods_benefits %||% data.frame()),
-      nrow(data$data$isa_data$responses %||% data.frame()),
-      nrow(data$data$isa_data$measures %||% data.frame())
+      nrow(data$data$isa_data$responses %||% data.frame())
     )
 
     tags$p(style = "margin-bottom: 5px; font-size: 13px;",

@@ -250,6 +250,34 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
         cat("[EXPORT] About to call rmarkdown::render()...\n")
         flush.console()
 
+        # Special handling for PDF - check if LaTeX is available
+        if (report_format_safe == "PDF") {
+          # Check if tinytex or other LaTeX is installed
+          latex_available <- tryCatch({
+            tinytex::tinytex_root()
+            TRUE
+          }, error = function(e) {
+            FALSE
+          })
+
+          if (!latex_available) {
+            # Check system LaTeX
+            latex_available <- tryCatch({
+              system("pdflatex --version", intern = TRUE, ignore.stderr = TRUE)
+              TRUE
+            }, error = function(e) {
+              FALSE
+            })
+          }
+
+          if (!latex_available) {
+            stop("PDF generation requires LaTeX. Please install TinyTeX using:\n",
+                 "install.packages('tinytex')\n",
+                 "tinytex::install_tinytex()\n\n",
+                 "Alternatively, generate an HTML report and print to PDF from your browser.")
+          }
+        }
+
         rmarkdown::render(
           input = rmd_file,
           output_format = output_format,
@@ -265,30 +293,57 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
         # Show success
         removeModal()
 
-        # For HTML reports, open in browser automatically
+        # For HTML reports, open in new window/tab
         if (report_format == "HTML") {
-          cat("[EXPORT] Opening HTML report in browser...\n")
-          browseURL(output_file)
+          cat("[EXPORT] Opening HTML report in new window...\n")
 
-          msg <- i18n$t(
-            "Report opened in your browser! You can also download it below."
+          # Copy to www directory so it can be served by Shiny
+          www_dir <- file.path(getwd(), "www", "reports")
+          if (!dir.exists(www_dir)) {
+            dir.create(www_dir, recursive = TRUE)
+          }
+
+          # Create unique filename
+          report_filename <- paste0("report_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".html")
+          www_file <- file.path(www_dir, report_filename)
+          file.copy(output_file, www_file, overwrite = TRUE)
+
+          # Create relative URL for Shiny
+          report_url <- paste0("reports/", report_filename)
+
+          # Open in new window using JavaScript
+          session$sendCustomMessage(
+            type = "openReport",
+            message = list(url = report_url)
           )
-          showNotification(msg, type = "message", duration = 5)
 
-          # Still show download option
+          showNotification(
+            i18n$t("Report opened in a new window!"),
+            type = "message",
+            duration = 5
+          )
+
+        } else if (report_format == "PDF") {
+          # For PDF, show informative message about requirements
           showModal(modalDialog(
-            title = i18n$t("Report Generated Successfully"),
+            title = i18n$t("PDF Report Notice"),
             tags$div(
-              p(i18n$t("Your HTML report has been opened in your browser.")),
-              p(i18n$t("You can also download it to save permanently:")),
+              tags$p(icon("info-circle"), style = "color: #17a2b8;",
+                     i18n$t("PDF generation requires LaTeX (e.g., TinyTeX or MiKTeX).")),
+              tags$p(i18n$t("If you see errors, try generating an HTML report instead, which you can print to PDF from your browser.")),
+              tags$hr(),
+              tags$p(i18n$t("To install TinyTeX for PDF support:")),
+              tags$pre("install.packages('tinytex')\ntinytex::install_tinytex()"),
+              tags$hr(),
               downloadButton(session$ns("download_report_file"),
-                             i18n$t("Download Report"),
-                             class = "btn-success")
+                             i18n$t("Download Report (if generated)"),
+                             class = "btn-danger")
             ),
-            footer = modalButton(i18n$t("Close"))
+            footer = modalButton(i18n$t("Close")),
+            easyClose = TRUE
           ))
         } else {
-          # For PDF/Word, show download dialog
+          # For Word, show download dialog
           showModal(modalDialog(
             title = i18n$t("Report Generated Successfully"),
             tags$div(

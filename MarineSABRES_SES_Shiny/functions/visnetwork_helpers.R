@@ -2,6 +2,45 @@
 # Helper functions for visNetwork-based CLD visualization
 
 # ============================================================================
+# UTILITY FUNCTIONS
+# ============================================================================
+
+#' Wrap long text labels for better display
+#' 
+#' @param text Character string to wrap
+#' @param max_width Maximum characters per line (default 20)
+#' @return Text with line breaks inserted
+wrap_label <- function(text, max_width = 20) {
+  if (is.na(text) || nchar(text) <= max_width) {
+    return(text)
+  }
+  
+  # Split on spaces
+  words <- strsplit(text, " ")[[1]]
+  lines <- c()
+  current_line <- ""
+  
+  for (word in words) {
+    if (nchar(current_line) == 0) {
+      current_line <- word
+    } else if (nchar(paste(current_line, word)) <= max_width) {
+      current_line <- paste(current_line, word)
+    } else {
+      lines <- c(lines, current_line)
+      current_line <- word
+    }
+  }
+  
+  # Add the last line
+  if (nchar(current_line) > 0) {
+    lines <- c(lines, current_line)
+  }
+  
+  # Join with newline
+  paste(lines, collapse = "\n")
+}
+
+# ============================================================================
 # NODE CREATION FUNCTIONS
 # ============================================================================
 
@@ -25,6 +64,7 @@ create_nodes_df <- function(isa_data) {
     font.size = numeric(),
     indicator = character(),
     leverage_score = numeric(),
+    x = numeric(),
     stringsAsFactors = FALSE
   )
   
@@ -33,9 +73,10 @@ create_nodes_df <- function(isa_data) {
     gb_nodes <- isa_data$goods_benefits %>%
       mutate(
         id = paste0("GB_", row_number()),
-        label = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
-        title = create_node_tooltip(label, indicator, "Goods & Benefits"),
+        title = create_node_tooltip(label_raw, indicator, "Goods & Benefits"),
         group = "Goods & Benefits",
         level = 0,
         shape = ELEMENT_SHAPES[["Goods & Benefits"]],
@@ -43,9 +84,10 @@ create_nodes_df <- function(isa_data) {
         color = ELEMENT_COLORS[["Goods & Benefits"]],
         size = 30,
         font.size = 14,
-        leverage_score = NA_real_
+        leverage_score = NA_real_,
+        x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
 
     nodes <- bind_rows(nodes, gb_nodes)
   }
@@ -55,9 +97,10 @@ create_nodes_df <- function(isa_data) {
     es_nodes <- isa_data$ecosystem_services %>%
       mutate(
         id = paste0("ES_", row_number()),
-        label = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
-        title = create_node_tooltip(label, indicator, "Ecosystem Services"),
+        title = create_node_tooltip(label_raw, indicator, "Ecosystem Services"),
         group = "Ecosystem Services",
         level = 1,
         shape = ELEMENT_SHAPES[["Ecosystem Services"]],
@@ -65,9 +108,10 @@ create_nodes_df <- function(isa_data) {
         color = ELEMENT_COLORS[["Ecosystem Services"]],
         size = 25,
         font.size = 12,
-        leverage_score = NA_real_
+        leverage_score = NA_real_,
+        x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
 
     nodes <- bind_rows(nodes, es_nodes)
   }
@@ -77,9 +121,10 @@ create_nodes_df <- function(isa_data) {
     mpf_nodes <- isa_data$marine_processes %>%
       mutate(
         id = paste0("MPF_", row_number()),
-        label = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
-        title = create_node_tooltip(label, indicator, "Marine Processes & Functioning"),
+        title = create_node_tooltip(label_raw, indicator, "Marine Processes & Functioning"),
         group = "Marine Processes & Functioning",
         level = 2,
         shape = ELEMENT_SHAPES[["Marine Processes & Functioning"]],
@@ -87,9 +132,10 @@ create_nodes_df <- function(isa_data) {
         color = ELEMENT_COLORS[["Marine Processes & Functioning"]],
         size = 25,
         font.size = 12,
-        leverage_score = NA_real_
+        leverage_score = NA_real_,
+        x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
 
     nodes <- bind_rows(nodes, mpf_nodes)
   }
@@ -99,10 +145,11 @@ create_nodes_df <- function(isa_data) {
     pressure_nodes <- isa_data$pressures %>%
       mutate(
         id = paste0("P_", row_number()),
-        label = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(
-          label, indicator, "Pressures",
+          label_raw, indicator, "Pressures",
           extra = if("type" %in% names(.)) paste("Type:", type) else if("Type" %in% names(.)) paste("Type:", Type) else NULL
         ),
         group = "Pressures",
@@ -112,9 +159,10 @@ create_nodes_df <- function(isa_data) {
         color = ELEMENT_COLORS[["Pressures"]],
         size = 25,
         font.size = 12,
-        leverage_score = NA_real_
+        leverage_score = NA_real_,
+        x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
 
     nodes <- bind_rows(nodes, pressure_nodes)
   }
@@ -124,10 +172,11 @@ create_nodes_df <- function(isa_data) {
     activity_nodes <- isa_data$activities %>%
       mutate(
         id = paste0("A_", row_number()),
-        label = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(
-          label, indicator, "Activities",
+          label_raw, indicator, "Activities",
           extra = if("scale" %in% names(.)) paste("Scale:", scale) else if("Scale" %in% names(.)) paste("Scale:", Scale) else NULL
         ),
         group = "Activities",
@@ -137,9 +186,10 @@ create_nodes_df <- function(isa_data) {
         color = ELEMENT_COLORS[["Activities"]],
         size = 25,
         font.size = 12,
-        leverage_score = NA_real_
+        leverage_score = NA_real_,
+        x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
 
     nodes <- bind_rows(nodes, activity_nodes)
   }
@@ -149,9 +199,10 @@ create_nodes_df <- function(isa_data) {
     driver_nodes <- isa_data$drivers %>%
       mutate(
         id = paste0("D_", row_number()),
-        label = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else ID,
+        label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
-        title = create_node_tooltip(label, indicator, "Drivers"),
+        title = create_node_tooltip(label_raw, indicator, "Drivers"),
         group = "Drivers",
         level = 5,
         shape = "image",  # Use image shape for custom octagon
@@ -159,55 +210,36 @@ create_nodes_df <- function(isa_data) {
         color = NA_character_,  # Color handled by SVG
         size = 30,
         font.size = 14,
-        leverage_score = NA_real_
+        leverage_score = NA_real_,
+        x = NA_real_
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
 
     nodes <- bind_rows(nodes, driver_nodes)
   }
 
-  # Responses (Level 6)
+  # Responses (Level 3 - positioned in middle, will be offset to the right)
   if (!is.null(isa_data$responses) && nrow(isa_data$responses) > 0) {
     response_nodes <- isa_data$responses %>%
       mutate(
         id = paste0("R_", row_number()),
-        label = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else as.character(row_number()),
+        label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else as.character(row_number()),
+        label = sapply(label_raw, wrap_label),
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
-        title = create_node_tooltip(label, indicator, "Responses"),
+        title = create_node_tooltip(label_raw, indicator, "Responses"),
         group = "Responses",
-        level = 6,
-        shape = "triangle",
+        level = 3,  # Middle level (same as Marine Processes)
+        shape = ELEMENT_SHAPES[["Responses"]],
         image = NA_character_,
-        color = "#9C27B0",  # Purple color for responses
+        color = ELEMENT_COLORS[["Responses"]],
         size = 25,
         font.size = 12,
-        leverage_score = NA_real_
+        leverage_score = NA_real_,
+        x = 400  # Offset to the right of the main DAPSIWRM flow
       ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
+      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
 
     nodes <- bind_rows(nodes, response_nodes)
-  }
-
-  # Measures (Level 7)
-  if (!is.null(isa_data$measures) && nrow(isa_data$measures) > 0) {
-    measure_nodes <- isa_data$measures %>%
-      mutate(
-        id = paste0("M_", row_number()),
-        label = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else as.character(row_number()),
-        indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
-        title = create_node_tooltip(label, indicator, "Measures"),
-        group = "Measures",
-        level = 7,
-        shape = "star",
-        image = NA_character_,
-        color = "#E91E63",  # Pink color for measures
-        size = 25,
-        font.size = 12,
-        leverage_score = NA_real_
-      ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score)
-
-    nodes <- bind_rows(nodes, measure_nodes)
   }
 
   return(nodes)
@@ -275,10 +307,9 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   n_a <- if(!is.null(isa_data$activities)) nrow(isa_data$activities) else 0
   n_d <- if(!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0
   n_r <- if(!is.null(isa_data$responses)) nrow(isa_data$responses) else 0
-  n_m <- if(!is.null(isa_data$measures)) nrow(isa_data$measures) else 0
 
-  cat(sprintf("[CREATE_EDGES] Element counts: GB=%d, ES=%d, MPF=%d, P=%d, A=%d, D=%d, R=%d, M=%d\n",
-             n_gb, n_es, n_mpf, n_p, n_a, n_d, n_r, n_m))
+  cat(sprintf("[CREATE_EDGES] Element counts: GB=%d, ES=%d, MPF=%d, P=%d, A=%d, D=%d, R=%d\n",
+             n_gb, n_es, n_mpf, n_p, n_a, n_d, n_r))
 
   if (is.null(adjacency_matrices)) {
     cat("[CREATE_EDGES] adjacency_matrices is NULL!\n")
@@ -289,105 +320,254 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
 
   # Process each adjacency matrix
   # MATRIX CONVENTION: All matrices use SOURCE×TARGET format
-  # - Matrix name: source_target (e.g., "es_gb" means ES→GB)
+  # - Matrix name: source_target (e.g., "d_a" means D→A)
   # - Matrix structure: rows=SOURCE elements, cols=TARGET elements
   # - Cell [i,j]: Connection from SOURCE[i] to TARGET[j]
-  # Example: gb_es matrix has rows=GB elements, cols=ES elements (GB→ES connections)
+  # DAPSIWRM FORWARD CAUSAL FLOW: Drivers → Activities → Pressures → Marine Processes → Ecosystem Services → Welfare
 
-  if (!is.null(adjacency_matrices$gb_es)) {
-    edges_gb_es <- process_adjacency_matrix(
-      adjacency_matrices$gb_es,  # GB×ES (rows=GB, cols=ES): GB→ES connections
-      from_prefix = "GB",
+  # 1. Drivers → Activities
+  if (!is.null(adjacency_matrices$d_a)) {
+    edges_d_a <- process_adjacency_matrix(
+      adjacency_matrices$d_a,  # D×A (rows=D, cols=A): D→A connections
+      from_prefix = "D",
+      to_prefix = "A",
+      expected_rows = n_d,
+      expected_cols = n_a
+    )
+    edges <- bind_rows(edges, edges_d_a)
+  }
+
+  # 2. Activities → Pressures
+  if (!is.null(adjacency_matrices$a_p)) {
+    edges_a_p <- process_adjacency_matrix(
+      adjacency_matrices$a_p,  # A×P (rows=A, cols=P): A→P connections
+      from_prefix = "A",
+      to_prefix = "P",
+      expected_rows = n_a,
+      expected_cols = n_p
+    )
+    edges <- bind_rows(edges, edges_a_p)
+  }
+
+  # 3. Pressures → Marine Processes & Functions
+  if (!is.null(adjacency_matrices$p_mpf)) {
+    edges_p_mpf <- process_adjacency_matrix(
+      adjacency_matrices$p_mpf,  # P×MPF (rows=P, cols=MPF): P→MPF connections
+      from_prefix = "P",
+      to_prefix = "MPF",
+      expected_rows = n_p,
+      expected_cols = n_mpf
+    )
+    edges <- bind_rows(edges, edges_p_mpf)
+  } else if (!is.null(adjacency_matrices$p_mp)) {
+    # Alternative naming: p_mp instead of p_mpf
+    edges_p_mp <- process_adjacency_matrix(
+      adjacency_matrices$p_mp,  # P×MP (rows=P, cols=MP): P→MP connections
+      from_prefix = "P",
+      to_prefix = "MPF",
+      expected_rows = n_p,
+      expected_cols = n_mpf
+    )
+    edges <- bind_rows(edges, edges_p_mp)
+  }
+
+  # 4. Marine Processes → Ecosystem Services
+  if (!is.null(adjacency_matrices$mpf_es)) {
+    edges_mpf_es <- process_adjacency_matrix(
+      adjacency_matrices$mpf_es,  # MPF×ES (rows=MPF, cols=ES): MPF→ES connections
+      from_prefix = "MPF",
       to_prefix = "ES",
-      expected_rows = n_gb,
+      expected_rows = n_mpf,
       expected_cols = n_es
     )
-    edges <- bind_rows(edges, edges_gb_es)
+    edges <- bind_rows(edges, edges_mpf_es)
+  } else if (!is.null(adjacency_matrices$mp_es)) {
+    # Alternative naming: mp_es instead of mpf_es
+    edges_mp_es <- process_adjacency_matrix(
+      adjacency_matrices$mp_es,  # MP×ES (rows=MP, cols=ES): MP→ES connections
+      from_prefix = "MPF",
+      to_prefix = "ES",
+      expected_rows = n_mpf,
+      expected_cols = n_es
+    )
+    edges <- bind_rows(edges, edges_mp_es)
+  }
+
+  # 5. Ecosystem Services → Welfare (Goods & Benefits)
+  if (!is.null(adjacency_matrices$es_gb)) {
+    edges_es_gb <- process_adjacency_matrix(
+      adjacency_matrices$es_gb,  # ES×GB (rows=ES, cols=GB): ES→GB connections
+      from_prefix = "ES",
+      to_prefix = "GB",
+      expected_rows = n_es,
+      expected_cols = n_gb
+    )
+    edges <- bind_rows(edges, edges_es_gb)
+  }
+
+  # 6. Welfare → Drivers (feedback loop closure)
+  if (!is.null(adjacency_matrices$gb_d)) {
+    edges_gb_d <- process_adjacency_matrix(
+      adjacency_matrices$gb_d,  # GB×D (rows=GB, cols=D): GB→D connections
+      from_prefix = "GB",
+      to_prefix = "D",
+      expected_rows = n_gb,
+      expected_cols = n_d
+    )
+    edges <- bind_rows(edges, edges_gb_d)
+  }
+
+  # === RESPONSE MEASURES (Management Interventions) ===
+  
+  # 7. Welfare → Responses (problems drive management responses)
+  if (!is.null(adjacency_matrices$gb_r)) {
+    edges_gb_r <- process_adjacency_matrix(
+      adjacency_matrices$gb_r,  # GB×R (rows=GB, cols=R): GB→R connections
+      from_prefix = "GB",
+      to_prefix = "R",
+      expected_rows = n_gb,
+      expected_cols = n_r
+    )
+    edges <- bind_rows(edges, edges_gb_r)
+  }
+
+  # 8. Responses → Drivers (policy targeting underlying drivers)
+  if (!is.null(adjacency_matrices$r_d)) {
+    edges_r_d <- process_adjacency_matrix(
+      adjacency_matrices$r_d,  # R×D (rows=R, cols=D): R→D connections
+      from_prefix = "R",
+      to_prefix = "D",
+      expected_rows = n_r,
+      expected_cols = n_d
+    )
+    edges <- bind_rows(edges, edges_r_d)
+  }
+
+  # 9. Responses → Activities (regulations on activities)
+  if (!is.null(adjacency_matrices$r_a)) {
+    edges_r_a <- process_adjacency_matrix(
+      adjacency_matrices$r_a,  # R×A (rows=R, cols=A): R→A connections
+      from_prefix = "R",
+      to_prefix = "A",
+      expected_rows = n_r,
+      expected_cols = n_a
+    )
+    edges <- bind_rows(edges, edges_r_a)
+  }
+
+  # 10. Responses → Pressures (direct pressure mitigation)
+  if (!is.null(adjacency_matrices$r_p)) {
+    edges_r_p <- process_adjacency_matrix(
+      adjacency_matrices$r_p,  # R×P (rows=R, cols=P): R→P connections
+      from_prefix = "R",
+      to_prefix = "P",
+      expected_rows = n_r,
+      expected_cols = n_p
+    )
+    edges <- bind_rows(edges, edges_r_p)
+  }
+
+  # === LEGACY/BACKWARD COMPATIBILITY ===
+  # Support old matrix names for existing projects (will be converted on load)
+  
+  if (!is.null(adjacency_matrices$gb_es)) {
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'gb_es' - treating as forward flow 'es_gb'\n")
+    edges_legacy <- process_adjacency_matrix(
+      t(adjacency_matrices$gb_es),  # Transpose to convert GB→ES to ES→GB
+      from_prefix = "ES",
+      to_prefix = "GB",
+      expected_rows = n_es,
+      expected_cols = n_gb
+    )
+    edges <- bind_rows(edges, edges_legacy)
   }
 
   if (!is.null(adjacency_matrices$es_mpf)) {
-    edges_es_mpf <- process_adjacency_matrix(
-      adjacency_matrices$es_mpf,  # ES×MPF (rows=ES, cols=MPF): ES→MPF connections
-      from_prefix = "ES",
-      to_prefix = "MPF",
-      expected_rows = n_es,
-      expected_cols = n_mpf
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'es_mpf' - treating as forward flow 'mpf_es'\n")
+    edges_legacy <- process_adjacency_matrix(
+      t(adjacency_matrices$es_mpf),  # Transpose
+      from_prefix = "MPF",
+      to_prefix = "ES",
+      expected_rows = n_mpf,
+      expected_cols = n_es
     )
-    edges <- bind_rows(edges, edges_es_mpf)
+    edges <- bind_rows(edges, edges_legacy)
   }
 
   if (!is.null(adjacency_matrices$mpf_p)) {
-    edges_mpf_p <- process_adjacency_matrix(
-      adjacency_matrices$mpf_p,  # MPF×P (rows=MPF, cols=P): MPF→P connections
-      from_prefix = "MPF",
-      to_prefix = "P",
-      expected_rows = n_mpf,
-      expected_cols = n_p
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'mpf_p' - treating as forward flow 'p_mpf'\n")
+    edges_legacy <- process_adjacency_matrix(
+      t(adjacency_matrices$mpf_p),  # Transpose
+      from_prefix = "P",
+      to_prefix = "MPF",
+      expected_rows = n_p,
+      expected_cols = n_mpf
     )
-    edges <- bind_rows(edges, edges_mpf_p)
+    edges <- bind_rows(edges, edges_legacy)
   }
 
   if (!is.null(adjacency_matrices$p_a)) {
-    edges_p_a <- process_adjacency_matrix(
-      adjacency_matrices$p_a,  # P×A (rows=P, cols=A): P→A connections
-      from_prefix = "P",
-      to_prefix = "A",
-      expected_rows = n_p,
-      expected_cols = n_a
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'p_a' - treating as forward flow 'a_p'\n")
+    edges_legacy <- process_adjacency_matrix(
+      t(adjacency_matrices$p_a),  # Transpose
+      from_prefix = "A",
+      to_prefix = "P",
+      expected_rows = n_a,
+      expected_cols = n_p
     )
-    edges <- bind_rows(edges, edges_p_a)
+    edges <- bind_rows(edges, edges_legacy)
   }
 
   if (!is.null(adjacency_matrices$a_d)) {
-    edges_a_d <- process_adjacency_matrix(
-      adjacency_matrices$a_d,  # A×D (rows=A, cols=D): A→D connections
-      from_prefix = "A",
-      to_prefix = "D",
-      expected_rows = n_a,
-      expected_cols = n_d
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'a_d' - treating as forward flow 'd_a'\n")
+    edges_legacy <- process_adjacency_matrix(
+      t(adjacency_matrices$a_d),  # Transpose
+      from_prefix = "D",
+      to_prefix = "A",
+      expected_rows = n_d,
+      expected_cols = n_a
     )
-    edges <- bind_rows(edges, edges_a_d)
+    edges <- bind_rows(edges, edges_legacy)
   }
 
   if (!is.null(adjacency_matrices$d_gb)) {
-    edges_d_gb <- process_adjacency_matrix(
-      adjacency_matrices$d_gb,  # D×GB (rows=D, cols=GB): D→GB connections
-      from_prefix = "D",
-      to_prefix = "GB",
-      expected_rows = n_d,
-      expected_cols = n_gb
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'd_gb' - treating as feedback 'gb_d'\n")
+    edges_legacy <- process_adjacency_matrix(
+      t(adjacency_matrices$d_gb),  # Transpose
+      from_prefix = "GB",
+      to_prefix = "D",
+      expected_rows = n_gb,
+      expected_cols = n_d
     )
-    edges <- bind_rows(edges, edges_d_gb)
+    edges <- bind_rows(edges, edges_legacy)
   }
 
-  # Responses → Pressures matrix
   if (!is.null(adjacency_matrices$p_r)) {
-    edges_p_r <- process_adjacency_matrix(
-      adjacency_matrices$p_r,  # P×R (rows=P, cols=R): P→R connections
-      from_prefix = "P",
-      to_prefix = "R",
-      expected_rows = n_p,
-      expected_cols = n_r
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'p_r' - treating as 'r_p'\n")
+    edges_legacy <- process_adjacency_matrix(
+      t(adjacency_matrices$p_r),  # Transpose
+      from_prefix = "R",
+      to_prefix = "P",
+      expected_rows = n_r,
+      expected_cols = n_p
     )
-    edges <- bind_rows(edges, edges_p_r)
+    edges <- bind_rows(edges, edges_legacy)
   }
 
-  # Measures → Responses matrix
   if (!is.null(adjacency_matrices$r_m)) {
-    cat("[CREATE_EDGES] Processing r_m matrix\n")
-    edges_r_m <- process_adjacency_matrix(
-      adjacency_matrices$r_m,  # R×M (rows=R, cols=M): R→M connections
-      from_prefix = "R",
-      to_prefix = "M",
-      expected_rows = n_r,
-      expected_cols = n_m
-    )
-    cat(sprintf("[CREATE_EDGES] r_m returned %d edges\n", nrow(edges_r_m)))
-    edges <- bind_rows(edges, edges_r_m)
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'r_m' (Responses→Measures) - skipping as measures merged into responses\n")
+    # Skip this as we've merged measures into responses
   }
 
   # Process any additional non-standard matrices that weren't handled above
-  standard_matrices <- c("gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb", "p_r", "r_m")
+  standard_matrices <- c(
+    # New DAPSIWRM forward flow
+    "d_a", "a_p", "p_mp", "p_mpf", "mp_es", "mpf_es", "es_gb", "gb_d",
+    # Response measures
+    "gb_r", "r_d", "r_a", "r_p",
+    # Legacy backward flow (for compatibility)
+    "gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb", "p_r"
+  )
   additional_matrices <- setdiff(names(adjacency_matrices), standard_matrices)
 
   if (length(additional_matrices) > 0) {
@@ -397,7 +577,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     # Mapping from abbreviations to prefixes
     abbrev_to_prefix <- c(
       "gb" = "GB", "es" = "ES", "mpf" = "MPF", "p" = "P",
-      "a" = "A", "d" = "D", "r" = "R", "m" = "M"
+      "a" = "A", "d" = "D", "r" = "R"
     )
 
     for (matrix_name in additional_matrices) {
@@ -468,6 +648,11 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
   # Use minimum of matrix dimensions and expected counts to avoid referencing non-existent nodes
   max_rows <- if (!is.null(expected_rows)) min(nrow(adj_matrix), expected_rows) else nrow(adj_matrix)
   max_cols <- if (!is.null(expected_cols)) min(ncol(adj_matrix), expected_cols) else ncol(adj_matrix)
+
+  # Skip processing if no valid rows or columns
+  if (max_rows < 1 || max_cols < 1) {
+    return(edges)
+  }
 
   for (i in 1:max_rows) {
     for (j in 1:max_cols) {
@@ -610,6 +795,12 @@ apply_standard_styling <- function(visnet) {
                   border = darken_color(ELEMENT_COLORS[["Goods & Benefits"]])),
       shape = ELEMENT_SHAPES[["Goods & Benefits"]]
     ) %>%
+    visGroups(
+      groupname = "Responses",
+      color = list(background = ELEMENT_COLORS[["Responses"]], 
+                  border = darken_color(ELEMENT_COLORS[["Responses"]])),
+      shape = ELEMENT_SHAPES[["Responses"]]
+    ) %>%
     # Legend
     visLegend(
       width = 0.15,
@@ -634,11 +825,18 @@ apply_standard_styling <- function(visnet) {
       arrows = list(to = list(enabled = TRUE, scaleFactor = 0.5)),
       font = list(size = 10, align = "middle")
     ) %>%
-    # Node configuration - labels outside shapes
+    # Node configuration - labels below shapes with wrapping
     visNodes(
       shadow = list(enabled = TRUE, size = 5),
-      font = list(size = 12, face = "arial", vadjust = -20),
-      borderWidth = 2
+      font = list(
+        size = 12, 
+        face = "arial", 
+        vadjust = 25,  # Positive value moves labels below shapes
+        multi = "html",  # Enable HTML for line breaks
+        bold = list(size = 12)
+      ),
+      borderWidth = 2,
+      widthConstraint = list(maximum = 150)  # Constrain width to force wrapping
     ) %>%
     # Options
     visOptions(
@@ -675,8 +873,8 @@ apply_hierarchical_layout <- function(visnet, direction = "DU",
     visHierarchicalLayout(
       direction = direction,
       levelSeparation = level_separation,
-      nodeSpacing = 200,
-      treeSpacing = 200,
+      nodeSpacing = 250,      # Increased from 200 for more horizontal spacing
+      treeSpacing = 250,      # Increased from 200 for more spacing between separate trees
       blockShifting = TRUE,
       edgeMinimization = TRUE,
       parentCentralization = TRUE,

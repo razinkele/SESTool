@@ -434,8 +434,7 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
           nrow(recovered_data$data$isa_data$marine_processes %||% data.frame()),
           nrow(recovered_data$data$isa_data$ecosystem_services %||% data.frame()),
           nrow(recovered_data$data$isa_data$goods_benefits %||% data.frame()),
-          nrow(recovered_data$data$isa_data$responses %||% data.frame()),
-          nrow(recovered_data$data$isa_data$measures %||% data.frame())
+          nrow(recovered_data$data$isa_data$responses %||% data.frame())
         )
         cat(sprintf("[AUTO-SAVE] Recovered %d total elements\n", total_recovered))
 
@@ -484,8 +483,22 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
     # Initialize - check for recovery on module load
     isolate({
       check_for_recovery()
-      # Update indicator to show initial status
-      updateSaveIndicator()
+    })
+
+    # Update indicator shortly after initialization to clear "Initializing..." message
+    # Use a flag to ensure this only runs once
+    indicator_initialized <- FALSE
+
+    observe({
+      if (!indicator_initialized) {
+        invalidateLater(100)  # 100ms delay
+        isolate({
+          if (!indicator_initialized) {
+            updateSaveIndicator()
+            indicator_initialized <<- TRUE
+          }
+        })
+      }
     })
 
     # Return control functions

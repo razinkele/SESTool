@@ -99,7 +99,7 @@ get_regional_seas_knowledge_base <- function(i18n) {
 #' Returns intelligent suggestions based on regional sea, ecosystem type,
 #' and main issue context.
 #'
-#' @param category DAPSIWRM category (drivers, activities, pressures, states, impacts, welfare, responses, measures)
+#' @param category DAPSIWRM category (drivers, activities, pressures, states, impacts, welfare, responses)
 #' @param regional_sea Selected regional sea key
 #' @param ecosystem_type Selected ecosystem type
 #' @param main_issue Main environmental issue
@@ -291,36 +291,6 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
         suggestions$issue <- c("Agricultural best practices", "Wastewater treatment", "Buffer zones")
       } else if (any(grepl("climate", main_issue, ignore.case = TRUE))) {
         suggestions$issue <- c("Carbon reduction", "Climate adaptation planning", "Coastal defense")
-      }
-    }
-  }
-
-  else if (category == "measures") {
-    # Universal measures
-    suggestions$universal <- c("Legislation and enforcement", "Spatial planning", "Impact assessment",
-                               "Education and awareness", "Research and monitoring", "International cooperation")
-
-    # Region-specific
-    if (!is.null(regional_sea)) {
-      if (regional_sea == "baltic") {
-        suggestions$regional <- c("HELCOM action plan", "National nutrient limits", "Fish quota system")
-      } else if (regional_sea == "mediterranean") {
-        suggestions$regional <- c("Barcelona Convention", "MPA network", "Coastal zone management")
-      } else if (regional_sea == "north_sea") {
-        suggestions$regional <- c("OSPAR measures", "Common Fisheries Policy", "Maritime spatial planning")
-      } else if (regional_sea == "arctic") {
-        suggestions$regional <- c("Arctic Council guidelines", "Polar Code", "Traditional knowledge integration")
-      }
-    }
-
-    # Issue-specific
-    if (length(main_issue) > 0) {
-      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Total Allowable Catch", "Fishing licenses", "Gear restrictions", "Bycatch reduction devices")
-      } else if (any(grepl("eutroph", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Fertilizer regulations", "Sewage treatment standards", "Agricultural subsidies reform")
-      } else if (any(grepl("pollution|litter", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Plastic ban legislation", "Waste collection systems", "Producer responsibility")
       }
     }
   }

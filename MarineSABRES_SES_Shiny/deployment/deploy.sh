@@ -19,41 +19,6 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Default deployment method
-DEPLOY_METHOD="${1:---shiny-server}"
-
-echo "================================================================================"
-echo " MarineSABRES SES Tool - Deployment Script"
-echo "================================================================================"
-echo ""
-
-# Run pre-deployment checks
-print_status "Running pre-deployment checks..."
-if command -v Rscript &> /dev/null; then
-    cd "$(dirname "$0")"
-    if Rscript pre-deploy-check.R; then
-        print_success "Pre-deployment checks passed"
-    else
-        print_warning "Pre-deployment checks found issues"
-        read -p "Continue with deployment anyway? (y/N) " -n 1 -r
-        echo
-        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-            print_error "Deployment cancelled"
-            exit 1
-        fi
-    fi
-    cd ..
-else
-    print_warning "Rscript not found, skipping pre-deployment checks"
-fi
-
-# Check if running as root for shiny-server deployment
-if [[ "$DEPLOY_METHOD" == "--shiny-server" ]] && [[ $EUID -ne 0 ]]; then
-   echo -e "${RED}ERROR: This script must be run as root for Shiny Server deployment${NC}"
-   echo "Please run: sudo ./deploy.sh"
-   exit 1
-fi
-
 # Function to print status messages
 print_status() {
     echo -e "${BLUE}==>${NC} $1"
@@ -70,6 +35,44 @@ print_error() {
 print_warning() {
     echo -e "${YELLOW}⚠${NC} $1"
 }
+
+# Get the absolute path to the deployment directory
+DEPLOY_DIR="$(cd "$(dirname "$0")" && pwd)"
+APP_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
+# Default deployment method
+DEPLOY_METHOD="${1:---shiny-server}"
+
+echo "================================================================================"
+echo " MarineSABRES SES Tool - Deployment Script"
+echo "================================================================================"
+echo ""
+
+# Run pre-deployment checks
+print_status "Running pre-deployment checks..."
+if command -v Rscript &> /dev/null; then
+    cd "$DEPLOY_DIR"
+    if Rscript pre-deploy-check.R; then
+        print_success "Pre-deployment checks passed"
+    else
+        print_warning "Pre-deployment checks found issues"
+        read -p "Continue with deployment anyway? (y/N) " -n 1 -r
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            print_error "Deployment cancelled"
+            exit 1
+        fi
+    fi
+else
+    print_warning "Rscript not found, skipping pre-deployment checks"
+fi
+
+# Check if running as root for shiny-server deployment
+if [[ "$DEPLOY_METHOD" == "--shiny-server" ]] && [[ $EUID -ne 0 ]]; then
+   echo -e "${RED}ERROR: This script must be run as root for Shiny Server deployment${NC}"
+   echo "Please run: sudo ./deploy.sh"
+   exit 1
+fi
 
 # ============================================================================
 # Docker Deployment
@@ -178,6 +181,7 @@ deploy_shiny_server() {
 
     # Install R package dependencies
     print_status "Installing R package dependencies..."
+    cd "$DEPLOY_DIR"
     Rscript install_dependencies.R
 
     if [ $? -ne 0 ]; then
@@ -193,8 +197,50 @@ deploy_shiny_server() {
     # Create app directory
     mkdir -p /srv/shiny-server/marinesabres
 
-    # Copy files
-    cp -r ../* /srv/shiny-server/marinesabres/
+    # Remove old deployment if exists (keep data directory)
+    if [ -d /srv/shiny-server/marinesabres ]; then
+        print_status "Backing up existing data..."
+        if [ -d /srv/shiny-server/marinesabres/data ]; then
+            cp -r /srv/shiny-server/marinesabres/data /tmp/marinesabres-data-backup
+        fi
+        rm -rf /srv/shiny-server/marinesabres/*
+    fi
+
+    # Copy core files
+    print_status "Copying application files..."
+    cp "$APP_DIR/app.R" /srv/shiny-server/marinesabres/
+    cp "$APP_DIR/global.R" /srv/shiny-server/marinesabres/
+    cp "$APP_DIR/run_app.R" /srv/shiny-server/marinesabres/
+    cp "$APP_DIR/constants.R" /srv/shiny-server/marinesabres/
+    cp "$APP_DIR/io.R" /srv/shiny-server/marinesabres/
+    cp "$APP_DIR/utils.R" /srv/shiny-server/marinesabres/
+    cp "$APP_DIR/VERSION" /srv/shiny-server/marinesabres/
+    cp "$APP_DIR/VERSION_INFO.json" /srv/shiny-server/marinesabres/
+    cp "$APP_DIR/version_manager.R" /srv/shiny-server/marinesabres/
+
+    # Copy directories
+    print_status "Copying modules and functions..."
+    cp -r "$APP_DIR/modules" /srv/shiny-server/marinesabres/
+    cp -r "$APP_DIR/functions" /srv/shiny-server/marinesabres/
+    cp -r "$APP_DIR/server" /srv/shiny-server/marinesabres/
+    cp -r "$APP_DIR/www" /srv/shiny-server/marinesabres/
+    cp -r "$APP_DIR/translations" /srv/shiny-server/marinesabres/
+    
+    # Copy docs directory (if it exists)
+    if [ -d "$APP_DIR/docs" ]; then
+        print_status "Copying documentation..."
+        cp -r "$APP_DIR/docs" /srv/shiny-server/marinesabres/
+    fi
+
+    # Copy data directory (or restore backup)
+    if [ -d /tmp/marinesabres-data-backup ]; then
+        print_status "Restoring data directory..."
+        cp -r /tmp/marinesabres-data-backup /srv/shiny-server/marinesabres/data
+        rm -rf /tmp/marinesabres-data-backup
+    else
+        print_status "Copying data directory..."
+        cp -r "$APP_DIR/data" /srv/shiny-server/marinesabres/
+    fi
 
     # Set permissions
     chown -R shiny:shiny /srv/shiny-server/marinesabres
@@ -211,7 +257,7 @@ deploy_shiny_server() {
     fi
 
     # Copy new config
-    cp shiny-server.conf /etc/shiny-server/shiny-server.conf
+    cp "$DEPLOY_DIR/shiny-server.conf" /etc/shiny-server/shiny-server.conf
 
     print_success "Shiny Server configured"
 

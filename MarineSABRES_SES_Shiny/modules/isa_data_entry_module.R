@@ -244,7 +244,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
           cat(sprintf("[ISA Module] Loaded %d connections from adjacency matrices\n", n_connections))
         }
 
-        # Note: responses and measures from AI Assistant don't map to ISA Data Entry
+        # Note: responses from AI Assistant don't map to ISA Data Entry
         # They would need to be handled separately or shown in a different section
 
         cat("[ISA Module] Data loading complete\n")
@@ -1554,15 +1554,16 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
     observeEvent(input$save_ex6, {
       # loop_connections already in isa_data (no need to copy from rv)
 
-      # Convert loop_connections to d_gb adjacency matrix
+      # Convert loop_connections to gb_d adjacency matrix (NEW: forward causal flow)
+      # GB→D represents how welfare perceptions feed back to drive societal drivers
       if (nrow(isa_data$loop_connections) > 0) {
         n_drivers <- nrow(isa_data$drivers)
         n_gb <- nrow(isa_data$goods_benefits)
 
-        # Initialize empty matrix
-        d_gb_matrix <- matrix("", nrow = n_gb, ncol = n_drivers)
-        rownames(d_gb_matrix) <- isa_data$goods_benefits$ID
-        colnames(d_gb_matrix) <- isa_data$drivers$ID
+        # Initialize empty matrix (SOURCE×TARGET: rows=GB, cols=Drivers)
+        gb_d_matrix <- matrix("", nrow = n_gb, ncol = n_drivers)
+        rownames(gb_d_matrix) <- isa_data$goods_benefits$ID
+        colnames(gb_d_matrix) <- isa_data$drivers$ID
 
         # Fill matrix with connections
         for (i in 1:nrow(isa_data$loop_connections)) {
@@ -1573,7 +1574,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
           if (length(gb_idx) > 0 && length(d_idx) > 0) {
             # Format: "effect+strength:confidence"
             value <- paste0(conn$Effect, conn$Strength, ":", conn$Confidence)
-            d_gb_matrix[gb_idx, d_idx] <- value
+            gb_d_matrix[gb_idx, d_idx] <- value
           }
         }
 
@@ -1581,7 +1582,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
         if (is.null(isa_data$adjacency_matrices)) {
           isa_data$adjacency_matrices <- list()
         }
-        isa_data$adjacency_matrices$d_gb <- d_gb_matrix
+        isa_data$adjacency_matrices$gb_d <- gb_d_matrix
       }
 
       showNotification(paste("Exercise 6 saved:", nrow(isa_data$loop_connections), "loop connections"),
@@ -1715,8 +1716,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
           tags$li(strong(i18n$t("pressures_label")), i18n$t("isa_guide_dapsiwr_pressures")),
           tags$li(strong(i18n$t("state_label")), i18n$t("isa_guide_dapsiwr_state")),
           tags$li(strong(i18n$t("impacts_label")), i18n$t("isa_guide_dapsiwr_impacts")),
-          tags$li(strong(i18n$t("responses_label")), i18n$t("isa_guide_dapsiwr_responses")),
-          tags$li(strong(i18n$t("measures_label")), i18n$t("isa_guide_dapsiwr_measures"))
+          tags$li(strong(i18n$t("responses_label")), i18n$t("isa_guide_dapsiwr_responses"))
         ),
         hr(),
         h4(i18n$t("isa_guide_how_to_use_title")),

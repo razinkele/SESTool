@@ -27,7 +27,9 @@
 
 ### 1.1 What is the MarineSABRES SES Tool?
 
-The MarineSABRES Social-Ecological Systems (SES) Analysis Tool is a comprehensive Shiny application designed to support participatory analysis of marine social-ecological systems. It implements the **DAPSI(W)R(M) framework** (Drivers-Activities-Pressures-State changes-(Welfare impacts)-Responses-(Measures)) and Integrated Systems Analysis (ISA) methodology.
+The MarineSABRES Social-Ecological Systems (SES) Analysis Tool is a comprehensive Shiny application designed to support participatory analysis of marine social-ecological systems. It implements the **DAPSI(W)R(M) framework** (Drivers-Activities-Pressures-State changes-(Welfare impacts)-Response Measures) and Integrated Systems Analysis (ISA) methodology.
+
+**Note on Framework Terminology:** In DAPSI(W)R(M), "R" and "M" both refer to management interventions—"R" for policy/management Responses and "M" for the specific policy instruments/Measures that implement those responses. In this tool, we treat these as a unified category called "Response Measures" to avoid duplication, as they represent the same concept: management actions taken to address system problems.
 
 ### 1.2 Key Features
 
@@ -1843,7 +1845,7 @@ Measure of node importance in network. Types include degree (number of connectio
 ### D
 
 **DAPSI(W)R(M) Framework**
-Drivers-Activities-Pressures-State changes-(Welfare impacts)-Responses-(Measures). Causal chain framework for analyzing human impacts on marine ecosystems and management responses.
+Drivers-Activities-Pressures-State changes-(Welfare impacts)-Response Measures. Causal chain framework for analyzing human impacts on marine ecosystems and management responses. Note: The "R/M" component represents both policy Responses and implementing Measures, which are treated as a unified category of management interventions in this tool.
 
 **Driver**
 Underlying socio-economic factors that motivate human activities (e.g., economic growth, population, technology, policy).
@@ -1931,8 +1933,8 @@ Direct human-induced stress on marine system (e.g., fishing mortality, nutrient 
 **Reinforcing Loop (R)**
 Feedback loop that amplifies change. Characterized by even number of negative links (0, 2, 4...). Also called positive feedback loop.
 
-**Response (Measure)**
-Management intervention designed to address drivers, activities, or pressures. Part of DAPSI(W)R(M) framework.
+**Response Measures (R/M)**
+Management interventions and policy instruments designed to address drivers, activities, or pressures. Encompasses both policy-level responses and specific implementing measures. Examples include regulations (fishing quotas, MPAs), economic instruments (taxes, subsidies), educational programs, and technical solutions. Part of DAPSI(W)R(M) framework.
 
 ### S
 
