@@ -58,9 +58,10 @@ build_adjacency_matrix <- function(connections, from_elements, to_elements,
   mat <- matrix("", nrow = length(from_elements), ncol = length(to_elements),
                 dimnames = list(from_names, to_names))
 
-  # Filter connections for this matrix
+  # Filter connections for this matrix (case-insensitive comparison)
   relevant_connections <- Filter(function(conn) {
-    conn$from_type == from_type && conn$to_type == to_type
+    tolower(conn$from_type) == tolower(from_type) &&
+    tolower(conn$to_type) == tolower(to_type)
   }, connections)
 
   # Fill matrix
