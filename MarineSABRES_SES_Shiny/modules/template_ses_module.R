@@ -687,10 +687,11 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
         d_gb = list(from = "driver", to = "goods_benefit"),
         gb_d = list(from = "goods_benefit", to = "driver"),
 
-        # Responses
-        r_d = list(from = "response", to = "driver"),
-        r_a = list(from = "response", to = "activity"),
-        r_p = list(from = "response", to = "pressure")
+        # Responses - Management intervention matrices
+        gb_r = list(from = "goods_benefit", to = "response"),  # Welfare triggers responses
+        r_d = list(from = "response", to = "driver"),          # Responses regulate drivers
+        r_a = list(from = "response", to = "activity"),        # Responses restrict activities
+        r_p = list(from = "response", to = "pressure")         # Responses reduce pressures
       )
 
       # Process each adjacency matrix
