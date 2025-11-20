@@ -8,8 +8,19 @@
 #   - Same approval/edit functionality as unified module
 #   - Cleaner organization for large connection sets
 
+# Robust NULL/NA coalescing operator for this module
+utils::globalVariables(c('%|||%'))
+`%|||%` <- function(a, b) {
+  if (is.null(a) || (length(a) == 1 && is.na(a))) b else a
+}
+
 library(shiny)
 library(shinyWidgets)
+
+# Ensure %|||% operator is visible in this module (for R CMD check/lint)
+`%|||%` <- function(a, b) {
+  if (is.null(a) || (length(a) == 1 && is.na(a))) b else a
+}
 
 # ============================================================================
 # HELPER FUNCTIONS
@@ -111,8 +122,8 @@ get_connection_batches <- function() {
 
 # Categorize a connection into a batch
 categorize_connection <- function(conn, batches) {
-  from_type <- tolower(trimws(conn$from_type %||% ""))
-  to_type <- tolower(trimws(conn$to_type %||% ""))
+  from_type <- tolower(trimws(conn$from_type %|||% ""))
+  to_type <- tolower(trimws(conn$to_type %|||% ""))
 
   # Check all defined transitions (now includes Response→Driver/Activity/Pressure)
   # All batches except the last one (which is "other")
@@ -134,6 +145,7 @@ categorize_connection <- function(conn, batches) {
 
 connection_review_tabbed_ui <- function(id, i18n) {
   ns <- NS(id)
+  cat(sprintf("[CONN REVIEW TABBED UI] UI function called with id: %s\n", id))
 
   tagList(
     # Custom CSS
@@ -287,7 +299,10 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       req(connections_reactive())
       conns <- connections_reactive()
 
+      cat(sprintf("[CONN REVIEW TABBED] Received %d connections\n", length(conns)))
+
       if (length(conns) == 0) {
+        cat("[CONN REVIEW TABBED] No connections to display\n")
         return(list(batches = list(), total = 0))
       }
 
@@ -382,12 +397,31 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
         batch_rejected <- sum(batch$indices %in% rv$rejected)
         batch_pending <- conn_count - batch_approved - batch_rejected
 
-        # Create tab label with badge
+        # Calculate approval percentage
+        approval_pct <- if (conn_count > 0) round(batch_approved / conn_count * 100) else 0
+
+        # Determine badge color based on approval percentage
+        badge_color <- if (approval_pct == 100) {
+          "#28a745"  # Green - all approved
+        } else if (approval_pct >= 50) {
+          "#ffc107"  # Yellow/Orange - partial approval
+        } else if (approval_pct > 0) {
+          "#fd7e14"  # Orange - some approved
+        } else {
+          "#6c757d"  # Gray - none approved
+        }
+
+        # Create tab label with colored badge showing approval status
         tab_label <- tags$span(
           icon(batch$info$icon),
           " ",
           i18n$t(batch$info$label),
-          tags$span(class = "tab-badge", conn_count)
+          " ",
+          tags$span(
+            class = "tab-badge",
+            style = sprintf("background-color: %s; color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.85em; margin-left: 5px;", badge_color),
+            sprintf("%d/%d", batch_approved, conn_count)
+          )
         )
 
         tabPanel(
@@ -452,15 +486,37 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
     })
 
     # Render connections for each batch
+    # Use a simple session counter approach
+    batch_session <- reactiveVal(0)
+    last_batch_count <- reactiveVal(-1)
+    last_batch_names <- reactiveVal(character(0))
+
     observe({
       batched <- batched_connections()
       batch_lists <- batched$batches
+      current_batches <- names(batch_lists)
+
+      # Check if batches have actually changed (different count or names)
+      if (length(batch_lists) != last_batch_count() ||
+          !setequal(current_batches, last_batch_names())) {
+        cat(sprintf("[CONN REVIEW TABBED] Batches changed: %d -> %d, incrementing session\n",
+                    last_batch_count(), length(batch_lists)))
+        last_batch_count(length(batch_lists))
+        last_batch_names(current_batches)
+        batch_session(batch_session() + 1)
+      }
+
+      # Create outputs for all batches in current session
+      current_session <- batch_session()
 
       lapply(names(batch_lists), function(batch_id) {
         local({
           local_batch_id <- batch_id
+          output_name <- paste0("batch_connections_", local_batch_id)
 
-          output[[paste0("batch_connections_", local_batch_id)]] <- renderUI({
+          cat(sprintf("[CONN REVIEW TABBED] Creating batch output: %s (session %d)\n", output_name, current_session))
+
+          output[[output_name]] <- renderUI({
             batch <- batch_lists[[local_batch_id]]
             conns <- batch$connections
             indices <- batch$indices
@@ -476,11 +532,14 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               conn <- conns[[i]]
               conn_idx <- indices[i]  # Original index in full list
 
-              render_connection_card(conn, conn_idx, ns, i18n, rv)
+              render_connection_card(conn, conn_idx, ns, i18n, rv, indices, i)
             })
 
             do.call(tagList, connection_cards)
           })
+
+          # Suspend when hidden to prevent unnecessary updates
+          outputOptions(output, output_name, suspendWhenHidden = TRUE)
         })
       })
     })
@@ -539,9 +598,55 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
     })
 
     # Set up observers for all connection buttons
+    # Use a simple session counter that increments each time connections change
+    observer_session <- reactiveVal(0)
+    last_generation_time <- reactiveVal(NULL)
+    last_connections_signature <- reactiveVal(NULL)
+
+    # Destroy and recreate all observers when connections actually change
     observe({
       req(connections_reactive())
       conns <- connections_reactive()
+
+      # GUARD: Don't process if connections are empty - prevents infinite loop
+      if (length(conns) == 0) {
+        cat("[CONN REVIEW TABBED] WARNING: Connections are empty, skipping observer setup\n")
+        return()
+      }
+
+      # Create a signature of the actual connection content to detect real changes
+      # This prevents infinite loops when connections_reactive() invalidates but content is unchanged
+      conn_signature <- digest::digest(lapply(conns, function(c) {
+        list(
+          from_type = c$from_type %|||% "",
+          from_index = c$from_index %|||% 0,
+          to_type = c$to_type %|||% "",
+          to_index = c$to_index %|||% 0,
+          polarity = c$polarity %|||% "+",
+          strength = c$strength %|||% "medium"
+        )
+      }))
+
+      # Check if connections have actually changed (by content, not just timestamp)
+      if (!is.null(last_connections_signature()) &&
+          identical(conn_signature, last_connections_signature())) {
+        # Connections are identical - skip recreation to prevent infinite loop
+        return()
+      }
+
+      # Check the generation timestamp to detect real changes
+      generation_time <- attr(conns, "generated_at")
+
+      # Connections have changed - update signature and increment session
+      cat(sprintf("[CONN REVIEW TABBED] Connections changed (count: %d), incrementing session to %d\n",
+                  length(conns), observer_session() + 1))
+      last_connections_signature(conn_signature)
+      last_generation_time(generation_time)
+      observer_session(observer_session() + 1)
+
+      # Create all observers for current session
+      # Using session number ensures old observers are effectively ignored
+      current_session <- observer_session()
 
       lapply(seq_along(conns), function(conn_idx) {
         local({
@@ -604,6 +709,15 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             if (!is.null(on_approve)) {
               on_approve(local_idx, conn)
             }
+
+            # Focus on next connection in the list
+            if (local_idx < length(conns)) {
+              next_idx <- local_idx + 1
+              session$sendCustomMessage(
+                type = "focusButton",
+                message = list(id = session$ns(paste0("approve_", next_idx)))
+              )
+            }
           })
 
           # Reject button
@@ -613,6 +727,15 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
             if (!is.null(on_reject)) {
               on_reject(local_idx, conn)
+            }
+
+            # Focus on next connection in the list
+            if (local_idx < length(conns)) {
+              next_idx <- local_idx + 1
+              session$sendCustomMessage(
+                type = "focusButton",
+                message = list(id = session$ns(paste0("approve_", next_idx)))
+              )
             }
           })
 
@@ -666,7 +789,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 # HELPER FUNCTION: RENDER CONNECTION CARD
 # ============================================================================
 
-render_connection_card <- function(conn, conn_idx, ns, i18n, rv) {
+render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices = NULL, pos_in_batch = NULL) {
   # Determine status class
   status_class <- "conn-card-tabbed"
   if (conn_idx %in% rv$approved) {
@@ -677,29 +800,29 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv) {
 
   # Get amended values if they exist, otherwise use connection defaults
   amended <- rv$amended_data[[as.character(conn_idx)]]
-  current_polarity <- if (!is.null(amended$polarity)) amended$polarity else (conn$polarity %||% "+")
-  current_strength <- if (!is.null(amended$strength)) amended$strength else (conn$strength %||% "medium")
-  current_confidence <- if (!is.null(amended$confidence)) amended$confidence else (conn$confidence %||% 3)
+  current_polarity <- if (!is.null(amended$polarity) && !is.na(amended$polarity)) amended$polarity else (conn$polarity %|||% "+")
+  current_strength <- if (!is.null(amended$strength) && !is.na(amended$strength)) amended$strength else (conn$strength %|||% "medium")
+  current_confidence <- if (!is.null(amended$confidence) && !is.na(amended$confidence)) amended$confidence else (conn$confidence %|||% 3)
 
   # Convert strength to slider value (1-5)
   strength_map <- c("very weak" = 1, "weak" = 2, "medium" = 3, "strong" = 4, "very strong" = 5)
-  strength_value <- strength_map[current_strength] %||% 3
+  strength_value <- strength_map[current_strength] %|||% 3
 
   # Polarity switch initial value
-  polarity_initial <- current_polarity == "+"
+  polarity_initial <- isTRUE(current_polarity == "+")
 
   div(class = status_class,
     # Connection header with polarity display and switch
     div(class = "conn-header-tabbed", style = "display: flex; justify-content: space-between; align-items: center;",
       div(style = "flex: 1;",
-        span(conn$from_name %||% "Unknown"),
+  span(conn$from_name %|||% "Unknown"),
         span(" "),
         uiOutput(ns(paste0("polarity_text_", conn_idx)), inline = TRUE),
         span(" "),
         span(class = "conn-rationale",
              textOutput(ns(paste0("rationale_", conn_idx)), inline = TRUE)),
         span(" "),
-        span(conn$to_name %||% "Unknown")
+  span(conn$to_name %|||% "Unknown")
       ),
       # Polarity switch in header
       div(style = "margin-left: 15px;",

@@ -1009,6 +1009,15 @@
       "it": "Informazioni"
     },
     {
+      "en": "App Info",
+      "es": "Info de la App",
+      "fr": "Info de l'App",
+      "de": "App-Info",
+      "lt": "Programos informacija",
+      "pt": "Info do App",
+      "it": "Info App"
+    },
+    {
       "en": "Save your current project data, including all PIMS, ISA entries, and analysis results",
       "es": "Guarde los datos de su proyecto actual, incluidas todas las entradas PIMS, ISA y los resultados de análisis",
       "fr": "Enregistrez les données de votre projet actuel, y compris toutes les entrées PIMS, ISA et les résultats d'analyse",
@@ -9217,6 +9226,15 @@
       "it": "Modello salvato! Passare a \"ISA Data Entry\" per vedere i tuoi elementi."
     },
     {
+      "en": "connections saved! Navigating to dashboard...",
+      "es": "¡conexiones guardadas! Navegando al panel...",
+      "fr": "connexions enregistrées ! Navigation vers le tableau de bord...",
+      "de": "Verbindungen gespeichert! Navigation zum Dashboard...",
+      "lt": "ryšiai išsaugoti! Pereinama į valdymo skydą...",
+      "pt": "conexões salvas! Navegando para o painel...",
+      "it": "connessioni salvate! Navigazione alla dashboard..."
+    },
+    {
       "en": "Overfishing template loaded with example connections! You can now preview or modify it.",
       "es": "¡Plantilla de sobrepesca cargada con conexiones de ejemplo! Ahora puede obtener una vista previa o modificarlo.",
       "fr": "Modèle de surpêche chargé d'exemples de connexions ! Vous pouvez maintenant le prévisualiser ou le modifier.",
@@ -10504,6 +10522,78 @@
       "it": "Che tipo di ecosistema marino stai studiando?"
     },
     {
+      "en": "Warning: Changing Regional Sea",
+      "es": "Advertencia: Cambiando Mar Regional",
+      "fr": "Avertissement : Changement de mer régionale",
+      "de": "Warnung: Regionalmeer wird geändert",
+      "lt": "Įspėjimas: Keičiama regioninė jūra",
+      "pt": "Aviso: Alterando Mar Regional",
+      "it": "Attenzione: Modifica del mare regionale"
+    },
+    {
+      "en": "You are changing your regional sea selection. This will affect the available options for:",
+      "es": "Está cambiando su selección de mar regional. Esto afectará las opciones disponibles para:",
+      "fr": "Vous modifiez votre sélection de mer régionale. Cela affectera les options disponibles pour :",
+      "de": "Sie ändern Ihre Regionalmeer-Auswahl. Dies wirkt sich auf die verfügbaren Optionen aus für:",
+      "lt": "Keičiate regioninės jūros pasirinkimą. Tai paveiks galimas parinktis:",
+      "pt": "Você está alterando sua seleção de mar regional. Isso afetará as opções disponíveis para:",
+      "it": "Stai modificando la selezione del mare regionale. Questo influenzerà le opzioni disponibili per:"
+    },
+    {
+      "en": "Ecosystem types",
+      "es": "Tipos de ecosistemas",
+      "fr": "Types d'écosystèmes",
+      "de": "Ökosystemtypen",
+      "lt": "Ekosistemų tipai",
+      "pt": "Tipos de ecossistemas",
+      "it": "Tipi di ecosistemi"
+    },
+    {
+      "en": "Common issues in the region",
+      "es": "Problemas comunes en la región",
+      "fr": "Problèmes courants dans la région",
+      "de": "Häufige Probleme in der Region",
+      "lt": "Įprastos problemos regione",
+      "pt": "Problemas comuns na região",
+      "it": "Problemi comuni nella regione"
+    },
+    {
+      "en": "Context-specific suggestions",
+      "es": "Sugerencias específicas del contexto",
+      "fr": "Suggestions spécifiques au contexte",
+      "de": "Kontextspezifische Vorschläge",
+      "lt": "Kontekstui būdingos rekomendacijos",
+      "pt": "Sugestões específicas do contexto",
+      "it": "Suggerimenti specifici del contesto"
+    },
+    {
+      "en": "Your current ecosystem and issue selections may no longer be valid for the new regional sea.",
+      "es": "Sus selecciones actuales de ecosistema y problemas pueden dejar de ser válidas para el nuevo mar regional.",
+      "fr": "Vos sélections actuelles d'écosystème et de problèmes peuvent ne plus être valides pour la nouvelle mer régionale.",
+      "de": "Ihre aktuellen Ökosystem- und Problemauswahlen sind möglicherweise nicht mehr für das neue Regionalmeer gültig.",
+      "lt": "Jūsų dabartiniai ekosistemos ir problemų pasirinkimai gali nebegalioti naujam regioniniam jūrai.",
+      "pt": "Suas seleções atuais de ecossistema e problemas podem não ser mais válidas para o novo mar regional.",
+      "it": "Le tue selezioni attuali di ecosistema e problemi potrebbero non essere più valide per il nuovo mare regionale."
+    },
+    {
+      "en": "Regional sea changed to",
+      "es": "Mar regional cambiado a",
+      "fr": "Mer régionale changée en",
+      "de": "Regionalmeer geändert zu",
+      "lt": "Regioninė jūra pakeista į",
+      "pt": "Mar regional alterado para",
+      "it": "Mare regionale cambiato in"
+    },
+    {
+      "en": "Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea.",
+      "es": "Sus selecciones de ecosistema y problemas han sido borradas. Por favor, vuelva a seleccionarlas para el nuevo mar regional.",
+      "fr": "Vos sélections d'écosystème et de problèmes ont été effacées. Veuillez les re-sélectionner pour la nouvelle mer régionale.",
+      "de": "Ihre Ökosystem- und Problemauswahlen wurden gelöscht. Bitte wählen Sie sie für das neue Regionalmeer erneut aus.",
+      "lt": "Jūsų ekosistemos ir problemų pasirinkimai buvo išvalyti. Prašome juos pasirinkti iš naujo naujam regioniniam jūrai.",
+      "pt": "Suas seleções de ecossistema e problemas foram apagadas. Por favor, selecione-as novamente para o novo mar regional.",
+      "it": "Le tue selezioni di ecosistema e problemi sono state cancellate. Si prega di ri-selezionarle per il nuovo mare regionale."
+    },
+    {
       "en": "Preview",
       "es": "Vista previa",
       "fr": "Aperçu",
@@ -10772,6 +10862,870 @@
       "lt": "Keisti",
       "pt": "Alterar",
       "it": "Modificare"
+    },
+    {
+      "en": "Project Information Management System for planning and tracking",
+      "es": "Sistema de Gestión de Información de Proyectos para planificación y seguimiento",
+      "fr": "Système de Gestion de l'Information de Projet pour la planification et le suivi",
+      "de": "Projektinformationsmanagementsystem für Planung und Verfolgung",
+      "lt": "Projekto informacijos valdymo sistema planavimui ir stebėjimui",
+      "pt": "Sistema de Gestão de Informação de Projeto para planejamento e acompanhamento",
+      "it": "Sistema di Gestione delle Informazioni di Progetto per pianificazione e monitoraggio"
+    },
+    {
+      "en": "Guided question-based SES creation with AI assistance",
+      "es": "Creación de SES basada en preguntas guiadas con asistencia de IA",
+      "fr": "Création de SES basée sur des questions guidées avec assistance IA",
+      "de": "Geführte fragenbasierte SES-Erstellung mit KI-Unterstützung",
+      "lt": "Vadovaujama SES kūrimas su dirbtinio intelekto pagalba",
+      "pt": "Criação de SES baseada em perguntas guiadas com assistência de IA",
+      "it": "Creazione SES basata su domande guidate con assistenza IA"
+    },
+    {
+      "en": "Start from pre-built SES templates",
+      "es": "Comenzar desde plantillas SES predefinidas",
+      "fr": "Commencer à partir de modèles SES pré-construits",
+      "de": "Mit vorgefertigten SES-Vorlagen beginnen",
+      "lt": "Pradėti nuo paruoštų SES šablonų",
+      "pt": "Começar a partir de modelos SES pré-construídos",
+      "it": "Iniziare da modelli SES predefiniti"
+    },
+    {
+      "en": "Create your Social-Ecological System using structured methods",
+      "es": "Cree su Sistema Socio-Ecológico utilizando métodos estructurados",
+      "fr": "Créez votre Système Socio-Écologique en utilisant des méthodes structurées",
+      "de": "Erstellen Sie Ihr Sozial-Ökologisches System mit strukturierten Methoden",
+      "lt": "Sukurkite socialinę-ekologinę sistemą naudodami struktūrizuotus metodus",
+      "pt": "Crie seu Sistema Sócio-Ecológico usando métodos estruturados",
+      "it": "Crea il tuo Sistema Socio-Ecologico utilizzando metodi strutturati"
+    },
+    {
+      "en": "Interactive visualization of your Social-Ecological System network",
+      "es": "Visualización interactiva de la red de su Sistema Socio-Ecológico",
+      "fr": "Visualisation interactive de votre réseau de Système Socio-Écologique",
+      "de": "Interaktive Visualisierung Ihres Sozial-Ökologischen Systemnetzwerks",
+      "lt": "Interaktyvi socialinės-ekologinės sistemos tinklo vizualizacija",
+      "pt": "Visualização interativa da rede do seu Sistema Sócio-Ecológico",
+      "it": "Visualizzazione interattiva della rete del tuo Sistema Socio-Ecologico"
+    },
+    {
+      "en": "Essential network analysis tools for understanding your SES",
+      "es": "Herramientas esenciales de análisis de red para comprender su SES",
+      "fr": "Outils essentiels d'analyse de réseau pour comprendre votre SES",
+      "de": "Wesentliche Netzwerkanalyse-Tools zum Verständnis Ihres SES",
+      "lt": "Esminiai tinklo analizės įrankiai jūsų SES supratimui",
+      "pt": "Ferramentas essenciais de análise de rede para compreender seu SES",
+      "it": "Strumenti essenziali di analisi di rete per comprendere il tuo SES"
+    },
+    {
+      "en": "Advanced network analysis and metrics tools for your SES model",
+      "es": "Herramientas avanzadas de análisis de red y métricas para su modelo SES",
+      "fr": "Outils avancés d'analyse de réseau et de métriques pour votre modèle SES",
+      "de": "Erweiterte Netzwerkanalyse- und Metrik-Tools für Ihr SES-Modell",
+      "lt": "Pažangūs tinklo analizės ir metrikų įrankiai jūsų SES modeliui",
+      "pt": "Ferramentas avançadas de análise de rede e métricas para seu modelo SES",
+      "it": "Strumenti avanzati di analisi di rete e metriche per il tuo modello SES"
+    },
+    {
+      "en": "Design response measures, build scenarios, and validate your model",
+      "es": "Diseñe medidas de respuesta, construya escenarios y valide su modelo",
+      "fr": "Concevez des mesures de réponse, construisez des scénarios et validez votre modèle",
+      "de": "Entwerfen Sie Reaktionsmaßnahmen, erstellen Sie Szenarien und validieren Sie Ihr Modell",
+      "lt": "Projektuokite atsako priemones, kurkite scenarijus ir validuokite savo modelį",
+      "pt": "Projete medidas de resposta, construa cenários e valide seu modelo",
+      "it": "Progetta misure di risposta, costruisci scenari e convalida il tuo modello"
+    },
+    {
+      "en": "Import existing data from Excel files with Elements and Connections sheets",
+      "es": "Importar datos existentes desde archivos Excel con hojas de Elementos y Conexiones",
+      "fr": "Importer des données existantes à partir de fichiers Excel avec des feuilles Éléments et Connexions",
+      "de": "Importieren Sie vorhandene Daten aus Excel-Dateien mit Elementen- und Verbindungsblättern",
+      "lt": "Importuokite esamus duomenis iš Excel failų su elementų ir ryšių lapais",
+      "pt": "Importar dados existentes de arquivos Excel com planilhas de Elementos e Conexões",
+      "it": "Importa dati esistenti da file Excel con fogli Elementi e Connessioni"
+    },
+    {
+      "en": "Export data and generate comprehensive analysis reports",
+      "es": "Exportar datos y generar informes de análisis completos",
+      "fr": "Exporter les données et générer des rapports d'analyse complets",
+      "de": "Exportieren Sie Daten und erstellen Sie umfassende Analyseberichte",
+      "lt": "Eksportuokite duomenis ir generuokite išsamias analizės ataskaitas",
+      "pt": "Exportar dados e gerar relatórios de análise abrangentes",
+      "it": "Esporta dati e genera rapporti di analisi completi"
+    },
+    {
+      "en": "Generate comprehensive analysis report (requires loop and leverage analyses)",
+      "es": "Generar informe de análisis completo (requiere análisis de bucles y puntos de apalancamiento)",
+      "fr": "Générer un rapport d'analyse complet (nécessite des analyses de boucles et de points de levier)",
+      "de": "Umfassenden Analysebericht erstellen (erfordert Schleifen- und Hebelanalysen)",
+      "lt": "Generuoti išsamią analizės ataskaitą (reikia ciklų ir sverties taškų analizių)",
+      "pt": "Gerar relatório de análise abrangente (requer análises de loop e ponto de alavancagem)",
+      "it": "Genera rapporto di analisi completo (richiede analisi di loop e punti di leva)"
+    },
+    {
+      "en": "What are feedback loops?",
+      "es": "¿Qué son los bucles de retroalimentación?",
+      "fr": "Que sont les boucles de rétroaction?",
+      "de": "Was sind Rückkopplungsschleifen?",
+      "lt": "Kas yra grįžtamojo ryšio ciklai?",
+      "pt": "O que são loops de feedback?",
+      "it": "Cosa sono i loop di feedback?"
+    },
+    {
+      "en": "Feedback loops are circular patterns in the system where an element eventually affects itself through a chain of causal connections. These loops are fundamental to understanding system dynamics and behavior.",
+      "es": "Los bucles de retroalimentación son patrones circulares en el sistema donde un elemento eventualmente afecta a sí mismo a través de una cadena de conexiones causales. Estos bucles son fundamentales para comprender la dinámica y el comportamiento del sistema.",
+      "fr": "Les boucles de rétroaction sont des motifs circulaires dans le système où un élément finit par s'affecter lui-même par une chaîne de connexions causales. Ces boucles sont fondamentales pour comprendre la dynamique et le comportement du système.",
+      "de": "Rückkopplungsschleifen sind zirkuläre Muster im System, bei denen ein Element sich schließlich durch eine Kette kausaler Verbindungen selbst beeinflusst. Diese Schleifen sind grundlegend für das Verständnis der Systemdynamik und des Verhaltens.",
+      "lt": "Grįžtamojo ryšio ciklai yra žiediniai modeliai sistemoje, kai elementas galiausiai veikia save per priežastinių ryšių grandinę. Šie ciklai yra esminiai suprantant sistemos dinamiką ir elgseną.",
+      "pt": "Loops de feedback são padrões circulares no sistema onde um elemento eventualmente afeta a si mesmo através de uma cadeia de conexões causais. Esses loops são fundamentais para entender a dinâmica e o comportamento do sistema.",
+      "it": "I loop di feedback sono modelli circolari nel sistema in cui un elemento finisce per influenzare se stesso attraverso una catena di connessioni causali. Questi loop sono fondamentali per comprendere la dinamica e il comportamento del sistema."
+    },
+    {
+      "en": "Loop types:",
+      "es": "Tipos de bucles:",
+      "fr": "Types de boucles :",
+      "de": "Schleifentypen:",
+      "lt": "Ciklų tipai:",
+      "pt": "Tipos de loops:",
+      "it": "Tipi di loop:"
+    },
+    {
+      "en": "Reinforcing loops (R):",
+      "es": "Bucles de refuerzo (R):",
+      "fr": "Boucles de renforcement (R) :",
+      "de": "Verstärkende Schleifen (R):",
+      "lt": "Stiprinantys ciklai (R):",
+      "pt": "Loops de reforço (R):",
+      "it": "Loop di rinforzo (R):"
+    },
+    {
+      "en": " Amplify change in the system.",
+      "es": "Amplifican el cambio en el sistema.",
+      "fr": "Amplifient le changement dans le système.",
+      "de": "Verstärken die Veränderung im System.",
+      "lt": "Stiprina pokyčius sistemoje.",
+      "pt": "Amplificam a mudança no sistema.",
+      "it": "Amplificano il cambiamento nel sistema."
+    },
+    {
+      "en": "Rule: Even number of negative connections (-)",
+      "es": "Regla: Número par de conexiones negativas (-)",
+      "fr": "Règle : Nombre pair de connexions négatives (-)",
+      "de": "Regel: Gerade Anzahl negativer Verbindungen (-)",
+      "lt": "Taisyklė: Lyginis neigiamų ryšių skaičius (-)",
+      "pt": "Regra: Número par de conexões negativas (-)",
+      "it": "Regola: Numero pari di connessioni negative (-)"
+    },
+    {
+      "en": "Behavior: Can create virtuous cycles (exponential growth) or vicious cycles (collapse)",
+      "es": "Comportamiento: Puede crear ciclos virtuosos (crecimiento exponencial) o viciosos (colapso)",
+      "fr": "Comportement : Peut créer des cycles vertueux (croissance exponentielle) ou vicieux (effondrement)",
+      "de": "Verhalten: Kann positive Kreisläufe (exponentielles Wachstum) oder negative (Zusammenbruch) erzeugen",
+      "lt": "Elgsena: Gali kurti gerus ciklus (eksponentinis augimas) arba blogus (žlugimas)",
+      "pt": "Comportamento: Pode criar ciclos virtuosos (crescimento exponencial) ou viciosos (colapso)",
+      "it": "Comportamento: Può creare cicli virtuosi (crescita esponenziale) o viziosi (collasso)"
+    },
+    {
+      "en": "Example: Species population → + Reproduction rate → + Species population",
+      "es": "Ejemplo: Población de especies → + Tasa de reproducción → + Población de especies",
+      "fr": "Exemple : Population d'espèces → + Taux de reproduction → + Population d'espèces",
+      "de": "Beispiel: Artenpopulation → + Reproduktionsrate → + Artenpopulation",
+      "lt": "Pavyzdys: Rūšių populiacija → + Reprodukcijos tempas → + Rūšių populiacija",
+      "pt": "Exemplo: População de espécies → + Taxa de reprodução → + População de espécies",
+      "it": "Esempio: Popolazione di specie → + Tasso di riproduzione → + Popolazione di specie"
+    },
+    {
+      "en": "Balancing loops (B):",
+      "es": "Bucles de equilibrio (B):",
+      "fr": "Boucles d'équilibrage (B) :",
+      "de": "Ausgleichende Schleifen (B):",
+      "lt": "Balansuojantys ciklai (B):",
+      "pt": "Loops de equilíbrio (B):",
+      "it": "Loop di bilanciamento (B):"
+    },
+    {
+      "en": " Counteract change and seek equilibrium.",
+      "es": "Contrarrestan el cambio y buscan el equilibrio.",
+      "fr": "Contrebalancent le changement et recherchent l'équilibre.",
+      "de": "Wirken Veränderungen entgegen und suchen das Gleichgewicht.",
+      "lt": "Priešinasi pokyčiams ir siekia pusiausvyros.",
+      "pt": "Contrabalançam a mudança e buscam o equilíbrio.",
+      "it": "Contrastano il cambiamento e cercano l'equilibrio."
+    },
+    {
+      "en": "Rule: Odd number of negative connections (-)",
+      "es": "Regla: Número impar de conexiones negativas (-)",
+      "fr": "Règle : Nombre impair de connexions négatives (-)",
+      "de": "Regel: Ungerade Anzahl negativer Verbindungen (-)",
+      "lt": "Taisyklė: Nelyginis neigiamų ryšių skaičius (-)",
+      "pt": "Regra: Número ímpar de conexões negativas (-)",
+      "it": "Regola: Numero dispari di connessioni negative (-)"
+    },
+    {
+      "en": "Behavior: Produces resistance to change and system stabilization",
+      "es": "Comportamiento: Produce resistencia al cambio y estabilización del sistema",
+      "fr": "Comportement : Produit une résistance au changement et une stabilisation du système",
+      "de": "Verhalten: Erzeugt Widerstand gegen Veränderungen und Systemstabilisierung",
+      "lt": "Elgsena: Sukuria pasipriešinimą pokyčiams ir sistemos stabilizavimą",
+      "pt": "Comportamento: Produz resistência à mudança e estabilização do sistema",
+      "it": "Comportamento: Produce resistenza al cambiamento e stabilizzazione del sistema"
+    },
+    {
+      "en": "Example: Fishing → - Fish biomass → - Fishing",
+      "es": "Ejemplo: Pesca → - Biomasa de peces → - Pesca",
+      "fr": "Exemple : Pêche → - Biomasse de poissons → - Pêche",
+      "de": "Beispiel: Fischerei → - Fischbiomasse → - Fischerei",
+      "lt": "Pavyzdys: Žvejyba → - Žuvų biomasė → - Žvejyba",
+      "pt": "Exemplo: Pesca → - Biomassa de peixes → - Pesca",
+      "it": "Esempio: Pesca → - Biomassa ittica → - Pesca"
+    },
+    {
+      "en": "How to use this tool:",
+      "es": "Cómo usar esta herramienta:",
+      "fr": "Comment utiliser cet outil :",
+      "de": "So verwenden Sie dieses Tool:",
+      "lt": "Kaip naudoti šį įrankį:",
+      "pt": "Como usar esta ferramenta:",
+      "it": "Come usare questo strumento:"
+    },
+    {
+      "en": "1. Detect loops:",
+      "es": "1. Detectar bucles:",
+      "fr": "1. Détecter les boucles :",
+      "de": "1. Schleifen erkennen:",
+      "lt": "1. Aptikti ciklus:",
+      "pt": "1. Detectar loops:",
+      "it": "1. Rilevare loop:"
+    },
+    {
+      "en": " Set detection parameters (maximum length, number of cycles) and run automatic detection",
+      "es": "Establezca parámetros de detección (longitud máxima, cantidad de ciclos) y ejecute la detección automática",
+      "fr": "Définissez les paramètres de détection (longueur maximale, nombre de cycles) et exécutez la détection automatique",
+      "de": "Legen Sie Erkennungsparameter fest (maximale Länge, Anzahl der Zyklen) und führen Sie die automatische Erkennung durch",
+      "lt": "Nustatykite aptikimo parametrus (maksimalų ilgį, ciklų skaičių) ir paleiskite automatinį aptikimą",
+      "pt": "Defina parâmetros de detecção (comprimento máximo, número de ciclos) e execute a detecção automática",
+      "it": "Imposta i parametri di rilevamento (lunghezza massima, numero di cicli) ed esegui il rilevamento automatico"
+    },
+    {
+      "en": "2. Classification:",
+      "es": "2. Clasificación:",
+      "fr": "2. Classification :",
+      "de": "2. Klassifizierung:",
+      "lt": "2. Klasifikacija:",
+      "pt": "2. Classificação:",
+      "it": "2. Classificazione:"
+    },
+    {
+      "en": " Review reinforcing and balancing loops found",
+      "es": "Revise los bucles de refuerzo y equilibrio encontrados",
+      "fr": "Examinez les boucles de renforcement et d'équilibrage trouvées",
+      "de": "Überprüfen Sie die gefundenen Verstärkungs- und Ausgleichsschleifen",
+      "lt": "Peržiūrėkite rastus stiprinančius ir balansuojančius ciklus",
+      "pt": "Revise os loops de reforço e equilíbrio encontrados",
+      "it": "Rivedi i loop di rinforzo e bilanciamento trovati"
+    },
+    {
+      "en": "3. Details:",
+      "es": "3. Detalles:",
+      "fr": "3. Détails :",
+      "de": "3. Details:",
+      "lt": "3. Detalės:",
+      "pt": "3. Detalhes:",
+      "it": "3. Dettagli:"
+    },
+    {
+      "en": " Examine individual loops and see their complete path",
+      "es": "Examine bucles individuales y vea su ruta completa",
+      "fr": "Examinez les boucles individuelles et voyez leur chemin complet",
+      "de": "Untersuchen Sie einzelne Schleifen und sehen Sie ihren vollständigen Pfad",
+      "lt": "Išnagrinėkite atskirus ciklus ir pamatykite jų visą kelią",
+      "pt": "Examine loops individuais e veja seu caminho completo",
+      "it": "Esamina i singoli loop e visualizza il loro percorso completo"
+    },
+    {
+      "en": "4. Visualization:",
+      "es": "4. Visualización:",
+      "fr": "4. Visualisation :",
+      "de": "4. Visualisierung:",
+      "lt": "4. Vizualizacija:",
+      "pt": "4. Visualização:",
+      "it": "4. Visualizzazione:"
+    },
+    {
+      "en": " See highlighted loops in the context of your full network",
+      "es": "Vea bucles resaltados en el contexto de su red completa",
+      "fr": "Voyez les boucles mises en évidence dans le contexte de votre réseau complet",
+      "de": "Sehen Sie hervorgehobene Schleifen im Kontext Ihres vollständigen Netzwerks",
+      "lt": "Peržiūrėkite paryškintus ciklus viso tinklo kontekste",
+      "pt": "Veja loops destacados no contexto de sua rede completa",
+      "it": "Visualizza i loop evidenziati nel contesto della tua rete completa"
+    },
+    {
+      "en": "5. Element participation:",
+      "es": "5. Participación de elementos:",
+      "fr": "5. Participation des éléments :",
+      "de": "5. Elementbeteiligung:",
+      "lt": "5. Elementų dalyvavimas:",
+      "pt": "5. Participação de elementos:",
+      "it": "5. Partecipazione di elementi:"
+    },
+    {
+      "en": " Identify which system elements participate in most loops",
+      "es": "Identifique qué elementos del sistema participan en la mayoría de los bucles",
+      "fr": "Identifiez quels éléments du système participent à la plupart des boucles",
+      "de": "Identifizieren Sie, welche Systemelemente an den meisten Schleifen teilnehmen",
+      "lt": "Nustatykite, kurie sistemos elementai dalyvauja daugumoje ciklų",
+      "pt": "Identifique quais elementos do sistema participam na maioria dos loops",
+      "it": "Identifica quali elementi del sistema partecipano alla maggior parte dei loop"
+    },
+    {
+      "en": "6. Export:",
+      "es": "6. Exportar:",
+      "fr": "6. Exporter :",
+      "de": "6. Exportieren:",
+      "lt": "6. Eksportuoti:",
+      "pt": "6. Exportar:",
+      "it": "6. Esportare:"
+    },
+    {
+      "en": " Save results in Excel or CSV formats for further analysis",
+      "es": "Guarde los resultados en formatos Excel o CSV para análisis posterior",
+      "fr": "Enregistrez les résultats aux formats Excel ou CSV pour une analyse ultérieure",
+      "de": "Speichern Sie die Ergebnisse in Excel- oder CSV-Formaten für weitere Analysen",
+      "lt": "Išsaugokite rezultatus Excel arba CSV formatais tolesnei analizei",
+      "pt": "Salve os resultados em formatos Excel ou CSV para análise posterior",
+      "it": "Salva i risultati in formati Excel o CSV per ulteriori analisi"
+    },
+    {
+      "en": "Understanding the results:",
+      "es": "Comprensión de los resultados:",
+      "fr": "Comprendre les résultats :",
+      "de": "Ergebnisse verstehen:",
+      "lt": "Rezultatų supratimas:",
+      "pt": "Compreensão dos resultados:",
+      "it": "Comprensione dei risultati:"
+    },
+    {
+      "en": "Loop length:",
+      "es": "Longitud del bucle:",
+      "fr": "Longueur de la boucle :",
+      "de": "Schleifenlänge:",
+      "lt": "Ciklo ilgis:",
+      "pt": "Comprimento do loop:",
+      "it": "Lunghezza del loop:"
+    },
+    {
+      "en": " Number of elements in the loop. Shorter loops (3-5 elements) tend to have greater influence.",
+      "es": "Número de elementos en el bucle. Bucles más cortos (3-5 elementos) tienden a tener mayor influencia.",
+      "fr": "Nombre d'éléments dans la boucle. Les boucles plus courtes (3-5 éléments) ont tendance à avoir plus d'influence.",
+      "de": "Anzahl der Elemente in der Schleife. Kürzere Schleifen (3-5 Elemente) haben tendenziell größeren Einfluss.",
+      "lt": "Elementų skaičius cikle. Trumpesni ciklai (3-5 elementai) turi didesnę įtaką.",
+      "pt": "Número de elementos no loop. Loops mais curtos (3-5 elementos) tendem a ter maior influência.",
+      "it": "Numero di elementi nel loop. Loop più corti (3-5 elementi) tendono ad avere maggiore influenza."
+    },
+    {
+      "en": "Dominance score:",
+      "es": "Puntuación de dominancia:",
+      "fr": "Score de dominance :",
+      "de": "Dominanz-Score:",
+      "lt": "Dominavimo balas:",
+      "pt": "Pontuação de dominância:",
+      "it": "Punteggio di dominanza:"
+    },
+    {
+      "en": " Measures how significant the loop is based on the centrality of its elements.",
+      "es": "Mide cuán significativo es el bucle basado en la centralidad de sus elementos.",
+      "fr": "Mesure l'importance de la boucle en fonction de la centralité de ses éléments.",
+      "de": "Misst, wie bedeutend die Schleife basierend auf der Zentralität ihrer Elemente ist.",
+      "lt": "Matuoja, kiek reikšmingas yra ciklas, remiantis jo elementų centralizacija.",
+      "pt": "Mede quão significativo é o loop com base na centralidade de seus elementos.",
+      "it": "Misura quanto è significativo il loop in base alla centralità dei suoi elementi."
+    },
+    {
+      "en": "Element participation:",
+      "es": "Participación de elementos:",
+      "fr": "Participation des éléments :",
+      "de": "Elementbeteiligung:",
+      "lt": "Elementų dalyvavimas:",
+      "pt": "Participação de elementos:",
+      "it": "Partecipazione di elementi:"
+    },
+    {
+      "en": " Elements appearing in multiple loops are potential leverage points for interventions.",
+      "es": "Elementos que aparecen en múltiples bucles son puntos de apalancamiento potenciales para intervenciones.",
+      "fr": "Les éléments qui apparaissent dans plusieurs boucles sont des points de levier potentiels pour les interventions.",
+      "de": "Elemente, die in mehreren Schleifen vorkommen, sind potenzielle Hebelpunkte für Interventionen.",
+      "lt": "Elementai, pasirodyantys keliuose cikluose, yra potencialūs sverties taškai intervencijoms.",
+      "pt": "Elementos que aparecem em múltiplos loops são pontos de alavancagem potenciais para intervenções.",
+      "it": "Gli elementi che compaiono in più loop sono potenziali punti di leva per gli interventi."
+    },
+    {
+      "en": "Understanding feedback loops: Reinforcing loops often identify areas of system growth or collapse, while balancing loops identify stabilization mechanisms or resistance to change.",
+      "es": "Comprensión de bucles de retroalimentación: los bucles de refuerzo a menudo identifican áreas de crecimiento o colapso del sistema, mientras que los bucles de equilibrio identifican mecanismos de estabilización o resistencia al cambio.",
+      "fr": "Compréhension des boucles de rétroaction : les boucles de renforcement identifient souvent les zones de croissance ou d'effondrement du système, tandis que les boucles d'équilibrage identifient les mécanismes de stabilisation ou de résistance au changement.",
+      "de": "Verständnis von Rückkopplungsschleifen: Verstärkungsschleifen identifizieren oft Bereiche des Systemwachstums oder -zusammenbruchs, während Ausgleichsschleifen Stabilisierungsmechanismen oder Widerstand gegen Veränderungen identifizieren.",
+      "lt": "Grįžtamojo ryšio ciklų supratimas: stiprinantys ciklai dažnai identifikuoja sistemos augimo ar žlugimo sritis, o balansuojantys ciklai identifikuoja stabilizavimo mechanizmus ar pasipriešinimą pokyčiams.",
+      "pt": "Compreensão de loops de feedback: loops de reforço frequentemente identificam áreas de crescimento ou colapso do sistema, enquanto loops de equilíbrio identificam mecanismos de estabilização ou resistência à mudança.",
+      "it": "Comprensione dei loop di feedback: i loop di rinforzo spesso identificano aree di crescita o collasso del sistema, mentre i loop di bilanciamento identificano meccanismi di stabilizzazione o resistenza al cambiamento."
+    },
+    {
+      "en": "Leverage Point Analysis Help",
+      "es": "Ayuda de Análisis de Puntos de Apalancamiento",
+      "fr": "Aide de l'Analyse des Points de Levier",
+      "de": "Hilfe zur Hebelpunkt-Analyse",
+      "lt": "Sverties taškų analizės pagalba",
+      "pt": "Ajuda de Análise de Pontos de Alavancagem",
+      "it": "Aiuto Analisi Punti di Leva"
+    },
+    {
+      "en": "What are leverage points?",
+      "es": "¿Qué son los puntos de apalancamiento?",
+      "fr": "Que sont les points de levier?",
+      "de": "Was sind Hebelpunkte?",
+      "lt": "Kas yra sverties taškai?",
+      "pt": "O que são pontos de alavancagem?",
+      "it": "Cosa sono i punti di leva?"
+    },
+    {
+      "en": "Leverage points are nodes in your network that have the highest potential for system-wide impact when interventions are applied. These are strategic locations where small changes can lead to significant improvements across the entire social-ecological system.",
+      "es": "Los puntos de apalancamiento son nodos en su red que tienen el mayor potencial de impacto en todo el sistema cuando se aplican intervenciones. Estas son ubicaciones estratégicas donde pequeños cambios pueden conducir a mejoras significativas en todo el sistema socio-ecológico.",
+      "fr": "Les points de levier sont des nœuds de votre réseau qui ont le plus grand potentiel d'impact à l'échelle du système lorsque des interventions sont appliquées. Ce sont des emplacements stratégiques où de petits changements peuvent conduire à des améliorations significatives dans tout le système socio-écologique.",
+      "de": "Hebelpunkte sind Knoten in Ihrem Netzwerk, die das höchste Potenzial für systemweite Auswirkungen haben, wenn Interventionen angewendet werden. Dies sind strategische Standorte, an denen kleine Änderungen zu erheblichen Verbesserungen im gesamten sozial-ökologischen System führen können.",
+      "lt": "Sverties taškai yra mazgai jūsų tinkle, turintys didžiausią sisteminės įtakos potencialą, kai taikomos intervencijos. Tai strateginės vietos, kur nedideli pokyčiai gali lemti reikšmingus patobulinimus visoje socialinėje-ekologinėje sistemoje.",
+      "pt": "Pontos de alavancagem são nós em sua rede que têm o maior potencial de impacto em todo o sistema quando intervenções são aplicadas. Estas são localizações estratégicas onde pequenas mudanças podem levar a melhorias significativas em todo o sistema sócio-ecológico.",
+      "it": "I punti di leva sono nodi nella tua rete che hanno il più alto potenziale di impatto a livello di sistema quando vengono applicate interventi. Queste sono posizioni strategiche dove piccoli cambiamenti possono portare a miglioramenti significativi in tutto il sistema socio-ecologico."
+    },
+    {
+      "en": "Metrics Used:",
+      "es": "Métricas Utilizadas:",
+      "fr": "Métriques Utilisées :",
+      "de": "Verwendete Metriken:",
+      "lt": "Naudojamos metrikos:",
+      "pt": "Métricas Usadas:",
+      "it": "Metriche Utilizzate:"
+    },
+    {
+      "en": "Betweenness Centrality: Measures how often a node acts as a bridge between other nodes. High betweenness means the node controls information flow and can act as a bottleneck or facilitator.",
+      "es": "Centralidad de Intermediación: Mide con qué frecuencia un nodo actúa como puente entre otros nodos. Alta intermediación significa que el nodo controla el flujo de información y puede actuar como cuello de botella o facilitador.",
+      "fr": "Centralité d'Intermédiarité : Mesure la fréquence à laquelle un nœud agit comme un pont entre d'autres nœuds. Une intermédiarité élevée signifie que le nœud contrôle le flux d'informations et peut agir comme un goulot d'étranglement ou un facilitateur.",
+      "de": "Zwischenzentralität: Misst, wie oft ein Knoten als Brücke zwischen anderen Knoten fungiert. Hohe Zwischenzentralität bedeutet, dass der Knoten den Informationsfluss kontrolliert und als Engpass oder Vermittler fungieren kann.",
+      "lt": "Tarpinės centrinės pozicijos: Matuoja, kaip dažnai mazgas veikia kaip tiltas tarp kitų mazgų. Didelis tarpiškumas reiškia, kad mazgas kontroliuoja informacijos srautą ir gali veikti kaip kliūtis ar palengvintojas.",
+      "pt": "Centralidade de Intermediação: Mede com que frequência um nó atua como uma ponte entre outros nós. Alta intermediação significa que o nó controla o fluxo de informações e pode atuar como um gargalo ou facilitador.",
+      "it": "Centralità di Intermediazione: Misura quanto spesso un nodo agisce come ponte tra altri nodi. Un'alta intermediazione significa che il nodo controlla il flusso di informazioni e può agire come collo di bottiglia o facilitatore."
+    },
+    {
+      "en": "Eigenvector Centrality: Measures the influence of a node based on the importance of its neighbors. Nodes connected to other important nodes score higher.",
+      "es": "Centralidad de Vector Propio: Mide la influencia de un nodo basándose en la importancia de sus vecinos. Los nodos conectados a otros nodos importantes obtienen puntuaciones más altas.",
+      "fr": "Centralité de Vecteur Propre : Mesure l'influence d'un nœud en fonction de l'importance de ses voisins. Les nœuds connectés à d'autres nœuds importants obtiennent des scores plus élevés.",
+      "de": "Eigenvektorzentralität: Misst den Einfluss eines Knotens basierend auf der Bedeutung seiner Nachbarn. Knoten, die mit anderen wichtigen Knoten verbunden sind, erzielen höhere Werte.",
+      "lt": "Savojo vektoriaus centrinė pozicija: Matuoja mazgo įtaką pagal jo kaimynų svarbą. Mazgai, sujungti su kitais svarbiais mazgais, gauna didesnius balus.",
+      "pt": "Centralidade de Autovetor: Mede a influência de um nó com base na importância de seus vizinhos. Nós conectados a outros nós importantes pontuam mais alto.",
+      "it": "Centralità di Autovettore: Misura l'influenza di un nodo in base all'importanza dei suoi vicini. I nodi collegati ad altri nodi importanti ottengono punteggi più alti."
+    },
+    {
+      "en": "PageRank: Google's algorithm adapted for network analysis. Measures overall importance considering both direct connections and the importance of connecting nodes.",
+      "es": "PageRank: Algoritmo de Google adaptado para análisis de redes. Mide la importancia general considerando tanto las conexiones directas como la importancia de los nodos conectores.",
+      "fr": "PageRank : Algorithme de Google adapté pour l'analyse de réseau. Mesure l'importance globale en considérant à la fois les connexions directes et l'importance des nœuds de connexion.",
+      "de": "PageRank: Googles Algorithmus für Netzwerkanalyse angepasst. Misst die Gesamtbedeutung unter Berücksichtigung sowohl direkter Verbindungen als auch der Bedeutung verbindender Knoten.",
+      "lt": "PageRank: Google algoritmas pritaikytas tinklo analizei. Matuoja bendrą svarbą, atsižvelgiant į tiesioginius ryšius ir jungiamų mazgų svarbą.",
+      "pt": "PageRank: Algoritmo do Google adaptado para análise de rede. Mede a importância geral considerando tanto as conexões diretas quanto a importância dos nós conectados.",
+      "it": "PageRank: Algoritmo di Google adattato per l'analisi di rete. Misura l'importanza complessiva considerando sia le connessioni dirette che l'importanza dei nodi di collegamento."
+    },
+    {
+      "en": "Composite Score: A combined metric that sums the normalized values of all three centrality measures to provide an overall leverage score.",
+      "es": "Puntuación Compuesta: Una métrica combinada que suma los valores normalizados de las tres medidas de centralidad para proporcionar una puntuación de apalancamiento general.",
+      "fr": "Score Composite : Une métrique combinée qui additionne les valeurs normalisées des trois mesures de centralité pour fournir un score de levier global.",
+      "de": "Zusammengesetzter Score: Eine kombinierte Metrik, die die normalisierten Werte aller drei Zentralitätsmaße summiert, um einen Gesamt-Hebelpunkt-Score zu liefern.",
+      "lt": "Kompozitinis balas: Kombinuota metrika, sumuojanti visų trijų centrinių pozicijų matavimų normalizuotas vertes, kad būtų pateiktas bendras sverties balas.",
+      "pt": "Pontuação Composta: Uma métrica combinada que soma os valores normalizados das três medidas de centralidade para fornecer uma pontuação geral de alavancagem.",
+      "it": "Punteggio Composito: Una metrica combinata che somma i valori normalizzati di tutte e tre le misure di centralità per fornire un punteggio di leva complessivo."
+    },
+    {
+      "en": "How to interpret results:",
+      "es": "Cómo interpretar los resultados:",
+      "fr": "Comment interpréter les résultats :",
+      "de": "So interpretieren Sie die Ergebnisse:",
+      "lt": "Kaip interpretuoti rezultatus:",
+      "pt": "Como interpretar os resultados:",
+      "it": "Come interpretare i risultati:"
+    },
+    {
+      "en": "High Composite Score: These nodes are your top leverage points. Interventions here can have cascading effects throughout the system.",
+      "es": "Puntuación Compuesta Alta: Estos nodos son sus principales puntos de apalancamiento. Las intervenciones aquí pueden tener efectos en cascada en todo el sistema.",
+      "fr": "Score Composite Élevé : Ces nœuds sont vos principaux points de levier. Les interventions ici peuvent avoir des effets en cascade dans tout le système.",
+      "de": "Hoher zusammengesetzter Score: Diese Knoten sind Ihre Top-Hebelpunkte. Interventionen hier können kaskadierende Auswirkungen im gesamten System haben.",
+      "lt": "Didelis kompozitinis balas: Šie mazgai yra jūsų pagrindiniai sverties taškai. Intervencijos čia gali turėti kaskadines pasekmes visoje sistemoje.",
+      "pt": "Pontuação Composta Alta: Estes nós são seus principais pontos de alavancagem. Intervenções aqui podem ter efeitos em cascata em todo o sistema.",
+      "it": "Punteggio Composito Alto: Questi nodi sono i tuoi principali punti di leva. Gli interventi qui possono avere effetti a cascata in tutto il sistema."
+    },
+    {
+      "en": "High Betweenness: Focus on nodes that control information flow. They can block or facilitate changes.",
+      "es": "Alta Intermediación: Enfóquese en nodos que controlan el flujo de información. Pueden bloquear o facilitar cambios.",
+      "fr": "Intermédiarité Élevée : Concentrez-vous sur les nœuds qui contrôlent le flux d'informations. Ils peuvent bloquer ou faciliter les changements.",
+      "de": "Hohe Zwischenzentralität: Konzentrieren Sie sich auf Knoten, die den Informationsfluss kontrollieren. Sie können Änderungen blockieren oder erleichtern.",
+      "lt": "Didelis tarpiškumas: Sutelkite dėmesį į mazgus, kontroliuojančius informacijos srautą. Jie gali blokuoti arba palengvinti pokyčius.",
+      "pt": "Alta Intermediação: Concentre-se em nós que controlam o fluxo de informações. Eles podem bloquear ou facilitar mudanças.",
+      "it": "Alta Intermediazione: Concentrati sui nodi che controllano il flusso di informazioni. Possono bloccare o facilitare i cambiamenti."
+    },
+    {
+      "en": "High Eigenvector: Target nodes that are influential because they're connected to other influential nodes.",
+      "es": "Alto Vector Propio: Diríjase a nodos que son influyentes porque están conectados a otros nodos influyentes.",
+      "fr": "Vecteur Propre Élevé : Ciblez les nœuds qui sont influents parce qu'ils sont connectés à d'autres nœuds influents.",
+      "de": "Hoher Eigenvektor: Zielen Sie auf Knoten ab, die einflussreich sind, weil sie mit anderen einflussreichen Knoten verbunden sind.",
+      "lt": "Didelis savasis vektorius: Nukreipkite į mazgus, kurie yra įtakingi, nes susiję su kitais įtakingais mazgais.",
+      "pt": "Alto Autovetor: Direcione nós que são influentes porque estão conectados a outros nós influentes.",
+      "it": "Alto Autovettore: Punta sui nodi che sono influenti perché sono collegati ad altri nodi influenti."
+    },
+    {
+      "en": "High PageRank: These nodes have broad influence across the network and often represent core system elements.",
+      "es": "Alto PageRank: Estos nodos tienen una amplia influencia en toda la red y a menudo representan elementos centrales del sistema.",
+      "fr": "PageRank Élevé : Ces nœuds ont une large influence sur le réseau et représentent souvent des éléments centraux du système.",
+      "de": "Hoher PageRank: Diese Knoten haben breiten Einfluss über das Netzwerk und repräsentieren oft zentrale Systemelemente.",
+      "lt": "Didelis PageRank: Šie mazgai turi platų poveikį visame tinkle ir dažnai reprezentuoja pagrindinius sistemos elementus.",
+      "pt": "Alto PageRank: Estes nós têm ampla influência na rede e frequentemente representam elementos centrais do sistema.",
+      "it": "Alto PageRank: Questi nodi hanno un'ampia influenza sulla rete e spesso rappresentano elementi centrali del sistema."
+    },
+    {
+      "en": "Using leverage points for intervention design:",
+      "es": "Uso de puntos de apalancamiento para el diseño de intervenciones:",
+      "fr": "Utilisation des points de levier pour la conception d'interventions :",
+      "de": "Verwendung von Hebelpunkten für die Interventionsgestaltung:",
+      "lt": "Sverties taškų naudojimas intervencijų projektavimui:",
+      "pt": "Uso de pontos de alavancagem para design de intervenções:",
+      "it": "Utilizzo dei punti di leva per la progettazione di interventi:"
+    },
+    {
+      "en": "Prioritize interventions: Focus resources on high-leverage nodes rather than spreading efforts thinly across many nodes.",
+      "es": "Priorizar intervenciones: Enfoque recursos en nodos de alto apalancamiento en lugar de dispersar esfuerzos entre muchos nodos.",
+      "fr": "Prioriser les interventions : Concentrez les ressources sur les nœuds à fort effet de levier plutôt que de disperser les efforts sur de nombreux nœuds.",
+      "de": "Interventionen priorisieren: Konzentrieren Sie Ressourcen auf Knoten mit hohem Hebel, anstatt Bemühungen über viele Knoten zu verteilen.",
+      "lt": "Nustatyti intervencijų prioritetus: Sutelkti išteklius į didelės sverto galios mazgus, o ne sklaidos pastangas tarp daugelio mazgų.",
+      "pt": "Priorizar intervenções: Concentre recursos em nós de alta alavancagem em vez de espalhar esforços por muitos nós.",
+      "it": "Dare priorità agli interventi: Concentra le risorse sui nodi ad alta leva anziché distribuire gli sforzi su molti nodi."
+    },
+    {
+      "en": "Consider node type: Different types of nodes (Drivers, Activities, Pressures, States, Impacts, Responses) may require different intervention strategies.",
+      "es": "Considere el tipo de nodo: Diferentes tipos de nodos (Impulsores, Actividades, Presiones, Estados, Impactos, Respuestas) pueden requerir diferentes estrategias de intervención.",
+      "fr": "Considérer le type de nœud : Différents types de nœuds (Moteurs, Activités, Pressions, États, Impacts, Réponses) peuvent nécessiter différentes stratégies d'intervention.",
+      "de": "Knotentyp berücksichtigen: Verschiedene Knotentypen (Treiber, Aktivitäten, Belastungen, Zustände, Auswirkungen, Reaktionen) erfordern möglicherweise unterschiedliche Interventionsstrategien.",
+      "lt": "Atsižvelgti į mazgo tipą: Skirtingi mazgų tipai (Vairuotojai, Veiklos, Spaudimai, Būsenos, Poveikiai, Atsakai) gali reikalauti skirtingų intervencijos strategijų.",
+      "pt": "Considere o tipo de nó: Diferentes tipos de nós (Drivers, Atividades, Pressões, Estados, Impactos, Respostas) podem exigir diferentes estratégias de intervenção.",
+      "it": "Considera il tipo di nodo: Diversi tipi di nodi (Driver, Attività, Pressioni, Stati, Impatti, Risposte) potrebbero richiedere diverse strategie di intervento."
+    },
+    {
+      "en": "Combine with loop analysis: Nodes that appear in multiple feedback loops AND have high leverage scores are especially important for system-wide change.",
+      "es": "Combinar con análisis de bucles: Los nodos que aparecen en múltiples bucles de retroalimentación Y tienen puntuaciones de apalancamiento altas son especialmente importantes para el cambio en todo el sistema.",
+      "fr": "Combiner avec l'analyse de boucles : Les nœuds qui apparaissent dans plusieurs boucles de rétroaction ET ont des scores de levier élevés sont particulièrement importants pour le changement à l'échelle du système.",
+      "de": "Mit Schleifenanalyse kombinieren: Knoten, die in mehreren Rückkopplungsschleifen vorkommen UND hohe Hebelwerte haben, sind besonders wichtig für systemweite Veränderungen.",
+      "lt": "Derinti su ciklų analize: Mazgai, pasirodyantys keliuose grįžtamojo ryšio cikluose IR turintys didelius sverties balus, yra ypač svarbūs sistemos pokyčiams.",
+      "pt": "Combine com análise de loops: Nós que aparecem em múltiplos loops de feedback E têm altas pontuações de alavancagem são especialmente importantes para mudanças em todo o sistema.",
+      "it": "Combinare con l'analisi dei loop: I nodi che compaiono in più loop di feedback E hanno alti punteggi di leva sono particolarmente importanti per il cambiamento a livello di sistema."
+    },
+    {
+      "en": "DAPSI(W)R(M) Elements",
+      "es": "Elementos DAPSI(W)R(M)",
+      "fr": "Éléments DAPSI(W)R(M)",
+      "de": "DAPSI(W)R(M) Elemente",
+      "lt": "DAPSI(W)R(M) elementai",
+      "pt": "Elementos DAPSI(W)R(M)",
+      "it": "Elementi DAPSI(W)R(M)"
+    },
+    {
+      "en": "States:",
+      "es": "Estados:",
+      "fr": "États :",
+      "de": "Zustände:",
+      "lt": "Būsenos:",
+      "pt": "Estados:",
+      "it": "Stati:"
+    },
+    {
+      "en": "elements created",
+      "es": "elementos creados",
+      "fr": "éléments créés",
+      "de": "Elemente erstellt",
+      "lt": "elementai sukurti",
+      "pt": "elementos criados",
+      "it": "elementi creati"
+    },
+    {
+      "en": "connections defined",
+      "es": "conexiones definidas",
+      "fr": "connexions définies",
+      "de": "Verbindungen definiert",
+      "lt": "ryšiai apibrėžti",
+      "pt": "conexões definidas",
+      "it": "connessioni definite"
+    },
+    {
+      "en": "nodes in CLD",
+      "es": "nodos en CLD",
+      "fr": "nœuds dans le CLD",
+      "de": "Knoten im CLD",
+      "lt": "mazgai CLD",
+      "pt": "nós no CLD",
+      "it": "nodi nel CLD"
+    },
+    {
+      "en": "edges in CLD",
+      "es": "aristas en CLD",
+      "fr": "arêtes dans le CLD",
+      "de": "Kanten im CLD",
+      "lt": "briaunos CLD",
+      "pt": "arestas no CLD",
+      "it": "archi nel CLD"
+    },
+    {
+      "en": "No analysis performed",
+      "es": "No se realizó ningún análisis",
+      "fr": "Aucune analyse effectuée",
+      "de": "Keine Analyse durchgeführt",
+      "lt": "Analizė neatlikta",
+      "pt": "Nenhuma análise realizada",
+      "it": "Nessuna analisi eseguita"
+    },
+    {
+      "en": "Feedback Loop Detection and Analysis Guide",
+      "es": "Guía de Detección y Análisis de Bucles de Retroalimentación",
+      "fr": "Guide de Détection et d'Analyse des Boucles de Rétroaction",
+      "de": "Leitfaden zur Erkennung und Analyse von Rückkopplungsschleifen",
+      "lt": "Grįžtamojo ryšio ciklų aptikimo ir analizės vadovas",
+      "pt": "Guia de Detecção e Análise de Loops de Feedback",
+      "it": "Guida al Rilevamento e all'Analisi dei Loop di Feedback"
+    },
+    {
+      "en": "Analyzing your elements and generating connections...",
+      "es": "Analizando tus elementos y generando conexiones...",
+      "fr": "Analyse de vos éléments et génération de connexions...",
+      "de": "Analysiere deine Elemente und generiere Verbindungen...",
+      "lt": "Analizuojami jūsų elementai ir generuojami ryšiai...",
+      "pt": "Analisando seus elementos e gerando conexões...",
+      "it": "Analisi degli elementi e generazione delle connessioni..."
+    },
+    {
+      "en": "This may take a moment...",
+      "es": "Esto puede tardar un momento...",
+      "fr": "Cela peut prendre un instant...",
+      "de": "Dies kann einen Moment dauern...",
+      "lt": "Tai gali užtrukti...",
+      "pt": "Isso pode levar um momento...",
+      "it": "Potrebbe richiedere un momento..."
+    },
+    {
+      "en": "Finalizing connections...",
+      "es": "Finalizando conexiones...",
+      "fr": "Finalisation des connexions...",
+      "de": "Finalisiere Verbindungen...",
+      "lt": "Baigiami ryšiai...",
+      "pt": "Finalizando conexões...",
+      "it": "Finalizzazione delle connessioni..."
+    },
+    {
+      "en": "Note: I found more connections, but limited to",
+      "es": "Nota: Encontré más conexiones, pero limitado a",
+      "fr": "Note: J'ai trouvé plus de connexions, mais limité à",
+      "de": "Hinweis: Ich habe mehr Verbindungen gefunden, aber begrenzt auf",
+      "lt": "Pastaba: radau daugiau ryšių, bet apribota iki",
+      "pt": "Nota: Encontrei mais conexões, mas limitado a",
+      "it": "Nota: Ho trovato più connessioni, ma limitato a"
+    },
+    {
+      "en": "to keep the interface responsive.",
+      "es": "para mantener la interfaz receptiva.",
+      "fr": "pour garder l'interface réactive.",
+      "de": "um die Benutzeroberfläche reaktionsfähig zu halten.",
+      "lt": "kad sąsaja būtų greitesnė.",
+      "pt": "para manter a interface responsiva.",
+      "it": "per mantenere l'interfaccia reattiva."
+    },
+    {
+      "en": "Detection complete! Found",
+      "es": "¡Detección completa! Se encontraron",
+      "fr": "Détection terminée ! Trouvé",
+      "de": "Erkennung abgeschlossen! Gefunden",
+      "lt": "Aptikimas baigtas! Rasta",
+      "pt": "Detecção concluída! Encontrado",
+      "it": "Rilevamento completato! Trovato"
+    },
+    {
+      "en": "feedback loops.",
+      "es": "bucles de retroalimentación.",
+      "fr": "boucles de rétroaction.",
+      "de": "Rückkopplungsschleifen.",
+      "lt": "grįžtamojo ryšio ciklai.",
+      "pt": "loops de feedback.",
+      "it": "loop di feedback."
+    },
+    {
+      "en": "selected",
+      "es": "seleccionado(s)",
+      "fr": "sélectionné(s)",
+      "de": "ausgewählt",
+      "lt": "pasirinkta",
+      "pt": "selecionado(s)",
+      "it": "selezionato/i"
+    },
+    {
+      "en": "Transfer your completed model to the standard ISA Data Entry module where you can view and edit it in detail",
+      "es": "Transfiera su modelo completado al módulo estándar de Entrada de Datos ISA donde puede verlo y editarlo en detalle",
+      "fr": "Transférez votre modèle terminé vers le module standard de saisie de données ISA où vous pourrez le visualiser et le modifier en détail",
+      "de": "Übertragen Sie Ihr fertiges Modell zum Standard-ISA-Dateneingabemodul, wo Sie es im Detail anzeigen und bearbeiten können",
+      "lt": "Perkelkite užbaigtą modelį į standartinį ISA duomenų įvedimo modulį, kuriame galite jį peržiūrėti ir redaguoti detaliai",
+      "pt": "Transfira seu modelo concluído para o módulo padrão de Entrada de Dados ISA, onde você pode visualizá-lo e editá-lo em detalhes",
+      "it": "Trasferisci il tuo modello completato al modulo standard di Inserimento Dati ISA dove puoi visualizzarlo e modificarlo in dettaglio"
+    },
+    {
+      "en": "Causal Loop Diagram Guide",
+      "es": "Guía de Diagrama de Bucles Causales",
+      "fr": "Guide du Diagramme de Boucles Causales",
+      "de": "Anleitung zum Kausalen Schleifendiagramm",
+      "lt": "Priežastinių kilpų diagramos vadovas",
+      "pt": "Guia de Diagrama de Loops Causais",
+      "it": "Guida al Diagramma dei Loop Causali"
+    },
+    {
+      "en": "What is a Causal Loop Diagram?",
+      "es": "¿Qué es un Diagrama de Bucles Causales?",
+      "fr": "Qu'est-ce qu'un Diagramme de Boucles Causales ?",
+      "de": "Was ist ein Kausales Schleifendiagramm?",
+      "lt": "Kas yra priežastinių kilpų diagrama?",
+      "pt": "O que é um Diagrama de Loops Causais?",
+      "it": "Cos'è un Diagramma dei Loop Causali?"
+    },
+    {
+      "en": "A Causal Loop Diagram (CLD) is a visual representation of how different elements in your social-ecological system are connected through cause-and-effect relationships.",
+      "es": "Un Diagrama de Bucles Causales (CLD) es una representación visual de cómo diferentes elementos en su sistema socio-ecológico están conectados a través de relaciones de causa y efecto.",
+      "fr": "Un Diagramme de Boucles Causales (CLD) est une représentation visuelle de la façon dont différents éléments de votre système socio-écologique sont connectés par des relations de cause à effet.",
+      "de": "Ein Kausales Schleifendiagramm (CLD) ist eine visuelle Darstellung, wie verschiedene Elemente in Ihrem sozial-ökologischen System durch Ursache-Wirkungs-Beziehungen verbunden sind.",
+      "lt": "Priežastinių kilpų diagrama (CLD) yra vizualinis vaizdavimas, kaip skirtingi jūsų socialinės-ekologinės sistemos elementai yra susiję priežasties ir pasekmės ryšiais.",
+      "pt": "Um Diagrama de Loops Causais (CLD) é uma representação visual de como diferentes elementos no seu sistema socioecológico estão conectados através de relações de causa e efeito.",
+      "it": "Un Diagramma dei Loop Causali (CLD) è una rappresentazione visiva di come diversi elementi del tuo sistema socio-ecologico sono collegati attraverso relazioni causa-effetto."
+    },
+    {
+      "en": "It helps you understand feedback loops, leverage points, and potential intervention strategies.",
+      "es": "Le ayuda a comprender bucles de retroalimentación, puntos de apalancamiento y estrategias de intervención potenciales.",
+      "fr": "Il vous aide à comprendre les boucles de rétroaction, les points de levier et les stratégies d'intervention potentielles.",
+      "de": "Es hilft Ihnen, Rückkopplungsschleifen, Hebelwirkungspunkte und potenzielle Interventionsstrategien zu verstehen.",
+      "lt": "Tai padeda suprasti grįžtamojo ryšio kilpas, sverto taškus ir galimas intervencijos strategijas.",
+      "pt": "Ajuda você a entender loops de feedback, pontos de alavancagem e estratégias de intervenção potenciais.",
+      "it": "Ti aiuta a comprendere i loop di feedback, i punti di leva e le potenziali strategie di intervento."
+    },
+    {
+      "en": "How to Read the Diagram",
+      "es": "Cómo Leer el Diagrama",
+      "fr": "Comment Lire le Diagramme",
+      "de": "Wie man das Diagramm liest",
+      "lt": "Kaip skaityti diagramą",
+      "pt": "Como Ler o Diagrama",
+      "it": "Come Leggere il Diagramma"
+    },
+    {
+      "en": "Nodes:",
+      "es": "Nodos:",
+      "fr": "Nœuds:",
+      "de": "Knoten:",
+      "lt": "Mazgai:",
+      "pt": "Nós:",
+      "it": "Nodi:"
+    },
+    {
+      "en": " Represent elements in your system (drivers, activities, pressures, states, impacts, welfare, responses)",
+      "es": " Representan elementos en su sistema (impulsores, actividades, presiones, estados, impactos, bienestar, respuestas)",
+      "fr": " Représentent des éléments de votre système (moteurs, activités, pressions, états, impacts, bien-être, réponses)",
+      "de": " Repräsentieren Elemente in Ihrem System (Treiber, Aktivitäten, Drücke, Zustände, Auswirkungen, Wohlbefinden, Reaktionen)",
+      "lt": " Reprezentuoja elementus jūsų sistemoje (varomosios jėgos, veiklos, spaudimas, būsenos, poveikis, gerovė, atsakai)",
+      "pt": " Representam elementos no seu sistema (impulsores, atividades, pressões, estados, impactos, bem-estar, respostas)",
+      "it": " Rappresentano elementi nel tuo sistema (driver, attività, pressioni, stati, impatti, benessere, risposte)"
+    },
+    {
+      "en": "Edges:",
+      "es": "Aristas:",
+      "fr": "Arêtes:",
+      "de": "Kanten:",
+      "lt": "Kraštinės:",
+      "pt": "Arestas:",
+      "it": "Archi:"
+    },
+    {
+      "en": " Show causal connections between elements. Arrow direction indicates the direction of influence",
+      "es": " Muestran conexiones causales entre elementos. La dirección de la flecha indica la dirección de influencia",
+      "fr": " Montrent les connexions causales entre les éléments. La direction de la flèche indique la direction de l'influence",
+      "de": " Zeigen kausale Verbindungen zwischen Elementen. Die Pfeilrichtung zeigt die Richtung des Einflusses",
+      "lt": " Rodo priežastinius ryšius tarp elementų. Rodyklės kryptis nurodo įtakos kryptį",
+      "pt": " Mostram conexões causais entre elementos. A direção da seta indica a direção da influência",
+      "it": " Mostrano connessioni causali tra elementi. La direzione della freccia indica la direzione dell'influenza"
+    },
+    {
+      "en": "Polarity: + means the elements change in the same direction, - means they change in opposite directions",
+      "es": "Polaridad: + significa que los elementos cambian en la misma dirección, - significa que cambian en direcciones opuestas",
+      "fr": "Polarité: + signifie que les éléments changent dans la même direction, - signifie qu'ils changent dans des directions opposées",
+      "de": "Polarität: + bedeutet, dass sich die Elemente in die gleiche Richtung ändern, - bedeutet, dass sie sich in entgegengesetzte Richtungen ändern",
+      "lt": "Polaritetas: + reiškia, kad elementai keičiasi ta pačia kryptimi, - reiškia, kad jie keičiasi priešingomis kryptimis",
+      "pt": "Polaridade: + significa que os elementos mudam na mesma direção, - significa que eles mudam em direções opostas",
+      "it": "Polarità: + significa che gli elementi cambiano nella stessa direzione, - significa che cambiano in direzioni opposte"
+    },
+    {
+      "en": "Visualization Controls",
+      "es": "Controles de Visualización",
+      "fr": "Contrôles de Visualisation",
+      "de": "Visualisierungssteuerung",
+      "lt": "Vizualizacijos valdymas",
+      "pt": "Controles de Visualização",
+      "it": "Controlli di Visualizzazione"
+    },
+    {
+      "en": "Layout:",
+      "es": "Diseño:",
+      "fr": "Disposition:",
+      "de": "Layout:",
+      "lt": "Išdėstymas:",
+      "pt": "Layout:",
+      "it": "Layout:"
+    },
+    {
+      "en": " Choose between hierarchical, physics-based, or circular layouts to better understand different aspects of your system",
+      "es": " Elija entre diseños jerárquicos, basados en física o circulares para comprender mejor diferentes aspectos de su sistema",
+      "fr": " Choisissez entre des dispositions hiérarchiques, basées sur la physique ou circulaires pour mieux comprendre différents aspects de votre système",
+      "de": " Wählen Sie zwischen hierarchischen, physikbasierten oder kreisförmigen Layouts, um verschiedene Aspekte Ihres Systems besser zu verstehen",
+      "lt": " Pasirinkite tarp hierarchinių, fizika pagrįstų ar žiedinių išdėstymų, kad geriau suprastumėte skirtingus savo sistemos aspektus",
+      "pt": " Escolha entre layouts hierárquicos, baseados em física ou circulares para entender melhor diferentes aspectos do seu sistema",
+      "it": " Scegli tra layout gerarchici, basati sulla fisica o circolari per comprendere meglio diversi aspetti del tuo sistema"
+    },
+    {
+      "en": "Highlight Leverage Points:",
+      "es": "Resaltar Puntos de Apalancamiento:",
+      "fr": "Mettre en Évidence les Points de Levier:",
+      "de": "Hebelwirkungspunkte Hervorheben:",
+      "lt": "Paryškinti sverto taškus:",
+      "pt": "Destacar Pontos de Alavancagem:",
+      "it": "Evidenzia Punti di Leva:"
+    },
+    {
+      "en": " Toggle to highlight the most influential nodes where interventions could have the greatest impact",
+      "es": " Alterne para resaltar los nodos más influyentes donde las intervenciones podrían tener el mayor impacto",
+      "fr": " Basculez pour mettre en évidence les nœuds les plus influents où les interventions pourraient avoir le plus grand impact",
+      "de": " Umschalten, um die einflussreichsten Knoten hervorzuheben, bei denen Interventionen die größte Wirkung haben könnten",
+      "lt": " Perjunkite, kad paryškintumėte įtakingiausius mazgus, kuriuose intervencijos galėtų turėti didžiausią poveikį",
+      "pt": " Alternar para destacar os nós mais influentes onde as intervenções poderiam ter o maior impacto",
+      "it": " Attiva per evidenziare i nodi più influenti dove gli interventi potrebbero avere il maggiore impatto"
+    },
+    {
+      "en": "Highlight Loop:",
+      "es": "Resaltar Bucle:",
+      "fr": "Mettre en Évidence la Boucle:",
+      "de": "Schleife Hervorheben:",
+      "lt": "Paryškinti kilpą:",
+      "pt": "Destacar Loop:",
+      "it": "Evidenzia Loop:"
+    },
+    {
+      "en": " Select a feedback loop to visualize circular patterns of influence in your system",
+      "es": " Seleccione un bucle de retroalimentación para visualizar patrones circulares de influencia en su sistema",
+      "fr": " Sélectionnez une boucle de rétroaction pour visualiser les modèles circulaires d'influence dans votre système",
+      "de": " Wählen Sie eine Rückkopplungsschleife aus, um kreisförmige Einflussmuster in Ihrem System zu visualisieren",
+      "lt": " Pasirinkite grįžtamojo ryšio kilpą, kad vizualizuotumėte žiedinius įtakos modelius savo sistemoje",
+      "pt": " Selecione um loop de feedback para visualizar padrões circulares de influência no seu sistema",
+      "it": " Seleziona un loop di feedback per visualizzare modelli circolari di influenza nel tuo sistema"
     }
   ]
 }

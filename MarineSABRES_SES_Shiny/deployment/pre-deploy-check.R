@@ -92,6 +92,20 @@ if (dir.exists("docs")) {
   print_check("Directory: docs (optional)", "WARN", "Documentation directory not found")
 }
 
+# Validate JSON templates exist in data directory
+cat("\n[2.1] Checking JSON Templates in data/...\n")
+if (dir.exists("data")) {
+  json_templates <- list.files("data", pattern = ".*_SES_Template\\.json$", full.names = FALSE)
+  if (length(json_templates) > 0) {
+    print_check("JSON templates in data/", "PASS")
+    cat(sprintf("   Found %d template(s): %s\n", length(json_templates), paste(json_templates, collapse = ", ")))
+  } else {
+    print_check("JSON templates in data/", "WARN", "No SES template JSON files found")
+  }
+} else {
+  print_check("JSON templates in data/", "ERROR", "data/ directory does not exist")
+}
+
 # ============================================================================
 # Check 3: Validate translation.json
 # ============================================================================

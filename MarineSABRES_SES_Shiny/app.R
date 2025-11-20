@@ -11,7 +11,7 @@ options(shiny.autoreload = FALSE)
 # LOAD GLOBAL ENVIRONMENT
 # ============================================================================
 
-source("global.R", local = TRUE)
+source("global.R")
 
 # ============================================================================
 # REGISTER RESOURCE PATHS
@@ -26,15 +26,15 @@ if (dir.exists("docs")) {
 # LOAD HELPER FUNCTIONS
 # ============================================================================
 
-source("functions/report_generation.R", local = TRUE)
+source("functions/report_generation.R")
 
 # Load UI components
-source("functions/ui_header.R", local = TRUE)
-source("functions/ui_sidebar.R", local = TRUE)
+source("functions/ui_header.R")
+source("functions/ui_sidebar.R")
 
 # Load server components
-source("server/modals.R", local = TRUE)
-source("server/dashboard.R", local = TRUE)
+source("server/modals.R")
+source("server/dashboard.R")
 
 # ============================================================================
 # SOURCE MODULES
@@ -85,7 +85,7 @@ ui <- dashboardPage(
 
       tags$style(HTML("
         /* Persistent loading overlay */
-        #language-loading-overlay {
+        #language-loading-overlay { 
           display: none;
           position: fixed;
           top: 0;
@@ -288,8 +288,8 @@ server <- function(input, output, session) {
   project_data <- reactiveVal(init_session_data())
 
   # User experience level (beginner/intermediate/expert)
-  # Default to intermediate for existing users
-  user_level <- reactiveVal("intermediate")
+  # Default to beginner for new users and stakeholder testing
+  user_level <- reactiveVal("beginner")
 
   # Auto-save enabled flag (controls AI ISA Assistant auto-save)
   # Default to FALSE to avoid accidental overwrites
@@ -341,6 +341,11 @@ server <- function(input, output, session) {
                                   nrow(data$data$cld$nodes) > 0
 
     cat("[BOOKMARK] State saved successfully\n")
+  })
+
+  # Show modal after bookmark URL is generated
+  onBookmarked(function(url) {
+    cat("[BOOKMARK] Bookmark URL created:", url, "\n")
 
     # Show bookmark modal with URL
     showModal(modalDialog(
@@ -364,7 +369,7 @@ server <- function(input, output, session) {
             rows = 4,
             readonly = "readonly",
             style = "font-family: monospace; font-size: 12px; resize: vertical;",
-            session$getCurrentUrl()
+            url
           )
         ),
 
@@ -513,26 +518,12 @@ server <- function(input, output, session) {
     }
   })
 
-  # JavaScript to load/save user level from/to localStorage
-  output$user_level_script <- renderUI({
-    tags$script(HTML("
-      // Load user level from localStorage on startup
-      $(document).ready(function() {
-        var savedLevel = localStorage.getItem('marinesabres_user_level');
-        if (savedLevel && ['beginner', 'intermediate', 'expert'].includes(savedLevel)) {
-          Shiny.setInputValue('initial_user_level', savedLevel);
-        }
-      });
-    "))
-  })
-
-  # Update user level from localStorage
-  observeEvent(input$initial_user_level, {
-    if (!is.null(input$initial_user_level)) {
-      user_level(input$initial_user_level)
-      cat(sprintf("[USER-LEVEL] Loaded from localStorage: %s\n", input$initial_user_level))
-    }
-  }, once = TRUE)
+  # User level persistence REMOVED for consistent fresh-start behavior
+  # Previously loaded from localStorage, but this caused confusion:
+  # - User level persisted (setting)
+  # - But guided pathway data did NOT persist (actual work)
+  # Now: Everything starts fresh on restart for stakeholder testing
+  # Users must explicitly "Save Project" to persist any data
 
   # ========== MODAL HANDLERS ==========
   # Modals extracted to server/modals.R for better maintainability
@@ -566,13 +557,13 @@ server <- function(input, output, session) {
   template_ses_server("template_ses", project_data, session, event_bus, i18n)
 
   # AI ISA Assistant module
-  ai_isa_assistant_server("ai_isa_mod", project_data, i18n, event_bus, autosave_enabled)
+  ai_isa_assistant_server("ai_isa_mod", project_data, i18n, event_bus, autosave_enabled, user_level, session)
 
   # ISA data entry module (Standard Entry)
   isa_data <- isaDataEntryServer("isa_module", project_data, event_bus)
 
   # CLD visualization
-  cld_viz_server("cld_visual", project_data)
+  cld_viz_server("cld_visual", project_data, i18n)
   
   # Analysis modules
   analysis_metrics_server("analysis_met", project_data)
@@ -915,4 +906,4 @@ server <- function(input, output, session) {
 # RUN APPLICATION
 # ============================================================================
 
-shinyApp(ui = ui, server = server)
+shinyApp(ui = ui, server = server, enableBookmarking = "url")
