@@ -76,6 +76,9 @@ ui <- dashboardPage(
   # ========== BODY ==========
   dashboardBody(
 
+    # Enable shiny.i18n automatic language detection and reactive translations
+    shiny.i18n::usei18n(i18n),
+
     # Custom CSS and JavaScript
     tags$head(
       tags$title("MarineSABRES SES Toolbox"),
