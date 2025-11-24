@@ -1,0 +1,305 @@
+{
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "translation": [
+    {
+      "key": "common.labels.name",
+      "en": "Name",
+      "es": "Nombre",
+      "fr": "Nom",
+      "de": "Name",
+      "lt": "Pavadinimas",
+      "pt": "Nome",
+      "it": "Nome"
+    },
+    {
+      "key": "common.labels.description",
+      "en": "Description",
+      "es": "Descripción",
+      "fr": "Description",
+      "de": "Beschreibung",
+      "lt": "Aprašymas",
+      "pt": "Descrição",
+      "it": "Descrizione"
+    },
+    {
+      "key": "common.labels.notes",
+      "en": "Notes",
+      "es": "Notas",
+      "fr": "Notes",
+      "de": "Notizen",
+      "lt": "Pastabos",
+      "pt": "Notas",
+      "it": "Note"
+    },
+    {
+      "key": "common.labels.indicator",
+      "en": "Indicator",
+      "es": "Indicador",
+      "fr": "Indicateur",
+      "de": "Indikator",
+      "lt": "Indikatorius",
+      "pt": "Indicador",
+      "it": "Indicatore"
+    },
+    {
+      "key": "common.labels.value",
+      "en": "Value",
+      "es": "Valor",
+      "fr": "Valeur",
+      "de": "Wert",
+      "lt": "Vertė",
+      "pt": "Valor",
+      "it": "Valore"
+    },
+    {
+      "key": "common.labels.unit",
+      "en": "Unit",
+      "es": "Unidad",
+      "fr": "Unité",
+      "de": "Einheit",
+      "lt": "Vienetas",
+      "pt": "Unidade",
+      "it": "Unità"
+    },
+    {
+      "key": "common.labels.source",
+      "en": "Source",
+      "es": "Fuente",
+      "fr": "Source",
+      "de": "Quelle",
+      "lt": "Šaltinis",
+      "pt": "Fonte",
+      "it": "Fonte"
+    },
+    {
+      "key": "common.labels.data_source",
+      "en": "Data Source",
+      "es": "Fuente de Datos",
+      "fr": "Source de Données",
+      "de": "Datenquelle",
+      "lt": "Duomenų šaltinis",
+      "pt": "Fonte de Dados",
+      "it": "Fonte di Dati"
+    },
+    {
+      "key": "common.labels.baseline",
+      "en": "Baseline",
+      "es": "Línea Base",
+      "fr": "Ligne de Base",
+      "de": "Grundlinie",
+      "lt": "Bazinė linija",
+      "pt": "Linha de Base",
+      "it": "Linea di Base"
+    },
+    {
+      "key": "common.labels.current",
+      "en": "Current",
+      "es": "Actual",
+      "fr": "Actuel",
+      "de": "Aktuell",
+      "lt": "Dabartinis",
+      "pt": "Atual",
+      "it": "Corrente"
+    },
+    {
+      "key": "common.labels.type",
+      "en": "Type",
+      "es": "Tipo",
+      "fr": "Type",
+      "de": "Typ",
+      "lt": "Tipas",
+      "pt": "Tipo",
+      "it": "Tipo"
+    },
+    {
+      "key": "common.labels.category",
+      "en": "Category",
+      "es": "Categoría",
+      "fr": "Catégorie",
+      "de": "Kategorie",
+      "lt": "Kategorija",
+      "pt": "Categoria",
+      "it": "Categoria"
+    },
+    {
+      "key": "common.labels.status",
+      "en": "Status",
+      "es": "Estado",
+      "fr": "Statut",
+      "de": "Status",
+      "lt": "Būsena",
+      "pt": "Estado",
+      "it": "Stato"
+    },
+    {
+      "key": "common.labels.date",
+      "en": "Date",
+      "es": "Fecha",
+      "fr": "Date",
+      "de": "Datum",
+      "lt": "Data",
+      "pt": "Data",
+      "it": "Data"
+    },
+    {
+      "key": "common.labels.time",
+      "en": "Time",
+      "es": "Tiempo",
+      "fr": "Temps",
+      "de": "Zeit",
+      "lt": "Laikas",
+      "pt": "Tempo",
+      "it": "Tempo"
+    },
+    {
+      "key": "common.labels.title",
+      "en": "Title",
+      "es": "Título",
+      "fr": "Titre",
+      "de": "Titel",
+      "lt": "Pavadinimas",
+      "pt": "Título",
+      "it": "Titolo"
+    },
+    {
+      "key": "common.labels.author",
+      "en": "Author",
+      "es": "Autor",
+      "fr": "Auteur",
+      "de": "Autor",
+      "lt": "Autorius",
+      "pt": "Autor",
+      "it": "Autore"
+    },
+    {
+      "key": "common.labels.version",
+      "en": "Version",
+      "es": "Versión",
+      "fr": "Version",
+      "de": "Version",
+      "lt": "Versija",
+      "pt": "Versão",
+      "it": "Versione"
+    },
+    {
+      "key": "common.labels.location",
+      "en": "Location",
+      "es": "Ubicación",
+      "fr": "Emplacement",
+      "de": "Standort",
+      "lt": "Vieta",
+      "pt": "Localização",
+      "it": "Posizione"
+    },
+    {
+      "key": "common.labels.region",
+      "en": "Region",
+      "es": "Región",
+      "fr": "Région",
+      "de": "Region",
+      "lt": "Regionas",
+      "pt": "Região",
+      "it": "Regione"
+    },
+    {
+      "key": "common.labels.email",
+      "en": "Email",
+      "es": "Correo Electrónico",
+      "fr": "E-mail",
+      "de": "E-Mail",
+      "lt": "El. paštas",
+      "pt": "E-mail",
+      "it": "Email"
+    },
+    {
+      "key": "common.labels.organization",
+      "en": "Organization",
+      "es": "Organización",
+      "fr": "Organisation",
+      "de": "Organisation",
+      "lt": "Organizacija",
+      "pt": "Organização",
+      "it": "Organizzazione"
+    },
+    {
+      "key": "common.labels.role",
+      "en": "Role",
+      "es": "Rol",
+      "fr": "Rôle",
+      "de": "Rolle",
+      "lt": "Vaidmuo",
+      "pt": "Função",
+      "it": "Ruolo"
+    },
+    {
+      "key": "common.labels.scale",
+      "en": "Scale",
+      "es": "Escala",
+      "fr": "Échelle",
+      "de": "Skala",
+      "lt": "Mastas",
+      "pt": "Escala",
+      "it": "Scala"
+    },
+    {
+      "key": "common.labels.timeframe",
+      "en": "Timeframe",
+      "es": "Marco Temporal",
+      "fr": "Période",
+      "de": "Zeitrahmen",
+      "lt": "Laikotarpis",
+      "pt": "Período",
+      "it": "Periodo"
+    },
+    {
+      "key": "common.labels.comment",
+      "en": "Comment",
+      "es": "Comentario",
+      "fr": "Commentaire",
+      "de": "Kommentar",
+      "lt": "Komentaras",
+      "pt": "Comentário",
+      "it": "Commento"
+    },
+    {
+      "key": "common.labels.priority",
+      "en": "Priority",
+      "es": "Prioridad",
+      "fr": "Priorité",
+      "de": "Priorität",
+      "lt": "Prioritetas",
+      "pt": "Prioridade",
+      "it": "Priorità"
+    },
+    {
+      "key": "common.labels.confidence",
+      "en": "Confidence",
+      "es": "Confianza",
+      "fr": "Confiance",
+      "de": "Vertrauen",
+      "lt": "Pasitikėjimas",
+      "pt": "Confiança",
+      "it": "Confidenza"
+    },
+    {
+      "key": "common.labels.strength",
+      "en": "Strength",
+      "es": "Fuerza",
+      "fr": "Force",
+      "de": "Stärke",
+      "lt": "Stiprumas",
+      "pt": "Força",
+      "it": "Forza"
+    },
+    {
+      "key": "common.labels.polarity",
+      "en": "Polarity",
+      "es": "Polaridad",
+      "fr": "Polarité",
+      "de": "Polarität",
+      "lt": "Polarumas",
+      "pt": "Polaridade",
+      "it": "Polarità"
+    }
+  ]
+}

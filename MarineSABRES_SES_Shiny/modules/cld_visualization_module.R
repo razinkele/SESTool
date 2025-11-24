@@ -12,6 +12,7 @@
 #' focus mode, and node sizing, along with a main panel for the network visualization.
 #'
 #' @param id Character string. Module namespace ID.
+#' @param i18n Translator object for internationalization.
 #'
 #' @return A Shiny UI element containing the CLD visualization interface.
 #'
@@ -31,12 +32,12 @@
 #' @examples
 #' \dontrun{
 #' ui <- fluidPage(
-#'   cld_viz_ui("cld_module")
+#'   cld_viz_ui("cld_module", i18n)
 #' )
 #' }
 #'
 #' @export
-cld_viz_ui <- function(id) {
+cld_viz_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
@@ -99,7 +100,7 @@ cld_viz_ui <- function(id) {
         # Collapsible controls box
         box(
           width = NULL,
-          title = tagList(icon("sliders"), " Visualisation Controls"),
+          title = tagList(icon("sliders"), i18n$t("Visualisation Controls")),
           status = "primary",
           solidHeader = TRUE,
           collapsible = TRUE,
@@ -110,13 +111,13 @@ cld_viz_ui <- function(id) {
           # No manual generation needed - see automatic observer below
 
           # Layout Controls
-          h5(icon("cogs"), " Layout"),
+          h5(icon("cogs"), i18n$t("Layout")),
           selectInput(
             ns("layout_type"),
             NULL,
-            choices = c(
-              "Hierarchical (DAPSI)" = "hierarchical",
-              "Physics-based (Manual)" = "physics"
+            choices = setNames(
+              c("hierarchical", "physics"),
+              c(i18n$t("Hierarchical (DAPSI)"), i18n$t("Physics-based (Manual)"))
             ),
             selected = "hierarchical"
           ),
@@ -126,18 +127,16 @@ cld_viz_ui <- function(id) {
             ns = ns,
             selectInput(
               ns("hierarchy_direction"),
-              "Direction:",
-              choices = c(
-                "Down-Up" = "DU",
-                "Up-Down" = "UD",
-                "Left-Right" = "LR",
-                "Right-Left" = "RL"
+              i18n$t("Direction:"),
+              choices = setNames(
+                c("DU", "UD", "LR", "RL"),
+                c(i18n$t("Down-Up"), i18n$t("Up-Down"), i18n$t("Left-Right"), i18n$t("Right-Left"))
               ),
               selected = "DU"
             ),
             sliderInput(
               ns("level_separation"),
-              "Spacing:",
+              i18n$t("Spacing:"),
               min = 50,
               max = 300,
               value = 150,
@@ -147,13 +146,13 @@ cld_viz_ui <- function(id) {
 
           # Highlight Controls
           hr(),
-          h5(icon("lightbulb"), " Highlight"),
+          h5(icon("lightbulb"), i18n$t("Highlight")),
 
           div(
             style = "padding: 10px 0;",
             shinyWidgets::materialSwitch(
               inputId = ns("highlight_leverage"),
-              label = "Leverage Points",
+              label = i18n$t("Leverage Points"),
               value = FALSE,
               status = "success",
               right = TRUE
@@ -164,8 +163,8 @@ cld_viz_ui <- function(id) {
             style = "padding: 10px 0;",
             selectInput(
               inputId = ns("selected_loop"),
-              label = "Highlight Loop",
-              choices = c("None" = "none"),
+              label = i18n$t("Highlight Loop"),
+              choices = setNames("none", i18n$t("None")),
               selected = "none",
               width = "100%"
             ),
@@ -705,9 +704,9 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
                   }
 
                   if (isLoopEdge) {
-                    // Keep original edge color and width for loop edges
+                    // Keep original edge color and make loop edges 5x thicker for visibility
                     edge.color = edge.originalColor;
-                    edge.width = edge.originalWidth || 1;
+                    edge.width = (edge.originalWidth || 1) * 5;
                   } else {
                     edge.color = 'rgba(200,200,200,0.3)';
                     edge.width = 1;

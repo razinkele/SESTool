@@ -234,7 +234,7 @@ ui <- dashboardPage(
       tabItem(tabName = "create_ses_template", template_ses_ui("template_ses", i18n)),
 
       # ==================== CLD VISUALIZATION ====================
-      tabItem(tabName = "cld_viz", cld_viz_ui("cld_visual")),
+      tabItem(tabName = "cld_viz", cld_viz_ui("cld_visual", i18n)),
       
       # ==================== ANALYSIS ====================
       tabItem(tabName = "analysis_metrics", analysis_metrics_ui("analysis_met")),
@@ -533,6 +533,9 @@ server <- function(input, output, session) {
 
   # Setup user level modal
   setup_user_level_modal_handlers(input, output, session, user_level, i18n)
+
+  # Setup download manuals modal
+  setup_manuals_modal_handlers(input, output, session, i18n)
 
   # Setup about modal
   setup_about_modal_handlers(input, output, session, i18n)

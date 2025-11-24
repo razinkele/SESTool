@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Step-by-Step Tutorial - MarineSABRES</title>
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.7;
+  color: #333;
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  max-width: 950px;
+  margin: 0 auto;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #11998e;
+}
+.header h1 {
+  font-size: 2.5em;
+  color: #11998e;
+  margin: 0 0 10px 0;
+}
+.tutorial-step {
+  margin: 30px 0;
+  padding: 25px;
+  background: #f8f9fa;
+  border-left: 5px solid #11998e;
+  border-radius: 8px;
+  position: relative;
+}
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.step-number-large {
+  min-width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.5em;
+  box-shadow: 0 4px 12px rgba(17,153,142,0.3);
+}
+.step-title {
+  font-size: 1.6em;
+  color: #11998e;
+  margin: 0;
+  font-weight: 600;
+}
+.action-box {
+  background: white;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 6px;
+  border: 2px solid #11998e;
+}
+.action-box h4 {
+  margin: 0 0 10px 0;
+  color: #11998e;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.screenshot-placeholder {
+  background: #e8f5e9;
+  padding: 30px;
+  margin: 15px 0;
+  border-radius: 8px;
+  text-align: center;
+  color: #2e7d32;
+  font-style: italic;
+  border: 2px dashed #4caf50;
+}
+.tip-box {
+  background: #e3f2fd;
+  border-left: 4px solid #2196F3;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+.warning-box {
+  background: #fff3cd;
+  border-left: 4px solid #ff9800;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+.success-box {
+  background: #e8f5e9;
+  border-left: 4px solid #4caf50;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+.button-demo {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #11998e;
+  color: white;
+  border-radius: 4px;
+  font-weight: 500;
+  margin: 0 3px;
+  font-size: 0.95em;
+}
+.checklist {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+.checklist-item {
+  padding: 10px;
+  margin: 8px 0;
+  border-left: 3px solid #11998e;
+  padding-left: 15px;
+}
+ul.feature-list {
+  line-height: 2;
+}
+ul.feature-list li {
+  margin: 10px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>📖 Step-by-Step Tutorial</h1>
+    <div style="font-size: 1.3em; color: #2e7d32; font-weight: 500;">Build Your First Marine Ecosystem Model</div>
+    <div style="margin-top: 10px; color: #666; font-size: 1.1em;">⏱️ Estimated time: 20-30 minutes</div>
+  </div>
+
+  <!-- INTRODUCTION -->
+  <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #4caf50;">
+    <h3 style="margin-top: 0; color: #2e7d32;">🎯 What You'll Learn</h3>
+    <p>By the end of this tutorial, you'll know how to:</p>
+    <ul class="feature-list">
+      <li>✅ Load and explore a pre-built template</li>
+      <li>✅ Add new elements to your model</li>
+      <li>✅ Create connections between elements</li>
+      <li>✅ Visualize your system as a network diagram</li>
+      <li>✅ Analyze leverage points and feedback loops</li>
+      <li>✅ Save and export your work</li>
+    </ul>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="tutorial-step">
+    <div class="step-header">
+      <div class="step-number-large">1</div>
+      <h2 class="step-title">Load a Template</h2>
+    </div>
+
+    <div class="action-box">
+      <h4>🎬 What to do:</h4>
+      <ol style="line-height: 2;">
+        <li>Look at the <strong>sidebar on the left</strong></li>
+        <li>Click on <span class="button-demo">📋 Create SES from Template</span></li>
+        <li>Choose the <strong>"Fisheries"</strong> template (good for beginners)</li>
+        <li>Click <span class="button-demo">Load Template</span></li>
+      </ol>
+    </div>
+
+    <div class="success-box">
+      <strong>✅ What you should see:</strong><br>
+      The main screen will load with pre-filled information about a fishing system. You'll see different categories like Drivers, Activities, Pressures, etc.
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Why start with a template?</strong><br>
+      Templates are pre-built examples that show you the structure. It's easier to learn by modifying something that already works!
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="tutorial-step">
+    <div class="step-header">
+      <div class="step-number-large">2</div>
+      <h2 class="step-title">Explore the Data Entry Screen</h2>
+    </div>
+
+    <div class="action-box">
+      <h4>🎬 What to do:</h4>
+      <ol style="line-height: 2;">
+        <li>In the sidebar, click <span class="button-demo">✏️ ISA Data Entry</span></li>
+        <li>You'll see different sections (tabs) at the top</li>
+        <li>Click through each tab to see what's there</li>
+      </ol>
+    </div>
+
+    <div style="background: white; padding: 20px; margin: 15px 0; border-radius: 8px;">
+      <h4 style="color: #11998e; margin-top: 0;">Understanding the Tabs:</h4>
+      <div style="margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+        <strong>Drivers Tab:</strong> Why do people use the ocean? (e.g., "Need for food", "Economic growth")
+      </div>
+      <div style="margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+        <strong>Activities Tab:</strong> What do people do? (e.g., "Commercial fishing", "Coastal tourism")
+      </div>
+      <div style="margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+        <strong>Pressures Tab:</strong> What pressures does this create? (e.g., "Overfishing", "Habitat disturbance")
+      </div>
+      <div style="margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+        <strong>States Tab:</strong> How does the environment change? (e.g., "Fish stock decline", "Seabed degradation")
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Take your time:</strong> Click through all the tabs and read the descriptions. Understanding the structure is key!
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="tutorial-step">
+    <div class="step-header">
+      <div class="step-number-large">3</div>
+      <h2 class="step-title">Add a New Element</h2>
+    </div>
+
+    <p>Now let's add something new to the model!</p>
+
+    <div class="action-box">
+      <h4>🎬 What to do:</h4>
+      <ol style="line-height: 2;">
+        <li>Go to the <strong>Activities</strong> tab</li>
+        <li>Scroll to the bottom and click <span class="button-demo">+ Add Activity</span></li>
+        <li>Fill in the form:
+          <ul>
+            <li><strong>Name:</strong> "Recreational diving"</li>
+            <li><strong>Description:</strong> "Tourism activity where people dive to observe marine life"</li>
+          </ul>
+        </li>
+        <li>Click <span class="button-demo">✅ Save</span></li>
+      </ol>
+    </div>
+
+    <div class="success-box">
+      <strong>✅ What you should see:</strong><br>
+      Your new "Recreational diving" activity appears in the list of activities.
+    </div>
+
+    <div class="warning-box">
+      <strong>⚠️ Remember to save!</strong><br>
+      After making changes, always click the <span class="button-demo">💾 Save Project</span> button in the sidebar to keep your work.
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="tutorial-step">
+    <div class="step-header">
+      <div class="step-number-large">4</div>
+      <h2 class="step-title">Create Connections</h2>
+    </div>
+
+    <p>Now let's link your new activity to other parts of the system.</p>
+
+    <div class="action-box">
+      <h4>🎬 What to do:</h4>
+      <ol style="line-height: 2;">
+        <li>Go to the <strong>Connections</strong> tab</li>
+        <li>Find the section for <strong>Activities → Pressures</strong></li>
+        <li>Click <span class="button-demo">+ Add Connection</span></li>
+        <li>Select:
+          <ul>
+            <li><strong>From:</strong> Recreational diving</li>
+            <li><strong>To:</strong> Habitat disturbance</li>
+            <li><strong>Type:</strong> Positive (+) [more diving → more disturbance]</li>
+            <li><strong>Strength:</strong> Weak</li>
+          </ul>
+        </li>
+        <li>Click <span class="button-demo">Save Connection</span></li>
+      </ol>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Understanding Connection Types:</strong><br>
+      <strong>Positive (+)</strong>: When one increases, the other increases<br>
+      <strong>Negative (-)</strong>: When one increases, the other decreases
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="tutorial-step">
+    <div class="step-header">
+      <div class="step-number-large">5</div>
+      <h2 class="step-title">Visualize Your System</h2>
+    </div>
+
+    <p>Now comes the exciting part - see your system as a network diagram!</p>
+
+    <div class="action-box">
+      <h4>🎬 What to do:</h4>
+      <ol style="line-height: 2;">
+        <li>In the sidebar, click <span class="button-demo">🔗 CLD Visualization</span></li>
+        <li>Wait a moment while the diagram loads</li>
+        <li>You'll see colorful circles (nodes) connected by arrows</li>
+        <li>Try these controls on the left:
+          <ul>
+            <li>Change the <strong>Layout</strong> to see different arrangements</li>
+            <li>Use your mouse to <strong>drag nodes</strong> around</li>
+            <li>Zoom in and out with your <strong>mouse wheel</strong></li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="success-box">
+      <strong>✅ What you should see:</strong><br>
+      A network diagram with different colored nodes:
+      <ul style="margin-top: 10px;">
+        <li>🟣 Purple = Drivers</li>
+        <li>🔵 Blue = Activities</li>
+        <li>🟠 Orange = Pressures</li>
+        <li>🟢 Green = States</li>
+        <li>And more...</li>
+      </ul>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Pro tip:</strong> Click on any node to highlight its connections. This helps you see which elements are directly connected!
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="tutorial-step">
+    <div class="step-header">
+      <div class="step-number-large">6</div>
+      <h2 class="step-title">Analyze Your System</h2>
+    </div>
+
+    <p>Let's find the most important parts of your system.</p>
+
+    <div class="action-box">
+      <h4>🎬 What to do:</h4>
+      <ol style="line-height: 2;">
+        <li>In the sidebar, expand <span class="button-demo">📊 Analysis Tools</span></li>
+        <li>Click on <span class="button-demo">Leverage Point Analysis</span></li>
+        <li>Click the <span class="button-demo">▶️ Run Analysis</span> button</li>
+        <li>Look at the results table - it shows which elements have the most connections</li>
+      </ol>
+    </div>
+
+    <div style="background: white; padding: 20px; margin: 15px 0; border-radius: 8px; border: 2px solid #11998e;">
+      <h4 style="color: #11998e; margin-top: 0;">🎯 What are Leverage Points?</h4>
+      <p>
+        Leverage points are the "high-impact" parts of your system. These are elements where small changes could have big effects.
+        Think of them like the steering wheel of a car - a small turn can change the whole direction!
+      </p>
+      <p>
+        <strong>Why does this matter?</strong> If you're a manager deciding where to focus your efforts, these are the key areas to target.
+      </p>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Try this:</strong> After running the analysis, go back to the CLD Visualization and turn on "Highlight Leverage Points" to see them highlighted in the diagram!
+    </div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="tutorial-step">
+    <div class="step-header">
+      <div class="step-number-large">7</div>
+      <h2 class="step-title">Find Feedback Loops</h2>
+    </div>
+
+    <div class="action-box">
+      <h4>🎬 What to do:</h4>
+      <ol style="line-height: 2;">
+        <li>In Analysis Tools, click on <span class="button-demo">Feedback Loop Detection</span></li>
+        <li>Click <span class="button-demo">▶️ Detect Loops</span></li>
+        <li>You'll see a list of loops found in your system</li>
+        <li>Each loop is labeled as either:
+          <ul>
+            <li><strong>R (Reinforcing):</strong> Amplifies change (can be good or bad)</li>
+            <li><strong>B (Balancing):</strong> Stabilizes the system</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div style="background: white; padding: 20px; margin: 15px 0; border-radius: 8px; border: 2px solid #11998e;">
+      <h4 style="color: #11998e; margin-top: 0;">🔄 What are Feedback Loops?</h4>
+      <p>
+        A feedback loop is when something eventually affects itself through a chain of connections.
+      </p>
+      <p><strong>Example:</strong></p>
+      <div style="background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 6px;">
+        More fishing → Fish population declines → Less fish available → Fishers need to fish more → More fishing...
+      </div>
+      <p>This is a <strong>reinforcing loop</strong> - it keeps getting worse!</p>
+    </div>
+  </div>
+
+  <!-- STEP 8 -->
+  <div class="tutorial-step">
+    <div class="step-header">
+      <div class="step-number-large">8</div>
+      <h2 class="step-title">Save and Export</h2>
+    </div>
+
+    <div class="action-box">
+      <h4>🎬 What to do:</h4>
+      <ol style="line-height: 2;">
+        <li><strong>Save your work:</strong> Click <span class="button-demo">💾 Save Project</span> in the sidebar</li>
+        <li><strong>Export data:</strong> Click <span class="button-demo">📤 Export Data</span> to get your model as a file</li>
+        <li><strong>Generate a report:</strong> Go to <span class="button-demo">📋 Generate Reports</span> to create a PDF summary</li>
+      </ol>
+    </div>
+
+    <div class="warning-box">
+      <strong>⚠️ Before you close:</strong><br>
+      Always save your project! Your work is NOT automatically saved unless you enabled auto-save in settings.
+    </div>
+  </div>
+
+  <!-- CONGRATULATIONS -->
+  <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 30px; border-radius: 12px; margin: 30px 0; text-align: center;">
+    <h2 style="font-size: 2.2em; margin: 0 0 15px 0;">🎉 Congratulations!</h2>
+    <p style="font-size: 1.2em; margin: 0; line-height: 1.8;">
+      You've just built, visualized, and analyzed your first marine ecosystem model!<br>
+      You're now ready to create your own models from scratch.
+    </p>
+  </div>
+
+  <!-- WHAT'S NEXT -->
+  <div class="tutorial-step">
+    <h2 style="color: #11998e;">🚀 What's Next?</h2>
+
+    <div class="checklist">
+      <div class="checklist-item">
+        <strong>Try building from scratch:</strong> Use the <span class="button-demo">AI ISA Assistant</span> to create a model for your own marine area
+      </div>
+      <div class="checklist-item">
+        <strong>Explore other templates:</strong> Check out Tourism, Aquaculture, or Pollution templates
+      </div>
+      <div class="checklist-item">
+        <strong>Learn advanced features:</strong> Try scenario building, response validation, and PIMS analysis
+      </div>
+      <div class="checklist-item">
+        <strong>Read the full manual:</strong> Download the complete user manual for in-depth guidance
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Need more help?</strong><br>
+      • Click the <span class="button-demo">❓</span> button next to any feature for context-specific help<br>
+      • Check the Beginner's Guide for concept explanations<br>
+      • Download the full User Manual for detailed instructions
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee; text-align: center; color: #666;">
+    <p><strong>Happy Modeling! 🌊</strong></p>
+    <p style="font-size: 0.9em;">MarineSABRES SES Toolbox - Part of the Marine-SABRES Project</p>
+  </div>
+</div>
+
+</body>
+</html>

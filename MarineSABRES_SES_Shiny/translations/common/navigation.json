@@ -1,0 +1,173 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "common.navigation.home",
+      "en": "Home",
+      "es": "Inicio",
+      "fr": "Accueil",
+      "de": "Startseite",
+      "lt": "Pradžia",
+      "pt": "Início",
+      "it": "Home"
+    },
+    {
+      "key": "common.navigation.dashboard",
+      "en": "Dashboard",
+      "es": "Panel de Control",
+      "fr": "Tableau de Bord",
+      "de": "Dashboard",
+      "lt": "Prietaisų skydelis",
+      "pt": "Painel",
+      "it": "Dashboard"
+    },
+    {
+      "key": "common.navigation.menu",
+      "en": "Menu",
+      "es": "Menú",
+      "fr": "Menu",
+      "de": "Menü",
+      "lt": "Meniu",
+      "pt": "Menu",
+      "it": "Menu"
+    },
+    {
+      "key": "common.navigation.settings",
+      "en": "Settings",
+      "es": "Configuración",
+      "fr": "Paramètres",
+      "de": "Einstellungen",
+      "lt": "Nustatymai",
+      "pt": "Configurações",
+      "it": "Impostazioni"
+    },
+    {
+      "key": "common.navigation.about",
+      "en": "About",
+      "es": "Acerca de",
+      "fr": "À propos",
+      "de": "Über",
+      "lt": "Apie",
+      "pt": "Sobre",
+      "it": "Informazioni"
+    },
+    {
+      "key": "common.navigation.logout",
+      "en": "Logout",
+      "es": "Cerrar sesión",
+      "fr": "Déconnexion",
+      "de": "Abmelden",
+      "lt": "Atsijungti",
+      "pt": "Sair",
+      "it": "Disconnetti"
+    },
+    {
+      "key": "common.navigation.login",
+      "en": "Login",
+      "es": "Iniciar sesión",
+      "fr": "Connexion",
+      "de": "Anmelden",
+      "lt": "Prisijungti",
+      "pt": "Entrar",
+      "it": "Accedi"
+    },
+    {
+      "key": "common.navigation.help",
+      "en": "Help",
+      "es": "Ayuda",
+      "fr": "Aide",
+      "de": "Hilfe",
+      "lt": "Pagalba",
+      "pt": "Ajuda",
+      "it": "Aiuto"
+    },
+    {
+      "key": "common.navigation.application_settings",
+      "en": "Application Settings",
+      "es": "Configuración de la Aplicación",
+      "fr": "Paramètres de l'Application",
+      "de": "Anwendungseinstellungen",
+      "lt": "Programos nustatymai",
+      "pt": "Configurações da Aplicação",
+      "it": "Impostazioni dell'Applicazione"
+    },
+    {
+      "key": "common.navigation.app_settings",
+      "en": "App Settings",
+      "es": "Configuración",
+      "fr": "Paramètres",
+      "de": "Einstellungen",
+      "lt": "Nustatymai",
+      "pt": "Configurações",
+      "it": "Impostazioni"
+    },
+    {
+      "key": "common.navigation.help_documentation",
+      "en": "Help & Documentation",
+      "es": "Ayuda y Documentación",
+      "fr": "Aide et Documentation",
+      "de": "Hilfe und Dokumentation",
+      "lt": "Pagalba ir dokumentacija",
+      "pt": "Ajuda e Documentação",
+      "it": "Aiuto e Documentazione"
+    },
+    {
+      "key": "common.navigation.configure_settings",
+      "en": "Configure Settings",
+      "es": "Configurar Ajustes",
+      "fr": "Configurer les Paramètres",
+      "de": "Einstellungen Konfigurieren",
+      "lt": "Konfigūruoti nustatymus",
+      "pt": "Configurar Definições",
+      "it": "Configura Impostazioni"
+    },
+    {
+      "key": "common.navigation.get_help",
+      "en": "Get Help",
+      "es": "Obtener Ayuda",
+      "fr": "Obtenir de l'Aide",
+      "de": "Hilfe Erhalten",
+      "lt": "Gauti pagalbą",
+      "pt": "Obter Ajuda",
+      "it": "Ottieni Aiuto"
+    },
+    {
+      "key": "common.navigation.user_menu",
+      "en": "User Menu",
+      "es": "Menú de Usuario",
+      "fr": "Menu Utilisateur",
+      "de": "Benutzermenü",
+      "lt": "Vartotojo meniu",
+      "pt": "Menu do Usuário",
+      "it": "Menu Utente"
+    },
+    {
+      "key": "common.navigation._visualization_module_help_modal_content",
+      "en": "# Visualization Module - Help Modal Content",
+      "es": "# Módulo de Visualización - Contenido de Ayuda Modal",
+      "fr": "# Module de Visualisation - Contenu d'Aide Modal",
+      "de": "# Visualisierungsmodul - Hilfe-Modal-Inhalt",
+      "lt": "# Vizualizacijos modulis - Modal pagalbos turinys",
+      "pt": "# Módulo de Visualização - Conteúdo de Ajuda Modal",
+      "it": "# Modulo di Visualizzazione - Contenuto Modale di Aiuto"
+    },
+    {
+      "key": "common.navigation.it_helps_you_understand_feedback_loops_leverage_po",
+      "en": "It helps you understand feedback loops, leverage points, and potential intervention strategies.",
+      "es": "Le ayuda a comprender bucles de retroalimentación, puntos de apalancamiento y estrategias de intervención potenciales.",
+      "fr": "Il vous aide à comprendre les boucles de rétroaction, les points de levier et les stratégies d'intervention potentielles.",
+      "de": "Es hilft Ihnen, Rückkopplungsschleifen, Hebelwirkungspunkte und potenzielle Interventionsstrategien zu verstehen.",
+      "lt": "Tai padeda suprasti grįžtamojo ryšio kilpas, sverto taškus ir galimas intervencijos strategijas.",
+      "pt": "Ajuda você a entender loops de feedback, pontos de alavancagem e estratégias de intervenção potenciais.",
+      "it": "Ti aiuta a comprendere i loop di feedback, i punti di leva e le potenziali strategie di intervento."
+    }
+  ]
+}

@@ -3,21 +3,20 @@
 # Extracted from app.R for better maintainability
 
 # ============================================================================
-# LANGUAGE SETTINGS MODAL
+# LANGUAGE MODAL (Simplified)
 # ============================================================================
 
-#' Setup Language Settings Modal Handlers
+#' Setup Language Modal Handlers
 #'
 #' @param input Shiny input object
 #' @param output Shiny output object
 #' @param session Shiny session object
 #' @param i18n shiny.i18n translator object
-#' @param autosave_enabled reactiveVal for autosave setting
 #' @param AVAILABLE_LANGUAGES List of available languages
-setup_language_modal_handlers <- function(input, output, session, i18n, autosave_enabled, AVAILABLE_LANGUAGES) {
+setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LANGUAGES) {
 
-  # Show settings modal when button is clicked
-  observeEvent(input$show_settings_modal, {
+  # Show language modal when button is clicked
+  observeEvent(input$open_language_modal, {
     current_lang <- if(!is.null(i18n$get_translation_language())) {
       i18n$get_translation_language()
     } else {
@@ -25,24 +24,25 @@ setup_language_modal_handlers <- function(input, output, session, i18n, autosave
     }
 
     showModal(modalDialog(
-      title = tags$h3(icon("cog"), " Application Settings"),
+      title = tags$h3(icon("globe"), " ", i18n$t("Change Language")),
       size = "m",
       easyClose = TRUE,
       footer = tagList(
         modalButton(i18n$t("Cancel")),
-        actionButton("apply_language_change", i18n$t("Apply Changes"), class = "btn-primary", icon = icon("check"))
+        actionButton("apply_language_only", i18n$t("Apply"), class = "btn-primary", icon = icon("check"))
       ),
 
       tags$div(
         style = "padding: 20px;",
 
-        tags$h4(icon("globe"), " ", i18n$t("Interface Language")),
-        tags$p(i18n$t("Select your preferred language for the application interface. Click 'Apply Changes' to reload the application with the new language.")),
-        tags$br(),
+        tags$p(
+          style = "font-size: 15px; margin-bottom: 20px;",
+          i18n$t("Select your preferred language for the application interface.")
+        ),
 
         selectInput(
-          "settings_language_selector",
-          label = tags$strong("Language:"),
+          "language_selector",
+          label = tags$strong(i18n$t("Interface Language:")),
           choices = setNames(
             names(AVAILABLE_LANGUAGES),
             sapply(AVAILABLE_LANGUAGES, function(x) paste(x$flag, x$name))
@@ -51,63 +51,22 @@ setup_language_modal_handlers <- function(input, output, session, i18n, autosave
           width = "100%"
         ),
 
-        tags$hr(style = "margin: 30px 0;"),
-
-        tags$h4(icon("save"), " ", i18n$t("Auto-Save Settings")),
-        tags$p(i18n$t("Configure automatic saving behavior for the AI ISA Assistant module.")),
-        tags$br(),
-
-        shinyWidgets::switchInput(
-          inputId = "autosave_enabled",
-          label = tags$strong("Enable Auto-Save:"),
-          value = autosave_enabled(),  # Load current value
-          onLabel = "ON",
-          offLabel = "OFF",
-          onStatus = "success",
-          offStatus = "danger",
-          size = "default",
-          width = "100%"
-        ),
-
-        tags$p(
-          style = "margin-top: 10px; font-size: 13px; color: #666;",
-          icon("info-circle"),
-          " Auto-save automatically saves your work when the AI ISA Assistant completes generating the framework (Step 10). When disabled, you must manually save your work."
-        ),
-
-        tags$div(
-          class = "alert alert-warning",
-          style = "margin-top: 15px;",
-          icon("exclamation-triangle"),
-          tags$strong(" Default: OFF. "),
-          "Auto-save is disabled by default to prevent accidental overwrites when loading templates or existing data."
-        ),
-
         tags$div(
           class = "alert alert-info",
           style = "margin-top: 20px;",
           icon("info-circle"),
-          tags$strong(" Note: "),
-          "The application will reload to apply the language changes. Your current work will be preserved."
+          tags$strong(" ", i18n$t("Note:"), " "),
+          i18n$t("The application will reload to apply the language change.")
         )
       )
     ))
   })
 
-  # Handle Apply button click in settings modal
-  observeEvent(input$apply_language_change, {
-    req(input$settings_language_selector)
+  # Handle Apply button click in language modal
+  observeEvent(input$apply_language_only, {
+    req(input$language_selector)
 
-    new_lang <- input$settings_language_selector
-
-    # Update autosave setting
-    if (!is.null(input$autosave_enabled)) {
-      autosave_enabled(input$autosave_enabled)
-      cat(sprintf("[SETTINGS] Auto-save %s\n", if(input$autosave_enabled) "enabled" else "disabled"))
-    }
-
-    # Get language name for notifications
-    lang_name <- AVAILABLE_LANGUAGES[[new_lang]]$name
+    new_lang <- input$language_selector
 
     # Log language change
     cat(paste0("[", Sys.time(), "] INFO: Language changed to: ", new_lang, "\n"))
@@ -135,10 +94,105 @@ setup_language_modal_handlers <- function(input, output, session, i18n, autosave
     shiny.i18n::update_lang(new_lang, session)
     i18n$set_translation_language(new_lang)
 
-    # Note: Sidebar menu will update automatically via renderMenu()
     # Reload session immediately to update all UI elements
     session$reload()
   })
+}
+
+# ============================================================================
+# SETTINGS MODAL (Auto-Save Only)
+# ============================================================================
+
+#' Setup Settings Modal Handlers (Without Language)
+#'
+#' @param input Shiny input object
+#' @param output Shiny output object
+#' @param session Shiny session object
+#' @param i18n shiny.i18n translator object
+#' @param autosave_enabled reactiveVal for autosave setting
+setup_settings_modal_handlers <- function(input, output, session, i18n, autosave_enabled) {
+
+  # Show settings modal when button is clicked
+  observeEvent(input$open_settings_modal, {
+    showModal(modalDialog(
+      title = tags$h3(icon("cog"), " ", i18n$t("Application Settings")),
+      size = "m",
+      easyClose = TRUE,
+      footer = tagList(
+        modalButton(i18n$t("Cancel")),
+        actionButton("apply_settings", i18n$t("Apply"), class = "btn-primary", icon = icon("check"))
+      ),
+
+      tags$div(
+        style = "padding: 20px;",
+
+        tags$h4(icon("save"), " ", i18n$t("Auto-Save Settings")),
+        tags$p(i18n$t("Configure automatic saving behavior for the AI ISA Assistant module.")),
+        tags$br(),
+
+        shinyWidgets::switchInput(
+          inputId = "autosave_enabled",
+          label = tags$strong(i18n$t("Enable Auto-Save:")),
+          value = autosave_enabled(),  # Load current value
+          onLabel = "ON",
+          offLabel = "OFF",
+          onStatus = "success",
+          offStatus = "danger",
+          size = "default",
+          width = "100%"
+        ),
+
+        tags$p(
+          style = "margin-top: 10px; font-size: 13px; color: #666;",
+          icon("info-circle"),
+          " ", i18n$t("Auto-save automatically saves your work when the AI ISA Assistant completes generating the framework (Step 10). When disabled, you must manually save your work.")
+        ),
+
+        tags$div(
+          class = "alert alert-warning",
+          style = "margin-top: 15px;",
+          icon("exclamation-triangle"),
+          tags$strong(" ", i18n$t("Default: OFF."), " "),
+          i18n$t("Auto-save is disabled by default to prevent accidental overwrites when loading templates or existing data.")
+        )
+      )
+    ))
+  })
+
+  # Handle Apply button click in settings modal
+  observeEvent(input$apply_settings, {
+    # Update autosave setting
+    if (!is.null(input$autosave_enabled)) {
+      autosave_enabled(input$autosave_enabled)
+      cat(sprintf("[SETTINGS] Auto-save %s\n", if(input$autosave_enabled) "enabled" else "disabled"))
+    }
+
+    removeModal()
+
+    showNotification(
+      i18n$t("Settings updated successfully"),
+      type = "message",
+      duration = 2
+    )
+  })
+}
+
+# ============================================================================
+# LEGACY: Combined Language/Settings Modal (Keep for compatibility)
+# ============================================================================
+
+#' Setup Language Settings Modal Handlers (Legacy)
+#'
+#' @param input Shiny input object
+#' @param output Shiny output object
+#' @param session Shiny session object
+#' @param i18n shiny.i18n translator object
+#' @param autosave_enabled reactiveVal for autosave setting
+#' @param AVAILABLE_LANGUAGES List of available languages
+setup_language_modal_handlers <- function(input, output, session, i18n, autosave_enabled, AVAILABLE_LANGUAGES) {
+  # Call the new separate handlers
+  setup_language_modal_only(input, output, session, i18n, AVAILABLE_LANGUAGES)
+  setup_settings_modal_handlers(input, output, session, i18n, autosave_enabled)
 }
 
 # ============================================================================
@@ -228,6 +282,200 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
   # Cancel user level changes
   observeEvent(input$cancel_user_level, {
     removeModal()
+  })
+}
+
+# ============================================================================
+# DOWNLOAD MANUALS MODAL
+# ============================================================================
+
+#' Setup Download Manuals Modal Handlers
+#'
+#' @param input Shiny input object
+#' @param output Shiny output object
+#' @param session Shiny session object
+#' @param i18n shiny.i18n translator object
+setup_manuals_modal_handlers <- function(input, output, session, i18n) {
+
+  # Show manuals modal when button is clicked
+  observeEvent(input$open_manuals_modal, {
+    showModal(modalDialog(
+      title = tags$h3(icon("download"), " ", i18n$t("Download User Manuals & Guides")),
+      size = "l",
+      easyClose = TRUE,
+      footer = modalButton(i18n$t("Close")),
+
+      tags$div(
+        style = "padding: 20px;",
+
+        # Beginner-Friendly Guides Section
+        tags$div(
+          class = "well",
+          style = "background: #e8f5e9; border-left: 4px solid #4caf50;",
+          tags$h4(
+            icon("graduation-cap"),
+            " ",
+            i18n$t("Beginner-Friendly Guides"),
+            tags$span(
+              class = "label label-success",
+              style = "margin-left: 10px;",
+              i18n$t("Recommended for New Users")
+            )
+          ),
+          tags$p(i18n$t("Simple, practical guides with step-by-step instructions and no technical jargon.")),
+          tags$div(
+            style = "margin-top: 15px;",
+            tags$a(
+              href = "#",
+              onclick = "window.open('beginner_guide.html', '_blank'); return false;",
+              class = "btn btn-success btn-lg",
+              style = "margin: 5px;",
+              icon("graduation-cap"),
+              " ",
+              i18n$t("Beginner's Quick Start"),
+              tags$br(),
+              tags$small(i18n$t("5-minute introduction"))
+            ),
+            tags$a(
+              href = "#",
+              onclick = "window.open('step_by_step_tutorial.html', '_blank'); return false;",
+              class = "btn btn-success btn-lg",
+              style = "margin: 5px;",
+              icon("list-ol"),
+              " ",
+              i18n$t("Step-by-Step Tutorial"),
+              tags$br(),
+              tags$small(i18n$t("20-minute hands-on walkthrough"))
+            )
+          )
+        ),
+
+        tags$hr(style = "margin: 25px 0;"),
+
+        # Quick Reference
+        tags$div(
+          class = "well",
+          tags$h4(icon("book"), " ", i18n$t("Quick Reference Guide")),
+          tags$p(i18n$t("Compact reference for experienced users who need a quick reminder.")),
+          tags$div(
+            style = "margin-top: 15px;",
+            tags$a(
+              href = "#",
+              onclick = "window.open('user_guide.html', '_blank'); return false;",
+              class = "btn btn-primary btn-lg",
+              style = "margin: 5px;",
+              icon("book"),
+              " ",
+              i18n$t("Quick Reference Guide"),
+              tags$br(),
+              tags$small(i18n$t("Open in browser"))
+            )
+          )
+        ),
+
+        tags$hr(style = "margin: 25px 0;"),
+
+        # Complete Manuals Section
+        tags$div(
+          class = "well",
+          tags$h4(icon("file-alt"), " ", i18n$t("Complete User Manuals")),
+          tags$p(i18n$t("Comprehensive documentation with detailed explanations, technical details, and advanced features.")),
+
+          tags$h5(style = "margin-top: 20px; color: #337ab7;",
+                 icon("globe"),
+                 " ",
+                 i18n$t("English Manual")),
+          tags$div(
+            style = "margin: 10px 0;",
+            tags$a(
+              href = "#",
+              onclick = "window.open('docs/MarineSABRES_User_Manual_EN.html', '_blank'); return false;",
+              class = "btn btn-info",
+              style = "margin: 5px;",
+              icon("file-code"),
+              " ",
+              i18n$t("HTML Version"),
+              tags$br(),
+              tags$small(i18n$t("View online"))
+            ),
+            tags$a(
+              href = "#",
+              onclick = "window.open('docs/MarineSABRES_User_Manual_EN.pdf', '_blank'); return false;",
+              class = "btn btn-info",
+              style = "margin: 5px;",
+              icon("file-pdf"),
+              " ",
+              i18n$t("PDF Version"),
+              tags$br(),
+              tags$small(i18n$t("Download/Print"))
+            )
+          ),
+
+          tags$h5(style = "margin-top: 20px; color: #337ab7;",
+                 icon("globe"),
+                 " ",
+                 i18n$t("French Manual")),
+          tags$div(
+            style = "margin: 10px 0;",
+            tags$a(
+              href = "#",
+              onclick = "window.open('docs/MarineSABRES_User_Manual_FR.html', '_blank'); return false;",
+              class = "btn btn-info",
+              style = "margin: 5px;",
+              icon("file-code"),
+              " ",
+              i18n$t("HTML Version"),
+              tags$br(),
+              tags$small(i18n$t("View online"))
+            ),
+            tags$a(
+              href = "#",
+              onclick = "window.open('docs/MarineSABRES_User_Manual_FR.pdf', '_blank'); return false;",
+              class = "btn btn-info",
+              style = "margin: 5px;",
+              icon("file-pdf"),
+              " ",
+              i18n$t("PDF Version"),
+              tags$br(),
+              tags$small(i18n$t("Download/Print"))
+            )
+          ),
+
+          tags$div(
+            class = "alert alert-info",
+            style = "margin-top: 20px;",
+            icon("info-circle"),
+            " ",
+            i18n$t("The complete manual contains approximately 75 pages of detailed documentation covering all features and workflows.")
+          )
+        ),
+
+        tags$hr(style = "margin: 25px 0;"),
+
+        # Additional Resources
+        tags$div(
+          class = "well",
+          tags$h4(icon("link"), " ", i18n$t("Additional Resources")),
+          tags$ul(
+            tags$li(
+              tags$strong(i18n$t("Video Tutorials:")),
+              " ",
+              i18n$t("Coming soon - check back later")
+            ),
+            tags$li(
+              tags$strong(i18n$t("Example Projects:")),
+              " ",
+              i18n$t("Available in the template library")
+            ),
+            tags$li(
+              tags$strong(i18n$t("Technical Documentation:")),
+              " ",
+              i18n$t("For developers and advanced users")
+            )
+          )
+        )
+      )
+    ))
   })
 }
 

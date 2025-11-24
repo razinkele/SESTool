@@ -1,0 +1,143 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "ui.header.app_title",
+      "en": "MarineSABRES SES Toolbox",
+      "es": "Caja de Herramientas SES MarineSABRES",
+      "fr": "Boîte à Outils SES MarineSABRES",
+      "de": "MarineSABRES SES Toolbox",
+      "lt": "MarineSABRES SES įrankių rinkinys",
+      "pt": "Caixa de Ferramentas SES MarineSABRES",
+      "it": "Toolbox SES MarineSABRES"
+    },
+    {
+      "key": "ui.header.save_project",
+      "en": "Save Project",
+      "es": "Guardar Proyecto",
+      "fr": "Enregistrer le Projet",
+      "de": "Projekt Speichern",
+      "lt": "Išsaugoti projektą",
+      "pt": "Salvar Projeto",
+      "it": "Salva Progetto"
+    },
+    {
+      "key": "ui.header.load_project",
+      "en": "Load Project",
+      "es": "Cargar Proyecto",
+      "fr": "Charger le Projet",
+      "de": "Projekt Laden",
+      "lt": "Įkelti projektą",
+      "pt": "Carregar Projeto",
+      "it": "Carica Progetto"
+    },
+    {
+      "key": "ui.header.new_project",
+      "en": "New Project",
+      "es": "Nuevo Proyecto",
+      "fr": "Nouveau Projet",
+      "de": "Neues Projekt",
+      "lt": "Naujas projektas",
+      "pt": "Novo Projeto",
+      "it": "Nuovo Progetto"
+    },
+    {
+      "key": "ui.header.project_info",
+      "en": "Project Info",
+      "es": "Info del Proyecto",
+      "fr": "Info du Projet",
+      "de": "Projektinfo",
+      "lt": "Projekto informacija",
+      "pt": "Info do Projeto",
+      "it": "Info Progetto"
+    },
+    {
+      "key": "ui.header.language_selector",
+      "en": "Language",
+      "es": "Idioma",
+      "fr": "Langue",
+      "de": "Sprache",
+      "lt": "Kalba",
+      "pt": "Idioma",
+      "it": "Lingua"
+    },
+    {
+      "key": "ui.header.user_guide",
+      "en": "User Guide",
+      "es": "Guía del Usuario",
+      "fr": "Guide de l'Utilisateur",
+      "de": "Benutzerhandbuch",
+      "lt": "Naudotojo vadovas",
+      "pt": "Guia do Usuário",
+      "it": "Guida Utente"
+    },
+    {
+      "key": "ui.header.about_app",
+      "en": "About",
+      "es": "Acerca de",
+      "fr": "À propos",
+      "de": "Über",
+      "lt": "Apie",
+      "pt": "Sobre",
+      "it": "Informazioni"
+    },
+    {
+      "key": "ui.header.project_overview",
+      "en": "Project Overview",
+      "es": "Resumen del Proyecto",
+      "fr": "Aperçu du Projet",
+      "de": "Projektübersicht",
+      "lt": "Projekto apžvalga",
+      "pt": "Visão Geral do Projeto",
+      "it": "Panoramica del Progetto"
+    },
+    {
+      "key": "ui.header.user",
+      "en": "User",
+      "es": "Usuario",
+      "fr": "Utilisateur",
+      "de": "Benutzer",
+      "lt": "Vartotojas",
+      "pt": "Usuário",
+      "it": "Utente"
+    },
+    {
+      "key": "ui.header.change_language",
+      "en": "Change Language",
+      "es": "Cambiar Idioma",
+      "fr": "Changer de Langue",
+      "de": "Sprache Ändern",
+      "lt": "Pakeisti Kalbą",
+      "pt": "Mudar Idioma",
+      "it": "Cambia Lingua"
+    },
+    {
+      "key": "ui.header.user_profile",
+      "en": "User Profile",
+      "es": "Perfil de Usuario",
+      "fr": "Profil Utilisateur",
+      "de": "Benutzerprofil",
+      "lt": "Vartotojo profilis",
+      "pt": "Perfil de Usuário",
+      "it": "Profilo Utente"
+    },
+    {
+      "key": "ui.header.user_account",
+      "en": "User Account",
+      "es": "Cuenta de Usuario",
+      "fr": "Compte Utilisateur",
+      "de": "Benutzerkonto",
+      "lt": "Vartotojo paskyra",
+      "pt": "Conta de Usuário",
+      "it": "Account Utente"
+    }
+  ]
+}

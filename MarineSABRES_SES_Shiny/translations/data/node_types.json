@@ -1,0 +1,233 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "data.node_types.drivers.title",
+      "en": "Drivers",
+      "es": "Impulsores",
+      "fr": "Moteurs",
+      "de": "Treiber",
+      "lt": "Varomosios jėgos",
+      "pt": "Impulsores",
+      "it": "Driver"
+    },
+    {
+      "key": "data.node_types.drivers.subtitle",
+      "en": "Root Causes & Needs",
+      "es": "Causas Raíces y Necesidades",
+      "fr": "Causes Profondes et Besoins",
+      "de": "Grundursachen und Bedürfnisse",
+      "lt": "Pagrindinės priežastys ir poreikiai",
+      "pt": "Causas Raízes e Necessidades",
+      "it": "Cause Radici e Bisogni"
+    },
+    {
+      "key": "data.node_types.activities.title",
+      "en": "Activities",
+      "es": "Actividades",
+      "fr": "Activités",
+      "de": "Aktivitäten",
+      "lt": "Veiklos",
+      "pt": "Atividades",
+      "it": "Attività"
+    },
+    {
+      "key": "data.node_types.activities.subtitle",
+      "en": "Human Actions",
+      "es": "Acciones Humanas",
+      "fr": "Actions Humaines",
+      "de": "Menschliche Handlungen",
+      "lt": "Žmogaus veiksmai",
+      "pt": "Ações Humanas",
+      "it": "Azioni Umane"
+    },
+    {
+      "key": "data.node_types.pressures.title",
+      "en": "Pressures",
+      "es": "Presiones",
+      "fr": "Pressions",
+      "de": "Drücke",
+      "lt": "Spaudimai",
+      "pt": "Pressões",
+      "it": "Pressioni"
+    },
+    {
+      "key": "data.node_types.pressures.subtitle",
+      "en": "Environmental Stressors",
+      "es": "Estresores Ambientales",
+      "fr": "Facteurs de Stress Environnementaux",
+      "de": "Umweltbelastungen",
+      "lt": "Aplinkos streso veiksniai",
+      "pt": "Estressores Ambientais",
+      "it": "Fattori di Stress Ambientale"
+    },
+    {
+      "key": "data.node_types.state.title",
+      "en": "State",
+      "es": "Estado",
+      "fr": "État",
+      "de": "Zustand",
+      "lt": "Būsena",
+      "pt": "Estado",
+      "it": "Stato"
+    },
+    {
+      "key": "data.node_types.state.subtitle",
+      "en": "Ecosystem Condition",
+      "es": "Condición del Ecosistema",
+      "fr": "État de l'Écosystème",
+      "de": "Ökosystemzustand",
+      "lt": "Ekosistemos būklė",
+      "pt": "Condição do Ecossistema",
+      "it": "Condizione dell'Ecosistema"
+    },
+    {
+      "key": "data.node_types.marine_processes.title",
+      "en": "Marine Processes & Functioning",
+      "es": "Procesos y Funcionamiento Marino",
+      "fr": "Processus et Fonctionnement Marin",
+      "de": "Marineprozesse und -funktionen",
+      "lt": "Jūrų procesai ir funkcijos",
+      "pt": "Processos e Funcionamento Marinho",
+      "it": "Processi e Funzionamento Marino"
+    },
+    {
+      "key": "data.node_types.ecosystem_services.title",
+      "en": "Ecosystem Services",
+      "es": "Servicios Ecosistémicos",
+      "fr": "Services Écosystémiques",
+      "de": "Ökosystemleistungen",
+      "lt": "Ekosistemos paslaugos",
+      "pt": "Serviços Ecossistêmicos",
+      "it": "Servizi Ecosistemici"
+    },
+    {
+      "key": "data.node_types.ecosystem_services.subtitle",
+      "en": "Nature's Benefits",
+      "es": "Beneficios de la Naturaleza",
+      "fr": "Bienfaits de la Nature",
+      "de": "Vorteile der Natur",
+      "lt": "Gamtos nauda",
+      "pt": "Benefícios da Natureza",
+      "it": "Benefici della Natura"
+    },
+    {
+      "key": "data.node_types.goods_benefits.title",
+      "en": "Goods & Benefits",
+      "es": "Bienes y Beneficios",
+      "fr": "Biens et Bénéfices",
+      "de": "Güter und Nutzen",
+      "lt": "Gėriai ir nauda",
+      "pt": "Bens e Benefícios",
+      "it": "Beni e Benefici"
+    },
+    {
+      "key": "data.node_types.goods_benefits.subtitle",
+      "en": "Human Welfare",
+      "es": "Bienestar Humano",
+      "fr": "Bien-être Humain",
+      "de": "Menschliches Wohlergehen",
+      "lt": "Žmonių gerovė",
+      "pt": "Bem-estar Humano",
+      "it": "Benessere Umano"
+    },
+    {
+      "key": "data.node_types.responses.title",
+      "en": "Responses",
+      "es": "Respuestas",
+      "fr": "Réponses",
+      "de": "Reaktionen",
+      "lt": "Atsakai",
+      "pt": "Respostas",
+      "it": "Risposte"
+    },
+    {
+      "key": "data.node_types.responses.subtitle",
+      "en": "Management Actions",
+      "es": "Acciones de Gestión",
+      "fr": "Actions de Gestion",
+      "de": "Managementmaßnahmen",
+      "lt": "Valdymo veiksmai",
+      "pt": "Ações de Gestão",
+      "it": "Azioni di Gestione"
+    },
+    {
+      "key": "data.node_types.measures.title",
+      "en": "Measures",
+      "es": "Medidas",
+      "fr": "Mesures",
+      "de": "Maßnahmen",
+      "lt": "Priemonės",
+      "pt": "Medidas",
+      "it": "Misure"
+    },
+    {
+      "key": "data.node_types.measures.subtitle",
+      "en": "Implementation Tools",
+      "es": "Herramientas de Implementación",
+      "fr": "Outils de Mise en Œuvre",
+      "de": "Umsetzungswerkzeuge",
+      "lt": "Įgyvendinimo priemonės",
+      "pt": "Ferramentas de Implementação",
+      "it": "Strumenti di Implementazione"
+    },
+    {
+      "key": "data.node_types._visualization_module_ui_elements",
+      "en": "# Visualization Module - UI Elements",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.a_causal_loop_diagram_cld_is_a_visual_representati",
+      "en": "A Causal Loop Diagram (CLD) is a visual representation of how different elements in your social-ecological system are connected through cause-and-effect relationships.",
+      "es": "Un Diagrama de Bucles Causales (CLD) es una representación visual de cómo diferentes elementos en su sistema socio-ecológico están conectados a través de relaciones de causa y efecto.",
+      "fr": "Un Diagramme de Boucles Causales (CLD) est une représentation visuelle de la façon dont différents éléments de votre système socio-écologique sont connectés par des relations de cause à effet.",
+      "de": "Ein Kausales Schleifendiagramm (CLD) ist eine visuelle Darstellung, wie verschiedene Elemente in Ihrem sozial-ökologischen System durch Ursache-Wirkungs-Beziehungen verbunden sind.",
+      "lt": "Priežastinių kilpų diagrama (CLD) yra vizualinis vaizdavimas, kaip skirtingi jūsų socialinės-ekologinės sistemos elementai yra susiję priežasties ir pasekmės ryšiais.",
+      "pt": "Um Diagrama de Loops Causais (CLD) é uma representação visual de como diferentes elementos no seu sistema socioecológico estão conectados através de relações de causa e efeito.",
+      "it": "Un Diagramma dei Loop Causali (CLD) è una rappresentazione visiva di come diversi elementi del tuo sistema socio-ecologico sono collegati attraverso relazioni causa-effetto."
+    },
+    {
+      "key": "data.node_types.nodes",
+      "en": "Nodes:",
+      "es": "Nodos:",
+      "fr": "Nœuds:",
+      "de": "Knoten:",
+      "lt": "Mazgai:",
+      "pt": "Nós:",
+      "it": "Nodi:"
+    },
+    {
+      "key": "data.node_types._show_causal_connections_between_elements_arrow_di",
+      "en": " Show causal connections between elements. Arrow direction indicates the direction of influence",
+      "es": " Muestran conexiones causales entre elementos. La dirección de la flecha indica la dirección de influencia",
+      "fr": " Montrent les connexions causales entre les éléments. La direction de la flèche indique la direction de l'influence",
+      "de": " Zeigen kausale Verbindungen zwischen Elementen. Die Pfeilrichtung zeigt die Richtung des Einflusses",
+      "lt": " Rodo priežastinius ryšius tarp elementų. Rodyklės kryptis nurodo įtakos kryptį",
+      "pt": " Mostram conexões causais entre elementos. A direção da seta indica a direção da influência",
+      "it": " Mostrano connessioni causali tra elementi. La direzione della freccia indica la direzione dell'influenza"
+    },
+    {
+      "key": "data.node_types.polarity_means_the_elements_change_in_the_same_dir",
+      "en": "Polarity: + means the elements change in the same direction, - means they change in opposite directions",
+      "es": "Polaridad: + significa que los elementos cambian en la misma dirección, - significa que cambian en direcciones opuestas",
+      "fr": "Polarité: + signifie que les éléments changent dans la même direction, - signifie qu'ils changent dans des directions opposées",
+      "de": "Polarität: + bedeutet, dass sich die Elemente in die gleiche Richtung ändern, - bedeutet, dass sie sich in entgegengesetzte Richtungen ändern",
+      "lt": "Polaritetas: + reiškia, kad elementai keičiasi ta pačia kryptimi, - reiškia, kad jie keičiasi priešingomis kryptimis",
+      "pt": "Polaridade: + significa que os elementos mudam na mesma direção, - significa que eles mudam em direções opostas",
+      "it": "Polarità: + significa che gli elementi cambiano nella stessa direzione, - significa che cambiano in direzioni opposte"
+    }
+  ]
+}

@@ -1,0 +1,353 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "framework.drivers.singular",
+      "en": "Driver",
+      "es": "Impulsor",
+      "fr": "Moteur",
+      "de": "Treiber",
+      "lt": "Varomoji jėga",
+      "pt": "Impulsor",
+      "it": "Driver"
+    },
+    {
+      "key": "framework.drivers.plural",
+      "en": "Drivers",
+      "es": "Impulsores",
+      "fr": "Moteurs",
+      "de": "Treiber",
+      "lt": "Varomosios jėgos",
+      "pt": "Impulsores",
+      "it": "Driver"
+    },
+    {
+      "key": "framework.drivers.description",
+      "en": "Social needs and demands that drive human activities",
+      "es": "Necesidades y demandas sociales que impulsan las actividades humanas",
+      "fr": "Besoins et demandes sociaux qui motivent les activités humaines",
+      "de": "Soziale Bedürfnisse und Anforderungen, die menschliche Aktivitäten antreiben",
+      "lt": "Socialiniai poreikiai ir reikalavimai, skatinantys žmogaus veiklą",
+      "pt": "Necessidades e demandas sociais que impulsionam atividades humanas",
+      "it": "Bisogni e richieste sociali che guidano le attività umane"
+    },
+    {
+      "key": "framework.activities.singular",
+      "en": "Activity",
+      "es": "Actividad",
+      "fr": "Activité",
+      "de": "Aktivität",
+      "lt": "Veikla",
+      "pt": "Atividade",
+      "it": "Attività"
+    },
+    {
+      "key": "framework.activities.plural",
+      "en": "Activities",
+      "es": "Actividades",
+      "fr": "Activités",
+      "de": "Aktivitäten",
+      "lt": "Veiklos",
+      "pt": "Atividades",
+      "it": "Attività"
+    },
+    {
+      "key": "framework.activities.description",
+      "en": "Human actions undertaken to meet social needs",
+      "es": "Acciones humanas emprendidas para satisfacer necesidades sociales",
+      "fr": "Actions humaines entreprises pour répondre aux besoins sociaux",
+      "de": "Menschliche Handlungen zur Erfüllung sozialer Bedürfnisse",
+      "lt": "Žmogaus veiksmai, atliekami socialiniams poreikiams patenkinti",
+      "pt": "Ações humanas empreendidas para atender necessidades sociais",
+      "it": "Azioni umane intraprese per soddisfare bisogni sociali"
+    },
+    {
+      "key": "framework.pressures.singular",
+      "en": "Pressure",
+      "es": "Presión",
+      "fr": "Pression",
+      "de": "Druck",
+      "lt": "Spaudimas",
+      "pt": "Pressão",
+      "it": "Pressione"
+    },
+    {
+      "key": "framework.pressures.plural",
+      "en": "Pressures",
+      "es": "Presiones",
+      "fr": "Pressions",
+      "de": "Drücke",
+      "lt": "Spaudimai",
+      "pt": "Pressões",
+      "it": "Pressioni"
+    },
+    {
+      "key": "framework.pressures.description",
+      "en": "Environmental stressors resulting from human activities",
+      "es": "Factores de estrés ambiental resultantes de actividades humanas",
+      "fr": "Facteurs de stress environnementaux résultant des activités humaines",
+      "de": "Umweltstressfaktoren, die aus menschlichen Aktivitäten resultieren",
+      "lt": "Aplinkos streso veiksniai, atsirandantys dėl žmogaus veiklos",
+      "pt": "Estressores ambientais resultantes de atividades humanas",
+      "it": "Fattori di stress ambientale derivanti da attività umane"
+    },
+    {
+      "key": "framework.state.singular",
+      "en": "State",
+      "es": "Estado",
+      "fr": "État",
+      "de": "Zustand",
+      "lt": "Būsena",
+      "pt": "Estado",
+      "it": "Stato"
+    },
+    {
+      "key": "framework.state.plural",
+      "en": "State Changes",
+      "es": "Cambios de Estado",
+      "fr": "Changements d'État",
+      "de": "Zustandsänderungen",
+      "lt": "Būsenos pokyčiai",
+      "pt": "Mudanças de Estado",
+      "it": "Cambiamenti di Stato"
+    },
+    {
+      "key": "framework.state.description",
+      "en": "Changes in ecosystem components and processes",
+      "es": "Cambios en los componentes y procesos del ecosistema",
+      "fr": "Changements dans les composants et processus de l'écosystème",
+      "de": "Veränderungen in Ökosystemkomponenten und -prozessen",
+      "lt": "Ekosistemos komponentų ir procesų pokyčiai",
+      "pt": "Mudanças nos componentes e processos do ecossistema",
+      "it": "Cambiamenti nei componenti e processi dell'ecosistema"
+    },
+    {
+      "key": "framework.marine_processes.singular",
+      "en": "Marine Process",
+      "es": "Proceso Marino",
+      "fr": "Processus Marin",
+      "de": "Marineprozess",
+      "lt": "Jūrų procesas",
+      "pt": "Processo Marinho",
+      "it": "Processo Marino"
+    },
+    {
+      "key": "framework.marine_processes.plural",
+      "en": "Marine Processes & Functioning",
+      "es": "Procesos y Funcionamiento Marino",
+      "fr": "Processus et Fonctionnement Marin",
+      "de": "Marineprozesse und -funktionen",
+      "lt": "Jūrų procesai ir funkcijos",
+      "pt": "Processos e Funcionamento Marinho",
+      "it": "Processi e Funzionamento Marino"
+    },
+    {
+      "key": "framework.impacts.singular",
+      "en": "Impact",
+      "es": "Impacto",
+      "fr": "Impact",
+      "de": "Auswirkung",
+      "lt": "Poveikis",
+      "pt": "Impacto",
+      "it": "Impatto"
+    },
+    {
+      "key": "framework.impacts.plural",
+      "en": "Impacts",
+      "es": "Impactos",
+      "fr": "Impacts",
+      "de": "Auswirkungen",
+      "lt": "Poveikiai",
+      "pt": "Impactos",
+      "it": "Impatti"
+    },
+    {
+      "key": "framework.impacts.description",
+      "en": "Effects on ecosystem services and human welfare",
+      "es": "Efectos sobre los servicios ecosistémicos y el bienestar humano",
+      "fr": "Effets sur les services écosystémiques et le bien-être humain",
+      "de": "Auswirkungen auf Ökosystemleistungen und menschliches Wohlbefinden",
+      "lt": "Poveikis ekosistemų paslaugoms ir žmonių gerovei",
+      "pt": "Efeitos nos serviços ecossistêmicos e bem-estar humano",
+      "it": "Effetti sui servizi ecosistemici e sul benessere umano"
+    },
+    {
+      "key": "framework.ecosystem_services.singular",
+      "en": "Ecosystem Service",
+      "es": "Servicio Ecosistémico",
+      "fr": "Service Écosystémique",
+      "de": "Ökosystemleistung",
+      "lt": "Ekosistemos paslauga",
+      "pt": "Serviço Ecossistêmico",
+      "it": "Servizio Ecosistemico"
+    },
+    {
+      "key": "framework.ecosystem_services.plural",
+      "en": "Ecosystem Services",
+      "es": "Servicios Ecosistémicos",
+      "fr": "Services Écosystémiques",
+      "de": "Ökosystemleistungen",
+      "lt": "Ekosistemos paslaugos",
+      "pt": "Serviços Ecossistêmicos",
+      "it": "Servizi Ecosistemici"
+    },
+    {
+      "key": "framework.welfare.singular",
+      "en": "Welfare",
+      "es": "Bienestar",
+      "fr": "Bien-être",
+      "de": "Wohlbefinden",
+      "lt": "Gerovė",
+      "pt": "Bem-estar",
+      "it": "Benessere"
+    },
+    {
+      "key": "framework.goods_benefits.singular",
+      "en": "Good & Benefit",
+      "es": "Bien y Beneficio",
+      "fr": "Bien et Bénéfice",
+      "de": "Gut und Nutzen",
+      "lt": "Gėris ir nauda",
+      "pt": "Bem e Benefício",
+      "it": "Bene e Beneficio"
+    },
+    {
+      "key": "framework.goods_benefits.plural",
+      "en": "Goods & Benefits",
+      "es": "Bienes y Beneficios",
+      "fr": "Biens et Bénéfices",
+      "de": "Güter und Nutzen",
+      "lt": "Gėriai ir nauda",
+      "pt": "Bens e Benefícios",
+      "it": "Beni e Benefici"
+    },
+    {
+      "key": "framework.responses.singular",
+      "en": "Response",
+      "es": "Respuesta",
+      "fr": "Réponse",
+      "de": "Reaktion",
+      "lt": "Atsakas",
+      "pt": "Resposta",
+      "it": "Risposta"
+    },
+    {
+      "key": "framework.responses.plural",
+      "en": "Responses",
+      "es": "Respuestas",
+      "fr": "Réponses",
+      "de": "Reaktionen",
+      "lt": "Atsakai",
+      "pt": "Respostas",
+      "it": "Risposte"
+    },
+    {
+      "key": "framework.responses.description",
+      "en": "Management interventions and policy responses",
+      "es": "Intervenciones de gestión y respuestas políticas",
+      "fr": "Interventions de gestion et réponses politiques",
+      "de": "Managementeingriffe und politische Reaktionen",
+      "lt": "Valdymo intervencijos ir politiniai atsakai",
+      "pt": "Intervenções de gestão e respostas políticas",
+      "it": "Interventi di gestione e risposte politiche"
+    },
+    {
+      "key": "framework.measures.singular",
+      "en": "Measure",
+      "es": "Medida",
+      "fr": "Mesure",
+      "de": "Maßnahme",
+      "lt": "Priemonė",
+      "pt": "Medida",
+      "it": "Misura"
+    },
+    {
+      "key": "framework.measures.plural",
+      "en": "Measures",
+      "es": "Medidas",
+      "fr": "Mesures",
+      "de": "Maßnahmen",
+      "lt": "Priemonės",
+      "pt": "Medidas",
+      "it": "Misure"
+    },
+    {
+      "key": "framework.measures.description",
+      "en": "Specific actions and implementations of responses",
+      "es": "Acciones específicas e implementaciones de respuestas",
+      "fr": "Actions spécifiques et mises en œuvre des réponses",
+      "de": "Spezifische Aktionen und Umsetzungen von Reaktionen",
+      "lt": "Konkretūs veiksmai ir atsakų įgyvendinimas",
+      "pt": "Ações específicas e implementações de respostas",
+      "it": "Azioni specifiche e implementazioni di risposte"
+    },
+    {
+      "key": "framework.components.singular",
+      "en": "Component",
+      "es": "Componente",
+      "fr": "Composant",
+      "de": "Komponente",
+      "lt": "Komponentas",
+      "pt": "Componente",
+      "it": "Componente"
+    },
+    {
+      "key": "framework.components.plural",
+      "en": "Components",
+      "es": "Componentes",
+      "fr": "Composants",
+      "de": "Komponenten",
+      "lt": "Komponentai",
+      "pt": "Componentes",
+      "it": "Componenti"
+    },
+    {
+      "key": "framework.components.description",
+      "en": "Ecosystem elements affected by pressures",
+      "es": "Elementos del ecosistema afectados por presiones",
+      "fr": "Éléments de l'écosystème affectés par les pressions",
+      "de": "Ökosystemelemente, die von Drücken betroffen sind",
+      "lt": "Ekosistemos elementai, veikiami spaudimų",
+      "pt": "Elementos do ecossistema afetados por pressões",
+      "it": "Elementi dell'ecosistema influenzati dalle pressioni"
+    },
+    {
+      "key": "framework.bookmark_this_state",
+      "en": "Bookmark this state",
+      "es": "Marcar este estado",
+      "fr": "Ajouter ce statut aux signets",
+      "de": "Diesen Zustand markieren",
+      "lt": "Pažymėti šią būseną",
+      "pt": "Marcar este estado",
+      "it": "Aggiungi questo stato ai segnalibri"
+    },
+    {
+      "key": "framework._represent_elements_in_your_system_drivers_activit",
+      "en": " Represent elements in your system (drivers, activities, pressures, states, impacts, welfare, responses)",
+      "es": " Representan elementos en su sistema (impulsores, actividades, presiones, estados, impactos, bienestar, respuestas)",
+      "fr": " Représentent des éléments de votre système (moteurs, activités, pressions, états, impacts, bien-être, réponses)",
+      "de": " Repräsentieren Elemente in Ihrem System (Treiber, Aktivitäten, Drücke, Zustände, Auswirkungen, Wohlbefinden, Reaktionen)",
+      "lt": " Reprezentuoja elementus jūsų sistemoje (varomosios jėgos, veiklos, spaudimas, būsenos, poveikis, gerovė, atsakai)",
+      "pt": " Representam elementos no seu sistema (impulsores, atividades, pressões, estados, impactos, bem-estar, respostas)",
+      "it": " Rappresentano elementi nel tuo sistema (driver, attività, pressioni, stati, impatti, benessere, risposte)"
+    },
+    {
+      "key": "framework._toggle_to_highlight_the_most_influential_nodes_wh",
+      "en": " Toggle to highlight the most influential nodes where interventions could have the greatest impact",
+      "es": " Alterne para resaltar los nodos más influyentes donde las intervenciones podrían tener el mayor impacto",
+      "fr": " Basculez pour mettre en évidence les nœuds les plus influents où les interventions pourraient avoir le plus grand impact",
+      "de": " Umschalten, um die einflussreichsten Knoten hervorzuheben, bei denen Interventionen die größte Wirkung haben könnten",
+      "lt": " Perjunkite, kad paryškintumėte įtakingiausius mazgus, kuriuose intervencijos galėtų turėti didžiausią poveikį",
+      "pt": " Alternar para destacar os nós mais influentes onde as intervenções poderiam ter o maior impacto",
+      "it": " Attiva per evidenziare i nodi più influenti dove gli interventi potrebbero avere il maggiore impatto"
+    }
+  ]
+}

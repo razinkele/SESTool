@@ -33,7 +33,14 @@ json_elements_to_df <- function(elements, element_type) {
 
   df <- data.frame(
     ID = sapply(elements, function(x) if (!is.null(x$id)) x$id else ""),
-    Name = sapply(elements, function(x) if (!is.null(x$name)) x$name else ""),
+    Name = sapply(elements, function(x) {
+      # Prefer 'name' field, fallback to 'id' if name is missing
+      name <- x$name
+      if (is.null(name) || length(name) == 0 || name == "") {
+        return(x$id)
+      }
+      return(name)
+    }),
     Type = element_type,
     Description = sapply(elements, function(x) if (!is.null(x$description)) x$description else ""),
     Stakeholder = sapply(elements, function(x) if (!is.null(x$stakeholder)) x$stakeholder else ""),
@@ -152,11 +159,18 @@ load_template_from_json <- function(json_path) {
     gb_list <- fw$goods_benefits %||% fw$welfare
     goods_benefits_df <- json_elements_to_df(gb_list, "Welfare")
 
-    # Handle responses
-    responses_df <- json_elements_to_df(fw$responses, "Response")
-    
-    # Handle measures
-    measures_df <- json_elements_to_df(fw$measures, "Measure")
+    # Handle responses and measures - merge them into a single responses category
+    responses_list <- fw$responses %||% list()
+    measures_list <- fw$measures %||% list()
+
+    # Count original sizes BEFORE merging
+    n_original_responses <- length(responses_list)
+    n_measures <- length(measures_list)
+
+    # Merge measures into responses
+    all_responses <- c(responses_list, measures_list)
+    responses_df <- json_elements_to_df(all_responses, "Response")
+    n_total_responses <- nrow(responses_df)
 
     # Extract connections
     connections <- json_data$connections %||% list()
@@ -212,56 +226,173 @@ load_template_from_json <- function(json_path) {
         )
       }
 
-      # Response matrices (if responses exist)
-      if (nrow(responses_df) > 0) {
+      # Response matrices (if original responses exist - measures will be added later)
+      if (n_original_responses > 0) {
+        # Use only the original responses (not measures yet)
+        original_response_ids <- responses_df$ID[1:n_original_responses]
+        original_response_names <- responses_df$Name[1:n_original_responses]
+
         # GB → R (Goods & Benefits/Welfare to Responses)
+        # This matrix has GB as rows, but we want ALL responses (including future measures) as columns
         if (nrow(goods_benefits_df) > 0) {
           adjacency_matrices$gb_r <- build_adjacency_matrix(
-            connections, goods_benefits_df$ID, responses_df$ID,
+            connections, goods_benefits_df$ID, responses_df$ID,  # Use full responses_df for columns
             "welfare", "response", goods_benefits_df$Name, responses_df$Name
           )
         }
 
-        # R → D (Responses to Drivers)
+        # R → D (Responses to Drivers) - only original responses for now
         if (nrow(drivers_df) > 0) {
           adjacency_matrices$r_d <- build_adjacency_matrix(
-            connections, responses_df$ID, drivers_df$ID,
-            "response", "driver", responses_df$Name, drivers_df$Name
+            connections, original_response_ids, drivers_df$ID,
+            "response", "driver", original_response_names, drivers_df$Name
           )
         }
 
-        # R → A (Responses to Activities)
+        # R → A (Responses to Activities) - only original responses for now
         if (nrow(activities_df) > 0) {
           adjacency_matrices$r_a <- build_adjacency_matrix(
-            connections, responses_df$ID, activities_df$ID,
-            "response", "activity", responses_df$Name, activities_df$Name
+            connections, original_response_ids, activities_df$ID,
+            "response", "activity", original_response_names, activities_df$Name
           )
         }
 
-        # R → P (Responses to Pressures)
+        # R → P (Responses to Pressures) - only original responses for now
         if (nrow(pressures_df) > 0) {
           adjacency_matrices$r_p <- build_adjacency_matrix(
-            connections, responses_df$ID, pressures_df$ID,
-            "response", "pressure", responses_df$Name, pressures_df$Name
+            connections, original_response_ids, pressures_df$ID,
+            "response", "pressure", original_response_names, pressures_df$Name
           )
         }
-        
-        # R → S (Responses to States) - direct restoration
+
+        # R → S (Responses to States) - direct restoration, only original responses for now
         if (nrow(marine_processes_df) > 0) {
           adjacency_matrices$r_mpf <- build_adjacency_matrix(
-            connections, responses_df$ID, marine_processes_df$ID,
-            "response", "state", responses_df$Name, marine_processes_df$Name
+            connections, original_response_ids, marine_processes_df$ID,
+            "response", "state", original_response_names, marine_processes_df$Name
           )
         }
       }
       
-      # Measure matrices (if measures exist)
-      if (nrow(measures_df) > 0 && nrow(responses_df) > 0) {
-        # M → R (Measures to Responses)
-        adjacency_matrices$m_r <- build_adjacency_matrix(
-          connections, measures_df$ID, responses_df$ID,
-          "measure", "response", measures_df$Name, responses_df$Name
-        )
+      # Process measure connections (they're now part of responses)
+      # Measures are rows n_original_responses+1 to n_total_responses in responses_df
+      if (n_measures > 0) {
+        measure_ids <- responses_df$ID[(n_original_responses + 1):n_total_responses]
+        measure_names <- responses_df$Name[(n_original_responses + 1):n_total_responses]
+
+        # Build temporary matrices for measure connections, then insert into appropriate rows of response matrices
+        # M → D (Measures to Drivers)
+        if (nrow(drivers_df) > 0) {
+          m_d_temp <- build_adjacency_matrix(
+            connections, measure_ids, drivers_df$ID,
+            "measure", "driver", measure_names, drivers_df$Name
+          )
+
+          # Create/expand r_d matrix to have n_total_responses rows
+          if (!is.null(adjacency_matrices$r_d)) {
+            # Ensure r_d has correct dimensions
+            if (nrow(adjacency_matrices$r_d) != n_total_responses) {
+              # Expand matrix to include measure rows
+              full_matrix <- matrix("", nrow = n_total_responses, ncol = ncol(adjacency_matrices$r_d),
+                                   dimnames = list(responses_df$Name, colnames(adjacency_matrices$r_d)))
+              # Copy original response rows
+              full_matrix[1:n_original_responses, ] <- adjacency_matrices$r_d
+              # Insert measure rows
+              full_matrix[(n_original_responses + 1):n_total_responses, ] <- m_d_temp
+              adjacency_matrices$r_d <- full_matrix
+            }
+          } else {
+            # Create new r_d with all response rows
+            adjacency_matrices$r_d <- matrix("", nrow = n_total_responses, ncol = ncol(m_d_temp),
+                                            dimnames = list(responses_df$Name, colnames(m_d_temp)))
+            adjacency_matrices$r_d[(n_original_responses + 1):n_total_responses, ] <- m_d_temp
+          }
+        }
+
+        # M → A (Measures to Activities)
+        if (nrow(activities_df) > 0) {
+          m_a_temp <- build_adjacency_matrix(
+            connections, measure_ids, activities_df$ID,
+            "measure", "activity", measure_names, activities_df$Name
+          )
+
+          if (!is.null(adjacency_matrices$r_a)) {
+            if (nrow(adjacency_matrices$r_a) != n_total_responses) {
+              full_matrix <- matrix("", nrow = n_total_responses, ncol = ncol(adjacency_matrices$r_a),
+                                   dimnames = list(responses_df$Name, colnames(adjacency_matrices$r_a)))
+              full_matrix[1:n_original_responses, ] <- adjacency_matrices$r_a
+              full_matrix[(n_original_responses + 1):n_total_responses, ] <- m_a_temp
+              adjacency_matrices$r_a <- full_matrix
+            }
+          } else {
+            adjacency_matrices$r_a <- matrix("", nrow = n_total_responses, ncol = ncol(m_a_temp),
+                                            dimnames = list(responses_df$Name, colnames(m_a_temp)))
+            adjacency_matrices$r_a[(n_original_responses + 1):n_total_responses, ] <- m_a_temp
+          }
+        }
+
+        # M → P (Measures to Pressures)
+        if (nrow(pressures_df) > 0) {
+          m_p_temp <- build_adjacency_matrix(
+            connections, measure_ids, pressures_df$ID,
+            "measure", "pressure", measure_names, pressures_df$Name
+          )
+
+          if (!is.null(adjacency_matrices$r_p)) {
+            if (nrow(adjacency_matrices$r_p) != n_total_responses) {
+              full_matrix <- matrix("", nrow = n_total_responses, ncol = ncol(adjacency_matrices$r_p),
+                                   dimnames = list(responses_df$Name, colnames(adjacency_matrices$r_p)))
+              full_matrix[1:n_original_responses, ] <- adjacency_matrices$r_p
+              full_matrix[(n_original_responses + 1):n_total_responses, ] <- m_p_temp
+              adjacency_matrices$r_p <- full_matrix
+            }
+          } else {
+            adjacency_matrices$r_p <- matrix("", nrow = n_total_responses, ncol = ncol(m_p_temp),
+                                            dimnames = list(responses_df$Name, colnames(m_p_temp)))
+            adjacency_matrices$r_p[(n_original_responses + 1):n_total_responses, ] <- m_p_temp
+          }
+        }
+
+        # M → MPF (Measures to States)
+        if (nrow(marine_processes_df) > 0) {
+          m_mpf_temp <- build_adjacency_matrix(
+            connections, measure_ids, marine_processes_df$ID,
+            "measure", "state", measure_names, marine_processes_df$Name
+          )
+
+          if (!is.null(adjacency_matrices$r_mpf)) {
+            if (nrow(adjacency_matrices$r_mpf) != n_total_responses) {
+              full_matrix <- matrix("", nrow = n_total_responses, ncol = ncol(adjacency_matrices$r_mpf),
+                                   dimnames = list(responses_df$Name, colnames(adjacency_matrices$r_mpf)))
+              full_matrix[1:n_original_responses, ] <- adjacency_matrices$r_mpf
+              full_matrix[(n_original_responses + 1):n_total_responses, ] <- m_mpf_temp
+              adjacency_matrices$r_mpf <- full_matrix
+            }
+          } else {
+            adjacency_matrices$r_mpf <- matrix("", nrow = n_total_responses, ncol = ncol(m_mpf_temp),
+                                              dimnames = list(responses_df$Name, colnames(m_mpf_temp)))
+            adjacency_matrices$r_mpf[(n_original_responses + 1):n_total_responses, ] <- m_mpf_temp
+          }
+        }
+
+        # M → R (Measures to Responses) - this becomes R→R (within responses)
+        # Only process original responses as targets (rows 1 to n_original_responses)
+        if (n_original_responses > 0) {
+          original_response_ids <- responses_df$ID[1:n_original_responses]
+          original_response_names <- responses_df$Name[1:n_original_responses]
+
+          m_r_temp <- build_adjacency_matrix(
+            connections, measure_ids, original_response_ids,
+            "measure", "response", measure_names, original_response_names
+          )
+
+          # Create full R×R matrix (responses to responses)
+          adjacency_matrices$r_r <- matrix("", nrow = n_total_responses, ncol = n_total_responses,
+                                          dimnames = list(responses_df$Name, responses_df$Name))
+
+          # Fill in measure→response connections (last n_measures rows, first n_original_responses cols)
+          adjacency_matrices$r_r[(n_original_responses + 1):n_total_responses, 1:n_original_responses] <- m_r_temp
+        }
       }
     }
 
@@ -319,14 +450,9 @@ load_template_from_json <- function(json_path) {
       adjacency_matrices = adjacency_matrices
     )
 
-    # Add responses if they exist
+    # Add responses (now includes both original responses and measures)
     if (nrow(responses_df) > 0) {
       template$responses <- responses_df
-    }
-    
-    # Add measures if they exist
-    if (nrow(measures_df) > 0) {
-      template$measures <- measures_df
     }
 
     return(template)

@@ -245,6 +245,129 @@ create_numeric_adjacency_matrix <- function(nodes, edges) {
 }
 
 # ============================================================================
+# DAPSIRWRM FRAMEWORK VALIDATION
+# ============================================================================
+
+#' Check if a transition follows valid DAPSIRWRM framework logic
+#'
+#' Valid transitions:
+#' - Forward: D→A, A→P, P→MPF, MPF→ES, ES→GB, GB→R
+#' - Feedback: R→D, R→A, R→P, D→GB
+#'
+#' @param from_type Source node type
+#' @param to_type Target node type
+#' @return Logical indicating if transition is valid
+is_valid_dapsirwrm_transition <- function(from_type, to_type) {
+  # Normalize types to lowercase for comparison
+  from <- tolower(trimws(as.character(from_type)))
+  to <- tolower(trimws(as.character(to_type)))
+
+  # Define valid transitions (using arrays for flexibility with synonyms)
+  valid_transitions <- list(
+    # Forward transitions
+    list(from = c("driver", "drivers"), to = c("activity", "activities")),
+    list(from = c("activity", "activities"), to = c("pressure", "pressures", "enmp")),
+    list(from = c("pressure", "pressures", "enmp"),
+         to = c("state", "states", "state change", "marine_process", "marine_processes", "mpf")),
+    list(from = c("state", "states", "state change", "marine_process", "marine_processes", "mpf"),
+         to = c("impact", "impacts", "ecosystem_service", "ecosystem_services", "es")),
+    list(from = c("impact", "impacts", "ecosystem_service", "ecosystem_services", "es"),
+         to = c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing")),
+    list(from = c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing"),
+         to = c("response", "responses")),
+
+    # Feedback transitions (responses back to earlier stages)
+    list(from = c("response", "responses"), to = c("driver", "drivers")),
+    list(from = c("response", "responses"), to = c("activity", "activities")),
+    list(from = c("response", "responses"), to = c("pressure", "pressures", "enmp")),
+
+    # Direct feedback shortcut
+    list(from = c("driver", "drivers"),
+         to = c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing"))
+  )
+
+  # Check if this transition matches any valid pattern
+  for (transition in valid_transitions) {
+    if (from %in% transition$from && to %in% transition$to) {
+      return(TRUE)
+    }
+  }
+
+  return(FALSE)
+}
+
+#' Validate that all edges in a loop follow DAPSIRWRM framework
+#'
+#' @param loop_node_ids Vector of node IDs in the loop
+#' @param nodes Nodes dataframe with id and type/group columns
+#' @return List with is_valid (logical) and invalid_edges (character vector)
+validate_loop_dapsirwrm <- function(loop_node_ids, nodes) {
+  invalid_edges <- character(0)
+
+  # Helper function to derive type from group or use type directly
+  get_node_type <- function(node_data) {
+    if ("type" %in% names(node_data) && !is.null(node_data$type)) {
+      return(node_data$type)
+    } else if ("group" %in% names(node_data) && !is.null(node_data$group)) {
+      # Map group names to type names
+      group <- node_data$group
+      type_mapping <- c(
+        "Drivers" = "driver",
+        "Activities" = "activity",
+        "Pressures" = "pressure",
+        "Marine Processes & Functioning" = "state",
+        "Ecosystem Services" = "impact",
+        "Goods & Benefits" = "welfare",
+        "Responses" = "response"
+      )
+      return(type_mapping[group])
+    }
+    return(NA_character_)
+  }
+
+  # Create fast lookup for node types - handle both type and group columns
+  if ("type" %in% names(nodes)) {
+    node_type_lookup <- setNames(nodes$type, nodes$id)
+  } else if ("group" %in% names(nodes)) {
+    # Derive type from group
+    type_mapping <- c(
+      "Drivers" = "driver",
+      "Activities" = "activity",
+      "Pressures" = "pressure",
+      "Marine Processes & Functioning" = "state",
+      "Ecosystem Services" = "impact",
+      "Goods & Benefits" = "welfare",
+      "Responses" = "response"
+    )
+    node_types <- type_mapping[nodes$group]
+    node_type_lookup <- setNames(node_types, nodes$id)
+  } else {
+    stop("nodes dataframe must have either 'type' or 'group' column")
+  }
+
+  # Check each edge in the loop
+  for (i in seq_along(loop_node_ids)) {
+    from_id <- loop_node_ids[i]
+    to_id <- loop_node_ids[(i %% length(loop_node_ids)) + 1]
+
+    from_type <- node_type_lookup[from_id]
+    to_type <- node_type_lookup[to_id]
+
+    # Validate this transition
+    if (!is_valid_dapsirwrm_transition(from_type, to_type)) {
+      invalid_edge <- sprintf("%s (%s) → %s (%s)",
+                              from_id, from_type, to_id, to_type)
+      invalid_edges <- c(invalid_edges, invalid_edge)
+    }
+  }
+
+  list(
+    is_valid = length(invalid_edges) == 0,
+    invalid_edges = invalid_edges
+  )
+}
+
+# ============================================================================
 # LOOP DETECTION FUNCTIONS
 # ============================================================================
 
@@ -289,14 +412,15 @@ find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
       subg <- induced_subgraph(g, comp_nodes)
 
       # Skip very large components that will cause exponential explosion
-      # Use very strict limits for large components
+      # Use reasonable limits for large components
+      # DAPSIR frameworks with feedback loops typically have 2-5% density
       if (comp_size > 30) {
         edge_count <- ecount(subg)
         edge_density <- edge_count / (comp_size * (comp_size - 1))
 
-        # Very strict limits based on empirical testing
-        # 40 nodes with 7.69% density (120 edges) still hangs
-        max_density <- if (comp_size > 50) 0.02 else if (comp_size > 40) 0.04 else if (comp_size > 35) 0.06 else 0.08
+        # Adjusted limits to allow typical DAPSIR feedback structures
+        # Components with >10% density are truly problematic
+        max_density <- if (comp_size > 100) 0.05 else if (comp_size > 70) 0.08 else if (comp_size > 50) 0.10 else 0.15
 
         if (edge_density > max_density) {
           warning(sprintf(
@@ -312,6 +436,14 @@ find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
 
       # Find cycles in this component
       comp_cycles <- find_cycles_dfs(subg, max_length, max_cycles = remaining_cycles)
+
+      # CRITICAL: Remap subgraph indices to original graph indices
+      # comp_cycles contains indices in the subgraph, we need to map them to the original graph
+      if (length(comp_cycles) > 0) {
+        comp_cycles <- lapply(comp_cycles, function(cycle) {
+          comp_nodes[cycle]  # Map subgraph indices to original graph indices
+        })
+      }
 
       cycles <- c(cycles, comp_cycles)
     }
@@ -498,8 +630,9 @@ create_edge_lookup_table <- function(edges) {
 #' @param nodes Nodes dataframe
 #' @param edges Edges dataframe
 #' @param g igraph object
+#' @param validate_dapsirwrm Logical, whether to validate loops against DAPSIRWRM framework (default TRUE)
 #' @return Dataframe with loop information
-process_cycles_to_loops <- function(cycles, nodes, edges, g) {
+process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm = TRUE) {
 
   if (length(cycles) == 0) {
     return(data.frame(
@@ -528,6 +661,9 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g) {
     cat(sprintf("[Loop Processing] Processing %d loops in %d batches\n", n_cycles, n_batches))
   }
 
+  # Track invalid loops for reporting
+  invalid_loops <- list()
+
   loops_list <- lapply(seq_along(cycles), function(i) {
     # Progress monitoring for large datasets
     if (i %% batch_size == 0 && n_cycles > batch_size) {
@@ -540,6 +676,21 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g) {
     # Get node IDs and labels using fast lookup
     node_ids <- V(g)[cycle]$name
     node_labels <- node_label_lookup[node_ids]
+
+    # Validate loop against DAPSIRWRM framework if requested
+    if (validate_dapsirwrm) {
+      validation <- validate_loop_dapsirwrm(node_ids, nodes)
+
+      if (!validation$is_valid) {
+        # Store invalid loop info for reporting
+        invalid_loops[[length(invalid_loops) + 1]] <<- list(
+          loop_id = i,
+          elements = paste(node_labels, collapse = " → "),
+          invalid_edges = validation$invalid_edges
+        )
+        return(NULL)  # Skip this loop
+      }
+    }
 
     # Determine loop type using pre-computed edge lookup
     loop_type <- classify_loop_type(node_ids, edge_lookup = edge_lookup)
@@ -557,7 +708,52 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g) {
     )
   })
 
-  bind_rows(loops_list)
+  # Filter out NULL entries (invalid loops)
+  loops_list <- Filter(Negate(is.null), loops_list)
+
+  # Report on filtered loops
+  if (validate_dapsirwrm && length(invalid_loops) > 0) {
+    cat(sprintf("\n[DAPSIRWRM Validation] Filtered out %d invalid loops that violate framework constraints:\n",
+                length(invalid_loops)))
+
+    # Show first few examples
+    n_examples <- min(3, length(invalid_loops))
+    for (i in 1:n_examples) {
+      invalid <- invalid_loops[[i]]
+      cat(sprintf("  Loop %d: %s\n", invalid$loop_id, invalid$elements))
+      cat(sprintf("    Invalid transitions: %s\n",
+                  paste(invalid$invalid_edges, collapse="; ")))
+    }
+
+    if (length(invalid_loops) > n_examples) {
+      cat(sprintf("  ... and %d more invalid loops\n",
+                  length(invalid_loops) - n_examples))
+    }
+
+    cat(sprintf("\nValid DAPSIRWRM transitions:\n"))
+    cat("  Forward: D→A→P→MPF→ES→GB→R\n")
+    cat("  Feedback: R→D, R→A, R→P, D→GB\n\n")
+  }
+
+  # Re-number loop IDs to be sequential
+  if (length(loops_list) > 0) {
+    result <- bind_rows(loops_list)
+    result$LoopID <- seq_len(nrow(result))
+    result$Name <- paste0("Loop_", result$LoopID)
+    return(result)
+  } else {
+    return(data.frame(
+      LoopID = integer(0),
+      Name = character(0),
+      Type = character(0),
+      Length = integer(0),
+      Elements = character(0),
+      NodeIDs = character(0),
+      Significance = character(0),
+      Story = character(0),
+      stringsAsFactors = FALSE
+    ))
+  }
 }
 
 # ============================================================================

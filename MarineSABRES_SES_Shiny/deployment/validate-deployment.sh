@@ -116,6 +116,39 @@ if $all_dirs_exist; then
 fi
 
 # Optional directories
+
+# Check for required SES template JSON files
+echo ""
+echo "[2b] Checking SES Template JSON files..."
+
+# List of required template files (update as needed)
+required_templates=(
+    "Fisheries_SES_Template.json"
+    "Tourism_SES_Template.json"
+    "Aquaculture_SES_Template.json"
+    "Pollution_SES_Template.json"
+    "ClimateChange_SES_Template.json"
+    "Caribbean_SES_Template.json"
+    "OffshoreWind_SES_Template.json"
+)
+
+all_templates_exist=true
+for template in "${required_templates[@]}"; do
+    if [ -f "$app_dir/data/$template" ]; then
+        print_check "Template: $template" "PASS"
+    else
+        print_check "Template: $template" "FAIL" "File not found"
+        all_templates_exist=false
+    fi
+done
+
+if $all_templates_exist; then
+    print_check "All SES template JSON files present" "PASS"
+else
+    print_check "All SES template JSON files present" "FAIL" "One or more template files missing"
+fi
+
+# Optional directories
 if [ -d "$app_dir/docs" ]; then
     print_check "Documentation directory" "PASS"
 else

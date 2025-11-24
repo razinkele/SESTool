@@ -55,6 +55,11 @@ suppressPackageStartupMessages({
   if (is.null(a)) b else a
 }
 
+# Define the %|||% operator for NULL or NA coalescing (return right side if left is NULL or NA)
+`%|||%` <- function(a, b) {
+  if (is.null(a) || (length(a) == 1 && is.na(a))) b else a
+}
+
 # ============================================================================
 # VERSION MANAGEMENT
 # ============================================================================
@@ -83,10 +88,48 @@ VERSION_INFO <- tryCatch({
 # INTERNATIONALIZATION (i18n) CONFIGURATION
 # ============================================================================
 
-# Initialize translator with JSON translation file
-i18n <- Translator$new(
-  translation_json_path = "translations/translation.json"
-)
+# Check if modular translations should be used (can be controlled via env var)
+USE_MODULAR_TRANSLATIONS <- Sys.getenv("USE_MODULAR_TRANSLATIONS", "TRUE") == "TRUE"
+
+if (USE_MODULAR_TRANSLATIONS) {
+  # Source translation loader
+  source("functions/translation_loader.R")
+
+  # Check debug mode
+  DEBUG_I18N <- getOption("marinesabres.debug_i18n", FALSE) ||
+                Sys.getenv("DEBUG_I18N", "FALSE") == "TRUE"
+
+  # Initialize modular translation system
+  if (DEBUG_I18N) {
+    cat("[I18N] Using modular translation system\n")
+  }
+
+  translation_file <- init_modular_translations(
+    base_path = "translations",
+    validate = DEBUG_I18N,
+    debug = DEBUG_I18N
+  )
+
+  # Initialize translator with merged translations
+  i18n <- Translator$new(translation_json_path = translation_file)
+
+  # Clean up temp file on R session end
+  reg.finalizer(
+    globalenv(),
+    function(e) {
+      if (exists("translation_file") && file.exists(translation_file)) {
+        unlink(translation_file)
+      }
+    },
+    onexit = TRUE
+  )
+} else {
+  # Fallback to monolithic translation file
+  cat("[I18N] Using legacy monolithic translation file\n")
+  i18n <- Translator$new(
+    translation_json_path = "translations/translation.json.backup"
+  )
+}
 
 # Set default language to English
 i18n$set_translation_language("en")
@@ -108,6 +151,9 @@ AVAILABLE_LANGUAGES <- list(
 
 # UI helper functions
 source("functions/ui_helpers.R")
+
+# Template loading functions (for JSON templates)
+source("functions/template_loader.R", local = TRUE)
 
 # Data structure functions
 source("functions/data_structure.R", local = TRUE)
@@ -474,7 +520,7 @@ EP3_RISKS_HAZARDS <- list(
   # Natural Hazards
   list(
     id = "hydro_flood",
-    label = "Hydrological Hazards",
+    label = "Flooding & Storm Surge",
     category = "Natural",
     temporal = "Acute",
     description = "Flooding, storm surge, tsunamis",
@@ -483,7 +529,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "physio_natural_chronic",
-    label = "Physiographic - Natural (Chronic)",
+    label = "Coastal Erosion",
     category = "Natural",
     temporal = "Chronic",
     description = "Coastal erosion, long-term sediment changes",
@@ -492,7 +538,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "physio_human_chronic",
-    label = "Physiographic - Human (Chronic)",
+    label = "Coastal Development Impacts",
     category = "Anthropogenic",
     temporal = "Chronic",
     description = "Land reclamation, space removal",
@@ -501,7 +547,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "physio_acute",
-    label = "Physiographic - Acute",
+    label = "Landslides & Cliff Failures",
     category = "Natural",
     temporal = "Acute",
     description = "Cliff failure, landslides",
@@ -510,7 +556,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "climate_acute",
-    label = "Climatological - Acute",
+    label = "Extreme Weather Events",
     category = "Natural",
     temporal = "Acute",
     description = "Extreme storms, heat waves",
@@ -519,7 +565,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "climate_chronic",
-    label = "Climatological - Chronic",
+    label = "Climate Change (Sea-level, Acidification)",
     category = "Natural",
     temporal = "Chronic",
     description = "Sea-level rise, NAO changes, ocean acidification",
@@ -528,7 +574,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "tectonic_acute",
-    label = "Tectonic - Acute",
+    label = "Earthquakes",
     category = "Natural",
     temporal = "Acute",
     description = "Earthquakes, land slips",
@@ -537,7 +583,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "tectonic_chronic",
-    label = "Tectonic - Chronic",
+    label = "Land Subsidence",
     category = "Natural",
     temporal = "Chronic",
     description = "Subsidence, isostatic rebound",
@@ -546,7 +592,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "bio_micro",
-    label = "Biological - Microbial",
+    label = "Pollution & Pathogens",
     category = "Anthropogenic",
     temporal = "Both",
     description = "Sewage pollution, pathogens",
@@ -555,7 +601,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "bio_macro",
-    label = "Biological - Macrobial",
+    label = "Invasive Species & Harmful Blooms",
     category = "Anthropogenic",
     temporal = "Chronic",
     description = "Non-indigenous species, harmful algal blooms",
@@ -564,7 +610,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "tech_introduced",
-    label = "Technological - Introduced",
+    label = "Infrastructure & Dredging Impacts",
     category = "Anthropogenic",
     temporal = "Chronic",
     description = "Infrastructure, dredging, sediment disposal",
@@ -573,7 +619,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "tech_extractive",
-    label = "Technological - Extractive",
+    label = "Fishing & Resource Extraction",
     category = "Anthropogenic",
     temporal = "Chronic",
     description = "Fishing impacts, aggregate extraction",
@@ -582,7 +628,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "chem_acute",
-    label = "Chemical - Acute",
+    label = "Oil Spills & Chemical Accidents",
     category = "Anthropogenic",
     temporal = "Acute",
     description = "Oil spills, chemical accidents",
@@ -591,7 +637,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "chem_chronic",
-    label = "Chemical - Chronic",
+    label = "Chronic Pollution",
     category = "Anthropogenic",
     temporal = "Chronic",
     description = "Diffuse pollution, point-source contaminants",
@@ -600,7 +646,7 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "geopolitical_acute",
-    label = "Geopolitical - Acute",
+    label = "Conflicts & Civil Unrest",
     category = "Anthropogenic",
     temporal = "Acute",
     description = "Wars, terrorism, civil unrest",
@@ -609,12 +655,49 @@ EP3_RISKS_HAZARDS <- list(
   ),
   list(
     id = "geopolitical_chronic",
-    label = "Geopolitical - Chronic",
+    label = "Migration & Social Displacement",
     category = "Anthropogenic",
     temporal = "Chronic",
     description = "Human migrations, refugee crises, conflicts",
     icon = "users",
     severity = "High"
+  ),
+  # Social & Economic Risks
+  list(
+    id = "social_inequality",
+    label = "Social Inequality & Injustice",
+    category = "Social",
+    temporal = "Chronic",
+    description = "Poverty, inequality, lack of access to resources",
+    icon = "balance-scale",
+    severity = "High"
+  ),
+  list(
+    id = "food_insecurity",
+    label = "Food & Livelihood Security",
+    category = "Social",
+    temporal = "Both",
+    description = "Threats to food security, livelihoods, employment",
+    icon = "utensils",
+    severity = "High"
+  ),
+  list(
+    id = "health_wellbeing",
+    label = "Public Health & Wellbeing",
+    category = "Social",
+    temporal = "Both",
+    description = "Health risks, disease, mental health impacts",
+    icon = "heartbeat",
+    severity = "High"
+  ),
+  list(
+    id = "cultural_heritage",
+    label = "Cultural Heritage Loss",
+    category = "Social",
+    temporal = "Chronic",
+    description = "Loss of traditional practices, cultural identity, heritage sites",
+    icon = "landmark",
+    severity = "Medium"
   )
 )
 
@@ -1102,7 +1185,7 @@ safe_get_nested <- function(data, ..., default = NULL) {
 # @param exercise_name character - Name of the exercise for error messages
 # @param required_cols character vector - Required column names
 # @return character vector of error messages (empty if valid)
-validate_isa_data <- function(data, exercise_name, required_cols = c("ID", "Name")) {
+validate_isa_dataframe <- function(data, exercise_name, required_cols = c("ID", "Name")) {
   errors <- c()
 
   # Check if data is a data frame

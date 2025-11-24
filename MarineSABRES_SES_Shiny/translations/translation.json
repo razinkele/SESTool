@@ -8092,6 +8092,15 @@
       "it": "Misure – Strumenti politici"
     },
     {
+      "en": "Response Measures - Management & Policy",
+      "es": "Medidas de Respuesta - Gestión y Política",
+      "fr": "Mesures de Réponse - Gestion et Politique",
+      "de": "Reaktionsmaßnahmen – Management und Politik",
+      "lt": "Atsako priemonės – valdymas ir politika",
+      "pt": "Medidas de Resposta - Gestão e Política",
+      "it": "Misure di Risposta - Gestione e Politica"
+    },
+    {
       "en": "Connection Review",
       "es": "Revisión de conexión",
       "fr": "Examen de la connexion",
@@ -8198,6 +8207,15 @@
       "lt": "Galiausiai, kokios konkrečios PRIEMONĖS ar politikos priemonės palaiko šiuos atsakymus? (pvz., įstatymai, ekonominės paskatos, švietimo programos)",
       "pt": "Finalmente, que MEDIDAS específicas ou instrumentos políticos apoiam estas respostas? (por exemplo, leis, incentivos econômicos, programas educacionais)",
       "it": "Infine, quali MISURE specifiche o strumenti politici supportano queste risposte? (ad esempio, leggi, incentivi economici, programmi educativi)"
+    },
+    {
+      "en": "What RESPONSE MEASURES (management actions, policies, regulations) are being taken (or could be taken) to address these issues?",
+      "es": "¿Qué MEDIDAS DE RESPUESTA (acciones de gestión, políticas, regulaciones) se están adoptando (o podrían adoptarse) para abordar estas cuestiones?",
+      "fr": "Quelles MESURES DE RÉPONSE (actions de gestion, politiques, réglementations) sont prises (ou pourraient être prises) pour résoudre ces problèmes ?",
+      "de": "Welche REAKTIONSMASSNAHMEN (Managementmaßnahmen, Richtlinien, Vorschriften) werden ergriffen (oder könnten ergriffen werden), um diese Probleme anzugehen?",
+      "lt": "Kokių ATSAKO PRIEMONIŲ (valdymo veiksmų, politikos, taisyklių) imamasi (ar gali būti imtasi) siekiant išspręsti šias problemas?",
+      "pt": "Que MEDIDAS DE RESPOSTA (ações de gestão, políticas, regulamentos) estão a ser tomadas (ou poderiam ser tomadas) para resolver estas questões?",
+      "it": "Quali MISURE DI RISPOSTA (azioni di gestione, politiche, regolamenti) vengono intraprese (o potrebbero essere intraprese) per affrontare questi problemi?"
     },
     {
       "en": "Great! Now I'll suggest logical connections between the elements you've identified. These connections represent causal relationships in your social-ecological system. You can review and approve/reject each suggestion.",
@@ -11726,6 +11744,168 @@
       "lt": " Pasirinkite grįžtamojo ryšio kilpą, kad vizualizuotumėte žiedinius įtakos modelius savo sistemoje",
       "pt": " Selecione um loop de feedback para visualizar padrões circulares de influência no seu sistema",
       "it": " Seleziona un loop di feedback per visualizzare modelli circolari di influenza nel tuo sistema"
+    },
+    {
+      "en": "Change Language",
+      "es": "Cambiar Idioma",
+      "fr": "Changer de Langue",
+      "de": "Sprache Ändern",
+      "lt": "Pakeisti Kalbą",
+      "pt": "Mudar Idioma",
+      "it": "Cambia Lingua"
+    },
+    {
+      "en": "Download Manuals",
+      "es": "Descargar Manuales",
+      "fr": "Télécharger les Manuels",
+      "de": "Handbücher Herunterladen",
+      "lt": "Atsisiųsti Vadovus",
+      "pt": "Baixar Manuais",
+      "it": "Scarica Manuali"
+    },
+    {
+      "en": "Beginner's Guide",
+      "es": "Guía para Principiantes",
+      "fr": "Guide du Débutant",
+      "de": "Anfängerleitfaden",
+      "lt": "Pradedančiųjų Vadovas",
+      "pt": "Guia para Iniciantes",
+      "it": "Guida per Principianti"
+    },
+    {
+      "en": "Step-by-Step Tutorial",
+      "es": "Tutorial Paso a Paso",
+      "fr": "Tutoriel Étape par Étape",
+      "de": "Schritt-für-Schritt-Anleitung",
+      "lt": "Žingsnis po Žingsnio Vadovėlis",
+      "pt": "Tutorial Passo a Passo",
+      "it": "Tutorial Passo dopo Passo"
+    },
+    {
+      "en": "Quick Reference",
+      "es": "Referencia Rápida",
+      "fr": "Référence Rapide",
+      "de": "Schnellreferenz",
+      "lt": "Greitoji Nuoroda",
+      "pt": "Referência Rápida",
+      "it": "Riferimento Rapido"
+    },
+    {
+      "en": "Download User Manuals & Guides",
+      "es": "Descargar Manuales y Guías del Usuario",
+      "fr": "Télécharger les Manuels et Guides de l'Utilisateur",
+      "de": "Benutzerhandbücher und Leitfäden Herunterladen",
+      "lt": "Atsisiųsti Vartotojo Vadovus ir Gidus",
+      "pt": "Baixar Manuais e Guias do Usuário",
+      "it": "Scarica Manuali e Guide Utente"
+    },
+    {
+      "en": "Beginner-Friendly Guides",
+      "es": "Guías para Principiantes",
+      "fr": "Guides Adaptés aux Débutants",
+      "de": "Anfängerfreundliche Leitfäden",
+      "lt": "Pradedantiesiems Skirti Vadovai",
+      "pt": "Guias para Iniciantes",
+      "it": "Guide per Principianti"
+    },
+    {
+      "en": "Recommended for New Users",
+      "es": "Recomendado para Nuevos Usuarios",
+      "fr": "Recommandé pour les Nouveaux Utilisateurs",
+      "de": "Empfohlen für Neue Benutzer",
+      "lt": "Rekomenduojama Naujiems Vartotojams",
+      "pt": "Recomendado para Novos Usuários",
+      "it": "Raccomandato per Nuovi Utenti"
+    },
+    {
+      "en": "Complete User Manuals",
+      "es": "Manuales de Usuario Completos",
+      "fr": "Manuels d'Utilisateur Complets",
+      "de": "Vollständige Benutzerhandbücher",
+      "lt": "Pilni Vartotojo Vadovai",
+      "pt": "Manuais de Usuário Completos",
+      "it": "Manuali Utente Completi"
+    },
+    {
+      "en": "English Manual",
+      "es": "Manual en Inglés",
+      "fr": "Manuel Anglais",
+      "de": "Englisches Handbuch",
+      "lt": "Anglų Vadovas",
+      "pt": "Manual em Inglês",
+      "it": "Manuale Inglese"
+    },
+    {
+      "en": "French Manual",
+      "es": "Manual en Francés",
+      "fr": "Manuel Français",
+      "de": "Französisches Handbuch",
+      "lt": "Prancūzų Vadovas",
+      "pt": "Manual em Francês",
+      "it": "Manuale Francese"
+    },
+    {
+      "en": "HTML Version",
+      "es": "Versión HTML",
+      "fr": "Version HTML",
+      "de": "HTML-Version",
+      "lt": "HTML Versija",
+      "pt": "Versão HTML",
+      "it": "Versione HTML"
+    },
+    {
+      "en": "PDF Version",
+      "es": "Versión PDF",
+      "fr": "Version PDF",
+      "de": "PDF-Version",
+      "lt": "PDF Versija",
+      "pt": "Versão PDF",
+      "it": "Versione PDF"
+    },
+    {
+      "en": "View online",
+      "es": "Ver en línea",
+      "fr": "Voir en ligne",
+      "de": "Online ansehen",
+      "lt": "Žiūrėti internete",
+      "pt": "Ver online",
+      "it": "Visualizza online"
+    },
+    {
+      "en": "Download/Print",
+      "es": "Descargar/Imprimir",
+      "fr": "Télécharger/Imprimer",
+      "de": "Herunterladen/Drucken",
+      "lt": "Atsisiųsti/Spausdinti",
+      "pt": "Baixar/Imprimir",
+      "it": "Scarica/Stampa"
+    },
+    {
+      "en": "A friendly introduction to the tool with simple explanations and visual examples",
+      "es": "Una introducción amigable a la herramienta con explicaciones simples y ejemplos visuales",
+      "fr": "Une introduction conviviale à l'outil avec des explications simples et des exemples visuels",
+      "de": "Eine freundliche Einführung in das Tool mit einfachen Erklärungen und visuellen Beispielen",
+      "lt": "Draugiškas įrankio pristatymas su paprastais paaiškinimais ir vizualiniais pavyzdžiais",
+      "pt": "Uma introdução amigável à ferramenta com explicações simples e exemplos visuais",
+      "it": "Un'introduzione amichevole allo strumento con spiegazioni semplici ed esempi visivi"
+    },
+    {
+      "en": "A practical 20-30 minute walkthrough to build your first model",
+      "es": "Un recorrido práctico de 20-30 minutos para construir tu primer modelo",
+      "fr": "Une procédure pratique de 20 à 30 minutes pour créer votre premier modèle",
+      "de": "Eine praktische 20-30-minütige Anleitung zum Erstellen Ihres ersten Modells",
+      "lt": "Praktinis 20-30 minučių vadovėlis, kaip sukurti pirmąjį modelį",
+      "pt": "Um passo a passo prático de 20-30 minutos para construir seu primeiro modelo",
+      "it": "Una procedura pratica di 20-30 minuti per costruire il tuo primo modello"
+    },
+    {
+      "en": "Comprehensive documentation with all features and technical details",
+      "es": "Documentación completa con todas las características y detalles técnicos",
+      "fr": "Documentation complète avec toutes les fonctionnalités et détails techniques",
+      "de": "Umfassende Dokumentation mit allen Funktionen und technischen Details",
+      "lt": "Išsami dokumentacija su visomis funkcijomis ir techninėmis detalėmis",
+      "pt": "Documentação abrangente com todos os recursos e detalhes técnicos",
+      "it": "Documentazione completa con tutte le funzionalità e i dettagli tecnici"
     }
   ]
 }

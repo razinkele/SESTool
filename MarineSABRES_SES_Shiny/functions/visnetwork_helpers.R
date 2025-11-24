@@ -1,5 +1,22 @@
+
+
 # functions/visnetwork_helpers.R
 # Helper functions for visNetwork-based CLD visualization
+
+# Required libraries
+library(dplyr)
+library(magrittr)
+
+# Suppress R CMD check notes for NSE variables used in dplyr pipelines and for styling variables
+utils::globalVariables(c(
+  ".", "name", "Name", "ID", "label_raw", "indicator", "Indicator", "type", "Type", "scale", "Scale",
+  "group", "level", "shape", "image", "color", "size", "font.size", "leverage_score", "x", "id", "label", "title",
+  "row_number", "select", "mutate", "bind_rows",
+  # Styling and config variables
+  "ELEMENT_SHAPES", "ELEMENT_COLORS", "EDGE_COLORS", "CONFIDENCE_OPACITY", "CONFIDENCE_LABELS",
+  # Add all variables used in dplyr pipelines to suppress NSE notes
+  "from", "to", "arrows", "width", "opacity", "polarity", "strength", "confidence", "font.size", "metric_value"
+))
 
 # ============================================================================
 # UTILITY FUNCTIONS
@@ -219,6 +236,7 @@ create_nodes_df <- function(isa_data) {
   }
 
   # Responses (Level 3 - positioned in middle, will be offset to the right)
+  # Now includes both original responses and measures merged together
   if (!is.null(isa_data$responses) && nrow(isa_data$responses) > 0) {
     response_nodes <- isa_data$responses %>%
       mutate(
@@ -228,7 +246,7 @@ create_nodes_df <- function(isa_data) {
         indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
         title = create_node_tooltip(label_raw, indicator, "Responses"),
         group = "Responses",
-        level = 3,  # Middle level (same as Marine Processes)
+        level = 3,  # Middle level (same as Pressures)
         shape = ELEMENT_SHAPES[["Responses"]],
         image = NA_character_,
         color = ELEMENT_COLORS[["Responses"]],
@@ -240,30 +258,6 @@ create_nodes_df <- function(isa_data) {
       select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
 
     nodes <- bind_rows(nodes, response_nodes)
-  }
-
-  # Measures (treated as responses with different color)
-  if (!is.null(isa_data$measures) && nrow(isa_data$measures) > 0) {
-    measure_nodes <- isa_data$measures %>%
-      mutate(
-        id = paste0("R_", nrow(isa_data$responses) + row_number()),  # Continue R_ numbering
-        label_raw = if("name" %in% names(.)) name else if("Name" %in% names(.)) Name else as.character(row_number()),
-        label = sapply(label_raw, wrap_label),
-        indicator = if("indicator" %in% names(.)) indicator else if("Indicator" %in% names(.)) Indicator else "No indicator",
-        title = create_node_tooltip(label_raw, indicator, "Measures"),
-        group = "Measures",
-        level = 3,  # Same level as Responses
-        shape = ELEMENT_SHAPES[["Responses"]],  # Same shape as responses
-        image = NA_character_,
-        color = ELEMENT_COLORS[["Measures"]],  # Different color
-        size = 25,
-        font.size = 12,
-        leverage_score = NA_real_,
-        x = 400  # Same x as Responses
-      ) %>%
-      select(id, label, title, group, level, shape, image, color, size, font.size, indicator, leverage_score, x)
-
-    nodes <- bind_rows(nodes, measure_nodes)
   }
 
   return(nodes)
@@ -331,10 +325,9 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   n_a <- if(!is.null(isa_data$activities)) nrow(isa_data$activities) else 0
   n_d <- if(!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0
   n_r <- if(!is.null(isa_data$responses)) nrow(isa_data$responses) else 0
-  n_m <- if(!is.null(isa_data$measures)) nrow(isa_data$measures) else 0
 
-  cat(sprintf("[CREATE_EDGES] Element counts: GB=%d, ES=%d, MPF=%d, P=%d, A=%d, D=%d, R=%d, M=%d\n",
-             n_gb, n_es, n_mpf, n_p, n_a, n_d, n_r, n_m))
+  cat(sprintf("[CREATE_EDGES] Element counts: GB=%d, ES=%d, MPF=%d, P=%d, A=%d, D=%d, R=%d\n",
+             n_gb, n_es, n_mpf, n_p, n_a, n_d, n_r))
 
   if (is.null(adjacency_matrices)) {
     cat("[CREATE_EDGES] adjacency_matrices is NULL!\n")
@@ -492,9 +485,48 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     edges <- bind_rows(edges, edges_r_p)
   }
 
-  # Note: M→R connections are skipped as measures are treated as responses (not separate nodes)
+  # 11. Responses → Marine Processes (direct restoration/enhancement)
+  if (!is.null(adjacency_matrices$r_mpf)) {
+    edges_r_mpf <- process_adjacency_matrix(
+      adjacency_matrices$r_mpf,  # R×MPF (rows=R, cols=MPF): R→MPF connections
+      from_prefix = "R",
+      to_prefix = "MPF",
+      expected_rows = n_r,
+      expected_cols = n_mpf
+    )
+    edges <- bind_rows(edges, edges_r_mpf)
+  }
+
+  # 12. Responses → Responses (measures linking to responses)
+  if (!is.null(adjacency_matrices$r_r)) {
+    edges_r_r <- process_adjacency_matrix(
+      adjacency_matrices$r_r,  # R×R (rows=R, cols=R): R→R connections
+      from_prefix = "R",
+      to_prefix = "R",
+      expected_rows = n_r,
+      expected_cols = n_r
+    )
+    edges <- bind_rows(edges, edges_r_r)
+  }
+
+  # === LEGACY MEASURE MATRICES ===
+  # Support old m_* matrices from before measures were merged into responses
+  # These should not appear in new templates, but handle them for backward compatibility
+
+  if (!is.null(adjacency_matrices$m_d)) {
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'm_d' - measures should now be merged into responses\n")
+  }
+  if (!is.null(adjacency_matrices$m_a)) {
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'm_a' - measures should now be merged into responses\n")
+  }
+  if (!is.null(adjacency_matrices$m_p)) {
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'm_p' - measures should now be merged into responses\n")
+  }
+  if (!is.null(adjacency_matrices$m_mpf)) {
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'm_mpf' - measures should now be merged into responses\n")
+  }
   if (!is.null(adjacency_matrices$m_r)) {
-    cat("[CREATE_EDGES] Skipping m_r matrix - measures are treated as responses\n")
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'm_r' - measures should now be merged into responses\n")
   }
 
   # === LEGACY/BACKWARD COMPATIBILITY ===
@@ -585,8 +617,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   if (!is.null(adjacency_matrices$r_m)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'r_m' (Responses→Measures) - skipping as measures merged into responses\n")
-    # Skip this as we've merged measures into responses
+    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'r_m' - measures should now be merged into responses\n")
   }
 
   # Process any additional non-standard matrices that weren't handled above
@@ -594,9 +625,11 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     # New DAPSIWRM forward flow
     "d_a", "a_p", "p_mp", "p_mpf", "mp_es", "mpf_es", "es_gb", "gb_d",
     # Response measures
-    "gb_r", "r_d", "r_a", "r_p",
-    # Legacy/deprecated (measures treated as responses)
-    "gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb", "p_r", "r_m", "m_r"
+    "gb_r", "r_d", "r_a", "r_p", "r_mpf", "r_r",
+    # Legacy measure matrices (no longer used - measures merged into responses)
+    "m_d", "m_a", "m_p", "m_mpf", "m_r",
+    # Legacy/deprecated flow directions
+    "gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb", "p_r", "r_m"
   )
   additional_matrices <- setdiff(names(adjacency_matrices), standard_matrices)
 
@@ -709,42 +742,64 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
 
           # Get row/column names with fallback to generic names
           from_name <- if (!is.null(rownames(adj_matrix)) && length(rownames(adj_matrix)) >= i) {
-            rownames(adj_matrix)[i]
+            name <- rownames(adj_matrix)[i]
+            # Defensive check: if name is NA or empty, use generic name
+            if (is.na(name) || is.null(name) || nchar(trimws(name)) == 0) {
+              paste0(from_prefix, "_", i)
+            } else {
+              name
+            }
           } else {
             paste0(from_prefix, "_", i)
           }
 
           to_name <- if (!is.null(colnames(adj_matrix)) && length(colnames(adj_matrix)) >= j) {
-            colnames(adj_matrix)[j]
+            name <- colnames(adj_matrix)[j]
+            # Defensive check: if name is NA or empty, use generic name
+            if (is.na(name) || is.null(name) || nchar(trimws(name)) == 0) {
+              paste0(to_prefix, "_", j)
+            } else {
+              name
+            }
           } else {
             paste0(to_prefix, "_", j)
           }
 
           # Apply opacity to edge color using alpha channel
           edge_color_with_opacity <- adjustcolor(edge_color, alpha.f = edge_opacity)
-          edge <- data.frame(
-            from = paste0(from_prefix, "_", i),
-            to = paste0(to_prefix, "_", j),
-            arrows = "to",
-            color = edge_color_with_opacity,
-            width = edge_width,
-            opacity = edge_opacity,  # Store for potential use
-            title = create_edge_tooltip(
-              from_name,
-              to_name,
-              connection$polarity,
-              connection$strength,
-              connection$confidence
-            ),
-            polarity = connection$polarity,
-            strength = connection$strength,
-            confidence = connection$confidence,
-            label = connection$polarity,
-            font.size = 10,
-            stringsAsFactors = FALSE
-          )
-          
-          edges <- bind_rows(edges, edge)
+
+          # Create edge with defensive error handling
+          tryCatch({
+            edge <- data.frame(
+              from = paste0(from_prefix, "_", i),
+              to = paste0(to_prefix, "_", j),
+              arrows = "to",
+              color = edge_color_with_opacity,
+              width = edge_width,
+              opacity = edge_opacity,  # Store for potential use
+              title = create_edge_tooltip(
+                from_name,
+                to_name,
+                connection$polarity,
+                connection$strength,
+                connection$confidence
+              ),
+              polarity = connection$polarity,
+              strength = connection$strength,
+              confidence = connection$confidence,
+              label = connection$polarity,
+              font.size = 10,
+              stringsAsFactors = FALSE,
+              row.names = NULL  # Explicitly prevent row name issues
+            )
+
+            edges <- bind_rows(edges, edge)
+          }, error = function(e) {
+            warning(sprintf(
+              "Error creating edge %s_%d -> %s_%d (names: '%s' -> '%s'): %s",
+              from_prefix, i, to_prefix, j, from_name, to_name, e$message
+            ))
+          })
         }
       }
     }

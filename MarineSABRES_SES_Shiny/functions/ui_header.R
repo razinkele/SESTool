@@ -17,7 +17,30 @@ build_dashboard_header <- function(i18n) {
     title = "MarineSABRES SES Toolbox",
     titleWidth = 300,
 
-    # Settings dropdown (consolidates Language + User Level + About)
+    # Language selector dropdown
+    tags$li(
+      class = "dropdown settings-dropdown",
+      tags$a(
+        href = "#",
+        id = "language_dropdown_toggle",
+        class = "settings-dropdown-toggle",
+        icon("globe"),
+        tags$span(i18n$t("Language")),
+        tags$span(class = "caret", style = "margin-left: 5px;")
+      ),
+      tags$div(
+        class = "settings-dropdown-menu",
+        tags$a(
+          href = "#",
+          id = "open_language_modal",
+          class = "action-button",
+          icon("globe"),
+          i18n$t("Change Language")
+        )
+      )
+    ),
+
+    # Settings dropdown
     tags$li(
       class = "dropdown settings-dropdown",
       tags$a(
@@ -46,23 +69,52 @@ build_dashboard_header <- function(i18n) {
         ),
         tags$a(
           href = "#",
+          id = "open_manuals_modal",
+          class = "action-button",
+          icon("download"),
+          i18n$t("Download Manuals")
+        ),
+        tags$a(
+          href = "#",
           id = "open_about_modal",
           class = "action-button",
           icon("info-circle"),
-          i18n$t("About")
+          i18n$t("App Info")
         )
       )
     ),
 
-    # Help button (User Guide)
+    # Help button (User Guides)
     tags$li(
-      class = "dropdown",
+      class = "dropdown settings-dropdown",
       tags$a(
-        href = "user_guide.html",
-        target = "_blank",
-        icon("book"),
-        i18n$t("About"),
-        style = "cursor: pointer;"
+        href = "#",
+        id = "help_dropdown_toggle",
+        class = "settings-dropdown-toggle",
+        icon("question-circle"),
+        tags$span(i18n$t("Help")),
+        tags$span(class = "caret", style = "margin-left: 5px;")
+      ),
+      tags$div(
+        class = "settings-dropdown-menu",
+        tags$a(
+          href = "#",
+          onclick = "window.open('beginner_guide.html', '_blank'); return false;",
+          icon("graduation-cap"),
+          i18n$t("Beginner's Guide")
+        ),
+        tags$a(
+          href = "#",
+          onclick = "window.open('step_by_step_tutorial.html', '_blank'); return false;",
+          icon("list-ol"),
+          i18n$t("Step-by-Step Tutorial")
+        ),
+        tags$a(
+          href = "#",
+          onclick = "window.open('user_guide.html', '_blank'); return false;",
+          icon("book"),
+          i18n$t("Quick Reference")
+        )
       )
     ),
 

@@ -2,7 +2,9 @@
 
 ## Overview
 
-The MarineSABRES SES Shiny application supports multiple languages using the `shiny.i18n` package. This guide explains how the internationalization system works and how to add or modify translations.
+The MarineSABRES SES Shiny application supports multiple languages using the `shiny.i18n` package with a **modular translation system**. This guide explains how the internationalization system works and how to add or modify translations.
+
+> 📖 **For detailed workflow instructions**, see [`TRANSLATION_WORKFLOW_GUIDE.md`](../TRANSLATION_WORKFLOW_GUIDE.md) in the project root.
 
 ## Supported Languages
 
@@ -11,34 +13,97 @@ Currently supported languages:
 - **Spanish (es)** 🇪🇸
 - **French (fr)** 🇫🇷
 - **German (de)** 🇩🇪
+- **Lithuanian (lt)** 🇱🇹
 - **Portuguese (pt)** 🇵🇹
+- **Italian (it)** 🇮🇹
 
-## File Structure
+## File Structure (Modular System)
 
 ```
 translations/
-├── translation.json          # Main translation file (JSON format)
-└── README.md                # This documentation file
+├── _framework.json              # DAPSIWR framework terms (30 entries)
+├── _glossary.json               # Common glossary (9 terms)
+├── TEMPLATE.json                # Template for new files
+├── README.md                    # This documentation file
+├── translation.json.backup      # Legacy monolithic file (11,892 lines)
+├── common/                      # Common UI elements
+│   ├── buttons.json             # Button labels
+│   ├── labels.json              # Form labels
+│   ├── messages.json            # User messages
+│   ├── navigation.json          # Navigation items
+│   └── validation.json          # Validation messages
+├── ui/                          # UI component translations
+│   ├── header.json              # Header elements
+│   ├── modals.json              # Modal dialogs
+│   └── sidebar.json             # Sidebar elements
+├── data/                        # Data-specific translations
+│   └── node_types.json          # Node type definitions
+└── modules/                     # Module-specific translations
+    └── (future module files)
 ```
+
+## 🚀 Quick Start
+
+### Adding a New Translation
+
+**Use the interactive tool** (recommended):
+```bash
+Rscript scripts/add_translation.R
+```
+
+This tool will:
+- Guide you through selecting/creating a file
+- Prompt for all 7 languages
+- Validate before saving
+- Check for duplicates
+
+### Validating Before Commit
+
+**Always run validation**:
+```bash
+Rscript scripts/translation_workflow.R check
+```
+
+This runs:
+- JSON syntax validation
+- Language completeness check
+- Automated tests
+- Encoding validation
+
+### See All Available Commands
+
+```bash
+Rscript scripts/translation_workflow.R help
+```
+
+---
 
 ## Translation File Format
 
-The `translation.json` file follows this structure:
+Modular translation files follow this structure:
 
 ```json
 {
-  "languages": ["en", "es", "fr", "de", "pt"],
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
   "translation": [
     {
-      "en": "English text",
-      "es": "Texto en español",
-      "fr": "Texte français",
-      "de": "Deutscher Text",
-      "pt": "Texto português"
+      "key": "common.buttons.save",
+      "en": "Save",
+      "es": "Guardar",
+      "fr": "Enregistrer",
+      "de": "Speichern",
+      "lt": "Išsaugoti",
+      "pt": "Salvar",
+      "it": "Salva"
     }
   ]
 }
 ```
+
+**Key points**:
+- All 7 languages required
+- `key` field is optional but recommended for new translations
+- Use namespaced keys: `category.subcategory.name`
 
 ## How to Use Translations in Code
 

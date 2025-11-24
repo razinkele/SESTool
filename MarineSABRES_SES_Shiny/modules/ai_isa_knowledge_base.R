@@ -94,6 +94,64 @@ get_regional_seas_knowledge_base <- function(i18n) {
 # CONTEXT-AWARE SUGGESTIONS
 # ============================================================================
 
+#' Semantic Deduplication Helper
+#'
+#' Removes semantically similar suggestions to avoid showing "trawl fishing" and "trawling" together
+#'
+#' @param suggestions Character vector of suggestions
+#' @return Deduplicated character vector
+deduplicate_suggestions <- function(suggestions) {
+  if (length(suggestions) <= 1) return(suggestions)
+
+  # Convert to lowercase for comparison
+  lower_suggestions <- tolower(suggestions)
+
+  # Track which items to keep
+  keep <- rep(TRUE, length(suggestions))
+
+  for (i in seq_along(lower_suggestions)) {
+    if (!keep[i]) next  # Already marked for removal
+
+    current <- lower_suggestions[i]
+
+    # Check against all subsequent items
+    for (j in seq_along(lower_suggestions)) {
+      if (i >= j || !keep[j]) next  # Skip self and already removed items
+
+      other <- lower_suggestions[j]
+
+      # Extract core words (remove common suffixes/prefixes)
+      current_words <- unlist(strsplit(current, "\\s+"))
+      other_words <- unlist(strsplit(other, "\\s+"))
+
+      # Check for significant overlap
+      # If one is a subset of the other, or they share key root words, mark as duplicate
+      current_core <- gsub("ing$|ed$|s$", "", current_words)
+      other_core <- gsub("ing$|ed$|s$", "", other_words)
+
+      # Calculate overlap - if 80%+ of words match (after stemming), it's a duplicate
+      common_words <- intersect(current_core, other_core)
+
+      # If they share most core words, keep the shorter/simpler one
+      if (length(common_words) > 0) {
+        overlap_ratio <- length(common_words) / min(length(current_core), length(other_core))
+
+        if (overlap_ratio >= 0.8) {
+          # Keep the one with fewer words (simpler)
+          if (length(current_words) <= length(other_words)) {
+            keep[j] <- FALSE
+          } else {
+            keep[i] <- FALSE
+            break  # Current item removed, move to next i
+          }
+        }
+      }
+    }
+  }
+
+  return(suggestions[keep])
+}
+
 #' Get Context-Aware Suggestions for DAPSI(W)R(M) Elements
 #'
 #' Returns intelligent suggestions based on regional sea, ecosystem type,
@@ -295,8 +353,12 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
   }
 
-  # Combine all suggestions and remove duplicates
+  # Combine all suggestions and remove exact duplicates
   all_suggestions <- unique(c(suggestions$universal, suggestions$regional,
                               suggestions$ecosystem, suggestions$issue))
-  return(all_suggestions)
+
+  # Apply semantic deduplication to remove similar terms
+  deduplicated <- deduplicate_suggestions(all_suggestions)
+
+  return(deduplicated)
 }

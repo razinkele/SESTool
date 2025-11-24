@@ -112,9 +112,8 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
     rv <- reactiveValues(
       current_screen = "welcome",  # welcome, guided, recommendations
       current_step = 0,            # 0=EP0, 1=EP1, 2=EP2-3, 4=EP4
-      user_question = "",
-      ep0_selected = NULL,
-      ep1_selected = NULL,
+      ep0_selected = c(),          # Changed to vector for multi-select
+      ep1_selected = c(),          # Changed to vector for multi-select
       ep2_selected = c(),
       ep3_selected = c(),
       ep4_selected = c()
@@ -139,7 +138,6 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
 
     # ========== WELCOME SCREEN ACTIONS ==========
     observeEvent(input$start_guided, {
-      rv$user_question <- input$user_question %||% ""
       rv$current_screen <- "guided"
       rv$current_step <- 0
     })
@@ -150,11 +148,19 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
 
     # ========== EP0 ACTIONS ==========
     observeEvent(input$ep0_role_click, {
-      rv$ep0_selected <- input$ep0_role_click
+      # Toggle multi-select behavior
+      clicked_id <- input$ep0_role_click
+      if (clicked_id %in% rv$ep0_selected) {
+        # Deselect if already selected
+        rv$ep0_selected <- setdiff(rv$ep0_selected, clicked_id)
+      } else {
+        # Add to selection
+        rv$ep0_selected <- c(rv$ep0_selected, clicked_id)
+      }
     })
 
     observeEvent(input$ep0_continue, {
-      if (!is.null(rv$ep0_selected)) {
+      if (length(rv$ep0_selected) > 0) {
         rv$current_step <- 1
       } else {
         showNotification(i18n$t("ep_notify_select_role"), type = "warning")
@@ -162,13 +168,21 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
     })
 
     observeEvent(input$ep0_skip, {
-      rv$ep0_selected <- NULL
+      rv$ep0_selected <- c()
       rv$current_step <- 1
     })
 
     # ========== EP1 ACTIONS ==========
     observeEvent(input$ep1_need_click, {
-      rv$ep1_selected <- input$ep1_need_click
+      # Toggle multi-select behavior
+      clicked_id <- input$ep1_need_click
+      if (clicked_id %in% rv$ep1_selected) {
+        # Deselect if already selected
+        rv$ep1_selected <- setdiff(rv$ep1_selected, clicked_id)
+      } else {
+        # Add to selection
+        rv$ep1_selected <- c(rv$ep1_selected, clicked_id)
+      }
     })
 
     observeEvent(input$ep1_back, {
@@ -176,7 +190,7 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
     })
 
     observeEvent(input$ep1_continue, {
-      if (!is.null(rv$ep1_selected)) {
+      if (length(rv$ep1_selected) > 0) {
         rv$current_step <- 2
       } else {
         showNotification(i18n$t("ep_notify_select_need"), type = "warning")
@@ -184,7 +198,7 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
     })
 
     observeEvent(input$ep1_skip, {
-      rv$ep1_selected <- NULL
+      rv$ep1_selected <- c()
       rv$current_step <- 2
     })
 
@@ -230,9 +244,8 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
     observeEvent(input$start_over, {
       rv$current_screen <- "welcome"
       rv$current_step <- 0
-      rv$user_question <- ""
-      rv$ep0_selected <- NULL
-      rv$ep1_selected <- NULL
+      rv$ep0_selected <- c()
+      rv$ep1_selected <- c()
       rv$ep2_selected <- c()
       rv$ep3_selected <- c()
       rv$ep4_selected <- c()
@@ -250,14 +263,18 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
         # Create pathway summary text
         pathway_summary <- c()
 
-        if (!is.null(rv$ep0_selected)) {
-          role_label <- EP0_MANAGER_ROLES[[which(sapply(EP0_MANAGER_ROLES, function(x) x$id) == rv$ep0_selected)]]$label
-          pathway_summary <- c(pathway_summary, paste("Role:", i18n$t(role_label)))
+        if (length(rv$ep0_selected) > 0) {
+          role_labels <- sapply(rv$ep0_selected, function(id) {
+            i18n$t(EP0_MANAGER_ROLES[[which(sapply(EP0_MANAGER_ROLES, function(x) x$id) == id)]]$label)
+          })
+          pathway_summary <- c(pathway_summary, paste("Role:", paste(role_labels, collapse = ", ")))
         }
 
-        if (!is.null(rv$ep1_selected)) {
-          need_label <- EP1_BASIC_NEEDS[[which(sapply(EP1_BASIC_NEEDS, function(x) x$id) == rv$ep1_selected)]]$label
-          pathway_summary <- c(pathway_summary, paste("Need:", i18n$t(need_label)))
+        if (length(rv$ep1_selected) > 0) {
+          need_labels <- sapply(rv$ep1_selected, function(id) {
+            i18n$t(EP1_BASIC_NEEDS[[which(sapply(EP1_BASIC_NEEDS, function(x) x$id) == id)]]$label)
+          })
+          pathway_summary <- c(pathway_summary, paste("Need:", paste(need_labels, collapse = ", ")))
         }
 
         if (length(rv$ep2_selected) > 0) {
@@ -401,16 +418,6 @@ render_welcome_screen <- function(ns, i18n) {
                           icon = icon("tools"), class = "btn-success btn-lg btn-block")
             )
           )
-        ),
-
-        br(),
-
-        textAreaInput(
-          ns("user_question"),
-          h4(i18n$t("What is your main marine management question?")),
-          placeholder = i18n$t("e.g., How can we reduce fishing impacts while maintaining livelihoods?"),
-          rows = 3,
-          width = "100%"
         )
       )
     )
@@ -467,12 +474,12 @@ render_ep0 <- function(ns, rv, i18n) {
           title = i18n$t("Your role helps us recommend the most relevant tools and workflows for your marine management context.")
         )
       ),
-      p(class = "text-muted", i18n$t("Select your role in marine management")),
+      p(class = "text-muted", i18n$t("Select your role in marine management (multiple selection allowed)")),
       br(),
 
       lapply(EP0_MANAGER_ROLES, function(role) {
         div(
-          class = if(!is.null(rv$ep0_selected) && rv$ep0_selected == role$id) "ep-card selected" else "ep-card",
+          class = if(role$id %in% rv$ep0_selected) "ep-card selected" else "ep-card",
           onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'})", ns("ep0_role_click"), role$id),
           `data-toggle` = "tooltip",
           `data-placement` = "top",
@@ -514,12 +521,12 @@ render_ep1 <- function(ns, rv, i18n) {
           title = i18n$t("Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.")
         )
       ),
-      p(class = "text-muted", i18n$t("What basic human need drives your question?")),
+      p(class = "text-muted", i18n$t("What basic human need drives your question? (multiple selection allowed)")),
       br(),
 
       lapply(EP1_BASIC_NEEDS, function(need) {
         div(
-          class = if(!is.null(rv$ep1_selected) && rv$ep1_selected == need$id) "ep-card selected" else "ep-card",
+          class = if(need$id %in% rv$ep1_selected) "ep-card selected" else "ep-card",
           onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'})", ns("ep1_need_click"), need$id),
           style = sprintf("border-left: 5px solid %s;", sanitize_color(need$color)),
           `data-toggle` = "tooltip",
@@ -659,10 +666,12 @@ render_recommendations_screen <- function(ns, rv, user_level = "intermediate", i
         collapsible = TRUE,
 
         tags$ul(
-          if (!is.null(rv$ep0_selected)) tags$li(strong(i18n$t("Role:"), " "),
-            i18n$t(EP0_MANAGER_ROLES[[which(sapply(EP0_MANAGER_ROLES, function(x) x$id) == rv$ep0_selected)]]$label)),
-          if (!is.null(rv$ep1_selected)) tags$li(strong(i18n$t("Need:"), " "),
-            i18n$t(EP1_BASIC_NEEDS[[which(sapply(EP1_BASIC_NEEDS, function(x) x$id) == rv$ep1_selected)]]$label)),
+          if (length(rv$ep0_selected) > 0) tags$li(strong(i18n$t("Role:"), " "),
+            paste(sapply(rv$ep0_selected, function(id)
+              i18n$t(EP0_MANAGER_ROLES[[which(sapply(EP0_MANAGER_ROLES, function(x) x$id) == id)]]$label)), collapse = ", ")),
+          if (length(rv$ep1_selected) > 0) tags$li(strong(i18n$t("Need:"), " "),
+            paste(sapply(rv$ep1_selected, function(id)
+              i18n$t(EP1_BASIC_NEEDS[[which(sapply(EP1_BASIC_NEEDS, function(x) x$id) == id)]]$label)), collapse = ", ")),
           if (length(rv$ep2_selected) > 0) tags$li(strong(i18n$t("Activities:"), " "),
             paste(sapply(rv$ep2_selected, function(id)
               i18n$t(EP2_ACTIVITY_SECTORS[[which(sapply(EP2_ACTIVITY_SECTORS, function(x) x$id) == id)]]$label)), collapse = ", ")),
@@ -917,7 +926,7 @@ get_tool_recommendations <- function(rv, user_level = "intermediate") {
   }
 
   # Model Simplification - Recommended for communication needs
-  if (!is.null(rv$ep0_selected) && rv$ep0_selected %in% c("policy_creator", "educator", "engo")) {
+  if (length(rv$ep0_selected) > 0 && any(rv$ep0_selected %in% c("policy_creator", "educator", "engo"))) {
     tools[[length(tools) + 1]] <- list(
       id = "simplification",
       name = "Model Simplification Tools",

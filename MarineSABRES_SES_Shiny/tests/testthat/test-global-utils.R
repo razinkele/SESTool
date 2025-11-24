@@ -261,8 +261,8 @@ test_that("validate_element_data validates DAPSI(W)R(M) element data", {
   expect_true(any(grepl("Empty names", errors3)))
 })
 
-# Test validate_isa_data function
-test_that("validate_isa_data validates ISA data frames", {
+# Test validate_isa_dataframe function
+test_that("validate_isa_dataframe validates ISA data frames", {
   # Valid data
   valid_data <- data.frame(
     ID = c("1", "2", "3"),
@@ -271,16 +271,16 @@ test_that("validate_isa_data validates ISA data frames", {
     stringsAsFactors = FALSE
   )
 
-  errors <- validate_isa_data(valid_data, "Test Exercise")
+  errors <- validate_isa_dataframe(valid_data, "Test Exercise")
   expect_length(errors, 0)
 
   # Not a data frame
-  errors1 <- validate_isa_data(list(), "Test Exercise")
+  errors1 <- validate_isa_dataframe(list(), "Test Exercise")
   expect_true(length(errors1) > 0)
   expect_true(any(grepl("must be a data frame", errors1)))
 
   # Empty data frame
-  errors2 <- validate_isa_data(data.frame(), "Test Exercise")
+  errors2 <- validate_isa_dataframe(data.frame(), "Test Exercise")
   expect_true(length(errors2) > 0)
   expect_true(any(grepl("must have at least one entry", errors2)))
 
@@ -289,7 +289,7 @@ test_that("validate_isa_data validates ISA data frames", {
     ID = c("1", "2"),
     Description = c("Desc 1", "Desc 2")
   )
-  errors3 <- validate_isa_data(invalid_data1, "Test Exercise")
+  errors3 <- validate_isa_dataframe(invalid_data1, "Test Exercise")
   expect_true(length(errors3) > 0)
   expect_true(any(grepl("missing required columns", errors3)))
 
@@ -299,7 +299,7 @@ test_that("validate_isa_data validates ISA data frames", {
     Name = c("Item 1", ""),
     stringsAsFactors = FALSE
   )
-  errors4 <- validate_isa_data(invalid_data2, "Test Exercise")
+  errors4 <- validate_isa_dataframe(invalid_data2, "Test Exercise")
   expect_true(length(errors4) > 0)
   expect_true(any(grepl("empty names", errors4)))
 
@@ -309,7 +309,7 @@ test_that("validate_isa_data validates ISA data frames", {
     Name = c("Item 1", "Item 1"),
     stringsAsFactors = FALSE
   )
-  errors5 <- validate_isa_data(invalid_data3, "Test Exercise")
+  errors5 <- validate_isa_dataframe(invalid_data3, "Test Exercise")
   expect_true(length(errors5) > 0)
   expect_true(any(grepl("duplicate names", errors5)))
 })

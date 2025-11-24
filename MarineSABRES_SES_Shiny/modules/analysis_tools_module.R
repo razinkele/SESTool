@@ -564,7 +564,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
           )
 
           showNotification(
-            paste(i18n$t("analysis_found"), nrow(loop_info), i18n$t("analysis_feedback_loops")),
+            paste(i18n$t("Detection complete! Found"), nrow(loop_info), i18n$t("feedback loops.")),
             type = "message"
           )
 
@@ -729,6 +729,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
           arrows = "to",
           color = ifelse(polarity == "+", "#06D6A0", "#E63946"),
           label = polarity,
+          width = 5,  # 5x thicker edges for better loop visibility
           stringsAsFactors = FALSE
         )
       }
@@ -848,43 +849,43 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
       input_id = "help_loops",
       title_key = "Feedback Loop Detection and Analysis Guide",
       content = tagList(
-        h4(i18n$t("what_are_feedback_loops")),
-        p(i18n$t("feedback_loops_explanation")),
+        h4(i18n$t("What are feedback loops?")),
+        p(i18n$t("Feedback loops are circular patterns in the system where an element eventually affects itself through a chain of causal connections. These loops are fundamental to understanding system dynamics and behavior.")),
         hr(),
-        h5(i18n$t("loop_types_title")),
+        h5(i18n$t("Loop types:")),
         tags$ul(
-          tags$li(strong(i18n$t("reinforcing_loops_title")), i18n$t("reinforcing_loops_description")),
+          tags$li(strong(i18n$t("Reinforcing loops (R):")), i18n$t(" Amplify change in the system.")),
           tags$ul(
-            tags$li(i18n$t("reinforcing_loops_rule")),
-            tags$li(i18n$t("reinforcing_loops_behavior")),
-            tags$li(i18n$t("reinforcing_loops_example"))
+            tags$li(i18n$t("Rule: Even number of negative connections (-)")),
+            tags$li(i18n$t("Behavior: Can create virtuous cycles (exponential growth) or vicious cycles (collapse)")),
+            tags$li(i18n$t("Example: Species population → + Reproduction rate → + Species population"))
           ),
-          tags$li(strong(i18n$t("balancing_loops_title")), i18n$t("balancing_loops_description")),
+          tags$li(strong(i18n$t("Balancing loops (B):")), i18n$t(" Counteract change and seek equilibrium.")),
           tags$ul(
-            tags$li(i18n$t("balancing_loops_rule")),
-            tags$li(i18n$t("balancing_loops_behavior")),
-            tags$li(i18n$t("balancing_loops_example"))
+            tags$li(i18n$t("Rule: Odd number of negative connections (-)")),
+            tags$li(i18n$t("Behavior: Produces resistance to change and system stabilization")),
+            tags$li(i18n$t("Example: Fishing → - Fish biomass → - Fishing"))
           )
         ),
         hr(),
-        h5(i18n$t("how_to_use_tool_title")),
+        h5(i18n$t("How to use this tool:")),
         tags$ol(
-          tags$li(strong(i18n$t("how_to_use_step1_strong")), i18n$t("how_to_use_step1_text")),
-          tags$li(strong(i18n$t("how_to_use_step2_strong")), i18n$t("how_to_use_step2_text")),
-          tags$li(strong(i18n$t("how_to_use_step3_strong")), i18n$t("how_to_use_step3_text")),
-          tags$li(strong(i18n$t("how_to_use_step4_strong")), i18n$t("how_to_use_step4_text")),
-          tags$li(strong(i18n$t("how_to_use_step5_strong")), i18n$t("how_to_use_step5_text")),
-          tags$li(strong(i18n$t("how_to_use_step6_strong")), i18n$t("how_to_use_step6_text"))
+          tags$li(strong(i18n$t("1. Detect loops:")), i18n$t(" Set detection parameters (maximum length, number of cycles) and run automatic detection")),
+          tags$li(strong(i18n$t("2. Classification:")), i18n$t(" Review reinforcing and balancing loops found")),
+          tags$li(strong(i18n$t("3. Details:")), i18n$t(" Examine individual loops and see their complete path")),
+          tags$li(strong(i18n$t("4. Visualization:")), i18n$t(" See highlighted loops in the context of your full network")),
+          tags$li(strong(i18n$t("5. Element participation:")), i18n$t(" Identify which system elements participate in most loops")),
+          tags$li(strong(i18n$t("6. Export:")), i18n$t(" Save results in Excel or CSV formats for further analysis"))
         ),
         hr(),
-        h5(i18n$t("understanding_results_title")),
+        h5(i18n$t("Understanding the results:")),
         tags$ul(
-          tags$li(strong(i18n$t("loop_length_title")), i18n$t("loop_length_description")),
-          tags$li(strong(i18n$t("dominance_score_title")), i18n$t("dominance_score_description")),
-          tags$li(strong(i18n$t("element_participation_title")), i18n$t("element_participation_description"))
+          tags$li(strong(i18n$t("Loop length:")), i18n$t(" Number of elements in the loop. Shorter loops (3-5 elements) tend to have greater influence.")),
+          tags$li(strong(i18n$t("Dominance score:")), i18n$t(" Measures how significant the loop is based on the centrality of its elements.")),
+          tags$li(strong(i18n$t("Element participation:")), i18n$t(" Elements appearing in multiple loops are potential leverage points for interventions."))
         ),
         hr(),
-        p(em(i18n$t("feedback_loops_leverage_point_summary")))
+        p(em(i18n$t("Understanding feedback loops: Reinforcing loops often identify areas of system growth or collapse, while balancing loops identify stabilization mechanisms or resistance to change.")))
       ),
       i18n = i18n
     )
@@ -2993,11 +2994,14 @@ analysis_simplify_server <- function(id, project_data_reactive) {
 analysis_leverage_ui <- function(id) {
   ns <- NS(id)
 
-  fluidPage(
-    h2(icon("bullseye"), " Leverage Point Analysis"),
-    p("Identify the most influential nodes in your network that could serve as key intervention points."),
-
-    hr(),
+  tagList(
+    create_module_header(
+      ns = ns,
+      title_key = "Leverage Point Analysis",
+      subtitle_key = "Identify the most influential nodes in your network that could serve as key intervention points.",
+      help_id = "help_leverage",
+      i18n = i18n
+    ),
 
     fluidRow(
       column(4,
@@ -3395,6 +3399,77 @@ analysis_leverage_server <- function(id, project_data_reactive) {
         )
       )
     })
+
+    # Help Modal ----
+    create_help_observer(
+      input = input,
+      input_id = "help_leverage",
+      title_key = "Leverage Point Analysis Help",
+      content = tagList(
+        h4(i18n$t("What are leverage points?")),
+        p(i18n$t("Leverage points are nodes in your network that have the highest potential for system-wide impact when interventions are applied. These are strategic locations where small changes can lead to significant improvements across the entire social-ecological system.")),
+
+        hr(),
+        h5(i18n$t("Metrics Used:")),
+        tags$ul(
+          tags$li(
+            strong("Betweenness Centrality: "),
+            i18n$t("Betweenness Centrality: Measures how often a node acts as a bridge between other nodes. High betweenness means the node controls information flow and can act as a bottleneck or facilitator.")
+          ),
+          tags$li(
+            strong("Eigenvector Centrality: "),
+            i18n$t("Eigenvector Centrality: Measures the influence of a node based on the importance of its neighbors. Nodes connected to other important nodes score higher.")
+          ),
+          tags$li(
+            strong("PageRank: "),
+            i18n$t("PageRank: Google's algorithm adapted for network analysis. Measures overall importance considering both direct connections and the importance of connecting nodes.")
+          ),
+          tags$li(
+            strong("Composite Score: "),
+            i18n$t("Composite Score: A combined metric that sums the normalized values of all three centrality measures to provide an overall leverage score.")
+          )
+        ),
+
+        hr(),
+        h5(i18n$t("How to interpret results:")),
+        tags$ul(
+          tags$li(
+            strong("High Composite Score: "),
+            i18n$t("High Composite Score: These nodes are your top leverage points. Interventions here can have cascading effects throughout the system.")
+          ),
+          tags$li(
+            strong("High Betweenness: "),
+            i18n$t("High Betweenness: Focus on nodes that control information flow. They can block or facilitate changes.")
+          ),
+          tags$li(
+            strong("High Eigenvector: "),
+            i18n$t("High Eigenvector: Target nodes that are influential because they're connected to other influential nodes.")
+          ),
+          tags$li(
+            strong("High PageRank: "),
+            i18n$t("High PageRank: These nodes have broad influence across the network and often represent core system elements.")
+          )
+        ),
+
+        hr(),
+        h5(i18n$t("Using leverage points for intervention design:")),
+        tags$ul(
+          tags$li(
+            strong("Prioritize interventions: "),
+            i18n$t("Prioritize interventions: Focus resources on high-leverage nodes rather than spreading efforts thinly across many nodes.")
+          ),
+          tags$li(
+            strong("Consider node type: "),
+            i18n$t("Consider node type: Different types of nodes (Drivers, Activities, Pressures, States, Impacts, Responses) may require different intervention strategies.")
+          ),
+          tags$li(
+            strong("Combine with loop analysis: "),
+            i18n$t("Combine with loop analysis: Nodes that appear in multiple feedback loops AND have high leverage scores are especially important for system-wide change.")
+          )
+        )
+      ),
+      i18n = i18n
+    )
 
   })
 }

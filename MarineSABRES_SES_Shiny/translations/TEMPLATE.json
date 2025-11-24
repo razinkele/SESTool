@@ -1,0 +1,25 @@
+{
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "translation": [
+    {
+      "key": "category.subcategory.name",
+      "en": "English text",
+      "es": "Spanish text",
+      "fr": "French text",
+      "de": "German text",
+      "lt": "Lithuanian text",
+      "pt": "Portuguese text",
+      "it": "Italian text"
+    },
+    {
+      "key": "category.subcategory.another_name",
+      "en": "Another English text",
+      "es": "Otro texto en español",
+      "fr": "Un autre texte en français",
+      "de": "Ein weiterer deutscher Text",
+      "lt": "Kitas lietuviškas tekstas",
+      "pt": "Outro texto em português",
+      "it": "Un altro testo in italiano"
+    }
+  ]
+}

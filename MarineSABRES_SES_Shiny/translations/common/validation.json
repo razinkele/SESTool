@@ -1,0 +1,193 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "validation.error.required_field",
+      "en": "This field is required",
+      "es": "Este campo es obligatorio",
+      "fr": "Ce champ est obligatoire",
+      "de": "Dieses Feld ist erforderlich",
+      "lt": "Šis laukas yra privalomas",
+      "pt": "Este campo é obrigatório",
+      "it": "Questo campo è obbligatorio"
+    },
+    {
+      "key": "validation.error.invalid_input",
+      "en": "Invalid input",
+      "es": "Entrada inválida",
+      "fr": "Entrée invalide",
+      "de": "Ungültige Eingabe",
+      "lt": "Netinkama įvestis",
+      "pt": "Entrada inválida",
+      "it": "Input non valido"
+    },
+    {
+      "key": "validation.error.file_not_found",
+      "en": "File not found",
+      "es": "Archivo no encontrado",
+      "fr": "Fichier non trouvé",
+      "de": "Datei nicht gefunden",
+      "lt": "Failas nerastas",
+      "pt": "Arquivo não encontrado",
+      "it": "File non trovato"
+    },
+    {
+      "key": "validation.error.invalid_format",
+      "en": "Invalid format",
+      "es": "Formato inválido",
+      "fr": "Format invalide",
+      "de": "Ungültiges Format",
+      "lt": "Netinkamas formatas",
+      "pt": "Formato inválido",
+      "it": "Formato non valido"
+    },
+    {
+      "key": "validation.error.upload_failed",
+      "en": "Upload failed",
+      "es": "Error al cargar",
+      "fr": "Échec du téléchargement",
+      "de": "Upload fehlgeschlagen",
+      "lt": "Nepavyko įkelti",
+      "pt": "Falha no upload",
+      "it": "Caricamento fallito"
+    },
+    {
+      "key": "validation.error.save_failed",
+      "en": "Save failed",
+      "es": "Error al guardar",
+      "fr": "Échec de l'enregistrement",
+      "de": "Speichern fehlgeschlagen",
+      "lt": "Nepavyko išsaugoti",
+      "pt": "Falha ao salvar",
+      "it": "Salvataggio fallito"
+    },
+    {
+      "key": "validation.error.load_failed",
+      "en": "Load failed",
+      "es": "Error al cargar",
+      "fr": "Échec du chargement",
+      "de": "Laden fehlgeschlagen",
+      "lt": "Nepavyko įkelti",
+      "pt": "Falha ao carregar",
+      "it": "Caricamento fallito"
+    },
+    {
+      "key": "validation.warning.unsaved_changes",
+      "en": "You have unsaved changes",
+      "es": "Tiene cambios sin guardar",
+      "fr": "Vous avez des modifications non enregistrées",
+      "de": "Sie haben nicht gespeicherte Änderungen",
+      "lt": "Turite neišsaugotų pakeitimų",
+      "pt": "Você tem alterações não salvas",
+      "it": "Hai modifiche non salvate"
+    },
+    {
+      "key": "validation.success.saved",
+      "en": "Saved successfully",
+      "es": "Guardado exitosamente",
+      "fr": "Enregistré avec succès",
+      "de": "Erfolgreich gespeichert",
+      "lt": "Sėkmingai išsaugota",
+      "pt": "Salvo com sucesso",
+      "it": "Salvato con successo"
+    },
+    {
+      "key": "validation.success.loaded",
+      "en": "Loaded successfully",
+      "es": "Cargado exitosamente",
+      "fr": "Chargé avec succès",
+      "de": "Erfolgreich geladen",
+      "lt": "Sėkmingai įkeltas",
+      "pt": "Carregado com sucesso",
+      "it": "Caricato con successo"
+    },
+    {
+      "key": "validation.success.deleted",
+      "en": "Deleted successfully",
+      "es": "Eliminado exitosamente",
+      "fr": "Supprimé avec succès",
+      "de": "Erfolgreich gelöscht",
+      "lt": "Sėkmingai ištrinta",
+      "pt": "Excluído com sucesso",
+      "it": "Eliminato con successo"
+    },
+    {
+      "key": "validation.success.updated",
+      "en": "Updated successfully",
+      "es": "Actualizado exitosamente",
+      "fr": "Mis à jour avec succès",
+      "de": "Erfolgreich aktualisiert",
+      "lt": "Sėkmingai atnaujinta",
+      "pt": "Atualizado com sucesso",
+      "it": "Aggiornato con successo"
+    },
+    {
+      "key": "validation.confirm.delete",
+      "en": "Are you sure you want to delete this item?",
+      "es": "¿Está seguro de que desea eliminar este elemento?",
+      "fr": "Êtes-vous sûr de vouloir supprimer cet élément?",
+      "de": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
+      "lt": "Ar tikrai norite ištrinti šį elementą?",
+      "pt": "Tem certeza de que deseja excluir este item?",
+      "it": "Sei sicuro di voler eliminare questo elemento?"
+    },
+    {
+      "key": "validation.confirm.overwrite",
+      "en": "This will overwrite existing data. Continue?",
+      "es": "Esto sobrescribirá los datos existentes. ¿Continuar?",
+      "fr": "Cela écrasera les données existantes. Continuer?",
+      "de": "Dies wird vorhandene Daten überschreiben. Fortfahren?",
+      "lt": "Tai perrašys esamus duomenis. Tęsti?",
+      "pt": "Isso sobrescreverá os dados existentes. Continuar?",
+      "it": "Questo sovrascriverà i dati esistenti. Continuare?"
+    },
+    {
+      "key": "common.validation.language_selection",
+      "en": "Language Selection",
+      "es": "Selección de Idioma",
+      "fr": "Sélection de Langue",
+      "de": "Sprachauswahl",
+      "lt": "Kalbos pasirinkimas",
+      "pt": "Seleção de Idioma",
+      "it": "Selezione Lingua"
+    },
+    {
+      "key": "common.validation.select_language",
+      "en": "Select Language",
+      "es": "Seleccionar Idioma",
+      "fr": "Sélectionner la Langue",
+      "de": "Sprache Wählen",
+      "lt": "Pasirinkite kalbą",
+      "pt": "Selecionar Idioma",
+      "it": "Seleziona Lingua"
+    },
+    {
+      "key": "common.validation._choose_between_hierarchical_physicsbased_or_circu",
+      "en": " Choose between hierarchical, physics-based, or circular layouts to better understand different aspects of your system",
+      "es": " Elija entre diseños jerárquicos, basados en física o circulares para comprender mejor diferentes aspectos de su sistema",
+      "fr": " Choisissez entre des dispositions hiérarchiques, basées sur la physique ou circulaires pour mieux comprendre différents aspects de votre système",
+      "de": " Wählen Sie zwischen hierarchischen, physikbasierten oder kreisförmigen Layouts, um verschiedene Aspekte Ihres Systems besser zu verstehen",
+      "lt": " Pasirinkite tarp hierarchinių, fizika pagrįstų ar žiedinių išdėstymų, kad geriau suprastumėte skirtingus savo sistemos aspektus",
+      "pt": " Escolha entre layouts hierárquicos, baseados em física ou circulares para entender melhor diferentes aspectos do seu sistema",
+      "it": " Scegli tra layout gerarchici, basati sulla fisica o circolari per comprendere meglio diversi aspetti del tuo sistema"
+    },
+    {
+      "key": "common.validation._select_a_feedback_loop_to_visualize_circular_patt",
+      "en": " Select a feedback loop to visualize circular patterns of influence in your system",
+      "es": " Seleccione un bucle de retroalimentación para visualizar patrones circulares de influencia en su sistema",
+      "fr": " Sélectionnez une boucle de rétroaction pour visualiser les modèles circulaires d'influence dans votre système",
+      "de": " Wählen Sie eine Rückkopplungsschleife aus, um kreisförmige Einflussmuster in Ihrem System zu visualisieren",
+      "lt": " Pasirinkite grįžtamojo ryšio kilpą, kad vizualizuotumėte žiedinius įtakos modelius savo sistemoje",
+      "pt": " Selecione um loop de feedback para visualizar padrões circulares de influência no seu sistema",
+      "it": " Seleziona un loop di feedback per visualizzare modelli circolari di influenza nel tuo sistema"
+    }
+  ]
+}

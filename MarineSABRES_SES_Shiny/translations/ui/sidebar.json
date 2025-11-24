@@ -1,0 +1,115 @@
+{
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "translation": [
+    {
+      "key": "ui.sidebar.welcome",
+      "en": "Welcome",
+      "es": "Bienvenida",
+      "fr": "Bienvenue",
+      "de": "Willkommen",
+      "lt": "Sveiki",
+      "pt": "Bem-vindo",
+      "it": "Benvenuto"
+    },
+    {
+      "key": "ui.sidebar.entry_point",
+      "en": "Entry Point",
+      "es": "Punto de Entrada",
+      "fr": "Point d'Entrée",
+      "de": "Einstiegspunkt",
+      "lt": "Įėjimo taškas",
+      "pt": "Ponto de Entrada",
+      "it": "Punto di Ingresso"
+    },
+    {
+      "key": "ui.sidebar.pims",
+      "en": "PIMS",
+      "es": "PIMS",
+      "fr": "PIMS",
+      "de": "PIMS",
+      "lt": "PIMS",
+      "pt": "PIMS",
+      "it": "PIMS"
+    },
+    {
+      "key": "ui.sidebar.create_ses",
+      "en": "Create SES",
+      "es": "Crear SES",
+      "fr": "Créer SES",
+      "de": "SES erstellen",
+      "lt": "Sukurti SES",
+      "pt": "Criar SES",
+      "it": "Crea SES"
+    },
+    {
+      "key": "ui.sidebar.cld_visualization",
+      "en": "CLD Visualization",
+      "es": "Visualización CLD",
+      "fr": "Visualisation CLD",
+      "de": "CLD-Visualisierung",
+      "lt": "CLD vizualizacija",
+      "pt": "Visualização CLD",
+      "it": "Visualizzazione CLD"
+    },
+    {
+      "key": "ui.sidebar.analysis_tools",
+      "en": "Analysis Tools",
+      "es": "Herramientas de Análisis",
+      "fr": "Outils d'Analyse",
+      "de": "Analysewerkzeuge",
+      "lt": "Analizės įrankiai",
+      "pt": "Ferramentas de Análise",
+      "it": "Strumenti di Analisi"
+    },
+    {
+      "key": "ui.sidebar.response_measures",
+      "en": "Response Measures",
+      "es": "Medidas de Respuesta",
+      "fr": "Mesures de Réponse",
+      "de": "Reaktionsmaßnahmen",
+      "lt": "Atsakomosios priemonės",
+      "pt": "Medidas de Resposta",
+      "it": "Misure di Risposta"
+    },
+    {
+      "key": "ui.sidebar.scenario_builder",
+      "en": "Scenario Builder",
+      "es": "Constructor de Escenarios",
+      "fr": "Constructeur de Scénarios",
+      "de": "Szenario-Builder",
+      "lt": "Scenarijų kūrimas",
+      "pt": "Construtor de Cenários",
+      "it": "Costruttore di Scenari"
+    },
+    {
+      "key": "ui.sidebar.prepare_report",
+      "en": "Prepare Report",
+      "es": "Preparar Informe",
+      "fr": "Préparer le Rapport",
+      "de": "Bericht Vorbereiten",
+      "lt": "Parengti ataskaitą",
+      "pt": "Preparar Relatório",
+      "it": "Prepara Report"
+    },
+    {
+      "key": "ui.sidebar.import_data",
+      "en": "Import Data",
+      "es": "Importar Datos",
+      "fr": "Importer des Données",
+      "de": "Daten Importieren",
+      "lt": "Importuoti duomenis",
+      "pt": "Importar Dados",
+      "it": "Importa Dati"
+    },
+    {
+      "key": "ui.sidebar.export_data",
+      "en": "Export Data",
+      "es": "Exportar Datos",
+      "fr": "Exporter les Données",
+      "de": "Daten Exportieren",
+      "lt": "Eksportuoti duomenis",
+      "pt": "Exportar Dados",
+      "it": "Esporta Dati"
+    }
+  ]
+}

@@ -1,0 +1,493 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "common.messages.loading",
+      "en": "Loading...",
+      "es": "Cargando...",
+      "fr": "Chargement...",
+      "de": "Wird geladen...",
+      "lt": "Įkeliama...",
+      "pt": "Carregando...",
+      "it": "Caricamento..."
+    },
+    {
+      "key": "common.messages.processing",
+      "en": "Processing...",
+      "es": "Procesando...",
+      "fr": "Traitement...",
+      "de": "Verarbeitung...",
+      "lt": "Apdorojama...",
+      "pt": "Processando...",
+      "it": "Elaborazione..."
+    },
+    {
+      "key": "common.messages.please_wait",
+      "en": "Please wait",
+      "es": "Por favor espere",
+      "fr": "Veuillez patienter",
+      "de": "Bitte warten",
+      "lt": "Prašome palaukti",
+      "pt": "Por favor aguarde",
+      "it": "Attendere prego"
+    },
+    {
+      "key": "common.messages.no_data",
+      "en": "No data available",
+      "es": "No hay datos disponibles",
+      "fr": "Aucune donnée disponible",
+      "de": "Keine Daten verfügbar",
+      "lt": "Nėra duomenų",
+      "pt": "Nenhum dado disponível",
+      "it": "Nessun dato disponibile"
+    },
+    {
+      "key": "common.messages.select_option",
+      "en": "Select an option",
+      "es": "Seleccione una opción",
+      "fr": "Sélectionnez une option",
+      "de": "Wählen Sie eine Option",
+      "lt": "Pasirinkite parinktį",
+      "pt": "Selecione uma opção",
+      "it": "Seleziona un'opzione"
+    },
+    {
+      "key": "common.messages.select_file",
+      "en": "Select a file",
+      "es": "Seleccione un archivo",
+      "fr": "Sélectionnez un fichier",
+      "de": "Wählen Sie eine Datei",
+      "lt": "Pasirinkite failą",
+      "pt": "Selecione um arquivo",
+      "it": "Seleziona un file"
+    },
+    {
+      "key": "common.messages.no_file_selected",
+      "en": "No file selected",
+      "es": "Ningún archivo seleccionado",
+      "fr": "Aucun fichier sélectionné",
+      "de": "Keine Datei ausgewählt",
+      "lt": "Nepasirinktas failas",
+      "pt": "Nenhum arquivo selecionado",
+      "it": "Nessun file selezionato"
+    },
+    {
+      "key": "common.messages.all",
+      "en": "All",
+      "es": "Todos",
+      "fr": "Tous",
+      "de": "Alle",
+      "lt": "Visi",
+      "pt": "Todos",
+      "it": "Tutti"
+    },
+    {
+      "key": "common.messages.none",
+      "en": "None",
+      "es": "Ninguno",
+      "fr": "Aucun",
+      "de": "Keine",
+      "lt": "Joks",
+      "pt": "Nenhum",
+      "it": "Nessuno"
+    },
+    {
+      "key": "common.messages.yes",
+      "en": "Yes",
+      "es": "Sí",
+      "fr": "Oui",
+      "de": "Ja",
+      "lt": "Taip",
+      "pt": "Sim",
+      "it": "Sì"
+    },
+    {
+      "key": "common.messages.no",
+      "en": "No",
+      "es": "No",
+      "fr": "Non",
+      "de": "Nein",
+      "lt": "Ne",
+      "pt": "Não",
+      "it": "No"
+    },
+    {
+      "key": "common.messages.optional",
+      "en": "Optional",
+      "es": "Opcional",
+      "fr": "Optionnel",
+      "de": "Optional",
+      "lt": "Neprivaloma",
+      "pt": "Opcional",
+      "it": "Opzionale"
+    },
+    {
+      "key": "common.messages.required",
+      "en": "Required",
+      "es": "Obligatorio",
+      "fr": "Obligatoire",
+      "de": "Erforderlich",
+      "lt": "Privaloma",
+      "pt": "Obrigatório",
+      "it": "Obbligatorio"
+    },
+    {
+      "key": "common.messages.completed",
+      "en": "Completed",
+      "es": "Completado",
+      "fr": "Terminé",
+      "de": "Abgeschlossen",
+      "lt": "Užbaigta",
+      "pt": "Concluído",
+      "it": "Completato"
+    },
+    {
+      "key": "common.messages.in_progress",
+      "en": "In Progress",
+      "es": "En Progreso",
+      "fr": "En Cours",
+      "de": "In Bearbeitung",
+      "lt": "Vykdoma",
+      "pt": "Em Andamento",
+      "it": "In Corso"
+    },
+    {
+      "key": "common.messages.pending",
+      "en": "Pending",
+      "es": "Pendiente",
+      "fr": "En Attente",
+      "de": "Ausstehend",
+      "lt": "Laukiama",
+      "pt": "Pendente",
+      "it": "In Attesa"
+    },
+    {
+      "key": "common.messages.error_occurred",
+      "en": "An error occurred",
+      "es": "Ocurrió un error",
+      "fr": "Une erreur s'est produite",
+      "de": "Ein Fehler ist aufgetreten",
+      "lt": "Įvyko klaida",
+      "pt": "Ocorreu um erro",
+      "it": "Si è verificato un errore"
+    },
+    {
+      "key": "common.messages.try_again",
+      "en": "Please try again",
+      "es": "Por favor intente nuevamente",
+      "fr": "Veuillez réessayer",
+      "de": "Bitte versuchen Sie es erneut",
+      "lt": "Prašome bandyti dar kartą",
+      "pt": "Por favor tente novamente",
+      "it": "Si prega di riprovare"
+    },
+    {
+      "key": "common.messages.operation_successful",
+      "en": "Operation successful",
+      "es": "Operación exitosa",
+      "fr": "Opération réussie",
+      "de": "Operation erfolgreich",
+      "lt": "Operacija sėkminga",
+      "pt": "Operação bem-sucedida",
+      "it": "Operazione riuscita"
+    },
+    {
+      "key": "common.messages.operation_failed",
+      "en": "Operation failed",
+      "es": "Operación fallida",
+      "fr": "Opération échouée",
+      "de": "Operation fehlgeschlagen",
+      "lt": "Operacija nepavyko",
+      "pt": "Operação falhou",
+      "it": "Operazione fallita"
+    },
+    {
+      "key": "common.messages.bookmark",
+      "en": "Bookmark",
+      "es": "Marcador",
+      "fr": "Marque-page",
+      "de": "Lesezeichen",
+      "lt": "Žymė",
+      "pt": "Marcador",
+      "it": "Segnalibro"
+    },
+    {
+      "key": "common.messages.status_summary",
+      "en": "Status Summary",
+      "es": "Resumen del Estado",
+      "fr": "Résumé du Statut",
+      "de": "Statusübersicht",
+      "lt": "Būklės santrauka",
+      "pt": "Resumo do Status",
+      "it": "Riepilogo dello Stato"
+    },
+    {
+      "key": "common.messages.session_saved_successfully",
+      "en": "Session saved successfully!",
+      "es": "¡Sesión guardada exitosamente!",
+      "fr": "Session enregistrée avec succès !",
+      "de": "Sitzung erfolgreich gespeichert!",
+      "lt": "Sesija sėkmingai išsaugota!",
+      "pt": "Sessão salva com sucesso!",
+      "it": "Sessione salvata con successo!"
+    },
+    {
+      "key": "common.messages.model_saved_successfully",
+      "en": "Model saved successfully!",
+      "es": "¡Modelo guardado exitosamente!",
+      "fr": "Modèle enregistré avec succès !",
+      "de": "Modell erfolgreich gespeichert!",
+      "lt": "Modelis sėkmingai išsaugotas!",
+      "pt": "Modelo salvo com sucesso!",
+      "it": "Modello salvato con successo!"
+    },
+    {
+      "key": "common.messages.save_bookmark",
+      "en": "Save Bookmark",
+      "es": "Guardar Marcador",
+      "fr": "Enregistrer le Signet",
+      "de": "Lesezeichen Speichern",
+      "lt": "Išsaugoti žymę",
+      "pt": "Salvar Marcador",
+      "it": "Salva Segnalibro"
+    },
+    {
+      "key": "common.messages.bookmarks",
+      "en": "Bookmarks",
+      "es": "Marcadores",
+      "fr": "Signets",
+      "de": "Lesezeichen",
+      "lt": "Žymės",
+      "pt": "Marcadores",
+      "it": "Segnalibri"
+    },
+    {
+      "key": "common.messages.causal_loop_diagram_visualization",
+      "en": "Causal Loop Diagram Visualization",
+      "es": "Visualización del Diagrama de Bucles Causales",
+      "fr": "Visualisation du Diagramme de Boucles Causales",
+      "de": "Kausales Schleifendiagramm Visualisierung",
+      "lt": "Priežastinių kilpų diagramos vizualizacija",
+      "pt": "Visualização do Diagrama de Loops Causais",
+      "it": "Visualizzazione del Diagramma dei Loop Causali"
+    },
+    {
+      "key": "common.messages.interactive_network_visualization_of_your_socialec",
+      "en": "Interactive network visualization of your social-ecological system",
+      "es": "Visualización de red interactiva de su sistema socio-ecológico",
+      "fr": "Visualisation de réseau interactive de votre système socio-écologique",
+      "de": "Interaktive Netzwerkvisualisierung Ihres sozial-ökologischen Systems",
+      "lt": "Interaktyvi jūsų socialinės-ekologinės sistemos tinklo vizualizacija",
+      "pt": "Visualização de rede interativa do seu sistema socioecológico",
+      "it": "Visualizzazione interattiva della rete del tuo sistema socio-ecologico"
+    },
+    {
+      "key": "common.messages.visualisation_controls",
+      "en": "Visualisation Controls",
+      "es": "Controles de Visualización",
+      "fr": "Contrôles de Visualisation",
+      "de": "Visualisierungssteuerung",
+      "lt": "Vizualizacijos valdymas",
+      "pt": "Controles de Visualização",
+      "it": "Controlli di Visualizzazione"
+    },
+    {
+      "key": "common.messages.layout",
+      "en": "Layout",
+      "es": "Diseño",
+      "fr": "Disposition",
+      "de": "Layout",
+      "lt": "Išdėstymas",
+      "pt": "Layout",
+      "it": "Layout"
+    },
+    {
+      "key": "common.messages.hierarchical_dapsi",
+      "en": "Hierarchical (DAPSI)",
+      "es": "Jerárquico (DAPSI)",
+      "fr": "Hiérarchique (DAPSI)",
+      "de": "Hierarchisch (DAPSI)",
+      "lt": "Hierarchinis (DAPSI)",
+      "pt": "Hierárquico (DAPSI)",
+      "it": "Gerarchico (DAPSI)"
+    },
+    {
+      "key": "common.messages.physicsbased_manual",
+      "en": "Physics-based (Manual)",
+      "es": "Basado en Física (Manual)",
+      "fr": "Basé sur la Physique (Manuel)",
+      "de": "Physikbasiert (Manuell)",
+      "lt": "Pagrįstas fizika (Rankinis)",
+      "pt": "Baseado em Física (Manual)",
+      "it": "Basato sulla Fisica (Manuale)"
+    },
+    {
+      "key": "common.messages.direction",
+      "en": "Direction:",
+      "es": "Dirección:",
+      "fr": "Direction:",
+      "de": "Richtung:",
+      "lt": "Kryptis:",
+      "pt": "Direção:",
+      "it": "Direzione:"
+    },
+    {
+      "key": "common.messages.downup",
+      "en": "Down-Up",
+      "es": "Abajo-Arriba",
+      "fr": "Bas-Haut",
+      "de": "Unten-Oben",
+      "lt": "Žemyn-Aukštyn",
+      "pt": "Baixo-Cima",
+      "it": "Giù-Su"
+    },
+    {
+      "key": "common.messages.updown",
+      "en": "Up-Down",
+      "es": "Arriba-Abajo",
+      "fr": "Haut-Bas",
+      "de": "Oben-Unten",
+      "lt": "Aukštyn-Žemyn",
+      "pt": "Cima-Baixo",
+      "it": "Su-Giù"
+    },
+    {
+      "key": "common.messages.leftright",
+      "en": "Left-Right",
+      "es": "Izquierda-Derecha",
+      "fr": "Gauche-Droite",
+      "de": "Links-Rechts",
+      "lt": "Kairė-Dešinė",
+      "pt": "Esquerda-Direita",
+      "it": "Sinistra-Destra"
+    },
+    {
+      "key": "common.messages.rightleft",
+      "en": "Right-Left",
+      "es": "Derecha-Izquierda",
+      "fr": "Droite-Gauche",
+      "de": "Rechts-Links",
+      "lt": "Dešinė-Kairė",
+      "pt": "Direita-Esquerda",
+      "it": "Destra-Sinistra"
+    },
+    {
+      "key": "common.messages.spacing",
+      "en": "Spacing:",
+      "es": "Espaciado:",
+      "fr": "Espacement:",
+      "de": "Abstand:",
+      "lt": "Tarpai:",
+      "pt": "Espaçamento:",
+      "it": "Spaziatura:"
+    },
+    {
+      "key": "common.messages.highlight",
+      "en": "Highlight",
+      "es": "Resaltar",
+      "fr": "Mettre en Évidence",
+      "de": "Hervorheben",
+      "lt": "Paryškinti",
+      "pt": "Destacar",
+      "it": "Evidenziare"
+    },
+    {
+      "key": "common.messages.leverage_points",
+      "en": "Leverage Points",
+      "es": "Puntos de Apalancamiento",
+      "fr": "Points de Levier",
+      "de": "Hebelpunkte",
+      "lt": "Sverčiai",
+      "pt": "Pontos de Alavancagem",
+      "it": "Punti di Leva"
+    },
+    {
+      "key": "common.messages.highlight_loop",
+      "en": "Highlight Loop",
+      "es": "Resaltar Bucle",
+      "fr": "Mettre en Évidence la Boucle",
+      "de": "Schleife Hervorheben",
+      "lt": "Paryškinti kilpą",
+      "pt": "Destacar Loop",
+      "it": "Evidenzia Loop"
+    },
+    {
+      "key": "common.messages.what_is_a_causal_loop_diagram",
+      "en": "What is a Causal Loop Diagram?",
+      "es": "¿Qué es un Diagrama de Bucles Causales?",
+      "fr": "Qu'est-ce qu'un Diagramme de Boucles Causales ?",
+      "de": "Was ist ein Kausales Schleifendiagramm?",
+      "lt": "Kas yra priežastinių kilpų diagrama?",
+      "pt": "O que é um Diagrama de Loops Causais?",
+      "it": "Cos'è un Diagramma dei Loop Causali?"
+    },
+    {
+      "key": "common.messages.how_to_read_the_diagram",
+      "en": "How to Read the Diagram",
+      "es": "Cómo Leer el Diagrama",
+      "fr": "Comment Lire le Diagramme",
+      "de": "Wie man das Diagramm liest",
+      "lt": "Kaip skaityti diagramą",
+      "pt": "Como Ler o Diagrama",
+      "it": "Come Leggere il Diagramma"
+    },
+    {
+      "key": "common.messages.edges",
+      "en": "Edges:",
+      "es": "Aristas:",
+      "fr": "Arêtes:",
+      "de": "Kanten:",
+      "lt": "Kraštinės:",
+      "pt": "Arestas:",
+      "it": "Archi:"
+    },
+    {
+      "key": "common.messages.visualization_controls",
+      "en": "Visualization Controls",
+      "es": "Controles de Visualización",
+      "fr": "Contrôles de Visualisation",
+      "de": "Visualisierungssteuerung",
+      "lt": "Vizualizacijos valdymas",
+      "pt": "Controles de Visualização",
+      "it": "Controlli di Visualizzazione"
+    },
+    {
+      "key": "common.messages.layout",
+      "en": "Layout:",
+      "es": "Diseño:",
+      "fr": "Disposition:",
+      "de": "Layout:",
+      "lt": "Išdėstymas:",
+      "pt": "Layout:",
+      "it": "Layout:"
+    },
+    {
+      "key": "common.messages.highlight_leverage_points",
+      "en": "Highlight Leverage Points:",
+      "es": "Resaltar Puntos de Apalancamiento:",
+      "fr": "Mettre en Évidence les Points de Levier:",
+      "de": "Hebelwirkungspunkte Hervorheben:",
+      "lt": "Paryškinti sverto taškus:",
+      "pt": "Destacar Pontos de Alavancagem:",
+      "it": "Evidenzia Punti di Leva:"
+    },
+    {
+      "key": "common.messages.highlight_loop",
+      "en": "Highlight Loop:",
+      "es": "Resaltar Bucle:",
+      "fr": "Mettre en Évidence la Boucle:",
+      "de": "Schleife Hervorheben:",
+      "lt": "Paryškinti kilpą:",
+      "pt": "Destacar Loop:",
+      "it": "Evidenzia Loop:"
+    }
+  ]
+}

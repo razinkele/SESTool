@@ -79,9 +79,27 @@
       "Bash(cmd /c \"taskkill /F /T /PID 2956\")",
       "Bash(pandoc:*)",
       "Bash(ls:*)",
-      "Bash(modules/template_ses_module_ui_server.txt)"
+      "Bash(modules/template_ses_module_ui_server.txt)",
+      "Bash(cmd /c \"del \"\"C:\\Users\\DELL\\OneDrive - ku.lt\\HORIZON_EUROPE\\Marine-SABRES\\SESToolbox\\MarineSABRES_SES_Shiny\\test_template_load.R\"\"\")",
+      "Bash(cmd /c \"del \"\"C:\\Users\\DELL\\OneDrive - ku.lt\\HORIZON_EUROPE\\Marine-SABRES\\SESToolbox\\MarineSABRES_SES_Shiny\\test_edges.R\"\"\")",
+      "Bash(cmd /c \"del \"\"C:\\Users\\DELL\\OneDrive - ku.lt\\HORIZON_EUROPE\\Marine-SABRES\\SESToolbox\\MarineSABRES_SES_Shiny\\test_connection_loss.R\"\"\")",
+      "Bash(cmd /c \"del test_refactor.R test_measure_merge.R\")",
+      "Bash(cmd /c \"del \"\"C:\\Users\\DELL\\OneDrive - ku.lt\\HORIZON_EUROPE\\Marine-SABRES\\SESToolbox\\MarineSABRES_SES_Shiny\\analyze_interventions.R\"\"\")",
+      "Bash(cmd /c \"del test_consolidated.R consolidate_caribbean.R\")",
+      "Bash(cmd /c \"del analyze_caribbean_connections.R fix_disconnected.R test_final_caribbean.R\")",
+      "Bash(cmd /c \"del check_caribbean_connectivity.py\")",
+      "Bash(cmd /c \"del test_template_matrix_names.R test_caribbean_app_simulation.R\")",
+      "Bash(cmd /c \"del test_caribbean_cycles.R\")",
+      "Bash(cmd /c \"dir /O-D /B *.md 2>nul\")",
+      "Bash(cmd /c 'for %f in (*.md *.txt *.log) do @echo %~tf %f' 2)",
+      "Bash(cmd /c \"dir /B translations\\common\")",
+      "Bash(cmd /c \"dir /B translations\\data\")",
+      "Bash(cmd /c \"dir /B translations\\ui\")",
+      "Bash(cmd /c \"findstr /S /C:TODO translations\\common\\*.json translations\\ui\\*.json translations\\data\\*.json\")",
+      "Bash(cmd /c:*)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "outputStyle": "default"
 }

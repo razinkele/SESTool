@@ -265,27 +265,32 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
   menu_items <- c(menu_items, list(
     hr(),
     div(
-      style = "padding: 15px; text-align: center;",
-      h5(i18n$t("Quick Actions")),
-      actionButton(
-        "save_project",
-        i18n$t("Save Project"),
-        icon = icon("save"),
-        class = "btn-primary btn-block",
-        title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results")
+      style = "padding: 15px 10px; text-align: center;",
+      h5(i18n$t("Quick Actions"), style = "margin-bottom: 15px;"),
+      div(
+        style = "display: flex; flex-direction: column; align-items: center; gap: 10px;",
+        actionButton(
+          "save_project",
+          i18n$t("Save Project"),
+          icon = icon("save"),
+          class = "btn-primary",
+          style = "width: 90%; min-width: 180px;",
+          title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results")
+        ),
+        actionButton(
+          "load_project",
+          i18n$t("Load Project"),
+          icon = icon("folder-open"),
+          class = "btn-secondary",
+          style = "width: 90%; min-width: 180px;",
+          title = i18n$t("Load a previously saved project")
+        )
       ),
       bsTooltip(
         id = "save_project",
         title = i18n$t("Save your current project data, including all PIMS, ISA entries, and analysis results"),
         placement = "right",
         trigger = "hover"
-      ),
-      actionButton(
-        "load_project",
-        i18n$t("Load Project"),
-        icon = icon("folder-open"),
-        class = "btn-secondary btn-block",
-        title = i18n$t("Load a previously saved project")
       ),
       bsTooltip(
         id = "load_project",

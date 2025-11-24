@@ -24,10 +24,28 @@ Shiny.addCustomMessageHandler('saveLanguageAndReload', function(lang) {
 
 // Settings dropdown functionality
 $(document).ready(function() {
+  // Language dropdown toggle
+  $('#language_dropdown_toggle').on('click', function(e) {
+    e.preventDefault();
+    $(this).closest('.settings-dropdown').toggleClass('open');
+    // Close other dropdowns
+    $('.settings-dropdown').not($(this).closest('.settings-dropdown')).removeClass('open');
+  });
+
   // Settings dropdown toggle
   $('#settings_dropdown_toggle').on('click', function(e) {
     e.preventDefault();
-    $('.settings-dropdown').toggleClass('open');
+    $(this).closest('.settings-dropdown').toggleClass('open');
+    // Close other dropdowns
+    $('.settings-dropdown').not($(this).closest('.settings-dropdown')).removeClass('open');
+  });
+
+  // Help dropdown toggle
+  $('#help_dropdown_toggle').on('click', function(e) {
+    e.preventDefault();
+    $(this).closest('.settings-dropdown').toggleClass('open');
+    // Close other dropdowns
+    $('.settings-dropdown').not($(this).closest('.settings-dropdown')).removeClass('open');
   });
 
   // Close dropdown when clicking outside
@@ -55,8 +73,10 @@ Shiny.addCustomMessageHandler('save_user_level', function(message) {
 });
 
 // Function to save user level and reload
+// Note: localStorage persistence removed for consistent fresh-start behavior
+// Only URL parameter is set for bookmarking support
 function saveUserLevel(level) {
-  localStorage.setItem('marinesabres_user_level', level);
+  // localStorage.setItem('marinesabres_user_level', level); // REMOVED
   window.location.search = '?user_level=' + level;
 }
 
@@ -99,6 +119,18 @@ $(document).ready(function() {
   Shiny.addCustomMessageHandler('openReport', function(message) {
     // Open the report URL in a new window/tab
     window.open(message.url, '_blank');
+  });
+
+  // Focus on a specific button (for connection review navigation)
+  Shiny.addCustomMessageHandler('focusButton', function(message) {
+    setTimeout(function() {
+      var button = document.getElementById(message.id);
+      if (button) {
+        button.focus();
+        // Optionally scroll the button into view
+        button.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100); // Small delay to ensure DOM is updated
   });
 });
 
