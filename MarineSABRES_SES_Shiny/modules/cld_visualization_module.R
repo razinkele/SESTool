@@ -117,7 +117,7 @@ cld_viz_ui <- function(id, i18n) {
             NULL,
             choices = setNames(
               c("hierarchical", "physics"),
-              c(i18n$t("Hierarchical (DAPSI)"), i18n$t("Physics-based (Manual)"))
+              c(as.character(i18n$t("Hierarchical (DAPSI)")), as.character(i18n$t("Physics-based (Manual)")))
             ),
             selected = "hierarchical"
           ),
@@ -130,7 +130,8 @@ cld_viz_ui <- function(id, i18n) {
               i18n$t("Direction:"),
               choices = setNames(
                 c("DU", "UD", "LR", "RL"),
-                c(i18n$t("Down-Up"), i18n$t("Up-Down"), i18n$t("Left-Right"), i18n$t("Right-Left"))
+                c(as.character(i18n$t("Down-Up")), as.character(i18n$t("Up-Down")),
+                  as.character(i18n$t("Left-Right")), as.character(i18n$t("Right-Left")))
               ),
               selected = "DU"
             ),
@@ -164,7 +165,7 @@ cld_viz_ui <- function(id, i18n) {
             selectInput(
               inputId = ns("selected_loop"),
               label = i18n$t("Highlight Loop"),
-              choices = setNames("none", i18n$t("None")),
+              choices = setNames("none", as.character(i18n$t("None"))),
               selected = "none",
               width = "100%"
             ),
