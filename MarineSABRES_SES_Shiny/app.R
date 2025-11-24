@@ -507,6 +507,17 @@ server <- function(input, output, session) {
     AVAILABLE_LANGUAGES[[current_lang]]$name
   })
 
+  # ========== LANGUAGE STATE MANAGEMENT ==========
+
+  # Load language from query parameter on startup
+  observe({
+    query <- parseQueryString(session$clientData$url_search)
+    if (!is.null(query$language) && query$language %in% names(AVAILABLE_LANGUAGES)) {
+      i18n$set_translation_language(query$language)
+      cat(sprintf("[LANGUAGE] Loaded from URL: %s\n", query$language))
+    }
+  })
+
   # ========== USER LEVEL STATE MANAGEMENT ==========
 
   # Load user level from query parameter on startup
