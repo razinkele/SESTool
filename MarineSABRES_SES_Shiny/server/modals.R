@@ -94,8 +94,9 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
     shiny.i18n::update_lang(new_lang, session)
     i18n$set_translation_language(new_lang)
 
-    # Reload session immediately to update all UI elements
-    session$reload()
+    # Save language to localStorage and reload with URL parameter
+    # This ensures the language persists across reloads
+    session$sendCustomMessage(type = "saveLanguageAndReload", message = new_lang)
   })
 }
 
