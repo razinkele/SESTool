@@ -83,7 +83,7 @@ create_progress_bar <- function(current, total, title = NULL, i18n = NULL) {
   # Default title
   if (is.null(title)) {
     title <- if (!is.null(i18n)) {
-      i18n$t("Progress")
+      i18n$t("common.misc.progress")
     } else {
       "Progress"
     }
@@ -93,7 +93,7 @@ create_progress_bar <- function(current, total, title = NULL, i18n = NULL) {
 
   # Stats text
   stats_text <- if (!is.null(i18n)) {
-    sprintf(i18n$t("Step %d of %d"), current, total)
+    sprintf(i18n$t("common.misc.step_d_of_d"), current, total)
   } else {
     sprintf("Step %d of %d", current, total)
   }
@@ -138,11 +138,11 @@ create_nav_buttons <- function(ns,
                                 i18n = NULL) {
 
   # Translate labels
-  back_text <- if (!is.null(i18n)) i18n$t("Back") else "Back"
-  skip_text <- if (!is.null(i18n)) i18n$t("Skip") else "Skip"
+  back_text <- if (!is.null(i18n)) i18n$t("common.buttons.back") else "Back"
+  skip_text <- if (!is.null(i18n)) i18n$t("common.buttons.skip") else "Skip"
 
   if (is.null(next_label)) {
-    next_text <- if (!is.null(i18n)) i18n$t("Next") else "Next"
+    next_text <- if (!is.null(i18n)) i18n$t("common.buttons.next") else "Next"
   } else {
     next_text <- if (!is.null(i18n)) i18n$t(next_label) else next_label
   }
@@ -200,7 +200,7 @@ create_nav_buttons <- function(ns,
 create_step_indicator <- function(current, total, i18n = NULL) {
 
   text <- if (!is.null(i18n)) {
-    sprintf(i18n$t("Step %d of %d"), current, total)
+    sprintf(i18n$t("common.misc.step_d_of_d"), current, total)
   } else {
     sprintf("Step %d of %d", current, total)
   }
@@ -239,7 +239,7 @@ mark_as_recommended <- function(content, i18n = NULL) {
 add_start_here_badge <- function(content, i18n = NULL) {
 
   badge_text <- if (!is.null(i18n)) {
-    i18n$t("START HERE")
+    i18n$t("modules.entry_point.start_here")
   } else {
     "START HERE"
   }

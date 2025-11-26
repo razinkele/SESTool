@@ -185,7 +185,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
 
     # Render templates heading
     output$templates_heading <- renderUI({
-      h4(icon("folder-open"), " ", i18n$t("Available Templates"))
+      h4(icon("folder-open"), " ", i18n$t("modules.ses.creation.available_templates"))
     })
 
     # Render template actions
@@ -194,18 +194,18 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
         div(
           wellPanel(
             style = "padding: 15px; margin-top: 0;",
-            h6(icon("eye"), " ", i18n$t("Preview"), style = "margin-bottom: 10px; font-weight: bold;"),
+            h6(icon("eye"), " ", i18n$t("modules.ses.creation.preview"), style = "margin-bottom: 10px; font-weight: bold;"),
             uiOutput(ns("template_preview_compact"))
           ),
           wellPanel(
             style = "padding: 15px;",
-            h6(icon("cog"), " ", i18n$t("Actions"), style = "margin-bottom: 10px; font-weight: bold;"),
+            h6(icon("cog"), " ", i18n$t("modules.ses.creation.actions"), style = "margin-bottom: 10px; font-weight: bold;"),
             tags$div(
               `data-toggle` = "tooltip",
               `data-placement` = "right",
-              title = i18n$t("Preview all template connections before loading. Review connections to understand the causal links in the SES model."),
+              title = i18n$t("modules.ses.preview_all_template_connections_before_loading_re"),
               actionButton(ns("review_connections"),
-                           i18n$t("Review"),
+                           i18n$t("modules.ses.creation.review"),
                            icon = icon("search"),
                            class = "btn btn-info btn-block",
                            style = "margin-bottom: 8px; font-size: 13px; padding: 8px;")
@@ -213,9 +213,9 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
             tags$div(
               `data-toggle` = "tooltip",
               `data-placement` = "right",
-              title = i18n$t("Load the template as-is without reviewing connections. All predefined connections will be imported directly into your project."),
+              title = i18n$t("modules.ses.load_the_template_as_is_without_reviewing_connecti"),
               actionButton(ns("load_template"),
-                           i18n$t("Load"),
+                           i18n$t("common.buttons.load"),
                            icon = icon("download"),
                            class = "btn btn-success btn-block",
                            style = "margin-bottom: 8px; font-size: 13px; padding: 8px;")
@@ -223,9 +223,9 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
             tags$div(
               `data-toggle` = "tooltip",
               `data-placement` = "right",
-              title = i18n$t("Review and customize template connections. Approve, reject, or modify individual connections before loading into your project."),
+              title = i18n$t("modules.ses.review_and_customize_template_connections_approve_"),
               actionButton(ns("customize_template"),
-                           i18n$t("Customize"),
+                           i18n$t("modules.ses.creation.customize"),
                            icon = icon("edit"),
                            class = "btn btn-primary btn-block",
                            style = "font-size: 13px; padding: 8px;")
@@ -257,7 +257,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                             icon = icon("eye"),
                             class = "btn btn-link btn-sm",
                             style = "padding: 2px 8px; color: #666;",
-                            title = i18n$t("View detailed preview"),
+                            title = i18n$t("modules.ses.creation.view_detailed_preview"),
                             onclick = "event.stopPropagation();")
               ),
               div(class = "template-description", i18n$t(template$description_key)),
@@ -280,39 +280,39 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
 
         # Show confirmation modal
         showModal(modalDialog(
-          title = tags$h4(icon("exclamation-triangle"), " ", i18n$t("Switch Template?")),
+          title = tags$h4(icon("exclamation-triangle"), " ", i18n$t("modules.ses.creation.switch_template")),
           size = "m",
           easyClose = FALSE,
 
           tags$div(
             style = "padding: 15px;",
             tags$p(
-              tags$strong(i18n$t("Warning:")), " ",
-              i18n$t("You are about to switch to a different template.")
+              tags$strong(i18n$t("common.messages.warning")), " ",
+              i18n$t("modules.ses.creation.you_are_about_to_switch_to_a_different_template")
             ),
             tags$p(
-              i18n$t("All work on the current template will be lost, including:"),
+              i18n$t("modules.ses.creation.all_work_on_the_current_template_will_be_lost_including"),
               tags$ul(
-                tags$li(i18n$t("Connection reviews and amendments")),
-                tags$li(i18n$t("Approved and rejected connections")),
-                tags$li(i18n$t("Any customizations made"))
+                tags$li(i18n$t("modules.ses.creation.connection_reviews_and_amendments")),
+                tags$li(i18n$t("modules.ses.creation.approved_and_rejected_connections")),
+                tags$li(i18n$t("modules.ses.creation.any_customizations_made"))
               )
             ),
             tags$p(
               style = "color: #d9534f; font-weight: bold;",
-              i18n$t("This action cannot be undone.")
+              i18n$t("modules.ses.creation.this_action_cannot_be_undone")
             ),
             tags$p(
-              i18n$t("Are you sure you want to start from scratch with the new template?")
+              i18n$t("modules.ses.are_you_sure_you_want_to_start_from_scratch_with_t")
             )
           ),
 
           footer = tagList(
             actionButton(ns("cancel_template_switch"),
-                        i18n$t("Cancel"),
+                        i18n$t("common.buttons.cancel"),
                         class = "btn-default"),
             actionButton(ns("confirm_template_switch"),
-                        i18n$t("Yes, Switch Template"),
+                        i18n$t("modules.ses.creation.yes_switch_template"),
                         class = "btn-danger",
                         icon = icon("exchange-alt"))
           )
@@ -353,7 +353,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
       removeModal()
 
       showNotification(
-        i18n$t("Template switched. Starting fresh."),
+        i18n$t("modules.ses.creation.template_switched_starting_fresh"),
         type = "warning",
         duration = 3
       )
@@ -384,7 +384,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
               style = "background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;",
               tags$p(
                 style = "font-size: 15px; margin: 0;",
-                tags$strong(i18n$t("Description:")), " ",
+                tags$strong(i18n$t("common.labels.description")), " ",
                 i18n$t(template$description_key)
               ),
               tags$p(
@@ -399,7 +399,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
               column(6,
                 tags$div(
                   style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px;",
-                  tags$h5(icon("arrow-down"), " ", i18n$t("Drivers"), " (", nrow(template$drivers), ")",
+                  tags$h5(icon("arrow-down"), " ", i18n$t("modules.response.measures.drivers"), " (", nrow(template$drivers), ")",
                           style = "color: #667eea; margin-top: 0;"),
                   if (nrow(template$drivers) > 0) {
                     lapply(1:min(5, nrow(template$drivers)), function(i) {
@@ -411,17 +411,17 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                       )
                     })
                   } else {
-                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("modules.ses.creation.none_defined"))
                   },
                   if (nrow(template$drivers) > 5) {
                     tags$small(style = "color: #666; font-style: italic;",
-                              sprintf(i18n$t("... and %d more"), nrow(template$drivers) - 5))
+                              sprintf(i18n$t("modules.ses.creation.and_d_more"), nrow(template$drivers) - 5))
                   }
                 ),
 
                 tags$div(
                   style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px;",
-                  tags$h5(icon("exclamation-triangle"), " ", i18n$t("Pressures"), " (", nrow(template$pressures), ")",
+                  tags$h5(icon("exclamation-triangle"), " ", i18n$t("modules.response.measures.pressures"), " (", nrow(template$pressures), ")",
                           style = "color: #dc3545; margin-top: 0;"),
                   if (nrow(template$pressures) > 0) {
                     lapply(1:min(5, nrow(template$pressures)), function(i) {
@@ -433,17 +433,17 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                       )
                     })
                   } else {
-                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("modules.ses.creation.none_defined"))
                   },
                   if (nrow(template$pressures) > 5) {
                     tags$small(style = "color: #666; font-style: italic;",
-                              sprintf(i18n$t("... and %d more"), nrow(template$pressures) - 5))
+                              sprintf(i18n$t("modules.ses.creation.and_d_more"), nrow(template$pressures) - 5))
                   }
                 ),
 
                 tags$div(
                   style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px;",
-                  tags$h5(icon("leaf"), " ", i18n$t("Ecosystem Services"), " (", nrow(template$ecosystem_services), ")",
+                  tags$h5(icon("leaf"), " ", i18n$t("modules.ses.creation.ecosystem_services"), " (", nrow(template$ecosystem_services), ")",
                           style = "color: #28a745; margin-top: 0;"),
                   if (nrow(template$ecosystem_services) > 0) {
                     lapply(1:min(5, nrow(template$ecosystem_services)), function(i) {
@@ -455,11 +455,11 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                       )
                     })
                   } else {
-                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("modules.ses.creation.none_defined"))
                   },
                   if (nrow(template$ecosystem_services) > 5) {
                     tags$small(style = "color: #666; font-style: italic;",
-                              sprintf(i18n$t("... and %d more"), nrow(template$ecosystem_services) - 5))
+                              sprintf(i18n$t("modules.ses.creation.and_d_more"), nrow(template$ecosystem_services) - 5))
                   }
                 )
               ),
@@ -467,7 +467,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
               column(6,
                 tags$div(
                   style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px;",
-                  tags$h5(icon("running"), " ", i18n$t("Activities"), " (", nrow(template$activities), ")",
+                  tags$h5(icon("running"), " ", i18n$t("modules.response.measures.activities"), " (", nrow(template$activities), ")",
                           style = "color: #ffc107; margin-top: 0;"),
                   if (nrow(template$activities) > 0) {
                     lapply(1:min(5, nrow(template$activities)), function(i) {
@@ -479,17 +479,17 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                       )
                     })
                   } else {
-                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("modules.ses.creation.none_defined"))
                   },
                   if (nrow(template$activities) > 5) {
                     tags$small(style = "color: #666; font-style: italic;",
-                              sprintf(i18n$t("... and %d more"), nrow(template$activities) - 5))
+                              sprintf(i18n$t("modules.ses.creation.and_d_more"), nrow(template$activities) - 5))
                   }
                 ),
 
                 tags$div(
                   style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px;",
-                  tags$h5(icon("fish"), " ", i18n$t("Marine Processes and Functions"), " (", nrow(template$marine_processes), ")",
+                  tags$h5(icon("fish"), " ", i18n$t("modules.ses.creation.marine_processes_and_functions"), " (", nrow(template$marine_processes), ")",
                           style = "color: #17a2b8; margin-top: 0;"),
                   if (nrow(template$marine_processes) > 0) {
                     lapply(1:min(5, nrow(template$marine_processes)), function(i) {
@@ -501,17 +501,17 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                       )
                     })
                   } else {
-                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("modules.ses.creation.none_defined"))
                   },
                   if (nrow(template$marine_processes) > 5) {
                     tags$small(style = "color: #666; font-style: italic;",
-                              sprintf(i18n$t("... and %d more"), nrow(template$marine_processes) - 5))
+                              sprintf(i18n$t("modules.ses.creation.and_d_more"), nrow(template$marine_processes) - 5))
                   }
                 ),
 
                 tags$div(
                   style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px;",
-                  tags$h5(icon("heart"), " ", i18n$t("Welfare"), " (", nrow(template$goods_benefits), ")",
+                  tags$h5(icon("heart"), " ", i18n$t("modules.ses.creation.welfare"), " (", nrow(template$goods_benefits), ")",
                           style = "color: #e83e8c; margin-top: 0;"),
                   if (nrow(template$goods_benefits) > 0) {
                     lapply(1:min(5, nrow(template$goods_benefits)), function(i) {
@@ -523,11 +523,11 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                       )
                     })
                   } else {
-                    tags$p(style = "color: #999; font-style: italic;", i18n$t("None defined"))
+                    tags$p(style = "color: #999; font-style: italic;", i18n$t("modules.ses.creation.none_defined"))
                   },
                   if (nrow(template$goods_benefits) > 5) {
                     tags$small(style = "color: #666; font-style: italic;",
-                              sprintf(i18n$t("... and %d more"), nrow(template$goods_benefits) - 5))
+                              sprintf(i18n$t("modules.ses.creation.and_d_more"), nrow(template$goods_benefits) - 5))
                   }
                 )
               )
@@ -536,10 +536,10 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
             # Connection statistics
             tags$div(
               style = "background: #e3f2fd; padding: 15px; border-radius: 8px; margin-top: 20px;",
-              tags$h5(icon("link"), " ", i18n$t("Connections"), style = "margin-top: 0; color: #1976d2;"),
+              tags$h5(icon("link"), " ", i18n$t("ui.dashboard.connections"), style = "margin-top: 0; color: #1976d2;"),
               tags$p(
                 style = "margin: 0;",
-                sprintf(i18n$t("This template includes %d predefined connections between elements."),
+                sprintf(i18n$t("modules.ses.this_template_includes_d_predefined_connections_be"),
                         length(parse_template_connections(template)))
               )
             )
@@ -547,14 +547,14 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
 
           footer = tagList(
             actionButton(ns(paste0("select_from_preview_", template_id)),
-                        i18n$t("Select This Template"),
+                        i18n$t("modules.ses.creation.select_this_template"),
                         class = "btn-primary",
                         icon = icon("check")),
             tags$button(
               type = "button",
               class = "btn btn-default",
               `data-dismiss` = "modal",
-              i18n$t("Close")
+              i18n$t("common.buttons.close")
             )
           )
         ))
@@ -587,25 +587,25 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
 
       div(class = "template-preview",
         div(class = "preview-section",
-          h6(icon("arrow-down"), " ", i18n$t("Drivers"), " (", nrow(template$drivers), ")"),
+          h6(icon("arrow-down"), " ", i18n$t("modules.response.measures.drivers"), " (", nrow(template$drivers), ")"),
           lapply(template$drivers$Name, function(name) {
             span(class = "element-tag", name)
           })
         ),
         div(class = "preview-section",
-          h6(icon("running"), " ", i18n$t("Activities"), " (", nrow(template$activities), ")"),
+          h6(icon("running"), " ", i18n$t("modules.response.measures.activities"), " (", nrow(template$activities), ")"),
           lapply(template$activities$Name, function(name) {
             span(class = "element-tag", name)
           })
         ),
         div(class = "preview-section",
-          h6(icon("exclamation-triangle"), " ", i18n$t("Pressures"), " (", nrow(template$pressures), ")"),
+          h6(icon("exclamation-triangle"), " ", i18n$t("modules.response.measures.pressures"), " (", nrow(template$pressures), ")"),
           lapply(template$pressures$Name, function(name) {
             span(class = "element-tag", name)
           })
         ),
         div(class = "preview-section",
-          h6(icon("leaf"), " ", i18n$t("Ecosystem Services"), " (", nrow(template$ecosystem_services), ")"),
+          h6(icon("leaf"), " ", i18n$t("modules.ses.creation.ecosystem_services"), " (", nrow(template$ecosystem_services), ")"),
           lapply(template$ecosystem_services$Name, function(name) {
             span(class = "element-tag", name)
           })
@@ -621,19 +621,19 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
 
       div(style = "font-size: 11px;",
         div(style = "margin-bottom: 5px;",
-          strong(icon("arrow-down"), " ", i18n$t("Drivers"), ": "), nrow(template$drivers)
+          strong(icon("arrow-down"), " ", i18n$t("modules.response.measures.drivers"), ": "), nrow(template$drivers)
         ),
         div(style = "margin-bottom: 5px;",
-          strong(icon("running"), " ", i18n$t("Activities"), ": "), nrow(template$activities)
+          strong(icon("running"), " ", i18n$t("modules.response.measures.activities"), ": "), nrow(template$activities)
         ),
         div(style = "margin-bottom: 5px;",
-          strong(icon("exclamation-triangle"), " ", i18n$t("Pressures"), ": "), nrow(template$pressures)
+          strong(icon("exclamation-triangle"), " ", i18n$t("modules.response.measures.pressures"), ": "), nrow(template$pressures)
         ),
         div(style = "margin-bottom: 5px;",
-          strong(icon("leaf"), " ", i18n$t("ES"), ": "), nrow(template$ecosystem_services)
+          strong(icon("leaf"), " ", i18n$t("modules.ses.creation.es"), ": "), nrow(template$ecosystem_services)
         ),
         div(style = "margin-bottom: 0;",
-          strong(icon("gift"), " ", i18n$t("G&B"), ": "), nrow(template$goods_benefits)
+          strong(icon("gift"), " ", i18n$t("modules.ses.creation.gb"), ": "), nrow(template$goods_benefits)
         )
       )
     })
@@ -642,13 +642,13 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
     create_help_observer(
       input, "help_template_ses", "template_ses_guide_title",
       tagList(
-        h4(i18n$t("template_ses_guide_what_is_title")),
-        p(i18n$t("template_ses_guide_what_is_p1")),
-        h4(i18n$t("template_ses_guide_how_to_use_title")),
+        h4(i18n$t("modules.ses.creation.template_ses_guide_what_is_title")),
+        p(i18n$t("modules.ses.creation.template_ses_guide_what_is_p1")),
+        h4(i18n$t("modules.ses.creation.template_ses_guide_how_to_use_title")),
         tags$ol(
-          tags$li(i18n$t("template_ses_guide_step1")),
-          tags$li(i18n$t("template_ses_guide_step2")),
-          tags$li(i18n$t("template_ses_guide_step3"))
+          tags$li(i18n$t("modules.ses.creation.template_ses_guide_step1")),
+          tags$li(i18n$t("modules.ses.creation.template_ses_guide_step2")),
+          tags$li(i18n$t("modules.ses.creation.template_ses_guide_step3"))
         )
       ),
       i18n
@@ -811,7 +811,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
 
       # Show success message
       showNotification(
-        sprintf(i18n$t("Template %s loaded!"), i18n$t(template$name_key)),
+        sprintf(i18n$t("modules.ses.creation.template_s_loaded"), i18n$t(template$name_key)),
         type = "message",
                duration = 5
       )
@@ -860,9 +860,9 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
         # Compact header matching card width
         div(
           style = "max-width: 600px; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px; margin-bottom: 15px;",
-          h5(icon("link"), " ", i18n$t("Connection Review"), style = "margin: 0; font-weight: bold;"),
+          h5(icon("link"), " ", i18n$t("modules.ses.creation.connection_review"), style = "margin: 0; font-weight: bold;"),
           p(style = "margin: 5px 0 0 0; font-size: 12px;",
-            sprintf(i18n$t("%d connections from %s template"),
+            sprintf(i18n$t("modules.ses.creation.d_connections_from_s_template"),
                     length(rv$template_connections),
                     i18n$t(template$name_key)))
         ),
@@ -876,13 +876,13 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
           fluidRow(
             column(6,
               actionButton(ns("cancel_review"),
-                          i18n$t("Cancel"),
+                          i18n$t("common.buttons.cancel"),
                           icon = icon("times"),
                           class = "btn-secondary btn-lg btn-block")
             ),
             column(6,
               actionButton(ns("finalize_template"),
-                          if (rv$review_mode == "customize") i18n$t("Customize Template") else i18n$t("Load Template"),
+                          if (rv$review_mode == "customize") i18n$t("modules.ses.creation.customize_template") else i18n$t("modules.ses.creation.load_template"),
                           icon = icon("check-circle"),
                           class = "btn-success btn-lg btn-block")
             )
@@ -1070,7 +1070,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
 
       # Show success message
       showNotification(
-        sprintf(i18n$t("Template %s loaded with %d connections!"),
+        sprintf(i18n$t("modules.ses.creation.template_s_loaded_with_d_connections"),
                 i18n$t(template$name_key),
                 length(final_connections)),
         type = "message",

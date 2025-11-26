@@ -147,8 +147,8 @@ ui <- dashboardPage(
 
         fluidRow(
           column(12,
-            h2(i18n$t("MarineSABRES Social-Ecological Systems Analysis Tool")),
-            p(i18n$t("Welcome to the computer-assisted SES creation and analysis platform."))
+            h2(i18n$t("data.framework.marinesabres_social_ecological_systems_analysis_tool")),
+            p(i18n$t("common.misc.welcome_to_the_computer_assisted_ses_creation_and_analysis_platform"))
           )
         ),
 
@@ -163,7 +163,7 @@ ui <- dashboardPage(
         fluidRow(
           # Project overview
           box(
-            title = i18n$t("Project Overview"),
+            title = i18n$t("ui.dashboard.project_overview"),
             status = "primary",
             solidHeader = TRUE,
             width = 6,
@@ -176,7 +176,7 @@ ui <- dashboardPage(
 
           # Status summary
           box(
-            title = i18n$t("Status Summary"),
+            title = i18n$t("ui.dashboard.status_summary"),
             status = "success",
             solidHeader = TRUE,
             width = 6,
@@ -190,7 +190,7 @@ ui <- dashboardPage(
               tags$div(
                 style = "margin-bottom: 10px; padding: 8px; background: #f8f9fa; border-radius: 5px;",
                 tags$h5(style = "margin-bottom: 8px; font-size: 14px;",
-                  icon("database"), " ", i18n$t("ISA Data Status")),
+                  icon("database"), " ", i18n$t("ui.dashboard.isa_data_status")),
                 uiOutput("status_isa_elements"),
                 uiOutput("status_isa_connections")
               ),
@@ -199,7 +199,7 @@ ui <- dashboardPage(
               tags$div(
                 style = "margin-bottom: 10px; padding: 8px; background: #f8f9fa; border-radius: 5px;",
                 tags$h5(style = "margin-bottom: 8px; font-size: 14px;",
-                  icon("project-diagram"), " ", i18n$t("CLD Status")),
+                  icon("project-diagram"), " ", i18n$t("ui.dashboard.cld_status")),
                 uiOutput("status_cld_nodes"),
                 uiOutput("status_cld_edges")
               ),
@@ -208,7 +208,7 @@ ui <- dashboardPage(
               tags$div(
                 style = "padding: 8px; background: #f8f9fa; border-radius: 5px;",
                 tags$h5(style = "margin-bottom: 8px; font-size: 14px;",
-                  icon("chart-line"), " ", i18n$t("Analysis Status")),
+                  icon("chart-line"), " ", i18n$t("ui.dashboard.analysis_status")),
                 uiOutput("status_analysis_complete")
               )
             )
@@ -418,7 +418,7 @@ server <- function(input, output, session) {
       title = tags$h3(icon("bookmark"), " Bookmark Created"),
       size = "l",
       easyClose = TRUE,
-      footer = modalButton(i18n$t("Close")),
+      footer = modalButton(i18n$t("common.buttons.close")),
 
       tags$div(
         style = "padding: 20px;",
@@ -516,7 +516,7 @@ server <- function(input, output, session) {
     showNotification(
       HTML(paste0(
         icon("bookmark"), " ",
-        i18n$t("Bookmark restored successfully!")
+        i18n$t("common.messages.bookmark_restored_successfully")
       )),
       type = "message",
       duration = 5
@@ -705,7 +705,7 @@ server <- function(input, output, session) {
       textInput("save_project_name", "Project Name:",
                value = project_data()$project_id),
       footer = tagList(
-        modalButton(i18n$t("Cancel")),
+        modalButton(i18n$t("common.buttons.cancel")),
         downloadButton("confirm_save", "Save")
       )
     ))
@@ -722,7 +722,7 @@ server <- function(input, output, session) {
         # Validate data structure before saving
         data <- project_data()
         if (!is.list(data) || !all(c("project_id", "data") %in% names(data))) {
-          showNotification(i18n$t("Error: Invalid project data structure"),
+          showNotification(i18n$t("common.messages.error_invalid_project_data_structure"),
                           type = "error", duration = 10)
           return(NULL)
         }
@@ -732,17 +732,17 @@ server <- function(input, output, session) {
 
         # Verify saved file
         if (!file.exists(file) || file.size(file) == 0) {
-          showNotification(i18n$t("Error: File save failed or file is empty"),
+          showNotification(i18n$t("common.messages.error_file_save_failed_or_file_is_empty"),
                           type = "error", duration = 10)
           return(NULL)
         }
 
         removeModal()
-        showNotification(i18n$t("Project saved successfully!"), type = "message")
+        showNotification(i18n$t("common.messages.project_saved_successfully"), type = "message")
 
       }, error = function(e) {
         showNotification(
-          paste(i18n$t("Error saving project:"), e$message),
+          paste(i18n$t("common.misc.error_saving_project"), e$message),
           type = "error",
           duration = 10
         )
@@ -752,12 +752,12 @@ server <- function(input, output, session) {
   
   observeEvent(input$load_project, {
     showModal(modalDialog(
-      title = i18n$t("Load Project"),
-      fileInput("load_project_file", i18n$t("Choose RDS File:"),
+      title = i18n$t("common.buttons.load_project"),
+      fileInput("load_project_file", i18n$t("common.misc.choose_rds_file"),
                accept = ".rds"),
       footer = tagList(
-        modalButton(i18n$t("Cancel")),
-        actionButton("confirm_load", i18n$t("Load"))
+        modalButton(i18n$t("common.buttons.cancel")),
+        actionButton("confirm_load", i18n$t("common.buttons.load"))
       )
     ))
   })
@@ -772,7 +772,7 @@ server <- function(input, output, session) {
       # Validate project structure
       if (!validate_project_structure(loaded_data)) {
         showNotification(
-          i18n$t("Error: Invalid project file structure. This may not be a valid MarineSABRES project file."),
+          i18n$t("common.messages.error_invalid_proj_file_structure_this_may_not_be_"),
           type = "error",
           duration = 10
         )
@@ -783,11 +783,11 @@ server <- function(input, output, session) {
       project_data(loaded_data)
 
       removeModal()
-      showNotification(i18n$t("Project loaded successfully!"), type = "message")
+      showNotification(i18n$t("common.messages.project_loaded_successfully"), type = "message")
 
     }, error = function(e) {
       showNotification(
-        paste(i18n$t("Error loading project:"), e$message),
+        paste(i18n$t("common.misc.error_loading_project"), e$message),
         type = "error",
         duration = 10
       )
@@ -890,7 +890,7 @@ server <- function(input, output, session) {
         save(export_list, file = file)
       }
 
-      showNotification(i18n$t("Data exported successfully!"), type = "message")
+      showNotification(i18n$t("common.messages.data_exported_successfully"), type = "message")
     }
   )
   
@@ -910,7 +910,7 @@ server <- function(input, output, session) {
 
       # Check if CLD data exists
       if(is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
-        showNotification(i18n$t("No CLD data to export. Please create a CLD first."), type = "error")
+        showNotification(i18n$t("common.misc.no_cld_data_to_export_please_create_a_cld_first"), type = "error")
         return(NULL)
       }
 
@@ -991,7 +991,7 @@ server <- function(input, output, session) {
         dev.off()
       }
 
-      showNotification(i18n$t("Visualization exported successfully!"), type = "message")
+      showNotification(i18n$t("common.messages.visualization_exported_successfully"), type = "message")
     }
   )
 

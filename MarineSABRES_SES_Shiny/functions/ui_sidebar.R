@@ -108,11 +108,11 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
         menuItem(
-          safe_t("Getting Started", i18n_obj = i18n),
+          safe_t("ui.sidebar.getting_started", i18n_obj = i18n) i18n_obj = i18n),
           tabName = "entry_point",
           icon = icon("compass")
         ),
-        safe_t("Guided entry point to find the right tools for your marine management needs", i18n_obj = i18n)
+        safe_t("ui.sidebar.guided_entry_point_to_find_the_right_tools_for_you", i18n_obj = i18n) i18n_obj = i18n)
       )
     ))
   }
@@ -122,11 +122,11 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
         menuItem(
-          safe_t("Dashboard", i18n_obj = i18n),
+          safe_t("ui.sidebar.dashboard", i18n_obj = i18n) i18n_obj = i18n),
           tabName = "dashboard",
           icon = icon("dashboard")
         ),
-        safe_t("Overview of your project status and key metrics", i18n_obj = i18n)
+        safe_t("ui.sidebar.overview_of_your_project_status_and_key_metrics", i18n_obj = i18n) i18n_obj = i18n)
       )
     ))
   }
@@ -136,14 +136,14 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
         menuItem(
-          safe_t("PIMS Module", i18n_obj = i18n),
+          safe_t("ui.sidebar.pims_module", i18n_obj = i18n) i18n_obj = i18n),
           tabName = "pims",
           icon = icon("project-diagram"),
-          menuSubItem(safe_t("Project Setup", i18n_obj = i18n), tabName = "pims_project"),
-          menuSubItem(safe_t("Stakeholders", i18n_obj = i18n), tabName = "pims_stakeholders"),
-          menuSubItem(safe_t("Resources & Risks", i18n_obj = i18n), tabName = "pims_resources"),
-          menuSubItem(safe_t("Data Management", i18n_obj = i18n), tabName = "pims_data"),
-          menuSubItem(safe_t("Evaluation", i18n_obj = i18n), tabName = "pims_evaluation")
+          menuSubItem(safe_t("ui.sidebar.project_setup", i18n_obj = i18n) i18n_obj = i18n), tabName = "pims_project"),
+          menuSubItem(safe_t("ui.sidebar.stakeholders", i18n_obj = i18n) i18n_obj = i18n), tabName = "pims_stakeholders"),
+          menuSubItem(safe_t("ui.sidebar.resources_risks", i18n_obj = i18n) i18n_obj = i18n), tabName = "pims_resources"),
+          menuSubItem(safe_t("modules.isa.data_entry.common.data_management", i18n_obj = i18n) i18n_obj = i18n), tabName = "pims_data"),
+          menuSubItem(safe_t("ui.sidebar.evaluation", i18n_obj = i18n) i18n_obj = i18n), tabName = "pims_evaluation")
         ),
         "Project Information Management System for planning and tracking"
       )
@@ -157,7 +157,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
       menu_items <- c(menu_items, list(
         add_menu_tooltip(
           menuItem(
-            safe_t("AI guided SES creation", i18n_obj = i18n),
+            safe_t("ui.sidebar.ai_guided_ses_creation", i18n_obj = i18n) i18n_obj = i18n),
             tabName = "create_ses_ai",
             icon = icon("robot")
           ),
@@ -165,7 +165,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
         ),
         add_menu_tooltip(
           menuItem(
-            safe_t("Template based SES creation", i18n_obj = i18n),
+            safe_t("ui.sidebar.template_based_ses_creation", i18n_obj = i18n) i18n_obj = i18n),
             tabName = "create_ses_template",
             icon = icon("file-alt")
           ),
@@ -177,13 +177,13 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
       menu_items <- c(menu_items, list(
         add_menu_tooltip(
           menuItem(
-            safe_t("Create SES", i18n_obj = i18n),
+            safe_t("ui.sidebar.create_ses", i18n_obj = i18n) i18n_obj = i18n),
             tabName = "create_ses",
             icon = icon("layer-group"),
-            menuSubItem(safe_t("Choose Method", i18n_obj = i18n), tabName = "create_ses_choose"),
-            menuSubItem(safe_t("Standard Entry", i18n_obj = i18n), tabName = "create_ses_standard"),
-            menuSubItem(safe_t("AI Assistant", i18n_obj = i18n), tabName = "create_ses_ai"),
-            menuSubItem(safe_t("Template-Based", i18n_obj = i18n), tabName = "create_ses_template")
+            menuSubItem(safe_t("ui.sidebar.choose_method", i18n_obj = i18n) i18n_obj = i18n), tabName = "create_ses_choose"),
+            menuSubItem(safe_t("ui.sidebar.standard_entry", i18n_obj = i18n) i18n_obj = i18n), tabName = "create_ses_standard"),
+            menuSubItem(safe_t("ui.sidebar.ai_assistant", i18n_obj = i18n) i18n_obj = i18n), tabName = "create_ses_ai"),
+            menuSubItem(safe_t("ui.sidebar.template_based", i18n_obj = i18n) i18n_obj = i18n), tabName = "create_ses_template")
           ),
           "Create your Social-Ecological System using structured methods"
         )
@@ -196,7 +196,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
         menuItem(
-          safe_t("SES Visualization", i18n_obj = i18n),
+          safe_t("ui.sidebar.ses_visualization", i18n_obj = i18n) i18n_obj = i18n),
           tabName = "cld_viz",
           icon = icon("project-diagram")
         ),
@@ -212,11 +212,11 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
       menu_items <- c(menu_items, list(
         add_menu_tooltip(
           menuItem(
-            safe_t("Analysis Tools", i18n_obj = i18n),
+            safe_t("ui.sidebar.analysis_tools", i18n_obj = i18n) i18n_obj = i18n),
             tabName = "analysis",
             icon = icon("chart-line"),
-            menuSubItem(safe_t("Loop Detection", i18n_obj = i18n), tabName = "analysis_loops"),
-            menuSubItem(safe_t("Leverage Point Analysis", i18n_obj = i18n), tabName = "analysis_leverage")
+            menuSubItem(safe_t("ui.sidebar.loop_detection", i18n_obj = i18n) i18n_obj = i18n), tabName = "analysis_loops"),
+            menuSubItem(safe_t("ui.sidebar.leverage_point_analysis", i18n_obj = i18n) i18n_obj = i18n), tabName = "analysis_leverage")
           ),
           "Essential network analysis tools for understanding your SES"
         )
@@ -226,14 +226,14 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
       menu_items <- c(menu_items, list(
         add_menu_tooltip(
           menuItem(
-            safe_t("Analysis Tools", i18n_obj = i18n),
+            safe_t("ui.sidebar.analysis_tools", i18n_obj = i18n) i18n_obj = i18n),
             tabName = "analysis",
             icon = icon("chart-line"),
-            menuSubItem(safe_t("Network Metrics", i18n_obj = i18n), tabName = "analysis_metrics"),
-            menuSubItem(safe_t("Loop Detection", i18n_obj = i18n), tabName = "analysis_loops"),
-            menuSubItem(safe_t("Leverage Point Analysis", i18n_obj = i18n), tabName = "analysis_leverage"),
-            menuSubItem(safe_t("BOT Analysis", i18n_obj = i18n), tabName = "analysis_bot"),
-            menuSubItem(safe_t("Simplification", i18n_obj = i18n), tabName = "analysis_simplify")
+            menuSubItem(safe_t("ui.sidebar.network_metrics", i18n_obj = i18n) i18n_obj = i18n), tabName = "analysis_metrics"),
+            menuSubItem(safe_t("ui.sidebar.loop_detection", i18n_obj = i18n) i18n_obj = i18n), tabName = "analysis_loops"),
+            menuSubItem(safe_t("ui.sidebar.leverage_point_analysis", i18n_obj = i18n) i18n_obj = i18n), tabName = "analysis_leverage"),
+            menuSubItem(safe_t("ui.sidebar.bot_analysis", i18n_obj = i18n) i18n_obj = i18n), tabName = "analysis_bot"),
+            menuSubItem(safe_t("ui.sidebar.simplification", i18n_obj = i18n) i18n_obj = i18n), tabName = "analysis_simplify")
           ),
           "Advanced network analysis and metrics tools for your SES model"
         )
@@ -246,12 +246,12 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
         menuItem(
-          safe_t("Response & Validation", i18n_obj = i18n),
+          safe_t("ui.sidebar.response_validation", i18n_obj = i18n) i18n_obj = i18n),
           tabName = "response",
           icon = icon("tasks"),
-          menuSubItem(safe_t("Response Measures", i18n_obj = i18n), tabName = "response_measures"),
-          menuSubItem(safe_t("Scenario Builder", i18n_obj = i18n), tabName = "response_scenarios"),
-          menuSubItem(safe_t("Validation", i18n_obj = i18n), tabName = "response_validation")
+          menuSubItem(safe_t("ui.sidebar.response_measures", i18n_obj = i18n) i18n_obj = i18n), tabName = "response_measures"),
+          menuSubItem(safe_t("ui.sidebar.scenario_builder", i18n_obj = i18n) i18n_obj = i18n), tabName = "response_scenarios"),
+          menuSubItem(safe_t("ui.sidebar.validation", i18n_obj = i18n) i18n_obj = i18n), tabName = "response_validation")
         ),
         "Design response measures, build scenarios, and validate your model"
       )
@@ -263,7 +263,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
         menuItem(
-          safe_t("Import Data", i18n_obj = i18n),
+          safe_t("modules.isa.data_entry.common.import_data", i18n_obj = i18n) i18n_obj = i18n),
           tabName = "import_data",
           icon = icon("upload")
         ),
@@ -277,7 +277,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
         menuItem(
-          safe_t("Export Data", i18n_obj = i18n),
+          safe_t("modules.isa.data_entry.common.export_data", i18n_obj = i18n) i18n_obj = i18n),
           tabName = "export",
           icon = icon("download")
         ),
@@ -291,7 +291,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
         menuItem(
-          safe_t("Prepare Report", i18n_obj = i18n),
+          safe_t("ui.sidebar.prepare_report", i18n_obj = i18n) i18n_obj = i18n),
           tabName = "prepare_report",
           icon = icon("file-alt")
         ),
@@ -305,35 +305,35 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     hr(),
     div(
       style = "padding: 15px 10px; text-align: center;",
-      h5(safe_t("Quick Actions", i18n_obj = i18n), style = "margin-bottom: 15px;"),
+      h5(safe_t("ui.sidebar.quick_actions", i18n_obj = i18n) i18n_obj = i18n), style = "margin-bottom: 15px;"),
       div(
         style = "display: flex; flex-direction: column; align-items: center; gap: 10px;",
         actionButton(
           "save_project",
-          safe_t("Save Project", i18n_obj = i18n),
+          safe_t("common.buttons.save_project", i18n_obj = i18n) i18n_obj = i18n),
           icon = icon("save"),
           class = "btn-primary",
           style = "width: 90%; min-width: 180px;",
-          title = safe_t("Save your current project data, including all PIMS, ISA entries, and analysis results", i18n_obj = i18n)
+          title = safe_t("ui.sidebar.save_your_curr_proj_dat_incl_all_pims_isa_ent_and_", i18n_obj = i18n) i18n_obj = i18n)
         ),
         actionButton(
           "load_project",
-          safe_t("Load Project", i18n_obj = i18n),
+          safe_t("common.buttons.load_project", i18n_obj = i18n) i18n_obj = i18n),
           icon = icon("folder-open"),
           class = "btn-secondary",
           style = "width: 90%; min-width: 180px;",
-          title = safe_t("Load a previously saved project", i18n_obj = i18n)
+          title = safe_t("ui.sidebar.load_a_previously_saved_project", i18n_obj = i18n) i18n_obj = i18n)
         )
       ),
       bsTooltip(
         id = "save_project",
-        title = safe_t("Save your current project data, including all PIMS, ISA entries, and analysis results", i18n_obj = i18n),
+        title = safe_t("ui.sidebar.save_your_curr_proj_dat_incl_all_pims_isa_ent_and_", i18n_obj = i18n) i18n_obj = i18n),
         placement = "right",
         trigger = "hover"
       ),
       bsTooltip(
         id = "load_project",
-        title = safe_t("Load a previously saved project", i18n_obj = i18n),
+        title = safe_t("ui.sidebar.load_a_previously_saved_project", i18n_obj = i18n) i18n_obj = i18n),
         placement = "right",
         trigger = "hover"
       )

@@ -37,7 +37,7 @@ scan_dir <- function(dir) {
     # Combine all content to search
     full_content <- paste(content, collapse = "\n")
 
-    # Find patterns like i18n$t("key") or i18n$t('key')
+    # Find patterns like i18n$t("common.misc.key") or i18n$t("common.misc.key")
     pattern <- 'i18n\\$t\\(["\']([^"\']+)["\']'
     matches <- gregexpr(pattern, full_content, perl = TRUE)
 

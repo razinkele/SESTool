@@ -87,8 +87,8 @@ scenario_builder_ui <- function(id, i18n) {
       "))
     ),
 
-    h2(icon("flask"), " ", i18n$t("scenario_builder_title")),
-    p(i18n$t("scenario_builder_description")),
+    h2(icon("flask"), " ", i18n$t("modules.scenario.builder.scenario_builder_title")),
+    p(i18n$t("modules.scenario.builder.scenario_builder_description")),
     hr(),
 
     # Check if CLD exists
@@ -130,9 +130,9 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         div(
           class = "alert alert-warning",
           icon("exclamation-triangle"),
-          tags$strong(" ", i18n$t("scenario_no_cld_found")),
-          tags$p(i18n$t("scenario_need_cld_first")),
-          tags$p(i18n$t("scenario_go_to_cld_module"))
+          tags$strong(" ", i18n$t("modules.scenario.builder.scenario_no_cld_found")),
+          tags$p(i18n$t("modules.scenario.builder.scenario_need_cld_first")),
+          tags$p(i18n$t("modules.scenario.builder.scenario_go_to_cld_module"))
         )
       } else {
         NULL
@@ -153,8 +153,8 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         # Left panel: Scenario management
         column(4,
           wellPanel(
-            h4(icon("list"), " ", i18n$t("scenario_scenarios")),
-            actionButton(ns("create_scenario"), i18n$t("scenario_new_scenario"),
+            h4(icon("list"), " ", i18n$t("modules.scenario.builder.scenario_scenarios")),
+            actionButton(ns("create_scenario"), i18n$t("modules.scenario.builder.scenario_new_scenario"),
                         icon = icon("plus"), class = "btn-success btn-block"),
             br(), br(),
             uiOutput(ns("scenarios_list"))
@@ -169,21 +169,21 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
             tabsetPanel(id = ns("scenario_tabs"),
               # Tab 1: Configure
-              tabPanel(i18n$t("scenario_configure"),
+              tabPanel(i18n$t("modules.scenario.builder.scenario_configure"),
                 icon = icon("cog"),
                 br(),
                 uiOutput(ns("configure_scenario_ui"))
               ),
 
               # Tab 2: Impact Analysis
-              tabPanel(i18n$t("scenario_impact_analysis"),
+              tabPanel(i18n$t("modules.scenario.builder.scenario_impact_analysis"),
                 icon = icon("chart-line"),
                 br(),
                 uiOutput(ns("impact_analysis_ui"))
               ),
 
               # Tab 3: Compare
-              tabPanel(i18n$t("scenario_compare_scenarios"),
+              tabPanel(i18n$t("modules.scenario.builder.scenario_compare_scenarios"),
                 icon = icon("balance-scale"),
                 br(),
                 uiOutput(ns("compare_scenarios_ui"))
@@ -199,7 +199,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
               class = "alert alert-info",
               style = "margin-top: 20px;",
               icon("info-circle"),
-              " ", i18n$t("scenario_select_or_create")
+              " ", i18n$t("modules.scenario.builder.scenario_select_or_create")
             )
           )
         )
@@ -222,7 +222,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       active_id <- active_scenario_id()
 
       if (length(scenario_list) == 0) {
-        return(p(class = "text-muted", i18n$t("scenario_no_scenarios_yet")))
+        return(p(class = "text-muted", i18n$t("modules.scenario.builder.scenario_no_scenarios_yet")))
       }
 
       lapply(seq_along(scenario_list), function(i) {
@@ -252,7 +252,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
             length(scenario$modifications$nodes_removed) +
             length(scenario$modifications$links_added) +
             length(scenario$modifications$links_removed),
-            " ", i18n$t("scenario_changes")
+            " ", i18n$t("modules.scenario.builder.scenario_changes")
           )
         )
       })
@@ -261,17 +261,17 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
     # Create new scenario
     observeEvent(input$create_scenario, {
       showModal(modalDialog(
-        title = i18n$t("scenario_create_new_scenario"),
+        title = i18n$t("modules.scenario.builder.scenario_create_new_scenario"),
         size = "m",
         footer = tagList(
-          modalButton(i18n$t("cancel")),
-          actionButton(ns("confirm_create_scenario"), i18n$t("create"), class = "btn-primary")
+          modalButton(i18n$t("modules.scenario.builder.cancel")),
+          actionButton(ns("confirm_create_scenario"), i18n$t("modules.scenario.builder.create"), class = "btn-primary")
         ),
 
-        textInput(ns("new_scenario_name"), i18n$t("scenario_scenario_name"),
-                 placeholder = i18n$t("scenario_name_placeholder")),
-        textAreaInput(ns("new_scenario_description"), i18n$t("scenario_description"),
-                     placeholder = i18n$t("scenario_description_placeholder"),
+        textInput(ns("new_scenario_name"), i18n$t("modules.scenario.builder.scenario_scenario_name"),
+                 placeholder = i18n$t("modules.scenario.builder.scenario_name_placeholder")),
+        textAreaInput(ns("new_scenario_description"), i18n$t("modules.scenario.builder.scenario_description"),
+                     placeholder = i18n$t("modules.scenario.builder.scenario_description_placeholder"),
                      rows = 4)
       ))
     })
@@ -308,7 +308,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       save_scenarios_to_project()
 
       removeModal()
-      showNotification(i18n$t("scenario_created_successfully"), type = "message")
+      showNotification(i18n$t("modules.scenario.builder.scenario_created_successfully"), type = "message")
     })
 
     # Select scenario
@@ -321,11 +321,11 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       scenario_id <- input$delete_scenario
 
       showModal(modalDialog(
-        title = i18n$t("scenario_confirm_delete"),
-        i18n$t("scenario_confirm_delete_message"),
+        title = i18n$t("modules.scenario.builder.scenario_confirm_delete"),
+        i18n$t("modules.scenario.builder.scenario_confirm_delete_message"),
         footer = tagList(
-          modalButton(i18n$t("cancel")),
-          actionButton(ns("confirm_delete_scenario"), i18n$t("delete"), class = "btn-danger")
+          modalButton(i18n$t("modules.scenario.builder.cancel")),
+          actionButton(ns("confirm_delete_scenario"), i18n$t("modules.scenario.builder.delete"), class = "btn-danger")
         )
       ))
 
@@ -348,7 +348,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
       save_scenarios_to_project()
       removeModal()
-      showNotification(i18n$t("scenario_deleted"), type = "message")
+      showNotification(i18n$t("modules.scenario.builder.scenario_deleted"), type = "message")
     })
 
     # ========================================================================
@@ -361,43 +361,43 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       req(active_scenario)
 
       tagList(
-        h4(icon("cog"), " ", i18n$t("scenario_configure"), ": ", active_scenario$name),
+        h4(icon("cog"), " ", i18n$t("modules.scenario.builder.scenario_configure"), ": ", active_scenario$name),
         p(class = "text-muted", active_scenario$description),
         hr(),
 
         fluidRow(
           column(6,
             wellPanel(
-              h5(icon("circle-plus"), " ", i18n$t("scenario_add_modify_nodes")),
-              actionButton(ns("add_node"), i18n$t("scenario_add_new_node"),
+              h5(icon("circle-plus"), " ", i18n$t("modules.scenario.builder.scenario_add_modify_nodes")),
+              actionButton(ns("add_node"), i18n$t("modules.scenario.builder.scenario_add_new_node"),
                           icon = icon("plus"), class = "btn-success btn-sm"),
               br(), br(),
               uiOutput(ns("added_nodes_list"))
             ),
 
             wellPanel(
-              h5(icon("circle-minus"), " ", i18n$t("scenario_remove_nodes")),
-              selectInput(ns("node_to_remove"), i18n$t("scenario_select_node_to_remove"),
+              h5(icon("circle-minus"), " ", i18n$t("modules.scenario.builder.scenario_remove_nodes")),
+              selectInput(ns("node_to_remove"), i18n$t("modules.scenario.builder.scenario_select_node_to_remove"),
                          choices = NULL),
-              actionButton(ns("remove_node"), i18n$t("scenario_remove_node"),
+              actionButton(ns("remove_node"), i18n$t("modules.scenario.builder.scenario_remove_node"),
                           icon = icon("trash"), class = "btn-danger btn-sm")
             )
           ),
 
           column(6,
             wellPanel(
-              h5(icon("arrow-right"), " ", i18n$t("scenario_add_modify_links")),
-              actionButton(ns("add_link"), i18n$t("scenario_add_new_link"),
+              h5(icon("arrow-right"), " ", i18n$t("modules.scenario.builder.scenario_add_modify_links")),
+              actionButton(ns("add_link"), i18n$t("modules.scenario.builder.scenario_add_new_link"),
                           icon = icon("plus"), class = "btn-success btn-sm"),
               br(), br(),
               uiOutput(ns("added_links_list"))
             ),
 
             wellPanel(
-              h5(icon("link-slash"), " ", i18n$t("scenario_remove_links")),
-              selectInput(ns("link_to_remove"), i18n$t("scenario_select_link_to_remove"),
+              h5(icon("link-slash"), " ", i18n$t("modules.scenario.builder.scenario_remove_links")),
+              selectInput(ns("link_to_remove"), i18n$t("modules.scenario.builder.scenario_select_link_to_remove"),
                          choices = NULL),
-              actionButton(ns("remove_link"), i18n$t("scenario_remove_link"),
+              actionButton(ns("remove_link"), i18n$t("modules.scenario.builder.scenario_remove_link"),
                           icon = icon("trash"), class = "btn-danger btn-sm")
             )
           )
@@ -405,9 +405,9 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
         hr(),
         div(style = "text-align: center;",
-          actionButton(ns("preview_scenario"), i18n$t("scenario_preview_network"),
+          actionButton(ns("preview_scenario"), i18n$t("modules.scenario.builder.scenario_preview_network"),
                       icon = icon("eye"), class = "btn-primary"),
-          actionButton(ns("run_impact_analysis"), i18n$t("scenario_run_impact_analysis"),
+          actionButton(ns("run_impact_analysis"), i18n$t("modules.scenario.builder.scenario_run_impact_analysis"),
                       icon = icon("play"), class = "btn-success")
         )
       )
@@ -428,7 +428,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         choices <- setNames(available_nodes,
                           data$data$cld$nodes$label[match(available_nodes, data$data$cld$nodes$id)])
 
-        updateSelectInput(session, "node_to_remove", choices = c(setNames("", i18n$t("select")), choices))
+        updateSelectInput(session, "node_to_remove", choices = c(setNames("", i18n$t("modules.scenario.builder.select")), choices))
       }
     })
 
@@ -451,7 +451,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         if (nrow(available_links) > 0) {
           link_labels <- paste(available_links$from_label, "→", available_links$to_label)
           choices <- setNames(available_links$id, link_labels)
-          updateSelectInput(session, "link_to_remove", choices = c(setNames("", i18n$t("select")), choices))
+          updateSelectInput(session, "link_to_remove", choices = c(setNames("", i18n$t("modules.scenario.builder.select")), choices))
         }
       }
     })
@@ -459,19 +459,19 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
     # Add node dialog
     observeEvent(input$add_node, {
       showModal(modalDialog(
-        title = i18n$t("scenario_add_new_node"),
+        title = i18n$t("modules.scenario.builder.scenario_add_new_node"),
         size = "m",
         footer = tagList(
-          modalButton(i18n$t("cancel")),
-          actionButton(ns("confirm_add_node"), i18n$t("add"), class = "btn-primary")
+          modalButton(i18n$t("modules.scenario.builder.cancel")),
+          actionButton(ns("confirm_add_node"), i18n$t("modules.scenario.builder.add"), class = "btn-primary")
         ),
 
-        textInput(ns("new_node_label"), i18n$t("scenario_node_label"),
-                 placeholder = i18n$t("scenario_node_label_placeholder")),
-        selectInput(ns("new_node_dapsi"), i18n$t("scenario_dapsi_category"),
-                   choices = c("", i18n$t("driver"), i18n$t("activity"), i18n$t("pressure"), i18n$t("state"),
-                             i18n$t("impact"), i18n$t("welfare"), i18n$t("response"), i18n$t("management"))),
-        textAreaInput(ns("new_node_description"), i18n$t("scenario_description"), rows = 3)
+        textInput(ns("new_node_label"), i18n$t("modules.scenario.builder.scenario_node_label"),
+                 placeholder = i18n$t("modules.scenario.builder.scenario_node_label_placeholder")),
+        selectInput(ns("new_node_dapsi"), i18n$t("modules.scenario.builder.scenario_dapsi_category"),
+                   choices = c("", i18n$t("modules.scenario.builder.driver"), i18n$t("modules.scenario.builder.activity"), i18n$t("modules.scenario.builder.pressure"), i18n$t("modules.scenario.builder.state"),
+                             i18n$t("modules.scenario.builder.impact"), i18n$t("modules.scenario.builder.welfare"), i18n$t("modules.scenario.builder.response"), i18n$t("modules.scenario.builder.management"))),
+        textAreaInput(ns("new_node_description"), i18n$t("modules.scenario.builder.scenario_description"), rows = 3)
       ))
     })
 
@@ -502,7 +502,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
       save_scenarios_to_project()
       removeModal()
-      showNotification(i18n$t("scenario_node_added"), type = "message")
+      showNotification(i18n$t("modules.scenario.builder.scenario_node_added"), type = "message")
     })
 
     # Remove node
@@ -527,7 +527,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       scenarios(scenario_list)
 
       save_scenarios_to_project()
-      showNotification(i18n$t("scenario_node_marked_for_removal"), type = "message")
+      showNotification(i18n$t("modules.scenario.builder.scenario_node_marked_for_removal"), type = "message")
     })
 
     # Add link dialog
@@ -550,19 +550,19 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       all_labels <- c(base_labels, added_labels)
 
       showModal(modalDialog(
-        title = i18n$t("scenario_add_new_link"),
+        title = i18n$t("modules.scenario.builder.scenario_add_new_link"),
         size = "m",
         footer = tagList(
-          modalButton(i18n$t("cancel")),
-          actionButton(ns("confirm_add_link"), i18n$t("add"), class = "btn-primary")
+          modalButton(i18n$t("modules.scenario.builder.cancel")),
+          actionButton(ns("confirm_add_link"), i18n$t("modules.scenario.builder.add"), class = "btn-primary")
         ),
 
-        selectInput(ns("new_link_from"), i18n$t("scenario_from_node"),
+        selectInput(ns("new_link_from"), i18n$t("modules.scenario.builder.scenario_from_node"),
                    choices = all_labels),
-        selectInput(ns("new_link_to"), i18n$t("scenario_to_node"),
+        selectInput(ns("new_link_to"), i18n$t("modules.scenario.builder.scenario_to_node"),
                    choices = all_labels),
-        selectInput(ns("new_link_polarity"), i18n$t("scenario_polarity"),
-                   choices = c(setNames("+", i18n$t("scenario_positive")), setNames("-", i18n$t("scenario_negative"))))
+        selectInput(ns("new_link_polarity"), i18n$t("modules.scenario.builder.scenario_polarity"),
+                   choices = c(setNames("+", i18n$t("modules.scenario.builder.scenario_positive")), setNames("-", i18n$t("modules.scenario.builder.scenario_negative"))))
       ))
     })
 
@@ -571,7 +571,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       req(input$new_link_from, input$new_link_to)
 
       if (input$new_link_from == input$new_link_to) {
-        showNotification(i18n$t("scenario_cannot_create_self_loop"), type = "error")
+        showNotification(i18n$t("modules.scenario.builder.scenario_cannot_create_self_loop"), type = "error")
         return()
       }
 
@@ -597,7 +597,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
       save_scenarios_to_project()
       removeModal()
-      showNotification(i18n$t("scenario_link_added"), type = "message")
+      showNotification(i18n$t("modules.scenario.builder.scenario_link_added"), type = "message")
     })
 
     # Remove link
@@ -622,7 +622,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       scenarios(scenario_list)
 
       save_scenarios_to_project()
-      showNotification(i18n$t("scenario_link_marked_for_removal"), type = "message")
+      showNotification(i18n$t("modules.scenario.builder.scenario_link_marked_for_removal"), type = "message")
     })
 
     # Display added nodes
@@ -634,7 +634,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       removed_nodes <- active_scenario$modifications$nodes_removed
 
       if (length(added_nodes) == 0 && length(removed_nodes) == 0) {
-        return(p(class = "text-muted", style = "font-size: 12px;", i18n$t("scenario_no_modifications_yet")))
+        return(p(class = "text-muted", style = "font-size: 12px;", i18n$t("modules.scenario.builder.scenario_no_modifications_yet")))
       }
 
       tagList(
@@ -665,7 +665,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       removed_links <- active_scenario$modifications$links_removed
 
       if (length(added_links) == 0 && length(removed_links) == 0) {
-        return(p(class = "text-muted", style = "font-size: 12px;", i18n$t("scenario_no_modifications_yet")))
+        return(p(class = "text-muted", style = "font-size: 12px;", i18n$t("modules.scenario.builder.scenario_no_modifications_yet")))
       }
 
       req(project_data_reactive())
@@ -708,8 +708,8 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
           div(
             class = "alert alert-info",
             icon("info-circle"),
-            tags$strong(" ", i18n$t("scenario_impact_analysis_not_run")),
-            tags$p(i18n$t("scenario_click_run_impact_analysis"))
+            tags$strong(" ", i18n$t("modules.scenario.builder.scenario_impact_analysis_not_run")),
+            tags$p(i18n$t("modules.scenario.builder.scenario_click_run_impact_analysis"))
           )
         )
       }
@@ -717,7 +717,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       results <- active_scenario$results
 
       tagList(
-        h4(icon("chart-line"), " ", i18n$t("scenario_impact_analysis"), ": ", active_scenario$name),
+        h4(icon("chart-line"), " ", i18n$t("modules.scenario.builder.scenario_impact_analysis"), ": ", active_scenario$name),
         hr(),
 
         # Summary metrics
@@ -726,7 +726,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
             div(class = "info-box bg-aqua",
               div(class = "info-box-icon", icon("circle-nodes")),
               div(class = "info-box-content",
-                span(class = "info-box-text", i18n$t("scenario_total_nodes")),
+                span(class = "info-box-text", i18n$t("modules.scenario.builder.scenario_total_nodes")),
                 span(class = "info-box-number", results$network_stats$total_nodes)
               )
             )
@@ -735,7 +735,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
             div(class = "info-box bg-green",
               div(class = "info-box-icon", icon("arrow-right")),
               div(class = "info-box-content",
-                span(class = "info-box-text", i18n$t("scenario_total_links")),
+                span(class = "info-box-text", i18n$t("modules.scenario.builder.scenario_total_links")),
                 span(class = "info-box-number", results$network_stats$total_links)
               )
             )
@@ -744,7 +744,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
             div(class = "info-box bg-yellow",
               div(class = "info-box-icon", icon("arrows-spin")),
               div(class = "info-box-content",
-                span(class = "info-box-text", i18n$t("scenario_feedback_loops")),
+                span(class = "info-box-text", i18n$t("modules.scenario.builder.scenario_feedback_loops")),
                 span(class = "info-box-number", results$network_stats$total_loops)
               )
             )
@@ -753,7 +753,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
             div(class = "info-box bg-red",
               div(class = "info-box-icon", icon("triangle-exclamation")),
               div(class = "info-box-content",
-                span(class = "info-box-text", i18n$t("scenario_changed_nodes")),
+                span(class = "info-box-text", i18n$t("modules.scenario.builder.scenario_changed_nodes")),
                 span(class = "info-box-number", results$impact_summary$nodes_affected)
               )
             )
@@ -766,13 +766,13 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         fluidRow(
           column(6,
             wellPanel(
-              h5(icon("chart-bar"), " ", i18n$t("scenario_network_topology_changes")),
+              h5(icon("chart-bar"), " ", i18n$t("modules.scenario.builder.scenario_network_topology_changes")),
               DTOutput(ns("topology_changes_table"))
             )
           ),
           column(6,
             wellPanel(
-              h5(icon("arrows-split-up-and-left"), " ", i18n$t("scenario_affected_feedback_loops")),
+              h5(icon("arrows-split-up-and-left"), " ", i18n$t("modules.scenario.builder.scenario_affected_feedback_loops")),
               uiOutput(ns("affected_loops_list"))
             )
           )
@@ -782,7 +782,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
         # Impact predictions
         wellPanel(
-          h5(icon("lightbulb"), " ", i18n$t("scenario_predicted_impacts")),
+          h5(icon("lightbulb"), " ", i18n$t("modules.scenario.builder.scenario_predicted_impacts")),
           DTOutput(ns("impact_predictions_table"))
         )
       )
@@ -803,14 +803,14 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
       if (!validation$valid) {
         showNotification(
-          paste(i18n$t("Validation errors:"), paste(validation$errors, collapse = "; ")),
+          paste(i18n$t("modules.scenario.builder.validation_errors"), paste(validation$errors, collapse = "; ")),
           type = "error",
           duration = 5
         )
         return()
       }
 
-      withProgress(message = i18n$t("scenario_running_impact_analysis"), {
+      withProgress(message = i18n$t("modules.scenario.builder.scenario_running_impact_analysis"), {
 
         # Apply scenario modifications to baseline CLD
         modified_network <- apply_scenario_modifications(
@@ -818,17 +818,17 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
           active_scenario$modifications
         )
 
-        setProgress(0.3, detail = i18n$t("scenario_analyzing_network_topology"))
+        setProgress(0.3, detail = i18n$t("modules.scenario.builder.scenario_analyzing_network_topology"))
 
         # Calculate network metrics
         network_stats <- calculate_network_stats(modified_network)
 
-        setProgress(0.6, detail = i18n$t("scenario_detecting_feedback_loops"))
+        setProgress(0.6, detail = i18n$t("modules.scenario.builder.scenario_detecting_feedback_loops"))
 
         # Detect loops
         loops <- detect_feedback_loops(modified_network)
 
-        setProgress(0.8, detail = i18n$t("scenario_predicting_impacts"))
+        setProgress(0.8, detail = i18n$t("modules.scenario.builder.scenario_predicting_impacts"))
 
         # Predict impacts
         impact_predictions <- predict_impacts(
@@ -837,7 +837,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
           modifications = active_scenario$modifications
         )
 
-        setProgress(1.0, detail = i18n$t("complete"))
+        setProgress(1.0, detail = i18n$t("modules.scenario.builder.complete"))
 
         # Store results
         scenario_list <- scenarios()
@@ -857,7 +857,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
         save_scenarios_to_project()
 
-        showNotification(i18n$t("scenario_impact_analysis_complete"), type = "message")
+        showNotification(i18n$t("modules.scenario.builder.scenario_impact_analysis_complete"), type = "message")
       })
     })
 
@@ -881,7 +881,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       scenario_stats <- active_scenario$results$network_stats
 
       changes <- data.frame(
-        Metric = c(i18n$t("scenario_nodes"), i18n$t("scenario_links"), i18n$t("scenario_feedback_loops")),
+        Metric = c(i18n$t("modules.scenario.builder.scenario_nodes"), i18n$t("modules.scenario.builder.scenario_links"), i18n$t("modules.scenario.builder.scenario_feedback_loops")),
         Baseline = c(baseline_stats$total_nodes, baseline_stats$total_links, baseline_stats$total_loops),
         Scenario = c(scenario_stats$total_nodes, scenario_stats$total_links, scenario_stats$total_loops),
         Change = c(
@@ -905,7 +905,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       loops <- active_scenario$results$loops
 
       if (is.null(loops) || length(loops) == 0) {
-        return(p(class = "text-muted", i18n$t("scenario_no_feedback_loops_detected")))
+        return(p(class = "text-muted", i18n$t("modules.scenario.builder.scenario_no_feedback_loops_detected")))
       }
 
       # Display first 5 loops
@@ -915,14 +915,14 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         lapply(loops_to_show, function(loop) {
           div(
             style = "padding: 8px; border-left: 3px solid #3c8dbc; margin-bottom: 8px; background: #f9f9f9;",
-            tags$strong(loop$type, " ", i18n$t("scenario_loop"), " (", length(loop$nodes), " ", i18n$t("scenario_nodes_lowercase"), ")"),
+            tags$strong(loop$type, " ", i18n$t("modules.scenario.builder.scenario_loop"), " (", length(loop$nodes), " ", i18n$t("modules.scenario.builder.scenario_nodes_lowercase"), ")"),
             br(),
             tags$small(paste(loop$nodes, collapse = " → "))
           )
         }),
         if (length(loops) > 5) {
           p(class = "text-muted", style = "font-size: 12px;",
-           "... ", i18n$t("scenario_and"), " ", length(loops) - 5, " ", i18n$t("scenario_more_loops"))
+           "... ", i18n$t("modules.scenario.builder.scenario_and"), " ", length(loops) - 5, " ", i18n$t("modules.scenario.builder.scenario_more_loops"))
         }
       )
     })
@@ -957,8 +957,8 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
           div(
             class = "alert alert-info",
             icon("info-circle"),
-            tags$strong(" ", i18n$t("scenario_not_enough_scenarios")),
-            tags$p(i18n$t("scenario_need_two_scenarios"))
+            tags$strong(" ", i18n$t("modules.scenario.builder.scenario_not_enough_scenarios")),
+            tags$p(i18n$t("modules.scenario.builder.scenario_need_two_scenarios"))
           )
         )
       }
@@ -971,8 +971,8 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
           div(
             class = "alert alert-warning",
             icon("exclamation-triangle"),
-            tags$strong(" ", i18n$t("scenario_scenarios_not_analyzed")),
-            tags$p(i18n$t("scenario_run_analysis_to_compare"))
+            tags$strong(" ", i18n$t("modules.scenario.builder.scenario_scenarios_not_analyzed")),
+            tags$p(i18n$t("modules.scenario.builder.scenario_run_analysis_to_compare"))
           )
         )
       }
@@ -983,16 +983,16 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       )
 
       tagList(
-        h4(icon("balance-scale"), " ", i18n$t("scenario_compare_scenarios")),
+        h4(icon("balance-scale"), " ", i18n$t("modules.scenario.builder.scenario_compare_scenarios")),
         hr(),
 
         fluidRow(
           column(6,
-            selectInput(ns("compare_scenario_a"), i18n$t("scenario_scenario_a"),
+            selectInput(ns("compare_scenario_a"), i18n$t("modules.scenario.builder.scenario_scenario_a"),
                        choices = scenario_choices)
           ),
           column(6,
-            selectInput(ns("compare_scenario_b"), i18n$t("scenario_scenario_b"),
+            selectInput(ns("compare_scenario_b"), i18n$t("modules.scenario.builder.scenario_scenario_b"),
                        choices = scenario_choices)
           )
         ),
@@ -1010,7 +1010,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
       if (input$compare_scenario_a == input$compare_scenario_b) {
         return(
           div(class = "alert alert-warning",
-             i18n$t("scenario_select_different_scenarios"))
+             i18n$t("modules.scenario.builder.scenario_select_different_scenarios"))
         )
       }
 
@@ -1023,22 +1023,22 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
       tagList(
         # Network stats comparison
-        h5(icon("chart-bar"), " ", i18n$t("scenario_network_statistics_comparison")),
+        h5(icon("chart-bar"), " ", i18n$t("modules.scenario.builder.scenario_network_statistics_comparison")),
         fluidRow(
           column(6,
             wellPanel(
               h6(scenario_a$name),
-              p(i18n$t("scenario_nodes"), ": ", scenario_a$results$network_stats$total_nodes),
-              p(i18n$t("scenario_links"), ": ", scenario_a$results$network_stats$total_links),
-              p(i18n$t("scenario_loops"), ": ", scenario_a$results$network_stats$total_loops)
+              p(i18n$t("modules.scenario.builder.scenario_nodes"), ": ", scenario_a$results$network_stats$total_nodes),
+              p(i18n$t("modules.scenario.builder.scenario_links"), ": ", scenario_a$results$network_stats$total_links),
+              p(i18n$t("modules.scenario.builder.scenario_loops"), ": ", scenario_a$results$network_stats$total_loops)
             )
           ),
           column(6,
             wellPanel(
               h6(scenario_b$name),
-              p(i18n$t("scenario_nodes"), ": ", scenario_b$results$network_stats$total_nodes),
-              p(i18n$t("scenario_links"), ": ", scenario_b$results$network_stats$total_links),
-              p(i18n$t("scenario_loops"), ": ", scenario_b$results$network_stats$total_loops)
+              p(i18n$t("modules.scenario.builder.scenario_nodes"), ": ", scenario_b$results$network_stats$total_nodes),
+              p(i18n$t("modules.scenario.builder.scenario_links"), ": ", scenario_b$results$network_stats$total_links),
+              p(i18n$t("modules.scenario.builder.scenario_loops"), ": ", scenario_b$results$network_stats$total_loops)
             )
           )
         ),
@@ -1046,7 +1046,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         br(),
 
         # Impact comparison
-        h5(icon("chart-line"), " ", i18n$t("scenario_impact_comparison")),
+        h5(icon("chart-line"), " ", i18n$t("modules.scenario.builder.scenario_impact_comparison")),
         DTOutput(ns("impact_comparison_table"))
       )
     })
@@ -1075,11 +1075,11 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
 
       comparison[is.na(comparison)] <- 0
 
-      colnames(comparison) <- c(i18n$t("scenario_node"),
-                                paste(scenario_a$name, i18n$t("scenario_impact")),
-                                paste(scenario_a$name, i18n$t("scenario_direction")),
-                                paste(scenario_b$name, i18n$t("scenario_impact")),
-                                paste(scenario_b$name, i18n$t("scenario_direction")))
+      colnames(comparison) <- c(i18n$t("modules.scenario.builder.scenario_node"),
+                                paste(scenario_a$name, i18n$t("modules.scenario.builder.scenario_impact")),
+                                paste(scenario_a$name, i18n$t("modules.scenario.builder.scenario_direction")),
+                                paste(scenario_b$name, i18n$t("modules.scenario.builder.scenario_impact")),
+                                paste(scenario_b$name, i18n$t("modules.scenario.builder.scenario_direction")))
 
       datatable(comparison,
                 options = list(pageLength = 10),
@@ -1131,14 +1131,14 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
         added_ids <- sapply(modifications$nodes_added, function(n) n$id)
         conflicts <- intersect(added_ids, modifications$nodes_removed)
         if (length(conflicts) > 0) {
-          errors <- c(errors, sprintf(i18n$t("Conflicting modifications for nodes: %s"), paste(conflicts, collapse = ", ")))
+          errors <- c(errors, sprintf(i18n$t("modules.scenario.builder.conflicting_modifications_for_nodes_s"), paste(conflicts, collapse = ", ")))
         }
       }
 
       # Check that removed nodes exist in baseline
       for (node_id in modifications$nodes_removed) {
         if (!(node_id %in% baseline_cld$nodes$id)) {
-          errors <- c(errors, sprintf(i18n$t("Cannot remove non-existent node: %s"), node_id))
+          errors <- c(errors, sprintf(i18n$t("modules.scenario.builder.cannot_remove_non_existent_node_s"), node_id))
         }
       }
 
@@ -1312,7 +1312,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
             node = node_label,
             impact_magnitude = 3,
             impact_direction = "negative",
-            reason = i18n$t("scenario_node_marked_for_removal"),
+            reason = i18n$t("modules.scenario.builder.scenario_node_marked_for_removal"),
             stringsAsFactors = FALSE
           ))
         }
@@ -1339,7 +1339,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
           # New node added - positive impact
           impact_magnitude <- 3
           impact_direction <- "positive"
-          reason <- i18n$t("scenario_new_node_added")
+          reason <- i18n$t("modules.scenario.builder.scenario_new_node_added")
 
         } else if (any(connected_links_added)) {
           # Links added involving this node
@@ -1354,28 +1354,28 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
           if (positive_links > negative_links) {
             impact_magnitude <- 2
             impact_direction <- "positive"
-            reason <- sprintf(i18n$t("scenario_positive_links_added"), positive_links)
+            reason <- sprintf(i18n$t("modules.scenario.builder.scenario_positive_links_added"), positive_links)
           } else if (negative_links > positive_links) {
             impact_magnitude <- 2
             impact_direction <- "negative"
-            reason <- sprintf(i18n$t("scenario_negative_links_added"), negative_links)
+            reason <- sprintf(i18n$t("modules.scenario.builder.scenario_negative_links_added"), negative_links)
           } else {
             impact_magnitude <- 1
             impact_direction <- "mixed"
-            reason <- sprintf(i18n$t("scenario_mixed_links_added"), length(link_polarities))
+            reason <- sprintf(i18n$t("modules.scenario.builder.scenario_mixed_links_added"), length(link_polarities))
           }
 
         } else if (any(connected_links_removed)) {
           # Links removed involving this node - negative impact
           impact_magnitude <- 2
           impact_direction <- "negative"
-          reason <- sprintf(i18n$t("scenario_links_removed"), sum(connected_links_removed))
+          reason <- sprintf(i18n$t("modules.scenario.builder.scenario_links_removed"), sum(connected_links_removed))
 
         } else {
           # No direct modifications to this node
           impact_magnitude <- 0
           impact_direction <- "neutral"
-          reason <- i18n$t("scenario_no_direct_modifications")
+          reason <- i18n$t("modules.scenario.builder.scenario_no_direct_modifications")
         }
 
         node_label <- get_node_label_by_id(node_id, scenario$nodes)

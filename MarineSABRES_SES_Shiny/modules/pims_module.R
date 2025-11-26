@@ -97,7 +97,7 @@ pims_project_server <- function(id, project_data_reactive, i18n) {
       input,
       "pims_project_help",
       "pims_project_help_title",
-      i18n$t("pims_project_help_content"),
+      i18n$t("common.misc.pims_project_help_content"),
       i18n
     )
     
@@ -153,7 +153,7 @@ pims_stakeholders_server <- function(id, project_data_reactive, i18n) {
       input,
       "pims_stakeholders_help",
       "pims_stakeholders_help_title",
-      i18n$t("pims_stakeholders_help_content"),
+      i18n$t("common.misc.pims_stakeholders_help_content"),
       i18n
     )
     
@@ -236,7 +236,7 @@ pims_evaluation_server <- function(id, project_data_reactive, i18n) {
       input,
       "pims_evaluation_help",
       "pims_evaluation_help_title",
-      i18n$t("pims_evaluation_help_content"),
+      i18n$t("common.misc.pims_evaluation_help_content"),
       i18n
     )
 

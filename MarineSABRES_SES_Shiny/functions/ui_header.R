@@ -25,7 +25,7 @@ build_dashboard_header <- function(i18n) {
         id = "language_dropdown_toggle",
         class = "settings-dropdown-toggle",
         icon("globe"),
-        tags$span(i18n$t("Language")),
+        tags$span(i18n$t("ui.header.language")),
         tags$span(class = "caret", style = "margin-left: 5px;")
       ),
       tags$div(
@@ -35,7 +35,7 @@ build_dashboard_header <- function(i18n) {
           id = "open_language_modal",
           class = "action-button",
           icon("globe"),
-          i18n$t("Change Language")
+          i18n$t("ui.header.change_language")
         )
       )
     ),
@@ -48,7 +48,7 @@ build_dashboard_header <- function(i18n) {
         id = "settings_dropdown_toggle",
         class = "settings-dropdown-toggle",
         icon("cog"),
-        tags$span(i18n$t("Settings")),
+        tags$span(i18n$t("ui.header.settings")),
         tags$span(class = "caret", style = "margin-left: 5px;")
       ),
       tags$div(
@@ -58,28 +58,28 @@ build_dashboard_header <- function(i18n) {
           id = "open_settings_modal",
           class = "action-button",
           icon("cog"),
-          i18n$t("Application Settings")
+          i18n$t("ui.header.application_settings")
         ),
         tags$a(
           href = "#",
           id = "open_user_level_modal",
           class = "action-button",
           icon("user-cog"),
-          i18n$t("User Experience Level")
+          i18n$t("ui.header.user_experience_level")
         ),
         tags$a(
           href = "#",
           id = "open_manuals_modal",
           class = "action-button",
           icon("download"),
-          i18n$t("Download Manuals")
+          i18n$t("ui.header.download_manuals")
         ),
         tags$a(
           href = "#",
           id = "open_about_modal",
           class = "action-button",
           icon("info-circle"),
-          i18n$t("App Info")
+          i18n$t("ui.header.app_info")
         )
       )
     ),
@@ -92,7 +92,7 @@ build_dashboard_header <- function(i18n) {
         id = "help_dropdown_toggle",
         class = "settings-dropdown-toggle",
         icon("question-circle"),
-        tags$span(i18n$t("Help")),
+        tags$span(i18n$t("ui.header.help")),
         tags$span(class = "caret", style = "margin-left: 5px;")
       ),
       tags$div(
@@ -107,13 +107,13 @@ build_dashboard_header <- function(i18n) {
           href = "#",
           onclick = "window.open('step_by_step_tutorial.html', '_blank'); return false;",
           icon("list-ol"),
-          i18n$t("Step-by-Step Tutorial")
+          i18n$t("ui.header.step_by_step_tutorial")
         ),
         tags$a(
           href = "#",
           onclick = "window.open('user_guide.html', '_blank'); return false;",
           icon("book"),
-          i18n$t("Quick Reference")
+          i18n$t("ui.header.quick_reference")
         )
       )
     ),
@@ -125,9 +125,9 @@ build_dashboard_header <- function(i18n) {
         href = "#",
         id = "bookmark_btn",
         icon("bookmark"),
-        i18n$t("Bookmark"),
+        i18n$t("ui.header.bookmark"),
         style = "cursor: pointer;",
-        title = i18n$t("Save current state as bookmark")
+        title = i18n$t("ui.header.save_current_state_as_bookmark")
       )
     ),
 

@@ -196,7 +196,7 @@ find_used_translation_keys <- function(dirs = c(".", "modules", "functions")) {
 
   for (file in r_files) {
     content <- readLines(file, warn = FALSE)
-    # Find patterns like i18n$t("key") or i18n$t('key')
+    # Find patterns like i18n$t("common.misc.key") or i18n$t("common.misc.key")
     matches <- regmatches(content, gregexpr('i18n\\$t\\(["\']([^"\']+)["\']',
                                            content, perl = TRUE))
     keys <- unlist(lapply(matches, function(m) {

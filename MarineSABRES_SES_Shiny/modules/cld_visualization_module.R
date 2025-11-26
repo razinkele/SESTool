@@ -103,7 +103,7 @@ cld_viz_ui <- function(id, i18n) {
         # Collapsible controls box
         box(
           width = NULL,
-          title = tagList(icon("sliders"), i18n$t("Visualisation Controls")),
+          title = tagList(icon("sliders"), i18n$t("modules.cld.visualization.visualisation_controls")),
           status = "primary",
           solidHeader = TRUE,
           collapsible = TRUE,
@@ -114,7 +114,7 @@ cld_viz_ui <- function(id, i18n) {
           # No manual generation needed - see automatic observer below
 
           # Layout Controls
-          h5(icon("cogs"), i18n$t("Layout")),
+          h5(icon("cogs"), i18n$t("modules.cld.visualization.layout")),
           selectInput(
             ns("layout_type"),
             NULL,
@@ -130,7 +130,7 @@ cld_viz_ui <- function(id, i18n) {
             ns = ns,
             selectInput(
               ns("hierarchy_direction"),
-              i18n$t("Direction:"),
+              i18n$t("modules.cld.visualization.direction"),
               choices = c(
                 "Down-Up" = "DU",
                 "Up-Down" = "UD",
@@ -141,7 +141,7 @@ cld_viz_ui <- function(id, i18n) {
             ),
             sliderInput(
               ns("level_separation"),
-              i18n$t("Spacing:"),
+              i18n$t("modules.cld.visualization.spacing"),
               min = 50,
               max = 300,
               value = 150,
@@ -151,13 +151,13 @@ cld_viz_ui <- function(id, i18n) {
 
           # Highlight Controls
           hr(),
-          h5(icon("lightbulb"), i18n$t("Highlight")),
+          h5(icon("lightbulb"), i18n$t("modules.cld.visualization.highlight")),
 
           div(
             style = "padding: 10px 0;",
             shinyWidgets::materialSwitch(
               inputId = ns("highlight_leverage"),
-              label = i18n$t("Leverage Points"),
+              label = i18n$t("modules.isa.data_entry.common.leverage_points"),
               value = FALSE,
               status = "success",
               right = TRUE
@@ -168,7 +168,7 @@ cld_viz_ui <- function(id, i18n) {
             style = "padding: 10px 0;",
             selectInput(
               inputId = ns("selected_loop"),
-              label = i18n$t("Highlight Loop"),
+              label = i18n$t("modules.cld.visualization.highlight_loop"),
               choices = c("None" = "none"),
               selected = "none",
               width = "100%"
@@ -756,22 +756,22 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
     create_help_observer(
       input, "help_cld", "Causal Loop Diagram Guide",
       tagList(
-        h4(i18n$t("What is a Causal Loop Diagram?")),
-        p(i18n$t("A Causal Loop Diagram (CLD) is a visual representation of how different elements in your social-ecological system are connected through cause-and-effect relationships.")),
-        p(i18n$t("It helps you understand feedback loops, leverage points, and potential intervention strategies.")),
+        h4(i18n$t("modules.cld.visualization.what_is_a_causal_loop_diagram")),
+        p(i18n$t("modules.cld.a_causal_loop_diagram_cld_is_a_visual_representati")),
+        p(i18n$t("modules.cld.it_helps_you_understand_feedback_loops_leverage_po")),
         hr(),
-        h4(i18n$t("How to Read the Diagram")),
+        h4(i18n$t("modules.cld.visualization.how_to_read_the_diagram")),
         tags$ul(
-          tags$li(strong(i18n$t("Nodes:")), i18n$t(" Represent elements in your system (drivers, activities, pressures, states, impacts, welfare, responses)")),
-          tags$li(strong(i18n$t("Edges:")), i18n$t(" Show causal connections between elements. Arrow direction indicates the direction of influence")),
-          tags$li(i18n$t("Polarity: + means the elements change in the same direction, - means they change in opposite directions"))
+          tags$li(strong(i18n$t("modules.cld.visualization.nodes")), i18n$t("modules.cld.represent_elements_in_your_system_drivers_activiti")),
+          tags$li(strong(i18n$t("modules.cld.visualization.edges")), i18n$t("modules.cld.show_causal_connections_between_elements_arrow_dir")),
+          tags$li(i18n$t("modules.cld.polarity_means_the_elements_change_in_the_same_dir"))
         ),
         hr(),
-        h4(i18n$t("Visualization Controls")),
+        h4(i18n$t("modules.cld.visualization.visualization_controls")),
         tags$ul(
-          tags$li(strong(i18n$t("Layout:")), i18n$t(" Choose between hierarchical, physics-based, or circular layouts to better understand different aspects of your system")),
-          tags$li(strong(i18n$t("Highlight Leverage Points:")), i18n$t(" Toggle to highlight the most influential nodes where interventions could have the greatest impact")),
-          tags$li(strong(i18n$t("Highlight Loop:")), i18n$t(" Select a feedback loop to visualize circular patterns of influence in your system"))
+          tags$li(strong(i18n$t("modules.cld.visualization.layout")), i18n$t("modules.cld.choose_between_hierarchical_physics_based_or_circu")),
+          tags$li(strong(i18n$t("modules.cld.visualization.highlight_leverage_points")), i18n$t("modules.cld.toggle_to_highlight_the_most_influential_nodes_whe")),
+          tags$li(strong(i18n$t("modules.cld.visualization.highlight_loop")), i18n$t("modules.cld.select_a_feedback_loop_to_visualize_circular_patte"))
         )
       ),
       i18n

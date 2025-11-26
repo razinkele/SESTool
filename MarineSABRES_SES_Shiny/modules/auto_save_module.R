@@ -261,19 +261,19 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
       # Determine icon and text based on status
       if (status == "saving") {
         icon <- "🔄"
-        text <- i18n$t("Saving...")
+        text <- i18n$t("common.misc.saving")
         time_text <- ""
       } else if (status == "saved") {
         icon <- "✓"
-        text <- i18n$t("All changes saved")
+        text <- i18n$t("common.misc.all_changes_saved")
 
         if (!is.null(auto_save$last_save_time)) {
           time_diff <- as.numeric(difftime(Sys.time(), auto_save$last_save_time, units = "secs"))
 
           if (time_diff < 60) {
-            time_text <- sprintf(i18n$t("Last saved: %d seconds ago"), round(time_diff))
+            time_text <- sprintf(i18n$t("common.misc.last_saved_d_seconds_ago"), round(time_diff))
           } else if (time_diff < 3600) {
-            time_text <- sprintf(i18n$t("Last saved: %d minutes ago"), round(time_diff / 60))
+            time_text <- sprintf(i18n$t("common.misc.last_saved_d_minutes_ago"), round(time_diff / 60))
           } else {
             time_text <- format(auto_save$last_save_time, "%H:%M:%S")
           }
@@ -282,16 +282,16 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
         }
       } else if (status == "error") {
         icon <- "⚠"
-        text <- i18n$t("Save failed")
+        text <- i18n$t("common.misc.save_failed")
         time_text <- auto_save$error_message
       } else {
         # Check if auto-save is actually enabled
         if (auto_save$is_enabled) {
           icon <- "💾"
-          text <- i18n$t("Auto-save enabled")
+          text <- i18n$t("common.misc.auto_save_enabled")
         } else {
           icon <- "💾"
-          text <- i18n$t("Auto-save disabled")
+          text <- i18n$t("common.misc.auto_save_disabled")
         }
         time_text <- ""
       }
@@ -373,34 +373,34 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
           # Show recovery modal
           showModal(modalDialog(
             title = tags$h4(icon("exclamation-triangle"), " ",
-                          i18n$t("Unsaved Work Detected")),
+                          i18n$t("common.misc.unsaved_work_detected")),
             size = "m",
             easyClose = FALSE,
 
             tags$div(
               style = "padding: 15px;",
               tags$p(
-                i18n$t("We found an auto-saved version of your work from"),
+                i18n$t("common.misc.we_found_an_auto_saved_version_of_your_work_from"),
                 " ",
                 tags$strong(format(file_time, "%Y-%m-%d %H:%M:%S"))
               ),
               tags$p(
-                i18n$t("Would you like to recover this data?")
+                i18n$t("common.misc.would_you_like_to_recover_this_data")
               ),
               tags$br(),
               tags$p(
                 style = "font-size: 12px; color: #666;",
                 icon("info-circle"), " ",
-                i18n$t("Auto-save helps prevent data loss from unexpected disconnections.")
+                i18n$t("common.misc.auto_save_helps_prevent_data_loss_from_unexpected_disconnections")
               )
             ),
 
             footer = tagList(
               actionButton(ns("discard_recovery"),
-                         i18n$t("Start Fresh"),
+                         i18n$t("common.misc.start_fresh"),
                          class = "btn-default"),
               actionButton(ns("confirm_recovery"),
-                         i18n$t("Recover Data"),
+                         i18n$t("common.misc.recover_data"),
                          class = "btn-primary",
                          icon = icon("history"))
             )
@@ -448,7 +448,7 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
         }
 
         showNotification(
-          i18n$t("Data recovered successfully!"),
+          i18n$t("common.messages.data_recovered_successfully"),
           type = "message",
           duration = 3
         )
@@ -462,7 +462,7 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
       }, error = function(e) {
         cat(sprintf("[AUTO-SAVE ERROR] Recovery failed: %s\n", e$message))
         showNotification(
-          paste(i18n$t("Recovery failed:"), e$message),
+          paste(i18n$t("common.misc.recovery_failed"), e$message),
           type = "error",
           duration = 10
         )

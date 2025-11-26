@@ -24,12 +24,12 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
     }
 
     showModal(modalDialog(
-      title = tags$h3(icon("globe"), " ", i18n$t("Change Language")),
+      title = tags$h3(icon("globe"), " ", i18n$t("ui.header.change_language")),
       size = "m",
       easyClose = TRUE,
       footer = tagList(
-        modalButton(i18n$t("Cancel")),
-        actionButton("apply_language_only", i18n$t("Apply"), class = "btn-primary", icon = icon("check"))
+        modalButton(i18n$t("common.buttons.cancel")),
+        actionButton("apply_language_only", i18n$t("common.buttons.apply"), class = "btn-primary", icon = icon("check"))
       ),
 
       tags$div(
@@ -37,12 +37,12 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
 
         tags$p(
           style = "font-size: 15px; margin-bottom: 20px;",
-          i18n$t("Select your preferred language for the application interface.")
+          i18n$t("ui.modals.select_your_preferred_language_for_the_application_interface")
         ),
 
         selectInput(
           "language_selector",
-          label = tags$strong(i18n$t("Interface Language:")),
+          label = tags$strong(i18n$t("ui.modals.interface_language")),
           choices = setNames(
             names(AVAILABLE_LANGUAGES),
             sapply(AVAILABLE_LANGUAGES, function(x) paste(x$flag, x$name))
@@ -55,8 +55,8 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
           class = "alert alert-info",
           style = "margin-top: 20px;",
           icon("info-circle"),
-          tags$strong(" ", i18n$t("Note:"), " "),
-          i18n$t("The application will reload to apply the language change.")
+          tags$strong(" ", i18n$t("common.labels.note"), " "),
+          i18n$t("ui.modals.the_application_will_reload_to_apply_the_language_change")
         )
       )
     ))
@@ -116,24 +116,24 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
   # Show settings modal when button is clicked
   observeEvent(input$open_settings_modal, {
     showModal(modalDialog(
-      title = tags$h3(icon("cog"), " ", i18n$t("Application Settings")),
+      title = tags$h3(icon("cog"), " ", i18n$t("ui.header.application_settings")),
       size = "m",
       easyClose = TRUE,
       footer = tagList(
-        modalButton(i18n$t("Cancel")),
-        actionButton("apply_settings", i18n$t("Apply"), class = "btn-primary", icon = icon("check"))
+        modalButton(i18n$t("common.buttons.cancel")),
+        actionButton("apply_settings", i18n$t("common.buttons.apply"), class = "btn-primary", icon = icon("check"))
       ),
 
       tags$div(
         style = "padding: 20px;",
 
-        tags$h4(icon("save"), " ", i18n$t("Auto-Save Settings")),
-        tags$p(i18n$t("Configure automatic saving behavior for the AI ISA Assistant module.")),
+        tags$h4(icon("save"), " ", i18n$t("ui.modals.auto_save_settings")),
+        tags$p(i18n$t("ui.modals.configure_automatic_saving_behavior_for_the_ai_isa_assistant_module")),
         tags$br(),
 
         shinyWidgets::switchInput(
           inputId = "autosave_enabled",
-          label = tags$strong(i18n$t("Enable Auto-Save:")),
+          label = tags$strong(i18n$t("ui.modals.enable_auto_save")),
           value = autosave_enabled(),  # Load current value
           onLabel = "ON",
           offLabel = "OFF",
@@ -146,15 +146,15 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
         tags$p(
           style = "margin-top: 10px; font-size: 13px; color: #666;",
           icon("info-circle"),
-          " ", i18n$t("Auto-save automatically saves your work when the AI ISA Assistant completes generating the framework (Step 10). When disabled, you must manually save your work.")
+          " ", i18n$t("ui.modals.auto_save_automatically_saves_your_work_when_the_a")
         ),
 
         tags$div(
           class = "alert alert-warning",
           style = "margin-top: 15px;",
           icon("exclamation-triangle"),
-          tags$strong(" ", i18n$t("Default: OFF."), " "),
-          i18n$t("Auto-save is disabled by default to prevent accidental overwrites when loading templates or existing data.")
+          tags$strong(" ", i18n$t("ui.modals.default_off"), " "),
+          i18n$t("ui.modals.auto_save_is_disabled_by_default_to_prevent_accide")
         )
       )
     ))
@@ -171,7 +171,7 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
     removeModal()
 
     showNotification(
-      i18n$t("Settings updated successfully"),
+      i18n$t("ui.modals.settings_updated_successfully"),
       type = "message",
       duration = 2
     )
@@ -212,7 +212,7 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
   # Show user level modal
   observeEvent(input$open_user_level_modal, {
     showModal(modalDialog(
-      title = tags$h3(icon("user-cog"), " ", i18n$t("User Experience Level")),
+      title = tags$h3(icon("user-cog"), " ", i18n$t("ui.header.user_experience_level")),
       size = "m",
       easyClose = FALSE,
 
@@ -221,7 +221,7 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
 
         tags$p(
           style = "margin-bottom: 20px; font-size: 14px;",
-          i18n$t("Select your experience level with marine ecosystem modeling:")
+          i18n$t("ui.modals.select_your_experience_level_with_marine_ecosystem_modeling")
         ),
 
         # Single radio button group with all choices
@@ -231,9 +231,9 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
           choices = setNames(
             c("beginner", "intermediate", "expert"),
             c(
-              paste("\U0001F7E2", i18n$t("Beginner"), "-", i18n$t("Simplified interface for first-time users. Shows essential tools only.")),
-              paste("\U0001F7E1", i18n$t("Intermediate"), "-", i18n$t("Standard interface for regular users. Shows most tools and features.")),
-              paste("\U0001F534", i18n$t("Expert"), "-", i18n$t("Advanced interface showing all tools, technical terminology, and advanced options."))
+              paste("\U0001F7E2", i18n$t("modules.ses.creation.beginner"), "-", i18n$t("ui.modals.simplified_interface_for_first_time_users_shows_essential_tools_only")),
+              paste("\U0001F7E1", i18n$t("modules.ses.creation.intermediate"), "-", i18n$t("ui.modals.standard_interface_for_regular_users_shows_most_tools_and_features")),
+              paste("\U0001F534", i18n$t("ui.modals.expert"), "-", i18n$t("ui.modals.advanced_interface_showing_all_tools_technical_ter"))
             )
           ),
           selected = user_level(),
@@ -245,13 +245,13 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
         tags$p(
           style = "font-size: 12px; color: #666; margin-top: 15px;",
           icon("info-circle"), " ",
-          i18n$t("The application will reload to apply the new user experience level.")
+          i18n$t("ui.modals.the_application_will_reload_to_apply_the_new_user_experience_level")
         )
       ),
 
       footer = tagList(
-        actionButton("cancel_user_level", i18n$t("Cancel"), class = "btn-default"),
-        actionButton("apply_user_level", i18n$t("Apply Changes"), class = "btn-primary", icon = icon("check"))
+        actionButton("cancel_user_level", i18n$t("common.buttons.cancel"), class = "btn-default"),
+        actionButton("apply_user_level", i18n$t("ui.modals.apply_changes"), class = "btn-primary", icon = icon("check"))
       )
     ))
   })
@@ -274,7 +274,7 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
     removeModal()
 
     showNotification(
-      i18n$t("Applying new user experience level..."),
+      i18n$t("ui.modals.applying_new_user_experience_level"),
       type = "message",
       duration = 2
     )
@@ -301,10 +301,10 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
   # Show manuals modal when button is clicked
   observeEvent(input$open_manuals_modal, {
     showModal(modalDialog(
-      title = tags$h3(icon("download"), " ", i18n$t("Download User Manuals & Guides")),
+      title = tags$h3(icon("download"), " ", i18n$t("ui.modals.download_user_manuals_guides")),
       size = "l",
       easyClose = TRUE,
-      footer = modalButton(i18n$t("Close")),
+      footer = modalButton(i18n$t("common.buttons.close")),
 
       tags$div(
         style = "padding: 20px;",
@@ -316,14 +316,14 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
           tags$h4(
             icon("graduation-cap"),
             " ",
-            i18n$t("Beginner-Friendly Guides"),
+            i18n$t("ui.modals.beginner_friendly_guides"),
             tags$span(
               class = "label label-success",
               style = "margin-left: 10px;",
-              i18n$t("Recommended for New Users")
+              i18n$t("ui.modals.recommended_for_new_users")
             )
           ),
-          tags$p(i18n$t("Simple, practical guides with step-by-step instructions and no technical jargon.")),
+          tags$p(i18n$t("ui.modals.simple_practical_guides_with_step_by_step_instruct")),
           tags$div(
             style = "margin-top: 15px;",
             tags$a(
@@ -335,7 +335,7 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
               " ",
               i18n$t("Beginner's Quick Start"),
               tags$br(),
-              tags$small(i18n$t("5-minute introduction"))
+              tags$small(i18n$t("ui.modals.5_minute_introduction"))
             ),
             tags$a(
               href = "#",
@@ -344,9 +344,9 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
               style = "margin: 5px;",
               icon("list-ol"),
               " ",
-              i18n$t("Step-by-Step Tutorial"),
+              i18n$t("ui.header.step_by_step_tutorial"),
               tags$br(),
-              tags$small(i18n$t("20-minute hands-on walkthrough"))
+              tags$small(i18n$t("ui.modals.20_minute_hands_on_walkthrough"))
             )
           )
         ),
@@ -356,8 +356,8 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
         # Quick Reference
         tags$div(
           class = "well",
-          tags$h4(icon("book"), " ", i18n$t("Quick Reference Guide")),
-          tags$p(i18n$t("Compact reference for experienced users who need a quick reminder.")),
+          tags$h4(icon("book"), " ", i18n$t("ui.modals.quick_reference_guide")),
+          tags$p(i18n$t("ui.modals.compact_reference_for_experienced_users_who_need_a_quick_reminder")),
           tags$div(
             style = "margin-top: 15px;",
             tags$a(
@@ -367,9 +367,9 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
               style = "margin: 5px;",
               icon("book"),
               " ",
-              i18n$t("Quick Reference Guide"),
+              i18n$t("ui.modals.quick_reference_guide"),
               tags$br(),
-              tags$small(i18n$t("Open in browser"))
+              tags$small(i18n$t("ui.modals.open_in_browser"))
             )
           )
         ),
@@ -379,13 +379,13 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
         # Complete Manuals Section
         tags$div(
           class = "well",
-          tags$h4(icon("file-alt"), " ", i18n$t("Complete User Manuals")),
-          tags$p(i18n$t("Comprehensive documentation with detailed explanations, technical details, and advanced features.")),
+          tags$h4(icon("file-alt"), " ", i18n$t("ui.modals.complete_user_manuals")),
+          tags$p(i18n$t("ui.modals.comprehensive_documentation_with_detailed_explanat")),
 
           tags$h5(style = "margin-top: 20px; color: #337ab7;",
                  icon("globe"),
                  " ",
-                 i18n$t("English Manual")),
+                 i18n$t("ui.modals.english_manual")),
           tags$div(
             style = "margin: 10px 0;",
             tags$a(
@@ -395,9 +395,9 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
               style = "margin: 5px;",
               icon("file-code"),
               " ",
-              i18n$t("HTML Version"),
+              i18n$t("ui.modals.html_version"),
               tags$br(),
-              tags$small(i18n$t("View online"))
+              tags$small(i18n$t("ui.modals.view_online"))
             ),
             tags$a(
               href = "#",
@@ -406,16 +406,16 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
               style = "margin: 5px;",
               icon("file-pdf"),
               " ",
-              i18n$t("PDF Version"),
+              i18n$t("ui.modals.pdf_version"),
               tags$br(),
-              tags$small(i18n$t("Download/Print"))
+              tags$small(i18n$t("ui.modals.downloadprint"))
             )
           ),
 
           tags$h5(style = "margin-top: 20px; color: #337ab7;",
                  icon("globe"),
                  " ",
-                 i18n$t("French Manual")),
+                 i18n$t("ui.modals.french_manual")),
           tags$div(
             style = "margin: 10px 0;",
             tags$a(
@@ -425,9 +425,9 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
               style = "margin: 5px;",
               icon("file-code"),
               " ",
-              i18n$t("HTML Version"),
+              i18n$t("ui.modals.html_version"),
               tags$br(),
-              tags$small(i18n$t("View online"))
+              tags$small(i18n$t("ui.modals.view_online"))
             ),
             tags$a(
               href = "#",
@@ -436,9 +436,9 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
               style = "margin: 5px;",
               icon("file-pdf"),
               " ",
-              i18n$t("PDF Version"),
+              i18n$t("ui.modals.pdf_version"),
               tags$br(),
-              tags$small(i18n$t("Download/Print"))
+              tags$small(i18n$t("ui.modals.downloadprint"))
             )
           ),
 
@@ -447,7 +447,7 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
             style = "margin-top: 20px;",
             icon("info-circle"),
             " ",
-            i18n$t("The complete manual contains approximately 75 pages of detailed documentation covering all features and workflows.")
+            i18n$t("ui.modals.the_complete_manual_contains_approximately_75_page")
           )
         ),
 
@@ -456,22 +456,22 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
         # Additional Resources
         tags$div(
           class = "well",
-          tags$h4(icon("link"), " ", i18n$t("Additional Resources")),
+          tags$h4(icon("link"), " ", i18n$t("ui.modals.additional_resources")),
           tags$ul(
             tags$li(
-              tags$strong(i18n$t("Video Tutorials:")),
+              tags$strong(i18n$t("ui.modals.video_tutorials")),
               " ",
-              i18n$t("Coming soon - check back later")
+              i18n$t("ui.modals.coming_soon_check_back_later")
             ),
             tags$li(
-              tags$strong(i18n$t("Example Projects:")),
+              tags$strong(i18n$t("ui.modals.example_projects")),
               " ",
-              i18n$t("Available in the template library")
+              i18n$t("ui.modals.available_in_the_template_library")
             ),
             tags$li(
-              tags$strong(i18n$t("Technical Documentation:")),
+              tags$strong(i18n$t("ui.modals.technical_documentation")),
               " ",
-              i18n$t("For developers and advanced users")
+              i18n$t("ui.modals.for_developers_and_advanced_users")
             )
           )
         )
@@ -501,7 +501,7 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
       title = tags$h3(icon("info-circle"), " About MarineSABRES SES Toolbox"),
       size = "l",
       easyClose = TRUE,
-      footer = modalButton(i18n$t("Close")),
+      footer = modalButton(i18n$t("common.buttons.close")),
 
       tags$div(
         style = "padding: 20px;",

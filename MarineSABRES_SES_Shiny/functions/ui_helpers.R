@@ -22,7 +22,7 @@ create_module_header <- function(ns, title_key, subtitle_key, help_id, i18n) {
         p(i18n$t(subtitle_key))
       ),
       div(style = "margin-top: 10px;",
-        actionButton(ns(help_id), i18n$t("Help"),
+        actionButton(ns(help_id), i18n$t("ui.header.help"),
                     icon = icon("question-circle"),
                     class = "btn btn-info btn-lg")
       )
@@ -49,7 +49,7 @@ create_help_observer <- function(input, input_id, title_key, content, i18n) {
       size = "l",
       easyClose = TRUE,
       content,
-      footer = modalButton(i18n$t("Close"))
+      footer = modalButton(i18n$t("common.buttons.close"))
     ))
   })
 }

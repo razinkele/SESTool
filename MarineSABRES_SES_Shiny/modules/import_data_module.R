@@ -68,19 +68,19 @@ import_data_ui <- function(id, i18n) {
     # Instructions
     div(class = "import-container",
       div(class = "import-instructions",
-        h4(icon("info-circle"), " ", i18n$t("Required Excel Format")),
+        h4(icon("info-circle"), " ", i18n$t("common.misc.required_excel_format")),
         tags$ul(
-          tags$li(strong(i18n$t("Two sheets required:")),
+          tags$li(strong(i18n$t("common.misc.two_sheets_required")),
                   tags$ul(
                     tags$li(strong("Elements"), " - Contains all nodes/elements in your SES"),
                     tags$li(strong("Connections"), " - Contains all relationships/edges between elements")
                   )),
-          tags$li(strong(i18n$t("Elements sheet columns:")),
+          tags$li(strong(i18n$t("common.misc.elements_sheet_columns")),
                   tags$ul(
                     tags$li(code("Label"), " - Name of the element (required)"),
                     tags$li(code("type"), " - Element type: Driver, Activity, Pressure, Marine Process and Function, Ecosystem Service, Good and Benefit, Response, or Measure (required)")
                   )),
-          tags$li(strong(i18n$t("Connections sheet columns:")),
+          tags$li(strong(i18n$t("common.misc.connections_sheet_columns")),
                   tags$ul(
                     tags$li(code("From"), " - Source element label (required)"),
                     tags$li(code("To"), " - Target element label (required)"),
@@ -466,7 +466,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       input,
       "import_data_help",
       "import_data_help_title",
-      tagList(p(i18n$t("import_data_help_content"))),
+      tagList(p(i18n$t("common.misc.import_data_help_content"))),
       i18n
     )
 

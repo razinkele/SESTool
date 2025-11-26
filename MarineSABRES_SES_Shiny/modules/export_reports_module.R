@@ -33,52 +33,52 @@ export_reports_ui <- function(id, i18n) {
 
     fluidRow(
       box(
-        title = i18n$t("Export Data"),
+        title = i18n$t("modules.isa.data_entry.common.export_data"),
         status = "primary",
         solidHeader = TRUE,
         width = 6,
 
         selectInput(
           ns("export_data_format"),
-          i18n$t("Select Format:"),
+          i18n$t("modules.export.reports.select_format"),
           choices = c("Excel (.xlsx)", "CSV (.csv)", "JSON (.json)",
                       "R Data (.RData)")
         ),
 
         checkboxGroupInput(
           ns("export_data_components"),
-          i18n$t("Select Components:"),
+          i18n$t("modules.export.reports.select_components"),
           choices = c(
-            "metadata" = i18n$t("Project Metadata"),
-            "pims" = i18n$t("PIMS Data"),
-            "isa_data" = i18n$t("ISA Data"),
-            "cld" = i18n$t("CLD Data"),
-            "analysis" = i18n$t("Analysis Results"),
-            "responses" = i18n$t("Response Measures")
+            "metadata" = i18n$t("modules.export.reports.project_metadata"),
+            "pims" = i18n$t("modules.export.reports.pims_data"),
+            "isa_data" = i18n$t("modules.export.reports.isa_data"),
+            "cld" = i18n$t("modules.export.reports.cld_data"),
+            "analysis" = i18n$t("modules.export.reports.analysis_results"),
+            "responses" = i18n$t("ui.sidebar.response_measures")
           ),
           selected = c("metadata", "isa_data", "cld")
         ),
 
-        downloadButton(ns("download_data"), i18n$t("Download Data"),
+        downloadButton(ns("download_data"), i18n$t("modules.export.reports.download_data"),
                        class = "btn-primary")
       ),
 
       box(
-        title = i18n$t("Export Visualizations"),
+        title = i18n$t("modules.export.reports.export_visualizations"),
         status = "info",
         solidHeader = TRUE,
         width = 6,
 
         selectInput(
           ns("export_viz_format"),
-          i18n$t("Select Format:"),
+          i18n$t("modules.export.reports.select_format"),
           choices = c("PNG (.png)", "SVG (.svg)", "HTML (.html)",
                       "PDF (.pdf)")
         ),
 
         numericInput(
           ns("export_viz_width"),
-          i18n$t("Width (pixels):"),
+          i18n$t("modules.export.reports.width_pixels"),
           value = 1200,
           min = 400,
           max = 4000
@@ -86,27 +86,27 @@ export_reports_ui <- function(id, i18n) {
 
         numericInput(
           ns("export_viz_height"),
-          i18n$t("Height (pixels):"),
+          i18n$t("modules.export.reports.height_pixels"),
           value = 900,
           min = 300,
           max = 3000
         ),
 
-        downloadButton(ns("download_viz"), i18n$t("Download Visualization"),
+        downloadButton(ns("download_viz"), i18n$t("modules.export.reports.download_visualization"),
                        class = "btn-info")
       )
     ),
 
     fluidRow(
       box(
-        title = i18n$t("Generate Report"),
+        title = i18n$t("modules.export.reports.generate_report"),
         status = "success",
         solidHeader = TRUE,
         width = 12,
 
         selectInput(
           ns("report_type"),
-          i18n$t("Report Type:"),
+          i18n$t("common.labels.report_type"),
           choices = c(
             "Executive Summary" = "executive",
             "Technical Report" = "technical",
@@ -117,25 +117,25 @@ export_reports_ui <- function(id, i18n) {
 
         selectInput(
           ns("report_format"),
-          i18n$t("Report Format:"),
+          i18n$t("modules.export.reports.report_format"),
           choices = c("HTML", "PDF", "Word")
         ),
 
         checkboxInput(
           ns("report_include_viz"),
-          i18n$t("Include Visualizations"),
+          i18n$t("modules.export.reports.include_visualizations"),
           value = TRUE
         ),
 
         checkboxInput(
           ns("report_include_data"),
-          i18n$t("Include Data Tables"),
+          i18n$t("modules.export.reports.include_data_tables"),
           value = TRUE
         ),
 
         actionButton(
           ns("generate_report"),
-          i18n$t("Generate Report"),
+          i18n$t("modules.export.reports.generate_report"),
           icon = icon("file-alt"),
           class = "btn-success"
         ),
@@ -321,7 +321,7 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
           )
 
           showNotification(
-            i18n$t("Report opened in a new window!"),
+            i18n$t("modules.export.reports.report_opened_in_a_new_window"),
             type = "message",
             duration = 5
           )
@@ -329,33 +329,33 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
         } else if (report_format == "PDF") {
           # For PDF, show informative message about requirements
           showModal(modalDialog(
-            title = i18n$t("PDF Report Notice"),
+            title = i18n$t("modules.export.reports.pdf_report_notice"),
             tags$div(
               tags$p(icon("info-circle"), style = "color: #17a2b8;",
-                     i18n$t("PDF generation requires LaTeX (e.g., TinyTeX or MiKTeX).")),
-              tags$p(i18n$t("If you see errors, try generating an HTML report instead, which you can print to PDF from your browser.")),
+                     i18n$t("modules.export.reports.pdf_generation_requires_latex_eg_tinytex_or_miktex")),
+              tags$p(i18n$t("modules.export.if_you_see_errors_try_generating_an_html_report_in")),
               tags$hr(),
-              tags$p(i18n$t("To install TinyTeX for PDF support:")),
+              tags$p(i18n$t("modules.export.reports.to_install_tinytex_for_pdf_support")),
               tags$pre("install.packages('tinytex')\ntinytex::install_tinytex()"),
               tags$hr(),
               downloadButton(session$ns("download_report_file"),
-                             i18n$t("Download Report (if generated)"),
+                             i18n$t("modules.export.reports.download_report_if_generated"),
                              class = "btn-danger")
             ),
-            footer = modalButton(i18n$t("Close")),
+            footer = modalButton(i18n$t("common.buttons.close")),
             easyClose = TRUE
           ))
         } else {
           # For Word, show download dialog
           showModal(modalDialog(
-            title = i18n$t("Report Generated Successfully"),
+            title = i18n$t("common.messages.report_generated_successfully"),
             tags$div(
-              p(i18n$t("Your report has been generated successfully.")),
+              p(i18n$t("modules.export.reports.your_report_has_been_generated_successfully")),
               downloadButton(session$ns("download_report_file"),
-                             i18n$t("Download Report"),
+                             i18n$t("modules.export.reports.download_report"),
                              class = "btn-success")
             ),
-            footer = modalButton(i18n$t("Close"))
+            footer = modalButton(i18n$t("common.buttons.close"))
           ))
         }
 
@@ -427,12 +427,12 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
     create_help_observer(
       input, "help_export", "export_guide_title",
       tagList(
-        h4(i18n$t("export_guide_data_title")),
-        p(i18n$t("export_guide_data_p1")),
-        h4(i18n$t("export_guide_viz_title")),
-        p(i18n$t("export_guide_viz_p1")),
-        h4(i18n$t("export_guide_reports_title")),
-        p(i18n$t("export_guide_reports_p1"))
+        h4(i18n$t("modules.export.reports.export_guide_data_title")),
+        p(i18n$t("modules.export.reports.export_guide_data_p1")),
+        h4(i18n$t("modules.export.reports.export_guide_viz_title")),
+        p(i18n$t("modules.export.reports.export_guide_viz_p1")),
+        h4(i18n$t("modules.export.reports.export_guide_reports_title")),
+        p(i18n$t("modules.export.reports.export_guide_reports_p1"))
       ),
       i18n
     )

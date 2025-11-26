@@ -340,7 +340,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
       if (total == 0) {
         return(div(class = "alert alert-info",
-                  icon("info-circle"), " ", i18n$t("No connections to review.")))
+                  icon("info-circle"), " ", i18n$t("common.misc.no_connections_to_review")))
       }
 
       approved <- length(rv$approved)
@@ -353,24 +353,24 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           div(
             span(class = "stat-item",
               span(class = "stat-value", total),
-              span(class = "stat-label", i18n$t("Total Connections"))
+              span(class = "stat-label", i18n$t("common.misc.total_connections"))
             ),
             span(class = "stat-item",
               span(class = "stat-value", approved),
-              span(class = "stat-label", i18n$t("Approved"), style = "color: #d4edda;")
+              span(class = "stat-label", i18n$t("common.misc.approved"), style = "color: #d4edda;")
             ),
             span(class = "stat-item",
               span(class = "stat-value", rejected),
-              span(class = "stat-label", i18n$t("Rejected"), style = "color: #f8d7da;")
+              span(class = "stat-label", i18n$t("common.misc.rejected"), style = "color: #f8d7da;")
             ),
             span(class = "stat-item",
               span(class = "stat-value", pending),
-              span(class = "stat-label", i18n$t("Pending"))
+              span(class = "stat-label", i18n$t("modules.response.measures.pending"))
             )
           ),
           div(style = "text-align: right;",
             div(style = "font-size: 2em; font-weight: bold;", paste0(progress_pct, "%")),
-            div(style = "font-size: 0.9em; opacity: 0.9;", i18n$t("Reviewed"))
+            div(style = "font-size: 0.9em; opacity: 0.9;", i18n$t("common.misc.reviewed"))
           )
         )
       )
@@ -445,29 +445,29 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               div(
                 span(class = "stat-item",
                   span(class = "stat-value", conn_count),
-                  span(class = "stat-label", i18n$t("Connections"))
+                  span(class = "stat-label", i18n$t("ui.dashboard.connections"))
                 ),
                 span(class = "stat-item",
                   span(class = "stat-value", batch_approved),
-                  span(class = "stat-label", i18n$t("Approved"), style = "color: #d4edda;")
+                  span(class = "stat-label", i18n$t("common.misc.approved"), style = "color: #d4edda;")
                 ),
                 span(class = "stat-item",
                   span(class = "stat-value", batch_rejected),
-                  span(class = "stat-label", i18n$t("Rejected"), style = "color: #f8d7da;")
+                  span(class = "stat-label", i18n$t("common.misc.rejected"), style = "color: #f8d7da;")
                 ),
                 span(class = "stat-item",
                   span(class = "stat-value", batch_pending),
-                  span(class = "stat-label", i18n$t("Pending"))
+                  span(class = "stat-label", i18n$t("modules.response.measures.pending"))
                 )
               ),
               div(style = "text-align: right;",
                 actionButton(ns(paste0("approve_all_", batch_id)),
-                            i18n$t("Approve All"),
+                            i18n$t("modules.isa.ai_assistant.approve_all"),
                             icon = icon("check-circle"),
                             class = "btn-success btn-sm",
                             style = "margin-left: 5px;"),
                 actionButton(ns(paste0("reject_all_", batch_id)),
-                            i18n$t("Reject All"),
+                            i18n$t("common.misc.reject_all"),
                             icon = icon("times-circle"),
                             class = "btn-danger btn-sm",
                             style = "margin-left: 5px;")
@@ -527,7 +527,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             if (length(conns) == 0) {
               return(div(class = "empty-batch-message",
                         div(class = "empty-batch-icon", icon("inbox")),
-                        div(i18n$t("No connections in this category"))))
+                        div(i18n$t("common.misc.no_connections_in_this_category"))))
             }
 
             # Create cards for each connection
@@ -569,7 +569,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             }
 
             showNotification(
-              sprintf(i18n$t("All %d connections in %s approved!"),
+              sprintf(i18n$t("common.misc.all_d_connections_in_s_approved"),
                      length(batch$indices),
                      i18n$t(batch$info$label)),
               type = "message",
@@ -589,7 +589,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             }
 
             showNotification(
-              sprintf(i18n$t("All %d connections in %s rejected!"),
+              sprintf(i18n$t("common.misc.all_d_connections_in_s_rejected"),
                      length(batch$indices),
                      i18n$t(batch$info$label)),
               type = "warning",
@@ -767,7 +767,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             }
 
             showNotification(
-              i18n$t("Connection amended successfully"),
+              i18n$t("common.misc.connection_amended_successfully"),
               type = "message",
               duration = 2
             )
@@ -847,7 +847,7 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
     div(class = "conn-slider-container",
       div(class = "conn-slider-label",
         span(
-          icon("bolt"), " ", i18n$t("Strength:"),
+          icon("bolt"), " ", i18n$t("modules.isa.data_entry.common.strength"),
           span(
             icon("info-circle", style = "color: #17a2b8; cursor: help; margin-left: 5px; font-size: 0.9em;"),
             `data-toggle` = "tooltip",
@@ -873,7 +873,7 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
     div(class = "conn-slider-container",
       div(class = "conn-slider-label",
         span(
-          icon("chart-bar"), " ", i18n$t("Confidence:"),
+          icon("chart-bar"), " ", i18n$t("modules.isa.data_entry.common.confidence"),
           span(
             icon("info-circle", style = "color: #17a2b8; cursor: help; margin-left: 5px; font-size: 0.9em;"),
             `data-toggle` = "tooltip",
@@ -902,9 +902,9 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
         tags$div(
           `data-toggle` = "tooltip",
           `data-placement` = "top",
-          title = i18n$t("Save changes to strength, confidence, or polarity for this connection"),
+          title = i18n$t("common.misc.save_changes_to_strength_confidence_or_polarity_for_this_connection"),
           actionButton(ns(paste0("amend_", conn_idx)),
-                      i18n$t("Amend"),
+                      i18n$t("common.misc.amend"),
                       icon = icon("edit"),
                       class = "btn-warning btn-sm",
                       style = "width: 100%; height: 32px; padding: 6px 8px;")
@@ -916,9 +916,9 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
         tags$div(
           `data-toggle` = "tooltip",
           `data-placement` = "top",
-          title = i18n$t("Accept this connection as-is or with amendments"),
+          title = i18n$t("common.misc.accept_this_connection_as_is_or_with_amendments"),
           actionButton(ns(paste0("approve_", conn_idx)),
-                      i18n$t("Approve"),
+                      i18n$t("common.misc.approve"),
                       icon = icon("check"),
                       class = "btn-success btn-sm",
                       style = "width: 100%; height: 32px; padding: 6px 8px;")
@@ -930,9 +930,9 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
         tags$div(
           `data-toggle` = "tooltip",
           `data-placement` = "top",
-          title = i18n$t("Reject this connection and exclude it from your model"),
+          title = i18n$t("common.misc.reject_this_connection_and_exclude_it_from_your_model"),
           actionButton(ns(paste0("reject_", conn_idx)),
-                      i18n$t("Reject"),
+                      i18n$t("common.misc.reject"),
                       icon = icon("times"),
                       class = "btn-danger btn-sm",
                       style = "width: 100%; height: 32px; padding: 6px 8px;")

@@ -482,7 +482,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 0,
         title_key = "regional_sea",
-        title = i18n$t("Regional Sea Context"),
+        title = i18n$t("modules.isa.ai_assistant.regional_sea_context"),
         question = i18n$t("Hello! I'm your AI assistant for creating a DAPSI(W)R(M) model. Let's start by selecting your regional sea or ocean. This helps me provide relevant suggestions for your area."),
         type = "choice_regional_sea",
         target = "regional_sea"
@@ -490,15 +490,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 1,
         title_key = "ecosystem",
-        title = i18n$t("Ecosystem Type"),
-        question = i18n$t("What type of marine ecosystem are you studying?"),
+        title = i18n$t("modules.isa.ai_assistant.ecosystem_type"),
+        question = i18n$t("modules.isa.ai_assistant.what_type_of_marine_ecosystem_are_you_studying"),
         type = "choice_ecosystem",
         target = "ecosystem_type"
       ),
       list(
         step = 2,
         title_key = "main_issue",
-        title = i18n$t("Main Issue Identification"),
+        title = i18n$t("modules.isa.ai_assistant.main_issue_identification"),
         question = i18n$t("What are the main environmental or management issues you're addressing? (Select all that apply)"),
         type = "choice_with_custom_multiple",  # Changed to support multiple selections
         target = "main_issue"
@@ -506,7 +506,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 3,
         title_key = "drivers",
-        title = i18n$t("Drivers - Societal Needs"),
+        title = i18n$t("modules.isa.ai_assistant.drivers_societal_needs"),
         question = i18n$t("Let's identify the DRIVERS - these are the basic human needs or societal demands driving activities in your area. What are the main societal needs?"),
         type = "multiple",
         target = "drivers",
@@ -515,7 +515,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 4,
         title_key = "activities",
-        title = i18n$t("Activities - Human Actions"),
+        title = i18n$t("modules.isa.ai_assistant.activities_human_actions"),
         question = i18n$t("Now let's identify ACTIVITIES - the human actions taken to meet those needs. What activities are happening in your marine area?"),
         type = "multiple",
         target = "activities",
@@ -524,8 +524,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 5,
         title_key = "pressures",
-        title = i18n$t("Pressures - Environmental Stressors"),
-        question = i18n$t("What PRESSURES do these activities put on the marine environment?"),
+        title = i18n$t("modules.isa.ai_assistant.pressures_environmental_stressors"),
+        question = i18n$t("modules.isa.what_pressures_do_these_activities_put_on_the_mari"),
         type = "multiple",
         target = "pressures",
         use_context_examples = TRUE
@@ -533,8 +533,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 6,
         title_key = "states",
-        title = i18n$t("State Changes - Ecosystem Effects"),
-        question = i18n$t("How do these pressures change the STATE of the marine ecosystem?"),
+        title = i18n$t("modules.isa.ai_assistant.state_changes_ecosystem_effects"),
+        question = i18n$t("modules.isa.how_do_these_pressures_change_the_state_of_the_mar"),
         type = "multiple",
         target = "states",
         use_context_examples = TRUE
@@ -542,8 +542,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 7,
         title_key = "impacts",
-        title = i18n$t("Impacts - Effects on Ecosystem Services"),
-        question = i18n$t("What are the IMPACTS on ecosystem services and benefits? How do these changes affect what the ocean provides?"),
+        title = i18n$t("modules.isa.ai_assistant.impacts_effects_on_ecosystem_services"),
+        question = i18n$t("modules.isa.what_are_the_impacts_on_ecosystem_services_and_ben"),
         type = "multiple",
         target = "impacts",
         use_context_examples = TRUE
@@ -551,8 +551,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 8,
         title_key = "welfare",
-        title = i18n$t("Welfare - Human Well-being Effects"),
-        question = i18n$t("How do these impacts affect human WELFARE and well-being?"),
+        title = i18n$t("modules.isa.ai_assistant.welfare_human_well_being_effects"),
+        question = i18n$t("modules.isa.how_do_these_impacts_affect_human_welfare_and_well"),
         type = "multiple",
         target = "welfare",
         use_context_examples = TRUE
@@ -560,8 +560,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 9,
         title_key = "responses",
-        title = i18n$t("Response Measures - Management & Policy"),
-        question = i18n$t("What RESPONSE MEASURES (management actions, policies, regulations) are being taken (or could be taken) to address these issues?"),
+        title = i18n$t("modules.isa.ai_assistant.response_measures_management_policy"),
+        question = i18n$t("modules.isa.what_response_measures_management_actions_policies"),
         type = "multiple",
         target = "responses",
         use_context_examples = TRUE
@@ -569,7 +569,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       list(
         step = 10,
         title_key = "connection_review",
-        title = i18n$t("Connection Review"),
+        title = i18n$t("modules.ses.creation.connection_review"),
         question = i18n$t("Great! Now I'll suggest logical connections between the elements you've identified. These connections represent causal relationships in your social-ecological system. You can review and approve/reject each suggestion."),
         type = "connection_review",
         target = "connections"
@@ -594,7 +594,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       input,
       "ai_isa_help",
       "AI Assistant Help",
-      i18n$t("This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step."),
+      i18n$t("modules.isa.this_ai_powered_assistant_helps_you_create_your_da"),
       i18n
     )
 
@@ -603,7 +603,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     output$sidebar_panel <- renderUI({
       ns <- session$ns
       box(
-        title = i18n$t("Your SES Model Progress"),
+        title = i18n$t("modules.isa.ai_assistant.your_ses_model_progress"),
         status = "info",
         solidHeader = TRUE,
         width = 12,
@@ -612,7 +612,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Progress indicator
         div(class = "step-indicator",
           icon("tasks"), " ",
-          sprintf(i18n$t("Step %d of %d"), rv$current_step, rv$total_steps)
+          sprintf(i18n$t("common.misc.step_d_of_d"), rv$current_step, rv$total_steps)
         ),
 
         # Breadcrumb navigation
@@ -623,7 +623,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
         hr(),
 
-        h4(icon("network-wired"), " ", i18n$t("Current Framework:")),
+        h4(icon("network-wired"), " ", i18n$t("modules.isa.ai_assistant.current_framework")),
 
         # Two-column layout: Elements | Connection Types
         tags$table(
@@ -632,54 +632,54 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             tags$td(
               style = "vertical-align: top; padding-right: 15px; border-right: 1px solid #ddd;",
               tags$div(style = "font-weight: bold; color: #007bff; margin-bottom: 5px;",
-                      i18n$t("Elements:")),
+                      i18n$t("modules.isa.ai_assistant.elements")),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_drivers"),
-                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Drivers:")), " ", textOutput(ns("count_drivers"), inline = TRUE)),
+                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.response.measures.drivers")), " ", textOutput(ns("count_drivers"), inline = TRUE)),
                           style = "color: #007bff;")
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_activities"),
-                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Activities:")), " ", textOutput(ns("count_activities"), inline = TRUE)),
+                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.response.measures.activities")), " ", textOutput(ns("count_activities"), inline = TRUE)),
                           style = "color: #007bff;")
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_pressures"),
-                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Pressures:")), " ", textOutput(ns("count_pressures"), inline = TRUE)),
+                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.response.measures.pressures")), " ", textOutput(ns("count_pressures"), inline = TRUE)),
                           style = "color: #007bff;")
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_states"),
-                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("State Changes:")), " ", textOutput(ns("count_states"), inline = TRUE)),
+                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.isa.ai_assistant.state_changes")), " ", textOutput(ns("count_states"), inline = TRUE)),
                           style = "color: #007bff;")
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_impacts"),
-                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Impacts:")), " ", textOutput(ns("count_impacts"), inline = TRUE)),
+                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.isa.ai_assistant.impacts")), " ", textOutput(ns("count_impacts"), inline = TRUE)),
                           style = "color: #007bff;")
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_welfare"),
-                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Welfare:")), " ", textOutput(ns("count_welfare"), inline = TRUE)),
+                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.isa.ai_assistant.welfare")), " ", textOutput(ns("count_welfare"), inline = TRUE)),
                           style = "color: #007bff;")
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_responses"),
-                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("Response Measures:")), " ", textOutput(ns("count_responses"), inline = TRUE)),
+                          tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.isa.ai_assistant.response_measures")), " ", textOutput(ns("count_responses"), inline = TRUE)),
                           style = "color: #007bff;")
               )
             ),
             tags$td(
               style = "vertical-align: top; padding-left: 15px;",
               tags$div(style = "font-weight: bold; color: #28a745; margin-bottom: 5px;",
-                      i18n$t("Connection Types:")),
+                      i18n$t("modules.isa.ai_assistant.connection_types")),
               uiOutput(ns("connection_types_summary"))
             )
           )
@@ -688,47 +688,47 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         tags$div(
           style = "margin-bottom: 5px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #ddd; margin-left: 10px;",
           actionLink(ns("link_connections"),
-                    tagList(icon("project-diagram"), " ", strong(i18n$t("Connections:")), " ", textOutput(ns("count_connections"), inline = TRUE)),
+                    tagList(icon("project-diagram"), " ", strong(i18n$t("modules.isa.ai_assistant.connections")), " ", textOutput(ns("count_connections"), inline = TRUE)),
                     style = "color: #28a745; font-weight: bold;")
         ),
 
         hr(),
 
-        h5(icon("database"), " ", i18n$t("Session Management")),
+        h5(icon("database"), " ", i18n$t("modules.isa.ai_assistant.session_management")),
         uiOutput(ns("save_status")),
         br(),
         fluidRow(
           column(6,
-            actionButton(ns("manual_save"), i18n$t("Save Progress"),
+            actionButton(ns("manual_save"), i18n$t("modules.isa.ai_assistant.save_progress"),
                         icon = icon("save"),
                         class = "btn-primary btn-sm btn-block",
-                        title = i18n$t("Save your current progress to browser storage"))
+                        title = i18n$t("modules.isa.ai_assistant.save_your_current_progress_to_browser_storage"))
           ),
           column(6,
-            actionButton(ns("load_session"), i18n$t("Load Saved"),
+            actionButton(ns("load_session"), i18n$t("modules.isa.ai_assistant.load_saved"),
                         icon = icon("folder-open"),
                         class = "btn-secondary btn-sm btn-block",
-                        title = i18n$t("Restore your last saved session"))
+                        title = i18n$t("modules.isa.ai_assistant.restore_your_last_saved_session"))
           )
         ),
         br(),
 
         hr(),
 
-        actionButton(ns("preview_model"), i18n$t("Preview Model"),
+        actionButton(ns("preview_model"), i18n$t("modules.isa.ai_assistant.preview_model"),
                     icon = icon("eye"),
                     class = "btn-info btn-block"),
         br(),
-        actionButton(ns("save_to_isa"), i18n$t("Save to ISA Data Entry"),
+        actionButton(ns("save_to_isa"), i18n$t("modules.isa.ai_assistant.save_to_isa_data_entry"),
                     icon = icon("save"),
                     class = "btn-success btn-block",
-                    title = i18n$t("Transfer your completed model to the standard ISA Data Entry module where you can view and edit it in detail")),
+                    title = i18n$t("modules.isa.transfer_your_completed_model_to_the_standard_isa_")),
         br(),
-        actionButton(ns("load_template"), i18n$t("Load Example Template"),
+        actionButton(ns("load_template"), i18n$t("modules.isa.ai_assistant.load_example_template"),
                     icon = icon("file-import"),
                     class = "btn-info btn-block"),
         br(),
-        actionButton(ns("start_over"), i18n$t("Start Over"),
+        actionButton(ns("start_over"), i18n$t("modules.entry_point.start_over"),
                     icon = icon("redo"),
                     class = "btn-warning btn-block")
       )
@@ -792,17 +792,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       if (!is.null(rv$last_save_time)) {
         time_diff <- difftime(Sys.time(), rv$last_save_time, units = "secs")
         time_text <- if (time_diff < 60) {
-          paste0(round(time_diff), " ", i18n$t("seconds ago"))
+          paste0(round(time_diff), " ", i18n$t("modules.isa.ai_assistant.seconds_ago"))
         } else {
-          paste0(round(time_diff / 60), " ", i18n$t("minutes ago"))
+          paste0(round(time_diff / 60), " ", i18n$t("modules.isa.ai_assistant.minutes_ago"))
         }
 
         div(class = "save-status",
-          icon("check-circle"), " ", i18n$t("Auto-saved"), " ", time_text
+          icon("check-circle"), " ", i18n$t("modules.isa.ai_assistant.auto_saved"), " ", time_text
         )
       } else {
         div(class = "save-status warning",
-          icon("exclamation-triangle"), " ", i18n$t("Not yet saved")
+          icon("exclamation-triangle"), " ", i18n$t("modules.isa.ai_assistant.not_yet_saved")
         )
       }
     })
@@ -814,7 +814,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       rv$last_save_time <- Sys.time()
 
       showNotification(
-        i18n$t("Session saved successfully!"),
+        i18n$t("modules.isa.ai_assistant.session_saved_successfully"),
         type = "message",
         duration = 3
       )
@@ -832,21 +832,21 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
         # Show confirmation dialog
         showModal(modalDialog(
-          title = i18n$t("Restore Previous Session?"),
-          paste0(i18n$t("Found a saved session from"),
+          title = i18n$t("modules.isa.ai_assistant.restore_previous_session"),
+          paste0(i18n$t("modules.isa.ai_assistant.found_a_saved_session_from"),
                  " ",
                  format(as.POSIXct(input$loaded_session_data$timestamp), "%Y-%m-%d %H:%M:%S"),
-                 ". ", i18n$t("Do you want to restore it?")),
+                 ". ", i18n$t("modules.isa.ai_assistant.do_you_want_to_restore_it")),
           footer = tagList(
-            actionButton(session$ns("confirm_load"), i18n$t("Yes, Restore"), class = "btn-primary"),
-            modalButton(i18n$t("Cancel"))
+            actionButton(session$ns("confirm_load"), i18n$t("modules.isa.ai_assistant.yes_restore"), class = "btn-primary"),
+            modalButton(i18n$t("common.buttons.cancel"))
           )
         ))
 
         # Store loaded data temporarily
         rv$temp_loaded_data <- loaded_data
       } else {
-        showNotification(i18n$t("No saved session found."), type = "warning", duration = 3)
+        showNotification(i18n$t("modules.isa.ai_assistant.no_saved_session_found"), type = "warning", duration = 3)
       }
     })
 
@@ -947,18 +947,18 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         if (step_info$type == "connection_review") {
           # Connection review interface using tabbed module
           wellPanel(
-            h4(icon("link"), " ", i18n$t("Review Suggested Connections")),
-            p(i18n$t("Approve or reject each connection organized by framework transitions. You can modify the strength and polarity if needed.")),
+            h4(icon("link"), " ", i18n$t("modules.isa.ai_assistant.review_suggested_connections")),
+            p(i18n$t("modules.isa.approve_or_reject_each_connection_organized_by_fra")),
             connection_review_tabbed_ui(session$ns("conn_review"), i18n),
             br(),
             fluidRow(
               column(6,
-                actionButton(session$ns("approve_all_connections"), i18n$t("Approve All"),
+                actionButton(session$ns("approve_all_connections"), i18n$t("modules.isa.ai_assistant.approve_all"),
                             icon = icon("check-circle"),
                             class = "btn-success btn-block")
               ),
               column(6,
-                actionButton(session$ns("finish_connections"), i18n$t("Finish & Continue"),
+                actionButton(session$ns("finish_connections"), i18n$t("modules.isa.ai_assistant.finish_continue"),
                             icon = icon("arrow-right"),
                             class = "btn-primary btn-block")
               )
@@ -974,10 +974,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               tagList(
                 textAreaInput(session$ns("user_input"),
                              label = NULL,
-                             placeholder = i18n$t("Type your answer here..."),
+                             placeholder = i18n$t("modules.isa.ai_assistant.type_your_answer_here"),
                              rows = 3,
                              width = "100%"),
-                actionButton(session$ns("submit_answer"), i18n$t("Submit Answer"),
+                actionButton(session$ns("submit_answer"), i18n$t("modules.isa.ai_assistant.submit_answer"),
                             icon = icon("paper-plane"),
                             class = "btn-primary btn-block"),
                 br()
@@ -1037,7 +1037,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       rv$approved_connections <- seq_along(rv$suggested_connections)
       cat(sprintf("[AI ISA CONNECTIONS] APPROVE ALL clicked - approved %d connections\n",
                  length(rv$approved_connections)))
-      showNotification(i18n$t("All connections approved!"), type = "message")
+      showNotification(i18n$t("modules.isa.ai_assistant.all_connections_approved"), type = "message")
     })
 
     # Finish connection review
@@ -1051,9 +1051,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       rv$conversation <- c(rv$conversation, list(
         list(type = "ai",
              message = paste0(i18n$t("Great! You've approved"), " ", approved_count, " ",
-                            i18n$t("connections out of"), " ",
-                            length(rv$suggested_connections), " ", i18n$t("suggested connections."), " ",
-                            i18n$t("These connections will be included in your saved ISA data.")),
+                            i18n$t("modules.isa.ai_assistant.connections_out_of"), " ",
+                            length(rv$suggested_connections), " ", i18n$t("modules.isa.ai_assistant.suggested_connections"), " ",
+                            i18n$t("modules.isa.these_connections_will_be_included_in_your_saved_i")),
              timestamp = Sys.time())
       ))
 
@@ -1334,7 +1334,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       rv$current_step <- 12
 
       showNotification(
-        paste0(approved_count, " ", i18n$t("connections saved! Navigating to dashboard...")),
+        paste0(approved_count, " ", i18n$t("modules.isa.ai_assistant.connections_saved_navigating_to_dashboard")),
         type = "message",
         duration = 3
       )
@@ -1360,17 +1360,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         step_info <- QUESTION_FLOW[[rv$current_step + 1]]
 
         # Determine button label based on next step
-        button_label <- i18n$t("Skip This Question")
+        button_label <- i18n$t("modules.isa.ai_assistant.skip_this_question")
         button_icon <- icon("forward")
 
         # For main_issue step (multiple selection), show count of selected items
         if (step_info$target == "main_issue") {
           selected_count <- length(rv$selected_issues)
           if (selected_count > 0) {
-            button_label <- paste0(i18n$t("Continue with"), " ", selected_count, " ", i18n$t("selected"))
+            button_label <- paste0(i18n$t("modules.isa.ai_assistant.continue_with"), " ", selected_count, " ", i18n$t("modules.isa.ai_assistant.selected"))
             button_icon <- icon("arrow-right")
           } else {
-            button_label <- i18n$t("Skip This Question")
+            button_label <- i18n$t("modules.isa.ai_assistant.skip_this_question")
             button_icon <- icon("forward")
           }
         }
@@ -1379,35 +1379,35 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
           # Create context-aware labels using title_key
           if (next_step$title_key == "activities") {
-            button_label <- i18n$t("Continue to Activities")
+            button_label <- i18n$t("modules.isa.ai_assistant.continue_to_activities")
             button_icon <- icon("arrow-right")
           } else if (next_step$title_key == "pressures") {
-            button_label <- i18n$t("Continue to Pressures")
+            button_label <- i18n$t("modules.isa.ai_assistant.continue_to_pressures")
             button_icon <- icon("arrow-right")
           } else if (next_step$title_key == "states") {
-            button_label <- i18n$t("Continue to State Changes")
+            button_label <- i18n$t("modules.isa.ai_assistant.continue_to_state_changes")
             button_icon <- icon("arrow-right")
           } else if (next_step$title_key == "impacts") {
-            button_label <- i18n$t("Continue to Impacts")
+            button_label <- i18n$t("modules.isa.ai_assistant.continue_to_impacts")
             button_icon <- icon("arrow-right")
           } else if (next_step$title_key == "welfare") {
-            button_label <- i18n$t("Continue to Welfare")
+            button_label <- i18n$t("modules.isa.ai_assistant.continue_to_welfare")
             button_icon <- icon("arrow-right")
           } else if (next_step$title_key == "responses") {
-            button_label <- i18n$t("Continue to Responses")
+            button_label <- i18n$t("modules.isa.ai_assistant.continue_to_responses")
             button_icon <- icon("arrow-right")
           } else if (next_step$title_key == "measures") {
-            button_label <- i18n$t("Continue to Measures")
+            button_label <- i18n$t("modules.isa.ai_assistant.continue_to_measures")
             button_icon <- icon("arrow-right")
           } else if (next_step$title_key == "connection_review") {
-            button_label <- i18n$t("Finish")
+            button_label <- i18n$t("common.buttons.finish")
             button_icon <- icon("check")
           } else {
-            button_label <- i18n$t("Continue")
+            button_label <- i18n$t("common.buttons.continue")
             button_icon <- icon("arrow-right")
           }
         } else {
-          button_label <- i18n$t("Finish")
+          button_label <- i18n$t("common.buttons.finish")
           button_icon <- icon("check")
         }
 
@@ -1480,13 +1480,13 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
           other_button <- actionButton(
             inputId = other_button_id,
-            label = i18n$t("Other"),
+            label = i18n$t("modules.isa.ai_assistant.other"),
             class = "quick-option",
             style = "margin: 3px; min-width: 150px; background-color: #f0f0f0;"
           )
 
           return(div(
-            h5(style = "font-weight: 600; color: #667eea;", i18n$t("Select your regional sea:")),
+            h5(style = "font-weight: 600; color: #667eea;", i18n$t("modules.isa.ai_assistant.select_your_regional_sea")),
             div(style = "margin-top: 10px;", regional_sea_buttons, other_button)
           ))
         }
@@ -1506,13 +1506,13 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # Add "Other" button
             other_button <- actionButton(
               inputId = session$ns(paste0("ecosystem_other", render_suffix)),
-              label = i18n$t("Other"),
+              label = i18n$t("modules.isa.ai_assistant.other"),
               class = "quick-option",
               style = "margin: 3px; min-width: 140px; background-color: #f0f0f0;"
             )
             return(div(
               h5(style = "font-weight: 600; color: #667eea;",
-                 paste0(i18n$t("Common ecosystem types in"), " ",
+                 paste0(i18n$t("modules.isa.ai_assistant.common_ecosystem_types_in"), " ",
                         REGIONAL_SEAS[[rv$context$regional_sea]]$name_i18n, ":")),
               div(style = "margin-top: 10px;", ecosystem_buttons, other_button)
             ))
@@ -1538,7 +1538,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # Add "Other" button
             other_button <- actionButton(
               inputId = session$ns(paste0("issue_other", render_suffix)),
-              label = i18n$t("Other"),
+              label = i18n$t("modules.isa.ai_assistant.other"),
               class = "quick-option",
               style = "margin: 3px; min-width: 160px; background-color: #f0f0f0;"
             )
@@ -1546,9 +1546,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # that shows count at the bottom of the interface (line 1328-1337)
             return(div(
               h5(style = "font-weight: 600; color: #667eea;",
-                 i18n$t("Common issues in your region:")),
+                 i18n$t("modules.isa.ai_assistant.common_issues_in_your_region")),
               p(style = "font-size: 0.9em; color: #666; margin-top: 5px;",
-                i18n$t("Click to select/deselect. Multiple selections allowed.")),
+                i18n$t("modules.isa.ai_assistant.click_to_selectdeselect_multiple_selections_allowed")),
               div(style = "margin-top: 10px;", issue_buttons, other_button)
             ))
           }
@@ -1568,13 +1568,13 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # Add "Other" button
             other_button <- actionButton(
               inputId = session$ns(paste0("issue_other", render_suffix)),
-              label = i18n$t("Other"),
+              label = i18n$t("modules.isa.ai_assistant.other"),
               class = "quick-option",
               style = "margin: 3px; min-width: 160px; background-color: #f0f0f0;"
             )
             return(div(
               h5(style = "font-weight: 600; color: #667eea;",
-                 i18n$t("Common issues in your region:")),
+                 i18n$t("modules.isa.ai_assistant.common_issues_in_your_region")),
               div(style = "margin-top: 10px;", issue_buttons, other_button)
             ))
           }
@@ -1618,7 +1618,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             context_info <- ""
             if (!is.null(rv$context$regional_sea)) {
               context_info <- paste0(
-                " (", i18n$t("tailored for"), " ",
+                " (", i18n$t("modules.isa.ai_assistant.tailored_for"), " ",
                 REGIONAL_SEAS[[rv$context$regional_sea]]$name_i18n,
                 if (!is.null(rv$context$ecosystem_type)) paste0(" - ", rv$context$ecosystem_type) else "",
                 ")"
@@ -1628,7 +1628,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # Add "Other" button
             other_button <- actionButton(
               inputId = session$ns("dapsiwrm_other"),
-              label = i18n$t("Other (enter your own)"),
+              label = i18n$t("modules.isa.ai_assistant.other_enter_your_own"),
               class = "quick-option",
               style = "margin: 3px; background-color: #f0f0f0;"
             )
@@ -1643,7 +1643,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                 custom_elements <- tagList(
                   hr(style = "margin: 15px 0;"),
                   h5(style = "font-weight: 600; color: #28a745;",
-                     paste0(i18n$t("Your custom additions"), " (", length(custom_names), "):")),
+                     paste0(i18n$t("modules.isa.ai_assistant.your_custom_additions"), " (", length(custom_names), "):")),
                   div(style = "margin-top: 10px;",
                     lapply(custom_names, function(name) {
                       tags$span(
@@ -1660,9 +1660,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
             return(div(
               h5(style = "font-weight: 600; color: #667eea;",
-                 paste0(i18n$t("AI-suggested options"), context_info, ":")),
+                 paste0(i18n$t("modules.isa.ai_assistant.ai_suggested_options"), context_info, ":")),
               p(style = "font-size: 0.9em; color: #666; margin-top: 5px;",
-                i18n$t("Click to select/deselect. Multiple selections allowed.")),
+                i18n$t("modules.isa.ai_assistant.click_to_selectdeselect_multiple_selections_allowed")),
               div(style = "margin-top: 10px;", suggestion_buttons, other_button),
               custom_elements
             ))
@@ -1672,7 +1672,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Fallback for old static examples (backwards compatibility)
         else if (!is.null(step_info$examples)) {
           tagList(
-            h5(i18n$t("Quick options (click to add):")),
+            h5(i18n$t("modules.isa.ai_assistant.quick_options_click_to_add")),
             lapply(seq_along(step_info$examples), function(i) {
               example <- step_info$examples[i]
               actionButton(
@@ -1761,25 +1761,25 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                                  previous_selection, sea_key))
 
                       showModal(modalDialog(
-                        title = tags$h4(icon("exclamation-triangle"), " ", i18n$t("Warning: Changing Regional Sea")),
+                        title = tags$h4(icon("exclamation-triangle"), " ", i18n$t("common.messages.warning_changing_regional_sea")),
                         size = "m",
                         easyClose = FALSE,
                         footer = tagList(
-                          modalButton(i18n$t("Cancel")),
+                          modalButton(i18n$t("common.buttons.cancel")),
                           actionButton(session$ns("confirm_regional_sea_change"),
-                                      i18n$t("Continue"),
+                                      i18n$t("common.buttons.continue"),
                                       class = "btn-warning")
                         ),
                         tags$div(
                           p(style = "font-size: 15px;",
-                            i18n$t("You are changing your regional sea selection. This will affect the available options for:")),
+                            i18n$t("modules.isa.you_are_changing_your_regional_sea_selection_this_")),
                           tags$ul(
-                            tags$li(i18n$t("Ecosystem types")),
-                            tags$li(i18n$t("Common issues in the region")),
-                            tags$li(i18n$t("Context-specific suggestions"))
+                            tags$li(i18n$t("modules.isa.ai_assistant.ecosystem_types")),
+                            tags$li(i18n$t("modules.isa.ai_assistant.common_issues_in_the_region")),
+                            tags$li(i18n$t("modules.isa.ai_assistant.context_specific_suggestions"))
                           ),
                           p(style = "font-size: 15px; font-weight: 600; color: #d9534f;",
-                            i18n$t("Your current ecosystem and issue selections may no longer be valid for the new regional sea."))
+                            i18n$t("modules.isa.your_curr_ecosystem_and_issue_selections_may_no_lo"))
                         )
                       ))
 
@@ -1797,8 +1797,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                         cat(sprintf("[AI ISA] Regional sea changed to %s, cleared dependent selections\n", sea_key))
 
                         ai_response <- paste0(
-                          i18n$t("Regional sea changed to"), " ", REGIONAL_SEAS[[sea_key]]$name_i18n, ". ",
-                          i18n$t("Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea.")
+                          i18n$t("modules.isa.ai_assistant.regional_sea_changed_to"), " ", REGIONAL_SEAS[[sea_key]]$name_i18n, ". ",
+                          i18n$t("modules.isa.your_ecosystem_and_issue_selections_have_been_clea")
                         )
                         rv$conversation <- c(rv$conversation, list(
                           list(type = "ai", message = ai_response, timestamp = Sys.time())
@@ -1813,8 +1813,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                       rv$context$regional_sea <- sea_key
 
                       ai_response <- paste0(
-                        i18n$t("Great! You selected"), " ", REGIONAL_SEAS[[sea_key]]$name_i18n, ". ",
-                        i18n$t("This will help me suggest relevant activities and pressures specific to your region.")
+                        i18n$t("modules.isa.ai_assistant.great_you_selected"), " ", REGIONAL_SEAS[[sea_key]]$name_i18n, ". ",
+                        i18n$t("modules.isa.this_will_help_me_suggest_relevant_activities_and_")
                       )
                       rv$conversation <- c(rv$conversation, list(
                         list(type = "ai", message = ai_response, timestamp = Sys.time())
@@ -1853,7 +1853,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                       rv$context$ecosystem_type <- ecosystem_name
 
                       ai_response <- paste0(
-                        i18n$t("Perfect!"), " ", ecosystem_name, " ",
+                        i18n$t("modules.isa.ai_assistant.perfect"), " ", ecosystem_name, " ",
                         i18n$t("ecosystems have unique characteristics that I'll consider in my suggestions.")
                       )
                       rv$conversation <- c(rv$conversation, list(
@@ -2095,8 +2095,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             cat(sprintf("[AI ISA] Regional sea set to: %s (text input)\n", REGIONAL_SEAS[[matched_sea]]$name_en))
 
             ai_response <- paste0(
-              i18n$t("Great! You selected"), " ", REGIONAL_SEAS[[matched_sea]]$name_i18n, ". ",
-              i18n$t("This will help me suggest relevant activities and pressures specific to your region.")
+              i18n$t("modules.isa.ai_assistant.great_you_selected"), " ", REGIONAL_SEAS[[matched_sea]]$name_i18n, ". ",
+              i18n$t("modules.isa.this_will_help_me_suggest_relevant_activities_and_")
             )
           } else {
             # Couldn't match, use "other"
@@ -2119,7 +2119,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           cat(sprintf("[AI ISA] Ecosystem type set to: %s (text input)\n", answer))
 
           ai_response <- paste0(
-            i18n$t("Perfect!"), " ", answer, " ",
+            i18n$t("modules.isa.ai_assistant.perfect"), " ", answer, " ",
             i18n$t("ecosystems have unique characteristics that I'll consider in my suggestions.")
           )
 
@@ -2172,7 +2172,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           rv$show_text_input <- FALSE
 
           # AI response with count
-          ai_response <- paste0(i18n$t("Added"), " '", answer, "' (", element_count, " ", step_info$target, " ", i18n$t("total"), "). ", i18n$t("Click quick options to add more, or click the green button to continue."))
+          ai_response <- paste0(i18n$t("modules.isa.ai_assistant.added"), " '", answer, "' (", element_count, " ", step_info$target, " ", i18n$t("modules.isa.ai_assistant.total"), "). ", i18n$t("modules.isa.click_quick_options_to_add_more_or_click_the_green"))
 
           # Add AI response
           rv$conversation <- c(rv$conversation, list(
@@ -2185,7 +2185,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
           # Add AI response BEFORE moving to next step
           rv$conversation <- c(rv$conversation, list(
-            list(type = "ai", message = i18n$t("Thank you! Moving to the next question..."), timestamp = Sys.time())
+            list(type = "ai", message = i18n$t("modules.isa.ai_assistant.thank_you_moving_to_the_next_question"), timestamp = Sys.time())
           ))
 
           move_to_next_step()
@@ -2629,15 +2629,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # No elements - show helpful message
             message <- paste0(
               i18n$t("I notice you haven't added any elements yet!"), " ",
-              i18n$t("To create connections, you need to add at least some Drivers, Activities, Pressures, States, Impacts, Welfare, or Response Measures."), " ",
-              i18n$t("Please go back through the previous steps and add elements by clicking the suggested options or entering your own text.")
+              i18n$t("modules.isa.to_create_connections_you_need_to_add_at_least_som"), " ",
+              i18n$t("modules.isa.please_go_back_through_the_previous_steps_and_add_")
             )
           } else {
             # Generate connections with progress indicator
             conn_count <- 0
-            withProgress(message = i18n$t('Analyzing your elements and generating connections...'),
+            withProgress(message = i18n$t("modules.isa.ai_assistant.analyzing_your_elements_and_generating_connections"),
                         value = 0, {
-              incProgress(0.3, detail = i18n$t("This may take a moment..."))
+              incProgress(0.3, detail = i18n$t("modules.isa.ai_assistant.this_may_take_a_moment"))
 
               # Generate connections
               cat("[AI ISA] About to call generate_connections()...\n")
@@ -2664,23 +2664,23 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               cat(sprintf("[AI ISA] First connection structure: %s\n",
                          paste(names(rv$suggested_connections[[1]]), collapse=", ")))
 
-              incProgress(0.7, detail = i18n$t("Finalizing connections..."))
+              incProgress(0.7, detail = i18n$t("modules.isa.ai_assistant.finalizing_connections"))
             })
 
             if (conn_count == 0) {
               message <- paste0(
                 i18n$t("I see you've added"), " ", total_elements, " ", i18n$t("elements, but I couldn't generate connections between them."), " ",
-                i18n$t("Try adding more elements to different categories (Drivers, Activities, Pressures, etc.) to create meaningful connections.")
+                i18n$t("modules.isa.try_adding_more_elements_to_different_categories_d")
               )
             } else {
               base_message <- paste0(next_step$question, " ", i18n$t("I've identified"), " ", conn_count,
-                               " ", i18n$t("potential connections based on the DAPSI(W)R(M) framework logic."), " ",
-                               i18n$t("Review each connection below and approve or reject them."))
+                               " ", i18n$t("modules.isa.potential_connections_based_on_the_dapsiwrm_framew"), " ",
+                               i18n$t("modules.isa.ai_assistant.review_each_connection_below_and_approve_or_reject_them"))
 
               if (too_many) {
                 message <- paste0(base_message, " ",
-                                 i18n$t("Note: I found more connections, but limited to"), " ", max_connections,
-                                 " ", i18n$t("distributed across tabs to keep the interface responsive."))
+                                 i18n$t("modules.isa.ai_assistant.note_i_found_more_connections_but_limited_to"), " ", max_connections,
+                                 " ", i18n$t("modules.isa.distributed_across_tabs_to_keep_the_interface_resp"))
               } else {
                 message <- base_message
               }
@@ -2722,7 +2722,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         onclick = sprintf("Shiny.setInputValue('%s', Math.random())", session$ns("goto_start")),
         icon("home"),
         " ",
-        i18n$t("Start")
+        i18n$t("common.buttons.start")
       )
 
       # Add previous steps up to current
@@ -2828,7 +2828,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       div(
         h2(style = "color: #667eea; text-align: center;", total_elements),
-        p(style = "text-align: center;", i18n$t("Total elements created"))
+        p(style = "text-align: center;", i18n$t("modules.isa.ai_assistant.total_elements_created"))
       )
     })
 
@@ -2938,16 +2938,16 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$preview_model, {
       # Create preview of all elements
       preview_content <- tagList(
-        h3(icon("project-diagram"), " ", i18n$t("Your DAPSI(W)R(M) Model Preview")),
+        h3(icon("project-diagram"), " ", i18n$t("modules.isa.ai_assistant.your_dapsiwrm_model_preview")),
         hr(),
 
         if (!is.null(rv$context$project_name)) {
           div(
-            h4(icon("map-marker-alt"), " ", i18n$t("Project Information")),
+            h4(icon("map-marker-alt"), " ", i18n$t("common.messages.project_information")),
             tags$ul(
-              tags$li(strong(i18n$t("Project/Location:")), " ", rv$context$project_name),
-              if (!is.null(rv$context$ecosystem_type)) tags$li(strong(i18n$t("Ecosystem Type:")), " ", rv$context$ecosystem_type),
-              if (!is.null(rv$context$main_issue)) tags$li(strong(i18n$t("Main Issue:")), " ", rv$context$main_issue)
+              tags$li(strong(i18n$t("modules.isa.ai_assistant.projectlocation")), " ", rv$context$project_name),
+              if (!is.null(rv$context$ecosystem_type)) tags$li(strong(i18n$t("common.labels.ecosystem_type")), " ", rv$context$ecosystem_type),
+              if (!is.null(rv$context$main_issue)) tags$li(strong(i18n$t("modules.isa.ai_assistant.main_issue")), " ", rv$context$main_issue)
             ),
             hr()
           )
@@ -2956,7 +2956,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Drivers
         if (length(rv$elements$drivers) > 0) {
           div(
-            h4(style = "color: #776db3;", icon("flag"), " ", i18n$t("Drivers (Societal Needs)")),
+            h4(style = "color: #776db3;", icon("flag"), " ", i18n$t("modules.isa.ai_assistant.drivers_societal_needs")),
             tags$ul(
               lapply(rv$elements$drivers, function(d) tags$li(d$name))
             )
@@ -2966,7 +2966,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Activities
         if (length(rv$elements$activities) > 0) {
           div(
-            h4(style = "color: #5abc67;", icon("running"), " ", i18n$t("Activities (Human Actions)")),
+            h4(style = "color: #5abc67;", icon("running"), " ", i18n$t("modules.isa.ai_assistant.activities_human_actions")),
             tags$ul(
               lapply(rv$elements$activities, function(a) tags$li(a$name))
             )
@@ -2976,7 +2976,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Pressures
         if (length(rv$elements$pressures) > 0) {
           div(
-            h4(style = "color: #fec05a;", icon("exclamation-triangle"), " ", i18n$t("Pressures (Environmental Stressors)")),
+            h4(style = "color: #fec05a;", icon("exclamation-triangle"), " ", i18n$t("modules.isa.ai_assistant.pressures_environmental_stressors")),
             tags$ul(
               lapply(rv$elements$pressures, function(p) tags$li(p$name))
             )
@@ -2986,7 +2986,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # State Changes
         if (length(rv$elements$states) > 0) {
           div(
-            h4(style = "color: #bce2ee;", icon("water"), " ", i18n$t("State Changes (Ecosystem Effects)")),
+            h4(style = "color: #bce2ee;", icon("water"), " ", i18n$t("modules.isa.ai_assistant.state_changes_ecosystem_effects")),
             tags$ul(
               lapply(rv$elements$states, function(s) tags$li(s$name))
             )
@@ -2996,7 +2996,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Impacts
         if (length(rv$elements$impacts) > 0) {
           div(
-            h4(style = "color: #313695;", icon("chart-line"), " ", i18n$t("Impacts (Service Effects)")),
+            h4(style = "color: #313695;", icon("chart-line"), " ", i18n$t("modules.isa.ai_assistant.impacts_service_effects")),
             tags$ul(
               lapply(rv$elements$impacts, function(i) tags$li(i$name))
             )
@@ -3006,7 +3006,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Welfare
         if (length(rv$elements$welfare) > 0) {
           div(
-            h4(style = "color: #fff1a2; text-shadow: 1px 1px 2px #666;", icon("heart"), " ", i18n$t("Welfare (Human Well-being)")),
+            h4(style = "color: #fff1a2; text-shadow: 1px 1px 2px #666;", icon("heart"), " ", i18n$t("modules.isa.ai_assistant.welfare_human_well_being")),
             tags$ul(
               lapply(rv$elements$welfare, function(w) tags$li(w$name))
             )
@@ -3016,7 +3016,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Responses
         if (length(rv$elements$responses) > 0) {
           div(
-            h4(style = "color: #66c2a5;", icon("shield-alt"), " ", i18n$t("Response Measures (Management & Policy)")),
+            h4(style = "color: #66c2a5;", icon("shield-alt"), " ", i18n$t("modules.isa.ai_assistant.response_measures_management_policy")),
             tags$ul(
               lapply(rv$elements$responses, function(r) tags$li(r$name))
             )
@@ -3033,7 +3033,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           if (length(valid_indices) > 0) {
             div(
               h4(style = "color: #28a745;", icon("project-diagram"), " ",
-                 i18n$t("Connections"), " (", length(valid_indices), ")"),
+                 i18n$t("ui.dashboard.connections"), " (", length(valid_indices), ")"),
               tags$div(
                 style = "max-height: 300px; overflow-y: auto; padding: 10px; background: #f8f9fa; border-radius: 5px;",
                 tags$ul(
@@ -3052,8 +3052,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                       strong(conn$to_name),
                       tags$br(),
                       span(style = "font-size: 0.85em; color: #666; margin-left: 20px;",
-                           i18n$t("Strength:"), " ", conn$strength, ", ",
-                           i18n$t("Confidence:"), " ", conn$confidence %||% 3)
+                           i18n$t("modules.isa.data_entry.common.strength"), " ", conn$strength, ", ",
+                           i18n$t("modules.isa.data_entry.common.confidence"), " ", conn$confidence %||% 3)
                     )
                   })
                 )
@@ -3064,13 +3064,13 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         },
 
         p(class = "text-muted",
-          i18n$t("Total elements:"), " ",
+          i18n$t("modules.isa.ai_assistant.total_elements"), " ",
           sum(length(rv$elements$drivers), length(rv$elements$activities),
               length(rv$elements$pressures), length(rv$elements$states),
               length(rv$elements$impacts), length(rv$elements$welfare),
               length(rv$elements$responses)),
           " | ",
-          i18n$t("Total connections:"), " ",
+          i18n$t("modules.isa.ai_assistant.total_connections"), " ",
           # Count only valid approved connections (bounds check)
           if (length(rv$suggested_connections) > 0) {
             length(rv$approved_connections[rv$approved_connections <= length(rv$suggested_connections)])
@@ -3085,8 +3085,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         size = "l",
         easyClose = TRUE,
         footer = tagList(
-          modalButton(i18n$t("Close")),
-          actionButton(session$ns("save_from_preview"), i18n$t("Save to ISA Data Entry"),
+          modalButton(i18n$t("common.buttons.close")),
+          actionButton(session$ns("save_from_preview"), i18n$t("modules.isa.ai_assistant.save_to_isa_data_entry"),
                       class = "btn-success", icon = icon("save"))
         )
       ))
@@ -3106,11 +3106,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # Handle start over
     observeEvent(input$start_over, {
       showModal(modalDialog(
-        title = i18n$t("Confirm Start Over"),
-        i18n$t("Are you sure you want to start over? All current progress will be lost."),
+        title = i18n$t("common.messages.confirm_start_over"),
+        i18n$t("modules.isa.are_you_sure_you_want_to_start_over_all_curr_progr"),
         footer = tagList(
-          modalButton(i18n$t("Cancel")),
-          actionButton(session$ns("confirm_start_over"), i18n$t("Yes, Start Over"), class = "btn-danger")
+          modalButton(i18n$t("common.buttons.cancel")),
+          actionButton(session$ns("confirm_start_over"), i18n$t("modules.isa.ai_assistant.yes_start_over"), class = "btn-danger")
         )
       ))
     })
@@ -3184,11 +3184,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$link_drivers, {
       if (length(rv$elements$drivers) > 0) {
         showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Drivers")),
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.response.measures.drivers")),
           tags$ul(lapply(rv$elements$drivers, function(d) tags$li(strong(d$name)))),
           size = "m",
           easyClose = TRUE,
-          footer = modalButton(i18n$t("Close"))
+          footer = modalButton(i18n$t("common.buttons.close"))
         ))
       }
     })
@@ -3196,11 +3196,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$link_activities, {
       if (length(rv$elements$activities) > 0) {
         showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Activities")),
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.response.measures.activities")),
           tags$ul(lapply(rv$elements$activities, function(a) tags$li(strong(a$name)))),
           size = "m",
           easyClose = TRUE,
-          footer = modalButton(i18n$t("Close"))
+          footer = modalButton(i18n$t("common.buttons.close"))
         ))
       }
     })
@@ -3208,11 +3208,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$link_pressures, {
       if (length(rv$elements$pressures) > 0) {
         showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Pressures")),
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.response.measures.pressures")),
           tags$ul(lapply(rv$elements$pressures, function(p) tags$li(strong(p$name)))),
           size = "m",
           easyClose = TRUE,
-          footer = modalButton(i18n$t("Close"))
+          footer = modalButton(i18n$t("common.buttons.close"))
         ))
       }
     })
@@ -3220,11 +3220,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$link_states, {
       if (length(rv$elements$states) > 0) {
         showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("State Changes")),
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.isa.ai_assistant.state_changes")),
           tags$ul(lapply(rv$elements$states, function(s) tags$li(strong(s$name)))),
           size = "m",
           easyClose = TRUE,
-          footer = modalButton(i18n$t("Close"))
+          footer = modalButton(i18n$t("common.buttons.close"))
         ))
       }
     })
@@ -3232,11 +3232,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$link_impacts, {
       if (length(rv$elements$impacts) > 0) {
         showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Impacts")),
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.isa.ai_assistant.impacts")),
           tags$ul(lapply(rv$elements$impacts, function(i) tags$li(strong(i$name)))),
           size = "m",
           easyClose = TRUE,
-          footer = modalButton(i18n$t("Close"))
+          footer = modalButton(i18n$t("common.buttons.close"))
         ))
       }
     })
@@ -3244,11 +3244,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$link_welfare, {
       if (length(rv$elements$welfare) > 0) {
         showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Welfare")),
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.ses.creation.welfare")),
           tags$ul(lapply(rv$elements$welfare, function(w) tags$li(strong(w$name)))),
           size = "m",
           easyClose = TRUE,
-          footer = modalButton(i18n$t("Close"))
+          footer = modalButton(i18n$t("common.buttons.close"))
         ))
       }
     })
@@ -3256,11 +3256,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     observeEvent(input$link_responses, {
       if (length(rv$elements$responses) > 0) {
         showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("Responses")),
+          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.isa.ai_assistant.responses")),
           tags$ul(lapply(rv$elements$responses, function(r) tags$li(strong(r$name)))),
           size = "m",
           easyClose = TRUE,
-          footer = modalButton(i18n$t("Close"))
+          footer = modalButton(i18n$t("common.buttons.close"))
         ))
       }
     })
@@ -3281,11 +3281,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         })
 
         showModal(modalDialog(
-          title = tagList(icon("project-diagram"), " ", i18n$t("Approved Connections")),
+          title = tagList(icon("project-diagram"), " ", i18n$t("modules.isa.ai_assistant.approved_connections")),
           tags$ul(conn_list),
           size = "l",
           easyClose = TRUE,
-          footer = modalButton(i18n$t("Close"))
+          footer = modalButton(i18n$t("common.buttons.close"))
         ))
       } else {
         showNotification("No connections approved yet.", type = "warning", duration = 2)
@@ -3295,29 +3295,29 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # Handle load template
     observeEvent(input$load_template, {
       showModal(modalDialog(
-        title = i18n$t("Load Example Template"),
-        h4(i18n$t("Choose a pre-built scenario:")),
+        title = i18n$t("modules.isa.ai_assistant.load_example_template"),
+        h4(i18n$t("modules.isa.ai_assistant.choose_a_pre_built_scenario")),
         fluidRow(
           column(6,
-            actionButton(session$ns("template_overfishing"), i18n$t("Overfishing in Coastal Waters"),
+            actionButton(session$ns("template_overfishing"), i18n$t("modules.isa.ai_assistant.overfishing_in_coastal_waters"),
                         class = "btn-primary btn-block", style = "margin: 5px;")
           ),
           column(6,
-            actionButton(session$ns("template_pollution"), i18n$t("Marine Pollution & Plastics"),
+            actionButton(session$ns("template_pollution"), i18n$t("modules.isa.ai_assistant.marine_pollution_plastics"),
                         class = "btn-primary btn-block", style = "margin: 5px;")
           )
         ),
         fluidRow(
           column(6,
-            actionButton(session$ns("template_tourism"), i18n$t("Coastal Tourism Impacts"),
+            actionButton(session$ns("template_tourism"), i18n$t("modules.isa.ai_assistant.coastal_tourism_impacts"),
                         class = "btn-primary btn-block", style = "margin: 5px;")
           ),
           column(6,
-            actionButton(session$ns("template_climate"), i18n$t("Climate Change & Coral Reefs"),
+            actionButton(session$ns("template_climate"), i18n$t("modules.isa.ai_assistant.climate_change_coral_reefs"),
                         class = "btn-primary btn-block", style = "margin: 5px;")
           )
         ),
-        footer = modalButton(i18n$t("Cancel"))
+        footer = modalButton(i18n$t("common.buttons.cancel"))
       ))
     })
 
@@ -3400,7 +3400,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       rv$approved_connections <- seq_along(rv$suggested_connections)
       rv$current_step <- 10  # Mark as complete
       removeModal()
-      showNotification(i18n$t("Overfishing template loaded with example connections! You can now preview or modify it."), type = "message", duration = 5)
+      showNotification(i18n$t("modules.isa.overfishing_template_loaded_with_example_connectio"), type = "message", duration = 5)
     })
 
     # Template: Marine Pollution
@@ -3485,7 +3485,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       rv$approved_connections <- seq_along(rv$suggested_connections)
       rv$current_step <- 10
       removeModal()
-      showNotification(i18n$t("Marine Pollution template loaded with example connections!"), type = "message", duration = 5)
+      showNotification(i18n$t("modules.isa.marine_pollution_template_loaded_with_example_conn"), type = "message", duration = 5)
     })
 
     # Template: Coastal Tourism
@@ -3567,7 +3567,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       rv$approved_connections <- seq_along(rv$suggested_connections)
       rv$current_step <- 10
       removeModal()
-      showNotification(i18n$t("Coastal Tourism template loaded with example connections!"), type = "message", duration = 5)
+      showNotification(i18n$t("modules.isa.coastal_tourism_template_loaded_with_example_conne"), type = "message", duration = 5)
     })
 
     # Template: Climate Change
@@ -3651,7 +3651,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       rv$approved_connections <- seq_along(rv$suggested_connections)
       rv$current_step <- 10
       removeModal()
-      showNotification(i18n$t("Climate Change template loaded with example connections!"), type = "message", duration = 5)
+      showNotification(i18n$t("modules.isa.ai_assistant.climate_change_template_loaded_with_example_connections"), type = "message", duration = 5)
     })
 
     # Auto-save when ISA framework generation is complete (step 10)
@@ -4534,8 +4534,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         cat(sprintf("[AI ISA] Save completed: %d elements, %d connections\n", total_elements, n_connections))
 
         showNotification(
-          paste0(i18n$t("Model saved successfully!"), " ", total_elements, " ", i18n$t("elements and"), " ",
-                 n_connections, " ", i18n$t("connections transferred to ISA Data Entry.")),
+          paste0(i18n$t("modules.isa.ai_assistant.model_saved_successfully"), " ", total_elements, " ", i18n$t("modules.isa.ai_assistant.elements_and"), " ",
+                 n_connections, " ", i18n$t("modules.isa.ai_assistant.connections_transferred_to_isa_data_entry")),
           type = "message",
           duration = 5
         )
@@ -4545,7 +4545,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         cat(sprintf("[AI ISA ERROR] Call stack: %s\n", paste(sys.calls(), collapse = "\n")))
 
         showNotification(
-          paste0(i18n$t("Error saving model:"), " ", e$message),
+          paste0(i18n$t("modules.isa.ai_assistant.error_saving_model"), " ", e$message),
           type = "error",
           duration = 10
         )
