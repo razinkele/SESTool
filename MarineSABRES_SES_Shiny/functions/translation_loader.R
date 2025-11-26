@@ -94,30 +94,8 @@ load_translations <- function(base_path = "translations", debug = FALSE) {
     })
   }
 
-  # Deduplicate merged_translations BEFORE creating final structure
-  # Keep first occurrence of each English text (files loaded in order)
-  if (length(merged_translations) > 0) {
-    en_values <- sapply(merged_translations, function(entry) {
-      if (!is.null(entry$en)) entry$en else ""
-    })
-
-    # Find duplicates
-    duplicate_indices <- which(duplicated(en_values) & en_values != "")
-
-    if (length(duplicate_indices) > 0 && debug) {
-      cat(sprintf("[TRANSLATION LOADER] Removing %d duplicate entries from modular files\n",
-                  length(duplicate_indices)))
-      for (idx in duplicate_indices) {
-        cat(sprintf("  - Duplicate: '%s'\n", en_values[idx]))
-      }
-    }
-
-    # Remove duplicates (keep first occurrence)
-    if (length(duplicate_indices) > 0) {
-      merged_translations <- merged_translations[-duplicate_indices]
-      entry_count <- entry_count - length(duplicate_indices)
-    }
-  }
+  # Pure modular system - no deduplication needed (all keys are unique namespaced)
+  # Removed legacy flat-key deduplication logic (lines 97-120)
 
   # Create final structure compatible with shiny.i18n
   result <- list(
@@ -330,8 +308,8 @@ get_translation_stats <- function(translations) {
 init_modular_translations <- function(base_path = "translations",
                                       validate = FALSE,
                                       debug = FALSE,
-                                      include_legacy = TRUE,
-                                      persistent = TRUE) {
+                                      persistent = TRUE,
+                                      enforce_namespaced = TRUE) {
 
   if (debug) {
     cat("[TRANSLATION SYSTEM] Initializing modular translation system...\n")
@@ -340,47 +318,8 @@ init_modular_translations <- function(base_path = "translations",
   # Load and merge all translation files
   merged_translations <- load_translations(base_path, debug = debug)
 
-  # If include_legacy, also load the old translation.json.backup and merge
-  if (include_legacy && file.exists(file.path(base_path, "translation.json.backup"))) {
-    if (debug) {
-      cat("[TRANSLATION SYSTEM] Loading legacy translations for backwards compatibility...\n")
-    }
-
-    tryCatch({
-      legacy <- jsonlite::fromJSON(
-        file.path(base_path, "translation.json.backup"),
-        simplifyVector = FALSE
-      )
-
-      # Append legacy translations (modular takes precedence by being first)
-      if (!is.null(legacy$translation)) {
-        # Extract keys from modular translations (use "en" field as key for flat-key system)
-        modular_keys <- sapply(merged_translations$translation, function(entry) {
-          if (!is.null(entry$en)) entry$en else ""
-        })
-
-        # Filter out legacy entries that duplicate modular keys
-        legacy_filtered <- Filter(function(entry) {
-          key <- if (!is.null(entry$en)) entry$en else ""
-          !(key %in% modular_keys)
-        }, legacy$translation)
-
-        # Append filtered legacy translations
-        merged_translations$translation <- c(
-          merged_translations$translation,
-          legacy_filtered
-        )
-
-        if (debug) {
-          cat(sprintf("[TRANSLATION SYSTEM] Added %d legacy translations (%d duplicates removed)\n",
-                      length(legacy_filtered),
-                      length(legacy$translation) - length(legacy_filtered)))
-        }
-      }
-    }, error = function(e) {
-      warning(sprintf("Could not load legacy translations: %s", e$message))
-    })
-  }
+  # Pure modular system - no legacy loading
+  # Removed legacy translation merging logic (previously lines 321-365)
 
   # Validate if requested
   if (validate) {
@@ -396,7 +335,11 @@ init_modular_translations <- function(base_path = "translations",
     cat(sprintf("[TRANSLATION SYSTEM] Statistics:\n"))
     cat(sprintf("  - Total entries: %d\n", stats$total_entries))
     cat(sprintf("  - Namespaced keys: %d\n", stats$namespaced_keys))
-    cat(sprintf("  - Flat keys: %d\n", stats$flat_keys))
+
+    # Warn if flat keys found (should be zero in pure modular system)
+    if (stats$flat_keys > 0 && enforce_namespaced) {
+      warning(sprintf("Found %d flat-key entries (expected 0 in pure modular system)", stats$flat_keys))
+    }
   }
 
   # Save to file (persistent or temp)

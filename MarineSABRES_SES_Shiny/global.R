@@ -108,11 +108,23 @@ if (USE_MODULAR_TRANSLATIONS) {
     base_path = "translations",
     validate = DEBUG_I18N,
     debug = DEBUG_I18N,
-    persistent = TRUE  # Use persistent file to avoid session cleanup issues
+    persistent = TRUE,  # Use persistent file to avoid session cleanup issues
+    enforce_namespaced = TRUE  # Pure modular system - enforce namespaced keys only
   )
+
+  # Verify translation file exists
+  if (!file.exists(translation_file)) {
+    stop("[I18N] FATAL: Translation file not created. Check translations directory.")
+  }
 
   # Initialize translator with merged translations
   i18n <- Translator$new(translation_json_path = translation_file)
+
+  if (DEBUG_I18N) {
+    cat(sprintf("[I18N] Pure modular translation system initialized\n"))
+    cat(sprintf("[I18N] Translation file: %s\n", translation_file))
+    cat(sprintf("[I18N] File size: %s KB\n", round(file.info(translation_file)$size / 1024, 1)))
+  }
 
   # Note: No cleanup needed for persistent translation file
   # The file is kept in translations/_merged_translations.json
