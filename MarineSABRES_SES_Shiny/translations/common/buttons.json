@@ -268,6 +268,56 @@
       "lt": "Įkelti",
       "pt": "Carregar",
       "it": "Carica"
+    },
+    {
+      "key": "common.buttons.reject",
+      "en": "Reject",
+      "es": "Rechazar",
+      "fr": "Rejeter",
+      "de": "Ablehnen",
+      "lt": "Atmesti",
+      "pt": "Rejeitar",
+      "it": "Rifiutare"
+    },
+    {
+      "key": "common.buttons.cancel",
+      "en": "cancel",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.buttons.create",
+      "en": "create",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.buttons.delete",
+      "en": "delete",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.buttons.add",
+      "en": "add",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
     }
   ]
 }

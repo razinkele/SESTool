@@ -16,6 +16,9 @@ export_reports_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
     fluidRow(
       column(12,
         create_module_header(

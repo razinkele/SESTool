@@ -1,5 +1,13 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
   "translation": [
     {
       "key": "ui.modals.confirm_title",
@@ -140,6 +148,26 @@
       "lt": "Rasta ankstesnė sesija. Spustelėkite 'Įkelti išsaugotą', kad ją atkurtumėte.",
       "pt": "Uma sessão anterior foi encontrada. Clique em 'Carregar Salvo' para restaurá-la.",
       "it": "È stata trovata una sessione precedente. Fai clic su 'Carica Salvato' per ripristinarla."
+    },
+    {
+      "key": "ui.modals.confirm_start_over",
+      "en": "Confirm Start Over",
+      "es": "Confirmar empezar de nuevo",
+      "fr": "Confirmer le redémarrage",
+      "de": "Bestätigen Sie „Neu starten“.",
+      "lt": "Patvirtinkite Pradėti iš naujo",
+      "pt": "Confirme o recomeço",
+      "it": "Conferma Ricomincia"
+    },
+    {
+      "key": "ui.modals.scenarioconfirmdelete",
+      "en": "scenario_confirm_delete",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
     }
   ]
 }

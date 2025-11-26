@@ -6,7 +6,11 @@
 progress_indicator_ui <- function(id) {
   ns <- NS(id)
 
-  tags$div(
+  tagList(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
+    tags$div(
     id = ns("progress_container"),
     class = "progress-indicator-container",
 
@@ -149,6 +153,7 @@ progress_indicator_ui <- function(id) {
 
     # Progress indicator content (will be updated dynamically)
     uiOutput(ns("progress_content"))
+    )
   )
 }
 

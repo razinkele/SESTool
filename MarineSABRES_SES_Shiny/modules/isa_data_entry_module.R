@@ -8,6 +8,9 @@ isaDataEntryUI <- function(id) {
   ns <- NS(id)
 
   tagList(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
     fluidRow(
       column(12,
         uiOutput(ns("isa_header"))
@@ -931,7 +934,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
         key_stakeholders = if (!is.null(validations[[6]]$value)) validations[[6]]$value else ""
       )
 
-      showNotification("Exercise 0 saved successfully!", type = "message")
+      showNotification(i18n$t("Exercise 0 saved successfully!"), type = "message")
       log_message("Exercise 0 case information saved", "INFO")
     })
 
@@ -967,7 +970,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
       # Add remove button handler for this entry
       observeEvent(input[[paste0("gb_remove_", current_id)]], {
         removeUI(selector = paste0("#", ns(paste0("gb_panel_", current_id))))
-        showNotification("Entry removed", type = "message", duration = 2)
+        showNotification(i18n$t("Entry removed"), type = "message", duration = 2)
       }, ignoreInit = TRUE, once = TRUE)
     })
 
@@ -978,7 +981,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
     observeEvent(input$save_ex1, {
       # Check if at least one entry exists
       if (isa_data$gb_counter == 0) {
-        showNotification("Please add at least one Good/Benefit entry before saving.",
+        showNotification(i18n$t("Please add at least one Good/Benefit entry before saving."),
                         type = "warning", session = session)
         return()
       }
@@ -1043,29 +1046,29 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
       # Show validation errors if any
       if (length(validation_errors) > 0) {
         showModal(modalDialog(
-          title = tags$div(icon("exclamation-triangle"), " Validation Errors"),
+          title = tags$div(icon("exclamation-triangle"), i18n$t(" Validation Errors")),
           tags$div(
-            tags$p(strong("Please fix the following issues before saving:")),
+            tags$p(strong(i18n$t("Please fix the following issues before saving:"))),
             tags$ul(
               lapply(validation_errors, function(err) tags$li(err))
             )
           ),
           easyClose = TRUE,
-          footer = modalButton("OK")
+          footer = modalButton(i18n$t("OK"))
         ))
         return()
       }
 
       # Check if we have at least one valid entry
       if (nrow(gb_df) == 0) {
-        showNotification("Please add at least one valid Good/Benefit entry.",
+        showNotification(i18n$t("Please add at least one valid Good/Benefit entry."),
                         type = "warning", session = session)
         return()
       }
 
       # Save if all validations pass
       isa_data$goods_benefits <- gb_df
-      showNotification(paste("Exercise 1 saved:", nrow(gb_df), "Goods & Benefits"),
+      showNotification(paste(i18n$t("Exercise 1 saved:"), nrow(gb_df), i18n$t("Goods & Benefits")),
                       type = "message", session = session)
       log_message(paste("Exercise 1 saved with", nrow(gb_df), "entries"), "INFO")
     })
@@ -1102,7 +1105,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
       # Add remove button handler for this entry
       observeEvent(input[[paste0("es_remove_", current_id)]], {
         removeUI(selector = paste0("#", ns(paste0("es_panel_", current_id))))
-        showNotification("Entry removed", type = "message", duration = 2)
+        showNotification(i18n$t("Entry removed"), type = "message", duration = 2)
       }, ignoreInit = TRUE, once = TRUE)
     })
 
@@ -1113,7 +1116,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
     observeEvent(input$save_ex2a, {
       # Check if at least one entry exists
       if (isa_data$es_counter == 0) {
-        showNotification("Please add at least one Ecosystem Service entry before saving.",
+        showNotification(i18n$t("Please add at least one Ecosystem Service entry before saving."),
                         type = "warning", session = session)
         return()
       }
@@ -1178,29 +1181,29 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
       # Show validation errors if any
       if (length(validation_errors) > 0) {
         showModal(modalDialog(
-          title = tags$div(icon("exclamation-triangle"), " Validation Errors"),
+          title = tags$div(icon("exclamation-triangle"), i18n$t(" Validation Errors")),
           tags$div(
-            tags$p(strong("Please fix the following issues before saving:")),
+            tags$p(strong(i18n$t("Please fix the following issues before saving:"))),
             tags$ul(
               lapply(validation_errors, function(err) tags$li(err))
             )
           ),
           easyClose = TRUE,
-          footer = modalButton("OK")
+          footer = modalButton(i18n$t("OK"))
         ))
         return()
       }
 
       # Check if we have at least one valid entry
       if (nrow(es_df) == 0) {
-        showNotification("Please add at least one valid Ecosystem Service entry.",
+        showNotification(i18n$t("Please add at least one valid Ecosystem Service entry."),
                         type = "warning", session = session)
         return()
       }
 
       # Save if all validations pass
       isa_data$ecosystem_services <- es_df
-      showNotification(paste("Exercise 2a saved:", nrow(es_df), "Ecosystem Services"),
+      showNotification(paste(i18n$t("Exercise 2a saved:"), nrow(es_df), i18n$t("Ecosystem Services")),
                       type = "message", session = session)
       log_message(paste("Exercise 2a saved with", nrow(es_df), "entries"), "INFO")
     })
@@ -1236,7 +1239,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
       # Add remove button handler for this entry
       observeEvent(input[[paste0("mpf_remove_", current_id)]], {
         removeUI(selector = paste0("#", ns(paste0("mpf_panel_", current_id))))
-        showNotification("Entry removed", type = "message", duration = 2)
+        showNotification(i18n$t("Entry removed"), type = "message", duration = 2)
       }, ignoreInit = TRUE, once = TRUE)
     })
 
@@ -1262,7 +1265,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
         }
       }
       isa_data$marine_processes <- mpf_df
-      showNotification(paste("Exercise 2b saved:", nrow(mpf_df), "Marine Processes"), type = "message")
+      showNotification(paste(i18n$t("Exercise 2b saved:"), nrow(mpf_df), i18n$t("Marine Processes")), type = "message")
     })
 
     # Exercise 3: Pressures ----
@@ -1298,7 +1301,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
       # Add remove button handler for this entry
       observeEvent(input[[paste0("p_remove_", current_id)]], {
         removeUI(selector = paste0("#", ns(paste0("p_panel_", current_id))))
-        showNotification("Entry removed", type = "message", duration = 2)
+        showNotification(i18n$t("Entry removed"), type = "message", duration = 2)
       }, ignoreInit = TRUE, once = TRUE)
     })
 
@@ -1325,7 +1328,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
         }
       }
       isa_data$pressures <- p_df
-      showNotification(paste("Exercise 3 saved:", nrow(p_df), "Pressures"), type = "message")
+      showNotification(paste(i18n$t("Exercise 3 saved:"), nrow(p_df), i18n$t("Pressures")), type = "message")
     })
 
     # Exercise 4: Activities ----
@@ -1361,7 +1364,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
       # Add remove button handler for this entry
       observeEvent(input[[paste0("a_remove_", current_id)]], {
         removeUI(selector = paste0("#", ns(paste0("a_panel_", current_id))))
-        showNotification("Entry removed", type = "message", duration = 2)
+        showNotification(i18n$t("Entry removed"), type = "message", duration = 2)
       }, ignoreInit = TRUE, once = TRUE)
     })
 
@@ -1387,7 +1390,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
         }
       }
       isa_data$activities <- a_df
-      showNotification(paste("Exercise 4 saved:", nrow(a_df), "Activities"), type = "message")
+      showNotification(paste(i18n$t("Exercise 4 saved:"), nrow(a_df), i18n$t("Activities")), type = "message")
     })
 
     # Exercise 5: Drivers ----
@@ -1423,7 +1426,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
       # Add remove button handler for this entry
       observeEvent(input[[paste0("d_remove_", current_id)]], {
         removeUI(selector = paste0("#", ns(paste0("d_panel_", current_id))))
-        showNotification("Entry removed", type = "message", duration = 2)
+        showNotification(i18n$t("Entry removed"), type = "message", duration = 2)
       }, ignoreInit = TRUE, once = TRUE)
     })
 
@@ -1449,7 +1452,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
         }
       }
       isa_data$drivers <- d_df
-      showNotification(paste("Exercise 5 saved:", nrow(d_df), "Drivers"), type = "message")
+      showNotification(paste(i18n$t("Exercise 5 saved:"), nrow(d_df), i18n$t("Drivers")), type = "message")
     })
 
     # Exercise 6: Loop connections UI ----
@@ -1531,7 +1534,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
       )
 
       isa_data$loop_connections <- rbind(isa_data$loop_connections, new_connection)
-      showNotification("Loop connection added", type = "message")
+      showNotification(i18n$t("Loop connection added"), type = "message")
     })
 
     # Display loop connections table ----
@@ -1585,7 +1588,7 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
         isa_data$adjacency_matrices$gb_d <- gb_d_matrix
       }
 
-      showNotification(paste("Exercise 6 saved:", nrow(isa_data$loop_connections), "loop connections"),
+      showNotification(paste(i18n$t("Exercise 6 saved:"), nrow(isa_data$loop_connections), i18n$t("loop connections")),
                       type = "message")
     })
 

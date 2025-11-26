@@ -188,6 +188,656 @@
       "lt": " Pasirinkite grįžtamojo ryšio kilpą, kad vizualizuotumėte žiedinius įtakos modelius savo sistemoje",
       "pt": " Selecione um loop de feedback para visualizar padrões circulares de influência no seu sistema",
       "it": " Seleziona un loop di feedback per visualizzare modelli circolari di influenza nel tuo sistema"
+    },
+    {
+      "key": "common.validation.choose_rds_file",
+      "en": "Choose RDS File:",
+      "es": "Elegir Archivo RDS:",
+      "fr": "Choisir le Fichier RDS:",
+      "de": "RDS-Datei Wählen:",
+      "lt": "Pasirinkti RDS Failą:",
+      "pt": "Escolher Ficheiro RDS:",
+      "it": "Scegli File RDS:"
+    },
+    {
+      "key": "common.validation.choose_method",
+      "en": "Choose Method",
+      "es": "Elegir Método",
+      "fr": "Choisir la Méthode",
+      "de": "Methode wählen",
+      "lt": "Pasirinkti metodą",
+      "pt": "Escolher Método",
+      "it": "Scegli Metodo"
+    },
+    {
+      "key": "common.validation.selected",
+      "en": "selected",
+      "es": "seleccionado(s)",
+      "fr": "sélectionné(s)",
+      "de": "ausgewählt",
+      "lt": "pasirinkta",
+      "pt": "selecionado(s)",
+      "it": "selezionato/i"
+    },
+    {
+      "key": "common.validation.select_your_regional_sea",
+      "en": "Select your regional sea:",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.click_to_selectdeselect_multiple_selections_allowe",
+      "en": "Click to select/deselect. Multiple selections allowed.",
+      "es": "Haga clic para seleccionar/deseleccionar. Se permiten selecciones múltiples.",
+      "fr": "Cliquez pour sélectionner/désélectionner. Sélections multiples autorisées.",
+      "de": "Klicken Sie zum Auswählen/Abwählen. Mehrfachauswahl zulässig.",
+      "lt": "Spustelėkite, kad pasirinktumėte/atšauktumėte. Leidžiama kelių pasirinkimų.",
+      "pt": "Clique para selecionar/desmarcar. Múltiplas seleções permitidas.",
+      "it": "Fai clic per selezionare/deselezionare. Selezioni multiple consentite."
+    },
+    {
+      "key": "common.validation.other_enter_your_own",
+      "en": "Other (enter your own)",
+      "es": "Otro (ingrese el suyo)",
+      "fr": "Autre (saisissez le vôtre)",
+      "de": "Andere (geben Sie Ihre eigene ein)",
+      "lt": "Kitas (įveskite savo)",
+      "pt": "Outro (insira o seu)",
+      "it": "Altro (inserisci il tuo)"
+    },
+    {
+      "key": "common.validation.you_are_changing_your_regional_sea_selection_this_",
+      "en": "You are changing your regional sea selection. This will affect the available options for:",
+      "es": "Está cambiando su selección de mar regional. Esto afectará las opciones disponibles para:",
+      "fr": "Vous modifiez votre sélection de mer régionale. Cela affectera les options disponibles pour :",
+      "de": "Sie ändern Ihre Regionalmeer-Auswahl. Dies wirkt sich auf die verfügbaren Optionen aus für:",
+      "lt": "Keičiate regioninės jūros pasirinkimą. Tai paveiks galimas parinktis:",
+      "pt": "Você está alterando sua seleção de mar regional. Isso afetará as opções disponíveis para:",
+      "it": "Stai modificando la selezione del mare regionale. Questo influenzerà le opzioni disponibili per:"
+    },
+    {
+      "key": "common.validation.your_current_ecosystem_and_issue_selections_may_no",
+      "en": "Your current ecosystem and issue selections may no longer be valid for the new regional sea.",
+      "es": "Sus selecciones actuales de ecosistema y problemas pueden dejar de ser válidas para el nuevo mar regional.",
+      "fr": "Vos sélections actuelles d'écosystème et de problèmes peuvent ne plus être valides pour la nouvelle mer régionale.",
+      "de": "Ihre aktuellen Ökosystem- und Problemauswahlen sind möglicherweise nicht mehr für das neue Regionalmeer gültig.",
+      "lt": "Jūsų dabartiniai ekosistemos ir problemų pasirinkimai gali nebegalioti naujam regioniniam jūrai.",
+      "pt": "Suas seleções atuais de ecossistema e problemas podem não ser mais válidas para o novo mar regional.",
+      "it": "Le tue selezioni attuali di ecosistema e problemi potrebbero non essere più valide per il nuovo mare regionale."
+    },
+    {
+      "key": "common.validation.your_ecosystem_and_issue_selections_have_been_clea",
+      "en": "Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea.",
+      "es": "Sus selecciones de ecosistema y problemas han sido borradas. Por favor, vuelva a seleccionarlas para el nuevo mar regional.",
+      "fr": "Vos sélections d'écosystème et de problèmes ont été effacées. Veuillez les re-sélectionner pour la nouvelle mer régionale.",
+      "de": "Ihre Ökosystem- und Problemauswahlen wurden gelöscht. Bitte wählen Sie sie für das neue Regionalmeer erneut aus.",
+      "lt": "Jūsų ekosistemos ir problemų pasirinkimai buvo išvalyti. Prašome juos pasirinkti iš naujo naujam regioniniam jūrai.",
+      "pt": "Suas seleções de ecossistema e problemas foram apagadas. Por favor, selecione-as novamente para o novo mar regional.",
+      "it": "Le tue selezioni di ecosistema e problemi sono state cancellate. Si prega di ri-selezionarle per il nuovo mare regionale."
+    },
+    {
+      "key": "common.validation.great_you_selected",
+      "en": "Great! You selected",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.please_go_back_through_the_previous_steps_and_add_",
+      "en": "Please go back through the previous steps and add elements by clicking the suggested options or entering your own text.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.choose_a_prebuilt_scenario",
+      "en": "Choose a pre-built scenario:",
+      "es": "Elija un escenario prediseñado:",
+      "fr": "Choisissez un scénario prédéfini :",
+      "de": "Wählen Sie ein vorgefertigtes Szenario:",
+      "lt": "Pasirinkite iš anksto sukurtą scenarijų:",
+      "pt": "Escolha um cenário pré-construído:",
+      "it": "Scegli uno scenario predefinito:"
+    },
+    {
+      "key": "common.validation.please_generate_a_cld_network_first_using",
+      "en": "Please generate a CLD network first using:",
+      "es": "Por favor, genere primero una red CLD utilizando:",
+      "fr": "Veuillez d'abord générer un réseau CLD en utilisant:",
+      "de": "Bitte generieren Sie zuerst ein CLD-Netzwerk mit:",
+      "lt": "Pirmiausia sugeneruokite CLD tinklą naudodami:",
+      "pt": "Por favor, gere primeiro uma rede CLD usando:",
+      "it": "Si prega di generare prima una rete CLD utilizzando:"
+    },
+    {
+      "key": "common.validation.select_metric",
+      "en": "Select Metric",
+      "es": "Seleccionar Métrica",
+      "fr": "Sélectionner la Métrique",
+      "de": "Metrik Auswählen",
+      "lt": "Pasirinkti metriką",
+      "pt": "Selecionar Métrica",
+      "it": "Seleziona Metrica"
+    },
+    {
+      "key": "common.validation.bar_plot_top_nodes_by_selected_metric",
+      "en": "Bar Plot - Top Nodes by Selected Metric",
+      "es": "Gráfico de Barras - Nodos Principales por Métrica Seleccionada",
+      "fr": "Graphique à Barres - Nœuds Principaux par Métrique Sélectionnée",
+      "de": "Balkendiagramm - Top-Knoten nach Ausgewählter Metrik",
+      "lt": "Stulpelinė diagrama - Pagrindiniai mazgai pagal pasirinktą metriką",
+      "pt": "Gráfico de Barras - Nós Principais por Métrica Selecionada",
+      "it": "Grafico a Barre - Nodi Principali per Metrica Selezionata"
+    },
+    {
+      "key": "common.validation.proceed_to_selected_method",
+      "en": "Proceed to Selected Method",
+      "es": "Continuar al Método Seleccionado",
+      "fr": "Passer à la Méthode Sélectionnée",
+      "de": "Zur ausgewählten Methode fortfahren",
+      "lt": "Pereiti prie pasirinkto metodo",
+      "pt": "Prosseguir para o Método Selecionado",
+      "it": "Procedi al Metodo Selezionato"
+    },
+    {
+      "key": "common.validation.you_selected",
+      "en": "You selected:",
+      "es": "Usted seleccionó:",
+      "fr": "Vous avez sélectionné:",
+      "de": "Sie haben ausgewählt:",
+      "lt": "Jūs pasirinkote:",
+      "pt": "Você selecionou:",
+      "it": "Hai selezionato:"
+    },
+    {
+      "key": "common.validation.epnotifyselectrole",
+      "en": "ep_notify_select_role",
+      "es": "Por favor seleccione un rol para continuar",
+      "fr": "Veuillez sélectionner un rôle pour continuer",
+      "de": "Bitte wählen Sie eine Rolle aus, um fortzufahren",
+      "lt": "Pasirinkite vaidmenį, kad tęstumėte",
+      "pt": "Por favor selecione um papel para continuar",
+      "it": "Seleziona un ruolo per continuare"
+    },
+    {
+      "key": "common.validation.epnotifyselectneed",
+      "en": "ep_notify_select_need",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.select_your_role_in_marine_management_multiple_sel",
+      "en": "Select your role in marine management (multiple selection allowed)",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.what_basic_human_need_drives_your_question_multipl",
+      "en": "What basic human need drives your question? (multiple selection allowed)",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.return_to_role_selection",
+      "en": "Return to role selection",
+      "es": "Volver a la selección de rol",
+      "fr": "Retour à la sélection de rôle",
+      "de": "Zurück zur Rollenauswahl",
+      "lt": "Grįžti į vaidmens pasirinkimą",
+      "pt": "Voltar à seleção de papel",
+      "it": "Torna alla selezione del ruolo"
+    },
+    {
+      "key": "common.validation.select_the_human_activities_relevant_to_your_marin",
+      "en": "Select the human activities relevant to your marine management question. These represent the ",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.select_all_that_apply_multiple_selection_allowed",
+      "en": "Select all that apply (multiple selection allowed)",
+      "es": "Seleccione todos los que correspondan (se permite selección múltiple)",
+      "fr": "Sélectionnez tout ce qui s'applique (sélection multiple autorisée)",
+      "de": "Wählen Sie alle zutreffenden aus (Mehrfachauswahl möglich)",
+      "lt": "Pasirinkite visus tinkamus (galima kelių pasirinkimas)",
+      "pt": "Selecione todos os que se aplicam (seleção múltipla permitida)",
+      "it": "Seleziona tutte quelle applicabili (selezione multipla consentita)"
+    },
+    {
+      "key": "common.validation.select_the_environmental_pressures_risks_or_hazard",
+      "en": "Select the environmental pressures, risks, or hazards you",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.proceed_to_select_knowledge_topics",
+      "en": "Proceed to select knowledge topics",
+      "es": "Continuar para seleccionar temas de conocimiento",
+      "fr": "Continuer pour sélectionner les sujets de connaissance",
+      "de": "Fahren Sie fort, um Wissensthemen auszuwählen",
+      "lt": "Tęskite, kad pasirinktumėte žinių temas",
+      "pt": "Continuar para selecionar tópicos de conhecimento",
+      "it": "Procedi per selezionare gli argomenti di conoscenza"
+    },
+    {
+      "key": "common.validation.select_the_knowledge_domains_and_analytical_approa",
+      "en": "Select the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks.",
+      "es": "Seleccione los dominios de conocimiento y enfoques analíticos relevantes para su pregunta. Esto ayuda a emparejarle con herramientas y marcos de análisis apropiados.",
+      "fr": "Sélectionnez les domaines de connaissance et approches analytiques pertinents pour votre question. Cela aide à vous associer aux outils et cadres d'analyse appropriés.",
+      "de": "Wählen Sie die für Ihre Frage relevanten Wissensbereiche und analytischen Ansätze. Dies hilft, Sie mit geeigneten Analysewerkzeugen und -rahmen zu verbinden.",
+      "lt": "Pasirinkite žinių sritis ir analitinius metodus, susijusius su jūsų klausimu. Tai padeda susieti jus su tinkamomis analizės priemonėmis ir sistemomis.",
+      "pt": "Selecione os domínios de conhecimento e abordagens analíticas relevantes para a sua questão. Isto ajuda a combiná-lo com ferramentas e quadros de análise apropriados.",
+      "it": "Seleziona gli ambiti di conoscenza e gli approcci analitici rilevanti per la tua domanda. Questo aiuta a abbinarti con strumenti e framework di analisi appropriati."
+    },
+    {
+      "key": "common.validation.what_topic_areas_are_you_interested_in_select_all_",
+      "en": "What topic areas are you interested in? (Select all that apply)",
+      "es": "¿Qué áreas temáticas le interesan? (Seleccione todas las que correspondan)",
+      "fr": "Quels domaines thématiques vous intéressent? (Sélectionnez tout ce qui s'applique)",
+      "de": "An welchen Themenbereichen sind Sie interessiert? (Wählen Sie alle zutreffenden aus)",
+      "lt": "Kokios teminės sritys jus domina? (Pasirinkite visas tinkamas)",
+      "pt": "Que áreas temáticas lhe interessam? (Selecione todas as que se aplicam)",
+      "it": "Quali aree tematiche ti interessano? (Seleziona tutte quelle applicabili)"
+    },
+    {
+      "key": "common.validation.select_format",
+      "en": "Select Format:",
+      "es": "Seleccionar Formato:",
+      "fr": "Sélectionner le Format:",
+      "de": "Format Auswählen:",
+      "lt": "Pasirinkite formatą:",
+      "pt": "Selecionar Formato:",
+      "it": "Seleziona Formato:"
+    },
+    {
+      "key": "common.validation.select_components",
+      "en": "Select Components:",
+      "es": "Seleccionar Componentes:",
+      "fr": "Sélectionner les Composants:",
+      "de": "Komponenten Auswählen:",
+      "lt": "Pasirinkite komponentus:",
+      "pt": "Selecionar Componentes:",
+      "it": "Seleziona Componenti:"
+    },
+    {
+      "key": "common.validation.required_excel_format",
+      "en": "Required Excel Format",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.two_sheets_required",
+      "en": "Two sheets required:",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.complete_columns_bh_in_the_master_data_sheet_each_",
+      "en": "Complete columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification.",
+      "es": "Complete las columnas B-H en la Hoja de Datos Maestra. Cada Bien/Beneficio debe tener un ID único y clasificación.",
+      "fr": "Remplissez les colonnes B-H dans la Feuille de Données Principale. Chaque Bien/Avantage doit avoir un ID unique et une classification.",
+      "de": "Vervollständigen Sie die Spalten B-H im Master-Datenblatt. Jedes Gut/Vorteil sollte eine eindeutige ID und Klassifizierung haben.",
+      "lt": "Užpildykite B-H stulpelius Pagrindinėje duomenų lentelėje. Kiekviena Gėrybė/Nauda turėtų turėti unikalų ID ir klasifikaciją.",
+      "pt": "Complete as colunas B-H na Folha de Dados Mestre. Cada Bem/Benefício deve ter um ID único e classificação.",
+      "it": "Completare le colonne B-H nel Foglio Dati Principale. Ogni Bene/Beneficio deve avere un ID univoco e una classificazione."
+    },
+    {
+      "key": "common.validation.select_drivers_and_the_goodsbenefits_they_influenc",
+      "en": "Select drivers and the goods/benefits they influence (positively or negatively):",
+      "es": "Seleccione los impulsores y los bienes/beneficios que influyen (positiva o negativamente):",
+      "fr": "Sélectionnez les facteurs et les biens/avantages qu'ils influencent (positivement ou négativement) :",
+      "de": "Wählen Sie Treiber und die Güter/Vorteile aus, die sie beeinflussen (positiv oder negativ):",
+      "lt": "Pasirinkite veiksnius ir gėrybes/naudą, kurioms jie turi įtakos (teigiamą arba neigiamą):",
+      "pt": "Selecione os impulsores e os bens/benefícios que influenciam (positiva ou negativamente):",
+      "it": "Selezionare i fattori e i beni/benefici che influenzano (positivamente o negativamente):"
+    },
+    {
+      "key": "common.validation.select_matrix_type",
+      "en": "Select Matrix Type:",
+      "es": "Seleccionar Tipo de Matriz:",
+      "fr": "Sélectionner le Type de Matrice :",
+      "de": "Matrixtyp auswählen:",
+      "lt": "Pasirinkite matricos tipą:",
+      "pt": "Selecionar Tipo de Matriz:",
+      "it": "Seleziona Tipo di Matrice:"
+    },
+    {
+      "key": "common.validation.what_external_factors_should_be_brought_inside_the",
+      "en": "What external factors should be brought inside the system boundary?",
+      "es": "¿Qué factores externos deben incluirse dentro del límite del sistema?",
+      "fr": "Quels facteurs externes doivent être intégrés dans les limites du système ?",
+      "de": "Welche externen Faktoren sollten in die Systemgrenze einbezogen werden?",
+      "lt": "Kokie išoriniai veiksniai turėtų būti įtraukti į sistemos ribas?",
+      "pt": "Que fatores externos devem ser trazidos para dentro da fronteira do sistema?",
+      "it": "Quali fattori esterni dovrebbero essere portati all'interno del confine del sistema?"
+    },
+    {
+      "key": "common.validation.choose_excel_file_xlsx",
+      "en": "Choose Excel File (.xlsx):",
+      "es": "Elegir Archivo de Excel (.xlsx):",
+      "fr": "Choisir un Fichier Excel (.xlsx) :",
+      "de": "Excel-Datei auswählen (.xlsx):",
+      "lt": "Pasirinkite Excel failą (.xlsx):",
+      "pt": "Escolher Ficheiro Excel (.xlsx):",
+      "it": "Scegli File Excel (.xlsx):"
+    },
+    {
+      "key": "common.validation.this_will_clear_all_entered_data_this_action_canno",
+      "en": "This will clear all entered data. This action cannot be undone.",
+      "es": "Esto borrará todos los datos ingresados. Esta acción no se puede deshacer.",
+      "fr": "Cela effacera toutes les données saisies. Cette action ne peut pas être annulée.",
+      "de": "Dies löscht alle eingegebenen Daten. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "lt": "Tai išvalys visus įvestus duomenis. Šio veiksmo negalima atšaukti.",
+      "pt": "Isto irá limpar todos os dados introduzidos. Esta ação não pode ser desfeita.",
+      "it": "Questo cancellerà tutti i dati inseriti. Questa azione non può essere annullata."
+    },
+    {
+      "key": "common.validation.please_complete_exercises_1_and_5_first_to_create_",
+      "en": "Please complete Exercises 1 and 5 first to create Goods & Benefits and Drivers.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.select_element",
+      "en": "Select Element:",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.delete_selected",
+      "en": "Delete Selected",
+      "es": "Eliminar Seleccionados",
+      "fr": "Supprimer la Sélection",
+      "de": "Ausgewählte löschen",
+      "lt": "Ištrinti Pasirinktus",
+      "pt": "Excluir Selecionados",
+      "it": "Elimina Selezionati"
+    },
+    {
+      "key": "common.validation.select_response",
+      "en": "Select Response:",
+      "es": "Seleccionar Respuesta:",
+      "fr": "Sélectionner la Réponse:",
+      "de": "Reaktion auswählen:",
+      "lt": "Pasirinkti Atsaką:",
+      "pt": "Selecionar Resposta:",
+      "it": "Seleziona Risposta:"
+    },
+    {
+      "key": "common.validation.notesactions_required",
+      "en": "Notes/Actions Required:",
+      "es": "Notas/Acciones Requeridas:",
+      "fr": "Notes/Actions Requises:",
+      "de": "Anmerkungen/Erforderliche Maßnahmen:",
+      "lt": "Pastabos/Reikalingi Veiksmai:",
+      "pt": "Notas/Ações Necessárias:",
+      "it": "Note/Azioni Richieste:"
+    },
+    {
+      "key": "common.validation.what_resources_are_required",
+      "en": "What resources are required?",
+      "es": "¿Qué recursos se requieren?",
+      "fr": "Quelles ressources sont nécessaires?",
+      "de": "Welche Ressourcen werden benötigt?",
+      "lt": "Kokių išteklių reikia?",
+      "pt": "Quais recursos são necessários?",
+      "it": "Quali risorse sono necessarie?"
+    },
+    {
+      "key": "common.validation.scenarioselectorcreate",
+      "en": "scenario_select_or_create",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.scenarioselectnodetoremove",
+      "en": "scenario_select_node_to_remove",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.scenarioselectlinktoremove",
+      "en": "scenario_select_link_to_remove",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.select",
+      "en": "select",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.scenariocannotcreateselfloop",
+      "en": "scenario_cannot_create_self_loop",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.scenarioselectdifferentscenarios",
+      "en": "scenario_select_different_scenarios",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.cannot_remove_nonexistent_node_s",
+      "en": "Cannot remove non-existent node: %s",
+      "es": "No se puede eliminar un nodo inexistente: %s",
+      "fr": "Impossible de supprimer un nœud inexistant: %s",
+      "de": "Kann nicht vorhandenen Knoten nicht entfernen: %s",
+      "lt": "Negalima pašalinti neegzistuojančio mazgo: %s",
+      "pt": "Não é possível remover nó inexistente: %s",
+      "it": "Impossibile rimuovere un nodo inesistente: %s"
+    },
+    {
+      "key": "common.validation.this_action_cannot_be_undone",
+      "en": "This action cannot be undone.",
+      "es": "Esta acción no se puede deshacer.",
+      "fr": "Cette action ne peut pas être annulée.",
+      "de": "Diese Aktion kann nicht rückgängig gemacht werden.",
+      "lt": "Šio veiksmo negalima atšaukti.",
+      "pt": "Esta ação não pode ser desfeita.",
+      "it": "Questa azione non può essere annullata."
+    },
+    {
+      "key": "common.validation.select_this_template",
+      "en": "Select This Template",
+      "es": "Seleccionar esta plantilla",
+      "fr": "Sélectionner ce modèle",
+      "de": "Diese Vorlage auswählen",
+      "lt": "Pasirinkti šį šabloną",
+      "pt": "Selecionar este modelo",
+      "it": "Seleziona questo modello"
+    },
+    {
+      "key": "common.validation.select_a_template_and_click_",
+      "en": "Select a template and click ",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.select_your_preferred_language_for_the_application",
+      "en": "Select your preferred language for the application interface.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.autosave_automatically_saves_your_work_when_the_ai",
+      "en": "Auto-save automatically saves your work when the AI ISA Assistant completes generating the framework (Step 10). When disabled, you must manually save your work.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.select_your_experience_level_with_marine_ecosystem",
+      "en": "Select your experience level with marine ecosystem modeling:",
+      "es": "Seleccione su nivel de experiencia con modelado de ecosistemas marinos:",
+      "fr": "Sélectionnez votre niveau d'expérience avec la modélisation des écosystèmes marins:",
+      "de": "Wählen Sie Ihre Erfahrungsstufe mit Meeresökosystemmodellierung:",
+      "lt": "Pasirinkite savo patirties lygį su jūrų ekosistemų modeliavimu:",
+      "pt": "Selecione seu nível de experiência com modelagem de ecossistemas marinhos:",
+      "it": "Seleziona il tuo livello di esperienza con la modellazione degli ecosistemi marini:"
+    },
+    {
+      "key": "common.validation.no_cld_data_to_export_please_create_a_cld_first",
+      "en": "No CLD data to export. Please create a CLD first.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.validation.graph_too_large_for_reliable_loop_detection_please",
+      "en": "Graph too large for reliable loop detection. Please simplify the network first.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": " Validation Errors",
+      "en": " Validation Errors",
+      "es": " Validation Errors",
+      "fr": " Validation Errors",
+      "de": " Validation Errors",
+      "lt": " Validation Errors",
+      "pt": " Validation Errors",
+      "it": " Validation Errors"
+    },
+    {
+      "key": "Please add at least one Ecosystem Service entry before saving.",
+      "en": "Please add at least one Ecosystem Service entry before saving.",
+      "es": "Please add at least one Ecosystem Service entry before saving.",
+      "fr": "Please add at least one Ecosystem Service entry before saving.",
+      "de": "Please add at least one Ecosystem Service entry before saving.",
+      "lt": "Please add at least one Ecosystem Service entry before saving.",
+      "pt": "Please add at least one Ecosystem Service entry before saving.",
+      "it": "Please add at least one Ecosystem Service entry before saving."
+    },
+    {
+      "key": "Please add at least one Good/Benefit entry before saving.",
+      "en": "Please add at least one Good/Benefit entry before saving.",
+      "es": "Please add at least one Good/Benefit entry before saving.",
+      "fr": "Please add at least one Good/Benefit entry before saving.",
+      "de": "Please add at least one Good/Benefit entry before saving.",
+      "lt": "Please add at least one Good/Benefit entry before saving.",
+      "pt": "Please add at least one Good/Benefit entry before saving.",
+      "it": "Please add at least one Good/Benefit entry before saving."
+    },
+    {
+      "key": "Please add at least one valid Ecosystem Service entry.",
+      "en": "Please add at least one valid Ecosystem Service entry.",
+      "es": "Please add at least one valid Ecosystem Service entry.",
+      "fr": "Please add at least one valid Ecosystem Service entry.",
+      "de": "Please add at least one valid Ecosystem Service entry.",
+      "lt": "Please add at least one valid Ecosystem Service entry.",
+      "pt": "Please add at least one valid Ecosystem Service entry.",
+      "it": "Please add at least one valid Ecosystem Service entry."
+    },
+    {
+      "key": "Please add at least one valid Good/Benefit entry.",
+      "en": "Please add at least one valid Good/Benefit entry.",
+      "es": "Please add at least one valid Good/Benefit entry.",
+      "fr": "Please add at least one valid Good/Benefit entry.",
+      "de": "Please add at least one valid Good/Benefit entry.",
+      "lt": "Please add at least one valid Good/Benefit entry.",
+      "pt": "Please add at least one valid Good/Benefit entry.",
+      "it": "Please add at least one valid Good/Benefit entry."
+    },
+    {
+      "key": "Please fix the following issues before saving:",
+      "en": "Please fix the following issues before saving:",
+      "es": "Please fix the following issues before saving:",
+      "fr": "Please fix the following issues before saving:",
+      "de": "Please fix the following issues before saving:",
+      "lt": "Please fix the following issues before saving:",
+      "pt": "Please fix the following issues before saving:",
+      "it": "Please fix the following issues before saving:"
     }
   ]
 }

@@ -638,7 +638,7 @@ server <- function(input, output, session) {
         # Validate data structure before saving
         data <- project_data()
         if (!is.list(data) || !all(c("project_id", "data") %in% names(data))) {
-          showNotification("Error: Invalid project data structure",
+          showNotification(i18n$t("Error: Invalid project data structure"),
                           type = "error", duration = 10)
           return(NULL)
         }
@@ -648,17 +648,17 @@ server <- function(input, output, session) {
 
         # Verify saved file
         if (!file.exists(file) || file.size(file) == 0) {
-          showNotification("Error: File save failed or file is empty",
+          showNotification(i18n$t("Error: File save failed or file is empty"),
                           type = "error", duration = 10)
           return(NULL)
         }
 
         removeModal()
-        showNotification("Project saved successfully!", type = "message")
+        showNotification(i18n$t("Project saved successfully!"), type = "message")
 
       }, error = function(e) {
         showNotification(
-          paste("Error saving project:", e$message),
+          paste(i18n$t("Error saving project:"), e$message),
           type = "error",
           duration = 10
         )
@@ -688,7 +688,7 @@ server <- function(input, output, session) {
       # Validate project structure
       if (!validate_project_structure(loaded_data)) {
         showNotification(
-          "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
+          i18n$t("Error: Invalid project file structure. This may not be a valid MarineSABRES project file."),
           type = "error",
           duration = 10
         )
@@ -699,11 +699,11 @@ server <- function(input, output, session) {
       project_data(loaded_data)
 
       removeModal()
-      showNotification("Project loaded successfully!", type = "message")
+      showNotification(i18n$t("Project loaded successfully!"), type = "message")
 
     }, error = function(e) {
       showNotification(
-        paste("Error loading project:", e$message),
+        paste(i18n$t("Error loading project:"), e$message),
         type = "error",
         duration = 10
       )
@@ -806,7 +806,7 @@ server <- function(input, output, session) {
         save(export_list, file = file)
       }
 
-      showNotification("Data exported successfully!", type = "message")
+      showNotification(i18n$t("Data exported successfully!"), type = "message")
     }
   )
   
@@ -826,7 +826,7 @@ server <- function(input, output, session) {
 
       # Check if CLD data exists
       if(is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
-        showNotification("No CLD data to export. Please create a CLD first.", type = "error")
+        showNotification(i18n$t("No CLD data to export. Please create a CLD first."), type = "error")
         return(NULL)
       }
 
@@ -907,7 +907,7 @@ server <- function(input, output, session) {
         dev.off()
       }
 
-      showNotification("Visualization exported successfully!", type = "message")
+      showNotification(i18n$t("Visualization exported successfully!"), type = "message")
     }
   )
 

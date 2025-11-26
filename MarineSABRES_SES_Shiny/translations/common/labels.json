@@ -1,5 +1,13 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
   "translation": [
     {
       "key": "common.labels.name",
@@ -300,6 +308,356 @@
       "lt": "Polarumas",
       "pt": "Polaridade",
       "it": "Polarità"
+    },
+    {
+      "key": "common.labels.isa_data_status",
+      "en": "ISA Data Status",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.cld_status",
+      "en": "CLD Status",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.analysis_status",
+      "en": "Analysis Status",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.ecosystem_type",
+      "en": "Ecosystem Type",
+      "es": "Tipo de Ecosistema",
+      "fr": "Type d'Écosystème",
+      "de": "Ökosystemtyp",
+      "lt": "Ekosistemos tipas",
+      "pt": "Tipo de Ecossistema",
+      "it": "Tipo di Ecosistema"
+    },
+    {
+      "key": "common.labels.no_connections_in_this_category",
+      "en": "No connections in this category",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.fastest_setup_time",
+      "en": "Fastest setup time",
+      "es": "Tiempo de configuración más rápido",
+      "fr": "Temps de configuration le plus rapide",
+      "de": "Schnellste Einrichtungszeit",
+      "lt": "Greičiausias nustatymo laikas",
+      "pt": "Tempo de configuração mais rápido",
+      "it": "Tempo di configurazione più veloce"
+    },
+    {
+      "key": "common.labels.createsesguidemethodstitle",
+      "en": "create_ses_guide_methods_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.exportguidedatatitle",
+      "en": "export_guide_data_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.exportguideviztitle",
+      "en": "export_guide_viz_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.exportguidereportstitle",
+      "en": "export_guide_reports_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.isaguidewhatisisatitle",
+      "en": "isa_guide_what_is_isa_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.isaguidedapsiwrtitle",
+      "en": "isa_guide_dapsiwr_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.driverslabel",
+      "en": "drivers_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.activitieslabel",
+      "en": "activities_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.pressureslabel",
+      "en": "pressures_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.statelabel",
+      "en": "state_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.impactslabel",
+      "en": "impacts_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.responseslabel",
+      "en": "responses_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.isaguidehowtousetitle",
+      "en": "isa_guide_how_to_use_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.scenariobuildertitle",
+      "en": "scenario_builder_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.scenariobuilderdescription",
+      "en": "scenario_builder_description",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.scenarioscenarioname",
+      "en": "scenario_scenario_name",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.scenariodescription",
+      "en": "scenario_description",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.scenarionodelabel",
+      "en": "scenario_node_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.scenariodapsicategory",
+      "en": "scenario_dapsi_category",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.templatesesguidewhatistitle",
+      "en": "template_ses_guide_what_is_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.labels.templatesesguidehowtousetitle",
+      "en": "template_ses_guide_how_to_use_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "Activities",
+      "en": "Activities",
+      "es": "Activities",
+      "fr": "Activities",
+      "de": "Activities",
+      "lt": "Activities",
+      "pt": "Activities",
+      "it": "Activities"
+    },
+    {
+      "key": "Drivers",
+      "en": "Drivers",
+      "es": "Drivers",
+      "fr": "Drivers",
+      "de": "Drivers",
+      "lt": "Drivers",
+      "pt": "Drivers",
+      "it": "Drivers"
+    },
+    {
+      "key": "Ecosystem Services",
+      "en": "Ecosystem Services",
+      "es": "Ecosystem Services",
+      "fr": "Ecosystem Services",
+      "de": "Ecosystem Services",
+      "lt": "Ecosystem Services",
+      "pt": "Ecosystem Services",
+      "it": "Ecosystem Services"
+    },
+    {
+      "key": "Goods & Benefits",
+      "en": "Goods & Benefits",
+      "es": "Goods & Benefits",
+      "fr": "Goods & Benefits",
+      "de": "Goods & Benefits",
+      "lt": "Goods & Benefits",
+      "pt": "Goods & Benefits",
+      "it": "Goods & Benefits"
+    },
+    {
+      "key": "Marine Processes",
+      "en": "Marine Processes",
+      "es": "Marine Processes",
+      "fr": "Marine Processes",
+      "de": "Marine Processes",
+      "lt": "Marine Processes",
+      "pt": "Marine Processes",
+      "it": "Marine Processes"
+    },
+    {
+      "key": "Pressures",
+      "en": "Pressures",
+      "es": "Pressures",
+      "fr": "Pressures",
+      "de": "Pressures",
+      "lt": "Pressures",
+      "pt": "Pressures",
+      "it": "Pressures"
+    },
+    {
+      "key": "loop connections",
+      "en": "loop connections",
+      "es": "loop connections",
+      "fr": "loop connections",
+      "de": "loop connections",
+      "lt": "loop connections",
+      "pt": "loop connections",
+      "it": "loop connections"
+    },
+    {
+      "key": "OK",
+      "en": "OK",
+      "es": "OK",
+      "fr": "OK",
+      "de": "OK",
+      "lt": "OK",
+      "pt": "OK",
+      "it": "OK"
     }
   ]
 }

@@ -41,6 +41,9 @@ cld_viz_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
     tags$style(HTML("
       /* Remove all frames from visNetwork elements */
       .cld-network-container .vis-network {

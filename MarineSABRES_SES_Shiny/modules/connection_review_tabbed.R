@@ -148,6 +148,9 @@ connection_review_tabbed_ui <- function(id, i18n) {
   cat(sprintf("[CONN REVIEW TABBED UI] UI function called with id: %s\n", id))
 
   tagList(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
     # Custom CSS
     tags$head(
       tags$style(HTML("

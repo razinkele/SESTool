@@ -32,6 +32,9 @@ analysis_loops_ui <- function(id) {
   ns <- NS(id)
 
   tagList(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
     create_module_header(
       ns = ns,
       title_key = "Feedback Loop Detection and Analysis",
@@ -387,8 +390,8 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
       if(vcount(g) > 100 || ecount(g) > 500) {
         cat("[WARNING] Large network detected - may take longer\n")
         showNotification(
-          paste0("Large network detected: ", vcount(g), " nodes, ", ecount(g), " edges. ",
-                 "Loop detection may take longer. Consider reducing max_cycles or max_loop_length."),
+          paste0(i18n$t("Large network detected:"), " ", vcount(g), " ", i18n$t("nodes"), ", ", ecount(g), " ", i18n$t("edges"), ". ",
+                 i18n$t("Loop detection may take longer. Consider reducing max_cycles or max_loop_length.")),
           type = "warning",
           duration = 8
         )
@@ -396,9 +399,9 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
 
       if(vcount(g) > 300 || ecount(g) > 1500) {
         cat("[ERROR] Network too large - refusing to process\n")
-        output$detection_status <- renderText("Graph too large for reliable loop detection. Please simplify the network first.")
+        output$detection_status <- renderText(i18n$t("Graph too large for reliable loop detection. Please simplify the network first."))
         showNotification(
-          "Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.",
+          i18n$t("Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging."),
           type = "error",
           duration = 15
         )
@@ -472,14 +475,14 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
             if (grepl("time limit", e$message, ignore.case = TRUE)) {
               cat("[ERROR] Timeout occurred\n")
               showNotification(
-                "Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.",
+                i18n$t("Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles."),
                 type = "error",
                 duration = 10
               )
             } else {
               cat(sprintf("[ERROR] Exception: %s\n", e$message))
               showNotification(
-                paste("Error during loop detection:", e$message),
+                paste(i18n$t("Error during loop detection:"), e$message),
                 type = "error",
                 duration = 10
               )
@@ -489,7 +492,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
 
           if (error_occurred || is.null(all_loops)) {
             cat("[ABORT] Detection failed or timed out\n")
-            output$detection_status <- renderText("Loop detection failed or timed out.")
+            output$detection_status <- renderText(i18n$t("Loop detection failed or timed out."))
             return()
           }
 
@@ -511,7 +514,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
           if(length(all_loops) > max_loops_display) {
             cat(sprintf("[INFO] Limiting from %d to %d loops\n", original_count, max_loops_display))
             showNotification(
-              paste0("Found ", length(all_loops), " loops. Displaying first ", max_loops_display, " loops."),
+              paste0(i18n$t("Found"), " ", length(all_loops), " ", i18n$t("loops. Displaying first"), " ", max_loops_display, " ", i18n$t("loops.")),
               type = "warning",
               duration = 10
             )
@@ -574,9 +577,9 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
           cat("═══════════════════════════════════════════════════════════════════\n\n")
 
         }, error = function(e) {
-          output$detection_status <- renderText(paste("Error during loop detection:", conditionMessage(e)))
+          output$detection_status <- renderText(paste(i18n$t("Error during loop detection:"), conditionMessage(e)))
           showNotification(
-            paste("Loop detection failed:", conditionMessage(e)),
+            paste(i18n$t("Loop detection failed:"), conditionMessage(e)),
             type = "error",
             duration = 10
           )
@@ -1433,6 +1436,9 @@ analysis_bot_ui <- function(id) {
   ns <- NS(id)
 
   fluidPage(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
     h2(icon("chart-line"), " Advanced BOT Analysis"),
     p("Analyze temporal patterns and trends in your social-ecological system."),
 
@@ -1898,6 +1904,9 @@ analysis_simplify_ui <- function(id) {
   ns <- NS(id)
 
   fluidPage(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
     # Header with information
     fluidRow(
       column(12,
@@ -2995,6 +3004,9 @@ analysis_leverage_ui <- function(id) {
   ns <- NS(id)
 
   tagList(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
     create_module_header(
       ns = ns,
       title_key = "Leverage Point Analysis",

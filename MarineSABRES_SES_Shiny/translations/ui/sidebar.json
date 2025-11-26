@@ -1,5 +1,13 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
   "translation": [
     {
       "key": "ui.sidebar.welcome",
@@ -110,6 +118,26 @@
       "lt": "Eksportuoti duomenis",
       "pt": "Exportar Dados",
       "it": "Esporta Dati"
+    },
+    {
+      "key": "ui.sidebar.navigate_to_",
+      "en": "Navigate to ",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "ui.sidebar.navigating_to_s",
+      "en": "Navigating to %s...",
+      "es": "Navegando a %s...",
+      "fr": "Navigation vers %s...",
+      "de": "Navigiere zu %s...",
+      "lt": "Naviguojama į %s...",
+      "pt": "Navegando para %s...",
+      "it": "Navigando verso %s..."
     }
   ]
 }

@@ -7,6 +7,9 @@ auto_save_indicator_ui <- function(id) {
   ns <- NS(id)
 
   tagList(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
     # JavaScript handlers
     tags$script(HTML(sprintf("
       // Handle auto-save to localStorage

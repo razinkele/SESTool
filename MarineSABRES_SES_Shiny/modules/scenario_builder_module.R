@@ -10,6 +10,9 @@ scenario_builder_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
+    # Use i18n for language support
+    shiny.i18n::usei18n(i18n),
+
     tags$head(
       tags$style(HTML("
         .scenario-card {
