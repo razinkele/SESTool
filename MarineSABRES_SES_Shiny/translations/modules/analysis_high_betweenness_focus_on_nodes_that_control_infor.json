@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.high_betweenness_focus_on_nodes_that_control_infor",
+      "en": "High Betweenness: Focus on nodes that control information flow. They can block or facilitate changes.",
+      "es": "Alta Intermediación: Enfóquese en nodos que controlan el flujo de información. Pueden bloquear o facilitar cambios.",
+      "fr": "Intermédiarité Élevée : Concentrez-vous sur les nœuds qui contrôlent le flux d'informations. Ils peuvent bloquer ou faciliter les changements.",
+      "de": "Hohe Zwischenzentralität: Konzentrieren Sie sich auf Knoten, die den Informationsfluss kontrollieren. Sie können Änderungen blockieren oder erleichtern.",
+      "lt": "Didelis tarpiškumas: Sutelkite dėmesį į mazgus, kontroliuojančius informacijos srautą. Jie gali blokuoti arba palengvinti pokyčius.",
+      "pt": "Alta Intermediação: Concentre-se em nós que controlam o fluxo de informações. Eles podem bloquear ou facilitar mudanças.",
+      "it": "Alta Intermediazione: Concentrati sui nodi che controllano il flusso di informazioni. Possono bloccare o facilitare i cambiamenti."
+    }
+  ]
+}

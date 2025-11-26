@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.entry_point_4_knowledge_domain",
+      "en": "Entry Point 4: Knowledge Domain",
+      "es": "Punto de Entrada 4: Dominio del Conocimiento",
+      "fr": "Point d'Entrée 4: Domaine de Connaissance",
+      "de": "Einstiegspunkt 4: Wissensbereich",
+      "lt": "Įėjimo taškas 4: Žinių sritis",
+      "pt": "Ponto de Entrada 4: Domínio de Conhecimento",
+      "it": "Punto di Ingresso 4: Ambito di Conoscenza"
+    }
+  ]
+}

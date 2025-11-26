@@ -1,0 +1,393 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.common.2_classification",
+      "en": "2. Classification:",
+      "es": "2. Clasificación:",
+      "fr": "2. Classification :",
+      "de": "2. Klassifizierung:",
+      "lt": "2. Klasifikacija:",
+      "pt": "2. Classificação:",
+      "it": "2. Classificazione:"
+    },
+    {
+      "key": "modules.analysis.common.4_visualization",
+      "en": "4. Visualization:",
+      "es": "4. Visualización:",
+      "fr": "4. Visualisation :",
+      "de": "4. Visualisierung:",
+      "lt": "4. Vizualizacija:",
+      "pt": "4. Visualização:",
+      "it": "4. Visualizzazione:"
+    },
+    {
+      "key": "modules.analysis.common.5_element_participation",
+      "en": "5. Element participation:",
+      "es": "5. Participación de elementos:",
+      "fr": "5. Participation des éléments :",
+      "de": "5. Elementbeteiligung:",
+      "lt": "5. Elementų dalyvavimas:",
+      "pt": "5. Participação de elementos:",
+      "it": "5. Partecipazione di elementi:"
+    },
+    {
+      "key": "modules.analysis.common.6_export",
+      "en": "6. Export:",
+      "es": "6. Exportar:",
+      "fr": "6. Exporter :",
+      "de": "6. Exportieren:",
+      "lt": "6. Eksportuoti:",
+      "pt": "6. Exportar:",
+      "it": "6. Esportare:"
+    },
+    {
+      "key": "modules.analysis.common.average_path_length",
+      "en": "Average Path Length",
+      "es": "Longitud Promedio de Ruta",
+      "fr": "Longueur Moyenne du Chemin",
+      "de": "Durchschnittliche Pfadlänge",
+      "lt": "Vidutinis kelio ilgis",
+      "pt": "Comprimento Médio do Caminho",
+      "it": "Lunghezza Media del Percorso"
+    },
+    {
+      "key": "modules.analysis.common.betweenness_centrality",
+      "en": "Betweenness Centrality",
+      "es": "Centralidad de Intermediación",
+      "fr": "Centralité d'Intermédiarité",
+      "de": "Zwischenzentralität",
+      "lt": "Tarpininkavimo centrinis svarba",
+      "pt": "Centralidade de Intermediação",
+      "it": "Centralità di Betweenness"
+    },
+    {
+      "key": "modules.analysis.common.bubble_size_represents_pagerank",
+      "en": "Bubble size represents PageRank",
+      "es": "El tamaño de la burbuja representa PageRank",
+      "fr": "La taille de la bulle représente le PageRank",
+      "de": "Blasengröße steht für PageRank",
+      "lt": "Burbulo dydis atspindi PageRank",
+      "pt": "O tamanho da bolha representa o PageRank",
+      "it": "La dimensione della bolla rappresenta il PageRank"
+    },
+    {
+      "key": "modules.analysis.common.closeness_centrality",
+      "en": "Closeness Centrality",
+      "es": "Centralidad de Cercanía",
+      "fr": "Centralité de Proximité",
+      "de": "Nähezentralität",
+      "lt": "Artumo centrinis svarba",
+      "pt": "Centralidade de Proximidade",
+      "it": "Centralità di Vicinanza"
+    },
+    {
+      "key": "modules.analysis.common.comparison_plot_degree_vs_betweenness",
+      "en": "Comparison Plot - Degree vs Betweenness",
+      "es": "Gráfico de Comparación - Grado vs Intermediación",
+      "fr": "Graphique de Comparaison - Degré vs Intermédiarité",
+      "de": "Vergleichsdiagramm - Grad vs Zwischen",
+      "lt": "Palyginimo diagrama - Laipsnis vs Tarpininkavimas",
+      "pt": "Gráfico de Comparação - Grau vs Intermediação",
+      "it": "Grafico di Confronto - Grado vs Betweenness"
+    },
+    {
+      "key": "modules.analysis.common.critical_bridge_nodes_connecting_different_parts",
+      "en": "Critical bridge nodes connecting different parts",
+      "es": "Nodos puente críticos que conectan diferentes partes",
+      "fr": "Nœuds de pont critiques reliant différentes parties",
+      "de": "Kritische Brückenknoten, die verschiedene Teile verbinden",
+      "lt": "Kritiniai tilto mazgai, jungiantys skirtingas dalis",
+      "pt": "Nós de ponte críticos conectando diferentes partes",
+      "it": "Nodi ponte critici che collegano diverse parti"
+    },
+    {
+      "key": "modules.analysis.common.degree_centrality",
+      "en": "Degree Centrality",
+      "es": "Centralidad de Grado",
+      "fr": "Centralité de Degré",
+      "de": "Gradzentralität",
+      "lt": "Laipsnio centrinis svarba",
+      "pt": "Centralidade de Grau",
+      "it": "Centralità di Grado"
+    },
+    {
+      "key": "modules.analysis.common.detection_complete_found",
+      "en": "Detection complete! Found",
+      "es": "¡Detección completa! Se encontraron",
+      "fr": "Détection terminée ! Trouvé",
+      "de": "Erkennung abgeschlossen! Gefunden",
+      "lt": "Aptikimas baigtas! Rasta",
+      "pt": "Detecção concluída! Encontrado",
+      "it": "Rilevamento completato! Trovato"
+    },
+    {
+      "key": "modules.analysis.common.distribution_histogram",
+      "en": "Distribution Histogram",
+      "es": "Histograma de Distribución",
+      "fr": "Histogramme de Distribution",
+      "de": "Verteilungshistogramm",
+      "lt": "Pasiskirstymo histograma",
+      "pt": "Histograma de Distribuição",
+      "it": "Istogramma di Distribuzione"
+    },
+    {
+      "key": "modules.analysis.common.dominance_score",
+      "en": "Dominance score:",
+      "es": "Puntuación de dominancia:",
+      "fr": "Score de dominance :",
+      "de": "Dominanz-Score:",
+      "lt": "Dominavimo balas:",
+      "pt": "Pontuação de dominância:",
+      "it": "Punteggio di dominanza:"
+    },
+    {
+      "key": "modules.analysis.common.eigenvector_centrality",
+      "en": "Eigenvector Centrality",
+      "es": "Centralidad de Vector Propio",
+      "fr": "Centralité de Vecteur Propre",
+      "de": "Eigenvektorzentralität",
+      "lt": "Tikrinio vektoriaus centrinis svarba",
+      "pt": "Centralidade de Vetor Próprio",
+      "it": "Centralità di Autovettore"
+    },
+    {
+      "key": "modules.analysis.common.element_participation",
+      "en": "Element participation:",
+      "es": "Participación de elementos:",
+      "fr": "Participation des éléments :",
+      "de": "Elementbeteiligung:",
+      "lt": "Elementų dalyvavimas:",
+      "pt": "Participação de elementos:",
+      "it": "Partecipazione di elementi:"
+    },
+    {
+      "key": "modules.analysis.common.example_fishing_fish_biomass_fishing",
+      "en": "Example: Fishing → - Fish biomass → - Fishing",
+      "es": "Ejemplo: Pesca → - Biomasa de peces → - Pesca",
+      "fr": "Exemple : Pêche → - Biomasse de poissons → - Pêche",
+      "de": "Beispiel: Fischerei → - Fischbiomasse → - Fischerei",
+      "lt": "Pavyzdys: Žvejyba → - Žuvų biomasė → - Žvejyba",
+      "pt": "Exemplo: Pesca → - Biomassa de peixes → - Pesca",
+      "it": "Esempio: Pesca → - Biomassa ittica → - Pesca"
+    },
+    {
+      "key": "modules.analysis.common.guide",
+      "en": "Guide",
+      "es": "Guía",
+      "fr": "Guide",
+      "de": "Leitfaden",
+      "lt": "Vadovas",
+      "pt": "Guia",
+      "it": "Guida"
+    },
+    {
+      "key": "modules.analysis.common.how_to_interpret_results",
+      "en": "How to interpret results:",
+      "es": "Cómo interpretar los resultados:",
+      "fr": "Comment interpréter les résultats :",
+      "de": "So interpretieren Sie die Ergebnisse:",
+      "lt": "Kaip interpretuoti rezultatus:",
+      "pt": "Como interpretar os resultados:",
+      "it": "Come interpretare i risultati:"
+    },
+    {
+      "key": "modules.analysis.common.how_to_use_this_tool",
+      "en": "How to use this tool:",
+      "es": "Cómo usar esta herramienta:",
+      "fr": "Comment utiliser cet outil :",
+      "de": "So verwenden Sie dieses Tool:",
+      "lt": "Kaip naudoti šį įrankį:",
+      "pt": "Como usar esta ferramenta:",
+      "it": "Come usare questo strumento:"
+    },
+    {
+      "key": "modules.analysis.common.key_nodes",
+      "en": "Key Nodes",
+      "es": "Nodos Clave",
+      "fr": "Nœuds Clés",
+      "de": "Schlüsselknoten",
+      "lt": "Pagrindiniai mazgai",
+      "pt": "Nós-Chave",
+      "it": "Nodi Chiave"
+    },
+    {
+      "key": "modules.analysis.common.mean",
+      "en": "Mean",
+      "es": "Media",
+      "fr": "Moyenne",
+      "de": "Mittelwert",
+      "lt": "Vidurkis",
+      "pt": "Média",
+      "it": "Media"
+    },
+    {
+      "key": "modules.analysis.common.median",
+      "en": "Median",
+      "es": "Mediana",
+      "fr": "Médiane",
+      "de": "Median",
+      "lt": "Mediana",
+      "pt": "Mediana",
+      "it": "Mediana"
+    },
+    {
+      "key": "modules.analysis.common.most_central_nodes_with_shortest_paths_to_others",
+      "en": "Most central nodes with shortest paths to others",
+      "es": "Nodos más centrales con rutas más cortas a otros",
+      "fr": "Nœuds les plus centraux avec les chemins les plus courts vers les autres",
+      "de": "Zentralste Knoten mit kürzesten Pfaden zu anderen",
+      "lt": "Centriškiausi mazgai su trumpiausiais keliais į kitus",
+      "pt": "Nós mais centrais com caminhos mais curtos para outros",
+      "it": "Nodi più centrali con percorsi più brevi verso gli altri"
+    },
+    {
+      "key": "modules.analysis.common.most_influential_nodes_based_on_incoming_connections",
+      "en": "Most influential nodes based on incoming connections",
+      "es": "Nodos más influyentes basados en conexiones entrantes",
+      "fr": "Nœuds les plus influents basés sur les connexions entrantes",
+      "de": "Einflussreichste Knoten basierend auf eingehenden Verbindungen",
+      "lt": "Įtakingiausi mazgai pagal įeinančius ryšius",
+      "pt": "Nós mais influentes com base em conexões de entrada",
+      "it": "Nodi più influenti in base alle connessioni in entrata"
+    },
+    {
+      "key": "modules.analysis.common.no_cld_data_found",
+      "en": "No CLD data found.",
+      "es": "No se encontraron datos CLD.",
+      "fr": "Aucune donnée CLD trouvée.",
+      "de": "Keine CLD-Daten gefunden.",
+      "lt": "CLD duomenų nerasta.",
+      "pt": "Nenhum dado CLD encontrado.",
+      "it": "Nessun dato CLD trovato."
+    },
+    {
+      "key": "modules.analysis.common.pagerank",
+      "en": "PageRank",
+      "es": "PageRank",
+      "fr": "PageRank",
+      "de": "PageRank",
+      "lt": "PageRank",
+      "pt": "PageRank",
+      "it": "PageRank"
+    },
+    {
+      "key": "modules.analysis.common.rule_even_number_of_negative_connections",
+      "en": "Rule: Even number of negative connections (-)",
+      "es": "Regla: Número par de conexiones negativas (-)",
+      "fr": "Règle : Nombre pair de connexions négatives (-)",
+      "de": "Regel: Gerade Anzahl negativer Verbindungen (-)",
+      "lt": "Taisyklė: Lyginis neigiamų ryšių skaičius (-)",
+      "pt": "Regra: Número par de conexões negativas (-)",
+      "it": "Regola: Numero pari di connessioni negative (-)"
+    },
+    {
+      "key": "modules.analysis.common.rule_odd_number_of_negative_connections",
+      "en": "Rule: Odd number of negative connections (-)",
+      "es": "Regla: Número impar de conexiones negativas (-)",
+      "fr": "Règle : Nombre impair de connexions négatives (-)",
+      "de": "Regel: Ungerade Anzahl negativer Verbindungen (-)",
+      "lt": "Taisyklė: Nelyginis neigiamų ryšių skaičius (-)",
+      "pt": "Regra: Número ímpar de conexões negativas (-)",
+      "it": "Regola: Numero dispari di connessioni negative (-)"
+    },
+    {
+      "key": "modules.analysis.common.top_5_nodes_by_betweenness",
+      "en": "Top 5 Nodes by Betweenness",
+      "es": "Top 5 Nodos por Intermediación",
+      "fr": "Top 5 Nœuds par Intermédiarité",
+      "de": "Top 5 Knoten nach Zwischen",
+      "lt": "Top 5 mazgai pagal tarpininkavimą",
+      "pt": "Top 5 Nós por Intermediação",
+      "it": "Top 5 Nodi per Betweenness"
+    },
+    {
+      "key": "modules.analysis.common.top_5_nodes_by_closeness",
+      "en": "Top 5 Nodes by Closeness",
+      "es": "Top 5 Nodos por Cercanía",
+      "fr": "Top 5 Nœuds par Proximité",
+      "de": "Top 5 Knoten nach Nähe",
+      "lt": "Top 5 mazgai pagal artumą",
+      "pt": "Top 5 Nós por Proximidade",
+      "it": "Top 5 Nodi per Vicinanza"
+    },
+    {
+      "key": "modules.analysis.common.top_5_nodes_by_degree",
+      "en": "Top 5 Nodes by Degree",
+      "es": "Top 5 Nodos por Grado",
+      "fr": "Top 5 Nœuds par Degré",
+      "de": "Top 5 Knoten nach Grad",
+      "lt": "Top 5 mazgai pagal laipsnį",
+      "pt": "Top 5 Nós por Grau",
+      "it": "Top 5 Nodi per Grado"
+    },
+    {
+      "key": "modules.analysis.common.top_5_nodes_by_pagerank",
+      "en": "Top 5 Nodes by PageRank",
+      "es": "Top 5 Nodos por PageRank",
+      "fr": "Top 5 Nœuds par PageRank",
+      "de": "Top 5 Knoten nach PageRank",
+      "lt": "Top 5 mazgai pagal PageRank",
+      "pt": "Top 5 Nós por PageRank",
+      "it": "Top 5 Nodi per PageRank"
+    },
+    {
+      "key": "modules.analysis.common.top_n_nodes",
+      "en": "Top N Nodes",
+      "es": "Top N Nodos",
+      "fr": "Top N Nœuds",
+      "de": "Top N Knoten",
+      "lt": "Top N mazgai",
+      "pt": "Top N Nós",
+      "it": "Top N Nodi"
+    },
+    {
+      "key": "modules.analysis.common.total_edges",
+      "en": "Total Edges",
+      "es": "Total de Enlaces",
+      "fr": "Total d'Arêtes",
+      "de": "Gesamtkanten",
+      "lt": "Viso ryšių",
+      "pt": "Total de Arestas",
+      "it": "Totale Archi"
+    },
+    {
+      "key": "modules.analysis.common.total_nodes",
+      "en": "Total Nodes",
+      "es": "Total de Nodos",
+      "fr": "Total de Nœuds",
+      "de": "Gesamtknoten",
+      "lt": "Viso mazgų",
+      "pt": "Total de Nós",
+      "it": "Totale Nodi"
+    },
+    {
+      "key": "modules.analysis.common.understanding_the_results",
+      "en": "Understanding the results:",
+      "es": "Comprensión de los resultados:",
+      "fr": "Comprendre les résultats :",
+      "de": "Ergebnisse verstehen:",
+      "lt": "Rezultatų supratimas:",
+      "pt": "Compreensão dos resultados:",
+      "it": "Comprensione dei risultati:"
+    },
+    {
+      "key": "modules.analysis.common.visualizations",
+      "en": "Visualizations",
+      "es": "Visualizaciones",
+      "fr": "Visualisations",
+      "de": "Visualisierungen",
+      "lt": "Vizualizacijos",
+      "pt": "Visualizações",
+      "it": "Visualizzazioni"
+    }
+  ]
+}

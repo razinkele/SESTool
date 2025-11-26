@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.export_pathway_report",
+      "en": "Export Pathway Report",
+      "es": "Exportar Informe de Ruta",
+      "fr": "Exporter le Rapport de Parcours",
+      "de": "Pfadbericht Exportieren",
+      "lt": "Eksportuoti kelio ataskaitą",
+      "pt": "Exportar Relatório de Percurso",
+      "it": "Esporta Rapporto Percorso"
+    }
+  ]
+}

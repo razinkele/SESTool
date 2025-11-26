@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.use_create_ses_with_templates_or_ai_assistant_for_",
+      "en": "Use Create SES with templates or AI assistant for rapid model building (beginner-friendly)",
+      "es": "Use Crear SES con plantillas o asistente de IA para la construcción rápida de modelos (amigable para principiantes)",
+      "fr": "Utilisez Créer SES avec des modèles ou un assistant IA pour une construction rapide de modèles (convivial pour les débutants)",
+      "de": "Verwenden Sie SES Erstellen mit Vorlagen oder KI-Assistenten für schnelle Modellierung (anfängerfreundlich)",
+      "lt": "Naudokite Kurti SES su šablonais arba DI asistentu greitai modeliui sukurti (patogus pradedantiesiems)",
+      "pt": "Use Criar SES com modelos ou assistente de IA para construção rápida de modelos (amigável para iniciantes)",
+      "it": "Usa Crea SES con modelli o assistente IA per una rapida costruzione del modello (adatto ai principianti)"
+    }
+  ]
+}

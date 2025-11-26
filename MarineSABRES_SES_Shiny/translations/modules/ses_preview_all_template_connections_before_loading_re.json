@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.ses.preview_all_template_connections_before_loading_re",
+      "en": "Preview all template connections before loading. Review connections to understand the causal links in the SES model.",
+      "es": "Previsualice todas las conexiones de plantilla antes de cargar. Revise las conexiones para comprender los enlaces causales en el modelo SES.",
+      "fr": "Prévisualisez toutes les connexions du modèle avant le chargement. Examinez les connexions pour comprendre les liens causals dans le modèle SES.",
+      "de": "Vorschau aller Vorlagenverbindungen vor dem Laden. Überprüfen Sie die Verbindungen, um die kausalen Verknüpfungen im SES-Modell zu verstehen.",
+      "lt": "Peržiūrėkite visus šablono ryšius prieš įkeliant. Peržiūrėkite ryšius, kad suprastumėte priežastinius ryšius SES modelyje.",
+      "pt": "Visualize todas as conexões do modelo antes de carregar. Revise as conexões para entender os vínculos causais no modelo SES.",
+      "it": "Visualizza in anteprima tutte le connessioni del modello prima del caricamento. Rivedi le connessioni per comprendere i collegamenti causali nel modello SES."
+    }
+  ]
+}

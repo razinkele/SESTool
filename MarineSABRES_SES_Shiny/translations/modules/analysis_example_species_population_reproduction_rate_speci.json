@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.example_species_population_reproduction_rate_speci",
+      "en": "Example: Species population → + Reproduction rate → + Species population",
+      "es": "Ejemplo: Población de especies → + Tasa de reproducción → + Población de especies",
+      "fr": "Exemple : Population d'espèces → + Taux de reproduction → + Population d'espèces",
+      "de": "Beispiel: Artenpopulation → + Reproduktionsrate → + Artenpopulation",
+      "lt": "Pavyzdys: Rūšių populiacija → + Reprodukcijos tempas → + Rūšių populiacija",
+      "pt": "Exemplo: População de espécies → + Taxa de reprodução → + População de espécies",
+      "it": "Esempio: Popolazione di specie → + Tasso di riproduzione → + Popolazione di specie"
+    }
+  ]
+}

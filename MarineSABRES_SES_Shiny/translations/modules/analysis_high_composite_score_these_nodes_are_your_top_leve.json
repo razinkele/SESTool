@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.high_composite_score_these_nodes_are_your_top_leve",
+      "en": "High Composite Score: These nodes are your top leverage points. Interventions here can have cascading effects throughout the system.",
+      "es": "Puntuación Compuesta Alta: Estos nodos son sus principales puntos de apalancamiento. Las intervenciones aquí pueden tener efectos en cascada en todo el sistema.",
+      "fr": "Score Composite Élevé : Ces nœuds sont vos principaux points de levier. Les interventions ici peuvent avoir des effets en cascade dans tout le système.",
+      "de": "Hoher zusammengesetzter Score: Diese Knoten sind Ihre Top-Hebelpunkte. Interventionen hier können kaskadierende Auswirkungen im gesamten System haben.",
+      "lt": "Didelis kompozitinis balas: Šie mazgai yra jūsų pagrindiniai sverties taškai. Intervencijos čia gali turėti kaskadines pasekmes visoje sistemoje.",
+      "pt": "Pontuação Composta Alta: Estes nós são seus principais pontos de alavancagem. Intervenções aqui podem ter efeitos em cascata em todo o sistema.",
+      "it": "Punteggio Composito Alto: Questi nodi sono i tuoi principali punti di leva. Gli interventi qui possono avere effetti a cascata in tutto il sistema."
+    }
+  ]
+}

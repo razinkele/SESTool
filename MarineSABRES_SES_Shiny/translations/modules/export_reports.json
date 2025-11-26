@@ -1,0 +1,193 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.export.reports.analysis_results",
+      "en": "Analysis Results",
+      "es": "Resultados del Análisis",
+      "fr": "Résultats de l'Analyse",
+      "de": "Analyseergebnisse",
+      "lt": "Analizės rezultatai",
+      "pt": "Resultados da Análise",
+      "it": "Risultati dell'Analisi"
+    },
+    {
+      "key": "modules.export.reports.cld_data",
+      "en": "CLD Data",
+      "es": "Datos CLD",
+      "fr": "Données CLD",
+      "de": "CLD-Daten",
+      "lt": "CLD duomenys",
+      "pt": "Dados CLD",
+      "it": "Dati CLD"
+    },
+    {
+      "key": "modules.export.reports.download_data",
+      "en": "Download Data",
+      "es": "Descargar Datos",
+      "fr": "Télécharger les Données",
+      "de": "Daten Herunterladen",
+      "lt": "Atsisiųsti duomenis",
+      "pt": "Descarregar Dados",
+      "it": "Scarica Dati"
+    },
+    {
+      "key": "modules.export.reports.download_report",
+      "en": "Download Report",
+      "es": "Descargar Informe",
+      "fr": "Télécharger le Rapport",
+      "de": "Bericht Herunterladen",
+      "lt": "Atsisiųsti Ataskaitą",
+      "pt": "Baixar Relatório",
+      "it": "Scarica Rapporto"
+    },
+    {
+      "key": "modules.export.reports.download_visualization",
+      "en": "Download Visualization",
+      "es": "Descargar Visualización",
+      "fr": "Télécharger la Visualisation",
+      "de": "Visualisierung Herunterladen",
+      "lt": "Atsisiųsti vizualizaciją",
+      "pt": "Descarregar Visualização",
+      "it": "Scarica Visualizzazione"
+    },
+    {
+      "key": "modules.export.reports.export_visualizations",
+      "en": "Export Visualizations",
+      "es": "Exportar Visualizaciones",
+      "fr": "Exporter les Visualisations",
+      "de": "Visualisierungen Exportieren",
+      "lt": "Eksportuoti vizualizacijas",
+      "pt": "Exportar Visualizações",
+      "it": "Esporta Visualizzazioni"
+    },
+    {
+      "key": "modules.export.reports.generate_report",
+      "en": "Generate Report",
+      "es": "Generar Informe",
+      "fr": "Générer le Rapport",
+      "de": "Bericht Erstellen",
+      "lt": "Generuoti ataskaitą",
+      "pt": "Gerar Relatório",
+      "it": "Genera Rapporto"
+    },
+    {
+      "key": "modules.export.reports.height_pixels",
+      "en": "Height (pixels):",
+      "es": "Alto (píxeles):",
+      "fr": "Hauteur (pixels):",
+      "de": "Höhe (Pixel):",
+      "lt": "Aukštis (pikseliai):",
+      "pt": "Altura (pixels):",
+      "it": "Altezza (pixel):"
+    },
+    {
+      "key": "modules.export.reports.include_data_tables",
+      "en": "Include Data Tables",
+      "es": "Incluir Tablas de Datos",
+      "fr": "Inclure les Tableaux de Données",
+      "de": "Datentabellen Einbeziehen",
+      "lt": "Įtraukti duomenų lenteles",
+      "pt": "Incluir Tabelas de Dados",
+      "it": "Includi Tabelle di Dati"
+    },
+    {
+      "key": "modules.export.reports.include_visualizations",
+      "en": "Include Visualizations",
+      "es": "Incluir Visualizaciones",
+      "fr": "Inclure les Visualisations",
+      "de": "Visualisierungen Einbeziehen",
+      "lt": "Įtraukti vizualizacijas",
+      "pt": "Incluir Visualizações",
+      "it": "Includi Visualizzazioni"
+    },
+    {
+      "key": "modules.export.reports.isa_data",
+      "en": "ISA Data",
+      "es": "Datos ISA",
+      "fr": "Données ISA",
+      "de": "ISA-Daten",
+      "lt": "ISA duomenys",
+      "pt": "Dados ISA",
+      "it": "Dati ISA"
+    },
+    {
+      "key": "modules.export.reports.pims_data",
+      "en": "PIMS Data",
+      "es": "Datos PIMS",
+      "fr": "Données PIMS",
+      "de": "PIMS-Daten",
+      "lt": "PIMS duomenys",
+      "pt": "Dados PIMS",
+      "it": "Dati PIMS"
+    },
+    {
+      "key": "modules.export.reports.project_metadata",
+      "en": "Project Metadata",
+      "es": "Metadatos del Proyecto",
+      "fr": "Métadonnées du Projet",
+      "de": "Projektmetadaten",
+      "lt": "Projekto metaduomenys",
+      "pt": "Metadados do Projeto",
+      "it": "Metadati del Progetto"
+    },
+    {
+      "key": "modules.export.reports.report_format",
+      "en": "Report Format:",
+      "es": "Formato del Informe:",
+      "fr": "Format du Rapport:",
+      "de": "Berichtsformat:",
+      "lt": "Ataskaitos formatas:",
+      "pt": "Formato do Relatório:",
+      "it": "Formato del Rapporto:"
+    },
+    {
+      "key": "modules.export.reports.select_components",
+      "en": "Select Components:",
+      "es": "Seleccionar Componentes:",
+      "fr": "Sélectionner les Composants:",
+      "de": "Komponenten Auswählen:",
+      "lt": "Pasirinkite komponentus:",
+      "pt": "Selecionar Componentes:",
+      "it": "Seleziona Componenti:"
+    },
+    {
+      "key": "modules.export.reports.select_format",
+      "en": "Select Format:",
+      "es": "Seleccionar Formato:",
+      "fr": "Sélectionner le Format:",
+      "de": "Format Auswählen:",
+      "lt": "Pasirinkite formatą:",
+      "pt": "Selecionar Formato:",
+      "it": "Seleziona Formato:"
+    },
+    {
+      "key": "modules.export.reports.width_pixels",
+      "en": "Width (pixels):",
+      "es": "Ancho (píxeles):",
+      "fr": "Largeur (pixels):",
+      "de": "Breite (Pixel):",
+      "lt": "Plotis (pikseliai):",
+      "pt": "Largura (pixels):",
+      "it": "Larghezza (pixel):"
+    },
+    {
+      "key": "modules.export.reports.your_report_has_been_generated_successfully",
+      "en": "Your report has been generated successfully.",
+      "es": "Su informe se ha generado exitosamente.",
+      "fr": "Votre rapport a été généré avec succès.",
+      "de": "Ihr Bericht wurde erfolgreich erstellt.",
+      "lt": "Jūsų ataskaita buvo sėkmingai sugeneruota.",
+      "pt": "O seu relatório foi gerado com sucesso.",
+      "it": "Il tuo rapporto è stato generato con successo."
+    }
+  ]
+}

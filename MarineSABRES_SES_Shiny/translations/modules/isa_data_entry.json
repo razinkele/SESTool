@@ -1,0 +1,703 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.data_entry.common.add_activities",
+      "en": "Add Activities",
+      "es": "Agregar Actividades",
+      "fr": "Ajouter des Activités",
+      "de": "Aktivitäten hinzufügen",
+      "lt": "Pridėti veiklas",
+      "pt": "Adicionar Atividades",
+      "it": "Aggiungere Attività"
+    },
+    {
+      "key": "modules.isa.data_entry.common.add_activity",
+      "en": "Add Activity",
+      "es": "Agregar Actividad",
+      "fr": "Ajouter une Activité",
+      "de": "Aktivität hinzufügen",
+      "lt": "Pridėti veiklą",
+      "pt": "Adicionar Atividade",
+      "it": "Aggiungi Attività"
+    },
+    {
+      "key": "modules.isa.data_entry.common.add_data_point",
+      "en": "Add Data Point",
+      "es": "Agregar Punto de Datos",
+      "fr": "Ajouter un Point de Données",
+      "de": "Datenpunkt hinzufügen",
+      "lt": "Pridėti duomenų tašką",
+      "pt": "Adicionar Ponto de Dados",
+      "it": "Aggiungi Punto Dati"
+    },
+    {
+      "key": "modules.isa.data_entry.common.add_marine_process",
+      "en": "Add Marine Process",
+      "es": "Agregar Proceso Marino",
+      "fr": "Ajouter un Processus Marin",
+      "de": "Meeresprozess hinzufügen",
+      "lt": "Pridėti jūros procesą",
+      "pt": "Adicionar Processo Marinho",
+      "it": "Aggiungi Processo Marino"
+    },
+    {
+      "key": "modules.isa.data_entry.common.add_marine_processes_and_functioning",
+      "en": "Add Marine Processes and Functioning",
+      "es": "Agregar Procesos y Funcionamiento Marinos",
+      "fr": "Ajouter des Processus et Fonctionnement Marins",
+      "de": "Marine Prozesse und Funktionsweise hinzufügen",
+      "lt": "Pridėti jūros procesus ir funkcionavimą",
+      "pt": "Adicionar Processos e Funcionamento Marinhos",
+      "it": "Aggiungere Processi e Funzionamento Marini"
+    },
+    {
+      "key": "modules.isa.data_entry.common.add_pressure",
+      "en": "Add Pressure",
+      "es": "Agregar Presión",
+      "fr": "Ajouter une Pression",
+      "de": "Belastung hinzufügen",
+      "lt": "Pridėti spaudimą",
+      "pt": "Adicionar Pressão",
+      "it": "Aggiungi Pressione"
+    },
+    {
+      "key": "modules.isa.data_entry.common.add_pressures",
+      "en": "Add Pressures",
+      "es": "Agregar Presiones",
+      "fr": "Ajouter des Pressions",
+      "de": "Belastungen hinzufügen",
+      "lt": "Pridėti spaudimus",
+      "pt": "Adicionar Pressões",
+      "it": "Aggiungere Pressioni"
+    },
+    {
+      "key": "modules.isa.data_entry.common.add_time_series_data",
+      "en": "Add Time Series Data",
+      "es": "Agregar Datos de Series Temporales",
+      "fr": "Ajouter des Données de Séries Temporelles",
+      "de": "Zeitreihendaten hinzufügen",
+      "lt": "Pridėti laiko eilučių duomenis",
+      "pt": "Adicionar Dados de Séries Temporais",
+      "it": "Aggiungere Dati di Serie Temporali"
+    },
+    {
+      "key": "modules.isa.data_entry.common.adjacency_matrix_review",
+      "en": "Adjacency Matrix Review",
+      "es": "Revisión de Matriz de Adyacencia",
+      "fr": "Révision de la Matrice d'Adjacence",
+      "de": "Überprüfung der Adjazenzmatrix",
+      "lt": "Gretimumo matricos peržiūra",
+      "pt": "Revisão da Matriz de Adjacência",
+      "it": "Revisione della Matrice di Adiacenza"
+    },
+    {
+      "key": "modules.isa.data_entry.common.behaviour_over_time_bot_graphs",
+      "en": "Behaviour Over Time (BOT) Graphs",
+      "es": "Gráficos de Comportamiento a lo Largo del Tiempo (BOT)",
+      "fr": "Graphiques de Comportement au Fil du Temps (BOT)",
+      "de": "Verhalten im Zeitverlauf (BOT) Diagramme",
+      "lt": "Elgesio laike (BOT) grafikai",
+      "pt": "Gráficos de Comportamento ao Longo do Tempo (BOT)",
+      "it": "Grafici del Comportamento nel Tempo (BOT)"
+    },
+    {
+      "key": "modules.isa.data_entry.common.bot_graphs",
+      "en": "BOT Graphs",
+      "es": "Gráficos BOT",
+      "fr": "Graphiques BOT",
+      "de": "BOT-Diagramme",
+      "lt": "BOT grafikai",
+      "pt": "Gráficos BOT",
+      "it": "Grafici BOT"
+    },
+    {
+      "key": "modules.isa.data_entry.common.case_study_context",
+      "en": "Case Study Context",
+      "es": "Contexto del Estudio de Caso",
+      "fr": "Contexte de l'Étude de Cas",
+      "de": "Fallstudienkontext",
+      "lt": "Atvejo tyrimo kontekstas",
+      "pt": "Contexto do Estudo de Caso",
+      "it": "Contesto del Caso Studio"
+    },
+    {
+      "key": "modules.isa.data_entry.common.causal_loop_diagram_creation_and_export",
+      "en": "Causal Loop Diagram Creation and Export",
+      "es": "Creación y Exportación de Diagramas de Bucles Causales",
+      "fr": "Création et Exportation de Diagrammes de Boucles Causales",
+      "de": "Erstellung und Export von Kausalen Schleifendiagrammen",
+      "lt": "Priežastinių ciklų diagramos kūrimas ir eksportas",
+      "pt": "Criação e Exportação de Diagramas de Ciclos Causais",
+      "it": "Creazione ed Esportazione di Diagrammi di Cicli Causali"
+    },
+    {
+      "key": "modules.isa.data_entry.common.choose_excel_file_xlsx",
+      "en": "Choose Excel File (.xlsx):",
+      "es": "Elegir Archivo de Excel (.xlsx):",
+      "fr": "Choisir un Fichier Excel (.xlsx) :",
+      "de": "Excel-Datei auswählen (.xlsx):",
+      "lt": "Pasirinkite Excel failą (.xlsx):",
+      "pt": "Escolher Ficheiro Excel (.xlsx):",
+      "it": "Scegli File Excel (.xlsx):"
+    },
+    {
+      "key": "modules.isa.data_entry.common.clarifying_endogenisation_and_encapsulation",
+      "en": "Clarifying - Endogenisation and Encapsulation",
+      "es": "Aclaración - Endogenización y Encapsulación",
+      "fr": "Clarification - Endogénéisation et Encapsulation",
+      "de": "Klärung - Endogenisierung und Kapselung",
+      "lt": "Patikslinimas - Endogenizacija ir inkapsuliacija",
+      "pt": "Clarificação - Endogenização e Encapsulamento",
+      "it": "Chiarificazione - Endogenizzazione e Incapsulamento"
+    },
+    {
+      "key": "modules.isa.data_entry.common.clarifying_metrics_and_validation",
+      "en": "Clarifying, Metrics, and Validation",
+      "es": "Aclaración, Métricas y Validación",
+      "fr": "Clarification, Métriques et Validation",
+      "de": "Klärung, Metriken und Validierung",
+      "lt": "Patikslinimas, rodikliai ir patvirtinimas",
+      "pt": "Clarificação, Métricas e Validação",
+      "it": "Chiarificazione, Metriche e Validazione"
+    },
+    {
+      "key": "modules.isa.data_entry.common.confidence",
+      "en": "Confidence:",
+      "es": "Confianza:",
+      "fr": "Confiance :",
+      "de": "Vertrauen:",
+      "lt": "Pasitikėjimas:",
+      "pt": "Confiança:",
+      "it": "Confidenza:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.current_activities",
+      "en": "Current Activities",
+      "es": "Actividades Actuales",
+      "fr": "Activités Actuelles",
+      "de": "Aktuelle Aktivitäten",
+      "lt": "Dabartinės veiklos",
+      "pt": "Atividades Atuais",
+      "it": "Attività Attuali"
+    },
+    {
+      "key": "modules.isa.data_entry.common.current_data",
+      "en": "Current Data",
+      "es": "Datos Actuales",
+      "fr": "Données Actuelles",
+      "de": "Aktuelle Daten",
+      "lt": "Dabartiniai duomenys",
+      "pt": "Dados Atuais",
+      "it": "Dati Attuali"
+    },
+    {
+      "key": "modules.isa.data_entry.common.current_marine_processes",
+      "en": "Current Marine Processes",
+      "es": "Procesos Marinos Actuales",
+      "fr": "Processus Marins Actuels",
+      "de": "Aktuelle Meeresprozesse",
+      "lt": "Dabartiniai jūros procesai",
+      "pt": "Processos Marinhos Atuais",
+      "it": "Processi Marini Attuali"
+    },
+    {
+      "key": "modules.isa.data_entry.common.current_pressures",
+      "en": "Current Pressures",
+      "es": "Presiones Actuales",
+      "fr": "Pressions Actuelles",
+      "de": "Aktuelle Belastungen",
+      "lt": "Dabartiniai spaudimai",
+      "pt": "Pressões Atuais",
+      "it": "Pressioni Attuali"
+    },
+    {
+      "key": "modules.isa.data_entry.common.data_management",
+      "en": "Data Management",
+      "es": "Gestión de Datos",
+      "fr": "Gestion des Données",
+      "de": "Datenverwaltung",
+      "lt": "Duomenų valdymas",
+      "pt": "Gestão de Dados",
+      "it": "Gestione Dati"
+    },
+    {
+      "key": "modules.isa.data_entry.common.describe_your_marine_case_study_context",
+      "en": "Describe your marine case study context...",
+      "es": "Describa el contexto de su estudio de caso marino...",
+      "fr": "Décrivez le contexte de votre étude de cas marine...",
+      "de": "Beschreiben Sie den Kontext Ihrer Meeresfall­studie...",
+      "lt": "Apibūdinkite savo jūrinio atvejo tyrimo kontekstą...",
+      "pt": "Descreva o contexto do seu estudo de caso marinho...",
+      "it": "Descrivete il contesto del vostro caso studio marino..."
+    },
+    {
+      "key": "modules.isa.data_entry.common.documentation",
+      "en": "Documentation",
+      "es": "Documentación",
+      "fr": "Documentation",
+      "de": "Dokumentation",
+      "lt": "Dokumentacija",
+      "pt": "Documentação",
+      "it": "Documentazione"
+    },
+    {
+      "key": "modules.isa.data_entry.common.download_complete_excel_workbook",
+      "en": "Download Complete Excel Workbook",
+      "es": "Descargar Libro de Excel Completo",
+      "fr": "Télécharger le Classeur Excel Complet",
+      "de": "Vollständige Excel-Arbeitsmappe herunterladen",
+      "lt": "Atsisiųsti visą Excel darbaknygę",
+      "pt": "Transferir Livro Excel Completo",
+      "it": "Scarica Cartella di Lavoro Excel Completa"
+    },
+    {
+      "key": "modules.isa.data_entry.common.download_kumu_csv_files",
+      "en": "Download Kumu CSV Files",
+      "es": "Descargar Archivos CSV de Kumu",
+      "fr": "Télécharger les Fichiers CSV Kumu",
+      "de": "Kumu CSV-Dateien herunterladen",
+      "lt": "Atsisiųsti Kumu CSV failus",
+      "pt": "Transferir Ficheiros CSV Kumu",
+      "it": "Scarica File CSV Kumu"
+    },
+    {
+      "key": "modules.isa.data_entry.common.eg_2000_2024",
+      "en": "e.g., 2000-2024",
+      "es": "p. ej., 2000-2024",
+      "fr": "p. ex., 2000-2024",
+      "de": "z.B. 2000-2024",
+      "lt": "pvz., 2000-2024",
+      "pt": "por exemplo, 2000-2024",
+      "it": "ad es., 2000-2024"
+    },
+    {
+      "key": "modules.isa.data_entry.common.eg_baltic_sea_fisheries",
+      "en": "e.g., Baltic Sea fisheries",
+      "es": "p. ej., pesquerías del Mar Báltico",
+      "fr": "p. ex., pêcheries de la mer Baltique",
+      "de": "z.B. Ostseefischerei",
+      "lt": "pvz., Baltijos jūros žuvininkystė",
+      "pt": "por exemplo, pescarias do Mar Báltico",
+      "it": "ad es., pesca nel Mar Baltico"
+    },
+    {
+      "key": "modules.isa.data_entry.common.eg_baltic_sea_north_atlantic",
+      "en": "e.g., Baltic Sea, North Atlantic",
+      "es": "p. ej., Mar Báltico, Atlántico Norte",
+      "fr": "p. ex., mer Baltique, Atlantique Nord",
+      "de": "z.B. Ostsee, Nordatlantik",
+      "lt": "pvz., Baltijos jūra, Šiaurės Atlanto vandenynas",
+      "pt": "por exemplo, Mar Báltico, Atlântico Norte",
+      "it": "ad es., Mar Baltico, Atlantico settentrionale"
+    },
+    {
+      "key": "modules.isa.data_entry.common.eg_tonnes_index",
+      "en": "e.g., tonnes, %, index",
+      "es": "p. ej., toneladas, %, índice",
+      "fr": "p. ex., tonnes, %, indice",
+      "de": "z.B. Tonnen, %, Index",
+      "lt": "pvz., tonos, %, indeksas",
+      "pt": "por exemplo, toneladas, %, índice",
+      "it": "ad es., tonnellate, %, indice"
+    },
+    {
+      "key": "modules.isa.data_entry.common.exercises_10_12_analysis",
+      "en": "Exercises 10-12: Analysis",
+      "es": "Ejercicios 10-12: Análisis",
+      "fr": "Exercices 10-12 : Analyse",
+      "de": "Übungen 10-12: Analyse",
+      "lt": "Pratimai 10-12: Analizė",
+      "pt": "Exercícios 10-12: Análise",
+      "it": "Esercizi 10-12: Analisi"
+    },
+    {
+      "key": "modules.isa.data_entry.common.exercises_7_9_cld",
+      "en": "Exercises 7-9: CLD",
+      "es": "Ejercicios 7-9: DCL",
+      "fr": "Exercices 7-9 : DCB",
+      "de": "Übungen 7-9: KSD",
+      "lt": "Pratimai 7-9: PCS",
+      "pt": "Exercícios 7-9: DCL",
+      "it": "Esercizi 7-9: DCC"
+    },
+    {
+      "key": "modules.isa.data_entry.common.export_data",
+      "en": "Export Data",
+      "es": "Exportar Datos",
+      "fr": "Exporter les Données",
+      "de": "Daten Exportieren",
+      "lt": "Eksportuoti duomenis",
+      "pt": "Exportar Dados",
+      "it": "Esporta Dati"
+    },
+    {
+      "key": "modules.isa.data_entry.common.export_to_excel",
+      "en": "Export to Excel",
+      "es": "Exportar a Excel",
+      "fr": "Exporter vers Excel",
+      "de": "Nach Excel exportieren",
+      "lt": "Eksportuoti į Excel",
+      "pt": "Exportar para Excel",
+      "it": "Esporta in Excel"
+    },
+    {
+      "key": "modules.isa.data_entry.common.exporting_cld_for_further_analysis",
+      "en": "Exporting CLD for further analysis",
+      "es": "Exportando DCL para análisis adicional",
+      "fr": "Exportation de DCB pour une analyse approfondie",
+      "de": "Export von KSD zur weiteren Analyse",
+      "lt": "PCS eksportavimas tolesnei analizei",
+      "pt": "Exportando DCL para análise adicional",
+      "it": "Esportazione di DCC per ulteriori analisi"
+    },
+    {
+      "key": "modules.isa.data_entry.common.filename",
+      "en": "Filename:",
+      "es": "Nombre de Archivo:",
+      "fr": "Nom du Fichier :",
+      "de": "Dateiname:",
+      "lt": "Failo pavadinimas:",
+      "pt": "Nome do Ficheiro:",
+      "it": "Nome File:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.geographic_scope",
+      "en": "Geographic Scope:",
+      "es": "Ámbito Geográfico:",
+      "fr": "Portée Géographique :",
+      "de": "Geografischer Umfang:",
+      "lt": "Geografinė apimtis:",
+      "pt": "Âmbito Geográfico:",
+      "it": "Ambito Geografico:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.import_data",
+      "en": "Import Data",
+      "es": "Importar Datos",
+      "fr": "Importer des Données",
+      "de": "Daten importieren",
+      "lt": "Importuoti duomenis",
+      "pt": "Importar Dados",
+      "it": "Importa Dati"
+    },
+    {
+      "key": "modules.isa.data_entry.common.importexport_and_data_management",
+      "en": "Import/Export and Data Management",
+      "es": "Importación/Exportación y Gestión de Datos",
+      "fr": "Importation/Exportation et Gestion des Données",
+      "de": "Import/Export und Datenverwaltung",
+      "lt": "Importavimas/Eksportavimas ir duomenų valdymas",
+      "pt": "Importação/Exportação e Gestão de Dados",
+      "it": "Importazione/Esportazione e Gestione dei Dati"
+    },
+    {
+      "key": "modules.isa.data_entry.common.include_in_export",
+      "en": "Include in Export:",
+      "es": "Incluir en Exportación:",
+      "fr": "Inclure dans l'Exportation :",
+      "de": "In Export einbeziehen:",
+      "lt": "Įtraukti į eksportą:",
+      "pt": "Incluir na Exportação:",
+      "it": "Includere nell'Esportazione:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.initial_complexity_mapping",
+      "en": "Initial Complexity Mapping",
+      "es": "Mapeo Inicial de Complejidad",
+      "fr": "Cartographie Initiale de la Complexité",
+      "de": "Erste Komplexitätskartierung",
+      "lt": "Pradinis sudėtingumo kartografavimas",
+      "pt": "Mapeamento Inicial de Complexidade",
+      "it": "Mappatura Iniziale della Complessità"
+    },
+    {
+      "key": "modules.isa.data_entry.common.isa_guidance_document_pdf",
+      "en": "ISA Guidance Document (PDF)",
+      "es": "Documento de Orientación ISA (PDF)",
+      "fr": "Document d'Orientation ISA (PDF)",
+      "de": "ISA-Leitfaden (PDF)",
+      "lt": "ISA vadovo dokumentas (PDF)",
+      "pt": "Documento de Orientação ISA (PDF)",
+      "it": "Documento di Orientamento ISA (PDF)"
+    },
+    {
+      "key": "modules.isa.data_entry.common.key_stakeholders",
+      "en": "Key Stakeholders:",
+      "es": "Actores Clave:",
+      "fr": "Parties Prenantes Clés :",
+      "de": "Wichtige Stakeholder:",
+      "lt": "Pagrindiniai suinteresuotieji subjektai:",
+      "pt": "Partes Interessadas Principais:",
+      "it": "Principali Parti Interessate:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.kumu_export_options",
+      "en": "Kumu Export Options",
+      "es": "Opciones de Exportación Kumu",
+      "fr": "Options d'Exportation Kumu",
+      "de": "Kumu-Exportoptionen",
+      "lt": "Kumu eksportavimo parinktys",
+      "pt": "Opções de Exportação Kumu",
+      "it": "Opzioni di Esportazione Kumu"
+    },
+    {
+      "key": "modules.isa.data_entry.common.kumu_styling_code",
+      "en": "Kumu Styling Code",
+      "es": "Código de Estilo Kumu",
+      "fr": "Code de Style Kumu",
+      "de": "Kumu-Styling-Code",
+      "lt": "Kumu stilizavimo kodas",
+      "pt": "Código de Estilo Kumu",
+      "it": "Codice di Stile Kumu"
+    },
+    {
+      "key": "modules.isa.data_entry.common.leverage_points",
+      "en": "Leverage Points",
+      "es": "Puntos de Apalancamiento",
+      "fr": "Points de Levier",
+      "de": "Hebelpunkte",
+      "lt": "Sverčiai",
+      "pt": "Pontos de Alavancagem",
+      "it": "Punti di Leva"
+    },
+    {
+      "key": "modules.isa.data_entry.common.load_existing_isa_data_from_excel_workbook",
+      "en": "Load existing ISA data from Excel workbook:",
+      "es": "Cargar datos ISA existentes desde libro de Excel:",
+      "fr": "Charger des données ISA existantes à partir d'un classeur Excel :",
+      "de": "Vorhandene ISA-Daten aus Excel-Arbeitsmappe laden:",
+      "lt": "Įkelti esamus ISA duomenis iš Excel darbaknygės:",
+      "pt": "Carregar dados ISA existentes do livro Excel:",
+      "it": "Caricare dati ISA esistenti da cartella di lavoro Excel:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.loop_closure_summary",
+      "en": "Loop Closure Summary",
+      "es": "Resumen del Cierre del Bucle",
+      "fr": "Résumé de la Fermeture de la Boucle",
+      "de": "Zusammenfassung der Schleifenschließung",
+      "lt": "Ciklo uždarymo santrauka",
+      "pt": "Resumo do Fecho do Ciclo",
+      "it": "Riepilogo della Chiusura del Ciclo"
+    },
+    {
+      "key": "modules.isa.data_entry.common.marine_processes",
+      "en": "Marine Processes",
+      "es": "Procesos Marinos",
+      "fr": "Processus Marins",
+      "de": "Marine Prozesse",
+      "lt": "Jūros procesai",
+      "pt": "Processos Marinhos",
+      "it": "Processi Marini"
+    },
+    {
+      "key": "modules.isa.data_entry.common.marine_processes_and_functioning_mpf",
+      "en": "Marine Processes and Functioning (MPF)",
+      "es": "Procesos y Funcionamiento Marinos (PFM)",
+      "fr": "Processus et Fonctionnement Marins (PFM)",
+      "de": "Marine Prozesse und Funktionsweise (MPF)",
+      "lt": "Jūros procesai ir funkcionavimas (JPF)",
+      "pt": "Processos e Funcionamento Marinhos (PFM)",
+      "it": "Processi e Funzionamento Marini (PFM)"
+    },
+    {
+      "key": "modules.isa.data_entry.common.metrics_root_causes_and_leverage_points",
+      "en": "Metrics, Root Causes, and Leverage Points",
+      "es": "Métricas, Causas Raíz y Puntos de Apalancamiento",
+      "fr": "Métriques, Causes Profondes et Points de Levier",
+      "de": "Metriken, Grundursachen und Hebelpunkte",
+      "lt": "Rodikliai, pagrindinės priežastys ir sverčiai",
+      "pt": "Métricas, Causas Raiz e Pontos de Alavancagem",
+      "it": "Metriche, Cause Radice e Punti di Leva"
+    },
+    {
+      "key": "modules.isa.data_entry.common.moving_from_causal_logic_chains_to_causal_loops",
+      "en": "Moving from Causal Logic Chains to Causal Loops",
+      "es": "Pasando de Cadenas de Lógica Causal a Bucles Causales",
+      "fr": "Passage des Chaînes Logiques Causales aux Boucles Causales",
+      "de": "Übergang von Kausalen Logikketten zu Kausalen Schleifen",
+      "lt": "Perėjimas nuo priežastinių loginių grandinių prie priežastinių ciklų",
+      "pt": "Passando de Cadeias Lógicas Causais para Ciclos Causais",
+      "it": "Passaggio da Catene Logiche Causali a Cicli Causali"
+    },
+    {
+      "key": "modules.isa.data_entry.common.open_user_guide",
+      "en": "Open User Guide",
+      "es": "Abrir Guía del Usuario",
+      "fr": "Ouvrir le Guide de l'Utilisateur",
+      "de": "Benutzerhandbuch öffnen",
+      "lt": "Atidaryti naudotojo vadovą",
+      "pt": "Abrir Guia do Utilizador",
+      "it": "Apri Guida Utente"
+    },
+    {
+      "key": "modules.isa.data_entry.common.presenting_and_validating_results",
+      "en": "Presenting and Validating Results",
+      "es": "Presentando y Validando Resultados",
+      "fr": "Présentation et Validation des Résultats",
+      "de": "Präsentation und Validierung von Ergebnissen",
+      "lt": "Rezultatų pateikimas ir patvirtinimas",
+      "pt": "Apresentando e Validando Resultados",
+      "it": "Presentazione e Validazione dei Risultati"
+    },
+    {
+      "key": "modules.isa.data_entry.common.reset_all_data",
+      "en": "Reset All Data",
+      "es": "Restablecer Todos los Datos",
+      "fr": "Réinitialiser Toutes les Données",
+      "de": "Alle Daten zurücksetzen",
+      "lt": "Atstatyti visus duomenis",
+      "pt": "Redefinir Todos os Dados",
+      "it": "Ripristina Tutti i Dati"
+    },
+    {
+      "key": "modules.isa.data_entry.common.reset_data",
+      "en": "Reset Data",
+      "es": "Restablecer Datos",
+      "fr": "Réinitialiser les Données",
+      "de": "Daten zurücksetzen",
+      "lt": "Atstatyti duomenis",
+      "pt": "Redefinir Dados",
+      "it": "Ripristina Dati"
+    },
+    {
+      "key": "modules.isa.data_entry.common.root_causes_identified",
+      "en": "Root Causes Identified",
+      "es": "Causas Raíz Identificadas",
+      "fr": "Causes Profondes Identifiées",
+      "de": "Identifizierte Grundursachen",
+      "lt": "Nustatytos pagrindinės priežastys",
+      "pt": "Causas Raiz Identificadas",
+      "it": "Cause Radice Identificate"
+    },
+    {
+      "key": "modules.isa.data_entry.common.save_bot_data",
+      "en": "Save BOT Data",
+      "es": "Guardar Datos BOT",
+      "fr": "Enregistrer les Données BOT",
+      "de": "BOT-Daten speichern",
+      "lt": "Išsaugoti BOT duomenis",
+      "pt": "Guardar Dados BOT",
+      "it": "Salva Dati BOT"
+    },
+    {
+      "key": "modules.isa.data_entry.common.save_current_isa_analysis_to_excel_workbook",
+      "en": "Save current ISA analysis to Excel workbook:",
+      "es": "Guardar análisis ISA actual en libro de Excel:",
+      "fr": "Enregistrer l'analyse ISA actuelle dans un classeur Excel :",
+      "de": "Aktuelle ISA-Analyse in Excel-Arbeitsmappe speichern:",
+      "lt": "Išsaugoti dabartinę ISA analizę į Excel darbaknygę:",
+      "pt": "Guardar análise ISA atual no livro Excel:",
+      "it": "Salvare l'analisi ISA corrente nella cartella di lavoro Excel:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.save_exercises_10_12",
+      "en": "Save Exercises 10-12",
+      "es": "Guardar Ejercicios 10-12",
+      "fr": "Enregistrer les Exercices 10-12",
+      "de": "Übungen 10-12 speichern",
+      "lt": "Išsaugoti Pratimus 10-12",
+      "pt": "Guardar Exercícios 10-12",
+      "it": "Salva Esercizi 10-12"
+    },
+    {
+      "key": "modules.isa.data_entry.common.save_exercises_7_9",
+      "en": "Save Exercises 7-9",
+      "es": "Guardar Ejercicios 7-9",
+      "fr": "Enregistrer les Exercices 7-9",
+      "de": "Übungen 7-9 speichern",
+      "lt": "Išsaugoti Pratimus 7-9",
+      "pt": "Guardar Exercícios 7-9",
+      "it": "Salva Esercizi 7-9"
+    },
+    {
+      "key": "modules.isa.data_entry.common.specifying_activities_affecting_pressures",
+      "en": "Specifying Activities affecting Pressures",
+      "es": "Especificando Actividades que afectan las Presiones",
+      "fr": "Spécification des Activités affectant les Pressions",
+      "de": "Spezifizierung von Aktivitäten, die Belastungen beeinflussen",
+      "lt": "Veiklos, darančios įtaką spaudimams, specifikavimas",
+      "pt": "Especificando Atividades que afetam as Pressões",
+      "it": "Specificazione delle Attività che influenzano le Pressioni"
+    },
+    {
+      "key": "modules.isa.data_entry.common.strength",
+      "en": "Strength:",
+      "es": "Fortaleza:",
+      "fr": "Force:",
+      "de": "Stärke:",
+      "lt": "Stiprumas:",
+      "pt": "Força:",
+      "it": "Forza:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.temporal_scope",
+      "en": "Temporal Scope:",
+      "es": "Ámbito Temporal:",
+      "fr": "Portée Temporelle :",
+      "de": "Zeitlicher Umfang:",
+      "lt": "Laikotarpio apimtis:",
+      "pt": "Âmbito Temporal:",
+      "it": "Ambito Temporale:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.time_series_plot",
+      "en": "Time Series Plot",
+      "es": "Gráfico de Series Temporales",
+      "fr": "Graphique de Séries Temporelles",
+      "de": "Zeitreihendiagramm",
+      "lt": "Laiko eilučių grafikas",
+      "pt": "Gráfico de Séries Temporais",
+      "it": "Grafico di Serie Temporali"
+    },
+    {
+      "key": "modules.isa.data_entry.common.unit",
+      "en": "Unit:",
+      "es": "Unidad:",
+      "fr": "Unité :",
+      "de": "Einheit:",
+      "lt": "Vienetas:",
+      "pt": "Unidade:",
+      "it": "Unità:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.validation_completed",
+      "en": "Validation Completed:",
+      "es": "Validación Completada:",
+      "fr": "Validation Terminée :",
+      "de": "Validierung abgeschlossen:",
+      "lt": "Patvirtinimas baigtas:",
+      "pt": "Validação Concluída:",
+      "it": "Validazione Completata:"
+    },
+    {
+      "key": "modules.isa.data_entry.common.who_is_affected_who_makes_decisions",
+      "en": "Who is affected? Who makes decisions?",
+      "es": "¿Quién se ve afectado? ¿Quién toma las decisiones?",
+      "fr": "Qui est affecté ? Qui prend les décisions ?",
+      "de": "Wer ist betroffen? Wer trifft Entscheidungen?",
+      "lt": "Kas yra paveiktas? Kas priima sprendimus?",
+      "pt": "Quem é afetado? Quem toma as decisões?",
+      "it": "Chi è interessato? Chi prende le decisioni?"
+    },
+    {
+      "key": "modules.isa.data_entry.common.year",
+      "en": "Year:",
+      "es": "Año:",
+      "fr": "Année :",
+      "de": "Jahr:",
+      "lt": "Metai:",
+      "pt": "Ano:",
+      "it": "Anno:"
+    }
+  ]
+}

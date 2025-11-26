@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.your_ecosystem_and_issue_selections_have_been_clea",
+      "en": "Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea.",
+      "es": "Sus selecciones de ecosistema y problemas han sido borradas. Por favor, vuelva a seleccionarlas para el nuevo mar regional.",
+      "fr": "Vos sélections d'écosystème et de problèmes ont été effacées. Veuillez les re-sélectionner pour la nouvelle mer régionale.",
+      "de": "Ihre Ökosystem- und Problemauswahlen wurden gelöscht. Bitte wählen Sie sie für das neue Regionalmeer erneut aus.",
+      "lt": "Jūsų ekosistemos ir problemų pasirinkimai buvo išvalyti. Prašome juos pasirinkti iš naujo naujam regioniniam jūrai.",
+      "pt": "Suas seleções de ecossistema e problemas foram apagadas. Por favor, selecione-as novamente para o novo mar regional.",
+      "it": "Le tue selezioni di ecosistema e problemi sono state cancellate. Si prega di ri-selezionarle per il nuovo mare regionale."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.behavior_can_create_virtuous_cycles_exponential_gr",
+      "en": "Behavior: Can create virtuous cycles (exponential growth) or vicious cycles (collapse)",
+      "es": "Comportamiento: Puede crear ciclos virtuosos (crecimiento exponencial) o viciosos (colapso)",
+      "fr": "Comportement : Peut créer des cycles vertueux (croissance exponentielle) ou vicieux (effondrement)",
+      "de": "Verhalten: Kann positive Kreisläufe (exponentielles Wachstum) oder negative (Zusammenbruch) erzeugen",
+      "lt": "Elgsena: Gali kurti gerus ciklus (eksponentinis augimas) arba blogus (žlugimas)",
+      "pt": "Comportamento: Pode criar ciclos virtuosos (crescimento exponencial) ou viciosos (colapso)",
+      "it": "Comportamento: Può creare cicli virtuosi (crescita esponenziale) o viziosi (collasso)"
+    }
+  ]
+}

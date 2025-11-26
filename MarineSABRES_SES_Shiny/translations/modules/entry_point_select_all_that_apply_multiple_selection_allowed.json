@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.select_all_that_apply_multiple_selection_allowed",
+      "en": "Select all that apply (multiple selection allowed)",
+      "es": "Seleccione todos los que correspondan (se permite selección múltiple)",
+      "fr": "Sélectionnez tout ce qui s'applique (sélection multiple autorisée)",
+      "de": "Wählen Sie alle zutreffenden aus (Mehrfachauswahl möglich)",
+      "lt": "Pasirinkite visus tinkamus (galima kelių pasirinkimas)",
+      "pt": "Selecione todos os que se aplicam (seleção múltipla permitida)",
+      "it": "Seleziona tutte quelle applicabili (selezione multipla consentita)"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.cld.visualization.edges",
+      "en": "Edges:",
+      "es": "Aristas:",
+      "fr": "Arêtes:",
+      "de": "Kanten:",
+      "lt": "Kraštinės:",
+      "pt": "Arestas:",
+      "it": "Archi:"
+    },
+    {
+      "key": "modules.cld.visualization.highlight_leverage_points",
+      "en": "Highlight Leverage Points:",
+      "es": "Resaltar Puntos de Apalancamiento:",
+      "fr": "Mettre en Évidence les Points de Levier:",
+      "de": "Hebelwirkungspunkte Hervorheben:",
+      "lt": "Paryškinti sverto taškus:",
+      "pt": "Destacar Pontos de Alavancagem:",
+      "it": "Evidenzia Punti di Leva:"
+    },
+    {
+      "key": "modules.cld.visualization.highlight_loop",
+      "en": "Highlight Loop:",
+      "es": "Resaltar Bucle:",
+      "fr": "Mettre en Évidence la Boucle:",
+      "de": "Schleife Hervorheben:",
+      "lt": "Paryškinti kilpą:",
+      "pt": "Destacar Loop:",
+      "it": "Evidenzia Loop:"
+    },
+    {
+      "key": "modules.cld.visualization.how_to_read_the_diagram",
+      "en": "How to Read the Diagram",
+      "es": "Cómo Leer el Diagrama",
+      "fr": "Comment Lire le Diagramme",
+      "de": "Wie man das Diagramm liest",
+      "lt": "Kaip skaityti diagramą",
+      "pt": "Como Ler o Diagrama",
+      "it": "Come Leggere il Diagramma"
+    },
+    {
+      "key": "modules.cld.visualization.layout",
+      "en": "Layout:",
+      "es": "Diseño:",
+      "fr": "Disposition:",
+      "de": "Layout:",
+      "lt": "Išdėstymas:",
+      "pt": "Layout:",
+      "it": "Layout:"
+    },
+    {
+      "key": "modules.cld.visualization.nodes",
+      "en": "Nodes: ",
+      "es": "Nodos: ",
+      "fr": "Nœuds : ",
+      "de": "Knoten: ",
+      "lt": "Mazgai: ",
+      "pt": "Nós: ",
+      "it": "Nodi: "
+    },
+    {
+      "key": "modules.cld.visualization.nodes",
+      "en": "Nodes:",
+      "es": "Nodos:",
+      "fr": "Nœuds:",
+      "de": "Knoten:",
+      "lt": "Mazgai:",
+      "pt": "Nós:",
+      "it": "Nodi:"
+    },
+    {
+      "key": "modules.cld.visualization.visualization_controls",
+      "en": "Visualization Controls",
+      "es": "Controles de Visualización",
+      "fr": "Contrôles de Visualisation",
+      "de": "Visualisierungssteuerung",
+      "lt": "Vizualizacijos valdymas",
+      "pt": "Controles de Visualização",
+      "it": "Controlli di Visualizzazione"
+    },
+    {
+      "key": "modules.cld.visualization.what_is_a_causal_loop_diagram",
+      "en": "What is a Causal Loop Diagram?",
+      "es": "¿Qué es un Diagrama de Bucles Causales?",
+      "fr": "Qu'est-ce qu'un Diagramme de Boucles Causales ?",
+      "de": "Was ist ein Kausales Schleifendiagramm?",
+      "lt": "Kas yra priežastinių kilpų diagrama?",
+      "pt": "O que é um Diagrama de Loops Causais?",
+      "it": "Cos'è un Diagramma dei Loop Causali?"
+    }
+  ]
+}

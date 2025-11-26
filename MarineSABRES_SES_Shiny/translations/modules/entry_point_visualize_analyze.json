@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.visualize_analyze",
+      "en": "Visualize & Analyze:",
+      "es": "Visualizar y Analizar:",
+      "fr": "Visualiser et Analyser:",
+      "de": "Visualisieren & Analysieren:",
+      "lt": "Vizualizuoti ir analizuoti:",
+      "pt": "Visualizar e Analisar:",
+      "it": "Visualizza e Analizza:"
+    }
+  ]
+}

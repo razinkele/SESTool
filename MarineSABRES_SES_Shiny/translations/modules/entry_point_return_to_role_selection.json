@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.return_to_role_selection",
+      "en": "Return to role selection",
+      "es": "Volver a la selección de rol",
+      "fr": "Retour à la sélection de rôle",
+      "de": "Zurück zur Rollenauswahl",
+      "lt": "Grįžti į vaidmens pasirinkimą",
+      "pt": "Voltar à seleção de papel",
+      "it": "Torna alla selezione del ruolo"
+    }
+  ]
+}

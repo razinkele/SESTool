@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.coastal_tourism_template_loaded_with_example_conne",
+      "en": "Coastal Tourism template loaded with example connections!",
+      "es": "¡Plantilla de turismo costero cargada con conexiones de ejemplo!",
+      "fr": "Modèle de tourisme côtier chargé d'exemples de connexions !",
+      "de": "Vorlage für Küstentourismus mit zahlreichen Beispielverbindungen!",
+      "lt": "Pakrančių turizmo šablonas su jungčių pavyzdžiais!",
+      "pt": "Modelo de Turismo Costeiro carregado com exemplos de conexões!",
+      "it": "Modello di turismo costiero caricato con collegamenti di esempio!"
+    }
+  ]
+}

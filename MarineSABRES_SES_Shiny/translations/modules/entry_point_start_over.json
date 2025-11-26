@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.start_over",
+      "en": "Start Over",
+      "es": "Comenzar de Nuevo",
+      "fr": "Recommencer",
+      "de": "Von Vorne Beginnen",
+      "lt": "Pradėti iš naujo",
+      "pt": "Recomeçar",
+      "it": "Ricomincia"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.data_entry.ex2a.exercise_2a_ecosystem_services",
+      "en": "Exercise 2a: Ecosystem Services",
+      "es": "Ejercicio 2a: Servicios Ecosistémicos",
+      "fr": "Exercice 2a : Services Écosystémiques",
+      "de": "Übung 2a: Ökosystemleistungen",
+      "lt": "Pratimas 2a: Ekosistemų paslaugos",
+      "pt": "Exercício 2a: Serviços Ecossistémicos",
+      "it": "Esercizio 2a: Servizi Ecosistemici"
+    },
+    {
+      "key": "modules.isa.data_entry.ex2a.save_exercise_2a",
+      "en": "Save Exercise 2a",
+      "es": "Guardar Ejercicio 2a",
+      "fr": "Enregistrer l'Exercice 2a",
+      "de": "Übung 2a speichern",
+      "lt": "Išsaugoti Pratimą 2a",
+      "pt": "Guardar Exercício 2a",
+      "it": "Salva Esercizio 2a"
+    }
+  ]
+}

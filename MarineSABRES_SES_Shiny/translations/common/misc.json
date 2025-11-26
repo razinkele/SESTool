@@ -1,0 +1,363 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "common.misc.all_changes_saved",
+      "en": "All changes saved",
+      "es": "Todos los cambios guardados",
+      "fr": "Toutes les modifications enregistrées",
+      "de": "Alle Änderungen gespeichert",
+      "lt": "Visi pakeitimai išsaugoti",
+      "pt": "Todas as alterações salvas",
+      "it": "Tutte le modifiche salvate"
+    },
+    {
+      "key": "common.misc.amend",
+      "en": "Amend",
+      "es": "Modificar",
+      "fr": "Modifier",
+      "de": "Ändern",
+      "lt": "Keisti",
+      "pt": "Alterar",
+      "it": "Modificare"
+    },
+    {
+      "key": "common.misc.approve",
+      "en": "Approve",
+      "es": "Aprobar",
+      "fr": "Approuver",
+      "de": "Genehmigen",
+      "lt": "Patvirtinti",
+      "pt": "Aprovar",
+      "it": "Approvare"
+    },
+    {
+      "key": "common.misc.arctic_ocean",
+      "en": "Arctic Ocean",
+      "es": "Océano Ártico",
+      "fr": "Océan Arctique",
+      "de": "Arktischer Ozean",
+      "lt": "Arkties vandenynas",
+      "pt": "Oceano Ártico",
+      "it": "Oceano Artico"
+    },
+    {
+      "key": "common.misc.atlantic_ocean",
+      "en": "Atlantic Ocean",
+      "es": "Océano Atlántico",
+      "fr": "Océan Atlantique",
+      "de": "Atlantischer Ozean",
+      "lt": "Atlanto vandenynas",
+      "pt": "Oceano Atlântico",
+      "it": "Oceano Atlantico"
+    },
+    {
+      "key": "common.misc.auto_save_disabled",
+      "en": "Auto-save disabled",
+      "es": "Guardado automático desactivado",
+      "fr": "Sauvegarde automatique désactivée",
+      "de": "Auto-Speichern deaktiviert",
+      "lt": "Automatinis išsaugojimas išjungtas",
+      "pt": "Salvamento automático desativado",
+      "it": "Salvataggio automatico disattivato"
+    },
+    {
+      "key": "common.misc.auto_save_enabled",
+      "en": "Auto-save enabled",
+      "es": "Guardado automático activado",
+      "fr": "Sauvegarde automatique activée",
+      "de": "Auto-Speichern aktiviert",
+      "lt": "Automatinis išsaugojimas įjungtas",
+      "pt": "Salvamento automático ativado",
+      "it": "Salvataggio automatico attivato"
+    },
+    {
+      "key": "common.misc.auto_save_helps_prevent_data_loss_from_unexpected_disconnections",
+      "en": "Auto-save helps prevent data loss from unexpected disconnections.",
+      "es": "El guardado automático ayuda a prevenir la pérdida de datos por desconexiones inesperadas.",
+      "fr": "La sauvegarde automatique aide à prévenir la perte de données en cas de déconnexions inattendues.",
+      "de": "Auto-Speichern hilft, Datenverlust durch unerwartete Trennungen zu verhindern.",
+      "lt": "Automatinis išsaugojimas padeda išvengti duomenų praradimo dėl netikėtų atjungimų.",
+      "pt": "O salvamento automático ajuda a prevenir perda de dados de desconexões inesperadas.",
+      "it": "Il salvataggio automatico aiuta a prevenire la perdita di dati da disconnessioni inattese."
+    },
+    {
+      "key": "common.misc.baltic_sea",
+      "en": "Baltic Sea",
+      "es": "Mar Báltico",
+      "fr": "Mer Baltique",
+      "de": "Ostsee",
+      "lt": "Baltijos jūra",
+      "pt": "Mar Báltico",
+      "it": "Mar Baltico"
+    },
+    {
+      "key": "common.misc.black_sea",
+      "en": "Black Sea",
+      "es": "Mar Negro",
+      "fr": "Mer Noire",
+      "de": "Schwarzes Meer",
+      "lt": "Juodoji jūra",
+      "pt": "Mar Negro",
+      "it": "Mar Nero"
+    },
+    {
+      "key": "common.misc.caribbean_sea",
+      "en": "Caribbean Sea",
+      "es": "Mar Caribe",
+      "fr": "Mer des Caraïbes",
+      "de": "Karibisches Meer",
+      "lt": "Karibų jūra",
+      "pt": "Mar do Caribe",
+      "it": "Mar dei Caraibi"
+    },
+    {
+      "key": "common.misc.choose_rds_file",
+      "en": "Choose RDS File:",
+      "es": "Elegir Archivo RDS:",
+      "fr": "Choisir le Fichier RDS:",
+      "de": "RDS-Datei Wählen:",
+      "lt": "Pasirinkti RDS Failą:",
+      "pt": "Escolher Ficheiro RDS:",
+      "it": "Scegli File RDS:"
+    },
+    {
+      "key": "common.misc.east_atlantic",
+      "en": "East Atlantic",
+      "es": "Atlántico Oriental",
+      "fr": "Atlantique Est",
+      "de": "Ostatlantik",
+      "lt": "Rytų Atlanto vandenynas",
+      "pt": "Atlântico Leste",
+      "it": "Atlantico Orientale"
+    },
+    {
+      "key": "common.misc.indian_ocean",
+      "en": "Indian Ocean",
+      "es": "Océano Índico",
+      "fr": "Océan Indien",
+      "de": "Indischer Ozean",
+      "lt": "Indijos vandenynas",
+      "pt": "Oceano Índico",
+      "it": "Oceano Indiano"
+    },
+    {
+      "key": "common.misc.irish_sea",
+      "en": "Irish Sea",
+      "es": "Mar de Irlanda",
+      "fr": "Mer d'Irlande",
+      "de": "Irische See",
+      "lt": "Airijos jūra",
+      "pt": "Mar da Irlanda",
+      "it": "Mare d'Irlanda"
+    },
+    {
+      "key": "common.misc.last_saved_d_minutes_ago",
+      "en": "Last saved: %d minutes ago",
+      "es": "Guardado hace %d minutos",
+      "fr": "Dernière sauvegarde: il y a %d minutes",
+      "de": "Zuletzt gespeichert: vor %d Minuten",
+      "lt": "Paskutinį kartą išsaugota prieš %d minučių",
+      "pt": "Última gravação: %d minutos atrás",
+      "it": "Ultimo salvataggio: %d minuti fa"
+    },
+    {
+      "key": "common.misc.last_saved_d_seconds_ago",
+      "en": "Last saved: %d seconds ago",
+      "es": "Guardado hace %d segundos",
+      "fr": "Dernière sauvegarde: il y a %d secondes",
+      "de": "Zuletzt gespeichert: vor %d Sekunden",
+      "lt": "Paskutinį kartą išsaugota prieš %d sekundes",
+      "pt": "Última gravação: %d segundos atrás",
+      "it": "Ultimo salvataggio: %d secondi fa"
+    },
+    {
+      "key": "common.misc.mediterranean_sea",
+      "en": "Mediterranean Sea",
+      "es": "Mar Mediterráneo",
+      "fr": "Mer Méditerranée",
+      "de": "Mittelmeer",
+      "lt": "Viduržemio jūra",
+      "pt": "Mar Mediterrâneo",
+      "it": "Mar Mediterraneo"
+    },
+    {
+      "key": "common.misc.no_connections_to_review",
+      "en": "No connections to review.",
+      "es": "No hay conexiones para revisar.",
+      "fr": "Aucune connexion à vérifier.",
+      "de": "Keine Verbindungen zum Überprüfen.",
+      "lt": "Nėra ryšių, kuriuos būtų galima peržiūrėti.",
+      "pt": "Não há conexões para revisar.",
+      "it": "Nessuna connessione da rivedere."
+    },
+    {
+      "key": "common.misc.north_sea",
+      "en": "North Sea",
+      "es": "Mar del Norte",
+      "fr": "Mer du Nord",
+      "de": "Nordsee",
+      "lt": "Šiaurės jūra",
+      "pt": "Mar do Norte",
+      "it": "Mare del Nord"
+    },
+    {
+      "key": "common.misc.otherregional",
+      "en": "Other/Regional",
+      "es": "Otro/Regional",
+      "fr": "Autre/Régional",
+      "de": "Andere/Regional",
+      "lt": "Kitas/Regioninis",
+      "pt": "Outro/Regional",
+      "it": "Altro/Regionale"
+    },
+    {
+      "key": "common.misc.pacific_ocean",
+      "en": "Pacific Ocean",
+      "es": "Océano Pacífico",
+      "fr": "Océan Pacifique",
+      "de": "Pazifischer Ozean",
+      "lt": "Ramusis vandenynas",
+      "pt": "Oceano Pacífico",
+      "it": "Oceano Pacifico"
+    },
+    {
+      "key": "common.misc.recover_data",
+      "en": "Recover Data",
+      "es": "Recuperar Datos",
+      "fr": "Récupérer les Données",
+      "de": "Daten Wiederherstellen",
+      "lt": "Atkurti Duomenis",
+      "pt": "Recuperar Dados",
+      "it": "Recupera Dati"
+    },
+    {
+      "key": "common.misc.recovery_failed",
+      "en": "Recovery failed:",
+      "es": "Recuperación fallida:",
+      "fr": "Échec de la récupération:",
+      "de": "Wiederherstellung fehlgeschlagen:",
+      "lt": "Atkūrimas nepavyko:",
+      "pt": "Recuperação falhou:",
+      "it": "Recupero fallito:"
+    },
+    {
+      "key": "common.misc.reject",
+      "en": "Reject",
+      "es": "Rechazar",
+      "fr": "Rejeter",
+      "de": "Ablehnen",
+      "lt": "Atmesti",
+      "pt": "Rejeitar",
+      "it": "Rifiutare"
+    },
+    {
+      "key": "common.misc.save_failed",
+      "en": "Save failed",
+      "es": "Error al guardar",
+      "fr": "Échec de l'enregistrement",
+      "de": "Speichern fehlgeschlagen",
+      "lt": "Išsaugoti nepavyko",
+      "pt": "Falha ao salvar",
+      "it": "Salvataggio fallito"
+    },
+    {
+      "key": "common.misc.saving",
+      "en": "Saving...",
+      "es": "Guardando...",
+      "fr": "Enregistrement...",
+      "de": "Speichern...",
+      "lt": "Išsaugoma...",
+      "pt": "Salvando...",
+      "it": "Salvataggio..."
+    },
+    {
+      "key": "common.misc.start_fresh",
+      "en": "Start Fresh",
+      "es": "Empezar de Nuevo",
+      "fr": "Recommencer",
+      "de": "Neu Beginnen",
+      "lt": "Pradėti iš Naujo",
+      "pt": "Começar do Zero",
+      "it": "Inizia da Capo"
+    },
+    {
+      "key": "common.misc.step_d",
+      "en": "Step %d",
+      "es": "Paso %d",
+      "fr": "Étape %d",
+      "de": "Schritt %d",
+      "lt": "Žingsnis %d",
+      "pt": "Passo %d",
+      "it": "Passo %d"
+    },
+    {
+      "key": "common.misc.step_d_of_d",
+      "en": "Step %d of %d",
+      "es": "Paso %d de %d",
+      "fr": "Étape %d sur %d",
+      "de": "Schritt %d von %d",
+      "lt": "Žingsnis %d iš %d",
+      "pt": "Passo %d de %d",
+      "it": "Passo %d di %d"
+    },
+    {
+      "key": "common.misc.total_connections",
+      "en": "Total Connections",
+      "es": "Conexiones Totales",
+      "fr": "Connexions Totales",
+      "de": "Gesamtverbindungen",
+      "lt": "Viso ryšių",
+      "pt": "Total de Conexões",
+      "it": "Connessioni Totali"
+    },
+    {
+      "key": "common.misc.unsaved_work_detected",
+      "en": "Unsaved Work Detected",
+      "es": "Trabajo no Guardado Detectado",
+      "fr": "Travail non Enregistré Détecté",
+      "de": "Nicht Gespeicherte Arbeit Erkannt",
+      "lt": "Aptiktas Neišsaugotas Darbas",
+      "pt": "Trabalho não Salvo Detectado",
+      "it": "Lavoro non Salvato Rilevato"
+    },
+    {
+      "key": "common.misc.we_found_an_auto_saved_version_of_your_work_from",
+      "en": "We found an auto-saved version of your work from",
+      "es": "Encontramos una versión autoguardada de su trabajo desde",
+      "fr": "Nous avons trouvé une version auto-enregistrée de votre travail depuis",
+      "de": "Wir haben eine automatisch gespeicherte Version Ihrer Arbeit gefunden von",
+      "lt": "Radome automatiškai išsaugotą jūsų darbo versiją iš",
+      "pt": "Encontramos uma versão salva automaticamente do seu trabalho de",
+      "it": "Abbiamo trovato una versione salvata automaticamente del tuo lavoro da"
+    },
+    {
+      "key": "common.misc.welcome_to_the_computer_assisted_ses_creation_and_analysis_platform",
+      "en": "Welcome to the computer-assisted SES creation and analysis platform.",
+      "es": "Bienvenido a la plataforma de creación y análisis de SES asistida por computadora.",
+      "fr": "Bienvenue sur la plateforme de création et d'analyse SES assistée par ordinateur.",
+      "de": "Willkommen zur computergestützten SES-Erstellungs- und Analyseplattform.",
+      "lt": "Sveiki atvykę į kompiuterio pagalbą naudojančią SES kūrimo ir analizės platformą.",
+      "pt": "Bem-vindo à plataforma de criação e análise de SES assistida por computador.",
+      "it": "Benvenuto nella piattaforma di creazione e analisi SES assistita da computer."
+    },
+    {
+      "key": "common.misc.would_you_like_to_recover_this_data",
+      "en": "Would you like to recover this data?",
+      "es": "¿Desea recuperar estos datos?",
+      "fr": "Souhaitez-vous récupérer ces données?",
+      "de": "Möchten Sie diese Daten wiederherstellen?",
+      "lt": "Ar norite atkurti šiuos duomenis?",
+      "pt": "Gostaria de recuperar esses dados?",
+      "it": "Vuoi recuperare questi dati?"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.complete_columns_ac_am_in_the_master_dat_sheet_lin",
+      "en": "Complete columns AC-AM in the Master Data Sheet. Link Pressures to MPF from Exercise 2b.",
+      "es": "Complete las columnas AC-AM en la Hoja de Datos Maestra. Vincule Presiones con PFM del Ejercicio 2b.",
+      "fr": "Remplissez les colonnes AC-AM dans la Feuille de Données Principale. Liez les Pressions aux PFM de l'Exercice 2b.",
+      "de": "Vervollständigen Sie die Spalten AC-AM im Master-Datenblatt. Verknüpfen Sie Belastungen mit MPF aus Übung 2b.",
+      "lt": "Užpildykite AC-AM stulpelius Pagrindinėje duomenų lentelėje. Susieti Spaudimus su JPF iš Pratimo 2b.",
+      "pt": "Complete as colunas AC-AM na Folha de Dados Mestre. Ligue Pressões aos PFM do Exercício 2b.",
+      "it": "Completare le colonne AC-AM nel Foglio Dati Principale. Collegare le Pressioni ai PFM dell'Esercizio 2b."
+    }
+  ]
+}

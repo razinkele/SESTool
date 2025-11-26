@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.build_your_ses_model",
+      "en": "Build your SES model:",
+      "es": "Construya su modelo SES:",
+      "fr": "Construisez votre modèle SES:",
+      "de": "Erstellen Sie Ihr SES-Modell:",
+      "lt": "Sukurkite savo SES modelį:",
+      "pt": "Construa o seu modelo SES:",
+      "it": "Costruisci il tuo modello SES:"
+    }
+  ]
+}

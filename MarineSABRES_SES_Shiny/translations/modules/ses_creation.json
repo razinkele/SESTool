@@ -1,0 +1,573 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.ses.creation.actions",
+      "en": "Actions",
+      "es": "Acciones",
+      "fr": "Actions",
+      "de": "Aktionen",
+      "lt": "Veiksmai",
+      "pt": "Ações",
+      "it": "Azioni"
+    },
+    {
+      "key": "modules.ses.creation.all_work_on_the_current_template_will_be_lost_including",
+      "en": "All work on the current template will be lost, including:",
+      "es": "Se perderá todo el trabajo en la plantilla actual, incluyendo:",
+      "fr": "Tout le travail sur le modèle actuel sera perdu, y compris :",
+      "de": "Alle Arbeiten an der aktuellen Vorlage gehen verloren, einschließlich:",
+      "lt": "Visi dabartinio šablono darbai bus prarasti, įskaitant:",
+      "pt": "Todo o trabalho no modelo atual será perdido, incluindo:",
+      "it": "Tutto il lavoro sul modello corrente andrà perso, incluso:"
+    },
+    {
+      "key": "modules.ses.creation.and_d_more",
+      "en": "... and %d more",
+      "es": "... y %d más",
+      "fr": "... et %d de plus",
+      "de": "... und %d weitere",
+      "lt": "... ir dar %d",
+      "pt": "... e mais %d",
+      "it": "... e altri %d"
+    },
+    {
+      "key": "modules.ses.creation.any_customizations_made",
+      "en": "Any customizations made",
+      "es": "Cualquier personalización realizada",
+      "fr": "Toutes les personnalisations effectuées",
+      "de": "Alle vorgenommenen Anpassungen",
+      "lt": "Visi atlikti pritaikymai",
+      "pt": "Quaisquer personalizações feitas",
+      "it": "Qualsiasi personalizzazione effettuata"
+    },
+    {
+      "key": "modules.ses.creation.approved_and_rejected_connections",
+      "en": "Approved and rejected connections",
+      "es": "Conexiones aprobadas y rechazadas",
+      "fr": "Connexions approuvées et rejetées",
+      "de": "Genehmigte und abgelehnte Verbindungen",
+      "lt": "Patvirtinti ir atmesti ryšiai",
+      "pt": "Conexões aprovadas e rejeitadas",
+      "it": "Connessioni approvate e rifiutate"
+    },
+    {
+      "key": "modules.ses.creation.automatic_element_generation",
+      "en": "Automatic element generation",
+      "es": "Generación automática de elementos",
+      "fr": "Génération automatique d'éléments",
+      "de": "Automatische Elementgenerierung",
+      "lt": "Automatinis elementų generavimas",
+      "pt": "Geração automática de elementos",
+      "it": "Generazione automatica di elementi"
+    },
+    {
+      "key": "modules.ses.creation.available_templates",
+      "en": "Available Templates",
+      "es": "Plantillas Disponibles",
+      "fr": "Modèles Disponibles",
+      "de": "Verfügbare Vorlagen",
+      "lt": "Prieinami šablonai",
+      "pt": "Modelos Disponíveis",
+      "it": "Modelli Disponibili"
+    },
+    {
+      "key": "modules.ses.creation.beginner",
+      "en": "Beginner",
+      "es": "Principiante",
+      "fr": "Débutant",
+      "de": "Anfänger",
+      "lt": "Pradedantysis",
+      "pt": "Iniciante",
+      "it": "Principiante"
+    },
+    {
+      "key": "modules.ses.creation.beginners_first_time_users_exploratory_analysis",
+      "en": "Beginners, first-time users, exploratory analysis",
+      "es": "Principiantes, usuarios primerizos, análisis exploratorio",
+      "fr": "Débutants, nouveaux utilisateurs, analyse exploratoire",
+      "de": "Anfänger, Erstbenutzer, explorative Analyse",
+      "lt": "Pradedantieji, pirmą kartą naudojantys, tyrinėjamoji analizė",
+      "pt": "Iniciantes, utilizadores pela primeira vez, análise exploratória",
+      "it": "Principianti, utenti alle prime armi, analisi esplorativa"
+    },
+    {
+      "key": "modules.ses.creation.best_for",
+      "en": "Best for:",
+      "es": "Mejor para:",
+      "fr": "Idéal pour:",
+      "de": "Am besten für:",
+      "lt": "Geriausiai tinka:",
+      "pt": "Melhor para:",
+      "it": "Ideale per:"
+    },
+    {
+      "key": "modules.ses.creation.built_in_examples",
+      "en": "Built-in examples",
+      "es": "Ejemplos integrados",
+      "fr": "Exemples intégrés",
+      "de": "Integrierte Beispiele",
+      "lt": "Integruoti pavyzdžiai",
+      "pt": "Exemplos integrados",
+      "it": "Esempi integrati"
+    },
+    {
+      "key": "modules.ses.creation.complete_control_over_all_elements",
+      "en": "Complete control over all elements",
+      "es": "Control completo sobre todos los elementos",
+      "fr": "Contrôle complet sur tous les éléments",
+      "de": "Vollständige Kontrolle über alle Elemente",
+      "lt": "Visiškas kontrolė virš visų elementų",
+      "pt": "Controle completo sobre todos os elementos",
+      "it": "Controllo completo su tutti gli elementi"
+    },
+    {
+      "key": "modules.ses.creation.connection_review",
+      "en": "Connection Review",
+      "es": "Revisión de conexión",
+      "fr": "Examen de la connexion",
+      "de": "Verbindungsüberprüfung",
+      "lt": "Ryšio apžvalga",
+      "pt": "Revisão de conexão",
+      "it": "Revisione della connessione"
+    },
+    {
+      "key": "modules.ses.creation.connection_reviews_and_amendments",
+      "en": "Connection reviews and amendments",
+      "es": "Revisiones y modificaciones de conexiones",
+      "fr": "Examens et modifications de connexions",
+      "de": "Verbindungsüberprüfungen und -änderungen",
+      "lt": "Ryšių peržiūros ir pataisymai",
+      "pt": "Revisões e alterações de conexões",
+      "it": "Revisioni e modifiche delle connessioni"
+    },
+    {
+      "key": "modules.ses.creation.context_aware_suggestions",
+      "en": "Context-aware suggestions",
+      "es": "Sugerencias sensibles al contexto",
+      "fr": "Suggestions contextuelles",
+      "de": "Kontextbezogene Vorschläge",
+      "lt": "Kontekstui pritaikyti pasiūlymai",
+      "pt": "Sugestões sensíveis ao contexto",
+      "it": "Suggerimenti contestuali"
+    },
+    {
+      "key": "modules.ses.creation.customization",
+      "en": "Customization",
+      "es": "Personalización",
+      "fr": "Personnalisation",
+      "de": "Anpassung",
+      "lt": "Pritaikymas",
+      "pt": "Personalização",
+      "it": "Personalizzazione"
+    },
+    {
+      "key": "modules.ses.creation.customize",
+      "en": "Customize",
+      "es": "Personalizar",
+      "fr": "Personnaliser",
+      "de": "Anpassen",
+      "lt": "Pritaikyti",
+      "pt": "Personalizar",
+      "it": "Personalizzare"
+    },
+    {
+      "key": "modules.ses.creation.detailed_data_validation",
+      "en": "Detailed data validation",
+      "es": "Validación detallada de datos",
+      "fr": "Validation détaillée des données",
+      "de": "Detaillierte Datenvalidierung",
+      "lt": "Išsamus duomenų tikrinimas",
+      "pt": "Validação detalhada de dados",
+      "it": "Validazione dettagliata dei dati"
+    },
+    {
+      "key": "modules.ses.creation.direct_framework_implementation",
+      "en": "Direct framework implementation",
+      "es": "Implementación directa del marco",
+      "fr": "Implémentation directe du cadre",
+      "de": "Direkte Framework-Implementierung",
+      "lt": "Tiesioginė sistemos įgyvendinimas",
+      "pt": "Implementação direta da estrutura",
+      "it": "Implementazione diretta del framework"
+    },
+    {
+      "key": "modules.ses.creation.domain_specific_templates",
+      "en": "Domain-specific templates",
+      "es": "Plantillas específicas del dominio",
+      "fr": "Modèles spécifiques au domaine",
+      "de": "Domänenspezifische Vorlagen",
+      "lt": "Srities specifiniai šablonai",
+      "pt": "Modelos específicos do domínio",
+      "it": "Modelli specifici del dominio"
+    },
+    {
+      "key": "modules.ses.creation.ecosystem_services",
+      "en": "Ecosystem Services",
+      "es": "Servicios Ecosistémicos",
+      "fr": "Services Écosystémiques",
+      "de": "Ökosystemleistungen",
+      "lt": "Ekosistemos paslaugos",
+      "pt": "Serviços Ecossistêmicos",
+      "it": "Servizi Ecosistemici"
+    },
+    {
+      "key": "modules.ses.creation.example_connections_included",
+      "en": "Example connections included",
+      "es": "Conexiones de ejemplo incluidas",
+      "fr": "Connexions d'exemple incluses",
+      "de": "Beispielverbindungen enthalten",
+      "lt": "Įtraukti ryšių pavyzdžiai",
+      "pt": "Conexões de exemplo incluídas",
+      "it": "Connessioni di esempio incluse"
+    },
+    {
+      "key": "modules.ses.creation.experienced_users_academic_research_detailed_documentation",
+      "en": "Experienced users, academic research, detailed documentation",
+      "es": "Usuarios experimentados, investigación académica, documentación detallada",
+      "fr": "Utilisateurs expérimentés, recherche académique, documentation détaillée",
+      "de": "Erfahrene Benutzer, akademische Forschung, detaillierte Dokumentation",
+      "lt": "Patyrę vartotojai, akademiniai tyrimai, išsami dokumentacija",
+      "pt": "Utilizadores experientes, pesquisa académica, documentação detalhada",
+      "it": "Utenti esperti, ricerca accademica, documentazione dettagliata"
+    },
+    {
+      "key": "modules.ses.creation.export_ready_data_structure",
+      "en": "Export-ready data structure",
+      "es": "Estructura de datos lista para exportar",
+      "fr": "Structure de données prête à exporter",
+      "de": "Exportbereite Datenstruktur",
+      "lt": "Eksportui paruošta duomenų struktūra",
+      "pt": "Estrutura de dados pronta para exportar",
+      "it": "Struttura dati pronta per l'esportazione"
+    },
+    {
+      "key": "modules.ses.creation.fastest_setup_time",
+      "en": "Fastest setup time",
+      "es": "Tiempo de configuración más rápido",
+      "fr": "Temps de configuration le plus rapide",
+      "de": "Schnellste Einrichtungszeit",
+      "lt": "Greičiausias nustatymo laikas",
+      "pt": "Tempo de configuração mais rápido",
+      "it": "Tempo di configurazione più veloce"
+    },
+    {
+      "key": "modules.ses.creation.flexibility",
+      "en": "Flexibility",
+      "es": "Flexibilidad",
+      "fr": "Flexibilité",
+      "de": "Flexibilität",
+      "lt": "Lankstumas",
+      "pt": "Flexibilidade",
+      "it": "Flessibilità"
+    },
+    {
+      "key": "modules.ses.creation.guidance_level",
+      "en": "Guidance Level",
+      "es": "Nivel de Orientación",
+      "fr": "Niveau de Guidage",
+      "de": "Anleitungsniveau",
+      "lt": "Vadovavimo lygis",
+      "pt": "Nível de Orientação",
+      "it": "Livello di Guida"
+    },
+    {
+      "key": "modules.ses.creation.have_existing_framework_knowledge",
+      "en": "Have existing framework knowledge?",
+      "es": "¿Tiene conocimientos del marco existente?",
+      "fr": "Avez-vous une connaissance du cadre existant?",
+      "de": "Haben Sie vorhandenes Framework-Wissen?",
+      "lt": "Turite sistemos žinių?",
+      "pt": "Tem conhecimento da estrutura existente?",
+      "it": "Hai conoscenze del framework esistente?"
+    },
+    {
+      "key": "modules.ses.creation.interactive_qa_workflow",
+      "en": "Interactive Q&A workflow",
+      "es": "Flujo de trabajo interactivo de preguntas y respuestas",
+      "fr": "Flux de travail interactif de questions-réponses",
+      "de": "Interaktiver Frage-Antwort-Workflow",
+      "lt": "Interaktyvus klausimų ir atsakymų srautas",
+      "pt": "Fluxo de trabalho interativo de perguntas e respostas",
+      "it": "Flusso di lavoro interattivo Q&A"
+    },
+    {
+      "key": "modules.ses.creation.intermediate",
+      "en": "Intermediate",
+      "es": "Intermedio",
+      "fr": "Intermédiaire",
+      "de": "Fortgeschritten",
+      "lt": "Vidutinis",
+      "pt": "Intermédio",
+      "it": "Intermedio"
+    },
+    {
+      "key": "modules.ses.creation.learning_curve",
+      "en": "Learning Curve",
+      "es": "Curva de Aprendizaje",
+      "fr": "Courbe d'Apprentissage",
+      "de": "Lernkurve",
+      "lt": "Mokymosi kreivė",
+      "pt": "Curva de Aprendizagem",
+      "it": "Curva di Apprendimento"
+    },
+    {
+      "key": "modules.ses.creation.learning_friendly_approach",
+      "en": "Learning-friendly approach",
+      "es": "Enfoque amigable para el aprendizaje",
+      "fr": "Approche conviviale pour l'apprentissage",
+      "de": "Lernfreundlicher Ansatz",
+      "lt": "Mokymui palankus požiūris",
+      "pt": "Abordagem amigável à aprendizagem",
+      "it": "Approccio favorevole all'apprendimento"
+    },
+    {
+      "key": "modules.ses.creation.method_comparison",
+      "en": "Method Comparison",
+      "es": "Comparación de Métodos",
+      "fr": "Comparaison des Méthodes",
+      "de": "Methodenvergleich",
+      "lt": "Metodų palyginimas",
+      "pt": "Comparação de Métodos",
+      "it": "Confronto dei Metodi"
+    },
+    {
+      "key": "modules.ses.creation.need_help_choosing",
+      "en": "Need Help Choosing?",
+      "es": "¿Necesita Ayuda para Elegir?",
+      "fr": "Besoin d'Aide pour Choisir?",
+      "de": "Brauchen Sie Hilfe bei der Auswahl?",
+      "lt": "Reikia pagalbos pasirenkant?",
+      "pt": "Precisa de Ajuda para Escolher?",
+      "it": "Hai Bisogno di Aiuto per Scegliere?"
+    },
+    {
+      "key": "modules.ses.creation.new_to_ses_modeling",
+      "en": "New to SES modeling?",
+      "es": "¿Nuevo en el modelado SES?",
+      "fr": "Nouveau dans la modélisation SES?",
+      "de": "Neu in der SES-Modellierung?",
+      "lt": "Naujas SES modeliavime?",
+      "pt": "Novo na modelagem SES?",
+      "it": "Nuovo alla modellazione SES?"
+    },
+    {
+      "key": "modules.ses.creation.none_defined",
+      "en": "None defined",
+      "es": "Ninguno definido",
+      "fr": "Aucun défini",
+      "de": "Keine definiert",
+      "lt": "Nėra apibrėžta",
+      "pt": "Nenhum definido",
+      "it": "Nessuno definito"
+    },
+    {
+      "key": "modules.ses.creation.pre_populated_frameworks",
+      "en": "Pre-populated frameworks",
+      "es": "Marcos prepoblados",
+      "fr": "Cadres pré-remplis",
+      "de": "Vorbefüllte Frameworks",
+      "lt": "Iš anksto užpildytos sistemos",
+      "pt": "Estruturas pré-preenchidas",
+      "it": "Framework pre-popolati"
+    },
+    {
+      "key": "modules.ses.creation.preview",
+      "en": "Preview",
+      "es": "Vista previa",
+      "fr": "Aperçu",
+      "de": "Vorschau",
+      "lt": "Peržiūra",
+      "pt": "Visualizar",
+      "it": "Anteprima"
+    },
+    {
+      "key": "modules.ses.creation.proceed_to_selected_method",
+      "en": "Proceed to Selected Method",
+      "es": "Continuar al Método Seleccionado",
+      "fr": "Passer à la Méthode Sélectionnée",
+      "de": "Zur ausgewählten Methode fortfahren",
+      "lt": "Pereiti prie pasirinkto metodo",
+      "pt": "Prosseguir para o Método Selecionado",
+      "it": "Procedi al Metodo Selezionato"
+    },
+    {
+      "key": "modules.ses.creation.quick_start",
+      "en": "Quick Start",
+      "es": "Inicio Rápido",
+      "fr": "Démarrage Rapide",
+      "de": "Schnellstart",
+      "lt": "Greitas startas",
+      "pt": "Início Rápido",
+      "it": "Avvio Rapido"
+    },
+    {
+      "key": "modules.ses.creation.ready_to_customize_elements",
+      "en": "Ready-to-customize elements",
+      "es": "Elementos listos para personalizar",
+      "fr": "Éléments prêts à personnaliser",
+      "de": "Anpassbare Elemente",
+      "lt": "Paruošti pritaikymui elementai",
+      "pt": "Elementos prontos para personalizar",
+      "it": "Elementi pronti da personalizzare"
+    },
+    {
+      "key": "modules.ses.creation.recommended",
+      "en": "Recommended",
+      "es": "Recomendado",
+      "fr": "Recommandé",
+      "de": "Empfohlen",
+      "lt": "Rekomenduojama",
+      "pt": "Recomendado",
+      "it": "Consigliato"
+    },
+    {
+      "key": "modules.ses.creation.review",
+      "en": "Review",
+      "es": "Revisar",
+      "fr": "Réviser",
+      "de": "Überprüfen",
+      "lt": "Peržiūrėti",
+      "pt": "Revisar",
+      "it": "Rivedere"
+    },
+    {
+      "key": "modules.ses.creation.select_this_template",
+      "en": "Select This Template",
+      "es": "Seleccionar esta plantilla",
+      "fr": "Sélectionner ce modèle",
+      "de": "Diese Vorlage auswählen",
+      "lt": "Pasirinkti šį šabloną",
+      "pt": "Selecionar este modelo",
+      "it": "Seleziona questo modello"
+    },
+    {
+      "key": "modules.ses.creation.step_by_step_guided_exercises",
+      "en": "Step-by-step guided exercises",
+      "es": "Ejercicios guiados paso a paso",
+      "fr": "Exercices guidés étape par étape",
+      "de": "Schritt-für-Schritt-Übungen",
+      "lt": "Žingsnis po žingsnio vedami pratimai",
+      "pt": "Exercícios guiados passo a passo",
+      "it": "Esercizi guidati passo dopo passo"
+    },
+    {
+      "key": "modules.ses.creation.structured",
+      "en": "Structured",
+      "es": "Estructurado",
+      "fr": "Structuré",
+      "de": "Strukturiert",
+      "lt": "Struktūrizuotas",
+      "pt": "Estruturado",
+      "it": "Strutturato"
+    },
+    {
+      "key": "modules.ses.creation.switch_template",
+      "en": "Switch Template?",
+      "es": "¿Cambiar plantilla?",
+      "fr": "Changer de modèle ?",
+      "de": "Vorlage wechseln?",
+      "lt": "Pakeisti šabloną?",
+      "pt": "Trocar modelo?",
+      "it": "Cambiare modello?"
+    },
+    {
+      "key": "modules.ses.creation.template_switched_starting_fresh",
+      "en": "Template switched. Starting fresh.",
+      "es": "Plantilla cambiada. Comenzando de nuevo.",
+      "fr": "Modèle changé. Redémarrage.",
+      "de": "Vorlage gewechselt. Neustart.",
+      "lt": "Šablonas pakeistas. Pradedama iš naujo.",
+      "pt": "Modelo trocado. Começando do zero.",
+      "it": "Modello cambiato. Ripartenza da zero."
+    },
+    {
+      "key": "modules.ses.creation.this_action_cannot_be_undone",
+      "en": "This action cannot be undone.",
+      "es": "Esta acción no se puede deshacer.",
+      "fr": "Cette action ne peut pas être annulée.",
+      "de": "Diese Aktion kann nicht rückgängig gemacht werden.",
+      "lt": "Šio veiksmo negalima atšaukti.",
+      "pt": "Esta ação não pode ser desfeita.",
+      "it": "Questa azione non può essere annullata."
+    },
+    {
+      "key": "modules.ses.creation.time_to_start",
+      "en": "Time to Start",
+      "es": "Tiempo para Comenzar",
+      "fr": "Temps de Démarrage",
+      "de": "Startzeit",
+      "lt": "Laikas pradėti",
+      "pt": "Tempo para Começar",
+      "it": "Tempo di Avvio"
+    },
+    {
+      "key": "modules.ses.creation.view_detailed_preview",
+      "en": "View detailed preview",
+      "es": "Ver vista previa detallada",
+      "fr": "Voir l'aperçu détaillé",
+      "de": "Detaillierte Vorschau anzeigen",
+      "lt": "Peržiūrėti išsamią peržiūrą",
+      "pt": "Ver visualização detalhada",
+      "it": "Visualizza anteprima dettagliata"
+    },
+    {
+      "key": "modules.ses.creation.welfare",
+      "en": "Welfare",
+      "es": "Bienestar",
+      "fr": "Bien-être",
+      "de": "Wohlergehen",
+      "lt": "Gerovė",
+      "pt": "Bem-estar",
+      "it": "Benessere"
+    },
+    {
+      "key": "modules.ses.creation.working_on_a_time_sensitive_project",
+      "en": "Working on a time-sensitive project?",
+      "es": "¿Trabaja en un proyecto urgente?",
+      "fr": "Travaillez-vous sur un projet urgent?",
+      "de": "Arbeiten Sie an einem zeitkritischen Projekt?",
+      "lt": "Dirbate su laiko jautriu projektu?",
+      "pt": "A trabalhar num projeto urgente?",
+      "it": "Lavori su un progetto urgente?"
+    },
+    {
+      "key": "modules.ses.creation.yes_switch_template",
+      "en": "Yes, Switch Template",
+      "es": "Sí, cambiar plantilla",
+      "fr": "Oui, changer de modèle",
+      "de": "Ja, Vorlage wechseln",
+      "lt": "Taip, pakeisti šabloną",
+      "pt": "Sim, trocar modelo",
+      "it": "Sì, cambia modello"
+    },
+    {
+      "key": "modules.ses.creation.you_are_about_to_switch_to_a_different_template",
+      "en": "You are about to switch to a different template.",
+      "es": "Está a punto de cambiar a una plantilla diferente.",
+      "fr": "Vous êtes sur le point de passer à un modèle différent.",
+      "de": "Sie sind dabei, zu einer anderen Vorlage zu wechseln.",
+      "lt": "Ketinate pereiti prie kito šablono.",
+      "pt": "Você está prestes a mudar para um modelo diferente.",
+      "it": "Stai per passare a un modello diverso."
+    },
+    {
+      "key": "modules.ses.creation.you_selected",
+      "en": "You selected:",
+      "es": "Usted seleccionó:",
+      "fr": "Vous avez sélectionné:",
+      "de": "Sie haben ausgewählt:",
+      "lt": "Jūs pasirinkote:",
+      "pt": "Você selecionou:",
+      "it": "Hai selezionato:"
+    }
+  ]
+}

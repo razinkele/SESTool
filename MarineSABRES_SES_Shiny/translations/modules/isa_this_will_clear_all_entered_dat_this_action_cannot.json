@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.this_will_clear_all_entered_dat_this_action_cannot",
+      "en": "This will clear all entered data. This action cannot be undone.",
+      "es": "Esto borrará todos los datos ingresados. Esta acción no se puede deshacer.",
+      "fr": "Cela effacera toutes les données saisies. Cette action ne peut pas être annulée.",
+      "de": "Dies löscht alle eingegebenen Daten. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "lt": "Tai išvalys visus įvestus duomenis. Šio veiksmo negalima atšaukti.",
+      "pt": "Isto irá limpar todos os dados introduzidos. Esta ação não pode ser desfeita.",
+      "it": "Questo cancellerà tutti i dati inseriti. Questa azione non può essere annullata."
+    }
+  ]
+}

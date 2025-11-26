@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.complete_columns_ao_ay_in_the_master_dat_sheet_lin",
+      "en": "Complete columns AO-AY in the Master Data Sheet. Link Activities to Pressures from Exercise 3.",
+      "es": "Complete las columnas AO-AY en la Hoja de Datos Maestra. Vincule Actividades con Presiones del Ejercicio 3.",
+      "fr": "Remplissez les colonnes AO-AY dans la Feuille de Données Principale. Liez les Activités aux Pressions de l'Exercice 3.",
+      "de": "Vervollständigen Sie die Spalten AO-AY im Master-Datenblatt. Verknüpfen Sie Aktivitäten mit Belastungen aus Übung 3.",
+      "lt": "Užpildykite AO-AY stulpelius Pagrindinėje duomenų lentelėje. Susieti Veiklas su Spaudimais iš Pratimo 3.",
+      "pt": "Complete as colunas AO-AY na Folha de Dados Mestre. Ligue Atividades às Pressões do Exercício 3.",
+      "it": "Completare le colonne AO-AY nel Foglio Dati Principale. Collegare le Attività alle Pressioni dell'Esercizio 3."
+    }
+  ]
+}

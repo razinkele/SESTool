@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.typical_tasks",
+      "en": "Typical tasks:",
+      "es": "Tareas típicas:",
+      "fr": "Tâches typiques:",
+      "de": "Typische Aufgaben:",
+      "lt": "Įprastinės užduotys:",
+      "pt": "Tarefas típicas:",
+      "it": "Compiti tipici:"
+    }
+  ]
+}

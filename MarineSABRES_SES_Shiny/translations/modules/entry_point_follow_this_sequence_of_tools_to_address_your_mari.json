@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.follow_this_sequence_of_tools_to_address_your_mari",
+      "en": "Follow this sequence of tools to address your marine management question:",
+      "es": "Siga esta secuencia de herramientas para abordar su pregunta de gestión marina:",
+      "fr": "Suivez cette séquence d'outils pour répondre à votre question de gestion marine:",
+      "de": "Folgen Sie dieser Abfolge von Werkzeugen, um Ihre Meeresmanagement-Frage zu beantworten:",
+      "lt": "Sekite šią priemonių seką, kad išspręstumėte savo jūrų valdymo klausimą:",
+      "pt": "Siga esta sequência de ferramentas para abordar a sua questão de gestão marinha:",
+      "it": "Segui questa sequenza di strumenti per affrontare la tua domanda di gestione marina:"
+    }
+  ]
+}

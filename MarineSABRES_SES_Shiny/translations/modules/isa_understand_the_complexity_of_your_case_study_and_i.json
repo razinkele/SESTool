@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.understand_the_complexity_of_your_case_study_and_i",
+      "en": "Understand the complexity of your case study and identify impacts on human welfare.",
+      "es": "Comprender la complejidad de su estudio de caso e identificar los impactos en el bienestar humano.",
+      "fr": "Comprendre la complexité de votre étude de cas et identifier les impacts sur le bien-être humain.",
+      "de": "Verstehen Sie die Komplexität Ihrer Fallstudie und identifizieren Sie Auswirkungen auf das menschliche Wohlergehen.",
+      "lt": "Supraskite savo atvejo tyrimo sudėtingumą ir nustatykite poveikį žmonių gerovei.",
+      "pt": "Compreender a complexidade do seu estudo de caso e identificar impactos no bem-estar humano.",
+      "it": "Comprendere la complessità del vostro caso studio e identificare gli impatti sul benessere umano."
+    }
+  ]
+}

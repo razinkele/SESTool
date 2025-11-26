@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.are_you_sure_you_want_to_start_over_all_curr_progr",
+      "en": "Are you sure you want to start over? All current progress will be lost.",
+      "es": "¿Estás seguro de que quieres empezar de nuevo? Todo el progreso actual se perderá.",
+      "fr": "Êtes-vous sûr de vouloir recommencer ? Tous les progrès actuels seront perdus.",
+      "de": "Sind Sie sicher, dass Sie von vorne beginnen möchten? Alle aktuellen Fortschritte gehen verloren.",
+      "lt": "Ar tikrai norite pradėti iš naujo? Visa dabartinė pažanga bus prarasta.",
+      "pt": "Tem certeza de que deseja recomeçar? Todo o progresso atual será perdido.",
+      "it": "Sei sicuro di voler ricominciare da capo? Tutti i progressi attuali andranno persi."
+    }
+  ]
+}

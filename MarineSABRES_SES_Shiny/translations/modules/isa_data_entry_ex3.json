@@ -1,0 +1,43 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.data_entry.ex3.exercise_3_pressures",
+      "en": "Exercise 3: Pressures",
+      "es": "Ejercicio 3: Presiones",
+      "fr": "Exercice 3 : Pressions",
+      "de": "Übung 3: Belastungen",
+      "lt": "Pratimas 3: Spaudimai",
+      "pt": "Exercício 3: Pressões",
+      "it": "Esercizio 3: Pressioni"
+    },
+    {
+      "key": "modules.isa.data_entry.ex3.save_exercise_3",
+      "en": "Save Exercise 3",
+      "es": "Guardar Ejercicio 3",
+      "fr": "Enregistrer l'Exercice 3",
+      "de": "Übung 3 speichern",
+      "lt": "Išsaugoti Pratimą 3",
+      "pt": "Guardar Exercício 3",
+      "it": "Salva Esercizio 3"
+    },
+    {
+      "key": "modules.isa.data_entry.ex3.specifying_pressures_on_state_changes",
+      "en": "Specifying Pressures on State Changes",
+      "es": "Especificando Presiones sobre Cambios de Estado",
+      "fr": "Spécification des Pressions sur les Changements d'État",
+      "de": "Spezifizierung von Belastungen auf Zustandsänderungen",
+      "lt": "Spaudimų, darančių įtaką būklės pokyčiams, specifikavimas",
+      "pt": "Especificando Pressões sobre Mudanças de Estado",
+      "it": "Specificazione delle Pressioni sui Cambiamenti di Stato"
+    }
+  ]
+}

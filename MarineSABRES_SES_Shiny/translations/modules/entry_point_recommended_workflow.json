@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.recommended_workflow",
+      "en": "Recommended Workflow:",
+      "es": "Flujo de Trabajo Recomendado:",
+      "fr": "Flux de Travail Recommandé:",
+      "de": "Empfohlener Arbeitsablauf:",
+      "lt": "Rekomenduojama darbo eiga:",
+      "pt": "Fluxo de Trabalho Recomendado:",
+      "it": "Flusso di Lavoro Raccomandato:"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.ses.are_you_sure_you_want_to_start_from_scratch_with_t",
+      "en": "Are you sure you want to start from scratch with the new template?",
+      "es": "¿Está seguro de que desea comenzar desde cero con la nueva plantilla?",
+      "fr": "Êtes-vous sûr de vouloir recommencer à zéro avec le nouveau modèle ?",
+      "de": "Sind Sie sicher, dass Sie mit der neuen Vorlage von vorne beginnen möchten?",
+      "lt": "Ar tikrai norite pradėti iš naujo su nauju šablonu?",
+      "pt": "Tem certeza de que deseja começar do zero com o novo modelo?",
+      "it": "Sei sicuro di voler ricominciare da zero con il nuovo modello?"
+    }
+  ]
+}

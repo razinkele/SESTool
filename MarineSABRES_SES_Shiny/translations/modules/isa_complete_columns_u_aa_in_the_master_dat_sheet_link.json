@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.complete_columns_u_aa_in_the_master_dat_sheet_link",
+      "en": "Complete columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a.",
+      "es": "Complete las columnas U-AA en la Hoja de Datos Maestra. Vincule PFM con SE del Ejercicio 2a.",
+      "fr": "Remplissez les colonnes U-AA dans la Feuille de Données Principale. Liez PFM aux SE de l'Exercice 2a.",
+      "de": "Vervollständigen Sie die Spalten U-AA im Master-Datenblatt. Verknüpfen Sie MPF mit ÖL aus Übung 2a.",
+      "lt": "Užpildykite U-AA stulpelius Pagrindinėje duomenų lentelėje. Susieti JPF su EP iš Pratimo 2a.",
+      "pt": "Complete as colunas U-AA na Folha de Dados Mestre. Ligue PFM aos SE do Exercício 2a.",
+      "it": "Completare le colonne U-AA nel Foglio Dati Principale. Collegare PFM ai SE dell'Esercizio 2a."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.skip_if_you_want_to_explore_all_activities_and_risks",
+      "en": "Skip if you want to explore all activities and risks",
+      "es": "Saltar si desea explorar todas las actividades y riesgos",
+      "fr": "Passer si vous voulez explorer toutes les activités et risques",
+      "de": "Überspringen, wenn Sie alle Aktivitäten und Risiken erkunden möchten",
+      "lt": "Praleisti, jei norite ištirti visas veiklas ir rizikas",
+      "pt": "Ignorar se quiser explorar todas as atividades e riscos",
+      "it": "Salta se vuoi esplorare tutte le attività e i rischi"
+    }
+  ]
+}

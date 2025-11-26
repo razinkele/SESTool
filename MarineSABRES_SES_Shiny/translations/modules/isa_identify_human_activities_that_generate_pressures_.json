@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.identify_human_activities_that_generate_pressures_",
+      "en": "Identify human activities that generate pressures on the marine environment.",
+      "es": "Identificar las actividades humanas que generan presiones sobre el medio marino.",
+      "fr": "Identifier les activités humaines qui génèrent des pressions sur l'environnement marin.",
+      "de": "Identifizieren Sie menschliche Aktivitäten, die Belastungen für die Meeresumwelt erzeugen.",
+      "lt": "Nustatyti žmonių veiklą, kuri sukelia spaudimą jūrų aplinkai.",
+      "pt": "Identificar as atividades humanas que geram pressões sobre o ambiente marinho.",
+      "it": "Identificare le attività umane che generano pressioni sull'ambiente marino."
+    }
+  ]
+}

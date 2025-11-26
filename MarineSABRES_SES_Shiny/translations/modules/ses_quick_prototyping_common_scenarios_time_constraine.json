@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.ses.quick_prototyping_common_scenarios_time_constraine",
+      "en": "Quick prototyping, common scenarios, time-constrained projects",
+      "es": "Prototipado rápido, escenarios comunes, proyectos con restricciones de tiempo",
+      "fr": "Prototypage rapide, scénarios courants, projets à contraintes de temps",
+      "de": "Schnelles Prototyping, gängige Szenarien, zeitkritische Projekte",
+      "lt": "Greitas prototipavimas, įprasti scenarijai, laiko apriboti projektai",
+      "pt": "Prototipagem rápida, cenários comuns, projetos com restrições de tempo",
+      "it": "Prototipazione rapida, scenari comuni, progetti con vincoli di tempo"
+    }
+  ]
+}

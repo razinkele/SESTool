@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.identify_the_underlying_drivers_that_motivate_huma",
+      "en": "Identify the underlying drivers that motivate human activities.",
+      "es": "Identificar los impulsores subyacentes que motivan las actividades humanas.",
+      "fr": "Identifier les facteurs sous-jacents qui motivent les activités humaines.",
+      "de": "Identifizieren Sie die zugrunde liegenden Treiber, die menschliche Aktivitäten motivieren.",
+      "lt": "Nustatyti pagrindinius veiksnius, skatinančius žmonių veiklą.",
+      "pt": "Identificar os impulsores subjacentes que motivam as atividades humanas.",
+      "it": "Identificare i fattori sottostanti che motivano le attività umane."
+    }
+  ]
+}

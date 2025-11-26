@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.ep4_topic",
+      "en": "EP4: Topic",
+      "es": "EP4: Tema",
+      "fr": "EP4: Sujet",
+      "de": "EP4: Thema",
+      "lt": "EP4: Tema",
+      "pt": "EP4: Tópico",
+      "it": "EP4: Argomento"
+    }
+  ]
+}

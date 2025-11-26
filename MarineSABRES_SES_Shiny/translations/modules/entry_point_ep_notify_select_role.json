@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.ep_notify_select_role",
+      "en": "ep_notify_select_role",
+      "es": "Por favor seleccione un rol para continuar",
+      "fr": "Veuillez sélectionner un rôle pour continuer",
+      "de": "Bitte wählen Sie eine Rolle aus, um fortzufahren",
+      "lt": "Pasirinkite vaidmenį, kad tęstumėte",
+      "pt": "Por favor selecione um papel para continuar",
+      "it": "Seleziona un ruolo per continuare"
+    }
+  ]
+}

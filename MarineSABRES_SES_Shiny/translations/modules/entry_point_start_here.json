@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.start_here",
+      "en": "START HERE",
+      "es": "COMENZAR AQUÍ",
+      "fr": "COMMENCER ICI",
+      "de": "HIER BEGINNEN",
+      "lt": "PRADĖKITE ČIA",
+      "pt": "COMEÇAR AQUI",
+      "it": "INIZIA QUI"
+    }
+  ]
+}

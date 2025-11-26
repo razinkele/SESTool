@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.use_isa_dat_entry_to_map_dapsiwrm_elements_with_co",
+      "en": "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection",
+      "es": "Use Entrada de Datos ISA para mapear elementos DAPSI(W)R(M) con niveles de confianza (1-5) para cada conexión",
+      "fr": "Utilisez la Saisie de Données ISA pour cartographier les éléments DAPSI(W)R(M) avec des niveaux de confiance (1-5) pour chaque connexion",
+      "de": "Verwenden Sie ISA-Dateneingabe, um DAPSI(W)R(M)-Elemente mit Vertrauensstufen (1-5) für jede Verbindung zu kartieren",
+      "lt": "Naudokite ISA duomenų įvedimą DAPSI(W)R(M) elementams susieti su pasitikėjimo lygiais (1-5) kiekvienam ryšiui",
+      "pt": "Use Entrada de Dados ISA para mapear elementos DAPSI(W)R(M) com níveis de confiança (1-5) para cada conexão",
+      "it": "Usa Inserimento Dati ISA per mappare elementi DAPSI(W)R(M) con livelli di confidenza (1-5) per ogni connessione"
+    }
+  ]
+}

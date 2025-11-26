@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.identify_pressures_that_affect_marine_processes_an",
+      "en": "Identify pressures that affect marine processes and ecosystem state.",
+      "es": "Identificar las presiones que afectan los procesos marinos y el estado del ecosistema.",
+      "fr": "Identifier les pressions qui affectent les processus marins et l'état de l'écosystème.",
+      "de": "Identifizieren Sie Belastungen, die Meeresprozesse und Ökosystemzustand beeinflussen.",
+      "lt": "Nustatyti spaudimus, turinčius įtakos jūros procesams ir ekosistemos būklei.",
+      "pt": "Identificar as pressões que afetam os processos marinhos e o estado do ecossistema.",
+      "it": "Identificare le pressioni che influenzano i processi marini e lo stato dell'ecosistema."
+    }
+  ]
+}

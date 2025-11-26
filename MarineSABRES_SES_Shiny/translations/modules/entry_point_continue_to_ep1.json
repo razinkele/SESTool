@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.continue_to_ep1",
+      "en": "Continue to EP1",
+      "es": "Continuar a EP1",
+      "fr": "Continuer vers EP1",
+      "de": "Weiter zu EP1",
+      "lt": "Tęsti į EP1",
+      "pt": "Continuar para EP1",
+      "it": "Continua a EP1"
+    }
+  ]
+}

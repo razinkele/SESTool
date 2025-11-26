@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.understanding_feedback_loops_reinforcing_loops_oft",
+      "en": "Understanding feedback loops: Reinforcing loops often identify areas of system growth or collapse, while balancing loops identify stabilization mechanisms or resistance to change.",
+      "es": "Comprensión de bucles de retroalimentación: los bucles de refuerzo a menudo identifican áreas de crecimiento o colapso del sistema, mientras que los bucles de equilibrio identifican mecanismos de estabilización o resistencia al cambio.",
+      "fr": "Compréhension des boucles de rétroaction : les boucles de renforcement identifient souvent les zones de croissance ou d'effondrement du système, tandis que les boucles d'équilibrage identifient les mécanismes de stabilisation ou de résistance au changement.",
+      "de": "Verständnis von Rückkopplungsschleifen: Verstärkungsschleifen identifizieren oft Bereiche des Systemwachstums oder -zusammenbruchs, während Ausgleichsschleifen Stabilisierungsmechanismen oder Widerstand gegen Veränderungen identifizieren.",
+      "lt": "Grįžtamojo ryšio ciklų supratimas: stiprinantys ciklai dažnai identifikuoja sistemos augimo ar žlugimo sritis, o balansuojantys ciklai identifikuoja stabilizavimo mechanizmus ar pasipriešinimą pokyčiams.",
+      "pt": "Compreensão de loops de feedback: loops de reforço frequentemente identificam áreas de crescimento ou colapso do sistema, enquanto loops de equilíbrio identificam mecanismos de estabilização ou resistência à mudança.",
+      "it": "Comprensione dei loop di feedback: i loop di rinforzo spesso identificano aree di crescita o collasso del sistema, mentre i loop di bilanciamento identificano meccanismi di stabilizzazione o resistenza al cambiamento."
+    }
+  ]
+}

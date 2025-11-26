@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.complete_the_feedback_loop_by_linking_drivers_back",
+      "en": "Complete the feedback loop by linking Drivers back to Goods & Benefits.",
+      "es": "Complete el bucle de retroalimentación vinculando los Impulsores con los Bienes y Beneficios.",
+      "fr": "Complétez la boucle de rétroaction en reliant les Facteurs aux Biens et Avantages.",
+      "de": "Schließen Sie die Rückkopplungsschleife, indem Sie Treiber mit Gütern und Vorteilen verknüpfen.",
+      "lt": "Užbaikite grįžtamojo ryšio ciklą susiedami Veiksnius su Gėrybėmis ir Nauda.",
+      "pt": "Complete o ciclo de feedback ligando os Impulsores aos Bens e Benefícios.",
+      "it": "Completare il ciclo di feedback collegando i Fattori ai Beni e Benefici."
+    }
+  ]
+}

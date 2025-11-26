@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.visualize_how_indicators_change_over_time_to_under",
+      "en": "Visualize how indicators change over time to understand system dynamics.",
+      "es": "Visualice cómo cambian los indicadores a lo largo del tiempo para comprender la dinámica del sistema.",
+      "fr": "Visualisez comment les indicateurs évoluent dans le temps pour comprendre la dynamique du système.",
+      "de": "Visualisieren Sie, wie sich Indikatoren im Laufe der Zeit ändern, um die Systemdynamik zu verstehen.",
+      "lt": "Vizualizuokite, kaip rodikliai keičiasi laikui bėgant, kad suprastumėte sistemos dinamiką.",
+      "pt": "Visualize como os indicadores mudam ao longo do tempo para compreender a dinâmica do sistema.",
+      "it": "Visualizzare come gli indicatori cambiano nel tempo per comprendere le dinamiche del sistema."
+    }
+  ]
+}

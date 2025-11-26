@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.ses.start_from_pre_built_templates_based_on_common_mar",
+      "en": "Start from pre-built templates based on common marine management scenarios. Customize to fit your specific case.",
+      "es": "Comience con plantillas predefinidas basadas en escenarios comunes de gestión marina. Personalice para adaptarse a su caso específico.",
+      "fr": "Commencez avec des modèles prédéfinis basés sur des scénarios de gestion marine courants. Personnalisez pour correspondre à votre cas spécifique.",
+      "de": "Beginnen Sie mit vorgefertigten Vorlagen basierend auf gängigen Meeresmanagement-Szenarien. Passen Sie sie an Ihren spezifischen Fall an.",
+      "lt": "Pradėkite nuo iš anksto paruoštų šablonų, pagrįstų įprastais jūrų valdymo scenarijais. Pritaikykite pagal savo specifinį atvejį.",
+      "pt": "Comece com modelos pré-construídos baseados em cenários comuns de gestão marinha. Personalize para se adequar ao seu caso específico.",
+      "it": "Inizia con modelli predefiniti basati su scenari comuni di gestione marina. Personalizza per adattarli al tuo caso specifico."
+    }
+  ]
+}

@@ -1,0 +1,823 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.ai_assistant.activities_human_actions",
+      "en": "Activities - Human Actions",
+      "es": "Actividades - Acciones Humanas",
+      "fr": "Activités - Actions humaines",
+      "de": "Aktivitäten – Menschliches Handeln",
+      "lt": "Veikla – Žmogaus veiksmai",
+      "pt": "Atividades - Ações Humanas",
+      "it": "Attività - Azioni umane"
+    },
+    {
+      "key": "modules.isa.ai_assistant.added",
+      "en": "Added",
+      "es": "Agregado",
+      "fr": "Ajouté",
+      "de": "Hinzugefügt",
+      "lt": "Pridėta",
+      "pt": "Adicionado",
+      "it": "Aggiunto"
+    },
+    {
+      "key": "modules.isa.ai_assistant.ai_suggested_options",
+      "en": "AI-suggested options",
+      "es": "Opciones sugeridas por IA",
+      "fr": "Options suggérées par l'IA",
+      "de": "KI-vorgeschlagene Optionen",
+      "lt": "DI siūlomos parinktys",
+      "pt": "Opções sugeridas por IA",
+      "it": "Opzioni suggerite dall'IA"
+    },
+    {
+      "key": "modules.isa.ai_assistant.all_connections_approved",
+      "en": "All connections approved!",
+      "es": "¡Todas las conexiones aprobadas!",
+      "fr": "Toutes les connexions approuvées !",
+      "de": "Alle Anschlüsse genehmigt!",
+      "lt": "Visos jungtys patvirtintos!",
+      "pt": "Todas as conexões aprovadas!",
+      "it": "Tutti i collegamenti approvati!"
+    },
+    {
+      "key": "modules.isa.ai_assistant.analyzing_your_elements_and_generating_connections",
+      "en": "Analyzing your elements and generating connections...",
+      "es": "Analizando tus elementos y generando conexiones...",
+      "fr": "Analyse de vos éléments et génération de connexions...",
+      "de": "Analysiere deine Elemente und generiere Verbindungen...",
+      "lt": "Analizuojami jūsų elementai ir generuojami ryšiai...",
+      "pt": "Analisando seus elementos e gerando conexões...",
+      "it": "Analisi degli elementi e generazione delle connessioni..."
+    },
+    {
+      "key": "modules.isa.ai_assistant.approve_all",
+      "en": "Approve All",
+      "es": "Aprobar todo",
+      "fr": "Tout approuver",
+      "de": "Alle genehmigen",
+      "lt": "Patvirtinti viską",
+      "pt": "Aprovar tudo",
+      "it": "Approva tutto"
+    },
+    {
+      "key": "modules.isa.ai_assistant.auto_saved",
+      "en": "Auto-saved",
+      "es": "Guardado automáticamente",
+      "fr": "Enregistré automatiquement",
+      "de": "Automatisch gespeichert",
+      "lt": "Automatiškai išsaugota",
+      "pt": "Salvo automaticamente",
+      "it": "Salvato automaticamente"
+    },
+    {
+      "key": "modules.isa.ai_assistant.choose_a_pre_built_scenario",
+      "en": "Choose a pre-built scenario:",
+      "es": "Elija un escenario prediseñado:",
+      "fr": "Choisissez un scénario prédéfini :",
+      "de": "Wählen Sie ein vorgefertigtes Szenario:",
+      "lt": "Pasirinkite iš anksto sukurtą scenarijų:",
+      "pt": "Escolha um cenário pré-construído:",
+      "it": "Scegli uno scenario predefinito:"
+    },
+    {
+      "key": "modules.isa.ai_assistant.click_to_selectdeselect_multiple_selections_allowed",
+      "en": "Click to select/deselect. Multiple selections allowed.",
+      "es": "Haga clic para seleccionar/deseleccionar. Se permiten selecciones múltiples.",
+      "fr": "Cliquez pour sélectionner/désélectionner. Sélections multiples autorisées.",
+      "de": "Klicken Sie zum Auswählen/Abwählen. Mehrfachauswahl zulässig.",
+      "lt": "Spustelėkite, kad pasirinktumėte/atšauktumėte. Leidžiama kelių pasirinkimų.",
+      "pt": "Clique para selecionar/desmarcar. Múltiplas seleções permitidas.",
+      "it": "Fai clic per selezionare/deselezionare. Selezioni multiple consentite."
+    },
+    {
+      "key": "modules.isa.ai_assistant.climate_change_coral_reefs",
+      "en": "Climate Change & Coral Reefs",
+      "es": "Cambio climático y arrecifes de coral",
+      "fr": "Changement climatique et récifs coralliens",
+      "de": "Klimawandel und Korallenriffe",
+      "lt": "Klimato kaita ir koraliniai rifai",
+      "pt": "Mudanças Climáticas e Recifes de Coral",
+      "it": "Cambiamenti climatici e barriere coralline"
+    },
+    {
+      "key": "modules.isa.ai_assistant.climate_change_template_loaded_with_example_connections",
+      "en": "Climate Change template loaded with example connections!",
+      "es": "¡Plantilla de cambio climático cargada con conexiones de ejemplo!",
+      "fr": "Modèle sur le changement climatique chargé d'exemples de connexions !",
+      "de": "Vorlage zum Klimawandel mit vielen Beispielverbindungen!",
+      "lt": "Klimato kaitos šablonas įkeltas su jungčių pavyzdžiais!",
+      "pt": "Modelo de Mudanças Climáticas carregado com exemplos de conexões!",
+      "it": "Modello sul cambiamento climatico caricato con collegamenti di esempio!"
+    },
+    {
+      "key": "modules.isa.ai_assistant.coastal_tourism_impacts",
+      "en": "Coastal Tourism Impacts",
+      "es": "Impactos del turismo costero",
+      "fr": "Impacts du tourisme côtier",
+      "de": "Auswirkungen des Küstentourismus",
+      "lt": "Pakrantės turizmo poveikis",
+      "pt": "Impactos do Turismo Costeiro",
+      "it": "Impatti del turismo costiero"
+    },
+    {
+      "key": "modules.isa.ai_assistant.common_issues_in_the_region",
+      "en": "Common issues in the region",
+      "es": "Problemas comunes en la región",
+      "fr": "Problèmes courants dans la région",
+      "de": "Häufige Probleme in der Region",
+      "lt": "Įprastos problemos regione",
+      "pt": "Problemas comuns na região",
+      "it": "Problemi comuni nella regione"
+    },
+    {
+      "key": "modules.isa.ai_assistant.connections",
+      "en": "Connections:",
+      "es": "Conexiones:",
+      "fr": "Connexions :",
+      "de": "Verbindungen:",
+      "lt": "Ryšiai:",
+      "pt": "Conexões:",
+      "it": "Connessioni:"
+    },
+    {
+      "key": "modules.isa.ai_assistant.connections_out_of",
+      "en": "connections out of",
+      "es": "conexiones fuera de",
+      "fr": "connexions hors de",
+      "de": "Verbindungen aus",
+      "lt": "jungtys išjungtos",
+      "pt": "conexões fora de",
+      "it": "connessioni fuori"
+    },
+    {
+      "key": "modules.isa.ai_assistant.connections_saved_navigating_to_dashboard",
+      "en": "connections saved! Navigating to dashboard...",
+      "es": "¡conexiones guardadas! Navegando al panel...",
+      "fr": "connexions enregistrées ! Navigation vers le tableau de bord...",
+      "de": "Verbindungen gespeichert! Navigation zum Dashboard...",
+      "lt": "ryšiai išsaugoti! Pereinama į valdymo skydą...",
+      "pt": "conexões salvas! Navegando para o painel...",
+      "it": "connessioni salvate! Navigazione alla dashboard..."
+    },
+    {
+      "key": "modules.isa.ai_assistant.connections_transferred_to_isa_data_entry",
+      "en": "connections transferred to ISA Data Entry.",
+      "es": "conexiones transferidas a ISA Data Entry.",
+      "fr": "connexions transférées vers ISA Data Entry.",
+      "de": "Verbindungen werden an ISA Data Entry übertragen.",
+      "lt": "jungtys, perkeltos į ISA Data Entry.",
+      "pt": "conexões transferidas para o ISA Data Entry.",
+      "it": "connessioni trasferite a ISA Data Entry."
+    },
+    {
+      "key": "modules.isa.ai_assistant.context_specific_suggestions",
+      "en": "Context-specific suggestions",
+      "es": "Sugerencias específicas del contexto",
+      "fr": "Suggestions spécifiques au contexte",
+      "de": "Kontextspezifische Vorschläge",
+      "lt": "Kontekstui būdingos rekomendacijos",
+      "pt": "Sugestões específicas do contexto",
+      "it": "Suggerimenti specifici del contesto"
+    },
+    {
+      "key": "modules.isa.ai_assistant.continue_to_activities",
+      "en": "Continue to Activities",
+      "es": "Continuar a Actividades",
+      "fr": "Continuer vers les activités",
+      "de": "Weiter zu Aktivitäten",
+      "lt": "Toliau eikite į „Veikla“.",
+      "pt": "Continuar para Atividades",
+      "it": "Continua alle Attività"
+    },
+    {
+      "key": "modules.isa.ai_assistant.continue_to_impacts",
+      "en": "Continue to Impacts",
+      "es": "Continuar a Impactos",
+      "fr": "Continuer vers Impacts",
+      "de": "Weiter zu Auswirkungen",
+      "lt": "Toliau eikite į „Poveikis“.",
+      "pt": "Continuar para Impactos",
+      "it": "Continua su Impatti"
+    },
+    {
+      "key": "modules.isa.ai_assistant.continue_to_measures",
+      "en": "Continue to Measures",
+      "es": "Continuar a Medidas",
+      "fr": "Continuer vers les mesures",
+      "de": "Weiter zu Maßnahmen",
+      "lt": "Toliau eikite į Priemonės",
+      "pt": "Continuar para Medidas",
+      "it": "Continua con Misure"
+    },
+    {
+      "key": "modules.isa.ai_assistant.continue_to_pressures",
+      "en": "Continue to Pressures",
+      "es": "Continuar con Presiones",
+      "fr": "Continuer vers Pressions",
+      "de": "Weiter zu Belastungen",
+      "lt": "Toliau eikite į Slėgiai",
+      "pt": "Continuar para Pressões",
+      "it": "Continua a Pressioni"
+    },
+    {
+      "key": "modules.isa.ai_assistant.continue_to_responses",
+      "en": "Continue to Responses",
+      "es": "Continuar a Respuestas",
+      "fr": "Continuer vers les réponses",
+      "de": "Weiter zu Antworten",
+      "lt": "Toliau eikite į atsakymus",
+      "pt": "Continuar para as respostas",
+      "it": "Continua con le risposte"
+    },
+    {
+      "key": "modules.isa.ai_assistant.continue_to_state_changes",
+      "en": "Continue to State Changes",
+      "es": "Continuar con los cambios de estado",
+      "fr": "Continuer à indiquer les modifications",
+      "de": "Weiter zu Statusänderungen",
+      "lt": "Tęskite būsenos pakeitimus",
+      "pt": "Continuar para Mudanças de Estado",
+      "it": "Continua con Cambiamenti di stato"
+    },
+    {
+      "key": "modules.isa.ai_assistant.continue_to_welfare",
+      "en": "Continue to Welfare",
+      "es": "Continuar a Bienestar",
+      "fr": "Continuer vers l'aide sociale",
+      "de": "Weiter zu Wohlfahrt",
+      "lt": "Toliau į Gerovė",
+      "pt": "Continuar para o bem-estar",
+      "it": "Continua su Welfare"
+    },
+    {
+      "key": "modules.isa.ai_assistant.continue_with",
+      "en": "Continue with",
+      "es": "Continuar con",
+      "fr": "Continuer avec",
+      "de": "Weiter mit",
+      "lt": "Tęsti su",
+      "pt": "Continuar com",
+      "it": "Continua con"
+    },
+    {
+      "key": "modules.isa.ai_assistant.current_framework",
+      "en": "Current Framework:",
+      "es": "Marco actual:",
+      "fr": "Cadre actuel :",
+      "de": "Aktueller Rahmen:",
+      "lt": "Dabartinė sistema:",
+      "pt": "Quadro Atual:",
+      "it": "Quadro attuale:"
+    },
+    {
+      "key": "modules.isa.ai_assistant.do_you_want_to_restore_it",
+      "en": "Do you want to restore it?",
+      "es": "¿Quieres restaurarlo?",
+      "fr": "Voulez-vous le restaurer ?",
+      "de": "Möchten Sie es wiederherstellen?",
+      "lt": "Ar norite jį atkurti?",
+      "pt": "Você quer restaurá-lo?",
+      "it": "Vuoi ripristinarlo?"
+    },
+    {
+      "key": "modules.isa.ai_assistant.drivers_societal_needs",
+      "en": "Drivers - Societal Needs",
+      "es": "Impulsores: necesidades sociales",
+      "fr": "Facteurs - Besoins sociétaux",
+      "de": "Treiber – gesellschaftliche Bedürfnisse",
+      "lt": "Vairuotojai – visuomenės poreikiai",
+      "pt": "Motivadores - Necessidades Sociais",
+      "it": "Driver: bisogni della società"
+    },
+    {
+      "key": "modules.isa.ai_assistant.ecosystem_type",
+      "en": "Ecosystem Type",
+      "es": "Tipo de Ecosistema",
+      "fr": "Type d'Écosystème",
+      "de": "Ökosystemtyp",
+      "lt": "Ekosistemos tipas",
+      "pt": "Tipo de Ecossistema",
+      "it": "Tipo di Ecosistema"
+    },
+    {
+      "key": "modules.isa.ai_assistant.ecosystem_types",
+      "en": "Ecosystem types",
+      "es": "Tipos de ecosistemas",
+      "fr": "Types d'écosystèmes",
+      "de": "Ökosystemtypen",
+      "lt": "Ekosistemų tipai",
+      "pt": "Tipos de ecossistemas",
+      "it": "Tipi di ecosistemi"
+    },
+    {
+      "key": "modules.isa.ai_assistant.elements_and",
+      "en": "elements and",
+      "es": "elementos y",
+      "fr": "éléments et",
+      "de": "Elemente und",
+      "lt": "elementai ir",
+      "pt": "elementos e",
+      "it": "elementi e"
+    },
+    {
+      "key": "modules.isa.ai_assistant.finalizing_connections",
+      "en": "Finalizing connections...",
+      "es": "Finalizando conexiones...",
+      "fr": "Finalisation des connexions...",
+      "de": "Finalisiere Verbindungen...",
+      "lt": "Baigiami ryšiai...",
+      "pt": "Finalizando conexões...",
+      "it": "Finalizzazione delle connessioni..."
+    },
+    {
+      "key": "modules.isa.ai_assistant.finish_continue",
+      "en": "Finish & Continue",
+      "es": "Finalizar y continuar",
+      "fr": "Terminer et continuer",
+      "de": "Beenden und fortfahren",
+      "lt": "Baigti ir tęsti",
+      "pt": "Concluir e continuar",
+      "it": "Termina e continua"
+    },
+    {
+      "key": "modules.isa.ai_assistant.found_a_saved_session_from",
+      "en": "Found a saved session from",
+      "es": "Encontré una sesión guardada de",
+      "fr": "Trouvé une session enregistrée à partir de",
+      "de": "Eine gespeicherte Sitzung von gefunden",
+      "lt": "Rasta išsaugota sesija iš",
+      "pt": "Encontrou uma sessão salva de",
+      "it": "Trovato una sessione salvata da"
+    },
+    {
+      "key": "modules.isa.ai_assistant.impacts",
+      "en": "Impacts:",
+      "es": "Impactos:",
+      "fr": "Impacts :",
+      "de": "Auswirkungen:",
+      "lt": "Poveikis:",
+      "pt": "Impactos:",
+      "it": "Impatti:"
+    },
+    {
+      "key": "modules.isa.ai_assistant.impacts_effects_on_ecosystem_services",
+      "en": "Impacts - Effects on Ecosystem Services",
+      "es": "Impactos - Efectos sobre los servicios ecosistémicos",
+      "fr": "Impacts - Effets sur les services écosystémiques",
+      "de": "Auswirkungen – Auswirkungen auf Ökosystemleistungen",
+      "lt": "Poveikis – poveikis ekosistemų paslaugoms",
+      "pt": "Impactos - Efeitos nos Serviços Ecossistêmicos",
+      "it": "Impatti – Effetti sui Servizi Ecosistemici"
+    },
+    {
+      "key": "modules.isa.ai_assistant.load_example_template",
+      "en": "Load Example Template",
+      "es": "Cargar plantilla de ejemplo",
+      "fr": "Charger un exemple de modèle",
+      "de": "Beispielvorlage laden",
+      "lt": "Įkelti šablono pavyzdį",
+      "pt": "Carregar modelo de exemplo",
+      "it": "Carica modello di esempio"
+    },
+    {
+      "key": "modules.isa.ai_assistant.load_saved",
+      "en": "Load Saved",
+      "es": "Cargar guardado",
+      "fr": "Charge enregistrée",
+      "de": "Laden gespeichert",
+      "lt": "Įkėlimas išsaugotas",
+      "pt": "Carga salva",
+      "it": "Carica salvato"
+    },
+    {
+      "key": "modules.isa.ai_assistant.main_issue_identification",
+      "en": "Main Issue Identification",
+      "es": "Identificación del problema principal",
+      "fr": "Identification du problème principal",
+      "de": "Identifizierung des Hauptproblems",
+      "lt": "Pagrindinės problemos identifikavimas",
+      "pt": "Identificação do problema principal",
+      "it": "Identificazione del problema principale"
+    },
+    {
+      "key": "modules.isa.ai_assistant.marine_pollution_plastics",
+      "en": "Marine Pollution & Plastics",
+      "es": "Contaminación marina y plásticos",
+      "fr": "Pollution marine et plastiques",
+      "de": "Meeresverschmutzung und Kunststoffe",
+      "lt": "Jūros tarša ir plastikai",
+      "pt": "Poluição Marinha e Plásticos",
+      "it": "Inquinamento marino e plastica"
+    },
+    {
+      "key": "modules.isa.ai_assistant.minutes_ago",
+      "en": "minutes ago",
+      "es": "hace minutos",
+      "fr": "il y a quelques minutes",
+      "de": "vor Minuten",
+      "lt": "prieš minutes",
+      "pt": "minutos atrás",
+      "it": "minuti fa"
+    },
+    {
+      "key": "modules.isa.ai_assistant.model_saved_successfully",
+      "en": "Model saved successfully!",
+      "es": "¡Modelo guardado exitosamente!",
+      "fr": "Modèle enregistré avec succès !",
+      "de": "Modell erfolgreich gespeichert!",
+      "lt": "Modelis sėkmingai išsaugotas!",
+      "pt": "Modelo salvo com sucesso!",
+      "it": "Modello salvato con successo!"
+    },
+    {
+      "key": "modules.isa.ai_assistant.no_saved_session_found",
+      "en": "No saved session found.",
+      "es": "No se encontró ninguna sesión guardada.",
+      "fr": "Aucune session enregistrée trouvée.",
+      "de": "Keine gespeicherte Sitzung gefunden.",
+      "lt": "Nerasta jokių išsaugotų seansų.",
+      "pt": "Nenhuma sessão salva encontrada.",
+      "it": "Nessuna sessione salvata trovata."
+    },
+    {
+      "key": "modules.isa.ai_assistant.not_yet_saved",
+      "en": "Not yet saved",
+      "es": "Aún no guardado",
+      "fr": "Pas encore enregistré",
+      "de": "Noch nicht gespeichert",
+      "lt": "Dar neišsaugota",
+      "pt": "Ainda não salvo",
+      "it": "Non ancora salvato"
+    },
+    {
+      "key": "modules.isa.ai_assistant.note_i_found_more_connections_but_limited_to",
+      "en": "Note: I found more connections, but limited to",
+      "es": "Nota: Encontré más conexiones, pero limitado a",
+      "fr": "Note: J'ai trouvé plus de connexions, mais limité à",
+      "de": "Hinweis: Ich habe mehr Verbindungen gefunden, aber begrenzt auf",
+      "lt": "Pastaba: radau daugiau ryšių, bet apribota iki",
+      "pt": "Nota: Encontrei mais conexões, mas limitado a",
+      "it": "Nota: Ho trovato più connessioni, ma limitato a"
+    },
+    {
+      "key": "modules.isa.ai_assistant.other",
+      "en": "Other",
+      "es": "Otro",
+      "fr": "Autre",
+      "de": "Andere",
+      "lt": "Kita",
+      "pt": "Outro",
+      "it": "Altro"
+    },
+    {
+      "key": "modules.isa.ai_assistant.other_enter_your_own",
+      "en": "Other (enter your own)",
+      "es": "Otro (ingrese el suyo)",
+      "fr": "Autre (saisissez le vôtre)",
+      "de": "Andere (geben Sie Ihre eigene ein)",
+      "lt": "Kitas (įveskite savo)",
+      "pt": "Outro (insira o seu)",
+      "it": "Altro (inserisci il tuo)"
+    },
+    {
+      "key": "modules.isa.ai_assistant.overfishing_in_coastal_waters",
+      "en": "Overfishing in Coastal Waters",
+      "es": "Sobrepesca en aguas costeras",
+      "fr": "Surpêche dans les eaux côtières",
+      "de": "Überfischung in Küstengewässern",
+      "lt": "Perteklinė žvejyba pakrantės vandenyse",
+      "pt": "Pesca excessiva em águas costeiras",
+      "it": "Pesca eccessiva nelle acque costiere"
+    },
+    {
+      "key": "modules.isa.ai_assistant.pressures_environmental_stressors",
+      "en": "Pressures - Environmental Stressors",
+      "es": "Presiones: factores estresantes ambientales",
+      "fr": "Pressions – Facteurs de stress environnementaux",
+      "de": "Belastungen – Umweltstressoren",
+      "lt": "Spaudimai – aplinkos veiksniai",
+      "pt": "Pressões - Estressores Ambientais",
+      "it": "Pressioni - Fattori di stress ambientale"
+    },
+    {
+      "key": "modules.isa.ai_assistant.preview_model",
+      "en": "Preview Model",
+      "es": "Vista previa del modelo",
+      "fr": "Modèle d'aperçu",
+      "de": "Vorschaumodell",
+      "lt": "Peržiūros modelis",
+      "pt": "Modelo de visualização",
+      "it": "Anteprima del modello"
+    },
+    {
+      "key": "modules.isa.ai_assistant.quick_options_click_to_add",
+      "en": "Quick options (click to add):",
+      "es": "Opciones rápidas (haga clic para agregar):",
+      "fr": "Options rapides (cliquez pour ajouter) :",
+      "de": "Schnelloptionen (zum Hinzufügen klicken):",
+      "lt": "Greitos parinktys (spustelėkite, kad pridėtumėte):",
+      "pt": "Opções rápidas (clique para adicionar):",
+      "it": "Opzioni rapide (clicca per aggiungere):"
+    },
+    {
+      "key": "modules.isa.ai_assistant.regional_sea_changed_to",
+      "en": "Regional sea changed to",
+      "es": "Mar regional cambiado a",
+      "fr": "Mer régionale changée en",
+      "de": "Regionalmeer geändert zu",
+      "lt": "Regioninė jūra pakeista į",
+      "pt": "Mar regional alterado para",
+      "it": "Mare regionale cambiato in"
+    },
+    {
+      "key": "modules.isa.ai_assistant.regional_sea_context",
+      "en": "Regional Sea Context",
+      "es": "Contexto del Mar Regional",
+      "fr": "Contexte de la Mer Régionale",
+      "de": "Regionaler Meereskontext",
+      "lt": "Regioninės jūros kontekstas",
+      "pt": "Contexto do Mar Regional",
+      "it": "Contesto del Mare Regionale"
+    },
+    {
+      "key": "modules.isa.ai_assistant.restore_previous_session",
+      "en": "Restore Previous Session?",
+      "es": "¿Restaurar la sesión anterior?",
+      "fr": "Restaurer la session précédente ?",
+      "de": "Vorherige Sitzung wiederherstellen?",
+      "lt": "Atkurti ankstesnę sesiją?",
+      "pt": "Restaurar sessão anterior?",
+      "it": "Ripristinare la sessione precedente?"
+    },
+    {
+      "key": "modules.isa.ai_assistant.restore_your_last_saved_session",
+      "en": "Restore your last saved session",
+      "es": "Restaura tu última sesión guardada",
+      "fr": "Restaurez votre dernière session enregistrée",
+      "de": "Stellen Sie Ihre letzte gespeicherte Sitzung wieder her",
+      "lt": "Atkurkite paskutinę išsaugotą seansą",
+      "pt": "Restaure sua última sessão salva",
+      "it": "Ripristina l'ultima sessione salvata"
+    },
+    {
+      "key": "modules.isa.ai_assistant.review_each_connection_below_and_approve_or_reject_them",
+      "en": "Review each connection below and approve or reject them.",
+      "es": "Revise cada conexión a continuación y apruebe o rechace.",
+      "fr": "Examinez chaque connexion ci-dessous et approuvez-les ou rejetez-les.",
+      "de": "Überprüfen Sie jede Verbindung unten und genehmigen oder lehnen Sie sie ab.",
+      "lt": "Peržiūrėkite kiekvieną žemiau esantį ryšį ir patvirtinkite arba atmeskite juos.",
+      "pt": "Revise cada conexão abaixo e aprove ou rejeite-as.",
+      "it": "Esamina ciascuna connessione di seguito e approvala o rifiutala."
+    },
+    {
+      "key": "modules.isa.ai_assistant.review_suggested_connections",
+      "en": "Review Suggested Connections",
+      "es": "Revisar las conexiones sugeridas",
+      "fr": "Examiner les connexions suggérées",
+      "de": "Überprüfen Sie die vorgeschlagenen Verbindungen",
+      "lt": "Peržiūrėkite siūlomus ryšius",
+      "pt": "Revise as conexões sugeridas",
+      "it": "Esaminare le connessioni suggerite"
+    },
+    {
+      "key": "modules.isa.ai_assistant.save_progress",
+      "en": "Save Progress",
+      "es": "Guardar progreso",
+      "fr": "Enregistrer la progression",
+      "de": "Fortschritt speichern",
+      "lt": "Išsaugoti pažangą",
+      "pt": "Salvar progresso",
+      "it": "Salva progressi"
+    },
+    {
+      "key": "modules.isa.ai_assistant.save_to_isa_data_entry",
+      "en": "Save to ISA Data Entry",
+      "es": "Guardar en entrada de datos ISA",
+      "fr": "Enregistrer dans la saisie de données ISA",
+      "de": "In ISA Data Entry speichern",
+      "lt": "Išsaugoti ISA duomenų įvedime",
+      "pt": "Salvar na entrada de dados ISA",
+      "it": "Salva in immissione dati ISA"
+    },
+    {
+      "key": "modules.isa.ai_assistant.save_your_current_progress_to_browser_storage",
+      "en": "Save your current progress to browser storage",
+      "es": "Guarde su progreso actual en el almacenamiento del navegador",
+      "fr": "Enregistrez votre progression actuelle dans le stockage du navigateur",
+      "de": "Speichern Sie Ihren aktuellen Fortschritt im Browserspeicher",
+      "lt": "Išsaugokite dabartinę eigą naršyklės saugykloje",
+      "pt": "Salve seu progresso atual no armazenamento do navegador",
+      "it": "Salva i tuoi progressi attuali nella memoria del browser"
+    },
+    {
+      "key": "modules.isa.ai_assistant.seconds_ago",
+      "en": "seconds ago",
+      "es": "hace segundos",
+      "fr": "il y a quelques secondes",
+      "de": "vor Sekunden",
+      "lt": "prieš sekundes",
+      "pt": "segundos atrás",
+      "it": "secondi fa"
+    },
+    {
+      "key": "modules.isa.ai_assistant.selected",
+      "en": "selected",
+      "es": "seleccionado(s)",
+      "fr": "sélectionné(s)",
+      "de": "ausgewählt",
+      "lt": "pasirinkta",
+      "pt": "selecionado(s)",
+      "it": "selezionato/i"
+    },
+    {
+      "key": "modules.isa.ai_assistant.session_management",
+      "en": "Session Management",
+      "es": "Gestión de sesiones",
+      "fr": "Gestion des sessions",
+      "de": "Sitzungsverwaltung",
+      "lt": "Seansų valdymas",
+      "pt": "Gerenciamento de sessão",
+      "it": "Gestione della sessione"
+    },
+    {
+      "key": "modules.isa.ai_assistant.session_saved_successfully",
+      "en": "Session saved successfully!",
+      "es": "¡Sesión guardada exitosamente!",
+      "fr": "Session enregistrée avec succès !",
+      "de": "Sitzung erfolgreich gespeichert!",
+      "lt": "Sesija sėkmingai išsaugota!",
+      "pt": "Sessão salva com sucesso!",
+      "it": "Sessione salvata con successo!"
+    },
+    {
+      "key": "modules.isa.ai_assistant.skip_this_question",
+      "en": "Skip This Question",
+      "es": "Saltar esta pregunta",
+      "fr": "Passer cette question",
+      "de": "Überspringen Sie diese Frage",
+      "lt": "Praleiskite šį klausimą",
+      "pt": "Pule esta pergunta",
+      "it": "Salta questa domanda"
+    },
+    {
+      "key": "modules.isa.ai_assistant.state_changes",
+      "en": "State Changes:",
+      "es": "Cambios de estado:",
+      "fr": "Changements d'état :",
+      "de": "Zustandsänderungen:",
+      "lt": "Būsenos pakeitimai:",
+      "pt": "Mudanças de estado:",
+      "it": "Cambiamenti di stato:"
+    },
+    {
+      "key": "modules.isa.ai_assistant.state_changes_ecosystem_effects",
+      "en": "State Changes - Ecosystem Effects",
+      "es": "Cambios de estado: efectos en el ecosistema",
+      "fr": "Changements d'état - Effets sur l'écosystème",
+      "de": "Zustandsänderungen – Auswirkungen auf das Ökosystem",
+      "lt": "Būsenos pokyčiai – ekosistemų poveikis",
+      "pt": "Mudanças de Estado - Efeitos Ecossistêmicos",
+      "it": "Cambiamenti di stato - Effetti sull'ecosistema"
+    },
+    {
+      "key": "modules.isa.ai_assistant.submit_answer",
+      "en": "Submit Answer",
+      "es": "Enviar respuesta",
+      "fr": "Soumettre la réponse",
+      "de": "Antwort absenden",
+      "lt": "Pateikti atsakymą",
+      "pt": "Enviar resposta",
+      "it": "Invia risposta"
+    },
+    {
+      "key": "modules.isa.ai_assistant.tailored_for",
+      "en": "tailored for",
+      "es": "adaptado para",
+      "fr": "adapté pour",
+      "de": "angepasst für",
+      "lt": "pritaikytas",
+      "pt": "adaptado para",
+      "it": "adattato per"
+    },
+    {
+      "key": "modules.isa.ai_assistant.thank_you_moving_to_the_next_question",
+      "en": "Thank you! Moving to the next question...",
+      "es": "¡Gracias! Pasando a la siguiente pregunta...",
+      "fr": "Merci! Passons à la question suivante...",
+      "de": "Danke schön! Weiter zur nächsten Frage...",
+      "lt": "Ačiū! Pereinant prie kito klausimo...",
+      "pt": "Obrigado! Passando para a próxima pergunta...",
+      "it": "Grazie! Passando alla domanda successiva..."
+    },
+    {
+      "key": "modules.isa.ai_assistant.this_may_take_a_moment",
+      "en": "This may take a moment...",
+      "es": "Esto puede tardar un momento...",
+      "fr": "Cela peut prendre un instant...",
+      "de": "Dies kann einen Moment dauern...",
+      "lt": "Tai gali užtrukti...",
+      "pt": "Isso pode levar um momento...",
+      "it": "Potrebbe richiedere un momento..."
+    },
+    {
+      "key": "modules.isa.ai_assistant.total",
+      "en": "total",
+      "es": "total",
+      "fr": "total",
+      "de": "gesamt",
+      "lt": "viso",
+      "pt": "total",
+      "it": "totale"
+    },
+    {
+      "key": "modules.isa.ai_assistant.total_elements_created",
+      "en": "Total elements created",
+      "es": "Elementos totales creados",
+      "fr": "Total des éléments créés",
+      "de": "Insgesamt erstellte Elemente",
+      "lt": "Iš viso sukurta elementų",
+      "pt": "Total de elementos criados",
+      "it": "Totale elementi creati"
+    },
+    {
+      "key": "modules.isa.ai_assistant.type_your_answer_here",
+      "en": "Type your answer here...",
+      "es": "Escribe tu respuesta aquí...",
+      "fr": "Tapez votre réponse ici...",
+      "de": "Geben Sie hier Ihre Antwort ein...",
+      "lt": "Įvesk savo atsakymą čia...",
+      "pt": "Digite sua resposta aqui...",
+      "it": "Scrivi la tua risposta qui..."
+    },
+    {
+      "key": "modules.isa.ai_assistant.welfare",
+      "en": "Welfare:",
+      "es": "Bienestar:",
+      "fr": "Bien-être:",
+      "de": "Wohlfahrt:",
+      "lt": "Gerovė:",
+      "pt": "Bem-estar:",
+      "it": "Benessere:"
+    },
+    {
+      "key": "modules.isa.ai_assistant.welfare_human_well_being_effects",
+      "en": "Welfare - Human Well-being Effects",
+      "es": "Bienestar - Efectos sobre el bienestar humano",
+      "fr": "Bien-être - Effets sur le bien-être humain",
+      "de": "Wohlfahrt – Auswirkungen auf das menschliche Wohlbefinden",
+      "lt": "Gerovė – žmogaus gerovės poveikis",
+      "pt": "Bem-estar - Efeitos no bem-estar humano",
+      "it": "Welfare: effetti sul benessere umano"
+    },
+    {
+      "key": "modules.isa.ai_assistant.what_type_of_marine_ecosystem_are_you_studying",
+      "en": "What type of marine ecosystem are you studying?",
+      "es": "¿Qué tipo de ecosistema marino está estudiando?",
+      "fr": "Quel type d'écosystème marin étudiez-vous ?",
+      "de": "Welchen Typ von Meeresökosystem untersuchen Sie?",
+      "lt": "Kokio tipo jūrų ekosistemą tyrinėjate?",
+      "pt": "Que tipo de ecossistema marinho você está estudando?",
+      "it": "Che tipo di ecosistema marino stai studiando?"
+    },
+    {
+      "key": "modules.isa.ai_assistant.yes_restore",
+      "en": "Yes, Restore",
+      "es": "Sí, restaurar",
+      "fr": "Oui, restaurer",
+      "de": "Ja, Wiederherstellen",
+      "lt": "Taip, Atkurti",
+      "pt": "Sim, restaurar",
+      "it": "Sì, ripristina"
+    },
+    {
+      "key": "modules.isa.ai_assistant.yes_start_over",
+      "en": "Yes, Start Over",
+      "es": "Sí, empezar de nuevo",
+      "fr": "Oui, recommencer",
+      "de": "Ja, fangen Sie von vorne an",
+      "lt": "Taip, pradėti iš naujo",
+      "pt": "Sim, recomeçar",
+      "it": "Sì, ricomincia da capo"
+    },
+    {
+      "key": "modules.isa.ai_assistant.your_ses_model_progress",
+      "en": "Your SES Model Progress",
+      "es": "El progreso de su modelo SES",
+      "fr": "Progrès de votre modèle SES",
+      "de": "Ihr SES-Modellfortschritt",
+      "lt": "Jūsų SES modelio pažanga",
+      "pt": "O progresso do seu modelo SES",
+      "it": "I progressi del tuo modello SES"
+    }
+  ]
+}

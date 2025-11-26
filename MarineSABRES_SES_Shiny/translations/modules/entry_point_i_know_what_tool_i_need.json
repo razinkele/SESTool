@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.i_know_what_tool_i_need",
+      "en": "I know what tool I need",
+      "es": "Sé qué herramienta necesito",
+      "fr": "Je sais quel outil j'ai besoin",
+      "de": "Ich weiß, welches Werkzeug ich brauche",
+      "lt": "Žinau, kokios priemonės man reikia",
+      "pt": "Sei qual ferramenta preciso",
+      "it": "So quale strumento mi serve"
+    }
+  ]
+}

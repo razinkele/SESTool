@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.welcome",
+      "en": "Welcome",
+      "es": "Bienvenida",
+      "fr": "Bienvenue",
+      "de": "Willkommen",
+      "lt": "Sveiki",
+      "pt": "Bem-vindo",
+      "it": "Benvenuto"
+    }
+  ]
+}

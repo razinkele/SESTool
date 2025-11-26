@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.behavior_produces_resistance_to_change_and_system_",
+      "en": "Behavior: Produces resistance to change and system stabilization",
+      "es": "Comportamiento: Produce resistencia al cambio y estabilización del sistema",
+      "fr": "Comportement : Produit une résistance au changement et une stabilisation du système",
+      "de": "Verhalten: Erzeugt Widerstand gegen Veränderungen und Systemstabilisierung",
+      "lt": "Elgsena: Sukuria pasipriešinimą pokyčiams ir sistemos stabilizavimą",
+      "pt": "Comportamento: Produz resistência à mudança e estabilização do sistema",
+      "it": "Comportamento: Produce resistenza al cambiamento e stabilizzazione del sistema"
+    }
+  ]
+}

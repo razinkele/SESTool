@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.this_ai_powered_assistant_helps_you_create_your_da",
+      "en": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
+      "es": "Este asistente impulsado por IA le ayuda a crear su marco DAPSI(W)R(M) a través de una conversación interactiva. Simplemente responda las preguntas y el asistente le guiará en cada paso.",
+      "fr": "Cet assistant alimenté par l'IA vous aide à créer votre cadre DAPSI(W)R(M) grâce à une conversation interactive. Répondez simplement aux questions et l'assistant vous guidera à chaque étape.",
+      "de": "Dieser KI-gestützte Assistent hilft Ihnen, Ihr DAPSI(W)R(M)-Framework durch interaktive Konversation zu erstellen. Beantworten Sie einfach die Fragen und der Assistent führt Sie durch jeden Schritt.",
+      "lt": "Šis dirbtinio intelekto asistentas padeda sukurti DAPSI(W)R(M) sistemą interaktyvia kalba. Tiesiog atsakykite į klausimus, o asistentas jus ves per kiekvieną žingsnį.",
+      "pt": "Este assistente alimentado por IA ajuda você a criar sua estrutura DAPSI(W)R(M) através de conversação interativa. Simplesmente responda às perguntas e o assistente irá guiá-lo em cada etapa.",
+      "it": "Questo assistente basato sull'intelligenza artificiale ti aiuta a creare il tuo framework DAPSI(W)R(M) attraverso una conversazione interattiva. Rispondi semplicemente alle domande e l'assistente ti guiderà in ogni passaggio."
+    }
+  ]
+}

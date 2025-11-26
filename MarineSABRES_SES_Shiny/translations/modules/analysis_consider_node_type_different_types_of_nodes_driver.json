@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.consider_node_type_different_types_of_nodes_driver",
+      "en": "Consider node type: Different types of nodes (Drivers, Activities, Pressures, States, Impacts, Responses) may require different intervention strategies.",
+      "es": "Considere el tipo de nodo: Diferentes tipos de nodos (Impulsores, Actividades, Presiones, Estados, Impactos, Respuestas) pueden requerir diferentes estrategias de intervención.",
+      "fr": "Considérer le type de nœud : Différents types de nœuds (Moteurs, Activités, Pressions, États, Impacts, Réponses) peuvent nécessiter différentes stratégies d'intervention.",
+      "de": "Knotentyp berücksichtigen: Verschiedene Knotentypen (Treiber, Aktivitäten, Belastungen, Zustände, Auswirkungen, Reaktionen) erfordern möglicherweise unterschiedliche Interventionsstrategien.",
+      "lt": "Atsižvelgti į mazgo tipą: Skirtingi mazgų tipai (Vairuotojai, Veiklos, Spaudimai, Būsenos, Poveikiai, Atsakai) gali reikalauti skirtingų intervencijos strategijų.",
+      "pt": "Considere o tipo de nó: Diferentes tipos de nós (Drivers, Atividades, Pressões, Estados, Impactos, Respostas) podem exigir diferentes estratégias de intervenção.",
+      "it": "Considera il tipo di nodo: Diversi tipi di nodi (Driver, Attività, Pressioni, Stati, Impatti, Risposte) potrebbero richiedere diverse strategie di intervento."
+    }
+  ]
+}

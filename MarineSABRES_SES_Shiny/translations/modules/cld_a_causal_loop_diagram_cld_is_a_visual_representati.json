@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.cld.a_causal_loop_diagram_cld_is_a_visual_representati",
+      "en": "A Causal Loop Diagram (CLD) is a visual representation of how different elements in your social-ecological system are connected through cause-and-effect relationships.",
+      "es": "Un Diagrama de Bucles Causales (CLD) es una representación visual de cómo diferentes elementos en su sistema socio-ecológico están conectados a través de relaciones de causa y efecto.",
+      "fr": "Un Diagramme de Boucles Causales (CLD) est une représentation visuelle de la façon dont différents éléments de votre système socio-écologique sont connectés par des relations de cause à effet.",
+      "de": "Ein Kausales Schleifendiagramm (CLD) ist eine visuelle Darstellung, wie verschiedene Elemente in Ihrem sozial-ökologischen System durch Ursache-Wirkungs-Beziehungen verbunden sind.",
+      "lt": "Priežastinių kilpų diagrama (CLD) yra vizualinis vaizdavimas, kaip skirtingi jūsų socialinės-ekologinės sistemos elementai yra susiję priežasties ir pasekmės ryšiais.",
+      "pt": "Um Diagrama de Loops Causais (CLD) é uma representação visual de como diferentes elementos no seu sistema socioecológico estão conectados através de relações de causa e efeito.",
+      "it": "Un Diagramma dei Loop Causali (CLD) è una rappresentazione visiva di come diversi elementi del tuo sistema socio-ecologico sono collegati attraverso relazioni causa-effetto."
+    }
+  ]
+}

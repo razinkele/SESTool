@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.high_pagerank_these_nodes_have_broad_influence_acr",
+      "en": "High PageRank: These nodes have broad influence across the network and often represent core system elements.",
+      "es": "Alto PageRank: Estos nodos tienen una amplia influencia en toda la red y a menudo representan elementos centrales del sistema.",
+      "fr": "PageRank Élevé : Ces nœuds ont une large influence sur le réseau et représentent souvent des éléments centraux du système.",
+      "de": "Hoher PageRank: Diese Knoten haben breiten Einfluss über das Netzwerk und repräsentieren oft zentrale Systemelemente.",
+      "lt": "Didelis PageRank: Šie mazgai turi platų poveikį visame tinkle ir dažnai reprezentuoja pagrindinius sistemos elementus.",
+      "pt": "Alto PageRank: Estes nós têm ampla influência na rede e frequentemente representam elementos centrais do sistema.",
+      "it": "Alto PageRank: Questi nodi hanno un'ampia influenza sulla rete e spesso rappresentano elementi centrali del sistema."
+    }
+  ]
+}

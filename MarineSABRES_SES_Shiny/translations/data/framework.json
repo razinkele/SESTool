@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "data.framework.marinesabres_social_ecological_systems_analysis_tool",
+      "en": "MarineSABRES Social-Ecological Systems Analysis Tool",
+      "es": "Herramienta de Análisis de Sistemas Socio-Ecológicos MarineSABRES",
+      "fr": "Outil d'Analyse des Systèmes Socio-Écologiques MarineSABRES",
+      "de": "MarineSABRES Sozial-Ökologisches System-Analysewerkzeug",
+      "lt": "MarineSABRES socialinių-ekologinių sistemų analizės įrankis",
+      "pt": "Ferramenta de Análise de Sistemas Sócio-Ecológicos MarineSABRES",
+      "it": "Strumento di Analisi dei Sistemi Socio-Ecologici MarineSABRES"
+    }
+  ]
+}

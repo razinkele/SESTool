@@ -1,0 +1,163 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.data_entry.ex1.add_driver",
+      "en": "Add Driver",
+      "es": "Agregar Impulsor",
+      "fr": "Ajouter un Facteur",
+      "de": "Treiber hinzufügen",
+      "lt": "Pridėti veiksnį",
+      "pt": "Adicionar Impulsor",
+      "it": "Aggiungi Fattore"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.add_drivers",
+      "en": "Add Drivers",
+      "es": "Agregar Impulsores",
+      "fr": "Ajouter des Facteurs",
+      "de": "Treiber hinzufügen",
+      "lt": "Pridėti veiksnius",
+      "pt": "Adicionar Impulsores",
+      "it": "Aggiungere Fattori"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.closing_the_loop_drivers_to_goods_benefits",
+      "en": "Closing the Loop: Drivers to Goods & Benefits",
+      "es": "Cierre del Bucle: Impulsores a Bienes y Beneficios",
+      "fr": "Fermeture de la Boucle : Facteurs vers Biens et Avantages",
+      "de": "Schließen der Schleife: Treiber zu Gütern und Vorteilen",
+      "lt": "Ciklo uždarymas: Veiksniai į gėrybes ir naudą",
+      "pt": "Fecho do Ciclo: Impulsores para Bens e Benefícios",
+      "it": "Chiusura del Ciclo: Fattori verso Beni e Benefici"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.current_drivers",
+      "en": "Current Drivers",
+      "es": "Impulsores Actuales",
+      "fr": "Facteurs Actuels",
+      "de": "Aktuelle Treiber",
+      "lt": "Dabartiniai veiksniai",
+      "pt": "Impulsores Atuais",
+      "it": "Fattori Attuali"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.driver_to_goodsbenefits_connections",
+      "en": "Driver to Goods/Benefits Connections",
+      "es": "Conexiones de Impulsores a Bienes/Beneficios",
+      "fr": "Connexions Facteurs vers Biens/Avantages",
+      "de": "Treiber zu Güter/Vorteile Verbindungen",
+      "lt": "Veiksnių ir gėrybių/naudos ryšiai",
+      "pt": "Ligações de Impulsores para Bens/Benefícios",
+      "it": "Connessioni Fattori-Beni/Benefici"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.drivers_giving_rise_to_activities",
+      "en": "Drivers giving rise to Activities",
+      "es": "Impulsores que dan lugar a Actividades",
+      "fr": "Facteurs donnant lieu aux Activités",
+      "de": "Treiber, die zu Aktivitäten führen",
+      "lt": "Veiksniai, sukeliantys veiklą",
+      "pt": "Impulsores que dão origem a Atividades",
+      "it": "Fattori che danno origine alle Attività"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.exercise_10",
+      "en": "Exercise 10:",
+      "es": "Ejercicio 10:",
+      "fr": "Exercice 10 :",
+      "de": "Übung 10:",
+      "lt": "Pratimas 10:",
+      "pt": "Exercício 10:",
+      "it": "Esercizio 10:"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.exercise_10_clarifying_the_cld",
+      "en": "Exercise 10: Clarifying the CLD",
+      "es": "Ejercicio 10: Aclaración del DCL",
+      "fr": "Exercice 10 : Clarification du DCB",
+      "de": "Übung 10: Klärung des KSD",
+      "lt": "Pratimas 10: PCS patikslinimas",
+      "pt": "Exercício 10: Clarificação do DCL",
+      "it": "Esercizio 10: Chiarificazione del DCC"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.exercise_11",
+      "en": "Exercise 11:",
+      "es": "Ejercicio 11:",
+      "fr": "Exercice 11 :",
+      "de": "Übung 11:",
+      "lt": "Pratimas 11:",
+      "pt": "Exercício 11:",
+      "it": "Esercizio 11:"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.exercise_11_metrics_and_leverage_points",
+      "en": "Exercise 11: Metrics and Leverage Points",
+      "es": "Ejercicio 11: Métricas y Puntos de Apalancamiento",
+      "fr": "Exercice 11 : Métriques et Points de Levier",
+      "de": "Übung 11: Metriken und Hebelpunkte",
+      "lt": "Pratimas 11: Rodikliai ir sverčiai",
+      "pt": "Exercício 11: Métricas e Pontos de Alavancagem",
+      "it": "Esercizio 11: Metriche e Punti di Leva"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.exercise_12",
+      "en": "Exercise 12:",
+      "es": "Ejercicio 12:",
+      "fr": "Exercice 12 :",
+      "de": "Übung 12:",
+      "lt": "Pratimas 12:",
+      "pt": "Exercício 12:",
+      "it": "Esercizio 12:"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.exercise_12_presenting_and_validating",
+      "en": "Exercise 12: Presenting and Validating",
+      "es": "Ejercicio 12: Presentación y Validación",
+      "fr": "Exercice 12 : Présentation et Validation",
+      "de": "Übung 12: Präsentation und Validierung",
+      "lt": "Pratimas 12: Pateikimas ir patvirtinimas",
+      "pt": "Exercício 12: Apresentação e Validação",
+      "it": "Esercizio 12: Presentazione e Validazione"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.exercise_1_goods_benefits",
+      "en": "Exercise 1: Goods & Benefits",
+      "es": "Ejercicio 1: Bienes y Beneficios",
+      "fr": "Exercice 1 : Biens et Avantages",
+      "de": "Übung 1: Güter und Vorteile",
+      "lt": "Pratimas 1: Gėrybės ir nauda",
+      "pt": "Exercício 1: Bens e Benefícios",
+      "it": "Esercizio 1: Beni e Benefici"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.exercise_5_drivers",
+      "en": "Exercise 5: Drivers",
+      "es": "Ejercicio 5: Impulsores",
+      "fr": "Exercice 5 : Facteurs",
+      "de": "Übung 5: Treiber",
+      "lt": "Pratimas 5: Veiksniai",
+      "pt": "Exercício 5: Impulsores",
+      "it": "Esercizio 5: Fattori"
+    },
+    {
+      "key": "modules.isa.data_entry.ex1.save_exercise_1",
+      "en": "Save Exercise 1",
+      "es": "Guardar Ejercicio 1",
+      "fr": "Enregistrer l'Exercice 1",
+      "de": "Übung 1 speichern",
+      "lt": "Išsaugoti Pratimą 1",
+      "pt": "Guardar Exercício 1",
+      "it": "Salva Esercizio 1"
+    }
+  ]
+}

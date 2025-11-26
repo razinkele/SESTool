@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.start_guided_journey",
+      "en": "Start Guided Journey",
+      "es": "Comenzar Viaje Guiado",
+      "fr": "Commencer le Parcours Guidé",
+      "de": "Geführte Reise Starten",
+      "lt": "Pradėti vedamą kelionę",
+      "pt": "Iniciar Percurso Guiado",
+      "it": "Inizia il Percorso Guidato"
+    }
+  ]
+}

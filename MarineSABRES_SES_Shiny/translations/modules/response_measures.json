@@ -1,0 +1,1343 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.response.measures.abandoned",
+      "en": "Abandoned",
+      "es": "Abandonado",
+      "fr": "Abandonné",
+      "de": "Aufgegeben",
+      "lt": "Atsisakyta",
+      "pt": "Abandonado",
+      "it": "Abbandonato"
+    },
+    {
+      "key": "modules.response.measures.activities",
+      "en": "Activities:",
+      "es": "Actividades:",
+      "fr": "Activités:",
+      "de": "Aktivitäten:",
+      "lt": "Veiklos:",
+      "pt": "Atividades:",
+      "it": "Attività:"
+    },
+    {
+      "key": "modules.response.measures.activities",
+      "en": "Activities",
+      "es": "Actividades",
+      "fr": "Activités",
+      "de": "Aktivitäten",
+      "lt": "Veiklos",
+      "pt": "Atividades",
+      "it": "Attività"
+    },
+    {
+      "key": "modules.response.measures.add_effectiveness_and_feasibility_ratings",
+      "en": "Add effectiveness and feasibility ratings",
+      "es": "Agregar calificaciones de efectividad y viabilidad",
+      "fr": "Ajouter des évaluations d'efficacité et de faisabilité",
+      "de": "Wirksamkeits- und Durchführbarkeitsbewertungen hinzufügen",
+      "lt": "Pridėti efektyvumo ir įgyvendinamumo įvertinimus",
+      "pt": "Adicionar classificações de eficácia e viabilidade",
+      "it": "Aggiungi valutazioni di efficacia e fattibilità"
+    },
+    {
+      "key": "modules.response.measures.add_impact_link",
+      "en": "Add Impact Link",
+      "es": "Agregar Vínculo de Impacto",
+      "fr": "Ajouter un Lien d'Impact",
+      "de": "Wirkungsverknüpfung hinzufügen",
+      "lt": "Pridėti Poveikio Ryšį",
+      "pt": "Adicionar Ligação de Impacto",
+      "it": "Aggiungi Collegamento d'Impatto"
+    },
+    {
+      "key": "modules.response.measures.add_implementation_milestone",
+      "en": "Add Implementation Milestone",
+      "es": "Agregar Hito de Implementación",
+      "fr": "Ajouter une Étape de Mise en Œuvre",
+      "de": "Umsetzungsmeilenstein hinzufügen",
+      "lt": "Pridėti Įgyvendinimo Etapą",
+      "pt": "Adicionar Marco de Implementação",
+      "it": "Aggiungi Traguardo di Attuazione"
+    },
+    {
+      "key": "modules.response.measures.add_milestone",
+      "en": "Add Milestone",
+      "es": "Agregar Hito",
+      "fr": "Ajouter une Étape",
+      "de": "Meilenstein hinzufügen",
+      "lt": "Pridėti Etapą",
+      "pt": "Adicionar Marco",
+      "it": "Aggiungi Traguardo"
+    },
+    {
+      "key": "modules.response.measures.add_response_measure",
+      "en": "Add Response Measure",
+      "es": "Agregar Medida de Respuesta",
+      "fr": "Ajouter une Mesure de Réponse",
+      "de": "Reaktionsmaßnahme hinzufügen",
+      "lt": "Pridėti Atsako Priemonę",
+      "pt": "Adicionar Medida de Resposta",
+      "it": "Aggiungi Misura di Risposta"
+    },
+    {
+      "key": "modules.response.measures.address_root_causes_most_leverage_but_hardest",
+      "en": "Address root causes (most leverage but hardest)",
+      "es": "Abordar causas raíz (mayor apalancamiento pero más difícil)",
+      "fr": "Traiter les causes profondes (plus grand levier mais plus difficile)",
+      "de": "Grundursachen angehen (größte Hebelwirkung, aber am schwierigsten)",
+      "lt": "Spręsti pagrindines priežastis (didžiausias poveikis, bet sunkiausia)",
+      "pt": "Abordar causas raiz (maior alavancagem mas mais difícil)",
+      "it": "Affrontare le cause profonde (massima leva ma più difficile)"
+    },
+    {
+      "key": "modules.response.measures.addresses_problem",
+      "en": "Addresses Problem:",
+      "es": "Aborda el Problema:",
+      "fr": "Traite le Problème:",
+      "de": "Behandelt Problem:",
+      "lt": "Sprendžia Problemą:",
+      "pt": "Aborda o Problema:",
+      "it": "Affronta il Problema:"
+    },
+    {
+      "key": "modules.response.measures.awareness_campaigns_training_capacity_building",
+      "en": "Awareness campaigns, training, capacity building",
+      "es": "Campañas de sensibilización, capacitación, desarrollo de capacidades",
+      "fr": "Campagnes de sensibilisation, formation, renforcement des capacités",
+      "de": "Sensibilisierungskampagnen, Schulung, Kapazitätsaufbau",
+      "lt": "Informavimo kampanijos, mokymai, pajėgumų stiprinimas",
+      "pt": "Campanhas de sensibilização, formação, capacitação",
+      "it": "Campagne di sensibilizzazione, formazione, capacity building"
+    },
+    {
+      "key": "modules.response.measures.calculate_priority_scores",
+      "en": "Calculate Priority Scores",
+      "es": "Calcular Puntuaciones de Prioridad",
+      "fr": "Calculer les Scores de Priorité",
+      "de": "Prioritätswerte berechnen",
+      "lt": "Apskaičiuoti Prioritetų Įverčius",
+      "pt": "Calcular Pontuações de Prioridade",
+      "it": "Calcola Punteggi di Priorità"
+    },
+    {
+      "key": "modules.response.measures.can_it_be_implemented_political_social_technical",
+      "en": "Can it be implemented (political, social, technical)?",
+      "es": "¿Se puede implementar (político, social, técnico)?",
+      "fr": "Peut-on le mettre en œuvre (politique, social, technique)?",
+      "de": "Kann es umgesetzt werden (politisch, sozial, technisch)?",
+      "lt": "Ar galima įgyvendinti (politiškai, socialiai, techniškai)?",
+      "pt": "Pode ser implementado (político, social, técnico)?",
+      "it": "Può essere attuato (politico, sociale, tecnico)?"
+    },
+    {
+      "key": "modules.response.measures.certification_codes_of_conduct_stewardship",
+      "en": "Certification, codes of conduct, stewardship",
+      "es": "Certificación, códigos de conducta, administración",
+      "fr": "Certification, codes de conduite, gestion responsable",
+      "de": "Zertifizierung, Verhaltenskodizes, Verantwortung",
+      "lt": "Sertifikavimas, elgesio kodeksai, globėjiškumas",
+      "pt": "Certificação, códigos de conduta, gestão responsável",
+      "it": "Certificazione, codici di condotta, gestione responsabile"
+    },
+    {
+      "key": "modules.response.measures.co_benefits",
+      "en": "Co-benefits:",
+      "es": "Co-beneficios:",
+      "fr": "Co-bénéfices:",
+      "de": "Zusatznutzen:",
+      "lt": "Papildoma Nauda:",
+      "pt": "Co-benefícios:",
+      "it": "Co-benefici:"
+    },
+    {
+      "key": "modules.response.measures.completed",
+      "en": "Completed",
+      "es": "Completado",
+      "fr": "Terminé",
+      "de": "Abgeschlossen",
+      "lt": "Užbaigta",
+      "pt": "Concluído",
+      "it": "Completato"
+    },
+    {
+      "key": "modules.response.measures.completing_dapsiwrm",
+      "en": "Completing DAPSI(W)R(M)",
+      "es": "Completando DAPSI(W)R(M)",
+      "fr": "Compléter DAPSI(W)R(M)",
+      "de": "Vervollständigung von DAPSI(W)R(M)",
+      "lt": "DAPSI(W)R(M) Užbaigimas",
+      "pt": "Completando DAPSI(W)R(M)",
+      "it": "Completamento di DAPSI(W)R(M)"
+    },
+    {
+      "key": "modules.response.measures.cost",
+      "en": "Cost:",
+      "es": "Costo:",
+      "fr": "Coût:",
+      "de": "Kosten:",
+      "lt": "Išlaidos:",
+      "pt": "Custo:",
+      "it": "Costo:"
+    },
+    {
+      "key": "modules.response.measures.cost_vs_expected_impact",
+      "en": "Cost vs. Expected Impact",
+      "es": "Costo vs. Impacto Esperado",
+      "fr": "Coût vs. Impact Attendu",
+      "de": "Kosten vs. Erwartete Wirkung",
+      "lt": "Išlaidos vs. Tikėtinas Poveikis",
+      "pt": "Custo vs. Impacto Esperado",
+      "it": "Costo vs. Impatto Previsto"
+    },
+    {
+      "key": "modules.response.measures.cost_weight_inverse",
+      "en": "Cost Weight (inverse):",
+      "es": "Peso del Costo (inverso):",
+      "fr": "Poids du Coût (inverse):",
+      "de": "Kostengewicht (invers):",
+      "lt": "Išlaidų Svoris (atvirkštinis):",
+      "pt": "Peso do Custo (inverso):",
+      "it": "Peso del Costo (inverso):"
+    },
+    {
+      "key": "modules.response.measures.create_impact_linkage",
+      "en": "Create Impact Linkage",
+      "es": "Crear Vínculo de Impacto",
+      "fr": "Créer un Lien d'Impact",
+      "de": "Wirkungsverknüpfung erstellen",
+      "lt": "Sukurti Poveikio Ryšį",
+      "pt": "Criar Ligação de Impacto",
+      "it": "Crea Collegamento d'Impatto"
+    },
+    {
+      "key": "modules.response.measures.delayed",
+      "en": "Delayed",
+      "es": "Retrasado",
+      "fr": "Retardé",
+      "de": "Verzögert",
+      "lt": "Atidėta",
+      "pt": "Atrasado",
+      "it": "Ritardato"
+    },
+    {
+      "key": "modules.response.measures.delete_selected",
+      "en": "Delete Selected",
+      "es": "Eliminar Seleccionados",
+      "fr": "Supprimer la Sélection",
+      "de": "Ausgewählte löschen",
+      "lt": "Ištrinti Pasirinktus",
+      "pt": "Excluir Selecionados",
+      "it": "Elimina Selezionati"
+    },
+    {
+      "key": "modules.response.measures.deleted_response_measures",
+      "en": "Deleted response measure(s)",
+      "es": "Medida(s) de respuesta eliminada(s)",
+      "fr": "Mesure(s) de réponse supprimée(s)",
+      "de": "Reaktionsmaßnahme(n) gelöscht",
+      "lt": "Atsako priemonė(s) ištrinta(os)",
+      "pt": "Medida(s) de resposta excluída(s)",
+      "it": "Misura/e di risposta eliminata/e"
+    },
+    {
+      "key": "modules.response.measures.does_it_address_multiple_issues",
+      "en": "Does it address multiple issues?",
+      "es": "¿Aborda múltiples problemas?",
+      "fr": "Traite-t-il plusieurs problèmes?",
+      "de": "Behandelt es mehrere Probleme?",
+      "lt": "Ar tai sprendžia kelias problemas?",
+      "pt": "Aborda múltiplos problemas?",
+      "it": "Affronta più problemi?"
+    },
+    {
+      "key": "modules.response.measures.download_implementation_plan",
+      "en": "Download Implementation Plan",
+      "es": "Descargar Plan de Implementación",
+      "fr": "Télécharger le Plan de Mise en Œuvre",
+      "de": "Umsetzungsplan herunterladen",
+      "lt": "Atsisiųsti Įgyvendinimo Planą",
+      "pt": "Baixar Plano de Implementação",
+      "it": "Scarica Piano di Attuazione"
+    },
+    {
+      "key": "modules.response.measures.download_priority_report_pdf",
+      "en": "Download Priority Report (PDF)",
+      "es": "Descargar Informe de Prioridad (PDF)",
+      "fr": "Télécharger le Rapport de Priorité (PDF)",
+      "de": "Prioritätsbericht herunterladen (PDF)",
+      "lt": "Atsisiųsti Prioritetų Ataskaitą (PDF)",
+      "pt": "Baixar Relatório de Prioridade (PDF)",
+      "it": "Scarica Rapporto di Priorità (PDF)"
+    },
+    {
+      "key": "modules.response.measures.download_response_data_excel",
+      "en": "Download Response Data (Excel)",
+      "es": "Descargar Datos de Respuestas (Excel)",
+      "fr": "Télécharger les Données de Réponse (Excel)",
+      "de": "Antwortdaten herunterladen (Excel)",
+      "lt": "Atsisiųsti Atsakų Duomenis (Excel)",
+      "pt": "Baixar Dados de Respostas (Excel)",
+      "it": "Scarica Dati di Risposta (Excel)"
+    },
+    {
+      "key": "modules.response.measures.download_response_documentation",
+      "en": "Download Response Documentation",
+      "es": "Descargar Documentación de Respuestas",
+      "fr": "Télécharger la Documentation des Réponses",
+      "de": "Antwortdokumentation herunterladen",
+      "lt": "Atsisiųsti Atsakų Dokumentaciją",
+      "pt": "Baixar Documentação de Respostas",
+      "it": "Scarica Documentazione di Risposta"
+    },
+    {
+      "key": "modules.response.measures.drivers",
+      "en": "Drivers",
+      "es": "Impulsores",
+      "fr": "Facteurs",
+      "de": "Treiber",
+      "lt": "Veiksniai",
+      "pt": "Impulsores",
+      "it": "Fattori"
+    },
+    {
+      "key": "modules.response.measures.drivers",
+      "en": "Drivers:",
+      "es": "Impulsores:",
+      "fr": "Facteurs de Changement :",
+      "de": "Treiber:",
+      "lt": "Veiksniai:",
+      "pt": "Impulsionadores:",
+      "it": "Fattori di Cambiamento:"
+    },
+    {
+      "key": "modules.response.measures.economic",
+      "en": "Economic",
+      "es": "Económico",
+      "fr": "Économique",
+      "de": "Wirtschaftlich",
+      "lt": "Ekonominis",
+      "pt": "Económico",
+      "it": "Economico"
+    },
+    {
+      "key": "modules.response.measures.economic",
+      "en": "Economic:",
+      "es": "Económicas:",
+      "fr": "Économiques:",
+      "de": "Wirtschaftlich:",
+      "lt": "Ekonominės:",
+      "pt": "Económicas:",
+      "it": "Economiche:"
+    },
+    {
+      "key": "modules.response.measures.educational",
+      "en": "Educational",
+      "es": "Educativo",
+      "fr": "Éducatif",
+      "de": "Bildung",
+      "lt": "Švietimo",
+      "pt": "Educacional",
+      "it": "Educativo"
+    },
+    {
+      "key": "modules.response.measures.educational",
+      "en": "Educational:",
+      "es": "Educativas:",
+      "fr": "Éducatives:",
+      "de": "Bildung:",
+      "lt": "Švietimo:",
+      "pt": "Educacionais:",
+      "it": "Educative:"
+    },
+    {
+      "key": "modules.response.measures.effectiveness",
+      "en": "Effectiveness",
+      "es": "Efectividad",
+      "fr": "Efficacité",
+      "de": "Wirksamkeit",
+      "lt": "Efektyvumas",
+      "pt": "Eficácia",
+      "it": "Efficacia"
+    },
+    {
+      "key": "modules.response.measures.effectiveness",
+      "en": "Effectiveness:",
+      "es": "Efectividad:",
+      "fr": "Efficacité:",
+      "de": "Wirksamkeit:",
+      "lt": "Efektyvumas:",
+      "pt": "Eficácia:",
+      "it": "Efficacia:"
+    },
+    {
+      "key": "modules.response.measures.effectiveness_vs_feasibility",
+      "en": "Effectiveness vs. Feasibility",
+      "es": "Efectividad vs. Viabilidad",
+      "fr": "Efficacité vs. Faisabilité",
+      "de": "Wirksamkeit vs. Durchführbarkeit",
+      "lt": "Efektyvumas vs. Įgyvendinamumas",
+      "pt": "Eficácia vs. Viabilidade",
+      "it": "Efficacia vs. Fattibilità"
+    },
+    {
+      "key": "modules.response.measures.effectiveness_weight",
+      "en": "Effectiveness Weight:",
+      "es": "Peso de Efectividad:",
+      "fr": "Poids de l'Efficacité:",
+      "de": "Wirksamkeitsgewicht:",
+      "lt": "Efektyvumo Svoris:",
+      "pt": "Peso da Eficácia:",
+      "it": "Peso dell'Efficacia:"
+    },
+    {
+      "key": "modules.response.measures.eg_fishing_quota_reduction",
+      "en": "e.g., Fishing quota reduction",
+      "es": "ej., Reducción de cuotas pesqueras",
+      "fr": "p.ex., Réduction des quotas de pêche",
+      "de": "z.B., Reduzierung von Fangquoten",
+      "lt": "pvz., Žvejybos kvotų mažinimas",
+      "pt": "ex., Redução de quotas de pesca",
+      "it": "es., Riduzione delle quote di pesca"
+    },
+    {
+      "key": "modules.response.measures.eg_legislation_passed",
+      "en": "e.g., Legislation passed",
+      "es": "ej., Legislación aprobada",
+      "fr": "p.ex., Législation adoptée",
+      "de": "z.B., Gesetzgebung verabschiedet",
+      "lt": "pvz., Įstatymas priimtas",
+      "pt": "ex., Legislação aprovada",
+      "it": "es., Legislazione approvata"
+    },
+    {
+      "key": "modules.response.measures.estimated_cost_relative",
+      "en": "Estimated Cost (relative):",
+      "es": "Costo Estimado (relativo):",
+      "fr": "Coût Estimé (relatif):",
+      "de": "Geschätzte Kosten (relativ):",
+      "lt": "Numatomos Išlaidos (santykinės):",
+      "pt": "Custo Estimado (relativo):",
+      "it": "Costo Stimato (relativo):"
+    },
+    {
+      "key": "modules.response.measures.expected_effectiveness",
+      "en": "Expected Effectiveness:",
+      "es": "Efectividad Esperada:",
+      "fr": "Efficacité Attendue:",
+      "de": "Erwartete Wirksamkeit:",
+      "lt": "Tikėtinas Efektyvumas:",
+      "pt": "Eficácia Esperada:",
+      "it": "Efficacia Prevista:"
+    },
+    {
+      "key": "modules.response.measures.export",
+      "en": "Export",
+      "es": "Exportar",
+      "fr": "Exporter",
+      "de": "Exportieren",
+      "lt": "Eksportuoti",
+      "pt": "Exportar",
+      "it": "Esporta"
+    },
+    {
+      "key": "modules.response.measures.export_response_analysis",
+      "en": "Export Response Analysis",
+      "es": "Exportar Análisis de Respuestas",
+      "fr": "Exporter l'Analyse de Réponse",
+      "de": "Antwortanalyse exportieren",
+      "lt": "Eksportuoti Atsakų Analizę",
+      "pt": "Exportar Análise de Respostas",
+      "it": "Esporta Analisi di Risposta"
+    },
+    {
+      "key": "modules.response.measures.feasibility",
+      "en": "Feasibility:",
+      "es": "Viabilidad:",
+      "fr": "Faisabilité:",
+      "de": "Durchführbarkeit:",
+      "lt": "Įgyvendinamumas:",
+      "pt": "Viabilidade:",
+      "it": "Fattibilità:"
+    },
+    {
+      "key": "modules.response.measures.feasibility",
+      "en": "Feasibility",
+      "es": "Viabilidad",
+      "fr": "Faisabilité",
+      "de": "Durchführbarkeit",
+      "lt": "Įgyvendinamumas",
+      "pt": "Viabilidade",
+      "it": "Fattibilità"
+    },
+    {
+      "key": "modules.response.measures.feasibility_weight",
+      "en": "Feasibility Weight:",
+      "es": "Peso de Viabilidad:",
+      "fr": "Poids de la Faisabilité:",
+      "de": "Durchführbarkeitsgewicht:",
+      "lt": "Įgyvendinamumo Svoris:",
+      "pt": "Peso da Viabilidade:",
+      "it": "Peso della Fattibilità:"
+    },
+    {
+      "key": "modules.response.measures.gantt_chart_simplified",
+      "en": "Gantt Chart (Simplified)",
+      "es": "Diagrama de Gantt (Simplificado)",
+      "fr": "Diagramme de Gantt (Simplifié)",
+      "de": "Gantt-Diagramm (Vereinfacht)",
+      "lt": "Ganto Diagrama (Supaprastinta)",
+      "pt": "Gráfico de Gantt (Simplificado)",
+      "it": "Diagramma di Gantt (Semplificato)"
+    },
+    {
+      "key": "modules.response.measures.governance_reforms_co_management_partnerships",
+      "en": "Governance reforms, co-management, partnerships",
+      "es": "Reformas de gobernanza, cogestión, asociaciones",
+      "fr": "Réformes de gouvernance, cogestion, partenariats",
+      "de": "Governance-Reformen, Co-Management, Partnerschaften",
+      "lt": "Valdymo reformos, bendravaldymas, partnerystės",
+      "pt": "Reformas de governança, cogestão, parcerias",
+      "it": "Riforme di governance, cogestione, partenariati"
+    },
+    {
+      "key": "modules.response.measures.high",
+      "en": "High",
+      "es": "Alto",
+      "fr": "Élevé",
+      "de": "Hoch",
+      "lt": "Aukštas",
+      "pt": "Alto",
+      "it": "Alto"
+    },
+    {
+      "key": "modules.response.measures.how_quickly_will_it_have_effects",
+      "en": "How quickly will it have effects?",
+      "es": "¿Qué tan rápido tendrá efectos?",
+      "fr": "Combien de temps avant qu'il ait des effets?",
+      "de": "Wie schnell wird es Wirkung zeigen?",
+      "lt": "Kaip greitai tai turės poveikį?",
+      "pt": "Quão rapidamente terá efeitos?",
+      "it": "Quanto rapidamente avrà effetti?"
+    },
+    {
+      "key": "modules.response.measures.how_will_this_intervention_work",
+      "en": "How will this intervention work?",
+      "es": "¿Cómo funcionará esta intervención?",
+      "fr": "Comment cette intervention fonctionnera-t-elle?",
+      "de": "Wie wird diese Intervention funktionieren?",
+      "lt": "Kaip veiks ši intervencija?",
+      "pt": "Como funcionará esta intervenção?",
+      "it": "Come funzionerà questo intervento?"
+    },
+    {
+      "key": "modules.response.measures.immediate",
+      "en": "Immediate",
+      "es": "Inmediato",
+      "fr": "Immédiat",
+      "de": "Sofort",
+      "lt": "Nedelsiant",
+      "pt": "Imediato",
+      "it": "Immediato"
+    },
+    {
+      "key": "modules.response.measures.impact_assessment",
+      "en": "Impact Assessment",
+      "es": "Evaluación de Impacto",
+      "fr": "Évaluation d'Impact",
+      "de": "Folgenabschätzung",
+      "lt": "Poveikio Vertinimas",
+      "pt": "Avaliação de Impacto",
+      "it": "Valutazione d'Impatto"
+    },
+    {
+      "key": "modules.response.measures.impact_linkage_added",
+      "en": "Impact linkage added!",
+      "es": "¡Vínculo de impacto agregado!",
+      "fr": "Lien d'impact ajouté!",
+      "de": "Wirkungsverknüpfung hinzugefügt!",
+      "lt": "Poveikio ryšys pridėtas!",
+      "pt": "Ligação de impacto adicionada!",
+      "it": "Collegamento d'impatto aggiunto!"
+    },
+    {
+      "key": "modules.response.measures.impact_matrix",
+      "en": "Impact Matrix",
+      "es": "Matriz de Impacto",
+      "fr": "Matrice d'Impact",
+      "de": "Wirkungsmatrix",
+      "lt": "Poveikio Matrica",
+      "pt": "Matriz de Impacto",
+      "it": "Matrice d'Impatto"
+    },
+    {
+      "key": "modules.response.measures.impact_strength",
+      "en": "Impact Strength:",
+      "es": "Intensidad del Impacto:",
+      "fr": "Force de l'Impact:",
+      "de": "Wirkungsstärke:",
+      "lt": "Poveikio Stiprumas:",
+      "pt": "Força do Impacto:",
+      "it": "Forza dell'Impatto:"
+    },
+    {
+      "key": "modules.response.measures.implementation_barriers",
+      "en": "Implementation Barriers:",
+      "es": "Barreras de Implementación:",
+      "fr": "Obstacles à la Mise en Œuvre:",
+      "de": "Umsetzungsbarrieren:",
+      "lt": "Įgyvendinimo Kliūtys:",
+      "pt": "Barreiras de Implementação:",
+      "it": "Barriere all'Attuazione:"
+    },
+    {
+      "key": "modules.response.measures.implementation_plan",
+      "en": "Implementation Plan",
+      "es": "Plan de Implementación",
+      "fr": "Plan de Mise en Œuvre",
+      "de": "Umsetzungsplan",
+      "lt": "Įgyvendinimo Planas",
+      "pt": "Plano de Implementação",
+      "it": "Piano di Attuazione"
+    },
+    {
+      "key": "modules.response.measures.implementation_timeline",
+      "en": "Implementation Timeline",
+      "es": "Cronograma de Implementación",
+      "fr": "Calendrier de Mise en Œuvre",
+      "de": "Umsetzungszeitplan",
+      "lt": "Įgyvendinimo Grafikas",
+      "pt": "Cronograma de Implementação",
+      "it": "Cronologia di Attuazione"
+    },
+    {
+      "key": "modules.response.measures.implemented",
+      "en": "Implemented",
+      "es": "Implementado",
+      "fr": "Mis en Œuvre",
+      "de": "Umgesetzt",
+      "lt": "Įgyvendintas",
+      "pt": "Implementado",
+      "it": "Attuato"
+    },
+    {
+      "key": "modules.response.measures.in_progress",
+      "en": "In Progress",
+      "es": "En Progreso",
+      "fr": "En Cours",
+      "de": "In Bearbeitung",
+      "lt": "Vykdoma",
+      "pt": "Em Andamento",
+      "it": "In Corso"
+    },
+    {
+      "key": "modules.response.measures.institutional",
+      "en": "Institutional",
+      "es": "Institucional",
+      "fr": "Institutionnel",
+      "de": "Institutionell",
+      "lt": "Institucinis",
+      "pt": "Institucional",
+      "it": "Istituzionale"
+    },
+    {
+      "key": "modules.response.measures.institutional",
+      "en": "Institutional:",
+      "es": "Institucionales:",
+      "fr": "Institutionnelles:",
+      "de": "Institutionell:",
+      "lt": "Institucinės:",
+      "pt": "Institucionais:",
+      "it": "Istituzionali:"
+    },
+    {
+      "key": "modules.response.measures.intervention_points",
+      "en": "Intervention Points",
+      "es": "Puntos de Intervención",
+      "fr": "Points d'Intervention",
+      "de": "Interventionspunkte",
+      "lt": "Intervencijų Taškai",
+      "pt": "Pontos de Intervenção",
+      "it": "Punti di Intervento"
+    },
+    {
+      "key": "modules.response.measures.laws_quotas_protected_areas_bans",
+      "en": "Laws, quotas, protected areas, bans",
+      "es": "Leyes, cuotas, áreas protegidas, prohibiciones",
+      "fr": "Lois, quotas, zones protégées, interdictions",
+      "de": "Gesetze, Quoten, Schutzgebiete, Verbote",
+      "lt": "Įstatymai, kvotos, saugomos teritorijos, draudimai",
+      "pt": "Leis, quotas, áreas protegidas, proibições",
+      "it": "Leggi, quote, aree protette, divieti"
+    },
+    {
+      "key": "modules.response.measures.long_term_10y",
+      "en": "Long-term (>10y)",
+      "es": "Largo plazo (>10a)",
+      "fr": "Long terme (>10a)",
+      "de": "Langfristig (>10 J.)",
+      "lt": "Ilgalaikis (>10 m.)",
+      "pt": "Longo prazo (>10a)",
+      "it": "Lungo termine (>10a)"
+    },
+    {
+      "key": "modules.response.measures.low",
+      "en": "Low",
+      "es": "Bajo",
+      "fr": "Faible",
+      "de": "Niedrig",
+      "lt": "Žemas",
+      "pt": "Baixo",
+      "it": "Basso"
+    },
+    {
+      "key": "modules.response.measures.low_priority",
+      "en": "Low Priority",
+      "es": "Baja Prioridad",
+      "fr": "Priorité Faible",
+      "de": "Niedrige Priorität",
+      "lt": "Žemas Prioritetas",
+      "pt": "Baixa Prioridade",
+      "it": "Bassa Priorità"
+    },
+    {
+      "key": "modules.response.measures.management_measures_and_policy_interventions",
+      "en": "Management Measures and Policy Interventions",
+      "es": "Medidas de Gestión e Intervenciones Políticas",
+      "fr": "Mesures de Gestion et Interventions Politiques",
+      "de": "Managementmaßnahmen und politische Interventionen",
+      "lt": "Valdymo Priemonės ir Politikos Intervencijos",
+      "pt": "Medidas de Gestão e Intervenções Políticas",
+      "it": "Misure di Gestione e Interventi Politici"
+    },
+    {
+      "key": "modules.response.measures.mechanism_of_action",
+      "en": "Mechanism of Action:",
+      "es": "Mecanismo de Acción:",
+      "fr": "Mécanisme d'Action:",
+      "de": "Wirkungsmechanismus:",
+      "lt": "Veikimo Mechanizmas:",
+      "pt": "Mecanismo de Ação:",
+      "it": "Meccanismo d'Azione:"
+    },
+    {
+      "key": "modules.response.measures.medium",
+      "en": "Medium",
+      "es": "Medio",
+      "fr": "Moyen",
+      "de": "Mittel",
+      "lt": "Vidutinis",
+      "pt": "Médio",
+      "it": "Medio"
+    },
+    {
+      "key": "modules.response.measures.medium_term_3_10y",
+      "en": "Medium-term (3-10y)",
+      "es": "Mediano plazo (3-10a)",
+      "fr": "Moyen terme (3-10a)",
+      "de": "Mittelfristig (3-10 J.)",
+      "lt": "Vidutinės trukmės (3-10 m.)",
+      "pt": "Médio prazo (3-10a)",
+      "it": "Medio termine (3-10a)"
+    },
+    {
+      "key": "modules.response.measures.milestone",
+      "en": "Milestone:",
+      "es": "Hito:",
+      "fr": "Étape:",
+      "de": "Meilenstein:",
+      "lt": "Etapas:",
+      "pt": "Marco:",
+      "it": "Traguardo:"
+    },
+    {
+      "key": "modules.response.measures.milestone_added",
+      "en": "Milestone added!",
+      "es": "¡Hito agregado!",
+      "fr": "Étape ajoutée!",
+      "de": "Meilenstein hinzugefügt!",
+      "lt": "Etapas pridėtas!",
+      "pt": "Marco adicionado!",
+      "it": "Traguardo aggiunto!"
+    },
+    {
+      "key": "modules.response.measures.mitigate_impacts_symptomatic_treatment",
+      "en": "Mitigate impacts (symptomatic treatment)",
+      "es": "Mitigar impactos (tratamiento sintomático)",
+      "fr": "Atténuer les impacts (traitement symptomatique)",
+      "de": "Auswirkungen mindern (symptomatische Behandlung)",
+      "lt": "Sumažinti poveikį (simptominis gydymas)",
+      "pt": "Mitigar impactos (tratamento sintomático)",
+      "it": "Mitigare gli impatti (trattamento sintomatico)"
+    },
+    {
+      "key": "modules.response.measures.mixed",
+      "en": "Mixed",
+      "es": "Mixto",
+      "fr": "Mixte",
+      "de": "Gemischt",
+      "lt": "Mišrus",
+      "pt": "Misto",
+      "it": "Misto"
+    },
+    {
+      "key": "modules.response.measures.model_validation",
+      "en": "Model Validation",
+      "es": "Validación del Modelo",
+      "fr": "Validation du Modèle",
+      "de": "Modellvalidierung",
+      "lt": "Modelio Validacija",
+      "pt": "Validação do Modelo",
+      "it": "Validazione del Modello"
+    },
+    {
+      "key": "modules.response.measures.moderate",
+      "en": "Moderate",
+      "es": "Moderado",
+      "fr": "Modéré",
+      "de": "Mäßig",
+      "lt": "Vidutinis",
+      "pt": "Moderado",
+      "it": "Moderato"
+    },
+    {
+      "key": "modules.response.measures.multiple_levels",
+      "en": "Multiple Levels",
+      "es": "Múltiples Niveles",
+      "fr": "Niveaux Multiples",
+      "de": "Mehrere Ebenen",
+      "lt": "Keli Lygiai",
+      "pt": "Múltiplos Níveis",
+      "it": "Livelli Multipli"
+    },
+    {
+      "key": "modules.response.measures.new_technologies_best_practices_innovation",
+      "en": "New technologies, best practices, innovation",
+      "es": "Nuevas tecnologías, mejores prácticas, innovación",
+      "fr": "Nouvelles technologies, meilleures pratiques, innovation",
+      "de": "Neue Technologien, beste Praktiken, Innovation",
+      "lt": "Naujos technologijos, geriausia praktika, inovacijos",
+      "pt": "Novas tecnologias, melhores práticas, inovação",
+      "it": "Nuove tecnologie, migliori pratiche, innovazione"
+    },
+    {
+      "key": "modules.response.measures.notesactions_required",
+      "en": "Notes/Actions Required:",
+      "es": "Notas/Acciones Requeridas:",
+      "fr": "Notes/Actions Requises:",
+      "de": "Anmerkungen/Erforderliche Maßnahmen:",
+      "lt": "Pastabos/Reikalingi Veiksmai:",
+      "pt": "Notas/Ações Necessárias:",
+      "it": "Note/Azioni Richieste:"
+    },
+    {
+      "key": "modules.response.measures.partially_implemented",
+      "en": "Partially Implemented",
+      "es": "Parcialmente Implementado",
+      "fr": "Partiellement Mis en Œuvre",
+      "de": "Teilweise umgesetzt",
+      "lt": "Dalinai Įgyvendintas",
+      "pt": "Parcialmente Implementado",
+      "it": "Parzialmente Attuato"
+    },
+    {
+      "key": "modules.response.measures.pending",
+      "en": "Pending",
+      "es": "Pendiente",
+      "fr": "En Attente",
+      "de": "Ausstehend",
+      "lt": "Laukiama",
+      "pt": "Pendente",
+      "it": "In Attesa"
+    },
+    {
+      "key": "modules.response.measures.planned",
+      "en": "Planned",
+      "es": "Planificado",
+      "fr": "Planifié",
+      "de": "Geplant",
+      "lt": "Planuojamas",
+      "pt": "Planeado",
+      "it": "Pianificato"
+    },
+    {
+      "key": "modules.response.measures.pressures",
+      "en": "Pressures",
+      "es": "Presiones",
+      "fr": "Pressions",
+      "de": "Belastungen",
+      "lt": "Spaudimai",
+      "pt": "Pressões",
+      "it": "Pressioni"
+    },
+    {
+      "key": "modules.response.measures.pressures",
+      "en": "Pressures:",
+      "es": "Presiones:",
+      "fr": "Pressions :",
+      "de": "Belastungen:",
+      "lt": "Spaudimai:",
+      "pt": "Pressões:",
+      "it": "Pressioni:"
+    },
+    {
+      "key": "modules.response.measures.prioritization",
+      "en": "Prioritization",
+      "es": "Priorización",
+      "fr": "Priorisation",
+      "de": "Priorisierung",
+      "lt": "Prioritetų Nustatymas",
+      "pt": "Priorização",
+      "it": "Prioritizzazione"
+    },
+    {
+      "key": "modules.response.measures.prioritization_criteria",
+      "en": "Prioritization Criteria",
+      "es": "Criterios de Priorización",
+      "fr": "Critères de Priorisation",
+      "de": "Priorisierungskriterien",
+      "lt": "Prioritetų Nustatymo Kriterijai",
+      "pt": "Critérios de Priorização",
+      "it": "Criteri di Prioritizzazione"
+    },
+    {
+      "key": "modules.response.measures.prioritization_criteria_weighting",
+      "en": "Prioritization Criteria Weighting",
+      "es": "Ponderación de Criterios de Priorización",
+      "fr": "Pondération des Critères de Priorisation",
+      "de": "Gewichtung der Priorisierungskriterien",
+      "lt": "Prioritetų Nustatymo Kriterijai Svoris",
+      "pt": "Ponderação de Critérios de Priorização",
+      "it": "Ponderazione dei Criteri di Prioritizzazione"
+    },
+    {
+      "key": "modules.response.measures.prioritized_response_measures",
+      "en": "Prioritized Response Measures",
+      "es": "Medidas de Respuesta Priorizadas",
+      "fr": "Mesures de Réponse Priorisées",
+      "de": "Priorisierte Reaktionsmaßnahmen",
+      "lt": "Prioritetinės Atsako Priemonės",
+      "pt": "Medidas de Resposta Priorizadas",
+      "it": "Misure di Risposta Prioritizzate"
+    },
+    {
+      "key": "modules.response.measures.priority_ranking",
+      "en": "Priority Ranking",
+      "es": "Clasificación de Prioridad",
+      "fr": "Classement de Priorité",
+      "de": "Prioritätsrangliste",
+      "lt": "Prioritetų Reitingas",
+      "pt": "Classificação de Prioridade",
+      "it": "Classifica di Priorità"
+    },
+    {
+      "key": "modules.response.measures.problem_element_id",
+      "en": "Problem Element ID:",
+      "es": "ID del Elemento del Problema:",
+      "fr": "ID de l'Élément du Problème:",
+      "de": "Problemelement-ID:",
+      "lt": "Problemos Elemento ID:",
+      "pt": "ID do Elemento do Problema:",
+      "it": "ID Elemento del Problema:"
+    },
+    {
+      "key": "modules.response.measures.proposed",
+      "en": "Proposed",
+      "es": "Propuesto",
+      "fr": "Proposé",
+      "de": "Vorgeschlagen",
+      "lt": "Siūlomas",
+      "pt": "Proposto",
+      "it": "Proposto"
+    },
+    {
+      "key": "modules.response.measures.regulate_what_people_do_direct_but_may_face_resistance",
+      "en": "Regulate what people do (direct but may face resistance)",
+      "es": "Regular lo que hace la gente (directo pero puede enfrentar resistencia)",
+      "fr": "Réglementer ce que font les gens (direct mais peut rencontrer une résistance)",
+      "de": "Regulieren, was Menschen tun (direkt, aber kann auf Widerstand stoßen)",
+      "lt": "Reguliuoti žmonių veiklą (tiesioginis, bet gali sulaukti pasipriešinimo)",
+      "pt": "Regular o que as pessoas fazem (direto mas pode enfrentar resistência)",
+      "it": "Regolare ciò che fanno le persone (diretto ma può incontrare resistenza)"
+    },
+    {
+      "key": "modules.response.measures.regulatory",
+      "en": "Regulatory",
+      "es": "Regulatorio",
+      "fr": "Réglementaire",
+      "de": "Regulatorisch",
+      "lt": "Reguliavimo",
+      "pt": "Regulatório",
+      "it": "Regolamentare"
+    },
+    {
+      "key": "modules.response.measures.regulatory",
+      "en": "Regulatory:",
+      "es": "Regulatorias:",
+      "fr": "Réglementaires:",
+      "de": "Regulatorisch:",
+      "lt": "Reguliavimo:",
+      "pt": "Regulatórias:",
+      "it": "Regolamentari:"
+    },
+    {
+      "key": "modules.response.measures.response_implementation_roadmap",
+      "en": "Response Implementation Roadmap",
+      "es": "Hoja de Ruta de Implementación de Respuestas",
+      "fr": "Feuille de Route de Mise en Œuvre des Réponses",
+      "de": "Fahrplan zur Umsetzung von Reaktionen",
+      "lt": "Atsakų Įgyvendinimo Kelrodis",
+      "pt": "Roteiro de Implementação de Respostas",
+      "it": "Roadmap di Attuazione delle Risposte"
+    },
+    {
+      "key": "modules.response.measures.response_measure",
+      "en": "Response Measure:",
+      "es": "Medida de Respuesta:",
+      "fr": "Mesure de Réponse:",
+      "de": "Reaktionsmaßnahme:",
+      "lt": "Atsako Priemonė:",
+      "pt": "Medida de Resposta:",
+      "it": "Misura di Risposta:"
+    },
+    {
+      "key": "modules.response.measures.response_measure_added",
+      "en": "Response measure added!",
+      "es": "¡Medida de respuesta agregada!",
+      "fr": "Mesure de réponse ajoutée!",
+      "de": "Reaktionsmaßnahme hinzugefügt!",
+      "lt": "Atsako priemonė pridėta!",
+      "pt": "Medida de resposta adicionada!",
+      "it": "Misura di risposta aggiunta!"
+    },
+    {
+      "key": "modules.response.measures.response_measure_impact_matrix",
+      "en": "Response Measure Impact Matrix",
+      "es": "Matriz de Impacto de Medidas de Respuesta",
+      "fr": "Matrice d'Impact des Mesures de Réponse",
+      "de": "Wirkungsmatrix der Reaktionsmaßnahmen",
+      "lt": "Atsako Priemonių Poveikio Matrica",
+      "pt": "Matriz de Impacto das Medidas de Resposta",
+      "it": "Matrice d'Impatto delle Misure di Risposta"
+    },
+    {
+      "key": "modules.response.measures.response_measure_prioritization",
+      "en": "Response Measure Prioritization",
+      "es": "Priorización de Medidas de Respuesta",
+      "fr": "Priorisation des Mesures de Réponse",
+      "de": "Priorisierung von Reaktionsmaßnahmen",
+      "lt": "Atsako Priemonių Prioritetų Nustatymas",
+      "pt": "Priorização de Medidas de Resposta",
+      "it": "Prioritizzazione delle Misure di Risposta"
+    },
+    {
+      "key": "modules.response.measures.response_measure_prioritization_matrix",
+      "en": "Response Measure Prioritization Matrix",
+      "es": "Matriz de Priorización de Medidas de Respuesta",
+      "fr": "Matrice de Priorisation des Mesures de Réponse",
+      "de": "Priorisierungsmatrix für Reaktionsmaßnahmen",
+      "lt": "Atsako Priemonių Prioritetų Nustatymo Matrica",
+      "pt": "Matriz de Priorização de Medidas de Resposta",
+      "it": "Matrice di Prioritizzazione delle Misure di Risposta"
+    },
+    {
+      "key": "modules.response.measures.response_measures_register",
+      "en": "Response Measures Register",
+      "es": "Registro de Medidas de Respuesta",
+      "fr": "Registre des Mesures de Réponse",
+      "de": "Register der Reaktionsmaßnahmen",
+      "lt": "Atsako Priemonių Registras",
+      "pt": "Registro de Medidas de Resposta",
+      "it": "Registro delle Misure di Risposta"
+    },
+    {
+      "key": "modules.response.measures.response_register",
+      "en": "Response Register",
+      "es": "Registro de Respuestas",
+      "fr": "Registre de Réponses",
+      "de": "Antwortregister",
+      "lt": "Atsakų Registras",
+      "pt": "Registro de Respostas",
+      "it": "Registro di Risposte"
+    },
+    {
+      "key": "modules.response.measures.responsible_stakeholders",
+      "en": "Responsible Stakeholders:",
+      "es": "Partes Interesadas Responsables:",
+      "fr": "Parties Prenantes Responsables:",
+      "de": "Verantwortliche Interessengruppen:",
+      "lt": "Atsakingos Suinteresuotos Šalys:",
+      "pt": "Partes Interessadas Responsáveis:",
+      "it": "Parti Interessate Responsabili:"
+    },
+    {
+      "key": "modules.response.measures.restore_ecosystems_expensive_slow",
+      "en": "Restore ecosystems (expensive, slow)",
+      "es": "Restaurar ecosistemas (costoso, lento)",
+      "fr": "Restaurer les écosystèmes (coûteux, lent)",
+      "de": "Ökosysteme wiederherstellen (teuer, langsam)",
+      "lt": "Atkurti ekosistemas (brangu, lėta)",
+      "pt": "Restaurar ecossistemas (caro, lento)",
+      "it": "Ripristinare gli ecosistemi (costoso, lento)"
+    },
+    {
+      "key": "modules.response.measures.select_response",
+      "en": "Select Response:",
+      "es": "Seleccionar Respuesta:",
+      "fr": "Sélectionner la Réponse:",
+      "de": "Reaktion auswählen:",
+      "lt": "Pasirinkti Atsaką:",
+      "pt": "Selecionar Resposta:",
+      "it": "Seleziona Risposta:"
+    },
+    {
+      "key": "modules.response.measures.short_term_1_3y",
+      "en": "Short-term (1-3y)",
+      "es": "Corto plazo (1-3a)",
+      "fr": "Court terme (1-3a)",
+      "de": "Kurzfristig (1-3 J.)",
+      "lt": "Trumpalaikis (1-3 m.)",
+      "pt": "Curto prazo (1-3a)",
+      "it": "Breve termine (1-3a)"
+    },
+    {
+      "key": "modules.response.measures.specific_activity",
+      "en": "Specific Activity",
+      "es": "Actividad Específica",
+      "fr": "Activité Spécifique",
+      "de": "Spezifische Aktivität",
+      "lt": "Specifinė Veikla",
+      "pt": "Atividade Específica",
+      "it": "Attività Specifica"
+    },
+    {
+      "key": "modules.response.measures.specific_driver",
+      "en": "Specific Driver",
+      "es": "Impulsor Específico",
+      "fr": "Facteur Spécifique",
+      "de": "Spezifischer Treiber",
+      "lt": "Specifinė Varomoji Jėga",
+      "pt": "Impulsionador Específico",
+      "it": "Fattore Specifico"
+    },
+    {
+      "key": "modules.response.measures.specific_pressure",
+      "en": "Specific Pressure",
+      "es": "Presión Específica",
+      "fr": "Pression Spécifique",
+      "de": "Spezifische Belastung",
+      "lt": "Specifinis Spaudimas",
+      "pt": "Pressão Específica",
+      "it": "Pressione Specifica"
+    },
+    {
+      "key": "modules.response.measures.state",
+      "en": "State",
+      "es": "Estado",
+      "fr": "État",
+      "de": "Zustand",
+      "lt": "Būsena",
+      "pt": "Estado",
+      "it": "Stato"
+    },
+    {
+      "key": "modules.response.measures.state",
+      "en": "State:",
+      "es": "Estado:",
+      "fr": "État:",
+      "de": "Zustand:",
+      "lt": "Būsena:",
+      "pt": "Estado:",
+      "it": "Stato:"
+    },
+    {
+      "key": "modules.response.measures.strong",
+      "en": "Strong",
+      "es": "Fuerte",
+      "fr": "Fort",
+      "de": "Stark",
+      "lt": "Stiprus",
+      "pt": "Forte",
+      "it": "Forte"
+    },
+    {
+      "key": "modules.response.measures.system_wide_issue",
+      "en": "System-wide Issue",
+      "es": "Problema a Nivel del Sistema",
+      "fr": "Problème à l'Échelle du Système",
+      "de": "Systemweites Problem",
+      "lt": "Visos Sistemos Problema",
+      "pt": "Problema a Nível do Sistema",
+      "it": "Problema a Livello di Sistema"
+    },
+    {
+      "key": "modules.response.measures.target_element_id",
+      "en": "Target Element ID:",
+      "es": "ID del Elemento Objetivo:",
+      "fr": "ID de l'Élément Cible:",
+      "de": "Zielelement-ID:",
+      "lt": "Tikslo Elemento ID:",
+      "pt": "ID do Elemento Alvo:",
+      "it": "ID Elemento Obiettivo:"
+    },
+    {
+      "key": "modules.response.measures.targets",
+      "en": "Targets:",
+      "es": "Objetivos:",
+      "fr": "Cibles:",
+      "de": "Ziele:",
+      "lt": "Tikslai:",
+      "pt": "Alvos:",
+      "it": "Obiettivi:"
+    },
+    {
+      "key": "modules.response.measures.taxes_subsidies_payments_for_ecosystem_services",
+      "en": "Taxes, subsidies, payments for ecosystem services",
+      "es": "Impuestos, subsidios, pagos por servicios ecosistémicos",
+      "fr": "Taxes, subventions, paiements pour services écosystémiques",
+      "de": "Steuern, Subventionen, Zahlungen für Ökosystemleistungen",
+      "lt": "Mokesčiai, subsidijos, mokėjimai už ekosistemų paslaugas",
+      "pt": "Impostos, subsídios, pagamentos por serviços ecossistémicos",
+      "it": "Tasse, sussidi, pagamenti per servizi ecosistemici"
+    },
+    {
+      "key": "modules.response.measures.technical",
+      "en": "Technical",
+      "es": "Técnico",
+      "fr": "Technique",
+      "de": "Technisch",
+      "lt": "Techninis",
+      "pt": "Técnico",
+      "it": "Tecnico"
+    },
+    {
+      "key": "modules.response.measures.technical",
+      "en": "Technical:",
+      "es": "Técnicas:",
+      "fr": "Techniques:",
+      "de": "Technisch:",
+      "lt": "Techninės:",
+      "pt": "Técnicas:",
+      "it": "Tecniche:"
+    },
+    {
+      "key": "modules.response.measures.timeframe",
+      "en": "Timeframe:",
+      "es": "Marco Temporal:",
+      "fr": "Délai:",
+      "de": "Zeitrahmen:",
+      "lt": "Laiko Rėmai:",
+      "pt": "Prazo:",
+      "it": "Tempi:"
+    },
+    {
+      "key": "modules.response.measures.types_of_response_measures",
+      "en": "Types of Response Measures",
+      "es": "Tipos de Medidas de Respuesta",
+      "fr": "Types de Mesures de Réponse",
+      "de": "Arten von Reaktionsmaßnahmen",
+      "lt": "Atsako Priemonių Tipai",
+      "pt": "Tipos de Medidas de Resposta",
+      "it": "Tipi di Misure di Risposta"
+    },
+    {
+      "key": "modules.response.measures.visual_impact_matrix",
+      "en": "Visual Impact Matrix",
+      "es": "Matriz de Impacto Visual",
+      "fr": "Matrice d'Impact Visuelle",
+      "de": "Visuelle Wirkungsmatrix",
+      "lt": "Vizuali Poveikio Matrica",
+      "pt": "Matriz de Impacto Visual",
+      "it": "Matrice d'Impatto Visiva"
+    },
+    {
+      "key": "modules.response.measures.voluntary",
+      "en": "Voluntary",
+      "es": "Voluntario",
+      "fr": "Volontaire",
+      "de": "Freiwillig",
+      "lt": "Savanoriškas",
+      "pt": "Voluntário",
+      "it": "Volontario"
+    },
+    {
+      "key": "modules.response.measures.voluntary",
+      "en": "Voluntary:",
+      "es": "Voluntarias:",
+      "fr": "Volontaires:",
+      "de": "Freiwillig:",
+      "lt": "Savanoriškos:",
+      "pt": "Voluntárias:",
+      "it": "Volontarie:"
+    },
+    {
+      "key": "modules.response.measures.weak",
+      "en": "Weak",
+      "es": "Débil",
+      "fr": "Faible",
+      "de": "Schwach",
+      "lt": "Silpnas",
+      "pt": "Fraco",
+      "it": "Debole"
+    },
+    {
+      "key": "modules.response.measures.what_does_this_measure_do",
+      "en": "What does this measure do?",
+      "es": "¿Qué hace esta medida?",
+      "fr": "Que fait cette mesure?",
+      "de": "Was bewirkt diese Maßnahme?",
+      "lt": "Ką daro ši priemonė?",
+      "pt": "O que faz esta medida?",
+      "it": "Cosa fa questa misura?"
+    },
+    {
+      "key": "modules.response.measures.what_obstacles_exist",
+      "en": "What obstacles exist?",
+      "es": "¿Qué obstáculos existen?",
+      "fr": "Quels obstacles existent?",
+      "de": "Welche Hindernisse bestehen?",
+      "lt": "Kokios kliūtys egzistuoja?",
+      "pt": "Quais obstáculos existem?",
+      "it": "Quali ostacoli esistono?"
+    },
+    {
+      "key": "modules.response.measures.what_resources_are_required",
+      "en": "What resources are required?",
+      "es": "¿Qué recursos se requieren?",
+      "fr": "Quelles ressources sont nécessaires?",
+      "de": "Welche Ressourcen werden benötigt?",
+      "lt": "Kokių išteklių reikia?",
+      "pt": "Quais recursos são necessários?",
+      "it": "Quali risorse sono necessarie?"
+    },
+    {
+      "key": "modules.response.measures.who_implements_this_measure",
+      "en": "Who implements this measure?",
+      "es": "¿Quién implementa esta medida?",
+      "fr": "Qui met en œuvre cette mesure?",
+      "de": "Wer setzt diese Maßnahme um?",
+      "lt": "Kas įgyvendina šią priemonę?",
+      "pt": "Quem implementa esta medida?",
+      "it": "Chi attua questa misura?"
+    },
+    {
+      "key": "modules.response.measures.will_it_solve_the_problem",
+      "en": "Will it solve the problem?",
+      "es": "¿Resolverá el problema?",
+      "fr": "Cela résoudra-t-il le problème?",
+      "de": "Wird es das Problem lösen?",
+      "lt": "Ar tai išspręs problemą?",
+      "pt": "Resolverá o problema?",
+      "it": "Risolverà il problema?"
+    }
+  ]
+}

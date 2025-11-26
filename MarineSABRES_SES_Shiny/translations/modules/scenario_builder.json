@@ -1,0 +1,43 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.scenario.builder.cannot_remove_non_existent_node_s",
+      "en": "Cannot remove non-existent node: %s",
+      "es": "No se puede eliminar un nodo inexistente: %s",
+      "fr": "Impossible de supprimer un nœud inexistant: %s",
+      "de": "Kann nicht vorhandenen Knoten nicht entfernen: %s",
+      "lt": "Negalima pašalinti neegzistuojančio mazgo: %s",
+      "pt": "Não é possível remover nó inexistente: %s",
+      "it": "Impossibile rimuovere un nodo inesistente: %s"
+    },
+    {
+      "key": "modules.scenario.builder.conflicting_modifications_for_nodes_s",
+      "en": "Conflicting modifications for nodes: %s",
+      "es": "Modificaciones conflictivas para nodos: %s",
+      "fr": "Modifications conflictuelles pour les nœuds: %s",
+      "de": "Widersprüchliche Änderungen für Knoten: %s",
+      "lt": "Prieštaringi pakeitimai mazgams: %s",
+      "pt": "Modificações conflitantes para nós: %s",
+      "it": "Modifiche in conflitto per i nodi: %s"
+    },
+    {
+      "key": "modules.scenario.builder.validation_errors",
+      "en": "Validation errors:",
+      "es": "Errores de validación:",
+      "fr": "Erreurs de validation:",
+      "de": "Validierungsfehler:",
+      "lt": "Tikrinimo klaidos:",
+      "pt": "Erros de validação:",
+      "it": "Errori di validazione:"
+    }
+  ]
+}

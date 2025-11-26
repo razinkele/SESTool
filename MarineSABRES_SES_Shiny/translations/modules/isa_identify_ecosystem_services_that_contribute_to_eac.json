@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.identify_ecosystem_services_that_contribute_to_eac",
+      "en": "Identify ecosystem services that contribute to each Good/Benefit.",
+      "es": "Identificar los servicios ecosistémicos que contribuyen a cada Bien/Beneficio.",
+      "fr": "Identifier les services écosystémiques qui contribuent à chaque Bien/Avantage.",
+      "de": "Identifizieren Sie Ökosystemleistungen, die zu jedem Gut/Vorteil beitragen.",
+      "lt": "Nustatyti ekosistemų paslaugas, kurios prisideda prie kiekvienos Gėrybės/Naudos.",
+      "pt": "Identificar os serviços ecossistémicos que contribuem para cada Bem/Benefício.",
+      "it": "Identificare i servizi ecosistemici che contribuiscono a ciascun Bene/Beneficio."
+    }
+  ]
+}

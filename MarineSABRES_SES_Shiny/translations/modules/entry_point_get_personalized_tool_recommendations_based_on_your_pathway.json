@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.get_personalized_tool_recommendations_based_on_your_pathway",
+      "en": "Get personalized tool recommendations based on your pathway",
+      "es": "Obtener recomendaciones de herramientas personalizadas basadas en su ruta",
+      "fr": "Obtenir des recommandations d'outils personnalisées basées sur votre parcours",
+      "de": "Erhalten Sie personalisierte Werkzeugempfehlungen basierend auf Ihrem Pfad",
+      "lt": "Gaukite pritaikytus įrankių rekomendacijas pagal jūsų kelią",
+      "pt": "Obter recomendações de ferramentas personalizadas com base no seu percurso",
+      "it": "Ottieni raccomandazioni di strumenti personalizzate in base al tuo percorso"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.ep_tooltip_download_pdf",
+      "en": "ep_tooltip_download_pdf",
+      "es": "Descargar un informe PDF de su ruta recomendada",
+      "fr": "Télécharger un rapport PDF de votre parcours recommandé",
+      "de": "Laden Sie einen PDF-Bericht Ihres empfohlenen Pfades herunter",
+      "lt": "Atsisiųsti PDF ataskaitą apie rekomenduojamą kelią",
+      "pt": "Descarregar um relatório PDF do seu percurso recomendado",
+      "it": "Scarica un rapporto PDF del tuo percorso raccomandato"
+    }
+  ]
+}

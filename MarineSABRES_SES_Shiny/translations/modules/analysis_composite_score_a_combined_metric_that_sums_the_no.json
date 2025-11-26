@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.composite_score_a_combined_metric_that_sums_the_no",
+      "en": "Composite Score: A combined metric that sums the normalized values of all three centrality measures to provide an overall leverage score.",
+      "es": "Puntuación Compuesta: Una métrica combinada que suma los valores normalizados de las tres medidas de centralidad para proporcionar una puntuación de apalancamiento general.",
+      "fr": "Score Composite : Une métrique combinée qui additionne les valeurs normalisées des trois mesures de centralité pour fournir un score de levier global.",
+      "de": "Zusammengesetzter Score: Eine kombinierte Metrik, die die normalisierten Werte aller drei Zentralitätsmaße summiert, um einen Gesamt-Hebelpunkt-Score zu liefern.",
+      "lt": "Kompozitinis balas: Kombinuota metrika, sumuojanti visų trijų centrinių pozicijų matavimų normalizuotas vertes, kad būtų pateiktas bendras sverties balas.",
+      "pt": "Pontuação Composta: Uma métrica combinada que soma os valores normalizados das três medidas de centralidade para fornecer uma pontuação geral de alavancagem.",
+      "it": "Punteggio Composito: Una metrica combinata che somma i valori normalizzati di tutte e tre le misure di centralità per fornire un punteggio di leva complessivo."
+    }
+  ]
+}

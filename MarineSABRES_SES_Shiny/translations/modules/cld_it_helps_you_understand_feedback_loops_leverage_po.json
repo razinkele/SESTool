@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.cld.it_helps_you_understand_feedback_loops_leverage_po",
+      "en": "It helps you understand feedback loops, leverage points, and potential intervention strategies.",
+      "es": "Le ayuda a comprender bucles de retroalimentación, puntos de apalancamiento y estrategias de intervención potenciales.",
+      "fr": "Il vous aide à comprendre les boucles de rétroaction, les points de levier et les stratégies d'intervention potentielles.",
+      "de": "Es hilft Ihnen, Rückkopplungsschleifen, Hebelwirkungspunkte und potenzielle Interventionsstrategien zu verstehen.",
+      "lt": "Tai padeda suprasti grįžtamojo ryšio kilpas, sverto taškus ir galimas intervencijos strategijas.",
+      "pt": "Ajuda você a entender loops de feedback, pontos de alavancagem e estratégias de intervenção potenciais.",
+      "it": "Ti aiuta a comprendere i loop di feedback, i punti di leva e le potenziali strategie di intervento."
+    }
+  ]
+}

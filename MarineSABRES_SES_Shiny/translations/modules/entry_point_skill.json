@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.skill",
+      "en": "Skill:",
+      "es": "Habilidad:",
+      "fr": "Compétence:",
+      "de": "Fähigkeit:",
+      "lt": "Įgūdis:",
+      "pt": "Habilidade:",
+      "it": "Abilità:"
+    }
+  ]
+}

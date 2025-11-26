@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.ses.intelligent_question_based_guidance_that_helps_you",
+      "en": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.",
+      "es": "Orientación inteligente basada en preguntas que le ayuda a construir su modelo SES a través de indicaciones conversacionales y sugerencias.",
+      "fr": "Guidage intelligent basé sur des questions qui vous aide à construire votre modèle SES grâce à des invites conversationnelles et des suggestions.",
+      "de": "Intelligente fragenbasierte Anleitung, die Ihnen hilft, Ihr SES-Modell durch konversationelle Eingabeaufforderungen und Vorschläge zu erstellen.",
+      "lt": "Inteligentus klausimais pagrįstas vadovavimas, padedantis sukurti SES modelį per pokalbio raginimus ir pasiūlymus.",
+      "pt": "Orientação inteligente baseada em perguntas que ajuda a construir o seu modelo SES através de sugestões conversacionais.",
+      "it": "Guida intelligente basata su domande che ti aiuta a costruire il tuo modello SES attraverso suggerimenti conversazionali."
+    }
+  ]
+}

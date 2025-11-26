@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.proceed_to_identify_your_basic_human_needs",
+      "en": "Proceed to identify your basic human needs",
+      "es": "Continuar para identificar sus necesidades humanas básicas",
+      "fr": "Continuer pour identifier vos besoins humains fondamentaux",
+      "de": "Fahren Sie fort, um Ihre grundlegenden menschlichen Bedürfnisse zu identifizieren",
+      "lt": "Tęskite, kad nustatytumėte savo pagrindinius žmogaus poreikius",
+      "pt": "Continuar para identificar as suas necessidades humanas básicas",
+      "it": "Procedi per identificare i tuoi bisogni umani fondamentali"
+    }
+  ]
+}

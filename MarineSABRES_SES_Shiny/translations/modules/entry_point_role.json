@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.role",
+      "en": "Role:",
+      "es": "Rol:",
+      "fr": "Rôle:",
+      "de": "Rolle:",
+      "lt": "Vaidmuo:",
+      "pt": "Papel:",
+      "it": "Ruolo:"
+    }
+  ]
+}

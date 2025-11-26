@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.proceed_to_select_knowledge_topics",
+      "en": "Proceed to select knowledge topics",
+      "es": "Continuar para seleccionar temas de conocimiento",
+      "fr": "Continuer pour sélectionner les sujets de connaissance",
+      "de": "Fahren Sie fort, um Wissensthemen auszuwählen",
+      "lt": "Tęskite, kad pasirinktumėte žinių temas",
+      "pt": "Continuar para selecionar tópicos de conhecimento",
+      "it": "Procedi per selezionare gli argomenti di conoscenza"
+    }
+  ]
+}

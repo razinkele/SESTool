@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.data_entry.ex101112.review_the_connections_between_dapsiwrm_elements",
+      "en": "Review the connections between DAPSI(W)R(M) elements:",
+      "es": "Revise las conexiones entre los elementos DAPSI(W)R(M):",
+      "fr": "Examinez les connexions entre les éléments DAPSI(W)R(M) :",
+      "de": "Überprüfen Sie die Verbindungen zwischen DAPSI(W)R(M)-Elementen:",
+      "lt": "Peržiūrėkite ryšius tarp DAPSI(W)R(M) elementų:",
+      "pt": "Reveja as ligações entre os elementos DAPSI(W)R(M):",
+      "it": "Rivedere le connessioni tra gli elementi DAPSI(W)R(M):"
+    }
+  ]
+}

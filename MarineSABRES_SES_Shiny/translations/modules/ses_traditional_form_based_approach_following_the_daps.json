@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.ses.traditional_form_based_approach_following_the_daps",
+      "en": "Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology.",
+      "es": "Enfoque tradicional basado en formularios siguiendo el marco DAPSI(W)R(M). Perfecto para usuarios familiarizados con la metodología ISA.",
+      "fr": "Approche traditionnelle basée sur des formulaires suivant le cadre DAPSI(W)R(M). Parfait pour les utilisateurs familiers avec la méthodologie ISA.",
+      "de": "Traditioneller formularbasierter Ansatz nach dem DAPSI(W)R(M)-Framework. Perfekt für Benutzer, die mit der ISA-Methodik vertraut sind.",
+      "lt": "Tradicinis formomis pagrįstas požiūris pagal DAPSI(W)R(M) sistemą. Puikiai tinka vartotojams, susipažinusiems su ISA metodika.",
+      "pt": "Abordagem tradicional baseada em formulários seguindo a estrutura DAPSI(W)R(M). Perfeito para usuários familiarizados com a metodologia ISA.",
+      "it": "Approccio tradizionale basato su moduli seguendo il framework DAPSI(W)R(M). Perfetto per utenti esperti della metodologia ISA."
+    }
+  ]
+}

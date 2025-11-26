@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.eigenvector_centrality_measures_the_influence_of_a",
+      "en": "Eigenvector Centrality: Measures the influence of a node based on the importance of its neighbors. Nodes connected to other important nodes score higher.",
+      "es": "Centralidad de Vector Propio: Mide la influencia de un nodo basándose en la importancia de sus vecinos. Los nodos conectados a otros nodos importantes obtienen puntuaciones más altas.",
+      "fr": "Centralité de Vecteur Propre : Mesure l'influence d'un nœud en fonction de l'importance de ses voisins. Les nœuds connectés à d'autres nœuds importants obtiennent des scores plus élevés.",
+      "de": "Eigenvektorzentralität: Misst den Einfluss eines Knotens basierend auf der Bedeutung seiner Nachbarn. Knoten, die mit anderen wichtigen Knoten verbunden sind, erzielen höhere Werte.",
+      "lt": "Savojo vektoriaus centrinė pozicija: Matuoja mazgo įtaką pagal jo kaimynų svarbą. Mazgai, sujungti su kitais svarbiais mazgais, gauna didesnius balus.",
+      "pt": "Centralidade de Autovetor: Mede a influência de um nó com base na importância de seus vizinhos. Nós conectados a outros nós importantes pontuam mais alto.",
+      "it": "Centralità di Autovettore: Misura l'influenza di un nodo in base all'importanza dei suoi vicini. I nodi collegati ad altri nodi importanti ottengono punteggi più alti."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.prioritize_interventions_focus_resources_on_high_l",
+      "en": "Prioritize interventions: Focus resources on high-leverage nodes rather than spreading efforts thinly across many nodes.",
+      "es": "Priorizar intervenciones: Enfoque recursos en nodos de alto apalancamiento en lugar de dispersar esfuerzos entre muchos nodos.",
+      "fr": "Prioriser les interventions : Concentrez les ressources sur les nœuds à fort effet de levier plutôt que de disperser les efforts sur de nombreux nœuds.",
+      "de": "Interventionen priorisieren: Konzentrieren Sie Ressourcen auf Knoten mit hohem Hebel, anstatt Bemühungen über viele Knoten zu verteilen.",
+      "lt": "Nustatyti intervencijų prioritetus: Sutelkti išteklius į didelės sverto galios mazgus, o ne sklaidos pastangas tarp daugelio mazgų.",
+      "pt": "Priorizar intervenções: Concentre recursos em nós de alta alavancagem em vez de espalhar esforços por muitos nós.",
+      "it": "Dare priorità agli interventi: Concentra le risorse sui nodi ad alta leva anziché distribuire gli sforzi su molti nodi."
+    }
+  ]
+}

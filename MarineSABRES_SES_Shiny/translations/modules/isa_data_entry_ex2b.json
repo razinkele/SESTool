@@ -1,0 +1,33 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.isa.data_entry.ex2b.exercise_2b_marine_processes",
+      "en": "Exercise 2b: Marine Processes",
+      "es": "Ejercicio 2b: Procesos Marinos",
+      "fr": "Exercice 2b : Processus Marins",
+      "de": "Übung 2b: Meeresprozesse",
+      "lt": "Pratimas 2b: Jūros procesai",
+      "pt": "Exercício 2b: Processos Marinhos",
+      "it": "Esercizio 2b: Processi Marini"
+    },
+    {
+      "key": "modules.isa.data_entry.ex2b.save_exercise_2b",
+      "en": "Save Exercise 2b",
+      "es": "Guardar Ejercicio 2b",
+      "fr": "Enregistrer l'Exercice 2b",
+      "de": "Übung 2b speichern",
+      "lt": "Išsaugoti Pratimą 2b",
+      "pt": "Guardar Exercício 2b",
+      "it": "Salva Esercizio 2b"
+    }
+  ]
+}

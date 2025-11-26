@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.analysis.betweenness_centrality_measures_how_often_a_node_a",
+      "en": "Betweenness Centrality: Measures how often a node acts as a bridge between other nodes. High betweenness means the node controls information flow and can act as a bottleneck or facilitator.",
+      "es": "Centralidad de Intermediación: Mide con qué frecuencia un nodo actúa como puente entre otros nodos. Alta intermediación significa que el nodo controla el flujo de información y puede actuar como cuello de botella o facilitador.",
+      "fr": "Centralité d'Intermédiarité : Mesure la fréquence à laquelle un nœud agit comme un pont entre d'autres nœuds. Une intermédiarité élevée signifie que le nœud contrôle le flux d'informations et peut agir comme un goulot d'étranglement ou un facilitateur.",
+      "de": "Zwischenzentralität: Misst, wie oft ein Knoten als Brücke zwischen anderen Knoten fungiert. Hohe Zwischenzentralität bedeutet, dass der Knoten den Informationsfluss kontrolliert und als Engpass oder Vermittler fungieren kann.",
+      "lt": "Tarpinės centrinės pozicijos: Matuoja, kaip dažnai mazgas veikia kaip tiltas tarp kitų mazgų. Didelis tarpiškumas reiškia, kad mazgas kontroliuoja informacijos srautą ir gali veikti kaip kliūtis ar palengvintojas.",
+      "pt": "Centralidade de Intermediação: Mede com que frequência um nó atua como uma ponte entre outros nós. Alta intermediação significa que o nó controla o fluxo de informações e pode atuar como um gargalo ou facilitador.",
+      "it": "Centralità di Intermediazione: Misura quanto spesso un nodo agisce come ponte tra altri nodi. Un'alta intermediazione significa che il nodo controlla il flusso di informazioni e può agire come collo di bottiglia o facilitatore."
+    }
+  ]
+}

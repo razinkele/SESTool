@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.response.response_measures_r_and_management_measures_m_comp",
+      "en": "Response measures (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems.",
+      "es": "Las medidas de respuesta (R) y las medidas de gestión (M) completan el marco DAPSI(W)R(M) identificando intervenciones para abordar problemas del sistema.",
+      "fr": "Les mesures de réponse (R) et les mesures de gestion (M) complètent le cadre DAPSI(W)R(M) en identifiant les interventions pour traiter les problèmes du système.",
+      "de": "Reaktionsmaßnahmen (R) und Managementmaßnahmen (M) vervollständigen das DAPSI(W)R(M)-Framework durch Identifizierung von Interventionen zur Bewältigung von Systemproblemen.",
+      "lt": "Atsako priemonės (R) ir valdymo priemonės (M) užbaigia DAPSI(W)R(M) sistemą nustatydamos intervencijas sistemos problemoms spręsti.",
+      "pt": "As medidas de resposta (R) e as medidas de gestão (M) completam o quadro DAPSI(W)R(M) identificando intervenções para resolver problemas do sistema.",
+      "it": "Le misure di risposta (R) e le misure di gestione (M) completano il quadro DAPSI(W)R(M) identificando interventi per affrontare i problemi del sistema."
+    }
+  ]
+}

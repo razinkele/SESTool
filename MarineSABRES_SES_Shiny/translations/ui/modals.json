@@ -10,144 +10,44 @@
   ],
   "translation": [
     {
-      "key": "ui.modals.confirm_title",
-      "en": "Confirm Action",
-      "es": "Confirmar Acción",
-      "fr": "Confirmer l'Action",
-      "de": "Aktion Bestätigen",
-      "lt": "Patvirtinti veiksmą",
-      "pt": "Confirmar Ação",
-      "it": "Conferma Azione"
+      "key": "ui.modals.advanced_interface_showing_all_tools_technical_ter",
+      "en": "Advanced interface showing all tools, technical terminology, and advanced options.",
+      "es": "Interfaz avanzada que muestra todas las herramientas, terminología técnica y opciones avanzadas.",
+      "fr": "Interface avancée affichant tous les outils, la terminologie technique et les options avancées.",
+      "de": "Erweiterte Benutzeroberfläche mit allen Werkzeugen, technischer Terminologie und erweiterten Optionen.",
+      "lt": "Išplėstinė sąsaja, rodanti visus įrankius, techninę terminologiją ir išplėstines parinktis.",
+      "pt": "Interface avançada mostrando todas as ferramentas, terminologia técnica e opções avançadas.",
+      "it": "Interfaccia avanzata che mostra tutti gli strumenti, terminologia tecnica e opzioni avanzate."
     },
     {
-      "key": "ui.modals.warning_title",
-      "en": "Warning",
-      "es": "Advertencia",
-      "fr": "Avertissement",
-      "de": "Warnung",
-      "lt": "Įspėjimas",
-      "pt": "Aviso",
-      "it": "Avviso"
+      "key": "ui.modals.apply_changes",
+      "en": "Apply Changes",
+      "es": "Aplicar Cambios",
+      "fr": "Appliquer les Modifications",
+      "de": "Änderungen Anwenden",
+      "lt": "Pritaikyti Pakeitimus",
+      "pt": "Aplicar Alterações",
+      "it": "Applica Modifiche"
     },
     {
-      "key": "ui.modals.error_title",
-      "en": "Error",
-      "es": "Error",
-      "fr": "Erreur",
-      "de": "Fehler",
-      "lt": "Klaida",
-      "pt": "Erro",
-      "it": "Errore"
+      "key": "ui.modals.beginner_friendly_guides",
+      "en": "Beginner-Friendly Guides",
+      "es": "Guías para Principiantes",
+      "fr": "Guides Adaptés aux Débutants",
+      "de": "Anfängerfreundliche Leitfäden",
+      "lt": "Pradedantiesiems Skirti Vadovai",
+      "pt": "Guias para Iniciantes",
+      "it": "Guide per Principianti"
     },
     {
-      "key": "ui.modals.success_title",
-      "en": "Success",
-      "es": "Éxito",
-      "fr": "Succès",
-      "de": "Erfolg",
-      "lt": "Sėkmė",
-      "pt": "Sucesso",
-      "it": "Successo"
-    },
-    {
-      "key": "ui.modals.info_title",
-      "en": "Information",
-      "es": "Información",
-      "fr": "Information",
-      "de": "Information",
-      "lt": "Informacija",
-      "pt": "Informação",
-      "it": "Informazione"
-    },
-    {
-      "key": "ui.modals.save_project_title",
-      "en": "Save Project",
-      "es": "Guardar Proyecto",
-      "fr": "Enregistrer le Projet",
-      "de": "Projekt Speichern",
-      "lt": "Išsaugoti projektą",
-      "pt": "Salvar Projeto",
-      "it": "Salva Progetto"
-    },
-    {
-      "key": "ui.modals.save_project_message",
-      "en": "Save your current project data, including all PIMS, ISA entries, and analysis results",
-      "es": "Guarde los datos de su proyecto actual, incluidas todas las entradas PIMS, ISA y los resultados de análisis",
-      "fr": "Enregistrez les données de votre projet actuel, y compris toutes les entrées PIMS, ISA et les résultats d'analyse",
-      "de": "Speichern Sie Ihre aktuellen Projektdaten, einschließlich aller PIMS-, ISA-Einträge und Analyseergebnisse",
-      "lt": "Išsaugokite dabartinio projekto duomenis, įskaitant visus PIMS, ISA įrašus ir analizės rezultatus",
-      "pt": "Guarde os dados do seu projeto atual, incluindo todas as entradas PIMS, ISA e resultados de análise",
-      "it": "Salva i dati del progetto corrente, incluse tutte le voci PIMS, ISA e i risultati dell'analisi"
-    },
-    {
-      "key": "ui.modals.load_project_title",
-      "en": "Load Project",
-      "es": "Cargar Proyecto",
-      "fr": "Charger le Projet",
-      "de": "Projekt Laden",
-      "lt": "Įkelti projektą",
-      "pt": "Carregar Projeto",
-      "it": "Carica Progetto"
-    },
-    {
-      "key": "ui.modals.load_project_message",
-      "en": "Load a previously saved project",
-      "es": "Cargar un proyecto guardado anteriormente",
-      "fr": "Charger un projet précédemment enregistré",
-      "de": "Laden Sie ein zuvor gespeichertes Projekt",
-      "lt": "Įkelti anksčiau išsaugotą projektą",
-      "pt": "Carregar um projeto guardado anteriormente",
-      "it": "Carica un progetto salvato in precedenza"
-    },
-    {
-      "key": "ui.modals.unsaved_changes_title",
-      "en": "Unsaved Changes",
-      "es": "Cambios no Guardados",
-      "fr": "Modifications Non Enregistrées",
-      "de": "Nicht Gespeicherte Änderungen",
-      "lt": "Neišsaugoti pakeitimai",
-      "pt": "Alterações Não Salvas",
-      "it": "Modifiche Non Salvate"
-    },
-    {
-      "key": "ui.modals.unsaved_changes_message",
-      "en": "You have unsaved changes. Do you want to save before proceeding?",
-      "es": "Tiene cambios sin guardar. ¿Desea guardar antes de continuar?",
-      "fr": "Vous avez des modifications non enregistrées. Voulez-vous enregistrer avant de continuer?",
-      "de": "Sie haben nicht gespeicherte Änderungen. Möchten Sie speichern, bevor Sie fortfahren?",
-      "lt": "Turite neišsaugotų pakeitimų. Ar norite išsaugoti prieš tęsiant?",
-      "pt": "Você tem alterações não salvas. Deseja salvar antes de prosseguir?",
-      "it": "Hai modifiche non salvate. Vuoi salvare prima di procedere?"
-    },
-    {
-      "key": "ui.modals.delete_confirm_message",
-      "en": "Are you sure you want to delete this item? This action cannot be undone.",
-      "es": "¿Está seguro de que desea eliminar este elemento? Esta acción no se puede deshacer.",
-      "fr": "Êtes-vous sûr de vouloir supprimer cet élément? Cette action ne peut pas être annulée.",
-      "de": "Sind Sie sicher, dass Sie dieses Element löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
-      "lt": "Ar tikrai norite ištrinti šį elementą? Šio veiksmo negalima atšaukti.",
-      "pt": "Tem certeza de que deseja excluir este item? Esta ação não pode ser desfeita.",
-      "it": "Sei sicuro di voler eliminare questo elemento? Questa azione non può essere annullata."
-    },
-    {
-      "key": "ui.modals.session_restored_title",
-      "en": "Session Restored",
-      "es": "Sesión Restaurada",
-      "fr": "Session Restaurée",
-      "de": "Sitzung Wiederhergestellt",
-      "lt": "Sesija atkurta",
-      "pt": "Sessão Restaurada",
-      "it": "Sessione Ripristinata"
-    },
-    {
-      "key": "ui.modals.session_restored_message",
-      "en": "A previous session was found. Click 'Load Saved' to restore it.",
-      "es": "Se encontró una sesión anterior. Haga clic en 'Cargar Guardado' para restaurarla.",
-      "fr": "Une session précédente a été trouvée. Cliquez sur 'Charger Enregistré' pour la restaurer.",
-      "de": "Eine vorherige Sitzung wurde gefunden. Klicken Sie auf 'Gespeichert Laden', um sie wiederherzustellen.",
-      "lt": "Rasta ankstesnė sesija. Spustelėkite 'Įkelti išsaugotą', kad ją atkurtumėte.",
-      "pt": "Uma sessão anterior foi encontrada. Clique em 'Carregar Salvo' para restaurá-la.",
-      "it": "È stata trovata una sessione precedente. Fai clic su 'Carica Salvato' per ripristinarla."
+      "key": "ui.modals.complete_user_manuals",
+      "en": "Complete User Manuals",
+      "es": "Manuales de Usuario Completos",
+      "fr": "Manuels d'Utilisateur Complets",
+      "de": "Vollständige Benutzerhandbücher",
+      "lt": "Pilni Vartotojo Vadovai",
+      "pt": "Manuais de Usuário Completos",
+      "it": "Manuali Utente Completi"
     },
     {
       "key": "ui.modals.confirm_start_over",
@@ -160,6 +60,166 @@
       "it": "Conferma Ricomincia"
     },
     {
+      "key": "ui.modals.confirm_title",
+      "en": "Confirm Action",
+      "es": "Confirmar Acción",
+      "fr": "Confirmer l'Action",
+      "de": "Aktion Bestätigen",
+      "lt": "Patvirtinti veiksmą",
+      "pt": "Confirmar Ação",
+      "it": "Conferma Azione"
+    },
+    {
+      "key": "ui.modals.delete_confirm_message",
+      "en": "Are you sure you want to delete this item? This action cannot be undone.",
+      "es": "¿Está seguro de que desea eliminar este elemento? Esta acción no se puede deshacer.",
+      "fr": "Êtes-vous sûr de vouloir supprimer cet élément? Cette action ne peut pas être annulée.",
+      "de": "Sind Sie sicher, dass Sie dieses Element löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "lt": "Ar tikrai norite ištrinti šį elementą? Šio veiksmo negalima atšaukti.",
+      "pt": "Tem certeza de que deseja excluir este item? Esta ação não pode ser desfeita.",
+      "it": "Sei sicuro di voler eliminare questo elemento? Questa azione non può essere annullata."
+    },
+    {
+      "key": "ui.modals.download_user_manuals_guides",
+      "en": "Download User Manuals & Guides",
+      "es": "Descargar Manuales y Guías del Usuario",
+      "fr": "Télécharger les Manuels et Guides de l'Utilisateur",
+      "de": "Benutzerhandbücher und Leitfäden Herunterladen",
+      "lt": "Atsisiųsti Vartotojo Vadovus ir Gidus",
+      "pt": "Baixar Manuais e Guias do Usuário",
+      "it": "Scarica Manuali e Guide Utente"
+    },
+    {
+      "key": "ui.modals.downloadprint",
+      "en": "Download/Print",
+      "es": "Descargar/Imprimir",
+      "fr": "Télécharger/Imprimer",
+      "de": "Herunterladen/Drucken",
+      "lt": "Atsisiųsti/Spausdinti",
+      "pt": "Baixar/Imprimir",
+      "it": "Scarica/Stampa"
+    },
+    {
+      "key": "ui.modals.english_manual",
+      "en": "English Manual",
+      "es": "Manual en Inglés",
+      "fr": "Manuel Anglais",
+      "de": "Englisches Handbuch",
+      "lt": "Anglų Vadovas",
+      "pt": "Manual em Inglês",
+      "it": "Manuale Inglese"
+    },
+    {
+      "key": "ui.modals.error_title",
+      "en": "Error",
+      "es": "Error",
+      "fr": "Erreur",
+      "de": "Fehler",
+      "lt": "Klaida",
+      "pt": "Erro",
+      "it": "Errore"
+    },
+    {
+      "key": "ui.modals.expert",
+      "en": "Expert",
+      "es": "Experto",
+      "fr": "Expert",
+      "de": "Experte",
+      "lt": "Ekspertas",
+      "pt": "Especialista",
+      "it": "Esperto"
+    },
+    {
+      "key": "ui.modals.french_manual",
+      "en": "French Manual",
+      "es": "Manual en Francés",
+      "fr": "Manuel Français",
+      "de": "Französisches Handbuch",
+      "lt": "Prancūzų Vadovas",
+      "pt": "Manual em Francês",
+      "it": "Manuale Francese"
+    },
+    {
+      "key": "ui.modals.html_version",
+      "en": "HTML Version",
+      "es": "Versión HTML",
+      "fr": "Version HTML",
+      "de": "HTML-Version",
+      "lt": "HTML Versija",
+      "pt": "Versão HTML",
+      "it": "Versione HTML"
+    },
+    {
+      "key": "ui.modals.info_title",
+      "en": "Information",
+      "es": "Información",
+      "fr": "Information",
+      "de": "Information",
+      "lt": "Informacija",
+      "pt": "Informação",
+      "it": "Informazione"
+    },
+    {
+      "key": "ui.modals.load_project_message",
+      "en": "Load a previously saved project",
+      "es": "Cargar un proyecto guardado anteriormente",
+      "fr": "Charger un projet précédemment enregistré",
+      "de": "Laden Sie ein zuvor gespeichertes Projekt",
+      "lt": "Įkelti anksčiau išsaugotą projektą",
+      "pt": "Carregar um projeto guardado anteriormente",
+      "it": "Carica un progetto salvato in precedenza"
+    },
+    {
+      "key": "ui.modals.load_project_title",
+      "en": "Load Project",
+      "es": "Cargar Proyecto",
+      "fr": "Charger le Projet",
+      "de": "Projekt Laden",
+      "lt": "Įkelti projektą",
+      "pt": "Carregar Projeto",
+      "it": "Carica Progetto"
+    },
+    {
+      "key": "ui.modals.pdf_version",
+      "en": "PDF Version",
+      "es": "Versión PDF",
+      "fr": "Version PDF",
+      "de": "PDF-Version",
+      "lt": "PDF Versija",
+      "pt": "Versão PDF",
+      "it": "Versione PDF"
+    },
+    {
+      "key": "ui.modals.recommended_for_new_users",
+      "en": "Recommended for New Users",
+      "es": "Recomendado para Nuevos Usuarios",
+      "fr": "Recommandé pour les Nouveaux Utilisateurs",
+      "de": "Empfohlen für Neue Benutzer",
+      "lt": "Rekomenduojama Naujiems Vartotojams",
+      "pt": "Recomendado para Novos Usuários",
+      "it": "Raccomandato per Nuovi Utenti"
+    },
+    {
+      "key": "ui.modals.save_project_message",
+      "en": "Save your current project data, including all PIMS, ISA entries, and analysis results",
+      "es": "Guarde los datos de su proyecto actual, incluidas todas las entradas PIMS, ISA y los resultados de análisis",
+      "fr": "Enregistrez les données de votre projet actuel, y compris toutes les entrées PIMS, ISA et les résultats d'analyse",
+      "de": "Speichern Sie Ihre aktuellen Projektdaten, einschließlich aller PIMS-, ISA-Einträge und Analyseergebnisse",
+      "lt": "Išsaugokite dabartinio projekto duomenis, įskaitant visus PIMS, ISA įrašus ir analizės rezultatus",
+      "pt": "Guarde os dados do seu projeto atual, incluindo todas as entradas PIMS, ISA e resultados de análise",
+      "it": "Salva i dati del progetto corrente, incluse tutte le voci PIMS, ISA e i risultati dell'analisi"
+    },
+    {
+      "key": "ui.modals.save_project_title",
+      "en": "Save Project",
+      "es": "Guardar Proyecto",
+      "fr": "Enregistrer le Projet",
+      "de": "Projekt Speichern",
+      "lt": "Išsaugoti projektą",
+      "pt": "Salvar Projeto",
+      "it": "Salva Progetto"
+    },
+    {
       "key": "ui.modals.scenarioconfirmdelete",
       "en": "scenario_confirm_delete",
       "es": "TODO: es translation",
@@ -168,6 +228,116 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation"
+    },
+    {
+      "key": "ui.modals.select_your_experience_level_with_marine_ecosystem_modeling",
+      "en": "Select your experience level with marine ecosystem modeling:",
+      "es": "Seleccione su nivel de experiencia con modelado de ecosistemas marinos:",
+      "fr": "Sélectionnez votre niveau d'expérience avec la modélisation des écosystèmes marins:",
+      "de": "Wählen Sie Ihre Erfahrungsstufe mit Meeresökosystemmodellierung:",
+      "lt": "Pasirinkite savo patirties lygį su jūrų ekosistemų modeliavimu:",
+      "pt": "Selecione seu nível de experiência com modelagem de ecossistemas marinhos:",
+      "it": "Seleziona il tuo livello di esperienza con la modellazione degli ecosistemi marini:"
+    },
+    {
+      "key": "ui.modals.session_restored_message",
+      "en": "A previous session was found. Click 'Load Saved' to restore it.",
+      "es": "Se encontró una sesión anterior. Haga clic en 'Cargar Guardado' para restaurarla.",
+      "fr": "Une session précédente a été trouvée. Cliquez sur 'Charger Enregistré' pour la restaurer.",
+      "de": "Eine vorherige Sitzung wurde gefunden. Klicken Sie auf 'Gespeichert Laden', um sie wiederherzustellen.",
+      "lt": "Rasta ankstesnė sesija. Spustelėkite 'Įkelti išsaugotą', kad ją atkurtumėte.",
+      "pt": "Uma sessão anterior foi encontrada. Clique em 'Carregar Salvo' para restaurá-la.",
+      "it": "È stata trovata una sessione precedente. Fai clic su 'Carica Salvato' per ripristinarla."
+    },
+    {
+      "key": "ui.modals.session_restored_title",
+      "en": "Session Restored",
+      "es": "Sesión Restaurada",
+      "fr": "Session Restaurée",
+      "de": "Sitzung Wiederhergestellt",
+      "lt": "Sesija atkurta",
+      "pt": "Sessão Restaurada",
+      "it": "Sessione Ripristinata"
+    },
+    {
+      "key": "ui.modals.simplified_interface_for_first_time_users_shows_essential_tools_only",
+      "en": "Simplified interface for first-time users. Shows essential tools only.",
+      "es": "Interfaz simplificada para nuevos usuarios. Muestra solo herramientas esenciales.",
+      "fr": "Interface simplifiée pour les nouveaux utilisateurs. Affiche uniquement les outils essentiels.",
+      "de": "Vereinfachte Benutzeroberfläche für Erstbenutzer. Zeigt nur wesentliche Werkzeuge.",
+      "lt": "Supaprastinta sąsaja pradedantiesiems. Rodo tik esminius įrankius.",
+      "pt": "Interface simplificada para novos usuários. Mostra apenas ferramentas essenciais.",
+      "it": "Interfaccia semplificata per nuovi utenti. Mostra solo strumenti essenziali."
+    },
+    {
+      "key": "ui.modals.standard_interface_for_regular_users_shows_most_tools_and_features",
+      "en": "Standard interface for regular users. Shows most tools and features.",
+      "es": "Interfaz estándar para usuarios regulares. Muestra la mayoría de herramientas y funciones.",
+      "fr": "Interface standard pour les utilisateurs réguliers. Affiche la plupart des outils et fonctionnalités.",
+      "de": "Standardbenutzeroberfläche für regelmäßige Benutzer. Zeigt die meisten Werkzeuge und Funktionen.",
+      "lt": "Standartinė sąsaja įprastiems naudotojams. Rodo daugumą įrankių ir funkcijų.",
+      "pt": "Interface padrão para usuários regulares. Mostra a maioria das ferramentas e recursos.",
+      "it": "Interfaccia standard per utenti abituali. Mostra la maggior parte degli strumenti e delle funzionalità."
+    },
+    {
+      "key": "ui.modals.success_title",
+      "en": "Success",
+      "es": "Éxito",
+      "fr": "Succès",
+      "de": "Erfolg",
+      "lt": "Sėkmė",
+      "pt": "Sucesso",
+      "it": "Successo"
+    },
+    {
+      "key": "ui.modals.the_application_will_reload_to_apply_the_new_user_experience_level",
+      "en": "The application will reload to apply the new user experience level.",
+      "es": "La aplicación se recargará para aplicar el nuevo nivel de experiencia del usuario.",
+      "fr": "L'application se rechargera pour appliquer le nouveau niveau d'expérience utilisateur.",
+      "de": "Die Anwendung wird neu geladen, um die neue Benutzererfahrungsstufe anzuwenden.",
+      "lt": "Programa bus perkrauta, kad būtų pritaikytas naujas naudotojo patirties lygis.",
+      "pt": "A aplicação será recarregada para aplicar o novo nível de experiência do usuário.",
+      "it": "L'applicazione si ricaricherà per applicare il nuovo livello di esperienza utente."
+    },
+    {
+      "key": "ui.modals.unsaved_changes_message",
+      "en": "You have unsaved changes. Do you want to save before proceeding?",
+      "es": "Tiene cambios sin guardar. ¿Desea guardar antes de continuar?",
+      "fr": "Vous avez des modifications non enregistrées. Voulez-vous enregistrer avant de continuer?",
+      "de": "Sie haben nicht gespeicherte Änderungen. Möchten Sie speichern, bevor Sie fortfahren?",
+      "lt": "Turite neišsaugotų pakeitimų. Ar norite išsaugoti prieš tęsiant?",
+      "pt": "Você tem alterações não salvas. Deseja salvar antes de prosseguir?",
+      "it": "Hai modifiche non salvate. Vuoi salvare prima di procedere?"
+    },
+    {
+      "key": "ui.modals.unsaved_changes_title",
+      "en": "Unsaved Changes",
+      "es": "Cambios no Guardados",
+      "fr": "Modifications Non Enregistrées",
+      "de": "Nicht Gespeicherte Änderungen",
+      "lt": "Neišsaugoti pakeitimai",
+      "pt": "Alterações Não Salvas",
+      "it": "Modifiche Non Salvate"
+    },
+    {
+      "key": "ui.modals.view_online",
+      "en": "View online",
+      "es": "Ver en línea",
+      "fr": "Voir en ligne",
+      "de": "Online ansehen",
+      "lt": "Žiūrėti internete",
+      "pt": "Ver online",
+      "it": "Visualizza online"
+    },
+    {
+      "key": "ui.modals.warning_title",
+      "en": "Warning",
+      "es": "Advertencia",
+      "fr": "Avertissement",
+      "de": "Warnung",
+      "lt": "Įspėjimas",
+      "pt": "Aviso",
+      "it": "Avviso"
     }
   ]
 }

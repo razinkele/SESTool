@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.entry_point.quick_start_option",
+      "en": "Quick start option:",
+      "es": "Opción de inicio rápido:",
+      "fr": "Option de démarrage rapide :",
+      "de": "Schnellstartoption:",
+      "lt": "Greito pradžios parinktis:",
+      "pt": "Opção de início rápido:",
+      "it": "Opzione di avvio rapido:"
+    }
+  ]
+}

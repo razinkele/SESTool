@@ -1,0 +1,23 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "modules.ses.review_and_customize_template_connections_approve_",
+      "en": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project.",
+      "es": "Revise y personalice las conexiones de plantilla. Apruebe, rechace o modifique conexiones individuales antes de cargarlas en su proyecto.",
+      "fr": "Examinez et personnalisez les connexions du modèle. Approuvez, rejetez ou modifiez les connexions individuelles avant de les charger dans votre projet.",
+      "de": "Überprüfen und passen Sie Vorlagenverbindungen an. Genehmigen, ablehnen oder ändern Sie einzelne Verbindungen, bevor Sie sie in Ihr Projekt laden.",
+      "lt": "Peržiūrėkite ir pritaikykite šablono ryšius. Patvirtinkite, atmeskite arba modifikuokite atskirus ryšius prieš įkeliant į savo projektą.",
+      "pt": "Revise e personalize as conexões do modelo. Aprove, rejeite ou modifique conexões individuais antes de carregar em seu projeto.",
+      "it": "Rivedi e personalizza le connessioni del modello. Approva, rifiuta o modifica le singole connessioni prima di caricarle nel tuo progetto."
+    }
+  ]
+}
