@@ -134,6 +134,25 @@ save_merged_translations <- function(translations, debug = FALSE, persistent = F
     stop("Package 'jsonlite' is required but not installed")
   }
 
+  # Deduplicate by English text before saving (shiny.i18n uses 'en' as row names)
+  # This is critical: shiny.i18n internally uses English text as identifiers
+  if (!is.null(translations$translation) && length(translations$translation) > 0) {
+    en_values <- sapply(translations$translation, function(entry) {
+      if (!is.null(entry$en)) entry$en else ""
+    })
+
+    # Find duplicates by English text
+    duplicate_indices <- which(duplicated(en_values) & en_values != "")
+
+    if (length(duplicate_indices) > 0) {
+      if (debug) {
+        cat(sprintf("[TRANSLATION LOADER] Removing %d duplicate English texts before saving\n",
+                    length(duplicate_indices)))
+      }
+      translations$translation <- translations$translation[-duplicate_indices]
+    }
+  }
+
   # Create file path - persistent or temp
   if (persistent) {
     temp_file <- file.path("translations", "_merged_translations.json")
