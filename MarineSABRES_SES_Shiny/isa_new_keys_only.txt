@@ -1,0 +1,24 @@
+ Validation Errors
+Activities
+Drivers
+Ecosystem Services
+Entry removed
+Exercise 0 saved successfully!
+Exercise 1 saved:
+Exercise 2a saved:
+Exercise 2b saved:
+Exercise 3 saved:
+Exercise 4 saved:
+Exercise 5 saved:
+Exercise 6 saved:
+Goods & Benefits
+Loop connection added
+Marine Processes
+OK
+Please add at least one Ecosystem Service entry before saving.
+Please add at least one Good/Benefit entry before saving.
+Please add at least one valid Ecosystem Service entry.
+Please add at least one valid Good/Benefit entry.
+Please fix the following issues before saving:
+Pressures
+loop connections

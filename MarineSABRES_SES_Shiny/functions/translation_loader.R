@@ -141,22 +141,33 @@ load_translations <- function(base_path = "translations", debug = FALSE) {
   return(result)
 }
 
-#' Save Merged Translations to Temp File
+#' Save Merged Translations to File
 #'
-#' Saves merged translations to a temporary JSON file for use by shiny.i18n
+#' Saves merged translations to a JSON file for use by shiny.i18n
 #'
 #' @param translations Merged translation list
 #' @param debug Print debug information (default: FALSE)
-#' @return Path to temporary JSON file
+#' @param persistent Use persistent file in translations directory instead of temp (default: FALSE)
+#' @return Path to JSON file
 #' @export
-save_merged_translations <- function(translations, debug = FALSE) {
+save_merged_translations <- function(translations, debug = FALSE, persistent = FALSE) {
 
   if (!requireNamespace("jsonlite", quietly = TRUE)) {
     stop("Package 'jsonlite' is required but not installed")
   }
 
-  # Create temp file
-  temp_file <- tempfile(pattern = "marinesabres_translations_", fileext = ".json")
+  # Create file path - persistent or temp
+  if (persistent) {
+    temp_file <- file.path("translations", "_merged_translations.json")
+    if (debug) {
+      cat(sprintf("[TRANSLATION LOADER] Using persistent file: %s\n", temp_file))
+    }
+  } else {
+    temp_file <- tempfile(pattern = "marinesabres_translations_", fileext = ".json")
+    if (debug) {
+      cat(sprintf("[TRANSLATION LOADER] Using temp file: %s\n", temp_file))
+    }
+  }
 
   # Convert to JSON and write
   tryCatch({
@@ -313,12 +324,14 @@ get_translation_stats <- function(translations) {
 #' @param validate Run validation checks (default: FALSE)
 #' @param debug Print debug information (default: FALSE)
 #' @param include_legacy Include legacy translation.json.backup for backwards compatibility (default: TRUE)
-#' @return Path to temporary merged translation JSON file
+#' @param persistent Save to persistent file instead of temp file (default: TRUE)
+#' @return Path to merged translation JSON file
 #' @export
 init_modular_translations <- function(base_path = "translations",
                                       validate = FALSE,
                                       debug = FALSE,
-                                      include_legacy = TRUE) {
+                                      include_legacy = TRUE,
+                                      persistent = TRUE) {
 
   if (debug) {
     cat("[TRANSLATION SYSTEM] Initializing modular translation system...\n")
@@ -386,8 +399,8 @@ init_modular_translations <- function(base_path = "translations",
     cat(sprintf("  - Flat keys: %d\n", stats$flat_keys))
   }
 
-  # Save to temporary file
-  temp_file <- save_merged_translations(merged_translations, debug = debug)
+  # Save to file (persistent or temp)
+  temp_file <- save_merged_translations(merged_translations, debug = debug, persistent = persistent)
 
   if (debug) {
     cat("[TRANSLATION SYSTEM] Initialization complete!\n")

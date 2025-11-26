@@ -107,22 +107,16 @@ if (USE_MODULAR_TRANSLATIONS) {
   translation_file <- init_modular_translations(
     base_path = "translations",
     validate = DEBUG_I18N,
-    debug = DEBUG_I18N
+    debug = DEBUG_I18N,
+    persistent = TRUE  # Use persistent file to avoid session cleanup issues
   )
 
   # Initialize translator with merged translations
   i18n <- Translator$new(translation_json_path = translation_file)
 
-  # Clean up temp file on R session end
-  reg.finalizer(
-    globalenv(),
-    function(e) {
-      if (exists("translation_file") && file.exists(translation_file)) {
-        unlink(translation_file)
-      }
-    },
-    onexit = TRUE
-  )
+  # Note: No cleanup needed for persistent translation file
+  # The file is kept in translations/_merged_translations.json
+  # and will be overwritten on next initialization
 } else {
   # Fallback to monolithic translation file
   cat("[I18N] Using legacy monolithic translation file\n")

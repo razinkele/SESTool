@@ -1,0 +1,17 @@
+Error: Invalid project data structure
+Error: File save failed or file is empty
+Project saved successfully!
+Error saving project:
+Error: Invalid project file structure. This may not be a valid MarineSABRES project file.
+Project loaded successfully!
+Error loading project:
+Data exported successfully!
+No CLD data to export. Please create a CLD first.
+Visualization exported successfully!
+Large network detected:
+Loop detection may take longer. Consider reducing max_cycles or max_loop_length.
+Graph too large for reliable loop detection. Please simplify the network first.
+Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.
+Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.
+Error during loop detection:
+loops. Displaying first

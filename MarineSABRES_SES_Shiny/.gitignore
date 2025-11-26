@@ -92,3 +92,4 @@ api_keys.txt
 
 # Testing
 tests/testthat/_snaps/
+translations/_merged_translations.json

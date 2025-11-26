@@ -271,6 +271,30 @@ ui <- dashboardPage(
 # ============================================================================
 
 server <- function(input, output, session) {
+  # === DIAGNOSTICS: Print project data element counts and IDs at startup and on load ===
+  observe({
+    data <- project_data()
+    if (!is.null(data) && !is.null(data$data$isa_data)) {
+      cat("[DIAGNOSTIC] Project data loaded\n")
+      for (etype in c("drivers", "activities", "pressures", "marine_processes", "ecosystem_services", "goods_benefits", "responses")) {
+        el <- data$data$isa_data[[etype]]
+        if (!is.null(el) && nrow(el) > 0) {
+          cat(sprintf("[DIAGNOSTIC] %s: %d elements\n", etype, nrow(el)))
+          cat(sprintf("[DIAGNOSTIC] %s IDs: %s\n", etype, paste(head(el$ID, 10), collapse=", ")))
+        } else {
+          cat(sprintf("[DIAGNOSTIC] %s: 0 elements\n", etype))
+        }
+      }
+      if (!is.null(data$data$isa_data$adjacency_matrices)) {
+        cat("[DIAGNOSTIC] Adjacency matrices present:\n")
+        cat(paste(names(data$data$isa_data$adjacency_matrices), collapse=", "), "\n")
+      } else {
+        cat("[DIAGNOSTIC] No adjacency matrices present\n")
+      }
+    } else {
+      cat("[DIAGNOSTIC] Project data or isa_data is NULL\n")
+    }
+  })
 
   cat("\n")
   cat("=====================================\n")
@@ -280,7 +304,46 @@ server <- function(input, output, session) {
   cat("=====================================\n")
   cat("\n")
 
-  # ========== BOOKMARKING SETUP ==========
+  # ========== AUTO-LOAD DEFAULT TEMPLATE IF EMPTY ========== 
+  observe({
+    # Only run once at startup
+    isolate({
+      data <- project_data()
+      # Check if all SES element types are empty or missing
+      is_empty <- function(df) is.null(df) || (is.data.frame(df) && nrow(df) == 0)
+      isa <- data$data$isa_data
+      if (is.null(isa) || (
+        is_empty(isa$drivers) && is_empty(isa$activities) && is_empty(isa$pressures) &&
+        is_empty(isa$marine_processes) && is_empty(isa$ecosystem_services) &&
+        is_empty(isa$goods_benefits) && is_empty(isa$responses)
+      )) {
+        cat("[AUTOLOAD] No SES data found, loading default template...\n")
+        # Load the migrated Caribbean template (update path if needed)
+        template_path <- "data/Caribbean_SES_Template_migrated.json"
+        if (file.exists(template_path)) {
+          template <- load_template_from_json(template_path)
+          # Build project_data structure
+          new_data <- data
+          new_data$data$isa_data$drivers <- template$drivers
+          new_data$data$isa_data$activities <- template$activities
+          new_data$data$isa_data$pressures <- template$pressures
+          new_data$data$isa_data$marine_processes <- template$marine_processes
+          new_data$data$isa_data$ecosystem_services <- template$ecosystem_services
+          new_data$data$isa_data$goods_benefits <- template$goods_benefits
+          new_data$data$isa_data$responses <- template$responses
+          new_data$data$isa_data$adjacency_matrices <- template$adjacency_matrices
+          new_data$data$metadata$template_used <- template$template_name %||% "Caribbean_SES_Template"
+          new_data$data$metadata$source <- "autoloaded_default_template"
+          new_data$last_modified <- Sys.time()
+          project_data(new_data)
+          cat("[AUTOLOAD] Default template loaded successfully.\n")
+        } else {
+          cat("[AUTOLOAD] ERROR: Default template file not found at:", template_path, "\n")
+        }
+      }
+    })
+  })
+  # ========== BOOKMARKING SETUP ========== 
   # Enable bookmarking for this session
   setBookmarkExclude(c("save_project", "load_project", "confirm_save",
                        "confirm_load", "trigger_bookmark"))
@@ -476,13 +539,34 @@ server <- function(input, output, session) {
   # Pass autosave_enabled reactive so module respects user's setting
   auto_save_server("auto_save", project_data, i18n, autosave_enabled)
 
+  # ========== LANGUAGE CHANGE TRIGGER ========== 
+  # Create a reactive value that changes when language changes
+  # This forces UI elements to re-render when language is switched
+  lang_trigger <- reactiveVal(0)
+  last_lang <- reactiveVal(i18n$get_translation_language())
+
+  # Observe language changes and trigger re-render only if language actually changes
+  observe({
+    current_lang <- i18n$get_translation_language()
+    if (!identical(current_lang, last_lang())) {
+      lang_trigger(lang_trigger() + 1)
+      last_lang(current_lang)
+      cat(sprintf("[LANGUAGE] Language trigger updated: %s (count: %d)\n",
+                  current_lang, lang_trigger()))
+    }
+  })
+
   # ========== DYNAMIC SIDEBAR MENU ==========
   # Renders sidebar menu dynamically based on current language and user level
   # This allows the menu to update when language or user level changes
   output$dynamic_sidebar <- renderMenu({
+    # Add dependency on language trigger to force re-render on language change
+    lang_trigger()
+
     tryCatch({
       cat("[SIDEBAR] Rendering dynamic sidebar...\n")
       cat(sprintf("[SIDEBAR] User level: %s\n", user_level()))
+      cat(sprintf("[SIDEBAR] Current language: %s\n", i18n$get_translation_language()))
       menu <- generate_sidebar_menu(user_level(), i18n)
       cat("[SIDEBAR] Sidebar generated successfully\n")
       menu

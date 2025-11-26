@@ -1,0 +1,323 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "common.buttons.save",
+      "en": "Save",
+      "es": "Guardar",
+      "fr": "Enregistrer",
+      "de": "Speichern",
+      "lt": "Išsaugoti",
+      "pt": "Salvar",
+      "it": "Salva"
+    },
+    {
+      "key": "common.buttons.cancel",
+      "en": "Cancel",
+      "es": "Cancelar",
+      "fr": "Annuler",
+      "de": "Abbrechen",
+      "lt": "Atšaukti",
+      "pt": "Cancelar",
+      "it": "Annulla"
+    },
+    {
+      "key": "common.buttons.apply",
+      "en": "Apply",
+      "es": "Aplicar",
+      "fr": "Appliquer",
+      "de": "Anwenden",
+      "lt": "Taikyti",
+      "pt": "Aplicar",
+      "it": "Applica"
+    },
+    {
+      "key": "common.buttons.delete",
+      "en": "Delete",
+      "es": "Eliminar",
+      "fr": "Supprimer",
+      "de": "Löschen",
+      "lt": "Ištrinti",
+      "pt": "Excluir",
+      "it": "Elimina"
+    },
+    {
+      "key": "common.buttons.close",
+      "en": "Close",
+      "es": "Cerrar",
+      "fr": "Fermer",
+      "de": "Schließen",
+      "lt": "Uždaryti",
+      "pt": "Fechar",
+      "it": "Chiudi"
+    },
+    {
+      "key": "common.buttons.next",
+      "en": "Next",
+      "es": "Siguiente",
+      "fr": "Suivant",
+      "de": "Weiter",
+      "lt": "Kitas",
+      "pt": "Próximo",
+      "it": "Avanti"
+    },
+    {
+      "key": "common.buttons.previous",
+      "en": "Previous",
+      "es": "Anterior",
+      "fr": "Précédent",
+      "de": "Zurück",
+      "lt": "Ankstesnis",
+      "pt": "Anterior",
+      "it": "Precedente"
+    },
+    {
+      "key": "common.buttons.back",
+      "en": "Back",
+      "es": "Atrás",
+      "fr": "Retour",
+      "de": "Zurück",
+      "lt": "Atgal",
+      "pt": "Voltar",
+      "it": "Indietro"
+    },
+    {
+      "key": "common.buttons.continue",
+      "en": "Continue",
+      "es": "Continuar",
+      "fr": "Continuer",
+      "de": "Fortfahren",
+      "lt": "Tęsti",
+      "pt": "Continuar",
+      "it": "Continua"
+    },
+    {
+      "key": "common.buttons.confirm",
+      "en": "Confirm",
+      "es": "Confirmar",
+      "fr": "Confirmer",
+      "de": "Bestätigen",
+      "lt": "Patvirtinti",
+      "pt": "Confirmar",
+      "it": "Conferma"
+    },
+    {
+      "key": "common.buttons.add",
+      "en": "Add",
+      "es": "Agregar",
+      "fr": "Ajouter",
+      "de": "Hinzufügen",
+      "lt": "Pridėti",
+      "pt": "Adicionar",
+      "it": "Aggiungi"
+    },
+    {
+      "key": "common.buttons.remove",
+      "en": "Remove",
+      "es": "Eliminar",
+      "fr": "Retirer",
+      "de": "Entfernen",
+      "lt": "Pašalinti",
+      "pt": "Remover",
+      "it": "Rimuovi"
+    },
+    {
+      "key": "common.buttons.edit",
+      "en": "Edit",
+      "es": "Editar",
+      "fr": "Modifier",
+      "de": "Bearbeiten",
+      "lt": "Redaguoti",
+      "pt": "Editar",
+      "it": "Modifica"
+    },
+    {
+      "key": "common.buttons.update",
+      "en": "Update",
+      "es": "Actualizar",
+      "fr": "Mettre à jour",
+      "de": "Aktualisieren",
+      "lt": "Atnaujinti",
+      "pt": "Atualizar",
+      "it": "Aggiorna"
+    },
+    {
+      "key": "common.buttons.submit",
+      "en": "Submit",
+      "es": "Enviar",
+      "fr": "Soumettre",
+      "de": "Absenden",
+      "lt": "Pateikti",
+      "pt": "Enviar",
+      "it": "Invia"
+    },
+    {
+      "key": "common.buttons.reset",
+      "en": "Reset",
+      "es": "Restablecer",
+      "fr": "Réinitialiser",
+      "de": "Zurücksetzen",
+      "lt": "Atkurti",
+      "pt": "Redefinir",
+      "it": "Ripristina"
+    },
+    {
+      "key": "common.buttons.clear",
+      "en": "Clear",
+      "es": "Limpiar",
+      "fr": "Effacer",
+      "de": "Löschen",
+      "lt": "Išvalyti",
+      "pt": "Limpar",
+      "it": "Cancella"
+    },
+    {
+      "key": "common.buttons.download",
+      "en": "Download",
+      "es": "Descargar",
+      "fr": "Télécharger",
+      "de": "Herunterladen",
+      "lt": "Atsisiųsti",
+      "pt": "Descarregar",
+      "it": "Scarica"
+    },
+    {
+      "key": "common.buttons.upload",
+      "en": "Upload",
+      "es": "Subir",
+      "fr": "Téléverser",
+      "de": "Hochladen",
+      "lt": "Įkelti",
+      "pt": "Carregar",
+      "it": "Carica"
+    },
+    {
+      "key": "common.buttons.export",
+      "en": "Export",
+      "es": "Exportar",
+      "fr": "Exporter",
+      "de": "Exportieren",
+      "lt": "Eksportuoti",
+      "pt": "Exportar",
+      "it": "Esporta"
+    },
+    {
+      "key": "common.buttons.import",
+      "en": "Import",
+      "es": "Importar",
+      "fr": "Importer",
+      "de": "Importieren",
+      "lt": "Importuoti",
+      "pt": "Importar",
+      "it": "Importa"
+    },
+    {
+      "key": "common.buttons.search",
+      "en": "Search",
+      "es": "Buscar",
+      "fr": "Rechercher",
+      "de": "Suchen",
+      "lt": "Ieškoti",
+      "pt": "Pesquisar",
+      "it": "Cerca"
+    },
+    {
+      "key": "common.buttons.filter",
+      "en": "Filter",
+      "es": "Filtrar",
+      "fr": "Filtrer",
+      "de": "Filtern",
+      "lt": "Filtruoti",
+      "pt": "Filtrar",
+      "it": "Filtra"
+    },
+    {
+      "key": "common.buttons.refresh",
+      "en": "Refresh",
+      "es": "Actualizar",
+      "fr": "Actualiser",
+      "de": "Aktualisieren",
+      "lt": "Atnaujinti",
+      "pt": "Atualizar",
+      "it": "Aggiorna"
+    },
+    {
+      "key": "common.buttons.help",
+      "en": "Help",
+      "es": "Ayuda",
+      "fr": "Aide",
+      "de": "Hilfe",
+      "lt": "Pagalba",
+      "pt": "Ajuda",
+      "it": "Aiuto"
+    },
+    {
+      "key": "common.buttons.load",
+      "en": "Load",
+      "es": "Cargar",
+      "fr": "Charger",
+      "de": "Laden",
+      "lt": "Įkelti",
+      "pt": "Carregar",
+      "it": "Carica"
+    },
+    {
+      "key": "common.buttons.reject",
+      "en": "Reject",
+      "es": "Rechazar",
+      "fr": "Rejeter",
+      "de": "Ablehnen",
+      "lt": "Atmesti",
+      "pt": "Rejeitar",
+      "it": "Rifiutare"
+    },
+    {
+      "key": "common.buttons.cancel",
+      "en": "cancel",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.buttons.create",
+      "en": "create",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.buttons.delete",
+      "en": "delete",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "common.buttons.add",
+      "en": "add",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    }
+  ]
+}

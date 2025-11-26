@@ -96,7 +96,18 @@
       "Bash(cmd /c \"dir /B translations\\data\")",
       "Bash(cmd /c \"dir /B translations\\ui\")",
       "Bash(cmd /c \"findstr /S /C:TODO translations\\common\\*.json translations\\ui\\*.json translations\\data\\*.json\")",
-      "Bash(cmd /c:*)"
+      "Bash(cmd /c:*)",
+      "Bash(sort:*)",
+      "Bash(__NEW_LINE__ echo \"=== Checking progress_indicator_module.R structure ===\")",
+      "Bash(__NEW_LINE__ if [ -d \"tests\" ])",
+      "Bash(then)",
+      "Bash(else)",
+      "Bash(fi)",
+      "Bash(jq:*)",
+      "Bash(if [ -f .gitignore ])",
+      "Bash(then echo translations/_merged_translations.json)",
+      "Bash(else echo translations/_merged_translations.json)",
+      "Bash(chmod:*)"
     ],
     "deny": [],
     "ask": []
