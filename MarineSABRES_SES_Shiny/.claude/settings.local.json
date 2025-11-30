@@ -107,7 +107,16 @@
       "Bash(if [ -f .gitignore ])",
       "Bash(then echo translations/_merged_translations.json)",
       "Bash(else echo translations/_merged_translations.json)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "WebSearch",
+      "WebFetch(domain:appsilon.github.io)",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(do basename \"$f\" .R)",
+      "Bash(xargs:*)",
+      "Bash(do)",
+      "Bash(if grep -q \"\"\"$key\"\"\" scripts/reverse_key_mapping.json)",
+      "Bash(do echo '=== Searching for: $key ===' jq -r \".translation[] | select(.en | contains($key)) | \\(.key // .en)\" translations/translation.json.backup)",
+      "Bash(bash:*)"
     ],
     "deny": [],
     "ask": []

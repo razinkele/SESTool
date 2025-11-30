@@ -102,7 +102,7 @@ if $all_files_exist; then
 fi
 
 # Directories
-dirs=("modules" "functions" "server" "www" "data" "translations")
+dirs=("modules" "functions" "server" "www" "data" "translations" "scripts")
 all_dirs_exist=true
 for dir in "${dirs[@]}"; do
     if [ ! -d "$app_dir/$dir" ]; then
@@ -113,6 +113,41 @@ done
 
 if $all_dirs_exist; then
     print_check "All required directories present" "PASS"
+fi
+
+# Check translation subdirectories (modular structure)
+echo ""
+echo "[2c] Checking Modular Translation Structure..."
+
+translation_subdirs=("common" "modules" "ui" "data")
+all_translation_subdirs_exist=true
+for subdir in "${translation_subdirs[@]}"; do
+    if [ -d "$app_dir/translations/$subdir" ]; then
+        print_check "Translation subdir: $subdir" "PASS"
+    else
+        print_check "Translation subdir: $subdir" "FAIL" "Directory not found"
+        all_translation_subdirs_exist=false
+    fi
+done
+
+# Check for reverse key mapping file (DEPRECATED - now optional)
+if [ -f "$app_dir/scripts/reverse_key_mapping.json" ]; then
+    print_check "Reverse key mapping file (deprecated)" "PASS"
+    echo "   File is deprecated but still present"
+else
+    print_check "Reverse key mapping file (deprecated)" "PASS"
+    echo "   File not present (deprecated feature removed)"
+fi
+
+# Check for modular translation files
+if $all_translation_subdirs_exist; then
+    translation_file_count=$(find "$app_dir/translations" -type f -name "*.json" ! -name "*backup*" ! -name "translation.json" | wc -l)
+    if [ "$translation_file_count" -gt 0 ]; then
+        print_check "Modular translation files" "PASS"
+        echo "   Found $translation_file_count translation files"
+    else
+        print_check "Modular translation files" "FAIL" "No modular translation files found"
+    fi
 fi
 
 # Optional directories

@@ -15,6 +15,9 @@
 #' @param i18n The translator object.
 #' @return A Shiny UI tag list.
 create_module_header <- function(ns, title_key, subtitle_key, help_id, i18n) {
+  # Use the wrapper directly to translate namespaced keys
+  # This gives correct translations but they won't update dynamically when language changes
+  # User needs to refresh the page after changing language to see updated module headers
   tagList(
     div(style = "display: flex; justify-content: space-between; align-items: center;",
       div(
@@ -29,6 +32,35 @@ create_module_header <- function(ns, title_key, subtitle_key, help_id, i18n) {
     ),
     hr()
   )
+}
+
+# ============================================================================
+# REACTIVE MODULE HEADER
+# ============================================================================
+
+#' Create a reactive module header observer
+#'
+#' Call this in your module's server function to make the header reactive to language changes.
+#'
+#' @param output The output object from the module's server function.
+#' @param ns The namespace function from the module's session.
+#' @param header_id The output ID for the header (default: "module_header").
+#' @param title_key The translation key for the main title.
+#' @param subtitle_key The translation key for the subtitle.
+#' @param help_id The input ID for the help button.
+#' @param i18n The translator object.
+#' @return None (sets up reactive output)
+create_reactive_header <- function(output, ns, header_id = "module_header",
+                                   title_key, subtitle_key, help_id, i18n) {
+  output[[header_id]] <- renderUI({
+    create_module_header(
+      ns = ns,
+      title_key = title_key,
+      subtitle_key = subtitle_key,
+      help_id = help_id,
+      i18n = i18n
+    )
+  })
 }
 
 # ============================================================================

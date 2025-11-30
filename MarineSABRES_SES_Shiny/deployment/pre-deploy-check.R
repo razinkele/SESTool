@@ -52,7 +52,7 @@ required_files <- c(
   "VERSION",
   "VERSION_INFO.json",
   "version_manager.R",
-  "translations/translation.json"
+  "functions/translation_loader.R"
 )
 
 for (file in required_files) {
@@ -107,53 +107,102 @@ if (dir.exists("data")) {
 }
 
 # ============================================================================
-# Check 3: Validate translation.json
+# Check 3: Validate Modular Translation System
 # ============================================================================
-cat("\n[3] Validating Translation File...\n")
+cat("\n[3] Validating Modular Translation System...\n")
 
-if (file.exists("translations/translation.json")) {
+# Check for translation subdirectories
+translation_subdirs <- c("common", "modules", "ui", "data")
+all_subdirs_exist <- TRUE
+for (subdir in translation_subdirs) {
+  subdir_path <- file.path("translations", subdir)
+  if (dir.exists(subdir_path)) {
+    print_check(paste("Translation subdir:", subdir), "PASS")
+  } else {
+    print_check(paste("Translation subdir:", subdir), "ERROR", "Directory not found")
+    all_subdirs_exist <- FALSE
+  }
+}
+
+# Check for translation files in subdirectories
+if (all_subdirs_exist) {
   tryCatch({
     library(jsonlite)
-    trans_data <- fromJSON("translations/translation.json", simplifyVector = FALSE)
-    
-    # Check if it has the expected structure
-    if (is.list(trans_data) && "translation" %in% names(trans_data)) {
-      translations <- trans_data$translation
-      print_check("Translation JSON structure", "PASS")
-      cat(sprintf("   Found %d translation entries\n", length(translations)))
-      
-      # Check for duplicates
-      en_texts <- sapply(translations, function(x) x$en)
-      if (any(duplicated(en_texts))) {
-        dup_count <- sum(duplicated(en_texts))
-        print_check("Translation duplicates", "WARN", 
-                   sprintf("%d duplicate entries found", dup_count))
-      } else {
-        print_check("Translation duplicates", "PASS")
+
+    # Find all modular translation JSON files
+    json_files <- list.files(
+      path = "translations",
+      pattern = "\\.json$",
+      full.names = TRUE,
+      recursive = TRUE
+    )
+
+    # Exclude backups and legacy files
+    json_files <- json_files[!grepl("backup|translation\\.json$|ui_flat_keys\\.json$",
+                                    json_files, ignore.case = TRUE)]
+
+    # Only include modular files
+    json_files <- json_files[grepl("(_[a-z]+\\.json$|/common/|/modules/|/ui/|/data/)", json_files)]
+
+    if (length(json_files) > 0) {
+      print_check("Modular translation files", "PASS")
+      cat(sprintf("   Found %d modular translation files\n", length(json_files)))
+
+      # Validate structure of each file
+      valid_count <- 0
+      invalid_files <- c()
+
+      for (file_path in json_files) {
+        data <- tryCatch({
+          fromJSON(file_path, simplifyVector = FALSE)
+        }, error = function(e) {
+          invalid_files <- c(invalid_files, basename(file_path))
+          NULL
+        })
+
+        if (!is.null(data) && "languages" %in% names(data) && "translation" %in% names(data)) {
+          valid_count <- valid_count + 1
+        } else if (!is.null(data)) {
+          invalid_files <- c(invalid_files, basename(file_path))
+        }
       }
-      
-      # Check for required languages
-      if ("languages" %in% names(trans_data)) {
-        required_langs <- c("en", "es", "fr", "de", "lt", "pt", "it")
-        available_langs <- unlist(trans_data$languages)
-        missing_langs <- setdiff(required_langs, available_langs)
-        if (length(missing_langs) > 0) {
-          print_check("Translation languages", "WARN", 
-                     paste("Missing languages:", paste(missing_langs, collapse = ", ")))
+
+      if (length(invalid_files) > 0) {
+        print_check("Translation file structure", "WARN",
+                   sprintf("%d files with invalid structure: %s",
+                          length(invalid_files),
+                          paste(head(invalid_files, 3), collapse = ", ")))
+      } else {
+        print_check("Translation file structure", "PASS")
+      }
+
+      # Check for reverse key mapping (DEPRECATED - now optional)
+      if (file.exists("scripts/reverse_key_mapping.json")) {
+        mapping_data <- tryCatch({
+          fromJSON("scripts/reverse_key_mapping.json", simplifyVector = TRUE)
+        }, error = function(e) {
+          NULL
+        })
+
+        if (!is.null(mapping_data) && length(mapping_data) > 0) {
+          print_check("Reverse key mapping (deprecated)", "PASS")
+          cat(sprintf("   Found %d key mappings (file is deprecated but still present)\n", length(mapping_data)))
         } else {
-          print_check("Translation languages", "PASS")
+          print_check("Reverse key mapping (deprecated)", "WARN", "File exists but appears empty or invalid")
         }
       } else {
-        print_check("Translation languages", "WARN", "No 'languages' key in JSON")
+        print_check("Reverse key mapping (deprecated)", "PASS")
+        cat("   File not present (deprecated feature removed)\n")
       }
+
     } else {
-      print_check("Translation JSON structure", "ERROR", "Invalid JSON structure")
+      print_check("Modular translation files", "ERROR", "No modular translation files found")
     }
   }, error = function(e) {
-    print_check("Translation JSON parsing", "ERROR", e$message)
+    print_check("Translation validation", "ERROR", e$message)
   })
 } else {
-  print_check("Translation file", "ERROR", "File not found")
+  print_check("Translation system", "ERROR", "Required translation subdirectories missing")
 }
 
 # ============================================================================

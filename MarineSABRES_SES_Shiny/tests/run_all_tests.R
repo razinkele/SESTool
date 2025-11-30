@@ -61,6 +61,42 @@ run_test_suite(
   "test_network_analysis_functions.R"
 )
 
+# Test 3: testthat Test Suite (includes connection review tests)
+cat("\n▶ Running: testthat Test Suite\n")
+cat(strrep("─", 70), "\n")
+start_time <- Sys.time()
+tryCatch({
+  library(testthat)
+  test_results <- test_dir("testthat", reporter = "summary")
+  elapsed <- as.numeric(Sys.time() - start_time, units = "secs")
+
+  # Extract test counts from results
+  if (!is.null(test_results)) {
+    passed_count <- sum(sapply(test_results, function(r) sum(r$passed)))
+    failed_count <- sum(sapply(test_results, function(r) sum(r$failed)))
+    warning_count <- sum(sapply(test_results, function(r) sum(r$warning)))
+
+    if (failed_count > 0) {
+      results[["testthat Suite"]] <<- list(status = "FAIL", time = elapsed, error = paste(failed_count, "tests failed"))
+      cat(sprintf("❌ testthat Suite failed in %.2fs (%d failed)\n", elapsed, failed_count))
+    } else if (warning_count > 0) {
+      results[["testthat Suite"]] <<- list(status = "WARN", time = elapsed, error = NULL)
+      cat(sprintf("⚠️  testthat Suite completed with warnings in %.2fs\n", elapsed))
+    } else {
+      results[["testthat Suite"]] <<- list(status = "PASS", time = elapsed, error = NULL)
+      cat(sprintf("✅ testthat Suite completed in %.2fs (%d tests passed)\n", elapsed, passed_count))
+    }
+  } else {
+    results[["testthat Suite"]] <<- list(status = "PASS", time = elapsed, error = NULL)
+    cat(sprintf("✅ testthat Suite completed in %.2fs\n", elapsed))
+  }
+}, error = function(e) {
+  elapsed <- as.numeric(Sys.time() - start_time, units = "secs")
+  results[["testthat Suite"]] <<- list(status = "FAIL", time = elapsed, error = conditionMessage(e))
+  cat(sprintf("❌ testthat Suite failed in %.2fs\n", elapsed))
+  cat(sprintf("   Error: %s\n", conditionMessage(e)))
+})
+
 # ==============================================================================
 # SUMMARY REPORT
 # ==============================================================================

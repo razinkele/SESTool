@@ -1,0 +1,34 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no"
+  ],
+  "translation": {
+    "modules.import.data.title": {
+      "en": "Import Data from Excel",
+      "es": "Importar Datos desde Excel",
+      "fr": "Importer des Données depuis Excel",
+      "de": "Daten aus Excel importieren",
+      "lt": "Importuoti duomenis iš Excel",
+      "pt": "Importar Dados do Excel",
+      "it": "Importa Dati da Excel",
+      "no": "Importer data fra Excel"
+    },
+    "modules.import.data.subtitle": {
+      "en": "Upload your ISA framework data from a properly formatted Excel file.",
+      "es": "Cargue sus datos del marco ISA desde un archivo Excel correctamente formateado.",
+      "fr": "Téléchargez vos données du cadre ISA à partir d'un fichier Excel correctement formaté.",
+      "de": "Laden Sie Ihre ISA-Framework-Daten aus einer korrekt formatierten Excel-Datei hoch.",
+      "lt": "Įkelkite savo ISA sistemos duomenis iš tinkamai suformatuoto Excel failo.",
+      "pt": "Carregue seus dados da estrutura ISA de um arquivo Excel formatado corretamente.",
+      "it": "Carica i tuoi dati del framework ISA da un file Excel formattato correttamente.",
+      "no": "Last opp dine ISA-rammeverk-data fra en riktig formatert Excel-fil."
+    }
+  }
+}

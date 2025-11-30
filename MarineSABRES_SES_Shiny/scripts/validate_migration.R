@@ -15,36 +15,41 @@ cat(strrep("=", 70), "\n\n")
 source("functions/translation_loader.R")
 
 cat("[1/6] Testing translation system initialization...\n")
-translation_file <- tryCatch({
-  init_modular_translations(
+translation_system <- tryCatch({
+  init_translation_system(
     base_path = "translations",
+    mapping_path = "scripts/reverse_key_mapping.json",
     validate = TRUE,
-    debug = FALSE,
+    debug = TRUE,
     persistent = TRUE,
-    enforce_namespaced = TRUE
+    use_direct_lookup = TRUE
   )
 }, error = function(e) {
   cat("✗ FAILED:", e$message, "\n")
   quit(status = 1)
 })
 
-if (!file.exists(translation_file)) {
+if (!file.exists(translation_system$file)) {
   cat("✗ FAILED: Translation file not created\n")
   quit(status = 1)
 }
 
-cat("✓ Translation file created:", translation_file, "\n")
-cat("  Size:", round(file.info(translation_file)$size / 1024, 1), "KB\n\n")
+cat("✓ Translation file created:", translation_system$file, "\n")
+cat("  Size:", round(file.info(translation_system$file)$size / 1024, 1), "KB\n\n")
 
-cat("[2/6] Testing Translator initialization...\n")
-i18n <- tryCatch({
-  Translator$new(translation_json_path = translation_file)
-}, error = function(e) {
-  cat("✗ FAILED:", e$message, "\n")
-  quit(status = 1)
-})
+cat("[2/6] Testing wrapper initialization...\n")
+i18n <- list(
+  t = translation_system$wrapper,
+  translator = translation_system$translator,
+  set_translation_language = function(lang) {
+    translation_system$translator$set_translation_language(lang)
+  },
+  get_translation_language = function() {
+    translation_system$translator$get_translation_language()
+  }
+)
 
-cat("✓ Translator initialized successfully\n\n")
+cat("✓ Translation wrapper initialized successfully\n\n")
 
 cat("[3/6] Testing sample namespaced keys...\n")
 test_keys <- list(
@@ -52,7 +57,7 @@ test_keys <- list(
   list(key = "common.buttons.save", expected = "Save"),
   list(key = "ui.sidebar.getting_started", expected_pattern = "Getting|started"),
   list(key = "ui.sidebar.dashboard", expected_pattern = "Dashboard|Panel"),
-  list(key = "modules.isa.data_entry.ex1", expected_pattern = ".*")  # Any ISA key
+  list(key = "modules.isa.ai_assistant.ai_assisted_isa_creation", expected_pattern = ".*")  # Any ISA key
 )
 
 passed <- 0
@@ -80,8 +85,8 @@ if (failed > 0) {
   cat("⚠ Some translations not working\n\n")
 }
 
-cat("[4/6] Testing all 7 languages...\n")
-langs <- c("en", "es", "fr", "de", "lt", "pt", "it")
+cat("[4/6] Testing all 8 languages...\n")
+langs <- c("en", "es", "fr", "de", "lt", "pt", "it", "no")
 test_key <- "common.buttons.close"
 
 results <- list()
@@ -100,17 +105,21 @@ if (unique_results >= 5) {  # At least 5 different translations
 }
 
 cat("[5/6] Checking for flat-key entries...\n")
-merged <- fromJSON(translation_file)
+merged <- fromJSON(translation_system$file, simplifyVector = FALSE)
 flat_keys <- 0
 namespaced_keys <- 0
 
-for (entry in merged$translation) {
-  if (is.null(entry$key)) {
-    flat_keys <- flat_keys + 1
-  } else if (!grepl("\\.", entry$key)) {
-    flat_keys <- flat_keys + 1
-  } else {
-    namespaced_keys <- namespaced_keys + 1
+if (is.list(merged$translation)) {
+  for (entry in merged$translation) {
+    if (is.list(entry)) {
+      if (is.null(entry$key)) {
+        flat_keys <- flat_keys + 1
+      } else if (!grepl("\\.", entry$key)) {
+        flat_keys <- flat_keys + 1
+      } else {
+        namespaced_keys <- namespaced_keys + 1
+      }
+    }
   }
 }
 

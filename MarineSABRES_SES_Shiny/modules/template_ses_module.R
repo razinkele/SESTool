@@ -43,7 +43,7 @@ template_ses_ui <- function(id, i18n) {
 
   fluidPage(
     useShinyjs(),
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     # Custom CSS
     tags$head(
@@ -176,8 +176,8 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
     output$template_header <- renderUI({
       create_module_header(
         ns = ns,
-        title_key = "Template-Based SES Creation",
-        subtitle_key = "Choose a pre-built template that matches your scenario and customize it to your needs",
+        title_key = "modules.ses.template.title",
+        subtitle_key = "modules.ses.template.subtitle",
         help_id = "help_template_ses",
         i18n = i18n
       )
@@ -915,6 +915,17 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
           rationale,
           rv$template_connections[[idx]]$to_name
         )
+      },
+      on_approve = function(idx, conn) {
+        # When approving, save the connection data (in case user didn't click Amend)
+        # This is important because the user might change sliders and click Accept directly
+        debug_log(sprintf("Connection #%d approved", idx), "TEMPLATE")
+        # No additional action needed - amendments are already saved via on_amend
+      },
+      on_reject = function(idx, conn) {
+        # When rejecting, just log it
+        debug_log(sprintf("Connection #%d rejected", idx), "TEMPLATE")
+        # No additional action needed - rejection is tracked in review_status
       }
     )
 
@@ -948,6 +959,53 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
       } else {
         # No approvals or rejections - keep all
         final_connections <- rv$template_connections
+      }
+
+      # CRITICAL: Apply any amendments that were made in the review module
+      # This ensures that changes to sliders/switches are saved even if user
+      # clicked Accept without clicking Amend first
+      if (length(amended_data) > 0) {
+        cat(sprintf("[CONN FINALIZE] Applying %d amendments to final connections\n", length(amended_data)))
+        for (amended_idx in names(amended_data)) {
+          # Convert character index to numeric
+          idx <- as.numeric(amended_idx)
+
+          # Check if this connection is in our final list
+          # Find position in original list
+          original_position <- which(seq_along(rv$template_connections) == idx)
+          if (length(original_position) > 0) {
+            # Find position in final_connections list
+            # We need to check which of the approved/kept indices this is
+            if (length(approved_idx) > 0) {
+              final_position <- which(approved_idx == idx)
+            } else if (length(rejected_idx) > 0) {
+              keep_idx <- setdiff(seq_along(rv$template_connections), rejected_idx)
+              final_position <- which(keep_idx == idx)
+            } else {
+              final_position <- idx
+            }
+
+            if (length(final_position) > 0 && final_position <= length(final_connections)) {
+              # Apply amendments
+              amendment <- amended_data[[amended_idx]]
+              if (!is.null(amendment$polarity)) {
+                final_connections[[final_position]]$polarity <- amendment$polarity
+                cat(sprintf("[CONN FINALIZE] Applied polarity amendment to connection #%d: %s\n",
+                           idx, amendment$polarity))
+              }
+              if (!is.null(amendment$strength)) {
+                final_connections[[final_position]]$strength <- amendment$strength
+                cat(sprintf("[CONN FINALIZE] Applied strength amendment to connection #%d: %s\n",
+                           idx, amendment$strength))
+              }
+              if (!is.null(amendment$confidence)) {
+                final_connections[[final_position]]$confidence <- amendment$confidence
+                cat(sprintf("[CONN FINALIZE] Applied confidence amendment to connection #%d: %d\n",
+                           idx, amendment$confidence))
+              }
+            }
+          }
+        }
       }
 
       debug_log(sprintf("Finalizing with %d of %d connections (rejected: %d)",

@@ -13,11 +13,11 @@ response_measures_ui <- function(id, i18n) {
 
   tagList(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     fluidRow(
       column(12,
-        create_module_header(ns, "Response Measures (R & M)", "Identify management interventions and policy responses to address system challenges.", "help_response", i18n)
+        create_module_header(ns, "modules.response.measures.title", "modules.response.measures.subtitle", "help_response", i18n)
       )
     ),
 

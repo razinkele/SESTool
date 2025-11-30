@@ -8,13 +8,13 @@ library(openxlsx)
 
 # Module UI ----
 pimsStakeholderUI <- function(id, i18n) {
-  shiny.i18n::usei18n(i18n)
+  # shiny.i18n::usei18n(i18n) removed - only call once in main UI
   ns <- NS(id)
 
   tagList(
     fluidRow(
       column(12,
-        create_module_header(ns, "pims_stakeholder_title", "pims_stakeholder_subtitle", "pims_stakeholder_help", i18n)
+        create_module_header(ns, "modules.pims.stakeholder.title", "modules.pims.stakeholder.subtitle", "pims_stakeholder_help", i18n)
       )
     ),
 

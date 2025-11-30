@@ -16,6 +16,186 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.2] - 2025-11-30 - "Connection Review Bug Fixes"
+
+### Fixed
+
+#### 🔴 CRITICAL: Connection Review Amendment System
+Four critical bugs in the template-based SES creation workflow have been fixed:
+
+- **Bug #1: Amendment Data Not Saved** ([modules/template_ses_module.R:964-1009](modules/template_ses_module.R#L964-L1009))
+  - **Problem:** Clicking "Amend" appeared to only save confidence level, not strength or polarity
+  - **Root Cause:** `amended_data` was retrieved from review module but **never applied** to final connections before building adjacency matrices
+  - **Impact:** HIGH - User modifications to connection strength and polarity were silently lost
+  - **Fix:**
+    - Added comprehensive amendment application logic (46 lines) before finalization
+    - Applies all three properties: polarity, strength, AND confidence
+    - Handles complex approval/rejection scenarios
+    - Added detailed logging to track each amendment applied
+  - **User Impact:** All slider and switch changes now persist correctly to the final SES model
+
+- **Bug #2: Missing on_approve Callback** ([modules/template_ses_module.R:919-924](modules/template_ses_module.R#L919-L924))
+  - **Problem:** "Accept" button behavior was inconsistent, appeared to reset values
+  - **Root Cause:** No `on_approve` callback defined in template module's connection review server call
+  - **Impact:** MEDIUM - No communication channel when user approved connections
+  - **Fix:**
+    - Added `on_approve` callback with logging
+    - Added `on_reject` callback for consistency
+    - Callbacks now properly handle approval/rejection events
+  - **User Impact:** Approve/Reject buttons work reliably with proper state tracking
+
+- **Bug #3: Amendments Lost During Finalization** (Combined fix with Bug #1)
+  - **Problem:** Changes made in review didn't appear when clicking "Finish" to complete SES
+  - **Root Cause:** Amendment data structure existed but was never merged with final connections
+  - **Impact:** CRITICAL - Users lost all their careful adjustments to connection properties
+  - **Fix:** Amendment application logic now runs BEFORE adjacency matrix construction
+  - **User Impact:** All review changes persist through to the completed SES model
+
+- **Bug #4: Unwanted Auto-Navigation** ([modules/connection_review_tabbed.R:716-746](modules/connection_review_tabbed.R#L716-L746))
+  - **Problem:** "System keeps going back between elements, without us clicking on them" (user video evidence)
+  - **Root Cause:** Auto-focus feature called `sendCustomMessage("focusButton")` after approve/reject, causing unwanted tab navigation in tabbed interface
+  - **Impact:** HIGH - Disorienting user experience, made review workflow frustrating
+  - **Fix:**
+    - Disabled auto-focus in both approve and reject button handlers
+    - Added detailed comments explaining why feature was removed
+    - Users now maintain manual control of navigation
+  - **User Impact:** No more unexpected jumping between connections or tabs
+
+### Added
+
+#### Testing Framework
+- **Connection Review Test Suite** ([tests/testthat/test-connection-review.R](tests/testthat/test-connection-review.R))
+  - 14 comprehensive tests covering all bug fixes
+  - Core functionality tests (3): Module initialization, batch categorization
+  - Amendment application tests (3): Data structure, property updates, matrix persistence
+  - Regression tests (4): Verification for each of the 4 reported bugs
+  - Edge case tests (4): Empty lists, partial amendments, rejected connections, multiple amendments
+  - Mock data generators for reliable testing
+  - Integration tests for complete review workflow
+
+### Technical Details
+
+#### Files Modified
+
+**modules/template_ses_module.R**
+- Lines 919-929: Added `on_approve` and `on_reject` callbacks
+- Lines 964-1009: Added comprehensive amendment application logic (46 new lines)
+  - Converts character indices to numeric
+  - Handles complex approval/rejection filtering
+  - Applies polarity, strength, and confidence amendments
+  - Logs each amendment for debugging
+  - Maintains backward compatibility with old data
+
+**modules/connection_review_tabbed.R**
+- Lines 716-725: Disabled auto-focus after approve (commented out with explanation)
+- Lines 737-746: Disabled auto-focus after reject (commented out with explanation)
+- Added detailed comments referencing user bug report
+
+**tests/testthat/test-connection-review.R** (NEW)
+- 14 tests, 300+ lines
+- Complete coverage of amendment system
+- Regression tests for all 4 bugs
+- Helper functions for mock data generation
+
+#### Code Flow (Amendment Application)
+
+```r
+# 1. User reviews connections in tabbed interface
+# 2. User adjusts sliders/switches → stored in rv$amended_data
+# 3. User clicks "Amend" → on_amend callback updates rv$template_connections
+# 4. User clicks "Accept" → on_approve callback logs approval
+# 5. User clicks "Finalize Template"
+# 6. NEW: Apply amended_data to final_connections (lines 964-1009)
+# 7. Build adjacency matrices from amended final_connections
+# 8. Save to project_data with all amendments preserved
+```
+
+#### Amendment Data Structure
+
+```r
+amended_data <- list(
+  "1" = list(
+    polarity = "+",          # From polarity switch
+    strength = "very strong", # From strength slider (1-5)
+    confidence = 5           # From confidence slider (1-5)
+  ),
+  "3" = list(polarity = "-", strength = "weak", confidence = 2)
+)
+```
+
+### Testing Protocol
+
+**Test Scenario 1: Amend and Approve Workflow**
+1. Load template with 20 connections
+2. Change connection #5: strength = "very strong", confidence = 5
+3. Click "Amend" → verify no error
+4. Click "Accept" → verify connection marked approved
+5. Click "Finalize Template"
+6. ✅ VERIFY: ISA data entry shows strength="very strong", confidence=5
+7. ✅ VERIFY: CLD edges have correct opacity based on confidence
+8. ✅ VERIFY: Matrix value = "+very strong:5"
+
+**Test Scenario 2: Multiple Amendments**
+1. Amend connections #2, #5, #8 with different values
+2. Approve all three
+3. Finalize template
+4. ✅ VERIFY: All 3 amendments persist
+5. ✅ VERIFY: Non-amended connections retain original values
+
+**Test Scenario 3: Amend Without Clicking Amend Button**
+1. Change sliders but DON'T click "Amend"
+2. Click "Accept" directly
+3. Finalize template
+4. ✅ VERIFY: Changes still saved (amendment data captured from sliders)
+
+**Test Scenario 4: No Auto-Navigation**
+1. Review connections in "Drivers → Activities" tab
+2. Click "Accept" on connection #3
+3. ✅ VERIFY: Stay in same tab, no jumping to connection #4
+4. ✅ VERIFY: User maintains manual control
+
+### Backward Compatibility
+
+- ✅ **Fully backward compatible** - No breaking changes
+- ✅ **Old data works unchanged** - Projects without amendments load normally
+- ✅ **Default behavior maintained** - Connections without amendments work as before
+- ✅ **No migration required**
+
+### Performance
+
+- **No performance impact** - Amendment application is O(n) where n = number of amendments
+- **Logging overhead minimal** - Only active during finalization
+- **Memory efficient** - Amendment data structure small (<1KB for typical use)
+
+### Known Limitations
+
+- Auto-navigation feature removed (was causing bug #4)
+  - Users must manually navigate between connections
+  - This is intentional to prevent disorienting tab switches
+  - Future: Could add "Next" button if requested
+
+### User-Reported Issues Resolved
+
+All issues from user bug report now resolved:
+- ✅ "Amend seems to just save the confidence level, not the strength"
+- ✅ "Accept resets the strengths and confidence levels"
+- ✅ "None of these seems to save to the next page, to finish the SES"
+- ✅ "System keeps going back between elements, without us clicking on them" (video evidence)
+
+### Migration Notes
+
+No migration required. Existing projects work unchanged.
+
+### Commits Included
+
+1. `[hash]` - Fix amendment data application in template finalization
+2. `[hash]` - Add on_approve and on_reject callbacks
+3. `[hash]` - Disable auto-navigation in connection review
+4. `[hash]` - Add comprehensive connection review test suite
+5. `[hash]` - Update documentation and CHANGELOG
+
+---
+
 ## [1.5.1] - 2025-01-21 - "Bug Fixes & Stability"
 
 ### Added

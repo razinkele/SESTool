@@ -43,7 +43,7 @@ source("server/dashboard.R")
 source("modules/entry_point_module.R", local = TRUE)  # Entry Point guidance system
 source("modules/create_ses_module.R", local = TRUE)  # NEW: Consolidated Create SES module
 source("modules/template_ses_module.R", local = TRUE)  # NEW: Template-based SES creation
-source("modules/ai_isa_assistant_module.R", local = TRUE)  # AI-Assisted ISA Creation
+source("modules/ai_isa_assistant_module.R", local = TRUE)  # AI-Assisted SES Creation
 source("modules/import_data_module.R", local = TRUE)  # Import Data from Excel
 source("modules/isa_data_entry_module.R", local = TRUE)  # Standard ISA Data Entry
 source("modules/pims_module.R", local = TRUE)
@@ -77,7 +77,8 @@ ui <- dashboardPage(
   dashboardBody(
 
     # Enable shiny.i18n automatic language detection and reactive translations
-    shiny.i18n::usei18n(i18n),
+    # Note: Must use the underlying translator object, not the wrapper
+    shiny.i18n::usei18n(i18n$translator),
 
     # Custom CSS and JavaScript
     tags$head(
@@ -147,8 +148,7 @@ ui <- dashboardPage(
 
         fluidRow(
           column(12,
-            h2(i18n$t("data.framework.marinesabres_social_ecological_systems_analysis_tool")),
-            p(i18n$t("common.misc.welcome_to_the_computer_assisted_ses_creation_and_analysis_platform"))
+            uiOutput("dashboard_header")
           )
         ),
 
@@ -240,11 +240,11 @@ ui <- dashboardPage(
       tabItem(tabName = "cld_viz", cld_viz_ui("cld_visual", i18n)),
       
       # ==================== ANALYSIS ====================
-      tabItem(tabName = "analysis_metrics", analysis_metrics_ui("analysis_met")),
-      tabItem(tabName = "analysis_loops", analysis_loops_ui("analysis_loop")),
-      tabItem(tabName = "analysis_leverage", analysis_leverage_ui("analysis_lev")),
-      tabItem(tabName = "analysis_bot", analysis_bot_ui("analysis_b")),
-      tabItem(tabName = "analysis_simplify", analysis_simplify_ui("analysis_simp")),
+      tabItem(tabName = "analysis_metrics", analysis_metrics_ui("analysis_met", i18n)),
+      tabItem(tabName = "analysis_loops", analysis_loops_ui("analysis_loop", i18n)),
+      tabItem(tabName = "analysis_leverage", analysis_leverage_ui("analysis_lev", i18n)),
+      tabItem(tabName = "analysis_bot", analysis_bot_ui("analysis_b", i18n)),
+      tabItem(tabName = "analysis_simplify", analysis_simplify_ui("analysis_simp", i18n)),
       
       # ==================== RESPONSE & VALIDATION ====================
       tabItem(tabName = "response_measures", response_measures_ui("resp_meas", i18n)),
@@ -261,7 +261,7 @@ ui <- dashboardPage(
       ),
 
       # ==================== PREPARE REPORT ====================
-      tabItem(tabName = "prepare_report", prepare_report_ui("prep_report"))
+      tabItem(tabName = "prepare_report", prepare_report_ui("prep_report", i18n))
     )
   )
 )
@@ -539,7 +539,55 @@ server <- function(input, output, session) {
   # Pass autosave_enabled reactive so module respects user's setting
   auto_save_server("auto_save", project_data, i18n, autosave_enabled)
 
-  # ========== LANGUAGE CHANGE TRIGGER ========== 
+  # ========== LANGUAGE STATE MANAGEMENT (EARLY) ==========
+  # Load language from query parameter BEFORE anything else
+  observe({
+    query <- parseQueryString(session$clientData$url_search)
+    cat(sprintf("[LANGUAGE] URL search: %s\n", session$clientData$url_search))
+
+    if (!is.null(query$language)) {
+      cat(sprintf("[LANGUAGE] Found language parameter: %s\n", query$language))
+
+      if (query$language %in% names(AVAILABLE_LANGUAGES)) {
+        cat(sprintf("[LANGUAGE] Setting language to: %s\n", query$language))
+
+        # Set language in wrapper (this will also set it in underlying translator)
+        i18n$set_translation_language(query$language)
+        cat(sprintf("[LANGUAGE] Language set. Current: %s\n", i18n$get_translation_language()))
+
+        # Use shiny.i18n's built-in update mechanism for elements with data-i18n attributes
+        shiny.i18n::update_lang(query$language, session)
+
+        # Capture translations NOW (before async call) to ensure they're strings
+        header_translations <- list(
+          language = as.character(i18n$t("ui.header.language")),
+          change_language = as.character(i18n$t("ui.header.change_language")),
+          settings = as.character(i18n$t("ui.header.settings")),
+          application_settings = as.character(i18n$t("ui.header.application_settings")),
+          user_experience_level = as.character(i18n$t("ui.header.user_experience_level")),
+          download_manuals = as.character(i18n$t("ui.header.download_manuals")),
+          app_info = as.character(i18n$t("ui.header.app_info")),
+          help = as.character(i18n$t("ui.header.help")),
+          step_by_step_tutorial = as.character(i18n$t("ui.header.step_by_step_tutorial")),
+          quick_reference = as.character(i18n$t("ui.header.quick_reference")),
+          bookmark = as.character(i18n$t("ui.header.bookmark"))
+        )
+        cat(sprintf("[LANGUAGE] Header translations captured: %s, %s, %s\n",
+                    header_translations$language, header_translations$settings, header_translations$help))
+
+        # Schedule header update to run after shiny.i18n finishes
+        later::later(function() {
+          session$sendCustomMessage(type = "updateHeaderTranslations", message = header_translations)
+        }, delay = 0.1)
+      } else {
+        cat(sprintf("[LANGUAGE] Invalid language: %s\n", query$language))
+      }
+    } else {
+      cat("[LANGUAGE] No language parameter in URL\n")
+    }
+  }, priority = 1000)  # High priority to run early
+
+  # ========== LANGUAGE CHANGE TRIGGER ==========
   # Create a reactive value that changes when language changes
   # This forces UI elements to re-render when language is switched
   lang_trigger <- reactiveVal(0)
@@ -595,15 +643,7 @@ server <- function(input, output, session) {
   })
 
   # ========== LANGUAGE STATE MANAGEMENT ==========
-
-  # Load language from query parameter on startup
-  observe({
-    query <- parseQueryString(session$clientData$url_search)
-    if (!is.null(query$language) && query$language %in% names(AVAILABLE_LANGUAGES)) {
-      i18n$set_translation_language(query$language)
-      cat(sprintf("[LANGUAGE] Loaded from URL: %s\n", query$language))
-    }
-  })
+  # (Handled earlier at line 543 with high priority)
 
   # ========== USER LEVEL STATE MANAGEMENT ==========
 
@@ -667,11 +707,11 @@ server <- function(input, output, session) {
   cld_viz_server("cld_visual", project_data, i18n)
   
   # Analysis modules
-  analysis_metrics_server("analysis_met", project_data)
+  analysis_metrics_server("analysis_met", project_data, i18n)
   analysis_loops_server("analysis_loop", project_data, i18n)
-  analysis_leverage_server("analysis_lev", project_data)
-  analysis_bot_server("analysis_b", project_data)
-  analysis_simplify_server("analysis_simp", project_data)
+  analysis_leverage_server("analysis_lev", project_data, i18n)
+  analysis_bot_server("analysis_b", project_data, i18n)
+  analysis_simplify_server("analysis_simp", project_data, i18n)
   
   # Response & validation modules
   response_measures_server("resp_meas", project_data, i18n)
@@ -685,7 +725,7 @@ server <- function(input, output, session) {
   export_reports_server("export_reports_mod", project_data, i18n)
 
   # Prepare Report module (comprehensive)
-  prepare_report_server("prep_report", project_data)
+  prepare_report_server("prep_report", project_data, i18n)
 
   # ========== REACTIVE DATA PIPELINE ==========
   # Setup event-based reactive pipeline for automatic data propagation

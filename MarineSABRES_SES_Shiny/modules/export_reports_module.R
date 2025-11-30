@@ -17,17 +17,11 @@ export_reports_ui <- function(id, i18n) {
 
   tagList(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     fluidRow(
       column(12,
-        create_module_header(
-          ns = ns,
-          title_key = "Export & Reports",
-          subtitle_key = "Export your data, visualizations, and generate comprehensive reports.",
-          help_id = "help_export",
-          i18n = i18n
-        )
+        uiOutput(ns("module_header"))
       )
     ),
 
@@ -155,6 +149,16 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
 
     # Reactive value to store output file path
     report_file_path <- reactiveVal(NULL)
+
+    # === REACTIVE MODULE HEADER ===
+    create_reactive_header(
+      output = output,
+      ns = session$ns,
+      title_key = "modules.export.reports.title",
+      subtitle_key = "modules.export.reports.subtitle",
+      help_id = "help_export",
+      i18n = i18n
+    )
 
     # ========== REPORT GENERATION ==========
 

@@ -6,388 +6,359 @@
     "de",
     "lt",
     "pt",
-    "it"
+    "it",
+    "no"
   ],
-  "translation": [
-    {
-      "key": "common.buttons.add",
+  "translation": {
+    "common.buttons.add": {
       "en": "Add",
       "es": "Agregar",
       "fr": "Ajouter",
       "de": "Hinzufügen",
       "lt": "Pridėti",
       "pt": "Adicionar",
-      "it": "Aggiungi"
+      "it": "Aggiungi",
+      "no": "Legg til"
     },
-    {
-      "key": "common.buttons.add",
-      "en": "add",
-      "es": "TODO: es translation",
-      "fr": "TODO: fr translation",
-      "de": "TODO: de translation",
-      "lt": "TODO: lt translation",
-      "pt": "TODO: pt translation",
-      "it": "TODO: it translation"
-    },
-    {
-      "key": "common.buttons.apply",
+    "common.buttons.apply": {
       "en": "Apply",
       "es": "Aplicar",
       "fr": "Appliquer",
       "de": "Anwenden",
       "lt": "Taikyti",
       "pt": "Aplicar",
-      "it": "Applica"
+      "it": "Applica",
+      "no": "Bruk"
     },
-    {
-      "key": "common.buttons.back",
+    "common.buttons.back": {
       "en": "Back",
       "es": "Atrás",
       "fr": "Retour",
       "de": "Zurück",
       "lt": "Atgal",
       "pt": "Voltar",
-      "it": "Indietro"
+      "it": "Indietro",
+      "no": "Tilbake"
     },
-    {
-      "key": "common.buttons.cancel",
+    "common.buttons.cancel": {
       "en": "Cancel",
       "es": "Cancelar",
       "fr": "Annuler",
       "de": "Abbrechen",
       "lt": "Atšaukti",
       "pt": "Cancelar",
-      "it": "Annulla"
+      "it": "Annulla",
+      "no": "Avbryt"
     },
-    {
-      "key": "common.buttons.cancel",
-      "en": "cancel",
-      "es": "TODO: es translation",
-      "fr": "TODO: fr translation",
-      "de": "TODO: de translation",
-      "lt": "TODO: lt translation",
-      "pt": "TODO: pt translation",
-      "it": "TODO: it translation"
-    },
-    {
-      "key": "common.buttons.clear",
+    "common.buttons.clear": {
       "en": "Clear",
       "es": "Limpiar",
       "fr": "Effacer",
       "de": "Löschen",
       "lt": "Išvalyti",
       "pt": "Limpar",
-      "it": "Cancella"
+      "it": "Cancella",
+      "no": "Tøm"
     },
-    {
-      "key": "common.buttons.close",
+    "common.buttons.close": {
       "en": "Close",
       "es": "Cerrar",
       "fr": "Fermer",
       "de": "Schließen",
       "lt": "Uždaryti",
       "pt": "Fechar",
-      "it": "Chiudi"
+      "it": "Chiudi",
+      "no": "Lukk"
     },
-    {
-      "key": "common.buttons.confirm",
+    "common.buttons.confirm": {
       "en": "Confirm",
       "es": "Confirmar",
       "fr": "Confirmer",
       "de": "Bestätigen",
       "lt": "Patvirtinti",
       "pt": "Confirmar",
-      "it": "Conferma"
+      "it": "Conferma",
+      "no": "Bekreft"
     },
-    {
-      "key": "common.buttons.continue",
+    "common.buttons.continue": {
       "en": "Continue",
       "es": "Continuar",
       "fr": "Continuer",
       "de": "Fortfahren",
       "lt": "Tęsti",
       "pt": "Continuar",
-      "it": "Continua"
+      "it": "Continua",
+      "no": "Fortsett"
     },
-    {
-      "key": "common.buttons.create",
+    "common.buttons.create": {
       "en": "create",
       "es": "TODO: es translation",
       "fr": "TODO: fr translation",
       "de": "TODO: de translation",
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
-      "it": "TODO: it translation"
+      "it": "TODO: it translation",
+      "no": "opprett"
     },
-    {
-      "key": "common.buttons.delete",
+    "common.buttons.delete": {
       "en": "Delete",
       "es": "Eliminar",
       "fr": "Supprimer",
       "de": "Löschen",
       "lt": "Ištrinti",
       "pt": "Excluir",
-      "it": "Elimina"
+      "it": "Elimina",
+      "no": "Slett"
     },
-    {
-      "key": "common.buttons.delete",
-      "en": "delete",
-      "es": "TODO: es translation",
-      "fr": "TODO: fr translation",
-      "de": "TODO: de translation",
-      "lt": "TODO: lt translation",
-      "pt": "TODO: pt translation",
-      "it": "TODO: it translation"
-    },
-    {
-      "key": "common.buttons.download",
+    "common.buttons.download": {
       "en": "Download",
       "es": "Descargar",
       "fr": "Télécharger",
       "de": "Herunterladen",
       "lt": "Atsisiųsti",
       "pt": "Descarregar",
-      "it": "Scarica"
+      "it": "Scarica",
+      "no": "Last ned"
     },
-    {
-      "key": "common.buttons.edit",
+    "common.buttons.edit": {
       "en": "Edit",
       "es": "Editar",
       "fr": "Modifier",
       "de": "Bearbeiten",
       "lt": "Redaguoti",
       "pt": "Editar",
-      "it": "Modifica"
+      "it": "Modifica",
+      "no": "Rediger"
     },
-    {
-      "key": "common.buttons.export",
+    "common.buttons.export": {
       "en": "Export",
       "es": "Exportar",
       "fr": "Exporter",
       "de": "Exportieren",
       "lt": "Eksportuoti",
       "pt": "Exportar",
-      "it": "Esporta"
+      "it": "Esporta",
+      "no": "Eksporter"
     },
-    {
-      "key": "common.buttons.filter",
+    "common.buttons.filter": {
       "en": "Filter",
       "es": "Filtrar",
       "fr": "Filtrer",
       "de": "Filtern",
       "lt": "Filtruoti",
       "pt": "Filtrar",
-      "it": "Filtra"
+      "it": "Filtra",
+      "no": "Filtrer"
     },
-    {
-      "key": "common.buttons.finish",
+    "common.buttons.finish": {
       "en": "Finish",
       "es": "Finalizar",
       "fr": "Finition",
       "de": "Beenden",
       "lt": "Baigti",
       "pt": "Terminar",
-      "it": "Fine"
+      "it": "Fine",
+      "no": "Fullfør"
     },
-    {
-      "key": "common.buttons.help",
+    "common.buttons.help": {
       "en": "Help",
       "es": "Ayuda",
       "fr": "Aide",
       "de": "Hilfe",
       "lt": "Pagalba",
       "pt": "Ajuda",
-      "it": "Aiuto"
+      "it": "Aiuto",
+      "no": "Hjelp"
     },
-    {
-      "key": "common.buttons.import",
+    "common.buttons.import": {
       "en": "Import",
       "es": "Importar",
       "fr": "Importer",
       "de": "Importieren",
       "lt": "Importuoti",
       "pt": "Importar",
-      "it": "Importa"
+      "it": "Importa",
+      "no": "Importer"
     },
-    {
-      "key": "common.buttons.load",
+    "common.buttons.load": {
       "en": "Load",
       "es": "Cargar",
       "fr": "Charger",
       "de": "Laden",
       "lt": "Įkelti",
       "pt": "Carregar",
-      "it": "Carica"
+      "it": "Carica",
+      "no": "Last inn"
     },
-    {
-      "key": "common.buttons.load_project",
+    "common.buttons.load_project": {
       "en": "Load Project",
       "es": "Cargar Proyecto",
       "fr": "Charger le Projet",
       "de": "Projekt Laden",
       "lt": "Įkelti projektą",
       "pt": "Carregar Projeto",
-      "it": "Carica Progetto"
+      "it": "Carica Progetto",
+      "no": "Last inn prosjekt"
     },
-    {
-      "key": "common.buttons.next",
+    "common.buttons.next": {
       "en": "Next",
       "es": "Siguiente",
       "fr": "Suivant",
       "de": "Weiter",
       "lt": "Kitas",
       "pt": "Próximo",
-      "it": "Avanti"
+      "it": "Avanti",
+      "no": "Neste"
     },
-    {
-      "key": "common.buttons.no",
+    "common.buttons.no": {
       "en": "No",
       "es": "No",
       "fr": "Non",
       "de": "Nein",
       "lt": "Ne",
       "pt": "Não",
-      "it": "No"
+      "it": "No",
+      "no": "Nei"
     },
-    {
-      "key": "common.buttons.previous",
+    "common.buttons.previous": {
       "en": "Previous",
       "es": "Anterior",
       "fr": "Précédent",
       "de": "Zurück",
       "lt": "Ankstesnis",
       "pt": "Anterior",
-      "it": "Precedente"
+      "it": "Precedente",
+      "no": "Forrige"
     },
-    {
-      "key": "common.buttons.refresh",
+    "common.buttons.refresh": {
       "en": "Refresh",
       "es": "Actualizar",
       "fr": "Actualiser",
       "de": "Aktualisieren",
       "lt": "Atnaujinti",
       "pt": "Atualizar",
-      "it": "Aggiorna"
+      "it": "Aggiorna",
+      "no": "Oppdater"
     },
-    {
-      "key": "common.buttons.reject",
+    "common.buttons.reject": {
       "en": "Reject",
       "es": "Rechazar",
       "fr": "Rejeter",
       "de": "Ablehnen",
       "lt": "Atmesti",
       "pt": "Rejeitar",
-      "it": "Rifiutare"
+      "it": "Rifiutare",
+      "no": "Avvis"
     },
-    {
-      "key": "common.buttons.remove",
+    "common.buttons.remove": {
       "en": "Remove",
       "es": "Eliminar",
       "fr": "Retirer",
       "de": "Entfernen",
       "lt": "Pašalinti",
       "pt": "Remover",
-      "it": "Rimuovi"
+      "it": "Rimuovi",
+      "no": "Fjern"
     },
-    {
-      "key": "common.buttons.reset",
+    "common.buttons.reset": {
       "en": "Reset",
       "es": "Restablecer",
       "fr": "Réinitialiser",
       "de": "Zurücksetzen",
       "lt": "Atkurti",
       "pt": "Redefinir",
-      "it": "Ripristina"
+      "it": "Ripristina",
+      "no": "Tilbakestill"
     },
-    {
-      "key": "common.buttons.save",
+    "common.buttons.save": {
       "en": "Save",
       "es": "Guardar",
       "fr": "Enregistrer",
       "de": "Speichern",
       "lt": "Išsaugoti",
       "pt": "Salvar",
-      "it": "Salva"
+      "it": "Salva",
+      "no": "Lagre"
     },
-    {
-      "key": "common.buttons.save_project",
+    "common.buttons.save_project": {
       "en": "Save Project",
       "es": "Guardar Proyecto",
       "fr": "Enregistrer le Projet",
       "de": "Projekt Speichern",
       "lt": "Išsaugoti projektą",
       "pt": "Guardar Projeto",
-      "it": "Salva Progetto"
+      "it": "Salva Progetto",
+      "no": "Lagre prosjekt"
     },
-    {
-      "key": "common.buttons.search",
+    "common.buttons.search": {
       "en": "Search",
       "es": "Buscar",
       "fr": "Rechercher",
       "de": "Suchen",
       "lt": "Ieškoti",
       "pt": "Pesquisar",
-      "it": "Cerca"
+      "it": "Cerca",
+      "no": "Søk"
     },
-    {
-      "key": "common.buttons.skip",
+    "common.buttons.skip": {
       "en": "Skip",
       "es": "Saltar",
       "fr": "Passer",
       "de": "Überspringen",
       "lt": "Praleisti",
       "pt": "Ignorar",
-      "it": "Salta"
+      "it": "Salta",
+      "no": "Hopp over"
     },
-    {
-      "key": "common.buttons.start",
+    "common.buttons.start": {
       "en": "Start",
       "es": "Inicio",
       "fr": "Début",
       "de": "Start",
       "lt": "Pradžia",
       "pt": "Início",
-      "it": "Inizio"
+      "it": "Inizio",
+      "no": "Start"
     },
-    {
-      "key": "common.buttons.submit",
+    "common.buttons.submit": {
       "en": "Submit",
       "es": "Enviar",
       "fr": "Soumettre",
       "de": "Absenden",
       "lt": "Pateikti",
       "pt": "Enviar",
-      "it": "Invia"
+      "it": "Invia",
+      "no": "Send inn"
     },
-    {
-      "key": "common.buttons.update",
+    "common.buttons.update": {
       "en": "Update",
       "es": "Actualizar",
       "fr": "Mettre à jour",
       "de": "Aktualisieren",
       "lt": "Atnaujinti",
       "pt": "Atualizar",
-      "it": "Aggiorna"
+      "it": "Aggiorna",
+      "no": "Oppdater"
     },
-    {
-      "key": "common.buttons.upload",
+    "common.buttons.upload": {
       "en": "Upload",
       "es": "Subir",
       "fr": "Téléverser",
       "de": "Hochladen",
       "lt": "Įkelti",
       "pt": "Carregar",
-      "it": "Carica"
+      "it": "Carica",
+      "no": "Last opp"
     },
-    {
-      "key": "common.buttons.yes",
+    "common.buttons.yes": {
       "en": "Yes",
       "es": "Sí",
       "fr": "Oui",
       "de": "Ja",
       "lt": "Taip",
       "pt": "Sim",
-      "it": "Sì"
+      "it": "Sì",
+      "no": "Ja"
     }
-  ]
+  }
 }

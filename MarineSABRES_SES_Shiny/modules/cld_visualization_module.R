@@ -42,7 +42,7 @@ cld_viz_ui <- function(id, i18n) {
 
   tagList(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     tags$style(HTML("
       /* Remove all frames from visNetwork elements */
@@ -85,13 +85,7 @@ cld_viz_ui <- function(id, i18n) {
 
     fluidRow(
       column(12,
-        create_module_header(
-          ns = ns,
-          title_key = "Causal Loop Diagram Visualization",
-          subtitle_key = "Interactive network visualization of your social-ecological system",
-          help_id = "help_cld",
-          i18n = i18n
-        )
+        uiOutput(ns("module_header"))
       )
     ),
 
@@ -258,6 +252,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       filtered_nodes = NULL,
       filtered_edges = NULL,
       isa_hash = NULL  # Cache hash to track ISA data changes
+    )
+
+    # === REACTIVE MODULE HEADER ===
+    create_reactive_header(
+      output = output,
+      ns = session$ns,
+      title_key = "modules.cld.visualization.title",
+      subtitle_key = "modules.cld.visualization.subtitle",
+      help_id = "help_cld",
+      i18n = i18n
     )
 
     # === GENERATE CLD FROM ISA DATA ===

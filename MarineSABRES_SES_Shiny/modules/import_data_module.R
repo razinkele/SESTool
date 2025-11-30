@@ -63,7 +63,7 @@ import_data_ui <- function(id, i18n) {
     ),
 
     # Header
-    create_module_header(ns, "import_data_title", "import_data_subtitle", "import_data_help", i18n),
+    uiOutput(ns("module_header")),
 
     # Instructions
     div(class = "import-container",
@@ -136,6 +136,16 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       import_success = FALSE,
       show_review = FALSE,
       parsed_connections = NULL
+    )
+
+    # === REACTIVE MODULE HEADER ===
+    create_reactive_header(
+      output = output,
+      ns = session$ns,
+      title_key = "modules.import.data.title",
+      subtitle_key = "modules.import.data.subtitle",
+      help_id = "import_data_help",
+      i18n = i18n
     )
 
     # Load sample file

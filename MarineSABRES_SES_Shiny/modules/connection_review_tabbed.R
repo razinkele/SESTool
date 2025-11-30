@@ -149,7 +149,7 @@ connection_review_tabbed_ui <- function(id, i18n) {
 
   tagList(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     # Custom CSS
     tags$head(
@@ -713,14 +713,16 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               on_approve(local_idx, conn)
             }
 
-            # Focus on next connection in the list
-            if (local_idx < length(conns)) {
-              next_idx <- local_idx + 1
-              session$sendCustomMessage(
-                type = "focusButton",
-                message = list(id = session$ns(paste0("approve_", next_idx)))
-              )
-            }
+            # DISABLED: Auto-focus on next connection
+            # This was causing unwanted tab navigation in tabbed interface
+            # Users reported "system keeps going back between elements"
+            # if (local_idx < length(conns)) {
+            #   next_idx <- local_idx + 1
+            #   session$sendCustomMessage(
+            #     type = "focusButton",
+            #     message = list(id = session$ns(paste0("approve_", next_idx)))
+            #   )
+            # }
           })
 
           # Reject button
@@ -732,14 +734,16 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               on_reject(local_idx, conn)
             }
 
-            # Focus on next connection in the list
-            if (local_idx < length(conns)) {
-              next_idx <- local_idx + 1
-              session$sendCustomMessage(
-                type = "focusButton",
-                message = list(id = session$ns(paste0("approve_", next_idx)))
-              )
-            }
+            # DISABLED: Auto-focus on next connection
+            # This was causing unwanted tab navigation in tabbed interface
+            # Users reported "system keeps going back between elements"
+            # if (local_idx < length(conns)) {
+            #   next_idx <- local_idx + 1
+            #   session$sendCustomMessage(
+            #     type = "focusButton",
+            #     message = list(id = session$ns(paste0("approve_", next_idx)))
+            #   )
+            # }
           })
 
           # Amend button

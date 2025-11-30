@@ -1,0 +1,54 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no"
+  ],
+  "translation": {
+    "modules.prepare.report.title": {
+      "en": "Prepare Comprehensive Report",
+      "es": "Preparar Informe Completo",
+      "fr": "Préparer un Rapport Complet",
+      "de": "Umfassenden Bericht Erstellen",
+      "lt": "Parengti Išsamią Ataskaitą",
+      "pt": "Preparar Relatório Abrangente",
+      "it": "Prepara Rapporto Completo",
+      "no": "Forbered Omfattende Rapport"
+    },
+    "modules.prepare.report.subtitle": {
+      "en": "Generate a detailed analysis report of your Social-Ecological System model.",
+      "es": "Genere un informe de análisis detallado de su modelo de Sistema Socio-Ecológico.",
+      "fr": "Générez un rapport d'analyse détaillé de votre modèle de Système Socio-Écologique.",
+      "de": "Erstellen Sie einen detaillierten Analysebericht Ihres sozial-ökologischen Systemmodells.",
+      "lt": "Sukurkite išsamią savo socialinės-ekologinės sistemos modelio analizės ataskaitą.",
+      "pt": "Gere um relatório de análise detalhado do seu modelo de Sistema Socio-Ecológico.",
+      "it": "Genera un rapporto di analisi dettagliato del tuo modello di Sistema Socio-Ecologico.",
+      "no": "Generer en detaljert analyserapport av din sosial-økologiske systemmodell."
+    },
+    "modules.prepare.report.requirements": {
+      "en": "Both Loop Detection and Leverage Point Analysis must be completed before generating a report.",
+      "es": "Tanto la Detección de Bucles como el Análisis de Puntos de Apalancamiento deben completarse antes de generar un informe.",
+      "fr": "La détection de boucles et l'analyse des points de levier doivent être terminées avant de générer un rapport.",
+      "de": "Sowohl die Schleifen-Erkennung als auch die Hebelpunkt-Analyse müssen abgeschlossen sein, bevor ein Bericht erstellt werden kann.",
+      "lt": "Prieš generuojant ataskaitą, turi būti užbaigta tiek kilpų aptikimas, tiek sverto taškų analizė.",
+      "pt": "Tanto a Detecção de Ciclos quanto a Análise de Pontos de Alavancagem devem ser concluídas antes de gerar um relatório.",
+      "it": "Sia il rilevamento dei cicli che l'analisi dei punti di leva devono essere completati prima di generare un rapporto.",
+      "no": "Både Loop-deteksjon og Leverage Point-analyse må fullføres før du genererer en rapport."
+    },
+    "modules.prepare.report.requirements_label": {
+      "en": "Requirements:",
+      "es": "Requisitos:",
+      "fr": "Exigences:",
+      "de": "Anforderungen:",
+      "lt": "Reikalavimai:",
+      "pt": "Requisitos:",
+      "it": "Requisiti:",
+      "no": "Krav:"
+    }
+  }
+}

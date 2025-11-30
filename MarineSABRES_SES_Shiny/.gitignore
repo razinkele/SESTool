@@ -93,3 +93,58 @@ api_keys.txt
 # Testing
 tests/testthat/_snaps/
 translations/_merged_translations.json
+
+# Temporary status files and migration artifacts
+*_FIXED.md
+*_COMPLETE*.md
+*_FIX.md
+*_IMPLEMENTATION*.md
+MODULE_*.md
+TRANSLATION_*.md
+AI_*.md
+I18N_*.md
+NORWEGIAN_*.md
+DUPLICATE_*.md
+REACTIVE_*.md
+PROGRESS_*.md
+PREPARE_*.md
+OPTION_*.md
+FINAL_*.md
+TEST_*.md
+!CONNECTION_REVIEW_BUGFIX_SUMMARY.md
+duplicate_report.txt
+
+# Temporary translation backups
+translations/_backup*/
+translations/_merged_translations-*.json
+translations/*-laguna-safeBackup-*.json
+translations_backup_*/
+
+# Temporary test files in root
+test_*.R
+!tests/
+
+# Temporary scripts (migration/fix scripts)
+scripts/add_*.py
+scripts/add_*.R
+scripts/fix_*.py
+scripts/fix_*.R
+scripts/find_*.R
+scripts/extract_*.py
+scripts/translate_*.py
+scripts/update_*.py
+scripts/merge_translations.py
+scripts/merge_translations.R
+scripts/consolidate_translations.py
+scripts/convert_to_key_based_format.py
+scripts/create_reverse_mapping.py
+scripts/detect_duplicate_translations.py
+scripts/remove_duplicate_*.py
+scripts/validate_*.py
+scripts/validate_*.R
+scripts/reverse_key_mapping.json
+scripts/extraction_summary.json
+scripts/test_*.R
+scripts/debug_*.R
+scripts/*_README.md
+scripts/QUICK_REFERENCE.md

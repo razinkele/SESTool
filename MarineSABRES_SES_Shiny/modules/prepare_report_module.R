@@ -6,15 +6,13 @@
 # UI FUNCTION
 # ============================================================================
 
-prepare_report_ui <- function(id) {
+prepare_report_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
     fluidRow(
       column(12,
-        h2(icon("file-alt"), " Prepare Comprehensive Report"),
-        p("Generate a detailed analysis report of your Social-Ecological System model."),
-        p(strong("Requirements:"), " Both Loop Detection and Leverage Point Analysis must be completed before generating a report.")
+        uiOutput(ns("module_header"))
       )
     ),
 
@@ -119,7 +117,7 @@ prepare_report_ui <- function(id) {
 # SERVER FUNCTION
 # ============================================================================
 
-prepare_report_server <- function(id, project_data_reactive) {
+prepare_report_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive values for storing report paths
@@ -129,6 +127,15 @@ prepare_report_server <- function(id, project_data_reactive) {
       word_report_path = NULL,
       ppt_report_path = NULL
     )
+
+    # === REACTIVE MODULE HEADER ===
+    output$module_header <- renderUI({
+      tagList(
+        h2(icon("file-alt"), " ", i18n$t("modules.prepare.report.title")),
+        p(i18n$t("modules.prepare.report.subtitle")),
+        p(strong(i18n$t("modules.prepare.report.requirements_label")), " ", i18n$t("modules.prepare.report.requirements"))
+      )
+    })
 
     # Check prerequisites
     check_prerequisites <- reactive({

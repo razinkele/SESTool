@@ -14,7 +14,7 @@ pims_project_ui <- function(id, i18n) {
   ns <- NS(id)
   
   fluidPage(
-    create_module_header(ns, "pims_project_title", "pims_project_subtitle", "pims_project_help", i18n),
+    create_module_header(ns, "modules.pims.project.title", "modules.pims.project.subtitle", "pims_project_help", i18n),
     hr(),
     
     fluidRow(
@@ -113,7 +113,7 @@ pims_stakeholders_ui <- function(id, i18n) {
   ns <- NS(id)
   
   fluidPage(
-    create_module_header(ns, "pims_stakeholders_title", "pims_stakeholders_subtitle", "pims_stakeholders_help", i18n),
+    create_module_header(ns, "modules.pims.stakeholders.title", "modules.pims.stakeholders.subtitle", "pims_stakeholders_help", i18n),
     hr(),
     
     fluidRow(
@@ -169,7 +169,7 @@ pims_resources_ui <- function(id, i18n) {
   ns <- NS(id)
   
   fluidPage(
-    create_module_header(ns, "pims_resources_title", "pims_resources_subtitle", "pims_resources_help", i18n),
+    create_module_header(ns, "modules.pims.resources.title", "modules.pims.resources.subtitle", "pims_resources_help", i18n),
     hr(),
     
     tabsetPanel(
@@ -200,7 +200,7 @@ pims_data_ui <- function(id, i18n) {
   ns <- NS(id)
   
   fluidPage(
-    create_module_header(ns, "pims_data_title", "pims_data_subtitle", "pims_data_help", i18n),
+    create_module_header(ns, "modules.pims.data.title", "modules.pims.data.subtitle", "pims_data_help", i18n),
     hr(),
     
     p("Data management functionality to be implemented")
@@ -222,7 +222,7 @@ pims_evaluation_ui <- function(id, i18n) {
   ns <- NS(id)
   
   fluidPage(
-    create_module_header(ns, "pims_evaluation_title", "pims_evaluation_subtitle", "pims_evaluation_help", i18n),
+    create_module_header(ns, "modules.pims.evaluation.title", "modules.pims.evaluation.subtitle", "pims_evaluation_help", i18n),
     hr(),
     
     p("Evaluation functionality to be implemented")

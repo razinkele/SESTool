@@ -99,31 +99,60 @@ if (USE_MODULAR_TRANSLATIONS) {
   DEBUG_I18N <- getOption("marinesabres.debug_i18n", FALSE) ||
                 Sys.getenv("DEBUG_I18N", "FALSE") == "TRUE"
 
-  # Initialize modular translation system
+  # Initialize modular translation system with wrapper
   if (DEBUG_I18N) {
-    cat("[I18N] Using modular translation system\n")
+    cat("[I18N] Using modular translation system with wrapper\n")
   }
 
-  translation_file <- init_modular_translations(
+  translation_system <- init_translation_system(
     base_path = "translations",
+    mapping_path = "scripts/reverse_key_mapping.json",
     validate = DEBUG_I18N,
     debug = DEBUG_I18N,
-    persistent = TRUE,  # Use persistent file to avoid session cleanup issues
-    enforce_namespaced = TRUE  # Pure modular system - enforce namespaced keys only
+    persistent = TRUE  # Use persistent file to avoid session cleanup issues
   )
+
+  # Extract components from translation system
+  i18n_translator <- translation_system$translator  # Original shiny.i18n Translator object
+  t_ <- translation_system$wrapper                  # Wrapper function for namespaced keys
+  translation_file <- translation_system$file        # Path to merged JSON
+
+  # Create an i18n wrapper object that makes i18n$t() use namespaced keys
+  # This allows existing code using i18n$t("namespaced.key") to work seamlessly
+  i18n <- list(
+    t = t_,  # Wrapper function for translation
+    set_translation_language = function(lang) {
+      i18n_translator$set_translation_language(lang)
+    },
+    get_translation_language = function() {
+      i18n_translator$get_translation_language()
+    },
+    get_translations = function() {
+      i18n_translator$get_translations()
+    },
+    use_js = function() {
+      i18n_translator$use_js()
+    },
+    get_languages = function() {
+      i18n_translator$get_languages()
+    },
+    get_key_translation = function() {
+      i18n_translator$get_key_translation()
+    },
+    translator = i18n_translator  # Access to underlying translator if needed
+  )
+  class(i18n) <- c("wrapped_translator", "list")
 
   # Verify translation file exists
   if (!file.exists(translation_file)) {
     stop("[I18N] FATAL: Translation file not created. Check translations directory.")
   }
 
-  # Initialize translator with merged translations
-  i18n <- Translator$new(translation_json_path = translation_file)
-
   if (DEBUG_I18N) {
-    cat(sprintf("[I18N] Pure modular translation system initialized\n"))
+    cat(sprintf("[I18N] Pure modular translation system with wrapper initialized\n"))
     cat(sprintf("[I18N] Translation file: %s\n", translation_file))
     cat(sprintf("[I18N] File size: %s KB\n", round(file.info(translation_file)$size / 1024, 1)))
+    cat(sprintf("[I18N] Use i18n$t(\"namespaced.key\") or t_(\"namespaced.key\")\n"))
   }
 
   # Note: No cleanup needed for persistent translation file
@@ -132,9 +161,33 @@ if (USE_MODULAR_TRANSLATIONS) {
 } else {
   # Fallback to monolithic translation file
   cat("[I18N] Using legacy monolithic translation file\n")
-  i18n <- Translator$new(
+  i18n_translator <- Translator$new(
     translation_json_path = "translations/translation.json.backup"
   )
+  # Wrap in same structure for consistency
+  i18n <- list(
+    t = function(key) i18n_translator$t(key),
+    set_translation_language = function(lang) {
+      i18n_translator$set_translation_language(lang)
+    },
+    get_translation_language = function() {
+      i18n_translator$get_translation_language()
+    },
+    get_translations = function() {
+      i18n_translator$get_translations()
+    },
+    use_js = function() {
+      i18n_translator$use_js()
+    },
+    get_languages = function() {
+      i18n_translator$get_languages()
+    },
+    get_key_translation = function() {
+      i18n_translator$get_key_translation()
+    },
+    translator = i18n_translator  # Access to underlying translator
+  )
+  class(i18n) <- c("wrapped_translator", "list")
 }
 
 # Set default language to English
@@ -148,7 +201,8 @@ AVAILABLE_LANGUAGES <- list(
   "de" = list(name = "Deutsch", flag = "🇩🇪"),
   "lt" = list(name = "Lietuvių", flag = "🇱🇹"),
   "pt" = list(name = "Português", flag = "🇵🇹"),
-  "it" = list(name = "Italiano", flag = "🇮🇹")
+  "it" = list(name = "Italiano", flag = "🇮🇹"),
+  "no" = list(name = "Norsk", flag = "🇳🇴")
 )
 
 # ============================================================================

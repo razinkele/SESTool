@@ -5,12 +5,18 @@ Quick reference for running tests.
 ## Quick Start
 
 ```bash
-# Run all tests
+# Run all tests (includes testthat suite with connection review tests)
 Rscript run_all_tests.R
 
 # Run specific test suite
 Rscript test_loop_detection_comprehensive.R
 Rscript test_network_analysis_functions.R
+
+# Run testthat suite only
+Rscript -e "testthat::test_dir('testthat')"
+
+# Run connection review tests only
+Rscript -e "testthat::test_file('testthat/test-connection-review.R')"
 ```
 
 ## Test Files
@@ -20,6 +26,8 @@ Rscript test_network_analysis_functions.R
 | `run_all_tests.R` | Master test runner | - |
 | `test_loop_detection_comprehensive.R` | Loop detection & performance | 10+ |
 | `test_network_analysis_functions.R` | All network analysis functions | 15+ |
+| `testthat/test-connection-review.R` | Connection review bug fixes (v1.5.2) | 14 |
+| `testthat/test-*.R` | Other testthat suites | 160+ |
 
 ## Expected Results
 
@@ -51,6 +59,20 @@ The most important tests validate that loop detection **never hangs**:
 These tests protect against the bugs documented in:
 - `LOOP_ANALYSIS_HANG_FIX.md`
 - `LOOP_ANALYSIS_HANG_FIX_V2.md`
+
+### Connection Review Bug Fixes (v1.5.2)
+
+Critical regression tests for connection review amendments:
+
+- ✅ Bug #1: Amend saves both strength AND confidence
+- ✅ Bug #2: on_approve callback works correctly
+- ✅ Bug #3: Amendments persist to finalization
+- ✅ Bug #4: Auto-navigation is disabled
+
+These tests protect against the bugs documented in:
+- `CONNECTION_REVIEW_BUGFIX_SUMMARY.md`
+- `docs/CONNECTION_REVIEW_MODULE.md`
+- `docs/CHANGELOG.md` (v1.5.2 section)
 
 ## More Information
 

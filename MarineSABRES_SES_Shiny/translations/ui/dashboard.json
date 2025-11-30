@@ -6,278 +6,329 @@
     "de",
     "lt",
     "pt",
-    "it"
+    "it",
+    "no"
   ],
-  "translation": [
-    {
-      "key": "ui.dashboard.cld_generated",
+  "translation": {
+    "ui.dashboard.title": {
+      "en": "MarineSABRES Social-Ecological Systems Analysis Tool",
+      "es": "Herramienta de Análisis de Sistemas Socio-Ecológicos MarineSABRES",
+      "fr": "Outil d'Analyse des Systèmes Socio-Écologiques MarineSABRES",
+      "de": "MarineSABRES Sozial-Ökologisches System-Analysewerkzeug",
+      "lt": "MarineSABRES socialinių-ekologinių sistemų analizės įrankis",
+      "pt": "Ferramenta de Análise de Sistemas Sócio-Ecológicos MarineSABRES",
+      "it": "Strumento di Analisi dei Sistemi Socio-Ecologici MarineSABRES",
+      "no": "MarineSABRES-verktøy for analyse av sosial-økologiske systemer"
+    },
+    "ui.dashboard.subtitle": {
+      "en": "Welcome to the computer-assisted SES creation and analysis platform.",
+      "es": "Bienvenido a la plataforma de creación y análisis de SES asistida por computadora.",
+      "fr": "Bienvenue sur la plateforme de création et d'analyse SES assistée par ordinateur.",
+      "de": "Willkommen zur computergestützten SES-Erstellungs- und Analyseplattform.",
+      "lt": "Sveiki atvykę į kompiuterio pagalbą naudojančią SES kūrimo ir analizės platformą.",
+      "pt": "Bem-vindo à plataforma de criação e análise de SES assistida por computador.",
+      "it": "Benvenuto nella piattaforma di creazione e analisi SES assistita da computer.",
+      "no": "Velkommen til den datastøttede plattformen for SES-opprettelse og analyse."
+    },
+    "ui.dashboard.cld_generated": {
       "en": "CLD Generated:",
       "es": "DBC Generado:",
       "fr": "DBC Généré :",
       "de": "ULS Generiert:",
       "lt": "PKD sukurtas:",
       "pt": "DLC Gerado:",
-      "it": "DCC Generato:"
+      "it": "DCC Generato:",
+      "no": "CLD Generated:"
     },
-    {
-      "key": "ui.dashboard.complete",
+    "ui.dashboard.complete": {
       "en": "Complete",
       "es": "Completo",
       "fr": "Complet",
       "de": "Vollständig",
       "lt": "Baigta",
       "pt": "Completo",
-      "it": "Completo"
+      "it": "Completo",
+      "no": "Complete"
     },
-    {
-      "key": "ui.dashboard.completion",
+    "ui.dashboard.completion": {
       "en": "Completion",
       "es": "Finalización",
       "fr": "Achèvement",
       "de": "Fertigstellung",
       "lt": "Užbaigimas",
       "pt": "Conclusão",
-      "it": "Completamento"
+      "it": "Completamento",
+      "no": "Completion"
     },
-    {
-      "key": "ui.dashboard.connections",
+    "ui.dashboard.connections": {
       "en": "Connections",
       "es": "Conexiones",
       "fr": "Connexions",
       "de": "Verbindungen",
       "lt": "Ryšiai",
       "pt": "Conexões",
-      "it": "Connessioni"
+      "it": "Connessioni",
+      "no": "Connections"
     },
-    {
-      "key": "ui.dashboard.connections_defined",
+    "ui.dashboard.connections_defined": {
       "en": "connections defined",
       "es": "conexiones definidas",
       "fr": "connexions définies",
       "de": "Verbindungen definiert",
       "lt": "ryšiai apibrėžti",
       "pt": "conexões definidas",
-      "it": "connessioni definite"
+      "it": "connessioni definite",
+      "no": "connections defined"
     },
-    {
-      "key": "ui.dashboard.created",
+    "ui.dashboard.created": {
       "en": "Created:",
       "es": "Creado:",
       "fr": "Créé :",
       "de": "Erstellt:",
       "lt": "Sukurta:",
       "pt": "Criado:",
-      "it": "Creato:"
+      "it": "Creato:",
+      "no": "Created:"
     },
-    {
-      "key": "ui.dashboard.dapsiwrm_elements",
+    "ui.dashboard.dapsiwrm_elements": {
       "en": "DAPSI(W)R(M) Elements",
       "es": "Elementos DAPSI(W)R(M)",
       "fr": "Éléments DAPSI(W)R(M)",
       "de": "DAPSI(W)R(M) Elemente",
       "lt": "DAPSI(W)R(M) elementai",
       "pt": "Elementos DAPSI(W)R(M)",
-      "it": "Elementi DAPSI(W)R(M)"
+      "it": "Elementi DAPSI(W)R(M)",
+      "no": "DAPSI(W)R(M) Elements"
     },
-    {
-      "key": "ui.dashboard.demonstration_area",
+    "ui.dashboard.demonstration_area": {
       "en": "Demonstration Area:",
       "es": "Área de Demostración:",
       "fr": "Zone de Démonstration :",
       "de": "Demonstrationsbereich:",
       "lt": "Demonstracinė sritis:",
       "pt": "Área de Demonstração:",
-      "it": "Area di Dimostrazione:"
+      "it": "Area di Dimostrazione:",
+      "no": "Demonstration Area:"
     },
-    {
-      "key": "ui.dashboard.ecosystem_services",
+    "ui.dashboard.ecosystem_services": {
       "en": "Ecosystem Services:",
       "es": "Servicios Ecosistémicos:",
       "fr": "Services Écosystémiques :",
       "de": "Ökosystemleistungen:",
       "lt": "Ekosistemų paslaugos:",
       "pt": "Serviços Ecossistêmicos:",
-      "it": "Servizi Ecosistemici:"
+      "it": "Servizi Ecosistemici:",
+      "no": "Ecosystem Services:"
     },
-    {
-      "key": "ui.dashboard.edges_in_cld",
+    "ui.dashboard.edges_in_cld": {
       "en": "edges in CLD",
       "es": "aristas en CLD",
       "fr": "arêtes dans le CLD",
       "de": "Kanten im CLD",
       "lt": "briaunos CLD",
       "pt": "arestas no CLD",
-      "it": "archi nel CLD"
+      "it": "archi nel CLD",
+      "no": "edges in CLD"
     },
-    {
-      "key": "ui.dashboard.elements_created",
+    "ui.dashboard.elements_created": {
       "en": "elements created",
       "es": "elementos creados",
       "fr": "éléments créés",
       "de": "Elemente erstellt",
       "lt": "elementai sukurti",
       "pt": "elementos criados",
-      "it": "elementi creati"
+      "it": "elementi creati",
+      "no": "elements created"
     },
-    {
-      "key": "ui.dashboard.error_rendering_dashboard",
+    "ui.dashboard.error_rendering_dashboard": {
       "en": "Error rendering dashboard:",
       "es": "Error al renderizar el panel:",
       "fr": "Erreur lors du rendu du tableau de bord:",
       "de": "Fehler beim Rendern des Dashboards:",
       "lt": "Klaida atvaizdavimo skydelyje:",
       "pt": "Erro ao renderizar o painel:",
-      "it": "Errore nel rendering della dashboard:"
+      "it": "Errore nel rendering della dashboard:",
+      "no": "Error rendering dashboard:"
     },
-    {
-      "key": "ui.dashboard.focal_issue",
+    "ui.dashboard.focal_issue": {
       "en": "Focal Issue:",
       "es": "Asunto Focal:",
       "fr": "Question Centrale :",
       "de": "Kernthema:",
       "lt": "Pagrindinė problema:",
       "pt": "Questão Focal:",
-      "it": "Questione Focale:"
+      "it": "Questione Focale:",
+      "no": "Focal Issue:"
     },
-    {
-      "key": "ui.dashboard.goods_benefits",
+    "ui.dashboard.goods_benefits": {
       "en": "Goods & Benefits:",
       "es": "Bienes y Beneficios:",
       "fr": "Biens et Avantages :",
       "de": "Güter und Vorteile:",
       "lt": "Gėrybės ir naudos:",
       "pt": "Bens e Benefícios:",
-      "it": "Beni e Benefici:"
+      "it": "Beni e Benefici:",
+      "no": "Goods & Benefits:"
     },
-    {
-      "key": "ui.dashboard.incomplete",
+    "ui.dashboard.incomplete": {
       "en": "Incomplete",
       "es": "Incompleto",
       "fr": "Incomplet",
       "de": "Unvollständig",
       "lt": "Nebaigta",
       "pt": "Incompleto",
-      "it": "Incompleto"
+      "it": "Incompleto",
+      "no": "Incomplete"
     },
-    {
-      "key": "ui.dashboard.last_modified",
+    "ui.dashboard.last_modified": {
       "en": "Last Modified:",
       "es": "Última Modificación:",
       "fr": "Dernière Modification :",
       "de": "Zuletzt Geändert:",
       "lt": "Paskutinį kartą keista:",
       "pt": "Última Modificação:",
-      "it": "Ultima Modifica:"
+      "it": "Ultima Modifica:",
+      "no": "Last Modified:"
     },
-    {
-      "key": "ui.dashboard.loops_detected",
+    "ui.dashboard.loops_detected": {
       "en": "Loops Detected",
       "es": "Bucles Detectados",
       "fr": "Boucles Détectées",
       "de": "Schleifen Erkannt",
       "lt": "Aptikta ciklų",
       "pt": "Ciclos Detetados",
-      "it": "Cicli Rilevati"
+      "it": "Cicli Rilevati",
+      "no": "Loops Detected"
     },
-    {
-      "key": "ui.dashboard.nodes_in_cld",
+    "ui.dashboard.nodes_in_cld": {
       "en": "nodes in CLD",
       "es": "nodos en CLD",
       "fr": "nœuds dans le CLD",
       "de": "Knoten im CLD",
       "lt": "mazgai CLD",
       "pt": "nós no CLD",
-      "it": "nodi nel CLD"
+      "it": "nodi nel CLD",
+      "no": "nodes in CLD"
     },
-    {
-      "key": "ui.dashboard.not_defined",
+    "ui.dashboard.not_defined": {
       "en": "Not defined",
       "es": "No definido",
       "fr": "Non défini",
       "de": "Nicht definiert",
       "lt": "Neapibrėžta",
       "pt": "Não definido",
-      "it": "Non definito"
+      "it": "Non definito",
+      "no": "Not defined"
     },
-    {
-      "key": "ui.dashboard.not_set",
+    "ui.dashboard.not_set": {
       "en": "Not set",
       "es": "No establecido",
       "fr": "Non défini",
       "de": "Nicht festgelegt",
       "lt": "Nenustatyta",
       "pt": "Não definido",
-      "it": "Non impostato"
+      "it": "Non impostato",
+      "no": "Not set"
     },
-    {
-      "key": "ui.dashboard.pims_setup",
+    "ui.dashboard.pims_setup": {
       "en": "PIMS Setup:",
       "es": "Configuración PIMS:",
       "fr": "Configuration PIMS :",
       "de": "PIMS-Konfiguration:",
       "lt": "PIMS sąranka:",
       "pt": "Configuração PIMS:",
-      "it": "Configurazione PIMS:"
+      "it": "Configurazione PIMS:",
+      "no": "PIMS Setup:"
     },
-    {
-      "key": "ui.dashboard.project_id",
+    "ui.dashboard.project_id": {
       "en": "Project ID:",
       "es": "ID del Proyecto:",
       "fr": "ID du Projet :",
       "de": "Projekt-ID:",
       "lt": "Projekto ID:",
       "pt": "ID do Projeto:",
-      "it": "ID Progetto:"
+      "it": "ID Progetto:",
+      "no": "Project ID:"
     },
-    {
-      "key": "ui.dashboard.project_overview",
+    "ui.dashboard.project_overview": {
       "en": "Project Overview",
       "es": "Resumen del Proyecto",
       "fr": "Aperçu du Projet",
       "de": "Projektübersicht",
       "lt": "Projekto apžvalga",
       "pt": "Visão Geral do Projeto",
-      "it": "Panoramica del Progetto"
+      "it": "Panoramica del Progetto",
+      "no": "Prosjektoversikt"
     },
-    {
-      "key": "ui.dashboard.responses",
+    "ui.dashboard.responses": {
       "en": "Responses:",
       "es": "Respuestas:",
       "fr": "Réponses :",
       "de": "Antworten:",
       "lt": "Atsakymai:",
       "pt": "Respostas:",
-      "it": "Risposte:"
+      "it": "Risposte:",
+      "no": "Responses:"
     },
-    {
-      "key": "ui.dashboard.states",
+    "ui.dashboard.states": {
       "en": "States:",
       "es": "Estados:",
       "fr": "États :",
       "de": "Zustände:",
       "lt": "Būsenos:",
       "pt": "Estados:",
-      "it": "Stati:"
+      "it": "Stati:",
+      "no": "States:"
     },
-    {
-      "key": "ui.dashboard.status_summary",
+    "ui.dashboard.status_summary": {
       "en": "Status Summary",
       "es": "Resumen del Estado",
       "fr": "Résumé du Statut",
       "de": "Statusübersicht",
       "lt": "Būklės santrauka",
       "pt": "Resumo do Status",
-      "it": "Riepilogo dello Stato"
+      "it": "Riepilogo dello Stato",
+      "no": "Status Summary"
     },
-    {
-      "key": "ui.dashboard.total_elements",
+    "ui.dashboard.total_elements": {
       "en": "Total Elements",
       "es": "Elementos Totales",
       "fr": "Éléments Totaux",
       "de": "Gesamtelemente",
       "lt": "Viso elementų",
       "pt": "Total de Elementos",
-      "it": "Elementi Totali"
+      "it": "Elementi Totali",
+      "no": "Total Elements"
+    },
+    "ui.dashboard.isa_data_status": {
+      "en": "ISA Data Status",
+      "es": "Estado de Datos ISA",
+      "fr": "Statut des Données ISA",
+      "de": "ISA-Datenstatus",
+      "lt": "ISA duomenų būsena",
+      "pt": "Status dos Dados ISA",
+      "it": "Stato Dati ISA",
+      "no": "ISA-datastatus"
+    },
+    "ui.dashboard.cld_status": {
+      "en": "CLD Status",
+      "es": "Estado del DBC",
+      "fr": "Statut du DBC",
+      "de": "ULS-Status",
+      "lt": "PKD būsena",
+      "pt": "Status do DLC",
+      "it": "Stato DCC",
+      "no": "CLD-status"
+    },
+    "ui.dashboard.analysis_status": {
+      "en": "Analysis Status",
+      "es": "Estado del Análisis",
+      "fr": "Statut de l'Analyse",
+      "de": "Analysestatus",
+      "lt": "Analizės būsena",
+      "pt": "Status da Análise",
+      "it": "Stato dell'Analisi",
+      "no": "Analysestatus"
     }
-  ]
+  }
 }

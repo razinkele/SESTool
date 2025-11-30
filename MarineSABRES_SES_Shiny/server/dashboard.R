@@ -18,6 +18,14 @@
 #' @param i18n shiny.i18n translator object
 setup_dashboard_rendering <- function(input, output, session, project_data, i18n) {
 
+  # ========== DASHBOARD HEADER ==========
+  output$dashboard_header <- renderUI({
+    tagList(
+      h2(i18n$t("ui.dashboard.title")),
+      p(i18n$t("ui.dashboard.subtitle"))
+    )
+  })
+
   # ========== VALUE BOXES ==========
 
   # Total Elements Box

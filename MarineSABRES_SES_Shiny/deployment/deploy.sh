@@ -225,6 +225,10 @@ deploy_shiny_server() {
     cp -r "$APP_DIR/server" /srv/shiny-server/marinesabres/
     cp -r "$APP_DIR/www" /srv/shiny-server/marinesabres/
     cp -r "$APP_DIR/translations" /srv/shiny-server/marinesabres/
+
+    # Copy scripts directory (required for modular translation system)
+    print_status "Copying scripts..."
+    cp -r "$APP_DIR/scripts" /srv/shiny-server/marinesabres/
     
     # Copy docs directory (if it exists)
     if [ -d "$APP_DIR/docs" ]; then

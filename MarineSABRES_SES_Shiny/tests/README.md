@@ -44,6 +44,10 @@ test_dir("tests/testthat")
 Or from the command line:
 
 ```bash
+# Run all tests (includes comprehensive test runner)
+Rscript tests/run_all_tests.R
+
+# Run testthat suite only
 Rscript -e "testthat::test_dir('tests/testthat')"
 ```
 
@@ -58,6 +62,9 @@ test_file("tests/testthat/test-modules.R")
 
 # Run only integration tests
 test_file("tests/testthat/test-integration.R")
+
+# Run only connection review tests (NEW in v1.5.2)
+test_file("tests/testthat/test-connection-review.R")
 ```
 
 ### Run Tests Automatically on File Changes
@@ -105,6 +112,18 @@ Tests for functions in `functions/network_analysis.R`:
 - Network simplification
 - Pathway analysis
 - Node importance ranking
+
+### Connection Review Tests (`test-connection-review.R`) - NEW in v1.5.2
+
+Tests for connection review module bug fixes:
+- Core functionality (module initialization, batch categorization)
+- Amendment application (polarity, strength, confidence)
+- Regression tests for 4 critical bugs:
+  - Bug #1: Amendment data not saved
+  - Bug #2: Missing on_approve callback
+  - Bug #3: Amendments lost during finalization
+  - Bug #4: Unwanted auto-navigation
+- Edge cases (empty lists, partial amendments, rejections)
 
 ### Module Tests (`test-modules.R`)
 

@@ -24,8 +24,11 @@ load_translations <- function(base_path = "translations", debug = FALSE) {
     recursive = TRUE
   )
 
-  # Exclude backup files - be aggressive to avoid duplicates
-  json_files <- json_files[!grepl("backup|translation\\.json$", json_files, ignore.case = TRUE)]
+  # Exclude backup files and generated merged files - be aggressive to avoid duplicates
+  json_files <- json_files[!grepl("backup|translation\\.json$|_merged_translations\\.json$", json_files, ignore.case = TRUE)]
+
+  # Exclude legacy flat-key files (ui_flat_keys.json) that don't have "key" fields
+  json_files <- json_files[!grepl("ui_flat_keys\\.json$", json_files, ignore.case = TRUE)]
 
   # Only include modular files (those with underscores or in subdirectories)
   # This excludes old monolithic translation.json files
@@ -81,10 +84,25 @@ load_translations <- function(base_path = "translations", debug = FALSE) {
         glossary_count <- glossary_count + length(data$glossary)
       }
 
-      # Handle regular translation files
+      # Handle regular translation files (support both array and object formats)
       if (!is.null(data$translation)) {
-        merged_translations <- c(merged_translations, data$translation)
-        entry_count <- entry_count + length(data$translation)
+        # Detect format: array (has numeric indices) vs object (has character names)
+        is_object_format <- !is.null(names(data$translation)) &&
+                           all(names(data$translation) != "")
+
+        if (is_object_format) {
+          # Object-based format: {key: {en: "...", es: "..."}}
+          # Merge by combining named lists
+          for (key in names(data$translation)) {
+            merged_translations[[key]] <- data$translation[[key]]
+          }
+          entry_count <- entry_count + length(data$translation)
+        } else {
+          # Array-based format: [{key: "...", en: "...", es: "..."}]
+          # Merge by concatenating lists
+          merged_translations <- c(merged_translations, data$translation)
+          entry_count <- entry_count + length(data$translation)
+        }
       }
 
       file_count <- file_count + 1
@@ -134,23 +152,78 @@ save_merged_translations <- function(translations, debug = FALSE, persistent = F
     stop("Package 'jsonlite' is required but not installed")
   }
 
-  # Deduplicate by English text before saving (shiny.i18n uses 'en' as row names)
-  # This is critical: shiny.i18n internally uses English text as identifiers
-  if (!is.null(translations$translation) && length(translations$translation) > 0) {
-    en_values <- sapply(translations$translation, function(entry) {
+  # Handle both object-based and array-based formats
+  is_object_format <- !is.null(names(translations$translation)) &&
+                     all(names(translations$translation) != "")
+
+  if (is_object_format) {
+    # Object format: Convert to array format for shiny.i18n compatibility
+    # shiny.i18n expects array format: [{key: "x", en: "...", es: "..."}]
+    if (debug) {
+      cat("[TRANSLATION LOADER] Converting object format to array for shiny.i18n\n")
+    }
+
+    # First, identify duplicate English texts
+    en_texts <- sapply(translations$translation, function(entry) {
       if (!is.null(entry$en)) entry$en else ""
     })
 
-    # Find duplicates by English text
-    duplicate_indices <- which(duplicated(en_values) & en_values != "")
+    # Find which English texts are duplicated
+    duplicated_en_texts <- unique(en_texts[duplicated(en_texts) & en_texts != ""])
 
-    if (length(duplicate_indices) > 0) {
-      if (debug) {
-        cat(sprintf("[TRANSLATION LOADER] Removing %d duplicate English texts before saving\n",
-                    length(duplicate_indices)))
-      }
-      translations$translation <- translations$translation[-duplicate_indices]
+    if (debug && length(duplicated_en_texts) > 0) {
+      cat(sprintf("[TRANSLATION LOADER] Found %d duplicate English texts (will make unique for shiny.i18n)\n",
+                  length(duplicated_en_texts)))
     }
+
+    # Convert to array format, making English text unique where needed
+    array_translation <- lapply(names(translations$translation), function(key) {
+      entry <- translations$translation[[key]]
+      # Create array entry with key field
+      result <- list(key = key)
+
+      # Add all language fields
+      for (lang in translations$languages) {
+        lang_text <- entry[[lang]]
+
+        # For English language: if this text is duplicated, append key to make it unique
+        # This ensures shiny.i18n can use it as row.names without conflicts
+        if (lang == "en" && !is.null(lang_text) && lang_text %in% duplicated_en_texts) {
+          # Append key in brackets to make unique
+          # Example: "Other" becomes "Other [modules.isa.ai_assistant.other]"
+          lang_text <- sprintf("%s [%s]", lang_text, key)
+        }
+
+        result[[lang]] <- lang_text
+      }
+      return(result)
+    })
+
+    translations$translation <- array_translation
+  }
+
+  # DISABLED: Deduplication by English text
+  # In the pure modular/namespaced key system, different keys CAN have the same English text
+  # (e.g., "Other", "Help", "Activities" appear in multiple contexts with different keys)
+  # Deduplicating by English text removes legitimate translation keys!
+  #
+  # OLD LOGIC (INCORRECT for namespaced keys):
+  # if (!is.null(translations$translation) && length(translations$translation) > 0) {
+  #   en_values <- sapply(translations$translation, function(entry) {
+  #     if (!is.null(entry$en)) entry$en else ""
+  #   })
+  #   duplicate_indices <- which(duplicated(en_values) & en_values != "")
+  #   if (length(duplicate_indices) > 0) {
+  #     translations$translation <- translations$translation[-duplicate_indices]
+  #   }
+  # }
+  #
+  # NEW LOGIC: No deduplication - each namespaced key is unique by definition
+  # shiny.i18n will use the "key" field as the unique identifier, not English text
+
+  if (debug && !is.null(translations$translation) && length(translations$translation) > 0) {
+    cat(sprintf("[TRANSLATION LOADER] Skipping English text deduplication (namespaced keys allow duplicate English text)\n"))
+    cat(sprintf("[TRANSLATION LOADER] Total entries to save: %d\n", length(translations$translation)))
   }
 
   # Create file path - persistent or temp
@@ -369,4 +442,244 @@ init_modular_translations <- function(base_path = "translations",
   }
 
   return(temp_file)
+}
+
+#' Load Reverse Key Mapping
+#'
+#' Loads the reverse mapping from namespaced keys to English text
+#' This enables the wrapper to convert namespaced keys to shiny.i18n lookups
+#'
+#' @param mapping_path Path to reverse key mapping JSON (default: "scripts/reverse_key_mapping.json")
+#' @param debug Print debug information (default: FALSE)
+#' @return Named list mapping namespaced keys to English text
+#' @export
+load_reverse_key_mapping <- function(mapping_path = "scripts/reverse_key_mapping.json", debug = FALSE) {
+
+  if (!requireNamespace("jsonlite", quietly = TRUE)) {
+    stop("Package 'jsonlite' is required but not installed")
+  }
+
+  if (!file.exists(mapping_path)) {
+    stop(sprintf("Reverse key mapping not found: %s", mapping_path))
+  }
+
+  tryCatch({
+    mapping <- jsonlite::fromJSON(mapping_path, simplifyVector = TRUE)
+
+    if (debug) {
+      cat(sprintf("[TRANSLATION WRAPPER] Loaded %d key mappings from %s\n",
+                  length(mapping), mapping_path))
+    }
+
+    return(mapping)
+
+  }, error = function(e) {
+    stop(sprintf("Error loading reverse key mapping: %s", e$message))
+  })
+}
+
+#' Create Translation Wrapper
+#'
+#' Creates a wrapper function that looks up translations by namespaced key.
+#' Supports both legacy mode (with reverse_mapping) and new direct mode (with merged_translations).
+#'
+#' @param i18n_translator shiny.i18n Translator object
+#' @param reverse_mapping Named list mapping namespaced keys to English text (legacy, optional)
+#' @param merged_translations Merged translation data for direct lookup (new format, optional)
+#' @param debug Print debug information (default: FALSE)
+#' @return Wrapper function that accepts namespaced keys
+#' @export
+create_translation_wrapper <- function(i18n_translator,
+                                     reverse_mapping = NULL,
+                                     merged_translations = NULL,
+                                     debug = FALSE) {
+
+  # Cache for performance (keyed by language + key)
+  cache <- new.env(parent = emptyenv())
+
+  # Determine mode: direct lookup or legacy reverse mapping
+  use_direct_lookup <- !is.null(merged_translations) &&
+                      is.list(merged_translations) &&
+                      length(names(merged_translations)) > 0
+
+  if (debug) {
+    if (use_direct_lookup) {
+      cat("[TRANSLATION WRAPPER] Using direct key-based lookup (no reverse mapping needed)\n")
+    } else {
+      cat("[TRANSLATION WRAPPER] Using legacy reverse mapping mode\n")
+    }
+  }
+
+  # Return wrapper function
+  function(namespaced_key) {
+
+    # Get current language from translator
+    current_lang <- i18n_translator$get_translation_language()
+
+    # Create cache key combining language and namespaced key
+    cache_key <- paste0(current_lang, ":", namespaced_key)
+
+    # Check cache first
+    if (exists(cache_key, envir = cache)) {
+      return(get(cache_key, envir = cache))
+    }
+
+    # NEW MODE: Direct key-based lookup
+    if (use_direct_lookup) {
+      translation_entry <- merged_translations[[namespaced_key]]
+
+      if (is.null(translation_entry)) {
+        # Key not found - warn and return key
+        if (debug) {
+          warning(sprintf("Translation key not found: '%s'", namespaced_key))
+        }
+        return(namespaced_key)
+      }
+
+      # Get translation for current language
+      result <- translation_entry[[current_lang]]
+
+      if (is.null(result) || result == "") {
+        # Translation not available for this language - try English fallback
+        result <- translation_entry[["en"]]
+        if (is.null(result)) {
+          return(namespaced_key)
+        }
+      }
+
+      # Cache and return
+      assign(cache_key, result, envir = cache)
+      return(result)
+
+    } else {
+      # LEGACY MODE: Use reverse mapping to get English text, then call shiny.i18n
+      english_text <- reverse_mapping[[namespaced_key]]
+
+      if (is.null(english_text)) {
+        # No mapping found - warn and return key
+        if (debug) {
+          warning(sprintf("No mapping found for key: '%s'", namespaced_key))
+        }
+        return(namespaced_key)
+      }
+
+      # Call shiny.i18n with English text
+      tryCatch({
+        result <- i18n_translator$t(english_text)
+
+        # Cache the result with language-aware key
+        assign(cache_key, result, envir = cache)
+
+        return(result)
+
+      }, error = function(e) {
+        if (debug) {
+          warning(sprintf("Translation error for '%s': %s", namespaced_key, e$message))
+        }
+        return(namespaced_key)
+      })
+    }
+  }
+}
+
+#' Initialize Translation System with Wrapper
+#'
+#' Complete initialization function that:
+#' 1. Loads and merges modular translation files
+#' 2. Initializes shiny.i18n Translator
+#' 3. Creates wrapper function for namespaced key lookups
+#'
+#' @param base_path Base path to translations directory (default: "translations")
+#' @param mapping_path Path to reverse key mapping (default: "scripts/reverse_key_mapping.json")
+#' @param validate Run validation checks (default: FALSE)
+#' @param debug Print debug information (default: FALSE)
+#' @param persistent Save to persistent file instead of temp (default: TRUE)
+#' @param use_direct_lookup Use direct key-based lookup instead of reverse mapping (default: TRUE)
+#' @return List with: translator (shiny.i18n object), wrapper (namespaced key function), file (JSON path)
+#' @export
+init_translation_system <- function(base_path = "translations",
+                                    mapping_path = "scripts/reverse_key_mapping.json",
+                                    validate = FALSE,
+                                    debug = FALSE,
+                                    persistent = TRUE,
+                                    use_direct_lookup = TRUE) {
+
+  if (debug) {
+    cat("[TRANSLATION SYSTEM] Initializing complete translation system...\n")
+  }
+
+  # Step 1: Load and merge modular translations
+  merged_translations <- load_translations(base_path = base_path, debug = debug)
+
+  # Keep object format for wrapper (modular files are already in object format)
+  # merged_translations$translation is already: list("key" = list(en="...", es="..."), ...)
+  translation_obj <- merged_translations$translation
+
+  if (debug) {
+    cat(sprintf("[TRANSLATION SYSTEM] Object format for wrapper: %d entries\n",
+                length(translation_obj)))
+  }
+
+  # Step 2: Save merged translations to file for shiny.i18n
+  translation_file <- save_merged_translations(
+    merged_translations,
+    debug = debug,
+    persistent = persistent
+  )
+
+  if (debug) {
+    cat(sprintf("[TRANSLATION SYSTEM] Merged translation file: %s\n", translation_file))
+  }
+
+  # Step 3: Initialize shiny.i18n Translator (primarily for language management)
+  if (!requireNamespace("shiny.i18n", quietly = TRUE)) {
+    stop("Package 'shiny.i18n' is required but not installed")
+  }
+
+  i18n <- tryCatch({
+    shiny.i18n::Translator$new(translation_json_path = translation_file)
+  }, error = function(e) {
+    stop(sprintf("Failed to initialize Translator: %s", e$message))
+  })
+
+  if (debug) {
+    cat("[TRANSLATION SYSTEM] shiny.i18n Translator initialized\n")
+  }
+
+  # Step 4: Create wrapper function
+  if (use_direct_lookup) {
+    # NEW MODE: Use direct key-based lookup (no reverse mapping needed)
+    if (debug) {
+      cat("[TRANSLATION SYSTEM] Using direct key-based lookup mode\n")
+    }
+
+    # Use the object format we created earlier
+    wrapper <- create_translation_wrapper(
+      i18n_translator = i18n,
+      merged_translations = translation_obj,
+      debug = debug
+    )
+  } else {
+    # LEGACY MODE: Use reverse mapping
+    if (debug) {
+      cat("[TRANSLATION SYSTEM] Using legacy reverse mapping mode\n")
+    }
+    reverse_mapping <- load_reverse_key_mapping(mapping_path = mapping_path, debug = debug)
+    wrapper <- create_translation_wrapper(
+      i18n_translator = i18n,
+      reverse_mapping = reverse_mapping,
+      debug = debug
+    )
+  }
+
+  if (debug) {
+    cat("[TRANSLATION SYSTEM] Translation wrapper created\n")
+    cat("[TRANSLATION SYSTEM] Initialization complete!\n")
+  }
+
+  return(list(
+    translator = i18n,     # Original shiny.i18n object (for language switching)
+    wrapper = wrapper,      # Wrapper function for namespaced keys
+    file = translation_file # Path to merged JSON
+  ))
 }

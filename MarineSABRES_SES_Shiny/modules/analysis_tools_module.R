@@ -28,20 +28,14 @@
 #' }
 #'
 #' @export
-analysis_loops_ui <- function(id) {
+analysis_loops_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
-    create_module_header(
-      ns = ns,
-      title_key = "Feedback Loop Detection and Analysis",
-      subtitle_key = "Automatically identify and analyze feedback loops in your Causal Loop Diagram.",
-      help_id = "help_loops",
-      i18n = i18n
-    ),
+    uiOutput(ns("module_header")),
 
     fluidRow(
       column(12,
@@ -269,6 +263,16 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
       graph = NULL,
       adjacency = NULL,
       detection_complete = FALSE
+    )
+
+    # === REACTIVE MODULE HEADER ===
+    create_reactive_header(
+      output = output,
+      ns = session$ns,
+      title_key = "modules.analysis.loops.title",
+      subtitle_key = "modules.analysis.loops.subtitle",
+      help_id = "help_loops",
+      i18n = i18n
     )
 
     # ============================================================================
@@ -901,15 +905,14 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
 # NETWORK METRICS MODULE
 # ============================================================================
 
-analysis_metrics_ui <- function(id) {
+analysis_metrics_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
-    h2(icon("chart-line"), " ", i18n$t("modules.analysis.network.network_metrics_analysis")),
-    p(i18n$t("modules.analysis.calculate_and_visualize_centrality_metrics_to_iden")),
+    uiOutput(ns("module_header")),
 
     # Check if CLD exists
     uiOutput(ns("cld_check_ui")),
@@ -919,7 +922,7 @@ analysis_metrics_ui <- function(id) {
   )
 }
 
-analysis_metrics_server <- function(id, project_data_reactive) {
+analysis_metrics_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -928,6 +931,14 @@ analysis_metrics_server <- function(id, project_data_reactive) {
       calculated_metrics = NULL,
       node_metrics_df = NULL
     )
+
+    # === REACTIVE MODULE HEADER ===
+    output$module_header <- renderUI({
+      tagList(
+        h2(icon("chart-line"), " ", i18n$t("modules.analysis.network.network_metrics_analysis")),
+        p(i18n$t("modules.analysis.calculate_and_visualize_centrality_metrics_to_iden"))
+      )
+    })
 
     # Check if CLD data exists
     output$cld_check_ui <- renderUI({
@@ -1432,15 +1443,14 @@ analysis_metrics_server <- function(id, project_data_reactive) {
 # BOT ANALYSIS MODULE - Behaviour Over Time
 # ============================================================================
 
-analysis_bot_ui <- function(id) {
+analysis_bot_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
-    h2(icon("chart-line"), " Advanced BOT Analysis"),
-    p("Analyze temporal patterns and trends in your social-ecological system."),
+    uiOutput(ns("module_header")),
 
     fluidRow(
       # Left Panel: Data Input and Configuration
@@ -1548,7 +1558,7 @@ analysis_bot_ui <- function(id) {
   )
 }
 
-analysis_bot_server <- function(id, project_data_reactive) {
+analysis_bot_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
 
     ns <- session$ns
@@ -1558,6 +1568,14 @@ analysis_bot_server <- function(id, project_data_reactive) {
       current_element = NULL,
       timeseries_data = data.frame(Year = integer(), Value = numeric())
     )
+
+    # === REACTIVE MODULE HEADER ===
+    output$module_header <- renderUI({
+      tagList(
+        h2(icon("chart-line"), " Advanced BOT Analysis"),
+        p("Analyze temporal patterns and trends in your social-ecological system.")
+      )
+    })
 
     # Update element choices from ISA data
     observe({
@@ -1900,23 +1918,15 @@ analysis_bot_server <- function(id, project_data_reactive) {
 #          low-centrality node removal, strength-based aggregation
 # ============================================================================
 
-analysis_simplify_ui <- function(id) {
+analysis_simplify_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     # Header with information
-    fluidRow(
-      column(12,
-        h2(icon("compress-arrows-alt"), "Model Simplification Tools"),
-        p(class = "text-muted",
-          "Reduce network complexity while preserving essential causal structures and feedback loops.",
-          "Apply multiple simplification methods to create focused, interpretable models."
-        )
-      )
-    ),
+    uiOutput(ns("module_header")),
 
     hr(),
 
@@ -2328,7 +2338,7 @@ analysis_simplify_ui <- function(id) {
   )
 }
 
-analysis_simplify_server <- function(id, project_data_reactive) {
+analysis_simplify_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
 
     # ========== REACTIVE VALUES ==========
@@ -2342,6 +2352,19 @@ analysis_simplify_server <- function(id, project_data_reactive) {
       simplification_history = list(),
       has_simplified = FALSE
     )
+
+    # === REACTIVE MODULE HEADER ===
+    output$module_header <- renderUI({
+      fluidRow(
+        column(12,
+          h2(icon("compress-arrows-alt"), "Model Simplification Tools"),
+          p(class = "text-muted",
+            "Reduce network complexity while preserving essential causal structures and feedback loops. ",
+            "Apply multiple simplification methods to create focused, interpretable models."
+          )
+        )
+      )
+    })
 
     # ========== LOAD ORIGINAL NETWORK ==========
     observe({
@@ -3000,20 +3023,14 @@ analysis_simplify_server <- function(id, project_data_reactive) {
 #'
 #' @param id Module ID
 #' @return UI elements
-analysis_leverage_ui <- function(id) {
+analysis_leverage_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
-    create_module_header(
-      ns = ns,
-      title_key = "Leverage Point Analysis",
-      subtitle_key = "Identify the most influential nodes in your network that could serve as key intervention points.",
-      help_id = "help_leverage",
-      i18n = i18n
-    ),
+    uiOutput(ns("module_header")),
 
     fluidRow(
       column(4,
@@ -3091,13 +3108,23 @@ analysis_leverage_ui <- function(id) {
 #' @param id Module ID
 #' @param project_data_reactive Reactive project data
 #' @return Server logic
-analysis_leverage_server <- function(id, project_data_reactive) {
+analysis_leverage_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive values
     rv <- reactiveValues(
       leverage_results = NULL,
       has_data = FALSE
+    )
+
+    # === REACTIVE MODULE HEADER ===
+    create_reactive_header(
+      output = output,
+      ns = session$ns,
+      title_key = "modules.analysis.leverage.title",
+      subtitle_key = "modules.analysis.leverage.subtitle",
+      help_id = "help_leverage",
+      i18n = i18n
     )
 
     # Check if data exists - check ISA data directly like loop analysis does

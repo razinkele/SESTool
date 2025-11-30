@@ -1,5 +1,5 @@
 # modules/ai_isa_assistant_module.R
-# AI-Assisted ISA Creation Module
+# AI-Assisted SES Creation Module
 # Purpose: Guide users through stepwise questions to build DAPSI(W)R(M) framework
 
 # Load helper modules
@@ -17,7 +17,7 @@ ai_isa_assistant_ui <- function(id, i18n) {
   fluidPage(
     useShinyjs(),
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     # Custom CSS
     tags$head(
@@ -228,7 +228,7 @@ ai_isa_assistant_ui <- function(id, i18n) {
     # Main content
     fluidRow(
       column(12,
-        create_module_header(ns, "AI-Assisted ISA Creation", "Let me guide you step-by-step through building your DAPSI(W)R(M) model.", "ai_isa_help", i18n)
+        create_module_header(ns, "modules.isa.ai_assistant.ai_assisted_isa_creation", "modules.isa.ai_assistant.subtitle", "ai_isa_help", i18n)
       )
     ),
 
@@ -483,7 +483,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         step = 0,
         title_key = "regional_sea",
         title = i18n$t("modules.isa.ai_assistant.regional_sea_context"),
-        question = i18n$t("Hello! I'm your AI assistant for creating a DAPSI(W)R(M) model. Let's start by selecting your regional sea or ocean. This helps me provide relevant suggestions for your area."),
+        question = i18n$t("modules.isa.ai_assistant.welcome_message"),
         type = "choice_regional_sea",
         target = "regional_sea"
       ),
@@ -499,7 +499,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         step = 2,
         title_key = "main_issue",
         title = i18n$t("modules.isa.ai_assistant.main_issue_identification"),
-        question = i18n$t("What are the main environmental or management issues you're addressing? (Select all that apply)"),
+        question = i18n$t("modules.isa.ai_assistant.question_main_issues"),
         type = "choice_with_custom_multiple",  # Changed to support multiple selections
         target = "main_issue"
       ),
@@ -507,7 +507,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         step = 3,
         title_key = "drivers",
         title = i18n$t("modules.isa.ai_assistant.drivers_societal_needs"),
-        question = i18n$t("Let's identify the DRIVERS - these are the basic human needs or societal demands driving activities in your area. What are the main societal needs?"),
+        question = i18n$t("modules.isa.ai_assistant.question_drivers"),
         type = "multiple",
         target = "drivers",
         use_context_examples = TRUE
@@ -516,7 +516,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         step = 4,
         title_key = "activities",
         title = i18n$t("modules.isa.ai_assistant.activities_human_actions"),
-        question = i18n$t("Now let's identify ACTIVITIES - the human actions taken to meet those needs. What activities are happening in your marine area?"),
+        question = i18n$t("modules.isa.ai_assistant.question_activities"),
         type = "multiple",
         target = "activities",
         use_context_examples = TRUE
@@ -570,7 +570,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         step = 10,
         title_key = "connection_review",
         title = i18n$t("modules.ses.creation.connection_review"),
-        question = i18n$t("Great! Now I'll suggest logical connections between the elements you've identified. These connections represent causal relationships in your social-ecological system. You can review and approve/reject each suggestion."),
+        question = i18n$t("modules.isa.ai_assistant.connection_review_intro"),
         type = "connection_review",
         target = "connections"
       )
@@ -864,7 +864,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       if (!is.null(input$has_saved_session) && input$has_saved_session) {
         # Notify user about saved session
         showNotification(
-          i18n$t("A previous session was found. Click 'Load Saved' to restore it."),
+          i18n$t("modules.isa.ai_assistant.previous_session_found"),
           type = "message",
           duration = 5
         )
@@ -919,7 +919,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           div(style = "color: #667eea; font-weight: 600;",
             icon("robot"), " AI Assistant"
           ),
-          p(i18n$t("Great work! You've completed all the steps. Review your connections and finalize your model."))
+          p(i18n$t("modules.isa.ai_assistant.completion_message"))
         )
       }
     })
@@ -1050,7 +1050,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       rv$conversation <- c(rv$conversation, list(
         list(type = "ai",
-             message = paste0(i18n$t("Great! You've approved"), " ", approved_count, " ",
+             message = paste0(i18n$t("modules.isa.ai_assistant.great_youve_approved"), " ", approved_count, " ",
                             i18n$t("modules.isa.ai_assistant.connections_out_of"), " ",
                             length(rv$suggested_connections), " ", i18n$t("modules.isa.ai_assistant.suggested_connections"), " ",
                             i18n$t("modules.isa.these_connections_will_be_included_in_your_saved_i")),
@@ -1719,6 +1719,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     quick_observers_setup_for_step <- reactiveVal(-1)
     last_render_counter <- reactiveVal(-1)
 
+    # Store active observers so we can destroy them
+    active_observers <- list()
+
     # Create observers for quick option buttons (only once per step, but recreate on navigation)
     observe({
       current_step <- rv$current_step
@@ -1729,6 +1732,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                      (current_render_counter != last_render_counter())
 
       if (needs_setup) {
+        # Destroy all previous observers before creating new ones
+        if (length(active_observers) > 0) {
+          cat(sprintf("[AI ISA] Destroying %d old observers\n", length(active_observers)))
+          lapply(active_observers, function(obs) {
+            if (!is.null(obs)) obs$destroy()
+          })
+          active_observers <<- list()
+        }
+
         quick_observers_setup_for_step(current_step)
         last_render_counter(current_render_counter)
 
@@ -1854,7 +1866,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
                       ai_response <- paste0(
                         i18n$t("modules.isa.ai_assistant.perfect"), " ", ecosystem_name, " ",
-                        i18n$t("ecosystems have unique characteristics that I'll consider in my suggestions.")
+                        i18n$t("modules.isa.ai_assistant.ecosystems_unique_characteristics")
                       )
                       rv$conversation <- c(rv$conversation, list(
                         list(type = "ai", message = ai_response, timestamp = Sys.time())
@@ -1937,8 +1949,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                       rv$context$main_issue <- issue_name
 
                       ai_response <- paste0(
-                        i18n$t("Understood. I'll focus suggestions on"), " ", tolower(issue_name), "-related issues. ",
-                        i18n$t("Now let's start building your DAPSI(W)R(M) framework!")
+                        i18n$t("modules.isa.ai_assistant.understood_focus_suggestions"), " ", tolower(issue_name), "-related issues. ",
+                        i18n$t("modules.isa.ai_assistant.now_lets_start_building")
                       )
                       rv$conversation <- c(rv$conversation, list(
                         list(type = "ai", message = ai_response, timestamp = Sys.time())
@@ -2055,8 +2067,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           # Create AI response
           issue_list <- paste(rv$selected_issues, collapse = ", ")
           ai_response <- paste0(
-            i18n$t("Great! I'll focus suggestions on these issues: "), issue_list, ". ",
-            i18n$t("Now let's start building your DAPSI(W)R(M) framework!")
+            i18n$t("modules.isa.ai_assistant.great_focus_on_issues"), " ", issue_list, ". ",
+            i18n$t("modules.isa.ai_assistant.now_lets_start_building")
           )
           rv$conversation <- c(rv$conversation, list(
             list(type = "ai", message = ai_response, timestamp = Sys.time())

@@ -82,7 +82,8 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
       de = "Sprache Ändern",
       lt = "Keičiama Kalba",
       pt = "Mudando Idioma",
-      it = "Cambio Lingua"
+      it = "Cambio Lingua",
+      no = "Endrer Språk"
     )
 
     session$sendCustomMessage(

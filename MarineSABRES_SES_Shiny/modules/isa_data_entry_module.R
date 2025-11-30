@@ -9,7 +9,7 @@ isaDataEntryUI <- function(id) {
 
   tagList(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     fluidRow(
       column(12,
@@ -261,8 +261,8 @@ isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
     output$isa_header <- renderUI({
       create_module_header(
         ns = ns,
-        title_key = "Integrated Systems Analysis (ISA) Data Entry",
-        subtitle_key = "Follow the structured exercises to build your marine Social-Ecological System analysis.",
+        title_key = "modules.isa.data_entry.title",
+        subtitle_key = "modules.isa.data_entry.subtitle",
         help_id = "help_main",
         i18n = i18n
       )

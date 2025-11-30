@@ -8,7 +8,7 @@ auto_save_indicator_ui <- function(id) {
 
   tagList(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     # JavaScript handlers
     tags$script(HTML(sprintf("

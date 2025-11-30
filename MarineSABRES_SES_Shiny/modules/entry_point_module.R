@@ -11,7 +11,7 @@ entry_point_ui <- function(id, i18n) {
 
   fluidPage(
     # Use i18n for language support
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     # Custom CSS
     tags$head(

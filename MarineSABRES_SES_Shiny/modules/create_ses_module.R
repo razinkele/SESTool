@@ -12,7 +12,7 @@ create_ses_ui <- function(id, i18n) {
 
   fluidPage(
     useShinyjs(),
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     # Custom CSS for the Create SES interface
     tags$head(
@@ -180,8 +180,8 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
         div(class = "header-section",
           create_module_header(
             ns = ns,
-            title_key = "Create Your Social-Ecological System",
-            subtitle_key = "Choose the method that best fits your experience level and project needs",
+            title_key = "modules.ses.creation.title",
+            subtitle_key = "modules.ses.creation.subtitle",
             help_id = "help_create_ses",
             i18n = i18n
           )
