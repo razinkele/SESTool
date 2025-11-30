@@ -16,7 +16,11 @@ cat("MarineSABRES SES Tool - Pre-Deployment Validation\n")
 cat("================================================================================\n\n")
 
 # Set working directory to app root
-setwd("..")
+# Check if we're in deployment/ directory or app root
+if (basename(getwd()) == "deployment") {
+  setwd("..")
+}
+cat(sprintf("Working directory: %s\n", getwd()))
 
 # Initialize counters
 errors <- 0
