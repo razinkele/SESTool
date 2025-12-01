@@ -251,6 +251,21 @@ deploy_shiny_server() {
 
     print_success "Application files deployed"
 
+    # Clear Shiny Server cache and force kill old processes
+    print_status "Clearing Shiny Server cache and old processes..."
+
+    # Kill any old Shiny R processes for this app
+    pkill -9 -f 'marinesabres.*R' 2>/dev/null || true
+
+    # Clear cache directories
+    rm -rf /var/lib/shiny-server/bookmarks/* 2>/dev/null || true
+    rm -rf /tmp/shiny-server/* 2>/dev/null || true
+
+    # Remove any stale merged translation cache in deployed app
+    rm -f /srv/shiny-server/marinesabres/translations/_merged_translations.json 2>/dev/null || true
+
+    print_success "Cache cleared"
+
     # Configure Shiny Server
     print_status "Configuring Shiny Server..."
 
@@ -265,9 +280,19 @@ deploy_shiny_server() {
 
     print_success "Shiny Server configured"
 
-    # Restart Shiny Server
-    print_status "Restarting Shiny Server..."
-    systemctl restart shiny-server
+    # Restart Shiny Server with full stop/start cycle
+    print_status "Restarting Shiny Server (full stop/start)..."
+
+    # Stop the server first
+    systemctl stop shiny-server
+    sleep 3
+
+    # Kill any remaining R processes
+    pkill -9 -f 'shiny.*R' 2>/dev/null || true
+    sleep 2
+
+    # Start the server
+    systemctl start shiny-server
 
     # Wait for server to start
     sleep 5
@@ -278,10 +303,15 @@ deploy_shiny_server() {
         echo ""
         echo "Application is running at: http://$(hostname -I | awk '{print $1}'):3838/marinesabres"
         echo ""
+        echo -e "${YELLOW}IMPORTANT:${NC} Clear your browser cache to see the new version!"
+        echo "  - Chrome/Firefox: Ctrl+Shift+R (or Cmd+Shift+R on Mac)"
+        echo "  - Or use Incognito/Private browsing mode"
+        echo ""
         echo "Useful commands:"
         echo "  - Check status: sudo systemctl status shiny-server"
         echo "  - View logs: sudo tail -f /var/log/shiny-server.log"
-        echo "  - Restart: sudo systemctl restart shiny-server"
+        echo "  - Force restart: sudo deployment/force-restart-shiny.sh"
+        echo "  - Check deployment: sudo deployment/check-deployment-status.sh"
     else
         print_error "Shiny Server failed to start"
         echo "Check logs with: sudo journalctl -u shiny-server -n 50"
