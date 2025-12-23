@@ -1,4 +1,4 @@
-# tests/testthat/test-export-functions-enhanced.R
+# test-export-functions-enhanced.R (retained)
 # Tests for enhanced export functions with error handling
 
 library(testthat)

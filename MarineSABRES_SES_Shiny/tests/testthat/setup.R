@@ -7,6 +7,22 @@
 # that are already in global.R - this causes redundancy and slower test execution.
 library(testthat)
 
+# Stub references for linters/static analysis (non-executing)
+if (FALSE) {
+  # igraph helpers
+  igraph::V
+  igraph::E
+  igraph::vcount
+  igraph::ecount
+  igraph::is.directed
+  # graph constructors
+  erdos.renyi.game
+  # testthat helpers
+  expect_true
+  expect_equal
+  expect_type
+}
+
 # Suppress warnings during tests
 options(warn = -1)
 

@@ -7729,16 +7729,6 @@
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
       "no": "Your work is already saved automatically. Navigate to "
-    },
-    "common.messages.error_invalid_proj_file_structure_this_may_not_be_": {
-      "en": "[MISSING TRANSLATION] common.messages.error_invalid_proj_file_structure_this_may_not_be_",
-      "es": "[MISSING TRANSLATION] common.messages.error_invalid_proj_file_structure_this_may_not_be_",
-      "fr": "[MISSING TRANSLATION] common.messages.error_invalid_proj_file_structure_this_may_not_be_",
-      "de": "[MISSING TRANSLATION] common.messages.error_invalid_proj_file_structure_this_may_not_be_",
-      "lt": "[MISSING TRANSLATION] common.messages.error_invalid_proj_file_structure_this_may_not_be_",
-      "pt": "[MISSING TRANSLATION] common.messages.error_invalid_proj_file_structure_this_may_not_be_",
-      "it": "[MISSING TRANSLATION] common.messages.error_invalid_proj_file_structure_this_may_not_be_",
-      "no": "[MISSING TRANSLATION] common.messages.error_invalid_proj_file_structure_this_may_not_be_"
     }
   }
 }

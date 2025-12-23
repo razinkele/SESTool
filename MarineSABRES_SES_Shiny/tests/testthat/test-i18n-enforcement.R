@@ -1,8 +1,11 @@
-# tests/testthat/test-i18n-enforcement.R
+# test-i18n-enforcement.R — i18n enforcement tests
 # Comprehensive i18n enforcement tests to prevent hardcoded strings
 # and ensure i18n best practices are followed
 
 library(testthat)
+
+# Module dir helper for repeated use in tests
+module_dir <- "../../modules"
 
 # ==============================================================================
 # TEST 1: Module UI Functions Have usei18n()
@@ -10,8 +13,14 @@ library(testthat)
 
 test_that("All module UI functions with i18n parameter have usei18n() calls", {
   # Find all module files
-  module_files <- list.files("../../modules", pattern = "\\.R$", full.names = TRUE)
+  module_files <- list.files(module_dir, pattern = "\\.R$", full.names = TRUE)
   module_files <- module_files[!grepl("backup|old|\\.bak", module_files, ignore.case = TRUE)]
+
+  # Preload app.R to accept global usei18n() calls
+  app_content <- ""
+  if (file.exists("../../app.R")) {
+    app_content <- paste(readLines("../../app.R", warn = FALSE), collapse = "\n")
+  }
 
   # List of modules that should have usei18n()
   critical_modules <- c(
@@ -28,7 +37,7 @@ test_that("All module UI functions with i18n parameter have usei18n() calls", {
   )
 
   for (module in critical_modules) {
-    module_path <- file.path("../../modules", module)
+    module_path <- file.path(module_dir, module)
 
     if (!file.exists(module_path)) {
       skip(paste("Module not found:", module))
@@ -42,12 +51,13 @@ test_that("All module UI functions with i18n parameter have usei18n() calls", {
     has_i18n_param <- grepl("function\\([^)]*i18n[^)]*\\)", content_str)
 
     if (has_i18n_param) {
-      # Module should have usei18n() call
-      has_usei18n <- grepl("shiny\\.i18n::usei18n\\(i18n\\)|usei18n\\(i18n\\)", content_str)
+      # Module should have usei18n() call either in module or globally in app.R
+      has_usei18n <- grepl("shiny\\.i18n::usei18n\\(i18n\\)|usei18n\\(i18n\\)", content_str) ||
+                     grepl("shiny\\.i18n::usei18n\\(i18n\\$translator\\)|usei18n\\(i18n\\$translator\\)", app_content)
 
       expect_true(
         has_usei18n,
-        info = paste(module, "has i18n parameter but missing usei18n() call")
+        info = paste(module, "has i18n parameter but missing usei18n() call (module or app-level)")
       )
     }
   }
@@ -59,9 +69,10 @@ test_that("All module UI functions with i18n parameter have usei18n() calls", {
 
 test_that("showNotification calls use i18n$t() for all user-facing messages", {
   # Check app.R and module files
+  module_dir <- "../../modules"
   files_to_check <- c(
     "../../app.R",
-    list.files("../../modules", pattern = "\\.R$", full.names = TRUE)
+    list.files(module_dir, pattern = "\\.R$", full.names = TRUE)
   )
 
   # Exclude backup files
@@ -85,9 +96,10 @@ test_that("showNotification calls use i18n$t() for all user-facing messages", {
 
         # Check if notification has hardcoded string (quoted text not wrapped in i18n$t)
         # Pattern: "text" that's not preceded by i18n$t(
-        if (grepl('showNotification\\s*\\(\\s*"[^"]+"|showNotification\\s*\\(\\s*paste0?\\s*\\(\\s*"[^"]+', context)) {
+        notification_pattern <- "showNotification\\s*\\(\\s*\"[^\"]+\"|showNotification\\s*\\(\\s*paste0?\\s*\\(\\s*\"[^\"]+"
+        if (grepl(notification_pattern, context)) {
           # Check if it's NOT using i18n$t
-          if (!grepl('i18n\\$t\\s*\\(', context)) {
+          if (!grepl("i18n\\$t\\s*\\(", context)) {
             hardcoded_notifications[[length(hardcoded_notifications) + 1]] <- list(
               file = basename(file_path),
               line = i,
@@ -121,14 +133,14 @@ test_that("showNotification calls use i18n$t() for all user-facing messages", {
 # ==============================================================================
 
 test_that("Common UI elements use i18n$t() for labels and titles", {
-  module_files <- list.files("../../modules", pattern = "\\.R$", full.names = TRUE)
+  module_files <- list.files(module_dir, pattern = "\\.R$", full.names = TRUE)
   module_files <- module_files[!grepl("backup|old|\\.bak", module_files, ignore.case = TRUE)]
 
   # Patterns that often indicate hardcoded strings
   suspicious_patterns <- c(
-    'actionButton\\([^,]+,\\s*"[A-Z]',  # actionButton with capitalized label
-    'h[1-6]\\(\\s*"[A-Z]',              # Headers with capitalized text
-    'modalDialog\\([^,]*title\\s*=\\s*"[A-Z]'  # Modal titles
+    "actionButton\\([^,]+,\\s*\"[A-Z]",
+    "h[1-6]\\(\\s*\"[A-Z]",
+    "modalDialog\\([^,]*title\\s*=\\s*\"[A-Z]"
   )
 
   hardcoded_ui_elements <- list()
@@ -181,7 +193,16 @@ test_that("All i18n$t() calls have corresponding translation keys", {
   # Load all translation keys
   source("../../functions/translation_loader.R")
   result <- load_translations("../../translations", debug = FALSE)
-  all_keys <- names(result$translations$en)
+  # Support multiple loader return shapes (historical differences)
+  if (!is.null(result$translations) && !is.null(result$translations$en)) {
+    all_keys <- names(result$translations$en)
+  } else if (!is.null(result$translation)) {
+    all_keys <- names(result$translation)
+  } else if (!is.null(result$translations) && is.list(result$translations)) {
+    all_keys <- names(result$translations)
+  } else {
+    stop('Unrecognized translation loader output format')
+  }
 
   # Find all i18n$t() calls in code
   code_files <- c(
@@ -272,27 +293,58 @@ test_that("All translation files are valid JSON and properly structured", {
 
     required_languages <- c("en", "es", "fr", "de", "lt", "pt", "it")
 
-    for (lang in required_languages) {
-      expect_true(
-        lang %in% names(data),
-        label = paste(file_name, "has language", lang)
-      )
-    }
+    # Support both unified 'translation' files and per-language files
+    if ("translation" %in% names(data)) {
+      # unified format: { languages: [...], translation: { key: {en:.., es:... } } }
+      langs <- data$languages
+      if (is.null(langs) || length(langs) == 0) {
+        first <- data$translation[[1]]
+        langs <- names(first)
+      }
 
-    # Test 3: All languages have same keys
-    if (length(data) > 0 && "en" %in% names(data)) {
-      en_keys <- names(data$en)
-
-      for (lang in setdiff(names(data), c("en", "glossary"))) {
-        lang_keys <- names(data[[lang]])
-
-        # Keys should match (order doesn't matter)
-        expect_equal(
-          sort(lang_keys),
-          sort(en_keys),
-          label = paste(file_name, "- Language", lang, "keys"),
-          expected.label = "English keys"
+      for (lang in required_languages) {
+        expect_true(
+          lang %in% langs,
+          label = paste(file_name, "has language", lang)
         )
+      }
+
+      # Test 3: All languages have same keys (iterate translation keys)
+      en_keys <- names(data$translation)
+
+      for (tk in en_keys) {
+        for (lang in required_languages) {
+          expect_true(
+            !is.null(data$translation[[tk]][[lang]]),
+            info = paste("Key", tk, "is missing language", lang, "in", file_name)
+          )
+        }
+      }
+
+    } else {
+      # Per-language top-level format
+      for (lang in required_languages) {
+        expect_true(
+          lang %in% names(data),
+          label = paste(file_name, "has language", lang)
+        )
+      }
+
+      # Test 3: All languages have same keys
+      if (length(data) > 0 && "en" %in% names(data)) {
+        en_keys <- names(data$en)
+
+        for (lang in setdiff(names(data), c("en", "glossary"))) {
+          lang_keys <- names(data[[lang]])
+
+          # Keys should match (order doesn't matter)
+          expect_equal(
+            sort(lang_keys),
+            sort(en_keys),
+            label = paste(file_name, "- Language", lang, "keys"),
+            expected.label = "English keys"
+          )
+        }
       }
     }
   }
@@ -317,16 +369,29 @@ test_that("Translation files have no empty values", {
 
     data <- jsonlite::fromJSON(json_file, simplifyVector = FALSE)
 
-    for (lang in names(data)) {
-      if (lang == "glossary") next
+    # Support unified translation structure or per-language structure
+    if ("translation" %in% names(data)) {
+      for (tk in names(data$translation)) {
+        for (lang in data$languages) {
+          value <- data$translation[[tk]][[lang]]
+          expect_true(
+            !is.null(value) && is.character(value) && nchar(trimws(value)) > 0,
+            label = sprintf("%s - %s[%s] has value", file_name, lang, tk)
+          )
+        }
+      }
+    } else {
+      for (lang in names(data)) {
+        if (lang == "glossary") next
 
-      for (key in names(data[[lang]])) {
-        value <- data[[lang]][[key]]
+        for (key in names(data[[lang]])) {
+          value <- data[[lang]][[key]]
 
-        expect_true(
-          !is.null(value) && nchar(trimws(value)) > 0,
-          label = sprintf("%s - %s[%s] has value", file_name, lang, key)
-        )
+          expect_true(
+            !is.null(value) && nchar(trimws(value)) > 0,
+            label = sprintf("%s - %s[%s] has value", file_name, lang, key)
+          )
+        }
       }
     }
   }
@@ -337,7 +402,7 @@ test_that("Translation files have no empty values", {
 # ==============================================================================
 
 test_that("Modules that accept i18n parameter actually use i18n$t()", {
-  module_files <- list.files("../../modules", pattern = "\\.R$", full.names = TRUE)
+  module_files <- list.files(module_dir, pattern = "\\.R$", full.names = TRUE)
   module_files <- module_files[!grepl("backup|old|\\.bak", module_files, ignore.case = TRUE)]
 
   for (module_path in module_files) {
@@ -371,9 +436,9 @@ test_that("Critical user-facing strings in app.R are internationalized", {
 
   # Check for common patterns that should be internationalized
   critical_patterns <- list(
-    showNotification = 'showNotification\\s*\\(',
-    modalDialog_title = 'modalDialog\\s*\\([^,]*title\\s*=',
-    actionButton_label = 'actionButton\\s*\\([^,]+,'
+    showNotification = "showNotification\\s*\\(",
+    modalDialog_title = "modalDialog\\s*\\([^,]*title\\s*=",
+    actionButton_label = "actionButton\\s*\\([^,]+,"
   )
 
   for (pattern_name in names(critical_patterns)) {
@@ -388,7 +453,7 @@ test_that("Critical user-facing strings in app.R are internationalized", {
       # Actual validation would need more sophisticated parsing
 
       expect_true(
-        grepl('i18n\\$t\\s*\\(', content_str),
+        grepl("i18n\\$t\\s*\\(", content_str),
         info = paste("app.R should use i18n$t() for", pattern_name)
       )
     }
@@ -405,7 +470,7 @@ test_that("i18n enforcement summary", {
   skip_if_not(dir.exists("../../translations"), "Translation directory not found")
 
   # Count modules with usei18n()
-  module_files <- list.files("../../modules", pattern = "\\.R$", full.names = TRUE)
+  module_files <- list.files(module_dir, pattern = "\\.R$", full.names = TRUE)
   module_files <- module_files[!grepl("backup|old|\\.bak", module_files, ignore.case = TRUE)]
 
   modules_with_usei18n <- 0
@@ -428,7 +493,8 @@ test_that("i18n enforcement summary", {
                  modules_with_usei18n, total_modules,
                  100 * modules_with_usei18n / total_modules))
   message(sprintf("Total translation keys: %d", total_keys))
-  message(sprintf("Supported languages: %d", length(names(result$translations)) - 1)) # -1 for glossary
+languages_count <- length(names(result$translations)) - 1  # -1 for glossary
+    message(sprintf("Supported languages: %d", languages_count))
 
   expect_true(TRUE)
 })

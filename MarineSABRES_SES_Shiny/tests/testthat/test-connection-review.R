@@ -1,4 +1,4 @@
-# tests/testthat/test-connection-review.R
+# test-connection-review.R (tests for connection review logic)
 # Tests for connection review module functionality
 # Tests verify the bug fixes implemented for:
 #   - Amendment data application (strength, confidence, polarity)
@@ -297,9 +297,15 @@ test_that("Bug #3 FIXED: Amendments persist to final save", {
     final_position <- which(approved_idx == idx)
     if (length(final_position) > 0) {
       amendment <- amended_data[[amended_idx]]
-      if (!is.null(amendment$polarity)) final_connections[[final_position]]$polarity <- amendment$polarity
-      if (!is.null(amendment$strength)) final_connections[[final_position]]$strength <- amendment$strength
-      if (!is.null(amendment$confidence)) final_connections[[final_position]]$confidence <- amendment$confidence
+      if (!is.null(amendment$polarity)) {
+    final_connections[[final_position]]$polarity <- amendment$polarity
+  }
+      if (!is.null(amendment$strength)) {
+        final_connections[[final_position]]$strength <- amendment$strength
+      }
+      if (!is.null(amendment$confidence)) {
+        final_connections[[final_position]]$confidence <- amendment$confidence
+      }
     }
   }
 

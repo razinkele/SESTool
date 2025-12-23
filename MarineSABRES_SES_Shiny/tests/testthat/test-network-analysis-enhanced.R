@@ -1,4 +1,4 @@
-# tests/testthat/test-network-analysis-enhanced.R
+# test-network-analysis-enhanced.R (additional network tests)
 # Tests for enhanced network analysis functions with error handling
 
 library(testthat)

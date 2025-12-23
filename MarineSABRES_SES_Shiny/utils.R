@@ -11,6 +11,40 @@ if (!exists("GROUP_COLORS")) {
   }
 }
 
+# For static analysis: declare constants used in this file so linters don't warn
+if (getRversion() >= "2.15.1") {
+  utils::globalVariables(c(
+    "GROUP_COLORS", "DEFAULT_GROUP_COLOR", "GROUP_SHAPES", "DEFAULT_GROUP_SHAPE",
+    "EDGE_WEIGHT_MIN", "EDGE_WEIGHT_MAX", "EDGE_STRENGTH_MIN", "EDGE_STRENGTH_MAX",
+    "EDGE_CONFIDENCE_MIN", "EDGE_CONFIDENCE_MAX",
+    "MARINE_WEIGHT_MIN", "MARINE_WEIGHT_MAX", "MARINE_STRENGTH_MIN", "MARINE_STRENGTH_MAX",
+    "DEFAULT_RANDOM_SEED", "MARINE_SES_CATEGORIES"
+  ))
+}
+
+# No-op assignments for static analysis (not executed at runtime)
+if (FALSE) {
+  GROUP_COLORS <- list() # nolint: object_name_linter
+  DEFAULT_GROUP_COLOR <- "#95A5A6" # nolint: object_name_linter
+  GROUP_SHAPES <- list() # nolint: object_name_linter
+  DEFAULT_GROUP_SHAPE <- "ellipse" # nolint: object_name_linter
+
+  EDGE_WEIGHT_MIN <- 1 # nolint: object_name_linter
+  EDGE_WEIGHT_MAX <- 7 # nolint: object_name_linter
+  EDGE_STRENGTH_MIN <- -5 # nolint: object_name_linter
+  EDGE_STRENGTH_MAX <- 5 # nolint: object_name_linter
+  EDGE_CONFIDENCE_MIN <- 1 # nolint: object_name_linter
+  EDGE_CONFIDENCE_MAX <- 5 # nolint: object_name_linter
+
+  MARINE_WEIGHT_MIN <- 1 # nolint: object_name_linter
+  MARINE_WEIGHT_MAX <- 7 # nolint: object_name_linter
+  MARINE_STRENGTH_MIN <- -5 # nolint: object_name_linter
+  MARINE_STRENGTH_MAX <- 5 # nolint: object_name_linter
+
+  DEFAULT_RANDOM_SEED <- 42 # nolint: object_name_linter
+  MARINE_SES_CATEGORIES <- c("Coastal", "Oceanic") # nolint: object_name_linter
+}
+
 #' Convert Semi-Quantitative Strength to Numerical Value
 #'
 #' Converts text-based strength descriptors (weak, medium, strong) to numerical
@@ -135,7 +169,7 @@ convert_strength_to_numeric <- function(strength_text, direction_indicator = NUL
 #' @export
 get_node_colors <- function(groups) {
   vapply(groups, function(grp) {
-    if (grp %in% names(GROUP_COLORS)) GROUP_COLORS[[grp]] else DEFAULT_GROUP_COLOR
+    if (grp %in% names(GROUP_COLORS)) GROUP_COLORS[[grp]] else DEFAULT_GROUP_COLOR # nolint: object_usage_linter
   }, character(1), USE.NAMES = FALSE)
 }
 
@@ -158,7 +192,7 @@ get_node_colors <- function(groups) {
 #' @export
 get_node_shapes <- function(groups) {
   vapply(groups, function(grp) {
-    if (grp %in% names(GROUP_SHAPES)) GROUP_SHAPES[[grp]] else DEFAULT_GROUP_SHAPE
+    if (grp %in% names(GROUP_SHAPES)) GROUP_SHAPES[[grp]] else DEFAULT_GROUP_SHAPE # nolint: object_usage_linter
   }, character(1), USE.NAMES = FALSE)
 }
 
@@ -184,9 +218,9 @@ get_node_shapes <- function(groups) {
 #'
 #' @export
 ensure_edge_attributes <- function(g,
-                                  weight_range = c(EDGE_WEIGHT_MIN, EDGE_WEIGHT_MAX),
-                                  strength_range = c(EDGE_STRENGTH_MIN, EDGE_STRENGTH_MAX),
-                                  confidence_range = c(EDGE_CONFIDENCE_MIN, EDGE_CONFIDENCE_MAX),
+                                  weight_range = c(EDGE_WEIGHT_MIN, EDGE_WEIGHT_MAX), # nolint: object_usage_linter
+                                  strength_range = c(EDGE_STRENGTH_MIN, EDGE_STRENGTH_MAX), # nolint: object_usage_linter
+                                  confidence_range = c(EDGE_CONFIDENCE_MIN, EDGE_CONFIDENCE_MAX), # nolint: object_usage_linter
                                   use_marine_ranges = FALSE,
                                   use_random = TRUE) {
   if (!inherits(g, "igraph")) {
@@ -195,36 +229,36 @@ ensure_edge_attributes <- function(g,
 
   # Use marine-specific ranges if requested
   if (use_marine_ranges) {
-    weight_range <- c(MARINE_WEIGHT_MIN, MARINE_WEIGHT_MAX)
-    strength_range <- c(MARINE_STRENGTH_MIN, MARINE_STRENGTH_MAX)
+    weight_range <- c(MARINE_WEIGHT_MIN, MARINE_WEIGHT_MAX) # nolint: object_usage_linter
+    strength_range <- c(MARINE_STRENGTH_MIN, MARINE_STRENGTH_MAX) # nolint: object_usage_linter
   }
 
   # Add weight if missing
-  if (!"weight" %in% edge_attr_names(g)) {
+  if (!"weight" %in% igraph::edge_attr_names(g)) {
     if (use_random) {
-      E(g)$weight <- runif(ecount(g), weight_range[1], weight_range[2])
+      igraph::E(g)$weight <- runif(igraph::ecount(g), weight_range[1], weight_range[2])
     } else {
-      E(g)$weight <- rep(weight_range[1], ecount(g))
+      igraph::E(g)$weight <- rep(weight_range[1], igraph::ecount(g))
     }
   }
 
   # Add strength if missing
-  if (!"strength" %in% edge_attr_names(g)) {
+  if (!"strength" %in% igraph::edge_attr_names(g)) {
     if (use_random) {
-      E(g)$strength <- runif(ecount(g), strength_range[1], strength_range[2])
+      igraph::E(g)$strength <- runif(igraph::ecount(g), strength_range[1], strength_range[2])
     } else {
-      E(g)$strength <- rep(weight_range[1], ecount(g))  # Use weight min as default
+      igraph::E(g)$strength <- rep(weight_range[1], igraph::ecount(g))  # Use weight min as default
     }
   }
 
   # Add confidence if missing (weighted toward medium values)
-  if (!"confidence" %in% edge_attr_names(g)) {
+  if (!"confidence" %in% igraph::edge_attr_names(g)) {
     if (use_random) {
-      E(g)$confidence <- sample(confidence_range[1]:confidence_range[2],
-                               ecount(g), replace = TRUE,
+      igraph::E(g)$confidence <- sample(confidence_range[1]:confidence_range[2],
+                               igraph::ecount(g), replace = TRUE,
                                prob = c(0.1, 0.2, 0.3, 0.3, 0.1))
     } else {
-      E(g)$confidence <- rep(3, ecount(g))  # Default to medium confidence
+      igraph::E(g)$confidence <- rep(3, igraph::ecount(g))  # Default to medium confidence
     }
   }
 
@@ -263,21 +297,21 @@ validate_igraph <- function(g,
   }
 
   # Check node count
-  if (vcount(g) < min_nodes) {
-    stop(sprintf("Graph must have at least %d nodes (has %d)", min_nodes, vcount(g)))
+  if (igraph::vcount(g) < min_nodes) {
+    stop(sprintf("Graph must have at least %d nodes (has %d)", min_nodes, igraph::vcount(g)))
   }
 
-  if (vcount(g) > max_nodes) {
-    stop(sprintf("Graph cannot have more than %d nodes (has %d)", max_nodes, vcount(g)))
+  if (igraph::vcount(g) > max_nodes) {
+    stop(sprintf("Graph cannot have more than %d nodes (has %d)", max_nodes, igraph::vcount(g)))
   }
 
   # Check directedness
-  if (require_directed && !is_directed(g)) {
+  if (require_directed && !igraph::is_directed(g)) {
     stop("Graph must be directed")
   }
 
   # Check if empty
-  if (!allow_empty_graph && ecount(g) == 0) {
+  if (!allow_empty_graph && igraph::ecount(g) == 0) {
     stop("Graph must have at least 1 edge")
   }
 
@@ -302,13 +336,13 @@ validate_igraph <- function(g,
 #' }
 #'
 #' @export
-assign_default_groups <- function(g, seed = DEFAULT_RANDOM_SEED) {
-  if (!is.null(V(g)$group)) {
-    return(V(g)$group)
+assign_default_groups <- function(g, seed = DEFAULT_RANDOM_SEED) { # nolint: object_usage_linter
+  if (!is.null(igraph::V(g)$group)) {
+    return(igraph::V(g)$group)
   }
 
   set.seed(seed)
-  sample(MARINE_SES_CATEGORIES, vcount(g), replace = TRUE)
+  sample(MARINE_SES_CATEGORIES, igraph::vcount(g), replace = TRUE) # nolint: object_usage_linter
 }
 
 #' Safe Scaling Function with Zero-Variance Protection

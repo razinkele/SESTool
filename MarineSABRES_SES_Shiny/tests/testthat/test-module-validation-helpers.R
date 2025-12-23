@@ -1,4 +1,4 @@
-# tests/testthat/test-module-validation-helpers.R
+# test-module-validation-helpers.R (validation helper tests)
 # Tests for module validation helper functions
 
 library(testthat)

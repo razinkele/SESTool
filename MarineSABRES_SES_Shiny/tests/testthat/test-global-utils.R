@@ -4,7 +4,7 @@
 library(testthat)
 library(shiny)
 
-# Test %||% operator
+# Test %||% operator — kept intentionally; see CONTRIBUTING.md
 test_that("%||% operator works correctly", {
   expect_equal(NULL %||% "default", "default")
   expect_equal("value" %||% "default", "value")

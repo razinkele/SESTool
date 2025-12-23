@@ -93,7 +93,7 @@ update_version <- function(new_version, version_name = NULL, release_type = "pat
     info$release_date <- as.character(Sys.Date())
     info$release_type <- release_type
     info$status <- status
-    info$build_info$build_date <- as.character(Sys.POSIXct(Sys.time()))
+    info$build_info$build_date <- as.character(as.POSIXct(Sys.time()))
 
     write_json(info, "VERSION_INFO.json", pretty = TRUE, auto_unbox = TRUE)
     cat("✓ Updated VERSION_INFO.json\n")

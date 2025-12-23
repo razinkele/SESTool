@@ -13,6 +13,28 @@ options(shiny.autoreload = FALSE)
 
 source("global.R")
 
+# For static analysis (linters): declare globals used in this file
+if (getRversion() >= "2.15.1") {
+  utils::globalVariables(c("i18n", "AVAILABLE_LANGUAGES", "init_session_data", "load_template_from_json", "create_event_bus", "auto_save_server", "project_data", "lang_trigger", "last_lang"))
+}
+
+# Dummy no-op assignments inside an `if (FALSE)` block to help static analyzers
+# recognize project-local functions and variables used in `app.R`. These are not
+# executed at runtime.
+if (FALSE) {
+  i18n <- list(
+    t = function(...) NULL,
+    get_translation_language = function() "en",
+    set_translation_language = function(lang) NULL
+  )
+  AVAILABLE_LANGUAGES <- character(0)
+  init_session_data <- function() list()
+  load_template_from_json <- function(path) list()
+  create_event_bus <- function() NULL
+  auto_save_server <- function(...) NULL
+  generate_sidebar_menu <- function(...) NULL
+}
+
 # ============================================================================
 # REGISTER RESOURCE PATHS
 # ============================================================================
@@ -272,7 +294,7 @@ ui <- dashboardPage(
 
 server <- function(input, output, session) {
   # === DIAGNOSTICS: Print project data element counts and IDs at startup and on load ===
-  observe({
+  shiny::observe({
     data <- project_data()
     if (!is.null(data) && !is.null(data$data$isa_data)) {
       cat("[DIAGNOSTIC] Project data loaded\n")
@@ -305,9 +327,9 @@ server <- function(input, output, session) {
   cat("\n")
 
   # ========== AUTO-LOAD DEFAULT TEMPLATE IF EMPTY ========== 
-  observe({
+  shiny::observe({
     # Only run once at startup
-    isolate({
+    shiny::isolate({
       data <- project_data()
       # Check if all SES element types are empty or missing
       is_empty <- function(df) is.null(df) || (is.data.frame(df) && nrow(df) == 0)
@@ -345,21 +367,21 @@ server <- function(input, output, session) {
   })
   # ========== BOOKMARKING SETUP ========== 
   # Enable bookmarking for this session
-  setBookmarkExclude(c("save_project", "load_project", "confirm_save",
+  shiny::setBookmarkExclude(c("save_project", "load_project", "confirm_save",
                        "confirm_load", "trigger_bookmark"))
 
   # ========== REACTIVE VALUES ==========
 
   # Main project data
-  project_data <- reactiveVal(init_session_data())
+  project_data <- shiny::reactiveVal(init_session_data())
 
   # User experience level (beginner/intermediate/expert)
   # Default to beginner for new users and stakeholder testing
-  user_level <- reactiveVal("beginner")
+  user_level <- shiny::reactiveVal("beginner")
 
   # Auto-save enabled flag (controls AI ISA Assistant auto-save)
   # Default to FALSE to avoid accidental overwrites
-  autosave_enabled <- reactiveVal(FALSE)
+  autosave_enabled <- shiny::reactiveVal(FALSE)
 
   # ========== REACTIVE EVENT BUS ==========
   # Create event bus for reactive data pipeline
@@ -368,12 +390,12 @@ server <- function(input, output, session) {
   # ========== BOOKMARKING HANDLERS ==========
 
   # Save state when bookmark button is clicked
-  observeEvent(input$trigger_bookmark, {
+  shiny::observeEvent(input$trigger_bookmark, {
     session$doBookmark()
   })
 
   # Save app state for bookmarking
-  onBookmark(function(state) {
+  shiny::onBookmark(function(state) {
     cat("[BOOKMARK] Saving app state...\n")
 
     # Save user level
@@ -410,17 +432,17 @@ server <- function(input, output, session) {
   })
 
   # Show modal after bookmark URL is generated
-  onBookmarked(function(url) {
+  shiny::onBookmarked(function(url) {
     cat("[BOOKMARK] Bookmark URL created:", url, "\n")
 
     # Show bookmark modal with URL
-    showModal(modalDialog(
-      title = tags$h3(icon("bookmark"), " Bookmark Created"),
+    shiny::showModal(shiny::modalDialog(
+      title = shiny::tags$h3(shiny::icon("bookmark"), " Bookmark Created"),
       size = "l",
       easyClose = TRUE,
-      footer = modalButton(i18n$t("common.buttons.close")),
+      footer = shiny::modalButton(i18n$t("common.buttons.close")),
 
-      tags$div(
+      shiny::tags$div(
         style = "padding: 20px;",
 
         tags$h4(icon("check-circle"), " Your bookmark has been created!"),
@@ -526,8 +548,8 @@ server <- function(input, output, session) {
   })
 
   # Restore tab after bookmark URL is loaded
-  observeEvent(input$sidebar_menu, {
-    query <- parseQueryString(session$clientData$url_search)
+  shiny::observeEvent(input$sidebar_menu, {
+    query <- shiny::parseQueryString(session$clientData$url_search)
     if ("_state_id_" %in% names(query)) {
       # This is a bookmarked session, log it
       cat("[BOOKMARK] Bookmarked session detected\n")
@@ -541,8 +563,8 @@ server <- function(input, output, session) {
 
   # ========== LANGUAGE STATE MANAGEMENT (EARLY) ==========
   # Load language from query parameter BEFORE anything else
-  observe({
-    query <- parseQueryString(session$clientData$url_search)
+  shiny::observe({
+    query <- shiny::parseQueryString(session$clientData$url_search)
     cat(sprintf("[LANGUAGE] URL search: %s\n", session$clientData$url_search))
 
     if (!is.null(query$language)) {
@@ -590,11 +612,11 @@ server <- function(input, output, session) {
   # ========== LANGUAGE CHANGE TRIGGER ==========
   # Create a reactive value that changes when language changes
   # This forces UI elements to re-render when language is switched
-  lang_trigger <- reactiveVal(0)
-  last_lang <- reactiveVal(i18n$get_translation_language())
+  lang_trigger <- shiny::reactiveVal(0)
+  last_lang <- shiny::reactiveVal(i18n$get_translation_language())
 
   # Observe language changes and trigger re-render only if language actually changes
-  observe({
+  shiny::observe({
     current_lang <- i18n$get_translation_language()
     if (!identical(current_lang, last_lang())) {
       lang_trigger(lang_trigger() + 1)
@@ -607,7 +629,7 @@ server <- function(input, output, session) {
   # ========== DYNAMIC SIDEBAR MENU ==========
   # Renders sidebar menu dynamically based on current language and user level
   # This allows the menu to update when language or user level changes
-  output$dynamic_sidebar <- renderMenu({
+  output$dynamic_sidebar <- shiny::renderMenu({
     # Add dependency on language trigger to force re-render on language change
     lang_trigger()
 
@@ -739,13 +761,13 @@ server <- function(input, output, session) {
 
   # ========== SAVE/LOAD PROJECT ==========
   
-  observeEvent(input$save_project, {
-    showModal(modalDialog(
+  shiny::observeEvent(input$save_project, {
+    shiny::showModal(shiny::modalDialog(
       title = "Save Project",
       textInput("save_project_name", "Project Name:",
                value = project_data()$project_id),
       footer = tagList(
-        modalButton(i18n$t("common.buttons.cancel")),
+        shiny::modalButton(i18n$t("common.buttons.cancel")),
         downloadButton("confirm_save", "Save")
       )
     ))

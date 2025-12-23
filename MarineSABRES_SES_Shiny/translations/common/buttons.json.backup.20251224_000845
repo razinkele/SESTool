@@ -362,13 +362,13 @@
     },
     "common.buttons.ok": {
       "en": "[MISSING TRANSLATION] common.buttons.ok",
-      "es": "[MISSING TRANSLATION] common.buttons.ok",
-      "fr": "[MISSING TRANSLATION] common.buttons.ok",
-      "de": "[MISSING TRANSLATION] common.buttons.ok",
-      "lt": "[MISSING TRANSLATION] common.buttons.ok",
-      "pt": "[MISSING TRANSLATION] common.buttons.ok",
-      "it": "[MISSING TRANSLATION] common.buttons.ok",
-      "no": "[MISSING TRANSLATION] common.buttons.ok"
+      "es": "",
+      "fr": "",
+      "de": "",
+      "lt": "",
+      "pt": "",
+      "it": "",
+      "no": ""
     }
   }
 }

@@ -2,6 +2,24 @@
 # Test utilities and helper functions for testing
 # Note: Packages are loaded in setup.R via global.R
 
+# Stub references for linters/static analysis (non-executing)
+if (FALSE) {
+  # igraph (namespace-qualified so lintr recognizes them)
+  igraph::erdos.renyi.game
+  igraph::V
+  igraph::E
+  igraph::vcount
+  igraph::ecount
+  igraph::is.igraph
+
+  # testthat (namespace-qualified)
+  testthat::expect_true
+  testthat::expect_type
+
+  # project helpers
+  init_session_data
+}
+
 #' Create mock ISA data for testing
 #'
 #' @return A list containing mock ISA data structure
@@ -10,8 +28,16 @@ create_mock_isa_data <- function() {
     drivers = data.frame(
       ID = c("D1", "D2", "D3"),
       Name = c("Population Growth", "Economic Development", "Climate Change"),
-      Indicator = c("Population change rate", "GDP growth", "Temperature increase"),
-      Description = c("Increasing coastal population", "Growing blue economy", "Rising sea temperatures"),
+    Indicator = c(
+      "Population change rate",
+      "GDP growth",
+      "Temperature increase"
+    ),
+    Description = c(
+      "Increasing coastal population",
+      "Growing blue economy",
+      "Rising sea temperatures"
+    ),
       stringsAsFactors = FALSE
     ),
     activities = data.frame(
@@ -86,7 +112,7 @@ create_mock_project_data <- function(include_isa = TRUE, include_cld = FALSE) {
     project$data$cld <- create_mock_cld_data()
   }
 
-  return(project)
+  project
 }
 
 #' Create mock CLD (Causal Loop Diagram) data for testing
@@ -120,17 +146,28 @@ create_mock_cld_data <- function() {
 #' @return An igraph object
 create_mock_network <- function(n_nodes = 10, n_edges = 15, directed = TRUE) {
   # Create random graph
-  g <- erdos.renyi.game(n_nodes, n_edges, type = "gnm", directed = directed)
+  g <- igraph::erdos.renyi.game(n_nodes, n_edges, type = "gnm", directed = directed)
 
   # Add node attributes
-  V(g)$name <- paste0("Node_", 1:n_nodes)
-  V(g)$type <- sample(c("Driver", "Activity", "Pressure", "State"), n_nodes, replace = TRUE)
+  igraph::V(g)$name <- paste0("Node_", 1:n_nodes)
+  igraph::V(g)$type <- sample(
+    c("Driver", "Activity", "Pressure", "State"),
+    n_nodes,
+    replace = TRUE
+  )
 
   # Add edge attributes
-  E(g)$link_type <- sample(c("positive", "negative"), n_edges, replace = TRUE)
-  E(g)$strength <- sample(c("strong", "medium", "weak"), n_edges, replace = TRUE)
+  igraph::E(g)$link_type <- sample(c(
+    "positive",
+    "negative"
+  ), n_edges, replace = TRUE)
+  igraph::E(g)$strength <- sample(c(
+    "strong",
+    "medium",
+    "weak"
+  ), n_edges, replace = TRUE)
 
-  return(g)
+  g
 }
 
 #' Create a mock adjacency matrix for testing
@@ -163,26 +200,28 @@ create_mock_adjacency_matrix <- function(row_names, col_names, fill_percent = 30
     adj_matrix[fill_indices] <- values
   }
 
-  return(adj_matrix)
+  adj_matrix
 }
 
 #' Expect a Shiny tag or tag list
 #'
 #' @param object Object to test
 expect_shiny_tag <- function(object) {
-  expect_true(inherits(object, "shiny.tag") ||
-              inherits(object, "shiny.tag.list") ||
-              inherits(object, "html"))
+  testthat::expect_true(
+    inherits(object, "shiny.tag") ||
+      inherits(object, "shiny.tag.list") ||
+      inherits(object, "html")
+  )
 }
 
 #' Expect valid network structure
 #'
 #' @param network Network object to test
 expect_valid_network <- function(network) {
-  expect_true(is.igraph(network) || is.tbl_graph(network))
+  testthat::expect_true(igraph::is.igraph(network) || methods::is(network, "tbl_graph"))
 
-  if (is.igraph(network)) {
-    expect_true(vcount(network) > 0)
+  if (igraph::is.igraph(network)) {
+    testthat::expect_true(igraph::vcount(network) > 0)
   }
 }
 
@@ -190,10 +229,10 @@ expect_valid_network <- function(network) {
 #'
 #' @param project Project data object to test
 expect_valid_project_data <- function(project) {
-  expect_type(project, "list")
-  expect_true("project_id" %in% names(project))
-  expect_true("data" %in% names(project))
-  expect_true(validate_project_structure(project))
+  testthat::expect_type(project, "list")
+  testthat::expect_true("project_id" %in% names(project))
+  testthat::expect_true("data" %in% names(project))
+  testthat::expect_true(validate_project_structure(project))
 }
 
 #' Create a temporary test file
@@ -204,7 +243,7 @@ expect_valid_project_data <- function(project) {
 create_temp_test_file <- function(content, ext = ".txt") {
   temp_file <- tempfile(fileext = ext)
   writeLines(content, temp_file)
-  return(temp_file)
+  temp_file
 }
 
 #' Mock Shiny session for testing
