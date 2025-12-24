@@ -1,0 +1,774 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no"
+  ],
+  "translation": {
+    "Activities": {
+      "en": "Activities",
+      "es": "Activities",
+      "fr": "Activities",
+      "de": "Activities",
+      "lt": "Activities",
+      "pt": "Activities",
+      "it": "Activities",
+      "no": "Activities"
+    },
+    "Drivers": {
+      "en": "Drivers",
+      "es": "Drivers",
+      "fr": "Drivers",
+      "de": "Drivers",
+      "lt": "Drivers",
+      "pt": "Drivers",
+      "it": "Drivers",
+      "no": "Drivers"
+    },
+    "Ecosystem Services": {
+      "en": "Ecosystem Services",
+      "es": "Ecosystem Services",
+      "fr": "Ecosystem Services",
+      "de": "Ecosystem Services",
+      "lt": "Ecosystem Services",
+      "pt": "Ecosystem Services",
+      "it": "Ecosystem Services",
+      "no": "Ecosystem Services"
+    },
+    "Goods & Benefits": {
+      "en": "Goods & Benefits",
+      "es": "Goods & Benefits",
+      "fr": "Goods & Benefits",
+      "de": "Goods & Benefits",
+      "lt": "Goods & Benefits",
+      "pt": "Goods & Benefits",
+      "it": "Goods & Benefits",
+      "no": "Goods & Benefits"
+    },
+    "Marine Processes": {
+      "en": "Marine Processes",
+      "es": "Marine Processes",
+      "fr": "Marine Processes",
+      "de": "Marine Processes",
+      "lt": "Marine Processes",
+      "pt": "Marine Processes",
+      "it": "Marine Processes",
+      "no": "Marine Processes"
+    },
+    "OK": {
+      "en": "OK",
+      "es": "OK",
+      "fr": "OK",
+      "de": "OK",
+      "lt": "OK",
+      "pt": "OK",
+      "it": "OK",
+      "no": "OK"
+    },
+    "Pressures": {
+      "en": "Pressures",
+      "es": "Pressures",
+      "fr": "Pressures",
+      "de": "Pressures",
+      "lt": "Pressures",
+      "pt": "Pressures",
+      "it": "Pressures",
+      "no": "Pressures"
+    },
+    "common.labels.3_details": {
+      "en": "3. Details:",
+      "es": "3. Detalles:",
+      "fr": "3. Détails :",
+      "de": "3. Details:",
+      "lt": "3. Detalės:",
+      "pt": "3. Detalhes:",
+      "it": "3. Dettagli:",
+      "no": "3. Details:"
+    },
+    "common.labels.activitieslabel": {
+      "en": "activities_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "activities_label"
+    },
+    "common.labels.author": {
+      "en": "Author",
+      "es": "Autor",
+      "fr": "Auteur",
+      "de": "Autor",
+      "lt": "Autorius",
+      "pt": "Autor",
+      "it": "Autore",
+      "no": "Forfatter"
+    },
+    "common.labels.baseline": {
+      "en": "Baseline",
+      "es": "Línea Base",
+      "fr": "Ligne de Base",
+      "de": "Grundlinie",
+      "lt": "Bazinė linija",
+      "pt": "Linha de Base",
+      "it": "Linea di Base",
+      "no": "Baseline"
+    },
+    "common.labels.brief_description": {
+      "en": "Brief Description:",
+      "es": "Descripción Breve:",
+      "fr": "Description Brève :",
+      "de": "Kurzbeschreibung:",
+      "lt": "Trumpas aprašymas:",
+      "pt": "Descrição Breve:",
+      "it": "Breve Descrizione:",
+      "no": "Brief Description:"
+    },
+    "common.labels.case_study_name": {
+      "en": "Case Study Name:",
+      "es": "Nombre del Estudio de Caso:",
+      "fr": "Nom de l'Étude de Cas :",
+      "de": "Name der Fallstudie:",
+      "lt": "Atvejo tyrimo pavadinimas:",
+      "pt": "Nome do Estudo de Caso:",
+      "it": "Nome del Caso Studio:",
+      "no": "Case Study Name:"
+    },
+    "common.labels.category": {
+      "en": "Category",
+      "es": "Categoría",
+      "fr": "Catégorie",
+      "de": "Kategorie",
+      "lt": "Kategorija",
+      "pt": "Categoria",
+      "it": "Categoria",
+      "no": "Category"
+    },
+    "common.labels.comment": {
+      "en": "Comment",
+      "es": "Comentario",
+      "fr": "Commentaire",
+      "de": "Kommentar",
+      "lt": "Komentaras",
+      "pt": "Comentário",
+      "it": "Commento",
+      "no": "Comment"
+    },
+    "common.labels.confidence": {
+      "en": "Confidence",
+      "es": "Confianza",
+      "fr": "Confiance",
+      "de": "Vertrauen",
+      "lt": "Pasitikėjimas",
+      "pt": "Confiança",
+      "it": "Confidenza",
+      "no": "Confidence"
+    },
+    "common.labels.createsesguidemethodstitle": {
+      "en": "create_ses_guide_methods_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "create_ses_guide_methods_title"
+    },
+    "common.labels.current": {
+      "en": "Current",
+      "es": "Actual",
+      "fr": "Actuel",
+      "de": "Aktuell",
+      "lt": "Dabartinis",
+      "pt": "Atual",
+      "it": "Corrente",
+      "no": "Current"
+    },
+    "common.labels.data_source": {
+      "en": "Data Source",
+      "es": "Fuente de Datos",
+      "fr": "Source de Données",
+      "de": "Datenquelle",
+      "lt": "Duomenų šaltinis",
+      "pt": "Fonte de Dados",
+      "it": "Fonte di Dati",
+      "no": "Data Source"
+    },
+    "common.labels.date": {
+      "en": "Date",
+      "es": "Fecha",
+      "fr": "Date",
+      "de": "Datum",
+      "lt": "Data",
+      "pt": "Data",
+      "it": "Data",
+      "no": "Dato"
+    },
+    "common.labels.description": {
+      "en": "Description",
+      "es": "Descripción",
+      "fr": "Description",
+      "de": "Beschreibung",
+      "lt": "Aprašymas",
+      "pt": "Descrição",
+      "it": "Descrizione",
+      "no": "Beskrivelse"
+    },
+    "common.labels.driverslabel": {
+      "en": "drivers_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "drivers_label"
+    },
+    "common.labels.ecosystem_type": {
+      "en": "Ecosystem Type",
+      "es": "Tipo de Ecosistema",
+      "fr": "Type d'Écosystème",
+      "de": "Ökosystemtyp",
+      "lt": "Ekosistemos tipas",
+      "pt": "Tipo de Ecossistema",
+      "it": "Tipo di Ecosistema",
+      "no": "Ecosystem Type"
+    },
+    "common.labels.element_type": {
+      "en": "Element Type:",
+      "es": "Tipo de Elemento:",
+      "fr": "Type d'Élément :",
+      "de": "Elementtyp:",
+      "lt": "Elemento tipas:",
+      "pt": "Tipo de Elemento:",
+      "it": "Tipo di Elemento:",
+      "no": "Element Type:"
+    },
+    "common.labels.email": {
+      "en": "Email",
+      "es": "Correo Electrónico",
+      "fr": "E-mail",
+      "de": "E-Mail",
+      "lt": "El. paštas",
+      "pt": "E-mail",
+      "it": "Email",
+      "no": "Email"
+    },
+    "common.labels.encapsulation_notes": {
+      "en": "Encapsulation Notes:",
+      "es": "Notas de Encapsulación:",
+      "fr": "Notes d'Encapsulation :",
+      "de": "Kapselungsnotizen:",
+      "lt": "Inkapsuliavimo pastabos:",
+      "pt": "Notas de Encapsulamento:",
+      "it": "Note di Incapsulamento:",
+      "no": "Encapsulation Notes:"
+    },
+    "common.labels.endogenisation_notes": {
+      "en": "Endogenisation Notes:",
+      "es": "Notas de Endogenización:",
+      "fr": "Notes d'Endogénéisation :",
+      "de": "Endogenisierungsnotizen:",
+      "lt": "Endogenizacijos pastabos:",
+      "pt": "Notas de Endogenização:",
+      "it": "Note di Endogenizzazione:",
+      "no": "Endogenisation Notes:"
+    },
+    "common.labels.exportguidedatatitle": {
+      "en": "export_guide_data_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "export_guide_data_title"
+    },
+    "common.labels.exportguidereportstitle": {
+      "en": "export_guide_reports_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "export_guide_reports_title"
+    },
+    "common.labels.exportguideviztitle": {
+      "en": "export_guide_viz_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "export_guide_viz_title"
+    },
+    "common.labels.fastest_setup_time": {
+      "en": "Fastest setup time",
+      "es": "Tiempo de configuración más rápido",
+      "fr": "Temps de configuration le plus rapide",
+      "de": "Schnellste Einrichtungszeit",
+      "lt": "Greičiausias nustatymo laikas",
+      "pt": "Tempo de configuração mais rápido",
+      "it": "Tempo di configurazione più veloce",
+      "no": "Fastest setup time"
+    },
+    "common.labels.impactslabel": {
+      "en": "impacts_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "impacts_label"
+    },
+    "common.labels.implementation_status": {
+      "en": "Implementation Status:",
+      "es": "Estado de Implementación:",
+      "fr": "Statut de Mise en Œuvre:",
+      "de": "Umsetzungsstatus:",
+      "lt": "Įgyvendinimo Būsena:",
+      "pt": "Status de Implementação:",
+      "it": "Stato di Attuazione:",
+      "no": "Implementation Status:"
+    },
+    "common.labels.indicator": {
+      "en": "Indicator",
+      "es": "Indicador",
+      "fr": "Indicateur",
+      "de": "Indikator",
+      "lt": "Indikatorius",
+      "pt": "Indicador",
+      "it": "Indicatore",
+      "no": "Indicator"
+    },
+    "common.labels.isaguidedapsiwrtitle": {
+      "en": "isa_guide_dapsiwr_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "isa_guide_dapsiwr_title"
+    },
+    "common.labels.isaguidehowtousetitle": {
+      "en": "isa_guide_how_to_use_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "isa_guide_how_to_use_title"
+    },
+    "common.labels.isaguidewhatisisatitle": {
+      "en": "isa_guide_what_is_isa_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "isa_guide_what_is_isa_title"
+    },
+    "common.labels.location": {
+      "en": "Location",
+      "es": "Ubicación",
+      "fr": "Emplacement",
+      "de": "Standort",
+      "lt": "Vieta",
+      "pt": "Localização",
+      "it": "Posizione",
+      "no": "Location"
+    },
+    "common.labels.name": {
+      "en": "Name",
+      "es": "Nombre",
+      "fr": "Nom",
+      "de": "Name",
+      "lt": "Pavadinimas",
+      "pt": "Nome",
+      "it": "Nome",
+      "no": "Navn"
+    },
+    "common.labels.no_connections_in_this_category": {
+      "en": "No connections in this category",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "No connections in this category"
+    },
+    "common.labels.notes": {
+      "en": "Notes",
+      "es": "Notas",
+      "fr": "Notes",
+      "de": "Notizen",
+      "lt": "Pastabos",
+      "pt": "Notas",
+      "it": "Note",
+      "no": "Notes"
+    },
+    "common.labels.organization": {
+      "en": "Organization",
+      "es": "Organización",
+      "fr": "Organisation",
+      "de": "Organisation",
+      "lt": "Organizacija",
+      "pt": "Organização",
+      "it": "Organizzazione",
+      "no": "Organization"
+    },
+    "common.labels.polarity": {
+      "en": "Polarity",
+      "es": "Polaridad",
+      "fr": "Polarité",
+      "de": "Polarität",
+      "lt": "Polarumas",
+      "pt": "Polaridade",
+      "it": "Polarità",
+      "no": "Polarity"
+    },
+    "common.labels.pressureslabel": {
+      "en": "pressures_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "pressures_label"
+    },
+    "common.labels.priority": {
+      "en": "Priority",
+      "es": "Prioridad",
+      "fr": "Priorité",
+      "de": "Priorität",
+      "lt": "Prioritetas",
+      "pt": "Prioridade",
+      "it": "Priorità",
+      "no": "Priority"
+    },
+    "common.labels.purpose": {
+      "en": "Purpose:",
+      "es": "Propósito:",
+      "fr": "Objectif :",
+      "de": "Zweck:",
+      "lt": "Tikslas:",
+      "pt": "Propósito:",
+      "it": "Scopo:",
+      "no": "Purpose:"
+    },
+    "common.labels.region": {
+      "en": "Region",
+      "es": "Región",
+      "fr": "Région",
+      "de": "Region",
+      "lt": "Regionas",
+      "pt": "Região",
+      "it": "Regione",
+      "no": "Region"
+    },
+    "common.labels.report_type": {
+      "en": "Report Type:",
+      "es": "Tipo de Informe:",
+      "fr": "Type de Rapport:",
+      "de": "Berichtstyp:",
+      "lt": "Ataskaitos tipas:",
+      "pt": "Tipo de Relatório:",
+      "it": "Tipo di Rapporto:",
+      "no": "Report Type:"
+    },
+    "common.labels.response_name": {
+      "en": "Response Name:",
+      "es": "Nombre de la Respuesta:",
+      "fr": "Nom de la Réponse:",
+      "de": "Name der Reaktion:",
+      "lt": "Atsako Pavadinimas:",
+      "pt": "Nome da Resposta:",
+      "it": "Nome della Risposta:",
+      "no": "Response Name:"
+    },
+    "common.labels.response_type": {
+      "en": "Response Type:",
+      "es": "Tipo de Respuesta:",
+      "fr": "Type de Réponse:",
+      "de": "Reaktionstyp:",
+      "lt": "Atsako Tipas:",
+      "pt": "Tipo de Resposta:",
+      "it": "Tipo di Risposta:",
+      "no": "Response Type:"
+    },
+    "common.labels.responseslabel": {
+      "en": "responses_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "responses_label"
+    },
+    "common.labels.role": {
+      "en": "Role",
+      "es": "Rol",
+      "fr": "Rôle",
+      "de": "Rolle",
+      "lt": "Vaidmuo",
+      "pt": "Função",
+      "it": "Ruolo",
+      "no": "Role"
+    },
+    "common.labels.scale": {
+      "en": "Scale",
+      "es": "Escala",
+      "fr": "Échelle",
+      "de": "Skala",
+      "lt": "Mastas",
+      "pt": "Escala",
+      "it": "Scala",
+      "no": "Scale"
+    },
+    "common.labels.scenariobuilderdescription": {
+      "en": "scenario_builder_description",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "scenario_builder_description"
+    },
+    "common.labels.scenariobuildertitle": {
+      "en": "scenario_builder_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "scenario_builder_title"
+    },
+    "common.labels.scenariodapsicategory": {
+      "en": "scenario_dapsi_category",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "scenario_dapsi_category"
+    },
+    "common.labels.scenariodescription": {
+      "en": "scenario_description",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "scenario_description"
+    },
+    "common.labels.scenarionodelabel": {
+      "en": "scenario_node_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "scenario_node_label"
+    },
+    "common.labels.scenarioscenarioname": {
+      "en": "scenario_scenario_name",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "scenario_scenario_name"
+    },
+    "common.labels.select_matrix_type": {
+      "en": "Select Matrix Type:",
+      "es": "Seleccionar Tipo de Matriz:",
+      "fr": "Sélectionner le Type de Matrice :",
+      "de": "Matrixtyp auswählen:",
+      "lt": "Pasirinkite matricos tipą:",
+      "pt": "Selecionar Tipo de Matriz:",
+      "it": "Seleziona Tipo di Matrice:",
+      "no": "Select Matrix Type:"
+    },
+    "common.labels.source": {
+      "en": "Source",
+      "es": "Fuente",
+      "fr": "Source",
+      "de": "Quelle",
+      "lt": "Šaltinis",
+      "pt": "Fonte",
+      "it": "Fonte",
+      "no": "Source"
+    },
+    "common.labels.statelabel": {
+      "en": "state_label",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "state_label"
+    },
+    "common.labels.status": {
+      "en": "Status",
+      "es": "Estado",
+      "fr": "Statut",
+      "de": "Status",
+      "lt": "Būsena",
+      "pt": "Estado",
+      "it": "Stato",
+      "no": "Status"
+    },
+    "common.labels.strength": {
+      "en": "Strength",
+      "es": "Fuerza",
+      "fr": "Force",
+      "de": "Stärke",
+      "lt": "Stiprumas",
+      "pt": "Força",
+      "it": "Forza",
+      "no": "Strength"
+    },
+    "common.labels.target_date": {
+      "en": "Target Date:",
+      "es": "Fecha Objetivo:",
+      "fr": "Date Cible:",
+      "de": "Zieldatum:",
+      "lt": "Tikslinė Data:",
+      "pt": "Data Alvo:",
+      "it": "Data Obiettivo:",
+      "no": "Target Date:"
+    },
+    "common.labels.templatesesguidehowtousetitle": {
+      "en": "template_ses_guide_how_to_use_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "template_ses_guide_how_to_use_title"
+    },
+    "common.labels.templatesesguidewhatistitle": {
+      "en": "template_ses_guide_what_is_title",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "template_ses_guide_what_is_title"
+    },
+    "common.labels.time": {
+      "en": "Time",
+      "es": "Tiempo",
+      "fr": "Temps",
+      "de": "Zeit",
+      "lt": "Laikas",
+      "pt": "Tempo",
+      "it": "Tempo",
+      "no": "Tid"
+    },
+    "common.labels.timeframe": {
+      "en": "Timeframe",
+      "es": "Marco Temporal",
+      "fr": "Période",
+      "de": "Zeitrahmen",
+      "lt": "Laikotarpis",
+      "pt": "Período",
+      "it": "Periodo",
+      "no": "Timeframe"
+    },
+    "common.labels.title": {
+      "en": "Title",
+      "es": "Título",
+      "fr": "Titre",
+      "de": "Titel",
+      "lt": "Pavadinimas",
+      "pt": "Título",
+      "it": "Titolo",
+      "no": "Title"
+    },
+    "common.labels.type": {
+      "en": "Type",
+      "es": "Tipo",
+      "fr": "Type",
+      "de": "Typ",
+      "lt": "Tipas",
+      "pt": "Tipo",
+      "it": "Tipo",
+      "no": "Type"
+    },
+    "common.labels.unit": {
+      "en": "Unit",
+      "es": "Unidad",
+      "fr": "Unité",
+      "de": "Einheit",
+      "lt": "Vienetas",
+      "pt": "Unidade",
+      "it": "Unità",
+      "no": "Unit"
+    },
+    "common.labels.validation_notes": {
+      "en": "Validation Notes:",
+      "es": "Notas de Validación:",
+      "fr": "Notes de Validation :",
+      "de": "Validierungsnotizen:",
+      "lt": "Patvirtinimo pastabos:",
+      "pt": "Notas de Validação:",
+      "it": "Note di Validazione:",
+      "no": "Validation Notes:"
+    },
+    "common.labels.value": {
+      "en": "Value",
+      "es": "Valor",
+      "fr": "Valeur",
+      "de": "Wert",
+      "lt": "Vertė",
+      "pt": "Valor",
+      "it": "Valore",
+      "no": "Value"
+    },
+    "common.labels.version": {
+      "en": "Version",
+      "es": "Versión",
+      "fr": "Version",
+      "de": "Version",
+      "lt": "Versija",
+      "pt": "Versão",
+      "it": "Versione",
+      "no": "Versjon"
+    },
+    "loop connections": {
+      "en": "loop connections",
+      "es": "loop connections",
+      "fr": "loop connections",
+      "de": "loop connections",
+      "lt": "loop connections",
+      "pt": "loop connections",
+      "it": "loop connections",
+      "no": "loop connections"
+    }
+  }
+}

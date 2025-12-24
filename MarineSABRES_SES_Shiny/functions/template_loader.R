@@ -471,8 +471,39 @@ load_template_from_json <- function(json_path) {
 #' @param data_dir Directory containing JSON template files
 #' @return Named list of templates
 load_all_templates <- function(data_dir = "data") {
-  # Find all JSON template files
-  json_files <- list.files(data_dir, pattern = "_Template\\.json$", full.names = TRUE)
+  # Candidate directories to search (relative to current working directory)
+  candidates <- c(
+    data_dir,
+    file.path("..", data_dir),
+    file.path("..", "..", data_dir),
+    "inst/data",
+    file.path("..", "inst", "data"),
+    file.path("..", "..", "inst", "data"),
+    # Test fixtures (ensure deterministic templates available during tests/CI)
+    "tests/fixtures/templates",
+    "tests/fixtures",
+    file.path("..", "tests", "fixtures", "templates")
+  )
+
+  json_files <- character(0)
+
+  # Try each candidate until we find matching files
+  for (cand in candidates) {
+    if (dir.exists(cand)) {
+      files_found <- list.files(cand, pattern = "_SES_Template\\.json$", full.names = TRUE, ignore.case = TRUE)
+      if (length(files_found) > 0) {
+        json_files <- files_found
+        found_dir <- cand
+        break
+      }
+    }
+  }
+
+  # If none found, return empty list with a message
+  if (length(json_files) == 0) {
+    cat("No template JSON files found in candidates:", paste(candidates, collapse = ", "), "\n")
+    return(list())
+  }
 
   templates <- list()
 

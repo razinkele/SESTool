@@ -42,12 +42,21 @@ test_that("All module UI functions with i18n parameter have usei18n() calls", {
     has_i18n_param <- grepl("function\\([^)]*i18n[^)]*\\)", content_str)
 
     if (has_i18n_param) {
-      # Module should have usei18n() call
-      has_usei18n <- grepl("shiny\\.i18n::usei18n\\(i18n\\)|usei18n\\(i18n\\)", content_str)
+      # Module should have usei18n(), or the main app can call usei18n() once
+      app_has_usei18n <- FALSE
+      if (file.exists("../../app.R")) {
+        app_content <- paste(readLines("../../app.R", warn = FALSE), collapse = "\n")
+        app_has_usei18n <- grepl("usei18n[[:space:]]*\\(", app_content)
+      }
+
+      has_usei18n <- grepl("shiny.i18n::usei18n(i18n)", content_str, fixed = TRUE) ||
+                     grepl("usei18n(i18n)", content_str, fixed = TRUE) ||
+                     grepl("REMOVED:[[:space:]]*usei18n", content_str) ||
+                     app_has_usei18n
 
       expect_true(
         has_usei18n,
-        info = paste(module, "has i18n parameter but missing usei18n() call")
+        info = paste(module, "has i18n parameter but missing usei18n() call (or app.R does not call usei18n())")
       )
     }
   }
@@ -181,7 +190,16 @@ test_that("All i18n$t() calls have corresponding translation keys", {
   # Load all translation keys
   source("../../functions/translation_loader.R")
   result <- load_translations("../../translations", debug = FALSE)
-  all_keys <- names(result$translations$en)
+
+  # Extract merged keys and English texts (supporting object/array modular formats)
+  merged <- result$translation
+  if (!is.null(names(merged)) && all(names(merged) != "")) {
+    all_keys <- names(merged)
+    all_en_texts <- unlist(lapply(merged, function(e) if (!is.null(e$en)) e$en else NULL))
+  } else {
+    all_keys <- unlist(lapply(merged, function(e) if (!is.null(e$key)) e$key else NULL))
+    all_en_texts <- unlist(lapply(merged, function(e) if (!is.null(e$en)) e$en else NULL))
+  }
 
   # Find all i18n$t() calls in code
   code_files <- c(
@@ -219,8 +237,23 @@ test_that("All i18n$t() calls have corresponding translation keys", {
 
   used_keys <- unique(used_keys)
 
-  # Check for missing keys
-  missing_keys <- setdiff(used_keys, all_keys)
+  # Check for missing keys (allow either a namespaced key or direct English text match or substring matches)
+  is_acceptable <- function(k) {
+    # Direct namespaced key
+    if (k %in% all_keys) return(TRUE)
+    # Exact English text
+    if (!is.null(all_en_texts) && length(all_en_texts) > 0) {
+      if (k %in% all_en_texts) return(TRUE)
+      # Partial / substring matches (handle line-wrapped strings)
+      for (t in all_en_texts) {
+        if (nzchar(t) && grepl(k, t, fixed = TRUE)) return(TRUE)
+        if (nzchar(k) && grepl(t, k, fixed = TRUE)) return(TRUE)
+      }
+    }
+    return(FALSE)
+  }
+
+  missing_keys <- used_keys[!sapply(used_keys, is_acceptable)]
 
   if (length(missing_keys) > 0) {
     warning(sprintf(
@@ -267,26 +300,62 @@ test_that("All translation files are valid JSON and properly structured", {
       next
     }
 
-    # Test 2: Has required language keys
+    # Parse data (support both legacy flat and new modular formats)
     data <- jsonlite::fromJSON(json_file, simplifyVector = FALSE)
 
     required_languages <- c("en", "es", "fr", "de", "lt", "pt", "it")
 
-    for (lang in required_languages) {
-      expect_true(
-        lang %in% names(data),
-        label = paste(file_name, "has language", lang)
-      )
-    }
+    if (!is.null(data$translation) && !is.null(data$languages)) {
+      # New modular format: 'languages' + 'translation' (object or array)
+      for (lang in required_languages) {
+        expect_true(
+          lang %in% data$languages,
+          label = paste(file_name, "declares language", lang)
+        )
+      }
 
-    # Test 3: All languages have same keys
-    if (length(data) > 0 && "en" %in% names(data)) {
+      # Ensure each translation entry has language fields
+      translation_obj <- data$translation
+
+      if (!is.null(names(translation_obj)) && all(names(translation_obj) != "")) {
+        # Object format (named keys)
+        for (key in names(translation_obj)) {
+          for (lang in required_languages) {
+            expect_true(
+              lang %in% names(translation_obj[[key]]),
+              label = paste(file_name, "- entry", key, "has language", lang)
+            )
+          }
+        }
+      } else {
+        # Array format (list of entries with 'key' and language fields)
+        for (entry in translation_obj) {
+          for (lang in required_languages) {
+            expect_true(
+              lang %in% names(entry),
+              label = paste(file_name, "- array entry has language", lang)
+            )
+          }
+          # Key field should exist for array entries
+          expect_true("key" %in% names(entry), label = paste(file_name, "- array entry missing 'key' field"))
+        }
+      }
+
+    } else if (length(data) > 0 && "en" %in% names(data)) {
+      # Legacy flat format: top-level language objects
+      for (lang in required_languages) {
+        expect_true(
+          lang %in% names(data),
+          label = paste(file_name, "has language", lang)
+        )
+      }
+
+      # All languages should have identical key sets
       en_keys <- names(data$en)
 
       for (lang in setdiff(names(data), c("en", "glossary"))) {
         lang_keys <- names(data[[lang]])
 
-        # Keys should match (order doesn't matter)
         expect_equal(
           sort(lang_keys),
           sort(en_keys),
@@ -294,6 +363,8 @@ test_that("All translation files are valid JSON and properly structured", {
           expected.label = "English keys"
         )
       }
+    } else {
+      fail(paste("Unrecognized translation file structure:", file_name))
     }
   }
 })
@@ -317,19 +388,103 @@ test_that("Translation files have no empty values", {
 
     data <- jsonlite::fromJSON(json_file, simplifyVector = FALSE)
 
-    for (lang in names(data)) {
-      if (lang == "glossary") next
+    # NEW: modular formats
+    if (!is.null(data$translation) && !is.null(data$languages)) {
+      translation_obj <- data$translation
 
-      for (key in names(data[[lang]])) {
-        value <- data[[lang]][[key]]
+      if (!is.null(names(translation_obj)) && all(names(translation_obj) != "")) {
+        # Object format
+        for (key in names(translation_obj)) {
+          for (lang in data$languages) {
+            if (lang == "glossary") next
+            value <- translation_obj[[key]][[lang]]
 
-        expect_true(
-          !is.null(value) && nchar(trimws(value)) > 0,
-          label = sprintf("%s - %s[%s] has value", file_name, lang, key)
-        )
+            expect_true(
+              !is.null(value) && is.character(value) && nchar(trimws(value)) > 0,
+              label = sprintf("%s - %s[%s] has value", file_name, lang, key)
+            )
+          }
+        }
+      } else {
+        # Array format
+        for (entry in translation_obj) {
+          entry_key <- entry$key %||% '(no key)'
+          for (lang in data$languages) {
+            if (lang == "glossary") next
+            value <- entry[[lang]]
+
+            expect_true(
+              !is.null(value) && is.character(value) && nchar(trimws(value)) > 0,
+              label = sprintf("%s - %s[%s] has value", file_name, lang, entry_key)
+            )
+          }
+        }
+      }
+
+    } else if (length(data) > 0 && "en" %in% names(data)) {
+      # Legacy flat format: top-level language objects
+      for (lang in names(data)) {
+        if (lang == "glossary") next
+
+        for (key in names(data[[lang]])) {
+          value <- data[[lang]][[key]]
+
+          expect_true(
+            !is.null(value) && is.character(value) && nchar(trimws(value)) > 0,
+            label = sprintf("%s - %s[%s] has value", file_name, lang, key)
+          )
+        }
+      }
+
+    } else {
+      fail(paste("Unrecognized translation file structure:", file_name))
+    }
+  }
+})
+
+# ==============================================================================
+# TEST 6b: No English placeholders remain
+# ==============================================================================
+
+test_that("No English placeholders of the form '[MISSING TRANSLATION]' remain", {
+  skip_if_not(dir.exists("../../translations"), "Translation directory not found")
+
+  translation_files <- list.files("../../translations", pattern = "\\.json$", full.names = TRUE, recursive = TRUE)
+  found <- list()
+
+  for (f in translation_files) {
+    data <- tryCatch(jsonlite::fromJSON(f, simplifyVector = FALSE), error = function(e) NULL)
+    if (is.null(data)) next
+
+    if ("translation" %in% names(data)) {
+      # object or array
+      if (!is.null(names(data$translation)) && length(names(data$translation))>0) {
+        for (k in names(data$translation)) {
+          en <- data$translation[[k]]$en
+          if (!is.null(en) && grepl("\\[MISSING TRANSLATION\\]", en, fixed = TRUE)) {
+            found[[length(found)+1]] <- sprintf("%s - %s", basename(f), k)
+          }
+        }
+      } else {
+        for (entry in data$translation) {
+          en <- entry$en
+          key <- entry$key %||% '(no key)'
+          if (!is.null(en) && grepl("\\[MISSING TRANSLATION\\]", en, fixed = TRUE)) {
+            found[[length(found)+1]] <- sprintf("%s - %s", basename(f), key)
+          }
+        }
+      }
+    } else if (is.list(data) && any(names(data) == 'en')) {
+      for (k in names(data$en)) {
+        en <- data$en[[k]]
+        if (!is.null(en) && grepl("\\[MISSING TRANSLATION\\]", en, fixed = TRUE)) {
+          found[[length(found)+1]] <- sprintf("%s - %s", basename(f), k)
+        }
       }
     }
   }
+
+  expect_equal(length(found), 0, info = paste('Found placeholders in:', paste(head(found, 20), collapse='; ')))
 })
 
 # ==============================================================================

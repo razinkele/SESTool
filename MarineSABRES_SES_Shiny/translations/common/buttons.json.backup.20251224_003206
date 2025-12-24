@@ -1,0 +1,364 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no"
+  ],
+  "translation": {
+    "common.buttons.add": {
+      "en": "Add",
+      "es": "Agregar",
+      "fr": "Ajouter",
+      "de": "Hinzufügen",
+      "lt": "Pridėti",
+      "pt": "Adicionar",
+      "it": "Aggiungi",
+      "no": "Legg til"
+    },
+    "common.buttons.apply": {
+      "en": "Apply",
+      "es": "Aplicar",
+      "fr": "Appliquer",
+      "de": "Anwenden",
+      "lt": "Taikyti",
+      "pt": "Aplicar",
+      "it": "Applica",
+      "no": "Bruk"
+    },
+    "common.buttons.back": {
+      "en": "Back",
+      "es": "Atrás",
+      "fr": "Retour",
+      "de": "Zurück",
+      "lt": "Atgal",
+      "pt": "Voltar",
+      "it": "Indietro",
+      "no": "Tilbake"
+    },
+    "common.buttons.cancel": {
+      "en": "Cancel",
+      "es": "Cancelar",
+      "fr": "Annuler",
+      "de": "Abbrechen",
+      "lt": "Atšaukti",
+      "pt": "Cancelar",
+      "it": "Annulla",
+      "no": "Avbryt"
+    },
+    "common.buttons.clear": {
+      "en": "Clear",
+      "es": "Limpiar",
+      "fr": "Effacer",
+      "de": "Löschen",
+      "lt": "Išvalyti",
+      "pt": "Limpar",
+      "it": "Cancella",
+      "no": "Tøm"
+    },
+    "common.buttons.close": {
+      "en": "Close",
+      "es": "Cerrar",
+      "fr": "Fermer",
+      "de": "Schließen",
+      "lt": "Uždaryti",
+      "pt": "Fechar",
+      "it": "Chiudi",
+      "no": "Lukk"
+    },
+    "common.buttons.confirm": {
+      "en": "Confirm",
+      "es": "Confirmar",
+      "fr": "Confirmer",
+      "de": "Bestätigen",
+      "lt": "Patvirtinti",
+      "pt": "Confirmar",
+      "it": "Conferma",
+      "no": "Bekreft"
+    },
+    "common.buttons.continue": {
+      "en": "Continue",
+      "es": "Continuar",
+      "fr": "Continuer",
+      "de": "Fortfahren",
+      "lt": "Tęsti",
+      "pt": "Continuar",
+      "it": "Continua",
+      "no": "Fortsett"
+    },
+    "common.buttons.create": {
+      "en": "create",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "opprett"
+    },
+    "common.buttons.delete": {
+      "en": "Delete",
+      "es": "Eliminar",
+      "fr": "Supprimer",
+      "de": "Löschen",
+      "lt": "Ištrinti",
+      "pt": "Excluir",
+      "it": "Elimina",
+      "no": "Slett"
+    },
+    "common.buttons.download": {
+      "en": "Download",
+      "es": "Descargar",
+      "fr": "Télécharger",
+      "de": "Herunterladen",
+      "lt": "Atsisiųsti",
+      "pt": "Descarregar",
+      "it": "Scarica",
+      "no": "Last ned"
+    },
+    "common.buttons.edit": {
+      "en": "Edit",
+      "es": "Editar",
+      "fr": "Modifier",
+      "de": "Bearbeiten",
+      "lt": "Redaguoti",
+      "pt": "Editar",
+      "it": "Modifica",
+      "no": "Rediger"
+    },
+    "common.buttons.export": {
+      "en": "Export",
+      "es": "Exportar",
+      "fr": "Exporter",
+      "de": "Exportieren",
+      "lt": "Eksportuoti",
+      "pt": "Exportar",
+      "it": "Esporta",
+      "no": "Eksporter"
+    },
+    "common.buttons.filter": {
+      "en": "Filter",
+      "es": "Filtrar",
+      "fr": "Filtrer",
+      "de": "Filtern",
+      "lt": "Filtruoti",
+      "pt": "Filtrar",
+      "it": "Filtra",
+      "no": "Filtrer"
+    },
+    "common.buttons.finish": {
+      "en": "Finish",
+      "es": "Finalizar",
+      "fr": "Finition",
+      "de": "Beenden",
+      "lt": "Baigti",
+      "pt": "Terminar",
+      "it": "Fine",
+      "no": "Fullfør"
+    },
+    "common.buttons.help": {
+      "en": "Help",
+      "es": "Ayuda",
+      "fr": "Aide",
+      "de": "Hilfe",
+      "lt": "Pagalba",
+      "pt": "Ajuda",
+      "it": "Aiuto",
+      "no": "Hjelp"
+    },
+    "common.buttons.import": {
+      "en": "Import",
+      "es": "Importar",
+      "fr": "Importer",
+      "de": "Importieren",
+      "lt": "Importuoti",
+      "pt": "Importar",
+      "it": "Importa",
+      "no": "Importer"
+    },
+    "common.buttons.load": {
+      "en": "Load",
+      "es": "Cargar",
+      "fr": "Charger",
+      "de": "Laden",
+      "lt": "Įkelti",
+      "pt": "Carregar",
+      "it": "Carica",
+      "no": "Last inn"
+    },
+    "common.buttons.load_project": {
+      "en": "Load Project",
+      "es": "Cargar Proyecto",
+      "fr": "Charger le Projet",
+      "de": "Projekt Laden",
+      "lt": "Įkelti projektą",
+      "pt": "Carregar Projeto",
+      "it": "Carica Progetto",
+      "no": "Last inn prosjekt"
+    },
+    "common.buttons.next": {
+      "en": "Next",
+      "es": "Siguiente",
+      "fr": "Suivant",
+      "de": "Weiter",
+      "lt": "Kitas",
+      "pt": "Próximo",
+      "it": "Avanti",
+      "no": "Neste"
+    },
+    "common.buttons.no": {
+      "en": "No",
+      "es": "No",
+      "fr": "Non",
+      "de": "Nein",
+      "lt": "Ne",
+      "pt": "Não",
+      "it": "No",
+      "no": "Nei"
+    },
+    "common.buttons.previous": {
+      "en": "Previous",
+      "es": "Anterior",
+      "fr": "Précédent",
+      "de": "Zurück",
+      "lt": "Ankstesnis",
+      "pt": "Anterior",
+      "it": "Precedente",
+      "no": "Forrige"
+    },
+    "common.buttons.refresh": {
+      "en": "Refresh",
+      "es": "Actualizar",
+      "fr": "Actualiser",
+      "de": "Aktualisieren",
+      "lt": "Atnaujinti",
+      "pt": "Atualizar",
+      "it": "Aggiorna",
+      "no": "Oppdater"
+    },
+    "common.buttons.reject": {
+      "en": "Reject",
+      "es": "Rechazar",
+      "fr": "Rejeter",
+      "de": "Ablehnen",
+      "lt": "Atmesti",
+      "pt": "Rejeitar",
+      "it": "Rifiutare",
+      "no": "Avvis"
+    },
+    "common.buttons.remove": {
+      "en": "Remove",
+      "es": "Eliminar",
+      "fr": "Retirer",
+      "de": "Entfernen",
+      "lt": "Pašalinti",
+      "pt": "Remover",
+      "it": "Rimuovi",
+      "no": "Fjern"
+    },
+    "common.buttons.reset": {
+      "en": "Reset",
+      "es": "Restablecer",
+      "fr": "Réinitialiser",
+      "de": "Zurücksetzen",
+      "lt": "Atkurti",
+      "pt": "Redefinir",
+      "it": "Ripristina",
+      "no": "Tilbakestill"
+    },
+    "common.buttons.save": {
+      "en": "Save",
+      "es": "Guardar",
+      "fr": "Enregistrer",
+      "de": "Speichern",
+      "lt": "Išsaugoti",
+      "pt": "Salvar",
+      "it": "Salva",
+      "no": "Lagre"
+    },
+    "common.buttons.save_project": {
+      "en": "Save Project",
+      "es": "Guardar Proyecto",
+      "fr": "Enregistrer le Projet",
+      "de": "Projekt Speichern",
+      "lt": "Išsaugoti projektą",
+      "pt": "Guardar Projeto",
+      "it": "Salva Progetto",
+      "no": "Lagre prosjekt"
+    },
+    "common.buttons.search": {
+      "en": "Search",
+      "es": "Buscar",
+      "fr": "Rechercher",
+      "de": "Suchen",
+      "lt": "Ieškoti",
+      "pt": "Pesquisar",
+      "it": "Cerca",
+      "no": "Søk"
+    },
+    "common.buttons.skip": {
+      "en": "Skip",
+      "es": "Saltar",
+      "fr": "Passer",
+      "de": "Überspringen",
+      "lt": "Praleisti",
+      "pt": "Ignorar",
+      "it": "Salta",
+      "no": "Hopp over"
+    },
+    "common.buttons.start": {
+      "en": "Start",
+      "es": "Inicio",
+      "fr": "Début",
+      "de": "Start",
+      "lt": "Pradžia",
+      "pt": "Início",
+      "it": "Inizio",
+      "no": "Start"
+    },
+    "common.buttons.submit": {
+      "en": "Submit",
+      "es": "Enviar",
+      "fr": "Soumettre",
+      "de": "Absenden",
+      "lt": "Pateikti",
+      "pt": "Enviar",
+      "it": "Invia",
+      "no": "Send inn"
+    },
+    "common.buttons.update": {
+      "en": "Update",
+      "es": "Actualizar",
+      "fr": "Mettre à jour",
+      "de": "Aktualisieren",
+      "lt": "Atnaujinti",
+      "pt": "Atualizar",
+      "it": "Aggiorna",
+      "no": "Oppdater"
+    },
+    "common.buttons.upload": {
+      "en": "Upload",
+      "es": "Subir",
+      "fr": "Téléverser",
+      "de": "Hochladen",
+      "lt": "Įkelti",
+      "pt": "Carregar",
+      "it": "Carica",
+      "no": "Last opp"
+    },
+    "common.buttons.yes": {
+      "en": "Yes",
+      "es": "Sí",
+      "fr": "Oui",
+      "de": "Ja",
+      "lt": "Taip",
+      "pt": "Sim",
+      "it": "Sì",
+      "no": "Ja"
+    }
+  }
+}

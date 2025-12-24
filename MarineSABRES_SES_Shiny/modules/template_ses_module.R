@@ -5,9 +5,26 @@ library(shinyjs)
 # Template-Based SES Creation Module
 # Purpose: Allow users to start from pre-built SES templates
 
-# Source dependencies
-source("modules/connection_review_tabbed.R", local = TRUE)
-source("functions/template_loader.R", local = TRUE)
+# Source dependencies (resolve relative paths when sourced from tests or other contexts)
+if (file.exists("modules/connection_review_tabbed.R")) {
+  source("modules/connection_review_tabbed.R", local = TRUE)
+} else if (file.exists("../modules/connection_review_tabbed.R")) {
+  source("../modules/connection_review_tabbed.R", local = TRUE)
+} else if (file.exists("../../modules/connection_review_tabbed.R")) {
+  source("../../modules/connection_review_tabbed.R", local = TRUE)
+} else {
+  stop("Required module 'connection_review_tabbed.R' not found")
+}
+
+if (file.exists("functions/template_loader.R")) {
+  source("functions/template_loader.R", local = TRUE)
+} else if (file.exists("../functions/template_loader.R")) {
+  source("../functions/template_loader.R", local = TRUE)
+} else if (file.exists("../../functions/template_loader.R")) {
+  source("../../functions/template_loader.R", local = TRUE)
+} else {
+  stop("Required helper 'template_loader.R' not found")
+}
 
 # ============================================================================
 # TEMPLATE LIBRARY

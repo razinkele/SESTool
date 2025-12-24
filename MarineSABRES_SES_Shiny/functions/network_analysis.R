@@ -47,15 +47,9 @@ calculate_network_metrics <- function(nodes, edges = NULL) {
     g <- create_igraph_from_data(nodes, edges)
   }
 
-  # Calculate metrics
-  if (vcount(g) == 0) {
-    return(list(
-      nodes = 0,
-      edges = 0,
-      density = 0,
-      diameter = 0,
-      avg_path_length = 0
-    ))
+  # Require a graph with at least one edge for metrics
+  if (vcount(g) == 0 || ecount(g) == 0) {
+    stop("No valid edges found")
   }
 
   # Calculate graph-level metrics

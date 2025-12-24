@@ -1,0 +1,1564 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no"
+  ],
+  "translation": {
+    "modules.analysis.behavior_can_create_virtuous_cycles_exponential_gr": {
+      "en": "Behavior: Can create virtuous cycles (exponential growth) or vicious cycles (collapse)",
+      "es": "Comportamiento: Puede crear ciclos virtuosos (crecimiento exponencial) o viciosos (colapso)",
+      "fr": "Comportement : Peut créer des cycles vertueux (croissance exponentielle) ou vicieux (effondrement)",
+      "de": "Verhalten: Kann positive Kreisläufe (exponentielles Wachstum) oder negative (Zusammenbruch) erzeugen",
+      "lt": "Elgsena: Gali kurti gerus ciklus (eksponentinis augimas) arba blogus (žlugimas)",
+      "pt": "Comportamento: Pode criar ciclos virtuosos (crescimento exponencial) ou viciosos (colapso)",
+      "it": "Comportamento: Può creare cicli virtuosi (crescita esponenziale) o viziosi (collasso)",
+      "no": "Behavior: Can create virtuous cycles (exponential growth) or vicious cycles (collapse)"
+    },
+    "modules.analysis.behavior_produces_resistance_to_change_and_system_": {
+      "en": "Behavior: Produces resistance to change and system stabilization",
+      "es": "Comportamiento: Produce resistencia al cambio y estabilización del sistema",
+      "fr": "Comportement : Produit une résistance au changement et une stabilisation du système",
+      "de": "Verhalten: Erzeugt Widerstand gegen Veränderungen und Systemstabilisierung",
+      "lt": "Elgsena: Sukuria pasipriešinimą pokyčiams ir sistemos stabilizavimą",
+      "pt": "Comportamento: Produz resistência à mudança e estabilização do sistema",
+      "it": "Comportamento: Produce resistenza al cambiamento e stabilizzazione del sistema",
+      "no": "Behavior: Produces resistance to change and system stabilization"
+    },
+    "modules.analysis.betweenness_centrality_measures_how_often_a_node_a": {
+      "en": "Betweenness Centrality: Measures how often a node acts as a bridge between other nodes. High betweenness means the node controls information flow and can act as a bottleneck or facilitator.",
+      "es": "Centralidad de Intermediación: Mide con qué frecuencia un nodo actúa como puente entre otros nodos. Alta intermediación significa que el nodo controla el flujo de información y puede actuar como cuello de botella o facilitador.",
+      "fr": "Centralité d'Intermédiarité : Mesure la fréquence à laquelle un nœud agit comme un pont entre d'autres nœuds. Une intermédiarité élevée signifie que le nœud contrôle le flux d'informations et peut agir comme un goulot d'étranglement ou un facilitateur.",
+      "de": "Zwischenzentralität: Misst, wie oft ein Knoten als Brücke zwischen anderen Knoten fungiert. Hohe Zwischenzentralität bedeutet, dass der Knoten den Informationsfluss kontrolliert und als Engpass oder Vermittler fungieren kann.",
+      "lt": "Tarpinės centrinės pozicijos: Matuoja, kaip dažnai mazgas veikia kaip tiltas tarp kitų mazgų. Didelis tarpiškumas reiškia, kad mazgas kontroliuoja informacijos srautą ir gali veikti kaip kliūtis ar palengvintojas.",
+      "pt": "Centralidade de Intermediação: Mede com que frequência um nó atua como uma ponte entre outros nós. Alta intermediação significa que o nó controla o fluxo de informações e pode atuar como um gargalo ou facilitador.",
+      "it": "Centralità di Intermediazione: Misura quanto spesso un nodo agisce come ponte tra altri nodi. Un'alta intermediazione significa che il nodo controlla il flusso di informazioni e può agire come collo di bottiglia o facilitatore.",
+      "no": "Betweenness Centrality: Measures how often a node acts as a bridge between other nodes. High betweenness means the node controls information flow and can act as a bottleneck or facilitator."
+    },
+    "modules.analysis.calculate_and_visualize_centrality_metrics_to_iden": {
+      "en": "Calculate and visualize centrality metrics to identify key nodes and understand network structure.",
+      "es": "Calcule y visualice métricas de centralidad para identificar nodos clave y comprender la estructura de la red.",
+      "fr": "Calculez et visualisez les métriques de centralité pour identifier les nœuds clés et comprendre la structure du réseau.",
+      "de": "Berechnen und visualisieren Sie Zentralitätsmetriken, um Schlüsselknoten zu identifizieren und die Netzwerkstruktur zu verstehen.",
+      "lt": "Apskaičiuokite ir vizualizuokite centrinio svarbos metrikos, kad nustatytumėte pagrindinius mazgus ir suprastumėte tinklo struktūrą.",
+      "pt": "Calcule e visualize métricas de centralidade para identificar nós-chave e compreender a estrutura da rede.",
+      "it": "Calcola e visualizza le metriche di centralità per identificare i nodi chiave e comprendere la struttura della rete.",
+      "no": "Calculate and visualize centrality metrics to identify key nodes and understand network structure."
+    },
+    "modules.analysis.combine_with_loop_anlys_nodes_that_appear_in_multi": {
+      "en": "Combine with loop analysis: Nodes that appear in multiple feedback loops AND have high leverage scores are especially important for system-wide change.",
+      "es": "Combinar con análisis de bucles: Los nodos que aparecen en múltiples bucles de retroalimentación Y tienen puntuaciones de apalancamiento altas son especialmente importantes para el cambio en todo el sistema.",
+      "fr": "Combiner avec l'analyse de boucles : Les nœuds qui apparaissent dans plusieurs boucles de rétroaction ET ont des scores de levier élevés sont particulièrement importants pour le changement à l'échelle du système.",
+      "de": "Mit Schleifenanalyse kombinieren: Knoten, die in mehreren Rückkopplungsschleifen vorkommen UND hohe Hebelwerte haben, sind besonders wichtig für systemweite Veränderungen.",
+      "lt": "Derinti su ciklų analize: Mazgai, pasirodyantys keliuose grįžtamojo ryšio cikluose IR turintys didelius sverties balus, yra ypač svarbūs sistemos pokyčiams.",
+      "pt": "Combine com análise de loops: Nós que aparecem em múltiplos loops de feedback E têm altas pontuações de alavancagem são especialmente importantes para mudanças em todo o sistema.",
+      "it": "Combinare con l'analisi dei loop: I nodi che compaiono in più loop di feedback E hanno alti punteggi di leva sono particolarmente importanti per il cambiamento a livello di sistema.",
+      "no": "Combine with loop analysis: Nodes that appear in multiple feedback loops AND have high leverage scores are especially important for system-wide change."
+    },
+    "modules.analysis.common.2_classification": {
+      "en": "2. Classification:",
+      "es": "2. Clasificación:",
+      "fr": "2. Classification :",
+      "de": "2. Klassifizierung:",
+      "lt": "2. Klasifikacija:",
+      "pt": "2. Classificação:",
+      "it": "2. Classificazione:",
+      "no": "2. Classification:"
+    },
+    "modules.analysis.common.4_visualization": {
+      "en": "4. Visualization:",
+      "es": "4. Visualización:",
+      "fr": "4. Visualisation :",
+      "de": "4. Visualisierung:",
+      "lt": "4. Vizualizacija:",
+      "pt": "4. Visualização:",
+      "it": "4. Visualizzazione:",
+      "no": "4. Visualization:"
+    },
+    "modules.analysis.common.5_element_participation": {
+      "en": "5. Element participation:",
+      "es": "5. Participación de elementos:",
+      "fr": "5. Participation des éléments :",
+      "de": "5. Elementbeteiligung:",
+      "lt": "5. Elementų dalyvavimas:",
+      "pt": "5. Participação de elementos:",
+      "it": "5. Partecipazione di elementi:",
+      "no": "5. Element participation:"
+    },
+    "modules.analysis.common.6_export": {
+      "en": "6. Export:",
+      "es": "6. Exportar:",
+      "fr": "6. Exporter :",
+      "de": "6. Exportieren:",
+      "lt": "6. Eksportuoti:",
+      "pt": "6. Exportar:",
+      "it": "6. Esportare:",
+      "no": "6. Export:"
+    },
+    "modules.analysis.common.average_path_length": {
+      "en": "Average Path Length",
+      "es": "Longitud Promedio de Ruta",
+      "fr": "Longueur Moyenne du Chemin",
+      "de": "Durchschnittliche Pfadlänge",
+      "lt": "Vidutinis kelio ilgis",
+      "pt": "Comprimento Médio do Caminho",
+      "it": "Lunghezza Media del Percorso",
+      "no": "Average Path Length"
+    },
+    "modules.analysis.common.betweenness_centrality": {
+      "en": "Betweenness Centrality",
+      "es": "Centralidad de Intermediación",
+      "fr": "Centralité d'Intermédiarité",
+      "de": "Zwischenzentralität",
+      "lt": "Tarpininkavimo centrinis svarba",
+      "pt": "Centralidade de Intermediação",
+      "it": "Centralità di Betweenness",
+      "no": "Betweenness Centrality"
+    },
+    "modules.analysis.common.bubble_size_represents_pagerank": {
+      "en": "Bubble size represents PageRank",
+      "es": "El tamaño de la burbuja representa PageRank",
+      "fr": "La taille de la bulle représente le PageRank",
+      "de": "Blasengröße steht für PageRank",
+      "lt": "Burbulo dydis atspindi PageRank",
+      "pt": "O tamanho da bolha representa o PageRank",
+      "it": "La dimensione della bolla rappresenta il PageRank",
+      "no": "Bubble size represents PageRank"
+    },
+    "modules.analysis.common.closeness_centrality": {
+      "en": "Closeness Centrality",
+      "es": "Centralidad de Cercanía",
+      "fr": "Centralité de Proximité",
+      "de": "Nähezentralität",
+      "lt": "Artumo centrinis svarba",
+      "pt": "Centralidade de Proximidade",
+      "it": "Centralità di Vicinanza",
+      "no": "Closeness Centrality"
+    },
+    "modules.analysis.common.comparison_plot_degree_vs_betweenness": {
+      "en": "Comparison Plot - Degree vs Betweenness",
+      "es": "Gráfico de Comparación - Grado vs Intermediación",
+      "fr": "Graphique de Comparaison - Degré vs Intermédiarité",
+      "de": "Vergleichsdiagramm - Grad vs Zwischen",
+      "lt": "Palyginimo diagrama - Laipsnis vs Tarpininkavimas",
+      "pt": "Gráfico de Comparação - Grau vs Intermediação",
+      "it": "Grafico di Confronto - Grado vs Betweenness",
+      "no": "Comparison Plot - Degree vs Betweenness"
+    },
+    "modules.analysis.common.critical_bridge_nodes_connecting_different_parts": {
+      "en": "Critical bridge nodes connecting different parts",
+      "es": "Nodos puente críticos que conectan diferentes partes",
+      "fr": "Nœuds de pont critiques reliant différentes parties",
+      "de": "Kritische Brückenknoten, die verschiedene Teile verbinden",
+      "lt": "Kritiniai tilto mazgai, jungiantys skirtingas dalis",
+      "pt": "Nós de ponte críticos conectando diferentes partes",
+      "it": "Nodi ponte critici che collegano diverse parti",
+      "no": "Critical bridge nodes connecting different parts"
+    },
+    "modules.analysis.common.degree_centrality": {
+      "en": "Degree Centrality",
+      "es": "Centralidad de Grado",
+      "fr": "Centralité de Degré",
+      "de": "Gradzentralität",
+      "lt": "Laipsnio centrinis svarba",
+      "pt": "Centralidade de Grau",
+      "it": "Centralità di Grado",
+      "no": "Degree Centrality"
+    },
+    "modules.analysis.common.detection_complete_found": {
+      "en": "Detection complete! Found",
+      "es": "¡Detección completa! Se encontraron",
+      "fr": "Détection terminée ! Trouvé",
+      "de": "Erkennung abgeschlossen! Gefunden",
+      "lt": "Aptikimas baigtas! Rasta",
+      "pt": "Detecção concluída! Encontrado",
+      "it": "Rilevamento completato! Trovato",
+      "no": "Detection complete! Found"
+    },
+    "modules.analysis.common.distribution_histogram": {
+      "en": "Distribution Histogram",
+      "es": "Histograma de Distribución",
+      "fr": "Histogramme de Distribution",
+      "de": "Verteilungshistogramm",
+      "lt": "Pasiskirstymo histograma",
+      "pt": "Histograma de Distribuição",
+      "it": "Istogramma di Distribuzione",
+      "no": "Distribution Histogram"
+    },
+    "modules.analysis.common.dominance_score": {
+      "en": "Dominance score:",
+      "es": "Puntuación de dominancia:",
+      "fr": "Score de dominance :",
+      "de": "Dominanz-Score:",
+      "lt": "Dominavimo balas:",
+      "pt": "Pontuação de dominância:",
+      "it": "Punteggio di dominanza:",
+      "no": "Dominance score:"
+    },
+    "modules.analysis.common.eigenvector_centrality": {
+      "en": "Eigenvector Centrality",
+      "es": "Centralidad de Vector Propio",
+      "fr": "Centralité de Vecteur Propre",
+      "de": "Eigenvektorzentralität",
+      "lt": "Tikrinio vektoriaus centrinis svarba",
+      "pt": "Centralidade de Vetor Próprio",
+      "it": "Centralità di Autovettore",
+      "no": "Eigenvector Centrality"
+    },
+    "modules.analysis.common.element_participation": {
+      "en": "Element participation:",
+      "es": "Participación de elementos:",
+      "fr": "Participation des éléments :",
+      "de": "Elementbeteiligung:",
+      "lt": "Elementų dalyvavimas:",
+      "pt": "Participação de elementos:",
+      "it": "Partecipazione di elementi:",
+      "no": "Element participation:"
+    },
+    "modules.analysis.common.example_fishing_fish_biomass_fishing": {
+      "en": "Example: Fishing → - Fish biomass → - Fishing",
+      "es": "Ejemplo: Pesca → - Biomasa de peces → - Pesca",
+      "fr": "Exemple : Pêche → - Biomasse de poissons → - Pêche",
+      "de": "Beispiel: Fischerei → - Fischbiomasse → - Fischerei",
+      "lt": "Pavyzdys: Žvejyba → - Žuvų biomasė → - Žvejyba",
+      "pt": "Exemplo: Pesca → - Biomassa de peixes → - Pesca",
+      "it": "Esempio: Pesca → - Biomassa ittica → - Pesca",
+      "no": "Example: Fishing → - Fish biomass → - Fishing"
+    },
+    "modules.analysis.common.guide": {
+      "en": "Guide",
+      "es": "Guía",
+      "fr": "Guide",
+      "de": "Leitfaden",
+      "lt": "Vadovas",
+      "pt": "Guia",
+      "it": "Guida",
+      "no": "Guide"
+    },
+    "modules.analysis.common.how_to_interpret_results": {
+      "en": "How to interpret results:",
+      "es": "Cómo interpretar los resultados:",
+      "fr": "Comment interpréter les résultats :",
+      "de": "So interpretieren Sie die Ergebnisse:",
+      "lt": "Kaip interpretuoti rezultatus:",
+      "pt": "Como interpretar os resultados:",
+      "it": "Come interpretare i risultati:",
+      "no": "How to interpret results:"
+    },
+    "modules.analysis.common.how_to_use_this_tool": {
+      "en": "How to use this tool:",
+      "es": "Cómo usar esta herramienta:",
+      "fr": "Comment utiliser cet outil :",
+      "de": "So verwenden Sie dieses Tool:",
+      "lt": "Kaip naudoti šį įrankį:",
+      "pt": "Como usar esta ferramenta:",
+      "it": "Come usare questo strumento:",
+      "no": "How to use this tool:"
+    },
+    "modules.analysis.common.key_nodes": {
+      "en": "Key Nodes",
+      "es": "Nodos Clave",
+      "fr": "Nœuds Clés",
+      "de": "Schlüsselknoten",
+      "lt": "Pagrindiniai mazgai",
+      "pt": "Nós-Chave",
+      "it": "Nodi Chiave",
+      "no": "Key Nodes"
+    },
+    "modules.analysis.common.mean": {
+      "en": "Mean",
+      "es": "Media",
+      "fr": "Moyenne",
+      "de": "Mittelwert",
+      "lt": "Vidurkis",
+      "pt": "Média",
+      "it": "Media",
+      "no": "Mean"
+    },
+    "modules.analysis.common.median": {
+      "en": "Median",
+      "es": "Mediana",
+      "fr": "Médiane",
+      "de": "Median",
+      "lt": "Mediana",
+      "pt": "Mediana",
+      "it": "Mediana",
+      "no": "Median"
+    },
+    "modules.analysis.common.most_central_nodes_with_shortest_paths_to_others": {
+      "en": "Most central nodes with shortest paths to others",
+      "es": "Nodos más centrales con rutas más cortas a otros",
+      "fr": "Nœuds les plus centraux avec les chemins les plus courts vers les autres",
+      "de": "Zentralste Knoten mit kürzesten Pfaden zu anderen",
+      "lt": "Centriškiausi mazgai su trumpiausiais keliais į kitus",
+      "pt": "Nós mais centrais com caminhos mais curtos para outros",
+      "it": "Nodi più centrali con percorsi più brevi verso gli altri",
+      "no": "Most central nodes with shortest paths to others"
+    },
+    "modules.analysis.common.most_influential_nodes_based_on_incoming_connections": {
+      "en": "Most influential nodes based on incoming connections",
+      "es": "Nodos más influyentes basados en conexiones entrantes",
+      "fr": "Nœuds les plus influents basés sur les connexions entrantes",
+      "de": "Einflussreichste Knoten basierend auf eingehenden Verbindungen",
+      "lt": "Įtakingiausi mazgai pagal įeinančius ryšius",
+      "pt": "Nós mais influentes com base em conexões de entrada",
+      "it": "Nodi più influenti in base alle connessioni in entrata",
+      "no": "Most influential nodes based on incoming connections"
+    },
+    "modules.analysis.common.no_cld_data_found": {
+      "en": "No CLD data found.",
+      "es": "No se encontraron datos CLD.",
+      "fr": "Aucune donnée CLD trouvée.",
+      "de": "Keine CLD-Daten gefunden.",
+      "lt": "CLD duomenų nerasta.",
+      "pt": "Nenhum dado CLD encontrado.",
+      "it": "Nessun dato CLD trovato.",
+      "no": "No CLD data found."
+    },
+    "modules.analysis.common.pagerank": {
+      "en": "PageRank",
+      "es": "PageRank",
+      "fr": "PageRank",
+      "de": "PageRank",
+      "lt": "PageRank",
+      "pt": "PageRank",
+      "it": "PageRank",
+      "no": "PageRank"
+    },
+    "modules.analysis.common.rule_even_number_of_negative_connections": {
+      "en": "Rule: Even number of negative connections (-)",
+      "es": "Regla: Número par de conexiones negativas (-)",
+      "fr": "Règle : Nombre pair de connexions négatives (-)",
+      "de": "Regel: Gerade Anzahl negativer Verbindungen (-)",
+      "lt": "Taisyklė: Lyginis neigiamų ryšių skaičius (-)",
+      "pt": "Regra: Número par de conexões negativas (-)",
+      "it": "Regola: Numero pari di connessioni negative (-)",
+      "no": "Rule: Even number of negative connections (-)"
+    },
+    "modules.analysis.common.rule_odd_number_of_negative_connections": {
+      "en": "Rule: Odd number of negative connections (-)",
+      "es": "Regla: Número impar de conexiones negativas (-)",
+      "fr": "Règle : Nombre impair de connexions négatives (-)",
+      "de": "Regel: Ungerade Anzahl negativer Verbindungen (-)",
+      "lt": "Taisyklė: Nelyginis neigiamų ryšių skaičius (-)",
+      "pt": "Regra: Número ímpar de conexões negativas (-)",
+      "it": "Regola: Numero dispari di connessioni negative (-)",
+      "no": "Rule: Odd number of negative connections (-)"
+    },
+    "modules.analysis.common.top_5_nodes_by_betweenness": {
+      "en": "Top 5 Nodes by Betweenness",
+      "es": "Top 5 Nodos por Intermediación",
+      "fr": "Top 5 Nœuds par Intermédiarité",
+      "de": "Top 5 Knoten nach Zwischen",
+      "lt": "Top 5 mazgai pagal tarpininkavimą",
+      "pt": "Top 5 Nós por Intermediação",
+      "it": "Top 5 Nodi per Betweenness",
+      "no": "Top 5 Nodes by Betweenness"
+    },
+    "modules.analysis.common.top_5_nodes_by_closeness": {
+      "en": "Top 5 Nodes by Closeness",
+      "es": "Top 5 Nodos por Cercanía",
+      "fr": "Top 5 Nœuds par Proximité",
+      "de": "Top 5 Knoten nach Nähe",
+      "lt": "Top 5 mazgai pagal artumą",
+      "pt": "Top 5 Nós por Proximidade",
+      "it": "Top 5 Nodi per Vicinanza",
+      "no": "Top 5 Nodes by Closeness"
+    },
+    "modules.analysis.common.top_5_nodes_by_degree": {
+      "en": "Top 5 Nodes by Degree",
+      "es": "Top 5 Nodos por Grado",
+      "fr": "Top 5 Nœuds par Degré",
+      "de": "Top 5 Knoten nach Grad",
+      "lt": "Top 5 mazgai pagal laipsnį",
+      "pt": "Top 5 Nós por Grau",
+      "it": "Top 5 Nodi per Grado",
+      "no": "Top 5 Nodes by Degree"
+    },
+    "modules.analysis.common.top_5_nodes_by_pagerank": {
+      "en": "Top 5 Nodes by PageRank",
+      "es": "Top 5 Nodos por PageRank",
+      "fr": "Top 5 Nœuds par PageRank",
+      "de": "Top 5 Knoten nach PageRank",
+      "lt": "Top 5 mazgai pagal PageRank",
+      "pt": "Top 5 Nós por PageRank",
+      "it": "Top 5 Nodi per PageRank",
+      "no": "Top 5 Nodes by PageRank"
+    },
+    "modules.analysis.common.top_n_nodes": {
+      "en": "Top N Nodes",
+      "es": "Top N Nodos",
+      "fr": "Top N Nœuds",
+      "de": "Top N Knoten",
+      "lt": "Top N mazgai",
+      "pt": "Top N Nós",
+      "it": "Top N Nodi",
+      "no": "Top N Nodes"
+    },
+    "modules.analysis.common.total_edges": {
+      "en": "Total Edges",
+      "es": "Total de Enlaces",
+      "fr": "Total d'Arêtes",
+      "de": "Gesamtkanten",
+      "lt": "Viso ryšių",
+      "pt": "Total de Arestas",
+      "it": "Totale Archi",
+      "no": "Total Edges"
+    },
+    "modules.analysis.common.total_nodes": {
+      "en": "Total Nodes",
+      "es": "Total de Nodos",
+      "fr": "Total de Nœuds",
+      "de": "Gesamtknoten",
+      "lt": "Viso mazgų",
+      "pt": "Total de Nós",
+      "it": "Totale Nodi",
+      "no": "Total Nodes"
+    },
+    "modules.analysis.common.understanding_the_results": {
+      "en": "Understanding the results:",
+      "es": "Comprensión de los resultados:",
+      "fr": "Comprendre les résultats :",
+      "de": "Ergebnisse verstehen:",
+      "lt": "Rezultatų supratimas:",
+      "pt": "Compreensão dos resultados:",
+      "it": "Comprensione dei risultati:",
+      "no": "Understanding the results:"
+    },
+    "modules.analysis.common.visualizations": {
+      "en": "Visualizations",
+      "es": "Visualizaciones",
+      "fr": "Visualisations",
+      "de": "Visualisierungen",
+      "lt": "Vizualizacijos",
+      "pt": "Visualizações",
+      "it": "Visualizzazioni",
+      "no": "Visualizations"
+    },
+    "modules.analysis.composite_score_a_combined_metric_that_sums_the_no": {
+      "en": "Composite Score: A combined metric that sums the normalized values of all three centrality measures to provide an overall leverage score.",
+      "es": "Puntuación Compuesta: Una métrica combinada que suma los valores normalizados de las tres medidas de centralidad para proporcionar una puntuación de apalancamiento general.",
+      "fr": "Score Composite : Une métrique combinée qui additionne les valeurs normalisées des trois mesures de centralité pour fournir un score de levier global.",
+      "de": "Zusammengesetzter Score: Eine kombinierte Metrik, die die normalisierten Werte aller drei Zentralitätsmaße summiert, um einen Gesamt-Hebelpunkt-Score zu liefern.",
+      "lt": "Kompozitinis balas: Kombinuota metrika, sumuojanti visų trijų centrinių pozicijų matavimų normalizuotas vertes, kad būtų pateiktas bendras sverties balas.",
+      "pt": "Pontuação Composta: Uma métrica combinada que soma os valores normalizados das três medidas de centralidade para fornecer uma pontuação geral de alavancagem.",
+      "it": "Punteggio Composito: Una metrica combinata che somma i valori normalizzati di tutte e tre le misure di centralità per fornire un punteggio di leva complessivo.",
+      "no": "Composite Score: A combined metric that sums the normalized values of all three centrality measures to provide an overall leverage score."
+    },
+    "modules.analysis.consider_node_type_different_types_of_nodes_driver": {
+      "en": "Consider node type: Different types of nodes (Drivers, Activities, Pressures, States, Impacts, Responses) may require different intervention strategies.",
+      "es": "Considere el tipo de nodo: Diferentes tipos de nodos (Impulsores, Actividades, Presiones, Estados, Impactos, Respuestas) pueden requerir diferentes estrategias de intervención.",
+      "fr": "Considérer le type de nœud : Différents types de nœuds (Moteurs, Activités, Pressions, États, Impacts, Réponses) peuvent nécessiter différentes stratégies d'intervention.",
+      "de": "Knotentyp berücksichtigen: Verschiedene Knotentypen (Treiber, Aktivitäten, Belastungen, Zustände, Auswirkungen, Reaktionen) erfordern möglicherweise unterschiedliche Interventionsstrategien.",
+      "lt": "Atsižvelgti į mazgo tipą: Skirtingi mazgų tipai (Vairuotojai, Veiklos, Spaudimai, Būsenos, Poveikiai, Atsakai) gali reikalauti skirtingų intervencijos strategijų.",
+      "pt": "Considere o tipo de nó: Diferentes tipos de nós (Drivers, Atividades, Pressões, Estados, Impactos, Respostas) podem exigir diferentes estratégias de intervenção.",
+      "it": "Considera il tipo di nodo: Diversi tipi di nodi (Driver, Attività, Pressioni, Stati, Impatti, Risposte) potrebbero richiedere diverse strategie di intervento.",
+      "no": "Consider node type: Different types of nodes (Drivers, Activities, Pressures, States, Impacts, Responses) may require different intervention strategies."
+    },
+    "modules.analysis.eigenvector_centrality_measures_the_influence_of_a": {
+      "en": "Eigenvector Centrality: Measures the influence of a node based on the importance of its neighbors. Nodes connected to other important nodes score higher.",
+      "es": "Centralidad de Vector Propio: Mide la influencia de un nodo basándose en la importancia de sus vecinos. Los nodos conectados a otros nodos importantes obtienen puntuaciones más altas.",
+      "fr": "Centralité de Vecteur Propre : Mesure l'influence d'un nœud en fonction de l'importance de ses voisins. Les nœuds connectés à d'autres nœuds importants obtiennent des scores plus élevés.",
+      "de": "Eigenvektorzentralität: Misst den Einfluss eines Knotens basierend auf der Bedeutung seiner Nachbarn. Knoten, die mit anderen wichtigen Knoten verbunden sind, erzielen höhere Werte.",
+      "lt": "Savojo vektoriaus centrinė pozicija: Matuoja mazgo įtaką pagal jo kaimynų svarbą. Mazgai, sujungti su kitais svarbiais mazgais, gauna didesnius balus.",
+      "pt": "Centralidade de Autovetor: Mede a influência de um nó com base na importância de seus vizinhos. Nós conectados a outros nós importantes pontuam mais alto.",
+      "it": "Centralità di Autovettore: Misura l'influenza di un nodo in base all'importanza dei suoi vicini. I nodi collegati ad altri nodi importanti ottengono punteggi più alti.",
+      "no": "Eigenvector Centrality: Measures the influence of a node based on the importance of its neighbors. Nodes connected to other important nodes score higher."
+    },
+    "modules.analysis.example_species_population_reproduction_rate_speci": {
+      "en": "Example: Species population → + Reproduction rate → + Species population",
+      "es": "Ejemplo: Población de especies → + Tasa de reproducción → + Población de especies",
+      "fr": "Exemple : Population d'espèces → + Taux de reproduction → + Population d'espèces",
+      "de": "Beispiel: Artenpopulation → + Reproduktionsrate → + Artenpopulation",
+      "lt": "Pavyzdys: Rūšių populiacija → + Reprodukcijos tempas → + Rūšių populiacija",
+      "pt": "Exemplo: População de espécies → + Taxa de reprodução → + População de espécies",
+      "it": "Esempio: Popolazione di specie → + Tasso di riproduzione → + Popolazione di specie",
+      "no": "Example: Species population → + Reproduction rate → + Species population"
+    },
+    "modules.analysis.feedback_loops_are_circular_patterns_in_the_system": {
+      "en": "Feedback loops are circular patterns in the system where an element eventually affects itself through a chain of causal connections. These loops are fundamental to understanding system dynamics and behavior.",
+      "es": "Los bucles de retroalimentación son patrones circulares en el sistema donde un elemento eventualmente afecta a sí mismo a través de una cadena de conexiones causales. Estos bucles son fundamentales para comprender la dinámica y el comportamiento del sistema.",
+      "fr": "Les boucles de rétroaction sont des motifs circulaires dans le système où un élément finit par s'affecter lui-même par une chaîne de connexions causales. Ces boucles sont fondamentales pour comprendre la dynamique et le comportement du système.",
+      "de": "Rückkopplungsschleifen sind zirkuläre Muster im System, bei denen ein Element sich schließlich durch eine Kette kausaler Verbindungen selbst beeinflusst. Diese Schleifen sind grundlegend für das Verständnis der Systemdynamik und des Verhaltens.",
+      "lt": "Grįžtamojo ryšio ciklai yra žiediniai modeliai sistemoje, kai elementas galiausiai veikia save per priežastinių ryšių grandinę. Šie ciklai yra esminiai suprantant sistemos dinamiką ir elgseną.",
+      "pt": "Loops de feedback são padrões circulares no sistema onde um elemento eventualmente afeta a si mesmo através de uma cadeia de conexões causais. Esses loops são fundamentais para entender a dinâmica e o comportamento do sistema.",
+      "it": "I loop di feedback sono modelli circolari nel sistema in cui un elemento finisce per influenzare se stesso attraverso una catena di connessioni causali. Questi loop sono fondamentali per comprendere la dinamica e il comportamento del sistema.",
+      "no": "Feedback loops are circular patterns in the system where an element eventually affects itself through a chain of causal connections. These loops are fundamental to understanding system dynamics and behavior."
+    },
+    "modules.analysis.high_betweenness_focus_on_nodes_that_control_infor": {
+      "en": "High Betweenness: Focus on nodes that control information flow. They can block or facilitate changes.",
+      "es": "Alta Intermediación: Enfóquese en nodos que controlan el flujo de información. Pueden bloquear o facilitar cambios.",
+      "fr": "Intermédiarité Élevée : Concentrez-vous sur les nœuds qui contrôlent le flux d'informations. Ils peuvent bloquer ou faciliter les changements.",
+      "de": "Hohe Zwischenzentralität: Konzentrieren Sie sich auf Knoten, die den Informationsfluss kontrollieren. Sie können Änderungen blockieren oder erleichtern.",
+      "lt": "Didelis tarpiškumas: Sutelkite dėmesį į mazgus, kontroliuojančius informacijos srautą. Jie gali blokuoti arba palengvinti pokyčius.",
+      "pt": "Alta Intermediação: Concentre-se em nós que controlam o fluxo de informações. Eles podem bloquear ou facilitar mudanças.",
+      "it": "Alta Intermediazione: Concentrati sui nodi che controllano il flusso di informazioni. Possono bloccare o facilitare i cambiamenti.",
+      "no": "High Betweenness: Focus on nodes that control information flow. They can block or facilitate changes."
+    },
+    "modules.analysis.high_composite_score_these_nodes_are_your_top_leve": {
+      "en": "High Composite Score: These nodes are your top leverage points. Interventions here can have cascading effects throughout the system.",
+      "es": "Puntuación Compuesta Alta: Estos nodos son sus principales puntos de apalancamiento. Las intervenciones aquí pueden tener efectos en cascada en todo el sistema.",
+      "fr": "Score Composite Élevé : Ces nœuds sont vos principaux points de levier. Les interventions ici peuvent avoir des effets en cascade dans tout le système.",
+      "de": "Hoher zusammengesetzter Score: Diese Knoten sind Ihre Top-Hebelpunkte. Interventionen hier können kaskadierende Auswirkungen im gesamten System haben.",
+      "lt": "Didelis kompozitinis balas: Šie mazgai yra jūsų pagrindiniai sverties taškai. Intervencijos čia gali turėti kaskadines pasekmes visoje sistemoje.",
+      "pt": "Pontuação Composta Alta: Estes nós são seus principais pontos de alavancagem. Intervenções aqui podem ter efeitos em cascata em todo o sistema.",
+      "it": "Punteggio Composito Alto: Questi nodi sono i tuoi principali punti di leva. Gli interventi qui possono avere effetti a cascata in tutto il sistema.",
+      "no": "High Composite Score: These nodes are your top leverage points. Interventions here can have cascading effects throughout the system."
+    },
+    "modules.analysis.high_pagerank_these_nodes_have_broad_influence_acr": {
+      "en": "High PageRank: These nodes have broad influence across the network and often represent core system elements.",
+      "es": "Alto PageRank: Estos nodos tienen una amplia influencia en toda la red y a menudo representan elementos centrales del sistema.",
+      "fr": "PageRank Élevé : Ces nœuds ont une large influence sur le réseau et représentent souvent des éléments centraux du système.",
+      "de": "Hoher PageRank: Diese Knoten haben breiten Einfluss über das Netzwerk und repräsentieren oft zentrale Systemelemente.",
+      "lt": "Didelis PageRank: Šie mazgai turi platų poveikį visame tinkle ir dažnai reprezentuoja pagrindinius sistemos elementus.",
+      "pt": "Alto PageRank: Estes nós têm ampla influência na rede e frequentemente representam elementos centrais do sistema.",
+      "it": "Alto PageRank: Questi nodi hanno un'ampia influenza sulla rete e spesso rappresentano elementi centrali del sistema.",
+      "no": "High PageRank: These nodes have broad influence across the network and often represent core system elements."
+    },
+    "modules.analysis.leverage.using_leverage_points_for_intervention_design": {
+      "en": "Using leverage points for intervention design:",
+      "es": "Uso de puntos de apalancamiento para el diseño de intervenciones:",
+      "fr": "Utilisation des points de levier pour la conception d'interventions :",
+      "de": "Verwendung von Hebelpunkten für die Interventionsgestaltung:",
+      "lt": "Sverties taškų naudojimas intervencijų projektavimui:",
+      "pt": "Uso de pontos de alavancagem para design de intervenções:",
+      "it": "Utilizzo dei punti di leva per la progettazione di interventi:",
+      "no": "Using leverage points for intervention design:"
+    },
+    "modules.analysis.leverage.what_are_leverage_points": {
+      "en": "What are leverage points?",
+      "es": "¿Qué son los puntos de apalancamiento?",
+      "fr": "Que sont les points de levier?",
+      "de": "Was sind Hebelpunkte?",
+      "lt": "Kas yra sverties taškai?",
+      "pt": "O que são pontos de alavancagem?",
+      "it": "Cosa sono i punti di leva?",
+      "no": "What are leverage points?"
+    },
+    "modules.analysis.leverage_points_are_nodes_in_your_network_that_hav": {
+      "en": "Leverage points are nodes in your network that have the highest potential for system-wide impact when interventions are applied. These are strategic locations where small changes can lead to significant improvements across the entire social-ecological system.",
+      "es": "Los puntos de apalancamiento son nodos en su red que tienen el mayor potencial de impacto en todo el sistema cuando se aplican intervenciones. Estas son ubicaciones estratégicas donde pequeños cambios pueden conducir a mejoras significativas en todo el sistema socio-ecológico.",
+      "fr": "Les points de levier sont des nœuds de votre réseau qui ont le plus grand potentiel d'impact à l'échelle du système lorsque des interventions sont appliquées. Ce sont des emplacements stratégiques où de petits changements peuvent conduire à des améliorations significatives dans tout le système socio-écologique.",
+      "de": "Hebelpunkte sind Knoten in Ihrem Netzwerk, die das höchste Potenzial für systemweite Auswirkungen haben, wenn Interventionen angewendet werden. Dies sind strategische Standorte, an denen kleine Änderungen zu erheblichen Verbesserungen im gesamten sozial-ökologischen System führen können.",
+      "lt": "Sverties taškai yra mazgai jūsų tinkle, turintys didžiausią sisteminės įtakos potencialą, kai taikomos intervencijos. Tai strateginės vietos, kur nedideli pokyčiai gali lemti reikšmingus patobulinimus visoje socialinėje-ekologinėje sistemoje.",
+      "pt": "Pontos de alavancagem são nós em sua rede que têm o maior potencial de impacto em todo o sistema quando intervenções são aplicadas. Estas são localizações estratégicas onde pequenas mudanças podem levar a melhorias significativas em todo o sistema sócio-ecológico.",
+      "it": "I punti di leva sono nodi nella tua rete che hanno il più alto potenziale di impatto a livello di sistema quando vengono applicate interventi. Queste sono posizioni strategiche dove piccoli cambiamenti possono portare a miglioramenti significativi in tutto il sistema socio-ecologico.",
+      "no": "Leverage points are nodes in your network that have the highest potential for system-wide impact when interventions are applied. These are strategic locations where small changes can lead to significant improvements across the entire social-ecological system."
+    },
+    "modules.analysis.loops.1_detect_loops": {
+      "en": "1. Detect loops:",
+      "es": "1. Detectar bucles:",
+      "fr": "1. Détecter les boucles :",
+      "de": "1. Schleifen erkennen:",
+      "lt": "1. Aptikti ciklus:",
+      "pt": "1. Detectar loops:",
+      "it": "1. Rilevare loop:",
+      "no": "1. Detect loops:"
+    },
+    "modules.analysis.loops.balancing_loops_b": {
+      "en": "Balancing loops (B):",
+      "es": "Bucles de equilibrio (B):",
+      "fr": "Boucles d'équilibrage (B) :",
+      "de": "Ausgleichende Schleifen (B):",
+      "lt": "Balansuojantys ciklai (B):",
+      "pt": "Loops de equilíbrio (B):",
+      "it": "Loop di bilanciamento (B):",
+      "no": "Balancing loops (B):"
+    },
+    "modules.analysis.loops.feedback_loops": {
+      "en": "feedback loops.",
+      "es": "bucles de retroalimentación.",
+      "fr": "boucles de rétroaction.",
+      "de": "Rückkopplungsschleifen.",
+      "lt": "grįžtamojo ryšio ciklai.",
+      "pt": "loops de feedback.",
+      "it": "loop di feedback.",
+      "no": "feedback loops."
+    },
+    "modules.analysis.loops.loop_length": {
+      "en": "Loop length:",
+      "es": "Longitud del bucle:",
+      "fr": "Longueur de la boucle :",
+      "de": "Schleifenlänge:",
+      "lt": "Ciklo ilgis:",
+      "pt": "Comprimento do loop:",
+      "it": "Lunghezza del loop:",
+      "no": "Loop length:"
+    },
+    "modules.analysis.loops.loop_types": {
+      "en": "Loop types:",
+      "es": "Tipos de bucles:",
+      "fr": "Types de boucles :",
+      "de": "Schleifentypen:",
+      "lt": "Ciklų tipai:",
+      "pt": "Tipos de loops:",
+      "it": "Tipi di loop:",
+      "no": "Loop types:"
+    },
+    "modules.analysis.loops.reinforcing_loops_r": {
+      "en": "Reinforcing loops (R):",
+      "es": "Bucles de refuerzo (R):",
+      "fr": "Boucles de renforcement (R) :",
+      "de": "Verstärkende Schleifen (R):",
+      "lt": "Stiprinantys ciklai (R):",
+      "pt": "Loops de reforço (R):",
+      "it": "Loop di rinforzo (R):",
+      "no": "Reinforcing loops (R):"
+    },
+    "modules.analysis.loops.what_are_feedback_loops": {
+      "en": "What are feedback loops?",
+      "es": "¿Qué son los bucles de retroalimentación?",
+      "fr": "Que sont les boucles de rétroaction?",
+      "de": "Was sind Rückkopplungsschleifen?",
+      "lt": "Kas yra grįžtamojo ryšio ciklai?",
+      "pt": "O que são loops de feedback?",
+      "it": "Cosa sono i loop di feedback?",
+      "no": "What are feedback loops?"
+    },
+    "modules.analysis.network.all_metrics": {
+      "en": "All Metrics",
+      "es": "Todas las Métricas",
+      "fr": "Toutes les Métriques",
+      "de": "Alle Metriken",
+      "lt": "Visos metrikos",
+      "pt": "Todas as Métricas",
+      "it": "Tutte le Metriche",
+      "no": "All Metrics"
+    },
+    "modules.analysis.network.bar_plot_top_nodes_by_selected_metric": {
+      "en": "Bar Plot - Top Nodes by Selected Metric",
+      "es": "Gráfico de Barras - Nodos Principales por Métrica Seleccionada",
+      "fr": "Graphique à Barres - Nœuds Principaux par Métrique Sélectionnée",
+      "de": "Balkendiagramm - Top-Knoten nach Ausgewählter Metrik",
+      "lt": "Stulpelinė diagrama - Pagrindiniai mazgai pagal pasirinktą metriką",
+      "pt": "Gráfico de Barras - Nós Principais por Métrica Selecionada",
+      "it": "Grafico a Barre - Nodi Principali per Metrica Selezionata",
+      "no": "Bar Plot - Top Nodes by Selected Metric"
+    },
+    "modules.analysis.network.calculate_network_metrics": {
+      "en": "Calculate Network Metrics",
+      "es": "Calcular Métricas de Red",
+      "fr": "Calculer les Métriques de Réseau",
+      "de": "Netzwerkmetriken Berechnen",
+      "lt": "Apskaičiuoti tinklo metrikos",
+      "pt": "Calcular Métricas de Rede",
+      "it": "Calcola Metriche di Rete",
+      "no": "Calculate Network Metrics"
+    },
+    "modules.analysis.network.download_network_metrics": {
+      "en": "Download Network Metrics",
+      "es": "Descargar Métricas de Red",
+      "fr": "Télécharger les Métriques de Réseau",
+      "de": "Netzwerkmetriken Herunterladen",
+      "lt": "Atsisiųsti tinklo metrikos",
+      "pt": "Baixar Métricas de Rede",
+      "it": "Scarica Metriche di Rete",
+      "no": "Download Network Metrics"
+    },
+    "modules.analysis.network.error_calculating_metrics": {
+      "en": "Error calculating metrics:",
+      "es": "Error al calcular métricas:",
+      "fr": "Erreur lors du calcul des métriques:",
+      "de": "Fehler beim Berechnen von Metriken:",
+      "lt": "Klaida skaičiuojant metrikos:",
+      "pt": "Erro ao calcular métricas:",
+      "it": "Errore nel calcolo delle metriche:",
+      "no": "Error calculating metrics:"
+    },
+    "modules.analysis.network.metrics_used": {
+      "en": "Metrics Used:",
+      "es": "Métricas Utilizadas:",
+      "fr": "Métriques Utilisées :",
+      "de": "Verwendete Metriken:",
+      "lt": "Naudojamos metrikos:",
+      "pt": "Métricas Usadas:",
+      "it": "Metriche Utilizzate:",
+      "no": "Metrics Used:"
+    },
+    "modules.analysis.network.most_connected_nodes_in_the_network": {
+      "en": "Most connected nodes in the network",
+      "es": "Nodos más conectados en la red",
+      "fr": "Nœuds les plus connectés du réseau",
+      "de": "Am meisten verbundene Knoten im Netzwerk",
+      "lt": "Labiausiai susiję mazgai tinkle",
+      "pt": "Nós mais conectados na rede",
+      "it": "Nodi più connessi nella rete",
+      "no": "Most connected nodes in the network"
+    },
+    "modules.analysis.network.network_connectivity": {
+      "en": "Network Connectivity",
+      "es": "Conectividad de Red",
+      "fr": "Connectivité du Réseau",
+      "de": "Netzwerkkonnektivität",
+      "lt": "Tinklo junglumas",
+      "pt": "Conectividade da Rede",
+      "it": "Connettività della Rete",
+      "no": "Network Connectivity"
+    },
+    "modules.analysis.network.network_density": {
+      "en": "Network Density",
+      "es": "Densidad de Red",
+      "fr": "Densité du Réseau",
+      "de": "Netzwerkdichte",
+      "lt": "Tinklo tankis",
+      "pt": "Densidade da Rede",
+      "it": "Densità della Rete",
+      "no": "Network Density"
+    },
+    "modules.analysis.network.network_diameter": {
+      "en": "Network Diameter",
+      "es": "Diámetro de Red",
+      "fr": "Diamètre du Réseau",
+      "de": "Netzwerkdurchmesser",
+      "lt": "Tinklo skersmuo",
+      "pt": "Diâmetro da Rede",
+      "it": "Diametro della Rete",
+      "no": "Network Diameter"
+    },
+    "modules.analysis.network.network_metrics_analysis": {
+      "en": "Network Metrics Analysis",
+      "es": "Análisis de Métricas de Red",
+      "fr": "Analyse des Métriques de Réseau",
+      "de": "Netzwerkmetrik-Analyse",
+      "lt": "Tinklo metrikų analizė",
+      "pt": "Análise de Métricas de Rede",
+      "it": "Analisi delle Metriche di Rete",
+      "no": "Network Metrics Analysis"
+    },
+    "modules.analysis.network.network_metrics_calculated_successfully": {
+      "en": "Network metrics calculated successfully!",
+      "es": "¡Métricas de red calculadas con éxito!",
+      "fr": "Métriques de réseau calculées avec succès!",
+      "de": "Netzwerkmetriken erfolgreich berechnet!",
+      "lt": "Tinklo metrikos sėkmingai apskaičiuotos!",
+      "pt": "Métricas de rede calculadas com sucesso!",
+      "it": "Metriche di rete calcolate con successo!",
+      "no": "Network metrics calculated successfully!"
+    },
+    "modules.analysis.network.network_summary": {
+      "en": "Network Summary",
+      "es": "Resumen de Red",
+      "fr": "Résumé du Réseau",
+      "de": "Netzwerkübersicht",
+      "lt": "Tinklo santrauka",
+      "pt": "Resumo da Rede",
+      "it": "Riepilogo della Rete",
+      "no": "Network Summary"
+    },
+    "modules.analysis.network.please_generate_a_cld_network_first_using": {
+      "en": "Please generate a CLD network first using:",
+      "es": "Por favor, genere primero una red CLD utilizando:",
+      "fr": "Veuillez d'abord générer un réseau CLD en utilisant:",
+      "de": "Bitte generieren Sie zuerst ein CLD-Netzwerk mit:",
+      "lt": "Pirmiausia sugeneruokite CLD tinklą naudodami:",
+      "pt": "Por favor, gere primeiro uma rede CLD usando:",
+      "it": "Si prega di generare prima una rete CLD utilizzando:",
+      "no": "Please generate a CLD network first using:"
+    },
+    "modules.analysis.network.return_here_to_analyze_network_metrics": {
+      "en": "Return here to analyze network metrics",
+      "es": "Regrese aquí para analizar las métricas de red",
+      "fr": "Revenez ici pour analyser les métriques de réseau",
+      "de": "Kehren Sie hierher zurück, um Netzwerkmetriken zu analysieren",
+      "lt": "Grįžkite čia, kad analizuotumėte tinklo metrikos",
+      "pt": "Retorne aqui para analisar as métricas de rede",
+      "it": "Torna qui per analizzare le metriche di rete",
+      "no": "Return here to analyze network metrics"
+    },
+    "modules.analysis.network.select_metric": {
+      "en": "Select Metric",
+      "es": "Seleccionar Métrica",
+      "fr": "Sélectionner la Métrique",
+      "de": "Metrik Auswählen",
+      "lt": "Pasirinkti metriką",
+      "pt": "Selecionar Métrica",
+      "it": "Seleziona Metrica",
+      "no": "Select Metric"
+    },
+    "modules.analysis.network.understanding_centrality_metrics": {
+      "en": "Understanding Centrality Metrics",
+      "es": "Comprender las Métricas de Centralidad",
+      "fr": "Comprendre les Métriques de Centralité",
+      "de": "Verständnis der Zentralitätsmetriken",
+      "lt": "Centrinio svarbos metrikų supratimas",
+      "pt": "Compreendendo as Métricas de Centralidade",
+      "it": "Comprendere le Metriche di Centralità",
+      "no": "Understanding Centrality Metrics"
+    },
+    "modules.analysis.prioritize_interventions_focus_resources_on_high_l": {
+      "en": "Prioritize interventions: Focus resources on high-leverage nodes rather than spreading efforts thinly across many nodes.",
+      "es": "Priorizar intervenciones: Enfoque recursos en nodos de alto apalancamiento en lugar de dispersar esfuerzos entre muchos nodos.",
+      "fr": "Prioriser les interventions : Concentrez les ressources sur les nœuds à fort effet de levier plutôt que de disperser les efforts sur de nombreux nœuds.",
+      "de": "Interventionen priorisieren: Konzentrieren Sie Ressourcen auf Knoten mit hohem Hebel, anstatt Bemühungen über viele Knoten zu verteilen.",
+      "lt": "Nustatyti intervencijų prioritetus: Sutelkti išteklius į didelės sverto galios mazgus, o ne sklaidos pastangas tarp daugelio mazgų.",
+      "pt": "Priorizar intervenções: Concentre recursos em nós de alta alavancagem em vez de espalhar esforços por muitos nós.",
+      "it": "Dare priorità agli interventi: Concentra le risorse sui nodi ad alta leva anziché distribuire gli sforzi su molti nodi.",
+      "no": "Prioritize interventions: Focus resources on high-leverage nodes rather than spreading efforts thinly across many nodes."
+    },
+    "modules.analysis.understanding_feedback_loops_reinforcing_loops_oft": {
+      "en": "Understanding feedback loops: Reinforcing loops often identify areas of system growth or collapse, while balancing loops identify stabilization mechanisms or resistance to change.",
+      "es": "Comprensión de bucles de retroalimentación: los bucles de refuerzo a menudo identifican áreas de crecimiento o colapso del sistema, mientras que los bucles de equilibrio identifican mecanismos de estabilización o resistencia al cambio.",
+      "fr": "Compréhension des boucles de rétroaction : les boucles de renforcement identifient souvent les zones de croissance ou d'effondrement du système, tandis que les boucles d'équilibrage identifient les mécanismes de stabilisation ou de résistance au changement.",
+      "de": "Verständnis von Rückkopplungsschleifen: Verstärkungsschleifen identifizieren oft Bereiche des Systemwachstums oder -zusammenbruchs, während Ausgleichsschleifen Stabilisierungsmechanismen oder Widerstand gegen Veränderungen identifizieren.",
+      "lt": "Grįžtamojo ryšio ciklų supratimas: stiprinantys ciklai dažnai identifikuoja sistemos augimo ar žlugimo sritis, o balansuojantys ciklai identifikuoja stabilizavimo mechanizmus ar pasipriešinimą pokyčiams.",
+      "pt": "Compreensão de loops de feedback: loops de reforço frequentemente identificam áreas de crescimento ou colapso do sistema, enquanto loops de equilíbrio identificam mecanismos de estabilização ou resistência à mudança.",
+      "it": "Comprensione dei loop di feedback: i loop di rinforzo spesso identificano aree di crescita o collasso del sistema, mentre i loop di bilanciamento identificano meccanismi di stabilizzazione o resistenza al cambiamento.",
+      "no": "Understanding feedback loops: Reinforcing loops often identify areas of system growth or collapse, while balancing loops identify stabilization mechanisms or resistance to change."
+    },
+    "modules.analysis.average_steps_needed_to_reach_any_node_from_any_ot": {
+      "en": "Average Steps Needed To Reach Any Node From Any Ot",
+      "es": "[ES] Average Steps Needed To Reach Any Node From Any Ot",
+      "fr": "[FR] Average Steps Needed To Reach Any Node From Any Ot",
+      "de": "[DE] Average Steps Needed To Reach Any Node From Any Ot",
+      "lt": "[LT] Average Steps Needed To Reach Any Node From Any Ot",
+      "pt": "[PT] Average Steps Needed To Reach Any Node From Any Ot",
+      "it": "[IT] Average Steps Needed To Reach Any Node From Any Ot",
+      "no": "Average Steps Needed To Reach Any Node From Any Ot"
+    },
+    "modules.analysis.common.amplify_change_in_the_system": {
+      "en": " Amplify change in the system.",
+      "es": "Amplifican el cambio en el sistema.",
+      "fr": "Amplifient le changement dans le système.",
+      "de": "Verstärken die Veränderung im System.",
+      "lt": "Stiprina pokyčius sistemoje.",
+      "pt": "Amplificam a mudança no sistema.",
+      "it": "Amplificano il cambiamento nel sistema.",
+      "no": " Amplify change in the system."
+    },
+    "modules.analysis.common.analysis_csv_columns_error": {
+      "en": "Analysis Csv Columns Error",
+      "es": "[ES] Analysis Csv Columns Error",
+      "fr": "[FR] Analysis Csv Columns Error",
+      "de": "[DE] Analysis Csv Columns Error",
+      "lt": "[LT] Analysis Csv Columns Error",
+      "pt": "[PT] Analysis Csv Columns Error",
+      "it": "[IT] Analysis Csv Columns Error",
+      "no": "Analysis Csv Columns Error"
+    },
+    "modules.analysis.common.analysis_csv_loaded": {
+      "en": "Analysis Csv Loaded",
+      "es": "[ES] Analysis Csv Loaded",
+      "fr": "[FR] Analysis Csv Loaded",
+      "de": "[DE] Analysis Csv Loaded",
+      "lt": "[LT] Analysis Csv Loaded",
+      "pt": "[PT] Analysis Csv Loaded",
+      "it": "[IT] Analysis Csv Loaded",
+      "no": "Analysis Csv Loaded"
+    },
+    "modules.analysis.common.analysis_data_added": {
+      "en": "Analysis Data Added",
+      "es": "[ES] Analysis Data Added",
+      "fr": "[FR] Analysis Data Added",
+      "de": "[DE] Analysis Data Added",
+      "lt": "[LT] Analysis Data Added",
+      "pt": "[PT] Analysis Data Added",
+      "it": "[IT] Analysis Data Added",
+      "no": "Analysis Data Added"
+    },
+    "modules.analysis.common.analysis_data_cleared": {
+      "en": "Analysis Data Cleared",
+      "es": "[ES] Analysis Data Cleared",
+      "fr": "[FR] Analysis Data Cleared",
+      "de": "[DE] Analysis Data Cleared",
+      "lt": "[LT] Analysis Data Cleared",
+      "pt": "[PT] Analysis Data Cleared",
+      "it": "[IT] Analysis Data Cleared",
+      "no": "Analysis Data Cleared"
+    },
+    "modules.analysis.common.analysis_error_loading_csv": {
+      "en": "Analysis Error Loading Csv",
+      "es": "[ES] Analysis Error Loading Csv",
+      "fr": "[FR] Analysis Error Loading Csv",
+      "de": "[DE] Analysis Error Loading Csv",
+      "lt": "[LT] Analysis Error Loading Csv",
+      "pt": "[PT] Analysis Error Loading Csv",
+      "it": "[IT] Analysis Error Loading Csv",
+      "no": "Analysis Error Loading Csv"
+    },
+    "modules.analysis.common.analysis_no_graph_data": {
+      "en": "Analysis No Graph Data",
+      "es": "[ES] Analysis No Graph Data",
+      "fr": "[FR] Analysis No Graph Data",
+      "de": "[DE] Analysis No Graph Data",
+      "lt": "[LT] Analysis No Graph Data",
+      "pt": "[PT] Analysis No Graph Data",
+      "it": "[IT] Analysis No Graph Data",
+      "no": "Analysis No Graph Data"
+    },
+    "modules.analysis.common.analysis_no_isa_data": {
+      "en": "Analysis No Isa Data",
+      "es": "[ES] Analysis No Isa Data",
+      "fr": "[FR] Analysis No Isa Data",
+      "de": "[DE] Analysis No Isa Data",
+      "lt": "[LT] Analysis No Isa Data",
+      "pt": "[PT] Analysis No Isa Data",
+      "it": "[IT] Analysis No Isa Data",
+      "no": "Analysis No Isa Data"
+    },
+    "modules.analysis.common.average_shortest_path_between_any_two_nodes": {
+      "en": "Average Shortest Path Between Any Two Nodes",
+      "es": "[ES] Average Shortest Path Between Any Two Nodes",
+      "fr": "[FR] Average Shortest Path Between Any Two Nodes",
+      "de": "[DE] Average Shortest Path Between Any Two Nodes",
+      "lt": "[LT] Average Shortest Path Between Any Two Nodes",
+      "pt": "[PT] Average Shortest Path Between Any Two Nodes",
+      "it": "[IT] Average Shortest Path Between Any Two Nodes",
+      "no": "Average Shortest Path Between Any Two Nodes"
+    },
+    "modules.analysis.common.counteract_change_and_seek_equilibrium": {
+      "en": " Counteract change and seek equilibrium.",
+      "es": "Contrarrestan el cambio y buscan el equilibrio.",
+      "fr": "Contrebalancent le changement et recherchent l'équilibre.",
+      "de": "Wirken Veränderungen entgegen und suchen das Gleichgewicht.",
+      "lt": "Priešinasi pokyčiams ir siekia pusiausvyros.",
+      "pt": "Contrabalançam a mudança e buscam o equilíbrio.",
+      "it": "Contrastano il cambiamento e cercano l'equilibrio.",
+      "no": " Counteract change and seek equilibrium."
+    },
+    "modules.analysis.common.edges": {
+      "en": "Total Edges",
+      "es": "Total de Enlaces",
+      "fr": "Total d'Arêtes",
+      "de": "Gesamtkanten",
+      "lt": "Viso ryšių",
+      "pt": "Total de Arestas",
+      "it": "Totale Archi",
+      "no": "Total Edges"
+    },
+    "modules.analysis.common.efficient_information_spreaders": {
+      "en": "Efficient Information Spreaders",
+      "es": "[ES] Efficient Information Spreaders",
+      "fr": "[FR] Efficient Information Spreaders",
+      "de": "[DE] Efficient Information Spreaders",
+      "lt": "[LT] Efficient Information Spreaders",
+      "pt": "[PT] Efficient Information Spreaders",
+      "it": "[IT] Efficient Information Spreaders",
+      "no": "Efficient Information Spreaders"
+    },
+    "modules.analysis.common.found": {
+      "en": "No CLD data found.",
+      "es": "No se encontraron datos CLD.",
+      "fr": "Aucune donnée CLD trouvée.",
+      "de": "Keine CLD-Daten gefunden.",
+      "lt": "CLD duomenų nerasta.",
+      "pt": "Nenhum dado CLD encontrado.",
+      "it": "Nessun dato CLD trovato.",
+      "no": "No CLD data found."
+    },
+    "modules.analysis.common.frequency": {
+      "en": "Frequency",
+      "es": "[ES] Frequency",
+      "fr": "[FR] Frequency",
+      "de": "[DE] Frequency",
+      "lt": "[LT] Frequency",
+      "pt": "[PT] Frequency",
+      "it": "[IT] Frequency",
+      "no": "Frequency"
+    },
+    "modules.entry_point.guided_pathway": {
+      "en": "Guided Pathway",
+      "es": "Ruta Guiada",
+      "fr": "Parcours Guidé",
+      "de": "Geführter Pfad",
+      "lt": "Vedamas kelias",
+      "pt": "Percurso Guiado",
+      "it": "Percorso Guidato",
+      "no": "Guided Pathway"
+    },
+    "modules.response.measures.intervention_points": {
+      "en": "Identify intervention points (high betweenness nodes)",
+      "es": "Identificar puntos de intervención (nodos de alta intermediación)",
+      "fr": "Identifier les points d'intervention (nœuds à haute intermédiarité)",
+      "de": "Interventionspunkte identifizieren (Knoten mit hoher Zwischenzentralität)",
+      "lt": "Nustatyti intervencijos taškus (didelio tarpininkavimo mazgai)",
+      "pt": "Identificar pontos de intervenção (nós de alta intermediação)",
+      "it": "Identificare i punti di intervento (nodi ad alta betweenness)",
+      "no": "Identify intervention points (high betweenness nodes)"
+    },
+    "modules.analysis.common.high_closeness": {
+      "en": "High Closeness",
+      "es": "[ES] High Closeness",
+      "fr": "[FR] High Closeness",
+      "de": "[DE] High Closeness",
+      "lt": "[LT] High Closeness",
+      "pt": "[PT] High Closeness",
+      "it": "[IT] High Closeness",
+      "no": "High Closeness"
+    },
+    "modules.analysis.common.high_degree": {
+      "en": "Find key stakeholders (high degree nodes)",
+      "es": "Encontrar partes interesadas clave (nodos de alto grado)",
+      "fr": "Trouver les parties prenantes clés (nœuds de haut degré)",
+      "de": "Schlüsselakteure finden (Knoten mit hohem Grad)",
+      "lt": "Rasti pagrindinius suinteresuotus subjektus (didelio laipsnio mazgai)",
+      "pt": "Encontrar partes interessadas-chave (nós de alto grau)",
+      "it": "Trovare le parti interessate chiave (nodi ad alto grado)",
+      "no": "Find key stakeholders (high degree nodes)"
+    },
+    "modules.analysis.common.high_pagerank": {
+      "en": "High PageRank: These nodes have broad influence across the network and often represent core system elements.",
+      "es": "Alto PageRank: Estos nodos tienen una amplia influencia en toda la red y a menudo representan elementos centrales del sistema.",
+      "fr": "PageRank Élevé : Ces nœuds ont une large influence sur le réseau et représentent souvent des éléments centraux du système.",
+      "de": "Hoher PageRank: Diese Knoten haben breiten Einfluss über das Netzwerk und repräsentieren oft zentrale Systemelemente.",
+      "lt": "Didelis PageRank: Šie mazgai turi platų poveikį visame tinkle ir dažnai reprezentuoja pagrindinius sistemos elementus.",
+      "pt": "Alto PageRank: Estes nós têm ampla influência na rede e frequentemente representam elementos centrais do sistema.",
+      "it": "Alto PageRank: Questi nodi hanno un'ampia influenza sulla rete e spesso rappresentano elementi centrali del sistema.",
+      "no": "High PageRank: These nodes have broad influence across the network and often represent core system elements."
+    },
+    "modules.isa.ai_assistant.other": {
+      "en": "Other",
+      "es": "Otro",
+      "fr": "Autre",
+      "de": "Andere",
+      "lt": "Kita",
+      "pt": "Outro",
+      "it": "Altro",
+      "no": "Annen"
+    },
+    "modules.analysis.common.most_influential_system_components": {
+      "en": "Most Influential System Components",
+      "es": "[ES] Most Influential System Components",
+      "fr": "[FR] Most Influential System Components",
+      "de": "[DE] Most Influential System Components",
+      "lt": "[LT] Most Influential System Components",
+      "pt": "[PT] Most Influential System Components",
+      "it": "[IT] Most Influential System Components",
+      "no": "Most Influential System Components"
+    },
+    "modules.analysis.common.no_original_to_restore": {
+      "en": "No Original To Restore",
+      "es": "[ES] No Original To Restore",
+      "fr": "[FR] No Original To Restore",
+      "de": "[DE] No Original To Restore",
+      "lt": "[LT] No Original To Restore",
+      "pt": "[PT] No Original To Restore",
+      "it": "[IT] No Original To Restore",
+      "no": "No Original To Restore"
+    },
+    "modules.analysis.common.percentage_of_possible_connections_that_exist": {
+      "en": "Percentage Of Possible Connections That Exist",
+      "es": "[ES] Percentage Of Possible Connections That Exist",
+      "fr": "[FR] Percentage Of Possible Connections That Exist",
+      "de": "[DE] Percentage Of Possible Connections That Exist",
+      "lt": "[LT] Percentage Of Possible Connections That Exist",
+      "pt": "[PT] Percentage Of Possible Connections That Exist",
+      "it": "[IT] Percentage Of Possible Connections That Exist",
+      "no": "Percentage Of Possible Connections That Exist"
+    },
+    "modules.analysis.common.practical_applications": {
+      "en": "Practical Applications",
+      "es": "[ES] Practical Applications",
+      "fr": "[FR] Practical Applications",
+      "de": "[DE] Practical Applications",
+      "lt": "[LT] Practical Applications",
+      "pt": "[PT] Practical Applications",
+      "it": "[IT] Practical Applications",
+      "no": "Practical Applications"
+    },
+    "modules.analysis.common.preview_exogenous_nodes_before_removal": {
+      "en": "Preview exogenous nodes before removal",
+      "es": "Vista previa de nodos exógenos antes de la eliminación",
+      "fr": "Aperçu des nœuds exogènes avant suppression",
+      "de": "Vorschau exogener Knoten vor Entfernung",
+      "lt": "Peržiūrėti išorinius mazgus prieš pašalinant",
+      "pt": "Visualizar nós exógenos antes da remoção",
+      "it": "Anteprima nodi esogeni prima della rimozione",
+      "no": "Preview exogenous nodes before removal"
+    },
+    "modules.analysis.common.restore_original_warning": {
+      "en": "Restore Original Warning",
+      "es": "[ES] Restore Original Warning",
+      "fr": "[FR] Restore Original Warning",
+      "de": "[DE] Restore Original Warning",
+      "lt": "[LT] Restore Original Warning",
+      "pt": "[PT] Restore Original Warning",
+      "it": "[IT] Restore Original Warning",
+      "no": "Restore Original Warning"
+    },
+    "modules.analysis.common.target_for_broad_interventions": {
+      "en": "Target For Broad Interventions",
+      "es": "[ES] Target For Broad Interventions",
+      "fr": "[FR] Target For Broad Interventions",
+      "de": "[DE] Target For Broad Interventions",
+      "lt": "[LT] Target For Broad Interventions",
+      "pt": "[PT] Target For Broad Interventions",
+      "it": "[IT] Target For Broad Interventions",
+      "no": "Target For Broad Interventions"
+    },
+    "modules.export.reports.export_visualizations": {
+      "en": "Export Visualizations",
+      "es": "Exportar Visualizaciones",
+      "fr": "Exporter les Visualisations",
+      "de": "Visualisierungen Exportieren",
+      "lt": "Eksportuoti vizualizacijas",
+      "pt": "Exportar Visualizações",
+      "it": "Esporta Visualizzazioni",
+      "no": "Export Visualizations"
+    },
+    "modules.analysis.elements_appearing_in_multiple_loops_are_potential": {
+      "en": " Elements appearing in multiple loops are potential leverage points for interventions.",
+      "es": "Elementos que aparecen en múltiples bucles son puntos de apalancamiento potenciales para intervenciones.",
+      "fr": "Les éléments qui apparaissent dans plusieurs boucles sont des points de levier potentiels pour les interventions.",
+      "de": "Elemente, die in mehreren Schleifen vorkommen, sind potenzielle Hebelpunkte für Interventionen.",
+      "lt": "Elementai, pasirodyantys keliuose cikluose, yra potencialūs sverties taškai intervencijoms.",
+      "pt": "Elementos que aparecem em múltiplos loops são pontos de alavancagem potenciais para intervenções.",
+      "it": "Gli elementi che compaiono in più loop sono potenziali punti di leva per gli interventi.",
+      "no": " Elements appearing in multiple loops are potential leverage points for interventions."
+    },
+    "modules.analysis.graph_too_large_for_reliable_loop_detection_please": {
+      "en": "Graph Too Large For Reliable Loop Detection Please",
+      "es": "[ES] Graph Too Large For Reliable Loop Detection Please",
+      "fr": "[FR] Graph Too Large For Reliable Loop Detection Please",
+      "de": "[DE] Graph Too Large For Reliable Loop Detection Please",
+      "lt": "[LT] Graph Too Large For Reliable Loop Detection Please",
+      "pt": "[PT] Graph Too Large For Reliable Loop Detection Please",
+      "it": "[IT] Graph Too Large For Reliable Loop Detection Please",
+      "no": "Graph Too Large For Reliable Loop Detection Please"
+    },
+    "modules.analysis.how_close_a_node_is_to_all_other_nodes_high_closen": {
+      "en": "How Close A Node Is To All Other Nodes High Closen",
+      "es": "[ES] How Close A Node Is To All Other Nodes High Closen",
+      "fr": "[FR] How Close A Node Is To All Other Nodes High Closen",
+      "de": "[DE] How Close A Node Is To All Other Nodes High Closen",
+      "lt": "[LT] How Close A Node Is To All Other Nodes High Closen",
+      "pt": "[PT] How Close A Node Is To All Other Nodes High Closen",
+      "it": "[IT] How Close A Node Is To All Other Nodes High Closen",
+      "no": "How Close A Node Is To All Other Nodes High Closen"
+    },
+    "modules.analysis.how_often_a_node_lies_on_shortest_paths_between_ot": {
+      "en": "How Often A Node Lies On Shortest Paths Between Ot",
+      "es": "[ES] How Often A Node Lies On Shortest Paths Between Ot",
+      "fr": "[FR] How Often A Node Lies On Shortest Paths Between Ot",
+      "de": "[DE] How Often A Node Lies On Shortest Paths Between Ot",
+      "lt": "[LT] How Often A Node Lies On Shortest Paths Between Ot",
+      "pt": "[PT] How Often A Node Lies On Shortest Paths Between Ot",
+      "it": "[IT] How Often A Node Lies On Shortest Paths Between Ot",
+      "no": "How Often A Node Lies On Shortest Paths Between Ot"
+    },
+    "modules.analysis.importance_based_on_connections_to_other_important": {
+      "en": "Importance Based On Connections To Other Important",
+      "es": "[ES] Importance Based On Connections To Other Important",
+      "fr": "[FR] Importance Based On Connections To Other Important",
+      "de": "[DE] Importance Based On Connections To Other Important",
+      "lt": "[LT] Importance Based On Connections To Other Important",
+      "pt": "[PT] Importance Based On Connections To Other Important",
+      "it": "[IT] Importance Based On Connections To Other Important",
+      "no": "Importance Based On Connections To Other Important"
+    },
+    "modules.analysis.leverage.leverage_points_for_system_change": {
+      "en": "Leverage Points For System Change",
+      "es": "[ES] Leverage Points For System Change",
+      "fr": "[FR] Leverage Points For System Change",
+      "de": "[DE] Leverage Points For System Change",
+      "lt": "[LT] Leverage Points For System Change",
+      "pt": "[PT] Leverage Points For System Change",
+      "it": "[IT] Leverage Points For System Change",
+      "no": "Leverage Points For System Change"
+    },
+    "modules.analysis.longest_shortest_path_between_any_two_nodes_indica": {
+      "en": "Longest Shortest Path Between Any Two Nodes Indica",
+      "es": "[ES] Longest Shortest Path Between Any Two Nodes Indica",
+      "fr": "[FR] Longest Shortest Path Between Any Two Nodes Indica",
+      "de": "[DE] Longest Shortest Path Between Any Two Nodes Indica",
+      "lt": "[LT] Longest Shortest Path Between Any Two Nodes Indica",
+      "pt": "[PT] Longest Shortest Path Between Any Two Nodes Indica",
+      "it": "[IT] Longest Shortest Path Between Any Two Nodes Indica",
+      "no": "Longest Shortest Path Between Any Two Nodes Indica"
+    },
+    "modules.analysis.loop_detection_may_take_longer_consider_reducing_m": {
+      "en": "Loop Detection May Take Longer Consider Reducing M",
+      "es": "[ES] Loop Detection May Take Longer Consider Reducing M",
+      "fr": "[FR] Loop Detection May Take Longer Consider Reducing M",
+      "de": "[DE] Loop Detection May Take Longer Consider Reducing M",
+      "lt": "[LT] Loop Detection May Take Longer Consider Reducing M",
+      "pt": "[PT] Loop Detection May Take Longer Consider Reducing M",
+      "it": "[IT] Loop Detection May Take Longer Consider Reducing M",
+      "no": "Loop Detection May Take Longer Consider Reducing M"
+    },
+    "modules.analysis.loop_detection_timed_out_after_30_seconds_try_redu": {
+      "en": "Loop Detection Timed Out After 30 Seconds Try Redu",
+      "es": "[ES] Loop Detection Timed Out After 30 Seconds Try Redu",
+      "fr": "[FR] Loop Detection Timed Out After 30 Seconds Try Redu",
+      "de": "[DE] Loop Detection Timed Out After 30 Seconds Try Redu",
+      "lt": "[LT] Loop Detection Timed Out After 30 Seconds Try Redu",
+      "pt": "[PT] Loop Detection Timed Out After 30 Seconds Try Redu",
+      "it": "[IT] Loop Detection Timed Out After 30 Seconds Try Redu",
+      "no": "Loop Detection Timed Out After 30 Seconds Try Redu"
+    },
+    "modules.analysis.loops.analysis_detecting_loops": {
+      "en": "Analysis Detecting Loops",
+      "es": "[ES] Analysis Detecting Loops",
+      "fr": "[FR] Analysis Detecting Loops",
+      "de": "[DE] Analysis Detecting Loops",
+      "lt": "[LT] Analysis Detecting Loops",
+      "pt": "[PT] Analysis Detecting Loops",
+      "it": "[IT] Analysis Detecting Loops",
+      "no": "Analysis Detecting Loops"
+    },
+    "modules.analysis.loops.analysis_no_loops_detected": {
+      "en": "Analysis No Loops Detected",
+      "es": "[ES] Analysis No Loops Detected",
+      "fr": "[FR] Analysis No Loops Detected",
+      "de": "[DE] Analysis No Loops Detected",
+      "lt": "[LT] Analysis No Loops Detected",
+      "pt": "[PT] Analysis No Loops Detected",
+      "it": "[IT] Analysis No Loops Detected",
+      "no": "Analysis No Loops Detected"
+    },
+    "modules.analysis.loops.analysis_no_loops_found": {
+      "en": "Analysis No Loops Found",
+      "es": "[ES] Analysis No Loops Found",
+      "fr": "[FR] Analysis No Loops Found",
+      "de": "[DE] Analysis No Loops Found",
+      "lt": "[LT] Analysis No Loops Found",
+      "pt": "[PT] Analysis No Loops Found",
+      "it": "[IT] Analysis No Loops Found",
+      "no": "Analysis No Loops Found"
+    },
+    "modules.analysis.loops.error_during_loop_detection": {
+      "en": "Error During Loop Detection",
+      "es": "[ES] Error During Loop Detection",
+      "fr": "[FR] Error During Loop Detection",
+      "de": "[DE] Error During Loop Detection",
+      "lt": "[LT] Error During Loop Detection",
+      "pt": "[PT] Error During Loop Detection",
+      "it": "[IT] Error During Loop Detection",
+      "no": "Error During Loop Detection"
+    },
+    "modules.analysis.loops.examine_individual_loops_and_see_their_complete_path": {
+      "en": " Examine individual loops and see their complete path",
+      "es": "Examine bucles individuales y vea su ruta completa",
+      "fr": "Examinez les boucles individuelles et voyez leur chemin complet",
+      "de": "Untersuchen Sie einzelne Schleifen und sehen Sie ihren vollständigen Pfad",
+      "lt": "Išnagrinėkite atskirus ciklus ir pamatykite jų visą kelią",
+      "pt": "Examine loops individuais e veja seu caminho completo",
+      "it": "Esamina i singoli loop e visualizza il loro percorso completo",
+      "no": " Examine individual loops and see their complete path"
+    },
+    "modules.response.effective_responses_address_feedback_loops_and_lev": {
+      "en": "Effective responses address feedback loops and leverage points identified in your ISA analysis.",
+      "es": "Las respuestas efectivas abordan los bucles de retroalimentación y los puntos de apalancamiento identificados en su análisis ISA.",
+      "fr": "Les réponses efficaces traitent les boucles de rétroaction et les points de levier identifiés dans votre analyse ISA.",
+      "de": "Wirksame Antworten befassen sich mit Rückkopplungsschleifen und Hebelpunkten, die in Ihrer ISA-Analyse identifiziert wurden.",
+      "lt": "Efektyvūs atsakai sprendžia grįžtamojo ryšio kilpas ir svertų taškus, nustatytus jūsų ISA analizėje.",
+      "pt": "Respostas eficazes abordam loops de feedback e pontos de alavancagem identificados na sua análise ISA.",
+      "it": "Le risposte efficaci affrontano i cicli di feedback e i punti di leva identificati nella vostra analisi ISA.",
+      "no": "Effective responses address feedback loops and leverage points identified in your ISA analysis."
+    },
+    "modules.analysis.loops.identify_which_system_elements_participate_in_most_loops": {
+      "en": " Identify which system elements participate in most loops",
+      "es": "Identifique qué elementos del sistema participan en la mayoría de los bucles",
+      "fr": "Identifiez quels éléments du système participent à la plupart des boucles",
+      "de": "Identifizieren Sie, welche Systemelemente an den meisten Schleifen teilnehmen",
+      "lt": "Nustatykite, kurie sistemos elementai dalyvauja daugumoje ciklų",
+      "pt": "Identifique quais elementos do sistema participam na maioria dos loops",
+      "it": "Identifica quali elementi del sistema partecipano alla maggior parte dei loop",
+      "no": " Identify which system elements participate in most loops"
+    },
+    "modules.analysis.loops.loop_detection_failed": {
+      "en": "Loop Detection Failed",
+      "es": "[ES] Loop Detection Failed",
+      "fr": "[FR] Loop Detection Failed",
+      "de": "[DE] Loop Detection Failed",
+      "lt": "[LT] Loop Detection Failed",
+      "pt": "[PT] Loop Detection Failed",
+      "it": "[IT] Loop Detection Failed",
+      "no": "Loop Detection Failed"
+    },
+    "modules.analysis.loops.loop_detection_failed_or_timed_out": {
+      "en": "Loop Detection Failed Or Timed Out",
+      "es": "[ES] Loop Detection Failed Or Timed Out",
+      "fr": "[FR] Loop Detection Failed Or Timed Out",
+      "de": "[DE] Loop Detection Failed Or Timed Out",
+      "lt": "[LT] Loop Detection Failed Or Timed Out",
+      "pt": "[PT] Loop Detection Failed Or Timed Out",
+      "it": "[IT] Loop Detection Failed Or Timed Out",
+      "no": "Loop Detection Failed Or Timed Out"
+    },
+    "modules.analysis.loops.loops": {
+      "en": "Loops Detected",
+      "es": "Bucles Detectados",
+      "fr": "Boucles Détectées",
+      "de": "Schleifen Erkannt",
+      "lt": "Aptikta ciklų",
+      "pt": "Ciclos Detetados",
+      "it": "Cicli Rilevati",
+      "no": "Loops Detected"
+    },
+    "modules.analysis.loops.loops_displaying_first": {
+      "en": "Loops Displaying First",
+      "es": "[ES] Loops Displaying First",
+      "fr": "[FR] Loops Displaying First",
+      "de": "[DE] Loops Displaying First",
+      "lt": "[LT] Loops Displaying First",
+      "pt": "[PT] Loops Displaying First",
+      "it": "[IT] Loops Displaying First",
+      "no": "Loops Displaying First"
+    },
+    "modules.analysis.loops.review_reinforcing_and_balancing_loops_found": {
+      "en": " Review reinforcing and balancing loops found",
+      "es": "Revise los bucles de refuerzo y equilibrio encontrados",
+      "fr": "Examinez les boucles de renforcement et d'équilibrage trouvées",
+      "de": "Überprüfen Sie die gefundenen Verstärkungs- und Ausgleichsschleifen",
+      "lt": "Peržiūrėkite rastus stiprinančius ir balansuojančius ciklus",
+      "pt": "Revise os loops de reforço e equilíbrio encontrados",
+      "it": "Rivedi i loop di rinforzo e bilanciamento trovati",
+      "no": " Review reinforcing and balancing loops found"
+    },
+    "modules.analysis.loops.see_highlighted_loops_in_the_context_of_your_full_network": {
+      "en": " See highlighted loops in the context of your full network",
+      "es": "Vea bucles resaltados en el contexto de su red completa",
+      "fr": "Voyez les boucles mises en évidence dans le contexte de votre réseau complet",
+      "de": "Sehen Sie hervorgehobene Schleifen im Kontext Ihres vollständigen Netzwerks",
+      "lt": "Peržiūrėkite paryškintus ciklus viso tinklo kontekste",
+      "pt": "Veja loops destacados no contexto de sua rede completa",
+      "it": "Visualizza i loop evidenziati nel contesto della tua rete completa",
+      "no": " See highlighted loops in the context of your full network"
+    },
+    "modules.analysis.measures_how_significant_the_loop_is_based_on_the_": {
+      "en": " Measures how significant the loop is based on the centrality of its elements.",
+      "es": "Mide cuán significativo es el bucle basado en la centralidad de sus elementos.",
+      "fr": "Mesure l'importance de la boucle en fonction de la centralité de ses éléments.",
+      "de": "Misst, wie bedeutend die Schleife basierend auf der Zentralität ihrer Elemente ist.",
+      "lt": "Matuoja, kiek reikšmingas yra ciklas, remiantis jo elementų centralizacija.",
+      "pt": "Mede quão significativo é o loop com base na centralidade de seus elementos.",
+      "it": "Misura quanto è significativo il loop in base alla centralità dei suoi elementi.",
+      "no": " Measures how significant the loop is based on the centrality of its elements."
+    },
+    "modules.analysis.network.large_network_detected": {
+      "en": "Large Network Detected",
+      "es": "[ES] Large Network Detected",
+      "fr": "[FR] Large Network Detected",
+      "de": "[DE] Large Network Detected",
+      "lt": "[LT] Large Network Detected",
+      "pt": "[PT] Large Network Detected",
+      "it": "[IT] Large Network Detected",
+      "no": "Large Network Detected"
+    },
+    "modules.analysis.network.most_important_nodes_by_different_metrics": {
+      "en": "Most Important Nodes By Different Metrics",
+      "es": "[ES] Most Important Nodes By Different Metrics",
+      "fr": "[FR] Most Important Nodes By Different Metrics",
+      "de": "[DE] Most Important Nodes By Different Metrics",
+      "lt": "[LT] Most Important Nodes By Different Metrics",
+      "pt": "[PT] Most Important Nodes By Different Metrics",
+      "it": "[IT] Most Important Nodes By Different Metrics",
+      "no": "Most Important Nodes By Different Metrics"
+    },
+    "modules.analysis.network.network_level_metrics": {
+      "en": "Network Level Metrics",
+      "es": "[ES] Network Level Metrics",
+      "fr": "[FR] Network Level Metrics",
+      "de": "[DE] Network Level Metrics",
+      "lt": "[LT] Network Level Metrics",
+      "pt": "[PT] Network Level Metrics",
+      "it": "[IT] Network Level Metrics",
+      "no": "Network Level Metrics"
+    },
+    "modules.analysis.network.node_centrality_metrics": {
+      "en": "Node Centrality Metrics",
+      "es": "[ES] Node Centrality Metrics",
+      "fr": "[FR] Node Centrality Metrics",
+      "de": "[DE] Node Centrality Metrics",
+      "lt": "[LT] Node Centrality Metrics",
+      "pt": "[PT] Node Centrality Metrics",
+      "it": "[IT] Node Centrality Metrics",
+      "no": "Node Centrality Metrics"
+    },
+    "modules.analysis.network.node_level_centrality_metrics": {
+      "en": "Node Level Centrality Metrics",
+      "es": "[ES] Node Level Centrality Metrics",
+      "fr": "[FR] Node Level Centrality Metrics",
+      "de": "[DE] Node Level Centrality Metrics",
+      "lt": "[LT] Node Level Centrality Metrics",
+      "pt": "[PT] Node Level Centrality Metrics",
+      "it": "[IT] Node Level Centrality Metrics",
+      "no": "Node Level Centrality Metrics"
+    },
+    "modules.analysis.network.original_network_restored": {
+      "en": "Original network restored successfully",
+      "es": "Red original restaurada exitosamente",
+      "fr": "Réseau original restauré avec succès",
+      "de": "Originalnetzwerk erfolgreich wiederhergestellt",
+      "lt": "Pradinis tinklas sėkmingai atkurtas",
+      "pt": "Rede original restaurada com sucesso",
+      "it": "Rete originale ripristinata con successo",
+      "no": "Original network restored successfully"
+    },
+    "modules.analysis.network.restore_original_network": {
+      "en": "Restore Original Network",
+      "es": "Restaurar red original",
+      "fr": "Restaurer le réseau original",
+      "de": "Originalnetzwerk wiederherstellen",
+      "lt": "Atkurti pradinį tinklą",
+      "pt": "Restaurar rede original",
+      "it": "Ripristina rete originale",
+      "no": "Restore Original Network"
+    },
+    "modules.analysis.network.simplified_network_saved": {
+      "en": "Simplified network saved to project",
+      "es": "Red simplificada guardada en el proyecto",
+      "fr": "Réseau simplifié enregistré dans le projet",
+      "de": "Vereinfachtes Netzwerk im Projekt gespeichert",
+      "lt": "Supaprastintas tinklas išsaugotas projekte",
+      "pt": "Rede simplificada salva no projeto",
+      "it": "Rete semplificata salvata nel progetto",
+      "no": "Simplified network saved to project"
+    },
+    "modules.analysis.number_of_direct_connections_high_degree_well_conn": {
+      "en": "Number Of Direct Connections High Degree Well Conn",
+      "es": "[ES] Number Of Direct Connections High Degree Well Conn",
+      "fr": "[FR] Number Of Direct Connections High Degree Well Conn",
+      "de": "[DE] Number Of Direct Connections High Degree Well Conn",
+      "lt": "[LT] Number Of Direct Connections High Degree Well Conn",
+      "pt": "[PT] Number Of Direct Connections High Degree Well Conn",
+      "it": "[IT] Number Of Direct Connections High Degree Well Conn",
+      "no": "Number Of Direct Connections High Degree Well Conn"
+    },
+    "modules.analysis.number_of_elements_in_the_loop_shorter_loops_3_5_e": {
+      "en": "Number Of Elements In The Loop Shorter Loops 3 5 E",
+      "es": "[ES] Number Of Elements In The Loop Shorter Loops 3 5 E",
+      "fr": "[FR] Number Of Elements In The Loop Shorter Loops 3 5 E",
+      "de": "[DE] Number Of Elements In The Loop Shorter Loops 3 5 E",
+      "lt": "[LT] Number Of Elements In The Loop Shorter Loops 3 5 E",
+      "pt": "[PT] Number Of Elements In The Loop Shorter Loops 3 5 E",
+      "it": "[IT] Number Of Elements In The Loop Shorter Loops 3 5 E",
+      "no": "Number Of Elements In The Loop Shorter Loops 3 5 E"
+    },
+    "modules.analysis.proportion_of_actual_connections_to_possible_conne": {
+      "en": "Proportion Of Actual Connections To Possible Conne",
+      "es": "[ES] Proportion Of Actual Connections To Possible Conne",
+      "fr": "[FR] Proportion Of Actual Connections To Possible Conne",
+      "de": "[DE] Proportion Of Actual Connections To Possible Conne",
+      "lt": "[LT] Proportion Of Actual Connections To Possible Conne",
+      "pt": "[PT] Proportion Of Actual Connections To Possible Conne",
+      "it": "[IT] Proportion Of Actual Connections To Possible Conne",
+      "no": "Proportion Of Actual Connections To Possible Conne"
+    },
+    "modules.analysis.save_res_in_excel_or_csv_formats_for_further_anlys": {
+      "en": "Save Res In Excel Or Csv Formats For Further Anlys",
+      "es": "[ES] Save Res In Excel Or Csv Formats For Further Anlys",
+      "fr": "[FR] Save Res In Excel Or Csv Formats For Further Anlys",
+      "de": "[DE] Save Res In Excel Or Csv Formats For Further Anlys",
+      "lt": "[LT] Save Res In Excel Or Csv Formats For Further Anlys",
+      "pt": "[PT] Save Res In Excel Or Csv Formats For Further Anlys",
+      "it": "[IT] Save Res In Excel Or Csv Formats For Further Anlys",
+      "no": "Save Res In Excel Or Csv Formats For Further Anlys"
+    },
+    "modules.analysis.set_detection_parameters_maximum_length_number_of_": {
+      "en": "Set Detection Parameters Maximum Length Number Of ",
+      "es": "[ES] Set Detection Parameters Maximum Length Number Of ",
+      "fr": "[FR] Set Detection Parameters Maximum Length Number Of ",
+      "de": "[DE] Set Detection Parameters Maximum Length Number Of ",
+      "lt": "[LT] Set Detection Parameters Maximum Length Number Of ",
+      "pt": "[PT] Set Detection Parameters Maximum Length Number Of ",
+      "it": "[IT] Set Detection Parameters Maximum Length Number Of ",
+      "no": "Set Detection Parameters Maximum Length Number Of "
+    },
+    "modules.analysis.simplify.save_simplification_to_project": {
+      "en": "Save Simplification To Project",
+      "es": "[ES] Save Simplification To Project",
+      "fr": "[FR] Save Simplification To Project",
+      "de": "[DE] Save Simplification To Project",
+      "lt": "[LT] Save Simplification To Project",
+      "pt": "[PT] Save Simplification To Project",
+      "it": "[IT] Save Simplification To Project",
+      "no": "Save Simplification To Project"
+    },
+    "modules.analysis.simplify.save_simplification_warning": {
+      "en": "Save Simplification Warning",
+      "es": "[ES] Save Simplification Warning",
+      "fr": "[FR] Save Simplification Warning",
+      "de": "[DE] Save Simplification Warning",
+      "lt": "[LT] Save Simplification Warning",
+      "pt": "[PT] Save Simplification Warning",
+      "it": "[IT] Save Simplification Warning",
+      "no": "Save Simplification Warning"
+    },
+    "modules.analysis.simplify.simplification_applied": {
+      "en": "Simplification applied and saved to project",
+      "es": "Simplificación aplicada y guardada en el proyecto",
+      "fr": "Simplification appliquée et enregistrée dans le projet",
+      "de": "Vereinfachung angewendet und im Projekt gespeichert",
+      "lt": "Supaprastinimas pritaikytas ir išsaugotas projekte",
+      "pt": "Simplificação aplicada e salva no projeto",
+      "it": "Semplificazione applicata e salvata nel progetto",
+      "no": "Simplification applied and saved to project"
+    },
+    "modules.analysis.common.high_betweenness": {
+      "en": "High Betweenness",
+      "es": "[ES] High Betweenness",
+      "fr": "[FR] High Betweenness",
+      "de": "[DE] High Betweenness",
+      "lt": "[LT] High Betweenness",
+      "pt": "[PT] High Betweenness",
+      "it": "[IT] High Betweenness",
+      "no": "High Betweenness"
+    },
+    "modules.analysis.common.nodes": {
+      "en": "Nodes",
+      "es": "Nodos",
+      "fr": "Nœuds",
+      "de": "Knoten",
+      "lt": "Mazgai",
+      "pt": "Nós",
+      "it": "Nodi",
+      "no": "Nodes"
+    },
+    "modules.analysis.simplify.simplification_applied_and_saved": {
+      "en": "Simplification Applied And Saved",
+      "es": "[ES] Simplification Applied And Saved",
+      "fr": "[FR] Simplification Applied And Saved",
+      "de": "[DE] Simplification Applied And Saved",
+      "lt": "[LT] Simplification Applied And Saved",
+      "pt": "[PT] Simplification Applied And Saved",
+      "it": "[IT] Simplification Applied And Saved",
+      "no": "Simplification Applied And Saved"
+    },
+    "modules.analysis.loops.title": {
+      "en": "Feedback Loop Detection and Analysis",
+      "es": "Detección y Análisis de Bucles de Retroalimentación",
+      "fr": "Détection et Analyse des Boucles de Rétroaction",
+      "de": "Erkennung und Analyse von Rückkopplungsschleifen",
+      "lt": "Grįžtamojo Ryšio Kilpų Aptikimas ir Analizė",
+      "pt": "Detecção e Análise de Loops de Retroalimentação",
+      "it": "Rilevamento e Analisi dei Loop di Feedback",
+      "no": "Deteksjon og Analyse av Tilbakemeldingssløyfer"
+    },
+    "modules.analysis.loops.subtitle": {
+      "en": "Automatically identify and analyze feedback loops in your Causal Loop Diagram.",
+      "es": "Identifique y analice automáticamente los bucles de retroalimentación en su Diagrama de Bucles Causales.",
+      "fr": "Identifiez et analysez automatiquement les boucles de rétroaction dans votre diagramme de boucles causales.",
+      "de": "Identifizieren und analysieren Sie automatisch Rückkopplungsschleifen in Ihrem Kausalschleifendiagramm.",
+      "lt": "Automatiškai nustatykite ir analizuokite grįžtamojo ryšio kilpas savo Priežastinių Kilpų Diagramoje.",
+      "pt": "Identifique e analise automaticamente os loops de retroalimentação no seu Diagrama de Loops Causais.",
+      "it": "Identifica e analizza automaticamente i loop di feedback nel tuo Diagramma dei Loop Causali.",
+      "no": "Identifiser og analyser automatisk tilbakemeldingssløyfer i ditt Årsaksløkkediagram."
+    },
+    "modules.analysis.leverage.title": {
+      "en": "Leverage Point Analysis",
+      "es": "Análisis de Puntos de Apalancamiento",
+      "fr": "Analyse des Points de Levier",
+      "de": "Analyse von Hebelpunkten",
+      "lt": "Sverto Taškų Analizė",
+      "pt": "Análise de Pontos de Alavancagem",
+      "it": "Analisi dei Punti di Leva",
+      "no": "Analyse av Vippepunkter"
+    },
+    "modules.analysis.leverage.subtitle": {
+      "en": "Identify the most influential nodes in your network that could serve as key intervention points.",
+      "es": "Identifique los nodos más influyentes en su red que podrían servir como puntos clave de intervención.",
+      "fr": "Identifiez les nœuds les plus influents de votre réseau qui pourraient servir de points d'intervention clés.",
+      "de": "Identifizieren Sie die einflussreichsten Knoten in Ihrem Netzwerk, die als Schlüssel-Interventionspunkte dienen könnten.",
+      "lt": "Nustatykite įtakingiausius mazgus savo tinkle, kurie galėtų būti pagrindiniai intervencijos taškai.",
+      "pt": "Identifique os nós mais influentes na sua rede que podem servir como pontos-chave de intervenção.",
+      "it": "Identifica i nodi più influenti nella tua rete che potrebbero servire come punti chiave di intervento.",
+      "no": "Identifiser de mest innflytelsesrike nodene i nettverket ditt som kan tjene som nøkkelintervensjonspunkter."
+    }
+  }
+}
