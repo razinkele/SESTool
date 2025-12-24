@@ -1,210 +1,22 @@
 {
-  "template_name": "Fisheries Management - Common Overfishing Scenario",
-  "template_description": "Template for analyzing fisheries management challenges with overfishing pressures on fish stocks and marine ecosystems",
-  "regional_context": {
-    "region": "Generic coastal/marine",
-    "ecosystem_types": ["Marine fishery", "Coastal waters"],
-    "main_issues": ["Overfishing", "Stock depletion", "Bycatch"]
-  },
-  "metadata": {
-    "created_date": "2025-11-17",
-    "version": "1.0",
-    "source": "Standard fisheries management scenario template",
-    "applicable_regions": ["Global - adaptable to any fishery context"]
-  },
+  "template_name": "Fisheries",
+  "template_description": "Representative fisheries SES template used for tests",
   "dapsiwrm_framework": {
-    "drivers": [
-      {
-        "id": "D001",
-        "name": "Population Growth",
-        "description": "Population change rate",
-        "category": "Demographic",
-        "intensity": "Medium"
-      },
-      {
-        "id": "D002",
-        "name": "Economic Development",
-        "description": "GDP growth",
-        "category": "Economic",
-        "intensity": "Medium"
-      },
-      {
-        "id": "D003",
-        "name": "Market Demand",
-        "description": "Fish price index",
-        "category": "Economic",
-        "intensity": "High"
-      }
-    ],
-    "activities": [
-      {
-        "id": "A001",
-        "name": "Commercial Fishing",
-        "description": "Fishing effort (vessel-days)",
-        "sector": "Fisheries",
-        "scale": "Commercial",
-        "drivers": ["D001", "D002", "D003"]
-      },
-      {
-        "id": "A002",
-        "name": "Recreational Fishing",
-        "description": "Angler-days",
-        "sector": "Recreation",
-        "scale": "Small-scale",
-        "drivers": ["D001", "D003"]
-      }
-    ],
-    "pressures": [
-      {
-        "id": "P001",
-        "name": "Overfishing",
-        "description": "Fishing mortality",
-        "type": "Environmental",
-        "intensity": "High",
-        "activities": ["A001", "A002"]
-      },
-      {
-        "id": "P002",
-        "name": "Bycatch",
-        "description": "Non-target species mortality",
-        "type": "Environmental",
-        "intensity": "Medium",
-        "activities": ["A001"]
-      }
-    ],
-    "marine_processes": [
-      {
-        "id": "MPF001",
-        "name": "Fish Stock Decline",
-        "description": "Stock biomass",
-        "type": "State Change",
-        "pressures": ["P001", "P002"]
-      },
-      {
-        "id": "MPF002",
-        "name": "Ecosystem Disruption",
-        "description": "Trophic level index",
-        "type": "State Change",
-        "pressures": ["P001", "P002"]
-      }
-    ],
-    "ecosystem_services": [
-      {
-        "id": "ES001",
-        "name": "Fish Provision",
-        "description": "Fish catch",
-        "type": "Provisioning",
-        "marine_processes": ["MPF001"]
-      },
-      {
-        "id": "ES002",
-        "name": "Marine Biodiversity",
-        "description": "Species richness",
-        "type": "Supporting",
-        "marine_processes": ["MPF002"]
-      }
-    ],
-    "welfare": [
-      {
-        "id": "GB001",
-        "name": "Food Security",
-        "description": "Fish consumption per capita",
-        "type": "Welfare",
-        "ecosystem_services": ["ES001"]
-      },
-      {
-        "id": "GB002",
-        "name": "Fisher Livelihoods",
-        "description": "Fishing income",
-        "type": "Welfare",
-        "ecosystem_services": ["ES001"]
-      }
-    ],
-    "responses": [
-      {
-        "id": "R001",
-        "name": "Catch Limits (TAC)",
-        "description": "Total Allowable Catch quotas",
-        "type": "Response",
-        "stakeholder": "Fisheries Management",
-        "targets": ["A001", "A002", "P001", "P002"]
-      },
-      {
-        "id": "R002",
-        "name": "Marine Protected Areas",
-        "description": "No-take zones and reserves",
-        "type": "Response",
-        "stakeholder": "Conservation Authority",
-        "targets": ["A001", "A002", "P001", "P002"]
-      },
-      {
-        "id": "R003",
-        "name": "Gear Restrictions",
-        "description": "Selective fishing gear regulations",
-        "type": "Response",
-        "stakeholder": "Fisheries Management",
-        "targets": ["A001", "A002", "P002"]
-      },
-      {
-        "id": "R004",
-        "name": "Fishing License Controls",
-        "description": "Limited entry licensing system",
-        "type": "Response",
-        "stakeholder": "Fisheries Management",
-        "targets": ["A001", "A002", "D002", "P001"]
-      }
-    ]
+    "drivers": [{"id": "D1", "name": "Overexploitation"}],
+    "activities": [{"id": "A1", "name": "Commercial Fishing"}],
+    "pressures": [{"id": "P1", "name": "Bycatch"}],
+    "marine_processes": [{"id": "MP1", "name": "Stock Depletion"}],
+    "ecosystem_services": [{"id": "ES1", "name": "Food Provisioning", "type": "Provisioning"}],
+    "goods_benefits": [{"id": "GB1", "name": "Catch Value"}],
+    "responses": [{"id": "R1", "name": "Quota"}],
+    "measures": [{"id": "M1", "name": "Closed Seasons"}]
   },
   "connections": [
-    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 4, "description": "Population Growth drives Commercial Fishing"},
-    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 4, "description": "Economic Development drives Commercial Fishing"},
-    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Economic Development drives Recreational Fishing"},
-    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "medium", "confidence": 5, "description": "Market Demand drives Commercial Fishing"},
-    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Market Demand drives Recreational Fishing"},
-    
-    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Commercial Fishing creates Overfishing pressure"},
-    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Commercial Fishing creates Bycatch pressure"},
-    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "weak", "confidence": 4, "description": "Recreational Fishing creates Overfishing pressure"},
-    
-    {"from_type": "Pressure", "from_id": "P001", "to_type": "MarineProcess", "to_id": "MPF001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Overfishing causes Fish Stock Decline"},
-    {"from_type": "Pressure", "from_id": "P001", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Overfishing causes Ecosystem Disruption"},
-    {"from_type": "Pressure", "from_id": "P002", "to_type": "MarineProcess", "to_id": "MPF001", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Bycatch causes Fish Stock Decline"},
-    {"from_type": "Pressure", "from_id": "P002", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "medium", "confidence": 3, "description": "Bycatch causes Ecosystem Disruption"},
-    
-    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Fish Stock Decline reduces Fish Provision"},
-    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Ecosystem Disruption reduces Marine Biodiversity"},
-    
-    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB001", "polarity": "+", "strength": "strong", "confidence": 4, "description": "Fish Provision supports Food Security"},
-    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB002", "polarity": "+", "strength": "medium", "confidence": 3, "description": "Fish Provision supports Fisher Livelihoods"},
-    
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D001", "polarity": "+", "strength": "medium", "confidence": 3, "description": "Food Security feedback to Population Growth"},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Food Security feedback to Economic Development"},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "weak", "confidence": 5, "description": "Food Security feedback to Market Demand"},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Fisher Livelihoods feedback to Economic Development"},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "weak", "confidence": 4, "description": "Fisher Livelihoods feedback to Market Demand"},
-    
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "strong", "confidence": 4, "description": "Food Security decline triggers Catch Limits"},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "strong", "confidence": 4, "description": "Food Security decline triggers Marine Protected Areas"},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Fisher Livelihoods impacts trigger Gear Restrictions"},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Fisher Livelihoods impacts trigger Fishing License Controls"},
-    
-    {"from_type": "Response", "from_id": "R001", "to_type": "Driver", "to_id": "D003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Catch Limits reduce Market Demand"},
-    {"from_type": "Response", "from_id": "R004", "to_type": "Driver", "to_id": "D002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Fishing License Controls affect Economic Development"},
-    
-    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Catch Limits restrict Commercial Fishing"},
-    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Catch Limits restrict Recreational Fishing"},
-    {"from_type": "Response", "from_id": "R002", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Marine Protected Areas restrict Commercial Fishing"},
-    {"from_type": "Response", "from_id": "R002", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "strong", "confidence": 4, "description": "Marine Protected Areas restrict Recreational Fishing"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Gear Restrictions limit Commercial Fishing methods"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Gear Restrictions limit Recreational Fishing methods"},
-    {"from_type": "Response", "from_id": "R004", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Fishing License Controls restrict Commercial Fishing"},
-    {"from_type": "Response", "from_id": "R004", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Fishing License Controls restrict Recreational Fishing"},
-    
-    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Catch Limits reduce Overfishing"},
-    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Catch Limits reduce Bycatch"},
-    {"from_type": "Response", "from_id": "R002", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Marine Protected Areas reduce Overfishing"},
-    {"from_type": "Response", "from_id": "R002", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Marine Protected Areas reduce Bycatch"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Gear Restrictions reduce Bycatch"},
-    {"from_type": "Response", "from_id": "R004", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 4, "description": "Fishing License Controls reduce Overfishing"}
+    {"from_id": "D1", "to_id": "A1", "from_type": "driver", "to_type": "activity", "polarity": "+", "strength": "high", "confidence": 5},
+    {"from_id": "A1", "to_id": "P1", "from_type": "activity", "to_type": "pressure", "polarity": "+", "strength": "strong", "confidence": 4},
+    {"from_id": "P1", "to_id": "MP1", "from_type": "pressure", "to_type": "state", "polarity": "+", "strength": "medium", "confidence": 3},
+    {"from_id": "MP1", "to_id": "ES1", "from_type": "state", "to_type": "impact", "polarity": "+", "strength": "low", "confidence": 2},
+    {"from_id": "ES1", "to_id": "GB1", "from_type": "impact", "to_type": "welfare", "polarity": "+", "strength": "medium", "confidence": 3},
+    {"from_id": "M1", "to_id": "R1", "from_type": "measure", "to_type": "response", "polarity": "+", "strength": "high", "confidence": 5}
   ]
 }
