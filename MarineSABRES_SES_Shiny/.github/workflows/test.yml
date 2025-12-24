@@ -111,6 +111,18 @@ jobs:
           name: fixture-list
           path: fixture_list.txt
 
+      - name: Artifact presence summary
+        if: always()
+        run: |
+          repo="${GITHUB_REPOSITORY}"
+          run_id="${GITHUB_RUN_ID}"
+          artifact_url="https://github.com/${repo}/actions/runs/${run_id}/artifacts"
+          echo "### Fixture artifact" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Artifact**: fixture-list" >> $GITHUB_STEP_SUMMARY
+          echo "- **Artifacts page**: ${artifact_url}" >> $GITHUB_STEP_SUMMARY
+        shell: bash
+
       - name: Run tests
         run: |
           library(testthat)
