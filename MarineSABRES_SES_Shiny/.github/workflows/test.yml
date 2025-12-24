@@ -75,7 +75,9 @@ jobs:
             file.copy(fixtures, "data", overwrite = TRUE)
             message(sprintf("Copied %i fixture(s) into data/", length(fixtures)))
           } else {
-            message("No fixture JSON files found in tests/fixtures/templates")
+            message("ERROR: No fixture JSON files found in tests/fixtures/templates. Ensure fixtures are committed to tests/fixtures/templates.")
+            # Fail the step to make missing fixtures clearly visible in CI
+            stop("No fixture JSON files found in tests/fixtures/templates")
           }
         shell: Rscript {0}
 
