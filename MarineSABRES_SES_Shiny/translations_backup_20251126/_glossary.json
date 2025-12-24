@@ -1,0 +1,86 @@
+{
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "glossary": {
+    "ses": {
+      "en": "Social-Ecological System",
+      "es": "Sistema Social-Ecológico",
+      "fr": "Système Socio-Écologique",
+      "de": "Sozial-Ökologisches System",
+      "lt": "Socialinė-ekologinė sistema",
+      "pt": "Sistema Socioecológico",
+      "it": "Sistema Socio-Ecologico"
+    },
+    "dapsiwr": {
+      "en": "DAPSI(W)R (Drivers, Activities, Pressures, State, Impact, Welfare, Response)",
+      "es": "DAPSI(W)R (Impulsores, Actividades, Presiones, Estado, Impacto, Bienestar, Respuesta)",
+      "fr": "DAPSI(W)R (Moteurs, Activités, Pressions, État, Impact, Bien-être, Réponse)",
+      "de": "DAPSI(W)R (Treiber, Aktivitäten, Drücke, Zustand, Auswirkung, Wohlbefinden, Reaktion)",
+      "lt": "DAPSI(W)R (Varomosios jėgos, Veiklos, Spaudimas, Būsena, Poveikis, Gerovė, Atsakas)",
+      "pt": "DAPSI(W)R (Impulsores, Atividades, Pressões, Estado, Impacto, Bem-estar, Resposta)",
+      "it": "DAPSI(W)R (Driver, Attività, Pressioni, Stato, Impatto, Benessere, Risposta)"
+    },
+    "dapsiwrm": {
+      "en": "DAPSI(W)R(M) - Extended framework including Measures",
+      "es": "DAPSI(W)R(M) - Marco extendido incluyendo Medidas",
+      "fr": "DAPSI(W)R(M) - Cadre étendu incluant les Mesures",
+      "de": "DAPSI(W)R(M) - Erweiterter Rahmen einschließlich Maßnahmen",
+      "lt": "DAPSI(W)R(M) - Išplėstinė sistema įskaitant Priemones",
+      "pt": "DAPSI(W)R(M) - Quadro estendido incluindo Medidas",
+      "it": "DAPSI(W)R(M) - Framework esteso includendo le Misure"
+    },
+    "cld": {
+      "en": "Causal Loop Diagram",
+      "es": "Diagrama de Bucles Causales",
+      "fr": "Diagramme de Boucles Causales",
+      "de": "Ursache-Wirkungs-Diagramm",
+      "lt": "Priežastinių kilpų diagrama",
+      "pt": "Diagrama de Loops Causais",
+      "it": "Diagramma ad Anello Causale"
+    },
+    "isa": {
+      "en": "Integrated Systems Analysis",
+      "es": "Análisis de Sistemas Integrados",
+      "fr": "Analyse des Systèmes Intégrés",
+      "de": "Integrierte Systemanalyse",
+      "lt": "Integruota sistemų analizė",
+      "pt": "Análise de Sistemas Integrados",
+      "it": "Analisi dei Sistemi Integrati"
+    },
+    "pims": {
+      "en": "Process and Information Management System",
+      "es": "Sistema de Gestión de Procesos e Información",
+      "fr": "Système de Gestion des Processus et de l'Information",
+      "de": "Prozess- und Informationsmanagementsystem",
+      "lt": "Procesų ir informacijos valdymo sistema",
+      "pt": "Sistema de Gestão de Processos e Informação",
+      "it": "Sistema di Gestione dei Processi e dell'Informazione"
+    },
+    "node": {
+      "en": "Node",
+      "es": "Nodo",
+      "fr": "Nœud",
+      "de": "Knoten",
+      "lt": "Mazgas",
+      "pt": "Nó",
+      "it": "Nodo"
+    },
+    "stakeholder": {
+      "en": "Stakeholder",
+      "es": "Parte Interesada",
+      "fr": "Partie Prenante",
+      "de": "Stakeholder",
+      "lt": "Suinteresuotoji šalis",
+      "pt": "Parte Interessada",
+      "it": "Stakeholder"
+    },
+    "marinesabres": {
+      "en": "Marine-SABRES (Marine Systems Approaches for Biodiversity Resilience and Ecosystem Sustainability)",
+      "es": "Marine-SABRES (Enfoques de Sistemas Marinos para la Resiliencia de la Biodiversidad y la Sostenibilidad del Ecosistema)",
+      "fr": "Marine-SABRES (Approches Systémiques Marines pour la Résilience de la Biodiversité et la Durabilité des Écosystèmes)",
+      "de": "Marine-SABRES (Marine Systemansätze für Biodiversitätsresilienz und Ökosystem-Nachhaltigkeit)",
+      "lt": "Marine-SABRES (Jūrinių sistemų požiūriai biologinės įvairovės atsparumui ir ekosistemų tvarumui)",
+      "pt": "Marine-SABRES (Abordagens de Sistemas Marinhos para Resiliência da Biodiversidade e Sustentabilidade do Ecossistema)",
+      "it": "Marine-SABRES (Approcci di Sistemi Marini per la Resilienza della Biodiversità e la Sostenibilità degli Ecosistemi)"
+    }
+  }
+}

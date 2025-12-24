@@ -235,7 +235,6 @@ create_isa_signature <- function(isa_data) {
       ecosystem_services = isa_data$ecosystem_services,
       goods_benefits = isa_data$goods_benefits,
       responses = isa_data$responses,
-      measures = isa_data$measures,
       adjacency_matrices = isa_data$adjacency_matrices
     )
 

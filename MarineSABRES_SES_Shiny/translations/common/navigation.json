@@ -1,0 +1,524 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no"
+  ],
+  "translation": {
+    "common.navigation._visualization_module_help_modal_content": {
+      "en": "# Visualization Module - Help Modal Content",
+      "es": "# Módulo de Visualización - Contenido de Ayuda Modal",
+      "fr": "# Module de Visualisation - Contenu d'Aide Modal",
+      "de": "# Visualisierungsmodul - Hilfe-Modal-Inhalt",
+      "lt": "# Vizualizacijos modulis - Modal pagalbos turinys",
+      "pt": "# Módulo de Visualização - Conteúdo de Ajuda Modal",
+      "it": "# Modulo di Visualizzazione - Contenuto Modale di Aiuto",
+      "no": "# Visualization Module - Help Modal Content"
+    },
+    "common.navigation.about": {
+      "en": "About",
+      "es": "Acerca de",
+      "fr": "À propos",
+      "de": "Über",
+      "lt": "Apie",
+      "pt": "Sobre",
+      "it": "Informazioni",
+      "no": "Om"
+    },
+    "common.navigation.app_settings": {
+      "en": "App Settings",
+      "es": "Configuración",
+      "fr": "Paramètres",
+      "de": "Einstellungen",
+      "lt": "Nustatymai",
+      "pt": "Configurações",
+      "it": "Impostazioni",
+      "no": "App-innstillinger"
+    },
+    "common.navigation.application_settings": {
+      "en": "Application Settings",
+      "es": "Configuración de la Aplicación",
+      "fr": "Paramètres de l'Application",
+      "de": "Anwendungseinstellungen",
+      "lt": "Programos nustatymai",
+      "pt": "Configurações da Aplicação",
+      "it": "Impostazioni dell'Applicazione",
+      "no": "Programinnstillinger"
+    },
+    "common.navigation.autosave_helps_prevent_data_loss_from_unexpected_d": {
+      "en": "Auto-save helps prevent data loss from unexpected disconnections.",
+      "es": "El guardado automático ayuda a prevenir la pérdida de datos por desconexiones inesperadas.",
+      "fr": "La sauvegarde automatique aide à prévenir la perte de données en cas de déconnexions inattendues.",
+      "de": "Auto-Speichern hilft, Datenverlust durch unerwartete Trennungen zu verhindern.",
+      "lt": "Automatinis išsaugojimas padeda išvengti duomenų praradimo dėl netikėtų atjungimų.",
+      "pt": "O salvamento automático ajuda a prevenir perda de dados de desconexões inesperadas.",
+      "it": "Il salvataggio automatico aiuta a prevenire la perdita di dati da disconnessioni inattese.",
+      "no": "Automatisk lagring forhindrer tap av data ved uventede frakoblinger."
+    },
+    "common.navigation.autosave_settings": {
+      "en": "Auto-Save Settings",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "Innstillinger for automatisk lagring"
+    },
+    "common.navigation.behavior_produces_resistance_to_change_and_system_": {
+      "en": "Behavior: Produces resistance to change and system stabilization",
+      "es": "Comportamiento: Produce resistencia al cambio y estabilización del sistema",
+      "fr": "Comportement : Produit une résistance au changement et une stabilisation du système",
+      "de": "Verhalten: Erzeugt Widerstand gegen Veränderungen und Systemstabilisierung",
+      "lt": "Elgsena: Sukuria pasipriešinimą pokyčiams ir sistemos stabilizavimą",
+      "pt": "Comportamento: Produz resistência à mudança e estabilização do sistema",
+      "it": "Comportamento: Produce resistenza al cambiamento e stabilizzazione del sistema",
+      "no": "Behavior: Produces resistance to change and system stabilization"
+    },
+    "common.navigation.bothelptext": {
+      "en": "bot_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "bot_help_text"
+    },
+    "common.navigation.bubble_size_represents_pagerank": {
+      "en": "Bubble size represents PageRank",
+      "es": "El tamaño de la burbuja representa PageRank",
+      "fr": "La taille de la bulle représente le PageRank",
+      "de": "Blasengröße steht für PageRank",
+      "lt": "Burbulo dydis atspindi PageRank",
+      "pt": "O tamanho da bolha representa o PageRank",
+      "it": "La dimensione della bolla rappresenta il PageRank",
+      "no": "Bubble size represents PageRank"
+    },
+    "common.navigation.confidence_property_system_allows_you_to_track_dat": {
+      "en": "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research.",
+      "es": "El sistema de propiedades de confianza le permite rastrear la calidad y certeza de los datos. Los bordes con baja confianza aparecen más transparentes, ayudándole a identificar áreas que necesitan más investigación.",
+      "fr": "Le système de propriétés de confiance vous permet de suivre la qualité et la certitude des données. Les arêtes avec une faible confiance apparaissent plus transparentes, vous aidant à identifier les zones nécessitant plus de recherche.",
+      "de": "Das Vertrauenseigenschaftssystem ermöglicht es Ihnen, Datenqualität und Sicherheit zu verfolgen. Kanten mit geringem Vertrauen erscheinen transparenter und helfen Ihnen, Bereiche zu identifizieren, die mehr Forschung benötigen.",
+      "lt": "Pasitikėjimo savybių sistema leidžia sekti duomenų kokybę ir tikrumą. Mažo pasitikėjimo kraštai atrodo skaidresni, padeda nustatyti sritis, kurioms reikia daugiau tyrimų.",
+      "pt": "O sistema de propriedades de confiança permite rastrear a qualidade e certeza dos dados. Bordas com baixa confiança aparecem mais transparentes, ajudando a identificar áreas que precisam de mais pesquisa.",
+      "it": "Il sistema di proprietà di confidenza ti consente di tracciare qualità e certezza dei dati. I bordi con bassa confidenza appaiono più trasparenti, aiutandoti a identificare aree che necessitano di ulteriori ricerche.",
+      "no": "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research."
+    },
+    "common.navigation.configure_settings": {
+      "en": "Configure Settings",
+      "es": "Configurar Ajustes",
+      "fr": "Configurer les Paramètres",
+      "de": "Einstellungen Konfigurieren",
+      "lt": "Konfigūruoti nustatymus",
+      "pt": "Configurar Definições",
+      "it": "Configura Impostazioni",
+      "no": "Configure Settings"
+    },
+    "common.navigation.dashboard": {
+      "en": "Dashboard",
+      "es": "Panel de Control",
+      "fr": "Tableau de Bord",
+      "de": "Dashboard",
+      "lt": "Prietaisų skydelis",
+      "pt": "Painel",
+      "it": "Dashboard",
+      "no": "Dashbord"
+    },
+    "common.navigation.distributed_across_tabs_to_keep_the_interface_resp": {
+      "en": "distributed across tabs to keep the interface responsive.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "distributed across tabs to keep the interface responsive."
+    },
+    "common.navigation.epnotifyusemainmenu": {
+      "en": "ep_notify_use_main_menu",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ep_notify_use_main_menu"
+    },
+    "common.navigation.ex0helptext": {
+      "en": "ex0_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ex0_help_text"
+    },
+    "common.navigation.ex101112helptext": {
+      "en": "ex101112_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ex101112_help_text"
+    },
+    "common.navigation.ex1helptext": {
+      "en": "ex1_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ex1_help_text"
+    },
+    "common.navigation.ex2ahelptext": {
+      "en": "ex2a_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ex2a_help_text"
+    },
+    "common.navigation.ex2bhelptext": {
+      "en": "ex2b_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ex2b_help_text"
+    },
+    "common.navigation.ex3helptext": {
+      "en": "ex3_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ex3_help_text"
+    },
+    "common.navigation.ex4helptext": {
+      "en": "ex4_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ex4_help_text"
+    },
+    "common.navigation.ex5helptext": {
+      "en": "ex5_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ex5_help_text"
+    },
+    "common.navigation.ex6helptext": {
+      "en": "ex6_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ex6_help_text"
+    },
+    "common.navigation.ex789helptext": {
+      "en": "ex789_help_text",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "ex789_help_text"
+    },
+    "common.navigation.get_help": {
+      "en": "Get Help",
+      "es": "Obtener Ayuda",
+      "fr": "Obtenir de l'Aide",
+      "de": "Hilfe Erhalten",
+      "lt": "Gauti pagalbą",
+      "pt": "Obter Ajuda",
+      "it": "Ottieni Aiuto",
+      "no": "Get Help"
+    },
+    "common.navigation.help": {
+      "en": "Help",
+      "es": "Ayuda",
+      "fr": "Aide",
+      "de": "Hilfe",
+      "lt": "Pagalba",
+      "pt": "Ajuda",
+      "it": "Aiuto",
+      "no": "Hjelp"
+    },
+    "common.navigation.help_documentation": {
+      "en": "Help & Documentation",
+      "es": "Ayuda y Documentación",
+      "fr": "Aide et Documentation",
+      "de": "Hilfe und Dokumentation",
+      "lt": "Pagalba ir dokumentacija",
+      "pt": "Ajuda e Documentação",
+      "it": "Aiuto e Documentazione",
+      "no": "Help & Documentation"
+    },
+    "common.navigation.high_pagerank": {
+      "en": "High PageRank:",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "High PageRank:"
+    },
+    "common.navigation.high_pagerank_these_nodes_have_broad_influence_acr": {
+      "en": "High PageRank: These nodes have broad influence across the network and often represent core system elements.",
+      "es": "Alto PageRank: Estos nodos tienen una amplia influencia en toda la red y a menudo representan elementos centrales del sistema.",
+      "fr": "PageRank Élevé : Ces nœuds ont une large influence sur le réseau et représentent souvent des éléments centraux du système.",
+      "de": "Hoher PageRank: Diese Knoten haben breiten Einfluss über das Netzwerk und repräsentieren oft zentrale Systemelemente.",
+      "lt": "Didelis PageRank: Šie mazgai turi platų poveikį visame tinkle ir dažnai reprezentuoja pagrindinius sistemos elementus.",
+      "pt": "Alto PageRank: Estes nós têm ampla influência na rede e frequentemente representam elementos centrais do sistema.",
+      "it": "Alto PageRank: Questi nodi hanno un'ampia influenza sulla rete e spesso rappresentano elementi centrali del sistema.",
+      "no": "High PageRank: These nodes have broad influence across the network and often represent core system elements."
+    },
+    "common.navigation.home": {
+      "en": "Home",
+      "es": "Inicio",
+      "fr": "Accueil",
+      "de": "Startseite",
+      "lt": "Pradžia",
+      "pt": "Início",
+      "it": "Home",
+      "no": "Hjem"
+    },
+    "common.navigation.importdatahelpcontent": {
+      "en": "import_data_help_content",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "import_data_help_content"
+    },
+    "common.navigation.include_data_tables": {
+      "en": "Include Data Tables",
+      "es": "Incluir Tablas de Datos",
+      "fr": "Inclure les Tableaux de Données",
+      "de": "Datentabellen Einbeziehen",
+      "lt": "Įtraukti duomenų lenteles",
+      "pt": "Incluir Tabelas de Dados",
+      "it": "Includi Tabelle di Dati",
+      "no": "Include Data Tables"
+    },
+    "common.navigation.intelligent_questionbased_guidance_that_helps_you_": {
+      "en": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.",
+      "es": "Orientación inteligente basada en preguntas que le ayuda a construir su modelo SES a través de indicaciones conversacionales y sugerencias.",
+      "fr": "Guidage intelligent basé sur des questions qui vous aide à construire votre modèle SES grâce à des invites conversationnelles et des suggestions.",
+      "de": "Intelligente fragenbasierte Anleitung, die Ihnen hilft, Ihr SES-Modell durch konversationelle Eingabeaufforderungen und Vorschläge zu erstellen.",
+      "lt": "Inteligentus klausimais pagrįstas vadovavimas, padedantis sukurti SES modelį per pokalbio raginimus ir pasiūlymus.",
+      "pt": "Orientação inteligente baseada em perguntas que ajuda a construir o seu modelo SES através de sugestões conversacionais.",
+      "it": "Guida intelligente basata su domande che ti aiuta a costruire il tuo modello SES attraverso suggerimenti conversazionali.",
+      "no": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions."
+    },
+    "common.navigation.it_helps_you_understand_feedback_loops_leverage_po": {
+      "en": "It helps you understand feedback loops, leverage points, and potential intervention strategies.",
+      "es": "Le ayuda a comprender bucles de retroalimentación, puntos de apalancamiento y estrategias de intervención potenciales.",
+      "fr": "Il vous aide à comprendre les boucles de rétroaction, les points de levier et les stratégies d'intervention potentielles.",
+      "de": "Es hilft Ihnen, Rückkopplungsschleifen, Hebelwirkungspunkte und potenzielle Interventionsstrategien zu verstehen.",
+      "lt": "Tai padeda suprasti grįžtamojo ryšio kilpas, sverto taškus ir galimas intervencijos strategijas.",
+      "pt": "Ajuda você a entender loops de feedback, pontos de alavancagem e estratégias de intervenção potenciais.",
+      "it": "Ti aiuta a comprendere i loop di feedback, i punti di leva e le potenziali strategie di intervento.",
+      "no": "It helps you understand feedback loops, leverage points, and potential intervention strategies."
+    },
+    "common.navigation.login": {
+      "en": "Login",
+      "es": "Iniciar sesión",
+      "fr": "Connexion",
+      "de": "Anmelden",
+      "lt": "Prisijungti",
+      "pt": "Entrar",
+      "it": "Accedi",
+      "no": "Login"
+    },
+    "common.navigation.logout": {
+      "en": "Logout",
+      "es": "Cerrar sesión",
+      "fr": "Déconnexion",
+      "de": "Abmelden",
+      "lt": "Atsijungti",
+      "pt": "Sair",
+      "it": "Disconnetti",
+      "no": "Logout"
+    },
+    "common.navigation.menu": {
+      "en": "Menu",
+      "es": "Menú",
+      "fr": "Menu",
+      "de": "Menü",
+      "lt": "Meniu",
+      "pt": "Menu",
+      "it": "Menu",
+      "no": "Menu"
+    },
+    "common.navigation.need_help_choosing": {
+      "en": "Need Help Choosing?",
+      "es": "¿Necesita Ayuda para Elegir?",
+      "fr": "Besoin d'Aide pour Choisir?",
+      "de": "Brauchen Sie Hilfe bei der Auswahl?",
+      "lt": "Reikia pagalbos pasirenkant?",
+      "pt": "Precisa de Ajuda para Escolher?",
+      "it": "Hai Bisogno di Aiuto per Scegliere?",
+      "no": "Need Help Choosing?"
+    },
+    "common.navigation.pagerank": {
+      "en": "PageRank",
+      "es": "PageRank",
+      "fr": "PageRank",
+      "de": "PageRank",
+      "lt": "PageRank",
+      "pt": "PageRank",
+      "it": "PageRank",
+      "no": "PageRank"
+    },
+    "common.navigation.pagerank_google": {
+      "en": "PageRank: Google",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "PageRank: Google"
+    },
+    "common.navigation.pimsevaluationhelpcontent": {
+      "en": "pims_evaluation_help_content",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "pims_evaluation_help_content"
+    },
+    "common.navigation.pimsprojecthelpcontent": {
+      "en": "pims_project_help_content",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "pims_project_help_content"
+    },
+    "common.navigation.pimsstakeholderhelpcontent": {
+      "en": "pims_stakeholder_help_content",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "pims_stakeholder_help_content"
+    },
+    "common.navigation.pimsstakeholdershelpcontent": {
+      "en": "pims_stakeholders_help_content",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "pims_stakeholders_help_content"
+    },
+    "common.navigation.settings": {
+      "en": "Settings",
+      "es": "Configuración",
+      "fr": "Paramètres",
+      "de": "Einstellungen",
+      "lt": "Nustatymai",
+      "pt": "Configurações",
+      "it": "Impostazioni",
+      "no": "Innstillinger"
+    },
+    "common.navigation.the_complete_manual_contains_approximately_75_page": {
+      "en": "The complete manual contains approximately 75 pages of detailed documentation covering all features and workflows.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation",
+      "no": "The complete manual contains approximately 75 pages of detailed documentation covering all features and workflows."
+    },
+    "common.navigation.this_aipowered_assistant_helps_you_create_your_dap": {
+      "en": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
+      "es": "Este asistente impulsado por IA le ayuda a crear su marco DAPSI(W)R(M) a través de una conversación interactiva. Simplemente responda las preguntas y el asistente le guiará en cada paso.",
+      "fr": "Cet assistant alimenté par l'IA vous aide à créer votre cadre DAPSI(W)R(M) grâce à une conversation interactive. Répondez simplement aux questions et l'assistant vous guidera à chaque étape.",
+      "de": "Dieser KI-gestützte Assistent hilft Ihnen, Ihr DAPSI(W)R(M)-Framework durch interaktive Konversation zu erstellen. Beantworten Sie einfach die Fragen und der Assistent führt Sie durch jeden Schritt.",
+      "lt": "Šis dirbtinio intelekto asistentas padeda sukurti DAPSI(W)R(M) sistemą interaktyvia kalba. Tiesiog atsakykite į klausimus, o asistentas jus ves per kiekvieną žingsnį.",
+      "pt": "Este assistente alimentado por IA ajuda você a criar sua estrutura DAPSI(W)R(M) através de conversação interativa. Simplesmente responda às perguntas e o assistente irá guiá-lo em cada etapa.",
+      "it": "Questo assistente basato sull'intelligenza artificiale ti aiuta a creare il tuo framework DAPSI(W)R(M) attraverso una conversazione interattiva. Rispondi semplicemente alle domande e l'assistente ti guiderà in ogni passaggio.",
+      "no": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step."
+    },
+    "common.navigation.this_preliminary_exercise_helps_you_explore_the_fu": {
+      "en": "This preliminary exercise helps you explore the full scope of your system before detailed analysis.",
+      "es": "Este ejercicio preliminar le ayuda a explorar el alcance completo de su sistema antes del análisis detallado.",
+      "fr": "Cet exercice préliminaire vous aide à explorer toute l'étendue de votre système avant l'analyse détaillée.",
+      "de": "Diese Vorübung hilft Ihnen, den vollen Umfang Ihres Systems vor der detaillierten Analyse zu erkunden.",
+      "lt": "Šis preliminarus pratimas padeda ištirti visą jūsų sistemos apimtį prieš išsamią analizę.",
+      "pt": "Este exercício preliminar ajuda-o a explorar todo o âmbito do seu sistema antes da análise detalhada.",
+      "it": "Questo esercizio preliminare aiuta a esplorare l'intera portata del vostro sistema prima dell'analisi dettagliata.",
+      "no": "This preliminary exercise helps you explore the full scope of your system before detailed analysis."
+    },
+    "common.navigation.top_5_nodes_by_pagerank": {
+      "en": "Top 5 Nodes by PageRank",
+      "es": "Top 5 Nodos por PageRank",
+      "fr": "Top 5 Nœuds par PageRank",
+      "de": "Top 5 Knoten nach PageRank",
+      "lt": "Top 5 mazgai pagal PageRank",
+      "pt": "Top 5 Nós por PageRank",
+      "it": "Top 5 Nodi per PageRank",
+      "no": "Top 5 Nodes by PageRank"
+    },
+    "common.navigation.user_menu": {
+      "en": "User Menu",
+      "es": "Menú de Usuario",
+      "fr": "Menu Utilisateur",
+      "de": "Benutzermenü",
+      "lt": "Vartotojo meniu",
+      "pt": "Menu do Usuário",
+      "it": "Menu Utente",
+      "no": "User Menu"
+    },
+    "common.navigation.you_are_about_to_switch_to_a_different_template": {
+      "en": "You are about to switch to a different template.",
+      "es": "Está a punto de cambiar a una plantilla diferente.",
+      "fr": "Vous êtes sur le point de passer à un modèle différent.",
+      "de": "Sie sind dabei, zu einer anderen Vorlage zu wechseln.",
+      "lt": "Ketinate pereiti prie kito šablono.",
+      "pt": "Você está prestes a mudar para um modelo diferente.",
+      "it": "Stai per passare a un modello diverso.",
+      "no": "You are about to switch to a different template."
+    }
+  }
+}

@@ -1,0 +1,184 @@
+Add Activity
+Add Communication
+Add Communication Item
+Add New Stakeholder
+Add Stakeholder
+Add stakeholders to see coverage
+Add stakeholders to see distribution
+Advisory Committee
+All Stakeholders
+Analysis & Reports
+Annual
+Aquaculture
+As Needed
+Attitude:
+Cancelled
+Click on a point
+Clicked Stakeholder
+Collaborate
+Communication Plan
+Communication Type:
+Communication added!
+Communications Log
+Completed
+Conservation
+Consult
+Contact Person/Details:
+Count
+Current Attitude:
+Date:
+Define Engagement Activities
+Delete Selected
+Deleted
+Download Full Report (Excel)
+Download Power-Interest Grid (PNG)
+Download Summary (PDF)
+Download stakeholder information for reporting and documentation.
+Email
+Email/Newsletter
+Empower
+Energy
+Engage closely and make greatest efforts to satisfy
+Engaged
+Engagement Activities Log
+Engagement Coverage
+Engagement Level:
+Engagement Method:
+Engagement Objectives:
+Engagement Planning
+Engagement activity added!
+Export Stakeholder Data
+Facilitator/Contact:
+Fisheries
+Focus Group
+Frequency:
+Government
+Government/Regulators
+Grid Summary
+High
+High Interest Stakeholders:
+High Power Stakeholders:
+High Power, High Interest
+High Power, High Interest (Key Players):
+High Power, Low Interest
+High Power, Low Interest (Keep Satisfied):
+Identify all stakeholders relevant to your marine case study. Stakeholders include anyone affected by or who can affect the system.
+Indigenous Groups
+Industry
+Industry/Business
+Inform
+Interest/Impact
+Interest/Impact:
+Interest:
+Interview
+Involve
+Keep Informed
+Keep Informed:
+Keep Satisfied
+Keep Satisfied:
+Keep informed and talk to regarding their interests
+Keep satisfied but avoid excessive communication
+Key Interests/Concerns:
+Key Interests:
+Key Message/Content:
+Key Players
+Key Players:
+Local Communities
+Low
+Low Power, High Interest
+Low Power, High Interest (Keep Informed):
+Low Power, Low Interest
+Low Power, Low Interest (Monitor):
+Medium
+Meeting Notes
+Monitor
+Monitor with minimum effort
+Monitor:
+Monthly
+Multiple
+NGO/Civil Society
+NGOs
+Name, email, phone
+Name:
+Neutral
+Newsletter
+No data
+No stakeholders added yet
+No stakeholders selected
+Not Engaged
+One-on-One Meeting
+One-time
+Ongoing
+Other
+Outcomes/Notes:
+Percentage
+Plan and track communications with stakeholders to ensure effective information flow.
+Plan how to engage with each stakeholder group based on their power-interest classification.
+Planned
+Planned/Completed Date:
+Policy/Management
+Power-Interest Analysis
+Power-Interest Grid Classification
+Power-Interest Grid\n(Add stakeholders with Power and Interest ratings to see visualization)
+Power/Influence
+Power/Influence:
+Power:
+Presentation
+Press Release
+Primary Sector:
+Public Meeting
+Quarterly
+Report
+Research
+Resistant
+Resource Users
+Responsible Person:
+Role in System:
+Scientific Community
+Scientific/Academic
+Sector Distribution
+Sector:
+Sectors Represented:
+Select Stakeholder:
+Shipping
+Site Visit
+Social Media
+Specific Stakeholder
+Stakeholder Analysis Summary
+Stakeholder Communication and Impact Management
+Stakeholder Engagement Coverage
+Stakeholder Engagement Strategy
+Stakeholder Identification
+Stakeholder Name/Organization:
+Stakeholder Power-Interest Grid
+Stakeholder Register
+Stakeholder Statistics
+Stakeholder Type:
+Stakeholder Types Distribution
+Stakeholder Types:
+Stakeholder added successfully!
+Stakeholders by Sector
+Stakeholders by Type
+Status:
+Supportive
+Survey
+Target Audience:
+Total Communications:
+Total Engagements:
+Total Stakeholders:
+Tourism
+Type:
+Unknown
+Visualize stakeholders based on their power/influence and level of interest/impact. This helps prioritize engagement strategies.
+Website Update
+Weekly
+What do you want to achieve?
+What does this stakeholder care about in the marine system?
+What information is being communicated?
+What is their role? Decision-maker, user, affected party, etc.
+What was achieved or learned?
+Who is leading this?
+Workshop
+e.g., Local Fishers Association
+pims_stakeholder_help_content
+stakeholder(s)

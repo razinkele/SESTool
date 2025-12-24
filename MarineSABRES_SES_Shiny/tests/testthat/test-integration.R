@@ -405,19 +405,19 @@ test_that("Create SES translation workflow", {
   skip_if_not(exists("i18n"))
 
   # Test that Create SES keys are translated
-  create_ses <- i18n$t("Create SES")
+  create_ses <- i18n$t("ui.sidebar.create_ses")
   expect_true(is.character(create_ses))
   expect_true(nchar(create_ses) > 0)
 
-  standard_entry <- i18n$t("Standard Entry")
+  standard_entry <- i18n$t("ui.sidebar.standard_entry")
   expect_true(is.character(standard_entry))
   expect_true(nchar(standard_entry) > 0)
 
-  ai_assistant <- i18n$t("AI Assistant")
+  ai_assistant <- i18n$t("ui.sidebar.ai_assistant")
   expect_true(is.character(ai_assistant))
   expect_true(nchar(ai_assistant) > 0)
 
-  template_based <- i18n$t("Template-Based")
+  template_based <- i18n$t("ui.sidebar.template_based")
   expect_true(is.character(template_based))
   expect_true(nchar(template_based) > 0)
 })

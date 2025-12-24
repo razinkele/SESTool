@@ -17,7 +17,30 @@ build_dashboard_header <- function(i18n) {
     title = "MarineSABRES SES Toolbox",
     titleWidth = 300,
 
-    # Settings dropdown (consolidates Language + User Level + About)
+    # Language selector dropdown
+    tags$li(
+      class = "dropdown settings-dropdown",
+      tags$a(
+        href = "#",
+        id = "language_dropdown_toggle",
+        class = "settings-dropdown-toggle",
+        icon("globe"),
+        tags$span(i18n$t("ui.header.language"), `data-i18n`="Language"),
+        tags$span(class = "caret", style = "margin-left: 5px;")
+      ),
+      tags$div(
+        class = "settings-dropdown-menu",
+        tags$a(
+          href = "#",
+          id = "open_language_modal",
+          class = "action-button",
+          icon("globe"),
+          tags$span(i18n$t("ui.header.change_language"), `data-i18n`="Change Language")
+        )
+      )
+    ),
+
+    # Settings dropdown
     tags$li(
       class = "dropdown settings-dropdown",
       tags$a(
@@ -25,7 +48,7 @@ build_dashboard_header <- function(i18n) {
         id = "settings_dropdown_toggle",
         class = "settings-dropdown-toggle",
         icon("cog"),
-        tags$span("Settings"),
+        tags$span(i18n$t("ui.header.settings"), `data-i18n`="Settings"),
         tags$span(class = "caret", style = "margin-left: 5px;")
       ),
       tags$div(
@@ -35,34 +58,63 @@ build_dashboard_header <- function(i18n) {
           id = "open_settings_modal",
           class = "action-button",
           icon("cog"),
-          i18n$t("Application Settings")
+          tags$span(i18n$t("ui.header.application_settings"), `data-i18n`="Application Settings")
         ),
         tags$a(
           href = "#",
           id = "open_user_level_modal",
           class = "action-button",
           icon("user-cog"),
-          i18n$t("User Experience Level")
+          tags$span(i18n$t("ui.header.user_experience_level"), `data-i18n`="User Experience Level")
+        ),
+        tags$a(
+          href = "#",
+          id = "open_manuals_modal",
+          class = "action-button",
+          icon("download"),
+          tags$span(i18n$t("ui.header.download_manuals"), `data-i18n`="Download Manuals")
         ),
         tags$a(
           href = "#",
           id = "open_about_modal",
           class = "action-button",
           icon("info-circle"),
-          "About"
+          tags$span(i18n$t("ui.header.app_info"), `data-i18n`="App Info")
         )
       )
     ),
 
-    # Help button (User Guide)
+    # Help button (User Guides)
     tags$li(
-      class = "dropdown",
+      class = "dropdown settings-dropdown",
       tags$a(
-        href = "user_guide.html",
-        target = "_blank",
-        icon("book"),
-        "About",
-        style = "cursor: pointer;"
+        href = "#",
+        id = "help_dropdown_toggle",
+        class = "settings-dropdown-toggle",
+        icon("question-circle"),
+        tags$span(i18n$t("ui.header.help"), `data-i18n`="Help"),
+        tags$span(class = "caret", style = "margin-left: 5px;")
+      ),
+      tags$div(
+        class = "settings-dropdown-menu",
+        tags$a(
+          href = "#",
+          onclick = "window.open('beginner_guide.html', '_blank'); return false;",
+          icon("graduation-cap"),
+          tags$span("Beginner's Guide", `data-i18n`="Beginner's Guide")
+        ),
+        tags$a(
+          href = "#",
+          onclick = "window.open('step_by_step_tutorial.html', '_blank'); return false;",
+          icon("list-ol"),
+          tags$span(i18n$t("ui.header.step_by_step_tutorial"), `data-i18n`="Step-by-Step Tutorial")
+        ),
+        tags$a(
+          href = "#",
+          onclick = "window.open('user_guide.html', '_blank'); return false;",
+          icon("book"),
+          tags$span(i18n$t("ui.header.quick_reference"), `data-i18n`="Quick Reference")
+        )
       )
     ),
 
@@ -73,9 +125,10 @@ build_dashboard_header <- function(i18n) {
         href = "#",
         id = "bookmark_btn",
         icon("bookmark"),
-        "Bookmark",
+        tags$span(i18n$t("ui.header.bookmark"), `data-i18n`="Bookmark"),
         style = "cursor: pointer;",
-        title = "Save current state as bookmark"
+        title = i18n$t("ui.header.save_current_state_as_bookmark"),
+        `data-i18n-title`="Save current state as bookmark"
       )
     ),
 

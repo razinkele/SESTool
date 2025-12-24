@@ -1,0 +1,258 @@
+{
+  "template_info": {
+    "name": "Offshore Wind Parks",
+    "description": "Offshore wind energy development with environmental and socio-economic impacts",
+    "category": "Energy",
+    "version": "1.0",
+    "created": "2025-11-17"
+  },
+  "elements": {
+    "drivers": [
+      {
+        "id": "D001",
+        "name": "Energy Demand",
+        "description": "Electricity consumption growth",
+        "type": "Driver"
+      },
+      {
+        "id": "D002",
+        "name": "Climate Policy",
+        "description": "Renewable energy targets",
+        "type": "Driver"
+      },
+      {
+        "id": "D003",
+        "name": "Economic Development",
+        "description": "Regional economic growth",
+        "type": "Driver"
+      }
+    ],
+    "activities": [
+      {
+        "id": "A001",
+        "name": "Wind Farm Construction",
+        "description": "Installation of turbines and infrastructure",
+        "type": "Activity"
+      },
+      {
+        "id": "A002",
+        "name": "Wind Farm Operation",
+        "description": "Energy generation and maintenance",
+        "type": "Activity"
+      },
+      {
+        "id": "A003",
+        "name": "Service Vessel Traffic",
+        "description": "Supply and maintenance vessel operations",
+        "type": "Activity"
+      }
+    ],
+    "pressures": [
+      {
+        "id": "P001",
+        "name": "Habitat Alteration",
+        "description": "Seabed disturbance and reef effects",
+        "type": "Pressure"
+      },
+      {
+        "id": "P002",
+        "name": "Underwater Noise",
+        "description": "Construction and operational noise",
+        "type": "Pressure"
+      },
+      {
+        "id": "P003",
+        "name": "Electromagnetic Fields",
+        "description": "Cable electromagnetic emissions",
+        "type": "Pressure"
+      },
+      {
+        "id": "P004",
+        "name": "Collision Risk",
+        "description": "Bird and bat collisions with turbines",
+        "type": "Pressure"
+      }
+    ],
+    "marine_processes": [
+      {
+        "id": "MPF001",
+        "name": "Benthic Community Change",
+        "description": "Benthic species composition",
+        "type": "State Change",
+        "pressures": ["P001"]
+      },
+      {
+        "id": "MPF002",
+        "name": "Marine Mammal Behavior",
+        "description": "Marine mammal distribution and behavior",
+        "type": "State Change",
+        "pressures": ["P002", "P003"]
+      },
+      {
+        "id": "MPF003",
+        "name": "Seabird Population Dynamics",
+        "description": "Seabird abundance and breeding success",
+        "type": "State Change",
+        "pressures": ["P002", "P004"]
+      }
+    ],
+    "ecosystem_services": [
+      {
+        "id": "ES001",
+        "name": "Renewable Energy Production",
+        "description": "Clean electricity generation",
+        "type": "Provisioning",
+        "marine_processes": ["MPF001"]
+      },
+      {
+        "id": "ES002",
+        "name": "Commercial Fisheries",
+        "description": "Fish catch potential",
+        "type": "Provisioning",
+        "marine_processes": ["MPF001", "MPF002", "MPF003"]
+      },
+      {
+        "id": "ES003",
+        "name": "Marine Biodiversity",
+        "description": "Marine species diversity",
+        "type": "Supporting",
+        "marine_processes": ["MPF001", "MPF002", "MPF003"]
+      }
+    ],
+    "welfare": [
+      {
+        "id": "GB001",
+        "name": "Energy Security",
+        "description": "Reliable renewable energy supply",
+        "type": "Welfare",
+        "ecosystem_services": ["ES001"]
+      },
+      {
+        "id": "GB002",
+        "name": "Fishery Livelihoods",
+        "description": "Fishing income and employment",
+        "type": "Welfare",
+        "ecosystem_services": ["ES002"]
+      },
+      {
+        "id": "GB003",
+        "name": "Environmental Quality",
+        "description": "Marine ecosystem health status",
+        "type": "Welfare",
+        "ecosystem_services": ["ES003"]
+      }
+    ],
+    "responses": [
+      {
+        "id": "R001",
+        "name": "Spatial Planning Zones",
+        "description": "Exclusion zones for sensitive areas",
+        "type": "Planning",
+        "stakeholder": "Maritime Authority",
+        "targets": ["A001", "A002", "A003", "P001", "P002", "P004"]
+      },
+      {
+        "id": "R002",
+        "name": "Environmental Monitoring",
+        "description": "Pre- and post-construction monitoring programs",
+        "type": "Monitoring",
+        "stakeholder": "Environmental Agency",
+        "targets": ["MPF001", "MPF002", "MPF003"]
+      },
+      {
+        "id": "R003",
+        "name": "Mitigation Measures",
+        "description": "Noise reduction and collision prevention technologies",
+        "type": "Technical",
+        "stakeholder": "Wind Energy Operator",
+        "targets": ["A001", "A002", "P001", "P002", "P003", "P004"]
+      },
+      {
+        "id": "R004",
+        "name": "Compensation Programs",
+        "description": "Fishery compensation and habitat restoration",
+        "type": "Economic",
+        "stakeholder": "Wind Energy Operator",
+        "targets": ["GB002", "ES002"]
+      }
+    ]
+  },
+  "connections": [
+    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Energy Demand drives Wind Farm Construction"},
+    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Energy Demand drives Wind Farm Operation"},
+    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Energy Demand drives Service Vessel Traffic"},
+    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Climate Policy drives Wind Farm Construction"},
+    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Climate Policy drives Wind Farm Operation"},
+    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A003", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Climate Policy drives Service Vessel Traffic"},
+    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Economic Development drives Wind Farm Construction"},
+    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Economic Development drives Wind Farm Operation"},
+    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Economic Development drives Service Vessel Traffic"},
+    
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Wind Farm Construction creates Habitat Alteration"},
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Wind Farm Construction creates Underwater Noise"},
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Wind Farm Construction creates Electromagnetic Fields"},
+    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Wind Farm Operation creates Underwater Noise"},
+    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Wind Farm Operation creates Electromagnetic Fields"},
+    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P004", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Wind Farm Operation creates Collision Risk"},
+    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Service Vessel Traffic creates Habitat Alteration"},
+    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Service Vessel Traffic creates Underwater Noise"},
+    
+    {"from_type": "Pressure", "from_id": "P001", "to_type": "MarineProcess", "to_id": "MPF001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Habitat Alteration causes Benthic Community Change"},
+    {"from_type": "Pressure", "from_id": "P002", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Underwater Noise affects Marine Mammal Behavior"},
+    {"from_type": "Pressure", "from_id": "P002", "to_type": "MarineProcess", "to_id": "MPF003", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Underwater Noise affects Seabird Population Dynamics"},
+    {"from_type": "Pressure", "from_id": "P003", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Electromagnetic Fields affect Marine Mammal Behavior"},
+    {"from_type": "Pressure", "from_id": "P004", "to_type": "MarineProcess", "to_id": "MPF003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Collision Risk affects Seabird Population Dynamics"},
+    
+    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Benthic Community Change supports Renewable Energy Production (reef effect)"},
+    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Benthic Community Change affects Commercial Fisheries"},
+    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Benthic Community Change affects Marine Biodiversity"},
+    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Marine Mammal Behavior change affects Commercial Fisheries"},
+    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Marine Mammal Behavior change affects Marine Biodiversity"},
+    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Seabird Population Dynamics affect Commercial Fisheries"},
+    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Seabird Population Dynamics affect Marine Biodiversity"},
+    
+    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Renewable Energy Production supports Energy Security"},
+    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Renewable Energy Production supports Environmental Quality"},
+    {"from_type": "EcosystemService", "from_id": "ES002", "to_type": "Welfare", "to_id": "GB002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Commercial Fisheries support Fishery Livelihoods"},
+    {"from_type": "EcosystemService", "from_id": "ES002", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Commercial Fisheries support Environmental Quality"},
+    {"from_type": "EcosystemService", "from_id": "ES003", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Marine Biodiversity supports Environmental Quality"},
+    
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Energy Security feedback to Energy Demand"},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Energy Security feedback to Climate Policy"},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Energy Security feedback to Economic Development"},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Fishery Livelihoods feedback to Economic Development"},
+    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Environmental Quality feedback to Climate Policy"},
+    
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Energy Security concerns trigger Spatial Planning Zones"},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Energy Security concerns trigger Environmental Monitoring"},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Energy Security concerns trigger Mitigation Measures"},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Energy Security concerns trigger Compensation Programs"},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Fishery Livelihoods impacts trigger Spatial Planning Zones"},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Fishery Livelihoods impacts trigger Environmental Monitoring"},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Fishery Livelihoods impacts trigger Mitigation Measures"},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Fishery Livelihoods impacts trigger Compensation Programs"},
+    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Environmental Quality concerns trigger Spatial Planning Zones"},
+    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Environmental Quality concerns trigger Environmental Monitoring"},
+    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Environmental Quality concerns trigger Mitigation Measures"},
+    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Environmental Quality concerns trigger Compensation Programs"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Spatial Planning Zones support Climate Policy"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Mitigation Measures support Climate Policy"},
+    {"from_type": "Response", "from_id": "R004", "to_type": "Driver", "to_id": "D003", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Compensation Programs affect Economic Development"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Spatial Planning Zones restrict Wind Farm Construction"},
+    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Spatial Planning Zones restrict Wind Farm Operation"},
+    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Spatial Planning Zones restrict Service Vessel Traffic"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Mitigation Measures constrain Wind Farm Construction"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Mitigation Measures constrain Wind Farm Operation"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Mitigation Measures constrain Service Vessel Traffic"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Spatial Planning Zones reduce Habitat Alteration"},
+    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Spatial Planning Zones reduce Underwater Noise"},
+    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P004", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Spatial Planning Zones reduce Collision Risk"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Mitigation Measures reduce Habitat Alteration"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Mitigation Measures reduce Underwater Noise"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P003", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Mitigation Measures reduce Electromagnetic Fields"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P004", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Mitigation Measures reduce Collision Risk"}
+  ]
+}

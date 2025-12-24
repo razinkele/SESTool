@@ -2,24 +2,19 @@
 # Process and Information Management System - Stakeholder Identification and Engagement
 # Based on MarineSABRES Simple SES DRAFT Guidance
 
+library(shiny)
+library(DT)
+library(openxlsx)
+
 # Module UI ----
-pimsStakeholderUI <- function(id) {
+pimsStakeholderUI <- function(id, i18n) {
+  # shiny.i18n::usei18n(i18n) removed - only call once in main UI
   ns <- NS(id)
 
   tagList(
     fluidRow(
       column(12,
-        div(style = "display: flex; justify-content: space-between; align-items: center;",
-          div(
-            h3("PIMS: Stakeholder Identification and Engagement"),
-            p("Identify, analyze, and manage stakeholders for your marine social-ecological system project.")
-          ),
-          div(style = "margin-top: 10px;",
-            actionButton(ns("help_stakeholder"), "Stakeholder Guide",
-                        icon = icon("question-circle"),
-                        class = "btn btn-info btn-lg")
-          )
-        )
+        create_module_header(ns, "modules.pims.stakeholder.title", "modules.pims.stakeholder.subtitle", "pims_stakeholder_help", i18n)
       )
     ),
 
@@ -30,72 +25,72 @@ pimsStakeholderUI <- function(id) {
         tabsetPanel(id = ns("stakeholder_tabs"),
 
           # Tab 1: Stakeholder Register ----
-          tabPanel("Stakeholder Register",
-            h4("Stakeholder Identification"),
-            p("Identify all stakeholders relevant to your marine case study. Stakeholders include anyone affected by or who can affect the system."),
+          tabPanel(i18n$t("modules.pims.stakeholder.stakeholder_register"),
+            h4(i18n$t("modules.pims.stakeholder.stakeholder_identification")),
+            p(i18n$t("modules.pims.identify_all_stakeholders_relevant_to_your_marine_")),
 
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Add New Stakeholder"),
+                  h5(i18n$t("modules.pims.stakeholder.add_new_stakeholder")),
                   fluidRow(
                     column(3,
-                      textInput(ns("sh_name"), "Stakeholder Name/Organization:",
-                               placeholder = "e.g., Local Fishers Association")
+                      textInput(ns("sh_name"), i18n$t("modules.pims.stakeholder.stakeholder_nameorganization"),
+                               placeholder = i18n$t("modules.pims.stakeholder.eg_local_fishers_association"))
                     ),
                     column(3,
-                      selectInput(ns("sh_type"), "Stakeholder Type:",
-                                 choices = c("", "Resource Users", "Industry/Business",
-                                           "Government/Regulators", "NGO/Civil Society",
-                                           "Scientific/Academic", "Local Communities",
-                                           "Indigenous Groups", "Other"))
+                      selectInput(ns("sh_type"), i18n$t("common.labels.stakeholder_type"),
+                                 choices = c("", i18n$t("modules.pims.stakeholder.resource_users"), i18n$t("modules.pims.stakeholder.industrybusiness"),
+                                           i18n$t("modules.pims.stakeholder.governmentregulators"), i18n$t("modules.pims.stakeholder.ngocivil_society"),
+                                           i18n$t("modules.pims.stakeholder.scientificacademic"), i18n$t("modules.pims.stakeholder.local_communities"),
+                                           i18n$t("modules.pims.stakeholder.indigenous_groups"), i18n$t("modules.isa.ai_assistant.other")))
                     ),
                     column(3,
-                      selectInput(ns("sh_sector"), "Primary Sector:",
-                                 choices = c("", "Fisheries", "Aquaculture", "Tourism",
-                                           "Shipping", "Energy", "Conservation",
-                                           "Research", "Policy/Management", "Multiple", "Other"))
+                      selectInput(ns("sh_sector"), i18n$t("modules.pims.stakeholder.primary_sector"),
+                                 choices = c("", i18n$t("modules.pims.stakeholder.fisheries"), i18n$t("modules.pims.stakeholder.aquaculture"), i18n$t("modules.pims.stakeholder.tourism"),
+                                           i18n$t("modules.pims.stakeholder.shipping"), i18n$t("modules.pims.stakeholder.energy"), i18n$t("modules.pims.stakeholder.conservation"),
+                                           i18n$t("modules.pims.stakeholder.research"), i18n$t("modules.pims.stakeholder.policymanagement"), i18n$t("modules.pims.stakeholder.multiple"), i18n$t("modules.isa.ai_assistant.other")))
                     ),
                     column(3,
-                      textInput(ns("sh_contact"), "Contact Person/Details:",
-                               placeholder = "Name, email, phone")
+                      textInput(ns("sh_contact"), i18n$t("common.labels.contact_persondetails"),
+                               placeholder = i18n$t("modules.pims.stakeholder.name_email_phone"))
                     )
                   ),
                   fluidRow(
                     column(6,
-                      textAreaInput(ns("sh_interests"), "Key Interests/Concerns:",
-                                   placeholder = "What does this stakeholder care about in the marine system?",
+                      textAreaInput(ns("sh_interests"), i18n$t("modules.pims.stakeholder.key_interestsconcerns"),
+                                   placeholder = i18n$t("modules.pims.what_does_this_stakeholder_care_about_in_the_marin"),
                                    rows = 3)
                     ),
                     column(6,
-                      textAreaInput(ns("sh_role"), "Role in System:",
-                                   placeholder = "What is their role? Decision-maker, user, affected party, etc.",
+                      textAreaInput(ns("sh_role"), i18n$t("modules.pims.stakeholder.role_in_system"),
+                                   placeholder = i18n$t("modules.pims.what_is_their_role_decision_maker_user_affected_pa"),
                                    rows = 3)
                     )
                   ),
                   fluidRow(
                     column(3,
-                      selectInput(ns("sh_power"), "Power/Influence:",
-                                 choices = c("", "High", "Medium", "Low"),
+                      selectInput(ns("sh_power"), i18n$t("modules.pims.stakeholder.powerinfluence"),
+                                 choices = c("", i18n$t("modules.response.measures.high"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.low")),
                                  selected = "")
                     ),
                     column(3,
-                      selectInput(ns("sh_interest"), "Interest/Impact:",
-                                 choices = c("", "High", "Medium", "Low"),
+                      selectInput(ns("sh_interest"), i18n$t("modules.pims.stakeholder.interestimpact"),
+                                 choices = c("", i18n$t("modules.response.measures.high"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.low")),
                                  selected = "")
                     ),
                     column(3,
-                      selectInput(ns("sh_attitude"), "Current Attitude:",
-                                 choices = c("", "Supportive", "Neutral", "Resistant", "Unknown"),
+                      selectInput(ns("sh_attitude"), i18n$t("modules.pims.stakeholder.current_attitude"),
+                                 choices = c("", i18n$t("modules.pims.stakeholder.supportive"), i18n$t("modules.pims.stakeholder.neutral"), i18n$t("modules.pims.stakeholder.resistant"), i18n$t("modules.response.measures.unknown")),
                                  selected = "")
                     ),
                     column(3,
-                      selectInput(ns("sh_engagement_level"), "Engagement Level:",
-                                 choices = c("", "Inform", "Consult", "Involve", "Collaborate", "Empower"),
+                      selectInput(ns("sh_engagement_level"), i18n$t("modules.pims.stakeholder.engagement_level"),
+                                 choices = c("", i18n$t("modules.pims.stakeholder.inform"), i18n$t("modules.pims.stakeholder.consult"), i18n$t("modules.pims.stakeholder.involve"), i18n$t("modules.pims.stakeholder.collaborate"), i18n$t("modules.pims.stakeholder.empower")),
                                  selected = "")
                     )
                   ),
-                  actionButton(ns("add_stakeholder"), "Add Stakeholder",
+                  actionButton(ns("add_stakeholder"), i18n$t("modules.pims.stakeholder.add_stakeholder"),
                               icon = icon("plus"), class = "btn-success")
                 )
               )
@@ -105,31 +100,31 @@ pimsStakeholderUI <- function(id) {
 
             fluidRow(
               column(12,
-                h5("Stakeholder Register"),
+                h5(i18n$t("modules.pims.stakeholder.stakeholder_register")),
                 DTOutput(ns("stakeholder_table")),
                 br(),
-                actionButton(ns("delete_selected"), "Delete Selected",
+                actionButton(ns("delete_selected"), i18n$t("modules.response.measures.delete_selected"),
                             icon = icon("trash"), class = "btn-danger")
               )
             )
           ),
 
           # Tab 2: Power-Interest Grid ----
-          tabPanel("Power-Interest Analysis",
-            h4("Stakeholder Power-Interest Grid"),
-            p("Visualize stakeholders based on their power/influence and level of interest/impact. This helps prioritize engagement strategies."),
+          tabPanel(i18n$t("modules.pims.stakeholder.power_interest_analysis"),
+            h4(i18n$t("modules.pims.stakeholder.stakeholder_power_interest_grid")),
+            p(i18n$t("modules.pims.visualize_stakeholders_based_on_their_powerinfluen")),
 
             wellPanel(
-              h5("Power-Interest Grid Classification"),
+              h5(i18n$t("modules.pims.stakeholder.power_interest_grid_classification")),
               tags$ul(
-                tags$li(strong("High Power, High Interest (Key Players):"),
-                       "Engage closely and make greatest efforts to satisfy"),
-                tags$li(strong("High Power, Low Interest (Keep Satisfied):"),
-                       "Keep satisfied but avoid excessive communication"),
-                tags$li(strong("Low Power, High Interest (Keep Informed):"),
-                       "Keep informed and talk to regarding their interests"),
-                tags$li(strong("Low Power, Low Interest (Monitor):"),
-                       "Monitor with minimum effort")
+                tags$li(strong(i18n$t("modules.pims.stakeholder.high_power_high_interest_key_players")),
+                       i18n$t("modules.pims.stakeholder.engage_closely_and_make_greatest_efforts_to_satisfy")),
+                tags$li(strong(i18n$t("modules.pims.stakeholder.high_power_low_interest_keep_satisfied")),
+                       i18n$t("modules.pims.stakeholder.keep_satisfied_but_avoid_excessive_communication")),
+                tags$li(strong(i18n$t("modules.pims.stakeholder.low_power_high_interest_keep_informed")),
+                       i18n$t("modules.pims.stakeholder.keep_informed_and_talk_to_regarding_their_interests")),
+                tags$li(strong(i18n$t("modules.pims.stakeholder.low_power_low_interest_monitor")),
+                       i18n$t("modules.pims.stakeholder.monitor_with_minimum_effort"))
               )
             ),
 
@@ -139,10 +134,10 @@ pimsStakeholderUI <- function(id) {
               ),
               column(4,
                 wellPanel(
-                  h5("Grid Summary"),
+                  h5(i18n$t("modules.pims.stakeholder.grid_summary")),
                   verbatimTextOutput(ns("grid_summary")),
                   hr(),
-                  h5("Clicked Stakeholder"),
+                  h5(i18n$t("modules.pims.stakeholder.clicked_stakeholder")),
                   verbatimTextOutput(ns("clicked_stakeholder"))
                 )
               )
@@ -150,54 +145,54 @@ pimsStakeholderUI <- function(id) {
           ),
 
           # Tab 3: Engagement Planning ----
-          tabPanel("Engagement Planning",
-            h4("Stakeholder Engagement Strategy"),
-            p("Plan how to engage with each stakeholder group based on their power-interest classification."),
+          tabPanel(i18n$t("modules.pims.stakeholder.engagement_planning"),
+            h4(i18n$t("modules.pims.stakeholder.stakeholder_engagement_strategy")),
+            p(i18n$t("modules.pims.plan_how_to_engage_with_each_stakeholder_group_bas")),
 
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Define Engagement Activities"),
+                  h5(i18n$t("modules.pims.stakeholder.define_engagement_activities")),
                   fluidRow(
                     column(4,
-                      selectInput(ns("eng_stakeholder"), "Select Stakeholder:",
+                      selectInput(ns("eng_stakeholder"), i18n$t("modules.pims.stakeholder.select_stakeholder"),
                                  choices = NULL)
                     ),
                     column(4,
-                      selectInput(ns("eng_method"), "Engagement Method:",
-                                 choices = c("", "Workshop", "Interview", "Survey", "Focus Group",
-                                           "Public Meeting", "Advisory Committee", "Email/Newsletter",
-                                           "One-on-One Meeting", "Site Visit", "Other"))
+                      selectInput(ns("eng_method"), i18n$t("modules.pims.stakeholder.engagement_method"),
+                                 choices = c("", i18n$t("modules.pims.stakeholder.workshop"), i18n$t("modules.pims.stakeholder.interview"), i18n$t("modules.pims.stakeholder.survey"), i18n$t("modules.pims.stakeholder.focus_group"),
+                                           i18n$t("modules.pims.stakeholder.public_meeting"), i18n$t("modules.pims.stakeholder.advisory_committee"), i18n$t("modules.pims.stakeholder.emailnewsletter"),
+                                           i18n$t("modules.pims.stakeholder.one_on_one_meeting"), i18n$t("modules.pims.stakeholder.site_visit"), i18n$t("modules.isa.ai_assistant.other")))
                     ),
                     column(4,
-                      dateInput(ns("eng_date"), "Planned/Completed Date:",
+                      dateInput(ns("eng_date"), i18n$t("common.labels.plannedcompleted_date"),
                                value = Sys.Date())
                     )
                   ),
                   fluidRow(
                     column(6,
-                      textAreaInput(ns("eng_objectives"), "Engagement Objectives:",
-                                   placeholder = "What do you want to achieve?",
+                      textAreaInput(ns("eng_objectives"), i18n$t("modules.pims.stakeholder.engagement_objectives"),
+                                   placeholder = i18n$t("modules.pims.stakeholder.what_do_you_want_to_achieve"),
                                    rows = 3)
                     ),
                     column(6,
-                      textAreaInput(ns("eng_outcomes"), "Outcomes/Notes:",
-                                   placeholder = "What was achieved or learned?",
+                      textAreaInput(ns("eng_outcomes"), i18n$t("common.labels.outcomesnotes"),
+                                   placeholder = i18n$t("modules.pims.stakeholder.what_was_achieved_or_learned"),
                                    rows = 3)
                     )
                   ),
                   fluidRow(
                     column(4,
-                      selectInput(ns("eng_status"), "Status:",
-                                 choices = c("Planned", "Completed", "Cancelled", "Ongoing"))
+                      selectInput(ns("eng_status"), i18n$t("common.labels.status"),
+                                 choices = c(i18n$t("modules.response.measures.planned"), i18n$t("modules.response.measures.completed"), i18n$t("modules.pims.stakeholder.cancelled"), i18n$t("modules.pims.stakeholder.ongoing")))
                     ),
                     column(4,
-                      textInput(ns("eng_facilitator"), "Facilitator/Contact:",
-                               placeholder = "Who is leading this?")
+                      textInput(ns("eng_facilitator"), i18n$t("modules.pims.stakeholder.facilitatorcontact"),
+                               placeholder = i18n$t("modules.pims.stakeholder.who_is_leading_this"))
                     ),
                     column(4,
                       br(),
-                      actionButton(ns("add_engagement"), "Add Activity",
+                      actionButton(ns("add_engagement"), i18n$t("modules.isa.data_entry.common.add_activity"),
                                   icon = icon("plus"), class = "btn-success")
                     )
                   )
@@ -209,52 +204,52 @@ pimsStakeholderUI <- function(id) {
 
             fluidRow(
               column(12,
-                h5("Engagement Activities Log"),
+                h5(i18n$t("modules.pims.stakeholder.engagement_activities_log")),
                 DTOutput(ns("engagement_table"))
               )
             )
           ),
 
           # Tab 4: Communication Plan ----
-          tabPanel("Communication Plan",
-            h4("Stakeholder Communication and Impact Management"),
-            p("Plan and track communications with stakeholders to ensure effective information flow."),
+          tabPanel(i18n$t("modules.pims.stakeholder.communication_plan"),
+            h4(i18n$t("modules.pims.stakeholder.stakeholder_communication_and_impact_management")),
+            p(i18n$t("modules.pims.plan_and_track_communications_with_stakeholders_to")),
 
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Add Communication Item"),
+                  h5(i18n$t("modules.pims.stakeholder.add_communication_item")),
                   fluidRow(
                     column(3,
-                      selectInput(ns("comm_audience"), "Target Audience:",
-                                 choices = c("", "All Stakeholders", "Key Players", "Government",
-                                           "Industry", "NGOs", "Local Communities", "Scientific Community",
-                                           "Specific Stakeholder"))
+                      selectInput(ns("comm_audience"), i18n$t("modules.pims.stakeholder.target_audience"),
+                                 choices = c("", i18n$t("modules.pims.stakeholder.all_stakeholders"), i18n$t("modules.pims.stakeholder.key_players"), i18n$t("modules.pims.stakeholder.government"),
+                                           i18n$t("modules.pims.stakeholder.industry"), i18n$t("modules.pims.stakeholder.ngos"), i18n$t("modules.pims.stakeholder.local_communities"), i18n$t("modules.pims.stakeholder.scientific_community"),
+                                           i18n$t("modules.pims.stakeholder.specific_stakeholder")))
                     ),
                     column(3,
-                      selectInput(ns("comm_type"), "Communication Type:",
-                                 choices = c("", "Report", "Newsletter", "Presentation", "Website Update",
-                                           "Press Release", "Social Media", "Email", "Meeting Notes", "Other"))
+                      selectInput(ns("comm_type"), i18n$t("common.labels.communication_type"),
+                                 choices = c("", i18n$t("modules.pims.stakeholder.report"), i18n$t("modules.pims.stakeholder.newsletter"), i18n$t("modules.pims.stakeholder.presentation"), i18n$t("modules.pims.stakeholder.website_update"),
+                                           i18n$t("modules.pims.stakeholder.press_release"), i18n$t("modules.pims.stakeholder.social_media"), i18n$t("modules.pims.stakeholder.email"), i18n$t("modules.pims.stakeholder.meeting_notes"), i18n$t("modules.isa.ai_assistant.other")))
                     ),
                     column(3,
-                      dateInput(ns("comm_date"), "Date:",
+                      dateInput(ns("comm_date"), i18n$t("common.labels.date"),
                                value = Sys.Date())
                     ),
                     column(3,
-                      selectInput(ns("comm_frequency"), "Frequency:",
-                                 choices = c("One-time", "Weekly", "Monthly", "Quarterly", "Annual", "As Needed"))
+                      selectInput(ns("comm_frequency"), i18n$t("modules.isa.data_entry.common.frequency"),
+                                 choices = c(i18n$t("modules.pims.stakeholder.one_time"), i18n$t("modules.pims.stakeholder.weekly"), i18n$t("modules.pims.stakeholder.monthly"), i18n$t("modules.pims.stakeholder.quarterly"), i18n$t("modules.pims.stakeholder.annual"), i18n$t("modules.pims.stakeholder.as_needed")))
                     )
                   ),
                   fluidRow(
                     column(8,
-                      textAreaInput(ns("comm_message"), "Key Message/Content:",
-                                   placeholder = "What information is being communicated?",
+                      textAreaInput(ns("comm_message"), i18n$t("modules.pims.stakeholder.key_messagecontent"),
+                                   placeholder = i18n$t("modules.pims.stakeholder.what_information_is_being_communicated"),
                                    rows = 3)
                     ),
                     column(4,
-                      textInput(ns("comm_responsible"), "Responsible Person:"),
+                      textInput(ns("comm_responsible"), i18n$t("modules.pims.stakeholder.responsible_person")),
                       br(),
-                      actionButton(ns("add_communication"), "Add Communication",
+                      actionButton(ns("add_communication"), i18n$t("modules.pims.stakeholder.add_communication"),
                                   icon = icon("plus"), class = "btn-success")
                     )
                   )
@@ -266,26 +261,26 @@ pimsStakeholderUI <- function(id) {
 
             fluidRow(
               column(12,
-                h5("Communications Log"),
+                h5(i18n$t("modules.pims.stakeholder.communications_log")),
                 DTOutput(ns("communication_table"))
               )
             )
           ),
 
           # Tab 5: Analysis & Reports ----
-          tabPanel("Analysis & Reports",
-            h4("Stakeholder Analysis Summary"),
+          tabPanel(i18n$t("modules.pims.stakeholder.analysis_reports"),
+            h4(i18n$t("modules.pims.stakeholder.stakeholder_analysis_summary")),
 
             fluidRow(
               column(6,
                 wellPanel(
-                  h5("Stakeholder Statistics"),
+                  h5(i18n$t("modules.pims.stakeholder.stakeholder_statistics")),
                   verbatimTextOutput(ns("stakeholder_stats"))
                 )
               ),
               column(6,
                 wellPanel(
-                  h5("Engagement Coverage"),
+                  h5(i18n$t("modules.pims.stakeholder.engagement_coverage")),
                   plotOutput(ns("engagement_coverage"), height = "250px")
                 )
               )
@@ -296,13 +291,13 @@ pimsStakeholderUI <- function(id) {
             fluidRow(
               column(6,
                 wellPanel(
-                  h5("Stakeholder Types Distribution"),
+                  h5(i18n$t("modules.pims.stakeholder.stakeholder_types_distribution")),
                   plotOutput(ns("type_distribution"), height = "300px")
                 )
               ),
               column(6,
                 wellPanel(
-                  h5("Sector Distribution"),
+                  h5(i18n$t("modules.pims.stakeholder.sector_distribution")),
                   plotOutput(ns("sector_distribution"), height = "300px")
                 )
               )
@@ -313,19 +308,19 @@ pimsStakeholderUI <- function(id) {
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Export Stakeholder Data"),
-                  p("Download stakeholder information for reporting and documentation."),
+                  h5(i18n$t("modules.pims.stakeholder.export_stakeholder_data")),
+                  p(i18n$t("modules.pims.download_stakeholder_information_for_reporting_and")),
                   fluidRow(
                     column(4,
-                      downloadButton(ns("download_stakeholder_report"), "Download Full Report (Excel)",
+                      downloadButton(ns("download_stakeholder_report"), i18n$t("modules.pims.stakeholder.download_full_report_excel"),
                                     class = "btn-success btn-block")
                     ),
                     column(4,
-                      downloadButton(ns("download_power_interest"), "Download Power-Interest Grid (PNG)",
+                      downloadButton(ns("download_power_interest"), i18n$t("modules.pims.stakeholder.download_power_interest_grid_png"),
                                     class = "btn-info btn-block")
                     ),
                     column(4,
-                      downloadButton(ns("download_summary"), "Download Summary (PDF)",
+                      downloadButton(ns("download_summary"), i18n$t("modules.pims.stakeholder.download_summary_pdf"),
                                     class = "btn-warning btn-block")
                     )
                   )
@@ -340,7 +335,7 @@ pimsStakeholderUI <- function(id) {
 }
 
 # Module Server ----
-pimsStakeholderServer <- function(id, global_data) {
+pimsStakeholderServer <- function(id, global_data, i18n) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -428,7 +423,7 @@ pimsStakeholderServer <- function(id, global_data) {
       updateSelectInput(session, "sh_attitude", selected = "")
       updateSelectInput(session, "sh_engagement_level", selected = "")
 
-      showNotification("Stakeholder added successfully!", type = "message")
+      showNotification(i18n$t("modules.pims.stakeholder.stakeholder_added_successfully"), type = "message")
     })
 
     # Stakeholder Table ----
@@ -444,9 +439,9 @@ pimsStakeholderServer <- function(id, global_data) {
       selected_rows <- input$stakeholder_table_rows_selected
       if (!is.null(selected_rows) && length(selected_rows) > 0) {
         stakeholder_data$stakeholders <- stakeholder_data$stakeholders[-selected_rows, ]
-        showNotification(paste("Deleted", length(selected_rows), "stakeholder(s)"), type = "warning")
+        showNotification(paste(i18n$t("modules.pims.stakeholder.deleted"), length(selected_rows), i18n$t("modules.pims.stakeholder.stakeholders")), type = "warning")
       } else {
-        showNotification("No stakeholders selected", type = "error")
+        showNotification(i18n$t("modules.pims.stakeholder.no_stakeholders_selected"), type = "error")
       }
     })
 
@@ -472,8 +467,8 @@ pimsStakeholderServer <- function(id, global_data) {
       df <- df[!is.na(df$PowerNum) & !is.na(df$InterestNum), ]
 
       if(nrow(df) == 0) {
-        plot(1, 1, type = "n", xlab = "Interest/Impact", ylab = "Power/Influence",
-             main = "Power-Interest Grid\n(Add stakeholders with Power and Interest ratings to see visualization)",
+        plot(1, 1, type = "n", xlab = i18n$t("modules.pims.stakeholder.interestimpact"), ylab = i18n$t("modules.pims.stakeholder.powerinfluence"),
+             main = i18n$t("modules.pims.power_interest_gridnadd_stakeholders_with_power_an"),
              xlim = c(0.5, 3.5), ylim = c(0.5, 3.5))
         return()
       }
@@ -484,9 +479,9 @@ pimsStakeholderServer <- function(id, global_data) {
 
       plot(df$InterestNum, df$PowerNum,
            xlim = c(0.5, 3.5), ylim = c(0.5, 3.5),
-           xlab = "Interest/Impact →",
-           ylab = "Power/Influence →",
-           main = "Stakeholder Power-Interest Grid",
+           xlab = paste0(i18n$t("modules.pims.stakeholder.interestimpact"), " →"),
+           ylab = paste0(i18n$t("modules.pims.stakeholder.powerinfluence"), " →"),
+           main = i18n$t("modules.pims.stakeholder.stakeholder_power_interest_grid"),
            pch = 19, cex = 2, col = "#2E86AB",
            xaxt = "n", yaxt = "n",
            cex.lab = 1.2, cex.main = 1.5)
@@ -495,14 +490,14 @@ pimsStakeholderServer <- function(id, global_data) {
       abline(h = 2, v = 2, col = "gray30", lwd = 2, lty = 2)
 
       # Quadrant labels
-      text(1.25, 2.75, "Keep Satisfied\n(High Power, Low Interest)", cex = 1.1, col = "gray30")
-      text(2.75, 2.75, "Key Players\n(High Power, High Interest)", cex = 1.1, col = "gray30", font = 2)
-      text(1.25, 1.25, "Monitor\n(Low Power, Low Interest)", cex = 1.1, col = "gray30")
-      text(2.75, 1.25, "Keep Informed\n(Low Power, High Interest)", cex = 1.1, col = "gray30")
+      text(1.25, 2.75, paste0(i18n$t("modules.pims.stakeholder.keep_satisfied"), "\n(", i18n$t("modules.pims.stakeholder.high_power_low_interest"), ")"), cex = 1.1, col = "gray30")
+      text(2.75, 2.75, paste0(i18n$t("modules.pims.stakeholder.key_players"), "\n(", i18n$t("modules.pims.stakeholder.high_power_high_interest"), ")"), cex = 1.1, col = "gray30", font = 2)
+      text(1.25, 1.25, paste0(i18n$t("modules.pims.stakeholder.monitor"), "\n(", i18n$t("modules.pims.stakeholder.low_power_low_interest"), ")"), cex = 1.1, col = "gray30")
+      text(2.75, 1.25, paste0(i18n$t("modules.pims.stakeholder.keep_informed"), "\n(", i18n$t("modules.pims.stakeholder.low_power_high_interest"), ")"), cex = 1.1, col = "gray30")
 
       # Axes
-      axis(1, at = 1:3, labels = c("Low", "Medium", "High"))
-      axis(2, at = 1:3, labels = c("Low", "Medium", "High"))
+      axis(1, at = 1:3, labels = c(i18n$t("modules.response.measures.low"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.high")))
+      axis(2, at = 1:3, labels = c(i18n$t("modules.response.measures.low"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.high")))
 
       # Add stakeholder labels
       text(df$InterestNum, df$PowerNum, df$Name, pos = 3, cex = 0.8, offset = 0.5)
@@ -529,11 +524,11 @@ pimsStakeholderServer <- function(id, global_data) {
       monitor <- sum(df$Power == "Low" & df$Interest == "Low", na.rm = TRUE)
 
       paste0(
-        "Total Stakeholders: ", nrow(df), "\n\n",
-        "Key Players: ", key_players, "\n",
-        "Keep Satisfied: ", keep_satisfied, "\n",
-        "Keep Informed: ", keep_informed, "\n",
-        "Monitor: ", monitor
+        i18n$t("modules.pims.stakeholder.total_stakeholders"), " ", nrow(df), "\n\n",
+        i18n$t("modules.pims.stakeholder.key_players"), " ", key_players, "\n",
+        i18n$t("modules.pims.stakeholder.keep_satisfied"), " ", keep_satisfied, "\n",
+        i18n$t("modules.pims.stakeholder.keep_informed"), " ", keep_informed, "\n",
+        i18n$t("modules.pims.stakeholder.monitor"), " ", monitor
       )
     })
 
@@ -551,24 +546,24 @@ pimsStakeholderServer <- function(id, global_data) {
 
       df <- df[!is.na(df$PowerNum) & !is.na(df$InterestNum), ]
 
-      if(nrow(df) == 0) return("No data")
+      if(nrow(df) == 0) return(i18n$t("modules.pims.stakeholder.no_data"))
 
       # Find nearest point
       distances <- sqrt((df$InterestNum - input$plot_click$x)^2 +
                        (df$PowerNum - input$plot_click$y)^2)
       nearest <- which.min(distances)
 
-      if(distances[nearest] > 0.5) return("Click on a point")
+      if(distances[nearest] > 0.5) return(i18n$t("modules.pims.stakeholder.click_on_a_point"))
 
       sh <- df[nearest, ]
       paste0(
-        "Name: ", sh$Name, "\n",
-        "Type: ", sh$Type, "\n",
-        "Sector: ", sh$Sector, "\n",
-        "Power: ", sh$Power, "\n",
-        "Interest: ", sh$Interest, "\n",
-        "Attitude: ", sh$Attitude, "\n\n",
-        "Key Interests:\n", sh$Interests
+        i18n$t("common.labels.name"), " ", sh$Name, "\n",
+        i18n$t("common.labels.type"), " ", sh$Type, "\n",
+        i18n$t("modules.isa.data_entry.common.sector"), " ", sh$Sector, "\n",
+        i18n$t("modules.pims.stakeholder.power"), " ", sh$Power, "\n",
+        i18n$t("modules.pims.stakeholder.interest"), " ", sh$Interest, "\n",
+        i18n$t("modules.pims.stakeholder.attitude"), " ", sh$Attitude, "\n\n",
+        i18n$t("modules.pims.stakeholder.key_interests"), "\n", sh$Interests
       )
     })
 
@@ -601,7 +596,7 @@ pimsStakeholderServer <- function(id, global_data) {
       updateTextAreaInput(session, "eng_outcomes", value = "")
       updateTextInput(session, "eng_facilitator", value = "")
 
-      showNotification("Engagement activity added!", type = "message")
+      showNotification(i18n$t("modules.pims.stakeholder.engagement_activity_added"), type = "message")
     })
 
     # Engagement Table ----
@@ -635,7 +630,7 @@ pimsStakeholderServer <- function(id, global_data) {
       updateTextAreaInput(session, "comm_message", value = "")
       updateTextInput(session, "comm_responsible", value = "")
 
-      showNotification("Communication added!", type = "message")
+      showNotification(i18n$t("modules.pims.stakeholder.communication_added"), type = "message")
     })
 
     # Communication Table ----
@@ -648,16 +643,16 @@ pimsStakeholderServer <- function(id, global_data) {
     # Statistics ----
     output$stakeholder_stats <- renderText({
       df <- stakeholder_data$stakeholders
-      if(nrow(df) == 0) return("No stakeholders added yet")
+      if(nrow(df) == 0) return(i18n$t("modules.pims.stakeholder.no_stakeholders_added_yet"))
 
       paste0(
-        "Total Stakeholders: ", nrow(df), "\n",
-        "Stakeholder Types: ", length(unique(df$Type)), "\n",
-        "Sectors Represented: ", length(unique(df$Sector)), "\n",
-        "High Power Stakeholders: ", sum(df$Power == "High", na.rm = TRUE), "\n",
-        "High Interest Stakeholders: ", sum(df$Interest == "High", na.rm = TRUE), "\n",
-        "Total Engagements: ", nrow(stakeholder_data$engagements), "\n",
-        "Total Communications: ", nrow(stakeholder_data$communications)
+        i18n$t("modules.pims.stakeholder.total_stakeholders"), " ", nrow(df), "\n",
+        i18n$t("modules.pims.stakeholder.stakeholder_types"), " ", length(unique(df$Type)), "\n",
+        i18n$t("modules.pims.stakeholder.sectors_represented"), " ", length(unique(df$Sector)), "\n",
+        i18n$t("modules.pims.stakeholder.high_power_stakeholders"), " ", sum(df$Power == "High", na.rm = TRUE), "\n",
+        i18n$t("modules.pims.stakeholder.high_interest_stakeholders"), " ", sum(df$Interest == "High", na.rm = TRUE), "\n",
+        i18n$t("modules.pims.stakeholder.total_engagements"), " ", nrow(stakeholder_data$engagements), "\n",
+        i18n$t("modules.pims.stakeholder.total_communications"), " ", nrow(stakeholder_data$communications)
       )
     })
 
@@ -667,7 +662,7 @@ pimsStakeholderServer <- function(id, global_data) {
       df_eng <- stakeholder_data$engagements
 
       if(nrow(df_sh) == 0) {
-        plot(1, 1, type = "n", main = "Add stakeholders to see coverage")
+        plot(1, 1, type = "n", main = i18n$t("modules.pims.stakeholder.add_stakeholders_to_see_coverage"))
         return()
       }
 
@@ -675,10 +670,10 @@ pimsStakeholderServer <- function(id, global_data) {
       coverage <- sum(df_sh$ID %in% engaged_ids) / nrow(df_sh) * 100
 
       barplot(c(coverage, 100 - coverage),
-              names.arg = c("Engaged", "Not Engaged"),
+              names.arg = c(i18n$t("modules.pims.stakeholder.engaged"), i18n$t("modules.pims.stakeholder.not_engaged")),
               col = c("#2E86AB", "#CCCCCC"),
-              main = paste0("Stakeholder Engagement Coverage (", round(coverage, 1), "%)"),
-              ylab = "Percentage",
+              main = paste0(i18n$t("modules.pims.stakeholder.stakeholder_engagement_coverage"), " (", round(coverage, 1), "%)"),
+              ylab = i18n$t("modules.pims.stakeholder.percentage"),
               ylim = c(0, 100))
     })
 
@@ -686,14 +681,14 @@ pimsStakeholderServer <- function(id, global_data) {
     output$type_distribution <- renderPlot({
       df <- stakeholder_data$stakeholders
       if(nrow(df) == 0) {
-        plot(1, 1, type = "n", main = "Add stakeholders to see distribution")
+        plot(1, 1, type = "n", main = i18n$t("modules.pims.stakeholder.add_stakeholders_to_see_distribution"))
         return()
       }
 
       type_counts <- table(df$Type)
       barplot(type_counts,
-              main = "Stakeholders by Type",
-              ylab = "Count",
+              main = i18n$t("modules.pims.stakeholder.stakeholders_by_type"),
+              ylab = i18n$t("modules.pims.stakeholder.count"),
               col = "#A23B72",
               las = 2,
               cex.names = 0.8)
@@ -703,14 +698,14 @@ pimsStakeholderServer <- function(id, global_data) {
     output$sector_distribution <- renderPlot({
       df <- stakeholder_data$stakeholders
       if(nrow(df) == 0) {
-        plot(1, 1, type = "n", main = "Add stakeholders to see distribution")
+        plot(1, 1, type = "n", main = i18n$t("modules.pims.stakeholder.add_stakeholders_to_see_distribution"))
         return()
       }
 
       sector_counts <- table(df$Sector)
       barplot(sector_counts,
-              main = "Stakeholders by Sector",
-              ylab = "Count",
+              main = i18n$t("modules.pims.stakeholder.stakeholders_by_sector"),
+              ylab = i18n$t("modules.pims.stakeholder.count"),
               col = "#F18F01",
               las = 2,
               cex.names = 0.8)
@@ -737,64 +732,13 @@ pimsStakeholderServer <- function(id, global_data) {
     )
 
     # Help Modal ----
-    observeEvent(input$help_stakeholder, {
-      showModal(modalDialog(
-        title = "PIMS: Stakeholder Identification and Engagement Guide",
-        size = "l",
-        easyClose = TRUE,
-
-        h4("Purpose"),
-        p("Effective stakeholder engagement is critical for marine ecosystem management. No single stakeholder has a complete view of the system - only by bringing diverse stakeholders together can we approach a holistic understanding."),
-
-        hr(),
-        h5("Key Concepts"),
-
-        tags$ul(
-          tags$li(strong("Stakeholder:"), "Anyone affected by or who can affect the marine social-ecological system"),
-          tags$li(strong("Power:"), "Ability to influence decisions and outcomes"),
-          tags$li(strong("Interest:"), "Level of concern or impact from the system"),
-          tags$li(strong("Engagement Level:"), "How deeply stakeholders should be involved")
-        ),
-
-        hr(),
-        h5("Using the Power-Interest Grid"),
-
-        tags$ul(
-          tags$li(strong("Key Players (High Power, High Interest):"), "Engage closely, involve in decision-making"),
-          tags$li(strong("Keep Satisfied (High Power, Low Interest):"), "Keep satisfied but don't overwhelm with communication"),
-          tags$li(strong("Keep Informed (Low Power, High Interest):"), "Keep informed and consult regarding their interests"),
-          tags$li(strong("Monitor (Low Power, Low Interest):"), "Monitor with minimum effort, inform via general communications")
-        ),
-
-        hr(),
-        h5("Engagement Levels (IAP2 Spectrum)"),
-
-        tags$ul(
-          tags$li(strong("Inform:"), "Provide information to stakeholders"),
-          tags$li(strong("Consult:"), "Obtain feedback on analysis, alternatives, decisions"),
-          tags$li(strong("Involve:"), "Work with stakeholders to ensure concerns are understood"),
-          tags$li(strong("Collaborate:"), "Partner with stakeholders in decision-making"),
-          tags$li(strong("Empower:"), "Place final decision-making in hands of stakeholders")
-        ),
-
-        hr(),
-        h5("Workflow"),
-
-        tags$ol(
-          tags$li(strong("Identify:"), "Add all relevant stakeholders to the register"),
-          tags$li(strong("Analyze:"), "Assess power and interest, visualize on grid"),
-          tags$li(strong("Plan:"), "Develop engagement strategy based on classification"),
-          tags$li(strong("Engage:"), "Conduct and document engagement activities"),
-          tags$li(strong("Communicate:"), "Maintain ongoing communication"),
-          tags$li(strong("Review:"), "Analyze coverage and adjust strategy")
-        ),
-
-        hr(),
-        p(em("Remember: Stakeholder engagement is an ongoing process, not a one-time activity.")),
-
-        footer = modalButton("Close")
-      ))
-    })
+    create_help_observer(
+      input,
+      "pims_stakeholder_help",
+      "pims_stakeholder_help_title",
+      tagList(p(i18n$t("modules.pims.stakeholder.pims_stakeholder_help_content"))),
+      i18n
+    )
 
     # Return reactive data
     return(reactive({ stakeholder_data }))

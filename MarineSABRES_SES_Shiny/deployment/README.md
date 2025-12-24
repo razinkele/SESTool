@@ -2,13 +2,29 @@
 
 This directory contains all necessary files for deploying the MarineSABRES Social-Ecological Systems Analysis Tool to production servers.
 
+## 📋 Pre-Deployment Check
+
+**NEW:** Before deploying, run the validation script:
+
+```bash
+cd deployment
+Rscript pre-deploy-check.R
+```
+
+This validates:
+- All required files and directories
+- Translation JSON validity
+- R package dependencies
+- R syntax in core files
+- Common deployment issues
+
 ## Quick Start
 
 ### Docker Deployment (Recommended)
 
 ```bash
 cd deployment
-docker-compose up -d
+./deploy.sh --docker
 ```
 
 Access at: http://localhost:3838
@@ -17,7 +33,7 @@ Access at: http://localhost:3838
 
 ```bash
 cd deployment
-sudo bash deploy.sh --shiny-server
+sudo ./deploy.sh --shiny-server
 ```
 
 Access at: http://your-server:3838/marinesabres
@@ -26,23 +42,75 @@ Access at: http://your-server:3838/marinesabres
 
 ```
 deployment/
-├── README.md                    # This file
-├── DEPLOYMENT_GUIDE.md          # Comprehensive deployment documentation
-├── Dockerfile                   # Docker container configuration
-├── docker-compose.yml           # Docker Compose orchestration
-├── shiny-server.conf            # Shiny Server configuration
-├── install_dependencies.R       # R package installation script
-└── deploy.sh                    # Automated deployment script
+├── README.md                      # This file
+├── DEPLOYMENT_GUIDE.md            # Comprehensive deployment documentation
+├── TROUBLESHOOTING.md             # Deployment troubleshooting guide (NEW)
+├── pre-deploy-check.R             # Pre-deployment validation script
+├── validate-deployment.sh         # Post-deployment validation
+├── check-deployment-status.sh     # Deployment diagnostics (NEW)
+├── force-restart-shiny.sh         # Force restart with cache clearing (NEW)
+├── Dockerfile                     # Docker container configuration
+├── docker-compose.yml             # Docker Compose orchestration
+├── shiny-server.conf              # Shiny Server configuration
+├── install_dependencies.R         # R package installation script
+└── deploy.sh                      # Automated deployment script
 ```
 
 ## File Descriptions
+
+### pre-deploy-check.R
+Validation script that checks:
+- Required files (app.R, global.R, functions/translation_loader.R)
+- Required directories (modules, functions, www, data, translations, scripts)
+- **Modular translation system** (common/, modules/, ui/, data/ subdirectories)
+- Reverse key mapping file (deprecated but validated)
+- R package dependencies
+- R syntax validity
+- Large files and temporary files
+
+Run this before every deployment to catch issues early.
+
+### check-deployment-status.sh (NEW)
+Diagnostic script that helps troubleshoot deployment issues:
+- Compares source vs deployed file timestamps
+- Checks Shiny Server and R process status
+- Validates modular translation system deployment
+- Verifies scripts directory (required for translations)
+- Shows recent application logs
+- Provides actionable recommendations
+
+### force-restart-shiny.sh (NEW)
+Force restart script that resolves "old version" issues:
+- Kills all Shiny R processes
+- Clears Shiny Server cache directories
+- Removes stale translation caches
+- Full stop/start cycle (not just restart)
+- Verifies clean restart
+
+### validate-deployment.sh
+Post-deployment validation script that checks:
+- All required files and directories copied
+- Modular translation structure present
+- SES template JSON files
+- Permissions correctly set
+- Shiny Server running
+- Network access working
+
+### TROUBLESHOOTING.md (NEW)
+Comprehensive troubleshooting guide covering:
+- "Server serving old version" solutions
+- Common deployment issues
+- Diagnostic tools usage
+- Browser cache problems
+- Process and cache management
+- Complete reset procedures
 
 ### Dockerfile
 Docker image definition for containerized deployment. Includes:
 - R 4.4.1 base image
 - All system dependencies
 - All R package dependencies
-- Application files
+- Application files (including translations)
 - Shiny Server configuration
 
 ### docker-compose.yml
@@ -67,13 +135,18 @@ R script that installs all required packages:
 - Time series (dygraphs, xts)
 - Reporting (rmarkdown)
 
-### deploy.sh
+### deploy.sh (UPDATED)
 Automated deployment script supporting:
 - Docker deployment
 - Shiny Server deployment
+- **Automatic process killing** before deployment
+- **Cache clearing** (Shiny Server and translation caches)
+- **Full stop/start cycle** (not just restart)
+- Scripts directory copying (required for modular translations)
 - Dependency installation
 - Configuration management
 - Health checks
+- **Browser cache reminder** in output
 
 ### DEPLOYMENT_GUIDE.md
 Comprehensive 350+ line guide covering:
@@ -224,17 +297,51 @@ docker run --rm \
 
 ## Troubleshooting
 
+### ⚠️ Server Serving Old Version After Deployment (COMMON ISSUE)
+
+**Quick Fix:**
+```bash
+# Step 1: Force restart with cache clearing
+sudo deployment/force-restart-shiny.sh
+
+# Step 2: Clear your browser cache
+# Chrome/Firefox: Ctrl+Shift+R (or Cmd+Shift+R on Mac)
+# Or open in Incognito/Private mode
+```
+
+**Diagnose the Issue:**
+```bash
+# Check what's wrong
+sudo deployment/check-deployment-status.sh
+```
+
+**Why This Happens:**
+1. **Browser cache** (most common) - Browser caches old JavaScript/CSS
+2. **Active R processes** - Old R sessions still running
+3. **Shiny Server cache** - Cached application state
+4. **Soft restart** - Processes not killed properly
+
+**Prevention:**
+- The updated `deploy.sh` now automatically handles all of these
+- Always clear browser cache after deployment
+- Use force-restart-shiny.sh if issues persist
+
+See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for complete guide.
+
 ### Application won't start
 ```bash
 # Check logs
 docker-compose logs -f  # Docker
-sudo tail -f /var/log/shiny-server.log  # Shiny Server
+sudo tail -f /var/log/shiny-server/marinesabres.log  # Shiny Server
 
 # Verify R packages
 Rscript -e "library(shiny); library(visNetwork)"
 
 # Check permissions
 ls -la /srv/shiny-server/marinesabres
+
+# Test if app loads
+sudo -u shiny Rscript /srv/shiny-server/marinesabres/app.R
 ```
 
 ### Port already in use
@@ -244,6 +351,19 @@ sudo lsof -i :3838
 
 # Kill process
 sudo kill -9 <PID>
+```
+
+### Translation errors after deployment
+```bash
+# Check modular translation structure
+ls -la /srv/shiny-server/marinesabres/translations/
+
+# Verify scripts directory exists
+ls -la /srv/shiny-server/marinesabres/scripts/
+
+# Remove stale translation cache
+sudo rm -f /srv/shiny-server/marinesabres/translations/_merged_translations.json
+sudo deployment/force-restart-shiny.sh
 ```
 
 ### Performance issues
@@ -279,8 +399,32 @@ See main LICENSE file for details.
 
 ## Version
 
-- **Package Version**: 1.0
-- **Last Updated**: 2025-10-21
+- **Package Version**: 1.2
+- **Last Updated**: 2025-12-01
 - **R Version**: 4.4.1+
 - **Shiny Server**: 1.5.21+
 - **Docker**: 20.10+
+
+## Recent Updates
+
+### v1.2 (2025-12-01)
+- ✅ **NEW:** Modular translation system support
+- ✅ **NEW:** Automatic cache clearing in deployment
+- ✅ **NEW:** Force restart script (force-restart-shiny.sh)
+- ✅ **NEW:** Deployment diagnostics script (check-deployment-status.sh)
+- ✅ **NEW:** Comprehensive troubleshooting guide (TROUBLESHOOTING.md)
+- ✅ **FIXED:** "Server serving old version" issue
+- ✅ **IMPROVED:** Full stop/start cycle instead of restart
+- ✅ **IMPROVED:** Scripts directory now included in deployment
+- ✅ **IMPROVED:** Browser cache reminder in deployment output
+- ✅ **IMPROVED:** Pre-deploy validation for modular translations
+
+### v1.1 (2024-11-17)
+- Added pre-deployment validation script
+- Updated framework validation
+- Enhanced error reporting
+
+### v1.0 (2024-10-21)
+- Initial deployment package
+- Docker and Shiny Server support
+- Automated deployment scripts

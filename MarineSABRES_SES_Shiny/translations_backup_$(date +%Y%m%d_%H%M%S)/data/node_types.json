@@ -1,0 +1,903 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "data.node_types.drivers.title",
+      "en": "Drivers",
+      "es": "Impulsores",
+      "fr": "Moteurs",
+      "de": "Treiber",
+      "lt": "Varomosios jėgos",
+      "pt": "Impulsores",
+      "it": "Driver"
+    },
+    {
+      "key": "data.node_types.drivers.subtitle",
+      "en": "Root Causes & Needs",
+      "es": "Causas Raíces y Necesidades",
+      "fr": "Causes Profondes et Besoins",
+      "de": "Grundursachen und Bedürfnisse",
+      "lt": "Pagrindinės priežastys ir poreikiai",
+      "pt": "Causas Raízes e Necessidades",
+      "it": "Cause Radici e Bisogni"
+    },
+    {
+      "key": "data.node_types.activities.title",
+      "en": "Activities",
+      "es": "Actividades",
+      "fr": "Activités",
+      "de": "Aktivitäten",
+      "lt": "Veiklos",
+      "pt": "Atividades",
+      "it": "Attività"
+    },
+    {
+      "key": "data.node_types.activities.subtitle",
+      "en": "Human Actions",
+      "es": "Acciones Humanas",
+      "fr": "Actions Humaines",
+      "de": "Menschliche Handlungen",
+      "lt": "Žmogaus veiksmai",
+      "pt": "Ações Humanas",
+      "it": "Azioni Umane"
+    },
+    {
+      "key": "data.node_types.pressures.title",
+      "en": "Pressures",
+      "es": "Presiones",
+      "fr": "Pressions",
+      "de": "Drücke",
+      "lt": "Spaudimai",
+      "pt": "Pressões",
+      "it": "Pressioni"
+    },
+    {
+      "key": "data.node_types.pressures.subtitle",
+      "en": "Environmental Stressors",
+      "es": "Estresores Ambientales",
+      "fr": "Facteurs de Stress Environnementaux",
+      "de": "Umweltbelastungen",
+      "lt": "Aplinkos streso veiksniai",
+      "pt": "Estressores Ambientais",
+      "it": "Fattori di Stress Ambientale"
+    },
+    {
+      "key": "data.node_types.state.title",
+      "en": "State",
+      "es": "Estado",
+      "fr": "État",
+      "de": "Zustand",
+      "lt": "Būsena",
+      "pt": "Estado",
+      "it": "Stato"
+    },
+    {
+      "key": "data.node_types.state.subtitle",
+      "en": "Ecosystem Condition",
+      "es": "Condición del Ecosistema",
+      "fr": "État de l'Écosystème",
+      "de": "Ökosystemzustand",
+      "lt": "Ekosistemos būklė",
+      "pt": "Condição do Ecossistema",
+      "it": "Condizione dell'Ecosistema"
+    },
+    {
+      "key": "data.node_types.marine_processes.title",
+      "en": "Marine Processes & Functioning",
+      "es": "Procesos y Funcionamiento Marino",
+      "fr": "Processus et Fonctionnement Marin",
+      "de": "Marineprozesse und -funktionen",
+      "lt": "Jūrų procesai ir funkcijos",
+      "pt": "Processos e Funcionamento Marinho",
+      "it": "Processi e Funzionamento Marino"
+    },
+    {
+      "key": "data.node_types.ecosystem_services.title",
+      "en": "Ecosystem Services",
+      "es": "Servicios Ecosistémicos",
+      "fr": "Services Écosystémiques",
+      "de": "Ökosystemleistungen",
+      "lt": "Ekosistemos paslaugos",
+      "pt": "Serviços Ecossistêmicos",
+      "it": "Servizi Ecosistemici"
+    },
+    {
+      "key": "data.node_types.ecosystem_services.subtitle",
+      "en": "Nature's Benefits",
+      "es": "Beneficios de la Naturaleza",
+      "fr": "Bienfaits de la Nature",
+      "de": "Vorteile der Natur",
+      "lt": "Gamtos nauda",
+      "pt": "Benefícios da Natureza",
+      "it": "Benefici della Natura"
+    },
+    {
+      "key": "data.node_types.goods_benefits.title",
+      "en": "Goods & Benefits",
+      "es": "Bienes y Beneficios",
+      "fr": "Biens et Bénéfices",
+      "de": "Güter und Nutzen",
+      "lt": "Gėriai ir nauda",
+      "pt": "Bens e Benefícios",
+      "it": "Beni e Benefici"
+    },
+    {
+      "key": "data.node_types.goods_benefits.subtitle",
+      "en": "Human Welfare",
+      "es": "Bienestar Humano",
+      "fr": "Bien-être Humain",
+      "de": "Menschliches Wohlergehen",
+      "lt": "Žmonių gerovė",
+      "pt": "Bem-estar Humano",
+      "it": "Benessere Umano"
+    },
+    {
+      "key": "data.node_types.responses.title",
+      "en": "Responses",
+      "es": "Respuestas",
+      "fr": "Réponses",
+      "de": "Reaktionen",
+      "lt": "Atsakai",
+      "pt": "Respostas",
+      "it": "Risposte"
+    },
+    {
+      "key": "data.node_types.responses.subtitle",
+      "en": "Management Actions",
+      "es": "Acciones de Gestión",
+      "fr": "Actions de Gestion",
+      "de": "Managementmaßnahmen",
+      "lt": "Valdymo veiksmai",
+      "pt": "Ações de Gestão",
+      "it": "Azioni di Gestione"
+    },
+    {
+      "key": "data.node_types.measures.title",
+      "en": "Measures",
+      "es": "Medidas",
+      "fr": "Mesures",
+      "de": "Maßnahmen",
+      "lt": "Priemonės",
+      "pt": "Medidas",
+      "it": "Misure"
+    },
+    {
+      "key": "data.node_types.measures.subtitle",
+      "en": "Implementation Tools",
+      "es": "Herramientas de Implementación",
+      "fr": "Outils de Mise en Œuvre",
+      "de": "Umsetzungswerkzeuge",
+      "lt": "Įgyvendinimo priemonės",
+      "pt": "Ferramentas de Implementação",
+      "it": "Strumenti di Implementazione"
+    },
+    {
+      "key": "data.node_types._visualization_module_ui_elements",
+      "en": "# Visualization Module - UI Elements",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.a_causal_loop_diagram_cld_is_a_visual_representati",
+      "en": "A Causal Loop Diagram (CLD) is a visual representation of how different elements in your social-ecological system are connected through cause-and-effect relationships.",
+      "es": "Un Diagrama de Bucles Causales (CLD) es una representación visual de cómo diferentes elementos en su sistema socio-ecológico están conectados a través de relaciones de causa y efecto.",
+      "fr": "Un Diagramme de Boucles Causales (CLD) est une représentation visuelle de la façon dont différents éléments de votre système socio-écologique sont connectés par des relations de cause à effet.",
+      "de": "Ein Kausales Schleifendiagramm (CLD) ist eine visuelle Darstellung, wie verschiedene Elemente in Ihrem sozial-ökologischen System durch Ursache-Wirkungs-Beziehungen verbunden sind.",
+      "lt": "Priežastinių kilpų diagrama (CLD) yra vizualinis vaizdavimas, kaip skirtingi jūsų socialinės-ekologinės sistemos elementai yra susiję priežasties ir pasekmės ryšiais.",
+      "pt": "Um Diagrama de Loops Causais (CLD) é uma representação visual de como diferentes elementos no seu sistema socioecológico estão conectados através de relações de causa e efeito.",
+      "it": "Un Diagramma dei Loop Causali (CLD) è una rappresentazione visiva di come diversi elementi del tuo sistema socio-ecologico sono collegati attraverso relazioni causa-effetto."
+    },
+    {
+      "key": "data.node_types.nodes",
+      "en": "Nodes:",
+      "es": "Nodos:",
+      "fr": "Nœuds:",
+      "de": "Knoten:",
+      "lt": "Mazgai:",
+      "pt": "Nós:",
+      "it": "Nodi:"
+    },
+    {
+      "key": "data.node_types._show_causal_connections_between_elements_arrow_di",
+      "en": " Show causal connections between elements. Arrow direction indicates the direction of influence",
+      "es": " Muestran conexiones causales entre elementos. La dirección de la flecha indica la dirección de influencia",
+      "fr": " Montrent les connexions causales entre les éléments. La direction de la flèche indique la direction de l'influence",
+      "de": " Zeigen kausale Verbindungen zwischen Elementen. Die Pfeilrichtung zeigt die Richtung des Einflusses",
+      "lt": " Rodo priežastinius ryšius tarp elementų. Rodyklės kryptis nurodo įtakos kryptį",
+      "pt": " Mostram conexões causais entre elementos. A direção da seta indica a direção da influência",
+      "it": " Mostrano connessioni causali tra elementi. La direzione della freccia indica la direzione dell'influenza"
+    },
+    {
+      "key": "data.node_types.polarity_means_the_elements_change_in_the_same_dir",
+      "en": "Polarity: + means the elements change in the same direction, - means they change in opposite directions",
+      "es": "Polaridad: + significa que los elementos cambian en la misma dirección, - significa que cambian en direcciones opuestas",
+      "fr": "Polarité: + signifie que les éléments changent dans la même direction, - signifie qu'ils changent dans des directions opposées",
+      "de": "Polarität: + bedeutet, dass sich die Elemente in die gleiche Richtung ändern, - bedeutet, dass sie sich in entgegengesetzte Richtungen ändern",
+      "lt": "Polaritetas: + reiškia, kad elementai keičiasi ta pačia kryptimi, - reiškia, kad jie keičiasi priešingomis kryptimis",
+      "pt": "Polaridade: + significa que os elementos mudam na mesma direção, - significa que eles mudam em direções opostas",
+      "it": "Polarità: + significa che gli elementi cambiano nella stessa direzione, - significa che cambiano in direzioni opposte"
+    },
+    {
+      "key": "data.node_types.elements",
+      "en": "Elements:",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.analyzing_your_elements_and_generating_connections",
+      "en": "Analyzing your elements and generating connections...",
+      "es": "Analizando tus elementos y generando conexiones...",
+      "fr": "Analyse de vos éléments et génération de connexions...",
+      "de": "Analysiere deine Elemente und generiere Verbindungen...",
+      "lt": "Analizuojami jūsų elementai ir generuojami ryšiai...",
+      "pt": "Analisando seus elementos e gerando conexões...",
+      "it": "Analisi degli elementi e generazione delle connessioni..."
+    },
+    {
+      "key": "data.node_types.elements_but_i_couldn",
+      "en": "elements, but I couldn",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.total_elements_created",
+      "en": "Total elements created",
+      "es": "Elementos totales creados",
+      "fr": "Total des éléments créés",
+      "de": "Insgesamt erstellte Elemente",
+      "lt": "Iš viso sukurta elementų",
+      "pt": "Total de elementos criados",
+      "it": "Totale elementi creati"
+    },
+    {
+      "key": "data.node_types.total_elements",
+      "en": "Total elements:",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.elements_and",
+      "en": "elements and",
+      "es": "elementos y",
+      "fr": "éléments et",
+      "de": "Elemente und",
+      "lt": "elementai ir",
+      "pt": "elementos e",
+      "it": "elementi e"
+    },
+    {
+      "key": "data.node_types.feedback_loops_are_circular_patterns_in_the_system",
+      "en": "Feedback loops are circular patterns in the system where an element eventually affects itself through a chain of causal connections. These loops are fundamental to understanding system dynamics and behavior.",
+      "es": "Los bucles de retroalimentación son patrones circulares en el sistema donde un elemento eventualmente afecta a sí mismo a través de una cadena de conexiones causales. Estos bucles son fundamentales para comprender la dinámica y el comportamiento del sistema.",
+      "fr": "Les boucles de rétroaction sont des motifs circulaires dans le système où un élément finit par s'affecter lui-même par une chaîne de connexions causales. Ces boucles sont fondamentales pour comprendre la dynamique et le comportement du système.",
+      "de": "Rückkopplungsschleifen sind zirkuläre Muster im System, bei denen ein Element sich schließlich durch eine Kette kausaler Verbindungen selbst beeinflusst. Diese Schleifen sind grundlegend für das Verständnis der Systemdynamik und des Verhaltens.",
+      "lt": "Grįžtamojo ryšio ciklai yra žiediniai modeliai sistemoje, kai elementas galiausiai veikia save per priežastinių ryšių grandinę. Šie ciklai yra esminiai suprantant sistemos dinamiką ir elgseną.",
+      "pt": "Loops de feedback são padrões circulares no sistema onde um elemento eventualmente afeta a si mesmo através de uma cadeia de conexões causais. Esses loops são fundamentais para entender a dinâmica e o comportamento do sistema.",
+      "it": "I loop di feedback sono modelli circolari nel sistema in cui un elemento finisce per influenzare se stesso attraverso una catena di connessioni causali. Questi loop sono fondamentali per comprendere la dinamica e il comportamento del sistema."
+    },
+    {
+      "key": "data.node_types.5_element_participation",
+      "en": "5. Element participation:",
+      "es": "5. Participación de elementos:",
+      "fr": "5. Participation des éléments :",
+      "de": "5. Elementbeteiligung:",
+      "lt": "5. Elementų dalyvavimas:",
+      "pt": "5. Participação de elementos:",
+      "it": "5. Partecipazione di elementi:"
+    },
+    {
+      "key": "data.node_types._identify_which_system_elements_participate_in_mos",
+      "en": " Identify which system elements participate in most loops",
+      "es": "Identifique qué elementos del sistema participan en la mayoría de los bucles",
+      "fr": "Identifiez quels éléments du système participent à la plupart des boucles",
+      "de": "Identifizieren Sie, welche Systemelemente an den meisten Schleifen teilnehmen",
+      "lt": "Nustatykite, kurie sistemos elementai dalyvauja daugumoje ciklų",
+      "pt": "Identifique quais elementos do sistema participam na maioria dos loops",
+      "it": "Identifica quali elementi del sistema partecipano alla maggior parte dei loop"
+    },
+    {
+      "key": "data.node_types._number_of_elements_in_the_loop_shorter_loops_35_e",
+      "en": " Number of elements in the loop. Shorter loops (3-5 elements) tend to have greater influence.",
+      "es": "Número de elementos en el bucle. Bucles más cortos (3-5 elementos) tienden a tener mayor influencia.",
+      "fr": "Nombre d'éléments dans la boucle. Les boucles plus courtes (3-5 éléments) ont tendance à avoir plus d'influence.",
+      "de": "Anzahl der Elemente in der Schleife. Kürzere Schleifen (3-5 Elemente) haben tendenziell größeren Einfluss.",
+      "lt": "Elementų skaičius cikle. Trumpesni ciklai (3-5 elementai) turi didesnę įtaką.",
+      "pt": "Número de elementos no loop. Loops mais curtos (3-5 elementos) tendem a ter maior influência.",
+      "it": "Numero di elementi nel loop. Loop più corti (3-5 elementi) tendono ad avere maggiore influenza."
+    },
+    {
+      "key": "data.node_types.element_participation",
+      "en": "Element participation:",
+      "es": "Participación de elementos:",
+      "fr": "Participation des éléments :",
+      "de": "Elementbeteiligung:",
+      "lt": "Elementų dalyvavimas:",
+      "pt": "Participação de elementos:",
+      "it": "Partecipazione di elementi:"
+    },
+    {
+      "key": "data.node_types._elements_appearing_in_multiple_loops_are_potentia",
+      "en": " Elements appearing in multiple loops are potential leverage points for interventions.",
+      "es": "Elementos que aparecen en múltiples bucles son puntos de apalancamiento potenciales para intervenciones.",
+      "fr": "Les éléments qui apparaissent dans plusieurs boucles sont des points de levier potentiels pour les interventions.",
+      "de": "Elemente, die in mehreren Schleifen vorkommen, sind potenzielle Hebelpunkte für Interventionen.",
+      "lt": "Elementai, pasirodyantys keliuose cikluose, yra potencialūs sverties taškai intervencijoms.",
+      "pt": "Elementos que aparecem em múltiplos loops são pontos de alavancagem potenciais para intervenções.",
+      "it": "Gli elementi che compaiono in più loop sono potenziali punti di leva per gli interventi."
+    },
+    {
+      "key": "data.node_types.calculate_and_visualize_centrality_metrics_to_iden",
+      "en": "Calculate and visualize centrality metrics to identify key nodes and understand network structure.",
+      "es": "Calcule y visualice métricas de centralidad para identificar nodos clave y comprender la estructura de la red.",
+      "fr": "Calculez et visualisez les métriques de centralité pour identifier les nœuds clés et comprendre la structure du réseau.",
+      "de": "Berechnen und visualisieren Sie Zentralitätsmetriken, um Schlüsselknoten zu identifizieren und die Netzwerkstruktur zu verstehen.",
+      "lt": "Apskaičiuokite ir vizualizuokite centrinio svarbos metrikos, kad nustatytumėte pagrindinius mazgus ir suprastumėte tinklo struktūrą.",
+      "pt": "Calcule e visualize métricas de centralidade para identificar nós-chave e compreender a estrutura da rede.",
+      "it": "Calcola e visualizza le metriche di centralità per identificare i nodi chiave e comprendere la struttura della rete."
+    },
+    {
+      "key": "data.node_types.total_nodes",
+      "en": "Total Nodes",
+      "es": "Total de Nodos",
+      "fr": "Total de Nœuds",
+      "de": "Gesamtknoten",
+      "lt": "Viso mazgų",
+      "pt": "Total de Nós",
+      "it": "Totale Nodi"
+    },
+    {
+      "key": "data.node_types.average_shortest_path_between_any_two_nodes",
+      "en": "Average shortest path between any two nodes",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.nodelevel_centrality_metrics",
+      "en": "Node-Level Centrality Metrics",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.top_n_nodes",
+      "en": "Top N Nodes",
+      "es": "Top N Nodos",
+      "fr": "Top N Nœuds",
+      "de": "Top N Knoten",
+      "lt": "Top N mazgai",
+      "pt": "Top N Nós",
+      "it": "Top N Nodi"
+    },
+    {
+      "key": "data.node_types.key_nodes",
+      "en": "Key Nodes",
+      "es": "Nodos Clave",
+      "fr": "Nœuds Clés",
+      "de": "Schlüsselknoten",
+      "lt": "Pagrindiniai mazgai",
+      "pt": "Nós-Chave",
+      "it": "Nodi Chiave"
+    },
+    {
+      "key": "data.node_types.most_important_nodes_by_different_metrics",
+      "en": "Most Important Nodes by Different Metrics",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.top_5_nodes_by_degree",
+      "en": "Top 5 Nodes by Degree",
+      "es": "Top 5 Nodos por Grado",
+      "fr": "Top 5 Nœuds par Degré",
+      "de": "Top 5 Knoten nach Grad",
+      "lt": "Top 5 mazgai pagal laipsnį",
+      "pt": "Top 5 Nós por Grau",
+      "it": "Top 5 Nodi per Grado"
+    },
+    {
+      "key": "data.node_types.most_connected_nodes_in_the_network",
+      "en": "Most connected nodes in the network",
+      "es": "Nodos más conectados en la red",
+      "fr": "Nœuds les plus connectés du réseau",
+      "de": "Am meisten verbundene Knoten im Netzwerk",
+      "lt": "Labiausiai susiję mazgai tinkle",
+      "pt": "Nós mais conectados na rede",
+      "it": "Nodi più connessi nella rete"
+    },
+    {
+      "key": "data.node_types.top_5_nodes_by_betweenness",
+      "en": "Top 5 Nodes by Betweenness",
+      "es": "Top 5 Nodos por Intermediación",
+      "fr": "Top 5 Nœuds par Intermédiarité",
+      "de": "Top 5 Knoten nach Zwischen",
+      "lt": "Top 5 mazgai pagal tarpininkavimą",
+      "pt": "Top 5 Nós por Intermediação",
+      "it": "Top 5 Nodi per Betweenness"
+    },
+    {
+      "key": "data.node_types.critical_bridge_nodes_connecting_different_parts",
+      "en": "Critical bridge nodes connecting different parts",
+      "es": "Nodos puente críticos que conectan diferentes partes",
+      "fr": "Nœuds de pont critiques reliant différentes parties",
+      "de": "Kritische Brückenknoten, die verschiedene Teile verbinden",
+      "lt": "Kritiniai tilto mazgai, jungiantys skirtingas dalis",
+      "pt": "Nós de ponte críticos conectando diferentes partes",
+      "it": "Nodi ponte critici che collegano diverse parti"
+    },
+    {
+      "key": "data.node_types.top_5_nodes_by_closeness",
+      "en": "Top 5 Nodes by Closeness",
+      "es": "Top 5 Nodos por Cercanía",
+      "fr": "Top 5 Nœuds par Proximité",
+      "de": "Top 5 Knoten nach Nähe",
+      "lt": "Top 5 mazgai pagal artumą",
+      "pt": "Top 5 Nós por Proximidade",
+      "it": "Top 5 Nodi per Vicinanza"
+    },
+    {
+      "key": "data.node_types.most_central_nodes_with_shortest_paths_to_others",
+      "en": "Most central nodes with shortest paths to others",
+      "es": "Nodos más centrales con rutas más cortas a otros",
+      "fr": "Nœuds les plus centraux avec les chemins les plus courts vers les autres",
+      "de": "Zentralste Knoten mit kürzesten Pfaden zu anderen",
+      "lt": "Centriškiausi mazgai su trumpiausiais keliais į kitus",
+      "pt": "Nós mais centrais com caminhos mais curtos para outros",
+      "it": "Nodi più centrali con percorsi più brevi verso gli altri"
+    },
+    {
+      "key": "data.node_types.most_influential_nodes_based_on_incoming_connectio",
+      "en": "Most influential nodes based on incoming connections",
+      "es": "Nodos más influyentes basados en conexiones entrantes",
+      "fr": "Nœuds les plus influents basés sur les connexions entrantes",
+      "de": "Einflussreichste Knoten basierend auf eingehenden Verbindungen",
+      "lt": "Įtakingiausi mazgai pagal įeinančius ryšius",
+      "pt": "Nós mais influentes com base em conexões de entrada",
+      "it": "Nodi più influenti in base alle connessioni in entrata"
+    },
+    {
+      "key": "data.node_types.average_steps_needed_to_reach_any_node_from_any_ot",
+      "en": "Average steps needed to reach any node from any other node.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.node_centrality_metrics",
+      "en": "Node Centrality Metrics",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.how_often_a_node_lies_on_shortest_paths_between_ot",
+      "en": "How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.how_close_a_node_is_to_all_other_nodes_high_closen",
+      "en": "How close a node is to all other nodes. High closeness = can quickly reach or be reached by others.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.importance_based_on_connections_to_other_important",
+      "en": "Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.most_influential_system_components",
+      "en": "Most influential system components",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.previewexogenousnodesbeforeremoval",
+      "en": "preview_exogenous_nodes_before_removal",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.high_composite_score_these_nodes_are_your_top_leve",
+      "en": "High Composite Score: These nodes are your top leverage points. Interventions here can have cascading effects throughout the system.",
+      "es": "Puntuación Compuesta Alta: Estos nodos son sus principales puntos de apalancamiento. Las intervenciones aquí pueden tener efectos en cascada en todo el sistema.",
+      "fr": "Score Composite Élevé : Ces nœuds sont vos principaux points de levier. Les interventions ici peuvent avoir des effets en cascade dans tout le système.",
+      "de": "Hoher zusammengesetzter Score: Diese Knoten sind Ihre Top-Hebelpunkte. Interventionen hier können kaskadierende Auswirkungen im gesamten System haben.",
+      "lt": "Didelis kompozitinis balas: Šie mazgai yra jūsų pagrindiniai sverties taškai. Intervencijos čia gali turėti kaskadines pasekmes visoje sistemoje.",
+      "pt": "Pontuação Composta Alta: Estes nós são seus principais pontos de alavancagem. Intervenções aqui podem ter efeitos em cascata em todo o sistema.",
+      "it": "Punteggio Composito Alto: Questi nodi sono i tuoi principali punti di leva. Gli interventi qui possono avere effetti a cascata in tutto il sistema."
+    },
+    {
+      "key": "data.node_types.high_eigenvector_target_nodes_that_are_influential",
+      "en": "High Eigenvector: Target nodes that are influential because they",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.prioritize_interventions_focus_resources_on_highle",
+      "en": "Prioritize interventions: Focus resources on high-leverage nodes rather than spreading efforts thinly across many nodes.",
+      "es": "Priorizar intervenciones: Enfoque recursos en nodos de alto apalancamiento en lugar de dispersar esfuerzos entre muchos nodos.",
+      "fr": "Prioriser les interventions : Concentrez les ressources sur les nœuds à fort effet de levier plutôt que de disperser les efforts sur de nombreux nœuds.",
+      "de": "Interventionen priorisieren: Konzentrieren Sie Ressourcen auf Knoten mit hohem Hebel, anstatt Bemühungen über viele Knoten zu verteilen.",
+      "lt": "Nustatyti intervencijų prioritetus: Sutelkti išteklius į didelės sverto galios mazgus, o ne sklaidos pastangas tarp daugelio mazgų.",
+      "pt": "Priorizar intervenções: Concentre recursos em nós de alta alavancagem em vez de espalhar esforços por muitos nós.",
+      "it": "Dare priorità agli interventi: Concentra le risorse sui nodi ad alta leva anziché distribuire gli sforzi su molti nodi."
+    },
+    {
+      "key": "data.node_types.combine_with_loop_analysis_nodes_that_appear_in_mu",
+      "en": "Combine with loop analysis: Nodes that appear in multiple feedback loops AND have high leverage scores are especially important for system-wide change.",
+      "es": "Combinar con análisis de bucles: Los nodos que aparecen en múltiples bucles de retroalimentación Y tienen puntuaciones de apalancamiento altas son especialmente importantes para el cambio en todo el sistema.",
+      "fr": "Combiner avec l'analyse de boucles : Les nœuds qui apparaissent dans plusieurs boucles de rétroaction ET ont des scores de levier élevés sont particulièrement importants pour le changement à l'échelle du système.",
+      "de": "Mit Schleifenanalyse kombinieren: Knoten, die in mehreren Rückkopplungsschleifen vorkommen UND hohe Hebelwerte haben, sind besonders wichtig für systemweite Veränderungen.",
+      "lt": "Derinti su ciklų analize: Mazgai, pasirodyantys keliuose grįžtamojo ryšio cikluose IR turintys didelius sverties balus, yra ypač svarbūs sistemos pokyčiams.",
+      "pt": "Combine com análise de loops: Nós que aparecem em múltiplos loops de feedback E têm altas pontuações de alavancagem são especialmente importantes para mudanças em todo o sistema.",
+      "it": "Combinare con l'analisi dei loop: I nodi che compaiono in più loop di feedback E hanno alti punteggi di leva sono particolarmente importanti per il cambiamento a livello di sistema."
+    },
+    {
+      "key": "data.node_types.complete_control_over_all_elements",
+      "en": "Complete control over all elements",
+      "es": "Control completo sobre todos los elementos",
+      "fr": "Contrôle complet sur tous les éléments",
+      "de": "Vollständige Kontrolle über alle Elemente",
+      "lt": "Visiškas kontrolė virš visų elementų",
+      "pt": "Controle completo sobre todos os elementos",
+      "it": "Controllo completo su tutti gli elementi"
+    },
+    {
+      "key": "data.node_types.automatic_element_generation",
+      "en": "Automatic element generation",
+      "es": "Generación automática de elementos",
+      "fr": "Génération automatique d'éléments",
+      "de": "Automatische Elementgenerierung",
+      "lt": "Automatinis elementų generavimas",
+      "pt": "Geração automática de elementos",
+      "it": "Generazione automatica di elementi"
+    },
+    {
+      "key": "data.node_types.readytocustomize_elements",
+      "en": "Ready-to-customize elements",
+      "es": "Elementos listos para personalizar",
+      "fr": "Éléments prêts à personnaliser",
+      "de": "Anpassbare Elemente",
+      "lt": "Paruošti pritaikymui elementai",
+      "pt": "Elementos prontos para personalizar",
+      "it": "Elementi pronti da personalizzare"
+    },
+    {
+      "key": "data.node_types.use_isa_data_entry_to_map_dapsiwrm_elements_with_c",
+      "en": "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection",
+      "es": "Use Entrada de Datos ISA para mapear elementos DAPSI(W)R(M) con niveles de confianza (1-5) para cada conexión",
+      "fr": "Utilisez la Saisie de Données ISA pour cartographier les éléments DAPSI(W)R(M) avec des niveaux de confiance (1-5) pour chaque connexion",
+      "de": "Verwenden Sie ISA-Dateneingabe, um DAPSI(W)R(M)-Elemente mit Vertrauensstufen (1-5) für jede Verbindung zu kartieren",
+      "lt": "Naudokite ISA duomenų įvedimą DAPSI(W)R(M) elementams susieti su pasitikėjimo lygiais (1-5) kiekvienam ryšiui",
+      "pt": "Use Entrada de Dados ISA para mapear elementos DAPSI(W)R(M) com níveis de confiança (1-5) para cada conexão",
+      "it": "Usa Inserimento Dati ISA per mappare elementi DAPSI(W)R(M) con livelli di confidenza (1-5) per ogni connessione"
+    },
+    {
+      "key": "data.node_types.elements_sheet_columns",
+      "en": "Elements sheet columns:",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.review_the_connections_between_dapsiwrm_elements",
+      "en": "Review the connections between DAPSI(W)R(M) elements:",
+      "es": "Revise las conexiones entre los elementos DAPSI(W)R(M):",
+      "fr": "Examinez les connexions entre les éléments DAPSI(W)R(M) :",
+      "de": "Überprüfen Sie die Verbindungen zwischen DAPSI(W)R(M)-Elementen:",
+      "lt": "Peržiūrėkite ryšius tarp DAPSI(W)R(M) elementų:",
+      "pt": "Reveja as ligações entre os elementos DAPSI(W)R(M):",
+      "it": "Rivedere le connessioni tra gli elementi DAPSI(W)R(M):"
+    },
+    {
+      "key": "data.node_types.element_type",
+      "en": "Element Type:",
+      "es": "Tipo de Elemento:",
+      "fr": "Type d'Élément :",
+      "de": "Elementtyp:",
+      "lt": "Elemento tipas:",
+      "pt": "Tipo de Elemento:",
+      "it": "Tipo di Elemento:"
+    },
+    {
+      "key": "data.node_types.target_element_id",
+      "en": "Target Element ID:",
+      "es": "ID del Elemento Objetivo:",
+      "fr": "ID de l'Élément Cible:",
+      "de": "Zielelement-ID:",
+      "lt": "Tikslo Elemento ID:",
+      "pt": "ID do Elemento Alvo:",
+      "it": "ID Elemento Obiettivo:"
+    },
+    {
+      "key": "data.node_types.problem_element_id",
+      "en": "Problem Element ID:",
+      "es": "ID del Elemento del Problema:",
+      "fr": "ID de l'Élément du Problème:",
+      "de": "Problemelement-ID:",
+      "lt": "Problemos Elemento ID:",
+      "pt": "ID do Elemento do Problema:",
+      "it": "ID Elemento del Problema:"
+    },
+    {
+      "key": "data.node_types.scenarioaddmodifynodes",
+      "en": "scenario_add_modify_nodes",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenarioaddnewnode",
+      "en": "scenario_add_new_node",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenarioremovenodes",
+      "en": "scenario_remove_nodes",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenarioremovenode",
+      "en": "scenario_remove_node",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenarionodelabelplaceholder",
+      "en": "scenario_node_label_placeholder",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenarionodeadded",
+      "en": "scenario_node_added",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenarionodemarkedforremoval",
+      "en": "scenario_node_marked_for_removal",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenariofromnode",
+      "en": "scenario_from_node",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenariotonode",
+      "en": "scenario_to_node",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenariototalnodes",
+      "en": "scenario_total_nodes",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenariochangednodes",
+      "en": "scenario_changed_nodes",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenarionodes",
+      "en": "scenario_nodes",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenarionodeslowercase",
+      "en": "scenario_nodes_lowercase",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.scenarionode",
+      "en": "scenario_node",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.conflicting_modifications_for_nodes_s",
+      "en": "Conflicting modifications for nodes: %s",
+      "es": "Modificaciones conflictivas para nodos: %s",
+      "fr": "Modifications conflictuelles pour les nœuds: %s",
+      "de": "Widersprüchliche Änderungen für Knoten: %s",
+      "lt": "Prieštaringi pakeitimai mazgams: %s",
+      "pt": "Modificações conflitantes para nós: %s",
+      "it": "Modifiche in conflitto per i nodi: %s"
+    },
+    {
+      "key": "data.node_types.scenarionewnodeadded",
+      "en": "scenario_new_node_added",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "data.node_types.this_template_includes_d_predefined_connections_be",
+      "en": "This template includes %d predefined connections between elements.",
+      "es": "Esta plantilla incluye %d conexiones predefinidas entre elementos.",
+      "fr": "Ce modèle inclut %d connexions prédéfinies entre les éléments.",
+      "de": "Diese Vorlage enthält %d vordefinierte Verbindungen zwischen Elementen.",
+      "lt": "Šis šablonas apima %d iš anksto apibrėžtų ryšių tarp elementų.",
+      "pt": "Este modelo inclui %d conexões predefinidas entre elementos.",
+      "it": "Questo modello include %d connessioni predefinite tra elementi."
+    },
+    {
+      "key": "data.node_types.total_elements",
+      "en": "Total Elements",
+      "es": "Elementos Totales",
+      "fr": "Éléments Totaux",
+      "de": "Gesamtelemente",
+      "lt": "Viso elementų",
+      "pt": "Total de Elementos",
+      "it": "Elementi Totali"
+    },
+    {
+      "key": "data.node_types.dapsiwrm_elements",
+      "en": "DAPSI(W)R(M) Elements",
+      "es": "Elementos DAPSI(W)R(M)",
+      "fr": "Éléments DAPSI(W)R(M)",
+      "de": "DAPSI(W)R(M) Elemente",
+      "lt": "DAPSI(W)R(M) elementai",
+      "pt": "Elementos DAPSI(W)R(M)",
+      "it": "Elementi DAPSI(W)R(M)"
+    },
+    {
+      "key": "data.node_types.elements_created",
+      "en": "elements created",
+      "es": "elementos creados",
+      "fr": "éléments créés",
+      "de": "Elemente erstellt",
+      "lt": "elementai sukurti",
+      "pt": "elementos criados",
+      "it": "elementi creati"
+    },
+    {
+      "key": "data.node_types.nodes_in_cld",
+      "en": "nodes in CLD",
+      "es": "nodos en CLD",
+      "fr": "nœuds dans le CLD",
+      "de": "Knoten im CLD",
+      "lt": "mazgai CLD",
+      "pt": "nós no CLD",
+      "it": "nodi nel CLD"
+    }
+  ]
+}

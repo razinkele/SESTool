@@ -65,6 +65,20 @@ jobs:
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
 
+      - name: Prepare test fixtures
+        run: |
+          # Ensure a 'data' directory exists and copy template fixtures into it so
+          # tests that search for data/ or templates can find deterministic fixtures.
+          dir.create("data", showWarnings = FALSE)
+          fixtures <- list.files("tests/fixtures/templates", pattern = "\\.json$", full.names = TRUE)
+          if (length(fixtures) > 0) {
+            file.copy(fixtures, "data", overwrite = TRUE)
+            message(sprintf("Copied %i fixture(s) into data/", length(fixtures)))
+          } else {
+            message("No fixture JSON files found in tests/fixtures/templates")
+          }
+        shell: Rscript {0}
+
       - name: Run tests
         run: |
           library(testthat)

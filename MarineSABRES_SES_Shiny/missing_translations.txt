@@ -1,0 +1,1107 @@
+MarineSABRES Social-Ecological Systems Analysis Tool
+Welcome to the computer-assisted SES creation and analysis platform.
+ISA Data Status
+CLD Status
+Analysis Status
+Bookmark restored successfully!
+Choose RDS File:
+key
+User Experience Level
+Download Manuals
+App Info
+Beginner
+Step-by-Step Tutorial
+Quick Reference
+Save current state as bookmark
+Getting Started
+Guided entry point to find the right tools for your marine management needs
+Overview of your project status and key metrics
+PIMS Module
+Project Setup
+Stakeholders
+Resources & Risks
+Data Management
+Evaluation
+AI guided SES creation
+Template based SES creation
+Choose Method
+Standard Entry
+AI Assistant
+Template-Based
+SES Visualization
+Loop Detection
+Leverage Point Analysis
+Network Metrics
+BOT Analysis
+Simplification
+Response & Validation
+Validation
+Quick Actions
+Regional Sea Context
+Hello! I
+Ecosystem Type
+What type of marine ecosystem are you studying?
+Main Issue Identification
+What are the main environmental or management issues you
+Drivers - Societal Needs
+Let
+Activities - Human Actions
+Now let
+Pressures - Environmental Stressors
+What PRESSURES do these activities put on the marine environment?
+State Changes - Ecosystem Effects
+How do these pressures change the STATE of the marine ecosystem?
+Impacts - Effects on Ecosystem Services
+What are the IMPACTS on ecosystem services and benefits? How do these changes affect what the ocean provides?
+Welfare - Human Well-being Effects
+How do these impacts affect human WELFARE and well-being?
+Response Measures - Management & Policy
+What RESPONSE MEASURES (management actions, policies, regulations) are being taken (or could be taken) to address these issues?
+Connection Review
+Great! Now I
+This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.
+Your SES Model Progress
+Step %d of %d
+Current Framework:
+Elements:
+Drivers:
+Activities:
+Pressures:
+State Changes:
+Impacts:
+Welfare:
+Response Measures:
+Connection Types:
+Connections:
+Session Management
+Save Progress
+Save your current progress to browser storage
+Load Saved
+Restore your last saved session
+Preview Model
+Save to ISA Data Entry
+Transfer your completed model to the standard ISA Data Entry module where you can view and edit it in detail
+Load Example Template
+Start Over
+seconds ago
+minutes ago
+Auto-saved
+Not yet saved
+Restore Previous Session?
+Found a saved session from
+Do you want to restore it?
+Yes, Restore
+No saved session found.
+A previous session was found. Click 
+Great work! You
+Review Suggested Connections
+Approve or reject each connection organized by framework transitions. You can modify the strength and polarity if needed.
+Approve All
+Finish & Continue
+Type your answer here...
+Submit Answer
+All connections approved!
+Great! You
+connections out of
+suggested connections.
+These connections will be included in your saved ISA data.
+connections saved! Navigating to dashboard...
+Skip This Question
+Continue with
+selected
+Continue to Activities
+Continue to Pressures
+Continue to State Changes
+Continue to Impacts
+Continue to Welfare
+Continue to Responses
+Continue to Measures
+Finish
+Other
+Select your regional sea:
+Common ecosystem types in
+Common issues in your region:
+Click to select/deselect. Multiple selections allowed.
+tailored for
+Other (enter your own)
+Your custom additions
+AI-suggested options
+Quick options (click to add):
+Warning: Changing Regional Sea
+You are changing your regional sea selection. This will affect the available options for:
+Ecosystem types
+Common issues in the region
+Context-specific suggestions
+Your current ecosystem and issue selections may no longer be valid for the new regional sea.
+Regional sea changed to
+Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea.
+Great! You selected
+This will help me suggest relevant activities and pressures specific to your region.
+Perfect!
+ecosystems have unique characteristics that I
+Understood. I
+Great! I
+I
+Added
+total
+Click quick options to add more, or click the green button to continue.
+Thank you! Moving to the next question...
+I notice you haven
+To create connections, you need to add at least some Drivers, Activities, Pressures, States, Impacts, Welfare, or Response Measures.
+Please go back through the previous steps and add elements by clicking the suggested options or entering your own text.
+Analyzing your elements and generating connections...
+This may take a moment...
+Finalizing connections...
+I see you
+elements, but I couldn
+Try adding more elements to different categories (Drivers, Activities, Pressures, etc.) to create meaningful connections.
+potential connections based on the DAPSI(W)R(M) framework logic.
+Review each connection below and approve or reject them.
+Note: I found more connections, but limited to
+distributed across tabs to keep the interface responsive.
+Excellent work! You
+Start
+Total elements created
+Your DAPSI(W)R(M) Model Preview
+Project Information
+Project/Location:
+Ecosystem Type:
+Main Issue:
+Drivers (Societal Needs)
+Activities (Human Actions)
+Pressures (Environmental Stressors)
+State Changes (Ecosystem Effects)
+Impacts (Service Effects)
+Welfare (Human Well-being)
+Response Measures (Management & Policy)
+Connections
+Strength:
+Confidence:
+Total elements:
+Total connections:
+Model saved! Navigate to 
+Confirm Start Over
+Are you sure you want to start over? All current progress will be lost.
+Yes, Start Over
+Approved Connections
+Choose a pre-built scenario:
+Overfishing in Coastal Waters
+Marine Pollution & Plastics
+Coastal Tourism Impacts
+Climate Change & Coral Reefs
+Overfishing template loaded with example connections! You can now preview or modify it.
+Marine Pollution template loaded with example connections!
+Coastal Tourism template loaded with example connections!
+Climate Change template loaded with example connections!
+Your work is already saved automatically. Navigate to 
+elements and
+connections transferred to ISA Data Entry.
+Error saving model:
+Baltic Sea
+Mediterranean Sea
+North Sea
+Irish Sea
+East Atlantic
+Black Sea
+Atlantic Ocean
+Pacific Ocean
+Indian Ocean
+Caribbean Sea
+Arctic Ocean
+Other/Regional
+analysis_detecting_loops
+analysis_no_graph_data
+analysis_no_isa_data
+analysis_no_loops_detected
+analysis_no_loops_found
+Detection complete! Found
+feedback loops.
+What are feedback loops?
+Feedback loops are circular patterns in the system where an element eventually affects itself through a chain of causal connections. These loops are fundamental to understanding system dynamics and behavior.
+Loop types:
+Reinforcing loops (R):
+ Amplify change in the system.
+Rule: Even number of negative connections (-)
+Behavior: Can create virtuous cycles (exponential growth) or vicious cycles (collapse)
+Example: Species population → + Reproduction rate → + Species population
+Balancing loops (B):
+ Counteract change and seek equilibrium.
+Rule: Odd number of negative connections (-)
+Behavior: Produces resistance to change and system stabilization
+Example: Fishing → - Fish biomass → - Fishing
+How to use this tool:
+1. Detect loops:
+ Set detection parameters (maximum length, number of cycles) and run automatic detection
+2. Classification:
+ Review reinforcing and balancing loops found
+3. Details:
+ Examine individual loops and see their complete path
+4. Visualization:
+ See highlighted loops in the context of your full network
+5. Element participation:
+ Identify which system elements participate in most loops
+6. Export:
+ Save results in Excel or CSV formats for further analysis
+Understanding the results:
+Loop length:
+ Number of elements in the loop. Shorter loops (3-5 elements) tend to have greater influence.
+Dominance score:
+ Measures how significant the loop is based on the centrality of its elements.
+Element participation:
+ Elements appearing in multiple loops are potential leverage points for interventions.
+Understanding feedback loops: Reinforcing loops often identify areas of system growth or collapse, while balancing loops identify stabilization mechanisms or resistance to change.
+Network Metrics Analysis
+Calculate and visualize centrality metrics to identify key nodes and understand network structure.
+No CLD data found.
+Please generate a CLD network first using:
+Navigate to 
+Go to 
+Return here to analyze network metrics
+Calculate Network Metrics
+Network metrics calculated successfully!
+Error calculating metrics:
+Network Summary
+Total Nodes
+Total Edges
+Network Density
+Network Diameter
+Average Path Length
+Average shortest path between any two nodes
+Network Connectivity
+Percentage of possible connections that exist
+Node-Level Centrality Metrics
+All Metrics
+Download Network Metrics
+Visualizations
+Select Metric
+Top N Nodes
+Comparison Plot - Degree vs Betweenness
+Distribution Histogram
+Key Nodes
+Most Important Nodes by Different Metrics
+Top 5 Nodes by Degree
+Most connected nodes in the network
+Top 5 Nodes by Betweenness
+Critical bridge nodes connecting different parts
+Top 5 Nodes by Closeness
+Most central nodes with shortest paths to others
+Top 5 Nodes by PageRank
+Most influential nodes based on incoming connections
+Guide
+Understanding Centrality Metrics
+Network-Level Metrics
+Proportion of actual connections to possible connections. Higher density indicates more interconnected system.
+Longest shortest path between any two nodes. Indicates how far information needs to travel.
+Average steps needed to reach any node from any other node.
+Node Centrality Metrics
+Degree Centrality
+Number of direct connections. High degree = well-connected hub.
+Betweenness Centrality
+How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck.
+Closeness Centrality
+How close a node is to all other nodes. High closeness = can quickly reach or be reached by others.
+Eigenvector Centrality
+Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs.
+PageRank
+Google
+Practical Applications
+High Degree:
+Target for broad interventions
+High Betweenness:
+Leverage points for system change
+High Closeness:
+Efficient information spreaders
+High PageRank:
+Most influential system components
+Bar Plot - Top Nodes by Selected Metric
+Bubble size represents PageRank
+Frequency
+Mean
+Median
+analysis_data_added
+analysis_csv_loaded
+analysis_csv_columns_error
+analysis_error_loading_csv
+analysis_data_cleared
+preview_exogenous_nodes_before_removal
+save_simplification_to_project
+save_simplification_warning
+restore_original_network
+restore_original_warning
+simplified_network_saved
+simplification_applied_and_saved
+simplification_applied
+original_network_restored
+no_original_to_restore
+What are leverage points?
+Leverage points are nodes in your network that have the highest potential for system-wide impact when interventions are applied. These are strategic locations where small changes can lead to significant improvements across the entire social-ecological system.
+Metrics Used:
+Betweenness Centrality: Measures how often a node acts as a bridge between other nodes. High betweenness means the node controls information flow and can act as a bottleneck or facilitator.
+Eigenvector Centrality: Measures the influence of a node based on the importance of its neighbors. Nodes connected to other important nodes score higher.
+PageRank: Google
+Composite Score: A combined metric that sums the normalized values of all three centrality measures to provide an overall leverage score.
+How to interpret results:
+High Composite Score: These nodes are your top leverage points. Interventions here can have cascading effects throughout the system.
+High Betweenness: Focus on nodes that control information flow. They can block or facilitate changes.
+High Eigenvector: Target nodes that are influential because they
+High PageRank: These nodes have broad influence across the network and often represent core system elements.
+Using leverage points for intervention design:
+Prioritize interventions: Focus resources on high-leverage nodes rather than spreading efforts thinly across many nodes.
+Consider node type: Different types of nodes (Drivers, Activities, Pressures, States, Impacts, Responses) may require different intervention strategies.
+Combine with loop analysis: Nodes that appear in multiple feedback loops AND have high leverage scores are especially important for system-wide change.
+Saving...
+All changes saved
+Last saved: %d seconds ago
+Last saved: %d minutes ago
+Auto-save enabled
+Auto-save disabled
+Unsaved Work Detected
+We found an auto-saved version of your work from
+Would you like to recover this data?
+Auto-save helps prevent data loss from unexpected disconnections.
+Start Fresh
+Recover Data
+Data recovered successfully!
+Recovery failed:
+No connections to review.
+Total Connections
+Approved
+Rejected
+Reviewed
+Reject All
+No connections in this category
+All %d connections in %s approved!
+All %d connections in %s rejected!
+Connection amended successfully
+Save changes to strength, confidence, or polarity for this connection
+Amend
+Accept this connection as-is or with amendments
+Approve
+Reject this connection and exclude it from your model
+Reject
+Intermediate
+Structured
+Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology.
+Step-by-step guided exercises
+Complete control over all elements
+Detailed data validation
+Direct framework implementation
+Export-ready data structure
+Best for:
+Experienced users, academic research, detailed documentation
+Recommended
+Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.
+Interactive Q&A workflow
+Context-aware suggestions
+Automatic element generation
+Learning-friendly approach
+Built-in examples
+Beginners, first-time users, exploratory analysis
+Quick Start
+Start from pre-built templates based on common marine management scenarios. Customize to fit your specific case.
+Pre-populated frameworks
+Domain-specific templates
+Ready-to-customize elements
+Fastest setup time
+Example connections included
+Quick prototyping, common scenarios, time-constrained projects
+Proceed to Selected Method
+Method Comparison
+Need Help Choosing?
+New to SES modeling?
+Have existing framework knowledge?
+Working on a time-sensitive project?
+You selected:
+Time to Start
+Learning Curve
+Flexibility
+Guidance Level
+Customization
+create_ses_guide_methods_title
+create_ses_guide_methods_p1
+create_ses_guide_standard_desc
+create_ses_guide_ai_desc
+create_ses_guide_template_desc
+ep_notify_use_main_menu
+ep_notify_select_role
+ep_notify_select_need
+Pathway report generated successfully!
+Error generating pathway report:
+Navigating to %s...
+START HERE
+Guided Pathway
+Step-by-step guidance through the entry points
+Start Guided Journey
+Quick Access
+I know what tool I need
+Browse Tools
+Your Progress:
+EP0: Role
+EP1: Need
+EP2-3: Context
+EP4: Topic
+Tools
+Entry Point 0: Who Are You?
+Your role helps us recommend the most relevant tools and workflows for your marine management context.
+Select your role in marine management (multiple selection allowed)
+Typical tasks:
+Skip
+Skip if you
+Continue to EP1
+Proceed to identify your basic human needs
+Entry Point 1: Why Do You Care?
+Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.
+What basic human need drives your question? (multiple selection allowed)
+Return to role selection
+Skip if multiple needs apply or you
+Proceed to specify activities and risks
+EP2: Activity Sectors
+Select the human activities relevant to your marine management question. These represent the 
+Select all that apply (multiple selection allowed)
+EP3: Risks & Hazards
+Select the environmental pressures, risks, or hazards you
+Return to basic needs
+Skip if you want to explore all activities and risks
+Proceed to select knowledge topics
+Entry Point 4: Knowledge Domain
+Select the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks.
+What topic areas are you interested in? (Select all that apply)
+Return to activities and risks
+Skip to see all available tools
+Get Recommendations
+Get personalized tool recommendations based on your pathway
+Recommended Tools for Your Marine Management Question
+Your Pathway Summary
+Role:
+Need:
+Risks:
+Topics:
+Recommended Workflow:
+Follow this sequence of tools to address your marine management question:
+ep_priority_start_here
+ep_priority_next_step
+ep_priority_also_relevant
+Skill:
+Go to
+Suggested Workflow:
+Start with PIMS:
+Define your project goals, stakeholders, and timeline
+Quick start option:
+Use Create SES with templates or AI assistant for rapid model building (beginner-friendly)
+Build your SES model:
+Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection
+Visualize & Analyze:
+Create CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools
+Refine & Communicate:
+Simplify models and develop management scenarios
+New in v1.2.0:
+Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research.
+ep_tooltip_begin_new_pathway
+Export Pathway Report
+ep_tooltip_download_pdf
+Select Format:
+Select Components:
+Project Metadata
+PIMS Data
+ISA Data
+CLD Data
+Analysis Results
+Download Data
+Export Visualizations
+Width (pixels):
+Height (pixels):
+Download Visualization
+Generate Report
+Report Type:
+Report Format:
+Include Visualizations
+Include Data Tables
+Report opened in a new window!
+PDF Report Notice
+PDF generation requires LaTeX (e.g., TinyTeX or MiKTeX).
+If you see errors, try generating an HTML report instead, which you can print to PDF from your browser.
+To install TinyTeX for PDF support:
+Download Report (if generated)
+Report Generated Successfully
+Your report has been generated successfully.
+Download Report
+export_guide_data_title
+export_guide_data_p1
+export_guide_viz_title
+export_guide_viz_p1
+export_guide_reports_title
+export_guide_reports_p1
+Required Excel Format
+Two sheets required:
+Elements sheet columns:
+Connections sheet columns:
+import_data_help_content
+Exercise 0: Complexity
+Exercise 1: Goods & Benefits
+Exercise 2a: Ecosystem Services
+Exercise 2b: Marine Processes
+Exercise 3: Pressures
+Exercise 4: Activities
+Exercise 5: Drivers
+Exercise 6: Closing Loop
+Exercises 7-9: CLD
+Exercises 10-12: Analysis
+BOT Graphs
+Unfolding Complexity and Impacts on Welfare
+Purpose:
+Understand the complexity of your case study and identify impacts on human welfare.
+This preliminary exercise helps you explore the full scope of your system before detailed analysis.
+Case Study Context
+Case Study Name:
+e.g., Baltic Sea fisheries
+Brief Description:
+Describe your marine case study context...
+Geographic Scope:
+e.g., Baltic Sea, North Atlantic
+Temporal Scope:
+e.g., 2000-2024
+Initial Complexity Mapping
+Identified Welfare Impacts:
+List key impacts on human welfare you
+Key Stakeholders:
+Who is affected? Who makes decisions?
+Save Exercise 0
+Specifying Goods and Benefits (G&B)
+Identify and classify the goods and benefits derived from marine ecosystems.
+Complete columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification.
+Add Goods and Benefits
+Add Good/Benefit
+Current Goods and Benefits
+Save Exercise 1
+Ecosystem Services (ES) affecting Goods and Benefits
+Identify ecosystem services that contribute to each Good/Benefit.
+Complete columns L-R in the Master Data Sheet. Link ES to the G&B identified in Exercise 1.
+Add Ecosystem Services
+Add Ecosystem Service
+Current Ecosystem Services
+Save Exercise 2a
+Marine Processes and Functioning (MPF)
+Identify marine processes that support ecosystem services.
+Complete columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a.
+Add Marine Processes and Functioning
+Add Marine Process
+Current Marine Processes
+Save Exercise 2b
+Specifying Pressures on State Changes
+Identify pressures that affect marine processes and ecosystem state.
+Complete columns AC-AM in the Master Data Sheet. Link Pressures to MPF from Exercise 2b.
+Add Pressures
+Add Pressure
+Current Pressures
+Save Exercise 3
+Specifying Activities affecting Pressures
+Identify human activities that generate pressures on the marine environment.
+Complete columns AO-AY in the Master Data Sheet. Link Activities to Pressures from Exercise 3.
+Add Activities
+Add Activity
+Current Activities
+Save Exercise 4
+Drivers giving rise to Activities
+Identify the underlying drivers that motivate human activities.
+Complete columns BC-BK in the Master Data Sheet. Link Drivers to Activities from Exercise 4.
+Add Drivers
+Add Driver
+Current Drivers
+Save Exercise 5
+Closing the Loop: Drivers to Goods & Benefits
+Complete the feedback loop by linking Drivers back to Goods & Benefits.
+This creates the circular DAPSI(W)R(M) framework showing how drivers ultimately affect welfare.
+Driver to Goods/Benefits Connections
+Select drivers and the goods/benefits they influence (positively or negatively):
+Loop Closure Summary
+Save Exercise 6
+Causal Loop Diagram Creation and Export
+Exercise 7:
+Creating Impact-based CLD in Kumu
+Exercise 8:
+Moving from Causal Logic Chains to Causal Loops
+Exercise 9:
+Exporting CLD for further analysis
+Adjacency Matrix Review
+Review the connections between DAPSI(W)R(M) elements:
+Select Matrix Type:
+Kumu Export Options
+Prepare data for import into Kumu visualization software:
+Include in Export:
+Download Kumu CSV Files
+Download Complete Excel Workbook
+Save Exercises 7-9
+Clarifying, Metrics, and Validation
+Exercise 10:
+Clarifying - Endogenisation and Encapsulation
+Exercise 11:
+Metrics, Root Causes, and Leverage Points
+Exercise 12:
+Presenting and Validating Results
+Exercise 10: Clarifying the CLD
+Endogenisation Notes:
+What external factors should be brought inside the system boundary?
+Encapsulation Notes:
+What detailed processes can be simplified or grouped?
+Exercise 11: Metrics and Leverage Points
+Root Causes Identified
+Exercise 12: Presenting and Validating
+Validation Notes:
+Record stakeholder feedback, validation workshop results, expert reviews...
+Validation Completed:
+Save Exercises 10-12
+Behaviour Over Time (BOT) Graphs
+Visualize how indicators change over time to understand system dynamics.
+Element Type:
+Add Time Series Data
+Year:
+Value:
+Unit:
+e.g., tonnes, %, index
+Add Data Point
+Time Series Plot
+Current Data
+Save BOT Data
+Import/Export and Data Management
+Documentation
+Comprehensive guides for using the ISA Data Entry module:
+Open User Guide
+ISA Guidance Document (PDF)
+Kumu Styling Code
+Load existing ISA data from Excel workbook:
+Choose Excel File (.xlsx):
+Save current ISA analysis to Excel workbook:
+Filename:
+Export to Excel
+Reset Data
+Warning:
+This will clear all entered data. This action cannot be undone.
+Reset All Data
+Name:
+e.g., Fish catch
+Type:
+Description:
+Stakeholder:
+Importance:
+Trend:
+e.g., Fish production
+ES Type:
+Linked to G&B:
+Mechanism:
+e.g., Primary production
+Process Type:
+Linked to ES:
+Spatial Scale:
+e.g., Nutrient enrichment
+Pressure Type:
+Linked to MPF:
+Intensity:
+Spatial:
+Temporal:
+e.g., Commercial fishing
+Sector:
+Linked to Pressure:
+Scale:
+Frequency:
+e.g., Economic growth
+Driver Type:
+Linked to Activity:
+Controllability:
+Please complete Exercises 1 and 5 first to create Goods & Benefits and Drivers.
+Driver:
+Goods/Benefit:
+Effect:
+Confidence Level:
+Current Loop Connections:
+Select Element:
+Root causes analysis will be displayed here based on your CLD structure.
+Leverage points analysis will be displayed here based on your system dynamics.
+isa_guide_what_is_isa_title
+isa_guide_what_is_isa_p1
+isa_guide_what_is_isa_p2
+isa_guide_dapsiwr_title
+isa_guide_dapsiwr_p1
+drivers_label
+isa_guide_dapsiwr_drivers
+activities_label
+isa_guide_dapsiwr_activities
+pressures_label
+isa_guide_dapsiwr_pressures
+state_label
+isa_guide_dapsiwr_state
+impacts_label
+isa_guide_dapsiwr_impacts
+responses_label
+isa_guide_dapsiwr_responses
+isa_guide_how_to_use_title
+isa_guide_how_to_use_p1
+ex0_help_text
+ex1_help_text
+ex2a_help_text
+ex2b_help_text
+ex3_help_text
+ex4_help_text
+ex5_help_text
+ex6_help_text
+ex789_help_text
+ex101112_help_text
+bot_help_text
+Progress
+pims_project_help_content
+pims_stakeholders_help_content
+pims_evaluation_help_content
+pims_stakeholder_help_content
+Step %d
+Response Register
+Management Measures and Policy Interventions
+Document responses to address pressures, activities, and drivers in your system.
+Add Response Measure
+Response Name:
+e.g., Fishing quota reduction
+Response Type:
+Regulatory
+Economic
+Educational
+Technical
+Institutional
+Voluntary
+Mixed
+Targets:
+Multiple Levels
+Implementation Status:
+Proposed
+Planned
+Implemented
+Partially Implemented
+Abandoned
+What does this measure do?
+Mechanism of Action:
+How will this intervention work?
+Target Element ID:
+Expected Effectiveness:
+High
+Medium
+Low
+Unknown
+Feasibility:
+Estimated Cost (relative):
+Responsible Stakeholders:
+Who implements this measure?
+Implementation Barriers:
+What obstacles exist?
+Response Measures Register
+Delete Selected
+Impact Assessment
+Response Measure Impact Matrix
+Assess which measures address which problems in your system.
+Create Impact Linkage
+Select Response:
+Addresses Problem:
+Specific Pressure
+Specific Activity
+Specific Driver
+System-wide Issue
+Problem Element ID:
+Impact Strength:
+Strong
+Moderate
+Weak
+Timeframe:
+Immediate
+Short-term (1-3y)
+Medium-term (3-10y)
+Long-term (>10y)
+Add Impact Link
+Impact Matrix
+Visual Impact Matrix
+Prioritization
+Response Measure Prioritization
+Evaluate and rank measures based on effectiveness, feasibility, and cost.
+Prioritization Criteria Weighting
+Effectiveness Weight:
+Feasibility Weight:
+Cost Weight (inverse):
+Calculate Priority Scores
+Priority Ranking
+Prioritized Response Measures
+Effectiveness vs. Feasibility
+Cost vs. Expected Impact
+Implementation Plan
+Response Implementation Roadmap
+Add Implementation Milestone
+Response Measure:
+Milestone:
+e.g., Legislation passed
+Target Date:
+Notes/Actions Required:
+Status:
+Delayed
+Add Milestone
+Implementation Timeline
+Gantt Chart (Simplified)
+Export Response Analysis
+Download Response Documentation
+Download Response Data (Excel)
+Download Priority Report (PDF)
+Download Implementation Plan
+Response measure added!
+Deleted response measure(s)
+Impact linkage added!
+Add effectiveness and feasibility ratings
+Feasibility
+Effectiveness
+Response Measure Prioritization Matrix
+High Priority\n(Effective & Feasible)
+Effective but\nDifficult
+Easy but\nLimited Impact
+Low Priority
+Milestone added!
+Completing DAPSI(W)R(M)
+Response measures (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems.
+Types of Response Measures
+Regulatory:
+Laws, quotas, protected areas, bans
+Economic:
+Taxes, subsidies, payments for ecosystem services
+Educational:
+Awareness campaigns, training, capacity building
+Technical:
+New technologies, best practices, innovation
+Institutional:
+Governance reforms, co-management, partnerships
+Voluntary:
+Certification, codes of conduct, stewardship
+Intervention Points
+Address root causes (most leverage but hardest)
+Regulate what people do (direct but may face resistance)
+Mitigate impacts (symptomatic treatment)
+State:
+Restore ecosystems (expensive, slow)
+Prioritization Criteria
+Effectiveness:
+Will it solve the problem?
+Can it be implemented (political, social, technical)?
+Cost:
+What resources are required?
+How quickly will it have effects?
+Co-benefits:
+Does it address multiple issues?
+Effective responses address feedback loops and leverage points identified in your ISA analysis.
+Model Validation
+Track validation activities and model confidence assessment.
+Basic validation tracking available in ISA Exercise 12. Advanced features coming soon.
+scenario_builder_title
+scenario_builder_description
+scenario_no_cld_found
+scenario_need_cld_first
+scenario_go_to_cld_module
+scenario_scenarios
+scenario_new_scenario
+scenario_configure
+scenario_impact_analysis
+scenario_compare_scenarios
+scenario_select_or_create
+scenario_no_scenarios_yet
+scenario_changes
+scenario_create_new_scenario
+cancel
+create
+scenario_scenario_name
+scenario_name_placeholder
+scenario_description
+scenario_description_placeholder
+scenario_created_successfully
+scenario_confirm_delete
+scenario_confirm_delete_message
+delete
+scenario_deleted
+scenario_add_modify_nodes
+scenario_add_new_node
+scenario_remove_nodes
+scenario_select_node_to_remove
+scenario_remove_node
+scenario_add_modify_links
+scenario_add_new_link
+scenario_remove_links
+scenario_select_link_to_remove
+scenario_remove_link
+scenario_preview_network
+scenario_run_impact_analysis
+select
+add
+scenario_node_label
+scenario_node_label_placeholder
+scenario_dapsi_category
+driver
+activity
+pressure
+state
+impact
+welfare
+response
+management
+scenario_node_added
+scenario_node_marked_for_removal
+scenario_from_node
+scenario_to_node
+scenario_polarity
+scenario_positive
+scenario_negative
+scenario_cannot_create_self_loop
+scenario_link_added
+scenario_link_marked_for_removal
+scenario_no_modifications_yet
+scenario_impact_analysis_not_run
+scenario_click_run_impact_analysis
+scenario_total_nodes
+scenario_total_links
+scenario_feedback_loops
+scenario_changed_nodes
+scenario_network_topology_changes
+scenario_affected_feedback_loops
+scenario_predicted_impacts
+Validation errors:
+scenario_running_impact_analysis
+scenario_analyzing_network_topology
+scenario_detecting_feedback_loops
+scenario_predicting_impacts
+complete
+scenario_impact_analysis_complete
+scenario_nodes
+scenario_links
+scenario_no_feedback_loops_detected
+scenario_loop
+scenario_nodes_lowercase
+scenario_and
+scenario_more_loops
+scenario_not_enough_scenarios
+scenario_need_two_scenarios
+scenario_scenarios_not_analyzed
+scenario_run_analysis_to_compare
+scenario_scenario_a
+scenario_scenario_b
+scenario_select_different_scenarios
+scenario_network_statistics_comparison
+scenario_loops
+scenario_impact_comparison
+scenario_node
+scenario_impact
+scenario_direction
+Conflicting modifications for nodes: %s
+Cannot remove non-existent node: %s
+Link references non-existent 
+scenario_new_node_added
+scenario_positive_links_added
+scenario_negative_links_added
+scenario_mixed_links_added
+scenario_links_removed
+scenario_no_direct_modifications
+Available Templates
+Preview
+Actions
+Preview all template connections before loading. Review connections to understand the causal links in the SES model.
+Review
+Load the template as-is without reviewing connections. All predefined connections will be imported directly into your project.
+Review and customize template connections. Approve, reject, or modify individual connections before loading into your project.
+Customize
+View detailed preview
+Switch Template?
+You are about to switch to a different template.
+All work on the current template will be lost, including:
+Connection reviews and amendments
+Approved and rejected connections
+Any customizations made
+This action cannot be undone.
+Are you sure you want to start from scratch with the new template?
+Yes, Switch Template
+Template switched. Starting fresh.
+None defined
+... and %d more
+Marine Processes and Functions
+This template includes %d predefined connections between elements.
+Select This Template
+Template 
+ES
+G&B
+template_ses_guide_what_is_title
+template_ses_guide_what_is_p1
+template_ses_guide_how_to_use_title
+template_ses_guide_step1
+template_ses_guide_step2
+template_ses_guide_step3
+Template %s loaded!
+Select a template and click 
+Or click 
+%d connections from %s template
+Customize Template
+Load Template
+Template %s loaded with %d connections!
+Total Elements
+Loops Detected
+Completion
+Project ID:
+Created:
+Last Modified:
+Demonstration Area:
+Not set
+Focal Issue:
+Not defined
+DAPSI(W)R(M) Elements
+States:
+Ecosystem Services:
+Goods & Benefits:
+Responses:
+CLD Generated:
+PIMS Setup:
+Complete
+Incomplete
+Error rendering dashboard:
+elements created
+connections defined
+nodes in CLD
+edges in CLD
+Select your preferred language for the application interface.
+Interface Language:
+Note:
+The application will reload to apply the language change.
+Auto-Save Settings
+Configure automatic saving behavior for the AI ISA Assistant module.
+Enable Auto-Save:
+Auto-save automatically saves your work when the AI ISA Assistant completes generating the framework (Step 10). When disabled, you must manually save your work.
+Default: OFF.
+Auto-save is disabled by default to prevent accidental overwrites when loading templates or existing data.
+Settings updated successfully
+Select your experience level with marine ecosystem modeling:
+Simplified interface for first-time users. Shows essential tools only.
+Standard interface for regular users. Shows most tools and features.
+Expert
+Advanced interface showing all tools, technical terminology, and advanced options.
+The application will reload to apply the new user experience level.
+Apply Changes
+Applying new user experience level...
+Download User Manuals & Guides
+Beginner-Friendly Guides
+Recommended for New Users
+Simple, practical guides with step-by-step instructions and no technical jargon.
+5-minute introduction
+20-minute hands-on walkthrough
+Quick Reference Guide
+Compact reference for experienced users who need a quick reminder.
+Open in browser
+Complete User Manuals
+Comprehensive documentation with detailed explanations, technical details, and advanced features.
+English Manual
+HTML Version
+View online
+PDF Version
+Download/Print
+French Manual
+The complete manual contains approximately 75 pages of detailed documentation covering all features and workflows.
+Additional Resources
+Video Tutorials:
+Coming soon - check back later
+Example Projects:
+Available in the template library
+Technical Documentation:
+For developers and advanced users
+NONEXISTENT_KEY_12345

@@ -7,6 +7,9 @@ auto_save_indicator_ui <- function(id) {
   ns <- NS(id)
 
   tagList(
+    # Use i18n for language support
+    # REMOVED: usei18n() - only called once in main UI (app.R)
+
     # JavaScript handlers
     tags$script(HTML(sprintf("
       // Handle auto-save to localStorage
@@ -258,19 +261,19 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
       # Determine icon and text based on status
       if (status == "saving") {
         icon <- "🔄"
-        text <- i18n$t("Saving...")
+        text <- i18n$t("common.misc.saving")
         time_text <- ""
       } else if (status == "saved") {
         icon <- "✓"
-        text <- i18n$t("All changes saved")
+        text <- i18n$t("common.misc.all_changes_saved")
 
         if (!is.null(auto_save$last_save_time)) {
           time_diff <- as.numeric(difftime(Sys.time(), auto_save$last_save_time, units = "secs"))
 
           if (time_diff < 60) {
-            time_text <- sprintf(i18n$t("Last saved: %d seconds ago"), round(time_diff))
+            time_text <- sprintf(i18n$t("common.misc.last_saved_d_seconds_ago"), round(time_diff))
           } else if (time_diff < 3600) {
-            time_text <- sprintf(i18n$t("Last saved: %d minutes ago"), round(time_diff / 60))
+            time_text <- sprintf(i18n$t("common.misc.last_saved_d_minutes_ago"), round(time_diff / 60))
           } else {
             time_text <- format(auto_save$last_save_time, "%H:%M:%S")
           }
@@ -279,11 +282,17 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
         }
       } else if (status == "error") {
         icon <- "⚠"
-        text <- i18n$t("Save failed")
+        text <- i18n$t("common.misc.save_failed")
         time_text <- auto_save$error_message
       } else {
-        icon <- "💾"
-        text <- i18n$t("Auto-save enabled")
+        # Check if auto-save is actually enabled
+        if (auto_save$is_enabled) {
+          icon <- "💾"
+          text <- i18n$t("common.misc.auto_save_enabled")
+        } else {
+          icon <- "💾"
+          text <- i18n$t("common.misc.auto_save_disabled")
+        }
         time_text <- ""
       }
 
@@ -364,34 +373,34 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
           # Show recovery modal
           showModal(modalDialog(
             title = tags$h4(icon("exclamation-triangle"), " ",
-                          i18n$t("Unsaved Work Detected")),
+                          i18n$t("common.misc.unsaved_work_detected")),
             size = "m",
             easyClose = FALSE,
 
             tags$div(
               style = "padding: 15px;",
               tags$p(
-                i18n$t("We found an auto-saved version of your work from"),
+                i18n$t("common.misc.we_found_an_auto_saved_version_of_your_work_from"),
                 " ",
                 tags$strong(format(file_time, "%Y-%m-%d %H:%M:%S"))
               ),
               tags$p(
-                i18n$t("Would you like to recover this data?")
+                i18n$t("common.misc.would_you_like_to_recover_this_data")
               ),
               tags$br(),
               tags$p(
                 style = "font-size: 12px; color: #666;",
                 icon("info-circle"), " ",
-                i18n$t("Auto-save helps prevent data loss from unexpected disconnections.")
+                i18n$t("common.misc.auto_save_helps_prevent_data_loss_from_unexpected_disconnections")
               )
             ),
 
             footer = tagList(
               actionButton(ns("discard_recovery"),
-                         i18n$t("Start Fresh"),
+                         i18n$t("common.misc.start_fresh"),
                          class = "btn-default"),
               actionButton(ns("confirm_recovery"),
-                         i18n$t("Recover Data"),
+                         i18n$t("common.misc.recover_data"),
                          class = "btn-primary",
                          icon = icon("history"))
             )
@@ -428,8 +437,7 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
           nrow(recovered_data$data$isa_data$marine_processes %||% data.frame()),
           nrow(recovered_data$data$isa_data$ecosystem_services %||% data.frame()),
           nrow(recovered_data$data$isa_data$goods_benefits %||% data.frame()),
-          nrow(recovered_data$data$isa_data$responses %||% data.frame()),
-          nrow(recovered_data$data$isa_data$measures %||% data.frame())
+          nrow(recovered_data$data$isa_data$responses %||% data.frame())
         )
         cat(sprintf("[AUTO-SAVE] Recovered %d total elements\n", total_recovered))
 
@@ -440,7 +448,7 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
         }
 
         showNotification(
-          i18n$t("Data recovered successfully!"),
+          i18n$t("common.messages.data_recovered_successfully"),
           type = "message",
           duration = 3
         )
@@ -454,7 +462,7 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
       }, error = function(e) {
         cat(sprintf("[AUTO-SAVE ERROR] Recovery failed: %s\n", e$message))
         showNotification(
-          paste(i18n$t("Recovery failed:"), e$message),
+          paste(i18n$t("common.misc.recovery_failed"), e$message),
           type = "error",
           duration = 10
         )
@@ -478,6 +486,22 @@ auto_save_server <- function(id, project_data_reactive, i18n, autosave_enabled_r
     # Initialize - check for recovery on module load
     isolate({
       check_for_recovery()
+    })
+
+    # Update indicator shortly after initialization to clear "Initializing..." message
+    # Use a flag to ensure this only runs once
+    indicator_initialized <- FALSE
+
+    observe({
+      if (!indicator_initialized) {
+        invalidateLater(100)  # 100ms delay
+        isolate({
+          if (!indicator_initialized) {
+            updateSaveIndicator()
+            indicator_initialized <<- TRUE
+          }
+        })
+      }
     })
 
     # Return control functions

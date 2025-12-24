@@ -12,8 +12,14 @@ services:
     volumes:
       # Mount data directory for persistence
       - ../data:/srv/shiny-server/marinesabres/data
+      # Mount translations directory for live updates
+      - ../translations:/srv/shiny-server/marinesabres/translations
       # Mount logs directory
       - ./logs:/var/log/shiny-server
+      # Optional: Mount for hot reload during development (comment out in production)
+      # - ../modules:/srv/shiny-server/marinesabres/modules
+      # - ../functions:/srv/shiny-server/marinesabres/functions
+      # - ../server:/srv/shiny-server/marinesabres/server
     environment:
       - APPLICATION_LOGS_TO_STDOUT=true
       - SHINY_LOG_STDERR=1

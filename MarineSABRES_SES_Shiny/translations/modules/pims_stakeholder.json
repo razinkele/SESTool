@@ -1,0 +1,1864 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no"
+  ],
+  "translation": {
+    "modules.pims.project.title": {
+      "en": "PIMS Project Definition",
+      "es": "Definición del Proyecto PIMS",
+      "fr": "Définition du Projet PIMS",
+      "de": "PIMS-Projektdefinition",
+      "lt": "PIMS projekto apibrėžimas",
+      "pt": "Definição do Projeto PIMS",
+      "it": "Definizione del Progetto PIMS",
+      "no": "PIMS Prosjektdefinisjon"
+    },
+    "modules.pims.project.subtitle": {
+      "en": "Define your project scope, objectives, and context.",
+      "es": "Defina el alcance, los objetivos y el contexto de su proyecto.",
+      "fr": "Définissez la portée, les objectifs et le contexte de votre projet.",
+      "de": "Definieren Sie Umfang, Ziele und Kontext Ihres Projekts.",
+      "lt": "Apibrėžkite savo projekto apimtį, tikslus ir kontekstą.",
+      "pt": "Defina o escopo, objetivos e contexto do seu projeto.",
+      "it": "Definisci l'ambito, gli obiettivi e il contesto del tuo progetto.",
+      "no": "Definer prosjektomfang, mål og kontekst."
+    },
+    "modules.pims.stakeholders.title": {
+      "en": "PIMS Stakeholder Analysis",
+      "es": "Análisis de Partes Interesadas PIMS",
+      "fr": "Analyse des Parties Prenantes PIMS",
+      "de": "PIMS-Stakeholder-Analyse",
+      "lt": "PIMS suinteresuotųjų šalių analizė",
+      "pt": "Análise de Partes Interessadas PIMS",
+      "it": "Analisi delle Parti Interessate PIMS",
+      "no": "PIMS Interessentanalyse"
+    },
+    "modules.pims.stakeholders.subtitle": {
+      "en": "Identify and analyze key stakeholders and their interests.",
+      "es": "Identificar y analizar las partes interesadas clave y sus intereses.",
+      "fr": "Identifier et analyser les principales parties prenantes et leurs intérêts.",
+      "de": "Identifizieren und analysieren Sie wichtige Stakeholder und deren Interessen.",
+      "lt": "Nustatyti ir analizuoti pagrindines suinteresuotąsias šalis ir jų interesus.",
+      "pt": "Identificar e analisar as principais partes interessadas e seus interesses.",
+      "it": "Identificare e analizzare le principali parti interessate e i loro interessi.",
+      "no": "Identifiser og analyser nøkkelinteressenter og deres interesser."
+    },
+    "modules.pims.resources.title": {
+      "en": "PIMS Resource Management",
+      "es": "Gestión de Recursos PIMS",
+      "fr": "Gestion des Ressources PIMS",
+      "de": "PIMS-Ressourcenverwaltung",
+      "lt": "PIMS išteklių valdymas",
+      "pt": "Gestão de Recursos PIMS",
+      "it": "Gestione delle Risorse PIMS",
+      "no": "PIMS Ressursstyring"
+    },
+    "modules.pims.resources.subtitle": {
+      "en": "Document and manage project resources and budget.",
+      "es": "Documentar y gestionar los recursos y el presupuesto del proyecto.",
+      "fr": "Documenter et gérer les ressources et le budget du projet.",
+      "de": "Dokumentieren und verwalten Sie Projektressourcen und Budget.",
+      "lt": "Dokumentuoti ir valdyti projekto išteklius ir biudžetą.",
+      "pt": "Documentar e gerenciar recursos e orçamento do projeto.",
+      "it": "Documentare e gestire le risorse e il budget del progetto.",
+      "no": "Dokumenter og administrer prosjektressurser og budsjett."
+    },
+    "modules.pims.data.title": {
+      "en": "PIMS Data Management",
+      "es": "Gestión de Datos PIMS",
+      "fr": "Gestion des Données PIMS",
+      "de": "PIMS-Datenverwaltung",
+      "lt": "PIMS duomenų valdymas",
+      "pt": "Gestão de Dados PIMS",
+      "it": "Gestione dei Dati PIMS",
+      "no": "PIMS Datastyring"
+    },
+    "modules.pims.data.subtitle": {
+      "en": "Plan and manage project data collection and storage.",
+      "es": "Planificar y gestionar la recopilación y almacenamiento de datos del proyecto.",
+      "fr": "Planifier et gérer la collecte et le stockage des données du projet.",
+      "de": "Planen und verwalten Sie die Datenerfassung und -speicherung des Projekts.",
+      "lt": "Planuoti ir valdyti projekto duomenų rinkimą ir saugojimą.",
+      "pt": "Planejar e gerenciar a coleta e armazenamento de dados do projeto.",
+      "it": "Pianificare e gestire la raccolta e l'archiviazione dei dati del progetto.",
+      "no": "Planlegg og administrer prosjektdatainnsamling og lagring."
+    },
+    "modules.pims.evaluation.title": {
+      "en": "PIMS Monitoring & Evaluation",
+      "es": "Monitoreo y Evaluación PIMS",
+      "fr": "Suivi et Évaluation PIMS",
+      "de": "PIMS-Überwachung & Bewertung",
+      "lt": "PIMS stebėjimas ir vertinimas",
+      "pt": "Monitoramento e Avaliação PIMS",
+      "it": "Monitoraggio e Valutazione PIMS",
+      "no": "PIMS Overvåking og Evaluering"
+    },
+    "modules.pims.evaluation.subtitle": {
+      "en": "Define indicators and evaluation framework for project success.",
+      "es": "Definir indicadores y marco de evaluación para el éxito del proyecto.",
+      "fr": "Définir les indicateurs et le cadre d'évaluation pour le succès du projet.",
+      "de": "Definieren Sie Indikatoren und Bewertungsrahmen für den Projekterfolg.",
+      "lt": "Apibrėžti rodiklius ir vertinimo sistemą projekto sėkmei.",
+      "pt": "Definir indicadores e estrutura de avaliação para o sucesso do projeto.",
+      "it": "Definire indicatori e framework di valutazione per il successo del progetto.",
+      "no": "Definer indikatorer og evalueringsrammeverk for prosjektsuksess."
+    },
+    "modules.pims.stakeholder.title": {
+      "en": "PIMS Detailed Stakeholder Analysis",
+      "es": "Análisis Detallado de Partes Interesadas PIMS",
+      "fr": "Analyse Détaillée des Parties Prenantes PIMS",
+      "de": "PIMS Detaillierte Stakeholder-Analyse",
+      "lt": "PIMS išsami suinteresuotųjų šalių analizė",
+      "pt": "Análise Detalhada de Partes Interessadas PIMS",
+      "it": "Analisi Dettagliata delle Parti Interessate PIMS",
+      "no": "PIMS Detaljert Interessentanalyse"
+    },
+    "modules.pims.stakeholder.subtitle": {
+      "en": "Comprehensive stakeholder mapping and influence analysis.",
+      "es": "Mapeo integral de partes interesadas y análisis de influencia.",
+      "fr": "Cartographie complète des parties prenantes et analyse d'influence.",
+      "de": "Umfassendes Stakeholder-Mapping und Einflussanalyse.",
+      "lt": "Išsamus suinteresuotųjų šalių žemėlapis ir įtakos analizė.",
+      "pt": "Mapeamento abrangente de partes interessadas e análise de influência.",
+      "it": "Mappatura completa delle parti interessate e analisi dell'influenza.",
+      "no": "Omfattende kartlegging av interessenter og påvirkningsanalyse."
+    },
+    "modules.pims.stakeholder.aquaculture": {
+      "en": "Aquaculture",
+      "es": "Acuicultura",
+      "fr": "Aquaculture",
+      "de": "Aquakultur",
+      "lt": "Akvakultūra",
+      "pt": "Aquicultura",
+      "it": "Acquacoltura",
+      "no": "Aquaculture"
+    },
+    "modules.pims.stakeholder.shipping": {
+      "en": "Shipping",
+      "es": "Envío",
+      "fr": "Expédition",
+      "de": "Versand",
+      "lt": "Siuntimas",
+      "pt": "Envio",
+      "it": "Spedizione",
+      "no": "Shipping"
+    },
+    "modules.pims.stakeholder.tourism": {
+      "en": "Tourism",
+      "es": "Turismo",
+      "fr": "Tourisme",
+      "de": "Tourismus",
+      "lt": "Turizmas",
+      "pt": "Turismo",
+      "it": "Turismo",
+      "no": "Tourism"
+    },
+    "modules.isa.data_entry.common.add_activity": {
+      "en": "Add Activity",
+      "es": "Agregar Actividad",
+      "fr": "Ajouter une Activité",
+      "de": "Aktivität hinzufügen",
+      "lt": "Pridėti veiklą",
+      "pt": "Adicionar Atividade",
+      "it": "Aggiungi Attività",
+      "no": "Add Activity"
+    },
+    "modules.isa.data_entry.common.frequency": {
+      "en": "Frequency",
+      "es": "[ES] Frequency",
+      "fr": "[FR] Frequency",
+      "de": "[DE] Frequency",
+      "lt": "[LT] Frequency",
+      "pt": "[PT] Frequency",
+      "it": "[IT] Frequency",
+      "no": "Frequency"
+    },
+    "modules.isa.data_entry.common.sector": {
+      "en": "EP2: Activity Sectors",
+      "es": "EP2: Sectores de Actividad",
+      "fr": "EP2: Secteurs d'Activité",
+      "de": "EP2: Aktivitätssektoren",
+      "lt": "EP2: Veiklos sektoriai",
+      "pt": "EP2: Setores de Atividade",
+      "it": "EP2: Settori di Attività",
+      "no": "EP2: Activity Sectors"
+    },
+    "modules.pims.download_stakeholder_information_for_reporting_and": {
+      "en": "Download Stakeholder Information For Reporting And",
+      "es": "[ES] Download Stakeholder Information For Reporting And",
+      "fr": "[FR] Download Stakeholder Information For Reporting And",
+      "de": "[DE] Download Stakeholder Information For Reporting And",
+      "lt": "[LT] Download Stakeholder Information For Reporting And",
+      "pt": "[PT] Download Stakeholder Information For Reporting And",
+      "it": "[IT] Download Stakeholder Information For Reporting And",
+      "no": "Download Stakeholder Information For Reporting And"
+    },
+    "modules.pims.identify_all_stakeholders_relevant_to_your_marine_": {
+      "en": "Identify All Stakeholders Relevant To Your Marine ",
+      "es": "[ES] Identify All Stakeholders Relevant To Your Marine ",
+      "fr": "[FR] Identify All Stakeholders Relevant To Your Marine ",
+      "de": "[DE] Identify All Stakeholders Relevant To Your Marine ",
+      "lt": "[LT] Identify All Stakeholders Relevant To Your Marine ",
+      "pt": "[PT] Identify All Stakeholders Relevant To Your Marine ",
+      "it": "[IT] Identify All Stakeholders Relevant To Your Marine ",
+      "no": "Identify All Stakeholders Relevant To Your Marine "
+    },
+    "modules.pims.plan_and_track_communications_with_stakeholders_to": {
+      "en": "Plan And Track Communications With Stakeholders To",
+      "es": "[ES] Plan And Track Communications With Stakeholders To",
+      "fr": "[FR] Plan And Track Communications With Stakeholders To",
+      "de": "[DE] Plan And Track Communications With Stakeholders To",
+      "lt": "[LT] Plan And Track Communications With Stakeholders To",
+      "pt": "[PT] Plan And Track Communications With Stakeholders To",
+      "it": "[IT] Plan And Track Communications With Stakeholders To",
+      "no": "Plan And Track Communications With Stakeholders To"
+    },
+    "modules.pims.plan_how_to_engage_with_each_stakeholder_group_bas": {
+      "en": "Plan How To Engage With Each Stakeholder Group Bas",
+      "es": "[ES] Plan How To Engage With Each Stakeholder Group Bas",
+      "fr": "[FR] Plan How To Engage With Each Stakeholder Group Bas",
+      "de": "[DE] Plan How To Engage With Each Stakeholder Group Bas",
+      "lt": "[LT] Plan How To Engage With Each Stakeholder Group Bas",
+      "pt": "[PT] Plan How To Engage With Each Stakeholder Group Bas",
+      "it": "[IT] Plan How To Engage With Each Stakeholder Group Bas",
+      "no": "Plan How To Engage With Each Stakeholder Group Bas"
+    },
+    "modules.pims.power_interest_gridnadd_stakeholders_with_power_an": {
+      "en": "Power Interest Gridnadd Stakeholders With Power An",
+      "es": "[ES] Power Interest Gridnadd Stakeholders With Power An",
+      "fr": "[FR] Power Interest Gridnadd Stakeholders With Power An",
+      "de": "[DE] Power Interest Gridnadd Stakeholders With Power An",
+      "lt": "[LT] Power Interest Gridnadd Stakeholders With Power An",
+      "pt": "[PT] Power Interest Gridnadd Stakeholders With Power An",
+      "it": "[IT] Power Interest Gridnadd Stakeholders With Power An",
+      "no": "Power Interest Gridnadd Stakeholders With Power An"
+    },
+    "modules.pims.stakeholder.add_communication": {
+      "en": "Add Communication",
+      "es": "[ES] Add Communication",
+      "fr": "[FR] Add Communication",
+      "de": "[DE] Add Communication",
+      "lt": "[LT] Add Communication",
+      "pt": "[PT] Add Communication",
+      "it": "[IT] Add Communication",
+      "no": "Add Communication"
+    },
+    "modules.pims.stakeholder.add_communication_item": {
+      "en": "Add Communication Item",
+      "es": "[ES] Add Communication Item",
+      "fr": "[FR] Add Communication Item",
+      "de": "[DE] Add Communication Item",
+      "lt": "[LT] Add Communication Item",
+      "pt": "[PT] Add Communication Item",
+      "it": "[IT] Add Communication Item",
+      "no": "Add Communication Item"
+    },
+    "modules.pims.stakeholder.add_new_stakeholder": {
+      "en": "Add New Stakeholder",
+      "es": "[ES] Add New Stakeholder",
+      "fr": "[FR] Add New Stakeholder",
+      "de": "[DE] Add New Stakeholder",
+      "lt": "[LT] Add New Stakeholder",
+      "pt": "[PT] Add New Stakeholder",
+      "it": "[IT] Add New Stakeholder",
+      "no": "Add New Stakeholder"
+    },
+    "modules.pims.stakeholder.add_stakeholder": {
+      "en": "Add Stakeholder",
+      "es": "[ES] Add Stakeholder",
+      "fr": "[FR] Add Stakeholder",
+      "de": "[DE] Add Stakeholder",
+      "lt": "[LT] Add Stakeholder",
+      "pt": "[PT] Add Stakeholder",
+      "it": "[IT] Add Stakeholder",
+      "no": "Add Stakeholder"
+    },
+    "modules.pims.stakeholder.add_stakeholders_to_see_coverage": {
+      "en": "Add Stakeholders To See Coverage",
+      "es": "[ES] Add Stakeholders To See Coverage",
+      "fr": "[FR] Add Stakeholders To See Coverage",
+      "de": "[DE] Add Stakeholders To See Coverage",
+      "lt": "[LT] Add Stakeholders To See Coverage",
+      "pt": "[PT] Add Stakeholders To See Coverage",
+      "it": "[IT] Add Stakeholders To See Coverage",
+      "no": "Add Stakeholders To See Coverage"
+    },
+    "modules.pims.stakeholder.add_stakeholders_to_see_distribution": {
+      "en": "Add Stakeholders To See Distribution",
+      "es": "[ES] Add Stakeholders To See Distribution",
+      "fr": "[FR] Add Stakeholders To See Distribution",
+      "de": "[DE] Add Stakeholders To See Distribution",
+      "lt": "[LT] Add Stakeholders To See Distribution",
+      "pt": "[PT] Add Stakeholders To See Distribution",
+      "it": "[IT] Add Stakeholders To See Distribution",
+      "no": "Add Stakeholders To See Distribution"
+    },
+    "modules.pims.stakeholder.advisory_committee": {
+      "en": "Advisory Committee",
+      "es": "[ES] Advisory Committee",
+      "fr": "[FR] Advisory Committee",
+      "de": "[DE] Advisory Committee",
+      "lt": "[LT] Advisory Committee",
+      "pt": "[PT] Advisory Committee",
+      "it": "[IT] Advisory Committee",
+      "no": "Advisory Committee"
+    },
+    "modules.pims.stakeholder.all_stakeholders": {
+      "en": "All Stakeholders",
+      "es": "[ES] All Stakeholders",
+      "fr": "[FR] All Stakeholders",
+      "de": "[DE] All Stakeholders",
+      "lt": "[LT] All Stakeholders",
+      "pt": "[PT] All Stakeholders",
+      "it": "[IT] All Stakeholders",
+      "no": "All Stakeholders"
+    },
+    "modules.pims.stakeholder.analysis_reports": {
+      "en": "Export data and generate comprehensive analysis reports",
+      "es": "Exportar datos y generar informes de análisis completos",
+      "fr": "Exporter les données et générer des rapports d'analyse complets",
+      "de": "Exportieren Sie Daten und erstellen Sie umfassende Analyseberichte",
+      "lt": "Eksportuokite duomenis ir generuokite išsamias analizės ataskaitas",
+      "pt": "Exportar dados e gerar relatórios de análise abrangentes",
+      "it": "Esporta dati e genera rapporti di analisi completi",
+      "no": "Export data and generate comprehensive analysis reports"
+    },
+    "modules.pims.stakeholder.annual": {
+      "en": "Annual",
+      "es": "[ES] Annual",
+      "fr": "[FR] Annual",
+      "de": "[DE] Annual",
+      "lt": "[LT] Annual",
+      "pt": "[PT] Annual",
+      "it": "[IT] Annual",
+      "no": "Annual"
+    },
+    "modules.pims.stakeholder.as_needed": {
+      "en": "As Needed",
+      "es": "[ES] As Needed",
+      "fr": "[FR] As Needed",
+      "de": "[DE] As Needed",
+      "lt": "[LT] As Needed",
+      "pt": "[PT] As Needed",
+      "it": "[IT] As Needed",
+      "no": "As Needed"
+    },
+    "modules.pims.stakeholder.attitude": {
+      "en": "Attitude",
+      "es": "[ES] Attitude",
+      "fr": "[FR] Attitude",
+      "de": "[DE] Attitude",
+      "lt": "[LT] Attitude",
+      "pt": "[PT] Attitude",
+      "it": "[IT] Attitude",
+      "no": "Attitude"
+    },
+    "modules.pims.stakeholder.cancelled": {
+      "en": "Cancelled",
+      "es": "[ES] Cancelled",
+      "fr": "[FR] Cancelled",
+      "de": "[DE] Cancelled",
+      "lt": "[LT] Cancelled",
+      "pt": "[PT] Cancelled",
+      "it": "[IT] Cancelled",
+      "no": "Cancelled"
+    },
+    "modules.pims.stakeholder.clicked_stakeholder": {
+      "en": "Clicked Stakeholder",
+      "es": "[ES] Clicked Stakeholder",
+      "fr": "[FR] Clicked Stakeholder",
+      "de": "[DE] Clicked Stakeholder",
+      "lt": "[LT] Clicked Stakeholder",
+      "pt": "[PT] Clicked Stakeholder",
+      "it": "[IT] Clicked Stakeholder",
+      "no": "Clicked Stakeholder"
+    },
+    "modules.pims.stakeholder.click_on_a_point": {
+      "en": "Click On A Point",
+      "es": "[ES] Click On A Point",
+      "fr": "[FR] Click On A Point",
+      "de": "[DE] Click On A Point",
+      "lt": "[LT] Click On A Point",
+      "pt": "[PT] Click On A Point",
+      "it": "[IT] Click On A Point",
+      "no": "Click On A Point"
+    },
+    "modules.pims.stakeholder.collaborate": {
+      "en": "Collaborate",
+      "es": "[ES] Collaborate",
+      "fr": "[FR] Collaborate",
+      "de": "[DE] Collaborate",
+      "lt": "[LT] Collaborate",
+      "pt": "[PT] Collaborate",
+      "it": "[IT] Collaborate",
+      "no": "Collaborate"
+    },
+    "modules.pims.stakeholder.communication_added": {
+      "en": "Communication Added",
+      "es": "[ES] Communication Added",
+      "fr": "[FR] Communication Added",
+      "de": "[DE] Communication Added",
+      "lt": "[LT] Communication Added",
+      "pt": "[PT] Communication Added",
+      "it": "[IT] Communication Added",
+      "no": "Communication Added"
+    },
+    "modules.pims.stakeholder.communication_plan": {
+      "en": "Communication Plan",
+      "es": "[ES] Communication Plan",
+      "fr": "[FR] Communication Plan",
+      "de": "[DE] Communication Plan",
+      "lt": "[LT] Communication Plan",
+      "pt": "[PT] Communication Plan",
+      "it": "[IT] Communication Plan",
+      "no": "Communication Plan"
+    },
+    "modules.pims.stakeholder.communications_log": {
+      "en": "Communications Log",
+      "es": "[ES] Communications Log",
+      "fr": "[FR] Communications Log",
+      "de": "[DE] Communications Log",
+      "lt": "[LT] Communications Log",
+      "pt": "[PT] Communications Log",
+      "it": "[IT] Communications Log",
+      "no": "Communications Log"
+    },
+    "modules.pims.stakeholder.conservation": {
+      "en": "Conservation & Restoration",
+      "es": "Conservación y Restauración",
+      "fr": "Conservation et Restauration",
+      "de": "Naturschutz & Wiederherstellung",
+      "lt": "Išsaugojimas ir Atkūrimas",
+      "pt": "Conservação e Restauração",
+      "it": "Conservazione e Restauro",
+      "no": "Conservation & Restoration"
+    },
+    "modules.pims.stakeholder.consult": {
+      "en": "Consult",
+      "es": "[ES] Consult",
+      "fr": "[FR] Consult",
+      "de": "[DE] Consult",
+      "lt": "[LT] Consult",
+      "pt": "[PT] Consult",
+      "it": "[IT] Consult",
+      "no": "Consult"
+    },
+    "modules.analysis.common.counteract_change_and_seek_equilibrium": {
+      "en": " Counteract change and seek equilibrium.",
+      "es": "Contrarrestan el cambio y buscan el equilibrio.",
+      "fr": "Contrebalancent le changement et recherchent l'équilibre.",
+      "de": "Wirken Veränderungen entgegen und suchen das Gleichgewicht.",
+      "lt": "Priešinasi pokyčiams ir siekia pusiausvyros.",
+      "pt": "Contrabalançam a mudança e buscam o equilíbrio.",
+      "it": "Contrastano il cambiamento e cercano l'equilibrio.",
+      "no": " Counteract change and seek equilibrium."
+    },
+    "modules.pims.stakeholder.current_attitude": {
+      "en": "Current Attitude",
+      "es": "[ES] Current Attitude",
+      "fr": "[FR] Current Attitude",
+      "de": "[DE] Current Attitude",
+      "lt": "[LT] Current Attitude",
+      "pt": "[PT] Current Attitude",
+      "it": "[IT] Current Attitude",
+      "no": "Current Attitude"
+    },
+    "modules.pims.stakeholder.define_engagement_activities": {
+      "en": "Define Engagement Activities",
+      "es": "[ES] Define Engagement Activities",
+      "fr": "[FR] Define Engagement Activities",
+      "de": "[DE] Define Engagement Activities",
+      "lt": "[LT] Define Engagement Activities",
+      "pt": "[PT] Define Engagement Activities",
+      "it": "[IT] Define Engagement Activities",
+      "no": "Define Engagement Activities"
+    },
+    "modules.pims.stakeholder.deleted": {
+      "en": "Deleted response measure(s)",
+      "es": "Medida(s) de respuesta eliminada(s)",
+      "fr": "Mesure(s) de réponse supprimée(s)",
+      "de": "Reaktionsmaßnahme(n) gelöscht",
+      "lt": "Atsako priemonė(s) ištrinta(os)",
+      "pt": "Medida(s) de resposta excluída(s)",
+      "it": "Misura/e di risposta eliminata/e",
+      "no": "Deleted response measure(s)"
+    },
+    "modules.pims.stakeholder.download_full_report_excel": {
+      "en": "Download Full Report Excel",
+      "es": "[ES] Download Full Report Excel",
+      "fr": "[FR] Download Full Report Excel",
+      "de": "[DE] Download Full Report Excel",
+      "lt": "[LT] Download Full Report Excel",
+      "pt": "[PT] Download Full Report Excel",
+      "it": "[IT] Download Full Report Excel",
+      "no": "Download Full Report Excel"
+    },
+    "modules.pims.stakeholder.download_power_interest_grid_png": {
+      "en": "Download Power Interest Grid Png",
+      "es": "[ES] Download Power Interest Grid Png",
+      "fr": "[FR] Download Power Interest Grid Png",
+      "de": "[DE] Download Power Interest Grid Png",
+      "lt": "[LT] Download Power Interest Grid Png",
+      "pt": "[PT] Download Power Interest Grid Png",
+      "it": "[IT] Download Power Interest Grid Png",
+      "no": "Download Power Interest Grid Png"
+    },
+    "modules.pims.stakeholder.download_summary_pdf": {
+      "en": "Download Summary Pdf",
+      "es": "[ES] Download Summary Pdf",
+      "fr": "[FR] Download Summary Pdf",
+      "de": "[DE] Download Summary Pdf",
+      "lt": "[LT] Download Summary Pdf",
+      "pt": "[PT] Download Summary Pdf",
+      "it": "[IT] Download Summary Pdf",
+      "no": "Download Summary Pdf"
+    },
+    "modules.pims.stakeholder.eg_local_fishers_association": {
+      "en": "Eg Local Fishers Association",
+      "es": "[ES] Eg Local Fishers Association",
+      "fr": "[FR] Eg Local Fishers Association",
+      "de": "[DE] Eg Local Fishers Association",
+      "lt": "[LT] Eg Local Fishers Association",
+      "pt": "[PT] Eg Local Fishers Association",
+      "it": "[IT] Eg Local Fishers Association",
+      "no": "Eg Local Fishers Association"
+    },
+    "modules.pims.stakeholder.email": {
+      "en": "Email",
+      "es": "[ES] Email",
+      "fr": "[FR] Email",
+      "de": "[DE] Email",
+      "lt": "[LT] Email",
+      "pt": "[PT] Email",
+      "it": "[IT] Email",
+      "no": "Email"
+    },
+    "modules.pims.stakeholder.emailnewsletter": {
+      "en": "Emailnewsletter",
+      "es": "[ES] Emailnewsletter",
+      "fr": "[FR] Emailnewsletter",
+      "de": "[DE] Emailnewsletter",
+      "lt": "[LT] Emailnewsletter",
+      "pt": "[PT] Emailnewsletter",
+      "it": "[IT] Emailnewsletter",
+      "no": "Emailnewsletter"
+    },
+    "modules.pims.stakeholder.empower": {
+      "en": "Empower",
+      "es": "[ES] Empower",
+      "fr": "[FR] Empower",
+      "de": "[DE] Empower",
+      "lt": "[LT] Empower",
+      "pt": "[PT] Empower",
+      "it": "[IT] Empower",
+      "no": "Empower"
+    },
+    "modules.pims.stakeholder.energy": {
+      "en": "Energy Production",
+      "es": "Producción de Energía",
+      "fr": "Production d'Énergie",
+      "de": "Energieerzeugung",
+      "lt": "Energijos Gamyba",
+      "pt": "Produção de Energia",
+      "it": "Produzione di Energia",
+      "no": "Energy Production"
+    },
+    "modules.pims.stakeholder.engage_closely_and_make_greatest_efforts_to_satisfy": {
+      "en": "Engage Closely And Make Greatest Efforts To Satisfy",
+      "es": "[ES] Engage Closely And Make Greatest Efforts To Satisfy",
+      "fr": "[FR] Engage Closely And Make Greatest Efforts To Satisfy",
+      "de": "[DE] Engage Closely And Make Greatest Efforts To Satisfy",
+      "lt": "[LT] Engage Closely And Make Greatest Efforts To Satisfy",
+      "pt": "[PT] Engage Closely And Make Greatest Efforts To Satisfy",
+      "it": "[IT] Engage Closely And Make Greatest Efforts To Satisfy",
+      "no": "Engage Closely And Make Greatest Efforts To Satisfy"
+    },
+    "modules.pims.stakeholder.engaged": {
+      "en": "Engaged",
+      "es": "[ES] Engaged",
+      "fr": "[FR] Engaged",
+      "de": "[DE] Engaged",
+      "lt": "[LT] Engaged",
+      "pt": "[PT] Engaged",
+      "it": "[IT] Engaged",
+      "no": "Engaged"
+    },
+    "modules.pims.stakeholder.engagement_activities_log": {
+      "en": "Engagement Activities Log",
+      "es": "[ES] Engagement Activities Log",
+      "fr": "[FR] Engagement Activities Log",
+      "de": "[DE] Engagement Activities Log",
+      "lt": "[LT] Engagement Activities Log",
+      "pt": "[PT] Engagement Activities Log",
+      "it": "[IT] Engagement Activities Log",
+      "no": "Engagement Activities Log"
+    },
+    "modules.pims.stakeholder.engagement_activity_added": {
+      "en": "Engagement Activity Added",
+      "es": "[ES] Engagement Activity Added",
+      "fr": "[FR] Engagement Activity Added",
+      "de": "[DE] Engagement Activity Added",
+      "lt": "[LT] Engagement Activity Added",
+      "pt": "[PT] Engagement Activity Added",
+      "it": "[IT] Engagement Activity Added",
+      "no": "Engagement Activity Added"
+    },
+    "modules.pims.stakeholder.engagement_coverage": {
+      "en": "Engagement Coverage",
+      "es": "[ES] Engagement Coverage",
+      "fr": "[FR] Engagement Coverage",
+      "de": "[DE] Engagement Coverage",
+      "lt": "[LT] Engagement Coverage",
+      "pt": "[PT] Engagement Coverage",
+      "it": "[IT] Engagement Coverage",
+      "no": "Engagement Coverage"
+    },
+    "modules.pims.stakeholder.engagement_level": {
+      "en": "Engagement Level",
+      "es": "[ES] Engagement Level",
+      "fr": "[FR] Engagement Level",
+      "de": "[DE] Engagement Level",
+      "lt": "[LT] Engagement Level",
+      "pt": "[PT] Engagement Level",
+      "it": "[IT] Engagement Level",
+      "no": "Engagement Level"
+    },
+    "modules.pims.stakeholder.engagement_method": {
+      "en": "Engagement Method",
+      "es": "[ES] Engagement Method",
+      "fr": "[FR] Engagement Method",
+      "de": "[DE] Engagement Method",
+      "lt": "[LT] Engagement Method",
+      "pt": "[PT] Engagement Method",
+      "it": "[IT] Engagement Method",
+      "no": "Engagement Method"
+    },
+    "modules.pims.stakeholder.engagement_objectives": {
+      "en": "Engagement Objectives",
+      "es": "[ES] Engagement Objectives",
+      "fr": "[FR] Engagement Objectives",
+      "de": "[DE] Engagement Objectives",
+      "lt": "[LT] Engagement Objectives",
+      "pt": "[PT] Engagement Objectives",
+      "it": "[IT] Engagement Objectives",
+      "no": "Engagement Objectives"
+    },
+    "modules.pims.stakeholder.engagement_planning": {
+      "en": "Engagement Planning",
+      "es": "[ES] Engagement Planning",
+      "fr": "[FR] Engagement Planning",
+      "de": "[DE] Engagement Planning",
+      "lt": "[LT] Engagement Planning",
+      "pt": "[PT] Engagement Planning",
+      "it": "[IT] Engagement Planning",
+      "no": "Engagement Planning"
+    },
+    "modules.pims.stakeholder.export_stakeholder_data": {
+      "en": "Export Stakeholder Data",
+      "es": "[ES] Export Stakeholder Data",
+      "fr": "[FR] Export Stakeholder Data",
+      "de": "[DE] Export Stakeholder Data",
+      "lt": "[LT] Export Stakeholder Data",
+      "pt": "[PT] Export Stakeholder Data",
+      "it": "[IT] Export Stakeholder Data",
+      "no": "Export Stakeholder Data"
+    },
+    "modules.pims.stakeholder.facilitatorcontact": {
+      "en": "Facilitatorcontact",
+      "es": "[ES] Facilitatorcontact",
+      "fr": "[FR] Facilitatorcontact",
+      "de": "[DE] Facilitatorcontact",
+      "lt": "[LT] Facilitatorcontact",
+      "pt": "[PT] Facilitatorcontact",
+      "it": "[IT] Facilitatorcontact",
+      "no": "Facilitatorcontact"
+    },
+    "modules.pims.stakeholder.fisheries": {
+      "en": "Fisheries Management",
+      "es": "Gestión Pesquera",
+      "fr": "Gestion des Pêcheries",
+      "de": "Fischerei-Management",
+      "lt": "Žvejybos valdymas",
+      "pt": "Gestão Pesqueira",
+      "it": "Gestione della Pesca",
+      "no": "Fisheries Management"
+    },
+    "modules.pims.stakeholder.focus_group": {
+      "en": "Focus Group",
+      "es": "[ES] Focus Group",
+      "fr": "[FR] Focus Group",
+      "de": "[DE] Focus Group",
+      "lt": "[LT] Focus Group",
+      "pt": "[PT] Focus Group",
+      "it": "[IT] Focus Group",
+      "no": "Focus Group"
+    },
+    "modules.pims.stakeholder.government": {
+      "en": "Government",
+      "es": "[ES] Government",
+      "fr": "[FR] Government",
+      "de": "[DE] Government",
+      "lt": "[LT] Government",
+      "pt": "[PT] Government",
+      "it": "[IT] Government",
+      "no": "Government"
+    },
+    "modules.pims.stakeholder.governmentregulators": {
+      "en": "Governmentregulators",
+      "es": "[ES] Governmentregulators",
+      "fr": "[FR] Governmentregulators",
+      "de": "[DE] Governmentregulators",
+      "lt": "[LT] Governmentregulators",
+      "pt": "[PT] Governmentregulators",
+      "it": "[IT] Governmentregulators",
+      "no": "Governmentregulators"
+    },
+    "modules.pims.stakeholder.grid_summary": {
+      "en": "Grid Summary",
+      "es": "[ES] Grid Summary",
+      "fr": "[FR] Grid Summary",
+      "de": "[DE] Grid Summary",
+      "lt": "[LT] Grid Summary",
+      "pt": "[PT] Grid Summary",
+      "it": "[IT] Grid Summary",
+      "no": "Grid Summary"
+    },
+    "modules.pims.stakeholder.high_interest_stakeholders": {
+      "en": "High Interest Stakeholders",
+      "es": "[ES] High Interest Stakeholders",
+      "fr": "[FR] High Interest Stakeholders",
+      "de": "[DE] High Interest Stakeholders",
+      "lt": "[LT] High Interest Stakeholders",
+      "pt": "[PT] High Interest Stakeholders",
+      "it": "[IT] High Interest Stakeholders",
+      "no": "High Interest Stakeholders"
+    },
+    "modules.pims.stakeholder.high_power_high_interest": {
+      "en": "High Power High Interest",
+      "es": "[ES] High Power High Interest",
+      "fr": "[FR] High Power High Interest",
+      "de": "[DE] High Power High Interest",
+      "lt": "[LT] High Power High Interest",
+      "pt": "[PT] High Power High Interest",
+      "it": "[IT] High Power High Interest",
+      "no": "High Power High Interest"
+    },
+    "modules.pims.stakeholder.high_power_high_interest_key_players": {
+      "en": "High Power High Interest Key Players",
+      "es": "[ES] High Power High Interest Key Players",
+      "fr": "[FR] High Power High Interest Key Players",
+      "de": "[DE] High Power High Interest Key Players",
+      "lt": "[LT] High Power High Interest Key Players",
+      "pt": "[PT] High Power High Interest Key Players",
+      "it": "[IT] High Power High Interest Key Players",
+      "no": "High Power High Interest Key Players"
+    },
+    "modules.pims.stakeholder.high_power_low_interest": {
+      "en": "High Power Low Interest",
+      "es": "[ES] High Power Low Interest",
+      "fr": "[FR] High Power Low Interest",
+      "de": "[DE] High Power Low Interest",
+      "lt": "[LT] High Power Low Interest",
+      "pt": "[PT] High Power Low Interest",
+      "it": "[IT] High Power Low Interest",
+      "no": "High Power Low Interest"
+    },
+    "modules.pims.stakeholder.high_power_low_interest_keep_satisfied": {
+      "en": "High Power Low Interest Keep Satisfied",
+      "es": "[ES] High Power Low Interest Keep Satisfied",
+      "fr": "[FR] High Power Low Interest Keep Satisfied",
+      "de": "[DE] High Power Low Interest Keep Satisfied",
+      "lt": "[LT] High Power Low Interest Keep Satisfied",
+      "pt": "[PT] High Power Low Interest Keep Satisfied",
+      "it": "[IT] High Power Low Interest Keep Satisfied",
+      "no": "High Power Low Interest Keep Satisfied"
+    },
+    "modules.pims.stakeholder.high_power_stakeholders": {
+      "en": "High Power Stakeholders",
+      "es": "[ES] High Power Stakeholders",
+      "fr": "[FR] High Power Stakeholders",
+      "de": "[DE] High Power Stakeholders",
+      "lt": "[LT] High Power Stakeholders",
+      "pt": "[PT] High Power Stakeholders",
+      "it": "[IT] High Power Stakeholders",
+      "no": "High Power Stakeholders"
+    },
+    "modules.pims.stakeholder.indigenous_groups": {
+      "en": "Indigenous Groups",
+      "es": "[ES] Indigenous Groups",
+      "fr": "[FR] Indigenous Groups",
+      "de": "[DE] Indigenous Groups",
+      "lt": "[LT] Indigenous Groups",
+      "pt": "[PT] Indigenous Groups",
+      "it": "[IT] Indigenous Groups",
+      "no": "Indigenous Groups"
+    },
+    "modules.pims.stakeholder.industry": {
+      "en": "Fishers as industry influencers",
+      "es": "Pescadores como influyentes de la industria",
+      "fr": "Pêcheurs comme influenceurs de l'industrie",
+      "de": "Fischer als Branchenbeeinflussende",
+      "lt": "Žvejai kaip pramonės įtakos asmenys",
+      "pt": "Pescadores como influenciadores da indústria",
+      "it": "Pescatori come influencer del settore",
+      "no": "Fishers as industry influencers"
+    },
+    "modules.pims.stakeholder.industrybusiness": {
+      "en": "Industrybusiness",
+      "es": "[ES] Industrybusiness",
+      "fr": "[FR] Industrybusiness",
+      "de": "[DE] Industrybusiness",
+      "lt": "[LT] Industrybusiness",
+      "pt": "[PT] Industrybusiness",
+      "it": "[IT] Industrybusiness",
+      "no": "Industrybusiness"
+    },
+    "modules.pims.stakeholder.inform": {
+      "en": "How often a node lies on the shortest path between other nodes. Important for information flow.",
+      "es": "Con qué frecuencia un nodo se encuentra en el camino más corto entre otros nodos. Importante para el flujo de información.",
+      "fr": "À quelle fréquence un nœud se trouve sur le chemin le plus court entre d'autres nœuds. Important pour le flux d'informations.",
+      "de": "Wie oft ein Knoten auf dem kürzesten Pfad zwischen anderen Knoten liegt. Wichtig für den Informationsfluss.",
+      "lt": "Kaip dažnai mazgas yra trumpiausiame kelyje tarp kitų mazgų. Svarbu informacijos srautui.",
+      "pt": "Com que frequência um nó está no caminho mais curto entre outros nós. Importante para o fluxo de informações.",
+      "it": "Quanto spesso un nodo si trova sul percorso più breve tra altri nodi. Importante per il flusso di informazioni.",
+      "no": "How often a node lies on the shortest path between other nodes. Important for information flow."
+    },
+    "modules.pims.stakeholder.interest": {
+      "en": "What topic areas are you interested in? (Select all that apply)",
+      "es": "¿Qué áreas temáticas le interesan? (Seleccione todas las que correspondan)",
+      "fr": "Quels domaines thématiques vous intéressent? (Sélectionnez tout ce qui s'applique)",
+      "de": "An welchen Themenbereichen sind Sie interessiert? (Wählen Sie alle zutreffenden aus)",
+      "lt": "Kokios teminės sritys jus domina? (Pasirinkite visas tinkamas)",
+      "pt": "Que áreas temáticas lhe interessam? (Selecione todas as que se aplicam)",
+      "it": "Quali aree tematiche ti interessano? (Seleziona tutte quelle applicabili)",
+      "no": "What topic areas are you interested in? (Select all that apply)"
+    },
+    "modules.pims.stakeholder.interestimpact": {
+      "en": "Interestimpact",
+      "es": "[ES] Interestimpact",
+      "fr": "[FR] Interestimpact",
+      "de": "[DE] Interestimpact",
+      "lt": "[LT] Interestimpact",
+      "pt": "[PT] Interestimpact",
+      "it": "[IT] Interestimpact",
+      "no": "Interestimpact"
+    },
+    "modules.pims.stakeholder.interview": {
+      "en": "Interview",
+      "es": "[ES] Interview",
+      "fr": "[FR] Interview",
+      "de": "[DE] Interview",
+      "lt": "[LT] Interview",
+      "pt": "[PT] Interview",
+      "it": "[IT] Interview",
+      "no": "Interview"
+    },
+    "modules.pims.stakeholder.involve": {
+      "en": "Involve",
+      "es": "[ES] Involve",
+      "fr": "[FR] Involve",
+      "de": "[DE] Involve",
+      "lt": "[LT] Involve",
+      "pt": "[PT] Involve",
+      "it": "[IT] Involve",
+      "no": "Involve"
+    },
+    "modules.pims.stakeholder.keep_informed": {
+      "en": "Keep Informed",
+      "es": "[ES] Keep Informed",
+      "fr": "[FR] Keep Informed",
+      "de": "[DE] Keep Informed",
+      "lt": "[LT] Keep Informed",
+      "pt": "[PT] Keep Informed",
+      "it": "[IT] Keep Informed",
+      "no": "Keep Informed"
+    },
+    "modules.pims.stakeholder.keep_informed_and_talk_to_regarding_their_interests": {
+      "en": "Keep Informed And Talk To Regarding Their Interests",
+      "es": "[ES] Keep Informed And Talk To Regarding Their Interests",
+      "fr": "[FR] Keep Informed And Talk To Regarding Their Interests",
+      "de": "[DE] Keep Informed And Talk To Regarding Their Interests",
+      "lt": "[LT] Keep Informed And Talk To Regarding Their Interests",
+      "pt": "[PT] Keep Informed And Talk To Regarding Their Interests",
+      "it": "[IT] Keep Informed And Talk To Regarding Their Interests",
+      "no": "Keep Informed And Talk To Regarding Their Interests"
+    },
+    "modules.pims.stakeholder.keep_satisfied": {
+      "en": "Keep Satisfied",
+      "es": "[ES] Keep Satisfied",
+      "fr": "[FR] Keep Satisfied",
+      "de": "[DE] Keep Satisfied",
+      "lt": "[LT] Keep Satisfied",
+      "pt": "[PT] Keep Satisfied",
+      "it": "[IT] Keep Satisfied",
+      "no": "Keep Satisfied"
+    },
+    "modules.pims.stakeholder.keep_satisfied_but_avoid_excessive_communication": {
+      "en": "Keep Satisfied But Avoid Excessive Communication",
+      "es": "[ES] Keep Satisfied But Avoid Excessive Communication",
+      "fr": "[FR] Keep Satisfied But Avoid Excessive Communication",
+      "de": "[DE] Keep Satisfied But Avoid Excessive Communication",
+      "lt": "[LT] Keep Satisfied But Avoid Excessive Communication",
+      "pt": "[PT] Keep Satisfied But Avoid Excessive Communication",
+      "it": "[IT] Keep Satisfied But Avoid Excessive Communication",
+      "no": "Keep Satisfied But Avoid Excessive Communication"
+    },
+    "modules.pims.stakeholder.key_interests": {
+      "en": "Key Interests",
+      "es": "[ES] Key Interests",
+      "fr": "[FR] Key Interests",
+      "de": "[DE] Key Interests",
+      "lt": "[LT] Key Interests",
+      "pt": "[PT] Key Interests",
+      "it": "[IT] Key Interests",
+      "no": "Key Interests"
+    },
+    "modules.pims.stakeholder.key_interestsconcerns": {
+      "en": "Key Interestsconcerns",
+      "es": "[ES] Key Interestsconcerns",
+      "fr": "[FR] Key Interestsconcerns",
+      "de": "[DE] Key Interestsconcerns",
+      "lt": "[LT] Key Interestsconcerns",
+      "pt": "[PT] Key Interestsconcerns",
+      "it": "[IT] Key Interestsconcerns",
+      "no": "Key Interestsconcerns"
+    },
+    "modules.pims.stakeholder.key_messagecontent": {
+      "en": "Key Messagecontent",
+      "es": "[ES] Key Messagecontent",
+      "fr": "[FR] Key Messagecontent",
+      "de": "[DE] Key Messagecontent",
+      "lt": "[LT] Key Messagecontent",
+      "pt": "[PT] Key Messagecontent",
+      "it": "[IT] Key Messagecontent",
+      "no": "Key Messagecontent"
+    },
+    "modules.pims.stakeholder.key_players": {
+      "en": "Key Players",
+      "es": "[ES] Key Players",
+      "fr": "[FR] Key Players",
+      "de": "[DE] Key Players",
+      "lt": "[LT] Key Players",
+      "pt": "[PT] Key Players",
+      "it": "[IT] Key Players",
+      "no": "Key Players"
+    },
+    "modules.pims.stakeholder.local_communities": {
+      "en": "Local Communities",
+      "es": "[ES] Local Communities",
+      "fr": "[FR] Local Communities",
+      "de": "[DE] Local Communities",
+      "lt": "[LT] Local Communities",
+      "pt": "[PT] Local Communities",
+      "it": "[IT] Local Communities",
+      "no": "Local Communities"
+    },
+    "modules.pims.stakeholder.low_power_high_interest": {
+      "en": "Low Power High Interest",
+      "es": "[ES] Low Power High Interest",
+      "fr": "[FR] Low Power High Interest",
+      "de": "[DE] Low Power High Interest",
+      "lt": "[LT] Low Power High Interest",
+      "pt": "[PT] Low Power High Interest",
+      "it": "[IT] Low Power High Interest",
+      "no": "Low Power High Interest"
+    },
+    "modules.pims.stakeholder.low_power_high_interest_keep_informed": {
+      "en": "Low Power High Interest Keep Informed",
+      "es": "[ES] Low Power High Interest Keep Informed",
+      "fr": "[FR] Low Power High Interest Keep Informed",
+      "de": "[DE] Low Power High Interest Keep Informed",
+      "lt": "[LT] Low Power High Interest Keep Informed",
+      "pt": "[PT] Low Power High Interest Keep Informed",
+      "it": "[IT] Low Power High Interest Keep Informed",
+      "no": "Low Power High Interest Keep Informed"
+    },
+    "modules.pims.stakeholder.low_power_low_interest": {
+      "en": "Low Power Low Interest",
+      "es": "[ES] Low Power Low Interest",
+      "fr": "[FR] Low Power Low Interest",
+      "de": "[DE] Low Power Low Interest",
+      "lt": "[LT] Low Power Low Interest",
+      "pt": "[PT] Low Power Low Interest",
+      "it": "[IT] Low Power Low Interest",
+      "no": "Low Power Low Interest"
+    },
+    "modules.pims.stakeholder.low_power_low_interest_monitor": {
+      "en": "Low Power Low Interest Monitor",
+      "es": "[ES] Low Power Low Interest Monitor",
+      "fr": "[FR] Low Power Low Interest Monitor",
+      "de": "[DE] Low Power Low Interest Monitor",
+      "lt": "[LT] Low Power Low Interest Monitor",
+      "pt": "[PT] Low Power Low Interest Monitor",
+      "it": "[IT] Low Power Low Interest Monitor",
+      "no": "Low Power Low Interest Monitor"
+    },
+    "modules.pims.stakeholder.meeting_notes": {
+      "en": "Meeting Notes",
+      "es": "[ES] Meeting Notes",
+      "fr": "[FR] Meeting Notes",
+      "de": "[DE] Meeting Notes",
+      "lt": "[LT] Meeting Notes",
+      "pt": "[PT] Meeting Notes",
+      "it": "[IT] Meeting Notes",
+      "no": "Meeting Notes"
+    },
+    "modules.pims.stakeholder.monitor": {
+      "en": "Monitoring, scientific studies",
+      "es": "Monitoreo, estudios científicos",
+      "fr": "Surveillance, études scientifiques",
+      "de": "Überwachung, wissenschaftliche Studien",
+      "lt": "Stebėjimas, moksliniai tyrimai",
+      "pt": "Monitorização, estudos científicos",
+      "it": "Monitoraggio, studi scientifici",
+      "no": "Monitoring, scientific studies"
+    },
+    "modules.pims.stakeholder.monitor_with_minimum_effort": {
+      "en": "Monitor With Minimum Effort",
+      "es": "[ES] Monitor With Minimum Effort",
+      "fr": "[FR] Monitor With Minimum Effort",
+      "de": "[DE] Monitor With Minimum Effort",
+      "lt": "[LT] Monitor With Minimum Effort",
+      "pt": "[PT] Monitor With Minimum Effort",
+      "it": "[IT] Monitor With Minimum Effort",
+      "no": "Monitor With Minimum Effort"
+    },
+    "modules.pims.stakeholder.monthly": {
+      "en": "Monthly",
+      "es": "[ES] Monthly",
+      "fr": "[FR] Monthly",
+      "de": "[DE] Monthly",
+      "lt": "[LT] Monthly",
+      "pt": "[PT] Monthly",
+      "it": "[IT] Monthly",
+      "no": "Monthly"
+    },
+    "modules.pims.stakeholder.multiple": {
+      "en": "Select all that apply (multiple selection allowed)",
+      "es": "Seleccione todos los que correspondan (se permite selección múltiple)",
+      "fr": "Sélectionnez tout ce qui s'applique (sélection multiple autorisée)",
+      "de": "Wählen Sie alle zutreffenden aus (Mehrfachauswahl möglich)",
+      "lt": "Pasirinkite visus tinkamus (galima kelių pasirinkimas)",
+      "pt": "Selecione todos os que se aplicam (seleção múltipla permitida)",
+      "it": "Seleziona tutte quelle applicabili (selezione multipla consentita)",
+      "no": "Select all that apply (multiple selection allowed)"
+    },
+    "modules.pims.stakeholder.name_email_phone": {
+      "en": "Name Email Phone",
+      "es": "[ES] Name Email Phone",
+      "fr": "[FR] Name Email Phone",
+      "de": "[DE] Name Email Phone",
+      "lt": "[LT] Name Email Phone",
+      "pt": "[PT] Name Email Phone",
+      "it": "[IT] Name Email Phone",
+      "no": "Name Email Phone"
+    },
+    "modules.pims.stakeholder.neutral": {
+      "en": "neutral",
+      "es": "neutral",
+      "fr": "neutre",
+      "de": "neutral",
+      "lt": "neutralus",
+      "pt": "neutro",
+      "it": "neutro",
+      "no": "neutral"
+    },
+    "modules.pims.stakeholder.newsletter": {
+      "en": "Newsletter",
+      "es": "[ES] Newsletter",
+      "fr": "[FR] Newsletter",
+      "de": "[DE] Newsletter",
+      "lt": "[LT] Newsletter",
+      "pt": "[PT] Newsletter",
+      "it": "[IT] Newsletter",
+      "no": "Newsletter"
+    },
+    "modules.pims.stakeholder.ngocivil_society": {
+      "en": "Ngocivil Society",
+      "es": "[ES] Ngocivil Society",
+      "fr": "[FR] Ngocivil Society",
+      "de": "[DE] Ngocivil Society",
+      "lt": "[LT] Ngocivil Society",
+      "pt": "[PT] Ngocivil Society",
+      "it": "[IT] Ngocivil Society",
+      "no": "Ngocivil Society"
+    },
+    "modules.pims.stakeholder.ngos": {
+      "en": "Ngos",
+      "es": "[ES] Ngos",
+      "fr": "[FR] Ngos",
+      "de": "[DE] Ngos",
+      "lt": "[LT] Ngos",
+      "pt": "[PT] Ngos",
+      "it": "[IT] Ngos",
+      "no": "Ngos"
+    },
+    "modules.pims.stakeholder.no_data": {
+      "en": "No Data",
+      "es": "[ES] No Data",
+      "fr": "[FR] No Data",
+      "de": "[DE] No Data",
+      "lt": "[LT] No Data",
+      "pt": "[PT] No Data",
+      "it": "[IT] No Data",
+      "no": "No Data"
+    },
+    "modules.pims.stakeholder.no_stakeholders_added_yet": {
+      "en": "No Stakeholders Added Yet",
+      "es": "[ES] No Stakeholders Added Yet",
+      "fr": "[FR] No Stakeholders Added Yet",
+      "de": "[DE] No Stakeholders Added Yet",
+      "lt": "[LT] No Stakeholders Added Yet",
+      "pt": "[PT] No Stakeholders Added Yet",
+      "it": "[IT] No Stakeholders Added Yet",
+      "no": "No Stakeholders Added Yet"
+    },
+    "modules.pims.stakeholder.no_stakeholders_selected": {
+      "en": "No Stakeholders Selected",
+      "es": "[ES] No Stakeholders Selected",
+      "fr": "[FR] No Stakeholders Selected",
+      "de": "[DE] No Stakeholders Selected",
+      "lt": "[LT] No Stakeholders Selected",
+      "pt": "[PT] No Stakeholders Selected",
+      "it": "[IT] No Stakeholders Selected",
+      "no": "No Stakeholders Selected"
+    },
+    "modules.pims.stakeholder.not_engaged": {
+      "en": "Not Engaged",
+      "es": "[ES] Not Engaged",
+      "fr": "[FR] Not Engaged",
+      "de": "[DE] Not Engaged",
+      "lt": "[LT] Not Engaged",
+      "pt": "[PT] Not Engaged",
+      "it": "[IT] Not Engaged",
+      "no": "Not Engaged"
+    },
+    "modules.pims.stakeholder.one_on_one_meeting": {
+      "en": "One On One Meeting",
+      "es": "[ES] One On One Meeting",
+      "fr": "[FR] One On One Meeting",
+      "de": "[DE] One On One Meeting",
+      "lt": "[LT] One On One Meeting",
+      "pt": "[PT] One On One Meeting",
+      "it": "[IT] One On One Meeting",
+      "no": "One On One Meeting"
+    },
+    "modules.pims.stakeholder.one_time": {
+      "en": "One Time",
+      "es": "[ES] One Time",
+      "fr": "[FR] One Time",
+      "de": "[DE] One Time",
+      "lt": "[LT] One Time",
+      "pt": "[PT] One Time",
+      "it": "[IT] One Time",
+      "no": "One Time"
+    },
+    "modules.pims.stakeholder.ongoing": {
+      "en": "Ongoing",
+      "es": "[ES] Ongoing",
+      "fr": "[FR] Ongoing",
+      "de": "[DE] Ongoing",
+      "lt": "[LT] Ongoing",
+      "pt": "[PT] Ongoing",
+      "it": "[IT] Ongoing",
+      "no": "Ongoing"
+    },
+    "modules.pims.stakeholder.percentage": {
+      "en": "Percentage",
+      "es": "[ES] Percentage",
+      "fr": "[FR] Percentage",
+      "de": "[DE] Percentage",
+      "lt": "[LT] Percentage",
+      "pt": "[PT] Percentage",
+      "it": "[IT] Percentage",
+      "no": "Percentage"
+    },
+    "modules.pims.stakeholder.pims_stakeholder_help_content": {
+      "en": "Pims Stakeholder Help Content",
+      "es": "[ES] Pims Stakeholder Help Content",
+      "fr": "[FR] Pims Stakeholder Help Content",
+      "de": "[DE] Pims Stakeholder Help Content",
+      "lt": "[LT] Pims Stakeholder Help Content",
+      "pt": "[PT] Pims Stakeholder Help Content",
+      "it": "[IT] Pims Stakeholder Help Content",
+      "no": "Pims Stakeholder Help Content"
+    },
+    "modules.pims.stakeholder.policymanagement": {
+      "en": "Policymanagement",
+      "es": "[ES] Policymanagement",
+      "fr": "[FR] Policymanagement",
+      "de": "[DE] Policymanagement",
+      "lt": "[LT] Policymanagement",
+      "pt": "[PT] Policymanagement",
+      "it": "[IT] Policymanagement",
+      "no": "Policymanagement"
+    },
+    "modules.isa.this_ai_powered_assistant_helps_you_create_your_da": {
+      "en": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
+      "es": "Este asistente impulsado por IA le ayuda a crear su marco DAPSI(W)R(M) a través de una conversación interactiva. Simplemente responda las preguntas y el asistente le guiará en cada paso.",
+      "fr": "Cet assistant alimenté par l'IA vous aide à créer votre cadre DAPSI(W)R(M) grâce à une conversation interactive. Répondez simplement aux questions et l'assistant vous guidera à chaque étape.",
+      "de": "Dieser KI-gestützte Assistent hilft Ihnen, Ihr DAPSI(W)R(M)-Framework durch interaktive Konversation zu erstellen. Beantworten Sie einfach die Fragen und der Assistent führt Sie durch jeden Schritt.",
+      "lt": "Šis dirbtinio intelekto asistentas padeda sukurti DAPSI(W)R(M) sistemą interaktyvia kalba. Tiesiog atsakykite į klausimus, o asistentas jus ves per kiekvieną žingsnį.",
+      "pt": "Este assistente alimentado por IA ajuda você a criar sua estrutura DAPSI(W)R(M) através de conversação interativa. Simplesmente responda às perguntas e o assistente irá guiá-lo em cada etapa.",
+      "it": "Questo assistente basato sull'intelligenza artificiale ti aiuta a creare il tuo framework DAPSI(W)R(M) attraverso una conversazione interattiva. Rispondi semplicemente alle domande e l'assistente ti guiderà in ogni passaggio.",
+      "no": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step."
+    },
+    "modules.pims.stakeholder.powerinfluence": {
+      "en": "Powerinfluence",
+      "es": "[ES] Powerinfluence",
+      "fr": "[FR] Powerinfluence",
+      "de": "[DE] Powerinfluence",
+      "lt": "[LT] Powerinfluence",
+      "pt": "[PT] Powerinfluence",
+      "it": "[IT] Powerinfluence",
+      "no": "Powerinfluence"
+    },
+    "modules.pims.stakeholder.power_interest_analysis": {
+      "en": "Power Interest Analysis",
+      "es": "[ES] Power Interest Analysis",
+      "fr": "[FR] Power Interest Analysis",
+      "de": "[DE] Power Interest Analysis",
+      "lt": "[LT] Power Interest Analysis",
+      "pt": "[PT] Power Interest Analysis",
+      "it": "[IT] Power Interest Analysis",
+      "no": "Power Interest Analysis"
+    },
+    "modules.pims.stakeholder.power_interest_grid_classification": {
+      "en": "Power Interest Grid Classification",
+      "es": "[ES] Power Interest Grid Classification",
+      "fr": "[FR] Power Interest Grid Classification",
+      "de": "[DE] Power Interest Grid Classification",
+      "lt": "[LT] Power Interest Grid Classification",
+      "pt": "[PT] Power Interest Grid Classification",
+      "it": "[IT] Power Interest Grid Classification",
+      "no": "Power Interest Grid Classification"
+    },
+    "modules.pims.stakeholder.presentation": {
+      "en": "Stakeholder Presentation",
+      "es": "Presentación para Partes Interesadas",
+      "fr": "Présentation aux Parties Prenantes",
+      "de": "Stakeholder-Präsentation",
+      "lt": "Suinteresuotų šalių pristatymas",
+      "pt": "Apresentação às Partes Interessadas",
+      "it": "Presentazione per gli Stakeholder",
+      "no": "Stakeholder Presentation"
+    },
+    "modules.pims.stakeholder.press_release": {
+      "en": "Press Release",
+      "es": "[ES] Press Release",
+      "fr": "[FR] Press Release",
+      "de": "[DE] Press Release",
+      "lt": "[LT] Press Release",
+      "pt": "[PT] Press Release",
+      "it": "[IT] Press Release",
+      "no": "Press Release"
+    },
+    "modules.pims.stakeholder.primary_sector": {
+      "en": "Primary Sector",
+      "es": "[ES] Primary Sector",
+      "fr": "[FR] Primary Sector",
+      "de": "[DE] Primary Sector",
+      "lt": "[LT] Primary Sector",
+      "pt": "[PT] Primary Sector",
+      "it": "[IT] Primary Sector",
+      "no": "Primary Sector"
+    },
+    "modules.pims.stakeholder.public_meeting": {
+      "en": "Public Meeting",
+      "es": "[ES] Public Meeting",
+      "fr": "[FR] Public Meeting",
+      "de": "[DE] Public Meeting",
+      "lt": "[LT] Public Meeting",
+      "pt": "[PT] Public Meeting",
+      "it": "[IT] Public Meeting",
+      "no": "Public Meeting"
+    },
+    "modules.pims.stakeholder.quarterly": {
+      "en": "Quarterly",
+      "es": "[ES] Quarterly",
+      "fr": "[FR] Quarterly",
+      "de": "[DE] Quarterly",
+      "lt": "[LT] Quarterly",
+      "pt": "[PT] Quarterly",
+      "it": "[IT] Quarterly",
+      "no": "Quarterly"
+    },
+    "modules.response.measures.export": {
+      "en": "Export Pathway Report",
+      "es": "Exportar Informe de Ruta",
+      "fr": "Exporter le Rapport de Parcours",
+      "de": "Pfadbericht Exportieren",
+      "lt": "Eksportuoti kelio ataskaitą",
+      "pt": "Exportar Relatório de Percurso",
+      "it": "Esporta Rapporto Percorso",
+      "no": "Export Pathway Report"
+    },
+    "modules.isa.data_entry.common.documentation": {
+      "en": "Experienced users, academic research, detailed documentation",
+      "es": "Usuarios experimentados, investigación académica, documentación detallada",
+      "fr": "Utilisateurs expérimentés, recherche académique, documentation détaillée",
+      "de": "Erfahrene Benutzer, akademische Forschung, detaillierte Dokumentation",
+      "lt": "Patyrę vartotojai, akademiniai tyrimai, išsami dokumentacija",
+      "pt": "Utilizadores experientes, pesquisa académica, documentação detalhada",
+      "it": "Utenti esperti, ricerca accademica, documentazione dettagliata",
+      "no": "Experienced users, academic research, detailed documentation"
+    },
+    "modules.pims.stakeholder.resistant": {
+      "en": "Resistant",
+      "es": "[ES] Resistant",
+      "fr": "[FR] Resistant",
+      "de": "[DE] Resistant",
+      "lt": "[LT] Resistant",
+      "pt": "[PT] Resistant",
+      "it": "[IT] Resistant",
+      "no": "Resistant"
+    },
+    "modules.pims.stakeholder.resource_users": {
+      "en": "Resource Users",
+      "es": "[ES] Resource Users",
+      "fr": "[FR] Resource Users",
+      "de": "[DE] Resource Users",
+      "lt": "[LT] Resource Users",
+      "pt": "[PT] Resource Users",
+      "it": "[IT] Resource Users",
+      "no": "Resource Users"
+    },
+    "modules.pims.stakeholder.responsible_person": {
+      "en": "Responsible Person",
+      "es": "[ES] Responsible Person",
+      "fr": "[FR] Responsible Person",
+      "de": "[DE] Responsible Person",
+      "lt": "[LT] Responsible Person",
+      "pt": "[PT] Responsible Person",
+      "it": "[IT] Responsible Person",
+      "no": "Responsible Person"
+    },
+    "modules.pims.stakeholder.role_in_system": {
+      "en": "Role In System",
+      "es": "[ES] Role In System",
+      "fr": "[FR] Role In System",
+      "de": "[DE] Role In System",
+      "lt": "[LT] Role In System",
+      "pt": "[PT] Role In System",
+      "it": "[IT] Role In System",
+      "no": "Role In System"
+    },
+    "modules.pims.stakeholder.scientificacademic": {
+      "en": "Scientificacademic",
+      "es": "[ES] Scientificacademic",
+      "fr": "[FR] Scientificacademic",
+      "de": "[DE] Scientificacademic",
+      "lt": "[LT] Scientificacademic",
+      "pt": "[PT] Scientificacademic",
+      "it": "[IT] Scientificacademic",
+      "no": "Scientificacademic"
+    },
+    "modules.pims.stakeholder.scientific_community": {
+      "en": "Scientific Community",
+      "es": "[ES] Scientific Community",
+      "fr": "[FR] Scientific Community",
+      "de": "[DE] Scientific Community",
+      "lt": "[LT] Scientific Community",
+      "pt": "[PT] Scientific Community",
+      "it": "[IT] Scientific Community",
+      "no": "Scientific Community"
+    },
+    "modules.pims.stakeholder.sector_distribution": {
+      "en": "Sector Distribution",
+      "es": "[ES] Sector Distribution",
+      "fr": "[FR] Sector Distribution",
+      "de": "[DE] Sector Distribution",
+      "lt": "[LT] Sector Distribution",
+      "pt": "[PT] Sector Distribution",
+      "it": "[IT] Sector Distribution",
+      "no": "Sector Distribution"
+    },
+    "modules.pims.stakeholder.sectors_represented": {
+      "en": "Sectors Represented",
+      "es": "[ES] Sectors Represented",
+      "fr": "[FR] Sectors Represented",
+      "de": "[DE] Sectors Represented",
+      "lt": "[LT] Sectors Represented",
+      "pt": "[PT] Sectors Represented",
+      "it": "[IT] Sectors Represented",
+      "no": "Sectors Represented"
+    },
+    "modules.pims.stakeholder.select_stakeholder": {
+      "en": "Select Stakeholder",
+      "es": "[ES] Select Stakeholder",
+      "fr": "[FR] Select Stakeholder",
+      "de": "[DE] Select Stakeholder",
+      "lt": "[LT] Select Stakeholder",
+      "pt": "[PT] Select Stakeholder",
+      "it": "[IT] Select Stakeholder",
+      "no": "Select Stakeholder"
+    },
+    "modules.pims.stakeholder.site_visit": {
+      "en": "Site Visit",
+      "es": "[ES] Site Visit",
+      "fr": "[FR] Site Visit",
+      "de": "[DE] Site Visit",
+      "lt": "[LT] Site Visit",
+      "pt": "[PT] Site Visit",
+      "it": "[IT] Site Visit",
+      "no": "Site Visit"
+    },
+    "modules.pims.stakeholder.social_media": {
+      "en": "Social Media",
+      "es": "[ES] Social Media",
+      "fr": "[FR] Social Media",
+      "de": "[DE] Social Media",
+      "lt": "[LT] Social Media",
+      "pt": "[PT] Social Media",
+      "it": "[IT] Social Media",
+      "no": "Social Media"
+    },
+    "modules.pims.stakeholder.specific_stakeholder": {
+      "en": "Specific Stakeholder",
+      "es": "[ES] Specific Stakeholder",
+      "fr": "[FR] Specific Stakeholder",
+      "de": "[DE] Specific Stakeholder",
+      "lt": "[LT] Specific Stakeholder",
+      "pt": "[PT] Specific Stakeholder",
+      "it": "[IT] Specific Stakeholder",
+      "no": "Specific Stakeholder"
+    },
+    "modules.pims.stakeholder.stakeholder_added_successfully": {
+      "en": "Stakeholder Added Successfully",
+      "es": "[ES] Stakeholder Added Successfully",
+      "fr": "[FR] Stakeholder Added Successfully",
+      "de": "[DE] Stakeholder Added Successfully",
+      "lt": "[LT] Stakeholder Added Successfully",
+      "pt": "[PT] Stakeholder Added Successfully",
+      "it": "[IT] Stakeholder Added Successfully",
+      "no": "Stakeholder Added Successfully"
+    },
+    "modules.pims.stakeholder.stakeholder_analysis_summary": {
+      "en": "Stakeholder Analysis Summary",
+      "es": "[ES] Stakeholder Analysis Summary",
+      "fr": "[FR] Stakeholder Analysis Summary",
+      "de": "[DE] Stakeholder Analysis Summary",
+      "lt": "[LT] Stakeholder Analysis Summary",
+      "pt": "[PT] Stakeholder Analysis Summary",
+      "it": "[IT] Stakeholder Analysis Summary",
+      "no": "Stakeholder Analysis Summary"
+    },
+    "modules.pims.stakeholder.stakeholder_communication_and_impact_management": {
+      "en": "Stakeholder Communication And Impact Management",
+      "es": "[ES] Stakeholder Communication And Impact Management",
+      "fr": "[FR] Stakeholder Communication And Impact Management",
+      "de": "[DE] Stakeholder Communication And Impact Management",
+      "lt": "[LT] Stakeholder Communication And Impact Management",
+      "pt": "[PT] Stakeholder Communication And Impact Management",
+      "it": "[IT] Stakeholder Communication And Impact Management",
+      "no": "Stakeholder Communication And Impact Management"
+    },
+    "modules.pims.stakeholder.stakeholder_engagement_coverage": {
+      "en": "Stakeholder Engagement Coverage",
+      "es": "[ES] Stakeholder Engagement Coverage",
+      "fr": "[FR] Stakeholder Engagement Coverage",
+      "de": "[DE] Stakeholder Engagement Coverage",
+      "lt": "[LT] Stakeholder Engagement Coverage",
+      "pt": "[PT] Stakeholder Engagement Coverage",
+      "it": "[IT] Stakeholder Engagement Coverage",
+      "no": "Stakeholder Engagement Coverage"
+    },
+    "modules.pims.stakeholder.stakeholder_engagement_strategy": {
+      "en": "Stakeholder Engagement Strategy",
+      "es": "[ES] Stakeholder Engagement Strategy",
+      "fr": "[FR] Stakeholder Engagement Strategy",
+      "de": "[DE] Stakeholder Engagement Strategy",
+      "lt": "[LT] Stakeholder Engagement Strategy",
+      "pt": "[PT] Stakeholder Engagement Strategy",
+      "it": "[IT] Stakeholder Engagement Strategy",
+      "no": "Stakeholder Engagement Strategy"
+    },
+    "modules.pims.stakeholder.stakeholder_identification": {
+      "en": "Stakeholder Identification",
+      "es": "[ES] Stakeholder Identification",
+      "fr": "[FR] Stakeholder Identification",
+      "de": "[DE] Stakeholder Identification",
+      "lt": "[LT] Stakeholder Identification",
+      "pt": "[PT] Stakeholder Identification",
+      "it": "[IT] Stakeholder Identification",
+      "no": "Stakeholder Identification"
+    },
+    "modules.pims.stakeholder.stakeholder_nameorganization": {
+      "en": "Stakeholder Nameorganization",
+      "es": "[ES] Stakeholder Nameorganization",
+      "fr": "[FR] Stakeholder Nameorganization",
+      "de": "[DE] Stakeholder Nameorganization",
+      "lt": "[LT] Stakeholder Nameorganization",
+      "pt": "[PT] Stakeholder Nameorganization",
+      "it": "[IT] Stakeholder Nameorganization",
+      "no": "Stakeholder Nameorganization"
+    },
+    "modules.pims.stakeholder.stakeholder_power_interest_grid": {
+      "en": "Stakeholder Power Interest Grid",
+      "es": "[ES] Stakeholder Power Interest Grid",
+      "fr": "[FR] Stakeholder Power Interest Grid",
+      "de": "[DE] Stakeholder Power Interest Grid",
+      "lt": "[LT] Stakeholder Power Interest Grid",
+      "pt": "[PT] Stakeholder Power Interest Grid",
+      "it": "[IT] Stakeholder Power Interest Grid",
+      "no": "Stakeholder Power Interest Grid"
+    },
+    "modules.pims.stakeholder.stakeholder_register": {
+      "en": "Stakeholder Register",
+      "es": "[ES] Stakeholder Register",
+      "fr": "[FR] Stakeholder Register",
+      "de": "[DE] Stakeholder Register",
+      "lt": "[LT] Stakeholder Register",
+      "pt": "[PT] Stakeholder Register",
+      "it": "[IT] Stakeholder Register",
+      "no": "Stakeholder Register"
+    },
+    "modules.isa.data_entry.common.stakeholder": {
+      "en": "Define your project goals, stakeholders, and timeline",
+      "es": "Defina los objetivos de su proyecto, las partes interesadas y el cronograma",
+      "fr": "Définissez vos objectifs de projet, parties prenantes et calendrier",
+      "de": "Definieren Sie Ihre Projektziele, Stakeholder und Zeitplan",
+      "lt": "Apibrėžkite projekto tikslus, suinteresuotas šalis ir laikotarpį",
+      "pt": "Defina os objetivos do seu projeto, partes interessadas e cronograma",
+      "it": "Definisci gli obiettivi del progetto, gli stakeholder e la timeline",
+      "no": "Define your project goals, stakeholders, and timeline"
+    },
+    "modules.pims.stakeholder.stakeholders_by_sector": {
+      "en": "Stakeholders By Sector",
+      "es": "[ES] Stakeholders By Sector",
+      "fr": "[FR] Stakeholders By Sector",
+      "de": "[DE] Stakeholders By Sector",
+      "lt": "[LT] Stakeholders By Sector",
+      "pt": "[PT] Stakeholders By Sector",
+      "it": "[IT] Stakeholders By Sector",
+      "no": "Stakeholders By Sector"
+    },
+    "modules.pims.stakeholder.stakeholders_by_type": {
+      "en": "Stakeholders By Type",
+      "es": "[ES] Stakeholders By Type",
+      "fr": "[FR] Stakeholders By Type",
+      "de": "[DE] Stakeholders By Type",
+      "lt": "[LT] Stakeholders By Type",
+      "pt": "[PT] Stakeholders By Type",
+      "it": "[IT] Stakeholders By Type",
+      "no": "Stakeholders By Type"
+    },
+    "modules.pims.stakeholder.stakeholder_statistics": {
+      "en": "Stakeholder Statistics",
+      "es": "[ES] Stakeholder Statistics",
+      "fr": "[FR] Stakeholder Statistics",
+      "de": "[DE] Stakeholder Statistics",
+      "lt": "[LT] Stakeholder Statistics",
+      "pt": "[PT] Stakeholder Statistics",
+      "it": "[IT] Stakeholder Statistics",
+      "no": "Stakeholder Statistics"
+    },
+    "modules.pims.stakeholder.stakeholder_types": {
+      "en": "Stakeholder Types",
+      "es": "[ES] Stakeholder Types",
+      "fr": "[FR] Stakeholder Types",
+      "de": "[DE] Stakeholder Types",
+      "lt": "[LT] Stakeholder Types",
+      "pt": "[PT] Stakeholder Types",
+      "it": "[IT] Stakeholder Types",
+      "no": "Stakeholder Types"
+    },
+    "modules.pims.stakeholder.stakeholder_types_distribution": {
+      "en": "Stakeholder Types Distribution",
+      "es": "[ES] Stakeholder Types Distribution",
+      "fr": "[FR] Stakeholder Types Distribution",
+      "de": "[DE] Stakeholder Types Distribution",
+      "lt": "[LT] Stakeholder Types Distribution",
+      "pt": "[PT] Stakeholder Types Distribution",
+      "it": "[IT] Stakeholder Types Distribution",
+      "no": "Stakeholder Types Distribution"
+    },
+    "modules.pims.stakeholder.supportive": {
+      "en": "Supportive",
+      "es": "[ES] Supportive",
+      "fr": "[FR] Supportive",
+      "de": "[DE] Supportive",
+      "lt": "[LT] Supportive",
+      "pt": "[PT] Supportive",
+      "it": "[IT] Supportive",
+      "no": "Supportive"
+    },
+    "modules.pims.stakeholder.survey": {
+      "en": "Survey",
+      "es": "[ES] Survey",
+      "fr": "[FR] Survey",
+      "de": "[DE] Survey",
+      "lt": "[LT] Survey",
+      "pt": "[PT] Survey",
+      "it": "[IT] Survey",
+      "no": "Survey"
+    },
+    "modules.pims.stakeholder.target_audience": {
+      "en": "Target Audience",
+      "es": "[ES] Target Audience",
+      "fr": "[FR] Target Audience",
+      "de": "[DE] Target Audience",
+      "lt": "[LT] Target Audience",
+      "pt": "[PT] Target Audience",
+      "it": "[IT] Target Audience",
+      "no": "Target Audience"
+    },
+    "modules.pims.stakeholder.total_communications": {
+      "en": "Total Communications",
+      "es": "[ES] Total Communications",
+      "fr": "[FR] Total Communications",
+      "de": "[DE] Total Communications",
+      "lt": "[LT] Total Communications",
+      "pt": "[PT] Total Communications",
+      "it": "[IT] Total Communications",
+      "no": "Total Communications"
+    },
+    "modules.pims.stakeholder.total_engagements": {
+      "en": "Total Engagements",
+      "es": "[ES] Total Engagements",
+      "fr": "[FR] Total Engagements",
+      "de": "[DE] Total Engagements",
+      "lt": "[LT] Total Engagements",
+      "pt": "[PT] Total Engagements",
+      "it": "[IT] Total Engagements",
+      "no": "Total Engagements"
+    },
+    "modules.pims.stakeholder.total_stakeholders": {
+      "en": "Total Stakeholders",
+      "es": "[ES] Total Stakeholders",
+      "fr": "[FR] Total Stakeholders",
+      "de": "[DE] Total Stakeholders",
+      "lt": "[LT] Total Stakeholders",
+      "pt": "[PT] Total Stakeholders",
+      "it": "[IT] Total Stakeholders",
+      "no": "Total Stakeholders"
+    },
+    "modules.pims.stakeholder.website_update": {
+      "en": "Website Update",
+      "es": "[ES] Website Update",
+      "fr": "[FR] Website Update",
+      "de": "[DE] Website Update",
+      "lt": "[LT] Website Update",
+      "pt": "[PT] Website Update",
+      "it": "[IT] Website Update",
+      "no": "Website Update"
+    },
+    "modules.pims.stakeholder.weekly": {
+      "en": "Weekly",
+      "es": "[ES] Weekly",
+      "fr": "[FR] Weekly",
+      "de": "[DE] Weekly",
+      "lt": "[LT] Weekly",
+      "pt": "[PT] Weekly",
+      "it": "[IT] Weekly",
+      "no": "Weekly"
+    },
+    "modules.pims.stakeholder.what_do_you_want_to_achieve": {
+      "en": "What Do You Want To Achieve",
+      "es": "[ES] What Do You Want To Achieve",
+      "fr": "[FR] What Do You Want To Achieve",
+      "de": "[DE] What Do You Want To Achieve",
+      "lt": "[LT] What Do You Want To Achieve",
+      "pt": "[PT] What Do You Want To Achieve",
+      "it": "[IT] What Do You Want To Achieve",
+      "no": "What Do You Want To Achieve"
+    },
+    "modules.pims.stakeholder.what_information_is_being_communicated": {
+      "en": "What Information Is Being Communicated",
+      "es": "[ES] What Information Is Being Communicated",
+      "fr": "[FR] What Information Is Being Communicated",
+      "de": "[DE] What Information Is Being Communicated",
+      "lt": "[LT] What Information Is Being Communicated",
+      "pt": "[PT] What Information Is Being Communicated",
+      "it": "[IT] What Information Is Being Communicated",
+      "no": "What Information Is Being Communicated"
+    },
+    "modules.pims.stakeholder.what_was_achieved_or_learned": {
+      "en": "What Was Achieved Or Learned",
+      "es": "[ES] What Was Achieved Or Learned",
+      "fr": "[FR] What Was Achieved Or Learned",
+      "de": "[DE] What Was Achieved Or Learned",
+      "lt": "[LT] What Was Achieved Or Learned",
+      "pt": "[PT] What Was Achieved Or Learned",
+      "it": "[IT] What Was Achieved Or Learned",
+      "no": "What Was Achieved Or Learned"
+    },
+    "modules.pims.stakeholder.who_is_leading_this": {
+      "en": "Who Is Leading This",
+      "es": "[ES] Who Is Leading This",
+      "fr": "[FR] Who Is Leading This",
+      "de": "[DE] Who Is Leading This",
+      "lt": "[LT] Who Is Leading This",
+      "pt": "[PT] Who Is Leading This",
+      "it": "[IT] Who Is Leading This",
+      "no": "Who Is Leading This"
+    },
+    "modules.pims.stakeholder.workshop": {
+      "en": "Record stakeholder feedback, validation workshop results, expert reviews...",
+      "es": "Registre la retroalimentación de las partes interesadas, resultados de talleres de validación, revisiones de expertos...",
+      "fr": "Enregistrez les commentaires des parties prenantes, les résultats des ateliers de validation, les examens d'experts...",
+      "de": "Erfassen Sie Stakeholder-Feedback, Ergebnisse von Validierungsworkshops, Expertenbewertungen...",
+      "lt": "Užrašykite suinteresuotųjų subjektų atsiliepimus, patvirtinimo dirbtuvių rezultatus, ekspertų vertinimus...",
+      "pt": "Registe o feedback das partes interessadas, resultados de workshops de validação, revisões de especialistas...",
+      "it": "Registrare il feedback delle parti interessate, i risultati dei workshop di validazione, le revisioni degli esperti...",
+      "no": "Record stakeholder feedback, validation workshop results, expert reviews..."
+    },
+    "modules.pims.visualize_stakeholders_based_on_their_powerinfluen": {
+      "en": "Visualize Stakeholders Based On Their Powerinfluen",
+      "es": "[ES] Visualize Stakeholders Based On Their Powerinfluen",
+      "fr": "[FR] Visualize Stakeholders Based On Their Powerinfluen",
+      "de": "[DE] Visualize Stakeholders Based On Their Powerinfluen",
+      "lt": "[LT] Visualize Stakeholders Based On Their Powerinfluen",
+      "pt": "[PT] Visualize Stakeholders Based On Their Powerinfluen",
+      "it": "[IT] Visualize Stakeholders Based On Their Powerinfluen",
+      "no": "Visualize Stakeholders Based On Their Powerinfluen"
+    },
+    "modules.pims.what_does_this_stakeholder_care_about_in_the_marin": {
+      "en": "What Does This Stakeholder Care About In The Marin",
+      "es": "[ES] What Does This Stakeholder Care About In The Marin",
+      "fr": "[FR] What Does This Stakeholder Care About In The Marin",
+      "de": "[DE] What Does This Stakeholder Care About In The Marin",
+      "lt": "[LT] What Does This Stakeholder Care About In The Marin",
+      "pt": "[PT] What Does This Stakeholder Care About In The Marin",
+      "it": "[IT] What Does This Stakeholder Care About In The Marin",
+      "no": "What Does This Stakeholder Care About In The Marin"
+    },
+    "modules.pims.what_is_their_role_decision_maker_user_affected_pa": {
+      "en": "What Is Their Role Decision Maker User Affected Pa",
+      "es": "[ES] What Is Their Role Decision Maker User Affected Pa",
+      "fr": "[FR] What Is Their Role Decision Maker User Affected Pa",
+      "de": "[DE] What Is Their Role Decision Maker User Affected Pa",
+      "lt": "[LT] What Is Their Role Decision Maker User Affected Pa",
+      "pt": "[PT] What Is Their Role Decision Maker User Affected Pa",
+      "it": "[IT] What Is Their Role Decision Maker User Affected Pa",
+      "no": "What Is Their Role Decision Maker User Affected Pa"
+    },
+    "modules.response.measures.completed": {
+      "en": "Validation Completed:",
+      "es": "Validación Completada:",
+      "fr": "Validation Terminée :",
+      "de": "Validierung abgeschlossen:",
+      "lt": "Patvirtinimas baigtas:",
+      "pt": "Validação Concluída:",
+      "it": "Validazione Completata:",
+      "no": "Validation Completed:"
+    },
+    "modules.response.measures.delete_selected": {
+      "en": "Delete Selected",
+      "es": "Eliminar Seleccionados",
+      "fr": "Supprimer la Sélection",
+      "de": "Ausgewählte löschen",
+      "lt": "Ištrinti Pasirinktus",
+      "pt": "Excluir Selecionados",
+      "it": "Elimina Selezionati",
+      "no": "Delete Selected"
+    },
+    "modules.response.measures.high": {
+      "en": "Total number of connections (in + out). High values indicate hub nodes.",
+      "es": "Número total de conexiones (entrada + salida). Valores altos indican nodos concentradores.",
+      "fr": "Nombre total de connexions (entrée + sortie). Des valeurs élevées indiquent des nœuds hub.",
+      "de": "Gesamtzahl der Verbindungen (eingehend + ausgehend). Hohe Werte weisen auf Hub-Knoten hin.",
+      "lt": "Bendras ryšių skaičius (įėjimas + išėjimas). Didelės reikšmės rodo koncentratoriaus mazgus.",
+      "pt": "Número total de conexões (entrada + saída). Valores altos indicam nós concentradores.",
+      "it": "Numero totale di connessioni (in + out). Valori elevati indicano nodi hub.",
+      "no": "Total number of connections (in + out). High values indicate hub nodes."
+    },
+    "modules.response.measures.low": {
+      "en": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
+      "es": "Su rol nos ayuda a recomendar las herramientas y flujos de trabajo más relevantes para su contexto de gestión marina.",
+      "fr": "Votre rôle nous aide à recommander les outils et flux de travail les plus pertinents pour votre contexte de gestion marine.",
+      "de": "Ihre Rolle hilft uns, die relevantesten Werkzeuge und Arbeitsabläufe für Ihren Meeresmanagement-Kontext zu empfehlen.",
+      "lt": "Jūsų vaidmuo padeda mums rekomenduoti tinkamiausias priemones ir darbo eigas jūsų jūrų valdymo kontekstui.",
+      "pt": "O seu papel ajuda-nos a recomendar as ferramentas e fluxos de trabalho mais relevantes para o seu contexto de gestão marinha.",
+      "it": "Il tuo ruolo ci aiuta a raccomandare gli strumenti e i flussi di lavoro più rilevanti per il tuo contesto di gestione marina.",
+      "no": "Your role helps us recommend the most relevant tools and workflows for your marine management context."
+    },
+    "modules.response.measures.medium": {
+      "en": "Small/medium enterprise influencers",
+      "es": "Influyentes de pequeñas/medianas empresas",
+      "fr": "Influenceurs de petites/moyennes entreprises",
+      "de": "Einflussnehmer kleiner/mittlerer Unternehmen",
+      "lt": "Mažų/vidutinių įmonių įtakos asmenys",
+      "pt": "Influenciadores de pequenas/médias empresas",
+      "it": "Influencer di piccole/medie imprese",
+      "no": "Small/medium enterprise influencers"
+    },
+    "modules.response.measures.planned": {
+      "en": "Planned",
+      "es": "Planificado",
+      "fr": "Planifié",
+      "de": "Geplant",
+      "lt": "Planuojamas",
+      "pt": "Planeado",
+      "it": "Pianificato",
+      "no": "Planned"
+    },
+    "modules.response.measures.unknown": {
+      "en": "Unknown",
+      "es": "[ES] Unknown",
+      "fr": "[FR] Unknown",
+      "de": "[DE] Unknown",
+      "lt": "[LT] Unknown",
+      "pt": "[PT] Unknown",
+      "it": "[IT] Unknown",
+      "no": "Unknown"
+    },
+    "modules.pims.stakeholder.count": {
+      "en": "Count",
+      "es": "[ES] Count",
+      "fr": "[FR] Count",
+      "de": "[DE] Count",
+      "lt": "[LT] Count",
+      "pt": "[PT] Count",
+      "it": "[IT] Count",
+      "no": "Count"
+    },
+    "modules.pims.stakeholder.power": {
+      "en": "Power",
+      "es": "[ES] Power",
+      "fr": "[FR] Power",
+      "de": "[DE] Power",
+      "lt": "[LT] Power",
+      "pt": "[PT] Power",
+      "it": "[IT] Power",
+      "no": "Power"
+    },
+    "modules.pims.stakeholder.report": {
+      "en": "Report",
+      "es": "[ES] Report",
+      "fr": "[FR] Report",
+      "de": "[DE] Report",
+      "lt": "[LT] Report",
+      "pt": "[PT] Report",
+      "it": "[IT] Report",
+      "no": "Report"
+    },
+    "modules.pims.stakeholder.research": {
+      "en": "Research",
+      "es": "[ES] Research",
+      "fr": "[FR] Research",
+      "de": "[DE] Research",
+      "lt": "[LT] Research",
+      "pt": "[PT] Research",
+      "it": "[IT] Research",
+      "no": "Research"
+    },
+    "modules.pims.stakeholder.stakeholders": {
+      "en": "Stakeholders",
+      "es": "[ES] Stakeholders",
+      "fr": "[FR] Stakeholders",
+      "de": "[DE] Stakeholders",
+      "lt": "[LT] Stakeholders",
+      "pt": "[PT] Stakeholders",
+      "it": "[IT] Stakeholders",
+      "no": "Stakeholders"
+    }
+  }
+}

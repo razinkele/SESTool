@@ -1,0 +1,292 @@
+{
+  "template_name": "Climate Change Impacts on Marine Ecosystems",
+  "template_description": "Template for analyzing climate change effects on marine ecosystems including ocean warming, acidification, sea level rise, and storm impacts",
+  "regional_context": {
+    "region": "Generic marine/coastal",
+    "ecosystem_types": ["Marine ecosystems", "Coral reefs", "Coastal zones"],
+    "main_issues": ["Ocean warming", "Ocean acidification", "Sea level rise", "Extreme weather"]
+  },
+  "metadata": {
+    "created_date": "2025-11-17",
+    "version": "1.0",
+    "source": "Standard climate change impacts scenario template",
+    "applicable_regions": ["Global - adaptable to any climate-affected marine system"]
+  },
+  "dapsiwrm_framework": {
+    "drivers": [
+      {
+        "id": "D001",
+        "name": "Greenhouse Gas Emissions",
+        "description": "CO2 emissions",
+        "category": "Climate",
+        "intensity": "Very High"
+      },
+      {
+        "id": "D002",
+        "name": "Land Use Change",
+        "description": "Deforestation rate",
+        "category": "Land use",
+        "intensity": "High"
+      },
+      {
+        "id": "D003",
+        "name": "Energy Consumption",
+        "description": "Energy use",
+        "category": "Energy",
+        "intensity": "Very High"
+      }
+    ],
+    "activities": [
+      {
+        "id": "A001",
+        "name": "Fossil Fuel Use",
+        "description": "Fuel consumption",
+        "sector": "Energy",
+        "scale": "Global",
+        "drivers": ["D001", "D003"]
+      },
+      {
+        "id": "A002",
+        "name": "Industrial Production",
+        "description": "Production output",
+        "sector": "Industry",
+        "scale": "Large-scale",
+        "drivers": ["D002", "D003"]
+      },
+      {
+        "id": "A003",
+        "name": "Transportation",
+        "description": "Vehicle-km",
+        "sector": "Transport",
+        "scale": "Large-scale",
+        "drivers": ["D003"]
+      }
+    ],
+    "pressures": [
+      {
+        "id": "P001",
+        "name": "Ocean Warming",
+        "description": "Sea surface temperature",
+        "type": "External",
+        "intensity": "High",
+        "activities": ["A001", "A002", "A003"]
+      },
+      {
+        "id": "P002",
+        "name": "Ocean Acidification",
+        "description": "pH level",
+        "type": "External",
+        "intensity": "High",
+        "activities": ["A001", "A002", "A003"]
+      },
+      {
+        "id": "P003",
+        "name": "Sea Level Rise",
+        "description": "Sea level change",
+        "type": "External",
+        "intensity": "Medium",
+        "activities": ["A001", "A002", "A003"]
+      },
+      {
+        "id": "P004",
+        "name": "Storm Intensity",
+        "description": "Storm frequency",
+        "type": "External",
+        "intensity": "Medium",
+        "activities": ["A001", "A003"]
+      }
+    ],
+    "marine_processes": [
+      {
+        "id": "MPF001",
+        "name": "Species Distribution Shifts",
+        "description": "Range shift distance",
+        "type": "State Change",
+        "pressures": ["P001"]
+      },
+      {
+        "id": "MPF002",
+        "name": "Coral Bleaching",
+        "description": "Bleaching extent",
+        "type": "State Change",
+        "pressures": ["P002"]
+      },
+      {
+        "id": "MPF003",
+        "name": "Coastal Erosion",
+        "description": "Erosion rate",
+        "type": "State Change",
+        "pressures": ["P003", "P004"]
+      }
+    ],
+    "ecosystem_services": [
+      {
+        "id": "ES001",
+        "name": "Climate Regulation",
+        "description": "Carbon sequestration",
+        "type": "Regulating",
+        "marine_processes": ["MPF001", "MPF002", "MPF003"]
+      },
+      {
+        "id": "ES002",
+        "name": "Coastal Protection",
+        "description": "Storm protection",
+        "type": "Regulating",
+        "marine_processes": ["MPF002", "MPF003"]
+      },
+      {
+        "id": "ES003",
+        "name": "Biodiversity",
+        "description": "Species richness",
+        "type": "Supporting",
+        "marine_processes": ["MPF001", "MPF002", "MPF003"]
+      }
+    ],
+    "welfare": [
+      {
+        "id": "GB001",
+        "name": "Climate Stability",
+        "description": "Temperature stability",
+        "type": "Welfare",
+        "ecosystem_services": ["ES001", "ES003"]
+      },
+      {
+        "id": "GB002",
+        "name": "Coastal Safety",
+        "description": "Flood risk",
+        "type": "Welfare",
+        "ecosystem_services": ["ES002"]
+      },
+      {
+        "id": "GB003",
+        "name": "Ecosystem Resilience",
+        "description": "Resilience index",
+        "type": "Welfare",
+        "ecosystem_services": ["ES001", "ES002", "ES003"]
+      }
+    ],
+    "responses": [
+      {
+        "id": "R001",
+        "name": "Carbon Pricing Policies",
+        "description": "Market-based mechanisms to reduce greenhouse gas emissions",
+        "type": "Economic",
+        "stakeholder": "Climate Ministry",
+        "targets": ["A001", "D001", "P001"]
+      },
+      {
+        "id": "R002",
+        "name": "Renewable Energy Targets",
+        "description": "Mandates and incentives for renewable energy adoption",
+        "type": "Policy",
+        "stakeholder": "Energy Ministry",
+        "targets": ["A001", "D003", "P001"]
+      },
+      {
+        "id": "R003",
+        "name": "Energy Efficiency Standards",
+        "description": "Regulations requiring energy-efficient technologies and practices",
+        "type": "Regulatory",
+        "stakeholder": "Energy Authority",
+        "targets": ["A002", "A003", "D003", "P001"]
+      },
+      {
+        "id": "R004",
+        "name": "Coastal Adaptation Plans",
+        "description": "Strategies for adapting coastal infrastructure to climate impacts",
+        "type": "Planning",
+        "stakeholder": "Coastal Management",
+        "targets": ["P003", "MPF003"]
+      },
+      {
+        "id": "R005",
+        "name": "Nature-Based Solutions",
+        "description": "Ecosystem restoration and conservation for climate resilience",
+        "type": "Conservation",
+        "stakeholder": "Environmental Agency",
+        "targets": ["P002", "P003", "P004", "MPF001", "MPF002", "MPF003"]
+      }
+    ]
+  },
+  "connections": [
+    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "strong", "confidence": 4},
+    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A003", "polarity": "+", "strength": "strong", "confidence": 5},
+    
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P004", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P004", "polarity": "+", "strength": "weak", "confidence": 3},
+    
+    {"from_type": "Pressure", "from_id": "P001", "to_type": "MarineProcess", "to_id": "MPF001", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "Pressure", "from_id": "P002", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "Pressure", "from_id": "P003", "to_type": "MarineProcess", "to_id": "MPF003", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "Pressure", "from_id": "P004", "to_type": "MarineProcess", "to_id": "MPF003", "polarity": "-", "strength": "medium", "confidence": 4},
+    
+    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "weak", "confidence": 3},
+    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "medium", "confidence": 4},
+    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "weak", "confidence": 3},
+    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "weak", "confidence": 3},
+    
+    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "EcosystemService", "from_id": "ES002", "to_type": "Welfare", "to_id": "GB002", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "EcosystemService", "from_id": "ES002", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "EcosystemService", "from_id": "ES003", "to_type": "Welfare", "to_id": "GB001", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "EcosystemService", "from_id": "ES003", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "strong", "confidence": 5},
+    
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D001", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Driver", "to_id": "D001", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "medium", "confidence": 4},
+    
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Climate Stability concerns trigger Carbon Pricing Policies"},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Climate Stability concerns trigger Renewable Energy Targets"},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Climate Stability concerns trigger Energy Efficiency Standards"},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Coastal Safety concerns trigger Coastal Adaptation Plans"},
+    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Response", "to_id": "R005", "polarity": "+", "strength": "strong", "confidence": 4, "description": "Ecosystem Resilience concerns trigger Nature-Based Solutions"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Driver", "to_id": "D001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Carbon Pricing Policies reduce GHG Emissions"},
+    {"from_type": "Response", "from_id": "R001", "to_type": "Driver", "to_id": "D003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Carbon Pricing Policies affect Energy Demand"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Driver", "to_id": "D001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Renewable Energy Targets reduce GHG Emissions"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Renewable Energy Targets affect Energy Demand"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Driver", "to_id": "D003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Energy Efficiency Standards reduce Energy Demand"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Carbon Pricing Policies restrict Fossil Fuel Use"},
+    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Carbon Pricing Policies affect Industrial Activities"},
+    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Carbon Pricing Policies affect Transportation"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Renewable Energy Targets reduce Fossil Fuel Use"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Energy Efficiency Standards reduce Fossil Fuel Use"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Energy Efficiency Standards regulate Industrial Activities"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Energy Efficiency Standards regulate Transportation"},
+    {"from_type": "Response", "from_id": "R005", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Nature-Based Solutions affect Industrial Activities"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Carbon Pricing Policies reduce Ocean Warming"},
+    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Carbon Pricing Policies reduce Ocean Acidification"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Renewable Energy Targets reduce Ocean Warming"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Renewable Energy Targets reduce Ocean Acidification"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Energy Efficiency Standards reduce Ocean Warming"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Energy Efficiency Standards reduce Ocean Acidification"},
+    {"from_type": "Response", "from_id": "R004", "to_type": "Pressure", "to_id": "P003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Coastal Adaptation Plans mitigate Sea Level Rise impacts"},
+    {"from_type": "Response", "from_id": "R004", "to_type": "Pressure", "to_id": "P004", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Coastal Adaptation Plans mitigate Storm Intensification impacts"},
+    {"from_type": "Response", "from_id": "R005", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Nature-Based Solutions mitigate Ocean Acidification"},
+    {"from_type": "Response", "from_id": "R005", "to_type": "Pressure", "to_id": "P003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Nature-Based Solutions mitigate Sea Level Rise"},
+    {"from_type": "Response", "from_id": "R005", "to_type": "Pressure", "to_id": "P004", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Nature-Based Solutions mitigate Storm Intensification"}
+  ]
+}

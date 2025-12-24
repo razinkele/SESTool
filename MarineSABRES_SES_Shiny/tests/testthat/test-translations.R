@@ -232,17 +232,17 @@ test_that("i18n object can translate Create SES keys", {
   skip_if_not(exists("i18n"))
 
   # Test core translations
-  expect_true(nchar(i18n$t("Create SES")) > 0)
-  expect_true(nchar(i18n$t("Standard Entry")) > 0)
-  expect_true(nchar(i18n$t("AI Assistant")) > 0)
-  expect_true(nchar(i18n$t("Template-Based")) > 0)
+  expect_true(nchar(i18n$t("ui.sidebar.create_ses")) > 0)
+  expect_true(nchar(i18n$t("ui.sidebar.standard_entry")) > 0)
+  expect_true(nchar(i18n$t("ui.sidebar.ai_assistant")) > 0)
+  expect_true(nchar(i18n$t("ui.sidebar.template_based")) > 0)
 })
 
 test_that("i18n object handles missing keys gracefully", {
   skip_if_not(exists("i18n"))
 
   # Should return the key itself or a placeholder
-  result <- i18n$t("NONEXISTENT_KEY_12345")
+  result <- i18n$t("common.misc.nonexistent_key_12345")
   expect_true(is.character(result))
 })
 

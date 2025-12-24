@@ -12,7 +12,7 @@ create_ses_ui <- function(id, i18n) {
 
   fluidPage(
     useShinyjs(),
-    shiny.i18n::usei18n(i18n),
+    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     # Custom CSS for the Create SES interface
     tags$head(
@@ -178,8 +178,13 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
       div(class = "create-ses-container",
         # Header Section
         div(class = "header-section",
-          h2(icon("layer-group"), " ", i18n$t("Create Your Social-Ecological System")),
-          p(i18n$t("Choose the method that best fits your experience level and project needs"))
+          create_module_header(
+            ns = ns,
+            title_key = "modules.ses.creation.title",
+            subtitle_key = "modules.ses.creation.subtitle",
+            help_id = "help_create_ses",
+            i18n = i18n
+          )
         ),
 
         # Method Selection Cards
@@ -190,25 +195,25 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
               div(class = "method-icon",
                 icon("edit", class = "fa-3x")
               ),
-              div(class = "method-title", i18n$t("Standard Entry")),
+              div(class = "method-title", i18n$t("ui.sidebar.standard_entry")),
               div(
-                span(class = "method-badge intermediate", i18n$t("Intermediate")),
-                span(class = "method-badge", i18n$t("Structured"))
+                span(class = "method-badge intermediate", i18n$t("modules.ses.creation.intermediate")),
+                span(class = "method-badge", i18n$t("modules.ses.creation.structured"))
               ),
               div(class = "method-description",
-                i18n$t("Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology.")
+                i18n$t("modules.ses.traditional_form_based_approach_following_the_daps")
               ),
               tags$ul(class = "method-features",
-                tags$li(i18n$t("Step-by-step guided exercises")),
-                tags$li(i18n$t("Complete control over all elements")),
-                tags$li(i18n$t("Detailed data validation")),
-                tags$li(i18n$t("Direct framework implementation")),
-                tags$li(i18n$t("Export-ready data structure"))
+                tags$li(i18n$t("modules.ses.creation.step_by_step_guided_exercises")),
+                tags$li(i18n$t("modules.ses.creation.complete_control_over_all_elements")),
+                tags$li(i18n$t("modules.ses.creation.detailed_data_validation")),
+                tags$li(i18n$t("modules.ses.creation.direct_framework_implementation")),
+                tags$li(i18n$t("modules.ses.creation.export_ready_data_structure"))
               ),
               div(style = "text-align: center; margin-top: 20px;",
-                tags$strong(i18n$t("Best for:")),
+                tags$strong(i18n$t("modules.ses.creation.best_for")),
                 " ",
-                i18n$t("Experienced users, academic research, detailed documentation")
+                i18n$t("modules.ses.creation.experienced_users_academic_research_detailed_documentation")
               )
             )
           ),
@@ -219,25 +224,25 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
               div(class = "method-icon",
                 icon("robot", class = "fa-3x")
               ),
-              div(class = "method-title", i18n$t("AI Assistant")),
+              div(class = "method-title", i18n$t("ui.sidebar.ai_assistant")),
               div(
-                span(class = "method-badge beginner", i18n$t("Beginner")),
-                span(class = "method-badge recommended", i18n$t("Recommended"))
+                span(class = "method-badge beginner", i18n$t("modules.ses.creation.beginner")),
+                span(class = "method-badge recommended", i18n$t("modules.ses.creation.recommended"))
               ),
               div(class = "method-description",
-                i18n$t("Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.")
+                i18n$t("modules.ses.intelligent_question_based_guidance_that_helps_you")
               ),
               tags$ul(class = "method-features",
-                tags$li(i18n$t("Interactive Q&A workflow")),
-                tags$li(i18n$t("Context-aware suggestions")),
-                tags$li(i18n$t("Automatic element generation")),
-                tags$li(i18n$t("Learning-friendly approach")),
-                tags$li(i18n$t("Built-in examples"))
+                tags$li(i18n$t("modules.ses.creation.interactive_qa_workflow")),
+                tags$li(i18n$t("modules.ses.creation.context_aware_suggestions")),
+                tags$li(i18n$t("modules.ses.creation.automatic_element_generation")),
+                tags$li(i18n$t("modules.ses.creation.learning_friendly_approach")),
+                tags$li(i18n$t("modules.ses.creation.built_in_examples"))
               ),
               div(style = "text-align: center; margin-top: 20px;",
-                tags$strong(i18n$t("Best for:")),
+                tags$strong(i18n$t("modules.ses.creation.best_for")),
                 " ",
-                i18n$t("Beginners, first-time users, exploratory analysis")
+                i18n$t("modules.ses.creation.beginners_first_time_users_exploratory_analysis")
               )
             )
           ),
@@ -248,25 +253,25 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
               div(class = "method-icon",
                 icon("clone", class = "fa-3x")
               ),
-              div(class = "method-title", i18n$t("Template-Based")),
+              div(class = "method-title", i18n$t("ui.sidebar.template_based")),
               div(
-                span(class = "method-badge beginner", i18n$t("Beginner")),
-                span(class = "method-badge", i18n$t("Quick Start"))
+                span(class = "method-badge beginner", i18n$t("modules.ses.creation.beginner")),
+                span(class = "method-badge", i18n$t("modules.ses.creation.quick_start"))
               ),
               div(class = "method-description",
-                i18n$t("Start from pre-built templates based on common marine management scenarios. Customize to fit your specific case.")
+                i18n$t("modules.ses.start_from_pre_built_templates_based_on_common_mar")
               ),
               tags$ul(class = "method-features",
-                tags$li(i18n$t("Pre-populated frameworks")),
-                tags$li(i18n$t("Domain-specific templates")),
-                tags$li(i18n$t("Ready-to-customize elements")),
-                tags$li(i18n$t("Fastest setup time")),
-                tags$li(i18n$t("Example connections included"))
+                tags$li(i18n$t("modules.ses.creation.pre_populated_frameworks")),
+                tags$li(i18n$t("modules.ses.creation.domain_specific_templates")),
+                tags$li(i18n$t("modules.ses.creation.ready_to_customize_elements")),
+                tags$li(i18n$t("modules.ses.creation.fastest_setup_time")),
+                tags$li(i18n$t("modules.ses.creation.example_connections_included"))
               ),
               div(style = "text-align: center; margin-top: 20px;",
-                tags$strong(i18n$t("Best for:")),
+                tags$strong(i18n$t("modules.ses.creation.best_for")),
                 " ",
-                i18n$t("Quick prototyping, common scenarios, time-constrained projects")
+                i18n$t("modules.ses.quick_prototyping_common_scenarios_time_constraine")
               )
             )
           )
@@ -278,7 +283,7 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
             uiOutput(ns("selection_feedback")),
             br(),
             actionButton(ns("proceed"),
-                         i18n$t("Proceed to Selected Method"),
+                         i18n$t("modules.ses.creation.proceed_to_selected_method"),
                          icon = icon("arrow-right"),
                          class = "proceed-button",
                          disabled = TRUE)
@@ -289,7 +294,7 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
         hr(style = "margin: 50px 0;"),
 
         div(class = "comparison-table",
-          h4(icon("table"), " ", i18n$t("Method Comparison"), style = "text-align: center; margin-bottom: 20px;"),
+          h4(icon("table"), " ", i18n$t("modules.ses.creation.method_comparison"), style = "text-align: center; margin-bottom: 20px;"),
           tableOutput(ns("comparison_table"))
         ),
 
@@ -298,12 +303,12 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
           column(12,
             wellPanel(
               style = "background: #f8f9fa; border-left: 4px solid #667eea;",
-              h5(icon("lightbulb"), " ", i18n$t("Need Help Choosing?")),
-              p(tags$strong(i18n$t("New to SES modeling?")), " Start with the ", tags$strong(i18n$t("AI Assistant")),
+              h5(icon("lightbulb"), " ", i18n$t("modules.ses.creation.need_help_choosing")),
+              p(tags$strong(i18n$t("modules.ses.creation.new_to_ses_modeling")), " Start with the ", tags$strong(i18n$t("ui.sidebar.ai_assistant")),
                 " for guided learning and gentle introduction to the framework."),
-              p(tags$strong(i18n$t("Have existing framework knowledge?")), " Use ", tags$strong(i18n$t("Standard Entry")),
+              p(tags$strong(i18n$t("modules.ses.creation.have_existing_framework_knowledge")), " Use ", tags$strong(i18n$t("ui.sidebar.standard_entry")),
                 " for maximum control and detailed customization."),
-              p(tags$strong(i18n$t("Working on a time-sensitive project?")), " Try ", tags$strong(i18n$t("Template-Based")),
+              p(tags$strong(i18n$t("modules.ses.creation.working_on_a_time_sensitive_project")), " Try ", tags$strong(i18n$t("ui.sidebar.template_based")),
                 " to jumpstart your analysis with proven structures."),
               p(strong("Not sure?"), " You can always switch methods later or combine approaches!")
             )
@@ -331,14 +336,14 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
       req(rv$selected_method)
 
       method_names <- list(
-        standard = i18n$t("Standard Entry"),
-        ai = i18n$t("AI Assistant"),
-        template = i18n$t("Template-Based")
+        standard = i18n$t("ui.sidebar.standard_entry"),
+        ai = i18n$t("ui.sidebar.ai_assistant"),
+        template = i18n$t("ui.sidebar.template_based")
       )
 
       div(style = "font-size: 18px; color: #27ae60; font-weight: 600;",
         icon("check-circle"),
-        sprintf(" %s %s", i18n$t("You selected:"), method_names[[rv$selected_method]])
+        sprintf(" %s %s", i18n$t("modules.ses.creation.you_selected"), method_names[[rv$selected_method]])
       )
     })
 
@@ -346,18 +351,18 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
     output$comparison_table <- renderTable({
       data.frame(
         Feature = c(
-          i18n$t("Time to Start"),
-          i18n$t("Learning Curve"),
-          i18n$t("Flexibility"),
-          i18n$t("Guidance Level"),
-          i18n$t("Customization"),
+          i18n$t("modules.ses.creation.time_to_start"),
+          i18n$t("modules.ses.creation.learning_curve"),
+          i18n$t("modules.ses.creation.flexibility"),
+          i18n$t("modules.ses.creation.guidance_level"),
+          i18n$t("modules.ses.creation.customization"),
           "Best For"
         ),
         `Standard Entry` = c(
           "Medium (15-30 min)",
           "Moderate",
           "High",
-          i18n$t("Structured"),
+          i18n$t("modules.ses.creation.structured"),
           "Complete",
           "Experienced users"
         ),
@@ -365,7 +370,7 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
           "Quick (5-10 min)",
           "Easy",
           "Medium",
-          i18n$t("Interactive Q&A workflow"),
+          i18n$t("modules.ses.creation.interactive_qa_workflow"),
           "Guided",
           "Beginners"
         ),
@@ -373,9 +378,9 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
           "Very Quick (2-5 min)",
           "Very Easy",
           "Medium",
-          i18n$t("Pre-populated frameworks"),
+          i18n$t("modules.ses.creation.pre_populated_frameworks"),
           "Moderate",
-          i18n$t("Quick Start")
+          i18n$t("modules.ses.creation.quick_start")
         ),
         check.names = FALSE
       )
@@ -396,6 +401,21 @@ create_ses_server <- function(id, project_data_reactive, parent_session = NULL, 
         }
       }
     })
+
+    # Help Modal ----
+    create_help_observer(
+      input, "help_create_ses", "create_ses_guide_title",
+      tagList(
+        h4(i18n$t("modules.ses.creation.create_ses_guide_methods_title")),
+        p(i18n$t("modules.ses.creation.create_ses_guide_methods_p1")),
+        tags$ul(
+          tags$li(strong(i18n$t("ui.sidebar.standard_entry")), ": ", i18n$t("modules.ses.creation.create_ses_guide_standard_desc")),
+          tags$li(strong(i18n$t("ui.sidebar.ai_assistant")), ": ", i18n$t("modules.ses.creation.create_ses_guide_ai_desc")),
+          tags$li(strong(i18n$t("ui.sidebar.template_based")), ": ", i18n$t("modules.ses.creation.create_ses_guide_template_desc"))
+        )
+      ),
+      i18n
+    )
 
     # Return selected method for parent to access
     return(reactive({ rv$selected_method }))

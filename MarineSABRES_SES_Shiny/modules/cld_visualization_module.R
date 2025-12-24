@@ -12,6 +12,7 @@
 #' focus mode, and node sizing, along with a main panel for the network visualization.
 #'
 #' @param id Character string. Module namespace ID.
+#' @param i18n Translator object for internationalization.
 #'
 #' @return A Shiny UI element containing the CLD visualization interface.
 #'
@@ -31,15 +32,18 @@
 #' @examples
 #' \dontrun{
 #' ui <- fluidPage(
-#'   cld_viz_ui("cld_module")
+#'   cld_viz_ui("cld_module", i18n)
 #' )
 #' }
 #'
 #' @export
-cld_viz_ui <- function(id) {
+cld_viz_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
+    # Use i18n for language support
+    # REMOVED: usei18n() - only called once in main UI (app.R)
+
     tags$style(HTML("
       /* Remove all frames from visNetwork elements */
       .cld-network-container .vis-network {
@@ -80,6 +84,12 @@ cld_viz_ui <- function(id) {
     ")),
 
     fluidRow(
+      column(12,
+        uiOutput(ns("module_header"))
+      )
+    ),
+
+    fluidRow(
       # Left sidebar column with controls
       column(
         width = 3,
@@ -87,7 +97,7 @@ cld_viz_ui <- function(id) {
         # Collapsible controls box
         box(
           width = NULL,
-          title = tagList(icon("sliders"), " Visualisation Controls"),
+          title = tagList(icon("sliders"), i18n$t("modules.cld.visualization.visualisation_controls")),
           status = "primary",
           solidHeader = TRUE,
           collapsible = TRUE,
@@ -98,15 +108,13 @@ cld_viz_ui <- function(id) {
           # No manual generation needed - see automatic observer below
 
           # Layout Controls
-          h5(icon("cogs"), " Layout"),
+          h5(icon("cogs"), i18n$t("modules.cld.visualization.layout")),
           selectInput(
             ns("layout_type"),
             NULL,
             choices = c(
               "Hierarchical (DAPSI)" = "hierarchical",
-              "Physics-based" = "physics",
-              "Circular" = "circular",
-              "Manual" = "manual"
+              "Physics-based (Manual)" = "physics"
             ),
             selected = "hierarchical"
           ),
@@ -116,7 +124,7 @@ cld_viz_ui <- function(id) {
             ns = ns,
             selectInput(
               ns("hierarchy_direction"),
-              "Direction:",
+              i18n$t("modules.cld.visualization.direction"),
               choices = c(
                 "Down-Up" = "DU",
                 "Up-Down" = "UD",
@@ -127,7 +135,7 @@ cld_viz_ui <- function(id) {
             ),
             sliderInput(
               ns("level_separation"),
-              "Spacing:",
+              i18n$t("modules.cld.visualization.spacing"),
               min = 50,
               max = 300,
               value = 150,
@@ -137,13 +145,13 @@ cld_viz_ui <- function(id) {
 
           # Highlight Controls
           hr(),
-          h5(icon("lightbulb"), " Highlight"),
+          h5(icon("lightbulb"), i18n$t("modules.cld.visualization.highlight")),
 
           div(
             style = "padding: 10px 0;",
             shinyWidgets::materialSwitch(
               inputId = ns("highlight_leverage"),
-              label = "Leverage Points",
+              label = i18n$t("modules.isa.data_entry.common.leverage_points"),
               value = FALSE,
               status = "success",
               right = TRUE
@@ -154,7 +162,7 @@ cld_viz_ui <- function(id) {
             style = "padding: 10px 0;",
             selectInput(
               inputId = ns("selected_loop"),
-              label = "Highlight Loop",
+              label = i18n$t("modules.cld.visualization.highlight_loop"),
               choices = c("None" = "none"),
               selected = "none",
               width = "100%"
@@ -229,7 +237,7 @@ cld_viz_ui <- function(id) {
 #' }
 #'
 #' @export
-cld_viz_server <- function(id, project_data_reactive) {
+cld_viz_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
 
     # === REACTIVE VALUES ===
@@ -244,6 +252,16 @@ cld_viz_server <- function(id, project_data_reactive) {
       filtered_nodes = NULL,
       filtered_edges = NULL,
       isa_hash = NULL  # Cache hash to track ISA data changes
+    )
+
+    # === REACTIVE MODULE HEADER ===
+    create_reactive_header(
+      output = output,
+      ns = session$ns,
+      title_key = "modules.cld.visualization.title",
+      subtitle_key = "modules.cld.visualization.subtitle",
+      help_id = "help_cld",
+      i18n = i18n
     )
 
     # === GENERATE CLD FROM ISA DATA ===
@@ -308,14 +326,30 @@ cld_viz_server <- function(id, project_data_reactive) {
             # Use existing CLD nodes (preserves leverage scores and other analysis results)
             cat("[CLD VIZ] Using existing CLD nodes with analysis results\n")
             rv$nodes <- project_data$data$cld$nodes
+            # Store original colors for JavaScript-based highlighting
+            if (!"originalColor" %in% names(rv$nodes)) {
+              rv$nodes$originalColor <- rv$nodes$color
+            }
             # Always rebuild edges from adjacency matrices (they are the source of truth)
             rv$edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+            # Add IDs to edges for reliable proxy updates
+            rv$edges$id <- seq_len(nrow(rv$edges))
+            # Store original edge properties for JavaScript-based highlighting
+            rv$edges$originalColor <- rv$edges$color
+            rv$edges$originalWidth <- rv$edges$width
             cat(sprintf("[CLD VIZ] Rebuilt edges from adjacency matrices: %d edges\n", nrow(rv$edges)))
           } else {
             # No CLD exists yet - build from ISA data
             cat("[CLD VIZ] Building new CLD from ISA data\n")
             rv$nodes <- create_nodes_df(isa_data)
+            # Store original colors for JavaScript-based highlighting
+            rv$nodes$originalColor <- rv$nodes$color
             rv$edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+            # Add IDs to edges for reliable proxy updates
+            rv$edges$id <- seq_len(nrow(rv$edges))
+            # Store original edge properties for JavaScript-based highlighting
+            rv$edges$originalColor <- rv$edges$color
+            rv$edges$originalWidth <- rv$edges$width
 
             # Save initial CLD to project_data (use isolate to prevent infinite loop)
             isolate({
@@ -436,17 +470,30 @@ cld_viz_server <- function(id, project_data_reactive) {
             session$ns("node_selected"),
             session$ns("edge_selected")
           ),
-          stabilizationIterationsDone = "function() {
-            this.setOptions({physics: false});
-          }"
+          stabilizationIterationsDone = sprintf(
+            "function() {
+              this.setOptions({physics: false});
+              window.network_%s = this;
+              console.log('[CLD VIZ] Network stabilized and stored');
+            }",
+            id  # Use module id to create unique window variable
+          ),
+          type = "once",
+          stabilized = sprintf(
+            "function() {
+              window.network_%s = this;
+              console.log('[CLD VIZ] Network stabilized and stored in window.network_%s');
+            }",
+            id, id
+          )
         )
       
       return(vis)
     })
     
-    # Store network proxy
+    # Store network proxy (IMPORTANT: Use session namespace in module)
     observe({
-      rv$network_proxy <- visNetworkProxy("network")
+      rv$network_proxy <- visNetworkProxy(session$ns("network"))
     })
 
     # === HIGHLIGHT LEVERAGE POINTS ===
@@ -470,29 +517,48 @@ cld_viz_server <- function(id, project_data_reactive) {
         cat("[CLD VIZ] Filtered leverage nodes count:", nrow(leverage_nodes), "\n")
 
         if (nrow(leverage_nodes) > 0) {
-          # Create updated nodes with highlighting
-          # Use separate border color and width for leverage nodes
+          # Show only TOP 10 leverage points, hide others
+          top_leverage <- head(leverage_nodes$id, 10)
+
+          cat("[CLD VIZ] Highlighting top", length(top_leverage), "leverage points\n")
+
+          # Use 'hidden' property instead of opacity (more reliable in visNetwork)
           highlighted_nodes <- data.frame(
             id = rv$nodes$id,
-            color.border = if_else(rv$nodes$id %in% leverage_nodes$id, "#4CAF50", rv$nodes$color),
-            color.background = rv$nodes$color,
-            borderWidth = if_else(rv$nodes$id %in% leverage_nodes$id, 6, 2),
-            font.size = if_else(rv$nodes$id %in% leverage_nodes$id,
-                                as.integer(pmax(rv$nodes$font.size * 1.3, rv$nodes$font.size + 4)),
-                                as.integer(rv$nodes$font.size)),
+            hidden = !(rv$nodes$id %in% top_leverage),  # Hide non-leverage nodes
+            borderWidth = ifelse(rv$nodes$id %in% top_leverage, 10, 2),
+            font.size = ifelse(rv$nodes$id %in% top_leverage, 18, 14),
             stringsAsFactors = FALSE
           )
 
-          cat("[CLD VIZ] Updating", nrow(highlighted_nodes), "nodes for highlighting\n")
-          cat("[CLD VIZ] Nodes with borderWidth=6:", sum(highlighted_nodes$borderWidth == 6), "\n")
-          cat("[CLD VIZ] Sample border colors:", paste(head(highlighted_nodes$color.border, 5), collapse=", "), "\n")
+          # Also set color for visible nodes (leverage points)
+          highlighted_nodes$color.border <- ifelse(
+            rv$nodes$id %in% top_leverage,
+            "#4CAF50",  # Green for leverage
+            "#2B7CE9"   # Default blue
+          )
+          highlighted_nodes$color.background <- rv$nodes$color
 
-          visNetworkProxy("network") %>%
+          # Hide edges not connected to leverage points
+          highlighted_edges <- data.frame(
+            id = seq_len(nrow(rv$edges)),
+            hidden = !(rv$edges$from %in% top_leverage | rv$edges$to %in% top_leverage),
+            stringsAsFactors = FALSE
+          )
+
+          cat("[CLD VIZ] Hiding", sum(highlighted_nodes$hidden), "nodes,",
+              "showing", sum(!highlighted_nodes$hidden), "leverage points\n")
+          cat("[CLD VIZ] Top leverage nodes:", paste(top_leverage, collapse=", "), "\n")
+
+          # IMPORTANT: Use session namespace for proxy in module context
+          # DON'T use visSelectNodes - it triggers highlightNearest which can interfere with custom highlighting
+          visNetworkProxy(session$ns("network")) %>%
             visUpdateNodes(highlighted_nodes) %>%
-            visSelectNodes(id = head(leverage_nodes$id, 5))
+            visUpdateEdges(highlighted_edges) %>%
+            visFit()  # Fit view to visible nodes
 
           showNotification(
-            paste("Highlighting", nrow(leverage_nodes), "leverage points with thick green borders"),
+            paste("Showing top", length(top_leverage), "leverage points only"),
             type = "message",
             duration = 3
           )
@@ -505,20 +571,29 @@ cld_viz_server <- function(id, project_data_reactive) {
           updateMaterialSwitch(session, "highlight_leverage", value = FALSE)
         }
       } else {
-        # Reset highlighting - restore original node styling
+        # Reset highlighting - show all nodes/edges
         reset_nodes <- data.frame(
           id = rv$nodes$id,
-          color.border = rv$nodes$color,
+          hidden = FALSE,  # Show all nodes
+          color.border = "#2B7CE9",  # Default blue border
           color.background = rv$nodes$color,
           borderWidth = 2,
           font.size = as.integer(rv$nodes$font.size),
           stringsAsFactors = FALSE
         )
 
-        cat("[CLD VIZ] Resetting node highlighting\n")
+        reset_edges <- data.frame(
+          id = seq_len(nrow(rv$edges)),
+          hidden = FALSE,  # Show all edges
+          stringsAsFactors = FALSE
+        )
 
-        visNetworkProxy("network") %>%
+        cat("[CLD VIZ] Resetting leverage highlighting - showing all nodes\n")
+
+        # IMPORTANT: Use session namespace for proxy in module context
+        visNetworkProxy(session$ns("network")) %>%
           visUpdateNodes(reset_nodes) %>%
+          visUpdateEdges(reset_edges) %>%
           visUnselectAll()
       }
     })
@@ -574,7 +649,7 @@ cld_viz_server <- function(id, project_data_reactive) {
 
     # === HIGHLIGHT SELECTED LOOP ===
     observeEvent(input$selected_loop, {
-      req(rv$network_proxy, rv$edges, rv$nodes)
+      req(rv$edges, rv$nodes)
 
       cat("[CLD VIZ] Loop selector changed to:", input$selected_loop, "\n")
 
@@ -589,74 +664,122 @@ cld_viz_server <- function(id, project_data_reactive) {
           if (loop_idx > 0 && loop_idx <= length(all_loops)) {
             selected_loop <- all_loops[[loop_idx]]
 
-            # Get node IDs in this specific loop
-            loop_node_ids <- as.character(selected_loop)
+            # IMPORTANT: selected_loop contains node INDICES (1, 2, 3, ...), not IDs
+            # Need to convert to actual node IDs (ES_1, P_1, MPF_2, etc.)
+            loop_node_indices <- as.integer(selected_loop)
 
-            # Create edges for this loop (consecutive nodes in the cycle)
-            loop_edges <- character(0)
-            if (length(loop_node_ids) > 1) {
-              for (i in 1:(length(loop_node_ids) - 1)) {
-                loop_edges <- c(loop_edges, paste(loop_node_ids[i], loop_node_ids[i+1], sep = "->"))
-              }
-              # Close the loop: last node back to first
-              loop_edges <- c(loop_edges, paste(loop_node_ids[length(loop_node_ids)], loop_node_ids[1], sep = "->"))
-            }
+            # Convert indices to actual node IDs
+            loop_node_ids <- rv$nodes$id[loop_node_indices]
 
+            cat("[CLD VIZ] Loop indices from analysis:", paste(loop_node_indices, collapse=", "), "\n")
+            cat("[CLD VIZ] Converted to node IDs:", paste(loop_node_ids, collapse=", "), "\n")
             cat("[CLD VIZ] Highlighting loop", loop_idx, "with", length(loop_node_ids), "nodes\n")
 
-            # Ghost non-loop nodes (make semi-transparent) and highlight loop nodes
-            highlighted_nodes <- data.frame(
-              id = rv$nodes$id,
-              opacity = ifelse(rv$nodes$id %in% loop_node_ids, 1.0, 0.15),
-              color.border = ifelse(rv$nodes$id %in% loop_node_ids, "#FF6B35", rv$nodes$color),
-              color.background = rv$nodes$color,
-              borderWidth = ifelse(rv$nodes$id %in% loop_node_ids, 5, 2),
-              font.size = ifelse(rv$nodes$id %in% loop_node_ids, 16, 14),
-              stringsAsFactors = FALSE
-            )
+            # Use JavaScript to highlight loop (exact same approach as app_loops.R)
+            runjs(sprintf("
+              window.selectedLoopNodes_%s = %s;
+              console.log('[CLD VIZ] Selected loop nodes:', window.selectedLoopNodes_%s);
 
-            # Ghost non-loop edges and highlight loop edges
-            edge_ids <- paste(rv$edges$from, rv$edges$to, sep = "->")
-            highlighted_edges <- data.frame(
-              id = 1:nrow(rv$edges),
-              opacity = ifelse(edge_ids %in% loop_edges, 1.0, 0.1),
-              color = ifelse(edge_ids %in% loop_edges, "#FF6B35", rv$edges$color),
-              width = ifelse(edge_ids %in% loop_edges, 4, rv$edges$width),
-              stringsAsFactors = FALSE
-            )
+              if (window.network_%s && window.network_%s.body) {
+                var allNodes = window.network_%s.body.data.nodes.get();
+                var allEdges = window.network_%s.body.data.edges.get();
 
-            visNetworkProxy("network") %>%
-              visUpdateNodes(highlighted_nodes) %>%
-              visUpdateEdges(highlighted_edges)
+                // Highlight selected loop nodes
+                allNodes.forEach(function(node) {
+                  if (window.selectedLoopNodes_%s.includes(node.id)) {
+                    // Loop node - restore original appearance with thick black border
+                    node.color = node.originalColor;
+                    node.opacity = 1.0;
+                    node.borderWidth = 3;
+                    node.borderColor = '#000000';
+                  } else {
+                    // Non-loop node - fade using opacity (works for both color and image nodes)
+                    node.color = 'rgba(200,200,200,0.3)';
+                    node.opacity = 0.3;
+                    node.borderWidth = 1;
+                  }
+                });
+
+                // Highlight loop edges
+                allEdges.forEach(function(edge) {
+                  var isLoopEdge = false;
+                  for (var i = 0; i < window.selectedLoopNodes_%s.length; i++) {
+                    var currentNode = window.selectedLoopNodes_%s[i];
+                    var nextNode = window.selectedLoopNodes_%s[(i + 1) %% window.selectedLoopNodes_%s.length];
+                    if (edge.from === currentNode && edge.to === nextNode) {
+                      isLoopEdge = true;
+                      break;
+                    }
+                  }
+
+                  if (isLoopEdge) {
+                    // Keep original edge color and make loop edges 5x thicker for visibility
+                    edge.color = edge.originalColor;
+                    edge.width = (edge.originalWidth || 1) * 5;
+                  } else {
+                    edge.color = 'rgba(200,200,200,0.3)';
+                    edge.width = 1;
+                  }
+                });
+
+                window.network_%s.body.data.nodes.update(allNodes);
+                window.network_%s.body.data.edges.update(allEdges);
+              }
+            ", id, jsonlite::toJSON(loop_node_ids), id, id, id, id, id, id, id, id, id, id, id, id))
           }
         }
       } else {
-        # Reset highlighting - restore original styling and full opacity
-        reset_nodes <- data.frame(
-          id = rv$nodes$id,
-          opacity = 1.0,
-          color.border = rv$nodes$color,
-          color.background = rv$nodes$color,
-          borderWidth = 2,
-          font.size = 14,
-          stringsAsFactors = FALSE
-        )
-
-        reset_edges <- data.frame(
-          id = 1:nrow(rv$edges),
-          opacity = 1.0,
-          color = rv$edges$color,
-          width = rv$edges$width,
-          stringsAsFactors = FALSE
-        )
-
+        # Clear highlighting when no loop is selected (exact same as app_loops.R)
         cat("[CLD VIZ] Resetting loop highlighting\n")
 
-        visNetworkProxy("network") %>%
-          visUpdateNodes(reset_nodes) %>%
-          visUpdateEdges(reset_edges)
+        runjs(sprintf("
+          window.selectedLoopNodes_%s = [];
+          if (window.network_%s && window.network_%s.body) {
+            var allNodes = window.network_%s.body.data.nodes.get();
+            var allEdges = window.network_%s.body.data.edges.get();
+
+            allNodes.forEach(function(node) {
+              node.color = node.originalColor;
+              node.opacity = 1.0;
+              node.borderWidth = 1;
+            });
+
+            allEdges.forEach(function(edge) {
+              edge.color = edge.originalColor;
+              edge.width = edge.originalWidth || 1;
+            });
+
+            window.network_%s.body.data.nodes.update(allNodes);
+            window.network_%s.body.data.edges.update(allEdges);
+          }
+        ", id, id, id, id, id, id, id))
       }
     })
+
+    # === HELP MODAL ===
+    create_help_observer(
+      input, "help_cld", "Causal Loop Diagram Guide",
+      tagList(
+        h4(i18n$t("modules.cld.visualization.what_is_a_causal_loop_diagram")),
+        p(i18n$t("modules.cld.a_causal_loop_diagram_cld_is_a_visual_representati")),
+        p(i18n$t("modules.cld.it_helps_you_understand_feedback_loops_leverage_po")),
+        hr(),
+        h4(i18n$t("modules.cld.visualization.how_to_read_the_diagram")),
+        tags$ul(
+          tags$li(strong(i18n$t("modules.cld.visualization.nodes")), i18n$t("modules.cld.represent_elements_in_your_system_drivers_activiti")),
+          tags$li(strong(i18n$t("modules.cld.visualization.edges")), i18n$t("modules.cld.show_causal_connections_between_elements_arrow_dir")),
+          tags$li(i18n$t("modules.cld.polarity_means_the_elements_change_in_the_same_dir"))
+        ),
+        hr(),
+        h4(i18n$t("modules.cld.visualization.visualization_controls")),
+        tags$ul(
+          tags$li(strong(i18n$t("modules.cld.visualization.layout")), i18n$t("modules.cld.choose_between_hierarchical_physics_based_or_circu")),
+          tags$li(strong(i18n$t("modules.cld.visualization.highlight_leverage_points")), i18n$t("modules.cld.toggle_to_highlight_the_most_influential_nodes_whe")),
+          tags$li(strong(i18n$t("modules.cld.visualization.highlight_loop")), i18n$t("modules.cld.select_a_feedback_loop_to_visualize_circular_patte"))
+        )
+      ),
+      i18n
+    )
 
   })
 }

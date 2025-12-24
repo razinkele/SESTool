@@ -179,13 +179,6 @@ export_project_excel <- function(project_data, file_path) {
     writeData(wb, "Feedback_Loops", project_data$data$cld$loops)
   }
 
-  # Response measures
-  if (!is.null(project_data$data$responses$measures) && 
-      nrow(project_data$data$responses$measures) > 0) {
-    addWorksheet(wb, "Response_Measures")
-    writeData(wb, "Response_Measures", project_data$data$responses$measures)
-  }
-  
   saveWorkbook(wb, file_path, overwrite = TRUE)
   
   message("Project data exported to Excel: ", file_path)
@@ -487,27 +480,30 @@ generate_key_findings_md <- function(project_data) {
 }
 
 #' Generate recommendations markdown
-#' 
-#' @param responses_data Responses data list
+#'
+#' @param responses_data Responses data (dataframe)
 #' @return Character vector
 generate_recommendations_md <- function(responses_data) {
-  
+
   lines <- c()
-  
-  if (!is.null(responses_data$measures) && nrow(responses_data$measures) > 0) {
-    lines <- c(lines, 
-              paste0("Based on the analysis, ", nrow(responses_data$measures), 
+
+  # Responses are now consolidated (responses and measures merged)
+  responses <- if (is.data.frame(responses_data)) responses_data else NULL
+
+  if (!is.null(responses) && nrow(responses) > 0) {
+    lines <- c(lines,
+              paste0("Based on the analysis, ", nrow(responses),
                     " response measures have been identified:"),
               "")
-    
-    for (i in 1:min(5, nrow(responses_data$measures))) {
-      measure <- responses_data$measures[i, ]
-      lines <- c(lines, paste0(i, ". **", measure$name, ":** ", measure$description))
+
+    for (i in 1:min(5, nrow(responses))) {
+      response <- responses[i, ]
+      lines <- c(lines, paste0(i, ". **", response$name, ":** ", response$description))
     }
   } else {
     lines <- c(lines, "No specific response measures have been defined yet.")
   }
-  
+
   return(lines)
 }
 

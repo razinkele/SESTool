@@ -1,17 +1,51 @@
 {
-  "version": "1.4.0",
-  "version_name": "AI Assistant & Navigation Overhaul",
-  "release_date": "2025-11-16",
-  "release_type": "minor",
+  "version": "1.5.2",
+  "version_name": "Connection Review Bug Fixes",
+  "release_date": "2025-11-30",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
-  "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.4.0",
+  "changelog_url": "docs/CHANGELOG.md",
+  "documentation_version": "1.5.2",
   "api_version": "1.0",
   "database_version": "1.0",
   "breaking_changes": false,
   "security_updates": false,
   "features": [
+    "🔴 CRITICAL FIX - Amendment data application (Bug #1: Amend now saves strength AND confidence)",
+    "🔴 CRITICAL FIX - Amendments persist to finalization (Bug #3: Changes save to final SES model)",
+    "🟡 MEDIUM FIX - on_approve and on_reject callbacks added (Bug #2: Accept button works reliably)",
+    "🟠 HIGH FIX - Auto-navigation disabled (Bug #4: No more unwanted tab jumping)",
+    "✅ TESTING - Connection review test suite (14 comprehensive tests)",
+    "✅ DOCUMENTATION - CONNECTION_REVIEW_MODULE.md (15,000+ words, complete technical docs)",
+    "✅ DOCUMENTATION - CONNECTION_REVIEW_USER_GUIDE.md (8,000+ words, user-friendly guide)",
+    "✅ DOCUMENTATION - CONNECTION_REVIEW_BUGFIX_SUMMARY.md (comprehensive bug analysis)",
+    "✅ CHANGELOG - Updated with v1.5.2 section (detailed bug descriptions and fixes)",
+    "✅ CODE QUALITY - 46 lines of amendment application logic added",
+    "✅ CODE QUALITY - Comprehensive logging for debugging",
+    "✅ CODE QUALITY - Detailed inline comments explaining fixes",
+    "✅ I18N FIXES - Auto-save status display (shows correct enabled/disabled state)",
+    "✅ I18N FIXES - Header menu translations (Settings, About, Bookmark)",
+    "✅ I18N FIXES - Settings submenu translations (Application Settings, User Experience Level)",
+    "✅ I18N FIXES - All sidebar menu items properly translated",
+    "✅ I18N FIXES - Translation validation (1,196 entries, 0 duplicates)",
+    "✅ I18N FIXES - All 7 languages complete (en, es, fr, de, lt, pt, it)",
+    "✅ DEPLOYMENT - Pre-deployment validation script (20 automated checks)",
+    "✅ DEPLOYMENT - Docker configuration enhanced (translations volume mount)",
+    "✅ DEPLOYMENT - Comprehensive deployment checklist",
+    "✅ DEPLOYMENT - Integration with deploy.sh (automated validation)",
+    "✅ DEPLOYMENT - Enhanced .dockerignore (reduced image size)",
+    "✅ CODEBASE - Cleanup of 30+ temporary files and backups",
+    "✅ CODEBASE - Reorganized test files to tests/manual/",
+    "✅ CODEBASE - Removed all _ul* temporary directories",
+    "✅ CODEBASE - Enhanced .gitignore patterns",
+    "✅ CODEBASE - Final size: 32.3 MB (optimized)",
+    "✅ BUG FIXES (v1.5.1) - Fixed syntax error in analysis_tools_module.R (removed duplicate broken box() definition)",
+    "✅ BUG FIXES (v1.5.1) - Fixed loop detection in report generation (added get_loop_data() helper for backward compatibility)",
+    "✅ BUG FIXES (v1.5.1) - Fixed documentation link accessibility (added addResourcePath for docs/ directory)",
+    "✅ BUG FIXES (v1.5.1) - Added resource path configuration for serving documentation from non-www directories)",
+    "✅ DOCUMENTATION (v1.5.1) - Converted HTML user manuals to PDF format (EN: 737KB, FR: 617KB)",
+    "✅ DOCUMENTATION (v1.5.1) - Added PDF manual links to About modal alongside HTML versions",
     "✅ AUTO-SAVE SYSTEM - Comprehensive auto-save with browser localStorage and RDS backups (Sprint 1)",
     "✅ AUTO-SAVE - Session recovery modal with restore/discard options",
     "✅ AUTO-SAVE - Visual save status indicators (saving, saved, error)",
@@ -78,16 +112,58 @@
     "Collapsible sidebar for CLD visualization",
     "About dialog with version and system information"
   ],
+  "bug_fixes": {
+    "connection_review": {
+      "bug_1": {
+        "severity": "CRITICAL",
+        "title": "Amendment Data Not Saved",
+        "user_report": "Amend seems to just save the confidence level, not the strength",
+        "root_cause": "amended_data retrieved but never applied to final connections before building matrices",
+        "fix_location": "modules/template_ses_module.R:964-1009",
+        "lines_added": 46,
+        "impact": "All three properties (polarity, strength, confidence) now persist correctly"
+      },
+      "bug_2": {
+        "severity": "MEDIUM",
+        "title": "Missing on_approve Callback",
+        "user_report": "Accept resets the strengths and confidence levels",
+        "root_cause": "No on_approve callback defined in connection review server call",
+        "fix_location": "modules/template_ses_module.R:919-929",
+        "lines_added": 11,
+        "impact": "Proper event handling and state tracking"
+      },
+      "bug_3": {
+        "severity": "CRITICAL",
+        "title": "Amendments Lost During Finalization",
+        "user_report": "None of these seems to save to the next page, to finish the SES",
+        "root_cause": "Amendment data never merged with final connections",
+        "fix_location": "modules/template_ses_module.R:964-1009 (combined with Bug #1)",
+        "impact": "All amendments persist through to completed SES model"
+      },
+      "bug_4": {
+        "severity": "HIGH",
+        "title": "Unwanted Auto-Navigation",
+        "user_report": "System keeps going back between elements, without us clicking on them (video evidence)",
+        "root_cause": "Auto-focus feature calling sendCustomMessage after approve/reject",
+        "fix_location": "modules/connection_review_tabbed.R:716-746",
+        "lines_commented": 12,
+        "impact": "Users maintain manual navigation control, no unexpected jumps"
+      }
+    }
+  },
   "test_coverage": {
-    "total_tests": 174,
+    "total_tests": 188,
     "confidence_tests": 87,
     "network_metrics_tests": 87,
+    "connection_review_tests": 14,
+    "pre_deployment_checks": 20,
     "status": "all_passing"
   },
   "internationalization": {
-    "total_translations": 1099,
+    "total_translations": 1196,
     "languages": 7,
-    "new_translation_keys_added": 26,
+    "new_translation_keys_added": 4,
+    "duplicate_entries_fixed": 24,
     "modules_internationalized": [
       "AI ISA Assistant",
       "Create SES (all 3 methods)",
@@ -97,22 +173,42 @@
       "Response Measures & Validation",
       "Scenario Builder",
       "Analysis Tools",
-      "Main App (header, sidebar, modals)"
+      "Main App (header, sidebar, modals)",
+      "Header Menu (Settings, About, Bookmark)",
+      "Auto-save Status Indicators",
+      "Connection Review (tabbed interface)"
     ],
     "status": "complete"
+  },
+  "deployment": {
+    "pre_deploy_validation": "deployment/pre-deploy-check.R",
+    "deployment_checklist": "deployment/DEPLOYMENT_CHECKLIST.md",
+    "docker_ready": true,
+    "shiny_server_ready": true,
+    "status": "production_ready"
   },
   "contributors": [
     "Claude Code",
     "MarineSABRES Team"
   ],
   "build_info": {
-    "build_date": "2025-11-08T15:50:00Z",
-    "build_environment": "beta",
-    "git_branch": "main",
-    "last_git_commit": "a052be8"
+    "build_date": "2025-11-30T12:00:00Z",
+    "build_environment": "production",
+    "git_branch": "migration/pure-modular-translations",
+    "last_git_commit": "pending"
   },
   "documentation": {
+    "connection_review_module": "docs/CONNECTION_REVIEW_MODULE.md",
+    "connection_review_user_guide": "docs/CONNECTION_REVIEW_USER_GUIDE.md",
+    "connection_review_bugfix_summary": "CONNECTION_REVIEW_BUGFIX_SUMMARY.md",
+    "changelog": "docs/CHANGELOG.md",
     "completion_status": "V1.4.0_COMPLETION_STATUS.md",
+    "i18n_fixes": "I18N_COMPREHENSIVE_FIXES.md",
+    "deployment_guide": "deployment/DEPLOYMENT_GUIDE.md",
+    "deployment_checklist": "deployment/DEPLOYMENT_CHECKLIST.md",
+    "deployment_update": "deployment/DEPLOYMENT_UPDATE_SUMMARY.md",
+    "codebase_cleanup": "docs/CODEBASE_CLEANUP_SUMMARY.md",
+    "pre_deploy_check": "deployment/pre-deploy-check.R",
     "ai_assistant": "AI_ISA_ASSISTANT_COMPLETE.md",
     "navigation": "NAVIGATION_INTEGRATION_COMPLETE.md",
     "bug_fixes_intervention": "INTERVENTION_ANALYSIS_FIXES_COMPLETE.md",

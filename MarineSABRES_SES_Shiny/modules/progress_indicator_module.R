@@ -6,7 +6,11 @@
 progress_indicator_ui <- function(id) {
   ns <- NS(id)
 
-  tags$div(
+  tagList(
+    # Use i18n for language support
+    # REMOVED: usei18n() - only called once in main UI (app.R)
+
+    tags$div(
     id = ns("progress_container"),
     class = "progress-indicator-container",
 
@@ -149,6 +153,7 @@ progress_indicator_ui <- function(id) {
 
     # Progress indicator content (will be updated dynamically)
     uiOutput(ns("progress_content"))
+    )
   )
 }
 
@@ -184,14 +189,14 @@ progress_indicator_server <- function(id, current_step_reactive, total_steps_rea
     # Get current step title
     get_current_title <- reactive({
       if (is.null(progress_state$step_titles)) {
-        return(sprintf(i18n$t("Step %d"), progress_state$current_step))
+        return(sprintf(i18n$t("common.misc.step_d"), progress_state$current_step))
       }
 
       if (length(progress_state$step_titles) >= progress_state$current_step) {
         return(progress_state$step_titles[[progress_state$current_step]])
       }
 
-      return(sprintf(i18n$t("Step %d"), progress_state$current_step))
+      return(sprintf(i18n$t("common.misc.step_d"), progress_state$current_step))
     })
 
     # Render progress indicator
@@ -209,7 +214,7 @@ progress_indicator_server <- function(id, current_step_reactive, total_steps_rea
             class = "progress-step-info",
             icon("tasks"),
             " ",
-            sprintf(i18n$t("Step %d of %d"), current, total)
+            sprintf(i18n$t("common.misc.step_d_of_d"), current, total)
           ),
           tags$div(
             class = "progress-percentage",
@@ -259,7 +264,7 @@ progress_indicator_server <- function(id, current_step_reactive, total_steps_rea
                   title_text
                 }
               } else {
-                sprintf(i18n$t("Step %d"), i)
+                sprintf(i18n$t("common.misc.step_d"), i)
               }
 
               tags$li(
@@ -380,13 +385,13 @@ navigation_buttons_server <- function(id, current_step_reactive, total_steps_rea
       if (is_last) {
         actionButton(
           ns("btn_next"),
-          label = tagList(i18n$t("Finish"), " ", icon("check")),
+          label = tagList(i18n$t("common.buttons.finish"), " ", icon("check")),
           class = "btn btn-success nav-button nav-button-finish"
         )
       } else {
         actionButton(
           ns("btn_next"),
-          label = tagList(i18n$t("Next"), " ", icon("arrow-right")),
+          label = tagList(i18n$t("common.buttons.next"), " ", icon("arrow-right")),
           class = "btn btn-primary nav-button nav-button-next"
         )
       }

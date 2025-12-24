@@ -11,21 +11,30 @@ options(shiny.autoreload = FALSE)
 # LOAD GLOBAL ENVIRONMENT
 # ============================================================================
 
-source("global.R", local = TRUE)
+source("global.R")
+
+# ============================================================================
+# REGISTER RESOURCE PATHS
+# ============================================================================
+
+# Make docs directory accessible for serving user manuals (only if it exists)
+if (dir.exists("docs")) {
+  addResourcePath("docs", "docs")
+}
 
 # ============================================================================
 # LOAD HELPER FUNCTIONS
 # ============================================================================
 
-source("functions/report_generation.R", local = TRUE)
+source("functions/report_generation.R")
 
 # Load UI components
-source("functions/ui_header.R", local = TRUE)
-source("functions/ui_sidebar.R", local = TRUE)
+source("functions/ui_header.R")
+source("functions/ui_sidebar.R")
 
 # Load server components
-source("server/modals.R", local = TRUE)
-source("server/dashboard.R", local = TRUE)
+source("server/modals.R")
+source("server/dashboard.R")
 
 # ============================================================================
 # SOURCE MODULES
@@ -34,7 +43,7 @@ source("server/dashboard.R", local = TRUE)
 source("modules/entry_point_module.R", local = TRUE)  # Entry Point guidance system
 source("modules/create_ses_module.R", local = TRUE)  # NEW: Consolidated Create SES module
 source("modules/template_ses_module.R", local = TRUE)  # NEW: Template-based SES creation
-source("modules/ai_isa_assistant_module.R", local = TRUE)  # AI-Assisted ISA Creation
+source("modules/ai_isa_assistant_module.R", local = TRUE)  # AI-Assisted SES Creation
 source("modules/import_data_module.R", local = TRUE)  # Import Data from Excel
 source("modules/isa_data_entry_module.R", local = TRUE)  # Standard ISA Data Entry
 source("modules/pims_module.R", local = TRUE)
@@ -45,7 +54,7 @@ source("modules/response_module.R", local = TRUE)
 source("modules/scenario_builder_module.R", local = TRUE)  # Scenario Builder
 source("modules/prepare_report_module.R", local = TRUE)  # Report preparation (comprehensive)
 source("modules/export_reports_module.R", local = TRUE)  # Export & Reports (simple)
-# source("modules/response_validation_module.R", local = TRUE)  # Not implemented yet
+# source("modules/response_validation_module.R", local = FALSE)  # Not implemented yet
 
 # ============================================================================
 # UI
@@ -67,6 +76,10 @@ ui <- dashboardPage(
   # ========== BODY ==========
   dashboardBody(
 
+    # Enable shiny.i18n automatic language detection and reactive translations
+    # Note: Must use the underlying translator object, not the wrapper
+    shiny.i18n::usei18n(i18n$translator),
+
     # Custom CSS and JavaScript
     tags$head(
       tags$title("MarineSABRES SES Toolbox"),
@@ -76,7 +89,7 @@ ui <- dashboardPage(
 
       tags$style(HTML("
         /* Persistent loading overlay */
-        #language-loading-overlay {
+        #language-loading-overlay { 
           display: none;
           position: fixed;
           top: 0;
@@ -127,7 +140,7 @@ ui <- dashboardPage(
     tabItems(
 
       # ==================== ENTRY POINT (GETTING STARTED) ====================
-      tabItem(tabName = "entry_point", entry_point_ui("entry_pt")),
+      tabItem(tabName = "entry_point", entry_point_ui("entry_pt", i18n)),
 
       # ==================== DASHBOARD ====================
       tabItem(
@@ -135,8 +148,7 @@ ui <- dashboardPage(
 
         fluidRow(
           column(12,
-            h2(i18n$t("MarineSABRES Social-Ecological Systems Analysis Tool")),
-            p(i18n$t("Welcome to the computer-assisted SES creation and analysis platform."))
+            uiOutput("dashboard_header")
           )
         ),
 
@@ -151,7 +163,7 @@ ui <- dashboardPage(
         fluidRow(
           # Project overview
           box(
-            title = i18n$t("Project Overview"),
+            title = i18n$t("ui.dashboard.project_overview"),
             status = "primary",
             solidHeader = TRUE,
             width = 6,
@@ -164,7 +176,7 @@ ui <- dashboardPage(
 
           # Status summary
           box(
-            title = i18n$t("Status Summary"),
+            title = i18n$t("ui.dashboard.status_summary"),
             status = "success",
             solidHeader = TRUE,
             width = 6,
@@ -178,7 +190,7 @@ ui <- dashboardPage(
               tags$div(
                 style = "margin-bottom: 10px; padding: 8px; background: #f8f9fa; border-radius: 5px;",
                 tags$h5(style = "margin-bottom: 8px; font-size: 14px;",
-                  icon("database"), " ", i18n$t("ISA Data Status")),
+                  icon("database"), " ", i18n$t("ui.dashboard.isa_data_status")),
                 uiOutput("status_isa_elements"),
                 uiOutput("status_isa_connections")
               ),
@@ -187,7 +199,7 @@ ui <- dashboardPage(
               tags$div(
                 style = "margin-bottom: 10px; padding: 8px; background: #f8f9fa; border-radius: 5px;",
                 tags$h5(style = "margin-bottom: 8px; font-size: 14px;",
-                  icon("project-diagram"), " ", i18n$t("CLD Status")),
+                  icon("project-diagram"), " ", i18n$t("ui.dashboard.cld_status")),
                 uiOutput("status_cld_nodes"),
                 uiOutput("status_cld_edges")
               ),
@@ -196,7 +208,7 @@ ui <- dashboardPage(
               tags$div(
                 style = "padding: 8px; background: #f8f9fa; border-radius: 5px;",
                 tags$h5(style = "margin-bottom: 8px; font-size: 14px;",
-                  icon("chart-line"), " ", i18n$t("Analysis Status")),
+                  icon("chart-line"), " ", i18n$t("ui.dashboard.analysis_status")),
                 uiOutput("status_analysis_complete")
               )
             )
@@ -205,11 +217,11 @@ ui <- dashboardPage(
       ),
 
       # ==================== PIMS MODULE ====================
-      tabItem(tabName = "pims_project", pims_project_ui("pims_proj")),
-      tabItem(tabName = "pims_stakeholders", pimsStakeholderUI("pims_stake")),
-      tabItem(tabName = "pims_resources", pims_resources_ui("pims_res")),
-      tabItem(tabName = "pims_data", pims_data_ui("pims_dm")),
-      tabItem(tabName = "pims_evaluation", pims_evaluation_ui("pims_eval")),
+      tabItem(tabName = "pims_project", pims_project_ui("pims_proj", i18n)),
+      tabItem(tabName = "pims_stakeholders", pimsStakeholderUI("pims_stake", i18n)),
+      tabItem(tabName = "pims_resources", pims_resources_ui("pims_res", i18n)),
+      tabItem(tabName = "pims_data", pims_data_ui("pims_dm", i18n)),
+      tabItem(tabName = "pims_evaluation", pims_evaluation_ui("pims_eval", i18n)),
 
       # ==================== CREATE SES ====================
       # Choose Method
@@ -222,17 +234,17 @@ ui <- dashboardPage(
       tabItem(tabName = "create_ses_ai", ai_isa_assistant_ui("ai_isa_mod", i18n)),
 
       # Template-Based
-      tabItem(tabName = "create_ses_template", template_ses_ui("template_ses")),
+      tabItem(tabName = "create_ses_template", template_ses_ui("template_ses", i18n)),
 
       # ==================== CLD VISUALIZATION ====================
-      tabItem(tabName = "cld_viz", cld_viz_ui("cld_visual")),
+      tabItem(tabName = "cld_viz", cld_viz_ui("cld_visual", i18n)),
       
       # ==================== ANALYSIS ====================
-      tabItem(tabName = "analysis_metrics", analysis_metrics_ui("analysis_met")),
-      tabItem(tabName = "analysis_loops", analysis_loops_ui("analysis_loop")),
-      tabItem(tabName = "analysis_leverage", analysis_leverage_ui("analysis_lev")),
-      tabItem(tabName = "analysis_bot", analysis_bot_ui("analysis_b")),
-      tabItem(tabName = "analysis_simplify", analysis_simplify_ui("analysis_simp")),
+      tabItem(tabName = "analysis_metrics", analysis_metrics_ui("analysis_met", i18n)),
+      tabItem(tabName = "analysis_loops", analysis_loops_ui("analysis_loop", i18n)),
+      tabItem(tabName = "analysis_leverage", analysis_leverage_ui("analysis_lev", i18n)),
+      tabItem(tabName = "analysis_bot", analysis_bot_ui("analysis_b", i18n)),
+      tabItem(tabName = "analysis_simplify", analysis_simplify_ui("analysis_simp", i18n)),
       
       # ==================== RESPONSE & VALIDATION ====================
       tabItem(tabName = "response_measures", response_measures_ui("resp_meas", i18n)),
@@ -249,7 +261,7 @@ ui <- dashboardPage(
       ),
 
       # ==================== PREPARE REPORT ====================
-      tabItem(tabName = "prepare_report", prepare_report_ui("prep_report"))
+      tabItem(tabName = "prepare_report", prepare_report_ui("prep_report", i18n))
     )
   )
 )
@@ -259,6 +271,30 @@ ui <- dashboardPage(
 # ============================================================================
 
 server <- function(input, output, session) {
+  # === DIAGNOSTICS: Print project data element counts and IDs at startup and on load ===
+  observe({
+    data <- project_data()
+    if (!is.null(data) && !is.null(data$data$isa_data)) {
+      cat("[DIAGNOSTIC] Project data loaded\n")
+      for (etype in c("drivers", "activities", "pressures", "marine_processes", "ecosystem_services", "goods_benefits", "responses")) {
+        el <- data$data$isa_data[[etype]]
+        if (!is.null(el) && nrow(el) > 0) {
+          cat(sprintf("[DIAGNOSTIC] %s: %d elements\n", etype, nrow(el)))
+          cat(sprintf("[DIAGNOSTIC] %s IDs: %s\n", etype, paste(head(el$ID, 10), collapse=", ")))
+        } else {
+          cat(sprintf("[DIAGNOSTIC] %s: 0 elements\n", etype))
+        }
+      }
+      if (!is.null(data$data$isa_data$adjacency_matrices)) {
+        cat("[DIAGNOSTIC] Adjacency matrices present:\n")
+        cat(paste(names(data$data$isa_data$adjacency_matrices), collapse=", "), "\n")
+      } else {
+        cat("[DIAGNOSTIC] No adjacency matrices present\n")
+      }
+    } else {
+      cat("[DIAGNOSTIC] Project data or isa_data is NULL\n")
+    }
+  })
 
   cat("\n")
   cat("=====================================\n")
@@ -268,7 +304,46 @@ server <- function(input, output, session) {
   cat("=====================================\n")
   cat("\n")
 
-  # ========== BOOKMARKING SETUP ==========
+  # ========== AUTO-LOAD DEFAULT TEMPLATE IF EMPTY ========== 
+  observe({
+    # Only run once at startup
+    isolate({
+      data <- project_data()
+      # Check if all SES element types are empty or missing
+      is_empty <- function(df) is.null(df) || (is.data.frame(df) && nrow(df) == 0)
+      isa <- data$data$isa_data
+      if (is.null(isa) || (
+        is_empty(isa$drivers) && is_empty(isa$activities) && is_empty(isa$pressures) &&
+        is_empty(isa$marine_processes) && is_empty(isa$ecosystem_services) &&
+        is_empty(isa$goods_benefits) && is_empty(isa$responses)
+      )) {
+        cat("[AUTOLOAD] No SES data found, loading default template...\n")
+        # Load the migrated Caribbean template (update path if needed)
+        template_path <- "data/Caribbean_SES_Template_migrated.json"
+        if (file.exists(template_path)) {
+          template <- load_template_from_json(template_path)
+          # Build project_data structure
+          new_data <- data
+          new_data$data$isa_data$drivers <- template$drivers
+          new_data$data$isa_data$activities <- template$activities
+          new_data$data$isa_data$pressures <- template$pressures
+          new_data$data$isa_data$marine_processes <- template$marine_processes
+          new_data$data$isa_data$ecosystem_services <- template$ecosystem_services
+          new_data$data$isa_data$goods_benefits <- template$goods_benefits
+          new_data$data$isa_data$responses <- template$responses
+          new_data$data$isa_data$adjacency_matrices <- template$adjacency_matrices
+          new_data$data$metadata$template_used <- template$template_name %||% "Caribbean_SES_Template"
+          new_data$data$metadata$source <- "autoloaded_default_template"
+          new_data$last_modified <- Sys.time()
+          project_data(new_data)
+          cat("[AUTOLOAD] Default template loaded successfully.\n")
+        } else {
+          cat("[AUTOLOAD] ERROR: Default template file not found at:", template_path, "\n")
+        }
+      }
+    })
+  })
+  # ========== BOOKMARKING SETUP ========== 
   # Enable bookmarking for this session
   setBookmarkExclude(c("save_project", "load_project", "confirm_save",
                        "confirm_load", "trigger_bookmark"))
@@ -279,8 +354,8 @@ server <- function(input, output, session) {
   project_data <- reactiveVal(init_session_data())
 
   # User experience level (beginner/intermediate/expert)
-  # Default to intermediate for existing users
-  user_level <- reactiveVal("intermediate")
+  # Default to beginner for new users and stakeholder testing
+  user_level <- reactiveVal("beginner")
 
   # Auto-save enabled flag (controls AI ISA Assistant auto-save)
   # Default to FALSE to avoid accidental overwrites
@@ -332,13 +407,18 @@ server <- function(input, output, session) {
                                   nrow(data$data$cld$nodes) > 0
 
     cat("[BOOKMARK] State saved successfully\n")
+  })
+
+  # Show modal after bookmark URL is generated
+  onBookmarked(function(url) {
+    cat("[BOOKMARK] Bookmark URL created:", url, "\n")
 
     # Show bookmark modal with URL
     showModal(modalDialog(
       title = tags$h3(icon("bookmark"), " Bookmark Created"),
       size = "l",
       easyClose = TRUE,
-      footer = modalButton(i18n$t("Close")),
+      footer = modalButton(i18n$t("common.buttons.close")),
 
       tags$div(
         style = "padding: 20px;",
@@ -355,7 +435,7 @@ server <- function(input, output, session) {
             rows = 4,
             readonly = "readonly",
             style = "font-family: monospace; font-size: 12px; resize: vertical;",
-            session$getCurrentUrl()
+            url
           )
         ),
 
@@ -436,7 +516,7 @@ server <- function(input, output, session) {
     showNotification(
       HTML(paste0(
         icon("bookmark"), " ",
-        i18n$t("Bookmark restored successfully!")
+        i18n$t("common.messages.bookmark_restored_successfully")
       )),
       type = "message",
       duration = 5
@@ -459,13 +539,82 @@ server <- function(input, output, session) {
   # Pass autosave_enabled reactive so module respects user's setting
   auto_save_server("auto_save", project_data, i18n, autosave_enabled)
 
+  # ========== LANGUAGE STATE MANAGEMENT (EARLY) ==========
+  # Load language from query parameter BEFORE anything else
+  observe({
+    query <- parseQueryString(session$clientData$url_search)
+    cat(sprintf("[LANGUAGE] URL search: %s\n", session$clientData$url_search))
+
+    if (!is.null(query$language)) {
+      cat(sprintf("[LANGUAGE] Found language parameter: %s\n", query$language))
+
+      if (query$language %in% names(AVAILABLE_LANGUAGES)) {
+        cat(sprintf("[LANGUAGE] Setting language to: %s\n", query$language))
+
+        # Set language in wrapper (this will also set it in underlying translator)
+        i18n$set_translation_language(query$language)
+        cat(sprintf("[LANGUAGE] Language set. Current: %s\n", i18n$get_translation_language()))
+
+        # Use shiny.i18n's built-in update mechanism for elements with data-i18n attributes
+        shiny.i18n::update_lang(query$language, session)
+
+        # Capture translations NOW (before async call) to ensure they're strings
+        header_translations <- list(
+          language = as.character(i18n$t("ui.header.language")),
+          change_language = as.character(i18n$t("ui.header.change_language")),
+          settings = as.character(i18n$t("ui.header.settings")),
+          application_settings = as.character(i18n$t("ui.header.application_settings")),
+          user_experience_level = as.character(i18n$t("ui.header.user_experience_level")),
+          download_manuals = as.character(i18n$t("ui.header.download_manuals")),
+          app_info = as.character(i18n$t("ui.header.app_info")),
+          help = as.character(i18n$t("ui.header.help")),
+          step_by_step_tutorial = as.character(i18n$t("ui.header.step_by_step_tutorial")),
+          quick_reference = as.character(i18n$t("ui.header.quick_reference")),
+          bookmark = as.character(i18n$t("ui.header.bookmark"))
+        )
+        cat(sprintf("[LANGUAGE] Header translations captured: %s, %s, %s\n",
+                    header_translations$language, header_translations$settings, header_translations$help))
+
+        # Schedule header update to run after shiny.i18n finishes
+        later::later(function() {
+          session$sendCustomMessage(type = "updateHeaderTranslations", message = header_translations)
+        }, delay = 0.1)
+      } else {
+        cat(sprintf("[LANGUAGE] Invalid language: %s\n", query$language))
+      }
+    } else {
+      cat("[LANGUAGE] No language parameter in URL\n")
+    }
+  }, priority = 1000)  # High priority to run early
+
+  # ========== LANGUAGE CHANGE TRIGGER ==========
+  # Create a reactive value that changes when language changes
+  # This forces UI elements to re-render when language is switched
+  lang_trigger <- reactiveVal(0)
+  last_lang <- reactiveVal(i18n$get_translation_language())
+
+  # Observe language changes and trigger re-render only if language actually changes
+  observe({
+    current_lang <- i18n$get_translation_language()
+    if (!identical(current_lang, last_lang())) {
+      lang_trigger(lang_trigger() + 1)
+      last_lang(current_lang)
+      cat(sprintf("[LANGUAGE] Language trigger updated: %s (count: %d)\n",
+                  current_lang, lang_trigger()))
+    }
+  })
+
   # ========== DYNAMIC SIDEBAR MENU ==========
   # Renders sidebar menu dynamically based on current language and user level
   # This allows the menu to update when language or user level changes
   output$dynamic_sidebar <- renderMenu({
+    # Add dependency on language trigger to force re-render on language change
+    lang_trigger()
+
     tryCatch({
       cat("[SIDEBAR] Rendering dynamic sidebar...\n")
       cat(sprintf("[SIDEBAR] User level: %s\n", user_level()))
+      cat(sprintf("[SIDEBAR] Current language: %s\n", i18n$get_translation_language()))
       menu <- generate_sidebar_menu(user_level(), i18n)
       cat("[SIDEBAR] Sidebar generated successfully\n")
       menu
@@ -493,6 +642,9 @@ server <- function(input, output, session) {
     AVAILABLE_LANGUAGES[[current_lang]]$name
   })
 
+  # ========== LANGUAGE STATE MANAGEMENT ==========
+  # (Handled earlier at line 543 with high priority)
+
   # ========== USER LEVEL STATE MANAGEMENT ==========
 
   # Load user level from query parameter on startup
@@ -504,26 +656,12 @@ server <- function(input, output, session) {
     }
   })
 
-  # JavaScript to load/save user level from/to localStorage
-  output$user_level_script <- renderUI({
-    tags$script(HTML("
-      // Load user level from localStorage on startup
-      $(document).ready(function() {
-        var savedLevel = localStorage.getItem('marinesabres_user_level');
-        if (savedLevel && ['beginner', 'intermediate', 'expert'].includes(savedLevel)) {
-          Shiny.setInputValue('initial_user_level', savedLevel);
-        }
-      });
-    "))
-  })
-
-  # Update user level from localStorage
-  observeEvent(input$initial_user_level, {
-    if (!is.null(input$initial_user_level)) {
-      user_level(input$initial_user_level)
-      cat(sprintf("[USER-LEVEL] Loaded from localStorage: %s\n", input$initial_user_level))
-    }
-  }, once = TRUE)
+  # User level persistence REMOVED for consistent fresh-start behavior
+  # Previously loaded from localStorage, but this caused confusion:
+  # - User level persisted (setting)
+  # - But guided pathway data did NOT persist (actual work)
+  # Now: Everything starts fresh on restart for stakeholder testing
+  # Users must explicitly "Save Project" to persist any data
 
   # ========== MODAL HANDLERS ==========
   # Modals extracted to server/modals.R for better maintainability
@@ -534,43 +672,46 @@ server <- function(input, output, session) {
   # Setup user level modal
   setup_user_level_modal_handlers(input, output, session, user_level, i18n)
 
+  # Setup download manuals modal
+  setup_manuals_modal_handlers(input, output, session, i18n)
+
   # Setup about modal
   setup_about_modal_handlers(input, output, session, i18n)
 
   # ========== CALL MODULE SERVERS ==========
 
   # Entry Point module - pass session for sidebar navigation and user level
-  entry_point_server("entry_pt", project_data, parent_session = session, user_level_reactive = user_level)
+  entry_point_server("entry_pt", project_data, i18n, parent_session = session, user_level_reactive = user_level)
 
   # PIMS modules
-  pims_project_data <- pims_project_server("pims_proj", project_data)
-  pims_stakeholders_data <- pimsStakeholderServer("pims_stake", project_data)
-  pims_resources_data <- pims_resources_server("pims_res", project_data)
-  pims_data_data <- pims_data_server("pims_dm", project_data)
-  pims_evaluation_data <- pims_evaluation_server("pims_eval", project_data)
+  pims_project_data <- pims_project_server("pims_proj", project_data, i18n)
+  pims_stakeholders_data <- pimsStakeholderServer("pims_stake", project_data, i18n)
+  pims_resources_data <- pims_resources_server("pims_res", project_data, i18n)
+  pims_data_data <- pims_data_server("pims_dm", project_data, i18n)
+  pims_evaluation_data <- pims_evaluation_server("pims_eval", project_data, i18n)
   
   # ==================== CREATE SES MODULES ====================
   # Main Create SES module (method selector)
   create_ses_server("create_ses_main", project_data, session, i18n)
 
   # Template-based SES module
-  template_ses_server("template_ses", project_data, session, event_bus)
+  template_ses_server("template_ses", project_data, session, event_bus, i18n)
 
   # AI ISA Assistant module
-  ai_isa_assistant_server("ai_isa_mod", project_data, i18n, event_bus, autosave_enabled)
+  ai_isa_assistant_server("ai_isa_mod", project_data, i18n, event_bus, autosave_enabled, user_level, session)
 
   # ISA data entry module (Standard Entry)
   isa_data <- isaDataEntryServer("isa_module", project_data, event_bus)
 
   # CLD visualization
-  cld_viz_server("cld_visual", project_data)
+  cld_viz_server("cld_visual", project_data, i18n)
   
   # Analysis modules
-  analysis_metrics_server("analysis_met", project_data)
-  analysis_loops_server("analysis_loop", project_data)
-  analysis_leverage_server("analysis_lev", project_data)
-  analysis_bot_server("analysis_b", project_data)
-  analysis_simplify_server("analysis_simp", project_data)
+  analysis_metrics_server("analysis_met", project_data, i18n)
+  analysis_loops_server("analysis_loop", project_data, i18n)
+  analysis_leverage_server("analysis_lev", project_data, i18n)
+  analysis_bot_server("analysis_b", project_data, i18n)
+  analysis_simplify_server("analysis_simp", project_data, i18n)
   
   # Response & validation modules
   response_measures_server("resp_meas", project_data, i18n)
@@ -584,7 +725,7 @@ server <- function(input, output, session) {
   export_reports_server("export_reports_mod", project_data, i18n)
 
   # Prepare Report module (comprehensive)
-  prepare_report_server("prep_report", project_data)
+  prepare_report_server("prep_report", project_data, i18n)
 
   # ========== REACTIVE DATA PIPELINE ==========
   # Setup event-based reactive pipeline for automatic data propagation
@@ -604,7 +745,7 @@ server <- function(input, output, session) {
       textInput("save_project_name", "Project Name:",
                value = project_data()$project_id),
       footer = tagList(
-        modalButton(i18n$t("Cancel")),
+        modalButton(i18n$t("common.buttons.cancel")),
         downloadButton("confirm_save", "Save")
       )
     ))
@@ -621,7 +762,7 @@ server <- function(input, output, session) {
         # Validate data structure before saving
         data <- project_data()
         if (!is.list(data) || !all(c("project_id", "data") %in% names(data))) {
-          showNotification("Error: Invalid project data structure",
+          showNotification(i18n$t("common.messages.error_invalid_project_data_structure"),
                           type = "error", duration = 10)
           return(NULL)
         }
@@ -631,17 +772,17 @@ server <- function(input, output, session) {
 
         # Verify saved file
         if (!file.exists(file) || file.size(file) == 0) {
-          showNotification("Error: File save failed or file is empty",
+          showNotification(i18n$t("common.messages.error_file_save_failed_or_file_is_empty"),
                           type = "error", duration = 10)
           return(NULL)
         }
 
         removeModal()
-        showNotification("Project saved successfully!", type = "message")
+        showNotification(i18n$t("common.messages.project_saved_successfully"), type = "message")
 
       }, error = function(e) {
         showNotification(
-          paste("Error saving project:", e$message),
+          paste(i18n$t("common.misc.error_saving_project"), e$message),
           type = "error",
           duration = 10
         )
@@ -651,12 +792,12 @@ server <- function(input, output, session) {
   
   observeEvent(input$load_project, {
     showModal(modalDialog(
-      title = i18n$t("Load Project"),
-      fileInput("load_project_file", i18n$t("Choose RDS File:"),
+      title = i18n$t("common.buttons.load_project"),
+      fileInput("load_project_file", i18n$t("common.misc.choose_rds_file"),
                accept = ".rds"),
       footer = tagList(
-        modalButton(i18n$t("Cancel")),
-        actionButton("confirm_load", i18n$t("Load"))
+        modalButton(i18n$t("common.buttons.cancel")),
+        actionButton("confirm_load", i18n$t("common.buttons.load"))
       )
     ))
   })
@@ -671,7 +812,7 @@ server <- function(input, output, session) {
       # Validate project structure
       if (!validate_project_structure(loaded_data)) {
         showNotification(
-          "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
+          i18n$t("common.messages.error_invalid_proj_file_structure_this_may_not_be_"),
           type = "error",
           duration = 10
         )
@@ -682,11 +823,11 @@ server <- function(input, output, session) {
       project_data(loaded_data)
 
       removeModal()
-      showNotification("Project loaded successfully!", type = "message")
+      showNotification(i18n$t("common.messages.project_loaded_successfully"), type = "message")
 
     }, error = function(e) {
       showNotification(
-        paste("Error loading project:", e$message),
+        paste(i18n$t("common.misc.error_loading_project"), e$message),
         type = "error",
         duration = 10
       )
@@ -789,7 +930,7 @@ server <- function(input, output, session) {
         save(export_list, file = file)
       }
 
-      showNotification("Data exported successfully!", type = "message")
+      showNotification(i18n$t("common.messages.data_exported_successfully"), type = "message")
     }
   )
   
@@ -809,7 +950,7 @@ server <- function(input, output, session) {
 
       # Check if CLD data exists
       if(is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
-        showNotification("No CLD data to export. Please create a CLD first.", type = "error")
+        showNotification(i18n$t("common.misc.no_cld_data_to_export_please_create_a_cld_first"), type = "error")
         return(NULL)
       }
 
@@ -890,7 +1031,7 @@ server <- function(input, output, session) {
         dev.off()
       }
 
-      showNotification("Visualization exported successfully!", type = "message")
+      showNotification(i18n$t("common.messages.visualization_exported_successfully"), type = "message")
     }
   )
 
@@ -906,4 +1047,4 @@ server <- function(input, output, session) {
 # RUN APPLICATION
 # ============================================================================
 
-shinyApp(ui = ui, server = server)
+shinyApp(ui = ui, server = server, enableBookmarking = "url")

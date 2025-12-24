@@ -1,0 +1,423 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it"
+  ],
+  "translation": [
+    {
+      "key": "ui.header.app_title",
+      "en": "MarineSABRES SES Toolbox",
+      "es": "Caja de Herramientas SES MarineSABRES",
+      "fr": "Boîte à Outils SES MarineSABRES",
+      "de": "MarineSABRES SES Toolbox",
+      "lt": "MarineSABRES SES įrankių rinkinys",
+      "pt": "Caixa de Ferramentas SES MarineSABRES",
+      "it": "Toolbox SES MarineSABRES"
+    },
+    {
+      "key": "ui.header.save_project",
+      "en": "Save Project",
+      "es": "Guardar Proyecto",
+      "fr": "Enregistrer le Projet",
+      "de": "Projekt Speichern",
+      "lt": "Išsaugoti projektą",
+      "pt": "Salvar Projeto",
+      "it": "Salva Progetto"
+    },
+    {
+      "key": "ui.header.load_project",
+      "en": "Load Project",
+      "es": "Cargar Proyecto",
+      "fr": "Charger le Projet",
+      "de": "Projekt Laden",
+      "lt": "Įkelti projektą",
+      "pt": "Carregar Projeto",
+      "it": "Carica Progetto"
+    },
+    {
+      "key": "ui.header.new_project",
+      "en": "New Project",
+      "es": "Nuevo Proyecto",
+      "fr": "Nouveau Projet",
+      "de": "Neues Projekt",
+      "lt": "Naujas projektas",
+      "pt": "Novo Projeto",
+      "it": "Nuovo Progetto"
+    },
+    {
+      "key": "ui.header.project_info",
+      "en": "Project Info",
+      "es": "Info del Proyecto",
+      "fr": "Info du Projet",
+      "de": "Projektinfo",
+      "lt": "Projekto informacija",
+      "pt": "Info do Projeto",
+      "it": "Info Progetto"
+    },
+    {
+      "key": "ui.header.language_selector",
+      "en": "Language",
+      "es": "Idioma",
+      "fr": "Langue",
+      "de": "Sprache",
+      "lt": "Kalba",
+      "pt": "Idioma",
+      "it": "Lingua"
+    },
+    {
+      "key": "ui.header.user_guide",
+      "en": "User Guide",
+      "es": "Guía del Usuario",
+      "fr": "Guide de l'Utilisateur",
+      "de": "Benutzerhandbuch",
+      "lt": "Naudotojo vadovas",
+      "pt": "Guia do Usuário",
+      "it": "Guida Utente"
+    },
+    {
+      "key": "ui.header.about_app",
+      "en": "About",
+      "es": "Acerca de",
+      "fr": "À propos",
+      "de": "Über",
+      "lt": "Apie",
+      "pt": "Sobre",
+      "it": "Informazioni"
+    },
+    {
+      "key": "ui.header.project_overview",
+      "en": "Project Overview",
+      "es": "Resumen del Proyecto",
+      "fr": "Aperçu du Projet",
+      "de": "Projektübersicht",
+      "lt": "Projekto apžvalga",
+      "pt": "Visão Geral do Projeto",
+      "it": "Panoramica del Progetto"
+    },
+    {
+      "key": "ui.header.user",
+      "en": "User",
+      "es": "Usuario",
+      "fr": "Utilisateur",
+      "de": "Benutzer",
+      "lt": "Vartotojas",
+      "pt": "Usuário",
+      "it": "Utente"
+    },
+    {
+      "key": "ui.header.change_language",
+      "en": "Change Language",
+      "es": "Cambiar Idioma",
+      "fr": "Changer de Langue",
+      "de": "Sprache Ändern",
+      "lt": "Pakeisti Kalbą",
+      "pt": "Mudar Idioma",
+      "it": "Cambia Lingua"
+    },
+    {
+      "key": "ui.header.user_profile",
+      "en": "User Profile",
+      "es": "Perfil de Usuario",
+      "fr": "Profil Utilisateur",
+      "de": "Benutzerprofil",
+      "lt": "Vartotojo profilis",
+      "pt": "Perfil de Usuário",
+      "it": "Profilo Utente"
+    },
+    {
+      "key": "ui.header.user_account",
+      "en": "User Account",
+      "es": "Cuenta de Usuario",
+      "fr": "Compte Utilisateur",
+      "de": "Benutzerkonto",
+      "lt": "Vartotojo paskyra",
+      "pt": "Conta de Usuário",
+      "it": "Account Utente"
+    },
+    {
+      "key": "ui.header.user_experience_level",
+      "en": "User Experience Level",
+      "es": "Nivel de Experiencia del Usuario",
+      "fr": "Niveau d'Expérience Utilisateur",
+      "de": "Benutzererfahrungsstufe",
+      "lt": "Naudotojo patirties lygis",
+      "pt": "Nível de Experiência do Usuário",
+      "it": "Livello di Esperienza Utente"
+    },
+    {
+      "key": "ui.header.overview_of_your_project_status_and_key_metrics",
+      "en": "Overview of your project status and key metrics",
+      "es": "Resumen del estado del proyecto y métricas clave",
+      "fr": "Aperçu de l'état de votre projet et des indicateurs clés",
+      "de": "Überblick über Ihren Projektstatus und wichtige Kennzahlen",
+      "lt": "Projekto būsenos ir pagrindinių rodiklių apžvalga",
+      "pt": "Visão geral do status do projeto e métricas-chave",
+      "it": "Panoramica dello stato del progetto e metriche chiave"
+    },
+    {
+      "key": "ui.header.project_setup",
+      "en": "Project Setup",
+      "es": "Configuración del Proyecto",
+      "fr": "Configuration du Projet",
+      "de": "Projekteinrichtung",
+      "lt": "Projekto sąranka",
+      "pt": "Configuração do Projeto",
+      "it": "Configurazione Progetto"
+    },
+    {
+      "key": "ui.header.projectlocation",
+      "en": "Project/Location:",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "ui.header.savesimplificationtoproject",
+      "en": "save_simplification_to_project",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "ui.header.traditional_formbased_approach_following_the_dapsi",
+      "en": "Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology.",
+      "es": "Enfoque tradicional basado en formularios siguiendo el marco DAPSI(W)R(M). Perfecto para usuarios familiarizados con la metodología ISA.",
+      "fr": "Approche traditionnelle basée sur des formulaires suivant le cadre DAPSI(W)R(M). Parfait pour les utilisateurs familiers avec la méthodologie ISA.",
+      "de": "Traditioneller formularbasierter Ansatz nach dem DAPSI(W)R(M)-Framework. Perfekt für Benutzer, die mit der ISA-Methodik vertraut sind.",
+      "lt": "Tradicinis formomis pagrįstas požiūris pagal DAPSI(W)R(M) sistemą. Puikiai tinka vartotojams, susipažinusiems su ISA metodika.",
+      "pt": "Abordagem tradicional baseada em formulários seguindo a estrutura DAPSI(W)R(M). Perfeito para usuários familiarizados com a metodologia ISA.",
+      "it": "Approccio tradizionale basato su moduli seguendo il framework DAPSI(W)R(M). Perfetto per utenti esperti della metodologia ISA."
+    },
+    {
+      "key": "ui.header.experienced_users_academic_research_detailed_docum",
+      "en": "Experienced users, academic research, detailed documentation",
+      "es": "Usuarios experimentados, investigación académica, documentación detallada",
+      "fr": "Utilisateurs expérimentés, recherche académique, documentation détaillée",
+      "de": "Erfahrene Benutzer, akademische Forschung, detaillierte Dokumentation",
+      "lt": "Patyrę vartotojai, akademiniai tyrimai, išsami dokumentacija",
+      "pt": "Utilizadores experientes, pesquisa académica, documentação detalhada",
+      "it": "Utenti esperti, ricerca accademica, documentazione dettagliata"
+    },
+    {
+      "key": "ui.header.beginners_firsttime_users_exploratory_analysis",
+      "en": "Beginners, first-time users, exploratory analysis",
+      "es": "Principiantes, usuarios primerizos, análisis exploratorio",
+      "fr": "Débutants, nouveaux utilisateurs, analyse exploratoire",
+      "de": "Anfänger, Erstbenutzer, explorative Analyse",
+      "lt": "Pradedantieji, pirmą kartą naudojantys, tyrinėjamoji analizė",
+      "pt": "Iniciantes, utilizadores pela primeira vez, análise exploratória",
+      "it": "Principianti, utenti alle prime armi, analisi esplorativa"
+    },
+    {
+      "key": "ui.header.quick_prototyping_common_scenarios_timeconstrained",
+      "en": "Quick prototyping, common scenarios, time-constrained projects",
+      "es": "Prototipado rápido, escenarios comunes, proyectos con restricciones de tiempo",
+      "fr": "Prototypage rapide, scénarios courants, projets à contraintes de temps",
+      "de": "Schnelles Prototyping, gängige Szenarien, zeitkritische Projekte",
+      "lt": "Greitas prototipavimas, įprasti scenarijai, laiko apriboti projektai",
+      "pt": "Prototipagem rápida, cenários comuns, projetos com restrições de tempo",
+      "it": "Prototipazione rapida, scenari comuni, progetti con vincoli di tempo"
+    },
+    {
+      "key": "ui.header.working_on_a_timesensitive_project",
+      "en": "Working on a time-sensitive project?",
+      "es": "¿Trabaja en un proyecto urgente?",
+      "fr": "Travaillez-vous sur un projet urgent?",
+      "de": "Arbeiten Sie an einem zeitkritischen Projekt?",
+      "lt": "Dirbate su laiko jautriu projektu?",
+      "pt": "A trabalhar num projeto urgente?",
+      "it": "Lavori su un progetto urgente?"
+    },
+    {
+      "key": "ui.header.define_your_project_goals_stakeholders_and_timelin",
+      "en": "Define your project goals, stakeholders, and timeline",
+      "es": "Defina los objetivos de su proyecto, las partes interesadas y el cronograma",
+      "fr": "Définissez vos objectifs de projet, parties prenantes et calendrier",
+      "de": "Definieren Sie Ihre Projektziele, Stakeholder und Zeitplan",
+      "lt": "Apibrėžkite projekto tikslus, suinteresuotas šalis ir laikotarpį",
+      "pt": "Defina os objetivos do seu projeto, partes interessadas e cronograma",
+      "it": "Definisci gli obiettivi del progetto, gli stakeholder e la timeline"
+    },
+    {
+      "key": "ui.header.project_metadata",
+      "en": "Project Metadata",
+      "es": "Metadatos del Proyecto",
+      "fr": "Métadonnées du Projet",
+      "de": "Projektmetadaten",
+      "lt": "Projekto metaduomenys",
+      "pt": "Metadados do Projeto",
+      "it": "Metadati del Progetto"
+    },
+    {
+      "key": "ui.header.open_user_guide",
+      "en": "Open User Guide",
+      "es": "Abrir Guía del Usuario",
+      "fr": "Ouvrir le Guide de l'Utilisateur",
+      "de": "Benutzerhandbuch öffnen",
+      "lt": "Atidaryti naudotojo vadovą",
+      "pt": "Abrir Guia do Utilizador",
+      "it": "Apri Guida Utente"
+    },
+    {
+      "key": "ui.header.load_the_template_asis_without_reviewing_connectio",
+      "en": "Load the template as-is without reviewing connections. All predefined connections will be imported directly into your project.",
+      "es": "Cargue la plantilla tal cual sin revisar las conexiones. Todas las conexiones predefinidas se importarán directamente a su proyecto.",
+      "fr": "Chargez le modèle tel quel sans examiner les connexions. Toutes les connexions prédéfinies seront importées directement dans votre projet.",
+      "de": "Laden Sie die Vorlage unverändert ohne Überprüfung der Verbindungen. Alle vordefinierten Verbindungen werden direkt in Ihr Projekt importiert.",
+      "lt": "Įkelkite šabloną tokį, koks yra, neperžiūrėdami ryšių. Visi iš anksto apibrėžti ryšiai bus tiesiogiai importuoti į jūsų projektą.",
+      "pt": "Carregue o modelo como está sem revisar as conexões. Todas as conexões predefinidas serão importadas diretamente para seu projeto.",
+      "it": "Carica il modello così com'è senza rivedere le connessioni. Tutte le connessioni predefinite verranno importate direttamente nel tuo progetto."
+    },
+    {
+      "key": "ui.header.review_and_customize_template_connections_approve_",
+      "en": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project.",
+      "es": "Revise y personalice las conexiones de plantilla. Apruebe, rechace o modifique conexiones individuales antes de cargarlas en su proyecto.",
+      "fr": "Examinez et personnalisez les connexions du modèle. Approuvez, rejetez ou modifiez les connexions individuelles avant de les charger dans votre projet.",
+      "de": "Überprüfen und passen Sie Vorlagenverbindungen an. Genehmigen, ablehnen oder ändern Sie einzelne Verbindungen, bevor Sie sie in Ihr Projekt laden.",
+      "lt": "Peržiūrėkite ir pritaikykite šablono ryšius. Patvirtinkite, atmeskite arba modifikuokite atskirus ryšius prieš įkeliant į savo projektą.",
+      "pt": "Revise e personalize as conexões do modelo. Aprove, rejeite ou modifique conexões individuais antes de carregar em seu projeto.",
+      "it": "Rivedi e personalizza le connessioni del modello. Approva, rifiuta o modifica le singole connessioni prima di caricarle nel tuo progetto."
+    },
+    {
+      "key": "ui.header.project_id",
+      "en": "Project ID:",
+      "es": "ID del Proyecto:",
+      "fr": "ID du Projet :",
+      "de": "Projekt-ID:",
+      "lt": "Projekto ID:",
+      "pt": "ID do Projeto:",
+      "it": "ID Progetto:"
+    },
+    {
+      "key": "ui.header.interface_language",
+      "en": "Interface Language:",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "ui.header.the_application_will_reload_to_apply_the_language_",
+      "en": "The application will reload to apply the language change.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "ui.header.simplified_interface_for_firsttime_users_shows_ess",
+      "en": "Simplified interface for first-time users. Shows essential tools only.",
+      "es": "Interfaz simplificada para nuevos usuarios. Muestra solo herramientas esenciales.",
+      "fr": "Interface simplifiée pour les nouveaux utilisateurs. Affiche uniquement les outils essentiels.",
+      "de": "Vereinfachte Benutzeroberfläche für Erstbenutzer. Zeigt nur wesentliche Werkzeuge.",
+      "lt": "Supaprastinta sąsaja pradedantiesiems. Rodo tik esminius įrankius.",
+      "pt": "Interface simplificada para novos usuários. Mostra apenas ferramentas essenciais.",
+      "it": "Interfaccia semplificata per nuovi utenti. Mostra solo strumenti essenziali."
+    },
+    {
+      "key": "ui.header.standard_interface_for_regular_users_shows_most_to",
+      "en": "Standard interface for regular users. Shows most tools and features.",
+      "es": "Interfaz estándar para usuarios regulares. Muestra la mayoría de herramientas y funciones.",
+      "fr": "Interface standard pour les utilisateurs réguliers. Affiche la plupart des outils et fonctionnalités.",
+      "de": "Standardbenutzeroberfläche für regelmäßige Benutzer. Zeigt die meisten Werkzeuge und Funktionen.",
+      "lt": "Standartinė sąsaja įprastiems naudotojams. Rodo daugumą įrankių ir funkcijų.",
+      "pt": "Interface padrão para usuários regulares. Mostra a maioria das ferramentas e recursos.",
+      "it": "Interfaccia standard per utenti abituali. Mostra la maggior parte degli strumenti e delle funzionalità."
+    },
+    {
+      "key": "ui.header.the_application_will_reload_to_apply_the_new_user_",
+      "en": "The application will reload to apply the new user experience level.",
+      "es": "La aplicación se recargará para aplicar el nuevo nivel de experiencia del usuario.",
+      "fr": "L'application se rechargera pour appliquer le nouveau niveau d'expérience utilisateur.",
+      "de": "Die Anwendung wird neu geladen, um die neue Benutzererfahrungsstufe anzuwenden.",
+      "lt": "Programa bus perkrauta, kad būtų pritaikytas naujas naudotojo patirties lygis.",
+      "pt": "A aplicação será recarregada para aplicar o novo nível de experiência do usuário.",
+      "it": "L'applicazione si ricaricherà per applicare il nuovo livello di esperienza utente."
+    },
+    {
+      "key": "ui.header.applying_new_user_experience_level",
+      "en": "Applying new user experience level...",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "ui.header.download_user_manuals_guides",
+      "en": "Download User Manuals & Guides",
+      "es": "Descargar Manuales y Guías del Usuario",
+      "fr": "Télécharger les Manuels et Guides de l'Utilisateur",
+      "de": "Benutzerhandbücher und Leitfäden Herunterladen",
+      "lt": "Atsisiųsti Vartotojo Vadovus ir Gidus",
+      "pt": "Baixar Manuais e Guias do Usuário",
+      "it": "Scarica Manuali e Guide Utente"
+    },
+    {
+      "key": "ui.header.recommended_for_new_users",
+      "en": "Recommended for New Users",
+      "es": "Recomendado para Nuevos Usuarios",
+      "fr": "Recommandé pour les Nouveaux Utilisateurs",
+      "de": "Empfohlen für Neue Benutzer",
+      "lt": "Rekomenduojama Naujiems Vartotojams",
+      "pt": "Recomendado para Novos Usuários",
+      "it": "Raccomandato per Nuovi Utenti"
+    },
+    {
+      "key": "ui.header.compact_reference_for_experienced_users_who_need_a",
+      "en": "Compact reference for experienced users who need a quick reminder.",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "ui.header.complete_user_manuals",
+      "en": "Complete User Manuals",
+      "es": "Manuales de Usuario Completos",
+      "fr": "Manuels d'Utilisateur Complets",
+      "de": "Vollständige Benutzerhandbücher",
+      "lt": "Pilni Vartotojo Vadovai",
+      "pt": "Manuais de Usuário Completos",
+      "it": "Manuali Utente Completi"
+    },
+    {
+      "key": "ui.header.example_projects",
+      "en": "Example Projects:",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    },
+    {
+      "key": "ui.header.for_developers_and_advanced_users",
+      "en": "For developers and advanced users",
+      "es": "TODO: es translation",
+      "fr": "TODO: fr translation",
+      "de": "TODO: de translation",
+      "lt": "TODO: lt translation",
+      "pt": "TODO: pt translation",
+      "it": "TODO: it translation"
+    }
+  ]
+}

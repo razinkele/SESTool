@@ -18,6 +18,14 @@
 #' @param i18n shiny.i18n translator object
 setup_dashboard_rendering <- function(input, output, session, project_data, i18n) {
 
+  # ========== DASHBOARD HEADER ==========
+  output$dashboard_header <- renderUI({
+    tagList(
+      h2(i18n$t("ui.dashboard.title")),
+      p(i18n$t("ui.dashboard.subtitle"))
+    )
+  })
+
   # ========== VALUE BOXES ==========
 
   # Total Elements Box
@@ -34,11 +42,10 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
         nrow(isa_data$marine_processes %||% data.frame()),
         nrow(isa_data$ecosystem_services %||% data.frame()),
         nrow(isa_data$goods_benefits %||% data.frame()),
-        nrow(isa_data$responses %||% data.frame()),
-        nrow(isa_data$measures %||% data.frame())
+        nrow(isa_data$responses %||% data.frame())
       )
 
-      valueBox(n_elements, i18n$t("Total Elements"), icon = icon("circle"), color = "blue")
+      valueBox(n_elements, i18n$t("ui.dashboard.total_elements"), icon = icon("circle"), color = "blue")
     }, error = function(e) {
       valueBox(0, "Error", icon = icon("times"), color = "red")
     })
@@ -60,7 +67,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
         }
       }
 
-      valueBox(n_connections, i18n$t("Connections"), icon = icon("arrow-right"), color = "green")
+      valueBox(n_connections, i18n$t("ui.dashboard.connections"), icon = icon("arrow-right"), color = "green")
     }, error = function(e) {
       valueBox(0, "Error", icon = icon("times"), color = "red")
     })
@@ -73,7 +80,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       loops <- safe_get_nested(data, "data", "cld", "loops", default = data.frame())
       n_loops <- if(is.data.frame(loops)) nrow(loops) else 0
 
-      valueBox(n_loops, i18n$t("Loops Detected"), icon = icon("refresh"), color = "orange")
+      valueBox(n_loops, i18n$t("ui.dashboard.loops_detected"), icon = icon("refresh"), color = "orange")
     }, error = function(e) {
       valueBox(0, "Error", icon = icon("times"), color = "red")
     })
@@ -117,7 +124,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
 
       valueBox(
         paste0(completion, "%"),
-        i18n$t("Completion"),
+        i18n$t("ui.dashboard.completion"),
         icon = icon("check-circle"),
         color = if(completion >= 75) "green" else if(completion >= 40) "yellow" else "purple"
       )
@@ -135,72 +142,77 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       tagList(
       tags$div(style = "word-wrap: break-word; overflow-wrap: break-word;",
         tags$p(style = "margin-bottom: 8px; font-size: 13px;",
-          tags$strong(i18n$t("Project ID:")), tags$br(),
+          tags$strong(i18n$t("ui.dashboard.project_id")), tags$br(),
           tags$span(style = "color: #666;", data$project_id)
         ),
         tags$p(style = "margin-bottom: 8px; font-size: 13px;",
-          tags$strong(i18n$t("Created:")), " ",
+          tags$strong(i18n$t("ui.dashboard.created")), " ",
           tags$span(style = "color: #666;", format_date_display(data$created_at))
         ),
         tags$p(style = "margin-bottom: 8px; font-size: 13px;",
-          tags$strong(i18n$t("Last Modified:")), " ",
+          tags$strong(i18n$t("ui.dashboard.last_modified")), " ",
           tags$span(style = "color: #666;", format_date_display(data$last_modified))
         ),
         tags$p(style = "margin-bottom: 8px; font-size: 13px;",
-          tags$strong(i18n$t("Demonstration Area:")), tags$br(),
-          tags$span(style = "color: #666;", data$data$metadata$da_site %||% i18n$t("Not set"))
+          tags$strong(i18n$t("ui.dashboard.demonstration_area")), tags$br(),
+          tags$span(style = "color: #666;", data$data$metadata$da_site %||% i18n$t("ui.dashboard.not_set"))
         ),
         tags$p(style = "margin-bottom: 8px; font-size: 13px;",
-          tags$strong(i18n$t("Focal Issue:")), tags$br(),
-          tags$span(style = "color: #666;", data$data$metadata$focal_issue %||% i18n$t("Not defined"))
+          tags$strong(i18n$t("ui.dashboard.focal_issue")), tags$br(),
+          tags$span(style = "color: #666;", data$data$metadata$focal_issue %||% i18n$t("ui.dashboard.not_defined"))
         ),
         tags$hr(style = "margin: 10px 0;"),
-        tags$h5(style = "margin-bottom: 8px; font-size: 14px;", i18n$t("DAPSI(W)R(M) Elements")),
+        tags$h5(style = "margin-bottom: 8px; font-size: 14px;", i18n$t("ui.dashboard.dapsiwrm_elements")),
         tags$ul(style = "list-style-type: none; padding-left: 5px; margin-bottom: 5px; font-size: 12px;",
           tags$li(style = "margin-bottom: 3px;",
             icon(if(!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) "check" else "times",
                  class = if(!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) "text-success" else "text-muted"),
-            " ", i18n$t("Drivers:"), " ",
+            " ", i18n$t("modules.response.measures.drivers"), " ",
             tags$strong(if(!is.null(data$data$isa_data$drivers)) nrow(data$data$isa_data$drivers) else 0)),
           tags$li(style = "margin-bottom: 3px;",
             icon(if(!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) "check" else "times",
                  class = if(!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) "text-success" else "text-muted"),
-            " ", i18n$t("Activities:"), " ",
+            " ", i18n$t("modules.response.measures.activities"), " ",
             tags$strong(if(!is.null(data$data$isa_data$activities)) nrow(data$data$isa_data$activities) else 0)),
           tags$li(style = "margin-bottom: 3px;",
             icon(if(!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) "check" else "times",
                  class = if(!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) "text-success" else "text-muted"),
-            " ", i18n$t("Pressures:"), " ",
+            " ", i18n$t("modules.response.measures.pressures"), " ",
             tags$strong(if(!is.null(data$data$isa_data$pressures)) nrow(data$data$isa_data$pressures) else 0)),
           tags$li(style = "margin-bottom: 3px;",
             icon(if(!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) "check" else "times",
                  class = if(!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) "text-success" else "text-muted"),
-            " ", i18n$t("States:"), " ",
+            " ", i18n$t("ui.dashboard.states"), " ",
             tags$strong(if(!is.null(data$data$isa_data$marine_processes)) nrow(data$data$isa_data$marine_processes) else 0)),
           tags$li(style = "margin-bottom: 3px;",
             icon(if(!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) "check" else "times",
                  class = if(!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) "text-success" else "text-muted"),
-            " ", i18n$t("Ecosystem Services:"), " ",
+            " ", i18n$t("ui.dashboard.ecosystem_services"), " ",
             tags$strong(if(!is.null(data$data$isa_data$ecosystem_services)) nrow(data$data$isa_data$ecosystem_services) else 0)),
           tags$li(style = "margin-bottom: 3px;",
             icon(if(!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) "check" else "times",
                  class = if(!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) "text-success" else "text-muted"),
-            " ", i18n$t("Goods & Benefits:"), " ",
-            tags$strong(if(!is.null(data$data$isa_data$goods_benefits)) nrow(data$data$isa_data$goods_benefits) else 0))
+            " ", i18n$t("ui.dashboard.goods_benefits"), " ",
+            tags$strong(if(!is.null(data$data$isa_data$goods_benefits)) nrow(data$data$isa_data$goods_benefits) else 0)),
+          tags$li(style = "margin-bottom: 3px;",
+            icon(if(!is.null(data$data$isa_data$responses) && nrow(data$data$isa_data$responses) > 0) "check" else "times",
+                 class = if(!is.null(data$data$isa_data$responses) && nrow(data$data$isa_data$responses) > 0) "text-success" else "text-muted"),
+            " ", i18n$t("ui.dashboard.responses"), " ",
+            tags$strong(if(!is.null(data$data$isa_data$responses)) nrow(data$data$isa_data$responses) else 0))
         ),
         tags$hr(style = "margin: 10px 0;"),
         tags$p(style = "margin-bottom: 5px; font-size: 13px;",
-          tags$strong(i18n$t("CLD Generated:")), " ",
+          tags$strong(i18n$t("ui.dashboard.cld_generated")), " ",
           tags$span(
             style = if(!is.null(data$data$cld$nodes)) "color: #28a745; font-weight: bold;" else "color: #dc3545;",
-            if(!is.null(data$data$cld$nodes)) i18n$t("Yes") else i18n$t("No")
+            if(!is.null(data$data$cld$nodes)) i18n$t("common.buttons.yes") else i18n$t("common.buttons.no")
           )
         ),
         tags$p(style = "margin-bottom: 5px; font-size: 13px;",
-          tags$strong(i18n$t("PIMS Setup:")), " ",
+          tags$strong(i18n$t("ui.dashboard.pims_setup")), " ",
           tags$span(
             style = if(length(data$data$pims) > 0) "color: #28a745;" else "color: #dc3545;",
-            if(length(data$data$pims) > 0) i18n$t("Complete") else i18n$t("Incomplete")
+            if(length(data$data$pims) > 0) i18n$t("ui.dashboard.complete") else i18n$t("ui.dashboard.incomplete")
           )
         )
       )
@@ -212,7 +224,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       print(sys.calls())
       # Return error message to UI
       tagList(
-        p(style = "color: red;", i18n$t("Error rendering dashboard:"), " ", conditionMessage(e))
+        p(style = "color: red;", i18n$t("ui.dashboard.error_rendering_dashboard"), " ", conditionMessage(e))
       )
     })
   })
@@ -229,14 +241,13 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       nrow(data$data$isa_data$marine_processes %||% data.frame()),
       nrow(data$data$isa_data$ecosystem_services %||% data.frame()),
       nrow(data$data$isa_data$goods_benefits %||% data.frame()),
-      nrow(data$data$isa_data$responses %||% data.frame()),
-      nrow(data$data$isa_data$measures %||% data.frame())
+      nrow(data$data$isa_data$responses %||% data.frame())
     )
 
     tags$p(style = "margin-bottom: 5px; font-size: 13px;",
       icon(if(n_elements > 0) "check-circle" else "circle",
            class = if(n_elements > 0) "text-success" else "text-muted"),
-      " ", strong(n_elements), " ", i18n$t("elements created")
+      " ", strong(n_elements), " ", i18n$t("ui.dashboard.elements_created")
     )
   })
 
@@ -256,7 +267,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
     tags$p(style = "margin-bottom: 5px; font-size: 13px;",
       icon(if(n_connections > 0) "check-circle" else "circle",
            class = if(n_connections > 0) "text-success" else "text-muted"),
-      " ", strong(n_connections), " ", i18n$t("connections defined")
+      " ", strong(n_connections), " ", i18n$t("ui.dashboard.connections_defined")
     )
   })
 
@@ -268,7 +279,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
     tags$p(style = "margin-bottom: 5px; font-size: 13px;",
       icon(if(n_nodes > 0) "check-circle" else "circle",
            class = if(n_nodes > 0) "text-success" else "text-muted"),
-      " ", strong(n_nodes), " ", i18n$t("nodes in CLD")
+      " ", strong(n_nodes), " ", i18n$t("ui.dashboard.nodes_in_cld")
     )
   })
 
@@ -280,7 +291,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
     tags$p(style = "margin-bottom: 5px; font-size: 13px;",
       icon(if(n_edges > 0) "check-circle" else "circle",
            class = if(n_edges > 0) "text-success" else "text-muted"),
-      " ", strong(n_edges), " ", i18n$t("edges in CLD")
+      " ", strong(n_edges), " ", i18n$t("ui.dashboard.edges_in_cld")
     )
   })
 

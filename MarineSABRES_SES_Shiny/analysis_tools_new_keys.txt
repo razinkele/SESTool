@@ -1,0 +1,3 @@
+Loop detection failed or timed out.
+Error during loop detection:
+Loop detection failed:

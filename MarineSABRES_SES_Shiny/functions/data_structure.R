@@ -113,6 +113,7 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
         pressures = create_empty_element_df("Pressures"),
         activities = create_empty_element_df("Activities"),
         drivers = create_empty_element_df("Drivers"),
+        responses = create_empty_element_df("Responses"),  # Management responses/measures (R/M in DAPSI(W)R(M))
         
         # BOT data
         bot_data = list(
@@ -151,17 +152,35 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
             element_id = character(),
             value = numeric(),
             stringsAsFactors = FALSE
+          ),
+          responses = data.frame(
+            date = as.Date(character()),
+            element_id = character(),
+            value = numeric(),
+            stringsAsFactors = FALSE
           )
         ),
         
-        # Adjacency matrices
+        # Adjacency matrices - DAPSIWRM framework
+        # MATRIX CONVENTION: All matrices use SOURCE×TARGET format (rows=SOURCE, cols=TARGET)
+        # FORWARD CAUSAL FLOW: Drivers → Activities → Pressures → Marine Processes → Ecosystem Services → Welfare (Goods & Benefits)
+        # FEEDBACK/RESPONSES: Welfare → Responses → (Drivers, Activities, Pressures)
         adjacency_matrices = list(
-          gb_es = NULL,
-          es_mpf = NULL,
-          mpf_p = NULL,
-          p_a = NULL,
-          a_d = NULL,
-          d_gb = NULL
+          # Forward causal chain
+          d_a = NULL,      # Drivers → Activities
+          a_p = NULL,      # Activities → Pressures
+          p_mpf = NULL,    # Pressures → Marine Processes & Functions
+          mpf_es = NULL,   # Marine Processes → Ecosystem Services
+          es_gb = NULL,    # Ecosystem Services → Welfare (Goods & Benefits)
+          
+          # Feedback loop closure
+          gb_d = NULL,     # Welfare → Drivers (perception/demand feedback)
+          
+          # Response measures (management interventions)
+          gb_r = NULL,     # Welfare → Responses (problems drive responses)
+          r_d = NULL,      # Responses → Drivers (policy targeting drivers)
+          r_a = NULL,      # Responses → Activities (regulations on activities)
+          r_p = NULL       # Responses → Pressures (direct pressure mitigation)
         )
       ),
       
@@ -174,23 +193,12 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
         simplified = FALSE,
         simplification_history = list()
       ),
-      
-      # Response measures
-      responses = list(
-        measures = data.frame(
-          id = character(),
-          name = character(),
-          type = character(),
-          description = character(),
-          target_elements = character(),
-          expected_effect = character(),
-          implementation_cost = numeric(),
-          feasibility = character(),
-          stakeholder_acceptance = character(),
-          stringsAsFactors = FALSE
-        ),
-        
-        scenarios = list()
+
+      # Analysis results
+      analysis = list(
+        loops = NULL,  # Loop detection results
+        leverage_points = NULL,  # Leverage point analysis results
+        scenarios = list()  # Scenario analysis results
       )
     )
   )
@@ -232,8 +240,16 @@ create_empty_element_df <- function(element_type) {
   } else if (element_type == "Drivers") {
     base_cols$needs_category <- character()
     base_cols$trends <- character()
+  } else if (element_type == "Responses") {
+    # Response measures / policy instruments (R/M in DAPSI(W)R(M))
+    base_cols$measure_type <- character()  # e.g., regulatory, economic, informational
+    base_cols$target_elements <- character()  # Which DAPSI elements this targets
+    base_cols$expected_effect <- character()  # Expected outcome
+    base_cols$implementation_cost <- numeric()  # Cost estimate
+    base_cols$feasibility <- character()  # Low, Medium, High
+    base_cols$stakeholder_acceptance <- character()  # Acceptance level
   }
-  
+
   return(base_cols)
 }
 

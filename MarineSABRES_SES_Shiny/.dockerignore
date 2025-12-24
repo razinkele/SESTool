@@ -27,12 +27,29 @@ Thumbs.db
 deployment/logs
 deployment/*.tar.gz
 
-# Documentation drafts
+# Documentation (exclude development docs but keep docs/ for app)
+Documents/
 *.draft.md
+*.md
+!README.md
+!translations/README.md
+!deployment/README.md
+!deployment/DEPLOYMENT_GUIDE.md
+!deployment/DEPLOYMENT_CHECKLIST.md
+!docs/*.md
 
-# Local test data
+# Local test data and development files
 test_data/
 temp/
+temp_*/
+scripts/
+tests/
+_ul*
+nul
+test_*.R
+run_app_dev.R
+install_packages.R
+update_polarities.R
 
 # R session data
 .Rdata

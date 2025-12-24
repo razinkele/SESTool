@@ -1,0 +1,345 @@
+{
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no"],
+  "translation": {
+    "common.misc.error_saving_project": {
+      "en": "Error saving project:",
+      "es": "Error al guardar el proyecto:",
+      "fr": "Erreur lors de l'enregistrement du projet:",
+      "de": "Fehler beim Speichern des Projekts:",
+      "lt": "Klaida įrašant projektą:",
+      "pt": "Erro ao salvar o projeto:",
+      "it": "Errore durante il salvataggio del progetto:",
+      "no": "Error saving project:"
+    },
+    "common.messages.error_invalid_proj_file_structure_this_may_not_be_": {
+      "en": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
+      "es": "Error: Estructura de archivo de proyecto no válida.",
+      "fr": "Erreur : structure de fichier de projet invalide.",
+      "de": "Fehler: Ungültige Projektdateistruktur.",
+      "lt": "Klaida: netinkama projekto failo struktūra.",
+      "pt": "Erro: estrutura de arquivo de projeto inválida.",
+      "it": "Errore: struttura del file di progetto non valida.",
+      "no": "Error: Invalid project file structure."
+    },
+    "common.misc.error_loading_project": {
+      "en": "Error loading project:",
+      "es": "Error al cargar el proyecto:",
+      "fr": "Erreur lors du chargement du projet:",
+      "de": "Fehler beim Laden des Projekts:",
+      "lt": "Klaida įkeliant projektą:",
+      "pt": "Erro ao carregar o projeto:",
+      "it": "Errore nel caricamento del progetto:",
+      "no": "Error loading project:"
+    },
+    "common.misc.no_cld_data_to_export_please_create_a_cld_first": {
+      "en": "No CLD data to export — please create a CLD first.",
+      "es": "No hay datos CLD para exportar — por favor cree un CLD primero.",
+      "fr": "Aucune donnée CLD à exporter — veuillez d'abord créer un CLD.",
+      "de": "Keine CLD-Daten zum Exportieren — bitte erstellen Sie zuerst ein CLD.",
+      "lt": "Nėra CLD duomenų eksportavimui — pirmiausia sukurkite CLD.",
+      "pt": "Sem dados CLD para exportar — crie um CLD primeiro.",
+      "it": "Nessun dato CLD da esportare — crea prima un CLD.",
+      "no": "No CLD data to export — please create a CLD first."
+    },
+    "common.misc.no_connections_in_this_category": {
+      "en": "No connections in this category",
+      "es": "No hay conexiones en esta categoría",
+      "fr": "Aucune connexion dans cette catégorie",
+      "de": "Keine Verbindungen in dieser Kategorie",
+      "lt": "Nėra ryšių šioje kategorijoje",
+      "pt": "Sem conexões nesta categoria",
+      "it": "Nessuna connessione in questa categoria",
+      "no": "No connections in this category"
+    },
+    "common.misc.all_d_connections_in_s_approved": {
+      "en": "All connections in %s approved",
+      "es": "Todas las conexiones en %s aprobadas",
+      "fr": "Toutes les connexions dans %s approuvées",
+      "de": "Alle Verbindungen in %s genehmigt",
+      "lt": "Visi ryšiai %s patvirtinti",
+      "pt": "Todas as conexões em %s aprovadas",
+      "it": "Tutte le connessioni in %s approvate",
+      "no": "All connections in %s approved"
+    },
+    "common.misc.all_d_connections_in_s_rejected": {
+      "en": "All connections in %s rejected",
+      "es": "Todas las conexiones en %s rechazadas",
+      "fr": "Toutes les connexions dans %s rejetées",
+      "de": "Alle Verbindungen in %s abgelehnt",
+      "lt": "Visi ryšiai %s atmesti",
+      "pt": "Todas as conexões em %s rejeitadas",
+      "it": "Tutte le connessioni in %s rifiutate",
+      "no": "All connections in %s rejected"
+    },
+    "common.misc.connection_amended_successfully": {
+      "en": "Connection amended successfully",
+      "es": "Conexión modificada con éxito",
+      "fr": "Connexion modifiée avec succès",
+      "de": "Verbindung erfolgreich geändert",
+      "lt": "Ryšys sėkmingai pakeistas",
+      "pt": "Conexão alterada com sucesso",
+      "it": "Connessione modificata con successo",
+      "no": "Connection amended successfully"
+    },
+    "common.misc.progress": {
+      "en": "Progress",
+      "es": "Progreso",
+      "fr": "Progrès",
+      "de": "Fortschritt",
+      "lt": "Pažanga",
+      "pt": "Progresso",
+      "it": "Progresso",
+      "no": "Progress"
+    },
+    "common.buttons.ok": {
+      "en": "OK",
+      "es": "OK",
+      "fr": "OK",
+      "de": "OK",
+      "lt": "OK",
+      "pt": "OK",
+      "it": "OK",
+      "no": "OK"
+    },
+    "common.labels.es_type": {
+      "en": "ES Type:",
+      "es": "Tipo ES:",
+      "fr": "Type ES:",
+      "de": "ES-Typ:",
+      "lt": "ES tipas:",
+      "pt": "Tipo ES:",
+      "it": "Tipo ES:",
+      "no": "ES Type:"
+    },
+    "common.labels.process_type": {
+      "en": "Process Type:",
+      "es": "Tipo de proceso:",
+      "fr": "Type de processus:",
+      "de": "Prozesstyp:",
+      "lt": "Proceso tipas:",
+      "pt": "Tipo de processo:",
+      "it": "Tipo di processo:",
+      "no": "Process Type:"
+    },
+    "common.labels.pressure_type": {
+      "en": "Pressure Type:",
+      "es": "Tipo de Presión:",
+      "fr": "Type de pression:",
+      "de": "Drucktyp:",
+      "lt": "Slėgio tipas:",
+      "pt": "Tipo de Pressão:",
+      "it": "Tipo di pressione:",
+      "no": "Pressure Type:"
+    },
+    "common.labels.driver_type": {
+      "en": "Driver Type:",
+      "es": "Tipo de Conductor:",
+      "fr": "Type de pilote:",
+      "de": "Treiber Typ:",
+      "lt": "Vairuotojo tipas:",
+      "pt": "Tipo de Driver:",
+      "it": "Tipo di Driver:",
+      "no": "Driver Type:"
+    },
+    "common.misc.link_references_nonexistent_from_node": {
+      "en": "Link references non-existent 'from' node: %s",
+      "es": "El enlace hace referencia a un nodo 'desde' inexistente: %s",
+      "fr": "Le lien fait référence à un nœud 'depuis' inexistant : %s",
+      "de": "Link verweist auf nicht vorhandenen 'from'-Knoten: %s",
+      "lt": "Nuoroda nurodo neegzistuojantį 'nuo' mazgą: %s",
+      "pt": "Link refere-se a nó 'de' inexistente: %s",
+      "it": "Il collegamento fa riferimento a un nodo 'from' inesistente: %s",
+      "no": "Link references non-existent 'from' node: %s"
+    },
+    "common.misc.link_references_nonexistent_to_node": {
+      "en": "Link references non-existent 'to' node: %s",
+      "es": "El enlace hace referencia a un nodo 'a' inexistente: %s",
+      "fr": "Le lien fait référence à un nœud 'à' inexistant : %s",
+      "de": "Link verweist auf nicht vorhandenen 'to'-Knoten: %s",
+      "lt": "Nuoroda nurodo neegzistuojantį 'į' mazgą: %s",
+      "pt": "Link refere-se a nó 'para' inexistente: %s",
+      "it": "Il collegamento fa riferimento a un nodo 'to' inesistente: %s",
+      "no": "Link references non-existent 'to' node: %s"
+    },
+    "modules.ai_isa_assistant.use_general_marine_suggestions": {
+      "en": "I'll use general marine suggestions for your area.",
+      "es": "Usaré sugerencias generales marinas para su área.",
+      "fr": "J'utiliserai des suggestions marines générales pour votre région.",
+      "de": "Ich werde allgemeine marine Vorschläge für Ihr Gebiet verwenden.",
+      "lt": "Aš naudosiu bendras jūrines rekomendacijas jūsų sričiai.",
+      "pt": "Vou usar sugestões marinhas gerais para a sua área.",
+      "it": "Userò suggerimenti marini generali per la tua zona.",
+      "no": "I'll use general marine suggestions for your area."
+    },
+    "modules.ai_isa_assistant.ecosystem_characteristics_note": {
+      "en": "Ecosystems have unique characteristics that I'll consider in my suggestions.",
+      "es": "Los ecosistemas tienen características únicas que consideraré en mis sugerencias.",
+      "fr": "Les écosystèmes ont des caractéristiques uniques que je prendrai en compte dans mes suggestions.",
+      "de": "Ökosysteme haben einzigartige Merkmale, die ich in meinen Vorschlägen berücksichtigen werde.",
+      "lt": "Ekosistemos turi unikalių savybių, kurias apsvarstysiu savo pasiūlymuose.",
+      "pt": "Os ecossistemas têm características únicas que considerarei nas minhas sugestões.",
+      "it": "Gli ecosistemi hanno caratteristiche uniche che considererò nei miei suggerimenti.",
+      "no": "Ecosystems have unique characteristics that I'll consider in my suggestions."
+    },
+    "modules.ai_isa_assistant.understood_focus_suggestions": {
+      "en": "Understood. I'll focus suggestions on",
+      "es": "Entendido. Me centraré en sugestiones sobre",
+      "fr": "Compris. Je concentrerai les suggestions sur",
+      "de": "Verstanden. Ich werde die Vorschläge auf ... konzentrieren",
+      "lt": "Supratau. Aš sutelksiu pasiūlymus į",
+      "pt": "Entendi. Vou focar as sugestões em",
+      "it": "Capito. Mi concentrerò sui suggerimenti su",
+      "no": "Understood. I'll focus suggestions on"
+    },
+    "modules.ai_isa_assistant.start_building_dapsiwrm": {
+      "en": "Now let's start building your DAPSI(W)R(M) framework!",
+      "es": "¡Ahora empecemos a construir su marco DAPSI(W)R(M)!",
+      "fr": "Maintenant, commençons à construire votre cadre DAPSI(W)R(M)!",
+      "de": "Lassen Sie uns nun mit dem Aufbau Ihres DAPSI(W)R(M)-Rahmens beginnen!",
+      "lt": "Dabar pradėkime kurti jūsų DAPSI(W)R(M) sistemą!",
+      "pt": "Agora vamos começar a construir sua estrutura DAPSI(W)R(M)!",
+      "it": "Ora iniziamo a costruire il tuo framework DAPSI(W)R(M)!",
+      "no": "Now let's start building your DAPSI(W)R(M) framework!"
+    },
+    "modules.ai_isa_assistant.no_elements_added_note": {
+      "en": "I notice you haven't added any elements yet!",
+      "es": "¡Veo que aún no has añadido elementos!",
+      "fr": "Je remarque que vous n'avez encore ajouté aucun élément !",
+      "de": "Ich sehe, Sie haben noch keine Elemente hinzugefügt!",
+      "lt": "Pastebėjau, kad dar nepridėjote jokių elementų!",
+      "pt": "Percebo que ainda não adicionou elementos!",
+      "it": "Vedo che non hai ancora aggiunto elementi!",
+      "no": "I notice you haven't added any elements yet!"
+    },
+    "modules.ai_isa_assistant.element_added_but_no_connections": {
+      "en": "elements, but I couldn't generate connections between them.",
+      "es": "elementos, pero no pude generar conexiones entre ellos.",
+      "fr": "éléments, mais je n'ai pas pu générer de connexions entre eux.",
+      "de": "Elemente, aber ich konnte keine Verbindungen zwischen ihnen erstellen.",
+      "lt": "elementai, bet negalėjau sukurti ryšių tarp jų.",
+      "pt": "elementos, mas não consegui gerar conexões entre eles.",
+      "it": "elementi, ma non sono riuscito a generare connessioni tra di loro.",
+      "no": "elements, but I couldn't generate connections between them."
+    },
+    "modules.ai_isa_assistant.identified_message": {
+      "en": "I've identified",
+      "es": "He identificado",
+      "fr": "J'ai identifié",
+      "de": "Ich habe identifiziert",
+      "lt": "Aš nustatiau",
+      "pt": "Eu identifiquei",
+      "it": "Ho identificato",
+      "no": "I've identified"
+    },
+    "modules.ai_isa_assistant.congratulations_completion": {
+      "en": "Excellent work! You've completed your DAPSI(W)R(M) model with connections. Review the summary on the right, and when ready, click 'Save to ISA Data Entry' to transfer your model to the main ISA module.",
+      "es": "¡Excelente trabajo! Ha completado su modelo DAPSI(W)R(M) con conexiones. Revise el resumen a la derecha y, cuando esté listo, haga clic en 'Guardar en ISA Data Entry' para transferir su modelo al módulo ISA principal.",
+      "fr": "Excellent travail ! Vous avez terminé votre modèle DAPSI(W)R(M) avec des connexions. Consultez le résumé à droite et, lorsque vous êtes prêt, cliquez sur 'Save to ISA Data Entry' pour transférer votre modèle vers le module ISA principal.",
+      "de": "Ausgezeichnete Arbeit! Sie haben Ihr DAPSI(W)R(M)-Modell mit Verbindungen abgeschlossen. Überprüfen Sie die Zusammenfassung rechts und klicken Sie bei Bedarf auf 'Save to ISA Data Entry', um Ihr Modell in das Haupt-ISA-Modul zu übertragen.",
+      "lt": "Puikus darbas! Jūs baigėte savo DAPSI(W)R(M) modelį su ryšiais. Peržiūrėkite santrauką dešinėje ir, kai būsite pasiruošę, spustelėkite 'Save to ISA Data Entry', kad perkeltumėte modelį į pagrindinį ISA modulį.",
+      "pt": "Excelente trabalho! Você completou seu modelo DAPSI(W)R(M) com conexões. Reveja o resumo à direita e, quando estiver pronto, clique em 'Save to ISA Data Entry' para transferir seu modelo para o módulo ISA principal.",
+      "it": "Ottimo lavoro! Hai completato il tuo modello DAPSI(W)R(M) con connessioni. Rivedi il riepilogo a destra e, quando sei pronto, clicca su 'Save to ISA Data Entry' per trasferire il tuo modello al modulo ISA principale.",
+      "no": "Excellent work! You've completed your DAPSI(W)R(M) model with connections. Review the summary on the right, and when ready, click 'Save to ISA Data Entry' to transfer your model to the main ISA module."
+    },
+    "modules.ai_isa_assistant.model_saved_navigate": {
+      "en": "Model saved! Navigate to 'ISA Data Entry' to see your elements.",
+      "es": "¡Modelo guardado! Navegue a 'ISA Data Entry' para ver sus elementos.",
+      "fr": "Modèle enregistré ! Accédez à 'ISA Data Entry' pour voir vos éléments.",
+      "de": "Modell gespeichert! Navigieren Sie zu 'ISA Data Entry', um Ihre Elemente zu sehen.",
+      "lt": "Modelis išsaugotas! Eikite į 'ISA Data Entry', kad pamatytumėte savo elementus.",
+      "pt": "Modelo salvo! Navegue até 'ISA Data Entry' para ver seus elementos.",
+      "it": "Modello salvato! Vai su 'ISA Data Entry' per vedere i tuoi elementi.",
+      "no": "Model saved! Navigate to 'ISA Data Entry' to see your elements."
+    },
+    "modules.ai_isa_assistant.your_work_saved_automatically": {
+      "en": "Your work is already saved automatically. Navigate to 'ISA Data Entry' to see your elements.",
+      "es": "Su trabajo ya se guarda automáticamente. Navegue a 'ISA Data Entry' para ver sus elementos.",
+      "fr": "Votre travail est déjà enregistré automatiquement. Accédez à 'ISA Data Entry' pour voir vos éléments.",
+      "de": "Ihre Arbeit wird bereits automatisch gespeichert. Navigieren Sie zu 'ISA Data Entry', um Ihre Elemente zu sehen.",
+      "lt": "Jūsų darbas jau yra automatiškai išsaugomas. Eikite į 'ISA Data Entry', kad pamatytumėte savo elementus.",
+      "pt": "Seu trabalho já é salvo automaticamente. Navegue até 'ISA Data Entry' para ver seus elementos.",
+      "it": "Il tuo lavoro è già salvato automaticamente. Vai su 'ISA Data Entry' per vedere i tuoi elementi.",
+      "no": "Your work is already saved automatically. Navigate to 'ISA Data Entry' to see your elements."
+    },
+    "modules.ai_isa_assistant.navigate_to_isa_data_entry": {
+      "en": "Navigate to 'ISA Data Entry' and complete your SES model",
+      "es": "Navegue a 'ISA Data Entry' y complete su modelo SES",
+      "fr": "Accédez à 'ISA Data Entry' et terminez votre modèle SES",
+      "de": "Navigieren Sie zu 'ISA Data Entry' und vervollständigen Sie Ihr SES-Modell",
+      "lt": "Eikite į 'ISA Data Entry' ir užbaikite savo SES modelį",
+      "pt": "Navegue até 'ISA Data Entry' e complete seu modelo SES",
+      "it": "Vai su 'ISA Data Entry' e completa il tuo modello SES",
+      "no": "Navigate to 'ISA Data Entry' and complete your SES model"
+    },
+    "modules.ai_isa_assistant.go_to_cld_visualization": {
+      "en": "Go to 'CLD Visualization' and click 'Generate CLD'",
+      "es": "Vaya a 'CLD Visualization' y haga clic en 'Generate CLD'",
+      "fr": "Allez à 'CLD Visualization' et cliquez sur 'Generate CLD'",
+      "de": "Gehen Sie zu 'CLD Visualization' und klicken Sie auf 'Generate CLD'",
+      "lt": "Eikite į 'CLD Visualization' ir spustelėkite 'Generate CLD'",
+      "pt": "Vá para 'CLD Visualization' e clique em 'Generate CLD'",
+      "it": "Vai su 'CLD Visualization' e clicca su 'Generate CLD'",
+      "no": "Go to 'CLD Visualization' and click 'Generate CLD'"
+    },
+    "modules.ai_isa_assistant.pagerank_description": {
+      "en": "Google's algorithm: importance based on quality and quantity of incoming connections.",
+      "es": "El algoritmo de Google: importancia basada en la calidad y cantidad de conexiones entrantes.",
+      "fr": "L'algorithme de Google : importance basée sur la qualité et la quantité des connexions entrantes.",
+      "de": "Googles Algorithmus: Bedeutung basierend auf Qualität und Quantität der eingehenden Verbindungen.",
+      "lt": "„Google“ algoritmas: svarba, priklausanti nuo gaunančių ryšių kokybės ir kiekybės.",
+      "pt": "O algoritmo do Google: importância baseada na qualidade e quantidade de conexões recebidas.",
+      "it": "L'algoritmo di Google: importanza basata sulla qualità e quantità delle connessioni in entrata.",
+      "no": "Google's algorithm: importance based on quality and quantity of incoming connections."
+    },
+    "modules.ai_isa_assistant.pagerank_short": {
+      "en": "PageRank: Google's algorithm adapted for network analysis. Measures overall importance considering both direct connections and the importance of connecting nodes.",
+      "es": "PageRank: el algoritmo de Google adaptado para el análisis de redes.",
+      "fr": "PageRank : l'algorithme de Google adapté à l'analyse des réseaux.",
+      "de": "PageRank: Googles Algorithmus für die Netzwerkanalyse.",
+      "lt": "PageRank: „Google“ algoritmo pritaikytas tinklo analizei.",
+      "pt": "PageRank: o algoritmo do Google adaptado para análise de redes.",
+      "it": "PageRank: l'algoritmo di Google adattato per l'analisi delle reti.",
+      "no": "PageRank: Google's algorithm adapted for network analysis. Measures overall importance considering both direct connections and the importance of connecting nodes."
+    },
+    "modules.ai_isa_assistant.high_eigenvector": {
+      "en": "High Eigenvector: Target nodes that are influential because they're connected to other influential nodes.",
+      "es": "Eigenvector alto: Apunta a nodos influyentes porque están conectados a otros nodos influyentes.",
+      "fr": "Vecteur propre élevé : cibler les nœuds influents car ils sont connectés à d'autres nœuds influents.",
+      "de": "Hoher Eigenvektor: Zielknoten, die einflussreich sind, weil sie mit anderen einflussreichen Knoten verbunden sind.",
+      "lt": "Didelis Eigenvector: Tiksliniai mazgai, kurie yra įtakingi, nes jie yra sujungti su kitais įtakingais mazgais.",
+      "pt": "Alto Eigenvector: Alvo nós influentes por estarem conectados a outros nós influentes.",
+      "it": "Alto Eigenvector: mira i nodi influenti perché sono collegati ad altri nodi influenti.",
+      "no": "High Eigenvector: Target nodes that are influential because they're connected to other influential nodes."
+    },
+    "common.messages.template_selected": {
+      "en": "Template '%s' selected",
+      "es": "Plantilla '%s' seleccionada",
+      "fr": "Modèle '%s' sélectionné",
+      "de": "Vorlage '%s' ausgewählt",
+      "lt": "Šablonas '%s' pasirinktas",
+      "pt": "Modelo '%s' selecionado",
+      "it": "Template '%s' selezionato",
+      "no": "Template '%s' selected"
+    },
+    "common.messages.select_template_review": {
+      "en": "Select a template and click 'Review' to preview connections",
+      "es": "Seleccione una plantilla y haga clic en 'Review' para previsualizar las conexiones",
+      "fr": "Sélectionnez un modèle et cliquez sur 'Review' pour prévisualiser les connexions",
+      "de": "Wählen Sie eine Vorlage und klicken Sie auf 'Review', um Verbindungen in der Vorschau anzuzeigen",
+      "lt": "Pasirinkite šabloną ir spustelėkite 'Review', kad peržiūrėtumėte ryšius",
+      "pt": "Selecione um modelo e clique em 'Review' para visualizar as conexões",
+      "it": "Seleziona un modello e fai clic su 'Review' per visualizzare le connessioni",
+      "no": "Select a template and click 'Review' to preview connections"
+    },
+    "common.messages.or_click_load": {
+      "en": "Or click 'Load' to load it as-is without review",
+      "es": "O haga clic en 'Load' para cargarlo tal cual sin revisión",
+      "fr": "Ou cliquez sur 'Load' pour le charger tel quel sans révision",
+      "de": "Oder klicken Sie auf 'Load', um es unverändert ohne Überprüfung zu laden",
+      "lt": "Arba spustelėkite 'Load', kad įkeltumėte jį taip, kaip yra, be peržiūros",
+      "pt": "Ou clique em 'Load' para carregá-lo como está sem revisão",
+      "it": "O fai clic su 'Load' per caricarlo così com'è senza revisione",
+      "no": "Or click 'Load' to load it as-is without review"
+    }
+  }
+}

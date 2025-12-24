@@ -1,0 +1,243 @@
+ Validation Errors
+Activities
+Add
+Add Activities
+Add Activity
+Add Data Point
+Add Driver
+Add Drivers
+Add Ecosystem Service
+Add Ecosystem Services
+Add Good/Benefit
+Add Goods and Benefits
+Add Marine Process
+Add Marine Processes and Functioning
+Add Pressure
+Add Pressures
+Add Time Series Data
+Adjacency Matrix Review
+BOT Graphs
+Behaviour Over Time (BOT) Graphs
+Brief Description:
+Case Study Context
+Case Study Name:
+Causal Loop Diagram Creation and Export
+Choose Excel File (.xlsx):
+Clarifying - Endogenisation and Encapsulation
+Clarifying, Metrics, and Validation
+Closing the Loop: Drivers to Goods & Benefits
+Complete columns AC-AM in the Master Data Sheet. Link Pressures to MPF from Exercise 2b.
+Complete columns AO-AY in the Master Data Sheet. Link Activities to Pressures from Exercise 3.
+Complete columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification.
+Complete columns BC-BK in the Master Data Sheet. Link Drivers to Activities from Exercise 4.
+Complete columns L-R in the Master Data Sheet. Link ES to the G&B identified in Exercise 1.
+Complete columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a.
+Complete the feedback loop by linking Drivers back to Goods & Benefits.
+Comprehensive guides for using the ISA Data Entry module:
+Confidence Level:
+Confidence:
+Controllability:
+Creating Impact-based CLD in Kumu
+Current Activities
+Current Data
+Current Drivers
+Current Ecosystem Services
+Current Goods and Benefits
+Current Loop Connections:
+Current Marine Processes
+Current Pressures
+Data Management
+Describe your marine case study context...
+Description:
+Documentation
+Download Complete Excel Workbook
+Download Kumu CSV Files
+Driver Type:
+Driver to Goods/Benefits Connections
+Driver:
+Drivers
+Drivers giving rise to Activities
+ES Type:
+Ecosystem Services
+Ecosystem Services (ES) affecting Goods and Benefits
+Effect:
+Element Type:
+Encapsulation Notes:
+Endogenisation Notes:
+Entry removed
+Exercise 0 saved successfully!
+Exercise 0: Complexity
+Exercise 1 saved:
+Exercise 10:
+Exercise 10: Clarifying the CLD
+Exercise 11:
+Exercise 11: Metrics and Leverage Points
+Exercise 12:
+Exercise 12: Presenting and Validating
+Exercise 1: Goods & Benefits
+Exercise 2a saved:
+Exercise 2a: Ecosystem Services
+Exercise 2b saved:
+Exercise 2b: Marine Processes
+Exercise 3 saved:
+Exercise 3: Pressures
+Exercise 4 saved:
+Exercise 4: Activities
+Exercise 5 saved:
+Exercise 5: Drivers
+Exercise 6 saved:
+Exercise 6: Closing Loop
+Exercise 7:
+Exercise 8:
+Exercise 9:
+Exercises 10-12: Analysis
+Exercises 7-9: CLD
+Export Data
+Export to Excel
+Exporting CLD for further analysis
+Filename:
+Frequency:
+Geographic Scope:
+Goods & Benefits
+Goods/Benefit:
+Help
+ISA Guidance Document (PDF)
+Identified Welfare Impacts:
+Identify and classify the goods and benefits derived from marine ecosystems.
+Identify ecosystem services that contribute to each Good/Benefit.
+Identify human activities that generate pressures on the marine environment.
+Identify marine processes that support ecosystem services.
+Identify pressures that affect marine processes and ecosystem state.
+Identify the underlying drivers that motivate human activities.
+Import Data
+Import/Export and Data Management
+Importance:
+Include in Export:
+Initial Complexity Mapping
+Intensity:
+Key Stakeholders:
+Kumu Export Options
+Kumu Styling Code
+Leverage Points
+Leverage points analysis will be displayed here based on your system dynamics.
+Linked to Activity:
+Linked to ES:
+Linked to G&B:
+Linked to MPF:
+Linked to Pressure:
+List key impacts on human welfare you've observed...
+Load existing ISA data from Excel workbook:
+Loop Closure Summary
+Loop connection added
+Marine Processes
+Marine Processes and Functioning (MPF)
+Mechanism:
+Metrics, Root Causes, and Leverage Points
+Moving from Causal Logic Chains to Causal Loops
+Name:
+OK
+Open User Guide
+Please add at least one Ecosystem Service entry before saving.
+Please add at least one Good/Benefit entry before saving.
+Please add at least one valid Ecosystem Service entry.
+Please add at least one valid Good/Benefit entry.
+Please complete Exercises 1 and 5 first to create Goods & Benefits and Drivers.
+Please fix the following issues before saving:
+Prepare data for import into Kumu visualization software:
+Presenting and Validating Results
+Pressure Type:
+Pressures
+Process Type:
+Purpose:
+Record stakeholder feedback, validation workshop results, expert reviews...
+Remove
+Reset All Data
+Reset Data
+Review the connections between DAPSI(W)R(M) elements:
+Root Causes Identified
+Root causes analysis will be displayed here based on your CLD structure.
+Save BOT Data
+Save Exercise 0
+Save Exercise 1
+Save Exercise 2a
+Save Exercise 2b
+Save Exercise 3
+Save Exercise 4
+Save Exercise 5
+Save Exercise 6
+Save Exercises 10-12
+Save Exercises 7-9
+Save current ISA analysis to Excel workbook:
+Scale:
+Sector:
+Select Element:
+Select Matrix Type:
+Select drivers and the goods/benefits they influence (positively or negatively):
+Spatial Scale:
+Spatial:
+Specifying Activities affecting Pressures
+Specifying Goods and Benefits (G&B)
+Specifying Pressures on State Changes
+Stakeholder:
+Strength:
+Temporal Scope:
+Temporal:
+This creates the circular DAPSI(W)R(M) framework showing how drivers ultimately affect welfare.
+This preliminary exercise helps you explore the full scope of your system before detailed analysis.
+This will clear all entered data. This action cannot be undone.
+Time Series Plot
+Trend:
+Type:
+Understand the complexity of your case study and identify impacts on human welfare.
+Unfolding Complexity and Impacts on Welfare
+Unit:
+Validation Completed:
+Validation Notes:
+Value:
+Visualize how indicators change over time to understand system dynamics.
+Warning:
+What detailed processes can be simplified or grouped?
+What external factors should be brought inside the system boundary?
+Who is affected? Who makes decisions?
+Year:
+activities_label
+bot_help_text
+drivers_label
+e.g., 2000-2024
+e.g., Baltic Sea fisheries
+e.g., Baltic Sea, North Atlantic
+e.g., Commercial fishing
+e.g., Economic growth
+e.g., Fish catch
+e.g., Fish production
+e.g., Nutrient enrichment
+e.g., Primary production
+e.g., tonnes, %, index
+ex0_help_text
+ex101112_help_text
+ex1_help_text
+ex2a_help_text
+ex2b_help_text
+ex3_help_text
+ex4_help_text
+ex5_help_text
+ex6_help_text
+ex789_help_text
+impacts_label
+isa_guide_dapsiwr_activities
+isa_guide_dapsiwr_drivers
+isa_guide_dapsiwr_impacts
+isa_guide_dapsiwr_p1
+isa_guide_dapsiwr_pressures
+isa_guide_dapsiwr_responses
+isa_guide_dapsiwr_state
+isa_guide_dapsiwr_title
+isa_guide_how_to_use_p1
+isa_guide_how_to_use_title
+isa_guide_what_is_isa_p1
+isa_guide_what_is_isa_p2
+isa_guide_what_is_isa_title
+loop connections
+pressures_label
+responses_label
+state_label

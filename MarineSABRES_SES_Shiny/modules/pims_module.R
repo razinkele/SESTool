@@ -2,16 +2,19 @@
 # PIMS (Process & Information Management System) modules
 # Placeholder implementations - to be expanded
 
+library(shiny)
+library(DT)
+source("constants.R", local = TRUE)
+
 # ============================================================================
 # PROJECT SETUP MODULE
 # ============================================================================
 
-pims_project_ui <- function(id) {
+pims_project_ui <- function(id, i18n) {
   ns <- NS(id)
   
   fluidPage(
-    h2(icon("project-diagram"), " Project Setup"),
-    p("Initialize your MarineSABRES project with basic information."),
+    create_module_header(ns, "modules.pims.project.title", "modules.pims.project.subtitle", "pims_project_help", i18n),
     hr(),
     
     fluidRow(
@@ -48,7 +51,7 @@ pims_project_ui <- function(id) {
   )
 }
 
-pims_project_server <- function(id, project_data_reactive) {
+pims_project_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
     
     # Load existing data
@@ -89,6 +92,15 @@ pims_project_server <- function(id, project_data_reactive) {
       cat("Last Modified:", format(data$last_modified, "%Y-%m-%d %H:%M"), "\n")
     })
     
+    # ========== HELP MODAL ==========
+    create_help_observer(
+      input,
+      "pims_project_help",
+      "pims_project_help_title",
+      i18n$t("common.misc.pims_project_help_content"),
+      i18n
+    )
+    
     return(reactive(project_data_reactive()))
   })
 }
@@ -97,11 +109,11 @@ pims_project_server <- function(id, project_data_reactive) {
 # STAKEHOLDERS MODULE
 # ============================================================================
 
-pims_stakeholders_ui <- function(id) {
+pims_stakeholders_ui <- function(id, i18n) {
   ns <- NS(id)
   
   fluidPage(
-    h2(icon("users"), " Stakeholder Management"),
+    create_module_header(ns, "modules.pims.stakeholders.title", "modules.pims.stakeholders.subtitle", "pims_stakeholders_help", i18n),
     hr(),
     
     fluidRow(
@@ -115,7 +127,7 @@ pims_stakeholders_ui <- function(id) {
   )
 }
 
-pims_stakeholders_server <- function(id, project_data_reactive) {
+pims_stakeholders_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
     
     # Display stakeholders table
@@ -136,6 +148,15 @@ pims_stakeholders_server <- function(id, project_data_reactive) {
                       type = "message")
     })
     
+    # ========== HELP MODAL ==========
+    create_help_observer(
+      input,
+      "pims_stakeholders_help",
+      "pims_stakeholders_help_title",
+      i18n$t("common.misc.pims_stakeholders_help_content"),
+      i18n
+    )
+    
     return(reactive(project_data_reactive()))
   })
 }
@@ -144,12 +165,11 @@ pims_stakeholders_server <- function(id, project_data_reactive) {
 # RESOURCES MODULE
 # ============================================================================
 
-pims_resources_ui <- function(id) {
+pims_resources_ui <- function(id, i18n) {
   ns <- NS(id)
   
   fluidPage(
-    h2(icon("tasks"), " Resources & Risks"),
-    p("Manage project resources and track risks."),
+    create_module_header(ns, "modules.pims.resources.title", "modules.pims.resources.subtitle", "pims_resources_help", i18n),
     hr(),
     
     tabsetPanel(
@@ -165,7 +185,7 @@ pims_resources_ui <- function(id) {
   )
 }
 
-pims_resources_server <- function(id, project_data_reactive) {
+pims_resources_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
     # Placeholder
     return(reactive(project_data_reactive()))
@@ -176,19 +196,18 @@ pims_resources_server <- function(id, project_data_reactive) {
 # DATA MANAGEMENT MODULE
 # ============================================================================
 
-pims_data_ui <- function(id) {
+pims_data_ui <- function(id, i18n) {
   ns <- NS(id)
   
   fluidPage(
-    h2(icon("database"), " Data Management"),
-    p("Data management plan and provenance tracking."),
+    create_module_header(ns, "modules.pims.data.title", "modules.pims.data.subtitle", "pims_data_help", i18n),
     hr(),
     
     p("Data management functionality to be implemented")
   )
 }
 
-pims_data_server <- function(id, project_data_reactive) {
+pims_data_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
     # Placeholder
     return(reactive(project_data_reactive()))
@@ -199,20 +218,28 @@ pims_data_server <- function(id, project_data_reactive) {
 # EVALUATION MODULE
 # ============================================================================
 
-pims_evaluation_ui <- function(id) {
+pims_evaluation_ui <- function(id, i18n) {
   ns <- NS(id)
   
   fluidPage(
-    h2(icon("check-circle"), " Evaluation"),
-    p("Process and outcome evaluation framework."),
+    create_module_header(ns, "modules.pims.evaluation.title", "modules.pims.evaluation.subtitle", "pims_evaluation_help", i18n),
     hr(),
     
     p("Evaluation functionality to be implemented")
   )
 }
 
-pims_evaluation_server <- function(id, project_data_reactive) {
+pims_evaluation_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
+    # ========== HELP MODAL ==========
+    create_help_observer(
+      input,
+      "pims_evaluation_help",
+      "pims_evaluation_help_title",
+      i18n$t("common.misc.pims_evaluation_help_content"),
+      i18n
+    )
+
     # Placeholder
     return(reactive(project_data_reactive()))
   })

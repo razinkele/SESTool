@@ -17,73 +17,73 @@ get_regional_seas_knowledge_base <- function(i18n) {
   list(
     baltic = list(
       name_en = "Baltic Sea",
-      name_i18n = i18n$t("Baltic Sea"),
+      name_i18n = i18n$t("common.misc.baltic_sea"),
       common_issues = c("Eutrophication", "Overfishing", "Pollution", "Invasive species", "Climate change"),
       ecosystem_types = c("Open coast", "Archipelago", "Estuary", "Coastal lagoon", "Offshore waters")
     ),
     mediterranean = list(
       name_en = "Mediterranean Sea",
-      name_i18n = i18n$t("Mediterranean Sea"),
+      name_i18n = i18n$t("common.misc.mediterranean_sea"),
       common_issues = c("Overfishing", "Coastal development", "Tourism pressure", "Marine litter", "Invasive species", "Climate change"),
       ecosystem_types = c("Open coast", "Coastal lagoon", "Rocky shore", "Sandy beach", "Seagrass meadow", "Offshore waters")
     ),
     north_sea = list(
       name_en = "North Sea",
-      name_i18n = i18n$t("North Sea"),
+      name_i18n = i18n$t("common.misc.north_sea"),
       common_issues = c("Overfishing", "Oil and gas extraction", "Shipping", "Wind energy development", "Climate change", "Eutrophication"),
       ecosystem_types = c("Open coast", "Estuary", "Tidal flat", "Offshore waters", "Rocky shore", "Sandy beach")
     ),
     irish_sea = list(
       name_en = "Irish Sea",
-      name_i18n = i18n$t("Irish Sea"),
+      name_i18n = i18n$t("common.misc.irish_sea"),
       common_issues = c("Overfishing", "Coastal development", "Shipping", "Marine litter", "Eutrophication", "Climate change"),
       ecosystem_types = c("Open coast", "Estuary", "Coastal lagoon", "Rocky shore", "Sandy beach", "Offshore waters")
     ),
     east_atlantic = list(
       name_en = "East Atlantic",
-      name_i18n = i18n$t("East Atlantic"),
+      name_i18n = i18n$t("common.misc.east_atlantic"),
       common_issues = c("Overfishing", "Climate change", "Ocean acidification", "Shipping", "Coastal erosion", "Marine litter"),
       ecosystem_types = c("Open coast", "Continental shelf", "Offshore waters", "Rocky shore", "Sandy beach", "Estuary")
     ),
     black_sea = list(
       name_en = "Black Sea",
-      name_i18n = i18n$t("Black Sea"),
+      name_i18n = i18n$t("common.misc.black_sea"),
       common_issues = c("Eutrophication", "Overfishing", "Pollution", "Invasive species", "Coastal erosion"),
       ecosystem_types = c("Open coast", "Delta", "Coastal lagoon", "Offshore waters", "Estuary")
     ),
     atlantic = list(
       name_en = "Atlantic Ocean",
-      name_i18n = i18n$t("Atlantic Ocean"),
+      name_i18n = i18n$t("common.misc.atlantic_ocean"),
       common_issues = c("Overfishing", "Climate change", "Ocean acidification", "Shipping", "Deep-sea mining"),
       ecosystem_types = c("Open ocean", "Continental shelf", "Coastal upwelling", "Open coast", "Offshore waters")
     ),
     pacific = list(
       name_en = "Pacific Ocean",
-      name_i18n = i18n$t("Pacific Ocean"),
+      name_i18n = i18n$t("common.misc.pacific_ocean"),
       common_issues = c("Overfishing", "Coral bleaching", "Plastic pollution", "Climate change", "Illegal fishing"),
       ecosystem_types = c("Coral reef", "Open ocean", "Coastal waters", "Mangrove", "Offshore waters")
     ),
     indian = list(
       name_en = "Indian Ocean",
-      name_i18n = i18n$t("Indian Ocean"),
+      name_i18n = i18n$t("common.misc.indian_ocean"),
       common_issues = c("Overfishing", "Coastal erosion", "Mangrove loss", "Climate change", "Illegal fishing"),
       ecosystem_types = c("Coral reef", "Mangrove", "Open coast", "Lagoon", "Offshore waters")
     ),
     caribbean = list(
       name_en = "Caribbean Sea",
-      name_i18n = i18n$t("Caribbean Sea"),
+      name_i18n = i18n$t("common.misc.caribbean_sea"),
       common_issues = c("Coral bleaching", "Overfishing", "Tourism pressure", "Hurricanes", "Sargassum blooms"),
       ecosystem_types = c("Coral reef", "Mangrove", "Seagrass bed", "Sandy beach", "Open coast")
     ),
     arctic = list(
       name_en = "Arctic Ocean",
-      name_i18n = i18n$t("Arctic Ocean"),
+      name_i18n = i18n$t("common.misc.arctic_ocean"),
       common_issues = c("Climate change", "Sea ice loss", "Oil and gas exploration", "Shipping increase", "Arctic fisheries"),
       ecosystem_types = c("Sea ice", "Open ocean", "Fjord", "Coastal waters", "Continental shelf")
     ),
     other = list(
       name_en = "Other/Regional",
-      name_i18n = i18n$t("Other/Regional"),
+      name_i18n = i18n$t("common.misc.otherregional"),
       common_issues = c("Overfishing", "Pollution", "Coastal development", "Climate change"),
       ecosystem_types = c("Open coast", "Estuary", "Lagoon", "Offshore waters", "Rocky shore")
     )
@@ -94,12 +94,70 @@ get_regional_seas_knowledge_base <- function(i18n) {
 # CONTEXT-AWARE SUGGESTIONS
 # ============================================================================
 
+#' Semantic Deduplication Helper
+#'
+#' Removes semantically similar suggestions to avoid showing "trawl fishing" and "trawling" together
+#'
+#' @param suggestions Character vector of suggestions
+#' @return Deduplicated character vector
+deduplicate_suggestions <- function(suggestions) {
+  if (length(suggestions) <= 1) return(suggestions)
+
+  # Convert to lowercase for comparison
+  lower_suggestions <- tolower(suggestions)
+
+  # Track which items to keep
+  keep <- rep(TRUE, length(suggestions))
+
+  for (i in seq_along(lower_suggestions)) {
+    if (!keep[i]) next  # Already marked for removal
+
+    current <- lower_suggestions[i]
+
+    # Check against all subsequent items
+    for (j in seq_along(lower_suggestions)) {
+      if (i >= j || !keep[j]) next  # Skip self and already removed items
+
+      other <- lower_suggestions[j]
+
+      # Extract core words (remove common suffixes/prefixes)
+      current_words <- unlist(strsplit(current, "\\s+"))
+      other_words <- unlist(strsplit(other, "\\s+"))
+
+      # Check for significant overlap
+      # If one is a subset of the other, or they share key root words, mark as duplicate
+      current_core <- gsub("ing$|ed$|s$", "", current_words)
+      other_core <- gsub("ing$|ed$|s$", "", other_words)
+
+      # Calculate overlap - if 80%+ of words match (after stemming), it's a duplicate
+      common_words <- intersect(current_core, other_core)
+
+      # If they share most core words, keep the shorter/simpler one
+      if (length(common_words) > 0) {
+        overlap_ratio <- length(common_words) / min(length(current_core), length(other_core))
+
+        if (overlap_ratio >= 0.8) {
+          # Keep the one with fewer words (simpler)
+          if (length(current_words) <= length(other_words)) {
+            keep[j] <- FALSE
+          } else {
+            keep[i] <- FALSE
+            break  # Current item removed, move to next i
+          }
+        }
+      }
+    }
+  }
+
+  return(suggestions[keep])
+}
+
 #' Get Context-Aware Suggestions for DAPSI(W)R(M) Elements
 #'
 #' Returns intelligent suggestions based on regional sea, ecosystem type,
 #' and main issue context.
 #'
-#' @param category DAPSIWRM category (drivers, activities, pressures, states, impacts, welfare, responses, measures)
+#' @param category DAPSIWRM category (drivers, activities, pressures, states, impacts, welfare, responses)
 #' @param regional_sea Selected regional sea key
 #' @param ecosystem_type Selected ecosystem type
 #' @param main_issue Main environmental issue
@@ -295,38 +353,12 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
   }
 
-  else if (category == "measures") {
-    # Universal measures
-    suggestions$universal <- c("Legislation and enforcement", "Spatial planning", "Impact assessment",
-                               "Education and awareness", "Research and monitoring", "International cooperation")
-
-    # Region-specific
-    if (!is.null(regional_sea)) {
-      if (regional_sea == "baltic") {
-        suggestions$regional <- c("HELCOM action plan", "National nutrient limits", "Fish quota system")
-      } else if (regional_sea == "mediterranean") {
-        suggestions$regional <- c("Barcelona Convention", "MPA network", "Coastal zone management")
-      } else if (regional_sea == "north_sea") {
-        suggestions$regional <- c("OSPAR measures", "Common Fisheries Policy", "Maritime spatial planning")
-      } else if (regional_sea == "arctic") {
-        suggestions$regional <- c("Arctic Council guidelines", "Polar Code", "Traditional knowledge integration")
-      }
-    }
-
-    # Issue-specific
-    if (length(main_issue) > 0) {
-      if (any(grepl("fish", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Total Allowable Catch", "Fishing licenses", "Gear restrictions", "Bycatch reduction devices")
-      } else if (any(grepl("eutroph", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Fertilizer regulations", "Sewage treatment standards", "Agricultural subsidies reform")
-      } else if (any(grepl("pollution|litter", main_issue, ignore.case = TRUE))) {
-        suggestions$issue <- c("Plastic ban legislation", "Waste collection systems", "Producer responsibility")
-      }
-    }
-  }
-
-  # Combine all suggestions and remove duplicates
+  # Combine all suggestions and remove exact duplicates
   all_suggestions <- unique(c(suggestions$universal, suggestions$regional,
                               suggestions$ecosystem, suggestions$issue))
-  return(all_suggestions)
+
+  # Apply semantic deduplication to remove similar terms
+  deduplicated <- deduplicate_suggestions(all_suggestions)
+
+  return(deduplicated)
 }
