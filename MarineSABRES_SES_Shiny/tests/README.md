@@ -9,6 +9,7 @@ The testing framework is built using the `testthat` package and includes:
 - **Unit Tests**: Tests for individual functions and utilities
 - **Module Tests**: Tests for Shiny modules (UI and server)
 - **Integration Tests**: End-to-end workflow tests
+- **E2E Tests**: Browser-based end-to-end tests using shinytest2 (NEW in v1.5.2)
 - **Test Utilities**: Helper functions and mock data generators
 
 ## Directory Structure
@@ -65,6 +66,10 @@ test_file("tests/testthat/test-integration.R")
 
 # Run only connection review tests (NEW in v1.5.2)
 test_file("tests/testthat/test-connection-review.R")
+
+# Run only E2E browser tests (NEW in v1.5.2)
+# Requires Chrome/Chromium
+test_file("tests/testthat/test-app-e2e.R")
 ```
 
 ### Run Tests Automatically on File Changes
@@ -145,6 +150,30 @@ End-to-end workflow tests:
 - Save and load project workflow
 - Network analysis workflow
 - Export workflow (JSON, CSV, Excel)
+
+### End-to-End Tests (`test-app-e2e.R`) - NEW in v1.5.2
+
+Browser-based E2E tests using shinytest2:
+- **Test 1: App Launch and Dashboard Navigation**
+  - App initialization and default template auto-loading
+  - Sidebar menu rendering and basic navigation
+  - Dashboard value boxes display
+- **Test 2: Language Switching Workflow**
+  - i18n system and dynamic UI updates
+  - Switching between English, Spanish, and French
+  - Translation system reliability
+- **Test 3: Create SES Method Selection**
+  - Navigation through different SES creation methods
+  - Template-based, AI assistant, and standard entry navigation
+- **Test 4: CLD Visualization**
+  - Network visualization rendering with auto-loaded data
+  - CLD module initialization
+- **Test 5: Complete Navigation Flow**
+  - Navigation through all major application sections
+  - Entry point, PIMS, Create SES, Analysis, Export
+
+**Note**: E2E tests require Chrome/Chromium and run in headless mode in CI/CD.
+See [E2E_TESTING.md](./E2E_TESTING.md) for detailed documentation.
 
 ## Test Utilities
 
