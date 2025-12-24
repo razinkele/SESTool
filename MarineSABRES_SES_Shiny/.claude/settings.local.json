@@ -10,7 +10,9 @@
       "Bash(wc:*)",
       "Bash(grep:*)",
       "Bash(Rscript:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git pull:*)"
     ],
     "deny": [],
     "ask": []
