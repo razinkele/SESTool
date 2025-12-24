@@ -50,7 +50,7 @@ jobs:
 
       - name: Install R dependencies
         run: |
-          install.packages(c("testthat", "shiny", "shinydashboard", "shinyWidgets", "shinyjs", "shinyBS"))
+          install.packages(c("testthat", "shiny", "shinydashboard", "shinyWidgets", "shinyjs", "shinyBS", "shinytest2"))
           install.packages(c("tidyverse", "DT", "openxlsx", "jsonlite"))
           install.packages(c("igraph", "visNetwork", "ggraph", "tidygraph"))
           install.packages(c("ggplot2", "plotly", "dygraphs", "xts"))
