@@ -81,6 +81,18 @@ jobs:
           }
         shell: Rscript {0}
 
+      - name: Report fixture count
+        run: |
+          # Count JSON fixtures present in data/ and print for diagnostics
+          n <- length(list.files("data", pattern = "\\.json$", full.names = TRUE))
+          message(sprintf("Fixtures present in data/: %d", n))
+          # Also list files for easier debugging
+          files <- list.files("data", pattern = "\\.json$", full.names = TRUE)
+          if (length(files) > 0) {
+            message(paste("Files:", paste(basename(files), collapse = ", ")))
+          }
+        shell: Rscript {0}
+
       - name: Run tests
         run: |
           library(testthat)
