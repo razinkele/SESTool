@@ -1,1 +1,321 @@
-{ "languages": ["en", "es", "fr", "de", "lt", "pt", "it"], "translation": [] }
+{
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "translation": [
+    {
+      "en": "Create SES",
+      "es": "Crear SES",
+      "fr": "Créer SES",
+      "de": "SES erstellen",
+      "lt": "Sukurti SES",
+      "pt": "Criar SES",
+      "it": "Crea SES"
+    },
+    {
+      "en": "Choose Method",
+      "es": "Elegir método",
+      "fr": "Choisir la méthode",
+      "de": "Methode wählen",
+      "lt": "Pasirinkite metodą",
+      "pt": "Escolher método",
+      "it": "Scegli il metodo"
+    },
+    {
+      "en": "Standard Entry",
+      "es": "Entrada Estándar",
+      "fr": "Saisie Standard",
+      "de": "Standardeingabe",
+      "lt": "Standartinė įvestis",
+      "pt": "Entrada Padrão",
+      "it": "Inserimento Standard"
+    },
+    {
+      "en": "AI Assistant",
+      "es": "Asistente de IA",
+      "fr": "Assistant IA",
+      "de": "KI-Assistent",
+      "lt": "DI padėjėjas",
+      "pt": "Assistente de IA",
+      "it": "Assistente IA"
+    },
+    {
+      "en": "Template-Based",
+      "es": "Basado en plantillas",
+      "fr": "Basé sur des modèles",
+      "de": "Vorlagenbasiert",
+      "lt": "Pagal šabloną",
+      "pt": "Baseado em modelos",
+      "it": "Basato su modelli"
+    },
+    {
+      "en": "Beginner",
+      "es": "Principiante",
+      "fr": "Débutant",
+      "de": "Anfänger",
+      "lt": "Pradedantysis",
+      "pt": "Iniciante",
+      "it": "Principiante"
+    },
+    {
+      "en": "Intermediate",
+      "es": "Intermedio",
+      "fr": "Intermédiaire",
+      "de": "Fortgeschritten",
+      "lt": "Tarpinis",
+      "pt": "Intermediário",
+      "it": "Intermedio"
+    },
+    {
+      "en": "Advanced",
+      "es": "Avanzado",
+      "fr": "Avancé",
+      "de": "Fortgeschrittene",
+      "lt": "Pažengęs",
+      "pt": "Avançado",
+      "it": "Avanzato"
+    },
+    {
+      "en": "Recommended",
+      "es": "Recomendado",
+      "fr": "Recommandé",
+      "de": "Empfohlen",
+      "lt": "Rekomenduojama",
+      "pt": "Recomendado",
+      "it": "Raccomandato"
+    },
+    {
+      "en": "Quick Start",
+      "es": "Inicio rápido",
+      "fr": "Démarrage rapide",
+      "de": "Schnellstart",
+      "lt": "Greitas pradėjimas",
+      "pt": "Início rápido",
+      "it": "Avvio rapido"
+    },
+    {
+      "en": "Structured",
+      "es": "Estructurado",
+      "fr": "Structuré",
+      "de": "Strukturiert",
+      "lt": "Struktūruota",
+      "pt": "Estruturado",
+      "it": "Strutturato"
+    },
+    {
+      "en": "Traditional form-based approach",
+      "es": "Enfoque tradicional basado en formularios",
+      "fr": "Approche traditionnelle basée sur des formulaires",
+      "de": "Traditioneller formularbasierter Ansatz",
+      "lt": "Tradicinis formomis paremtas požiūris",
+      "pt": "Abordagem tradicional baseada em formulários",
+      "it": "Approccio tradizionale basato su moduli"
+    },
+    {
+      "en": "Intelligent question-based guidance",
+      "es": "Guía inteligente basada en preguntas",
+      "fr": "Guidage intelligent basé sur des questions",
+      "de": "Intelligente fragebasierte Anleitung",
+      "lt": "Išmanus klausimais paremtas vadovas",
+      "pt": "Orientação inteligente baseada em perguntas",
+      "it": "Guida intelligente basata su domande"
+    },
+    {
+      "en": "Start from pre-built templates",
+      "es": "Comenzar desde plantillas preconstruidas",
+      "fr": "Commencer à partir de modèles préconstruits",
+      "de": "Beginnen Sie mit vorkonfigurierten Vorlagen",
+      "lt": "Pradėkite nuo iš anksto paruoštų šablonų",
+      "pt": "Começar a partir de modelos pré-construídos",
+      "it": "Inizia da modelli predefiniti"
+    },
+    {
+      "en": "Step-by-step guided exercises",
+      "es": "Ejercicios guiados paso a paso",
+      "fr": "Exercices guidés étape par étape",
+      "de": "Schritt-für-Schritt-Anleitungen",
+      "lt": "Žingsnis po žingsnio pratybos",
+      "pt": "Exercícios guiados passo a passo",
+      "it": "Esercizi guidati passo dopo passo"
+    },
+    {
+      "en": "Complete control over all elements",
+      "es": "Control total sobre todos los elementos",
+      "fr": "Contrôle total sur tous les éléments",
+      "de": "Vollständige Kontrolle über alle Elemente",
+      "lt": "Visiškas valdymas visiems elementams",
+      "pt": "Controle total sobre todos os elementos",
+      "it": "Controllo completo su tutti gli elementi"
+    },
+    {
+      "en": "Detailed data validation",
+      "es": "Validación detallada de datos",
+      "fr": "Validation détaillée des données",
+      "de": "Detaillierte Datenvalidierung",
+      "lt": "Išsami duomenų patikra",
+      "pt": "Validação detalhada de dados",
+      "it": "Validazione dettagliata dei dati"
+    },
+    {
+      "en": "Direct framework implementation",
+      "es": "Implementación directa del marco",
+      "fr": "Mise en œuvre directe du cadre",
+      "de": "Direkte Implementierung des Frameworks",
+      "lt": "Tiesioginis sistemos įgyvendinimas",
+      "pt": "Implementação direta do framework",
+      "it": "Implementazione diretta del framework"
+    },
+    {
+      "en": "Export-ready data structure",
+      "es": "Estructura de datos lista para exportar",
+      "fr": "Structure de données prête à l'exportation",
+      "de": "Exportbereite Datenstruktur",
+      "lt": "Išvežimui paruošta duomenų struktūra",
+      "pt": "Estrutura de dados pronta para exportação",
+      "it": "Struttura dati pronta per l'esportazione"
+    },
+    {
+      "en": "Interactive Q&A workflow",
+      "es": "Flujo de trabajo interactivo de preguntas y respuestas",
+      "fr": "Flux de travail interactif Q&R",
+      "de": "Interaktiver Q&A-Workflow",
+      "lt": "Interaktyvus klausimų ir atsakymų procesas",
+      "pt": "Fluxo de trabalho interativo de perguntas e respostas",
+      "it": "Flusso di lavoro Q&A interattivo"
+    },
+    {
+      "en": "Context-aware suggestions",
+      "es": "Sugerencias contextuales",
+      "fr": "Suggestions contextuelles",
+      "de": "Kontextbezogene Vorschläge",
+      "lt": "Konteksto suvokimo pasiūlymai",
+      "pt": "Sugestões sensíveis ao contexto",
+      "it": "Suggerimenti contestuali"
+    },
+    {
+      "en": "Automatic element generation",
+      "es": "Generación automática de elementos",
+      "fr": "Génération automatique d'éléments",
+      "de": "Automatische Elementerzeugung",
+      "lt": "Automatinis elementų generavimas",
+      "pt": "Geração automática de elementos",
+      "it": "Generazione automatica di elementi"
+    },
+    {
+      "en": "Learning-friendly approach",
+      "es": "Enfoque amigable para el aprendizaje",
+      "fr": "Approche adaptée à l'apprentissage",
+      "de": "Lernfreundlicher Ansatz",
+      "lt": "Mokymuisi palanki metodika",
+      "pt": "Abordagem favorável ao aprendizado",
+      "it": "Approccio favorevole all'apprendimento"
+    },
+    {
+      "en": "Built-in examples",
+      "es": "Ejemplos integrados",
+      "fr": "Exemples intégrés",
+      "de": "Integrierte Beispiele",
+      "lt": "Integruoti pavyzdžiai",
+      "pt": "Exemplos integrados",
+      "it": "Esempi integrati"
+    },
+    {
+      "en": "Pre-populated frameworks",
+      "es": "Marcos pre-poblados",
+      "fr": "Cadres pré-remplis",
+      "de": "Vorbefüllte Frameworks",
+      "lt": "Iš anksto užpildyti rėmai",
+      "pt": "Frameworks pré-populados",
+      "it": "Framework prepopolati"
+    },
+    {
+      "en": "Domain-specific templates",
+      "es": "Plantillas específicas de dominio",
+      "fr": "Modèles spécifiques au domaine",
+      "de": "Domänenspezifische Vorlagen",
+      "lt": "Domenui specifiniai šablonai",
+      "pt": "Modelos específicos do domínio",
+      "it": "Modelli specifici per dominio"
+    },
+    {
+      "en": "Ready-to-customize elements",
+      "es": "Elementos listos para personalizar",
+      "fr": "Éléments prêts à être personnalisés",
+      "de": "Bereit zur Anpassung",
+      "lt": "Paruošti pritaikymui elementai",
+      "pt": "Elementos prontos para personalizar",
+      "it": "Elementi pronti da personalizzare"
+    },
+    {
+      "en": "Fastest setup time",
+      "es": "Tiempo de configuración más rápido",
+      "fr": "Temps de configuration le plus rapide",
+      "de": "Schnellste Einrichtungszeit",
+      "lt": "Greičiausias nustatymo laikas",
+      "pt": "Tempo de configuração mais rápido",
+      "it": "Tempo di configurazione più rapido"
+    },
+    {
+      "en": "Example connections included",
+      "es": "Conexiones de ejemplo incluidas",
+      "fr": "Connexions d'exemple incluses",
+      "de": "Beispielverbindungen enthalten",
+      "lt": "Įtrauktos pavyzdinės jungtys",
+      "pt": "Conexões de exemplo incluídas",
+      "it": "Connessioni di esempio incluse"
+    },
+    {
+      "en": "Method Comparison",
+      "es": "Comparación de métodos",
+      "fr": "Comparaison des méthodes",
+      "de": "Methodenvergleich",
+      "lt": "Metodų palyginimas",
+      "pt": "Comparação de métodos",
+      "it": "Confronto metodi"
+    },
+    {
+      "en": "Time to Start",
+      "es": "Tiempo para comenzar",
+      "fr": "Temps de démarrage",
+      "de": "Zeit bis zum Start",
+      "lt": "Laikas pradėti",
+      "pt": "Tempo para começar",
+      "it": "Tempo per iniziare"
+    },
+    {
+      "en": "Learning Curve",
+      "es": "Curva de aprendizaje",
+      "fr": "Courbe d'apprentissage",
+      "de": "Lernkurve",
+      "lt": "Mokymosi kreivė",
+      "pt": "Curva de aprendizado",
+      "it": "Curva di apprendimento"
+    },
+    {
+      "en": "Flexibility",
+      "es": "Flexibilidad",
+      "fr": "Flexibilité",
+      "de": "Flexibilität",
+      "lt": "Lankstumas",
+      "pt": "Flexibilidade",
+      "it": "Flessibilità"
+    },
+    {
+      "en": "Guidance Level",
+      "es": "Nivel de orientación",
+      "fr": "Niveau d'orientation",
+      "de": "Leitungsniveau",
+      "lt": "Gairių lygis",
+      "pt": "Nível de orientação",
+      "it": "Livello di guida"
+    },
+    {
+      "en": "Customization",
+      "es": "Personalización",
+      "fr": "Personnalisation",
+      "de": "Anpassung",
+      "lt": "Tinkinamumas",
+      "pt": "Personalização",
+      "it": "Personalizzazione"
+    },
+    {
+      "en": "Need Help Choosing?",
+      "es": "¿Necesita ayuda para elegir?",
