@@ -67,7 +67,7 @@ ui <- dashboardPage(
   
   # ========== SIDEBAR ==========
   dashboardSidebar(
-    width = 300,
+    width = UI_SIDEBAR_WIDTH,
 
     # Dynamic sidebar menu that updates when language changes
     sidebarMenuOutput("dynamic_sidebar")
@@ -167,7 +167,7 @@ ui <- dashboardPage(
             status = "primary",
             solidHeader = TRUE,
             width = 6,
-            height = 400,
+            height = UI_BOX_HEIGHT_DEFAULT,
             tags$div(
               style = "overflow-y: auto; max-height: 330px; padding: 5px;",
               uiOutput("project_overview_ui")
@@ -180,7 +180,7 @@ ui <- dashboardPage(
             status = "success",
             solidHeader = TRUE,
             width = 6,
-            height = 400,
+            height = UI_BOX_HEIGHT_DEFAULT,
 
             # Project status indicators
             tags$div(
@@ -310,13 +310,8 @@ server <- function(input, output, session) {
     isolate({
       data <- project_data()
       # Check if all SES element types are empty or missing
-      is_empty <- function(df) is.null(df) || (is.data.frame(df) && nrow(df) == 0)
       isa <- data$data$isa_data
-      if (is.null(isa) || (
-        is_empty(isa$drivers) && is_empty(isa$activities) && is_empty(isa$pressures) &&
-        is_empty(isa$marine_processes) && is_empty(isa$ecosystem_services) &&
-        is_empty(isa$goods_benefits) && is_empty(isa$responses)
-      )) {
+      if (is_empty_isa_data(isa)) {
         cat("[AUTOLOAD] No SES data found, loading default template...\n")
         # Load the migrated Caribbean template (update path if needed)
         template_path <- "data/Caribbean_SES_Template_migrated.json"

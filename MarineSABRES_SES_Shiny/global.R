@@ -47,6 +47,37 @@ suppressPackageStartupMessages({
 })
 
 # ============================================================================
+# PROJECT ROOT ESTABLISHMENT
+# ============================================================================
+
+# Establish project root for reliable file sourcing
+if (!exists("PROJECT_ROOT")) {
+  # Find project root by looking for app.R
+  find_project_root <- function(start_dir = getwd()) {
+    dir <- start_dir
+    # Look up directory tree for app.R
+    while (dir != dirname(dir)) {  # Not at filesystem root
+      if (file.exists(file.path(dir, "app.R"))) {
+        return(dir)
+      }
+      dir <- dirname(dir)
+    }
+    # Fallback to current directory
+    return(start_dir)
+  }
+
+  PROJECT_ROOT <- find_project_root()
+  if (DEBUG_MODE <- (Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE")) {
+    message("Project root: ", PROJECT_ROOT)
+  }
+}
+
+# Helper to get project file path
+get_project_file <- function(...) {
+  file.path(PROJECT_ROOT, ...)
+}
+
+# ============================================================================
 # HELPER OPERATORS
 # ============================================================================
 

@@ -168,6 +168,23 @@ RISK_LOW_THRESHOLD <- 30               # Below this = low risk (green)
 RISK_HIGH_THRESHOLD <- 60              # Above this = high risk (red)
 
 # ============================================================================
+# UI LAYOUT CONSTANTS
+# ============================================================================
+
+# Box and panel heights
+UI_BOX_HEIGHT_DEFAULT <- 400           # Standard box height for UI elements
+UI_BOX_HEIGHT_LARGE <- 500             # Large box height for detailed views
+UI_BOX_HEIGHT_SMALL <- 300             # Small box height for compact views
+
+# Panel widths
+UI_SIDEBAR_WIDTH <- 300                # Standard sidebar width
+
+# Plot dimensions
+PLOT_HEIGHT_DEFAULT <- 500             # Default plot height
+PLOT_WIDTH_DEFAULT <- 800              # Default plot width
+PLOT_MARGINS <- c(0, 0, 2, 0)          # Plot margins: bottom, left, top, right
+
+# ============================================================================
 # EXCEL I/O CONSTANTS
 # ============================================================================
 

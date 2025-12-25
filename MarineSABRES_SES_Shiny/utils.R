@@ -356,6 +356,30 @@ safe_scale <- function(x) {
   as.numeric(scale(x))
 }
 
+#' Check if a data frame is empty
+#'
+#' @param df data.frame or NULL
+#' @return logical TRUE if NULL or has 0 rows
+is_empty <- function(df) {
+  is.null(df) || (is.data.frame(df) && nrow(df) == 0)
+}
+
+#' Check if ISA data structure is completely empty
+#'
+#' @param isa_data list ISA data structure
+#' @return logical TRUE if all element types are empty
+is_empty_isa_data <- function(isa_data) {
+  if (is.null(isa_data)) return(TRUE)
+
+  element_types <- c("drivers", "activities", "pressures",
+                     "marine_processes", "ecosystem_services",
+                     "goods_benefits", "responses")
+
+  all(sapply(element_types, function(type) {
+    is_empty(isa_data[[type]])
+  }))
+}
+
 # ============================================================================
 # END OF UTILITY FUNCTIONS
 # ============================================================================
