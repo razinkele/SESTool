@@ -198,7 +198,8 @@ TO_COL_NAMES <- c("to", "target", "to_node", "node2", "end")
 EDGE_SHEET_CANDIDATES <- c("edges", "network", "connections", "links")
 
 # File upload limits
-MAX_UPLOAD_SIZE_MB <- 30                # Maximum file size in megabytes
+MAX_UPLOAD_SIZE_MB <- 100               # Maximum file size in megabytes (Shiny default)
+MAX_UPLOAD_SIZE_BYTES <- MAX_UPLOAD_SIZE_MB * 1024^2  # Computed in bytes
 ALLOWED_EXCEL_TYPES <- c("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",  # .xlsx
                           "application/vnd.ms-excel")                                            # .xls
 

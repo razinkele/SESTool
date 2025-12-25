@@ -1327,8 +1327,8 @@ validate_isa_dataframe <- function(data, exercise_name, required_cols = c("ID", 
 # APPLICATION SETTINGS
 # ============================================================================
 
-# Maximum file upload size (100 MB)
-options(shiny.maxRequestSize = 100 * 1024^2)
+# Maximum file upload size (use constant from constants.R)
+options(shiny.maxRequestSize = MAX_UPLOAD_SIZE_BYTES)
 
 # Enable bookmarking
 enableBookmarking(store = "url")
