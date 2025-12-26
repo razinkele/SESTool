@@ -35,6 +35,7 @@ source("functions/ui_sidebar.R")
 # Load server components
 source("server/modals.R")
 source("server/dashboard.R")
+source("server/project_io.R")
 
 # ============================================================================
 # SOURCE MODULES
@@ -733,101 +734,9 @@ server <- function(input, output, session) {
   setup_dashboard_rendering(input, output, session, project_data, i18n)
 
   # ========== SAVE/LOAD PROJECT ==========
-  
-  observeEvent(input$save_project, {
-    showModal(modalDialog(
-      title = "Save Project",
-      textInput("save_project_name", "Project Name:",
-               value = project_data()$project_id),
-      footer = tagList(
-        modalButton(i18n$t("common.buttons.cancel")),
-        downloadButton("confirm_save", "Save")
-      )
-    ))
-  })
-  
-  output$confirm_save <- downloadHandler(
-    filename = function() {
-      # Sanitize filename to prevent path traversal
-      safe_name <- sanitize_filename(input$save_project_name)
-      paste0(safe_name, "_", Sys.Date(), ".rds")
-    },
-    content = function(file) {
-      tryCatch({
-        # Validate data structure before saving
-        data <- project_data()
-        if (!is.list(data) || !all(c("project_id", "data") %in% names(data))) {
-          showNotification(i18n$t("common.messages.error_invalid_project_data_structure"),
-                          type = "error", duration = 10)
-          return(NULL)
-        }
+  # Project I/O logic extracted to server/project_io.R for better maintainability
 
-        # Save with error handling
-        saveRDS(data, file)
-
-        # Verify saved file
-        if (!file.exists(file) || file.size(file) == 0) {
-          showNotification(i18n$t("common.messages.error_file_save_failed_or_file_is_empty"),
-                          type = "error", duration = 10)
-          return(NULL)
-        }
-
-        removeModal()
-        showNotification(i18n$t("common.messages.project_saved_successfully"), type = "message")
-
-      }, error = function(e) {
-        showNotification(
-          paste(i18n$t("common.misc.error_saving_project"), e$message),
-          type = "error",
-          duration = 10
-        )
-      })
-    }
-  )
-  
-  observeEvent(input$load_project, {
-    showModal(modalDialog(
-      title = i18n$t("common.buttons.load_project"),
-      fileInput("load_project_file", i18n$t("common.misc.choose_rds_file"),
-               accept = ".rds"),
-      footer = tagList(
-        modalButton(i18n$t("common.buttons.cancel")),
-        actionButton("confirm_load", i18n$t("common.buttons.load"))
-      )
-    ))
-  })
-  
-  observeEvent(input$confirm_load, {
-    req(input$load_project_file)
-
-    tryCatch({
-      # Load RDS file
-      loaded_data <- readRDS(input$load_project_file$datapath)
-
-      # Validate project structure
-      if (!validate_project_structure(loaded_data)) {
-        showNotification(
-          i18n$t("common.messages.error_invalid_proj_file_structure_this_may_not_be_"),
-          type = "error",
-          duration = 10
-        )
-        return()
-      }
-
-      # Load validated data
-      project_data(loaded_data)
-
-      removeModal()
-      showNotification(i18n$t("common.messages.project_loaded_successfully"), type = "message")
-
-    }, error = function(e) {
-      showNotification(
-        paste(i18n$t("common.misc.error_loading_project"), e$message),
-        type = "error",
-        duration = 10
-      )
-    })
-  })
+  setup_project_io_handlers(input, output, session, project_data, i18n)
   
   # ========== EXPORT HANDLERS ==========
   
