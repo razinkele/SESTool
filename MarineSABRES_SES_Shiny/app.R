@@ -36,6 +36,7 @@ source("functions/ui_sidebar.R")
 source("server/modals.R")
 source("server/dashboard.R")
 source("server/project_io.R")
+source("server/export_handlers.R")
 
 # ============================================================================
 # SOURCE MODULES
@@ -276,34 +277,32 @@ server <- function(input, output, session) {
   observe({
     data <- project_data()
     if (!is.null(data) && !is.null(data$data$isa_data)) {
-      cat("[DIAGNOSTIC] Project data loaded\n")
+      debug_log("[DIAGNOSTIC] Project data loaded", "DIAGNOSTICS")
       for (etype in c("drivers", "activities", "pressures", "marine_processes", "ecosystem_services", "goods_benefits", "responses")) {
         el <- data$data$isa_data[[etype]]
         if (!is.null(el) && nrow(el) > 0) {
-          cat(sprintf("[DIAGNOSTIC] %s: %d elements\n", etype, nrow(el)))
-          cat(sprintf("[DIAGNOSTIC] %s IDs: %s\n", etype, paste(head(el$ID, 10), collapse=", ")))
+          debug_log(sprintf("%s: %d elements", etype, nrow(el)), "DIAGNOSTICS")
+          debug_log(sprintf("%s IDs: %s", etype, paste(head(el$ID, 10), collapse=", ")), "DIAGNOSTICS")
         } else {
-          cat(sprintf("[DIAGNOSTIC] %s: 0 elements\n", etype))
+          debug_log(sprintf("%s: 0 elements", etype), "DIAGNOSTICS")
         }
       }
       if (!is.null(data$data$isa_data$adjacency_matrices)) {
-        cat("[DIAGNOSTIC] Adjacency matrices present:\n")
-        cat(paste(names(data$data$isa_data$adjacency_matrices), collapse=", "), "\n")
+        debug_log("Adjacency matrices present:", "DIAGNOSTICS")
+        debug_log(paste(names(data$data$isa_data$adjacency_matrices), collapse=", "), "DIAGNOSTICS")
       } else {
-        cat("[DIAGNOSTIC] No adjacency matrices present\n")
+        debug_log("No adjacency matrices present", "DIAGNOSTICS")
       }
     } else {
-      cat("[DIAGNOSTIC] Project data or isa_data is NULL\n")
+      debug_log("Project data or isa_data is NULL", "DIAGNOSTICS")
     }
   })
 
-  cat("\n")
-  cat("=====================================\n")
-  cat("APP RESTARTED - NEW SESSION STARTING\n")
-  cat("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n")
-  cat("Report generation functions loaded:", exists("generate_report_content"), "\n")
-  cat("=====================================\n")
-  cat("\n")
+  debug_log("=====================================", "SESSION")
+  debug_log("APP RESTARTED - NEW SESSION STARTING", "SESSION")
+  debug_log(paste("Timestamp:", format(Sys.time(), "%Y-%m-%d %H:%M:%S")), "SESSION")
+  debug_log(paste("Report generation functions loaded:", exists("generate_report_content")), "SESSION")
+  debug_log("=====================================", "SESSION")
 
   # ========== AUTO-LOAD DEFAULT TEMPLATE IF EMPTY ========== 
   observe({
@@ -313,7 +312,7 @@ server <- function(input, output, session) {
       # Check if all SES element types are empty or missing
       isa <- data$data$isa_data
       if (is_empty_isa_data(isa)) {
-        cat("[AUTOLOAD] No SES data found, loading default template...\n")
+        debug_log("No SES data found, loading default template...", "AUTOLOAD")
         # Load the migrated Caribbean template (update path if needed)
         template_path <- "data/Caribbean_SES_Template_migrated.json"
         if (file.exists(template_path)) {
@@ -332,9 +331,9 @@ server <- function(input, output, session) {
           new_data$data$metadata$source <- "autoloaded_default_template"
           new_data$last_modified <- Sys.time()
           project_data(new_data)
-          cat("[AUTOLOAD] Default template loaded successfully.\n")
+          debug_log("Default template loaded successfully", "AUTOLOAD")
         } else {
-          cat("[AUTOLOAD] ERROR: Default template file not found at:", template_path, "\n")
+          debug_log(paste("ERROR: Default template file not found at:", template_path), "AUTOLOAD")
         }
       }
     })
@@ -739,205 +738,9 @@ server <- function(input, output, session) {
   setup_project_io_handlers(input, output, session, project_data, i18n)
   
   # ========== EXPORT HANDLERS ==========
-  
-  output$download_data <- downloadHandler(
-    filename = function() {
-      format <- input$export_data_format
-      ext <- switch(format,
-        "Excel (.xlsx)" = ".xlsx",
-        "CSV (.csv)" = ".csv",
-        "JSON (.json)" = ".json",
-        "R Data (.RData)" = ".RData"
-      )
-      paste0("MarineSABRES_Data_", Sys.Date(), ext)
-    },
-    content = function(file) {
-      data <- project_data()
-      components <- input$export_data_components
+  # Export logic extracted to server/export_handlers.R for better maintainability
 
-      # Prepare export data based on selected components
-      export_list <- list()
-
-      if("metadata" %in% components) {
-        export_list$metadata <- data$data$metadata
-        export_list$project_info <- list(
-          project_id = data$project_id,
-          project_name = data$project_name,
-          created_at = data$created_at,
-          last_modified = data$last_modified
-        )
-      }
-
-      if("pims" %in% components) {
-        export_list$pims <- data$data$pims
-      }
-
-      if("isa_data" %in% components) {
-        export_list$goods_benefits <- data$data$isa_data$goods_benefits
-        export_list$ecosystem_services <- data$data$isa_data$ecosystem_services
-        export_list$marine_processes <- data$data$isa_data$marine_processes
-        export_list$pressures <- data$data$isa_data$pressures
-        export_list$activities <- data$data$isa_data$activities
-        export_list$drivers <- data$data$isa_data$drivers
-        export_list$bot_data <- data$data$isa_data$bot_data
-      }
-
-      if("cld" %in% components) {
-        export_list$cld_nodes <- data$data$cld$nodes
-        export_list$cld_edges <- data$data$cld$edges
-        export_list$cld_loops <- data$data$cld$loops
-      }
-
-      if("analysis" %in% components) {
-        export_list$analysis_results <- data$data$analysis
-      }
-
-      if("responses" %in% components) {
-        export_list$response_measures <- data$data$responses
-      }
-
-      # Export based on format
-      format <- input$export_data_format
-
-      if(format == "Excel (.xlsx)") {
-        wb <- createWorkbook()
-
-        # Add each component as a worksheet
-        for(name in names(export_list)) {
-          item <- export_list[[name]]
-          if(is.data.frame(item) && nrow(item) > 0) {
-            addWorksheet(wb, name)
-            writeData(wb, name, item)
-          } else if(is.list(item) && !is.data.frame(item)) {
-            # Convert list to data frame
-            df <- as.data.frame(t(unlist(item)), stringsAsFactors = FALSE)
-            addWorksheet(wb, name)
-            writeData(wb, name, df)
-          }
-        }
-
-        saveWorkbook(wb, file, overwrite = TRUE)
-
-      } else if(format == "CSV (.csv)") {
-        # For CSV, export the main ISA data
-        if("isa_data" %in% components && !is.null(data$data$isa_data$goods_benefits)) {
-          write.csv(data$data$isa_data$goods_benefits, file, row.names = FALSE)
-        } else {
-          write.csv(data.frame(message = "No data to export"), file, row.names = FALSE)
-        }
-
-      } else if(format == "JSON (.json)") {
-        json_data <- toJSON(export_list, pretty = TRUE, auto_unbox = TRUE)
-        writeLines(json_data, file)
-
-      } else if(format == "R Data (.RData)") {
-        save(export_list, file = file)
-      }
-
-      showNotification(i18n$t("common.messages.data_exported_successfully"), type = "message")
-    }
-  )
-  
-  output$download_viz <- downloadHandler(
-    filename = function() {
-      format <- input$export_viz_format
-      ext <- switch(format,
-        "PNG (.png)" = ".png",
-        "SVG (.svg)" = ".svg",
-        "HTML (.html)" = ".html",
-        "PDF (.pdf)" = ".pdf"
-      )
-      paste0("MarineSABRES_CLD_", Sys.Date(), ext)
-    },
-    content = function(file) {
-      data <- project_data()
-
-      # Check if CLD data exists
-      if(is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
-        showNotification(i18n$t("common.misc.no_cld_data_to_export_please_create_a_cld_first"), type = "error")
-        return(NULL)
-      }
-
-      nodes <- data$data$cld$nodes
-      edges <- data$data$cld$edges
-
-      format <- input$export_viz_format
-      width <- input$export_viz_width
-      height <- input$export_viz_height
-
-      if(format == "HTML (.html)") {
-        # Create interactive HTML visualization
-        viz <- visNetwork(nodes, edges, width = paste0(width, "px"), height = paste0(height, "px")) %>%
-          visIgraphLayout(layout = "layout_with_fr") %>%
-          visNodes(
-            borderWidth = 2,
-            font = list(size = 14)
-          ) %>%
-          visEdges(
-            arrows = "to",
-            smooth = list(enabled = TRUE, type = "curvedCW")
-          ) %>%
-          visOptions(
-            highlightNearest = list(enabled = TRUE, hover = TRUE),
-            nodesIdSelection = TRUE
-          ) %>%
-          visInteraction(
-            navigationButtons = TRUE,
-            hover = TRUE,
-            zoomView = TRUE
-          ) %>%
-          visLegend(width = 0.1, position = "right")
-
-        visSave(viz, file)
-
-      } else if(format == "PNG (.png)" || format == "SVG (.svg)" || format == "PDF (.pdf)") {
-        # For static exports, create an igraph object and plot
-        # Note: igraph is already loaded in global.R
-
-        # Create igraph object
-        g <- graph_from_data_frame(d = edges, vertices = nodes, directed = TRUE)
-
-        # Set vertex attributes
-        V(g)$label <- V(g)$label
-        V(g)$color <- V(g)$color
-        V(g)$size <- 15
-
-        # Set edge attributes
-        E(g)$color <- ifelse(edges$link_type == "positive", "#06D6A0", "#E63946")
-        E(g)$arrow.size <- 0.5
-
-        # Open appropriate device
-        if(format == "PNG (.png)") {
-          png(file, width = width, height = height, res = 150)
-        } else if(format == "SVG (.svg)") {
-          svg(file, width = width/100, height = height/100)
-        } else if(format == "PDF (.pdf)") {
-          pdf(file, width = width/100, height = height/100)
-        }
-
-        # Plot
-        par(mar = c(0, 0, 2, 0))
-        plot(g,
-             layout = layout_with_fr(g),
-             vertex.label.cex = 0.8,
-             vertex.label.color = "black",
-             vertex.frame.color = "gray",
-             edge.curved = 0.2,
-             main = "MarineSABRES Causal Loop Diagram")
-
-        # Add legend
-        legend("bottomright",
-               legend = c("Positive link", "Negative link"),
-               col = c("#06D6A0", "#E63946"),
-               lty = 1, lwd = 2,
-               bty = "n")
-
-        dev.off()
-      }
-
-      showNotification(i18n$t("common.messages.visualization_exported_successfully"), type = "message")
-    }
-  )
+  setup_export_handlers(input, output, session, project_data, i18n)
 
   # ========== REPORT GENERATION ==========
 
