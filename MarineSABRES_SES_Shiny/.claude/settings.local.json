@@ -12,7 +12,9 @@
       "Bash(Rscript:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(gh run list --limit 5 --repo razinkele/SESTool)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []
