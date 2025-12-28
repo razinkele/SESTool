@@ -1,21 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(*)",
+      "Bash",
       "mcp__ide__getDiagnostics",
       "WebSearch",
-      "WebFetch(*)",
-      "Bash(cd:*)",
-      "Bash(cat:*)",
-      "Bash(wc:*)",
-      "Bash(grep:*)",
-      "Bash(Rscript:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git pull:*)",
-      "Bash(gh run list --limit 5 --repo razinkele/SESTool)",
-      "Bash(ls:*)",
-      "Bash(git check-ignore:*)"
+      "WebFetch(domain:*)"
     ],
     "deny": [],
     "ask": []
