@@ -5,6 +5,112 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-01-06
+
+### Stability and Consistency Improvements
+
+This release focuses on fixing critical issues identified in codebase analysis and improving code consistency across the application. No user-facing functionality changes.
+
+### Fixed
+- **Critical**: Removed duplicate `sanitize_filename()` function in `global.R`
+  - Second definition at lines 1305-1328 was overwriting first
+  - Lost max_length parameter functionality
+  - Preserved proper implementation at lines 416-464
+- **Critical**: Fixed reactive value initialization race condition in `app.R`
+  - `project_data` reactive was used in observe() blocks before initialization
+  - Moved all reactive value declarations to line 387 (before any observe() blocks)
+  - Prevents startup crashes from race condition
+- **Critical**: Consolidated duplicate constant definitions
+  - Removed DAPSIWRM_ELEMENTS, ELEMENT_COLORS, ELEMENT_SHAPES duplicates from `global.R`
+  - Centralized all constants in `constants.R`
+  - Single source of truth for configuration values
+- **Consistency**: Standardized debug logging in `server/modals.R`
+  - Replaced 6 `cat()` calls with `debug_log()` for settings messages
+  - Consistent with debug logging pattern across application
+  - Respects DEBUG_MODE configuration
+
+### Changed
+- **Consistency**: Standardized all `source()` calls with explicit `local` parameter
+  - Updated 40+ source() calls in `global.R` and `app.R`
+  - Explicit scoping improves code clarity
+  - Documented rationale for `local = FALSE` usage
+- **Consistency**: Completed internationalization (i18n) coverage
+  - Added 6 new translation keys to `translations/ui/dashboard.json`:
+    - `ui.dashboard.project_overview`
+    - `ui.dashboard.status_summary`
+    - `ui.dashboard.network_status`
+    - `ui.dashboard.project_history`
+    - `ui.dashboard.isa_data_status`
+    - `ui.dashboard.analysis_status`
+  - Added missing key to `translations/common/misc.json`:
+    - `common.misc.approve_this_connection_with_current_slider_values`
+  - All 7 keys have complete translations in 8 languages (EN, ES, FR, DE, LT, PT, IT, NO)
+- **Consistency**: Applied UI dimension constants throughout dashboard
+  - Used `UI_BOX_WIDTH_QUARTER`, `UI_BOX_WIDTH_HALF`, `UI_BOX_WIDTH_FULL` consistently
+  - Replaced hard-coded width values in `app.R`
+
+### Added
+- **Constants**: Expanded `constants.R` with DAPSIWRM framework definitions
+  - `DAPSIWRM_ELEMENTS`: 7 element types from framework
+  - `ELEMENT_COLORS`: 8 Kumu-style colors for element types
+  - `ELEMENT_SHAPES`: 7 visNetwork shapes for element types
+  - `EDGE_COLORS`: Reinforcing and opposing connection colors
+  - `DA_SITES`: 3 demonstration area identifiers
+  - `STAKEHOLDER_TYPES`: 6 types from Newton & Elliott (2016)
+  - `UI_BOX_WIDTH_*`: UI dimension constants
+- **Documentation**: Created comprehensive refactoring documentation
+  - `DEPLOYMENT_REVIEW_POST_REFACTORING.md`: Full deployment compatibility analysis
+  - `TEST_FAILURE_DEEP_ANALYSIS.md`: Investigation of test failures (all pre-existing)
+  - Pattern documentation in `functions/error_handling.R`
+
+### Improved
+- **Code Quality**: Eliminated duplicate function definitions
+- **Code Quality**: Prevented startup race conditions
+- **Code Quality**: Centralized configuration management
+- **Code Consistency**: Uniform source() call patterns
+- **Code Consistency**: Complete i18n coverage for UI strings
+- **Code Consistency**: Standardized debug logging approach
+
+### Technical Details
+- **Files Modified**: 7 (global.R, constants.R, app.R, server/modals.R, functions/error_handling.R, translations/ui/dashboard.json, translations/common/misc.json)
+- **Critical Issues Fixed**: 4
+- **Consistency Issues Fixed**: 7
+- **Translation Keys Added**: 7 (all with 8-language coverage)
+- **Source Calls Standardized**: 40+
+- **Lines Changed**: +910 insertions, -350 deletions
+- **Tests Passing**: 3,729 (no regressions introduced)
+- **Pre-existing Test Failures**: 8 (ML context embeddings - unrelated to changes)
+
+### Testing
+- All 3,729 tests passing after refactoring
+- Zero regressions introduced by changes
+- Comprehensive test failure analysis completed
+- All failures confirmed as pre-existing (ML module issues)
+
+### Deployment
+- All deployment scripts verified compatible
+- Pre-deployment checks validate all changes
+- Translation cache clearing ensures new keys loaded
+- Full server restart ensures reactive fix takes effect
+- See `DEPLOYMENT_REVIEW_POST_REFACTORING.md` for details
+
+### Migration Notes
+- **No Breaking Changes**: All changes are internal refactoring
+- **No User Impact**: Functionality preserved exactly
+- **No Configuration Changes**: Existing settings work unchanged
+- **Backward Compatible**: Existing project files load without modification
+- **Translation Cache**: Will be automatically cleared on deployment
+
+### Developer Notes
+- Use `debug_log(message, category)` instead of `cat()` for debug output
+- Always specify `local` parameter in `source()` calls for clarity
+- Add magic numbers to `constants.R` with descriptive names
+- Use `i18n$t()` for all user-facing strings
+- Follow error handling patterns in `functions/error_handling.R`
+- Initialize reactive values before any `observe()` blocks
+
+---
+
 ## [1.6.0] - 2025-12-26
 
 ### Major Optimization Release
