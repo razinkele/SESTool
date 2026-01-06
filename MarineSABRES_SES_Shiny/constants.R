@@ -56,7 +56,7 @@ MARINE_STRENGTH_MAX <- 4.0
 # MARINE SES CATEGORIES
 # ============================================================================
 
-# Standard marine SES node groups
+# Standard marine SES node groups (legacy naming)
 MARINE_SES_CATEGORIES <- c(
   "Activities",
   "Pressures",
@@ -64,6 +64,17 @@ MARINE_SES_CATEGORIES <- c(
   "Societal Goods and Services",
   "Ecosystem Services",
   "Marine Processes"
+)
+
+# DAPSI(W)R(M) element types (MarineSABRES standard naming)
+DAPSIWRM_ELEMENTS <- c(
+  "Drivers",
+  "Activities",
+  "Pressures",
+  "Marine Processes & Functioning",
+  "Ecosystem Services",
+  "Goods & Benefits",
+  "Responses"
 )
 
 # Minimum nodes per category
@@ -86,15 +97,41 @@ DEFAULT_TOP_N_LEVERAGE <- 10
 # ============================================================================
 
 # Node visualization
-DEFAULT_NODE_SIZE <- 40              # Increased from 20 (now 40) for much better visibility
-LEVERAGE_NODE_SIZE <- 45             # Increased from 25 (now 45) for much better visibility
+DEFAULT_NODE_SIZE <- 40              # Standard node size for network visualizations
+LARGE_NODE_SIZE <- 50                # Large node size for graphical SES creator
+SMALL_NODE_SIZE <- 25                # Small node size for compact views
+MEDIUM_NODE_SIZE <- 30               # Medium node size for moderate views
+LEVERAGE_NODE_SIZE <- 45             # Node size for leverage points
+MIN_NODE_SIZE <- 15                  # Minimum node size for scaling
+MAX_NODE_SIZE <- 50                  # Maximum node size for scaling
+
 DEFAULT_NODE_COLOR <- "lightgray"
 LEVERAGE_NODE_COLOR <- "orange"
+
+# Node borders
+DEFAULT_BORDER_WIDTH <- 2            # Standard border width
+SELECTED_BORDER_WIDTH <- 3           # Border width for selected nodes
+GHOST_BORDER_WIDTH <- 3              # Border width for ghost/preview nodes
+
+# Font sizes
+FONT_SIZE_SMALL <- 10                # Small font for labels
+FONT_SIZE_MEDIUM <- 12               # Medium font for labels
+FONT_SIZE_STANDARD <- 14             # Standard font for most text
+FONT_SIZE_LARGE <- 16                # Large font for prominent nodes
+
+# Node opacity
+NODE_OPACITY_NORMAL <- 1.0           # Full opacity for normal nodes
+NODE_OPACITY_GHOST <- 0.4            # Semi-transparent for ghost/preview nodes
 
 # Edge visualization
 DEFAULT_EDGE_ARROW_SIZE <- 0.5
 DEFAULT_EDGE_WIDTH <- 1
 DEFAULT_BASE_EDGE_WIDTH <- 10          # Base edge width for strength scaling
+EDGE_WIDTH_THIN <- 0.15              # Thin edge width for subtle connections
+
+# Label configuration
+LABEL_WRAP_WIDTH <- 20               # Maximum characters per line in wrapped labels
+VERTEX_LABEL_CEX_SMALL <- 0.7        # Small vertex label size
 
 # NOTE: The following constants are defined for future use in edge visualization
 # Currently not actively used in the app, but reserved for enhanced edge styling
@@ -116,6 +153,46 @@ DEFAULT_BASE_EDGE_WIDTH <- 10          # Base edge width for strength scaling
 
 # Strength threshold for color differentiation
 # EDGE_STRONG_THRESHOLD <- 3.0
+
+# ============================================================================
+# DAPSIWRM ELEMENT STYLING (Kumu-style colors and shapes)
+# ============================================================================
+
+# Color scheme for DAPSI(W)R(M) elements (following Kumu style guide)
+ELEMENT_COLORS <- list(
+  "Drivers" = "#776db3",                           # Purple (Kumu style)
+  "Activities" = "#5abc67",                        # Green (Kumu style)
+  "Pressures" = "#fec05a",                         # Orange (Kumu style)
+  "Marine Processes & Functioning" = "#bce2ee",    # Light Blue (Kumu style)
+  "Ecosystem Services" = "#313695",                # Dark Blue (Kumu style)
+  "Goods & Benefits" = "#fff1a2",                  # Light Yellow (Kumu style)
+  "Responses" = "#9C27B0",                         # Purple for management responses
+  "Measures" = "#795548"                           # Brown for management measures/instruments
+)
+
+# Node shapes for each element type (following Kumu style guide)
+# visNetwork available shapes: dot, diamond, square, triangle, triangleDown,
+# star, hexagon, ellipse, database, text, circularImage, circle
+# Note: hexagon is available! Octagon is not, using star as closest alternative
+ELEMENT_SHAPES <- list(
+  "Drivers" = "star",                            # Kumu: octagon → star (closest available)
+  "Activities" = "hexagon",                      # Kumu: hexagon → hexagon (EXACT MATCH!)
+  "Pressures" = "diamond",                       # Kumu: diamond (EXACT MATCH!)
+  "Marine Processes & Functioning" = "dot",      # Kumu: pill → dot (circular, label outside)
+  "Ecosystem Services" = "square",               # Kumu: square (EXACT MATCH!)
+  "Goods & Benefits" = "triangle",               # Kumu: triangle (EXACT MATCH!)
+  "Responses" = "triangleDown"                   # Inverted triangle for management responses
+)
+
+# Edge colors (following Kumu style guide)
+EDGE_COLORS <- list(
+  reinforcing = "#80b8d7",    # Light blue (positive from Kumu)
+  opposing = "#dc131e"        # Red (negative from Kumu)
+)
+
+# ============================================================================
+# LEGACY GROUP COLORS/SHAPES (for backward compatibility)
+# ============================================================================
 
 # Group colors for marine SES visualization (including alternative names)
 GROUP_COLORS <- list(
@@ -154,11 +231,22 @@ MAX_EDGES_BEFORE_OPTIMIZATION <- 30    # Optimize networks with more than this m
 EDGE_RETENTION_QUANTILE <- 0.7         # Keep top 30% of edges when optimizing (1 - 0.7 = 0.3)
 
 # ============================================================================
+# EXPORT CONSTANTS
+# ============================================================================
+
+# PNG export dimensions
+EXPORT_PNG_WIDTH <- 1200              # Default width for exported PNG images
+EXPORT_PNG_HEIGHT <- 900              # Default height for exported PNG images
+
+# Shadow effects
+SHADOW_SIZE <- 5                      # Size of shadow effect for nodes
+
+# ============================================================================
 # VISUALIZATION CONSTANTS (APP-SPECIFIC)
 # ============================================================================
 
 # Plot parameters
-VERTEX_LABEL_CEX <- 0.7                # Vertex label text size
+VERTEX_LABEL_CEX <- 0.7                # Vertex label text size (used in static plots)
 HISTOGRAM_BINS <- 15                   # Number of bins for histograms
 HISTOGRAM_ALPHA <- 0.7                 # Transparency for histogram bars
 MAX_BAR_LENGTH <- 30                   # Maximum bar length in text-based charts
@@ -171,15 +259,22 @@ RISK_HIGH_THRESHOLD <- 60              # Above this = high risk (red)
 # UI LAYOUT CONSTANTS
 # ============================================================================
 
-# Box and panel heights
-UI_BOX_HEIGHT_DEFAULT <- 400           # Standard box height for UI elements
-UI_BOX_HEIGHT_LARGE <- 500             # Large box height for detailed views
-UI_BOX_HEIGHT_SMALL <- 300             # Small box height for compact views
+# Box and panel heights (explicit CSS strings for clarity)
+UI_BOX_HEIGHT_DEFAULT <- "400px"       # Standard box height for UI elements
+UI_BOX_HEIGHT_LARGE <- "500px"         # Large box height for detailed views
+UI_BOX_HEIGHT_SMALL <- "300px"         # Small box height for compact views
 
-# Panel widths
-UI_SIDEBAR_WIDTH <- 300                # Standard sidebar width
+# Panel widths (explicit CSS strings for clarity)
+UI_SIDEBAR_WIDTH <- "300px"            # Standard sidebar width
+UI_CONTROLBAR_WIDTH <- "300px"         # Standard controlbar width
 
-# Plot dimensions
+# Bootstrap grid column widths (numeric, out of 12 columns)
+UI_BOX_WIDTH_FULL <- 12                # Full width (100%)
+UI_BOX_WIDTH_HALF <- 6                 # Half width (50%)
+UI_BOX_WIDTH_THIRD <- 4                # Third width (~33%)
+UI_BOX_WIDTH_QUARTER <- 3              # Quarter width (25%)
+
+# Plot dimensions (numeric for plotly/ggplot)
 PLOT_HEIGHT_DEFAULT <- 500             # Default plot height
 PLOT_WIDTH_DEFAULT <- 800              # Default plot width
 PLOT_MARGINS <- c(0, 0, 2, 0)          # Plot margins: bottom, left, top, right
@@ -223,6 +318,51 @@ STRENGTH_MAPPING <- list(
 # Default seeds for reproducibility
 DEFAULT_RANDOM_SEED <- 123
 MARINE_SES_SEED <- 42
+
+# ============================================================================
+# AUTO-SAVE CONSTANTS
+# ============================================================================
+
+# ADAPTIVE DEBOUNCING - Adjusts save delay based on editing patterns
+# During rapid editing (e.g., building a model), use longer debounce for performance
+# During casual editing (e.g., tweaking a few elements), use shorter debounce for safety
+
+# Debounce delays (milliseconds)
+AUTOSAVE_DEBOUNCE_RAPID_MS <- 5000    # 5 seconds during rapid/active editing
+AUTOSAVE_DEBOUNCE_CASUAL_MS <- 2000   # 2 seconds during casual/slow editing
+
+# Pattern detection thresholds
+AUTOSAVE_RAPID_THRESHOLD <- 3         # 3+ changes within time window = "rapid editing"
+AUTOSAVE_PATTERN_WINDOW_SEC <- 10     # Time window for detecting rapid editing (seconds)
+
+# Auto-save recovery window (hours)
+# Maximum age of recovery file to offer for restoration
+AUTOSAVE_RECOVERY_WINDOW_HOURS <- 24  # 24 hours
+
+# Auto-save indicator update interval (milliseconds)
+# How often to refresh the "last saved X seconds ago" display
+AUTOSAVE_INDICATOR_UPDATE_MS <- 10000  # 10 seconds
+
+# ============================================================================
+# MARINESABRES PROJECT-SPECIFIC CONSTANTS
+# ============================================================================
+
+# Demonstration Areas
+DA_SITES <- c(
+  "Tuscan Archipelago",
+  "Arctic Northeast Atlantic",
+  "Macaronesia"
+)
+
+# Stakeholder types (Newton & Elliott, 2016)
+STAKEHOLDER_TYPES <- c(
+  "Inputters",
+  "Extractors",
+  "Regulators",
+  "Affectees",
+  "Beneficiaries",
+  "Influencers"
+)
 
 # ============================================================================
 # MESSAGE CONSTANTS

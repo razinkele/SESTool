@@ -11,7 +11,8 @@ options(shiny.autoreload = FALSE)
 # LOAD GLOBAL ENVIRONMENT
 # ============================================================================
 
-source("global.R")
+# Note: Global environment contains packages, constants, and shared utilities
+source("global.R", local = FALSE)
 
 # ============================================================================
 # REGISTER RESOURCE PATHS
@@ -26,17 +27,18 @@ if (dir.exists("docs")) {
 # LOAD HELPER FUNCTIONS
 # ============================================================================
 
-source("functions/report_generation.R")
+# Note: These functions define UI and server components, must be globally available
+source("functions/report_generation.R", local = FALSE)
 
 # Load UI components
-source("functions/ui_header.R")
-source("functions/ui_sidebar.R")
+source("functions/ui_header.R", local = FALSE)
+source("functions/ui_sidebar.R", local = FALSE)
 
 # Load server components
-source("server/modals.R")
-source("server/dashboard.R")
-source("server/project_io.R")
-source("server/export_handlers.R")
+source("server/modals.R", local = FALSE)
+source("server/dashboard.R", local = FALSE)
+source("server/project_io.R", local = FALSE)
+source("server/export_handlers.R", local = FALSE)
 
 # ============================================================================
 # SOURCE MODULES
@@ -52,31 +54,92 @@ source("modules/pims_module.R", local = TRUE)
 source("modules/pims_stakeholder_module.R", local = TRUE)
 source("modules/cld_visualization_module.R", local = TRUE)
 source("modules/analysis_tools_module.R", local = TRUE)
-source("modules/response_module.R", local = TRUE)
+source("modules/response_module.R", local = TRUE)  # Includes response_validation_server()
 source("modules/scenario_builder_module.R", local = TRUE)  # Scenario Builder
 source("modules/prepare_report_module.R", local = TRUE)  # Report preparation (comprehensive)
 source("modules/export_reports_module.R", local = TRUE)  # Export & Reports (simple)
-# source("modules/response_validation_module.R", local = FALSE)  # Not implemented yet
+# NOTE: response_validation_server() is defined in response_module.R, not a separate file
 
 # ============================================================================
 # UI
 # ============================================================================
 
-ui <- dashboardPage(
-  
+# Note: Using explicit bs4Dash naming convention (bs4DashPage, bs4DashSidebar, etc.)
+# rather than aliases (dashboardPage, dashboardSidebar) for clarity and to avoid
+# confusion with legacy shinydashboard package. Both are valid in bs4Dash 2.0+.
+
+ui <- bs4DashPage(
+  # Page title (displayed in browser tab)
+  title = "SES Tool - MarineSABRES",
+
+  # Enable scroll-to-top button (appears bottom-right)
+  scrollToTop = TRUE,
+
+  # Preloader - Custom CSS-based loading screen
+  preloader = list(
+    html = tagList(
+      tags$div(
+        style = "display: flex; flex-direction: column; align-items: center; justify-content: center;",
+        # Animated spinner
+        tags$div(
+          class = "spinner",
+          style = "
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(52, 152, 219, 0.2);
+            border-top-color: #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 25px;
+          "
+        ),
+        # Logo/Icon
+        tags$div(
+          style = "font-size: 48px; color: #3498db; margin-bottom: 15px;",
+          icon("water")
+        ),
+        # Loading text
+        tags$div(
+          style = "font-size: 22px; font-weight: 600; color: #2c3e50; margin-bottom: 8px;",
+          "Loading SES Toolbox"
+        ),
+        tags$div(
+          style = "font-size: 14px; color: #7f8c8d;",
+          "Marine Social-Ecological Systems Analysis"
+        ),
+        # CSS animation
+        tags$style(HTML("
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        "))
+      )
+    ),
+    color = "rgba(255, 255, 255, 0.95)"  # Semi-transparent white background
+  ),
+
   # ========== HEADER ==========
-  build_dashboard_header(i18n),
-  
+  header = build_dashboard_header(i18n),  # Note: bs4DashPage uses 'header' not 'navbar'
+
   # ========== SIDEBAR ==========
-  dashboardSidebar(
+  sidebar = bs4DashSidebar(
+    id = "sidebar",          # ID for programmatic access
+    skin = "light",
+    status = "primary",
+    elevation = 3,
     width = UI_SIDEBAR_WIDTH,
+    collapsed = TRUE,        # Start collapsed
+    minified = TRUE,         # Keep icons visible when collapsed
+    expandOnHover = FALSE,   # IMPORTANT: Disable auto-expand on hover to prevent overlap
+    fixed = TRUE,
 
     # Dynamic sidebar menu that updates when language changes
     sidebarMenuOutput("dynamic_sidebar")
   ),
-  
+
   # ========== BODY ==========
-  dashboardBody(
+  body = bs4DashBody(
 
     # Enable shiny.i18n automatic language detection and reactive translations
     # Note: Must use the underlying translator object, not the wrapper
@@ -84,9 +147,9 @@ ui <- dashboardPage(
 
     # Custom CSS and JavaScript
     tags$head(
-      tags$title("MarineSABRES SES Toolbox"),
-      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
-      tags$link(rel = "stylesheet", type = "text/css", href = "isa-forms.css"),
+      tags$link(rel = "stylesheet", type = "text/css", href = "bs4dash-custom.css"),  # bs4Dash custom theme
+      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),  # Module-specific styles
+      tags$link(rel = "stylesheet", type = "text/css", href = "isa-forms.css"),  # ISA form styles
       tags$script(src = "custom.js"),
 
       tags$style(HTML("
@@ -139,13 +202,16 @@ ui <- dashboardPage(
     # Auto-save indicator (fixed position overlay)
     auto_save_indicator_ui("auto_save"),
 
-    tabItems(
+    # Tutorial system (contextual help overlays)
+    tutorial_ui(),
+
+    bs4TabItems(
 
       # ==================== ENTRY POINT (GETTING STARTED) ====================
-      tabItem(tabName = "entry_point", entry_point_ui("entry_pt", i18n)),
+      bs4TabItem(tabName = "entry_point", entry_point_ui("entry_pt", i18n)),
 
       # ==================== DASHBOARD ====================
-      tabItem(
+      bs4TabItem(
         tabName = "dashboard",
 
         fluidRow(
@@ -156,19 +222,20 @@ ui <- dashboardPage(
 
         fluidRow(
           # Summary boxes
-          valueBoxOutput("total_elements_box", width = 3),
-          valueBoxOutput("total_connections_box", width = 3),
-          valueBoxOutput("loops_detected_box", width = 3),
-          valueBoxOutput("completion_box", width = 3)
+          valueBoxOutput("total_elements_box", width = UI_BOX_WIDTH_QUARTER),
+          valueBoxOutput("total_connections_box", width = UI_BOX_WIDTH_QUARTER),
+          valueBoxOutput("loops_detected_box", width = UI_BOX_WIDTH_QUARTER),
+          valueBoxOutput("completion_box", width = UI_BOX_WIDTH_QUARTER)
         ),
 
         fluidRow(
           # Project overview
-          box(
+          bs4Card(
+            id = "project_overview_card",
             title = i18n$t("ui.dashboard.project_overview"),
             status = "primary",
             solidHeader = TRUE,
-            width = 6,
+            width = UI_BOX_WIDTH_HALF,
             height = UI_BOX_HEIGHT_DEFAULT,
             tags$div(
               style = "overflow-y: auto; max-height: 330px; padding: 5px;",
@@ -177,11 +244,12 @@ ui <- dashboardPage(
           ),
 
           # Status summary
-          box(
+          bs4Card(
+            id = "status_summary_card",
             title = i18n$t("ui.dashboard.status_summary"),
             status = "success",
             solidHeader = TRUE,
-            width = 6,
+            width = UI_BOX_WIDTH_HALF,
             height = UI_BOX_HEIGHT_DEFAULT,
 
             # Project status indicators
@@ -197,11 +265,11 @@ ui <- dashboardPage(
                 uiOutput("status_isa_connections")
               ),
 
-              # CLD Status
+              # Network Status
               tags$div(
                 style = "margin-bottom: 10px; padding: 8px; background: #f8f9fa; border-radius: 5px;",
                 tags$h5(style = "margin-bottom: 8px; font-size: 14px;",
-                  icon("project-diagram"), " ", i18n$t("ui.dashboard.cld_status")),
+                  icon("project-diagram"), " ", i18n$t("ui.dashboard.network_status")),
                 uiOutput("status_cld_nodes"),
                 uiOutput("status_cld_edges")
               ),
@@ -215,57 +283,105 @@ ui <- dashboardPage(
               )
             )
           )
+        ),
+
+        # Project History Timeline
+        fluidRow(
+          bs4Card(
+            id = "project_timeline_card",
+            title = tagList(icon("history"), " ", i18n$t("ui.dashboard.project_history")),
+            status = "primary",
+            solidHeader = TRUE,
+            width = UI_BOX_WIDTH_FULL,
+            collapsible = TRUE,
+            collapsed = TRUE,
+
+            # Timeline output (uses Shiny's built-in loading indicator)
+            uiOutput("dashboard_timeline")
+          )
         )
       ),
 
       # ==================== PIMS MODULE ====================
-      tabItem(tabName = "pims_project", pims_project_ui("pims_proj", i18n)),
-      tabItem(tabName = "pims_stakeholders", pimsStakeholderUI("pims_stake", i18n)),
-      tabItem(tabName = "pims_resources", pims_resources_ui("pims_res", i18n)),
-      tabItem(tabName = "pims_data", pims_data_ui("pims_dm", i18n)),
-      tabItem(tabName = "pims_evaluation", pims_evaluation_ui("pims_eval", i18n)),
+      bs4TabItem(tabName = "pims_project", pims_project_ui("pims_proj", i18n)),
+      bs4TabItem(tabName = "pims_stakeholders", pims_stakeholder_ui("pims_stake", i18n)),
+      bs4TabItem(tabName = "pims_resources", pims_resources_ui("pims_res", i18n)),
+      bs4TabItem(tabName = "pims_data", pims_data_ui("pims_dm", i18n)),
+      bs4TabItem(tabName = "pims_evaluation", pims_evaluation_ui("pims_eval", i18n)),
 
       # ==================== CREATE SES ====================
       # Choose Method
-      tabItem(tabName = "create_ses_choose", create_ses_ui("create_ses_main", i18n)),
+      bs4TabItem(tabName = "create_ses_choose", create_ses_ui("create_ses_main", i18n)),
 
       # Standard Entry
-      tabItem(tabName = "create_ses_standard", isaDataEntryUI("isa_module")),
+      bs4TabItem(tabName = "create_ses_standard", isaDataEntryUI("isa_module")),
 
       # AI Assistant
-      tabItem(tabName = "create_ses_ai", ai_isa_assistant_ui("ai_isa_mod", i18n)),
+      bs4TabItem(tabName = "create_ses_ai", ai_isa_assistant_ui("ai_isa_mod", i18n)),
 
       # Template-Based
-      tabItem(tabName = "create_ses_template", template_ses_ui("template_ses", i18n)),
+      bs4TabItem(tabName = "create_ses_template", template_ses_ui("template_ses", i18n)),
+
+      # ==================== GRAPHICAL SES CREATOR ====================
+      # AI-powered step-by-step network building with context wizard
+      bs4TabItem(tabName = "graphical_ses_creator",
+        graphical_ses_creator_ui("graphical_ses_mod", i18n)),
 
       # ==================== CLD VISUALIZATION ====================
-      tabItem(tabName = "cld_viz", cld_viz_ui("cld_visual", i18n)),
+      bs4TabItem(tabName = "cld_viz", cld_viz_ui("cld_visual", i18n)),
       
       # ==================== ANALYSIS ====================
-      tabItem(tabName = "analysis_metrics", analysis_metrics_ui("analysis_met", i18n)),
-      tabItem(tabName = "analysis_loops", analysis_loops_ui("analysis_loop", i18n)),
-      tabItem(tabName = "analysis_leverage", analysis_leverage_ui("analysis_lev", i18n)),
-      tabItem(tabName = "analysis_bot", analysis_bot_ui("analysis_b", i18n)),
-      tabItem(tabName = "analysis_simplify", analysis_simplify_ui("analysis_simp", i18n)),
+      bs4TabItem(tabName = "analysis_metrics", analysis_metrics_ui("analysis_met", i18n)),
+      bs4TabItem(tabName = "analysis_loops", analysis_loops_ui("analysis_loop", i18n)),
+      bs4TabItem(tabName = "analysis_leverage", analysis_leverage_ui("analysis_lev", i18n)),
+      bs4TabItem(tabName = "analysis_bot", analysis_bot_ui("analysis_b", i18n)),
+      bs4TabItem(tabName = "analysis_simplify", analysis_simplify_ui("analysis_simp", i18n)),
       
       # ==================== RESPONSE & VALIDATION ====================
-      tabItem(tabName = "response_measures", response_measures_ui("resp_meas", i18n)),
-      tabItem(tabName = "response_scenarios", scenario_builder_ui("scenario_builder", i18n)),
-      tabItem(tabName = "response_validation", response_validation_ui("resp_val", i18n)),
+      bs4TabItem(tabName = "response_measures", response_measures_ui("resp_meas", i18n)),
+      bs4TabItem(tabName = "response_scenarios", scenario_builder_ui("scenario_builder", i18n)),
+      bs4TabItem(tabName = "response_validation", response_validation_ui("resp_val", i18n)),
 
       # ==================== IMPORT DATA ====================
-      tabItem(tabName = "import_data", import_data_ui("import_data_mod", i18n)),
+      bs4TabItem(tabName = "import_data", import_data_ui("import_data_mod", i18n)),
 
       # ==================== EXPORT ====================
-      tabItem(
+      bs4TabItem(
         tabName = "export",
         export_reports_ui("export_reports_mod", i18n)
       ),
 
       # ==================== PREPARE REPORT ====================
-      tabItem(tabName = "prepare_report", prepare_report_ui("prep_report", i18n))
+      bs4TabItem(tabName = "prepare_report", prepare_report_ui("prep_report", i18n))
     )
-  )
+  ),
+
+  # ========== CONTROLBAR - REMOVED ==========
+  # Controlbar removed - settings moved to main settings modal
+  # Quick actions (Save/Load) available in sidebar
+  controlbar = NULL,
+
+  # ========== FOOTER ==========
+  footer = bs4DashFooter(
+    left = tags$span(
+      "© 2026 ",
+      tags$a(href = "https://marinesabres.eu", target = "_blank", "Marine-SABRES"),
+      " - Horizon Europe Project"
+    ),
+    right = tags$span(
+      "SES Toolbox ",
+      tags$strong(paste0("v", readLines("VERSION")[1])),
+      " | ",
+      tags$a(href = "https://github.com/marinesabres", target = "_blank", icon("github"))
+    )
+  ),
+
+  # ========== DASHBOARD OPTIONS ==========
+  # Static light theme (following EcoNeTool architecture)
+  skin = "light",
+  freshTheme = NULL,
+  help = NULL,  # Disable bs4Dash's built-in help toggle (we use custom tooltip implementation)
+  dark = NULL
 )
 
 # ============================================================================
@@ -273,6 +389,31 @@ ui <- dashboardPage(
 # ============================================================================
 
 server <- function(input, output, session) {
+
+  # ========== REACTIVE VALUES ==========
+  # NOTE: These must be initialized BEFORE any observe() blocks that use them
+
+  # Main project data
+  project_data <- reactiveVal(init_session_data())
+
+  # User experience level (beginner/intermediate/expert)
+  # Default to beginner for new users and stakeholder testing
+  user_level <- reactiveVal("beginner")
+
+  # Auto-save enabled flag (controls AI ISA Assistant auto-save)
+  # Default to FALSE to avoid accidental overwrites
+  autosave_enabled <- reactiveVal(FALSE)
+
+  # Advanced auto-save settings
+  autosave_delay <- reactiveVal(2)  # Default: 2 seconds
+  autosave_notifications <- reactiveVal(FALSE)  # Default: notifications OFF
+  autosave_indicator <- reactiveVal(TRUE)  # Default: indicator ON
+  autosave_triggers <- reactiveVal(c("elements", "context", "connections", "steps"))  # Default: all triggers
+
+  # ========== REACTIVE EVENT BUS ==========
+  # Create event bus for reactive data pipeline
+  event_bus <- create_event_bus()
+
   # === DIAGNOSTICS: Print project data element counts and IDs at startup and on load ===
   observe({
     data <- project_data()
@@ -338,27 +479,11 @@ server <- function(input, output, session) {
       }
     })
   })
-  # ========== BOOKMARKING SETUP ========== 
+
+  # ========== BOOKMARKING SETUP ==========
   # Enable bookmarking for this session
   setBookmarkExclude(c("save_project", "load_project", "confirm_save",
                        "confirm_load", "trigger_bookmark"))
-
-  # ========== REACTIVE VALUES ==========
-
-  # Main project data
-  project_data <- reactiveVal(init_session_data())
-
-  # User experience level (beginner/intermediate/expert)
-  # Default to beginner for new users and stakeholder testing
-  user_level <- reactiveVal("beginner")
-
-  # Auto-save enabled flag (controls AI ISA Assistant auto-save)
-  # Default to FALSE to avoid accidental overwrites
-  autosave_enabled <- reactiveVal(FALSE)
-
-  # ========== REACTIVE EVENT BUS ==========
-  # Create event bus for reactive data pipeline
-  event_bus <- create_event_bus()
 
   # ========== BOOKMARKING HANDLERS ==========
 
@@ -369,7 +494,7 @@ server <- function(input, output, session) {
 
   # Save app state for bookmarking
   onBookmark(function(state) {
-    cat("[BOOKMARK] Saving app state...\n")
+    debug_log("Saving app state...", "BOOKMARK")
 
     # Save user level
     state$values$user_level <- user_level()
@@ -377,7 +502,7 @@ server <- function(input, output, session) {
     # Save current tab
     if (!is.null(input$sidebar_menu)) {
       state$values$active_tab <- input$sidebar_menu
-      cat("[BOOKMARK] Saved active tab:", input$sidebar_menu, "\n")
+      debug_log(paste("Saved active tab:", input$sidebar_menu), "BOOKMARK")
     }
 
     # Save autosave setting
@@ -401,12 +526,12 @@ server <- function(input, output, session) {
     state$values$has_cld_data <- !is.null(data$data$cld$nodes) &&
                                   nrow(data$data$cld$nodes) > 0
 
-    cat("[BOOKMARK] State saved successfully\n")
+    debug_log("State saved successfully", "BOOKMARK")
   })
 
   # Show modal after bookmark URL is generated
   onBookmarked(function(url) {
-    cat("[BOOKMARK] Bookmark URL created:", url, "\n")
+    debug_log(paste("Bookmark URL created:", url), "BOOKMARK")
 
     # Show bookmark modal with URL
     showModal(modalDialog(
@@ -473,18 +598,18 @@ server <- function(input, output, session) {
 
   # Restore state from bookmark
   onRestore(function(state) {
-    cat("[BOOKMARK] Restoring app state...\n")
+    debug_log("Restoring app state...", "BOOKMARK")
 
     # Restore user level
     if (!is.null(state$values$user_level)) {
       user_level(state$values$user_level)
-      cat("[BOOKMARK] Restored user level:", state$values$user_level, "\n")
+      debug_log(paste("Restored user level:", state$values$user_level), "BOOKMARK")
     }
 
     # Restore autosave setting
     if (!is.null(state$values$autosave_enabled)) {
       autosave_enabled(state$values$autosave_enabled)
-      cat("[BOOKMARK] Restored autosave setting:", state$values$autosave_enabled, "\n")
+      debug_log(paste("Restored autosave setting:", state$values$autosave_enabled), "BOOKMARK")
     }
 
     # Restore metadata if saved
@@ -497,14 +622,14 @@ server <- function(input, output, session) {
         data$data$metadata$focal_issue <- state$values$metadata_focal_issue
       }
       project_data(data)
-      cat("[BOOKMARK] Restored metadata\n")
+      debug_log("Restored metadata", "BOOKMARK")
     }
 
     # Restore active tab
     if (!is.null(state$values$active_tab)) {
       # Use updateTabItems to switch to saved tab
       updateTabItems(session, "sidebar_menu", state$values$active_tab)
-      cat("[BOOKMARK] Restored active tab:", state$values$active_tab, "\n")
+      debug_log(paste("Restored active tab:", state$values$active_tab), "BOOKMARK")
     }
 
     # Show restoration notification
@@ -517,7 +642,7 @@ server <- function(input, output, session) {
       duration = 5
     )
 
-    cat("[BOOKMARK] State restored successfully\n")
+    debug_log("State restored successfully", "BOOKMARK")
   })
 
   # Restore tab after bookmark URL is loaded
@@ -525,30 +650,34 @@ server <- function(input, output, session) {
     query <- parseQueryString(session$clientData$url_search)
     if ("_state_id_" %in% names(query)) {
       # This is a bookmarked session, log it
-      cat("[BOOKMARK] Bookmarked session detected\n")
+      debug_log("Bookmarked session detected", "BOOKMARK")
     }
   }, once = TRUE)
 
   # ========== AUTO-SAVE MODULE ==========
   # Initialize auto-save functionality
   # Pass autosave_enabled reactive so module respects user's setting
-  auto_save_server("auto_save", project_data, i18n, autosave_enabled)
+  # Pass event_bus for event-driven auto-save (non-intrusive, triggers on SES changes)
+  # Pass advanced autosave settings for customizable behavior
+  auto_save_server("auto_save", project_data, i18n, autosave_enabled, event_bus,
+                   autosave_delay, autosave_notifications,
+                   autosave_indicator, autosave_triggers)
 
   # ========== LANGUAGE STATE MANAGEMENT (EARLY) ==========
   # Load language from query parameter BEFORE anything else
   observe({
     query <- parseQueryString(session$clientData$url_search)
-    cat(sprintf("[LANGUAGE] URL search: %s\n", session$clientData$url_search))
+    debug_log(sprintf("URL search: %s", session$clientData$url_search), "LANGUAGE")
 
     if (!is.null(query$language)) {
-      cat(sprintf("[LANGUAGE] Found language parameter: %s\n", query$language))
+      debug_log(sprintf("Found language parameter: %s", query$language), "LANGUAGE")
 
       if (query$language %in% names(AVAILABLE_LANGUAGES)) {
-        cat(sprintf("[LANGUAGE] Setting language to: %s\n", query$language))
+        debug_log(sprintf("Setting language to: %s", query$language), "LANGUAGE")
 
         # Set language in wrapper (this will also set it in underlying translator)
         i18n$set_translation_language(query$language)
-        cat(sprintf("[LANGUAGE] Language set. Current: %s\n", i18n$get_translation_language()))
+        debug_log(sprintf("Language set. Current: %s", i18n$get_translation_language()), "LANGUAGE")
 
         # Use shiny.i18n's built-in update mechanism for elements with data-i18n attributes
         shiny.i18n::update_lang(query$language, session)
@@ -567,18 +696,18 @@ server <- function(input, output, session) {
           quick_reference = as.character(i18n$t("ui.header.quick_reference")),
           bookmark = as.character(i18n$t("ui.header.bookmark"))
         )
-        cat(sprintf("[LANGUAGE] Header translations captured: %s, %s, %s\n",
-                    header_translations$language, header_translations$settings, header_translations$help))
+        debug_log(sprintf("Header translations captured: %s, %s, %s",
+                    header_translations$language, header_translations$settings, header_translations$help), "LANGUAGE")
 
         # Schedule header update to run after shiny.i18n finishes
         later::later(function() {
           session$sendCustomMessage(type = "updateHeaderTranslations", message = header_translations)
         }, delay = 0.1)
       } else {
-        cat(sprintf("[LANGUAGE] Invalid language: %s\n", query$language))
+        debug_log(sprintf("Invalid language: %s", query$language), "LANGUAGE")
       }
     } else {
-      cat("[LANGUAGE] No language parameter in URL\n")
+      debug_log("No language parameter in URL", "LANGUAGE")
     }
   }, priority = 1000)  # High priority to run early
 
@@ -594,8 +723,8 @@ server <- function(input, output, session) {
     if (!identical(current_lang, last_lang())) {
       lang_trigger(lang_trigger() + 1)
       last_lang(current_lang)
-      cat(sprintf("[LANGUAGE] Language trigger updated: %s (count: %d)\n",
-                  current_lang, lang_trigger()))
+      debug_log(sprintf("Language trigger updated: %s (count: %d)",
+                  current_lang, lang_trigger()), "LANGUAGE")
     }
   })
 
@@ -607,20 +736,39 @@ server <- function(input, output, session) {
     lang_trigger()
 
     tryCatch({
-      cat("[SIDEBAR] Rendering dynamic sidebar...\n")
-      cat(sprintf("[SIDEBAR] User level: %s\n", user_level()))
-      cat(sprintf("[SIDEBAR] Current language: %s\n", i18n$get_translation_language()))
+      debug_log("Rendering dynamic sidebar...", "SIDEBAR")
+      debug_log(sprintf("User level: %s", user_level()), "SIDEBAR")
+      debug_log(sprintf("Current language: %s", i18n$get_translation_language()), "SIDEBAR")
       menu <- generate_sidebar_menu(user_level(), i18n)
-      cat("[SIDEBAR] Sidebar generated successfully\n")
+      debug_log("Sidebar generated successfully", "SIDEBAR")
       menu
     }, error = function(e) {
-      cat(sprintf("[SIDEBAR] ERROR: %s\n", e$message))
+      debug_log(sprintf("ERROR: %s", e$message), "SIDEBAR")
       # Return a minimal sidebar on error
-      sidebarMenu(
-        menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"))
+      bs4SidebarMenu(
+        bs4SidebarMenuItem(text = "Dashboard", tabName = "dashboard", icon = icon("dashboard"))
       )
     })
   })
+
+  # Re-initialize tooltips for sidebar menu items after dynamic updates
+  # The sidebar is rendered dynamically via renderMenu(), so tooltips need
+  # to be re-initialized each time language or user level changes
+  # We use custom JavaScript handler for full control over tooltip behavior
+  observeEvent(c(lang_trigger(), user_level()), {
+    # Small delay to ensure DOM is ready after sidebar re-renders
+    invalidateLater(600, session)
+
+    isolate({
+      # Send custom message to JavaScript to re-initialize tooltips
+      # This ensures sidebar menu tooltips work after dynamic updates
+      session$sendCustomMessage("initSidebarTooltips", list(
+        selector = ".main-sidebar .nav-link[title]"
+      ))
+
+      debug_log("Sidebar tooltip re-initialization scheduled", "TOOLTIPS")
+    })
+  }, ignoreNULL = TRUE, ignoreInit = FALSE)
 
   # User info
   output$user_info <- renderText({
@@ -647,7 +795,7 @@ server <- function(input, output, session) {
     query <- parseQueryString(session$clientData$url_search)
     if (!is.null(query$user_level) && query$user_level %in% c("beginner", "intermediate", "expert")) {
       user_level(query$user_level)
-      cat(sprintf("[USER-LEVEL] Loaded from URL: %s\n", query$user_level))
+      debug_log(sprintf("Loaded from URL: %s", query$user_level), "USER-LEVEL")
     }
   })
 
@@ -662,7 +810,9 @@ server <- function(input, output, session) {
   # Modals extracted to server/modals.R for better maintainability
 
   # Setup language settings modal
-  setup_language_modal_handlers(input, output, session, i18n, autosave_enabled, AVAILABLE_LANGUAGES)
+  setup_language_modal_handlers(input, output, session, i18n, autosave_enabled, AVAILABLE_LANGUAGES,
+                                 autosave_delay, autosave_notifications,
+                                 autosave_indicator, autosave_triggers)
 
   # Setup user level modal
   setup_user_level_modal_handlers(input, output, session, user_level, i18n)
@@ -673,6 +823,11 @@ server <- function(input, output, session) {
   # Setup about modal
   setup_about_modal_handlers(input, output, session, i18n)
 
+  # ========== CONTROLBAR HANDLERS - REMOVED ==========
+  # Controlbar has been removed - settings now in main settings modal
+  # User level and autosave settings accessible via Settings dropdown in header
+  # Quick save/load actions available in sidebar
+
   # ========== CALL MODULE SERVERS ==========
 
   # Entry Point module - pass session for sidebar navigation and user level
@@ -680,14 +835,14 @@ server <- function(input, output, session) {
 
   # PIMS modules
   pims_project_data <- pims_project_server("pims_proj", project_data, i18n)
-  pims_stakeholders_data <- pimsStakeholderServer("pims_stake", project_data, i18n)
+  pims_stakeholders_data <- pims_stakeholder_server("pims_stake", project_data, i18n)
   pims_resources_data <- pims_resources_server("pims_res", project_data, i18n)
   pims_data_data <- pims_data_server("pims_dm", project_data, i18n)
   pims_evaluation_data <- pims_evaluation_server("pims_eval", project_data, i18n)
   
   # ==================== CREATE SES MODULES ====================
   # Main Create SES module (method selector)
-  create_ses_server("create_ses_main", project_data, session, i18n)
+  create_ses_server("create_ses_main", project_data, i18n, parent_session = session)
 
   # Template-based SES module
   template_ses_server("template_ses", project_data, session, event_bus, i18n)
@@ -697,6 +852,9 @@ server <- function(input, output, session) {
 
   # ISA data entry module (Standard Entry)
   isa_data <- isaDataEntryServer("isa_module", project_data, event_bus)
+
+  # Graphical SES Creator module (AI-powered step-by-step network building)
+  graphical_ses_creator_server("graphical_ses_mod", project_data, session, i18n)
 
   # CLD visualization
   cld_viz_server("cld_visual", project_data, i18n)
@@ -711,7 +869,7 @@ server <- function(input, output, session) {
   # Response & validation modules
   response_measures_server("resp_meas", project_data, i18n)
   scenario_builder_server("scenario_builder", project_data, i18n)
-  response_validation_server("resp_val", project_data)
+  response_validation_server("resp_val", project_data, i18n)
 
   # Import Data module
   import_data_server("import_data_mod", project_data, i18n, session, event_bus)

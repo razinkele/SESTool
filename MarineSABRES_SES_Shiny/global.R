@@ -10,7 +10,7 @@ suppressPackageStartupMessages({
 
   # Core Shiny packages
   library(shiny)
-  library(shinydashboard)
+  library(bs4Dash)  # Modern Bootstrap 4 dashboard framework
   library(shinyWidgets)
   library(shinyjs)
   library(shinyBS)
@@ -241,14 +241,15 @@ AVAILABLE_LANGUAGES <- list(
 # ============================================================================
 
 # Load application constants (must be loaded before other functions)
-source("constants.R")
+# Note: local = FALSE makes constants available globally
+source("constants.R", local = FALSE)
 
 # ============================================================================
 # SOURCE HELPER FUNCTIONS
 # ============================================================================
 
-# UI helper functions
-source("functions/ui_helpers.R")
+# UI helper functions (global scope for use across modules)
+source("functions/ui_helpers.R", local = FALSE)
 
 # Template loading functions (for JSON templates)
 source("functions/template_loader.R", local = TRUE)
@@ -277,11 +278,115 @@ source("functions/error_handling.R", local = TRUE)
 # Reactive pipeline (event-based data flow)
 source("functions/reactive_pipeline.R", local = TRUE)
 
+# Utility functions (general helper functions)
+source("utils.R", local = TRUE)
+
 # Navigation helpers (breadcrumbs, progress bars, nav buttons)
 source("modules/navigation_helpers.R", local = TRUE)
 
 # Auto-save module
 source("modules/auto_save_module.R", local = TRUE)
+
+# Tutorial system (contextual help for features)
+source("modules/tutorial_system.R", local = TRUE)
+source("config/tutorial_content.R", local = TRUE)
+
+# Graphical SES Creator system (AI-powered step-by-step network building)
+# Note: Knowledge base must be global scope for use by both AI ISA and Graphical SES modules
+source("modules/ai_isa_knowledge_base.R", local = FALSE)
+source("data/dapsiwrm_element_keywords.R", local = TRUE)
+source("functions/dapsiwrm_connection_rules.R", local = TRUE)
+source("modules/graphical_ses_ai_classifier.R", local = TRUE)
+source("modules/graphical_ses_network_builder.R", local = TRUE)
+source("modules/graphical_ses_creator_module.R", local = TRUE)
+
+# ============================================================================
+# OPTIONAL ML ENHANCEMENT (Deep Learning Connection Predictor)
+# ============================================================================
+
+# ML can be enabled/disabled via environment variable or user preference
+ML_ENABLED <- Sys.getenv("MARINESABRES_ML_ENABLED", "TRUE") == "TRUE"
+ML_AVAILABLE <- FALSE  # Will be set to TRUE if model loads successfully
+
+if (ML_ENABLED) {
+  cat("\n")
+  cat("═══════════════════════════════════════════════════════════\n")
+  cat("  ML Enhancement: Loading Deep Learning Module\n")
+  cat("═══════════════════════════════════════════════════════════\n")
+
+  # Try to load torch package (required for ML)
+  tryCatch({
+    suppressPackageStartupMessages({
+      library(torch)
+    })
+    cat("✓ torch package loaded\n")
+
+    # Load ML functions
+    source("functions/ml_feature_engineering.R", local = TRUE)
+    cat("✓ ML feature engineering functions loaded\n")
+
+    # Load Phase 2 ML modules (context embeddings, graph features, active learning, ensemble)
+    if (file.exists("functions/ml_context_embeddings.R")) {
+      source("functions/ml_context_embeddings.R", local = TRUE)
+    }
+    if (file.exists("functions/ml_graph_features.R")) {
+      source("functions/ml_graph_features.R", local = TRUE)
+    }
+    if (file.exists("functions/ml_active_learning.R")) {
+      source("functions/ml_active_learning.R", local = TRUE)
+    }
+    if (file.exists("functions/ml_ensemble.R")) {
+      source("functions/ml_ensemble.R", local = TRUE)
+    }
+    if (file.exists("functions/ml_template_matching.R")) {
+      source("functions/ml_template_matching.R", local = TRUE)
+    }
+    if (file.exists("functions/template_versioning.R")) {
+      source("functions/template_versioning.R", local = TRUE)
+    }
+
+    source("functions/ml_models.R", local = TRUE)
+    cat("✓ ML model architecture loaded\n")
+
+    source("functions/ml_inference.R", local = TRUE)
+    cat("✓ ML inference API loaded\n")
+
+    source("modules/graphical_ses_ml_enhancer.R", local = TRUE)
+    cat("✓ ML enhancer module loaded\n")
+
+    source("functions/ml_feedback_logger.R", local = TRUE)
+    cat("✓ ML feedback logger loaded\n")
+
+    # Try to load trained model
+    model_path <- "models/connection_predictor_best.pt"
+    if (file.exists(model_path)) {
+      load_ml_model(model_path)
+      ML_AVAILABLE <- TRUE
+
+      model_info <- get_ml_model_info()
+      cat(sprintf("\n✓ ML Model Loaded Successfully\n"))
+      cat(sprintf("  - Model: %s\n", model_info$architecture))
+      cat(sprintf("  - Parameters: %s\n", format(model_info$parameters, big.mark = ",")))
+      cat(sprintf("  - Size: %.2f MB\n", model_info$size_mb))
+      cat(sprintf("  - Status: Ready for predictions\n"))
+    } else {
+      cat(sprintf("\n✗ ML model file not found: %s\n", model_path))
+      cat("  ML predictions will not be available\n")
+      cat("  To enable ML, run: Rscript scripts/train_connection_predictor.R\n")
+    }
+
+  }, error = function(e) {
+    cat(sprintf("\n✗ ML Enhancement could not be loaded: %s\n", e$message))
+    cat("  Falling back to rule-based AI only\n")
+    cat("  To enable ML, install torch: install.packages('torch')\n")
+    ML_ENABLED <- FALSE
+  })
+
+  cat("═══════════════════════════════════════════════════════════\n\n")
+} else {
+  cat("\nML Enhancement: Disabled (using rule-based AI only)\n")
+  cat("Set MARINESABRES_ML_ENABLED=TRUE to enable ML features\n\n")
+}
 
 # ============================================================================
 # DEBUG MODE CONFIGURATION
@@ -297,9 +402,22 @@ DEBUG_MODE <- Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE"
 #' Conditionally prints debug messages based on DEBUG_MODE flag.
 #' In production (DEBUG_MODE=FALSE), these calls are silently skipped.
 #'
+#' STANDARDIZED DEBUG LOGGING PATTERN:
+#' - Use debug_log() for ALL debug messages (respects DEBUG_MODE)
+#' - NEVER use cat() directly for debug messages
+#' - Use consistent context tags: SETTINGS, CONFIG, I18N, ML, DIAGNOSTICS, etc.
+#' - Format: debug_log("message", "CONTEXT") → outputs "[CONTEXT] message"
+#'
+#' EXCEPTION: System status messages (ML loading, i18n init) that users should
+#' always see use cat() directly - these are informational, not debug messages.
+#'
 #' @param message Character string to log
 #' @param context Optional context string (e.g., "TEMPLATE", "NETWORK_ANALYSIS")
 #' @export
+#'
+#' @examples
+#' debug_log("Processing started", "TEMPLATE")  # [TEMPLATE] Processing started
+#' debug_log("Found 5 connections")              # Found 5 connections
 debug_log <- function(message, context = NULL) {
   if (DEBUG_MODE) {
     if (!is.null(context)) {
@@ -308,6 +426,45 @@ debug_log <- function(message, context = NULL) {
       cat(message, "\n")
     }
   }
+}
+
+#' Sanitize filename for safe file operations
+#'
+#' Removes or replaces characters that could cause issues in filenames across
+#' different operating systems. Limits filename length to prevent path issues.
+#' Preserves spaces, alphanumeric characters, underscores, and hyphens.
+#'
+#' @param name Character string to sanitize
+#' @param max_length Maximum filename length (default: 50 characters)
+#' @return Sanitized filename string
+#' @export
+#'
+#' @examples
+#' sanitize_filename("My Report: 2024 (Final Version)")
+#' # Returns: "My Report 2024 Final Version"
+sanitize_filename <- function(name, max_length = 50) {
+  if (is.null(name) || !is.character(name) || length(name) != 1) {
+    return("project")
+  }
+
+  # Remove path separators and dangerous characters
+  name <- gsub("[/\\\\:*?\"<>|]", "", name)
+
+  # Keep only alphanumeric, underscore, hyphen, space
+  name <- gsub("[^A-Za-z0-9_ -]", "", name)
+
+  # Trim whitespace
+  name <- trimws(name)
+
+  # Truncate to reasonable length
+  name <- substr(name, 1, max_length)
+
+  # Ensure not empty
+  if (nchar(name) == 0) {
+    name <- "project"
+  }
+
+  return(name)
 }
 
 # Print debug mode status on startup
@@ -330,69 +487,33 @@ if (DEBUG_MODE) {
 # Prevents excessive regenerations during rapid consecutive edits
 ISA_DEBOUNCE_MS <- as.numeric(Sys.getenv("MARINESABRES_ISA_DEBOUNCE_MS", "500"))
 
-if (DEBUG_MODE) {
-  cat(sprintf("ISA debounce delay: %d ms\n", ISA_DEBOUNCE_MS))
-}
+debug_log(sprintf("ISA debounce delay: %d ms", ISA_DEBOUNCE_MS), "CONFIG")
 
-# DAPSI(W)R(M) element types
-DAPSIWRM_ELEMENTS <- c(
-  "Drivers",
-  "Activities",
-  "Pressures",
-  "Marine Processes & Functioning",
-  "Ecosystem Services",
-  "Goods & Benefits",
-  "Responses"
-)
+# NOTE: The following constants are now defined in constants.R:
+# - DAPSIWRM_ELEMENTS (MarineSABRES element types)
+# - ELEMENT_COLORS (Kumu-style colors for DAPSIWRM elements)
+# - ELEMENT_SHAPES (visNetwork shapes for DAPSIWRM elements)
+# - EDGE_COLORS (reinforcing/opposing edge colors)
+# - DA_SITES (Demonstration Areas)
+# - STAKEHOLDER_TYPES (Newton & Elliott, 2016)
+# All constants moved to constants.R for centralized configuration
 
-# Color scheme for DAPSI(W)R(M) elements
-ELEMENT_COLORS <- list(
-  "Drivers" = "#776db3",                           # Purple (Kumu style)
-  "Activities" = "#5abc67",                        # Green (Kumu style)
-  "Pressures" = "#fec05a",                         # Orange (Kumu style)
-  "Marine Processes & Functioning" = "#bce2ee",    # Light Blue (Kumu style)
-  "Ecosystem Services" = "#313695",                # Dark Blue (Kumu style)
-  "Goods & Benefits" = "#fff1a2",                  # Light Yellow (Kumu style)
-  "Responses" = "#9C27B0",                         # Purple for management responses
-  "Measures" = "#795548"                           # Brown for management measures/instruments
-)
+# ============================================================================
+# GRAPHICAL SES CREATOR CONSTANTS
+# ============================================================================
 
-# Node shapes for each element type (following Kumu style guide)
-# visNetwork available shapes: dot, diamond, square, triangle, triangleDown,
-# star, hexagon, ellipse, database, text, circularImage, circle
-# Note: hexagon is available! Octagon is not, using star as closest alternative
-ELEMENT_SHAPES <- list(
-  "Drivers" = "star",                            # Kumu: octagon → star (closest available)
-  "Activities" = "hexagon",                      # Kumu: hexagon → hexagon (EXACT MATCH!)
-  "Pressures" = "diamond",                       # Kumu: diamond (EXACT MATCH!)
-  "Marine Processes & Functioning" = "dot",      # Kumu: pill → dot (circular, label outside)
-  "Ecosystem Services" = "square",               # Kumu: square (EXACT MATCH!)
-  "Goods & Benefits" = "triangle",               # Kumu: triangle (EXACT MATCH!)
-  "Responses" = "triangleDown"                   # Inverted triangle for management responses
-)
+# Ghost node rendering (semi-transparent preview nodes in graphical creator)
+GHOST_NODE_OPACITY <- 0.4         # 40% opacity for ghost nodes
+GHOST_EDGE_OPACITY <- 0.4         # 40% opacity for ghost edges
+GHOST_NODE_BORDER_DASH <- c(5, 5) # Dashed border pattern
 
-# Edge colors (following Kumu style guide)
-EDGE_COLORS <- list(
-  reinforcing = "#80b8d7",    # Light blue (positive from Kumu)
-  opposing = "#dc131e"        # Red (negative from Kumu)
-)
+# AI suggestion limits
+MAX_SUGGESTIONS_PER_EXPANSION <- 5  # Max number of ghost nodes per expansion
+MIN_CLASSIFICATION_CONFIDENCE <- 0.2 # Minimum confidence to show classification
 
-# Demonstration Areas
-DA_SITES <- c(
-  "Tuscan Archipelago",
-  "Arctic Northeast Atlantic",
-  "Macaronesia"
-)
-
-# Stakeholder types (Newton & Elliott, 2016)
-STAKEHOLDER_TYPES <- c(
-  "Inputters",
-  "Extractors",
-  "Regulators",
-  "Affectees",
-  "Beneficiaries",
-  "Influencers"
-)
+# Network validation
+MIN_NETWORK_NODES_FOR_EXPORT <- 2  # Minimum nodes required for ISA export
+MIN_NETWORK_EDGES_FOR_EXPORT <- 1  # Minimum edges required for ISA export
 
 # ============================================================================
 # ENTRY POINT SYSTEM (Marine Management DSS & Toolbox)
@@ -1048,59 +1169,11 @@ parse_connection_value <- function(value) {
 # DATA VALIDATION FUNCTIONS
 # ============================================================================
 
-# Validate DAPSI(W)R(M) element data
-validate_element_data <- function(data, element_type) {
-  errors <- c()
-  
-  # Check required columns
-  required_cols <- c("id", "name", "indicator")
-  missing_cols <- setdiff(required_cols, names(data))
-  
-  if (length(missing_cols) > 0) {
-    errors <- c(errors, paste("Missing required columns:", 
-                             paste(missing_cols, collapse = ", ")))
-  }
-  
-  # Check for duplicate IDs
-  if (any(duplicated(data$id))) {
-    errors <- c(errors, "Duplicate IDs found")
-  }
-  
-  # Check for empty names
-  if (any(is.na(data$name) | data$name == "")) {
-    errors <- c(errors, "Empty names found")
-  }
-  
-  return(errors)
-}
+# NOTE: validate_element_data() now defined in functions/data_structure.R
+# (removed duplicate definition to avoid function name conflicts)
 
-# Validate adjacency matrix
-validate_adjacency_matrix <- function(adj_matrix) {
-  errors <- c()
-  
-  # Check if matrix
-  if (!is.matrix(adj_matrix)) {
-    errors <- c(errors, "Not a valid matrix")
-    return(errors)
-  }
-  
-  # Check dimensions
-  if (nrow(adj_matrix) == 0 || ncol(adj_matrix) == 0) {
-    errors <- c(errors, "Matrix has zero dimensions")
-  }
-  
-  # Check values
-  valid_values <- c("", NA, 
-                   paste0("+", CONNECTION_STRENGTH),
-                   paste0("-", CONNECTION_STRENGTH))
-  
-  invalid_values <- !adj_matrix %in% valid_values
-  if (any(invalid_values, na.rm = TRUE)) {
-    errors <- c(errors, "Invalid connection values found")
-  }
-  
-  return(errors)
-}
+# NOTE: validate_adjacency_matrix() now defined in functions/data_structure.R
+# (removed duplicate definition to avoid function name conflicts)
 
 # ============================================================================
 # LOGGING FUNCTIONS
@@ -1179,103 +1252,14 @@ sanitize_color <- function(color) {
   return("#cccccc")
 }
 
-# Sanitize filename to prevent path traversal
-sanitize_filename <- function(name) {
-  if (is.null(name) || !is.character(name) || length(name) != 1) {
-    return("project")
-  }
+# NOTE: sanitize_filename() is defined earlier in this file (global.R:430)
+# (removed duplicate definition to avoid function name conflicts)
 
-  # Remove path separators and dangerous characters
-  name <- gsub("[/\\\\:*?\"<>|]", "", name)
+# NOTE: validate_project_structure() now defined in functions/data_structure.R
+# (removed duplicate definition to avoid function name conflicts)
 
-  # Keep only alphanumeric, underscore, hyphen, space
-  name <- gsub("[^A-Za-z0-9_ -]", "", name)
-
-  # Trim whitespace
-  name <- trimws(name)
-
-  # Truncate to reasonable length
-  name <- substr(name, 1, 50)
-
-  # Ensure not empty
-  if (nchar(name) == 0) {
-    name <- "project"
-  }
-
-  return(name)
-}
-
-# Validate project data structure
-validate_project_structure <- function(data) {
-  # Check if data is a list
-  if (!is.list(data)) {
-    return(FALSE)
-  }
-
-  # Essential keys (must have)
-  essential_keys <- c("project_id", "project_name", "data")
-
-  if (!all(essential_keys %in% names(data))) {
-    return(FALSE)
-  }
-
-  # Check that data is a list
-  if (!is.list(data$data)) {
-    return(FALSE)
-  }
-
-  # Basic type validation
-  if (!is.character(data$project_id) || length(data$project_id) != 1) {
-    return(FALSE)
-  }
-
-  if (!is.character(data$project_name) || length(data$project_name) != 1) {
-    return(FALSE)
-  }
-
-  # Date validation - accept both 'created' and 'created_at' field names
-  has_created <- "created" %in% names(data)
-  has_created_at <- "created_at" %in% names(data)
-
-  if (!has_created && !has_created_at) {
-    return(FALSE)
-  }
-
-  # Validate the date field that exists
-  created_field <- if (has_created) data$created else data$created_at
-  if (!inherits(created_field, "POSIXct") && !is.character(created_field)) {
-    return(FALSE)
-  }
-
-  # Validate last_modified if present (optional for backward compatibility)
-  if ("last_modified" %in% names(data)) {
-    if (!inherits(data$last_modified, "POSIXct") && !is.character(data$last_modified)) {
-      return(FALSE)
-    }
-  }
-
-  return(TRUE)
-}
-
-# Safe nested data accessor
-safe_get_nested <- function(data, ..., default = NULL) {
-  keys <- list(...)
-  result <- data
-
-  for (key in keys) {
-    if (is.null(result)) {
-      return(default)
-    }
-
-    if (is.list(result) && key %in% names(result)) {
-      result <- result[[key]]
-    } else {
-      return(default)
-    }
-  }
-
-  return(result)
-}
+# NOTE: safe_get_nested() now defined in functions/error_handling.R
+# (removed duplicate definition to avoid function name conflicts)
 
 # Validate ISA exercise data
 # Generic validation for ISA data frames
