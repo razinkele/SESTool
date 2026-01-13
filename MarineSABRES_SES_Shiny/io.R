@@ -371,21 +371,15 @@ create_comprehensive_marine_ses <- function() {
 # ============================================================================
 
 # Function to read network from Excel file
-read_network_from_excel <- function(file_path,
-                                   sheet_name = NULL,
+read_network_from_excel <- function(file_path, 
+                                   sheet_name = NULL, 
                                    node_sheet = "nodes",
                                    edge_sheet = "edges") {
-
-  # Validate file exists
+  
   if (!file.exists(file_path)) {
     stop("File not found: ", file_path)
   }
-
-  # Validate file type (Excel)
-  if (!grepl("\\.xlsx?$", file_path, ignore.case = TRUE)) {
-    stop("File must be Excel format (.xlsx or .xls), got: ", basename(file_path))
-  }
-
+  
   # Check if required packages are available
   if (!requireNamespace("readxl", quietly = TRUE)) {
     stop("Package 'readxl' is required but not installed. Please install it with: install.packages('readxl')")

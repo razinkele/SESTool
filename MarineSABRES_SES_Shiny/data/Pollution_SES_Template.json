@@ -1,21 +1,245 @@
 {
-  "template_name": "Pollution",
-  "template_description": "Representative pollution SES template used for tests",
+  "template_name": "Marine Pollution from Multiple Sources",
+  "template_description": "Template for analyzing pollution impacts from land and sea-based sources on marine water quality and ecosystem health",
+  "regional_context": {
+    "region": "Generic coastal/marine",
+    "ecosystem_types": ["Coastal waters", "Marine ecosystems", "Benthic habitats"],
+    "main_issues": ["Chemical pollution", "Eutrophication", "Plastic pollution"]
+  },
+  "metadata": {
+    "created_date": "2025-11-17",
+    "version": "1.0",
+    "source": "Standard marine pollution scenario template",
+    "applicable_regions": ["Global - adaptable to any marine pollution context"]
+  },
   "dapsiwrm_framework": {
-    "drivers": [{"id": "D1", "name": "Industrial Discharge"}],
-    "activities": [{"id": "A1", "name": "Effluent Release"}],
-    "pressures": [{"id": "P1", "name": "Chemical Load"}],
-    "marine_processes": [{"id": "MP1", "name": "Contamination"}],
-    "ecosystem_services": [{"id": "ES1", "name": "Water Quality Regulation", "type": "Regulating"}],
-    "goods_benefits": [{"id": "GB1", "name": "Clean Water"}],
-    "responses": [{"id": "R1", "name": "Treatment"}],
-    "measures": [{"id": "M1", "name": "Pre-Treatment"}]
+    "drivers": [
+      {
+        "id": "D001",
+        "name": "Industrial Activity",
+        "description": "Industrial output",
+        "category": "Economic",
+        "intensity": "High"
+      },
+      {
+        "id": "D002",
+        "name": "Agricultural Runoff",
+        "description": "Fertilizer use",
+        "category": "Agriculture",
+        "intensity": "High"
+      },
+      {
+        "id": "D003",
+        "name": "Urban Development",
+        "description": "Urban area",
+        "category": "Development",
+        "intensity": "Medium"
+      }
+    ],
+    "activities": [
+      {
+        "id": "A001",
+        "name": "Industrial Discharge",
+        "description": "Discharge volume",
+        "sector": "Industry",
+        "scale": "Large-scale",
+        "drivers": ["D001"]
+      },
+      {
+        "id": "A002",
+        "name": "Agricultural Practices",
+        "description": "Farm area",
+        "sector": "Agriculture",
+        "scale": "Large-scale",
+        "drivers": ["D002"]
+      },
+      {
+        "id": "A003",
+        "name": "Waste Management",
+        "description": "Waste treatment capacity",
+        "sector": "Municipal",
+        "scale": "Medium-scale",
+        "drivers": ["D003"]
+      }
+    ],
+    "pressures": [
+      {
+        "id": "P001",
+        "name": "Chemical Pollution",
+        "description": "Contaminant levels",
+        "type": "Environmental",
+        "intensity": "High",
+        "activities": ["A001", "A003"]
+      },
+      {
+        "id": "P002",
+        "name": "Nutrient Enrichment",
+        "description": "Nitrogen concentration",
+        "type": "Environmental",
+        "intensity": "High",
+        "activities": ["A002"]
+      },
+      {
+        "id": "P003",
+        "name": "Plastic Pollution",
+        "description": "Plastic density",
+        "type": "Environmental",
+        "intensity": "Medium",
+        "activities": ["A003"]
+      }
+    ],
+    "marine_processes": [
+      {
+        "id": "MPF001",
+        "name": "Eutrophication",
+        "description": "Algal bloom frequency",
+        "type": "State Change",
+        "pressures": ["P002"]
+      },
+      {
+        "id": "MPF002",
+        "name": "Toxicity Effects",
+        "description": "Organism health",
+        "type": "State Change",
+        "pressures": ["P001"]
+      },
+      {
+        "id": "MPF003",
+        "name": "Habitat Contamination",
+        "description": "Sediment contamination",
+        "type": "State Change",
+        "pressures": ["P003"]
+      }
+    ],
+    "ecosystem_services": [
+      {
+        "id": "ES001",
+        "name": "Water Quality",
+        "description": "Water clarity",
+        "type": "Regulating",
+        "marine_processes": ["MPF001", "MPF002", "MPF003"]
+      },
+      {
+        "id": "ES002",
+        "name": "Seafood Safety",
+        "description": "Contaminant levels in seafood",
+        "type": "Provisioning",
+        "marine_processes": ["MPF002", "MPF003"]
+      },
+      {
+        "id": "ES003",
+        "name": "Marine Biodiversity",
+        "description": "Species diversity",
+        "type": "Supporting",
+        "marine_processes": ["MPF001", "MPF002", "MPF003"]
+      }
+    ],
+    "welfare": [
+      {
+        "id": "GB001",
+        "name": "Public Health",
+        "description": "Waterborne disease incidence",
+        "type": "Welfare",
+        "ecosystem_services": ["ES001"]
+      },
+      {
+        "id": "GB002",
+        "name": "Ecosystem Health",
+        "description": "Ecosystem status",
+        "type": "Welfare",
+        "ecosystem_services": ["ES003"]
+      }
+    ],
+    "responses": [
+      {
+        "id": "R001",
+        "name": "Emission Standards",
+        "description": "Regulations limiting pollutant discharge from industrial sources",
+        "type": "Regulatory",
+        "stakeholder": "Environmental Protection Agency",
+        "targets": ["A001", "P001"]
+      },
+      {
+        "id": "R002",
+        "name": "Wastewater Treatment Requirements",
+        "description": "Mandatory treatment standards for municipal and industrial wastewater",
+        "type": "Infrastructure",
+        "stakeholder": "Water Authority",
+        "targets": ["A003", "P002"]
+      },
+      {
+        "id": "R003",
+        "name": "Pollution Monitoring Programs",
+        "description": "Regular monitoring and enforcement of pollution standards",
+        "type": "Monitoring",
+        "stakeholder": "Environmental Protection Agency",
+        "targets": ["A001", "A002", "A003", "P001", "P002", "P003"]
+      },
+      {
+        "id": "R004",
+        "name": "Waste Reduction Policies",
+        "description": "Policies promoting circular economy and waste minimization",
+        "type": "Policy",
+        "stakeholder": "Environmental Ministry",
+        "targets": ["A003", "D003", "P003"]
+      }
+    ]
   },
   "connections": [
-    {"from_id": "D1", "to_id": "A1", "from_type": "driver", "to_type": "activity", "polarity": "+", "strength": "high", "confidence": 4},
-    {"from_id": "A1", "to_id": "P1", "from_type": "activity", "to_type": "pressure", "polarity": "+", "strength": "high", "confidence": 4},
-    {"from_id": "P1", "to_id": "MP1", "from_type": "pressure", "to_type": "state", "polarity": "+", "strength": "medium", "confidence": 3},
-    {"from_id": "MP1", "to_id": "ES1", "from_type": "state", "to_type": "impact", "polarity": "+", "strength": "low", "confidence": 2},
-    {"from_id": "ES1", "to_id": "GB1", "from_type": "impact", "to_type": "welfare", "polarity": "+", "strength": "medium", "confidence": 3}
+    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A003", "polarity": "+", "strength": "strong", "confidence": 5},
+    
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "medium", "confidence": 4},
+    
+    {"from_type": "Pressure", "from_id": "P001", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "Pressure", "from_id": "P002", "to_type": "MarineProcess", "to_id": "MPF001", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "Pressure", "from_id": "P003", "to_type": "MarineProcess", "to_id": "MPF003", "polarity": "-", "strength": "medium", "confidence": 4},
+    
+    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "weak", "confidence": 3},
+    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "medium", "confidence": 4},
+    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "medium", "confidence": 4},
+    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "weak", "confidence": 3},
+    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "medium", "confidence": 4},
+    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "strong", "confidence": 5},
+    
+    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "EcosystemService", "from_id": "ES003", "to_type": "Welfare", "to_id": "GB002", "polarity": "+", "strength": "strong", "confidence": 4},
+    
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D001", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "medium", "confidence": 3},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D001", "polarity": "+", "strength": "strong", "confidence": 4},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "weak", "confidence": 3},
+    
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Public Health concerns trigger Emission Standards"},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Public Health concerns trigger Wastewater Treatment Requirements"},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Ecosystem Health concerns trigger Pollution Monitoring Programs"},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Ecosystem Health concerns trigger Waste Reduction Policies"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Driver", "to_id": "D001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Emission Standards regulate Industrial Growth"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Driver", "to_id": "D003", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Wastewater Treatment Requirements affect Urban Development"},
+    {"from_type": "Response", "from_id": "R004", "to_type": "Driver", "to_id": "D003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Waste Reduction Policies affect Urban Development"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Emission Standards restrict Industrial Discharge"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Wastewater Treatment Requirements restrict Waste Management"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Pollution Monitoring Programs constrain Industrial Discharge"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Pollution Monitoring Programs constrain Agricultural Practices"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Pollution Monitoring Programs constrain Waste Management"},
+    {"from_type": "Response", "from_id": "R004", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Waste Reduction Policies affect Industrial Discharge"},
+    {"from_type": "Response", "from_id": "R004", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Waste Reduction Policies restrict Waste Management"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Emission Standards reduce Chemical Pollution"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Wastewater Treatment Requirements reduce Nutrient Pollution"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Pollution Monitoring Programs reduce Chemical Pollution"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Pollution Monitoring Programs reduce Nutrient Pollution"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Pollution Monitoring Programs reduce Plastic Pollution"},
+    {"from_type": "Response", "from_id": "R004", "to_type": "Pressure", "to_id": "P003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Waste Reduction Policies reduce Plastic Pollution"}
   ]
 }

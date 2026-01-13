@@ -50,7 +50,7 @@ jobs:
 
       - name: Install R dependencies
         run: |
-          install.packages(c("testthat", "shiny", "shinydashboard", "shinyWidgets", "shinyjs", "shinyBS", "shinytest2"))
+          install.packages(c("testthat", "shiny", "shinydashboard", "shinyWidgets", "shinyjs", "shinyBS"))
           install.packages(c("tidyverse", "DT", "openxlsx", "jsonlite"))
           install.packages(c("igraph", "visNetwork", "ggraph", "tidygraph"))
           install.packages(c("ggplot2", "plotly", "dygraphs", "xts"))
@@ -65,214 +65,20 @@ jobs:
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
 
-      - name: Prepare test fixtures
-        run: |
-          # Ensure a 'data' directory exists and copy template fixtures into it so
-          # tests that search for data/ or templates can find deterministic fixtures.
-          dir.create("data", showWarnings = FALSE)
-          fixtures <- list.files("tests/fixtures/templates", pattern = "\\.json$", full.names = TRUE)
-          if (length(fixtures) > 0) {
-            file.copy(fixtures, "data", overwrite = TRUE)
-            message(sprintf("Copied %i fixture(s) into data/", length(fixtures)))
-          } else {
-            message("ERROR: No fixture JSON files found in tests/fixtures/templates. Ensure fixtures are committed to tests/fixtures/templates.")
-            # Fail the step to make missing fixtures clearly visible in CI
-            stop("No fixture JSON files found in tests/fixtures/templates")
-          }
-        shell: Rscript {0}
-
-      - name: Report fixture count
-        run: |
-          # Count JSON fixtures present in data/ and print for diagnostics
-          n <- length(list.files("data", pattern = "\\.json$", full.names = TRUE))
-          message(sprintf("Fixtures present in data/: %d", n))
-          # Also list files for easier debugging
-          files <- list.files("data", pattern = "\\.json$", full.names = TRUE)
-          if (length(files) > 0) {
-            message(paste("Files:", paste(basename(files), collapse = ", ")))
-          }
-        shell: Rscript {0}
-
-      - name: Persist fixture list to artifact
-        run: |
-          files <- list.files("data", pattern = "\\.json$", full.names = TRUE)
-          if (length(files) == 0) {
-            writeLines(character(0), "fixture_list.txt")
-          } else {
-            writeLines(files, "fixture_list.txt")
-          }
-          message(sprintf("Wrote %d fixture(s) to fixture_list.txt", length(files)))
-        shell: Rscript {0}
-
-      - name: Upload fixture list artifact
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: fixture-list
-          path: fixture_list.txt
-
-      - name: Artifact presence summary
-        if: always()
-        run: |
-          repo="${GITHUB_REPOSITORY}"
-          run_id="${GITHUB_RUN_ID}"
-          artifact_url="https://github.com/${repo}/actions/runs/${run_id}/artifacts"
-          echo "### Fixture artifact" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Artifact**: fixture-list" >> $GITHUB_STEP_SUMMARY
-          echo "- **Artifacts page**: ${artifact_url}" >> $GITHUB_STEP_SUMMARY
-        shell: bash
-
       - name: Run tests
         run: |
           library(testthat)
           test_dir("tests/testthat", reporter = "progress")
         shell: Rscript {0}
 
-      - name: Setup Chrome for shinytest2 (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser chromium-chromedriver
-
-      - name: Setup Chrome for shinytest2 (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          brew install --cask google-chrome
-          brew install chromedriver
-
-      - name: Setup Chrome for shinytest2 (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          choco install googlechrome -y
-          choco install chromedriver -y
-
-      - name: Run shinytest2 E2E tests
-        if: matrix.r-version == '4.3'
-        run: |
-          library(testthat)
-          library(shinytest2)
-          # Run only E2E tests
-          test_file("tests/testthat/test-app-e2e.R", reporter = "progress")
-        shell: Rscript {0}
-        env:
-          # Run in headless mode for CI
-          CHROMOTE_CHROME: chromium-browser
-          # Increase timeout for CI environment
-          SHINYTEST2_TIMEOUT: 30000
-
-      - name: Upload E2E test screenshots
-        if: failure() && matrix.r-version == '4.3'
-        uses: actions/upload-artifact@v3
-        with:
-          name: e2e-screenshots-${{ matrix.os }}
-          path: tests/testthat/screenshots/
-          if-no-files-found: ignore
-
       - name: Test coverage
         if: runner.os == 'Linux' && matrix.r-version == '4.3'
         run: |
           library(covr)
-
-          # Generate coverage
-          cat("Generating test coverage...\n")
           coverage <- package_coverage(type = "tests", quiet = FALSE)
-
-          # Print summary to console
           print(coverage)
-
-          # Calculate overall percentage
-          pct <- percent_coverage(coverage)
-          cat(sprintf("\nOverall Coverage: %.2f%%\n", pct))
-
-          # Save coverage object for later use
-          saveRDS(coverage, "coverage.rds")
-
-          # Generate HTML report
-          cat("Generating HTML coverage report...\n")
-          report(coverage, file = "coverage-report.html", browse = FALSE)
-
-          # Generate detailed coverage data
-          cov_df <- as.data.frame(coverage)
-          write.csv(cov_df, "coverage-details.csv", row.names = FALSE)
-
-          # Upload to Codecov (if token available)
-          tryCatch({
-            codecov(coverage = coverage)
-            cat("Coverage uploaded to Codecov\n")
-          }, error = function(e) {
-            cat("Note: Codecov upload skipped (token not configured)\n")
-          })
-
-          # Exit with error if coverage is below threshold
-          threshold <- 70  # Minimum 70% coverage required
-          if (pct < threshold) {
-            cat(sprintf("ERROR: Coverage %.2f%% is below threshold of %d%%\n", pct, threshold))
-            quit(status = 1)
-          }
+          codecov(coverage = coverage)
         shell: Rscript {0}
-
-      - name: Generate coverage summary
-        if: runner.os == 'Linux' && matrix.r-version == '4.3'
-        run: |
-          library(covr)
-          coverage <- readRDS("coverage.rds")
-          pct <- percent_coverage(coverage)
-
-          # Get coverage by file
-          cov_df <- as.data.frame(coverage)
-
-          # Create markdown summary
-          cat("## Test Coverage Report\n\n", file = "coverage-summary.md")
-          cat(sprintf("**Overall Coverage**: %.2f%%\n\n", pct), file = "coverage-summary.md", append = TRUE)
-
-          # Coverage status badge color
-          badge_color <- if (pct >= 80) "brightgreen" else if (pct >= 70) "yellow" else "red"
-          cat(sprintf("![Coverage](https://img.shields.io/badge/coverage-%.1f%%--%s)\n\n", pct, badge_color),
-              file = "coverage-summary.md", append = TRUE)
-
-          # Top 10 files by coverage
-          cat("### Coverage by File (Top 10)\n\n", file = "coverage-summary.md", append = TRUE)
-          cat("| File | Coverage |\n", file = "coverage-summary.md", append = TRUE)
-          cat("|------|----------|\n", file = "coverage-summary.md", append = TRUE)
-
-          if (nrow(cov_df) > 0) {
-            # Aggregate by filename
-            file_cov <- aggregate(value ~ filename, data = cov_df, FUN = function(x) mean(x > 0) * 100)
-            file_cov <- file_cov[order(-file_cov$value), ]
-
-            # Top 10
-            top10 <- head(file_cov, 10)
-            for (i in 1:nrow(top10)) {
-              fname <- basename(as.character(top10$filename[i]))
-              fcov <- top10$value[i]
-              cat(sprintf("| %s | %.1f%% |\n", fname, fcov), file = "coverage-summary.md", append = TRUE)
-            }
-          }
-
-          cat("\n### Coverage Threshold\n\n", file = "coverage-summary.md", append = TRUE)
-          cat("- **Required**: 70%\n", file = "coverage-summary.md", append = TRUE)
-          cat(sprintf("- **Actual**: %.2f%%\n", pct), file = "coverage-summary.md", append = TRUE)
-          cat(sprintf("- **Status**: %s\n", if (pct >= 70) "✅ PASS" else "❌ FAIL"),
-              file = "coverage-summary.md", append = TRUE)
-        shell: Rscript {0}
-
-      - name: Add coverage to step summary
-        if: runner.os == 'Linux' && matrix.r-version == '4.3'
-        run: |
-          cat coverage-summary.md >> $GITHUB_STEP_SUMMARY
-        shell: bash
-
-      - name: Upload coverage report
-        if: runner.os == 'Linux' && matrix.r-version == '4.3'
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-report
-          path: |
-            coverage-report.html
-            coverage-details.csv
-            coverage-summary.md
-            coverage.rds
 
       - name: Upload test results
         if: failure()

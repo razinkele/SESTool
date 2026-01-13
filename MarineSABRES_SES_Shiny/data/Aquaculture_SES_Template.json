@@ -1,23 +1,218 @@
 {
-  "template_name": "Aquaculture",
-  "template_description": "Representative aquaculture SES template used for tests",
+  "template_name": "Aquaculture Development",
+  "template_description": "Template for analyzing marine aquaculture expansion and environmental impacts on benthic systems and wild fish stocks",
+  "regional_context": {
+    "region": "Generic coastal/marine",
+    "ecosystem_types": ["Coastal waters", "Benthic habitats", "Wild fish populations"],
+    "main_issues": ["Organic enrichment", "Disease transfer", "Genetic pollution"]
+  },
+  "metadata": {
+    "created_date": "2025-11-17",
+    "version": "1.0",
+    "source": "Standard aquaculture development scenario template",
+    "applicable_regions": ["Global - adaptable to any aquaculture context"]
+  },
   "dapsiwrm_framework": {
-    "drivers": [{"id": "D1", "name": "Overfishing"}],
-    "activities": [{"id": "A1", "name": "Farming"}],
-    "pressures": [{"id": "P1", "name": "Nutrient Runoff"}],
-    "marine_processes": [{"id": "MP1", "name": "Hypoxia"}],
-    "ecosystem_services": [{"id": "ES1", "name": "Food Provisioning", "type": "Provisioning"}],
-    "goods_benefits": [{"id": "GB1", "name": "Fish Supply"}],
-    "responses": [{"id": "R1", "name": "Regulations"}],
-    "measures": [{"id": "M1", "name": "Best Practices"}]
+    "drivers": [
+      {
+        "id": "D001",
+        "name": "Food Demand",
+        "description": "Seafood consumption",
+        "category": "Food security",
+        "intensity": "High"
+      },
+      {
+        "id": "D002",
+        "name": "Technology Advancement",
+        "description": "Innovation index",
+        "category": "Technology",
+        "intensity": "Medium"
+      },
+      {
+        "id": "D003",
+        "name": "Policy Support",
+        "description": "Subsidy level",
+        "category": "Policy",
+        "intensity": "Medium"
+      }
+    ],
+    "activities": [
+      {
+        "id": "A001",
+        "name": "Fish Farming",
+        "description": "Production volume",
+        "sector": "Aquaculture",
+        "scale": "Commercial",
+        "drivers": ["D001", "D002", "D003"]
+      },
+      {
+        "id": "A002",
+        "name": "Shellfish Farming",
+        "description": "Farm area",
+        "sector": "Aquaculture",
+        "scale": "Small to medium",
+        "drivers": ["D001", "D002", "D003"]
+      }
+    ],
+    "pressures": [
+      {
+        "id": "P001",
+        "name": "Organic Enrichment",
+        "description": "Nutrient loading",
+        "type": "Environmental",
+        "intensity": "High",
+        "activities": ["A001", "A002"]
+      },
+      {
+        "id": "P002",
+        "name": "Disease Transfer",
+        "description": "Disease prevalence",
+        "type": "Environmental",
+        "intensity": "Medium",
+        "activities": ["A001"]
+      },
+      {
+        "id": "P003",
+        "name": "Escaped Farmed Fish",
+        "description": "Escape events",
+        "type": "Environmental",
+        "intensity": "Medium",
+        "activities": ["A001"]
+      }
+    ],
+    "marine_processes": [
+      {
+        "id": "MPF001",
+        "name": "Benthic Degradation",
+        "description": "Sediment quality",
+        "type": "State Change",
+        "pressures": ["P001"]
+      },
+      {
+        "id": "MPF002",
+        "name": "Wild Stock Impact",
+        "description": "Wild fish health",
+        "type": "State Change",
+        "pressures": ["P002", "P003"]
+      }
+    ],
+    "ecosystem_services": [
+      {
+        "id": "ES001",
+        "name": "Seafood Production",
+        "description": "Farm output",
+        "type": "Provisioning",
+        "marine_processes": ["MPF001", "MPF002"]
+      },
+      {
+        "id": "ES002",
+        "name": "Genetic Diversity",
+        "description": "Stock genetic diversity",
+        "type": "Supporting",
+        "marine_processes": ["MPF002"]
+      }
+    ],
+    "welfare": [
+      {
+        "id": "GB001",
+        "name": "Food Supply",
+        "description": "Seafood availability",
+        "type": "Welfare",
+        "ecosystem_services": ["ES001"]
+      },
+      {
+        "id": "GB002",
+        "name": "Employment",
+        "description": "Jobs created",
+        "type": "Welfare",
+        "ecosystem_services": ["ES002"]
+      }
+    ],
+    "responses": [
+      {
+        "id": "R001",
+        "name": "Farm Siting Regulations",
+        "description": "Regulations on aquaculture farm locations to minimize environmental impacts",
+        "type": "Regulatory",
+        "stakeholder": "Aquaculture Authority",
+        "targets": ["A001", "A002", "P001"]
+      },
+      {
+        "id": "R002",
+        "name": "Disease Monitoring Programs",
+        "description": "Surveillance and control programs for aquaculture diseases",
+        "type": "Monitoring",
+        "stakeholder": "Veterinary Services",
+        "targets": ["A001", "A002", "P002"]
+      },
+      {
+        "id": "R003",
+        "name": "Fallowing Requirements",
+        "description": "Mandatory rest periods for aquaculture sites to allow environmental recovery",
+        "type": "Regulatory",
+        "stakeholder": "Aquaculture Authority",
+        "targets": ["A001", "A002", "P001", "P002"]
+      },
+      {
+        "id": "R004",
+        "name": "Escape Prevention Standards",
+        "description": "Requirements for containment systems to prevent fish escapes",
+        "type": "Technical",
+        "stakeholder": "Aquaculture Authority",
+        "targets": ["A001", "P003"]
+      }
+    ]
   },
   "connections": [
-    {"from_id": "D1", "to_id": "A1", "from_type": "driver", "to_type": "activity", "polarity": "+", "strength": "high", "confidence": 4},
-    {"from_id": "A1", "to_id": "P1", "from_type": "activity", "to_type": "pressure", "polarity": "+", "strength": "medium", "confidence": 3},
-    {"from_id": "P1", "to_id": "MP1", "from_type": "pressure", "to_type": "state", "polarity": "+", "strength": "strong", "confidence": 2},
-    {"from_id": "MP1", "to_id": "ES1", "from_type": "state", "to_type": "impact", "polarity": "+", "strength": "low", "confidence": 3},
-    {"from_id": "ES1", "to_id": "GB1", "from_type": "impact", "to_type": "welfare", "polarity": "+", "strength": "medium", "confidence": 3},
-    {"from_id": "GB1", "to_id": "D1", "from_type": "welfare", "to_type": "driver", "polarity": "+", "strength": "low", "confidence": 2},
-    {"from_id": "M1", "to_id": "R1", "from_type": "measure", "to_type": "response", "polarity": "+", "strength": "high", "confidence": 4}
+    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "weak", "confidence": 3},
+    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "weak", "confidence": 3},
+    
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "weak", "confidence": 4},
+    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "weak", "confidence": 3},
+    
+    {"from_type": "Pressure", "from_id": "P001", "to_type": "MarineProcess", "to_id": "MPF001", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "Pressure", "from_id": "P002", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "medium", "confidence": 3},
+    {"from_type": "Pressure", "from_id": "P003", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "weak", "confidence": 3},
+    
+    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "strong", "confidence": 5},
+    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "medium", "confidence": 4},
+    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "strong", "confidence": 4},
+    
+    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "EcosystemService", "from_id": "ES002", "to_type": "Welfare", "to_id": "GB002", "polarity": "+", "strength": "medium", "confidence": 4},
+    
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D001", "polarity": "+", "strength": "strong", "confidence": 5},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "weak", "confidence": 4},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "medium", "confidence": 4},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "strong", "confidence": 5},
+    
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "strong", "confidence": 4, "description": "Food Supply concerns trigger Farm Siting Regulations"},
+    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Food Supply concerns trigger Fallowing Requirements"},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Employment impacts trigger Disease Monitoring Programs"},
+    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Employment impacts trigger Escape Prevention Standards"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Driver", "to_id": "D002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Farm Siting Regulations affect Technology Development"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Disease Monitoring Programs support Policy Framework"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Driver", "to_id": "D001", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Fallowing Requirements temporarily affect Food Demand"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Farm Siting Regulations restrict Fish Farming"},
+    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "strong", "confidence": 4, "description": "Farm Siting Regulations restrict Shellfish Farming"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Disease Monitoring Programs constrain Fish Farming"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Disease Monitoring Programs constrain Shellfish Farming"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Fallowing Requirements limit Fish Farming"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Fallowing Requirements limit Shellfish Farming"},
+    {"from_type": "Response", "from_id": "R004", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Escape Prevention Standards constrain Fish Farming"},
+    
+    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Farm Siting Regulations reduce Organic Enrichment"},
+    {"from_type": "Response", "from_id": "R002", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Disease Monitoring Programs reduce Disease Transfer"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Fallowing Requirements reduce Organic Enrichment"},
+    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Fallowing Requirements reduce Disease Transfer"},
+    {"from_type": "Response", "from_id": "R004", "to_type": "Pressure", "to_id": "P003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Escape Prevention Standards reduce Escaped Fish"}
   ]
 }

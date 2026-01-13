@@ -5,9 +5,9 @@ library(shinyjs)
 # Template-Based SES Creation Module
 # Purpose: Allow users to start from pre-built SES templates
 
-# Source dependencies using project root (reliable from any working directory)
-source(get_project_file("modules/connection_review_tabbed.R"), local = TRUE)
-source(get_project_file("functions/template_loader.R"), local = TRUE)
+# Source dependencies
+source("modules/connection_review_tabbed.R", local = TRUE)
+source("functions/template_loader.R", local = TRUE)
 
 # ============================================================================
 # TEMPLATE LIBRARY

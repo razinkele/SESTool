@@ -40,16 +40,6 @@
       "it": "Approvare",
       "no": "Approve"
     },
-    "common.misc.approve_this_connection_with_current_slider_values": {
-      "en": "Approve this connection with current slider values",
-      "es": "Aprobar esta conexión con los valores actuales de los controles deslizantes",
-      "fr": "Approuver cette connexion avec les valeurs actuelles des curseurs",
-      "de": "Diese Verbindung mit den aktuellen Schiebereglerwerten genehmigen",
-      "lt": "Patvirtinti šį ryšį su dabartinėmis slankiklių reikšmėmis",
-      "pt": "Aprovar esta conexão com os valores atuais dos controles deslizantes",
-      "it": "Approva questa connessione con i valori attuali dei cursori",
-      "no": "Godkjenn denne tilkoblingen med gjeldende glidebryterværdier"
-    },
     "common.misc.accept_this_connection_as_is_or_with_amendments": {
       "en": "Accept this connection as-is or with amendments",
       "es": "Aceptar esta conexión tal cual o con modificaciones",
@@ -129,56 +119,6 @@
       "pt": "O salvamento automático ajuda a prevenir perda de dados de desconexões inesperadas.",
       "it": "Il salvataggio automatico aiuta a prevenire la perdita di dati da disconnessioni inattese.",
       "no": "Auto-save helps prevent data loss from unexpected disconnections."
-    },
-    "common.misc.adaptive_auto_save": {
-      "en": "Adaptive Auto-Save",
-      "es": "Guardado Automático Adaptativo",
-      "fr": "Sauvegarde Automatique Adaptive",
-      "de": "Adaptives Auto-Speichern",
-      "lt": "Adaptyvus Automatinis Išsaugojimas",
-      "pt": "Salvamento Automático Adaptativo",
-      "it": "Salvataggio Automatico Adattivo",
-      "no": "Adaptive Auto-Save"
-    },
-    "common.misc.this_badge_shows_your_editing_mode": {
-      "en": "This badge shows your current editing mode and adjusts save delays automatically.",
-      "es": "Esta insignia muestra su modo de edición actual y ajusta los retrasos de guardado automáticamente.",
-      "fr": "Ce badge affiche votre mode d'édition actuel et ajuste automatiquement les délais de sauvegarde.",
-      "de": "Dieses Abzeichen zeigt Ihren aktuellen Bearbeitungsmodus und passt die Speicherverzögerungen automatisch an.",
-      "lt": "Šis ženklelis rodo jūsų dabartinį redagavimo režimą ir automatiškai koreguoja išsaugojimo vėlavimus.",
-      "pt": "Este distintivo mostra seu modo de edição atual e ajusta os atrasos de salvamento automaticamente.",
-      "it": "Questo badge mostra la tua modalità di modifica corrente e regola automaticamente i ritardi di salvataggio.",
-      "no": "This badge shows your current editing mode and adjusts save delays automatically."
-    },
-    "common.misc.click_to_toggle": {
-      "en": "Click to toggle between views:",
-      "es": "Haga clic para alternar entre vistas:",
-      "fr": "Cliquez pour basculer entre les vues:",
-      "de": "Klicken Sie, um zwischen Ansichten zu wechseln:",
-      "lt": "Spustelėkite, kad perjungtumėte rodinius:",
-      "pt": "Clique para alternar entre visualizações:",
-      "it": "Fai clic per passare tra le visualizzazioni:",
-      "no": "Click to toggle between views:"
-    },
-    "common.misc.compact_view_shows_save_delay": {
-      "en": "Compact: Shows save delay in seconds",
-      "es": "Compacto: Muestra el retraso de guardado en segundos",
-      "fr": "Compact: Affiche le délai de sauvegarde en secondes",
-      "de": "Kompakt: Zeigt Speicherverzögerung in Sekunden",
-      "lt": "Kompaktiškas: Rodo išsaugojimo vėlavimą sekundėmis",
-      "pt": "Compacto: Mostra atraso de salvamento em segundos",
-      "it": "Compatto: Mostra ritardo di salvataggio in secondi",
-      "no": "Compact: Shows save delay in seconds"
-    },
-    "common.misc.detailed_view_shows_full_info": {
-      "en": "Detailed: Shows mode, delay, and recent edit count",
-      "es": "Detallado: Muestra modo, retraso y número de ediciones recientes",
-      "fr": "Détaillé: Affiche le mode, le délai et le nombre de modifications récentes",
-      "de": "Detailliert: Zeigt Modus, Verzögerung und aktuelle Bearbeitungsanzahl",
-      "lt": "Detalus: Rodo režimą, vėlavimą ir naujausių redagavimų skaičių",
-      "pt": "Detalhado: Mostra modo, atraso e contagem de edições recentes",
-      "it": "Dettagliato: Mostra modalità, ritardo e conteggio modifiche recenti",
-      "no": "Detailed: Shows mode, delay, and recent edit count"
     },
     "common.misc.baltic_sea": {
       "en": "Baltic Sea",

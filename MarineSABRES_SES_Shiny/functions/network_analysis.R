@@ -47,9 +47,15 @@ calculate_network_metrics <- function(nodes, edges = NULL) {
     g <- create_igraph_from_data(nodes, edges)
   }
 
-  # Require a graph with at least one edge for metrics
-  if (vcount(g) == 0 || ecount(g) == 0) {
-    stop("No valid edges found")
+  # Calculate metrics
+  if (vcount(g) == 0) {
+    return(list(
+      nodes = 0,
+      edges = 0,
+      density = 0,
+      diameter = 0,
+      avg_path_length = 0
+    ))
   }
 
   # Calculate graph-level metrics
@@ -106,105 +112,17 @@ create_igraph_from_data <- function(nodes, edges) {
     return(g)
   }
 
-  # Select available columns - must include 'from' and 'to'
-  if (!all(c("from", "to") %in% names(valid_edges))) {
-    stop("Edges dataframe must contain 'from' and 'to' columns")
+  # Select required columns, include confidence if present
+  required_cols <- c("from", "to", "polarity", "strength")
+  if ("confidence" %in% names(valid_edges)) {
+    required_cols <- c(required_cols, "confidence")
   }
-  allowed_extra <- c("polarity", "strength", "confidence", "link_type")
-  cols_to_use <- c("from", "to", intersect(allowed_extra, names(valid_edges)))
 
   graph_from_data_frame(
-    valid_edges[, cols_to_use, drop = FALSE],
+    valid_edges[, required_cols, drop = FALSE],
     directed = TRUE,
     vertices = nodes
   )
-}
-
-#' Build an igraph object directly from an 'isa' structure (list with $nodes and $edges)
-#'
-#' @param isa list with components 'nodes' and 'edges' (data.frames)
-#' @return igraph object or NULL
-build_network_from_isa <- function(isa) {
-  if (is.null(isa)) return(NULL)
-  nodes <- isa$nodes
-  edges <- isa$edges
-  if (is.null(nodes) || is.null(edges)) return(NULL)
-  create_igraph_from_data(nodes, edges)
-}
-
-#' Calculate basic centrality metrics and return as a named list
-#'
-#' @param graph igraph object
-#' @return named list of numeric vectors
-calculate_centrality <- function(graph) {
-  if (is.null(graph) || !inherits(graph, "igraph")) return(list())
-  list(
-    degree = igraph::degree(graph, mode = "all"),
-    betweenness = igraph::betweenness(graph, directed = TRUE),
-    closeness = tryCatch(igraph::closeness(graph, mode = "all"), error = function(e) rep(0, vcount(graph)))
-  )
-}
-
-#' Detect feedback loops (simple cycles) up to a maximum length
-#'
-#' @param graph igraph directed graph
-#' @param max_length integer maximum cycle length
-#' @return data.frame of cycles (path strings)
-detect_feedback_loops <- function(graph, max_length = 5) {
-  if (!inherits(graph, "igraph")) return(list())
-  nodes <- igraph::V(graph)$name
-  result <- data.frame(path = character(0), stringsAsFactors = FALSE)
-  for (v in nodes) {
-    paths <- igraph::all_simple_paths(graph, from = v, to = v, mode = "out", cutoff = max_length)
-    for (p in paths) {
-      if (length(p) > 1) {
-        path_str <- paste(igraph::V(graph)$name[as.numeric(p)], collapse = "->")
-        result <- rbind(result, data.frame(path = path_str, stringsAsFactors = FALSE))
-      }
-    }
-  }
-  result
-}
-
-#' Classify loop type (Reinforcing or Balancing) based on edge sign vector
-#' @param loop_info list with edge_types (vector of '+' or '-')
-#' @return character 'Reinforcing' or 'Balancing'
-classify_loop_type <- function(loop_info) {
-  if (is.null(loop_info$edge_types)) return(NA_character_)
-  neg_count <- sum(loop_info$edge_types == "-")
-  if (neg_count %% 2 == 0) "Reinforcing" else "Balancing"
-}
-
-#' Simplify network by removing low-importance nodes
-#' @param graph igraph object
-#' @param threshold numeric proportion threshold (0-1)
-#' @return simplified igraph object
-simplify_network <- function(graph, threshold = NULL) {
-  if (!inherits(graph, "igraph")) return(graph)
-  if (is.null(threshold)) return(graph)
-  deg <- igraph::degree(graph)
-  keep <- deg >= threshold * max(deg)
-  igraph::induced_subgraph(graph, igraph::V(graph)[keep])
-}
-
-#' Rank node importance using PageRank
-#' @param graph igraph object
-#' @return data.frame with node and importance
-rank_node_importance <- function(graph) {
-  if (!inherits(graph, "igraph")) return(data.frame())
-  pr <- igraph::page_rank(graph)$vector
-  data.frame(node = igraph::V(graph)$name, importance = pr, stringsAsFactors = FALSE)
-}
-
-#' Find simple pathways between two nodes (limited search)
-#' @param graph igraph object
-#' @param from source node id
-#' @param to target node id
-#' @return list of pathways or data.frame
-find_pathways <- function(graph, from, to) {
-  if (!inherits(graph, "igraph")) return(list())
-  paths <- igraph::all_simple_paths(graph, from = from, to = to, mode = "out")
-  lapply(paths, function(p) igraph::V(graph)$name[as.numeric(p)])
 }
 
 #' Calculate MICMAC analysis

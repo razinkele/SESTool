@@ -112,21 +112,13 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
 #' @param session Shiny session object
 #' @param i18n shiny.i18n translator object
 #' @param autosave_enabled reactiveVal for autosave setting
-#' @param autosave_delay reactiveVal for autosave delay setting
-#' @param autosave_notifications reactiveVal for autosave notifications setting
-#' @param autosave_indicator reactiveVal for autosave indicator setting
-#' @param autosave_triggers reactiveVal for autosave triggers setting
-setup_settings_modal_handlers <- function(input, output, session, i18n, autosave_enabled,
-                                          autosave_delay = NULL,
-                                          autosave_notifications = NULL,
-                                          autosave_indicator = NULL,
-                                          autosave_triggers = NULL) {
+setup_settings_modal_handlers <- function(input, output, session, i18n, autosave_enabled) {
 
   # Show settings modal when button is clicked
   observeEvent(input$open_settings_modal, {
     showModal(modalDialog(
       title = tags$h3(icon("cog"), " ", i18n$t("ui.header.application_settings")),
-      size = "l",  # Changed to large for more content
+      size = "m",
       easyClose = TRUE,
       footer = tagList(
         modalButton(i18n$t("common.buttons.cancel")),
@@ -136,17 +128,14 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
       tags$div(
         style = "padding: 20px;",
 
-        # ========== AUTO-SAVE SECTION ==========
-        tags$h4(icon("save"), " Auto-Save Settings"),
-        tags$p(style = "color: #666; margin-bottom: 20px;",
-          "Configure automatic saving behavior for the AI ISA Assistant module."
-        ),
+        tags$h4(icon("save"), " ", i18n$t("ui.modals.auto_save_settings")),
+        tags$p(i18n$t("ui.modals.configure_automatic_saving_behavior_for_the_ai_isa_assistant_module")),
+        tags$br(),
 
-        # Main auto-save toggle
         shinyWidgets::switchInput(
           inputId = "autosave_enabled",
-          label = tags$strong("Enable Auto-Save"),
-          value = autosave_enabled(),
+          label = tags$strong(i18n$t("ui.modals.enable_auto_save")),
+          value = autosave_enabled(),  # Load current value
           onLabel = "ON",
           offLabel = "OFF",
           onStatus = "success",
@@ -155,148 +144,18 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
           width = "100%"
         ),
 
-        # Advanced options (conditional on autosave being enabled)
-        conditionalPanel(
-          condition = "input.autosave_enabled == true",
-
-          tags$div(
-            style = "margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px;",
-
-            tags$h5(icon("sliders-h"), " Advanced Auto-Save Options"),
-
-            # Save interval
-            tags$div(
-              style = "margin-bottom: 15px;",
-              tags$label(
-                style = "font-weight: 600; margin-bottom: 5px; display: block;",
-                icon("clock"), " Save Delay (seconds)"
-              ),
-              sliderInput(
-                inputId = "autosave_delay",
-                label = NULL,
-                min = 1,
-                max = 10,
-                value = if (!is.null(autosave_delay)) autosave_delay() else 2,
-                step = 0.5,
-                width = "100%",
-                ticks = TRUE
-              ),
-              tags$p(
-                style = "font-size: 12px; color: #666; margin-top: -10px;",
-                icon("info-circle"),
-                " Delay before auto-save triggers after changes (prevents saving on every keystroke)"
-              )
-            ),
-
-            # Notification settings
-            tags$div(
-              style = "margin-bottom: 15px;",
-              tags$label(
-                style = "font-weight: 600; margin-bottom: 10px; display: block;",
-                icon("bell"), " Notifications"
-              ),
-              shinyWidgets::switchInput(
-                inputId = "autosave_notifications",
-                label = "Show save notifications",
-                value = if (!is.null(autosave_notifications)) autosave_notifications() else FALSE,
-                onLabel = "ON",
-                offLabel = "OFF",
-                onStatus = "info",
-                offStatus = "secondary",
-                size = "small",
-                inline = TRUE
-              ),
-              tags$p(
-                style = "font-size: 12px; color: #666; margin-top: 5px;",
-                "Display a notification each time auto-save occurs (can be distracting)"
-              )
-            ),
-
-            # Save indicator
-            tags$div(
-              style = "margin-bottom: 15px;",
-              tags$label(
-                style = "font-weight: 600; margin-bottom: 10px; display: block;",
-                icon("check-circle"), " Visual Indicator"
-              ),
-              shinyWidgets::switchInput(
-                inputId = "autosave_indicator",
-                label = "Show save status indicator",
-                value = if (!is.null(autosave_indicator)) autosave_indicator() else TRUE,
-                onLabel = "ON",
-                offLabel = "OFF",
-                onStatus = "success",
-                offStatus = "secondary",
-                size = "small",
-                inline = TRUE
-              ),
-              tags$p(
-                style = "font-size: 12px; color: #666; margin-top: 5px;",
-                "Display a small indicator showing when last auto-save occurred"
-              )
-            ),
-
-            # What triggers autosave
-            tags$div(
-              style = "margin-bottom: 10px;",
-              tags$label(
-                style = "font-weight: 600; margin-bottom: 10px; display: block;",
-                icon("sync"), " Auto-Save Triggers"
-              ),
-              checkboxGroupInput(
-                inputId = "autosave_triggers",
-                label = NULL,
-                choices = list(
-                  "Element added/modified" = "elements",
-                  "Context changed (region, ecosystem)" = "context",
-                  "Connections approved" = "connections",
-                  "Step progression" = "steps"
-                ),
-                selected = if (!is.null(autosave_triggers)) autosave_triggers() else c("elements", "context", "connections", "steps"),
-                width = "100%"
-              ),
-              tags$p(
-                style = "font-size: 12px; color: #666; margin-top: -5px;",
-                "Select which actions trigger auto-save"
-              )
-            )
-          )
+        tags$p(
+          style = "margin-top: 10px; font-size: 13px; color: #666;",
+          icon("info-circle"),
+          " ", i18n$t("ui.modals.auto_save_automatically_saves_your_work_when_the_a")
         ),
 
-        # Info box
         tags$div(
-          class = "alert alert-info",
-          style = "margin-top: 20px;",
-          icon("lightbulb"),
-          tags$strong(" Tip: "),
-          "Auto-save only works in the AI ISA Assistant module. Your work in other modules is saved manually using the Save Project button in the sidebar."
-        ),
-
-        tags$hr(),
-
-        # ========== GENERAL SETTINGS SECTION ==========
-        tags$h4(icon("tools"), " General Settings"),
-
-        tags$div(
+          class = "alert alert-warning",
           style = "margin-top: 15px;",
-
-          # Debug mode toggle
-          shinyWidgets::switchInput(
-            inputId = "debug_mode",
-            label = tags$strong("Enable Debug Logging"),
-            value = FALSE,
-            onLabel = "ON",
-            offLabel = "OFF",
-            onStatus = "warning",
-            offStatus = "secondary",
-            size = "default",
-            width = "100%"
-          ),
-          tags$p(
-            style = "margin-top: 10px; font-size: 13px; color: #666;",
-            icon("bug"),
-            " Enable detailed logging to console (useful for troubleshooting, may slow down performance)"
-          )
+          icon("exclamation-triangle"),
+          tags$strong(" ", i18n$t("ui.modals.default_off"), " "),
+          i18n$t("ui.modals.auto_save_is_disabled_by_default_to_prevent_accide")
         )
       )
     ))
@@ -304,60 +163,19 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
 
   # Handle Apply button click in settings modal
   observeEvent(input$apply_settings, {
-    settings_changed <- FALSE
-
     # Update autosave setting
     if (!is.null(input$autosave_enabled)) {
       autosave_enabled(input$autosave_enabled)
-      debug_log(sprintf("Auto-save %s", if(input$autosave_enabled) "enabled" else "disabled"), "SETTINGS")
-      settings_changed <- TRUE
-    }
-
-    # Store advanced autosave settings
-    if (!is.null(input$autosave_delay)) {
-      autosave_delay(input$autosave_delay)
-      debug_log(sprintf("Auto-save delay: %s seconds", input$autosave_delay), "SETTINGS")
-      settings_changed <- TRUE
-    }
-
-    if (!is.null(input$autosave_notifications)) {
-      autosave_notifications(input$autosave_notifications)
-      debug_log(sprintf("Auto-save notifications: %s", input$autosave_notifications), "SETTINGS")
-      settings_changed <- TRUE
-    }
-
-    if (!is.null(input$autosave_indicator)) {
-      autosave_indicator(input$autosave_indicator)
-      debug_log(sprintf("Auto-save indicator: %s", input$autosave_indicator), "SETTINGS")
-      settings_changed <- TRUE
-    }
-
-    if (!is.null(input$autosave_triggers)) {
-      autosave_triggers(input$autosave_triggers)
-      debug_log(sprintf("Auto-save triggers: %s", paste(input$autosave_triggers, collapse = ", ")), "SETTINGS")
-      settings_changed <- TRUE
-    }
-
-    # Debug mode
-    if (!is.null(input$debug_mode)) {
-      debug_log(sprintf("Debug mode %s", if(input$debug_mode) "enabled" else "disabled"), "SETTINGS")
-      # Set environment variable for debug logging
-      if (input$debug_mode) {
-        Sys.setenv(MARINESABRES_DEBUG = "TRUE")
-      } else {
-        Sys.setenv(MARINESABRES_DEBUG = "FALSE")
-      }
+      cat(sprintf("[SETTINGS] Auto-save %s\n", if(input$autosave_enabled) "enabled" else "disabled"))
     }
 
     removeModal()
 
-    if (settings_changed || !is.null(input$autosave_delay)) {
-      showNotification(
-        i18n$t("ui.modals.settings_updated_successfully"),
-        type = "message",
-        duration = 3
-      )
-    }
+    showNotification(
+      i18n$t("ui.modals.settings_updated_successfully"),
+      type = "message",
+      duration = 2
+    )
   })
 }
 
@@ -372,21 +190,11 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
 #' @param session Shiny session object
 #' @param i18n shiny.i18n translator object
 #' @param autosave_enabled reactiveVal for autosave setting
-#' @param autosave_delay reactiveVal for autosave delay setting
-#' @param autosave_notifications reactiveVal for autosave notifications setting
-#' @param autosave_indicator reactiveVal for autosave indicator setting
-#' @param autosave_triggers reactiveVal for autosave triggers setting
 #' @param AVAILABLE_LANGUAGES List of available languages
-setup_language_modal_handlers <- function(input, output, session, i18n, autosave_enabled, AVAILABLE_LANGUAGES,
-                                          autosave_delay = NULL,
-                                          autosave_notifications = NULL,
-                                          autosave_indicator = NULL,
-                                          autosave_triggers = NULL) {
+setup_language_modal_handlers <- function(input, output, session, i18n, autosave_enabled, AVAILABLE_LANGUAGES) {
   # Call the new separate handlers
   setup_language_modal_only(input, output, session, i18n, AVAILABLE_LANGUAGES)
-  setup_settings_modal_handlers(input, output, session, i18n, autosave_enabled,
-                                 autosave_delay, autosave_notifications,
-                                 autosave_indicator, autosave_triggers)
+  setup_settings_modal_handlers(input, output, session, i18n, autosave_enabled)
 }
 
 # ============================================================================

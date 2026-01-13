@@ -1,12 +1,6 @@
 # functions/error_handling.R
 # Centralized Error Handling and Validation
 # Purpose: Provide consistent error handling, validation, and safe fallbacks across the application
-#
-# STANDARDIZED ERROR HANDLING PATTERN:
-# - Use safe_execute() for operations that might fail and need graceful fallbacks
-# - Use validate_*() functions for data structure validation
-# - Use safe_get_nested() for safely accessing nested list elements
-# - All error handling functions use debug_log() for consistent logging (respects DEBUG_MODE)
 
 # ============================================================================
 # VALIDATION GUARDS

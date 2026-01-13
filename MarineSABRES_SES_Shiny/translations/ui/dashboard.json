@@ -329,26 +329,6 @@
       "pt": "Status da Análise",
       "it": "Stato dell'Analisi",
       "no": "Analysestatus"
-    },
-    "ui.dashboard.network_status": {
-      "en": "Network Status",
-      "es": "Estado de la Red",
-      "fr": "Statut du Réseau",
-      "de": "Netzwerkstatus",
-      "lt": "Tinklo būsena",
-      "pt": "Status da Rede",
-      "it": "Stato della Rete",
-      "no": "Nettverksstatus"
-    },
-    "ui.dashboard.project_history": {
-      "en": "Project History",
-      "es": "Historial del Proyecto",
-      "fr": "Historique du Projet",
-      "de": "Projekthistorie",
-      "lt": "Projekto istorija",
-      "pt": "Histórico do Projeto",
-      "it": "Cronologia del Progetto",
-      "no": "Prosjekthistorikk"
     }
   }
 }

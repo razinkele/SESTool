@@ -128,15 +128,6 @@ tryCatch({
   message("Warning: Could not load export_functions.R")
 })
 
-# Load module stubs for tests (provides minimal implementations where modules are optional)
-tryCatch({
-  if (file.exists(file.path(project_root, "functions/module_stubs.R"))) {
-    source(file.path(project_root, "functions/module_stubs.R"), local = TRUE)
-  }
-}, error = function(e) {
-  message("Warning: Could not load module_stubs.R")
-})
-
 # Restore working directory
 setwd(old_wd)
 

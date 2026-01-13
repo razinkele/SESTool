@@ -1,0 +1,50 @@
+# MarineSABRES Remote Deployment Configuration
+# ============================================================================
+# This file contains configuration settings for remote deployment to laguna.ku.lt
+# Copy this to remote-deploy-config.local.txt and customize for your setup
+# ============================================================================
+
+# SSH Configuration
+REMOTE_HOST="laguna.ku.lt"
+REMOTE_USER="razinka"  # Fixed user for laguna.ku.lt deployment
+REMOTE_PORT="22"  # Default SSH port, change if different
+
+# Deployment Paths
+REMOTE_TARGET="/srv/shiny-server/marinesabres"
+REMOTE_BACKUP_BASE="/tmp/marinesabres-backups"
+
+# SSH Key Configuration (if not using default)
+# SSH_KEY_PATH="~/.ssh/id_rsa"  # Uncomment and set if using specific key
+
+# Deployment Options
+EXCLUDE_MODELS_BY_DEFAULT="false"  # Set to "true" to exclude SESModels by default
+AUTO_RESTART_SHINY="true"  # Set to "false" to skip automatic Shiny Server restart
+
+# Rsync Options
+RSYNC_BANDWIDTH_LIMIT=""  # e.g., "1000" for 1MB/s limit
+RSYNC_TIMEOUT="300"  # Timeout in seconds
+
+# Backup Retention
+BACKUP_RETENTION_DAYS="7"  # How many days to keep backups
+
+# Notification (optional)
+# SLACK_WEBHOOK_URL=""  # Slack webhook for deployment notifications
+# EMAIL_NOTIFICATION=""  # Email for deployment notifications
+
+# Custom Excludes (in addition to defaults)
+# Add patterns one per line, starting with CUSTOM_EXCLUDE_
+CUSTOM_EXCLUDE_1=".env"
+CUSTOM_EXCLUDE_2="*.secret"
+CUSTOM_EXCLUDE_3="private/"
+
+# Pre-deployment checks
+CHECK_DISK_SPACE="true"  # Check available disk space on remote server
+MIN_DISK_SPACE_MB="1024"  # Minimum disk space required in MB
+
+# Post-deployment validation
+VALIDATE_HTTP_ACCESS="true"  # Test HTTP access after deployment
+HTTP_TIMEOUT="30"  # HTTP test timeout in seconds
+
+# Logging
+LOG_DEPLOYMENT="true"  # Keep deployment logs
+LOG_DIRECTORY="logs"  # Local directory for deployment logs
