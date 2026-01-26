@@ -1,7 +1,5 @@
-library(shiny)
-library(shinydashboard)
-
 # modules/export_reports_module.R
+# Libraries loaded in global.R: shiny
 # Export & Reports Module
 # Purpose: Handle data export, visualization export, and report generation
 
@@ -26,7 +24,7 @@ export_reports_ui <- function(id, i18n) {
     ),
 
     fluidRow(
-      box(
+      bs4Card(
         title = i18n$t("modules.isa.data_entry.common.export_data"),
         status = "primary",
         solidHeader = TRUE,
@@ -57,7 +55,7 @@ export_reports_ui <- function(id, i18n) {
                        class = "btn-primary")
       ),
 
-      box(
+      bs4Card(
         title = i18n$t("modules.export.reports.export_visualizations"),
         status = "info",
         solidHeader = TRUE,
@@ -92,7 +90,7 @@ export_reports_ui <- function(id, i18n) {
     ),
 
     fluidRow(
-      box(
+      bs4Card(
         title = i18n$t("modules.export.reports.generate_report"),
         status = "success",
         solidHeader = TRUE,
@@ -403,7 +401,7 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
       },
       content = function(file) {
         # Implement data export logic
-        showNotification("Data export not yet implemented", type = "warning")
+        showNotification(i18n$t("common.messages.data_export_not_implemented"), type = "warning")
       }
     )
 

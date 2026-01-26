@@ -3,8 +3,15 @@
 # Purpose: Guide users through stepwise questions to build DAPSI(W)R(M) framework
 
 # Load helper modules
-source("modules/ai_isa_knowledge_base.R", local = TRUE)
+# NOTE: ai_isa_knowledge_base.R is now sourced globally in global.R
 source("modules/connection_review_tabbed.R", local = TRUE)
+
+# Load AI ISA sub-modules
+source("modules/ai_isa/connection_generator.R", local = TRUE)
+source("modules/ai_isa/ui_components.R", local = TRUE)
+source("modules/ai_isa/question_flow.R", local = TRUE)
+source("modules/ai_isa/answer_processor.R", local = TRUE)
+source("modules/ai_isa/data_persistence.R", local = TRUE)
 
 # ============================================================================
 # UI FUNCTION
@@ -602,12 +609,19 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
     output$sidebar_panel <- renderUI({
       ns <- session$ns
-      box(
+      bs4Card(
         title = i18n$t("modules.isa.ai_assistant.your_ses_model_progress"),
         status = "info",
         solidHeader = TRUE,
         width = 12,
         collapsible = TRUE,
+
+        # Add ribbon badge for AI feature
+        label = bs4CardLabel(
+          text = "AI",
+          status = "primary",
+          tooltip = "AI-Powered Assistant"
+        ),
 
         # Progress indicator
         div(class = "step-indicator",
@@ -735,36 +749,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     })
 
     # ========== SESSION SAVE/LOAD FUNCTIONS ==========
-
-    # Function to serialize current session state
-    get_session_data <- function() {
-      list(
-        current_step = rv$current_step,
-        elements = rv$elements,
-        context = rv$context,
-        suggested_connections = rv$suggested_connections,
-        approved_connections = rv$approved_connections,
-        conversation = rv$conversation,
-        timestamp = Sys.time()
-      )
-    }
-
-    # Function to restore session state
-    restore_session_data <- function(data) {
-      if (!is.null(data)) {
-        rv$current_step <- data$current_step %||% 0
-        rv$elements <- data$elements %||% list(drivers=list(), activities=list(), pressures=list(),
-                                                states=list(), impacts=list(), welfare=list(),
-                                                responses=list())
-        rv$context <- data$context %||% list(project_name=NULL, location=NULL,
-                                              ecosystem_type=NULL, main_issue=NULL)
-        rv$suggested_connections <- data$suggested_connections %||% list()
-        rv$approved_connections <- data$approved_connections %||% list()
-        rv$conversation <- data$conversation %||% list()
-
-        showNotification("Session restored successfully!", type = "message", duration = 3)
-      }
-    }
+    # NOTE: Functions moved to modules/ai_isa/data_persistence.R
 
     # Auto-save observer - triggers on data changes
     observe({
@@ -780,7 +765,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         if (is.null(rv$last_save_time) ||
             difftime(current_time, rv$last_save_time, units = "secs") > 2) {
 
-          session_data <- get_session_data()
+          session_data <- get_session_data(rv)
           session$sendCustomMessage("save_ai_isa_session", session_data)
           rv$last_save_time <- current_time
         }
@@ -809,7 +794,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
     # Manual save button
     observeEvent(input$manual_save, {
-      session_data <- get_session_data()
+      session_data <- get_session_data(rv)
       session$sendCustomMessage("save_ai_isa_session", session_data)
       rv$last_save_time <- Sys.time()
 
@@ -853,7 +838,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # Confirm load
     observeEvent(input$confirm_load, {
       if (!is.null(rv$temp_loaded_data)) {
-        restore_session_data(rv$temp_loaded_data)
+        restore_session_data(rv, rv$temp_loaded_data)
         rv$temp_loaded_data <- NULL
       }
       removeModal()
@@ -2080,6 +2065,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     })
 
     # Process answer function
+    # NOTE: Equivalent function extracted to modules/ai_isa/answer_processor.R
+    # Future refactoring can replace this with: process_answer(answer, step_info, rv, i18n, move_to_next_step, REGIONAL_SEAS)
     process_answer <- function(answer) {
       cat(sprintf("[AI ISA PROCESS] process_answer called with: '%s'\n", answer))
 
@@ -2206,6 +2193,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     }
 
     # Intelligent polarity detection based on element names
+    # NOTE: This function is defined in modules/ai_isa/connection_generator.R
+    # Keeping inline version for now to avoid refactoring complexity with closures
     detect_polarity <- function(from_name, to_name, from_type, to_type) {
       # Keywords that suggest negative impacts/changes
       negative_keywords <- c(
@@ -2310,6 +2299,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     }
 
     # Convert adjacency matrices to connection list format
+    # NOTE: This function is defined in modules/ai_isa/connection_generator.R
+    # Keeping inline version for now to avoid refactoring complexity with closures
     convert_matrices_to_connections <- function(matrices, elements) {
       connections <- list()
 
@@ -2392,6 +2383,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     }
 
     # Helper function to generate smart connections with relevance filtering
+    # NOTE: This function is defined in modules/ai_isa/connection_generator.R
+    # Keeping inline version for now to avoid refactoring complexity with closures
     generate_smart_connections <- function(from_elements, to_elements, from_type, to_type, matrix_name, max_count, min_relevance) {
       candidates <- list()
 
@@ -2456,6 +2449,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     }
 
     # Helper function to calculate semantic relevance between two elements
+    # NOTE: This function is defined in modules/ai_isa/connection_generator.R
+    # Keeping inline version for now to avoid refactoring complexity with closures
     calculate_relevance <- function(from_name, to_name, from_type, to_type) {
       # Normalize names to lowercase for comparison
       from_lower <- tolower(from_name)
@@ -2492,6 +2487,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     }
 
     # Generate logical connections based on DAPSI(W)R(M) framework
+    # NOTE: This function is defined in modules/ai_isa/connection_generator.R
+    # Keeping inline version for now to avoid refactoring complexity with closures
     generate_connections <- function(elements) {
       connections <- list()
       MAX_PER_TYPE <- 15  # Reduced limit for better quality (10 types × 15 = max 150 total)
@@ -3188,7 +3185,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       removeModal()
 
-      showNotification("All data cleared. Starting over from step 1.", type = "message", duration = 3)
+      showNotification(i18n$t("common.messages.all_data_cleared_starting_over"), type = "message", duration = 3)
       cat("[AI ISA] Reset complete\n")
     })
 
@@ -3300,7 +3297,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           footer = modalButton(i18n$t("common.buttons.close"))
         ))
       } else {
-        showNotification("No connections approved yet.", type = "warning", duration = 2)
+        showNotification(i18n$t("common.messages.no_connections_approved_yet"), type = "warning", duration = 2)
       }
     })
 

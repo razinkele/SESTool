@@ -1,6 +1,12 @@
 # functions/error_handling.R
 # Centralized Error Handling and Validation
 # Purpose: Provide consistent error handling, validation, and safe fallbacks across the application
+#
+# STANDARDIZED ERROR HANDLING PATTERN:
+# - Use safe_execute() for operations that might fail and need graceful fallbacks
+# - Use validate_*() functions for data structure validation
+# - Use safe_get_nested() for safely accessing nested list elements
+# - All error handling functions use debug_log() for consistent logging (respects DEBUG_MODE)
 
 # ============================================================================
 # VALIDATION GUARDS
@@ -113,7 +119,7 @@ check_cld_readiness <- function(cld) {
     message = NULL
   )
 
-  tryCatch({
+  error_msg <- tryCatch({
     validate_cld_data(cld)
 
     result$n_nodes <- nrow(cld$nodes)
@@ -130,9 +136,15 @@ check_cld_readiness <- function(cld) {
                                result$n_nodes, result$n_edges)
     }
 
+    NULL  # No error
   }, error = function(e) {
-    result$message <- sprintf("CLD validation error: %s", e$message)
+    sprintf("CLD validation error: %s", e$message)
   })
+
+  # If there was an error, set the message
+  if (!is.null(error_msg)) {
+    result$message <- error_msg
+  }
 
   return(result)
 }
@@ -332,7 +344,108 @@ log_error <- function(context, message, error = NULL) {
 #' @param message Warning message
 #' @export
 log_warning <- function(context, message) {
+
   timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
   cat(sprintf("[%s] [WARN] [%s] %s\n",
               timestamp, context, message))
+}
+
+# ============================================================================
+# SAFE SOURCE FUNCTIONS
+# ============================================================================
+
+#' Safely source an R file with error handling
+#'
+#' @param file Path to R file to source
+#' @param local Logical or environment - same as source()
+#' @param required If TRUE, stop on error. If FALSE, return FALSE on error.
+#' @param context Context string for logging (default: extracted from file path)
+#' @return TRUE if sourced successfully, FALSE if failed and required=FALSE
+#' @export
+safe_source <- function(file, local = FALSE, required = TRUE, context = NULL) {
+  if (is.null(context)) {
+    context <- toupper(gsub("[^a-zA-Z0-9]", "_", basename(file)))
+  }
+
+  # Check if file exists first
+
+  if (!file.exists(file)) {
+    msg <- sprintf("Source file not found: %s", file)
+    log_error(context, msg)
+    if (required) {
+      stop(msg)
+    }
+    return(FALSE)
+  }
+
+  tryCatch({
+    source(file, local = local)
+    return(TRUE)
+  }, error = function(e) {
+    msg <- sprintf("Failed to source file: %s", file)
+    log_error(context, msg, e)
+    if (required) {
+      stop(sprintf("%s - %s", msg, e$message))
+    }
+    return(FALSE)
+  })
+}
+
+#' Safely source multiple R files with error handling
+#'
+#' @param files Character vector of file paths
+#' @param local Logical or environment - same as source()
+#' @param stop_on_first_error If TRUE, stop on first error. If FALSE, continue and return results.
+#' @param context Context string for logging
+#' @return Named list with success status for each file
+#' @export
+safe_source_multiple <- function(files, local = FALSE, stop_on_first_error = TRUE, context = "SOURCE") {
+  results <- list()
+
+  for (file in files) {
+    file_name <- basename(file)
+    success <- safe_source(
+      file = file,
+      local = local,
+      required = stop_on_first_error,
+      context = context
+    )
+    results[[file_name]] <- success
+
+    if (!success && stop_on_first_error) {
+      break
+    }
+  }
+
+  return(results)
+}
+
+#' Validate module dependencies before loading
+#'
+#' @param module_file Path to module file
+#' @param dependencies Character vector of required function names
+#' @return TRUE if all dependencies available, FALSE otherwise
+#' @export
+validate_module_dependencies <- function(module_file, dependencies = NULL) {
+  if (is.null(dependencies)) {
+    return(TRUE)
+  }
+
+  missing <- c()
+  for (dep in dependencies) {
+    if (!exists(dep, mode = "function")) {
+      missing <- c(missing, dep)
+    }
+  }
+
+  if (length(missing) > 0) {
+    log_warning("MODULE_DEPS", sprintf(
+      "Module %s missing dependencies: %s",
+      basename(module_file),
+      paste(missing, collapse = ", ")
+    ))
+    return(FALSE)
+  }
+
+  return(TRUE)
 }

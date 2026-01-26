@@ -21,7 +21,7 @@ prepare_report_ui <- function(id, i18n) {
     fluidRow(
       # Status Panel
       column(6,
-        box(
+        bs4Card(
           title = tagList(icon("check-circle"), " Prerequisites Status"),
           status = "info",
           solidHeader = TRUE,
@@ -33,7 +33,7 @@ prepare_report_ui <- function(id, i18n) {
 
       # Report Configuration
       column(6,
-        box(
+        bs4Card(
           title = tagList(icon("cog"), " Report Configuration"),
           status = "primary",
           solidHeader = TRUE,
@@ -65,7 +65,7 @@ prepare_report_ui <- function(id, i18n) {
 
     fluidRow(
       column(12,
-        box(
+        bs4Card(
           title = tagList(icon("file-download"), " Generate Report"),
           status = "success",
           solidHeader = TRUE,
@@ -243,7 +243,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         return()
       }
 
-      showNotification("Generating HTML report...", type = "message", duration = 3)
+      showNotification(i18n$t("common.messages.generating_html_report"), type = "message", duration = 3)
 
       tryCatch({
         data <- project_data_reactive()
@@ -321,7 +321,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         return()
       }
 
-      showNotification("Generating PDF report...", type = "message", duration = 3)
+      showNotification(i18n$t("common.messages.generating_pdf_report"), type = "message", duration = 3)
 
       tryCatch({
         data <- project_data_reactive()
@@ -430,7 +430,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         return()
       }
 
-      showNotification("Generating Word document...", type = "message", duration = 3)
+      showNotification(i18n$t("common.messages.generating_word_document"), type = "message", duration = 3)
 
       tryCatch({
         data <- project_data_reactive()
@@ -491,7 +491,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         return()
       }
 
-      showNotification("Generating PowerPoint presentation...", type = "message", duration = 3)
+      showNotification(i18n$t("common.messages.generating_powerpoint"), type = "message", duration = 3)
 
       tryCatch({
         data <- project_data_reactive()
@@ -556,7 +556,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
     # Download handler for HTML report
     output$download_html <- downloadHandler(
       filename = function() {
-        paste0(gsub(" ", "_", input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".html")
+        paste0(sanitize_filename(input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".html")
       },
       content = function(file) {
         file.copy(rv$html_report_path, file)
@@ -566,7 +566,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
     # Download handler for HTML fallback
     output$download_html_fallback <- downloadHandler(
       filename = function() {
-        paste0(gsub(" ", "_", input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".html")
+        paste0(sanitize_filename(input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".html")
       },
       content = function(file) {
         file.copy(rv$html_report_path, file)
@@ -576,7 +576,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
     # Download handler for PDF report
     output$download_pdf <- downloadHandler(
       filename = function() {
-        paste0(gsub(" ", "_", input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".pdf")
+        paste0(sanitize_filename(input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".pdf")
       },
       content = function(file) {
         file.copy(rv$pdf_report_path, file)
@@ -586,7 +586,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
     # Download handler for Word report
     output$download_word <- downloadHandler(
       filename = function() {
-        paste0(gsub(" ", "_", input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".docx")
+        paste0(sanitize_filename(input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".docx")
       },
       content = function(file) {
         file.copy(rv$word_report_path, file)
@@ -596,7 +596,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
     # Download handler for PowerPoint report
     output$download_ppt <- downloadHandler(
       filename = function() {
-        paste0(gsub(" ", "_", input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".pptx")
+        paste0(sanitize_filename(input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".pptx")
       },
       content = function(file) {
         file.copy(rv$ppt_report_path, file)

@@ -1040,6 +1040,16 @@
       "it": "Segnalibro ripristinato con successo!",
       "no": "Bookmark restored successfully!"
     },
+    "common.messages.progress_restored_after_language_change": {
+      "en": "Your progress has been restored after language change",
+      "es": "Su progreso ha sido restaurado después del cambio de idioma",
+      "fr": "Votre progression a été restaurée après le changement de langue",
+      "de": "Ihr Fortschritt wurde nach der Sprachänderung wiederhergestellt",
+      "lt": "Jūsų progresas buvo atkurtas po kalbos pakeitimo",
+      "pt": "Seu progresso foi restaurado após a mudança de idioma",
+      "it": "I tuoi progressi sono stati ripristinati dopo il cambio di lingua",
+      "no": "Fremgangen din er gjenopprettet etter språkendring"
+    },
     "common.messages.bookmarks": {
       "en": "Bookmarks",
       "es": "Marcadores",
@@ -5152,13 +5162,143 @@
     },
     "common.messages.project_saved_successfully": {
       "en": "Project saved successfully!",
-      "es": "TODO: es translation",
-      "fr": "TODO: fr translation",
-      "de": "TODO: de translation",
-      "lt": "TODO: lt translation",
-      "pt": "TODO: pt translation",
-      "it": "TODO: it translation",
-      "no": "Project saved successfully!"
+      "es": "¡Proyecto guardado exitosamente!",
+      "fr": "Projet enregistré avec succès!",
+      "de": "Projekt erfolgreich gespeichert!",
+      "lt": "Projektas sėkmingai išsaugotas!",
+      "pt": "Projeto salvo com sucesso!",
+      "it": "Progetto salvato con successo!",
+      "no": "Prosjekt lagret vellykket!"
+    },
+    "common.messages.local_directory_restored": {
+      "en": "Restored connection to local folder: %s",
+      "es": "Conexión restaurada a carpeta local: %s",
+      "fr": "Connexion restaurée au dossier local: %s",
+      "de": "Verbindung zum lokalen Ordner wiederhergestellt: %s",
+      "lt": "Atstatytas ryšys su vietiniu aplanku: %s",
+      "pt": "Conexão restaurada para pasta local: %s",
+      "it": "Connessione ripristinata alla cartella locale: %s",
+      "no": "Gjenopprettet tilkobling til lokal mappe: %s"
+    },
+    "common.messages.local_directory_connected": {
+      "en": "Connected to local folder: %s",
+      "es": "Conectado a carpeta local: %s",
+      "fr": "Connecté au dossier local: %s",
+      "de": "Mit lokalem Ordner verbunden: %s",
+      "lt": "Prisijungta prie vietinio aplanko: %s",
+      "pt": "Conectado à pasta local: %s",
+      "it": "Connesso alla cartella locale: %s",
+      "no": "Koblet til lokal mappe: %s"
+    },
+    "common.messages.directory_access_failed": {
+      "en": "Failed to access directory:",
+      "es": "Error al acceder al directorio:",
+      "fr": "Échec de l'accès au répertoire:",
+      "de": "Zugriff auf Verzeichnis fehlgeschlagen:",
+      "lt": "Nepavyko pasiekti katalogo:",
+      "pt": "Falha ao acessar diretório:",
+      "it": "Accesso alla directory fallito:",
+      "no": "Kunne ikke få tilgang til katalog:"
+    },
+    "common.messages.saved_to_local_file": {
+      "en": "Saved to local file: %s",
+      "es": "Guardado en archivo local: %s",
+      "fr": "Enregistré dans le fichier local: %s",
+      "de": "In lokaler Datei gespeichert: %s",
+      "lt": "Išsaugota vietiniame faile: %s",
+      "pt": "Salvo no arquivo local: %s",
+      "it": "Salvato nel file locale: %s",
+      "no": "Lagret til lokal fil: %s"
+    },
+    "common.messages.local_save_failed": {
+      "en": "Failed to save to local folder:",
+      "es": "Error al guardar en carpeta local:",
+      "fr": "Échec de l'enregistrement dans le dossier local:",
+      "de": "Speichern im lokalen Ordner fehlgeschlagen:",
+      "lt": "Nepavyko išsaugoti vietiniame aplanke:",
+      "pt": "Falha ao salvar na pasta local:",
+      "it": "Salvataggio nella cartella locale fallito:",
+      "no": "Kunne ikke lagre til lokal mappe:"
+    },
+    "common.messages.loaded_from_local_file": {
+      "en": "Loaded from local file: %s",
+      "es": "Cargado desde archivo local: %s",
+      "fr": "Chargé depuis le fichier local: %s",
+      "de": "Von lokaler Datei geladen: %s",
+      "lt": "Įkelta iš vietinio failo: %s",
+      "pt": "Carregado do arquivo local: %s",
+      "it": "Caricato dal file locale: %s",
+      "no": "Lastet fra lokal fil: %s"
+    },
+    "common.messages.error_parsing_file": {
+      "en": "Error parsing file:",
+      "es": "Error al analizar el archivo:",
+      "fr": "Erreur d'analyse du fichier:",
+      "de": "Fehler beim Parsen der Datei:",
+      "lt": "Klaida analizuojant failą:",
+      "pt": "Erro ao analisar arquivo:",
+      "it": "Errore durante l'analisi del file:",
+      "no": "Feil ved parsing av fil:"
+    },
+    "common.messages.local_load_failed": {
+      "en": "Failed to load from local folder:",
+      "es": "Error al cargar desde carpeta local:",
+      "fr": "Échec du chargement depuis le dossier local:",
+      "de": "Laden vom lokalen Ordner fehlgeschlagen:",
+      "lt": "Nepavyko įkelti iš vietinio aplanko:",
+      "pt": "Falha ao carregar da pasta local:",
+      "it": "Caricamento dalla cartella locale fallito:",
+      "no": "Kunne ikke laste fra lokal mappe:"
+    },
+    "common.messages.deleted_local_file": {
+      "en": "Deleted local file: %s",
+      "es": "Archivo local eliminado: %s",
+      "fr": "Fichier local supprimé: %s",
+      "de": "Lokale Datei gelöscht: %s",
+      "lt": "Ištrintas vietinis failas: %s",
+      "pt": "Arquivo local excluído: %s",
+      "it": "File locale eliminato: %s",
+      "no": "Slettet lokal fil: %s"
+    },
+    "common.messages.local_delete_failed": {
+      "en": "Failed to delete file:",
+      "es": "Error al eliminar archivo:",
+      "fr": "Échec de la suppression du fichier:",
+      "de": "Löschen der Datei fehlgeschlagen:",
+      "lt": "Nepavyko ištrinti failo:",
+      "pt": "Falha ao excluir arquivo:",
+      "it": "Eliminazione del file fallita:",
+      "no": "Kunne ikke slette fil:"
+    },
+    "common.messages.local_directory_disconnected": {
+      "en": "Disconnected from local folder",
+      "es": "Desconectado de la carpeta local",
+      "fr": "Déconnecté du dossier local",
+      "de": "Von lokalem Ordner getrennt",
+      "lt": "Atjungta nuo vietinio aplanko",
+      "pt": "Desconectado da pasta local",
+      "it": "Disconnesso dalla cartella locale",
+      "no": "Frakoblet fra lokal mappe"
+    },
+    "common.messages.no_local_directory_selected": {
+      "en": "No local folder selected. Please select a folder first.",
+      "es": "No se ha seleccionado ninguna carpeta local. Por favor, seleccione una carpeta primero.",
+      "fr": "Aucun dossier local sélectionné. Veuillez d'abord sélectionner un dossier.",
+      "de": "Kein lokaler Ordner ausgewählt. Bitte wählen Sie zuerst einen Ordner aus.",
+      "lt": "Nepasirinktas vietinis aplankas. Pirmiausia pasirinkite aplanką.",
+      "pt": "Nenhuma pasta local selecionada. Por favor, selecione uma pasta primeiro.",
+      "it": "Nessuna cartella locale selezionata. Si prega di selezionare prima una cartella.",
+      "no": "Ingen lokal mappe valgt. Vennligst velg en mappe først."
+    },
+    "common.messages.no_data_to_save": {
+      "en": "No data to save",
+      "es": "No hay datos para guardar",
+      "fr": "Aucune donnée à enregistrer",
+      "de": "Keine Daten zum Speichern",
+      "lt": "Nėra duomenų išsaugoti",
+      "pt": "Nenhum dado para salvar",
+      "it": "Nessun dato da salvare",
+      "no": "Ingen data å lagre"
     },
     "common.messages.proportion_of_actual_connections_to_possible_conne": {
       "en": "Proportion of actual connections to possible connections. Higher density indicates more interconnected system.",
@@ -7729,6 +7869,186 @@
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
       "no": "Your work is already saved automatically. Navigate to "
+    },
+    "common.messages.error_no_project_data": {
+      "en": "Error: No project data available",
+      "es": "Error: No hay datos del proyecto disponibles",
+      "fr": "Erreur: Aucune donnée de projet disponible",
+      "de": "Fehler: Keine Projektdaten verfügbar",
+      "lt": "Klaida: Nėra projekto duomenų",
+      "pt": "Erro: Nenhum dado do projeto disponível",
+      "it": "Errore: Nessun dato del progetto disponibile",
+      "no": "Feil: Ingen prosjektdata tilgjengelig"
+    },
+    "common.messages.project_saved": {
+      "en": "Project information saved",
+      "es": "Información del proyecto guardada",
+      "fr": "Informations du projet enregistrées",
+      "de": "Projektinformationen gespeichert",
+      "lt": "Projekto informacija išsaugota",
+      "pt": "Informações do projeto salvas",
+      "it": "Informazioni del progetto salvate",
+      "no": "Prosjektinformasjon lagret"
+    },
+    "common.messages.feature_coming_soon": {
+      "en": "This feature is coming soon",
+      "es": "Esta función estará disponible próximamente",
+      "fr": "Cette fonctionnalité sera bientôt disponible",
+      "de": "Diese Funktion kommt bald",
+      "lt": "Ši funkcija bus netrukus",
+      "pt": "Este recurso estará disponível em breve",
+      "it": "Questa funzionalità sarà disponibile a breve",
+      "no": "Denne funksjonen kommer snart"
+    },
+    "common.messages.all_data_cleared_starting_over": {
+      "en": "All data cleared. Starting over from step 1.",
+      "es": "Todos los datos borrados. Comenzando de nuevo desde el paso 1.",
+      "fr": "Toutes les données effacées. Reprise depuis l'étape 1.",
+      "de": "Alle Daten gelöscht. Neustart ab Schritt 1.",
+      "lt": "Visi duomenys išvalyti. Pradedama nuo 1 žingsnio.",
+      "pt": "Todos os dados apagados. Recomeçando do passo 1.",
+      "it": "Tutti i dati cancellati. Ripartendo dal passaggio 1.",
+      "no": "Alle data slettet. Starter på nytt fra steg 1."
+    },
+    "common.messages.no_connections_approved_yet": {
+      "en": "No connections approved yet.",
+      "es": "Aún no se han aprobado conexiones.",
+      "fr": "Aucune connexion approuvée pour le moment.",
+      "de": "Noch keine Verbindungen genehmigt.",
+      "lt": "Dar nepatvirtinta jokių ryšių.",
+      "pt": "Nenhuma conexão aprovada ainda.",
+      "it": "Nessuna connessione approvata ancora.",
+      "no": "Ingen tilkoblinger godkjent ennå."
+    },
+    "common.messages.data_export_not_implemented": {
+      "en": "Data export not yet implemented",
+      "es": "La exportación de datos aún no está implementada",
+      "fr": "L'exportation de données n'est pas encore implémentée",
+      "de": "Datenexport noch nicht implementiert",
+      "lt": "Duomenų eksportavimas dar neįgyvendintas",
+      "pt": "Exportação de dados ainda não implementada",
+      "it": "Esportazione dati non ancora implementata",
+      "no": "Dataeksport ikke implementert ennå"
+    },
+    "common.messages.suggestions_cleared": {
+      "en": "Suggestions cleared",
+      "es": "Sugerencias borradas",
+      "fr": "Suggestions effacées",
+      "de": "Vorschläge gelöscht",
+      "lt": "Pasiūlymai išvalyti",
+      "pt": "Sugestões apagadas",
+      "it": "Suggerimenti cancellati",
+      "no": "Forslag slettet"
+    },
+    "common.messages.undone": {
+      "en": "Undone",
+      "es": "Deshecho",
+      "fr": "Annulé",
+      "de": "Rückgängig gemacht",
+      "lt": "Atšaukta",
+      "pt": "Desfeito",
+      "it": "Annullato",
+      "no": "Angret"
+    },
+    "common.messages.nothing_to_undo": {
+      "en": "Nothing to undo",
+      "es": "Nada que deshacer",
+      "fr": "Rien à annuler",
+      "de": "Nichts rückgängig zu machen",
+      "lt": "Nėra ką atšaukti",
+      "pt": "Nada para desfazer",
+      "it": "Niente da annullare",
+      "no": "Ingenting å angre"
+    },
+    "common.messages.restarted_wizard": {
+      "en": "Restarted wizard",
+      "es": "Asistente reiniciado",
+      "fr": "Assistant redémarré",
+      "de": "Assistent neu gestartet",
+      "lt": "Vedlys paleistas iš naujo",
+      "pt": "Assistente reiniciado",
+      "it": "Procedura guidata riavviata",
+      "no": "Veiviser startet på nytt"
+    },
+    "common.messages.export_failed": {
+      "en": "Export failed",
+      "es": "La exportación falló",
+      "fr": "L'exportation a échoué",
+      "de": "Export fehlgeschlagen",
+      "lt": "Eksportavimas nepavyko",
+      "pt": "A exportação falhou",
+      "it": "Esportazione fallita",
+      "no": "Eksport mislyktes"
+    },
+    "common.messages.session_restored_successfully": {
+      "en": "Session restored successfully!",
+      "es": "¡Sesión restaurada con éxito!",
+      "fr": "Session restaurée avec succès !",
+      "de": "Sitzung erfolgreich wiederhergestellt!",
+      "lt": "Sesija sėkmingai atkurta!",
+      "pt": "Sessão restaurada com sucesso!",
+      "it": "Sessione ripristinata con successo!",
+      "no": "Økt gjenopprettet!"
+    },
+    "common.messages.generating_html_report": {
+      "en": "Generating HTML report...",
+      "es": "Generando informe HTML...",
+      "fr": "Génération du rapport HTML...",
+      "de": "HTML-Bericht wird erstellt...",
+      "lt": "Generuojama HTML ataskaita...",
+      "pt": "Gerando relatório HTML...",
+      "it": "Generazione report HTML...",
+      "no": "Genererer HTML-rapport..."
+    },
+    "common.messages.generating_pdf_report": {
+      "en": "Generating PDF report...",
+      "es": "Generando informe PDF...",
+      "fr": "Génération du rapport PDF...",
+      "de": "PDF-Bericht wird erstellt...",
+      "lt": "Generuojama PDF ataskaita...",
+      "pt": "Gerando relatório PDF...",
+      "it": "Generazione report PDF...",
+      "no": "Genererer PDF-rapport..."
+    },
+    "common.messages.generating_word_document": {
+      "en": "Generating Word document...",
+      "es": "Generando documento Word...",
+      "fr": "Génération du document Word...",
+      "de": "Word-Dokument wird erstellt...",
+      "lt": "Generuojamas Word dokumentas...",
+      "pt": "Gerando documento Word...",
+      "it": "Generazione documento Word...",
+      "no": "Genererer Word-dokument..."
+    },
+    "common.messages.generating_powerpoint": {
+      "en": "Generating PowerPoint presentation...",
+      "es": "Generando presentación de PowerPoint...",
+      "fr": "Génération de la présentation PowerPoint...",
+      "de": "PowerPoint-Präsentation wird erstellt...",
+      "lt": "Generuojama PowerPoint pristatymas...",
+      "pt": "Gerando apresentação PowerPoint...",
+      "it": "Generazione presentazione PowerPoint...",
+      "no": "Genererer PowerPoint-presentasjon..."
+    },
+    "common.messages.training_data_not_available": {
+      "en": "Training data not available",
+      "es": "Datos de entrenamiento no disponibles",
+      "fr": "Données d'entraînement non disponibles",
+      "de": "Trainingsdaten nicht verfügbar",
+      "lt": "Mokymo duomenys neprieinami",
+      "pt": "Dados de treinamento não disponíveis",
+      "it": "Dati di addestramento non disponibili",
+      "no": "Treningsdata ikke tilgjengelig"
+    },
+    "common.messages.training_complete": {
+      "en": "Training complete!",
+      "es": "¡Entrenamiento completo!",
+      "fr": "Entraînement terminé !",
+      "de": "Training abgeschlossen!",
+      "lt": "Mokymas baigtas!",
+      "pt": "Treinamento concluído!",
+      "it": "Addestramento completato!",
+      "no": "Trening fullført!"
     }
   }
 }
