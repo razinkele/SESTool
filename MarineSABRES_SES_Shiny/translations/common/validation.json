@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     " Validation Errors": {
@@ -18,7 +19,8 @@
       "lt": " Validation Errors",
       "pt": " Validation Errors",
       "it": " Validation Errors",
-      "no": " Validation Errors"
+      "no": " Validation Errors",
+      "el": "Επικύρωση  Errors"
     },
     "Please add at least one Ecosystem Service entry before saving.": {
       "en": "Please add at least one Ecosystem Service entry before saving.",
@@ -28,7 +30,8 @@
       "lt": "Please add at least one Ecosystem Service entry before saving.",
       "pt": "Please add at least one Ecosystem Service entry before saving.",
       "it": "Please add at least one Ecosystem Service entry before saving.",
-      "no": "Please add at least one Ecosystem Service entry before saving."
+      "no": "Please add at least one Ecosystem Service entry before saving.",
+      "el": "Παρακαλώ Προσθήκη at least one Ecosystem Service entry before saving."
     },
     "Please add at least one Good/Benefit entry before saving.": {
       "en": "Please add at least one Good/Benefit entry before saving.",
@@ -38,7 +41,8 @@
       "lt": "Please add at least one Good/Benefit entry before saving.",
       "pt": "Please add at least one Good/Benefit entry before saving.",
       "it": "Please add at least one Good/Benefit entry before saving.",
-      "no": "Please add at least one Good/Benefit entry before saving."
+      "no": "Please add at least one Good/Benefit entry before saving.",
+      "el": "Παρακαλώ Προσθήκη at least one Good/Benefit entry before saving."
     },
     "Please add at least one valid Ecosystem Service entry.": {
       "en": "Please add at least one valid Ecosystem Service entry.",
@@ -48,7 +52,8 @@
       "lt": "Please add at least one valid Ecosystem Service entry.",
       "pt": "Please add at least one valid Ecosystem Service entry.",
       "it": "Please add at least one valid Ecosystem Service entry.",
-      "no": "Please add at least one valid Ecosystem Service entry."
+      "no": "Please add at least one valid Ecosystem Service entry.",
+      "el": "Παρακαλώ Προσθήκη at least one valid Ecosystem Service entry."
     },
     "Please add at least one valid Good/Benefit entry.": {
       "en": "Please add at least one valid Good/Benefit entry.",
@@ -58,7 +63,8 @@
       "lt": "Please add at least one valid Good/Benefit entry.",
       "pt": "Please add at least one valid Good/Benefit entry.",
       "it": "Please add at least one valid Good/Benefit entry.",
-      "no": "Please add at least one valid Good/Benefit entry."
+      "no": "Please add at least one valid Good/Benefit entry.",
+      "el": "Παρακαλώ Προσθήκη at least one valid Good/Benefit entry."
     },
     "Please fix the following issues before saving:": {
       "en": "Please fix the following issues before saving:",
@@ -68,7 +74,8 @@
       "lt": "Please fix the following issues before saving:",
       "pt": "Please fix the following issues before saving:",
       "it": "Please fix the following issues before saving:",
-      "no": "Please fix the following issues before saving:"
+      "no": "Please fix the following issues before saving:",
+      "el": "Παρακαλώ fix the following issues before saving:"
     },
     "common.validation._choose_between_hierarchical_physicsbased_or_circu": {
       "en": " Choose between hierarchical, physics-based, or circular layouts to better understand different aspects of your system",
@@ -78,7 +85,8 @@
       "lt": " Pasirinkite tarp hierarchinių, fizika pagrįstų ar žiedinių išdėstymų, kad geriau suprastumėte skirtingus savo sistemos aspektus",
       "pt": " Escolha entre layouts hierárquicos, baseados em física ou circulares para entender melhor diferentes aspectos do seu sistema",
       "it": " Scegli tra layout gerarchici, basati sulla fisica o circolari per comprendere meglio diversi aspetti del tuo sistema",
-      "no": " Choose between hierarchical, physics-based, or circular layouts to better understand different aspects of your system"
+      "no": " Choose between hierarchical, physics-based, or circular layouts to better understand different aspects of your system",
+      "el": "Επιλέξτε  between hierarchical, physics-based, or circular layouts to better understand different aspects of your system"
     },
     "common.validation._select_a_feedback_loop_to_visualize_circular_patt": {
       "en": " Select a feedback loop to visualize circular patterns of influence in your system",
@@ -88,7 +96,8 @@
       "lt": " Pasirinkite grįžtamojo ryšio kilpą, kad vizualizuotumėte žiedinius įtakos modelius savo sistemoje",
       "pt": " Selecione um loop de feedback para visualizar padrões circulares de influência no seu sistema",
       "it": " Seleziona un loop di feedback per visualizzare modelli circolari di influenza nel tuo sistema",
-      "no": " Select a feedback loop to visualize circular patterns of influence in your system"
+      "no": " Select a feedback loop to visualize circular patterns of influence in your system",
+      "el": "Επιλογή  a feedback loop to visualize circular patterns of influence in your system"
     },
     "common.validation.autosave_automatically_saves_your_work_when_the_ai": {
       "en": "Auto-save automatically saves your work when the AI ISA Assistant completes generating the framework (Step 10). When disabled, you must manually save your work.",
@@ -98,7 +107,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Auto-save automatically saves your work when the AI ISA Assistant completes generating the framework (Step 10). When disabled, you must manually save your work."
+      "no": "Auto-save automatically saves your work when the AI ISA Assistant completes generating the framework (Step 10). When disabled, you must manually save your work.",
+      "el": "Auto-save automatically saves your work when the AI ISA Assistant completes generating the framework (Step 10). When disabled, you must manually save your work."
     },
     "common.validation.bar_plot_top_nodes_by_selected_metric": {
       "en": "Bar Plot - Top Nodes by Selected Metric",
@@ -108,7 +118,8 @@
       "lt": "Stulpelinė diagrama - Pagrindiniai mazgai pagal pasirinktą metriką",
       "pt": "Gráfico de Barras - Nós Principais por Métrica Selecionada",
       "it": "Grafico a Barre - Nodi Principali per Metrica Selezionata",
-      "no": "Bar Plot - Top Nodes by Selected Metric"
+      "no": "Bar Plot - Top Nodes by Selected Metric",
+      "el": "Bar Plot - Top Nodes by Selected Metric"
     },
     "common.validation.cannot_remove_nonexistent_node_s": {
       "en": "Cannot remove non-existent node: %s",
@@ -118,7 +129,8 @@
       "lt": "Negalima pašalinti neegzistuojančio mazgo: %s",
       "pt": "Não é possível remover nó inexistente: %s",
       "it": "Impossibile rimuovere un nodo inesistente: %s",
-      "no": "Cannot remove non-existent node: %s"
+      "no": "Cannot remove non-existent node: %s",
+      "el": "Cannot remove non-existent node: %s"
     },
     "common.validation.choose_a_prebuilt_scenario": {
       "en": "Choose a pre-built scenario:",
@@ -128,7 +140,8 @@
       "lt": "Pasirinkite iš anksto sukurtą scenarijų:",
       "pt": "Escolha um cenário pré-construído:",
       "it": "Scegli uno scenario predefinito:",
-      "no": "Choose a pre-built scenario:"
+      "no": "Choose a pre-built scenario:",
+      "el": "Επιλέξτε a pre-built scenario:"
     },
     "common.validation.choose_excel_file_xlsx": {
       "en": "Choose Excel File (.xlsx):",
@@ -138,7 +151,8 @@
       "lt": "Pasirinkite Excel failą (.xlsx):",
       "pt": "Escolher Ficheiro Excel (.xlsx):",
       "it": "Scegli File Excel (.xlsx):",
-      "no": "Choose Excel File (.xlsx):"
+      "no": "Choose Excel File (.xlsx):",
+      "el": "Επιλέξτε Excel File (.xlsx):"
     },
     "common.validation.choose_method": {
       "en": "Choose Method",
@@ -148,7 +162,8 @@
       "lt": "Pasirinkti metodą",
       "pt": "Escolher Método",
       "it": "Scegli Metodo",
-      "no": "Choose Method"
+      "no": "Choose Method",
+      "el": "Επιλέξτε Method"
     },
     "common.validation.choose_rds_file": {
       "en": "Choose RDS File:",
@@ -158,7 +173,8 @@
       "lt": "Pasirinkti RDS Failą:",
       "pt": "Escolher Ficheiro RDS:",
       "it": "Scegli File RDS:",
-      "no": "Choose RDS File:"
+      "no": "Choose RDS File:",
+      "el": "Επιλέξτε RDS File:"
     },
     "common.validation.click_to_selectdeselect_multiple_selections_allowe": {
       "en": "Click to select/deselect. Multiple selections allowed.",
@@ -168,7 +184,8 @@
       "lt": "Spustelėkite, kad pasirinktumėte/atšauktumėte. Leidžiama kelių pasirinkimų.",
       "pt": "Clique para selecionar/desmarcar. Múltiplas seleções permitidas.",
       "it": "Fai clic per selezionare/deselezionare. Selezioni multiple consentite.",
-      "no": "Click to select/deselect. Multiple selections allowed."
+      "no": "Click to select/deselect. Multiple selections allowed.",
+      "el": "Click to select/deselect. Multiple selections allowed."
     },
     "common.validation.complete_columns_bh_in_the_master_data_sheet_each_": {
       "en": "Complete columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification.",
@@ -178,7 +195,8 @@
       "lt": "Užpildykite B-H stulpelius Pagrindinėje duomenų lentelėje. Kiekviena Gėrybė/Nauda turėtų turėti unikalų ID ir klasifikaciją.",
       "pt": "Complete as colunas B-H na Folha de Dados Mestre. Cada Bem/Benefício deve ter um ID único e classificação.",
       "it": "Completare le colonne B-H nel Foglio Dati Principale. Ogni Bene/Beneficio deve avere un ID univoco e una classificazione.",
-      "no": "Complete columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification."
+      "no": "Complete columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification.",
+      "el": "Ολοκληρώθηκε columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification."
     },
     "common.validation.delete_selected": {
       "en": "Delete Selected",
@@ -188,7 +206,8 @@
       "lt": "Ištrinti Pasirinktus",
       "pt": "Excluir Selecionados",
       "it": "Elimina Selezionati",
-      "no": "Delete Selected"
+      "no": "Delete Selected",
+      "el": "Διαγραφή Επιλεγμένο"
     },
     "common.validation.epnotifyselectneed": {
       "en": "ep_notify_select_need",
@@ -198,7 +217,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ep_notify_select_need"
+      "no": "ep_notify_select_need",
+      "el": "ep_notify_select_need"
     },
     "common.validation.epnotifyselectrole": {
       "en": "ep_notify_select_role",
@@ -208,7 +228,8 @@
       "lt": "Pasirinkite vaidmenį, kad tęstumėte",
       "pt": "Por favor selecione um papel para continuar",
       "it": "Seleziona un ruolo per continuare",
-      "no": "ep_notify_select_role"
+      "no": "ep_notify_select_role",
+      "el": "ep_notify_select_role"
     },
     "common.validation.graph_too_large_for_reliable_loop_detection_please": {
       "en": "Graph too large for reliable loop detection. Please simplify the network first.",
@@ -218,7 +239,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Graph too large for reliable loop detection. Please simplify the network first."
+      "no": "Graph too large for reliable loop detection. Please simplify the network first.",
+      "el": "Γράφημα too large for reliable loop detection. Please simplify the network first."
     },
     "common.validation.great_you_selected": {
       "en": "Great! You selected",
@@ -228,7 +250,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Great! You selected"
+      "no": "Great! You selected",
+      "el": "Great! You selected"
     },
     "common.validation.language_selection": {
       "en": "Language Selection",
@@ -238,7 +261,8 @@
       "lt": "Kalbos pasirinkimas",
       "pt": "Seleção de Idioma",
       "it": "Selezione Lingua",
-      "no": "Language Selection"
+      "no": "Language Selection",
+      "el": "Γλώσσα Selection"
     },
     "common.validation.no_cld_data_to_export_please_create_a_cld_first": {
       "en": "No CLD data to export. Please create a CLD first.",
@@ -248,7 +272,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "No CLD data to export. Please create a CLD first."
+      "no": "No CLD data to export. Please create a CLD first.",
+      "el": "Όχι CLD Δεδομένα to export. Please create a CLD first."
     },
     "common.validation.notesactions_required": {
       "en": "Notes/Actions Required:",
@@ -258,7 +283,8 @@
       "lt": "Pastabos/Reikalingi Veiksmai:",
       "pt": "Notas/Ações Necessárias:",
       "it": "Note/Azioni Richieste:",
-      "no": "Notes/Actions Required:"
+      "no": "Notes/Actions Required:",
+      "el": "Notes/Actions Required:"
     },
     "common.validation.other_enter_your_own": {
       "en": "Other (enter your own)",
@@ -268,7 +294,8 @@
       "lt": "Kitas (įveskite savo)",
       "pt": "Outro (insira o seu)",
       "it": "Altro (inserisci il tuo)",
-      "no": "Other (enter your own)"
+      "no": "Other (enter your own)",
+      "el": "Άλλο (enter your own)"
     },
     "common.validation.please_complete_exercises_1_and_5_first_to_create_": {
       "en": "Please complete Exercises 1 and 5 first to create Goods & Benefits and Drivers.",
@@ -278,7 +305,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Please complete Exercises 1 and 5 first to create Goods & Benefits and Drivers."
+      "no": "Please complete Exercises 1 and 5 first to create Goods & Benefits and Drivers.",
+      "el": "Παρακαλώ Ολοκληρώθηκε Exercises 1 and 5 first to create Goods & Benefits and Drivers."
     },
     "common.validation.please_generate_a_cld_network_first_using": {
       "en": "Please generate a CLD network first using:",
@@ -288,7 +316,8 @@
       "lt": "Pirmiausia sugeneruokite CLD tinklą naudodami:",
       "pt": "Por favor, gere primeiro uma rede CLD usando:",
       "it": "Si prega di generare prima una rete CLD utilizzando:",
-      "no": "Please generate a CLD network first using:"
+      "no": "Please generate a CLD network first using:",
+      "el": "Παρακαλώ generate a CLD network first using:"
     },
     "common.validation.please_go_back_through_the_previous_steps_and_add_": {
       "en": "Please go back through the previous steps and add elements by clicking the suggested options or entering your own text.",
@@ -298,7 +327,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Please go back through the previous steps and add elements by clicking the suggested options or entering your own text."
+      "no": "Please go back through the previous steps and add elements by clicking the suggested options or entering your own text.",
+      "el": "Παρακαλώ go back through the previous steps and add elements by clicking the suggested options or entering your own text."
     },
     "common.validation.proceed_to_select_knowledge_topics": {
       "en": "Proceed to select knowledge topics",
@@ -308,7 +338,8 @@
       "lt": "Tęskite, kad pasirinktumėte žinių temas",
       "pt": "Continuar para selecionar tópicos de conhecimento",
       "it": "Procedi per selezionare gli argomenti di conoscenza",
-      "no": "Proceed to select knowledge topics"
+      "no": "Proceed to select knowledge topics",
+      "el": "Proceed to select knowledge topics"
     },
     "common.validation.proceed_to_selected_method": {
       "en": "Proceed to Selected Method",
@@ -318,7 +349,8 @@
       "lt": "Pereiti prie pasirinkto metodo",
       "pt": "Prosseguir para o Método Selecionado",
       "it": "Procedi al Metodo Selezionato",
-      "no": "Proceed to Selected Method"
+      "no": "Proceed to Selected Method",
+      "el": "Proceed to Selected Method"
     },
     "common.validation.required_excel_format": {
       "en": "Required Excel Format",
@@ -328,7 +360,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Required Excel Format"
+      "no": "Required Excel Format",
+      "el": "Απαιτείται Excel Format"
     },
     "common.validation.return_to_role_selection": {
       "en": "Return to role selection",
@@ -338,7 +371,8 @@
       "lt": "Grįžti į vaidmens pasirinkimą",
       "pt": "Voltar à seleção de papel",
       "it": "Torna alla selezione del ruolo",
-      "no": "Return to role selection"
+      "no": "Return to role selection",
+      "el": "Return to role selection"
     },
     "common.validation.scenariocannotcreateselfloop": {
       "en": "scenario_cannot_create_self_loop",
@@ -348,7 +382,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "scenario_cannot_create_self_loop"
+      "no": "scenario_cannot_create_self_loop",
+      "el": "scenario_cannot_create_self_loop"
     },
     "common.validation.scenarioselectdifferentscenarios": {
       "en": "scenario_select_different_scenarios",
@@ -358,7 +393,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "scenario_select_different_scenarios"
+      "no": "scenario_select_different_scenarios",
+      "el": "scenario_select_different_scenarios"
     },
     "common.validation.scenarioselectlinktoremove": {
       "en": "scenario_select_link_to_remove",
@@ -368,7 +404,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "scenario_select_link_to_remove"
+      "no": "scenario_select_link_to_remove",
+      "el": "scenario_select_link_to_remove"
     },
     "common.validation.scenarioselectnodetoremove": {
       "en": "scenario_select_node_to_remove",
@@ -378,7 +415,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "scenario_select_node_to_remove"
+      "no": "scenario_select_node_to_remove",
+      "el": "scenario_select_node_to_remove"
     },
     "common.validation.scenarioselectorcreate": {
       "en": "scenario_select_or_create",
@@ -388,7 +426,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "scenario_select_or_create"
+      "no": "scenario_select_or_create",
+      "el": "scenario_select_or_create"
     },
     "common.validation.select": {
       "en": "select",
@@ -398,7 +437,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "select"
+      "no": "select",
+      "el": "Επιλογή"
     },
     "common.validation.select_a_template_and_click_": {
       "en": "Select a template and click ",
@@ -408,7 +448,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Select a template and click "
+      "no": "Select a template and click ",
+      "el": "Επιλογή a template and click "
     },
     "common.validation.select_all_that_apply_multiple_selection_allowed": {
       "en": "Select all that apply (multiple selection allowed)",
@@ -418,7 +459,8 @@
       "lt": "Pasirinkite visus tinkamus (galima kelių pasirinkimas)",
       "pt": "Selecione todos os que se aplicam (seleção múltipla permitida)",
       "it": "Seleziona tutte quelle applicabili (selezione multipla consentita)",
-      "no": "Select all that apply (multiple selection allowed)"
+      "no": "Select all that apply (multiple selection allowed)",
+      "el": "Επιλογή Όλα that apply (multiple selection allowed)"
     },
     "common.validation.select_components": {
       "en": "Select Components:",
@@ -428,7 +470,8 @@
       "lt": "Pasirinkite komponentus:",
       "pt": "Selecionar Componentes:",
       "it": "Seleziona Componenti:",
-      "no": "Select Components:"
+      "no": "Select Components:",
+      "el": "Επιλογή Components:"
     },
     "common.validation.select_drivers_and_the_goodsbenefits_they_influenc": {
       "en": "Select drivers and the goods/benefits they influence (positively or negatively):",
@@ -438,7 +481,8 @@
       "lt": "Pasirinkite veiksnius ir gėrybes/naudą, kurioms jie turi įtakos (teigiamą arba neigiamą):",
       "pt": "Selecione os impulsores e os bens/benefícios que influenciam (positiva ou negativamente):",
       "it": "Selezionare i fattori e i beni/benefici che influenzano (positivamente o negativamente):",
-      "no": "Select drivers and the goods/benefits they influence (positively or negatively):"
+      "no": "Select drivers and the goods/benefits they influence (positively or negatively):",
+      "el": "Επιλογή Κινητήριες δυνάμεις and the goods/benefits they influence (positively or negatively):"
     },
     "common.validation.select_element": {
       "en": "Select Element:",
@@ -448,7 +492,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Select Element:"
+      "no": "Select Element:",
+      "el": "Επιλογή Element:"
     },
     "common.validation.select_format": {
       "en": "Select Format:",
@@ -458,7 +503,8 @@
       "lt": "Pasirinkite formatą:",
       "pt": "Selecionar Formato:",
       "it": "Seleziona Formato:",
-      "no": "Select Format:"
+      "no": "Select Format:",
+      "el": "Επιλογή Format:"
     },
     "common.validation.select_language": {
       "en": "Select Language",
@@ -468,7 +514,8 @@
       "lt": "Pasirinkite kalbą",
       "pt": "Selecionar Idioma",
       "it": "Seleziona Lingua",
-      "no": "Select Language"
+      "no": "Select Language",
+      "el": "Επιλογή Γλώσσα"
     },
     "common.validation.select_matrix_type": {
       "en": "Select Matrix Type:",
@@ -478,7 +525,8 @@
       "lt": "Pasirinkite matricos tipą:",
       "pt": "Selecionar Tipo de Matriz:",
       "it": "Seleziona Tipo di Matrice:",
-      "no": "Select Matrix Type:"
+      "no": "Select Matrix Type:",
+      "el": "Επιλογή Matrix Type:"
     },
     "common.validation.select_metric": {
       "en": "Select Metric",
@@ -488,7 +536,8 @@
       "lt": "Pasirinkti metriką",
       "pt": "Selecionar Métrica",
       "it": "Seleziona Metrica",
-      "no": "Select Metric"
+      "no": "Select Metric",
+      "el": "Επιλογή Μετρική"
     },
     "common.validation.select_response": {
       "en": "Select Response:",
@@ -498,7 +547,8 @@
       "lt": "Pasirinkti Atsaką:",
       "pt": "Selecionar Resposta:",
       "it": "Seleziona Risposta:",
-      "no": "Select Response:"
+      "no": "Select Response:",
+      "el": "Επιλογή Response:"
     },
     "common.validation.select_the_environmental_pressures_risks_or_hazard": {
       "en": "Select the environmental pressures, risks, or hazards you",
@@ -508,7 +558,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Select the environmental pressures, risks, or hazards you"
+      "no": "Select the environmental pressures, risks, or hazards you",
+      "el": "Επιλογή the environmental pressures, risks, or hazards you"
     },
     "common.validation.select_the_human_activities_relevant_to_your_marin": {
       "en": "Select the human activities relevant to your marine management question. These represent the ",
@@ -518,7 +569,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Select the human activities relevant to your marine management question. These represent the "
+      "no": "Select the human activities relevant to your marine management question. These represent the ",
+      "el": "Επιλογή the human activities relevant to your marine management question. These represent the "
     },
     "common.validation.select_the_knowledge_domains_and_analytical_approa": {
       "en": "Select the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks.",
@@ -528,7 +580,8 @@
       "lt": "Pasirinkite žinių sritis ir analitinius metodus, susijusius su jūsų klausimu. Tai padeda susieti jus su tinkamomis analizės priemonėmis ir sistemomis.",
       "pt": "Selecione os domínios de conhecimento e abordagens analíticas relevantes para a sua questão. Isto ajuda a combiná-lo com ferramentas e quadros de análise apropriados.",
       "it": "Seleziona gli ambiti di conoscenza e gli approcci analitici rilevanti per la tua domanda. Questo aiuta a abbinarti con strumenti e framework di analisi appropriati.",
-      "no": "Select the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks."
+      "no": "Select the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks.",
+      "el": "Επιλογή the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks."
     },
     "common.validation.select_this_template": {
       "en": "Select This Template",
@@ -538,7 +591,8 @@
       "lt": "Pasirinkti šį šabloną",
       "pt": "Selecionar este modelo",
       "it": "Seleziona questo modello",
-      "no": "Select This Template"
+      "no": "Select This Template",
+      "el": "Επιλογή This Template"
     },
     "common.validation.select_your_experience_level_with_marine_ecosystem": {
       "en": "Select your experience level with marine ecosystem modeling:",
@@ -548,7 +602,8 @@
       "lt": "Pasirinkite savo patirties lygį su jūrų ekosistemų modeliavimu:",
       "pt": "Selecione seu nível de experiência com modelagem de ecossistemas marinhos:",
       "it": "Seleziona il tuo livello di esperienza con la modellazione degli ecosistemi marini:",
-      "no": "Select your experience level with marine ecosystem modeling:"
+      "no": "Select your experience level with marine ecosystem modeling:",
+      "el": "Επιλογή your experience level with marine ecosystem modeling:"
     },
     "common.validation.select_your_preferred_language_for_the_application": {
       "en": "Select your preferred language for the application interface.",
@@ -558,7 +613,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Select your preferred language for the application interface."
+      "no": "Select your preferred language for the application interface.",
+      "el": "Επιλογή your preferred language for the application interface."
     },
     "common.validation.select_your_regional_sea": {
       "en": "Select your regional sea:",
@@ -568,7 +624,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Select your regional sea:"
+      "no": "Select your regional sea:",
+      "el": "Επιλογή your regional sea:"
     },
     "common.validation.select_your_role_in_marine_management_multiple_sel": {
       "en": "Select your role in marine management (multiple selection allowed)",
@@ -578,7 +635,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Select your role in marine management (multiple selection allowed)"
+      "no": "Select your role in marine management (multiple selection allowed)",
+      "el": "Επιλογή your role in marine management (multiple selection allowed)"
     },
     "common.validation.selected": {
       "en": "selected",
@@ -588,7 +646,8 @@
       "lt": "pasirinkta",
       "pt": "selecionado(s)",
       "it": "selezionato/i",
-      "no": "selected"
+      "no": "selected",
+      "el": "Επιλεγμένο"
     },
     "common.validation.this_action_cannot_be_undone": {
       "en": "This action cannot be undone.",
@@ -598,7 +657,8 @@
       "lt": "Šio veiksmo negalima atšaukti.",
       "pt": "Esta ação não pode ser desfeita.",
       "it": "Questa azione non può essere annullata.",
-      "no": "This action cannot be undone."
+      "no": "This action cannot be undone.",
+      "el": "This action cannot be undone."
     },
     "common.validation.this_will_clear_all_entered_data_this_action_canno": {
       "en": "This will clear all entered data. This action cannot be undone.",
@@ -608,7 +668,8 @@
       "lt": "Tai išvalys visus įvestus duomenis. Šio veiksmo negalima atšaukti.",
       "pt": "Isto irá limpar todos os dados introduzidos. Esta ação não pode ser desfeita.",
       "it": "Questo cancellerà tutti i dati inseriti. Questa azione non può essere annullata.",
-      "no": "This will clear all entered data. This action cannot be undone."
+      "no": "This will clear all entered data. This action cannot be undone.",
+      "el": "This will clear all entered data. This action cannot be undone."
     },
     "common.validation.two_sheets_required": {
       "en": "Two sheets required:",
@@ -618,7 +679,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Two sheets required:"
+      "no": "Two sheets required:",
+      "el": "Two sheets required:"
     },
     "common.validation.what_basic_human_need_drives_your_question_multipl": {
       "en": "What basic human need drives your question? (multiple selection allowed)",
@@ -628,7 +690,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "What basic human need drives your question? (multiple selection allowed)"
+      "no": "What basic human need drives your question? (multiple selection allowed)",
+      "el": "What basic human need drives your question? (multiple selection allowed)"
     },
     "common.validation.what_external_factors_should_be_brought_inside_the": {
       "en": "What external factors should be brought inside the system boundary?",
@@ -638,7 +701,8 @@
       "lt": "Kokie išoriniai veiksniai turėtų būti įtraukti į sistemos ribas?",
       "pt": "Que fatores externos devem ser trazidos para dentro da fronteira do sistema?",
       "it": "Quali fattori esterni dovrebbero essere portati all'interno del confine del sistema?",
-      "no": "What external factors should be brought inside the system boundary?"
+      "no": "What external factors should be brought inside the system boundary?",
+      "el": "What external factors should be brought inside the system boundary?"
     },
     "common.validation.what_resources_are_required": {
       "en": "What resources are required?",
@@ -648,7 +712,8 @@
       "lt": "Kokių išteklių reikia?",
       "pt": "Quais recursos são necessários?",
       "it": "Quali risorse sono necessarie?",
-      "no": "What resources are required?"
+      "no": "What resources are required?",
+      "el": "What resources are required?"
     },
     "common.validation.what_topic_areas_are_you_interested_in_select_all_": {
       "en": "What topic areas are you interested in? (Select all that apply)",
@@ -658,7 +723,8 @@
       "lt": "Kokios teminės sritys jus domina? (Pasirinkite visas tinkamas)",
       "pt": "Que áreas temáticas lhe interessam? (Selecione todas as que se aplicam)",
       "it": "Quali aree tematiche ti interessano? (Seleziona tutte quelle applicabili)",
-      "no": "What topic areas are you interested in? (Select all that apply)"
+      "no": "What topic areas are you interested in? (Select all that apply)",
+      "el": "What topic areas are you interested in? (Select all that apply)"
     },
     "common.validation.you_are_changing_your_regional_sea_selection_this_": {
       "en": "You are changing your regional sea selection. This will affect the available options for:",
@@ -668,7 +734,8 @@
       "lt": "Keičiate regioninės jūros pasirinkimą. Tai paveiks galimas parinktis:",
       "pt": "Você está alterando sua seleção de mar regional. Isso afetará as opções disponíveis para:",
       "it": "Stai modificando la selezione del mare regionale. Questo influenzerà le opzioni disponibili per:",
-      "no": "You are changing your regional sea selection. This will affect the available options for:"
+      "no": "You are changing your regional sea selection. This will affect the available options for:",
+      "el": "You are changing your regional sea selection. This will affect the available options for:"
     },
     "common.validation.you_selected": {
       "en": "You selected:",
@@ -678,7 +745,8 @@
       "lt": "Jūs pasirinkote:",
       "pt": "Você selecionou:",
       "it": "Hai selezionato:",
-      "no": "You selected:"
+      "no": "You selected:",
+      "el": "You selected:"
     },
     "common.validation.your_current_ecosystem_and_issue_selections_may_no": {
       "en": "Your current ecosystem and issue selections may no longer be valid for the new regional sea.",
@@ -688,7 +756,8 @@
       "lt": "Jūsų dabartiniai ekosistemos ir problemų pasirinkimai gali nebegalioti naujam regioniniam jūrai.",
       "pt": "Suas seleções atuais de ecossistema e problemas podem não ser mais válidas para o novo mar regional.",
       "it": "Le tue selezioni attuali di ecosistema e problemi potrebbero non essere più valide per il nuovo mare regionale.",
-      "no": "Your current ecosystem and issue selections may no longer be valid for the new regional sea."
+      "no": "Your current ecosystem and issue selections may no longer be valid for the new regional sea.",
+      "el": "Your current ecosystem and issue selections may no longer be valid for the new regional sea."
     },
     "common.validation.your_ecosystem_and_issue_selections_have_been_clea": {
       "en": "Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea.",
@@ -698,7 +767,8 @@
       "lt": "Jūsų ekosistemos ir problemų pasirinkimai buvo išvalyti. Prašome juos pasirinkti iš naujo naujam regioniniam jūrai.",
       "pt": "Suas seleções de ecossistema e problemas foram apagadas. Por favor, selecione-as novamente para o novo mar regional.",
       "it": "Le tue selezioni di ecosistema e problemi sono state cancellate. Si prega di ri-selezionarle per il nuovo mare regionale.",
-      "no": "Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea."
+      "no": "Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea.",
+      "el": "Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea."
     },
     "validation.confirm.delete": {
       "en": "Are you sure you want to delete this item?",
@@ -708,7 +778,8 @@
       "lt": "Ar tikrai norite ištrinti šį elementą?",
       "pt": "Tem certeza de que deseja excluir este item?",
       "it": "Sei sicuro di voler eliminare questo elemento?",
-      "no": "Are you sure you want to delete this item?"
+      "no": "Are you sure you want to delete this item?",
+      "el": "Είστε σίγουροι you want to delete this item?"
     },
     "validation.confirm.overwrite": {
       "en": "This will overwrite existing data. Continue?",
@@ -718,7 +789,8 @@
       "lt": "Tai perrašys esamus duomenis. Tęsti?",
       "pt": "Isso sobrescreverá os dados existentes. Continuar?",
       "it": "Questo sovrascriverà i dati esistenti. Continuare?",
-      "no": "This will overwrite existing data. Continue?"
+      "no": "This will overwrite existing data. Continue?",
+      "el": "This will overwrite existing data. Continue?"
     },
     "validation.error.file_not_found": {
       "en": "File not found",
@@ -728,7 +800,8 @@
       "lt": "Failas nerastas",
       "pt": "Arquivo não encontrado",
       "it": "File non trovato",
-      "no": "File not found"
+      "no": "File not found",
+      "el": "Αρχείο not found"
     },
     "validation.error.invalid_format": {
       "en": "Invalid format",
@@ -738,7 +811,8 @@
       "lt": "Netinkamas formatas",
       "pt": "Formato inválido",
       "it": "Formato non valido",
-      "no": "Invalid format"
+      "no": "Invalid format",
+      "el": "Invalid format"
     },
     "validation.error.invalid_input": {
       "en": "Invalid input",
@@ -748,7 +822,8 @@
       "lt": "Netinkama įvestis",
       "pt": "Entrada inválida",
       "it": "Input non valido",
-      "no": "Invalid input"
+      "no": "Invalid input",
+      "el": "Invalid input"
     },
     "validation.error.load_failed": {
       "en": "Load failed",
@@ -758,7 +833,8 @@
       "lt": "Nepavyko įkelti",
       "pt": "Falha ao carregar",
       "it": "Caricamento fallito",
-      "no": "Load failed"
+      "no": "Load failed",
+      "el": "Load failed"
     },
     "validation.error.required_field": {
       "en": "This field is required",
@@ -768,7 +844,8 @@
       "lt": "Šis laukas yra privalomas",
       "pt": "Este campo é obrigatório",
       "it": "Questo campo è obbligatorio",
-      "no": "This field is required"
+      "no": "This field is required",
+      "el": "This field is required"
     },
     "validation.error.save_failed": {
       "en": "Save failed",
@@ -778,7 +855,8 @@
       "lt": "Nepavyko išsaugoti",
       "pt": "Falha ao salvar",
       "it": "Salvataggio fallito",
-      "no": "Save failed"
+      "no": "Save failed",
+      "el": "Αποθήκευση Απέτυχε"
     },
     "validation.error.upload_failed": {
       "en": "Upload failed",
@@ -788,7 +866,8 @@
       "lt": "Nepavyko įkelti",
       "pt": "Falha no upload",
       "it": "Caricamento fallito",
-      "no": "Upload failed"
+      "no": "Upload failed",
+      "el": "Μεταφόρτωση Απέτυχε"
     },
     "validation.success.deleted": {
       "en": "Deleted successfully",
@@ -798,7 +877,8 @@
       "lt": "Sėkmingai ištrinta",
       "pt": "Excluído com sucesso",
       "it": "Eliminato con successo",
-      "no": "Deleted successfully"
+      "no": "Deleted successfully",
+      "el": "Διαγράφηκε successfully"
     },
     "validation.success.loaded": {
       "en": "Loaded successfully",
@@ -808,7 +888,8 @@
       "lt": "Sėkmingai įkeltas",
       "pt": "Carregado com sucesso",
       "it": "Caricato con successo",
-      "no": "Loaded successfully"
+      "no": "Loaded successfully",
+      "el": "Φορτώθηκε successfully"
     },
     "validation.success.saved": {
       "en": "Saved successfully",
@@ -818,7 +899,8 @@
       "lt": "Sėkmingai išsaugota",
       "pt": "Salvo com sucesso",
       "it": "Salvato con successo",
-      "no": "Saved successfully"
+      "no": "Saved successfully",
+      "el": "Αποθηκεύτηκε successfully"
     },
     "validation.success.updated": {
       "en": "Updated successfully",
@@ -828,7 +910,8 @@
       "lt": "Sėkmingai atnaujinta",
       "pt": "Atualizado com sucesso",
       "it": "Aggiornato con successo",
-      "no": "Updated successfully"
+      "no": "Updated successfully",
+      "el": "Ενημερώθηκε successfully"
     },
     "validation.warning.unsaved_changes": {
       "en": "You have unsaved changes",
@@ -838,7 +921,8 @@
       "lt": "Turite neišsaugotų pakeitimų",
       "pt": "Você tem alterações não salvas",
       "it": "Hai modifiche non salvate",
-      "no": "You have unsaved changes"
+      "no": "You have unsaved changes",
+      "el": "You have unsaved changes"
     }
   }
 }

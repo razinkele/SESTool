@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "modules.prepare.report.title": {
@@ -18,7 +19,8 @@
       "lt": "Parengti Išsamią Ataskaitą",
       "pt": "Preparar Relatório Abrangente",
       "it": "Prepara Rapporto Completo",
-      "no": "Forbered Omfattende Rapport"
+      "no": "Forbered Omfattende Rapport",
+      "el": "Prepare Comprehensive Report"
     },
     "modules.prepare.report.subtitle": {
       "en": "Generate a detailed analysis report of your Social-Ecological System model.",
@@ -28,7 +30,8 @@
       "lt": "Sukurkite išsamią savo socialinės-ekologinės sistemos modelio analizės ataskaitą.",
       "pt": "Gere um relatório de análise detalhado do seu modelo de Sistema Socio-Ecológico.",
       "it": "Genera un rapporto di analisi dettagliato del tuo modello di Sistema Socio-Ecologico.",
-      "no": "Generer en detaljert analyserapport av din sosial-økologiske systemmodell."
+      "no": "Generer en detaljert analyserapport av din sosial-økologiske systemmodell.",
+      "el": "Generate a detailed analysis report of your Social-Ecological System model."
     },
     "modules.prepare.report.requirements": {
       "en": "Both Loop Detection and Leverage Point Analysis must be completed before generating a report.",
@@ -38,7 +41,8 @@
       "lt": "Prieš generuojant ataskaitą, turi būti užbaigta tiek kilpų aptikimas, tiek sverto taškų analizė.",
       "pt": "Tanto a Detecção de Ciclos quanto a Análise de Pontos de Alavancagem devem ser concluídas antes de gerar um relatório.",
       "it": "Sia il rilevamento dei cicli che l'analisi dei punti di leva devono essere completati prima di generare un rapporto.",
-      "no": "Både Loop-deteksjon og Leverage Point-analyse må fullføres før du genererer en rapport."
+      "no": "Både Loop-deteksjon og Leverage Point-analyse må fullføres før du genererer en rapport.",
+      "el": "Both Loop Detection and Leverage Point Analysis must be completed before generating a report."
     },
     "modules.prepare.report.requirements_label": {
       "en": "Requirements:",
@@ -48,7 +52,8 @@
       "lt": "Reikalavimai:",
       "pt": "Requisitos:",
       "it": "Requisiti:",
-      "no": "Krav:"
+      "no": "Krav:",
+      "el": "Requirements:"
     }
   }
 }

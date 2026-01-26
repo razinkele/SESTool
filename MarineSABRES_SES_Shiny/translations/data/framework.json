@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "data.framework.marinesabres_social_ecological_systems_analysis_tool": {
@@ -18,7 +19,8 @@
       "lt": "MarineSABRES socialinių-ekologinių sistemų analizės įrankis",
       "pt": "Ferramenta de Análise de Sistemas Sócio-Ecológicos MarineSABRES",
       "it": "Strumento di Analisi dei Sistemi Socio-Ecologici MarineSABRES",
-      "no": "MarineSABRES Social-Ecological Systems Analysis Tool"
+      "no": "MarineSABRES Social-Ecological Systems Analysis Tool",
+      "el": "MarineSABRES Social-Ecological Systems Analysis Tool"
     }
   }
 }

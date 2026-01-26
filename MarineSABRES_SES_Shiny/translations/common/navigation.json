@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "common.navigation._visualization_module_help_modal_content": {
@@ -18,7 +19,8 @@
       "lt": "# Vizualizacijos modulis - Modal pagalbos turinys",
       "pt": "# Módulo de Visualização - Conteúdo de Ajuda Modal",
       "it": "# Modulo di Visualizzazione - Contenuto Modale di Aiuto",
-      "no": "# Visualization Module - Help Modal Content"
+      "no": "# Visualization Module - Help Modal Content",
+      "el": "# Visualization Module - Help Modal Content"
     },
     "common.navigation.about": {
       "en": "About",
@@ -28,7 +30,8 @@
       "lt": "Apie",
       "pt": "Sobre",
       "it": "Informazioni",
-      "no": "Om"
+      "no": "Om",
+      "el": "About"
     },
     "common.navigation.app_settings": {
       "en": "App Settings",
@@ -38,7 +41,8 @@
       "lt": "Nustatymai",
       "pt": "Configurações",
       "it": "Impostazioni",
-      "no": "App-innstillinger"
+      "no": "App-innstillinger",
+      "el": "App Settings"
     },
     "common.navigation.application_settings": {
       "en": "Application Settings",
@@ -48,7 +52,8 @@
       "lt": "Programos nustatymai",
       "pt": "Configurações da Aplicação",
       "it": "Impostazioni dell'Applicazione",
-      "no": "Programinnstillinger"
+      "no": "Programinnstillinger",
+      "el": "Application Settings"
     },
     "common.navigation.autosave_helps_prevent_data_loss_from_unexpected_d": {
       "en": "Auto-save helps prevent data loss from unexpected disconnections.",
@@ -58,7 +63,8 @@
       "lt": "Automatinis išsaugojimas padeda išvengti duomenų praradimo dėl netikėtų atjungimų.",
       "pt": "O salvamento automático ajuda a prevenir perda de dados de desconexões inesperadas.",
       "it": "Il salvataggio automatico aiuta a prevenire la perdita di dati da disconnessioni inattese.",
-      "no": "Automatisk lagring forhindrer tap av data ved uventede frakoblinger."
+      "no": "Automatisk lagring forhindrer tap av data ved uventede frakoblinger.",
+      "el": "Auto-save helps prevent data loss from unexpected disconnections."
     },
     "common.navigation.autosave_settings": {
       "en": "Auto-Save Settings",
@@ -68,7 +74,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Innstillinger for automatisk lagring"
+      "no": "Innstillinger for automatisk lagring",
+      "el": "Auto-Save Settings"
     },
     "common.navigation.behavior_produces_resistance_to_change_and_system_": {
       "en": "Behavior: Produces resistance to change and system stabilization",
@@ -78,7 +85,8 @@
       "lt": "Elgsena: Sukuria pasipriešinimą pokyčiams ir sistemos stabilizavimą",
       "pt": "Comportamento: Produz resistência à mudança e estabilização do sistema",
       "it": "Comportamento: Produce resistenza al cambiamento e stabilizzazione del sistema",
-      "no": "Behavior: Produces resistance to change and system stabilization"
+      "no": "Behavior: Produces resistance to change and system stabilization",
+      "el": "Behavior: Produces resistance to change and system stabilization"
     },
     "common.navigation.bothelptext": {
       "en": "bot_help_text",
@@ -88,7 +96,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "bot_help_text"
+      "no": "bot_help_text",
+      "el": "bot_help_text"
     },
     "common.navigation.bubble_size_represents_pagerank": {
       "en": "Bubble size represents PageRank",
@@ -98,7 +107,8 @@
       "lt": "Burbulo dydis atspindi PageRank",
       "pt": "O tamanho da bolha representa o PageRank",
       "it": "La dimensione della bolla rappresenta il PageRank",
-      "no": "Bubble size represents PageRank"
+      "no": "Bubble size represents PageRank",
+      "el": "Bubble size represents PageRank"
     },
     "common.navigation.confidence_property_system_allows_you_to_track_dat": {
       "en": "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research.",
@@ -108,7 +118,8 @@
       "lt": "Pasitikėjimo savybių sistema leidžia sekti duomenų kokybę ir tikrumą. Mažo pasitikėjimo kraštai atrodo skaidresni, padeda nustatyti sritis, kurioms reikia daugiau tyrimų.",
       "pt": "O sistema de propriedades de confiança permite rastrear a qualidade e certeza dos dados. Bordas com baixa confiança aparecem mais transparentes, ajudando a identificar áreas que precisam de mais pesquisa.",
       "it": "Il sistema di proprietà di confidenza ti consente di tracciare qualità e certezza dei dati. I bordi con bassa confidenza appaiono più trasparenti, aiutandoti a identificare aree che necessitano di ulteriori ricerche.",
-      "no": "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research."
+      "no": "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research.",
+      "el": "Εμπιστοσύνη property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research."
     },
     "common.navigation.configure_settings": {
       "en": "Configure Settings",
@@ -118,7 +129,8 @@
       "lt": "Konfigūruoti nustatymus",
       "pt": "Configurar Definições",
       "it": "Configura Impostazioni",
-      "no": "Configure Settings"
+      "no": "Configure Settings",
+      "el": "Configure Settings"
     },
     "common.navigation.dashboard": {
       "en": "Dashboard",
@@ -128,7 +140,8 @@
       "lt": "Prietaisų skydelis",
       "pt": "Painel",
       "it": "Dashboard",
-      "no": "Dashbord"
+      "no": "Dashbord",
+      "el": "Πίνακας ελέγχου"
     },
     "common.navigation.distributed_across_tabs_to_keep_the_interface_resp": {
       "en": "distributed across tabs to keep the interface responsive.",
@@ -138,7 +151,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "distributed across tabs to keep the interface responsive."
+      "no": "distributed across tabs to keep the interface responsive.",
+      "el": "distributed across tabs to keep the interface responsive."
     },
     "common.navigation.epnotifyusemainmenu": {
       "en": "ep_notify_use_main_menu",
@@ -148,7 +162,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ep_notify_use_main_menu"
+      "no": "ep_notify_use_main_menu",
+      "el": "ep_notify_use_main_menu"
     },
     "common.navigation.ex0helptext": {
       "en": "ex0_help_text",
@@ -158,7 +173,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ex0_help_text"
+      "no": "ex0_help_text",
+      "el": "ex0_help_text"
     },
     "common.navigation.ex101112helptext": {
       "en": "ex101112_help_text",
@@ -168,7 +184,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ex101112_help_text"
+      "no": "ex101112_help_text",
+      "el": "ex101112_help_text"
     },
     "common.navigation.ex1helptext": {
       "en": "ex1_help_text",
@@ -178,7 +195,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ex1_help_text"
+      "no": "ex1_help_text",
+      "el": "ex1_help_text"
     },
     "common.navigation.ex2ahelptext": {
       "en": "ex2a_help_text",
@@ -188,7 +206,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ex2a_help_text"
+      "no": "ex2a_help_text",
+      "el": "ex2a_help_text"
     },
     "common.navigation.ex2bhelptext": {
       "en": "ex2b_help_text",
@@ -198,7 +217,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ex2b_help_text"
+      "no": "ex2b_help_text",
+      "el": "ex2b_help_text"
     },
     "common.navigation.ex3helptext": {
       "en": "ex3_help_text",
@@ -208,7 +228,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ex3_help_text"
+      "no": "ex3_help_text",
+      "el": "ex3_help_text"
     },
     "common.navigation.ex4helptext": {
       "en": "ex4_help_text",
@@ -218,7 +239,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ex4_help_text"
+      "no": "ex4_help_text",
+      "el": "ex4_help_text"
     },
     "common.navigation.ex5helptext": {
       "en": "ex5_help_text",
@@ -228,7 +250,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ex5_help_text"
+      "no": "ex5_help_text",
+      "el": "ex5_help_text"
     },
     "common.navigation.ex6helptext": {
       "en": "ex6_help_text",
@@ -238,7 +261,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ex6_help_text"
+      "no": "ex6_help_text",
+      "el": "ex6_help_text"
     },
     "common.navigation.ex789helptext": {
       "en": "ex789_help_text",
@@ -248,7 +272,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "ex789_help_text"
+      "no": "ex789_help_text",
+      "el": "ex789_help_text"
     },
     "common.navigation.get_help": {
       "en": "Get Help",
@@ -258,7 +283,8 @@
       "lt": "Gauti pagalbą",
       "pt": "Obter Ajuda",
       "it": "Ottieni Aiuto",
-      "no": "Get Help"
+      "no": "Get Help",
+      "el": "Get Help"
     },
     "common.navigation.help": {
       "en": "Help",
@@ -268,7 +294,8 @@
       "lt": "Pagalba",
       "pt": "Ajuda",
       "it": "Aiuto",
-      "no": "Hjelp"
+      "no": "Hjelp",
+      "el": "Βοήθεια"
     },
     "common.navigation.help_documentation": {
       "en": "Help & Documentation",
@@ -278,7 +305,8 @@
       "lt": "Pagalba ir dokumentacija",
       "pt": "Ajuda e Documentação",
       "it": "Aiuto e Documentazione",
-      "no": "Help & Documentation"
+      "no": "Help & Documentation",
+      "el": "Βοήθεια & Documentation"
     },
     "common.navigation.high_pagerank": {
       "en": "High PageRank:",
@@ -288,7 +316,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "High PageRank:"
+      "no": "High PageRank:",
+      "el": "High PageRank:"
     },
     "common.navigation.high_pagerank_these_nodes_have_broad_influence_acr": {
       "en": "High PageRank: These nodes have broad influence across the network and often represent core system elements.",
@@ -298,7 +327,8 @@
       "lt": "Didelis PageRank: Šie mazgai turi platų poveikį visame tinkle ir dažnai reprezentuoja pagrindinius sistemos elementus.",
       "pt": "Alto PageRank: Estes nós têm ampla influência na rede e frequentemente representam elementos centrais do sistema.",
       "it": "Alto PageRank: Questi nodi hanno un'ampia influenza sulla rete e spesso rappresentano elementi centrali del sistema.",
-      "no": "High PageRank: These nodes have broad influence across the network and often represent core system elements."
+      "no": "High PageRank: These nodes have broad influence across the network and often represent core system elements.",
+      "el": "High PageRank: These nodes have broad influence across the network and often represent core system elements."
     },
     "common.navigation.home": {
       "en": "Home",
@@ -308,7 +338,8 @@
       "lt": "Pradžia",
       "pt": "Início",
       "it": "Home",
-      "no": "Hjem"
+      "no": "Hjem",
+      "el": "Αρχική"
     },
     "common.navigation.importdatahelpcontent": {
       "en": "import_data_help_content",
@@ -318,7 +349,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "import_data_help_content"
+      "no": "import_data_help_content",
+      "el": "import_data_help_content"
     },
     "common.navigation.include_data_tables": {
       "en": "Include Data Tables",
@@ -328,7 +360,8 @@
       "lt": "Įtraukti duomenų lenteles",
       "pt": "Incluir Tabelas de Dados",
       "it": "Includi Tabelle di Dati",
-      "no": "Include Data Tables"
+      "no": "Include Data Tables",
+      "el": "Include Data Tables"
     },
     "common.navigation.intelligent_questionbased_guidance_that_helps_you_": {
       "en": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.",
@@ -338,7 +371,8 @@
       "lt": "Inteligentus klausimais pagrįstas vadovavimas, padedantis sukurti SES modelį per pokalbio raginimus ir pasiūlymus.",
       "pt": "Orientação inteligente baseada em perguntas que ajuda a construir o seu modelo SES através de sugestões conversacionais.",
       "it": "Guida intelligente basata su domande che ti aiuta a costruire il tuo modello SES attraverso suggerimenti conversazionali.",
-      "no": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions."
+      "no": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.",
+      "el": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions."
     },
     "common.navigation.it_helps_you_understand_feedback_loops_leverage_po": {
       "en": "It helps you understand feedback loops, leverage points, and potential intervention strategies.",
@@ -348,7 +382,8 @@
       "lt": "Tai padeda suprasti grįžtamojo ryšio kilpas, sverto taškus ir galimas intervencijos strategijas.",
       "pt": "Ajuda você a entender loops de feedback, pontos de alavancagem e estratégias de intervenção potenciais.",
       "it": "Ti aiuta a comprendere i loop di feedback, i punti di leva e le potenziali strategie di intervento.",
-      "no": "It helps you understand feedback loops, leverage points, and potential intervention strategies."
+      "no": "It helps you understand feedback loops, leverage points, and potential intervention strategies.",
+      "el": "It helps you understand feedback loops, leverage points, and potential intervention strategies."
     },
     "common.navigation.login": {
       "en": "Login",
@@ -358,7 +393,8 @@
       "lt": "Prisijungti",
       "pt": "Entrar",
       "it": "Accedi",
-      "no": "Login"
+      "no": "Login",
+      "el": "Σύνδεση"
     },
     "common.navigation.logout": {
       "en": "Logout",
@@ -368,7 +404,8 @@
       "lt": "Atsijungti",
       "pt": "Sair",
       "it": "Disconnetti",
-      "no": "Logout"
+      "no": "Logout",
+      "el": "Αποσύνδεση"
     },
     "common.navigation.menu": {
       "en": "Menu",
@@ -378,7 +415,8 @@
       "lt": "Meniu",
       "pt": "Menu",
       "it": "Menu",
-      "no": "Menu"
+      "no": "Menu",
+      "el": "Μενού"
     },
     "common.navigation.need_help_choosing": {
       "en": "Need Help Choosing?",
@@ -388,7 +426,8 @@
       "lt": "Reikia pagalbos pasirenkant?",
       "pt": "Precisa de Ajuda para Escolher?",
       "it": "Hai Bisogno di Aiuto per Scegliere?",
-      "no": "Need Help Choosing?"
+      "no": "Need Help Choosing?",
+      "el": "Need Help Choosing?"
     },
     "common.navigation.pagerank": {
       "en": "PageRank",
@@ -398,7 +437,8 @@
       "lt": "PageRank",
       "pt": "PageRank",
       "it": "PageRank",
-      "no": "PageRank"
+      "no": "PageRank",
+      "el": "PageRank"
     },
     "common.navigation.pagerank_google": {
       "en": "PageRank: Google",
@@ -408,7 +448,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "PageRank: Google"
+      "no": "PageRank: Google",
+      "el": "PageRank: Google"
     },
     "common.navigation.pimsevaluationhelpcontent": {
       "en": "pims_evaluation_help_content",
@@ -418,7 +459,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "pims_evaluation_help_content"
+      "no": "pims_evaluation_help_content",
+      "el": "pims_evaluation_help_content"
     },
     "common.navigation.pimsprojecthelpcontent": {
       "en": "pims_project_help_content",
@@ -428,7 +470,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "pims_project_help_content"
+      "no": "pims_project_help_content",
+      "el": "pims_project_help_content"
     },
     "common.navigation.pimsstakeholderhelpcontent": {
       "en": "pims_stakeholder_help_content",
@@ -438,7 +481,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "pims_stakeholder_help_content"
+      "no": "pims_stakeholder_help_content",
+      "el": "pims_stakeholder_help_content"
     },
     "common.navigation.pimsstakeholdershelpcontent": {
       "en": "pims_stakeholders_help_content",
@@ -448,7 +492,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "pims_stakeholders_help_content"
+      "no": "pims_stakeholders_help_content",
+      "el": "pims_stakeholders_help_content"
     },
     "common.navigation.settings": {
       "en": "Settings",
@@ -458,7 +503,8 @@
       "lt": "Nustatymai",
       "pt": "Configurações",
       "it": "Impostazioni",
-      "no": "Innstillinger"
+      "no": "Innstillinger",
+      "el": "Ρυθμίσεις"
     },
     "common.navigation.the_complete_manual_contains_approximately_75_page": {
       "en": "The complete manual contains approximately 75 pages of detailed documentation covering all features and workflows.",
@@ -468,7 +514,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "The complete manual contains approximately 75 pages of detailed documentation covering all features and workflows."
+      "no": "The complete manual contains approximately 75 pages of detailed documentation covering all features and workflows.",
+      "el": "The complete manual contains approximately 75 pages of detailed documentation covering all features and workflows."
     },
     "common.navigation.this_aipowered_assistant_helps_you_create_your_dap": {
       "en": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
@@ -478,7 +525,8 @@
       "lt": "Šis dirbtinio intelekto asistentas padeda sukurti DAPSI(W)R(M) sistemą interaktyvia kalba. Tiesiog atsakykite į klausimus, o asistentas jus ves per kiekvieną žingsnį.",
       "pt": "Este assistente alimentado por IA ajuda você a criar sua estrutura DAPSI(W)R(M) através de conversação interativa. Simplesmente responda às perguntas e o assistente irá guiá-lo em cada etapa.",
       "it": "Questo assistente basato sull'intelligenza artificiale ti aiuta a creare il tuo framework DAPSI(W)R(M) attraverso una conversazione interattiva. Rispondi semplicemente alle domande e l'assistente ti guiderà in ogni passaggio.",
-      "no": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step."
+      "no": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
+      "el": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step."
     },
     "common.navigation.this_preliminary_exercise_helps_you_explore_the_fu": {
       "en": "This preliminary exercise helps you explore the full scope of your system before detailed analysis.",
@@ -488,7 +536,8 @@
       "lt": "Šis preliminarus pratimas padeda ištirti visą jūsų sistemos apimtį prieš išsamią analizę.",
       "pt": "Este exercício preliminar ajuda-o a explorar todo o âmbito do seu sistema antes da análise detalhada.",
       "it": "Questo esercizio preliminare aiuta a esplorare l'intera portata del vostro sistema prima dell'analisi dettagliata.",
-      "no": "This preliminary exercise helps you explore the full scope of your system before detailed analysis."
+      "no": "This preliminary exercise helps you explore the full scope of your system before detailed analysis.",
+      "el": "This preliminary exercise helps you explore the full scope of your system before detailed analysis."
     },
     "common.navigation.top_5_nodes_by_pagerank": {
       "en": "Top 5 Nodes by PageRank",
@@ -498,7 +547,8 @@
       "lt": "Top 5 mazgai pagal PageRank",
       "pt": "Top 5 Nós por PageRank",
       "it": "Top 5 Nodi per PageRank",
-      "no": "Top 5 Nodes by PageRank"
+      "no": "Top 5 Nodes by PageRank",
+      "el": "Top 5 Nodes by PageRank"
     },
     "common.navigation.user_menu": {
       "en": "User Menu",
@@ -508,7 +558,8 @@
       "lt": "Vartotojo meniu",
       "pt": "Menu do Usuário",
       "it": "Menu Utente",
-      "no": "User Menu"
+      "no": "User Menu",
+      "el": "Χρήστης Μενού"
     },
     "common.navigation.you_are_about_to_switch_to_a_different_template": {
       "en": "You are about to switch to a different template.",
@@ -518,7 +569,8 @@
       "lt": "Ketinate pereiti prie kito šablono.",
       "pt": "Você está prestes a mudar para um modelo diferente.",
       "it": "Stai per passare a un modello diverso.",
-      "no": "You are about to switch to a different template."
+      "no": "You are about to switch to a different template.",
+      "el": "You are about to switch to a different template."
     }
   }
 }

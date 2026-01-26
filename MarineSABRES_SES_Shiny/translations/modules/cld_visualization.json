@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "modules.cld.a_causal_loop_diagram_cld_is_a_visual_representati": {
@@ -18,7 +19,8 @@
       "lt": "Priežastinių kilpų diagrama (CLD) yra vizualinis vaizdavimas, kaip skirtingi jūsų socialinės-ekologinės sistemos elementai yra susiję priežasties ir pasekmės ryšiais.",
       "pt": "Um Diagrama de Loops Causais (CLD) é uma representação visual de como diferentes elementos no seu sistema socioecológico estão conectados através de relações de causa e efeito.",
       "it": "Un Diagramma dei Loop Causali (CLD) è una rappresentazione visiva di come diversi elementi del tuo sistema socio-ecologico sono collegati attraverso relazioni causa-effetto.",
-      "no": "A Causal Loop Diagram (CLD) is a visual representation of how different elements in your social-ecological system are connected through cause-and-effect relationships."
+      "no": "A Causal Loop Diagram (CLD) is a visual representation of how different elements in your social-ecological system are connected through cause-and-effect relationships.",
+      "el": "A Causal Loop Diagram (CLD) is a visual representation of how different elements in your social-ecological system are connected through cause-and-effect relationships."
     },
     "modules.cld.it_helps_you_understand_feedback_loops_leverage_po": {
       "en": "It helps you understand feedback loops, leverage points, and potential intervention strategies.",
@@ -28,7 +30,8 @@
       "lt": "Tai padeda suprasti grįžtamojo ryšio kilpas, sverto taškus ir galimas intervencijos strategijas.",
       "pt": "Ajuda você a entender loops de feedback, pontos de alavancagem e estratégias de intervenção potenciais.",
       "it": "Ti aiuta a comprendere i loop di feedback, i punti di leva e le potenziali strategie di intervento.",
-      "no": "It helps you understand feedback loops, leverage points, and potential intervention strategies."
+      "no": "It helps you understand feedback loops, leverage points, and potential intervention strategies.",
+      "el": "It helps you understand feedback loops, leverage points, and potential intervention strategies."
     },
     "modules.cld.polarity_means_the_elements_change_in_the_same_dir": {
       "en": "Polarity: + means the elements change in the same direction, - means they change in opposite directions",
@@ -38,7 +41,8 @@
       "lt": "Polaritetas: + reiškia, kad elementai keičiasi ta pačia kryptimi, - reiškia, kad jie keičiasi priešingomis kryptimis",
       "pt": "Polaridade: + significa que os elementos mudam na mesma direção, - significa que eles mudam em direções opostas",
       "it": "Polarità: + significa che gli elementi cambiano nella stessa direzione, - significa che cambiano in direzioni opposte",
-      "no": "Polarity: + means the elements change in the same direction, - means they change in opposite directions"
+      "no": "Polarity: + means the elements change in the same direction, - means they change in opposite directions",
+      "el": "Polarity: + means the elements change in the same direction, - means they change in opposite directions"
     },
     "modules.cld.choose_between_hierarchical_physics_based_or_circu": {
       "en": "Choose between hierarchical, physics-based, or circular layouts to better understand different aspects of your system",
@@ -48,7 +52,8 @@
       "lt": "Pasirinkite tarp hierarchinių, fizika pagrįstų ar žiedinių išdėstymų, kad geriau suprastumėte skirtingus savo sistemos aspektus",
       "pt": "Escolha entre layouts hierárquicos, baseados em física ou circulares para entender melhor diferentes aspectos do seu sistema",
       "it": "Scegli tra layout gerarchici, basati sulla fisica o circolari per comprendere meglio diversi aspetti del tuo sistema",
-      "no": "Choose between hierarchical, physics-based, or circular layouts to better understand different aspects of your system"
+      "no": "Choose between hierarchical, physics-based, or circular layouts to better understand different aspects of your system",
+      "el": "Επιλέξτε between hierarchical, physics-based, or circular layouts to better understand different aspects of your system"
     },
     "modules.cld.represent_elements_in_your_system_drivers_activiti": {
       "en": "Represent elements in your system (drivers, activities, pressures, states, impacts, welfare, responses)",
@@ -58,7 +63,8 @@
       "lt": "Reprezentuoja elementus jūsų sistemoje (varomosios jėgos, veiklos, spaudimas, būsenos, poveikis, gerovė, atsakai)",
       "pt": "Representam elementos no seu sistema (impulsores, atividades, pressões, estados, impactos, bem-estar, respostas)",
       "it": "Rappresentano elementi nel tuo sistema (driver, attività, pressioni, stati, impatti, benessere, risposte)",
-      "no": "Represent elements in your system (drivers, activities, pressures, states, impacts, welfare, responses)"
+      "no": "Represent elements in your system (drivers, activities, pressures, states, impacts, welfare, responses)",
+      "el": "Represent elements in your system (drivers, activities, pressures, states, impacts, welfare, responses)"
     },
     "modules.cld.select_a_feedback_loop_to_visualize_circular_patte": {
       "en": "Select a feedback loop to visualize circular patterns of influence in your system",
@@ -68,7 +74,8 @@
       "lt": "Pasirinkite grįžtamojo ryšio kilpą, kad vizualizuotumėte žiedinius įtakos modelius savo sistemoje",
       "pt": "Selecione um loop de feedback para visualizar padrões circulares de influência no seu sistema",
       "it": "Seleziona un loop di feedback per visualizzare modelli circolari di influenza nel tuo sistema",
-      "no": "Select a feedback loop to visualize circular patterns of influence in your system"
+      "no": "Select a feedback loop to visualize circular patterns of influence in your system",
+      "el": "Επιλογή a feedback loop to visualize circular patterns of influence in your system"
     },
     "modules.cld.show_causal_connections_between_elements_arrow_dir": {
       "en": "Show causal connections between elements. Arrow direction indicates the direction of influence",
@@ -78,7 +85,8 @@
       "lt": "Rodo priežastinius ryšius tarp elementų. Rodyklės kryptis nurodo įtakos kryptį",
       "pt": "Mostram conexões causais entre elementos. A direção da seta indica a direção da influência",
       "it": "Mostrano connessioni causali tra elementi. La direzione della freccia indica la direzione dell'influenza",
-      "no": "Show causal connections between elements. Arrow direction indicates the direction of influence"
+      "no": "Show causal connections between elements. Arrow direction indicates the direction of influence",
+      "el": "Εμφάνιση causal connections between elements. Arrow direction indicates the direction of influence"
     },
     "modules.cld.toggle_to_highlight_the_most_influential_nodes_whe": {
       "en": "Toggle to highlight the most influential nodes where interventions could have the greatest impact",
@@ -88,7 +96,8 @@
       "lt": "Perjunkite, kad paryškintumėte įtakingiausius mazgus, kuriuose intervencijos galėtų turėti didžiausią poveikį",
       "pt": "Alternar para destacar os nós mais influentes onde as intervenções poderiam ter o maior impacto",
       "it": "Attiva per evidenziare i nodi più influenti dove gli interventi potrebbero avere il maggiore impatto",
-      "no": "Toggle to highlight the most influential nodes where interventions could have the greatest impact"
+      "no": "Toggle to highlight the most influential nodes where interventions could have the greatest impact",
+      "el": "Toggle to highlight the most influential nodes where interventions could have the greatest impact"
     },
     "modules.cld.visualization.direction": {
       "en": "Direction:",
@@ -98,7 +107,8 @@
       "lt": "Kryptis:",
       "pt": "Direção:",
       "it": "Direzione:",
-      "no": "Direction:"
+      "no": "Direction:",
+      "el": "Direction:"
     },
     "modules.cld.visualization.edges": {
       "en": "Edges:",
@@ -108,7 +118,8 @@
       "lt": "Kraštinės:",
       "pt": "Arestas:",
       "it": "Archi:",
-      "no": "Edges:"
+      "no": "Edges:",
+      "el": "Edges:"
     },
     "modules.cld.visualization.highlight": {
       "en": "Highlight:",
@@ -118,7 +129,8 @@
       "lt": "Paryškinti:",
       "pt": "Destacar:",
       "it": "Evidenzia:",
-      "no": "Highlight:"
+      "no": "Highlight:",
+      "el": "Highlight:"
     },
     "modules.cld.visualization.highlight_leverage_points": {
       "en": "Highlight Leverage Points:",
@@ -128,7 +140,8 @@
       "lt": "Paryškinti sverto taškus:",
       "pt": "Destacar Pontos de Alavancagem:",
       "it": "Evidenzia Punti di Leva:",
-      "no": "Highlight Leverage Points:"
+      "no": "Highlight Leverage Points:",
+      "el": "Highlight Leverage Points:"
     },
     "modules.cld.visualization.highlight_loop": {
       "en": "Highlight Loop:",
@@ -138,7 +151,8 @@
       "lt": "Paryškinti kilpą:",
       "pt": "Destacar Loop:",
       "it": "Evidenzia Loop:",
-      "no": "Highlight Loop:"
+      "no": "Highlight Loop:",
+      "el": "Highlight Loop:"
     },
     "modules.cld.visualization.how_to_read_the_diagram": {
       "en": "How to Read the Diagram",
@@ -148,7 +162,8 @@
       "lt": "Kaip skaityti diagramą",
       "pt": "Como Ler o Diagrama",
       "it": "Come Leggere il Diagramma",
-      "no": "How to Read the Diagram"
+      "no": "How to Read the Diagram",
+      "el": "How to Read the Diagram"
     },
     "modules.cld.visualization.layout": {
       "en": "Layout:",
@@ -158,7 +173,8 @@
       "lt": "Išdėstymas:",
       "pt": "Layout:",
       "it": "Layout:",
-      "no": "Layout:"
+      "no": "Layout:",
+      "el": "Layout:"
     },
     "modules.cld.visualization.nodes": {
       "en": "Nodes:",
@@ -168,7 +184,8 @@
       "lt": "Mazgai:",
       "pt": "Nós:",
       "it": "Nodi:",
-      "no": "Nodes:"
+      "no": "Nodes:",
+      "el": "Nodes:"
     },
     "modules.cld.visualization.spacing": {
       "en": "Spacing:",
@@ -178,7 +195,8 @@
       "lt": "Tarpai:",
       "pt": "Espaçamento:",
       "it": "Spaziatura:",
-      "no": "Spacing:"
+      "no": "Spacing:",
+      "el": "Spacing:"
     },
     "modules.cld.visualization.visualisation_controls": {
       "en": "Visualisation Controls",
@@ -188,7 +206,8 @@
       "lt": "Vizualizacijos valdymas",
       "pt": "Controles de Visualização",
       "it": "Controlli di Visualizzazione",
-      "no": "Visualisation Controls"
+      "no": "Visualisation Controls",
+      "el": "Visualisation Controls"
     },
     "modules.cld.visualization.visualization_controls": {
       "en": "Visualization Controls",
@@ -198,7 +217,8 @@
       "lt": "Vizualizacijos valdymas",
       "pt": "Controles de Visualização",
       "it": "Controlli di Visualizzazione",
-      "no": "Visualization Controls"
+      "no": "Visualization Controls",
+      "el": "Οπτικοποίηση Controls"
     },
     "modules.cld.visualization.what_is_a_causal_loop_diagram": {
       "en": "What is a Causal Loop Diagram?",
@@ -208,7 +228,8 @@
       "lt": "Kas yra priežastinių kilpų diagrama?",
       "pt": "O que é um Diagrama de Loops Causais?",
       "it": "Cos'è un Diagramma dei Loop Causali?",
-      "no": "What is a Causal Loop Diagram?"
+      "no": "What is a Causal Loop Diagram?",
+      "el": "What is a Causal Loop Diagram?"
     },
     "modules.isa.data_entry.common.leverage_points": {
       "en": "Leverage Points",
@@ -218,7 +239,8 @@
       "lt": "[LT] Leverage Points",
       "pt": "[PT] Leverage Points",
       "it": "[IT] Leverage Points",
-      "no": "Leverage Points"
+      "no": "Leverage Points",
+      "el": "Σημεία μόχλευσης"
     },
     "modules.cld.visualization.title": {
       "en": "Causal Loop Diagram Visualization",
@@ -228,7 +250,8 @@
       "lt": "Priežastinių Kilpų Diagramos Vizualizacija",
       "pt": "Visualização do Diagrama de Loops Causais",
       "it": "Visualizzazione del Diagramma dei Loop Causali",
-      "no": "Visualisering av Årsaksløkkediagram"
+      "no": "Visualisering av Årsaksløkkediagram",
+      "el": "Διάγραμμα αιτιακών βρόχων Οπτικοποίηση"
     },
     "modules.cld.visualization.subtitle": {
       "en": "Interactive network visualization of your social-ecological system",
@@ -238,7 +261,8 @@
       "lt": "Interaktyvi jūsų socialinės-ekologinės sistemos tinklo vizualizacija",
       "pt": "Visualização interativa da rede do seu sistema socio-ecológico",
       "it": "Visualizzazione interattiva della rete del tuo sistema socio-ecologico",
-      "no": "Interaktiv nettverksvisualisering av ditt sosial-økologiske system"
+      "no": "Interaktiv nettverksvisualisering av ditt sosial-økologiske system",
+      "el": "Interactive network visualization of your social-ecological system"
     }
   }
 }

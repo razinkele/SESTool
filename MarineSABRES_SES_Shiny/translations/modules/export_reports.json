@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "modules.export.reports.analysis_results": {
@@ -18,7 +19,8 @@
       "lt": "Analizės rezultatai",
       "pt": "Resultados da Análise",
       "it": "Risultati dell'Analisi",
-      "no": "Analysis Results"
+      "no": "Analysis Results",
+      "el": "Ανάλυση Αποτελέσματα"
     },
     "modules.export.reports.cld_data": {
       "en": "CLD Data",
@@ -28,7 +30,8 @@
       "lt": "CLD duomenys",
       "pt": "Dados CLD",
       "it": "Dati CLD",
-      "no": "CLD Data"
+      "no": "CLD Data",
+      "el": "CLD Δεδομένα"
     },
     "modules.export.reports.download_data": {
       "en": "Download Data",
@@ -38,7 +41,8 @@
       "lt": "Atsisiųsti duomenis",
       "pt": "Descarregar Dados",
       "it": "Scarica Dati",
-      "no": "Download Data"
+      "no": "Download Data",
+      "el": "Λήψη Δεδομένα"
     },
     "modules.export.reports.download_report": {
       "en": "Download Report",
@@ -48,7 +52,8 @@
       "lt": "Atsisiųsti Ataskaitą",
       "pt": "Baixar Relatório",
       "it": "Scarica Rapporto",
-      "no": "Download Report"
+      "no": "Download Report",
+      "el": "Λήψη Αναφορά"
     },
     "modules.export.reports.download_visualization": {
       "en": "Download Visualization",
@@ -58,7 +63,8 @@
       "lt": "Atsisiųsti vizualizaciją",
       "pt": "Descarregar Visualização",
       "it": "Scarica Visualizzazione",
-      "no": "Download Visualization"
+      "no": "Download Visualization",
+      "el": "Λήψη Οπτικοποίηση"
     },
     "modules.export.reports.export_visualizations": {
       "en": "Export Visualizations",
@@ -68,7 +74,8 @@
       "lt": "Eksportuoti vizualizacijas",
       "pt": "Exportar Visualizações",
       "it": "Esporta Visualizzazioni",
-      "no": "Export Visualizations"
+      "no": "Export Visualizations",
+      "el": "Εξαγωγή Visualizations"
     },
     "modules.export.reports.generate_report": {
       "en": "Generate Report",
@@ -78,7 +85,8 @@
       "lt": "Generuoti ataskaitą",
       "pt": "Gerar Relatório",
       "it": "Genera Rapporto",
-      "no": "Generate Report"
+      "no": "Generate Report",
+      "el": "Generate Report"
     },
     "modules.export.reports.height_pixels": {
       "en": "Height (pixels):",
@@ -88,7 +96,8 @@
       "lt": "Aukštis (pikseliai):",
       "pt": "Altura (pixels):",
       "it": "Altezza (pixel):",
-      "no": "Height (pixels):"
+      "no": "Height (pixels):",
+      "el": "Ύψος (pixels):"
     },
     "modules.export.reports.include_data_tables": {
       "en": "Include Data Tables",
@@ -98,7 +107,8 @@
       "lt": "Įtraukti duomenų lenteles",
       "pt": "Incluir Tabelas de Dados",
       "it": "Includi Tabelle di Dati",
-      "no": "Include Data Tables"
+      "no": "Include Data Tables",
+      "el": "Include Data Tables"
     },
     "modules.export.reports.include_visualizations": {
       "en": "Include Visualizations",
@@ -108,7 +118,8 @@
       "lt": "Įtraukti vizualizacijas",
       "pt": "Incluir Visualizações",
       "it": "Includi Visualizzazioni",
-      "no": "Include Visualizations"
+      "no": "Include Visualizations",
+      "el": "Include Visualizations"
     },
     "modules.export.reports.isa_data": {
       "en": "ISA Data",
@@ -118,7 +129,8 @@
       "lt": "ISA duomenys",
       "pt": "Dados ISA",
       "it": "Dati ISA",
-      "no": "ISA Data"
+      "no": "ISA Data",
+      "el": "ISA Data"
     },
     "modules.export.reports.pims_data": {
       "en": "PIMS Data",
@@ -128,7 +140,8 @@
       "lt": "PIMS duomenys",
       "pt": "Dados PIMS",
       "it": "Dati PIMS",
-      "no": "PIMS Data"
+      "no": "PIMS Data",
+      "el": "PIMS Δεδομένα"
     },
     "modules.export.reports.project_metadata": {
       "en": "Project Metadata",
@@ -138,7 +151,8 @@
       "lt": "Projekto metaduomenys",
       "pt": "Metadados do Projeto",
       "it": "Metadati del Progetto",
-      "no": "Project Metadata"
+      "no": "Project Metadata",
+      "el": "Έργο Metadata"
     },
     "modules.export.reports.report_format": {
       "en": "Report Format:",
@@ -148,7 +162,8 @@
       "lt": "Ataskaitos formatas:",
       "pt": "Formato do Relatório:",
       "it": "Formato del Rapporto:",
-      "no": "Report Format:"
+      "no": "Report Format:",
+      "el": "Αναφορά Format:"
     },
     "modules.export.reports.select_components": {
       "en": "Select Components:",
@@ -158,7 +173,8 @@
       "lt": "Pasirinkite komponentus:",
       "pt": "Selecionar Componentes:",
       "it": "Seleziona Componenti:",
-      "no": "Select Components:"
+      "no": "Select Components:",
+      "el": "Επιλογή Components:"
     },
     "modules.export.reports.select_format": {
       "en": "Select Format:",
@@ -168,7 +184,8 @@
       "lt": "Pasirinkite formatą:",
       "pt": "Selecionar Formato:",
       "it": "Seleziona Formato:",
-      "no": "Select Format:"
+      "no": "Select Format:",
+      "el": "Επιλογή Format:"
     },
     "modules.export.reports.width_pixels": {
       "en": "Width (pixels):",
@@ -178,7 +195,8 @@
       "lt": "Plotis (pikseliai):",
       "pt": "Largura (pixels):",
       "it": "Larghezza (pixel):",
-      "no": "Width (pixels):"
+      "no": "Width (pixels):",
+      "el": "Πλάτος (pixels):"
     },
     "modules.export.reports.your_report_has_been_generated_successfully": {
       "en": "Your report has been generated successfully.",
@@ -188,7 +206,8 @@
       "lt": "Jūsų ataskaita buvo sėkmingai sugeneruota.",
       "pt": "O seu relatório foi gerado com sucesso.",
       "it": "Il tuo rapporto è stato generato con successo.",
-      "no": "Your report has been generated successfully."
+      "no": "Your report has been generated successfully.",
+      "el": "Your report has been generated successfully."
     },
     "modules.export.if_you_see_errors_try_generating_an_html_report_in": {
       "en": "If You See Errors Try Generating An Html Report In",
@@ -198,7 +217,8 @@
       "lt": "[LT] If You See Errors Try Generating An Html Report In",
       "pt": "[PT] If You See Errors Try Generating An Html Report In",
       "it": "[IT] If You See Errors Try Generating An Html Report In",
-      "no": "If You See Errors Try Generating An Html Report In"
+      "no": "If You See Errors Try Generating An Html Report In",
+      "el": "If You See Errors Try Generating An Html Report In"
     },
     "modules.export.reports.download_report_if_generated": {
       "en": "Download Report If Generated",
@@ -208,7 +228,8 @@
       "lt": "[LT] Download Report If Generated",
       "pt": "[PT] Download Report If Generated",
       "it": "[IT] Download Report If Generated",
-      "no": "Download Report If Generated"
+      "no": "Download Report If Generated",
+      "el": "Λήψη Αναφορά If Generated"
     },
     "modules.export.reports.export_guide_data_p1": {
       "en": "Export Guide Data P1",
@@ -218,7 +239,8 @@
       "lt": "[LT] Export Guide Data P1",
       "pt": "[PT] Export Guide Data P1",
       "it": "[IT] Export Guide Data P1",
-      "no": "Export Guide Data P1"
+      "no": "Export Guide Data P1",
+      "el": "Εξαγωγή Guide Data P1"
     },
     "modules.export.reports.export_guide_data_title": {
       "en": "Export Guide Data Title",
@@ -228,7 +250,8 @@
       "lt": "[LT] Export Guide Data Title",
       "pt": "[PT] Export Guide Data Title",
       "it": "[IT] Export Guide Data Title",
-      "no": "Export Guide Data Title"
+      "no": "Export Guide Data Title",
+      "el": "Εξαγωγή Guide Data Title"
     },
     "modules.export.reports.export_guide_reports_p1": {
       "en": "Export Guide Reports P1",
@@ -238,7 +261,8 @@
       "lt": "[LT] Export Guide Reports P1",
       "pt": "[PT] Export Guide Reports P1",
       "it": "[IT] Export Guide Reports P1",
-      "no": "Export Guide Reports P1"
+      "no": "Export Guide Reports P1",
+      "el": "Εξαγωγή Guide Reports P1"
     },
     "modules.export.reports.export_guide_reports_title": {
       "en": "Export Guide Reports Title",
@@ -248,7 +272,8 @@
       "lt": "[LT] Export Guide Reports Title",
       "pt": "[PT] Export Guide Reports Title",
       "it": "[IT] Export Guide Reports Title",
-      "no": "Export Guide Reports Title"
+      "no": "Export Guide Reports Title",
+      "el": "Εξαγωγή Guide Reports Title"
     },
     "modules.export.reports.export_guide_viz_p1": {
       "en": "Export Guide Viz P1",
@@ -258,7 +283,8 @@
       "lt": "[LT] Export Guide Viz P1",
       "pt": "[PT] Export Guide Viz P1",
       "it": "[IT] Export Guide Viz P1",
-      "no": "Export Guide Viz P1"
+      "no": "Export Guide Viz P1",
+      "el": "Εξαγωγή Guide Viz P1"
     },
     "modules.export.reports.export_guide_viz_title": {
       "en": "Export Guide Viz Title",
@@ -268,7 +294,8 @@
       "lt": "[LT] Export Guide Viz Title",
       "pt": "[PT] Export Guide Viz Title",
       "it": "[IT] Export Guide Viz Title",
-      "no": "Export Guide Viz Title"
+      "no": "Export Guide Viz Title",
+      "el": "Εξαγωγή Guide Viz Title"
     },
     "modules.export.reports.pdf_generation_requires_latex_eg_tinytex_or_miktex": {
       "en": "Pdf Generation Requires Latex Eg Tinytex Or Miktex",
@@ -278,7 +305,8 @@
       "lt": "[LT] Pdf Generation Requires Latex Eg Tinytex Or Miktex",
       "pt": "[PT] Pdf Generation Requires Latex Eg Tinytex Or Miktex",
       "it": "[IT] Pdf Generation Requires Latex Eg Tinytex Or Miktex",
-      "no": "Pdf Generation Requires Latex Eg Tinytex Or Miktex"
+      "no": "Pdf Generation Requires Latex Eg Tinytex Or Miktex",
+      "el": "Pdf Generation Requires Latex Eg Tinytex Or Miktex"
     },
     "modules.export.reports.pdf_report_notice": {
       "en": "Pdf Report Notice",
@@ -288,7 +316,8 @@
       "lt": "[LT] Pdf Report Notice",
       "pt": "[PT] Pdf Report Notice",
       "it": "[IT] Pdf Report Notice",
-      "no": "Pdf Report Notice"
+      "no": "Pdf Report Notice",
+      "el": "Pdf Report Notice"
     },
     "modules.export.reports.report_opened_in_a_new_window": {
       "en": "Report Opened In A New Window",
@@ -298,7 +327,8 @@
       "lt": "[LT] Report Opened In A New Window",
       "pt": "[PT] Report Opened In A New Window",
       "it": "[IT] Report Opened In A New Window",
-      "no": "Report Opened In A New Window"
+      "no": "Report Opened In A New Window",
+      "el": "Αναφορά Opened In A New Window"
     },
     "modules.export.reports.to_install_tinytex_for_pdf_support": {
       "en": "To Install Tinytex For Pdf Support",
@@ -308,7 +338,8 @@
       "lt": "[LT] To Install Tinytex For Pdf Support",
       "pt": "[PT] To Install Tinytex For Pdf Support",
       "it": "[IT] To Install Tinytex For Pdf Support",
-      "no": "To Install Tinytex For Pdf Support"
+      "no": "To Install Tinytex For Pdf Support",
+      "el": "To Install Tinytex For Pdf Support"
     },
     "modules.isa.data_entry.common.export_data": {
       "en": "Export Data",
@@ -318,7 +349,8 @@
       "lt": "Eksportuoti duomenis",
       "pt": "Exportar Dados",
       "it": "Esporta Dati",
-      "no": "Export Data"
+      "no": "Export Data",
+      "el": "Εξαγωγή Δεδομένα"
     },
     "modules.export.reports.title": {
       "en": "Export & Reports",
@@ -328,7 +360,8 @@
       "lt": "Eksportavimas ir Ataskaitos",
       "pt": "Exportação e Relatórios",
       "it": "Esportazione e Rapporti",
-      "no": "Eksport og Rapporter"
+      "no": "Eksport og Rapporter",
+      "el": "Εξαγωγή & Reports"
     },
     "modules.export.reports.subtitle": {
       "en": "Export your data, visualizations, and generate comprehensive reports.",
@@ -338,7 +371,8 @@
       "lt": "Eksportuokite savo duomenis, vizualizacijas ir generuokite išsamias ataskaitas.",
       "pt": "Exporte seus dados, visualizações e gere relatórios abrangentes.",
       "it": "Esporta i tuoi dati, visualizzazioni e genera report completi.",
-      "no": "Eksporter dataene dine, visualiseringer og generer omfattende rapporter."
+      "no": "Eksporter dataene dine, visualiseringer og generer omfattende rapporter.",
+      "el": "Εξαγωγή your data, visualizations, and generate comprehensive reports."
     }
   }
 }

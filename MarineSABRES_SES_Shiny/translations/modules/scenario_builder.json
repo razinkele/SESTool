@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "modules.scenario.builder.cannot_remove_non_existent_node_s": {
@@ -18,7 +19,8 @@
       "lt": "Negalima pašalinti neegzistuojančio mazgo: %s",
       "pt": "Não é possível remover nó inexistente: %s",
       "it": "Impossibile rimuovere un nodo inesistente: %s",
-      "no": "Cannot remove non-existent node: %s"
+      "no": "Cannot remove non-existent node: %s",
+      "el": "Cannot remove non-existent node: %s"
     },
     "modules.scenario.builder.conflicting_modifications_for_nodes_s": {
       "en": "Conflicting modifications for nodes: %s",
@@ -28,7 +30,8 @@
       "lt": "Prieštaringi pakeitimai mazgams: %s",
       "pt": "Modificações conflitantes para nós: %s",
       "it": "Modifiche in conflitto per i nodi: %s",
-      "no": "Conflicting modifications for nodes: %s"
+      "no": "Conflicting modifications for nodes: %s",
+      "el": "Conflicting modifications for nodes: %s"
     },
     "modules.scenario.builder.validation_errors": {
       "en": "Validation errors:",
@@ -38,7 +41,8 @@
       "lt": "Tikrinimo klaidos:",
       "pt": "Erros de validação:",
       "it": "Errori di validazione:",
-      "no": "Validation errors:"
+      "no": "Validation errors:",
+      "el": "Επικύρωση errors:"
     },
     "modules.isa.data_entry.common.sector": {
       "en": "EP2: Activity Sectors",
@@ -48,7 +52,8 @@
       "lt": "EP2: Veiklos sektoriai",
       "pt": "EP2: Setores de Atividade",
       "it": "EP2: Settori di Attività",
-      "no": "EP2: Activity Sectors"
+      "no": "EP2: Activity Sectors",
+      "el": "EP2: Activity Sectors"
     },
     "modules.entry_point.follow_this_sequence_of_tools_to_address_your_mari": {
       "en": "Follow this sequence of tools to address your marine management question:",
@@ -58,7 +63,8 @@
       "lt": "Sekite šią priemonių seką, kad išspręstumėte savo jūrų valdymo klausimą:",
       "pt": "Siga esta sequência de ferramentas para abordar a sua questão de gestão marinha:",
       "it": "Segui questa sequenza di strumenti per affrontare la tua domanda di gestione marina:",
-      "no": "Follow this sequence of tools to address your marine management question:"
+      "no": "Follow this sequence of tools to address your marine management question:",
+      "el": "Follow this sequence of tools to address your marine management question:"
     },
     "modules.scenario.builder.cancel": {
       "en": "Cancel",
@@ -68,7 +74,8 @@
       "lt": "Atšaukti",
       "pt": "Cancelar",
       "it": "Annulla",
-      "no": "Avbryt"
+      "no": "Avbryt",
+      "el": "Ακύρωση"
     },
     "modules.ses.creation.complete_control_over_all_elements": {
       "en": "Complete control over all elements",
@@ -78,7 +85,8 @@
       "lt": "Visiškas kontrolė virš visų elementų",
       "pt": "Controle completo sobre todos os elementos",
       "it": "Controllo completo su tutti gli elementi",
-      "no": "Complete control over all elements"
+      "no": "Complete control over all elements",
+      "el": "Ολοκληρώθηκε control over all elements"
     },
     "modules.scenario.builder.create": {
       "en": "Create CLD networks and run analysis tools",
@@ -88,7 +96,8 @@
       "lt": "Sukurkite CLD tinklus ir paleiskite analizės priemones",
       "pt": "Crie redes CLD e execute ferramentas de análise",
       "it": "Crea reti CLD ed esegui strumenti di analisi",
-      "no": "Create CLD networks and run analysis tools"
+      "no": "Create CLD networks and run analysis tools",
+      "el": "Δημιουργία CLD networks and run analysis tools"
     },
     "modules.response.measures.delete_selected": {
       "en": "Delete Selected",
@@ -98,7 +107,8 @@
       "lt": "Ištrinti Pasirinktus",
       "pt": "Excluir Selecionados",
       "it": "Elimina Selezionati",
-      "no": "Delete Selected"
+      "no": "Delete Selected",
+      "el": "Διαγραφή Επιλεγμένο"
     },
     "modules.entry_point.need": {
       "en": "This guidance system will help you find the right tools for your marine management needs.",
@@ -108,7 +118,8 @@
       "lt": "Ši orientavimo sistema padės jums rasti tinkamas priemones jūrų valdymo poreikiams.",
       "pt": "Este sistema de orientação irá ajudá-lo a encontrar as ferramentas certas para as suas necessidades de gestão marinha.",
       "it": "Questo sistema di orientamento ti aiuterà a trovare gli strumenti giusti per le tue esigenze di gestione marina.",
-      "no": "This guidance system will help you find the right tools for your marine management needs."
+      "no": "This guidance system will help you find the right tools for your marine management needs.",
+      "el": "This guidance system will help you find the right tools for your marine management needs."
     },
     "modules.response.measures.response_measure": {
       "en": "Response Measures",
@@ -118,7 +129,8 @@
       "lt": "Atsakomosios priemonės",
       "pt": "Medidas de Resposta",
       "it": "Misure di Risposta",
-      "no": "Response Measures"
+      "no": "Response Measures",
+      "el": "Απόκριση Μέτρα"
     },
     "modules.scenario.builder.scenario_add_modify_links": {
       "en": "Scenario Add Modify Links",
@@ -128,7 +140,8 @@
       "lt": "[LT] Scenario Add Modify Links",
       "pt": "[PT] Scenario Add Modify Links",
       "it": "[IT] Scenario Add Modify Links",
-      "no": "Scenario Add Modify Links"
+      "no": "Scenario Add Modify Links",
+      "el": "Σενάριο Προσθήκη Modify Links"
     },
     "modules.scenario.builder.scenario_add_modify_nodes": {
       "en": "Scenario Add Modify Nodes",
@@ -138,7 +151,8 @@
       "lt": "[LT] Scenario Add Modify Nodes",
       "pt": "[PT] Scenario Add Modify Nodes",
       "it": "[IT] Scenario Add Modify Nodes",
-      "no": "Scenario Add Modify Nodes"
+      "no": "Scenario Add Modify Nodes",
+      "el": "Σενάριο Προσθήκη Modify Nodes"
     },
     "modules.scenario.builder.scenario_add_new_link": {
       "en": "Scenario Add New Link",
@@ -148,7 +162,8 @@
       "lt": "[LT] Scenario Add New Link",
       "pt": "[PT] Scenario Add New Link",
       "it": "[IT] Scenario Add New Link",
-      "no": "Scenario Add New Link"
+      "no": "Scenario Add New Link",
+      "el": "Σενάριο Προσθήκη Νέο Σύνδεσμος"
     },
     "modules.scenario.builder.scenario_add_new_node": {
       "en": "Scenario Add New Node",
@@ -158,7 +173,8 @@
       "lt": "[LT] Scenario Add New Node",
       "pt": "[PT] Scenario Add New Node",
       "it": "[IT] Scenario Add New Node",
-      "no": "Scenario Add New Node"
+      "no": "Scenario Add New Node",
+      "el": "Σενάριο Προσθήκη Νέο Κόμβος"
     },
     "modules.scenario.builder.scenario_affected_feedback_loops": {
       "en": "Scenario Affected Feedback Loops",
@@ -168,7 +184,8 @@
       "lt": "[LT] Scenario Affected Feedback Loops",
       "pt": "[PT] Scenario Affected Feedback Loops",
       "it": "[IT] Scenario Affected Feedback Loops",
-      "no": "Scenario Affected Feedback Loops"
+      "no": "Scenario Affected Feedback Loops",
+      "el": "Σενάριο Affected Feedback Loops"
     },
     "modules.scenario.builder.scenario_analyzing_network_topology": {
       "en": "Scenario Analyzing Network Topology",
@@ -178,7 +195,8 @@
       "lt": "[LT] Scenario Analyzing Network Topology",
       "pt": "[PT] Scenario Analyzing Network Topology",
       "it": "[IT] Scenario Analyzing Network Topology",
-      "no": "Scenario Analyzing Network Topology"
+      "no": "Scenario Analyzing Network Topology",
+      "el": "Σενάριο Analyzing Network Topology"
     },
     "modules.scenario.builder.scenario_and": {
       "en": "Choose a pre-built template that matches your scenario and customize it to your needs",
@@ -188,7 +206,8 @@
       "lt": "Pasirinkite iš anksto sukurtą šabloną, atitinkantį jūsų scenarijų, ir pritaikykite jį savo poreikiams",
       "pt": "Escolha um modelo pré-construído que corresponda ao seu cenário e personalize-o de acordo com suas necessidades",
       "it": "Scegli un modello predefinito che corrisponda al tuo scenario e personalizzalo in base alle tue esigenze",
-      "no": "Choose a pre-built template that matches your scenario and customize it to your needs"
+      "no": "Choose a pre-built template that matches your scenario and customize it to your needs",
+      "el": "Επιλέξτε a pre-built template that matches your scenario and customize it to your needs"
     },
     "modules.scenario.builder.scenario_builder_description": {
       "en": "Scenario Builder Description",
@@ -198,7 +217,8 @@
       "lt": "[LT] Scenario Builder Description",
       "pt": "[PT] Scenario Builder Description",
       "it": "[IT] Scenario Builder Description",
-      "no": "Scenario Builder Description"
+      "no": "Scenario Builder Description",
+      "el": "Σενάριο Builder Description"
     },
     "modules.scenario.builder.scenario_builder_title": {
       "en": "Scenario Builder Title",
@@ -208,7 +228,8 @@
       "lt": "[LT] Scenario Builder Title",
       "pt": "[PT] Scenario Builder Title",
       "it": "[IT] Scenario Builder Title",
-      "no": "Scenario Builder Title"
+      "no": "Scenario Builder Title",
+      "el": "Σενάριο Builder Title"
     },
     "modules.scenario.builder.scenario_cannot_create_self_loop": {
       "en": "Scenario Cannot Create Self Loop",
@@ -218,7 +239,8 @@
       "lt": "[LT] Scenario Cannot Create Self Loop",
       "pt": "[PT] Scenario Cannot Create Self Loop",
       "it": "[IT] Scenario Cannot Create Self Loop",
-      "no": "Scenario Cannot Create Self Loop"
+      "no": "Scenario Cannot Create Self Loop",
+      "el": "Σενάριο Cannot Create Self Loop"
     },
     "modules.scenario.builder.scenario_changed_nodes": {
       "en": "Scenario Changed Nodes",
@@ -228,7 +250,8 @@
       "lt": "[LT] Scenario Changed Nodes",
       "pt": "[PT] Scenario Changed Nodes",
       "it": "[IT] Scenario Changed Nodes",
-      "no": "Scenario Changed Nodes"
+      "no": "Scenario Changed Nodes",
+      "el": "Σενάριο Άλλαξε Κόμβοι"
     },
     "modules.scenario.builder.scenario_changes": {
       "en": "Scenario Changes",
@@ -238,7 +261,8 @@
       "lt": "[LT] Scenario Changes",
       "pt": "[PT] Scenario Changes",
       "it": "[IT] Scenario Changes",
-      "no": "Scenario Changes"
+      "no": "Scenario Changes",
+      "el": "Σενάριο Changes"
     },
     "modules.scenario.builder.scenario_click_run_impact_analysis": {
       "en": "Scenario Click Run Impact Analysis",
@@ -248,7 +272,8 @@
       "lt": "[LT] Scenario Click Run Impact Analysis",
       "pt": "[PT] Scenario Click Run Impact Analysis",
       "it": "[IT] Scenario Click Run Impact Analysis",
-      "no": "Scenario Click Run Impact Analysis"
+      "no": "Scenario Click Run Impact Analysis",
+      "el": "Σενάριο Click Run Impact Analysis"
     },
     "modules.scenario.builder.scenario_compare_scenarios": {
       "en": "Scenario Compare Scenarios",
@@ -258,7 +283,8 @@
       "lt": "[LT] Scenario Compare Scenarios",
       "pt": "[PT] Scenario Compare Scenarios",
       "it": "[IT] Scenario Compare Scenarios",
-      "no": "Scenario Compare Scenarios"
+      "no": "Scenario Compare Scenarios",
+      "el": "Σενάριο Compare Scenarios"
     },
     "modules.scenario.builder.scenario_configure": {
       "en": "Scenario Configure",
@@ -268,7 +294,8 @@
       "lt": "[LT] Scenario Configure",
       "pt": "[PT] Scenario Configure",
       "it": "[IT] Scenario Configure",
-      "no": "Scenario Configure"
+      "no": "Scenario Configure",
+      "el": "Σενάριο Configure"
     },
     "modules.scenario.builder.scenario_confirm_delete": {
       "en": "Scenario Confirm Delete",
@@ -278,7 +305,8 @@
       "lt": "[LT] Scenario Confirm Delete",
       "pt": "[PT] Scenario Confirm Delete",
       "it": "[IT] Scenario Confirm Delete",
-      "no": "Scenario Confirm Delete"
+      "no": "Scenario Confirm Delete",
+      "el": "Σενάριο Επιβεβαίωση Διαγραφή"
     },
     "modules.scenario.builder.scenario_confirm_delete_message": {
       "en": "Scenario Confirm Delete Message",
@@ -288,7 +316,8 @@
       "lt": "[LT] Scenario Confirm Delete Message",
       "pt": "[PT] Scenario Confirm Delete Message",
       "it": "[IT] Scenario Confirm Delete Message",
-      "no": "Scenario Confirm Delete Message"
+      "no": "Scenario Confirm Delete Message",
+      "el": "Σενάριο Επιβεβαίωση Διαγραφή Message"
     },
     "modules.scenario.builder.scenario_created_successfully": {
       "en": "Scenario created successfully",
@@ -298,7 +327,8 @@
       "lt": "Scenarijus sėkmingai sukurtas",
       "pt": "Cenário criado com sucesso",
       "it": "Scenario creato con successo",
-      "no": "Scenario created successfully"
+      "no": "Scenario created successfully",
+      "el": "Σενάριο Δημιουργήθηκε successfully"
     },
     "modules.scenario.builder.scenario_create_new_scenario": {
       "en": "Scenario Create New Scenario",
@@ -308,7 +338,8 @@
       "lt": "[LT] Scenario Create New Scenario",
       "pt": "[PT] Scenario Create New Scenario",
       "it": "[IT] Scenario Create New Scenario",
-      "no": "Scenario Create New Scenario"
+      "no": "Scenario Create New Scenario",
+      "el": "Σενάριο Δημιουργία Νέο Σενάριο"
     },
     "modules.scenario.builder.scenario_dapsi_category": {
       "en": "Scenario Dapsi Category",
@@ -318,7 +349,8 @@
       "lt": "[LT] Scenario Dapsi Category",
       "pt": "[PT] Scenario Dapsi Category",
       "it": "[IT] Scenario Dapsi Category",
-      "no": "Scenario Dapsi Category"
+      "no": "Scenario Dapsi Category",
+      "el": "Σενάριο Dapsi Category"
     },
     "modules.scenario.builder.scenario_deleted": {
       "en": "Scenario deleted",
@@ -328,7 +360,8 @@
       "lt": "Scenarijus ištrintas",
       "pt": "Cenário eliminado",
       "it": "Scenario eliminato",
-      "no": "Scenario deleted"
+      "no": "Scenario deleted",
+      "el": "Σενάριο Διαγράφηκε"
     },
     "modules.scenario.builder.scenario_description": {
       "en": "Scenario Description",
@@ -338,7 +371,8 @@
       "lt": "[LT] Scenario Description",
       "pt": "[PT] Scenario Description",
       "it": "[IT] Scenario Description",
-      "no": "Scenario Description"
+      "no": "Scenario Description",
+      "el": "Σενάριο Περιγραφή"
     },
     "modules.scenario.builder.scenario_description_placeholder": {
       "en": "Scenario Description Placeholder",
@@ -348,7 +382,8 @@
       "lt": "[LT] Scenario Description Placeholder",
       "pt": "[PT] Scenario Description Placeholder",
       "it": "[IT] Scenario Description Placeholder",
-      "no": "Scenario Description Placeholder"
+      "no": "Scenario Description Placeholder",
+      "el": "Σενάριο Περιγραφή Placeholder"
     },
     "modules.scenario.builder.scenario_detecting_feedback_loops": {
       "en": "Scenario Detecting Feedback Loops",
@@ -358,7 +393,8 @@
       "lt": "[LT] Scenario Detecting Feedback Loops",
       "pt": "[PT] Scenario Detecting Feedback Loops",
       "it": "[IT] Scenario Detecting Feedback Loops",
-      "no": "Scenario Detecting Feedback Loops"
+      "no": "Scenario Detecting Feedback Loops",
+      "el": "Σενάριο Detecting Feedback Loops"
     },
     "modules.scenario.builder.scenario_direction": {
       "en": "Scenario Direction",
@@ -368,7 +404,8 @@
       "lt": "[LT] Scenario Direction",
       "pt": "[PT] Scenario Direction",
       "it": "[IT] Scenario Direction",
-      "no": "Scenario Direction"
+      "no": "Scenario Direction",
+      "el": "Σενάριο Direction"
     },
     "modules.scenario.builder.scenario_feedback_loops": {
       "en": "Scenario Feedback Loops",
@@ -378,7 +415,8 @@
       "lt": "[LT] Scenario Feedback Loops",
       "pt": "[PT] Scenario Feedback Loops",
       "it": "[IT] Scenario Feedback Loops",
-      "no": "Scenario Feedback Loops"
+      "no": "Scenario Feedback Loops",
+      "el": "Σενάριο Βρόχοι ανατροφοδότησης"
     },
     "modules.scenario.builder.scenario_from_node": {
       "en": "Scenario From Node",
@@ -388,7 +426,8 @@
       "lt": "[LT] Scenario From Node",
       "pt": "[PT] Scenario From Node",
       "it": "[IT] Scenario From Node",
-      "no": "Scenario From Node"
+      "no": "Scenario From Node",
+      "el": "Σενάριο From Node"
     },
     "modules.scenario.builder.scenario_go_to_cld_module": {
       "en": "Scenario Go To Cld Module",
@@ -398,7 +437,8 @@
       "lt": "[LT] Scenario Go To Cld Module",
       "pt": "[PT] Scenario Go To Cld Module",
       "it": "[IT] Scenario Go To Cld Module",
-      "no": "Scenario Go To Cld Module"
+      "no": "Scenario Go To Cld Module",
+      "el": "Σενάριο Go To Cld Module"
     },
     "modules.scenario.builder.scenario_impact": {
       "en": "Scenario Impact",
@@ -408,7 +448,8 @@
       "lt": "[LT] Scenario Impact",
       "pt": "[PT] Scenario Impact",
       "it": "[IT] Scenario Impact",
-      "no": "Scenario Impact"
+      "no": "Scenario Impact",
+      "el": "Σενάριο Επίπτωση"
     },
     "modules.scenario.builder.scenario_impact_analysis": {
       "en": "Scenario Impact Analysis",
@@ -418,7 +459,8 @@
       "lt": "[LT] Scenario Impact Analysis",
       "pt": "[PT] Scenario Impact Analysis",
       "it": "[IT] Scenario Impact Analysis",
-      "no": "Scenario Impact Analysis"
+      "no": "Scenario Impact Analysis",
+      "el": "Σενάριο Επίπτωση Ανάλυση"
     },
     "modules.scenario.builder.scenario_impact_analysis_complete": {
       "en": "Scenario Impact Analysis Complete",
@@ -428,7 +470,8 @@
       "lt": "[LT] Scenario Impact Analysis Complete",
       "pt": "[PT] Scenario Impact Analysis Complete",
       "it": "[IT] Scenario Impact Analysis Complete",
-      "no": "Scenario Impact Analysis Complete"
+      "no": "Scenario Impact Analysis Complete",
+      "el": "Σενάριο Επίπτωση Ανάλυση Ολοκληρώθηκε"
     },
     "modules.scenario.builder.scenario_impact_analysis_not_run": {
       "en": "Scenario Impact Analysis Not Run",
@@ -438,7 +481,8 @@
       "lt": "[LT] Scenario Impact Analysis Not Run",
       "pt": "[PT] Scenario Impact Analysis Not Run",
       "it": "[IT] Scenario Impact Analysis Not Run",
-      "no": "Scenario Impact Analysis Not Run"
+      "no": "Scenario Impact Analysis Not Run",
+      "el": "Σενάριο Επίπτωση Ανάλυση Not Run"
     },
     "modules.scenario.builder.scenario_impact_comparison": {
       "en": "Scenario Impact Comparison",
@@ -448,7 +492,8 @@
       "lt": "[LT] Scenario Impact Comparison",
       "pt": "[PT] Scenario Impact Comparison",
       "it": "[IT] Scenario Impact Comparison",
-      "no": "Scenario Impact Comparison"
+      "no": "Scenario Impact Comparison",
+      "el": "Σενάριο Επίπτωση Comparison"
     },
     "modules.scenario.builder.scenario_link_added": {
       "en": "Scenario Link Added",
@@ -458,7 +503,8 @@
       "lt": "[LT] Scenario Link Added",
       "pt": "[PT] Scenario Link Added",
       "it": "[IT] Scenario Link Added",
-      "no": "Scenario Link Added"
+      "no": "Scenario Link Added",
+      "el": "Σενάριο Σύνδεσμος Προστέθηκε"
     },
     "modules.scenario.builder.scenario_link_marked_for_removal": {
       "en": "Scenario Link Marked For Removal",
@@ -468,7 +514,8 @@
       "lt": "[LT] Scenario Link Marked For Removal",
       "pt": "[PT] Scenario Link Marked For Removal",
       "it": "[IT] Scenario Link Marked For Removal",
-      "no": "Scenario Link Marked For Removal"
+      "no": "Scenario Link Marked For Removal",
+      "el": "Σενάριο Σύνδεσμος Marked For Removal"
     },
     "modules.scenario.builder.scenario_links": {
       "en": "Scenario Links",
@@ -478,7 +525,8 @@
       "lt": "[LT] Scenario Links",
       "pt": "[PT] Scenario Links",
       "it": "[IT] Scenario Links",
-      "no": "Scenario Links"
+      "no": "Scenario Links",
+      "el": "Σενάριο Σύνδεσμοι"
     },
     "modules.scenario.builder.scenario_links_removed": {
       "en": "Scenario Links Removed",
@@ -488,7 +536,8 @@
       "lt": "[LT] Scenario Links Removed",
       "pt": "[PT] Scenario Links Removed",
       "it": "[IT] Scenario Links Removed",
-      "no": "Scenario Links Removed"
+      "no": "Scenario Links Removed",
+      "el": "Σενάριο Σύνδεσμοι Αφαιρέθηκε"
     },
     "modules.scenario.builder.scenario_loop": {
       "en": "Scenario Loop",
@@ -498,7 +547,8 @@
       "lt": "[LT] Scenario Loop",
       "pt": "[PT] Scenario Loop",
       "it": "[IT] Scenario Loop",
-      "no": "Scenario Loop"
+      "no": "Scenario Loop",
+      "el": "Σενάριο Loop"
     },
     "modules.scenario.builder.scenario_loops": {
       "en": "Scenario Loops",
@@ -508,7 +558,8 @@
       "lt": "[LT] Scenario Loops",
       "pt": "[PT] Scenario Loops",
       "it": "[IT] Scenario Loops",
-      "no": "Scenario Loops"
+      "no": "Scenario Loops",
+      "el": "Σενάριο Loops"
     },
     "modules.scenario.builder.scenario_mixed_links_added": {
       "en": "Scenario Mixed Links Added",
@@ -518,7 +569,8 @@
       "lt": "[LT] Scenario Mixed Links Added",
       "pt": "[PT] Scenario Mixed Links Added",
       "it": "[IT] Scenario Mixed Links Added",
-      "no": "Scenario Mixed Links Added"
+      "no": "Scenario Mixed Links Added",
+      "el": "Σενάριο Mixed Links Added"
     },
     "modules.scenario.builder.scenario_more_loops": {
       "en": "Scenario More Loops",
@@ -528,7 +580,8 @@
       "lt": "[LT] Scenario More Loops",
       "pt": "[PT] Scenario More Loops",
       "it": "[IT] Scenario More Loops",
-      "no": "Scenario More Loops"
+      "no": "Scenario More Loops",
+      "el": "Σενάριο Περισσότερα Loops"
     },
     "modules.scenario.builder.scenario_name_placeholder": {
       "en": "Scenario Name Placeholder",
@@ -538,7 +591,8 @@
       "lt": "[LT] Scenario Name Placeholder",
       "pt": "[PT] Scenario Name Placeholder",
       "it": "[IT] Scenario Name Placeholder",
-      "no": "Scenario Name Placeholder"
+      "no": "Scenario Name Placeholder",
+      "el": "Σενάριο Όνομα Placeholder"
     },
     "modules.scenario.builder.scenario_need_cld_first": {
       "en": "Scenario Need Cld First",
@@ -548,7 +602,8 @@
       "lt": "[LT] Scenario Need Cld First",
       "pt": "[PT] Scenario Need Cld First",
       "it": "[IT] Scenario Need Cld First",
-      "no": "Scenario Need Cld First"
+      "no": "Scenario Need Cld First",
+      "el": "Σενάριο Need Cld First"
     },
     "modules.scenario.builder.scenario_need_two_scenarios": {
       "en": "Scenario Need Two Scenarios",
@@ -558,7 +613,8 @@
       "lt": "[LT] Scenario Need Two Scenarios",
       "pt": "[PT] Scenario Need Two Scenarios",
       "it": "[IT] Scenario Need Two Scenarios",
-      "no": "Scenario Need Two Scenarios"
+      "no": "Scenario Need Two Scenarios",
+      "el": "Σενάριο Need Two Scenarios"
     },
     "modules.scenario.builder.scenario_negative": {
       "en": "Scenario Negative",
@@ -568,7 +624,8 @@
       "lt": "[LT] Scenario Negative",
       "pt": "[PT] Scenario Negative",
       "it": "[IT] Scenario Negative",
-      "no": "Scenario Negative"
+      "no": "Scenario Negative",
+      "el": "Σενάριο Αρνητικό"
     },
     "modules.scenario.builder.scenario_negative_links_added": {
       "en": "Scenario Negative Links Added",
@@ -578,7 +635,8 @@
       "lt": "[LT] Scenario Negative Links Added",
       "pt": "[PT] Scenario Negative Links Added",
       "it": "[IT] Scenario Negative Links Added",
-      "no": "Scenario Negative Links Added"
+      "no": "Scenario Negative Links Added",
+      "el": "Σενάριο Αρνητικό Σύνδεσμοι Προστέθηκε"
     },
     "modules.scenario.builder.scenario_network_statistics_comparison": {
       "en": "Scenario Network Statistics Comparison",
@@ -588,7 +646,8 @@
       "lt": "[LT] Scenario Network Statistics Comparison",
       "pt": "[PT] Scenario Network Statistics Comparison",
       "it": "[IT] Scenario Network Statistics Comparison",
-      "no": "Scenario Network Statistics Comparison"
+      "no": "Scenario Network Statistics Comparison",
+      "el": "Σενάριο Δίκτυο Statistics Comparison"
     },
     "modules.scenario.builder.scenario_network_topology_changes": {
       "en": "Scenario Network Topology Changes",
@@ -598,7 +657,8 @@
       "lt": "[LT] Scenario Network Topology Changes",
       "pt": "[PT] Scenario Network Topology Changes",
       "it": "[IT] Scenario Network Topology Changes",
-      "no": "Scenario Network Topology Changes"
+      "no": "Scenario Network Topology Changes",
+      "el": "Σενάριο Δίκτυο Topology Changes"
     },
     "modules.scenario.builder.scenario_new_node_added": {
       "en": "Scenario New Node Added",
@@ -608,7 +668,8 @@
       "lt": "[LT] Scenario New Node Added",
       "pt": "[PT] Scenario New Node Added",
       "it": "[IT] Scenario New Node Added",
-      "no": "Scenario New Node Added"
+      "no": "Scenario New Node Added",
+      "el": "Σενάριο Νέο Κόμβος Προστέθηκε"
     },
     "modules.scenario.builder.scenario_new_scenario": {
       "en": "Scenario New Scenario",
@@ -618,7 +679,8 @@
       "lt": "[LT] Scenario New Scenario",
       "pt": "[PT] Scenario New Scenario",
       "it": "[IT] Scenario New Scenario",
-      "no": "Scenario New Scenario"
+      "no": "Scenario New Scenario",
+      "el": "Σενάριο Νέο Σενάριο"
     },
     "modules.scenario.builder.scenario_no_cld_found": {
       "en": "Scenario No Cld Found",
@@ -628,7 +690,8 @@
       "lt": "[LT] Scenario No Cld Found",
       "pt": "[PT] Scenario No Cld Found",
       "it": "[IT] Scenario No Cld Found",
-      "no": "Scenario No Cld Found"
+      "no": "Scenario No Cld Found",
+      "el": "Σενάριο Όχι CLD Found"
     },
     "modules.scenario.builder.scenario_node": {
       "en": "Scenario Node",
@@ -638,7 +701,8 @@
       "lt": "[LT] Scenario Node",
       "pt": "[PT] Scenario Node",
       "it": "[IT] Scenario Node",
-      "no": "Scenario Node"
+      "no": "Scenario Node",
+      "el": "Σενάριο Κόμβος"
     },
     "modules.scenario.builder.scenario_node_added": {
       "en": "Scenario Node Added",
@@ -648,7 +712,8 @@
       "lt": "[LT] Scenario Node Added",
       "pt": "[PT] Scenario Node Added",
       "it": "[IT] Scenario Node Added",
-      "no": "Scenario Node Added"
+      "no": "Scenario Node Added",
+      "el": "Σενάριο Κόμβος Προστέθηκε"
     },
     "modules.scenario.builder.scenario_node_label": {
       "en": "Scenario Node Label",
@@ -658,7 +723,8 @@
       "lt": "[LT] Scenario Node Label",
       "pt": "[PT] Scenario Node Label",
       "it": "[IT] Scenario Node Label",
-      "no": "Scenario Node Label"
+      "no": "Scenario Node Label",
+      "el": "Σενάριο Κόμβος Label"
     },
     "modules.scenario.builder.scenario_node_label_placeholder": {
       "en": "Scenario Node Label Placeholder",
@@ -668,7 +734,8 @@
       "lt": "[LT] Scenario Node Label Placeholder",
       "pt": "[PT] Scenario Node Label Placeholder",
       "it": "[IT] Scenario Node Label Placeholder",
-      "no": "Scenario Node Label Placeholder"
+      "no": "Scenario Node Label Placeholder",
+      "el": "Σενάριο Κόμβος Label Placeholder"
     },
     "modules.scenario.builder.scenario_node_marked_for_removal": {
       "en": "Scenario Node Marked For Removal",
@@ -678,7 +745,8 @@
       "lt": "[LT] Scenario Node Marked For Removal",
       "pt": "[PT] Scenario Node Marked For Removal",
       "it": "[IT] Scenario Node Marked For Removal",
-      "no": "Scenario Node Marked For Removal"
+      "no": "Scenario Node Marked For Removal",
+      "el": "Σενάριο Κόμβος Marked For Removal"
     },
     "modules.scenario.builder.scenario_nodes": {
       "en": "Scenario Nodes",
@@ -688,7 +756,8 @@
       "lt": "[LT] Scenario Nodes",
       "pt": "[PT] Scenario Nodes",
       "it": "[IT] Scenario Nodes",
-      "no": "Scenario Nodes"
+      "no": "Scenario Nodes",
+      "el": "Σενάριο Κόμβοι"
     },
     "modules.scenario.builder.scenario_nodes_lowercase": {
       "en": "Scenario Nodes Lowercase",
@@ -698,7 +767,8 @@
       "lt": "[LT] Scenario Nodes Lowercase",
       "pt": "[PT] Scenario Nodes Lowercase",
       "it": "[IT] Scenario Nodes Lowercase",
-      "no": "Scenario Nodes Lowercase"
+      "no": "Scenario Nodes Lowercase",
+      "el": "Σενάριο Κόμβοι Lowercase"
     },
     "modules.scenario.builder.scenario_no_direct_modifications": {
       "en": "Scenario No Direct Modifications",
@@ -708,7 +778,8 @@
       "lt": "[LT] Scenario No Direct Modifications",
       "pt": "[PT] Scenario No Direct Modifications",
       "it": "[IT] Scenario No Direct Modifications",
-      "no": "Scenario No Direct Modifications"
+      "no": "Scenario No Direct Modifications",
+      "el": "Σενάριο Όχι Direct Modifications"
     },
     "modules.scenario.builder.scenario_no_feedback_loops_detected": {
       "en": "Scenario No Feedback Loops Detected",
@@ -718,7 +789,8 @@
       "lt": "[LT] Scenario No Feedback Loops Detected",
       "pt": "[PT] Scenario No Feedback Loops Detected",
       "it": "[IT] Scenario No Feedback Loops Detected",
-      "no": "Scenario No Feedback Loops Detected"
+      "no": "Scenario No Feedback Loops Detected",
+      "el": "Σενάριο Όχι Βρόχοι ανατροφοδότησης Detected"
     },
     "modules.scenario.builder.scenario_no_modifications_yet": {
       "en": "Scenario No Modifications Yet",
@@ -728,7 +800,8 @@
       "lt": "[LT] Scenario No Modifications Yet",
       "pt": "[PT] Scenario No Modifications Yet",
       "it": "[IT] Scenario No Modifications Yet",
-      "no": "Scenario No Modifications Yet"
+      "no": "Scenario No Modifications Yet",
+      "el": "Σενάριο Όχι Modifications Yet"
     },
     "modules.scenario.builder.scenario_no_scenarios_yet": {
       "en": "Scenario No Scenarios Yet",
@@ -738,7 +811,8 @@
       "lt": "[LT] Scenario No Scenarios Yet",
       "pt": "[PT] Scenario No Scenarios Yet",
       "it": "[IT] Scenario No Scenarios Yet",
-      "no": "Scenario No Scenarios Yet"
+      "no": "Scenario No Scenarios Yet",
+      "el": "Σενάριο Όχι Σενάρια Yet"
     },
     "modules.scenario.builder.scenario_not_enough_scenarios": {
       "en": "Scenario Not Enough Scenarios",
@@ -748,7 +822,8 @@
       "lt": "[LT] Scenario Not Enough Scenarios",
       "pt": "[PT] Scenario Not Enough Scenarios",
       "it": "[IT] Scenario Not Enough Scenarios",
-      "no": "Scenario Not Enough Scenarios"
+      "no": "Scenario Not Enough Scenarios",
+      "el": "Σενάριο Not Enough Scenarios"
     },
     "modules.scenario.builder.scenario_polarity": {
       "en": "Scenario Polarity",
@@ -758,7 +833,8 @@
       "lt": "[LT] Scenario Polarity",
       "pt": "[PT] Scenario Polarity",
       "it": "[IT] Scenario Polarity",
-      "no": "Scenario Polarity"
+      "no": "Scenario Polarity",
+      "el": "Σενάριο Πολικότητα"
     },
     "modules.scenario.builder.scenario_positive": {
       "en": "Scenario Positive",
@@ -768,7 +844,8 @@
       "lt": "[LT] Scenario Positive",
       "pt": "[PT] Scenario Positive",
       "it": "[IT] Scenario Positive",
-      "no": "Scenario Positive"
+      "no": "Scenario Positive",
+      "el": "Σενάριο Θετικό"
     },
     "modules.scenario.builder.scenario_positive_links_added": {
       "en": "Scenario Positive Links Added",
@@ -778,7 +855,8 @@
       "lt": "[LT] Scenario Positive Links Added",
       "pt": "[PT] Scenario Positive Links Added",
       "it": "[IT] Scenario Positive Links Added",
-      "no": "Scenario Positive Links Added"
+      "no": "Scenario Positive Links Added",
+      "el": "Σενάριο Θετικό Σύνδεσμοι Προστέθηκε"
     },
     "modules.scenario.builder.scenario_predicted_impacts": {
       "en": "Scenario Predicted Impacts",
@@ -788,7 +866,8 @@
       "lt": "[LT] Scenario Predicted Impacts",
       "pt": "[PT] Scenario Predicted Impacts",
       "it": "[IT] Scenario Predicted Impacts",
-      "no": "Scenario Predicted Impacts"
+      "no": "Scenario Predicted Impacts",
+      "el": "Σενάριο Predicted Impacts"
     },
     "modules.scenario.builder.scenario_predicting_impacts": {
       "en": "Scenario Predicting Impacts",
@@ -798,7 +877,8 @@
       "lt": "[LT] Scenario Predicting Impacts",
       "pt": "[PT] Scenario Predicting Impacts",
       "it": "[IT] Scenario Predicting Impacts",
-      "no": "Scenario Predicting Impacts"
+      "no": "Scenario Predicting Impacts",
+      "el": "Σενάριο Predicting Impacts"
     },
     "modules.scenario.builder.scenario_preview_network": {
       "en": "Scenario Preview Network",
@@ -808,7 +888,8 @@
       "lt": "[LT] Scenario Preview Network",
       "pt": "[PT] Scenario Preview Network",
       "it": "[IT] Scenario Preview Network",
-      "no": "Scenario Preview Network"
+      "no": "Scenario Preview Network",
+      "el": "Σενάριο Προεπισκόπηση Δίκτυο"
     },
     "modules.scenario.builder.scenario_remove_link": {
       "en": "Scenario Remove Link",
@@ -818,7 +899,8 @@
       "lt": "[LT] Scenario Remove Link",
       "pt": "[PT] Scenario Remove Link",
       "it": "[IT] Scenario Remove Link",
-      "no": "Scenario Remove Link"
+      "no": "Scenario Remove Link",
+      "el": "Σενάριο Αφαίρεση Σύνδεσμος"
     },
     "modules.scenario.builder.scenario_remove_links": {
       "en": "Scenario Remove Links",
@@ -828,7 +910,8 @@
       "lt": "[LT] Scenario Remove Links",
       "pt": "[PT] Scenario Remove Links",
       "it": "[IT] Scenario Remove Links",
-      "no": "Scenario Remove Links"
+      "no": "Scenario Remove Links",
+      "el": "Σενάριο Αφαίρεση Σύνδεσμοι"
     },
     "modules.scenario.builder.scenario_remove_node": {
       "en": "Scenario Remove Node",
@@ -838,7 +921,8 @@
       "lt": "[LT] Scenario Remove Node",
       "pt": "[PT] Scenario Remove Node",
       "it": "[IT] Scenario Remove Node",
-      "no": "Scenario Remove Node"
+      "no": "Scenario Remove Node",
+      "el": "Σενάριο Αφαίρεση Κόμβος"
     },
     "modules.scenario.builder.scenario_remove_nodes": {
       "en": "Scenario Remove Nodes",
@@ -848,7 +932,8 @@
       "lt": "[LT] Scenario Remove Nodes",
       "pt": "[PT] Scenario Remove Nodes",
       "it": "[IT] Scenario Remove Nodes",
-      "no": "Scenario Remove Nodes"
+      "no": "Scenario Remove Nodes",
+      "el": "Σενάριο Αφαίρεση Κόμβοι"
     },
     "modules.scenario.builder.scenario_run_analysis_to_compare": {
       "en": "Scenario Run Analysis To Compare",
@@ -858,7 +943,8 @@
       "lt": "[LT] Scenario Run Analysis To Compare",
       "pt": "[PT] Scenario Run Analysis To Compare",
       "it": "[IT] Scenario Run Analysis To Compare",
-      "no": "Scenario Run Analysis To Compare"
+      "no": "Scenario Run Analysis To Compare",
+      "el": "Σενάριο Run Analysis To Compare"
     },
     "modules.scenario.builder.scenario_run_impact_analysis": {
       "en": "Scenario Run Impact Analysis",
@@ -868,7 +954,8 @@
       "lt": "[LT] Scenario Run Impact Analysis",
       "pt": "[PT] Scenario Run Impact Analysis",
       "it": "[IT] Scenario Run Impact Analysis",
-      "no": "Scenario Run Impact Analysis"
+      "no": "Scenario Run Impact Analysis",
+      "el": "Σενάριο Run Impact Analysis"
     },
     "modules.scenario.builder.scenario_running_impact_analysis": {
       "en": "Scenario Running Impact Analysis",
@@ -878,7 +965,8 @@
       "lt": "[LT] Scenario Running Impact Analysis",
       "pt": "[PT] Scenario Running Impact Analysis",
       "it": "[IT] Scenario Running Impact Analysis",
-      "no": "Scenario Running Impact Analysis"
+      "no": "Scenario Running Impact Analysis",
+      "el": "Σενάριο Running Impact Analysis"
     },
     "modules.scenario.builder.scenario_scenario_a": {
       "en": "Scenario Scenario A",
@@ -888,7 +976,8 @@
       "lt": "[LT] Scenario Scenario A",
       "pt": "[PT] Scenario Scenario A",
       "it": "[IT] Scenario Scenario A",
-      "no": "Scenario Scenario A"
+      "no": "Scenario Scenario A",
+      "el": "Σενάριο Σενάριο A"
     },
     "modules.scenario.builder.scenario_scenario_b": {
       "en": "Scenario Scenario B",
@@ -898,7 +987,8 @@
       "lt": "[LT] Scenario Scenario B",
       "pt": "[PT] Scenario Scenario B",
       "it": "[IT] Scenario Scenario B",
-      "no": "Scenario Scenario B"
+      "no": "Scenario Scenario B",
+      "el": "Σενάριο Σενάριο B"
     },
     "modules.scenario.builder.scenario_scenario_name": {
       "en": "Scenario Scenario Name",
@@ -908,7 +998,8 @@
       "lt": "[LT] Scenario Scenario Name",
       "pt": "[PT] Scenario Scenario Name",
       "it": "[IT] Scenario Scenario Name",
-      "no": "Scenario Scenario Name"
+      "no": "Scenario Scenario Name",
+      "el": "Σενάριο Σενάριο Όνομα"
     },
     "modules.scenario.builder.scenario_scenarios": {
       "en": "Scenario Scenarios",
@@ -918,7 +1009,8 @@
       "lt": "[LT] Scenario Scenarios",
       "pt": "[PT] Scenario Scenarios",
       "it": "[IT] Scenario Scenarios",
-      "no": "Scenario Scenarios"
+      "no": "Scenario Scenarios",
+      "el": "Σενάριο Σενάρια"
     },
     "modules.scenario.builder.scenario_scenarios_not_analyzed": {
       "en": "Scenario Scenarios Not Analyzed",
@@ -928,7 +1020,8 @@
       "lt": "[LT] Scenario Scenarios Not Analyzed",
       "pt": "[PT] Scenario Scenarios Not Analyzed",
       "it": "[IT] Scenario Scenarios Not Analyzed",
-      "no": "Scenario Scenarios Not Analyzed"
+      "no": "Scenario Scenarios Not Analyzed",
+      "el": "Σενάριο Σενάρια Not Analyzed"
     },
     "modules.scenario.builder.scenario_select_different_scenarios": {
       "en": "Scenario Select Different Scenarios",
@@ -938,7 +1031,8 @@
       "lt": "[LT] Scenario Select Different Scenarios",
       "pt": "[PT] Scenario Select Different Scenarios",
       "it": "[IT] Scenario Select Different Scenarios",
-      "no": "Scenario Select Different Scenarios"
+      "no": "Scenario Select Different Scenarios",
+      "el": "Σενάριο Επιλογή Different Scenarios"
     },
     "modules.scenario.builder.scenario_select_link_to_remove": {
       "en": "Scenario Select Link To Remove",
@@ -948,7 +1042,8 @@
       "lt": "[LT] Scenario Select Link To Remove",
       "pt": "[PT] Scenario Select Link To Remove",
       "it": "[IT] Scenario Select Link To Remove",
-      "no": "Scenario Select Link To Remove"
+      "no": "Scenario Select Link To Remove",
+      "el": "Σενάριο Επιλογή Σύνδεσμος To Remove"
     },
     "modules.scenario.builder.scenario_select_node_to_remove": {
       "en": "Scenario Select Node To Remove",
@@ -958,7 +1053,8 @@
       "lt": "[LT] Scenario Select Node To Remove",
       "pt": "[PT] Scenario Select Node To Remove",
       "it": "[IT] Scenario Select Node To Remove",
-      "no": "Scenario Select Node To Remove"
+      "no": "Scenario Select Node To Remove",
+      "el": "Σενάριο Επιλογή Κόμβος To Remove"
     },
     "modules.scenario.builder.scenario_select_or_create": {
       "en": "Scenario Select Or Create",
@@ -968,7 +1064,8 @@
       "lt": "[LT] Scenario Select Or Create",
       "pt": "[PT] Scenario Select Or Create",
       "it": "[IT] Scenario Select Or Create",
-      "no": "Scenario Select Or Create"
+      "no": "Scenario Select Or Create",
+      "el": "Σενάριο Επιλογή Or Create"
     },
     "modules.scenario.builder.scenario_to_node": {
       "en": "Scenario To Node",
@@ -978,7 +1075,8 @@
       "lt": "[LT] Scenario To Node",
       "pt": "[PT] Scenario To Node",
       "it": "[IT] Scenario To Node",
-      "no": "Scenario To Node"
+      "no": "Scenario To Node",
+      "el": "Σενάριο To Node"
     },
     "modules.scenario.builder.scenario_total_links": {
       "en": "Scenario Total Links",
@@ -988,7 +1086,8 @@
       "lt": "[LT] Scenario Total Links",
       "pt": "[PT] Scenario Total Links",
       "it": "[IT] Scenario Total Links",
-      "no": "Scenario Total Links"
+      "no": "Scenario Total Links",
+      "el": "Σενάριο Σύνολο Σύνδεσμοι"
     },
     "modules.scenario.builder.scenario_total_nodes": {
       "en": "Scenario Total Nodes",
@@ -998,7 +1097,8 @@
       "lt": "[LT] Scenario Total Nodes",
       "pt": "[PT] Scenario Total Nodes",
       "it": "[IT] Scenario Total Nodes",
-      "no": "Scenario Total Nodes"
+      "no": "Scenario Total Nodes",
+      "el": "Σενάριο Σύνολο Κόμβοι"
     },
     "modules.entry_point.role": {
       "en": "Select your role in marine management",
@@ -1008,7 +1108,8 @@
       "lt": "Pasirinkite savo vaidmenį jūrų valdyme",
       "pt": "Selecione o seu papel na gestão marinha",
       "it": "Seleziona il tuo ruolo nella gestione marina",
-      "no": "Select your role in marine management"
+      "no": "Select your role in marine management",
+      "el": "Επιλογή your role in marine management"
     },
     "modules.isa.data_entry.common.validation_errors": {
       "en": "Validation errors:",
@@ -1018,7 +1119,8 @@
       "lt": "Tikrinimo klaidos:",
       "pt": "Erros de validação:",
       "it": "Errori di validazione:",
-      "no": "Validation errors:"
+      "no": "Validation errors:",
+      "el": "Επικύρωση errors:"
     },
     "modules.ses.creation.welfare": {
       "en": "Welfare",
@@ -1028,7 +1130,8 @@
       "lt": "Gerovė",
       "pt": "Bem-estar",
       "it": "Benessere",
-      "no": "Welfare"
+      "no": "Welfare",
+      "el": "Ευημερία"
     },
     "modules.scenario.builder.activity": {
       "en": "Activity",
@@ -1038,7 +1141,8 @@
       "lt": "[LT] Activity",
       "pt": "[PT] Activity",
       "it": "[IT] Activity",
-      "no": "Activity"
+      "no": "Activity",
+      "el": "Δραστηριότητα"
     },
     "modules.scenario.builder.add": {
       "en": "Add",
@@ -1048,7 +1152,8 @@
       "lt": "[LT] Add",
       "pt": "[PT] Add",
       "it": "[IT] Add",
-      "no": "Legg til"
+      "no": "Legg til",
+      "el": "Προσθήκη"
     },
     "modules.scenario.builder.complete": {
       "en": "Complete",
@@ -1058,7 +1163,8 @@
       "lt": "[LT] Complete",
       "pt": "[PT] Complete",
       "it": "[IT] Complete",
-      "no": "Complete"
+      "no": "Complete",
+      "el": "Ολοκληρώθηκε"
     },
     "modules.scenario.builder.delete": {
       "en": "Delete",
@@ -1068,7 +1174,8 @@
       "lt": "[LT] Delete",
       "pt": "[PT] Delete",
       "it": "[IT] Delete",
-      "no": "Slett"
+      "no": "Slett",
+      "el": "Διαγραφή"
     },
     "modules.scenario.builder.driver": {
       "en": "Driver",
@@ -1078,7 +1185,8 @@
       "lt": "[LT] Driver",
       "pt": "[PT] Driver",
       "it": "[IT] Driver",
-      "no": "Driver"
+      "no": "Driver",
+      "el": "Κινητήρια δύναμη"
     },
     "modules.scenario.builder.impact": {
       "en": "Impact",
@@ -1088,7 +1196,8 @@
       "lt": "[LT] Impact",
       "pt": "[PT] Impact",
       "it": "[IT] Impact",
-      "no": "Impact"
+      "no": "Impact",
+      "el": "Επίπτωση"
     },
     "modules.scenario.builder.management": {
       "en": "Management",
@@ -1098,7 +1207,8 @@
       "lt": "[LT] Management",
       "pt": "[PT] Management",
       "it": "[IT] Management",
-      "no": "Management"
+      "no": "Management",
+      "el": "Διαχείριση"
     },
     "modules.scenario.builder.pressure": {
       "en": "Pressure",
@@ -1108,7 +1218,8 @@
       "lt": "[LT] Pressure",
       "pt": "[PT] Pressure",
       "it": "[IT] Pressure",
-      "no": "Pressure"
+      "no": "Pressure",
+      "el": "Πίεση"
     },
     "modules.scenario.builder.response": {
       "en": "Response",
@@ -1118,7 +1229,8 @@
       "lt": "[LT] Response",
       "pt": "[PT] Response",
       "it": "[IT] Response",
-      "no": "Response"
+      "no": "Response",
+      "el": "Απόκριση"
     },
     "modules.scenario.builder.select": {
       "en": "Select",
@@ -1128,7 +1240,8 @@
       "lt": "[LT] Select",
       "pt": "[PT] Select",
       "it": "[IT] Select",
-      "no": "Velg"
+      "no": "Velg",
+      "el": "Επιλογή"
     },
     "modules.scenario.builder.state": {
       "en": "State",
@@ -1138,7 +1251,8 @@
       "lt": "[LT] State",
       "pt": "[PT] State",
       "it": "[IT] State",
-      "no": "State"
+      "no": "State",
+      "el": "Κατάσταση"
     },
     "modules.scenario.builder.welfare": {
       "en": "Welfare",
@@ -1148,7 +1262,8 @@
       "lt": "[LT] Welfare",
       "pt": "[PT] Welfare",
       "it": "[IT] Welfare",
-      "no": "Welfare"
+      "no": "Welfare",
+      "el": "Ευημερία"
     }
   }
 }

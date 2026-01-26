@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "ui.modals.advanced_interface_showing_all_tools_technical_ter": {
@@ -18,7 +19,8 @@
       "lt": "Išplėstinė sąsaja, rodanti visus įrankius, techninę terminologiją ir išplėstines parinktis.",
       "pt": "Interface avançada mostrando todas as ferramentas, terminologia técnica e opções avançadas.",
       "it": "Interfaccia avanzata che mostra tutti gli strumenti, terminologia tecnica e opzioni avanzate.",
-      "no": "Advanced interface showing all tools, technical terminology, and advanced options."
+      "no": "Advanced interface showing all tools, technical terminology, and advanced options.",
+      "el": "Προχωρημένος interface showing all tools, technical terminology, and advanced options."
     },
     "ui.modals.apply_changes": {
       "en": "Apply Changes",
@@ -28,7 +30,8 @@
       "lt": "Pritaikyti Pakeitimus",
       "pt": "Aplicar Alterações",
       "it": "Applica Modifiche",
-      "no": "Apply Changes"
+      "no": "Apply Changes",
+      "el": "Εφαρμογή Changes"
     },
     "ui.modals.beginner_friendly_guides": {
       "en": "Beginner-Friendly Guides",
@@ -38,7 +41,8 @@
       "lt": "Pradedantiesiems Skirti Vadovai",
       "pt": "Guias para Iniciantes",
       "it": "Guide per Principianti",
-      "no": "Beginner-Friendly Guides"
+      "no": "Beginner-Friendly Guides",
+      "el": "Beginner-Friendly Guides"
     },
     "ui.modals.complete_user_manuals": {
       "en": "Complete User Manuals",
@@ -48,7 +52,8 @@
       "lt": "Pilni Vartotojo Vadovai",
       "pt": "Manuais de Usuário Completos",
       "it": "Manuali Utente Completi",
-      "no": "Fullstendige brukermanualer"
+      "no": "Fullstendige brukermanualer",
+      "el": "Ολοκληρώθηκε Χρήστης Manuals"
     },
     "ui.modals.confirm_start_over": {
       "en": "Confirm Start Over",
@@ -58,7 +63,8 @@
       "lt": "Patvirtinkite Pradėti iš naujo",
       "pt": "Confirme o recomeço",
       "it": "Conferma Ricomincia",
-      "no": "Confirm Start Over"
+      "no": "Confirm Start Over",
+      "el": "Επιβεβαίωση Έναρξη Over"
     },
     "ui.modals.confirm_title": {
       "en": "Confirm Action",
@@ -68,7 +74,8 @@
       "lt": "Patvirtinti veiksmą",
       "pt": "Confirmar Ação",
       "it": "Conferma Azione",
-      "no": "Confirm Action"
+      "no": "Confirm Action",
+      "el": "Επιβεβαίωση Action"
     },
     "ui.modals.delete_confirm_message": {
       "en": "Are you sure you want to delete this item? This action cannot be undone.",
@@ -78,7 +85,8 @@
       "lt": "Ar tikrai norite ištrinti šį elementą? Šio veiksmo negalima atšaukti.",
       "pt": "Tem certeza de que deseja excluir este item? Esta ação não pode ser desfeita.",
       "it": "Sei sicuro di voler eliminare questo elemento? Questa azione non può essere annullata.",
-      "no": "Are you sure you want to delete this item? This action cannot be undone."
+      "no": "Are you sure you want to delete this item? This action cannot be undone.",
+      "el": "Είστε σίγουροι you want to delete this item? This action cannot be undone."
     },
     "ui.modals.download_user_manuals_guides": {
       "en": "Download User Manuals & Guides",
@@ -88,7 +96,8 @@
       "lt": "Atsisiųsti Vartotojo Vadovus ir Gidus",
       "pt": "Baixar Manuais e Guias do Usuário",
       "it": "Scarica Manuali e Guide Utente",
-      "no": "Last ned brukermanualer og guider"
+      "no": "Last ned brukermanualer og guider",
+      "el": "Λήψη Χρήστης Manuals & Guides"
     },
     "ui.modals.downloadprint": {
       "en": "Download/Print",
@@ -98,7 +107,8 @@
       "lt": "Atsisiųsti/Spausdinti",
       "pt": "Baixar/Imprimir",
       "it": "Scarica/Stampa",
-      "no": "Download/Print"
+      "no": "Download/Print",
+      "el": "Download/Print"
     },
     "ui.modals.english_manual": {
       "en": "English Manual",
@@ -108,7 +118,8 @@
       "lt": "Anglų Vadovas",
       "pt": "Manual em Inglês",
       "it": "Manuale Inglese",
-      "no": "English Manual"
+      "no": "English Manual",
+      "el": "English Manual"
     },
     "ui.modals.error_title": {
       "en": "Error",
@@ -118,7 +129,8 @@
       "lt": "Klaida",
       "pt": "Erro",
       "it": "Errore",
-      "no": "Feil"
+      "no": "Feil",
+      "el": "Σφάλμα"
     },
     "ui.modals.expert": {
       "en": "Expert",
@@ -128,7 +140,8 @@
       "lt": "Ekspertas",
       "pt": "Especialista",
       "it": "Esperto",
-      "no": "Expert"
+      "no": "Expert",
+      "el": "Ειδικός"
     },
     "ui.modals.french_manual": {
       "en": "French Manual",
@@ -138,7 +151,8 @@
       "lt": "Prancūzų Vadovas",
       "pt": "Manual em Francês",
       "it": "Manuale Francese",
-      "no": "French Manual"
+      "no": "French Manual",
+      "el": "French Manual"
     },
     "ui.modals.html_version": {
       "en": "HTML Version",
@@ -148,7 +162,8 @@
       "lt": "HTML Versija",
       "pt": "Versão HTML",
       "it": "Versione HTML",
-      "no": "HTML Version"
+      "no": "HTML Version",
+      "el": "HTML Version"
     },
     "ui.modals.info_title": {
       "en": "Information",
@@ -158,7 +173,8 @@
       "lt": "Informacija",
       "pt": "Informação",
       "it": "Informazione",
-      "no": "Informasjon"
+      "no": "Informasjon",
+      "el": "Πληροφορίες"
     },
     "ui.modals.load_project_message": {
       "en": "Load a previously saved project",
@@ -168,7 +184,8 @@
       "lt": "Įkelti anksčiau išsaugotą projektą",
       "pt": "Carregar um projeto guardado anteriormente",
       "it": "Carica un progetto salvato in precedenza",
-      "no": "Load a previously saved project"
+      "no": "Load a previously saved project",
+      "el": "Load a previously saved project"
     },
     "ui.modals.load_project_title": {
       "en": "Load Project",
@@ -178,7 +195,8 @@
       "lt": "Įkelti projektą",
       "pt": "Carregar Projeto",
       "it": "Carica Progetto",
-      "no": "Last inn prosjekt"
+      "no": "Last inn prosjekt",
+      "el": "Load Project"
     },
     "ui.modals.pdf_version": {
       "en": "PDF Version",
@@ -188,7 +206,8 @@
       "lt": "PDF Versija",
       "pt": "Versão PDF",
       "it": "Versione PDF",
-      "no": "PDF Version"
+      "no": "PDF Version",
+      "el": "PDF Version"
     },
     "ui.modals.recommended_for_new_users": {
       "en": "Recommended for New Users",
@@ -198,7 +217,8 @@
       "lt": "Rekomenduojama Naujiems Vartotojams",
       "pt": "Recomendado para Novos Usuários",
       "it": "Raccomandato per Nuovi Utenti",
-      "no": "Anbefalt for nye brukere"
+      "no": "Anbefalt for nye brukere",
+      "el": "Recommended for New Users"
     },
     "ui.modals.save_project_message": {
       "en": "Save your current project data, including all PIMS, ISA entries, and analysis results",
@@ -208,7 +228,8 @@
       "lt": "Išsaugokite dabartinio projekto duomenis, įskaitant visus PIMS, ISA įrašus ir analizės rezultatus",
       "pt": "Guarde os dados do seu projeto atual, incluindo todas as entradas PIMS, ISA e resultados de análise",
       "it": "Salva i dati del progetto corrente, incluse tutte le voci PIMS, ISA e i risultati dell'analisi",
-      "no": "Save your current project data, including all PIMS, ISA entries, and analysis results"
+      "no": "Save your current project data, including all PIMS, ISA entries, and analysis results",
+      "el": "Αποθήκευση your current project data, including all PIMS, ISA entries, and analysis results"
     },
     "ui.modals.save_project_title": {
       "en": "Save Project",
@@ -218,7 +239,8 @@
       "lt": "Išsaugoti projektą",
       "pt": "Salvar Projeto",
       "it": "Salva Progetto",
-      "no": "Lagre prosjekt"
+      "no": "Lagre prosjekt",
+      "el": "Αποθήκευση Έργο"
     },
     "ui.modals.scenarioconfirmdelete": {
       "en": "scenario_confirm_delete",
@@ -228,7 +250,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "scenario_confirm_delete"
+      "no": "scenario_confirm_delete",
+      "el": "scenario_confirm_delete"
     },
     "ui.modals.select_your_experience_level_with_marine_ecosystem_modeling": {
       "en": "Select your experience level with marine ecosystem modeling:",
@@ -238,7 +261,8 @@
       "lt": "Pasirinkite savo patirties lygį su jūrų ekosistemų modeliavimu:",
       "pt": "Selecione seu nível de experiência com modelagem de ecossistemas marinhos:",
       "it": "Seleziona il tuo livello di esperienza con la modellazione degli ecosistemi marini:",
-      "no": "Select your experience level with marine ecosystem modeling:"
+      "no": "Select your experience level with marine ecosystem modeling:",
+      "el": "Επιλογή your experience level with marine ecosystem modeling:"
     },
     "ui.modals.session_restored_message": {
       "en": "A previous session was found. Click 'Load Saved' to restore it.",
@@ -248,7 +272,8 @@
       "lt": "Rasta ankstesnė sesija. Spustelėkite 'Įkelti išsaugotą', kad ją atkurtumėte.",
       "pt": "Uma sessão anterior foi encontrada. Clique em 'Carregar Salvo' para restaurá-la.",
       "it": "È stata trovata una sessione precedente. Fai clic su 'Carica Salvato' per ripristinarla.",
-      "no": "A previous session was found. Click 'Load Saved' to restore it."
+      "no": "A previous session was found. Click 'Load Saved' to restore it.",
+      "el": "A previous session was found. Click 'Load Saved' to restore it."
     },
     "ui.modals.session_restored_title": {
       "en": "Session Restored",
@@ -258,7 +283,8 @@
       "lt": "Sesija atkurta",
       "pt": "Sessão Restaurada",
       "it": "Sessione Ripristinata",
-      "no": "Session Restored"
+      "no": "Session Restored",
+      "el": "Session Restored"
     },
     "ui.modals.simplified_interface_for_first_time_users_shows_essential_tools_only": {
       "en": "Simplified interface for first-time users. Shows essential tools only.",
@@ -268,7 +294,8 @@
       "lt": "Supaprastinta sąsaja pradedantiesiems. Rodo tik esminius įrankius.",
       "pt": "Interface simplificada para novos usuários. Mostra apenas ferramentas essenciais.",
       "it": "Interfaccia semplificata per nuovi utenti. Mostra solo strumenti essenziali.",
-      "no": "Simplified interface for first-time users. Shows essential tools only."
+      "no": "Simplified interface for first-time users. Shows essential tools only.",
+      "el": "Simplified interface for first-time users. Shows essential tools only."
     },
     "ui.modals.standard_interface_for_regular_users_shows_most_tools_and_features": {
       "en": "Standard interface for regular users. Shows most tools and features.",
@@ -278,7 +305,8 @@
       "lt": "Standartinė sąsaja įprastiems naudotojams. Rodo daugumą įrankių ir funkcijų.",
       "pt": "Interface padrão para usuários regulares. Mostra a maioria das ferramentas e recursos.",
       "it": "Interfaccia standard per utenti abituali. Mostra la maggior parte degli strumenti e delle funzionalità.",
-      "no": "Standard interface for regular users. Shows most tools and features."
+      "no": "Standard interface for regular users. Shows most tools and features.",
+      "el": "Standard interface for regular users. Shows most tools and features."
     },
     "ui.modals.success_title": {
       "en": "Success",
@@ -288,7 +316,8 @@
       "lt": "Sėkmė",
       "pt": "Sucesso",
       "it": "Successo",
-      "no": "Suksess"
+      "no": "Suksess",
+      "el": "Επιτυχία"
     },
     "ui.modals.the_application_will_reload_to_apply_the_new_user_experience_level": {
       "en": "The application will reload to apply the new user experience level.",
@@ -298,7 +327,8 @@
       "lt": "Programa bus perkrauta, kad būtų pritaikytas naujas naudotojo patirties lygis.",
       "pt": "A aplicação será recarregada para aplicar o novo nível de experiência do usuário.",
       "it": "L'applicazione si ricaricherà per applicare il nuovo livello di esperienza utente.",
-      "no": "The application will reload to apply the new user experience level."
+      "no": "The application will reload to apply the new user experience level.",
+      "el": "The application will reload to apply the new user experience level."
     },
     "ui.modals.unsaved_changes_message": {
       "en": "You have unsaved changes. Do you want to save before proceeding?",
@@ -308,7 +338,8 @@
       "lt": "Turite neišsaugotų pakeitimų. Ar norite išsaugoti prieš tęsiant?",
       "pt": "Você tem alterações não salvas. Deseja salvar antes de prosseguir?",
       "it": "Hai modifiche non salvate. Vuoi salvare prima di procedere?",
-      "no": "You have unsaved changes. Do you want to save before proceeding?"
+      "no": "You have unsaved changes. Do you want to save before proceeding?",
+      "el": "You have unsaved changes. Do you want to save before proceeding?"
     },
     "ui.modals.unsaved_changes_title": {
       "en": "Unsaved Changes",
@@ -318,7 +349,8 @@
       "lt": "Neišsaugoti pakeitimai",
       "pt": "Alterações Não Salvas",
       "it": "Modifiche Non Salvate",
-      "no": "Unsaved Changes"
+      "no": "Unsaved Changes",
+      "el": "Unsaved Changes"
     },
     "ui.modals.view_online": {
       "en": "View online",
@@ -328,7 +360,8 @@
       "lt": "Žiūrėti internete",
       "pt": "Ver online",
       "it": "Visualizza online",
-      "no": "View online"
+      "no": "View online",
+      "el": "Προβολή Συνδεδεμένο"
     },
     "ui.modals.warning_title": {
       "en": "Warning",
@@ -338,7 +371,481 @@
       "lt": "Įspėjimas",
       "pt": "Aviso",
       "it": "Avviso",
-      "no": "Advarsel"
+      "no": "Advarsel",
+      "el": "Προειδοποίηση"
+    },
+    "ui.modals.local_storage_settings": {
+      "en": "Local Storage Settings",
+      "es": "Configuración de Almacenamiento Local",
+      "fr": "Paramètres de Stockage Local",
+      "de": "Lokale Speichereinstellungen",
+      "lt": "Vietinės Saugyklos Nustatymai",
+      "pt": "Configurações de Armazenamento Local",
+      "it": "Impostazioni Archiviazione Locale",
+      "no": "Lokale Lagringsinnstillinger",
+      "el": "Local Storage Settings"
+    },
+    "ui.modals.local_storage_description": {
+      "en": "Save and load projects directly to/from a folder on your computer. This keeps your data on your local machine instead of the server.",
+      "es": "Guardar y cargar proyectos directamente a/desde una carpeta en su computadora. Esto mantiene sus datos en su máquina local en lugar del servidor.",
+      "fr": "Enregistrer et charger des projets directement vers/depuis un dossier sur votre ordinateur. Cela conserve vos données sur votre machine locale au lieu du serveur.",
+      "de": "Projekte direkt in einem Ordner auf Ihrem Computer speichern und laden. Dies behält Ihre Daten auf Ihrem lokalen Computer anstelle des Servers.",
+      "lt": "Išsaugoti ir įkelti projektus tiesiogiai į/iš aplanko jūsų kompiuteryje. Tai laiko jūsų duomenis vietiniame kompiuteryje, o ne serveryje.",
+      "pt": "Salvar e carregar projetos diretamente para/de uma pasta no seu computador. Isso mantém seus dados na sua máquina local em vez do servidor.",
+      "it": "Salva e carica progetti direttamente su/da una cartella sul tuo computer. Questo mantiene i tuoi dati sulla tua macchina locale invece che sul server.",
+      "no": "Lagre og laste prosjekter direkte til/fra en mappe på datamaskinen din. Dette holder dataene dine på din lokale maskin i stedet for serveren.",
+      "el": "Αποθήκευση and load projects directly to/from a folder on your computer. This keeps your data on your local machine instead of the server."
+    },
+    "ui.modals.local_storage_not_supported_title": {
+      "en": "Browser Not Supported",
+      "es": "Navegador No Compatible",
+      "fr": "Navigateur Non Pris en Charge",
+      "de": "Browser Nicht Unterstützt",
+      "lt": "Naršyklė Nepalaikoma",
+      "pt": "Navegador Não Suportado",
+      "it": "Browser Non Supportato",
+      "no": "Nettleser Ikke Støttet",
+      "el": "Browser Not Supported"
+    },
+    "ui.modals.local_storage_not_supported_message": {
+      "en": "Your browser does not support the File System Access API required for local folder access. Please use a modern Chromium-based browser (Chrome, Edge, Opera) for this feature.",
+      "es": "Su navegador no es compatible con la API de Acceso al Sistema de Archivos requerida para el acceso a carpetas locales. Por favor, use un navegador moderno basado en Chromium (Chrome, Edge, Opera) para esta función.",
+      "fr": "Votre navigateur ne prend pas en charge l'API d'Accès au Système de Fichiers requise pour l'accès aux dossiers locaux. Veuillez utiliser un navigateur moderne basé sur Chromium (Chrome, Edge, Opera) pour cette fonctionnalité.",
+      "de": "Ihr Browser unterstützt die File System Access API nicht, die für den Zugriff auf lokale Ordner erforderlich ist. Bitte verwenden Sie einen modernen Chromium-basierten Browser (Chrome, Edge, Opera) für diese Funktion.",
+      "lt": "Jūsų naršyklė nepalaiko File System Access API, reikalingo prieigai prie vietinių aplankų. Prašome naudoti modernią Chromium pagrindu veikiančią naršyklę (Chrome, Edge, Opera) šiai funkcijai.",
+      "pt": "Seu navegador não suporta a API de Acesso ao Sistema de Arquivos necessária para acesso a pastas locais. Por favor, use um navegador moderno baseado em Chromium (Chrome, Edge, Opera) para este recurso.",
+      "it": "Il tuo browser non supporta l'API di Accesso al File System richiesta per l'accesso alle cartelle locali. Si prega di utilizzare un browser moderno basato su Chromium (Chrome, Edge, Opera) per questa funzionalità.",
+      "no": "Nettleseren din støtter ikke File System Access API som kreves for lokal mappeaksess. Vennligst bruk en moderne Chromium-basert nettleser (Chrome, Edge, Opera) for denne funksjonen.",
+      "el": "Your browser does not support the File System Access API required for local folder access. Please use a modern Chromium-based browser (Chrome, Edge, Opera) for this feature."
+    },
+    "ui.modals.local_storage_fallback_message": {
+      "en": "You can still use the Download/Upload buttons in the sidebar to save and load projects manually.",
+      "es": "Aún puede usar los botones Descargar/Cargar en la barra lateral para guardar y cargar proyectos manualmente.",
+      "fr": "Vous pouvez toujours utiliser les boutons Télécharger/Téléverser dans la barre latérale pour enregistrer et charger des projets manuellement.",
+      "de": "Sie können weiterhin die Download/Upload-Schaltflächen in der Seitenleiste verwenden, um Projekte manuell zu speichern und zu laden.",
+      "lt": "Vis tiek galite naudoti Atsisiųsti/Įkelti mygtukus šoninėje juostoje, kad išsaugotumėte ir įkeltumėte projektus rankiniu būdu.",
+      "pt": "Você ainda pode usar os botões Download/Upload na barra lateral para salvar e carregar projetos manualmente.",
+      "it": "Puoi ancora utilizzare i pulsanti Scarica/Carica nella barra laterale per salvare e caricare progetti manualmente.",
+      "no": "Du kan fortsatt bruke Last ned/Last opp-knappene i sidefeltet for å lagre og laste prosjekter manuelt.",
+      "el": "You can still use the Download/Upload buttons in the sidebar to save and load projects manually."
+    },
+    "ui.modals.select_local_folder": {
+      "en": "Select Local Folder",
+      "es": "Seleccionar Carpeta Local",
+      "fr": "Sélectionner le Dossier Local",
+      "de": "Lokalen Ordner Auswählen",
+      "lt": "Pasirinkti Vietinį Aplanką",
+      "pt": "Selecionar Pasta Local",
+      "it": "Seleziona Cartella Locale",
+      "no": "Velg Lokal Mappe",
+      "el": "Επιλογή Local Folder"
+    },
+    "ui.modals.disconnect_local_folder": {
+      "en": "Disconnect",
+      "es": "Desconectar",
+      "fr": "Déconnecter",
+      "de": "Trennen",
+      "lt": "Atjungti",
+      "pt": "Desconectar",
+      "it": "Disconnetti",
+      "no": "Koble fra",
+      "el": "Αποσύνδεση"
+    },
+    "ui.modals.connected_to_folder": {
+      "en": "Connected to:",
+      "es": "Conectado a:",
+      "fr": "Connecté à:",
+      "de": "Verbunden mit:",
+      "lt": "Prijungta prie:",
+      "pt": "Conectado a:",
+      "it": "Connesso a:",
+      "no": "Koblet til:",
+      "el": "Συνδεδεμένο to:"
+    },
+    "ui.modals.no_folder_selected": {
+      "en": "No folder selected",
+      "es": "Ninguna carpeta seleccionada",
+      "fr": "Aucun dossier sélectionné",
+      "de": "Kein Ordner ausgewählt",
+      "lt": "Nepasirinktas aplankas",
+      "pt": "Nenhuma pasta selecionada",
+      "it": "Nessuna cartella selezionata",
+      "no": "Ingen mappe valgt",
+      "el": "Όχι Φάκελος Επιλεγμένο"
+    },
+    "ui.modals.saved_projects": {
+      "en": "Saved Projects",
+      "es": "Proyectos Guardados",
+      "fr": "Projets Enregistrés",
+      "de": "Gespeicherte Projekte",
+      "lt": "Išsaugoti Projektai",
+      "pt": "Projetos Salvos",
+      "it": "Progetti Salvati",
+      "no": "Lagrede Prosjekter",
+      "el": "Αποθηκεύτηκε Projects"
+    },
+    "ui.modals.no_saved_projects": {
+      "en": "No saved projects in this folder",
+      "es": "No hay proyectos guardados en esta carpeta",
+      "fr": "Aucun projet enregistré dans ce dossier",
+      "de": "Keine gespeicherten Projekte in diesem Ordner",
+      "lt": "Šiame aplanke nėra išsaugotų projektų",
+      "pt": "Nenhum projeto salvo nesta pasta",
+      "it": "Nessun progetto salvato in questa cartella",
+      "no": "Ingen lagrede prosjekter i denne mappen",
+      "el": "Όχι Αποθηκεύτηκε projects in this folder"
+    },
+    "ui.modals.save_current_project": {
+      "en": "Save Current Project",
+      "es": "Guardar Proyecto Actual",
+      "fr": "Enregistrer le Projet Actuel",
+      "de": "Aktuelles Projekt Speichern",
+      "lt": "Išsaugoti Dabartinį Projektą",
+      "pt": "Salvar Projeto Atual",
+      "it": "Salva Progetto Corrente",
+      "no": "Lagre Nåværende Prosjekt",
+      "el": "Αποθήκευση Current Project"
+    },
+    "ui.modals.load_from_local": {
+      "en": "Load from Local Folder",
+      "es": "Cargar desde Carpeta Local",
+      "fr": "Charger depuis le Dossier Local",
+      "de": "Aus Lokalem Ordner Laden",
+      "lt": "Įkelti iš Vietinio Aplanko",
+      "pt": "Carregar da Pasta Local",
+      "it": "Carica da Cartella Locale",
+      "no": "Last fra Lokal Mappe",
+      "el": "Load from Local Folder"
+    },
+    "ui.modals.auto_save_to_local": {
+      "en": "Auto-save to local folder",
+      "es": "Guardado automático en carpeta local",
+      "fr": "Enregistrement automatique dans le dossier local",
+      "de": "Automatisch im lokalen Ordner speichern",
+      "lt": "Automatinis išsaugojimas vietiniame aplanke",
+      "pt": "Salvar automaticamente na pasta local",
+      "it": "Salvataggio automatico nella cartella locale",
+      "no": "Automatisk lagring til lokal mappe",
+      "el": "Auto-save to local folder"
+    },
+    "ui.modals.ses_models_directory": {
+      "en": "SES Models Directory",
+      "es": "Directorio de Modelos SES",
+      "fr": "Répertoire des Modèles SES",
+      "de": "SES-Modellverzeichnis",
+      "lt": "SES Modelių Katalogas",
+      "pt": "Diretório de Modelos SES",
+      "it": "Directory Modelli SES",
+      "no": "SES-modellkatalog",
+      "el": "SES Μοντέλα Directory"
+    },
+    "ui.modals.ses_models_source_label": {
+      "en": "Select Models Source",
+      "es": "Seleccionar Fuente de Modelos",
+      "fr": "Sélectionner la Source des Modèles",
+      "de": "Modellquelle Auswählen",
+      "lt": "Pasirinkti Modelių Šaltinį",
+      "pt": "Selecionar Fonte de Modelos",
+      "it": "Seleziona Origine Modelli",
+      "no": "Velg Modellkilde",
+      "el": "Επιλογή Μοντέλα Source"
+    },
+    "ui.modals.ses_models_custom_path": {
+      "en": "Custom Directory Path",
+      "es": "Ruta de Directorio Personalizada",
+      "fr": "Chemin du Répertoire Personnalisé",
+      "de": "Benutzerdefinierter Verzeichnispfad",
+      "lt": "Pasirinktinio Katalogo Kelias",
+      "pt": "Caminho do Diretório Personalizado",
+      "it": "Percorso Directory Personalizzata",
+      "no": "Egendefinert Katalogbane",
+      "el": "Προσαρμοσμένο Directory Path"
+    },
+    "ui.modals.ses_models_path_placeholder": {
+      "en": "e.g., C:/MyModels or /home/user/models",
+      "es": "ej., C:/MisModelos o /home/usuario/modelos",
+      "fr": "ex., C:/MesModèles ou /home/utilisateur/modèles",
+      "de": "z.B., C:/MeineModelle oder /home/benutzer/modelle",
+      "lt": "pvz., C:/ManoModeliai arba /home/vartotojas/modeliai",
+      "pt": "ex., C:/MeusModelos ou /home/usuario/modelos",
+      "it": "es., C:/MieiModelli o /home/utente/modelli",
+      "no": "f.eks., C:/MineModeller eller /home/bruker/modeller",
+      "el": "e.g., C:/MyModels or /home/user/models"
+    },
+    "ui.modals.browse": {
+      "en": "Browse...",
+      "es": "Examinar...",
+      "fr": "Parcourir...",
+      "de": "Durchsuchen...",
+      "lt": "Naršyti...",
+      "pt": "Procurar...",
+      "it": "Sfoglia...",
+      "no": "Bla gjennom...",
+      "el": "Browse..."
+    },
+    "ui.modals.select_ses_models_directory": {
+      "en": "Select SES Models Directory",
+      "es": "Seleccionar Directorio de Modelos SES",
+      "fr": "Sélectionner le Répertoire des Modèles SES",
+      "de": "SES-Modellverzeichnis Auswählen",
+      "lt": "Pasirinkti SES Modelių Katalogą",
+      "pt": "Selecionar Diretório de Modelos SES",
+      "it": "Seleziona Directory Modelli SES",
+      "no": "Velg SES-modellkatalog",
+      "el": "Επιλογή SES Μοντέλα Directory"
+    },
+    "ui.modals.ses_models_directory_help": {
+      "en": "Select a directory containing Excel files with SES model data. The directory should contain .xlsx files organized in subfolders.",
+      "es": "Seleccione un directorio que contenga archivos Excel con datos del modelo SES. El directorio debe contener archivos .xlsx organizados en subcarpetas.",
+      "fr": "Sélectionnez un répertoire contenant des fichiers Excel avec des données de modèle SES. Le répertoire doit contenir des fichiers .xlsx organisés en sous-dossiers.",
+      "de": "Wählen Sie ein Verzeichnis mit Excel-Dateien mit SES-Modelldaten. Das Verzeichnis sollte .xlsx-Dateien in Unterordnern enthalten.",
+      "lt": "Pasirinkite katalogą, kuriame yra Excel failai su SES modelių duomenimis. Kataloge turi būti .xlsx failai, suskirstyti į pakatalogius.",
+      "pt": "Selecione um diretório contendo arquivos Excel com dados de modelo SES. O diretório deve conter arquivos .xlsx organizados em subpastas.",
+      "it": "Seleziona una directory contenente file Excel con dati del modello SES. La directory deve contenere file .xlsx organizzati in sottocartelle.",
+      "no": "Velg en katalog som inneholder Excel-filer med SES-modelldata. Katalogen bør inneholde .xlsx-filer organisert i undermapper.",
+      "el": "Επιλογή a directory containing Excel files with SES model data. The directory should contain .xlsx files organized in subfolders."
+    },
+    "ui.modals.current_directory": {
+      "en": "Current Directory",
+      "es": "Directorio Actual",
+      "fr": "Répertoire Actuel",
+      "de": "Aktuelles Verzeichnis",
+      "lt": "Dabartinis Katalogas",
+      "pt": "Diretório Atual",
+      "it": "Directory Corrente",
+      "no": "Gjeldende Katalog",
+      "el": "Current Directory"
+    },
+    "ui.modals.directory_not_found": {
+      "en": "Directory not found:",
+      "es": "Directorio no encontrado:",
+      "fr": "Répertoire introuvable:",
+      "de": "Verzeichnis nicht gefunden:",
+      "lt": "Katalogas nerastas:",
+      "pt": "Diretório não encontrado:",
+      "it": "Directory non trovata:",
+      "no": "Katalog ikke funnet:",
+      "el": "Directory not found:"
+    },
+    "ui.modals.settings_updated_successfully": {
+      "en": "Settings updated successfully",
+      "es": "Configuración actualizada exitosamente",
+      "fr": "Paramètres mis à jour avec succès",
+      "de": "Einstellungen erfolgreich aktualisiert",
+      "lt": "Nustatymai sėkmingai atnaujinti",
+      "pt": "Configurações atualizadas com sucesso",
+      "it": "Impostazioni aggiornate con successo",
+      "no": "Innstillinger oppdatert",
+      "el": "Ρυθμίσεις Ενημερώθηκε successfully"
+    },
+    "ui.modals.interface_language": {
+      "en": "Interface Language",
+      "es": "Idioma de la Interfaz",
+      "fr": "Langue de l'Interface",
+      "de": "Sprache der Benutzeroberfläche",
+      "lt": "Sąsajos Kalba",
+      "pt": "Idioma da Interface",
+      "it": "Lingua dell'Interfaccia",
+      "no": "Grensesnittspråk",
+      "el": "Interface Language"
+    },
+    "ui.modals.select_your_preferred_language_for_the_application_interface": {
+      "en": "Select your preferred language for the application interface.",
+      "es": "Seleccione su idioma preferido para la interfaz de la aplicación.",
+      "fr": "Sélectionnez votre langue préférée pour l'interface de l'application.",
+      "de": "Wählen Sie Ihre bevorzugte Sprache für die Anwendungsoberfläche.",
+      "lt": "Pasirinkite pageidaujamą programos sąsajos kalbą.",
+      "pt": "Selecione seu idioma preferido para a interface do aplicativo.",
+      "it": "Seleziona la tua lingua preferita per l'interfaccia dell'applicazione.",
+      "no": "Velg ditt foretrukne språk for applikasjonsgrensesnittet.",
+      "el": "Επιλογή your preferred language for the application interface."
+    },
+    "ui.modals.the_application_will_reload_to_apply_the_language_change": {
+      "en": "The application will reload to apply the language change.",
+      "es": "La aplicación se recargará para aplicar el cambio de idioma.",
+      "fr": "L'application se rechargera pour appliquer le changement de langue.",
+      "de": "Die Anwendung wird neu geladen, um die Sprachänderung anzuwenden.",
+      "lt": "Programa bus perkrauta, kad būtų pritaikytas kalbos pakeitimas.",
+      "pt": "O aplicativo será recarregado para aplicar a mudança de idioma.",
+      "it": "L'applicazione si ricaricherà per applicare la modifica della lingua.",
+      "no": "Applikasjonen vil laste på nytt for å bruke språkendringen.",
+      "el": "The application will reload to apply the language change."
+    },
+    "ui.modals.applying_new_user_experience_level": {
+      "en": "Applying new user experience level...",
+      "es": "Aplicando nuevo nivel de experiencia del usuario...",
+      "fr": "Application du nouveau niveau d'expérience utilisateur...",
+      "de": "Neues Benutzererfahrungslevel wird angewendet...",
+      "lt": "Taikomas naujas naudotojo patirties lygis...",
+      "pt": "Aplicando novo nível de experiência do usuário...",
+      "it": "Applicazione del nuovo livello di esperienza utente...",
+      "no": "Bruker nytt brukeropplevelsesnivå...",
+      "el": "Applying new user experience level..."
+    },
+    "ui.modals.simple_practical_guides_with_step_by_step_instruct": {
+      "en": "Simple practical guides with step by step instruct",
+      "lt": "Simple practical guides with step by step instruct",
+      "es": "Simple practical guides with step by step instruct",
+      "fr": "Simple practical guides with step by step instruct",
+      "de": "Simple practical guides with step by step instruct",
+      "it": "Simple practical guides with step by step instruct",
+      "pt": "Simple practical guides with step by step instruct",
+      "el": "Simple practical guides with step by step instruct",
+      "no": "Simple practical guides with step by step instruct"
+    },
+    "ui.modals.5_minute_introduction": {
+      "en": "5 minute introduction",
+      "lt": "5 minute introduction",
+      "es": "5 minute introduction",
+      "fr": "5 minute introduction",
+      "de": "5 minute introduction",
+      "it": "5 minute introduction",
+      "pt": "5 minute introduction",
+      "el": "5 minute introduction",
+      "no": "5 minute introduction"
+    },
+    "ui.modals.20_minute_hands_on_walkthrough": {
+      "en": "20 minute hands on walkthrough",
+      "lt": "20 minute hands on walkthrough",
+      "es": "20 minute hands on walkthrough",
+      "fr": "20 minute hands on walkthrough",
+      "de": "20 minute hands on walkthrough",
+      "it": "20 minute hands on walkthrough",
+      "pt": "20 minute hands on walkthrough",
+      "el": "20 minute hands on walkthrough",
+      "no": "20 minute hands on walkthrough"
+    },
+    "ui.modals.quick_reference_guide": {
+      "en": "Quick reference guide",
+      "lt": "Quick reference guide",
+      "es": "Quick reference guide",
+      "fr": "Quick reference guide",
+      "de": "Quick reference guide",
+      "it": "Quick reference guide",
+      "pt": "Quick reference guide",
+      "el": "Quick reference guide",
+      "no": "Quick reference guide"
+    },
+    "ui.modals.compact_reference_for_experienced_users_who_need_a_quick_reminder": {
+      "en": "Compact reference for experienced users who need a quick reminder",
+      "lt": "Compact reference for experienced users who need a quick reminder",
+      "es": "Compact reference for experienced users who need a quick reminder",
+      "fr": "Compact reference for experienced users who need a quick reminder",
+      "de": "Compact reference for experienced users who need a quick reminder",
+      "it": "Compact reference for experienced users who need a quick reminder",
+      "pt": "Compact reference for experienced users who need a quick reminder",
+      "el": "Compact reference for experienced users who need a quick reminder",
+      "no": "Compact reference for experienced users who need a quick reminder"
+    },
+    "ui.modals.open_in_browser": {
+      "en": "Open in browser",
+      "lt": "Open in browser",
+      "es": "Open in browser",
+      "fr": "Open in browser",
+      "de": "Open in browser",
+      "it": "Open in browser",
+      "pt": "Open in browser",
+      "el": "Open in browser",
+      "no": "Open in browser"
+    },
+    "ui.modals.comprehensive_documentation_with_detailed_explanat": {
+      "en": "Comprehensive documentation with detailed explanat",
+      "lt": "Comprehensive documentation with detailed explanat",
+      "es": "Comprehensive documentation with detailed explanat",
+      "fr": "Comprehensive documentation with detailed explanat",
+      "de": "Comprehensive documentation with detailed explanat",
+      "it": "Comprehensive documentation with detailed explanat",
+      "pt": "Comprehensive documentation with detailed explanat",
+      "el": "Comprehensive documentation with detailed explanat",
+      "no": "Comprehensive documentation with detailed explanat"
+    },
+    "ui.modals.the_complete_manual_contains_approximately_75_page": {
+      "en": "The complete manual contains approximately 75 page",
+      "lt": "The complete manual contains approximately 75 page",
+      "es": "The complete manual contains approximately 75 page",
+      "fr": "The complete manual contains approximately 75 page",
+      "de": "The complete manual contains approximately 75 page",
+      "it": "The complete manual contains approximately 75 page",
+      "pt": "The complete manual contains approximately 75 page",
+      "el": "The complete manual contains approximately 75 page",
+      "no": "The complete manual contains approximately 75 page"
+    },
+    "ui.modals.additional_resources": {
+      "en": "Additional resources",
+      "lt": "Additional resources",
+      "es": "Additional resources",
+      "fr": "Additional resources",
+      "de": "Additional resources",
+      "it": "Additional resources",
+      "pt": "Additional resources",
+      "el": "Additional resources",
+      "no": "Additional resources"
+    },
+    "ui.modals.video_tutorials": {
+      "en": "Video tutorials",
+      "lt": "Video tutorials",
+      "es": "Video tutorials",
+      "fr": "Video tutorials",
+      "de": "Video tutorials",
+      "it": "Video tutorials",
+      "pt": "Video tutorials",
+      "el": "Video tutorials",
+      "no": "Video tutorials"
+    },
+    "ui.modals.coming_soon_check_back_later": {
+      "en": "Coming soon check back later",
+      "lt": "Coming soon check back later",
+      "es": "Coming soon check back later",
+      "fr": "Coming soon check back later",
+      "de": "Coming soon check back later",
+      "it": "Coming soon check back later",
+      "pt": "Coming soon check back later",
+      "el": "Coming soon check back later",
+      "no": "Coming soon check back later"
+    },
+    "ui.modals.example_projects": {
+      "en": "Example projects",
+      "lt": "Example projects",
+      "es": "Example projects",
+      "fr": "Example projects",
+      "de": "Example projects",
+      "it": "Example projects",
+      "pt": "Example projects",
+      "el": "Example projects",
+      "no": "Example projects"
+    },
+    "ui.modals.available_in_the_template_library": {
+      "en": "Available in the template library",
+      "lt": "Available in the template library",
+      "es": "Available in the template library",
+      "fr": "Available in the template library",
+      "de": "Available in the template library",
+      "it": "Available in the template library",
+      "pt": "Available in the template library",
+      "el": "Available in the template library",
+      "no": "Available in the template library"
+    },
+    "ui.modals.technical_documentation": {
+      "en": "Technical documentation",
+      "lt": "Technical documentation",
+      "es": "Technical documentation",
+      "fr": "Technical documentation",
+      "de": "Technical documentation",
+      "it": "Technical documentation",
+      "pt": "Technical documentation",
+      "el": "Technical documentation",
+      "no": "Technical documentation"
+    },
+    "ui.modals.for_developers_and_advanced_users": {
+      "en": "For developers and advanced users",
+      "lt": "For developers and advanced users",
+      "es": "For developers and advanced users",
+      "fr": "For developers and advanced users",
+      "de": "For developers and advanced users",
+      "it": "For developers and advanced users",
+      "pt": "For developers and advanced users",
+      "el": "For developers and advanced users",
+      "no": "For developers and advanced users"
     }
   }
 }

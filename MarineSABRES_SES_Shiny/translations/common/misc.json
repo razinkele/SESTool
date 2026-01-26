@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "common.misc.all_changes_saved": {
@@ -18,7 +19,8 @@
       "lt": "Visi pakeitimai išsaugoti",
       "pt": "Todas as alterações salvas",
       "it": "Tutte le modifiche salvate",
-      "no": "All changes saved"
+      "no": "All changes saved",
+      "el": "Όλα changes saved"
     },
     "common.misc.amend": {
       "en": "Amend",
@@ -28,7 +30,8 @@
       "lt": "Keisti",
       "pt": "Alterar",
       "it": "Modificare",
-      "no": "Amend"
+      "no": "Amend",
+      "el": "Amend"
     },
     "common.misc.approve": {
       "en": "Approve",
@@ -38,7 +41,19 @@
       "lt": "Patvirtinti",
       "pt": "Aprovar",
       "it": "Approvare",
-      "no": "Approve"
+      "no": "Approve",
+      "el": "Approve"
+    },
+    "common.misc.approve_this_connection_with_current_slider_values": {
+      "en": "Approve this connection with current slider values",
+      "es": "Aprobar esta conexión con los valores actuales de los controles deslizantes",
+      "fr": "Approuver cette connexion avec les valeurs actuelles des curseurs",
+      "de": "Diese Verbindung mit den aktuellen Schiebereglerwerten genehmigen",
+      "lt": "Patvirtinti šį ryšį su dabartinėmis slankiklių reikšmėmis",
+      "pt": "Aprovar esta conexão com os valores atuais dos controles deslizantes",
+      "it": "Approva questa connessione con i valori attuali dei cursori",
+      "no": "Godkjenn denne tilkoblingen med gjeldende glidebryterværdier",
+      "el": "Approve this connection with current slider values"
     },
     "common.misc.accept_this_connection_as_is_or_with_amendments": {
       "en": "Accept this connection as-is or with amendments",
@@ -48,7 +63,8 @@
       "lt": "Priimti šį ryšį tokį, koks yra, arba su pakeitimais",
       "pt": "Aceitar esta conexão como está ou com alterações",
       "it": "Accetta questa connessione così com'è o con modifiche",
-      "no": "Godta denne tilkoblingen som den er eller med endringer"
+      "no": "Godta denne tilkoblingen som den er eller med endringer",
+      "el": "Accept this connection as-is or with amendments"
     },
     "common.misc.save_changes_to_strength_confidence_or_polarity_for_this_connection": {
       "en": "Save changes to strength, confidence, or polarity for this connection",
@@ -58,7 +74,8 @@
       "lt": "Išsaugoti stiprumo, pasitikėjimo ar poliarumo pakeitimus šiam ryšiui",
       "pt": "Salvar alterações de força, confiança ou polaridade para esta conexão",
       "it": "Salva le modifiche di forza, fiducia o polarità per questa connessione",
-      "no": "Lagre endringer i styrke, tillit eller polaritet for denne tilkoblingen"
+      "no": "Lagre endringer i styrke, tillit eller polaritet for denne tilkoblingen",
+      "el": "Αποθήκευση changes to strength, confidence, or polarity for this connection"
     },
     "common.misc.reject_this_connection_and_exclude_it_from_your_model": {
       "en": "Reject this connection and exclude it from your model",
@@ -68,7 +85,8 @@
       "lt": "Atmesti šį ryšį ir pašalinti jį iš modelio",
       "pt": "Rejeitar esta conexão e excluí-la do seu modelo",
       "it": "Rifiuta questa connessione ed escludila dal tuo modello",
-      "no": "Avvis denne tilkoblingen og ekskluder den fra modellen din"
+      "no": "Avvis denne tilkoblingen og ekskluder den fra modellen din",
+      "el": "Reject this connection and exclude it from your model"
     },
     "common.misc.arctic_ocean": {
       "en": "Arctic Ocean",
@@ -78,7 +96,8 @@
       "lt": "Arkties vandenynas",
       "pt": "Oceano Ártico",
       "it": "Oceano Artico",
-      "no": "Arctic Ocean"
+      "no": "Arctic Ocean",
+      "el": "Arctic Ocean"
     },
     "common.misc.atlantic_ocean": {
       "en": "Atlantic Ocean",
@@ -88,7 +107,8 @@
       "lt": "Atlanto vandenynas",
       "pt": "Oceano Atlântico",
       "it": "Oceano Atlantico",
-      "no": "Atlantic Ocean"
+      "no": "Atlantic Ocean",
+      "el": "Ατλαντικός Ocean"
     },
     "common.misc.auto_save_disabled": {
       "en": "Auto-save disabled",
@@ -98,7 +118,8 @@
       "lt": "Automatinis išsaugojimas išjungtas",
       "pt": "Salvamento automático desativado",
       "it": "Salvataggio automatico disattivato",
-      "no": "Auto-save disabled"
+      "no": "Auto-save disabled",
+      "el": "Auto-save disabled"
     },
     "common.misc.auto_save_enabled": {
       "en": "Auto-save enabled",
@@ -108,7 +129,8 @@
       "lt": "Automatinis išsaugojimas įjungtas",
       "pt": "Salvamento automático ativado",
       "it": "Salvataggio automatico attivato",
-      "no": "Auto-save enabled"
+      "no": "Auto-save enabled",
+      "el": "Auto-save enabled"
     },
     "common.misc.auto_save_helps_prevent_data_loss_from_unexpected_disconnections": {
       "en": "Auto-save helps prevent data loss from unexpected disconnections.",
@@ -118,7 +140,63 @@
       "lt": "Automatinis išsaugojimas padeda išvengti duomenų praradimo dėl netikėtų atjungimų.",
       "pt": "O salvamento automático ajuda a prevenir perda de dados de desconexões inesperadas.",
       "it": "Il salvataggio automatico aiuta a prevenire la perdita di dati da disconnessioni inattese.",
-      "no": "Auto-save helps prevent data loss from unexpected disconnections."
+      "no": "Auto-save helps prevent data loss from unexpected disconnections.",
+      "el": "Auto-save helps prevent data loss from unexpected disconnections."
+    },
+    "common.misc.adaptive_auto_save": {
+      "en": "Adaptive Auto-Save",
+      "es": "Guardado Automático Adaptativo",
+      "fr": "Sauvegarde Automatique Adaptive",
+      "de": "Adaptives Auto-Speichern",
+      "lt": "Adaptyvus Automatinis Išsaugojimas",
+      "pt": "Salvamento Automático Adaptativo",
+      "it": "Salvataggio Automatico Adattivo",
+      "no": "Adaptive Auto-Save",
+      "el": "Adaptive Auto-Save"
+    },
+    "common.misc.this_badge_shows_your_editing_mode": {
+      "en": "This badge shows your current editing mode and adjusts save delays automatically.",
+      "es": "Esta insignia muestra su modo de edición actual y ajusta los retrasos de guardado automáticamente.",
+      "fr": "Ce badge affiche votre mode d'édition actuel et ajuste automatiquement les délais de sauvegarde.",
+      "de": "Dieses Abzeichen zeigt Ihren aktuellen Bearbeitungsmodus und passt die Speicherverzögerungen automatisch an.",
+      "lt": "Šis ženklelis rodo jūsų dabartinį redagavimo režimą ir automatiškai koreguoja išsaugojimo vėlavimus.",
+      "pt": "Este distintivo mostra seu modo de edição atual e ajusta os atrasos de salvamento automaticamente.",
+      "it": "Questo badge mostra la tua modalità di modifica corrente e regola automaticamente i ritardi di salvataggio.",
+      "no": "This badge shows your current editing mode and adjusts save delays automatically.",
+      "el": "This badge shows your current editing mode and adjusts save delays automatically."
+    },
+    "common.misc.click_to_toggle": {
+      "en": "Click to toggle between views:",
+      "es": "Haga clic para alternar entre vistas:",
+      "fr": "Cliquez pour basculer entre les vues:",
+      "de": "Klicken Sie, um zwischen Ansichten zu wechseln:",
+      "lt": "Spustelėkite, kad perjungtumėte rodinius:",
+      "pt": "Clique para alternar entre visualizações:",
+      "it": "Fai clic per passare tra le visualizzazioni:",
+      "no": "Click to toggle between views:",
+      "el": "Click to toggle between views:"
+    },
+    "common.misc.compact_view_shows_save_delay": {
+      "en": "Compact: Shows save delay in seconds",
+      "es": "Compacto: Muestra el retraso de guardado en segundos",
+      "fr": "Compact: Affiche le délai de sauvegarde en secondes",
+      "de": "Kompakt: Zeigt Speicherverzögerung in Sekunden",
+      "lt": "Kompaktiškas: Rodo išsaugojimo vėlavimą sekundėmis",
+      "pt": "Compacto: Mostra atraso de salvamento em segundos",
+      "it": "Compatto: Mostra ritardo di salvataggio in secondi",
+      "no": "Compact: Shows save delay in seconds",
+      "el": "Compact: Shows save delay in seconds"
+    },
+    "common.misc.detailed_view_shows_full_info": {
+      "en": "Detailed: Shows mode, delay, and recent edit count",
+      "es": "Detallado: Muestra modo, retraso y número de ediciones recientes",
+      "fr": "Détaillé: Affiche le mode, le délai et le nombre de modifications récentes",
+      "de": "Detailliert: Zeigt Modus, Verzögerung und aktuelle Bearbeitungsanzahl",
+      "lt": "Detalus: Rodo režimą, vėlavimą ir naujausių redagavimų skaičių",
+      "pt": "Detalhado: Mostra modo, atraso e contagem de edições recentes",
+      "it": "Dettagliato: Mostra modalità, ritardo e conteggio modifiche recenti",
+      "no": "Detailed: Shows mode, delay, and recent edit count",
+      "el": "Detailed: Shows mode, delay, and recent edit count"
     },
     "common.misc.baltic_sea": {
       "en": "Baltic Sea",
@@ -128,7 +206,8 @@
       "lt": "Baltijos jūra",
       "pt": "Mar Báltico",
       "it": "Mar Baltico",
-      "no": "Baltic Sea"
+      "no": "Baltic Sea",
+      "el": "Βαλτική Sea"
     },
     "common.misc.black_sea": {
       "en": "Black Sea",
@@ -138,7 +217,8 @@
       "lt": "Juodoji jūra",
       "pt": "Mar Negro",
       "it": "Mar Nero",
-      "no": "Black Sea"
+      "no": "Black Sea",
+      "el": "Black Sea"
     },
     "common.misc.caribbean_sea": {
       "en": "Caribbean Sea",
@@ -148,7 +228,8 @@
       "lt": "Karibų jūra",
       "pt": "Mar do Caribe",
       "it": "Mar dei Caraibi",
-      "no": "Caribbean Sea"
+      "no": "Caribbean Sea",
+      "el": "Καραϊβική Sea"
     },
     "common.misc.choose_rds_file": {
       "en": "Choose RDS File:",
@@ -158,7 +239,8 @@
       "lt": "Pasirinkti RDS Failą:",
       "pt": "Escolher Ficheiro RDS:",
       "it": "Scegli File RDS:",
-      "no": "Choose RDS File:"
+      "no": "Choose RDS File:",
+      "el": "Επιλέξτε RDS File:"
     },
     "common.misc.connections_sheet_columns": {
       "en": "Connections sheet columns:",
@@ -168,7 +250,8 @@
       "lt": "Ryšių lapo stulpeliai:",
       "pt": "Colunas da folha de Conexões:",
       "it": "Colonne del foglio Connessioni:",
-      "no": "Connections sheet columns:"
+      "no": "Connections sheet columns:",
+      "el": "Συνδέσεις sheet columns:"
     },
     "common.misc.east_atlantic": {
       "en": "East Atlantic",
@@ -178,7 +261,8 @@
       "lt": "Rytų Atlanto vandenynas",
       "pt": "Atlântico Leste",
       "it": "Atlantico Orientale",
-      "no": "East Atlantic"
+      "no": "East Atlantic",
+      "el": "East Atlantic"
     },
     "common.misc.elements_sheet_columns": {
       "en": "Elements sheet columns:",
@@ -188,7 +272,8 @@
       "lt": "Elementų lapo stulpeliai:",
       "pt": "Colunas da folha de Elementos:",
       "it": "Colonne del foglio Elementi:",
-      "no": "Elements sheet columns:"
+      "no": "Elements sheet columns:",
+      "el": "Στοιχεία sheet columns:"
     },
     "common.misc.indian_ocean": {
       "en": "Indian Ocean",
@@ -198,7 +283,8 @@
       "lt": "Indijos vandenynas",
       "pt": "Oceano Índico",
       "it": "Oceano Indiano",
-      "no": "Indian Ocean"
+      "no": "Indian Ocean",
+      "el": "Indian Ocean"
     },
     "common.misc.import_data_help_content": {
       "en": "Import your SES model from an Excel file with Elements and Connections sheets. The file should follow the standard format with required columns.",
@@ -208,7 +294,8 @@
       "lt": "Importuokite savo SES modelį iš Excel failo su Elementų ir Ryšių lapais. Failas turi atitikti standartinį formatą su reikalingais stulpeliais.",
       "pt": "Importe seu modelo SES de um arquivo Excel com folhas de Elementos e Conexões. O arquivo deve seguir o formato padrão com as colunas necessárias.",
       "it": "Importa il tuo modello SES da un file Excel con fogli Elementi e Connessioni. Il file deve seguire il formato standard con le colonne richieste.",
-      "no": "Import your SES model from an Excel file with Elements and Connections sheets. The file should follow the standard format with required columns."
+      "no": "Import your SES model from an Excel file with Elements and Connections sheets. The file should follow the standard format with required columns.",
+      "el": "Εισαγωγή your SES model from an Excel file with Elements and Connections sheets. The file should follow the standard format with required columns."
     },
     "common.misc.irish_sea": {
       "en": "Irish Sea",
@@ -218,7 +305,8 @@
       "lt": "Airijos jūra",
       "pt": "Mar da Irlanda",
       "it": "Mare d'Irlanda",
-      "no": "Irish Sea"
+      "no": "Irish Sea",
+      "el": "Irish Sea"
     },
     "common.misc.last_saved_d_minutes_ago": {
       "en": "Last saved: %d minutes ago",
@@ -228,7 +316,8 @@
       "lt": "Paskutinį kartą išsaugota prieš %d minučių",
       "pt": "Última gravação: %d minutos atrás",
       "it": "Ultimo salvataggio: %d minuti fa",
-      "no": "Last saved: %d minutes ago"
+      "no": "Last saved: %d minutes ago",
+      "el": "Τελευταίο saved: %d minutes ago"
     },
     "common.misc.last_saved_d_seconds_ago": {
       "en": "Last saved: %d seconds ago",
@@ -238,7 +327,8 @@
       "lt": "Paskutinį kartą išsaugota prieš %d sekundes",
       "pt": "Última gravação: %d segundos atrás",
       "it": "Ultimo salvataggio: %d secondi fa",
-      "no": "Last saved: %d seconds ago"
+      "no": "Last saved: %d seconds ago",
+      "el": "Τελευταίο saved: %d seconds ago"
     },
     "common.misc.mediterranean_sea": {
       "en": "Mediterranean Sea",
@@ -248,7 +338,8 @@
       "lt": "Viduržemio jūra",
       "pt": "Mar Mediterrâneo",
       "it": "Mar Mediterraneo",
-      "no": "Mediterranean Sea"
+      "no": "Mediterranean Sea",
+      "el": "Μεσόγειος Sea"
     },
     "common.misc.no_connections_to_review": {
       "en": "No connections to review.",
@@ -258,7 +349,8 @@
       "lt": "Nėra ryšių, kuriuos būtų galima peržiūrėti.",
       "pt": "Não há conexões para revisar.",
       "it": "Nessuna connessione da rivedere.",
-      "no": "No connections to review."
+      "no": "No connections to review.",
+      "el": "Όχι Συνδέσεις to review."
     },
     "common.misc.north_sea": {
       "en": "North Sea",
@@ -268,7 +360,8 @@
       "lt": "Šiaurės jūra",
       "pt": "Mar do Norte",
       "it": "Mare del Nord",
-      "no": "North Sea"
+      "no": "North Sea",
+      "el": "Βόρεια Θάλασσα"
     },
     "common.misc.otherregional": {
       "en": "Other/Regional",
@@ -278,7 +371,8 @@
       "lt": "Kitas/Regioninis",
       "pt": "Outro/Regional",
       "it": "Altro/Regionale",
-      "no": "Other/Regional"
+      "no": "Other/Regional",
+      "el": "Other/Regional"
     },
     "common.misc.pims_evaluation_help_content": {
       "en": "Evaluate your project progress and outcomes against defined goals and indicators.",
@@ -288,7 +382,8 @@
       "lt": "Įvertinkite savo projekto pažangą ir rezultatus pagal nustatytus tikslus ir rodiklius.",
       "pt": "Avalie o progresso e os resultados do seu projeto em relação aos objetivos e indicadores definidos.",
       "it": "Valuta i progressi e i risultati del tuo progetto rispetto agli obiettivi e agli indicatori definiti.",
-      "no": "Evaluate your project progress and outcomes against defined goals and indicators."
+      "no": "Evaluate your project progress and outcomes against defined goals and indicators.",
+      "el": "Evaluate your project progress and outcomes against defined goals and indicators."
     },
     "common.misc.pims_project_help_content": {
       "en": "Define your project information including title, description, goals, timeline, and key milestones.",
@@ -298,7 +393,8 @@
       "lt": "Apibrėžkite savo projekto informaciją, įskaitant pavadinimą, aprašymą, tikslus, laiko planą ir pagrindinius etapus.",
       "pt": "Defina as informações do seu projeto, incluindo título, descrição, objetivos, cronograma e marcos principais.",
       "it": "Definisci le informazioni del tuo progetto, inclusi titolo, descrizione, obiettivi, cronologia e tappe fondamentali.",
-      "no": "Define your project information including title, description, goals, timeline, and key milestones."
+      "no": "Define your project information including title, description, goals, timeline, and key milestones.",
+      "el": "Define your project information including title, description, goals, timeline, and key milestones."
     },
     "common.misc.pims_stakeholders_help_content": {
       "en": "Identify and manage stakeholders involved in your project, including their roles, interests, and influence.",
@@ -308,7 +404,8 @@
       "lt": "Identifikuokite ir valdykite suinteresuotąsias šalis, dalyvaujančias jūsų projekte, įskaitant jų vaidmenis, interesus ir įtaką.",
       "pt": "Identifique e gerencie as partes interessadas envolvidas no seu projeto, incluindo seus papéis, interesses e influência.",
       "it": "Identifica e gestisci le parti interessate coinvolte nel tuo progetto, inclusi i loro ruoli, interessi e influenza.",
-      "no": "Identify and manage stakeholders involved in your project, including their roles, interests, and influence."
+      "no": "Identify and manage stakeholders involved in your project, including their roles, interests, and influence.",
+      "el": "Identify and manage stakeholders involved in your project, including their roles, interests, and influence."
     },
     "common.misc.pacific_ocean": {
       "en": "Pacific Ocean",
@@ -318,7 +415,8 @@
       "lt": "Ramusis vandenynas",
       "pt": "Oceano Pacífico",
       "it": "Oceano Pacifico",
-      "no": "Pacific Ocean"
+      "no": "Pacific Ocean",
+      "el": "Pacific Ocean"
     },
     "common.misc.recover_data": {
       "en": "Recover Data",
@@ -328,7 +426,8 @@
       "lt": "Atkurti Duomenis",
       "pt": "Recuperar Dados",
       "it": "Recupera Dati",
-      "no": "Recover Data"
+      "no": "Recover Data",
+      "el": "Recover Data"
     },
     "common.misc.recovery_failed": {
       "en": "Recovery failed:",
@@ -338,7 +437,8 @@
       "lt": "Atkūrimas nepavyko:",
       "pt": "Recuperação falhou:",
       "it": "Recupero fallito:",
-      "no": "Recovery failed:"
+      "no": "Recovery failed:",
+      "el": "Recovery failed:"
     },
     "common.misc.reject": {
       "en": "Reject",
@@ -348,7 +448,8 @@
       "lt": "Atmesti",
       "pt": "Rejeitar",
       "it": "Rifiutare",
-      "no": "Avvis"
+      "no": "Avvis",
+      "el": "Reject"
     },
     "common.misc.reject_all": {
       "en": "Reject All",
@@ -358,7 +459,8 @@
       "lt": "Atmesti Visus",
       "pt": "Rejeitar Todos",
       "it": "Rifiuta Tutti",
-      "no": "Avvis Alle"
+      "no": "Avvis Alle",
+      "el": "Reject All"
     },
     "common.misc.approved": {
       "en": "Approved",
@@ -368,7 +470,8 @@
       "lt": "Patvirtinta",
       "pt": "Aprovado",
       "it": "Approvato",
-      "no": "Godkjent"
+      "no": "Godkjent",
+      "el": "Εγκρίθηκε"
     },
     "common.misc.rejected": {
       "en": "Rejected",
@@ -378,7 +481,8 @@
       "lt": "Atmesta",
       "pt": "Rejeitado",
       "it": "Rifiutato",
-      "no": "Avvist"
+      "no": "Avvist",
+      "el": "Απορρίφθηκε"
     },
     "common.misc.reviewed": {
       "en": "Reviewed",
@@ -388,7 +492,8 @@
       "lt": "Peržiūrėta",
       "pt": "Revisado",
       "it": "Rivisto",
-      "no": "Gjennomgått"
+      "no": "Gjennomgått",
+      "el": "Reviewed"
     },
     "common.misc.required_excel_format": {
       "en": "Required Excel Format",
@@ -398,7 +503,8 @@
       "lt": "Reikalingas Excel formatas",
       "pt": "Formato Excel Necessário",
       "it": "Formato Excel Richiesto",
-      "no": "Required Excel Format"
+      "no": "Required Excel Format",
+      "el": "Απαιτείται Excel Format"
     },
     "common.misc.save_failed": {
       "en": "Save failed",
@@ -408,7 +514,8 @@
       "lt": "Išsaugoti nepavyko",
       "pt": "Falha ao salvar",
       "it": "Salvataggio fallito",
-      "no": "Save failed"
+      "no": "Save failed",
+      "el": "Αποθήκευση Απέτυχε"
     },
     "common.misc.saving": {
       "en": "Saving...",
@@ -418,7 +525,8 @@
       "lt": "Išsaugoma...",
       "pt": "Salvando...",
       "it": "Salvataggio...",
-      "no": "Saving..."
+      "no": "Saving...",
+      "el": "Saving..."
     },
     "common.misc.start_fresh": {
       "en": "Start Fresh",
@@ -428,7 +536,8 @@
       "lt": "Pradėti iš Naujo",
       "pt": "Começar do Zero",
       "it": "Inizia da Capo",
-      "no": "Start Fresh"
+      "no": "Start Fresh",
+      "el": "Έναρξη Fresh"
     },
     "common.misc.step_d": {
       "en": "Step %d",
@@ -438,7 +547,8 @@
       "lt": "Žingsnis %d",
       "pt": "Passo %d",
       "it": "Passo %d",
-      "no": "Step %d"
+      "no": "Step %d",
+      "el": "Step %d"
     },
     "common.misc.step_d_of_d": {
       "en": "Step %d of %d",
@@ -448,7 +558,8 @@
       "lt": "Žingsnis %d iš %d",
       "pt": "Passo %d de %d",
       "it": "Passo %d di %d",
-      "no": "Step %d of %d"
+      "no": "Step %d of %d",
+      "el": "Step %d of %d"
     },
     "common.misc.total_connections": {
       "en": "Total Connections",
@@ -458,7 +569,8 @@
       "lt": "Viso ryšių",
       "pt": "Total de Conexões",
       "it": "Connessioni Totali",
-      "no": "Total Connections"
+      "no": "Total Connections",
+      "el": "Σύνολο Συνδέσεις"
     },
     "common.misc.two_sheets_required": {
       "en": "Two sheets required:",
@@ -468,7 +580,8 @@
       "lt": "Reikalingi du lapai:",
       "pt": "Duas folhas necessárias:",
       "it": "Due fogli richiesti:",
-      "no": "Two sheets required:"
+      "no": "Two sheets required:",
+      "el": "Two sheets required:"
     },
     "common.misc.unsaved_work_detected": {
       "en": "Unsaved Work Detected",
@@ -478,7 +591,8 @@
       "lt": "Aptiktas Neišsaugotas Darbas",
       "pt": "Trabalho não Salvo Detectado",
       "it": "Lavoro non Salvato Rilevato",
-      "no": "Unsaved Work Detected"
+      "no": "Unsaved Work Detected",
+      "el": "Unsaved Work Detected"
     },
     "common.misc.we_found_an_auto_saved_version_of_your_work_from": {
       "en": "We found an auto-saved version of your work from",
@@ -488,7 +602,8 @@
       "lt": "Radome automatiškai išsaugotą jūsų darbo versiją iš",
       "pt": "Encontramos uma versão salva automaticamente do seu trabalho de",
       "it": "Abbiamo trovato una versione salvata automaticamente del tuo lavoro da",
-      "no": "We found an auto-saved version of your work from"
+      "no": "We found an auto-saved version of your work from",
+      "el": "We found an auto-saved version of your work from"
     },
     "common.misc.welcome_to_the_computer_assisted_ses_creation_and_analysis_platform": {
       "en": "Welcome to the computer-assisted SES creation and analysis platform.",
@@ -498,7 +613,8 @@
       "lt": "Sveiki atvykę į kompiuterio pagalbą naudojančią SES kūrimo ir analizės platformą.",
       "pt": "Bem-vindo à plataforma de criação e análise de SES assistida por computador.",
       "it": "Benvenuto nella piattaforma di creazione e analisi SES assistita da computer.",
-      "no": "Welcome to the computer-assisted SES creation and analysis platform."
+      "no": "Welcome to the computer-assisted SES creation and analysis platform.",
+      "el": "Καλώς ήρθατε to the computer-assisted SES creation and analysis platform."
     },
     "common.misc.would_you_like_to_recover_this_data": {
       "en": "Would you like to recover this data?",
@@ -508,7 +624,162 @@
       "lt": "Ar norite atkurti šiuos duomenis?",
       "pt": "Gostaria de recuperar esses dados?",
       "it": "Vuoi recuperare questi dati?",
-      "no": "Would you like to recover this data?"
+      "no": "Would you like to recover this data?",
+      "el": "Θα θέλατε to recover this data?"
+    },
+    "common.misc.key": {
+      "en": "Key",
+      "lt": "Key",
+      "es": "Key",
+      "fr": "Key",
+      "de": "Key",
+      "it": "Key",
+      "pt": "Key",
+      "el": "Key",
+      "no": "Key"
+    },
+    "namespaced.key": {
+      "en": "Key",
+      "lt": "Key",
+      "es": "Key",
+      "fr": "Key",
+      "de": "Key",
+      "it": "Key",
+      "pt": "Key",
+      "el": "Key",
+      "no": "Key"
+    },
+    "ecosystems have unique characteristics that I": {
+      "en": "Ecosystems have unique characteristics that I",
+      "lt": "Ecosystems have unique characteristics that I",
+      "es": "Ecosystems have unique characteristics that I",
+      "fr": "Ecosystems have unique characteristics that I",
+      "de": "Ecosystems have unique characteristics that I",
+      "it": "Ecosystems have unique characteristics that I",
+      "pt": "Ecosystems have unique characteristics that I",
+      "el": "Ecosystems have unique characteristics that I",
+      "no": "Ecosystems have unique characteristics that I"
+    },
+    "common.misc.no_connections_in_this_category": {
+      "en": "No connections in this category",
+      "lt": "Ne connections in this category",
+      "es": "No connections in this category",
+      "fr": "Non connections in this category",
+      "de": "Nein connections in this category",
+      "it": "No connections in this category",
+      "pt": "Não connections in this category",
+      "el": "Όχι connections in this category",
+      "no": "Nei connections in this category"
+    },
+    "common.misc.all_d_connections_in_s_approved": {
+      "en": "All d connections in s approved",
+      "lt": "All d connections in s approved",
+      "es": "All d connections in s approved",
+      "fr": "All d connections in s approved",
+      "de": "All d connections in s approved",
+      "it": "All d connections in s approved",
+      "pt": "All d connections in s approved",
+      "el": "All d connections in s approved",
+      "no": "All d connections in s approved"
+    },
+    "common.misc.all_d_connections_in_s_rejected": {
+      "en": "All d connections in s rejected",
+      "lt": "All d connections in s rejected",
+      "es": "All d connections in s rejected",
+      "fr": "All d connections in s rejected",
+      "de": "All d connections in s rejected",
+      "it": "All d connections in s rejected",
+      "pt": "All d connections in s rejected",
+      "el": "All d connections in s rejected",
+      "no": "All d connections in s rejected"
+    },
+    "List key impacts on human welfare you": {
+      "en": "List key impacts on human welfare you",
+      "lt": "List key impacts on human welfare you",
+      "es": "List key impacts on human welfare you",
+      "fr": "List key impacts on human welfare you",
+      "de": "List key impacts on human welfare you",
+      "it": "List key impacts on human welfare you",
+      "pt": "List key impacts on human welfare you",
+      "el": "List key impacts on human welfare you",
+      "no": "List key impacts on human welfare you"
+    },
+    "common.misc.progress": {
+      "en": "Progress",
+      "lt": "Progress",
+      "es": "Progress",
+      "fr": "Progress",
+      "de": "Progress",
+      "it": "Progress",
+      "pt": "Progress",
+      "el": "Progress",
+      "no": "Progress"
+    },
+    "button.close": {
+      "en": "Close",
+      "lt": "Uždaryti",
+      "es": "Cerrar",
+      "fr": "Fermer",
+      "de": "Schließen",
+      "it": "Chiudi",
+      "pt": "Fechar",
+      "el": "Κλείσιμο",
+      "no": "Lukk"
+    },
+    "common.misc.no_cld_data_to_export_please_create_a_cld_first": {
+      "en": "No cld data to export please create a cld first",
+      "lt": "Ne cld data to export please create a cld first",
+      "es": "No cld data to export please create a cld first",
+      "fr": "Non cld data to export please create a cld first",
+      "de": "Nein cld data to export please create a cld first",
+      "it": "No cld data to export please create a cld first",
+      "pt": "Não cld data to export please create a cld first",
+      "el": "Όχι cld data to export please create a cld first",
+      "no": "Nei cld data to export please create a cld first"
+    },
+    "common.misc.error_saving_project": {
+      "en": "Error saving project",
+      "lt": "Klaida saving project",
+      "es": "Error saving project",
+      "fr": "Erreur saving project",
+      "de": "Fehler saving project",
+      "it": "Errore saving project",
+      "pt": "Erro saving project",
+      "el": "Σφάλμα saving project",
+      "no": "Feil saving project"
+    },
+    "common.misc.error_loading_project": {
+      "en": "Error loading project",
+      "lt": "Klaida loading project",
+      "es": "Error loading project",
+      "fr": "Erreur loading project",
+      "de": "Fehler loading project",
+      "it": "Errore loading project",
+      "pt": "Erro loading project",
+      "el": "Σφάλμα loading project",
+      "no": "Feil loading project"
+    },
+    "common.misc.nonexistent_key_12345": {
+      "en": "Nonexistent key 12345",
+      "lt": "Nonexistent key 12345",
+      "es": "Nonexistent key 12345",
+      "fr": "Nonexistent key 12345",
+      "de": "Nonexistent key 12345",
+      "it": "Nonexistent key 12345",
+      "pt": "Nonexistent key 12345",
+      "el": "Nonexistent key 12345",
+      "no": "Nonexistent key 12345"
+    },
+    "Beginner": {
+      "en": "Beginner",
+      "lt": "Pradedantysis",
+      "es": "Principiante",
+      "fr": "Débutant",
+      "de": "Anfänger",
+      "it": "Principiante",
+      "pt": "Iniciante",
+      "el": "Αρχάριος",
+      "no": "Nybegynner"
     }
   }
 }

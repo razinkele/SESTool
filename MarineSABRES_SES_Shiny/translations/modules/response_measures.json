@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "modules.response.measures.title": {
@@ -18,7 +19,8 @@
       "lt": "Atsako priemonės (R ir M)",
       "pt": "Medidas de Resposta (R & M)",
       "it": "Misure di Risposta (R & M)",
-      "no": "Reaksjonstiltak (R og M)"
+      "no": "Reaksjonstiltak (R og M)",
+      "el": "Απόκριση Μέτρα (R & M)"
     },
     "modules.response.measures.subtitle": {
       "en": "Identify management interventions and policy responses to address system challenges.",
@@ -28,7 +30,8 @@
       "lt": "Nustatyti valdymo intervencijas ir politines priemones sistemos iššūkiams spręsti.",
       "pt": "Identificar intervenções de gestão e respostas políticas para enfrentar os desafios do sistema.",
       "it": "Identificare interventi gestionali e risposte politiche per affrontare le sfide del sistema.",
-      "no": "Identifiser ledelsestiltak og politiske tiltak for å møte systemutfordringer."
+      "no": "Identifiser ledelsestiltak og politiske tiltak for å møte systemutfordringer.",
+      "el": "Identify management interventions and policy responses to address system challenges."
     },
     "modules.response.assess_which_measures_address_which_problems_in_yo": {
       "en": "Assess which measures address which problems in your system.",
@@ -38,7 +41,8 @@
       "lt": "Įvertinti, kurios priemonės sprendžia kurias problemas jūsų sistemoje.",
       "pt": "Avaliar quais medidas abordam quais problemas no seu sistema.",
       "it": "Valutare quali misure affrontano quali problemi nel vostro sistema.",
-      "no": "Assess which measures address which problems in your system."
+      "no": "Assess which measures address which problems in your system.",
+      "el": "Assess which measures address which problems in your system."
     },
     "modules.response.basic_validation_tracking_available_in_isa_exercis": {
       "en": "Basic validation tracking available in ISA Exercise 12. Advanced features coming soon.",
@@ -48,7 +52,8 @@
       "lt": "Pagrindinis validacijos sekimas prieinamas ISA pratyboje 12. Išplėstinės funkcijos greitai.",
       "pt": "Acompanhamento básico de validação disponível no Exercício ISA 12. Recursos avançados em breve.",
       "it": "Monitoraggio di base della validazione disponibile nell'Esercizio ISA 12. Funzionalità avanzate in arrivo.",
-      "no": "Basic validation tracking available in ISA Exercise 12. Advanced features coming soon."
+      "no": "Basic validation tracking available in ISA Exercise 12. Advanced features coming soon.",
+      "el": "Basic validation tracking available in ISA Exercise 12. Advanced features coming soon."
     },
     "modules.response.document_responses_to_address_pressures_activities": {
       "en": "Document responses to address pressures, activities, and drivers in your system.",
@@ -58,7 +63,8 @@
       "lt": "Dokumentuoti atsakus, kad būtų sprendžiami spaudimai, veiklos ir varomosios jėgos jūsų sistemoje.",
       "pt": "Documentar respostas para enfrentar pressões, atividades e impulsionadores no seu sistema.",
       "it": "Documentare le risposte per affrontare pressioni, attività e fattori nel vostro sistema.",
-      "no": "Document responses to address pressures, activities, and drivers in your system."
+      "no": "Document responses to address pressures, activities, and drivers in your system.",
+      "el": "Document responses to address pressures, activities, and drivers in your system."
     },
     "modules.response.effective_responses_address_feedback_loops_and_lev": {
       "en": "Effective responses address feedback loops and leverage points identified in your ISA analysis.",
@@ -68,7 +74,8 @@
       "lt": "Efektyvūs atsakai sprendžia grįžtamojo ryšio kilpas ir svertų taškus, nustatytus jūsų ISA analizėje.",
       "pt": "Respostas eficazes abordam loops de feedback e pontos de alavancagem identificados na sua análise ISA.",
       "it": "Le risposte efficaci affrontano i cicli di feedback e i punti di leva identificati nella vostra analisi ISA.",
-      "no": "Effective responses address feedback loops and leverage points identified in your ISA analysis."
+      "no": "Effective responses address feedback loops and leverage points identified in your ISA analysis.",
+      "el": "Effective responses address feedback loops and leverage points identified in your ISA analysis."
     },
     "modules.response.evaluate_and_rank_measures_based_on_effectiveness_": {
       "en": "Evaluate and rank measures based on effectiveness, feasibility, and cost.",
@@ -78,7 +85,8 @@
       "lt": "Įvertinti ir ranguoti priemones pagal efektyvumą, įgyvendinamumą ir išlaidas.",
       "pt": "Avaliar e classificar medidas com base na eficácia, viabilidade e custo.",
       "it": "Valutare e classificare le misure in base a efficacia, fattibilità e costo.",
-      "no": "Evaluate and rank measures based on effectiveness, feasibility, and cost."
+      "no": "Evaluate and rank measures based on effectiveness, feasibility, and cost.",
+      "el": "Evaluate and rank measures based on effectiveness, feasibility, and cost."
     },
     "modules.response.measures.abandoned": {
       "en": "Abandoned",
@@ -88,7 +96,8 @@
       "lt": "Atsisakyta",
       "pt": "Abandonado",
       "it": "Abbandonato",
-      "no": "Abandoned"
+      "no": "Abandoned",
+      "el": "Abandoned"
     },
     "modules.response.measures.activities": {
       "en": "Activities:",
@@ -98,7 +107,8 @@
       "lt": "Veiklos:",
       "pt": "Atividades:",
       "it": "Attività:",
-      "no": "Activities:"
+      "no": "Activities:",
+      "el": "Activities:"
     },
     "modules.response.measures.add_effectiveness_and_feasibility_ratings": {
       "en": "Add effectiveness and feasibility ratings",
@@ -108,7 +118,8 @@
       "lt": "Pridėti efektyvumo ir įgyvendinamumo įvertinimus",
       "pt": "Adicionar classificações de eficácia e viabilidade",
       "it": "Aggiungi valutazioni di efficacia e fattibilità",
-      "no": "Add effectiveness and feasibility ratings"
+      "no": "Add effectiveness and feasibility ratings",
+      "el": "Προσθήκη effectiveness and feasibility ratings"
     },
     "modules.response.measures.add_impact_link": {
       "en": "Add Impact Link",
@@ -118,7 +129,8 @@
       "lt": "Pridėti Poveikio Ryšį",
       "pt": "Adicionar Ligação de Impacto",
       "it": "Aggiungi Collegamento d'Impatto",
-      "no": "Add Impact Link"
+      "no": "Add Impact Link",
+      "el": "Προσθήκη Επίπτωση Σύνδεσμος"
     },
     "modules.response.measures.add_implementation_milestone": {
       "en": "Add Implementation Milestone",
@@ -128,7 +140,8 @@
       "lt": "Pridėti Įgyvendinimo Etapą",
       "pt": "Adicionar Marco de Implementação",
       "it": "Aggiungi Traguardo di Attuazione",
-      "no": "Add Implementation Milestone"
+      "no": "Add Implementation Milestone",
+      "el": "Προσθήκη Implementation Milestone"
     },
     "modules.response.measures.add_milestone": {
       "en": "Add Milestone",
@@ -138,7 +151,8 @@
       "lt": "Pridėti Etapą",
       "pt": "Adicionar Marco",
       "it": "Aggiungi Traguardo",
-      "no": "Add Milestone"
+      "no": "Add Milestone",
+      "el": "Προσθήκη Milestone"
     },
     "modules.response.measures.add_response_measure": {
       "en": "Add Response Measure",
@@ -148,7 +162,8 @@
       "lt": "Pridėti Atsako Priemonę",
       "pt": "Adicionar Medida de Resposta",
       "it": "Aggiungi Misura di Risposta",
-      "no": "Add Response Measure"
+      "no": "Add Response Measure",
+      "el": "Προσθήκη Απόκριση Μέτρο"
     },
     "modules.response.measures.address_root_causes_most_leverage_but_hardest": {
       "en": "Address root causes (most leverage but hardest)",
@@ -158,7 +173,8 @@
       "lt": "Spręsti pagrindines priežastis (didžiausias poveikis, bet sunkiausia)",
       "pt": "Abordar causas raiz (maior alavancagem mas mais difícil)",
       "it": "Affrontare le cause profonde (massima leva ma più difficile)",
-      "no": "Address root causes (most leverage but hardest)"
+      "no": "Address root causes (most leverage but hardest)",
+      "el": "Address root causes (most leverage but hardest)"
     },
     "modules.response.measures.addresses_problem": {
       "en": "Addresses Problem:",
@@ -168,7 +184,8 @@
       "lt": "Sprendžia Problemą:",
       "pt": "Aborda o Problema:",
       "it": "Affronta il Problema:",
-      "no": "Addresses Problem:"
+      "no": "Addresses Problem:",
+      "el": "Addresses Problem:"
     },
     "modules.response.measures.awareness_campaigns_training_capacity_building": {
       "en": "Awareness campaigns, training, capacity building",
@@ -178,7 +195,8 @@
       "lt": "Informavimo kampanijos, mokymai, pajėgumų stiprinimas",
       "pt": "Campanhas de sensibilização, formação, capacitação",
       "it": "Campagne di sensibilizzazione, formazione, capacity building",
-      "no": "Awareness campaigns, training, capacity building"
+      "no": "Awareness campaigns, training, capacity building",
+      "el": "Awareness campaigns, training, capacity building"
     },
     "modules.response.measures.calculate_priority_scores": {
       "en": "Calculate Priority Scores",
@@ -188,7 +206,8 @@
       "lt": "Apskaičiuoti Prioritetų Įverčius",
       "pt": "Calcular Pontuações de Prioridade",
       "it": "Calcola Punteggi di Priorità",
-      "no": "Calculate Priority Scores"
+      "no": "Calculate Priority Scores",
+      "el": "Υπολογισμός Priority Scores"
     },
     "modules.response.measures.can_it_be_implemented_political_social_technical": {
       "en": "Can it be implemented (political, social, technical)?",
@@ -198,7 +217,8 @@
       "lt": "Ar galima įgyvendinti (politiškai, socialiai, techniškai)?",
       "pt": "Pode ser implementado (político, social, técnico)?",
       "it": "Può essere attuato (politico, sociale, tecnico)?",
-      "no": "Can it be implemented (political, social, technical)?"
+      "no": "Can it be implemented (political, social, technical)?",
+      "el": "Can it be implemented (political, social, technical)?"
     },
     "modules.response.measures.certification_codes_of_conduct_stewardship": {
       "en": "Certification, codes of conduct, stewardship",
@@ -208,7 +228,8 @@
       "lt": "Sertifikavimas, elgesio kodeksai, globėjiškumas",
       "pt": "Certificação, códigos de conduta, gestão responsável",
       "it": "Certificazione, codici di condotta, gestione responsabile",
-      "no": "Certification, codes of conduct, stewardship"
+      "no": "Certification, codes of conduct, stewardship",
+      "el": "Certification, codes of conduct, stewardship"
     },
     "modules.response.measures.co_benefits": {
       "en": "Co-benefits:",
@@ -218,7 +239,8 @@
       "lt": "Papildoma Nauda:",
       "pt": "Co-benefícios:",
       "it": "Co-benefici:",
-      "no": "Co-benefits:"
+      "no": "Co-benefits:",
+      "el": "Co-benefits:"
     },
     "modules.response.measures.completed": {
       "en": "Completed",
@@ -228,7 +250,8 @@
       "lt": "Užbaigta",
       "pt": "Concluído",
       "it": "Completato",
-      "no": "Completed"
+      "no": "Completed",
+      "el": "Ολοκληρώθηκε"
     },
     "modules.response.measures.completing_dapsiwrm": {
       "en": "Completing DAPSI(W)R(M)",
@@ -238,7 +261,8 @@
       "lt": "DAPSI(W)R(M) Užbaigimas",
       "pt": "Completando DAPSI(W)R(M)",
       "it": "Completamento di DAPSI(W)R(M)",
-      "no": "Completing DAPSI(W)R(M)"
+      "no": "Completing DAPSI(W)R(M)",
+      "el": "Completing DAPSI(W)R(M)"
     },
     "modules.response.measures.cost": {
       "en": "Cost:",
@@ -248,7 +272,8 @@
       "lt": "Išlaidos:",
       "pt": "Custo:",
       "it": "Costo:",
-      "no": "Cost:"
+      "no": "Cost:",
+      "el": "Cost:"
     },
     "modules.response.measures.cost_vs_expected_impact": {
       "en": "Cost vs. Expected Impact",
@@ -258,7 +283,8 @@
       "lt": "Išlaidos vs. Tikėtinas Poveikis",
       "pt": "Custo vs. Impacto Esperado",
       "it": "Costo vs. Impatto Previsto",
-      "no": "Cost vs. Expected Impact"
+      "no": "Cost vs. Expected Impact",
+      "el": "Cost vs. Expected Impact"
     },
     "modules.response.measures.cost_weight_inverse": {
       "en": "Cost Weight (inverse):",
@@ -268,7 +294,8 @@
       "lt": "Išlaidų Svoris (atvirkštinis):",
       "pt": "Peso do Custo (inverso):",
       "it": "Peso del Costo (inverso):",
-      "no": "Cost Weight (inverse):"
+      "no": "Cost Weight (inverse):",
+      "el": "Cost Weight (inverse):"
     },
     "modules.response.measures.create_impact_linkage": {
       "en": "Create Impact Linkage",
@@ -278,7 +305,8 @@
       "lt": "Sukurti Poveikio Ryšį",
       "pt": "Criar Ligação de Impacto",
       "it": "Crea Collegamento d'Impatto",
-      "no": "Create Impact Linkage"
+      "no": "Create Impact Linkage",
+      "el": "Δημιουργία Επίπτωση Linkage"
     },
     "modules.response.measures.delayed": {
       "en": "Delayed",
@@ -288,7 +316,8 @@
       "lt": "Atidėta",
       "pt": "Atrasado",
       "it": "Ritardato",
-      "no": "Delayed"
+      "no": "Delayed",
+      "el": "Delayed"
     },
     "modules.response.measures.delete_selected": {
       "en": "Delete Selected",
@@ -298,7 +327,8 @@
       "lt": "Ištrinti Pasirinktus",
       "pt": "Excluir Selecionados",
       "it": "Elimina Selezionati",
-      "no": "Delete Selected"
+      "no": "Delete Selected",
+      "el": "Διαγραφή Επιλεγμένο"
     },
     "modules.response.measures.deleted_response_measures": {
       "en": "Deleted response measure(s)",
@@ -308,7 +338,8 @@
       "lt": "Atsako priemonė(s) ištrinta(os)",
       "pt": "Medida(s) de resposta excluída(s)",
       "it": "Misura/e di risposta eliminata/e",
-      "no": "Deleted response measure(s)"
+      "no": "Deleted response measure(s)",
+      "el": "Διαγράφηκε Απόκριση measure(s)"
     },
     "modules.response.measures.does_it_address_multiple_issues": {
       "en": "Does it address multiple issues?",
@@ -318,7 +349,8 @@
       "lt": "Ar tai sprendžia kelias problemas?",
       "pt": "Aborda múltiplos problemas?",
       "it": "Affronta più problemi?",
-      "no": "Does it address multiple issues?"
+      "no": "Does it address multiple issues?",
+      "el": "Does it address multiple issues?"
     },
     "modules.response.measures.download_implementation_plan": {
       "en": "Download Implementation Plan",
@@ -328,7 +360,8 @@
       "lt": "Atsisiųsti Įgyvendinimo Planą",
       "pt": "Baixar Plano de Implementação",
       "it": "Scarica Piano di Attuazione",
-      "no": "Download Implementation Plan"
+      "no": "Download Implementation Plan",
+      "el": "Λήψη Implementation Plan"
     },
     "modules.response.measures.download_priority_report_pdf": {
       "en": "Download Priority Report (PDF)",
@@ -338,7 +371,8 @@
       "lt": "Atsisiųsti Prioritetų Ataskaitą (PDF)",
       "pt": "Baixar Relatório de Prioridade (PDF)",
       "it": "Scarica Rapporto di Priorità (PDF)",
-      "no": "Download Priority Report (PDF)"
+      "no": "Download Priority Report (PDF)",
+      "el": "Λήψη Priority Report (PDF)"
     },
     "modules.response.measures.download_response_data_excel": {
       "en": "Download Response Data (Excel)",
@@ -348,7 +382,8 @@
       "lt": "Atsisiųsti Atsakų Duomenis (Excel)",
       "pt": "Baixar Dados de Respostas (Excel)",
       "it": "Scarica Dati di Risposta (Excel)",
-      "no": "Download Response Data (Excel)"
+      "no": "Download Response Data (Excel)",
+      "el": "Λήψη Απόκριση Δεδομένα (Excel)"
     },
     "modules.response.measures.download_response_documentation": {
       "en": "Download Response Documentation",
@@ -358,7 +393,8 @@
       "lt": "Atsisiųsti Atsakų Dokumentaciją",
       "pt": "Baixar Documentação de Respostas",
       "it": "Scarica Documentazione di Risposta",
-      "no": "Download Response Documentation"
+      "no": "Download Response Documentation",
+      "el": "Λήψη Απόκριση Documentation"
     },
     "modules.response.measures.drivers": {
       "en": "Drivers",
@@ -368,7 +404,8 @@
       "lt": "Veiksniai",
       "pt": "Impulsores",
       "it": "Fattori",
-      "no": "Drivers"
+      "no": "Drivers",
+      "el": "Κινητήριες δυνάμεις"
     },
     "modules.response.measures.economic": {
       "en": "Economic",
@@ -378,7 +415,8 @@
       "lt": "Ekonominis",
       "pt": "Económico",
       "it": "Economico",
-      "no": "Economic"
+      "no": "Economic",
+      "el": "Economic"
     },
     "modules.response.measures.educational": {
       "en": "Educational",
@@ -388,7 +426,8 @@
       "lt": "Švietimo",
       "pt": "Educacional",
       "it": "Educativo",
-      "no": "Educational"
+      "no": "Educational",
+      "el": "Educational"
     },
     "modules.response.measures.effectiveness": {
       "en": "Effectiveness",
@@ -398,7 +437,8 @@
       "lt": "Efektyvumas",
       "pt": "Eficácia",
       "it": "Efficacia",
-      "no": "Effectiveness"
+      "no": "Effectiveness",
+      "el": "Effectiveness"
     },
     "modules.response.measures.effectiveness_vs_feasibility": {
       "en": "Effectiveness vs. Feasibility",
@@ -408,7 +448,8 @@
       "lt": "Efektyvumas vs. Įgyvendinamumas",
       "pt": "Eficácia vs. Viabilidade",
       "it": "Efficacia vs. Fattibilità",
-      "no": "Effectiveness vs. Feasibility"
+      "no": "Effectiveness vs. Feasibility",
+      "el": "Effectiveness vs. Feasibility"
     },
     "modules.response.measures.effectiveness_weight": {
       "en": "Effectiveness Weight:",
@@ -418,7 +459,8 @@
       "lt": "Efektyvumo Svoris:",
       "pt": "Peso da Eficácia:",
       "it": "Peso dell'Efficacia:",
-      "no": "Effectiveness Weight:"
+      "no": "Effectiveness Weight:",
+      "el": "Effectiveness Weight:"
     },
     "modules.response.measures.eg_fishing_quota_reduction": {
       "en": "e.g., Fishing quota reduction",
@@ -428,7 +470,8 @@
       "lt": "pvz., Žvejybos kvotų mažinimas",
       "pt": "ex., Redução de quotas de pesca",
       "it": "es., Riduzione delle quote di pesca",
-      "no": "e.g., Fishing quota reduction"
+      "no": "e.g., Fishing quota reduction",
+      "el": "e.g., Fishing quota reduction"
     },
     "modules.response.measures.eg_legislation_passed": {
       "en": "e.g., Legislation passed",
@@ -438,7 +481,8 @@
       "lt": "pvz., Įstatymas priimtas",
       "pt": "ex., Legislação aprovada",
       "it": "es., Legislazione approvata",
-      "no": "e.g., Legislation passed"
+      "no": "e.g., Legislation passed",
+      "el": "e.g., Legislation passed"
     },
     "modules.response.measures.estimated_cost_relative": {
       "en": "Estimated Cost (relative):",
@@ -448,7 +492,8 @@
       "lt": "Numatomos Išlaidos (santykinės):",
       "pt": "Custo Estimado (relativo):",
       "it": "Costo Stimato (relativo):",
-      "no": "Estimated Cost (relative):"
+      "no": "Estimated Cost (relative):",
+      "el": "Estimated Cost (relative):"
     },
     "modules.response.measures.expected_effectiveness": {
       "en": "Expected Effectiveness:",
@@ -458,7 +503,8 @@
       "lt": "Tikėtinas Efektyvumas:",
       "pt": "Eficácia Esperada:",
       "it": "Efficacia Prevista:",
-      "no": "Expected Effectiveness:"
+      "no": "Expected Effectiveness:",
+      "el": "Expected Effectiveness:"
     },
     "modules.response.measures.export": {
       "en": "Export",
@@ -468,7 +514,8 @@
       "lt": "Eksportuoti",
       "pt": "Exportar",
       "it": "Esporta",
-      "no": "Eksporter"
+      "no": "Eksporter",
+      "el": "Εξαγωγή"
     },
     "modules.response.measures.export_response_analysis": {
       "en": "Export Response Analysis",
@@ -478,7 +525,8 @@
       "lt": "Eksportuoti Atsakų Analizę",
       "pt": "Exportar Análise de Respostas",
       "it": "Esporta Analisi di Risposta",
-      "no": "Export Response Analysis"
+      "no": "Export Response Analysis",
+      "el": "Εξαγωγή Απόκριση Ανάλυση"
     },
     "modules.response.measures.feasibility": {
       "en": "Feasibility:",
@@ -488,7 +536,8 @@
       "lt": "Įgyvendinamumas:",
       "pt": "Viabilidade:",
       "it": "Fattibilità:",
-      "no": "Feasibility:"
+      "no": "Feasibility:",
+      "el": "Feasibility:"
     },
     "modules.response.measures.feasibility_weight": {
       "en": "Feasibility Weight:",
@@ -498,7 +547,8 @@
       "lt": "Įgyvendinamumo Svoris:",
       "pt": "Peso da Viabilidade:",
       "it": "Peso della Fattibilità:",
-      "no": "Feasibility Weight:"
+      "no": "Feasibility Weight:",
+      "el": "Feasibility Weight:"
     },
     "modules.response.measures.gantt_chart_simplified": {
       "en": "Gantt Chart (Simplified)",
@@ -508,7 +558,8 @@
       "lt": "Ganto Diagrama (Supaprastinta)",
       "pt": "Gráfico de Gantt (Simplificado)",
       "it": "Diagramma di Gantt (Semplificato)",
-      "no": "Gantt Chart (Simplified)"
+      "no": "Gantt Chart (Simplified)",
+      "el": "Gantt Chart (Simplified)"
     },
     "modules.response.measures.governance_reforms_co_management_partnerships": {
       "en": "Governance reforms, co-management, partnerships",
@@ -518,7 +569,8 @@
       "lt": "Valdymo reformos, bendravaldymas, partnerystės",
       "pt": "Reformas de governança, cogestão, parcerias",
       "it": "Riforme di governance, cogestione, partenariati",
-      "no": "Governance reforms, co-management, partnerships"
+      "no": "Governance reforms, co-management, partnerships",
+      "el": "Governance reforms, co-management, partnerships"
     },
     "modules.response.measures.high": {
       "en": "High",
@@ -528,7 +580,8 @@
       "lt": "Aukštas",
       "pt": "Alto",
       "it": "Alto",
-      "no": "High"
+      "no": "High",
+      "el": "High"
     },
     "modules.response.measures.how_quickly_will_it_have_effects": {
       "en": "How quickly will it have effects?",
@@ -538,7 +591,8 @@
       "lt": "Kaip greitai tai turės poveikį?",
       "pt": "Quão rapidamente terá efeitos?",
       "it": "Quanto rapidamente avrà effetti?",
-      "no": "How quickly will it have effects?"
+      "no": "How quickly will it have effects?",
+      "el": "How quickly will it have effects?"
     },
     "modules.response.measures.how_will_this_intervention_work": {
       "en": "How will this intervention work?",
@@ -548,7 +602,8 @@
       "lt": "Kaip veiks ši intervencija?",
       "pt": "Como funcionará esta intervenção?",
       "it": "Come funzionerà questo intervento?",
-      "no": "How will this intervention work?"
+      "no": "How will this intervention work?",
+      "el": "How will this intervention work?"
     },
     "modules.response.measures.immediate": {
       "en": "Immediate",
@@ -558,7 +613,8 @@
       "lt": "Nedelsiant",
       "pt": "Imediato",
       "it": "Immediato",
-      "no": "Immediate"
+      "no": "Immediate",
+      "el": "Immediate"
     },
     "modules.response.measures.impact_assessment": {
       "en": "Impact Assessment",
@@ -568,7 +624,8 @@
       "lt": "Poveikio Vertinimas",
       "pt": "Avaliação de Impacto",
       "it": "Valutazione d'Impatto",
-      "no": "Impact Assessment"
+      "no": "Impact Assessment",
+      "el": "Επίπτωση Αξιολόγηση"
     },
     "modules.response.measures.impact_linkage_added": {
       "en": "Impact linkage added!",
@@ -578,7 +635,8 @@
       "lt": "Poveikio ryšys pridėtas!",
       "pt": "Ligação de impacto adicionada!",
       "it": "Collegamento d'impatto aggiunto!",
-      "no": "Impact linkage added!"
+      "no": "Impact linkage added!",
+      "el": "Επίπτωση linkage added!"
     },
     "modules.response.measures.impact_matrix": {
       "en": "Impact Matrix",
@@ -588,7 +646,8 @@
       "lt": "Poveikio Matrica",
       "pt": "Matriz de Impacto",
       "it": "Matrice d'Impatto",
-      "no": "Impact Matrix"
+      "no": "Impact Matrix",
+      "el": "Επίπτωση Matrix"
     },
     "modules.response.measures.impact_strength": {
       "en": "Impact Strength:",
@@ -598,7 +657,8 @@
       "lt": "Poveikio Stiprumas:",
       "pt": "Força do Impacto:",
       "it": "Forza dell'Impatto:",
-      "no": "Impact Strength:"
+      "no": "Impact Strength:",
+      "el": "Επίπτωση Strength:"
     },
     "modules.response.measures.implementation_barriers": {
       "en": "Implementation Barriers:",
@@ -608,7 +668,8 @@
       "lt": "Įgyvendinimo Kliūtys:",
       "pt": "Barreiras de Implementação:",
       "it": "Barriere all'Attuazione:",
-      "no": "Implementation Barriers:"
+      "no": "Implementation Barriers:",
+      "el": "Implementation Barriers:"
     },
     "modules.response.measures.implementation_plan": {
       "en": "Implementation Plan",
@@ -618,7 +679,8 @@
       "lt": "Įgyvendinimo Planas",
       "pt": "Plano de Implementação",
       "it": "Piano di Attuazione",
-      "no": "Implementation Plan"
+      "no": "Implementation Plan",
+      "el": "Implementation Plan"
     },
     "modules.response.measures.implementation_timeline": {
       "en": "Implementation Timeline",
@@ -628,7 +690,8 @@
       "lt": "Įgyvendinimo Grafikas",
       "pt": "Cronograma de Implementação",
       "it": "Cronologia di Attuazione",
-      "no": "Implementation Timeline"
+      "no": "Implementation Timeline",
+      "el": "Implementation Timeline"
     },
     "modules.response.measures.implemented": {
       "en": "Implemented",
@@ -638,7 +701,8 @@
       "lt": "Įgyvendintas",
       "pt": "Implementado",
       "it": "Attuato",
-      "no": "Implemented"
+      "no": "Implemented",
+      "el": "Implemented"
     },
     "modules.response.measures.in_progress": {
       "en": "In Progress",
@@ -648,7 +712,8 @@
       "lt": "Vykdoma",
       "pt": "Em Andamento",
       "it": "In Corso",
-      "no": "In Progress"
+      "no": "In Progress",
+      "el": "Σε εξέλιξη"
     },
     "modules.response.measures.institutional": {
       "en": "Institutional",
@@ -658,7 +723,8 @@
       "lt": "Institucinis",
       "pt": "Institucional",
       "it": "Istituzionale",
-      "no": "Institutional"
+      "no": "Institutional",
+      "el": "Institutional"
     },
     "modules.response.measures.intervention_points": {
       "en": "Intervention Points",
@@ -668,7 +734,8 @@
       "lt": "Intervencijų Taškai",
       "pt": "Pontos de Intervenção",
       "it": "Punti di Intervento",
-      "no": "Intervention Points"
+      "no": "Intervention Points",
+      "el": "Intervention Points"
     },
     "modules.response.measures.laws_quotas_protected_areas_bans": {
       "en": "Laws, quotas, protected areas, bans",
@@ -678,7 +745,8 @@
       "lt": "Įstatymai, kvotos, saugomos teritorijos, draudimai",
       "pt": "Leis, quotas, áreas protegidas, proibições",
       "it": "Leggi, quote, aree protette, divieti",
-      "no": "Laws, quotas, protected areas, bans"
+      "no": "Laws, quotas, protected areas, bans",
+      "el": "Laws, quotas, protected areas, bans"
     },
     "modules.response.measures.long_term_10y": {
       "en": "Long-term (>10y)",
@@ -688,7 +756,8 @@
       "lt": "Ilgalaikis (>10 m.)",
       "pt": "Longo prazo (>10a)",
       "it": "Lungo termine (>10a)",
-      "no": "Long-term (>10y)"
+      "no": "Long-term (>10y)",
+      "el": "Long-term (>10y)"
     },
     "modules.response.measures.low": {
       "en": "Low",
@@ -698,7 +767,8 @@
       "lt": "Žemas",
       "pt": "Baixo",
       "it": "Basso",
-      "no": "Low"
+      "no": "Low",
+      "el": "Low"
     },
     "modules.response.measures.low_priority": {
       "en": "Low Priority",
@@ -708,7 +778,8 @@
       "lt": "Žemas Prioritetas",
       "pt": "Baixa Prioridade",
       "it": "Bassa Priorità",
-      "no": "Low Priority"
+      "no": "Low Priority",
+      "el": "Low Priority"
     },
     "modules.response.measures.management_measures_and_policy_interventions": {
       "en": "Management Measures and Policy Interventions",
@@ -718,7 +789,8 @@
       "lt": "Valdymo Priemonės ir Politikos Intervencijos",
       "pt": "Medidas de Gestão e Intervenções Políticas",
       "it": "Misure di Gestione e Interventi Politici",
-      "no": "Management Measures and Policy Interventions"
+      "no": "Management Measures and Policy Interventions",
+      "el": "Διαχείριση Μέτρα and Policy Interventions"
     },
     "modules.response.measures.mechanism_of_action": {
       "en": "Mechanism of Action:",
@@ -728,7 +800,8 @@
       "lt": "Veikimo Mechanizmas:",
       "pt": "Mecanismo de Ação:",
       "it": "Meccanismo d'Azione:",
-      "no": "Mechanism of Action:"
+      "no": "Mechanism of Action:",
+      "el": "Mechanism of Action:"
     },
     "modules.response.measures.medium": {
       "en": "Medium",
@@ -738,7 +811,8 @@
       "lt": "Vidutinis",
       "pt": "Médio",
       "it": "Medio",
-      "no": "Medium"
+      "no": "Medium",
+      "el": "Medium"
     },
     "modules.response.measures.medium_term_3_10y": {
       "en": "Medium-term (3-10y)",
@@ -748,7 +822,8 @@
       "lt": "Vidutinės trukmės (3-10 m.)",
       "pt": "Médio prazo (3-10a)",
       "it": "Medio termine (3-10a)",
-      "no": "Medium-term (3-10y)"
+      "no": "Medium-term (3-10y)",
+      "el": "Medium-term (3-10y)"
     },
     "modules.response.measures.milestone": {
       "en": "Milestone:",
@@ -758,7 +833,8 @@
       "lt": "Etapas:",
       "pt": "Marco:",
       "it": "Traguardo:",
-      "no": "Milestone:"
+      "no": "Milestone:",
+      "el": "Milestone:"
     },
     "modules.response.measures.milestone_added": {
       "en": "Milestone added!",
@@ -768,7 +844,8 @@
       "lt": "Etapas pridėtas!",
       "pt": "Marco adicionado!",
       "it": "Traguardo aggiunto!",
-      "no": "Milestone added!"
+      "no": "Milestone added!",
+      "el": "Milestone added!"
     },
     "modules.response.measures.mitigate_impacts_symptomatic_treatment": {
       "en": "Mitigate impacts (symptomatic treatment)",
@@ -778,7 +855,8 @@
       "lt": "Sumažinti poveikį (simptominis gydymas)",
       "pt": "Mitigar impactos (tratamento sintomático)",
       "it": "Mitigare gli impatti (trattamento sintomatico)",
-      "no": "Mitigate impacts (symptomatic treatment)"
+      "no": "Mitigate impacts (symptomatic treatment)",
+      "el": "Mitigate impacts (symptomatic treatment)"
     },
     "modules.response.measures.mixed": {
       "en": "Mixed",
@@ -788,7 +866,8 @@
       "lt": "Mišrus",
       "pt": "Misto",
       "it": "Misto",
-      "no": "Mixed"
+      "no": "Mixed",
+      "el": "Mixed"
     },
     "modules.response.measures.model_validation": {
       "en": "Model Validation",
@@ -798,7 +877,8 @@
       "lt": "Modelio Validacija",
       "pt": "Validação do Modelo",
       "it": "Validazione del Modello",
-      "no": "Model Validation"
+      "no": "Model Validation",
+      "el": "Μοντέλο Επικύρωση"
     },
     "modules.response.measures.moderate": {
       "en": "Moderate",
@@ -808,7 +888,8 @@
       "lt": "Vidutinis",
       "pt": "Moderado",
       "it": "Moderato",
-      "no": "Moderate"
+      "no": "Moderate",
+      "el": "Moderate"
     },
     "modules.response.measures.multiple_levels": {
       "en": "Multiple Levels",
@@ -818,7 +899,8 @@
       "lt": "Keli Lygiai",
       "pt": "Múltiplos Níveis",
       "it": "Livelli Multipli",
-      "no": "Multiple Levels"
+      "no": "Multiple Levels",
+      "el": "Multiple Levels"
     },
     "modules.response.measures.new_technologies_best_practices_innovation": {
       "en": "New technologies, best practices, innovation",
@@ -828,7 +910,8 @@
       "lt": "Naujos technologijos, geriausia praktika, inovacijos",
       "pt": "Novas tecnologias, melhores práticas, inovação",
       "it": "Nuove tecnologie, migliori pratiche, innovazione",
-      "no": "New technologies, best practices, innovation"
+      "no": "New technologies, best practices, innovation",
+      "el": "Νέο technologies, best practices, innovation"
     },
     "modules.response.measures.notesactions_required": {
       "en": "Notes/Actions Required:",
@@ -838,7 +921,8 @@
       "lt": "Pastabos/Reikalingi Veiksmai:",
       "pt": "Notas/Ações Necessárias:",
       "it": "Note/Azioni Richieste:",
-      "no": "Notes/Actions Required:"
+      "no": "Notes/Actions Required:",
+      "el": "Notes/Actions Required:"
     },
     "modules.response.measures.partially_implemented": {
       "en": "Partially Implemented",
@@ -848,7 +932,8 @@
       "lt": "Dalinai Įgyvendintas",
       "pt": "Parcialmente Implementado",
       "it": "Parzialmente Attuato",
-      "no": "Partially Implemented"
+      "no": "Partially Implemented",
+      "el": "Partially Implemented"
     },
     "modules.response.measures.pending": {
       "en": "Pending",
@@ -858,7 +943,8 @@
       "lt": "Laukiama",
       "pt": "Pendente",
       "it": "In Attesa",
-      "no": "Pending"
+      "no": "Pending",
+      "el": "Εκκρεμεί"
     },
     "modules.response.measures.planned": {
       "en": "Planned",
@@ -868,7 +954,8 @@
       "lt": "Planuojamas",
       "pt": "Planeado",
       "it": "Pianificato",
-      "no": "Planned"
+      "no": "Planned",
+      "el": "Planned"
     },
     "modules.response.measures.pressures": {
       "en": "Pressures",
@@ -878,7 +965,8 @@
       "lt": "Spaudimai",
       "pt": "Pressões",
       "it": "Pressioni",
-      "no": "Pressures"
+      "no": "Pressures",
+      "el": "Πιέσεις"
     },
     "modules.response.measures.prioritization": {
       "en": "Prioritization",
@@ -888,7 +976,8 @@
       "lt": "Prioritetų Nustatymas",
       "pt": "Priorização",
       "it": "Prioritizzazione",
-      "no": "Prioritization"
+      "no": "Prioritization",
+      "el": "Prioritization"
     },
     "modules.response.measures.prioritization_criteria": {
       "en": "Prioritization Criteria",
@@ -898,7 +987,8 @@
       "lt": "Prioritetų Nustatymo Kriterijai",
       "pt": "Critérios de Priorização",
       "it": "Criteri di Prioritizzazione",
-      "no": "Prioritization Criteria"
+      "no": "Prioritization Criteria",
+      "el": "Prioritization Criteria"
     },
     "modules.response.measures.prioritization_criteria_weighting": {
       "en": "Prioritization Criteria Weighting",
@@ -908,7 +998,8 @@
       "lt": "Prioritetų Nustatymo Kriterijai Svoris",
       "pt": "Ponderação de Critérios de Priorização",
       "it": "Ponderazione dei Criteri di Prioritizzazione",
-      "no": "Prioritization Criteria Weighting"
+      "no": "Prioritization Criteria Weighting",
+      "el": "Prioritization Criteria Weighting"
     },
     "modules.response.measures.prioritized_response_measures": {
       "en": "Prioritized Response Measures",
@@ -918,7 +1009,8 @@
       "lt": "Prioritetinės Atsako Priemonės",
       "pt": "Medidas de Resposta Priorizadas",
       "it": "Misure di Risposta Prioritizzate",
-      "no": "Prioritized Response Measures"
+      "no": "Prioritized Response Measures",
+      "el": "Prioritized Response Measures"
     },
     "modules.response.measures.priority_ranking": {
       "en": "Priority Ranking",
@@ -928,7 +1020,8 @@
       "lt": "Prioritetų Reitingas",
       "pt": "Classificação de Prioridade",
       "it": "Classifica di Priorità",
-      "no": "Priority Ranking"
+      "no": "Priority Ranking",
+      "el": "Priority Ranking"
     },
     "modules.response.measures.problem_element_id": {
       "en": "Problem Element ID:",
@@ -938,7 +1031,8 @@
       "lt": "Problemos Elemento ID:",
       "pt": "ID do Elemento do Problema:",
       "it": "ID Elemento del Problema:",
-      "no": "Problem Element ID:"
+      "no": "Problem Element ID:",
+      "el": "Problem Element ID:"
     },
     "modules.response.measures.proposed": {
       "en": "Proposed",
@@ -948,7 +1042,8 @@
       "lt": "Siūlomas",
       "pt": "Proposto",
       "it": "Proposto",
-      "no": "Proposed"
+      "no": "Proposed",
+      "el": "Proposed"
     },
     "modules.response.measures.regulate_what_people_do_direct_but_may_face_resistance": {
       "en": "Regulate what people do (direct but may face resistance)",
@@ -958,7 +1053,8 @@
       "lt": "Reguliuoti žmonių veiklą (tiesioginis, bet gali sulaukti pasipriešinimo)",
       "pt": "Regular o que as pessoas fazem (direto mas pode enfrentar resistência)",
       "it": "Regolare ciò che fanno le persone (diretto ma può incontrare resistenza)",
-      "no": "Regulate what people do (direct but may face resistance)"
+      "no": "Regulate what people do (direct but may face resistance)",
+      "el": "Regulate what people do (direct but may face resistance)"
     },
     "modules.response.measures.regulatory": {
       "en": "Regulatory",
@@ -968,7 +1064,8 @@
       "lt": "Reguliavimo",
       "pt": "Regulatório",
       "it": "Regolamentare",
-      "no": "Regulatory"
+      "no": "Regulatory",
+      "el": "Regulatory"
     },
     "modules.response.measures.response_implementation_roadmap": {
       "en": "Response Implementation Roadmap",
@@ -978,7 +1075,8 @@
       "lt": "Atsakų Įgyvendinimo Kelrodis",
       "pt": "Roteiro de Implementação de Respostas",
       "it": "Roadmap di Attuazione delle Risposte",
-      "no": "Response Implementation Roadmap"
+      "no": "Response Implementation Roadmap",
+      "el": "Απόκριση Implementation Roadmap"
     },
     "modules.response.measures.response_measure": {
       "en": "Response Measure:",
@@ -988,7 +1086,8 @@
       "lt": "Atsako Priemonė:",
       "pt": "Medida de Resposta:",
       "it": "Misura di Risposta:",
-      "no": "Response Measure:"
+      "no": "Response Measure:",
+      "el": "Απόκριση Measure:"
     },
     "modules.response.measures.response_measure_added": {
       "en": "Response measure added!",
@@ -998,7 +1097,8 @@
       "lt": "Atsako priemonė pridėta!",
       "pt": "Medida de resposta adicionada!",
       "it": "Misura di risposta aggiunta!",
-      "no": "Response measure added!"
+      "no": "Response measure added!",
+      "el": "Απόκριση Μέτρο added!"
     },
     "modules.response.measures.response_measure_impact_matrix": {
       "en": "Response Measure Impact Matrix",
@@ -1008,7 +1108,8 @@
       "lt": "Atsako Priemonių Poveikio Matrica",
       "pt": "Matriz de Impacto das Medidas de Resposta",
       "it": "Matrice d'Impatto delle Misure di Risposta",
-      "no": "Response Measure Impact Matrix"
+      "no": "Response Measure Impact Matrix",
+      "el": "Απόκριση Μέτρο Επίπτωση Matrix"
     },
     "modules.response.measures.response_measure_prioritization": {
       "en": "Response Measure Prioritization",
@@ -1018,7 +1119,8 @@
       "lt": "Atsako Priemonių Prioritetų Nustatymas",
       "pt": "Priorização de Medidas de Resposta",
       "it": "Prioritizzazione delle Misure di Risposta",
-      "no": "Response Measure Prioritization"
+      "no": "Response Measure Prioritization",
+      "el": "Απόκριση Μέτρο Prioritization"
     },
     "modules.response.measures.response_measure_prioritization_matrix": {
       "en": "Response Measure Prioritization Matrix",
@@ -1028,7 +1130,8 @@
       "lt": "Atsako Priemonių Prioritetų Nustatymo Matrica",
       "pt": "Matriz de Priorização de Medidas de Resposta",
       "it": "Matrice di Prioritizzazione delle Misure di Risposta",
-      "no": "Response Measure Prioritization Matrix"
+      "no": "Response Measure Prioritization Matrix",
+      "el": "Απόκριση Μέτρο Prioritization Matrix"
     },
     "modules.response.measures.response_measures_register": {
       "en": "Response Measures Register",
@@ -1038,7 +1141,8 @@
       "lt": "Atsako Priemonių Registras",
       "pt": "Registro de Medidas de Resposta",
       "it": "Registro delle Misure di Risposta",
-      "no": "Response Measures Register"
+      "no": "Response Measures Register",
+      "el": "Απόκριση Μέτρα Εγγραφή"
     },
     "modules.response.measures.response_register": {
       "en": "Response Register",
@@ -1048,7 +1152,8 @@
       "lt": "Atsakų Registras",
       "pt": "Registro de Respostas",
       "it": "Registro di Risposte",
-      "no": "Response Register"
+      "no": "Response Register",
+      "el": "Απόκριση Εγγραφή"
     },
     "modules.response.measures.responsible_stakeholders": {
       "en": "Responsible Stakeholders:",
@@ -1058,7 +1163,8 @@
       "lt": "Atsakingos Suinteresuotos Šalys:",
       "pt": "Partes Interessadas Responsáveis:",
       "it": "Parti Interessate Responsabili:",
-      "no": "Responsible Stakeholders:"
+      "no": "Responsible Stakeholders:",
+      "el": "Responsible Stakeholders:"
     },
     "modules.response.measures.restore_ecosystems_expensive_slow": {
       "en": "Restore ecosystems (expensive, slow)",
@@ -1068,7 +1174,8 @@
       "lt": "Atkurti ekosistemas (brangu, lėta)",
       "pt": "Restaurar ecossistemas (caro, lento)",
       "it": "Ripristinare gli ecosistemi (costoso, lento)",
-      "no": "Restore ecosystems (expensive, slow)"
+      "no": "Restore ecosystems (expensive, slow)",
+      "el": "Επαναφορά Οικοσυστήματα (expensive, slow)"
     },
     "modules.response.measures.select_response": {
       "en": "Select Response:",
@@ -1078,7 +1185,8 @@
       "lt": "Pasirinkti Atsaką:",
       "pt": "Selecionar Resposta:",
       "it": "Seleziona Risposta:",
-      "no": "Select Response:"
+      "no": "Select Response:",
+      "el": "Επιλογή Response:"
     },
     "modules.response.measures.short_term_1_3y": {
       "en": "Short-term (1-3y)",
@@ -1088,7 +1196,8 @@
       "lt": "Trumpalaikis (1-3 m.)",
       "pt": "Curto prazo (1-3a)",
       "it": "Breve termine (1-3a)",
-      "no": "Short-term (1-3y)"
+      "no": "Short-term (1-3y)",
+      "el": "Short-term (1-3y)"
     },
     "modules.response.measures.specific_activity": {
       "en": "Specific Activity",
@@ -1098,7 +1207,8 @@
       "lt": "Specifinė Veikla",
       "pt": "Atividade Específica",
       "it": "Attività Specifica",
-      "no": "Specific Activity"
+      "no": "Specific Activity",
+      "el": "Specific Activity"
     },
     "modules.response.measures.specific_driver": {
       "en": "Specific Driver",
@@ -1108,7 +1218,8 @@
       "lt": "Specifinė Varomoji Jėga",
       "pt": "Impulsionador Específico",
       "it": "Fattore Specifico",
-      "no": "Specific Driver"
+      "no": "Specific Driver",
+      "el": "Specific Driver"
     },
     "modules.response.measures.specific_pressure": {
       "en": "Specific Pressure",
@@ -1118,7 +1229,8 @@
       "lt": "Specifinis Spaudimas",
       "pt": "Pressão Específica",
       "it": "Pressione Specifica",
-      "no": "Specific Pressure"
+      "no": "Specific Pressure",
+      "el": "Specific Pressure"
     },
     "modules.response.measures.state": {
       "en": "State",
@@ -1128,7 +1240,8 @@
       "lt": "Būsena",
       "pt": "Estado",
       "it": "Stato",
-      "no": "State"
+      "no": "State",
+      "el": "Κατάσταση"
     },
     "modules.response.measures.strong": {
       "en": "Strong",
@@ -1138,7 +1251,8 @@
       "lt": "Stiprus",
       "pt": "Forte",
       "it": "Forte",
-      "no": "Strong"
+      "no": "Strong",
+      "el": "Strong"
     },
     "modules.response.measures.system_wide_issue": {
       "en": "System-wide Issue",
@@ -1148,7 +1262,8 @@
       "lt": "Visos Sistemos Problema",
       "pt": "Problema a Nível do Sistema",
       "it": "Problema a Livello di Sistema",
-      "no": "System-wide Issue"
+      "no": "System-wide Issue",
+      "el": "System-wide Issue"
     },
     "modules.response.measures.target_element_id": {
       "en": "Target Element ID:",
@@ -1158,7 +1273,8 @@
       "lt": "Tikslo Elemento ID:",
       "pt": "ID do Elemento Alvo:",
       "it": "ID Elemento Obiettivo:",
-      "no": "Target Element ID:"
+      "no": "Target Element ID:",
+      "el": "Target Element ID:"
     },
     "modules.response.measures.targets": {
       "en": "Targets:",
@@ -1168,7 +1284,8 @@
       "lt": "Tikslai:",
       "pt": "Alvos:",
       "it": "Obiettivi:",
-      "no": "Targets:"
+      "no": "Targets:",
+      "el": "Targets:"
     },
     "modules.response.measures.taxes_subsidies_payments_for_ecosystem_services": {
       "en": "Taxes, subsidies, payments for ecosystem services",
@@ -1178,7 +1295,8 @@
       "lt": "Mokesčiai, subsidijos, mokėjimai už ekosistemų paslaugas",
       "pt": "Impostos, subsídios, pagamentos por serviços ecossistémicos",
       "it": "Tasse, sussidi, pagamenti per servizi ecosistemici",
-      "no": "Taxes, subsidies, payments for ecosystem services"
+      "no": "Taxes, subsidies, payments for ecosystem services",
+      "el": "Taxes, subsidies, payments for ecosystem services"
     },
     "modules.response.measures.technical": {
       "en": "Technical",
@@ -1188,7 +1306,8 @@
       "lt": "Techninis",
       "pt": "Técnico",
       "it": "Tecnico",
-      "no": "Technical"
+      "no": "Technical",
+      "el": "Technical"
     },
     "modules.response.measures.timeframe": {
       "en": "Timeframe:",
@@ -1198,7 +1317,8 @@
       "lt": "Laiko Rėmai:",
       "pt": "Prazo:",
       "it": "Tempi:",
-      "no": "Timeframe:"
+      "no": "Timeframe:",
+      "el": "Timeframe:"
     },
     "modules.response.measures.types_of_response_measures": {
       "en": "Types of Response Measures",
@@ -1208,7 +1328,8 @@
       "lt": "Atsako Priemonių Tipai",
       "pt": "Tipos de Medidas de Resposta",
       "it": "Tipi di Misure di Risposta",
-      "no": "Types of Response Measures"
+      "no": "Types of Response Measures",
+      "el": "Types of Response Measures"
     },
     "modules.response.measures.visual_impact_matrix": {
       "en": "Visual Impact Matrix",
@@ -1218,7 +1339,8 @@
       "lt": "Vizuali Poveikio Matrica",
       "pt": "Matriz de Impacto Visual",
       "it": "Matrice d'Impatto Visiva",
-      "no": "Visual Impact Matrix"
+      "no": "Visual Impact Matrix",
+      "el": "Visual Impact Matrix"
     },
     "modules.response.measures.voluntary": {
       "en": "Voluntary",
@@ -1228,7 +1350,8 @@
       "lt": "Savanoriškas",
       "pt": "Voluntário",
       "it": "Volontario",
-      "no": "Voluntary"
+      "no": "Voluntary",
+      "el": "Voluntary"
     },
     "modules.response.measures.weak": {
       "en": "Weak",
@@ -1238,7 +1361,8 @@
       "lt": "Silpnas",
       "pt": "Fraco",
       "it": "Debole",
-      "no": "Weak"
+      "no": "Weak",
+      "el": "Weak"
     },
     "modules.response.measures.what_does_this_measure_do": {
       "en": "What does this measure do?",
@@ -1248,7 +1372,8 @@
       "lt": "Ką daro ši priemonė?",
       "pt": "O que faz esta medida?",
       "it": "Cosa fa questa misura?",
-      "no": "What does this measure do?"
+      "no": "What does this measure do?",
+      "el": "What does this measure do?"
     },
     "modules.response.measures.what_obstacles_exist": {
       "en": "What obstacles exist?",
@@ -1258,7 +1383,8 @@
       "lt": "Kokios kliūtys egzistuoja?",
       "pt": "Quais obstáculos existem?",
       "it": "Quali ostacoli esistono?",
-      "no": "What obstacles exist?"
+      "no": "What obstacles exist?",
+      "el": "What obstacles exist?"
     },
     "modules.response.measures.what_resources_are_required": {
       "en": "What resources are required?",
@@ -1268,7 +1394,8 @@
       "lt": "Kokių išteklių reikia?",
       "pt": "Quais recursos são necessários?",
       "it": "Quali risorse sono necessarie?",
-      "no": "What resources are required?"
+      "no": "What resources are required?",
+      "el": "What resources are required?"
     },
     "modules.response.measures.who_implements_this_measure": {
       "en": "Who implements this measure?",
@@ -1278,7 +1405,8 @@
       "lt": "Kas įgyvendina šią priemonę?",
       "pt": "Quem implementa esta medida?",
       "it": "Chi attua questa misura?",
-      "no": "Who implements this measure?"
+      "no": "Who implements this measure?",
+      "el": "Who implements this measure?"
     },
     "modules.response.measures.will_it_solve_the_problem": {
       "en": "Will it solve the problem?",
@@ -1288,7 +1416,8 @@
       "lt": "Ar tai išspręs problemą?",
       "pt": "Resolverá o problema?",
       "it": "Risolverà il problema?",
-      "no": "Will it solve the problem?"
+      "no": "Will it solve the problem?",
+      "el": "Will it solve the problem?"
     },
     "modules.response.response_measures_r_and_management_measures_m_comp": {
       "en": "Response measures (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems.",
@@ -1298,7 +1427,8 @@
       "lt": "Atsako priemonės (R) ir valdymo priemonės (M) užbaigia DAPSI(W)R(M) sistemą nustatydamos intervencijas sistemos problemoms spręsti.",
       "pt": "As medidas de resposta (R) e as medidas de gestão (M) completam o quadro DAPSI(W)R(M) identificando intervenções para resolver problemas do sistema.",
       "it": "Le misure di risposta (R) e le misure di gestione (M) completano il quadro DAPSI(W)R(M) identificando interventi per affrontare i problemi del sistema.",
-      "no": "Response measures (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems."
+      "no": "Response measures (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems.",
+      "el": "Απόκριση Μέτρα (R) and Management measures (M) complete the DAPSI(W)R(M) framework by identifying interventions to address system problems."
     },
     "modules.response.track_validation_activities_and_model_confidence_a": {
       "en": "Track validation activities and model confidence assessment.",
@@ -1308,7 +1438,8 @@
       "lt": "Sekti validacijos veiklą ir modelio patikimumo vertinimą.",
       "pt": "Acompanhar atividades de validação e avaliação de confiança do modelo.",
       "it": "Monitorare le attività di validazione e la valutazione della fiducia del modello.",
-      "no": "Track validation activities and model confidence assessment."
+      "no": "Track validation activities and model confidence assessment.",
+      "el": "Track validation activities and model confidence assessment."
     },
     "modules.response.measures.easy_butnlimited_impact": {
       "en": "Easy Butnlimited Impact",
@@ -1318,7 +1449,8 @@
       "lt": "[LT] Easy Butnlimited Impact",
       "pt": "[PT] Easy Butnlimited Impact",
       "it": "[IT] Easy Butnlimited Impact",
-      "no": "Easy Butnlimited Impact"
+      "no": "Easy Butnlimited Impact",
+      "el": "Easy Butnlimited Impact"
     },
     "modules.response.measures.effective_butndifficult": {
       "en": "Effective Butndifficult",
@@ -1328,7 +1460,8 @@
       "lt": "[LT] Effective Butndifficult",
       "pt": "[PT] Effective Butndifficult",
       "it": "[IT] Effective Butndifficult",
-      "no": "Effective Butndifficult"
+      "no": "Effective Butndifficult",
+      "el": "Effective Butndifficult"
     },
     "modules.response.measures.high_priorityneffective_feasible": {
       "en": "High Priorityneffective Feasible",
@@ -1338,7 +1471,8 @@
       "lt": "[LT] High Priorityneffective Feasible",
       "pt": "[PT] High Priorityneffective Feasible",
       "it": "[IT] High Priorityneffective Feasible",
-      "no": "High Priorityneffective Feasible"
+      "no": "High Priorityneffective Feasible",
+      "el": "High Priorityneffective Feasible"
     },
     "modules.response.measures.unknown": {
       "en": "Unknown",
@@ -1348,7 +1482,8 @@
       "lt": "[LT] Unknown",
       "pt": "[PT] Unknown",
       "it": "[IT] Unknown",
-      "no": "Unknown"
+      "no": "Unknown",
+      "el": "Unknown"
     }
   }
 }

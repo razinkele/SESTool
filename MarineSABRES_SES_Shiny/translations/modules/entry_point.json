@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "modules.entry_point.browse_tools": {
@@ -18,7 +19,8 @@
       "lt": "Naršyti priemones",
       "pt": "Explorar Ferramentas",
       "it": "Esplora Strumenti",
-      "no": "Browse Tools"
+      "no": "Browse Tools",
+      "el": "Browse Tools"
     },
     "modules.entry_point.build_your_ses_model": {
       "en": "Build your SES model:",
@@ -28,7 +30,8 @@
       "lt": "Sukurkite savo SES modelį:",
       "pt": "Construa o seu modelo SES:",
       "it": "Costruisci il tuo modello SES:",
-      "no": "Build your SES model:"
+      "no": "Build your SES model:",
+      "el": "Build your SES model:"
     },
     "modules.entry_point.confidence_property_system_allows_you_to_track_dat": {
       "en": "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research.",
@@ -38,7 +41,8 @@
       "lt": "Pasitikėjimo savybių sistema leidžia sekti duomenų kokybę ir tikrumą. Mažo pasitikėjimo kraštai atrodo skaidresni, padeda nustatyti sritis, kurioms reikia daugiau tyrimų.",
       "pt": "O sistema de propriedades de confiança permite rastrear a qualidade e certeza dos dados. Bordas com baixa confiança aparecem mais transparentes, ajudando a identificar áreas que precisam de mais pesquisa.",
       "it": "Il sistema di proprietà di confidenza ti consente di tracciare qualità e certezza dei dati. I bordi con bassa confidenza appaiono più trasparenti, aiutandoti a identificare aree che necessitano di ulteriori ricerche.",
-      "no": "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research."
+      "no": "Confidence property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research.",
+      "el": "Εμπιστοσύνη property system allows you to track data quality and certainty. Edges with low confidence appear more transparent, helping you identify areas needing more research."
     },
     "modules.entry_point.continue_to_ep1": {
       "en": "Continue to EP1",
@@ -48,7 +52,8 @@
       "lt": "Tęsti į EP1",
       "pt": "Continuar para EP1",
       "it": "Continua a EP1",
-      "no": "Continue to EP1"
+      "no": "Continue to EP1",
+      "el": "Συνέχεια to EP1"
     },
     "modules.entry_point.create_cld_networks_with_confidence_based_visual_f": {
       "en": "Create CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools",
@@ -58,7 +63,8 @@
       "lt": "Sukurkite CLD tinklus su pasitikėjimu pagrįstu vaizdiniu grįžtamuoju ryšiu, filtruokite pagal pasitikėjimą ir vykdykite analizės įrankius",
       "pt": "Crie redes CLD com feedback visual baseado em confiança, filtre por confiança e execute ferramentas de análise",
       "it": "Crea reti CLD con feedback visivo basato sulla confidenza, filtra per confidenza ed esegui strumenti di analisi",
-      "no": "Create CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools"
+      "no": "Create CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools",
+      "el": "Δημιουργία CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools"
     },
     "modules.entry_point.define_your_project_goals_stakeholders_and_timeline": {
       "en": "Define your project goals, stakeholders, and timeline",
@@ -68,7 +74,8 @@
       "lt": "Apibrėžkite projekto tikslus, suinteresuotas šalis ir laikotarpį",
       "pt": "Defina os objetivos do seu projeto, partes interessadas e cronograma",
       "it": "Definisci gli obiettivi del progetto, gli stakeholder e la timeline",
-      "no": "Define your project goals, stakeholders, and timeline"
+      "no": "Define your project goals, stakeholders, and timeline",
+      "el": "Define your project goals, stakeholders, and timeline"
     },
     "modules.entry_point.entry_point_0_who_are_you": {
       "en": "Entry Point 0: Who Are You?",
@@ -78,7 +85,8 @@
       "lt": "Įėjimo taškas 0: Kas jūs?",
       "pt": "Ponto de Entrada 0: Quem É Você?",
       "it": "Punto di Ingresso 0: Chi Sei?",
-      "no": "Entry Point 0: Who Are You?"
+      "no": "Entry Point 0: Who Are You?",
+      "el": "Entry Point 0: Who Are You?"
     },
     "modules.entry_point.entry_point_1_why_do_you_care": {
       "en": "Entry Point 1: Why Do You Care?",
@@ -88,7 +96,8 @@
       "lt": "Įėjimo taškas 1: Kodėl jums rūpi?",
       "pt": "Ponto de Entrada 1: Por Que Se Importa?",
       "it": "Punto di Ingresso 1: Perché Ti Importa?",
-      "no": "Entry Point 1: Why Do You Care?"
+      "no": "Entry Point 1: Why Do You Care?",
+      "el": "Entry Point 1: Why Do You Care?"
     },
     "modules.entry_point.entry_point_4_knowledge_domain": {
       "en": "Entry Point 4: Knowledge Domain",
@@ -98,7 +107,8 @@
       "lt": "Įėjimo taškas 4: Žinių sritis",
       "pt": "Ponto de Entrada 4: Domínio de Conhecimento",
       "it": "Punto di Ingresso 4: Ambito di Conoscenza",
-      "no": "Entry Point 4: Knowledge Domain"
+      "no": "Entry Point 4: Knowledge Domain",
+      "el": "Entry Point 4: Knowledge Domain"
     },
     "modules.entry_point.ep0_role": {
       "en": "EP0: Role",
@@ -108,7 +118,8 @@
       "lt": "EP0: Vaidmuo",
       "pt": "EP0: Papel",
       "it": "EP0: Ruolo",
-      "no": "EP0: Role"
+      "no": "EP0: Role",
+      "el": "EP0: Role"
     },
     "modules.entry_point.ep1_need": {
       "en": "EP1: Need",
@@ -118,7 +129,8 @@
       "lt": "EP1: Poreikis",
       "pt": "EP1: Necessidade",
       "it": "EP1: Necessità",
-      "no": "EP1: Need"
+      "no": "EP1: Need",
+      "el": "EP1: Need"
     },
     "modules.entry_point.ep2_3_context": {
       "en": "EP2-3: Context",
@@ -128,7 +140,8 @@
       "lt": "EP2-3: Kontekstas",
       "pt": "EP2-3: Contexto",
       "it": "EP2-3: Contesto",
-      "no": "EP2-3: Context"
+      "no": "EP2-3: Context",
+      "el": "EP2-3: Context"
     },
     "modules.entry_point.ep2_activity_sectors": {
       "en": "EP2: Activity Sectors",
@@ -138,7 +151,8 @@
       "lt": "EP2: Veiklos sektoriai",
       "pt": "EP2: Setores de Atividade",
       "it": "EP2: Settori di Attività",
-      "no": "EP2: Activity Sectors"
+      "no": "EP2: Activity Sectors",
+      "el": "EP2: Activity Sectors"
     },
     "modules.entry_point.ep3_risks_hazards": {
       "en": "EP3: Risks & Hazards",
@@ -148,7 +162,8 @@
       "lt": "EP3: Rizikos ir pavojai",
       "pt": "EP3: Riscos e Perigos",
       "it": "EP3: Rischi e Pericoli",
-      "no": "EP3: Risks & Hazards"
+      "no": "EP3: Risks & Hazards",
+      "el": "EP3: Risks & Hazards"
     },
     "modules.entry_point.ep4_topic": {
       "en": "EP4: Topic",
@@ -158,7 +173,8 @@
       "lt": "EP4: Tema",
       "pt": "EP4: Tópico",
       "it": "EP4: Argomento",
-      "no": "EP4: Topic"
+      "no": "EP4: Topic",
+      "el": "EP4: Topic"
     },
     "modules.entry_point.ep_notify_select_role": {
       "en": "ep_notify_select_role",
@@ -168,7 +184,8 @@
       "lt": "Pasirinkite vaidmenį, kad tęstumėte",
       "pt": "Por favor selecione um papel para continuar",
       "it": "Seleziona un ruolo per continuare",
-      "no": "ep_notify_select_role"
+      "no": "ep_notify_select_role",
+      "el": "ep_notify_select_role"
     },
     "modules.entry_point.ep_tooltip_begin_new_pathway": {
       "en": "ep_tooltip_begin_new_pathway",
@@ -178,7 +195,8 @@
       "lt": "Pradėti naują kelią nuo pradžių",
       "pt": "Iniciar um novo percurso desde o início",
       "it": "Inizia un nuovo percorso dall'inizio",
-      "no": "ep_tooltip_begin_new_pathway"
+      "no": "ep_tooltip_begin_new_pathway",
+      "el": "ep_tooltip_begin_new_pathway"
     },
     "modules.entry_point.ep_tooltip_download_pdf": {
       "en": "ep_tooltip_download_pdf",
@@ -188,7 +206,8 @@
       "lt": "Atsisiųsti PDF ataskaitą apie rekomenduojamą kelią",
       "pt": "Descarregar um relatório PDF do seu percurso recomendado",
       "it": "Scarica un rapporto PDF del tuo percorso raccomandato",
-      "no": "ep_tooltip_download_pdf"
+      "no": "ep_tooltip_download_pdf",
+      "el": "ep_tooltip_download_pdf"
     },
     "modules.entry_point.export_pathway_report": {
       "en": "Export Pathway Report",
@@ -198,7 +217,8 @@
       "lt": "Eksportuoti kelio ataskaitą",
       "pt": "Exportar Relatório de Percurso",
       "it": "Esporta Rapporto Percorso",
-      "no": "Export Pathway Report"
+      "no": "Export Pathway Report",
+      "el": "Εξαγωγή Pathway Report"
     },
     "modules.entry_point.follow_this_sequence_of_tools_to_address_your_mari": {
       "en": "Follow this sequence of tools to address your marine management question:",
@@ -208,7 +228,8 @@
       "lt": "Sekite šią priemonių seką, kad išspręstumėte savo jūrų valdymo klausimą:",
       "pt": "Siga esta sequência de ferramentas para abordar a sua questão de gestão marinha:",
       "it": "Segui questa sequenza di strumenti per affrontare la tua domanda di gestione marina:",
-      "no": "Follow this sequence of tools to address your marine management question:"
+      "no": "Follow this sequence of tools to address your marine management question:",
+      "el": "Follow this sequence of tools to address your marine management question:"
     },
     "modules.entry_point.get_personalized_tool_recommendations_based_on_your_pathway": {
       "en": "Get personalized tool recommendations based on your pathway",
@@ -218,7 +239,8 @@
       "lt": "Gaukite pritaikytus įrankių rekomendacijas pagal jūsų kelią",
       "pt": "Obter recomendações de ferramentas personalizadas com base no seu percurso",
       "it": "Ottieni raccomandazioni di strumenti personalizzate in base al tuo percorso",
-      "no": "Get personalized tool recommendations based on your pathway"
+      "no": "Get personalized tool recommendations based on your pathway",
+      "el": "Get personalized tool recommendations based on your pathway"
     },
     "modules.entry_point.get_recommendations": {
       "en": "Get Recommendations",
@@ -228,7 +250,8 @@
       "lt": "Gauti rekomendacijas",
       "pt": "Obter Recomendações",
       "it": "Ottieni Raccomandazioni",
-      "no": "Get Recommendations"
+      "no": "Get Recommendations",
+      "el": "Get Recommendations"
     },
     "modules.entry_point.go_to": {
       "en": "Go to",
@@ -238,7 +261,8 @@
       "lt": "Eiti į",
       "pt": "Ir para",
       "it": "Vai a",
-      "no": "Go to"
+      "no": "Go to",
+      "el": "Go to"
     },
     "modules.entry_point.guided_pathway": {
       "en": "Guided Pathway",
@@ -248,7 +272,8 @@
       "lt": "Vedamas kelias",
       "pt": "Percurso Guiado",
       "it": "Percorso Guidato",
-      "no": "Guided Pathway"
+      "no": "Guided Pathway",
+      "el": "Guided Pathway"
     },
     "modules.entry_point.i_know_what_tool_i_need": {
       "en": "I know what tool I need",
@@ -258,7 +283,8 @@
       "lt": "Žinau, kokios priemonės man reikia",
       "pt": "Sei qual ferramenta preciso",
       "it": "So quale strumento mi serve",
-      "no": "I know what tool I need"
+      "no": "I know what tool I need",
+      "el": "I know what tool I need"
     },
     "modules.entry_point.navigating_to_s": {
       "en": "Navigating to %s...",
@@ -268,7 +294,8 @@
       "lt": "Naviguojama į %s...",
       "pt": "Navegando para %s...",
       "it": "Navigando verso %s...",
-      "no": "Navigating to %s..."
+      "no": "Navigating to %s...",
+      "el": "Navigating to %s..."
     },
     "modules.entry_point.need": {
       "en": "Need:",
@@ -278,7 +305,8 @@
       "lt": "Poreikis:",
       "pt": "Necessidade:",
       "it": "Necessità:",
-      "no": "Need:"
+      "no": "Need:",
+      "el": "Need:"
     },
     "modules.entry_point.new_in_v120": {
       "en": "New in v1.2.0:",
@@ -288,7 +316,8 @@
       "lt": "Nauja v1.2.0:",
       "pt": "Novo na v1.2.0:",
       "it": "Novità della v1.2.0:",
-      "no": "New in v1.2.0:"
+      "no": "New in v1.2.0:",
+      "el": "Νέο in v1.2.0:"
     },
     "modules.entry_point.proceed_to_identify_your_basic_human_needs": {
       "en": "Proceed to identify your basic human needs",
@@ -298,7 +327,8 @@
       "lt": "Tęskite, kad nustatytumėte savo pagrindinius žmogaus poreikius",
       "pt": "Continuar para identificar as suas necessidades humanas básicas",
       "it": "Procedi per identificare i tuoi bisogni umani fondamentali",
-      "no": "Proceed to identify your basic human needs"
+      "no": "Proceed to identify your basic human needs",
+      "el": "Proceed to identify your basic human needs"
     },
     "modules.entry_point.proceed_to_select_knowledge_topics": {
       "en": "Proceed to select knowledge topics",
@@ -308,7 +338,8 @@
       "lt": "Tęskite, kad pasirinktumėte žinių temas",
       "pt": "Continuar para selecionar tópicos de conhecimento",
       "it": "Procedi per selezionare gli argomenti di conoscenza",
-      "no": "Proceed to select knowledge topics"
+      "no": "Proceed to select knowledge topics",
+      "el": "Proceed to select knowledge topics"
     },
     "modules.entry_point.proceed_to_specify_activities_and_risks": {
       "en": "Proceed to specify activities and risks",
@@ -318,7 +349,8 @@
       "lt": "Tęskite, kad nurodytumėte veiklas ir rizikas",
       "pt": "Continuar para especificar atividades e riscos",
       "it": "Procedi per specificare attività e rischi",
-      "no": "Proceed to specify activities and risks"
+      "no": "Proceed to specify activities and risks",
+      "el": "Proceed to specify activities and risks"
     },
     "modules.entry_point.quick_access": {
       "en": "Quick Access",
@@ -328,7 +360,8 @@
       "lt": "Greita prieiga",
       "pt": "Acesso Rápido",
       "it": "Accesso Rapido",
-      "no": "Quick Access"
+      "no": "Quick Access",
+      "el": "Quick Access"
     },
     "modules.entry_point.quick_start_option": {
       "en": "Quick start option:",
@@ -338,7 +371,8 @@
       "lt": "Greito pradžios parinktis:",
       "pt": "Opção de início rápido:",
       "it": "Opzione di avvio rapido:",
-      "no": "Quick start option:"
+      "no": "Quick start option:",
+      "el": "Quick start option:"
     },
     "modules.entry_point.recommended_tools_for_your_marine_management_question": {
       "en": "Recommended Tools for Your Marine Management Question",
@@ -348,7 +382,8 @@
       "lt": "Rekomenduojamos priemonės jūsų jūrų valdymo klausimui",
       "pt": "Ferramentas Recomendadas para a Sua Questão de Gestão Marinha",
       "it": "Strumenti Raccomandati per la Tua Domanda di Gestione Marina",
-      "no": "Recommended Tools for Your Marine Management Question"
+      "no": "Recommended Tools for Your Marine Management Question",
+      "el": "Recommended Tools for Your Marine Management Question"
     },
     "modules.entry_point.recommended_workflow": {
       "en": "Recommended Workflow:",
@@ -358,7 +393,8 @@
       "lt": "Rekomenduojama darbo eiga:",
       "pt": "Fluxo de Trabalho Recomendado:",
       "it": "Flusso di Lavoro Raccomandato:",
-      "no": "Recommended Workflow:"
+      "no": "Recommended Workflow:",
+      "el": "Recommended Workflow:"
     },
     "modules.entry_point.refine_communicate": {
       "en": "Refine & Communicate:",
@@ -368,7 +404,8 @@
       "lt": "Patobulinti ir komunikuoti:",
       "pt": "Refinar e Comunicar:",
       "it": "Raffinare e Comunicare:",
-      "no": "Refine & Communicate:"
+      "no": "Refine & Communicate:",
+      "el": "Refine & Communicate:"
     },
     "modules.entry_point.return_to_activities_and_risks": {
       "en": "Return to activities and risks",
@@ -378,7 +415,8 @@
       "lt": "Grįžti į veiklas ir rizikas",
       "pt": "Voltar às atividades e riscos",
       "it": "Torna alle attività e ai rischi",
-      "no": "Return to activities and risks"
+      "no": "Return to activities and risks",
+      "el": "Return to activities and risks"
     },
     "modules.entry_point.return_to_basic_needs": {
       "en": "Return to basic needs",
@@ -388,7 +426,8 @@
       "lt": "Grįžti į pagrindinius poreikius",
       "pt": "Voltar às necessidades básicas",
       "it": "Torna ai bisogni fondamentali",
-      "no": "Return to basic needs"
+      "no": "Return to basic needs",
+      "el": "Return to basic needs"
     },
     "modules.entry_point.return_to_role_selection": {
       "en": "Return to role selection",
@@ -398,7 +437,8 @@
       "lt": "Grįžti į vaidmens pasirinkimą",
       "pt": "Voltar à seleção de papel",
       "it": "Torna alla selezione del ruolo",
-      "no": "Return to role selection"
+      "no": "Return to role selection",
+      "el": "Return to role selection"
     },
     "modules.entry_point.risks": {
       "en": "Risks:",
@@ -408,7 +448,8 @@
       "lt": "Rizikos:",
       "pt": "Riscos:",
       "it": "Rischi:",
-      "no": "Risks:"
+      "no": "Risks:",
+      "el": "Risks:"
     },
     "modules.entry_point.role": {
       "en": "Role:",
@@ -418,7 +459,8 @@
       "lt": "Vaidmuo:",
       "pt": "Papel:",
       "it": "Ruolo:",
-      "no": "Role:"
+      "no": "Role:",
+      "el": "Role:"
     },
     "modules.entry_point.select_all_that_apply_multiple_selection_allowed": {
       "en": "Select all that apply (multiple selection allowed)",
@@ -428,7 +470,8 @@
       "lt": "Pasirinkite visus tinkamus (galima kelių pasirinkimas)",
       "pt": "Selecione todos os que se aplicam (seleção múltipla permitida)",
       "it": "Seleziona tutte quelle applicabili (selezione multipla consentita)",
-      "no": "Select all that apply (multiple selection allowed)"
+      "no": "Select all that apply (multiple selection allowed)",
+      "el": "Επιλογή Όλα that apply (multiple selection allowed)"
     },
     "modules.entry_point.select_the_knowledge_domains_and_analytical_approa": {
       "en": "Select the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks.",
@@ -438,7 +481,8 @@
       "lt": "Pasirinkite žinių sritis ir analitinius metodus, susijusius su jūsų klausimu. Tai padeda susieti jus su tinkamomis analizės priemonėmis ir sistemomis.",
       "pt": "Selecione os domínios de conhecimento e abordagens analíticas relevantes para a sua questão. Isto ajuda a combiná-lo com ferramentas e quadros de análise apropriados.",
       "it": "Seleziona gli ambiti di conoscenza e gli approcci analitici rilevanti per la tua domanda. Questo aiuta a abbinarti con strumenti e framework di analisi appropriati.",
-      "no": "Select the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks."
+      "no": "Select the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks.",
+      "el": "Επιλογή the knowledge domains and analytical approaches relevant to your question. This helps match you with appropriate analysis tools and frameworks."
     },
     "modules.entry_point.simplify_models_and_develop_management_scenarios": {
       "en": "Simplify models and develop management scenarios",
@@ -448,7 +492,8 @@
       "lt": "Supaprastinkite modelius ir sukurkite valdymo scenarijus",
       "pt": "Simplifique modelos e desenvolva cenários de gestão",
       "it": "Semplifica i modelli e sviluppa scenari di gestione",
-      "no": "Simplify models and develop management scenarios"
+      "no": "Simplify models and develop management scenarios",
+      "el": "Απλοποίηση Μοντέλα and develop management scenarios"
     },
     "modules.entry_point.skill": {
       "en": "Skill:",
@@ -458,7 +503,8 @@
       "lt": "Įgūdis:",
       "pt": "Habilidade:",
       "it": "Abilità:",
-      "no": "Skill:"
+      "no": "Skill:",
+      "el": "Skill:"
     },
     "modules.entry_point.skip_if_you_want_to_explore_all_activities_and_risks": {
       "en": "Skip if you want to explore all activities and risks",
@@ -468,7 +514,8 @@
       "lt": "Praleisti, jei norite ištirti visas veiklas ir rizikas",
       "pt": "Ignorar se quiser explorar todas as atividades e riscos",
       "it": "Salta se vuoi esplorare tutte le attività e i rischi",
-      "no": "Skip if you want to explore all activities and risks"
+      "no": "Skip if you want to explore all activities and risks",
+      "el": "Παράλειψη if you want to explore all activities and risks"
     },
     "modules.entry_point.skip_to_see_all_available_tools": {
       "en": "Skip to see all available tools",
@@ -478,7 +525,8 @@
       "lt": "Praleisti, kad pamatytumėte visas prieinamas priemones",
       "pt": "Ignorar para ver todas as ferramentas disponíveis",
       "it": "Salta per vedere tutti gli strumenti disponibili",
-      "no": "Skip to see all available tools"
+      "no": "Skip to see all available tools",
+      "el": "Παράλειψη to see all available tools"
     },
     "modules.entry_point.start_guided_journey": {
       "en": "Start Guided Journey",
@@ -488,7 +536,8 @@
       "lt": "Pradėti vedamą kelionę",
       "pt": "Iniciar Percurso Guiado",
       "it": "Inizia il Percorso Guidato",
-      "no": "Start Guided Journey"
+      "no": "Start Guided Journey",
+      "el": "Έναρξη Guided Journey"
     },
     "modules.entry_point.start_here": {
       "en": "START HERE",
@@ -498,7 +547,8 @@
       "lt": "PRADĖKITE ČIA",
       "pt": "COMEÇAR AQUI",
       "it": "INIZIA QUI",
-      "no": "START HERE"
+      "no": "START HERE",
+      "el": "Έναρξη HERE"
     },
     "modules.entry_point.start_over": {
       "en": "Start Over",
@@ -508,7 +558,8 @@
       "lt": "Pradėti iš naujo",
       "pt": "Recomeçar",
       "it": "Ricomincia",
-      "no": "Start Over"
+      "no": "Start Over",
+      "el": "Έναρξη Over"
     },
     "modules.entry_point.start_with_pims": {
       "en": "Start with PIMS:",
@@ -518,7 +569,8 @@
       "lt": "Pradėkite su PIMS:",
       "pt": "Começar com PIMS:",
       "it": "Inizia con PIMS:",
-      "no": "Start with PIMS:"
+      "no": "Start with PIMS:",
+      "el": "Έναρξη with PIMS:"
     },
     "modules.entry_point.step_by_step_guidance_through_the_entry_points": {
       "en": "Step-by-step guidance through the entry points",
@@ -528,7 +580,8 @@
       "lt": "Nuoseklus vedimas per įėjimo taškus",
       "pt": "Orientação passo a passo através dos pontos de entrada",
       "it": "Guida passo dopo passo attraverso i punti di ingresso",
-      "no": "Step-by-step guidance through the entry points"
+      "no": "Step-by-step guidance through the entry points",
+      "el": "Step-by-step guidance through the entry points"
     },
     "modules.entry_point.suggested_workflow": {
       "en": "Suggested Workflow:",
@@ -538,7 +591,8 @@
       "lt": "Siūloma darbo eiga:",
       "pt": "Fluxo de Trabalho Sugerido:",
       "it": "Flusso di Lavoro Suggerito:",
-      "no": "Suggested Workflow:"
+      "no": "Suggested Workflow:",
+      "el": "Suggested Workflow:"
     },
     "modules.entry_point.tools": {
       "en": "Tools",
@@ -548,7 +602,8 @@
       "lt": "Įrankiai",
       "pt": "Ferramentas",
       "it": "Strumenti",
-      "no": "Tools"
+      "no": "Tools",
+      "el": "Tools"
     },
     "modules.entry_point.topics": {
       "en": "Topics:",
@@ -558,7 +613,8 @@
       "lt": "Temos:",
       "pt": "Tópicos:",
       "it": "Argomenti:",
-      "no": "Topics:"
+      "no": "Topics:",
+      "el": "Topics:"
     },
     "modules.entry_point.typical_tasks": {
       "en": "Typical tasks:",
@@ -568,7 +624,8 @@
       "lt": "Įprastinės užduotys:",
       "pt": "Tarefas típicas:",
       "it": "Compiti tipici:",
-      "no": "Typical tasks:"
+      "no": "Typical tasks:",
+      "el": "Typical tasks:"
     },
     "modules.entry_point.understanding_the_fundamental_human_need_behind_yo": {
       "en": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
@@ -578,7 +635,8 @@
       "lt": "Supratimas pagrindinio žmogaus poreikio už jūsų klausimo padeda nustatyti svarbias ekosistemų paslaugas ir valdymo prioritetus.",
       "pt": "Compreender a necessidade humana fundamental por trás da sua questão ajuda a identificar serviços ecossistémicos relevantes e prioridades de gestão.",
       "it": "Comprendere il bisogno umano fondamentale dietro la tua domanda aiuta a identificare i servizi ecosistemici rilevanti e le priorità di gestione.",
-      "no": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities."
+      "no": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
+      "el": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities."
     },
     "modules.entry_point.use_create_ses_with_templates_or_ai_assistant_for_": {
       "en": "Use Create SES with templates or AI assistant for rapid model building (beginner-friendly)",
@@ -588,7 +646,8 @@
       "lt": "Naudokite Kurti SES su šablonais arba DI asistentu greitai modeliui sukurti (patogus pradedantiesiems)",
       "pt": "Use Criar SES com modelos ou assistente de IA para construção rápida de modelos (amigável para iniciantes)",
       "it": "Usa Crea SES con modelli o assistente IA per una rapida costruzione del modello (adatto ai principianti)",
-      "no": "Use Create SES with templates or AI assistant for rapid model building (beginner-friendly)"
+      "no": "Use Create SES with templates or AI assistant for rapid model building (beginner-friendly)",
+      "el": "Use Create SES with templates or AI assistant for rapid model building (beginner-friendly)"
     },
     "modules.entry_point.use_isa_dat_entry_to_map_dapsiwrm_elements_with_co": {
       "en": "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection",
@@ -598,7 +657,8 @@
       "lt": "Naudokite ISA duomenų įvedimą DAPSI(W)R(M) elementams susieti su pasitikėjimo lygiais (1-5) kiekvienam ryšiui",
       "pt": "Use Entrada de Dados ISA para mapear elementos DAPSI(W)R(M) com níveis de confiança (1-5) para cada conexão",
       "it": "Usa Inserimento Dati ISA per mappare elementi DAPSI(W)R(M) con livelli di confidenza (1-5) per ogni connessione",
-      "no": "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection"
+      "no": "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection",
+      "el": "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection"
     },
     "modules.entry_point.visualize_analyze": {
       "en": "Visualize & Analyze:",
@@ -608,7 +668,8 @@
       "lt": "Vizualizuoti ir analizuoti:",
       "pt": "Visualizar e Analisar:",
       "it": "Visualizza e Analizza:",
-      "no": "Visualize & Analyze:"
+      "no": "Visualize & Analyze:",
+      "el": "Οπτικοποίηση & Analyze:"
     },
     "modules.entry_point.welcome": {
       "en": "Welcome",
@@ -618,7 +679,8 @@
       "lt": "Sveiki",
       "pt": "Bem-vindo",
       "it": "Benvenuto",
-      "no": "Welcome"
+      "no": "Welcome",
+      "el": "Καλώς ήρθατε"
     },
     "modules.entry_point.what_topic_areas_are_you_interested_in_select_all_that_apply": {
       "en": "What topic areas are you interested in? (Select all that apply)",
@@ -628,7 +690,8 @@
       "lt": "Kokios teminės sritys jus domina? (Pasirinkite visas tinkamas)",
       "pt": "Que áreas temáticas lhe interessam? (Selecione todas as que se aplicam)",
       "it": "Quali aree tematiche ti interessano? (Seleziona tutte quelle applicabili)",
-      "no": "What topic areas are you interested in? (Select all that apply)"
+      "no": "What topic areas are you interested in? (Select all that apply)",
+      "el": "What topic areas are you interested in? (Select all that apply)"
     },
     "modules.entry_point.your_pathway_summary": {
       "en": "Your Pathway Summary",
@@ -638,7 +701,8 @@
       "lt": "Jūsų kelio santrauka",
       "pt": "Resumo do Seu Percurso",
       "it": "Riepilogo del Tuo Percorso",
-      "no": "Your Pathway Summary"
+      "no": "Your Pathway Summary",
+      "el": "Your Pathway Summary"
     },
     "modules.entry_point.your_progress": {
       "en": "Your Progress:",
@@ -648,7 +712,8 @@
       "lt": "Jūsų pažanga:",
       "pt": "O Seu Progresso:",
       "it": "Il Tuo Progresso:",
-      "no": "Your Progress:"
+      "no": "Your Progress:",
+      "el": "Your Progress:"
     },
     "modules.entry_point.your_role_helps_us_recommend_the_most_relevant_too": {
       "en": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
@@ -658,7 +723,8 @@
       "lt": "Jūsų vaidmuo padeda mums rekomenduoti tinkamiausias priemones ir darbo eigas jūsų jūrų valdymo kontekstui.",
       "pt": "O seu papel ajuda-nos a recomendar as ferramentas e fluxos de trabalho mais relevantes para o seu contexto de gestão marinha.",
       "it": "Il tuo ruolo ci aiuta a raccomandare gli strumenti e i flussi di lavoro più rilevanti per il tuo contesto di gestione marina.",
-      "no": "Your role helps us recommend the most relevant tools and workflows for your marine management context."
+      "no": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
+      "el": "Your role helps us recommend the most relevant tools and workflows for your marine management context."
     },
     "modules.entry_point.ep_notify_select_need": {
       "en": "Ep Notify Select Need",
@@ -668,7 +734,8 @@
       "lt": "[LT] Ep Notify Select Need",
       "pt": "[PT] Ep Notify Select Need",
       "it": "[IT] Ep Notify Select Need",
-      "no": "Ep Notify Select Need"
+      "no": "Ep Notify Select Need",
+      "el": "Ep Notify Select Need"
     },
     "modules.entry_point.ep_notify_use_main_menu": {
       "en": "Ep Notify Use Main Menu",
@@ -678,7 +745,8 @@
       "lt": "[LT] Ep Notify Use Main Menu",
       "pt": "[PT] Ep Notify Use Main Menu",
       "it": "[IT] Ep Notify Use Main Menu",
-      "no": "Ep Notify Use Main Menu"
+      "no": "Ep Notify Use Main Menu",
+      "el": "Ep Notify Use Main Menu"
     },
     "modules.entry_point.ep_priority_also_relevant": {
       "en": "Ep Priority Also Relevant",
@@ -688,7 +756,8 @@
       "lt": "[LT] Ep Priority Also Relevant",
       "pt": "[PT] Ep Priority Also Relevant",
       "it": "[IT] Ep Priority Also Relevant",
-      "no": "Ep Priority Also Relevant"
+      "no": "Ep Priority Also Relevant",
+      "el": "Ep Priority Also Relevant"
     },
     "modules.entry_point.ep_priority_next_step": {
       "en": "Ep Priority Next Step",
@@ -698,7 +767,8 @@
       "lt": "[LT] Ep Priority Next Step",
       "pt": "[PT] Ep Priority Next Step",
       "it": "[IT] Ep Priority Next Step",
-      "no": "Ep Priority Next Step"
+      "no": "Ep Priority Next Step",
+      "el": "Ep Priority Next Step"
     },
     "modules.entry_point.ep_priority_start_here": {
       "en": "Ep Priority Start Here",
@@ -708,7 +778,8 @@
       "lt": "[LT] Ep Priority Start Here",
       "pt": "[PT] Ep Priority Start Here",
       "it": "[IT] Ep Priority Start Here",
-      "no": "Ep Priority Start Here"
+      "no": "Ep Priority Start Here",
+      "el": "Ep Priority Start Here"
     },
     "modules.entry_point.error_generating_pathway_report": {
       "en": "Error Generating Pathway Report",
@@ -718,7 +789,8 @@
       "lt": "[LT] Error Generating Pathway Report",
       "pt": "[PT] Error Generating Pathway Report",
       "it": "[IT] Error Generating Pathway Report",
-      "no": "Error Generating Pathway Report"
+      "no": "Error Generating Pathway Report",
+      "el": "Σφάλμα Generating Pathway Report"
     },
     "modules.response.measures.export": {
       "en": "Export Pathway Report",
@@ -728,7 +800,8 @@
       "lt": "Eksportuoti kelio ataskaitą",
       "pt": "Exportar Relatório de Percurso",
       "it": "Esporta Rapporto Percorso",
-      "no": "Export Pathway Report"
+      "no": "Export Pathway Report",
+      "el": "Εξαγωγή Pathway Report"
     },
     "modules.entry_point.pathway_report_generated_successfully": {
       "en": "Pathway Report Generated Successfully",
@@ -738,7 +811,8 @@
       "lt": "[LT] Pathway Report Generated Successfully",
       "pt": "[PT] Pathway Report Generated Successfully",
       "it": "[IT] Pathway Report Generated Successfully",
-      "no": "Pathway Report Generated Successfully"
+      "no": "Pathway Report Generated Successfully",
+      "el": "Pathway Report Generated Successfully"
     },
     "modules.entry_point.select_your_role_in_marine_management_multiple_sel": {
       "en": "Select Your Role In Marine Management Multiple Sel",
@@ -748,7 +822,8 @@
       "lt": "[LT] Select Your Role In Marine Management Multiple Sel",
       "pt": "[PT] Select Your Role In Marine Management Multiple Sel",
       "it": "[IT] Select Your Role In Marine Management Multiple Sel",
-      "no": "Select Your Role In Marine Management Multiple Sel"
+      "no": "Select Your Role In Marine Management Multiple Sel",
+      "el": "Επιλογή Your Role In Marine Management Multiple Sel"
     },
     "modules.ses.creation.ecosystem_services": {
       "en": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
@@ -758,7 +833,8 @@
       "lt": "Supratimas pagrindinio žmogaus poreikio už jūsų klausimo padeda nustatyti svarbias ekosistemų paslaugas ir valdymo prioritetus.",
       "pt": "Compreender a necessidade humana fundamental por trás da sua questão ajuda a identificar serviços ecossistémicos relevantes e prioridades de gestão.",
       "it": "Comprendere il bisogno umano fondamentale dietro la tua domanda aiuta a identificare i servizi ecosistemici rilevanti e le priorità di gestione.",
-      "no": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities."
+      "no": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
+      "el": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities."
     },
     "modules.ses.creation.es": {
       "en": "Welcome to the MarineSABRES Toolbox",
@@ -768,7 +844,8 @@
       "lt": "Sveiki atvykę į MarineSABRES įrankių rinkinį",
       "pt": "Bem-vindo à Caixa de Ferramentas MarineSABRES",
       "it": "Benvenuto nella Toolbox MarineSABRES",
-      "no": "Welcome to the MarineSABRES Toolbox"
+      "no": "Welcome to the MarineSABRES Toolbox",
+      "el": "Καλώς ήρθατε to the MarineSABRES Toolbox"
     },
     "modules.entry_point.what_basic_human_need_drives_your_question_multipl": {
       "en": "What Basic Human Need Drives Your Question Multipl",
@@ -778,7 +855,8 @@
       "lt": "[LT] What Basic Human Need Drives Your Question Multipl",
       "pt": "[PT] What Basic Human Need Drives Your Question Multipl",
       "it": "[IT] What Basic Human Need Drives Your Question Multipl",
-      "no": "What Basic Human Need Drives Your Question Multipl"
+      "no": "What Basic Human Need Drives Your Question Multipl",
+      "el": "What Basic Human Need Drives Your Question Multipl"
     },
     "modules.response.measures.low": {
       "en": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
@@ -788,7 +866,8 @@
       "lt": "Jūsų vaidmuo padeda mums rekomenduoti tinkamiausias priemones ir darbo eigas jūsų jūrų valdymo kontekstui.",
       "pt": "O seu papel ajuda-nos a recomendar as ferramentas e fluxos de trabalho mais relevantes para o seu contexto de gestão marinha.",
       "it": "Il tuo ruolo ci aiuta a raccomandare gli strumenti e i flussi di lavoro più rilevanti per il tuo contesto di gestione marina.",
-      "no": "Your role helps us recommend the most relevant tools and workflows for your marine management context."
+      "no": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
+      "el": "Your role helps us recommend the most relevant tools and workflows for your marine management context."
     }
   }
 }

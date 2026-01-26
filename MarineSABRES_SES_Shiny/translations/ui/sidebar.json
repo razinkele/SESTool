@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "ui.sidebar.ai_assistant": {
@@ -18,7 +19,8 @@
       "lt": "AI asistentas",
       "pt": "Assistente IA",
       "it": "Assistente IA",
-      "no": "AI-assistent"
+      "no": "AI-assistent",
+      "el": "AI Assistant"
     },
     "ui.sidebar.ai_guided_ses_creation": {
       "en": "AI guided SES creation",
@@ -28,7 +30,8 @@
       "lt": "AI vadovaujama SES kūrimas",
       "pt": "Criação SES guiada por IA",
       "it": "Creazione SES guidata da IA",
-      "no": "AI-veiledet SES-opprettelse"
+      "no": "AI-veiledet SES-opprettelse",
+      "el": "AI guided SES creation"
     },
     "ui.sidebar.analysis_tools": {
       "en": "Analysis Tools",
@@ -38,7 +41,8 @@
       "lt": "Analizės įrankiai",
       "pt": "Ferramentas de Análise",
       "it": "Strumenti di Analisi",
-      "no": "Analyseverktøy"
+      "no": "Analyseverktøy",
+      "el": "Ανάλυση Tools"
     },
     "ui.sidebar.bot_analysis": {
       "en": "BOT Analysis",
@@ -48,7 +52,8 @@
       "lt": "BOT analizė",
       "pt": "Análise BOT",
       "it": "Analisi BOT",
-      "no": "BOT-analyse"
+      "no": "BOT-analyse",
+      "el": "BOT Analysis"
     },
     "ui.sidebar.choose_method": {
       "en": "Choose Method",
@@ -58,7 +63,8 @@
       "lt": "Pasirinkti metodą",
       "pt": "Escolher Método",
       "it": "Scegli Metodo",
-      "no": "Velg metode"
+      "no": "Velg metode",
+      "el": "Επιλέξτε Method"
     },
     "ui.sidebar.cld_visualization": {
       "en": "CLD Visualization",
@@ -68,7 +74,8 @@
       "lt": "CLD vizualizacija",
       "pt": "Visualização CLD",
       "it": "Visualizzazione CLD",
-      "no": "CLD-visualisering"
+      "no": "CLD-visualisering",
+      "el": "CLD Οπτικοποίηση"
     },
     "ui.sidebar.create_ses": {
       "en": "Create SES",
@@ -78,7 +85,8 @@
       "lt": "Sukurti SES",
       "pt": "Criar SES",
       "it": "Crea SES",
-      "no": "Opprett SES"
+      "no": "Opprett SES",
+      "el": "Δημιουργία SES"
     },
     "ui.sidebar.dashboard": {
       "en": "Dashboard",
@@ -88,7 +96,8 @@
       "lt": "Prietaisų skydelis",
       "pt": "Painel de Controlo",
       "it": "Pannello di Controllo",
-      "no": "Dashbord"
+      "no": "Dashbord",
+      "el": "Πίνακας ελέγχου"
     },
     "ui.sidebar.entry_point": {
       "en": "Entry Point",
@@ -98,7 +107,8 @@
       "lt": "Įėjimo taškas",
       "pt": "Ponto de Entrada",
       "it": "Punto di Ingresso",
-      "no": "Innganspunkt"
+      "no": "Innganspunkt",
+      "el": "Entry Point"
     },
     "ui.sidebar.evaluation": {
       "en": "Evaluation",
@@ -108,7 +118,8 @@
       "lt": "Vertinimas",
       "pt": "Avaliação",
       "it": "Valutazione",
-      "no": "Evaluering"
+      "no": "Evaluering",
+      "el": "Αξιολόγηση"
     },
     "ui.sidebar.export_data": {
       "en": "Export Data",
@@ -118,7 +129,8 @@
       "lt": "Eksportuoti duomenis",
       "pt": "Exportar Dados",
       "it": "Esporta Dati",
-      "no": "Eksporter data"
+      "no": "Eksporter data",
+      "el": "Εξαγωγή Δεδομένα"
     },
     "ui.sidebar.getting_started": {
       "en": "Getting Started",
@@ -128,7 +140,8 @@
       "lt": "Pradėti",
       "pt": "Começar",
       "it": "Iniziare",
-      "no": "Kom i gang"
+      "no": "Kom i gang",
+      "el": "Getting Started"
     },
     "ui.sidebar.guided_entry_point_to_find_the_right_tools_for_you": {
       "en": "Guided entry point to find the right tools for your marine management needs",
@@ -138,7 +151,8 @@
       "lt": "Vadovaujamas įėjimo taškas, padedantis rasti tinkamus įrankius jūrų valdymo poreikiams",
       "pt": "Ponto de entrada guiado para encontrar as ferramentas certas para suas necessidades de gestão marinha",
       "it": "Punto di ingresso guidato per trovare gli strumenti giusti per le tue esigenze di gestione marina",
-      "no": "Veiledet innganspunkt for å finne de rette verktøyene for dine marine forvaltningsbehov"
+      "no": "Veiledet innganspunkt for å finne de rette verktøyene for dine marine forvaltningsbehov",
+      "el": "Guided entry point to find the right tools for your marine management needs"
     },
     "ui.sidebar.import_data": {
       "en": "Import Data",
@@ -148,7 +162,8 @@
       "lt": "Importuoti duomenis",
       "pt": "Importar Dados",
       "it": "Importa Dati",
-      "no": "Importer data"
+      "no": "Importer data",
+      "el": "Εισαγωγή Δεδομένα"
     },
     "ui.sidebar.leverage_point_analysis": {
       "en": "Leverage Point Analysis",
@@ -158,7 +173,8 @@
       "lt": "Svertų taškų analizė",
       "pt": "Análise de Pontos de Alavancagem",
       "it": "Analisi dei Punti di Leva",
-      "no": "Påvirkningspunktanalyse"
+      "no": "Påvirkningspunktanalyse",
+      "el": "Σημείο μόχλευσης Ανάλυση"
     },
     "ui.sidebar.load_a_previously_saved_project": {
       "en": "Load a previously saved project",
@@ -168,7 +184,41 @@
       "lt": "Įkelti anksčiau išsaugotą projektą",
       "pt": "Carregar um projeto guardado anteriormente",
       "it": "Carica un progetto salvato in precedenza",
-      "no": "Last inn et tidligere lagret prosjekt"
+      "no": "Last inn et tidligere lagret prosjekt",
+      "el": "Load a previously saved project"
+    },
+    "ui.sidebar.local_storage": {
+      "en": "Local Folder",
+      "es": "Carpeta Local",
+      "fr": "Dossier Local",
+      "de": "Lokaler Ordner",
+      "lt": "Vietinis Aplankas",
+      "pt": "Pasta Local",
+      "it": "Cartella Locale",
+      "no": "Lokal Mappe",
+      "el": "Local Folder"
+    },
+    "ui.sidebar.save_to_local_folder": {
+      "en": "Save project to your local folder",
+      "es": "Guardar proyecto en su carpeta local",
+      "fr": "Enregistrer le projet dans votre dossier local",
+      "de": "Projekt in Ihrem lokalen Ordner speichern",
+      "lt": "Išsaugoti projektą vietiniame aplanke",
+      "pt": "Salvar projeto na sua pasta local",
+      "it": "Salva progetto nella tua cartella locale",
+      "no": "Lagre prosjekt til din lokale mappe",
+      "el": "Αποθήκευση Έργο to your local folder"
+    },
+    "ui.sidebar.load_from_local_folder": {
+      "en": "Load project from your local folder",
+      "es": "Cargar proyecto desde su carpeta local",
+      "fr": "Charger le projet depuis votre dossier local",
+      "de": "Projekt aus Ihrem lokalen Ordner laden",
+      "lt": "Įkelti projektą iš vietinio aplanko",
+      "pt": "Carregar projeto da sua pasta local",
+      "it": "Carica progetto dalla tua cartella locale",
+      "no": "Last prosjekt fra din lokale mappe",
+      "el": "Load project from your local folder"
     },
     "ui.sidebar.loop_detection": {
       "en": "Loop Detection",
@@ -178,7 +228,8 @@
       "lt": "Ciklų aptikimas",
       "pt": "Deteção de Ciclos",
       "it": "Rilevamento Cicli",
-      "no": "Sløyfedeteksjon"
+      "no": "Sløyfedeteksjon",
+      "el": "Ανίχνευση βρόχων"
     },
     "ui.sidebar.navigate_to_": {
       "en": "Navigate to ",
@@ -188,7 +239,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "Naviger til "
+      "no": "Naviger til ",
+      "el": "Navigate to "
     },
     "ui.sidebar.navigating_to_s": {
       "en": "Navigating to %s...",
@@ -198,7 +250,8 @@
       "lt": "Naviguojama į %s...",
       "pt": "Navegando para %s...",
       "it": "Navigando verso %s...",
-      "no": "Navigerer til %s..."
+      "no": "Navigerer til %s...",
+      "el": "Navigating to %s..."
     },
     "ui.sidebar.network_metrics": {
       "en": "Network Metrics",
@@ -208,7 +261,8 @@
       "lt": "Tinklo metrikos",
       "pt": "Métricas de Rede",
       "it": "Metriche di Rete",
-      "no": "Nettverksmålinger"
+      "no": "Nettverksmålinger",
+      "el": "Δίκτυο Μετρικές"
     },
     "ui.sidebar.overview_of_your_project_status_and_key_metrics": {
       "en": "Overview of your project status and key metrics",
@@ -218,7 +272,8 @@
       "lt": "Projekto būsenos ir pagrindinių rodiklių apžvalga",
       "pt": "Visão geral do status do projeto e métricas-chave",
       "it": "Panoramica dello stato del progetto e metriche chiave",
-      "no": "Oversikt over prosjektstatus og nøkkelparametre"
+      "no": "Oversikt over prosjektstatus og nøkkelparametre",
+      "el": "Επισκόπηση of your project status and key metrics"
     },
     "ui.sidebar.pims": {
       "en": "PIMS",
@@ -228,7 +283,8 @@
       "lt": "PIMS",
       "pt": "PIMS",
       "it": "PIMS",
-      "no": "PIMS"
+      "no": "PIMS",
+      "el": "PIMS"
     },
     "ui.sidebar.pims_module": {
       "en": "PIMS Module",
@@ -238,7 +294,8 @@
       "lt": "PIMS modulis",
       "pt": "Módulo PIMS",
       "it": "Modulo PIMS",
-      "no": "PIMS-modul"
+      "no": "PIMS-modul",
+      "el": "PIMS Module"
     },
     "ui.sidebar.prepare_report": {
       "en": "Prepare Report",
@@ -248,7 +305,8 @@
       "lt": "Parengti ataskaitą",
       "pt": "Preparar Relatório",
       "it": "Prepara Report",
-      "no": "Forbered rapport"
+      "no": "Forbered rapport",
+      "el": "Prepare Report"
     },
     "ui.sidebar.project_setup": {
       "en": "Project Setup",
@@ -258,7 +316,8 @@
       "lt": "Projekto sąranka",
       "pt": "Configuração do Projeto",
       "it": "Configurazione Progetto",
-      "no": "Prosjektoppsett"
+      "no": "Prosjektoppsett",
+      "el": "Έργο Setup"
     },
     "ui.sidebar.quick_actions": {
       "en": "Quick Actions",
@@ -268,7 +327,8 @@
       "lt": "Greiti veiksmai",
       "pt": "Ações Rápidas",
       "it": "Azioni Rapide",
-      "no": "Hurtighandlinger"
+      "no": "Hurtighandlinger",
+      "el": "Quick Actions"
     },
     "ui.sidebar.resources_risks": {
       "en": "Resources & Risks",
@@ -278,7 +338,8 @@
       "lt": "Ištekliai ir rizikos",
       "pt": "Recursos e Riscos",
       "it": "Risorse e Rischi",
-      "no": "Ressurser og risikoer"
+      "no": "Ressurser og risikoer",
+      "el": "Resources & Risks"
     },
     "ui.sidebar.response_measures": {
       "en": "Response Measures",
@@ -288,7 +349,8 @@
       "lt": "Atsakomosios priemonės",
       "pt": "Medidas de Resposta",
       "it": "Misure di Risposta",
-      "no": "Responstiltak"
+      "no": "Responstiltak",
+      "el": "Απόκριση Μέτρα"
     },
     "ui.sidebar.response_validation": {
       "en": "Response & Validation",
@@ -298,7 +360,8 @@
       "lt": "Atsakas ir Validacija",
       "pt": "Resposta e Validação",
       "it": "Risposta e Validazione",
-      "no": "Respons og validering"
+      "no": "Respons og validering",
+      "el": "Απόκριση & Validation"
     },
     "ui.sidebar.save_your_curr_proj_dat_incl_all_pims_isa_ent_and_": {
       "en": "Save your current project data, including all PIMS, ISA entries, and analysis results",
@@ -308,7 +371,8 @@
       "lt": "Išsaugokite dabartinio projekto duomenis, įskaitant visus PIMS, ISA įrašus ir analizės rezultatus",
       "pt": "Guarde os dados do seu projeto atual, incluindo todas as entradas PIMS, ISA e resultados de análise",
       "it": "Salva i dati del progetto corrente, incluse tutte le voci PIMS, ISA e i risultati dell'analisi",
-      "no": "Lagre dine nåværende prosjektdata, inkludert alle PIMS, ISA-oppføringer og analyseresultater"
+      "no": "Lagre dine nåværende prosjektdata, inkludert alle PIMS, ISA-oppføringer og analyseresultater",
+      "el": "Αποθήκευση your current project data, including all PIMS, ISA entries, and analysis results"
     },
     "ui.sidebar.scenario_builder": {
       "en": "Scenario Builder",
@@ -318,7 +382,8 @@
       "lt": "Scenarijų kūrimas",
       "pt": "Construtor de Cenários",
       "it": "Costruttore di Scenari",
-      "no": "Scenariobygger"
+      "no": "Scenariobygger",
+      "el": "Σενάριο Builder"
     },
     "ui.sidebar.ses_visualization": {
       "en": "SES Visualization",
@@ -328,7 +393,8 @@
       "lt": "SES vizualizacija",
       "pt": "Visualização SES",
       "it": "Visualizzazione SES",
-      "no": "SES-visualisering"
+      "no": "SES-visualisering",
+      "el": "SES Οπτικοποίηση"
     },
     "ui.sidebar.simplification": {
       "en": "Simplification",
@@ -338,7 +404,8 @@
       "lt": "Supaprastinimas",
       "pt": "Simplificação",
       "it": "Semplificazione",
-      "no": "Forenkling"
+      "no": "Forenkling",
+      "el": "Απλοποίηση"
     },
     "ui.sidebar.stakeholders": {
       "en": "Stakeholders",
@@ -348,7 +415,8 @@
       "lt": "Suinteresuotos šalys",
       "pt": "Partes Interessadas",
       "it": "Stakeholder",
-      "no": "Interessenter"
+      "no": "Interessenter",
+      "el": "Ενδιαφερόμενα μέρη"
     },
     "ui.sidebar.standard_entry": {
       "en": "Standard Entry",
@@ -358,7 +426,8 @@
       "lt": "Standartinė įvestis",
       "pt": "Entrada Padrão",
       "it": "Inserimento Standard",
-      "no": "Standard inngang"
+      "no": "Standard inngang",
+      "el": "Standard Entry"
     },
     "ui.sidebar.template_based": {
       "en": "Template-Based",
@@ -368,7 +437,8 @@
       "lt": "Pagrįsta šablonais",
       "pt": "Baseado em Modelos",
       "it": "Basato su Modelli",
-      "no": "Malbasert"
+      "no": "Malbasert",
+      "el": "Template-Based"
     },
     "ui.sidebar.template_based_ses_creation": {
       "en": "Template based SES creation",
@@ -378,7 +448,8 @@
       "lt": "SES kūrimas pagal šablonus",
       "pt": "Criação SES baseada em modelos",
       "it": "Creazione SES basata su modelli",
-      "no": "Malbasert SES-opprettelse"
+      "no": "Malbasert SES-opprettelse",
+      "el": "Πρότυπο based SES creation"
     },
     "ui.sidebar.validation": {
       "en": "Validation",
@@ -388,7 +459,8 @@
       "lt": "Patvirtinimas",
       "pt": "Validação",
       "it": "Validazione",
-      "no": "Validering"
+      "no": "Validering",
+      "el": "Επικύρωση"
     },
     "ui.sidebar.welcome": {
       "en": "Welcome",
@@ -398,7 +470,8 @@
       "lt": "Sveiki",
       "pt": "Bem-vindo",
       "it": "Benvenuto",
-      "no": "Velkommen"
+      "no": "Velkommen",
+      "el": "Καλώς ήρθατε"
     },
     "ui.sidebar.tooltip.pims_module": {
       "en": "Project Information Management System for planning and tracking your marine management initiatives",
@@ -408,7 +481,8 @@
       "lt": "Projekto informacijos valdymo sistema jūrų valdymo iniciatyvų planavimui ir stebėjimui",
       "pt": "Sistema de Gestão de Informação de Projetos para planeamento e acompanhamento de iniciativas de gestão marinha",
       "it": "Sistema di Gestione delle Informazioni di Progetto per pianificare e monitorare le iniziative di gestione marina",
-      "no": "Prosjektinformasjonsstyringssystem for planlegging og oppfølging av marine forvaltningsinitiativ"
+      "no": "Prosjektinformasjonsstyringssystem for planlegging og oppfølging av marine forvaltningsinitiativ",
+      "el": "Πληροφορίες έργου Διαχείριση System for planning and tracking your marine management initiatives"
     },
     "ui.sidebar.tooltip.ai_guided_ses": {
       "en": "Guided question-based SES creation with AI assistance to help you build your model step by step",
@@ -418,7 +492,8 @@
       "lt": "Vadovaujamas klausimais pagrįstas SES kūrimas su AI pagalba, padedant kurti modelį žingsnis po žingsnio",
       "pt": "Criação SES guiada por perguntas com assistência de IA para ajudá-lo a construir seu modelo passo a passo",
       "it": "Creazione SES guidata da domande con assistenza IA per aiutarti a costruire il tuo modello passo dopo passo",
-      "no": "Veiledet spørsmålsbasert SES-opprettelse med AI-assistanse for å hjelpe deg med å bygge modellen din trinn for trinn"
+      "no": "Veiledet spørsmålsbasert SES-opprettelse med AI-assistanse for å hjelpe deg med å bygge modellen din trinn for trinn",
+      "el": "Guided question-based SES creation with AI assistance to help you build your model step by step"
     },
     "ui.sidebar.tooltip.template_based_ses": {
       "en": "Start from pre-built SES templates for common marine management scenarios (pollution, overfishing, tourism)",
@@ -428,7 +503,8 @@
       "lt": "Pradėkite nuo iš anksto sukurtų SES šablonų įprastiniams jūrų valdymo scenarijams (tarša, peržvejyba, turizmas)",
       "pt": "Comece a partir de modelos SES pré-construídos para cenários comuns de gestão marinha (poluição, sobrepesca, turismo)",
       "it": "Inizia da modelli SES precostituiti per scenari comuni di gestione marina (inquinamento, sovrapesca, turismo)",
-      "no": "Start fra forhåndsbygde SES-maler for vanlige marine forvaltningsscenarier (forurensning, overfiske, turisme)"
+      "no": "Start fra forhåndsbygde SES-maler for vanlige marine forvaltningsscenarier (forurensning, overfiske, turisme)",
+      "el": "Έναρξη from pre-built SES templates for common marine management scenarios (pollution, overfishing, tourism)"
     },
     "ui.sidebar.tooltip.create_ses": {
       "en": "Create your Social-Ecological System using structured methods: standard DAPSI(W)R(M) framework, AI guidance, or templates",
@@ -438,7 +514,8 @@
       "lt": "Sukurkite savo socialinę-ekologinę sistemą naudodami struktūrizuotus metodus: standartinę DAPSI(W)R(M) sistemą, AI vedimą arba šablonus",
       "pt": "Crie seu Sistema Sócio-Ecológico usando métodos estruturados: estrutura DAPSI(W)R(M) padrão, orientação de IA ou modelos",
       "it": "Crea il tuo Sistema Socio-Ecologico utilizzando metodi strutturati: framework DAPSI(W)R(M) standard, guida IA o modelli",
-      "no": "Opprett ditt sosial-økologiske system ved hjelp av strukturerte metoder: standard DAPSI(W)R(M)-rammeverk, AI-veiledning eller maler"
+      "no": "Opprett ditt sosial-økologiske system ved hjelp av strukturerte metoder: standard DAPSI(W)R(M)-rammeverk, AI-veiledning eller maler",
+      "el": "Δημιουργία your Social-Ecological System using structured methods: standard DAPSI(W)R(M) framework, AI guidance, or templates"
     },
     "ui.sidebar.tooltip.ses_visualization": {
       "en": "Interactive visualization of your Social-Ecological System network showing connections, feedback loops, and system structure",
@@ -448,7 +525,8 @@
       "lt": "Interaktyvi socialinės-ekologinės sistemos tinklo vizualizacija, rodanti ryšius, grįžtamojo ryšio ciklus ir sistemos struktūrą",
       "pt": "Visualização interativa da rede do seu Sistema Sócio-Ecológico mostrando conexões, ciclos de retroalimentação e estrutura do sistema",
       "it": "Visualizzazione interattiva della rete del tuo Sistema Socio-Ecologico che mostra connessioni, cicli di feedback e struttura del sistema",
-      "no": "Interaktiv visualisering av ditt sosial-økologiske systemnettverksom viser forbindelser, tilbakekoblingssløyfer og systemstruktur"
+      "no": "Interaktiv visualisering av ditt sosial-økologiske systemnettverksom viser forbindelser, tilbakekoblingssløyfer og systemstruktur",
+      "el": "Interactive visualization of your Social-Ecological System network showing connections, feedback loops, and system structure"
     },
     "ui.sidebar.tooltip.analysis_tools_beginner": {
       "en": "Essential network analysis tools for understanding feedback loops and identifying key intervention points in your SES",
@@ -458,7 +536,8 @@
       "lt": "Pagrindiniai tinklo analizės įrankiai grįžtamojo ryšio ciklams suprasti ir svarbiausių intervencijos taškų nustatymui jūsų SES",
       "pt": "Ferramentas essenciais de análise de rede para compreender ciclos de retroalimentação e identificar pontos-chave de intervenção no seu SES",
       "it": "Strumenti essenziali di analisi di rete per comprendere i cicli di feedback e identificare i punti chiave di intervento nel tuo SES",
-      "no": "Essensielle nettverksanalyseverktøy for å forstå tilbakekoblingssløyfer og identifisere sentrale intervensjonspunkter i SES-en din"
+      "no": "Essensielle nettverksanalyseverktøy for å forstå tilbakekoblingssløyfer og identifisere sentrale intervensjonspunkter i SES-en din",
+      "el": "Essential network analysis tools for understanding feedback loops and identifying key intervention points in your SES"
     },
     "ui.sidebar.tooltip.analysis_tools_advanced": {
       "en": "Advanced network analysis and metrics tools including centrality measures, BOT analysis, and model simplification techniques",
@@ -468,7 +547,8 @@
       "lt": "Pažangūs tinklo analizės ir metrikų įrankiai, įskaitant centralizuotės matavimus, BOT analizę ir modelio supaprastinimo metodus",
       "pt": "Ferramentas avançadas de análise de rede e métricas, incluindo medidas de centralidade, análise BOT e técnicas de simplificação de modelos",
       "it": "Strumenti avanzati di analisi di rete e metriche incluse misure di centralità, analisi BOT e tecniche di semplificazione del modello",
-      "no": "Avanserte nettverksanalyse- og metrikkverktøy inkludert sentralitetsmål, BOT-analyse og modellforenklingsteknkker"
+      "no": "Avanserte nettverksanalyse- og metrikkverktøy inkludert sentralitetsmål, BOT-analyse og modellforenklingsteknkker",
+      "el": "Προχωρημένος Δίκτυο Ανάλυση and metrics tools including centrality measures, BOT analysis, and model simplification techniques"
     },
     "ui.sidebar.tooltip.response_validation": {
       "en": "Design response measures, build management scenarios, and validate your model with stakeholder feedback",
@@ -478,7 +558,8 @@
       "lt": "Sukurkite atsako priemones, kurkite valdymo scenarijus ir patvirtinkite modelį su suinteresuotųjų šalių grįžtamuoju ryšiu",
       "pt": "Projete medidas de resposta, construa cenários de gestão e valide seu modelo com feedback das partes interessadas",
       "it": "Progetta misure di risposta, costruisci scenari di gestione e convalida il tuo modello con il feedback delle parti interessate",
-      "no": "Utform responstiltak, bygg forvaltningsscenarier og valider modellen din med tilbakemelding fra interessenter"
+      "no": "Utform responstiltak, bygg forvaltningsscenarier og valider modellen din med tilbakemelding fra interessenter",
+      "el": "Design response measures, build management scenarios, and validate your model with stakeholder feedback"
     },
     "ui.sidebar.tooltip.import_data": {
       "en": "Import existing data from Excel files with Elements and Connections sheets to quickly populate your SES model",
@@ -488,7 +569,8 @@
       "lt": "Importuokite esamus duomenis iš Excel failų su Elementų ir Ryšių lapais, kad greitai užpildytumėte SES modelį",
       "pt": "Importe dados existentes de arquivos Excel com planilhas de Elementos e Conexões para preencher rapidamente seu modelo SES",
       "it": "Importa dati esistenti da file Excel con fogli Elementi e Connessioni per popolare rapidamente il tuo modello SES",
-      "no": "Importer eksisterende data fra Excel-filer med Element- og Forbindelsesark for raskt å fylle ut SES-modellen din"
+      "no": "Importer eksisterende data fra Excel-filer med Element- og Forbindelsesark for raskt å fylle ut SES-modellen din",
+      "el": "Εισαγωγή existing data from Excel files with Elements and Connections sheets to quickly populate your SES model"
     },
     "ui.sidebar.tooltip.export_data": {
       "en": "Export your SES data and analysis results to Excel, Kumu JSON, or generate comprehensive analysis reports",
@@ -498,7 +580,8 @@
       "lt": "Eksportuokite SES duomenis ir analizės rezultatus į Excel, Kumu JSON arba generuokite išsamias analizės ataskaitas",
       "pt": "Exporte seus dados SES e resultados de análise para Excel, JSON Kumu ou gere relatórios de análise abrangentes",
       "it": "Esporta i tuoi dati SES e risultati di analisi in Excel, JSON Kumu o genera report di analisi completi",
-      "no": "Eksporter SES-dataene dine og analyseresultater til Excel, Kumu JSON, eller generer omfattende analyserapporter"
+      "no": "Eksporter SES-dataene dine og analyseresultater til Excel, Kumu JSON, eller generer omfattende analyserapporter",
+      "el": "Εξαγωγή your SES data and analysis results to Excel, Kumu JSON, or generate comprehensive analysis reports"
     },
     "ui.sidebar.tooltip.prepare_report": {
       "en": "Generate a comprehensive analysis report combining loop detection and leverage point analysis results (requires both analyses to be completed)",
@@ -508,7 +591,8 @@
       "lt": "Generuokite išsamią analizės ataskaitą, apjungiančią ciklų aptikimo ir svertų taškų analizės rezultatus (reikalingos abi atliktos analizės)",
       "pt": "Gere um relatório de análise abrangente combinando resultados de deteção de ciclos e análise de pontos de alavancagem (requer ambas as análises concluídas)",
       "it": "Genera un report di analisi completo che combina i risultati del rilevamento dei cicli e dell'analisi dei punti di leva (richiede che entrambe le analisi siano completate)",
-      "no": "Generer en omfattende analyserapport som kombinerer resultater fra sløyfedeteksjon og påvirkningspunktanalyse (krever at begge analysene er fullført)"
+      "no": "Generer en omfattende analyserapport som kombinerer resultater fra sløyfedeteksjon og påvirkningspunktanalyse (krever at begge analysene er fullført)",
+      "el": "Generate a comprehensive analysis report combining loop detection and leverage point analysis results (requires both analyses to be completed)"
     },
     "ui.sidebar.tooltip.network_metrics": {
       "en": "Calculate network centrality metrics (degree, betweenness, closeness, eigenvector, PageRank) to identify the most important and influential nodes in your system",
@@ -518,7 +602,8 @@
       "lt": "Apskaičiuokite tinklo centralizuotės metrikas (laipsnį, tarpinę centralumą, artumo centralumą, tikrinį vektorių, PageRank), kad nustatytumėte svarbiausius ir įtakingiausius mazgus sistemoje",
       "pt": "Calcule métricas de centralidade de rede (grau, intermediação, proximidade, vetor próprio, PageRank) para identificar os nós mais importantes e influentes no seu sistema",
       "it": "Calcola le metriche di centralità della rete (grado, betweenness, closeness, eigenvector, PageRank) per identificare i nodi più importanti e influenti nel tuo sistema",
-      "no": "Beregn nettverkssentralitetsmålinger (grad, mellomliggende sentralitet, nærhetssentralitet, egenvektor, PageRank) for å identifisere de viktigste og mest innflytelsesrike nodene i systemet ditt"
+      "no": "Beregn nettverkssentralitetsmålinger (grad, mellomliggende sentralitet, nærhetssentralitet, egenvektor, PageRank) for å identifisere de viktigste og mest innflytelsesrike nodene i systemet ditt",
+      "el": "Υπολογισμός Δίκτυο Κεντρικότητα Μετρικές (degree, betweenness, closeness, eigenvector, PageRank) to identify the most important and influential nodes in your system"
     },
     "ui.sidebar.tooltip.loop_detection": {
       "en": "Identify feedback loops (reinforcing and balancing) in your causal network to understand system behavior, resilience, and potential intervention points",
@@ -528,7 +613,8 @@
       "lt": "Nustatykite grįžtamojo ryšio ciklus (stiprinančius ir balansuojančius) priežastiniame tinkle, kad suprastumėte sistemos elgesį, atsparumą ir galimus intervencijos taškus",
       "pt": "Identifique ciclos de retroalimentação (reforçadores e equilibradores) na sua rede causal para compreender o comportamento do sistema, resiliência e pontos potenciais de intervenção",
       "it": "Identifica i cicli di feedback (di rinforzo e di bilanciamento) nella tua rete causale per comprendere il comportamento del sistema, la resilienza e i potenziali punti di intervento",
-      "no": "Identifiser tilbakekoblingssløyfer (forsterkende og balanserende) i ditt årsaksnettverk for å forstå systemadferd, motstandsdyktighet og potensielle intervensjonspunkter"
+      "no": "Identifiser tilbakekoblingssløyfer (forsterkende og balanserende) i ditt årsaksnettverk for å forstå systemadferd, motstandsdyktighet og potensielle intervensjonspunkter",
+      "el": "Identify feedback loops (reinforcing and balancing) in your causal network to understand system behavior, resilience, and potential intervention points"
     },
     "ui.sidebar.tooltip.leverage_point_analysis": {
       "en": "Identify high-leverage intervention points by combining centrality metrics and loop participation to find nodes where small changes can have large system-wide effects",
@@ -538,7 +624,8 @@
       "lt": "Nustatykite didelės sverto galios intervencijos taškus, sujungdami centralizuotės metrikas ir dalyvavimą cikluose, kad rastumėte mazgus, kuriuose nedideli pokyčiai gali turėti didelį poveikį visai sistemai",
       "pt": "Identifique pontos de intervenção de alta alavancagem combinando métricas de centralidade e participação em ciclos para encontrar nós onde pequenas mudanças podem ter grandes efeitos em todo o sistema",
       "it": "Identifica punti di intervento ad alta leva combinando metriche di centralità e partecipazione ai cicli per trovare nodi dove piccoli cambiamenti possono avere grandi effetti sull'intero sistema",
-      "no": "Identifiser høye påvirkningspunkter for intervensjon ved å kombinere sentralitetsmålinger og sløyfedeltakelse for å finne noder der små endringer kan ha store systemomfattende effekter"
+      "no": "Identifiser høye påvirkningspunkter for intervensjon ved å kombinere sentralitetsmålinger og sløyfedeltakelse for å finne noder der små endringer kan ha store systemomfattende effekter",
+      "el": "Identify high-leverage intervention points by combining centrality metrics and loop participation to find nodes where small changes can have large system-wide effects"
     },
     "ui.sidebar.tooltip.bot_analysis": {
       "en": "Balance Over Time (BOT) analysis identifies structural patterns that may lead to policy resistance, unintended consequences, or system delays requiring careful intervention design",
@@ -548,7 +635,8 @@
       "lt": "Balanso laikui bėgant (BOT) analizė nustatostruktūrinius modelius, kurie gali lemti politikos pasipriešinimą, nenumatytas pasekmes ar sistemos vėlavimus, reikalaujančius kruopštaus intervencijos projekto",
       "pt": "A análise de Equilíbrio ao Longo do Tempo (BOT) identifica padrões estruturais que podem levar à resistência a políticas, consequências não intencionais ou atrasos do sistema que requerem design cuidadoso de intervenção",
       "it": "L'analisi di Balance Over Time (BOT) identifica modelli strutturali che possono portare a resistenza politica, conseguenze indesiderate o ritardi del sistema che richiedono una progettazione attenta dell'intervento",
-      "no": "Balance Over Time (BOT)-analyse identifiserer strukturelle mønstre som kan føre til politikk-motstand, utilsiktede konsekvenser eller systemforsinkelser som krever nøye intervensjonsdesign"
+      "no": "Balance Over Time (BOT)-analyse identifiserer strukturelle mønstre som kan føre til politikk-motstand, utilsiktede konsekvenser eller systemforsinkelser som krever nøye intervensjonsdesign",
+      "el": "Balance Over Time (BOT) analysis identifies structural patterns that may lead to policy resistance, unintended consequences, or system delays requiring careful intervention design"
     },
     "ui.sidebar.tooltip.simplification": {
       "en": "Simplify your network by identifying and removing less important nodes while preserving the core system structure, feedback loops, and key relationships for clearer communication",
@@ -558,7 +646,41 @@
       "lt": "Supaprastinkite tinklą nustatydami ir pašalindami mažiau svarbius mazgus, išlaikydami pagrindinę sistemos struktūrą, grįžtamojo ryšio ciklus ir pagrindinius ryšius aiškesniam bendravimui",
       "pt": "Simplifique sua rede identificando e removendo nós menos importantes enquanto preserva a estrutura central do sistema, ciclos de retroalimentação e relações-chave para comunicação mais clara",
       "it": "Semplifica la tua rete identificando e rimuovendo i nodi meno importanti preservando la struttura centrale del sistema, i cicli di feedback e le relazioni chiave per una comunicazione più chiara",
-      "no": "Forenkle nettverket ditt ved å identifisere og fjerne mindre viktige noder samtidig som du bevarer kjernesystemstrukturen, tilbakekoblingssløyfer og nøkkelrelasjoner for klarere kommunikasjon"
+      "no": "Forenkle nettverket ditt ved å identifisere og fjerne mindre viktige noder samtidig som du bevarer kjernesystemstrukturen, tilbakekoblingssløyfer og nøkkelrelasjoner for klarere kommunikasjon",
+      "el": "Απλοποίηση your network by identifying and removing less important nodes while preserving the core system structure, feedback loops, and key relationships for clearer communication"
+    },
+    "ui.sidebar.import_from_excel": {
+      "en": "Import from Excel",
+      "es": "Importar desde Excel",
+      "fr": "Importer depuis Excel",
+      "de": "Aus Excel importieren",
+      "lt": "Importuoti iš Excel",
+      "pt": "Importar do Excel",
+      "it": "Importa da Excel",
+      "no": "Importer fra Excel",
+      "el": "Εισαγωγή from Excel"
+    },
+    "ui.sidebar.load_ses_models": {
+      "en": "Load SES Models",
+      "es": "Cargar Modelos SES",
+      "fr": "Charger des Modèles SES",
+      "de": "SES-Modelle laden",
+      "lt": "Įkelti SES modelius",
+      "pt": "Carregar Modelos SES",
+      "it": "Carica Modelli SES",
+      "no": "Last inn SES-modeller",
+      "el": "Load SES Models"
+    },
+    "ui.sidebar.tooltip.load_ses_models": {
+      "en": "Load pre-built SES models from the SESModels directory organized by Demonstration Area",
+      "es": "Cargue modelos SES preconstruidos desde el directorio SESModels organizados por Área de Demostración",
+      "fr": "Chargez des modèles SES préconstruits depuis le répertoire SESModels organisés par Zone de Démonstration",
+      "de": "Laden Sie vorgefertigte SES-Modelle aus dem SESModels-Verzeichnis, organisiert nach Demonstrationsgebiet",
+      "lt": "Įkelkite iš anksto sukurtus SES modelius iš SESModels katalogo, suskirstytus pagal Demonstracinę sritį",
+      "pt": "Carregue modelos SES pré-construídos do diretório SESModels organizados por Área de Demonstração",
+      "it": "Carica modelli SES precostituiti dalla directory SESModels organizzati per Area di Dimostrazione",
+      "no": "Last inn forhåndsbygde SES-modeller fra SESModels-katalogen organisert etter Demonstrasjonsområde",
+      "el": "Load pre-built SES models from the SESModels directory organized by Demonstration Area"
     }
   }
 }

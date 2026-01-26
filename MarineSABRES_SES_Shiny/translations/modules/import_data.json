@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "modules.import.data.title": {
@@ -18,7 +19,8 @@
       "lt": "Importuoti duomenis iš Excel",
       "pt": "Importar Dados do Excel",
       "it": "Importa Dati da Excel",
-      "no": "Importer data fra Excel"
+      "no": "Importer data fra Excel",
+      "el": "Εισαγωγή Δεδομένα from Excel"
     },
     "modules.import.data.subtitle": {
       "en": "Upload your ISA framework data from a properly formatted Excel file.",
@@ -28,7 +30,8 @@
       "lt": "Įkelkite savo ISA sistemos duomenis iš tinkamai suformatuoto Excel failo.",
       "pt": "Carregue seus dados da estrutura ISA de um arquivo Excel formatado corretamente.",
       "it": "Carica i tuoi dati del framework ISA da un file Excel formattato correttamente.",
-      "no": "Last opp dine ISA-rammeverk-data fra en riktig formatert Excel-fil."
+      "no": "Last opp dine ISA-rammeverk-data fra en riktig formatert Excel-fil.",
+      "el": "Μεταφόρτωση your ISA framework data from a properly formatted Excel file."
     }
   }
 }

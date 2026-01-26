@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "common.buttons.add": {
@@ -18,7 +19,8 @@
       "lt": "Pridėti",
       "pt": "Adicionar",
       "it": "Aggiungi",
-      "no": "Legg til"
+      "no": "Legg til",
+      "el": "Προσθήκη"
     },
     "common.buttons.apply": {
       "en": "Apply",
@@ -28,7 +30,8 @@
       "lt": "Taikyti",
       "pt": "Aplicar",
       "it": "Applica",
-      "no": "Bruk"
+      "no": "Bruk",
+      "el": "Εφαρμογή"
     },
     "common.buttons.back": {
       "en": "Back",
@@ -38,7 +41,8 @@
       "lt": "Atgal",
       "pt": "Voltar",
       "it": "Indietro",
-      "no": "Tilbake"
+      "no": "Tilbake",
+      "el": "Πίσω"
     },
     "common.buttons.cancel": {
       "en": "Cancel",
@@ -48,7 +52,8 @@
       "lt": "Atšaukti",
       "pt": "Cancelar",
       "it": "Annulla",
-      "no": "Avbryt"
+      "no": "Avbryt",
+      "el": "Ακύρωση"
     },
     "common.buttons.clear": {
       "en": "Clear",
@@ -58,7 +63,8 @@
       "lt": "Išvalyti",
       "pt": "Limpar",
       "it": "Cancella",
-      "no": "Tøm"
+      "no": "Tøm",
+      "el": "Καθαρισμός"
     },
     "common.buttons.close": {
       "en": "Close",
@@ -68,7 +74,8 @@
       "lt": "Uždaryti",
       "pt": "Fechar",
       "it": "Chiudi",
-      "no": "Lukk"
+      "no": "Lukk",
+      "el": "Κλείσιμο"
     },
     "common.buttons.confirm": {
       "en": "Confirm",
@@ -78,7 +85,8 @@
       "lt": "Patvirtinti",
       "pt": "Confirmar",
       "it": "Conferma",
-      "no": "Bekreft"
+      "no": "Bekreft",
+      "el": "Επιβεβαίωση"
     },
     "common.buttons.continue": {
       "en": "Continue",
@@ -88,7 +96,8 @@
       "lt": "Tęsti",
       "pt": "Continuar",
       "it": "Continua",
-      "no": "Fortsett"
+      "no": "Fortsett",
+      "el": "Συνέχεια"
     },
     "common.buttons.create": {
       "en": "create",
@@ -98,7 +107,8 @@
       "lt": "TODO: lt translation",
       "pt": "TODO: pt translation",
       "it": "TODO: it translation",
-      "no": "opprett"
+      "no": "opprett",
+      "el": "Δημιουργία"
     },
     "common.buttons.delete": {
       "en": "Delete",
@@ -108,7 +118,8 @@
       "lt": "Ištrinti",
       "pt": "Excluir",
       "it": "Elimina",
-      "no": "Slett"
+      "no": "Slett",
+      "el": "Διαγραφή"
     },
     "common.buttons.download": {
       "en": "Download",
@@ -118,7 +129,8 @@
       "lt": "Atsisiųsti",
       "pt": "Descarregar",
       "it": "Scarica",
-      "no": "Last ned"
+      "no": "Last ned",
+      "el": "Λήψη"
     },
     "common.buttons.edit": {
       "en": "Edit",
@@ -128,7 +140,8 @@
       "lt": "Redaguoti",
       "pt": "Editar",
       "it": "Modifica",
-      "no": "Rediger"
+      "no": "Rediger",
+      "el": "Επεξεργασία"
     },
     "common.buttons.export": {
       "en": "Export",
@@ -138,7 +151,8 @@
       "lt": "Eksportuoti",
       "pt": "Exportar",
       "it": "Esporta",
-      "no": "Eksporter"
+      "no": "Eksporter",
+      "el": "Εξαγωγή"
     },
     "common.buttons.filter": {
       "en": "Filter",
@@ -148,7 +162,8 @@
       "lt": "Filtruoti",
       "pt": "Filtrar",
       "it": "Filtra",
-      "no": "Filtrer"
+      "no": "Filtrer",
+      "el": "Φίλτρο"
     },
     "common.buttons.finish": {
       "en": "Finish",
@@ -158,7 +173,8 @@
       "lt": "Baigti",
       "pt": "Terminar",
       "it": "Fine",
-      "no": "Fullfør"
+      "no": "Fullfør",
+      "el": "Ολοκλήρωση"
     },
     "common.buttons.help": {
       "en": "Help",
@@ -168,7 +184,8 @@
       "lt": "Pagalba",
       "pt": "Ajuda",
       "it": "Aiuto",
-      "no": "Hjelp"
+      "no": "Hjelp",
+      "el": "Βοήθεια"
     },
     "common.buttons.import": {
       "en": "Import",
@@ -178,7 +195,8 @@
       "lt": "Importuoti",
       "pt": "Importar",
       "it": "Importa",
-      "no": "Importer"
+      "no": "Importer",
+      "el": "Εισαγωγή"
     },
     "common.buttons.load": {
       "en": "Load",
@@ -188,7 +206,8 @@
       "lt": "Įkelti",
       "pt": "Carregar",
       "it": "Carica",
-      "no": "Last inn"
+      "no": "Last inn",
+      "el": "Load"
     },
     "common.buttons.load_project": {
       "en": "Load Project",
@@ -198,7 +217,8 @@
       "lt": "Įkelti projektą",
       "pt": "Carregar Projeto",
       "it": "Carica Progetto",
-      "no": "Last inn prosjekt"
+      "no": "Last inn prosjekt",
+      "el": "Load Project"
     },
     "common.buttons.next": {
       "en": "Next",
@@ -208,7 +228,8 @@
       "lt": "Kitas",
       "pt": "Próximo",
       "it": "Avanti",
-      "no": "Neste"
+      "no": "Neste",
+      "el": "Επόμενο"
     },
     "common.buttons.no": {
       "en": "No",
@@ -218,7 +239,8 @@
       "lt": "Ne",
       "pt": "Não",
       "it": "No",
-      "no": "Nei"
+      "no": "Nei",
+      "el": "Όχι"
     },
     "common.buttons.previous": {
       "en": "Previous",
@@ -228,7 +250,8 @@
       "lt": "Ankstesnis",
       "pt": "Anterior",
       "it": "Precedente",
-      "no": "Forrige"
+      "no": "Forrige",
+      "el": "Προηγούμενο"
     },
     "common.buttons.refresh": {
       "en": "Refresh",
@@ -238,7 +261,8 @@
       "lt": "Atnaujinti",
       "pt": "Atualizar",
       "it": "Aggiorna",
-      "no": "Oppdater"
+      "no": "Oppdater",
+      "el": "Ανανέωση"
     },
     "common.buttons.reject": {
       "en": "Reject",
@@ -248,7 +272,8 @@
       "lt": "Atmesti",
       "pt": "Rejeitar",
       "it": "Rifiutare",
-      "no": "Avvis"
+      "no": "Avvis",
+      "el": "Reject"
     },
     "common.buttons.remove": {
       "en": "Remove",
@@ -258,7 +283,8 @@
       "lt": "Pašalinti",
       "pt": "Remover",
       "it": "Rimuovi",
-      "no": "Fjern"
+      "no": "Fjern",
+      "el": "Αφαίρεση"
     },
     "common.buttons.reset": {
       "en": "Reset",
@@ -268,7 +294,8 @@
       "lt": "Atkurti",
       "pt": "Redefinir",
       "it": "Ripristina",
-      "no": "Tilbakestill"
+      "no": "Tilbakestill",
+      "el": "Επαναφορά"
     },
     "common.buttons.save": {
       "en": "Save",
@@ -278,7 +305,8 @@
       "lt": "Išsaugoti",
       "pt": "Salvar",
       "it": "Salva",
-      "no": "Lagre"
+      "no": "Lagre",
+      "el": "Αποθήκευση"
     },
     "common.buttons.save_project": {
       "en": "Save Project",
@@ -288,7 +316,30 @@
       "lt": "Išsaugoti projektą",
       "pt": "Guardar Projeto",
       "it": "Salva Progetto",
-      "no": "Lagre prosjekt"
+      "no": "Lagre prosjekt",
+      "el": "Αποθήκευση Έργο"
+    },
+    "common.buttons.save_local": {
+      "en": "Save to Local",
+      "es": "Guardar en Local",
+      "fr": "Enregistrer en Local",
+      "de": "Lokal Speichern",
+      "lt": "Išsaugoti Vietoje",
+      "pt": "Guardar Local",
+      "it": "Salva in Locale",
+      "no": "Lagre Lokalt",
+      "el": "Αποθήκευση to Local"
+    },
+    "common.buttons.load_local": {
+      "en": "Load from Local",
+      "es": "Cargar desde Local",
+      "fr": "Charger depuis Local",
+      "de": "Von Lokal Laden",
+      "lt": "Įkelti iš Vietinės",
+      "pt": "Carregar do Local",
+      "it": "Carica da Locale",
+      "no": "Last fra Lokal",
+      "el": "Load from Local"
     },
     "common.buttons.search": {
       "en": "Search",
@@ -298,7 +349,8 @@
       "lt": "Ieškoti",
       "pt": "Pesquisar",
       "it": "Cerca",
-      "no": "Søk"
+      "no": "Søk",
+      "el": "Αναζήτηση"
     },
     "common.buttons.skip": {
       "en": "Skip",
@@ -308,7 +360,8 @@
       "lt": "Praleisti",
       "pt": "Ignorar",
       "it": "Salta",
-      "no": "Hopp over"
+      "no": "Hopp over",
+      "el": "Παράλειψη"
     },
     "common.buttons.start": {
       "en": "Start",
@@ -318,7 +371,8 @@
       "lt": "Pradžia",
       "pt": "Início",
       "it": "Inizio",
-      "no": "Start"
+      "no": "Start",
+      "el": "Έναρξη"
     },
     "common.buttons.submit": {
       "en": "Submit",
@@ -328,7 +382,8 @@
       "lt": "Pateikti",
       "pt": "Enviar",
       "it": "Invia",
-      "no": "Send inn"
+      "no": "Send inn",
+      "el": "Υποβολή"
     },
     "common.buttons.update": {
       "en": "Update",
@@ -338,7 +393,8 @@
       "lt": "Atnaujinti",
       "pt": "Atualizar",
       "it": "Aggiorna",
-      "no": "Oppdater"
+      "no": "Oppdater",
+      "el": "Ενημέρωση"
     },
     "common.buttons.upload": {
       "en": "Upload",
@@ -348,7 +404,8 @@
       "lt": "Įkelti",
       "pt": "Carregar",
       "it": "Carica",
-      "no": "Last opp"
+      "no": "Last opp",
+      "el": "Μεταφόρτωση"
     },
     "common.buttons.yes": {
       "en": "Yes",
@@ -358,7 +415,30 @@
       "lt": "Taip",
       "pt": "Sim",
       "it": "Sì",
-      "no": "Ja"
+      "no": "Ja",
+      "el": "Ναι"
+    },
+    "common.buttons.ok": {
+      "en": "Ok",
+      "lt": "Ok",
+      "es": "Ok",
+      "fr": "Ok",
+      "de": "Ok",
+      "it": "Ok",
+      "pt": "Ok",
+      "el": "Ok",
+      "no": "Ok"
+    },
+    "Close": {
+      "en": "Close",
+      "lt": "Uždaryti",
+      "es": "Cerrar",
+      "fr": "Fermer",
+      "de": "Schließen",
+      "it": "Chiudi",
+      "pt": "Fechar",
+      "el": "Κλείσιμο",
+      "no": "Lukk"
     }
   }
 }

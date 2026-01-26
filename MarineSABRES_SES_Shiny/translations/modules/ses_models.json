@@ -1,0 +1,323 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "modules.ses_models.title": {
+      "en": "Load Pre-built SES Models",
+      "es": "Cargar Modelos SES Preconstruidos",
+      "fr": "Charger des Modèles SES Préconstruits",
+      "de": "Vorgefertigte SES-Modelle laden",
+      "lt": "Įkelti iš anksto sukurtus SES modelius",
+      "pt": "Carregar Modelos SES Pré-construídos",
+      "it": "Carica Modelli SES Precostituiti",
+      "no": "Last inn forhåndsbygde SES-modeller",
+      "el": "Load Pre-built SES Models"
+    },
+    "modules.ses_models.subtitle": {
+      "en": "Select from existing SES models organized by Demonstration Area to quickly start your analysis.",
+      "es": "Seleccione entre modelos SES existentes organizados por Área de Demostración para comenzar rápidamente su análisis.",
+      "fr": "Sélectionnez parmi les modèles SES existants organisés par Zone de Démonstration pour démarrer rapidement votre analyse.",
+      "de": "Wählen Sie aus bestehenden SES-Modellen, die nach Demonstrationsgebiet organisiert sind, um schnell mit Ihrer Analyse zu beginnen.",
+      "lt": "Pasirinkite iš esamų SES modelių, suskirstytų pagal Demonstracinę sritį, kad greitai pradėtumėte analizę.",
+      "pt": "Selecione entre modelos SES existentes organizados por Área de Demonstração para iniciar rapidamente sua análise.",
+      "it": "Seleziona tra i modelli SES esistenti organizzati per Area di Dimostrazione per iniziare rapidamente la tua analisi.",
+      "no": "Velg fra eksisterende SES-modeller organisert etter Demonstrasjonsområde for å raskt starte analysen.",
+      "el": "Επιλογή from existing SES models organized by Demonstration Area to quickly start your analysis."
+    },
+    "modules.ses_models.select_model": {
+      "en": "Select a Model",
+      "es": "Seleccionar un Modelo",
+      "fr": "Sélectionner un Modèle",
+      "de": "Modell auswählen",
+      "lt": "Pasirinkti modelį",
+      "pt": "Selecionar um Modelo",
+      "it": "Seleziona un Modello",
+      "no": "Velg en modell",
+      "el": "Επιλογή a Model"
+    },
+    "modules.ses_models.reload_list": {
+      "en": "Reload Models List",
+      "es": "Recargar Lista de Modelos",
+      "fr": "Recharger la Liste des Modèles",
+      "de": "Modellliste neu laden",
+      "lt": "Perkrauti modelių sąrašą",
+      "pt": "Recarregar Lista de Modelos",
+      "it": "Ricarica Elenco Modelli",
+      "no": "Last inn modelliste på nytt",
+      "el": "Επαναφόρτωση Μοντέλα List"
+    },
+    "modules.ses_models.load_models": {
+      "en": "Load Models",
+      "es": "Cargar Modelos",
+      "fr": "Charger les Modèles",
+      "de": "Modelle laden",
+      "lt": "Įkelti modelius",
+      "pt": "Carregar Modelos",
+      "it": "Carica Modelli",
+      "no": "Last inn modeller",
+      "el": "Load Models"
+    },
+    "modules.ses_models.click_to_scan": {
+      "en": "Click to scan SESModels directory",
+      "es": "Haga clic para escanear el directorio SESModels",
+      "fr": "Cliquez pour analyser le répertoire SESModels",
+      "de": "Klicken Sie, um das SESModels-Verzeichnis zu scannen",
+      "lt": "Spustelėkite, kad nuskaitytumėte SESModels katalogą",
+      "pt": "Clique para verificar o diretório SESModels",
+      "it": "Clicca per scansionare la directory SESModels",
+      "no": "Klikk for å skanne SESModels-katalogen",
+      "el": "Click to scan SESModels directory"
+    },
+    "modules.ses_models.load_model": {
+      "en": "Load Model",
+      "es": "Cargar Modelo",
+      "fr": "Charger le Modèle",
+      "de": "Modell laden",
+      "lt": "Įkelti modelį",
+      "pt": "Carregar Modelo",
+      "it": "Carica Modello",
+      "no": "Last inn modell",
+      "el": "Load Model"
+    },
+    "modules.ses_models.confirm_title": {
+      "en": "Confirm Load",
+      "es": "Confirmar Carga",
+      "fr": "Confirmer le Chargement",
+      "de": "Laden bestätigen",
+      "lt": "Patvirtinti įkėlimą",
+      "pt": "Confirmar Carregamento",
+      "it": "Conferma Caricamento",
+      "no": "Bekreft innlasting",
+      "el": "Επιβεβαίωση Load"
+    },
+    "modules.ses_models.confirm_message": {
+      "en": "Loading this model will replace your current project data. Continue?",
+      "es": "Cargar este modelo reemplazará los datos de su proyecto actual. ¿Continuar?",
+      "fr": "Charger ce modèle remplacera les données de votre projet actuel. Continuer?",
+      "de": "Das Laden dieses Modells ersetzt Ihre aktuellen Projektdaten. Fortfahren?",
+      "lt": "Įkeliant šį modelį bus pakeisti dabartiniai projekto duomenys. Tęsti?",
+      "pt": "Carregar este modelo substituirá os dados do seu projeto atual. Continuar?",
+      "it": "Caricare questo modello sostituirà i dati del progetto corrente. Continuare?",
+      "no": "Å laste inn denne modellen vil erstatte dine nåværende prosjektdata. Fortsette?",
+      "el": "Φόρτωση this model will replace your current project data. Continue?"
+    },
+    "modules.ses_models.model_info": {
+      "en": "Model Information",
+      "es": "Información del Modelo",
+      "fr": "Informations sur le Modèle",
+      "de": "Modellinformationen",
+      "lt": "Modelio informacija",
+      "pt": "Informações do Modelo",
+      "it": "Informazioni sul Modello",
+      "no": "Modellinformasjon",
+      "el": "Μοντέλο Πληροφορίες"
+    },
+    "modules.ses_models.file_name": {
+      "en": "File Name",
+      "es": "Nombre del Archivo",
+      "fr": "Nom du Fichier",
+      "de": "Dateiname",
+      "lt": "Failo pavadinimas",
+      "pt": "Nome do Arquivo",
+      "it": "Nome File",
+      "no": "Filnavn",
+      "el": "Αρχείο Όνομα"
+    },
+    "modules.ses_models.elements_count": {
+      "en": "Elements",
+      "es": "Elementos",
+      "fr": "Éléments",
+      "de": "Elemente",
+      "lt": "Elementai",
+      "pt": "Elementos",
+      "it": "Elementi",
+      "no": "Elementer",
+      "el": "Στοιχεία"
+    },
+    "modules.ses_models.connections_count": {
+      "en": "Connections",
+      "es": "Conexiones",
+      "fr": "Connexions",
+      "de": "Verbindungen",
+      "lt": "Ryšiai",
+      "pt": "Conexões",
+      "it": "Connessioni",
+      "no": "Forbindelser",
+      "el": "Συνδέσεις"
+    },
+    "modules.ses_models.file_size": {
+      "en": "File Size",
+      "es": "Tamaño del Archivo",
+      "fr": "Taille du Fichier",
+      "de": "Dateigröße",
+      "lt": "Failo dydis",
+      "pt": "Tamanho do Arquivo",
+      "it": "Dimensione File",
+      "no": "Filstørrelse",
+      "el": "Αρχείο Μέγεθος"
+    },
+    "modules.ses_models.last_modified": {
+      "en": "Last Modified",
+      "es": "Última Modificación",
+      "fr": "Dernière Modification",
+      "de": "Zuletzt geändert",
+      "lt": "Paskutinis pakeitimas",
+      "pt": "Última Modificação",
+      "it": "Ultima Modifica",
+      "no": "Sist endret",
+      "el": "Τελευταίο Τροποποιήθηκε"
+    },
+    "modules.ses_models.element_types": {
+      "en": "Element Types",
+      "es": "Tipos de Elementos",
+      "fr": "Types d'Éléments",
+      "de": "Elementtypen",
+      "lt": "Elementų tipai",
+      "pt": "Tipos de Elementos",
+      "it": "Tipi di Elementi",
+      "no": "Elementtyper",
+      "el": "Στοιχείο Types"
+    },
+    "modules.ses_models.invalid_model": {
+      "en": "Invalid Model",
+      "es": "Modelo Inválido",
+      "fr": "Modèle Invalide",
+      "de": "Ungültiges Modell",
+      "lt": "Neteisingas modelis",
+      "pt": "Modelo Inválido",
+      "it": "Modello Non Valido",
+      "no": "Ugyldig modell",
+      "el": "Invalid Model"
+    },
+    "modules.ses_models.cannot_load_invalid": {
+      "en": "Cannot load an invalid model. Please fix the errors first.",
+      "es": "No se puede cargar un modelo inválido. Por favor, corrija los errores primero.",
+      "fr": "Impossible de charger un modèle invalide. Veuillez d'abord corriger les erreurs.",
+      "de": "Ungültiges Modell kann nicht geladen werden. Bitte beheben Sie zuerst die Fehler.",
+      "lt": "Negalima įkelti neteisingo modelio. Pirmiausia ištaisykite klaidas.",
+      "pt": "Não é possível carregar um modelo inválido. Por favor, corrija os erros primeiro.",
+      "it": "Impossibile caricare un modello non valido. Per favore, correggi prima gli errori.",
+      "no": "Kan ikke laste inn en ugyldig modell. Vennligst rett feilene først.",
+      "el": "Cannot load an invalid model. Please fix the errors first."
+    },
+    "modules.ses_models.load_error": {
+      "en": "Error loading model:",
+      "es": "Error al cargar el modelo:",
+      "fr": "Erreur lors du chargement du modèle:",
+      "de": "Fehler beim Laden des Modells:",
+      "lt": "Klaida įkeliant modelį:",
+      "pt": "Erro ao carregar o modelo:",
+      "it": "Errore durante il caricamento del modello:",
+      "no": "Feil ved innlasting av modell:",
+      "el": "Σφάλμα Φόρτωση model:"
+    },
+    "modules.ses_models.load_success": {
+      "en": "Model loaded successfully!",
+      "es": "¡Modelo cargado exitosamente!",
+      "fr": "Modèle chargé avec succès!",
+      "de": "Modell erfolgreich geladen!",
+      "lt": "Modelis sėkmingai įkeltas!",
+      "pt": "Modelo carregado com sucesso!",
+      "it": "Modello caricato con successo!",
+      "no": "Modell lastet inn vellykket!",
+      "el": "Μοντέλο Φορτώθηκε successfully!"
+    },
+    "modules.ses_models.elements_and": {
+      "en": "elements and",
+      "es": "elementos y",
+      "fr": "éléments et",
+      "de": "Elemente und",
+      "lt": "elementų ir",
+      "pt": "elementos e",
+      "it": "elementi e",
+      "no": "elementer og",
+      "el": "Στοιχεία and"
+    },
+    "modules.ses_models.connections_imported": {
+      "en": "connections imported.",
+      "es": "conexiones importadas.",
+      "fr": "connexions importées.",
+      "de": "Verbindungen importiert.",
+      "lt": "ryšių importuota.",
+      "pt": "conexões importadas.",
+      "it": "connessioni importate.",
+      "no": "forbindelser importert.",
+      "el": "Συνδέσεις imported."
+    },
+    "modules.ses_models.loading": {
+      "en": "Loading model...",
+      "es": "Cargando modelo...",
+      "fr": "Chargement du modèle...",
+      "de": "Modell wird geladen...",
+      "lt": "Įkeliamas modelis...",
+      "pt": "Carregando modelo...",
+      "it": "Caricamento modello...",
+      "no": "Laster inn modell...",
+      "el": "Φόρτωση model..."
+    },
+    "modules.ses_models.models_reloaded": {
+      "en": "Models list reloaded successfully.",
+      "es": "Lista de modelos recargada exitosamente.",
+      "fr": "Liste des modèles rechargée avec succès.",
+      "de": "Modellliste erfolgreich neu geladen.",
+      "lt": "Modelių sąrašas sėkmingai perkrautas.",
+      "pt": "Lista de modelos recarregada com sucesso.",
+      "it": "Elenco modelli ricaricato con successo.",
+      "no": "Modelliste lastet inn på nytt.",
+      "el": "Μοντέλα list reloaded successfully."
+    },
+    "modules.ses_models.no_models_found": {
+      "en": "No Excel models found in the SESModels directory.",
+      "es": "No se encontraron modelos Excel en el directorio SESModels.",
+      "fr": "Aucun modèle Excel trouvé dans le répertoire SESModels.",
+      "de": "Keine Excel-Modelle im SESModels-Verzeichnis gefunden.",
+      "lt": "SESModels kataloge nerasta jokių Excel modelių.",
+      "pt": "Nenhum modelo Excel encontrado no diretório SESModels.",
+      "it": "Nessun modello Excel trovato nella directory SESModels.",
+      "no": "Ingen Excel-modeller funnet i SESModels-katalogen.",
+      "el": "Όχι Excel models found in the SESModels directory."
+    },
+    "modules.ses_models.select_variant": {
+      "en": "Select Model Variant",
+      "es": "Seleccionar Variante del Modelo",
+      "fr": "Sélectionner la Variante du Modèle",
+      "de": "Modellvariante auswählen",
+      "lt": "Pasirinkti modelio variantą",
+      "pt": "Selecionar Variante do Modelo",
+      "it": "Seleziona Variante del Modello",
+      "no": "Velg modellvariant",
+      "el": "Επιλογή Μοντέλο Variant"
+    },
+    "modules.ses_models.variants_available": {
+      "en": "variants available",
+      "es": "variantes disponibles",
+      "fr": "variantes disponibles",
+      "de": "Varianten verfügbar",
+      "lt": "variantai pasiekiami",
+      "pt": "variantes disponíveis",
+      "it": "varianti disponibili",
+      "no": "varianter tilgjengelig",
+      "el": "variants available"
+    },
+    "modules.ses_models.variant_info": {
+      "en": "This file contains multiple model variants (e.g., different regions). Select the variant you want to load.",
+      "es": "Este archivo contiene múltiples variantes de modelo (p. ej., diferentes regiones). Seleccione la variante que desea cargar.",
+      "fr": "Ce fichier contient plusieurs variantes de modèle (par exemple, différentes régions). Sélectionnez la variante que vous souhaitez charger.",
+      "de": "Diese Datei enthält mehrere Modellvarianten (z.B. verschiedene Regionen). Wählen Sie die Variante, die Sie laden möchten.",
+      "lt": "Šis failas turi kelias modelio variantus (pvz., skirtingus regionus). Pasirinkite variantą, kurį norite įkelti.",
+      "pt": "Este arquivo contém múltiplas variantes de modelo (por exemplo, diferentes regiões). Selecione a variante que deseja carregar.",
+      "it": "Questo file contiene più varianti del modello (ad esempio, regioni diverse). Seleziona la variante che vuoi caricare.",
+      "no": "Denne filen inneholder flere modellvarianter (f.eks. forskjellige regioner). Velg varianten du vil laste inn.",
+      "el": "This file contains multiple model variants (e.g., different regions). Select the variant you want to load."
+    }
+  }
+}

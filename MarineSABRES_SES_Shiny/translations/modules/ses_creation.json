@@ -7,7 +7,8 @@
     "lt",
     "pt",
     "it",
-    "no"
+    "no",
+    "el"
   ],
   "translation": {
     "modules.ses.are_you_sure_you_want_to_start_from_scratch_with_t": {
@@ -18,7 +19,8 @@
       "lt": "Ar tikrai norite pradėti iš naujo su nauju šablonu?",
       "pt": "Tem certeza de que deseja começar do zero com o novo modelo?",
       "it": "Sei sicuro di voler ricominciare da zero con il nuovo modello?",
-      "no": "Are you sure you want to start from scratch with the new template?"
+      "no": "Are you sure you want to start from scratch with the new template?",
+      "el": "Είστε σίγουροι you want to start from scratch with the new template?"
     },
     "modules.ses.creation.actions": {
       "en": "Actions",
@@ -28,7 +30,8 @@
       "lt": "Veiksmai",
       "pt": "Ações",
       "it": "Azioni",
-      "no": "Actions"
+      "no": "Actions",
+      "el": "Actions"
     },
     "modules.ses.creation.all_work_on_the_current_template_will_be_lost_including": {
       "en": "All work on the current template will be lost, including:",
@@ -38,7 +41,8 @@
       "lt": "Visi dabartinio šablono darbai bus prarasti, įskaitant:",
       "pt": "Todo o trabalho no modelo atual será perdido, incluindo:",
       "it": "Tutto il lavoro sul modello corrente andrà perso, incluso:",
-      "no": "All work on the current template will be lost, including:"
+      "no": "All work on the current template will be lost, including:",
+      "el": "Όλα work on the current template will be lost, including:"
     },
     "modules.ses.creation.and_d_more": {
       "en": "... and %d more",
@@ -48,7 +52,8 @@
       "lt": "... ir dar %d",
       "pt": "... e mais %d",
       "it": "... e altri %d",
-      "no": "... and %d more"
+      "no": "... and %d more",
+      "el": "... and %d more"
     },
     "modules.ses.creation.any_customizations_made": {
       "en": "Any customizations made",
@@ -58,7 +63,8 @@
       "lt": "Visi atlikti pritaikymai",
       "pt": "Quaisquer personalizações feitas",
       "it": "Qualsiasi personalizzazione effettuata",
-      "no": "Any customizations made"
+      "no": "Any customizations made",
+      "el": "Any customizations made"
     },
     "modules.ses.creation.approved_and_rejected_connections": {
       "en": "Approved and rejected connections",
@@ -68,7 +74,8 @@
       "lt": "Patvirtinti ir atmesti ryšiai",
       "pt": "Conexões aprovadas e rejeitadas",
       "it": "Connessioni approvate e rifiutate",
-      "no": "Approved and rejected connections"
+      "no": "Approved and rejected connections",
+      "el": "Εγκρίθηκε and rejected connections"
     },
     "modules.ses.creation.automatic_element_generation": {
       "en": "Automatic element generation",
@@ -78,7 +85,8 @@
       "lt": "Automatinis elementų generavimas",
       "pt": "Geração automática de elementos",
       "it": "Generazione automatica di elementi",
-      "no": "Automatic element generation"
+      "no": "Automatic element generation",
+      "el": "Automatic element generation"
     },
     "modules.ses.creation.available_templates": {
       "en": "Available Templates",
@@ -88,7 +96,8 @@
       "lt": "Prieinami šablonai",
       "pt": "Modelos Disponíveis",
       "it": "Modelli Disponibili",
-      "no": "Available Templates"
+      "no": "Available Templates",
+      "el": "Available Templates"
     },
     "modules.ses.creation.beginner": {
       "en": "Beginner",
@@ -98,7 +107,8 @@
       "lt": "Pradedantysis",
       "pt": "Iniciante",
       "it": "Principiante",
-      "no": "Beginner"
+      "no": "Beginner",
+      "el": "Αρχάριος"
     },
     "modules.ses.creation.beginners_first_time_users_exploratory_analysis": {
       "en": "Beginners, first-time users, exploratory analysis",
@@ -108,7 +118,8 @@
       "lt": "Pradedantieji, pirmą kartą naudojantys, tyrinėjamoji analizė",
       "pt": "Iniciantes, utilizadores pela primeira vez, análise exploratória",
       "it": "Principianti, utenti alle prime armi, analisi esplorativa",
-      "no": "Beginners, first-time users, exploratory analysis"
+      "no": "Beginners, first-time users, exploratory analysis",
+      "el": "Beginners, first-time users, exploratory analysis"
     },
     "modules.ses.creation.best_for": {
       "en": "Best for:",
@@ -118,7 +129,8 @@
       "lt": "Geriausiai tinka:",
       "pt": "Melhor para:",
       "it": "Ideale per:",
-      "no": "Best for:"
+      "no": "Best for:",
+      "el": "Best for:"
     },
     "modules.ses.creation.built_in_examples": {
       "en": "Built-in examples",
@@ -128,7 +140,8 @@
       "lt": "Integruoti pavyzdžiai",
       "pt": "Exemplos integrados",
       "it": "Esempi integrati",
-      "no": "Built-in examples"
+      "no": "Built-in examples",
+      "el": "Built-in examples"
     },
     "modules.ses.creation.complete_control_over_all_elements": {
       "en": "Complete control over all elements",
@@ -138,7 +151,8 @@
       "lt": "Visiškas kontrolė virš visų elementų",
       "pt": "Controle completo sobre todos os elementos",
       "it": "Controllo completo su tutti gli elementi",
-      "no": "Complete control over all elements"
+      "no": "Complete control over all elements",
+      "el": "Ολοκληρώθηκε control over all elements"
     },
     "modules.ses.creation.connection_review": {
       "en": "Connection Review",
@@ -148,7 +162,8 @@
       "lt": "Ryšio apžvalga",
       "pt": "Revisão de conexão",
       "it": "Revisione della connessione",
-      "no": "Connection Review"
+      "no": "Connection Review",
+      "el": "Σύνδεση Review"
     },
     "modules.ses.creation.connection_reviews_and_amendments": {
       "en": "Connection reviews and amendments",
@@ -158,7 +173,8 @@
       "lt": "Ryšių peržiūros ir pataisymai",
       "pt": "Revisões e alterações de conexões",
       "it": "Revisioni e modifiche delle connessioni",
-      "no": "Connection reviews and amendments"
+      "no": "Connection reviews and amendments",
+      "el": "Σύνδεση reviews and amendments"
     },
     "modules.ses.creation.context_aware_suggestions": {
       "en": "Context-aware suggestions",
@@ -168,7 +184,8 @@
       "lt": "Kontekstui pritaikyti pasiūlymai",
       "pt": "Sugestões sensíveis ao contexto",
       "it": "Suggerimenti contestuali",
-      "no": "Context-aware suggestions"
+      "no": "Context-aware suggestions",
+      "el": "Context-aware suggestions"
     },
     "modules.ses.creation.customization": {
       "en": "Customization",
@@ -178,7 +195,8 @@
       "lt": "Pritaikymas",
       "pt": "Personalização",
       "it": "Personalizzazione",
-      "no": "Customization"
+      "no": "Customization",
+      "el": "Customization"
     },
     "modules.ses.creation.customize": {
       "en": "Customize",
@@ -188,7 +206,8 @@
       "lt": "Pritaikyti",
       "pt": "Personalizar",
       "it": "Personalizzare",
-      "no": "Customize"
+      "no": "Customize",
+      "el": "Customize"
     },
     "modules.ses.creation.detailed_data_validation": {
       "en": "Detailed data validation",
@@ -198,7 +217,8 @@
       "lt": "Išsamus duomenų tikrinimas",
       "pt": "Validação detalhada de dados",
       "it": "Validazione dettagliata dei dati",
-      "no": "Detailed data validation"
+      "no": "Detailed data validation",
+      "el": "Detailed data validation"
     },
     "modules.ses.creation.direct_framework_implementation": {
       "en": "Direct framework implementation",
@@ -208,7 +228,8 @@
       "lt": "Tiesioginė sistemos įgyvendinimas",
       "pt": "Implementação direta da estrutura",
       "it": "Implementazione diretta del framework",
-      "no": "Direct framework implementation"
+      "no": "Direct framework implementation",
+      "el": "Direct framework implementation"
     },
     "modules.ses.creation.domain_specific_templates": {
       "en": "Domain-specific templates",
@@ -218,7 +239,8 @@
       "lt": "Srities specifiniai šablonai",
       "pt": "Modelos específicos do domínio",
       "it": "Modelli specifici del dominio",
-      "no": "Domain-specific templates"
+      "no": "Domain-specific templates",
+      "el": "Domain-specific templates"
     },
     "modules.ses.creation.ecosystem_services": {
       "en": "Ecosystem Services",
@@ -228,7 +250,8 @@
       "lt": "Ekosistemos paslaugos",
       "pt": "Serviços Ecossistêmicos",
       "it": "Servizi Ecosistemici",
-      "no": "Ecosystem Services"
+      "no": "Ecosystem Services",
+      "el": "Υπηρεσίες οικοσυστήματος"
     },
     "modules.ses.creation.example_connections_included": {
       "en": "Example connections included",
@@ -238,7 +261,8 @@
       "lt": "Įtraukti ryšių pavyzdžiai",
       "pt": "Conexões de exemplo incluídas",
       "it": "Connessioni di esempio incluse",
-      "no": "Example connections included"
+      "no": "Example connections included",
+      "el": "Παράδειγμα Συνδέσεις included"
     },
     "modules.ses.creation.experienced_users_academic_research_detailed_documentation": {
       "en": "Experienced users, academic research, detailed documentation",
@@ -248,7 +272,8 @@
       "lt": "Patyrę vartotojai, akademiniai tyrimai, išsami dokumentacija",
       "pt": "Utilizadores experientes, pesquisa académica, documentação detalhada",
       "it": "Utenti esperti, ricerca accademica, documentazione dettagliata",
-      "no": "Experienced users, academic research, detailed documentation"
+      "no": "Experienced users, academic research, detailed documentation",
+      "el": "Experienced users, academic research, detailed documentation"
     },
     "modules.ses.creation.export_ready_data_structure": {
       "en": "Export-ready data structure",
@@ -258,7 +283,8 @@
       "lt": "Eksportui paruošta duomenų struktūra",
       "pt": "Estrutura de dados pronta para exportar",
       "it": "Struttura dati pronta per l'esportazione",
-      "no": "Export-ready data structure"
+      "no": "Export-ready data structure",
+      "el": "Export-ready data structure"
     },
     "modules.ses.creation.fastest_setup_time": {
       "en": "Fastest setup time",
@@ -268,7 +294,8 @@
       "lt": "Greičiausias nustatymo laikas",
       "pt": "Tempo de configuração mais rápido",
       "it": "Tempo di configurazione più veloce",
-      "no": "Fastest setup time"
+      "no": "Fastest setup time",
+      "el": "Fastest setup time"
     },
     "modules.ses.creation.flexibility": {
       "en": "Flexibility",
@@ -278,7 +305,8 @@
       "lt": "Lankstumas",
       "pt": "Flexibilidade",
       "it": "Flessibilità",
-      "no": "Flexibility"
+      "no": "Flexibility",
+      "el": "Flexibility"
     },
     "modules.ses.creation.guidance_level": {
       "en": "Guidance Level",
@@ -288,7 +316,8 @@
       "lt": "Vadovavimo lygis",
       "pt": "Nível de Orientação",
       "it": "Livello di Guida",
-      "no": "Guidance Level"
+      "no": "Guidance Level",
+      "el": "Guidance Level"
     },
     "modules.ses.creation.have_existing_framework_knowledge": {
       "en": "Have existing framework knowledge?",
@@ -298,7 +327,8 @@
       "lt": "Turite sistemos žinių?",
       "pt": "Tem conhecimento da estrutura existente?",
       "it": "Hai conoscenze del framework esistente?",
-      "no": "Have existing framework knowledge?"
+      "no": "Have existing framework knowledge?",
+      "el": "Have existing framework knowledge?"
     },
     "modules.ses.creation.interactive_qa_workflow": {
       "en": "Interactive Q&A workflow",
@@ -308,7 +338,8 @@
       "lt": "Interaktyvus klausimų ir atsakymų srautas",
       "pt": "Fluxo de trabalho interativo de perguntas e respostas",
       "it": "Flusso di lavoro interattivo Q&A",
-      "no": "Interactive Q&A workflow"
+      "no": "Interactive Q&A workflow",
+      "el": "Interactive Q&A workflow"
     },
     "modules.ses.creation.intermediate": {
       "en": "Intermediate",
@@ -318,7 +349,8 @@
       "lt": "Vidutinis",
       "pt": "Intermédio",
       "it": "Intermedio",
-      "no": "Intermediate"
+      "no": "Intermediate",
+      "el": "Μέσος"
     },
     "modules.ses.creation.learning_curve": {
       "en": "Learning Curve",
@@ -328,7 +360,8 @@
       "lt": "Mokymosi kreivė",
       "pt": "Curva de Aprendizagem",
       "it": "Curva di Apprendimento",
-      "no": "Learning Curve"
+      "no": "Learning Curve",
+      "el": "Learning Curve"
     },
     "modules.ses.creation.learning_friendly_approach": {
       "en": "Learning-friendly approach",
@@ -338,7 +371,8 @@
       "lt": "Mokymui palankus požiūris",
       "pt": "Abordagem amigável à aprendizagem",
       "it": "Approccio favorevole all'apprendimento",
-      "no": "Learning-friendly approach"
+      "no": "Learning-friendly approach",
+      "el": "Learning-friendly approach"
     },
     "modules.ses.creation.method_comparison": {
       "en": "Method Comparison",
@@ -348,7 +382,8 @@
       "lt": "Metodų palyginimas",
       "pt": "Comparação de Métodos",
       "it": "Confronto dei Metodi",
-      "no": "Method Comparison"
+      "no": "Method Comparison",
+      "el": "Method Comparison"
     },
     "modules.ses.creation.need_help_choosing": {
       "en": "Need Help Choosing?",
@@ -358,7 +393,8 @@
       "lt": "Reikia pagalbos pasirenkant?",
       "pt": "Precisa de Ajuda para Escolher?",
       "it": "Hai Bisogno di Aiuto per Scegliere?",
-      "no": "Need Help Choosing?"
+      "no": "Need Help Choosing?",
+      "el": "Need Help Choosing?"
     },
     "modules.ses.creation.new_to_ses_modeling": {
       "en": "New to SES modeling?",
@@ -368,7 +404,8 @@
       "lt": "Naujas SES modeliavime?",
       "pt": "Novo na modelagem SES?",
       "it": "Nuovo alla modellazione SES?",
-      "no": "New to SES modeling?"
+      "no": "New to SES modeling?",
+      "el": "Νέο to SES modeling?"
     },
     "modules.ses.creation.none_defined": {
       "en": "None defined",
@@ -378,7 +415,8 @@
       "lt": "Nėra apibrėžta",
       "pt": "Nenhum definido",
       "it": "Nessuno definito",
-      "no": "None defined"
+      "no": "None defined",
+      "el": "Κανένα defined"
     },
     "modules.ses.creation.pre_populated_frameworks": {
       "en": "Pre-populated frameworks",
@@ -388,7 +426,8 @@
       "lt": "Iš anksto užpildytos sistemos",
       "pt": "Estruturas pré-preenchidas",
       "it": "Framework pre-popolati",
-      "no": "Pre-populated frameworks"
+      "no": "Pre-populated frameworks",
+      "el": "Pre-populated frameworks"
     },
     "modules.ses.creation.preview": {
       "en": "Preview",
@@ -398,7 +437,8 @@
       "lt": "Peržiūra",
       "pt": "Visualizar",
       "it": "Anteprima",
-      "no": "Preview"
+      "no": "Preview",
+      "el": "Προεπισκόπηση"
     },
     "modules.ses.creation.proceed_to_selected_method": {
       "en": "Proceed to Selected Method",
@@ -408,7 +448,8 @@
       "lt": "Pereiti prie pasirinkto metodo",
       "pt": "Prosseguir para o Método Selecionado",
       "it": "Procedi al Metodo Selezionato",
-      "no": "Proceed to Selected Method"
+      "no": "Proceed to Selected Method",
+      "el": "Proceed to Selected Method"
     },
     "modules.ses.creation.quick_start": {
       "en": "Quick Start",
@@ -418,7 +459,8 @@
       "lt": "Greitas startas",
       "pt": "Início Rápido",
       "it": "Avvio Rapido",
-      "no": "Quick Start"
+      "no": "Quick Start",
+      "el": "Quick Start"
     },
     "modules.ses.creation.ready_to_customize_elements": {
       "en": "Ready-to-customize elements",
@@ -428,7 +470,8 @@
       "lt": "Paruošti pritaikymui elementai",
       "pt": "Elementos prontos para personalizar",
       "it": "Elementi pronti da personalizzare",
-      "no": "Ready-to-customize elements"
+      "no": "Ready-to-customize elements",
+      "el": "Ready-to-customize elements"
     },
     "modules.ses.creation.recommended": {
       "en": "Recommended",
@@ -438,7 +481,8 @@
       "lt": "Rekomenduojama",
       "pt": "Recomendado",
       "it": "Consigliato",
-      "no": "Recommended"
+      "no": "Recommended",
+      "el": "Recommended"
     },
     "modules.ses.creation.review": {
       "en": "Review",
@@ -448,7 +492,8 @@
       "lt": "Peržiūrėti",
       "pt": "Revisar",
       "it": "Rivedere",
-      "no": "Review"
+      "no": "Review",
+      "el": "Review"
     },
     "modules.ses.creation.select_this_template": {
       "en": "Select This Template",
@@ -458,7 +503,8 @@
       "lt": "Pasirinkti šį šabloną",
       "pt": "Selecionar este modelo",
       "it": "Seleziona questo modello",
-      "no": "Select This Template"
+      "no": "Select This Template",
+      "el": "Επιλογή This Template"
     },
     "modules.ses.creation.step_by_step_guided_exercises": {
       "en": "Step-by-step guided exercises",
@@ -468,7 +514,8 @@
       "lt": "Žingsnis po žingsnio vedami pratimai",
       "pt": "Exercícios guiados passo a passo",
       "it": "Esercizi guidati passo dopo passo",
-      "no": "Step-by-step guided exercises"
+      "no": "Step-by-step guided exercises",
+      "el": "Step-by-step guided exercises"
     },
     "modules.ses.creation.structured": {
       "en": "Structured",
@@ -478,7 +525,8 @@
       "lt": "Struktūrizuotas",
       "pt": "Estruturado",
       "it": "Strutturato",
-      "no": "Structured"
+      "no": "Structured",
+      "el": "Structured"
     },
     "modules.ses.creation.switch_template": {
       "en": "Switch Template?",
@@ -488,7 +536,8 @@
       "lt": "Pakeisti šabloną?",
       "pt": "Trocar modelo?",
       "it": "Cambiare modello?",
-      "no": "Switch Template?"
+      "no": "Switch Template?",
+      "el": "Switch Template?"
     },
     "modules.ses.creation.template_switched_starting_fresh": {
       "en": "Template switched. Starting fresh.",
@@ -498,7 +547,8 @@
       "lt": "Šablonas pakeistas. Pradedama iš naujo.",
       "pt": "Modelo trocado. Começando do zero.",
       "it": "Modello cambiato. Ripartenza da zero.",
-      "no": "Template switched. Starting fresh."
+      "no": "Template switched. Starting fresh.",
+      "el": "Πρότυπο switched. Starting fresh."
     },
     "modules.ses.creation.this_action_cannot_be_undone": {
       "en": "This action cannot be undone.",
@@ -508,7 +558,8 @@
       "lt": "Šio veiksmo negalima atšaukti.",
       "pt": "Esta ação não pode ser desfeita.",
       "it": "Questa azione non può essere annullata.",
-      "no": "This action cannot be undone."
+      "no": "This action cannot be undone.",
+      "el": "This action cannot be undone."
     },
     "modules.ses.creation.time_to_start": {
       "en": "Time to Start",
@@ -518,7 +569,8 @@
       "lt": "Laikas pradėti",
       "pt": "Tempo para Começar",
       "it": "Tempo di Avvio",
-      "no": "Time to Start"
+      "no": "Time to Start",
+      "el": "Ώρα to Start"
     },
     "modules.ses.creation.view_detailed_preview": {
       "en": "View detailed preview",
@@ -528,7 +580,8 @@
       "lt": "Peržiūrėti išsamią peržiūrą",
       "pt": "Ver visualização detalhada",
       "it": "Visualizza anteprima dettagliata",
-      "no": "View detailed preview"
+      "no": "View detailed preview",
+      "el": "Προβολή detailed preview"
     },
     "modules.ses.creation.welfare": {
       "en": "Welfare",
@@ -538,7 +591,8 @@
       "lt": "Gerovė",
       "pt": "Bem-estar",
       "it": "Benessere",
-      "no": "Welfare"
+      "no": "Welfare",
+      "el": "Ευημερία"
     },
     "modules.ses.creation.working_on_a_time_sensitive_project": {
       "en": "Working on a time-sensitive project?",
@@ -548,7 +602,8 @@
       "lt": "Dirbate su laiko jautriu projektu?",
       "pt": "A trabalhar num projeto urgente?",
       "it": "Lavori su un progetto urgente?",
-      "no": "Working on a time-sensitive project?"
+      "no": "Working on a time-sensitive project?",
+      "el": "Working on a time-sensitive project?"
     },
     "modules.ses.creation.yes_switch_template": {
       "en": "Yes, Switch Template",
@@ -558,7 +613,8 @@
       "lt": "Taip, pakeisti šabloną",
       "pt": "Sim, trocar modelo",
       "it": "Sì, cambia modello",
-      "no": "Yes, Switch Template"
+      "no": "Yes, Switch Template",
+      "el": "Yes, Switch Template"
     },
     "modules.ses.creation.you_are_about_to_switch_to_a_different_template": {
       "en": "You are about to switch to a different template.",
@@ -568,7 +624,8 @@
       "lt": "Ketinate pereiti prie kito šablono.",
       "pt": "Você está prestes a mudar para um modelo diferente.",
       "it": "Stai per passare a un modello diverso.",
-      "no": "You are about to switch to a different template."
+      "no": "You are about to switch to a different template.",
+      "el": "You are about to switch to a different template."
     },
     "modules.ses.creation.you_selected": {
       "en": "You selected:",
@@ -578,7 +635,8 @@
       "lt": "Jūs pasirinkote:",
       "pt": "Você selecionou:",
       "it": "Hai selezionato:",
-      "no": "You selected:"
+      "no": "You selected:",
+      "el": "You selected:"
     },
     "modules.ses.intelligent_question_based_guidance_that_helps_you": {
       "en": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.",
@@ -588,7 +646,8 @@
       "lt": "Inteligentus klausimais pagrįstas vadovavimas, padedantis sukurti SES modelį per pokalbio raginimus ir pasiūlymus.",
       "pt": "Orientação inteligente baseada em perguntas que ajuda a construir o seu modelo SES através de sugestões conversacionais.",
       "it": "Guida intelligente basata su domande che ti aiuta a costruire il tuo modello SES attraverso suggerimenti conversazionali.",
-      "no": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions."
+      "no": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions.",
+      "el": "Intelligent question-based guidance that helps you build your SES model through conversational prompts and suggestions."
     },
     "modules.ses.load_the_template_as_is_without_reviewing_connecti": {
       "en": "Load the template as-is without reviewing connections. All predefined connections will be imported directly into your project.",
@@ -598,7 +657,8 @@
       "lt": "Įkelkite šabloną tokį, koks yra, neperžiūrėdami ryšių. Visi iš anksto apibrėžti ryšiai bus tiesiogiai importuoti į jūsų projektą.",
       "pt": "Carregue o modelo como está sem revisar as conexões. Todas as conexões predefinidas serão importadas diretamente para seu projeto.",
       "it": "Carica il modello così com'è senza rivedere le connessioni. Tutte le connessioni predefinite verranno importate direttamente nel tuo progetto.",
-      "no": "Load the template as-is without reviewing connections. All predefined connections will be imported directly into your project."
+      "no": "Load the template as-is without reviewing connections. All predefined connections will be imported directly into your project.",
+      "el": "Load the template as-is without reviewing connections. All predefined connections will be imported directly into your project."
     },
     "modules.ses.preview_all_template_connections_before_loading_re": {
       "en": "Preview all template connections before loading. Review connections to understand the causal links in the SES model.",
@@ -608,7 +668,8 @@
       "lt": "Peržiūrėkite visus šablono ryšius prieš įkeliant. Peržiūrėkite ryšius, kad suprastumėte priežastinius ryšius SES modelyje.",
       "pt": "Visualize todas as conexões do modelo antes de carregar. Revise as conexões para entender os vínculos causais no modelo SES.",
       "it": "Visualizza in anteprima tutte le connessioni del modello prima del caricamento. Rivedi le connessioni per comprendere i collegamenti causali nel modello SES.",
-      "no": "Preview all template connections before loading. Review connections to understand the causal links in the SES model."
+      "no": "Preview all template connections before loading. Review connections to understand the causal links in the SES model.",
+      "el": "Προεπισκόπηση Όλα Πρότυπο Συνδέσεις before loading. Review connections to understand the causal links in the SES model."
     },
     "modules.ses.quick_prototyping_common_scenarios_time_constraine": {
       "en": "Quick prototyping, common scenarios, time-constrained projects",
@@ -618,7 +679,8 @@
       "lt": "Greitas prototipavimas, įprasti scenarijai, laiko apriboti projektai",
       "pt": "Prototipagem rápida, cenários comuns, projetos com restrições de tempo",
       "it": "Prototipazione rapida, scenari comuni, progetti con vincoli di tempo",
-      "no": "Quick prototyping, common scenarios, time-constrained projects"
+      "no": "Quick prototyping, common scenarios, time-constrained projects",
+      "el": "Quick prototyping, common scenarios, time-constrained projects"
     },
     "modules.ses.review_and_customize_template_connections_approve_": {
       "en": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project.",
@@ -628,7 +690,8 @@
       "lt": "Peržiūrėkite ir pritaikykite šablono ryšius. Patvirtinkite, atmeskite arba modifikuokite atskirus ryšius prieš įkeliant į savo projektą.",
       "pt": "Revise e personalize as conexões do modelo. Aprove, rejeite ou modifique conexões individuais antes de carregar em seu projeto.",
       "it": "Rivedi e personalizza le connessioni del modello. Approva, rifiuta o modifica le singole connessioni prima di caricarle nel tuo progetto.",
-      "no": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project."
+      "no": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project.",
+      "el": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project."
     },
     "modules.ses.start_from_pre_built_templates_based_on_common_mar": {
       "en": "Start from pre-built templates based on common marine management scenarios. Customize to fit your specific case.",
@@ -638,7 +701,8 @@
       "lt": "Pradėkite nuo iš anksto paruoštų šablonų, pagrįstų įprastais jūrų valdymo scenarijais. Pritaikykite pagal savo specifinį atvejį.",
       "pt": "Comece com modelos pré-construídos baseados em cenários comuns de gestão marinha. Personalize para se adequar ao seu caso específico.",
       "it": "Inizia con modelli predefiniti basati su scenari comuni di gestione marina. Personalizza per adattarli al tuo caso specifico.",
-      "no": "Start from pre-built templates based on common marine management scenarios. Customize to fit your specific case."
+      "no": "Start from pre-built templates based on common marine management scenarios. Customize to fit your specific case.",
+      "el": "Έναρξη from pre-built templates based on common marine management scenarios. Customize to fit your specific case."
     },
     "modules.ses.this_template_includes_d_predefined_connections_be": {
       "en": "This template includes %d predefined connections between elements.",
@@ -648,7 +712,8 @@
       "lt": "Šis šablonas apima %d iš anksto apibrėžtų ryšių tarp elementų.",
       "pt": "Este modelo inclui %d conexões predefinidas entre elementos.",
       "it": "Questo modello include %d connessioni predefinite tra elementi.",
-      "no": "This template includes %d predefined connections between elements."
+      "no": "This template includes %d predefined connections between elements.",
+      "el": "This template includes %d predefined connections between elements."
     },
     "modules.ses.traditional_form_based_approach_following_the_daps": {
       "en": "Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology.",
@@ -658,7 +723,8 @@
       "lt": "Tradicinis formomis pagrįstas požiūris pagal DAPSI(W)R(M) sistemą. Puikiai tinka vartotojams, susipažinusiems su ISA metodika.",
       "pt": "Abordagem tradicional baseada em formulários seguindo a estrutura DAPSI(W)R(M). Perfeito para usuários familiarizados com a metodologia ISA.",
       "it": "Approccio tradizionale basato su moduli seguendo il framework DAPSI(W)R(M). Perfetto per utenti esperti della metodologia ISA.",
-      "no": "Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology."
+      "no": "Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology.",
+      "el": "Traditional form-based approach following the DAPSI(W)R(M) framework. Perfect for users familiar with ISA methodology."
     },
     "modules.ses.creation.customize_template": {
       "en": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project.",
@@ -668,7 +734,8 @@
       "lt": "Peržiūrėkite ir pritaikykite šablono ryšius. Patvirtinkite, atmeskite arba modifikuokite atskirus ryšius prieš įkeliant į savo projektą.",
       "pt": "Revise e personalize as conexões do modelo. Aprove, rejeite ou modifique conexões individuais antes de carregar em seu projeto.",
       "it": "Rivedi e personalizza le connessioni del modello. Approva, rifiuta o modifica le singole connessioni prima di caricarle nel tuo progetto.",
-      "no": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project."
+      "no": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project.",
+      "el": "Review and customize template connections. Approve, reject, or modify individual connections before loading into your project."
     },
     "modules.ses.creation.d_connections_from_s_template": {
       "en": "D Connections From S Template",
@@ -678,7 +745,8 @@
       "lt": "[LT] D Connections From S Template",
       "pt": "[PT] D Connections From S Template",
       "it": "[IT] D Connections From S Template",
-      "no": "D Connections From S Template"
+      "no": "D Connections From S Template",
+      "el": "D Connections From S Template"
     },
     "modules.ses.creation.es": {
       "en": "Welcome to the MarineSABRES Toolbox",
@@ -688,7 +756,8 @@
       "lt": "Sveiki atvykę į MarineSABRES įrankių rinkinį",
       "pt": "Bem-vindo à Caixa de Ferramentas MarineSABRES",
       "it": "Benvenuto nella Toolbox MarineSABRES",
-      "no": "Welcome to the MarineSABRES Toolbox"
+      "no": "Welcome to the MarineSABRES Toolbox",
+      "el": "Καλώς ήρθατε to the MarineSABRES Toolbox"
     },
     "modules.ses.creation.gb": {
       "en": "Gb",
@@ -698,7 +767,8 @@
       "lt": "[LT] Gb",
       "pt": "[PT] Gb",
       "it": "[IT] Gb",
-      "no": "Gb"
+      "no": "Gb",
+      "el": "Gb"
     },
     "modules.ses.creation.load_template": {
       "en": "Load Template",
@@ -708,7 +778,8 @@
       "lt": "[LT] Load Template",
       "pt": "[PT] Load Template",
       "it": "[IT] Load Template",
-      "no": "Load Template"
+      "no": "Load Template",
+      "el": "Load Template"
     },
     "modules.ses.creation.marine_processes_and_functions": {
       "en": "Marine Processes And Functions",
@@ -718,7 +789,8 @@
       "lt": "[LT] Marine Processes And Functions",
       "pt": "[PT] Marine Processes And Functions",
       "it": "[IT] Marine Processes And Functions",
-      "no": "Marine Processes And Functions"
+      "no": "Marine Processes And Functions",
+      "el": "Θαλάσσιες διεργασίες And Functions"
     },
     "modules.ses.creation.template_ses_guide_how_to_use_title": {
       "en": "Template Ses Guide How To Use Title",
@@ -728,7 +800,8 @@
       "lt": "[LT] Template Ses Guide How To Use Title",
       "pt": "[PT] Template Ses Guide How To Use Title",
       "it": "[IT] Template Ses Guide How To Use Title",
-      "no": "Template Ses Guide How To Use Title"
+      "no": "Template Ses Guide How To Use Title",
+      "el": "Πρότυπο SES Guide How To Use Title"
     },
     "modules.ses.creation.template_ses_guide_step1": {
       "en": "Template Ses Guide Step1",
@@ -738,7 +811,8 @@
       "lt": "[LT] Template Ses Guide Step1",
       "pt": "[PT] Template Ses Guide Step1",
       "it": "[IT] Template Ses Guide Step1",
-      "no": "Template Ses Guide Step1"
+      "no": "Template Ses Guide Step1",
+      "el": "Πρότυπο SES Guide Step1"
     },
     "modules.ses.creation.template_ses_guide_step2": {
       "en": "Template Ses Guide Step2",
@@ -748,7 +822,8 @@
       "lt": "[LT] Template Ses Guide Step2",
       "pt": "[PT] Template Ses Guide Step2",
       "it": "[IT] Template Ses Guide Step2",
-      "no": "Template Ses Guide Step2"
+      "no": "Template Ses Guide Step2",
+      "el": "Πρότυπο SES Guide Step2"
     },
     "modules.ses.creation.template_ses_guide_step3": {
       "en": "Template Ses Guide Step3",
@@ -758,7 +833,8 @@
       "lt": "[LT] Template Ses Guide Step3",
       "pt": "[PT] Template Ses Guide Step3",
       "it": "[IT] Template Ses Guide Step3",
-      "no": "Template Ses Guide Step3"
+      "no": "Template Ses Guide Step3",
+      "el": "Πρότυπο SES Guide Step3"
     },
     "modules.ses.creation.template_ses_guide_what_is_p1": {
       "en": "Template Ses Guide What Is P1",
@@ -768,7 +844,8 @@
       "lt": "[LT] Template Ses Guide What Is P1",
       "pt": "[PT] Template Ses Guide What Is P1",
       "it": "[IT] Template Ses Guide What Is P1",
-      "no": "Template Ses Guide What Is P1"
+      "no": "Template Ses Guide What Is P1",
+      "el": "Πρότυπο SES Guide What Is P1"
     },
     "modules.ses.creation.template_ses_guide_what_is_title": {
       "en": "Template Ses Guide What Is Title",
@@ -778,27 +855,30 @@
       "lt": "[LT] Template Ses Guide What Is Title",
       "pt": "[PT] Template Ses Guide What Is Title",
       "it": "[IT] Template Ses Guide What Is Title",
-      "no": "Template Ses Guide What Is Title"
+      "no": "Template Ses Guide What Is Title",
+      "el": "Πρότυπο SES Guide What Is Title"
     },
     "modules.ses.creation.template_s_loaded": {
-      "en": "Template S Loaded",
-      "es": "[ES] Template S Loaded",
-      "fr": "[FR] Template S Loaded",
-      "de": "[DE] Template S Loaded",
-      "lt": "[LT] Template S Loaded",
-      "pt": "[PT] Template S Loaded",
-      "it": "[IT] Template S Loaded",
-      "no": "Template S Loaded"
+      "en": "Template %s loaded!",
+      "es": "[ES] Template %s loaded!",
+      "fr": "[FR] Template %s loaded!",
+      "de": "[DE] Template %s loaded!",
+      "lt": "[LT] Template %s loaded!",
+      "pt": "[PT] Template %s loaded!",
+      "it": "[IT] Template %s loaded!",
+      "no": "Template %s loaded!",
+      "el": "Πρότυπο %s loaded!"
     },
     "modules.ses.creation.template_s_loaded_with_d_connections": {
-      "en": "Template S Loaded With D Connections",
-      "es": "[ES] Template S Loaded With D Connections",
-      "fr": "[FR] Template S Loaded With D Connections",
-      "de": "[DE] Template S Loaded With D Connections",
-      "lt": "[LT] Template S Loaded With D Connections",
-      "pt": "[PT] Template S Loaded With D Connections",
-      "it": "[IT] Template S Loaded With D Connections",
-      "no": "Template S Loaded With D Connections"
+      "en": "Template %s loaded with %d connections!",
+      "es": "[ES] Template %s loaded with %d connections!",
+      "fr": "[FR] Template %s loaded with %d connections!",
+      "de": "[DE] Template %s loaded with %d connections!",
+      "lt": "[LT] Template %s loaded with %d connections!",
+      "pt": "[PT] Template %s loaded with %d connections!",
+      "it": "[IT] Template %s loaded with %d connections!",
+      "no": "Template %s loaded with %d connections!",
+      "el": "Πρότυπο %s loaded with %d connections!"
     },
     "modules.ses.creation.create_ses_guide_ai_desc": {
       "en": "Create Ses Guide Ai Desc",
@@ -808,7 +888,8 @@
       "lt": "[LT] Create Ses Guide Ai Desc",
       "pt": "[PT] Create Ses Guide Ai Desc",
       "it": "[IT] Create Ses Guide Ai Desc",
-      "no": "Create Ses Guide Ai Desc"
+      "no": "Create Ses Guide Ai Desc",
+      "el": "Δημιουργία SES Guide Ai Desc"
     },
     "modules.ses.creation.create_ses_guide_methods_p1": {
       "en": "Create Ses Guide Methods P1",
@@ -818,7 +899,8 @@
       "lt": "[LT] Create Ses Guide Methods P1",
       "pt": "[PT] Create Ses Guide Methods P1",
       "it": "[IT] Create Ses Guide Methods P1",
-      "no": "Create Ses Guide Methods P1"
+      "no": "Create Ses Guide Methods P1",
+      "el": "Δημιουργία SES Guide Methods P1"
     },
     "modules.ses.creation.create_ses_guide_methods_title": {
       "en": "Create Ses Guide Methods Title",
@@ -828,7 +910,8 @@
       "lt": "[LT] Create Ses Guide Methods Title",
       "pt": "[PT] Create Ses Guide Methods Title",
       "it": "[IT] Create Ses Guide Methods Title",
-      "no": "Create Ses Guide Methods Title"
+      "no": "Create Ses Guide Methods Title",
+      "el": "Δημιουργία SES Guide Methods Title"
     },
     "modules.ses.creation.create_ses_guide_standard_desc": {
       "en": "Create Ses Guide Standard Desc",
@@ -838,7 +921,8 @@
       "lt": "[LT] Create Ses Guide Standard Desc",
       "pt": "[PT] Create Ses Guide Standard Desc",
       "it": "[IT] Create Ses Guide Standard Desc",
-      "no": "Create Ses Guide Standard Desc"
+      "no": "Create Ses Guide Standard Desc",
+      "el": "Δημιουργία SES Guide Standard Desc"
     },
     "modules.ses.creation.create_ses_guide_template_desc": {
       "en": "Create Ses Guide Template Desc",
@@ -848,7 +932,8 @@
       "lt": "[LT] Create Ses Guide Template Desc",
       "pt": "[PT] Create Ses Guide Template Desc",
       "it": "[IT] Create Ses Guide Template Desc",
-      "no": "Create Ses Guide Template Desc"
+      "no": "Create Ses Guide Template Desc",
+      "el": "Δημιουργία SES Guide Template Desc"
     },
     "modules.ses.creation.title": {
       "en": "Create Your Social-Ecological System",
@@ -858,7 +943,8 @@
       "lt": "Sukurkite savo Socialinę-Ekologinę Sistemą",
       "pt": "Crie o seu Sistema Socio-Ecológico",
       "it": "Crea il tuo Sistema Socio-Ecologico",
-      "no": "Opprett ditt Sosial-Økologiske System"
+      "no": "Opprett ditt Sosial-Økologiske System",
+      "el": "Δημιουργία Your Social-Ecological System"
     },
     "modules.ses.creation.subtitle": {
       "en": "Choose the method that best fits your experience level and project needs",
@@ -868,7 +954,8 @@
       "lt": "Pasirinkite metodą, kuris geriausiai atitinka jūsų patirties lygį ir projekto poreikius",
       "pt": "Escolha o método que melhor se adapta ao seu nível de experiência e às necessidades do projeto",
       "it": "Scegli il metodo che meglio si adatta al tuo livello di esperienza e alle esigenze del progetto",
-      "no": "Velg metoden som best passer ditt erfaringsnivå og prosjektbehov"
+      "no": "Velg metoden som best passer ditt erfaringsnivå og prosjektbehov",
+      "el": "Επιλέξτε the method that best fits your experience level and project needs"
     },
     "modules.ses.template.title": {
       "en": "Template-Based SES Creation",
@@ -878,7 +965,8 @@
       "lt": "SES Kūrimas Remiantis Šablonais",
       "pt": "Criação de SES Baseada em Modelos",
       "it": "Creazione SES Basata su Modelli",
-      "no": "Malbasert SES-Oppretting"
+      "no": "Malbasert SES-Oppretting",
+      "el": "Template-Based SES Creation"
     },
     "modules.ses.template.subtitle": {
       "en": "Choose a pre-built template that matches your scenario and customize it to your needs",
@@ -888,7 +976,8 @@
       "lt": "Pasirinkite iš anksto sukurtą šabloną, atitinkantį jūsų scenarijų, ir pritaikykite jį savo poreikiams",
       "pt": "Escolha um modelo pré-construído que corresponda ao seu cenário e personalize-o de acordo com suas necessidades",
       "it": "Scegli un modello pre-costruito che corrisponde al tuo scenario e personalizzalo in base alle tue esigenze",
-      "no": "Velg en ferdigbygd mal som passer ditt scenario og tilpass den til dine behov"
+      "no": "Velg en ferdigbygd mal som passer ditt scenario og tilpass den til dine behov",
+      "el": "Επιλέξτε a pre-built template that matches your scenario and customize it to your needs"
     }
   }
 }

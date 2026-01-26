@@ -9,11 +9,9 @@ source("functions/translation_loader.R")
 cat("Loading translations...\n")
 merged <- load_translations("translations", debug = FALSE)
 
-# Extract English keys (used as the primary identifier)
-defined_keys <- sapply(merged$translation, function(x) {
-  if (!is.null(x$en)) x$en else ""
-})
-defined_keys <- defined_keys[defined_keys != ""]
+# Extract translation keys (the key names, not values)
+# Fixed: was incorrectly extracting English values instead of keys
+defined_keys <- names(merged$translation)
 
 cat(sprintf("Defined translations: %d\n", length(defined_keys)))
 
