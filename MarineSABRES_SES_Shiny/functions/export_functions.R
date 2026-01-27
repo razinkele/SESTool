@@ -14,22 +14,29 @@
 #' @param height Image height in pixels
 #' @return NULL (side effect: saves file)
 export_cld_png <- function(visnet, file_path, width = 1200, height = 900) {
-  
+
   if (!requireNamespace("webshot", quietly = TRUE)) {
     stop("Package 'webshot' is required for PNG export. Install with: webshot::install_phantomjs()")
   }
-  
-  # Save as HTML first
-  temp_html <- tempfile(fileext = ".html")
-  htmlwidgets::saveWidget(visnet, temp_html, selfcontained = TRUE)
-  
-  # Convert to PNG
-  webshot::webshot(temp_html, file_path, vwidth = width, vheight = height)
-  
-  # Clean up
-  unlink(temp_html)
-  
-  message("CLD exported as PNG: ", file_path)
+
+  temp_html <- NULL
+  tryCatch({
+    # Save as HTML first
+    temp_html <- tempfile(fileext = ".html")
+    htmlwidgets::saveWidget(visnet, temp_html, selfcontained = TRUE)
+
+    # Convert to PNG
+    webshot::webshot(temp_html, file_path, vwidth = width, vheight = height)
+
+    message("CLD exported as PNG: ", file_path)
+  }, error = function(e) {
+    stop(paste("Failed to export PNG:", e$message))
+  }, finally = {
+    # Clean up temp file
+    if (!is.null(temp_html) && file.exists(temp_html)) {
+      unlink(temp_html)
+    }
+  })
 }
 
 #' Export CLD as SVG
@@ -110,11 +117,16 @@ export_bot_pdf <- function(bot_data_list, file_path, width = 11, height = 8.5) {
 #' @param file_path Output file path
 #' @return NULL (side effect: saves file)
 export_project_excel <- function(project_data, file_path) {
-  
-  wb <- createWorkbook()
-  
-  # Project metadata sheet
-  addWorksheet(wb, "Project_Info")
+
+  if (is.null(project_data)) {
+    stop("No project data provided for export")
+  }
+
+  tryCatch({
+    wb <- createWorkbook()
+
+    # Project metadata sheet
+    addWorksheet(wb, "Project_Info")
   metadata_df <- data.frame(
     Field = c("Project ID", "Project Name", "Created", "Last Modified", 
               "DA Site", "Focal Issue"),
@@ -179,9 +191,12 @@ export_project_excel <- function(project_data, file_path) {
     writeData(wb, "Feedback_Loops", project_data$data$cld$loops)
   }
 
-  saveWorkbook(wb, file_path, overwrite = TRUE)
-  
-  message("Project data exported to Excel: ", file_path)
+    saveWorkbook(wb, file_path, overwrite = TRUE)
+
+    message("Project data exported to Excel: ", file_path)
+  }, error = function(e) {
+    stop(paste("Failed to export Excel file:", e$message))
+  })
 }
 
 #' Helper function to export ISA data to existing workbook
@@ -288,15 +303,16 @@ export_project_csv_zip <- function(project_data, file_path) {
              file.path(temp_dir, "risks.csv"), row.names = FALSE)
   }
   
-  # Export ISA data
-  isa_data <- project_data$data$isa_data
+  # Export ISA data (use safe_get_nested for defensive access)
+  isa_data <- safe_get_nested(project_data, "data", "isa_data", default = list())
   element_names <- c("goods_benefits", "ecosystem_services", "marine_processes",
                     "pressures", "activities", "drivers")
-  
+
   for (elem_name in element_names) {
-    if (!is.null(isa_data[[elem_name]]) && nrow(isa_data[[elem_name]]) > 0) {
-      write.csv(isa_data[[elem_name]], 
-               file.path(temp_dir, paste0(elem_name, ".csv")), 
+    elem_data <- isa_data[[elem_name]]
+    if (!is.null(elem_data) && is.data.frame(elem_data) && nrow(elem_data) > 0) {
+      write.csv(elem_data,
+               file.path(temp_dir, paste0(elem_name, ".csv")),
                row.names = FALSE)
     }
   }
@@ -354,15 +370,21 @@ generate_executive_summary <- function(project_data, output_file) {
 }
 
 #' Create executive summary Rmd content
-#' 
+#'
 #' @param project_data Project data list
 #' @return Character vector of Rmd lines
 create_executive_summary_rmd <- function(project_data) {
-  
+
+  # Use safe_get_nested for defensive data access
+  metadata <- safe_get_nested(project_data, "data", "metadata", default = list())
+  isa_data <- safe_get_nested(project_data, "data", "isa_data", default = list())
+  cld_data <- safe_get_nested(project_data, "data", "cld", default = list())
+  responses <- safe_get_nested(project_data, "data", "responses", default = list())
+
   c(
     "---",
     "title: 'Executive Summary: MarineSABRES SES Analysis'",
-    paste0("subtitle: '", project_data$project_name, "'"),
+    paste0("subtitle: '", project_data$project_name %||% "Untitled", "'"),
     paste0("date: '", format(Sys.Date(), "%B %d, %Y"), "'"),
     "output:",
     "  html_document:",
@@ -373,20 +395,20 @@ create_executive_summary_rmd <- function(project_data) {
     "",
     "# Project Overview",
     "",
-    paste0("**Project ID:** ", project_data$project_id),
-    paste0("**Demonstration Area:** ", project_data$data$metadata$da_site %||% "Not specified"),
-    paste0("**Focal Issue:** ", project_data$data$metadata$focal_issue %||% "Not defined"),
-    paste0("**Created:** ", format(project_data$created_at, "%B %d, %Y")),
+    paste0("**Project ID:** ", project_data$project_id %||% "N/A"),
+    paste0("**Demonstration Area:** ", metadata$da_site %||% "Not specified"),
+    paste0("**Focal Issue:** ", metadata$focal_issue %||% "Not defined"),
+    paste0("**Created:** ", format(project_data$created_at %||% Sys.Date(), "%B %d, %Y")),
     "",
     "# System Analysis Summary",
     "",
     "## DAPSI(W)R(M) Elements",
     "",
-    generate_element_summary_md(project_data$data$isa_data),
+    generate_element_summary_md(isa_data),
     "",
     "## Network Structure",
     "",
-    generate_network_summary_md(project_data$data$cld),
+    generate_network_summary_md(cld_data),
     "",
     "## Key Findings",
     "",
@@ -394,7 +416,7 @@ create_executive_summary_rmd <- function(project_data) {
     "",
     "# Recommendations",
     "",
-    generate_recommendations_md(project_data$data$responses),
+    generate_recommendations_md(responses),
     "",
     "---",
     "",

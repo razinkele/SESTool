@@ -2,9 +2,7 @@
 # Import Data Module
 # Purpose: Import Excel files with Elements (nodes) and Connections (edges) sheets
 
-library(shiny)
-library(shinyjs)
-library(readxl)
+# Libraries loaded in global.R: shiny, shinyjs, readxl
 
 # Source the tabbed connection review module (organized by DAPSI(W)R(M) stages)
 source("modules/connection_review_tabbed.R", local = TRUE)
@@ -186,9 +184,53 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
       tryCatch({
         file_path <- input$excel_file$datapath
+        file_name <- input$excel_file$name
+        file_size <- input$excel_file$size
 
-        # Check sheets
-        sheets <- readxl::excel_sheets(file_path)
+        # === VALIDATION 1: File extension check ===
+        if (!grepl("\\.(xlsx|xls)$", tolower(file_name))) {
+          showNotification(
+            i18n$t("common.messages.invalid_file_type_please_upload_xlsx_or_xls"),
+            type = "error",
+            duration = 10
+          )
+          return(NULL)
+        }
+
+        # === VALIDATION 2: File size check (max 50MB) ===
+        max_size_mb <- 50
+        if (file_size > max_size_mb * 1024 * 1024) {
+          showNotification(
+            paste(i18n$t("common.messages.file_too_large_maximum_size_is"), max_size_mb, "MB"),
+            type = "error",
+            duration = 10
+          )
+          return(NULL)
+        }
+
+        # === VALIDATION 3: File exists and readable ===
+        if (!file.exists(file_path)) {
+          showNotification(
+            i18n$t("common.messages.uploaded_file_not_found"),
+            type = "error",
+            duration = 10
+          )
+          return(NULL)
+        }
+
+        # === VALIDATION 4: Check sheets ===
+        sheets <- tryCatch({
+          readxl::excel_sheets(file_path)
+        }, error = function(e) {
+          showNotification(
+            paste(i18n$t("common.messages.cannot_read_excel_file"), e$message),
+            type = "error",
+            duration = 10
+          )
+          return(NULL)
+        })
+
+        if (is.null(sheets)) return(NULL)
 
         if (!("Elements" %in% sheets) || !("Connections" %in% sheets)) {
           showNotification(
@@ -359,7 +401,12 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         cat(sprintf("[IMPORT] Importing %d of %d connections (rejected: %d)\n",
                     nrow(connections_to_import), nrow(rv$connections_data), length(rejected)))
 
-        # Convert to ISA structure
+        # Verify shared function is available
+        if (!exists("convert_excel_to_isa", mode = "function")) {
+          stop("convert_excel_to_isa function not available. Ensure excel_import_helpers.R is sourced.")
+        }
+
+        # Convert to ISA structure (uses connection-first approach from excel_import_helpers.R)
         isa_data <- convert_excel_to_isa(rv$elements_data, connections_to_import)
 
         # Perform import
@@ -379,7 +426,12 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       req(rv$file_loaded)
 
       tryCatch({
-        # Convert to ISA structure
+        # Verify shared function is available
+        if (!exists("convert_excel_to_isa", mode = "function")) {
+          stop("convert_excel_to_isa function not available. Ensure excel_import_helpers.R is sourced.")
+        }
+
+        # Convert to ISA structure (uses connection-first approach from excel_import_helpers.R)
         isa_data <- convert_excel_to_isa(rv$elements_data, rv$connections_data)
 
         # Perform import
@@ -550,178 +602,17 @@ validate_import_data <- function(elements, connections) {
   return(if (length(errors) > 0) errors else NULL)
 }
 
-#' Convert Excel data to ISA framework structure
-convert_excel_to_isa <- function(elements, connections) {
-
-  # Get type column name
-  type_col <- if ("type...2" %in% names(elements)) "type...2" else "type"
-
-  # Initialize ISA data structure
-  isa_data <- list(
-    drivers = NULL,
-    activities = NULL,
-    pressures = NULL,
-    marine_processes = NULL,
-    ecosystem_services = NULL,
-    goods_benefits = NULL,
-    responses = NULL,
-    adjacency_matrices = list()
-  )
-
-  # Map element types to ISA categories
-  type_mapping <- list(
-    "Driver" = "drivers",
-    "Activity" = "activities",
-    "Pressure" = "pressures",
-    "Marine Process and Function" = "marine_processes",
-    "Ecosystem Service" = "ecosystem_services",
-    "Good and Benefit" = "goods_benefits",
-    "Response" = "responses",
-    "Measure" = "responses"  # Measures are now merged with responses
-  )
-
-  # Process each element type
-  for (type_name in names(type_mapping)) {
-    isa_key <- type_mapping[[type_name]]
-
-    # Filter elements by type
-    type_elements <- elements[elements[[type_col]] == type_name, ]
-
-    if (nrow(type_elements) > 0) {
-      # Create dataframe with ID, Name, Description
-      df <- data.frame(
-        ID = paste0(substr(isa_key, 1, 1), 1:nrow(type_elements)),
-        Name = type_elements$Label,
-        Description = "", # Excel file doesn't have descriptions
-        stringsAsFactors = FALSE
-      )
-
-      isa_data[[isa_key]] <- df
-    }
-  }
-
-  # Build adjacency matrices from connections
-  isa_data$adjacency_matrices <- build_adjacency_matrices_from_connections(
-    elements, connections, type_col, type_mapping
-  )
-
-  return(isa_data)
-}
-
-#' Build adjacency matrices from connections data
-build_adjacency_matrices_from_connections <- function(elements, connections, type_col, type_mapping) {
-
-  # Create mapping from label to type
-  label_to_type <- setNames(elements[[type_col]], elements$Label)
-
-  # Map to ISA categories
-  label_to_isa <- sapply(label_to_type, function(type) {
-    if (type %in% names(type_mapping)) {
-      return(type_mapping[[type]])
-    } else {
-      return(NA)
-    }
-  })
-
-  # Category abbreviation mapping
-  category_abbrev <- list(
-    "drivers" = "d",
-    "activities" = "a",
-    "pressures" = "p",
-    "marine_processes" = "mpf",
-    "ecosystem_services" = "es",
-    "goods_benefits" = "gb",
-    "responses" = "r"
-  )
-
-  # Find all unique category pairs that exist in the connections
-  connection_pairs <- list()
-
-  for (j in 1:nrow(connections)) {
-    from_label <- connections$From[j]
-    to_label <- connections$To[j]
-
-    from_cat <- label_to_isa[from_label]
-    to_cat <- label_to_isa[to_label]
-
-    if (!is.na(from_cat) && !is.na(to_cat)) {
-      pair_key <- paste(from_cat, to_cat, sep = "->")
-      if (!(pair_key %in% names(connection_pairs))) {
-        connection_pairs[[pair_key]] <- list(from = from_cat, to = to_cat)
-      }
-    }
-  }
-
-  # Build adjacency matrices for all unique connection pairs
-  adjacency_matrices <- list()
-
-  for (pair in connection_pairs) {
-    from_category <- pair$from
-    to_category <- pair$to
-
-    # Get elements in each category
-    from_elements <- elements$Label[label_to_isa == from_category]
-    to_elements <- elements$Label[label_to_isa == to_category]
-
-    if (length(from_elements) > 0 && length(to_elements) > 0) {
-      # MATRIX CONVENTION: Create matrix in SOURCE×TARGET format
-      # - Matrix will be named: from_to (e.g., "es_gb" for ES→GB connections)
-      # - Matrix structure: rows=FROM elements (source), cols=TO elements (target)
-      # - Cell [i,j]: Connection from FROM[i] to TO[j]
-      mat <- matrix("", nrow = length(from_elements), ncol = length(to_elements))
-      rownames(mat) <- from_elements
-      colnames(mat) <- to_elements
-
-      # Fill matrix with connections
-      for (j in 1:nrow(connections)) {
-        from_label <- connections$From[j]
-        to_label <- connections$To[j]
-        polarity <- connections$Label[j]
-
-        # Check if this connection is between the current categories
-        if (from_label %in% from_elements && to_label %in% to_elements) {
-          # Determine strength
-          strength <- "medium"
-          if ("Strength" %in% names(connections)) {
-            strength_val <- tolower(as.character(connections$Strength[j]))
-            if (grepl("strong", strength_val)) strength <- "strong"
-            else if (grepl("weak", strength_val)) strength <- "weak"
-          }
-
-          # Determine confidence
-          confidence <- 3
-          if ("Confidence" %in% names(connections)) {
-            conf_val <- connections$Confidence[j]
-            if (!is.na(conf_val) && is.numeric(conf_val)) {
-              confidence <- as.integer(conf_val)
-            }
-          }
-
-          # Format: +strength:confidence or -strength:confidence
-          polarity_sign <- if (polarity == "+") "+" else "-"
-          cell_value <- paste0(polarity_sign, strength, ":", confidence)
-
-          # Matrix is SOURCE×TARGET, so indexing is [from, to]
-          mat[from_label, to_label] <- cell_value
-        }
-      }
-
-      # Add matrix to list with appropriate key using standard abbreviations
-      # Matrix structure: rows=FROM elements (source), cols=TO elements (target)
-      # Matrix name: FROM_TO (matches structure)
-      # Example: Driver→Activity connection
-      #   - Excel: From=Driver, To=Activity
-      #   - Matrix name: "d_a" (driver_activity)
-      #   - Matrix structure: rows=Drivers, cols=Activities (D×A)
-      from_abbrev <- category_abbrev[[from_category]]
-      to_abbrev <- category_abbrev[[to_category]]
-      matrix_key <- paste0(from_abbrev, "_", to_abbrev)  # FROM_TO naming
-      adjacency_matrices[[matrix_key]] <- mat
-    }
-  }
-
-  return(adjacency_matrices)
-}
+# NOTE: convert_excel_to_isa() and build_adjacency_matrices_from_connections() functions
+# are now provided by the shared excel_import_helpers.R module.
+# The shared functions use a connection-first approach:
+# 1. Extract all nodes from connections (From/To values)
+# 2. Look up types from elements sheet
+# 3. Infer types for unmatched nodes using DAPSIWRM keyword matching
+# 4. Build ISA categories from connection-derived nodes
+# 5. Build adjacency matrices ensuring all connection edges are preserved
+#
+# If the shared function is not available, the import will fail with an error message.
+# Ensure excel_import_helpers.R is sourced in global.R before this module.
 
 #' Parse connections for review module
 parse_connections_for_review <- function(elements, connections) {

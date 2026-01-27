@@ -1991,6 +1991,28 @@
       "no": "Data exported successfully!",
       "el": "Δεδομένα exported successfully!"
     },
+    "common.messages.export_failed": {
+      "en": "Export failed:",
+      "es": "Error en la exportación:",
+      "fr": "Échec de l'exportation :",
+      "de": "Export fehlgeschlagen:",
+      "lt": "Eksportavimas nepavyko:",
+      "pt": "Falha na exportação:",
+      "it": "Esportazione fallita:",
+      "no": "Eksport mislyktes:",
+      "el": "Η εξαγωγή απέτυχε:"
+    },
+    "common.messages.no_data_to_export": {
+      "en": "No data to export. Please load or create a project first.",
+      "es": "No hay datos para exportar. Por favor, cargue o cree un proyecto primero.",
+      "fr": "Aucune donnée à exporter. Veuillez charger ou créer un projet d'abord.",
+      "de": "Keine Daten zum Exportieren. Bitte laden oder erstellen Sie zuerst ein Projekt.",
+      "lt": "Nėra duomenų eksportavimui. Pirmiausia įkelkite arba sukurkite projektą.",
+      "pt": "Sem dados para exportar. Por favor, carregue ou crie um projeto primeiro.",
+      "it": "Nessun dato da esportare. Per favore, carica o crea prima un progetto.",
+      "no": "Ingen data å eksportere. Vennligst last eller opprett et prosjekt først.",
+      "el": "Δεν υπάρχουν δεδομένα προς εξαγωγή. Παρακαλώ φορτώστε ή δημιουργήστε πρώτα ένα έργο."
+    },
     "common.messages.data_management": {
       "en": "Data Management",
       "es": "Gestión de Datos",
@@ -3299,6 +3321,50 @@
       "it": "Nome File:",
       "no": "Filename:",
       "el": "Filename:"
+    },
+    "common.messages.file_too_large_maximum_size_is": {
+      "en": "File too large. Maximum size is",
+      "es": "Archivo demasiado grande. El tamaño máximo es",
+      "fr": "Fichier trop volumineux. La taille maximale est",
+      "de": "Datei zu groß. Maximale Größe ist",
+      "lt": "Failas per didelis. Maksimalus dydis yra",
+      "pt": "Ficheiro demasiado grande. O tamanho máximo é",
+      "it": "File troppo grande. La dimensione massima è",
+      "no": "Filen er for stor. Maksimal størrelse er",
+      "el": "Το αρχείο είναι πολύ μεγάλο. Το μέγιστο μέγεθος είναι"
+    },
+    "common.messages.invalid_file_type_please_upload_xlsx_or_xls": {
+      "en": "Invalid file type. Please upload an Excel file (.xlsx or .xls)",
+      "es": "Tipo de archivo no válido. Por favor, suba un archivo Excel (.xlsx o .xls)",
+      "fr": "Type de fichier non valide. Veuillez télécharger un fichier Excel (.xlsx ou .xls)",
+      "de": "Ungültiger Dateityp. Bitte laden Sie eine Excel-Datei hoch (.xlsx oder .xls)",
+      "lt": "Neteisingas failo tipas. Prašome įkelti Excel failą (.xlsx arba .xls)",
+      "pt": "Tipo de ficheiro inválido. Por favor, carregue um ficheiro Excel (.xlsx ou .xls)",
+      "it": "Tipo di file non valido. Si prega di caricare un file Excel (.xlsx o .xls)",
+      "no": "Ugyldig filtype. Vennligst last opp en Excel-fil (.xlsx eller .xls)",
+      "el": "Μη έγκυρος τύπος αρχείου. Παρακαλώ ανεβάστε ένα αρχείο Excel (.xlsx ή .xls)"
+    },
+    "common.messages.uploaded_file_not_found": {
+      "en": "Uploaded file not found. Please try uploading again.",
+      "es": "Archivo subido no encontrado. Por favor, intente subir de nuevo.",
+      "fr": "Fichier téléchargé non trouvé. Veuillez réessayer.",
+      "de": "Hochgeladene Datei nicht gefunden. Bitte versuchen Sie es erneut.",
+      "lt": "Įkeltas failas nerastas. Bandykite įkelti dar kartą.",
+      "pt": "Ficheiro carregado não encontrado. Por favor, tente carregar novamente.",
+      "it": "File caricato non trovato. Per favore, prova a caricarlo di nuovo.",
+      "no": "Opplastet fil ikke funnet. Vennligst prøv å laste opp igjen.",
+      "el": "Το μεταφορτωμένο αρχείο δεν βρέθηκε. Παρακαλώ δοκιμάστε ξανά."
+    },
+    "common.messages.cannot_read_excel_file": {
+      "en": "Cannot read Excel file. The file may be corrupted or password-protected.",
+      "es": "No se puede leer el archivo Excel. El archivo puede estar dañado o protegido con contraseña.",
+      "fr": "Impossible de lire le fichier Excel. Le fichier peut être corrompu ou protégé par mot de passe.",
+      "de": "Excel-Datei kann nicht gelesen werden. Die Datei ist möglicherweise beschädigt oder passwortgeschützt.",
+      "lt": "Nepavyksta perskaityti Excel failo. Failas gali būti pažeistas arba apsaugotas slaptažodžiu.",
+      "pt": "Não é possível ler o ficheiro Excel. O ficheiro pode estar corrompido ou protegido por senha.",
+      "it": "Impossibile leggere il file Excel. Il file potrebbe essere corrotto o protetto da password.",
+      "no": "Kan ikke lese Excel-filen. Filen kan være ødelagt eller passordbeskyttet.",
+      "el": "Αδυναμία ανάγνωσης αρχείου Excel. Το αρχείο μπορεί να είναι κατεστραμμένο ή προστατευμένο με κωδικό."
     },
     "common.messages.finalizing_connections": {
       "en": "Finalizing connections...",

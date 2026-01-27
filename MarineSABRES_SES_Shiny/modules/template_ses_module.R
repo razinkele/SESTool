@@ -1,13 +1,12 @@
-library(shiny)
-library(shinyjs)
-
 # modules/template_ses_module.R
 # Template-Based SES Creation Module
 # Purpose: Allow users to start from pre-built SES templates
 
-# Source dependencies
-source("modules/connection_review_tabbed.R", local = TRUE)
-source("functions/template_loader.R", local = TRUE)
+# Libraries loaded in global.R: shiny, shinyjs
+
+# Source dependencies using project root (reliable from any working directory)
+source(get_project_file("modules/connection_review_tabbed.R"), local = TRUE)
+source(get_project_file("functions/template_loader.R"), local = TRUE)
 
 # ============================================================================
 # TEMPLATE LIBRARY
@@ -29,9 +28,20 @@ source("functions/template_loader.R", local = TRUE)
 # - Format 1 (comprehensive): {"dapsiwrm_framework": {...}, "template_name": "...", ...}
 # - Format 2 (simplified): {"elements": {...}, "template_info": {...}, ...}
 
-cat("Loading SES templates from JSON files...\n")
-ses_templates <- load_all_templates("data")
-cat("Loaded", length(ses_templates), "templates:", paste(names(ses_templates), collapse=", "), "\n\n")
+debug_log("Loading SES templates from JSON files...", "TEMPLATE")
+ses_templates <- tryCatch({
+  result <- load_all_templates("data")
+  if (is.null(result) || length(result) == 0) {
+    debug_log("Warning: No templates loaded from data directory", "TEMPLATE", "WARN")
+    list()  # Return empty list instead of NULL
+  } else {
+    result
+  }
+}, error = function(e) {
+  debug_log(paste("Error loading templates:", e$message), "TEMPLATE", "ERROR")
+  list()  # Return empty list on error
+})
+debug_log(sprintf("Loaded %d templates: %s", length(ses_templates), paste(names(ses_templates), collapse=", ")), "TEMPLATE")
 
 
 # ============================================================================
@@ -53,55 +63,89 @@ template_ses_ui <- function(id, i18n) {
           margin: 0 auto;
           padding: 20px;
         }
+        .template-cards-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
         .template-card {
           background: white;
           border: 2px solid #e0e0e0;
-          border-radius: 12px;
-          padding: 15px;
-          margin: 10px 0;
+          border-radius: 10px;
+          padding: 10px 12px;
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          position: relative;
         }
         .template-card:hover {
           border-color: #667eea;
-          box-shadow: 0 6px 16px rgba(102,126,234,0.2);
-          transform: translateY(-3px);
+          box-shadow: 0 4px 12px rgba(102,126,234,0.2);
+          transform: translateY(-2px);
         }
         .template-card.selected {
           border-color: #27ae60;
           background: linear-gradient(135deg, #f8fff9 0%, #e8f8f0 100%);
-          box-shadow: 0 6px 20px rgba(39,174,96,0.3);
+          box-shadow: 0 4px 16px rgba(39,174,96,0.25);
         }
-        .template-icon-large {
-          font-size: 32px;
-          color: #667eea;
-          text-align: center;
-          margin-bottom: 10px;
+        .template-icon-wrapper {
+          flex-shrink: 0;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border-radius: 8px;
         }
-        .template-card.selected .template-icon-large {
-          color: #27ae60;
+        .template-icon-wrapper i {
+          font-size: 16px;
+          color: white;
+        }
+        .template-card.selected .template-icon-wrapper {
+          background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+        .template-content {
+          flex: 1;
+          min-width: 0;
         }
         .template-name {
-          font-size: 18px;
-          font-weight: 700;
-          color: #2c3e50;
-          margin-bottom: 8px;
-        }
-        .template-description {
-          color: #34495e;
           font-size: 13px;
-          line-height: 1.5;
+          font-weight: 600;
+          color: #2c3e50;
+          margin: 0 0 2px 0;
         }
         .template-category-badge {
           display: inline-block;
-          background: #667eea;
-          color: white;
-          padding: 4px 12px;
-          border-radius: 12px;
-          font-size: 11px;
+          background: #e8ecf5;
+          color: #667eea;
+          padding: 2px 8px;
+          border-radius: 10px;
+          font-size: 10px;
           font-weight: 600;
-          margin-top: 10px;
+        }
+        .template-card.selected .template-category-badge {
+          background: #d4edda;
+          color: #27ae60;
+        }
+        .template-preview-btn {
+          flex-shrink: 0;
+          padding: 4px 8px;
+          color: #999;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          transition: color 0.2s;
+        }
+        .template-preview-btn:hover {
+          color: #667eea;
+        }
+        /* Ensure tooltips appear above template cards */
+        .tooltip {
+          z-index: 10000 !important;
         }
         .template-preview {
           background: #f8f9fa;
@@ -135,7 +179,7 @@ template_ses_ui <- function(id, i18n) {
 
       # Three-column layout: Template cards + Preview/Actions + Connection review
       fluidRow(
-        # Column 1: Template cards (3 columns)
+        # Column 1: Template cards (3 columns - single column list)
         column(3,
           uiOutput(ns("templates_heading")),
           uiOutput(ns("template_cards"))
@@ -203,6 +247,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
             tags$div(
               `data-toggle` = "tooltip",
               `data-placement` = "right",
+              `data-container` = "body",
               title = i18n$t("modules.ses.preview_all_template_connections_before_loading_re"),
               actionButton(ns("review_connections"),
                            i18n$t("modules.ses.creation.review"),
@@ -213,6 +258,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
             tags$div(
               `data-toggle` = "tooltip",
               `data-placement` = "right",
+              `data-container` = "body",
               title = i18n$t("modules.ses.load_the_template_as_is_without_reviewing_connecti"),
               actionButton(ns("load_template"),
                            i18n$t("common.buttons.load"),
@@ -223,49 +269,93 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
             tags$div(
               `data-toggle` = "tooltip",
               `data-placement` = "right",
+              `data-container` = "body",
               title = i18n$t("modules.ses.review_and_customize_template_connections_approve_"),
               actionButton(ns("customize_template"),
                            i18n$t("modules.ses.creation.customize"),
                            icon = icon("edit"),
                            class = "btn btn-primary btn-block",
                            style = "font-size: 13px; padding: 8px;")
-            )
+            ),
+            # Initialize tooltips for action buttons - use setTimeout for proper timing
+            tags$script(HTML("
+              setTimeout(function() {
+                var $actionTooltips = $('.well [data-toggle=\"tooltip\"]');
+                if ($actionTooltips.length > 0) {
+                  try { $actionTooltips.tooltip('dispose'); } catch(e) {}
+                  $actionTooltips.tooltip({
+                    container: 'body',
+                    boundary: 'viewport'
+                  });
+                  console.log('[TOOLTIPS] Initialized ' + $actionTooltips.length + ' action button tooltips');
+                }
+              }, 100);
+            "))
           )
         )
       }
     })
 
-    # Render template cards
+    # Render template cards - compact grid layout with tooltips
     output$template_cards <- renderUI({
-      lapply(names(ses_templates), function(template_id) {
-        template <- ses_templates[[template_id]]
+      tagList(
+        div(class = "template-cards-grid",
+          lapply(names(ses_templates), function(template_id) {
+            template <- ses_templates[[template_id]]
 
-        div(class = "template-card", id = ns(paste0("card_", template_id)),
-            onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'})",
-                            ns("template_selected"), template_id),
-          fluidRow(
-            column(3,
-              div(class = "template-icon-large",
+            # Card with tooltip - use data attributes for Bootstrap tooltip
+            tags$div(
+              class = "template-card",
+              id = ns(paste0("card_", template_id)),
+              onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'})",
+                                ns("template_selected"), template_id),
+              `data-toggle` = "tooltip",
+              `data-placement` = "right",
+              `data-html` = "true",
+              `data-container` = "body",
+              title = i18n$t(template$description_key),
+
+              # Icon wrapper
+              tags$div(class = "template-icon-wrapper",
                 icon(template$icon)
-              )
-            ),
-            column(9,
-              div(style = "display: flex; justify-content: space-between; align-items: center;",
-                div(class = "template-name", i18n$t(template$name_key)),
-                actionButton(ns(paste0("preview_", template_id)),
-                            NULL,
-                            icon = icon("eye"),
-                            class = "btn btn-link btn-sm",
-                            style = "padding: 2px 8px; color: #666;",
-                            title = i18n$t("modules.ses.creation.view_detailed_preview"),
-                            onclick = "event.stopPropagation();")
               ),
-              div(class = "template-description", i18n$t(template$description_key)),
-              span(class = "template-category-badge", i18n$t(template$category_key))
+
+              # Content
+              tags$div(class = "template-content",
+                tags$div(class = "template-name", i18n$t(template$name_key)),
+                tags$span(class = "template-category-badge", i18n$t(template$category_key))
+              ),
+
+              # Preview button
+              actionButton(ns(paste0("preview_", template_id)),
+                          NULL,
+                          icon = icon("eye"),
+                          class = "template-preview-btn",
+                          title = i18n$t("modules.ses.creation.view_detailed_preview"),
+                          onclick = "event.stopPropagation();")
             )
-          )
-        )
-      })
+          })
+        ),
+        # Initialize Bootstrap tooltips after rendering with container: body
+        # This ensures tooltips appear above all elements (proper z-index)
+        # Use setTimeout to ensure DOM is ready after Shiny renders this output
+        tags$script(HTML(sprintf("
+          setTimeout(function() {
+            var $cards = $('#%s .template-card[data-toggle=\"tooltip\"]');
+            if ($cards.length > 0) {
+              // Destroy any existing tooltips first
+              try { $cards.tooltip('dispose'); } catch(e) {}
+              // Initialize with container: body to fix z-index issues
+              $cards.tooltip({
+                container: 'body',
+                boundary: 'viewport',
+                delay: { show: 300, hide: 100 }
+              });
+              console.log('[TOOLTIPS] Initialized ' + $cards.length + ' template card tooltips');
+            }
+          }, 100);
+        ", ns("template_cards"))))
+      )
     })
 
     # Track template selection with warning if switching templates
@@ -965,7 +1055,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
       # This ensures that changes to sliders/switches are saved even if user
       # clicked Accept without clicking Amend first
       if (length(amended_data) > 0) {
-        cat(sprintf("[CONN FINALIZE] Applying %d amendments to final connections\n", length(amended_data)))
+        debug_log(sprintf("Applying %d amendments to final connections", length(amended_data)), "TEMPLATE-CONN")
         for (amended_idx in names(amended_data)) {
           # Convert character index to numeric
           idx <- as.numeric(amended_idx)
@@ -990,18 +1080,18 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
               amendment <- amended_data[[amended_idx]]
               if (!is.null(amendment$polarity)) {
                 final_connections[[final_position]]$polarity <- amendment$polarity
-                cat(sprintf("[CONN FINALIZE] Applied polarity amendment to connection #%d: %s\n",
-                           idx, amendment$polarity))
+                debug_log(sprintf("Applied polarity amendment to connection #%d: %s",
+                           idx, amendment$polarity), "TEMPLATE-CONN")
               }
               if (!is.null(amendment$strength)) {
                 final_connections[[final_position]]$strength <- amendment$strength
-                cat(sprintf("[CONN FINALIZE] Applied strength amendment to connection #%d: %s\n",
-                           idx, amendment$strength))
+                debug_log(sprintf("Applied strength amendment to connection #%d: %s",
+                           idx, amendment$strength), "TEMPLATE-CONN")
               }
               if (!is.null(amendment$confidence)) {
                 final_connections[[final_position]]$confidence <- amendment$confidence
-                cat(sprintf("[CONN FINALIZE] Applied confidence amendment to connection #%d: %d\n",
-                           idx, amendment$confidence))
+                debug_log(sprintf("Applied confidence amendment to connection #%d: %d",
+                           idx, amendment$confidence), "TEMPLATE-CONN")
               }
             }
           }
@@ -1070,12 +1160,12 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
       )
 
       # Deep diagnostics: print number and structure of connections and matrix names
-      cat(sprintf("[CONN FINALIZE] Number of final connections: %d\n", length(final_connections)))
+      debug_log(sprintf("Number of final connections: %d", length(final_connections)), "TEMPLATE-CONN")
       if (length(final_connections) > 0) {
-        cat("[CONN FINALIZE] Example connection:\n")
+        debug_log("Example connection:", "TEMPLATE-CONN")
         print(final_connections[[1]])
       }
-      cat("[CONN FINALIZE] Example matrix row/col names (first matrix):\n")
+      debug_log("Example matrix row/col names (first matrix):", "TEMPLATE-CONN")
       print(rownames(adj_matrices[[1]]))
       print(colnames(adj_matrices[[1]]))
 
@@ -1104,7 +1194,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
           }
         }
         if (!assigned) {
-          cat(sprintf("[CONN FINALIZE] Could not assign connection by ID: '%s' -> '%s' (value: %s)\n", from_id, to_id, value))
+          debug_log(sprintf("Could not assign connection by ID: '%s' -> '%s' (value: %s)", from_id, to_id, value), "TEMPLATE-CONN")
         }
       }
 
