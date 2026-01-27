@@ -5,6 +5,31 @@
 library(jsonlite)
 
 # ============================================================================
+# TEMPLATE CACHE (Memoization)
+# ============================================================================
+# Cache environment for loaded templates to avoid repeated disk reads
+# Cache key is the normalized file path + file modification time
+
+.template_cache <- new.env(parent = emptyenv())
+
+#' Get cache key for a file (path + mtime for cache invalidation)
+#' @param file_path Path to file
+#' @return Cache key string
+.get_cache_key <- function(file_path) {
+  if (!file.exists(file_path)) return(NULL)
+  norm_path <- normalizePath(file_path, mustWork = FALSE)
+  mtime <- file.mtime(file_path)
+  paste0(norm_path, "|", as.numeric(mtime))
+}
+
+#' Clear template cache (useful for testing or after template updates)
+#' @export
+clear_template_cache <- function() {
+  rm(list = ls(.template_cache), envir = .template_cache)
+  invisible(TRUE)
+}
+
+# ============================================================================
 # HELPER FUNCTIONS
 # ============================================================================
 
@@ -110,11 +135,21 @@ build_adjacency_matrix <- function(connections, from_elements, to_elements,
 # MAIN LOADER FUNCTION
 # ============================================================================
 
-#' Load template from JSON file
+#' Load template from JSON file (with memoization)
 #' @param json_path Path to JSON template file
+#' @param use_cache Whether to use cached result (default TRUE)
 #' @return List with template data in R format
-load_template_from_json <- function(json_path) {
-  tryCatch({
+#' @export
+load_template_from_json <- function(json_path, use_cache = TRUE) {
+  # Check cache first (if enabled)
+  if (use_cache) {
+    cache_key <- .get_cache_key(json_path)
+    if (!is.null(cache_key) && exists(cache_key, envir = .template_cache)) {
+      return(get(cache_key, envir = .template_cache))
+    }
+  }
+
+  result <- tryCatch({
     # Read JSON file
     json_data <- jsonlite::fromJSON(json_path, simplifyVector = FALSE)
 
@@ -436,9 +471,12 @@ load_template_from_json <- function(json_path) {
     }
 
     # Return template in R format
+    # IMPORTANT: Always include all element dataframes, even if empty, for consistency
     template <- list(
-      name_key = template_name,
-      description_key = template_desc,
+      name = template_name,              # For test compatibility
+      name_key = template_name,          # For backward compatibility
+      description = template_desc,       # For test compatibility
+      description_key = template_desc,   # For backward compatibility
       icon = icon,
       category_key = category,
       drivers = drivers_df,
@@ -447,20 +485,27 @@ load_template_from_json <- function(json_path) {
       marine_processes = marine_processes_df,
       ecosystem_services = ecosystem_services_df,
       goods_benefits = goods_benefits_df,
+      responses = responses_df,          # Always include, even if empty (0 rows)
+      connections = connections,         # Include raw connections from JSON
       adjacency_matrices = adjacency_matrices
     )
 
-    # Add responses (now includes both original responses and measures)
-    if (nrow(responses_df) > 0) {
-      template$responses <- responses_df
-    }
-
-    return(template)
+    template
 
   }, error = function(e) {
     warning(paste("Error loading template from", json_path, ":", e$message))
-    return(NULL)
+    NULL
   })
+
+  # Store in cache if successful and caching is enabled
+  if (use_cache && !is.null(result)) {
+    cache_key <- .get_cache_key(json_path)
+    if (!is.null(cache_key)) {
+      assign(cache_key, result, envir = .template_cache)
+    }
+  }
+
+  return(result)
 }
 
 # ============================================================================
@@ -471,8 +516,39 @@ load_template_from_json <- function(json_path) {
 #' @param data_dir Directory containing JSON template files
 #' @return Named list of templates
 load_all_templates <- function(data_dir = "data") {
-  # Find all JSON template files
-  json_files <- list.files(data_dir, pattern = "_Template\\.json$", full.names = TRUE)
+  # Candidate directories to search (relative to current working directory)
+  candidates <- c(
+    data_dir,
+    file.path("..", data_dir),
+    file.path("..", "..", data_dir),
+    "inst/data",
+    file.path("..", "inst", "data"),
+    file.path("..", "..", "inst", "data"),
+    # Test fixtures (ensure deterministic templates available during tests/CI)
+    "tests/fixtures/templates",
+    "tests/fixtures",
+    file.path("..", "tests", "fixtures", "templates")
+  )
+
+  json_files <- character(0)
+
+  # Try each candidate until we find matching files
+  for (cand in candidates) {
+    if (dir.exists(cand)) {
+      files_found <- list.files(cand, pattern = "_SES_Template\\.json$", full.names = TRUE, ignore.case = TRUE)
+      if (length(files_found) > 0) {
+        json_files <- files_found
+        found_dir <- cand
+        break
+      }
+    }
+  }
+
+  # If none found, return empty list with a message
+  if (length(json_files) == 0) {
+    cat("No template JSON files found in candidates:", paste(candidates, collapse = ", "), "\n")
+    return(list())
+  }
 
   templates <- list()
 
