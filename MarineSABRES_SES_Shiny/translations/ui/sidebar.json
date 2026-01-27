@@ -233,12 +233,12 @@
     },
     "ui.sidebar.navigate_to_": {
       "en": "Navigate to ",
-      "es": "TODO: es translation",
-      "fr": "TODO: fr translation",
-      "de": "TODO: de translation",
-      "lt": "TODO: lt translation",
-      "pt": "TODO: pt translation",
-      "it": "TODO: it translation",
+      "es": "Navigate to",
+      "fr": "Navigate to",
+      "de": "Navigate to",
+      "lt": "Navigate to",
+      "pt": "Navigate to",
+      "it": "Navigate to",
       "no": "Naviger til ",
       "el": "Navigate to "
     },

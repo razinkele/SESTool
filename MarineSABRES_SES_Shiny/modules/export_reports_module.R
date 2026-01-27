@@ -368,7 +368,7 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
         cat("Error class:", class(e), "\n")
         print(e)
         cat("=====================================\n\n")
-        showNotification(paste("Error generating report:", e$message),
+        showNotification(paste(i18n$t("common.messages.error_generating_report"), e$message),
                          type = "error", duration = 10)
       })
     })

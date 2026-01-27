@@ -778,13 +778,13 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         rv$wizard_step <- 5
 
         showNotification(
-          paste("Element classified as:", result$primary$type),
+          paste(i18n$t("common.messages.element_classified_as"), result$primary$type),
           type = "message",
           duration = 3
         )
       } else {
         showNotification(
-          "Classification failed. Please try again.",
+          i18n$t("common.messages.classification_failed"),
           type = "error",
           duration = 5
         )
@@ -872,7 +872,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       ", ns("context_panel")))
 
       showNotification(
-        "First node created! Click it to expand your network.",
+        i18n$t("common.messages.first_node_created"),
         type = "message",
         duration = 5
       )
@@ -1026,7 +1026,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       rv$selected_node_id <- new_node_id
 
       showNotification(
-        paste("Added:", ghost_node$name),
+        paste(i18n$t("common.messages.added_element"), ghost_node$name),
         type = "message",
         duration = 2
       )
@@ -1165,7 +1165,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
 
       if (length(suggestions) == 0) {
         showNotification(
-          "No suggestions found. Try expanding from a different node.",
+          i18n$t("common.messages.no_suggestions_found"),
           type = "warning",
           duration = 5
         )
@@ -1186,7 +1186,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       rv$expanded_node_id <- rv$selected_node_id
 
       showNotification(
-        paste("Found", length(suggestions), "suggestions. Click to add."),
+        sprintf(i18n$t("common.messages.found_suggestions"), length(suggestions)),
         type = "message",
         duration = 3
       )
@@ -1349,7 +1349,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       project_data_reactive(current_data)
 
       showNotification(
-        "Network exported to ISA successfully!",
+        i18n$t("common.messages.exported_to_isa"),
         type = "message",
         duration = 5
       )

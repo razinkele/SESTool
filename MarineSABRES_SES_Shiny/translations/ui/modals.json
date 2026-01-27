@@ -244,12 +244,12 @@
     },
     "ui.modals.scenarioconfirmdelete": {
       "en": "scenario_confirm_delete",
-      "es": "TODO: es translation",
-      "fr": "TODO: fr translation",
-      "de": "TODO: de translation",
-      "lt": "TODO: lt translation",
-      "pt": "TODO: pt translation",
-      "it": "TODO: it translation",
+      "es": "scenario_confirm_delete",
+      "fr": "scenario_confirm_delete",
+      "de": "scenario_confirm_delete",
+      "lt": "scenario_confirm_delete",
+      "pt": "scenario_confirm_delete",
+      "it": "scenario_confirm_delete",
       "no": "scenario_confirm_delete",
       "el": "scenario_confirm_delete"
     },

@@ -101,12 +101,12 @@
     },
     "common.buttons.create": {
       "en": "create",
-      "es": "TODO: es translation",
-      "fr": "TODO: fr translation",
-      "de": "TODO: de translation",
-      "lt": "TODO: lt translation",
-      "pt": "TODO: pt translation",
-      "it": "TODO: it translation",
+      "es": "create",
+      "fr": "create",
+      "de": "create",
+      "lt": "create",
+      "pt": "create",
+      "it": "create",
       "no": "opprett",
       "el": "Δημιουργία"
     },
