@@ -24,21 +24,44 @@ if (dir.exists("docs")) {
 }
 
 # ============================================================================
-# LOAD HELPER FUNCTIONS
+# LOAD HELPER FUNCTIONS (with error handling)
 # ============================================================================
 
 # Note: These functions define UI and server components, must be globally available
-source("functions/report_generation.R", local = FALSE)
+# Critical files - app cannot start without these
+critical_sources <- c(
+  "functions/report_generation.R",
+  "functions/ui_header.R",
+  "functions/ui_sidebar.R",
+  "server/modals.R",
+  "server/dashboard.R",
+  "server/project_io.R",
+  "server/export_handlers.R"
+)
 
-# Load UI components
-source("functions/ui_header.R", local = FALSE)
-source("functions/ui_sidebar.R", local = FALSE)
+source_load_errors <- list()
+for (source_file in critical_sources) {
+  tryCatch({
+    if (!file.exists(source_file)) {
+      stop(sprintf("Critical source file not found: %s", source_file))
+    }
+    source(source_file, local = FALSE)
+  }, error = function(e) {
+    file_name <- basename(source_file)
+    error_msg <- sprintf("[SOURCE_LOAD] Failed to load %s: %s", file_name, e$message)
+    cat(error_msg, "\n")
+    source_load_errors[[file_name]] <<- e$message
+  })
+}
 
-# Load server components
-source("server/modals.R", local = FALSE)
-source("server/dashboard.R", local = FALSE)
-source("server/project_io.R", local = FALSE)
-source("server/export_handlers.R", local = FALSE)
+# Critical source failures should stop the app
+if (length(source_load_errors) > 0) {
+  stop(sprintf(
+    "CRITICAL: Failed to load %d essential source file(s): %s. Application cannot start.",
+    length(source_load_errors),
+    paste(names(source_load_errors), collapse = ", ")
+  ))
+}
 
 # ============================================================================
 # SOURCE MODULES (with error handling)
