@@ -112,7 +112,8 @@ test_that("get_allowed_targets returns multiple targets for Responses", {
 })
 
 test_that("get_allowed_targets returns empty for unknown type", {
-  expect_warning(
+  # log_warning outputs to console, so we capture output instead of warning
+  expect_output(
     targets <- get_allowed_targets("Unknown Type"),
     "Unknown DAPSIWRM type"
   )

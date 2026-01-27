@@ -554,8 +554,8 @@ import_project_rds <- function(file_path) {
   validation <- validate_project_data(project_data)
   
   if (!validation$valid) {
-    warning("Project data validation errors:\n", 
-           paste(validation$errors, collapse = "\n"))
+    log_warning("DATA", paste("Project data validation errors:",
+                              paste(validation$errors, collapse = "; ")))
   }
   
   return(project_data)
@@ -574,7 +574,7 @@ export_project_rds <- function(project_data, file_path) {
   # Save
   saveRDS(project_data, file_path)
   
-  message("Project saved to: ", file_path)
+  debug_log(paste("Project saved to:", file_path), "DATA")
 }
 
 #' Import ISA data from Excel workbook
@@ -686,7 +686,7 @@ export_isa_excel <- function(isa_data, file_path) {
   
   saveWorkbook(wb, file_path, overwrite = TRUE)
   
-  message("ISA data exported to: ", file_path)
+  debug_log(paste("ISA data exported to:", file_path), "DATA")
 }
 
 # ============================================================================
@@ -728,7 +728,7 @@ update_element <- function(isa_data, element_type, element_id, element_data) {
   idx <- which(isa_data[[element_type]]$id == element_id)
   
   if (length(idx) == 0) {
-    warning("Element not found: ", element_id)
+    log_warning("DATA", paste("Element not found:", element_id))
     return(isa_data)
   }
   
@@ -744,9 +744,372 @@ update_element <- function(isa_data, element_type, element_id, element_data) {
 #' @param element_id Element ID to delete
 #' @return Updated ISA data list
 delete_element <- function(isa_data, element_type, element_id) {
-  
+
   isa_data[[element_type]] <- isa_data[[element_type]] %>%
     filter(id != element_id)
-  
+
   return(isa_data)
+}
+
+# ============================================================================
+# PROJECT VALIDATION FUNCTIONS
+# ============================================================================
+
+#' Validate project data structure
+#'
+#' Validates that a project object has all required fields and correct types.
+#' This is the canonical implementation - other duplicates have been removed.
+#'
+#' @param data Project data list
+#' @return Character vector of error messages (empty if valid)
+#' @export
+validate_project_structure <- function(data) {
+  errors <- c()
+
+  # Check if data is a list
+  if (!is.list(data)) {
+    errors <- c(errors, "Project data must be a list")
+    return(errors)
+  }
+
+  # Essential keys (must have)
+  essential_keys <- c("project_id", "project_name", "data")
+  missing_keys <- setdiff(essential_keys, names(data))
+
+  if (length(missing_keys) > 0) {
+    errors <- c(errors, paste("Missing required fields:",
+                             paste(missing_keys, collapse = ", ")))
+  }
+
+  # Check that data is a list
+  if (!"data" %in% names(data) || !is.list(data$data)) {
+    errors <- c(errors, "Project data$data must be a list")
+  }
+
+  # Basic type validation
+  if ("project_id" %in% names(data)) {
+    if (!is.character(data$project_id) || length(data$project_id) != 1) {
+      errors <- c(errors, "project_id must be a single character string")
+    }
+  }
+
+  if ("project_name" %in% names(data)) {
+    if (!is.character(data$project_name) || length(data$project_name) != 1) {
+      errors <- c(errors, "project_name must be a single character string")
+    }
+  }
+
+  # Date validation - accept both 'created' and 'created_at' field names
+  has_created <- "created" %in% names(data)
+  has_created_at <- "created_at" %in% names(data)
+
+  if (!has_created && !has_created_at) {
+    errors <- c(errors, "Missing creation date field (created or created_at)")
+  } else {
+    # Validate the date field that exists
+    created_field <- if (has_created) data$created else data$created_at
+    if (!inherits(created_field, "POSIXct") && !is.character(created_field)) {
+      errors <- c(errors, "Creation date must be POSIXct or character")
+    }
+  }
+
+  # Validate last_modified if present (optional for backward compatibility)
+  if ("last_modified" %in% names(data)) {
+    if (!inherits(data$last_modified, "POSIXct") && !is.character(data$last_modified)) {
+      errors <- c(errors, "last_modified must be POSIXct or character")
+    }
+  }
+
+  return(errors)
+}
+
+#' Validate DAPSI(W)R(M) element data
+#'
+#' Validates element data frame and returns any validation errors.
+#' This is the canonical implementation - other duplicates have been removed.
+#'
+#' @param data Element data frame
+#' @param element_type Element type name
+#' @return Character vector of error messages (empty if valid)
+#' @export
+validate_element_data <- function(data, element_type) {
+  errors <- c()
+
+  # Check required columns
+  required_cols <- c("id", "name", "indicator")
+  missing_cols <- setdiff(required_cols, names(data))
+
+  if (length(missing_cols) > 0) {
+    errors <- c(errors, paste("Missing required columns:",
+                             paste(missing_cols, collapse = ", ")))
+  }
+
+  # Check for duplicate IDs
+  if (any(duplicated(data$id))) {
+    errors <- c(errors, "Duplicate IDs found")
+  }
+
+  # Check for empty names
+  if (any(is.na(data$name) | data$name == "")) {
+    errors <- c(errors, "Empty names found")
+  }
+
+  return(errors)
+}
+
+#' Validate adjacency matrix
+#'
+#' Validates adjacency matrix format and values.
+#' This is the canonical implementation - other duplicates have been removed.
+#'
+#' @param adj_matrix Adjacency matrix to validate
+#' @return Character vector of error messages (empty if valid)
+#' @export
+validate_adjacency_matrix <- function(adj_matrix) {
+  errors <- c()
+
+  # Check if matrix
+  if (!is.matrix(adj_matrix)) {
+    errors <- c(errors, "Not a valid matrix")
+    return(errors)
+  }
+
+  # Check dimensions
+  if (nrow(adj_matrix) == 0 || ncol(adj_matrix) == 0) {
+    errors <- c(errors, "Matrix has zero dimensions")
+  }
+
+  # Check values
+  valid_values <- c("", NA,
+                   paste0("+", CONNECTION_STRENGTH),
+                   paste0("-", CONNECTION_STRENGTH))
+
+  invalid_values <- !adj_matrix %in% valid_values
+  if (any(invalid_values, na.rm = TRUE)) {
+    errors <- c(errors, "Invalid connection values found")
+  }
+
+  return(errors)
+}
+
+# ============================================================================
+# ENHANCED WRAPPERS AND SAFE FUNCTIONS
+# (Consolidated from data_structure_enhanced.R for easier maintenance)
+# ============================================================================
+# Enhanced wrappers for data structure validation and safe creation
+
+# NOTE: validate_project_structure() now defined in functions/data_structure.R
+# (removed duplicate definition to avoid function name conflicts)
+
+validate_element_type <- function(type) {
+  if (is.null(type)) stop("Element type is NULL")
+  valid_types <- c(
+    "Goods & Benefits",
+    "Ecosystem Services",
+    "Marine Processes & Functioning",
+    "Pressures",
+    "Activities",
+    "Drivers",
+    "Responses"
+  )
+  if (!type %in% valid_types) stop("Invalid element type")
+  TRUE
+}
+
+# NOTE: validate_element_data() now defined in functions/data_structure.R
+# (removed duplicate definition - this version had incompatible signature)
+
+validate_adjacency_dimensions <- function(from_elements, to_elements) {
+  if (is.null(from_elements)) stop("from_elements is NULL")
+  if (is.null(to_elements)) stop("to_elements is NULL")
+  TRUE
+}
+
+# NOTE: validate_adjacency_matrix() now defined in functions/data_structure.R
+# (removed duplicate definition - this version had incompatible signature)
+
+# Safe create empty project wrapper
+create_empty_project_safe <- function(project_name = "New Project", da_site = NULL) {
+  # Validate project_name
+  if (is.null(project_name) || !is.character(project_name) || nchar(trimws(project_name)) == 0) return(NULL)
+  # Truncate if too long
+  if (nchar(project_name) > 200) project_name <- substr(project_name, 1, 200)
+
+  # Validate da_site: must be character or NULL
+  if (!is.null(da_site) && !is.character(da_site)) {
+    da_site <- NULL
+  }
+
+  # Use existing create_empty_project if available
+  if (exists("create_empty_project")) {
+    proj <- tryCatch({
+      create_empty_project(project_name, da_site)
+    }, error = function(e) {
+      NULL
+    })
+
+    # Ensure required fields are present
+    if (is.null(proj) || !all(c("project_id", "project_name", "data") %in% names(proj))) return(NULL)
+
+    # Ensure metadata da_site is character or NULL
+    if (!is.null(proj$data$metadata$da_site) && !is.character(proj$data$metadata$da_site)) {
+      proj$data$metadata$da_site <- NULL
+    }
+
+    return(proj)
+  }
+
+  # Fallback minimal structure
+  list(
+    project_id = paste0("PROJ_", format(Sys.time(), "%Y%m%d%H%M%S")),
+    project_name = project_name,
+    created_at = Sys.time(),
+    last_modified = Sys.time(),
+    user = Sys.info()["user"],
+    data = list(
+      metadata = list(da_site = da_site),
+      pims = list(stakeholders = data.frame(), risks = data.frame()),
+      isa_data = list(),
+      cld = list(nodes = data.frame(), edges = data.frame()),
+      responses = list()
+    )
+  )
+}
+
+# Helper to safely add an element to isa_data lists
+add_element_safe <- function(isa_data, elem_name, elem_row) {
+  # If isa_data is NULL, return NULL per tests
+  if (is.null(isa_data)) return(NULL)
+  if (!is.list(isa_data)) stop("isa_data must be a list")
+  if (is.null(elem_name) || !nzchar(elem_name)) return(isa_data)
+  if (is.null(elem_row)) return(isa_data)
+
+  # Validate element type - must be one of expected keys or create if missing
+  valid_elem_names <- c("goods_benefits", "ecosystem_services", "marine_processes", "pressures", "activities", "drivers", "responses")
+  if (!elem_name %in% valid_elem_names) return(isa_data)
+
+  # Ensure element list exists
+  if (is.null(isa_data[[elem_name]])) {
+    isa_data[[elem_name]] <- create_empty_element_df(gsub("_", " ", elem_name))
+  }
+
+  # Append row (coerce to data.frame if needed)
+  if (!is.data.frame(elem_row)) elem_row <- as.data.frame(elem_row, stringsAsFactors = FALSE)
+  isa_data[[elem_name]] <- rbind(isa_data[[elem_name]], elem_row)
+
+  return(isa_data)
+}
+
+# Create empty element df safe wrapper
+create_empty_element_df_safe <- function(element_type) {
+  if (is.null(element_type) || !is.character(element_type)) return(NULL)
+  # Use existing implementation
+  if (!element_type %in% c(
+    "Goods & Benefits","Ecosystem Services","Marine Processes & Functioning",
+    "Pressures","Activities","Drivers","Responses"
+  )) return(NULL)
+  create_empty_element_df(element_type)
+}
+
+# Safe adjacency matrix and conversion helpers
+create_empty_adjacency_matrix_safe <- function(from_elements, to_elements) {
+  if (is.null(from_elements) || is.null(to_elements)) return(NULL)
+  # Remove duplicates and preserve order
+  from_u <- unique(from_elements)
+  to_u <- unique(to_elements)
+  # If either vector empty, return empty matrix with 0 rows
+  if (length(from_u) == 0 || length(to_u) == 0) return(matrix(nrow = 0, ncol = 0))
+  create_empty_adjacency_matrix(from_u, to_u)
+}
+
+adjacency_to_edgelist_safe <- function(mat, from_ids, to_ids) {
+  if (is.null(mat)) return(NULL)
+  if (!is.matrix(mat)) return(NULL)
+  if (is.null(rownames(mat)) || is.null(colnames(mat))) return(NULL)
+  if (length(from_ids) != nrow(mat) || length(to_ids) != ncol(mat)) return(NULL)
+  adjacency_to_edgelist(mat, from_ids, to_ids)
+}
+
+edgelist_to_adjacency_safe <- function(edgelist, from_names, to_names) {
+  if (is.null(edgelist)) return(NULL)
+  if (!is.data.frame(edgelist)) return(NULL)
+  if (!all(c("from", "to", "value") %in% names(edgelist))) return(NULL)
+  edgelist_to_adjacency(edgelist, from_names, to_names)
+}
+
+# Project validation safe wrappers
+validate_project_data_safe <- function(project_data) {
+  if (is.null(project_data)) return(list(valid = FALSE, errors = c("Project is NULL")))
+  # Use existing validator if available
+  if (exists("validate_project_data")) {
+    res <- validate_project_data(project_data)
+    return(res)
+  }
+  # Basic validation
+  errors <- c()
+  required_fields <- c("project_id", "project_name", "data")
+  missing <- setdiff(required_fields, names(project_data))
+  if (length(missing) > 0) errors <- c(errors, paste("Missing fields:", paste(missing, collapse = ", ")))
+  list(valid = length(errors) == 0, errors = errors)
+}
+
+validate_isa_structure_safe <- function(isa_data) {
+  if (is.null(isa_data)) return(c("ISA data is NULL"))
+  if (!is.list(isa_data)) return(c("ISA data must be a list"))
+  errs <- c()
+  for (n in names(isa_data)) {
+    df <- isa_data[[n]]
+    if (!is.data.frame(df)) {
+      errs <- c(errs, paste(n, "is not a dataframe"))
+      next
+    }
+    # Require id and name columns
+    if (!all(c("id", "name") %in% names(df))) {
+      errs <- c(errs, paste(n, "missing id or name columns"))
+    }
+  }
+  errs
+}
+
+validate_pims_data_safe <- function(pims_data) {
+  errs <- c()
+  if (is.null(pims_data)) return(errs)
+  if (!is.null(pims_data$stakeholders) && nrow(pims_data$stakeholders) > 0) {
+    if ("power" %in% names(pims_data$stakeholders)) {
+      if (any(pims_data$stakeholders$power < 0 | pims_data$stakeholders$power > 10, na.rm = TRUE)) {
+        errs <- c(errs, "power")
+      }
+    }
+  }
+  errs
+}
+
+# Helpers for ISA structure creation and element updates
+create_empty_isa_structure_safe <- function() {
+  list(
+    goods_benefits = create_empty_element_df("Goods & Benefits"),
+    ecosystem_services = create_empty_element_df("Ecosystem Services"),
+    marine_processes = create_empty_element_df("Marine Processes & Functioning"),
+    pressures = create_empty_element_df("Pressures"),
+    activities = create_empty_element_df("Activities"),
+    drivers = create_empty_element_df("Drivers")
+  )
+}
+
+update_element_safe <- function(isa_data, elem_name, id, new_element) {
+  if (is.null(isa_data) || is.null(isa_data[[elem_name]])) return(isa_data)
+  df <- isa_data[[elem_name]]
+  idx <- which(df$id == id)
+  if (length(idx) == 0) return(isa_data)
+  df[idx, names(new_element)] <- new_element
+  isa_data[[elem_name]] <- df
+  isa_data
+}
+
+delete_element_safe <- function(isa_data, elem_name, id) {
+  if (is.null(isa_data) || is.null(isa_data[[elem_name]])) return(isa_data)
+  df <- isa_data[[elem_name]]
+  df <- df[df$id != id, , drop = FALSE]
+  isa_data[[elem_name]] <- df
+  isa_data
 }

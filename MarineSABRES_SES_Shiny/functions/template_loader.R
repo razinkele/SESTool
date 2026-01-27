@@ -493,7 +493,7 @@ load_template_from_json <- function(json_path, use_cache = TRUE) {
     template
 
   }, error = function(e) {
-    warning(paste("Error loading template from", json_path, ":", e$message))
+    log_warning("TEMPLATE", paste("Error loading template from", json_path, ":", e$message))
     NULL
   })
 

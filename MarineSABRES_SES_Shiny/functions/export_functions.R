@@ -28,7 +28,7 @@ export_cld_png <- function(visnet, file_path, width = 1200, height = 900) {
     # Convert to PNG
     webshot::webshot(temp_html, file_path, vwidth = width, vheight = height)
 
-    message("CLD exported as PNG: ", file_path)
+    debug_log(paste("CLD exported as PNG:", file_path), "EXPORT")
   }, error = function(e) {
     stop(paste("Failed to export PNG:", e$message))
   }, finally = {
@@ -49,7 +49,7 @@ export_cld_svg <- function(visnet, file_path) {
   # SVG export requires additional tools
   # This is a placeholder - full implementation would need additional packages
   
-  warning("SVG export not yet fully implemented. Use HTML or PNG export instead.")
+  log_warning("EXPORT", "SVG export not yet fully implemented. Use HTML or PNG export instead.")
 }
 
 #' Export CLD as HTML
@@ -65,7 +65,7 @@ export_cld_html <- function(visnet, file_path) {
     selfcontained = TRUE
   )
   
-  message("CLD exported as HTML: ", file_path)
+  debug_log(paste("CLD exported as HTML:", file_path), "EXPORT")
 }
 
 #' Export BOT graphs as PDF
@@ -104,7 +104,7 @@ export_bot_pdf <- function(bot_data_list, file_path, width = 11, height = 8.5) {
   
   dev.off()
   
-  message("BOT graphs exported as PDF: ", file_path)
+  debug_log(paste("BOT graphs exported as PDF:", file_path), "EXPORT")
 }
 
 # ============================================================================
@@ -193,7 +193,7 @@ export_project_excel <- function(project_data, file_path) {
 
     saveWorkbook(wb, file_path, overwrite = TRUE)
 
-    message("Project data exported to Excel: ", file_path)
+    debug_log(paste("Project data exported to Excel:", file_path), "EXPORT")
   }, error = function(e) {
     stop(paste("Failed to export Excel file:", e$message))
   })
@@ -266,7 +266,7 @@ export_project_json <- function(project_data, file_path) {
   json_text <- toJSON(project_json, pretty = TRUE, auto_unbox = TRUE)
   write(json_text, file_path)
   
-  message("Project data exported as JSON: ", file_path)
+  debug_log(paste("Project data exported as JSON:", file_path), "EXPORT")
 }
 
 #' Export project data as CSV (multiple files in zip)
@@ -332,7 +332,7 @@ export_project_csv_zip <- function(project_data, file_path) {
   # Clean up
   unlink(temp_dir, recursive = TRUE)
   
-  message("Project data exported as CSV zip: ", file_path)
+  debug_log(paste("Project data exported as CSV zip:", file_path), "EXPORT")
 }
 
 # ============================================================================
@@ -366,7 +366,7 @@ generate_executive_summary <- function(project_data, output_file) {
   # Clean up
   unlink(temp_rmd)
   
-  message("Executive summary generated: ", output_file)
+  debug_log(paste("Executive summary generated:", output_file), "EXPORT")
 }
 
 #' Create executive summary Rmd content
@@ -541,7 +541,7 @@ generate_technical_report <- function(project_data, output_file,
   # More detailed report implementation
   # This would include full data tables, detailed analysis, etc.
   
-  message("Technical report generation not yet fully implemented")
+  log_warning("EXPORT", "Technical report generation not yet fully implemented")
 }
 
 #' Generate stakeholder presentation
@@ -554,5 +554,5 @@ generate_stakeholder_presentation <- function(project_data, output_file) {
   # Presentation generation implementation
   # This would create slides suitable for stakeholder meetings
   
-  message("Presentation generation not yet fully implemented")
+  log_warning("EXPORT", "Presentation generation not yet fully implemented")
 }

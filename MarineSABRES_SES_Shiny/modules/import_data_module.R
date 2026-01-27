@@ -17,9 +17,9 @@ import_data_ui <- function(id, i18n) {
   fluidPage(
     useShinyjs(),
 
-    # Custom CSS
+    # Custom CSS (using constants from constants.R)
     tags$head(
-      tags$style(HTML("
+      tags$style(HTML(sprintf("
         .import-container {
           padding: 20px;
           background: white;
@@ -28,7 +28,7 @@ import_data_ui <- function(id, i18n) {
           margin: 20px 0;
         }
         .import-header {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, %s 0%%, %s 100%%);
           color: white;
           padding: 20px;
           border-radius: 10px;
@@ -54,10 +54,12 @@ import_data_ui <- function(id, i18n) {
           padding: 15px;
           border-radius: 5px;
           margin-top: 20px;
-          max-height: 400px;
+          max-height: %s;
           overflow-y: auto;
         }
-      "))
+      ", IMPORT_MODULE_COLORS$gradient_start,
+         IMPORT_MODULE_COLORS$gradient_end,
+         UI_BOX_HEIGHT_DEFAULT)))
     ),
 
     # Header

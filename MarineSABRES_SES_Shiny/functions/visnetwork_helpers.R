@@ -690,14 +690,14 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
 
   # Validate matrix dimensions against expected counts
   if (!is.null(expected_rows) && nrow(adj_matrix) != expected_rows) {
-    warning(sprintf(
+    log_warning("NETWORK", sprintf(
       "Adjacency matrix dimension mismatch: %s->%s matrix has %d rows but %d %s elements exist. Using min(%d, %d).",
       from_prefix, to_prefix, nrow(adj_matrix), expected_rows, from_prefix, nrow(adj_matrix), expected_rows
     ))
   }
 
   if (!is.null(expected_cols) && ncol(adj_matrix) != expected_cols) {
-    warning(sprintf(
+    log_warning("NETWORK", sprintf(
       "Adjacency matrix dimension mismatch: %s->%s matrix has %d cols but %d %s elements exist. Using min(%d, %d).",
       from_prefix, to_prefix, ncol(adj_matrix), expected_cols, to_prefix, ncol(adj_matrix), expected_cols
     ))
@@ -790,7 +790,7 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
 
             edges <- bind_rows(edges, edge)
           }, error = function(e) {
-            warning(sprintf(
+            log_warning("NETWORK", sprintf(
               "Error creating edge %s_%d -> %s_%d (names: '%s' -> '%s'): %s",
               from_prefix, i, to_prefix, j, from_name, to_name, e$message
             ))
@@ -1114,7 +1114,7 @@ export_visnetwork_html <- function(visnet, file) {
       selfcontained = TRUE
     )
 
-    message("HTML exported successfully to: ", file)
+    debug_log(paste("HTML exported successfully to:", file), "EXPORT")
 
   }, error = function(e) {
     stop(paste("Error exporting visNetwork to HTML:", e$message))
@@ -1168,7 +1168,7 @@ export_visnetwork_png <- function(visnet, file, width = EXPORT_PNG_WIDTH, height
     # Clean up
     unlink(temp_html)
 
-    message("PNG exported successfully to: ", file)
+    debug_log(paste("PNG exported successfully to:", file), "EXPORT")
 
   }, error = function(e) {
     stop(paste("Error exporting visNetwork to PNG:", e$message))
