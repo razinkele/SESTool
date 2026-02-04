@@ -68,7 +68,8 @@ test_that("Complete ISA workflow: create, connect, visualize", {
   }
 
   # Overall workflow verification
-  expect_true(validate_project_structure(project_data))
+  errors <- validate_project_structure(project_data)
+  expect_equal(length(errors), 0, info = paste("Validation errors:", paste(errors, collapse = "; ")))
 })
 
 test_that("PIMS to ISA data flow works", {
@@ -118,7 +119,8 @@ test_that("Save and load project workflow", {
   )
 
   # Validate before save
-  expect_true(validate_project_structure(original_project))
+  errors <- validate_project_structure(original_project)
+  expect_equal(length(errors), 0, info = paste("Validation errors:", paste(errors, collapse = "; ")))
 
   # Simulate save/load
   temp_file <- tempfile(fileext = ".rds")
@@ -137,8 +139,6 @@ test_that("Save and load project workflow", {
 })
 
 test_that("Network analysis workflow", {
-  skip_if_not(exists("calculate_centrality"))
-
   # Create a simple network
   library(igraph)
 
@@ -208,8 +208,6 @@ test_that("Export workflow works", {
 # ============================================================================
 
 test_that("Create SES method selection workflow", {
-  skip_if_not(exists("create_ses_server"))
-
   # Initialize project
   project_data <- reactiveVal(init_session_data())
 
@@ -223,20 +221,21 @@ test_that("Create SES method selection workflow", {
 
     # Step 2: Verify selection is tracked
     # (Implementation depends on module structure)
-    expect_true(TRUE)
+    succeed("Method 'standard' selected without error")
 
     # Step 3: Test other method selections
     session$setInputs(method_selected = "ai")
-    expect_true(TRUE)
+    succeed("Method 'ai' selected without error")
 
     session$setInputs(method_selected = "template")
-    expect_true(TRUE)
+    succeed("Method 'template' selected without error")
   })
 })
 
 test_that("Template SES loading workflow", {
-  skip_if_not(exists("ses_templates"))
-  skip_if_not(exists("template_ses_server"))
+  # Load templates using helper function (works in any environment)
+  ses_templates <- get_test_templates()
+  skip_if_not(length(ses_templates) > 0, "No templates loaded")
 
   # Initialize project
   project_data <- reactiveVal(init_session_data())
@@ -259,11 +258,14 @@ test_that("Template SES loading workflow", {
   expect_true(nrow(project_data_copy$data$isa_data$pressures) > 0)
 
   # Step 5: Verify project structure is still valid
-  expect_true(validate_project_structure(project_data_copy))
+  errors <- validate_project_structure(project_data_copy)
+  expect_equal(length(errors), 0, info = paste("Validation errors:", paste(errors, collapse = "; ")))
 })
 
 test_that("Complete Create SES workflow: Choose method -> Load template -> Use data", {
-  skip_if_not(exists("ses_templates"))
+  # Load templates using helper function (works in any environment)
+  ses_templates <- get_test_templates()
+  skip_if_not(length(ses_templates) > 0, "No templates loaded")
 
   # Initialize
   project_data <- init_session_data()
@@ -301,11 +303,14 @@ test_that("Complete Create SES workflow: Choose method -> Load template -> Use d
   expect_true(total_elements > 0)
 
   # Step 7: Verify project is valid
-  expect_true(validate_project_structure(project_data))
+  errors <- validate_project_structure(project_data)
+  expect_equal(length(errors), 0, info = paste("Validation errors:", paste(errors, collapse = "; ")))
 })
 
 test_that("Create SES template customization workflow", {
-  skip_if_not(exists("ses_templates"))
+  # Load templates using helper function (works in any environment)
+  ses_templates <- get_test_templates()
+  skip_if_not(length(ses_templates) > 0, "No templates loaded")
 
   # Start with a template
   project_data <- init_session_data()
@@ -332,11 +337,14 @@ test_that("Create SES template customization workflow", {
   expect_true("D_CUSTOM" %in% driver_ids)
 
   # Verify project is still valid
-  expect_true(validate_project_structure(project_data))
+  errors <- validate_project_structure(project_data)
+  expect_equal(length(errors), 0, info = paste("Validation errors:", paste(errors, collapse = "; ")))
 })
 
 test_that("Multiple templates can be loaded sequentially", {
-  skip_if_not(exists("ses_templates"))
+  # Load templates using helper function (works in any environment)
+  ses_templates <- get_test_templates()
+  skip_if_not(length(ses_templates) > 0, "No templates loaded")
 
   project_data <- init_session_data()
 
@@ -352,18 +360,21 @@ test_that("Multiple templates can be loaded sequentially", {
 
   # Counts may differ between templates
   # Just verify both loaded successfully
-  expect_true(validate_project_structure(project_data))
+  errors <- validate_project_structure(project_data)
+  expect_equal(length(errors), 0, info = paste("Validation errors:", paste(errors, collapse = "; ")))
 })
 
 test_that("Create SES integrates with existing ISA workflow", {
   # This test verifies that data created via Create SES templates
   # works with existing ISA analysis tools
 
-  skip_if_not(exists("ses_templates"))
+  # Load templates using helper function (works in any environment)
+  ses_templates <- get_test_templates()
+  skip_if_not(length(ses_templates) > 0, "No templates loaded")
 
   # Load template
   project_data <- init_session_data()
-  project_data$data$isa_data <- ses_templates$climate_change
+  project_data$data$isa_data <- ses_templates$climatechange
 
   # Step 1: Verify template loaded
   expect_true(nrow(project_data$data$isa_data$drivers) > 0)
@@ -398,7 +409,8 @@ test_that("Create SES integrates with existing ISA workflow", {
   }
 
   # Step 3: Verify project is still valid
-  expect_true(validate_project_structure(project_data))
+  errors <- validate_project_structure(project_data)
+  expect_equal(length(errors), 0, info = paste("Validation errors:", paste(errors, collapse = "; ")))
 })
 
 test_that("Create SES translation workflow", {

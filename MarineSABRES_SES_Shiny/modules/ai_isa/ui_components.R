@@ -323,6 +323,9 @@ ai_isa_assistant_ui <- function(id, i18n) {
 #'
 #' @export
 highlight_keywords <- function(text) {
+  # Escape user-derived content first to prevent XSS
+  text <- htmltools::htmlEscape(text)
+
   # Keywords to highlight (DAPSI(W)R(M) components)
   keywords <- c("DRIVERS", "ACTIVITIES", "PRESSURES", "STATE", "IMPACTS",
                "WELFARE", "RESPONSES")

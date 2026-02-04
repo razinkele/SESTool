@@ -147,13 +147,16 @@ t_tooltip <- function(key, placement = "top") {
 # TRANSLATION CACHE MANAGEMENT
 # ============================================================================
 
-# Initialize translation cache environment
+# Initialize translation cache environment with eviction support
 .translation_cache <- new.env(parent = emptyenv())
+.translation_cache_order <- character(0)  # Track insertion order for LRU eviction
+.TRANSLATION_CACHE_MAX_SIZE <- 500L  # Maximum cache entries before eviction
 
-#' Cached translation lookup
+#' Cached translation lookup with LRU eviction
 #'
-#' Caches translated strings to improve performance
-#' Automatically cleared when language changes
+#' Caches translated strings to improve performance.
+#' Implements LRU eviction when cache exceeds max size.
+#' Automatically cleared when language changes.
 #'
 #' @param key Translation key
 #' @param ... Additional parameters
@@ -167,7 +170,23 @@ t_cached <- function(key, ...) {
   }
 
   result <- i18n$t(key, ...)
+
+  # Evict oldest entries if cache is full (LRU policy)
+  cache_size <- length(.translation_cache_order)
+  if (cache_size >= .TRANSLATION_CACHE_MAX_SIZE) {
+    # Remove oldest 10% of entries
+    evict_count <- max(1L, as.integer(cache_size * 0.1))
+    keys_to_remove <- .translation_cache_order[1:evict_count]
+    for (k in keys_to_remove) {
+      if (exists(k, envir = .translation_cache)) {
+        rm(list = k, envir = .translation_cache)
+      }
+    }
+    .translation_cache_order <<- .translation_cache_order[-(1:evict_count)]
+  }
+
   assign(cache_key, result, envir = .translation_cache)
+  .translation_cache_order <<- c(.translation_cache_order, cache_key)
   result
 }
 
@@ -176,6 +195,18 @@ t_cached <- function(key, ...) {
 #' Call this when language changes to force re-translation
 clear_translation_cache <- function() {
   rm(list = ls(.translation_cache), envir = .translation_cache)
+  .translation_cache_order <<- character(0)
+}
+
+#' Get translation cache statistics
+#'
+#' @return List with cache size and max size
+get_translation_cache_stats <- function() {
+  list(
+    size = length(.translation_cache_order),
+    max_size = .TRANSLATION_CACHE_MAX_SIZE,
+    utilization = length(.translation_cache_order) / .TRANSLATION_CACHE_MAX_SIZE
+  )
 }
 
 # ============================================================================

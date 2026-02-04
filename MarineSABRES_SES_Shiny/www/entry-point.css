@@ -1,0 +1,46 @@
+/* Entry Point Module Styles */
+/* Extracted from modules/entry_point_module.R */
+
+.ep-card {
+  border: 2px solid #3498db;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 15px 0;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.ep-card:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+.ep-card.selected {
+  border-color: #27ae60;
+  background: #eafaf1;
+}
+.ep-progress {
+  background: #ecf0f1;
+  border-radius: 20px;
+  padding: 15px;
+  margin: 20px 0;
+}
+.ep-step {
+  display: inline-block;
+  padding: 8px 15px;
+  margin: 0 5px;
+  border-radius: 15px;
+  background: white;
+  border: 2px solid #bdc3c7;
+  font-weight: 500;
+}
+.ep-step.active {
+  background: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+.ep-step.completed {
+  background: #27ae60;
+  color: white;
+  border-color: #27ae60;
+}

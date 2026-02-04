@@ -317,7 +317,40 @@ textInput(ns("email_field"), i18n$t("Email Address:"))
    - Keep functions focused and single-purpose
    - Follow the module pattern: `moduleUI()` and `moduleServer()`
 
-3. **Error Handling**:
+3. **Standard Module Signatures**:
+   To ensure consistency across all modules, follow this standard signature pattern:
+
+   ```r
+   # UI Function - Standard Pattern
+   module_name_ui <- function(id, i18n) {
+     ns <- NS(id)
+     # Use snake_case for function names
+     # Always accept i18n for translations
+   }
+
+   # Server Function - Standard Pattern
+   module_name_server <- function(id, project_data, session, i18n,
+                                   event_bus = NULL, ...) {
+     moduleServer(id, function(input, output, session) {
+       # Module logic here
+     })
+   }
+   ```
+
+   **Parameter Order** (in order of importance):
+   1. `id` - Module namespace ID (required)
+   2. `project_data` - Reactive project data (required for data modules)
+   3. `session` - Parent session for navigation (when needed)
+   4. `i18n` - Translation object (required for UI text)
+   5. `event_bus` - Event bus for inter-module communication (optional)
+   6. Additional optional parameters with defaults
+
+   **Naming Conventions**:
+   - Use `snake_case` for all function names: `module_name_server()`
+   - Avoid `camelCase`: ~~`moduleNameServer()`~~
+   - UI suffix: `_ui`, Server suffix: `_server`
+
+4. **Error Handling**:
    - Always use `tryCatch()` for operations that might fail
    - Provide clear, internationalized error messages to users
    - Log technical details for debugging

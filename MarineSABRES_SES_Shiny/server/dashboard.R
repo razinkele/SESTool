@@ -45,9 +45,9 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
         nrow(isa_data$responses %||% data.frame())
       )
 
-      valueBox(n_elements, i18n$t("ui.dashboard.total_elements"), icon = icon("circle"), color = "blue")
+      bs4ValueBox(n_elements, i18n$t("ui.dashboard.total_elements"), icon = icon("circle"), color = "primary")
     }, error = function(e) {
-      valueBox(0, "Error", icon = icon("times"), color = "red")
+      bs4ValueBox(0, "Error", icon = icon("times"), color = "danger")
     })
   })
 
@@ -67,9 +67,9 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
         }
       }
 
-      valueBox(n_connections, i18n$t("ui.dashboard.connections"), icon = icon("arrow-right"), color = "green")
+      bs4ValueBox(n_connections, i18n$t("ui.dashboard.connections"), icon = icon("arrow-right"), color = "success")
     }, error = function(e) {
-      valueBox(0, "Error", icon = icon("times"), color = "red")
+      bs4ValueBox(0, "Error", icon = icon("times"), color = "danger")
     })
   })
 
@@ -80,9 +80,9 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       loops <- safe_get_nested(data, "data", "cld", "loops", default = data.frame())
       n_loops <- if(is.data.frame(loops)) nrow(loops) else 0
 
-      valueBox(n_loops, i18n$t("ui.dashboard.loops_detected"), icon = icon("refresh"), color = "orange")
+      bs4ValueBox(n_loops, i18n$t("ui.dashboard.loops_detected"), icon = icon("refresh"), color = "orange")
     }, error = function(e) {
-      valueBox(0, "Error", icon = icon("times"), color = "red")
+      bs4ValueBox(0, "Error", icon = icon("times"), color = "danger")
     })
   })
 
@@ -122,14 +122,14 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
 
       completion <- round(completion)
 
-      valueBox(
+      bs4ValueBox(
         paste0(completion, "%"),
         i18n$t("ui.dashboard.completion"),
         icon = icon("check-circle"),
-        color = if(completion >= 75) "green" else if(completion >= 40) "yellow" else "purple"
+        color = if(completion >= 75) "success" else if(completion >= 40) "warning" else "secondary"
       )
     }, error = function(e) {
-      valueBox("0%", "Error", icon = icon("times"), color = "red")
+      bs4ValueBox("0%", "Error", icon = icon("times"), color = "danger")
     })
   })
 
@@ -305,6 +305,107 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       icon(if(has_leverage) "check-circle" else "circle",
            class = if(has_leverage) "text-success" else "text-muted"),
       " ", i18n$t(if(has_leverage) "Leverage analysis complete" else "No analysis performed")
+    )
+  })
+
+  # ========== PROJECT TIMELINE ==========
+  output$dashboard_timeline <- renderUI({
+    data <- project_data()
+
+    # Gather timeline events
+    events <- list()
+
+    # Project creation (using metadata or current date)
+    creation_date <- data$data$metadata$created %||% Sys.Date()
+    events <- c(events, list(list(
+      date = creation_date,
+      title = "Project Created",
+      icon = "plus-circle",
+      color = "success",
+      description = paste("SES project initiated on", format(creation_date, "%B %d, %Y"))
+    )))
+
+    # Check if SES data exists
+    if (!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) {
+      events <- c(events, list(list(
+        date = data$last_modified %||% Sys.Date(),
+        title = "SES Framework Created",
+        icon = "layer-group",
+        color = "info",
+        description = paste("DAPSIWRM framework established with",
+                          sum(nrow(data$data$isa_data$drivers %||% data.frame()),
+                              nrow(data$data$isa_data$activities %||% data.frame()),
+                              nrow(data$data$isa_data$pressures %||% data.frame()),
+                              nrow(data$data$isa_data$marine_processes %||% data.frame()),
+                              nrow(data$data$isa_data$ecosystem_services %||% data.frame()),
+                              nrow(data$data$isa_data$goods_benefits %||% data.frame()),
+                              nrow(data$data$isa_data$responses %||% data.frame())),
+                          "elements")
+      )))
+    }
+
+    # Check if CLD was generated
+    if (!is.null(data$data$cld$nodes) && nrow(data$data$cld$nodes) > 0) {
+      events <- c(events, list(list(
+        date = data$last_modified %||% Sys.Date(),
+        title = "Network Visualization",
+        icon = "project-diagram",
+        color = "primary",
+        description = paste("CLD generated with", nrow(data$data$cld$nodes), "nodes and",
+                          if(!is.null(data$data$cld$edges)) nrow(data$data$cld$edges) else 0, "edges")
+      )))
+    }
+
+    # Check if analysis was performed
+    if (!is.null(data$data$cld$nodes) && any(data$data$cld$nodes$leverage_score > 0, na.rm = TRUE)) {
+      events <- c(events, list(list(
+        date = data$last_modified %||% Sys.Date(),
+        title = "Analysis Complete",
+        icon = "chart-line",
+        color = "warning",
+        description = "Leverage point analysis and network metrics calculated"
+      )))
+    }
+
+    # Build timeline
+    if (length(events) == 0) {
+      return(p(style = "text-align: center; padding: 20px; color: #999;",
+        icon("calendar"), " No project events yet. Start building your SES!"))
+    }
+
+    # Create bs4Timeline
+    timeline_items <- lapply(events, function(event) {
+      # Ensure event is a list (defensive check)
+      if (!is.list(event) || is.null(event)) {
+        return(NULL)
+      }
+
+      # Extract fields safely with defaults
+      event_date <- event[["date"]] %||% Sys.Date()
+      event_title <- event[["title"]] %||% "Event"
+      event_icon <- event[["icon"]] %||% "circle"
+      event_color <- event[["color"]] %||% "gray"
+      event_description <- event[["description"]] %||% ""
+
+      bs4TimelineItem(
+        elevation = 2,
+        time = if(inherits(event_date, "Date") || inherits(event_date, "POSIXt"))
+                 format(event_date, "%b %d, %Y") else as.character(event_date),
+        title = event_title,
+        icon = event_icon,
+        color = event_color,
+        event_description
+      )
+    })
+
+    # Remove NULL items (from defensive check above)
+    timeline_items <- Filter(Negate(is.null), timeline_items)
+
+    bs4Timeline(
+      reversed = FALSE,
+      bs4TimelineEnd(color = "gray"),
+      do.call(tagList, timeline_items),
+      bs4TimelineStart(color = "gray")
     )
   })
 }

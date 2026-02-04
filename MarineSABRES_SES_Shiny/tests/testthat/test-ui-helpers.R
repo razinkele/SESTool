@@ -10,8 +10,6 @@ if (file.exists("../../functions/ui_helpers.R")) {
 }
 
 test_that("create_info_box creates valid UI element", {
-  skip_if_not(exists("create_info_box"))
-
   info_box <- create_info_box(
     title = "Test Title",
     content = "Test content",
@@ -22,8 +20,6 @@ test_that("create_info_box creates valid UI element", {
 })
 
 test_that("create_value_card creates valid UI element", {
-  skip_if_not(exists("create_value_card"))
-
   value_card <- create_value_card(
     value = 42,
     title = "Test Metric",
@@ -34,8 +30,6 @@ test_that("create_value_card creates valid UI element", {
 })
 
 test_that("create_action_button_with_tooltip works", {
-  skip_if_not(exists("create_action_button_with_tooltip"))
-
   button <- create_action_button_with_tooltip(
     inputId = "test_btn",
     label = "Click Me",
@@ -47,16 +41,12 @@ test_that("create_action_button_with_tooltip works", {
 })
 
 test_that("format_number_display formats numbers correctly", {
-  skip_if_not(exists("format_number_display"))
-
   expect_equal(format_number_display(1000), "1,000")
   expect_equal(format_number_display(1234567), "1,234,567")
   expect_equal(format_number_display(42.5), "42.5")
 })
 
 test_that("create_tooltip creates valid tooltip", {
-  skip_if_not(exists("create_tooltip"))
-
   tooltip <- create_tooltip(
     element_id = "test_element",
     text = "Helpful tooltip text"
@@ -66,8 +56,6 @@ test_that("create_tooltip creates valid tooltip", {
 })
 
 test_that("create_progress_indicator creates valid UI", {
-  skip_if_not(exists("create_progress_indicator"))
-
   progress <- create_progress_indicator(
     current = 50,
     total = 100,
@@ -78,8 +66,6 @@ test_that("create_progress_indicator creates valid UI", {
 })
 
 test_that("create_notification_box creates valid notification", {
-  skip_if_not(exists("create_notification_box"))
-
   notification <- create_notification_box(
     message = "Test notification",
     type = "info"
@@ -89,8 +75,6 @@ test_that("create_notification_box creates valid notification", {
 })
 
 test_that("create_collapsible_section creates valid UI", {
-  skip_if_not(exists("create_collapsible_section"))
-
   section <- create_collapsible_section(
     title = "Section Title",
     content = div("Content here")
@@ -100,16 +84,12 @@ test_that("create_collapsible_section creates valid UI", {
 })
 
 test_that("format_percentage formats percentages correctly", {
-  skip_if_not(exists("format_percentage"))
-
   expect_equal(format_percentage(0.5), "50%")
   expect_equal(format_percentage(0.756), "75.6%")
   expect_equal(format_percentage(1), "100%")
 })
 
 test_that("create_help_text creates valid help element", {
-  skip_if_not(exists("create_help_text"))
-
   help_text <- create_help_text("This is helpful information")
 
   expect_shiny_tag(help_text)

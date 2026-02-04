@@ -57,120 +57,7 @@ template_ses_ui <- function(id, i18n) {
 
     # Custom CSS
     tags$head(
-      tags$style(HTML("
-        .template-container {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 20px;
-        }
-        .template-cards-grid {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-        .template-card {
-          background: white;
-          border: 2px solid #e0e0e0;
-          border-radius: 10px;
-          padding: 10px 12px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          position: relative;
-        }
-        .template-card:hover {
-          border-color: #667eea;
-          box-shadow: 0 4px 12px rgba(102,126,234,0.2);
-          transform: translateY(-2px);
-        }
-        .template-card.selected {
-          border-color: #27ae60;
-          background: linear-gradient(135deg, #f8fff9 0%, #e8f8f0 100%);
-          box-shadow: 0 4px 16px rgba(39,174,96,0.25);
-        }
-        .template-icon-wrapper {
-          flex-shrink: 0;
-          width: 36px;
-          height: 36px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          border-radius: 8px;
-        }
-        .template-icon-wrapper i {
-          font-size: 16px;
-          color: white;
-        }
-        .template-card.selected .template-icon-wrapper {
-          background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
-        }
-        .template-content {
-          flex: 1;
-          min-width: 0;
-        }
-        .template-name {
-          font-size: 13px;
-          font-weight: 600;
-          color: #2c3e50;
-          margin: 0 0 2px 0;
-        }
-        .template-category-badge {
-          display: inline-block;
-          background: #e8ecf5;
-          color: #667eea;
-          padding: 2px 8px;
-          border-radius: 10px;
-          font-size: 10px;
-          font-weight: 600;
-        }
-        .template-card.selected .template-category-badge {
-          background: #d4edda;
-          color: #27ae60;
-        }
-        .template-preview-btn {
-          flex-shrink: 0;
-          padding: 4px 8px;
-          color: #999;
-          background: transparent;
-          border: none;
-          cursor: pointer;
-          transition: color 0.2s;
-        }
-        .template-preview-btn:hover {
-          color: #667eea;
-        }
-        /* Ensure tooltips appear above template cards */
-        .tooltip {
-          z-index: 10000 !important;
-        }
-        .template-preview {
-          background: #f8f9fa;
-          border-radius: 8px;
-          padding: 20px;
-          margin: 20px 0;
-        }
-        .preview-section {
-          margin: 15px 0;
-        }
-        .preview-section h6 {
-          color: #667eea;
-          font-weight: 700;
-          margin-bottom: 10px;
-        }
-        .element-tag {
-          display: inline-block;
-          background: white;
-          border: 1px solid #ddd;
-          padding: 5px 12px;
-          border-radius: 15px;
-          margin: 3px;
-          font-size: 12px;
-        }
-      "))
+      tags$link(rel = "stylesheet", type = "text/css", href = "template-ses.css")
     ),
 
     div(class = "template-container",
@@ -235,63 +122,57 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
     # Render template actions
     output$template_actions <- renderUI({
       if (!is.null(rv$selected_template)) {
-        div(
-          wellPanel(
-            style = "padding: 15px; margin-top: 0;",
-            h6(icon("eye"), " ", i18n$t("modules.ses.creation.preview"), style = "margin-bottom: 10px; font-weight: bold;"),
-            uiOutput(ns("template_preview_compact"))
+        tagList(
+          div(
+            wellPanel(
+              style = "padding: 15px; margin-top: 0;",
+              h6(icon("eye"), " ", i18n$t("modules.ses.creation.preview"), style = "margin-bottom: 10px; font-weight: bold;"),
+              uiOutput(ns("template_preview_compact"))
+            ),
+            wellPanel(
+              style = "padding: 15px;",
+              h6(icon("cog"), " ", i18n$t("modules.ses.creation.actions"), style = "margin-bottom: 10px; font-weight: bold;"),
+              tags$div(
+                `data-toggle` = "tooltip",
+                `data-placement` = "right",
+                title = i18n$t("modules.ses.preview_all_template_connections_before_loading_re"),
+                actionButton(ns("review_connections"),
+                             i18n$t("modules.ses.creation.review"),
+                             icon = icon("search"),
+                             class = "btn btn-info btn-block",
+                             style = "margin-bottom: 8px; font-size: 13px; padding: 8px;")
+              ),
+              tags$div(
+                `data-toggle` = "tooltip",
+                `data-placement` = "right",
+                title = i18n$t("modules.ses.load_the_template_as_is_without_reviewing_connecti"),
+                actionButton(ns("load_template"),
+                             i18n$t("common.buttons.load"),
+                             icon = icon("download"),
+                             class = "btn btn-success btn-block",
+                             style = "margin-bottom: 8px; font-size: 13px; padding: 8px;")
+              ),
+              tags$div(
+                `data-toggle` = "tooltip",
+                `data-placement` = "right",
+                title = i18n$t("modules.ses.review_and_customize_template_connections_approve_"),
+                actionButton(ns("customize_template"),
+                             i18n$t("modules.ses.creation.customize"),
+                             icon = icon("edit"),
+                             class = "btn btn-primary btn-block",
+                             style = "font-size: 13px; padding: 8px;")
+              )
+            )
           ),
-          wellPanel(
-            style = "padding: 15px;",
-            h6(icon("cog"), " ", i18n$t("modules.ses.creation.actions"), style = "margin-bottom: 10px; font-weight: bold;"),
-            tags$div(
-              `data-toggle` = "tooltip",
-              `data-placement` = "right",
-              `data-container` = "body",
-              title = i18n$t("modules.ses.preview_all_template_connections_before_loading_re"),
-              actionButton(ns("review_connections"),
-                           i18n$t("modules.ses.creation.review"),
-                           icon = icon("search"),
-                           class = "btn btn-info btn-block",
-                           style = "margin-bottom: 8px; font-size: 13px; padding: 8px;")
-            ),
-            tags$div(
-              `data-toggle` = "tooltip",
-              `data-placement` = "right",
-              `data-container` = "body",
-              title = i18n$t("modules.ses.load_the_template_as_is_without_reviewing_connecti"),
-              actionButton(ns("load_template"),
-                           i18n$t("common.buttons.load"),
-                           icon = icon("download"),
-                           class = "btn btn-success btn-block",
-                           style = "margin-bottom: 8px; font-size: 13px; padding: 8px;")
-            ),
-            tags$div(
-              `data-toggle` = "tooltip",
-              `data-placement` = "right",
-              `data-container` = "body",
-              title = i18n$t("modules.ses.review_and_customize_template_connections_approve_"),
-              actionButton(ns("customize_template"),
-                           i18n$t("modules.ses.creation.customize"),
-                           icon = icon("edit"),
-                           class = "btn btn-primary btn-block",
-                           style = "font-size: 13px; padding: 8px;")
-            ),
-            # Initialize tooltips for action buttons - use setTimeout for proper timing
-            tags$script(HTML("
-              setTimeout(function() {
-                var $actionTooltips = $('.well [data-toggle=\"tooltip\"]');
-                if ($actionTooltips.length > 0) {
-                  try { $actionTooltips.tooltip('dispose'); } catch(e) {}
-                  $actionTooltips.tooltip({
-                    container: 'body',
-                    boundary: 'viewport'
-                  });
-                  console.log('[TOOLTIPS] Initialized ' + $actionTooltips.length + ' action button tooltips');
-                }
-              }, 100);
-            "))
-          )
+          # Initialize Bootstrap tooltips after rendering
+          tags$script(HTML("
+            setTimeout(function() {
+              $('[data-toggle=\"tooltip\"]').tooltip({
+                container: 'body',
+                trigger: 'hover'
+              });
+            }, 200);
+          "))
         )
       }
     })
@@ -303,7 +184,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
           lapply(names(ses_templates), function(template_id) {
             template <- ses_templates[[template_id]]
 
-            # Card with tooltip - use data attributes for Bootstrap tooltip
+            # Card with tooltip data attributes
             tags$div(
               class = "template-card",
               id = ns(paste0("card_", template_id)),
@@ -312,7 +193,6 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
               `data-toggle` = "tooltip",
               `data-placement` = "right",
               `data-html` = "true",
-              `data-container` = "body",
               title = i18n$t(template$description_key),
 
               # Icon wrapper
@@ -336,25 +216,15 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
             )
           })
         ),
-        # Initialize Bootstrap tooltips after rendering with container: body
-        # This ensures tooltips appear above all elements (proper z-index)
-        # Use setTimeout to ensure DOM is ready after Shiny renders this output
-        tags$script(HTML(sprintf("
+        # Initialize Bootstrap tooltips after rendering
+        tags$script(HTML("
           setTimeout(function() {
-            var $cards = $('#%s .template-card[data-toggle=\"tooltip\"]');
-            if ($cards.length > 0) {
-              // Destroy any existing tooltips first
-              try { $cards.tooltip('dispose'); } catch(e) {}
-              // Initialize with container: body to fix z-index issues
-              $cards.tooltip({
-                container: 'body',
-                boundary: 'viewport',
-                delay: { show: 300, hide: 100 }
-              });
-              console.log('[TOOLTIPS] Initialized ' + $cards.length + ' template card tooltips');
-            }
-          }, 100);
-        ", ns("template_cards"))))
+            $('.template-card[data-toggle=\"tooltip\"]').tooltip({
+              container: 'body',
+              trigger: 'hover'
+            });
+          }, 200);
+        "))
       )
     })
 

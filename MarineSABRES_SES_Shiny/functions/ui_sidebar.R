@@ -94,11 +94,11 @@ add_menu_tooltip <- function(menu_item, tooltip_text) {
 #' @return menuSubItem with title attribute
 add_submenu_tooltip <- function(text, tabName, tooltip_text = NULL) {
   if (is.null(tooltip_text) || tooltip_text == "") {
-    return(menuSubItem(text, tabName = tabName))
+    return(bs4SidebarMenuSubItem(text, tabName = tabName))
   }
 
-  # Create menuSubItem and add title attribute
-  item <- menuSubItem(text, tabName = tabName)
+  # Create bs4SidebarMenuSubItem and add title attribute
+  item <- bs4SidebarMenuSubItem(text, tabName = tabName)
 
   # Add title attribute to the item
   if (inherits(item, "shiny.tag")) {
@@ -124,6 +124,7 @@ should_show_menu_item <- function(item_name, user_level) {
       "Getting Started",
       "Dashboard",
       "Create SES",  # Will show AI guided and Template based creation
+      "Graphical SES Creator",  # AI-powered step-by-step network building
       "SES Visualization",
       "Analysis Tools",  # Will show Loop Detection and Leverage Point Analysis only
       "Import Data",  # Import from Excel
@@ -159,7 +160,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
   if (should_show_menu_item("Getting Started", user_level)) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
-        menuItem(
+        bs4SidebarMenuItem(
           safe_t("ui.sidebar.getting_started", i18n_obj = i18n),
           tabName = "entry_point",
           icon = icon("compass")
@@ -173,7 +174,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
   if (should_show_menu_item("Dashboard", user_level)) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
-        menuItem(
+        bs4SidebarMenuItem(
           safe_t("ui.sidebar.dashboard", i18n_obj = i18n),
           tabName = "dashboard",
           icon = icon("dashboard")
@@ -186,14 +187,14 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
   # PIMS Module (intermediate and expert only)
   if (should_show_menu_item("PIMS Module", user_level)) {
     menu_items <- c(menu_items, list(
-      menuItem(
+      bs4SidebarMenuItem(
         safe_t("ui.sidebar.pims_module", i18n_obj = i18n),
         icon = icon("project-diagram"),
-        menuSubItem(safe_t("ui.sidebar.project_setup", i18n_obj = i18n), tabName = "pims_project"),
-        menuSubItem(safe_t("ui.sidebar.stakeholders", i18n_obj = i18n), tabName = "pims_stakeholders"),
-        menuSubItem(safe_t("ui.sidebar.resources_risks", i18n_obj = i18n), tabName = "pims_resources"),
-        menuSubItem(safe_t("modules.isa.data_entry.common.data_management", i18n_obj = i18n), tabName = "pims_data"),
-        menuSubItem(safe_t("ui.sidebar.evaluation", i18n_obj = i18n), tabName = "pims_evaluation")
+        bs4SidebarMenuSubItem(safe_t("ui.sidebar.project_setup", i18n_obj = i18n), tabName = "pims_project"),
+        bs4SidebarMenuSubItem(safe_t("ui.sidebar.stakeholders", i18n_obj = i18n), tabName = "pims_stakeholders"),
+        bs4SidebarMenuSubItem(safe_t("ui.sidebar.resources_risks", i18n_obj = i18n), tabName = "pims_resources"),
+        bs4SidebarMenuSubItem(safe_t("modules.isa.data_entry.common.data_management", i18n_obj = i18n), tabName = "pims_data"),
+        bs4SidebarMenuSubItem(safe_t("ui.sidebar.evaluation", i18n_obj = i18n), tabName = "pims_evaluation")
       )
     ))
   }
@@ -204,7 +205,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
       # Beginner: Show AI guided and Template based creation as direct links
       menu_items <- c(menu_items, list(
         add_menu_tooltip(
-          menuItem(
+          bs4SidebarMenuItem(
             safe_t("ui.sidebar.ai_guided_ses_creation", i18n_obj = i18n),
             tabName = "create_ses_ai",
             icon = icon("robot")
@@ -212,7 +213,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
           safe_t("ui.sidebar.tooltip.ai_guided_ses", i18n_obj = i18n)
         ),
         add_menu_tooltip(
-          menuItem(
+          bs4SidebarMenuItem(
             safe_t("ui.sidebar.template_based_ses_creation", i18n_obj = i18n),
             tabName = "create_ses_template",
             icon = icon("file-alt")
@@ -223,23 +224,37 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     } else {
       # Intermediate/Expert: Show full Create SES menu with all methods
       menu_items <- c(menu_items, list(
-        menuItem(
+        bs4SidebarMenuItem(
           safe_t("ui.sidebar.create_ses", i18n_obj = i18n),
           icon = icon("layer-group"),
-          menuSubItem(safe_t("ui.sidebar.choose_method", i18n_obj = i18n), tabName = "create_ses_choose"),
-          menuSubItem(safe_t("ui.sidebar.standard_entry", i18n_obj = i18n), tabName = "create_ses_standard"),
-          menuSubItem(safe_t("ui.sidebar.ai_assistant", i18n_obj = i18n), tabName = "create_ses_ai"),
-          menuSubItem(safe_t("ui.sidebar.template_based", i18n_obj = i18n), tabName = "create_ses_template")
+          bs4SidebarMenuSubItem(safe_t("ui.sidebar.choose_method", i18n_obj = i18n), tabName = "create_ses_choose"),
+          bs4SidebarMenuSubItem(safe_t("ui.sidebar.standard_entry", i18n_obj = i18n), tabName = "create_ses_standard"),
+          bs4SidebarMenuSubItem(safe_t("ui.sidebar.ai_assistant", i18n_obj = i18n), tabName = "create_ses_ai"),
+          bs4SidebarMenuSubItem(safe_t("ui.sidebar.template_based", i18n_obj = i18n), tabName = "create_ses_template")
         )
       ))
     }
+  }
+
+  # Graphical SES Creator (all levels - AI-powered step-by-step network building)
+  if (should_show_menu_item("Graphical SES Creator", user_level)) {
+    menu_items <- c(menu_items, list(
+      add_menu_tooltip(
+        bs4SidebarMenuItem(
+          "Graphical SES Creator",  # Will add translation later
+          tabName = "graphical_ses_creator",
+          icon = icon("magic")
+        ),
+        "Build your SES network step-by-step with AI guidance"  # Will add translation later
+      )
+    ))
   }
 
   # SES Visualization (all levels)
   if (should_show_menu_item("SES Visualization", user_level)) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
-        menuItem(
+        bs4SidebarMenuItem(
           safe_t("ui.sidebar.ses_visualization", i18n_obj = i18n),
           tabName = "cld_viz",
           icon = icon("project-diagram")
@@ -254,7 +269,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     if (user_level == "beginner") {
       # Beginner: Show only Loop Detection and Leverage Point Analysis
       menu_items <- c(menu_items, list(
-        menuItem(
+        bs4SidebarMenuItem(
           safe_t("ui.sidebar.analysis_tools", i18n_obj = i18n),
           icon = icon("chart-line"),
           add_submenu_tooltip(
@@ -272,7 +287,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     } else {
       # Intermediate/Expert: Show all analysis tools
       menu_items <- c(menu_items, list(
-        menuItem(
+        bs4SidebarMenuItem(
           safe_t("ui.sidebar.analysis_tools", i18n_obj = i18n),
           icon = icon("chart-line"),
           add_submenu_tooltip(
@@ -308,26 +323,32 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
   # Response & Validation (intermediate and expert only)
   if (should_show_menu_item("Response & Validation", user_level)) {
     menu_items <- c(menu_items, list(
-      menuItem(
+      bs4SidebarMenuItem(
         safe_t("ui.sidebar.response_validation", i18n_obj = i18n),
         icon = icon("tasks"),
-        menuSubItem(safe_t("ui.sidebar.response_measures", i18n_obj = i18n), tabName = "response_measures"),
-        menuSubItem(safe_t("ui.sidebar.scenario_builder", i18n_obj = i18n), tabName = "response_scenarios"),
-        menuSubItem(safe_t("ui.sidebar.validation", i18n_obj = i18n), tabName = "response_validation")
+        bs4SidebarMenuSubItem(safe_t("ui.sidebar.response_measures", i18n_obj = i18n), tabName = "response_measures"),
+        bs4SidebarMenuSubItem(safe_t("ui.sidebar.scenario_builder", i18n_obj = i18n), tabName = "response_scenarios"),
+        bs4SidebarMenuSubItem(safe_t("ui.sidebar.validation", i18n_obj = i18n), tabName = "response_validation")
       )
     ))
   }
 
-  # Import Data (all levels)
+  # Import Data (all levels) - now with submenu for Excel import and SES Models
   if (should_show_menu_item("Import Data", user_level)) {
     menu_items <- c(menu_items, list(
-      add_menu_tooltip(
-        menuItem(
-          safe_t("modules.isa.data_entry.common.import_data", i18n_obj = i18n),
+      bs4SidebarMenuItem(
+        safe_t("modules.isa.data_entry.common.import_data", i18n_obj = i18n),
+        icon = icon("upload"),
+        add_submenu_tooltip(
+          safe_t("ui.sidebar.import_from_excel", i18n_obj = i18n),
           tabName = "import_data",
-          icon = icon("upload")
+          tooltip_text = safe_t("ui.sidebar.tooltip.import_data", i18n_obj = i18n)
         ),
-        safe_t("ui.sidebar.tooltip.import_data", i18n_obj = i18n)
+        add_submenu_tooltip(
+          safe_t("ui.sidebar.load_ses_models", i18n_obj = i18n),
+          tabName = "ses_models",
+          tooltip_text = safe_t("ui.sidebar.tooltip.load_ses_models", i18n_obj = i18n)
+        )
       )
     ))
   }
@@ -336,7 +357,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
   if (should_show_menu_item("Export Data", user_level)) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
-        menuItem(
+        bs4SidebarMenuItem(
           safe_t("modules.isa.data_entry.common.export_data", i18n_obj = i18n),
           tabName = "export",
           icon = icon("download")
@@ -350,7 +371,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
   if (should_show_menu_item("Prepare Report", user_level)) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
-        menuItem(
+        bs4SidebarMenuItem(
           safe_t("ui.sidebar.prepare_report", i18n_obj = i18n),
           tabName = "prepare_report",
           icon = icon("file-alt")
@@ -364,26 +385,75 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
   menu_items <- c(menu_items, list(
     hr(),
     div(
-      style = "padding: 15px 10px; text-align: center;",
-      h5(safe_t("ui.sidebar.quick_actions", i18n_obj = i18n), style = "margin-bottom: 15px;"),
+      class = "sidebar-quick-actions",
+      h5(safe_t("ui.sidebar.quick_actions", i18n_obj = i18n)),
       div(
         style = "display: flex; flex-direction: column; align-items: center; gap: 10px;",
-        actionButton(
-          "save_project",
-          safe_t("common.buttons.save_project", i18n_obj = i18n),
-          icon = icon("save"),
-          class = "btn-primary",
-          style = "width: 90%; min-width: 180px;",
-          title = safe_t("ui.sidebar.save_your_curr_proj_dat_incl_all_pims_isa_ent_and_", i18n_obj = i18n)
+        tags$button(
+          id = "save_project",
+          class = "btn btn-primary quick-action-btn action-button shiny-bound-input",
+          type = "button",
+          title = safe_t("ui.sidebar.save_your_curr_proj_dat_incl_all_pims_isa_ent_and_", i18n_obj = i18n),
+          icon("save"),
+          tags$span(class = "btn-text", safe_t("common.buttons.save_project", i18n_obj = i18n))
         ),
-        actionButton(
-          "load_project",
-          safe_t("common.buttons.load_project", i18n_obj = i18n),
-          icon = icon("folder-open"),
-          class = "btn-secondary",
-          style = "width: 90%; min-width: 180px;",
-          title = safe_t("ui.sidebar.load_a_previously_saved_project", i18n_obj = i18n)
-        )
+        tags$button(
+          id = "load_project",
+          class = "btn btn-secondary quick-action-btn action-button shiny-bound-input",
+          type = "button",
+          title = safe_t("ui.sidebar.load_a_previously_saved_project", i18n_obj = i18n),
+          icon("folder-open"),
+          tags$span(class = "btn-text", safe_t("common.buttons.load_project", i18n_obj = i18n))
+        ),
+        # Local storage buttons - visible only when File System Access API is supported
+        tags$div(
+          id = "local_storage_buttons",
+          style = "display: none; width: 100%; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc;",
+          tags$small(
+            style = "color: #666; margin-bottom: 5px; display: block; text-align: center;",
+            icon("hdd"), " ", safe_t("ui.sidebar.local_storage", i18n_obj = i18n)
+          ),
+          tags$button(
+            id = "save_to_local",
+            class = "btn btn-outline-success btn-sm quick-action-btn action-button shiny-bound-input",
+            type = "button",
+            title = safe_t("ui.sidebar.save_to_local_folder", i18n_obj = i18n),
+            style = "width: 100%; margin-bottom: 5px;",
+            icon("download"),
+            tags$span(class = "btn-text", safe_t("common.buttons.save_local", i18n_obj = i18n))
+          ),
+          tags$button(
+            id = "load_from_local",
+            class = "btn btn-outline-info btn-sm quick-action-btn action-button shiny-bound-input",
+            type = "button",
+            title = safe_t("ui.sidebar.load_from_local_folder", i18n_obj = i18n),
+            style = "width: 100%;",
+            icon("upload"),
+            tags$span(class = "btn-text", safe_t("common.buttons.load_local", i18n_obj = i18n))
+          )
+        ),
+        # JavaScript to show/hide local storage buttons based on API support and connection
+        tags$script(HTML("
+          $(document).ready(function() {
+            // Check if File System Access API is available and directory is connected
+            function updateLocalButtons() {
+              if (window.localStorageModule && window.localStorageModule.hasFileSystemAccess) {
+                $('#local_storage_buttons').show();
+                if (window.localStorageModule.directoryHandle) {
+                  $('#save_to_local, #load_from_local').removeClass('btn-outline-secondary').addClass('btn-outline-success btn-outline-info');
+                } else {
+                  $('#save_to_local, #load_from_local').removeClass('btn-outline-success btn-outline-info').addClass('btn-outline-secondary');
+                }
+              } else {
+                $('#local_storage_buttons').hide();
+              }
+            }
+            // Run after a short delay to ensure module is initialized
+            setTimeout(updateLocalButtons, 1000);
+            // Update periodically to reflect connection status changes
+            setInterval(updateLocalButtons, 2000);
+          });
+        "))
       ),
       bsTooltip(
         id = "save_project",
@@ -402,5 +472,6 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
 
   # Build and return the dynamic menu
   # Use tagList to avoid double-wrapping issues with renderMenu()
-  do.call(sidebarMenu, menu_items)
+  # IMPORTANT: id = "sidebar_menu" is required for updateTabItems() to work
+  do.call(bs4SidebarMenu, c(list(id = "sidebar_menu"), menu_items))
 }

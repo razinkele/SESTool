@@ -1,3 +1,11 @@
+// Debug logging utility - only logs when debug mode is enabled
+// Set window.__DEBUG = true in browser console to enable debug output
+var __dbg = function() {
+  if (window.__DEBUG) {
+    console.log.apply(console, arguments);
+  }
+};
+
 // This file will contain custom JavaScript for the MarineSABRES SES Toolbox.
 
 // CRITICAL: Check for language change IMMEDIATELY (before document.ready)
@@ -6,11 +14,11 @@
   var isChangingLanguage = sessionStorage.getItem('language_changing');
 
   if (isChangingLanguage === 'true') {
-    console.log('[JS] IMMEDIATE: Language change detected, creating overlay NOW');
+    __dbg('[JS] IMMEDIATE: Language change detected, creating overlay NOW');
 
     // Record when overlay was shown
     window.languageChangeStartTime = Date.now();
-    console.log('[JS] Overlay display started at:', window.languageChangeStartTime);
+    __dbg('[JS] Overlay display started at:', window.languageChangeStartTime);
 
     // Create overlay HTML immediately
     var overlayHTML = '<div id="language-loading-overlay" class="active" style="position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(44,62,80,0.95);z-index:999999;display:flex;flex-direction:column;justify-content:center;align-items:center;">' +
@@ -48,9 +56,25 @@ $(document).ready(function() {
   }
 });
 
+// Function to save project data to sessionStorage before language reload
+// This preserves the user's work (SES creation progress, etc.) across language changes
+Shiny.addCustomMessageHandler('saveProjectDataBeforeReload', function(message) {
+  __dbg('[JS] Saving project data before language reload...');
+  try {
+    if (message && message.data) {
+      sessionStorage.setItem('marinesabres_project_data_temp', message.data);
+      sessionStorage.setItem('marinesabres_restore_after_lang_change', 'true');
+      __dbg('[JS] Project data saved to sessionStorage (size: ' + message.data.length + ' chars)');
+    }
+  } catch (e) {
+    console.error('[JS] Failed to save project data:', e);
+    // If sessionStorage is full or unavailable, try to continue anyway
+  }
+});
+
 // Function to save language and reload with query parameter
 Shiny.addCustomMessageHandler('saveLanguageAndReload', function(lang) {
-  console.log('[JS] Saving language and reloading:', lang);
+  __dbg('[JS] Saving language and reloading:', lang);
   localStorage.setItem('marinesabres_language', lang);
 
   // Set flag for the new page to know we're changing language
@@ -62,13 +86,36 @@ Shiny.addCustomMessageHandler('saveLanguageAndReload', function(lang) {
     sessionStorage.setItem('language_loading_message', loadingMessage);
   }
 
-  console.log('[JS] Setting URL to: ?language=' + lang);
+  __dbg('[JS] Setting URL to: ?language=' + lang);
   window.location.search = '?language=' + lang;
+});
+
+// On Shiny connected, check if we need to restore project data after language change
+$(document).on('shiny:connected', function() {
+  var shouldRestore = sessionStorage.getItem('marinesabres_restore_after_lang_change');
+  if (shouldRestore === 'true') {
+    __dbg('[JS] Detected language change reload, checking for saved project data...');
+    var savedData = sessionStorage.getItem('marinesabres_project_data_temp');
+    if (savedData) {
+      __dbg('[JS] Found saved project data, sending to Shiny for restoration...');
+      // Small delay to ensure Shiny is fully ready
+      setTimeout(function() {
+        Shiny.setInputValue('restore_project_data_from_lang_change', savedData, {priority: 'event'});
+        // Clean up sessionStorage
+        sessionStorage.removeItem('marinesabres_project_data_temp');
+        sessionStorage.removeItem('marinesabres_restore_after_lang_change');
+        __dbg('[JS] Project data sent to Shiny, sessionStorage cleaned up');
+      }, 500);
+    } else {
+      __dbg('[JS] No saved project data found');
+      sessionStorage.removeItem('marinesabres_restore_after_lang_change');
+    }
+  }
 });
 
 // Function to update header translations after language is loaded
 Shiny.addCustomMessageHandler('updateHeaderTranslations', function(translations) {
-  console.log('[JS] Updating header translations:', translations);
+  __dbg('[JS] Updating header translations:', translations);
 
   // Update main dropdown labels
   $('#language_dropdown_toggle span:first').text(translations.language);
@@ -76,7 +123,7 @@ Shiny.addCustomMessageHandler('updateHeaderTranslations', function(translations)
   $('#help_dropdown_toggle span:first').text(translations.help);
   $('#bookmark_btn span').text(translations.bookmark);
 
-  console.log('[JS] Header translations updated');
+  __dbg('[JS] Header translations updated');
 
   // Update dropdown menu items
   $('#open_language_modal span').text(translations.change_language);
@@ -149,61 +196,99 @@ function saveUserLevel(level) {
   window.location.search = '?user_level=' + level;
 }
 
-$(document).ready(function() {
-  // Initialize Bootstrap tooltips for sidebar menu items
-  function initializeMenuTooltips() {
-    // Find all sidebar menu links that have a title attribute (native tooltips)
-    // We'll enhance them with Bootstrap tooltips for better styling
-    var $links = $('.sidebar-menu a[title]');
+// Custom message handler for sidebar tooltip initialization
+// This uses Bootstrap 4's native tooltip functionality (not bs4Dash's built-in)
+// We use custom implementation to avoid the bs4Dash help toggle in navbar
+Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
+  __dbg('[TOOLTIPS] Initializing sidebar tooltips...');
 
-    if ($links.length > 0) {
-      console.log('[TOOLTIPS] Found', $links.length, 'links with title attributes');
+  var $sidebarLinks = $(data.selector);
+  __dbg('[TOOLTIPS] Found', $sidebarLinks.length, 'sidebar links with title attributes');
 
-      // Destroy any existing Bootstrap tooltips first
-      $links.each(function() {
+  if ($sidebarLinks.length > 0) {
+    // Process each link
+    $sidebarLinks.each(function() {
+      var $link = $(this);
+      var titleText = $link.attr('title');
+
+      // Only initialize if element has a title attribute
+      if (titleText) {
+        // Destroy existing tooltip first
         try {
-          $(this).tooltip('dispose');
-        } catch(e) {}
-      });
+          $link.tooltip('dispose');
+        } catch(e) {
+          // Ignore if tooltip wasn't initialized
+        }
 
-      // Initialize Bootstrap tooltips
-      $links.tooltip({
-        container: 'body',
-        placement: 'right',
-        delay: { show: 300, hide: 100 },
-        trigger: 'hover'
-      });
+        // Initialize Bootstrap 4 tooltip
+        // Title is read from the element's title attribute
+        $link.tooltip({
+          placement: 'right',
+          trigger: 'hover',
+          container: 'body',
+          delay: { show: 300, hide: 100 }
+        });
 
-      console.log('[TOOLTIPS] Bootstrap tooltips initialized on', $links.length, 'menu links');
-    }
+        // Store original title as data attribute to prevent browser default tooltip
+        $link.attr('data-original-title', titleText);
+      }
+    });
 
-    // Also handle any other elements with data-toggle="tooltip"
-    var $otherTooltips = $('[data-toggle="tooltip"]');
+    __dbg('[TOOLTIPS] Sidebar tooltips initialized successfully');
+  } else {
+    console.warn('[TOOLTIPS] No sidebar links with title attributes found');
+  }
+});
+
+$(document).ready(function() {
+  // Log when tooltips are rendered (for debugging)
+  $(document).on('shown.bs.tooltip', function(e) {
+    __dbg('[TOOLTIPS] Tooltip shown for:', $(e.target).attr('title'));
+  });
+
+  // Handle any other elements with data-toggle="tooltip" (non-sidebar)
+  function initializeOtherTooltips() {
+    var $otherTooltips = $('[data-toggle="tooltip"]').not('.main-sidebar [title]');
     if ($otherTooltips.length > 0) {
       try {
         $otherTooltips.tooltip('dispose');
       } catch(e) {}
       $otherTooltips.tooltip({
         container: 'body',
-        placement: 'right',
-        delay: { show: 500, hide: 100 }
+        placement: 'auto',
+        boundary: 'viewport',
+        delay: { show: 300, hide: 100 }
       });
+      __dbg('[TOOLTIPS] Initialized', $otherTooltips.length, 'non-sidebar tooltips');
     }
   }
 
-  // Initialize on page load (with delay for Shiny to render)
-  setTimeout(initializeMenuTooltips, 800);
+  // Initialize non-sidebar tooltips on page load
+  setTimeout(initializeOtherTooltips, 1000);
 
-  // Re-initialize when sidebar updates
-  $(document).on('shiny:value', function(event) {
-    if (event.name === 'dynamic_sidebar') {
-      setTimeout(initializeMenuTooltips, 300);
-    }
+  // Re-initialize non-sidebar tooltips when Shiny becomes idle
+  $(document).on('shiny:idle', function() {
+    setTimeout(initializeOtherTooltips, 200);
   });
 
-  // Custom message handler for manual trigger
-  Shiny.addCustomMessageHandler('updateTooltips', function(message) {
-    setTimeout(initializeMenuTooltips, 100);
+  // ========== DISABLE SIDEBAR HOVER-TO-EXPAND BEHAVIOR ==========
+  // Fix issue where hovering over collapsed sidebar causes it to expand and overlap content
+  // Only allow toggle via hamburger menu button, not hover
+  $(document).ready(function() {
+    // Remove AdminLTE's default hover behavior for sidebar
+    $('body').removeClass('sidebar-mini-hover');
+
+    // Prevent mouseenter/mouseleave events on sidebar from expanding it
+    $('.main-sidebar').off('mouseenter mouseleave');
+
+    // Ensure sidebar only toggles via the pushmenu button (hamburger icon)
+    // This keeps the manual toggle working while disabling auto-expand on hover
+    $('.sidebar-toggle').on('click', function(e) {
+      // Let bs4Dash handle the toggle, just ensure hover class stays off
+      setTimeout(function() {
+        $('body').removeClass('sidebar-mini-hover');
+      }, 100);
+    });
   });
 
   // Open settings modal when clicking the language selector
@@ -220,7 +305,7 @@ $(document).ready(function() {
 
   // Show persistent loading overlay for language change
   Shiny.addCustomMessageHandler('showLanguageLoading', function(message) {
-    console.log('[JS] showLanguageLoading called with message:', message.text);
+    __dbg('[JS] showLanguageLoading called with message:', message.text);
 
     // Remove any existing overlay
     $('#language-loading-overlay').remove();
@@ -234,7 +319,7 @@ $(document).ready(function() {
 
     // Append to body
     $('body').append(overlay);
-    console.log('[JS] Overlay created and appended to body');
+    __dbg('[JS] Overlay created and appended to body');
   });
 
   // Open report in new window/tab
@@ -262,31 +347,31 @@ $(document).on('shiny:connected', function() {
   var isChangingLanguage = sessionStorage.getItem('language_changing');
 
   if (isChangingLanguage === 'true') {
-    console.log('[JS] Shiny connected after language change - waiting for full render');
+    __dbg('[JS] Shiny connected after language change - waiting for full render');
 
     // Calculate how long the overlay has been displayed
     var timeElapsed = window.languageChangeStartTime ? Date.now() - window.languageChangeStartTime : 0;
     var MINIMUM_DISPLAY_TIME = 5000; // Minimum 5 seconds display time
     var RENDER_WAIT_TIME = 2500; // Wait 2.5 seconds for UI to render after connection
 
-    console.log('[JS] Time elapsed since overlay appeared:', timeElapsed, 'ms');
-    console.log('[JS] Minimum display time:', MINIMUM_DISPLAY_TIME, 'ms');
+    __dbg('[JS] Time elapsed since overlay appeared:', timeElapsed, 'ms');
+    __dbg('[JS] Minimum display time:', MINIMUM_DISPLAY_TIME, 'ms');
 
     // Calculate how much longer we need to wait to meet minimum display time
     var remainingMinimumTime = Math.max(0, MINIMUM_DISPLAY_TIME - timeElapsed - RENDER_WAIT_TIME);
 
-    console.log('[JS] Will wait', RENDER_WAIT_TIME + remainingMinimumTime, 'ms before removing overlay');
+    __dbg('[JS] Will wait', RENDER_WAIT_TIME + remainingMinimumTime, 'ms before removing overlay');
 
     // Wait for Shiny to render
     setTimeout(function() {
-      console.log('[JS] Shiny render wait complete, checking minimum display time...');
+      __dbg('[JS] Shiny render wait complete, checking minimum display time...');
 
       // Ensure minimum display time is met
       setTimeout(function() {
-        console.log('[JS] NOW removing language loading overlay');
+        __dbg('[JS] NOW removing language loading overlay');
 
         var totalTimeDisplayed = Date.now() - window.languageChangeStartTime;
-        console.log('[JS] Total overlay display time:', totalTimeDisplayed, 'ms');
+        __dbg('[JS] Total overlay display time:', totalTimeDisplayed, 'ms');
 
         // Clear the session storage flags
         sessionStorage.removeItem('language_changing');
@@ -295,7 +380,7 @@ $(document).on('shiny:connected', function() {
         // Fade out and remove the overlay
         $('#language-loading-overlay').fadeOut(800, function() {
           $(this).remove();
-          console.log('[JS] Overlay removed - language change complete');
+          __dbg('[JS] Overlay removed - language change complete');
         });
       }, remainingMinimumTime);
     }, RENDER_WAIT_TIME);
@@ -307,7 +392,7 @@ $(document).on('shiny:idle', function() {
   var isChangingLanguage = sessionStorage.getItem('language_changing');
 
   if (isChangingLanguage === 'true') {
-    console.log('[JS] Shiny is now idle after language change');
+    __dbg('[JS] Shiny is now idle after language change');
   }
 });
 

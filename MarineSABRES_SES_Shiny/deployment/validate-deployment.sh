@@ -287,7 +287,7 @@ fi
 echo ""
 echo "[7] Checking R Package Dependencies..."
 
-required_packages=("shiny" "shinydashboard" "shinyWidgets" "shinyjs" "shinyBS" "shiny.i18n" "igraph" "visNetwork" "DT" "jsonlite")
+required_packages=("shiny" "bs4Dash" "shinyWidgets" "shinyjs" "shinyBS" "shiny.i18n" "igraph" "visNetwork" "DT" "jsonlite")
 
 missing_packages=()
 for pkg in "${required_packages[@]}"; do

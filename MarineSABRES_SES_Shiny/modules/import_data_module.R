@@ -199,6 +199,23 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
           return(NULL)
         }
 
+        # Validate MIME type (prevents renamed files from being processed)
+        file_info <- input$excel_file
+        expected_mimes <- c(
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "application/vnd.ms-excel",
+          "application/octet-stream"  # Some browsers report this for xlsx
+        )
+        if (!is.null(file_info$type) && nchar(file_info$type) > 0 &&
+            !file_info$type %in% expected_mimes) {
+          showNotification(
+            paste("Invalid file type detected:", file_info$type,
+                  "- Expected an Excel file (.xlsx or .xls)"),
+            type = "error", duration = 8
+          )
+          return()
+        }
+
         # === VALIDATION 2: File size check (max 50MB) ===
         max_size_mb <- 50
         if (file_size > max_size_mb * 1024 * 1024) {

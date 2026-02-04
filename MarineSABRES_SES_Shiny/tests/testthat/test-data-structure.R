@@ -8,8 +8,6 @@ library(shiny)
 source("../../functions/data_structure.R", local = TRUE)
 
 test_that("create_empty_isa_data creates proper structure", {
-  skip_if_not(exists("create_empty_isa_data"))
-
   isa_data <- create_empty_isa_data()
 
   expect_type(isa_data, "list")
@@ -26,8 +24,6 @@ test_that("create_empty_isa_data creates proper structure", {
 })
 
 test_that("adjacency matrix creation works correctly", {
-  skip_if_not(exists("create_adjacency_matrix"))
-
   # Test with simple row and column names
   row_names <- c("A", "B", "C")
   col_names <- c("X", "Y")
@@ -42,8 +38,6 @@ test_that("adjacency matrix creation works correctly", {
 })
 
 test_that("data export to data frame works", {
-  skip_if_not(exists("isa_to_dataframe"))
-
   # Create test ISA data
   test_data <- list(
     drivers = data.frame(
@@ -65,8 +59,6 @@ test_that("data export to data frame works", {
 })
 
 test_that("element merging works correctly", {
-  skip_if_not(exists("merge_isa_elements"))
-
   # Create test data
   data1 <- data.frame(
     ID = c("E1", "E2"),
@@ -88,8 +80,6 @@ test_that("element merging works correctly", {
 })
 
 test_that("data structure conversion functions work", {
-  skip_if_not(exists("convert_to_network_format"))
-
   # Create test ISA data with connections
   test_data <- list(
     nodes = data.frame(

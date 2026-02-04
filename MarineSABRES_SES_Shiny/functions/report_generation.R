@@ -36,25 +36,21 @@ get_loop_data <- function(data) {
 #' @return Character string containing complete R Markdown document
 generate_report_content <- function(data, report_type, include_viz = TRUE, include_data = FALSE) {
 
-  cat("\n=== DEBUG: Report generation started ===\n")
-  cat("Report type:", report_type, "\n")
-  cat("Data structure check:\n")
-  cat("  - is.list(data):", is.list(data), "\n")
-  cat("  - names(data):", paste(names(data), collapse = ", "), "\n")
-  flush.console()
+  debug_log("Report generation started", "REPORT")
+  debug_log(sprintf("Report type: %s", report_type), "REPORT")
+  debug_log(sprintf("Data is.list: %s, names: %s", is.list(data),
+                    paste(names(data), collapse = ", ")), "REPORT")
 
   # ========== YAML HEADER ==========
-  cat("Building YAML header...\n")
+  debug_log("Building YAML header", "REPORT")
 
   # Ensure report_type is a character string, not a list
   report_type_safe <- as.character(report_type)[1]
-  cat("  report_type class:", class(report_type), "value:", report_type_safe, "\n")
-  flush.console()
+  debug_log(sprintf("Report type (safe): %s", report_type_safe), "REPORT")
 
   # Safely format the date
   report_date <- format(Sys.Date(), "%B %d, %Y")
-  cat("  report_date class:", class(report_date), "value:", report_date, "\n")
-  flush.console()
+  debug_log(sprintf("Report date: %s", report_date), "REPORT")
 
   header <- paste0(
     "---\n",
@@ -68,11 +64,10 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
     "---\n\n"
   )
 
-  cat("YAML header built successfully\n")
-  flush.console()
+  debug_log("YAML header built successfully", "REPORT")
 
   # ========== PROJECT OVERVIEW SECTION ==========
-  cat("Processing dates...\n")
+  debug_log("Processing dates", "REPORT")
   # Safely format dates (handle potential list/non-date values)
   created_date <- tryCatch({
     if (is.null(data$created_at)) {
@@ -82,7 +77,10 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
     } else {
       as.character(format(data$created_at, "%Y-%m-%d"))
     }
-  }, error = function(e) "Unknown")
+  }, error = function(e) {
+    debug_log(sprintf("Error parsing created_at: %s", e$message), "REPORT")
+    "Unknown"
+  })
 
   modified_date <- tryCatch({
     if (is.null(data$last_modified)) {
@@ -92,7 +90,10 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
     } else {
       as.character(format(data$last_modified, "%Y-%m-%d"))
     }
-  }, error = function(e) "Unknown")
+  }, error = function(e) {
+    debug_log(sprintf("Error parsing last_modified: %s", e$message), "REPORT")
+    "Unknown"
+  })
 
   # Safely extract metadata fields (handle potential list values)
   da_site <- tryCatch({
@@ -103,7 +104,10 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
     } else {
       "Not specified"
     }
-  }, error = function(e) "Not specified")
+  }, error = function(e) {
+    debug_log(sprintf("Error extracting da_site: %s", e$message), "REPORT")
+    "Not specified"
+  })
 
   focal_issue <- tryCatch({
     if (is.list(data$data$metadata$focal_issue)) {
@@ -113,15 +117,15 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
     } else {
       "Not defined"
     }
-  }, error = function(e) "Not defined")
+  }, error = function(e) {
+    debug_log(sprintf("Error extracting focal_issue: %s", e$message), "REPORT")
+    "Not defined"
+  })
 
-  cat("Dates processed:\n")
-  cat("  - created_date:", created_date, "\n")
-  cat("  - modified_date:", modified_date, "\n")
-  cat("  - da_site:", da_site, "\n")
-  cat("  - focal_issue:", focal_issue, "\n")
+  debug_log(sprintf("Dates processed - created: %s, modified: %s", created_date, modified_date), "REPORT")
+  debug_log(sprintf("DA site: %s, focal issue: %s", da_site, focal_issue), "REPORT")
 
-  cat("Building intro section...\n")
+  debug_log("Building intro section", "REPORT")
 
   # Safely extract project name to avoid list issues
   project_name <- if (!is.null(data$project_name)) {
@@ -138,45 +142,39 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
     "**Created:** ", created_date, "\n\n",
     "**Last Modified:** ", modified_date, "\n\n"
   )
-  cat("Intro section built successfully\n")
+  debug_log("Intro section built successfully", "REPORT")
 
   # ========== REPORT TYPE-SPECIFIC CONTENT ==========
-  cat("Generating report type-specific content for:", report_type_safe, "\n")
-  flush.console()
+  debug_log(sprintf("Generating %s report content", report_type_safe), "REPORT")
+
   if (report_type_safe == "executive") {
-    cat("Calling generate_executive_content()...\n")
-    flush.console()
+    debug_log("Calling generate_executive_content", "REPORT")
     content <- generate_executive_content(data)
   } else if (report_type_safe == "technical") {
-    cat("Calling generate_technical_content()...\n")
-    flush.console()
+    debug_log("Calling generate_technical_content", "REPORT")
     content <- generate_technical_content(data)
   } else if (report_type_safe == "presentation") {
-    cat("Calling generate_presentation_content()...\n")
-    flush.console()
+    debug_log("Calling generate_presentation_content", "REPORT")
     content <- generate_presentation_content(data)
   } else {
     # Default to full report
-    cat("Calling generate_full_content()...\n")
-    flush.console()
+    debug_log("Calling generate_full_content", "REPORT")
     content <- generate_full_content(data)
   }
-  cat("Type-specific content generated successfully\n")
-  flush.console()
+  debug_log("Type-specific content generated successfully", "REPORT")
 
   # ========== FOOTER ==========
-  cat("Building footer...\n")
+  debug_log("Building footer", "REPORT")
   footer <- paste0(
     "\n\n---\n\n",
     "*Report generated by MarineSABRES SES Tool*\n\n",
     "*", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "*\n"
   )
-  cat("Footer built successfully\n")
+  debug_log("Footer built successfully", "REPORT")
 
-  cat("Combining all sections...\n")
+  debug_log("Combining all sections", "REPORT")
   result <- paste0(header, intro, content, footer)
-  cat("Report content generated successfully!\n")
-  cat("=== DEBUG: Report generation completed ===\n\n")
+  debug_log("Report content generated successfully!", "REPORT")
 
   return(result)
 }
@@ -190,7 +188,7 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
 #' @param data Project data object
 #' @return Character string with executive summary content
 generate_executive_content <- function(data) {
-  cat("  [Executive] Counting ISA elements...\n")
+  debug_log("Counting ISA elements", "EXECUTIVE")
   # Count elements correctly by summing rows in each dataframe
   # Safely count each component
   count_rows <- function(df) {
@@ -199,16 +197,18 @@ generate_executive_content <- function(data) {
     return(0)
   }
 
+  # Use safe_get_nested for defensive data access
+  isa_data <- safe_get_nested(data, "data", "isa_data", default = list())
   n_elements <- sum(
-    count_rows(data$data$isa_data$drivers),
-    count_rows(data$data$isa_data$activities),
-    count_rows(data$data$isa_data$pressures),
-    count_rows(data$data$isa_data$marine_processes),
-    count_rows(data$data$isa_data$ecosystem_services),
-    count_rows(data$data$isa_data$goods_benefits),
-    count_rows(data$data$isa_data$responses)
+    count_rows(isa_data$drivers),
+    count_rows(isa_data$activities),
+    count_rows(isa_data$pressures),
+    count_rows(isa_data$marine_processes),
+    count_rows(isa_data$ecosystem_services),
+    count_rows(isa_data$goods_benefits),
+    count_rows(isa_data$responses)
   )
-  cat("  [Executive] Total elements:", n_elements, "\n")
+  debug_log(sprintf("Total elements: %d", n_elements), "EXECUTIVE")
 
   # Safely extract metadata fields
   da_site <- tryCatch({
@@ -231,9 +231,8 @@ generate_executive_content <- function(data) {
     }
   }, error = function(e) "key system issues")
 
-  cat("  [Executive] Building content with n_elements:", n_elements, "\n")
-  cat("  [Executive] da_site:", da_site, "class:", class(da_site), "\n")
-  cat("  [Executive] focal_issue:", focal_issue, "class:", class(focal_issue), "\n")
+  debug_log(sprintf("Building content with n_elements=%d, da_site=%s, focal_issue=%s",
+                    n_elements, da_site, focal_issue), "EXECUTIVE")
 
   # Safely count loops using helper function
   loops_data <- get_loop_data(data)
@@ -261,7 +260,7 @@ generate_executive_content <- function(data) {
     " with particular attention to ", focal_issue, ".\n\n"
   )
 
-  cat("  [Executive] Content generated successfully\n")
+  debug_log("Content generated successfully", "EXECUTIVE")
   return(content)
 }
 
@@ -270,51 +269,54 @@ generate_executive_content <- function(data) {
 #' @param data Project data object
 #' @return Character string with technical analysis content
 generate_technical_content <- function(data) {
-  cat("  [Technical] Building sections...\n")
+  debug_log("Building technical sections", "TECHNICAL")
+
+  # Use safe_get_nested for defensive data access
+  isa_data <- safe_get_nested(data, "data", "isa_data", default = list())
+
+  # Helper to count rows safely
+  safe_nrow <- function(df) {
+    if (!is.null(df) && is.data.frame(df)) nrow(df) else 0
+  }
+
   # Build sections separately to avoid if-else list issues in paste0
-  drivers_section <- if (!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) {
-    paste0("Identified ", nrow(data$data$isa_data$drivers), " drivers in the system.\n\n")
+  drivers_section <- if (safe_nrow(isa_data$drivers) > 0) {
+    paste0("Identified ", nrow(isa_data$drivers), " drivers in the system.\n\n")
   } else {
     "No drivers data available.\n\n"
   }
-  cat("  [Technical] drivers_section class:", class(drivers_section), "\n")
 
-  activities_section <- if (!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) {
-    paste0("Identified ", nrow(data$data$isa_data$activities), " activities.\n\n")
+  activities_section <- if (safe_nrow(isa_data$activities) > 0) {
+    paste0("Identified ", nrow(isa_data$activities), " activities.\n\n")
   } else {
     "No activities data available.\n\n"
   }
-  cat("  [Technical] activities_section class:", class(activities_section), "\n")
 
-  pressures_section <- if (!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) {
-    paste0("Identified ", nrow(data$data$isa_data$pressures), " pressures.\n\n")
+  pressures_section <- if (safe_nrow(isa_data$pressures) > 0) {
+    paste0("Identified ", nrow(isa_data$pressures), " pressures.\n\n")
   } else {
     "No pressures data available.\n\n"
   }
-  cat("  [Technical] pressures_section class:", class(pressures_section), "\n")
 
-  states_section <- if (!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) {
-    paste0("Identified ", nrow(data$data$isa_data$marine_processes), " state changes (marine processes/impacts).\n\n")
+  states_section <- if (safe_nrow(isa_data$marine_processes) > 0) {
+    paste0("Identified ", nrow(isa_data$marine_processes), " state changes (marine processes/impacts).\n\n")
   } else {
     "No state changes data available.\n\n"
   }
-  cat("  [Technical] states_section class:", class(states_section), "\n")
 
-  services_section <- if (!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) {
-    paste0("Identified ", nrow(data$data$isa_data$ecosystem_services), " ecosystem services.\n\n")
+  services_section <- if (safe_nrow(isa_data$ecosystem_services) > 0) {
+    paste0("Identified ", nrow(isa_data$ecosystem_services), " ecosystem services.\n\n")
   } else {
     "No ecosystem services data available.\n\n"
   }
-  cat("  [Technical] services_section class:", class(services_section), "\n")
 
-  benefits_section <- if (!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) {
-    paste0("Identified ", nrow(data$data$isa_data$goods_benefits), " goods and benefits.\n\n")
+  benefits_section <- if (safe_nrow(isa_data$goods_benefits) > 0) {
+    paste0("Identified ", nrow(isa_data$goods_benefits), " goods and benefits.\n\n")
   } else {
     "No goods and benefits data available.\n\n"
   }
-  cat("  [Technical] benefits_section class:", class(benefits_section), "\n")
 
-  cat("  [Technical] Combining sections with paste0...\n")
+  debug_log("Combining sections", "TECHNICAL")
   content <- paste0(
     "# Technical Analysis\n\n",
     "## DAPSI(W)R(M) Framework Elements\n\n",
@@ -332,7 +334,7 @@ generate_technical_content <- function(data) {
     benefits_section
   )
 
-  cat("  [Technical] Content generated successfully\n")
+  debug_log("Content generated successfully", "TECHNICAL")
   return(content)
 }
 
@@ -698,7 +700,7 @@ generate_presentation_content <- function(data) {
 #' @param data Project data object
 #' @return Character string with complete analysis content
 generate_full_content <- function(data) {
-  cat("  [Full] Building enhanced sections...\n")
+  debug_log("Building enhanced sections", "FULL")
 
   # ========== SYSTEM OVERVIEW ==========
   n_nodes <- if (!is.null(data$data$cld$nodes) && is.data.frame(data$data$cld$nodes)) {
@@ -729,12 +731,11 @@ generate_full_content <- function(data) {
   }
 
   # DEBUG: Check all variables before paste0
-  cat("  [Full] DEBUG - Before overview_section paste0:\n")
-  cat("    n_nodes class:", class(n_nodes), "value:", n_nodes, "\n")
-  cat("    n_edges class:", class(n_edges), "value:", n_edges, "\n")
-  cat("    n_loops class:", class(n_loops), "value:", n_loops, "\n")
-  cat("    network_density class:", class(network_density), "value:", network_density, "\n")
-  flush.console()
+  debug_log("DEBUG: Before overview_section paste0", "FULL")
+  debug_log(sprintf("DEBUG: n_nodes class: %s, value: %s", class(n_nodes)[1], n_nodes), "FULL")
+  debug_log(sprintf("DEBUG: n_edges class: %s, value: %s", class(n_edges)[1], n_edges), "FULL")
+  debug_log(sprintf("DEBUG: n_loops class: %s, value: %s", class(n_loops)[1], n_loops), "FULL")
+  debug_log(sprintf("DEBUG: network_density class: %s, value: %s", class(network_density)[1], network_density), "FULL")
 
   overview_section <- paste0(
     "# Complete SES Analysis Report\n\n",
@@ -744,10 +745,10 @@ generate_full_content <- function(data) {
     "- **Feedback Dynamics**: ", as.character(n_loops), " feedback loops identified\n",
     "- **System Complexity**: Network density of ", network_density, "\n\n"
   )
-  cat("  [Full] overview_section created successfully, class:", class(overview_section), "\n")
+  debug_log(sprintf("DEBUG: overview_section created successfully, class: %s", class(overview_section)[1]), "FULL")
 
   # ========== DETAILED LOOP ANALYSIS ==========
-  cat("  [Full] DEBUG - Starting loop analysis section...\n")
+  debug_log("DEBUG: Starting loop analysis section", "FULL")
   # Check both possible locations: data$data$analysis$loops$loop_info (new) or data$data$cld$loops (legacy)
   loops_data <- if (!is.null(data$data$analysis$loops$loop_info)) {
     data$data$analysis$loops$loop_info
@@ -756,14 +757,14 @@ generate_full_content <- function(data) {
   }
   
   loops_section <- if (!is.null(loops_data) && nrow(loops_data) > 0) {
-    cat("  [Full] DEBUG - Loops data exists, processing...\n")
+    debug_log("DEBUG: Loops data exists, processing", "FULL")
     loops <- loops_data
-    cat("  [Full] DEBUG - loops is.data.frame:", is.data.frame(loops), "nrow:", nrow(loops), "\n")
+    debug_log(sprintf("DEBUG: loops is.data.frame: %s, nrow: %s", is.data.frame(loops), nrow(loops)), "FULL")
 
     n_reinforcing <- sum(loops$Type == "Reinforcing", na.rm = TRUE)
     n_balancing <- sum(loops$Type == "Balancing", na.rm = TRUE)
-    cat("  [Full] DEBUG - n_reinforcing:", n_reinforcing, "class:", class(n_reinforcing), "\n")
-    cat("  [Full] DEBUG - n_balancing:", n_balancing, "class:", class(n_balancing), "\n")
+    debug_log(sprintf("DEBUG: n_reinforcing: %s, class: %s", n_reinforcing, class(n_reinforcing)[1]), "FULL")
+    debug_log(sprintf("DEBUG: n_balancing: %s, class: %s", n_balancing, class(n_balancing)[1]), "FULL")
 
     # Analyze loop lengths - handle both Path and Elements columns
     if ("Path" %in% names(loops) && !all(is.na(loops$Path))) {
@@ -788,15 +789,15 @@ generate_full_content <- function(data) {
     if (is.infinite(max_length) || is.na(max_length)) max_length <- avg_length
     if (is.infinite(min_length) || is.na(min_length)) min_length <- avg_length
 
-    cat("  [Full] DEBUG - avg_length:", avg_length, "class:", class(avg_length), "\n")
-    cat("  [Full] DEBUG - max_length:", max_length, "class:", class(max_length), "\n")
-    cat("  [Full] DEBUG - min_length:", min_length, "class:", class(min_length), "\n")
+    debug_log(sprintf("DEBUG: avg_length: %s, class: %s", avg_length, class(avg_length)[1]), "FULL")
+    debug_log(sprintf("DEBUG: max_length: %s, class: %s", max_length, class(max_length)[1]), "FULL")
+    debug_log(sprintf("DEBUG: min_length: %s, class: %s", min_length, class(min_length)[1]), "FULL")
 
     # Get top loops by length
     top_loops_idx <- head(order(loop_lengths, decreasing = TRUE), min(5, nrow(loops)))
-    cat("  [Full] DEBUG - top_loops_idx:", paste(top_loops_idx, collapse=", "), "\n")
+    debug_log(sprintf("DEBUG: top_loops_idx: %s", paste(top_loops_idx, collapse=", ")), "FULL")
 
-    cat("  [Full] DEBUG - Building top_loops_text with sapply...\n")
+    debug_log("DEBUG: Building top_loops_text with sapply", "FULL")
     # Determine which column to use for path display
     path_col <- if ("Path" %in% names(loops)) {
       "Path"
@@ -811,19 +812,19 @@ generate_full_content <- function(data) {
         # Calculate ellipsis separately to avoid if-else in paste0
         path_text <- if (!is.na(loops[[path_col]][i])) as.character(loops[[path_col]][i]) else "Unknown path"
         path_ellipsis <- if(nchar(path_text) > 80) "..." else ""
-        cat("    [sapply iter] Loop", i, "Type:", loops$Type[i], "class:", class(loops$Type[i]), "\n")
-        cat("    [sapply iter] loop_lengths[", i, "]:", loop_lengths[i], "class:", class(loop_lengths[i]), "\n")
-        cat("    [sapply iter] path_ellipsis class:", class(path_ellipsis), "\n")
+        debug_log(sprintf("DEBUG: sapply iter - Loop %s, Type: %s, class: %s", i, loops$Type[i], class(loops$Type[i])[1]), "FULL")
+        debug_log(sprintf("DEBUG: sapply iter - loop_lengths[%s]: %s, class: %s", i, loop_lengths[i], class(loop_lengths[i])[1]), "FULL")
+        debug_log(sprintf("DEBUG: sapply iter - path_ellipsis class: %s", class(path_ellipsis)[1]), "FULL")
         paste0("   - **Loop ", i, "** (", loops$Type[i], ", ", loop_lengths[i], " nodes): ",
                substr(path_text, 1, 80), path_ellipsis, "\n")
       }), collapse = "")
     } else {
       paste0("   - ", nrow(loops), " feedback loops detected (details require path information)\n")
     }
-    cat("  [Full] DEBUG - top_loops_text created, class:", class(top_loops_text), "\n")
+    debug_log(sprintf("DEBUG: top_loops_text created, class: %s", class(top_loops_text)[1]), "FULL")
 
     # Calculate system implications separately to avoid if-else in paste0
-    cat("  [Full] DEBUG - Building system_implications_text...\n")
+    debug_log("DEBUG: Building system_implications_text", "FULL")
     system_implications_text <- if (n_reinforcing > n_balancing) {
       paste0("⚠️ **High proportion of reinforcing loops** (", round(n_reinforcing/nrow(loops)*100, 1),
              "%) suggests the system may be prone to rapid changes and potential instability. ",
@@ -847,19 +848,19 @@ generate_full_content <- function(data) {
     pct_reinforcing <- as.character(round(n_reinforcing/nrow(loops)*100, 1))
     pct_balancing <- as.character(round(n_balancing/nrow(loops)*100, 1))
 
-    cat("  [Full] DEBUG - Before final loops paste0:\n")
-    cat("    total_loops:", total_loops, "class:", class(total_loops), "\n")
-    cat("    n_reinforcing:", n_reinforcing, "class:", class(n_reinforcing), "\n")
-    cat("    pct_reinforcing:", pct_reinforcing, "class:", class(pct_reinforcing), "\n")
-    cat("    n_balancing:", n_balancing, "class:", class(n_balancing), "\n")
-    cat("    pct_balancing:", pct_balancing, "class:", class(pct_balancing), "\n")
-    cat("    avg_length:", avg_length, "class:", class(avg_length), "\n")
-    cat("    min_length:", min_length, "class:", class(min_length), "\n")
-    cat("    max_length:", max_length, "class:", class(max_length), "\n")
-    cat("    top_loops_text class:", class(top_loops_text), "\n")
-    cat("    system_implications_text class:", class(system_implications_text), "\n")
+    debug_log("DEBUG: Before final loops paste0", "FULL")
+    debug_log(sprintf("DEBUG: total_loops: %s, class: %s", total_loops, class(total_loops)[1]), "FULL")
+    debug_log(sprintf("DEBUG: n_reinforcing: %s, class: %s", n_reinforcing, class(n_reinforcing)[1]), "FULL")
+    debug_log(sprintf("DEBUG: pct_reinforcing: %s, class: %s", pct_reinforcing, class(pct_reinforcing)[1]), "FULL")
+    debug_log(sprintf("DEBUG: n_balancing: %s, class: %s", n_balancing, class(n_balancing)[1]), "FULL")
+    debug_log(sprintf("DEBUG: pct_balancing: %s, class: %s", pct_balancing, class(pct_balancing)[1]), "FULL")
+    debug_log(sprintf("DEBUG: avg_length: %s, class: %s", avg_length, class(avg_length)[1]), "FULL")
+    debug_log(sprintf("DEBUG: min_length: %s, class: %s", min_length, class(min_length)[1]), "FULL")
+    debug_log(sprintf("DEBUG: max_length: %s, class: %s", max_length, class(max_length)[1]), "FULL")
+    debug_log(sprintf("DEBUG: top_loops_text class: %s", class(top_loops_text)[1]), "FULL")
+    debug_log(sprintf("DEBUG: system_implications_text class: %s", class(system_implications_text)[1]), "FULL")
 
-    cat("  [Full] DEBUG - Calling paste0 for loops section...\n")
+    debug_log("DEBUG: Calling paste0 for loops section", "FULL")
     result <- paste0(
       "## Feedback Loop Analysis\n\n",
       "### Loop Discovery\n\n",
@@ -876,13 +877,13 @@ generate_full_content <- function(data) {
       "### System Implications\n\n",
       system_implications_text
     )
-    cat("  [Full] DEBUG - Loops section paste0 completed successfully!\n")
+    debug_log("DEBUG: Loops section paste0 completed successfully", "FULL")
     result
   } else {
-    cat("  [Full] DEBUG - No loops data, using default message\n")
+    debug_log("DEBUG: No loops data, using default message", "FULL")
     "## Feedback Loop Analysis\n\n⚠️ No feedback loops detected yet. Run loop detection analysis to identify circular causality in the system.\n\n"
   }
-  cat("  [Full] loops_section class:", class(loops_section), "\n")
+  debug_log(sprintf("DEBUG: loops_section class: %s", class(loops_section)[1]), "FULL")
 
   # ========== LEVERAGE POINT ANALYSIS ==========
   leverage_section <- if (!is.null(data$data$cld$nodes) && nrow(data$data$cld$nodes) > 0) {
@@ -942,7 +943,7 @@ generate_full_content <- function(data) {
   } else {
     "## Leverage Point Analysis\n\n⚠️ No CLD nodes available for leverage analysis.\n\n"
   }
-  cat("  [Full] leverage_section class:", class(leverage_section), "\n")
+  debug_log(sprintf("DEBUG: leverage_section class: %s", class(leverage_section)[1]), "FULL")
 
   # ========== NETWORK METRICS ==========
   network_section <- if (!is.null(data$data$cld$nodes) && nrow(data$data$cld$nodes) > 0) {
@@ -980,7 +981,7 @@ generate_full_content <- function(data) {
   } else {
     "## Network Structure\n\n⚠️ No CLD network available for analysis.\n\n"
   }
-  cat("  [Full] network_section class:", class(network_section), "\n")
+  debug_log(sprintf("DEBUG: network_section class: %s", class(network_section)[1]), "FULL")
 
   # ========== STAKEHOLDER ANALYSIS ==========
   stakeholder_section <- if (!is.null(data$data$pims$stakeholders) && nrow(data$data$pims$stakeholders) > 0) {
@@ -997,7 +998,7 @@ generate_full_content <- function(data) {
   } else {
     "## Stakeholder Analysis\n\n⚠️ No stakeholder data available.\n\n"
   }
-  cat("  [Full] stakeholder_section class:", class(stakeholder_section), "\n")
+  debug_log(sprintf("DEBUG: stakeholder_section class: %s", class(stakeholder_section)[1]), "FULL")
 
   # ========== MANAGEMENT RECOMMENDATIONS ==========
   # Generate context-specific management recommendations
@@ -1015,14 +1016,14 @@ generate_full_content <- function(data) {
   )
 
   # ========== COMBINE ALL SECTIONS ==========
-  cat("  [Full] Combining all sections...\n")
-  cat("  [Full] DEBUG - Before final combination paste0:\n")
-  cat("    overview_section class:", class(overview_section), "\n")
-  cat("    loops_section class:", class(loops_section), "\n")
-  cat("    leverage_section class:", class(leverage_section), "\n")
-  cat("    network_section class:", class(network_section), "\n")
-  cat("    stakeholder_section class:", class(stakeholder_section), "\n")
-  cat("    recommendations_section class:", class(recommendations_section), "\n")
+  debug_log("Combining all sections", "FULL")
+  debug_log("DEBUG: Before final combination paste0", "FULL")
+  debug_log(sprintf("DEBUG: overview_section class: %s", class(overview_section)[1]), "FULL")
+  debug_log(sprintf("DEBUG: loops_section class: %s", class(loops_section)[1]), "FULL")
+  debug_log(sprintf("DEBUG: leverage_section class: %s", class(leverage_section)[1]), "FULL")
+  debug_log(sprintf("DEBUG: network_section class: %s", class(network_section)[1]), "FULL")
+  debug_log(sprintf("DEBUG: stakeholder_section class: %s", class(stakeholder_section)[1]), "FULL")
+  debug_log(sprintf("DEBUG: recommendations_section class: %s", class(recommendations_section)[1]), "FULL")
 
   content <- paste0(
     overview_section,
@@ -1033,7 +1034,7 @@ generate_full_content <- function(data) {
     recommendations_section
   )
 
-  cat("  [Full] Enhanced content generated successfully\n")
-  cat("  [Full] Final content class:", class(content), "\n")
+  debug_log("Enhanced content generated successfully", "FULL")
+  debug_log(sprintf("DEBUG: Final content class: %s", class(content)[1]), "FULL")
   return(content)
 }

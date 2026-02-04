@@ -2,12 +2,10 @@
 # Process and Information Management System - Stakeholder Identification and Engagement
 # Based on MarineSABRES Simple SES DRAFT Guidance
 
-library(shiny)
-library(DT)
-library(openxlsx)
+# Libraries loaded in global.R: shiny, DT, openxlsx
 
 # Module UI ----
-pimsStakeholderUI <- function(id, i18n) {
+pims_stakeholder_ui <- function(id, i18n) {
   # shiny.i18n::usei18n(i18n) removed - only call once in main UI
   ns <- NS(id)
 
@@ -335,7 +333,7 @@ pimsStakeholderUI <- function(id, i18n) {
 }
 
 # Module Server ----
-pimsStakeholderServer <- function(id, global_data, i18n) {
+pims_stakeholder_server <- function(id, global_data, i18n) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

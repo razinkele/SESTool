@@ -1,6 +1,8 @@
 # R and RStudio files
 .Rhistory
+.Rhistory*
 .RData
+.RData*
 .Rproj.user
 .Rproj
 *.Rproj
@@ -25,6 +27,10 @@ _ul*
 temp_*.txt
 temp_*.json
 *.tmp
+
+# OneDrive/cloud sync backup files
+*-laguna-safeBackup-*
+*-Dell-PCn.*
 
 # Log files
 *.log
@@ -79,6 +85,8 @@ docs/development/
 *.bak
 *.backup
 *_backup.*
+*_backup.R
+*_old.R
 
 # Large files
 *.zip
@@ -89,6 +97,16 @@ docs/development/
 passwords.txt
 credentials.json
 api_keys.txt
+
+# ML model files
+models/
+*.pt
+*.pth
+data/ml_*.rds
+data/ml_*.csv
+
+# Test debugging artifacts
+tests/testthat/_problems/
 
 # Testing
 tests/testthat/_snaps/

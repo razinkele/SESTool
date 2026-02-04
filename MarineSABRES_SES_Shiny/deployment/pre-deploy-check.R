@@ -215,11 +215,11 @@ if (all_subdirs_exist) {
 cat("\n[4] Checking R Package Dependencies...\n")
 
 required_packages <- c(
-  "shiny", "shinydashboard", "shinyWidgets", "shinyjs", "shinyBS",
+  "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS",
   "shiny.i18n", "tidyverse", "dplyr", "tidyr", "readr", "purrr",
   "tibble", "stringr", "forcats", "lubridate", "DT", "openxlsx",
   "jsonlite", "digest", "igraph", "visNetwork", "ggraph", "tidygraph",
-  "ggplot2", "plotly", "dygraphs", "xts", "timevis", "rmarkdown", "htmlwidgets"
+  "ggplot2", "plotly", "dygraphs", "xts", "zoo", "timevis", "rmarkdown", "htmlwidgets", "knitr"
 )
 
 missing_packages <- c()

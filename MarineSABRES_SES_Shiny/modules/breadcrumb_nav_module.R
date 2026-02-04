@@ -255,7 +255,7 @@ breadcrumb_server <- function(id, i18n, parent_session = NULL) {
         breadcrumb_state$current_page <- page_id
 
         # Log navigation
-        cat(sprintf("[BREADCRUMB NAV] Navigated to: %s\n", page_id))
+        debug_log(sprintf("Navigated to: %s", page_id), "BREADCRUMB-NAV")
       })
     })
 

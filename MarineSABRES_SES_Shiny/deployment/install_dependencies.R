@@ -18,11 +18,60 @@ cat("===========================================================================
 # Set CRAN mirror
 options(repos = c(CRAN = "https://cran.rstudio.com/"))
 
+# ============================================================================
+# PINNED PACKAGE VERSIONS (for reproducible builds)
+# Last verified: 2026-02-03
+# ============================================================================
+# Core framework
+# shiny >= 1.8.0
+# bs4Dash >= 2.3.0
+# shinyWidgets >= 0.8.0
+# shinyjs >= 2.1.0
+#
+# Data
+# tidyverse >= 2.0.0
+# DT >= 0.31
+# jsonlite >= 1.8.8
+# openxlsx >= 4.2.5
+#
+# Network
+# igraph >= 1.6.0
+# visNetwork >= 2.1.2
+#
+# i18n
+# shiny.i18n >= 0.5.0
+# ============================================================================
+
+# Helper: Install package with version pinning for reproducible builds
+install_versioned <- function(pkg, min_version = NULL) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    if (!is.null(min_version) && requireNamespace("remotes", quietly = TRUE)) {
+      remotes::install_version(pkg, version = paste0(">= ", min_version),
+                                repos = "https://cloud.r-project.org",
+                                upgrade = "never")
+    } else {
+      install.packages(pkg, repos = "https://cloud.r-project.org")
+    }
+  } else if (!is.null(min_version)) {
+    installed_ver <- packageVersion(pkg)
+    if (installed_ver < min_version) {
+      message(sprintf("Upgrading %s from %s to >= %s", pkg, installed_ver, min_version))
+      if (requireNamespace("remotes", quietly = TRUE)) {
+        remotes::install_version(pkg, version = paste0(">= ", min_version),
+                                  repos = "https://cloud.r-project.org",
+                                  upgrade = "never")
+      } else {
+        install.packages(pkg, repos = "https://cloud.r-project.org")
+      }
+    }
+  }
+}
+
 # Define required packages
 required_packages <- c(
   # Core Shiny packages
   "shiny",
-  "shinydashboard",
+  "bs4Dash",
   "shinyWidgets",
   "shinyjs",
   "shinyBS",

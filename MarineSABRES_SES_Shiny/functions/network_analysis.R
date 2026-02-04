@@ -47,32 +47,53 @@ calculate_network_metrics <- function(nodes, edges = NULL) {
     g <- create_igraph_from_data(nodes, edges)
   }
 
-  # Calculate metrics
-  if (vcount(g) == 0) {
-    return(list(
-      nodes = 0,
-      edges = 0,
-      density = 0,
-      diameter = 0,
-      avg_path_length = 0
-    ))
+  # Require a graph with at least one edge for metrics
+  if (vcount(g) == 0 || ecount(g) == 0) {
+    stop("No valid edges found")
   }
 
-  # Calculate graph-level metrics
+  # Check if graph is connected (handle disconnected graphs gracefully)
+  graph_connected <- is_connected(g, mode = "weak")
+
+  # For disconnected graphs, calculate diameter on largest component
+  safe_diameter <- tryCatch({
+    if (graph_connected) {
+      diameter(g, directed = TRUE)
+    } else {
+      # Use largest component for diameter
+      comp <- components(g, mode = "weak")
+      largest_comp <- which.max(comp$csize)
+      subg <- induced_subgraph(g, which(comp$membership == largest_comp))
+      diameter(subg, directed = TRUE)
+    }
+  }, error = function(e) 0)
+
+  safe_avg_path <- tryCatch({
+    d <- mean_distance(g, directed = TRUE)
+    if (is.nan(d) || is.infinite(d)) 0 else d
+  }, error = function(e) 0)
+
+  # Closeness can return Inf/NaN for disconnected graphs
+  safe_closeness <- tryCatch({
+    cl <- closeness(g, mode = "all")
+    cl[is.nan(cl) | is.infinite(cl)] <- 0
+    cl
+  }, error = function(e) rep(0, vcount(g)))
+
   metrics <- list(
     nodes = vcount(g),
     edges = ecount(g),
     density = edge_density(g),
-    diameter = tryCatch(diameter(g, directed = TRUE), error = function(e) 0),
-    avg_path_length = tryCatch(mean_distance(g, directed = TRUE), error = function(e) 0),
-    # Node-level centrality metrics
+    connected = graph_connected,
+    diameter = safe_diameter,
+    avg_path_length = safe_avg_path,
     degree = degree(g, mode = "all"),
     indegree = degree(g, mode = "in"),
     outdegree = degree(g, mode = "out"),
-    betweenness = betweenness(g, directed = TRUE),
-    closeness = closeness(g, mode = "all"),
+    betweenness = tryCatch(betweenness(g, directed = TRUE), error = function(e) rep(0, vcount(g))),
+    closeness = safe_closeness,
     eigenvector = tryCatch(eigen_centrality(g, directed = TRUE)$vector, error = function(e) rep(0, vcount(g))),
-    pagerank = page_rank(g)$vector
+    pagerank = tryCatch(page_rank(g)$vector, error = function(e) rep(0, vcount(g)))
   )
 
   return(metrics)
@@ -112,17 +133,109 @@ create_igraph_from_data <- function(nodes, edges) {
     return(g)
   }
 
-  # Select required columns, include confidence if present
-  required_cols <- c("from", "to", "polarity", "strength")
-  if ("confidence" %in% names(valid_edges)) {
-    required_cols <- c(required_cols, "confidence")
+  # Select available columns - must include 'from' and 'to'
+  if (!all(c("from", "to") %in% names(valid_edges))) {
+    stop("Edges dataframe must contain 'from' and 'to' columns")
   }
+  allowed_extra <- c("polarity", "strength", "confidence", "link_type")
+  cols_to_use <- c("from", "to", intersect(allowed_extra, names(valid_edges)))
 
   graph_from_data_frame(
-    valid_edges[, required_cols, drop = FALSE],
+    valid_edges[, cols_to_use, drop = FALSE],
     directed = TRUE,
     vertices = nodes
   )
+}
+
+#' Build an igraph object directly from an 'isa' structure (list with $nodes and $edges)
+#'
+#' @param isa list with components 'nodes' and 'edges' (data.frames)
+#' @return igraph object or NULL
+build_network_from_isa <- function(isa) {
+  if (is.null(isa)) return(NULL)
+  nodes <- isa$nodes
+  edges <- isa$edges
+  if (is.null(nodes) || is.null(edges)) return(NULL)
+  create_igraph_from_data(nodes, edges)
+}
+
+#' Calculate basic centrality metrics and return as a named list
+#'
+#' @param graph igraph object
+#' @return named list of numeric vectors
+calculate_centrality <- function(graph) {
+  if (is.null(graph) || !inherits(graph, "igraph")) return(list())
+  list(
+    degree = igraph::degree(graph, mode = "all"),
+    betweenness = igraph::betweenness(graph, directed = TRUE),
+    closeness = tryCatch({
+      cl <- igraph::closeness(graph, mode = "all")
+      cl[is.nan(cl) | is.infinite(cl)] <- 0
+      cl
+    }, error = function(e) rep(0, vcount(graph)))
+  )
+}
+
+#' Detect feedback loops (simple cycles) up to a maximum length
+#'
+#' @param graph igraph directed graph
+#' @param max_length integer maximum cycle length
+#' @return data.frame of cycles (path strings)
+detect_feedback_loops <- function(graph, max_length = 5) {
+  if (!inherits(graph, "igraph")) return(list())
+  nodes <- igraph::V(graph)$name
+  result <- data.frame(path = character(0), stringsAsFactors = FALSE)
+  for (v in nodes) {
+    paths <- igraph::all_simple_paths(graph, from = v, to = v, mode = "out", cutoff = max_length)
+    for (p in paths) {
+      if (length(p) > 1) {
+        path_str <- paste(igraph::V(graph)$name[as.numeric(p)], collapse = "->")
+        result <- rbind(result, data.frame(path = path_str, stringsAsFactors = FALSE))
+      }
+    }
+  }
+  result
+}
+
+#' Classify loop type (Reinforcing or Balancing) based on edge sign vector
+#' @param loop_info list with edge_types (vector of '+' or '-')
+#' @return character 'Reinforcing' or 'Balancing'
+classify_loop_type <- function(loop_info) {
+  if (is.null(loop_info$edge_types)) return(NA_character_)
+  neg_count <- sum(loop_info$edge_types == "-")
+  if (neg_count %% 2 == 0) "Reinforcing" else "Balancing"
+}
+
+#' Simplify network by removing low-importance nodes
+#' @param graph igraph object
+#' @param threshold numeric proportion threshold (0-1)
+#' @return simplified igraph object
+simplify_network <- function(graph, threshold = NULL) {
+  if (!inherits(graph, "igraph")) return(graph)
+  if (is.null(threshold)) return(graph)
+  deg <- igraph::degree(graph)
+  keep <- deg >= threshold * max(deg)
+  igraph::induced_subgraph(graph, igraph::V(graph)[keep])
+}
+
+#' Rank node importance using PageRank
+#' @param graph igraph object
+#' @return data.frame with node and importance
+rank_node_importance <- function(graph) {
+  if (!inherits(graph, "igraph")) return(data.frame())
+  pr <- igraph::page_rank(graph)$vector
+  data.frame(node = igraph::V(graph)$name, importance = pr, stringsAsFactors = FALSE)
+}
+
+#' Find simple pathways between two nodes (limited search)
+#' @param graph igraph object
+#' @param from source node id
+#' @param to target node id
+#' @return list of pathways or data.frame
+find_pathways <- function(graph, from, to) {
+  if (!inherits(graph, "igraph")) return(list())
+  paths <- igraph::all_simple_paths(graph, from = from, to = to, mode = "out")
+  lapply(paths, function(p) igraph::V(graph)$name[as.numeric(p)])
 }
 
 #' Calculate MICMAC analysis
@@ -224,17 +337,22 @@ create_numeric_adjacency_matrix <- function(nodes, edges) {
     rownames(adj) <- nodes$id
     colnames(adj) <- nodes$id
 
-    for (i in 1:nrow(edges)) {
-      from_idx <- which(nodes$id == edges$from[i])
-      to_idx <- which(nodes$id == edges$to[i])
+    # Pre-build named lookup for O(1) index access (instead of O(n) which() per edge)
+    node_idx <- setNames(seq_len(nrow(nodes)), nodes$id)
 
-      # Validate indices
-      if (length(from_idx) == 0 || length(to_idx) == 0) {
-        warning(paste("Edge", i, "references non-existent node. Skipping."))
-        next
-      }
+    # Vectorized edge lookup
+    from_indices <- node_idx[edges$from]
+    to_indices <- node_idx[edges$to]
 
-      adj[from_idx, to_idx] <- 1
+    # Find valid edges (both endpoints exist)
+    valid <- !is.na(from_indices) & !is.na(to_indices)
+    if (any(!valid)) {
+      warning(sprintf("Skipped %d edges referencing non-existent nodes.", sum(!valid)))
+    }
+
+    # Fill adjacency matrix using matrix indexing (fully vectorized)
+    if (any(valid)) {
+      adj[cbind(from_indices[valid], to_indices[valid])] <- 1
     }
 
     return(adj)
@@ -454,45 +572,70 @@ find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
 
 #' Find cycles using depth-first search
 #'
+#' Optimized DFS implementation using index-based stack to avoid
+#' O(n) vector append/remove operations. Uses pre-allocated arrays
+#' for O(1) push/pop operations.
+#'
 #' @param graph igraph object
 #' @param max_length Maximum cycle length
 #' @param max_cycles Maximum number of cycles to find (default 1000)
 #' @return List of cycles
 find_cycles_dfs <- function(graph, max_length, max_cycles = 1000) {
 
+  n_vertices <- vcount(graph)
   cycles <- list()
-  visited <- rep(FALSE, vcount(graph))
-  stack <- integer(0)
-  in_stack <- rep(FALSE, vcount(graph))  # Fast O(1) stack lookup
+  visited <- rep(FALSE, n_vertices)
+  in_stack <- rep(FALSE, n_vertices)  # Fast O(1) stack membership lookup
+
+  # Pre-allocated stack with index pointer (avoids O(n) vector operations)
+  stack <- integer(max_length + 1)
+  stack_ptr <- 0L  # Stack pointer (0 = empty)
 
   # Use a hash environment for O(1) signature lookup
   cycle_signatures <- new.env(hash = TRUE, parent = emptyenv())
 
+  # Helper: push to stack (O(1))
+  stack_push <- function(v) {
+    stack_ptr <<- stack_ptr + 1L
+    stack[stack_ptr] <<- v
+  }
+
+  # Helper: pop from stack (O(1))
+  stack_pop <- function() {
+    stack_ptr <<- stack_ptr - 1L
+  }
+
+  # Helper: get current stack contents
+  get_stack <- function() {
+    if (stack_ptr > 0L) stack[1:stack_ptr] else integer(0)
+  }
+
   # DFS visit function
-  dfs_visit <- function(v, depth = 1) {
+  dfs_visit <- function(v, depth = 1L) {
     # Stop if we've found enough cycles
     if (length(cycles) >= max_cycles) return()
 
     if (depth > max_length) return()
 
     visited[v] <<- TRUE
-    stack <<- c(stack, v)
+    stack_push(v)
     in_stack[v] <<- TRUE  # Mark node as in current path
 
     # Get neighbors
-    neighbors <- neighbors(graph, v, mode = "out")
+    neighbor_list <- neighbors(graph, v, mode = "out")
 
-    for (neighbor in neighbors) {
+    for (neighbor in neighbor_list) {
       # Stop if we've found enough cycles
       if (length(cycles) >= max_cycles) break
 
       neighbor_idx <- as.integer(neighbor)
 
-      # Check if we've completed a cycle (O(1) lookup now!)
+      # Check if we've completed a cycle (O(1) lookup)
       if (in_stack[neighbor_idx]) {
-        # Found a cycle
-        cycle_start <- which(stack == neighbor_idx)
-        cycle <- stack[cycle_start:length(stack)]
+        # Found a cycle - extract from stack
+        current_stack <- get_stack()
+        cycle_start <- which(current_stack == neighbor_idx)
+        cycle <- current_stack[cycle_start:length(current_stack)]
 
         # Fast duplicate check using hash environment (O(1) lookup)
         normalized <- normalize_cycle(cycle)
@@ -505,19 +648,19 @@ find_cycles_dfs <- function(graph, max_length, max_cycles = 1000) {
       } else if (!visited[neighbor_idx]) {
         # Continue DFS only if we haven't exceeded depth
         if (depth < max_length) {
-          dfs_visit(neighbor_idx, depth + 1)
+          dfs_visit(neighbor_idx, depth + 1L)
         }
       }
     }
 
-    # Backtrack
-    stack <<- stack[-length(stack)]
+    # Backtrack (O(1) operations)
+    stack_pop()
     in_stack[v] <<- FALSE  # Remove from current path
     visited[v] <<- FALSE
   }
 
   # Start DFS from each node
-  for (v in 1:vcount(graph)) {
+  for (v in 1:n_vertices) {
     # Stop if we've found enough cycles
     if (length(cycles) >= max_cycles) break
 
@@ -649,7 +792,11 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm 
   }
 
   # Create lookup tables for performance (O(1) access instead of O(n) filtering)
-  node_label_lookup <- setNames(nodes$label, nodes$id)
+  # Handle NA labels by using id as fallback
+  safe_labels <- ifelse(is.na(nodes$label) | !nzchar(as.character(nodes$label)),
+                        nodes$id,
+                        nodes$label)
+  node_label_lookup <- setNames(safe_labels, nodes$id)
   edge_lookup <- create_edge_lookup_table(edges)
 
   # Process cycles in batches for progress monitoring on large datasets
@@ -1037,10 +1184,11 @@ calculate_all_centralities <- function(g) {
     error = function(e) rep(0, vcount(g))
   )
 
-  safe_closeness <- tryCatch(
-    closeness(g, mode = "all"),
-    error = function(e) rep(0, vcount(g))
-  )
+  safe_closeness <- tryCatch({
+    cl <- closeness(g, mode = "all")
+    cl[is.nan(cl) | is.infinite(cl)] <- 0
+    cl
+  }, error = function(e) rep(0, vcount(g)))
 
   safe_eigenvector <- tryCatch(
     eigen_centrality(g, directed = TRUE)$vector,
@@ -1122,4 +1270,81 @@ identify_leverage_points <- function(nodes, edges = NULL, top_n = 10) {
   # Sort by composite score and return top N
   leverage_points <- centralities[order(-centralities$Composite_Score), ]
   return(head(leverage_points, min(top_n, nrow(leverage_points))))
+}
+
+# ============================================================================
+# INCREMENTAL NETWORK UPDATE HELPERS
+# ============================================================================
+
+#' Add a node to an existing visNetwork via proxy (no full re-render)
+#'
+#' @param proxy_id The visNetwork output ID
+#' @param session The Shiny session
+#' @param node_data A list or data.frame with node properties (id, label, group, etc.)
+#' @return The visNetworkProxy object (for chaining)
+add_node_incremental <- function(proxy_id, session, node_data) {
+  if (is.null(node_data) || length(node_data) == 0) return(invisible(NULL))
+
+  proxy <- visNetworkProxy(proxy_id, session = session)
+
+  if (is.data.frame(node_data)) {
+    visUpdateNodes(proxy, node_data)
+  } else {
+    # Convert list to single-row data.frame
+    node_df <- as.data.frame(node_data, stringsAsFactors = FALSE)
+    visUpdateNodes(proxy, node_df)
+  }
+
+  invisible(proxy)
+}
+
+#' Remove a node from an existing visNetwork via proxy
+#'
+#' @param proxy_id The visNetwork output ID
+#' @param session The Shiny session
+#' @param node_id The ID of the node to remove
+#' @return The visNetworkProxy object (for chaining)
+remove_node_incremental <- function(proxy_id, session, node_id) {
+  if (is.null(node_id)) return(invisible(NULL))
+
+  proxy <- visNetworkProxy(proxy_id, session = session)
+  visRemoveNodes(proxy, id = node_id)
+
+  invisible(proxy)
+}
+
+#' Add an edge to an existing visNetwork via proxy
+#'
+#' @param proxy_id The visNetwork output ID
+#' @param session The Shiny session
+#' @param edge_data A list or data.frame with edge properties (from, to, etc.)
+#' @return The visNetworkProxy object (for chaining)
+add_edge_incremental <- function(proxy_id, session, edge_data) {
+  if (is.null(edge_data) || length(edge_data) == 0) return(invisible(NULL))
+
+  proxy <- visNetworkProxy(proxy_id, session = session)
+
+  if (is.data.frame(edge_data)) {
+    visUpdateEdges(proxy, edge_data)
+  } else {
+    edge_df <- as.data.frame(edge_data, stringsAsFactors = FALSE)
+    visUpdateEdges(proxy, edge_df)
+  }
+
+  invisible(proxy)
+}
+
+#' Remove an edge from an existing visNetwork via proxy
+#'
+#' @param proxy_id The visNetwork output ID
+#' @param session The Shiny session
+#' @param edge_id The ID of the edge to remove
+#' @return The visNetworkProxy object (for chaining)
+remove_edge_incremental <- function(proxy_id, session, edge_id) {
+  if (is.null(edge_id)) return(invisible(NULL))
+
+  proxy <- visNetworkProxy(proxy_id, session = session)
+  visRemoveEdges(proxy, id = edge_id)
+
+  invisible(proxy)
 }

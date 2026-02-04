@@ -570,5 +570,5 @@ test_that("Error handling preserves partial results in analysis pipeline", {
   expect_length(cycles, 0)
 
   # Even if one analysis fails, others should complete
-  expect_true(TRUE)  # Made it through without crashing
+  succeed("Analysis pipeline completed without crashing")
 })

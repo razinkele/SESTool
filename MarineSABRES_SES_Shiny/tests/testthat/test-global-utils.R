@@ -142,32 +142,39 @@ test_that("validate_project_structure validates project data", {
     )
   )
 
-  expect_true(validate_project_structure(valid_project))
+  # Valid project should return empty error vector
+  expect_length(validate_project_structure(valid_project), 0)
 
   # Also test with 'created' field (backward compatibility)
   valid_project_alt <- valid_project
   valid_project_alt$created <- valid_project_alt$created_at
   valid_project_alt$created_at <- NULL
-  expect_true(validate_project_structure(valid_project_alt))
+  expect_length(validate_project_structure(valid_project_alt), 0)
 
-  # Invalid structures
-  expect_false(validate_project_structure(NULL))
-  expect_false(validate_project_structure(list()))
-  expect_false(validate_project_structure("not a list"))
+  # Invalid structures should return errors
+  expect_true(length(validate_project_structure(NULL)) > 0)
+  expect_true(length(validate_project_structure(list())) > 0)
+  expect_true(length(validate_project_structure("not a list")) > 0)
 
   # Missing required fields
   invalid_project1 <- valid_project
   invalid_project1$project_id <- NULL
-  expect_false(validate_project_structure(invalid_project1))
+  errors1 <- validate_project_structure(invalid_project1)
+  expect_true(length(errors1) > 0)
+  expect_true(any(grepl("project_id", errors1)))
 
   invalid_project2 <- valid_project
   invalid_project2$data <- NULL
-  expect_false(validate_project_structure(invalid_project2))
+  errors2 <- validate_project_structure(invalid_project2)
+  expect_true(length(errors2) > 0)
+  expect_true(any(grepl("data", errors2)))
 
   # Wrong data types
   invalid_project3 <- valid_project
   invalid_project3$project_id <- c("id1", "id2")
-  expect_false(validate_project_structure(invalid_project3))
+  errors3 <- validate_project_structure(invalid_project3)
+  expect_true(length(errors3) > 0)
+  expect_true(any(grepl("project_id", errors3)))
 })
 
 # Test safe_get_nested function

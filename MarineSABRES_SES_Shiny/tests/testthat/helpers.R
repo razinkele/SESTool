@@ -193,7 +193,9 @@ expect_valid_project_data <- function(project) {
   expect_type(project, "list")
   expect_true("project_id" %in% names(project))
   expect_true("data" %in% names(project))
-  expect_true(validate_project_structure(project))
+  # validate_project_structure now returns error vector (empty if valid)
+  validation_errors <- validate_project_structure(project)
+  expect_length(validation_errors, 0)
 }
 
 #' Create a temporary test file

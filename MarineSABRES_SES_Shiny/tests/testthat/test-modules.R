@@ -14,19 +14,15 @@ test_module_ui <- function(module_ui_function, module_id = "test") {
 
 # Test ISA Data Entry Module
 test_that("ISA data entry module UI renders", {
-  skip_if_not(exists("isaDataEntryUI"))
-
   ui <- isaDataEntryUI("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
 })
 
 test_that("ISA data entry module server initializes", {
-  skip_if_not(exists("isaDataEntryServer"))
-
   testServer(isaDataEntryServer, args = list(project_data = reactiveVal(init_session_data())), {
     # Module should initialize without errors
-    expect_true(TRUE)
+    succeed("ISA data entry module server initialized without error")
 
     # Test that reactive values exist
     # This depends on the actual module implementation
@@ -35,51 +31,39 @@ test_that("ISA data entry module server initializes", {
 
 # Test PIMS Module
 test_that("PIMS project module UI renders", {
-  skip_if_not(exists("pims_project_ui"))
-
   ui <- pims_project_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
 })
 
 test_that("PIMS project module server initializes", {
-  skip_if_not(exists("pims_project_server"))
-
   testServer(pims_project_server, args = list(project_data = reactiveVal(init_session_data())), {
-    expect_true(TRUE)
+    succeed("PIMS project module server initialized without error")
   })
 })
 
 # Test CLD Visualization Module
 test_that("CLD visualization module UI renders", {
-  skip_if_not(exists("cld_viz_ui"))
-
   ui <- cld_viz_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
 })
 
 test_that("CLD visualization module handles empty data", {
-  skip_if_not(exists("cld_viz_server"))
-
   testServer(cld_viz_server, args = list(project_data = reactiveVal(init_session_data())), {
     # Should handle empty project data without errors
-    expect_true(TRUE)
+    succeed("CLD visualization module handled empty data without error")
   })
 })
 
 # Test Analysis Tools Module
 test_that("Analysis metrics module UI renders", {
-  skip_if_not(exists("analysis_metrics_ui"))
-
   ui <- analysis_metrics_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
 })
 
 test_that("Analysis loops module UI renders", {
-  skip_if_not(exists("analysis_loops_ui"))
-
   ui <- analysis_loops_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
@@ -87,16 +71,12 @@ test_that("Analysis loops module UI renders", {
 
 # Test Entry Point Module
 test_that("Entry point module UI renders", {
-  skip_if_not(exists("entry_point_ui"))
-
   ui <- entry_point_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
 })
 
 test_that("Entry point module server initializes", {
-  skip_if_not(exists("entry_point_server"))
-
   # Create a mock parent session
   mock_session <- MockShinySession$new()
 
@@ -105,31 +85,25 @@ test_that("Entry point module server initializes", {
       project_data = reactiveVal(init_session_data()),
       parent_session = mock_session
     ), {
-    expect_true(TRUE)
+    succeed("Entry point module server initialized without error")
   })
 })
 
 # Test AI ISA Assistant Module
 test_that("AI ISA assistant module UI renders", {
-  skip_if_not(exists("ai_isa_assistant_ui"))
-
   ui <- ai_isa_assistant_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
 })
 
 test_that("AI ISA assistant module server initializes", {
-  skip_if_not(exists("ai_isa_assistant_server"))
-
   testServer(ai_isa_assistant_server, args = list(project_data = reactiveVal(init_session_data())), {
-    expect_true(TRUE)
+    succeed("AI ISA assistant module server initialized without error")
   })
 })
 
 # Test Response Module
 test_that("Response measures module UI renders", {
-  skip_if_not(exists("response_measures_ui"))
-
   ui <- response_measures_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
@@ -137,8 +111,6 @@ test_that("Response measures module UI renders", {
 
 # Test Scenario Builder Module
 test_that("Scenario builder module UI renders", {
-  skip_if_not(exists("scenario_builder_ui"))
-
   ui <- scenario_builder_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
@@ -149,16 +121,12 @@ test_that("Scenario builder module UI renders", {
 # ============================================================================
 
 test_that("Create SES module UI renders", {
-  skip_if_not(exists("create_ses_ui"))
-
   ui <- create_ses_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
 })
 
 test_that("Create SES module UI contains all three method cards", {
-  skip_if_not(exists("create_ses_ui"))
-
   ui <- create_ses_ui("test")
   ui_html <- as.character(ui)
 
@@ -173,7 +141,6 @@ test_that("Create SES module UI contains all three method cards", {
 })
 
 test_that("Create SES module UI uses i18n translations", {
-  skip_if_not(exists("create_ses_ui"))
   skip_if_not(exists("i18n"))
 
   ui <- create_ses_ui("test")
@@ -185,8 +152,6 @@ test_that("Create SES module UI uses i18n translations", {
 })
 
 test_that("Create SES module UI has proceed button", {
-  skip_if_not(exists("create_ses_ui"))
-
   ui <- create_ses_ui("test")
   ui_html <- as.character(ui)
 
@@ -195,8 +160,6 @@ test_that("Create SES module UI has proceed button", {
 })
 
 test_that("Create SES module UI has comparison table", {
-  skip_if_not(exists("create_ses_ui"))
-
   ui <- create_ses_ui("test")
   ui_html <- as.character(ui)
 
@@ -205,20 +168,16 @@ test_that("Create SES module UI has comparison table", {
 })
 
 test_that("Create SES module server initializes", {
-  skip_if_not(exists("create_ses_server"))
-
   testServer(create_ses_server, args = list(
     project_data_reactive = reactiveVal(init_session_data()),
     parent_session = NULL
   ), {
     # Module should initialize without errors
-    expect_true(TRUE)
+    succeed("Create SES module server initialized without error")
   })
 })
 
 test_that("Create SES module server handles method selection", {
-  skip_if_not(exists("create_ses_server"))
-
   testServer(create_ses_server, args = list(
     project_data_reactive = reactiveVal(init_session_data()),
     parent_session = NULL
@@ -228,13 +187,11 @@ test_that("Create SES module server handles method selection", {
 
     # The reactive value should be updated
     # Note: actual implementation depends on module structure
-    expect_true(TRUE)
+    succeed("Create SES module accepted method selection input without error")
   })
 })
 
 test_that("Create SES module server generates comparison table", {
-  skip_if_not(exists("create_ses_server"))
-
   testServer(create_ses_server, args = list(
     project_data_reactive = reactiveVal(init_session_data()),
     parent_session = NULL
@@ -252,30 +209,32 @@ test_that("Create SES module server generates comparison table", {
 # ============================================================================
 
 test_that("Template SES module UI renders", {
-  skip_if_not(exists("template_ses_ui"))
-
   ui <- template_ses_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
 })
 
 test_that("Template SES module has template library", {
-  skip_if_not(exists("ses_templates"))
+  # Load templates using helper function (works in any environment)
+  ses_templates <- get_test_templates()
+  skip_if_not(length(ses_templates) > 0, "No templates loaded")
 
   # Check that ses_templates exists and contains expected templates
   expect_true(is.list(ses_templates))
   expect_true(length(ses_templates) > 0)
 
-  # Check for specific templates
+  # Check for specific templates (using actual template names from JSON files)
   expect_true("fisheries" %in% names(ses_templates))
   expect_true("tourism" %in% names(ses_templates))
   expect_true("aquaculture" %in% names(ses_templates))
   expect_true("pollution" %in% names(ses_templates))
-  expect_true("climate_change" %in% names(ses_templates))
+  expect_true("climatechange" %in% names(ses_templates))  # Note: no underscore
 })
 
 test_that("Template SES templates have required structure", {
-  skip_if_not(exists("ses_templates"))
+  # Load templates using helper function (works in any environment)
+  ses_templates <- get_test_templates()
+  skip_if_not(length(ses_templates) > 0, "No templates loaded")
 
   # Each template should have required fields
   for (template_name in names(ses_templates)) {
@@ -303,13 +262,15 @@ test_that("Template SES templates have required structure", {
 })
 
 test_that("Template SES fisheries template has correct structure", {
-  skip_if_not(exists("ses_templates"))
-  skip_if_not("fisheries" %in% names(ses_templates))
+  # Load templates using helper function (works in any environment)
+  ses_templates <- get_test_templates()
+  skip_if_not(length(ses_templates) > 0, "No templates loaded")
+  skip_if_not("fisheries" %in% names(ses_templates), "Fisheries template not found")
 
   fisheries <- ses_templates$fisheries
 
   # Check basic structure
-  expect_equal(fisheries$name, "Fisheries Management")
+  expect_equal(fisheries$name, "Fisheries")
   expect_true(is.character(fisheries$description))
   expect_true(is.data.frame(fisheries$drivers))
   expect_true(is.data.frame(fisheries$activities))
@@ -320,8 +281,6 @@ test_that("Template SES fisheries template has correct structure", {
 })
 
 test_that("Template SES module server initializes", {
-  skip_if_not(exists("template_ses_server"))
-
   mock_session <- MockShinySession$new()
 
   testServer(template_ses_server, args = list(
@@ -329,13 +288,11 @@ test_that("Template SES module server initializes", {
     parent_session = mock_session
   ), {
     # Module should initialize without errors
-    expect_true(TRUE)
+    succeed("Template SES module server initialized without error")
   })
 })
 
 test_that("Template SES module UI contains template selector", {
-  skip_if_not(exists("template_ses_ui"))
-
   ui <- template_ses_ui("test")
   ui_html <- as.character(ui)
 

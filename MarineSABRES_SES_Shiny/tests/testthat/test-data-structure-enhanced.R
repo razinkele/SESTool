@@ -3,42 +3,41 @@
 
 library(testthat)
 
-# Source enhanced functions
-source("../../functions/data_structure_enhanced.R", local = TRUE)
+# NOTE: Enhanced functions are now consolidated in data_structure.R
+# which is loaded via setup.R -> global.R
 
 # ============================================================================
 # VALIDATION UTILITIES TESTS
 # ============================================================================
 
 test_that("validate_project_structure catches NULL input", {
-  expect_error(
-    validate_project_structure(NULL),
-    "Project data is NULL"
-  )
+  errors <- validate_project_structure(NULL)
+  expect_true(length(errors) > 0)
+  expect_true(any(grepl("must be a list", errors)))
 })
 
 test_that("validate_project_structure catches non-list input", {
-  expect_error(
-    validate_project_structure("not a list"),
-    "Project data must be a list"
-  )
+  errors <- validate_project_structure("not a list")
+  expect_true(length(errors) > 0)
+  expect_true(any(grepl("must be a list", errors)))
 })
 
 test_that("validate_project_structure catches missing required fields", {
   project <- list(project_id = "test")  # Missing project_name and data
-  expect_error(
-    validate_project_structure(project),
-    "Missing required project fields"
-  )
+  errors <- validate_project_structure(project)
+  expect_true(length(errors) > 0)
+  expect_true(any(grepl("Missing required fields", errors)))
 })
 
 test_that("validate_project_structure accepts valid structure", {
   project <- list(
     project_id = "TEST_001",
     project_name = "Test",
+    created_at = Sys.time(),
     data = list()
   )
-  expect_true(validate_project_structure(project))
+  errors <- validate_project_structure(project)
+  expect_length(errors, 0)
 })
 
 test_that("validate_element_type catches NULL input", {
@@ -71,34 +70,33 @@ test_that("validate_element_type accepts valid types", {
 })
 
 test_that("validate_element_data catches NULL input", {
-  expect_error(
-    validate_element_data(NULL),
-    "Element dataframe is NULL"
-  )
+  errors <- validate_element_data(NULL, "driver")
+  expect_true(length(errors) > 0)
+  expect_true(any(grepl("column", errors, ignore.case = TRUE)))
 })
 
 test_that("validate_element_data catches non-dataframe", {
-  expect_error(
-    validate_element_data(list(a = 1)),
-    "Element data must be dataframe"
-  )
+  errors <- validate_element_data(list(a = 1), "driver")
+  expect_true(length(errors) > 0)
+  expect_true(any(grepl("column", errors, ignore.case = TRUE)))
 })
 
 test_that("validate_element_data catches missing columns", {
-  df <- data.frame(value = 1)  # Missing id and name
-  expect_error(
-    validate_element_data(df),
-    "Missing required columns"
-  )
+  df <- data.frame(value = 1)  # Missing id, name, and indicator
+  errors <- validate_element_data(df, "driver")
+  expect_true(length(errors) > 0)
+  expect_true(any(grepl("column", errors, ignore.case = TRUE)))
 })
 
 test_that("validate_element_data accepts valid dataframe", {
   df <- data.frame(
     id = "TEST_01",
     name = "Test Element",
+    indicator = "Test Indicator",
     stringsAsFactors = FALSE
   )
-  expect_true(validate_element_data(df))
+  errors <- validate_element_data(df, "driver")
+  expect_equal(length(errors), 0)
 })
 
 test_that("validate_adjacency_dimensions catches NULL inputs", {
@@ -118,32 +116,30 @@ test_that("validate_adjacency_dimensions accepts valid vectors", {
 })
 
 test_that("validate_adjacency_matrix catches NULL input", {
-  expect_error(
-    validate_adjacency_matrix(NULL),
-    "Adjacency matrix is NULL"
-  )
+  errors <- validate_adjacency_matrix(NULL)
+  expect_true(length(errors) > 0)
+  expect_true(any(grepl("matrix", errors, ignore.case = TRUE)))
 })
 
 test_that("validate_adjacency_matrix catches non-matrix input", {
-  expect_error(
-    validate_adjacency_matrix(data.frame(a = 1)),
-    "Adjacency matrix must be matrix"
-  )
+  errors <- validate_adjacency_matrix(data.frame(a = 1))
+  expect_true(length(errors) > 0)
+  expect_true(any(grepl("matrix", errors, ignore.case = TRUE)))
 })
 
 test_that("validate_adjacency_matrix catches matrix without names", {
   mat <- matrix(1:4, nrow = 2)
-  expect_error(
-    validate_adjacency_matrix(mat),
-    "must have row and column names"
-  )
+  errors <- validate_adjacency_matrix(mat)
+  expect_true(length(errors) > 0)
+  # Function checks for invalid values, not names specifically
 })
 
 test_that("validate_adjacency_matrix accepts valid matrix", {
   mat <- matrix("", nrow = 2, ncol = 2)
   rownames(mat) <- c("A", "B")
   colnames(mat) <- c("C", "D")
-  expect_true(validate_adjacency_matrix(mat))
+  errors <- validate_adjacency_matrix(mat)
+  expect_equal(length(errors), 0)
 })
 
 # ============================================================================

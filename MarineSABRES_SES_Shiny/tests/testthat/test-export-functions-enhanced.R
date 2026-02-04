@@ -3,9 +3,9 @@
 
 library(testthat)
 
-# Source enhanced functions
+# Source enhanced export functions
 source("../../functions/export_functions_enhanced.R", local = TRUE)
-source("../../functions/data_structure_enhanced.R", local = TRUE)  # For creating test data
+# NOTE: Data structure functions now consolidated in data_structure.R (loaded via setup.R -> global.R)
 
 # Create temp directory for test outputs
 test_temp_dir <- tempdir()
@@ -612,5 +612,5 @@ test_that("Cleanup test files", {
     }
   }
 
-  expect_true(TRUE)  # Always pass
+  succeed("Test file cleanup complete")
 })

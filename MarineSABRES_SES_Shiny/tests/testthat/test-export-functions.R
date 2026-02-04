@@ -11,8 +11,6 @@ if (file.exists("../../functions/export_functions.R")) {
 }
 
 test_that("export to JSON works correctly", {
-  skip_if_not(exists("export_to_json"))
-
   # Create test data
   test_data <- list(
     drivers = data.frame(ID = c("D1", "D2"), Name = c("Driver 1", "Driver 2")),
@@ -33,8 +31,6 @@ test_that("export to JSON works correctly", {
 })
 
 test_that("export to CSV works correctly", {
-  skip_if_not(exists("export_to_csv"))
-
   test_df <- data.frame(
     ID = c("1", "2", "3"),
     Name = c("Item 1", "Item 2", "Item 3"),
@@ -56,8 +52,6 @@ test_that("export to CSV works correctly", {
 })
 
 test_that("export to Excel works correctly", {
-  skip_if_not(exists("export_to_excel"))
-
   test_data <- list(
     Sheet1 = data.frame(ID = c("1", "2"), Name = c("A", "B")),
     Sheet2 = data.frame(ID = c("3", "4"), Name = c("C", "D"))
@@ -79,8 +73,6 @@ test_that("export to Excel works correctly", {
 })
 
 test_that("format_report_data formats data correctly", {
-  skip_if_not(exists("format_report_data"))
-
   project_data <- create_mock_project_data(include_isa = TRUE)
 
   formatted <- format_report_data(project_data)
@@ -90,8 +82,6 @@ test_that("format_report_data formats data correctly", {
 })
 
 test_that("generate_summary_statistics calculates stats correctly", {
-  skip_if_not(exists("generate_summary_statistics"))
-
   project_data <- create_mock_project_data(include_isa = TRUE, include_cld = TRUE)
 
   stats <- generate_summary_statistics(project_data)
@@ -105,8 +95,6 @@ test_that("generate_summary_statistics calculates stats correctly", {
 })
 
 test_that("export network visualization works", {
-  skip_if_not(exists("export_network_viz"))
-
   # Create test network data
   cld_data <- create_mock_cld_data()
 
@@ -120,8 +108,6 @@ test_that("export network visualization works", {
 })
 
 test_that("create_data_tables creates formatted tables", {
-  skip_if_not(exists("create_data_tables"))
-
   test_df <- data.frame(
     ID = 1:5,
     Name = paste("Item", 1:5),
@@ -134,8 +120,6 @@ test_that("create_data_tables creates formatted tables", {
 })
 
 test_that("validate_export_data validates data before export", {
-  skip_if_not(exists("validate_export_data"))
-
   # Valid data
   valid_data <- list(
     nodes = data.frame(id = c("N1", "N2"), label = c("Node 1", "Node 2")),

@@ -12,172 +12,23 @@ source("modules/ai_isa/ui_components.R", local = TRUE)
 source("modules/ai_isa/question_flow.R", local = TRUE)
 source("modules/ai_isa/answer_processor.R", local = TRUE)
 source("modules/ai_isa/data_persistence.R", local = TRUE)
+source("modules/ai_isa/ui_renderers.R", local = TRUE)
+source("modules/ai_isa/template_handlers.R", local = TRUE)
+source("modules/ai_isa/action_handlers.R", local = TRUE)
 
 # ============================================================================
 # UI FUNCTION
 # ============================================================================
 
 ai_isa_assistant_ui <- function(id, i18n) {
-  cat(sprintf("[AI ISA UI] UI function called with id: %s at %s\n", id, Sys.time()))
   ns <- NS(id)
 
   fluidPage(
     useShinyjs(),
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
 
-    # Custom CSS
+    # External CSS (extracted from inline styles)
     tags$head(
-      tags$style(HTML("
-        .ai-chat-container {
-          background: #f8f9fa;
-          border-radius: 10px;
-          padding: 20px;
-          margin: 20px 0;
-          max-height: 600px;
-          overflow-y: auto;
-        }
-        .ai-message {
-          background: white;
-          border-left: 4px solid #667eea;
-          padding: 15px;
-          margin: 10px 0;
-          border-radius: 5px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .user-message {
-          background: #e3f2fd;
-          border-left: 4px solid #2196f3;
-          padding: 15px;
-          margin: 10px 0;
-          border-radius: 5px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          margin-left: 40px;
-        }
-        .step-indicator {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: white;
-          padding: 15px;
-          border-radius: 10px;
-          margin-bottom: 20px;
-          text-align: center;
-          font-weight: 600;
-        }
-        .progress-bar-custom {
-          height: 30px;
-          background: #e0e0e0;
-          border-radius: 15px;
-          overflow: hidden;
-          margin: 10px 0;
-        }
-        .progress-fill {
-          height: 100%;
-          background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-          transition: width 0.3s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-weight: 600;
-        }
-        .element-preview {
-          background: white;
-          border: 2px solid #ddd;
-          border-radius: 8px;
-          padding: 10px;
-          margin: 5px;
-          display: inline-block;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .quick-option {
-          background: white;
-          border: 2px solid #667eea;
-          border-radius: 8px;
-          padding: 10px 15px;
-          margin: 5px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          display: inline-block;
-        }
-        .quick-option:hover {
-          background: #667eea;
-          color: white;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        .quick-option.selected {
-          background: #667eea;
-          color: white;
-          border-color: #5568d3;
-          box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-        }
-        .quick-option.selected::after {
-          content: ' ✓';
-          font-weight: bold;
-        }
-        .ai-breadcrumb {
-          background: #f8f9fa;
-          padding: 10px 15px;
-          border-radius: 8px;
-          margin-bottom: 15px;
-          font-size: 0.9em;
-        }
-        .ai-breadcrumb a {
-          color: #667eea;
-          text-decoration: none;
-          cursor: pointer;
-          transition: color 0.2s ease;
-        }
-        .ai-breadcrumb a:hover {
-          color: #5568d3;
-          text-decoration: underline;
-        }
-        .ai-breadcrumb .separator {
-          margin: 0 8px;
-          color: #999;
-        }
-        .ai-breadcrumb .current {
-          color: #333;
-          font-weight: 600;
-        }
-        .dapsiwrm-diagram {
-          background: white;
-          border: 2px solid #e0e0e0;
-          border-radius: 10px;
-          padding: 15px;
-          margin: 10px 0;
-        }
-        .dapsiwrm-box {
-          padding: 8px;
-          margin: 5px 0;
-          border-radius: 5px;
-          font-size: 11px;
-          text-align: center;
-          border: 2px solid;
-          font-weight: 600;
-        }
-        .dapsiwrm-arrow {
-          text-align: center;
-          color: #999;
-          font-size: 16px;
-          margin: 2px 0;
-        }
-        .save-status {
-          background: #d4edda;
-          border: 1px solid #c3e6cb;
-          color: #155724;
-          padding: 8px 12px;
-          border-radius: 5px;
-          font-size: 0.85em;
-          text-align: center;
-          margin: 5px 0;
-        }
-        .save-status.warning {
-          background: #fff3cd;
-          border-color: #ffeaa7;
-          color: #856404;
-        }
-      ")),
+      tags$link(rel = "stylesheet", type = "text/css", href = "ai-isa-assistant.css"),
       # JavaScript for local storage
       tags$script(HTML("
         // Save data to localStorage
@@ -265,9 +116,7 @@ ai_isa_assistant_ui <- function(id, i18n) {
 # ============================================================================
 
 ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus = NULL, autosave_enabled_reactive = NULL, user_level_reactive = NULL, parent_session = NULL) {
-  cat(sprintf("[AI ISA SERVER] Server function called with id: %s at %s\n", id, Sys.time()))
   moduleServer(id, function(input, output, session) {
-    cat(sprintf("[AI ISA SERVER] moduleServer executed for id: %s at %s\n", id, Sys.time()))
 
     # Reactive values for conversation state
     rv <- reactiveValues(
@@ -314,19 +163,19 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # Watch for changes in project_data_reactive
       recovered_data <- project_data_reactive()
 
-      cat("[AI ISA] Observer triggered\n")
+      debug_log("[AI ISA] Observer triggered\n")
 
       # Only proceed if we don't already have elements and there's data to load
       if (length(rv$elements$drivers) == 0 &&
           length(rv$elements$activities) == 0) {
 
-        cat("[AI ISA] Elements are empty, checking for data\n")
+        debug_log("[AI ISA] Elements are empty, checking for data\n")
 
         isolate({
           tryCatch({
 
         if (!is.null(recovered_data) && !is.null(recovered_data$data$isa_data)) {
-          cat("[AI ISA] Found data in project_data_reactive\n")
+          debug_log("[AI ISA] Found data in project_data_reactive\n")
           isa_data <- recovered_data$data$isa_data
 
           # Check if there's actually data to recover
@@ -341,7 +190,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           )
 
           # Debug: print each element count
-          cat(sprintf("[AI ISA] Element counts - drivers: %d, activities: %d, pressures: %d, states: %d, impacts: %d, welfare: %d, responses: %d\n",
+          debug_log(sprintf("[AI ISA] Element counts - drivers: %d, activities: %d, pressures: %d, states: %d, impacts: %d, welfare: %d, responses: %d\n",
             if(!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0,
             if(!is.null(isa_data$activities)) nrow(isa_data$activities) else 0,
             if(!is.null(isa_data$pressures)) nrow(isa_data$pressures) else 0,
@@ -351,10 +200,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             if(!is.null(isa_data$responses)) nrow(isa_data$responses) else 0
           ))
 
-          cat(sprintf("[AI ISA] has_data check result: %s\n", has_data))
+          debug_log(sprintf("[AI ISA] has_data check result: %s\n", has_data))
 
           if (has_data) {
-            cat("[AI ISA] Loading recovered data from project_data_reactive\n")
+            debug_log("[AI ISA] Loading recovered data from project_data_reactive\n")
 
             # Convert dataframes back to list format for AI ISA Assistant
             # Drivers
@@ -445,19 +294,19 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             if (!is.null(isa_data$connections)) {
               rv$suggested_connections <- isa_data$connections$suggested %||% list()
               rv$approved_connections <- isa_data$connections$approved %||% list()
-              cat(sprintf("[AI ISA] Recovered %d connections (%d approved)\n",
+              debug_log(sprintf("[AI ISA] Recovered %d connections (%d approved)\n",
                           length(rv$suggested_connections),
                           length(rv$approved_connections)))
             } else if (!is.null(isa_data$adjacency_matrices)) {
               # Convert adjacency matrices to connection list format
-              cat("[AI ISA] Converting adjacency matrices to connection list...\n")
+              debug_log("[AI ISA] Converting adjacency matrices to connection list...\n")
               rv$suggested_connections <- convert_matrices_to_connections(
                 isa_data$adjacency_matrices,
                 rv$elements
               )
               # Mark all as approved since they came from a saved/template source
               rv$approved_connections <- seq_along(rv$suggested_connections)
-              cat(sprintf("[AI ISA] Converted %d connections from adjacency matrices (all approved)\n",
+              debug_log(sprintf("[AI ISA] Converted %d connections from adjacency matrices (all approved)\n",
                           length(rv$suggested_connections)))
             }
 
@@ -474,11 +323,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               length(rv$elements$responses)
             )
 
-            cat(sprintf("[AI ISA] Recovered %d elements into AI ISA Assistant UI\n", total_recovered))
+            debug_log(sprintf("[AI ISA] Recovered %d elements into AI ISA Assistant UI\n", total_recovered))
           }
         }
           }, error = function(e) {
-            cat(sprintf("[AI ISA] Recovery initialization error: %s\n", e$message))
+            debug_log(sprintf("[AI ISA] Recovery initialization error: %s\n", e$message))
           })
         })
       }
@@ -856,20 +705,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       }
     }, once = TRUE)
 
-    # Render step title
-    output$step_title <- renderUI({
-      if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
-        step_info <- QUESTION_FLOW[[rv$current_step + 1]]
-        HTML(paste0("<h4>Step ", rv$current_step + 1, " of ", length(QUESTION_FLOW), ": ", step_info$title, "</h4>"))
-      } else {
-        HTML("<h4>Complete! Review your model</h4>")
-      }
-    })
+    # Step title rendering handled by setup_ui_renderers()
 
     # Note: progress_bar is rendered later (see line 1170) with better calculation using rv$total_steps
 
     # Helper function to highlight keywords in question text
     highlight_keywords <- function(text) {
+      # Escape user-derived content first to prevent XSS
+      text <- htmltools::htmlEscape(text)
+
       # Keywords to highlight (DAPSI(W)R(M) components)
       keywords <- c("DRIVERS", "ACTIVITIES", "PRESSURES", "STATE", "IMPACTS",
                    "WELFARE", "RESPONSES")
@@ -919,12 +763,12 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       input_area_exec_count <<- input_area_exec_count + 1
 
-      cat(sprintf("\n++++++++++++++++++++++++++++++++++++++++\n"))
-      cat(sprintf("[AI ISA INPUT_AREA] EXECUTION #%d at %s\n", input_area_exec_count, Sys.time()))
-      cat(sprintf("[AI ISA INPUT_AREA] Current step: %d\n", rv$current_step))
-      cat(sprintf("[AI ISA INPUT_AREA] show_text_input: %s\n", rv$show_text_input))
-      cat(sprintf("[AI ISA INPUT_AREA] Render counter: %d\n", counter_val))
-      cat(sprintf("++++++++++++++++++++++++++++++++++++++++\n\n"))
+      debug_log(sprintf("\n++++++++++++++++++++++++++++++++++++++++\n"))
+      debug_log(sprintf("[AI ISA INPUT_AREA] EXECUTION #%d at %s\n", input_area_exec_count, Sys.time()))
+      debug_log(sprintf("[AI ISA INPUT_AREA] Current step: %d\n", rv$current_step))
+      debug_log(sprintf("[AI ISA INPUT_AREA] show_text_input: %s\n", rv$show_text_input))
+      debug_log(sprintf("[AI ISA INPUT_AREA] Render counter: %d\n", counter_val))
+      debug_log(sprintf("++++++++++++++++++++++++++++++++++++++++\n\n"))
 
       if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
         step_info <- QUESTION_FLOW[[rv$current_step + 1]]
@@ -995,14 +839,14 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Add to approved list
         if (!(index %in% rv$approved_connections)) {
           rv$approved_connections <- c(rv$approved_connections, index)
-          cat(sprintf("[AI ISA CONN REVIEW] Connection #%d approved (total: %d)\n",
+          debug_log(sprintf("[AI ISA CONN REVIEW] Connection #%d approved (total: %d)\n",
                      index, length(rv$approved_connections)))
         }
       },
       on_reject = function(index, conn) {
         # Remove from approved list
         rv$approved_connections <- setdiff(rv$approved_connections, index)
-        cat(sprintf("[AI ISA CONN REVIEW] Connection #%d rejected (total approved: %d)\n",
+        debug_log(sprintf("[AI ISA CONN REVIEW] Connection #%d rejected (total approved: %d)\n",
                    index, length(rv$approved_connections)))
       },
       on_amend = function(index, polarity, strength, confidence) {
@@ -1011,7 +855,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           rv$suggested_connections[[index]]$polarity <- polarity
           rv$suggested_connections[[index]]$strength <- strength
           rv$suggested_connections[[index]]$confidence <- confidence
-          cat(sprintf("[AI ISA CONN REVIEW] Connection #%d amended: %s, %s, %d\n",
+          debug_log(sprintf("[AI ISA CONN REVIEW] Connection #%d amended: %s, %s, %d\n",
                      index, polarity, strength, confidence))
         }
       }
@@ -1020,7 +864,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # Approve all connections
     observeEvent(input$approve_all_connections, {
       rv$approved_connections <- seq_along(rv$suggested_connections)
-      cat(sprintf("[AI ISA CONNECTIONS] APPROVE ALL clicked - approved %d connections\n",
+      debug_log(sprintf("[AI ISA CONNECTIONS] APPROVE ALL clicked - approved %d connections\n",
                  length(rv$approved_connections)))
       showNotification(i18n$t("modules.isa.ai_assistant.all_connections_approved"), type = "message")
     })
@@ -1028,9 +872,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # Finish connection review
     observeEvent(input$finish_connections, {
       approved_count <- length(rv$approved_connections)
-      cat(sprintf("[AI ISA CONNECTIONS] FINISH clicked - %d approved, %d total suggested\n",
+      debug_log(sprintf("[AI ISA CONNECTIONS] FINISH clicked - %d approved, %d total suggested\n",
                  approved_count, length(rv$suggested_connections)))
-      cat(sprintf("[AI ISA CONNECTIONS] Approved indices: %s\n",
+      debug_log(sprintf("[AI ISA CONNECTIONS] Approved indices: %s\n",
                  paste(rv$approved_connections, collapse = ", ")))
 
       rv$conversation <- c(rv$conversation, list(
@@ -1043,7 +887,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       ))
 
       # Save directly with approved connections - don't rely on auto-save observer
-      cat("[AI ISA CONNECTIONS] Directly saving with approved connections\n")
+      debug_log("[AI ISA CONNECTIONS] Directly saving with approved connections\n")
 
       # Get current project data
       current_data <- project_data_reactive()
@@ -1133,7 +977,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       } else { NULL }
 
       # Build adjacency matrices from approved connections
-      cat(sprintf("[AI ISA CONNECTIONS SAVE] Building matrices for %d approved connections\n", approved_count))
+      debug_log(sprintf("[AI ISA CONNECTIONS SAVE] Building matrices for %d approved connections\n", approved_count))
 
       # Get element counts
       n_drivers <- length(rv$elements$drivers)
@@ -1303,19 +1147,19 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         if (!is.null(mat) && is.matrix(mat)) {
           n_filled <- sum(mat != "", na.rm = TRUE)
           if (n_filled > 0) {
-            cat(sprintf("[AI ISA CONNECTIONS SAVE] Matrix %s: %d connections\n", matrix_name, n_filled))
+            debug_log(sprintf("[AI ISA CONNECTIONS SAVE] Matrix %s: %d connections\n", matrix_name, n_filled))
           }
           n_connections <- n_connections + n_filled
         }
       }
-      cat(sprintf("[AI ISA CONNECTIONS SAVE] Total connections saved: %d\n", n_connections))
+      debug_log(sprintf("[AI ISA CONNECTIONS SAVE] Total connections saved: %d\n", n_connections))
 
       # Update project data
       project_data_reactive(current_data)
 
       # Mark as saved and move to completion
       rv$auto_saved_step_10 <- TRUE
-      cat("[AI ISA CONNECTIONS] Moving to completion\n")
+      debug_log("[AI ISA CONNECTIONS] Moving to completion\n")
       rv$current_step <- 12
 
       showNotification(
@@ -1326,10 +1170,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       # Navigate to dashboard after finishing connection review
       if (!is.null(parent_session)) {
-        cat("[AI ISA CONNECTIONS] Navigating to dashboard\n")
+        debug_log("[AI ISA CONNECTIONS] Navigating to dashboard\n")
         updateTabItems(parent_session, "sidebar_menu", "dashboard")
       } else {
-        cat("[AI ISA CONNECTIONS] Warning: parent_session is NULL, cannot navigate\n")
+        debug_log("[AI ISA CONNECTIONS] Warning: parent_session is NULL, cannot navigate\n")
       }
     })
 
@@ -1414,30 +1258,30 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       quick_options_exec_count <<- quick_options_exec_count + 1
       current_step <- rv$current_step
 
-      cat(sprintf("\n========================================\n"))
-      cat(sprintf("[AI ISA QUICK] EXECUTION #%d at %s\n", quick_options_exec_count, Sys.time()))
-      cat(sprintf("[AI ISA QUICK] Current step: %d / %d\n", current_step, length(QUESTION_FLOW)))
-      cat(sprintf("[AI ISA QUICK] Render counter: %d\n", counter_val))
+      debug_log(sprintf("\n========================================\n"))
+      debug_log(sprintf("[AI ISA QUICK] EXECUTION #%d at %s\n", quick_options_exec_count, Sys.time()))
+      debug_log(sprintf("[AI ISA QUICK] Current step: %d / %d\n", current_step, length(QUESTION_FLOW)))
+      debug_log(sprintf("[AI ISA QUICK] Render counter: %d\n", counter_val))
 
       # Return NULL first to force complete DOM cleanup
       if (current_step < 0 || current_step >= length(QUESTION_FLOW)) {
-        cat(sprintf("[AI ISA QUICK] Returning NULL (step out of range)\n"))
-        cat(sprintf("========================================\n\n"))
+        debug_log(sprintf("[AI ISA QUICK] Returning NULL (step out of range)\n"))
+        debug_log(sprintf("========================================\n\n"))
         return(NULL)
       }
 
       # Use current step as suffix to ensure unique IDs and enable proper observers
       render_suffix <- paste0("_s", current_step)
-      cat(sprintf("[AI ISA QUICK] Using suffix: %s\n", render_suffix))
+      debug_log(sprintf("[AI ISA QUICK] Using suffix: %s\n", render_suffix))
 
       step_info <- QUESTION_FLOW[[current_step + 1]]
-      cat(sprintf("[AI ISA QUICK] Step type: %s, target: %s\n", step_info$type, step_info$target))
+      debug_log(sprintf("[AI ISA QUICK] Step type: %s, target: %s\n", step_info$type, step_info$target))
 
       # Handle regional sea selection
       if (step_info$type == "choice_regional_sea") {
           # CRITICAL FIX: Exclude "other" since it's created separately below
           regional_seas_list <- setdiff(names(REGIONAL_SEAS), "other")
-          cat(sprintf("[AI ISA QUICK] Creating %d regional sea buttons (excluding 'other')\n", length(regional_seas_list)))
+          debug_log(sprintf("[AI ISA QUICK] Creating %d regional sea buttons (excluding 'other')\n", length(regional_seas_list)))
 
           regional_sea_buttons <- lapply(regional_seas_list, function(sea_key) {
             sea_info <- REGIONAL_SEAS[[sea_key]]
@@ -1447,7 +1291,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             is_selected <- !is.null(rv$context$regional_sea) && rv$context$regional_sea == sea_key
             button_class <- if (is_selected) "quick-option selected" else "quick-option"
 
-            cat(sprintf("[AI ISA QUICK]   Button ID: %s, Selected: %s\n", button_id, is_selected))
+            debug_log(sprintf("[AI ISA QUICK]   Button ID: %s, Selected: %s\n", button_id, is_selected))
             actionButton(
               inputId = button_id,
               label = sea_info$name_i18n,
@@ -1458,10 +1302,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
           # Add "Other" button
           other_button_id <- session$ns(paste0("regional_sea_other", render_suffix))
-          cat(sprintf("[AI ISA QUICK] *** CREATING OTHER BUTTON ***\n"))
-          cat(sprintf("[AI ISA QUICK] *** ID: %s ***\n", other_button_id))
-          cat(sprintf("[AI ISA QUICK] *** EXEC COUNT: %d ***\n", quick_options_exec_count))
-          cat(sprintf("========================================\n\n"))
+          debug_log(sprintf("[AI ISA QUICK] *** CREATING OTHER BUTTON ***\n"))
+          debug_log(sprintf("[AI ISA QUICK] *** ID: %s ***\n", other_button_id))
+          debug_log(sprintf("[AI ISA QUICK] *** EXEC COUNT: %d ***\n", quick_options_exec_count))
+          debug_log(sprintf("========================================\n\n"))
 
           other_button <- actionButton(
             inputId = other_button_id,
@@ -1567,9 +1411,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
         # Handle context-aware examples for DAPSI(W)R(M) elements
         else if (!is.null(step_info$use_context_examples) && step_info$use_context_examples) {
-          cat(sprintf("[AI ISA QUICK] Rendering context-aware suggestions for step %d, target: %s\n",
+          debug_log(sprintf("[AI ISA QUICK] Rendering context-aware suggestions for step %d, target: %s\n",
                       rv$current_step, step_info$target))
-          cat(sprintf("[AI ISA QUICK] Context - regional_sea: %s, ecosystem: %s, issue: %s\n",
+          debug_log(sprintf("[AI ISA QUICK] Context - regional_sea: %s, ecosystem: %s, issue: %s\n",
                       rv$context$regional_sea, rv$context$ecosystem_type, rv$context$main_issue))
 
           suggestions <- get_context_suggestions(
@@ -1579,7 +1423,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             main_issue = rv$context$main_issue
           )
 
-          cat(sprintf("[AI ISA QUICK] Got %d suggestions\n", length(suggestions)))
+          debug_log(sprintf("[AI ISA QUICK] Got %d suggestions\n", length(suggestions)))
 
           if (length(suggestions) > 0) {
             # Limit to first 12 suggestions to avoid overwhelming UI
@@ -1719,7 +1563,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       if (needs_setup) {
         # Destroy all previous observers before creating new ones
         if (length(active_observers) > 0) {
-          cat(sprintf("[AI ISA] Destroying %d old observers\n", length(active_observers)))
+          debug_log(sprintf("[AI ISA] Destroying %d old observers\n", length(active_observers)))
           lapply(active_observers, function(obs) {
             if (!is.null(obs)) obs$destroy()
           })
@@ -1742,7 +1586,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
                 observeEvent(input[[button_id]], {
                   if (rv$current_step == current_step) {
-                    cat(sprintf("[AI ISA] Regional sea button clicked: %s\n", sea_name))
+                    debug_log(sprintf("[AI ISA] Regional sea button clicked: %s\n", sea_name))
 
                     # Check if user is changing regional sea after having made progress
                     previous_selection <- rv$context$regional_sea
@@ -1754,7 +1598,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
                     # Show warning if changing after making progress
                     if (is_changing_selection && has_made_progress) {
-                      cat(sprintf("[AI ISA] Warning: User changing regional sea from %s to %s after making progress\n",
+                      debug_log(sprintf("[AI ISA] Warning: User changing regional sea from %s to %s after making progress\n",
                                  previous_selection, sea_key))
 
                       showModal(modalDialog(
@@ -1791,7 +1635,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                         rv$context$main_issue <- character(0)
                         rv$selected_issues <- character(0)
 
-                        cat(sprintf("[AI ISA] Regional sea changed to %s, cleared dependent selections\n", sea_key))
+                        debug_log(sprintf("[AI ISA] Regional sea changed to %s, cleared dependent selections\n", sea_key))
 
                         ai_response <- paste0(
                           i18n$t("modules.isa.ai_assistant.regional_sea_changed_to"), " ", REGIONAL_SEAS[[sea_key]]$name_i18n, ". ",
@@ -1827,7 +1671,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # Observer for "Other" button - regional sea
             observeEvent(input[[paste0("regional_sea_other_s", current_step)]], {
               if (rv$current_step == current_step) {
-                cat("[AI ISA] Regional sea 'Other' button clicked - showing text input\n")
+                debug_log("[AI ISA] Regional sea 'Other' button clicked - showing text input\n")
                 rv$show_text_input <- TRUE
               }
             }, ignoreInit = TRUE, once = TRUE)
@@ -1846,7 +1690,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
                   observeEvent(input[[button_id]], {
                     if (rv$current_step == current_step) {
-                      cat(sprintf("[AI ISA] Ecosystem button clicked: %s\n", ecosystem_name))
+                      debug_log(sprintf("[AI ISA] Ecosystem button clicked: %s\n", ecosystem_name))
                       rv$context$ecosystem_type <- ecosystem_name
 
                       ai_response <- paste0(
@@ -1866,7 +1710,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               # Observer for "Other" button - ecosystem
               observeEvent(input[[paste0("ecosystem_other_s", current_step)]], {
                 if (rv$current_step == current_step) {
-                  cat("[AI ISA] Ecosystem 'Other' button clicked - showing text input\n")
+                  debug_log("[AI ISA] Ecosystem 'Other' button clicked - showing text input\n")
                   rv$show_text_input <- TRUE
                 }
               }, ignoreInit = TRUE, once = TRUE)
@@ -1889,11 +1733,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                       # Toggle selection
                       if (issue_name %in% rv$selected_issues) {
                         # Deselect
-                        cat(sprintf("[AI ISA] Issue deselected: %s\n", issue_name))
+                        debug_log(sprintf("[AI ISA] Issue deselected: %s\n", issue_name))
                         rv$selected_issues <- setdiff(rv$selected_issues, issue_name)
                       } else {
                         # Select
-                        cat(sprintf("[AI ISA] Issue selected: %s\n", issue_name))
+                        debug_log(sprintf("[AI ISA] Issue selected: %s\n", issue_name))
                         rv$selected_issues <- c(rv$selected_issues, issue_name)
                       }
 
@@ -1907,7 +1751,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               # Observer for "Other" button - issue
               observeEvent(input[[paste0("issue_other_s", current_step)]], {
                 if (rv$current_step == current_step) {
-                  cat("[AI ISA] Issue 'Other' button clicked - showing text input\n")
+                  debug_log("[AI ISA] Issue 'Other' button clicked - showing text input\n")
                   rv$show_text_input <- TRUE
                 }
               }, ignoreInit = TRUE, once = TRUE)
@@ -1930,7 +1774,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
                   observeEvent(input[[button_id]], {
                     if (rv$current_step == current_step) {
-                      cat(sprintf("[AI ISA] Issue button clicked: %s\n", issue_name))
+                      debug_log(sprintf("[AI ISA] Issue button clicked: %s\n", issue_name))
                       rv$context$main_issue <- issue_name
 
                       ai_response <- paste0(
@@ -1950,7 +1794,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               # Observer for "Other" button - issue
               observeEvent(input[[paste0("issue_other_s", current_step)]], {
                 if (rv$current_step == current_step) {
-                  cat("[AI ISA] Issue 'Other' button clicked - showing text input\n")
+                  debug_log("[AI ISA] Issue 'Other' button clicked - showing text input\n")
                   rv$show_text_input <- TRUE
                 }
               }, ignoreInit = TRUE, once = TRUE)
@@ -2003,14 +1847,14 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
                       if (is_already_added) {
                         # Remove (deselect)
-                        cat(sprintf("[AI ISA QUICK] Removing %s from %s\n", suggestion_text, step_info$target))
+                        debug_log(sprintf("[AI ISA QUICK] Removing %s from %s\n", suggestion_text, step_info$target))
                         rv$elements[[step_info$target]] <- Filter(
                           function(e) e$name != suggestion_text,
                           rv$elements[[step_info$target]]
                         )
                       } else {
                         # Add (select)
-                        cat(sprintf("[AI ISA QUICK] Adding %s to %s\n", suggestion_text, step_info$target))
+                        debug_log(sprintf("[AI ISA QUICK] Adding %s to %s\n", suggestion_text, step_info$target))
                         new_element <- list(
                           name = suggestion_text,
                           description = "",
@@ -2030,7 +1874,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # Observer for "Other" button - DAPSIWRM elements
             observeEvent(input[["dapsiwrm_other"]], {
               if (rv$current_step == current_step) {
-                cat("[AI ISA] DAPSIWRM 'Other' button clicked - showing text input\n")
+                debug_log("[AI ISA] DAPSIWRM 'Other' button clicked - showing text input\n")
                 rv$show_text_input <- TRUE
               }
             }, ignoreInit = TRUE, once = TRUE)
@@ -2068,11 +1912,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # NOTE: Equivalent function extracted to modules/ai_isa/answer_processor.R
     # Future refactoring can replace this with: process_answer(answer, step_info, rv, i18n, move_to_next_step, REGIONAL_SEAS)
     process_answer <- function(answer) {
-      cat(sprintf("[AI ISA PROCESS] process_answer called with: '%s'\n", answer))
+      debug_log(sprintf("[AI ISA PROCESS] process_answer called with: '%s'\n", answer))
 
       if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
         step_info <- QUESTION_FLOW[[rv$current_step + 1]]
-        cat(sprintf("[AI ISA PROCESS] Current step %d, type: %s, target: %s\n",
+        debug_log(sprintf("[AI ISA PROCESS] Current step %d, type: %s, target: %s\n",
                     rv$current_step, step_info$type, step_info$target))
 
         # === Handle context-setting steps (regional_sea, ecosystem, issue) ===
@@ -2091,7 +1935,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
           if (!is.null(matched_sea)) {
             rv$context$regional_sea <- matched_sea
-            cat(sprintf("[AI ISA] Regional sea set to: %s (text input)\n", REGIONAL_SEAS[[matched_sea]]$name_en))
+            debug_log(sprintf("[AI ISA] Regional sea set to: %s (text input)\n", REGIONAL_SEAS[[matched_sea]]$name_en))
 
             ai_response <- paste0(
               i18n$t("modules.isa.ai_assistant.great_you_selected"), " ", REGIONAL_SEAS[[matched_sea]]$name_i18n, ". ",
@@ -2100,7 +1944,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           } else {
             # Couldn't match, use "other"
             rv$context$regional_sea <- "other"
-            cat("[AI ISA] Regional sea set to: other (text input not matched)\n")
+            debug_log("[AI ISA] Regional sea set to: other (text input not matched)\n")
             ai_response <- i18n$t("I'll use general marine suggestions for your area.")
           }
 
@@ -2115,7 +1959,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Ecosystem type (text input fallback)
         else if (step_info$target == "ecosystem_type") {
           rv$context$ecosystem_type <- answer
-          cat(sprintf("[AI ISA] Ecosystem type set to: %s (text input)\n", answer))
+          debug_log(sprintf("[AI ISA] Ecosystem type set to: %s (text input)\n", answer))
 
           ai_response <- paste0(
             i18n$t("modules.isa.ai_assistant.perfect"), " ", answer, " ",
@@ -2133,7 +1977,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Main issue (text input)
         else if (step_info$target == "main_issue") {
           rv$context$main_issue <- answer
-          cat(sprintf("[AI ISA] Main issue set to: %s\n", answer))
+          debug_log(sprintf("[AI ISA] Main issue set to: %s\n", answer))
 
           ai_response <- paste0(
             i18n$t("Understood. I'll focus suggestions on"), " ", tolower(answer), "-related issues. ",
@@ -2152,7 +1996,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
         # Store answer based on target
         if (step_info$type == "multiple") {
-          cat(sprintf("[AI ISA PROCESS] Adding element to %s\n", step_info$target))
+          debug_log(sprintf("[AI ISA PROCESS] Adding element to %s\n", step_info$target))
 
           # Add to list
           current_list <- rv$elements[[step_info$target]]
@@ -2165,7 +2009,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
           # Count current elements in this category
           element_count <- length(rv$elements[[step_info$target]])
-          cat(sprintf("[AI ISA PROCESS] Element added! Total %s: %d\n", step_info$target, element_count))
+          debug_log(sprintf("[AI ISA PROCESS] Element added! Total %s: %d\n", step_info$target, element_count))
 
           # Hide text input and show continue button again
           rv$show_text_input <- FALSE
@@ -2377,7 +2221,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         }
       }
 
-      cat(sprintf("[AI ISA] Converted %d connections from %d matrices\n",
+      debug_log(sprintf("[AI ISA] Converted %d connections from %d matrices\n",
                   length(connections), length(matrices)))
       return(connections)
     }
@@ -2438,13 +2282,13 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         candidates <- candidates[order(sapply(candidates, function(x) x$relevance), decreasing = TRUE)]
         n_to_return <- min(length(candidates), max_count)
         result <- lapply(1:n_to_return, function(i) candidates[[i]]$conn)
-        cat(sprintf("[AI ISA CONNECTIONS] Generated %d %s→%s connections (from %d candidates, %.0f%% filtered)\n",
+        debug_log(sprintf("[AI ISA CONNECTIONS] Generated %d %s→%s connections (from %d candidates, %.0f%% filtered)\n",
                     n_to_return, toupper(substring(from_type, 1, 1)), toupper(substring(to_type, 1, 1)),
                     length(candidates), (1 - n_to_return/length(candidates)) * 100))
         return(result)
       }
 
-      cat(sprintf("[AI ISA CONNECTIONS] No relevant %s→%s connections found\n", from_type, to_type))
+      debug_log(sprintf("[AI ISA CONNECTIONS] No relevant %s→%s connections found\n", from_type, to_type))
       return(list())
     }
 
@@ -2506,8 +2350,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       count_rd <- 0  # Responses → Drivers (feedback)
       count_ra <- 0  # Responses → Activities (feedback)
 
-      cat(sprintf("[AI ISA CONNECTIONS] Generating connections (max %d per type)...\n", MAX_PER_TYPE))
-      cat(sprintf("[AI ISA CONNECTIONS] Element counts: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d\n",
+      debug_log(sprintf("[AI ISA CONNECTIONS] Generating connections (max %d per type)...\n", MAX_PER_TYPE))
+      debug_log(sprintf("[AI ISA CONNECTIONS] Element counts: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d\n",
                   length(elements$drivers %||% list()),
                   length(elements$activities %||% list()),
                   length(elements$pressures %||% list()),
@@ -2518,10 +2362,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       # Debug: Print actual element names
       if (length(elements$drivers) > 0) {
-        cat(sprintf("[AI ISA CONNECTIONS] Drivers: %s\n", paste(sapply(elements$drivers, function(x) x$name), collapse=", ")))
+        debug_log(sprintf("[AI ISA CONNECTIONS] Drivers: %s\n", paste(sapply(elements$drivers, function(x) x$name), collapse=", ")))
       }
       if (length(elements$activities) > 0) {
-        cat(sprintf("[AI ISA CONNECTIONS] Activities: %s\n", paste(sapply(elements$activities, function(x) x$name), collapse=", ")))
+        debug_log(sprintf("[AI ISA CONNECTIONS] Activities: %s\n", paste(sapply(elements$activities, function(x) x$name), collapse=", ")))
       }
 
       # D → A (Drivers → Activities): Smart connection generation
@@ -2599,13 +2443,13 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       }
 
       # Log final count and per-type breakdown
-      cat(sprintf("[AI ISA CONNECTIONS] ========================================\n"))
-      cat(sprintf("[AI ISA CONNECTIONS] TOTAL GENERATED: %d connections\n", length(connections)))
-      cat(sprintf("[AI ISA CONNECTIONS] Per-type breakdown:\n"))
-      cat(sprintf("[AI ISA CONNECTIONS]   D→A: %d  A→P: %d  P→S: %d\n", count_da, count_ap, count_ps))
-      cat(sprintf("[AI ISA CONNECTIONS]   S→I: %d  I→W: %d  R→P: %d\n", count_si, count_iw, count_rp))
-      cat(sprintf("[AI ISA CONNECTIONS]   W→D: %d  W→R: %d  R→D: %d  R→A: %d\n", count_wd, count_wr, count_rd, count_ra))
-      cat(sprintf("[AI ISA CONNECTIONS] ========================================\n"))
+      debug_log(sprintf("[AI ISA CONNECTIONS] ========================================\n"))
+      debug_log(sprintf("[AI ISA CONNECTIONS] TOTAL GENERATED: %d connections\n", length(connections)))
+      debug_log(sprintf("[AI ISA CONNECTIONS] Per-type breakdown:\n"))
+      debug_log(sprintf("[AI ISA CONNECTIONS]   D→A: %d  A→P: %d  P→S: %d\n", count_da, count_ap, count_ps))
+      debug_log(sprintf("[AI ISA CONNECTIONS]   S→I: %d  I→W: %d  R→P: %d\n", count_si, count_iw, count_rp))
+      debug_log(sprintf("[AI ISA CONNECTIONS]   W→D: %d  W→R: %d  R→D: %d  R→A: %d\n", count_wd, count_wr, count_rd, count_ra))
+      debug_log(sprintf("[AI ISA CONNECTIONS] ========================================\n"))
 
       return(connections)
     }
@@ -2649,9 +2493,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               incProgress(0.3, detail = i18n$t("modules.isa.ai_assistant.this_may_take_a_moment"))
 
               # Generate connections
-              cat("[AI ISA] About to call generate_connections()...\n")
+              debug_log("[AI ISA] About to call generate_connections()...\n")
               all_connections <- generate_connections(rv$elements)
-              cat(sprintf("[AI ISA] generate_connections() returned %d connections\n", length(all_connections)))
+              debug_log(sprintf("[AI ISA] generate_connections() returned %d connections\n", length(all_connections)))
 
               # Limit to 200 connections for tabbed display (distributed across tabs)
               max_connections <- 200
@@ -2668,9 +2512,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               # Add a generation timestamp to force UI refresh
               attr(rv$suggested_connections, "generated_at") <- Sys.time()
 
-              cat(sprintf("[AI ISA] Generated %d connections for review at %s\n",
+              debug_log(sprintf("[AI ISA] Generated %d connections for review at %s\n",
                          length(rv$suggested_connections), Sys.time()))
-              cat(sprintf("[AI ISA] First connection structure: %s\n",
+              debug_log(sprintf("[AI ISA] First connection structure: %s\n",
                          paste(names(rv$suggested_connections[[1]]), collapse=", ")))
 
               incProgress(0.7, detail = i18n$t("modules.isa.ai_assistant.finalizing_connections"))
@@ -2718,969 +2562,36 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                             session$ns("chat_container"), session$ns("chat_container")))
     }
 
-    # Render breadcrumb navigation
-    output$breadcrumb_nav <- renderUI({
-      if (rv$current_step <= 0) return(NULL)
-
-      # Build breadcrumb trail
-      breadcrumbs <- list()
-
-      # Home/Start
-      breadcrumbs[[1]] <- tags$a(
-        href = "#",
-        onclick = sprintf("Shiny.setInputValue('%s', Math.random())", session$ns("goto_start")),
-        icon("home"),
-        " ",
-        i18n$t("common.buttons.start")
-      )
-
-      # Add previous steps up to current
-      for (i in 1:min(rv$current_step, length(QUESTION_FLOW))) {
-        step_info <- QUESTION_FLOW[[i]]
-        breadcrumbs[[length(breadcrumbs) + 1]] <- tags$span(class = "separator", "›")
-
-        if (i < rv$current_step) {
-          # Clickable - can go back
-          breadcrumbs[[length(breadcrumbs) + 1]] <- tags$a(
-            href = "#",
-            onclick = sprintf("Shiny.setInputValue('%s', %d)", session$ns("goto_step"), i - 1),
-            step_info$title
-          )
-        } else {
-          # Current step - not clickable
-          breadcrumbs[[length(breadcrumbs) + 1]] <- tags$span(
-            class = "current",
-            step_info$title
-          )
-        }
-      }
-
-      div(class = "ai-breadcrumb", breadcrumbs)
-    })
-
-    # Handle breadcrumb navigation - go to start
-    observeEvent(input$goto_start, {
-      cat("[AI ISA] Breadcrumb: Returning to start\n")
-      rv$current_step <- 0
-      rv$selected_issues <- character(0)
-    })
-
-    # Handle breadcrumb navigation - go to specific step
-    observeEvent(input$goto_step, {
-      target_step <- input$goto_step
-      if (!is.null(target_step) && target_step >= 0 && target_step < rv$current_step) {
-        cat(sprintf("[AI ISA] Breadcrumb: Going back to step %d from step %d\n",
-                   target_step, rv$current_step))
-
-        # Clear connections if navigating back from connection review (step 10)
-        # This will force regeneration when returning to step 10
-        if (rv$current_step == 10 && target_step < 10) {
-          cat("[AI ISA] Breadcrumb: Clearing connections for regeneration\n")
-          # Don't set timestamp on empty list to prevent reactive loop
-          rv$suggested_connections <- list()
-          rv$approved_connections <- list()
-          cat("[AI ISA] Breadcrumb: Connections cleared (no timestamp set)\n")
-        }
-
-        rv$current_step <- target_step
-
-        # Restore selected issues if going back to issue selection step (current_step==1 shows QUESTION_FLOW[[2]])
-        if (target_step == 1) {
-          # Restore from context
-          if (length(rv$context$main_issue) > 0) {
-            rv$selected_issues <- rv$context$main_issue
-            cat(sprintf("[AI ISA] Breadcrumb: Restored %d selected issues: %s\n",
-                       length(rv$selected_issues),
-                       paste(rv$selected_issues, collapse=", ")))
-          } else {
-            rv$selected_issues <- character(0)
-            cat("[AI ISA] Breadcrumb: No issues in context to restore\n")
-          }
-        } else if (target_step < 1) {
-          # Clear selected issues if going before issue selection
-          rv$selected_issues <- character(0)
-          cat("[AI ISA] Breadcrumb: Cleared selected issues (before step 1)\n")
-        }
-
-        # Force UI re-render
-        rv$render_counter <- (rv$render_counter %||% 0) + 1
-      }
-    })
-
-    # Render progress bar
-    output$progress_bar <- renderUI({
-      progress_pct <- if (rv$total_steps > 0) {
-        round((rv$current_step / rv$total_steps) * 100)
-      } else {
-        0
-      }
-
-      div(class = "progress-bar-custom",
-        div(class = "progress-fill",
-          style = sprintf("width: %d%%;", progress_pct),
-          sprintf("%d%%", progress_pct)
-        )
-      )
-    })
-
-    # Render elements summary
-    output$elements_summary <- renderUI({
-      total_elements <- sum(
-        length(rv$elements$drivers),
-        length(rv$elements$activities),
-        length(rv$elements$pressures),
-        length(rv$elements$states),
-        length(rv$elements$impacts),
-        length(rv$elements$welfare),
-        length(rv$elements$responses)
-      )
-
-      div(
-        h2(style = "color: #667eea; text-align: center;", total_elements),
-        p(style = "text-align: center;", i18n$t("modules.isa.ai_assistant.total_elements_created"))
-      )
-    })
-
-    # Render counts for detailed list
-    output$count_drivers <- renderText({ length(rv$elements$drivers) })
-    output$count_activities <- renderText({ length(rv$elements$activities) })
-    output$count_pressures <- renderText({ length(rv$elements$pressures) })
-    output$count_states <- renderText({ length(rv$elements$states) })
-    output$count_impacts <- renderText({ length(rv$elements$impacts) })
-    output$count_welfare <- renderText({ length(rv$elements$welfare) })
-    output$count_responses <- renderText({ length(rv$elements$responses) })
-    output$count_connections <- renderText({ length(rv$approved_connections) })
-
-    # Render connection types summary in a single column
-    output$connection_types_summary <- renderUI({
-      # Helper function to count connections by matrix type
-      count_by_matrix <- function(matrix_name) {
-        suggested_count <- 0
-        approved_count <- 0
-
-        # Count suggested connections
-        if (!is.null(rv$suggested_connections) && length(rv$suggested_connections) > 0) {
-          suggested_count <- sum(sapply(rv$suggested_connections, function(conn) {
-            if (is.list(conn) && !is.null(conn$matrix)) {
-              isTRUE(conn$matrix == matrix_name)
-            } else {
-              FALSE
-            }
-          }))
-        }
-
-        # Count approved connections
-        if (!is.null(rv$approved_connections) && length(rv$approved_connections) > 0) {
-          approved_count <- sum(sapply(rv$approved_connections, function(conn) {
-            if (is.list(conn) && !is.null(conn$matrix)) {
-              isTRUE(conn$matrix == matrix_name)
-            } else {
-              FALSE
-            }
-          }))
-        }
-
-        suggested_count + approved_count
-      }
-
-      # Count all 9 connection types
-      count_da <- count_by_matrix("d_a")    # Drivers → Activities
-      count_ap <- count_by_matrix("a_p")    # Activities → Pressures
-      count_ps <- count_by_matrix("p_mpf")  # Pressures → States
-      count_si <- count_by_matrix("mpf_es") # States → Impacts
-      count_iw <- count_by_matrix("es_gb")  # Impacts → Welfare
-      count_wr <- count_by_matrix("gb_r")   # Welfare → Responses
-      count_rd <- count_by_matrix("r_d")    # Responses → Drivers
-      count_ra <- count_by_matrix("r_a")    # Responses → Activities
-      count_rp <- count_by_matrix("r_p")    # Responses → Pressures
-
-      # Create display with bold font
-      tagList(
-        tags$div(style = "font-weight: bold; margin-bottom: 3px;",
-                 sprintf("D→A: %d", count_da)),
-        tags$div(style = "font-weight: bold; margin-bottom: 3px;",
-                 sprintf("A→P: %d", count_ap)),
-        tags$div(style = "font-weight: bold; margin-bottom: 3px;",
-                 sprintf("P→S: %d", count_ps)),
-        tags$div(style = "font-weight: bold; margin-bottom: 3px;",
-                 sprintf("S→I: %d", count_si)),
-        tags$div(style = "font-weight: bold; margin-bottom: 3px;",
-                 sprintf("I→W: %d", count_iw)),
-        tags$div(style = "font-weight: bold; margin-bottom: 3px;",
-                 sprintf("W→R: %d", count_wr)),
-        tags$div(style = "font-weight: bold; margin-bottom: 3px;",
-                 sprintf("R→D: %d", count_rd)),
-        tags$div(style = "font-weight: bold; margin-bottom: 3px;",
-                 sprintf("R→A: %d", count_ra)),
-        tags$div(style = "font-weight: bold; margin-bottom: 3px;",
-                 sprintf("R→P: %d", count_rp))
-      )
-    })
-
-    # Render DAPSI(W)R(M) flow diagram
-    output$dapsiwrm_diagram <- renderUI({
-      div(class = "dapsiwrm-diagram",
-        div(class = "dapsiwrm-box", style = "background: #f0f0f0; border-color: #776db3; color: #776db3;",
-          paste0("D: ", length(rv$elements$drivers))),
-        div(class = "dapsiwrm-arrow", "↓"),
-        div(class = "dapsiwrm-box", style = "background: #f0f0f0; border-color: #5abc67; color: #5abc67;",
-          paste0("A: ", length(rv$elements$activities))),
-        div(class = "dapsiwrm-arrow", "↓"),
-        div(class = "dapsiwrm-box", style = "background: #f0f0f0; border-color: #fec05a; color: #fec05a;",
-          paste0("P: ", length(rv$elements$pressures))),
-        div(class = "dapsiwrm-arrow", "↓"),
-        div(class = "dapsiwrm-box", style = "background: #f0f0f0; border-color: #bce2ee; color: #5ab4d9;",
-          paste0("S: ", length(rv$elements$states))),
-        div(class = "dapsiwrm-arrow", "↓"),
-        div(class = "dapsiwrm-box", style = "background: #f0f0f0; border-color: #313695; color: #313695;",
-          paste0("I: ", length(rv$elements$impacts))),
-        div(class = "dapsiwrm-arrow", "↓"),
-        div(class = "dapsiwrm-box", style = "background: #fff1a2; border-color: #f0c808; color: #666;",
-          paste0("W: ", length(rv$elements$welfare))),
-        div(class = "dapsiwrm-arrow", "↑"),
-        div(class = "dapsiwrm-box", style = "background: #f0f0f0; border-color: #66c2a5; color: #66c2a5;",
-          paste0("R/M: ", length(rv$elements$responses)))
-      )
-    })
-
-    # Handle preview model
-    observeEvent(input$preview_model, {
-      # Create preview of all elements
-      preview_content <- tagList(
-        h3(icon("project-diagram"), " ", i18n$t("modules.isa.ai_assistant.your_dapsiwrm_model_preview")),
-        hr(),
-
-        if (!is.null(rv$context$project_name)) {
-          div(
-            h4(icon("map-marker-alt"), " ", i18n$t("common.messages.project_information")),
-            tags$ul(
-              tags$li(strong(i18n$t("modules.isa.ai_assistant.projectlocation")), " ", rv$context$project_name),
-              if (!is.null(rv$context$ecosystem_type)) tags$li(strong(i18n$t("common.labels.ecosystem_type")), " ", rv$context$ecosystem_type),
-              if (!is.null(rv$context$main_issue)) tags$li(strong(i18n$t("modules.isa.ai_assistant.main_issue")), " ", rv$context$main_issue)
-            ),
-            hr()
-          )
-        },
-
-        # Drivers
-        if (length(rv$elements$drivers) > 0) {
-          div(
-            h4(style = "color: #776db3;", icon("flag"), " ", i18n$t("modules.isa.ai_assistant.drivers_societal_needs")),
-            tags$ul(
-              lapply(rv$elements$drivers, function(d) tags$li(d$name))
-            )
-          )
-        },
-
-        # Activities
-        if (length(rv$elements$activities) > 0) {
-          div(
-            h4(style = "color: #5abc67;", icon("running"), " ", i18n$t("modules.isa.ai_assistant.activities_human_actions")),
-            tags$ul(
-              lapply(rv$elements$activities, function(a) tags$li(a$name))
-            )
-          )
-        },
-
-        # Pressures
-        if (length(rv$elements$pressures) > 0) {
-          div(
-            h4(style = "color: #fec05a;", icon("exclamation-triangle"), " ", i18n$t("modules.isa.ai_assistant.pressures_environmental_stressors")),
-            tags$ul(
-              lapply(rv$elements$pressures, function(p) tags$li(p$name))
-            )
-          )
-        },
-
-        # State Changes
-        if (length(rv$elements$states) > 0) {
-          div(
-            h4(style = "color: #bce2ee;", icon("water"), " ", i18n$t("modules.isa.ai_assistant.state_changes_ecosystem_effects")),
-            tags$ul(
-              lapply(rv$elements$states, function(s) tags$li(s$name))
-            )
-          )
-        },
-
-        # Impacts
-        if (length(rv$elements$impacts) > 0) {
-          div(
-            h4(style = "color: #313695;", icon("chart-line"), " ", i18n$t("modules.isa.ai_assistant.impacts_service_effects")),
-            tags$ul(
-              lapply(rv$elements$impacts, function(i) tags$li(i$name))
-            )
-          )
-        },
-
-        # Welfare
-        if (length(rv$elements$welfare) > 0) {
-          div(
-            h4(style = "color: #fff1a2; text-shadow: 1px 1px 2px #666;", icon("heart"), " ", i18n$t("modules.isa.ai_assistant.welfare_human_well_being")),
-            tags$ul(
-              lapply(rv$elements$welfare, function(w) tags$li(w$name))
-            )
-          )
-        },
-
-        # Responses
-        if (length(rv$elements$responses) > 0) {
-          div(
-            h4(style = "color: #66c2a5;", icon("shield-alt"), " ", i18n$t("modules.isa.ai_assistant.response_measures_management_policy")),
-            tags$ul(
-              lapply(rv$elements$responses, function(r) tags$li(r$name))
-            )
-          )
-        },
-
-        hr(),
-
-        # Connections
-        if (length(rv$approved_connections) > 0 && length(rv$suggested_connections) > 0) {
-          # Filter out invalid indices (bounds check)
-          valid_indices <- rv$approved_connections[rv$approved_connections <= length(rv$suggested_connections)]
-
-          if (length(valid_indices) > 0) {
-            div(
-              h4(style = "color: #28a745;", icon("project-diagram"), " ",
-                 i18n$t("ui.dashboard.connections"), " (", length(valid_indices), ")"),
-              tags$div(
-                style = "max-height: 300px; overflow-y: auto; padding: 10px; background: #f8f9fa; border-radius: 5px;",
-                tags$ul(
-                  style = "list-style-type: none; padding-left: 0;",
-                  lapply(valid_indices, function(conn_idx) {
-                    conn <- rv$suggested_connections[[conn_idx]]
-                    tags$li(
-                      style = "margin-bottom: 8px; padding: 5px; background: white; border-radius: 3px;",
-                      icon("link"),
-                      " ",
-                      strong(conn$from_name),
-                      " ",
-                      span(style = "color: #666;",
-                           if(conn$polarity == "+") "→" else "⊸"),
-                      " ",
-                      strong(conn$to_name),
-                      tags$br(),
-                      span(style = "font-size: 0.85em; color: #666; margin-left: 20px;",
-                           i18n$t("modules.isa.data_entry.common.strength"), " ", conn$strength, ", ",
-                           i18n$t("modules.isa.data_entry.common.confidence"), " ", conn$confidence %||% 3)
-                    )
-                  })
-                )
-              ),
-              hr()
-            )
-          }
-        },
-
-        p(class = "text-muted",
-          i18n$t("modules.isa.ai_assistant.total_elements"), " ",
-          sum(length(rv$elements$drivers), length(rv$elements$activities),
-              length(rv$elements$pressures), length(rv$elements$states),
-              length(rv$elements$impacts), length(rv$elements$welfare),
-              length(rv$elements$responses)),
-          " | ",
-          i18n$t("modules.isa.ai_assistant.total_connections"), " ",
-          # Count only valid approved connections (bounds check)
-          if (length(rv$suggested_connections) > 0) {
-            length(rv$approved_connections[rv$approved_connections <= length(rv$suggested_connections)])
-          } else {
-            0
-          })
-      )
-
-      showModal(modalDialog(
-        preview_content,
-        title = NULL,
-        size = "l",
-        easyClose = TRUE,
-        footer = tagList(
-          modalButton(i18n$t("common.buttons.close")),
-          actionButton(session$ns("save_from_preview"), i18n$t("modules.isa.ai_assistant.save_to_isa_data_entry"),
-                      class = "btn-success", icon = icon("save"))
-        )
-      ))
-    })
-
-    # Handle save from preview modal
-    observeEvent(input$save_from_preview, {
-      removeModal()
-      # Trigger the main save action
-      showNotification(
-        i18n$t("Model saved! Navigate to 'ISA Data Entry' to see your elements."),
-        type = "message",
-        duration = 5
-      )
-    })
-
-    # Handle start over
-    observeEvent(input$start_over, {
-      showModal(modalDialog(
-        title = i18n$t("common.messages.confirm_start_over"),
-        i18n$t("modules.isa.are_you_sure_you_want_to_start_over_all_curr_progr"),
-        footer = tagList(
-          modalButton(i18n$t("common.buttons.cancel")),
-          actionButton(session$ns("confirm_start_over"), i18n$t("modules.isa.ai_assistant.yes_start_over"), class = "btn-danger")
-        )
-      ))
-    })
-
-    observeEvent(input$confirm_start_over, {
-      cat("[AI ISA] Starting over - resetting all data\n")
-
-      # Reset step
-      rv$current_step <- 0
-      rv$auto_saved_step_10 <- FALSE
-      rv$show_text_input <- FALSE
-
-      # Reset conversation
-      rv$conversation <- list(
-        list(type = "ai", message = QUESTION_FLOW[[1]]$question, timestamp = Sys.time())
-      )
-
-      # Reset all elements
-      rv$elements <- list(
-        drivers = list(),
-        activities = list(),
-        pressures = list(),
-        states = list(),
-        impacts = list(),
-        welfare = list(),
-        responses = list()
-      )
-
-      # Reset context - MUST match initialization structure
-      rv$context <- list(
-        project_name = NULL,
-        regional_sea = NULL,
-        ecosystem_type = NULL,
-        ecosystem_subtype = NULL,
-        main_issue = NULL
-      )
-
-      # Reset connections
-      rv$suggested_connections <- list()
-      rv$approved_connections <- list()
-
-      # Clear project data (if saved)
-      current_data <- project_data_reactive()
-      if (!is.null(current_data$data$isa_data)) {
-        cat("[AI ISA] Clearing saved project ISA data\n")
-        current_data$data$isa_data <- NULL
-        current_data$data$cld <- list(nodes = NULL, edges = NULL)
-        current_data$data$metadata$data_source <- NULL
-        current_data$last_modified <- Sys.time()
-        project_data_reactive(current_data)
-
-        # Emit ISA change event to clear CLD
-        if (!is.null(event_bus)) {
-          event_bus$emit_isa_change()
-        }
-      }
-
-      # Clear localStorage auto-save
-      session$sendCustomMessage('clear_ai_isa_session', list())
-
-      # Reset last save time
-      rv$last_save_time <- NULL
-
-      removeModal()
-
-      showNotification(i18n$t("common.messages.all_data_cleared_starting_over"), type = "message", duration = 3)
-      cat("[AI ISA] Reset complete\n")
-    })
-
-    # Framework element link observers - show element details in modal
-    observeEvent(input$link_drivers, {
-      if (length(rv$elements$drivers) > 0) {
-        showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.response.measures.drivers")),
-          tags$ul(lapply(rv$elements$drivers, function(d) tags$li(strong(d$name)))),
-          size = "m",
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("common.buttons.close"))
-        ))
-      }
-    })
-
-    observeEvent(input$link_activities, {
-      if (length(rv$elements$activities) > 0) {
-        showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.response.measures.activities")),
-          tags$ul(lapply(rv$elements$activities, function(a) tags$li(strong(a$name)))),
-          size = "m",
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("common.buttons.close"))
-        ))
-      }
-    })
-
-    observeEvent(input$link_pressures, {
-      if (length(rv$elements$pressures) > 0) {
-        showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.response.measures.pressures")),
-          tags$ul(lapply(rv$elements$pressures, function(p) tags$li(strong(p$name)))),
-          size = "m",
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("common.buttons.close"))
-        ))
-      }
-    })
-
-    observeEvent(input$link_states, {
-      if (length(rv$elements$states) > 0) {
-        showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.isa.ai_assistant.state_changes")),
-          tags$ul(lapply(rv$elements$states, function(s) tags$li(strong(s$name)))),
-          size = "m",
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("common.buttons.close"))
-        ))
-      }
-    })
-
-    observeEvent(input$link_impacts, {
-      if (length(rv$elements$impacts) > 0) {
-        showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.isa.ai_assistant.impacts")),
-          tags$ul(lapply(rv$elements$impacts, function(i) tags$li(strong(i$name)))),
-          size = "m",
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("common.buttons.close"))
-        ))
-      }
-    })
-
-    observeEvent(input$link_welfare, {
-      if (length(rv$elements$welfare) > 0) {
-        showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.ses.creation.welfare")),
-          tags$ul(lapply(rv$elements$welfare, function(w) tags$li(strong(w$name)))),
-          size = "m",
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("common.buttons.close"))
-        ))
-      }
-    })
-
-    observeEvent(input$link_responses, {
-      if (length(rv$elements$responses) > 0) {
-        showModal(modalDialog(
-          title = tagList(icon("arrow-circle-right"), " ", i18n$t("modules.isa.ai_assistant.responses")),
-          tags$ul(lapply(rv$elements$responses, function(r) tags$li(strong(r$name)))),
-          size = "m",
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("common.buttons.close"))
-        ))
-      }
-    })
-
-    observeEvent(input$link_connections, {
-      if (length(rv$approved_connections) > 0) {
-        # Build list of approved connections with details
-        conn_list <- lapply(rv$approved_connections, function(idx) {
-          conn <- rv$suggested_connections[[idx]]
-          tags$li(
-            strong(conn$from_name), " ",
-            span(style = "color: #666;", if(conn$polarity == "+") "→" else "⊸"), " ",
-            strong(conn$to_name),
-            tags$br(),
-            span(style = "font-size: 0.9em; color: #666;",
-                 "Strength: ", conn$strength, ", Confidence: ", conn$confidence %||% 3)
-          )
-        })
-
-        showModal(modalDialog(
-          title = tagList(icon("project-diagram"), " ", i18n$t("modules.isa.ai_assistant.approved_connections")),
-          tags$ul(conn_list),
-          size = "l",
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("common.buttons.close"))
-        ))
-      } else {
-        showNotification(i18n$t("common.messages.no_connections_approved_yet"), type = "warning", duration = 2)
-      }
-    })
-
-    # Handle load template
-    observeEvent(input$load_template, {
-      showModal(modalDialog(
-        title = i18n$t("modules.isa.ai_assistant.load_example_template"),
-        h4(i18n$t("modules.isa.ai_assistant.choose_a_pre_built_scenario")),
-        fluidRow(
-          column(6,
-            actionButton(session$ns("template_overfishing"), i18n$t("modules.isa.ai_assistant.overfishing_in_coastal_waters"),
-                        class = "btn-primary btn-block", style = "margin: 5px;")
-          ),
-          column(6,
-            actionButton(session$ns("template_pollution"), i18n$t("modules.isa.ai_assistant.marine_pollution_plastics"),
-                        class = "btn-primary btn-block", style = "margin: 5px;")
-          )
-        ),
-        fluidRow(
-          column(6,
-            actionButton(session$ns("template_tourism"), i18n$t("modules.isa.ai_assistant.coastal_tourism_impacts"),
-                        class = "btn-primary btn-block", style = "margin: 5px;")
-          ),
-          column(6,
-            actionButton(session$ns("template_climate"), i18n$t("modules.isa.ai_assistant.climate_change_coral_reefs"),
-                        class = "btn-primary btn-block", style = "margin: 5px;")
-          )
-        ),
-        footer = modalButton(i18n$t("common.buttons.cancel"))
-      ))
-    })
-
-    # Template: Overfishing
-    observeEvent(input$template_overfishing, {
-      rv$context <- list(
-        project_name = "Overfishing Management",
-        ecosystem_type = "Coastal waters",
-        main_issue = "Declining fish stocks due to overfishing"
-      )
-      rv$elements <- list(
-        drivers = list(
-          list(name = "Food security", description = "", timestamp = Sys.time()),
-          list(name = "Economic development", description = "", timestamp = Sys.time())
-        ),
-        activities = list(
-          list(name = "Commercial fishing", description = "", timestamp = Sys.time()),
-          list(name = "Recreational fishing", description = "", timestamp = Sys.time())
-        ),
-        pressures = list(
-          list(name = "Overfishing", description = "", timestamp = Sys.time()),
-          list(name = "Bycatch of non-target species", description = "", timestamp = Sys.time())
-        ),
-        states = list(
-          list(name = "Declining fish stocks", description = "", timestamp = Sys.time()),
-          list(name = "Altered food webs", description = "", timestamp = Sys.time())
-        ),
-        impacts = list(
-          list(name = "Reduced fish catch", description = "", timestamp = Sys.time()),
-          list(name = "Loss of biodiversity value", description = "", timestamp = Sys.time())
-        ),
-        welfare = list(
-          list(name = "Loss of livelihoods for fishers", description = "", timestamp = Sys.time()),
-          list(name = "Food insecurity", description = "", timestamp = Sys.time())
-        ),
-        responses = list(
-          list(name = "Fishing quotas and limits", description = "", timestamp = Sys.time()),
-          list(name = "Marine protected areas", description = "", timestamp = Sys.time())
-        )
-      )
-
-      # Add example connections
-      rv$suggested_connections <- list(
-        # Drivers → Activities
-        list(from = "Food security", to = "Commercial fishing", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 1),
-        list(from = "Economic development", to = "Commercial fishing", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "strong", matrix = "a_d", from_index = 2, to_index = 1),
-        list(from = "Economic development", to = "Recreational fishing", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "medium", matrix = "a_d", from_index = 2, to_index = 2),
-        # Activities → Pressures
-        list(from = "Commercial fishing", to = "Overfishing", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "strong", matrix = "p_a", from_index = 1, to_index = 1),
-        list(from = "Commercial fishing", to = "Bycatch of non-target species", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "medium", matrix = "p_a", from_index = 1, to_index = 2),
-        list(from = "Recreational fishing", to = "Overfishing", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "weak", matrix = "p_a", from_index = 2, to_index = 1),
-        # Pressures → States
-        list(from = "Overfishing", to = "Declining fish stocks", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 1, to_index = 1),
-        list(from = "Overfishing", to = "Altered food webs", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 1, to_index = 2),
-        list(from = "Bycatch of non-target species", to = "Altered food webs", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 2, to_index = 2),
-        # States → Impacts
-        list(from = "Declining fish stocks", to = "Reduced fish catch", from_category = "states", to_category = "impacts",
-             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 1, to_index = 1),
-        list(from = "Altered food webs", to = "Loss of biodiversity value", from_category = "states", to_category = "impacts",
-             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 2, to_index = 2),
-        # Impacts → Welfare
-        list(from = "Reduced fish catch", to = "Loss of livelihoods for fishers", from_category = "impacts", to_category = "welfare",
-             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 1, to_index = 1),
-        list(from = "Reduced fish catch", to = "Food insecurity", from_category = "impacts", to_category = "welfare",
-             polarity = "-", strength = "medium", matrix = "gb_es", from_index = 1, to_index = 2),
-        list(from = "Loss of biodiversity value", to = "Loss of livelihoods for fishers", from_category = "impacts", to_category = "welfare",
-             polarity = "-", strength = "weak", matrix = "gb_es", from_index = 2, to_index = 1)
-      )
-
-      # Mark all connections as approved
-      rv$approved_connections <- seq_along(rv$suggested_connections)
-      rv$current_step <- 10  # Mark as complete
-      removeModal()
-      showNotification(i18n$t("modules.isa.overfishing_template_loaded_with_example_connectio"), type = "message", duration = 5)
-    })
-
-    # Template: Marine Pollution
-    observeEvent(input$template_pollution, {
-      rv$context <- list(
-        project_name = "Marine Plastic Pollution",
-        ecosystem_type = "Coastal waters",
-        main_issue = "Plastic pollution and marine litter"
-      )
-      rv$elements <- list(
-        drivers = list(
-          list(name = "Economic development", description = "", timestamp = Sys.time()),
-          list(name = "Consumer demand", description = "", timestamp = Sys.time())
-        ),
-        activities = list(
-          list(name = "Coastal development", description = "", timestamp = Sys.time()),
-          list(name = "Tourism", description = "", timestamp = Sys.time()),
-          list(name = "Shipping", description = "", timestamp = Sys.time())
-        ),
-        pressures = list(
-          list(name = "Marine litter and plastics", description = "", timestamp = Sys.time()),
-          list(name = "Chemical pollution", description = "", timestamp = Sys.time())
-        ),
-        states = list(
-          list(name = "Water quality decline", description = "", timestamp = Sys.time()),
-          list(name = "Habitat degradation", description = "", timestamp = Sys.time())
-        ),
-        impacts = list(
-          list(name = "Loss of tourism revenue", description = "", timestamp = Sys.time()),
-          list(name = "Reduced water quality for recreation", description = "", timestamp = Sys.time())
-        ),
-        welfare = list(
-          list(name = "Health impacts from contamination", description = "", timestamp = Sys.time()),
-          list(name = "Economic losses in tourism", description = "", timestamp = Sys.time())
-        ),
-        responses = list(
-          list(name = "Pollution regulations", description = "", timestamp = Sys.time()),
-          list(name = "Beach cleanup programs", description = "", timestamp = Sys.time())
-        )
-      )
-
-      # Add example connections
-      rv$suggested_connections <- list(
-        # Drivers → Activities
-        list(from = "Economic development", to = "Coastal development", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 1),
-        list(from = "Economic development", to = "Tourism", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 2),
-        list(from = "Consumer demand", to = "Tourism", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "medium", matrix = "a_d", from_index = 2, to_index = 2),
-        list(from = "Economic development", to = "Shipping", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 3),
-        # Activities → Pressures
-        list(from = "Coastal development", to = "Marine litter and plastics", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "medium", matrix = "p_a", from_index = 1, to_index = 1),
-        list(from = "Tourism", to = "Marine litter and plastics", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "strong", matrix = "p_a", from_index = 2, to_index = 1),
-        list(from = "Shipping", to = "Marine litter and plastics", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "medium", matrix = "p_a", from_index = 3, to_index = 1),
-        list(from = "Coastal development", to = "Chemical pollution", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "weak", matrix = "p_a", from_index = 1, to_index = 2),
-        # Pressures → States
-        list(from = "Marine litter and plastics", to = "Water quality decline", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 1, to_index = 1),
-        list(from = "Marine litter and plastics", to = "Habitat degradation", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 1, to_index = 2),
-        list(from = "Chemical pollution", to = "Water quality decline", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 2, to_index = 1),
-        # States → Impacts
-        list(from = "Water quality decline", to = "Reduced water quality for recreation", from_category = "states", to_category = "impacts",
-             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 1, to_index = 2),
-        list(from = "Habitat degradation", to = "Loss of tourism revenue", from_category = "states", to_category = "impacts",
-             polarity = "-", strength = "medium", matrix = "es_mpf", from_index = 2, to_index = 1),
-        # Impacts → Welfare
-        list(from = "Reduced water quality for recreation", to = "Health impacts from contamination", from_category = "impacts", to_category = "welfare",
-             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 2, to_index = 1),
-        list(from = "Loss of tourism revenue", to = "Economic losses in tourism", from_category = "impacts", to_category = "welfare",
-             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 1, to_index = 2)
-      )
-
-      # Mark all connections as approved
-      rv$approved_connections <- seq_along(rv$suggested_connections)
-      rv$current_step <- 10
-      removeModal()
-      showNotification(i18n$t("modules.isa.marine_pollution_template_loaded_with_example_conn"), type = "message", duration = 5)
-    })
-
-    # Template: Coastal Tourism
-    observeEvent(input$template_tourism, {
-      rv$context <- list(
-        project_name = "Coastal Tourism Management",
-        ecosystem_type = "Coastal waters",
-        main_issue = "Tourism impacts on coastal ecosystems"
-      )
-      rv$elements <- list(
-        drivers = list(
-          list(name = "Recreation and leisure", description = "", timestamp = Sys.time()),
-          list(name = "Economic development", description = "", timestamp = Sys.time())
-        ),
-        activities = list(
-          list(name = "Tourism and recreation", description = "", timestamp = Sys.time()),
-          list(name = "Coastal development (hotels, infrastructure)", description = "", timestamp = Sys.time())
-        ),
-        pressures = list(
-          list(name = "Physical habitat damage", description = "", timestamp = Sys.time()),
-          list(name = "Pollution from tourists", description = "", timestamp = Sys.time())
-        ),
-        states = list(
-          list(name = "Habitat degradation", description = "", timestamp = Sys.time()),
-          list(name = "Loss of biodiversity", description = "", timestamp = Sys.time())
-        ),
-        impacts = list(
-          list(name = "Reduced coastal protection", description = "", timestamp = Sys.time()),
-          list(name = "Loss of cultural and aesthetic value", description = "", timestamp = Sys.time())
-        ),
-        welfare = list(
-          list(name = "Reduced quality of life for residents", description = "", timestamp = Sys.time()),
-          list(name = "Loss of cultural identity", description = "", timestamp = Sys.time())
-        ),
-        responses = list(
-          list(name = "Sustainable tourism practices", description = "", timestamp = Sys.time()),
-          list(name = "Coastal zone management", description = "", timestamp = Sys.time())
-        )
-      )
-
-      # Add example connections
-      rv$suggested_connections <- list(
-        # Drivers → Activities
-        list(from = "Recreation and leisure", to = "Tourism and recreation", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 1),
-        list(from = "Economic development", to = "Tourism and recreation", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "medium", matrix = "a_d", from_index = 2, to_index = 1),
-        list(from = "Economic development", to = "Coastal development (hotels, infrastructure)", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "strong", matrix = "a_d", from_index = 2, to_index = 2),
-        # Activities → Pressures
-        list(from = "Tourism and recreation", to = "Physical habitat damage", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "medium", matrix = "p_a", from_index = 1, to_index = 1),
-        list(from = "Tourism and recreation", to = "Pollution from tourists", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "strong", matrix = "p_a", from_index = 1, to_index = 2),
-        list(from = "Coastal development (hotels, infrastructure)", to = "Physical habitat damage", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "strong", matrix = "p_a", from_index = 2, to_index = 1),
-        # Pressures → States
-        list(from = "Physical habitat damage", to = "Habitat degradation", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 1, to_index = 1),
-        list(from = "Physical habitat damage", to = "Loss of biodiversity", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 1, to_index = 2),
-        list(from = "Pollution from tourists", to = "Habitat degradation", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 2, to_index = 1),
-        # States → Impacts
-        list(from = "Habitat degradation", to = "Reduced coastal protection", from_category = "states", to_category = "impacts",
-             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 1, to_index = 1),
-        list(from = "Loss of biodiversity", to = "Loss of cultural and aesthetic value", from_category = "states", to_category = "impacts",
-             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 2, to_index = 2),
-        # Impacts → Welfare
-        list(from = "Reduced coastal protection", to = "Reduced quality of life for residents", from_category = "impacts", to_category = "welfare",
-             polarity = "-", strength = "medium", matrix = "gb_es", from_index = 1, to_index = 1),
-        list(from = "Loss of cultural and aesthetic value", to = "Reduced quality of life for residents", from_category = "impacts", to_category = "welfare",
-             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 2, to_index = 1),
-        list(from = "Loss of cultural and aesthetic value", to = "Loss of cultural identity", from_category = "impacts", to_category = "welfare",
-             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 2, to_index = 2)
-      )
-
-      # Mark all connections as approved
-      rv$approved_connections <- seq_along(rv$suggested_connections)
-      rv$current_step <- 10
-      removeModal()
-      showNotification(i18n$t("modules.isa.coastal_tourism_template_loaded_with_example_conne"), type = "message", duration = 5)
-    })
-
-    # Template: Climate Change
-    observeEvent(input$template_climate, {
-      rv$context <- list(
-        project_name = "Climate Change Impacts on Coral Reefs",
-        ecosystem_type = "Coral reefs",
-        main_issue = "Coral bleaching from rising temperatures"
-      )
-      rv$elements <- list(
-        drivers = list(
-          list(name = "Energy needs", description = "", timestamp = Sys.time()),
-          list(name = "Economic development", description = "", timestamp = Sys.time())
-        ),
-        activities = list(
-          list(name = "Greenhouse gas emissions", description = "", timestamp = Sys.time()),
-          list(name = "Coastal development", description = "", timestamp = Sys.time())
-        ),
-        pressures = list(
-          list(name = "Ocean temperature rise", description = "", timestamp = Sys.time()),
-          list(name = "Ocean acidification", description = "", timestamp = Sys.time())
-        ),
-        states = list(
-          list(name = "Coral bleaching", description = "", timestamp = Sys.time()),
-          list(name = "Loss of coral reef ecosystem", description = "", timestamp = Sys.time())
-        ),
-        impacts = list(
-          list(name = "Loss of fisheries productivity", description = "", timestamp = Sys.time()),
-          list(name = "Reduced coastal protection from storms", description = "", timestamp = Sys.time())
-        ),
-        welfare = list(
-          list(name = "Loss of livelihoods for fishing communities", description = "", timestamp = Sys.time()),
-          list(name = "Increased vulnerability to storms", description = "", timestamp = Sys.time())
-        ),
-        responses = list(
-          list(name = "Climate change mitigation", description = "", timestamp = Sys.time()),
-          list(name = "Coral reef restoration", description = "", timestamp = Sys.time())
-        )
-      )
-
-      # Add example connections
-      rv$suggested_connections <- list(
-        # Drivers → Activities
-        list(from = "Energy needs", to = "Greenhouse gas emissions", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "strong", matrix = "a_d", from_index = 1, to_index = 1),
-        list(from = "Economic development", to = "Greenhouse gas emissions", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "strong", matrix = "a_d", from_index = 2, to_index = 1),
-        list(from = "Economic development", to = "Coastal development", from_category = "drivers", to_category = "activities",
-             polarity = "+", strength = "medium", matrix = "a_d", from_index = 2, to_index = 2),
-        # Activities → Pressures
-        list(from = "Greenhouse gas emissions", to = "Ocean temperature rise", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "strong", matrix = "p_a", from_index = 1, to_index = 1),
-        list(from = "Greenhouse gas emissions", to = "Ocean acidification", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "strong", matrix = "p_a", from_index = 1, to_index = 2),
-        list(from = "Coastal development", to = "Ocean temperature rise", from_category = "activities", to_category = "pressures",
-             polarity = "+", strength = "weak", matrix = "p_a", from_index = 2, to_index = 1),
-        # Pressures → States
-        list(from = "Ocean temperature rise", to = "Coral bleaching", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 1, to_index = 1),
-        list(from = "Ocean temperature rise", to = "Loss of coral reef ecosystem", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "strong", matrix = "mpf_p", from_index = 1, to_index = 2),
-        list(from = "Ocean acidification", to = "Coral bleaching", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 2, to_index = 1),
-        list(from = "Ocean acidification", to = "Loss of coral reef ecosystem", from_category = "pressures", to_category = "states",
-             polarity = "-", strength = "medium", matrix = "mpf_p", from_index = 2, to_index = 2),
-        # States → Impacts
-        list(from = "Coral bleaching", to = "Loss of fisheries productivity", from_category = "states", to_category = "impacts",
-             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 1, to_index = 1),
-        list(from = "Loss of coral reef ecosystem", to = "Loss of fisheries productivity", from_category = "states", to_category = "impacts",
-             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 2, to_index = 1),
-        list(from = "Loss of coral reef ecosystem", to = "Reduced coastal protection from storms", from_category = "states", to_category = "impacts",
-             polarity = "-", strength = "strong", matrix = "es_mpf", from_index = 2, to_index = 2),
-        # Impacts → Welfare
-        list(from = "Loss of fisheries productivity", to = "Loss of livelihoods for fishing communities", from_category = "impacts", to_category = "welfare",
-             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 1, to_index = 1),
-        list(from = "Reduced coastal protection from storms", to = "Increased vulnerability to storms", from_category = "impacts", to_category = "welfare",
-             polarity = "-", strength = "strong", matrix = "gb_es", from_index = 2, to_index = 2)
-      )
-
-      # Mark all connections as approved
-      rv$approved_connections <- seq_along(rv$suggested_connections)
-      rv$current_step <- 10
-      removeModal()
-      showNotification(i18n$t("modules.isa.ai_assistant.climate_change_template_loaded_with_example_connections"), type = "message", duration = 5)
-    })
+    # ========== UI RENDERERS ==========
+    # Breadcrumb, progress, counts, diagram, and connection types extracted to modules/ai_isa/ui_renderers.R
+    setup_ui_renderers(input, output, session, rv, i18n, QUESTION_FLOW)
+
+    # ========== ACTION HANDLERS ==========
+    # Preview, save, start over, and element link handlers extracted to modules/ai_isa/action_handlers.R
+    setup_action_handlers(input, session, rv, i18n, project_data_reactive, event_bus)
+
+    # ========== TEMPLATE HANDLERS ==========
+    # Template loading handlers extracted to modules/ai_isa/template_handlers.R
+    setup_template_handlers(input, session, rv, i18n)
 
     # Auto-save when ISA framework generation is complete (step 10)
     # This ensures auto-save module can recover the data without requiring manual save
     # Uses isolate() and a flag to prevent infinite loop
     observe({
       # Debug: log every time observer fires
-      cat(sprintf("[AI ISA SAVE] Observer fired - current_step: %s\n",
+      debug_log(sprintf("[AI ISA SAVE] Observer fired - current_step: %s\n",
                   if(is.null(rv$current_step)) "NULL" else rv$current_step))
 
       # Only trigger when step reaches 10
       if (!is.null(rv$current_step) && rv$current_step == 10) {
-        cat(sprintf("[AI ISA SAVE] Step is 10, checking auto_saved_step_10 flag: %s\n",
+        debug_log(sprintf("[AI ISA SAVE] Step is 10, checking auto_saved_step_10 flag: %s\n",
                     isTRUE(rv$auto_saved_step_10)))
 
         # Use isolate() to prevent reactive loop when updating project_data_reactive
         isolate({
           # Check if auto-save is enabled
           if (!is.null(autosave_enabled_reactive) && !autosave_enabled_reactive()) {
-            cat("[AI ISA SAVE] Skipping auto-save - auto-save is disabled in settings\n")
+            debug_log("[AI ISA SAVE] Skipping auto-save - auto-save is disabled in settings\n")
             return()
           }
 
@@ -3690,7 +2601,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             current_data <- project_data_reactive()
             if (!is.null(current_data$data$metadata$source) &&
                 current_data$data$metadata$source %in% c("template_direct_load", "template_reviewed_load")) {
-              cat("[AI ISA SAVE] Skipping auto-save - data is from template load\n")
+              debug_log("[AI ISA SAVE] Skipping auto-save - data is from template load\n")
               return()
             }
 
@@ -3701,7 +2612,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               length(rv$elements$responses)
             )
 
-            cat(sprintf("[AI ISA SAVE] Total elements: %d (D:%d A:%d P:%d S:%d I:%d W:%d R/M:%d)\n",
+            debug_log(sprintf("[AI ISA SAVE] Total elements: %d (D:%d A:%d P:%d S:%d I:%d W:%d R/M:%d)\n",
                         total_elements,
                         length(rv$elements$drivers), length(rv$elements$activities),
                         length(rv$elements$pressures), length(rv$elements$states),
@@ -3709,7 +2620,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                         length(rv$elements$responses)))
 
             if (total_elements > 0) {
-              cat("[AI ISA] Auto-saving generated ISA framework to project data\n")
+              debug_log("[AI ISA] Auto-saving generated ISA framework to project data\n")
 
               # Set flag to prevent re-triggering
               rv$auto_saved_step_10 <- TRUE
@@ -3850,7 +2761,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             data_source <- if (!is.null(current_data$data$metadata$data_source)) current_data$data$metadata$data_source else "ai_assistant"
 
             if (data_source == "excel_import") {
-              cat("[AI ISA AUTO-SAVE] Data from Excel import detected - preserving existing adjacency matrices\n")
+              debug_log("[AI ISA AUTO-SAVE] Data from Excel import detected - preserving existing adjacency matrices\n")
               # Don't overwrite adjacency matrices from imported data
               # Just ensure the structure exists
               if (is.null(current_data$data$isa_data$adjacency_matrices)) {
@@ -3874,9 +2785,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             }
 
             # If there are approved connections, build the matrices
-            cat(sprintf("[AI ISA AUTO-SAVE] Approved connections count: %d\n", length(rv$approved_connections)))
-            cat(sprintf("[AI ISA AUTO-SAVE] Approved connection indices: %s\n", paste(rv$approved_connections, collapse = ", ")))
-            cat(sprintf("[AI ISA AUTO-SAVE] Total suggested connections: %d\n", length(rv$suggested_connections)))
+            debug_log(sprintf("[AI ISA AUTO-SAVE] Approved connections count: %d\n", length(rv$approved_connections)))
+            debug_log(sprintf("[AI ISA AUTO-SAVE] Approved connection indices: %s\n", paste(rv$approved_connections, collapse = ", ")))
+            debug_log(sprintf("[AI ISA AUTO-SAVE] Total suggested connections: %d\n", length(rv$suggested_connections)))
 
             # Only build matrices from approved connections if data is NOT from Excel import
             if (data_source != "excel_import" && length(rv$approved_connections) > 0) {
@@ -3889,7 +2800,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               n_welfare <- length(rv$elements$welfare)
               n_responses <- length(rv$elements$responses)
 
-              cat(sprintf("[AI ISA AUTO-SAVE] Matrix dimensions: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R/M=%d\n",
+              debug_log(sprintf("[AI ISA AUTO-SAVE] Matrix dimensions: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R/M=%d\n",
                          n_drivers, n_activities, n_pressures, n_states, n_impacts, n_welfare, n_responses))
 
               # Initialize matrices with forward causal flow (SOURCE×TARGET format)
@@ -3903,7 +2814,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                     sapply(rv$elements$activities, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created d_a matrix (%d x %d)\n", n_drivers, n_activities))
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Created d_a matrix (%d x %d)\n", n_drivers, n_activities))
               }
 
               # 2. Activities → Pressures (A→P)
@@ -3915,7 +2826,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                     sapply(rv$elements$pressures, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created a_p matrix (%d x %d)\n", n_activities, n_pressures))
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Created a_p matrix (%d x %d)\n", n_activities, n_pressures))
               }
 
               # 3. Pressures → Marine Processes (P→MPF)
@@ -3927,7 +2838,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                     sapply(rv$elements$states, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created p_mpf matrix (%d x %d)\n", n_pressures, n_states))
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Created p_mpf matrix (%d x %d)\n", n_pressures, n_states))
               }
 
               # 4. Marine Processes → Ecosystem Services (MPF→ES)
@@ -3939,7 +2850,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                     sapply(rv$elements$impacts, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created mpf_es matrix (%d x %d)\n", n_states, n_impacts))
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Created mpf_es matrix (%d x %d)\n", n_states, n_impacts))
               }
 
               # 5. Ecosystem Services → Goods/Benefits (ES→GB)
@@ -3951,7 +2862,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                     sapply(rv$elements$welfare, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created es_gb matrix (%d x %d)\n", n_impacts, n_welfare))
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Created es_gb matrix (%d x %d)\n", n_impacts, n_welfare))
               }
 
               # 6. Goods/Benefits → Drivers feedback (GB→D)
@@ -3963,7 +2874,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                     sapply(rv$elements$drivers, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created gb_d matrix (%d x %d)\n", n_welfare, n_drivers))
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Created gb_d matrix (%d x %d)\n", n_welfare, n_drivers))
               }
 
               # 7. Goods/Benefits → Responses (GB→R)
@@ -3975,7 +2886,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                     sapply(rv$elements$responses, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created gb_r matrix (%d x %d)\n", n_welfare, n_responses))
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Created gb_r matrix (%d x %d)\n", n_welfare, n_responses))
               }
 
               # 8. Responses → Drivers (R→D management)
@@ -3987,7 +2898,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                     sapply(rv$elements$drivers, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created r_d matrix (%d x %d)\n", n_responses, n_drivers))
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Created r_d matrix (%d x %d)\n", n_responses, n_drivers))
               }
 
               # 9. Responses → Activities (R→A management)
@@ -3999,7 +2910,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                     sapply(rv$elements$activities, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created r_a matrix (%d x %d)\n", n_responses, n_activities))
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Created r_a matrix (%d x %d)\n", n_responses, n_activities))
               }
 
               # 10. Responses → Pressures (R→P management)
@@ -4011,17 +2922,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                     sapply(rv$elements$responses, function(x) x$name)
                   )
                 )
-                cat(sprintf("[AI ISA AUTO-SAVE] Created p_r matrix (%d x %d)\n", n_pressures, n_responses))
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Created p_r matrix (%d x %d)\n", n_pressures, n_responses))
               }
 
               # Fill matrices with approved connections
-              cat(sprintf("[AI ISA AUTO-SAVE] Processing %d approved connections...\n", length(rv$approved_connections)))
+              debug_log(sprintf("[AI ISA AUTO-SAVE] Processing %d approved connections...\n", length(rv$approved_connections)))
               for (conn_idx in rv$approved_connections) {
                 conn <- rv$suggested_connections[[conn_idx]]
 
-                cat(sprintf("[AI ISA AUTO-SAVE] Connection #%d: %s\n", conn_idx,
+                debug_log(sprintf("[AI ISA AUTO-SAVE] Connection #%d: %s\n", conn_idx,
                            paste(names(conn), collapse = ", ")))
-                cat(sprintf("[AI ISA AUTO-SAVE]   matrix=%s, from_index=%s, to_index=%s, polarity=%s, strength=%s\n",
+                debug_log(sprintf("[AI ISA AUTO-SAVE]   matrix=%s, from_index=%s, to_index=%s, polarity=%s, strength=%s\n",
                            conn$matrix %||% "NULL",
                            conn$from_index %||% "NULL",
                            conn$to_index %||% "NULL",
@@ -4031,50 +2942,50 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                 # Format: "+strength:confidence"
                 confidence <- conn$confidence %||% CONFIDENCE_DEFAULT
                 value <- paste0(conn$polarity, conn$strength, ":", confidence)
-                cat(sprintf("[AI ISA AUTO-SAVE]   Formatted value: %s\n", value))
+                debug_log(sprintf("[AI ISA AUTO-SAVE]   Formatted value: %s\n", value))
 
                 # Determine which matrix and indices (NEW: forward flow uses [from, to])
                 if (conn$matrix == "d_a" && !is.null(current_data$data$isa_data$adjacency_matrices$d_a)) {
                   current_data$data$isa_data$adjacency_matrices$d_a[conn$from_index, conn$to_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to d_a[%d, %d]\n", conn$from_index, conn$to_index))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to d_a[%d, %d]\n", conn$from_index, conn$to_index))
                 } else if (conn$matrix == "a_p" && !is.null(current_data$data$isa_data$adjacency_matrices$a_p)) {
                   current_data$data$isa_data$adjacency_matrices$a_p[conn$from_index, conn$to_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to a_p[%d, %d]\n", conn$from_index, conn$to_index))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to a_p[%d, %d]\n", conn$from_index, conn$to_index))
                 } else if (conn$matrix == "p_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$p_mpf)) {
                   current_data$data$isa_data$adjacency_matrices$p_mpf[conn$from_index, conn$to_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to p_mpf[%d, %d]\n", conn$from_index, conn$to_index))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to p_mpf[%d, %d]\n", conn$from_index, conn$to_index))
                 } else if (conn$matrix == "mpf_es" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_es)) {
                   current_data$data$isa_data$adjacency_matrices$mpf_es[conn$from_index, conn$to_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to mpf_es[%d, %d]\n", conn$from_index, conn$to_index))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to mpf_es[%d, %d]\n", conn$from_index, conn$to_index))
                 } else if (conn$matrix == "es_gb" && !is.null(current_data$data$isa_data$adjacency_matrices$es_gb)) {
                   current_data$data$isa_data$adjacency_matrices$es_gb[conn$from_index, conn$to_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to es_gb[%d, %d]\n", conn$from_index, conn$to_index))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to es_gb[%d, %d]\n", conn$from_index, conn$to_index))
                 } else if (conn$matrix == "gb_d" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_d)) {
                   current_data$data$isa_data$adjacency_matrices$gb_d[conn$from_index, conn$to_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to gb_d[%d, %d]\n", conn$from_index, conn$to_index))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to gb_d[%d, %d]\n", conn$from_index, conn$to_index))
                 } else if (conn$matrix == "gb_r" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_r)) {
                   current_data$data$isa_data$adjacency_matrices$gb_r[conn$from_index, conn$to_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to gb_r[%d, %d]\n", conn$from_index, conn$to_index))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to gb_r[%d, %d]\n", conn$from_index, conn$to_index))
                 } else if (conn$matrix == "r_d" && !is.null(current_data$data$isa_data$adjacency_matrices$r_d)) {
                   current_data$data$isa_data$adjacency_matrices$r_d[conn$from_index, conn$to_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_d[%d, %d]\n", conn$from_index, conn$to_index))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_d[%d, %d]\n", conn$from_index, conn$to_index))
                 } else if (conn$matrix == "r_a" && !is.null(current_data$data$isa_data$adjacency_matrices$r_a)) {
                   current_data$data$isa_data$adjacency_matrices$r_a[conn$from_index, conn$to_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_a[%d, %d]\n", conn$from_index, conn$to_index))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_a[%d, %d]\n", conn$from_index, conn$to_index))
                 } else if (conn$matrix == "r_p" && !is.null(current_data$data$isa_data$adjacency_matrices$r_p)) {
                   current_data$data$isa_data$adjacency_matrices$r_p[conn$from_index, conn$to_index] <- value
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_p[%d, %d]\n", conn$from_index, conn$to_index))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✓ Saved to r_p[%d, %d]\n", conn$from_index, conn$to_index))
                 } else {
-                  cat(sprintf("[AI ISA AUTO-SAVE]   ✗ FAILED to save - matrix '%s' not found or NULL\n", conn$matrix %||% "NULL"))
+                  debug_log(sprintf("[AI ISA AUTO-SAVE]   ✗ FAILED to save - matrix '%s' not found or NULL\n", conn$matrix %||% "NULL"))
                 }
               }
-              cat("[AI ISA AUTO-SAVE] Finished processing all connections\n")
+              debug_log("[AI ISA AUTO-SAVE] Finished processing all connections\n")
             }
 
             current_data$last_modified <- Sys.time()
 
             # Debug: verify data before saving
-            cat(sprintf("[AI ISA] About to save - drivers: %d rows, activities: %d rows, connections: %d suggested (%d approved)\n",
+            debug_log(sprintf("[AI ISA] About to save - drivers: %d rows, activities: %d rows, connections: %d suggested (%d approved)\n",
               nrow(current_data$data$isa_data$drivers),
               nrow(current_data$data$isa_data$activities),
               length(rv$suggested_connections),
@@ -4085,13 +2996,13 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
             # Debug: verify data after saving
             verify_data <- project_data_reactive()
-            cat(sprintf("[AI ISA] Verification after save - drivers: %d rows, activities: %d rows\n",
+            debug_log(sprintf("[AI ISA] Verification after save - drivers: %d rows, activities: %d rows\n",
               if(!is.null(verify_data$data$isa_data$drivers)) nrow(verify_data$data$isa_data$drivers) else 0,
               if(!is.null(verify_data$data$isa_data$activities)) nrow(verify_data$data$isa_data$activities) else 0))
 
-              cat(sprintf("[AI ISA] Auto-saved %d total elements to project_data_reactive\n", total_elements))
+              debug_log(sprintf("[AI ISA] Auto-saved %d total elements to project_data_reactive\n", total_elements))
             }, error = function(e) {
-              cat(sprintf("[AI ISA] Auto-save error: %s\n", e$message))
+              debug_log(sprintf("[AI ISA] Auto-save error: %s\n", e$message))
             })
             }
           }
@@ -4103,7 +3014,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # NOTE: Auto-save already saves when step reaches 10 (see observer at line 1955)
     # This button allows users to manually trigger save after editing elements
     observeEvent(input$save_to_isa, {
-      cat("[AI ISA] Manual save to ISA clicked\n")
+      debug_log("[AI ISA] Manual save to ISA clicked\n")
 
       # Check if auto-save already saved
       if (isTRUE(rv$auto_saved_step_10)) {
@@ -4112,18 +3023,18 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           type = "message",
           duration = 5
         )
-        cat("[AI ISA] Auto-save already completed, no manual save needed\n")
+        debug_log("[AI ISA] Auto-save already completed, no manual save needed\n")
         return()
       }
 
       tryCatch({
         # Get current project data
         current_data <- project_data_reactive()
-        cat("[AI ISA] Retrieved project data for manual save\n")
+        debug_log("[AI ISA] Retrieved project data for manual save\n")
 
         # Initialize data structure if it doesn't exist
         if (is.null(current_data) || length(current_data) == 0) {
-          cat("[AI ISA] Initializing new project data structure\n")
+          debug_log("[AI ISA] Initializing new project data structure\n")
           current_data <- list(
             data = list(
               isa_data = list()
@@ -4134,15 +3045,15 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
         # Ensure isa_data structure exists
         if (is.null(current_data$data)) {
-          cat("[AI ISA] Initializing data container\n")
+          debug_log("[AI ISA] Initializing data container\n")
           current_data$data <- list(isa_data = list())
         }
         if (is.null(current_data$data$isa_data)) {
-          cat("[AI ISA] Initializing isa_data container\n")
+          debug_log("[AI ISA] Initializing isa_data container\n")
           current_data$data$isa_data <- list()
         }
 
-        cat(sprintf("[AI ISA] Manual saving %d drivers, %d activities, %d pressures, %d states, %d impacts, %d welfare, %d response measures\n",
+        debug_log(sprintf("[AI ISA] Manual saving %d drivers, %d activities, %d pressures, %d states, %d impacts, %d welfare, %d response measures\n",
                    length(rv$elements$drivers), length(rv$elements$activities),
                    length(rv$elements$pressures), length(rv$elements$states),
                    length(rv$elements$impacts), length(rv$elements$welfare),
@@ -4314,9 +3225,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       )
 
       # If there are approved connections, build the matrices
-      cat(sprintf("[AI ISA CONNECTIONS] Approved connections count: %d\n", length(rv$approved_connections)))
-      cat(sprintf("[AI ISA CONNECTIONS] Approved connection indices: %s\n", paste(rv$approved_connections, collapse = ", ")))
-      cat(sprintf("[AI ISA CONNECTIONS] Total suggested connections: %d\n", length(rv$suggested_connections)))
+      debug_log(sprintf("[AI ISA CONNECTIONS] Approved connections count: %d\n", length(rv$approved_connections)))
+      debug_log(sprintf("[AI ISA CONNECTIONS] Approved connection indices: %s\n", paste(rv$approved_connections, collapse = ", ")))
+      debug_log(sprintf("[AI ISA CONNECTIONS] Total suggested connections: %d\n", length(rv$suggested_connections)))
 
       if (length(rv$approved_connections) > 0) {
         # Get dimensions for each matrix
@@ -4328,7 +3239,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         n_welfare <- length(rv$elements$welfare)
         n_responses <- length(rv$elements$responses)
 
-        cat(sprintf("[AI ISA CONNECTIONS] Matrix dimensions: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d\n",
+        debug_log(sprintf("[AI ISA CONNECTIONS] Matrix dimensions: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d\n",
                    n_drivers, n_activities, n_pressures, n_states, n_impacts, n_welfare, n_responses))
 
         # Initialize matrices with forward causal flow (SOURCE×TARGET format)
@@ -4342,7 +3253,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               sapply(rv$elements$activities, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created d_a matrix (%d x %d)\n", n_drivers, n_activities))
+          debug_log(sprintf("[AI ISA CONNECTIONS] Created d_a matrix (%d x %d)\n", n_drivers, n_activities))
         }
 
         # 2. Activities → Pressures (A→P)
@@ -4354,7 +3265,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               sapply(rv$elements$pressures, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created a_p matrix (%d x %d)\n", n_activities, n_pressures))
+          debug_log(sprintf("[AI ISA CONNECTIONS] Created a_p matrix (%d x %d)\n", n_activities, n_pressures))
         }
 
         # 3. Pressures → Marine Processes (P→MPF)
@@ -4366,7 +3277,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               sapply(rv$elements$states, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created p_mpf matrix (%d x %d)\n", n_pressures, n_states))
+          debug_log(sprintf("[AI ISA CONNECTIONS] Created p_mpf matrix (%d x %d)\n", n_pressures, n_states))
         }
 
         # 4. Marine Processes → Ecosystem Services (MPF→ES)
@@ -4378,7 +3289,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               sapply(rv$elements$impacts, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created mpf_es matrix (%d x %d)\n", n_states, n_impacts))
+          debug_log(sprintf("[AI ISA CONNECTIONS] Created mpf_es matrix (%d x %d)\n", n_states, n_impacts))
         }
 
         # 5. Ecosystem Services → Goods/Benefits (ES→GB)
@@ -4390,7 +3301,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               sapply(rv$elements$welfare, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created es_gb matrix (%d x %d)\n", n_impacts, n_welfare))
+          debug_log(sprintf("[AI ISA CONNECTIONS] Created es_gb matrix (%d x %d)\n", n_impacts, n_welfare))
         }
 
         # 6. Goods/Benefits → Drivers feedback (GB→D)
@@ -4402,7 +3313,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               sapply(rv$elements$drivers, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created gb_d matrix (%d x %d)\n", n_welfare, n_drivers))
+          debug_log(sprintf("[AI ISA CONNECTIONS] Created gb_d matrix (%d x %d)\n", n_welfare, n_drivers))
         }
 
         # 7. Goods/Benefits → Responses (GB→R)
@@ -4414,7 +3325,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               sapply(rv$elements$responses, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created gb_r matrix (%d x %d)\n", n_welfare, n_responses))
+          debug_log(sprintf("[AI ISA CONNECTIONS] Created gb_r matrix (%d x %d)\n", n_welfare, n_responses))
         }
 
         # 8. Responses → Drivers (R→D management)
@@ -4426,7 +3337,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               sapply(rv$elements$drivers, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created r_d matrix (%d x %d)\n", n_responses, n_drivers))
+          debug_log(sprintf("[AI ISA CONNECTIONS] Created r_d matrix (%d x %d)\n", n_responses, n_drivers))
         }
 
         # 9. Responses → Activities (R→A management)
@@ -4438,7 +3349,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               sapply(rv$elements$activities, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created r_a matrix (%d x %d)\n", n_responses, n_activities))
+          debug_log(sprintf("[AI ISA CONNECTIONS] Created r_a matrix (%d x %d)\n", n_responses, n_activities))
         }
 
         # 10. Responses → Pressures (R→P management)
@@ -4450,17 +3361,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               sapply(rv$elements$pressures, function(x) x$name)
             )
           )
-          cat(sprintf("[AI ISA CONNECTIONS] Created r_p matrix (%d x %d)\n", n_responses, n_pressures))
+          debug_log(sprintf("[AI ISA CONNECTIONS] Created r_p matrix (%d x %d)\n", n_responses, n_pressures))
         }
 
         # Fill matrices with approved connections
-        cat(sprintf("[AI ISA CONNECTIONS] Processing %d approved connections...\n", length(rv$approved_connections)))
+        debug_log(sprintf("[AI ISA CONNECTIONS] Processing %d approved connections...\n", length(rv$approved_connections)))
         for (conn_idx in rv$approved_connections) {
           conn <- rv$suggested_connections[[conn_idx]]
 
-          cat(sprintf("[AI ISA CONNECTIONS] Connection #%d: %s\n", conn_idx,
+          debug_log(sprintf("[AI ISA CONNECTIONS] Connection #%d: %s\n", conn_idx,
                      paste(names(conn), collapse = ", ")))
-          cat(sprintf("[AI ISA CONNECTIONS]   matrix=%s, from_index=%s, to_index=%s, polarity=%s, strength=%s\n",
+          debug_log(sprintf("[AI ISA CONNECTIONS]   matrix=%s, from_index=%s, to_index=%s, polarity=%s, strength=%s\n",
                      conn$matrix %||% "NULL",
                      conn$from_index %||% "NULL",
                      conn$to_index %||% "NULL",
@@ -4470,44 +3381,44 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           # Format: "+strength:confidence"
           confidence <- conn$confidence %||% CONFIDENCE_DEFAULT  # Default if not present
           value <- paste0(conn$polarity, conn$strength, ":", confidence)
-          cat(sprintf("[AI ISA CONNECTIONS]   Formatted value: %s\n", value))
+          debug_log(sprintf("[AI ISA CONNECTIONS]   Formatted value: %s\n", value))
 
           # Determine which matrix and indices (NEW: forward flow uses [from, to])
           if (conn$matrix == "d_a" && !is.null(current_data$data$isa_data$adjacency_matrices$d_a)) {
             current_data$data$isa_data$adjacency_matrices$d_a[conn$from_index, conn$to_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to d_a[%d, %d]\n", conn$from_index, conn$to_index))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to d_a[%d, %d]\n", conn$from_index, conn$to_index))
           } else if (conn$matrix == "a_p" && !is.null(current_data$data$isa_data$adjacency_matrices$a_p)) {
             current_data$data$isa_data$adjacency_matrices$a_p[conn$from_index, conn$to_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to a_p[%d, %d]\n", conn$from_index, conn$to_index))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to a_p[%d, %d]\n", conn$from_index, conn$to_index))
           } else if (conn$matrix == "p_mpf" && !is.null(current_data$data$isa_data$adjacency_matrices$p_mpf)) {
             current_data$data$isa_data$adjacency_matrices$p_mpf[conn$from_index, conn$to_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to p_mpf[%d, %d]\n", conn$from_index, conn$to_index))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to p_mpf[%d, %d]\n", conn$from_index, conn$to_index))
           } else if (conn$matrix == "mpf_es" && !is.null(current_data$data$isa_data$adjacency_matrices$mpf_es)) {
             current_data$data$isa_data$adjacency_matrices$mpf_es[conn$from_index, conn$to_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to mpf_es[%d, %d]\n", conn$from_index, conn$to_index))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to mpf_es[%d, %d]\n", conn$from_index, conn$to_index))
           } else if (conn$matrix == "es_gb" && !is.null(current_data$data$isa_data$adjacency_matrices$es_gb)) {
             current_data$data$isa_data$adjacency_matrices$es_gb[conn$from_index, conn$to_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to es_gb[%d, %d]\n", conn$from_index, conn$to_index))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to es_gb[%d, %d]\n", conn$from_index, conn$to_index))
           } else if (conn$matrix == "gb_d" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_d)) {
             current_data$data$isa_data$adjacency_matrices$gb_d[conn$from_index, conn$to_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to gb_d[%d, %d]\n", conn$from_index, conn$to_index))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to gb_d[%d, %d]\n", conn$from_index, conn$to_index))
           } else if (conn$matrix == "gb_r" && !is.null(current_data$data$isa_data$adjacency_matrices$gb_r)) {
             current_data$data$isa_data$adjacency_matrices$gb_r[conn$from_index, conn$to_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to gb_r[%d, %d]\n", conn$from_index, conn$to_index))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to gb_r[%d, %d]\n", conn$from_index, conn$to_index))
           } else if (conn$matrix == "r_d" && !is.null(current_data$data$isa_data$adjacency_matrices$r_d)) {
             current_data$data$isa_data$adjacency_matrices$r_d[conn$from_index, conn$to_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to r_d[%d, %d]\n", conn$from_index, conn$to_index))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to r_d[%d, %d]\n", conn$from_index, conn$to_index))
           } else if (conn$matrix == "r_a" && !is.null(current_data$data$isa_data$adjacency_matrices$r_a)) {
             current_data$data$isa_data$adjacency_matrices$r_a[conn$from_index, conn$to_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to r_a[%d, %d]\n", conn$from_index, conn$to_index))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to r_a[%d, %d]\n", conn$from_index, conn$to_index))
           } else if (conn$matrix == "r_p" && !is.null(current_data$data$isa_data$adjacency_matrices$r_p)) {
             current_data$data$isa_data$adjacency_matrices$r_p[conn$from_index, conn$to_index] <- value
-            cat(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to r_p[%d, %d]\n", conn$from_index, conn$to_index))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✓ Saved to r_p[%d, %d]\n", conn$from_index, conn$to_index))
           } else {
-            cat(sprintf("[AI ISA CONNECTIONS]   ✗ FAILED to save - matrix '%s' not found or NULL\n", conn$matrix %||% "NULL"))
+            debug_log(sprintf("[AI ISA CONNECTIONS]   ✗ FAILED to save - matrix '%s' not found or NULL\n", conn$matrix %||% "NULL"))
           }
         }
-        cat("[AI ISA CONNECTIONS] Finished processing all connections\n")
+        debug_log("[AI ISA CONNECTIONS] Finished processing all connections\n")
       }
 
       # Add metadata
@@ -4522,9 +3433,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       current_data$last_modified <- Sys.time()
 
         # Update the reactive value
-        cat("[AI ISA] Updating project_data reactive\n")
+        debug_log("[AI ISA] Updating project_data reactive\n")
         project_data_reactive(current_data)
-        cat("[AI ISA] Project data updated successfully\n")
+        debug_log("[AI ISA] Project data updated successfully\n")
 
         # Count total elements
         total_elements <- sum(
@@ -4540,7 +3451,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Count connections
         n_connections <- length(rv$approved_connections)
 
-        cat(sprintf("[AI ISA] Save completed: %d elements, %d connections\n", total_elements, n_connections))
+        debug_log(sprintf("[AI ISA] Save completed: %d elements, %d connections\n", total_elements, n_connections))
 
         showNotification(
           paste0(i18n$t("modules.isa.ai_assistant.model_saved_successfully"), " ", total_elements, " ", i18n$t("modules.isa.ai_assistant.elements_and"), " ",
@@ -4550,8 +3461,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         )
 
       }, error = function(e) {
-        cat(sprintf("[AI ISA ERROR] Save failed: %s\n", e$message))
-        cat(sprintf("[AI ISA ERROR] Call stack: %s\n", paste(sys.calls(), collapse = "\n")))
+        debug_log(sprintf("[AI ISA ERROR] Save failed: %s\n", e$message))
+        debug_log(sprintf("[AI ISA ERROR] Call stack: %s\n", paste(sys.calls(), collapse = "\n")))
 
         showNotification(
           paste0(i18n$t("modules.isa.ai_assistant.error_saving_model"), " ", e$message),

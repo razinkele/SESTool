@@ -15,51 +15,7 @@ entry_point_ui <- function(id, i18n) {
 
     # Custom CSS
     tags$head(
-      tags$style(HTML("
-        .ep-card {
-          border: 2px solid #3498db;
-          border-radius: 8px;
-          padding: 20px;
-          margin: 15px 0;
-          background: white;
-          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        .ep-card:hover {
-          box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-          transform: translateY(-2px);
-        }
-        .ep-card.selected {
-          border-color: #27ae60;
-          background: #eafaf1;
-        }
-        .ep-progress {
-          background: #ecf0f1;
-          border-radius: 20px;
-          padding: 15px;
-          margin: 20px 0;
-        }
-        .ep-step {
-          display: inline-block;
-          padding: 8px 15px;
-          margin: 0 5px;
-          border-radius: 15px;
-          background: white;
-          border: 2px solid #bdc3c7;
-          font-weight: 500;
-        }
-        .ep-step.active {
-          background: #3498db;
-          color: white;
-          border-color: #3498db;
-        }
-        .ep-step.completed {
-          background: #27ae60;
-          color: white;
-          border-color: #27ae60;
-        }
-      ")),
+      tags$link(rel = "stylesheet", type = "text/css", href = "entry-point.css"),
       # Initialize Bootstrap tooltips and download handler
       tags$script(HTML("
         $(document).ready(function() {
@@ -346,7 +302,7 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
           type = "error",
           duration = 5
         )
-        cat(sprintf("[ENTRY POINT] Error generating pathway report: %s\n", e$message))
+        debug_log(sprintf("Error generating pathway report: %s", e$message), "ENTRY-POINT")
       })
     })
 
@@ -417,6 +373,58 @@ render_welcome_screen <- function(ns, i18n) {
               actionButton(ns("start_quick"), i18n$t("modules.entry_point.browse_tools"),
                           icon = icon("tools"), class = "btn-success btn-lg btn-block")
             )
+          )
+        )
+      ),
+
+      # FAQ Accordion
+      hr(),
+      column(12,
+        h4(icon("question-circle"), " ", "Frequently Asked Questions"),
+        bs4Accordion(
+          id = ns("faq_accordion"),
+          bs4AccordionItem(
+            title = "What is a Social-Ecological System (SES)?",
+            status = "primary",
+            collapsed = TRUE,
+            p("A Social-Ecological System (SES) is an integrated concept that recognizes humans as part of, not separate from, ecosystems. It emphasizes the interconnected nature of human societies and natural environments, where social and ecological components continuously interact and influence each other."),
+            p("In marine contexts, an SES includes fishing communities, coastal development, marine ecosystems, and the various ways they interact through activities like fishing, tourism, and conservation.")
+          ),
+          bs4AccordionItem(
+            title = "What is the DAPSIWRM framework?",
+            status = "info",
+            collapsed = TRUE,
+            p("DAPSIWRM stands for Drivers → Activities → Pressures → State → Impacts → Welfare → Responses → Measures. It's a comprehensive framework for analyzing cause-effect chains in social-ecological systems."),
+            tags$ul(
+              tags$li(strong("Drivers:"), " Root causes (e.g., population growth, economic development)"),
+              tags$li(strong("Activities:"), " Human activities (e.g., fishing, shipping)"),
+              tags$li(strong("Pressures:"), " Environmental pressures (e.g., pollution, habitat loss)"),
+              tags$li(strong("State:"), " Condition of ecosystem (e.g., biodiversity, water quality)"),
+              tags$li(strong("Impacts:"), " Effects on ecosystem services"),
+              tags$li(strong("Welfare:"), " Human well-being outcomes"),
+              tags$li(strong("Responses:"), " Management actions"),
+              tags$li(strong("Measures:"), " Policy instruments")
+            )
+          ),
+          bs4AccordionItem(
+            title = "How do I get started?",
+            status = "success",
+            collapsed = TRUE,
+            p("Start with the ", strong("Guided Pathway"), " button above! It will walk you through a series of questions to understand your role, needs, and context."),
+            p("Based on your answers, we'll recommend the most appropriate tools and methods for your specific marine management situation."),
+            p("If you already know which tool you need, click ", strong("Quick Access"), " to browse all available tools directly.")
+          ),
+          bs4AccordionItem(
+            title = "Do I need technical expertise?",
+            status = "warning",
+            collapsed = TRUE,
+            p("Not at all! This toolbox is designed for users of all levels:"),
+            tags$ul(
+              tags$li(strong("Beginners:"), " Use the AI-Assisted or Template-based SES creation for guided support"),
+              tags$li(strong("Intermediate:"), " Access all standard tools and features"),
+              tags$li(strong("Experts:"), " Full access to advanced analysis and customization")
+            ),
+            p("You can change your user level at any time from the Settings menu in the header.")
           )
         )
       )
@@ -658,12 +666,18 @@ render_recommendations_screen <- function(ns, rv, user_level = "intermediate", i
     column(12,
       h2(icon("star"), " ", i18n$t("modules.entry_point.recommended_tools_for_your_marine_management_question")),
 
-      box(
+      bs4Card(
         title = i18n$t("modules.entry_point.your_pathway_summary"),
         status = "info",
         solidHeader = TRUE,
         width = 12,
         collapsible = TRUE,
+
+        # Add ribbon to highlight this as starting point
+        ribbon = bs4Ribbon(
+          text = "START HERE",
+          color = "success"
+        ),
 
         tags$ul(
           if (length(rv$ep0_selected) > 0) tags$li(strong(i18n$t("modules.entry_point.role"), " "),

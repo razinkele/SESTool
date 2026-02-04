@@ -128,6 +128,39 @@ tryCatch({
   message("Warning: Could not load export_functions.R")
 })
 
+tryCatch({
+  if (file.exists(file.path(project_root, "functions/ml_feature_engineering.R"))) {
+    source(file.path(project_root, "functions/ml_feature_engineering.R"), local = TRUE)
+  }
+}, error = function(e) {
+  message("Warning: Could not load ml_feature_engineering.R")
+})
+
+# Load SES templates for integration tests
+# NOTE: Templates are also loaded in helper-templates.R which runs automatically
+# This is a backup in case helper files run in different order
+tryCatch({
+  if (file.exists(file.path(project_root, "functions/template_loader.R"))) {
+    source(file.path(project_root, "functions/template_loader.R"), local = FALSE)
+    # Load templates from data directory and assign to global environment
+    # Use assign() for proper scoping - ensures exists("ses_templates") works in tests
+    templates_loaded <- load_all_templates("data")
+    assign("ses_templates", templates_loaded, envir = .GlobalEnv)
+    if (length(templates_loaded) > 0) {
+      message("Setup: Loaded ", length(templates_loaded), " SES templates for tests: ",
+              paste(names(templates_loaded), collapse = ", "))
+    } else {
+      message("Setup: Warning - No templates loaded from data directory")
+    }
+  }
+}, error = function(e) {
+  message("Setup: Warning - Could not load SES templates: ", e$message)
+  # Assign empty list to prevent exists() check failures
+  assign("ses_templates", list(), envir = .GlobalEnv)
+})
+
+# NOTE: Module stubs are now in helper-stubs.R and loaded automatically by testthat
+
 # Restore working directory
 setwd(old_wd)
 

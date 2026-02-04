@@ -61,3 +61,16 @@ node_modules/
 # Python cache (if any)
 __pycache__/
 *.pyc
+
+# Additional exclusions for cleaner Docker builds
+docs/
+SESModels/
+.claude/
+.github/
+examples/
+abstract.docx
+fixture_list.txt
+*.Rproj.user
+*_backup.R
+*_old.R
+*-laguna-safeBackup-*.R

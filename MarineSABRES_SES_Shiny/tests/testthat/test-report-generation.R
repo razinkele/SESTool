@@ -123,8 +123,6 @@ create_empty_project_data <- function() {
 # ==============================================================================
 
 test_that("get_loop_data returns loop_info from analysis location", {
-  skip_if_not(exists("get_loop_data"), "get_loop_data function not loaded")
-
   data <- create_test_project_data()
   loops <- get_loop_data(data)
 
@@ -134,8 +132,6 @@ test_that("get_loop_data returns loop_info from analysis location", {
 })
 
 test_that("get_loop_data falls back to cld$loops", {
-  skip_if_not(exists("get_loop_data"), "get_loop_data function not loaded")
-
   data <- create_test_project_data()
   # Remove analysis location
   data$data$analysis$loops$loop_info <- NULL
@@ -147,8 +143,6 @@ test_that("get_loop_data falls back to cld$loops", {
 })
 
 test_that("get_loop_data returns NULL for empty data", {
-  skip_if_not(exists("get_loop_data"), "get_loop_data function not loaded")
-
   data <- create_empty_project_data()
   loops <- get_loop_data(data)
 
@@ -160,9 +154,6 @@ test_that("get_loop_data returns NULL for empty data", {
 # ==============================================================================
 
 test_that("generate_report_content creates valid Rmd for executive report", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_test_project_data()
   content <- generate_report_content(data, "executive")
 
@@ -174,9 +165,6 @@ test_that("generate_report_content creates valid Rmd for executive report", {
 })
 
 test_that("generate_report_content creates valid Rmd for technical report", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_test_project_data()
   content <- generate_report_content(data, "technical")
 
@@ -186,9 +174,6 @@ test_that("generate_report_content creates valid Rmd for technical report", {
 })
 
 test_that("generate_report_content creates valid Rmd for full report", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_test_project_data()
   content <- generate_report_content(data, "full")
 
@@ -197,9 +182,6 @@ test_that("generate_report_content creates valid Rmd for full report", {
 })
 
 test_that("generate_report_content handles empty project data", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_empty_project_data()
 
   # Should not throw error even with empty data
@@ -212,9 +194,6 @@ test_that("generate_report_content handles empty project data", {
 })
 
 test_that("generate_report_content handles NULL metadata gracefully", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_test_project_data()
   data$data$metadata <- NULL
 
@@ -226,9 +205,6 @@ test_that("generate_report_content handles NULL metadata gracefully", {
 })
 
 test_that("generate_report_content handles list-wrapped values", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_test_project_data()
   # Wrap values in lists (common issue with reactive values)
   data$data$metadata$da_site <- list("Test Site")
@@ -246,9 +222,6 @@ test_that("generate_report_content handles list-wrapped values", {
 # ==============================================================================
 
 test_that("Executive report contains expected sections", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_test_project_data()
   content <- generate_report_content(data, "executive")
 
@@ -257,9 +230,6 @@ test_that("Executive report contains expected sections", {
 })
 
 test_that("Technical report is more detailed than executive", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_test_project_data()
 
   exec_content <- generate_report_content(data, "executive")
@@ -274,9 +244,6 @@ test_that("Technical report is more detailed than executive", {
 # ==============================================================================
 
 test_that("generate_report_content handles missing dates", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_test_project_data()
   data$created_at <- NULL
   data$last_modified <- NULL
@@ -289,9 +256,6 @@ test_that("generate_report_content handles missing dates", {
 })
 
 test_that("generate_report_content handles invalid report type", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_test_project_data()
 
   # Should still work with unknown type (uses type as subtitle)
@@ -303,9 +267,6 @@ test_that("generate_report_content handles invalid report type", {
 })
 
 test_that("generate_report_content handles vector report_type", {
-  skip_if_not(exists("generate_report_content"), "generate_report_content function not loaded")
-  skip_if_not(exists("debug_log"), "debug_log function not loaded")
-
   data <- create_test_project_data()
 
   # Should use first element if vector is passed

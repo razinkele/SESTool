@@ -1289,7 +1289,7 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
           list(count = 0, edges = list())
         }
       }, error = function(e) {
-        cat(sprintf("[SCENARIO BUILDER] Loop detection error: %s\n", e$message))
+        debug_log(sprintf("Loop detection error: %s", e$message), "SCENARIO-BUILDER")
         list(count = 0, edges = list())
       })
     }

@@ -20,7 +20,18 @@ This validates:
 
 ## Quick Start
 
-### Docker Deployment (Recommended)
+### Shiny Server Deployment (Recommended)
+
+```bash
+cd deployment
+sudo ./deploy-shiny-server.sh
+```
+
+Access at: http://your-server:3838/marinesabres
+
+This standalone script includes all pre-checks and requires no parameters.
+
+### Docker Deployment
 
 ```bash
 cd deployment
@@ -29,14 +40,12 @@ cd deployment
 
 Access at: http://localhost:3838
 
-### Shiny Server Deployment
+### Alternative: Multi-method deploy.sh
 
 ```bash
 cd deployment
-sudo ./deploy.sh --shiny-server
+sudo ./deploy.sh --shiny-server  # or --docker
 ```
-
-Access at: http://your-server:3838/marinesabres
 
 ## Package Contents
 
@@ -44,19 +53,41 @@ Access at: http://your-server:3838/marinesabres
 deployment/
 ├── README.md                      # This file
 ├── DEPLOYMENT_GUIDE.md            # Comprehensive deployment documentation
-├── TROUBLESHOOTING.md             # Deployment troubleshooting guide (NEW)
+├── TROUBLESHOOTING.md             # Deployment troubleshooting guide
+├── deploy-shiny-server.sh         # Standalone Shiny Server deployment (NEW)
+├── deploy.sh                      # Multi-method deployment script
 ├── pre-deploy-check.R             # Pre-deployment validation script
 ├── validate-deployment.sh         # Post-deployment validation
-├── check-deployment-status.sh     # Deployment diagnostics (NEW)
-├── force-restart-shiny.sh         # Force restart with cache clearing (NEW)
+├── check-deployment-status.sh     # Deployment diagnostics
+├── force-restart-shiny.sh         # Force restart with cache clearing
 ├── Dockerfile                     # Docker container configuration
 ├── docker-compose.yml             # Docker Compose orchestration
 ├── shiny-server.conf              # Shiny Server configuration
-├── install_dependencies.R         # R package installation script
-└── deploy.sh                      # Automated deployment script
+└── install_dependencies.R         # R package installation script
 ```
 
 ## File Descriptions
+
+### deploy-shiny-server.sh (NEW - RECOMMENDED)
+Standalone deployment script for direct Shiny Server deployment:
+- **No parameters required** - just run with sudo
+- Built-in pre-deployment checks (files, directories, R syntax, disk space)
+- Automatic service stop/start with cache clearing
+- User data backup and restore
+- Post-deployment validation
+- Clear progress output with color coding
+
+```bash
+# Simple usage - no parameters needed
+sudo ./deploy-shiny-server.sh
+```
+
+This script performs these phases automatically:
+1. **Pre-checks**: Validates all required files, directories, and R syntax
+2. **Preparation**: Stops Shiny Server, kills R processes, clears caches
+3. **Deployment**: Copies files, preserves user data, sets permissions
+4. **Startup**: Configures and starts Shiny Server
+5. **Validation**: Verifies deployment and tests HTTP access
 
 ### pre-deploy-check.R
 Validation script that checks:
@@ -399,13 +430,22 @@ See main LICENSE file for details.
 
 ## Version
 
-- **Package Version**: 1.2
-- **Last Updated**: 2025-12-01
+- **Package Version**: 1.3
+- **Last Updated**: 2026-01-07
+- **App Version**: 1.6.1
 - **R Version**: 4.4.1+
 - **Shiny Server**: 1.5.21+
 - **Docker**: 20.10+
 
 ## Recent Updates
+
+### v1.3 (2026-01-07)
+- **NEW:** `deploy-shiny-server.sh` - Standalone deployment with built-in pre-checks
+- **CRITICAL:** Updated to bs4Dash (replaced shinydashboard)
+- Updated Dockerfile, install_dependencies.R, pre-deploy-check.R, validate-deployment.sh
+- Updated Docker image version label to 1.6.1
+- Added zoo and knitr packages to dependencies
+- Synchronized with app version 1.6.1
 
 ### v1.2 (2025-12-01)
 - ✅ **NEW:** Modular translation system support

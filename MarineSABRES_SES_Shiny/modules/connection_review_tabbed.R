@@ -14,8 +14,7 @@ utils::globalVariables(c('%|||%'))
   if (is.null(a) || (length(a) == 1 && is.na(a))) b else a
 }
 
-library(shiny)
-library(shinyWidgets)
+# Libraries loaded in global.R: shiny, shinyWidgets
 
 # Ensure %|||% operator is visible in this module (for R CMD check/lint)
 `%|||%` <- function(a, b) {
@@ -145,7 +144,7 @@ categorize_connection <- function(conn, batches) {
 
 connection_review_tabbed_ui <- function(id, i18n) {
   ns <- NS(id)
-  cat(sprintf("[CONN REVIEW TABBED UI] UI function called with id: %s\n", id))
+  debug_log(sprintf("UI function called with id: %s", id), "CONN-REVIEW-TABBED")
 
   tagList(
     # Use i18n for language support
@@ -275,7 +274,28 @@ connection_review_tabbed_ui <- function(id, i18n) {
     hr(),
 
     # Tabbed interface for connection batches (dynamically generated)
-    uiOutput(ns("dynamic_tabs"))
+    uiOutput(ns("dynamic_tabs")),
+
+    # Initialize Bootstrap tooltips for dynamically generated content
+    tags$script(HTML("
+      $(document).ready(function() {
+        // Initialize tooltips on page load
+        $('[data-toggle=\"tooltip\"]').tooltip({
+          container: 'body',
+          trigger: 'hover'
+        });
+
+        // Re-initialize tooltips when Shiny updates the DOM
+        $(document).on('shiny:value', function(e) {
+          setTimeout(function() {
+            $('[data-toggle=\"tooltip\"]').tooltip({
+              container: 'body',
+              trigger: 'hover'
+            });
+          }, 100);
+        });
+      });
+    "))
   )
 }
 
@@ -302,10 +322,10 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       req(connections_reactive())
       conns <- connections_reactive()
 
-      cat(sprintf("[CONN REVIEW TABBED] Received %d connections\n", length(conns)))
+      debug_log(sprintf("Received %d connections", length(conns)), "CONN-REVIEW-TABBED")
 
       if (length(conns) == 0) {
-        cat("[CONN REVIEW TABBED] No connections to display\n")
+        debug_log("No connections to display", "CONN-REVIEW-TABBED")
         return(list(batches = list(), total = 0))
       }
 
@@ -502,8 +522,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       # Check if batches have actually changed (different count or names)
       if (length(batch_lists) != last_batch_count() ||
           !setequal(current_batches, last_batch_names())) {
-        cat(sprintf("[CONN REVIEW TABBED] Batches changed: %d -> %d, incrementing session\n",
-                    last_batch_count(), length(batch_lists)))
+        debug_log(sprintf("Batches changed: %d -> %d, incrementing session",
+                    last_batch_count(), length(batch_lists)), "CONN-REVIEW-TABBED")
         last_batch_count(length(batch_lists))
         last_batch_names(current_batches)
         batch_session(batch_session() + 1)
@@ -517,7 +537,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           local_batch_id <- batch_id
           output_name <- paste0("batch_connections_", local_batch_id)
 
-          cat(sprintf("[CONN REVIEW TABBED] Creating batch output: %s (session %d)\n", output_name, current_session))
+          debug_log(sprintf("Creating batch output: %s (session %d)", output_name, current_session), "CONN-REVIEW-TABBED")
 
           output[[output_name]] <- renderUI({
             batch <- batch_lists[[local_batch_id]]
@@ -613,7 +633,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
       # GUARD: Don't process if connections are empty - prevents infinite loop
       if (length(conns) == 0) {
-        cat("[CONN REVIEW TABBED] WARNING: Connections are empty, skipping observer setup\n")
+        debug_log("WARNING: Connections are empty, skipping observer setup", "CONN-REVIEW-TABBED")
         return()
       }
 
@@ -641,8 +661,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       generation_time <- attr(conns, "generated_at")
 
       # Connections have changed - update signature and increment session
-      cat(sprintf("[CONN REVIEW TABBED] Connections changed (count: %d), incrementing session to %d\n",
-                  length(conns), observer_session() + 1))
+      debug_log(sprintf("Connections changed (count: %d), incrementing session to %d",
+                  length(conns), observer_session() + 1), "CONN-REVIEW-TABBED")
       last_connections_signature(conn_signature)
       last_generation_time(generation_time)
       observer_session(observer_session() + 1)
@@ -704,11 +724,37 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             if (current_polarity == "+") "drives/increases" else "affects/reduces"
           })
 
-          # Approve button
+          # Approve button - reads current slider values and applies them
           observeEvent(input[[paste0("approve_", local_idx)]], {
+            # Read current slider values
+            strength_value <- input[[paste0("strength_", local_idx)]]
+            conf_value <- input[[paste0("confidence_", local_idx)]]
+            polarity_value <- input[[paste0("polarity_switch_", local_idx)]]
+
+            # Convert strength slider value to label
+            strength_labels <- c("very weak", "weak", "medium", "strong", "very strong")
+            strength_label <- strength_labels[strength_value]
+
+            # Convert polarity switch (TRUE/FALSE) to +/-
+            polarity <- if (is.null(polarity_value) || polarity_value) "+" else "-"
+
+            # Store amended data
+            rv$amended_data[[as.character(local_idx)]] <- list(
+              strength = strength_label,
+              confidence = conf_value,
+              polarity = polarity
+            )
+
+            # Call amend callback if provided
+            if (!is.null(on_amend)) {
+              on_amend(local_idx, polarity, strength_label, conf_value)
+            }
+
+            # Mark as approved
             rv$approved <- union(rv$approved, local_idx)
             rv$rejected <- setdiff(rv$rejected, local_idx)
 
+            # Call approve callback if provided
             if (!is.null(on_approve)) {
               on_approve(local_idx, conn)
             }
@@ -746,36 +792,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             # }
           })
 
-          # Amend button
-          observeEvent(input[[paste0("amend_", local_idx)]], {
-            strength_value <- input[[paste0("strength_", local_idx)]]
-            conf_value <- input[[paste0("confidence_", local_idx)]]
-            polarity_value <- input[[paste0("polarity_switch_", local_idx)]]
-
-            # Convert strength slider value to label
-            strength_labels <- c("very weak", "weak", "medium", "strong", "very strong")
-            strength_label <- strength_labels[strength_value]
-
-            # Convert polarity switch (TRUE/FALSE) to +/-
-            polarity <- if (is.null(polarity_value) || polarity_value) "+" else "-"
-
-            # Store amended data
-            rv$amended_data[[as.character(local_idx)]] <- list(
-              strength = strength_label,
-              confidence = conf_value,
-              polarity = polarity
-            )
-
-            if (!is.null(on_amend)) {
-              on_amend(local_idx, polarity, strength_label, conf_value)
-            }
-
-            showNotification(
-              i18n$t("common.misc.connection_amended_successfully"),
-              type = "message",
-              duration = 2
-            )
-          })
+          # Amend button handler removed - Approve button now handles slider values directly
         })
       })
     })
@@ -899,28 +916,14 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
       )
     ),
 
-    # Control buttons
+    # Control buttons (Approve/Reject only - sliders are used directly on approve)
     div(class = "conn-controls",
-      # Amend button
-      div(style = "width: 110px;",
+      # Approve button - uses current slider values
+      div(style = "width: 140px;",
         tags$div(
           `data-toggle` = "tooltip",
           `data-placement` = "top",
-          title = i18n$t("common.misc.save_changes_to_strength_confidence_or_polarity_for_this_connection"),
-          actionButton(ns(paste0("amend_", conn_idx)),
-                      i18n$t("common.misc.amend"),
-                      icon = icon("edit"),
-                      class = "btn-warning btn-sm",
-                      style = "width: 100%; height: 32px; padding: 6px 8px;")
-        )
-      ),
-
-      # Approve button
-      div(style = "width: 110px;",
-        tags$div(
-          `data-toggle` = "tooltip",
-          `data-placement` = "top",
-          title = i18n$t("common.misc.accept_this_connection_as_is_or_with_amendments"),
+          title = i18n$t("common.misc.approve_this_connection_with_current_slider_values"),
           actionButton(ns(paste0("approve_", conn_idx)),
                       i18n$t("common.misc.approve"),
                       icon = icon("check"),
@@ -929,8 +932,8 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
         )
       ),
 
-      # Reject button
-      div(style = "width: 110px;",
+      # Reject button - completely removes connection
+      div(style = "width: 140px; margin-left: 10px;",
         tags$div(
           `data-toggle` = "tooltip",
           `data-placement` = "top",

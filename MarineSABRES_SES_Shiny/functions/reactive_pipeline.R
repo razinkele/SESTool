@@ -81,8 +81,9 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
     isa_changed_debounced()
 
     data <- isolate(project_data())
-    isa_data <- isolate(data$data$isa_data)
-    data_source <- isolate(data$data$metadata$data_source)
+    # Use safe_get_nested for defensive data access
+    isa_data <- safe_get_nested(data, "data", "isa_data", default = NULL)
+    data_source <- safe_get_nested(data, "data", "metadata", "data_source", default = NULL)
 
     # Skip if flagged (e.g., after import that already generated CLD)
     if (isolate(event_bus$skip_next_cld_regen())) {
@@ -249,13 +250,16 @@ create_isa_signature <- function(isa_data) {
 
 #' Helper: Detect if ISA data has changed
 #'
-#' Compares current ISA signature with last known signature
+#' Compares current ISA signature with last known signature.
+#' Uses safe_get_nested for defensive data access.
 #'
 #' @param project_data Current project data
 #' @param last_signature Last known ISA signature
 #' @return TRUE if changed, FALSE otherwise
 detect_isa_change <- function(project_data, last_signature) {
-  current_sig <- create_isa_signature(project_data$data$isa_data)
+  # Use safe_get_nested for defensive access
+  isa_data <- safe_get_nested(project_data, "data", "isa_data", default = NULL)
+  current_sig <- create_isa_signature(isa_data)
 
   if (is.null(current_sig)) {
     return(FALSE)

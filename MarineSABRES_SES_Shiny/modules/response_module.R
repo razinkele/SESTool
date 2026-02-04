@@ -1,6 +1,5 @@
-library(shiny)
-
 # Response and Validation Module
+# Libraries loaded in global.R: shiny
 # Implements Response (as Measures) for complete DAPSI(W)R(M) framework
 # Includes: Response Measures, Scenario Builder, Validation
 
@@ -657,7 +656,7 @@ response_validation_ui <- function(id, i18n) {
   )
 }
 
-response_validation_server <- function(id, project_data_reactive) {
+response_validation_server <- function(id, project_data_reactive, i18n) {
   moduleServer(id, function(input, output, session) {
     # Placeholder
   })

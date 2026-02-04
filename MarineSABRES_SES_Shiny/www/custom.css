@@ -5,7 +5,11 @@
    HEADER STYLING
    ============================================================================ */
 
-/* Add logo to header title */
+/* LEGACY: Old shinydashboard .skin-blue selectors (disabled after bs4Dash migration)
+   These selectors are no longer used since we migrated to bs4Dash.
+   Header styling is now in bs4dash-custom.css
+   Kept here for reference only - can be removed in future cleanup.
+
 .skin-blue .main-header .logo {
   background-image: url('img/01 marinesabres_logo_transparent.png');
   background-repeat: no-repeat;
@@ -18,6 +22,9 @@
 .skin-blue .main-header .navbar {
   background-color: #3c8dbc;
 }
+*/
+
+/* NOTE: Header branding is now handled in bs4dash-custom.css with Marine-SABRES theme */
 
 /* ============================================================================
    GENERAL STYLING
@@ -43,6 +50,10 @@ h2 {
    BOXES AND PANELS
    ============================================================================ */
 
+/* NOTE: These styles are for custom HTML structures with class="well" or class="box"
+   NOT for bs4Dash components (which use .card, .card-header, etc.)
+   bs4Dash card styling is in bs4dash-custom.css */
+
 .well {
   background-color: #f8f9fa;
   border: 1px solid #dee2e6;
@@ -64,6 +75,7 @@ h2 {
    BUTTONS
    ============================================================================ */
 
+/* Base button enhancements (adds hover effects to all buttons) */
 .btn {
   border-radius: 6px;
   font-weight: 500;
@@ -79,25 +91,8 @@ h2 {
   margin-bottom: 10px;
 }
 
-.btn-primary {
-  background-color: #3498db;
-  border-color: #3498db;
-}
-
-.btn-primary:hover {
-  background-color: #2980b9;
-  border-color: #2980b9;
-}
-
-.btn-success {
-  background-color: #27ae60;
-  border-color: #27ae60;
-}
-
-.btn-success:hover {
-  background-color: #229954;
-  border-color: #229954;
-}
+/* NOTE: Button colors (.btn-primary, .btn-success, etc.) are defined in bs4dash-custom.css
+   using CSS variables for easier theming. */
 
 .btn-warning {
   background-color: #f39c12;
@@ -192,97 +187,98 @@ h2 {
 }
 
 /* ============================================================================
-   SIDEBAR
+   SIDEBAR - Light Theme
    ============================================================================ */
 
 .sidebar-menu > li.active > a {
-  border-left: 4px solid #3498db;
-  background-color: #2c3e50;
+  border-left: 4px solid #007bff;
+  background-color: #007bff !important;
+  color: #fff !important;
 }
 
 .sidebar-menu > li > a {
   transition: all 0.3s ease;
   position: relative;
+  color: #495057;
 }
 
 .sidebar-menu > li > a:hover {
-  background-color: #34495e;
-  border-left: 4px solid #3498db;
+  background-color: rgba(0, 123, 255, 0.05);
+  border-left: 4px solid #007bff;
+  color: #007bff;
 }
 
 .sidebar {
-  background-color: #2c3e50;
+  background-color: #f8f9fa !important;
 }
 
-/* Menu item tooltips */
+/* Menu item tooltips - Light theme */
 .sidebar-menu > li > a[data-tooltip]:hover::after {
   content: attr(data-tooltip);
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
+  position: fixed !important;
+  left: 250px !important;
+  top: auto !important;
+  transform: none !important;
   margin-left: 15px;
-  background-color: rgba(52, 73, 94, 0.95);
-  color: #ecf0f1;
+  background-color: #343a40 !important;
+  color: #fff !important;
   padding: 8px 12px;
   border-radius: 6px;
   white-space: nowrap;
   font-size: 13px;
   font-weight: 400;
-  z-index: 10000;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 99999 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   pointer-events: none;
-  border: 1px solid #3498db;
+  border: 1px solid #495057;
 }
 
 .sidebar-menu > li > a[data-tooltip]:hover::before {
   content: '';
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 8px;
+  position: fixed !important;
+  left: 243px !important;
+  top: auto !important;
+  transform: none !important;
   border: 7px solid transparent;
-  border-right-color: rgba(52, 73, 94, 0.95);
-  z-index: 10001;
+  border-right-color: #343a40 !important;
+  z-index: 99998 !important;
   pointer-events: none;
 }
 
-/* Submenu item tooltips */
+/* Submenu item tooltips - Light theme */
 .treeview-menu > li > a[data-tooltip] {
   position: relative;
 }
 
 .treeview-menu > li > a[data-tooltip]:hover::after {
   content: attr(data-tooltip);
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
+  position: fixed !important;
+  left: 250px !important;
+  top: auto !important;
+  transform: none !important;
   margin-left: 15px;
-  background-color: rgba(52, 73, 94, 0.95);
-  color: #ecf0f1;
+  background-color: #343a40 !important;
+  color: #fff !important;
   padding: 8px 12px;
   border-radius: 6px;
   white-space: nowrap;
   font-size: 12px;
   font-weight: 400;
-  z-index: 10000;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 99999 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   pointer-events: none;
-  border: 1px solid #3498db;
+  border: 1px solid #495057;
 }
 
 .treeview-menu > li > a[data-tooltip]:hover::before {
   content: '';
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 8px;
+  position: fixed !important;
+  left: 243px !important;
+  top: auto !important;
+  transform: none !important;
   border: 7px solid transparent;
-  border-right-color: rgba(52, 73, 94, 0.95);
-  z-index: 10001;
+  border-right-color: #343a40 !important;
+  z-index: 99998 !important;
   pointer-events: none;
 }
 
@@ -806,47 +802,7 @@ h2 .fa, h2 .fas {
   display: inline-block;
 }
 
-.settings-dropdown-menu {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 100%;
-  background-color: white;
-  min-width: 200px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  border-radius: 4px;
-  margin-top: 5px;
-  z-index: 10000;
-  border: 1px solid #ddd;
-}
-
-.settings-dropdown.open .settings-dropdown-menu {
-  display: block;
-}
-
-.settings-dropdown-menu a {
-  color: #333;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  transition: background-color 0.2s;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.settings-dropdown-menu a:last-child {
-  border-bottom: none;
-}
-
-.settings-dropdown-menu a:hover {
-  background-color: #f8f9fa;
-  color: #0056b3;
-}
-
-.settings-dropdown-menu a i {
-  margin-right: 8px;
-  width: 16px;
-  text-align: center;
-}
+/* NOTE: .settings-dropdown-menu styles are defined in bs4dash-custom.css */
 
 /* User level selector in modal */
 .user-level-option {
@@ -957,18 +913,41 @@ h2 .fa, h2 .fas {
 
 .settings-dropdown-toggle {
   cursor: pointer;
-  padding: 15px !important;
-  display: flex;
-  align-items: center;
+  padding: 0.5rem 0.75rem !important;
+  display: flex !important;
+  align-items: center !important;
   gap: 5px;
+  height: 3.5rem;
+  color: #6c757d !important;
+  text-decoration: none !important;
 }
 
 .settings-dropdown-toggle:hover {
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0, 123, 255, 0.05) !important;
+  color: #007bff !important;
 }
 
 .settings-dropdown-toggle i {
   margin-right: 5px;
+}
+
+/* Ensure navbar items are properly aligned */
+.main-header .navbar-nav {
+  display: flex;
+  align-items: center;
+  height: 3.5rem;
+}
+
+.main-header .navbar-nav > li {
+  display: flex;
+  align-items: center;
+  height: 3.5rem;
+}
+
+.main-header .navbar-nav > li > a {
+  height: 3.5rem;
+  display: flex !important;
+  align-items: center !important;
 }
 
 /* Mobile responsiveness */
@@ -1183,4 +1162,202 @@ h2 .fa, h2 .fas {
   text-align: center;
   max-width: 400px;
   line-height: 1.6;
+}
+
+/* ============================================================================
+   MINIMAL CUSTOM STYLING (Following EcoNeTool Architecture)
+   ============================================================================ */
+
+/* NOTE: Theme variables (--marine-primary, etc.) are defined in bs4dash-custom.css */
+
+/* ============================================================================
+   NAVBAR HEIGHT AND ALIGNMENT FIXES
+   ============================================================================ */
+
+/* Fix navbar height - keep it compact */
+.main-header {
+  min-height: 3.5rem !important;
+  max-height: 3.5rem !important;
+}
+
+.main-header .navbar {
+  min-height: 3.5rem !important;
+  max-height: 3.5rem !important;
+  padding: 0 !important;
+}
+
+/* Ensure all navbar items are visible and aligned */
+.main-header .navbar-nav {
+  display: flex !important;
+  align-items: center !important;
+  height: 3.5rem !important;
+  margin: 0 !important;
+}
+
+.main-header .navbar-nav > li {
+  height: 3.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+
+.main-header .navbar-nav > li > a {
+  height: 3.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0.5rem 0.75rem !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+
+/* Ensure navbar brand/title is also aligned */
+.main-header .navbar-brand {
+  height: 3.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0.5rem 1rem !important;
+}
+
+/* ============================================================================
+   RESPONSIVE BREAKPOINTS
+   Added for tablet and mobile support
+   ============================================================================ */
+
+/* Tablet breakpoint (768px) */
+@media (max-width: 768px) {
+  /* Collapse sidebar on tablet */
+  .main-sidebar {
+    margin-left: -250px;
+  }
+  body.sidebar-open .main-sidebar {
+    margin-left: 0;
+  }
+
+  /* Stack cards vertically */
+  .row > .col-md-6,
+  .row > .col-md-4,
+  .row > .col-md-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Reduce padding */
+  .content-wrapper {
+    padding: 10px;
+  }
+
+  /* Scale down value boxes */
+  .small-box {
+    margin-bottom: 10px;
+  }
+  .small-box h3 {
+    font-size: 24px;
+  }
+
+  /* Make tables scrollable horizontally */
+  .dataTables_wrapper {
+    overflow-x: auto;
+  }
+
+  /* Reduce visNetwork height on tablet */
+  .vis-network {
+    min-height: 300px;
+  }
+
+  /* Stack form columns */
+  .well .row > .col-sm-4,
+  .well .row > .col-sm-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Header dropdowns */
+  .settings-dropdown-menu {
+    min-width: 180px;
+  }
+
+  /* Adjust font sizes */
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.3rem; }
+  h4 { font-size: 1.1rem; }
+}
+
+/* Mobile breakpoint (480px) */
+@media (max-width: 480px) {
+  /* Further reduce content padding */
+  .content-wrapper {
+    padding: 5px;
+  }
+
+  /* Smaller value boxes */
+  .small-box h3 {
+    font-size: 18px;
+  }
+  .small-box .icon {
+    font-size: 50px;
+  }
+
+  /* Stack all columns */
+  .row > [class*="col-"] {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Reduce button sizes */
+  .btn-lg {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  .btn-block {
+    margin-bottom: 5px;
+  }
+
+  /* Compact cards */
+  .card {
+    margin-bottom: 10px;
+  }
+  .card-body {
+    padding: 10px;
+  }
+
+  /* Smaller fonts */
+  body {
+    font-size: 13px;
+  }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.15rem; }
+  h4 { font-size: 1rem; }
+
+  /* Hide non-essential elements */
+  .navbar .navbar-nav .nav-link span {
+    display: none;
+  }
+  .navbar .navbar-nav .nav-link i {
+    font-size: 18px;
+  }
+
+  /* Reduce visNetwork height on mobile */
+  .vis-network {
+    min-height: 250px;
+  }
+
+  /* Adjust sidebar toggle */
+  .main-header .navbar {
+    padding: 0 5px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .main-sidebar,
+  .main-header,
+  .main-footer,
+  .btn,
+  .settings-dropdown {
+    display: none !important;
+  }
+  .content-wrapper {
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
 }

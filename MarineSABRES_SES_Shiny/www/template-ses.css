@@ -1,0 +1,117 @@
+/* Template SES Module Styles */
+/* Extracted from modules/template_ses_module.R */
+
+.template-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.template-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.template-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+.template-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102,126,234,0.2);
+  transform: translateY(-2px);
+}
+.template-card.selected {
+  border-color: #27ae60;
+  background: linear-gradient(135deg, #f8fff9 0%, #e8f8f0 100%);
+  box-shadow: 0 4px 16px rgba(39,174,96,0.25);
+}
+.template-icon-wrapper {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+}
+.template-icon-wrapper i {
+  font-size: 16px;
+  color: white;
+}
+.template-card.selected .template-icon-wrapper {
+  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+}
+.template-content {
+  flex: 1;
+  min-width: 0;
+}
+.template-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 2px 0;
+}
+.template-category-badge {
+  display: inline-block;
+  background: #e8ecf5;
+  color: #667eea;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+}
+.template-card.selected .template-category-badge {
+  background: #d4edda;
+  color: #27ae60;
+}
+.template-preview-btn {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  color: #999;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.template-preview-btn:hover {
+  color: #667eea;
+}
+/* Ensure template containers don't clip tooltips */
+.template-container,
+.template-cards-grid,
+.well {
+  overflow: visible !important;
+}
+.template-preview {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+.preview-section {
+  margin: 15px 0;
+}
+.preview-section h6 {
+  color: #667eea;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.element-tag {
+  display: inline-block;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 5px 12px;
+  border-radius: 15px;
+  margin: 3px;
+  font-size: 12px;
+}

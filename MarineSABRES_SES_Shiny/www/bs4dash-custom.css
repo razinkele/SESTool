@@ -1,0 +1,708 @@
+/* =================================================================
+   bs4dash-custom.css
+   Custom styling for MarineSABRES SES Toolbox using bs4Dash
+   Light Theme (following EcoNeTool architecture)
+   ================================================================= */
+
+/* =================================================================
+   BOOTSTRAP LIGHT THEME COLORS
+   ================================================================= */
+:root {
+  --marine-primary: #007bff;
+  --marine-secondary: #6c757d;
+  --marine-success: #28a745;
+  --marine-info: #17a2b8;
+  --marine-warning: #ffc107;
+  --marine-danger: #dc3545;
+  --marine-light: #f8f9fa;
+  --marine-dark: #343a40;
+}
+
+/* =================================================================
+   NAVBAR (replaces dashboardHeader)
+   ================================================================= */
+
+/* Main navbar styling - Light theme (EcoNeTool architecture) */
+body .main-header .navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Navbar links and icons */
+body .main-header .navbar .nav-link {
+  color: #6c757d;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+body .main-header .navbar .nav-link:hover {
+  color: #007bff;
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Navbar custom dropdown items (settings, language, help) */
+body .main-header .navbar-nav > li > a {
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  height: 3.5rem;
+}
+
+body .main-header .navbar-nav > li > a:hover {
+  color: #007bff;
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* =================================================================
+   SIDEBAR (replaces dashboardSidebar)
+   ================================================================= */
+
+/* Main sidebar styling - Light theme */
+body .main-sidebar {
+  background-color: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  z-index: 1000; /* Lower than tooltips (99999) */
+}
+
+/* Ensure sidebar content also has lower z-index */
+body .main-sidebar .sidebar,
+body .main-sidebar .nav-sidebar {
+  z-index: 1001; /* Lower than tooltips */
+}
+
+/* Disable hover-to-expand behavior for collapsed sidebar */
+/* This prevents the sidebar from auto-expanding when mouse hovers over it */
+/* Only the hamburger menu button should toggle the sidebar */
+.sidebar-mini.sidebar-collapse .main-sidebar:hover {
+  width: 4.6rem !important; /* Keep collapsed width */
+}
+
+.sidebar-mini.sidebar-collapse .main-sidebar:hover .nav-sidebar {
+  width: 4.6rem !important; /* Keep collapsed width */
+}
+
+/* Prevent transition on hover to avoid expansion animation */
+.sidebar-mini.sidebar-collapse .main-sidebar {
+  transition: none !important;
+}
+
+/* Keep sidebar collapsed state even on hover */
+body.sidebar-mini.sidebar-collapse .main-sidebar:hover {
+  overflow: visible !important; /* Allow tooltips to show */
+  width: 4.6rem !important; /* Maintain collapsed width */
+}
+
+/* Ensure sidebar doesn't clip tooltips */
+.main-sidebar,
+.main-sidebar .sidebar {
+  overflow: visible !important;
+}
+
+/* Prevent any parent containers from hiding tooltips */
+.wrapper,
+.content-wrapper {
+  overflow: visible !important;
+}
+
+/* Ensure content doesn't shift when hovering over collapsed sidebar */
+body.sidebar-mini.sidebar-collapse .main-sidebar:hover ~ .content-wrapper {
+  margin-left: 4.6rem !important;
+}
+
+/* Sidebar menu items */
+.sidebar .nav-sidebar .nav-item .nav-link {
+  color: #495057;
+}
+
+.sidebar .nav-sidebar .nav-item .nav-link:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+  color: #007bff;
+}
+
+body .sidebar .nav-sidebar .nav-item .nav-link.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Sidebar submenu items */
+.sidebar .nav-treeview .nav-item .nav-link {
+  color: #6c757d;
+  padding-left: 2.5rem;
+}
+
+.sidebar .nav-treeview .nav-item .nav-link:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+  color: #007bff;
+}
+
+/* =================================================================
+   CARDS (replaces box)
+   ================================================================= */
+
+/* Base card styling */
+.card {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Card headers */
+.card-header {
+  background-color: var(--marine-primary);
+  color: #fff;
+  border-bottom: 2px solid var(--marine-dark);
+  font-weight: 600;
+}
+
+.card .card-header.bg-info {
+  background-color: var(--marine-info);
+}
+
+.card .card-header.bg-success {
+  background-color: var(--marine-success);
+}
+
+.card .card-header.bg-warning {
+  background-color: var(--marine-warning);
+}
+
+.card .card-header.bg-danger {
+  background-color: var(--marine-danger);
+}
+
+/* Collapsible cards */
+.card-tools .btn {
+  color: #fff;
+}
+
+/* =================================================================
+   VALUE BOXES (replaces valueBox)
+   ================================================================= */
+
+/* Value box styling */
+.info-box {
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.info-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Value box colors */
+body .info-box.bg-blue {
+  background-color: var(--marine-primary);
+}
+
+body .info-box.bg-green {
+  background-color: var(--marine-success);
+}
+
+body .info-box.bg-orange {
+  background-color: var(--marine-warning);
+}
+
+body .info-box.bg-red {
+  background-color: var(--marine-danger);
+}
+
+/* Value box icons */
+.info-box-icon {
+  font-size: 3rem;
+}
+
+/* =================================================================
+   BUTTONS
+   ================================================================= */
+
+/* Primary buttons */
+.btn-primary {
+  background-color: var(--marine-primary);
+  border-color: var(--marine-primary);
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+/* Success buttons */
+.btn-success {
+  background-color: var(--marine-success);
+  border-color: var(--marine-success);
+}
+
+.btn-success:hover {
+  background-color: #229954;
+  border-color: #229954;
+}
+
+/* =================================================================
+   FORMS
+   ================================================================= */
+
+/* Form inputs */
+.form-control:focus {
+  border-color: var(--marine-primary);
+  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* Select inputs */
+.selectize-input.focus {
+  border-color: var(--marine-primary);
+}
+
+/* =================================================================
+   CUSTOM DROPDOWNS (Header)
+   ================================================================= */
+
+/* Settings dropdown styling */
+.settings-dropdown {
+  position: relative;
+}
+
+body .settings-dropdown .settings-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.settings-dropdown-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.settings-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  min-width: 220px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  padding: 8px 0;
+  z-index: 1000;
+  margin-top: 5px;
+}
+
+.settings-dropdown:hover .settings-dropdown-menu {
+  display: block;
+}
+
+.settings-dropdown-menu a {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.settings-dropdown-menu a:hover {
+  background-color: #f8f9fa;
+}
+
+.settings-dropdown-menu a i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+  color: var(--marine-primary);
+}
+
+/* =================================================================
+   PIPELINE STATUS INDICATOR
+   ================================================================= */
+
+.pipeline-status {
+  padding: 8px 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.pipeline-status .fa-spin {
+  margin-right: 8px;
+}
+
+/* =================================================================
+   LOADING OVERLAY
+   ================================================================= */
+
+#language-loading-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#language-loading-overlay.active {
+  display: flex !important;
+}
+
+.loading-spinner {
+  font-size: 48px;
+  color: var(--marine-primary);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-message {
+  margin-top: 20px;
+  font-size: 24px;
+  color: var(--marine-primary);
+  font-weight: bold;
+}
+
+.loading-submessage {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* =================================================================
+   RESPONSIVE DESIGN
+   ================================================================= */
+
+@media (max-width: 768px) {
+  .main-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .main-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .settings-dropdown-menu {
+    right: auto;
+    left: 0;
+  }
+}
+
+/* =================================================================
+   LOGO AND BRANDING
+   ================================================================= */
+
+/* Brand link styling - Marine SABRES logo with darker background */
+body .main-sidebar .brand-link {
+  border-bottom: 1px solid #495057;
+  background-color: #343a40;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+body .main-sidebar .brand-link .brand-text {
+  color: #fff;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+body .main-sidebar .brand-link .brand-image {
+  opacity: 1;
+  max-height: 40px;
+  float: none;
+  margin: 0;
+}
+
+body .main-sidebar .brand-link:hover {
+  background-color: #495057;
+  text-decoration: none;
+}
+
+/* Navbar brand in header */
+body .main-header .navbar-brand {
+  background-color: #343a40;
+  padding: 0.5rem 1rem;
+  border-right: 1px solid #495057;
+}
+
+body .main-header .navbar-brand img {
+  max-height: 40px;
+}
+
+body .main-header .navbar-brand:hover {
+  background-color: #495057;
+}
+
+/* =================================================================
+   TABS
+   ================================================================= */
+
+.nav-tabs .nav-link {
+  color: #333;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: var(--marine-primary);
+  color: #fff;
+  border-color: var(--marine-primary);
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: var(--marine-light);
+}
+
+/* =================================================================
+   DATA TABLES
+   ================================================================= */
+
+body .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: var(--marine-primary);
+  border-color: var(--marine-primary);
+  color: #fff;
+}
+
+body .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: var(--marine-light);
+  border-color: var(--marine-light);
+  color: #333;
+}
+
+/* =================================================================
+   PROGRESS BARS
+   ================================================================= */
+
+.progress-bar {
+  background-color: var(--marine-primary);
+}
+
+/* =================================================================
+   BADGES
+   ================================================================= */
+
+.badge-primary {
+  background-color: var(--marine-primary);
+}
+
+.badge-success {
+  background-color: var(--marine-success);
+}
+
+.badge-warning {
+  background-color: var(--marine-warning);
+}
+
+.badge-danger {
+  background-color: var(--marine-danger);
+}
+
+/* =================================================================
+   TOOLTIPS - Enhanced visibility for sidebar menu items
+   ================================================================= */
+
+/* Make tooltips larger and more visible */
+/* Note: .tooltip-inner is defined once below (line ~564) with !important overrides */
+.tooltip {
+  font-size: 14px;
+  z-index: 9999;
+}
+
+/* Arrow colors for different placements */
+.tooltip.bs-tooltip-right .arrow::before {
+  border-right-color: var(--marine-dark);
+}
+
+.tooltip.bs-tooltip-left .arrow::before {
+  border-left-color: var(--marine-dark);
+}
+
+.tooltip.bs-tooltip-top .arrow::before {
+  border-top-color: var(--marine-dark);
+}
+
+.tooltip.bs-tooltip-bottom .arrow::before {
+  border-bottom-color: var(--marine-dark);
+}
+
+/* Sidebar menu item hover effect to indicate tooltip availability */
+body .sidebar .nav-sidebar .nav-item .nav-link[title]:hover,
+body .sidebar .nav-sidebar .nav-item .nav-link[data-original-title]:hover {
+  cursor: help;
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Bootstrap 4 tooltip styling - bs4Dash compatible */
+/* Tooltips are now initialized using bs4Dash's addTooltip() function */
+.tooltip {
+  z-index: 100000 !important; /* Ensure tooltips appear above sidebar (z-index: 1000) */
+  opacity: 1 !important;
+}
+
+.tooltip-inner {
+  background-color: #343a40 !important;
+  color: #fff !important;
+  border: 1px solid #495057 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+  max-width: 300px;
+  padding: 10px 15px;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.tooltip .arrow::before,
+.tooltip .tooltip-arrow::before {
+  border-right-color: #343a40 !important;
+  border-left-color: #343a40 !important;
+  border-top-color: #343a40 !important;
+  border-bottom-color: #343a40 !important;
+}
+
+/* Ensure bs4Dash sidebar tooltips are visible */
+.main-sidebar .nav-link[title] {
+  position: relative;
+}
+
+/* Override any tooltip opacity issues */
+.bs-tooltip-auto,
+.bs-tooltip-top,
+.bs-tooltip-right,
+.bs-tooltip-bottom,
+.bs-tooltip-left {
+  position: fixed !important;
+  opacity: 1 !important;
+  z-index: 99999 !important;
+}
+
+.bs-tooltip-auto .tooltip-inner,
+.bs-tooltip-top .tooltip-inner,
+.bs-tooltip-right .tooltip-inner,
+.bs-tooltip-bottom .tooltip-inner,
+.bs-tooltip-left .tooltip-inner {
+  background-color: #343a40 !important;
+  color: #fff !important;
+  border: 1px solid #495057 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+}
+
+/* =================================================================
+   SKIN SELECTOR FIX
+   ================================================================= */
+
+/* Fix skinSelector modal/panel width and behavior */
+.skin-blue .control-sidebar,
+.control-sidebar {
+  width: 250px !important;
+  max-width: 250px !important;
+}
+
+/* Ensure skin selector closes properly */
+.control-sidebar-slide-open .control-sidebar {
+  right: 0;
+}
+
+body:not(.control-sidebar-slide-open) .control-sidebar {
+  right: -250px;
+}
+
+/* Add close button styling */
+.control-sidebar .nav-link {
+  cursor: pointer;
+}
+
+/* Prevent skin selector from taking too much space */
+#controlbar-toggle {
+  z-index: 1050;
+}
+
+/* Make sure overlay closes the skin selector */
+.control-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1040;
+  cursor: pointer;
+}
+
+/* =================================================================
+   QUICK ACTIONS - Responsive to Sidebar Collapse
+   ================================================================= */
+
+/* Quick actions container */
+.sidebar-quick-actions {
+  padding: 15px 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* Quick actions buttons - default expanded state */
+.sidebar-quick-actions .quick-action-btn {
+  width: 90%;
+  min-width: 180px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Quick actions title */
+.sidebar-quick-actions h5 {
+  margin-bottom: 15px;
+  transition: opacity 0.3s ease;
+}
+
+/* When sidebar is collapsed - show only icons */
+body.sidebar-mini.sidebar-collapse .sidebar-quick-actions {
+  padding: 10px 5px;
+}
+
+body.sidebar-mini.sidebar-collapse .sidebar-quick-actions h5 {
+  display: none;
+}
+
+body.sidebar-mini.sidebar-collapse .sidebar-quick-actions .quick-action-btn {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  margin: 5px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hide button text when collapsed, show only icon */
+body.sidebar-mini.sidebar-collapse .sidebar-quick-actions .quick-action-btn .btn-text {
+  display: none;
+}
+
+body.sidebar-mini.sidebar-collapse .sidebar-quick-actions .quick-action-btn i {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Icon-only buttons hover effect */
+body.sidebar-mini.sidebar-collapse .sidebar-quick-actions .quick-action-btn:hover {
+  transform: scale(1.1);
+}
+
+/* =================================================================
+   END OF FILE
+   ================================================================= */

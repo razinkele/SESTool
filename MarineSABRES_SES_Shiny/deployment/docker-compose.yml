@@ -1,10 +1,16 @@
 version: '3.8'
 
+# MarineSABRES SES Tool - Docker Compose Configuration
+# App Version: 1.6.1 | Deployment Framework: 1.3
+
 services:
   marinesabres-shiny:
     build:
       context: ..
       dockerfile: deployment/Dockerfile
+      labels:
+        - "com.marinesabres.version=1.6.1"
+        - "com.marinesabres.framework=bs4Dash"
     container_name: marinesabres-ses-tool
     restart: unless-stopped
     ports:

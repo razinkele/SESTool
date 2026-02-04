@@ -5,7 +5,7 @@ FROM rocker/shiny-verse:4.4.1
 # Maintainer information
 LABEL maintainer="MarineSABRES Team"
 LABEL description="MarineSABRES Social-Ecological Systems Analysis Tool"
-LABEL version="1.0"
+LABEL version="1.6.1"
 
 # Set working directory
 WORKDIR /srv/shiny-server/marinesabres
@@ -23,16 +23,18 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libtiff5-dev \
     libjpeg-dev \
+    libicu-dev \
     pandoc \
     && rm -rf /var/lib/apt/lists/*
 
-# Install R packages
+# Install R packages (core dependencies)
 RUN R -e "install.packages(c( \
     'shiny', \
-    'shinydashboard', \
+    'bs4Dash', \
     'shinyWidgets', \
     'shinyjs', \
     'shinyBS', \
+    'shinyFiles', \
     'shiny.i18n', \
     'tidyverse', \
     'dplyr', \
@@ -41,12 +43,16 @@ RUN R -e "install.packages(c( \
     'purrr', \
     'tibble', \
     'stringr', \
+    'stringi', \
     'forcats', \
     'lubridate', \
     'DT', \
     'openxlsx', \
+    'readxl', \
     'jsonlite', \
     'digest', \
+    'zoo', \
+    'knitr', \
     'igraph', \
     'visNetwork', \
     'ggraph', \
@@ -60,7 +66,11 @@ RUN R -e "install.packages(c( \
     'htmlwidgets' \
     ), repos='https://cran.rstudio.com/')"
 
-# Copy application files
+# Optional: Install torch for ML features (comment out if not needed)
+# RUN R -e "install.packages('torch', repos='https://cran.rstudio.com/')"
+# RUN R -e "torch::install_torch()"
+
+# Copy application files (core)
 COPY app.R /srv/shiny-server/marinesabres/
 COPY global.R /srv/shiny-server/marinesabres/
 COPY run_app.R /srv/shiny-server/marinesabres/
@@ -70,14 +80,31 @@ COPY utils.R /srv/shiny-server/marinesabres/
 COPY VERSION /srv/shiny-server/marinesabres/
 COPY VERSION_INFO.json /srv/shiny-server/marinesabres/
 COPY version_manager.R /srv/shiny-server/marinesabres/
+
+# Copy application directories (required)
 COPY modules/ /srv/shiny-server/marinesabres/modules/
 COPY functions/ /srv/shiny-server/marinesabres/functions/
-COPY scripts/ /srv/shiny-server/marinesabres/scripts/
 COPY server/ /srv/shiny-server/marinesabres/server/
 COPY www/ /srv/shiny-server/marinesabres/www/
 COPY data/ /srv/shiny-server/marinesabres/data/
 COPY translations/ /srv/shiny-server/marinesabres/translations/
+COPY config/ /srv/shiny-server/marinesabres/config/
+
+# Copy optional directories (documentation)
 COPY docs/ /srv/shiny-server/marinesabres/docs/
+
+# Copy SES Models directory (pre-built Excel models)
+# Comment out if not needed in deployment
+COPY SESModels/ /srv/shiny-server/marinesabres/SESModels/
+
+# Copy ML models directory (optional - only if ML is enabled)
+# Uncomment if using ML features
+# COPY models/ /srv/shiny-server/marinesabres/models/
+
+# Copy scripts directory (only specific files needed at runtime)
+# Note: Most scripts are development-only, but reverse_key_mapping.json may be needed
+RUN mkdir -p /srv/shiny-server/marinesabres/scripts
+COPY scripts/reverse_key_mapping.json /srv/shiny-server/marinesabres/scripts/ 2>/dev/null || true
 
 # Set permissions
 RUN chown -R shiny:shiny /srv/shiny-server/marinesabres
