@@ -659,7 +659,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
         fluidRow(
           column(12,
             h5(i18n$t("modules.isa.data_entry.common.loop_closure_summary")),
-            plotOutput(ns("loop_diagram"), height = "400px")
+            plotOutput(ns("loop_diagram"), height = PLOT_HEIGHT_MD)
           )
         ),
 
@@ -810,7 +810,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
           ),
           column(8,
             h5(i18n$t("modules.isa.data_entry.common.time_series_plot")),
-            plotOutput(ns("bot_plot"), height = "400px"),
+            plotOutput(ns("bot_plot"), height = PLOT_HEIGHT_MD),
             br(),
             h6(i18n$t("modules.isa.data_entry.common.current_data")),
             DTOutput(ns("bot_data_table"))
@@ -1030,7 +1030,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
           # Add to data frame if individual validations pass
           if (all(sapply(entry_validations, function(v) v$valid))) {
             gb_df <- rbind(gb_df, data.frame(
-              ID = paste0("GB", sprintf("%03d", i)),
+              ID = generate_element_id(ELEMENT_ID_PREFIX$welfare, i),
               Name = entry_validations[[1]]$value,
               Type = entry_validations[[2]]$value,
               Description = if (!is.null(entry_validations[[3]]$value)) entry_validations[[3]]$value else "",
@@ -1165,7 +1165,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
           # Add to data frame if validations pass
           if (all(sapply(entry_validations, function(v) v$valid))) {
             es_df <- rbind(es_df, data.frame(
-              ID = paste0("ES", sprintf("%03d", i)),
+              ID = generate_element_id(ELEMENT_ID_PREFIX$impacts, i),
               Name = entry_validations[[1]]$value,
               Type = entry_validations[[2]]$value,
               Description = if (!is.null(entry_validations[[3]]$value)) entry_validations[[3]]$value else "",
@@ -1253,7 +1253,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
         name_val <- input[[paste0("mpf_name_", i)]]
         if(!is.null(name_val) && name_val != "") {
           mpf_df <- rbind(mpf_df, data.frame(
-            ID = paste0("MPF", sprintf("%03d", i)),
+            ID = generate_element_id(ELEMENT_ID_PREFIX$states, i),
             Name = name_val,
             Type = input[[paste0("mpf_type_", i)]],
             Description = input[[paste0("mpf_desc_", i)]],
@@ -1315,7 +1315,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
         name_val <- input[[paste0("p_name_", i)]]
         if(!is.null(name_val) && name_val != "") {
           p_df <- rbind(p_df, data.frame(
-            ID = paste0("P", sprintf("%03d", i)),
+            ID = generate_element_id(ELEMENT_ID_PREFIX$pressures, i),
             Name = name_val,
             Type = input[[paste0("p_type_", i)]],
             Description = input[[paste0("p_desc_", i)]],
@@ -1378,7 +1378,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
         name_val <- input[[paste0("a_name_", i)]]
         if(!is.null(name_val) && name_val != "") {
           a_df <- rbind(a_df, data.frame(
-            ID = paste0("A", sprintf("%03d", i)),
+            ID = generate_element_id(ELEMENT_ID_PREFIX$activities, i),
             Name = name_val,
             Sector = input[[paste0("a_sector_", i)]],
             Description = input[[paste0("a_desc_", i)]],
@@ -1440,7 +1440,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
         name_val <- input[[paste0("d_name_", i)]]
         if(!is.null(name_val) && name_val != "") {
           d_df <- rbind(d_df, data.frame(
-            ID = paste0("D", sprintf("%03d", i)),
+            ID = generate_element_id(ELEMENT_ID_PREFIX$drivers, i),
             Name = name_val,
             Type = input[[paste0("d_type_", i)]],
             Description = input[[paste0("d_desc_", i)]],
@@ -1634,7 +1634,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
     # Data export handlers ----
     output$download_excel <- downloadHandler(
       filename = function() {
-        paste0("ISA_Analysis_", Sys.Date(), ".xlsx")
+        generate_export_filename("ISA_Analysis", ".xlsx")
       },
       content = function(file) {
         # Create Excel workbook with all ISA data
@@ -1665,7 +1665,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
 
     output$download_kumu <- downloadHandler(
       filename = function() {
-        paste0("Kumu_Export_", Sys.Date(), ".zip")
+        generate_export_filename("Kumu_Export", ".zip")
       },
       content = function(file) {
         # Create Kumu-compatible CSV files

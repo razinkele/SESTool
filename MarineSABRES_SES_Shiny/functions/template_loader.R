@@ -132,6 +132,242 @@ build_adjacency_matrix <- function(connections, from_elements, to_elements,
 }
 
 # ============================================================================
+# TEMPLATE LOADER HELPERS
+# ============================================================================
+
+#' Detect JSON format and extract framework data with metadata
+#' @param json_data Parsed JSON list
+#' @return List with fw (framework data), name, and description
+.detect_template_format <- function(json_data) {
+  if (!is.null(json_data$dapsiwrm_framework)) {
+    list(
+      fw = json_data$dapsiwrm_framework,
+      name = json_data$template_name %||% "Unknown Template",
+      description = json_data$template_description %||% ""
+    )
+  } else if (!is.null(json_data$elements)) {
+    list(
+      fw = json_data$elements,
+      name = json_data$template_info$name %||% "Unknown Template",
+      description = json_data$template_info$description %||% ""
+    )
+  } else {
+    stop("Unknown JSON format - neither dapsiwrm_framework nor elements found")
+  }
+}
+
+#' Convert framework elements to data frames
+#' @param fw Framework list from JSON
+#' @return List of data frames and response counts
+.extract_template_elements <- function(fw) {
+  drivers_df <- json_elements_to_df(fw$drivers, "Driver")
+  activities_df <- json_elements_to_df(fw$activities, "Activity")
+  pressures_df <- json_elements_to_df(fw$pressures, "EnMP")
+
+  mpf_list <- fw$marine_processes %||% fw$states
+  marine_processes_df <- json_elements_to_df(mpf_list, "State Change")
+
+  es_list <- fw$ecosystem_services %||% fw$impacts
+  es_type <- "Provisioning"
+  if (!is.null(es_list) && length(es_list) > 0 && !is.null(es_list[[1]]$type)) {
+    es_type <- es_list[[1]]$type
+  } else if (!is.null(fw$impacts)) {
+    es_type <- "Impact"
+  }
+  ecosystem_services_df <- json_elements_to_df(es_list, es_type)
+
+  gb_list <- fw$goods_benefits %||% fw$welfare
+  goods_benefits_df <- json_elements_to_df(gb_list, "Welfare")
+
+  responses_list <- fw$responses %||% list()
+  measures_list <- fw$measures %||% list()
+  n_original_responses <- length(responses_list)
+  n_measures <- length(measures_list)
+  all_responses <- c(responses_list, measures_list)
+  responses_df <- json_elements_to_df(all_responses, "Response")
+
+  list(
+    drivers = drivers_df,
+    activities = activities_df,
+    pressures = pressures_df,
+    marine_processes = marine_processes_df,
+    ecosystem_services = ecosystem_services_df,
+    goods_benefits = goods_benefits_df,
+    responses = responses_df,
+    n_original_responses = n_original_responses,
+    n_measures = n_measures,
+    n_total_responses = nrow(responses_df)
+  )
+}
+
+#' Expand or create an adjacency matrix to include measure rows
+#' @param existing_matrix Existing matrix (or NULL)
+#' @param measure_matrix Temporary matrix for measure connections
+#' @param n_total Total row count for full matrix
+#' @param n_original Number of original response rows
+#' @param row_names Full row names vector
+#' @return Expanded matrix
+.merge_measure_matrix <- function(existing_matrix, measure_matrix, n_total, n_original, row_names) {
+  if (!is.null(existing_matrix) && nrow(existing_matrix) != n_total) {
+    full <- matrix("", nrow = n_total, ncol = ncol(existing_matrix),
+                   dimnames = list(row_names, colnames(existing_matrix)))
+    full[1:n_original, ] <- existing_matrix
+    full[(n_original + 1):n_total, ] <- measure_matrix
+    return(full)
+  } else if (is.null(existing_matrix)) {
+    full <- matrix("", nrow = n_total, ncol = ncol(measure_matrix),
+                   dimnames = list(row_names, colnames(measure_matrix)))
+    full[(n_original + 1):n_total, ] <- measure_matrix
+    return(full)
+  }
+  existing_matrix
+}
+
+#' Build all adjacency matrices for a template
+#' @param elems List of element data frames (from .extract_template_elements)
+#' @param connections Raw connections list from JSON
+#' @return Named list of adjacency matrices
+.build_template_matrices <- function(elems, connections) {
+  matrices <- list()
+  if (nrow(elems$drivers) == 0 || nrow(elems$activities) == 0 || length(connections) == 0) {
+    return(matrices)
+  }
+
+  # Core DAPSI(W)R chain
+  matrices$d_a <- build_adjacency_matrix(
+    connections, elems$drivers$ID, elems$activities$ID,
+    "driver", "activity", elems$drivers$Name, elems$activities$Name)
+
+  if (nrow(elems$pressures) > 0)
+    matrices$a_p <- build_adjacency_matrix(
+      connections, elems$activities$ID, elems$pressures$ID,
+      "activity", "pressure", elems$activities$Name, elems$pressures$Name)
+
+  if (nrow(elems$marine_processes) > 0 && nrow(elems$pressures) > 0)
+    matrices$p_mpf <- build_adjacency_matrix(
+      connections, elems$pressures$ID, elems$marine_processes$ID,
+      "pressure", "state", elems$pressures$Name, elems$marine_processes$Name)
+
+  if (nrow(elems$ecosystem_services) > 0 && nrow(elems$marine_processes) > 0)
+    matrices$mpf_es <- build_adjacency_matrix(
+      connections, elems$marine_processes$ID, elems$ecosystem_services$ID,
+      "state", "impact", elems$marine_processes$Name, elems$ecosystem_services$Name)
+
+  if (nrow(elems$goods_benefits) > 0 && nrow(elems$ecosystem_services) > 0)
+    matrices$es_gb <- build_adjacency_matrix(
+      connections, elems$ecosystem_services$ID, elems$goods_benefits$ID,
+      "impact", "welfare", elems$ecosystem_services$Name, elems$goods_benefits$Name)
+
+  if (nrow(elems$goods_benefits) > 0 && nrow(elems$drivers) > 0)
+    matrices$gb_d <- build_adjacency_matrix(
+      connections, elems$goods_benefits$ID, elems$drivers$ID,
+      "welfare", "driver", elems$goods_benefits$Name, elems$drivers$Name)
+
+  # Response matrices
+  n_orig <- elems$n_original_responses
+  n_total <- elems$n_total_responses
+  resp_df <- elems$responses
+
+  if (n_orig > 0) {
+    orig_ids <- resp_df$ID[1:n_orig]
+    orig_names <- resp_df$Name[1:n_orig]
+
+    if (nrow(elems$goods_benefits) > 0)
+      matrices$gb_r <- build_adjacency_matrix(
+        connections, elems$goods_benefits$ID, resp_df$ID,
+        "welfare", "response", elems$goods_benefits$Name, resp_df$Name)
+
+    if (nrow(elems$drivers) > 0)
+      matrices$r_d <- build_adjacency_matrix(
+        connections, orig_ids, elems$drivers$ID,
+        "response", "driver", orig_names, elems$drivers$Name)
+
+    if (nrow(elems$activities) > 0)
+      matrices$r_a <- build_adjacency_matrix(
+        connections, orig_ids, elems$activities$ID,
+        "response", "activity", orig_names, elems$activities$Name)
+
+    if (nrow(elems$pressures) > 0)
+      matrices$r_p <- build_adjacency_matrix(
+        connections, orig_ids, elems$pressures$ID,
+        "response", "pressure", orig_names, elems$pressures$Name)
+
+    if (nrow(elems$marine_processes) > 0)
+      matrices$r_mpf <- build_adjacency_matrix(
+        connections, orig_ids, elems$marine_processes$ID,
+        "response", "state", orig_names, elems$marine_processes$Name)
+  }
+
+  # Merge measure connections into response matrices
+  n_meas <- elems$n_measures
+  if (n_meas > 0) {
+    m_ids <- resp_df$ID[(n_orig + 1):n_total]
+    m_names <- resp_df$Name[(n_orig + 1):n_total]
+
+    measure_targets <- list(
+      list(key = "r_d",   df = elems$drivers,           src_type = "measure", tgt_type = "driver"),
+      list(key = "r_a",   df = elems$activities,         src_type = "measure", tgt_type = "activity"),
+      list(key = "r_p",   df = elems$pressures,          src_type = "measure", tgt_type = "pressure"),
+      list(key = "r_mpf", df = elems$marine_processes,   src_type = "measure", tgt_type = "state")
+    )
+
+    for (mt in measure_targets) {
+      if (nrow(mt$df) > 0) {
+        temp <- build_adjacency_matrix(
+          connections, m_ids, mt$df$ID,
+          mt$src_type, mt$tgt_type, m_names, mt$df$Name)
+        matrices[[mt$key]] <- .merge_measure_matrix(
+          matrices[[mt$key]], temp, n_total, n_orig, resp_df$Name)
+      }
+    }
+
+    # M → R (Measures to Responses) — becomes R×R
+    if (n_orig > 0) {
+      m_r_temp <- build_adjacency_matrix(
+        connections, m_ids, resp_df$ID[1:n_orig],
+        "measure", "response", m_names, resp_df$Name[1:n_orig])
+
+      matrices$r_r <- matrix("", nrow = n_total, ncol = n_total,
+                             dimnames = list(resp_df$Name, resp_df$Name))
+      matrices$r_r[(n_orig + 1):n_total, 1:n_orig] <- m_r_temp
+    }
+  }
+
+  matrices
+}
+
+#' Determine template category from metadata
+#' @param json_data Parsed JSON list
+#' @return Character string category
+.determine_template_category <- function(json_data) {
+  if (is.null(json_data$regional_context$main_issues)) return("General")
+
+  issues <- json_data$regional_context$main_issues
+  if (length(issues) > 1) return("Multi-Stressor")
+  if (any(grepl("fish", issues, ignore.case = TRUE))) return("Extraction")
+  if (any(grepl("touris", issues, ignore.case = TRUE))) return("Recreation")
+  if (any(grepl("aqua|farm", issues, ignore.case = TRUE))) return("Production")
+  if (any(grepl("pollut|contamin", issues, ignore.case = TRUE))) return("Pollution")
+  if (any(grepl("climat|warm|sea level", issues, ignore.case = TRUE))) return("Climate")
+  if (any(grepl("wind|energy", issues, ignore.case = TRUE))) return("Energy")
+  "General"
+}
+
+#' Determine template icon from name
+#' @param template_name Template name string
+#' @return FontAwesome icon name
+.determine_template_icon <- function(template_name) {
+  if (grepl("fish", template_name, ignore.case = TRUE)) return("fish")
+  if (grepl("touris|beach", template_name, ignore.case = TRUE)) return("umbrella-beach")
+  if (grepl("aqua", template_name, ignore.case = TRUE)) return("shrimp")
+  if (grepl("pollut", template_name, ignore.case = TRUE)) return("smog")
+  if (grepl("climat", template_name, ignore.case = TRUE)) return("temperature-high")
+  if (grepl("wind", template_name, ignore.case = TRUE)) return("wind")
+  if (grepl("caribbean|island", template_name, ignore.case = TRUE)) return("globe-americas")
+  "globe"
+}
+
+# ============================================================================
 # MAIN LOADER FUNCTION
 # ============================================================================
 
@@ -141,7 +377,21 @@ build_adjacency_matrix <- function(connections, from_elements, to_elements,
 #' @return List with template data in R format
 #' @export
 load_template_from_json <- function(json_path, use_cache = TRUE) {
-  # Check cache first (if enabled)
+  # Validate file path
+  if (is.null(json_path) || !is.character(json_path) || !nzchar(json_path)) {
+    log_warning("TEMPLATE", "Invalid template path provided (NULL or empty)")
+    return(NULL)
+  }
+  if (!file.exists(json_path)) {
+    log_warning("TEMPLATE", paste("Template file not found:", json_path))
+    return(NULL)
+  }
+  if (!grepl("\\.json$", json_path, ignore.case = TRUE)) {
+    log_warning("TEMPLATE", paste("Only JSON files are allowed, got:", json_path))
+    return(NULL)
+  }
+
+  # Check cache
   if (use_cache) {
     cache_key <- .get_cache_key(json_path)
     if (!is.null(cache_key) && exists(cache_key, envir = .template_cache)) {
@@ -150,354 +400,46 @@ load_template_from_json <- function(json_path, use_cache = TRUE) {
   }
 
   result <- tryCatch({
-    # Read JSON file
     json_data <- jsonlite::fromJSON(json_path, simplifyVector = FALSE)
 
-    # Detect JSON format and extract framework data
-    # Format 1: dapsiwrm_framework wrapper (Caribbean, Fisheries, etc.)
-    # Format 2: elements wrapper (OffshoreWind)
-    if (!is.null(json_data$dapsiwrm_framework)) {
-      fw <- json_data$dapsiwrm_framework
-      template_name <- json_data$template_name %||% "Unknown Template"
-      template_desc <- json_data$template_description %||% ""
-    } else if (!is.null(json_data$elements)) {
-      fw <- json_data$elements
-      template_name <- json_data$template_info$name %||% "Unknown Template"
-      template_desc <- json_data$template_info$description %||% ""
-    } else {
-      stop("Unknown JSON format - neither dapsiwrm_framework nor elements found")
-    }
+    # 1. Detect format and extract metadata
+    fmt <- .detect_template_format(json_data)
 
-    # Convert elements to data frames
-    drivers_df <- json_elements_to_df(fw$drivers, "Driver")
-    activities_df <- json_elements_to_df(fw$activities, "Activity")
-    pressures_df <- json_elements_to_df(fw$pressures, "EnMP")
+    # 2. Convert elements to data frames
+    elems <- .extract_template_elements(fmt$fw)
 
-    # Handle marine_processes (could be called "states" in some templates)
-    mpf_list <- fw$marine_processes %||% fw$states
-    marine_processes_df <- json_elements_to_df(mpf_list, "State Change")
-
-    # Handle ecosystem_services (could be called "impacts" in some templates)
-    es_list <- fw$ecosystem_services %||% fw$impacts
-
-    # Determine type from first element if available
-    es_type <- "Provisioning"
-    if (!is.null(es_list) && length(es_list) > 0 && !is.null(es_list[[1]]$type)) {
-      es_type <- es_list[[1]]$type
-    } else if (!is.null(fw$impacts)) {
-      es_type <- "Impact"
-    }
-
-    ecosystem_services_df <- json_elements_to_df(es_list, es_type)
-
-    # Handle goods_benefits (could be called "welfare" in some templates)
-    gb_list <- fw$goods_benefits %||% fw$welfare
-    goods_benefits_df <- json_elements_to_df(gb_list, "Welfare")
-
-    # Handle responses and measures - merge them into a single responses category
-    responses_list <- fw$responses %||% list()
-    measures_list <- fw$measures %||% list()
-
-    # Count original sizes BEFORE merging
-    n_original_responses <- length(responses_list)
-    n_measures <- length(measures_list)
-
-    # Merge measures into responses
-    all_responses <- c(responses_list, measures_list)
-    responses_df <- json_elements_to_df(all_responses, "Response")
-    n_total_responses <- nrow(responses_df)
-
-    # Extract connections
+    # 3. Build adjacency matrices
     connections <- json_data$connections %||% list()
+    adjacency_matrices <- .build_template_matrices(elems, connections)
 
-    # Build adjacency matrices
-    adjacency_matrices <- list()
+    # 4. Determine category and icon
+    category <- .determine_template_category(json_data)
+    icon <- .determine_template_icon(fmt$name)
 
-    # Only build matrices if we have elements and connections
-    if (nrow(drivers_df) > 0 && nrow(activities_df) > 0 && length(connections) > 0) {
-      # D → A (Drivers to Activities)
-      adjacency_matrices$d_a <- build_adjacency_matrix(
-        connections, drivers_df$ID, activities_df$ID,
-        "driver", "activity", drivers_df$Name, activities_df$Name
-      )
-
-      # A → P (Activities to Pressures)
-      if (nrow(pressures_df) > 0) {
-        adjacency_matrices$a_p <- build_adjacency_matrix(
-          connections, activities_df$ID, pressures_df$ID,
-          "activity", "pressure", activities_df$Name, pressures_df$Name
-        )
-      }
-
-      # P → MPF (Pressures to Marine Processes/States)
-      if (nrow(marine_processes_df) > 0 && nrow(pressures_df) > 0) {
-        adjacency_matrices$p_mpf <- build_adjacency_matrix(
-          connections, pressures_df$ID, marine_processes_df$ID,
-          "pressure", "state", pressures_df$Name, marine_processes_df$Name
-        )
-      }
-
-      # MPF → ES (Marine Processes/States to Ecosystem Services/Impacts)
-      if (nrow(ecosystem_services_df) > 0 && nrow(marine_processes_df) > 0) {
-        adjacency_matrices$mpf_es <- build_adjacency_matrix(
-          connections, marine_processes_df$ID, ecosystem_services_df$ID,
-          "state", "impact", marine_processes_df$Name, ecosystem_services_df$Name
-        )
-      }
-
-      # ES → GB (Ecosystem Services/Impacts to Goods & Benefits/Welfare)
-      if (nrow(goods_benefits_df) > 0 && nrow(ecosystem_services_df) > 0) {
-        adjacency_matrices$es_gb <- build_adjacency_matrix(
-          connections, ecosystem_services_df$ID, goods_benefits_df$ID,
-          "impact", "welfare", ecosystem_services_df$Name, goods_benefits_df$Name
-        )
-      }
-
-      # GB → D (Goods & Benefits/Welfare to Drivers - feedback)
-      if (nrow(goods_benefits_df) > 0 && nrow(drivers_df) > 0) {
-        adjacency_matrices$gb_d <- build_adjacency_matrix(
-          connections, goods_benefits_df$ID, drivers_df$ID,
-          "welfare", "driver", goods_benefits_df$Name, drivers_df$Name
-        )
-      }
-
-      # Response matrices (if original responses exist - measures will be added later)
-      if (n_original_responses > 0) {
-        # Use only the original responses (not measures yet)
-        original_response_ids <- responses_df$ID[1:n_original_responses]
-        original_response_names <- responses_df$Name[1:n_original_responses]
-
-        # GB → R (Goods & Benefits/Welfare to Responses)
-        # This matrix has GB as rows, but we want ALL responses (including future measures) as columns
-        if (nrow(goods_benefits_df) > 0) {
-          adjacency_matrices$gb_r <- build_adjacency_matrix(
-            connections, goods_benefits_df$ID, responses_df$ID,  # Use full responses_df for columns
-            "welfare", "response", goods_benefits_df$Name, responses_df$Name
-          )
-        }
-
-        # R → D (Responses to Drivers) - only original responses for now
-        if (nrow(drivers_df) > 0) {
-          adjacency_matrices$r_d <- build_adjacency_matrix(
-            connections, original_response_ids, drivers_df$ID,
-            "response", "driver", original_response_names, drivers_df$Name
-          )
-        }
-
-        # R → A (Responses to Activities) - only original responses for now
-        if (nrow(activities_df) > 0) {
-          adjacency_matrices$r_a <- build_adjacency_matrix(
-            connections, original_response_ids, activities_df$ID,
-            "response", "activity", original_response_names, activities_df$Name
-          )
-        }
-
-        # R → P (Responses to Pressures) - only original responses for now
-        if (nrow(pressures_df) > 0) {
-          adjacency_matrices$r_p <- build_adjacency_matrix(
-            connections, original_response_ids, pressures_df$ID,
-            "response", "pressure", original_response_names, pressures_df$Name
-          )
-        }
-
-        # R → S (Responses to States) - direct restoration, only original responses for now
-        if (nrow(marine_processes_df) > 0) {
-          adjacency_matrices$r_mpf <- build_adjacency_matrix(
-            connections, original_response_ids, marine_processes_df$ID,
-            "response", "state", original_response_names, marine_processes_df$Name
-          )
-        }
-      }
-      
-      # Process measure connections (they're now part of responses)
-      # Measures are rows n_original_responses+1 to n_total_responses in responses_df
-      if (n_measures > 0) {
-        measure_ids <- responses_df$ID[(n_original_responses + 1):n_total_responses]
-        measure_names <- responses_df$Name[(n_original_responses + 1):n_total_responses]
-
-        # Build temporary matrices for measure connections, then insert into appropriate rows of response matrices
-        # M → D (Measures to Drivers)
-        if (nrow(drivers_df) > 0) {
-          m_d_temp <- build_adjacency_matrix(
-            connections, measure_ids, drivers_df$ID,
-            "measure", "driver", measure_names, drivers_df$Name
-          )
-
-          # Create/expand r_d matrix to have n_total_responses rows
-          if (!is.null(adjacency_matrices$r_d)) {
-            # Ensure r_d has correct dimensions
-            if (nrow(adjacency_matrices$r_d) != n_total_responses) {
-              # Expand matrix to include measure rows
-              full_matrix <- matrix("", nrow = n_total_responses, ncol = ncol(adjacency_matrices$r_d),
-                                   dimnames = list(responses_df$Name, colnames(adjacency_matrices$r_d)))
-              # Copy original response rows
-              full_matrix[1:n_original_responses, ] <- adjacency_matrices$r_d
-              # Insert measure rows
-              full_matrix[(n_original_responses + 1):n_total_responses, ] <- m_d_temp
-              adjacency_matrices$r_d <- full_matrix
-            }
-          } else {
-            # Create new r_d with all response rows
-            adjacency_matrices$r_d <- matrix("", nrow = n_total_responses, ncol = ncol(m_d_temp),
-                                            dimnames = list(responses_df$Name, colnames(m_d_temp)))
-            adjacency_matrices$r_d[(n_original_responses + 1):n_total_responses, ] <- m_d_temp
-          }
-        }
-
-        # M → A (Measures to Activities)
-        if (nrow(activities_df) > 0) {
-          m_a_temp <- build_adjacency_matrix(
-            connections, measure_ids, activities_df$ID,
-            "measure", "activity", measure_names, activities_df$Name
-          )
-
-          if (!is.null(adjacency_matrices$r_a)) {
-            if (nrow(adjacency_matrices$r_a) != n_total_responses) {
-              full_matrix <- matrix("", nrow = n_total_responses, ncol = ncol(adjacency_matrices$r_a),
-                                   dimnames = list(responses_df$Name, colnames(adjacency_matrices$r_a)))
-              full_matrix[1:n_original_responses, ] <- adjacency_matrices$r_a
-              full_matrix[(n_original_responses + 1):n_total_responses, ] <- m_a_temp
-              adjacency_matrices$r_a <- full_matrix
-            }
-          } else {
-            adjacency_matrices$r_a <- matrix("", nrow = n_total_responses, ncol = ncol(m_a_temp),
-                                            dimnames = list(responses_df$Name, colnames(m_a_temp)))
-            adjacency_matrices$r_a[(n_original_responses + 1):n_total_responses, ] <- m_a_temp
-          }
-        }
-
-        # M → P (Measures to Pressures)
-        if (nrow(pressures_df) > 0) {
-          m_p_temp <- build_adjacency_matrix(
-            connections, measure_ids, pressures_df$ID,
-            "measure", "pressure", measure_names, pressures_df$Name
-          )
-
-          if (!is.null(adjacency_matrices$r_p)) {
-            if (nrow(adjacency_matrices$r_p) != n_total_responses) {
-              full_matrix <- matrix("", nrow = n_total_responses, ncol = ncol(adjacency_matrices$r_p),
-                                   dimnames = list(responses_df$Name, colnames(adjacency_matrices$r_p)))
-              full_matrix[1:n_original_responses, ] <- adjacency_matrices$r_p
-              full_matrix[(n_original_responses + 1):n_total_responses, ] <- m_p_temp
-              adjacency_matrices$r_p <- full_matrix
-            }
-          } else {
-            adjacency_matrices$r_p <- matrix("", nrow = n_total_responses, ncol = ncol(m_p_temp),
-                                            dimnames = list(responses_df$Name, colnames(m_p_temp)))
-            adjacency_matrices$r_p[(n_original_responses + 1):n_total_responses, ] <- m_p_temp
-          }
-        }
-
-        # M → MPF (Measures to States)
-        if (nrow(marine_processes_df) > 0) {
-          m_mpf_temp <- build_adjacency_matrix(
-            connections, measure_ids, marine_processes_df$ID,
-            "measure", "state", measure_names, marine_processes_df$Name
-          )
-
-          if (!is.null(adjacency_matrices$r_mpf)) {
-            if (nrow(adjacency_matrices$r_mpf) != n_total_responses) {
-              full_matrix <- matrix("", nrow = n_total_responses, ncol = ncol(adjacency_matrices$r_mpf),
-                                   dimnames = list(responses_df$Name, colnames(adjacency_matrices$r_mpf)))
-              full_matrix[1:n_original_responses, ] <- adjacency_matrices$r_mpf
-              full_matrix[(n_original_responses + 1):n_total_responses, ] <- m_mpf_temp
-              adjacency_matrices$r_mpf <- full_matrix
-            }
-          } else {
-            adjacency_matrices$r_mpf <- matrix("", nrow = n_total_responses, ncol = ncol(m_mpf_temp),
-                                              dimnames = list(responses_df$Name, colnames(m_mpf_temp)))
-            adjacency_matrices$r_mpf[(n_original_responses + 1):n_total_responses, ] <- m_mpf_temp
-          }
-        }
-
-        # M → R (Measures to Responses) - this becomes R→R (within responses)
-        # Only process original responses as targets (rows 1 to n_original_responses)
-        if (n_original_responses > 0) {
-          original_response_ids <- responses_df$ID[1:n_original_responses]
-          original_response_names <- responses_df$Name[1:n_original_responses]
-
-          m_r_temp <- build_adjacency_matrix(
-            connections, measure_ids, original_response_ids,
-            "measure", "response", measure_names, original_response_names
-          )
-
-          # Create full R×R matrix (responses to responses)
-          adjacency_matrices$r_r <- matrix("", nrow = n_total_responses, ncol = n_total_responses,
-                                          dimnames = list(responses_df$Name, responses_df$Name))
-
-          # Fill in measure→response connections (last n_measures rows, first n_original_responses cols)
-          adjacency_matrices$r_r[(n_original_responses + 1):n_total_responses, 1:n_original_responses] <- m_r_temp
-        }
-      }
-    }
-
-    # Determine category from metadata or main issues
-    category <- "General"
-    if (!is.null(json_data$regional_context$main_issues)) {
-      issues <- json_data$regional_context$main_issues
-      if (length(issues) > 1) {
-        category <- "Multi-Stressor"
-      } else if (any(grepl("fish", issues, ignore.case = TRUE))) {
-        category <- "Extraction"
-      } else if (any(grepl("touris", issues, ignore.case = TRUE))) {
-        category <- "Recreation"
-      } else if (any(grepl("aqua|farm", issues, ignore.case = TRUE))) {
-        category <- "Production"
-      } else if (any(grepl("pollut|contamin", issues, ignore.case = TRUE))) {
-        category <- "Pollution"
-      } else if (any(grepl("climat|warm|sea level", issues, ignore.case = TRUE))) {
-        category <- "Climate"
-      } else if (any(grepl("wind|energy", issues, ignore.case = TRUE))) {
-        category <- "Energy"
-      }
-    }
-
-    # Determine icon
-    icon <- "globe"
-    if (grepl("fish", template_name, ignore.case = TRUE)) {
-      icon <- "fish"
-    } else if (grepl("touris|beach", template_name, ignore.case = TRUE)) {
-      icon <- "umbrella-beach"
-    } else if (grepl("aqua", template_name, ignore.case = TRUE)) {
-      icon <- "shrimp"
-    } else if (grepl("pollut", template_name, ignore.case = TRUE)) {
-      icon <- "smog"
-    } else if (grepl("climat", template_name, ignore.case = TRUE)) {
-      icon <- "temperature-high"
-    } else if (grepl("wind", template_name, ignore.case = TRUE)) {
-      icon <- "wind"
-    } else if (grepl("caribbean|island", template_name, ignore.case = TRUE)) {
-      icon <- "globe-americas"
-    }
-
-    # Return template in R format
-    # IMPORTANT: Always include all element dataframes, even if empty, for consistency
-    template <- list(
-      name = template_name,              # For test compatibility
-      name_key = template_name,          # For backward compatibility
-      description = template_desc,       # For test compatibility
-      description_key = template_desc,   # For backward compatibility
+    # 5. Assemble result
+    list(
+      name = fmt$name,
+      name_key = fmt$name,
+      description = fmt$description,
+      description_key = fmt$description,
       icon = icon,
       category_key = category,
-      drivers = drivers_df,
-      activities = activities_df,
-      pressures = pressures_df,
-      marine_processes = marine_processes_df,
-      ecosystem_services = ecosystem_services_df,
-      goods_benefits = goods_benefits_df,
-      responses = responses_df,          # Always include, even if empty (0 rows)
-      connections = connections,         # Include raw connections from JSON
+      drivers = elems$drivers,
+      activities = elems$activities,
+      pressures = elems$pressures,
+      marine_processes = elems$marine_processes,
+      ecosystem_services = elems$ecosystem_services,
+      goods_benefits = elems$goods_benefits,
+      responses = elems$responses,
+      connections = connections,
       adjacency_matrices = adjacency_matrices
     )
-
-    template
-
   }, error = function(e) {
     log_warning("TEMPLATE", paste("Error loading template from", json_path, ":", e$message))
     NULL
   })
 
-  # Store in cache if successful and caching is enabled
+  # Store in cache
   if (use_cache && !is.null(result)) {
     cache_key <- .get_cache_key(json_path)
     if (!is.null(cache_key)) {
@@ -505,7 +447,7 @@ load_template_from_json <- function(json_path, use_cache = TRUE) {
     }
   }
 
-  return(result)
+  result
 }
 
 # ============================================================================

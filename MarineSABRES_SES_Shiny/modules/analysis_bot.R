@@ -73,7 +73,7 @@ analysis_bot_ui <- function(id, i18n) {
           # Time Series Plot
           tabPanel(icon("chart-line"), i18n$t("modules.analysis.bot.tab_time_series"),
             br(),
-            dygraphOutput(ns("bot_timeseries"), height = "400px"),
+            dygraphOutput(ns("bot_timeseries"), height = PLOT_HEIGHT_MD),
             br(),
             h5(icon("table"), " ", i18n$t("modules.analysis.bot.summary_statistics")),
             verbatimTextOutput(ns("bot_stats"))
@@ -418,7 +418,7 @@ analysis_bot_server <- function(id, project_data_reactive, i18n) {
     # Download handler
     output$download_bot_data <- downloadHandler(
       filename = function() {
-        paste0("BOT_Data_", input$bot_element, "_", Sys.Date(), ".csv")
+        generate_export_filename(paste0("BOT_Data_", input$bot_element), ".csv")
       },
       content = function(file) {
         write.csv(bot_rv$timeseries_data, file, row.names = FALSE)

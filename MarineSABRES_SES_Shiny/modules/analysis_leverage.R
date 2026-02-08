@@ -70,7 +70,7 @@ analysis_leverage_ui <- function(id, i18n) {
               style = "background: #f8f9fa; padding: 10px; border-radius: 5px; margin-bottom: 15px;",
               icon("info-circle"), " Node sizes reflect composite leverage scores. Larger nodes = higher leverage."
             ),
-            visNetworkOutput(ns("leverage_network"), height = "600px")
+            visNetworkOutput(ns("leverage_network"), height = PLOT_HEIGHT_XL)
           ),
 
           # Interpretation Tab
@@ -323,7 +323,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
         )
 
         # Build visNetwork
-        visNetwork(nodes, edges, width = "100%", height = "600px") %>%
+        visNetwork(nodes, edges, width = "100%", height = PLOT_HEIGHT_XL) %>%
           visNodes(shape = "dot", font = list(size = 14)) %>%
           visEdges(arrows = "to", smooth = list(enabled = TRUE, type = "continuous")) %>%
           visOptions(highlightNearest = list(enabled = TRUE, degree = 1, hover = TRUE), nodesIdSelection = FALSE) %>%

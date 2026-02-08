@@ -35,7 +35,7 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
     filename = function() {
       # Sanitize filename to prevent path traversal
       safe_name <- sanitize_filename(input$save_project_name)
-      paste0(safe_name, "_", Sys.Date(), ".rds")
+      generate_export_filename(safe_name, ".rds")
     },
     content = function(file) {
       tryCatch({

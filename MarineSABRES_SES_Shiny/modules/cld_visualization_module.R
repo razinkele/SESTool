@@ -183,7 +183,7 @@ cld_viz_ui <- function(id, i18n) {
           # Network Visualization (uses Shiny's built-in loading indicator)
           div(
             class = "cld-network-container",
-            visNetworkOutput(ns("network"), height = "700px")
+            visNetworkOutput(ns("network"), height = PLOT_HEIGHT_XXL)
           )
         )
       )

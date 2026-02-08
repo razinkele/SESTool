@@ -556,7 +556,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
     # Download handler for HTML report
     output$download_html <- downloadHandler(
       filename = function() {
-        paste0(sanitize_filename(input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".html")
+        generate_export_filename(sanitize_filename(input$report_title), ".html")
       },
       content = function(file) {
         file.copy(rv$html_report_path, file)
@@ -566,7 +566,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
     # Download handler for HTML fallback
     output$download_html_fallback <- downloadHandler(
       filename = function() {
-        paste0(sanitize_filename(input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".html")
+        generate_export_filename(sanitize_filename(input$report_title), ".html")
       },
       content = function(file) {
         file.copy(rv$html_report_path, file)
@@ -576,7 +576,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
     # Download handler for PDF report
     output$download_pdf <- downloadHandler(
       filename = function() {
-        paste0(sanitize_filename(input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".pdf")
+        generate_export_filename(sanitize_filename(input$report_title), ".pdf")
       },
       content = function(file) {
         file.copy(rv$pdf_report_path, file)
@@ -586,7 +586,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
     # Download handler for Word report
     output$download_word <- downloadHandler(
       filename = function() {
-        paste0(sanitize_filename(input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".docx")
+        generate_export_filename(sanitize_filename(input$report_title), ".docx")
       },
       content = function(file) {
         file.copy(rv$word_report_path, file)
@@ -596,7 +596,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
     # Download handler for PowerPoint report
     output$download_ppt <- downloadHandler(
       filename = function() {
-        paste0(sanitize_filename(input$report_title), "_", format(Sys.Date(), "%Y%m%d"), ".pptx")
+        generate_export_filename(sanitize_filename(input$report_title), ".pptx")
       },
       content = function(file) {
         file.copy(rv$ppt_report_path, file)

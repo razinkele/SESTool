@@ -28,7 +28,7 @@ setup_export_handlers <- function(input, output, session, project_data, i18n) {
         "JSON (.json)" = ".json",
         "R Data (.RData)" = ".RData"
       )
-      paste0("MarineSABRES_Data_", Sys.Date(), ext)
+      generate_export_filename("MarineSABRES_Data", ext)
     },
     content = function(file) {
       tryCatch({
@@ -143,7 +143,7 @@ setup_export_handlers <- function(input, output, session, project_data, i18n) {
         "HTML (.html)" = ".html",
         "PDF (.pdf)" = ".pdf"
       )
-      paste0("MarineSABRES_CLD_", Sys.Date(), ext)
+      generate_export_filename("MarineSABRES_CLD", ext)
     },
     content = function(file) {
       tryCatch({
@@ -157,6 +157,10 @@ setup_export_handlers <- function(input, output, session, project_data, i18n) {
 
         nodes <- data$data$cld$nodes
         edges <- data$data$cld$edges
+        if (is.null(edges) || !is.data.frame(edges) || nrow(edges) == 0) {
+          edges <- data.frame(from = character(0), to = character(0),
+                              stringsAsFactors = FALSE)
+        }
 
       format <- input$export_viz_format
       width <- input$export_viz_width

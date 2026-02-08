@@ -128,7 +128,7 @@ pims_stakeholder_ui <- function(id, i18n) {
 
             fluidRow(
               column(8,
-                plotOutput(ns("power_interest_plot"), height = "600px", click = ns("plot_click"))
+                plotOutput(ns("power_interest_plot"), height = PLOT_HEIGHT_XL, click = ns("plot_click"))
               ),
               column(4,
                 wellPanel(
@@ -279,7 +279,7 @@ pims_stakeholder_ui <- function(id, i18n) {
               column(6,
                 wellPanel(
                   h5(i18n$t("modules.pims.stakeholder.engagement_coverage")),
-                  plotOutput(ns("engagement_coverage"), height = "250px")
+                  plotOutput(ns("engagement_coverage"), height = PLOT_HEIGHT_SM)
                 )
               )
             ),
@@ -290,13 +290,13 @@ pims_stakeholder_ui <- function(id, i18n) {
               column(6,
                 wellPanel(
                   h5(i18n$t("modules.pims.stakeholder.stakeholder_types_distribution")),
-                  plotOutput(ns("type_distribution"), height = "300px")
+                  plotOutput(ns("type_distribution"), height = PLOT_HEIGHT_SM)
                 )
               ),
               column(6,
                 wellPanel(
                   h5(i18n$t("modules.pims.stakeholder.sector_distribution")),
-                  plotOutput(ns("sector_distribution"), height = "300px")
+                  plotOutput(ns("sector_distribution"), height = PLOT_HEIGHT_SM)
                 )
               )
             ),
@@ -389,7 +389,7 @@ pims_stakeholder_server <- function(id, global_data, i18n) {
       req(input$sh_name, input$sh_type)
 
       stakeholder_data$stakeholder_counter <- stakeholder_data$stakeholder_counter + 1
-      new_id <- paste0("SH", sprintf("%03d", stakeholder_data$stakeholder_counter))
+      new_id <- generate_element_id(PIMS_ID_PREFIX$stakeholder, stakeholder_data$stakeholder_counter)
 
       new_row <- data.frame(
         ID = new_id,
@@ -570,7 +570,7 @@ pims_stakeholder_server <- function(id, global_data, i18n) {
       req(input$eng_stakeholder, input$eng_method)
 
       stakeholder_data$engagement_counter <- stakeholder_data$engagement_counter + 1
-      new_id <- paste0("ENG", sprintf("%03d", stakeholder_data$engagement_counter))
+      new_id <- generate_element_id(PIMS_ID_PREFIX$engagement, stakeholder_data$engagement_counter)
 
       sh_name <- stakeholder_data$stakeholders$Name[stakeholder_data$stakeholders$ID == input$eng_stakeholder]
 
@@ -609,7 +609,7 @@ pims_stakeholder_server <- function(id, global_data, i18n) {
       req(input$comm_audience, input$comm_type)
 
       stakeholder_data$communication_counter <- stakeholder_data$communication_counter + 1
-      new_id <- paste0("COMM", sprintf("%03d", stakeholder_data$communication_counter))
+      new_id <- generate_element_id(PIMS_ID_PREFIX$communication, stakeholder_data$communication_counter)
 
       new_row <- data.frame(
         ID = new_id,
@@ -712,7 +712,7 @@ pims_stakeholder_server <- function(id, global_data, i18n) {
     # Download Handlers ----
     output$download_stakeholder_report <- downloadHandler(
       filename = function() {
-        paste0("Stakeholder_Report_", Sys.Date(), ".xlsx")
+        generate_export_filename("Stakeholder_Report", ".xlsx")
       },
       content = function(file) {
         wb <- createWorkbook()

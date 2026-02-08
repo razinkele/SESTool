@@ -172,7 +172,7 @@ response_measures_ui <- function(id, i18n) {
               column(12,
                 wellPanel(
                   h5(i18n$t("modules.response.measures.visual_impact_matrix")),
-                  plotOutput(ns("impact_heatmap"), height = "500px")
+                  plotOutput(ns("impact_heatmap"), height = PLOT_HEIGHT_LG)
                 )
               )
             )
@@ -220,13 +220,13 @@ response_measures_ui <- function(id, i18n) {
               column(6,
                 wellPanel(
                   h5(i18n$t("modules.response.measures.effectiveness_vs_feasibility")),
-                  plotOutput(ns("ef_plot"), height = "400px")
+                  plotOutput(ns("ef_plot"), height = PLOT_HEIGHT_MD)
                 )
               ),
               column(6,
                 wellPanel(
                   h5(i18n$t("modules.response.measures.cost_vs_expected_impact")),
-                  plotOutput(ns("cost_impact_plot"), height = "400px")
+                  plotOutput(ns("cost_impact_plot"), height = PLOT_HEIGHT_MD)
                 )
               )
             )
@@ -286,7 +286,7 @@ response_measures_ui <- function(id, i18n) {
               column(12,
                 wellPanel(
                   h5(i18n$t("modules.response.measures.gantt_chart_simplified")),
-                  plotOutput(ns("gantt_plot"), height = "400px")
+                  plotOutput(ns("gantt_plot"), height = PLOT_HEIGHT_MD)
                 )
               )
             )
@@ -374,7 +374,7 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
       req(input$rm_name, input$rm_type)
 
       response_data$counter <- response_data$counter + 1
-      new_id <- paste0("RM", sprintf("%03d", response_data$counter))
+      new_id <- generate_element_id(ELEMENT_ID_PREFIX$measures, response_data$counter)
 
       new_row <- data.frame(
         ID = new_id,
@@ -574,7 +574,7 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
     # Download Handler ----
     output$download_response_excel <- downloadHandler(
       filename = function() {
-        paste0("Response_Measures_", Sys.Date(), ".xlsx")
+        generate_export_filename("Response_Measures", ".xlsx")
       },
       content = function(file) {
         wb <- createWorkbook()

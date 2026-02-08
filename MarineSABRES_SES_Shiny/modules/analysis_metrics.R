@@ -44,7 +44,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
 
       data <- project_data_reactive()
 
-      if (is.null(data$data$cld) || is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
+      if (is.null(data) || !has_valid_cld(data)) {
         div(
           class = "alert alert-warning",
           icon("exclamation-triangle"), " ",
@@ -66,7 +66,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
       req(project_data_reactive())
 
       data <- project_data_reactive()
-      if (is.null(data$data$cld) || is.null(data$data$cld$nodes) || nrow(data$data$cld$nodes) == 0) {
+      if (is.null(data) || !has_valid_cld(data)) {
         return(NULL)
       }
 
@@ -250,7 +250,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
                 ),
                 fluidRow(
                   column(12,
-                    plotOutput(ns("metrics_barplot"), height = "500px")
+                    plotOutput(ns("metrics_barplot"), height = PLOT_HEIGHT_LG)
                   )
                 ),
                 hr(),
@@ -258,13 +258,13 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
                   column(6,
                     wellPanel(
                       h5(i18n$t("modules.analysis.common.comparison_plot_degree_vs_betweenness")),
-                      plotOutput(ns("metrics_comparison"), height = "400px")
+                      plotOutput(ns("metrics_comparison"), height = PLOT_HEIGHT_MD)
                     )
                   ),
                   column(6,
                     wellPanel(
                       h5(i18n$t("modules.analysis.common.distribution_histogram")),
-                      plotOutput(ns("metrics_histogram"), height = "400px")
+                      plotOutput(ns("metrics_histogram"), height = PLOT_HEIGHT_MD)
                     )
                   )
                 )
@@ -505,7 +505,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
     # Download handler
     output$download_metrics <- downloadHandler(
       filename = function() {
-        paste0("Network_Metrics_", Sys.Date(), ".xlsx")
+        generate_export_filename("Network_Metrics", ".xlsx")
       },
       content = function(file) {
         req(metrics_rv$node_metrics_df, metrics_rv$calculated_metrics)

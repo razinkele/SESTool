@@ -93,7 +93,7 @@ analysis_loops_ui <- function(id, i18n) {
                   p("Amplify change - can create virtuous or vicious cycles."),
                   DTOutput(ns("reinforcing_loops_table")),
                   hr(),
-                  plotOutput(ns("reinforcing_dist"), height = "200px")
+                  plotOutput(ns("reinforcing_dist"), height = PLOT_HEIGHT_XS)
                 )
               ),
               column(6,
@@ -102,7 +102,7 @@ analysis_loops_ui <- function(id, i18n) {
                   p("Counteract change - seek equilibrium or stability."),
                   DTOutput(ns("balancing_loops_table")),
                   hr(),
-                  plotOutput(ns("balancing_dist"), height = "200px")
+                  plotOutput(ns("balancing_dist"), height = PLOT_HEIGHT_XS)
                 )
               )
             ),
@@ -113,7 +113,7 @@ analysis_loops_ui <- function(id, i18n) {
               column(12,
                 wellPanel(
                   h5("Loop Type Distribution"),
-                  plotOutput(ns("loop_type_plot"), height = "300px")
+                  plotOutput(ns("loop_type_plot"), height = PLOT_HEIGHT_SM)
                 )
               )
             )
@@ -137,7 +137,7 @@ analysis_loops_ui <- function(id, i18n) {
               column(8,
                 wellPanel(
                   h5("Loop Visualization"),
-                  visNetworkOutput(ns("loop_network"), height = "400px")
+                  visNetworkOutput(ns("loop_network"), height = PLOT_HEIGHT_MD)
                 ),
                 wellPanel(
                   h5("Loop Narrative"),
@@ -168,14 +168,14 @@ analysis_loops_ui <- function(id, i18n) {
               column(6,
                 wellPanel(
                   h5("Loop Strength Analysis"),
-                  plotOutput(ns("loop_strength_plot"), height = "300px")
+                  plotOutput(ns("loop_strength_plot"), height = PLOT_HEIGHT_SM)
                 )
               ),
               column(6,
                 wellPanel(
                   h5("Element Participation"),
                   p("How many loops each element appears in:"),
-                  plotOutput(ns("element_participation_plot"), height = "300px")
+                  plotOutput(ns("element_participation_plot"), height = PLOT_HEIGHT_SM)
                 )
               )
             )
@@ -743,7 +743,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     # Download Handlers ----
     output$download_loops_excel <- downloadHandler(
       filename = function() {
-        paste0("Loop_Analysis_", Sys.Date(), ".xlsx")
+        generate_export_filename("Loop_Analysis", ".xlsx")
       },
       content = function(file) {
         req(loop_data$loops)

@@ -29,8 +29,8 @@ ai_isa_assistant_ui <- function(id, i18n) {
     # External CSS (extracted from inline styles)
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "ai-isa-assistant.css"),
-      # JavaScript for local storage
-      tags$script(HTML("
+      # JavaScript for local storage - use ns() for proper namespacing
+      tags$script(HTML(sprintf("
         // Save data to localStorage
         Shiny.addCustomMessageHandler('save_ai_isa_session', function(data) {
           try {
@@ -49,16 +49,16 @@ ai_isa_assistant_ui <- function(id, i18n) {
             var timestamp = localStorage.getItem('ai_isa_session_timestamp');
 
             if (savedData) {
-              Shiny.setInputValue('ai_isa_mod-loaded_session_data', {
+              Shiny.setInputValue('%s', {
                 data: JSON.parse(savedData),
                 timestamp: timestamp
               }, {priority: 'event'});
             } else {
-              Shiny.setInputValue('ai_isa_mod-loaded_session_data', null, {priority: 'event'});
+              Shiny.setInputValue('%s', null, {priority: 'event'});
             }
           } catch(e) {
             console.error('Failed to load from localStorage:', e);
-            Shiny.setInputValue('ai_isa_mod-loaded_session_data', null, {priority: 'event'});
+            Shiny.setInputValue('%s', null, {priority: 'event'});
           }
         });
 
@@ -66,7 +66,7 @@ ai_isa_assistant_ui <- function(id, i18n) {
         $(document).on('shiny:connected', function() {
           var savedData = localStorage.getItem('ai_isa_session');
           if (savedData) {
-            Shiny.setInputValue('ai_isa_mod-has_saved_session', true, {priority: 'event'});
+            Shiny.setInputValue('%s', true, {priority: 'event'});
           }
         });
 
@@ -80,7 +80,8 @@ ai_isa_assistant_ui <- function(id, i18n) {
             console.error('Failed to clear localStorage:', e);
           }
         });
-      "))
+      ", ns("loaded_session_data"), ns("loaded_session_data"),
+         ns("loaded_session_data"), ns("has_saved_session"))))
     ),
 
     # Main content
@@ -901,7 +902,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # Convert element lists to dataframes with proper structure and save
       current_data$data$isa_data$drivers <- if (length(rv$elements$drivers) > 0) {
         data.frame(
-          ID = paste0("D", sprintf("%03d", seq_along(rv$elements$drivers))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$drivers, seq_along(rv$elements$drivers)),
           Name = sapply(rv$elements$drivers, function(x) x$name),
           Type = "Driver",
           Description = sapply(rv$elements$drivers, function(x) x$description %||% ""),
@@ -912,7 +913,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       current_data$data$isa_data$activities <- if (length(rv$elements$activities) > 0) {
         data.frame(
-          ID = paste0("A", sprintf("%03d", seq_along(rv$elements$activities))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$activities, seq_along(rv$elements$activities)),
           Name = sapply(rv$elements$activities, function(x) x$name),
           Type = "Activity",
           Description = sapply(rv$elements$activities, function(x) x$description %||% ""),
@@ -923,7 +924,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       current_data$data$isa_data$pressures <- if (length(rv$elements$pressures) > 0) {
         data.frame(
-          ID = paste0("P", sprintf("%03d", seq_along(rv$elements$pressures))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$pressures, seq_along(rv$elements$pressures)),
           Name = sapply(rv$elements$pressures, function(x) x$name),
           Type = "Pressure",
           Description = sapply(rv$elements$pressures, function(x) x$description %||% ""),
@@ -934,7 +935,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       current_data$data$isa_data$marine_processes <- if (length(rv$elements$states) > 0) {
         data.frame(
-          ID = paste0("MPF", sprintf("%03d", seq_along(rv$elements$states))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$states, seq_along(rv$elements$states)),
           Name = sapply(rv$elements$states, function(x) x$name),
           Type = "State",
           Description = sapply(rv$elements$states, function(x) x$description %||% ""),
@@ -945,7 +946,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       current_data$data$isa_data$ecosystem_services <- if (length(rv$elements$impacts) > 0) {
         data.frame(
-          ID = paste0("ES", sprintf("%03d", seq_along(rv$elements$impacts))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$impacts, seq_along(rv$elements$impacts)),
           Name = sapply(rv$elements$impacts, function(x) x$name),
           Type = "Impact",
           Description = sapply(rv$elements$impacts, function(x) x$description %||% ""),
@@ -956,7 +957,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       current_data$data$isa_data$goods_benefits <- if (length(rv$elements$welfare) > 0) {
         data.frame(
-          ID = paste0("GB", sprintf("%03d", seq_along(rv$elements$welfare))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$welfare, seq_along(rv$elements$welfare)),
           Name = sapply(rv$elements$welfare, function(x) x$name),
           Type = "Welfare",
           Description = sapply(rv$elements$welfare, function(x) x$description %||% ""),
@@ -967,7 +968,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       current_data$data$isa_data$responses <- if (length(rv$elements$responses) > 0) {
         data.frame(
-          ID = paste0("R", sprintf("%03d", seq_along(rv$elements$responses))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$responses, seq_along(rv$elements$responses)),
           Name = sapply(rv$elements$responses, function(x) x$name),
           Type = "Response",
           Description = sapply(rv$elements$responses, function(x) x$description %||% ""),
@@ -2644,7 +2645,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # (Using same logic as manual save)
             current_data$data$isa_data$drivers <- if (length(rv$elements$drivers) > 0) {
               data.frame(
-                ID = paste0("D", sprintf("%03d", seq_along(rv$elements$drivers))),
+                ID = generate_element_id(ELEMENT_ID_PREFIX$drivers, seq_along(rv$elements$drivers)),
                 Name = sapply(rv$elements$drivers, function(x) x$name),
                 Type = "Driver",
                 Description = sapply(rv$elements$drivers, function(x) x$description %||% ""),
@@ -2660,7 +2661,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
             current_data$data$isa_data$activities <- if (length(rv$elements$activities) > 0) {
               data.frame(
-                ID = paste0("A", sprintf("%03d", seq_along(rv$elements$activities))),
+                ID = generate_element_id(ELEMENT_ID_PREFIX$activities, seq_along(rv$elements$activities)),
                 Name = sapply(rv$elements$activities, function(x) x$name),
                 Type = "Activity",
                 Description = sapply(rv$elements$activities, function(x) x$description %||% ""),
@@ -2676,7 +2677,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
             current_data$data$isa_data$pressures <- if (length(rv$elements$pressures) > 0) {
               data.frame(
-                ID = paste0("P", sprintf("%03d", seq_along(rv$elements$pressures))),
+                ID = generate_element_id(ELEMENT_ID_PREFIX$pressures, seq_along(rv$elements$pressures)),
                 Name = sapply(rv$elements$pressures, function(x) x$name),
                 Type = "Pressure",
                 Description = sapply(rv$elements$pressures, function(x) x$description %||% ""),
@@ -2692,7 +2693,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
             current_data$data$isa_data$marine_processes <- if (length(rv$elements$states) > 0) {
               data.frame(
-                ID = paste0("S", sprintf("%03d", seq_along(rv$elements$states))),
+                ID = generate_element_id(ELEMENT_ID_PREFIX$states, seq_along(rv$elements$states)),
                 Name = sapply(rv$elements$states, function(x) x$name),
                 Type = "Marine Process/State",
                 Description = sapply(rv$elements$states, function(x) x$description %||% ""),
@@ -2708,7 +2709,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
             current_data$data$isa_data$ecosystem_services <- if (length(rv$elements$impacts) > 0) {
               data.frame(
-                ID = paste0("I", sprintf("%03d", seq_along(rv$elements$impacts))),
+                ID = generate_element_id(ELEMENT_ID_PREFIX$impacts, seq_along(rv$elements$impacts)),
                 Name = sapply(rv$elements$impacts, function(x) x$name),
                 Type = "Ecosystem Service/Impact",
                 Description = sapply(rv$elements$impacts, function(x) x$description %||% ""),
@@ -2724,7 +2725,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
             current_data$data$isa_data$goods_benefits <- if (length(rv$elements$welfare) > 0) {
               data.frame(
-                ID = paste0("W", sprintf("%03d", seq_along(rv$elements$welfare))),
+                ID = generate_element_id(ELEMENT_ID_PREFIX$welfare, seq_along(rv$elements$welfare)),
                 Name = sapply(rv$elements$welfare, function(x) x$name),
                 Type = "Good/Benefit/Welfare",
                 Description = sapply(rv$elements$welfare, function(x) x$description %||% ""),
@@ -3066,7 +3067,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$drivers) > 0) {
         current_data$data$isa_data$drivers <- data.frame(
-          ID = paste0("D", sprintf("%03d", seq_along(rv$elements$drivers))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$drivers, seq_along(rv$elements$drivers)),
           Name = sapply(rv$elements$drivers, function(x) x$name),
           Type = "Driver",
           Description = sapply(rv$elements$drivers, function(x) x$description %||% ""),
@@ -3088,7 +3089,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$activities) > 0) {
         current_data$data$isa_data$activities <- data.frame(
-          ID = paste0("A", sprintf("%03d", seq_along(rv$elements$activities))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$activities, seq_along(rv$elements$activities)),
           Name = sapply(rv$elements$activities, function(x) x$name),
           Type = "Activity",
           Description = sapply(rv$elements$activities, function(x) x$description %||% ""),
@@ -3110,7 +3111,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$pressures) > 0) {
         current_data$data$isa_data$pressures <- data.frame(
-          ID = paste0("P", sprintf("%03d", seq_along(rv$elements$pressures))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$pressures, seq_along(rv$elements$pressures)),
           Name = sapply(rv$elements$pressures, function(x) x$name),
           Type = "Pressure",
           Description = sapply(rv$elements$pressures, function(x) x$description %||% ""),
@@ -3132,7 +3133,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$states) > 0) {
         current_data$data$isa_data$marine_processes <- data.frame(
-          ID = paste0("MPF", sprintf("%03d", seq_along(rv$elements$states))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$states, seq_along(rv$elements$states)),
           Name = sapply(rv$elements$states, function(x) x$name),
           Type = "State Change",
           Description = sapply(rv$elements$states, function(x) x$description %||% ""),
@@ -3154,7 +3155,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$impacts) > 0) {
         current_data$data$isa_data$ecosystem_services <- data.frame(
-          ID = paste0("ES", sprintf("%03d", seq_along(rv$elements$impacts))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$impacts, seq_along(rv$elements$impacts)),
           Name = sapply(rv$elements$impacts, function(x) x$name),
           Type = "Impact",
           Description = sapply(rv$elements$impacts, function(x) x$description %||% ""),
@@ -3176,7 +3177,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # Match Standard Entry structure: ID, Name, Type, Description, Stakeholder, Importance, Trend
       if (length(rv$elements$welfare) > 0) {
         current_data$data$isa_data$goods_benefits <- data.frame(
-          ID = paste0("GB", sprintf("%03d", seq_along(rv$elements$welfare))),
+          ID = generate_element_id(ELEMENT_ID_PREFIX$welfare, seq_along(rv$elements$welfare)),
           Name = sapply(rv$elements$welfare, function(x) x$name),
           Type = "Welfare",
           Description = sapply(rv$elements$welfare, function(x) x$description %||% ""),

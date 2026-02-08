@@ -3,6 +3,19 @@
 # Note: rmarkdown and htmlwidgets are loaded in global.R
 
 # ============================================================================
+# EXPORT FILENAME HELPER
+# ============================================================================
+
+#' Generate a standardized export filename with date stamp
+#'
+#' @param prefix Descriptive prefix (e.g., "Network_Metrics", "MarineSABRES_Data")
+#' @param extension File extension including dot (e.g., ".xlsx", ".csv")
+#' @return Character string like "Network_Metrics_20260208.xlsx"
+generate_export_filename <- function(prefix, extension) {
+  paste0(prefix, "_", format(Sys.Date(), EXPORT_DATE_FORMAT), extension)
+}
+
+# ============================================================================
 # VISUALIZATION EXPORT FUNCTIONS
 # ============================================================================
 

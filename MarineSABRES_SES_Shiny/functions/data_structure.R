@@ -2,6 +2,20 @@
 # Data structure definitions and initialization functions
 
 # ============================================================================
+# ELEMENT ID GENERATION
+# ============================================================================
+
+#' Generate element IDs from a prefix and numeric indices
+#'
+#' @param prefix ID prefix string (e.g., "D", "MPF") or element type name
+#' @param n Numeric vector of indices, or length to generate 1:n
+#' @return Character vector of IDs like "D001", "MPF002"
+generate_element_id <- function(prefix, n) {
+  if (length(n) == 1 && n >= 1) n <- seq_len(n)
+  paste0(prefix, sprintf("%03d", n))
+}
+
+# ============================================================================
 # DATA STRUCTURE TEMPLATES
 # ============================================================================
 

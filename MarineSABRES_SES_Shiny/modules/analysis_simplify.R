@@ -306,11 +306,11 @@ analysis_simplify_ui <- function(id, i18n) {
               fluidRow(
                 column(6,
                   h4(i18n$t("modules.analysis.simplify.original_network"), class = "text-center"),
-                  visNetworkOutput(ns("original_network"), height = "500px")
+                  visNetworkOutput(ns("original_network"), height = PLOT_HEIGHT_LG)
                 ),
                 column(6,
                   h4(i18n$t("modules.analysis.simplify.simplified_network"), class = "text-center"),
-                  visNetworkOutput(ns("simplified_network"), height = "500px")
+                  visNetworkOutput(ns("simplified_network"), height = PLOT_HEIGHT_LG)
                 )
               ),
 
@@ -333,7 +333,7 @@ analysis_simplify_ui <- function(id, i18n) {
 
               fluidRow(
                 column(12,
-                  visNetworkOutput(ns("simplified_network_full"), height = "600px")
+                  visNetworkOutput(ns("simplified_network_full"), height = PLOT_HEIGHT_XL)
                 )
               ),
 
@@ -370,7 +370,7 @@ analysis_simplify_ui <- function(id, i18n) {
               br(),
 
               h4(i18n$t("modules.analysis.simplify.impact_summary")),
-              plotOutput(ns("impact_chart"), height = "400px")
+              plotOutput(ns("impact_chart"), height = PLOT_HEIGHT_MD)
             )
           )
         )
@@ -867,34 +867,28 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
 
     # ========== VISUALIZATIONS ==========
 
-    output$original_network <- renderVisNetwork({
-      req(rv$original_nodes, rv$original_edges)
-
-      visNetwork(rv$original_nodes, rv$original_edges, height = "500px") %>%
+    # Helper to build a standard visNetwork with common options
+    build_vis_network <- function(nodes, edges, height = PLOT_HEIGHT_LG, zoom = FALSE) {
+      visNetwork(nodes, edges, height = height) %>%
         visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
         visLayout(randomSeed = 42) %>%
         visPhysics(stabilization = TRUE, barnesHut = list(gravitationalConstant = -2000, springLength = 200)) %>%
-        visInteraction(navigationButtons = TRUE, hover = TRUE)
+        visInteraction(navigationButtons = TRUE, hover = TRUE, zoomView = zoom)
+    }
+
+    output$original_network <- renderVisNetwork({
+      req(rv$original_nodes, rv$original_edges)
+      build_vis_network(rv$original_nodes, rv$original_edges)
     })
 
     output$simplified_network <- renderVisNetwork({
       req(rv$simplified_nodes, rv$simplified_edges)
-
-      visNetwork(rv$simplified_nodes, rv$simplified_edges, height = "500px") %>%
-        visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
-        visLayout(randomSeed = 42) %>%
-        visPhysics(stabilization = TRUE, barnesHut = list(gravitationalConstant = -2000, springLength = 200)) %>%
-        visInteraction(navigationButtons = TRUE, hover = TRUE)
+      build_vis_network(rv$simplified_nodes, rv$simplified_edges)
     })
 
     output$simplified_network_full <- renderVisNetwork({
       req(rv$simplified_nodes, rv$simplified_edges)
-
-      visNetwork(rv$simplified_nodes, rv$simplified_edges, height = "600px") %>%
-        visOptions(highlightNearest = TRUE, nodesIdSelection = TRUE) %>%
-        visLayout(randomSeed = 42) %>%
-        visPhysics(stabilization = TRUE, barnesHut = list(gravitationalConstant = -2000, springLength = 200)) %>%
-        visInteraction(navigationButtons = TRUE, hover = TRUE, zoomView = TRUE)
+      build_vis_network(rv$simplified_nodes, rv$simplified_edges, height = PLOT_HEIGHT_XL, zoom = TRUE)
     })
 
     # ========== STATISTICS AND TABLES ==========

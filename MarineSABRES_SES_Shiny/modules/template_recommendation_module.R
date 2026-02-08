@@ -146,7 +146,7 @@ templateRecommendationUI <- function(id) {
             br(),
 
             h5("Similarity Component Details"),
-            plotOutput(ns("similarity_plot"), height = "300px")
+            plotOutput(ns("similarity_plot"), height = PLOT_HEIGHT_SM)
           )
         )
       ),
@@ -721,9 +721,9 @@ templateRecommendationServer <- function(id, training_data, similarity_matrix = 
       )
 
       # Save to file
-      filename <- sprintf("template_metadata_%s_%s.rds",
-                         gsub(" ", "_", input$template_name),
-                         format(Sys.Date(), "%Y%m%d"))
+      filename <- generate_export_filename(
+        paste0("template_metadata_", gsub(" ", "_", input$template_name)), ".rds"
+      )
 
       saveRDS(metadata, filename)
 

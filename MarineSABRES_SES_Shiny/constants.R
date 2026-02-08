@@ -77,6 +77,25 @@ DAPSIWRM_ELEMENTS <- c(
   "Responses"
 )
 
+# DAPSI(W)R(M) element ID prefixes (for generating element IDs like "D001", "A002")
+ELEMENT_ID_PREFIX <- list(
+  drivers    = "D",
+  activities = "A",
+  pressures  = "P",
+  states     = "MPF",   # Marine Processes & Functioning
+  impacts    = "ES",    # Ecosystem Services
+  welfare    = "GB",    # Goods & Benefits
+  responses  = "R",
+  measures   = "RM"     # Response Measures
+)
+
+# PIMS module ID prefixes
+PIMS_ID_PREFIX <- list(
+  stakeholder   = "SH",
+  engagement    = "ENG",
+  communication = "COMM"
+)
+
 # Minimum nodes per category
 MIN_NODES_PER_CATEGORY <- 1
 DEFAULT_NODES_PER_CATEGORY <- 3
@@ -234,6 +253,9 @@ EDGE_RETENTION_QUANTILE <- 0.7         # Keep top 30% of edges when optimizing (
 # EXPORT CONSTANTS
 # ============================================================================
 
+# Export filename date format
+EXPORT_DATE_FORMAT <- "%Y%m%d"        # Date format for exported filenames (e.g. "20260208")
+
 # PNG export dimensions
 EXPORT_PNG_WIDTH <- 1200              # Default width for exported PNG images
 EXPORT_PNG_HEIGHT <- 900              # Default height for exported PNG images
@@ -278,6 +300,14 @@ UI_BOX_WIDTH_QUARTER <- 3              # Quarter width (25%)
 PLOT_HEIGHT_DEFAULT <- 500             # Default plot height
 PLOT_WIDTH_DEFAULT <- 800              # Default plot width
 PLOT_MARGINS <- c(0, 0, 2, 0)          # Plot margins: bottom, left, top, right
+
+# UI plot height strings (for *Output() widgets and visNetwork)
+PLOT_HEIGHT_XS  <- "200px"             # Compact distribution plots
+PLOT_HEIGHT_SM  <- "300px"             # Small charts, histograms
+PLOT_HEIGHT_MD  <- "400px"             # Standard charts and plots
+PLOT_HEIGHT_LG  <- "500px"             # Large visualizations
+PLOT_HEIGHT_XL  <- "600px"             # Full network views
+PLOT_HEIGHT_XXL <- "700px"             # Main CLD visualization
 
 # ============================================================================
 # UI STYLING CONSTANTS
@@ -420,6 +450,29 @@ MSG_GRAPH_CONVERTED <- "Graph converted to directed for loop analysis"
 MSG_UNDIRECTED_CONVERTED <- "Converting undirected graph to directed for loop analysis"
 MSG_LARGE_GRAPH_LIMIT <- "Large graph detected. Limiting search to loops of length %d or less, max %d loops"
 MSG_MEDIUM_GRAPH_LIMIT <- "Medium graph detected. Limiting search to loops of length %d or less, max %d loops"
+
+# ============================================================================
+# DTU DYNAMICS ANALYSIS CONSTANTS
+# ============================================================================
+
+DYNAMICS_MAX_BOOLEAN_NODES    <- 25L     # Hard limit for exhaustive Boolean analysis
+DYNAMICS_DEFAULT_ITER         <- 500L    # Default simulation iterations
+DYNAMICS_MIN_ITER             <- 50L     # Minimum iterations
+DYNAMICS_MAX_ITER             <- 5000L   # Maximum iterations
+DYNAMICS_DEFAULT_GREED        <- 100L    # Default Monte Carlo simulations
+DYNAMICS_MAX_GREED            <- 2000L   # Maximum Monte Carlo simulations
+DYNAMICS_DEFAULT_RF_TREES     <- 1000L   # Default random forest trees
+DYNAMICS_DIVERGENCE_THRESHOLD <- 1e10    # Value above which simulation is considered diverged
+
+# Weight mapping: polarity + strength -> numeric weight
+DYNAMICS_WEIGHT_MAP <- list(
+  "+strong"  =  1.00,
+  "+medium"  =  0.50,
+  "+weak"    =  0.25,
+  "-strong"  = -1.00,
+  "-medium"  = -0.50,
+  "-weak"    = -0.25
+)
 
 # ============================================================================
 # END OF CONSTANTS

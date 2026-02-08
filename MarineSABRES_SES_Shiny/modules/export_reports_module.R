@@ -376,11 +376,10 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
     # Download handler for generated report
     output$download_report_file <- downloadHandler(
       filename = function() {
-        paste0("MarineSABRES_Report_", input$report_type, "_", Sys.Date(),
-               switch(input$report_format,
-                      "HTML" = ".html",
-                      "PDF" = ".pdf",
-                      "Word" = ".docx"))
+        generate_export_filename(
+          paste0("MarineSABRES_Report_", input$report_type),
+          switch(input$report_format, "HTML" = ".html", "PDF" = ".pdf", "Word" = ".docx")
+        )
       },
       content = function(file) {
         file.copy(report_file_path(), file)
@@ -392,12 +391,12 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
 
     output$download_data <- downloadHandler(
       filename = function() {
-        paste0("MarineSABRES_Data_", Sys.Date(),
-               switch(input$export_data_format,
-                      "Excel (.xlsx)" = ".xlsx",
-                      "CSV (.csv)" = ".csv",
-                      "JSON (.json)" = ".json",
-                      "R Data (.RData)" = ".RData"))
+        generate_export_filename(
+          "MarineSABRES_Data",
+          switch(input$export_data_format,
+                 "Excel (.xlsx)" = ".xlsx", "CSV (.csv)" = ".csv",
+                 "JSON (.json)" = ".json", "R Data (.RData)" = ".RData")
+        )
       },
       content = function(file) {
         # Implement data export logic
@@ -409,12 +408,12 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
 
     output$download_viz <- downloadHandler(
       filename = function() {
-        paste0("MarineSABRES_Viz_", Sys.Date(),
-               switch(input$export_viz_format,
-                      "PNG (.png)" = ".png",
-                      "SVG (.svg)" = ".svg",
-                      "HTML (.html)" = ".html",
-                      "PDF (.pdf)" = ".pdf"))
+        generate_export_filename(
+          "MarineSABRES_Viz",
+          switch(input$export_viz_format,
+                 "PNG (.png)" = ".png", "SVG (.svg)" = ".svg",
+                 "HTML (.html)" = ".html", "PDF (.pdf)" = ".pdf")
+        )
       },
       content = function(file) {
         # Implement visualization export logic
