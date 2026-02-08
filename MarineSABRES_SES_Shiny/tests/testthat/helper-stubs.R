@@ -34,8 +34,8 @@ minimal_server <- function(input, output, session, ...) {
 }
 
 # Module stubs
-isaDataEntryUI <- function(id) minimal_ui(id)
-isaDataEntryServer <- function(id, project_data = NULL) {
+isa_data_entry_ui <- function(id) minimal_ui(id)
+isa_data_entry_server <- function(id, project_data = NULL) {
   moduleServer(id, function(input, output, session) minimal_server(input, output, session))
 }
 
@@ -414,10 +414,10 @@ template_ses_server <- function(id, project_data = NULL, parent_session = NULL) 
 }
 
 # so that `exists()` checks work
-utils::globalVariables(c("isaDataEntryUI", "isaDataEntryServer", "ses_templates", "template_ses_ui", "template_ses_server"))
+utils::globalVariables(c("isa_data_entry_ui", "isa_data_entry_server", "ses_templates", "template_ses_ui", "template_ses_server"))
 
 # so that `exists()` checks work
-utils::globalVariables(c("isaDataEntryUI", "isaDataEntryServer"))
+utils::globalVariables(c("isa_data_entry_ui", "isa_data_entry_server"))
 
 # Override rbind in test environment to handle SES template lists being used directly
 # in places where a data.frame is expected (e.g. when tests do rbind(template$drivers, new_row)).

@@ -89,7 +89,10 @@ module_files <- c(
   "modules/scenario_builder_module.R",   # Scenario Builder
   "modules/prepare_report_module.R",     # Report preparation (comprehensive)
   "modules/export_reports_module.R",     # Export & Reports (simple)
-  "modules/local_storage_module.R"       # Local storage for saving to user's computer
+  "modules/local_storage_module.R",      # Local storage for saving to user's computer
+  "modules/analysis_boolean.R",          # Boolean Network & Laplacian Stability (DTU)
+  "modules/analysis_simulation.R",       # Dynamic Simulation & State-Shift (DTU)
+  "modules/analysis_intervention.R"      # Intervention Simulation (DTU)
 )
 
 # Load all modules with error handling
@@ -129,7 +132,7 @@ if (length(module_load_errors) > 0) {
 
 ui <- bs4DashPage(
   # Page title (displayed in browser tab)
-  title = "SES Tool - MarineSABRES",
+  title = i18n$t("ui.header.page_title"),
 
   # Enable scroll-to-top button (appears bottom-right)
   scrollToTop = TRUE,
@@ -160,11 +163,11 @@ ui <- bs4DashPage(
         # Loading text
         tags$div(
           style = "font-size: 22px; font-weight: 600; color: #2c3e50; margin-bottom: 8px;",
-          "Loading SES Toolbox"
+          i18n$t("ui.header.preloader_title")
         ),
         tags$div(
           style = "font-size: 14px; color: #7f8c8d;",
-          "Marine Social-Ecological Systems Analysis"
+          i18n$t("ui.header.preloader_subtitle")
         ),
         # CSS animation
         tags$style(HTML("
@@ -376,7 +379,7 @@ ui <- bs4DashPage(
       bs4TabItem(tabName = "create_ses_choose", create_ses_ui("create_ses_main", i18n)),
 
       # Standard Entry
-      bs4TabItem(tabName = "create_ses_standard", isaDataEntryUI("isa_module")),
+      bs4TabItem(tabName = "create_ses_standard", isa_data_entry_ui("isa_module")),
 
       # AI Assistant
       bs4TabItem(tabName = "create_ses_ai", ai_isa_assistant_ui("ai_isa_mod", i18n)),
@@ -398,7 +401,10 @@ ui <- bs4DashPage(
       bs4TabItem(tabName = "analysis_leverage", analysis_leverage_ui("analysis_lev", i18n)),
       bs4TabItem(tabName = "analysis_bot", analysis_bot_ui("analysis_b", i18n)),
       bs4TabItem(tabName = "analysis_simplify", analysis_simplify_ui("analysis_simp", i18n)),
-      
+      bs4TabItem(tabName = "analysis_boolean", analysis_boolean_ui("analysis_bool", i18n)),
+      bs4TabItem(tabName = "analysis_simulation", analysis_simulation_ui("analysis_sim", i18n)),
+      bs4TabItem(tabName = "analysis_intervention", analysis_intervention_ui("analysis_intv", i18n)),
+
       # ==================== RESPONSE & VALIDATION ====================
       bs4TabItem(tabName = "response_measures", response_measures_ui("resp_meas", i18n)),
       bs4TabItem(tabName = "response_scenarios", scenario_builder_ui("scenario_builder", i18n)),
@@ -431,11 +437,11 @@ ui <- bs4DashPage(
     left = tags$span(
       "© 2026 ",
       tags$a(href = "https://marinesabres.eu", target = "_blank", "Marine-SABRES"),
-      " - Horizon Europe Project"
+      " - ", i18n$t("ui.header.footer_project")
     ),
     right = tags$span(
-      "SES Toolbox ",
-      tags$strong(paste0("v", readLines("VERSION")[1])),
+      i18n$t("ui.header.footer_toolbox"), " ",
+      tags$strong(paste0("v", tryCatch(readLines("VERSION")[1], error = function(e) "unknown"))),
       " | ",
       tags$a(href = "https://github.com/marinesabres", target = "_blank", icon("github"))
     )
@@ -872,7 +878,7 @@ server <- function(input, output, session) {
   ai_isa_assistant_server("ai_isa_mod", project_data, session_i18n, event_bus, autosave_enabled, user_level, session)
 
   # ISA data entry module (Standard Entry)
-  isa_data <- isaDataEntryServer("isa_module", project_data, event_bus)
+  isa_data <- isa_data_entry_server("isa_module", project_data, event_bus)
 
   # Graphical SES Creator module (AI-powered step-by-step network building)
   graphical_ses_creator_server("graphical_ses_mod", project_data, session, session_i18n)
@@ -886,6 +892,11 @@ server <- function(input, output, session) {
   analysis_leverage_server("analysis_lev", project_data, session_i18n)
   analysis_bot_server("analysis_b", project_data, session_i18n)
   analysis_simplify_server("analysis_simp", project_data, session_i18n)
+
+  # DTU dynamics analysis modules
+  analysis_boolean_server("analysis_bool", project_data, session_i18n)
+  analysis_simulation_server("analysis_sim", project_data, session_i18n)
+  analysis_intervention_server("analysis_intv", project_data, session_i18n)
 
   # Response & validation modules
   response_measures_server("resp_meas", project_data, session_i18n)

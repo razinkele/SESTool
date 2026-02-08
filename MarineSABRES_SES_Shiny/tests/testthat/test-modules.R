@@ -14,13 +14,13 @@ test_module_ui <- function(module_ui_function, module_id = "test") {
 
 # Test ISA Data Entry Module
 test_that("ISA data entry module UI renders", {
-  ui <- isaDataEntryUI("test")
+  ui <- isa_data_entry_ui("test")
 
   expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
 })
 
 test_that("ISA data entry module server initializes", {
-  testServer(isaDataEntryServer, args = list(project_data = reactiveVal(init_session_data())), {
+  testServer(isa_data_entry_server, args = list(project_data = reactiveVal(init_session_data())), {
     # Module should initialize without errors
     succeed("ISA data entry module server initialized without error")
 

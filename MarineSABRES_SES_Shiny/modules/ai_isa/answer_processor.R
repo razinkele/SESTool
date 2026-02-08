@@ -27,8 +27,24 @@
 #'
 #' @return NULL (modifies rv in place)
 process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, REGIONAL_SEAS) {
-  cat(sprintf("[AI ISA PROCESS] process_answer called with: '%s'\n", answer))
-  cat(sprintf("[AI ISA PROCESS] Step type: %s, target: %s\n", step_info$type, step_info$target))
+  # --- Input validation ---
+  if (is.null(answer) || !is.character(answer) || nchar(trimws(answer)) == 0) {
+    debug_log("process_answer: invalid answer (NULL, non-character, or empty)", "AI ISA PROCESS", "WARN")
+    return(invisible(NULL))
+  }
+
+  if (is.null(step_info) || !is.list(step_info) || is.null(step_info$target) || is.null(step_info$type)) {
+    debug_log("process_answer: invalid step_info (NULL or missing target/type)", "AI ISA PROCESS", "WARN")
+    return(invisible(NULL))
+  }
+
+  if (is.null(rv)) {
+    debug_log("process_answer: rv is NULL", "AI ISA PROCESS", "WARN")
+    return(invisible(NULL))
+  }
+
+  debug_log(sprintf("process_answer called with: '%s'", answer), "AI ISA PROCESS")
+  debug_log(sprintf("Step type: %s, target: %s", step_info$type, step_info$target), "AI ISA PROCESS")
 
   # === Handle context-setting steps (regional_sea, ecosystem, issue) ===
 
@@ -36,6 +52,15 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
   if (step_info$target == "regional_sea") {
     # Try to match input to a regional sea
     matched_sea <- NULL
+    if (is.null(REGIONAL_SEAS) || length(REGIONAL_SEAS) == 0) {
+      debug_log("process_answer: REGIONAL_SEAS is NULL or empty, using 'other'", "AI ISA PROCESS", "WARN")
+      rv$context$regional_sea <- "other"
+      rv$conversation <- c(rv$conversation, list(
+        list(type = "ai", message = i18n$t("I'll use general marine suggestions for your area."), timestamp = Sys.time())
+      ))
+      move_to_next_step_fn()
+      return()
+    }
     for (sea_key in names(REGIONAL_SEAS)) {
       if (grepl(answer, REGIONAL_SEAS[[sea_key]]$name_en, ignore.case = TRUE) ||
           grepl(answer, REGIONAL_SEAS[[sea_key]]$name_i18n, ignore.case = TRUE)) {
@@ -46,7 +71,7 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
 
     if (!is.null(matched_sea)) {
       rv$context$regional_sea <- matched_sea
-      cat(sprintf("[AI ISA] Regional sea set to: %s (text input)\n", REGIONAL_SEAS[[matched_sea]]$name_en))
+      debug_log(sprintf("Regional sea set to: %s (text input)", REGIONAL_SEAS[[matched_sea]]$name_en), "AI ISA")
 
       ai_response <- paste0(
         i18n$t("modules.isa.ai_assistant.great_you_selected"), " ", REGIONAL_SEAS[[matched_sea]]$name_i18n, ". ",
@@ -55,7 +80,7 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
     } else {
       # Couldn't match, use "other"
       rv$context$regional_sea <- "other"
-      cat("[AI ISA] Regional sea set to: other (text input not matched)\n")
+      debug_log("Regional sea set to: other (text input not matched)", "AI ISA")
       ai_response <- i18n$t("I'll use general marine suggestions for your area.")
     }
 
@@ -70,7 +95,7 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
   # Ecosystem type (text input fallback)
   else if (step_info$target == "ecosystem_type") {
     rv$context$ecosystem_type <- answer
-    cat(sprintf("[AI ISA] Ecosystem type set to: %s (text input)\n", answer))
+    debug_log(sprintf("Ecosystem type set to: %s (text input)", answer), "AI ISA")
 
     ai_response <- paste0(
       i18n$t("modules.isa.ai_assistant.perfect"), " ", answer, " ",
@@ -88,7 +113,7 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
   # Main issue (text input)
   else if (step_info$target == "main_issue") {
     rv$context$main_issue <- answer
-    cat(sprintf("[AI ISA] Main issue set to: %s\n", answer))
+    debug_log(sprintf("Main issue set to: %s", answer), "AI ISA")
 
     ai_response <- paste0(
       i18n$t("Understood. I'll focus suggestions on"), " ", tolower(answer), "-related issues. ",
@@ -106,7 +131,7 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
   # === Handle DAPSI(W)R(M) element addition ===
 
   if (step_info$type == "multiple") {
-    cat(sprintf("[AI ISA PROCESS] Adding element to %s\n", step_info$target))
+    debug_log(sprintf("Adding element to %s", step_info$target), "AI ISA PROCESS")
 
     # Add to list
     current_list <- rv$elements[[step_info$target]]
@@ -119,7 +144,7 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
 
     # Count current elements in this category
     element_count <- length(rv$elements[[step_info$target]])
-    cat(sprintf("[AI ISA PROCESS] Element added! Total %s: %d\n", step_info$target, element_count))
+    debug_log(sprintf("Element added! Total %s: %d", step_info$target, element_count), "AI ISA PROCESS")
 
     # Hide text input and show continue button again
     rv$show_text_input <- FALSE

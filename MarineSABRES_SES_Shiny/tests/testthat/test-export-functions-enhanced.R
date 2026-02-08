@@ -3,9 +3,8 @@
 
 library(testthat)
 
-# Source enhanced export functions
-source("../../functions/export_functions_enhanced.R", local = TRUE)
-# NOTE: Data structure functions now consolidated in data_structure.R (loaded via setup.R -> global.R)
+# Safe export wrappers are now consolidated into export_functions.R
+source("../../functions/export_functions.R", local = TRUE)
 
 # Create temp directory for test outputs
 test_temp_dir <- tempdir()

@@ -69,8 +69,7 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
 
     new_lang <- input$language_selector
 
-    # Log language change
-    cat(paste0("[", Sys.time(), "] INFO: Language changed to: ", new_lang, "\n"))
+    debug_log(paste("Language changed to:", new_lang), "LANGUAGE")
 
     # Close the modal first
     removeModal()
@@ -108,10 +107,10 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
             type = "saveProjectDataBeforeReload",
             message = list(data = as.character(data_json))
           )
-          cat(paste0("[", Sys.time(), "] INFO: Project data saved before language change reload\n"))
+          debug_log("Project data saved before language change reload", "LANGUAGE")
         }
       }, error = function(e) {
-        cat(paste0("[", Sys.time(), "] WARNING: Could not save project data before reload: ", e$message, "\n"))
+        debug_log(paste("Could not save project data before reload:", e$message), "LANGUAGE")
       })
     }
 
@@ -185,18 +184,18 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
         style = "padding: 20px;",
 
         # ========== AUTO-SAVE SECTION ==========
-        tags$h4(icon("save"), " Auto-Save Settings"),
+        tags$h4(icon("save"), " ", i18n$t("ui.modals.autosave_title")),
         tags$p(style = "color: #666; margin-bottom: 20px;",
-          "Configure automatic saving behavior for the AI ISA Assistant module."
+          i18n$t("ui.modals.autosave_description")
         ),
 
         # Main auto-save toggle
         shinyWidgets::switchInput(
           inputId = "autosave_enabled",
-          label = tags$strong("Enable Auto-Save"),
+          label = tags$strong(i18n$t("ui.modals.autosave_enable")),
           value = autosave_enabled(),
-          onLabel = "ON",
-          offLabel = "OFF",
+          onLabel = i18n$t("ui.modals.autosave_on"),
+          offLabel = i18n$t("ui.modals.autosave_off"),
           onStatus = "success",
           offStatus = "danger",
           size = "default",
@@ -210,14 +209,14 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
           tags$div(
             style = "margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px;",
 
-            tags$h5(icon("sliders-h"), " Advanced Auto-Save Options"),
+            tags$h5(icon("sliders-h"), " ", i18n$t("ui.modals.autosave_advanced")),
 
             # Save interval
             tags$div(
               style = "margin-bottom: 15px;",
               tags$label(
                 style = "font-weight: 600; margin-bottom: 5px; display: block;",
-                icon("clock"), " Save Delay (seconds)"
+                icon("clock"), " ", i18n$t("ui.modals.autosave_delay_label")
               ),
               sliderInput(
                 inputId = "autosave_delay",
@@ -232,7 +231,7 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
               tags$p(
                 style = "font-size: 12px; color: #666; margin-top: -10px;",
                 icon("info-circle"),
-                " Delay before auto-save triggers after changes (prevents saving on every keystroke)"
+                " ", i18n$t("ui.modals.autosave_delay_help")
               )
             ),
 
@@ -241,11 +240,11 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
               style = "margin-bottom: 15px;",
               tags$label(
                 style = "font-weight: 600; margin-bottom: 10px; display: block;",
-                icon("bell"), " Notifications"
+                icon("bell"), " ", i18n$t("ui.modals.autosave_notifications_label")
               ),
               shinyWidgets::switchInput(
                 inputId = "autosave_notifications",
-                label = "Show save notifications",
+                label = i18n$t("ui.modals.autosave_show_notifications"),
                 value = if (!is.null(autosave_notifications)) autosave_notifications() else FALSE,
                 onLabel = "ON",
                 offLabel = "OFF",
@@ -256,7 +255,7 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
               ),
               tags$p(
                 style = "font-size: 12px; color: #666; margin-top: 5px;",
-                "Display a notification each time auto-save occurs (can be distracting)"
+                i18n$t("ui.modals.autosave_notifications_help")
               )
             ),
 
@@ -265,11 +264,11 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
               style = "margin-bottom: 15px;",
               tags$label(
                 style = "font-weight: 600; margin-bottom: 10px; display: block;",
-                icon("check-circle"), " Visual Indicator"
+                icon("check-circle"), " ", i18n$t("ui.modals.autosave_indicator_label")
               ),
               shinyWidgets::switchInput(
                 inputId = "autosave_indicator",
-                label = "Show save status indicator",
+                label = i18n$t("ui.modals.autosave_show_indicator"),
                 value = if (!is.null(autosave_indicator)) autosave_indicator() else TRUE,
                 onLabel = "ON",
                 offLabel = "OFF",
@@ -280,7 +279,7 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
               ),
               tags$p(
                 style = "font-size: 12px; color: #666; margin-top: 5px;",
-                "Display a small indicator showing when last auto-save occurred"
+                i18n$t("ui.modals.autosave_indicator_help")
               )
             ),
 
@@ -289,23 +288,24 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
               style = "margin-bottom: 10px;",
               tags$label(
                 style = "font-weight: 600; margin-bottom: 10px; display: block;",
-                icon("sync"), " Auto-Save Triggers"
+                icon("sync"), " ", i18n$t("ui.modals.autosave_triggers_label")
               ),
               checkboxGroupInput(
                 inputId = "autosave_triggers",
                 label = NULL,
-                choices = list(
-                  "Element added/modified" = "elements",
-                  "Context changed (region, ecosystem)" = "context",
-                  "Connections approved" = "connections",
-                  "Step progression" = "steps"
+                choices = setNames(
+                  c("elements", "context", "connections", "steps"),
+                  c(i18n$t("ui.modals.autosave_trigger_element"),
+                    i18n$t("ui.modals.autosave_trigger_context"),
+                    i18n$t("ui.modals.autosave_trigger_connections"),
+                    i18n$t("ui.modals.autosave_trigger_step"))
                 ),
                 selected = if (!is.null(autosave_triggers)) autosave_triggers() else c("elements", "context", "connections", "steps"),
                 width = "100%"
               ),
               tags$p(
                 style = "font-size: 12px; color: #666; margin-top: -5px;",
-                "Select which actions trigger auto-save"
+                i18n$t("ui.modals.autosave_triggers_help")
               )
             )
           )
@@ -316,8 +316,8 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
           class = "alert alert-info",
           style = "margin-top: 20px;",
           icon("lightbulb"),
-          tags$strong(" Tip: "),
-          "Auto-save only works in the AI ISA Assistant module. Your work in other modules is saved manually using the Save Project button in the sidebar."
+          tags$strong(" ", i18n$t("ui.modals.autosave_tip"), " "),
+          i18n$t("ui.modals.autosave_tip_text")
         ),
 
         tags$hr(),
@@ -336,21 +336,39 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
           class = "local-storage-panel",
           
           # JavaScript-based rendering for File System API status
-          tags$script(HTML("
+          # Safely encode i18n strings for JavaScript using jsonlite::toJSON
+          # (handles quotes, backslashes, newlines, and format specifiers properly)
+          local({
+            js_safe <- function(txt) {
+              # toJSON produces a quoted JSON string e.g. "some text"
+              # We strip the outer quotes to get the JS-safe inner content
+              raw <- jsonlite::toJSON(txt, auto_unbox = TRUE)
+              substr(raw, 2, nchar(raw) - 1)
+            }
+            js_browser_not_supported <- js_safe(i18n$t("ui.modals.browser_not_supported"))
+            js_browser_warning       <- js_safe(i18n$t("ui.modals.browser_warning"))
+            js_connected_to          <- js_safe(i18n$t("ui.modals.connected_to"))
+            js_no_folder_selected    <- js_safe(i18n$t("ui.modals.no_folder_selected"))
+
+            tags$script(HTML(paste0("
             $(document).ready(function() {
+              // i18n strings (safely encoded via jsonlite)
+              var i18n_browserNotSupported = '", js_browser_not_supported, "';
+              var i18n_browserWarning = '", js_browser_warning, "';
+              var i18n_connectedTo = '", js_connected_to, "';
+              var i18n_noFolderSelected = '", js_no_folder_selected, "';
+
               // Update local storage panel based on API availability
               function updateLocalStoragePanel() {
                 var hasAPI = window.localStorageModule && window.localStorageModule.hasFileSystemAccess;
                 var isConnected = window.localStorageModule && window.localStorageModule.directoryHandle !== null;
-                
+
                 if (!hasAPI) {
                   $('#local_storage_api_status').html(
                     '<div class=\"fallback-warning\" style=\"margin-bottom: 0;\">' +
                     '<i class=\"fa fa-exclamation-triangle\"></i> ' +
-                    '<strong>Browser Not Fully Supported</strong><br>' +
-                    '<small>Your browser does not support the File System Access API. ' +
-                    'Please use Chrome, Edge, or Opera for direct folder access. ' +
-                    'You can still use Download/Upload buttons to manually save and load projects.</small>' +
+                    '<strong>' + i18n_browserNotSupported + '</strong><br>' +
+                    '<small>' + i18n_browserWarning + '</small>' +
                     '</div>'
                   );
                   $('#local_storage_controls').hide();
@@ -358,8 +376,8 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
                   var dirName = window.localStorageModule.directoryHandle.name;
                   $('#local_storage_api_status').html(
                     '<div class=\"directory-status connected\">' +
-                    '<span class=\"directory-status-icon\">📁</span>' +
-                    '<div><strong>Connected to:</strong> ' + dirName + '</div>' +
+                    '<span class=\"directory-status-icon\">\U0001F4C1</span>' +
+                    '<div><strong>' + i18n_connectedTo + '</strong> ' + dirName + '</div>' +
                     '</div>'
                   );
                   $('#btn_connect_local').hide();
@@ -369,8 +387,8 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
                 } else {
                   $('#local_storage_api_status').html(
                     '<div class=\"directory-status\">' +
-                    '<span class=\"directory-status-icon\">📂</span>' +
-                    '<div>No folder selected. Click the button below to select a folder on your computer.</div>' +
+                    '<span class=\"directory-status-icon\">\U0001F4C2</span>' +
+                    '<div>' + i18n_noFolderSelected + '</div>' +
                     '</div>'
                   );
                   $('#btn_connect_local').show();
@@ -379,16 +397,16 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
                   $('#local_storage_controls').show();
                 }
               }
-              
+
               // Initial update after a short delay
               setTimeout(updateLocalStoragePanel, 500);
-              
+
               // Update when directory changes
               Shiny.addCustomMessageHandler('update_local_storage_panel', function(message) {
                 updateLocalStoragePanel();
               });
-            });
-          ")),
+            });")))
+          }),
           
           # Status display (updated by JavaScript)
           tags$div(id = "local_storage_api_status"),
@@ -442,7 +460,7 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
             tags$p(
               style = "font-size: 12px; color: #666; margin-top: 5px; margin-bottom: 0;",
               icon("info-circle"),
-              " When enabled, changes will be automatically saved to your local folder in addition to server auto-save."
+              " ", i18n$t("ui.modals.autosave_local_sync_help")
             )
           )
         ),
@@ -450,7 +468,7 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
         tags$hr(),
 
         # ========== GENERAL SETTINGS SECTION ==========
-        tags$h4(icon("tools"), " General Settings"),
+        tags$h4(icon("tools"), " ", i18n$t("ui.modals.general_settings")),
 
         tags$div(
           style = "margin-top: 15px;",
@@ -458,7 +476,7 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
           # Debug mode toggle
           shinyWidgets::switchInput(
             inputId = "debug_mode",
-            label = tags$strong("Enable Debug Logging"),
+            label = tags$strong(i18n$t("ui.modals.debug_logging")),
             value = FALSE,
             onLabel = "ON",
             offLabel = "OFF",
@@ -470,7 +488,7 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
           tags$p(
             style = "margin-top: 10px; font-size: 13px; color: #666;",
             icon("bug"),
-            " Enable detailed logging to console (useful for troubleshooting, may slow down performance)"
+            " ", i18n$t("ui.modals.debug_logging_help")
           )
         ),
 
@@ -765,7 +783,7 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
     new_level <- input$user_level_selector
 
     # Log the change
-    cat(sprintf("[USER-LEVEL] Changing from %s to %s\n", user_level(), new_level))
+    debug_log(sprintf("Changing from %s to %s", user_level(), new_level), "USER-LEVEL")
 
     # Save to localStorage and reload via JavaScript
     session$sendCustomMessage(
@@ -835,7 +853,7 @@ setup_manuals_modal_handlers <- function(input, output, session, i18n) {
               style = "margin: 5px;",
               icon("graduation-cap"),
               " ",
-              i18n$t("Beginner's Quick Start"),
+              i18n$t("ui.modals.beginners_quick_start"),
               tags$br(),
               tags$small(i18n$t("ui.modals.5_minute_introduction"))
             ),
@@ -997,10 +1015,15 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
   # Show about modal when button is clicked
   observeEvent(input$show_about_modal, {
     # Read version info
-    version_info <- jsonlite::fromJSON("VERSION_INFO.json")
+    version_info <- tryCatch(
+      jsonlite::fromJSON("VERSION_INFO.json"),
+      error = function(e) {
+        list(version = "unknown", build_date = "unknown", r_version = "unknown")
+      }
+    )
 
     showModal(modalDialog(
-      title = tags$h3(icon("info-circle"), " About MarineSABRES SES Toolbox"),
+      title = tags$h3(icon("info-circle"), " ", i18n$t("ui.modals.about_title")),
       size = "l",
       easyClose = TRUE,
       footer = modalButton(i18n$t("common.buttons.close")),
@@ -1011,12 +1034,12 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
         # Application Info
         tags$div(
           class = "well",
-          tags$h4(icon("cube"), " Application Information"),
+          tags$h4(icon("cube"), " ", i18n$t("ui.modals.app_info")),
           tags$table(
             class = "table table-condensed",
             style = "margin-bottom: 0;",
             tags$tr(
-              tags$td(tags$strong("Version:")),
+              tags$td(tags$strong(i18n$t("ui.modals.version_label"))),
               tags$td(
                 tags$span(
                   style = "font-size: 18px; color: #3c8dbc; font-weight: bold;",
@@ -1030,15 +1053,15 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
               )
             ),
             tags$tr(
-              tags$td(tags$strong("Release Name:")),
+              tags$td(tags$strong(i18n$t("ui.modals.release_name"))),
               tags$td(version_info$version_name)
             ),
             tags$tr(
-              tags$td(tags$strong("Release Date:")),
+              tags$td(tags$strong(i18n$t("ui.modals.release_date"))),
               tags$td(version_info$release_date)
             ),
             tags$tr(
-              tags$td(tags$strong("Release Type:")),
+              tags$td(tags$strong(i18n$t("ui.modals.release_type"))),
               tags$td(
                 tags$span(
                   class = if(version_info$release_type == "major") "label label-danger"
@@ -1054,7 +1077,7 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
         # Features
         tags$div(
           class = "well",
-          tags$h4(icon("star"), " Key Features"),
+          tags$h4(icon("star"), " ", i18n$t("ui.modals.key_features")),
           tags$ul(
             lapply(version_info$features, function(feature) {
               tags$li(feature)
@@ -1065,24 +1088,24 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
         # Technical Info
         tags$div(
           class = "well",
-          tags$h4(icon("cogs"), " Technical Information"),
+          tags$h4(icon("cogs"), " ", i18n$t("ui.modals.technical_info")),
           tags$table(
             class = "table table-condensed",
             style = "margin-bottom: 0;",
             tags$tr(
-              tags$td(tags$strong("Minimum R Version:")),
+              tags$td(tags$strong(i18n$t("ui.modals.min_r_version"))),
               tags$td(version_info$minimum_r_version)
             ),
             tags$tr(
-              tags$td(tags$strong("Current R Version:")),
+              tags$td(tags$strong(i18n$t("ui.modals.current_r_version"))),
               tags$td(paste(R.version$major, R.version$minor, sep = "."))
             ),
             tags$tr(
-              tags$td(tags$strong("Platform:")),
+              tags$td(tags$strong(i18n$t("ui.modals.platform_label"))),
               tags$td(R.version$platform)
             ),
             tags$tr(
-              tags$td(tags$strong("Git Branch:")),
+              tags$td(tags$strong(i18n$t("ui.modals.git_branch"))),
               tags$td(version_info$build_info$git_branch)
             )
           )
@@ -1091,7 +1114,7 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
         # Contributors
         tags$div(
           class = "well",
-          tags$h4(icon("users"), " Contributors"),
+          tags$h4(icon("users"), " ", i18n$t("ui.modals.contributors")),
           tags$ul(
             lapply(version_info$contributors, function(contributor) {
               tags$li(contributor)
@@ -1103,45 +1126,45 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
         tags$div(
           class = "alert alert-info",
           icon("book"),
-          tags$strong(" Documentation: "),
+          tags$strong(" ", i18n$t("ui.modals.documentation_label"), " "),
           tags$a(
             href = "#",
             onclick = "window.open('user_guide.html', '_blank'); return false;",
-            "Quick Guide",
+            i18n$t("ui.modals.quick_guide"),
             style = "margin-right: 15px;"
           ),
           tags$a(
             href = "#",
             onclick = "window.open('docs/MarineSABRES_User_Manual_EN.html', '_blank'); return false;",
-            "📘 Manual (EN HTML)",
+            i18n$t("ui.modals.manual_en_html"),
             style = "margin-right: 15px;",
-            title = "Comprehensive 75-page English manual - HTML version"
+            title = i18n$t("ui.modals.manual_en_html_tooltip")
           ),
           tags$a(
             href = "#",
             onclick = "window.open('docs/MarineSABRES_User_Manual_EN.pdf', '_blank'); return false;",
-            "📕 Manual (EN PDF)",
+            i18n$t("ui.modals.manual_en_pdf"),
             style = "margin-right: 15px;",
-            title = "Comprehensive 75-page English manual - PDF version"
+            title = i18n$t("ui.modals.manual_en_pdf_tooltip")
           ),
           tags$a(
             href = "#",
             onclick = "window.open('docs/MarineSABRES_User_Manual_FR.html', '_blank'); return false;",
-            "📗 Manuel (FR HTML)",
+            i18n$t("ui.modals.manual_fr_html"),
             style = "margin-right: 15px;",
-            title = "Manuel français complet de 75 pages - version HTML"
+            title = i18n$t("ui.modals.manual_fr_html_tooltip")
           ),
           tags$a(
             href = "#",
             onclick = "window.open('docs/MarineSABRES_User_Manual_FR.pdf', '_blank'); return false;",
-            "📙 Manuel (FR PDF)",
+            i18n$t("ui.modals.manual_fr_pdf"),
             style = "margin-right: 15px;",
-            title = "Manuel français complet de 75 pages - version PDF"
+            title = i18n$t("ui.modals.manual_fr_pdf_tooltip")
           ),
           tags$a(
             href = "#",
             onclick = sprintf("window.open('%s', '_blank'); return false;", version_info$changelog_url),
-            "Changelog"
+            i18n$t("ui.modals.changelog")
           )
         )
       )

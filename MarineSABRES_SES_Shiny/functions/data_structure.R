@@ -198,7 +198,71 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
       analysis = list(
         loops = NULL,  # Loop detection results
         leverage_points = NULL,  # Leverage point analysis results
-        scenarios = list()  # Scenario analysis results
+        scenarios = list(),  # Scenario analysis results
+
+        # DTU dynamics analysis results
+        dynamics = list(
+          # Numeric adjacency matrix used for all dynamics analyses
+          numeric_matrix = NULL,
+          matrix_params = list(
+            source = NULL,             # "cld" or "isa"
+            weight_map = NULL,
+            include_confidence = FALSE,
+            timestamp = NULL
+          ),
+
+          # Qualitative: Laplacian stability
+          laplacian = list(
+            eigenvalues = NULL,        # named numeric vector
+            direction = NULL,          # "rows" or "cols"
+            fiedler_value = NULL,
+            n_components = NULL,
+            timestamp = NULL
+          ),
+
+          # Qualitative: Boolean network
+          boolean = list(
+            rules = NULL,              # data frame (targets, factors)
+            n_states = NULL,
+            n_attractors = NULL,
+            attractors = NULL,         # list of data frames
+            basins = NULL,             # numeric vector
+            timestamp = NULL
+          ),
+
+          # Quantitative: deterministic simulation
+          simulation = list(
+            time_series = NULL,        # matrix (nodes x timesteps)
+            n_iter = NULL,
+            initial_state = NULL,
+            diverged = FALSE,
+            timestamp = NULL
+          ),
+
+          # Quantitative: participation ratio
+          participation_ratio = NULL,   # data frame (node, PR)
+
+          # Quantitative: Monte Carlo state-shift
+          state_shift = list(
+            final_states = NULL,       # matrix (nodes x simulations)
+            n_simulations = NULL,
+            randomization_type = NULL,
+            target_nodes = NULL,
+            success_rate = NULL,
+            timestamp = NULL
+          ),
+
+          # Intervention scenarios
+          interventions = list(),
+
+          # ML: random forest importance
+          rf_importance = list(
+            importance = NULL,         # data frame
+            top_variables = NULL,
+            oob_error = NULL,
+            timestamp = NULL
+          )
+        )
       )
     )
   )
@@ -297,26 +361,38 @@ create_adjacency_matrix <- function(row_names, col_names) {
 #' @param to_ids Vector of target node IDs
 #' @return Dataframe with from, to, and value columns
 adjacency_to_edgelist <- function(adj_matrix, from_ids, to_ids) {
-  
-  edgelist <- data.frame()
-  
-  for (i in 1:nrow(adj_matrix)) {
-    for (j in 1:ncol(adj_matrix)) {
+
+  if (is.null(adj_matrix) || nrow(adj_matrix) == 0 || ncol(adj_matrix) == 0) {
+    return(data.frame(from = character(0), to = character(0), value = character(0),
+                      stringsAsFactors = FALSE))
+  }
+
+  # Use list accumulation instead of incremental rbind (O(n) vs O(n^2))
+  edges_list <- vector("list", nrow(adj_matrix) * ncol(adj_matrix))
+  idx <- 0L
+
+  for (i in seq_len(nrow(adj_matrix))) {
+    for (j in seq_len(ncol(adj_matrix))) {
       value <- adj_matrix[i, j]
-      
+
       if (!is.na(value) && value != "") {
-        edge <- data.frame(
+        idx <- idx + 1L
+        edges_list[[idx]] <- data.frame(
           from = from_ids[i],
           to = to_ids[j],
           value = value,
           stringsAsFactors = FALSE
         )
-        edgelist <- rbind(edgelist, edge)
       }
     }
   }
-  
-  return(edgelist)
+
+  if (idx == 0L) {
+    return(data.frame(from = character(0), to = character(0), value = character(0),
+                      stringsAsFactors = FALSE))
+  }
+
+  do.call(rbind, edges_list[seq_len(idx)])
 }
 
 #' Convert edge list to adjacency matrix
@@ -893,13 +969,9 @@ validate_adjacency_matrix <- function(adj_matrix) {
 }
 
 # ============================================================================
-# ENHANCED WRAPPERS AND SAFE FUNCTIONS
-# (Consolidated from data_structure_enhanced.R for easier maintenance)
+# SAFE WRAPPER FUNCTIONS
+# These add NULL checks and error handling before calling the core functions above.
 # ============================================================================
-# Enhanced wrappers for data structure validation and safe creation
-
-# NOTE: validate_project_structure() now defined in functions/data_structure.R
-# (removed duplicate definition to avoid function name conflicts)
 
 validate_element_type <- function(type) {
   if (is.null(type)) stop("Element type is NULL")
@@ -916,17 +988,11 @@ validate_element_type <- function(type) {
   TRUE
 }
 
-# NOTE: validate_element_data() now defined in functions/data_structure.R
-# (removed duplicate definition - this version had incompatible signature)
-
 validate_adjacency_dimensions <- function(from_elements, to_elements) {
   if (is.null(from_elements)) stop("from_elements is NULL")
   if (is.null(to_elements)) stop("to_elements is NULL")
   TRUE
 }
-
-# NOTE: validate_adjacency_matrix() now defined in functions/data_structure.R
-# (removed duplicate definition - this version had incompatible signature)
 
 # Safe create empty project wrapper
 create_empty_project_safe <- function(project_name = "New Project", da_site = NULL) {
@@ -940,40 +1006,21 @@ create_empty_project_safe <- function(project_name = "New Project", da_site = NU
     da_site <- NULL
   }
 
-  # Use existing create_empty_project if available
-  if (exists("create_empty_project")) {
-    proj <- tryCatch({
-      create_empty_project(project_name, da_site)
-    }, error = function(e) {
-      NULL
-    })
+  proj <- tryCatch({
+    create_empty_project(project_name, da_site)
+  }, error = function(e) {
+    NULL
+  })
 
-    # Ensure required fields are present
-    if (is.null(proj) || !all(c("project_id", "project_name", "data") %in% names(proj))) return(NULL)
+  # Ensure required fields are present
+  if (is.null(proj) || !all(c("project_id", "project_name", "data") %in% names(proj))) return(NULL)
 
-    # Ensure metadata da_site is character or NULL
-    if (!is.null(proj$data$metadata$da_site) && !is.character(proj$data$metadata$da_site)) {
-      proj$data$metadata$da_site <- NULL
-    }
-
-    return(proj)
+  # Ensure metadata da_site is character or NULL
+  if (!is.null(proj$data$metadata$da_site) && !is.character(proj$data$metadata$da_site)) {
+    proj$data$metadata$da_site <- NULL
   }
 
-  # Fallback minimal structure
-  list(
-    project_id = paste0("PROJ_", format(Sys.time(), "%Y%m%d%H%M%S")),
-    project_name = project_name,
-    created_at = Sys.time(),
-    last_modified = Sys.time(),
-    user = Sys.info()["user"],
-    data = list(
-      metadata = list(da_site = da_site),
-      pims = list(stakeholders = data.frame(), risks = data.frame()),
-      isa_data = list(),
-      cld = list(nodes = data.frame(), edges = data.frame()),
-      responses = list()
-    )
-  )
+  return(proj)
 }
 
 # Helper to safely add an element to isa_data lists
@@ -1040,17 +1087,7 @@ edgelist_to_adjacency_safe <- function(edgelist, from_names, to_names) {
 # Project validation safe wrappers
 validate_project_data_safe <- function(project_data) {
   if (is.null(project_data)) return(list(valid = FALSE, errors = c("Project is NULL")))
-  # Use existing validator if available
-  if (exists("validate_project_data")) {
-    res <- validate_project_data(project_data)
-    return(res)
-  }
-  # Basic validation
-  errors <- c()
-  required_fields <- c("project_id", "project_name", "data")
-  missing <- setdiff(required_fields, names(project_data))
-  if (length(missing) > 0) errors <- c(errors, paste("Missing fields:", paste(missing, collapse = ", ")))
-  list(valid = length(errors) == 0, errors = errors)
+  validate_project_data(project_data)
 }
 
 validate_isa_structure_safe <- function(isa_data) {

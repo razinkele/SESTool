@@ -18,6 +18,49 @@
 #' @param i18n shiny.i18n translator object
 setup_dashboard_rendering <- function(input, output, session, project_data, i18n) {
 
+  # ========== CACHED STATS (shared by value boxes, status, and timeline) ==========
+  dashboard_stats <- reactive({
+    data <- project_data()
+    isa_data <- safe_get_nested(data, "data", "isa_data", default = list())
+
+    n_elements <- sum(
+      nrow(isa_data$drivers %||% data.frame()),
+      nrow(isa_data$activities %||% data.frame()),
+      nrow(isa_data$pressures %||% data.frame()),
+      nrow(isa_data$marine_processes %||% data.frame()),
+      nrow(isa_data$ecosystem_services %||% data.frame()),
+      nrow(isa_data$goods_benefits %||% data.frame()),
+      nrow(isa_data$responses %||% data.frame())
+    )
+
+    adj_matrices <- safe_get_nested(data, "data", "isa_data", "adjacency_matrices", default = list())
+    n_connections <- 0L
+    if (length(adj_matrices) > 0) {
+      for (mat_name in names(adj_matrices)) {
+        mat <- adj_matrices[[mat_name]]
+        if (!is.null(mat) && is.matrix(mat)) {
+          n_connections <- n_connections + sum(!is.na(mat) & mat != "", na.rm = TRUE)
+        }
+      }
+    }
+
+    n_nodes <- if (!is.null(data$data$cld$nodes)) nrow(data$data$cld$nodes) else 0L
+    n_edges <- if (!is.null(data$data$cld$edges)) nrow(data$data$cld$edges) else 0L
+    loops <- safe_get_nested(data, "data", "cld", "loops", default = data.frame())
+    n_loops <- if (is.data.frame(loops)) nrow(loops) else 0L
+    has_leverage <- !is.null(data$data$cld$nodes) &&
+      any(data$data$cld$nodes$leverage_score > 0, na.rm = TRUE)
+
+    list(
+      n_elements = n_elements,
+      n_connections = n_connections,
+      n_nodes = n_nodes,
+      n_edges = n_edges,
+      n_loops = n_loops,
+      has_leverage = has_leverage
+    )
+  })
+
   # ========== DASHBOARD HEADER ==========
   output$dashboard_header <- renderUI({
     tagList(
@@ -31,21 +74,8 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
   # Total Elements Box
   output$total_elements_box <- renderValueBox({
     tryCatch({
-      data <- project_data()
-      isa_data <- safe_get_nested(data, "data", "isa_data", default = list())
-
-      # Count rows in each DAPSIWRM dataframe
-      n_elements <- sum(
-        nrow(isa_data$drivers %||% data.frame()),
-        nrow(isa_data$activities %||% data.frame()),
-        nrow(isa_data$pressures %||% data.frame()),
-        nrow(isa_data$marine_processes %||% data.frame()),
-        nrow(isa_data$ecosystem_services %||% data.frame()),
-        nrow(isa_data$goods_benefits %||% data.frame()),
-        nrow(isa_data$responses %||% data.frame())
-      )
-
-      bs4ValueBox(n_elements, i18n$t("ui.dashboard.total_elements"), icon = icon("circle"), color = "primary")
+      stats <- dashboard_stats()
+      bs4ValueBox(stats$n_elements, i18n$t("ui.dashboard.total_elements"), icon = icon("circle"), color = "primary")
     }, error = function(e) {
       bs4ValueBox(0, "Error", icon = icon("times"), color = "danger")
     })
@@ -54,20 +84,8 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
   # Total Connections Box
   output$total_connections_box <- renderValueBox({
     tryCatch({
-      data <- project_data()
-      n_connections <- 0
-      adj_matrices <- safe_get_nested(data, "data", "isa_data", "adjacency_matrices", default = list())
-
-      if(length(adj_matrices) > 0) {
-        for(mat_name in names(adj_matrices)) {
-          mat <- adj_matrices[[mat_name]]
-          if(!is.null(mat) && is.matrix(mat)) {
-            n_connections <- n_connections + sum(!is.na(mat) & mat != "", na.rm = TRUE)
-          }
-        }
-      }
-
-      bs4ValueBox(n_connections, i18n$t("ui.dashboard.connections"), icon = icon("arrow-right"), color = "success")
+      stats <- dashboard_stats()
+      bs4ValueBox(stats$n_connections, i18n$t("ui.dashboard.connections"), icon = icon("arrow-right"), color = "success")
     }, error = function(e) {
       bs4ValueBox(0, "Error", icon = icon("times"), color = "danger")
     })
@@ -76,11 +94,8 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
   # Loops Detected Box
   output$loops_detected_box <- renderValueBox({
     tryCatch({
-      data <- project_data()
-      loops <- safe_get_nested(data, "data", "cld", "loops", default = data.frame())
-      n_loops <- if(is.data.frame(loops)) nrow(loops) else 0
-
-      bs4ValueBox(n_loops, i18n$t("ui.dashboard.loops_detected"), icon = icon("refresh"), color = "orange")
+      stats <- dashboard_stats()
+      bs4ValueBox(stats$n_loops, i18n$t("ui.dashboard.loops_detected"), icon = icon("refresh"), color = "orange")
     }, error = function(e) {
       bs4ValueBox(0, "Error", icon = icon("times"), color = "danger")
     })
@@ -90,9 +105,10 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
   output$completion_box <- renderValueBox({
     tryCatch({
       data <- project_data()
+      stats <- dashboard_stats()
       completion <- 0
 
-      # Check if ISA data exists (6 components × 6.67% = 40%)
+      # Check if ISA data exists (6 components x 6.67% = 40%)
       isa_score <- 0
       if (!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) isa_score <- isa_score + 6.67
       if (!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) isa_score <- isa_score + 6.67
@@ -103,20 +119,10 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       completion <- completion + isa_score
 
       # Check if connections exist (30%)
-      adj_matrices <- safe_get_nested(data, "data", "isa_data", "adjacency_matrices", default = list())
-      n_connections <- 0
-      if (length(adj_matrices) > 0) {
-        for (mat_name in names(adj_matrices)) {
-          mat <- adj_matrices[[mat_name]]
-          if (!is.null(mat) && is.matrix(mat)) {
-            n_connections <- n_connections + sum(!is.na(mat) & mat != "", na.rm = TRUE)
-          }
-        }
-      }
-      if (n_connections > 0) completion <- completion + 30
+      if (stats$n_connections > 0) completion <- completion + 30
 
       # Check if CLD generated (30%)
-      if (!is.null(data$data$cld$nodes) && nrow(data$data$cld$nodes) > 0) {
+      if (stats$n_nodes > 0) {
         completion <- completion + 30
       }
 
@@ -218,10 +224,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       )
     )
     }, error = function(e) {
-      cat("\n!!! ERROR in project_overview_ui:\n")
-      cat("Error message:", conditionMessage(e), "\n")
-      cat("Call stack:\n")
-      print(sys.calls())
+      debug_log(paste("ERROR in project_overview_ui:", conditionMessage(e)), "DASHBOARD")
       # Return error message to UI
       tagList(
         p(style = "color: red;", i18n$t("ui.dashboard.error_rendering_dashboard"), " ", conditionMessage(e))
@@ -233,84 +236,58 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
 
   # ISA Elements Status
   output$status_isa_elements <- renderUI({
-    data <- project_data()
-    n_elements <- sum(
-      nrow(data$data$isa_data$drivers %||% data.frame()),
-      nrow(data$data$isa_data$activities %||% data.frame()),
-      nrow(data$data$isa_data$pressures %||% data.frame()),
-      nrow(data$data$isa_data$marine_processes %||% data.frame()),
-      nrow(data$data$isa_data$ecosystem_services %||% data.frame()),
-      nrow(data$data$isa_data$goods_benefits %||% data.frame()),
-      nrow(data$data$isa_data$responses %||% data.frame())
-    )
-
+    stats <- dashboard_stats()
     tags$p(style = "margin-bottom: 5px; font-size: 13px;",
-      icon(if(n_elements > 0) "check-circle" else "circle",
-           class = if(n_elements > 0) "text-success" else "text-muted"),
-      " ", strong(n_elements), " ", i18n$t("ui.dashboard.elements_created")
+      icon(if(stats$n_elements > 0) "check-circle" else "circle",
+           class = if(stats$n_elements > 0) "text-success" else "text-muted"),
+      " ", strong(stats$n_elements), " ", i18n$t("ui.dashboard.elements_created")
     )
   })
 
   # ISA Connections Status
   output$status_isa_connections <- renderUI({
-    data <- project_data()
-    n_connections <- 0
-    if (!is.null(data$data$isa_data$adjacency_matrices)) {
-      for (matrix_name in names(data$data$isa_data$adjacency_matrices)) {
-        mat <- data$data$isa_data$adjacency_matrices[[matrix_name]]
-        if (!is.null(mat) && is.matrix(mat)) {
-          n_connections <- n_connections + sum(mat != "", na.rm = TRUE)
-        }
-      }
-    }
-
+    stats <- dashboard_stats()
     tags$p(style = "margin-bottom: 5px; font-size: 13px;",
-      icon(if(n_connections > 0) "check-circle" else "circle",
-           class = if(n_connections > 0) "text-success" else "text-muted"),
-      " ", strong(n_connections), " ", i18n$t("ui.dashboard.connections_defined")
+      icon(if(stats$n_connections > 0) "check-circle" else "circle",
+           class = if(stats$n_connections > 0) "text-success" else "text-muted"),
+      " ", strong(stats$n_connections), " ", i18n$t("ui.dashboard.connections_defined")
     )
   })
 
   # CLD Nodes Status
   output$status_cld_nodes <- renderUI({
-    data <- project_data()
-    n_nodes <- if(!is.null(data$data$cld$nodes)) nrow(data$data$cld$nodes) else 0
-
+    stats <- dashboard_stats()
     tags$p(style = "margin-bottom: 5px; font-size: 13px;",
-      icon(if(n_nodes > 0) "check-circle" else "circle",
-           class = if(n_nodes > 0) "text-success" else "text-muted"),
-      " ", strong(n_nodes), " ", i18n$t("ui.dashboard.nodes_in_cld")
+      icon(if(stats$n_nodes > 0) "check-circle" else "circle",
+           class = if(stats$n_nodes > 0) "text-success" else "text-muted"),
+      " ", strong(stats$n_nodes), " ", i18n$t("ui.dashboard.nodes_in_cld")
     )
   })
 
   # CLD Edges Status
   output$status_cld_edges <- renderUI({
-    data <- project_data()
-    n_edges <- if(!is.null(data$data$cld$edges)) nrow(data$data$cld$edges) else 0
-
+    stats <- dashboard_stats()
     tags$p(style = "margin-bottom: 5px; font-size: 13px;",
-      icon(if(n_edges > 0) "check-circle" else "circle",
-           class = if(n_edges > 0) "text-success" else "text-muted"),
-      " ", strong(n_edges), " ", i18n$t("ui.dashboard.edges_in_cld")
+      icon(if(stats$n_edges > 0) "check-circle" else "circle",
+           class = if(stats$n_edges > 0) "text-success" else "text-muted"),
+      " ", strong(stats$n_edges), " ", i18n$t("ui.dashboard.edges_in_cld")
     )
   })
 
   # Analysis Status
   output$status_analysis_complete <- renderUI({
-    data <- project_data()
-    has_leverage <- !is.null(data$data$cld$nodes) &&
-                    any(data$data$cld$nodes$leverage_score > 0, na.rm = TRUE)
-
+    stats <- dashboard_stats()
     tags$p(style = "margin-bottom: 5px; font-size: 13px;",
-      icon(if(has_leverage) "check-circle" else "circle",
-           class = if(has_leverage) "text-success" else "text-muted"),
-      " ", i18n$t(if(has_leverage) "Leverage analysis complete" else "No analysis performed")
+      icon(if(stats$has_leverage) "check-circle" else "circle",
+           class = if(stats$has_leverage) "text-success" else "text-muted"),
+      " ", i18n$t(if(stats$has_leverage) "ui.dashboard.leverage_analysis_complete" else "ui.dashboard.no_analysis_performed")
     )
   })
 
   # ========== PROJECT TIMELINE ==========
   output$dashboard_timeline <- renderUI({
     data <- project_data()
+    stats <- dashboard_stats()
 
     # Gather timeline events
     events <- list()
@@ -319,58 +296,52 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
     creation_date <- data$data$metadata$created %||% Sys.Date()
     events <- c(events, list(list(
       date = creation_date,
-      title = "Project Created",
+      title = i18n$t("ui.dashboard.timeline_project_created"),
       icon = "plus-circle",
       color = "success",
-      description = paste("SES project initiated on", format(creation_date, "%B %d, %Y"))
+      description = paste(i18n$t("ui.dashboard.timeline_ses_initiated"), format(creation_date, "%B %d, %Y"))
     )))
 
     # Check if SES data exists
-    if (!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) {
+    if (stats$n_elements > 0) {
       events <- c(events, list(list(
         date = data$last_modified %||% Sys.Date(),
-        title = "SES Framework Created",
+        title = i18n$t("ui.dashboard.timeline_ses_framework_created"),
         icon = "layer-group",
         color = "info",
-        description = paste("DAPSIWRM framework established with",
-                          sum(nrow(data$data$isa_data$drivers %||% data.frame()),
-                              nrow(data$data$isa_data$activities %||% data.frame()),
-                              nrow(data$data$isa_data$pressures %||% data.frame()),
-                              nrow(data$data$isa_data$marine_processes %||% data.frame()),
-                              nrow(data$data$isa_data$ecosystem_services %||% data.frame()),
-                              nrow(data$data$isa_data$goods_benefits %||% data.frame()),
-                              nrow(data$data$isa_data$responses %||% data.frame())),
-                          "elements")
+        description = paste(i18n$t("ui.dashboard.timeline_dapsiwrm_established"), stats$n_elements,
+                          i18n$t("ui.dashboard.timeline_elements"))
       )))
     }
 
     # Check if CLD was generated
-    if (!is.null(data$data$cld$nodes) && nrow(data$data$cld$nodes) > 0) {
+    if (stats$n_nodes > 0) {
       events <- c(events, list(list(
         date = data$last_modified %||% Sys.Date(),
-        title = "Network Visualization",
+        title = i18n$t("ui.dashboard.timeline_network_visualization"),
         icon = "project-diagram",
         color = "primary",
-        description = paste("CLD generated with", nrow(data$data$cld$nodes), "nodes and",
-                          if(!is.null(data$data$cld$edges)) nrow(data$data$cld$edges) else 0, "edges")
+        description = paste(i18n$t("ui.dashboard.timeline_cld_generated"), stats$n_nodes,
+                          i18n$t("ui.dashboard.timeline_nodes_and"), stats$n_edges,
+                          i18n$t("ui.dashboard.timeline_edges"))
       )))
     }
 
     # Check if analysis was performed
-    if (!is.null(data$data$cld$nodes) && any(data$data$cld$nodes$leverage_score > 0, na.rm = TRUE)) {
+    if (stats$has_leverage) {
       events <- c(events, list(list(
         date = data$last_modified %||% Sys.Date(),
-        title = "Analysis Complete",
+        title = i18n$t("ui.dashboard.timeline_analysis_complete"),
         icon = "chart-line",
         color = "warning",
-        description = "Leverage point analysis and network metrics calculated"
+        description = i18n$t("ui.dashboard.timeline_leverage_calculated")
       )))
     }
 
     # Build timeline
     if (length(events) == 0) {
       return(p(style = "text-align: center; padding: 20px; color: #999;",
-        icon("calendar"), " No project events yet. Start building your SES!"))
+        icon("calendar"), " ", i18n$t("ui.dashboard.timeline_no_events")))
     }
 
     # Create bs4Timeline

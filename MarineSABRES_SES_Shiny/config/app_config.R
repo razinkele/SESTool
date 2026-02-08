@@ -17,7 +17,9 @@
 # DEBUG_MODE <- (Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE")
 
 # Maximum file upload size (MB)
-APP_MAX_UPLOAD_MB <- as.numeric(Sys.getenv("APP_MAX_UPLOAD_MB", "50"))
+# Default aligns with MAX_UPLOAD_SIZE_MB in constants.R (single source of truth)
+# Override via environment variable APP_MAX_UPLOAD_MB if needed for deployment
+APP_MAX_UPLOAD_MB <- as.numeric(Sys.getenv("APP_MAX_UPLOAD_MB", "100"))
 options(shiny.maxRequestSize = APP_MAX_UPLOAD_MB * 1024^2)
 
 # Session timeout (minutes, 0 = no timeout)

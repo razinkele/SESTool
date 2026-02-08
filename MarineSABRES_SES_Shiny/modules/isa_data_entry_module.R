@@ -4,7 +4,7 @@
 # Follows the DAPSI(W)R(M) framework for marine ecosystem analysis
 
 # Module UI ----
-isaDataEntryUI <- function(id) {
+isa_data_entry_ui <- function(id) {
   ns <- NS(id)
 
   tagList(
@@ -40,7 +40,7 @@ isaDataEntryUI <- function(id) {
 }
 
 # Module Server ----
-isaDataEntryServer <- function(id, global_data, event_bus = NULL, i18n) {
+isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

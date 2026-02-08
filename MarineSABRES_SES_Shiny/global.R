@@ -381,6 +381,7 @@ source("config/tutorial_content.R", local = TRUE)
 source("modules/ai_isa_knowledge_base.R", local = FALSE)
 source("data/dapsiwrm_element_keywords.R", local = TRUE)
 source("functions/dapsiwrm_connection_rules.R", local = TRUE)
+source("functions/ses_dynamics.R", local = TRUE)
 source("modules/graphical_ses_ai_classifier.R", local = TRUE)
 source("modules/graphical_ses_network_builder.R", local = TRUE)
 source("modules/graphical_ses_creator_module.R", local = TRUE)
@@ -668,24 +669,10 @@ ACTIVITY_SCALES <- c(
 )
 
 # ============================================================================
-# DEFAULT VALUES
-# ============================================================================
-
-# Default node size
-DEFAULT_NODE_SIZE <- 25
-
-# Default edge width
-DEFAULT_EDGE_WIDTH <- 2
-
-# Default hierarchy level separation
-DEFAULT_LEVEL_SEPARATION <- 150
-
-# Maximum loop length for detection
-DEFAULT_MAX_LOOP_LENGTH <- 10
-
-# ============================================================================
 # UTILITY FUNCTIONS
 # ============================================================================
+# NOTE: Default visualization constants (DEFAULT_NODE_SIZE, DEFAULT_EDGE_WIDTH, etc.)
+# are defined in constants.R — the single source of truth for all constants.
 
 # Generate unique ID
 generate_id <- function(prefix = "ID") {

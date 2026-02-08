@@ -4,8 +4,8 @@
 library(testthat)
 library(igraph)
 
-# Source enhanced functions
-source("../../functions/network_analysis_enhanced.R", local = TRUE)
+# Safe network wrappers are now consolidated into network_analysis.R
+source("../../functions/network_analysis.R", local = TRUE)
 
 # ============================================================================
 # VALIDATION UTILITIES TESTS
