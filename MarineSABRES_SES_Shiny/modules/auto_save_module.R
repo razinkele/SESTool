@@ -857,7 +857,7 @@ auto_save_server <- function(id, project_data_reactive, i18n,
               ),
               tags$br(),
               tags$p(
-                style = "font-size: 12px; color: #666;",
+                style = CSS_HINT_TEXT,
                 icon("info-circle"), " ",
                 i18n$t("common.misc.auto_save_helps_prevent_data_loss_from_unexpected_disconnections")
               )

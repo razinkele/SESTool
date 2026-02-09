@@ -501,43 +501,43 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_drivers"),
                           tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.response.measures.drivers")), " ", textOutput(ns("count_drivers"), inline = TRUE)),
-                          style = "color: #007bff;")
+                          style = CSS_TEXT_PRIMARY)
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_activities"),
                           tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.response.measures.activities")), " ", textOutput(ns("count_activities"), inline = TRUE)),
-                          style = "color: #007bff;")
+                          style = CSS_TEXT_PRIMARY)
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_pressures"),
                           tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.response.measures.pressures")), " ", textOutput(ns("count_pressures"), inline = TRUE)),
-                          style = "color: #007bff;")
+                          style = CSS_TEXT_PRIMARY)
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_states"),
                           tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.isa.ai_assistant.state_changes")), " ", textOutput(ns("count_states"), inline = TRUE)),
-                          style = "color: #007bff;")
+                          style = CSS_TEXT_PRIMARY)
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_impacts"),
                           tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.isa.ai_assistant.impacts")), " ", textOutput(ns("count_impacts"), inline = TRUE)),
-                          style = "color: #007bff;")
+                          style = CSS_TEXT_PRIMARY)
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_welfare"),
                           tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.isa.ai_assistant.welfare")), " ", textOutput(ns("count_welfare"), inline = TRUE)),
-                          style = "color: #007bff;")
+                          style = CSS_TEXT_PRIMARY)
               ),
               tags$div(
                 style = "margin-bottom: 5px;",
                 actionLink(ns("link_responses"),
                           tagList(icon("arrow-circle-right"), " ", strong(i18n$t("modules.isa.ai_assistant.response_measures")), " ", textOutput(ns("count_responses"), inline = TRUE)),
-                          style = "color: #007bff;")
+                          style = CSS_TEXT_PRIMARY)
               )
             ),
             tags$td(

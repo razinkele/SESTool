@@ -649,23 +649,23 @@ setup_progress_outputs <- function(output, rv, i18n) {
 
     # Create display with bold font
     tagList(
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;",
+      tags$div(style = CSS_LABEL_BOLD,
                sprintf("D→A: %d", count_da)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;",
+      tags$div(style = CSS_LABEL_BOLD,
                sprintf("A→P: %d", count_ap)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;",
+      tags$div(style = CSS_LABEL_BOLD,
                sprintf("P→S: %d", count_ps)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;",
+      tags$div(style = CSS_LABEL_BOLD,
                sprintf("S→I: %d", count_si)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;",
+      tags$div(style = CSS_LABEL_BOLD,
                sprintf("I→W: %d", count_iw)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;",
+      tags$div(style = CSS_LABEL_BOLD,
                sprintf("W→R: %d", count_wr)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;",
+      tags$div(style = CSS_LABEL_BOLD,
                sprintf("R→D: %d", count_rd)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;",
+      tags$div(style = CSS_LABEL_BOLD,
                sprintf("R→A: %d", count_ra)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;",
+      tags$div(style = CSS_LABEL_BOLD,
                sprintf("R→P: %d", count_rp))
     )
   })
@@ -809,7 +809,7 @@ setup_preview_modal <- function(input, session, rv, i18n) {
                     " ",
                     strong(conn$from_name),
                     " ",
-                    span(style = "color: #666;",
+                    span(style = CSS_TEXT_MUTED,
                          if(conn$polarity == "+") "→" else "⊸"),
                     " ",
                     strong(conn$to_name),

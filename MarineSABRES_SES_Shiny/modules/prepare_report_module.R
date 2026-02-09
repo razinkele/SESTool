@@ -618,6 +618,23 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
 #' @param author Report author
 #' @param sections Vector of sections to include
 #' @return HTML string
+# Helper: generate an HTML table for a DAPSI(W)R(M) element data frame
+.element_html_table <- function(df, heading) {
+  if (is.null(df) || nrow(df) == 0) return(character(0))
+  rows <- vapply(seq_len(nrow(df)), function(i) {
+    id_val   <- as.character(df$ID[i])[1]
+    name_val <- as.character(df$Name[i])[1]
+    desc     <- if (!is.null(df$Description) && !is.na(df$Description[i]))
+                  as.character(df$Description[i])[1] else ""
+    paste0("    <tr><td>", id_val, "</td><td>", name_val, "</td><td>", desc, "</td></tr>")
+  }, character(1))
+  c(paste0("  <h3>", heading, "</h3>"),
+    "  <table>",
+    "    <tr><th>ID</th><th>Name</th><th>Description</th></tr>",
+    rows,
+    "  </table>")
+}
+
 generate_html_report <- function(data, title, author, sections) {
 
   # Safely convert title and author to character strings
@@ -738,133 +755,18 @@ generate_html_report <- function(data, title, author, sections) {
 
     html <- c(html, "  <h2>ISA Framework (DAPSIWRM)</h2>")
 
-    # Drivers
-    if (!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) {
-      cat("  [gen_html] Processing Drivers table...\n")
-      flush.console()
-
-      html <- c(html,
-        "  <h3>Drivers</h3>",
-        "  <table>",
-        "    <tr><th>ID</th><th>Name</th><th>Description</th></tr>"
-      )
-      for (i in 1:nrow(data$data$isa_data$drivers)) {
-        row <- data$data$isa_data$drivers[i, ]
-        # Safely convert all fields to character
-        id_val <- as.character(row$ID)[1]
-        name_val <- as.character(row$Name)[1]
-        desc <- if (!is.null(row$Description) && !is.na(row$Description)) as.character(row$Description)[1] else ""
-
-        cat("  [gen_html] Driver", i, "ID:", id_val, "class:", class(id_val), "\n")
-        flush.console()
-
-        html <- c(html, paste0("    <tr><td>", id_val, "</td><td>", name_val, "</td><td>", desc, "</td></tr>"))
-      }
-      html <- c(html, "  </table>")
-      cat("  [gen_html] Drivers table completed\n")
-      flush.console()
-    }
-
-    # Activities
-    if (!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) {
-      cat("  [gen_html] Processing Activities table...\n")
-      flush.console()
-
-      html <- c(html,
-        "  <h3>Activities</h3>",
-        "  <table>",
-        "    <tr><th>ID</th><th>Name</th><th>Description</th></tr>"
-      )
-      for (i in 1:nrow(data$data$isa_data$activities)) {
-        row <- data$data$isa_data$activities[i, ]
-        # Safely convert all fields to character
-        id_val <- as.character(row$ID)[1]
-        name_val <- as.character(row$Name)[1]
-        desc <- if (!is.null(row$Description) && !is.na(row$Description)) as.character(row$Description)[1] else ""
-
-        cat("  [gen_html] Activity", i, "ID:", id_val, "\n")
-        flush.console()
-
-        html <- c(html, paste0("    <tr><td>", id_val, "</td><td>", name_val, "</td><td>", desc, "</td></tr>"))
-      }
-      html <- c(html, "  </table>")
-      cat("  [gen_html] Activities table completed\n")
-      flush.console()
-    }
-
-    # Pressures
-    if (!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) {
-      html <- c(html,
-        "  <h3>Pressures</h3>",
-        "  <table>",
-        "    <tr><th>ID</th><th>Name</th><th>Description</th></tr>"
-      )
-      for (i in 1:nrow(data$data$isa_data$pressures)) {
-        row <- data$data$isa_data$pressures[i, ]
-        desc <- if (!is.null(row$Description) && !is.na(row$Description)) row$Description else ""
-        html <- c(html, paste0("    <tr><td>", row$ID, "</td><td>", row$Name, "</td><td>", desc, "</td></tr>"))
-      }
-      html <- c(html, "  </table>")
-    }
-
-    # Marine Processes
-    if (!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) {
-      html <- c(html,
-        "  <h3>Marine Processes & Functions</h3>",
-        "  <table>",
-        "    <tr><th>ID</th><th>Name</th><th>Description</th></tr>"
-      )
-      for (i in 1:nrow(data$data$isa_data$marine_processes)) {
-        row <- data$data$isa_data$marine_processes[i, ]
-        desc <- if (!is.null(row$Description) && !is.na(row$Description)) row$Description else ""
-        html <- c(html, paste0("    <tr><td>", row$ID, "</td><td>", row$Name, "</td><td>", desc, "</td></tr>"))
-      }
-      html <- c(html, "  </table>")
-    }
-
-    # Ecosystem Services
-    if (!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) {
-      html <- c(html,
-        "  <h3>Ecosystem Services</h3>",
-        "  <table>",
-        "    <tr><th>ID</th><th>Name</th><th>Description</th></tr>"
-      )
-      for (i in 1:nrow(data$data$isa_data$ecosystem_services)) {
-        row <- data$data$isa_data$ecosystem_services[i, ]
-        desc <- if (!is.null(row$Description) && !is.na(row$Description)) row$Description else ""
-        html <- c(html, paste0("    <tr><td>", row$ID, "</td><td>", row$Name, "</td><td>", desc, "</td></tr>"))
-      }
-      html <- c(html, "  </table>")
-    }
-
-    # Goods & Benefits
-    if (!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) {
-      html <- c(html,
-        "  <h3>Goods & Benefits</h3>",
-        "  <table>",
-        "    <tr><th>ID</th><th>Name</th><th>Description</th></tr>"
-      )
-      for (i in 1:nrow(data$data$isa_data$goods_benefits)) {
-        row <- data$data$isa_data$goods_benefits[i, ]
-        desc <- if (!is.null(row$Description) && !is.na(row$Description)) row$Description else ""
-        html <- c(html, paste0("    <tr><td>", row$ID, "</td><td>", row$Name, "</td><td>", desc, "</td></tr>"))
-      }
-      html <- c(html, "  </table>")
-    }
-
-    # Responses
-    if (!is.null(data$data$isa_data$responses) && nrow(data$data$isa_data$responses) > 0) {
-      html <- c(html,
-        "  <h3>Responses</h3>",
-        "  <table>",
-        "    <tr><th>ID</th><th>Name</th><th>Description</th></tr>"
-      )
-      for (i in 1:nrow(data$data$isa_data$responses)) {
-        row <- data$data$isa_data$responses[i, ]
-        desc <- if (!is.null(row$Description) && !is.na(row$Description)) row$Description else ""
-        html <- c(html, paste0("    <tr><td>", row$ID, "</td><td>", row$Name, "</td><td>", desc, "</td></tr>"))
-      }
-      html <- c(html, "  </table>")
+    # DAPSI(W)R(M) element tables
+    element_tables <- list(
+      list(df = data$data$isa_data$drivers,            heading = "Drivers"),
+      list(df = data$data$isa_data$activities,         heading = "Activities"),
+      list(df = data$data$isa_data$pressures,          heading = "Pressures"),
+      list(df = data$data$isa_data$marine_processes,   heading = "Marine Processes & Functions"),
+      list(df = data$data$isa_data$ecosystem_services, heading = "Ecosystem Services"),
+      list(df = data$data$isa_data$goods_benefits,     heading = "Goods & Benefits"),
+      list(df = data$data$isa_data$responses,          heading = "Responses")
+    )
+    for (tbl in element_tables) {
+      html <- c(html, .element_html_table(tbl$df, tbl$heading))
     }
 
   }

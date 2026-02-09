@@ -127,6 +127,394 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
 # SETTINGS MODAL (Auto-Save Only)
 # ============================================================================
 
+# ---------------------------------------------------------------------------
+# Settings Modal UI builder helpers (decomposed from setup_settings_modal_handlers)
+# ---------------------------------------------------------------------------
+
+.build_autosave_ui <- function(i18n, autosave_enabled, autosave_delay,
+                               autosave_notifications, autosave_indicator,
+                               autosave_triggers) {
+  tagList(
+    tags$h4(icon("save"), " ", i18n$t("ui.modals.autosave_title")),
+    tags$p(style = "color: #666; margin-bottom: 20px;",
+      i18n$t("ui.modals.autosave_description")
+    ),
+
+    shinyWidgets::switchInput(
+      inputId = "autosave_enabled",
+      label = tags$strong(i18n$t("ui.modals.autosave_enable")),
+      value = autosave_enabled(),
+      onLabel = i18n$t("ui.modals.autosave_on"),
+      offLabel = i18n$t("ui.modals.autosave_off"),
+      onStatus = "success",
+      offStatus = "danger",
+      size = "default",
+      width = "100%"
+    ),
+
+    conditionalPanel(
+      condition = "input.autosave_enabled == true",
+      tags$div(
+        style = "margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px;",
+        tags$h5(icon("sliders-h"), " ", i18n$t("ui.modals.autosave_advanced")),
+
+        # Save interval
+        tags$div(
+          style = "margin-bottom: 15px;",
+          tags$label(
+            style = "font-weight: 600; margin-bottom: 5px; display: block;",
+            icon("clock"), " ", i18n$t("ui.modals.autosave_delay_label")
+          ),
+          sliderInput(
+            inputId = "autosave_delay", label = NULL,
+            min = 1, max = 10,
+            value = if (!is.null(autosave_delay)) autosave_delay() else 2,
+            step = 0.5, width = "100%", ticks = TRUE
+          ),
+          tags$p(style = "font-size: 12px; color: #666; margin-top: -10px;",
+            icon("info-circle"), " ", i18n$t("ui.modals.autosave_delay_help")
+          )
+        ),
+
+        # Notification settings
+        tags$div(
+          style = "margin-bottom: 15px;",
+          tags$label(style = CSS_LABEL_SEMIBOLD,
+            icon("bell"), " ", i18n$t("ui.modals.autosave_notifications_label")
+          ),
+          shinyWidgets::switchInput(
+            inputId = "autosave_notifications",
+            label = i18n$t("ui.modals.autosave_show_notifications"),
+            value = if (!is.null(autosave_notifications)) autosave_notifications() else FALSE,
+            onLabel = "ON", offLabel = "OFF",
+            onStatus = "info", offStatus = "secondary",
+            size = "small", inline = TRUE
+          ),
+          tags$p(style = "font-size: 12px; color: #666; margin-top: 5px;",
+            i18n$t("ui.modals.autosave_notifications_help")
+          )
+        ),
+
+        # Save indicator
+        tags$div(
+          style = "margin-bottom: 15px;",
+          tags$label(style = CSS_LABEL_SEMIBOLD,
+            icon("check-circle"), " ", i18n$t("ui.modals.autosave_indicator_label")
+          ),
+          shinyWidgets::switchInput(
+            inputId = "autosave_indicator",
+            label = i18n$t("ui.modals.autosave_show_indicator"),
+            value = if (!is.null(autosave_indicator)) autosave_indicator() else TRUE,
+            onLabel = "ON", offLabel = "OFF",
+            onStatus = "success", offStatus = "secondary",
+            size = "small", inline = TRUE
+          ),
+          tags$p(style = "font-size: 12px; color: #666; margin-top: 5px;",
+            i18n$t("ui.modals.autosave_indicator_help")
+          )
+        ),
+
+        # What triggers autosave
+        tags$div(
+          style = "margin-bottom: 10px;",
+          tags$label(style = CSS_LABEL_SEMIBOLD,
+            icon("sync"), " ", i18n$t("ui.modals.autosave_triggers_label")
+          ),
+          checkboxGroupInput(
+            inputId = "autosave_triggers", label = NULL,
+            choices = setNames(
+              c("elements", "context", "connections", "steps"),
+              c(i18n$t("ui.modals.autosave_trigger_element"),
+                i18n$t("ui.modals.autosave_trigger_context"),
+                i18n$t("ui.modals.autosave_trigger_connections"),
+                i18n$t("ui.modals.autosave_trigger_step"))
+            ),
+            selected = if (!is.null(autosave_triggers)) autosave_triggers() else c("elements", "context", "connections", "steps"),
+            width = "100%"
+          ),
+          tags$p(style = "font-size: 12px; color: #666; margin-top: -5px;",
+            i18n$t("ui.modals.autosave_triggers_help")
+          )
+        )
+      )
+    ),
+
+    tags$div(
+      class = "alert alert-info", style = "margin-top: 20px;",
+      icon("lightbulb"),
+      tags$strong(" ", i18n$t("ui.modals.autosave_tip"), " "),
+      i18n$t("ui.modals.autosave_tip_text")
+    )
+  )
+}
+
+.build_local_storage_ui <- function(i18n) {
+  tagList(
+    tags$h4(icon("hdd"), " ", i18n$t("ui.modals.local_storage_settings")),
+    tags$p(style = "color: #666; margin-bottom: 15px;",
+      i18n$t("ui.modals.local_storage_description")
+    ),
+
+    tags$div(
+      id = "local_storage_status_container",
+      class = "local-storage-panel",
+
+      # JavaScript-based rendering for File System API status
+      local({
+        js_safe <- function(txt) {
+          raw <- jsonlite::toJSON(txt, auto_unbox = TRUE)
+          substr(raw, 2, nchar(raw) - 1)
+        }
+        js_browser_not_supported <- js_safe(i18n$t("ui.modals.browser_not_supported"))
+        js_browser_warning       <- js_safe(i18n$t("ui.modals.browser_warning"))
+        js_connected_to          <- js_safe(i18n$t("ui.modals.connected_to"))
+        js_no_folder_selected    <- js_safe(i18n$t("ui.modals.no_folder_selected"))
+
+        tags$script(HTML(paste0("
+        $(document).ready(function() {
+          var i18n_browserNotSupported = '", js_browser_not_supported, "';
+          var i18n_browserWarning = '", js_browser_warning, "';
+          var i18n_connectedTo = '", js_connected_to, "';
+          var i18n_noFolderSelected = '", js_no_folder_selected, "';
+
+          function updateLocalStoragePanel() {
+            var hasAPI = window.localStorageModule && window.localStorageModule.hasFileSystemAccess;
+            var isConnected = window.localStorageModule && window.localStorageModule.directoryHandle !== null;
+
+            if (!hasAPI) {
+              $('#local_storage_api_status').html(
+                '<div class=\"fallback-warning\" style=\"margin-bottom: 0;\">' +
+                '<i class=\"fa fa-exclamation-triangle\"></i> ' +
+                '<strong>' + i18n_browserNotSupported + '</strong><br>' +
+                '<small>' + i18n_browserWarning + '</small>' +
+                '</div>'
+              );
+              $('#local_storage_controls').hide();
+            } else if (isConnected) {
+              var dirName = window.localStorageModule.directoryHandle.name;
+              $('#local_storage_api_status').html(
+                '<div class=\"directory-status connected\">' +
+                '<span class=\"directory-status-icon\">\U0001F4C1</span>' +
+                '<div><strong>' + i18n_connectedTo + '</strong> ' + dirName + '</div>' +
+                '</div>'
+              );
+              $('#btn_connect_local').hide();
+              $('#btn_disconnect_local').show();
+              $('#btn_save_to_local').show();
+              $('#local_storage_controls').show();
+            } else {
+              $('#local_storage_api_status').html(
+                '<div class=\"directory-status\">' +
+                '<span class=\"directory-status-icon\">\U0001F4C2</span>' +
+                '<div>' + i18n_noFolderSelected + '</div>' +
+                '</div>'
+              );
+              $('#btn_connect_local').show();
+              $('#btn_disconnect_local').hide();
+              $('#btn_save_to_local').hide();
+              $('#local_storage_controls').show();
+            }
+          }
+
+          setTimeout(updateLocalStoragePanel, 500);
+
+          Shiny.addCustomMessageHandler('update_local_storage_panel', function(message) {
+            updateLocalStoragePanel();
+          });
+        });")))
+      }),
+
+      tags$div(id = "local_storage_api_status"),
+
+      tags$div(
+        id = "local_storage_controls", style = "margin-top: 15px;",
+        actionButton("btn_connect_local",
+          tagList(icon("folder-open"), " ", i18n$t("ui.modals.select_local_folder")),
+          class = "btn-outline-primary", style = "margin-right: 10px;"
+        ),
+        actionButton("btn_disconnect_local",
+          tagList(icon("unlink"), " ", i18n$t("ui.modals.disconnect_local_folder")),
+          class = "btn-outline-secondary", style = "display: none; margin-right: 10px;"
+        ),
+        actionButton("btn_save_to_local",
+          tagList(icon("save"), " ", i18n$t("ui.modals.save_current_project")),
+          class = "btn-success", style = "display: none;"
+        )
+      ),
+
+      tags$div(
+        id = "local_autosave_container",
+        style = "margin-top: 15px; padding: 10px; background: #f0f7ff; border-radius: 6px; display: none;",
+        shinyWidgets::switchInput(
+          inputId = "local_autosave_enabled",
+          label = i18n$t("ui.modals.auto_save_to_local"),
+          value = FALSE, onLabel = "ON", offLabel = "OFF",
+          onStatus = "success", offStatus = "secondary",
+          size = "small", inline = TRUE
+        ),
+        tags$p(
+          style = "font-size: 12px; color: #666; margin-top: 5px; margin-bottom: 0;",
+          icon("info-circle"), " ", i18n$t("ui.modals.autosave_local_sync_help")
+        )
+      )
+    )
+  )
+}
+
+.build_general_settings_ui <- function(i18n) {
+  tagList(
+    tags$h4(icon("tools"), " ", i18n$t("ui.modals.general_settings")),
+    tags$div(
+      style = "margin-top: 15px;",
+      shinyWidgets::switchInput(
+        inputId = "debug_mode",
+        label = tags$strong(i18n$t("ui.modals.debug_logging")),
+        value = FALSE, onLabel = "ON", offLabel = "OFF",
+        onStatus = "warning", offStatus = "secondary",
+        size = "default", width = "100%"
+      ),
+      tags$p(
+        style = "margin-top: 10px; font-size: 13px; color: #666;",
+        icon("bug"), " ", i18n$t("ui.modals.debug_logging_help")
+      )
+    )
+  )
+}
+
+.build_ses_models_ui <- function(i18n, ses_models_directory) {
+  tagList(
+    tags$h4(icon("folder-open"), " ", i18n$t("ui.modals.ses_models_directory")),
+    tags$div(
+      style = "margin-top: 15px;",
+      radioButtons(
+        inputId = "ses_models_source",
+        label = i18n$t("ui.modals.ses_models_source_label"),
+        choices = list("Default (Application Directory)" = "default", "Custom Directory" = "custom"),
+        selected = if (!is.null(ses_models_directory) && !is.null(ses_models_directory()) && nzchar(ses_models_directory())) "custom" else "default",
+        width = "100%"
+      ),
+      conditionalPanel(
+        condition = "input.ses_models_source == 'custom'",
+        tags$div(
+          style = "margin-top: 10px; padding: 15px; background: #f8f9fa; border-radius: 8px;",
+          fluidRow(
+            column(9,
+              textInput("ses_models_custom_path",
+                label = i18n$t("ui.modals.ses_models_custom_path"),
+                value = if (!is.null(ses_models_directory)) ses_models_directory() else "",
+                width = "100%",
+                placeholder = i18n$t("ui.modals.ses_models_path_placeholder")
+              )
+            ),
+            column(3,
+              tags$div(style = "margin-top: 25px;",
+                shinyDirButton("ses_models_dir_select",
+                  label = i18n$t("ui.modals.browse"),
+                  title = i18n$t("ui.modals.select_ses_models_directory"),
+                  icon = icon("folder-open"), class = "btn-outline-primary"
+                )
+              )
+            )
+          ),
+          tags$p(style = "font-size: 12px; color: #666; margin-top: 5px;",
+            icon("info-circle"), " ", i18n$t("ui.modals.ses_models_directory_help")
+          )
+        )
+      ),
+      tags$div(
+        id = "ses_models_path_info",
+        style = "margin-top: 10px; padding: 10px; background: #e8f4f8; border-radius: 6px; font-size: 13px;",
+        icon("check-circle", style = "color: #28a745;"), " ",
+        tags$strong(i18n$t("ui.modals.current_directory")), ": ",
+        tags$span(
+          id = "current_ses_models_path", style = "font-family: monospace;",
+          if (!is.null(ses_models_directory) && !is.null(ses_models_directory()) && nzchar(ses_models_directory()))
+            ses_models_directory()
+          else
+            "SESModels (relative to app directory)"
+        )
+      )
+    )
+  )
+}
+
+.apply_settings <- function(input, i18n, autosave_enabled, autosave_delay,
+                            autosave_notifications, autosave_indicator,
+                            autosave_triggers, ses_models_directory) {
+  settings_changed <- FALSE
+
+  if (!is.null(input$autosave_enabled)) {
+    autosave_enabled(input$autosave_enabled)
+    debug_log(sprintf("Auto-save %s", if(input$autosave_enabled) "enabled" else "disabled"), "SETTINGS")
+    settings_changed <- TRUE
+  }
+
+  if (!is.null(input$autosave_delay)) {
+    autosave_delay(input$autosave_delay)
+    debug_log(sprintf("Auto-save delay: %s seconds", input$autosave_delay), "SETTINGS")
+    settings_changed <- TRUE
+  }
+
+  if (!is.null(input$autosave_notifications)) {
+    autosave_notifications(input$autosave_notifications)
+    debug_log(sprintf("Auto-save notifications: %s", input$autosave_notifications), "SETTINGS")
+    settings_changed <- TRUE
+  }
+
+  if (!is.null(input$autosave_indicator)) {
+    autosave_indicator(input$autosave_indicator)
+    debug_log(sprintf("Auto-save indicator: %s", input$autosave_indicator), "SETTINGS")
+    settings_changed <- TRUE
+  }
+
+  if (!is.null(input$autosave_triggers)) {
+    autosave_triggers(input$autosave_triggers)
+    debug_log(sprintf("Auto-save triggers: %s", paste(input$autosave_triggers, collapse = ", ")), "SETTINGS")
+    settings_changed <- TRUE
+  }
+
+  if (!is.null(input$debug_mode)) {
+    debug_log(sprintf("Debug mode %s", if(input$debug_mode) "enabled" else "disabled"), "SETTINGS")
+    Sys.setenv(MARINESABRES_DEBUG = if (input$debug_mode) "TRUE" else "FALSE")
+  }
+
+  if (!is.null(ses_models_directory) && !is.null(input$ses_models_source)) {
+    if (input$ses_models_source == "default") {
+      ses_models_directory("")
+      debug_log("SES Models directory reset to default", "SETTINGS")
+      settings_changed <- TRUE
+    } else if (input$ses_models_source == "custom" && !is.null(input$ses_models_custom_path)) {
+      custom_path <- input$ses_models_custom_path
+      if (nzchar(custom_path)) {
+        if (dir.exists(custom_path)) {
+          ses_models_directory(custom_path)
+          debug_log(sprintf("SES Models directory set to: %s", custom_path), "SETTINGS")
+          settings_changed <- TRUE
+          if (exists(".ses_models_cache", envir = globalenv())) {
+            .ses_models_cache$models <- NULL
+            .ses_models_cache$last_scan <- NULL
+          }
+        } else {
+          showNotification(
+            paste(i18n$t("ui.modals.directory_not_found"), custom_path),
+            type = "error", duration = 5
+          )
+        }
+      }
+    }
+  }
+
+  removeModal()
+
+  if (settings_changed || !is.null(input$autosave_delay)) {
+    showNotification(
+      i18n$t("ui.modals.settings_updated_successfully"),
+      type = "message", duration = 3
+    )
+  }
+}
+
+# ---------------------------------------------------------------------------
 #' Setup Settings Modal Handlers (Without Language)
 #'
 #' @param input Shiny input object
@@ -148,535 +536,57 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
                                           ses_models_directory = NULL,
                                           volumes = NULL) {
 
-  # Set up shinyFiles directory chooser for SES models directory
   if (!is.null(volumes)) {
     shinyDirChoose(input, "ses_models_dir_select", roots = volumes, session = session)
   }
 
-  # Handle directory selection from shinyDirButton
   observeEvent(input$ses_models_dir_select, {
     req(input$ses_models_dir_select)
-
-    # Check if a directory was actually selected (not just initialized)
     if (!is.integer(input$ses_models_dir_select) && !is.null(volumes)) {
-      # Parse the selected path
       selected_path <- parseDirPath(volumes, input$ses_models_dir_select)
-
       if (length(selected_path) > 0 && nzchar(selected_path)) {
-        # Update the text input with the selected path
         updateTextInput(session, "ses_models_custom_path", value = as.character(selected_path))
       }
     }
   })
 
-  # Show settings modal when button is clicked
   observeEvent(input$open_settings_modal, {
     showModal(modalDialog(
       title = tags$h3(icon("cog"), " ", i18n$t("ui.header.application_settings")),
-      size = "l",  # Changed to large for more content
-      easyClose = TRUE,
+      size = "l", easyClose = TRUE,
       footer = tagList(
         modalButton(i18n$t("common.buttons.cancel")),
         actionButton("apply_settings", i18n$t("common.buttons.apply"), class = "btn-primary", icon = icon("check"))
       ),
-
       tags$div(
         style = "padding: 20px;",
-
-        # ========== AUTO-SAVE SECTION ==========
-        tags$h4(icon("save"), " ", i18n$t("ui.modals.autosave_title")),
-        tags$p(style = "color: #666; margin-bottom: 20px;",
-          i18n$t("ui.modals.autosave_description")
-        ),
-
-        # Main auto-save toggle
-        shinyWidgets::switchInput(
-          inputId = "autosave_enabled",
-          label = tags$strong(i18n$t("ui.modals.autosave_enable")),
-          value = autosave_enabled(),
-          onLabel = i18n$t("ui.modals.autosave_on"),
-          offLabel = i18n$t("ui.modals.autosave_off"),
-          onStatus = "success",
-          offStatus = "danger",
-          size = "default",
-          width = "100%"
-        ),
-
-        # Advanced options (conditional on autosave being enabled)
-        conditionalPanel(
-          condition = "input.autosave_enabled == true",
-
-          tags$div(
-            style = "margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px;",
-
-            tags$h5(icon("sliders-h"), " ", i18n$t("ui.modals.autosave_advanced")),
-
-            # Save interval
-            tags$div(
-              style = "margin-bottom: 15px;",
-              tags$label(
-                style = "font-weight: 600; margin-bottom: 5px; display: block;",
-                icon("clock"), " ", i18n$t("ui.modals.autosave_delay_label")
-              ),
-              sliderInput(
-                inputId = "autosave_delay",
-                label = NULL,
-                min = 1,
-                max = 10,
-                value = if (!is.null(autosave_delay)) autosave_delay() else 2,
-                step = 0.5,
-                width = "100%",
-                ticks = TRUE
-              ),
-              tags$p(
-                style = "font-size: 12px; color: #666; margin-top: -10px;",
-                icon("info-circle"),
-                " ", i18n$t("ui.modals.autosave_delay_help")
-              )
-            ),
-
-            # Notification settings
-            tags$div(
-              style = "margin-bottom: 15px;",
-              tags$label(
-                style = "font-weight: 600; margin-bottom: 10px; display: block;",
-                icon("bell"), " ", i18n$t("ui.modals.autosave_notifications_label")
-              ),
-              shinyWidgets::switchInput(
-                inputId = "autosave_notifications",
-                label = i18n$t("ui.modals.autosave_show_notifications"),
-                value = if (!is.null(autosave_notifications)) autosave_notifications() else FALSE,
-                onLabel = "ON",
-                offLabel = "OFF",
-                onStatus = "info",
-                offStatus = "secondary",
-                size = "small",
-                inline = TRUE
-              ),
-              tags$p(
-                style = "font-size: 12px; color: #666; margin-top: 5px;",
-                i18n$t("ui.modals.autosave_notifications_help")
-              )
-            ),
-
-            # Save indicator
-            tags$div(
-              style = "margin-bottom: 15px;",
-              tags$label(
-                style = "font-weight: 600; margin-bottom: 10px; display: block;",
-                icon("check-circle"), " ", i18n$t("ui.modals.autosave_indicator_label")
-              ),
-              shinyWidgets::switchInput(
-                inputId = "autosave_indicator",
-                label = i18n$t("ui.modals.autosave_show_indicator"),
-                value = if (!is.null(autosave_indicator)) autosave_indicator() else TRUE,
-                onLabel = "ON",
-                offLabel = "OFF",
-                onStatus = "success",
-                offStatus = "secondary",
-                size = "small",
-                inline = TRUE
-              ),
-              tags$p(
-                style = "font-size: 12px; color: #666; margin-top: 5px;",
-                i18n$t("ui.modals.autosave_indicator_help")
-              )
-            ),
-
-            # What triggers autosave
-            tags$div(
-              style = "margin-bottom: 10px;",
-              tags$label(
-                style = "font-weight: 600; margin-bottom: 10px; display: block;",
-                icon("sync"), " ", i18n$t("ui.modals.autosave_triggers_label")
-              ),
-              checkboxGroupInput(
-                inputId = "autosave_triggers",
-                label = NULL,
-                choices = setNames(
-                  c("elements", "context", "connections", "steps"),
-                  c(i18n$t("ui.modals.autosave_trigger_element"),
-                    i18n$t("ui.modals.autosave_trigger_context"),
-                    i18n$t("ui.modals.autosave_trigger_connections"),
-                    i18n$t("ui.modals.autosave_trigger_step"))
-                ),
-                selected = if (!is.null(autosave_triggers)) autosave_triggers() else c("elements", "context", "connections", "steps"),
-                width = "100%"
-              ),
-              tags$p(
-                style = "font-size: 12px; color: #666; margin-top: -5px;",
-                i18n$t("ui.modals.autosave_triggers_help")
-              )
-            )
-          )
-        ),
-
-        # Info box
-        tags$div(
-          class = "alert alert-info",
-          style = "margin-top: 20px;",
-          icon("lightbulb"),
-          tags$strong(" ", i18n$t("ui.modals.autosave_tip"), " "),
-          i18n$t("ui.modals.autosave_tip_text")
-        ),
-
+        .build_autosave_ui(i18n, autosave_enabled, autosave_delay,
+                           autosave_notifications, autosave_indicator, autosave_triggers),
         tags$hr(),
-
-        # ========== LOCAL STORAGE SETTINGS SECTION ==========
-        tags$h4(icon("hdd"), " ", i18n$t("ui.modals.local_storage_settings")),
-        
-        tags$p(
-          style = "color: #666; margin-bottom: 15px;",
-          i18n$t("ui.modals.local_storage_description")
-        ),
-        
-        # Connection status and controls
-        tags$div(
-          id = "local_storage_status_container",
-          class = "local-storage-panel",
-          
-          # JavaScript-based rendering for File System API status
-          # Safely encode i18n strings for JavaScript using jsonlite::toJSON
-          # (handles quotes, backslashes, newlines, and format specifiers properly)
-          local({
-            js_safe <- function(txt) {
-              # toJSON produces a quoted JSON string e.g. "some text"
-              # We strip the outer quotes to get the JS-safe inner content
-              raw <- jsonlite::toJSON(txt, auto_unbox = TRUE)
-              substr(raw, 2, nchar(raw) - 1)
-            }
-            js_browser_not_supported <- js_safe(i18n$t("ui.modals.browser_not_supported"))
-            js_browser_warning       <- js_safe(i18n$t("ui.modals.browser_warning"))
-            js_connected_to          <- js_safe(i18n$t("ui.modals.connected_to"))
-            js_no_folder_selected    <- js_safe(i18n$t("ui.modals.no_folder_selected"))
-
-            tags$script(HTML(paste0("
-            $(document).ready(function() {
-              // i18n strings (safely encoded via jsonlite)
-              var i18n_browserNotSupported = '", js_browser_not_supported, "';
-              var i18n_browserWarning = '", js_browser_warning, "';
-              var i18n_connectedTo = '", js_connected_to, "';
-              var i18n_noFolderSelected = '", js_no_folder_selected, "';
-
-              // Update local storage panel based on API availability
-              function updateLocalStoragePanel() {
-                var hasAPI = window.localStorageModule && window.localStorageModule.hasFileSystemAccess;
-                var isConnected = window.localStorageModule && window.localStorageModule.directoryHandle !== null;
-
-                if (!hasAPI) {
-                  $('#local_storage_api_status').html(
-                    '<div class=\"fallback-warning\" style=\"margin-bottom: 0;\">' +
-                    '<i class=\"fa fa-exclamation-triangle\"></i> ' +
-                    '<strong>' + i18n_browserNotSupported + '</strong><br>' +
-                    '<small>' + i18n_browserWarning + '</small>' +
-                    '</div>'
-                  );
-                  $('#local_storage_controls').hide();
-                } else if (isConnected) {
-                  var dirName = window.localStorageModule.directoryHandle.name;
-                  $('#local_storage_api_status').html(
-                    '<div class=\"directory-status connected\">' +
-                    '<span class=\"directory-status-icon\">\U0001F4C1</span>' +
-                    '<div><strong>' + i18n_connectedTo + '</strong> ' + dirName + '</div>' +
-                    '</div>'
-                  );
-                  $('#btn_connect_local').hide();
-                  $('#btn_disconnect_local').show();
-                  $('#btn_save_to_local').show();
-                  $('#local_storage_controls').show();
-                } else {
-                  $('#local_storage_api_status').html(
-                    '<div class=\"directory-status\">' +
-                    '<span class=\"directory-status-icon\">\U0001F4C2</span>' +
-                    '<div>' + i18n_noFolderSelected + '</div>' +
-                    '</div>'
-                  );
-                  $('#btn_connect_local').show();
-                  $('#btn_disconnect_local').hide();
-                  $('#btn_save_to_local').hide();
-                  $('#local_storage_controls').show();
-                }
-              }
-
-              // Initial update after a short delay
-              setTimeout(updateLocalStoragePanel, 500);
-
-              // Update when directory changes
-              Shiny.addCustomMessageHandler('update_local_storage_panel', function(message) {
-                updateLocalStoragePanel();
-              });
-            });")))
-          }),
-          
-          # Status display (updated by JavaScript)
-          tags$div(id = "local_storage_api_status"),
-          
-          # Controls
-          tags$div(
-            id = "local_storage_controls",
-            style = "margin-top: 15px;",
-            
-            # Connect button
-            actionButton(
-              inputId = "btn_connect_local",
-              label = tagList(icon("folder-open"), " ", i18n$t("ui.modals.select_local_folder")),
-              class = "btn-outline-primary",
-              style = "margin-right: 10px;"
-            ),
-            
-            # Disconnect button (hidden by default)
-            actionButton(
-              inputId = "btn_disconnect_local",
-              label = tagList(icon("unlink"), " ", i18n$t("ui.modals.disconnect_local_folder")),
-              class = "btn-outline-secondary",
-              style = "display: none; margin-right: 10px;"
-            ),
-            
-            # Save current project button (hidden by default)
-            actionButton(
-              inputId = "btn_save_to_local",
-              label = tagList(icon("save"), " ", i18n$t("ui.modals.save_current_project")),
-              class = "btn-success",
-              style = "display: none;"
-            )
-          ),
-          
-          # Auto-save to local toggle (when connected)
-          tags$div(
-            id = "local_autosave_container",
-            style = "margin-top: 15px; padding: 10px; background: #f0f7ff; border-radius: 6px; display: none;",
-            
-            shinyWidgets::switchInput(
-              inputId = "local_autosave_enabled",
-              label = i18n$t("ui.modals.auto_save_to_local"),
-              value = FALSE,
-              onLabel = "ON",
-              offLabel = "OFF",
-              onStatus = "success",
-              offStatus = "secondary",
-              size = "small",
-              inline = TRUE
-            ),
-            tags$p(
-              style = "font-size: 12px; color: #666; margin-top: 5px; margin-bottom: 0;",
-              icon("info-circle"),
-              " ", i18n$t("ui.modals.autosave_local_sync_help")
-            )
-          )
-        ),
-
+        .build_local_storage_ui(i18n),
         tags$hr(),
-
-        # ========== GENERAL SETTINGS SECTION ==========
-        tags$h4(icon("tools"), " ", i18n$t("ui.modals.general_settings")),
-
-        tags$div(
-          style = "margin-top: 15px;",
-
-          # Debug mode toggle
-          shinyWidgets::switchInput(
-            inputId = "debug_mode",
-            label = tags$strong(i18n$t("ui.modals.debug_logging")),
-            value = FALSE,
-            onLabel = "ON",
-            offLabel = "OFF",
-            onStatus = "warning",
-            offStatus = "secondary",
-            size = "default",
-            width = "100%"
-          ),
-          tags$p(
-            style = "margin-top: 10px; font-size: 13px; color: #666;",
-            icon("bug"),
-            " ", i18n$t("ui.modals.debug_logging_help")
-          )
-        ),
-
+        .build_general_settings_ui(i18n),
         tags$hr(),
-
-        # ========== SES MODELS DIRECTORY SECTION ==========
-        tags$h4(icon("folder-open"), " ", i18n$t("ui.modals.ses_models_directory")),
-
-        tags$div(
-          style = "margin-top: 15px;",
-
-          # Directory source radio buttons
-          radioButtons(
-            inputId = "ses_models_source",
-            label = i18n$t("ui.modals.ses_models_source_label"),
-            choices = list(
-              "Default (Application Directory)" = "default",
-              "Custom Directory" = "custom"
-            ),
-            selected = if (!is.null(ses_models_directory) && !is.null(ses_models_directory()) && nzchar(ses_models_directory())) "custom" else "default",
-            width = "100%"
-          ),
-
-          # Custom directory input (shown only when custom is selected)
-          conditionalPanel(
-            condition = "input.ses_models_source == 'custom'",
-            tags$div(
-              style = "margin-top: 10px; padding: 15px; background: #f8f9fa; border-radius: 8px;",
-              fluidRow(
-                column(9,
-                  textInput(
-                    inputId = "ses_models_custom_path",
-                    label = i18n$t("ui.modals.ses_models_custom_path"),
-                    value = if (!is.null(ses_models_directory)) ses_models_directory() else "",
-                    width = "100%",
-                    placeholder = i18n$t("ui.modals.ses_models_path_placeholder")
-                  )
-                ),
-                column(3,
-                  tags$div(style = "margin-top: 25px;",
-                    shinyDirButton(
-                      id = "ses_models_dir_select",
-                      label = i18n$t("ui.modals.browse"),
-                      title = i18n$t("ui.modals.select_ses_models_directory"),
-                      icon = icon("folder-open"),
-                      class = "btn-outline-primary"
-                    )
-                  )
-                )
-              ),
-              tags$p(
-                style = "font-size: 12px; color: #666; margin-top: 5px;",
-                icon("info-circle"), " ",
-                i18n$t("ui.modals.ses_models_directory_help")
-              )
-            )
-          ),
-
-          # Show current path info
-          tags$div(
-            id = "ses_models_path_info",
-            style = "margin-top: 10px; padding: 10px; background: #e8f4f8; border-radius: 6px; font-size: 13px;",
-            icon("check-circle", style = "color: #28a745;"), " ",
-            tags$strong(i18n$t("ui.modals.current_directory")), ": ",
-            tags$span(
-              id = "current_ses_models_path",
-              style = "font-family: monospace;",
-              if (!is.null(ses_models_directory) && !is.null(ses_models_directory()) && nzchar(ses_models_directory()))
-                ses_models_directory()
-              else
-                "SESModels (relative to app directory)"
-            )
-          )
-        )
+        .build_ses_models_ui(i18n, ses_models_directory)
       )
     ))
   })
 
-  # Handle Apply button click in settings modal
   observeEvent(input$apply_settings, {
-    settings_changed <- FALSE
-
-    # Update autosave setting
-    if (!is.null(input$autosave_enabled)) {
-      autosave_enabled(input$autosave_enabled)
-      debug_log(sprintf("Auto-save %s", if(input$autosave_enabled) "enabled" else "disabled"), "SETTINGS")
-      settings_changed <- TRUE
-    }
-
-    # Store advanced autosave settings
-    if (!is.null(input$autosave_delay)) {
-      autosave_delay(input$autosave_delay)
-      debug_log(sprintf("Auto-save delay: %s seconds", input$autosave_delay), "SETTINGS")
-      settings_changed <- TRUE
-    }
-
-    if (!is.null(input$autosave_notifications)) {
-      autosave_notifications(input$autosave_notifications)
-      debug_log(sprintf("Auto-save notifications: %s", input$autosave_notifications), "SETTINGS")
-      settings_changed <- TRUE
-    }
-
-    if (!is.null(input$autosave_indicator)) {
-      autosave_indicator(input$autosave_indicator)
-      debug_log(sprintf("Auto-save indicator: %s", input$autosave_indicator), "SETTINGS")
-      settings_changed <- TRUE
-    }
-
-    if (!is.null(input$autosave_triggers)) {
-      autosave_triggers(input$autosave_triggers)
-      debug_log(sprintf("Auto-save triggers: %s", paste(input$autosave_triggers, collapse = ", ")), "SETTINGS")
-      settings_changed <- TRUE
-    }
-
-    # Debug mode
-    if (!is.null(input$debug_mode)) {
-      debug_log(sprintf("Debug mode %s", if(input$debug_mode) "enabled" else "disabled"), "SETTINGS")
-      # Set environment variable for debug logging
-      if (input$debug_mode) {
-        Sys.setenv(MARINESABRES_DEBUG = "TRUE")
-      } else {
-        Sys.setenv(MARINESABRES_DEBUG = "FALSE")
-      }
-    }
-
-    # SES Models directory
-    if (!is.null(ses_models_directory) && !is.null(input$ses_models_source)) {
-      if (input$ses_models_source == "default") {
-        # Reset to default (empty string means use default)
-        ses_models_directory("")
-        debug_log("SES Models directory reset to default", "SETTINGS")
-        settings_changed <- TRUE
-      } else if (input$ses_models_source == "custom" && !is.null(input$ses_models_custom_path)) {
-        custom_path <- input$ses_models_custom_path
-        if (nzchar(custom_path)) {
-          # Validate the directory exists
-          if (dir.exists(custom_path)) {
-            ses_models_directory(custom_path)
-            debug_log(sprintf("SES Models directory set to: %s", custom_path), "SETTINGS")
-            settings_changed <- TRUE
-
-            # Clear the models cache to force rescan with new directory
-            if (exists(".ses_models_cache", envir = globalenv())) {
-              .ses_models_cache$models <- NULL
-              .ses_models_cache$last_scan <- NULL
-            }
-          } else {
-            showNotification(
-              paste(i18n$t("ui.modals.directory_not_found"), custom_path),
-              type = "error",
-              duration = 5
-            )
-          }
-        }
-      }
-    }
-
-    removeModal()
-
-    if (settings_changed || !is.null(input$autosave_delay)) {
-      showNotification(
-        i18n$t("ui.modals.settings_updated_successfully"),
-        type = "message",
-        duration = 3
-      )
-    }
+    .apply_settings(input, i18n, autosave_enabled, autosave_delay,
+                    autosave_notifications, autosave_indicator,
+                    autosave_triggers, ses_models_directory)
   })
 
-  # ========== LOCAL STORAGE BUTTON HANDLERS ==========
-  
-  # Handle connect button - request directory access via JavaScript
+  # Local storage button handlers
   observeEvent(input$btn_connect_local, {
-    # Send message to JavaScript to request directory access
     session$sendCustomMessage("request_directory_access", list())
   })
-  
-  # Handle disconnect button
   observeEvent(input$btn_disconnect_local, {
-    # Send message to JavaScript to clear directory handle
     session$sendCustomMessage("clear_directory_handle", list())
-    # Update panel display
     session$sendCustomMessage("update_local_storage_panel", list())
   })
-  
-  # Handle save to local button
   observeEvent(input$btn_save_to_local, {
-    # Send message to JavaScript to save project
-    # The actual save is handled by the local_storage_module
     session$sendCustomMessage("trigger_local_save", list())
   })
 }
@@ -1018,6 +928,7 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
     version_info <- tryCatch(
       jsonlite::fromJSON("VERSION_INFO.json"),
       error = function(e) {
+        debug_log(sprintf("Could not load VERSION_INFO.json: %s", e$message), "MODALS")
         list(version = "unknown", build_date = "unknown", r_version = "unknown")
       }
     )

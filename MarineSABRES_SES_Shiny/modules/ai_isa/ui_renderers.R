@@ -179,15 +179,15 @@ setup_ui_renderers <- function(input, output, session, rv, i18n, QUESTION_FLOW) 
     count_rp <- count_by_matrix("r_p")
 
     tagList(
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;", sprintf("D\u2192A: %d", count_da)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;", sprintf("A\u2192P: %d", count_ap)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;", sprintf("P\u2192S: %d", count_ps)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;", sprintf("S\u2192I: %d", count_si)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;", sprintf("I\u2192W: %d", count_iw)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;", sprintf("W\u2192R: %d", count_wr)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;", sprintf("R\u2192D: %d", count_rd)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;", sprintf("R\u2192A: %d", count_ra)),
-      tags$div(style = "font-weight: bold; margin-bottom: 3px;", sprintf("R\u2192P: %d", count_rp))
+      tags$div(style = CSS_LABEL_BOLD, sprintf("D\u2192A: %d", count_da)),
+      tags$div(style = CSS_LABEL_BOLD, sprintf("A\u2192P: %d", count_ap)),
+      tags$div(style = CSS_LABEL_BOLD, sprintf("P\u2192S: %d", count_ps)),
+      tags$div(style = CSS_LABEL_BOLD, sprintf("S\u2192I: %d", count_si)),
+      tags$div(style = CSS_LABEL_BOLD, sprintf("I\u2192W: %d", count_iw)),
+      tags$div(style = CSS_LABEL_BOLD, sprintf("W\u2192R: %d", count_wr)),
+      tags$div(style = CSS_LABEL_BOLD, sprintf("R\u2192D: %d", count_rd)),
+      tags$div(style = CSS_LABEL_BOLD, sprintf("R\u2192A: %d", count_ra)),
+      tags$div(style = CSS_LABEL_BOLD, sprintf("R\u2192P: %d", count_rp))
     )
   })
 

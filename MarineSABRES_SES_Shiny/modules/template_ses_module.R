@@ -367,7 +367,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                         style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
                         tags$strong(template$drivers$Name[i]),
                         tags$br(),
-                        tags$small(style = "color: #666;", template$drivers$Description[i])
+                        tags$small(style = CSS_TEXT_MUTED, template$drivers$Description[i])
                       )
                     })
                   } else {
@@ -389,7 +389,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                         style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
                         tags$strong(template$pressures$Name[i]),
                         tags$br(),
-                        tags$small(style = "color: #666;", template$pressures$Description[i])
+                        tags$small(style = CSS_TEXT_MUTED, template$pressures$Description[i])
                       )
                     })
                   } else {
@@ -411,7 +411,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                         style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
                         tags$strong(template$ecosystem_services$Name[i]),
                         tags$br(),
-                        tags$small(style = "color: #666;", template$ecosystem_services$Description[i])
+                        tags$small(style = CSS_TEXT_MUTED, template$ecosystem_services$Description[i])
                       )
                     })
                   } else {
@@ -435,7 +435,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                         style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
                         tags$strong(template$activities$Name[i]),
                         tags$br(),
-                        tags$small(style = "color: #666;", template$activities$Description[i])
+                        tags$small(style = CSS_TEXT_MUTED, template$activities$Description[i])
                       )
                     })
                   } else {
@@ -457,7 +457,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                         style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
                         tags$strong(template$marine_processes$Name[i]),
                         tags$br(),
-                        tags$small(style = "color: #666;", template$marine_processes$Description[i])
+                        tags$small(style = CSS_TEXT_MUTED, template$marine_processes$Description[i])
                       )
                     })
                   } else {
@@ -479,7 +479,7 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
                         style = "padding: 5px 0; border-bottom: 1px solid #f0f0f0;",
                         tags$strong(template$goods_benefits$Name[i]),
                         tags$br(),
-                        tags$small(style = "color: #666;", template$goods_benefits$Description[i])
+                        tags$small(style = CSS_TEXT_MUTED, template$goods_benefits$Description[i])
                       )
                     })
                   } else {

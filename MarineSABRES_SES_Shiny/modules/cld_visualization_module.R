@@ -724,7 +724,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
             tags$strong(paste0(loop_row$Type, " Loop")),
             tags$br(),
             tags$small(
-              style = "color: #666;",
+              style = CSS_TEXT_MUTED,
               paste0("Length: ", loop_row$Length, " elements"),
               tags$br(),
               loop_row$Elements

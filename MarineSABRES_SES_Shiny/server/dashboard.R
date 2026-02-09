@@ -147,25 +147,25 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
 
       tagList(
       tags$div(style = "word-wrap: break-word; overflow-wrap: break-word;",
-        tags$p(style = "margin-bottom: 8px; font-size: 13px;",
+        tags$p(style = CSS_META_ROW,
           tags$strong(i18n$t("ui.dashboard.project_id")), tags$br(),
-          tags$span(style = "color: #666;", data$project_id)
+          tags$span(style = CSS_TEXT_MUTED, data$project_id)
         ),
-        tags$p(style = "margin-bottom: 8px; font-size: 13px;",
+        tags$p(style = CSS_META_ROW,
           tags$strong(i18n$t("ui.dashboard.created")), " ",
-          tags$span(style = "color: #666;", format_date_display(data$created_at))
+          tags$span(style = CSS_TEXT_MUTED, format_date_display(data$created_at))
         ),
-        tags$p(style = "margin-bottom: 8px; font-size: 13px;",
+        tags$p(style = CSS_META_ROW,
           tags$strong(i18n$t("ui.dashboard.last_modified")), " ",
-          tags$span(style = "color: #666;", format_date_display(data$last_modified))
+          tags$span(style = CSS_TEXT_MUTED, format_date_display(data$last_modified))
         ),
-        tags$p(style = "margin-bottom: 8px; font-size: 13px;",
+        tags$p(style = CSS_META_ROW,
           tags$strong(i18n$t("ui.dashboard.demonstration_area")), tags$br(),
-          tags$span(style = "color: #666;", data$data$metadata$da_site %||% i18n$t("ui.dashboard.not_set"))
+          tags$span(style = CSS_TEXT_MUTED, data$data$metadata$da_site %||% i18n$t("ui.dashboard.not_set"))
         ),
-        tags$p(style = "margin-bottom: 8px; font-size: 13px;",
+        tags$p(style = CSS_META_ROW,
           tags$strong(i18n$t("ui.dashboard.focal_issue")), tags$br(),
-          tags$span(style = "color: #666;", data$data$metadata$focal_issue %||% i18n$t("ui.dashboard.not_defined"))
+          tags$span(style = CSS_TEXT_MUTED, data$data$metadata$focal_issue %||% i18n$t("ui.dashboard.not_defined"))
         ),
         tags$hr(style = "margin: 10px 0;"),
         tags$h5(style = "margin-bottom: 8px; font-size: 14px;", i18n$t("ui.dashboard.dapsiwrm_elements")),

@@ -337,6 +337,15 @@ SPINNER_BORDER_RADIUS <- "8px"
 SPINNER_PADDING <- "15px"
 SPINNER_MARGIN_TOP <- "10px"
 
+# Reusable inline CSS style strings
+CSS_TEXT_MUTED        <- "color: #666;"
+CSS_TEXT_PRIMARY      <- "color: #007bff;"
+CSS_TEXT_SUCCESS      <- "color: #28a745;"
+CSS_LABEL_BOLD        <- "font-weight: bold; margin-bottom: 3px;"
+CSS_LABEL_SEMIBOLD    <- "font-weight: 600; margin-bottom: 10px; display: block;"
+CSS_META_ROW          <- "margin-bottom: 8px; font-size: 13px;"
+CSS_HINT_TEXT         <- "font-size: 12px; color: #666;"
+
 # ============================================================================
 # EXCEL I/O CONSTANTS
 # ============================================================================
