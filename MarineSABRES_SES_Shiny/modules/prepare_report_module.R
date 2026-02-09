@@ -22,7 +22,7 @@ prepare_report_ui <- function(id, i18n) {
       # Status Panel
       column(6,
         bs4Card(
-          title = tagList(icon("check-circle"), " Prerequisites Status"),
+          title = tagList(icon("check-circle"), " ", i18n$t("modules.prepare.report.prerequisites_status")),
           status = "info",
           solidHeader = TRUE,
           width = NULL,
@@ -34,29 +34,30 @@ prepare_report_ui <- function(id, i18n) {
       # Report Configuration
       column(6,
         bs4Card(
-          title = tagList(icon("cog"), " Report Configuration"),
+          title = tagList(icon("cog"), " ", i18n$t("modules.prepare.report.report_configuration")),
           status = "primary",
           solidHeader = TRUE,
           width = NULL,
 
           textInput(ns("report_title"),
-                   "Report Title:",
-                   value = "SES Analysis Report"),
+                   i18n$t("modules.prepare.report.report_title_label"),
+                   value = i18n$t("modules.prepare.report.default_report_title")),
 
           textInput(ns("report_author"),
-                   "Author(s):",
-                   placeholder = "Enter author name(s)"),
+                   i18n$t("modules.prepare.report.author_label"),
+                   placeholder = i18n$t("modules.prepare.report.author_placeholder")),
 
           checkboxGroupInput(ns("report_sections"),
-                            "Include Sections:",
-                            choices = c(
-                              "Executive Summary" = "summary",
-                              "ISA Framework" = "isa",
-                              "CLD Visualization" = "cld",
-                              "Network Metrics" = "metrics",
-                              "Loop Analysis" = "loops",
-                              "Leverage Points" = "leverage",
-                              "Recommendations" = "recommendations"
+                            i18n$t("modules.prepare.report.include_sections"),
+                            choices = setNames(
+                              c("summary", "isa", "cld", "metrics", "loops", "leverage", "recommendations"),
+                              c(i18n$t("modules.prepare.report.section_summary"),
+                                i18n$t("modules.prepare.report.section_isa"),
+                                i18n$t("modules.prepare.report.section_cld"),
+                                i18n$t("modules.prepare.report.section_metrics"),
+                                i18n$t("modules.prepare.report.section_loops"),
+                                i18n$t("modules.prepare.report.section_leverage"),
+                                i18n$t("modules.prepare.report.section_recommendations"))
                             ),
                             selected = c("summary", "isa", "cld", "loops", "leverage"))
         )
@@ -66,38 +67,38 @@ prepare_report_ui <- function(id, i18n) {
     fluidRow(
       column(12,
         bs4Card(
-          title = tagList(icon("file-download"), " Generate Report"),
+          title = tagList(icon("file-download"), " ", i18n$t("modules.prepare.report.generate_report")),
           status = "success",
           solidHeader = TRUE,
           width = NULL,
 
-          p("Select the report format you wish to generate:"),
+          p(i18n$t("modules.prepare.report.select_format")),
 
           fluidRow(
             column(3,
               actionButton(ns("generate_html"),
-                          "HTML Report",
+                          i18n$t("modules.prepare.report.btn_html"),
                           icon = icon("globe"),
                           class = "btn-primary btn-lg btn-block",
                           style = "margin-bottom: 10px;")
             ),
             column(3,
               actionButton(ns("generate_pdf"),
-                          "PDF Report",
+                          i18n$t("modules.prepare.report.btn_pdf"),
                           icon = icon("file-pdf"),
                           class = "btn-danger btn-lg btn-block",
                           style = "margin-bottom: 10px;")
             ),
             column(3,
               actionButton(ns("generate_word"),
-                          "Word Document",
+                          i18n$t("modules.prepare.report.btn_word"),
                           icon = icon("file-word"),
                           class = "btn-info btn-lg btn-block",
                           style = "margin-bottom: 10px;")
             ),
             column(3,
               actionButton(ns("generate_ppt"),
-                          "PowerPoint",
+                          i18n$t("modules.prepare.report.btn_ppt"),
                           icon = icon("file-powerpoint"),
                           class = "btn-warning btn-lg btn-block",
                           style = "margin-bottom: 10px;")
@@ -169,13 +170,13 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
           " ",
           tags$span(
             style = if(status$loops) "color: #28a745;" else "color: #dc3545;",
-            strong("Loop Detection Analysis")
+            strong(i18n$t("modules.prepare.report.loop_detection"))
           ),
           if (!status$loops) {
             tags$p(style = "margin-left: 30px; color: #666;",
-                  "Please complete loop detection analysis before generating report.",
+                  i18n$t("modules.prepare.report.complete_loop_detection"),
                   tags$br(),
-                  actionLink(session$ns("goto_loops"), "Go to Loop Detection →"))
+                  actionLink(session$ns("goto_loops"), i18n$t("modules.prepare.report.goto_loops")))
           }
         ),
 
@@ -187,13 +188,13 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
           " ",
           tags$span(
             style = if(status$leverage) "color: #28a745;" else "color: #dc3545;",
-            strong("Leverage Point Analysis")
+            strong(i18n$t("modules.prepare.report.leverage_analysis"))
           ),
           if (!status$leverage) {
             tags$p(style = "margin-left: 30px; color: #666;",
-                  "Please complete leverage point analysis before generating report.",
+                  i18n$t("modules.prepare.report.complete_leverage_analysis"),
                   tags$br(),
-                  actionLink(session$ns("goto_leverage"), "Go to Leverage Analysis →"))
+                  actionLink(session$ns("goto_leverage"), i18n$t("modules.prepare.report.goto_leverage")))
           }
         ),
 
@@ -204,18 +205,18 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
             style = "padding: 15px; background: #d4edda; border-radius: 5px; text-align: center;",
             icon("check-circle", class = "text-success", style = "font-size: 2em;"),
             tags$h4(style = "color: #155724; margin-top: 10px;",
-                   "All Prerequisites Met"),
+                   i18n$t("modules.prepare.report.all_prerequisites_met")),
             tags$p(style = "color: #155724;",
-                  "You can now generate your comprehensive report.")
+                  i18n$t("modules.prepare.report.can_generate"))
           )
         } else {
           tags$div(
             style = "padding: 15px; background: #f8d7da; border-radius: 5px; text-align: center;",
             icon("exclamation-triangle", class = "text-danger", style = "font-size: 2em;"),
             tags$h4(style = "color: #721c24; margin-top: 10px;",
-                   "Prerequisites Not Met"),
+                   i18n$t("modules.prepare.report.prerequisites_not_met")),
             tags$p(style = "color: #721c24;",
-                  "Complete required analyses to enable report generation.")
+                  i18n$t("modules.prepare.report.complete_analyses"))
           )
         }
       )
@@ -236,7 +237,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
       status <- check_prerequisites()
       if (!status$both) {
         showNotification(
-          "Please complete both Loop Detection and Leverage Point Analysis before generating a report.",
+          i18n$t("modules.prepare.report.requirements"),
           type = "error",
           duration = 5
         )
@@ -293,7 +294,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         )
 
         showNotification(
-          "Report opened in a new window!",
+          i18n$t("modules.prepare.report.report_opened"),
           type = "message",
           duration = 5
         )
@@ -303,7 +304,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
 
       }, error = function(e) {
         showNotification(
-          paste("Error generating report:", e$message),
+          paste(i18n$t("modules.prepare.report.error_generating"), e$message),
           type = "error",
           duration = 10
         )
@@ -314,7 +315,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
       status <- check_prerequisites()
       if (!status$both) {
         showNotification(
-          "Please complete both Loop Detection and Leverage Point Analysis before generating a report.",
+          i18n$t("modules.prepare.report.requirements"),
           type = "error",
           duration = 5
         )
@@ -343,26 +344,26 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         if (!latex_available) {
           # LaTeX not available - show helpful message
           showModal(modalDialog(
-            title = "PDF Generation Not Available",
+            title = i18n$t("modules.prepare.report.pdf_not_available"),
             tags$div(
               tags$p(icon("exclamation-triangle", class = "text-warning", style = "font-size: 2em;")),
-              tags$h4("PDF generation requires LaTeX"),
+              tags$h4(i18n$t("modules.prepare.report.pdf_requires_latex")),
               tags$hr(),
-              tags$p("PDF reports require a LaTeX distribution. You have two options:"),
-              tags$h5("Option 1: Install TinyTeX (Recommended)"),
-              tags$p("Run these commands in R:"),
+              tags$p(i18n$t("modules.prepare.report.pdf_latex_options")),
+              tags$h5(i18n$t("modules.prepare.report.option_tinytex")),
+              tags$p(i18n$t("modules.prepare.report.run_commands_in_r")),
               tags$pre("install.packages('tinytex')\ntinytex::install_tinytex()"),
-              tags$h5("Option 2: Use HTML Report"),
-              tags$p("Generate an HTML report instead, which you can:"),
+              tags$h5(i18n$t("modules.prepare.report.option_html_report")),
+              tags$p(i18n$t("modules.prepare.report.html_alternative")),
               tags$ul(
-                tags$li("View in your browser"),
-                tags$li("Print to PDF using your browser's print function (Ctrl+P → Save as PDF)")
+                tags$li(i18n$t("modules.prepare.report.view_in_browser")),
+                tags$li(i18n$t("modules.prepare.report.print_to_pdf"))
               )
             ),
             footer = tagList(
-              actionButton(session$ns("generate_html_instead"), "Generate HTML Report Instead",
+              actionButton(session$ns("generate_html_instead"), i18n$t("modules.prepare.report.generate_html_instead"),
                           class = "btn-primary"),
-              modalButton("Cancel")
+              modalButton(i18n$t("common.buttons.cancel"))
             ),
             easyClose = TRUE,
             size = "l"
@@ -391,11 +392,11 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         )
 
         showModal(modalDialog(
-          title = "PDF Report Generated Successfully",
-          tags$p("Your PDF report has been generated successfully."),
+          title = i18n$t("modules.prepare.report.pdf_success"),
+          tags$p(i18n$t("modules.prepare.report.pdf_success_message")),
           footer = tagList(
-            downloadButton(session$ns("download_pdf"), "Download Report"),
-            modalButton("Close")
+            downloadButton(session$ns("download_pdf"), i18n$t("modules.prepare.report.download_report")),
+            modalButton(i18n$t("common.buttons.close"))
           ),
           easyClose = TRUE,
           size = "m"
@@ -405,7 +406,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
 
       }, error = function(e) {
         showNotification(
-          paste("Error generating PDF report:", e$message),
+          paste(i18n$t("modules.prepare.report.error_pdf"), e$message),
           type = "error",
           duration = 10
         )
@@ -423,7 +424,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
       status <- check_prerequisites()
       if (!status$both) {
         showNotification(
-          "Please complete both Loop Detection and Leverage Point Analysis before generating a report.",
+          i18n$t("modules.prepare.report.requirements"),
           type = "error",
           duration = 5
         )
@@ -450,12 +451,12 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
           )
 
           showModal(modalDialog(
-            title = "Word Report Generated Successfully",
-            tags$p("Your Word document has been generated successfully."),
-            tags$p(tags$strong("File location:"), temp_docx),
+            title = i18n$t("modules.prepare.report.word_success"),
+            tags$p(i18n$t("modules.prepare.report.word_success_message")),
+            tags$p(tags$strong(i18n$t("modules.prepare.report.file_location")), temp_docx),
             footer = tagList(
-              downloadButton(session$ns("download_word"), "Download Report"),
-              modalButton("Close")
+              downloadButton(session$ns("download_word"), i18n$t("modules.prepare.report.download_report")),
+              modalButton(i18n$t("common.buttons.close"))
             ),
             easyClose = TRUE,
             size = "m"
@@ -465,7 +466,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
 
         } else {
           showNotification(
-            "Word generation requires the 'officer' and 'flextable' packages. Please install them.",
+            i18n$t("modules.prepare.report.requires_officer_flextable"),
             type = "warning",
             duration = 10
           )
@@ -473,7 +474,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
 
       }, error = function(e) {
         showNotification(
-          paste("Error generating Word report:", e$message),
+          paste(i18n$t("modules.prepare.report.error_word"), e$message),
           type = "error",
           duration = 10
         )
@@ -484,7 +485,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
       status <- check_prerequisites()
       if (!status$both) {
         showNotification(
-          "Please complete both Loop Detection and Leverage Point Analysis before generating a report.",
+          i18n$t("modules.prepare.report.requirements"),
           type = "error",
           duration = 5
         )
@@ -511,12 +512,12 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
           )
 
           showModal(modalDialog(
-            title = "PowerPoint Report Generated Successfully",
-            tags$p("Your PowerPoint presentation has been generated successfully."),
-            tags$p(tags$strong("File location:"), temp_pptx),
+            title = i18n$t("modules.prepare.report.ppt_success"),
+            tags$p(i18n$t("modules.prepare.report.ppt_success_message")),
+            tags$p(tags$strong(i18n$t("modules.prepare.report.file_location")), temp_pptx),
             footer = tagList(
-              downloadButton(session$ns("download_ppt"), "Download Report"),
-              modalButton("Close")
+              downloadButton(session$ns("download_ppt"), i18n$t("modules.prepare.report.download_report")),
+              modalButton(i18n$t("common.buttons.close"))
             ),
             easyClose = TRUE,
             size = "m"
@@ -526,7 +527,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
 
         } else {
           showNotification(
-            "PowerPoint generation requires the 'officer' package. Please install it.",
+            i18n$t("modules.prepare.report.requires_officer"),
             type = "warning",
             duration = 10
           )
@@ -534,7 +535,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
 
       }, error = function(e) {
         showNotification(
-          paste("Error generating PowerPoint report:", e$message),
+          paste(i18n$t("modules.prepare.report.error_ppt"), e$message),
           type = "error",
           duration = 10
         )

@@ -845,7 +845,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         font.size = FONT_SIZE_LARGE,
         font.color = "#ffffff",
         is_ghost = FALSE,
-        title = paste0("<b>", rv$classification_result$element_name, "</b><br>Type: ", rv$selected_classification_type),
+        title = paste0("<b>", htmltools::htmlEscape(rv$classification_result$element_name), "</b><br>Type: ", htmltools::htmlEscape(rv$selected_classification_type)),
         hidden = FALSE,
         physics = TRUE,
         stringsAsFactors = FALSE

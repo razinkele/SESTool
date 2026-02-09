@@ -49,6 +49,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
     loops <- safe_get_nested(data, "data", "cld", "loops", default = data.frame())
     n_loops <- if (is.data.frame(loops)) nrow(loops) else 0L
     has_leverage <- !is.null(data$data$cld$nodes) &&
+      "leverage_score" %in% names(data$data$cld$nodes) &&
       any(data$data$cld$nodes$leverage_score > 0, na.rm = TRUE)
 
     list(

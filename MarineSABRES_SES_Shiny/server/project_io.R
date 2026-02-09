@@ -21,12 +21,12 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
 
   observeEvent(input$save_project, {
     showModal(modalDialog(
-      title = "Save Project",
-      textInput("save_project_name", "Project Name:",
+      title = i18n$t("ui.modals.save_project"),
+      textInput("save_project_name", i18n$t("ui.modals.project_name_label"),
                value = project_data()$project_id),
       footer = tagList(
         modalButton(i18n$t("common.buttons.cancel")),
-        downloadButton("confirm_save", "Save")
+        downloadButton("confirm_save", i18n$t("ui.modals.save"))
       )
     ))
   })
@@ -144,94 +144,101 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
         # Check if connected to local directory
         uiOutput("local_files_list_ui"),
         
-        # JavaScript to populate the file list
-        tags$script(HTML("
-          $(document).ready(function() {
-            function populateLocalFilesList() {
-              var container = $('#local_files_list_container');
-              
-              if (!window.localStorageModule || !window.localStorageModule.directoryHandle) {
-                container.html(
-                  '<div class=\"alert alert-warning\">' +
-                  '<i class=\"fa fa-exclamation-triangle\"></i> ' +
-                  'No local folder connected. Please go to Settings → Application Settings to connect a local folder first.' +
-                  '</div>'
-                );
-                return;
-              }
-              
-              // Get files from directory
-              (async () => {
-                try {
-                  const handle = window.localStorageModule.directoryHandle;
-                  const files = [];
-                  
-                  for await (const entry of handle.values()) {
-                    if (entry.kind === 'file' && (entry.name.endsWith('.json') || entry.name.endsWith('.rds'))) {
-                      const file = await entry.getFile();
-                      files.push({
-                        name: entry.name,
-                        size: file.size,
-                        lastModified: file.lastModified
-                      });
-                    }
-                  }
-                  
-                  // Sort by last modified (newest first)
-                  files.sort((a, b) => b.lastModified - a.lastModified);
-                  
-                  if (files.length === 0) {
-                    container.html(
-                      '<div class=\"alert alert-info\">' +
-                      '<i class=\"fa fa-info-circle\"></i> ' +
-                      'No saved projects found in the local folder.' +
-                      '</div>'
-                    );
-                    return;
-                  }
-                  
-                  // Build file list HTML
-                  var html = '<div class=\"local-files-list\">';
-                  files.forEach(function(file) {
-                    var date = new Date(file.lastModified);
-                    var sizeKB = Math.round(file.size / 1024);
-                    html += '<div class=\"local-file-item\" data-filename=\"' + file.name + '\">';
-                    html += '<div class=\"local-file-info\">';
-                    html += '<div class=\"local-file-name\"><i class=\"fa fa-file\"></i> ' + file.name + '</div>';
-                    html += '<div class=\"local-file-meta\">' + sizeKB + ' KB • ' + date.toLocaleString() + '</div>';
-                    html += '</div>';
-                    html += '<div class=\"local-file-actions\">';
-                    html += '<button class=\"btn btn-sm btn-primary load-local-file\" data-filename=\"' + file.name + '\">';
-                    html += '<i class=\"fa fa-upload\"></i> Load</button>';
-                    html += '</div>';
-                    html += '</div>';
-                  });
-                  html += '</div>';
-                  
-                  container.html(html);
-                  
-                  // Add click handlers for load buttons
-                  $('.load-local-file').on('click', function() {
-                    var filename = $(this).data('filename');
-                    Shiny.setInputValue('local_file_to_load', {filename: filename, timestamp: Date.now()}, {priority: 'event'});
-                  });
-                  
-                } catch (error) {
-                  console.error('[LOCAL-STORAGE] Error listing files:', error);
+        # JavaScript to populate the file list (i18n-safe)
+        local({
+          js_safe <- function(txt) {
+            raw <- jsonlite::toJSON(txt, auto_unbox = TRUE)
+            substr(raw, 2, nchar(raw) - 1)
+          }
+          js_no_folder   <- js_safe(i18n$t("ui.modals.no_local_folder_connected"))
+          js_no_projects <- js_safe(i18n$t("ui.modals.no_saved_projects_in_folder"))
+          js_error_list  <- js_safe(i18n$t("ui.modals.error_listing_files"))
+          js_load_label  <- js_safe(i18n$t("ui.modals.load"))
+
+          tags$script(HTML(paste0("
+            $(document).ready(function() {
+              var i18n_noFolder = '", js_no_folder, "';
+              var i18n_noProjects = '", js_no_projects, "';
+              var i18n_errorList = '", js_error_list, "';
+              var i18n_loadLabel = '", js_load_label, "';
+
+              function populateLocalFilesList() {
+                var container = $('#local_files_list_container');
+
+                if (!window.localStorageModule || !window.localStorageModule.directoryHandle) {
                   container.html(
-                    '<div class=\"alert alert-danger\">' +
-                    '<i class=\"fa fa-exclamation-circle\"></i> ' +
-                    'Error listing files: ' + error.message +
+                    '<div class=\"alert alert-warning\">' +
+                    '<i class=\"fa fa-exclamation-triangle\"></i> ' +
+                    i18n_noFolder +
                     '</div>'
                   );
+                  return;
                 }
-              })();
-            }
-            
-            // Run on modal open
-            populateLocalFilesList();
-          });
-        "))
+
+                (async () => {
+                  try {
+                    const handle = window.localStorageModule.directoryHandle;
+                    const files = [];
+
+                    for await (const entry of handle.values()) {
+                      if (entry.kind === 'file' && (entry.name.endsWith('.json') || entry.name.endsWith('.rds'))) {
+                        const file = await entry.getFile();
+                        files.push({ name: entry.name, size: file.size, lastModified: file.lastModified });
+                      }
+                    }
+
+                    files.sort((a, b) => b.lastModified - a.lastModified);
+
+                    if (files.length === 0) {
+                      container.html(
+                        '<div class=\"alert alert-info\">' +
+                        '<i class=\"fa fa-info-circle\"></i> ' +
+                        i18n_noProjects +
+                        '</div>'
+                      );
+                      return;
+                    }
+
+                    var html = '<div class=\"local-files-list\">';
+                    files.forEach(function(file) {
+                      var date = new Date(file.lastModified);
+                      var sizeKB = Math.round(file.size / 1024);
+                      html += '<div class=\"local-file-item\" data-filename=\"' + file.name + '\">';
+                      html += '<div class=\"local-file-info\">';
+                      html += '<div class=\"local-file-name\"><i class=\"fa fa-file\"></i> ' + file.name + '</div>';
+                      html += '<div class=\"local-file-meta\">' + sizeKB + ' KB \\u2022 ' + date.toLocaleString() + '</div>';
+                      html += '</div>';
+                      html += '<div class=\"local-file-actions\">';
+                      html += '<button class=\"btn btn-sm btn-primary load-local-file\" data-filename=\"' + file.name + '\">';
+                      html += '<i class=\"fa fa-upload\"></i> ' + i18n_loadLabel + '</button>';
+                      html += '</div>';
+                      html += '</div>';
+                    });
+                    html += '</div>';
+
+                    container.html(html);
+
+                    $('.load-local-file').on('click', function() {
+                      var filename = $(this).data('filename');
+                      Shiny.setInputValue('local_file_to_load', {filename: filename, timestamp: Date.now()}, {priority: 'event'});
+                    });
+
+                  } catch (error) {
+                    console.error('[LOCAL-STORAGE] Error listing files:', error);
+                    container.html(
+                      '<div class=\"alert alert-danger\">' +
+                      '<i class=\"fa fa-exclamation-circle\"></i> ' +
+                      i18n_errorList + error.message +
+                      '</div>'
+                    );
+                  }
+                })();
+              }
+
+              populateLocalFilesList();
+            });
+          ")))
+        })
       ),
       
       tags$div(
@@ -241,7 +248,7 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
           class = "text-center",
           style = "padding: 40px;",
           icon("spinner", class = "fa-spin fa-2x"),
-          tags$p(style = "margin-top: 10px;", "Loading files...")
+          tags$p(style = "margin-top: 10px;", i18n$t("ui.modals.loading_files"))
         )
       )
     ))

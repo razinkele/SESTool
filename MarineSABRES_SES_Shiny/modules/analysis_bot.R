@@ -18,32 +18,35 @@ analysis_bot_ui <- function(id, i18n) {
           h4(icon("database"), " ", i18n$t("modules.analysis.bot.time_series_data")),
 
           # Element Selection
-          selectInput(ns("bot_element"), "Select Element:",
-                     choices = c("Select element..." = ""),
+          selectInput(ns("bot_element"), i18n$t("modules.analysis.bot.select_element"),
+                     choices = setNames("", i18n$t("modules.analysis.bot.select_element_placeholder")),
                      width = "100%"),
 
           # Time Period
-          sliderInput(ns("bot_years"), "Time Period:",
+          sliderInput(ns("bot_years"), i18n$t("modules.analysis.bot.time_period"),
                      min = 1950, max = 2030, value = c(2000, 2024),
                      step = 1, sep = ""),
 
           # Data Input Method
-          radioButtons(ns("data_input_method"), "Data Input Method:",
-                      choices = c("Manual Entry" = "manual",
-                                 "Upload CSV" = "upload",
-                                 "Use ISA BOT Data" = "isa"),
+          radioButtons(ns("data_input_method"), i18n$t("modules.analysis.bot.data_input_method"),
+                      choices = setNames(
+                        c("manual", "upload", "isa"),
+                        c(i18n$t("modules.analysis.bot.manual_entry"),
+                          i18n$t("modules.analysis.bot.upload_csv"),
+                          i18n$t("modules.analysis.bot.use_isa_data"))
+                      ),
                       selected = "isa"),
 
           conditionalPanel(
             condition = sprintf("input['%s'] == 'manual'", ns("data_input_method")),
-            numericInput(ns("manual_year"), "Year:", value = 2024, min = 1950, max = 2030),
-            numericInput(ns("manual_value"), "Value:", value = 100),
-            actionButton(ns("add_datapoint"), "Add Data Point", class = "btn-sm btn-primary")
+            numericInput(ns("manual_year"), i18n$t("modules.analysis.bot.year"), value = 2024, min = 1950, max = 2030),
+            numericInput(ns("manual_value"), i18n$t("modules.analysis.bot.value"), value = 100),
+            actionButton(ns("add_datapoint"), i18n$t("modules.analysis.bot.add_data_point"), class = "btn-sm btn-primary")
           ),
 
           conditionalPanel(
             condition = sprintf("input['%s'] == 'upload'", ns("data_input_method")),
-            fileInput(ns("upload_csv"), "Upload CSV (Year, Value):",
+            fileInput(ns("upload_csv"), i18n$t("modules.analysis.bot.upload_csv_label"),
                      accept = c(".csv"))
           ),
 
@@ -52,18 +55,18 @@ analysis_bot_ui <- function(id, i18n) {
           # Analysis Options
           h5(icon("sliders-h"), " ", i18n$t("modules.analysis.bot.analysis_options")),
 
-          checkboxInput(ns("show_trend"), "Show Trend Line", value = TRUE),
-          checkboxInput(ns("show_moving_avg"), "Show Moving Average", value = FALSE),
+          checkboxInput(ns("show_trend"), i18n$t("modules.analysis.bot.show_trend"), value = TRUE),
+          checkboxInput(ns("show_moving_avg"), i18n$t("modules.analysis.bot.show_moving_avg"), value = FALSE),
           conditionalPanel(
             condition = sprintf("input['%s']", ns("show_moving_avg")),
-            sliderInput(ns("moving_avg_window"), "Window Size:",
+            sliderInput(ns("moving_avg_window"), i18n$t("modules.analysis.bot.window_size"),
                        min = 2, max = 10, value = 3, step = 1)
           ),
 
-          checkboxInput(ns("detect_patterns"), "Detect Patterns", value = FALSE),
+          checkboxInput(ns("detect_patterns"), i18n$t("modules.analysis.bot.detect_patterns"), value = FALSE),
 
           hr(),
-          actionButton(ns("help_bot"), "Help", icon = icon("question-circle"), class = "btn-info btn-sm")
+          actionButton(ns("help_bot"), i18n$t("modules.analysis.bot.help"), icon = icon("question-circle"), class = "btn-info btn-sm")
         )
       ),
 
@@ -82,10 +85,10 @@ analysis_bot_ui <- function(id, i18n) {
           # Pattern Detection
           tabPanel(icon("search"), i18n$t("modules.analysis.bot.tab_pattern_analysis"),
             br(),
-            h4("Temporal Pattern Detection"),
+            h4(i18n$t("modules.analysis.bot.temporal_pattern_detection")),
             conditionalPanel(
               condition = sprintf("!input['%s']", ns("detect_patterns")),
-              p(class = "text-muted", "Enable 'Detect Patterns' to analyze temporal dynamics.")
+              p(class = "text-muted", i18n$t("modules.analysis.bot.enable_detect_patterns"))
             ),
             conditionalPanel(
               condition = sprintf("input['%s']", ns("detect_patterns")),
@@ -99,17 +102,17 @@ analysis_bot_ui <- function(id, i18n) {
             DTOutput(ns("bot_data_table")),
             br(),
             div(style = "margin-top: 10px;",
-              downloadButton(ns("download_bot_data"), "Download Data", class = "btn-sm"),
-              actionButton(ns("clear_data"), "Clear All Data", class = "btn-sm btn-warning")
+              downloadButton(ns("download_bot_data"), i18n$t("modules.analysis.bot.download_data"), class = "btn-sm"),
+              actionButton(ns("clear_data"), i18n$t("modules.analysis.bot.clear_all_data"), class = "btn-sm btn-warning")
             )
           ),
 
           # Comparison
           tabPanel(icon("exchange-alt"), i18n$t("modules.analysis.bot.tab_scenario_comparison"),
             br(),
-            h4("Compare Multiple Scenarios"),
-            p("Upload or create multiple time series to compare different scenarios."),
-            p(class = "text-muted", "Feature coming soon...")
+            h4(i18n$t("modules.analysis.bot.compare_scenarios")),
+            p(i18n$t("modules.analysis.bot.compare_scenarios_desc")),
+            p(class = "text-muted", i18n$t("modules.analysis.bot.coming_soon"))
           )
         )
       )
@@ -428,40 +431,40 @@ analysis_bot_server <- function(id, project_data_reactive, i18n) {
     # Help modal
     observeEvent(input$help_bot, {
       showModal(modalDialog(
-        title = "Advanced BOT Analysis - Help",
+        title = i18n$t("modules.analysis.bot.help_title"),
         size = "l",
         easyClose = TRUE,
 
-        h4(icon("info-circle"), " What is BOT Analysis?"),
-        p("Behaviour Over Time (BOT) analysis examines how key system indicators change over time, revealing important dynamics such as trends, oscillations, and regime shifts."),
+        h4(icon("info-circle"), " ", i18n$t("modules.analysis.bot.help_what_is")),
+        p(i18n$t("modules.analysis.bot.help_description")),
 
-        h5(icon("chart-line"), " Features"),
+        h5(icon("chart-line"), " ", i18n$t("modules.analysis.bot.help_features")),
         tags$ul(
-          tags$li(strong("Interactive Time Series:"), " Zoom, pan, and explore temporal patterns with dygraphs"),
-          tags$li(strong("Trend Analysis:"), " Automatically detect and visualize linear trends"),
-          tags$li(strong("Moving Averages:"), " Smooth out short-term fluctuations"),
-          tags$li(strong("Pattern Detection:"), " Identify significant trends, volatility, and phase changes"),
-          tags$li(strong("Multiple Data Sources:"), " Manual entry, CSV upload, or ISA data import")
+          tags$li(strong(i18n$t("modules.analysis.bot.help_feature_timeseries")), " ", i18n$t("modules.analysis.bot.help_feature_timeseries_desc")),
+          tags$li(strong(i18n$t("modules.analysis.bot.help_feature_trend")), " ", i18n$t("modules.analysis.bot.help_feature_trend_desc")),
+          tags$li(strong(i18n$t("modules.analysis.bot.help_feature_moving_avg")), " ", i18n$t("modules.analysis.bot.help_feature_moving_avg_desc")),
+          tags$li(strong(i18n$t("modules.analysis.bot.help_feature_pattern")), " ", i18n$t("modules.analysis.bot.help_feature_pattern_desc")),
+          tags$li(strong(i18n$t("modules.analysis.bot.help_feature_sources")), " ", i18n$t("modules.analysis.bot.help_feature_sources_desc"))
         ),
 
-        h5(icon("lightbulb"), " Interpreting Patterns"),
+        h5(icon("lightbulb"), " ", i18n$t("modules.analysis.bot.help_interpreting")),
         tags$ul(
-          tags$li(strong("Increasing Trend:"), " System variable is growing over time"),
-          tags$li(strong("Decreasing Trend:"), " System variable is declining"),
-          tags$li(strong("High Volatility:"), " Large fluctuations suggest instability or external shocks"),
-          tags$li(strong("Growth/Decline Phases:"), " Periods of consistent increase or decrease")
+          tags$li(strong(i18n$t("modules.analysis.bot.help_increasing")), " ", i18n$t("modules.analysis.bot.help_increasing_desc")),
+          tags$li(strong(i18n$t("modules.analysis.bot.help_decreasing")), " ", i18n$t("modules.analysis.bot.help_decreasing_desc")),
+          tags$li(strong(i18n$t("modules.analysis.bot.help_volatility")), " ", i18n$t("modules.analysis.bot.help_volatility_desc")),
+          tags$li(strong(i18n$t("modules.analysis.bot.help_phases")), " ", i18n$t("modules.analysis.bot.help_phases_desc"))
         ),
 
-        h5(icon("book"), " Best Practices"),
+        h5(icon("book"), " ", i18n$t("modules.analysis.bot.help_best_practices")),
         tags$ol(
-          tags$li("Select meaningful time periods that capture system dynamics"),
-          tags$li("Use multiple data points (5+ recommended) for reliable trend detection"),
-          tags$li("Compare BOT graphs across different elements to understand relationships"),
-          tags$li("Look for tipping points or regime shifts in the data"),
-          tags$li("Validate patterns with stakeholder knowledge")
+          tags$li(i18n$t("modules.analysis.bot.help_practice_1")),
+          tags$li(i18n$t("modules.analysis.bot.help_practice_2")),
+          tags$li(i18n$t("modules.analysis.bot.help_practice_3")),
+          tags$li(i18n$t("modules.analysis.bot.help_practice_4")),
+          tags$li(i18n$t("modules.analysis.bot.help_practice_5"))
         ),
 
-        footer = modalButton("Close")
+        footer = modalButton(i18n$t("common.buttons.close"))
       ))
     })
 

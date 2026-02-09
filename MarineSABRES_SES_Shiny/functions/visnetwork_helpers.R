@@ -259,19 +259,21 @@ create_nodes_df <- function(isa_data) {
 #' @param extra Additional information
 #' @return HTML string for tooltip
 create_node_tooltip <- function(name, indicator, group, extra = NULL) {
+  # HTML-escape user-supplied values to prevent XSS in visNetwork tooltips
+  esc <- htmltools::htmlEscape
   html <- sprintf(
     "<div style='padding: 8px;'>
       <b>%s</b><br>
       <i>%s</i><br>
       <hr style='margin: 5px 0;'>
       Indicator: %s",
-    name, group, indicator
+    esc(name), esc(group), esc(indicator)
   )
-  
+
   if (!is.null(extra)) {
-    html <- paste0(html, "<br>", extra)
+    html <- paste0(html, "<br>", esc(extra))
   }
-  
+
   html <- paste0(html, "</div>")
   return(html)
 }
@@ -817,14 +819,16 @@ create_edge_tooltip <- function(from_name, to_name, polarity, strength, confiden
   # Get confidence label from global constant
   confidence_text <- CONFIDENCE_LABELS[as.character(confidence)]
 
+  # HTML-escape user-supplied values to prevent XSS in visNetwork tooltips
+  esc <- htmltools::htmlEscape
   sprintf(
     "<div style='padding: 8px;'>
-      <b>%s → %s</b><br>
+      <b>%s \u2192 %s</b><br>
       Polarity: %s (%s)<br>
       Strength: %s<br>
       Confidence: %s (%d/5)
     </div>",
-    from_name, to_name, polarity, polarity_text, strength, confidence_text, confidence
+    esc(from_name), esc(to_name), esc(polarity), polarity_text, esc(strength), confidence_text, confidence
   )
 }
 
@@ -1318,12 +1322,13 @@ create_ghost_node_data <- function(suggestion, index) {
   ghost_color <- adjustcolor(color, alpha.f = GHOST_NODE_OPACITY)
 
   # Create tooltip
+  esc <- htmltools::htmlEscape
   tooltip <- paste0(
-    "<b>", suggestion$name, "</b><br>",
-    "Type: ", suggestion$type, "<br>",
-    "Connection: ", suggestion$connection_polarity, " (",
-    suggestion$connection_strength, ")<br>",
-    "<i>", suggestion$reasoning, "</i><br>",
+    "<b>", esc(suggestion$name), "</b><br>",
+    "Type: ", esc(suggestion$type), "<br>",
+    "Connection: ", esc(suggestion$connection_polarity), " (",
+    esc(suggestion$connection_strength), ")<br>",
+    "<i>", esc(suggestion$reasoning), "</i><br>",
     "<b>Click to accept</b>"
   )
 
@@ -1385,9 +1390,9 @@ create_ghost_edge_data <- function(suggestion, ghost_index) {
 
   # Create tooltip
   tooltip <- paste0(
-    "Polarity: ", suggestion$connection_polarity, "<br>",
-    "Strength: ", suggestion$connection_strength, "<br>",
-    "Confidence: ", suggestion$connection_confidence, "/5"
+    "Polarity: ", htmltools::htmlEscape(suggestion$connection_polarity), "<br>",
+    "Strength: ", htmltools::htmlEscape(suggestion$connection_strength), "<br>",
+    "Confidence: ", htmltools::htmlEscape(suggestion$connection_confidence), "/5"
   )
 
   data.frame(
