@@ -58,7 +58,7 @@ analysis_simplify_ui <- function(id, i18n) {
           width = 12,
 
           h4(icon("filter"), i18n$t("modules.analysis.simplify.select_methods")),
-          p(class = "text-muted", "Choose one or more simplification techniques:"),
+          p(class = "text-muted", i18n$t("modules.analysis.simplify.choose_techniques")),
 
           # Method 1: SISO Encapsulation
           checkboxInput(
@@ -71,15 +71,14 @@ analysis_simplify_ui <- function(id, i18n) {
             div(
               class = "well well-sm",
               p(icon("info-circle"),
-                strong("Single-Input-Single-Output (SISO) Variables")),
+                strong(i18n$t("modules.analysis.simplify.siso_info_title"))),
               p(class = "text-muted", style = "font-size: 12px;",
-                "Identifies nodes with exactly one incoming and one outgoing connection. ",
-                "Creates a 'bridge' edge that preserves the causal relationship while removing the intermediate node."
+                i18n$t("modules.analysis.simplify.siso_description")
               ),
               tags$ul(
-                tags$li("Reduces chains of simple relationships"),
-                tags$li("Preserves polarity through the chain"),
-                tags$li("Maintains overall network structure")
+                tags$li(i18n$t("modules.analysis.simplify.siso_bullet_chains")),
+                tags$li(i18n$t("modules.analysis.simplify.siso_bullet_polarity")),
+                tags$li(i18n$t("modules.analysis.simplify.siso_bullet_structure"))
               )
             )
           ),
@@ -97,15 +96,14 @@ analysis_simplify_ui <- function(id, i18n) {
             div(
               class = "well well-sm",
               p(icon("info-circle"),
-                strong("Exogenous Variables (External Drivers)")),
+                strong(i18n$t("modules.analysis.simplify.exogenous_info_title"))),
               p(class = "text-muted", style = "font-size: 12px;",
-                "Identifies nodes with outgoing connections but no incoming connections. ",
-                "These are external drivers that influence the system but are not influenced by it."
+                i18n$t("modules.analysis.simplify.exogenous_description")
               ),
               tags$ul(
-                tags$li("Focuses on endogenous dynamics"),
-                tags$li("Useful for understanding internal feedback"),
-                tags$li("Removes nodes with outdegree > 0, indegree = 0")
+                tags$li(i18n$t("modules.analysis.simplify.exogenous_bullet_endogenous")),
+                tags$li(i18n$t("modules.analysis.simplify.exogenous_bullet_feedback")),
+                tags$li(i18n$t("modules.analysis.simplify.exogenous_bullet_degree"))
               ),
               checkboxInput(
                 ns("exogenous_preview"),
@@ -128,23 +126,24 @@ analysis_simplify_ui <- function(id, i18n) {
             div(
               class = "well well-sm",
               p(icon("info-circle"),
-                strong("Connection Strength Filtering")),
+                strong(i18n$t("modules.analysis.simplify.weak_conn_info_title"))),
               p(class = "text-muted", style = "font-size: 12px;",
-                "Removes connections below a specified strength threshold to focus on dominant causal relationships."
+                i18n$t("modules.analysis.simplify.weak_conn_description")
               ),
               radioButtons(
                 ns("weak_edge_threshold"),
-                "Minimum strength to keep:",
-                choices = c(
-                  "Keep Medium & Strong only" = "medium",
-                  "Keep Strong only" = "strong"
+                i18n$t("modules.analysis.simplify.min_strength_to_keep"),
+                choices = setNames(
+                  c("medium", "strong"),
+                  c(i18n$t("modules.analysis.simplify.keep_medium_strong"),
+                    i18n$t("modules.analysis.simplify.keep_strong_only"))
                 ),
                 selected = "medium"
               ),
               tags$ul(
-                tags$li("Highlights dominant relationships"),
-                tags$li("Reduces visual clutter"),
-                tags$li("May disconnect some nodes")
+                tags$li(i18n$t("modules.analysis.simplify.weak_bullet_dominant")),
+                tags$li(i18n$t("modules.analysis.simplify.weak_bullet_clutter")),
+                tags$li(i18n$t("modules.analysis.simplify.weak_bullet_disconnect"))
               )
             )
           ),
@@ -162,31 +161,32 @@ analysis_simplify_ui <- function(id, i18n) {
             div(
               class = "well well-sm",
               p(icon("info-circle"),
-                strong("Centrality-Based Filtering")),
+                strong(i18n$t("modules.analysis.simplify.centrality_info_title"))),
               p(class = "text-muted", style = "font-size: 12px;",
-                "Removes peripheral nodes with low importance based on network centrality metrics."
+                i18n$t("modules.analysis.simplify.centrality_description")
               ),
               selectInput(
                 ns("centrality_metric"),
-                "Centrality metric:",
-                choices = c(
-                  "Degree (Total connections)" = "degree",
-                  "Betweenness (Bridge importance)" = "betweenness",
-                  "PageRank (Influence score)" = "pagerank",
-                  "Eigenvector (Connected to important nodes)" = "eigenvector"
+                i18n$t("modules.analysis.simplify.centrality_metric_label"),
+                choices = setNames(
+                  c("degree", "betweenness", "pagerank", "eigenvector"),
+                  c(i18n$t("modules.analysis.simplify.metric_degree"),
+                    i18n$t("modules.analysis.simplify.metric_betweenness"),
+                    i18n$t("modules.analysis.simplify.metric_pagerank"),
+                    i18n$t("modules.analysis.simplify.metric_eigenvector"))
                 ),
                 selected = "degree"
               ),
               sliderInput(
                 ns("centrality_percentile"),
-                "Keep nodes above percentile:",
+                i18n$t("modules.analysis.simplify.keep_above_percentile"),
                 min = 0, max = 100, value = 50, step = 5,
                 post = "%"
               ),
               tags$ul(
-                tags$li("Focuses on structurally important nodes"),
-                tags$li("Adjustable threshold for control"),
-                tags$li("Different metrics highlight different aspects")
+                tags$li(i18n$t("modules.analysis.simplify.centrality_bullet_important")),
+                tags$li(i18n$t("modules.analysis.simplify.centrality_bullet_adjustable")),
+                tags$li(i18n$t("modules.analysis.simplify.centrality_bullet_aspects"))
               )
             )
           ),
@@ -204,20 +204,23 @@ analysis_simplify_ui <- function(id, i18n) {
             div(
               class = "well well-sm",
               p(icon("info-circle"),
-                strong("DAPSI(W)R(M) Element Selection")),
+                strong(i18n$t("modules.analysis.simplify.element_info_title"))),
               p(class = "text-muted", style = "font-size: 12px;",
-                "Focus on specific components of the SES framework."
+                i18n$t("modules.analysis.simplify.element_description")
               ),
               checkboxGroupInput(
                 ns("elements_to_keep"),
-                "Elements to keep:",
-                choices = c(
-                  "Drivers" = "Drivers",
-                  "Activities" = "Activities",
-                  "Pressures" = "Pressures",
-                  "Marine Processes & Functioning" = "Marine Processes & Functioning",
-                  "Ecosystem Services" = "Ecosystem Services",
-                  "Goods & Benefits" = "Goods & Benefits"
+                i18n$t("modules.analysis.simplify.elements_to_keep"),
+                choices = setNames(
+                  c("Drivers", "Activities", "Pressures",
+                    "Marine Processes & Functioning", "Ecosystem Services",
+                    "Goods & Benefits"),
+                  c(i18n$t("modules.analysis.simplify.elem_drivers"),
+                    i18n$t("modules.analysis.simplify.elem_activities"),
+                    i18n$t("modules.analysis.simplify.elem_pressures"),
+                    i18n$t("modules.analysis.simplify.elem_marine_processes"),
+                    i18n$t("modules.analysis.simplify.elem_ecosystem_services"),
+                    i18n$t("modules.analysis.simplify.elem_goods_benefits"))
                 ),
                 selected = c("Drivers", "Activities", "Pressures",
                            "Marine Processes & Functioning", "Ecosystem Services",
@@ -263,7 +266,7 @@ analysis_simplify_ui <- function(id, i18n) {
           # Export simplified network
           downloadButton(
             ns("export_simplified"),
-            "Export Simplified Network",
+            i18n$t("modules.analysis.simplify.export_simplified_network"),
             class = "btn-success btn-block"
           ),
 
@@ -388,35 +391,34 @@ analysis_simplify_ui <- function(id, i18n) {
           collapsible = TRUE,
           collapsed = TRUE,
 
-          h4("Why Simplify Networks?"),
-          p("Complex social-ecological systems often contain hundreds of variables and connections. ",
-            "While comprehensive models capture full system complexity, simplified models offer:"),
+          h4(i18n$t("modules.analysis.simplify.about_why_title")),
+          p(i18n$t("modules.analysis.simplify.about_why_description")),
 
           tags$ul(
-            tags$li(strong("Better Communication:"), " Easier to explain to stakeholders and decision-makers"),
-            tags$li(strong("Focused Analysis:"), " Concentrate on key drivers and feedback loops"),
-            tags$li(strong("Computational Efficiency:"), " Faster analysis and visualization"),
-            tags$li(strong("Pattern Recognition:"), " Clearer identification of core system dynamics"),
-            tags$li(strong("Scenario Testing:"), " More manageable models for policy simulation")
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_better_communication"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_focused_analysis"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_computational_efficiency"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_pattern_recognition"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_scenario_testing")))
           ),
 
-          h4("Simplification Best Practices"),
+          h4(i18n$t("modules.analysis.simplify.about_best_practices_title")),
           tags$ol(
-            tags$li(strong("Preserve Feedback Loops:"), " Ensure key reinforcing and balancing loops remain intact"),
-            tags$li(strong("Maintain Causality:"), " Keep polarity and direction of relationships accurate"),
-            tags$li(strong("Document Changes:"), " Track what was removed and why"),
-            tags$li(strong("Validate with Experts:"), " Confirm simplified model still represents reality"),
-            tags$li(strong("Use Multiple Methods:"), " Combine techniques for comprehensive simplification"),
-            tags$li(strong("Iterate:"), " Apply methods gradually and review results at each step")
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_bp_feedback"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_bp_causality"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_bp_document"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_bp_validate"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_bp_multiple"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_bp_iterate")))
           ),
 
-          h4("Method Recommendations by Goal"),
+          h4(i18n$t("modules.analysis.simplify.about_recommendations_title")),
           tags$ul(
-            tags$li(strong("Focus on Internal Dynamics:"), " Remove exogenous variables"),
-            tags$li(strong("Reduce Visual Complexity:"), " Filter weak connections + SISO encapsulation"),
-            tags$li(strong("Highlight Key Leverage Points:"), " Low-centrality node removal with PageRank"),
-            tags$li(strong("Sector-Specific Analysis:"), " Element type filtering"),
-            tags$li(strong("Maximum Simplification:"), " Combine all methods with careful thresholds")
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_rec_internal"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_rec_visual"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_rec_leverage"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_rec_sector"))),
+            tags$li(HTML(i18n$t("modules.analysis.simplify.about_rec_maximum")))
           )
         )
       )
@@ -445,8 +447,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
         column(12,
           h2(icon("compress-arrows-alt"), i18n$t("modules.analysis.simplify.model_simplification_tools")),
           p(class = "text-muted",
-            "Reduce network complexity while preserving essential causal structures and feedback loops. ",
-            "Apply multiple simplification methods to create focused, interpretable models."
+            i18n$t("modules.analysis.simplify.header_description")
           )
         )
       )
@@ -469,7 +470,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
       node_count <- if (!is.null(rv$original_nodes)) nrow(rv$original_nodes) else 0
       bs4ValueBox(
         node_count,
-        "Original Nodes",
+        i18n$t("modules.analysis.simplify.original_nodes"),
         icon = icon("circle"),
         color = "primary"
       )
@@ -479,7 +480,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
       edge_count <- if (!is.null(rv$original_edges)) nrow(rv$original_edges) else 0
       bs4ValueBox(
         edge_count,
-        "Original Edges",
+        i18n$t("modules.analysis.simplify.original_edges"),
         icon = icon("arrow-right"),
         color = "primary"
       )
@@ -489,12 +490,12 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
       node_count <- if (!is.null(rv$simplified_nodes)) nrow(rv$simplified_nodes) else 0
       reduction <- if (!is.null(rv$original_nodes) && !is.null(rv$simplified_nodes)) {
         pct <- round((1 - nrow(rv$simplified_nodes) / nrow(rv$original_nodes)) * 100, 1)
-        paste0(" (", pct, "% reduction)")
+        paste0(" (", pct, "% ", i18n$t("modules.analysis.simplify.reduction_pct"), ")")
       } else ""
 
       bs4ValueBox(
         paste0(node_count, reduction),
-        "Simplified Nodes",
+        i18n$t("modules.analysis.simplify.simplified_nodes_label"),
         icon = icon("circle"),
         color = if (rv$has_simplified) "success" else "info"
       )
@@ -504,12 +505,12 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
       edge_count <- if (!is.null(rv$simplified_edges)) nrow(rv$simplified_edges) else 0
       reduction <- if (!is.null(rv$original_edges) && !is.null(rv$simplified_edges)) {
         pct <- round((1 - nrow(rv$simplified_edges) / nrow(rv$original_edges)) * 100, 1)
-        paste0(" (", pct, "% reduction)")
+        paste0(" (", pct, "% ", i18n$t("modules.analysis.simplify.reduction_pct"), ")")
       } else ""
 
       bs4ValueBox(
         paste0(edge_count, reduction),
-        "Simplified Edges",
+        i18n$t("modules.analysis.simplify.simplified_edges_label"),
         icon = icon("arrow-right"),
         color = if (rv$has_simplified) "success" else "info"
       )
@@ -519,7 +520,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
     output$original_summary <- renderPrint({
       req(rv$original_nodes, rv$original_edges)
 
-      cat("Network Components:\n")
+      cat(i18n$t("modules.analysis.simplify.network_components"), "\n")
       cat("------------------\n")
 
       element_counts <- table(rv$original_nodes$group)
@@ -527,33 +528,33 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
         cat(sprintf("  %s: %d\n", elem, element_counts[elem]))
       }
 
-      cat("\nConnection Strengths:\n")
+      cat("\n", i18n$t("modules.analysis.simplify.connection_strengths"), "\n")
       cat("--------------------\n")
       strength_counts <- table(rv$original_edges$strength)
       for (strength in names(strength_counts)) {
         cat(sprintf("  %s: %d\n", strength, strength_counts[strength]))
       }
 
-      cat("\nPolarity Distribution:\n")
+      cat("\n", i18n$t("modules.analysis.simplify.polarity_distribution"), "\n")
       cat("---------------------\n")
       polarity_counts <- table(rv$original_edges$polarity)
       for (pol in names(polarity_counts)) {
-        pol_name <- ifelse(pol == "+", "Reinforcing", "Opposing")
+        pol_name <- ifelse(pol == "+", i18n$t("modules.analysis.simplify.reinforcing"),
+                          i18n$t("modules.analysis.simplify.opposing"))
         cat(sprintf("  %s (%s): %d\n", pol_name, pol, polarity_counts[pol]))
       }
     })
 
     output$simplified_summary <- renderPrint({
       if (!rv$has_simplified) {
-        cat("No simplification applied yet.\n\n")
-        cat("Select simplification methods from the left panel\n")
-        cat("and click 'Apply Simplification' to begin.")
+        cat(i18n$t("modules.analysis.simplify.no_simplification_yet"), "\n\n")
+        cat(i18n$t("modules.analysis.simplify.select_methods_instruction"))
         return()
       }
 
       req(rv$simplified_nodes, rv$simplified_edges)
 
-      cat("Network Components:\n")
+      cat(i18n$t("modules.analysis.simplify.network_components"), "\n")
       cat("------------------\n")
 
       element_counts <- table(rv$simplified_nodes$group)
@@ -561,24 +562,25 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
         cat(sprintf("  %s: %d\n", elem, element_counts[elem]))
       }
 
-      cat("\nConnection Strengths:\n")
+      cat("\n", i18n$t("modules.analysis.simplify.connection_strengths"), "\n")
       cat("--------------------\n")
       strength_counts <- table(rv$simplified_edges$strength)
       for (strength in names(strength_counts)) {
         cat(sprintf("  %s: %d\n", strength, strength_counts[strength]))
       }
 
-      cat("\nPolarity Distribution:\n")
+      cat("\n", i18n$t("modules.analysis.simplify.polarity_distribution"), "\n")
       cat("---------------------\n")
       polarity_counts <- table(rv$simplified_edges$polarity)
       for (pol in names(polarity_counts)) {
-        pol_name <- ifelse(pol == "+", "Reinforcing", "Opposing")
+        pol_name <- ifelse(pol == "+", i18n$t("modules.analysis.simplify.reinforcing"),
+                          i18n$t("modules.analysis.simplify.opposing"))
         cat(sprintf("  %s (%s): %d\n", pol_name, pol, polarity_counts[pol]))
       }
 
       cat("\n")
-      cat(sprintf("Nodes removed: %d\n", nrow(rv$removed_nodes)))
-      cat(sprintf("Edges removed: %d\n", nrow(rv$removed_edges)))
+      cat(sprintf("%s %d\n", i18n$t("modules.analysis.simplify.nodes_removed_count"), nrow(rv$removed_nodes)))
+      cat(sprintf("%s %d\n", i18n$t("modules.analysis.simplify.edges_removed_count"), nrow(rv$removed_edges)))
     })
 
     # ========== APPLY SIMPLIFICATION ==========
@@ -595,11 +597,11 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
       all_removed_nodes <- data.frame()
       all_removed_edges <- data.frame()
 
-      withProgress(message = 'Applying simplification methods...', value = 0, {
+      withProgress(message = i18n$t("modules.analysis.simplify.progress_applying"), value = 0, {
 
         # Method 1: SISO Encapsulation
         if (input$method_siso) {
-          incProgress(0.15, detail = "Encapsulating SISO variables...")
+          incProgress(0.15, detail = i18n$t("modules.analysis.simplify.progress_siso"))
 
           siso_info <- identify_siso_variables(nodes, edges)
 
@@ -608,28 +610,28 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
 
             removed_nodes <- nodes %>% filter(id %in% siso_info$id)
             all_removed_nodes <- bind_rows(all_removed_nodes,
-                                          removed_nodes %>% mutate(reason = "SISO Encapsulation"))
+                                          removed_nodes %>% mutate(reason = i18n$t("modules.analysis.simplify.reason_siso")))
 
             nodes <- result$nodes
             edges <- result$edges
 
             history <- append(history, list(list(
-              method = "SISO Encapsulation",
+              method = i18n$t("modules.analysis.simplify.hist_siso_encapsulation"),
               removed_nodes = nrow(siso_info),
-              description = sprintf("Encapsulated %d SISO variables", nrow(siso_info))
+              description = sprintf(i18n$t("modules.analysis.simplify.hist_encapsulated_fmt"), nrow(siso_info))
             )))
           } else {
             history <- append(history, list(list(
-              method = "SISO Encapsulation",
+              method = i18n$t("modules.analysis.simplify.hist_siso_encapsulation"),
               removed_nodes = 0,
-              description = "No SISO variables found"
+              description = i18n$t("modules.analysis.simplify.hist_no_siso_found")
             )))
           }
         }
 
         # Method 2: Remove Exogenous Variables
         if (input$method_exogenous) {
-          incProgress(0.15, detail = "Removing exogenous variables...")
+          incProgress(0.15, detail = i18n$t("modules.analysis.simplify.progress_exogenous"))
 
           exog_ids <- identify_exogenous_variables(nodes, edges)
 
@@ -638,31 +640,31 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
             removed_edges <- edges %>% filter(from %in% exog_ids)
 
             all_removed_nodes <- bind_rows(all_removed_nodes,
-                                          removed_nodes %>% mutate(reason = "Exogenous Variable"))
+                                          removed_nodes %>% mutate(reason = i18n$t("modules.analysis.simplify.reason_exogenous")))
             all_removed_edges <- bind_rows(all_removed_edges,
-                                          removed_edges %>% mutate(reason = "Connected to Exogenous"))
+                                          removed_edges %>% mutate(reason = i18n$t("modules.analysis.simplify.reason_connected_exogenous")))
 
             result <- remove_exogenous_variables(nodes, edges, exog_ids)
             nodes <- result$nodes
             edges <- result$edges
 
             history <- append(history, list(list(
-              method = "Exogenous Removal",
+              method = i18n$t("modules.analysis.simplify.hist_exogenous_removal"),
               removed_nodes = length(exog_ids),
-              description = sprintf("Removed %d exogenous variables", length(exog_ids))
+              description = sprintf(i18n$t("modules.analysis.simplify.hist_removed_exogenous_fmt"), length(exog_ids))
             )))
           } else {
             history <- append(history, list(list(
-              method = "Exogenous Removal",
+              method = i18n$t("modules.analysis.simplify.hist_exogenous_removal"),
               removed_nodes = 0,
-              description = "No exogenous variables found"
+              description = i18n$t("modules.analysis.simplify.hist_no_exogenous_found")
             )))
           }
         }
 
         # Method 3: Filter Weak Connections
         if (input$method_weak_edges) {
-          incProgress(0.15, detail = "Filtering weak connections...")
+          incProgress(0.15, detail = i18n$t("modules.analysis.simplify.progress_weak"))
 
           if (input$weak_edge_threshold == "medium") {
             removed_edges <- edges %>% filter(strength == "weak")
@@ -673,7 +675,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
           }
 
           all_removed_edges <- bind_rows(all_removed_edges,
-                                        removed_edges %>% mutate(reason = "Weak Connection"))
+                                        removed_edges %>% mutate(reason = i18n$t("modules.analysis.simplify.reason_weak_connection")))
 
           # Remove orphaned nodes
           connected_nodes <- unique(c(edges_filtered$from, edges_filtered$to))
@@ -681,24 +683,24 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
 
           if (nrow(orphaned_nodes) > 0) {
             all_removed_nodes <- bind_rows(all_removed_nodes,
-                                          orphaned_nodes %>% mutate(reason = "Orphaned after edge filtering"))
+                                          orphaned_nodes %>% mutate(reason = i18n$t("modules.analysis.simplify.reason_orphaned")))
           }
 
           nodes <- nodes %>% filter(id %in% connected_nodes)
           edges <- edges_filtered
 
           history <- append(history, list(list(
-            method = "Weak Edge Filtering",
+            method = i18n$t("modules.analysis.simplify.hist_weak_edge_filtering"),
             removed_edges = nrow(removed_edges),
             removed_nodes = nrow(orphaned_nodes),
-            description = sprintf("Removed %d weak edges, %d orphaned nodes",
+            description = sprintf(i18n$t("modules.analysis.simplify.hist_weak_edges_fmt"),
                                 nrow(removed_edges), nrow(orphaned_nodes))
           )))
         }
 
         # Method 4: Remove Low Centrality Nodes
         if (input$method_low_centrality) {
-          incProgress(0.15, detail = "Calculating centrality metrics...")
+          incProgress(0.15, detail = i18n$t("modules.analysis.simplify.progress_centrality"))
 
           metrics <- calculate_network_metrics(nodes, edges)
           metric_values <- metrics[[input$centrality_metric]]
@@ -713,19 +715,19 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
 
             all_removed_nodes <- bind_rows(all_removed_nodes,
                                           removed_nodes %>% mutate(
-                                            reason = sprintf("Low %s centrality", input$centrality_metric)))
+                                            reason = sprintf(i18n$t("modules.analysis.simplify.reason_low_centrality_fmt"), input$centrality_metric)))
             all_removed_edges <- bind_rows(all_removed_edges,
-                                          removed_edges %>% mutate(reason = "Connected to low-centrality node"))
+                                          removed_edges %>% mutate(reason = i18n$t("modules.analysis.simplify.reason_connected_low_centrality")))
 
             nodes <- nodes %>% filter(!id %in% below_threshold)
             edges <- edges %>% filter(!from %in% below_threshold, !to %in% below_threshold)
 
             history <- append(history, list(list(
-              method = "Low Centrality Removal",
+              method = i18n$t("modules.analysis.simplify.hist_low_centrality_removal"),
               metric = input$centrality_metric,
               percentile = input$centrality_percentile,
               removed_nodes = length(below_threshold),
-              description = sprintf("Removed %d nodes below %d%% %s centrality",
+              description = sprintf(i18n$t("modules.analysis.simplify.hist_low_centrality_fmt"),
                                   length(below_threshold), input$centrality_percentile,
                                   input$centrality_metric)
             )))
@@ -734,30 +736,30 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
 
         # Method 5: Element Type Filtering
         if (input$method_element_filter) {
-          incProgress(0.15, detail = "Filtering by element type...")
+          incProgress(0.15, detail = i18n$t("modules.analysis.simplify.progress_element_type"))
 
           removed_nodes <- nodes %>% filter(!group %in% input$elements_to_keep)
 
           if (nrow(removed_nodes) > 0) {
             all_removed_nodes <- bind_rows(all_removed_nodes,
-                                          removed_nodes %>% mutate(reason = "Element type excluded"))
+                                          removed_nodes %>% mutate(reason = i18n$t("modules.analysis.simplify.reason_element_excluded")))
 
             removed_edges <- edges %>% filter(from %in% removed_nodes$id | to %in% removed_nodes$id)
             all_removed_edges <- bind_rows(all_removed_edges,
-                                          removed_edges %>% mutate(reason = "Connected to excluded element"))
+                                          removed_edges %>% mutate(reason = i18n$t("modules.analysis.simplify.reason_connected_excluded")))
 
             nodes <- nodes %>% filter(group %in% input$elements_to_keep)
             edges <- edges %>% filter(!from %in% removed_nodes$id, !to %in% removed_nodes$id)
 
             history <- append(history, list(list(
-              method = "Element Type Filtering",
+              method = i18n$t("modules.analysis.simplify.hist_element_type_filtering"),
               removed_nodes = nrow(removed_nodes),
-              description = sprintf("Kept only: %s", paste(input$elements_to_keep, collapse = ", "))
+              description = sprintf(i18n$t("modules.analysis.simplify.hist_kept_only_fmt"), paste(input$elements_to_keep, collapse = ", "))
             )))
           }
         }
 
-        incProgress(0.25, detail = "Finalizing simplification...")
+        incProgress(0.25, detail = i18n$t("modules.analysis.simplify.progress_finalizing"))
 
         # Update reactive values
         rv$simplified_nodes <- nodes
@@ -805,7 +807,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
       }, error = function(e) {
         debug_log(paste("Error in simplification:", e$message), "SIMPLIFY")
         showNotification(
-          paste("Error applying simplification:", e$message),
+          paste(i18n$t("modules.analysis.simplify.error_applying"), e$message),
           type = "error",
           duration = 10
         )
@@ -822,7 +824,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
       rv$has_simplified <- FALSE
 
       showNotification(
-        "Network reset to original state",
+        i18n$t("modules.analysis.simplify.network_reset"),
         type = "warning",
         duration = 3
       )
@@ -905,8 +907,11 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
     output$simplification_stats <- renderTable({
       req(rv$original_nodes, rv$original_edges, rv$simplified_nodes, rv$simplified_edges)
 
-      data.frame(
-        Metric = c("Total Nodes", "Total Edges", "Avg. Degree", "Network Density"),
+      stats_df <- data.frame(
+        Metric = c(i18n$t("modules.analysis.simplify.stat_total_nodes"),
+                   i18n$t("modules.analysis.simplify.stat_total_edges"),
+                   i18n$t("modules.analysis.simplify.stat_avg_degree"),
+                   i18n$t("modules.analysis.simplify.stat_network_density")),
         Original = c(
           nrow(rv$original_nodes),
           nrow(rv$original_edges),
@@ -930,57 +935,85 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
           "-"
         )
       )
+      colnames(stats_df) <- c(
+        i18n$t("modules.analysis.simplify.table_metric"),
+        i18n$t("modules.analysis.simplify.stat_original"),
+        i18n$t("modules.analysis.simplify.stat_simplified"),
+        i18n$t("modules.analysis.simplify.stat_change")
+      )
+      stats_df
     }, striped = TRUE, hover = TRUE, bordered = TRUE)
 
     output$removed_nodes_table <- renderTable({
       if (!rv$has_simplified || is.null(rv$removed_nodes) || nrow(rv$removed_nodes) == 0) {
-        return(data.frame(Message = "No nodes removed"))
+        df <- data.frame(x = i18n$t("modules.analysis.simplify.no_nodes_removed"))
+        colnames(df) <- i18n$t("modules.analysis.simplify.table_message")
+        return(df)
       }
 
-      rv$removed_nodes %>%
-        select(ID = id, Label = label, Type = group, Reason = reason) %>%
+      result <- rv$removed_nodes %>%
+        select(id, label, group, reason) %>%
         head(50)
+      colnames(result) <- c(
+        i18n$t("modules.analysis.simplify.table_id"),
+        i18n$t("modules.analysis.simplify.table_label"),
+        i18n$t("modules.analysis.simplify.table_type"),
+        i18n$t("modules.analysis.simplify.table_reason")
+      )
+      result
     }, striped = TRUE, hover = TRUE)
 
     output$removed_edges_table <- renderTable({
       if (!rv$has_simplified || is.null(rv$removed_edges) || nrow(rv$removed_edges) == 0) {
-        return(data.frame(Message = "No edges removed"))
+        df <- data.frame(x = i18n$t("modules.analysis.simplify.no_edges_removed"))
+        colnames(df) <- i18n$t("modules.analysis.simplify.table_message")
+        return(df)
       }
 
-      rv$removed_edges %>%
-        select(From = from, To = to, Polarity = polarity, Strength = strength, Reason = reason) %>%
+      result <- rv$removed_edges %>%
+        select(from, to, polarity, strength, reason) %>%
         head(50)
+      colnames(result) <- c(
+        i18n$t("modules.analysis.simplify.table_from"),
+        i18n$t("modules.analysis.simplify.table_to"),
+        i18n$t("modules.analysis.simplify.table_polarity"),
+        i18n$t("modules.analysis.simplify.table_strength"),
+        i18n$t("modules.analysis.simplify.table_reason")
+      )
+      result
     }, striped = TRUE, hover = TRUE)
 
     # ========== SIMPLIFICATION LOG ==========
     output$simplification_log <- renderPrint({
       if (!rv$has_simplified || length(rv$simplification_history) == 0) {
-        cat("No simplification methods applied yet.\n")
+        cat(i18n$t("modules.analysis.simplify.no_methods_applied"), "\n")
         return()
       }
 
-      cat("SIMPLIFICATION HISTORY\n")
+      cat(i18n$t("modules.analysis.simplify.log_title"), "\n")
       cat("======================\n\n")
 
       for (i in seq_along(rv$simplification_history)) {
         item <- rv$simplification_history[[i]]
-        cat(sprintf("Step %d: %s\n", i, item$method))
+        cat(sprintf("%s %d: %s\n", i18n$t("modules.analysis.simplify.log_step"), i, item$method))
         cat(sprintf("  %s\n", item$description))
         if (!is.null(item$removed_nodes) && item$removed_nodes > 0) {
-          cat(sprintf("  -> Nodes removed: %d\n", item$removed_nodes))
+          cat(sprintf("  %s %d\n", i18n$t("modules.analysis.simplify.log_nodes_removed"), item$removed_nodes))
         }
         if (!is.null(item$removed_edges) && item$removed_edges > 0) {
-          cat(sprintf("  -> Edges removed: %d\n", item$removed_edges))
+          cat(sprintf("  %s %d\n", i18n$t("modules.analysis.simplify.log_edges_removed"), item$removed_edges))
         }
         cat("\n")
       }
 
-      cat("TOTAL IMPACT\n")
+      cat(i18n$t("modules.analysis.simplify.log_total_impact"), "\n")
       cat("------------\n")
-      cat(sprintf("Total nodes removed: %d (%.1f%%)\n",
+      cat(sprintf("%s %d (%.1f%%)\n",
+                  i18n$t("modules.analysis.simplify.log_total_nodes"),
                   nrow(rv$removed_nodes),
                   (nrow(rv$removed_nodes) / nrow(rv$original_nodes)) * 100))
-      cat(sprintf("Total edges removed: %d (%.1f%%)\n",
+      cat(sprintf("%s %d (%.1f%%)\n",
+                  i18n$t("modules.analysis.simplify.log_total_edges"),
                   nrow(rv$removed_edges),
                   (nrow(rv$removed_edges) / nrow(rv$original_edges)) * 100))
     })
@@ -989,15 +1022,20 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
     output$impact_chart <- renderPlot({
       if (!rv$has_simplified) {
         plot.new()
-        text(0.5, 0.5, "Apply simplification to see impact chart", cex = 1.5)
+        text(0.5, 0.5, i18n$t("modules.analysis.simplify.apply_to_see_chart"), cex = 1.5)
         return()
       }
 
       req(rv$original_nodes, rv$simplified_nodes, rv$original_edges, rv$simplified_edges)
 
+      orig_label <- i18n$t("modules.analysis.simplify.stat_original")
+      simp_label <- i18n$t("modules.analysis.simplify.stat_simplified")
+      nodes_label <- i18n$t("modules.analysis.simplify.chart_nodes")
+      edges_label <- i18n$t("modules.analysis.simplify.chart_edges")
+
       comparison_data <- data.frame(
-        Category = rep(c("Nodes", "Edges"), each = 2),
-        State = rep(c("Original", "Simplified"), 2),
+        Category = rep(c(nodes_label, edges_label), each = 2),
+        State = rep(c(orig_label, simp_label), 2),
         Count = c(
           nrow(rv$original_nodes),
           nrow(rv$simplified_nodes),
@@ -1005,19 +1043,20 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
           nrow(rv$simplified_edges)
         )
       )
+      comparison_data$State <- factor(comparison_data$State, levels = c(orig_label, simp_label))
 
       ggplot(comparison_data, aes(x = Category, y = Count, fill = State)) +
         geom_bar(stat = "identity", position = "dodge", width = 0.7) +
         geom_text(aes(label = Count), position = position_dodge(0.7), vjust = -0.5, size = 5) +
-        scale_fill_manual(values = c("Original" = "#3498db", "Simplified" = "#27ae60")) +
+        scale_fill_manual(values = setNames(c("#3498db", "#27ae60"), c(orig_label, simp_label))) +
         labs(
-          title = "Simplification Impact: Before and After",
-          subtitle = sprintf("%.1f%% node reduction, %.1f%% edge reduction",
+          title = i18n$t("modules.analysis.simplify.chart_title"),
+          subtitle = sprintf(i18n$t("modules.analysis.simplify.chart_subtitle_fmt"),
                            (1 - nrow(rv$simplified_nodes) / nrow(rv$original_nodes)) * 100,
                            (1 - nrow(rv$simplified_edges) / nrow(rv$original_edges)) * 100),
           x = "",
-          y = "Count",
-          fill = "Network State"
+          y = i18n$t("modules.analysis.simplify.chart_count"),
+          fill = i18n$t("modules.analysis.simplify.chart_network_state")
         ) +
         theme_minimal(base_size = 14) +
         theme(
@@ -1046,7 +1085,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
         save(simplified_network, file = file)
 
         showNotification(
-          "Simplified network exported successfully!",
+          i18n$t("modules.analysis.simplify.export_success"),
           type = "message",
           duration = 3
         )

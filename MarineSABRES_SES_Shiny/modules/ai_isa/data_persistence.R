@@ -166,8 +166,8 @@ build_adjacency_matrices <- function(elements, suggested_connections,
   n_welfare <- length(elements$welfare)
   n_responses <- length(elements$responses)
 
-  cat(sprintf("[AI ISA] Building matrices: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d\n",
-             n_drivers, n_activities, n_pressures, n_states, n_impacts, n_welfare, n_responses))
+  debug_log(sprintf("Building matrices: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d",
+             n_drivers, n_activities, n_pressures, n_states, n_impacts, n_welfare, n_responses), "AI ISA")
 
   # Initialize matrices with forward causal flow
   matrices <- list(
@@ -294,7 +294,7 @@ build_adjacency_matrices <- function(elements, suggested_connections,
   }
 
   # Fill matrices with approved connections
-  cat(sprintf("[AI ISA] Processing %d approved connections...\n", length(approved_connections)))
+  debug_log(sprintf("Processing %d approved connections...", length(approved_connections)), "AI ISA")
 
   for (conn_idx in approved_connections) {
     conn <- suggested_connections[[conn_idx]]
@@ -327,7 +327,7 @@ build_adjacency_matrices <- function(elements, suggested_connections,
     }
   }
 
-  cat("[AI ISA] Adjacency matrices built successfully\n")
+  debug_log("Adjacency matrices built successfully", "AI ISA")
   return(matrices)
 }
 
@@ -396,7 +396,7 @@ save_to_project_format <- function(rv, current_data, CONFIDENCE_DEFAULT = 70) {
 
   # Build adjacency matrices
   if (data_source == "excel_import") {
-    cat("[AI ISA] Data from Excel import - preserving existing matrices\n")
+    debug_log("Data from Excel import - preserving existing matrices", "AI ISA")
     # Ensure structure exists but don't overwrite
     if (is.null(current_data$data$isa_data$adjacency_matrices)) {
       current_data$data$isa_data$adjacency_matrices <- list()

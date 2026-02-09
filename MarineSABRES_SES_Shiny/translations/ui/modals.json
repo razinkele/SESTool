@@ -1,18 +1,5 @@
 {
-  "languages": [
-    "en",
-    "es",
-    "fr",
-    "de",
-    "lt",
-    "pt",
-    "it",
-    "no",
-    "el"
-  ],
-  "_translation_notes": {
-    "TODO": "Norwegian (no) and Greek (el) translations are incomplete — many entries use English fallback text. Needs native speaker review."
-  },
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
   "translation": {
     "ui.modals.advanced_interface_showing_all_tools_technical_ter": {
       "en": "Advanced interface showing all tools, technical terminology, and advanced options.",
@@ -248,10 +235,10 @@
     "ui.modals.scenarioconfirmdelete": {
       "en": "scenario_confirm_delete",
       "es": "confirmar_eliminar_escenario",
-      "fr": "confirmer_suppression_sc\u00e9nario",
-      "de": "Szenario_L\u00f6schen_Best\u00e4tigen",
-      "lt": "patvirtinti_scenarijaus_i\u0161trynim\u0105",
-      "pt": "confirmar_exclus\u00e3o_cen\u00e1rio",
+      "fr": "confirmer_suppression_scénario",
+      "de": "Szenario_Löschen_Bestätigen",
+      "lt": "patvirtinti_scenarijaus_ištrynimą",
+      "pt": "confirmar_exclusão_cenário",
       "it": "conferma_eliminazione_scenario",
       "no": "scenario_confirm_delete",
       "el": "scenario_confirm_delete"
@@ -1401,26 +1388,26 @@
       "el": "Comprehensive 75-page English manual - PDF version"
     },
     "ui.modals.manual_fr_html_tooltip": {
-      "en": "Manuel fran\u00e7ais complet de 75 pages - version HTML",
-      "es": "Manual completo en franc\u00e9s de 75 p\u00e1ginas - versi\u00f3n HTML",
-      "fr": "Manuel fran\u00e7ais complet de 75 pages - version HTML",
-      "de": "Umfassendes 75-seitiges franz\u00f6sisches Handbuch - HTML-Version",
-      "lt": "I\u0161samus 75 puslapi\u0173 pranc\u016bz\u0173 kalbos vadovas - HTML versija",
-      "pt": "Manual completo em franc\u00eas de 75 p\u00e1ginas - vers\u00e3o HTML",
+      "en": "Manuel français complet de 75 pages - version HTML",
+      "es": "Manual completo en francés de 75 páginas - versión HTML",
+      "fr": "Manuel français complet de 75 pages - version HTML",
+      "de": "Umfassendes 75-seitiges französisches Handbuch - HTML-Version",
+      "lt": "Išsamus 75 puslapių prancūzų kalbos vadovas - HTML versija",
+      "pt": "Manual completo em francês de 75 páginas - versão HTML",
       "it": "Manuale completo in francese di 75 pagine - versione HTML",
-      "no": "Manuel fran\u00e7ais complet de 75 pages - version HTML",
-      "el": "Manuel fran\u00e7ais complet de 75 pages - version HTML"
+      "no": "Manuel français complet de 75 pages - version HTML",
+      "el": "Manuel français complet de 75 pages - version HTML"
     },
     "ui.modals.manual_fr_pdf_tooltip": {
-      "en": "Manuel fran\u00e7ais complet de 75 pages - version PDF",
-      "es": "Manual completo en franc\u00e9s de 75 p\u00e1ginas - versi\u00f3n PDF",
-      "fr": "Manuel fran\u00e7ais complet de 75 pages - version PDF",
-      "de": "Umfassendes 75-seitiges franz\u00f6sisches Handbuch - PDF-Version",
-      "lt": "I\u0161samus 75 puslapi\u0173 pranc\u016bz\u0173 kalbos vadovas - PDF versija",
-      "pt": "Manual completo em franc\u00eas de 75 p\u00e1ginas - vers\u00e3o PDF",
+      "en": "Manuel français complet de 75 pages - version PDF",
+      "es": "Manual completo en francés de 75 páginas - versión PDF",
+      "fr": "Manuel français complet de 75 pages - version PDF",
+      "de": "Umfassendes 75-seitiges französisches Handbuch - PDF-Version",
+      "lt": "Išsamus 75 puslapių prancūzų kalbos vadovas - PDF versija",
+      "pt": "Manual completo em francês de 75 páginas - versão PDF",
       "it": "Manuale completo in francese di 75 pagine - versione PDF",
-      "no": "Manuel fran\u00e7ais complet de 75 pages - version PDF",
-      "el": "Manuel fran\u00e7ais complet de 75 pages - version PDF"
+      "no": "Manuel français complet de 75 pages - version PDF",
+      "el": "Manuel français complet de 75 pages - version PDF"
     },
     "ui.modals.changelog": {
       "en": "Changelog",

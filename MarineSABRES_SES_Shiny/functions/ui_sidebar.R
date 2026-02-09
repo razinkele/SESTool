@@ -241,11 +241,11 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     menu_items <- c(menu_items, list(
       add_menu_tooltip(
         bs4SidebarMenuItem(
-          "Graphical SES Creator",  # Will add translation later
+          safe_t("ui.sidebar.graphical_ses_creator", i18n_obj = i18n),
           tabName = "graphical_ses_creator",
           icon = icon("magic")
         ),
-        "Build your SES network step-by-step with AI guidance"  # Will add translation later
+        safe_t("ui.sidebar.graphical_ses_tooltip", i18n_obj = i18n)
       )
     ))
   }
@@ -314,6 +314,21 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
             safe_t("ui.sidebar.simplification", i18n_obj = i18n),
             tabName = "analysis_simplify",
             tooltip_text = safe_t("ui.sidebar.tooltip.simplification", i18n_obj = i18n)
+          ),
+          add_submenu_tooltip(
+            safe_t("ui.sidebar.boolean_analysis", i18n_obj = i18n),
+            tabName = "analysis_boolean",
+            tooltip_text = safe_t("ui.sidebar.tooltip.boolean_analysis", i18n_obj = i18n)
+          ),
+          add_submenu_tooltip(
+            safe_t("ui.sidebar.dynamic_simulation", i18n_obj = i18n),
+            tabName = "analysis_simulation",
+            tooltip_text = safe_t("ui.sidebar.tooltip.dynamic_simulation", i18n_obj = i18n)
+          ),
+          add_submenu_tooltip(
+            safe_t("ui.sidebar.intervention_analysis", i18n_obj = i18n),
+            tabName = "analysis_intervention",
+            tooltip_text = safe_t("ui.sidebar.tooltip.intervention_analysis", i18n_obj = i18n)
           )
         )
       ))

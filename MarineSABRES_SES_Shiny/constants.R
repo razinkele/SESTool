@@ -438,6 +438,35 @@ DA_SITES <- c(
   "Macaronesia"
 )
 
+# Regional Sea choices (EU MSFD standard naming + global additions)
+REGIONAL_SEA_CHOICES <- c(
+  "Baltic Sea",
+  "North Sea",
+  "Celtic Seas",
+  "Bay of Biscay and Iberian Coast",
+  "Western Mediterranean Sea",
+  "Adriatic Sea",
+  "Ionian Sea and Central Mediterranean Sea",
+  "Aegean-Levantine Sea",
+  "Black Sea",
+  "Macaronesia",
+  "Arctic Ocean",
+  "Caribbean Sea"
+)
+
+# Ecosystem type choices — basic (for simple wizard-style inputs)
+ECOSYSTEM_TYPE_CHOICES <- c(
+  "Open coast", "Lagoon", "Estuary", "Offshore", "Deep sea"
+)
+
+# Ecosystem type choices — detailed (for template recommendation / multi-select)
+ECOSYSTEM_TYPE_CHOICES_DETAILED <- c(
+  "Coastal", "Shelf", "Deep Sea", "Pelagic", "Benthic",
+  "Rocky Shore", "Sandy Shore", "Mudflat", "Saltmarsh",
+  "Seagrass", "Kelp Forest", "Coral Reef", "Mangrove",
+  "Estuary", "Lagoon", "Fjord", "Other"
+)
+
 # Stakeholder types (Newton & Elliott, 2016)
 STAKEHOLDER_TYPES <- c(
   "Inputters",

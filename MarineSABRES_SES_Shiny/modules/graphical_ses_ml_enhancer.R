@@ -36,13 +36,13 @@ predict_connection_enhanced <- function(from_element, to_element, context, ml_we
         threshold = 0.5
       )
     }, error = function(e) {
-      message("[ML ENHANCER] ML prediction failed: ", e$message)
+      debug_log(paste("ML prediction failed:", e$message), "ML_ENHANCER")
     })
   }
 
   # Fallback to rule-based if ML not available
   if (is.null(ml_result)) {
-    message("[ML ENHANCER] Using rule-based prediction only")
+    debug_log("Using rule-based prediction only", "ML_ENHANCER")
 
     # Simple rule-based prediction
     rule_result <- list(
@@ -58,7 +58,7 @@ predict_connection_enhanced <- function(from_element, to_element, context, ml_we
   }
 
   # If ML succeeded, return ML result
-  message("[ML ENHANCER] Using ML prediction (prob: ", round(ml_result$existence_probability, 3), ")")
+  debug_log(paste("Using ML prediction (prob:", round(ml_result$existence_probability, 3), ")"), "ML_ENHANCER")
   return(ml_result)
 }
 
@@ -90,7 +90,7 @@ suggest_connected_elements_ml <- function(node_id, node_data, existing_network,
       max_suggestions = max_suggestions * 2  # Get more, then ML filter
     )
   } else {
-    message("[ML ENHANCER] Base suggestion function not found")
+    debug_log("Base suggestion function not found", "ML_ENHANCER")
     return(list())
   }
 
@@ -98,11 +98,11 @@ suggest_connected_elements_ml <- function(node_id, node_data, existing_network,
     return(list())
   }
 
-  message("[ML ENHANCER] Got ", length(base_suggestions), " base suggestions, applying ML ranking...")
+  debug_log(paste("Got", length(base_suggestions), "base suggestions, applying ML ranking..."), "ML_ENHANCER")
 
   # If ML not available, return base suggestions
   if (!ml_model_available()) {
-    message("[ML ENHANCER] ML not available, returning base suggestions")
+    debug_log("ML not available, returning base suggestions", "ML_ENHANCER")
     return(head(base_suggestions, max_suggestions))
   }
 
@@ -153,7 +153,7 @@ suggest_connected_elements_ml <- function(node_id, node_data, existing_network,
   # Return top N
   top_suggestions <- head(sorted_suggestions, max_suggestions)
 
-  message("[ML ENHANCER] Ranked suggestions by ML score, returning top ", length(top_suggestions))
+  debug_log(paste("Ranked suggestions by ML score, returning top", length(top_suggestions)), "ML_ENHANCER")
 
   return(top_suggestions)
 }
@@ -190,7 +190,7 @@ classify_element_ml_enhanced <- function(element_name, context, reference_elemen
   }
 
   # Try ML-based classification by testing connections with existing elements
-  message("[ML ENHANCER] Testing ML connections for classification refinement...")
+  debug_log("Testing ML connections for classification refinement...", "ML_ENHANCER")
 
   type_scores <- list()
 
@@ -230,11 +230,11 @@ classify_element_ml_enhanced <- function(element_name, context, reference_elemen
     best_type <- names(which.max(unlist(type_scores)))
     best_score <- max(unlist(type_scores))
 
-    message("[ML ENHANCER] ML suggests type: ", best_type, " (score: ", round(best_score, 3), ")")
+    debug_log(paste("ML suggests type:", best_type, "(score:", round(best_score, 3), ")"), "ML_ENHANCER")
 
     # Blend with base classification
     if (best_score > 0.6 && best_type != base_classification$primary$type) {
-      message("[ML ENHANCER] ML overriding base classification")
+      debug_log("ML overriding base classification", "ML_ENHANCER")
       base_classification$primary$type <- best_type
       base_classification$primary$confidence <- (best_score + base_classification$primary$confidence) / 2
       base_classification$primary$ml_enhanced <- TRUE
@@ -268,7 +268,6 @@ batch_predict_network_connections <- function(pairs, context) {
 # ==============================================================================
 
 debug_log("ML Enhancer module loaded", "ML_ENHANCER")
-debug_log("  Functions: predict_connection_enhanced, suggest_connected_elements_ml, classify_element_ml_enhanced", "ML_ENHANCER")
 
 # Try to load ML model automatically
 if (!exists(".ml_enhancer_model_loaded")) {
@@ -276,7 +275,7 @@ if (!exists(".ml_enhancer_model_loaded")) {
     load_ml_model()
     .ml_enhancer_model_loaded <- TRUE
   }, error = function(e) {
-    message("[ML ENHANCER] ML model not loaded: ", e$message)
+    debug_log(paste("ML model not loaded:", e$message), "ML_ENHANCER")
     .ml_enhancer_model_loaded <- FALSE
   })
 }

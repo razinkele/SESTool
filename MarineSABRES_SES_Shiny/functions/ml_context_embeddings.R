@@ -106,11 +106,7 @@ context_embeddings <- nn_module(
 #' @export
 get_context_vocabularies <- function() {
   list(
-    regional_seas = c(
-      "Baltic Sea", "North Sea", "Celtic Seas", "Bay of Biscay and Iberian Coast",
-      "Western Mediterranean Sea", "Adriatic Sea", "Ionian Sea and Central Mediterranean Sea",
-      "Aegean-Levantine Sea", "Black Sea", "Macaronesia", "Caribbean Sea", "Global"
-    ),
+    regional_seas = c(REGIONAL_SEA_CHOICES, "Global"),
 
     ecosystems = c(
       "Coastal", "Shelf", "Oceanic", "Open coast", "Archipelagos",

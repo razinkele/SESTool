@@ -162,19 +162,19 @@ setup_session_initialization <- function(project_data_reactive, rv, convert_matr
     # Watch for changes in project_data_reactive
     recovered_data <- project_data_reactive()
 
-    cat("[AI ISA] Observer triggered\n")
+    debug_log("Observer triggered", "AI ISA")
 
     # Only proceed if we don't already have elements and there's data to load
     if (length(rv$elements$drivers) == 0 &&
         length(rv$elements$activities) == 0) {
 
-      cat("[AI ISA] Elements are empty, checking for data\n")
+      debug_log("Elements are empty, checking for data", "AI ISA")
 
       isolate({
         tryCatch({
 
       if (!is.null(recovered_data) && !is.null(recovered_data$data$isa_data)) {
-        cat("[AI ISA] Found data in project_data_reactive\n")
+        debug_log("Found data in project_data_reactive", "AI ISA")
         isa_data <- recovered_data$data$isa_data
 
         # Check if there's actually data to recover
@@ -189,7 +189,7 @@ setup_session_initialization <- function(project_data_reactive, rv, convert_matr
         )
 
         # Debug: print each element count
-        cat(sprintf("[AI ISA] Element counts - drivers: %d, activities: %d, pressures: %d, states: %d, impacts: %d, welfare: %d, responses: %d\n",
+        debug_log(sprintf("Element counts - drivers: %d, activities: %d, pressures: %d, states: %d, impacts: %d, welfare: %d, responses: %d",
           if(!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0,
           if(!is.null(isa_data$activities)) nrow(isa_data$activities) else 0,
           if(!is.null(isa_data$pressures)) nrow(isa_data$pressures) else 0,
@@ -197,12 +197,12 @@ setup_session_initialization <- function(project_data_reactive, rv, convert_matr
           if(!is.null(isa_data$ecosystem_services)) nrow(isa_data$ecosystem_services) else 0,
           if(!is.null(isa_data$goods_benefits)) nrow(isa_data$goods_benefits) else 0,
           if(!is.null(isa_data$responses)) nrow(isa_data$responses) else 0
-        ))
+        ), "AI ISA")
 
-        cat(sprintf("[AI ISA] has_data check result: %s\n", has_data))
+        debug_log(sprintf("has_data check result: %s", has_data), "AI ISA")
 
         if (has_data) {
-          cat("[AI ISA] Loading recovered data from project_data_reactive\n")
+          debug_log("Loading recovered data from project_data_reactive", "AI ISA")
 
           # Convert dataframes back to list format for AI ISA Assistant
           # Drivers
@@ -293,20 +293,20 @@ setup_session_initialization <- function(project_data_reactive, rv, convert_matr
           if (!is.null(isa_data$connections)) {
             rv$suggested_connections <- isa_data$connections$suggested %||% list()
             rv$approved_connections <- isa_data$connections$approved %||% list()
-            cat(sprintf("[AI ISA] Recovered %d connections (%d approved)\n",
+            debug_log(sprintf("Recovered %d connections (%d approved)",
                         length(rv$suggested_connections),
-                        length(rv$approved_connections)))
+                        length(rv$approved_connections)), "AI ISA")
           } else if (!is.null(isa_data$adjacency_matrices)) {
             # Convert adjacency matrices to connection list format
-            cat("[AI ISA] Converting adjacency matrices to connection list...\n")
+            debug_log("Converting adjacency matrices to connection list...", "AI ISA")
             rv$suggested_connections <- convert_matrices_to_connections(
               isa_data$adjacency_matrices,
               rv$elements
             )
             # Mark all as approved since they came from a saved/template source
             rv$approved_connections <- seq_along(rv$suggested_connections)
-            cat(sprintf("[AI ISA] Converted %d connections from adjacency matrices (all approved)\n",
-                        length(rv$suggested_connections)))
+            debug_log(sprintf("Converted %d connections from adjacency matrices (all approved)",
+                        length(rv$suggested_connections)), "AI ISA")
           }
 
           # Set to step 10 (completed) since data was recovered
@@ -322,11 +322,11 @@ setup_session_initialization <- function(project_data_reactive, rv, convert_matr
             length(rv$elements$responses)
           )
 
-          cat(sprintf("[AI ISA] Recovered %d elements into AI ISA Assistant UI\n", total_recovered))
+          debug_log(sprintf("Recovered %d elements into AI ISA Assistant UI", total_recovered), "AI ISA")
         }
       }
         }, error = function(e) {
-          cat(sprintf("[AI ISA] Recovery initialization error: %s\n", e$message))
+          debug_log(sprintf("Recovery initialization error: %s", e$message), "AI ISA")
         })
       })
     }
@@ -508,7 +508,7 @@ setup_breadcrumb_navigation <- function(output, input, session, rv, i18n, QUESTI
 
   # Handle breadcrumb navigation - go to start
   observeEvent(input$goto_start, {
-    cat("[AI ISA] Breadcrumb: Returning to start\n")
+    debug_log("Breadcrumb: Returning to start", "AI ISA")
     rv$current_step <- 0
     rv$selected_issues <- character(0)
   })
@@ -517,17 +517,17 @@ setup_breadcrumb_navigation <- function(output, input, session, rv, i18n, QUESTI
   observeEvent(input$goto_step, {
     target_step <- input$goto_step
     if (!is.null(target_step) && target_step >= 0 && target_step < rv$current_step) {
-      cat(sprintf("[AI ISA] Breadcrumb: Going back to step %d from step %d\n",
-                 target_step, rv$current_step))
+      debug_log(sprintf("Breadcrumb: Going back to step %d from step %d",
+                 target_step, rv$current_step), "AI ISA")
 
       # Clear connections if navigating back from connection review (step 10)
       # This will force regeneration when returning to step 10
       if (rv$current_step == 10 && target_step < 10) {
-        cat("[AI ISA] Breadcrumb: Clearing connections for regeneration\n")
+        debug_log("Breadcrumb: Clearing connections for regeneration", "AI ISA")
         # Don't set timestamp on empty list to prevent reactive loop
         rv$suggested_connections <- list()
         rv$approved_connections <- list()
-        cat("[AI ISA] Breadcrumb: Connections cleared (no timestamp set)\n")
+        debug_log("Breadcrumb: Connections cleared (no timestamp set)", "AI ISA")
       }
 
       rv$current_step <- target_step
@@ -537,17 +537,17 @@ setup_breadcrumb_navigation <- function(output, input, session, rv, i18n, QUESTI
         # Restore from context
         if (length(rv$context$main_issue) > 0) {
           rv$selected_issues <- rv$context$main_issue
-          cat(sprintf("[AI ISA] Breadcrumb: Restored %d selected issues: %s\n",
+          debug_log(sprintf("Breadcrumb: Restored %d selected issues: %s",
                      length(rv$selected_issues),
-                     paste(rv$selected_issues, collapse=", ")))
+                     paste(rv$selected_issues, collapse=", ")), "AI ISA")
         } else {
           rv$selected_issues <- character(0)
-          cat("[AI ISA] Breadcrumb: No issues in context to restore\n")
+          debug_log("Breadcrumb: No issues in context to restore", "AI ISA")
         }
       } else if (target_step < 1) {
         # Clear selected issues if going before issue selection
         rv$selected_issues <- character(0)
-        cat("[AI ISA] Breadcrumb: Cleared selected issues (before step 1)\n")
+        debug_log("Breadcrumb: Cleared selected issues (before step 1)", "AI ISA")
       }
 
       # Force UI re-render
@@ -896,7 +896,7 @@ setup_start_over_modal <- function(input, session, rv, i18n, project_data_reacti
   })
 
   observeEvent(input$confirm_start_over, {
-    cat("[AI ISA] Starting over - resetting all data\n")
+    debug_log("Starting over - resetting all data", "AI ISA")
 
     # Reset step
     rv$current_step <- 0
@@ -935,7 +935,7 @@ setup_start_over_modal <- function(input, session, rv, i18n, project_data_reacti
     # Clear project data (if saved)
     current_data <- project_data_reactive()
     if (!is.null(current_data$data$isa_data)) {
-      cat("[AI ISA] Clearing saved project ISA data\n")
+      debug_log("Clearing saved project ISA data", "AI ISA")
       current_data$data$isa_data <- NULL
       current_data$data$cld <- list(nodes = NULL, edges = NULL)
       current_data$data$metadata$data_source <- NULL
@@ -957,7 +957,7 @@ setup_start_over_modal <- function(input, session, rv, i18n, project_data_reacti
     removeModal()
 
     showNotification(i18n$t("common.messages.all_data_cleared_starting_over"), type = "message", duration = 3)
-    cat("[AI ISA] Reset complete\n")
+    debug_log("Reset complete", "AI ISA")
   })
 }
 

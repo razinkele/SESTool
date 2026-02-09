@@ -68,31 +68,13 @@ templateRecommendationUI <- function(id) {
               selectInput(
                 ns("regional_sea"),
                 "Regional Sea",
-                choices = c(
-                  "Baltic Sea",
-                  "North Sea",
-                  "Celtic Seas",
-                  "Bay of Biscay and Iberian Coast",
-                  "Western Mediterranean Sea",
-                  "Adriatic Sea",
-                  "Ionian Sea and Central Mediterranean Sea",
-                  "Aegean-Levantine Sea",
-                  "Black Sea",
-                  "Macaronesia",
-                  "Caribbean Sea",
-                  "Other"
-                ),
+                choices = c(REGIONAL_SEA_CHOICES, "Other"),
                 selected = "Baltic Sea"
               ),
               selectizeInput(
                 ns("ecosystem_types"),
                 "Ecosystem Types (multiple)",
-                choices = c(
-                  "Coastal", "Shelf", "Deep Sea", "Pelagic", "Benthic",
-                  "Rocky Shore", "Sandy Shore", "Mudflat", "Saltmarsh",
-                  "Seagrass", "Kelp Forest", "Coral Reef", "Mangrove",
-                  "Estuary", "Lagoon", "Fjord", "Other"
-                ),
+                choices = ECOSYSTEM_TYPE_CHOICES_DETAILED,
                 multiple = TRUE,
                 options = list(placeholder = "Select ecosystem types")
               ),
@@ -740,9 +722,4 @@ templateRecommendationServer <- function(id, training_data, similarity_matrix = 
 # Startup Message
 # ==============================================================================
 
-cat("✓ Template Recommendation module loaded\n")
-cat("  - templateRecommendationUI(): UI for ML bootstrap workflow\n")
-cat("  - templateRecommendationServer(): Server logic for template creation\n")
-cat("  - Automatic source template recommendation\n")
-cat("  - Transfer learning strategy selection\n")
-cat("  - Template versioning support\n")
+debug_log("Template Recommendation module loaded", "TEMPLATE_REC")

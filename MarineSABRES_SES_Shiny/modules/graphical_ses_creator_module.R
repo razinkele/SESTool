@@ -312,7 +312,7 @@ graphical_ses_creator_ui <- function(id, i18n) {
       # LEFT PANEL: Context Wizard
       div(id = ns("context_panel"), class = "context-wizard-panel",
         div(class = "panel-header",
-          h4(icon("compass"), " Context Wizard"),
+          h4(icon("compass"), " ", i18n$t("modules.graphical_ses_creator.context_wizard")),
           actionButton(ns("toggle_context"), label = "", icon = icon("chevron-left"),
                       class = "btn-sm", style = "border: none; background: none;")
         ),
@@ -324,27 +324,27 @@ graphical_ses_creator_ui <- function(id, i18n) {
       # CENTER PANEL: Graph Canvas
       div(class = "graph-canvas-panel",
         div(class = "canvas-header",
-          h4(icon("project-diagram"), " SES Network"),
+          h4(icon("project-diagram"), " ", i18n$t("modules.graphical_ses_creator.ses_network")),
           div(class = "canvas-controls",
             # ML Status Badge
             if (exists("ML_AVAILABLE") && ML_AVAILABLE) {
               tags$span(
                 style = "background: #4CAF50; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-right: 10px;",
-                icon("brain"), " ML Enhanced"
+                icon("brain"), " ", i18n$t("modules.graphical_ses_creator.ml_enhanced")
               )
             } else {
               tags$span(
                 style = "background: #9E9E9E; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-right: 10px;",
-                icon("lightbulb"), " Rule-Based AI"
+                icon("lightbulb"), " ", i18n$t("modules.graphical_ses_creator.rule_based_ai")
               )
             },
-            actionButton(ns("zoom_fit"), label = "", icon = icon("expand"), title = "Fit to view",
+            actionButton(ns("zoom_fit"), label = "", icon = icon("expand"), title = i18n$t("modules.graphical_ses_creator.fit_to_view"),
                         class = "btn-sm btn-default"),
-            actionButton(ns("undo"), label = "", icon = icon("undo"), title = "Undo",
+            actionButton(ns("undo"), label = "", icon = icon("undo"), title = i18n$t("modules.graphical_ses_creator.undo"),
                         class = "btn-sm btn-default"),
-            actionButton(ns("clear_ghosts"), label = "", icon = icon("ghost"), title = "Clear suggestions",
+            actionButton(ns("clear_ghosts"), label = "", icon = icon("ghost"), title = i18n$t("modules.graphical_ses_creator.clear_suggestions"),
                         class = "btn-sm btn-warning"),
-            actionButton(ns("save_network"), label = "", icon = icon("save"), title = "Save",
+            actionButton(ns("save_network"), label = "", icon = icon("save"), title = i18n$t("modules.graphical_ses_creator.save"),
                         class = "btn-sm btn-primary")
           )
         ),
@@ -362,7 +362,7 @@ graphical_ses_creator_ui <- function(id, i18n) {
       # RIGHT PANEL: Details & Expansion
       div(class = "details-expansion-panel",
         div(class = "panel-header",
-          h4(icon("info-circle"), " Details")
+          h4(icon("info-circle"), " ", i18n$t("modules.graphical_ses_creator.details"))
         ),
 
         uiOutput(ns("details_content"))
@@ -371,12 +371,12 @@ graphical_ses_creator_ui <- function(id, i18n) {
 
     # BOTTOM ACTION BAR
     div(class = "action-bar",
-      actionButton(ns("restart"), label = "Start Over", icon = icon("refresh"),
+      actionButton(ns("restart"), label = i18n$t("modules.graphical_ses_creator.start_over"), icon = icon("refresh"),
                   class = "btn-warning"),
       div(
-        actionButton(ns("export_isa"), label = "Export to ISA", icon = icon("download"),
+        actionButton(ns("export_isa"), label = i18n$t("modules.graphical_ses_creator.export_to_isa"), icon = icon("download"),
                     class = "btn-primary"),
-        actionButton(ns("continue_standard"), label = "Continue in Standard Entry", icon = icon("arrow-right"),
+        actionButton(ns("continue_standard"), label = i18n$t("modules.graphical_ses_creator.continue_in_standard_entry"), icon = icon("arrow-right"),
                     class = "btn-success")
       )
     )
@@ -399,7 +399,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    message("[GRAPHICAL SES CREATOR] Module initialized")
+    debug_log("Module initialized", "GRAPHICAL SES CREATOR")
 
     # Auto-collapse sidebar when this tab is active
     observe({
@@ -489,7 +489,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         rv$history_index <- 20
       }
 
-      message("[GRAPHICAL SES] Saved to history (index: ", rv$history_index, ")")
+      debug_log(paste("Saved to history (index:", rv$history_index, ")"), "GRAPHICAL SES")
     }
 
     restore_from_history <- function(index) {
@@ -499,7 +499,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         rv$network_edges <- state$edges
         rv$last_modified <- state$timestamp
 
-        message("[GRAPHICAL SES] Restored from history (index: ", index, ")")
+        debug_log(paste("Restored from history (index:", index, ")"), "GRAPHICAL SES")
       }
     }
 
@@ -508,7 +508,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       rv$ghost_edges <- data.frame()
       rv$expanded_node_id <- NULL
 
-      message("[GRAPHICAL SES] Cleared ghost nodes")
+      debug_log("Cleared ghost nodes", "GRAPHICAL SES")
     }
 
     # =========================================================================
@@ -530,21 +530,17 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         div(class = paste0("wizard-step", if(step == 1) " active" else if(!is.null(rv$context$regional_sea)) " completed" else ""),
           div(
             span(class = "wizard-step-number", "1"),
-            span(class = "wizard-step-title", "Regional Sea")
+            span(class = "wizard-step-title", i18n$t("modules.graphical_ses_creator.regional_sea"))
           ),
           if (step >= 1) {
             selectInput(ns("regional_sea"),
               label = NULL,
-              choices = c("", "Baltic Sea", "North Sea", "Celtic Seas",
-                         "Bay of Biscay & Iberian Coast", "Western Mediterranean",
-                         "Adriatic Sea", "Ionian & Central Mediterranean",
-                         "Aegean-Levantine Sea", "Black Sea",
-                         "Macaronesia", "Arctic Ocean"),
+              choices = c("", REGIONAL_SEA_CHOICES),
               selected = rv$context$regional_sea %||% "",
               width = "100%"
             )
           } else {
-            div(class = "text-muted", style = "font-size: 12px;", "Complete previous steps")
+            div(class = "text-muted", style = "font-size: 12px;", i18n$t("modules.graphical_ses_creator.complete_previous_steps"))
           }
         ),
 
@@ -552,17 +548,17 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         div(class = paste0("wizard-step", if(step == 2) " active" else if(!is.null(rv$context$ecosystem_type)) " completed" else ""),
           div(
             span(class = "wizard-step-number", "2"),
-            span(class = "wizard-step-title", "Ecosystem Type")
+            span(class = "wizard-step-title", i18n$t("modules.graphical_ses_creator.ecosystem_type"))
           ),
           if (step >= 2) {
             selectInput(ns("ecosystem_type"),
               label = NULL,
-              choices = c("", "Open coast", "Lagoon", "Estuary", "Offshore", "Deep sea"),
+              choices = c("", ECOSYSTEM_TYPE_CHOICES),
               selected = rv$context$ecosystem_type %||% "",
               width = "100%"
             )
           } else {
-            div(class = "text-muted", style = "font-size: 12px;", "Complete previous steps")
+            div(class = "text-muted", style = "font-size: 12px;", i18n$t("modules.graphical_ses_creator.complete_previous_steps"))
           }
         ),
 
@@ -570,26 +566,26 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         div(class = paste0("wizard-step", if(step == 3) " active" else if(!is.null(rv$context$main_issue)) " completed" else ""),
           div(
             span(class = "wizard-step-number", "3"),
-            span(class = "wizard-step-title", "Main Issue")
+            span(class = "wizard-step-title", i18n$t("modules.graphical_ses_creator.main_issue"))
           ),
           if (step >= 3 && step < 6) {
             tagList(
               textInput(ns("main_issue"),
                 label = NULL,
-                placeholder = "e.g., Overfishing, Eutrophication, Tourism pressure...",
+                placeholder = i18n$t("modules.graphical_ses_creator.main_issue_placeholder"),
                 value = rv$context$main_issue %||% "",
                 width = "100%"
               ),
               div(class = "text-muted", style = "font-size: 11px; margin-top: 5px;",
-                "What is the primary environmental issue or challenge?"),
-              actionButton(ns("confirm_main_issue"), "Continue",
+                i18n$t("modules.graphical_ses_creator.main_issue_help")),
+              actionButton(ns("confirm_main_issue"), i18n$t("modules.graphical_ses_creator.continue"),
                           class = "btn-primary btn-sm", style = "margin-top: 10px; width: 100%;")
             )
           } else if (step > 3) {
             div(class = "text-success", style = "font-size: 12px;",
-              icon("check-circle"), " Issue defined: ", rv$context$main_issue)
+              icon("check-circle"), " ", i18n$t("modules.graphical_ses_creator.issue_defined"), " ", rv$context$main_issue)
           } else {
-            div(class = "text-muted", style = "font-size: 12px;", "Complete previous steps")
+            div(class = "text-muted", style = "font-size: 12px;", i18n$t("modules.graphical_ses_creator.complete_previous_steps"))
           }
         ),
 
@@ -597,26 +593,26 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         div(class = paste0("wizard-step", if(step == 4) " active" else if(step > 4) " completed" else ""),
           div(
             span(class = "wizard-step-number", "4"),
-            span(class = "wizard-step-title", "Prominent Element")
+            span(class = "wizard-step-title", i18n$t("modules.graphical_ses_creator.prominent_element"))
           ),
           if (step >= 4 && step < 6) {
             tagList(
               textInput(ns("prominent_element"),
                 label = NULL,
-                placeholder = "e.g., Commercial fishing, Nutrient runoff...",
+                placeholder = i18n$t("modules.graphical_ses_creator.prominent_element_placeholder"),
                 value = "",
                 width = "100%"
               ),
               div(class = "text-muted", style = "font-size: 11px; margin-top: 5px;",
-                "What is the most important element in your system?"),
-              actionButton(ns("classify_element"), "Classify Element",
+                i18n$t("modules.graphical_ses_creator.prominent_element_help")),
+              actionButton(ns("classify_element"), i18n$t("modules.graphical_ses_creator.classify_element"),
                           class = "btn-primary btn-sm", style = "margin-top: 10px; width: 100%;")
             )
           } else if (step > 4) {
             div(class = "text-success", style = "font-size: 12px;",
-              icon("check-circle"), " Element classified")
+              icon("check-circle"), " ", i18n$t("modules.graphical_ses_creator.element_classified"))
           } else {
-            div(class = "text-muted", style = "font-size: 12px;", "Complete previous steps")
+            div(class = "text-muted", style = "font-size: 12px;", i18n$t("modules.graphical_ses_creator.complete_previous_steps"))
           }
         ),
 
@@ -624,7 +620,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         div(class = paste0("wizard-step", if(step == 5) " active" else if(step > 5) " completed" else ""),
           div(
             span(class = "wizard-step-number", "5"),
-            span(class = "wizard-step-title", "Confirm Type")
+            span(class = "wizard-step-title", i18n$t("modules.graphical_ses_creator.confirm_type"))
           ),
           if (step == 5 && !is.null(rv$classification_result)) {
             tagList(
@@ -633,12 +629,12 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
                 if (exists("ML_AVAILABLE") && ML_AVAILABLE) {
                   tagList(
                     icon("brain", style = "color: #4CAF50;"),
-                    " ML-Enhanced AI suggests:"
+                    " ", i18n$t("modules.graphical_ses_creator.ml_enhanced_ai_suggests")
                   )
                 } else {
                   tagList(
                     icon("lightbulb", style = "color: #FF9800;"),
-                    " Rule-Based AI suggests:"
+                    " ", i18n$t("modules.graphical_ses_creator.rule_based_ai_suggests")
                   )
                 }),
 
@@ -674,14 +670,14 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
                 )
               }),
 
-              actionButton(ns("confirm_classification"), "Create First Node",
+              actionButton(ns("confirm_classification"), i18n$t("modules.graphical_ses_creator.create_first_node"),
                           class = "btn-success btn-sm", style = "margin-top: 15px; width: 100%;")
             )
           } else if (step > 5) {
             div(class = "text-success", style = "font-size: 12px;",
-              icon("check-circle"), " First node created")
+              icon("check-circle"), " ", i18n$t("modules.graphical_ses_creator.first_node_created"))
           } else {
-            div(class = "text-muted", style = "font-size: 12px;", "Complete previous steps")
+            div(class = "text-muted", style = "font-size: 12px;", i18n$t("modules.graphical_ses_creator.complete_previous_steps"))
           }
         ),
 
@@ -690,10 +686,10 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
           div(class = "wizard-step active",
             div(
               span(class = "wizard-step-number", icon("check")),
-              span(class = "wizard-step-title", "Building Network")
+              span(class = "wizard-step-title", i18n$t("modules.graphical_ses_creator.building_network"))
             ),
             div(style = "font-size: 12px; color: #666; margin-top: 10px;",
-              "Click nodes to expand the network with AI suggestions.")
+              i18n$t("modules.graphical_ses_creator.click_nodes_to_expand"))
           )
         } else {
           NULL
@@ -710,7 +706,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       req(input$regional_sea != "")
       rv$context$regional_sea <- input$regional_sea
       rv$wizard_step <- 2
-      message("[GRAPHICAL SES] Step 1 complete: ", input$regional_sea)
+      debug_log(paste("Step 1 complete:", input$regional_sea), "GRAPHICAL SES")
     })
 
     # Step 2: Ecosystem Type
@@ -718,7 +714,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       req(input$ecosystem_type != "")
       rv$context$ecosystem_type <- input$ecosystem_type
       rv$wizard_step <- 3
-      message("[GRAPHICAL SES] Step 2 complete: ", input$ecosystem_type)
+      debug_log(paste("Step 2 complete:", input$ecosystem_type), "GRAPHICAL SES")
     })
 
     # Step 3: Main Issue - Confirm Button
@@ -727,7 +723,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       req(nchar(trimws(input$main_issue)) > 0)
       rv$context$main_issue <- trimws(input$main_issue)
       rv$wizard_step <- 4
-      message("[GRAPHICAL SES] Step 3 complete: ", input$main_issue)
+      debug_log(paste("Step 3 complete:", input$main_issue), "GRAPHICAL SES")
     })
 
     # Step 4: Classify Element
@@ -736,11 +732,11 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       req(nchar(trimws(input$prominent_element)) > 0)
 
       showModal(modalDialog(
-        title = "Classifying Element...",
+        title = i18n$t("modules.graphical_ses_creator.classifying_element"),
         div(style = "text-align: center; padding: 20px;",
           icon("spinner", "fa-spin", style = "font-size: 48px; color: #2196F3;"),
-          h4(style = "margin-top: 20px;", "AI is analyzing your element..."),
-          p("This will only take a moment.")
+          h4(style = "margin-top: 20px;", i18n$t("modules.graphical_ses_creator.ai_analyzing_element")),
+          p(i18n$t("modules.graphical_ses_creator.only_take_a_moment"))
         ),
         footer = NULL,
         easyClose = FALSE
@@ -750,7 +746,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       result <- tryCatch({
         # Use ML-enhanced classification if ML is available
         if (exists("ML_AVAILABLE") && ML_AVAILABLE && exists("classify_element_ml_enhanced")) {
-          message("[GRAPHICAL SES] Using ML-enhanced classification")
+          debug_log("Using ML-enhanced classification", "GRAPHICAL SES")
           classify_element_ml_enhanced(
             element_name = trimws(input$prominent_element),
             context = rv$context,
@@ -758,7 +754,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
           )
         } else {
           # Fall back to rule-based classification
-          message("[GRAPHICAL SES] Using rule-based classification")
+          debug_log("Using rule-based classification", "GRAPHICAL SES")
           classify_element_with_ai(
             element_name = trimws(input$prominent_element),
             context = rv$context,
@@ -766,7 +762,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
           )
         }
       }, error = function(e) {
-        message("[GRAPHICAL SES] Classification error: ", e$message)
+        debug_log(paste("Classification error:", e$message), "GRAPHICAL SES")
         return(NULL)
       })
 
@@ -794,10 +790,10 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
     # Step 5: Select Type
     observeEvent(input$select_type, {
       rv$selected_classification_type <- input$select_type
-      message("[GRAPHICAL SES] Type selected: ", input$select_type)
+      debug_log(paste("Type selected:", input$select_type), "GRAPHICAL SES")
     })
 
-    # Step 5: Confirm Classification → Create First Node
+    # Step 5: Confirm Classification -> Create First Node
     observeEvent(input$confirm_classification, {
       req(rv$selected_classification_type)
       req(rv$classification_result)
@@ -820,7 +816,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
             session_id = session$token
           )
         }, error = function(e) {
-          message("[GRAPHICAL SES] Feedback logging failed: ", e$message)
+          debug_log(paste("Feedback logging failed:", e$message), "GRAPHICAL SES")
         })
       }
 
@@ -845,7 +841,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         font.size = FONT_SIZE_LARGE,
         font.color = "#ffffff",
         is_ghost = FALSE,
-        title = paste0("<b>", htmltools::htmlEscape(rv$classification_result$element_name), "</b><br>Type: ", htmltools::htmlEscape(rv$selected_classification_type)),
+        title = paste0("<b>", htmltools::htmlEscape(rv$classification_result$element_name), "</b><br>", i18n$t("modules.graphical_ses_creator.node_tooltip_type"), " ", htmltools::htmlEscape(rv$selected_classification_type)),
         hidden = FALSE,
         physics = TRUE,
         stringsAsFactors = FALSE
@@ -877,7 +873,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         duration = 5
       )
 
-      message("[GRAPHICAL SES] First node created: ", first_node_id)
+      debug_log(paste("First node created:", first_node_id), "GRAPHICAL SES")
     })
 
     # =========================================================================
@@ -889,9 +885,9 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         # Empty state
         div(class = "empty-state",
           div(class = "empty-icon", icon("project-diagram")),
-          div(class = "empty-text", "No Network Yet"),
+          div(class = "empty-text", i18n$t("modules.graphical_ses_creator.no_network_yet")),
           div(class = "empty-hint",
-            "Complete the context wizard to start building your SES network")
+            i18n$t("modules.graphical_ses_creator.complete_wizard_hint"))
         )
       } else {
         # Render network
@@ -934,7 +930,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
 
     observeEvent(input$node_clicked, {
       clicked_id <- input$node_clicked
-      message("[GRAPHICAL SES] Node clicked: ", clicked_id)
+      debug_log(paste("Node clicked:", clicked_id), "GRAPHICAL SES")
 
       # Check if ghost node
       if (startsWith(clicked_id, "GHOST_")) {
@@ -952,7 +948,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       ghost_node <- rv$ghost_nodes[rv$ghost_nodes$id == ghost_id, ]
 
       if (nrow(ghost_node) == 0) {
-        message("[GRAPHICAL SES] Ghost node not found: ", ghost_id)
+        debug_log(paste("Ghost node not found:", ghost_id), "GRAPHICAL SES")
         return()
       }
 
@@ -983,7 +979,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
                 session_id = session$token
               )
             }, error = function(e) {
-              message("[GRAPHICAL SES] Feedback logging failed: ", e$message)
+              debug_log(paste("Feedback logging failed:", e$message), "GRAPHICAL SES")
             })
           }
         }
@@ -1031,7 +1027,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         duration = 2
       )
 
-      message("[GRAPHICAL SES] Accepted ghost node: ", new_node_id)
+      debug_log(paste("Accepted ghost node:", new_node_id), "GRAPHICAL SES")
     }
 
     # =========================================================================
@@ -1042,15 +1038,15 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       if (is.null(rv$selected_node_id)) {
         div(class = "empty-state",
           div(class = "empty-icon", icon("mouse-pointer")),
-          div(class = "empty-text", "No Node Selected"),
-          div(class = "empty-hint", "Click a node to see details and expand options")
+          div(class = "empty-text", i18n$t("modules.graphical_ses_creator.no_node_selected")),
+          div(class = "empty-hint", i18n$t("modules.graphical_ses_creator.click_node_for_details"))
         )
       } else {
         # Show node details
         node <- rv$network_nodes[rv$network_nodes$id == rv$selected_node_id, ]
 
         if (nrow(node) == 0) {
-          return(div("Node not found"))
+          return(div(i18n$t("modules.graphical_ses_creator.node_not_found")))
         }
 
         tagList(
@@ -1061,17 +1057,17 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
 
           div(class = "node-actions",
             actionButton(ns("expand_node"),
-              label = "Expand Network",
+              label = i18n$t("modules.graphical_ses_creator.expand_network"),
               icon = icon("plus-circle"),
               class = "btn-primary btn-block"
             ),
             actionButton(ns("edit_node"),
-              label = "Edit",
+              label = i18n$t("modules.graphical_ses_creator.edit"),
               icon = icon("edit"),
               class = "btn-default btn-block"
             ),
             actionButton(ns("delete_node"),
-              label = "Delete",
+              label = i18n$t("modules.graphical_ses_creator.delete"),
               icon = icon("trash"),
               class = "btn-danger btn-block"
             )
@@ -1081,7 +1077,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
           if (!is.null(rv$expanded_node_id) && rv$expanded_node_id == rv$selected_node_id && nrow(rv$ghost_nodes) > 0) {
             tagList(
               hr(),
-              h5("Suggested Elements:"),
+              h5(i18n$t("modules.graphical_ses_creator.suggested_elements")),
               div(style = "max-height: 400px; overflow-y: auto;",
                 lapply(1:nrow(rv$ghost_nodes), function(i) {
                   ghost <- rv$ghost_nodes[i, ]
@@ -1091,7 +1087,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
                     div(class = "suggestion-name", ghost$name),
                     div(class = "suggestion-type", icon("tag"), " ", ghost$type),
                     div(class = "suggestion-connection",
-                      icon("arrow-right"), " Click to add")
+                      icon("arrow-right"), " ", i18n$t("modules.graphical_ses_creator.click_to_add"))
                   )
                 })
               )
@@ -1117,11 +1113,11 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       }
 
       showModal(modalDialog(
-        title = "Generating Suggestions...",
+        title = i18n$t("modules.graphical_ses_creator.generating_suggestions"),
         div(style = "text-align: center; padding: 20px;",
           icon("lightbulb", "fa-spin", style = "font-size: 48px; color: #ff9800;"),
-          h4(style = "margin-top: 20px;", "AI is finding connected elements..."),
-          p("This may take a moment.")
+          h4(style = "margin-top: 20px;", i18n$t("modules.graphical_ses_creator.ai_finding_connected")),
+          p(i18n$t("modules.graphical_ses_creator.may_take_a_moment"))
         ),
         footer = NULL,
         easyClose = FALSE
@@ -1131,7 +1127,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       suggestions <- tryCatch({
         # Use ML-ranked suggestions if ML is available
         if (exists("ML_AVAILABLE") && ML_AVAILABLE && exists("suggest_connected_elements_ml")) {
-          message("[GRAPHICAL SES] Using ML-ranked suggestions")
+          debug_log("Using ML-ranked suggestions", "GRAPHICAL SES")
           suggest_connected_elements_ml(
             node_id = rv$selected_node_id,
             node_data = list(
@@ -1144,7 +1140,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
           )
         } else {
           # Fall back to rule-based suggestions
-          message("[GRAPHICAL SES] Using rule-based suggestions")
+          debug_log("Using rule-based suggestions", "GRAPHICAL SES")
           suggest_connected_elements(
             node_id = rv$selected_node_id,
             node_data = list(
@@ -1157,7 +1153,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
           )
         }
       }, error = function(e) {
-        message("[GRAPHICAL SES] Suggestion error: ", e$message)
+        debug_log(paste("Suggestion error:", e$message), "GRAPHICAL SES")
         return(list())
       })
 
@@ -1191,7 +1187,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         duration = 3
       )
 
-      message("[GRAPHICAL SES] Created ", length(suggestions), " ghost nodes")
+      debug_log(paste("Created", length(suggestions), "ghost nodes"), "GRAPHICAL SES")
     })
 
     # =========================================================================
@@ -1221,11 +1217,11 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
 
     observeEvent(input$restart, {
       showModal(modalDialog(
-        title = "Start Over?",
-        "This will clear your network and restart the wizard. Are you sure?",
+        title = i18n$t("modules.graphical_ses_creator.start_over_confirm_title"),
+        i18n$t("modules.graphical_ses_creator.start_over_confirm_body"),
         footer = tagList(
-          modalButton("Cancel"),
-          actionButton(ns("confirm_restart"), "Yes, Start Over", class = "btn-danger")
+          modalButton(i18n$t("modules.graphical_ses_creator.cancel")),
+          actionButton(ns("confirm_restart"), i18n$t("modules.graphical_ses_creator.yes_start_over"), class = "btn-danger")
         )
       ))
     })
@@ -1293,14 +1289,14 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
 
       if (!validation$is_valid) {
         showModal(modalDialog(
-          title = "Cannot Export",
+          title = i18n$t("modules.graphical_ses_creator.cannot_export"),
           div(
-            h4("Network validation failed:"),
+            h4(i18n$t("modules.graphical_ses_creator.network_validation_failed")),
             tags$ul(
               lapply(validation$issues, function(issue) tags$li(issue))
             )
           ),
-          footer = modalButton("Close")
+          footer = modalButton(i18n$t("modules.graphical_ses_creator.close"))
         ))
         return()
       }
@@ -1315,10 +1311,10 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       }
 
       showModal(modalDialog(
-        title = "Exporting to ISA...",
+        title = i18n$t("modules.graphical_ses_creator.exporting_to_isa"),
         div(style = "text-align: center; padding: 20px;",
           icon("spinner", "fa-spin", style = "font-size: 48px; color: #4CAF50;"),
-          h4(style = "margin-top: 20px;", "Converting network to ISA format...")
+          h4(style = "margin-top: 20px;", i18n$t("modules.graphical_ses_creator.converting_to_isa_format"))
         ),
         footer = NULL,
         easyClose = FALSE
@@ -1332,7 +1328,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
           context = rv$context
         )
       }, error = function(e) {
-        message("[GRAPHICAL SES] Export error: ", e$message)
+        debug_log(paste("Export error:", e$message), "GRAPHICAL SES")
         return(NULL)
       })
 
@@ -1354,7 +1350,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         duration = 5
       )
 
-      message("[GRAPHICAL SES] Exported network to ISA")
+      debug_log("Exported network to ISA", "GRAPHICAL SES")
     })
 
     # =========================================================================
@@ -1367,19 +1363,19 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       n_ghosts <- nrow(rv$ghost_nodes)
 
       if (n_nodes == 0) {
-        return(div("No network data"))
+        return(div(i18n$t("modules.graphical_ses_creator.no_network_data")))
       }
 
       tagList(
         span(class = "stat",
-          span(class = "stat-label", "Nodes:"), " ", n_nodes
+          span(class = "stat-label", i18n$t("modules.graphical_ses_creator.nodes")), " ", n_nodes
         ),
         span(class = "stat",
-          span(class = "stat-label", "Connections:"), " ", n_edges
+          span(class = "stat-label", i18n$t("modules.graphical_ses_creator.connections")), " ", n_edges
         ),
         if (n_ghosts > 0) {
           span(class = "stat",
-            span(class = "stat-label", "Suggestions:"), " ", n_ghosts
+            span(class = "stat-label", i18n$t("modules.graphical_ses_creator.suggestions")), " ", n_ghosts
           )
         } else {
           NULL

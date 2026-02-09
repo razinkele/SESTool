@@ -1,15 +1,5 @@
 {
-  "languages": [
-    "en",
-    "es",
-    "fr",
-    "de",
-    "lt",
-    "pt",
-    "it",
-    "no",
-    "el"
-  ],
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
   "translation": {
     "ui.sidebar.ai_assistant": {
       "en": "AI Assistant",
@@ -681,6 +671,94 @@
       "it": "Carica modelli SES precostituiti dalla directory SESModels organizzati per Area di Dimostrazione",
       "no": "Last inn forhåndsbygde SES-modeller fra SESModels-katalogen organisert etter Demonstrasjonsområde",
       "el": "Load pre-built SES models from the SESModels directory organized by Demonstration Area"
+    },
+    "ui.sidebar.boolean_analysis": {
+      "en": "Boolean & Stability",
+      "es": "Booleano y Estabilidad",
+      "fr": "Booléen et Stabilité",
+      "de": "Boolesch und Stabilität",
+      "lt": "Būlio ir stabilumas",
+      "pt": "Booleano e Estabilidade",
+      "it": "Booleano e Stabilità",
+      "no": "Boolean & Stability",
+      "el": "Boolean & Stability"
+    },
+    "ui.sidebar.tooltip.boolean_analysis": {
+      "en": "Analyze system stability through Laplacian eigenvalue spectra and Boolean network attractor dynamics to understand resilience",
+      "es": "Analice la estabilidad del sistema mediante espectros de valores propios de Laplacian y dinámica de atractores de redes booleanas",
+      "fr": "Analysez la stabilité du système par les spectres de valeurs propres laplaciennes et la dynamique des attracteurs de réseaux booléens",
+      "de": "Analysieren Sie die Systemstabilität durch Laplace-Eigenwertspektren und Boolesche Netzwerk-Attraktordynamik",
+      "lt": "Analizuokite sistemos stabilumą naudodami Laplaso tikrinių verčių spektrus ir Būlio tinklo atraktorių dinamiką",
+      "pt": "Analise a estabilidade do sistema através de espectros de autovalores Laplacianos e dinâmica de atratores de redes booleanas",
+      "it": "Analizza la stabilità del sistema attraverso spettri di autovalori laplaciani e dinamica degli attrattori di reti booleane",
+      "no": "Analyze system stability through Laplacian eigenvalue spectra and Boolean network attractor dynamics",
+      "el": "Analyze system stability through Laplacian eigenvalue spectra and Boolean network attractor dynamics"
+    },
+    "ui.sidebar.dynamic_simulation": {
+      "en": "Dynamic Simulation",
+      "es": "Simulación Dinámica",
+      "fr": "Simulation Dynamique",
+      "de": "Dynamische Simulation",
+      "lt": "Dinaminė simuliacija",
+      "pt": "Simulação Dinâmica",
+      "it": "Simulazione Dinamica",
+      "no": "Dynamic Simulation",
+      "el": "Dynamic Simulation"
+    },
+    "ui.sidebar.tooltip.dynamic_simulation": {
+      "en": "Run deterministic time-series simulations and Monte Carlo state-shift robustness analysis on your SES network",
+      "es": "Ejecute simulaciones deterministas de series temporales y análisis de robustez Monte Carlo de cambio de estado en su red SES",
+      "fr": "Exécutez des simulations déterministes de séries temporelles et une analyse de robustesse Monte Carlo de changement d'état sur votre réseau SES",
+      "de": "Führen Sie deterministische Zeitreihensimulationen und Monte-Carlo-Zustandsänderungs-Robustheitsanalysen in Ihrem SES-Netzwerk durch",
+      "lt": "Vykdykite deterministines laiko eilučių simuliacijas ir Monte Karlo būsenos pokyčių patikimumo analizę savo SES tinkle",
+      "pt": "Execute simulações determinísticas de séries temporais e análise de robustez Monte Carlo de mudança de estado na sua rede SES",
+      "it": "Esegui simulazioni deterministiche di serie temporali e analisi di robustezza Monte Carlo del cambiamento di stato sulla tua rete SES",
+      "no": "Run deterministic time-series simulations and Monte Carlo state-shift robustness analysis on your SES network",
+      "el": "Run deterministic time-series simulations and Monte Carlo state-shift robustness analysis on your SES network"
+    },
+    "ui.sidebar.intervention_analysis": {
+      "en": "Intervention Analysis",
+      "es": "Análisis de Intervención",
+      "fr": "Analyse d'Intervention",
+      "de": "Interventionsanalyse",
+      "lt": "Intervencijos analizė",
+      "pt": "Análise de Intervenção",
+      "it": "Analisi dell'Intervento",
+      "no": "Intervention Analysis",
+      "el": "Intervention Analysis"
+    },
+    "ui.sidebar.tooltip.intervention_analysis": {
+      "en": "Design management interventions, simulate their effects on the SES network, and compare multiple intervention scenarios side by side",
+      "es": "Diseñe intervenciones de gestión, simule sus efectos en la red SES y compare múltiples escenarios de intervención lado a lado",
+      "fr": "Concevez des interventions de gestion, simulez leurs effets sur le réseau SES et comparez plusieurs scénarios d'intervention côte à côte",
+      "de": "Entwerfen Sie Managementinterventionen, simulieren Sie deren Auswirkungen auf das SES-Netzwerk und vergleichen Sie mehrere Interventionsszenarien nebeneinander",
+      "lt": "Projektuokite valdymo intervencijas, simuliuokite jų poveikį SES tinklui ir palyginkite kelis intervencijų scenarijus greta",
+      "pt": "Projete intervenções de gestão, simule seus efeitos na rede SES e compare múltiplos cenários de intervenção lado a lado",
+      "it": "Progetta interventi di gestione, simula i loro effetti sulla rete SES e confronta più scenari di intervento fianco a fianco",
+      "no": "Design management interventions, simulate their effects on the SES network, and compare multiple intervention scenarios side by side",
+      "el": "Design management interventions, simulate their effects on the SES network, and compare multiple intervention scenarios side by side"
+    },
+    "ui.sidebar.graphical_ses_creator": {
+      "en": "Graphical SES Creator",
+      "es": "Creador Gráfico de SES",
+      "fr": "Créateur Graphique de SES",
+      "de": "Grafischer SES-Ersteller",
+      "lt": "Grafinis SES kūrėjas",
+      "pt": "Criador Gráfico de SES",
+      "it": "Creatore Grafico di SES",
+      "no": "Graphical SES Creator",
+      "el": "Graphical SES Creator"
+    },
+    "ui.sidebar.graphical_ses_tooltip": {
+      "en": "Build your SES network step-by-step with AI guidance",
+      "es": "Construya su red SES paso a paso con guía de IA",
+      "fr": "Construisez votre réseau SES étape par étape avec l'aide de l'IA",
+      "de": "Erstellen Sie Ihr SES-Netzwerk Schritt für Schritt mit KI-Unterstützung",
+      "lt": "Kurkite savo SES tinklą žingsnis po žingsnio su DI pagalba",
+      "pt": "Construa a sua rede SES passo a passo com orientação de IA",
+      "it": "Costruisci la tua rete SES passo dopo passo con la guida dell'IA",
+      "no": "Build your SES network step-by-step with AI guidance",
+      "el": "Build your SES network step-by-step with AI guidance"
     }
   }
 }

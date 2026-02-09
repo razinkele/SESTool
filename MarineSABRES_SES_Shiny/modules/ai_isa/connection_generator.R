@@ -313,13 +313,13 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
     candidates <- candidates[order(sapply(candidates, function(x) x$relevance), decreasing = TRUE)]
     n_to_return <- min(length(candidates), max_count)
     result <- lapply(1:n_to_return, function(i) candidates[[i]]$conn)
-    cat(sprintf("[AI ISA CONNECTIONS] Generated %d %s→%s connections (from %d candidates, %.0f%% filtered)\n",
+    debug_log(sprintf("Generated %d %s→%s connections (from %d candidates, %.0f%% filtered)",
                 n_to_return, toupper(substring(from_type, 1, 1)), toupper(substring(to_type, 1, 1)),
-                length(candidates), (1 - n_to_return/length(candidates)) * 100))
+                length(candidates), (1 - n_to_return/length(candidates)) * 100), "AI ISA CONNECTIONS")
     return(result)
   }
 
-  cat(sprintf("[AI ISA CONNECTIONS] No relevant %s→%s connections found\n", from_type, to_type))
+  debug_log(sprintf("No relevant %s→%s connections found", from_type, to_type), "AI ISA CONNECTIONS")
   return(list())
 }
 
@@ -443,8 +443,8 @@ convert_matrices_to_connections <- function(matrices, elements) {
     }
   }
 
-  cat(sprintf("[AI ISA] Converted %d connections from %d matrices\n",
-              length(connections), length(matrices)))
+  debug_log(sprintf("Converted %d connections from %d matrices",
+              length(connections), length(matrices)), "AI ISA")
   return(connections)
 }
 
@@ -510,22 +510,22 @@ generate_connections <- function(elements) {
   count_rd <- 0  # Responses → Drivers (feedback)
   count_ra <- 0  # Responses → Activities (feedback)
 
-  cat(sprintf("[AI ISA CONNECTIONS] Generating connections (max %d per type)...\n", MAX_PER_TYPE))
-  cat(sprintf("[AI ISA CONNECTIONS] Element counts: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d\n",
+  debug_log(sprintf("Generating connections (max %d per type)...", MAX_PER_TYPE), "AI ISA CONNECTIONS")
+  debug_log(sprintf("Element counts: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d",
               length(elements$drivers %||% list()),
               length(elements$activities %||% list()),
               length(elements$pressures %||% list()),
               length(elements$states %||% list()),
               length(elements$impacts %||% list()),
               length(elements$welfare %||% list()),
-              length(elements$responses %||% list())))
+              length(elements$responses %||% list())), "AI ISA CONNECTIONS")
 
   # Debug: Print actual element names
   if (length(elements$drivers) > 0) {
-    cat(sprintf("[AI ISA CONNECTIONS] Drivers: %s\n", paste(sapply(elements$drivers, function(x) x$name), collapse=", ")))
+    debug_log(sprintf("Drivers: %s", paste(sapply(elements$drivers, function(x) x$name), collapse=", ")), "AI ISA CONNECTIONS")
   }
   if (length(elements$activities) > 0) {
-    cat(sprintf("[AI ISA CONNECTIONS] Activities: %s\n", paste(sapply(elements$activities, function(x) x$name), collapse=", ")))
+    debug_log(sprintf("Activities: %s", paste(sapply(elements$activities, function(x) x$name), collapse=", ")), "AI ISA CONNECTIONS")
   }
 
   # D → A (Drivers → Activities): Smart connection generation
@@ -603,13 +603,9 @@ generate_connections <- function(elements) {
   }
 
   # Log final count and per-type breakdown
-  cat(sprintf("[AI ISA CONNECTIONS] ========================================\n"))
-  cat(sprintf("[AI ISA CONNECTIONS] TOTAL GENERATED: %d connections\n", length(connections)))
-  cat(sprintf("[AI ISA CONNECTIONS] Per-type breakdown:\n"))
-  cat(sprintf("[AI ISA CONNECTIONS]   D→A: %d  A→P: %d  P→S: %d\n", count_da, count_ap, count_ps))
-  cat(sprintf("[AI ISA CONNECTIONS]   S→I: %d  I→W: %d  R→P: %d\n", count_si, count_iw, count_rp))
-  cat(sprintf("[AI ISA CONNECTIONS]   W→D: %d  W→R: %d  R→D: %d  R→A: %d\n", count_wd, count_wr, count_rd, count_ra))
-  cat(sprintf("[AI ISA CONNECTIONS] ========================================\n"))
+  debug_log(sprintf("TOTAL GENERATED: %d connections | D→A:%d A→P:%d P→S:%d S→I:%d I→W:%d R→P:%d W→D:%d W→R:%d R→D:%d R→A:%d",
+    length(connections), count_da, count_ap, count_ps, count_si, count_iw, count_rp, count_wd, count_wr, count_rd, count_ra),
+    "AI ISA CONNECTIONS")
 
   return(connections)
 }

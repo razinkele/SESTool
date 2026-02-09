@@ -15,7 +15,7 @@
 build_dashboard_header <- function(i18n) {
   bs4DashNavbar(
     title = dashboardBrand(
-      title = "SES Tool",
+      title = i18n$t("ui.header.brand_title"),
       color = "primary",
       href = "https://marinesabres.eu",
       image = "img/MSabres.png"
@@ -112,7 +112,7 @@ build_dashboard_header <- function(i18n) {
             href = "#",
             onclick = "window.open('beginner_guide.html', '_blank'); return false;",
             icon("graduation-cap"),
-            tags$span("Beginner's Guide", `data-i18n`="Beginner's Guide")
+            tags$span(i18n$t("ui.header.beginners_guide"), `data-i18n`="Beginner's Guide")
           ),
           tags$a(
             href = "#",
@@ -152,7 +152,7 @@ build_dashboard_header <- function(i18n) {
             class = "pipeline-status",
             style = "display: none;", # Initially hidden
             icon("cogs", class = "fa-spin"),
-            tags$span("Processing...", style = "margin-left: 5px;")
+            tags$span(i18n$t("ui.header.processing"), style = "margin-left: 5px;")
           )
         )
       ),

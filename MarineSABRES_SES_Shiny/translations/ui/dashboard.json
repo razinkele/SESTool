@@ -1,15 +1,5 @@
 {
-  "languages": [
-    "en",
-    "es",
-    "fr",
-    "de",
-    "lt",
-    "pt",
-    "it",
-    "no",
-    "el"
-  ],
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
   "translation": {
     "ui.dashboard.title": {
       "en": "MarineSABRES Social-Ecological Systems Analysis Tool",
@@ -384,6 +374,160 @@
       "it": "Cronologia del Progetto",
       "no": "Prosjekthistorikk",
       "el": "Έργο History"
+    },
+    "ui.dashboard.leverage_analysis_complete": {
+      "en": "Leverage analysis complete",
+      "es": "Análisis de apalancamiento completo",
+      "fr": "Analyse de levier terminée",
+      "de": "Hebelanalyse abgeschlossen",
+      "lt": "Sverto analizė baigta",
+      "pt": "Análise de alavancagem completa",
+      "it": "Analisi dei punti leva completata",
+      "no": "Vektanalyse fullført",
+      "el": "Ανάλυση μόχλευσης ολοκληρώθηκε"
+    },
+    "ui.dashboard.no_analysis_performed": {
+      "en": "No analysis performed",
+      "es": "No se realizó ningún análisis",
+      "fr": "Aucune analyse effectuée",
+      "de": "Keine Analyse durchgeführt",
+      "lt": "Analizė neatlikta",
+      "pt": "Nenhuma análise realizada",
+      "it": "Nessuna analisi eseguita",
+      "no": "Ingen analyse utført",
+      "el": "Δεν εκτελέστηκε ανάλυση"
+    },
+    "ui.dashboard.timeline_project_created": {
+      "en": "Project Created",
+      "es": "Proyecto Creado",
+      "fr": "Projet Créé",
+      "de": "Projekt Erstellt",
+      "lt": "Projektas sukurtas",
+      "pt": "Projeto Criado",
+      "it": "Progetto Creato",
+      "no": "Prosjekt opprettet",
+      "el": "Έργο δημιουργήθηκε"
+    },
+    "ui.dashboard.timeline_ses_initiated": {
+      "en": "SES project initiated on",
+      "es": "Proyecto SES iniciado el",
+      "fr": "Projet SES initié le",
+      "de": "SES-Projekt gestartet am",
+      "lt": "SES projektas pradėtas",
+      "pt": "Projeto SES iniciado em",
+      "it": "Progetto SES avviato il",
+      "no": "SES-prosjekt opprettet",
+      "el": "Έργο SES ξεκίνησε στις"
+    },
+    "ui.dashboard.timeline_ses_framework_created": {
+      "en": "SES Framework Created",
+      "es": "Marco SES Creado",
+      "fr": "Cadre SES Créé",
+      "de": "SES-Rahmenwerk Erstellt",
+      "lt": "SES struktūra sukurta",
+      "pt": "Estrutura SES Criada",
+      "it": "Framework SES Creato",
+      "no": "SES-rammeverk opprettet",
+      "el": "Πλαίσιο SES δημιουργήθηκε"
+    },
+    "ui.dashboard.timeline_dapsiwrm_established": {
+      "en": "DAPSIWRM framework established with",
+      "es": "Marco DAPSIWRM establecido con",
+      "fr": "Cadre DAPSIWRM établi avec",
+      "de": "DAPSIWRM-Rahmenwerk erstellt mit",
+      "lt": "DAPSIWRM struktūra sukurta su",
+      "pt": "Estrutura DAPSIWRM estabelecida com",
+      "it": "Framework DAPSIWRM stabilito con",
+      "no": "DAPSIWRM-rammeverk etablert med",
+      "el": "Πλαίσιο DAPSIWRM δημιουργήθηκε με"
+    },
+    "ui.dashboard.timeline_elements": {
+      "en": "elements",
+      "es": "elementos",
+      "fr": "éléments",
+      "de": "Elemente",
+      "lt": "elementų",
+      "pt": "elementos",
+      "it": "elementi",
+      "no": "elementer",
+      "el": "στοιχεία"
+    },
+    "ui.dashboard.timeline_network_visualization": {
+      "en": "Network Visualization",
+      "es": "Visualización de Red",
+      "fr": "Visualisation du Réseau",
+      "de": "Netzwerk-Visualisierung",
+      "lt": "Tinklo vizualizacija",
+      "pt": "Visualização de Rede",
+      "it": "Visualizzazione della Rete",
+      "no": "Nettverksvisualisering",
+      "el": "Οπτικοποίηση δικτύου"
+    },
+    "ui.dashboard.timeline_cld_generated": {
+      "en": "CLD generated with",
+      "es": "DBC generado con",
+      "fr": "DBC généré avec",
+      "de": "ULS generiert mit",
+      "lt": "PKD sugeneruotas su",
+      "pt": "DLC gerado com",
+      "it": "DCC generato con",
+      "no": "CLD generert med",
+      "el": "CLD δημιουργήθηκε με"
+    },
+    "ui.dashboard.timeline_nodes_and": {
+      "en": "nodes and",
+      "es": "nodos y",
+      "fr": "nœuds et",
+      "de": "Knoten und",
+      "lt": "mazgų ir",
+      "pt": "nós e",
+      "it": "nodi e",
+      "no": "noder og",
+      "el": "κόμβοι και"
+    },
+    "ui.dashboard.timeline_edges": {
+      "en": "edges",
+      "es": "aristas",
+      "fr": "arêtes",
+      "de": "Kanten",
+      "lt": "briaunų",
+      "pt": "arestas",
+      "it": "archi",
+      "no": "kanter",
+      "el": "ακμές"
+    },
+    "ui.dashboard.timeline_analysis_complete": {
+      "en": "Analysis Complete",
+      "es": "Análisis Completo",
+      "fr": "Analyse Terminée",
+      "de": "Analyse Abgeschlossen",
+      "lt": "Analizė baigta",
+      "pt": "Análise Completa",
+      "it": "Analisi Completata",
+      "no": "Analyse fullført",
+      "el": "Ανάλυση ολοκληρώθηκε"
+    },
+    "ui.dashboard.timeline_leverage_calculated": {
+      "en": "Leverage point analysis and network metrics calculated",
+      "es": "Análisis de puntos de apalancamiento y métricas de red calculados",
+      "fr": "Analyse des points de levier et métriques de réseau calculés",
+      "de": "Hebelpunktanalyse und Netzwerkmetriken berechnet",
+      "lt": "Sverto taškų analizė ir tinklo metrikos apskaičiuotos",
+      "pt": "Análise de pontos de alavancagem e métricas de rede calculadas",
+      "it": "Analisi dei punti leva e metriche di rete calcolate",
+      "no": "Vektpunktanalyse og nettverksmetrikker beregnet",
+      "el": "Υπολογισμός ανάλυσης μόχλευσης και μετρικών δικτύου"
+    },
+    "ui.dashboard.timeline_no_events": {
+      "en": "No project events yet. Start building your SES!",
+      "es": "Aún no hay eventos del proyecto. ¡Empiece a construir su SES!",
+      "fr": "Aucun événement de projet. Commencez à construire votre SES !",
+      "de": "Noch keine Projektereignisse. Beginnen Sie mit dem Aufbau Ihres SES!",
+      "lt": "Kol kas projekto įvykių nėra. Pradėkite kurti savo SES!",
+      "pt": "Nenhum evento de projeto ainda. Comece a construir o seu SES!",
+      "it": "Nessun evento di progetto. Inizia a costruire il tuo SES!",
+      "no": "Ingen prosjekthendelser ennå. Begynn å bygge din SES!",
+      "el": "Δεν υπάρχουν γεγονότα έργου. Ξεκινήστε να χτίζετε το SES σας!"
     }
   }
 }

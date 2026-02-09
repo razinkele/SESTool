@@ -169,9 +169,9 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
 
     # Generate report button
     observeEvent(input$generate_report, {
-      cat("\n*** EXPORT REPORTS MODULE: Generate Report clicked ***\n")
-      cat("Report type:", input$report_type, "\n")
-      cat("Report format:", input$report_format, "\n")
+      debug_log("Generate Report clicked", "EXPORT")
+      debug_log(paste("Report type:", input$report_type), "EXPORT")
+      debug_log(paste("Report format:", input$report_format), "EXPORT")
 
       # Show progress
       showModal(modalDialog(
@@ -192,7 +192,7 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
         rmd_file <- tempfile(fileext = ".Rmd")
 
         # Generate report content using the fixed function
-        cat("[EXPORT] Calling generate_report_content()...\n")
+        debug_log("Calling generate_report_content()...", "EXPORT")
         flush.console()
 
         report_content <- tryCatch({
@@ -203,30 +203,24 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
             include_data = include_data
           )
         }, error = function(e) {
-          cat("\n!!! ERROR IN generate_report_content() !!!\n")
-          cat("Error message:", e$message, "\n")
-          cat("Error class:", class(e), "\n")
-          print(traceback())
-          cat("=====================================\n\n")
+          debug_log("ERROR IN generate_report_content()", "EXPORT")
+          debug_log(paste("Error message:", e$message), "EXPORT")
+          debug_log(paste("Error class:", paste(class(e), collapse = ", ")), "EXPORT")
           flush.console()
           stop(e)
         })
 
-        cat("[EXPORT] Report content generated successfully!\n")
-        cat("[EXPORT] Content length:", nchar(report_content), "characters\n")
-        flush.console()
+        debug_log("Report content generated successfully!", "EXPORT")
+        debug_log(paste("Content length:", nchar(report_content), "characters"), "EXPORT")
 
         writeLines(report_content, rmd_file)
-        cat("[EXPORT] Written to temp Rmd file:", rmd_file, "\n")
-        flush.console()
+        debug_log(paste("Written to temp Rmd file:", rmd_file), "EXPORT")
 
         # Render the report
         # Ensure report_format is a simple character string
         report_format_safe <- as.character(report_format)[1]
-        cat("[EXPORT] report_format:", report_format, "class:",
-            class(report_format), "\n")
-        cat("[EXPORT] report_format_safe:", report_format_safe, "\n")
-        flush.console()
+        debug_log(paste("report_format:", report_format, "class:", class(report_format)), "EXPORT")
+        debug_log(paste("report_format_safe:", report_format_safe), "EXPORT")
 
         output_format <- switch(report_format_safe,
           "HTML" = "html_document",
@@ -244,16 +238,11 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
 
         output_file <- tempfile(fileext = output_ext)
 
-        cat("[EXPORT] output_format:", output_format, "class:",
-            class(output_format), "\n")
-        cat("[EXPORT] output_file:", output_file, "class:",
-            class(output_file), "\n")
-        cat("[EXPORT] rmd_file:", rmd_file, "class:",
-            class(rmd_file), "\n")
-        flush.console()
+        debug_log(paste("output_format:", output_format, "class:", class(output_format)), "EXPORT")
+        debug_log(paste("output_file:", output_file, "class:", class(output_file)), "EXPORT")
+        debug_log(paste("rmd_file:", rmd_file, "class:", class(rmd_file)), "EXPORT")
 
-        cat("[EXPORT] About to call rmarkdown::render()...\n")
-        flush.console()
+        debug_log("About to call rmarkdown::render()...", "EXPORT")
 
         # Special handling for PDF - check if LaTeX is available
         if (report_format_safe == "PDF") {
@@ -289,8 +278,7 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
           output_file = output_file,
           quiet = FALSE  # Changed to FALSE to see rendering errors
         )
-        cat("[EXPORT] Report rendered successfully!\n")
-        flush.console()
+        debug_log("Report rendered successfully!", "EXPORT")
 
         # Store file path for download
         report_file_path(output_file)
@@ -300,7 +288,7 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
 
         # For HTML reports, open in new window/tab
         if (report_format == "HTML") {
-          cat("[EXPORT] Opening HTML report in new window...\n")
+          debug_log("Opening HTML report in new window...", "EXPORT")
 
           # Copy to www directory so it can be served by Shiny
           www_dir <- file.path(getwd(), "www", "reports")
@@ -363,11 +351,9 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
 
       }, error = function(e) {
         removeModal()
-        cat("\n!!! ERROR IN REPORT GENERATION !!!\n")
-        cat("Error message:", e$message, "\n")
-        cat("Error class:", class(e), "\n")
-        print(e)
-        cat("=====================================\n\n")
+        debug_log("ERROR IN REPORT GENERATION", "EXPORT")
+        debug_log(paste("Error message:", e$message), "EXPORT")
+        debug_log(paste("Error class:", paste(class(e), collapse = ", ")), "EXPORT")
         showNotification(paste(i18n$t("common.messages.error_generating_report"), e$message),
                          type = "error", duration = 10)
       })

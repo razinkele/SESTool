@@ -19,30 +19,33 @@ pims_project_ui <- function(id, i18n) {
     fluidRow(
       column(6,
         wellPanel(
-          h4("Project Information"),
-          textInput(ns("project_name"), "Project Name:", 
-                   placeholder = "Enter project name..."),
-          selectInput(ns("da_site"), "Demonstration Area:",
+          h4(i18n$t("modules.pims.project_information")),
+          textInput(ns("project_name"), i18n$t("modules.pims.project_name"),
+                   placeholder = i18n$t("modules.pims.project_name_placeholder")),
+          selectInput(ns("da_site"), i18n$t("modules.pims.demonstration_area"),
                      choices = c("", DA_SITES)),
-          textAreaInput(ns("focal_issue"), "Focal Issue:",
-                       placeholder = "Describe the main issue...", rows = 4),
-          textAreaInput(ns("definition_statement"), "Definition Statement:",
-                       placeholder = "Project definition and objectives...", rows = 6),
-          actionButton(ns("save_project_info"), "Save", 
+          textAreaInput(ns("focal_issue"), i18n$t("modules.pims.focal_issue"),
+                       placeholder = i18n$t("modules.pims.focal_issue_placeholder"), rows = 4),
+          textAreaInput(ns("definition_statement"), i18n$t("modules.pims.definition_statement"),
+                       placeholder = i18n$t("modules.pims.definition_statement_placeholder"), rows = 6),
+          actionButton(ns("save_project_info"), i18n$t("modules.pims.save"),
                       class = "btn-primary", icon = icon("save"))
         )
       ),
       column(6,
         wellPanel(
-          h4("System Scope"),
-          selectInput(ns("temporal_scale"), "Temporal Scale:",
-                     choices = c("", "Daily", "Monthly", "Yearly", "Decadal")),
-          selectInput(ns("spatial_scale"), "Spatial Scale:",
+          h4(i18n$t("modules.pims.system_scope")),
+          selectInput(ns("temporal_scale"), i18n$t("modules.pims.temporal_scale"),
+                     choices = stats::setNames(
+                       c("", "Daily", "Monthly", "Yearly", "Decadal"),
+                       c("", i18n$t("modules.pims.temporal_daily"), i18n$t("modules.pims.temporal_monthly"), i18n$t("modules.pims.temporal_yearly"), i18n$t("modules.pims.temporal_decadal"))
+                     )),
+          selectInput(ns("spatial_scale"), i18n$t("modules.pims.spatial_scale"),
                      choices = c("", SPATIAL_SCALES)),
-          textAreaInput(ns("system_in_focus"), "System in Focus:",
-                       placeholder = "Describe the system boundaries...", rows = 4),
+          textAreaInput(ns("system_in_focus"), i18n$t("modules.pims.system_in_focus"),
+                       placeholder = i18n$t("modules.pims.system_in_focus_placeholder"), rows = 4),
           hr(),
-          h4("Current Status"),
+          h4(i18n$t("modules.pims.current_status")),
           verbatimTextOutput(ns("project_status"))
         )
       )
@@ -126,9 +129,9 @@ pims_project_server <- function(id, project_data_reactive, i18n) {
     output$project_status <- renderPrint({
       data <- project_data_reactive()
 
-      project_id <- if (!is.null(data$project_id)) data$project_id else "Not set"
-      created_at <- if (!is.null(data$created_at)) format(data$created_at, "%Y-%m-%d %H:%M") else "Unknown"
-      last_modified <- if (!is.null(data$last_modified)) format(data$last_modified, "%Y-%m-%d %H:%M") else "Never"
+      project_id <- if (!is.null(data$project_id)) data$project_id else i18n$t("modules.pims.status_not_set")
+      created_at <- if (!is.null(data$created_at)) format(data$created_at, "%Y-%m-%d %H:%M") else i18n$t("modules.pims.status_unknown")
+      last_modified <- if (!is.null(data$last_modified)) format(data$last_modified, "%Y-%m-%d %H:%M") else i18n$t("modules.pims.status_never")
 
       cat("Project ID:", project_id, "\n")
       cat("Created:", created_at, "\n")
@@ -161,7 +164,7 @@ pims_stakeholders_ui <- function(id, i18n) {
     
     fluidRow(
       column(12,
-        actionButton(ns("add_stakeholder"), "Add Stakeholder", 
+        actionButton(ns("add_stakeholder"), i18n$t("modules.pims.add_stakeholder"),
                     icon = icon("plus"), class = "btn-success"),
         br(), br(),
         DTOutput(ns("stakeholders_table"))
@@ -234,13 +237,13 @@ pims_resources_ui <- function(id, i18n) {
     hr(),
     
     tabsetPanel(
-      tabPanel("Resources",
+      tabPanel(i18n$t("modules.pims.tab_resources"),
         br(),
-        p("Resource management to be implemented")
+        p(i18n$t("modules.pims.resources_placeholder"))
       ),
-      tabPanel("Risks",
+      tabPanel(i18n$t("modules.pims.tab_risks"),
         br(),
-        p("Risk management to be implemented")
+        p(i18n$t("modules.pims.risks_placeholder"))
       )
     )
   )
@@ -264,7 +267,7 @@ pims_data_ui <- function(id, i18n) {
     create_module_header(ns, "modules.pims.data.title", "modules.pims.data.subtitle", "pims_data_help", i18n),
     hr(),
     
-    p("Data management functionality to be implemented")
+    p(i18n$t("modules.pims.data_placeholder"))
   )
 }
 
@@ -286,7 +289,7 @@ pims_evaluation_ui <- function(id, i18n) {
     create_module_header(ns, "modules.pims.evaluation.title", "modules.pims.evaluation.subtitle", "pims_evaluation_help", i18n),
     hr(),
     
-    p("Evaluation functionality to be implemented")
+    p(i18n$t("modules.pims.evaluation_placeholder"))
   )
 }
 

@@ -214,7 +214,7 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
         current_user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
 
         # Get recommended tools
-        recommended_tools <- get_tool_recommendations(rv, current_user_level)
+        recommended_tools <- get_tool_recommendations(rv, current_user_level, i18n)
 
         # Create pathway summary text
         pathway_summary <- c()
@@ -257,24 +257,26 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
         # Create tools summary
         tools_summary <- sapply(seq_along(recommended_tools), function(i) {
           tool <- recommended_tools[[i]]
-          sprintf("%d. %s\n   %s\n   Time: %s | Skill: %s\n",
-                  i, tool$name, tool$description, tool$time_required, tool$skill_level)
+          sprintf("%d. %s\n   %s\n   %s %s | %s %s\n",
+                  i, tool$name, tool$description,
+                  i18n$t("modules.entry_point.report_time"), tool$time_required,
+                  i18n$t("modules.entry_point.report_skill"), tool$skill_level)
         })
 
         # Combine into report text
         report_text <- paste0(
-          "=== MarineSABRES Entry Point Pathway Report ===\n\n",
-          "Generated: ", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n",
-          "YOUR PATHWAY:\n",
+          i18n$t("modules.entry_point.report_header"), "\n\n",
+          i18n$t("modules.entry_point.report_generated"), " ", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n",
+          i18n$t("modules.entry_point.report_pathway"), "\n",
           paste(pathway_summary, collapse = "\n"), "\n\n",
-          "RECOMMENDED TOOLS:\n",
+          i18n$t("modules.entry_point.report_tools"), "\n",
           paste(tools_summary, collapse = "\n"), "\n\n",
-          "SUGGESTED WORKFLOW:\n",
-          "1. Start with PIMS: Define your project goals, stakeholders, and timeline\n",
-          "2. Quick start option: Use Create SES with templates or AI assistant\n",
-          "3. Build your SES model: Use ISA Data Entry to map DAPSI(W)R(M) elements\n",
-          "4. Visualize & Analyze: Create CLD networks and run analysis tools\n",
-          "5. Refine & Communicate: Simplify models and develop scenarios\n"
+          i18n$t("modules.entry_point.report_workflow"), "\n",
+          "1. ", i18n$t("modules.entry_point.report_step_1"), "\n",
+          "2. ", i18n$t("modules.entry_point.report_step_2"), "\n",
+          "3. ", i18n$t("modules.entry_point.report_step_3"), "\n",
+          "4. ", i18n$t("modules.entry_point.report_step_4"), "\n",
+          "5. ", i18n$t("modules.entry_point.report_step_5"), "\n"
         )
 
         # Create temporary file
@@ -312,28 +314,35 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
     # create these observers if parent_session is provided
 
     if (!is.null(parent_session)) {
-      # Observe tool navigation buttons dynamically
+      # Track which tool navigation observers have been created to prevent leaks
+      created_observers <- reactiveVal(character(0))
+
       observe({
         if (rv$current_screen == "recommendations") {
-          # Get current user level (default to intermediate if not provided)
           current_user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
+          recommended_tools <- get_tool_recommendations(rv, current_user_level, i18n)
+          already_created <- created_observers()
 
-          recommended_tools <- get_tool_recommendations(rv, current_user_level)
-
+          new_ids <- character(0)
           lapply(recommended_tools, function(tool) {
             btn_id <- paste0("goto_", tool$id)
 
-            observeEvent(input[[btn_id]], {
-              # Navigate to the tool's menu using parent session
-              updateTabItems(parent_session, "sidebar_menu", tool$menu_id)
-
-              showNotification(
-                sprintf(i18n$t("modules.entry_point.navigating_to_s"), tool$name),
-                type = "message",
-                duration = 2
-              )
-            }, ignoreInit = TRUE)
+            if (!(btn_id %in% already_created)) {
+              new_ids <<- c(new_ids, btn_id)
+              observeEvent(input[[btn_id]], {
+                updateTabItems(parent_session, "sidebar_menu", tool$menu_id)
+                showNotification(
+                  sprintf(i18n$t("modules.entry_point.navigating_to_s"), tool$name),
+                  type = "message",
+                  duration = 2
+                )
+              }, ignoreInit = TRUE)
+            }
           })
+
+          if (length(new_ids) > 0) {
+            created_observers(c(already_created, new_ids))
+          }
         }
       })
     }
@@ -380,51 +389,51 @@ render_welcome_screen <- function(ns, i18n) {
       # FAQ Accordion
       hr(),
       column(12,
-        h4(icon("question-circle"), " ", "Frequently Asked Questions"),
+        h4(icon("question-circle"), " ", i18n$t("modules.entry_point.faq_title")),
         bs4Accordion(
           id = ns("faq_accordion"),
           bs4AccordionItem(
-            title = "What is a Social-Ecological System (SES)?",
+            title = i18n$t("modules.entry_point.faq_ses_question"),
             status = "primary",
             collapsed = TRUE,
-            p("A Social-Ecological System (SES) is an integrated concept that recognizes humans as part of, not separate from, ecosystems. It emphasizes the interconnected nature of human societies and natural environments, where social and ecological components continuously interact and influence each other."),
-            p("In marine contexts, an SES includes fishing communities, coastal development, marine ecosystems, and the various ways they interact through activities like fishing, tourism, and conservation.")
+            p(i18n$t("modules.entry_point.faq_ses_answer_1")),
+            p(i18n$t("modules.entry_point.faq_ses_answer_2"))
           ),
           bs4AccordionItem(
-            title = "What is the DAPSIWRM framework?",
+            title = i18n$t("modules.entry_point.faq_dapsiwrm_question"),
             status = "info",
             collapsed = TRUE,
-            p("DAPSIWRM stands for Drivers → Activities → Pressures → State → Impacts → Welfare → Responses → Measures. It's a comprehensive framework for analyzing cause-effect chains in social-ecological systems."),
+            p(i18n$t("modules.entry_point.faq_dapsiwrm_answer")),
             tags$ul(
-              tags$li(strong("Drivers:"), " Root causes (e.g., population growth, economic development)"),
-              tags$li(strong("Activities:"), " Human activities (e.g., fishing, shipping)"),
-              tags$li(strong("Pressures:"), " Environmental pressures (e.g., pollution, habitat loss)"),
-              tags$li(strong("State:"), " Condition of ecosystem (e.g., biodiversity, water quality)"),
-              tags$li(strong("Impacts:"), " Effects on ecosystem services"),
-              tags$li(strong("Welfare:"), " Human well-being outcomes"),
-              tags$li(strong("Responses:"), " Management actions"),
-              tags$li(strong("Measures:"), " Policy instruments")
+              tags$li(strong("Drivers:"), " ", i18n$t("modules.entry_point.faq_dapsiwrm_drivers")),
+              tags$li(strong("Activities:"), " ", i18n$t("modules.entry_point.faq_dapsiwrm_activities")),
+              tags$li(strong("Pressures:"), " ", i18n$t("modules.entry_point.faq_dapsiwrm_pressures")),
+              tags$li(strong("State:"), " ", i18n$t("modules.entry_point.faq_dapsiwrm_state")),
+              tags$li(strong("Impacts:"), " ", i18n$t("modules.entry_point.faq_dapsiwrm_impacts")),
+              tags$li(strong("Welfare:"), " ", i18n$t("modules.entry_point.faq_dapsiwrm_welfare")),
+              tags$li(strong("Responses:"), " ", i18n$t("modules.entry_point.faq_dapsiwrm_responses")),
+              tags$li(strong("Measures:"), " ", i18n$t("modules.entry_point.faq_dapsiwrm_measures"))
             )
           ),
           bs4AccordionItem(
-            title = "How do I get started?",
+            title = i18n$t("modules.entry_point.faq_started_question"),
             status = "success",
             collapsed = TRUE,
-            p("Start with the ", strong("Guided Pathway"), " button above! It will walk you through a series of questions to understand your role, needs, and context."),
-            p("Based on your answers, we'll recommend the most appropriate tools and methods for your specific marine management situation."),
-            p("If you already know which tool you need, click ", strong("Quick Access"), " to browse all available tools directly.")
+            p(i18n$t("modules.entry_point.faq_started_answer_1"), " ", strong(i18n$t("modules.entry_point.guided_pathway")), " ", i18n$t("modules.entry_point.faq_started_answer_1_suffix")),
+            p(i18n$t("modules.entry_point.faq_started_answer_2")),
+            p(i18n$t("modules.entry_point.faq_started_answer_3"), " ", strong(i18n$t("modules.entry_point.quick_access")), " ", i18n$t("modules.entry_point.faq_started_answer_3_suffix"))
           ),
           bs4AccordionItem(
-            title = "Do I need technical expertise?",
+            title = i18n$t("modules.entry_point.faq_expertise_question"),
             status = "warning",
             collapsed = TRUE,
-            p("Not at all! This toolbox is designed for users of all levels:"),
+            p(i18n$t("modules.entry_point.faq_expertise_answer")),
             tags$ul(
-              tags$li(strong("Beginners:"), " Use the AI-Assisted or Template-based SES creation for guided support"),
-              tags$li(strong("Intermediate:"), " Access all standard tools and features"),
-              tags$li(strong("Experts:"), " Full access to advanced analysis and customization")
+              tags$li(strong("Beginners:"), " ", i18n$t("modules.entry_point.faq_beginners")),
+              tags$li(strong("Intermediate:"), " ", i18n$t("modules.entry_point.faq_intermediate")),
+              tags$li(strong("Experts:"), " ", i18n$t("modules.entry_point.faq_experts"))
             ),
-            p("You can change your user level at any time from the Settings menu in the header.")
+            p(i18n$t("modules.entry_point.faq_change_level"))
           )
         )
       )
@@ -506,7 +515,7 @@ render_ep0 <- function(ns, rv, i18n) {
       fluidRow(
         column(6,
           actionButton(ns("ep0_skip"), i18n$t("common.buttons.skip"), icon = icon("forward"), class = "btn-secondary btn-block",
-                      `data-toggle` = "tooltip", title = i18n$t("Skip if you're not sure or want to see all options"))
+                      `data-toggle` = "tooltip", title = i18n$t("modules.entry_point.tooltip_skip_role"))
         ),
         column(6,
           actionButton(ns("ep0_continue"), i18n$t("modules.entry_point.continue_to_ep1"), icon = icon("arrow-right"), class = "btn-primary btn-block",
@@ -553,7 +562,7 @@ render_ep1 <- function(ns, rv, i18n) {
         ),
         column(4,
           actionButton(ns("ep1_skip"), i18n$t("common.buttons.skip"), icon = icon("forward"), class = "btn-warning btn-block",
-                      `data-toggle` = "tooltip", title = i18n$t("Skip if multiple needs apply or you're unsure"))
+                      `data-toggle` = "tooltip", title = i18n$t("modules.entry_point.tooltip_skip_needs"))
         ),
         column(4,
           actionButton(ns("ep1_continue"), i18n$t("common.buttons.continue"), icon = icon("arrow-right"), class = "btn-primary btn-block",
@@ -573,7 +582,7 @@ render_ep23 <- function(ns, rv, i18n) {
           icon("info-circle", style = "color: #3498db; cursor: help; margin-left: 10px;"),
           `data-toggle` = "tooltip",
           `data-placement` = "right",
-          title = i18n$t("Select the human activities relevant to your marine management question. These represent the 'Drivers' and 'Activities' in the DAPSI(W)R(M) framework.")
+          title = i18n$t("modules.entry_point.tooltip_activities")
         )
       ),
       p(class = "text-muted", style = "font-size: 0.9em;", i18n$t("modules.entry_point.select_all_that_apply_multiple_selection_allowed")),
@@ -589,7 +598,7 @@ render_ep23 <- function(ns, rv, i18n) {
           icon("info-circle", style = "color: #3498db; cursor: help; margin-left: 10px;"),
           `data-toggle` = "tooltip",
           `data-placement` = "right",
-          title = i18n$t("Select the environmental pressures, risks, or hazards you're concerned about. These represent 'Pressures' and 'State changes' in the DAPSI(W)R(M) framework.")
+          title = i18n$t("modules.entry_point.tooltip_risks")
         )
       ),
       p(class = "text-muted", style = "font-size: 0.9em;", i18n$t("modules.entry_point.select_all_that_apply_multiple_selection_allowed")),
@@ -660,7 +669,7 @@ render_ep4 <- function(ns, rv, i18n) {
 
 render_recommendations_screen <- function(ns, rv, user_level = "intermediate", i18n) {
   # Get recommended tools based on pathway and user level
-  recommended_tools <- get_tool_recommendations(rv, user_level)
+  recommended_tools <- get_tool_recommendations(rv, user_level, i18n)
 
   fluidRow(
     column(12,
@@ -771,7 +780,11 @@ render_recommendations_screen <- function(ns, rv, user_level = "intermediate", i
 }
 
 # Helper function to recommend tools based on user pathway and experience level
-get_tool_recommendations <- function(rv, user_level = "intermediate") {
+get_tool_recommendations <- function(rv, user_level = "intermediate", i18n = NULL) {
+  # Fallback: if i18n not provided, create a passthrough that returns the key
+  if (is.null(i18n)) {
+    i18n <- list(t = function(key) key)
+  }
   tools <- list()
 
   # BEGINNER LEVEL: Simplify recommendations - focus on quick start tools
@@ -779,54 +792,54 @@ get_tool_recommendations <- function(rv, user_level = "intermediate") {
     # For beginners, prioritize AI Assistant and Template creation
     tools[[length(tools) + 1]] <- list(
       id = "create_ses_ai",
-      name = "AI-Guided SES Creation",
-      description = "Interactive AI assistant asks you questions and builds your SES model automatically. Perfect for first-time users - no prior knowledge needed!",
+      name = i18n$t("modules.entry_point.tool_create_ses_ai_name"),
+      description = i18n$t("modules.entry_point.tool_create_ses_ai_desc"),
       time_required = "20-40 minutes",
-      skill_level = "Beginner",
-      use_case = "Guided SES creation with AI assistance",
+      skill_level = i18n$t("modules.entry_point.tool_create_ses_ai_skill"),
+      use_case = i18n$t("modules.entry_point.tool_create_ses_ai_usecase"),
       menu_id = "create_ses_ai"
     )
 
     tools[[length(tools) + 1]] <- list(
       id = "create_ses_template",
-      name = "Template-Based SES Creation",
-      description = "Start from pre-built templates for common marine scenarios: fisheries, tourism, aquaculture, pollution, or climate change. Customize to your needs.",
+      name = i18n$t("modules.entry_point.tool_create_ses_template_name"),
+      description = i18n$t("modules.entry_point.tool_create_ses_template_desc"),
       time_required = "15-30 minutes",
-      skill_level = "Beginner",
-      use_case = "Quick start with templates",
+      skill_level = i18n$t("modules.entry_point.tool_create_ses_template_skill"),
+      use_case = i18n$t("modules.entry_point.tool_create_ses_template_usecase"),
       menu_id = "create_ses_template"
     )
 
     # CLD Visualization
     tools[[length(tools) + 1]] <- list(
       id = "cld",
-      name = "SES Visualization",
-      description = "See your SES as an interactive network diagram. Explore connections, filter by confidence, and understand your system visually.",
+      name = i18n$t("modules.entry_point.tool_cld_name"),
+      description = i18n$t("modules.entry_point.tool_cld_desc"),
       time_required = "10-20 minutes",
-      skill_level = "Beginner",
-      use_case = "Visual exploration of your SES",
+      skill_level = i18n$t("modules.entry_point.tool_cld_skill"),
+      use_case = i18n$t("modules.entry_point.tool_cld_usecase"),
       menu_id = "cld_viz"
     )
 
     # Only show Loop Detection for beginners
     tools[[length(tools) + 1]] <- list(
       id = "loops",
-      name = "Loop Detection",
-      description = "Discover feedback loops in your system - the circular cause-and-effect patterns that drive system behavior.",
+      name = i18n$t("modules.entry_point.tool_loops_name"),
+      description = i18n$t("modules.entry_point.tool_loops_desc"),
       time_required = "15-30 minutes",
-      skill_level = "Beginner",
-      use_case = "Identify system feedback mechanisms",
+      skill_level = i18n$t("modules.entry_point.tool_loops_skill"),
+      use_case = i18n$t("modules.entry_point.tool_loops_usecase"),
       menu_id = "analysis_loops"
     )
 
     # Leverage Points for beginners
     tools[[length(tools) + 1]] <- list(
       id = "leverage",
-      name = "Leverage Point Analysis",
-      description = "Find the most influential points in your system where small changes can have big impacts.",
+      name = i18n$t("modules.entry_point.tool_leverage_name"),
+      description = i18n$t("modules.entry_point.tool_leverage_desc"),
       time_required = "20-30 minutes",
-      skill_level = "Beginner",
-      use_case = "Identify key intervention points",
+      skill_level = i18n$t("modules.entry_point.tool_leverage_skill"),
+      use_case = i18n$t("modules.entry_point.tool_leverage_usecase"),
       menu_id = "analysis_leverage"
     )
 
@@ -840,11 +853,11 @@ get_tool_recommendations <- function(rv, user_level = "intermediate") {
   if (is.null(rv$ep0_selected) || rv$ep0_selected %in% c("policy_creator", "policy_advisor", "educator")) {
     tools[[length(tools) + 1]] <- list(
       id = "pims",
-      name = "PIMS - Project Information Management",
-      description = "Plan and track your marine management project. Define goals, stakeholders, timeline, and resources. Essential first step for structured project management.",
+      name = i18n$t("modules.entry_point.tool_pims_name"),
+      description = i18n$t("modules.entry_point.tool_pims_desc"),
       time_required = "30-60 minutes",
-      skill_level = "Beginner",
-      use_case = "Project planning & stakeholder mapping",
+      skill_level = i18n$t("modules.entry_point.tool_pims_skill"),
+      use_case = i18n$t("modules.entry_point.tool_pims_usecase"),
       menu_id = "pims_project"
     )
   }
@@ -852,33 +865,33 @@ get_tool_recommendations <- function(rv, user_level = "intermediate") {
   # Create SES - Quick start with templates or AI
   tools[[length(tools) + 1]] <- list(
     id = "create_ses",
-    name = "Create SES (Quick Start)",
-    description = "Quickly build your SES model using pre-built templates (fisheries, tourism, aquaculture, pollution, climate) or AI-assisted creation. Perfect for getting started fast or learning the framework.",
+    name = i18n$t("modules.entry_point.tool_create_ses_name"),
+    description = i18n$t("modules.entry_point.tool_create_ses_desc"),
     time_required = "15-45 minutes",
-    skill_level = "Beginner",
-    use_case = "Fast SES creation with templates or AI",
+    skill_level = i18n$t("modules.entry_point.tool_create_ses_skill"),
+    use_case = i18n$t("modules.entry_point.tool_create_ses_usecase"),
     menu_id = "create_ses_choose"
   )
 
   # ISA Data Entry - Core tool for all pathways
   tools[[length(tools) + 1]] <- list(
     id = "isa",
-    name = "ISA Data Entry (DAPSI(W)R(M) Framework)",
-    description = "Build your social-ecological system model by entering Drivers, Activities, Pressures, State changes, Impacts, Welfare effects, Responses, and Measures. Now with confidence levels (1-5) for connections to track data quality and certainty. The foundation for all system analysis.",
+    name = i18n$t("modules.entry_point.tool_isa_name"),
+    description = i18n$t("modules.entry_point.tool_isa_desc"),
     time_required = "1-3 hours",
-    skill_level = "Intermediate",
-    use_case = "Detailed SES model construction with confidence tracking",
+    skill_level = i18n$t("modules.entry_point.tool_isa_skill"),
+    use_case = i18n$t("modules.entry_point.tool_isa_usecase"),
     menu_id = "create_ses_standard"
   )
 
   # CLD Visualization - Follows ISA
   tools[[length(tools) + 1]] <- list(
     id = "cld",
-    name = "CLD Network Visualization",
-    description = "Visualize your SES as an interactive causal loop diagram with collapsible controls and confidence-based visual feedback. Filter by confidence levels, explore connections, and identify feedback mechanisms. Clean, focused interface for maximum visualization space.",
+    name = i18n$t("modules.entry_point.tool_cld_viz_name"),
+    description = i18n$t("modules.entry_point.tool_cld_viz_desc"),
     time_required = "15-30 minutes",
-    skill_level = "Beginner-Intermediate",
-    use_case = "Interactive system visualization with confidence filtering",
+    skill_level = i18n$t("modules.entry_point.tool_cld_viz_skill"),
+    use_case = i18n$t("modules.entry_point.tool_cld_viz_usecase"),
     menu_id = "cld_viz"
   )
 
@@ -890,11 +903,11 @@ get_tool_recommendations <- function(rv, user_level = "intermediate") {
     if (any(grepl("ecosystem_structure|basic_concepts", topic_ids))) {
       tools[[length(tools) + 1]] <- list(
         id = "loops",
-        name = "Loop Detection Analysis",
-        description = "Identify reinforcing and balancing feedback loops in your system. Understand system dynamics and potential tipping points.",
+        name = i18n$t("modules.entry_point.tool_loop_detection_name"),
+        description = i18n$t("modules.entry_point.tool_loop_detection_desc"),
         time_required = "30-60 minutes",
-        skill_level = "Intermediate-Advanced",
-        use_case = "Feedback loop identification",
+        skill_level = i18n$t("modules.entry_point.tool_loop_detection_skill"),
+        use_case = i18n$t("modules.entry_point.tool_loop_detection_usecase"),
         menu_id = "analysis_loops"
       )
     }
@@ -903,11 +916,11 @@ get_tool_recommendations <- function(rv, user_level = "intermediate") {
     if (any(grepl("methods_tools|scientific_skills", topic_ids))) {
       tools[[length(tools) + 1]] <- list(
         id = "metrics",
-        name = "Network Metrics Analysis",
-        description = "Calculate centrality measures, identify key nodes, and analyze network structure. Advanced quantitative analysis of system connectivity.",
+        name = i18n$t("modules.entry_point.tool_metrics_name"),
+        description = i18n$t("modules.entry_point.tool_metrics_desc"),
         time_required = "20-45 minutes",
-        skill_level = "Advanced",
-        use_case = "Quantitative network analysis",
+        skill_level = i18n$t("modules.entry_point.tool_metrics_skill"),
+        use_case = i18n$t("modules.entry_point.tool_metrics_usecase"),
         menu_id = "analysis_metrics"
       )
     }
@@ -916,11 +929,11 @@ get_tool_recommendations <- function(rv, user_level = "intermediate") {
     if (any(grepl("climate_change|anthropogenic_effects|ecosystem_recovery", topic_ids))) {
       tools[[length(tools) + 1]] <- list(
         id = "bot",
-        name = "BOT - Behaviour Over Time Analysis",
-        description = "Analyze temporal trends and patterns in your system. Identify long-term changes, seasonal patterns, and emerging issues.",
+        name = i18n$t("modules.entry_point.tool_bot_name"),
+        description = i18n$t("modules.entry_point.tool_bot_desc"),
         time_required = "45-90 minutes",
-        skill_level = "Intermediate-Advanced",
-        use_case = "Temporal trend analysis",
+        skill_level = i18n$t("modules.entry_point.tool_bot_skill"),
+        use_case = i18n$t("modules.entry_point.tool_bot_usecase"),
         menu_id = "analysis_bot"
       )
     }
@@ -929,11 +942,11 @@ get_tool_recommendations <- function(rv, user_level = "intermediate") {
     if (any(grepl("policy_|governance|marine_planning", topic_ids))) {
       tools[[length(tools) + 1]] <- list(
         id = "scenarios",
-        name = "Scenario Builder",
-        description = "Build and compare alternative future scenarios. Design management interventions and analyze their impacts on your SES network.",
+        name = i18n$t("modules.entry_point.tool_scenarios_name"),
+        description = i18n$t("modules.entry_point.tool_scenarios_desc"),
         time_required = "1-2 hours",
-        skill_level = "Advanced",
-        use_case = "Management scenario development",
+        skill_level = i18n$t("modules.entry_point.tool_scenarios_skill"),
+        use_case = i18n$t("modules.entry_point.tool_scenarios_usecase"),
         menu_id = "response_scenarios"
       )
     }
@@ -943,11 +956,11 @@ get_tool_recommendations <- function(rv, user_level = "intermediate") {
   if (length(rv$ep0_selected) > 0 && any(rv$ep0_selected %in% c("policy_creator", "educator", "engo"))) {
     tools[[length(tools) + 1]] <- list(
       id = "simplification",
-      name = "Model Simplification Tools",
-      description = "Simplify complex networks for easier communication. Reduce cognitive load while retaining key system dynamics.",
+      name = i18n$t("modules.entry_point.tool_simplification_name"),
+      description = i18n$t("modules.entry_point.tool_simplification_desc"),
       time_required = "30-45 minutes",
-      skill_level = "Intermediate",
-      use_case = "Model simplification & communication",
+      skill_level = i18n$t("modules.entry_point.tool_simplification_skill"),
+      use_case = i18n$t("modules.entry_point.tool_simplification_usecase"),
       menu_id = "analysis_simplify"
     )
   }
@@ -958,11 +971,11 @@ get_tool_recommendations <- function(rv, user_level = "intermediate") {
     if (!any(sapply(tools, function(t) t$id == "cld"))) {
       tools[[length(tools) + 1]] <- list(
         id = "cld",
-        name = "CLD Network Visualization",
-        description = "Visualize your SES as an interactive causal loop diagram.",
+        name = i18n$t("modules.entry_point.tool_cld_viz_name"),
+        description = i18n$t("modules.entry_point.tool_cld_fallback_desc"),
         time_required = "15-30 minutes",
-        skill_level = "Beginner-Intermediate",
-        use_case = "System visualization",
+        skill_level = i18n$t("modules.entry_point.tool_cld_fallback_skill"),
+        use_case = i18n$t("modules.entry_point.tool_cld_fallback_usecase"),
         menu_id = "cld_viz"
       )
     }

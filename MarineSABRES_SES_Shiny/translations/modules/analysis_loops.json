@@ -1,8 +1,5 @@
 {
   "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
-  "_translation_notes": {
-    "TODO": "Norwegian (no) and Greek (el) translations use English fallback. Needs native speaker review."
-  },
   "translation": {
     "modules.analysis.loops.identify_all_desc": {
       "en": "Identify all feedback loops in your DAPSI(W)R(M) system.",
