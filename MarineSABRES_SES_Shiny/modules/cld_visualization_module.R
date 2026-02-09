@@ -314,17 +314,17 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
 
         full_signature <- paste(isa_signature, cld_signature, sep = "|")
 
-        cat("[CLD VIZ] Current signature:", full_signature, "\n")
-        cat("[CLD VIZ] Cached signature:", rv$isa_hash, "\n")
+        debug_log(paste("Current signature:", full_signature), "CLD VIZ")
+        debug_log(paste("Cached signature:", rv$isa_hash), "CLD VIZ")
 
         # Only reload if signature changed
         if (is.null(rv$isa_hash) || rv$isa_hash != full_signature) {
-          cat("[CLD VIZ] Signature changed - reloading CLD data\n")
+          debug_log("Signature changed - reloading CLD data", "CLD VIZ")
 
           if (!is.null(project_data$data$cld$nodes) &&
               nrow(project_data$data$cld$nodes) > 0) {
             # Use existing CLD nodes (preserves leverage scores and other analysis results)
-            cat("[CLD VIZ] Using existing CLD nodes with analysis results\n")
+            debug_log("Using existing CLD nodes with analysis results", "CLD VIZ")
             rv$nodes <- project_data$data$cld$nodes
             # Store original colors for JavaScript-based highlighting
             if (!"originalColor" %in% names(rv$nodes)) {
@@ -337,10 +337,10 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
             # Store original edge properties for JavaScript-based highlighting
             rv$edges$originalColor <- rv$edges$color
             rv$edges$originalWidth <- rv$edges$width
-            cat(sprintf("[CLD VIZ] Rebuilt edges from adjacency matrices: %d edges\n", nrow(rv$edges)))
+            debug_log(sprintf("Rebuilt edges from adjacency matrices: %d edges", nrow(rv$edges)), "CLD VIZ")
           } else {
             # No CLD exists yet - build from ISA data
-            cat("[CLD VIZ] Building new CLD from ISA data\n")
+            debug_log("Building new CLD from ISA data", "CLD VIZ")
             rv$nodes <- create_nodes_df(isa_data)
             # Store original colors for JavaScript-based highlighting
             rv$nodes$originalColor <- rv$nodes$color
@@ -358,17 +358,17 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
               pd$data$cld$edges <- rv$edges
               pd$last_modified <- Sys.time()
               project_data_reactive(pd)
-              cat("[CLD VIZ] Saved initial CLD to project_data\n")
+              debug_log("Saved initial CLD to project_data", "CLD VIZ")
             })
           }
 
           rv$isa_hash <- full_signature
           rv$metrics <- NULL
 
-          cat("[CLD VIZ] Loaded nodes:", nrow(rv$nodes), "\n")
-          cat("[CLD VIZ] Loaded edges:", nrow(rv$edges), "\n")
+          debug_log(paste("Loaded nodes:", nrow(rv$nodes)), "CLD VIZ")
+          debug_log(paste("Loaded edges:", nrow(rv$edges)), "CLD VIZ")
           if ("leverage_score" %in% names(rv$nodes)) {
-            cat("[CLD VIZ] rv$nodes has leverage scores >0:", sum(!is.na(rv$nodes$leverage_score) & rv$nodes$leverage_score > 0), "\n")
+            debug_log(paste("rv$nodes has leverage scores >0:", sum(!is.na(rv$nodes$leverage_score) & rv$nodes$leverage_score > 0)), "CLD VIZ")
 
             # Update tooltips to include leverage scores
             rv$nodes <- rv$nodes %>%
@@ -382,7 +382,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
                   title
                 )
               )
-            cat("[CLD VIZ] Updated tooltips with leverage scores\n")
+            debug_log("Updated tooltips with leverage scores", "CLD VIZ")
           }
 
           # Update focus node choices
@@ -398,7 +398,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
             )
           }
         } else {
-          cat("[CLD VIZ] Signature unchanged - skipping reload\n")
+          debug_log("Signature unchanged - skipping reload", "CLD VIZ")
         }
       }
     })
@@ -407,12 +407,12 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
     filtered_data <- reactive({
       req(rv$nodes, rv$edges)
 
-      cat("[CLD VIZ] filtered_data reactive triggered\n")
-      cat("[CLD VIZ] rv$nodes:", nrow(rv$nodes), "rows\n")
-      cat("[CLD VIZ] rv$edges:", nrow(rv$edges), "rows\n")
+      debug_log("filtered_data reactive triggered", "CLD VIZ")
+      debug_log(paste("rv$nodes:", nrow(rv$nodes), "rows"), "CLD VIZ")
+      debug_log(paste("rv$edges:", nrow(rv$edges), "rows"), "CLD VIZ")
       if (nrow(rv$edges) > 0) {
-        cat("[CLD VIZ] Edge columns:", paste(names(rv$edges), collapse=", "), "\n")
-        cat("[CLD VIZ] First edge: from=", rv$edges$from[1], " to=", rv$edges$to[1], "\n")
+        debug_log(paste("Edge columns:", paste(names(rv$edges), collapse=", ")), "CLD VIZ")
+        debug_log(paste("First edge: from=", rv$edges$from[1], " to=", rv$edges$to[1]), "CLD VIZ")
       }
 
       # Return all nodes and edges (filter controls removed)
@@ -444,9 +444,9 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       nodes <- sized_nodes()
       edges <- filtered_data()$edges
 
-      cat("[CLD VIZ] renderVisNetwork triggered\n")
-      cat("[CLD VIZ] nodes:", nrow(nodes), "rows\n")
-      cat("[CLD VIZ] edges:", nrow(edges), "rows\n")
+      debug_log("renderVisNetwork triggered", "CLD VIZ")
+      debug_log(paste("nodes:", nrow(nodes), "rows"), "CLD VIZ")
+      debug_log(paste("edges:", nrow(edges), "rows"), "CLD VIZ")
 
       # Create visNetwork with standard styling
       vis <- visNetwork(nodes, edges, height = "100%", width = "100%") %>%
@@ -587,12 +587,12 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
     observeEvent(input$highlight_leverage, {
       req(rv$network_proxy, rv$nodes)
 
-      cat("[CLD VIZ] Highlight leverage switch triggered:", input$highlight_leverage, "\n")
-      cat("[CLD VIZ] rv$nodes count:", nrow(rv$nodes), "\n")
-      cat("[CLD VIZ] Has leverage_score column:", "leverage_score" %in% names(rv$nodes), "\n")
+      debug_log(paste("Highlight leverage switch triggered:", input$highlight_leverage), "CLD VIZ")
+      debug_log(paste("rv$nodes count:", nrow(rv$nodes)), "CLD VIZ")
+      debug_log(paste("Has leverage_score column:", "leverage_score" %in% names(rv$nodes)), "CLD VIZ")
       if ("leverage_score" %in% names(rv$nodes)) {
-        cat("[CLD VIZ] Nodes with non-NA leverage scores:", sum(!is.na(rv$nodes$leverage_score)), "\n")
-        cat("[CLD VIZ] Nodes with leverage scores >0:", sum(!is.na(rv$nodes$leverage_score) & rv$nodes$leverage_score > 0), "\n")
+        debug_log(paste("Nodes with non-NA leverage scores:", sum(!is.na(rv$nodes$leverage_score))), "CLD VIZ")
+        debug_log(paste("Nodes with leverage scores >0:", sum(!is.na(rv$nodes$leverage_score) & rv$nodes$leverage_score > 0)), "CLD VIZ")
       }
 
       if (input$highlight_leverage) {
@@ -601,13 +601,13 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
           filter(!is.na(leverage_score) & leverage_score > 0) %>%
           arrange(desc(leverage_score))
 
-        cat("[CLD VIZ] Filtered leverage nodes count:", nrow(leverage_nodes), "\n")
+        debug_log(paste("Filtered leverage nodes count:", nrow(leverage_nodes)), "CLD VIZ")
 
         if (nrow(leverage_nodes) > 0) {
           # Show only TOP 10 leverage points, hide others
           top_leverage <- head(leverage_nodes$id, 10)
 
-          cat("[CLD VIZ] Highlighting top", length(top_leverage), "leverage points\n")
+          debug_log(paste("Highlighting top", length(top_leverage), "leverage points"), "CLD VIZ")
 
           # Use 'hidden' property instead of opacity (more reliable in visNetwork)
           highlighted_nodes <- data.frame(
@@ -633,9 +633,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
             stringsAsFactors = FALSE
           )
 
-          cat("[CLD VIZ] Hiding", sum(highlighted_nodes$hidden), "nodes,",
-              "showing", sum(!highlighted_nodes$hidden), "leverage points\n")
-          cat("[CLD VIZ] Top leverage nodes:", paste(top_leverage, collapse=", "), "\n")
+          debug_log(paste("Hiding", sum(highlighted_nodes$hidden), "nodes, showing", sum(!highlighted_nodes$hidden), "leverage points"), "CLD VIZ")
+          debug_log(paste("Top leverage nodes:", paste(top_leverage, collapse=", ")), "CLD VIZ")
 
           # IMPORTANT: Use session namespace for proxy in module context
           # DON'T use visSelectNodes - it triggers highlightNearest which can interfere with custom highlighting
@@ -675,7 +674,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
           stringsAsFactors = FALSE
         )
 
-        cat("[CLD VIZ] Resetting leverage highlighting - showing all nodes\n")
+        debug_log("Resetting leverage highlighting - showing all nodes", "CLD VIZ")
 
         # IMPORTANT: Use session namespace for proxy in module context
         visNetworkProxy(session$ns("network")) %>%
@@ -698,7 +697,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
           choices <- c("None" = "none", setNames(1:nrow(loop_info), paste("Loop", 1:nrow(loop_info))))
           updateSelectInput(session, "selected_loop", choices = choices)
 
-          cat("[CLD VIZ] Updated loop selector with", nrow(loop_info), "loops\n")
+          debug_log(paste("Updated loop selector with", nrow(loop_info), "loops"), "CLD VIZ")
         }
       }
     })
@@ -738,7 +737,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
     observeEvent(input$selected_loop, {
       req(rv$edges, rv$nodes)
 
-      cat("[CLD VIZ] Loop selector changed to:", input$selected_loop, "\n")
+      debug_log(paste("Loop selector changed to:", input$selected_loop), "CLD VIZ")
 
       if (input$selected_loop != "none") {
         project_data <- project_data_reactive()
@@ -758,9 +757,9 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
             # Convert indices to actual node IDs
             loop_node_ids <- rv$nodes$id[loop_node_indices]
 
-            cat("[CLD VIZ] Loop indices from analysis:", paste(loop_node_indices, collapse=", "), "\n")
-            cat("[CLD VIZ] Converted to node IDs:", paste(loop_node_ids, collapse=", "), "\n")
-            cat("[CLD VIZ] Highlighting loop", loop_idx, "with", length(loop_node_ids), "nodes\n")
+            debug_log(paste("Loop indices from analysis:", paste(loop_node_indices, collapse=", ")), "CLD VIZ")
+            debug_log(paste("Converted to node IDs:", paste(loop_node_ids, collapse=", ")), "CLD VIZ")
+            debug_log(paste("Highlighting loop", loop_idx, "with", length(loop_node_ids), "nodes"), "CLD VIZ")
 
             # Use JavaScript to highlight loop (exact same approach as app_loops.R)
             runjs(sprintf("
@@ -817,7 +816,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
         }
       } else {
         # Clear highlighting when no loop is selected (exact same as app_loops.R)
-        cat("[CLD VIZ] Resetting loop highlighting\n")
+        debug_log("Resetting loop highlighting", "CLD VIZ")
 
         runjs(sprintf("
           window.selectedLoopNodes_%s = [];

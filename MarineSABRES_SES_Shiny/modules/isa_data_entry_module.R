@@ -181,59 +181,59 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
     current_exercise <- reactiveVal(1)
 
     observe({
-      cat("[ISA Module] Checking for existing project data...\n")
+      debug_log("Checking for existing project data", "ISA Module")
 
       project <- global_data()
 
       if (!is.null(project) && !is.null(project$data) && !is.null(project$data$isa_data)) {
         isa_saved <- project$data$isa_data
-        cat("[ISA Module] Found saved ISA data in project\n")
+        debug_log("Found saved ISA data in project", "ISA Module")
 
         # Load Drivers
         if (!is.null(isa_saved$drivers) && nrow(isa_saved$drivers) > 0) {
-          cat(sprintf("[ISA Module] Loading %d drivers\n", nrow(isa_saved$drivers)))
+          debug_log(sprintf("Loading %d drivers", nrow(isa_saved$drivers)), "ISA Module")
           isa_data$drivers <- isa_saved$drivers
           isa_data$d_counter <- nrow(isa_saved$drivers)
         }
 
         # Load Activities
         if (!is.null(isa_saved$activities) && nrow(isa_saved$activities) > 0) {
-          cat(sprintf("[ISA Module] Loading %d activities\n", nrow(isa_saved$activities)))
+          debug_log(sprintf("Loading %d activities", nrow(isa_saved$activities)), "ISA Module")
           isa_data$activities <- isa_saved$activities
           isa_data$a_counter <- nrow(isa_saved$activities)
         }
 
         # Load Pressures
         if (!is.null(isa_saved$pressures) && nrow(isa_saved$pressures) > 0) {
-          cat(sprintf("[ISA Module] Loading %d pressures\n", nrow(isa_saved$pressures)))
+          debug_log(sprintf("Loading %d pressures", nrow(isa_saved$pressures)), "ISA Module")
           isa_data$pressures <- isa_saved$pressures
           isa_data$p_counter <- nrow(isa_saved$pressures)
         }
 
         # Load Marine Processes
         if (!is.null(isa_saved$marine_processes) && nrow(isa_saved$marine_processes) > 0) {
-          cat(sprintf("[ISA Module] Loading %d marine processes\n", nrow(isa_saved$marine_processes)))
+          debug_log(sprintf("Loading %d marine processes", nrow(isa_saved$marine_processes)), "ISA Module")
           isa_data$marine_processes <- isa_saved$marine_processes
           isa_data$mpf_counter <- nrow(isa_saved$marine_processes)
         }
 
         # Load Ecosystem Services
         if (!is.null(isa_saved$ecosystem_services) && nrow(isa_saved$ecosystem_services) > 0) {
-          cat(sprintf("[ISA Module] Loading %d ecosystem services\n", nrow(isa_saved$ecosystem_services)))
+          debug_log(sprintf("Loading %d ecosystem services", nrow(isa_saved$ecosystem_services)), "ISA Module")
           isa_data$ecosystem_services <- isa_saved$ecosystem_services
           isa_data$es_counter <- nrow(isa_saved$ecosystem_services)
         }
 
         # Load Goods & Benefits
         if (!is.null(isa_saved$goods_benefits) && nrow(isa_saved$goods_benefits) > 0) {
-          cat(sprintf("[ISA Module] Loading %d goods/benefits\n", nrow(isa_saved$goods_benefits)))
+          debug_log(sprintf("Loading %d goods/benefits", nrow(isa_saved$goods_benefits)), "ISA Module")
           isa_data$goods_benefits <- isa_saved$goods_benefits
           isa_data$gb_counter <- nrow(isa_saved$goods_benefits)
         }
 
         # Load adjacency matrices if they exist
         if (!is.null(isa_saved$adjacency_matrices)) {
-          cat("[ISA Module] Loading adjacency matrices\n")
+          debug_log("Loading adjacency matrices", "ISA Module")
           isa_data$adjacency_matrices <- isa_saved$adjacency_matrices
 
           # Count non-empty connections
@@ -244,16 +244,16 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
               n_connections <- n_connections + sum(mat != "", na.rm = TRUE)
             }
           }
-          cat(sprintf("[ISA Module] Loaded %d connections from adjacency matrices\n", n_connections))
+          debug_log(sprintf("Loaded %d connections from adjacency matrices", n_connections), "ISA Module")
         }
 
         # Note: responses from AI Assistant don't map to ISA Data Entry
         # They would need to be handled separately or shown in a different section
 
-        cat("[ISA Module] Data loading complete\n")
+        debug_log("Data loading complete", "ISA Module")
         data_initialized(TRUE)
       } else {
-        cat("[ISA Module] No saved ISA data found - starting fresh\n")
+        debug_log("No saved ISA data found - starting fresh", "ISA Module")
       }
     })
 

@@ -242,62 +242,8 @@ get_ai_isa_js <- function() {
 # MAIN UI FUNCTION
 # ==============================================================================
 
-#' AI ISA Assistant UI
-#'
-#' Main UI function for the AI-guided Interactive Stepwise Assistant.
-#' Creates the chat interface, input area, and summary sidebar.
-#'
-#' @param id Character string module ID
-#' @param i18n shiny.i18n translator object
-#'
-#' @return Shiny UI fluidPage object
-#'
-#' @examples
-#' \dontrun{
-#' ai_isa_assistant_ui("ai_isa_mod", i18n)
-#' }
-#'
-#' @export
-ai_isa_assistant_ui <- function(id, i18n) {
-  cat(sprintf("[AI ISA UI] UI function called with id: %s at %s\n", id, Sys.time()))
-  ns <- NS(id)
-
-  fluidPage(
-    useShinyjs(),
-
-    # Custom CSS and JavaScript
-    tags$head(
-      get_ai_isa_css(),
-      get_ai_isa_js()
-    ),
-
-    # Header
-    fluidRow(
-      column(12,
-        create_module_header(ns, "modules.isa.ai_assistant.ai_assisted_isa_creation",
-                           "modules.isa.ai_assistant.subtitle", "ai_isa_help", i18n)
-      )
-    ),
-
-    # Main content: Chat interface + Sidebar
-    fluidRow(
-      column(8,
-        # Chat container
-        div(class = "ai-chat-container", id = ns("chat_container"),
-          uiOutput(ns("conversation"))
-        ),
-
-        # Input area - dynamically changes based on step type
-        uiOutput(ns("input_area"))
-      ),
-
-      # Summary panel
-      column(4,
-        uiOutput(ns("sidebar_panel"))
-      )
-    )
-  )
-}
+# NOTE: ai_isa_assistant_ui() is defined in ai_isa_assistant_module.R (the parent module).
+# This file provides helper functions: setup_ui_outputs, highlight_keywords, get_ai_isa_css, get_ai_isa_js
 
 # ==============================================================================
 # HELPER FUNCTIONS
@@ -405,12 +351,9 @@ setup_ui_outputs <- function(output, input, session, rv, i18n, QUESTION_FLOW) {
 
     input_area_exec_count <<- input_area_exec_count + 1
 
-    cat(sprintf("\n++++++++++++++++++++++++++++++++++++++++\n"))
-    cat(sprintf("[AI ISA INPUT_AREA] EXECUTION #%d at %s\n", input_area_exec_count, Sys.time()))
-    cat(sprintf("[AI ISA INPUT_AREA] Current step: %d\n", rv$current_step))
-    cat(sprintf("[AI ISA INPUT_AREA] show_text_input: %s\n", rv$show_text_input))
-    cat(sprintf("[AI ISA INPUT_AREA] Render counter: %d\n", counter_val))
-    cat(sprintf("++++++++++++++++++++++++++++++++++++++++\n\n"))
+    debug_log(sprintf("EXECUTION #%d | step: %d | show_text_input: %s | render_counter: %d",
+                      input_area_exec_count, rv$current_step, rv$show_text_input, counter_val),
+              "AI ISA INPUT_AREA")
 
     if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
       step_info <- QUESTION_FLOW[[rv$current_step + 1]]
@@ -510,5 +453,4 @@ setup_ui_outputs <- function(output, input, session, rv, i18n, QUESTION_FLOW) {
 # ==============================================================================
 
 message("[INFO] AI ISA UI Components module loaded successfully")
-message("       Available functions: ai_isa_assistant_ui, setup_ui_outputs,")
-message("       highlight_keywords, get_ai_isa_css, get_ai_isa_js")
+message("       Available functions: setup_ui_outputs, highlight_keywords, get_ai_isa_css, get_ai_isa_js")

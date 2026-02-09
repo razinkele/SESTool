@@ -386,10 +386,10 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       connections_reactive = reactive({ rv$parsed_connections }),
       i18n = i18n,
       on_approve = function(approved_idx) {
-        cat("[IMPORT] Approved connections:", paste(approved_idx, collapse = ", "), "\n")
+        debug_log(paste("Approved connections:", paste(approved_idx, collapse = ", ")), "IMPORT")
       },
       on_reject = function(rejected_idx) {
-        cat("[IMPORT] Rejected connections:", paste(rejected_idx, collapse = ", "), "\n")
+        debug_log(paste("Rejected connections:", paste(rejected_idx, collapse = ", ")), "IMPORT")
       }
     )
 
@@ -417,8 +417,8 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
           connections_to_import <- rv$connections_data
         }
 
-        cat(sprintf("[IMPORT] Importing %d of %d connections (rejected: %d)\n",
-                    nrow(connections_to_import), nrow(rv$connections_data), length(rejected)))
+        debug_log(sprintf("Importing %d of %d connections (rejected: %d)",
+                    nrow(connections_to_import), nrow(rv$connections_data), length(rejected)), "IMPORT")
 
         # Verify shared function is available
         if (!exists("convert_excel_to_isa", mode = "function")) {
@@ -468,16 +468,16 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
     # Helper function to perform the actual import
     perform_import <- function(isa_data, num_elements, num_connections) {
       # Debug: Print adjacency matrices info
-      cat("[IMPORT] Adjacency matrices created:\n")
-      cat("[IMPORT]   Matrix names:", paste(names(isa_data$adjacency_matrices), collapse = ", "), "\n")
+      debug_log("Adjacency matrices created", "IMPORT")
+      debug_log(paste("Matrix names:", paste(names(isa_data$adjacency_matrices), collapse = ", ")), "IMPORT")
       total_matrix_connections <- 0
       for (matrix_name in names(isa_data$adjacency_matrices)) {
         mat <- isa_data$adjacency_matrices[[matrix_name]]
         non_empty <- sum(mat != "")
         total_matrix_connections <- total_matrix_connections + non_empty
-        cat(sprintf("[IMPORT]   %s: %d connections\n", matrix_name, non_empty))
+        debug_log(sprintf("%s: %d connections", matrix_name, non_empty), "IMPORT")
       }
-      cat(sprintf("[IMPORT] Total connections in all matrices: %d\n", total_matrix_connections))
+      debug_log(sprintf("Total connections in all matrices: %d", total_matrix_connections), "IMPORT")
 
       # Get current project data
       project_data <- project_data_reactive()
@@ -486,10 +486,10 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       project_data$data$isa_data <- isa_data
 
       # Generate CLD from imported ISA data
-      cat("[IMPORT] Generating CLD from imported data...\n")
+      debug_log("Generating CLD from imported data", "IMPORT")
       cld_nodes <- create_nodes_df(isa_data)
       cld_edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
-      cat(sprintf("[IMPORT] Generated CLD: %d nodes, %d edges\n", nrow(cld_nodes), nrow(cld_edges)))
+      debug_log(sprintf("Generated CLD: %d nodes, %d edges", nrow(cld_nodes), nrow(cld_edges)), "IMPORT")
 
       # Update CLD data
       project_data$data$cld <- list(
@@ -518,7 +518,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       if (!is.null(event_bus)) {
         event_bus$skip_next_cld_regen(TRUE)  # Skip CLD regen since we built it from connections
         event_bus$emit_isa_change()
-        cat("[IMPORT] Emitted ISA change event with skip_cld_regen flag\n")
+        debug_log("Emitted ISA change event with skip_cld_regen flag", "IMPORT")
       }
 
       showNotification(

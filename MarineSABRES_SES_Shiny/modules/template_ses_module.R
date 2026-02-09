@@ -1033,11 +1033,11 @@ template_ses_server <- function(id, project_data_reactive, parent_session = NULL
       debug_log(sprintf("Number of final connections: %d", length(final_connections)), "TEMPLATE-CONN")
       if (length(final_connections) > 0) {
         debug_log("Example connection:", "TEMPLATE-CONN")
-        print(final_connections[[1]])
+        debug_log(paste(capture.output(str(final_connections[[1]])), collapse = " "), "TEMPLATE")
       }
       debug_log("Example matrix row/col names (first matrix):", "TEMPLATE-CONN")
-      print(rownames(adj_matrices[[1]]))
-      print(colnames(adj_matrices[[1]]))
+      debug_log(paste("Matrix rownames:", paste(rownames(adj_matrices[[1]]), collapse = ", ")), "TEMPLATE")
+      debug_log(paste("Matrix colnames:", paste(colnames(adj_matrices[[1]]), collapse = ", ")), "TEMPLATE")
 
       # Helper: normalize string (remove all whitespace, Unicode normalize, tolower)
       normalize_str <- function(x) {

@@ -16,11 +16,6 @@ utils::globalVariables(c('%|||%'))
 
 # Libraries loaded in global.R: shiny, shinyWidgets
 
-# Ensure %|||% operator is visible in this module (for R CMD check/lint)
-`%|||%` <- function(a, b) {
-  if (is.null(a) || (length(a) == 1 && is.na(a))) b else a
-}
-
 # ============================================================================
 # HELPER FUNCTIONS
 # ============================================================================
@@ -759,16 +754,6 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               on_approve(local_idx, conn)
             }
 
-            # DISABLED: Auto-focus on next connection
-            # This was causing unwanted tab navigation in tabbed interface
-            # Users reported "system keeps going back between elements"
-            # if (local_idx < length(conns)) {
-            #   next_idx <- local_idx + 1
-            #   session$sendCustomMessage(
-            #     type = "focusButton",
-            #     message = list(id = session$ns(paste0("approve_", next_idx)))
-            #   )
-            # }
           })
 
           # Reject button
@@ -779,20 +764,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             if (!is.null(on_reject)) {
               on_reject(local_idx, conn)
             }
-
-            # DISABLED: Auto-focus on next connection
-            # This was causing unwanted tab navigation in tabbed interface
-            # Users reported "system keeps going back between elements"
-            # if (local_idx < length(conns)) {
-            #   next_idx <- local_idx + 1
-            #   session$sendCustomMessage(
-            #     type = "focusButton",
-            #     message = list(id = session$ns(paste0("approve_", next_idx)))
-            #   )
-            # }
           })
-
-          # Amend button handler removed - Approve button now handles slider values directly
         })
       })
     })

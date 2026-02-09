@@ -40,22 +40,22 @@ analysis_loops_ui <- function(id, i18n) {
           # Tab 1: Loop Detection ----
           tabPanel(i18n$t("modules.analysis.loops.tab_detect"),
             h4(i18n$t("modules.analysis.loops.automatic_detection")),
-            p("Identify all feedback loops in your DAPSI(W)R(M) system."),
+            p(i18n$t("modules.analysis.loops.identify_all_desc")),
 
             wellPanel(
               fluidRow(
                 column(4,
                   h5(i18n$t("modules.analysis.loops.detection_parameters")),
-                  numericInput(ns("max_loop_length"), "Maximum Loop Length:",
+                  numericInput(ns("max_loop_length"), i18n$t("modules.analysis.loops.max_loop_length"),
                               value = 8, min = 3, max = 10,
                               step = 1),
-                  numericInput(ns("max_cycles"), "Maximum Cycles to Find:",
+                  numericInput(ns("max_cycles"), i18n$t("modules.analysis.loops.max_cycles"),
                               value = 500, min = 50, max = 500,
                               step = 50),
-                  checkboxInput(ns("include_self_loops"), "Include Self-Loops", value = FALSE),
-                  checkboxInput(ns("filter_trivial"), "Filter Trivial Loops", value = TRUE),
+                  checkboxInput(ns("include_self_loops"), i18n$t("modules.analysis.loops.include_self_loops"), value = FALSE),
+                  checkboxInput(ns("filter_trivial"), i18n$t("modules.analysis.loops.filter_trivial"), value = TRUE),
                   tags$small(class = "text-muted",
-                    "Note: Lower values prevent hanging on complex networks"),
+                    i18n$t("modules.analysis.loops.note_lower_values")),
                   br(), br(),
                   actionButton(ns("detect_loops"), i18n$t("modules.analysis.loops.btn_detect"),
                               icon = icon("search"),
@@ -65,7 +65,7 @@ analysis_loops_ui <- function(id, i18n) {
                   h5(i18n$t("modules.analysis.loops.detection_summary")),
                   verbatimTextOutput(ns("detection_summary")),
                   hr(),
-                  h5("Processing Status"),
+                  h5(i18n$t("modules.analysis.loops.processing_status")),
                   textOutput(ns("detection_status"))
                 )
               )
@@ -84,13 +84,13 @@ analysis_loops_ui <- function(id, i18n) {
           # Tab 2: Loop Classification ----
           tabPanel(i18n$t("modules.analysis.loops.tab_classification"),
             h4(i18n$t("modules.analysis.loops.reinforcing_vs_balancing")),
-            p("Classify loops based on polarity and understand their system behavior."),
+            p(i18n$t("modules.analysis.loops.classify_desc")),
 
             fluidRow(
               column(6,
                 wellPanel(
                   h5(i18n$t("modules.analysis.loops.reinforcing_loops")),
-                  p("Amplify change - can create virtuous or vicious cycles."),
+                  p(i18n$t("modules.analysis.loops.reinforcing_desc")),
                   DTOutput(ns("reinforcing_loops_table")),
                   hr(),
                   plotOutput(ns("reinforcing_dist"), height = PLOT_HEIGHT_XS)
@@ -99,7 +99,7 @@ analysis_loops_ui <- function(id, i18n) {
               column(6,
                 wellPanel(
                   h5(i18n$t("modules.analysis.loops.balancing_loops")),
-                  p("Counteract change - seek equilibrium or stability."),
+                  p(i18n$t("modules.analysis.loops.balancing_desc")),
                   DTOutput(ns("balancing_loops_table")),
                   hr(),
                   plotOutput(ns("balancing_dist"), height = PLOT_HEIGHT_XS)
@@ -112,7 +112,7 @@ analysis_loops_ui <- function(id, i18n) {
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Loop Type Distribution"),
+                  h5(i18n$t("modules.analysis.loops.type_distribution")),
                   plotOutput(ns("loop_type_plot"), height = PLOT_HEIGHT_SM)
                 )
               )
@@ -126,21 +126,21 @@ analysis_loops_ui <- function(id, i18n) {
             fluidRow(
               column(4,
                 wellPanel(
-                  h5("Select Loop"),
-                  selectInput(ns("selected_loop"), "Loop ID:",
+                  h5(i18n$t("modules.analysis.loops.select_loop")),
+                  selectInput(ns("selected_loop"), i18n$t("modules.analysis.loops.loop_id"),
                              choices = NULL),
                   hr(),
-                  h5("Loop Properties"),
+                  h5(i18n$t("modules.analysis.loops.loop_properties")),
                   verbatimTextOutput(ns("loop_properties"))
                 )
               ),
               column(8,
                 wellPanel(
-                  h5("Loop Visualization"),
+                  h5(i18n$t("modules.analysis.loops.loop_visualization")),
                   visNetworkOutput(ns("loop_network"), height = PLOT_HEIGHT_MD)
                 ),
                 wellPanel(
-                  h5("Loop Narrative"),
+                  h5(i18n$t("modules.analysis.loops.loop_narrative")),
                   htmlOutput(ns("loop_narrative"))
                 )
               )
@@ -150,13 +150,13 @@ analysis_loops_ui <- function(id, i18n) {
           # Tab 4: Dominant Loops ----
           tabPanel(i18n$t("modules.analysis.loops.tab_dominant"),
             h4(i18n$t("modules.analysis.loops.identify_key_drivers")),
-            p("Analyze which loops have the most influence on system behavior."),
+            p(i18n$t("modules.analysis.loops.dominant_desc")),
 
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Dominance Metrics"),
-                  p("Loops are ranked by length, centrality, and element importance."),
+                  h5(i18n$t("modules.analysis.loops.dominance_metrics")),
+                  p(i18n$t("modules.analysis.loops.dominance_desc")),
                   DTOutput(ns("dominant_loops_table"))
                 )
               )
@@ -167,14 +167,14 @@ analysis_loops_ui <- function(id, i18n) {
             fluidRow(
               column(6,
                 wellPanel(
-                  h5("Loop Strength Analysis"),
+                  h5(i18n$t("modules.analysis.loops.strength_analysis")),
                   plotOutput(ns("loop_strength_plot"), height = PLOT_HEIGHT_SM)
                 )
               ),
               column(6,
                 wellPanel(
-                  h5("Element Participation"),
-                  p("How many loops each element appears in:"),
+                  h5(i18n$t("modules.analysis.loops.element_participation")),
+                  p(i18n$t("modules.analysis.loops.element_participation_desc")),
                   plotOutput(ns("element_participation_plot"), height = PLOT_HEIGHT_SM)
                 )
               )
@@ -188,22 +188,22 @@ analysis_loops_ui <- function(id, i18n) {
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Download Options"),
-                  p("Export loop detection results for documentation and reporting."),
+                  h5(i18n$t("modules.analysis.loops.download_options")),
+                  p(i18n$t("modules.analysis.loops.download_desc")),
                   fluidRow(
                     column(4,
                       downloadButton(ns("download_loops_excel"),
-                                    "Download Loops (Excel)",
+                                    i18n$t("modules.analysis.loops.download_excel"),
                                     class = "btn-success btn-block")
                     ),
                     column(4,
                       downloadButton(ns("download_loop_report"),
-                                    "Download Loop Report (PDF)",
+                                    i18n$t("modules.analysis.loops.download_pdf"),
                                     class = "btn-info btn-block")
                     ),
                     column(4,
                       downloadButton(ns("download_loop_viz"),
-                                    "Download Loop Diagrams (ZIP)",
+                                    i18n$t("modules.analysis.loops.download_zip"),
                                     class = "btn-warning btn-block")
                     )
                   )
@@ -216,7 +216,7 @@ analysis_loops_ui <- function(id, i18n) {
             fluidRow(
               column(12,
                 wellPanel(
-                  h5("Loop Summary Statistics"),
+                  h5(i18n$t("modules.analysis.loops.summary_stats")),
                   verbatimTextOutput(ns("export_summary"))
                 )
               )
@@ -371,9 +371,9 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
       }
 
       # Use optimized loop detection algorithm from network_analysis.R
-      withProgress(message = 'Detecting loops (this may take 10-30 seconds)...', value = 0, {
+      withProgress(message = i18n$t("modules.analysis.loops.progress_detecting"), value = 0, {
 
-        incProgress(0.1, detail = "Preparing detection parameters...")
+        incProgress(0.1, detail = i18n$t("modules.analysis.loops.progress_preparing"))
         Sys.sleep(0.1)
 
         tryCatch({
@@ -387,10 +387,10 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
           # Limit max_loop_length to prevent hanging
           safe_max_length <- min(input$max_loop_length, 10)
 
-          incProgress(0.1, detail = "Analyzing components...")
+          incProgress(0.1, detail = i18n$t("modules.analysis.loops.progress_components"))
           Sys.sleep(0.1)
 
-          incProgress(0.1, detail = "Finding cycles (please wait)...")
+          incProgress(0.1, detail = i18n$t("modules.analysis.loops.progress_finding"))
           Sys.sleep(0.1)
 
           # Run with timeout to prevent hanging
@@ -435,7 +435,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
             return()
           }
 
-          incProgress(0.1, detail = "Processing detected loops...")
+          incProgress(0.1, detail = i18n$t("modules.analysis.loops.progress_processing"))
           Sys.sleep(0.1)
 
           if(length(all_loops) == 0) {
@@ -457,12 +457,12 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
             all_loops <- all_loops[1:max_loops_display]
           }
 
-          incProgress(0.1, detail = "Processing loop details...")
+          incProgress(0.1, detail = i18n$t("modules.analysis.loops.progress_details"))
           Sys.sleep(0.1)
 
           loop_info <- process_cycles_to_loops(all_loops, nodes, edges, g)
 
-          incProgress(0.2, detail = "Finalizing results...")
+          incProgress(0.2, detail = i18n$t("modules.analysis.loops.progress_finalizing"))
           Sys.sleep(0.1)
 
           loop_data$loops <- loop_info
@@ -483,7 +483,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
           project_data_reactive(project_data)
 
           output$detection_status <- renderText(
-            paste("Detection complete! Found", nrow(loop_info), "loops.")
+            sprintf(i18n$t("modules.analysis.loops.detection_complete_n"), nrow(loop_info))
           )
 
           showNotification(
@@ -508,7 +508,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     # Detection Summary ----
     output$detection_summary <- renderText({
       if(!loop_data$detection_complete) {
-        return("Click 'Detect Loops' to begin analysis.")
+        return(i18n$t("modules.analysis.loops.click_detect"))
       }
 
       req(loop_data$loops)
@@ -518,12 +518,12 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
       balancing <- sum(loops$Type == "Balancing")
 
       paste0(
-        "Total Loops Found: ", nrow(loops), "\n",
-        "Reinforcing Loops: ", reinforcing, "\n",
-        "Balancing Loops: ", balancing, "\n",
-        "Average Loop Length: ", round(mean(loops$Length), 1), "\n",
-        "Shortest Loop: ", min(loops$Length), " elements\n",
-        "Longest Loop: ", max(loops$Length), " elements"
+        i18n$t("modules.analysis.loops.summary_total"), ": ", nrow(loops), "\n",
+        i18n$t("modules.analysis.loops.summary_reinforcing"), ": ", reinforcing, "\n",
+        i18n$t("modules.analysis.loops.summary_balancing"), ": ", balancing, "\n",
+        i18n$t("modules.analysis.loops.summary_avg_length"), ": ", round(mean(loops$Length), 1), "\n",
+        i18n$t("modules.analysis.loops.summary_shortest"), ": ", min(loops$Length), " ", i18n$t("modules.analysis.loops.elements_label"), "\n",
+        i18n$t("modules.analysis.loops.summary_longest"), ": ", max(loops$Length), " ", i18n$t("modules.analysis.loops.elements_label")
       )
     })
 
@@ -560,13 +560,13 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
       type_counts <- table(loop_data$loops$Type)
 
       barplot(type_counts,
-              main = "Loop Type Distribution",
+              main = i18n$t("modules.analysis.loops.type_distribution"),
               col = c("Balancing" = "#E63946", "Reinforcing" = "#06D6A0"),
-              ylab = "Number of Loops",
+              ylab = i18n$t("modules.analysis.loops.num_loops"),
               las = 1)
 
       legend("topright",
-             legend = c("Reinforcing (amplify change)", "Balancing (seek equilibrium)"),
+             legend = c(i18n$t("modules.analysis.loops.legend_reinforcing"), i18n$t("modules.analysis.loops.legend_balancing")),
              fill = c("#06D6A0", "#E63946"))
     })
 
@@ -578,7 +578,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
                            paste0(loop_data$loops$LoopID, ": ", loop_data$loops$Type))
         updateSelectInput(session, "selected_loop", choices = choices)
       } else {
-        updateSelectInput(session, "selected_loop", choices = c("No loops detected"))
+        updateSelectInput(session, "selected_loop", choices = c(i18n$t("modules.analysis.loops.no_loops_detected")))
       }
     })
 
@@ -589,11 +589,11 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
       loop_row <- loop_data$loops[loop_data$loops$LoopID == input$selected_loop, ]
 
       paste0(
-        "Loop ID: ", loop_row$LoopID, "\n",
-        "Type: ", loop_row$Type, "\n",
-        "Polarity: ", loop_row$Polarity, "\n",
-        "Length: ", loop_row$Length, " elements\n",
-        "\nPath:\n", loop_row$Elements
+        i18n$t("modules.analysis.loops.prop_loop_id"), ": ", loop_row$LoopID, "\n",
+        i18n$t("modules.analysis.loops.prop_type"), ": ", loop_row$Type, "\n",
+        i18n$t("modules.analysis.loops.prop_polarity"), ": ", loop_row$Polarity, "\n",
+        i18n$t("modules.analysis.loops.prop_length"), ": ", loop_row$Length, " ", i18n$t("modules.analysis.loops.elements_label"), "\n",
+        "\n", i18n$t("modules.analysis.loops.prop_path"), ":\n", loop_row$Elements
       )
     })
 
@@ -670,19 +670,17 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
 
       narrative <- if(loop_row$Type == "Reinforcing") {
         paste0(
-          "<p><strong>Reinforcing Loop</strong> - This loop amplifies change in the system.</p>",
-          "<p>When one element increases, it causes downstream elements to increase (or decrease through negative links), ",
-          "which eventually feeds back to increase the original element even more. This creates exponential growth or decline.</p>",
-          "<p><strong>System Behavior:</strong> Can create 'virtuous cycles' (positive growth) or 'vicious cycles' (degradation spirals).</p>",
-          "<p><strong>Management Implication:</strong> Intervention points in reinforcing loops can have large leverage effects.</p>"
+          "<p><strong>", i18n$t("modules.analysis.loops.narrative_reinforcing_title"), "</strong></p>",
+          "<p>", i18n$t("modules.analysis.loops.narrative_reinforcing_desc"), "</p>",
+          "<p><strong>", i18n$t("modules.analysis.loops.narrative_system_behavior"), ":</strong> ", i18n$t("modules.analysis.loops.narrative_reinforcing_behavior"), "</p>",
+          "<p><strong>", i18n$t("modules.analysis.loops.narrative_management"), ":</strong> ", i18n$t("modules.analysis.loops.narrative_reinforcing_mgmt"), "</p>"
         )
       } else {
         paste0(
-          "<p><strong>Balancing Loop</strong> - This loop counteracts change in the system.</p>",
-          "<p>When one element increases, the feedback loop causes forces that push it back down toward equilibrium. ",
-          "This creates self-regulation and stability-seeking behavior.</p>",
-          "<p><strong>System Behavior:</strong> Maintains stability, resists change, seeks goal or equilibrium state.</p>",
-          "<p><strong>Management Implication:</strong> Balancing loops can resist policy interventions and maintain status quo.</p>"
+          "<p><strong>", i18n$t("modules.analysis.loops.narrative_balancing_title"), "</strong></p>",
+          "<p>", i18n$t("modules.analysis.loops.narrative_balancing_desc"), "</p>",
+          "<p><strong>", i18n$t("modules.analysis.loops.narrative_system_behavior"), ":</strong> ", i18n$t("modules.analysis.loops.narrative_balancing_behavior"), "</p>",
+          "<p><strong>", i18n$t("modules.analysis.loops.narrative_management"), ":</strong> ", i18n$t("modules.analysis.loops.narrative_balancing_mgmt"), "</p>"
         )
       }
 
@@ -717,8 +715,8 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
       }
 
       barplot(element_counts,
-              main = "Elements in Most Loops (Top 15)",
-              ylab = "Number of Loops",
+              main = i18n$t("modules.analysis.loops.elements_in_most_loops"),
+              ylab = i18n$t("modules.analysis.loops.num_loops"),
               las = 2,
               col = "#457B9D",
               cex.names = 0.7)
@@ -731,12 +729,12 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
       loops <- loop_data$loops
 
       paste0(
-        "Export Summary\n",
+        i18n$t("modules.analysis.loops.export_summary_title"), "\n",
         "====================\n\n",
-        "Total Loops: ", nrow(loops), "\n",
-        "Reinforcing: ", sum(loops$Type == "Reinforcing"), "\n",
-        "Balancing: ", sum(loops$Type == "Balancing"), "\n\n",
-        "Ready for export in multiple formats."
+        i18n$t("modules.analysis.loops.summary_total"), ": ", nrow(loops), "\n",
+        i18n$t("modules.analysis.loops.summary_reinforcing"), ": ", sum(loops$Type == "Reinforcing"), "\n",
+        i18n$t("modules.analysis.loops.summary_balancing"), ": ", sum(loops$Type == "Balancing"), "\n\n",
+        i18n$t("modules.analysis.loops.ready_for_export")
       )
     })
 
@@ -767,7 +765,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     create_help_observer(
       input = input,
       input_id = "help_loops",
-      title_key = "Feedback Loop Detection and Analysis Guide",
+      title_key = "modules.analysis.loops.help_title",
       content = tagList(
         h4(i18n$t("modules.analysis.loops.what_are_feedback_loops")),
         p(i18n$t("modules.analysis.feedback_loops_are_circular_patterns_in_the_system")),

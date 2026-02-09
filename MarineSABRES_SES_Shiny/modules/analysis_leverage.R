@@ -21,7 +21,7 @@ analysis_leverage_ui <- function(id, i18n) {
           h4(icon("sliders-h"), " ", i18n$t("modules.analysis.leverage.analysis_settings")),
           sliderInput(
             ns("top_n"),
-            "Number of Top Nodes:",
+            i18n$t("modules.analysis.leverage.num_top_nodes"),
             min = 5,
             max = 20,
             value = 10,
@@ -37,11 +37,11 @@ analysis_leverage_ui <- function(id, i18n) {
           div(
             style = "background: #e8f4f8; padding: 10px; border-radius: 5px; border-left: 4px solid #17a2b8;",
             h5(icon("info-circle"), " ", i18n$t("modules.analysis.leverage.about_leverage_points")),
-            p("Leverage points are nodes that have the highest potential for system-wide impact based on:"),
+            p(i18n$t("modules.analysis.leverage.about_description")),
             tags$ul(
-              tags$li(strong("Betweenness:"), " Control over information flow"),
-              tags$li(strong("Eigenvector:"), " Connection to other important nodes"),
-              tags$li(strong("PageRank:"), " Overall importance in the network")
+              tags$li(strong(i18n$t("modules.analysis.leverage.betweenness_label")), " ", i18n$t("modules.analysis.leverage.betweenness_desc")),
+              tags$li(strong(i18n$t("modules.analysis.leverage.eigenvector_label")), " ", i18n$t("modules.analysis.leverage.eigenvector_desc")),
+              tags$li(strong(i18n$t("modules.analysis.leverage.pagerank_label")), " ", i18n$t("modules.analysis.leverage.pagerank_desc"))
             )
           )
         )
@@ -68,7 +68,7 @@ analysis_leverage_ui <- function(id, i18n) {
             br(),
             div(
               style = "background: #f8f9fa; padding: 10px; border-radius: 5px; margin-bottom: 15px;",
-              icon("info-circle"), " Node sizes reflect composite leverage scores. Larger nodes = higher leverage."
+              icon("info-circle"), " ", i18n$t("modules.analysis.leverage.network_info")
             ),
             visNetworkOutput(ns("leverage_network"), height = PLOT_HEIGHT_XL)
           ),
@@ -133,16 +133,16 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
 
       project_data <- project_data_reactive()
 
-      withProgress(message = "Analyzing leverage points...", value = 0, {
+      withProgress(message = i18n$t("modules.analysis.leverage.progress_analyzing"), value = 0, {
 
         tryCatch({
-          incProgress(0.2, detail = "Building network from ISA data...")
+          incProgress(0.2, detail = i18n$t("modules.analysis.leverage.progress_building"))
 
           isa_data <- project_data$data$isa_data
           nodes <- create_nodes_df(isa_data)
           edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
 
-          incProgress(0.4, detail = "Creating network graph...")
+          incProgress(0.4, detail = i18n$t("modules.analysis.leverage.progress_creating_graph"))
 
           all_centralities <- calculate_all_centralities(
             graph_from_data_frame(
@@ -157,7 +157,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
                                                safe_scale(all_centralities$Eigenvector) +
                                                safe_scale(all_centralities$PageRank)
 
-          incProgress(0.6, detail = "Ranking nodes...")
+          incProgress(0.6, detail = i18n$t("modules.analysis.leverage.progress_ranking"))
 
           # Get top leverage points
           leverage_df <- all_centralities[order(-all_centralities$Composite_Score), ]
@@ -166,7 +166,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
           # Store results
           rv$leverage_results <- leverage_df
 
-          incProgress(0.8, detail = "Updating node attributes...")
+          incProgress(0.8, detail = i18n$t("modules.analysis.leverage.progress_updating"))
 
           # Update nodes with leverage scores and centrality metrics
           nodes$leverage_score <- NA_real_
@@ -192,17 +192,17 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
           project_data$last_modified <- Sys.time()
           project_data_reactive(project_data)
 
-          incProgress(1.0, detail = "Complete!")
+          incProgress(1.0, detail = i18n$t("modules.analysis.leverage.progress_complete"))
 
           showNotification(
-            paste("Found", nrow(leverage_df), "leverage points! Scores saved to CLD nodes."),
+            sprintf(i18n$t("modules.analysis.leverage.found_n_points"), nrow(leverage_df)),
             type = "message",
             duration = 3
           )
 
         }, error = function(e) {
           showNotification(
-            paste("Error analyzing leverage points:", e$message),
+            paste(i18n$t("modules.analysis.leverage.error_analyzing"), e$message),
             type = "error",
             duration = 10
           )
@@ -216,23 +216,19 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
         div(
           class = "alert alert-warning",
           icon("exclamation-triangle"), " ",
-          strong("No network data available."),
-          " Please create your SES network first using the ",
-          tags$em("Create SES"),
-          " menu."
+          HTML(i18n$t("modules.analysis.leverage.no_network_data"))
         )
       } else if (is.null(rv$leverage_results)) {
         div(
           class = "alert alert-info",
           icon("info-circle"), " ",
-          "Click ", strong("Calculate Leverage Points"), " to analyze your network."
+          HTML(i18n$t("modules.analysis.leverage.click_calculate"))
         )
       } else {
         div(
           class = "alert alert-success",
           icon("check-circle"), " ",
-          strong(sprintf("Found %d leverage points", nrow(rv$leverage_results))),
-          " - Nodes are ranked by their composite influence score."
+          HTML(sprintf(i18n$t("modules.analysis.leverage.found_ranked"), nrow(rv$leverage_results)))
         )
       }
     })
@@ -317,9 +313,9 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
 
         # Override tooltips to include leverage score
         nodes$title <- paste0(
-          "<b>", nodes$label, "</b><br>",
-          "Type: ", nodes$group, "<br>",
-          "Leverage Score: ", sprintf("%.3f", nodes$leverage_score)
+          "<b>", htmltools::htmlEscape(nodes$label), "</b><br>",
+          i18n$t("modules.analysis.leverage.tooltip_type"), nodes$group, "<br>",
+          i18n$t("modules.analysis.leverage.tooltip_score"), sprintf("%.3f", nodes$leverage_score)
         )
 
         # Build visNetwork
@@ -355,37 +351,37 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
           h4(icon("star"), " ", i18n$t("modules.analysis.leverage.top_leverage_point")),
           p(
             strong(top_node),
-            sprintf(" has the highest composite score (%.2f) and represents the most strategic intervention point in your network.", top_score)
+            sprintf(i18n$t("modules.analysis.leverage.top_point_desc"), top_score)
           ),
 
           hr(),
 
           h4(icon("chart-line"), " ", i18n$t("modules.analysis.leverage.understanding_metrics")),
 
-          h5(icon("exchange-alt"), " Betweenness Centrality"),
-          p("Measures how often a node lies on the shortest path between other nodes. High betweenness means the node controls information flow and serves as a bridge."),
+          h5(icon("exchange-alt"), i18n$t("modules.analysis.leverage.metric_betweenness")),
+          p(i18n$t("modules.analysis.leverage.metric_betweenness_desc")),
 
-          h5(icon("network-wired"), " Eigenvector Centrality"),
-          p("Measures a node's influence based on the importance of its neighbors. A node with high eigenvector centrality is connected to other important nodes."),
+          h5(icon("network-wired"), i18n$t("modules.analysis.leverage.metric_eigenvector")),
+          p(i18n$t("modules.analysis.leverage.metric_eigenvector_desc")),
 
-          h5(icon("sitemap"), " PageRank"),
-          p("Originally developed for web pages, PageRank measures importance based on incoming connections and the importance of source nodes."),
+          h5(icon("sitemap"), i18n$t("modules.analysis.leverage.metric_pagerank")),
+          p(i18n$t("modules.analysis.leverage.metric_pagerank_desc")),
 
           hr(),
 
           h4(icon("lightbulb"), " ", i18n$t("modules.analysis.leverage.intervention_strategies")),
           tags$ul(
             tags$li(
-              strong("Direct Intervention: "), "Focus management actions directly on high-leverage nodes"
+              strong(i18n$t("modules.analysis.leverage.strategy_direct")), i18n$t("modules.analysis.leverage.strategy_direct_desc")
             ),
             tags$li(
-              strong("Monitoring: "), "Track changes in leverage points as early warning indicators"
+              strong(i18n$t("modules.analysis.leverage.strategy_monitoring")), i18n$t("modules.analysis.leverage.strategy_monitoring_desc")
             ),
             tags$li(
-              strong("Policy Design: "), "Design policies that strengthen or weaken connections to leverage points"
+              strong(i18n$t("modules.analysis.leverage.strategy_policy")), i18n$t("modules.analysis.leverage.strategy_policy_desc")
             ),
             tags$li(
-              strong("Stakeholder Engagement: "), "Prioritize engagement with actors associated with these nodes"
+              strong(i18n$t("modules.analysis.leverage.strategy_stakeholder")), i18n$t("modules.analysis.leverage.strategy_stakeholder_desc")
             )
           )
         )

@@ -233,7 +233,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
 
     # Report generation handlers
     observeEvent(input$generate_html, {
-      cat("\n*** PREPARE REPORT MODULE: Generate HTML clicked ***\n")
+      debug_log("Generate HTML clicked", "REPORT")
       status <- check_prerequisites()
       if (!status$both) {
         showNotification(
@@ -248,7 +248,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
 
       tryCatch({
         data <- project_data_reactive()
-        cat("[HTML REPORT] Using generate_report_content() from functions/report_generation.R...\n")
+        debug_log("Using generate_report_content() from functions/report_generation.R", "REPORT")
 
         # Use the fixed report generation function from functions/report_generation.R
         report_md <- generate_report_content(
@@ -257,10 +257,10 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
           include_viz = TRUE,
           include_data = FALSE
         )
-        cat("[HTML REPORT] Markdown content generated successfully!\n")
+        debug_log("Markdown content generated successfully", "REPORT")
 
         # Convert markdown to HTML using rmarkdown
-        cat("[HTML REPORT] Converting to HTML...\n")
+        debug_log("Converting to HTML", "REPORT")
         rmd_file <- tempfile(fileext = ".Rmd")
         writeLines(report_md, rmd_file)
 
@@ -271,7 +271,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
           output_file = temp_file,
           quiet = TRUE
         )
-        cat("[HTML REPORT] Report rendered to HTML successfully!\n")
+        debug_log("Report rendered to HTML successfully", "REPORT")
 
         # Copy to www directory so it can be served by Shiny
         www_dir <- file.path(getwd(), "www", "reports")
@@ -645,11 +645,10 @@ generate_html_report <- function(data, title, author, sections) {
   # Safely convert sections to character vector
   sections <- as.character(sections)
 
-  cat("  [gen_html] Function called\n")
-  cat("  [gen_html] Title:", title, "class:", class(title), "\n")
-  cat("  [gen_html] Author:", author, "class:", class(author), "\n")
-  cat("  [gen_html] Sections:", paste(sections, collapse = ", "), "class:", class(sections), "\n")
-  flush.console()
+  debug_log("Function called", "REPORT")
+  debug_log(paste("Title:", title, "class:", class(title)), "REPORT")
+  debug_log(paste("Author:", author, "class:", class(author)), "REPORT")
+  debug_log(paste("Sections:", paste(sections, collapse = ", "), "class:", class(sections)), "REPORT")
 
   # Start HTML document
   html <- c(
@@ -686,8 +685,7 @@ generate_html_report <- function(data, title, author, sections) {
 
   # Executive Summary
   if ("summary" %in% sections) {
-    cat("  [gen_html] Processing summary section...\n")
-    flush.console()
+    debug_log("Processing summary section", "REPORT")
 
     # Extract project name with explicit null checking and type conversion
     project_name <- tryCatch({
@@ -697,12 +695,11 @@ generate_html_report <- function(data, title, author, sections) {
         "Unnamed Project"
       }
     }, error = function(e) {
-      cat("  [gen_html] ERROR extracting project_name:", e$message, "\n")
+      debug_log(paste("ERROR extracting project_name:", e$message), "REPORT")
       "Unnamed Project"
     })
 
-    cat("  [gen_html] project_name:", project_name, "class:", class(project_name), "\n")
-    flush.console()
+    debug_log(paste("project_name:", project_name, "class:", class(project_name)), "REPORT")
 
     html <- c(html,
       "  <h2>Executive Summary</h2>",
@@ -712,8 +709,7 @@ generate_html_report <- function(data, title, author, sections) {
     )
 
     # Count elements with explicit null checking
-    cat("  [gen_html] Counting ISA elements...\n")
-    flush.console()
+    debug_log("Counting ISA elements", "REPORT")
 
     n_drivers <- if (!is.null(data$data$isa_data$drivers)) as.integer(nrow(data$data$isa_data$drivers)) else 0L
     n_activities <- if (!is.null(data$data$isa_data$activities)) as.integer(nrow(data$data$isa_data$activities)) else 0L
@@ -728,14 +724,12 @@ generate_html_report <- function(data, title, author, sections) {
     n_edges <- if (!is.null(data$data$cld$edges)) as.integer(nrow(data$data$cld$edges)) else 0L
     n_loops <- if (!is.null(data$data$analysis$loops)) as.integer(length(data$data$analysis$loops)) else 0L
 
-    cat("  [gen_html] n_elements:", n_elements, "class:", class(n_elements), "\n")
-    cat("  [gen_html] n_nodes:", n_nodes, "class:", class(n_nodes), "\n")
-    cat("  [gen_html] n_edges:", n_edges, "class:", class(n_edges), "\n")
-    cat("  [gen_html] n_loops:", n_loops, "class:", class(n_loops), "\n")
-    flush.console()
+    debug_log(paste("n_elements:", n_elements, "class:", class(n_elements)), "REPORT")
+    debug_log(paste("n_nodes:", n_nodes, "class:", class(n_nodes)), "REPORT")
+    debug_log(paste("n_edges:", n_edges, "class:", class(n_edges)), "REPORT")
+    debug_log(paste("n_loops:", n_loops, "class:", class(n_loops)), "REPORT")
 
-    cat("  [gen_html] Building summary HTML with paste0...\n")
-    flush.console()
+    debug_log("Building summary HTML with paste0", "REPORT")
 
     html <- c(html,
       paste0("    <p><strong>Total Elements:</strong> ", as.character(n_elements), "</p>"),
@@ -745,14 +739,12 @@ generate_html_report <- function(data, title, author, sections) {
       "  </div>"
     )
 
-    cat("  [gen_html] Summary section completed\n")
-    flush.console()
+    debug_log("Summary section completed", "REPORT")
   }
 
   # ISA Framework
   if ("isa" %in% sections) {
-    cat("  [gen_html] Processing ISA Framework section...\n")
-    flush.console()
+    debug_log("Processing ISA Framework section", "REPORT")
 
     html <- c(html, "  <h2>ISA Framework (DAPSIWRM)</h2>")
 

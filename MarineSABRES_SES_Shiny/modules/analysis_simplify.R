@@ -585,6 +585,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
     observeEvent(input$apply_simplification, {
       req(rv$original_nodes, rv$original_edges)
 
+      tryCatch({
       # Start with original network
       nodes <- rv$original_nodes
       edges <- rv$original_edges
@@ -801,6 +802,14 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
         type = "message",
         duration = 3
       )
+      }, error = function(e) {
+        debug_log(paste("Error in simplification:", e$message), "SIMPLIFY")
+        showNotification(
+          paste("Error applying simplification:", e$message),
+          type = "error",
+          duration = 10
+        )
+      })
     })
 
     # ========== RESET SIMPLIFICATION ==========
