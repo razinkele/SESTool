@@ -621,8 +621,8 @@ validate_import_data <- function(elements, connections) {
   return(if (length(errors) > 0) errors else NULL)
 }
 
-# NOTE: convert_excel_to_isa() and build_adjacency_matrices_from_connections() functions
-# are now provided by the shared excel_import_helpers.R module.
+# NOTE: convert_excel_to_isa() and build_adjacency_matrices_from_connections_v2() functions
+# are provided by the shared excel_import_helpers.R module.
 # The shared functions use a connection-first approach:
 # 1. Extract all nodes from connections (From/To values)
 # 2. Look up types from elements sheet

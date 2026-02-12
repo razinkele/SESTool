@@ -15,7 +15,9 @@
 #
 # ==============================================================================
 
-library(torch)
+if (!requireNamespace("torch", quietly = TRUE)) {
+  stop("Package 'torch' is required for ML features. Install with: install.packages('torch')")
+}
 
 # ==============================================================================
 # Context Embedding Layer (torch nn_module)
