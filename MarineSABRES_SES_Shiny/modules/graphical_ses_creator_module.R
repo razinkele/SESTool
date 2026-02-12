@@ -521,7 +521,7 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
       if (rv$panel_collapsed) {
         return(div(class = "text-center",
           icon("chevron-right", style = "font-size: 24px; color: #999; cursor: pointer;"),
-          onclick = "Shiny.setInputValue('graphical_ses_creator-toggle_context', Math.random());"
+          onclick = sprintf("Shiny.setInputValue('%s', Math.random());", ns("toggle_context"))
         ))
       }
 

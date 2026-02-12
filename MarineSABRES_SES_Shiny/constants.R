@@ -209,6 +209,18 @@ EDGE_COLORS <- list(
   opposing = "#dc131e"        # Red (negative from Kumu)
 )
 
+# Confidence defaults for network analysis
+CONFIDENCE_DEFAULT <- 3
+
+# Opacity mapping per confidence level (1-5 scale)
+CONFIDENCE_OPACITY <- c(
+  "1" = 0.3,
+  "2" = 0.5,
+  "3" = 0.7,
+  "4" = 0.9,
+  "5" = 1.0
+)
+
 # ============================================================================
 # LEGACY GROUP COLORS/SHAPES (for backward compatibility)
 # ============================================================================

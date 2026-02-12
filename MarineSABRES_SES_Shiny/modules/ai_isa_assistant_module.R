@@ -1580,7 +1580,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           # === HANDLE REGIONAL SEA SELECTION (Step 0) ===
           if (step_info$type == "choice_regional_sea") {
             # Set up observers for each regional sea button
-            lapply(names(REGIONAL_SEAS), function(sea_key) {
+            new_obs <- lapply(names(REGIONAL_SEAS), function(sea_key) {
               local({
                 button_id <- paste0("regional_sea_", sea_key, "_s", current_step)
                 sea_name <- REGIONAL_SEAS[[sea_key]]$name_en
@@ -1669,13 +1669,16 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               })
             })
 
+            active_observers <<- c(active_observers, new_obs)
+
             # Observer for "Other" button - regional sea
-            observeEvent(input[[paste0("regional_sea_other_s", current_step)]], {
+            obs_other <- observeEvent(input[[paste0("regional_sea_other_s", current_step)]], {
               if (rv$current_step == current_step) {
                 debug_log("[AI ISA] Regional sea 'Other' button clicked - showing text input\n")
                 rv$show_text_input <- TRUE
               }
             }, ignoreInit = TRUE, once = TRUE)
+            active_observers <<- c(active_observers, list(obs_other))
           }
 
           # === HANDLE ECOSYSTEM TYPE SELECTION (Step 1) ===
@@ -1684,7 +1687,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               ecosystem_types <- REGIONAL_SEAS[[rv$context$regional_sea]]$ecosystem_types
 
               # Set up observers for each ecosystem button
-              lapply(seq_along(ecosystem_types), function(i) {
+              new_obs <- lapply(seq_along(ecosystem_types), function(i) {
                 local({
                   button_id <- paste0("ecosystem_", i, "_s", current_step)
                   ecosystem_name <- ecosystem_types[i]
@@ -1708,13 +1711,16 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                 })
               })
 
+              active_observers <<- c(active_observers, new_obs)
+
               # Observer for "Other" button - ecosystem
-              observeEvent(input[[paste0("ecosystem_other_s", current_step)]], {
+              obs_other <- observeEvent(input[[paste0("ecosystem_other_s", current_step)]], {
                 if (rv$current_step == current_step) {
                   debug_log("[AI ISA] Ecosystem 'Other' button clicked - showing text input\n")
                   rv$show_text_input <- TRUE
                 }
               }, ignoreInit = TRUE, once = TRUE)
+              active_observers <<- c(active_observers, list(obs_other))
             }
           }
 
@@ -1724,7 +1730,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               issues <- REGIONAL_SEAS[[rv$context$regional_sea]]$common_issues
 
               # Set up observers for each issue button (toggle selection)
-              lapply(seq_along(issues), function(i) {
+              new_obs <- lapply(seq_along(issues), function(i) {
                 local({
                   button_id <- paste0("issue_", i, "_s", current_step)
                   issue_name <- issues[i]
@@ -1749,13 +1755,16 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                 })
               })
 
+              active_observers <<- c(active_observers, new_obs)
+
               # Observer for "Other" button - issue
-              observeEvent(input[[paste0("issue_other_s", current_step)]], {
+              obs_other <- observeEvent(input[[paste0("issue_other_s", current_step)]], {
                 if (rv$current_step == current_step) {
                   debug_log("[AI ISA] Issue 'Other' button clicked - showing text input\n")
                   rv$show_text_input <- TRUE
                 }
               }, ignoreInit = TRUE, once = TRUE)
+              active_observers <<- c(active_observers, list(obs_other))
 
               # NOTE: Removed inline continue button observer - now handled by
               # the general skip_question observer which uses the bottom continue button
@@ -1768,7 +1777,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               issues <- REGIONAL_SEAS[[rv$context$regional_sea]]$common_issues
 
               # Set up observers for each issue button
-              lapply(seq_along(issues), function(i) {
+              new_obs <- lapply(seq_along(issues), function(i) {
                 local({
                   button_id <- paste0("issue_", i, "_s", current_step)
                   issue_name <- issues[i]
@@ -1792,20 +1801,23 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                 })
               })
 
+              active_observers <<- c(active_observers, new_obs)
+
               # Observer for "Other" button - issue
-              observeEvent(input[[paste0("issue_other_s", current_step)]], {
+              obs_other <- observeEvent(input[[paste0("issue_other_s", current_step)]], {
                 if (rv$current_step == current_step) {
                   debug_log("[AI ISA] Issue 'Other' button clicked - showing text input\n")
                   rv$show_text_input <- TRUE
                 }
               }, ignoreInit = TRUE, once = TRUE)
+              active_observers <<- c(active_observers, list(obs_other))
             }
           }
 
           # === HANDLE STATIC EXAMPLES (old approach) ===
           else if (!is.null(step_info$examples)) {
             # Set up observers for this step's buttons
-            lapply(seq_along(step_info$examples), function(i) {
+            new_obs <- lapply(seq_along(step_info$examples), function(i) {
               local({
                 button_id <- paste0("quick_opt_", i)
                 example_text <- step_info$examples[i]
@@ -1818,6 +1830,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                 }, ignoreInit = TRUE, once = TRUE)
               })
             })
+            active_observers <<- c(active_observers, new_obs)
           }
           # === HANDLE CONTEXT-AWARE EXAMPLES (new approach) ===
           else if (!is.null(step_info$use_context_examples) && step_info$use_context_examples) {
@@ -1834,7 +1847,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               display_suggestions <- if (length(suggestions) > 12) suggestions[1:12] else suggestions
 
               # Set up observers for context-aware suggestion buttons (toggle selection)
-              lapply(seq_along(display_suggestions), function(i) {
+              new_obs <- lapply(seq_along(display_suggestions), function(i) {
                 local({
                   button_id <- paste0("quick_opt_", i)
                   suggestion_text <- display_suggestions[i]
@@ -1870,15 +1883,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                   }, ignoreInit = TRUE)
                 })
               })
+              active_observers <<- c(active_observers, new_obs)
             }
 
             # Observer for "Other" button - DAPSIWRM elements
-            observeEvent(input[["dapsiwrm_other"]], {
+            obs_other <- observeEvent(input[["dapsiwrm_other"]], {
               if (rv$current_step == current_step) {
                 debug_log("[AI ISA] DAPSIWRM 'Other' button clicked - showing text input\n")
                 rv$show_text_input <- TRUE
               }
             }, ignoreInit = TRUE, once = TRUE)
+            active_observers <<- c(active_observers, list(obs_other))
           }
         }
       }

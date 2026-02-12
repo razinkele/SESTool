@@ -66,16 +66,10 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n) {
     )
 
     # ── CLD validation gate ──────────────────────────────────────────────
-    output$cld_check_ui <- renderUI({
-      data <- project_data_reactive()
-      if (is.null(data) || !has_valid_cld(data)) {
-        div(class = "alert alert-warning", style = "margin: 20px;",
-          icon("exclamation-triangle"), " ",
-          strong(i18n$t("modules.analysis_intervention.no_cld_data")),
-          p(i18n$t("modules.analysis_intervention.no_cld_data_hint"))
-        )
-      }
-    })
+    setup_cld_gate(output, project_data_reactive, i18n,
+      "modules.analysis_intervention.no_cld_data",
+      "modules.analysis_intervention.no_cld_data_hint"
+    )
 
     # ── Main UI ──────────────────────────────────────────────────────────
     output$main_ui <- renderUI({
@@ -112,7 +106,7 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n) {
                 selectizeInput(
                   ns("from_response"),
                   i18n$t("modules.analysis_intervention.from_responses"),
-                  choices = c("" = "", response_names),
+                  choices = c(setNames("", ""), response_names),
                   options = list(
                     placeholder = i18n$t("modules.analysis_intervention.select_response"))
                 )

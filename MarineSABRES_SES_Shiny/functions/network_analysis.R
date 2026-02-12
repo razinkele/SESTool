@@ -3,29 +3,9 @@
 # Note: igraph is loaded in global.R
 
 # ============================================================================
-# CONSTANTS - Define defaults if not already loaded from global.R
+# CONSTANTS: CONFIDENCE_DEFAULT, CONFIDENCE_OPACITY, EDGE_COLORS
+# Defined in constants.R (loaded before this file)
 # ============================================================================
-
-if (!exists("CONFIDENCE_DEFAULT")) {
-  CONFIDENCE_DEFAULT <- 3
-}
-
-if (!exists("CONFIDENCE_OPACITY")) {
-  CONFIDENCE_OPACITY <- c(
-    "1" = 0.3,
-    "2" = 0.5,
-    "3" = 0.7,
-    "4" = 0.9,
-    "5" = 1.0
-  )
-}
-
-if (!exists("EDGE_COLORS")) {
-  EDGE_COLORS <- list(
-    reinforcing = "#80b8d7",  # Light blue
-    opposing = "#dc131e"      # Red
-  )
-}
 
 # ============================================================================
 # NETWORK METRICS FUNCTIONS

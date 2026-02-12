@@ -3,6 +3,39 @@
 # Reduces code duplication across modules
 
 # ============================================================================
+# CLD VALIDATION GATE
+# ============================================================================
+
+#' Set up CLD validation gate for analysis modules
+#'
+#' Renders a warning alert when no valid CLD data exists.
+#' Use in module server alongside a main_ui guard:
+#'   setup_cld_gate(output, project_data_reactive, i18n, title_key, hint_key)
+#'   output$main_ui <- renderUI({
+#'     data <- project_data_reactive()
+#'     if (is.null(data) || !has_valid_cld(data)) return(NULL)
+#'     ...
+#'   })
+#'
+#' @param output The module's output object
+#' @param project_data_reactive Reactive expression returning project data
+#' @param i18n Translator object
+#' @param title_key i18n key for the alert title
+#' @param hint_key i18n key for the alert hint text
+setup_cld_gate <- function(output, project_data_reactive, i18n, title_key, hint_key) {
+  output$cld_check_ui <- renderUI({
+    data <- project_data_reactive()
+    if (is.null(data) || !has_valid_cld(data)) {
+      div(class = "alert alert-warning", style = "margin: 20px;",
+        icon("exclamation-triangle"), " ",
+        strong(i18n$t(title_key)),
+        p(i18n$t(hint_key))
+      )
+    }
+  })
+}
+
+# ============================================================================
 # MODULE HEADER CREATION
 # ============================================================================
 

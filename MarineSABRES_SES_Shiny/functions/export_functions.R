@@ -52,19 +52,6 @@ export_cld_png <- function(visnet, file_path, width = 1200, height = 900) {
   })
 }
 
-#' Export CLD as SVG
-#' 
-#' @param visnet visNetwork object
-#' @param file_path Output file path
-#' @return NULL (side effect: saves file)
-export_cld_svg <- function(visnet, file_path) {
-  
-  # SVG export requires additional tools
-  # This is a placeholder - full implementation would need additional packages
-  
-  log_warning("EXPORT", "SVG export not yet fully implemented. Use HTML or PNG export instead.")
-}
-
 #' Export CLD as HTML
 #' 
 #' @param visnet visNetwork object
@@ -97,7 +84,7 @@ export_bot_pdf <- function(bot_data_list, file_path, width = 11, height = 8.5) {
     
     if (nrow(bot_data) > 0) {
       p <- ggplot(bot_data, aes(x = date, y = value, color = element_id)) +
-        geom_line(size = 1) +
+        geom_line(linewidth = 1) +
         geom_point(size = 2) +
         labs(
           title = paste("Behavior Over Time:", element_name),
@@ -538,34 +525,6 @@ generate_recommendations_md <- function(responses_data) {
   }
 
   return(lines)
-}
-
-#' Generate technical report
-#' 
-#' @param project_data Project data list
-#' @param output_file Output file path
-#' @param include_visualizations Include CLD and BOT graphs
-#' @return NULL (side effect: generates report)
-generate_technical_report <- function(project_data, output_file, 
-                                     include_visualizations = TRUE) {
-  
-  # More detailed report implementation
-  # This would include full data tables, detailed analysis, etc.
-  
-  log_warning("EXPORT", "Technical report generation not yet fully implemented")
-}
-
-#' Generate stakeholder presentation
-#' 
-#' @param project_data Project data list
-#' @param output_file Output file path (PPT or HTML)
-#' @return NULL (side effect: generates presentation)
-generate_stakeholder_presentation <- function(project_data, output_file) {
-
-  # Presentation generation implementation
-  # This would create slides suitable for stakeholder meetings
-
-  log_warning("EXPORT", "Presentation generation not yet fully implemented")
 }
 
 # ============================================================================

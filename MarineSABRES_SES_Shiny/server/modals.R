@@ -490,10 +490,7 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
           ses_models_directory(custom_path)
           debug_log(sprintf("SES Models directory set to: %s", custom_path), "SETTINGS")
           settings_changed <- TRUE
-          if (exists(".ses_models_cache", envir = globalenv())) {
-            .ses_models_cache$models <- NULL
-            .ses_models_cache$last_scan <- NULL
-          }
+          invalidate_ses_models_cache()
         } else {
           showNotification(
             paste(i18n$t("ui.modals.directory_not_found"), custom_path),
