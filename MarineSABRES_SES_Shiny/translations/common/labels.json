@@ -99,17 +99,6 @@
       "no": "3. Details:",
       "el": "3. Details:"
     },
-    "common.labels.activitieslabel": {
-      "en": "activities_label",
-      "es": "activities_label",
-      "fr": "activities_label",
-      "de": "activities_label",
-      "lt": "activities_label",
-      "pt": "activities_label",
-      "it": "activities_label",
-      "no": "activities_label",
-      "el": "activities_label"
-    },
     "common.labels.author": {
       "en": "Author",
       "es": "Autor",
@@ -242,17 +231,6 @@
       "no": "Beskrivelse",
       "el": "Περιγραφή"
     },
-    "common.labels.driverslabel": {
-      "en": "drivers_label",
-      "es": "drivers_label",
-      "fr": "drivers_label",
-      "de": "drivers_label",
-      "lt": "drivers_label",
-      "pt": "drivers_label",
-      "it": "drivers_label",
-      "no": "drivers_label",
-      "el": "drivers_label"
-    },
     "common.labels.ecosystem_type": {
       "en": "Ecosystem Type",
       "es": "Tipo de Ecosistema",
@@ -351,17 +329,6 @@
       "it": "Tempo di configurazione più veloce",
       "no": "Fastest setup time",
       "el": "Fastest setup time"
-    },
-    "common.labels.impactslabel": {
-      "en": "impacts_label",
-      "es": "impacts_label",
-      "fr": "impacts_label",
-      "de": "impacts_label",
-      "lt": "impacts_label",
-      "pt": "impacts_label",
-      "it": "impacts_label",
-      "no": "impacts_label",
-      "el": "impacts_label"
     },
     "common.labels.implementation_status": {
       "en": "Implementation Status:",
@@ -484,17 +451,6 @@
       "no": "Polarity",
       "el": "Πολικότητα"
     },
-    "common.labels.pressureslabel": {
-      "en": "pressures_label",
-      "es": "pressures_label",
-      "fr": "pressures_label",
-      "de": "pressures_label",
-      "lt": "pressures_label",
-      "pt": "pressures_label",
-      "it": "pressures_label",
-      "no": "pressures_label",
-      "el": "pressures_label"
-    },
     "common.labels.priority": {
       "en": "Priority",
       "es": "Prioridad",
@@ -561,17 +517,6 @@
       "no": "Response Type:",
       "el": "Απόκριση Type:"
     },
-    "common.labels.responseslabel": {
-      "en": "responses_label",
-      "es": "responses_label",
-      "fr": "responses_label",
-      "de": "responses_label",
-      "lt": "responses_label",
-      "pt": "responses_label",
-      "it": "responses_label",
-      "no": "responses_label",
-      "el": "responses_label"
-    },
     "common.labels.role": {
       "en": "Role",
       "es": "Rol",
@@ -594,72 +539,6 @@
       "no": "Scale",
       "el": "Scale"
     },
-    "common.labels.scenariobuilderdescription": {
-      "en": "scenario_builder_description",
-      "es": "scenario_builder_description",
-      "fr": "scenario_builder_description",
-      "de": "scenario_builder_description",
-      "lt": "scenario_builder_description",
-      "pt": "scenario_builder_description",
-      "it": "scenario_builder_description",
-      "no": "scenario_builder_description",
-      "el": "scenario_builder_description"
-    },
-    "common.labels.scenariobuildertitle": {
-      "en": "scenario_builder_title",
-      "es": "scenario_builder_title",
-      "fr": "scenario_builder_title",
-      "de": "scenario_builder_title",
-      "lt": "scenario_builder_title",
-      "pt": "scenario_builder_title",
-      "it": "scenario_builder_title",
-      "no": "scenario_builder_title",
-      "el": "scenario_builder_title"
-    },
-    "common.labels.scenariodapsicategory": {
-      "en": "scenario_dapsi_category",
-      "es": "scenario_dapsi_category",
-      "fr": "scenario_dapsi_category",
-      "de": "scenario_dapsi_category",
-      "lt": "scenario_dapsi_category",
-      "pt": "scenario_dapsi_category",
-      "it": "scenario_dapsi_category",
-      "no": "scenario_dapsi_category",
-      "el": "scenario_dapsi_category"
-    },
-    "common.labels.scenariodescription": {
-      "en": "scenario_description",
-      "es": "scenario_description",
-      "fr": "scenario_description",
-      "de": "scenario_description",
-      "lt": "scenario_description",
-      "pt": "scenario_description",
-      "it": "scenario_description",
-      "no": "scenario_description",
-      "el": "scenario_description"
-    },
-    "common.labels.scenarionodelabel": {
-      "en": "scenario_node_label",
-      "es": "scenario_node_label",
-      "fr": "scenario_node_label",
-      "de": "scenario_node_label",
-      "lt": "scenario_node_label",
-      "pt": "scenario_node_label",
-      "it": "scenario_node_label",
-      "no": "scenario_node_label",
-      "el": "scenario_node_label"
-    },
-    "common.labels.scenarioscenarioname": {
-      "en": "scenario_scenario_name",
-      "es": "scenario_scenario_name",
-      "fr": "scenario_scenario_name",
-      "de": "scenario_scenario_name",
-      "lt": "scenario_scenario_name",
-      "pt": "scenario_scenario_name",
-      "it": "scenario_scenario_name",
-      "no": "scenario_scenario_name",
-      "el": "scenario_scenario_name"
-    },
     "common.labels.select_matrix_type": {
       "en": "Select Matrix Type:",
       "es": "Seleccionar Tipo de Matriz:",
@@ -681,17 +560,6 @@
       "it": "Fonte",
       "no": "Source",
       "el": "Source"
-    },
-    "common.labels.statelabel": {
-      "en": "state_label",
-      "es": "state_label",
-      "fr": "state_label",
-      "de": "state_label",
-      "lt": "state_label",
-      "pt": "state_label",
-      "it": "state_label",
-      "no": "state_label",
-      "el": "state_label"
     },
     "common.labels.status": {
       "en": "Status",
