@@ -1,0 +1,169 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "modules.workflow_stepper.step_get_started": {
+      "en": "Get Started",
+      "es": "Comenzar",
+      "fr": "Commencer",
+      "de": "Loslegen",
+      "lt": "Pradžia",
+      "pt": "Começar",
+      "it": "Inizia",
+      "no": "Kom i gang",
+      "el": "Ξεκινήστε"
+    },
+    "modules.workflow_stepper.step_create_ses": {
+      "en": "Create SES",
+      "es": "Crear SES",
+      "fr": "Créer SES",
+      "de": "SES erstellen",
+      "lt": "Sukurti SES",
+      "pt": "Criar SES",
+      "it": "Crea SES",
+      "no": "Opprett SES",
+      "el": "Δημιουργία SES"
+    },
+    "modules.workflow_stepper.step_visualize": {
+      "en": "Visualize",
+      "es": "Visualizar",
+      "fr": "Visualiser",
+      "de": "Visualisieren",
+      "lt": "Vizualizuoti",
+      "pt": "Visualizar",
+      "it": "Visualizza",
+      "no": "Visualiser",
+      "el": "Οπτικοποίηση"
+    },
+    "modules.workflow_stepper.step_analyze": {
+      "en": "Analyze",
+      "es": "Analizar",
+      "fr": "Analyser",
+      "de": "Analysieren",
+      "lt": "Analizuoti",
+      "pt": "Analisar",
+      "it": "Analizza",
+      "no": "Analyser",
+      "el": "Ανάλυση"
+    },
+    "modules.workflow_stepper.step_report": {
+      "en": "Report",
+      "es": "Informe",
+      "fr": "Rapport",
+      "de": "Bericht",
+      "lt": "Ataskaita",
+      "pt": "Relatório",
+      "it": "Report",
+      "no": "Rapport",
+      "el": "Αναφορά"
+    },
+    "modules.workflow_stepper.aria_label": {
+      "en": "Workflow progress",
+      "es": "Progreso del flujo de trabajo",
+      "fr": "Progression du flux de travail",
+      "de": "Workflow-Fortschritt",
+      "lt": "Darbo eigos progresas",
+      "pt": "Progresso do fluxo de trabalho",
+      "it": "Progresso del flusso di lavoro",
+      "no": "Arbeidsflytfremdrift",
+      "el": "Πρόοδος ροής εργασίας"
+    },
+    "modules.workflow_stepper.locked_tooltip": {
+      "en": "Create your SES first",
+      "es": "Primero cree su SES",
+      "fr": "Créez d'abord votre SES",
+      "de": "Erstellen Sie zuerst Ihr SES",
+      "lt": "Pirmiausia sukurkite SES",
+      "pt": "Primeiro crie seu SES",
+      "it": "Prima crea il tuo SES",
+      "no": "Opprett SES først",
+      "el": "Δημιουργήστε πρώτα το SES σας"
+    },
+    "modules.workflow_stepper.nudge_ses_created": {
+      "en": "Your SES model has %s elements. Next: visualize it as a network diagram.",
+      "es": "Su modelo SES tiene %s elementos. Siguiente: visualícelo como un diagrama de red.",
+      "fr": "Votre modèle SES contient %s éléments. Suivant : visualisez-le comme un diagramme de réseau.",
+      "de": "Ihr SES-Modell hat %s Elemente. Nächster Schritt: als Netzwerkdiagramm visualisieren.",
+      "lt": "Jūsų SES modelis turi %s elementų. Kitas žingsnis: vizualizuokite kaip tinklo diagramą.",
+      "pt": "Seu modelo SES tem %s elementos. Próximo: visualize como um diagrama de rede.",
+      "it": "Il tuo modello SES ha %s elementi. Prossimo passo: visualizzalo come diagramma di rete.",
+      "no": "Din SES-modell har %s elementer. Neste: visualiser det som et nettverksdiagram.",
+      "el": "Το μοντέλο SES σας έχει %s στοιχεία. Επόμενο: οπτικοποιήστε το ως διάγραμμα δικτύου."
+    },
+    "modules.workflow_stepper.nudge_visualized": {
+      "en": "Next: run Loop Detection to find feedback loops in your system.",
+      "es": "Siguiente: ejecute la detección de bucles para encontrar ciclos de retroalimentación.",
+      "fr": "Suivant : lancez la détection de boucles pour trouver les boucles de rétroaction.",
+      "de": "Nächster Schritt: Schleifenerkennung durchführen, um Rückkopplungsschleifen zu finden.",
+      "lt": "Kitas žingsnis: paleiskite ciklų aptikimą, kad rastumėte grįžtamojo ryšio ciklus.",
+      "pt": "Próximo: execute a detecção de loops para encontrar ciclos de feedback.",
+      "it": "Prossimo passo: esegui il rilevamento dei cicli per trovare i cicli di feedback.",
+      "no": "Neste: kjør løkkedeteksjon for å finne tilbakekoblingsløkker.",
+      "el": "Επόμενο: εκτελέστε ανίχνευση βρόχων για να βρείτε βρόχους ανατροφοδότησης."
+    },
+    "modules.workflow_stepper.nudge_analyzed": {
+      "en": "Analysis complete! You can now generate a report.",
+      "es": "¡Análisis completo! Ahora puede generar un informe.",
+      "fr": "Analyse terminée ! Vous pouvez maintenant générer un rapport.",
+      "de": "Analyse abgeschlossen! Sie können jetzt einen Bericht erstellen.",
+      "lt": "Analizė baigta! Dabar galite generuoti ataskaitą.",
+      "pt": "Análise concluída! Agora você pode gerar um relatório.",
+      "it": "Analisi completata! Ora puoi generare un report.",
+      "no": "Analyse fullført! Du kan nå generere en rapport.",
+      "el": "Η ανάλυση ολοκληρώθηκε! Μπορείτε τώρα να δημιουργήσετε αναφορά."
+    },
+    "modules.workflow_stepper.nudge_complete": {
+      "en": "Congratulations! You have completed the full SES analysis pipeline.",
+      "es": "¡Felicidades! Ha completado todo el proceso de análisis SES.",
+      "fr": "Félicitations ! Vous avez terminé le processus complet d'analyse SES.",
+      "de": "Herzlichen Glückwunsch! Sie haben die vollständige SES-Analyse abgeschlossen.",
+      "lt": "Sveikiname! Jūs baigėte visą SES analizės procesą.",
+      "pt": "Parabéns! Você completou todo o processo de análise SES.",
+      "it": "Congratulazioni! Hai completato l'intero processo di analisi SES.",
+      "no": "Gratulerer! Du har fullført hele SES-analyseprosessen.",
+      "el": "Συγχαρητήρια! Ολοκληρώσατε πλήρως τη διαδικασία ανάλυσης SES."
+    },
+    "modules.workflow_stepper.btn_go_visualization": {
+      "en": "Go to Visualization",
+      "es": "Ir a Visualización",
+      "fr": "Aller à la Visualisation",
+      "de": "Zur Visualisierung",
+      "lt": "Eiti į vizualizaciją",
+      "pt": "Ir para Visualização",
+      "it": "Vai alla Visualizzazione",
+      "no": "Gå til Visualisering",
+      "el": "Μετάβαση στην Οπτικοποίηση"
+    },
+    "modules.workflow_stepper.btn_go_analysis": {
+      "en": "Go to Loop Detection",
+      "es": "Ir a Detección de Bucles",
+      "fr": "Aller à la Détection de Boucles",
+      "de": "Zur Schleifenerkennung",
+      "lt": "Eiti į ciklų aptikimą",
+      "pt": "Ir para Detecção de Loops",
+      "it": "Vai al Rilevamento Cicli",
+      "no": "Gå til Løkkedeteksjon",
+      "el": "Μετάβαση στην Ανίχνευση Βρόχων"
+    },
+    "modules.workflow_stepper.btn_go_report": {
+      "en": "Generate Report",
+      "es": "Generar Informe",
+      "fr": "Générer un Rapport",
+      "de": "Bericht erstellen",
+      "lt": "Generuoti ataskaitą",
+      "pt": "Gerar Relatório",
+      "it": "Genera Report",
+      "no": "Generer Rapport",
+      "el": "Δημιουργία Αναφοράς"
+    }
+  }
+}
