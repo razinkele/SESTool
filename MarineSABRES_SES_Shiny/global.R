@@ -295,7 +295,8 @@ AVAILABLE_LANGUAGES <- list(
   "lt" = list(name = "Lietuvių", flag = "🇱🇹"),
   "pt" = list(name = "Português", flag = "🇵🇹"),
   "it" = list(name = "Italiano", flag = "🇮🇹"),
-  "no" = list(name = "Norsk", flag = "🇳🇴")
+  "no" = list(name = "Norsk", flag = "🇳🇴"),
+  "el" = list(name = "Ελληνικά", flag = "🇬🇷")
 )
 
 # ============================================================================
@@ -385,6 +386,8 @@ source("functions/ses_dynamics.R", local = TRUE)
 source("modules/graphical_ses_ai_classifier.R", local = TRUE)
 source("modules/graphical_ses_network_builder.R", local = TRUE)
 source("modules/graphical_ses_creator_module.R", local = TRUE)
+source("modules/connection_review_tabbed.R", local = TRUE)
+source("modules/workflow_stepper_module.R", local = TRUE)
 
 # ============================================================================
 # OPTIONAL ML ENHANCEMENT (Deep Learning Connection Predictor)
@@ -626,17 +629,7 @@ CONFIDENCE_LABELS <- c(
   "5" = "Very High"
 )
 
-# Connection confidence opacity mapping (for visual feedback)
-CONFIDENCE_OPACITY <- c(
-  "1" = 0.3,
-  "2" = 0.5,
-  "3" = 0.7,
-  "4" = 0.85,
-  "5" = 1.0
-)
-
-# Default confidence level
-CONFIDENCE_DEFAULT <- 3
+# NOTE: CONFIDENCE_OPACITY and CONFIDENCE_DEFAULT are defined in constants.R
 
 # Ecosystem service categories
 ECOSYSTEM_SERVICE_CATEGORIES <- c(

@@ -50,7 +50,7 @@ for (source_file in critical_sources) {
   }, error = function(e) {
     file_name <- basename(source_file)
     error_msg <- sprintf("[SOURCE_LOAD] Failed to load %s: %s", file_name, e$message)
-    cat(error_msg, "\n")
+    debug_log(error_msg, "SOURCE_LOAD")
     source_load_errors[[file_name]] <<- e$message
   })
 }
@@ -106,7 +106,7 @@ for (module_file in module_files) {
   }, error = function(e) {
     module_name <- basename(module_file)
     error_msg <- sprintf("[MODULE_LOAD] Failed to load %s: %s", module_name, e$message)
-    cat(error_msg, "\n")
+    debug_log(error_msg, "MODULE_LOAD")
     module_load_errors[[module_name]] <<- e$message
   })
 }
@@ -212,6 +212,7 @@ ui <- bs4DashPage(
       tags$link(rel = "stylesheet", type = "text/css", href = "bs4dash-custom.css"),  # bs4Dash custom theme
       tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),  # Module-specific styles
       tags$link(rel = "stylesheet", type = "text/css", href = "isa-forms.css"),  # ISA form styles
+      tags$link(rel = "stylesheet", type = "text/css", href = "workflow-stepper.css"),  # Workflow stepper
       tags$script(src = "custom.js"),
 
       tags$style(HTML("
@@ -269,6 +270,9 @@ ui <- bs4DashPage(
 
     # Tutorial system (contextual help overlays)
     tutorial_ui(),
+
+    # Workflow stepper bar (beginner guidance)
+    workflow_stepper_ui("workflow_stepper"),
 
     bs4TabItems(
 
@@ -606,7 +610,7 @@ server <- function(input, output, session) {
       if (is_empty_isa_data(isa)) {
         debug_log("No SES data found, loading default template...", "AUTOLOAD")
         # Load the migrated Caribbean template (update path if needed)
-        template_path <- "data/Caribbean_SES_Template_migrated.json"
+        template_path <- "data/Caribbean_SES_Template.json"
         if (file.exists(template_path)) {
           template <- load_template_from_json(template_path)
           # Build project_data structure
@@ -644,6 +648,13 @@ server <- function(input, output, session) {
       saved_data <- jsonlite::fromJSON(input$restore_project_data_from_lang_change, simplifyVector = FALSE)
 
       if (!is.null(saved_data)) {
+        # Validate project structure before restoring
+        required_keys <- c("project_id", "project_name", "data")
+        if (!is.list(saved_data) || !all(required_keys %in% names(saved_data))) {
+          debug_log("Invalid project structure in restored data — refusing to restore", "LANG_RESTORE")
+          return()
+        }
+
         # Restore the project data
         project_data(saved_data)
         debug_log("Project data restored successfully after language change", "LANG_RESTORE")
@@ -860,6 +871,16 @@ server <- function(input, output, session) {
   # Entry Point module - pass session for sidebar navigation and user level
   entry_point_server("entry_pt", project_data, session_i18n, parent_session = session, user_level_reactive = user_level)
 
+  # Workflow stepper (beginner guidance bar)
+  workflow_stepper_server(
+    "workflow_stepper",
+    project_data_reactive = project_data,
+    i18n = session_i18n,
+    parent_session = session,
+    user_level_reactive = user_level,
+    sidebar_input = reactive(input$sidebar_menu)
+  )
+
   # PIMS modules
   pims_project_data <- pims_project_server("pims_proj", project_data, session_i18n)
   pims_stakeholders_data <- pims_stakeholder_server("pims_stake", project_data, session_i18n)
@@ -947,6 +968,12 @@ server <- function(input, output, session) {
       temp_report_dir <- file.path(tempdir(), "reports")
       if (dir.exists(temp_report_dir)) {
         unlink(temp_report_dir, recursive = TRUE)
+      }
+
+      # Clean up www/reports directory (HTML reports served during session)
+      www_reports_dir <- file.path(getwd(), "www", "reports")
+      if (dir.exists(www_reports_dir)) {
+        unlink(www_reports_dir, recursive = TRUE)
       }
 
       debug_log("Session ended - cleanup completed", "SESSION")
