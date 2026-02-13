@@ -20,9 +20,9 @@ workflow_stepper_server <- function(id, project_data_reactive, i18n,
     # Step definitions: label key and target sidebar tab
     STEPS <- list(
       list(key = "step_get_started", tab = "entry_point"),
-      list(key = "step_create_ses",  tab = "isa_data_entry"),
-      list(key = "step_visualize",   tab = "cld_visualization"),
-      list(key = "step_analyze",     tab = "loop_detection"),
+      list(key = "step_create_ses",  tab = "create_ses_standard"),
+      list(key = "step_visualize",   tab = "cld_viz"),
+      list(key = "step_analyze",     tab = "analysis_loops"),
       list(key = "step_report",      tab = "prepare_report")
     )
 
@@ -113,7 +113,7 @@ workflow_stepper_server <- function(id, project_data_reactive, i18n,
       if (wf$completed[3]) return()
       if (!wf$enabled[3]) return()
 
-      if (sidebar_input() == "cld_visualization") {
+      if (sidebar_input() == "cld_viz") {
         n <- count_isa_elements(project_data_reactive())
         if (n >= 2 && is.null(wf$viz_enter_time)) {
           wf$viz_enter_time <- Sys.time()
@@ -234,11 +234,11 @@ workflow_stepper_server <- function(id, project_data_reactive, i18n,
 
     # --- NAVIGATION BUTTON HANDLERS ---
     observeEvent(input$go_viz, {
-      updateTabItems(parent_session, "sidebar_menu", "cld_visualization")
+      updateTabItems(parent_session, "sidebar_menu", "cld_viz")
     })
 
     observeEvent(input$go_analysis, {
-      updateTabItems(parent_session, "sidebar_menu", "loop_detection")
+      updateTabItems(parent_session, "sidebar_menu", "analysis_loops")
     })
 
     observeEvent(input$go_report, {
