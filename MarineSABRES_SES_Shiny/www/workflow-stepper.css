@@ -1,0 +1,147 @@
+/* Workflow Stepper Bar */
+.workflow-stepper-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  margin: 0 0 15px 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  position: relative;
+}
+
+.workflow-stepper-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+.ws-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: default;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.ws-step-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.ws-step-label {
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.ws-connector {
+  width: 40px;
+  height: 2px;
+  background: #dee2e6;
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+
+.ws-connector.ws-connector-done {
+  background: #28a745;
+}
+
+.ws-step.ws-completed {
+  cursor: pointer;
+}
+
+.ws-step.ws-completed .ws-step-icon {
+  background: #28a745;
+  color: #fff;
+}
+
+.ws-step.ws-completed .ws-step-label {
+  color: #28a745;
+}
+
+.ws-step.ws-completed:hover {
+  background: rgba(40, 167, 69, 0.1);
+}
+
+.ws-step.ws-active .ws-step-icon {
+  background: #667eea;
+  color: #fff;
+  animation: pulse-glow 2s infinite;
+}
+
+.ws-step.ws-active .ws-step-label {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.ws-step.ws-enabled {
+  cursor: pointer;
+}
+
+.ws-step.ws-enabled .ws-step-icon {
+  background: #fff;
+  border: 2px solid #6c757d;
+  color: #6c757d;
+}
+
+.ws-step.ws-enabled .ws-step-label {
+  color: #6c757d;
+}
+
+.ws-step.ws-enabled:hover {
+  background: rgba(108, 117, 125, 0.1);
+}
+
+.ws-step.ws-locked .ws-step-icon {
+  background: #e9ecef;
+  border: 2px solid #dee2e6;
+  color: #adb5bd;
+}
+
+.ws-step.ws-locked .ws-step-label {
+  color: #adb5bd;
+}
+
+.ws-dismiss {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #adb5bd;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.ws-dismiss:hover {
+  color: #6c757d;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+  .ws-step-label {
+    display: none;
+  }
+  .ws-connector {
+    width: 20px;
+  }
+}
