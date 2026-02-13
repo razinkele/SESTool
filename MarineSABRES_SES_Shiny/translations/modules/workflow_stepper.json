@@ -164,6 +164,17 @@
       "it": "Genera Report",
       "no": "Generer Rapport",
       "el": "Δημιουργία Αναφοράς"
+    },
+    "modules.workflow_stepper.dismiss": {
+      "en": "Dismiss",
+      "es": "Cerrar",
+      "fr": "Fermer",
+      "de": "Schließen",
+      "lt": "Uždaryti",
+      "pt": "Fechar",
+      "it": "Chiudi",
+      "no": "Lukk",
+      "el": "Κλείσιμο"
     }
   }
 }

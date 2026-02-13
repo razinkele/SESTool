@@ -41,7 +41,8 @@ workflow_stepper_server <- function(id, project_data_reactive, i18n,
       isa <- data$data$isa_data
       if (is.null(isa)) return(0)
       categories <- c("drivers", "activities", "pressures",
-                       "marine_processes", "ecosystem_services", "goods_benefits")
+                       "marine_processes", "ecosystem_services",
+                       "goods_benefits", "responses")
       total <- 0
       for (cat in categories) {
         if (!is.null(isa[[cat]]) && is.data.frame(isa[[cat]])) {
@@ -334,7 +335,7 @@ workflow_stepper_server <- function(id, project_data_reactive, i18n,
         tags$div(class = "workflow-stepper-steps", step_items),
         actionLink(ns("dismiss_stepper"), label = NULL,
           class = "ws-dismiss",
-          title = "Dismiss",
+          title = i18n$t("modules.workflow_stepper.dismiss"),
           icon("times")
         )
       )
