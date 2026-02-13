@@ -281,7 +281,7 @@ workflow_stepper_server <- function(id, project_data_reactive, i18n,
         }
 
         icon_content <- if (wf$completed[i]) {
-          icon("check")
+          tags$i(class = "fa fa-check")
         } else {
           as.character(i)
         }
@@ -300,7 +300,10 @@ workflow_stepper_server <- function(id, project_data_reactive, i18n,
             class = css_class,
             title = tooltip,
             `aria-current` = aria_current,
-            actionLink(ns(paste0("step_click_", i)), label = NULL,
+            tags$a(
+              id = ns(paste0("step_click_", i)),
+              href = "#",
+              class = "action-button",
               style = "text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;",
               tags$span(class = "ws-step-icon", icon_content),
               tags$span(class = "ws-step-label", label)
@@ -333,10 +336,12 @@ workflow_stepper_server <- function(id, project_data_reactive, i18n,
         role = "navigation",
         `aria-label` = i18n$t("modules.workflow_stepper.aria_label"),
         tags$div(class = "workflow-stepper-steps", step_items),
-        actionLink(ns("dismiss_stepper"), label = NULL,
-          class = "ws-dismiss",
+        tags$a(
+          id = ns("dismiss_stepper"),
+          href = "#",
+          class = "action-button ws-dismiss",
           title = i18n$t("modules.workflow_stepper.dismiss"),
-          icon("times")
+          tags$i(class = "fa fa-times")
         )
       )
     })
