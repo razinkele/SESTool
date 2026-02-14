@@ -934,7 +934,7 @@ server <- function(input, output, session) {
   export_reports_server("export_reports_mod", project_data, session_i18n)
 
   # Prepare Report module (comprehensive)
-  prepare_report_server("prep_report", project_data, session_i18n)
+  prepare_report_server("prep_report", project_data, session_i18n, parent_session = session)
 
   # ========== REACTIVE DATA PIPELINE ==========
   # Setup event-based reactive pipeline for automatic data propagation

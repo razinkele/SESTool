@@ -5,7 +5,7 @@
 # Libraries loaded in global.R: shiny, shinyjs
 
 # Source dependencies using project root (reliable from any working directory)
-source(get_project_file("modules/connection_review_tabbed.R"), local = TRUE)
+# NOTE: connection_review_tabbed.R is sourced globally in global.R
 source(get_project_file("functions/template_loader.R"), local = TRUE)
 
 # ============================================================================
@@ -52,7 +52,6 @@ template_ses_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    useShinyjs(),
     # REMOVED: usei18n() - only called once in main UI (app.R)
 
     # Custom CSS

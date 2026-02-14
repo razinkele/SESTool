@@ -385,7 +385,7 @@ source("functions/ses_dynamics.R", local = TRUE)
 source("modules/graphical_ses_ai_classifier.R", local = TRUE)
 source("modules/graphical_ses_network_builder.R", local = TRUE)
 source("modules/graphical_ses_creator_module.R", local = TRUE)
-source("modules/connection_review_tabbed.R", local = TRUE)
+source("modules/connection_review_tabbed.R", local = FALSE)  # FALSE = global scope (used by multiple modules)
 source("modules/workflow_stepper_module.R", local = TRUE)
 
 # ============================================================================
@@ -516,44 +516,7 @@ debug_log <- function(message, context = NULL) {
   }
 }
 
-#' Sanitize filename for safe file operations
-#'
-#' Removes or replaces characters that could cause issues in filenames across
-#' different operating systems. Limits filename length to prevent path issues.
-#' Preserves spaces, alphanumeric characters, underscores, and hyphens.
-#'
-#' @param name Character string to sanitize
-#' @param max_length Maximum filename length (default: 50 characters)
-#' @return Sanitized filename string
-#' @export
-#'
-#' @examples
-#' sanitize_filename("My Report: 2024 (Final Version)")
-#' # Returns: "My Report 2024 Final Version"
-sanitize_filename <- function(name, max_length = 50) {
-  if (is.null(name) || !is.character(name) || length(name) != 1) {
-    return("project")
-  }
-
-  # Remove path separators and dangerous characters
-  name <- gsub("[/\\\\:*?\"<>|]", "", name)
-
-  # Keep only alphanumeric, underscore, hyphen, space
-  name <- gsub("[^A-Za-z0-9_ -]", "", name)
-
-  # Trim whitespace
-  name <- trimws(name)
-
-  # Truncate to reasonable length
-  name <- substr(name, 1, max_length)
-
-  # Ensure not empty
-  if (nchar(name) == 0) {
-    name <- "project"
-  }
-
-  return(name)
-}
+# NOTE: sanitize_filename() moved to functions/utils.R
 
 # Print debug mode status on startup
 if (DEBUG_MODE) {
@@ -580,205 +543,19 @@ debug_log(sprintf("ISA debounce delay: %d ms", ISA_DEBOUNCE_MS), "CONFIG")
 source(get_project_file("config", "entry_points.R"), local = FALSE)
 
 # ============================================================================
-# UTILITY FUNCTIONS
+# UTILITY FUNCTIONS (extracted to functions/utils.R)
 # ============================================================================
+# Contains: generate_id, format_date_display, is_valid_email,
+#   parse_connection_value, log_message, init_session_data,
+#   sanitize_color, sanitize_filename, validate_isa_dataframe
 # NOTE: Default visualization constants (DEFAULT_NODE_SIZE, DEFAULT_EDGE_WIDTH, etc.)
 # are defined in constants.R — the single source of truth for all constants.
+source("functions/utils.R", local = FALSE)
 
-# Generate unique ID
-generate_id <- function(prefix = "ID") {
-  paste0(prefix, "_", format(Sys.time(), "%Y%m%d%H%M%S"), "_", 
-         sample(1000:9999, 1))
-}
-
-# Format date for display
-format_date_display <- function(date) {
-  format(as.Date(date), "%d %B %Y")
-}
-
-# Validate email
-is_valid_email <- function(email) {
-  grepl("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", email)
-}
-
-# Convert adjacency matrix value to list with confidence
-# Format: "+strong:4" or "-medium:3" where :X is confidence (1-5)
-# If confidence is omitted, defaults to CONFIDENCE_DEFAULT (medium confidence)
-parse_connection_value <- function(value) {
-  if (is.na(value) || value == "") {
-    return(NULL)
-  }
-
-  # Check if confidence is included (format: "+strong:4")
-  if (grepl(":", value)) {
-    parts <- strsplit(value, ":")[[1]]
-    polarity_strength <- parts[1]
-    confidence <- as.integer(parts[2])
-
-    # Validate confidence is within allowed range
-    if (is.na(confidence) || !confidence %in% CONFIDENCE_LEVELS) {
-      confidence <- CONFIDENCE_DEFAULT  # Default if invalid
-    }
-  } else {
-    # No confidence specified, use default
-    polarity_strength <- value
-    confidence <- CONFIDENCE_DEFAULT
-  }
-
-  polarity <- substr(polarity_strength, 1, 1)
-  strength <- substr(polarity_strength, 2, nchar(polarity_strength))
-
-  list(polarity = polarity, strength = strength, confidence = confidence)
-}
-
-# ============================================================================
-# DATA VALIDATION FUNCTIONS
-# ============================================================================
-
-# NOTE: validate_element_data() now defined in functions/data_structure.R
-# (removed duplicate definition to avoid function name conflicts)
-
-# NOTE: validate_adjacency_matrix() now defined in functions/data_structure.R
-# (removed duplicate definition to avoid function name conflicts)
-
-# ============================================================================
-# LOGGING FUNCTIONS
-# ============================================================================
-
-# Log message to console and file
-log_message <- function(message, level = "INFO") {
-  timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
-  log_entry <- sprintf("[%s] %s: %s", timestamp, level, message)
-  
-  # Print to console
-  message(log_entry)
-  
-  # Optionally write to log file
-  # log_file <- "logs/app.log"
-  # if (!dir.exists("logs")) dir.create("logs")
-  # write(log_entry, file = log_file, append = TRUE)
-}
-
-# ============================================================================
-# SESSION MANAGEMENT
-# ============================================================================
-
-# Initialize session data
-init_session_data <- function() {
-  list(
-    project_id = generate_id("PROJ"),
-    project_name = "New Project",
-    created_at = Sys.time(),
-    last_modified = Sys.time(),
-    user = Sys.info()["user"],
-    version = APP_VERSION,
-    data = list(
-      metadata = list(),
-      pims = list(),
-      isa_data = list(),
-      cld = list(),
-      responses = list()
-    )
-  )
-}
-
-# ============================================================================
-# SECURITY & VALIDATION HELPER FUNCTIONS
-# ============================================================================
-
-# Sanitize color values to prevent XSS
-sanitize_color <- function(color) {
-  if (is.null(color) || !is.character(color) || length(color) != 1) {
-    return("#cccccc")  # Safe default
-  }
-
-  # Whitelist of valid colors used in the application
-  valid_colors <- c(
-    "#776db3", "#5abc67", "#fec05a", "#bce2ee", "#313695", "#fff1a2",
-    "#cccccc", "#d73027", "#f46d43", "#fdae61", "#fee08b", "#d9ef8b",
-    "#a6d96a", "#66bd63", "#1a9850", "#3288bd", "#5e4fa2"
-  )
-
-  # Check if color is in whitelist
-  if (color %in% valid_colors) {
-    return(color)
-  }
-
-  # Validate hex color format (#RRGGBB)
-  if (grepl("^#[0-9A-Fa-f]{6}$", color)) {
-    return(color)
-  }
-
-  # Validate RGB format (rgb(r,g,b))
-  if (grepl("^rgb\\([0-9]{1,3},\\s*[0-9]{1,3},\\s*[0-9]{1,3}\\)$", color)) {
-    return(color)
-  }
-
-  # Return safe default if validation fails
-  return("#cccccc")
-}
-
-# NOTE: sanitize_filename() is defined earlier in this file (global.R:430)
-# (removed duplicate definition to avoid function name conflicts)
-
-# NOTE: validate_project_structure() now defined in functions/data_structure.R
-# (removed duplicate definition to avoid function name conflicts)
-
-# NOTE: safe_get_nested() now defined in functions/error_handling.R
-# (removed duplicate definition to avoid function name conflicts)
-
-# Validate ISA exercise data
-# Generic validation for ISA data frames
-# @param data data.frame - The data frame to validate
-# @param exercise_name character - Name of the exercise for error messages
-# @param required_cols character vector - Required column names
-# @return character vector of error messages (empty if valid)
-validate_isa_dataframe <- function(data, exercise_name, required_cols = c("ID", "Name")) {
-  errors <- c()
-
-  # Check if data is a data frame
-  if (!is.data.frame(data)) {
-    errors <- c(errors, paste(exercise_name, "data must be a data frame"))
-    return(errors)
-  }
-
-  # Check if at least one entry exists
-  if (nrow(data) == 0) {
-    errors <- c(errors, paste(exercise_name, "must have at least one entry"))
-    return(errors)
-  }
-
-  # Check required columns exist
-  missing_cols <- setdiff(required_cols, names(data))
-  if (length(missing_cols) > 0) {
-    errors <- c(errors, paste(exercise_name, "missing required columns:",
-                             paste(missing_cols, collapse = ", ")))
-  }
-
-  # Check for empty names
-  if ("Name" %in% names(data)) {
-    empty_names <- is.na(data$Name) | data$Name == "" | trimws(data$Name) == ""
-    if (any(empty_names)) {
-      errors <- c(errors, paste(exercise_name, "has", sum(empty_names), "entries with empty names"))
-    }
-
-    # Check for duplicate names
-    if (any(duplicated(data$Name[!empty_names]))) {
-      dupe_names <- data$Name[duplicated(data$Name) & !empty_names]
-      errors <- c(errors, paste(exercise_name, "has duplicate names:",
-                               paste(unique(dupe_names), collapse = ", ")))
-    }
-  }
-
-  # Check ID column if it exists
-  if ("ID" %in% names(data)) {
-    if (any(is.na(data$ID) | data$ID == "")) {
-      errors <- c(errors, paste(exercise_name, "has entries with missing IDs"))
-    }
-  }
-
-  return(errors)
-}
+# NOTE: validate_element_data() defined in functions/data_structure.R
+# NOTE: validate_adjacency_matrix() defined in functions/data_structure.R
+# NOTE: validate_project_structure() defined in functions/data_structure.R
+# NOTE: safe_get_nested() defined in functions/error_handling.R
 
 # ============================================================================
 # APPLICATION SETTINGS

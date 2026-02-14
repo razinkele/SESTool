@@ -13,14 +13,14 @@
   "translation": {
     "Entry removed": {
       "en": "Entry removed",
-      "es": "Entry removed",
-      "fr": "Entry removed",
-      "de": "Entry removed",
-      "lt": "Entry removed",
-      "pt": "Entry removed",
-      "it": "Entry removed",
-      "no": "Entry removed",
-      "el": "Entry removed"
+      "es": "Entrada eliminada",
+      "fr": "Entrée supprimée",
+      "de": "Eintrag entfernt",
+      "lt": "Įrašas pašalintas",
+      "pt": "Entrada removida",
+      "it": "Voce rimossa",
+      "no": "Oppføring fjernet",
+      "el": "Η καταχώρηση αφαιρέθηκε"
     },
     "Error during loop detection:": {
       "en": "Error during loop detection:",

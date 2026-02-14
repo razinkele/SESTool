@@ -19,8 +19,8 @@
       "lt": "Analizės rezultatai",
       "pt": "Resultados da Análise",
       "it": "Risultati dell'Analisi",
-      "no": "Analysis Results",
-      "el": "Ανάλυση Αποτελέσματα"
+      "no": "Analyseresultater",
+      "el": "Αποτελέσματα Ανάλυσης"
     },
     "modules.export.reports.cld_data": {
       "en": "CLD Data",
@@ -30,8 +30,8 @@
       "lt": "CLD duomenys",
       "pt": "Dados CLD",
       "it": "Dati CLD",
-      "no": "CLD Data",
-      "el": "CLD Δεδομένα"
+      "no": "CLD-data",
+      "el": "Δεδομένα CLD"
     },
     "modules.export.reports.download_data": {
       "en": "Download Data",
@@ -41,8 +41,8 @@
       "lt": "Atsisiųsti duomenis",
       "pt": "Descarregar Dados",
       "it": "Scarica Dati",
-      "no": "Download Data",
-      "el": "Λήψη Δεδομένα"
+      "no": "Last ned data",
+      "el": "Λήψη Δεδομένων"
     },
     "modules.export.reports.download_report": {
       "en": "Download Report",
@@ -52,8 +52,8 @@
       "lt": "Atsisiųsti Ataskaitą",
       "pt": "Baixar Relatório",
       "it": "Scarica Rapporto",
-      "no": "Download Report",
-      "el": "Λήψη Αναφορά"
+      "no": "Last ned rapport",
+      "el": "Λήψη Αναφοράς"
     },
     "modules.export.reports.download_visualization": {
       "en": "Download Visualization",
@@ -63,8 +63,8 @@
       "lt": "Atsisiųsti vizualizaciją",
       "pt": "Descarregar Visualização",
       "it": "Scarica Visualizzazione",
-      "no": "Download Visualization",
-      "el": "Λήψη Οπτικοποίηση"
+      "no": "Last ned visualisering",
+      "el": "Λήψη Οπτικοποίησης"
     },
     "modules.export.reports.export_visualizations": {
       "en": "Export Visualizations",
@@ -74,8 +74,8 @@
       "lt": "Eksportuoti vizualizacijas",
       "pt": "Exportar Visualizações",
       "it": "Esporta Visualizzazioni",
-      "no": "Export Visualizations",
-      "el": "Εξαγωγή Visualizations"
+      "no": "Eksporter visualiseringer",
+      "el": "Εξαγωγή Οπτικοποιήσεων"
     },
     "modules.export.reports.generate_report": {
       "en": "Generate Report",
@@ -85,8 +85,8 @@
       "lt": "Generuoti ataskaitą",
       "pt": "Gerar Relatório",
       "it": "Genera Rapporto",
-      "no": "Generate Report",
-      "el": "Generate Report"
+      "no": "Generer rapport",
+      "el": "Δημιουργία Αναφοράς"
     },
     "modules.export.reports.height_pixels": {
       "en": "Height (pixels):",
@@ -96,8 +96,8 @@
       "lt": "Aukštis (pikseliai):",
       "pt": "Altura (pixels):",
       "it": "Altezza (pixel):",
-      "no": "Height (pixels):",
-      "el": "Ύψος (pixels):"
+      "no": "Høyde (piksler):",
+      "el": "Ύψος (εικονοστοιχεία):"
     },
     "modules.export.reports.include_data_tables": {
       "en": "Include Data Tables",
@@ -107,8 +107,8 @@
       "lt": "Įtraukti duomenų lenteles",
       "pt": "Incluir Tabelas de Dados",
       "it": "Includi Tabelle di Dati",
-      "no": "Include Data Tables",
-      "el": "Include Data Tables"
+      "no": "Inkluder datatabeller",
+      "el": "Συμπερίληψη Πινάκων Δεδομένων"
     },
     "modules.export.reports.include_visualizations": {
       "en": "Include Visualizations",
@@ -118,8 +118,8 @@
       "lt": "Įtraukti vizualizacijas",
       "pt": "Incluir Visualizações",
       "it": "Includi Visualizzazioni",
-      "no": "Include Visualizations",
-      "el": "Include Visualizations"
+      "no": "Inkluder visualiseringer",
+      "el": "Συμπερίληψη Οπτικοποιήσεων"
     },
     "modules.export.reports.isa_data": {
       "en": "ISA Data",
@@ -129,8 +129,8 @@
       "lt": "ISA duomenys",
       "pt": "Dados ISA",
       "it": "Dati ISA",
-      "no": "ISA Data",
-      "el": "ISA Data"
+      "no": "ISA-data",
+      "el": "Δεδομένα ISA"
     },
     "modules.export.reports.pims_data": {
       "en": "PIMS Data",
@@ -140,8 +140,8 @@
       "lt": "PIMS duomenys",
       "pt": "Dados PIMS",
       "it": "Dati PIMS",
-      "no": "PIMS Data",
-      "el": "PIMS Δεδομένα"
+      "no": "PIMS-data",
+      "el": "Δεδομένα PIMS"
     },
     "modules.export.reports.project_metadata": {
       "en": "Project Metadata",
@@ -151,8 +151,8 @@
       "lt": "Projekto metaduomenys",
       "pt": "Metadados do Projeto",
       "it": "Metadati del Progetto",
-      "no": "Project Metadata",
-      "el": "Έργο Metadata"
+      "no": "Prosjektmetadata",
+      "el": "Μεταδεδομένα Έργου"
     },
     "modules.export.reports.report_format": {
       "en": "Report Format:",
@@ -162,8 +162,8 @@
       "lt": "Ataskaitos formatas:",
       "pt": "Formato do Relatório:",
       "it": "Formato del Rapporto:",
-      "no": "Report Format:",
-      "el": "Αναφορά Format:"
+      "no": "Rapportformat:",
+      "el": "Μορφή Αναφοράς:"
     },
     "modules.export.reports.select_components": {
       "en": "Select Components:",
@@ -173,8 +173,8 @@
       "lt": "Pasirinkite komponentus:",
       "pt": "Selecionar Componentes:",
       "it": "Seleziona Componenti:",
-      "no": "Select Components:",
-      "el": "Επιλογή Components:"
+      "no": "Velg komponenter:",
+      "el": "Επιλογή Στοιχείων:"
     },
     "modules.export.reports.select_format": {
       "en": "Select Format:",
@@ -184,8 +184,8 @@
       "lt": "Pasirinkite formatą:",
       "pt": "Selecionar Formato:",
       "it": "Seleziona Formato:",
-      "no": "Select Format:",
-      "el": "Επιλογή Format:"
+      "no": "Velg format:",
+      "el": "Επιλογή Μορφής:"
     },
     "modules.export.reports.width_pixels": {
       "en": "Width (pixels):",
@@ -195,8 +195,8 @@
       "lt": "Plotis (pikseliai):",
       "pt": "Largura (pixels):",
       "it": "Larghezza (pixel):",
-      "no": "Width (pixels):",
-      "el": "Πλάτος (pixels):"
+      "no": "Bredde (piksler):",
+      "el": "Πλάτος (εικονοστοιχεία):"
     },
     "modules.export.reports.your_report_has_been_generated_successfully": {
       "en": "Your report has been generated successfully.",
@@ -206,140 +206,140 @@
       "lt": "Jūsų ataskaita buvo sėkmingai sugeneruota.",
       "pt": "O seu relatório foi gerado com sucesso.",
       "it": "Il tuo rapporto è stato generato con successo.",
-      "no": "Your report has been generated successfully.",
-      "el": "Your report has been generated successfully."
+      "no": "Rapporten din ble generert.",
+      "el": "Η αναφορά σας δημιουργήθηκε επιτυχώς."
     },
     "modules.export.if_you_see_errors_try_generating_an_html_report_in": {
       "en": "If You See Errors Try Generating An Html Report In",
-      "es": "[ES] If You See Errors Try Generating An Html Report In",
-      "fr": "[FR] If You See Errors Try Generating An Html Report In",
-      "de": "[DE] If You See Errors Try Generating An Html Report In",
-      "lt": "[LT] If You See Errors Try Generating An Html Report In",
-      "pt": "[PT] If You See Errors Try Generating An Html Report In",
-      "it": "[IT] If You See Errors Try Generating An Html Report In",
-      "no": "If You See Errors Try Generating An Html Report In",
-      "el": "If You See Errors Try Generating An Html Report In"
+      "es": "Si ve errores, intente generar un informe HTML en",
+      "fr": "Si vous voyez des erreurs, essayez de générer un rapport HTML dans",
+      "de": "Wenn Sie Fehler sehen, versuchen Sie, einen HTML-Bericht zu erstellen in",
+      "lt": "Jei matote klaidas, pabandykite sugeneruoti HTML ataskaitą",
+      "pt": "Se vir erros, tente gerar um relatório HTML em",
+      "it": "Se vedi errori, prova a generare un rapporto HTML in",
+      "no": "Hvis du ser feil, prøv å generere en HTML-rapport i",
+      "el": "Εάν βλέπετε σφάλματα, δοκιμάστε να δημιουργήσετε μια αναφορά HTML σε"
     },
     "modules.export.reports.download_report_if_generated": {
       "en": "Download Report If Generated",
-      "es": "[ES] Download Report If Generated",
-      "fr": "[FR] Download Report If Generated",
-      "de": "[DE] Download Report If Generated",
-      "lt": "[LT] Download Report If Generated",
-      "pt": "[PT] Download Report If Generated",
-      "it": "[IT] Download Report If Generated",
-      "no": "Download Report If Generated",
-      "el": "Λήψη Αναφορά If Generated"
+      "es": "Descargar informe si fue generado",
+      "fr": "Télécharger le rapport s'il a été généré",
+      "de": "Bericht herunterladen, falls erstellt",
+      "lt": "Atsisiųsti ataskaitą, jei sugeneruota",
+      "pt": "Baixar relatório se gerado",
+      "it": "Scarica rapporto se generato",
+      "no": "Last ned rapport hvis generert",
+      "el": "Λήψη αναφοράς εάν δημιουργήθηκε"
     },
     "modules.export.reports.export_guide_data_p1": {
       "en": "Export Guide Data P1",
-      "es": "[ES] Export Guide Data P1",
-      "fr": "[FR] Export Guide Data P1",
-      "de": "[DE] Export Guide Data P1",
-      "lt": "[LT] Export Guide Data P1",
-      "pt": "[PT] Export Guide Data P1",
-      "it": "[IT] Export Guide Data P1",
-      "no": "Export Guide Data P1",
-      "el": "Εξαγωγή Guide Data P1"
+      "es": "Guía de exportación de datos P1",
+      "fr": "Guide d'exportation des données P1",
+      "de": "Exportleitfaden Daten P1",
+      "lt": "Duomenų eksportavimo vadovas P1",
+      "pt": "Guia de exportação de dados P1",
+      "it": "Guida all'esportazione dei dati P1",
+      "no": "Eksportveiledning data P1",
+      "el": "Οδηγός εξαγωγής δεδομένων Μ1"
     },
     "modules.export.reports.export_guide_data_title": {
       "en": "Export Guide Data Title",
-      "es": "[ES] Export Guide Data Title",
-      "fr": "[FR] Export Guide Data Title",
-      "de": "[DE] Export Guide Data Title",
-      "lt": "[LT] Export Guide Data Title",
-      "pt": "[PT] Export Guide Data Title",
-      "it": "[IT] Export Guide Data Title",
-      "no": "Export Guide Data Title",
-      "el": "Εξαγωγή Guide Data Title"
+      "es": "Título de la guía de exportación de datos",
+      "fr": "Titre du guide d'exportation des données",
+      "de": "Titel des Datenexport-Leitfadens",
+      "lt": "Duomenų eksportavimo vadovo pavadinimas",
+      "pt": "Título do guia de exportação de dados",
+      "it": "Titolo della guida all'esportazione dei dati",
+      "no": "Tittel på eksportveiledning for data",
+      "el": "Τίτλος οδηγού εξαγωγής δεδομένων"
     },
     "modules.export.reports.export_guide_reports_p1": {
       "en": "Export Guide Reports P1",
-      "es": "[ES] Export Guide Reports P1",
-      "fr": "[FR] Export Guide Reports P1",
-      "de": "[DE] Export Guide Reports P1",
-      "lt": "[LT] Export Guide Reports P1",
-      "pt": "[PT] Export Guide Reports P1",
-      "it": "[IT] Export Guide Reports P1",
-      "no": "Export Guide Reports P1",
-      "el": "Εξαγωγή Guide Reports P1"
+      "es": "Guía de exportación de informes P1",
+      "fr": "Guide d'exportation des rapports P1",
+      "de": "Exportleitfaden Berichte P1",
+      "lt": "Ataskaitų eksportavimo vadovas P1",
+      "pt": "Guia de exportação de relatórios P1",
+      "it": "Guida all'esportazione dei rapporti P1",
+      "no": "Eksportveiledning rapporter P1",
+      "el": "Οδηγός εξαγωγής αναφορών Μ1"
     },
     "modules.export.reports.export_guide_reports_title": {
       "en": "Export Guide Reports Title",
-      "es": "[ES] Export Guide Reports Title",
-      "fr": "[FR] Export Guide Reports Title",
-      "de": "[DE] Export Guide Reports Title",
-      "lt": "[LT] Export Guide Reports Title",
-      "pt": "[PT] Export Guide Reports Title",
-      "it": "[IT] Export Guide Reports Title",
-      "no": "Export Guide Reports Title",
-      "el": "Εξαγωγή Guide Reports Title"
+      "es": "Título de la guía de exportación de informes",
+      "fr": "Titre du guide d'exportation des rapports",
+      "de": "Titel des Berichtsexport-Leitfadens",
+      "lt": "Ataskaitų eksportavimo vadovo pavadinimas",
+      "pt": "Título do guia de exportação de relatórios",
+      "it": "Titolo della guida all'esportazione dei rapporti",
+      "no": "Tittel på eksportveiledning for rapporter",
+      "el": "Τίτλος οδηγού εξαγωγής αναφορών"
     },
     "modules.export.reports.export_guide_viz_p1": {
       "en": "Export Guide Viz P1",
-      "es": "[ES] Export Guide Viz P1",
-      "fr": "[FR] Export Guide Viz P1",
-      "de": "[DE] Export Guide Viz P1",
-      "lt": "[LT] Export Guide Viz P1",
-      "pt": "[PT] Export Guide Viz P1",
-      "it": "[IT] Export Guide Viz P1",
-      "no": "Export Guide Viz P1",
-      "el": "Εξαγωγή Guide Viz P1"
+      "es": "Guía de exportación de visualizaciones P1",
+      "fr": "Guide d'exportation des visualisations P1",
+      "de": "Exportleitfaden Visualisierungen P1",
+      "lt": "Vizualizacijų eksportavimo vadovas P1",
+      "pt": "Guia de exportação de visualizações P1",
+      "it": "Guida all'esportazione delle visualizzazioni P1",
+      "no": "Eksportveiledning visualiseringer P1",
+      "el": "Οδηγός εξαγωγής οπτικοποιήσεων Μ1"
     },
     "modules.export.reports.export_guide_viz_title": {
       "en": "Export Guide Viz Title",
-      "es": "[ES] Export Guide Viz Title",
-      "fr": "[FR] Export Guide Viz Title",
-      "de": "[DE] Export Guide Viz Title",
-      "lt": "[LT] Export Guide Viz Title",
-      "pt": "[PT] Export Guide Viz Title",
-      "it": "[IT] Export Guide Viz Title",
-      "no": "Export Guide Viz Title",
-      "el": "Εξαγωγή Guide Viz Title"
+      "es": "Título de la guía de exportación de visualizaciones",
+      "fr": "Titre du guide d'exportation des visualisations",
+      "de": "Titel des Visualisierungsexport-Leitfadens",
+      "lt": "Vizualizacijų eksportavimo vadovo pavadinimas",
+      "pt": "Título do guia de exportação de visualizações",
+      "it": "Titolo della guida all'esportazione delle visualizzazioni",
+      "no": "Tittel på eksportveiledning for visualiseringer",
+      "el": "Τίτλος οδηγού εξαγωγής οπτικοποιήσεων"
     },
     "modules.export.reports.pdf_generation_requires_latex_eg_tinytex_or_miktex": {
       "en": "Pdf Generation Requires Latex Eg Tinytex Or Miktex",
-      "es": "[ES] Pdf Generation Requires Latex Eg Tinytex Or Miktex",
-      "fr": "[FR] Pdf Generation Requires Latex Eg Tinytex Or Miktex",
-      "de": "[DE] Pdf Generation Requires Latex Eg Tinytex Or Miktex",
-      "lt": "[LT] Pdf Generation Requires Latex Eg Tinytex Or Miktex",
-      "pt": "[PT] Pdf Generation Requires Latex Eg Tinytex Or Miktex",
-      "it": "[IT] Pdf Generation Requires Latex Eg Tinytex Or Miktex",
-      "no": "Pdf Generation Requires Latex Eg Tinytex Or Miktex",
-      "el": "Pdf Generation Requires Latex Eg Tinytex Or Miktex"
+      "es": "La generación de PDF requiere LaTeX, por ejemplo TinyTeX o MiKTeX",
+      "fr": "La génération de PDF nécessite LaTeX, par exemple TinyTeX ou MiKTeX",
+      "de": "PDF-Erstellung erfordert LaTeX, z.B. TinyTeX oder MiKTeX",
+      "lt": "PDF generavimui reikalingas LaTeX, pvz. TinyTeX arba MiKTeX",
+      "pt": "A geração de PDF requer LaTeX, por exemplo TinyTeX ou MiKTeX",
+      "it": "La generazione di PDF richiede LaTeX, ad esempio TinyTeX o MiKTeX",
+      "no": "PDF-generering krever LaTeX, f.eks. TinyTeX eller MiKTeX",
+      "el": "Η δημιουργία PDF απαιτεί LaTeX, π.χ. TinyTeX ή MiKTeX"
     },
     "modules.export.reports.pdf_report_notice": {
       "en": "Pdf Report Notice",
-      "es": "[ES] Pdf Report Notice",
-      "fr": "[FR] Pdf Report Notice",
-      "de": "[DE] Pdf Report Notice",
-      "lt": "[LT] Pdf Report Notice",
-      "pt": "[PT] Pdf Report Notice",
-      "it": "[IT] Pdf Report Notice",
-      "no": "Pdf Report Notice",
-      "el": "Pdf Report Notice"
+      "es": "Aviso sobre informes PDF",
+      "fr": "Avis sur les rapports PDF",
+      "de": "Hinweis zum PDF-Bericht",
+      "lt": "PDF ataskaitos pastaba",
+      "pt": "Aviso sobre relatórios PDF",
+      "it": "Avviso sui rapporti PDF",
+      "no": "Merknad om PDF-rapport",
+      "el": "Σημείωση αναφοράς PDF"
     },
     "modules.export.reports.report_opened_in_a_new_window": {
       "en": "Report Opened In A New Window",
-      "es": "[ES] Report Opened In A New Window",
-      "fr": "[FR] Report Opened In A New Window",
-      "de": "[DE] Report Opened In A New Window",
-      "lt": "[LT] Report Opened In A New Window",
-      "pt": "[PT] Report Opened In A New Window",
-      "it": "[IT] Report Opened In A New Window",
-      "no": "Report Opened In A New Window",
-      "el": "Αναφορά Opened In A New Window"
+      "es": "Informe abierto en una nueva ventana",
+      "fr": "Rapport ouvert dans une nouvelle fenêtre",
+      "de": "Bericht in einem neuen Fenster geöffnet",
+      "lt": "Ataskaita atidaryta naujame lange",
+      "pt": "Relatório aberto em uma nova janela",
+      "it": "Rapporto aperto in una nuova finestra",
+      "no": "Rapport åpnet i et nytt vindu",
+      "el": "Η αναφορά άνοιξε σε νέο παράθυρο"
     },
     "modules.export.reports.to_install_tinytex_for_pdf_support": {
       "en": "To Install Tinytex For Pdf Support",
-      "es": "[ES] To Install Tinytex For Pdf Support",
-      "fr": "[FR] To Install Tinytex For Pdf Support",
-      "de": "[DE] To Install Tinytex For Pdf Support",
-      "lt": "[LT] To Install Tinytex For Pdf Support",
-      "pt": "[PT] To Install Tinytex For Pdf Support",
-      "it": "[IT] To Install Tinytex For Pdf Support",
-      "no": "To Install Tinytex For Pdf Support",
-      "el": "To Install Tinytex For Pdf Support"
+      "es": "Para instalar TinyTeX para soporte de PDF",
+      "fr": "Pour installer TinyTeX pour le support PDF",
+      "de": "Um TinyTeX für PDF-Unterstützung zu installieren",
+      "lt": "Norėdami įdiegti TinyTeX PDF palaikymui",
+      "pt": "Para instalar TinyTeX para suporte a PDF",
+      "it": "Per installare TinyTeX per il supporto PDF",
+      "no": "For å installere TinyTeX for PDF-støtte",
+      "el": "Για εγκατάσταση TinyTeX για υποστήριξη PDF"
     },
     "modules.isa.data_entry.common.export_data": {
       "en": "Export Data",
@@ -349,8 +349,8 @@
       "lt": "Eksportuoti duomenis",
       "pt": "Exportar Dados",
       "it": "Esporta Dati",
-      "no": "Export Data",
-      "el": "Εξαγωγή Δεδομένα"
+      "no": "Eksporter data",
+      "el": "Εξαγωγή Δεδομένων"
     },
     "modules.export.reports.title": {
       "en": "Export & Reports",
@@ -361,7 +361,7 @@
       "pt": "Exportação e Relatórios",
       "it": "Esportazione e Rapporti",
       "no": "Eksport og Rapporter",
-      "el": "Εξαγωγή & Reports"
+      "el": "Εξαγωγή & Αναφορές"
     },
     "modules.export.reports.subtitle": {
       "en": "Export your data, visualizations, and generate comprehensive reports.",
@@ -372,7 +372,73 @@
       "pt": "Exporte seus dados, visualizações e gere relatórios abrangentes.",
       "it": "Esporta i tuoi dati, visualizzazioni e genera report completi.",
       "no": "Eksporter dataene dine, visualiseringer og generer omfattende rapporter.",
-      "el": "Εξαγωγή your data, visualizations, and generate comprehensive reports."
+      "el": "Εξαγάγετε τα δεδομένα σας, τις οπτικοποιήσεις και δημιουργήστε ολοκληρωμένες αναφορές."
+    },
+    "modules.export.cld_diagram_title": {
+      "en": "MarineSABRES Causal Loop Diagram",
+      "es": "Diagrama de Bucle Causal MarineSABRES",
+      "fr": "Diagramme de Boucle Causale MarineSABRES",
+      "de": "MarineSABRES Ursache-Wirkungs-Diagramm",
+      "lt": "MarineSABRES priežasties-pasekmės diagrama",
+      "pt": "Diagrama de Loop Causal MarineSABRES",
+      "it": "Diagramma Causale MarineSABRES",
+      "no": "MarineSABRES årsaks-loop-diagram",
+      "el": "Διάγραμμα αιτιακού βρόχου MarineSABRES"
+    },
+    "modules.export.positive_link": {
+      "en": "Positive link",
+      "es": "Enlace positivo",
+      "fr": "Lien positif",
+      "de": "Positive Verbindung",
+      "lt": "Teigiamas ryšys",
+      "pt": "Ligação positiva",
+      "it": "Collegamento positivo",
+      "no": "Positivt ledd",
+      "el": "Θετική σύνδεση"
+    },
+    "modules.export.negative_link": {
+      "en": "Negative link",
+      "es": "Enlace negativo",
+      "fr": "Lien négatif",
+      "de": "Negative Verbindung",
+      "lt": "Neigiamas ryšys",
+      "pt": "Ligação negativa",
+      "it": "Collegamento negativo",
+      "no": "Negativt ledd",
+      "el": "Αρνητική σύνδεση"
+    },
+    "modules.export.reports.generating_report": {
+      "en": "Generating Report",
+      "es": "Generando Informe",
+      "fr": "Génération du Rapport",
+      "de": "Bericht wird erstellt",
+      "lt": "Generuojama ataskaita",
+      "pt": "Gerando Relatório",
+      "it": "Generazione del Rapporto",
+      "no": "Genererer rapport",
+      "el": "Δημιουργία Αναφοράς"
+    },
+    "modules.export.reports.report_being_generated": {
+      "en": "Please wait while your report is being generated...",
+      "es": "Por favor espere mientras se genera su informe...",
+      "fr": "Veuillez patienter pendant la génération de votre rapport...",
+      "de": "Bitte warten Sie, während Ihr Bericht erstellt wird...",
+      "lt": "Prašome palaukti, kol generuojama jūsų ataskaita...",
+      "pt": "Por favor aguarde enquanto o seu relatório está sendo gerado...",
+      "it": "Attendere prego, il rapporto è in fase di generazione...",
+      "no": "Vennligst vent mens rapporten genereres...",
+      "el": "Παρακαλώ περιμένετε όσο δημιουργείται η αναφορά σας..."
+    },
+    "modules.export.reports.pdf_requires_latex_full": {
+      "en": "PDF generation requires LaTeX. Please install TinyTeX using: install.packages('tinytex'); tinytex::install_tinytex(). Alternatively, generate an HTML report and print to PDF from your browser.",
+      "es": "La generación de PDF requiere LaTeX. Instale TinyTeX usando: install.packages('tinytex'); tinytex::install_tinytex(). Alternativamente, genere un informe HTML e imprima a PDF desde su navegador.",
+      "fr": "La génération PDF nécessite LaTeX. Installez TinyTeX avec : install.packages('tinytex'); tinytex::install_tinytex(). Sinon, générez un rapport HTML et imprimez en PDF depuis votre navigateur.",
+      "de": "PDF-Erstellung erfordert LaTeX. Installieren Sie TinyTeX mit: install.packages('tinytex'); tinytex::install_tinytex(). Alternativ erstellen Sie einen HTML-Bericht und drucken ihn als PDF aus Ihrem Browser.",
+      "lt": "PDF generavimui reikalingas LaTeX. Įdiekite TinyTeX naudodami: install.packages('tinytex'); tinytex::install_tinytex(). Arba sugeneruokite HTML ataskaita ir spausdinkite kaip PDF iš naršyklės.",
+      "pt": "A geração de PDF requer LaTeX. Instale o TinyTeX usando: install.packages('tinytex'); tinytex::install_tinytex(). Como alternativa, gere um relatório HTML e imprima em PDF a partir do navegador.",
+      "it": "La generazione PDF richiede LaTeX. Installare TinyTeX con: install.packages('tinytex'); tinytex::install_tinytex(). In alternativa, generare un rapporto HTML e stampare in PDF dal browser.",
+      "no": "PDF-generering krever LaTeX. Installer TinyTeX med: install.packages('tinytex'); tinytex::install_tinytex(). Alternativt, generer en HTML-rapport og skriv ut til PDF fra nettleseren.",
+      "el": "Η δημιουργία PDF απαιτεί LaTeX. Εγκαταστήστε το TinyTeX χρησιμοποιώντας: install.packages('tinytex'); tinytex::install_tinytex(). Εναλλακτικά, δημιουργήστε αναφορά HTML και εκτυπώστε σε PDF από τον περιηγητή σας."
     }
   }
 }

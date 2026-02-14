@@ -13,58 +13,58 @@
   "translation": {
     "Activities": {
       "en": "Activities",
-      "es": "Activities",
-      "fr": "Activities",
-      "de": "Activities",
-      "lt": "Activities",
-      "pt": "Activities",
-      "it": "Activities",
-      "no": "Activities",
+      "es": "Actividades",
+      "fr": "Activités",
+      "de": "Aktivitäten",
+      "lt": "Veiklos",
+      "pt": "Atividades",
+      "it": "Attività",
+      "no": "Aktiviteter",
       "el": "Δραστηριότητες"
     },
     "Drivers": {
       "en": "Drivers",
-      "es": "Drivers",
-      "fr": "Drivers",
-      "de": "Drivers",
-      "lt": "Drivers",
-      "pt": "Drivers",
-      "it": "Drivers",
-      "no": "Drivers",
+      "es": "Impulsores",
+      "fr": "Facteurs",
+      "de": "Treiber",
+      "lt": "Varomosios jėgos",
+      "pt": "Fatores",
+      "it": "Fattori",
+      "no": "Drivkrefter",
       "el": "Κινητήριες δυνάμεις"
     },
     "Ecosystem Services": {
       "en": "Ecosystem Services",
-      "es": "Ecosystem Services",
-      "fr": "Ecosystem Services",
-      "de": "Ecosystem Services",
-      "lt": "Ecosystem Services",
-      "pt": "Ecosystem Services",
-      "it": "Ecosystem Services",
-      "no": "Ecosystem Services",
-      "el": "Υπηρεσίες οικοσυστήματος"
+      "es": "Servicios Ecosistémicos",
+      "fr": "Services Écosystémiques",
+      "de": "Ökosystemleistungen",
+      "lt": "Ekosistemų paslaugos",
+      "pt": "Serviços Ecossistêmicos",
+      "it": "Servizi Ecosistemici",
+      "no": "Økosystemtjenester",
+      "el": "Υπηρεσίες Οικοσυστήματος"
     },
     "Goods & Benefits": {
       "en": "Goods & Benefits",
-      "es": "Goods & Benefits",
-      "fr": "Goods & Benefits",
-      "de": "Goods & Benefits",
-      "lt": "Goods & Benefits",
-      "pt": "Goods & Benefits",
-      "it": "Goods & Benefits",
-      "no": "Goods & Benefits",
-      "el": "Αγαθά & Benefits"
+      "es": "Bienes y Beneficios",
+      "fr": "Biens et Avantages",
+      "de": "Güter und Vorteile",
+      "lt": "Gėrybės ir nauda",
+      "pt": "Bens e Benefícios",
+      "it": "Beni e Benefici",
+      "no": "Goder og fordeler",
+      "el": "Αγαθά & Οφέλη"
     },
     "Marine Processes": {
       "en": "Marine Processes",
-      "es": "Marine Processes",
-      "fr": "Marine Processes",
-      "de": "Marine Processes",
-      "lt": "Marine Processes",
-      "pt": "Marine Processes",
-      "it": "Marine Processes",
-      "no": "Marine Processes",
-      "el": "Θαλάσσιες διεργασίες"
+      "es": "Procesos Marinos",
+      "fr": "Processus Marins",
+      "de": "Marine Prozesse",
+      "lt": "Jūriniai procesai",
+      "pt": "Processos Marinhos",
+      "it": "Processi Marini",
+      "no": "Marine prosesser",
+      "el": "Θαλάσσιες Διεργασίες"
     },
     "OK": {
       "en": "OK",
@@ -96,8 +96,8 @@
       "lt": "3. Detalės:",
       "pt": "3. Detalhes:",
       "it": "3. Dettagli:",
-      "no": "3. Details:",
-      "el": "3. Details:"
+      "no": "3. Detaljer:",
+      "el": "3. Λεπτομέρειες:"
     },
     "common.labels.author": {
       "en": "Author",
@@ -108,7 +108,7 @@
       "pt": "Autor",
       "it": "Autore",
       "no": "Forfatter",
-      "el": "Author"
+      "el": "Συγγραφέας"
     },
     "common.labels.baseline": {
       "en": "Baseline",
@@ -118,8 +118,8 @@
       "lt": "Bazinė linija",
       "pt": "Linha de Base",
       "it": "Linea di Base",
-      "no": "Baseline",
-      "el": "Baseline"
+      "no": "Grunnlinje",
+      "el": "Βάση Αναφοράς"
     },
     "common.labels.brief_description": {
       "en": "Brief Description:",
@@ -129,8 +129,8 @@
       "lt": "Trumpas aprašymas:",
       "pt": "Descrição Breve:",
       "it": "Breve Descrizione:",
-      "no": "Brief Description:",
-      "el": "Brief Description:"
+      "no": "Kort beskrivelse:",
+      "el": "Σύντομη Περιγραφή:"
     },
     "common.labels.case_study_name": {
       "en": "Case Study Name:",
@@ -140,8 +140,8 @@
       "lt": "Atvejo tyrimo pavadinimas:",
       "pt": "Nome do Estudo de Caso:",
       "it": "Nome del Caso Studio:",
-      "no": "Case Study Name:",
-      "el": "Case Study Name:"
+      "no": "Kasusstudie Navn:",
+      "el": "Όνομα Μελέτης Περίπτωσης:"
     },
     "common.labels.category": {
       "en": "Category",
@@ -151,8 +151,8 @@
       "lt": "Kategorija",
       "pt": "Categoria",
       "it": "Categoria",
-      "no": "Category",
-      "el": "Category"
+      "no": "Kategori",
+      "el": "Κατηγορία"
     },
     "common.labels.comment": {
       "en": "Comment",
@@ -162,8 +162,8 @@
       "lt": "Komentaras",
       "pt": "Comentário",
       "it": "Commento",
-      "no": "Comment",
-      "el": "Comment"
+      "no": "Kommentar",
+      "el": "Σχόλιο"
     },
     "common.labels.confidence": {
       "en": "Confidence",
@@ -173,19 +173,19 @@
       "lt": "Pasitikėjimas",
       "pt": "Confiança",
       "it": "Confidenza",
-      "no": "Confidence",
+      "no": "Tillit",
       "el": "Εμπιστοσύνη"
     },
     "common.labels.createsesguidemethodstitle": {
-      "en": "create_ses_guide_methods_title",
-      "es": "create_ses_guide_methods_title",
-      "fr": "create_ses_guide_methods_title",
-      "de": "create_ses_guide_methods_title",
-      "lt": "create_ses_guide_methods_title",
-      "pt": "create_ses_guide_methods_title",
-      "it": "create_ses_guide_methods_title",
-      "no": "create_ses_guide_methods_title",
-      "el": "create_ses_guide_methods_title"
+      "en": "SES Creation Methods",
+      "es": "Métodos de Creación SES",
+      "fr": "Méthodes de Création SES",
+      "de": "SES-Erstellungsmethoden",
+      "lt": "SES Kūrimo Metodai",
+      "pt": "Métodos de Criação SES",
+      "it": "Metodi di Creazione SES",
+      "no": "SES-opprettelsesmetoder",
+      "el": "Μέθοδοι Δημιουργίας SES"
     },
     "common.labels.current": {
       "en": "Current",
@@ -195,8 +195,8 @@
       "lt": "Dabartinis",
       "pt": "Atual",
       "it": "Corrente",
-      "no": "Current",
-      "el": "Current"
+      "no": "Nåværende",
+      "el": "Τρέχουσα"
     },
     "common.labels.data_source": {
       "en": "Data Source",
@@ -206,8 +206,8 @@
       "lt": "Duomenų šaltinis",
       "pt": "Fonte de Dados",
       "it": "Fonte di Dati",
-      "no": "Data Source",
-      "el": "Δεδομένα Source"
+      "no": "Datakilde",
+      "el": "Πηγή Δεδομένων"
     },
     "common.labels.date": {
       "en": "Date",
@@ -239,8 +239,8 @@
       "lt": "Ekosistemos tipas",
       "pt": "Tipo de Ecossistema",
       "it": "Tipo di Ecosistema",
-      "no": "Ecosystem Type",
-      "el": "Οικοσύστημα Πληκτρολογήστε"
+      "no": "Økosystemtype",
+      "el": "Τύπος Οικοσυστήματος"
     },
     "common.labels.element_type": {
       "en": "Element Type:",
@@ -250,8 +250,8 @@
       "lt": "Elemento tipas:",
       "pt": "Tipo de Elemento:",
       "it": "Tipo di Elemento:",
-      "no": "Element Type:",
-      "el": "Στοιχείο Type:"
+      "no": "Elementtype:",
+      "el": "Τύπος Στοιχείου:"
     },
     "common.labels.email": {
       "en": "Email",
@@ -261,8 +261,8 @@
       "lt": "El. paštas",
       "pt": "E-mail",
       "it": "Email",
-      "no": "Email",
-      "el": "Email"
+      "no": "E-post",
+      "el": "Ηλ. ταχυδρομείο"
     },
     "common.labels.encapsulation_notes": {
       "en": "Encapsulation Notes:",
@@ -272,8 +272,8 @@
       "lt": "Inkapsuliavimo pastabos:",
       "pt": "Notas de Encapsulamento:",
       "it": "Note di Incapsulamento:",
-      "no": "Encapsulation Notes:",
-      "el": "Encapsulation Notes:"
+      "no": "Innkapslings-notater:",
+      "el": "Σημειώσεις Ενθυλάκωσης:"
     },
     "common.labels.endogenisation_notes": {
       "en": "Endogenisation Notes:",
@@ -283,41 +283,41 @@
       "lt": "Endogenizacijos pastabos:",
       "pt": "Notas de Endogenização:",
       "it": "Note di Endogenizzazione:",
-      "no": "Endogenisation Notes:",
-      "el": "Endogenisation Notes:"
+      "no": "Endogeniserings-notater:",
+      "el": "Σημειώσεις Ενδογενοποίησης:"
     },
     "common.labels.exportguidedatatitle": {
-      "en": "export_guide_data_title",
-      "es": "export_guide_data_title",
-      "fr": "export_guide_data_title",
-      "de": "export_guide_data_title",
-      "lt": "export_guide_data_title",
-      "pt": "export_guide_data_title",
-      "it": "export_guide_data_title",
-      "no": "export_guide_data_title",
-      "el": "export_guide_data_title"
+      "en": "Export Data",
+      "es": "Exportar Datos",
+      "fr": "Exporter les Données",
+      "de": "Daten Exportieren",
+      "lt": "Eksportuoti Duomenis",
+      "pt": "Exportar Dados",
+      "it": "Esporta Dati",
+      "no": "Eksporter Data",
+      "el": "Εξαγωγή Δεδομένων"
     },
     "common.labels.exportguidereportstitle": {
-      "en": "export_guide_reports_title",
-      "es": "export_guide_reports_title",
-      "fr": "export_guide_reports_title",
-      "de": "export_guide_reports_title",
-      "lt": "export_guide_reports_title",
-      "pt": "export_guide_reports_title",
-      "it": "export_guide_reports_title",
-      "no": "export_guide_reports_title",
-      "el": "export_guide_reports_title"
+      "en": "Export Reports",
+      "es": "Exportar Informes",
+      "fr": "Exporter les Rapports",
+      "de": "Berichte Exportieren",
+      "lt": "Eksportuoti Ataskaitas",
+      "pt": "Exportar Relatórios",
+      "it": "Esporta Report",
+      "no": "Eksporter Rapporter",
+      "el": "Εξαγωγή Αναφορών"
     },
     "common.labels.exportguideviztitle": {
-      "en": "export_guide_viz_title",
-      "es": "export_guide_viz_title",
-      "fr": "export_guide_viz_title",
-      "de": "export_guide_viz_title",
-      "lt": "export_guide_viz_title",
-      "pt": "export_guide_viz_title",
-      "it": "export_guide_viz_title",
-      "no": "export_guide_viz_title",
-      "el": "export_guide_viz_title"
+      "en": "Export Visualizations",
+      "es": "Exportar Visualizaciones",
+      "fr": "Exporter les Visualisations",
+      "de": "Visualisierungen Exportieren",
+      "lt": "Eksportuoti Vizualizacijas",
+      "pt": "Exportar Visualizações",
+      "it": "Esporta Visualizzazioni",
+      "no": "Eksporter Visualiseringer",
+      "el": "Εξαγωγή Απεικονίσεων"
     },
     "common.labels.fastest_setup_time": {
       "en": "Fastest setup time",
@@ -327,8 +327,8 @@
       "lt": "Greičiausias nustatymo laikas",
       "pt": "Tempo de configuração mais rápido",
       "it": "Tempo di configurazione più veloce",
-      "no": "Fastest setup time",
-      "el": "Fastest setup time"
+      "no": "Raskeste oppsettid",
+      "el": "Ταχύτερος χρόνος ρύθμισης"
     },
     "common.labels.implementation_status": {
       "en": "Implementation Status:",
@@ -338,8 +338,8 @@
       "lt": "Įgyvendinimo Būsena:",
       "pt": "Status de Implementação:",
       "it": "Stato di Attuazione:",
-      "no": "Implementation Status:",
-      "el": "Implementation Status:"
+      "no": "Implementeringsstatus:",
+      "el": "Κατάσταση Υλοποίησης:"
     },
     "common.labels.indicator": {
       "en": "Indicator",
@@ -349,41 +349,41 @@
       "lt": "Indikatorius",
       "pt": "Indicador",
       "it": "Indicatore",
-      "no": "Indicator",
+      "no": "Indikator",
       "el": "Δείκτης"
     },
     "common.labels.isaguidedapsiwrtitle": {
-      "en": "isa_guide_dapsiwr_title",
-      "es": "isa_guide_dapsiwr_title",
-      "fr": "isa_guide_dapsiwr_title",
-      "de": "isa_guide_dapsiwr_title",
-      "lt": "isa_guide_dapsiwr_title",
-      "pt": "isa_guide_dapsiwr_title",
-      "it": "isa_guide_dapsiwr_title",
-      "no": "isa_guide_dapsiwr_title",
-      "el": "isa_guide_dapsiwr_title"
+      "en": "DAPSI(W)R(M) Framework",
+      "es": "Marco DAPSI(W)R(M)",
+      "fr": "Cadre DAPSI(W)R(M)",
+      "de": "DAPSI(W)R(M)-Rahmenwerk",
+      "lt": "DAPSI(W)R(M) Sistema",
+      "pt": "Estrutura DAPSI(W)R(M)",
+      "it": "Framework DAPSI(W)R(M)",
+      "no": "DAPSI(W)R(M)-rammeverk",
+      "el": "Πλαίσιο DAPSI(W)R(M)"
     },
     "common.labels.isaguidehowtousetitle": {
-      "en": "isa_guide_how_to_use_title",
-      "es": "isa_guide_how_to_use_title",
-      "fr": "isa_guide_how_to_use_title",
-      "de": "isa_guide_how_to_use_title",
-      "lt": "isa_guide_how_to_use_title",
-      "pt": "isa_guide_how_to_use_title",
-      "it": "isa_guide_how_to_use_title",
-      "no": "isa_guide_how_to_use_title",
-      "el": "isa_guide_how_to_use_title"
+      "en": "How to Use the ISA",
+      "es": "Cómo Usar el ISA",
+      "fr": "Comment Utiliser l'ISA",
+      "de": "Verwendung des ISA",
+      "lt": "Kaip Naudoti ISA",
+      "pt": "Como Usar o ISA",
+      "it": "Come Usare l'ISA",
+      "no": "Hvordan Bruke ISA",
+      "el": "Πώς να Χρησιμοποιήσετε το ISA"
     },
     "common.labels.isaguidewhatisisatitle": {
-      "en": "isa_guide_what_is_isa_title",
-      "es": "isa_guide_what_is_isa_title",
-      "fr": "isa_guide_what_is_isa_title",
-      "de": "isa_guide_what_is_isa_title",
-      "lt": "isa_guide_what_is_isa_title",
-      "pt": "isa_guide_what_is_isa_title",
-      "it": "isa_guide_what_is_isa_title",
-      "no": "isa_guide_what_is_isa_title",
-      "el": "isa_guide_what_is_isa_title"
+      "en": "What is ISA?",
+      "es": "¿Qué es ISA?",
+      "fr": "Qu'est-ce que l'ISA ?",
+      "de": "Was ist ISA?",
+      "lt": "Kas yra ISA?",
+      "pt": "O que é ISA?",
+      "it": "Cos'è l'ISA?",
+      "no": "Hva er ISA?",
+      "el": "Τι είναι το ISA;"
     },
     "common.labels.location": {
       "en": "Location",
@@ -393,8 +393,8 @@
       "lt": "Vieta",
       "pt": "Localização",
       "it": "Posizione",
-      "no": "Location",
-      "el": "Location"
+      "no": "Plassering",
+      "el": "Τοποθεσία"
     },
     "common.labels.name": {
       "en": "Name",
@@ -409,14 +409,14 @@
     },
     "common.labels.no_connections_in_this_category": {
       "en": "No connections in this category",
-      "es": "No connections in this category",
-      "fr": "No connections in this category",
-      "de": "No connections in this category",
-      "lt": "No connections in this category",
-      "pt": "No connections in this category",
-      "it": "No connections in this category",
-      "no": "No connections in this category",
-      "el": "Όχι Συνδέσεις in this category"
+      "es": "Sin conexiones en esta categoría",
+      "fr": "Aucune connexion dans cette catégorie",
+      "de": "Keine Verbindungen in dieser Kategorie",
+      "lt": "Šioje kategorijoje ryšių nėra",
+      "pt": "Sem conexões nesta categoria",
+      "it": "Nessuna connessione in questa categoria",
+      "no": "Ingen forbindelser i denne kategorien",
+      "el": "Δεν υπάρχουν συνδέσεις σε αυτή την κατηγορία"
     },
     "common.labels.notes": {
       "en": "Notes",
@@ -426,8 +426,8 @@
       "lt": "Pastabos",
       "pt": "Notas",
       "it": "Note",
-      "no": "Notes",
-      "el": "Notes"
+      "no": "Notater",
+      "el": "Σημειώσεις"
     },
     "common.labels.organization": {
       "en": "Organization",
@@ -437,8 +437,8 @@
       "lt": "Organizacija",
       "pt": "Organização",
       "it": "Organizzazione",
-      "no": "Organization",
-      "el": "Organization"
+      "no": "Organisasjon",
+      "el": "Οργανισμός"
     },
     "common.labels.polarity": {
       "en": "Polarity",
@@ -448,7 +448,7 @@
       "lt": "Polarumas",
       "pt": "Polaridade",
       "it": "Polarità",
-      "no": "Polarity",
+      "no": "Polaritet",
       "el": "Πολικότητα"
     },
     "common.labels.priority": {
@@ -459,8 +459,8 @@
       "lt": "Prioritetas",
       "pt": "Prioridade",
       "it": "Priorità",
-      "no": "Priority",
-      "el": "Priority"
+      "no": "Prioritet",
+      "el": "Προτεραιότητα"
     },
     "common.labels.purpose": {
       "en": "Purpose:",
@@ -470,8 +470,8 @@
       "lt": "Tikslas:",
       "pt": "Propósito:",
       "it": "Scopo:",
-      "no": "Purpose:",
-      "el": "Purpose:"
+      "no": "Formål:",
+      "el": "Σκοπός:"
     },
     "common.labels.region": {
       "en": "Region",
@@ -482,7 +482,7 @@
       "pt": "Região",
       "it": "Regione",
       "no": "Region",
-      "el": "Region"
+      "el": "Περιοχή"
     },
     "common.labels.report_type": {
       "en": "Report Type:",
@@ -492,8 +492,8 @@
       "lt": "Ataskaitos tipas:",
       "pt": "Tipo de Relatório:",
       "it": "Tipo di Rapporto:",
-      "no": "Report Type:",
-      "el": "Αναφορά Type:"
+      "no": "Rapporttype:",
+      "el": "Τύπος Αναφοράς:"
     },
     "common.labels.response_name": {
       "en": "Response Name:",
@@ -503,8 +503,8 @@
       "lt": "Atsako Pavadinimas:",
       "pt": "Nome da Resposta:",
       "it": "Nome della Risposta:",
-      "no": "Response Name:",
-      "el": "Απόκριση Name:"
+      "no": "Responsnavn:",
+      "el": "Όνομα Απόκρισης:"
     },
     "common.labels.response_type": {
       "en": "Response Type:",
@@ -514,8 +514,8 @@
       "lt": "Atsako Tipas:",
       "pt": "Tipo de Resposta:",
       "it": "Tipo di Risposta:",
-      "no": "Response Type:",
-      "el": "Απόκριση Type:"
+      "no": "Responstype:",
+      "el": "Τύπος Απόκρισης:"
     },
     "common.labels.role": {
       "en": "Role",
@@ -525,7 +525,7 @@
       "lt": "Vaidmuo",
       "pt": "Função",
       "it": "Ruolo",
-      "no": "Role",
+      "no": "Rolle",
       "el": "Ρόλος"
     },
     "common.labels.scale": {
@@ -536,8 +536,8 @@
       "lt": "Mastas",
       "pt": "Escala",
       "it": "Scala",
-      "no": "Scale",
-      "el": "Scale"
+      "no": "Skala",
+      "el": "Κλίμακα"
     },
     "common.labels.select_matrix_type": {
       "en": "Select Matrix Type:",
@@ -547,8 +547,8 @@
       "lt": "Pasirinkite matricos tipą:",
       "pt": "Selecionar Tipo de Matriz:",
       "it": "Seleziona Tipo di Matrice:",
-      "no": "Select Matrix Type:",
-      "el": "Επιλογή Matrix Type:"
+      "no": "Velg matrisetype:",
+      "el": "Επιλογή Τύπου Μήτρας:"
     },
     "common.labels.source": {
       "en": "Source",
@@ -558,8 +558,8 @@
       "lt": "Šaltinis",
       "pt": "Fonte",
       "it": "Fonte",
-      "no": "Source",
-      "el": "Source"
+      "no": "Kilde",
+      "el": "Πηγή"
     },
     "common.labels.status": {
       "en": "Status",
@@ -580,7 +580,7 @@
       "lt": "Stiprumas",
       "pt": "Força",
       "it": "Forza",
-      "no": "Strength",
+      "no": "Styrke",
       "el": "Ένταση"
     },
     "common.labels.target_date": {
@@ -591,30 +591,30 @@
       "lt": "Tikslinė Data:",
       "pt": "Data Alvo:",
       "it": "Data Obiettivo:",
-      "no": "Target Date:",
-      "el": "Target Date:"
+      "no": "Måldato:",
+      "el": "Ημερομηνία Στόχου:"
     },
     "common.labels.templatesesguidehowtousetitle": {
-      "en": "template_ses_guide_how_to_use_title",
-      "es": "template_ses_guide_how_to_use_title",
-      "fr": "template_ses_guide_how_to_use_title",
-      "de": "template_ses_guide_how_to_use_title",
-      "lt": "template_ses_guide_how_to_use_title",
-      "pt": "template_ses_guide_how_to_use_title",
-      "it": "template_ses_guide_how_to_use_title",
-      "no": "template_ses_guide_how_to_use_title",
-      "el": "template_ses_guide_how_to_use_title"
+      "en": "How to Use SES Templates",
+      "es": "Cómo Usar las Plantillas SES",
+      "fr": "Comment Utiliser les Modèles SES",
+      "de": "Verwendung der SES-Vorlagen",
+      "lt": "Kaip Naudoti SES Šablonus",
+      "pt": "Como Usar os Modelos SES",
+      "it": "Come Usare i Modelli SES",
+      "no": "Hvordan Bruke SES-maler",
+      "el": "Πώς να Χρησιμοποιήσετε Πρότυπα SES"
     },
     "common.labels.templatesesguidewhatistitle": {
-      "en": "template_ses_guide_what_is_title",
-      "es": "template_ses_guide_what_is_title",
-      "fr": "template_ses_guide_what_is_title",
-      "de": "template_ses_guide_what_is_title",
-      "lt": "template_ses_guide_what_is_title",
-      "pt": "template_ses_guide_what_is_title",
-      "it": "template_ses_guide_what_is_title",
-      "no": "template_ses_guide_what_is_title",
-      "el": "template_ses_guide_what_is_title"
+      "en": "What are SES Templates?",
+      "es": "¿Qué son las Plantillas SES?",
+      "fr": "Que sont les Modèles SES ?",
+      "de": "Was sind SES-Vorlagen?",
+      "lt": "Kas yra SES Šablonai?",
+      "pt": "O que são Modelos SES?",
+      "it": "Cosa sono i Modelli SES?",
+      "no": "Hva er SES-maler?",
+      "el": "Τι είναι τα Πρότυπα SES;"
     },
     "common.labels.time": {
       "en": "Time",
@@ -635,8 +635,8 @@
       "lt": "Laikotarpis",
       "pt": "Período",
       "it": "Periodo",
-      "no": "Timeframe",
-      "el": "Timeframe"
+      "no": "Tidsramme",
+      "el": "Χρονικό Πλαίσιο"
     },
     "common.labels.title": {
       "en": "Title",
@@ -646,7 +646,7 @@
       "lt": "Pavadinimas",
       "pt": "Título",
       "it": "Titolo",
-      "no": "Title",
+      "no": "Tittel",
       "el": "Τίτλος"
     },
     "common.labels.type": {
@@ -658,7 +658,7 @@
       "pt": "Tipo",
       "it": "Tipo",
       "no": "Type",
-      "el": "Πληκτρολογήστε"
+      "el": "Τύπος"
     },
     "common.labels.unit": {
       "en": "Unit",
@@ -668,8 +668,8 @@
       "lt": "Vienetas",
       "pt": "Unidade",
       "it": "Unità",
-      "no": "Unit",
-      "el": "Unit"
+      "no": "Enhet",
+      "el": "Μονάδα"
     },
     "common.labels.validation_notes": {
       "en": "Validation Notes:",
@@ -679,8 +679,8 @@
       "lt": "Patvirtinimo pastabos:",
       "pt": "Notas de Validação:",
       "it": "Note di Validazione:",
-      "no": "Validation Notes:",
-      "el": "Επικύρωση Notes:"
+      "no": "Valideringsnotater:",
+      "el": "Σημειώσεις Επικύρωσης:"
     },
     "common.labels.value": {
       "en": "Value",
@@ -690,7 +690,7 @@
       "lt": "Vertė",
       "pt": "Valor",
       "it": "Valore",
-      "no": "Value",
+      "no": "Verdi",
       "el": "Τιμή"
     },
     "common.labels.version": {
@@ -705,125 +705,147 @@
       "el": "Έκδοση"
     },
     "loop connections": {
-      "en": "loop connections",
-      "es": "loop connections",
-      "fr": "loop connections",
-      "de": "loop connections",
-      "lt": "loop connections",
-      "pt": "loop connections",
-      "it": "loop connections",
-      "no": "loop connections",
-      "el": "loop connections"
+      "en": "Loop Connections",
+      "es": "Conexiones de Bucle",
+      "fr": "Connexions de Boucle",
+      "de": "Schleifenverbindungen",
+      "lt": "Ciklo Jungtys",
+      "pt": "Conexões de Loop",
+      "it": "Connessioni di Loop",
+      "no": "Løkkeforbindelser",
+      "el": "Συνδέσεις Βρόχου"
     },
     "common.labels.es_type": {
-      "en": "Es type",
-      "lt": "Es type",
-      "es": "Es type",
-      "fr": "Es type",
-      "de": "Es type",
-      "it": "Es type",
-      "pt": "Es type",
-      "el": "Es type",
-      "no": "Es type"
+      "en": "ES Type",
+      "lt": "ES Tipas",
+      "es": "Tipo de SE",
+      "fr": "Type de SE",
+      "de": "ÖS-Typ",
+      "it": "Tipo di SE",
+      "pt": "Tipo de SE",
+      "el": "Τύπος ΟΥ",
+      "no": "ØT-type"
     },
     "common.labels.process_type": {
       "en": "Process type",
-      "lt": "Process type",
-      "es": "Process type",
-      "fr": "Process type",
-      "de": "Process type",
-      "it": "Process type",
-      "pt": "Process type",
-      "el": "Process type",
-      "no": "Process type"
+      "lt": "Proceso tipas",
+      "es": "Tipo de proceso",
+      "fr": "Type de processus",
+      "de": "Prozesstyp",
+      "it": "Tipo di processo",
+      "pt": "Tipo de processo",
+      "el": "Τύπος διαδικασίας",
+      "no": "Prosesstype"
     },
     "common.labels.pressure_type": {
       "en": "Pressure type",
-      "lt": "Pressure type",
-      "es": "Pressure type",
-      "fr": "Pressure type",
-      "de": "Pressure type",
-      "it": "Pressure type",
-      "pt": "Pressure type",
-      "el": "Pressure type",
-      "no": "Pressure type"
+      "lt": "Spaudimo tipas",
+      "es": "Tipo de presión",
+      "fr": "Type de pression",
+      "de": "Druckart",
+      "it": "Tipo di pressione",
+      "pt": "Tipo de pressão",
+      "el": "Τύπος πίεσης",
+      "no": "Trykktype"
     },
     "common.labels.driver_type": {
       "en": "Driver type",
-      "lt": "Driver type",
-      "es": "Driver type",
-      "fr": "Driver type",
-      "de": "Driver type",
-      "it": "Driver type",
-      "pt": "Driver type",
-      "el": "Driver type",
-      "no": "Driver type"
+      "lt": "Varomosios jėgos tipas",
+      "es": "Tipo de impulsor",
+      "fr": "Type de facteur",
+      "de": "Treibertyp",
+      "it": "Tipo di fattore",
+      "pt": "Tipo de fator",
+      "el": "Τύπος κινητήριας δύναμης",
+      "no": "Drivertype"
     },
     "common.labels.stakeholder_type": {
       "en": "Stakeholder type",
-      "lt": "Suinteresuotoji šalis type",
-      "es": "Interesado type",
-      "fr": "Partie prenante type",
-      "de": "Stakeholder type",
-      "it": "Stakeholder type",
-      "pt": "Parte interessada type",
-      "el": "Ενδιαφερόμενος type",
-      "no": "Interessent type"
+      "lt": "Suinteresuotosios šalies tipas",
+      "es": "Tipo de parte interesada",
+      "fr": "Type de partie prenante",
+      "de": "Stakeholder-Typ",
+      "it": "Tipo di parte interessata",
+      "pt": "Tipo de parte interessada",
+      "el": "Τύπος ενδιαφερόμενου",
+      "no": "Interessenttype"
     },
     "common.labels.contact_persondetails": {
-      "en": "Contact persondetails",
-      "lt": "Contact persondetails",
-      "es": "Contact persondetails",
-      "fr": "Contact persondetails",
-      "de": "Contact persondetails",
-      "it": "Contact persondetails",
-      "pt": "Contact persondetails",
-      "el": "Contact persondetails",
-      "no": "Contact persondetails"
+      "en": "Contact person details",
+      "lt": "Kontaktinio asmens duomenys",
+      "es": "Datos de la persona de contacto",
+      "fr": "Coordonnées du contact",
+      "de": "Kontaktpersonendetails",
+      "it": "Dettagli della persona di contatto",
+      "pt": "Detalhes da pessoa de contato",
+      "el": "Στοιχεία υπεύθυνου επικοινωνίας",
+      "no": "Kontaktpersondetaljer"
     },
     "common.labels.plannedcompleted_date": {
-      "en": "Plannedcompleted date",
-      "lt": "Plannedcompleted date",
-      "es": "Plannedcompleted date",
-      "fr": "Plannedcompleted date",
-      "de": "Plannedcompleted date",
-      "it": "Plannedcompleted date",
-      "pt": "Plannedcompleted date",
-      "el": "Plannedcompleted date",
-      "no": "Plannedcompleted date"
+      "en": "Planned/completed date",
+      "lt": "Planuota/užbaigta data",
+      "es": "Fecha planificada/completada",
+      "fr": "Date prévue/achevée",
+      "de": "Geplantes/abgeschlossenes Datum",
+      "it": "Data pianificata/completata",
+      "pt": "Data planeada/concluída",
+      "el": "Προγραμματισμένη/ολοκληρωμένη ημερομηνία",
+      "no": "Planlagt/fullført dato"
     },
     "common.labels.outcomesnotes": {
-      "en": "Outcomesnotes",
-      "lt": "Outcomesnotes",
-      "es": "Outcomesnotes",
-      "fr": "Outcomesnotes",
-      "de": "Outcomesnotes",
-      "it": "Outcomesnotes",
-      "pt": "Outcomesnotes",
-      "el": "Outcomesnotes",
-      "no": "Outcomesnotes"
+      "en": "Outcomes/notes",
+      "lt": "Rezultatai/pastabos",
+      "es": "Resultados/notas",
+      "fr": "Résultats/notes",
+      "de": "Ergebnisse/Notizen",
+      "it": "Esiti/note",
+      "pt": "Resultados/notas",
+      "el": "Αποτελέσματα/σημειώσεις",
+      "no": "Resultater/notater"
     },
     "common.labels.communication_type": {
       "en": "Communication type",
-      "lt": "Communication type",
-      "es": "Communication type",
-      "fr": "Communication type",
-      "de": "Communication type",
-      "it": "Communication type",
-      "pt": "Communication type",
-      "el": "Communication type",
-      "no": "Communication type"
+      "lt": "Komunikacijos tipas",
+      "es": "Tipo de comunicación",
+      "fr": "Type de communication",
+      "de": "Kommunikationstyp",
+      "it": "Tipo di comunicazione",
+      "pt": "Tipo de comunicação",
+      "el": "Τύπος επικοινωνίας",
+      "no": "Kommunikasjonstype"
     },
     "common.labels.note": {
       "en": "Note",
-      "lt": "Note",
-      "es": "Note",
+      "lt": "Pastaba",
+      "es": "Nota",
       "fr": "Note",
-      "de": "Note",
-      "it": "Note",
-      "pt": "Note",
-      "el": "Note",
-      "no": "Note"
+      "de": "Anmerkung",
+      "it": "Nota",
+      "pt": "Nota",
+      "el": "Σημείωση",
+      "no": "Merknad"
+    },
+    "common.labels.on": {
+      "en": "ON",
+      "es": "SÍ",
+      "fr": "OUI",
+      "de": "EIN",
+      "lt": "ĮJ.",
+      "pt": "SIM",
+      "it": "SÌ",
+      "no": "PÅ",
+      "el": "ΝΑΙ"
+    },
+    "common.labels.off": {
+      "en": "OFF",
+      "es": "NO",
+      "fr": "NON",
+      "de": "AUS",
+      "lt": "NE",
+      "pt": "NÃO",
+      "it": "NO",
+      "no": "AV",
+      "el": "ΟΧΙ"
     }
   }
 }

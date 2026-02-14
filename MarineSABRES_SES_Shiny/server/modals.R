@@ -83,7 +83,8 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
       lt = "Keičiama Kalba",
       pt = "Mudando Idioma",
       it = "Cambio Lingua",
-      no = "Endrer Språk"
+      no = "Endrer Språk",
+      el = "Αλλαγή Γλώσσας"
     )
 
     session$sendCustomMessage(
@@ -186,7 +187,7 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
             inputId = "autosave_notifications",
             label = i18n$t("ui.modals.autosave_show_notifications"),
             value = if (!is.null(autosave_notifications)) autosave_notifications() else FALSE,
-            onLabel = "ON", offLabel = "OFF",
+            onLabel = i18n$t("common.labels.on"), offLabel = i18n$t("common.labels.off"),
             onStatus = "info", offStatus = "secondary",
             size = "small", inline = TRUE
           ),
@@ -205,7 +206,7 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
             inputId = "autosave_indicator",
             label = i18n$t("ui.modals.autosave_show_indicator"),
             value = if (!is.null(autosave_indicator)) autosave_indicator() else TRUE,
-            onLabel = "ON", offLabel = "OFF",
+            onLabel = i18n$t("common.labels.on"), offLabel = i18n$t("common.labels.off"),
             onStatus = "success", offStatus = "secondary",
             size = "small", inline = TRUE
           ),
@@ -348,7 +349,7 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
         shinyWidgets::switchInput(
           inputId = "local_autosave_enabled",
           label = i18n$t("ui.modals.auto_save_to_local"),
-          value = FALSE, onLabel = "ON", offLabel = "OFF",
+          value = FALSE, onLabel = i18n$t("common.labels.on"), offLabel = i18n$t("common.labels.off"),
           onStatus = "success", offStatus = "secondary",
           size = "small", inline = TRUE
         ),
@@ -369,7 +370,7 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
       shinyWidgets::switchInput(
         inputId = "debug_mode",
         label = tags$strong(i18n$t("ui.modals.debug_logging")),
-        value = FALSE, onLabel = "ON", offLabel = "OFF",
+        value = FALSE, onLabel = i18n$t("common.labels.on"), offLabel = i18n$t("common.labels.off"),
         onStatus = "warning", offStatus = "secondary",
         size = "default", width = "100%"
       ),
@@ -389,7 +390,10 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
       radioButtons(
         inputId = "ses_models_source",
         label = i18n$t("ui.modals.ses_models_source_label"),
-        choices = list("Default (Application Directory)" = "default", "Custom Directory" = "custom"),
+        choices = setNames(
+          c("default", "custom"),
+          c(i18n$t("ui.modals.ses_models_default_directory"), i18n$t("ui.modals.ses_models_custom_directory"))
+        ),
         selected = if (!is.null(ses_models_directory) && !is.null(ses_models_directory()) && nzchar(ses_models_directory())) "custom" else "default",
         width = "100%"
       ),
@@ -431,7 +435,7 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
           if (!is.null(ses_models_directory) && !is.null(ses_models_directory()) && nzchar(ses_models_directory()))
             ses_models_directory()
           else
-            "SESModels (relative to app directory)"
+            i18n$t("ui.modals.ses_models_default_path")
         )
       )
     )

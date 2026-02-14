@@ -73,7 +73,7 @@ setup_bookmarking <- function(input, output, session, project_data, user_level,
 
     # Show bookmark modal with URL
     showModal(modalDialog(
-      title = tags$h3(icon("bookmark"), " Bookmark Created"),
+      title = tags$h3(icon("bookmark"), " ", session_i18n$t("ui.modals.bookmark_created")),
       size = "l",
       easyClose = TRUE,
       footer = modalButton(session_i18n$t("common.buttons.close")),
@@ -81,8 +81,8 @@ setup_bookmarking <- function(input, output, session, project_data, user_level,
       tags$div(
         style = "padding: 20px;",
 
-        tags$h4(icon("check-circle"), " Your bookmark has been created!"),
-        tags$p("Copy the URL below to save your current application state:"),
+        tags$h4(icon("check-circle"), " ", session_i18n$t("ui.modals.bookmark_success")),
+        tags$p(session_i18n$t("ui.modals.bookmark_copy_instruction")),
 
         tags$div(
           class = "well",
@@ -97,38 +97,69 @@ setup_bookmarking <- function(input, output, session, project_data, user_level,
           )
         ),
 
-        tags$button(
-          id = "copy_bookmark_btn",
-          class = "btn btn-primary btn-block",
-          icon("copy"),
-          " Copy URL to Clipboard",
-          onclick = "
-            var textarea = document.getElementById('bookmark_url');
-            textarea.select();
-            document.execCommand('copy');
-            $(this).html('<i class=\"fa fa-check\"></i> Copied!');
-            setTimeout(() => {
-              $(this).html('<i class=\"fa fa-copy\"></i> Copy URL to Clipboard');
-            }, 2000);
-          "
-        ),
+        local({
+          # Prepare translated strings for injection into JavaScript
+          copied_text <- session_i18n$t("common.buttons.copied")
+          copy_text <- session_i18n$t("ui.modals.bookmark_copy_url")
+          js_safe <- function(txt) {
+            raw <- jsonlite::toJSON(txt, auto_unbox = TRUE)
+            substr(raw, 2, nchar(raw) - 1)
+          }
+          js_copied <- js_safe(copied_text)
+          js_copy <- js_safe(copy_text)
+
+          tags$button(
+            id = "copy_bookmark_btn",
+            class = "btn btn-primary btn-block",
+            icon("copy"),
+            " ", copy_text,
+            onclick = sprintf("
+              var btn = this;
+              var text = document.getElementById('bookmark_url').value;
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                  $(btn).html('<i class=\"fa fa-check\"></i> %s');
+                  setTimeout(function() {
+                    $(btn).html('<i class=\"fa fa-copy\"></i> %s');
+                  }, 2000);
+                }, function() {
+                  var textarea = document.getElementById('bookmark_url');
+                  textarea.select();
+                  document.execCommand('copy');
+                  $(btn).html('<i class=\"fa fa-check\"></i> %s');
+                  setTimeout(function() {
+                    $(btn).html('<i class=\"fa fa-copy\"></i> %s');
+                  }, 2000);
+                });
+              } else {
+                var textarea = document.getElementById('bookmark_url');
+                textarea.select();
+                document.execCommand('copy');
+                $(btn).html('<i class=\"fa fa-check\"></i> %s');
+                setTimeout(function() {
+                  $(btn).html('<i class=\"fa fa-copy\"></i> %s');
+                }, 2000);
+              }
+            ", js_copied, js_copy, js_copied, js_copy, js_copied, js_copy)
+          )
+        }),
 
         tags$hr(),
 
         tags$div(
           class = "alert alert-info",
           icon("info-circle"),
-          tags$strong(" Note: "),
-          "This bookmark saves your current view and settings. To save your complete project data, use the 'Save Project' button in the sidebar."
+          tags$strong(" ", session_i18n$t("common.labels.note"), ": "),
+          session_i18n$t("ui.modals.bookmark_note")
         ),
 
-        tags$h5("What's saved in this bookmark:"),
+        tags$h5(session_i18n$t("ui.modals.bookmark_saved_items")),
         tags$ul(
-          tags$li("Current tab/page location"),
-          tags$li("User experience level"),
-          tags$li("Language preference"),
-          tags$li("Auto-save settings"),
-          tags$li("Selected demonstration area and focal issue")
+          tags$li(session_i18n$t("ui.modals.bookmark_tab_location")),
+          tags$li(session_i18n$t("ui.modals.bookmark_experience_level")),
+          tags$li(session_i18n$t("ui.modals.bookmark_language")),
+          tags$li(session_i18n$t("ui.modals.bookmark_autosave")),
+          tags$li(session_i18n$t("ui.modals.bookmark_demo_area"))
         )
       )
     ))

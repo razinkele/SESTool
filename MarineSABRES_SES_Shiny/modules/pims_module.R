@@ -3,7 +3,7 @@
 # Placeholder implementations - to be expanded
 
 # Libraries loaded in global.R: shiny, DT
-source("constants.R", local = TRUE)
+# REMOVED: source("constants.R", local = TRUE) - already sourced in global.R
 
 # ============================================================================
 # PROJECT SETUP MODULE

@@ -4,8 +4,7 @@
 
 # Libraries loaded in global.R: shiny, shinyjs, readxl
 
-# Source the tabbed connection review module (organized by DAPSI(W)R(M) stages)
-source("modules/connection_review_tabbed.R", local = TRUE)
+# NOTE: connection_review_tabbed.R is sourced globally in global.R
 
 # ============================================================================
 # UI FUNCTION
@@ -15,8 +14,6 @@ import_data_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    useShinyjs(),
-
     # Custom CSS (using constants from constants.R)
     tags$head(
       tags$style(HTML(sprintf("
@@ -97,8 +94,8 @@ import_data_ui <- function(id, i18n) {
           fileInput(ns("excel_file"),
                     i18n$t("modules.import.data.choose_excel_file"),
                     accept = c(".xlsx", ".xls"),
-                    buttonLabel = "Browse...",
-                    placeholder = "No file selected")
+                    buttonLabel = i18n$t("common.buttons.browse"),
+                    placeholder = i18n$t("common.messages.no_file_selected"))
         ),
         column(6,
           br(),

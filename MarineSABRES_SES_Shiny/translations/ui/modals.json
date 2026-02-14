@@ -20,8 +20,8 @@
       "lt": "Pritaikyti Pakeitimus",
       "pt": "Aplicar Alterações",
       "it": "Applica Modifiche",
-      "no": "Apply Changes",
-      "el": "Εφαρμογή Changes"
+      "no": "Bruk endringer",
+      "el": "Εφαρμογή Αλλαγών"
     },
     "ui.modals.beginner_friendly_guides": {
       "en": "Beginner-Friendly Guides",
@@ -31,8 +31,8 @@
       "lt": "Pradedantiesiems Skirti Vadovai",
       "pt": "Guias para Iniciantes",
       "it": "Guide per Principianti",
-      "no": "Beginner-Friendly Guides",
-      "el": "Beginner-Friendly Guides"
+      "no": "Nybegynnervennlige guider",
+      "el": "Οδηγοί για Αρχάριους"
     },
     "ui.modals.complete_user_manuals": {
       "en": "Complete User Manuals",
@@ -43,7 +43,7 @@
       "pt": "Manuais de Usuário Completos",
       "it": "Manuali Utente Completi",
       "no": "Fullstendige brukermanualer",
-      "el": "Ολοκληρώθηκε Χρήστης Manuals"
+      "el": "Πλήρη Εγχειρίδια Χρήστη"
     },
     "ui.modals.confirm_start_over": {
       "en": "Confirm Start Over",
@@ -53,8 +53,8 @@
       "lt": "Patvirtinkite Pradėti iš naujo",
       "pt": "Confirme o recomeço",
       "it": "Conferma Ricomincia",
-      "no": "Confirm Start Over",
-      "el": "Επιβεβαίωση Έναρξη Over"
+      "no": "Bekreft start på nytt",
+      "el": "Επιβεβαίωση Νέας Έναρξης"
     },
     "ui.modals.confirm_title": {
       "en": "Confirm Action",
@@ -64,8 +64,8 @@
       "lt": "Patvirtinti veiksmą",
       "pt": "Confirmar Ação",
       "it": "Conferma Azione",
-      "no": "Confirm Action",
-      "el": "Επιβεβαίωση Action"
+      "no": "Bekreft handling",
+      "el": "Επιβεβαίωση Ενέργειας"
     },
     "ui.modals.delete_confirm_message": {
       "en": "Are you sure you want to delete this item? This action cannot be undone.",
@@ -75,8 +75,8 @@
       "lt": "Ar tikrai norite ištrinti šį elementą? Šio veiksmo negalima atšaukti.",
       "pt": "Tem certeza de que deseja excluir este item? Esta ação não pode ser desfeita.",
       "it": "Sei sicuro di voler eliminare questo elemento? Questa azione non può essere annullata.",
-      "no": "Are you sure you want to delete this item? This action cannot be undone.",
-      "el": "Είστε σίγουροι you want to delete this item? This action cannot be undone."
+      "no": "Er du sikker på at du vil slette dette elementet? Denne handlingen kan ikke angres.",
+      "el": "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το στοιχείο; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
     },
     "ui.modals.download_user_manuals_guides": {
       "en": "Download User Manuals & Guides",
@@ -87,7 +87,7 @@
       "pt": "Baixar Manuais e Guias do Usuário",
       "it": "Scarica Manuali e Guide Utente",
       "no": "Last ned brukermanualer og guider",
-      "el": "Λήψη Χρήστης Manuals & Guides"
+      "el": "Λήψη Εγχειριδίων & Οδηγών Χρήστη"
     },
     "ui.modals.downloadprint": {
       "en": "Download/Print",
@@ -339,8 +339,8 @@
       "lt": "Neišsaugoti pakeitimai",
       "pt": "Alterações Não Salvas",
       "it": "Modifiche Non Salvate",
-      "no": "Unsaved Changes",
-      "el": "Unsaved Changes"
+      "no": "Ulagrede endringer",
+      "el": "Μη Αποθηκευμένες Αλλαγές"
     },
     "ui.modals.view_online": {
       "en": "View online",
@@ -1454,6 +1454,160 @@
     },
     "ui.modals.error_listing_files": {
       "en": "Error listing files: "
+    },
+    "ui.modals.bookmark_created": {
+      "en": "Bookmark Created",
+      "es": "Marcador Creado",
+      "fr": "Signet Créé",
+      "de": "Lesezeichen Erstellt",
+      "lt": "Žymė Sukurta",
+      "pt": "Marcador Criado",
+      "it": "Segnalibro Creato",
+      "no": "Bokmerke Opprettet",
+      "el": "Ο σελιδοδείκτης δημιουργήθηκε"
+    },
+    "ui.modals.bookmark_success": {
+      "en": "Your bookmark has been created!",
+      "es": "¡Su marcador ha sido creado!",
+      "fr": "Votre signet a été créé !",
+      "de": "Ihr Lesezeichen wurde erstellt!",
+      "lt": "Jūsų žymė sukurta!",
+      "pt": "Seu marcador foi criado!",
+      "it": "Il tuo segnalibro è stato creato!",
+      "no": "Ditt bokmerke er opprettet!",
+      "el": "Ο σελιδοδείκτης σας δημιουργήθηκε!"
+    },
+    "ui.modals.bookmark_copy_instruction": {
+      "en": "Copy the URL below to save your current application state:",
+      "es": "Copie la URL a continuación para guardar el estado actual de la aplicación:",
+      "fr": "Copiez l'URL ci-dessous pour sauvegarder l'état actuel de l'application :",
+      "de": "Kopieren Sie die URL unten, um den aktuellen Anwendungsstatus zu speichern:",
+      "lt": "Nukopijuokite žemiau esančią URL, kad išsaugotumėte dabartinę programos būseną:",
+      "pt": "Copie a URL abaixo para salvar o estado atual da aplicação:",
+      "it": "Copia l'URL qui sotto per salvare lo stato attuale dell'applicazione:",
+      "no": "Kopier URL-en nedenfor for å lagre gjeldende applikasjonstilstand:",
+      "el": "Αντιγράψτε το URL παρακάτω για να αποθηκεύσετε την τρέχουσα κατάσταση:"
+    },
+    "ui.modals.bookmark_copy_url": {
+      "en": "Copy URL to Clipboard",
+      "es": "Copiar URL al Portapapeles",
+      "fr": "Copier l'URL dans le Presse-papiers",
+      "de": "URL in Zwischenablage kopieren",
+      "lt": "Kopijuoti URL į iškarpinę",
+      "pt": "Copiar URL para a Área de Transferência",
+      "it": "Copia URL negli Appunti",
+      "no": "Kopier URL til utklippstavlen",
+      "el": "Αντιγραφή URL στο πρόχειρο"
+    },
+    "ui.modals.bookmark_note": {
+      "en": "This bookmark saves your current view and settings. To save your complete project data, use the 'Save Project' button in the sidebar.",
+      "es": "Este marcador guarda su vista y configuración actuales. Para guardar los datos completos del proyecto, use el botón 'Guardar Proyecto' en la barra lateral.",
+      "fr": "Ce signet enregistre votre vue et vos paramètres actuels. Pour sauvegarder les données complètes du projet, utilisez le bouton 'Sauvegarder le Projet' dans la barre latérale.",
+      "de": "Dieses Lesezeichen speichert Ihre aktuelle Ansicht und Einstellungen. Um Ihre vollständigen Projektdaten zu speichern, verwenden Sie die Schaltfläche 'Projekt speichern' in der Seitenleiste.",
+      "lt": "Ši žymė išsaugo jūsų dabartinį rodinį ir nustatymus. Norėdami išsaugoti visus projekto duomenis, naudokite mygtuką 'Išsaugoti projektą' šoninėje juostoje.",
+      "pt": "Este marcador salva sua visualização e configurações atuais. Para salvar os dados completos do projeto, use o botão 'Salvar Projeto' na barra lateral.",
+      "it": "Questo segnalibro salva la vista e le impostazioni correnti. Per salvare i dati completi del progetto, usa il pulsante 'Salva Progetto' nella barra laterale.",
+      "no": "Dette bokmerket lagrer din nåværende visning og innstillinger. For å lagre fullstendige prosjektdata, bruk 'Lagre prosjekt'-knappen i sidepanelet.",
+      "el": "Αυτός ο σελιδοδείκτης αποθηκεύει την τρέχουσα προβολή και τις ρυθμίσεις σας."
+    },
+    "ui.modals.bookmark_saved_items": {
+      "en": "What's saved in this bookmark:",
+      "es": "Lo que se guarda en este marcador:",
+      "fr": "Ce qui est enregistré dans ce signet :",
+      "de": "Was in diesem Lesezeichen gespeichert ist:",
+      "lt": "Kas išsaugota šioje žymėje:",
+      "pt": "O que é salvo neste marcador:",
+      "it": "Cosa viene salvato in questo segnalibro:",
+      "no": "Hva som er lagret i dette bokmerket:",
+      "el": "Τι αποθηκεύεται σε αυτόν τον σελιδοδείκτη:"
+    },
+    "ui.modals.bookmark_tab_location": {
+      "en": "Current tab/page location",
+      "es": "Ubicación actual de pestaña/página",
+      "fr": "Emplacement actuel de l'onglet/page",
+      "de": "Aktuelle Tab-/Seitenposition",
+      "lt": "Dabartinė skirtuko/puslapio vieta",
+      "pt": "Localização atual da aba/página",
+      "it": "Posizione corrente della scheda/pagina",
+      "no": "Gjeldende fane-/sideplassering",
+      "el": "Τρέχουσα θέση καρτέλας/σελίδας"
+    },
+    "ui.modals.bookmark_experience_level": {
+      "en": "User experience level",
+      "es": "Nivel de experiencia del usuario",
+      "fr": "Niveau d'expérience utilisateur",
+      "de": "Benutzer-Erfahrungsstufe",
+      "lt": "Vartotojo patirties lygis",
+      "pt": "Nível de experiência do usuário",
+      "it": "Livello di esperienza utente",
+      "no": "Brukeropplevelsesnivå",
+      "el": "Επίπεδο εμπειρίας χρήστη"
+    },
+    "ui.modals.bookmark_language": {
+      "en": "Language preference",
+      "es": "Preferencia de idioma",
+      "fr": "Préférence de langue",
+      "de": "Spracheinstellung",
+      "lt": "Kalbos nuostata",
+      "pt": "Preferência de idioma",
+      "it": "Preferenza di lingua",
+      "no": "Språkpreferanse",
+      "el": "Προτίμηση γλώσσας"
+    },
+    "ui.modals.bookmark_autosave": {
+      "en": "Auto-save settings",
+      "es": "Configuración de guardado automático",
+      "fr": "Paramètres de sauvegarde automatique",
+      "de": "Auto-Speicher-Einstellungen",
+      "lt": "Automatinio išsaugojimo nustatymai",
+      "pt": "Configurações de salvamento automático",
+      "it": "Impostazioni di salvataggio automatico",
+      "no": "Innstillinger for automatisk lagring",
+      "el": "Ρυθμίσεις αυτόματης αποθήκευσης"
+    },
+    "ui.modals.bookmark_demo_area": {
+      "en": "Selected demonstration area and focal issue",
+      "es": "Área de demostración seleccionada y tema focal",
+      "fr": "Zone de démonstration et sujet focal sélectionnés",
+      "de": "Ausgewähltes Demonstrationsgebiet und Schwerpunktthema",
+      "lt": "Pasirinkta demonstracinė zona ir pagrindinis klausimas",
+      "pt": "Área de demonstração selecionada e questão focal",
+      "it": "Area dimostrativa selezionata e questione focale",
+      "no": "Valgt demonstrasjonsområde og fokusområde",
+      "el": "Επιλεγμένη περιοχή επίδειξης και κεντρικό θέμα"
+    },
+    "ui.modals.ses_models_default_directory": {
+      "en": "Default (Application Directory)",
+      "es": "Predeterminado (Directorio de la Aplicación)",
+      "fr": "Par Défaut (Répertoire de l'Application)",
+      "de": "Standard (Anwendungsverzeichnis)",
+      "lt": "Numatytasis (Programos Katalogas)",
+      "pt": "Padrão (Diretório da Aplicação)",
+      "it": "Predefinito (Directory dell'Applicazione)",
+      "no": "Standard (Programkatalog)",
+      "el": "Προεπιλογή (Κατάλογος Εφαρμογής)"
+    },
+    "ui.modals.ses_models_custom_directory": {
+      "en": "Custom Directory",
+      "es": "Directorio Personalizado",
+      "fr": "Répertoire Personnalisé",
+      "de": "Benutzerdefiniertes Verzeichnis",
+      "lt": "Pasirinktinis Katalogas",
+      "pt": "Diretório Personalizado",
+      "it": "Directory Personalizzata",
+      "no": "Egendefinert Katalog",
+      "el": "Προσαρμοσμένος Κατάλογος"
+    },
+    "ui.modals.ses_models_default_path": {
+      "en": "SESModels (relative to app directory)",
+      "es": "SESModels (relativo al directorio de la aplicación)",
+      "fr": "SESModels (relatif au répertoire de l'application)",
+      "de": "SESModels (relativ zum Anwendungsverzeichnis)",
+      "lt": "SESModels (santykinai su programos katalogu)",
+      "pt": "SESModels (relativo ao diretório da aplicação)",
+      "it": "SESModels (relativo alla directory dell'applicazione)",
+      "no": "SESModels (relativ til programkatalogen)",
+      "el": "SESModels (σχετικά με τον κατάλογο εφαρμογής)"
     }
   }
 }

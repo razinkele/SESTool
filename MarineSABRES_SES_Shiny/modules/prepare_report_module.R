@@ -118,7 +118,7 @@ prepare_report_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-prepare_report_server <- function(id, project_data_reactive, i18n) {
+prepare_report_server <- function(id, project_data_reactive, i18n, parent_session = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive values for storing report paths
@@ -128,6 +128,13 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
       word_report_path = NULL,
       ppt_report_path = NULL
     )
+
+    # Helper to clean up previous temp report files
+    cleanup_old_report <- function(old_path) {
+      if (!is.null(old_path) && nzchar(old_path) && file.exists(old_path)) {
+        tryCatch(unlink(old_path), error = function(e) debug_log(paste("Cleanup failed:", e$message), "REPORT"))
+      }
+    }
 
     # === REACTIVE MODULE HEADER ===
     output$module_header <- renderUI({
@@ -224,11 +231,15 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
 
     # Navigation links
     observeEvent(input$goto_loops, {
-      updateTabItems(session = session$parent, "sidebar_menu", "analysis_loops")
+      if (!is.null(parent_session)) {
+        updateTabItems(session = parent_session, "sidebar_menu", "analysis_loops")
+      }
     })
 
     observeEvent(input$goto_leverage, {
-      updateTabItems(session = session$parent, "sidebar_menu", "analysis_leverage")
+      if (!is.null(parent_session)) {
+        updateTabItems(session = parent_session, "sidebar_menu", "analysis_leverage")
+      }
     })
 
     # Report generation handlers
@@ -264,6 +275,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         rmd_file <- tempfile(fileext = ".Rmd")
         writeLines(report_md, rmd_file)
 
+        cleanup_old_report(rv$html_report_path)
         temp_file <- tempfile(fileext = ".html")
         rmarkdown::render(
           input = rmd_file,
@@ -272,6 +284,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
           quiet = TRUE
         )
         debug_log("Report rendered to HTML successfully", "REPORT")
+        unlink(rmd_file)
 
         # Copy to www directory so it can be served by Shiny
         www_dir <- file.path(getwd(), "www", "reports")
@@ -283,6 +296,11 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         report_filename <- paste0("report_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".html")
         www_file <- file.path(www_dir, report_filename)
         file.copy(temp_file, www_file, overwrite = TRUE)
+
+        # Clean up old reports (older than 1 hour)
+        old_reports <- list.files(www_dir, pattern = "\\.html$", full.names = TRUE)
+        old_reports <- old_reports[difftime(Sys.time(), file.mtime(old_reports), units = "hours") > 1]
+        if (length(old_reports) > 0) file.remove(old_reports)
 
         # Create relative URL for Shiny
         report_url <- paste0("reports/", report_filename)
@@ -383,6 +401,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         rmd_file <- tempfile(fileext = ".Rmd")
         writeLines(report_md, rmd_file)
 
+        cleanup_old_report(rv$pdf_report_path)
         temp_pdf <- tempfile(fileext = ".pdf")
         rmarkdown::render(
           input = rmd_file,
@@ -390,6 +409,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
           output_file = temp_pdf,
           quiet = FALSE
         )
+        unlink(rmd_file)
 
         showModal(modalDialog(
           title = i18n$t("modules.prepare.report.pdf_success"),
@@ -439,6 +459,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         # Check if officer package is available
         if (requireNamespace("officer", quietly = TRUE) && requireNamespace("flextable", quietly = TRUE)) {
 
+          cleanup_old_report(rv$word_report_path)
           temp_docx <- tempfile(fileext = ".docx")
 
           # Generate Word document
@@ -500,6 +521,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n) {
         # Check if officer package is available
         if (requireNamespace("officer", quietly = TRUE)) {
 
+          cleanup_old_report(rv$ppt_report_path)
           temp_pptx <- tempfile(fileext = ".pptx")
 
           # Generate PowerPoint presentation

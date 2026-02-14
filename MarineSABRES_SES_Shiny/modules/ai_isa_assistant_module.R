@@ -4,7 +4,7 @@
 
 # Load helper modules
 # NOTE: ai_isa_knowledge_base.R is now sourced globally in global.R
-source("modules/connection_review_tabbed.R", local = TRUE)
+# NOTE: connection_review_tabbed.R is sourced globally in global.R
 
 # Load AI ISA sub-modules
 source("modules/ai_isa/connection_generator.R", local = TRUE)
@@ -24,8 +24,6 @@ ai_isa_assistant_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    useShinyjs(),
-
     # External CSS (extracted from inline styles)
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "ai-isa-assistant.css"),
@@ -609,7 +607,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       rv$context
       rv$approved_connections
 
-      if (rv$auto_save_enabled && rv$current_step > 0) {
+      # Guard: only auto-save when enabled and past the initial step
+      req(rv$auto_save_enabled)
+      req(rv$current_step > 0)
+
+      isolate({
         # Debounce: only save if at least 2 seconds since last save
         current_time <- Sys.time()
         if (is.null(rv$last_save_time) ||
@@ -619,7 +621,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           session$sendCustomMessage("save_ai_isa_session", session_data)
           rv$last_save_time <- current_time
         }
-      }
+      })
     })
 
     # Render save status indicator
@@ -764,12 +766,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
       input_area_exec_count <<- input_area_exec_count + 1
 
-      debug_log(sprintf("\n++++++++++++++++++++++++++++++++++++++++\n"))
-      debug_log(sprintf("[AI ISA INPUT_AREA] EXECUTION #%d at %s\n", input_area_exec_count, Sys.time()))
-      debug_log(sprintf("[AI ISA INPUT_AREA] Current step: %d\n", rv$current_step))
-      debug_log(sprintf("[AI ISA INPUT_AREA] show_text_input: %s\n", rv$show_text_input))
-      debug_log(sprintf("[AI ISA INPUT_AREA] Render counter: %d\n", counter_val))
-      debug_log(sprintf("++++++++++++++++++++++++++++++++++++++++\n\n"))
+      debug_log(sprintf("EXECUTION #%d | step: %d | show_text: %s | counter: %d",
+                        input_area_exec_count, rv$current_step, rv$show_text_input, counter_val),
+                "AI ISA INPUT_AREA")
 
       if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
         step_info <- QUESTION_FLOW[[rv$current_step + 1]]
@@ -1259,30 +1258,25 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       quick_options_exec_count <<- quick_options_exec_count + 1
       current_step <- rv$current_step
 
-      debug_log(sprintf("\n========================================\n"))
-      debug_log(sprintf("[AI ISA QUICK] EXECUTION #%d at %s\n", quick_options_exec_count, Sys.time()))
-      debug_log(sprintf("[AI ISA QUICK] Current step: %d / %d\n", current_step, length(QUESTION_FLOW)))
-      debug_log(sprintf("[AI ISA QUICK] Render counter: %d\n", counter_val))
+      debug_log(sprintf("EXECUTION #%d | step: %d/%d | counter: %d",
+                        quick_options_exec_count, current_step, length(QUESTION_FLOW), counter_val),
+                "AI ISA QUICK")
 
       # Return NULL first to force complete DOM cleanup
       if (current_step < 0 || current_step >= length(QUESTION_FLOW)) {
-        debug_log(sprintf("[AI ISA QUICK] Returning NULL (step out of range)\n"))
-        debug_log(sprintf("========================================\n\n"))
         return(NULL)
       }
 
       # Use current step as suffix to ensure unique IDs and enable proper observers
       render_suffix <- paste0("_s", current_step)
-      debug_log(sprintf("[AI ISA QUICK] Using suffix: %s\n", render_suffix))
 
       step_info <- QUESTION_FLOW[[current_step + 1]]
-      debug_log(sprintf("[AI ISA QUICK] Step type: %s, target: %s\n", step_info$type, step_info$target))
+      debug_log(sprintf("Step type: %s, target: %s", step_info$type, step_info$target), "AI ISA QUICK")
 
       # Handle regional sea selection
       if (step_info$type == "choice_regional_sea") {
           # CRITICAL FIX: Exclude "other" since it's created separately below
           regional_seas_list <- setdiff(names(REGIONAL_SEAS), "other")
-          debug_log(sprintf("[AI ISA QUICK] Creating %d regional sea buttons (excluding 'other')\n", length(regional_seas_list)))
 
           regional_sea_buttons <- lapply(regional_seas_list, function(sea_key) {
             sea_info <- REGIONAL_SEAS[[sea_key]]
@@ -1292,7 +1286,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             is_selected <- !is.null(rv$context$regional_sea) && rv$context$regional_sea == sea_key
             button_class <- if (is_selected) "quick-option selected" else "quick-option"
 
-            debug_log(sprintf("[AI ISA QUICK]   Button ID: %s, Selected: %s\n", button_id, is_selected))
             actionButton(
               inputId = button_id,
               label = sea_info$name_i18n,
@@ -1303,10 +1296,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
           # Add "Other" button
           other_button_id <- session$ns(paste0("regional_sea_other", render_suffix))
-          debug_log(sprintf("[AI ISA QUICK] *** CREATING OTHER BUTTON ***\n"))
-          debug_log(sprintf("[AI ISA QUICK] *** ID: %s ***\n", other_button_id))
-          debug_log(sprintf("[AI ISA QUICK] *** EXEC COUNT: %d ***\n", quick_options_exec_count))
-          debug_log(sprintf("========================================\n\n"))
 
           other_button <- actionButton(
             inputId = other_button_id,
@@ -1412,11 +1401,6 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
         # Handle context-aware examples for DAPSI(W)R(M) elements
         else if (!is.null(step_info$use_context_examples) && step_info$use_context_examples) {
-          debug_log(sprintf("[AI ISA QUICK] Rendering context-aware suggestions for step %d, target: %s\n",
-                      rv$current_step, step_info$target))
-          debug_log(sprintf("[AI ISA QUICK] Context - regional_sea: %s, ecosystem: %s, issue: %s\n",
-                      rv$context$regional_sea, rv$context$ecosystem_type, rv$context$main_issue))
-
           suggestions <- get_context_suggestions(
             category = step_info$target,
             regional_sea = rv$context$regional_sea,
@@ -1424,16 +1408,18 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             main_issue = rv$context$main_issue
           )
 
-          debug_log(sprintf("[AI ISA QUICK] Got %d suggestions\n", length(suggestions)))
+          debug_log(sprintf("Context suggestions: %d for %s", length(suggestions), step_info$target),
+                    "AI ISA QUICK")
 
           if (length(suggestions) > 0) {
             # Limit to first 12 suggestions to avoid overwhelming UI
             display_suggestions <- if (length(suggestions) > 12) suggestions[1:12] else suggestions
 
+            # Pre-compute element names once (was inside lapply = O(n²))
+            element_names <- sapply(rv$elements[[step_info$target]], function(e) e$name)
+
             suggestion_buttons <- lapply(seq_along(display_suggestions), function(i) {
               suggestion_name <- display_suggestions[i]
-              # Check if this suggestion is already in the elements list
-              element_names <- sapply(rv$elements[[step_info$target]], function(e) e$name)
               is_selected <- suggestion_name %in% element_names
               button_class <- if (is_selected) "quick-option selected" else "quick-option"
 
@@ -1466,7 +1452,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # Show custom-added elements that aren't in suggestions
             custom_elements <- NULL
             if (!is.null(rv$elements[[step_info$target]]) && length(rv$elements[[step_info$target]]) > 0) {
-              element_names <- sapply(rv$elements[[step_info$target]], function(e) e$name)
+              # element_names already computed above
               custom_names <- setdiff(element_names, display_suggestions)
 
               if (length(custom_names) > 0) {

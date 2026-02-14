@@ -11,8 +11,8 @@ create_ses_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    useShinyjs(),
     # REMOVED: usei18n() - only called once in main UI (app.R)
+    # REMOVED: useShinyjs() - only called once in main UI (app.R)
 
     # Custom CSS for the Create SES interface
     tags$head(

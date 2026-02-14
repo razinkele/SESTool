@@ -14,8 +14,6 @@ graphical_ses_creator_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
-    useShinyjs(),
-
     # Custom CSS
     tags$head(
       tags$style(HTML("

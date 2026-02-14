@@ -10,8 +10,6 @@ ses_models_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    useShinyjs(),
-
     # Custom CSS
     tags$head(
       tags$style(HTML("
@@ -520,7 +518,13 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
 
         # Check if convert_excel_to_isa is available
         if (!exists("convert_excel_to_isa", mode = "function")) {
-          stop("convert_excel_to_isa function not found. Make sure excel_import_helpers.R is sourced.")
+          showNotification(
+            "convert_excel_to_isa function not found. Make sure excel_import_helpers.R is sourced.",
+            type = "error",
+            duration = 10
+          )
+          rv$loading <- FALSE
+          return()
         }
 
         isa_data <- convert_excel_to_isa(model_data$elements, model_data$connections)

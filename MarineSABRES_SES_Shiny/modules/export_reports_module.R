@@ -174,8 +174,8 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
 
       # Show progress
       showModal(modalDialog(
-        title = "Generating Report",
-        "Please wait while your report is being generated...",
+        title = i18n$t("modules.export.reports.generating_report"),
+        i18n$t("modules.export.reports.report_being_generated"),
         footer = NULL,
         easyClose = FALSE
       ))
@@ -263,9 +263,7 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
           if (!latex_available) {
             removeModal()
             showNotification(
-              paste("PDF generation requires LaTeX. Please install TinyTeX using:",
-                    "install.packages('tinytex'); tinytex::install_tinytex().",
-                    "Alternatively, generate an HTML report and print to PDF from your browser."),
+              i18n$t("modules.export.reports.pdf_requires_latex_full"),
               type = "error",
               duration = 15
             )
@@ -301,6 +299,11 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
           report_filename <- paste0("report_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".html")
           www_file <- file.path(www_dir, report_filename)
           file.copy(output_file, www_file, overwrite = TRUE)
+
+          # Clean up old reports (older than 1 hour)
+          old_reports <- list.files(www_dir, pattern = "\\.html$", full.names = TRUE)
+          old_reports <- old_reports[difftime(Sys.time(), file.mtime(old_reports), units = "hours") > 1]
+          if (length(old_reports) > 0) file.remove(old_reports)
 
           # Create relative URL for Shiny
           report_url <- paste0("reports/", report_filename)
@@ -386,8 +389,9 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
         )
       },
       content = function(file) {
-        # Implement data export logic
+        # Data export not yet implemented - write placeholder file
         showNotification(i18n$t("common.messages.data_export_not_implemented"), type = "warning")
+        writeLines("Data export is not yet implemented. Please use the Report generation feature instead.", file)
       }
     )
 
@@ -403,11 +407,12 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
         )
       },
       content = function(file) {
-        # Implement visualization export logic
+        # Visualization export not yet implemented - write placeholder file
         showNotification(
           "Visualization export not yet implemented",
           type = "warning"
         )
+        writeLines("Visualization export is not yet implemented.", file)
       }
     )
 

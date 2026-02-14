@@ -736,14 +736,15 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       })
 
       # Adaptive debounce timer - checks if enough time has passed since last change
+      # Only polls when a save is actually pending (event-driven start, self-stopping)
       observe({
-        # Re-check every 500ms
-        invalidateLater(500)
+        # Only start polling when a save is pending (reactive dependency)
+        req(debounce_state$pending_save)
+
+        # Re-check every 2s (debounce delays are 2-5s, so 2s check interval is sufficient)
+        invalidateLater(2000)
 
         isolate({
-          # Only process if a save is pending
-          if (!debounce_state$pending_save) return()
-
           # Check if enough time has passed since last change
           if (!is.null(debounce_state$last_change_time)) {
             time_since_change <- as.numeric(difftime(Sys.time(),
@@ -754,7 +755,7 @@ auto_save_server <- function(id, project_data_reactive, i18n,
 
             # If enough time has passed, trigger save
             if (time_since_change >= current_debounce) {
-              # Reset pending flag
+              # Reset pending flag (stops polling until next change event)
               debounce_state$pending_save <- FALSE
               debounce_state$last_change_time <- NULL
 
@@ -814,12 +815,15 @@ auto_save_server <- function(id, project_data_reactive, i18n,
     })
 
     # Update indicator display periodically to refresh "last saved X ago" text
+    # Only polls when auto-save is enabled and a save has been performed
     observe({
+      # Only poll when there is a saved status to display (reactive guard)
+      req(auto_save$is_enabled)
+      req(auto_save$save_status == "saved")
+
       invalidateLater(AUTOSAVE_INDICATOR_UPDATE_MS)
       isolate({
-        if (auto_save$save_status == "saved") {
-          updateSaveIndicator()
-        }
+        updateSaveIndicator()
       })
     })
 
@@ -957,20 +961,10 @@ auto_save_server <- function(id, project_data_reactive, i18n,
     })
 
     # Update indicator shortly after initialization to clear "Initializing..." message
-    # Use a flag to ensure this only runs once
-    indicator_initialized <- FALSE
-
-    observe({
-      if (!indicator_initialized) {
-        invalidateLater(100)  # 100ms delay
-        isolate({
-          if (!indicator_initialized) {
-            updateSaveIndicator()
-            updateModeIndicator(show = auto_save$is_enabled)
-            indicator_initialized <<- TRUE
-          }
-        })
-      }
+    # Use shinyjs::delay for one-shot deferred execution (no polling loop)
+    shinyjs::delay(100, {
+      updateSaveIndicator()
+      updateModeIndicator(show = auto_save$is_enabled)
     })
 
     # ========== GENERIC TUTORIAL INTEGRATION ==========

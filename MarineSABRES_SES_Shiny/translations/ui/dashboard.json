@@ -10,7 +10,7 @@
       "pt": "Ferramenta de Análise de Sistemas Sócio-Ecológicos MarineSABRES",
       "it": "Strumento di Analisi dei Sistemi Socio-Ecologici MarineSABRES",
       "no": "MarineSABRES-verktøy for analyse av sosial-økologiske systemer",
-      "el": "MarineSABRES Social-Ecological Systems Analysis Tool"
+      "el": "Εργαλείο Ανάλυσης Κοινωνικο-Οικολογικών Συστημάτων MarineSABRES"
     },
     "ui.dashboard.subtitle": {
       "en": "Welcome to the computer-assisted SES creation and analysis platform.",
@@ -21,7 +21,7 @@
       "pt": "Bem-vindo à plataforma de criação e análise de SES assistida por computador.",
       "it": "Benvenuto nella piattaforma di creazione e analisi SES assistita da computer.",
       "no": "Velkommen til den datastøttede plattformen for SES-opprettelse og analyse.",
-      "el": "Καλώς ήρθατε to the computer-assisted SES creation and analysis platform."
+      "el": "Καλώς ήρθατε στην πλατφόρμα δημιουργίας και ανάλυσης SES με υπολογιστική υποστήριξη."
     },
     "ui.dashboard.cld_generated": {
       "en": "CLD Generated:",
@@ -31,8 +31,8 @@
       "lt": "PKD sukurtas:",
       "pt": "DLC Gerado:",
       "it": "DCC Generato:",
-      "no": "CLD Generated:",
-      "el": "CLD Generated:"
+      "no": "CLD generert:",
+      "el": "CLD Δημιουργήθηκε:"
     },
     "ui.dashboard.complete": {
       "en": "Complete",
@@ -42,7 +42,7 @@
       "lt": "Baigta",
       "pt": "Completo",
       "it": "Completo",
-      "no": "Complete",
+      "no": "Fullført",
       "el": "Ολοκληρώθηκε"
     },
     "ui.dashboard.completion": {
@@ -53,8 +53,8 @@
       "lt": "Užbaigimas",
       "pt": "Conclusão",
       "it": "Completamento",
-      "no": "Completion",
-      "el": "Completion"
+      "no": "Fullføring",
+      "el": "Ολοκλήρωση"
     },
     "ui.dashboard.connections": {
       "en": "Connections",
@@ -64,7 +64,7 @@
       "lt": "Ryšiai",
       "pt": "Conexões",
       "it": "Connessioni",
-      "no": "Connections",
+      "no": "Forbindelser",
       "el": "Συνδέσεις"
     },
     "ui.dashboard.connections_defined": {
@@ -75,8 +75,8 @@
       "lt": "ryšiai apibrėžti",
       "pt": "conexões definidas",
       "it": "connessioni definite",
-      "no": "connections defined",
-      "el": "Συνδέσεις defined"
+      "no": "forbindelser definert",
+      "el": "συνδέσεις ορισμένες"
     },
     "ui.dashboard.created": {
       "en": "Created:",
@@ -86,8 +86,8 @@
       "lt": "Sukurta:",
       "pt": "Criado:",
       "it": "Creato:",
-      "no": "Created:",
-      "el": "Created:"
+      "no": "Opprettet:",
+      "el": "Δημιουργήθηκε:"
     },
     "ui.dashboard.dapsiwrm_elements": {
       "en": "DAPSI(W)R(M) Elements",
@@ -97,8 +97,8 @@
       "lt": "DAPSI(W)R(M) elementai",
       "pt": "Elementos DAPSI(W)R(M)",
       "it": "Elementi DAPSI(W)R(M)",
-      "no": "DAPSI(W)R(M) Elements",
-      "el": "DAPSI(W)R(M) Elements"
+      "no": "DAPSI(W)R(M)-elementer",
+      "el": "Στοιχεία DAPSI(W)R(M)"
     },
     "ui.dashboard.demonstration_area": {
       "en": "Demonstration Area:",
@@ -108,8 +108,8 @@
       "lt": "Demonstracinė sritis:",
       "pt": "Área de Demonstração:",
       "it": "Area di Dimostrazione:",
-      "no": "Demonstration Area:",
-      "el": "Demonstration Area:"
+      "no": "Demonstrasjonsområde:",
+      "el": "Περιοχή Επίδειξης:"
     },
     "ui.dashboard.ecosystem_services": {
       "en": "Ecosystem Services:",
@@ -119,8 +119,8 @@
       "lt": "Ekosistemų paslaugos:",
       "pt": "Serviços Ecossistêmicos:",
       "it": "Servizi Ecosistemici:",
-      "no": "Ecosystem Services:",
-      "el": "Οικοσύστημα Services:"
+      "no": "Økosystemtjenester:",
+      "el": "Οικοσυστημικές Υπηρεσίες:"
     },
     "ui.dashboard.edges_in_cld": {
       "en": "edges in CLD",
@@ -141,8 +141,8 @@
       "lt": "elementai sukurti",
       "pt": "elementos criados",
       "it": "elementi creati",
-      "no": "elements created",
-      "el": "Στοιχεία Δημιουργήθηκε"
+      "no": "elementer opprettet",
+      "el": "στοιχεία δημιουργήθηκαν"
     },
     "ui.dashboard.error_rendering_dashboard": {
       "en": "Error rendering dashboard:",
@@ -163,8 +163,8 @@
       "lt": "Pagrindinė problema:",
       "pt": "Questão Focal:",
       "it": "Questione Focale:",
-      "no": "Focal Issue:",
-      "el": "Focal Issue:"
+      "no": "Fokusområde:",
+      "el": "Κεντρικό Ζήτημα:"
     },
     "ui.dashboard.goods_benefits": {
       "en": "Goods & Benefits:",
@@ -174,8 +174,8 @@
       "lt": "Gėrybės ir naudos:",
       "pt": "Bens e Benefícios:",
       "it": "Beni e Benefici:",
-      "no": "Goods & Benefits:",
-      "el": "Αγαθά & Benefits:"
+      "no": "Goder og fordeler:",
+      "el": "Αγαθά & Οφέλη:"
     },
     "ui.dashboard.incomplete": {
       "en": "Incomplete",
@@ -185,8 +185,8 @@
       "lt": "Nebaigta",
       "pt": "Incompleto",
       "it": "Incompleto",
-      "no": "Incomplete",
-      "el": "Incomplete"
+      "no": "Ufullstendig",
+      "el": "Ελλιπές"
     },
     "ui.dashboard.last_modified": {
       "en": "Last Modified:",
@@ -196,8 +196,8 @@
       "lt": "Paskutinį kartą keista:",
       "pt": "Última Modificação:",
       "it": "Ultima Modifica:",
-      "no": "Last Modified:",
-      "el": "Τελευταίο Modified:"
+      "no": "Sist endret:",
+      "el": "Τελευταία Τροποποίηση:"
     },
     "ui.dashboard.loops_detected": {
       "en": "Loops Detected",
@@ -207,8 +207,8 @@
       "lt": "Aptikta ciklų",
       "pt": "Ciclos Detetados",
       "it": "Cicli Rilevati",
-      "no": "Loops Detected",
-      "el": "Loops Detected"
+      "no": "Sløyfer oppdaget",
+      "el": "Βρόχοι Ανιχνεύθηκαν"
     },
     "ui.dashboard.nodes_in_cld": {
       "en": "nodes in CLD",
@@ -229,8 +229,8 @@
       "lt": "Neapibrėžta",
       "pt": "Não definido",
       "it": "Non definito",
-      "no": "Not defined",
-      "el": "Not defined"
+      "no": "Ikke definert",
+      "el": "Μη καθορισμένο"
     },
     "ui.dashboard.not_set": {
       "en": "Not set",
@@ -240,8 +240,8 @@
       "lt": "Nenustatyta",
       "pt": "Não definido",
       "it": "Non impostato",
-      "no": "Not set",
-      "el": "Not set"
+      "no": "Ikke angitt",
+      "el": "Μη ορισμένο"
     },
     "ui.dashboard.pims_setup": {
       "en": "PIMS Setup:",
@@ -251,8 +251,8 @@
       "lt": "PIMS sąranka:",
       "pt": "Configuração PIMS:",
       "it": "Configurazione PIMS:",
-      "no": "PIMS Setup:",
-      "el": "PIMS Setup:"
+      "no": "PIMS-oppsett:",
+      "el": "Ρύθμιση PIMS:"
     },
     "ui.dashboard.project_id": {
       "en": "Project ID:",
@@ -262,8 +262,8 @@
       "lt": "Projekto ID:",
       "pt": "ID do Projeto:",
       "it": "ID Progetto:",
-      "no": "Project ID:",
-      "el": "Έργο ID:"
+      "no": "Prosjekt-ID:",
+      "el": "Αναγνωριστικό Έργου:"
     },
     "ui.dashboard.project_overview": {
       "en": "Project Overview",
@@ -274,7 +274,7 @@
       "pt": "Visão Geral do Projeto",
       "it": "Panoramica del Progetto",
       "no": "Prosjektoversikt",
-      "el": "Έργο Επισκόπηση"
+      "el": "Επισκόπηση Έργου"
     },
     "ui.dashboard.responses": {
       "en": "Responses:",
@@ -284,8 +284,8 @@
       "lt": "Atsakymai:",
       "pt": "Respostas:",
       "it": "Risposte:",
-      "no": "Responses:",
-      "el": "Responses:"
+      "no": "Responser:",
+      "el": "Αποκρίσεις:"
     },
     "ui.dashboard.states": {
       "en": "States:",
@@ -295,8 +295,8 @@
       "lt": "Būsenos:",
       "pt": "Estados:",
       "it": "Stati:",
-      "no": "States:",
-      "el": "States:"
+      "no": "Tilstander:",
+      "el": "Καταστάσεις:"
     },
     "ui.dashboard.status_summary": {
       "en": "Status Summary",
@@ -306,8 +306,8 @@
       "lt": "Būklės santrauka",
       "pt": "Resumo do Status",
       "it": "Riepilogo dello Stato",
-      "no": "Status Summary",
-      "el": "Κατάσταση Περίληψη"
+      "no": "Statussammendrag",
+      "el": "Περίληψη Κατάστασης"
     },
     "ui.dashboard.total_elements": {
       "en": "Total Elements",
@@ -317,8 +317,8 @@
       "lt": "Viso elementų",
       "pt": "Total de Elementos",
       "it": "Elementi Totali",
-      "no": "Total Elements",
-      "el": "Σύνολο Στοιχεία"
+      "no": "Totalt antall elementer",
+      "el": "Σύνολο Στοιχείων"
     },
     "ui.dashboard.isa_data_status": {
       "en": "ISA Data Status",
@@ -329,7 +329,7 @@
       "pt": "Status dos Dados ISA",
       "it": "Stato Dati ISA",
       "no": "ISA-datastatus",
-      "el": "ISA Data Status"
+      "el": "Κατάσταση Δεδομένων ISA"
     },
     "ui.dashboard.cld_status": {
       "en": "CLD Status",
@@ -340,7 +340,7 @@
       "pt": "Status do DLC",
       "it": "Stato DCC",
       "no": "CLD-status",
-      "el": "CLD Κατάσταση"
+      "el": "Κατάσταση CLD"
     },
     "ui.dashboard.analysis_status": {
       "en": "Analysis Status",
@@ -351,7 +351,7 @@
       "pt": "Status da Análise",
       "it": "Stato dell'Analisi",
       "no": "Analysestatus",
-      "el": "Ανάλυση Κατάσταση"
+      "el": "Κατάσταση Ανάλυσης"
     },
     "ui.dashboard.network_status": {
       "en": "Network Status",
@@ -362,7 +362,7 @@
       "pt": "Status da Rede",
       "it": "Stato della Rete",
       "no": "Nettverksstatus",
-      "el": "Δίκτυο Κατάσταση"
+      "el": "Κατάσταση Δικτύου"
     },
     "ui.dashboard.project_history": {
       "en": "Project History",
@@ -373,7 +373,7 @@
       "pt": "Histórico do Projeto",
       "it": "Cronologia del Progetto",
       "no": "Prosjekthistorikk",
-      "el": "Έργο History"
+      "el": "Ιστορικό Έργου"
     },
     "ui.dashboard.leverage_analysis_complete": {
       "en": "Leverage analysis complete",
@@ -528,6 +528,17 @@
       "it": "Nessun evento di progetto. Inizia a costruire il tuo SES!",
       "no": "Ingen prosjekthendelser ennå. Begynn å bygge din SES!",
       "el": "Δεν υπάρχουν γεγονότα έργου. Ξεκινήστε να χτίζετε το SES σας!"
+    },
+    "ui.dashboard.error": {
+      "en": "Error",
+      "es": "Error",
+      "fr": "Erreur",
+      "de": "Fehler",
+      "lt": "Klaida",
+      "pt": "Erro",
+      "it": "Errore",
+      "no": "Feil",
+      "el": "Σφάλμα"
     }
   }
 }

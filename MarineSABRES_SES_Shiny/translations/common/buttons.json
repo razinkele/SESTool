@@ -100,14 +100,14 @@
       "el": "Συνέχεια"
     },
     "common.buttons.create": {
-      "en": "create",
-      "es": "create",
-      "fr": "create",
-      "de": "create",
-      "lt": "create",
-      "pt": "create",
-      "it": "create",
-      "no": "opprett",
+      "en": "Create",
+      "es": "Crear",
+      "fr": "Créer",
+      "de": "Erstellen",
+      "lt": "Sukurti",
+      "pt": "Criar",
+      "it": "Crea",
+      "no": "Opprett",
       "el": "Δημιουργία"
     },
     "common.buttons.delete": {
@@ -207,7 +207,7 @@
       "pt": "Carregar",
       "it": "Carica",
       "no": "Last inn",
-      "el": "Load"
+      "el": "Φόρτωση"
     },
     "common.buttons.load_project": {
       "en": "Load Project",
@@ -218,7 +218,7 @@
       "pt": "Carregar Projeto",
       "it": "Carica Progetto",
       "no": "Last inn prosjekt",
-      "el": "Load Project"
+      "el": "Φόρτωση Έργου"
     },
     "common.buttons.next": {
       "en": "Next",
@@ -273,7 +273,7 @@
       "pt": "Rejeitar",
       "it": "Rifiutare",
       "no": "Avvis",
-      "el": "Reject"
+      "el": "Απόρριψη"
     },
     "common.buttons.remove": {
       "en": "Remove",
@@ -317,7 +317,7 @@
       "pt": "Guardar Projeto",
       "it": "Salva Progetto",
       "no": "Lagre prosjekt",
-      "el": "Αποθήκευση Έργο"
+      "el": "Αποθήκευση Έργου"
     },
     "common.buttons.save_local": {
       "en": "Save to Local",
@@ -328,7 +328,7 @@
       "pt": "Guardar Local",
       "it": "Salva in Locale",
       "no": "Lagre Lokalt",
-      "el": "Αποθήκευση to Local"
+      "el": "Αποθήκευση Τοπικά"
     },
     "common.buttons.load_local": {
       "en": "Load from Local",
@@ -339,7 +339,7 @@
       "pt": "Carregar do Local",
       "it": "Carica da Locale",
       "no": "Last fra Lokal",
-      "el": "Load from Local"
+      "el": "Φόρτωση από Τοπικό"
     },
     "common.buttons.search": {
       "en": "Search",
@@ -429,16 +429,27 @@
       "el": "Ok",
       "no": "Ok"
     },
-    "Close": {
-      "en": "Close",
-      "lt": "Uždaryti",
-      "es": "Cerrar",
-      "fr": "Fermer",
-      "de": "Schließen",
-      "it": "Chiudi",
-      "pt": "Fechar",
-      "el": "Κλείσιμο",
-      "no": "Lukk"
+    "common.buttons.copied": {
+      "en": "Copied!",
+      "es": "¡Copiado!",
+      "fr": "Copié !",
+      "de": "Kopiert!",
+      "lt": "Nukopijuota!",
+      "pt": "Copiado!",
+      "it": "Copiato!",
+      "no": "Kopiert!",
+      "el": "Αντιγράφηκε!"
+    },
+    "common.buttons.browse": {
+      "en": "Browse...",
+      "es": "Examinar...",
+      "fr": "Parcourir...",
+      "de": "Durchsuchen...",
+      "lt": "Naršyti...",
+      "pt": "Procurar...",
+      "it": "Sfoglia...",
+      "no": "Bla gjennom...",
+      "el": "Αναζήτηση..."
     }
   }
 }
