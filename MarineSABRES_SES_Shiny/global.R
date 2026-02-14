@@ -68,7 +68,7 @@ if (!exists("PROJECT_ROOT")) {
   }
 
   PROJECT_ROOT <- find_project_root()
-  if (DEBUG_MODE <- (Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE")) {
+  if (Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE") {
     message("Project root: ", PROJECT_ROOT)
   }
 }
@@ -346,8 +346,7 @@ source("functions/visnetwork_helpers.R", local = TRUE)
 # Export functions
 source("functions/export_functions.R", local = TRUE)
 
-# Report generation functions
-source("functions/report_generation.R", local = TRUE)
+# Report generation functions — sourced once via app.R critical_sources
 
 # Module validation helpers
 source("functions/module_validation_helpers.R", local = TRUE)
@@ -468,7 +467,7 @@ if (ML_ENABLED) {
     cat(sprintf("\n✗ ML Enhancement could not be loaded: %s\n", e$message))
     cat("  Falling back to rule-based AI only\n")
     cat("  To enable ML, install torch: install.packages('torch')\n")
-    ML_ENABLED <- FALSE
+    ML_ENABLED <<- FALSE
   })
 
   cat("═══════════════════════════════════════════════════════════\n\n")
@@ -568,41 +567,10 @@ if (DEBUG_MODE) {
 }
 
 # ============================================================================
-# GLOBAL VARIABLES AND CONSTANTS
+# NOTE: All application constants are defined in constants.R
 # ============================================================================
-
-# Reactive pipeline debouncing (milliseconds)
-# Delay before triggering CLD regeneration after ISA changes
-# Prevents excessive regenerations during rapid consecutive edits
-ISA_DEBOUNCE_MS <- as.numeric(Sys.getenv("MARINESABRES_ISA_DEBOUNCE_MS", "500"))
 
 debug_log(sprintf("ISA debounce delay: %d ms", ISA_DEBOUNCE_MS), "CONFIG")
-
-# NOTE: The following constants are now defined in constants.R:
-# - DAPSIWRM_ELEMENTS (MarineSABRES element types)
-# - ELEMENT_COLORS (Kumu-style colors for DAPSIWRM elements)
-# - ELEMENT_SHAPES (visNetwork shapes for DAPSIWRM elements)
-# - EDGE_COLORS (reinforcing/opposing edge colors)
-# - DA_SITES (Demonstration Areas)
-# - STAKEHOLDER_TYPES (Newton & Elliott, 2016)
-# All constants moved to constants.R for centralized configuration
-
-# ============================================================================
-# GRAPHICAL SES CREATOR CONSTANTS
-# ============================================================================
-
-# Ghost node rendering (semi-transparent preview nodes in graphical creator)
-GHOST_NODE_OPACITY <- 0.4         # 40% opacity for ghost nodes
-GHOST_EDGE_OPACITY <- 0.4         # 40% opacity for ghost edges
-GHOST_NODE_BORDER_DASH <- c(5, 5) # Dashed border pattern
-
-# AI suggestion limits
-MAX_SUGGESTIONS_PER_EXPANSION <- 5  # Max number of ghost nodes per expansion
-MIN_CLASSIFICATION_CONFIDENCE <- 0.2 # Minimum confidence to show classification
-
-# Network validation
-MIN_NETWORK_NODES_FOR_EXPORT <- 2  # Minimum nodes required for ISA export
-MIN_NETWORK_EDGES_FOR_EXPORT <- 1  # Minimum edges required for ISA export
 
 # ============================================================================
 # ENTRY POINT SYSTEM (Marine Management DSS & Toolbox)
@@ -610,56 +578,6 @@ MIN_NETWORK_EDGES_FOR_EXPORT <- 1  # Minimum edges required for ISA export
 # Extracted to config/entry_points.R for maintainability
 # ============================================================================
 source(get_project_file("config", "entry_points.R"), local = FALSE)
-
-# Connection strength options
-CONNECTION_STRENGTH <- c("strong", "medium", "weak")
-
-# Connection polarity options
-CONNECTION_POLARITY <- c("+", "-")
-
-# Connection confidence levels (1-5 scale)
-CONFIDENCE_LEVELS <- 1:5
-
-# Connection confidence labels
-CONFIDENCE_LABELS <- c(
-  "1" = "Very Low",
-  "2" = "Low",
-  "3" = "Medium",
-  "4" = "High",
-  "5" = "Very High"
-)
-
-# NOTE: CONFIDENCE_OPACITY and CONFIDENCE_DEFAULT are defined in constants.R
-
-# Ecosystem service categories
-ECOSYSTEM_SERVICE_CATEGORIES <- c(
-  "Provisioning",
-  "Regulating",
-  "Cultural",
-  "Supporting"
-)
-
-# Pressure types
-PRESSURE_TYPES <- c(
-  "Exogenic (ExP)",
-  "Endogenic Managed (EnMP)"
-)
-
-# Spatial scales
-SPATIAL_SCALES <- c(
-  "Local",
-  "Regional",
-  "National",
-  "International"
-)
-
-# Activity scales
-ACTIVITY_SCALES <- c(
-  "Individual",
-  "Group/Sector",
-  "National",
-  "International"
-)
 
 # ============================================================================
 # UTILITY FUNCTIONS

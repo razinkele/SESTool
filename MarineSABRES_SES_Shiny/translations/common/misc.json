@@ -22,17 +22,6 @@
       "no": "All changes saved",
       "el": "Όλα changes saved"
     },
-    "common.misc.amend": {
-      "en": "Amend",
-      "es": "Modificar",
-      "fr": "Modifier",
-      "de": "Ändern",
-      "lt": "Keisti",
-      "pt": "Alterar",
-      "it": "Modificare",
-      "no": "Amend",
-      "el": "Amend"
-    },
     "common.misc.approve": {
       "en": "Approve",
       "es": "Aprobar",
@@ -54,17 +43,6 @@
       "it": "Approva questa connessione con i valori attuali dei cursori",
       "no": "Godkjenn denne tilkoblingen med gjeldende glidebryterværdier",
       "el": "Approve this connection with current slider values"
-    },
-    "common.misc.accept_this_connection_as_is_or_with_amendments": {
-      "en": "Accept this connection as-is or with amendments",
-      "es": "Aceptar esta conexión tal cual o con modificaciones",
-      "fr": "Accepter cette connexion telle quelle ou avec modifications",
-      "de": "Akzeptieren Sie diese Verbindung wie sie ist oder mit Änderungen",
-      "lt": "Priimti šį ryšį tokį, koks yra, arba su pakeitimais",
-      "pt": "Aceitar esta conexão como está ou com alterações",
-      "it": "Accetta questa connessione così com'è o con modifiche",
-      "no": "Godta denne tilkoblingen som den er eller med endringer",
-      "el": "Accept this connection as-is or with amendments"
     },
     "common.misc.save_changes_to_strength_confidence_or_polarity_for_this_connection": {
       "en": "Save changes to strength, confidence, or polarity for this connection",
@@ -627,39 +605,6 @@
       "no": "Would you like to recover this data?",
       "el": "Θα θέλατε to recover this data?"
     },
-    "common.misc.key": {
-      "en": "Key",
-      "lt": "Key",
-      "es": "Key",
-      "fr": "Key",
-      "de": "Key",
-      "it": "Key",
-      "pt": "Key",
-      "el": "Key",
-      "no": "Key"
-    },
-    "namespaced.key": {
-      "en": "Key",
-      "lt": "Key",
-      "es": "Key",
-      "fr": "Key",
-      "de": "Key",
-      "it": "Key",
-      "pt": "Key",
-      "el": "Key",
-      "no": "Key"
-    },
-    "ecosystems have unique characteristics that I": {
-      "en": "Ecosystems have unique characteristics that I",
-      "lt": "Ecosystems have unique characteristics that I",
-      "es": "Ecosystems have unique characteristics that I",
-      "fr": "Ecosystems have unique characteristics that I",
-      "de": "Ecosystems have unique characteristics that I",
-      "it": "Ecosystems have unique characteristics that I",
-      "pt": "Ecosystems have unique characteristics that I",
-      "el": "Ecosystems have unique characteristics that I",
-      "no": "Ecosystems have unique characteristics that I"
-    },
     "common.misc.no_connections_in_this_category": {
       "en": "No connections in this category",
       "lt": "Ne connections in this category",
@@ -692,17 +637,6 @@
       "pt": "All d connections in s rejected",
       "el": "All d connections in s rejected",
       "no": "All d connections in s rejected"
-    },
-    "List key impacts on human welfare you": {
-      "en": "List key impacts on human welfare you",
-      "lt": "List key impacts on human welfare you",
-      "es": "List key impacts on human welfare you",
-      "fr": "List key impacts on human welfare you",
-      "de": "List key impacts on human welfare you",
-      "it": "List key impacts on human welfare you",
-      "pt": "List key impacts on human welfare you",
-      "el": "List key impacts on human welfare you",
-      "no": "List key impacts on human welfare you"
     },
     "common.misc.progress": {
       "en": "Progress",
@@ -758,17 +692,6 @@
       "pt": "Erro loading project",
       "el": "Σφάλμα loading project",
       "no": "Feil loading project"
-    },
-    "common.misc.nonexistent_key_12345": {
-      "en": "Nonexistent key 12345",
-      "lt": "Nonexistent key 12345",
-      "es": "Nonexistent key 12345",
-      "fr": "Nonexistent key 12345",
-      "de": "Nonexistent key 12345",
-      "it": "Nonexistent key 12345",
-      "pt": "Nonexistent key 12345",
-      "el": "Nonexistent key 12345",
-      "no": "Nonexistent key 12345"
     },
     "Beginner": {
       "en": "Beginner",

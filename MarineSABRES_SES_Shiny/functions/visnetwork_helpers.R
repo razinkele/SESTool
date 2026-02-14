@@ -289,7 +289,7 @@ create_node_tooltip <- function(name, indicator, group, extra = NULL) {
 #' @return Data frame with edge attributes for visNetwork
 create_edges_df <- function(isa_data, adjacency_matrices) {
 
-  cat("[CREATE_EDGES] Starting create_edges_df\n")
+  debug_log("Starting create_edges_df", "VISNETWORK")
 
   edges <- data.frame(
     from = character(),
@@ -316,15 +316,15 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   n_d <- if(!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0
   n_r <- if(!is.null(isa_data$responses)) nrow(isa_data$responses) else 0
 
-  cat(sprintf("[CREATE_EDGES] Element counts: GB=%d, ES=%d, MPF=%d, P=%d, A=%d, D=%d, R=%d\n",
-             n_gb, n_es, n_mpf, n_p, n_a, n_d, n_r))
+  debug_log(sprintf("Element counts: GB=%d, ES=%d, MPF=%d, P=%d, A=%d, D=%d, R=%d",
+             n_gb, n_es, n_mpf, n_p, n_a, n_d, n_r), "VISNETWORK")
 
   if (is.null(adjacency_matrices)) {
-    cat("[CREATE_EDGES] adjacency_matrices is NULL!\n")
+    debug_log("adjacency_matrices is NULL!", "VISNETWORK")
     return(edges)
   }
 
-  cat(sprintf("[CREATE_EDGES] Matrix names: %s\n", paste(names(adjacency_matrices), collapse=", ")))
+  debug_log(sprintf("Matrix names: %s", paste(names(adjacency_matrices), collapse=", ")), "VISNETWORK")
 
   # Process each adjacency matrix
   # MATRIX CONVENTION: All matrices use SOURCE×TARGET format
@@ -504,26 +504,26 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   # These should not appear in new templates, but handle them for backward compatibility
 
   if (!is.null(adjacency_matrices$m_d)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'm_d' - measures should now be merged into responses\n")
+    debug_log("WARNING: Found legacy matrix 'm_d' - measures should now be merged into responses", "VISNETWORK")
   }
   if (!is.null(adjacency_matrices$m_a)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'm_a' - measures should now be merged into responses\n")
+    debug_log("WARNING: Found legacy matrix 'm_a' - measures should now be merged into responses", "VISNETWORK")
   }
   if (!is.null(adjacency_matrices$m_p)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'm_p' - measures should now be merged into responses\n")
+    debug_log("WARNING: Found legacy matrix 'm_p' - measures should now be merged into responses", "VISNETWORK")
   }
   if (!is.null(adjacency_matrices$m_mpf)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'm_mpf' - measures should now be merged into responses\n")
+    debug_log("WARNING: Found legacy matrix 'm_mpf' - measures should now be merged into responses", "VISNETWORK")
   }
   if (!is.null(adjacency_matrices$m_r)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'm_r' - measures should now be merged into responses\n")
+    debug_log("WARNING: Found legacy matrix 'm_r' - measures should now be merged into responses", "VISNETWORK")
   }
 
   # === LEGACY/BACKWARD COMPATIBILITY ===
   # Support old matrix names for existing projects (will be converted on load)
   
   if (!is.null(adjacency_matrices$gb_es)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'gb_es' - treating as forward flow 'es_gb'\n")
+    debug_log("WARNING: Found legacy matrix 'gb_es' - treating as forward flow 'es_gb'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$gb_es),  # Transpose to convert GB→ES to ES→GB
       from_prefix = "ES",
@@ -535,7 +535,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   if (!is.null(adjacency_matrices$es_mpf)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'es_mpf' - treating as forward flow 'mpf_es'\n")
+    debug_log("WARNING: Found legacy matrix 'es_mpf' - treating as forward flow 'mpf_es'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$es_mpf),  # Transpose
       from_prefix = "MPF",
@@ -547,7 +547,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   if (!is.null(adjacency_matrices$mpf_p)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'mpf_p' - treating as forward flow 'p_mpf'\n")
+    debug_log("WARNING: Found legacy matrix 'mpf_p' - treating as forward flow 'p_mpf'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$mpf_p),  # Transpose
       from_prefix = "P",
@@ -559,7 +559,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   if (!is.null(adjacency_matrices$p_a)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'p_a' - treating as forward flow 'a_p'\n")
+    debug_log("WARNING: Found legacy matrix 'p_a' - treating as forward flow 'a_p'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$p_a),  # Transpose
       from_prefix = "A",
@@ -571,7 +571,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   if (!is.null(adjacency_matrices$a_d)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'a_d' - treating as forward flow 'd_a'\n")
+    debug_log("WARNING: Found legacy matrix 'a_d' - treating as forward flow 'd_a'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$a_d),  # Transpose
       from_prefix = "D",
@@ -583,7 +583,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   if (!is.null(adjacency_matrices$d_gb)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'd_gb' - treating as feedback 'gb_d'\n")
+    debug_log("WARNING: Found legacy matrix 'd_gb' - treating as feedback 'gb_d'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$d_gb),  # Transpose
       from_prefix = "GB",
@@ -595,7 +595,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   if (!is.null(adjacency_matrices$p_r)) {
-    cat("[CREATE_EDGES] WARNING: Found legacy matrix 'p_r' - treating as 'r_p'\n")
+    debug_log("WARNING: Found legacy matrix 'p_r' - treating as 'r_p'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$p_r),  # Transpose
       from_prefix = "R",
@@ -608,7 +608,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
 
   # Handle legacy r_m (responses-to-measures) matrix by converting to r_r (responses-to-responses)
   if (!is.null(adjacency_matrices$r_m)) {
-    cat("[CREATE_EDGES] INFO: Found legacy matrix 'r_m' (responses→measures), converting to 'r_r' (responses→responses)\n")
+    debug_log("INFO: Found legacy matrix 'r_m' (responses->measures), converting to 'r_r' (responses->responses)", "VISNETWORK")
     edges_r_m <- process_adjacency_matrix(
       adjacency_matrices$r_m,  # R×M (rows=R, cols=M): R→M connections (legacy)
       from_prefix = "R",
@@ -631,8 +631,8 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   additional_matrices <- setdiff(names(adjacency_matrices), standard_matrices)
 
   if (length(additional_matrices) > 0) {
-    cat(sprintf("[CREATE_EDGES] Processing %d additional non-standard matrices: %s\n",
-                length(additional_matrices), paste(additional_matrices, collapse = ", ")))
+    debug_log(sprintf("Processing %d additional non-standard matrices: %s",
+                length(additional_matrices), paste(additional_matrices, collapse = ", ")), "VISNETWORK")
 
     # Mapping from abbreviations to prefixes
     abbrev_to_prefix <- c(
@@ -652,8 +652,8 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
           to_prefix <- abbrev_to_prefix[[to_abbrev]]
 
           if (!is.null(from_prefix) && !is.null(to_prefix)) {
-            cat(sprintf("[CREATE_EDGES] Processing additional matrix %s (%s -> %s)\n",
-                        matrix_name, from_prefix, to_prefix))
+            debug_log(sprintf("Processing additional matrix %s (%s -> %s)",
+                        matrix_name, from_prefix, to_prefix), "VISNETWORK")
 
             edges_additional <- process_adjacency_matrix(
               adjacency_matrices[[matrix_name]],  # No transpose needed - already SOURCE×TARGET
@@ -661,7 +661,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
               to_prefix = to_prefix
             )
 
-            cat(sprintf("[CREATE_EDGES] %s returned %d edges\n", matrix_name, nrow(edges_additional)))
+            debug_log(sprintf("%s returned %d edges", matrix_name, nrow(edges_additional)), "VISNETWORK")
             edges <- bind_rows(edges, edges_additional)
           }
         }
@@ -669,7 +669,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     }
   }
 
-  cat(sprintf("[CREATE_EDGES] Total edges: %d\n", nrow(edges)))
+  debug_log(sprintf("Total edges: %d", nrow(edges)), "VISNETWORK")
   return(edges)
 }
 
@@ -1003,222 +1003,6 @@ apply_circular_layout <- function(visnet) {
 # FILTERING FUNCTIONS
 # ============================================================================
 
-#' Filter nodes and edges by element types
-#' 
-#' @param nodes Nodes dataframe
-#' @param edges Edges dataframe
-#' @param element_types Vector of element types to keep
-#' @return List with filtered nodes and edges
-filter_by_element_type <- function(nodes, edges, element_types) {
-  
-  nodes_filtered <- nodes %>%
-    filter(group %in% element_types)
-  
-  edges_filtered <- edges %>%
-    filter(from %in% nodes_filtered$id, to %in% nodes_filtered$id)
-  
-  list(nodes = nodes_filtered, edges = edges_filtered)
-}
-
-#' Filter edges by polarity
-#' 
-#' @param edges Edges dataframe
-#' @param polarity Vector of polarities to keep
-#' @return Filtered edges dataframe
-filter_by_polarity <- function(edges, polarity) {
-  edges %>% filter(polarity %in% polarity)
-}
-
-#' Filter edges by strength
-#'
-#' @param edges Edges dataframe
-#' @param strength Vector of strengths to keep
-#' @return Filtered edges dataframe
-filter_by_strength <- function(edges, strength) {
-  edges %>% filter(strength %in% strength)
-}
-
-#' Filter edges by minimum confidence level
-#'
-#' @param edges Edges dataframe
-#' @param min_confidence Minimum confidence level (1-5)
-#' @return Filtered edges dataframe
-filter_by_confidence <- function(edges, min_confidence) {
-  # Handle case where confidence column might not exist
-  if (!"confidence" %in% names(edges)) {
-    return(edges)
-  }
-
-  edges %>% filter(confidence >= min_confidence)
-}
-
-# ============================================================================
-# NODE SIZING FUNCTIONS
-# ============================================================================
-
-#' Apply metric-based node sizing
-#' 
-#' @param nodes Nodes dataframe
-#' @param metric_values Named vector of metric values
-#' @param min_size Minimum node size
-#' @param max_size Maximum node size
-#' @return Nodes dataframe with updated sizes
-apply_metric_sizing <- function(nodes, metric_values,
-                               min_size = MIN_NODE_SIZE, max_size = MAX_NODE_SIZE) {
-  
-  # Match metric values to nodes
-  nodes$metric_value <- metric_values[nodes$id]
-  
-  # Normalize to size range
-  min_val <- min(metric_values, na.rm = TRUE)
-  max_val <- max(metric_values, na.rm = TRUE)
-  
-  if (max_val > min_val) {
-    nodes$size <- min_size + (max_size - min_size) * 
-      (nodes$metric_value - min_val) / (max_val - min_val)
-  }
-  
-  # Remove temporary column
-  nodes$metric_value <- NULL
-  
-  return(nodes)
-}
-
-# ============================================================================
-# EXPORT FUNCTIONS
-# ============================================================================
-
-#' Export visNetwork as standalone HTML
-#'
-#' @param visnet visNetwork object
-#' @param file Output file path
-#' @return NULL (side effect: saves file)
-export_visnetwork_html <- function(visnet, file) {
-  tryCatch({
-    # Input validation
-    if (is.null(visnet)) {
-      stop("visNetwork object is NULL")
-    }
-    if (!inherits(visnet, "visNetwork")) {
-      stop("Object must be a visNetwork object")
-    }
-    if (missing(file) || is.null(file) || file == "") {
-      stop("Output file path must be specified")
-    }
-
-    # Create output directory if it doesn't exist
-    output_dir <- dirname(file)
-    if (!dir.exists(output_dir)) {
-      dir.create(output_dir, recursive = TRUE)
-    }
-
-    htmlwidgets::saveWidget(
-      visnet %>% visInteraction(navigationButtons = TRUE),
-      file,
-      selfcontained = TRUE
-    )
-
-    debug_log(paste("HTML exported successfully to:", file), "EXPORT")
-
-  }, error = function(e) {
-    stop(paste("Error exporting visNetwork to HTML:", e$message))
-  })
-}
-
-#' Export visNetwork as PNG
-#'
-#' @param visnet visNetwork object
-#' @param file Output file path
-#' @param width Image width in pixels
-#' @param height Image height in pixels
-#' @return NULL (side effect: saves file)
-export_visnetwork_png <- function(visnet, file, width = EXPORT_PNG_WIDTH, height = EXPORT_PNG_HEIGHT) {
-  tryCatch({
-    # Check if webshot is available (optional dependency)
-    if (!requireNamespace("webshot", quietly = TRUE)) {
-      stop("Package 'webshot' is required for PNG export. Install with: install.packages('webshot')")
-    }
-
-    # Input validation
-    if (is.null(visnet)) {
-      stop("visNetwork object is NULL")
-    }
-    if (!inherits(visnet, "visNetwork")) {
-      stop("Object must be a visNetwork object")
-    }
-    if (missing(file) || is.null(file) || file == "") {
-      stop("Output file path must be specified")
-    }
-    if (!is.numeric(width) || width <= 0) {
-      stop("Width must be a positive number")
-    }
-    if (!is.numeric(height) || height <= 0) {
-      stop("Height must be a positive number")
-    }
-
-    # Create output directory if it doesn't exist
-    output_dir <- dirname(file)
-    if (!dir.exists(output_dir)) {
-      dir.create(output_dir, recursive = TRUE)
-    }
-
-    # Save as HTML first
-    temp_html <- tempfile(fileext = ".html")
-    export_visnetwork_html(visnet, temp_html)
-
-    # Convert to PNG
-    webshot::webshot(temp_html, file, vwidth = width, vheight = height)
-
-    # Clean up
-    unlink(temp_html)
-
-    debug_log(paste("PNG exported successfully to:", file), "EXPORT")
-
-  }, error = function(e) {
-    stop(paste("Error exporting visNetwork to PNG:", e$message))
-  })
-}
-
-# ============================================================================
-# UTILITY FUNCTIONS
-# ============================================================================
-
-#' Check if node ID exists
-#' 
-#' @param nodes Nodes dataframe
-#' @param node_id Node ID to check
-#' @return Logical
-node_exists <- function(nodes, node_id) {
-  node_id %in% nodes$id
-}
-
-#' Get node by ID
-#' 
-#' @param nodes Nodes dataframe
-#' @param node_id Node ID
-#' @return Single row dataframe or NULL
-get_node <- function(nodes, node_id) {
-  node <- nodes %>% filter(id == node_id)
-  if (nrow(node) == 0) return(NULL)
-  return(node)
-}
-
-#' Get edges connected to node
-#'
-#' @param edges Edges dataframe
-#' @param node_id Node ID
-#' @param direction "in", "out", or "both"
-#' @return Dataframe of connected edges
-get_connected_edges <- function(edges, node_id, direction = "both") {
-  if (direction == "in") {
-    return(edges %>% filter(to == node_id))
-  } else if (direction == "out") {
-    return(edges %>% filter(from == node_id))
-  } else {
-    return(edges %>% filter(from == node_id | to == node_id))
-  }
-}
-
 # ============================================================================
 # GRAPHICAL SES CREATOR FUNCTIONS
 # ============================================================================
@@ -1319,7 +1103,7 @@ create_ghost_node_data <- function(suggestion, index) {
   level <- get_dapsiwrm_level(suggestion$type)
 
   # Create semi-transparent color
-  ghost_color <- adjustcolor(color, alpha.f = GHOST_NODE_OPACITY)
+  ghost_color <- adjustcolor(color, alpha.f = NODE_OPACITY_GHOST)
 
   # Create tooltip
   esc <- htmltools::htmlEscape

@@ -167,7 +167,7 @@ safe_execute <- function(expr, default = NULL, error_msg = "Operation failed", s
     error = function(e) {
       if (!silent) {
         warning(sprintf("%s: %s", error_msg, e$message))
-        cat(sprintf("[ERROR] %s: %s\n", error_msg, e$message))
+        debug_log(sprintf("%s: %s", error_msg, e$message), "ERROR")
       }
       return(default)
     }
@@ -271,7 +271,7 @@ safe_render <- function(render_func, error_ui = NULL) {
     tryCatch(
       render_func(...),
       error = function(e) {
-        cat(sprintf("[RENDER ERROR] %s\n", e$message))
+        debug_log(sprintf("Render error: %s", e$message), "ERROR")
         error_ui(e)
       }
     )
@@ -328,13 +328,10 @@ has_data <- function(df) {
 #' @param error Error object (optional)
 #' @export
 log_error <- function(context, message, error = NULL) {
-  timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
   if (!is.null(error)) {
-    cat(sprintf("[%s] [ERROR] [%s] %s: %s\n",
-                timestamp, context, message, error$message))
+    debug_log(sprintf("[ERROR] %s: %s", message, error$message), context)
   } else {
-    cat(sprintf("[%s] [ERROR] [%s] %s\n",
-                timestamp, context, message))
+    debug_log(sprintf("[ERROR] %s", message), context)
   }
 }
 
@@ -344,10 +341,7 @@ log_error <- function(context, message, error = NULL) {
 #' @param message Warning message
 #' @export
 log_warning <- function(context, message) {
-
-  timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
-  cat(sprintf("[%s] [WARN] [%s] %s\n",
-              timestamp, context, message))
+  debug_log(sprintf("[WARN] %s", message), context)
 }
 
 # ============================================================================

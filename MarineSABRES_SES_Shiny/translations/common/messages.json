@@ -24,135 +24,135 @@
     },
     "Error during loop detection:": {
       "en": "Error during loop detection:",
-      "es": "Error during loop detection:",
-      "fr": "Error during loop detection:",
-      "de": "Error during loop detection:",
-      "lt": "Error during loop detection:",
-      "pt": "Error during loop detection:",
-      "it": "Error during loop detection:",
-      "no": "Error during loop detection:",
-      "el": "Σφάλμα during loop detection:"
+      "es": "Error durante la detección de bucles:",
+      "fr": "Erreur lors de la détection de boucles :",
+      "de": "Fehler bei der Schleifenerkennung:",
+      "lt": "Klaida aptinkant ciklus:",
+      "pt": "Erro durante a detecção de loops:",
+      "it": "Errore durante il rilevamento dei loop:",
+      "no": "Feil under sløyfedeteksjon:",
+      "el": "Σφάλμα κατά την ανίχνευση βρόχων:"
     },
     "Exercise 0 saved successfully!": {
       "en": "Exercise 0 saved successfully!",
-      "es": "Exercise 0 saved successfully!",
-      "fr": "Exercise 0 saved successfully!",
-      "de": "Exercise 0 saved successfully!",
-      "lt": "Exercise 0 saved successfully!",
-      "pt": "Exercise 0 saved successfully!",
-      "it": "Exercise 0 saved successfully!",
-      "no": "Exercise 0 saved successfully!",
-      "el": "Exercise 0 saved successfully!"
+      "es": "¡Ejercicio 0 guardado exitosamente!",
+      "fr": "Exercice 0 enregistré avec succès !",
+      "de": "Übung 0 erfolgreich gespeichert!",
+      "lt": "Pratimas 0 sėkmingai išsaugotas!",
+      "pt": "Exercício 0 salvo com sucesso!",
+      "it": "Esercizio 0 salvato con successo!",
+      "no": "Øvelse 0 lagret vellykket!",
+      "el": "Η Άσκηση 0 αποθηκεύτηκε επιτυχώς!"
     },
     "Exercise 1 saved:": {
       "en": "Exercise 1 saved:",
-      "es": "Exercise 1 saved:",
-      "fr": "Exercise 1 saved:",
-      "de": "Exercise 1 saved:",
-      "lt": "Exercise 1 saved:",
-      "pt": "Exercise 1 saved:",
-      "it": "Exercise 1 saved:",
-      "no": "Exercise 1 saved:",
-      "el": "Exercise 1 saved:"
+      "es": "Ejercicio 1 guardado:",
+      "fr": "Exercice 1 enregistré :",
+      "de": "Übung 1 gespeichert:",
+      "lt": "Pratimas 1 išsaugotas:",
+      "pt": "Exercício 1 salvo:",
+      "it": "Esercizio 1 salvato:",
+      "no": "Øvelse 1 lagret:",
+      "el": "Άσκηση 1 αποθηκεύτηκε:"
     },
     "Exercise 2a saved:": {
       "en": "Exercise 2a saved:",
-      "es": "Exercise 2a saved:",
-      "fr": "Exercise 2a saved:",
-      "de": "Exercise 2a saved:",
-      "lt": "Exercise 2a saved:",
-      "pt": "Exercise 2a saved:",
-      "it": "Exercise 2a saved:",
-      "no": "Exercise 2a saved:",
-      "el": "Exercise 2a saved:"
+      "es": "Ejercicio 2a guardado:",
+      "fr": "Exercice 2a enregistré :",
+      "de": "Übung 2a gespeichert:",
+      "lt": "Pratimas 2a išsaugotas:",
+      "pt": "Exercício 2a salvo:",
+      "it": "Esercizio 2a salvato:",
+      "no": "Øvelse 2a lagret:",
+      "el": "Άσκηση 2α αποθηκεύτηκε:"
     },
     "Exercise 2b saved:": {
       "en": "Exercise 2b saved:",
-      "es": "Exercise 2b saved:",
-      "fr": "Exercise 2b saved:",
-      "de": "Exercise 2b saved:",
-      "lt": "Exercise 2b saved:",
-      "pt": "Exercise 2b saved:",
-      "it": "Exercise 2b saved:",
-      "no": "Exercise 2b saved:",
-      "el": "Exercise 2b saved:"
+      "es": "Ejercicio 2b guardado:",
+      "fr": "Exercice 2b enregistré :",
+      "de": "Übung 2b gespeichert:",
+      "lt": "Pratimas 2b išsaugotas:",
+      "pt": "Exercício 2b salvo:",
+      "it": "Esercizio 2b salvato:",
+      "no": "Øvelse 2b lagret:",
+      "el": "Άσκηση 2β αποθηκεύτηκε:"
     },
     "Exercise 3 saved:": {
       "en": "Exercise 3 saved:",
-      "es": "Exercise 3 saved:",
-      "fr": "Exercise 3 saved:",
-      "de": "Exercise 3 saved:",
-      "lt": "Exercise 3 saved:",
-      "pt": "Exercise 3 saved:",
-      "it": "Exercise 3 saved:",
-      "no": "Exercise 3 saved:",
-      "el": "Exercise 3 saved:"
+      "es": "Ejercicio 3 guardado:",
+      "fr": "Exercice 3 enregistré :",
+      "de": "Übung 3 gespeichert:",
+      "lt": "Pratimas 3 išsaugotas:",
+      "pt": "Exercício 3 salvo:",
+      "it": "Esercizio 3 salvato:",
+      "no": "Øvelse 3 lagret:",
+      "el": "Άσκηση 3 αποθηκεύτηκε:"
     },
     "Exercise 4 saved:": {
       "en": "Exercise 4 saved:",
-      "es": "Exercise 4 saved:",
-      "fr": "Exercise 4 saved:",
-      "de": "Exercise 4 saved:",
-      "lt": "Exercise 4 saved:",
-      "pt": "Exercise 4 saved:",
-      "it": "Exercise 4 saved:",
-      "no": "Exercise 4 saved:",
-      "el": "Exercise 4 saved:"
+      "es": "Ejercicio 4 guardado:",
+      "fr": "Exercice 4 enregistré :",
+      "de": "Übung 4 gespeichert:",
+      "lt": "Pratimas 4 išsaugotas:",
+      "pt": "Exercício 4 salvo:",
+      "it": "Esercizio 4 salvato:",
+      "no": "Øvelse 4 lagret:",
+      "el": "Άσκηση 4 αποθηκεύτηκε:"
     },
     "Exercise 5 saved:": {
       "en": "Exercise 5 saved:",
-      "es": "Exercise 5 saved:",
-      "fr": "Exercise 5 saved:",
-      "de": "Exercise 5 saved:",
-      "lt": "Exercise 5 saved:",
-      "pt": "Exercise 5 saved:",
-      "it": "Exercise 5 saved:",
-      "no": "Exercise 5 saved:",
-      "el": "Exercise 5 saved:"
+      "es": "Ejercicio 5 guardado:",
+      "fr": "Exercice 5 enregistré :",
+      "de": "Übung 5 gespeichert:",
+      "lt": "Pratimas 5 išsaugotas:",
+      "pt": "Exercício 5 salvo:",
+      "it": "Esercizio 5 salvato:",
+      "no": "Øvelse 5 lagret:",
+      "el": "Άσκηση 5 αποθηκεύτηκε:"
     },
     "Exercise 6 saved:": {
       "en": "Exercise 6 saved:",
-      "es": "Exercise 6 saved:",
-      "fr": "Exercise 6 saved:",
-      "de": "Exercise 6 saved:",
-      "lt": "Exercise 6 saved:",
-      "pt": "Exercise 6 saved:",
-      "it": "Exercise 6 saved:",
-      "no": "Exercise 6 saved:",
-      "el": "Exercise 6 saved:"
+      "es": "Ejercicio 6 guardado:",
+      "fr": "Exercice 6 enregistré :",
+      "de": "Übung 6 gespeichert:",
+      "lt": "Pratimas 6 išsaugotas:",
+      "pt": "Exercício 6 salvo:",
+      "it": "Esercizio 6 salvato:",
+      "no": "Øvelse 6 lagret:",
+      "el": "Άσκηση 6 αποθηκεύτηκε:"
     },
     "Loop connection added": {
       "en": "Loop connection added",
-      "es": "Loop connection added",
-      "fr": "Loop connection added",
-      "de": "Loop connection added",
-      "lt": "Loop connection added",
-      "pt": "Loop connection added",
-      "it": "Loop connection added",
-      "no": "Loop connection added",
-      "el": "Loop connection added"
+      "es": "Conexión de bucle añadida",
+      "fr": "Connexion de boucle ajoutée",
+      "de": "Schleifenverbindung hinzugefügt",
+      "lt": "Ciklo jungtis pridėta",
+      "pt": "Conexão de loop adicionada",
+      "it": "Connessione di loop aggiunta",
+      "no": "Sløyfetilkobling lagt til",
+      "el": "Προστέθηκε σύνδεση βρόχου"
     },
     "Loop detection failed or timed out.": {
       "en": "Loop detection failed or timed out.",
-      "es": "Loop detection failed or timed out.",
-      "fr": "Loop detection failed or timed out.",
-      "de": "Loop detection failed or timed out.",
-      "lt": "Loop detection failed or timed out.",
-      "pt": "Loop detection failed or timed out.",
-      "it": "Loop detection failed or timed out.",
-      "no": "Loop detection failed or timed out.",
-      "el": "Ανίχνευση βρόχων Απέτυχε or timed out."
+      "es": "La detección de bucles falló o se agotó el tiempo.",
+      "fr": "La détection de boucles a échoué ou a expiré.",
+      "de": "Die Schleifenerkennung ist fehlgeschlagen oder hat das Zeitlimit überschritten.",
+      "lt": "Ciklų aptikimas nepavyko arba baigėsi laikas.",
+      "pt": "A detecção de loops falhou ou expirou.",
+      "it": "Il rilevamento dei loop non è riuscito o è scaduto.",
+      "no": "Sløyfedeteksjon mislyktes eller tidsavbrudd.",
+      "el": "Η ανίχνευση βρόχων απέτυχε ή έληξε ο χρόνος."
     },
     "Loop detection failed:": {
       "en": "Loop detection failed:",
-      "es": "Loop detection failed:",
-      "fr": "Loop detection failed:",
-      "de": "Loop detection failed:",
-      "lt": "Loop detection failed:",
-      "pt": "Loop detection failed:",
-      "it": "Loop detection failed:",
-      "no": "Loop detection failed:",
-      "el": "Ανίχνευση βρόχων failed:"
+      "es": "Falló la detección de bucles:",
+      "fr": "Échec de la détection de boucles :",
+      "de": "Schleifenerkennung fehlgeschlagen:",
+      "lt": "Ciklų aptikimas nepavyko:",
+      "pt": "Falha na detecção de loops:",
+      "it": "Rilevamento dei loop non riuscito:",
+      "no": "Sløyfedeteksjon mislyktes:",
+      "el": "Η ανίχνευση βρόχων απέτυχε:"
     },
     "common.messages.1_detect_loops": {
       "en": "1. Detect loops:",
@@ -162,8 +162,8 @@
       "lt": "1. Aptikti ciklus:",
       "pt": "1. Detectar loops:",
       "it": "1. Rilevare loop:",
-      "no": "1. Detect loops:",
-      "el": "1. Detect loops:"
+      "no": "1. Oppdag sløyfer:",
+      "el": "1. Ανίχνευση βρόχων:"
     },
     "common.messages.20minute_handson_walkthrough": {
       "en": "20-minute hands-on walkthrough",
@@ -294,8 +294,8 @@
       "lt": "Išsaugokite rezultatus Excel arba CSV formatais tolesnei analizei",
       "pt": "Salve os resultados em formatos Excel ou CSV para análise posterior",
       "it": "Salva i risultati in formati Excel o CSV per ulteriori analisi",
-      "no": " Save results in Excel or CSV formats for further analysis",
-      "el": "Αποθήκευση Αποτελέσματα  in Excel or CSV formats for further analysis"
+      "no": " Lagre resultater i Excel- eller CSV-formater for videre analyse",
+      "el": " Αποθηκεύστε τα αποτελέσματα σε μορφή Excel ή CSV για περαιτέρω ανάλυση"
     },
     "common.messages._see_highlighted_loops_in_the_context_of_your_full": {
       "en": " See highlighted loops in the context of your full network",
@@ -393,8 +393,8 @@
       "lt": "Pridėti duomenų tašką",
       "pt": "Adicionar Ponto de Dados",
       "it": "Aggiungi Punto Dati",
-      "no": "Add Data Point",
-      "el": "Προσθήκη Δεδομένα Point"
+      "no": "Legg til Datapunkt",
+      "el": "Προσθήκη Σημείου Δεδομένων"
     },
     "common.messages.add_effectiveness_and_feasibility_ratings": {
       "en": "Add effectiveness and feasibility ratings",
@@ -404,8 +404,8 @@
       "lt": "Pridėti efektyvumo ir įgyvendinamumo įvertinimus",
       "pt": "Adicionar classificações de eficácia e viabilidade",
       "it": "Aggiungi valutazioni di efficacia e fattibilità",
-      "no": "Add effectiveness and feasibility ratings",
-      "el": "Προσθήκη effectiveness and feasibility ratings"
+      "no": "Legg til vurderinger av effektivitet og gjennomførbarhet",
+      "el": "Προσθήκη αξιολογήσεων αποτελεσματικότητας και σκοπιμότητας"
     },
     "common.messages.add_goodbenefit": {
       "en": "Add Good/Benefit",
@@ -415,8 +415,8 @@
       "lt": "Pridėti Gėrybę/Naudą",
       "pt": "Adicionar Bem/Benefício",
       "it": "Aggiungi Bene/Beneficio",
-      "no": "Add Good/Benefit",
-      "el": "Προσθήκη Good/Benefit"
+      "no": "Legg til Gode/Fordel",
+      "el": "Προσθήκη Αγαθού/Οφέλους"
     },
     "common.messages.add_goods_and_benefits": {
       "en": "Add Goods and Benefits",
@@ -426,8 +426,8 @@
       "lt": "Pridėti gėrybes ir naudą",
       "pt": "Adicionar Bens e Benefícios",
       "it": "Aggiungere Beni e Benefici",
-      "no": "Add Goods and Benefits",
-      "el": "Προσθήκη Αγαθά και οφέλη"
+      "no": "Legg til Goder og Fordeler",
+      "el": "Προσθήκη Αγαθών και Οφελών"
     },
     "common.messages.add_implementation_milestone": {
       "en": "Add Implementation Milestone",
@@ -437,8 +437,8 @@
       "lt": "Pridėti Įgyvendinimo Etapą",
       "pt": "Adicionar Marco de Implementação",
       "it": "Aggiungi Traguardo di Attuazione",
-      "no": "Add Implementation Milestone",
-      "el": "Προσθήκη Implementation Milestone"
+      "no": "Legg til Implementeringsmilepæl",
+      "el": "Προσθήκη Ορόσημου Υλοποίησης"
     },
     "common.messages.add_milestone": {
       "en": "Add Milestone",
@@ -448,8 +448,8 @@
       "lt": "Pridėti Etapą",
       "pt": "Adicionar Marco",
       "it": "Aggiungi Traguardo",
-      "no": "Add Milestone",
-      "el": "Προσθήκη Milestone"
+      "no": "Legg til Milepæl",
+      "el": "Προσθήκη Ορόσημου"
     },
     "common.messages.add_time_series_data": {
       "en": "Add Time Series Data",
@@ -459,8 +459,8 @@
       "lt": "Pridėti laiko eilučių duomenis",
       "pt": "Adicionar Dados de Séries Temporais",
       "it": "Aggiungere Dati di Serie Temporali",
-      "no": "Add Time Series Data",
-      "el": "Προσθήκη Ώρα Series Data"
+      "no": "Legg til Tidsseriedata",
+      "el": "Προσθήκη Δεδομένων Χρονοσειράς"
     },
     "common.messages.added": {
       "en": "Added",
@@ -525,8 +525,8 @@
       "lt": "Išplėstinė sąsaja, rodanti visus įrankius, techninę terminologiją ir išplėstines parinktis.",
       "pt": "Interface avançada mostrando todas as ferramentas, terminologia técnica e opções avançadas.",
       "it": "Interfaccia avanzata che mostra tutti gli strumenti, terminologia tecnica e opzioni avanzate.",
-      "no": "Advanced interface showing all tools, technical terminology, and advanced options.",
-      "el": "Προχωρημένος interface showing all tools, technical terminology, and advanced options."
+      "no": "Avansert grensesnitt som viser alle verktøy, teknisk terminologi og avanserte alternativer.",
+      "el": "Προχωρημένη διεπαφή που εμφανίζει όλα τα εργαλεία, τεχνική ορολογία και προχωρημένες επιλογές."
     },
     "common.messages.ai_assistant": {
       "en": "AI Assistant",
@@ -536,8 +536,8 @@
       "lt": "AI asistentas",
       "pt": "Assistente IA",
       "it": "Assistente IA",
-      "no": "AI Assistant",
-      "el": "AI Assistant"
+      "no": "AI-assistent",
+      "el": "Βοηθός AI"
     },
     "common.messages.ai_guided_ses_creation": {
       "en": "AI guided SES creation",
@@ -547,8 +547,8 @@
       "lt": "AI vadovaujama SES kūrimas",
       "pt": "Criação SES guiada por IA",
       "it": "Creazione SES guidata da IA",
-      "no": "AI guided SES creation",
-      "el": "AI guided SES creation"
+      "no": "AI-veiledet SES-opprettelse",
+      "el": "Δημιουργία SES με καθοδήγηση AI"
     },
     "common.messages.aisuggested_options": {
       "en": "AI-suggested options",
@@ -558,8 +558,8 @@
       "lt": "DI siūlomos parinktys",
       "pt": "Opções sugeridas por IA",
       "it": "Opzioni suggerite dall'IA",
-      "no": "AI-suggested options",
-      "el": "AI-suggested options"
+      "no": "AI-foreslåtte alternativer",
+      "el": "Επιλογές προτεινόμενες από AI"
     },
     "common.messages.all": {
       "en": "All",
@@ -580,8 +580,8 @@
       "lt": "Visi pakeitimai išsaugoti",
       "pt": "Todas as alterações salvas",
       "it": "Tutte le modifiche salvate",
-      "no": "All changes saved",
-      "el": "Όλα changes saved"
+      "no": "Alle endringer lagret",
+      "el": "Όλες οι αλλαγές αποθηκεύτηκαν"
     },
     "common.messages.all_connections_approved": {
       "en": "All connections approved!",
@@ -591,30 +591,30 @@
       "lt": "Visos jungtys patvirtintos!",
       "pt": "Todas as conexões aprovadas!",
       "it": "Tutti i collegamenti approvati!",
-      "no": "All connections approved!",
-      "el": "Όλα Συνδέσεις approved!"
+      "no": "Alle tilkoblinger godkjent!",
+      "el": "Όλες οι συνδέσεις εγκρίθηκαν!"
     },
     "common.messages.all_d_connections_in_s_approved": {
       "en": "All %d connections in %s approved!",
-      "es": "All %d connections in %s approved!",
-      "fr": "All %d connections in %s approved!",
-      "de": "All %d connections in %s approved!",
-      "lt": "All %d connections in %s approved!",
-      "pt": "All %d connections in %s approved!",
-      "it": "All %d connections in %s approved!",
-      "no": "All %d connections in %s approved!",
-      "el": "Όλα %d connections in %s approved!"
+      "es": "¡Todas las %d conexiones en %s aprobadas!",
+      "fr": "Les %d connexions dans %s approuvées !",
+      "de": "Alle %d Verbindungen in %s genehmigt!",
+      "lt": "Visos %d jungtys %s patvirtintos!",
+      "pt": "Todas as %d conexões em %s aprovadas!",
+      "it": "Tutti i %d collegamenti in %s approvati!",
+      "no": "Alle %d tilkoblinger i %s godkjent!",
+      "el": "Όλες οι %d συνδέσεις στο %s εγκρίθηκαν!"
     },
     "common.messages.all_d_connections_in_s_rejected": {
       "en": "All %d connections in %s rejected!",
-      "es": "All %d connections in %s rejected!",
-      "fr": "All %d connections in %s rejected!",
-      "de": "All %d connections in %s rejected!",
-      "lt": "All %d connections in %s rejected!",
-      "pt": "All %d connections in %s rejected!",
-      "it": "All %d connections in %s rejected!",
-      "no": "All %d connections in %s rejected!",
-      "el": "Όλα %d connections in %s rejected!"
+      "es": "¡Todas las %d conexiones en %s rechazadas!",
+      "fr": "Les %d connexions dans %s rejetées !",
+      "de": "Alle %d Verbindungen in %s abgelehnt!",
+      "lt": "Visos %d jungtys %s atmestos!",
+      "pt": "Todas as %d conexões em %s rejeitadas!",
+      "it": "Tutti i %d collegamenti in %s rifiutati!",
+      "no": "Alle %d tilkoblinger i %s avvist!",
+      "el": "Όλες οι %d συνδέσεις στο %s απορρίφθηκαν!"
     },
     "common.messages.all_metrics": {
       "en": "All Metrics",
@@ -624,8 +624,8 @@
       "lt": "Visos metrikos",
       "pt": "Todas as Métricas",
       "it": "Tutte le Metriche",
-      "no": "All Metrics",
-      "el": "Όλα Μετρικές"
+      "no": "Alle Metrikker",
+      "el": "Όλες οι Μετρικές"
     },
     "common.messages.all_work_on_the_current_template_will_be_lost_incl": {
       "en": "All work on the current template will be lost, including:",
@@ -635,8 +635,8 @@
       "lt": "Visi dabartinio šablono darbai bus prarasti, įskaitant:",
       "pt": "Todo o trabalho no modelo atual será perdido, incluindo:",
       "it": "Tutto il lavoro sul modello corrente andrà perso, incluso:",
-      "no": "All work on the current template will be lost, including:",
-      "el": "Όλα work on the current template will be lost, including:"
+      "no": "Alt arbeid på gjeldende mal vil gå tapt, inkludert:",
+      "el": "Όλη η εργασία στο τρέχον πρότυπο θα χαθεί, συμπεριλαμβανομένων:"
     },
     "common.messages.amend": {
       "en": "Amend",
@@ -661,114 +661,114 @@
       "el": "Ανάλυση Αποτελέσματα"
     },
     "common.messages.analysiscsvcolumnserror": {
-      "en": "analysis_csv_columns_error",
-      "es": "analysis_csv_columns_error",
-      "fr": "analysis_csv_columns_error",
-      "de": "analysis_csv_columns_error",
-      "lt": "analysis_csv_columns_error",
-      "pt": "analysis_csv_columns_error",
-      "it": "analysis_csv_columns_error",
-      "no": "analysis_csv_columns_error",
-      "el": "analysis_csv_columns_error"
+      "en": "CSV column format error",
+      "es": "Error en formato de columnas CSV",
+      "fr": "Erreur de format des colonnes CSV",
+      "de": "CSV-Spaltenformatfehler",
+      "lt": "CSV stulpelių formato klaida",
+      "pt": "Erro no formato das colunas CSV",
+      "it": "Errore formato colonne CSV",
+      "no": "CSV-kolonneformatfeil",
+      "el": "Σφάλμα μορφής στηλών CSV"
     },
     "common.messages.analysiscsvloaded": {
-      "en": "analysis_csv_loaded",
-      "es": "analysis_csv_loaded",
-      "fr": "analysis_csv_loaded",
-      "de": "analysis_csv_loaded",
-      "lt": "analysis_csv_loaded",
-      "pt": "analysis_csv_loaded",
-      "it": "analysis_csv_loaded",
-      "no": "analysis_csv_loaded",
-      "el": "analysis_csv_loaded"
+      "en": "CSV loaded successfully",
+      "es": "CSV cargado exitosamente",
+      "fr": "CSV chargé avec succès",
+      "de": "CSV erfolgreich geladen",
+      "lt": "CSV sėkmingai įkeltas",
+      "pt": "CSV carregado com sucesso",
+      "it": "CSV caricato con successo",
+      "no": "CSV lastet inn",
+      "el": "Το CSV φορτώθηκε επιτυχώς"
     },
     "common.messages.analysisdataadded": {
-      "en": "analysis_data_added",
-      "es": "analysis_data_added",
-      "fr": "analysis_data_added",
-      "de": "analysis_data_added",
-      "lt": "analysis_data_added",
-      "pt": "analysis_data_added",
-      "it": "analysis_data_added",
-      "no": "analysis_data_added",
-      "el": "analysis_data_added"
+      "en": "Analysis data added",
+      "es": "Datos de análisis añadidos",
+      "fr": "Données d'analyse ajoutées",
+      "de": "Analysedaten hinzugefügt",
+      "lt": "Analizės duomenys pridėti",
+      "pt": "Dados de análise adicionados",
+      "it": "Dati di analisi aggiunti",
+      "no": "Analysedata lagt til",
+      "el": "Προστέθηκαν δεδομένα ανάλυσης"
     },
     "common.messages.analysisdatacleared": {
-      "en": "analysis_data_cleared",
-      "es": "analysis_data_cleared",
-      "fr": "analysis_data_cleared",
-      "de": "analysis_data_cleared",
-      "lt": "analysis_data_cleared",
-      "pt": "analysis_data_cleared",
-      "it": "analysis_data_cleared",
-      "no": "analysis_data_cleared",
-      "el": "analysis_data_cleared"
+      "en": "Analysis data cleared",
+      "es": "Datos de análisis borrados",
+      "fr": "Données d'analyse effacées",
+      "de": "Analysedaten gelöscht",
+      "lt": "Analizės duomenys išvalyti",
+      "pt": "Dados de análise limpos",
+      "it": "Dati di analisi cancellati",
+      "no": "Analysedata slettet",
+      "el": "Τα δεδομένα ανάλυσης διαγράφηκαν"
     },
     "common.messages.analysisdetectingloops": {
-      "en": "analysis_detecting_loops",
-      "es": "analysis_detecting_loops",
-      "fr": "analysis_detecting_loops",
-      "de": "analysis_detecting_loops",
-      "lt": "analysis_detecting_loops",
-      "pt": "analysis_detecting_loops",
-      "it": "analysis_detecting_loops",
-      "no": "analysis_detecting_loops",
-      "el": "analysis_detecting_loops"
+      "en": "Detecting loops...",
+      "es": "Detectando bucles...",
+      "fr": "Détection des boucles...",
+      "de": "Schleifen werden erkannt...",
+      "lt": "Aptinkami ciklai...",
+      "pt": "Detectando loops...",
+      "it": "Rilevamento loop...",
+      "no": "Oppdager løkker...",
+      "el": "Ανίχνευση βρόχων..."
     },
     "common.messages.analysiserrorloadingcsv": {
-      "en": "analysis_error_loading_csv",
-      "es": "analysis_error_loading_csv",
-      "fr": "analysis_error_loading_csv",
-      "de": "analysis_error_loading_csv",
-      "lt": "analysis_error_loading_csv",
-      "pt": "analysis_error_loading_csv",
-      "it": "analysis_error_loading_csv",
-      "no": "analysis_error_loading_csv",
-      "el": "analysis_error_loading_csv"
+      "en": "Error loading CSV file",
+      "es": "Error al cargar archivo CSV",
+      "fr": "Erreur lors du chargement du fichier CSV",
+      "de": "Fehler beim Laden der CSV-Datei",
+      "lt": "Klaida įkeliant CSV failą",
+      "pt": "Erro ao carregar arquivo CSV",
+      "it": "Errore nel caricamento del file CSV",
+      "no": "Feil ved lasting av CSV-fil",
+      "el": "Σφάλμα φόρτωσης αρχείου CSV"
     },
     "common.messages.analysisnographdata": {
-      "en": "analysis_no_graph_data",
-      "es": "analysis_no_graph_data",
-      "fr": "analysis_no_graph_data",
-      "de": "analysis_no_graph_data",
-      "lt": "analysis_no_graph_data",
-      "pt": "analysis_no_graph_data",
-      "it": "analysis_no_graph_data",
-      "no": "analysis_no_graph_data",
-      "el": "analysis_no_graph_data"
+      "en": "No graph data available",
+      "es": "No hay datos de grafo disponibles",
+      "fr": "Aucune donnée de graphe disponible",
+      "de": "Keine Graphdaten verfügbar",
+      "lt": "Nėra grafo duomenų",
+      "pt": "Nenhum dado de grafo disponível",
+      "it": "Nessun dato del grafo disponibile",
+      "no": "Ingen grafdata tilgjengelig",
+      "el": "Δεν υπάρχουν διαθέσιμα δεδομένα γραφήματος"
     },
     "common.messages.analysisnoisadata": {
-      "en": "analysis_no_isa_data",
-      "es": "analysis_no_isa_data",
-      "fr": "analysis_no_isa_data",
-      "de": "analysis_no_isa_data",
-      "lt": "analysis_no_isa_data",
-      "pt": "analysis_no_isa_data",
-      "it": "analysis_no_isa_data",
-      "no": "analysis_no_isa_data",
-      "el": "analysis_no_isa_data"
+      "en": "No ISA data available",
+      "es": "No hay datos ISA disponibles",
+      "fr": "Aucune donnée ISA disponible",
+      "de": "Keine ISA-Daten verfügbar",
+      "lt": "Nėra ISA duomenų",
+      "pt": "Nenhum dado ISA disponível",
+      "it": "Nessun dato ISA disponibile",
+      "no": "Ingen ISA-data tilgjengelig",
+      "el": "Δεν υπάρχουν διαθέσιμα δεδομένα ISA"
     },
     "common.messages.analysisnoloopsdetected": {
-      "en": "analysis_no_loops_detected",
-      "es": "analysis_no_loops_detected",
-      "fr": "analysis_no_loops_detected",
-      "de": "analysis_no_loops_detected",
-      "lt": "analysis_no_loops_detected",
-      "pt": "analysis_no_loops_detected",
-      "it": "analysis_no_loops_detected",
-      "no": "analysis_no_loops_detected",
-      "el": "analysis_no_loops_detected"
+      "en": "No loops detected",
+      "es": "No se detectaron bucles",
+      "fr": "Aucune boucle détectée",
+      "de": "Keine Schleifen erkannt",
+      "lt": "Ciklų neaptikta",
+      "pt": "Nenhum loop detectado",
+      "it": "Nessun loop rilevato",
+      "no": "Ingen løkker oppdaget",
+      "el": "Δεν ανιχνεύθηκαν βρόχοι"
     },
     "common.messages.analysisnoloopsfound": {
-      "en": "analysis_no_loops_found",
-      "es": "analysis_no_loops_found",
-      "fr": "analysis_no_loops_found",
-      "de": "analysis_no_loops_found",
-      "lt": "analysis_no_loops_found",
-      "pt": "analysis_no_loops_found",
-      "it": "analysis_no_loops_found",
-      "no": "analysis_no_loops_found",
-      "el": "analysis_no_loops_found"
+      "en": "No loops found",
+      "es": "No se encontraron bucles",
+      "fr": "Aucune boucle trouvée",
+      "de": "Keine Schleifen gefunden",
+      "lt": "Ciklų nerasta",
+      "pt": "Nenhum loop encontrado",
+      "it": "Nessun loop trovato",
+      "no": "Ingen løkker funnet",
+      "el": "Δεν βρέθηκαν βρόχοι"
     },
     "common.messages.any_customizations_made": {
       "en": "Any customizations made",
@@ -800,8 +800,8 @@
       "lt": "Pritaikyti Pakeitimus",
       "pt": "Aplicar Alterações",
       "it": "Applica Modifiche",
-      "no": "Apply Changes",
-      "el": "Εφαρμογή Changes"
+      "no": "Bruk Endringer",
+      "el": "Εφαρμογή Αλλαγών"
     },
     "common.messages.approve": {
       "en": "Approve",
@@ -855,19 +855,19 @@
       "lt": "Patvirtinti ir atmesti ryšiai",
       "pt": "Conexões aprovadas e rejeitadas",
       "it": "Connessioni approvate e rifiutate",
-      "no": "Approved and rejected connections",
-      "el": "Εγκρίθηκε and rejected connections"
+      "no": "Godkjente og avviste tilkoblinger",
+      "el": "Εγκεκριμένες και απορριφθείσες συνδέσεις"
     },
     "common.messages.approved_connections": {
       "en": "Approved Connections",
-      "es": "Approved Connections",
-      "fr": "Approved Connections",
-      "de": "Approved Connections",
-      "lt": "Approved Connections",
-      "pt": "Approved Connections",
-      "it": "Approved Connections",
-      "no": "Approved Connections",
-      "el": "Εγκρίθηκε Συνδέσεις"
+      "es": "Conexiones Aprobadas",
+      "fr": "Connexions Approuvées",
+      "de": "Genehmigte Verbindungen",
+      "lt": "Patvirtintos Jungtys",
+      "pt": "Conexões Aprovadas",
+      "it": "Connessioni Approvate",
+      "no": "Godkjente Tilkoblinger",
+      "el": "Εγκεκριμένες Συνδέσεις"
     },
     "common.messages.arctic_ocean": {
       "en": "Arctic Ocean",
@@ -889,7 +889,7 @@
       "pt": "Tem certeza de que deseja começar do zero com o novo modelo?",
       "it": "Sei sicuro di voler ricominciare da zero con il nuovo modello?",
       "no": "Are you sure you want to start from scratch with the new template?",
-      "el": "Είστε σίγουροι you want to start from scratch with the new template?"
+      "el": "Είστε σίγουροι ότι θέλετε να ξεκινήσετε από την αρχή με το νέο πρότυπο;"
     },
     "common.messages.are_you_sure_you_want_to_start_over_all_current_pr": {
       "en": "Are you sure you want to start over? All current progress will be lost.",
@@ -900,7 +900,7 @@
       "pt": "Tem certeza de que deseja recomeçar? Todo o progresso atual será perdido.",
       "it": "Sei sicuro di voler ricominciare da capo? Tutti i progressi attuali andranno persi.",
       "no": "Are you sure you want to start over? All current progress will be lost.",
-      "el": "Είστε σίγουροι you want to start over? All current progress will be lost."
+      "el": "Είστε σίγουροι ότι θέλετε να ξεκινήσετε ξανά; Όλη η τρέχουσα πρόοδος θα χαθεί."
     },
     "common.messages.atlantic_ocean": {
       "en": "Atlantic Ocean",
@@ -911,7 +911,7 @@
       "pt": "Oceano Atlântico",
       "it": "Oceano Atlantico",
       "no": "Atlantic Ocean",
-      "el": "Ατλαντικός Ocean"
+      "el": "Ατλαντικός Ωκεανός"
     },
     "common.messages.autosave_disabled": {
       "en": "Auto-save disabled",
@@ -1021,7 +1021,7 @@
       "pt": "Mar Báltico",
       "it": "Mar Baltico",
       "no": "Baltic Sea",
-      "el": "Βαλτική Sea"
+      "el": "Βαλτική Θάλασσα"
     },
     "common.messages.basic_validation_tracking_available_in_isa_exercis": {
       "en": "Basic validation tracking available in ISA Exercise 12. Advanced features coming soon.",
@@ -1097,8 +1097,8 @@
       "lt": "Tarpininkavimo centrinis svarba",
       "pt": "Centralidade de Intermediação",
       "it": "Centralità di Betweenness",
-      "no": "Betweenness Centrality",
-      "el": "Ενδιαμεσότητα Κεντρικότητα"
+      "no": "Mellomliggende Sentralitet",
+      "el": "Κεντρικότητα Ενδιαμεσότητας"
     },
     "common.messages.betweenness_centrality_measures_how_often_a_node_a": {
       "en": "Betweenness Centrality: Measures how often a node acts as a bridge between other nodes. High betweenness means the node controls information flow and can act as a bottleneck or facilitator.",
@@ -1108,8 +1108,8 @@
       "lt": "Tarpinės centrinės pozicijos: Matuoja, kaip dažnai mazgas veikia kaip tiltas tarp kitų mazgų. Didelis tarpiškumas reiškia, kad mazgas kontroliuoja informacijos srautą ir gali veikti kaip kliūtis ar palengvintojas.",
       "pt": "Centralidade de Intermediação: Mede com que frequência um nó atua como uma ponte entre outros nós. Alta intermediação significa que o nó controla o fluxo de informações e pode atuar como um gargalo ou facilitador.",
       "it": "Centralità di Intermediazione: Misura quanto spesso un nodo agisce come ponte tra altri nodi. Un'alta intermediazione significa che il nodo controlla il flusso di informazioni e può agire come collo di bottiglia o facilitatore.",
-      "no": "Betweenness Centrality: Measures how often a node acts as a bridge between other nodes. High betweenness means the node controls information flow and can act as a bottleneck or facilitator.",
-      "el": "Ενδιαμεσότητα Centrality: Measures how often a node acts as a bridge between other nodes. High betweenness means the node controls information flow and can act as a bottleneck or facilitator."
+      "no": "Mellomliggende Sentralitet: Måler hvor ofte en node fungerer som bro mellom andre noder. Høy mellomliggenhet betyr at noden kontrollerer informasjonsflyten og kan fungere som flaskehals eller tilrettelegger.",
+      "el": "Κεντρικότητα Ενδιαμεσότητας: Μετρά πόσο συχνά ένας κόμβος λειτουργεί ως γέφυρα μεταξύ άλλων κόμβων. Υψηλή ενδιαμεσότητα σημαίνει ότι ο κόμβος ελέγχει τη ροή πληροφοριών και μπορεί να λειτουργήσει ως σημείο συμφόρησης ή διευκολυντής."
     },
     "common.messages.black_sea": {
       "en": "Black Sea",
@@ -1119,8 +1119,8 @@
       "lt": "Juodoji jūra",
       "pt": "Mar Negro",
       "it": "Mar Nero",
-      "no": "Black Sea",
-      "el": "Black Sea"
+      "no": "Svartehavet",
+      "el": "Μαύρη Θάλασσα"
     },
     "common.messages.bookmark": {
       "en": "Bookmark",
@@ -1251,8 +1251,8 @@
       "lt": "Apskaičiuoti Prioritetų Įverčius",
       "pt": "Calcular Pontuações de Prioridade",
       "it": "Calcola Punteggi di Priorità",
-      "no": "Calculate Priority Scores",
-      "el": "Υπολογισμός Priority Scores"
+      "no": "Beregn Prioritetspoeng",
+      "el": "Υπολογισμός Βαθμολογιών Προτεραιότητας"
     },
     "common.messages.can_it_be_implemented_political_social_technical": {
       "en": "Can it be implemented (political, social, technical)?",
@@ -1274,7 +1274,7 @@
       "pt": "Mar do Caribe",
       "it": "Mar dei Caraibi",
       "no": "Caribbean Sea",
-      "el": "Καραϊβική Sea"
+      "el": "Καραϊβική Θάλασσα"
     },
     "common.messages.case_study_context": {
       "en": "Case Study Context",
@@ -1306,8 +1306,8 @@
       "lt": "Priežastinių ciklų diagramos kūrimas ir eksportas",
       "pt": "Criação e Exportação de Diagramas de Ciclos Causais",
       "it": "Creazione ed Esportazione di Diagrammi di Cicli Causali",
-      "no": "Causal Loop Diagram Creation and Export",
-      "el": "Διάγραμμα αιτιακών βρόχων Creation and Export"
+      "no": "Opprettelse og Eksport av Kausalt Sløyfediagram",
+      "el": "Δημιουργία και Εξαγωγή Διαγράμματος Αιτιακών Βρόχων"
     },
     "common.messages.causal_loop_diagram_visualization": {
       "en": "Causal Loop Diagram Visualization",
@@ -1317,8 +1317,8 @@
       "lt": "Priežastinių kilpų diagramos vizualizacija",
       "pt": "Visualização do Diagrama de Loops Causais",
       "it": "Visualizzazione del Diagramma dei Loop Causali",
-      "no": "Causal Loop Diagram Visualization",
-      "el": "Διάγραμμα αιτιακών βρόχων Οπτικοποίηση"
+      "no": "Visualisering av Kausalt Sløyfediagram",
+      "el": "Οπτικοποίηση Διαγράμματος Αιτιακών Βρόχων"
     },
     "common.messages.certification_codes_of_conduct_stewardship": {
       "en": "Certification, codes of conduct, stewardship",
@@ -1328,8 +1328,8 @@
       "lt": "Sertifikavimas, elgesio kodeksai, globėjiškumas",
       "pt": "Certificação, códigos de conduta, gestão responsável",
       "it": "Certificazione, codici di condotta, gestione responsabile",
-      "no": "Certification, codes of conduct, stewardship",
-      "el": "Certification, codes of conduct, stewardship"
+      "no": "Sertifisering, atferdskoder, forvaltning",
+      "el": "Πιστοποίηση, κώδικες δεοντολογίας, διαχείριση"
     },
     "common.messages.clarifying_endogenisation_and_encapsulation": {
       "en": "Clarifying - Endogenisation and Encapsulation",
@@ -1427,8 +1427,8 @@
       "lt": "Pakrančių turizmo šablonas su jungčių pavyzdžiais!",
       "pt": "Modelo de Turismo Costeiro carregado com exemplos de conexões!",
       "it": "Modello di turismo costiero caricato con collegamenti di esempio!",
-      "no": "Coastal Tourism template loaded with example connections!",
-      "el": "Παράκτιο Tourism template loaded with example connections!"
+      "no": "Kysttourisme-mal lastet med eksempeltilkoblinger!",
+      "el": "Το πρότυπο Παράκτιου Τουρισμού φορτώθηκε με παραδείγματα συνδέσεων!"
     },
     "common.messages.cobenefits": {
       "en": "Co-benefits:",
@@ -1504,8 +1504,8 @@
       "lt": "Užpildykite L-R stulpelius Pagrindinėje duomenų lentelėje. Susieti EP su Pratime 1 nustatytomis G&N.",
       "pt": "Complete as colunas L-R na Folha de Dados Mestre. Ligue SE aos B&B identificados no Exercício 1.",
       "it": "Completare le colonne L-R nel Foglio Dati Principale. Collegare i SE ai B&B identificati nell'Esercizio 1.",
-      "no": "Complete columns L-R in the Master Data Sheet. Link ES to the G&B identified in Exercise 1.",
-      "el": "Ολοκληρώθηκε columns L-R in the Master Data Sheet. Link ES to the G&B identified in Exercise 1."
+      "no": "Fyll ut kolonnene L-R i Hoveddataarket. Koble ØT til G&F identifisert i Øvelse 1.",
+      "el": "Συμπληρώστε τις στήλες L-R στο Κύριο Φύλλο Δεδομένων. Συνδέστε τις ΥΟ με τα Α&Ο που εντοπίστηκαν στην Άσκηση 1."
     },
     "common.messages.complete_columns_uaa_in_the_master_data_sheet_link": {
       "en": "Complete columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a.",
@@ -1515,8 +1515,8 @@
       "lt": "Užpildykite U-AA stulpelius Pagrindinėje duomenų lentelėje. Susieti JPF su EP iš Pratimo 2a.",
       "pt": "Complete as colunas U-AA na Folha de Dados Mestre. Ligue PFM aos SE do Exercício 2a.",
       "it": "Completare le colonne U-AA nel Foglio Dati Principale. Collegare PFM ai SE dell'Esercizio 2a.",
-      "no": "Complete columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a.",
-      "el": "Ολοκληρώθηκε columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a."
+      "no": "Fyll ut kolonnene U-AA i Hoveddataarket. Koble MPF til ØT fra Øvelse 2a.",
+      "el": "Συμπληρώστε τις στήλες U-AA στο Κύριο Φύλλο Δεδομένων. Συνδέστε τους ΠΘΠ με τις ΥΟ από την Άσκηση 2α."
     },
     "common.messages.completed": {
       "en": "Completed",
@@ -1614,19 +1614,19 @@
       "lt": "Patvirtinkite Pradėti iš naujo",
       "pt": "Confirme o recomeço",
       "it": "Conferma Ricomincia",
-      "no": "Confirm Start Over",
-      "el": "Επιβεβαίωση Έναρξη Over"
+      "no": "Bekreft Start på Nytt",
+      "el": "Επιβεβαίωση Επανεκκίνησης"
     },
     "common.messages.connection_amended_successfully": {
       "en": "Connection amended successfully",
-      "es": "Conexion amended successfully",
-      "fr": "Connexion amended successfully",
-      "de": "Verbindung amended successfully",
-      "lt": "Rysys amended successfully",
-      "pt": "Conexao amended successfully",
-      "it": "Connessione amended successfully",
-      "no": "Connection amended successfully",
-      "el": "Σύνδεση amended successfully"
+      "es": "Conexión modificada exitosamente",
+      "fr": "Connexion modifiée avec succès",
+      "de": "Verbindung erfolgreich geändert",
+      "lt": "Ryšys sėkmingai pakeistas",
+      "pt": "Conexão alterada com sucesso",
+      "it": "Connessione modificata con successo",
+      "no": "Tilkobling endret vellykket",
+      "el": "Η σύνδεση τροποποιήθηκε επιτυχώς"
     },
     "common.messages.connection_review": {
       "en": "Connection Review",
@@ -1636,8 +1636,8 @@
       "lt": "Ryšio apžvalga",
       "pt": "Revisão de conexão",
       "it": "Revisione della connessione",
-      "no": "Connection Review",
-      "el": "Σύνδεση Review"
+      "no": "Gjennomgang av Tilkobling",
+      "el": "Επισκόπηση Σύνδεσης"
     },
     "common.messages.connection_reviews_and_amendments": {
       "en": "Connection reviews and amendments",
@@ -1647,19 +1647,19 @@
       "lt": "Ryšių peržiūros ir pataisymai",
       "pt": "Revisões e alterações de conexões",
       "it": "Revisioni e modifiche delle connessioni",
-      "no": "Connection reviews and amendments",
-      "el": "Σύνδεση reviews and amendments"
+      "no": "Gjennomganger og endringer av tilkoblinger",
+      "el": "Επισκοπήσεις και τροποποιήσεις συνδέσεων"
     },
     "common.messages.connection_types": {
       "en": "Connection Types:",
-      "es": "Conexion Types:",
-      "fr": "Connexion Types:",
-      "de": "Verbindung Types:",
-      "lt": "Rysys Types:",
-      "pt": "Conexao Types:",
-      "it": "Connessione Types:",
-      "no": "Connection Types:",
-      "el": "Σύνδεση Types:"
+      "es": "Tipos de Conexión:",
+      "fr": "Types de Connexion:",
+      "de": "Verbindungstypen:",
+      "lt": "Ryšių Tipai:",
+      "pt": "Tipos de Conexão:",
+      "it": "Tipi di Connessione:",
+      "no": "Tilkoblingstyper:",
+      "el": "Τύποι Σύνδεσης:"
     },
     "common.messages.connections": {
       "en": "Connections:",
@@ -1669,8 +1669,8 @@
       "lt": "Ryšiai:",
       "pt": "Conexões:",
       "it": "Connessioni:",
-      "no": "Connections:",
-      "el": "Connections:"
+      "no": "Tilkoblinger:",
+      "el": "Συνδέσεις:"
     },
     "common.messages.connections_defined": {
       "en": "connections defined",
@@ -1680,8 +1680,8 @@
       "lt": "ryšiai apibrėžti",
       "pt": "conexões definidas",
       "it": "connessioni definite",
-      "no": "connections defined",
-      "el": "Συνδέσεις defined"
+      "no": "tilkoblinger definert",
+      "el": "συνδέσεις ορισμένες"
     },
     "common.messages.connections_out_of": {
       "en": "connections out of",
@@ -1691,8 +1691,8 @@
       "lt": "jungtys išjungtos",
       "pt": "conexões fora de",
       "it": "connessioni fuori",
-      "no": "connections out of",
-      "el": "Συνδέσεις out of"
+      "no": "tilkoblinger av",
+      "el": "συνδέσεις από"
     },
     "common.messages.connections_saved_navigating_to_dashboard": {
       "en": "connections saved! Navigating to dashboard...",
@@ -1702,19 +1702,19 @@
       "lt": "ryšiai išsaugoti! Pereinama į valdymo skydą...",
       "pt": "conexões salvas! Navegando para o painel...",
       "it": "connessioni salvate! Navigazione alla dashboard...",
-      "no": "connections saved! Navigating to dashboard...",
-      "el": "Συνδέσεις saved! Navigating to dashboard..."
+      "no": "tilkoblinger lagret! Navigerer til dashbord...",
+      "el": "Οι συνδέσεις αποθηκεύτηκαν! Μετάβαση στον πίνακα ελέγχου..."
     },
     "common.messages.connections_sheet_columns": {
       "en": "Connections sheet columns:",
-      "es": "Connections sheet columns:",
-      "fr": "Connections sheet columns:",
-      "de": "Connections sheet columns:",
-      "lt": "Connections sheet columns:",
-      "pt": "Connections sheet columns:",
-      "it": "Connections sheet columns:",
-      "no": "Connections sheet columns:",
-      "el": "Συνδέσεις sheet columns:"
+      "es": "Columnas de la hoja de conexiones:",
+      "fr": "Colonnes de la feuille de connexions :",
+      "de": "Spalten des Verbindungsblatts:",
+      "lt": "Ryšių lapo stulpeliai:",
+      "pt": "Colunas da folha de conexões:",
+      "it": "Colonne del foglio delle connessioni:",
+      "no": "Kolonner i tilkoblingsarket:",
+      "el": "Στήλες φύλλου συνδέσεων:"
     },
     "common.messages.connections_transferred_to_isa_data_entry": {
       "en": "connections transferred to ISA Data Entry.",
@@ -1724,8 +1724,8 @@
       "lt": "jungtys, perkeltos į ISA Data Entry.",
       "pt": "conexões transferidas para o ISA Data Entry.",
       "it": "connessioni trasferite a ISA Data Entry.",
-      "no": "connections transferred to ISA Data Entry.",
-      "el": "Συνδέσεις transferred to ISA Data Entry."
+      "no": "tilkoblinger overført til ISA-dataregistrering.",
+      "el": "Οι συνδέσεις μεταφέρθηκαν στην Καταχώρηση Δεδομένων ISA."
     },
     "common.messages.contextaware_suggestions": {
       "en": "Context-aware suggestions",
@@ -1735,8 +1735,8 @@
       "lt": "Kontekstui pritaikyti pasiūlymai",
       "pt": "Sugestões sensíveis ao contexto",
       "it": "Suggerimenti contestuali",
-      "no": "Context-aware suggestions",
-      "el": "Context-aware suggestions"
+      "no": "Kontekstbevisste forslag",
+      "el": "Προτάσεις βάσει πλαισίου"
     },
     "common.messages.contextspecific_suggestions": {
       "en": "Context-specific suggestions",
@@ -1746,8 +1746,8 @@
       "lt": "Kontekstui būdingos rekomendacijos",
       "pt": "Sugestões específicas do contexto",
       "it": "Suggerimenti specifici del contesto",
-      "no": "Context-specific suggestions",
-      "el": "Context-specific suggestions"
+      "no": "Kontekstspesifikke forslag",
+      "el": "Προτάσεις ανάλογα με το πλαίσιο"
     },
     "common.messages.continue_to_activities": {
       "en": "Continue to Activities",
@@ -1757,8 +1757,8 @@
       "lt": "Toliau eikite į „Veikla“.",
       "pt": "Continuar para Atividades",
       "it": "Continua alle Attività",
-      "no": "Continue to Activities",
-      "el": "Συνέχεια to Activities"
+      "no": "Fortsett til Aktiviteter",
+      "el": "Συνέχεια στις Δραστηριότητες"
     },
     "common.messages.continue_to_ep1": {
       "en": "Continue to EP1",
@@ -1768,8 +1768,8 @@
       "lt": "Tęsti į EP1",
       "pt": "Continuar para EP1",
       "it": "Continua a EP1",
-      "no": "Continue to EP1",
-      "el": "Συνέχεια to EP1"
+      "no": "Fortsett til EP1",
+      "el": "Συνέχεια στο EP1"
     },
     "common.messages.continue_with": {
       "en": "Continue with",
@@ -1779,19 +1779,19 @@
       "lt": "Tęsti su",
       "pt": "Continuar com",
       "it": "Continua con",
-      "no": "Continue with",
-      "el": "Συνέχεια with"
+      "no": "Fortsett med",
+      "el": "Συνέχεια με"
     },
     "common.messages.controllability": {
       "en": "Controllability:",
-      "es": "Controllability:",
-      "fr": "Controllability:",
-      "de": "Controllability:",
-      "lt": "Controllability:",
-      "pt": "Controllability:",
-      "it": "Controllability:",
-      "no": "Controllability:",
-      "el": "Controllability:"
+      "es": "Controlabilidad:",
+      "fr": "Contrôlabilité :",
+      "de": "Steuerbarkeit:",
+      "lt": "Valdomumas:",
+      "pt": "Controlabilidade:",
+      "it": "Controllabilità:",
+      "no": "Kontrollerbarhet:",
+      "el": "Ελεγξιμότητα:"
     },
     "common.messages.cost": {
       "en": "Cost:",
@@ -1823,8 +1823,8 @@
       "lt": "Sukurkite CLD tinklus su pasitikėjimu pagrįstu vaizdiniu grįžtamuoju ryšiu, filtruokite pagal pasitikėjimą ir vykdykite analizės įrankius",
       "pt": "Crie redes CLD com feedback visual baseado em confiança, filtre por confiança e execute ferramentas de análise",
       "it": "Crea reti CLD con feedback visivo basato sulla confidenza, filtra per confidenza ed esegui strumenti di analisi",
-      "no": "Create CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools",
-      "el": "Δημιουργία CLD networks with confidence-based visual feedback, filter by confidence, and run analysis tools"
+      "no": "Opprett CLD-nettverk med tillitsbasert visuell tilbakemelding, filtrer etter tillit, og kjør analyseverktøy",
+      "el": "Δημιουργήστε δίκτυα CLD με οπτική ανατροφοδότηση βάσει εμπιστοσύνης, φιλτράρετε κατά εμπιστοσύνη και εκτελέστε εργαλεία ανάλυσης"
     },
     "common.messages.created": {
       "en": "Created:",
@@ -1982,14 +1982,14 @@
     },
     "common.messages.data_exported_successfully": {
       "en": "Data exported successfully!",
-      "es": "Datos exported successfully!",
-      "fr": "Donnees exported successfully!",
-      "de": "Daten exported successfully!",
-      "lt": "Duomenys exported successfully!",
-      "pt": "Dados exported successfully!",
-      "it": "Dati exported successfully!",
-      "no": "Data exported successfully!",
-      "el": "Δεδομένα exported successfully!"
+      "es": "¡Datos exportados exitosamente!",
+      "fr": "Données exportées avec succès !",
+      "de": "Daten erfolgreich exportiert!",
+      "lt": "Duomenys sėkmingai eksportuoti!",
+      "pt": "Dados exportados com sucesso!",
+      "it": "Dati esportati con successo!",
+      "no": "Data eksportert vellykket!",
+      "el": "Τα δεδομένα εξήχθησαν επιτυχώς!"
     },
     "common.messages.export_failed": {
       "en": "Export failed:",
@@ -2021,8 +2021,8 @@
       "lt": "Duomenų valdymas",
       "pt": "Gestão de Dados",
       "it": "Gestione Dati",
-      "no": "Data Management",
-      "el": "Δεδομένα Διαχείριση"
+      "no": "Databehandling",
+      "el": "Διαχείριση Δεδομένων"
     },
     "common.messages.data_recovered_successfully": {
       "en": "Data recovered successfully!",
@@ -2032,8 +2032,8 @@
       "lt": "Duomenys sėkmingai atkurti!",
       "pt": "Dados recuperados com sucesso!",
       "it": "Dati recuperati con successo!",
-      "no": "Data recovered successfully!",
-      "el": "Δεδομένα recovered successfully!"
+      "no": "Data gjenopprettet vellykket!",
+      "el": "Τα δεδομένα ανακτήθηκαν επιτυχώς!"
     },
     "common.messages.default_off": {
       "en": "Default: OFF.",
@@ -2164,8 +2164,8 @@
       "lt": "Ar norite jį atkurti?",
       "pt": "Você quer restaurá-lo?",
       "it": "Vuoi ripristinarlo?",
-      "no": "Do you want to restore it?",
-      "el": "Θέλετε to restore it?"
+      "no": "Ønsker du å gjenopprette det?",
+      "el": "Θέλετε να το επαναφέρετε;"
     },
     "common.messages.documentation": {
       "en": "Documentation",
@@ -2220,7 +2220,7 @@
       "pt": "Transferir Livro Excel Completo",
       "it": "Scarica Cartella di Lavoro Excel Completa",
       "no": "Download Complete Excel Workbook",
-      "el": "Λήψη Ολοκληρώθηκε Excel Workbook"
+      "el": "Λήψη Ολοκληρωμένου Βιβλίου Excel"
     },
     "common.messages.download_data": {
       "en": "Download Data",
@@ -2231,7 +2231,7 @@
       "pt": "Descarregar Dados",
       "it": "Scarica Dati",
       "no": "Download Data",
-      "el": "Λήψη Δεδομένα"
+      "el": "Λήψη Δεδομένων"
     },
     "common.messages.download_implementation_plan": {
       "en": "Download Implementation Plan",
@@ -2242,7 +2242,7 @@
       "pt": "Baixar Plano de Implementação",
       "it": "Scarica Piano di Attuazione",
       "no": "Download Implementation Plan",
-      "el": "Λήψη Implementation Plan"
+      "el": "Λήψη Σχεδίου Υλοποίησης"
     },
     "common.messages.download_kumu_csv_files": {
       "en": "Download Kumu CSV Files",
@@ -2253,7 +2253,7 @@
       "pt": "Transferir Ficheiros CSV Kumu",
       "it": "Scarica File CSV Kumu",
       "no": "Download Kumu CSV Files",
-      "el": "Λήψη Kumu CSV Files"
+      "el": "Λήψη Αρχείων Kumu CSV"
     },
     "common.messages.download_manuals": {
       "en": "Download Manuals",
@@ -2264,7 +2264,7 @@
       "pt": "Baixar Manuais",
       "it": "Scarica Manuali",
       "no": "Last ned brukermanualer",
-      "el": "Λήψη Manuals"
+      "el": "Λήψη Εγχειριδίων"
     },
     "common.messages.download_network_metrics": {
       "en": "Download Network Metrics",
@@ -2275,7 +2275,7 @@
       "pt": "Baixar Métricas de Rede",
       "it": "Scarica Metriche di Rete",
       "no": "Download Network Metrics",
-      "el": "Λήψη Δίκτυο Μετρικές"
+      "el": "Λήψη Μετρικών Δικτύου"
     },
     "common.messages.download_priority_report_pdf": {
       "en": "Download Priority Report (PDF)",
@@ -2286,7 +2286,7 @@
       "pt": "Baixar Relatório de Prioridade (PDF)",
       "it": "Scarica Rapporto di Priorità (PDF)",
       "no": "Download Priority Report (PDF)",
-      "el": "Λήψη Priority Report (PDF)"
+      "el": "Λήψη Εκθέσεως Προτεραιότητας (PDF)"
     },
     "common.messages.download_report": {
       "en": "Download Report",
@@ -2296,19 +2296,19 @@
       "lt": "Atsisiųsti Ataskaitą",
       "pt": "Baixar Relatório",
       "it": "Scarica Rapporto",
-      "no": "Download Report",
-      "el": "Λήψη Αναφορά"
+      "no": "Last ned rapport",
+      "el": "Λήψη Αναφοράς"
     },
     "common.messages.download_report_if_generated": {
       "en": "Download Report (if generated)",
-      "es": "Download Report (if generated)",
-      "fr": "Download Report (if generated)",
-      "de": "Download Report (if generated)",
-      "lt": "Download Report (if generated)",
-      "pt": "Download Report (if generated)",
-      "it": "Download Report (if generated)",
-      "no": "Download Report (if generated)",
-      "el": "Λήψη Αναφορά (if generated)"
+      "es": "Descargar Informe (si se generó)",
+      "fr": "Télécharger le Rapport (si généré)",
+      "de": "Bericht herunterladen (falls erstellt)",
+      "lt": "Atsisiųsti ataskaitą (jei sugeneruota)",
+      "pt": "Baixar Relatório (se gerado)",
+      "it": "Scarica Rapporto (se generato)",
+      "no": "Last ned rapport (hvis generert)",
+      "el": "Λήψη Αναφοράς (εάν δημιουργήθηκε)"
     },
     "common.messages.download_visualization": {
       "en": "Download Visualization",
@@ -2318,8 +2318,8 @@
       "lt": "Atsisiųsti vizualizaciją",
       "pt": "Descarregar Visualização",
       "it": "Scarica Visualizzazione",
-      "no": "Download Visualization",
-      "el": "Λήψη Οπτικοποίηση"
+      "no": "Last ned visualisering",
+      "el": "Λήψη Οπτικοποίησης"
     },
     "common.messages.downloadprint": {
       "en": "Download/Print",
@@ -2329,8 +2329,8 @@
       "lt": "Atsisiųsti/Spausdinti",
       "pt": "Baixar/Imprimir",
       "it": "Scarica/Stampa",
-      "no": "Download/Print",
-      "el": "Download/Print"
+      "no": "Last ned/Skriv ut",
+      "el": "Λήψη/Εκτύπωση"
     },
     "common.messages.downup": {
       "en": "Down-Up",
@@ -2340,8 +2340,8 @@
       "lt": "Žemyn-Aukštyn",
       "pt": "Baixo-Cima",
       "it": "Giù-Su",
-      "no": "Down-Up",
-      "el": "Down-Up"
+      "no": "Ned-Opp",
+      "el": "Κάτω-Πάνω"
     },
     "common.messages.east_atlantic": {
       "en": "East Atlantic",
@@ -2351,8 +2351,8 @@
       "lt": "Rytų Atlanto vandenynas",
       "pt": "Atlântico Leste",
       "it": "Atlantico Orientale",
-      "no": "East Atlantic",
-      "el": "East Atlantic"
+      "no": "Øst-Atlanteren",
+      "el": "Ανατολικός Ατλαντικός"
     },
     "common.messages.economic": {
       "en": "Economic",
@@ -2362,8 +2362,8 @@
       "lt": "Ekonominis",
       "pt": "Económico",
       "it": "Economico",
-      "no": "Economic",
-      "el": "Economic"
+      "no": "Økonomisk",
+      "el": "Οικονομικό"
     },
     "common.messages.edges": {
       "en": "Edges:",
@@ -2373,8 +2373,8 @@
       "lt": "Kraštinės:",
       "pt": "Arestas:",
       "it": "Archi:",
-      "no": "Edges:",
-      "el": "Edges:"
+      "no": "Kanter:",
+      "el": "Ακμές:"
     },
     "common.messages.edges_in_cld": {
       "en": "edges in CLD",
@@ -2384,8 +2384,8 @@
       "lt": "briaunos CLD",
       "pt": "arestas no CLD",
       "it": "archi nel CLD",
-      "no": "edges in CLD",
-      "el": "Ακμές in CLD"
+      "no": "kanter i CLD",
+      "el": "ακμές στο CLD"
     },
     "common.messages.educational": {
       "en": "Educational",
@@ -2395,30 +2395,30 @@
       "lt": "Švietimo",
       "pt": "Educacional",
       "it": "Educativo",
-      "no": "Educational",
-      "el": "Educational"
+      "no": "Utdanningsmessig",
+      "el": "Εκπαιδευτικό"
     },
     "common.messages.effect": {
       "en": "Effect:",
-      "es": "Effect:",
-      "fr": "Effect:",
-      "de": "Effect:",
-      "lt": "Effect:",
-      "pt": "Effect:",
-      "it": "Effect:",
-      "no": "Effect:",
-      "el": "Effect:"
+      "es": "Efecto:",
+      "fr": "Effet:",
+      "de": "Wirkung:",
+      "lt": "Poveikis:",
+      "pt": "Efeito:",
+      "it": "Effetto:",
+      "no": "Effekt:",
+      "el": "Αποτέλεσμα:"
     },
     "common.messages.effective_butndifficult": {
       "en": "Effective but\\nDifficult",
-      "es": "Effective but\\nDifficult",
-      "fr": "Effective but\\nDifficult",
-      "de": "Effective but\\nDifficult",
-      "lt": "Effective but\\nDifficult",
-      "pt": "Effective but\\nDifficult",
-      "it": "Effective but\\nDifficult",
-      "no": "Effective but\\nDifficult",
-      "el": "Effective but\\nDifficult"
+      "es": "Efectivo pero\\nDifícil",
+      "fr": "Efficace mais\\nDifficile",
+      "de": "Wirksam aber\\nSchwierig",
+      "lt": "Efektyvu, bet\\nSunku",
+      "pt": "Eficaz mas\\nDifícil",
+      "it": "Efficace ma\\nDifficile",
+      "no": "Effektiv men\\nVanskelig",
+      "el": "Αποτελεσματικό αλλά\\nΔύσκολο"
     },
     "common.messages.effectiveness": {
       "en": "Effectiveness",
@@ -2428,8 +2428,8 @@
       "lt": "Efektyvumas",
       "pt": "Eficácia",
       "it": "Efficacia",
-      "no": "Effectiveness",
-      "el": "Effectiveness"
+      "no": "Effektivitet",
+      "el": "Αποτελεσματικότητα"
     },
     "common.messages.effectiveness_vs_feasibility": {
       "en": "Effectiveness vs. Feasibility",
@@ -2439,8 +2439,8 @@
       "lt": "Efektyvumas vs. Įgyvendinamumas",
       "pt": "Eficácia vs. Viabilidade",
       "it": "Efficacia vs. Fattibilità",
-      "no": "Effectiveness vs. Feasibility",
-      "el": "Effectiveness vs. Feasibility"
+      "no": "Effektivitet vs. Gjennomførbarhet",
+      "el": "Αποτελεσματικότητα vs. Εφικτότητα"
     },
     "common.messages.effectiveness_weight": {
       "en": "Effectiveness Weight:",
@@ -2450,19 +2450,19 @@
       "lt": "Efektyvumo Svoris:",
       "pt": "Peso da Eficácia:",
       "it": "Peso dell'Efficacia:",
-      "no": "Effectiveness Weight:",
-      "el": "Effectiveness Weight:"
+      "no": "Effektivitetsvekt:",
+      "el": "Βάρος Αποτελεσματικότητας:"
     },
     "common.messages.efficient_information_spreaders": {
       "en": "Efficient information spreaders",
-      "es": "Efficient information spreaders",
-      "fr": "Efficient information spreaders",
-      "de": "Efficient information spreaders",
-      "lt": "Efficient information spreaders",
-      "pt": "Efficient information spreaders",
-      "it": "Efficient information spreaders",
-      "no": "Efficient information spreaders",
-      "el": "Efficient information spreaders"
+      "es": "Difusores eficientes de información",
+      "fr": "Diffuseurs d'information efficaces",
+      "de": "Effiziente Informationsverbreiter",
+      "lt": "Efektyvūs informacijos skleidėjai",
+      "pt": "Difusores eficientes de informação",
+      "it": "Diffusori efficienti di informazione",
+      "no": "Effektive informasjonsspredere",
+      "el": "Αποδοτικοί διασπορείς πληροφορίας"
     },
     "common.messages.eg_20002024": {
       "en": "e.g., 2000-2024",
@@ -2472,8 +2472,8 @@
       "lt": "pvz., 2000-2024",
       "pt": "por exemplo, 2000-2024",
       "it": "ad es., 2000-2024",
-      "no": "e.g., 2000-2024",
-      "el": "e.g., 2000-2024"
+      "no": "f.eks., 2000-2024",
+      "el": "π.χ., 2000-2024"
     },
     "common.messages.eg_baltic_sea_fisheries": {
       "en": "e.g., Baltic Sea fisheries",
@@ -2483,8 +2483,8 @@
       "lt": "pvz., Baltijos jūros žuvininkystė",
       "pt": "por exemplo, pescarias do Mar Báltico",
       "it": "ad es., pesca nel Mar Baltico",
-      "no": "e.g., Baltic Sea fisheries",
-      "el": "e.g., Baltic Sea fisheries"
+      "no": "f.eks., fiskeri i Østersjøen",
+      "el": "π.χ., αλιεία Βαλτικής Θάλασσας"
     },
     "common.messages.eg_baltic_sea_north_atlantic": {
       "en": "e.g., Baltic Sea, North Atlantic",
@@ -2494,52 +2494,52 @@
       "lt": "pvz., Baltijos jūra, Šiaurės Atlanto vandenynas",
       "pt": "por exemplo, Mar Báltico, Atlântico Norte",
       "it": "ad es., Mar Baltico, Atlantico settentrionale",
-      "no": "e.g., Baltic Sea, North Atlantic",
-      "el": "e.g., Baltic Sea, North Atlantic"
+      "no": "f.eks., Østersjøen, Nord-Atlanteren",
+      "el": "π.χ., Βαλτική Θάλασσα, Βόρειος Ατλαντικός"
     },
     "common.messages.eg_commercial_fishing": {
       "en": "e.g., Commercial fishing",
-      "es": "e.g., Commercial fishing",
-      "fr": "e.g., Commercial fishing",
-      "de": "e.g., Commercial fishing",
-      "lt": "e.g., Commercial fishing",
-      "pt": "e.g., Commercial fishing",
-      "it": "e.g., Commercial fishing",
-      "no": "e.g., Commercial fishing",
-      "el": "e.g., Commercial fishing"
+      "es": "ej., Pesca comercial",
+      "fr": "p.ex., Pêche commerciale",
+      "de": "z.B., Kommerzielle Fischerei",
+      "lt": "pvz., Komercinė žvejyba",
+      "pt": "ex., Pesca comercial",
+      "it": "es., Pesca commerciale",
+      "no": "f.eks., Kommersiell fiske",
+      "el": "π.χ., Εμπορική αλιεία"
     },
     "common.messages.eg_economic_growth": {
       "en": "e.g., Economic growth",
-      "es": "e.g., Economic growth",
-      "fr": "e.g., Economic growth",
-      "de": "e.g., Economic growth",
-      "lt": "e.g., Economic growth",
-      "pt": "e.g., Economic growth",
-      "it": "e.g., Economic growth",
-      "no": "e.g., Economic growth",
-      "el": "e.g., Economic growth"
+      "es": "ej., Crecimiento económico",
+      "fr": "p.ex., Croissance économique",
+      "de": "z.B., Wirtschaftswachstum",
+      "lt": "pvz., Ekonominis augimas",
+      "pt": "ex., Crescimento económico",
+      "it": "es., Crescita economica",
+      "no": "f.eks., Økonomisk vekst",
+      "el": "π.χ., Οικονομική ανάπτυξη"
     },
     "common.messages.eg_fish_catch": {
       "en": "e.g., Fish catch",
-      "es": "e.g., Fish catch",
-      "fr": "e.g., Fish catch",
-      "de": "e.g., Fish catch",
-      "lt": "e.g., Fish catch",
-      "pt": "e.g., Fish catch",
-      "it": "e.g., Fish catch",
-      "no": "e.g., Fish catch",
-      "el": "e.g., Fish catch"
+      "es": "ej., Captura de peces",
+      "fr": "p.ex., Capture de poissons",
+      "de": "z.B., Fischfang",
+      "lt": "pvz., Žuvų sugavimas",
+      "pt": "ex., Captura de peixes",
+      "it": "es., Cattura di pesci",
+      "no": "f.eks., Fiskefangst",
+      "el": "π.χ., Αλίευμα ψαριών"
     },
     "common.messages.eg_fish_production": {
       "en": "e.g., Fish production",
-      "es": "e.g., Fish production",
-      "fr": "e.g., Fish production",
-      "de": "e.g., Fish production",
-      "lt": "e.g., Fish production",
-      "pt": "e.g., Fish production",
-      "it": "e.g., Fish production",
-      "no": "e.g., Fish production",
-      "el": "e.g., Fish production"
+      "es": "ej., Producción pesquera",
+      "fr": "p.ex., Production halieutique",
+      "de": "z.B., Fischproduktion",
+      "lt": "pvz., Žuvų gamyba",
+      "pt": "ex., Produção de peixe",
+      "it": "es., Produzione ittica",
+      "no": "f.eks., Fiskeproduksjon",
+      "el": "π.χ., Παραγωγή ψαριών"
     },
     "common.messages.eg_fishing_quota_reduction": {
       "en": "e.g., Fishing quota reduction",
@@ -2549,8 +2549,8 @@
       "lt": "pvz., Žvejybos kvotų mažinimas",
       "pt": "ex., Redução de quotas de pesca",
       "it": "es., Riduzione delle quote di pesca",
-      "no": "e.g., Fishing quota reduction",
-      "el": "e.g., Fishing quota reduction"
+      "no": "f.eks., Reduksjon av fiskekvote",
+      "el": "π.χ., Μείωση αλιευτικής ποσόστωσης"
     },
     "common.messages.eg_legislation_passed": {
       "en": "e.g., Legislation passed",
@@ -2560,30 +2560,30 @@
       "lt": "pvz., Įstatymas priimtas",
       "pt": "ex., Legislação aprovada",
       "it": "es., Legislazione approvata",
-      "no": "e.g., Legislation passed",
-      "el": "e.g., Legislation passed"
+      "no": "f.eks., Lovgivning vedtatt",
+      "el": "π.χ., Νομοθεσία ψηφίστηκε"
     },
     "common.messages.eg_nutrient_enrichment": {
       "en": "e.g., Nutrient enrichment",
-      "es": "e.g., Nutrient enrichment",
-      "fr": "e.g., Nutrient enrichment",
-      "de": "e.g., Nutrient enrichment",
-      "lt": "e.g., Nutrient enrichment",
-      "pt": "e.g., Nutrient enrichment",
-      "it": "e.g., Nutrient enrichment",
-      "no": "e.g., Nutrient enrichment",
-      "el": "e.g., Nutrient enrichment"
+      "es": "ej., Enriquecimiento de nutrientes",
+      "fr": "p.ex., Enrichissement en nutriments",
+      "de": "z.B., Nährstoffanreicherung",
+      "lt": "pvz., Maistingųjų medžiagų praturtinimas",
+      "pt": "ex., Enriquecimento de nutrientes",
+      "it": "es., Arricchimento di nutrienti",
+      "no": "f.eks., Næringsberikelse",
+      "el": "π.χ., Εμπλουτισμός θρεπτικών ουσιών"
     },
     "common.messages.eg_primary_production": {
       "en": "e.g., Primary production",
-      "es": "e.g., Primary production",
-      "fr": "e.g., Primary production",
-      "de": "e.g., Primary production",
-      "lt": "e.g., Primary production",
-      "pt": "e.g., Primary production",
-      "it": "e.g., Primary production",
-      "no": "e.g., Primary production",
-      "el": "e.g., Primary production"
+      "es": "ej., Producción primaria",
+      "fr": "p.ex., Production primaire",
+      "de": "z.B., Primärproduktion",
+      "lt": "pvz., Pirminė gamyba",
+      "pt": "ex., Produção primária",
+      "it": "es., Produzione primaria",
+      "no": "f.eks., Primærproduksjon",
+      "el": "π.χ., Πρωτογενής παραγωγή"
     },
     "common.messages.eg_tonnes_index": {
       "en": "e.g., tonnes, %, index",
@@ -2593,8 +2593,8 @@
       "lt": "pvz., tonos, %, indeksas",
       "pt": "por exemplo, toneladas, %, índice",
       "it": "ad es., tonnellate, %, indice",
-      "no": "e.g., tonnes, %, index",
-      "el": "e.g., tonnes, %, index"
+      "no": "f.eks., tonn, %, indeks",
+      "el": "π.χ., τόνοι, %, δείκτης"
     },
     "common.messages.eigenvector_centrality": {
       "en": "Eigenvector Centrality",
@@ -2604,19 +2604,19 @@
       "lt": "Tikrinio vektoriaus centrinis svarba",
       "pt": "Centralidade de Vetor Próprio",
       "it": "Centralità di Autovettore",
-      "no": "Eigenvector Centrality",
-      "el": "Ιδιοδιάνυσμα Κεντρικότητα"
+      "no": "Egenvektorsentralitet",
+      "el": "Κεντρικότητα Ιδιοδιανύσματος"
     },
     "common.messages.enable_autosave": {
       "en": "Enable Auto-Save:",
-      "es": "Enable Auto-Save:",
-      "fr": "Enable Auto-Save:",
-      "de": "Enable Auto-Save:",
-      "lt": "Enable Auto-Save:",
-      "pt": "Enable Auto-Save:",
-      "it": "Enable Auto-Save:",
-      "no": "Enable Auto-Save:",
-      "el": "Ενεργοποίηση Auto-Save:"
+      "es": "Activar Guardado Automático:",
+      "fr": "Activer la Sauvegarde Automatique :",
+      "de": "Automatische Speicherung aktivieren:",
+      "lt": "Įjungti automatinį išsaugojimą:",
+      "pt": "Ativar Salvamento Automático:",
+      "it": "Attiva Salvataggio Automatico:",
+      "no": "Aktiver Autolagring:",
+      "el": "Ενεργοποίηση Αυτόματης Αποθήκευσης:"
     },
     "common.messages.encapsulation_notes": {
       "en": "Encapsulation Notes:",
@@ -2626,8 +2626,8 @@
       "lt": "Inkapsuliavimo pastabos:",
       "pt": "Notas de Encapsulamento:",
       "it": "Note di Incapsulamento:",
-      "no": "Encapsulation Notes:",
-      "el": "Encapsulation Notes:"
+      "no": "Innkapsling Merknader:",
+      "el": "Σημειώσεις Ενθυλάκωσης:"
     },
     "common.messages.endogenisation_notes": {
       "en": "Endogenisation Notes:",
@@ -2637,8 +2637,8 @@
       "lt": "Endogenizacijos pastabos:",
       "pt": "Notas de Endogenização:",
       "it": "Note di Endogenizzazione:",
-      "no": "Endogenisation Notes:",
-      "el": "Endogenisation Notes:"
+      "no": "Endogenisering Merknader:",
+      "el": "Σημειώσεις Ενδογενοποίησης:"
     },
     "common.messages.english_manual": {
       "en": "English Manual",
@@ -2648,8 +2648,8 @@
       "lt": "Anglų Vadovas",
       "pt": "Manual em Inglês",
       "it": "Manuale Inglese",
-      "no": "English Manual",
-      "el": "English Manual"
+      "no": "Engelsk Håndbok",
+      "el": "Αγγλικό Εγχειρίδιο"
     },
     "common.messages.entry_point_0_who_are_you": {
       "en": "Entry Point 0: Who Are You?",
@@ -2802,63 +2802,63 @@
       "lt": "Klaida skaičiuojant metrikos:",
       "pt": "Erro ao calcular métricas:",
       "it": "Errore nel calcolo delle metriche:",
-      "no": "Error calculating metrics:",
-      "el": "Σφάλμα calculating metrics:"
+      "no": "Feil ved beregning av metrikker:",
+      "el": "Σφάλμα κατά τον υπολογισμό μετρικών:"
     },
     "common.messages.error_file_save_failed_or_file_is_empty": {
       "en": "Error: File save failed or file is empty",
-      "es": "Error: File save failed or file is empty",
-      "fr": "Error: File save failed or file is empty",
-      "de": "Error: File save failed or file is empty",
-      "lt": "Error: File save failed or file is empty",
-      "pt": "Error: File save failed or file is empty",
-      "it": "Error: File save failed or file is empty",
-      "no": "Error: File save failed or file is empty",
-      "el": "Error: File save failed or file is empty"
+      "es": "Error: El guardado del archivo falló o el archivo está vacío",
+      "fr": "Erreur : L'enregistrement du fichier a échoué ou le fichier est vide",
+      "de": "Fehler: Datei speichern fehlgeschlagen oder Datei ist leer",
+      "lt": "Klaida: Failo išsaugojimas nepavyko arba failas tuščias",
+      "pt": "Erro: Falha ao salvar o arquivo ou o arquivo está vazio",
+      "it": "Errore: Salvataggio del file non riuscito o il file è vuoto",
+      "no": "Feil: Lagring av fil mislyktes eller filen er tom",
+      "el": "Σφάλμα: Η αποθήκευση του αρχείου απέτυχε ή το αρχείο είναι κενό"
     },
     "common.messages.error_generating_pathway_report": {
       "en": "Error generating pathway report:",
-      "es": "Error generating pathway report:",
-      "fr": "Error generating pathway report:",
-      "de": "Error generating pathway report:",
-      "lt": "Error generating pathway report:",
-      "pt": "Error generating pathway report:",
-      "it": "Error generating pathway report:",
-      "no": "Error generating pathway report:",
-      "el": "Σφάλμα generating pathway report:"
+      "es": "Error al generar el informe de ruta:",
+      "fr": "Erreur lors de la génération du rapport de parcours :",
+      "de": "Fehler beim Erstellen des Pfadberichts:",
+      "lt": "Klaida generuojant kelio ataskaitą:",
+      "pt": "Erro ao gerar relatório de percurso:",
+      "it": "Errore nella generazione del rapporto di percorso:",
+      "no": "Feil ved generering av ruterapport:",
+      "el": "Σφάλμα κατά τη δημιουργία αναφοράς διαδρομής:"
     },
     "common.messages.error_invalid_project_data_structure": {
       "en": "Error: Invalid project data structure",
-      "es": "Error: Invalid project data structure",
-      "fr": "Error: Invalid project data structure",
-      "de": "Error: Invalid project data structure",
-      "lt": "Error: Invalid project data structure",
-      "pt": "Error: Invalid project data structure",
-      "it": "Error: Invalid project data structure",
-      "no": "Error: Invalid project data structure",
-      "el": "Error: Invalid project data structure"
+      "es": "Error: Estructura de datos del proyecto no válida",
+      "fr": "Erreur : Structure de données du projet invalide",
+      "de": "Fehler: Ungültige Projektdatenstruktur",
+      "lt": "Klaida: Neteisinga projekto duomenų struktūra",
+      "pt": "Erro: Estrutura de dados do projeto inválida",
+      "it": "Errore: Struttura dati del progetto non valida",
+      "no": "Feil: Ugyldig prosjektdatastruktur",
+      "el": "Σφάλμα: Μη έγκυρη δομή δεδομένων έργου"
     },
     "common.messages.error_invalid_project_file_structure_this_may_not_": {
       "en": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
-      "es": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
-      "fr": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
-      "de": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
-      "lt": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
-      "pt": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
-      "it": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
-      "no": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
-      "el": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file."
+      "es": "Error: Estructura de archivo de proyecto no válida. Puede que no sea un archivo de proyecto MarineSABRES válido.",
+      "fr": "Erreur : Structure de fichier de projet invalide. Ce n'est peut-être pas un fichier de projet MarineSABRES valide.",
+      "de": "Fehler: Ungültige Projektdateistruktur. Dies ist möglicherweise keine gültige MarineSABRES-Projektdatei.",
+      "lt": "Klaida: Neteisinga projekto failo struktūra. Tai gali būti ne galiojantis MarineSABRES projekto failas.",
+      "pt": "Erro: Estrutura de arquivo de projeto inválida. Este pode não ser um arquivo de projeto MarineSABRES válido.",
+      "it": "Errore: Struttura del file di progetto non valida. Potrebbe non essere un file di progetto MarineSABRES valido.",
+      "no": "Feil: Ugyldig prosjektfilstruktur. Dette er kanskje ikke en gyldig MarineSABRES-prosjektfil.",
+      "el": "Σφάλμα: Μη έγκυρη δομή αρχείου έργου. Αυτό μπορεί να μην είναι ένα έγκυρο αρχείο έργου MarineSABRES."
     },
     "common.messages.error_loading_project": {
       "en": "Error loading project:",
-      "es": "Error loading project:",
-      "fr": "Erreur loading project:",
-      "de": "Error loading project:",
-      "lt": "Error loading project:",
-      "pt": "Error loading project:",
-      "it": "Error loading project:",
-      "no": "Error loading project:",
-      "el": "Σφάλμα Φόρτωση project:"
+      "es": "Error al cargar el proyecto:",
+      "fr": "Erreur lors du chargement du projet :",
+      "de": "Fehler beim Laden des Projekts:",
+      "lt": "Klaida įkeliant projektą:",
+      "pt": "Erro ao carregar o projeto:",
+      "it": "Errore nel caricamento del progetto:",
+      "no": "Feil ved lasting av prosjekt:",
+      "el": "Σφάλμα φόρτωσης έργου:"
     },
     "common.messages.error_network_too_large_300_nodes_or_1500_edges_lo": {
       "en": "Error: Network too large (>300 nodes or >1500 edges). Loop detection disabled to prevent hanging.",
@@ -2879,8 +2879,8 @@
       "lt": "Įvyko klaida",
       "pt": "Ocorreu um erro",
       "it": "Si è verificato un errore",
-      "no": "An error occurred",
-      "el": "An error occurred"
+      "no": "Det oppstod en feil",
+      "el": "Παρουσιάστηκε σφάλμα"
     },
     "common.messages.error_rendering_dashboard": {
       "en": "Error rendering dashboard:",
@@ -2890,30 +2890,30 @@
       "lt": "Klaida atvaizdavimo skydelyje:",
       "pt": "Erro ao renderizar o painel:",
       "it": "Errore nel rendering della dashboard:",
-      "no": "Error rendering dashboard:",
-      "el": "Σφάλμα rendering dashboard:"
+      "no": "Feil ved gjengivelse av dashbord:",
+      "el": "Σφάλμα απεικόνισης πίνακα ελέγχου:"
     },
     "common.messages.error_saving_model": {
       "en": "Error saving model:",
-      "es": "Error saving model:",
-      "fr": "Erreur saving model:",
-      "de": "Error saving model:",
-      "lt": "Error saving model:",
-      "pt": "Error saving model:",
-      "it": "Error saving model:",
-      "no": "Error saving model:",
-      "el": "Σφάλμα saving model:"
+      "es": "Error al guardar el modelo:",
+      "fr": "Erreur lors de l'enregistrement du modèle :",
+      "de": "Fehler beim Speichern des Modells:",
+      "lt": "Klaida išsaugant modelį:",
+      "pt": "Erro ao salvar o modelo:",
+      "it": "Errore nel salvataggio del modello:",
+      "no": "Feil ved lagring av modell:",
+      "el": "Σφάλμα αποθήκευσης μοντέλου:"
     },
     "common.messages.error_saving_project": {
       "en": "Error saving project:",
-      "es": "Error saving project:",
-      "fr": "Erreur saving project:",
-      "de": "Error saving project:",
-      "lt": "Error saving project:",
-      "pt": "Error saving project:",
-      "it": "Error saving project:",
-      "no": "Error saving project:",
-      "el": "Σφάλμα saving project:"
+      "es": "Error al guardar el proyecto:",
+      "fr": "Erreur lors de l'enregistrement du projet :",
+      "de": "Fehler beim Speichern des Projekts:",
+      "lt": "Klaida išsaugant projektą:",
+      "pt": "Erro ao salvar o projeto:",
+      "it": "Errore nel salvataggio del progetto:",
+      "no": "Feil ved lagring av prosjekt:",
+      "el": "Σφάλμα αποθήκευσης έργου:"
     },
     "common.messages.es": {
       "en": "ES",
@@ -2967,8 +2967,8 @@
       "lt": "Įtraukti ryšių pavyzdžiai",
       "pt": "Conexões de exemplo incluídas",
       "it": "Connessioni di esempio incluse",
-      "no": "Example connections included",
-      "el": "Παράδειγμα Συνδέσεις included"
+      "no": "Eksempeltilkoblinger inkludert",
+      "el": "Παραδείγματα συνδέσεων περιλαμβάνονται"
     },
     "common.messages.example_fishing_fish_biomass_fishing": {
       "en": "Example: Fishing → - Fish biomass → - Fishing",
@@ -3198,8 +3198,8 @@
       "lt": "Eksportuoti kelio ataskaitą",
       "pt": "Exportar Relatório de Percurso",
       "it": "Esporta Rapporto Percorso",
-      "no": "Export Pathway Report",
-      "el": "Εξαγωγή Pathway Report"
+      "no": "Eksporter Ruterapport",
+      "el": "Εξαγωγή Αναφοράς Διαδρομής"
     },
     "common.messages.export_to_excel": {
       "en": "Export to Excel",
@@ -3209,8 +3209,8 @@
       "lt": "Eksportuoti į Excel",
       "pt": "Exportar para Excel",
       "it": "Esporta in Excel",
-      "no": "Export to Excel",
-      "el": "Εξαγωγή to Excel"
+      "no": "Eksporter til Excel",
+      "el": "Εξαγωγή σε Excel"
     },
     "common.messages.export_visualizations": {
       "en": "Export Visualizations",
@@ -3220,8 +3220,8 @@
       "lt": "Eksportuoti vizualizacijas",
       "pt": "Exportar Visualizações",
       "it": "Esporta Visualizzazioni",
-      "no": "Export Visualizations",
-      "el": "Εξαγωγή Visualizations"
+      "no": "Eksporter Visualiseringer",
+      "el": "Εξαγωγή Απεικονίσεων"
     },
     "common.messages.exportguidedatap1": {
       "en": "export_guide_data_p1",
@@ -3396,8 +3396,8 @@
       "lt": "Baigti ir tęsti",
       "pt": "Concluir e continuar",
       "it": "Termina e continua",
-      "no": "Finish & Continue",
-      "el": "Ολοκλήρωση & Continue"
+      "no": "Fullfør og Fortsett",
+      "el": "Ολοκλήρωση & Συνέχεια"
     },
     "common.messages.flexibility": {
       "en": "Flexibility",
@@ -4287,8 +4287,8 @@
       "lt": "Paskutinį kartą keista:",
       "pt": "Última Modificação:",
       "it": "Ultima Modifica:",
-      "no": "Last Modified:",
-      "el": "Τελευταίο Modified:"
+      "no": "Sist Endret:",
+      "el": "Τελευταία Τροποποίηση:"
     },
     "common.messages.last_saved_d_minutes_ago": {
       "en": "Last saved: %d minutes ago",
@@ -4298,8 +4298,8 @@
       "lt": "Paskutinį kartą išsaugota prieš %d minučių",
       "pt": "Última gravação: %d minutos atrás",
       "it": "Ultimo salvataggio: %d minuti fa",
-      "no": "Last saved: %d minutes ago",
-      "el": "Τελευταίο saved: %d minutes ago"
+      "no": "Sist lagret: %d minutter siden",
+      "el": "Τελευταία αποθήκευση: πριν %d λεπτά"
     },
     "common.messages.last_saved_d_seconds_ago": {
       "en": "Last saved: %d seconds ago",
@@ -4309,8 +4309,8 @@
       "lt": "Paskutinį kartą išsaugota prieš %d sekundes",
       "pt": "Última gravação: %d segundos atrás",
       "it": "Ultimo salvataggio: %d secondi fa",
-      "no": "Last saved: %d seconds ago",
-      "el": "Τελευταίο saved: %d seconds ago"
+      "no": "Sist lagret: %d sekunder siden",
+      "el": "Τελευταία αποθήκευση: πριν %d δευτερόλεπτα"
     },
     "common.messages.laws_quotas_protected_areas_bans": {
       "en": "Laws, quotas, protected areas, bans",
@@ -4320,8 +4320,8 @@
       "lt": "Įstatymai, kvotos, saugomos teritorijos, draudimai",
       "pt": "Leis, quotas, áreas protegidas, proibições",
       "it": "Leggi, quote, aree protette, divieti",
-      "no": "Laws, quotas, protected areas, bans",
-      "el": "Laws, quotas, protected areas, bans"
+      "no": "Lover, kvoter, vernede områder, forbud",
+      "el": "Νόμοι, ποσοστώσεις, προστατευόμενες περιοχές, απαγορεύσεις"
     },
     "common.messages.layout": {
       "en": "Layout",
@@ -4413,25 +4413,25 @@
     },
     "common.messages.leverage_points_for_system_change": {
       "en": "Leverage points for system change",
-      "es": "Leverage points for system change",
-      "fr": "Leverage points for system change",
-      "de": "Leverage points for system change",
-      "lt": "Leverage points for system change",
-      "pt": "Leverage points for system change",
-      "it": "Leverage points for system change",
-      "no": "Leverage points for system change",
-      "el": "Σημεία μόχλευσης for system change"
+      "es": "Puntos de apalancamiento para el cambio del sistema",
+      "fr": "Points de levier pour le changement du système",
+      "de": "Hebelpunkte für Systemveränderung",
+      "lt": "Svertų taškai sistemos pokyčiams",
+      "pt": "Pontos de alavancagem para mudança do sistema",
+      "it": "Punti di leva per il cambiamento del sistema",
+      "no": "Vippepunkter for systemendring",
+      "el": "Σημεία μόχλευσης για αλλαγή του συστήματος"
     },
     "common.messages.link_references_nonexistent_": {
       "en": "Link references non-existent ",
-      "es": "Link references non-existent",
-      "fr": "Link references non-existent",
-      "de": "Link references non-existent",
-      "lt": "Link references non-existent",
-      "pt": "Link references non-existent",
-      "it": "Link references non-existent",
-      "no": "Link references non-existent ",
-      "el": "Σύνδεσμος references non-existent "
+      "es": "El enlace hace referencia a elementos inexistentes",
+      "fr": "Le lien fait référence à des éléments inexistants",
+      "de": "Link verweist auf nicht existierende Elemente",
+      "lt": "Nuoroda nurodo neegzistuojančius elementus",
+      "pt": "O link faz referência a elementos inexistentes",
+      "it": "Il collegamento fa riferimento a elementi inesistenti",
+      "no": "Lenken refererer til ikke-eksisterende elementer",
+      "el": "Ο σύνδεσμος αναφέρεται σε ανύπαρκτα στοιχεία"
     },
     "common.messages.linked_to_es": {
       "en": "Linked to ES:",
@@ -4567,25 +4567,25 @@
     },
     "common.messages.loop_detection_may_take_longer_consider_reducing_m": {
       "en": "Loop detection may take longer. Consider reducing max_cycles or max_loop_length.",
-      "es": "Loop detection may take longer. Consider reducing max_cycles or max_loop_length.",
-      "fr": "Loop detection may take longer. Consider reducing max_cycles or max_loop_length.",
-      "de": "Loop detection may take longer. Consider reducing max_cycles or max_loop_length.",
-      "lt": "Loop detection may take longer. Consider reducing max_cycles or max_loop_length.",
-      "pt": "Loop detection may take longer. Consider reducing max_cycles or max_loop_length.",
-      "it": "Loop detection may take longer. Consider reducing max_cycles or max_loop_length.",
-      "no": "Loop detection may take longer. Consider reducing max_cycles or max_loop_length.",
-      "el": "Ανίχνευση βρόχων may take longer. Consider reducing max_cycles or max_loop_length."
+      "es": "La detección de bucles puede tardar más. Considere reducir max_cycles o max_loop_length.",
+      "fr": "La détection de boucles peut prendre plus de temps. Envisagez de réduire max_cycles ou max_loop_length.",
+      "de": "Die Schleifenerkennung kann länger dauern. Erwägen Sie, max_cycles oder max_loop_length zu reduzieren.",
+      "lt": "Ciklų aptikimas gali užtrukti ilgiau. Apsvarstykite max_cycles arba max_loop_length sumažinimą.",
+      "pt": "A detecção de loops pode demorar mais. Considere reduzir max_cycles ou max_loop_length.",
+      "it": "Il rilevamento dei loop potrebbe richiedere più tempo. Considerare la riduzione di max_cycles o max_loop_length.",
+      "no": "Sløyfedeteksjon kan ta lengre tid. Vurder å redusere max_cycles eller max_loop_length.",
+      "el": "Η ανίχνευση βρόχων μπορεί να διαρκέσει περισσότερο. Εξετάστε τη μείωση max_cycles ή max_loop_length."
     },
     "common.messages.loop_detection_timed_out_after_30_seconds_try_redu": {
       "en": "Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.",
-      "es": "Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.",
-      "fr": "Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.",
-      "de": "Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.",
-      "lt": "Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.",
-      "pt": "Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.",
-      "it": "Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.",
-      "no": "Loop detection timed out after 30 seconds. Try reducing max loop length or max cycles.",
-      "el": "Ανίχνευση βρόχων timed out after 30 seconds. Try reducing max loop length or max cycles."
+      "es": "La detección de bucles se agotó después de 30 segundos. Intente reducir el largo máximo del bucle o los ciclos máximos.",
+      "fr": "La détection de boucles a expiré après 30 secondes. Essayez de réduire la longueur maximale ou les cycles maximaux.",
+      "de": "Die Schleifenerkennung hat nach 30 Sekunden das Zeitlimit überschritten. Versuchen Sie, die maximale Schleifenlänge oder maximale Zyklen zu reduzieren.",
+      "lt": "Ciklų aptikimo laikas baigėsi po 30 sekundžių. Bandykite sumažinti maksimalų ciklo ilgį arba maksimalius ciklus.",
+      "pt": "A detecção de loops expirou após 30 segundos. Tente reduzir o comprimento máximo ou os ciclos máximos.",
+      "it": "Il rilevamento dei loop è scaduto dopo 30 secondi. Prova a ridurre la lunghezza massima o i cicli massimi.",
+      "no": "Sløyfedeteksjon tidsavbrudd etter 30 sekunder. Prøv å redusere maks sløyfelengde eller maks sykluser.",
+      "el": "Η ανίχνευση βρόχων έληξε μετά από 30 δευτερόλεπτα. Δοκιμάστε να μειώσετε το μέγιστο μήκος βρόχου ή τους μέγιστους κύκλους."
     },
     "common.messages.loop_length": {
       "en": "Loop length:",
@@ -4694,8 +4694,8 @@
       "lt": "Jūros taršos šablonas su jungčių pavyzdžiais!",
       "pt": "Modelo de Poluição Marinha carregado com exemplos de conexões!",
       "it": "Modello di inquinamento marino caricato con collegamenti di esempio!",
-      "no": "Marine Pollution template loaded with example connections!",
-      "el": "Θαλάσσιο Pollution template loaded with example connections!"
+      "no": "Marin forurensning-mal lastet med eksempeltilkoblinger!",
+      "el": "Το πρότυπο Θαλάσσιας Ρύπανσης φορτώθηκε με παραδείγματα συνδέσεων!"
     },
     "common.messages.mean": {
       "en": "Mean",
@@ -4750,7 +4750,7 @@
       "pt": "Mar Mediterrâneo",
       "it": "Mar Mediterraneo",
       "no": "Mediterranean Sea",
-      "el": "Μεσόγειος Sea"
+      "el": "Μεσόγειος Θάλασσα"
     },
     "common.messages.medium": {
       "en": "Medium",
@@ -4804,8 +4804,8 @@
       "lt": "Naudojamos metrikos:",
       "pt": "Métricas Usadas:",
       "it": "Metriche Utilizzate:",
-      "no": "Metrics Used:",
-      "el": "Μετρικές Used:"
+      "no": "Brukte Metrikker:",
+      "el": "Μετρικές που Χρησιμοποιούνται:"
     },
     "common.messages.milestone": {
       "en": "Milestone:",
@@ -4815,8 +4815,8 @@
       "lt": "Etapas:",
       "pt": "Marco:",
       "it": "Traguardo:",
-      "no": "Milestone:",
-      "el": "Milestone:"
+      "no": "Milepæl:",
+      "el": "Ορόσημο:"
     },
     "common.messages.milestone_added": {
       "en": "Milestone added!",
@@ -4853,14 +4853,14 @@
     },
     "common.messages.model_saved_navigate_to_": {
       "en": "Model saved! Navigate to ",
-      "es": "Model saved! Navigate to ",
-      "fr": "Model saved! Navigate to ",
-      "de": "Model saved! Navigate to ",
-      "lt": "Model saved! Navigate to ",
-      "pt": "Model saved! Navigate to ",
-      "it": "Model saved! Navigate to ",
-      "no": "Model saved! Navigate to ",
-      "el": "Μοντέλο saved! Navigate to "
+      "es": "¡Modelo guardado! Navegar a ",
+      "fr": "Modèle enregistré ! Naviguer vers ",
+      "de": "Modell gespeichert! Navigieren zu ",
+      "lt": "Modelis išsaugotas! Eiti į ",
+      "pt": "Modelo salvo! Navegar para ",
+      "it": "Modello salvato! Vai a ",
+      "no": "Modell lagret! Naviger til ",
+      "el": "Το μοντέλο αποθηκεύτηκε! Μεταβείτε στο "
     },
     "common.messages.model_saved_successfully": {
       "en": "Model saved successfully!",
@@ -4947,8 +4947,8 @@
       "lt": "Tinklo junglumas",
       "pt": "Conectividade da Rede",
       "it": "Connettività della Rete",
-      "no": "Network Connectivity",
-      "el": "Δίκτυο Connectivity"
+      "no": "Nettverkstilkobling",
+      "el": "Συνδεσιμότητα Δικτύου"
     },
     "common.messages.network_density": {
       "en": "Network Density",
@@ -4958,8 +4958,8 @@
       "lt": "Tinklo tankis",
       "pt": "Densidade da Rede",
       "it": "Densità della Rete",
-      "no": "Network Density",
-      "el": "Δίκτυο Density"
+      "no": "Nettverkstetthet",
+      "el": "Πυκνότητα Δικτύου"
     },
     "common.messages.network_diameter": {
       "en": "Network Diameter",
@@ -4969,8 +4969,8 @@
       "lt": "Tinklo skersmuo",
       "pt": "Diâmetro da Rede",
       "it": "Diametro della Rete",
-      "no": "Network Diameter",
-      "el": "Δίκτυο Diameter"
+      "no": "Nettverksdiameter",
+      "el": "Διάμετρος Δικτύου"
     },
     "common.messages.network_metrics": {
       "en": "Network Metrics",
@@ -4980,8 +4980,8 @@
       "lt": "Tinklo metrikos",
       "pt": "Métricas de Rede",
       "it": "Metriche di Rete",
-      "no": "Network Metrics",
-      "el": "Δίκτυο Μετρικές"
+      "no": "Nettverksmetrikker",
+      "el": "Μετρικές Δικτύου"
     },
     "common.messages.network_metrics_analysis": {
       "en": "Network Metrics Analysis",
@@ -4991,8 +4991,8 @@
       "lt": "Tinklo metrikų analizė",
       "pt": "Análise de Métricas de Rede",
       "it": "Analisi delle Metriche di Rete",
-      "no": "Network Metrics Analysis",
-      "el": "Δίκτυο Μετρικές Ανάλυση"
+      "no": "Analyse av Nettverksmetrikker",
+      "el": "Ανάλυση Μετρικών Δικτύου"
     },
     "common.messages.network_metrics_calculated_successfully": {
       "en": "Network metrics calculated successfully!",
@@ -5002,8 +5002,8 @@
       "lt": "Tinklo metrikos sėkmingai apskaičiuotos!",
       "pt": "Métricas de rede calculadas com sucesso!",
       "it": "Metriche di rete calcolate con successo!",
-      "no": "Network metrics calculated successfully!",
-      "el": "Δίκτυο Μετρικές calculated successfully!"
+      "no": "Nettverksmetrikker beregnet vellykket!",
+      "el": "Οι μετρικές δικτύου υπολογίστηκαν επιτυχώς!"
     },
     "common.messages.network_summary": {
       "en": "Network Summary",
@@ -5013,8 +5013,8 @@
       "lt": "Tinklo santrauka",
       "pt": "Resumo da Rede",
       "it": "Riepilogo della Rete",
-      "no": "Network Summary",
-      "el": "Δίκτυο Περίληψη"
+      "no": "Nettverksoversikt",
+      "el": "Περίληψη Δικτύου"
     },
     "common.messages.networklevel_metrics": {
       "en": "Network-Level Metrics",
@@ -5035,8 +5035,8 @@
       "lt": "Nauja v1.2.0:",
       "pt": "Novo na v1.2.0:",
       "it": "Novità della v1.2.0:",
-      "no": "New in v1.2.0:",
-      "el": "Νέο in v1.2.0:"
+      "no": "Nytt i v1.2.0:",
+      "el": "Νέο στην v1.2.0:"
     },
     "common.messages.new_technologies_best_practices_innovation": {
       "en": "New technologies, best practices, innovation",
@@ -5046,8 +5046,8 @@
       "lt": "Naujos technologijos, geriausia praktika, inovacijos",
       "pt": "Novas tecnologias, melhores práticas, inovação",
       "it": "Nuove tecnologie, migliori pratiche, innovazione",
-      "no": "New technologies, best practices, innovation",
-      "el": "Νέο technologies, best practices, innovation"
+      "no": "Nye teknologier, beste praksiser, innovasjon",
+      "el": "Νέες τεχνολογίες, βέλτιστες πρακτικές, καινοτομία"
     },
     "common.messages.new_to_ses_modeling": {
       "en": "New to SES modeling?",
@@ -5057,8 +5057,8 @@
       "lt": "Naujas SES modeliavime?",
       "pt": "Novo na modelagem SES?",
       "it": "Nuovo alla modellazione SES?",
-      "no": "New to SES modeling?",
-      "el": "Νέο to SES modeling?"
+      "no": "Ny til SES-modellering?",
+      "el": "Νέοι στη μοντελοποίηση SES;"
     },
     "common.messages.no": {
       "en": "No",
@@ -5079,8 +5079,8 @@
       "lt": "CLD duomenų nerasta.",
       "pt": "Nenhum dado CLD encontrado.",
       "it": "Nessun dato CLD trovato.",
-      "no": "No CLD data found.",
-      "el": "Όχι CLD Δεδομένα found."
+      "no": "Ingen CLD-data funnet.",
+      "el": "Δεν βρέθηκαν δεδομένα CLD."
     },
     "common.messages.no_connections_to_review": {
       "en": "No connections to review.",
@@ -5090,8 +5090,8 @@
       "lt": "Nėra ryšių, kuriuos būtų galima peržiūrėti.",
       "pt": "Não há conexões para revisar.",
       "it": "Nessuna connessione da rivedere.",
-      "no": "No connections to review.",
-      "el": "Όχι Συνδέσεις to review."
+      "no": "Ingen tilkoblinger å gjennomgå.",
+      "el": "Δεν υπάρχουν συνδέσεις προς επισκόπηση."
     },
     "common.messages.no_data": {
       "en": "No data available",
@@ -5101,8 +5101,8 @@
       "lt": "Nėra duomenų",
       "pt": "Nenhum dado disponível",
       "it": "Nessun dato disponibile",
-      "no": "No data available",
-      "el": "Όχι Δεδομένα available"
+      "no": "Ingen data tilgjengelig",
+      "el": "Δεν υπάρχουν διαθέσιμα δεδομένα"
     },
     "common.messages.no_file_selected": {
       "en": "No file selected",
@@ -5112,8 +5112,8 @@
       "lt": "Nepasirinktas failas",
       "pt": "Nenhum arquivo selecionado",
       "it": "Nessun file selezionato",
-      "no": "No file selected",
-      "el": "Όχι Αρχείο Επιλεγμένο"
+      "no": "Ingen fil valgt",
+      "el": "Δεν επιλέχθηκε αρχείο"
     },
     "common.messages.no_saved_session_found": {
       "en": "No saved session found.",
@@ -5123,8 +5123,8 @@
       "lt": "Nerasta jokių išsaugotų seansų.",
       "pt": "Nenhuma sessão salva encontrada.",
       "it": "Nessuna sessione salvata trovata.",
-      "no": "No saved session found.",
-      "el": "Όχι Αποθηκεύτηκε session found."
+      "no": "Ingen lagret økt funnet.",
+      "el": "Δεν βρέθηκε αποθηκευμένη συνεδρία."
     },
     "common.messages.none": {
       "en": "None",
@@ -5607,8 +5607,8 @@
       "lt": "Peržiūrėkite visus šablono ryšius prieš įkeliant. Peržiūrėkite ryšius, kad suprastumėte priežastinius ryšius SES modelyje.",
       "pt": "Visualize todas as conexões do modelo antes de carregar. Revise as conexões para entender os vínculos causais no modelo SES.",
       "it": "Visualizza in anteprima tutte le connessioni del modello prima del caricamento. Rivedi le connessioni per comprendere i collegamenti causali nel modello SES.",
-      "no": "Preview all template connections before loading. Review connections to understand the causal links in the SES model.",
-      "el": "Προεπισκόπηση Όλα Πρότυπο Συνδέσεις before loading. Review connections to understand the causal links in the SES model."
+      "no": "Forhåndsvis alle malforbindelser før lasting. Gjennomgå forbindelsene for å forstå årsakssammenhengene i SES-modellen.",
+      "el": "Προεπισκόπηση όλων των συνδέσεων προτύπου πριν τη φόρτωση. Εξετάστε τις συνδέσεις για να κατανοήσετε τους αιτιακούς δεσμούς στο μοντέλο SES."
     },
     "common.messages.preview_model": {
       "en": "Preview Model",
@@ -5618,8 +5618,8 @@
       "lt": "Peržiūros modelis",
       "pt": "Modelo de visualização",
       "it": "Anteprima del modello",
-      "no": "Preview Model",
-      "el": "Προεπισκόπηση Μοντέλο"
+      "no": "Forhåndsvis modell",
+      "el": "Προεπισκόπηση Μοντέλου"
     },
     "common.messages.prioritization": {
       "en": "Prioritization",
@@ -5629,8 +5629,8 @@
       "lt": "Prioritetų Nustatymas",
       "pt": "Priorização",
       "it": "Prioritizzazione",
-      "no": "Prioritization",
-      "el": "Prioritization"
+      "no": "Prioritering",
+      "el": "Ιεράρχηση"
     },
     "common.messages.prioritization_criteria": {
       "en": "Prioritization Criteria",
@@ -5640,8 +5640,8 @@
       "lt": "Prioritetų Nustatymo Kriterijai",
       "pt": "Critérios de Priorização",
       "it": "Criteri di Prioritizzazione",
-      "no": "Prioritization Criteria",
-      "el": "Prioritization Criteria"
+      "no": "Prioriteringskriterier",
+      "el": "Κριτήρια Ιεράρχησης"
     },
     "common.messages.prioritization_criteria_weighting": {
       "en": "Prioritization Criteria Weighting",
@@ -5651,8 +5651,8 @@
       "lt": "Prioritetų Nustatymo Kriterijai Svoris",
       "pt": "Ponderação de Critérios de Priorização",
       "it": "Ponderazione dei Criteri di Prioritizzazione",
-      "no": "Prioritization Criteria Weighting",
-      "el": "Prioritization Criteria Weighting"
+      "no": "Vekting av prioriteringskriterier",
+      "el": "Στάθμιση Κριτηρίων Ιεράρχησης"
     },
     "common.messages.priority_ranking": {
       "en": "Priority Ranking",
@@ -5662,8 +5662,8 @@
       "lt": "Prioritetų Reitingas",
       "pt": "Classificação de Prioridade",
       "it": "Classifica di Priorità",
-      "no": "Priority Ranking",
-      "el": "Priority Ranking"
+      "no": "Prioritetsrangering",
+      "el": "Κατάταξη Προτεραιότητας"
     },
     "common.messages.proceed_to_identify_your_basic_human_needs": {
       "en": "Proceed to identify your basic human needs",
@@ -5673,8 +5673,8 @@
       "lt": "Tęskite, kad nustatytumėte savo pagrindinius žmogaus poreikius",
       "pt": "Continuar para identificar as suas necessidades humanas básicas",
       "it": "Procedi per identificare i tuoi bisogni umani fondamentali",
-      "no": "Proceed to identify your basic human needs",
-      "el": "Proceed to identify your basic human needs"
+      "no": "Fortsett for å identifisere dine grunnleggende menneskelige behov",
+      "el": "Προχωρήστε για να εντοπίσετε τις βασικές ανθρώπινες ανάγκες σας"
     },
     "common.messages.proceed_to_specify_activities_and_risks": {
       "en": "Proceed to specify activities and risks",
@@ -5684,19 +5684,19 @@
       "lt": "Tęskite, kad nurodytumėte veiklas ir rizikas",
       "pt": "Continuar para especificar atividades e riscos",
       "it": "Procedi per specificare attività e rischi",
-      "no": "Proceed to specify activities and risks",
-      "el": "Proceed to specify activities and risks"
+      "no": "Fortsett for å spesifisere aktiviteter og risikoer",
+      "el": "Προχωρήστε για να καθορίσετε δραστηριότητες και κινδύνους"
     },
     "common.messages.process_type": {
       "en": "Process Type:",
-      "es": "Process Tipo",
-      "fr": "Process Type",
-      "de": "Process Type:",
-      "lt": "Process Type:",
-      "pt": "Process Type:",
-      "it": "Process Type:",
-      "no": "Process Type:",
-      "el": "Process Type:"
+      "es": "Tipo de Proceso:",
+      "fr": "Type de Processus:",
+      "de": "Prozesstyp:",
+      "lt": "Proceso tipas:",
+      "pt": "Tipo de Processo:",
+      "it": "Tipo di Processo:",
+      "no": "Prosesstype:",
+      "el": "Τύπος Διαδικασίας:"
     },
     "common.messages.processing": {
       "en": "Processing...",
@@ -5706,19 +5706,19 @@
       "lt": "Apdorojama...",
       "pt": "Processando...",
       "it": "Elaborazione...",
-      "no": "Processing...",
-      "el": "Processing..."
+      "no": "Behandler...",
+      "el": "Επεξεργασία..."
     },
     "common.messages.progress": {
       "en": "Progress",
       "es": "Progreso",
-      "fr": "Progres",
-      "de": "Progress",
-      "lt": "Progress",
-      "pt": "Progress",
-      "it": "Progress",
-      "no": "Progress",
-      "el": "Progress"
+      "fr": "Progrès",
+      "de": "Fortschritt",
+      "lt": "Progresas",
+      "pt": "Progresso",
+      "it": "Progresso",
+      "no": "Fremgang",
+      "el": "Πρόοδος"
     },
     "common.messages.project_information": {
       "en": "Project Information",
@@ -5795,7 +5795,7 @@
       "pt": "Salvo no arquivo local: %s",
       "it": "Salvato nel file locale: %s",
       "no": "Lagret til lokal fil: %s",
-      "el": "Αποθηκεύτηκε to local file: %s"
+      "el": "Αποθηκεύτηκε σε τοπικό αρχείο: %s"
     },
     "common.messages.local_save_failed": {
       "en": "Failed to save to local folder:",
@@ -5828,7 +5828,7 @@
       "pt": "Erro ao analisar arquivo:",
       "it": "Errore durante l'analisi del file:",
       "no": "Feil ved parsing av fil:",
-      "el": "Σφάλμα parsing file:"
+      "el": "Σφάλμα ανάλυσης αρχείου:"
     },
     "common.messages.local_load_failed": {
       "en": "Failed to load from local folder:",
@@ -5883,7 +5883,7 @@
       "pt": "Nenhuma pasta local selecionada. Por favor, selecione uma pasta primeiro.",
       "it": "Nessuna cartella locale selezionata. Si prega di selezionare prima una cartella.",
       "no": "Ingen lokal mappe valgt. Vennligst velg en mappe først.",
-      "el": "Όχι local folder selected. Please select a folder first."
+      "el": "Δεν επιλέχθηκε τοπικός φάκελος. Παρακαλώ επιλέξτε πρώτα έναν φάκελο."
     },
     "common.messages.no_data_to_save": {
       "en": "No data to save",
@@ -5894,7 +5894,7 @@
       "pt": "Nenhum dado para salvar",
       "it": "Nessun dato da salvare",
       "no": "Ingen data å lagre",
-      "el": "Όχι Δεδομένα to save"
+      "el": "Δεν υπάρχουν δεδομένα προς αποθήκευση"
     },
     "common.messages.proportion_of_actual_connections_to_possible_conne": {
       "en": "Proportion of actual connections to possible connections. Higher density indicates more interconnected system.",
@@ -6080,8 +6080,8 @@
       "lt": "Regioninė jūra pakeista į",
       "pt": "Mar regional alterado para",
       "it": "Mare regionale cambiato in",
-      "no": "Regional sea changed to",
-      "el": "Περιφερειακή θάλασσα Άλλαξε to"
+      "no": "Regionalt hav endret til",
+      "el": "Η περιφερειακή θάλασσα άλλαξε σε"
     },
     "common.messages.regional_sea_context": {
       "en": "Regional Sea Context",
@@ -6146,8 +6146,8 @@
       "lt": "Ataskaitos formatas:",
       "pt": "Formato do Relatório:",
       "it": "Formato del Rapporto:",
-      "no": "Report Format:",
-      "el": "Αναφορά Format:"
+      "no": "Rapportformat:",
+      "el": "Μορφή Αναφοράς:"
     },
     "common.messages.report_generated_successfully": {
       "en": "Report Generated Successfully",
@@ -6157,19 +6157,19 @@
       "lt": "Ataskaita Sėkmingai Sugeneruota",
       "pt": "Relatório Gerado com Sucesso",
       "it": "Rapporto Generato con Successo",
-      "no": "Report Generated Successfully",
-      "el": "Αναφορά Generated Successfully"
+      "no": "Rapport Generert Vellykket",
+      "el": "Η Αναφορά Δημιουργήθηκε Επιτυχώς"
     },
     "common.messages.report_opened_in_a_new_window": {
       "en": "Report opened in a new window!",
-      "es": "Report opened in a new window!",
-      "fr": "Report opened in a new window!",
-      "de": "Report opened in a new window!",
-      "lt": "Report opened in a new window!",
-      "pt": "Report opened in a new window!",
-      "it": "Report opened in a new window!",
-      "no": "Report opened in a new window!",
-      "el": "Αναφορά opened in a new window!"
+      "es": "¡Informe abierto en una nueva ventana!",
+      "fr": "Rapport ouvert dans une nouvelle fenêtre !",
+      "de": "Bericht in einem neuen Fenster geöffnet!",
+      "lt": "Ataskaita atidaryta naujame lange!",
+      "pt": "Relatório aberto em uma nova janela!",
+      "it": "Rapporto aperto in una nuova finestra!",
+      "no": "Rapport åpnet i et nytt vindu!",
+      "el": "Η αναφορά άνοιξε σε νέο παράθυρο!"
     },
     "common.messages.report_type": {
       "en": "Report Type:",
@@ -6179,8 +6179,8 @@
       "lt": "Ataskaitos tipas:",
       "pt": "Tipo de Relatório:",
       "it": "Tipo di Rapporto:",
-      "no": "Report Type:",
-      "el": "Αναφορά Type:"
+      "no": "Rapporttype:",
+      "el": "Τύπος Αναφοράς:"
     },
     "common.messages.required": {
       "en": "Required",
@@ -6201,8 +6201,8 @@
       "lt": "Atstatyti visus duomenis",
       "pt": "Redefinir Todos os Dados",
       "it": "Ripristina Tutti i Dati",
-      "no": "Reset All Data",
-      "el": "Επαναφορά Όλα Δεδομένα"
+      "no": "Tilbakestill Alle Data",
+      "el": "Επαναφορά Όλων των Δεδομένων"
     },
     "common.messages.reset_data": {
       "en": "Reset Data",
@@ -6212,8 +6212,8 @@
       "lt": "Atstatyti duomenis",
       "pt": "Redefinir Dados",
       "it": "Ripristina Dati",
-      "no": "Reset Data",
-      "el": "Επαναφορά Δεδομένα"
+      "no": "Tilbakestill Data",
+      "el": "Επαναφορά Δεδομένων"
     },
     "common.messages.resources_risks": {
       "en": "Resources & Risks",
@@ -6223,8 +6223,8 @@
       "lt": "Ištekliai ir rizikos",
       "pt": "Recursos e Riscos",
       "it": "Risorse e Rischi",
-      "no": "Resources & Risks",
-      "el": "Resources & Risks"
+      "no": "Ressurser og Risikoer",
+      "el": "Πόροι & Κίνδυνοι"
     },
     "common.messages.responsible_stakeholders": {
       "en": "Responsible Stakeholders:",
@@ -6234,8 +6234,8 @@
       "lt": "Atsakingos Suinteresuotos Šalys:",
       "pt": "Partes Interessadas Responsáveis:",
       "it": "Parti Interessate Responsabili:",
-      "no": "Responsible Stakeholders:",
-      "el": "Responsible Stakeholders:"
+      "no": "Ansvarlige Interessenter:",
+      "el": "Υπεύθυνοι Ενδιαφερόμενοι:"
     },
     "common.messages.restore_previous_session": {
       "en": "Restore Previous Session?",
@@ -6245,8 +6245,8 @@
       "lt": "Atkurti ankstesnę sesiją?",
       "pt": "Restaurar sessão anterior?",
       "it": "Ripristinare la sessione precedente?",
-      "no": "Restore Previous Session?",
-      "el": "Επαναφορά Προηγούμενο Session?"
+      "no": "Gjenopprett Forrige Økt?",
+      "el": "Επαναφορά Προηγούμενης Συνεδρίας;"
     },
     "common.messages.restore_your_last_saved_session": {
       "en": "Restore your last saved session",
@@ -6256,8 +6256,8 @@
       "lt": "Atkurkite paskutinę išsaugotą seansą",
       "pt": "Restaure sua última sessão salva",
       "it": "Ripristina l'ultima sessione salvata",
-      "no": "Restore your last saved session",
-      "el": "Επαναφορά your last saved session"
+      "no": "Gjenopprett din sist lagrede økt",
+      "el": "Επαναφέρετε την τελευταία αποθηκευμένη συνεδρία σας"
     },
     "common.messages.restoreoriginalnetwork": {
       "en": "restore_original_network",
@@ -6433,7 +6433,7 @@
       "pt": "Salvar Marcador",
       "it": "Salva Segnalibro",
       "no": "Save Bookmark",
-      "el": "Αποθήκευση Bookmark"
+      "el": "Αποθήκευση Σελιδοδείκτη"
     },
     "common.messages.save_bot_data": {
       "en": "Save BOT Data",
@@ -6444,7 +6444,7 @@
       "pt": "Guardar Dados BOT",
       "it": "Salva Dati BOT",
       "no": "Save BOT Data",
-      "el": "Αποθήκευση BOT Data"
+      "el": "Αποθήκευση Δεδομένων BOT"
     },
     "common.messages.save_current_isa_analysis_to_excel_workbook": {
       "en": "Save current ISA analysis to Excel workbook:",
@@ -6454,8 +6454,8 @@
       "lt": "Išsaugoti dabartinę ISA analizę į Excel darbaknygę:",
       "pt": "Guardar análise ISA atual no livro Excel:",
       "it": "Salvare l'analisi ISA corrente nella cartella di lavoro Excel:",
-      "no": "Save current ISA analysis to Excel workbook:",
-      "el": "Αποθήκευση current ISA analysis to Excel workbook:"
+      "no": "Lagre gjeldende ISA-analyse i Excel-arbeidsbok:",
+      "el": "Αποθήκευση τρέχουσας ανάλυσης ISA σε βιβλίο εργασίας Excel:"
     },
     "common.messages.save_exercise_0": {
       "en": "Save Exercise 0",
@@ -6466,7 +6466,7 @@
       "pt": "Guardar Exercício 0",
       "it": "Salva Esercizio 0",
       "no": "Save Exercise 0",
-      "el": "Αποθήκευση Exercise 0"
+      "el": "Αποθήκευση Άσκησης 0"
     },
     "common.messages.save_exercise_1": {
       "en": "Save Exercise 1",
@@ -6477,7 +6477,7 @@
       "pt": "Guardar Exercício 1",
       "it": "Salva Esercizio 1",
       "no": "Save Exercise 1",
-      "el": "Αποθήκευση Exercise 1"
+      "el": "Αποθήκευση Άσκησης 1"
     },
     "common.messages.save_exercise_2a": {
       "en": "Save Exercise 2a",
@@ -6488,7 +6488,7 @@
       "pt": "Guardar Exercício 2a",
       "it": "Salva Esercizio 2a",
       "no": "Save Exercise 2a",
-      "el": "Αποθήκευση Exercise 2a"
+      "el": "Αποθήκευση Άσκησης 2a"
     },
     "common.messages.save_exercise_2b": {
       "en": "Save Exercise 2b",
@@ -6499,7 +6499,7 @@
       "pt": "Guardar Exercício 2b",
       "it": "Salva Esercizio 2b",
       "no": "Save Exercise 2b",
-      "el": "Αποθήκευση Exercise 2b"
+      "el": "Αποθήκευση Άσκησης 2b"
     },
     "common.messages.save_exercise_3": {
       "en": "Save Exercise 3",
@@ -6510,7 +6510,7 @@
       "pt": "Guardar Exercício 3",
       "it": "Salva Esercizio 3",
       "no": "Save Exercise 3",
-      "el": "Αποθήκευση Exercise 3"
+      "el": "Αποθήκευση Άσκησης 3"
     },
     "common.messages.save_exercise_4": {
       "en": "Save Exercise 4",
@@ -6521,7 +6521,7 @@
       "pt": "Guardar Exercício 4",
       "it": "Salva Esercizio 4",
       "no": "Save Exercise 4",
-      "el": "Αποθήκευση Exercise 4"
+      "el": "Αποθήκευση Άσκησης 4"
     },
     "common.messages.save_exercise_5": {
       "en": "Save Exercise 5",
@@ -6532,7 +6532,7 @@
       "pt": "Guardar Exercício 5",
       "it": "Salva Esercizio 5",
       "no": "Save Exercise 5",
-      "el": "Αποθήκευση Exercise 5"
+      "el": "Αποθήκευση Άσκησης 5"
     },
     "common.messages.save_exercise_6": {
       "en": "Save Exercise 6",
@@ -6543,7 +6543,7 @@
       "pt": "Guardar Exercício 6",
       "it": "Salva Esercizio 6",
       "no": "Save Exercise 6",
-      "el": "Αποθήκευση Exercise 6"
+      "el": "Αποθήκευση Άσκησης 6"
     },
     "common.messages.save_exercises_1012": {
       "en": "Save Exercises 10-12",
@@ -6554,7 +6554,7 @@
       "pt": "Guardar Exercícios 10-12",
       "it": "Salva Esercizi 10-12",
       "no": "Save Exercises 10-12",
-      "el": "Αποθήκευση Exercises 10-12"
+      "el": "Αποθήκευση Ασκήσεων 10-12"
     },
     "common.messages.save_exercises_79": {
       "en": "Save Exercises 7-9",
@@ -6565,7 +6565,7 @@
       "pt": "Guardar Exercícios 7-9",
       "it": "Salva Esercizi 7-9",
       "no": "Save Exercises 7-9",
-      "el": "Αποθήκευση Exercises 7-9"
+      "el": "Αποθήκευση Ασκήσεων 7-9"
     },
     "common.messages.save_progress": {
       "en": "Save Progress",
@@ -6576,7 +6576,7 @@
       "pt": "Salvar progresso",
       "it": "Salva progressi",
       "no": "Save Progress",
-      "el": "Αποθήκευση Progress"
+      "el": "Αποθήκευση Προόδου"
     },
     "common.messages.save_to_isa_data_entry": {
       "en": "Save to ISA Data Entry",
@@ -6587,7 +6587,7 @@
       "pt": "Salvar na entrada de dados ISA",
       "it": "Salva in immissione dati ISA",
       "no": "Save to ISA Data Entry",
-      "el": "Αποθήκευση to ISA Data Entry"
+      "el": "Αποθήκευση στην Εισαγωγή Δεδομένων ISA"
     },
     "common.messages.save_your_current_progress_to_browser_storage": {
       "en": "Save your current progress to browser storage",
@@ -6597,8 +6597,8 @@
       "lt": "Išsaugokite dabartinę eigą naršyklės saugykloje",
       "pt": "Salve seu progresso atual no armazenamento do navegador",
       "it": "Salva i tuoi progressi attuali nella memoria del browser",
-      "no": "Save your current progress to browser storage",
-      "el": "Αποθήκευση your current progress to browser storage"
+      "no": "Lagre din nåværende fremdrift i nettleserlagring",
+      "el": "Αποθηκεύστε την τρέχουσα πρόοδό σας στην αποθήκευση του προγράμματος περιήγησης"
     },
     "common.messages.savesimplificationwarning": {
       "en": "save_simplification_warning",
@@ -7356,8 +7356,8 @@
       "lt": "Supaprastinkite modelius ir sukurkite valdymo scenarijus",
       "pt": "Simplifique modelos e desenvolva cenários de gestão",
       "it": "Semplifica i modelli e sviluppa scenari di gestione",
-      "no": "Simplify models and develop management scenarios",
-      "el": "Απλοποίηση Μοντέλα and develop management scenarios"
+      "no": "Forenkle modeller og utvikle forvaltningsscenarier",
+      "el": "Απλοποίηση μοντέλων και ανάπτυξη σεναρίων διαχείρισης"
     },
     "common.messages.skill": {
       "en": "Skill:",
@@ -7383,25 +7383,25 @@
     },
     "common.messages.skip_if_multiple_needs_apply_or_you": {
       "en": "Skip if multiple needs apply or you",
-      "es": "Skip if multiple needs apply or you",
-      "fr": "Skip if multiple needs apply or you",
-      "de": "Skip if multiple needs apply or you",
-      "lt": "Skip if multiple needs apply or you",
-      "pt": "Skip if multiple needs apply or you",
-      "it": "Skip if multiple needs apply or you",
-      "no": "Skip if multiple needs apply or you",
-      "el": "Παράλειψη if multiple needs apply or you"
+      "es": "Saltar si se aplican múltiples necesidades o usted",
+      "fr": "Passer si plusieurs besoins s'appliquent ou vous",
+      "de": "Überspringen, wenn mehrere Bedürfnisse zutreffen oder Sie",
+      "lt": "Praleisti, jei taikomi keli poreikiai arba jūs",
+      "pt": "Ignorar se várias necessidades se aplicam ou você",
+      "it": "Salta se si applicano più esigenze o tu",
+      "no": "Hopp over hvis flere behov gjelder eller du",
+      "el": "Παράλειψη αν ισχύουν πολλαπλές ανάγκες ή εσείς"
     },
     "common.messages.skip_if_you": {
       "en": "Skip if you",
-      "es": "Skip if you",
-      "fr": "Skip if you",
-      "de": "Skip if you",
-      "lt": "Skip if you",
-      "pt": "Skip if you",
-      "it": "Skip if you",
-      "no": "Skip if you",
-      "el": "Παράλειψη if you"
+      "es": "Saltar si usted",
+      "fr": "Passer si vous",
+      "de": "Überspringen, wenn Sie",
+      "lt": "Praleisti, jei jūs",
+      "pt": "Ignorar se você",
+      "it": "Salta se tu",
+      "no": "Hopp over hvis du",
+      "el": "Παράλειψη αν εσείς"
     },
     "common.messages.skip_if_you_want_to_explore_all_activities_and_ris": {
       "en": "Skip if you want to explore all activities and risks",
@@ -7411,8 +7411,8 @@
       "lt": "Praleisti, jei norite ištirti visas veiklas ir rizikas",
       "pt": "Ignorar se quiser explorar todas as atividades e riscos",
       "it": "Salta se vuoi esplorare tutte le attività e i rischi",
-      "no": "Skip if you want to explore all activities and risks",
-      "el": "Παράλειψη if you want to explore all activities and risks"
+      "no": "Hopp over hvis du vil utforske alle aktiviteter og risikoer",
+      "el": "Παράλειψη αν θέλετε να εξερευνήσετε όλες τις δραστηριότητες και τους κινδύνους"
     },
     "common.messages.skip_this_question": {
       "en": "Skip This Question",
@@ -7422,8 +7422,8 @@
       "lt": "Praleiskite šį klausimą",
       "pt": "Pule esta pergunta",
       "it": "Salta questa domanda",
-      "no": "Skip This Question",
-      "el": "Παράλειψη This Question"
+      "no": "Hopp Over Dette Spørsmålet",
+      "el": "Παράλειψη Αυτής της Ερώτησης"
     },
     "common.messages.skip_to_see_all_available_tools": {
       "en": "Skip to see all available tools",
@@ -7433,8 +7433,8 @@
       "lt": "Praleisti, kad pamatytumėte visas prieinamas priemones",
       "pt": "Ignorar para ver todas as ferramentas disponíveis",
       "it": "Salta per vedere tutti gli strumenti disponibili",
-      "no": "Skip to see all available tools",
-      "el": "Παράλειψη to see all available tools"
+      "no": "Hopp over for å se alle tilgjengelige verktøy",
+      "el": "Παράλειψη για να δείτε όλα τα διαθέσιμα εργαλεία"
     },
     "common.messages.spacing": {
       "en": "Spacing:",
@@ -7444,8 +7444,8 @@
       "lt": "Tarpai:",
       "pt": "Espaçamento:",
       "it": "Spaziatura:",
-      "no": "Spacing:",
-      "el": "Spacing:"
+      "no": "Avstand:",
+      "el": "Απόσταση:"
     },
     "common.messages.spatial": {
       "en": "Spatial:",
@@ -7532,8 +7532,8 @@
       "lt": "Pradėti iš Naujo",
       "pt": "Começar do Zero",
       "it": "Inizia da Capo",
-      "no": "Start Fresh",
-      "el": "Έναρξη Fresh"
+      "no": "Start på Nytt",
+      "el": "Νέα Εκκίνηση"
     },
     "common.messages.start_guided_journey": {
       "en": "Start Guided Journey",
@@ -7543,8 +7543,8 @@
       "lt": "Pradėti vedamą kelionę",
       "pt": "Iniciar Percurso Guiado",
       "it": "Inizia il Percorso Guidato",
-      "no": "Start Guided Journey",
-      "el": "Έναρξη Guided Journey"
+      "no": "Start Veiledet Reise",
+      "el": "Έναρξη Καθοδηγούμενης Διαδρομής"
     },
     "common.messages.start_here": {
       "en": "START HERE",
@@ -7554,8 +7554,8 @@
       "lt": "PRADĖKITE ČIA",
       "pt": "COMEÇAR AQUI",
       "it": "INIZIA QUI",
-      "no": "START HERE",
-      "el": "Έναρξη HERE"
+      "no": "START HER",
+      "el": "ΞΕΚΙΝΗΣΤΕ ΕΔΩ"
     },
     "common.messages.start_over": {
       "en": "Start Over",
@@ -7565,8 +7565,8 @@
       "lt": "Pradėti iš naujo",
       "pt": "Recomeçar",
       "it": "Ricomincia",
-      "no": "Start Over",
-      "el": "Έναρξη Over"
+      "no": "Start på Nytt",
+      "el": "Επανεκκίνηση"
     },
     "common.messages.start_with_pims": {
       "en": "Start with PIMS:",
@@ -7576,8 +7576,8 @@
       "lt": "Pradėkite su PIMS:",
       "pt": "Começar com PIMS:",
       "it": "Inizia con PIMS:",
-      "no": "Start with PIMS:",
-      "el": "Έναρξη with PIMS:"
+      "no": "Start med PIMS:",
+      "el": "Έναρξη με PIMS:"
     },
     "common.messages.status": {
       "en": "Status:",
@@ -7588,7 +7588,7 @@
       "pt": "Status:",
       "it": "Stato:",
       "no": "Status:",
-      "el": "Status:"
+      "el": "Κατάσταση:"
     },
     "common.messages.status_summary": {
       "en": "Status Summary",
@@ -7697,19 +7697,19 @@
       "lt": "Pateikti atsakymą",
       "pt": "Enviar resposta",
       "it": "Invia risposta",
-      "no": "Submit Answer",
-      "el": "Υποβολή Answer"
+      "no": "Send Svar",
+      "el": "Υποβολή Απάντησης"
     },
     "common.messages.suggested_connections": {
       "en": "suggested connections.",
-      "es": "suggested connections.",
-      "fr": "suggested connections.",
-      "de": "suggested connections.",
-      "lt": "suggested connections.",
-      "pt": "suggested connections.",
-      "it": "suggested connections.",
-      "no": "suggested connections.",
-      "el": "suggested connections."
+      "es": "conexiones sugeridas.",
+      "fr": "connexions suggérées.",
+      "de": "vorgeschlagene Verbindungen.",
+      "lt": "siūlomos jungtys.",
+      "pt": "conexões sugeridas.",
+      "it": "connessioni suggerite.",
+      "no": "foreslåtte tilkoblinger.",
+      "el": "προτεινόμενες συνδέσεις."
     },
     "common.messages.suggested_workflow": {
       "en": "Suggested Workflow:",
@@ -7829,30 +7829,30 @@
       "lt": "SES kūrimas pagal šablonus",
       "pt": "Criação SES baseada em modelos",
       "it": "Creazione SES basata su modelli",
-      "no": "Template based SES creation",
-      "el": "Πρότυπο based SES creation"
+      "no": "Malbasert SES-opprettelse",
+      "el": "Δημιουργία SES βάσει προτύπου"
     },
     "common.messages.template_s_loaded": {
       "en": "Template %s loaded!",
-      "es": "Plantilla %s loaded!",
-      "fr": "Modele %s loaded!",
-      "de": "Template %s loaded!",
-      "lt": "Template %s loaded!",
-      "pt": "Template %s loaded!",
-      "it": "Template %s loaded!",
-      "no": "Template %s loaded!",
-      "el": "Πρότυπο %s loaded!"
+      "es": "¡Plantilla %s cargada!",
+      "fr": "Modèle %s chargé !",
+      "de": "Vorlage %s geladen!",
+      "lt": "Šablonas %s įkeltas!",
+      "pt": "Modelo %s carregado!",
+      "it": "Modello %s caricato!",
+      "no": "Mal %s lastet!",
+      "el": "Το πρότυπο %s φορτώθηκε!"
     },
     "common.messages.template_s_loaded_with_d_connections": {
       "en": "Template %s loaded with %d connections!",
-      "es": "Template %s loaded with %d connections!",
-      "fr": "Template %s loaded with %d connections!",
-      "de": "Template %s loaded with %d connections!",
-      "lt": "Template %s loaded with %d connections!",
-      "pt": "Template %s loaded with %d connections!",
-      "it": "Template %s loaded with %d connections!",
-      "no": "Template %s loaded with %d connections!",
-      "el": "Πρότυπο %s loaded with %d connections!"
+      "es": "¡Plantilla %s cargada con %d conexiones!",
+      "fr": "Modèle %s chargé avec %d connexions !",
+      "de": "Vorlage %s mit %d Verbindungen geladen!",
+      "lt": "Šablonas %s įkeltas su %d jungtimis!",
+      "pt": "Modelo %s carregado com %d conexões!",
+      "it": "Modello %s caricato con %d connessioni!",
+      "no": "Mal %s lastet med %d tilkoblinger!",
+      "el": "Το πρότυπο %s φορτώθηκε με %d συνδέσεις!"
     },
     "common.messages.template_switched_starting_fresh": {
       "en": "Template switched. Starting fresh.",
@@ -7862,8 +7862,8 @@
       "lt": "Šablonas pakeistas. Pradedama iš naujo.",
       "pt": "Modelo trocado. Começando do zero.",
       "it": "Modello cambiato. Ripartenza da zero.",
-      "no": "Template switched. Starting fresh.",
-      "el": "Πρότυπο switched. Starting fresh."
+      "no": "Mal byttet. Starter på nytt.",
+      "el": "Το πρότυπο άλλαξε. Εκκίνηση από την αρχή."
     },
     "common.messages.templatebased": {
       "en": "Template-Based",
@@ -7873,8 +7873,8 @@
       "lt": "Pagrįsta šablonais",
       "pt": "Baseado em Modelos",
       "it": "Basato su Modelli",
-      "no": "Template-Based",
-      "el": "Template-Based"
+      "no": "Malbasert",
+      "el": "Βασισμένο σε Πρότυπο"
     },
     "common.messages.templatesesguidestep1": {
       "en": "template_ses_guide_step1",
@@ -7983,8 +7983,8 @@
       "lt": "Laiko eilučių grafikas",
       "pt": "Gráfico de Séries Temporais",
       "it": "Grafico di Serie Temporali",
-      "no": "Time Series Plot",
-      "el": "Ώρα Series Plot"
+      "no": "Tidsserieplot",
+      "el": "Γράφημα Χρονοσειράς"
     },
     "common.messages.time_to_start": {
       "en": "Time to Start",
@@ -7994,8 +7994,8 @@
       "lt": "Laikas pradėti",
       "pt": "Tempo para Começar",
       "it": "Tempo di Avvio",
-      "no": "Time to Start",
-      "el": "Ώρα to Start"
+      "no": "På tide å Starte",
+      "el": "Ώρα να Ξεκινήσετε"
     },
     "common.messages.timeframe": {
       "en": "Timeframe:",
@@ -8137,8 +8137,8 @@
       "lt": "Įvesk savo atsakymą čia...",
       "pt": "Digite sua resposta aqui...",
       "it": "Scrivi la tua risposta qui...",
-      "no": "Type your answer here...",
-      "el": "Πληκτρολογήστε your answer here..."
+      "no": "Skriv svaret ditt her...",
+      "el": "Πληκτρολογήστε την απάντησή σας εδώ..."
     },
     "common.messages.typical_tasks": {
       "en": "Typical tasks:",
@@ -8335,8 +8335,8 @@
       "lt": "Peržiūrėti išsamią peržiūrą",
       "pt": "Ver visualização detalhada",
       "it": "Visualizza anteprima dettagliata",
-      "no": "View detailed preview",
-      "el": "Προβολή detailed preview"
+      "no": "Se detaljert forhåndsvisning",
+      "el": "Προβολή λεπτομερούς προεπισκόπησης"
     },
     "common.messages.view_online": {
       "en": "View online",
@@ -8346,8 +8346,8 @@
       "lt": "Žiūrėti internete",
       "pt": "Ver online",
       "it": "Visualizza online",
-      "no": "View online",
-      "el": "Προβολή Συνδεδεμένο"
+      "no": "Se på nett",
+      "el": "Προβολή στο διαδίκτυο"
     },
     "common.messages.visualisation_controls": {
       "en": "Visualisation Controls",
@@ -8357,8 +8357,8 @@
       "lt": "Vizualizacijos valdymas",
       "pt": "Controles de Visualização",
       "it": "Controlli di Visualizzazione",
-      "no": "Visualisation Controls",
-      "el": "Visualisation Controls"
+      "no": "Visualiseringskontroller",
+      "el": "Στοιχεία Ελέγχου Οπτικοποίησης"
     },
     "common.messages.visualization_controls": {
       "en": "Visualization Controls",
@@ -8368,19 +8368,19 @@
       "lt": "Vizualizacijos valdymas",
       "pt": "Controles de Visualização",
       "it": "Controlli di Visualizzazione",
-      "no": "Visualization Controls",
-      "el": "Οπτικοποίηση Controls"
+      "no": "Visualiseringskontroller",
+      "el": "Στοιχεία Ελέγχου Οπτικοποίησης"
     },
     "common.messages.visualization_exported_successfully": {
       "en": "Visualization exported successfully!",
-      "es": "Visualization exported successfully!",
-      "fr": "Visualization exported successfully!",
-      "de": "Visualization exported successfully!",
-      "lt": "Visualization exported successfully!",
-      "pt": "Visualization exported successfully!",
-      "it": "Visualization exported successfully!",
-      "no": "Visualization exported successfully!",
-      "el": "Οπτικοποίηση exported successfully!"
+      "es": "¡Visualización exportada exitosamente!",
+      "fr": "Visualisation exportée avec succès !",
+      "de": "Visualisierung erfolgreich exportiert!",
+      "lt": "Vizualizacija sėkmingai eksportuota!",
+      "pt": "Visualização exportada com sucesso!",
+      "it": "Visualizzazione esportata con successo!",
+      "no": "Visualisering eksportert vellykket!",
+      "el": "Η οπτικοποίηση εξήχθη επιτυχώς!"
     },
     "common.messages.visualizations": {
       "en": "Visualizations",
@@ -8390,8 +8390,8 @@
       "lt": "Vizualizacijos",
       "pt": "Visualizações",
       "it": "Visualizzazioni",
-      "no": "Visualizations",
-      "el": "Visualizations"
+      "no": "Visualiseringer",
+      "el": "Οπτικοποιήσεις"
     },
     "common.messages.visualize_analyze": {
       "en": "Visualize & Analyze:",
@@ -8401,8 +8401,8 @@
       "lt": "Vizualizuoti ir analizuoti:",
       "pt": "Visualizar e Analisar:",
       "it": "Visualizza e Analizza:",
-      "no": "Visualize & Analyze:",
-      "el": "Οπτικοποίηση & Analyze:"
+      "no": "Visualiser og Analyser:",
+      "el": "Οπτικοποίηση & Ανάλυση:"
     },
     "common.messages.visualize_how_indicators_change_over_time_to_under": {
       "en": "Visualize how indicators change over time to understand system dynamics.",
@@ -8412,8 +8412,8 @@
       "lt": "Vizualizuokite, kaip rodikliai keičiasi laikui bėgant, kad suprastumėte sistemos dinamiką.",
       "pt": "Visualize como os indicadores mudam ao longo do tempo para compreender a dinâmica do sistema.",
       "it": "Visualizzare come gli indicatori cambiano nel tempo per comprendere le dinamiche del sistema.",
-      "no": "Visualize how indicators change over time to understand system dynamics.",
-      "el": "Οπτικοποίηση how indicators change over time to understand system dynamics."
+      "no": "Visualiser hvordan indikatorer endres over tid for å forstå systemdynamikk.",
+      "el": "Οπτικοποιήστε πώς αλλάζουν οι δείκτες με τον χρόνο για να κατανοήσετε τη δυναμική του συστήματος."
     },
     "common.messages.voluntary": {
       "en": "Voluntary",
@@ -8423,8 +8423,8 @@
       "lt": "Savanoriškas",
       "pt": "Voluntário",
       "it": "Volontario",
-      "no": "Voluntary",
-      "el": "Voluntary"
+      "no": "Frivillig",
+      "el": "Εθελοντικό"
     },
     "common.messages.warning": {
       "en": "Warning:",
@@ -8478,8 +8478,8 @@
       "lt": "Sveiki atvykę į kompiuterio pagalbą naudojančią SES kūrimo ir analizės platformą.",
       "pt": "Bem-vindo à plataforma de criação e análise de SES assistida por computador.",
       "it": "Benvenuto nella piattaforma di creazione e analisi SES assistita da computer.",
-      "no": "Welcome to the computer-assisted SES creation and analysis platform.",
-      "el": "Καλώς ήρθατε to the computer-assisted SES creation and analysis platform."
+      "no": "Velkommen til den dataassisterte SES-opprettelses- og analyseplattformen.",
+      "el": "Καλώς ήρθατε στην πλατφόρμα δημιουργίας και ανάλυσης SES με υποστήριξη υπολογιστή."
     },
     "common.messages.what_are_feedback_loops": {
       "en": "What are feedback loops?",
@@ -8588,8 +8588,8 @@
       "lt": "Ar norite atkurti šiuos duomenis?",
       "pt": "Gostaria de recuperar esses dados?",
       "it": "Vuoi recuperare questi dati?",
-      "no": "Would you like to recover this data?",
-      "el": "Θα θέλατε to recover this data?"
+      "no": "Ønsker du å gjenopprette disse dataene?",
+      "el": "Θα θέλατε να ανακτήσετε αυτά τα δεδομένα;"
     },
     "common.messages.year": {
       "en": "Year:",
@@ -8765,7 +8765,7 @@
       "pt": "Todos os dados apagados. Recomeçando do passo 1.",
       "it": "Tutti i dati cancellati. Ripartendo dal passaggio 1.",
       "no": "Alle data slettet. Starter på nytt fra steg 1.",
-      "el": "Όλα Δεδομένα cleared. Starting over from step 1."
+      "el": "Όλα τα δεδομένα διαγράφηκαν. Επανεκκίνηση από το βήμα 1."
     },
     "common.messages.no_connections_approved_yet": {
       "en": "No connections approved yet.",
@@ -8776,7 +8776,7 @@
       "pt": "Nenhuma conexão aprovada ainda.",
       "it": "Nessuna connessione approvata ancora.",
       "no": "Ingen tilkoblinger godkjent ennå.",
-      "el": "Όχι Συνδέσεις Εγκρίθηκε yet."
+      "el": "Δεν έχουν εγκριθεί συνδέσεις ακόμη."
     },
     "common.messages.data_export_not_implemented": {
       "en": "Data export not yet implemented",
@@ -8787,7 +8787,7 @@
       "pt": "Exportação de dados ainda não implementada",
       "it": "Esportazione dati non ancora implementata",
       "no": "Dataeksport ikke implementert ennå",
-      "el": "Δεδομένα Εξαγωγή not yet implemented"
+      "el": "Η εξαγωγή δεδομένων δεν έχει υλοποιηθεί ακόμη"
     },
     "common.messages.suggestions_cleared": {
       "en": "Suggestions cleared",
@@ -8798,7 +8798,7 @@
       "pt": "Sugestões apagadas",
       "it": "Suggerimenti cancellati",
       "no": "Forslag slettet",
-      "el": "Suggestions cleared"
+      "el": "Οι προτάσεις διαγράφηκαν"
     },
     "common.messages.undone": {
       "en": "Undone",
@@ -8832,17 +8832,6 @@
       "it": "Procedura guidata riavviata",
       "no": "Veiviser startet på nytt",
       "el": "Restarted wizard"
-    },
-    "common.messages.export_failed": {
-      "en": "Export failed",
-      "es": "La exportación falló",
-      "fr": "L'exportation a échoué",
-      "de": "Export fehlgeschlagen",
-      "lt": "Eksportavimas nepavyko",
-      "pt": "A exportação falhou",
-      "it": "Esportazione fallita",
-      "no": "Eksport mislyktes",
-      "el": "Εξαγωγή Απέτυχε"
     },
     "common.messages.session_restored_successfully": {
       "en": "Session restored successfully!",
@@ -8923,14 +8912,14 @@
     },
     "common.messages.error_invalid_proj_file_structure_this_may_not_be_": {
       "en": "Error invalid proj file structure this may not be",
-      "lt": "Klaida invalid proj file structure this may not be",
-      "es": "Error invalid proj file structure this may not be",
-      "fr": "Erreur invalid proj file structure this may not be",
-      "de": "Fehler invalid proj file structure this may not be",
-      "it": "Errore invalid proj file structure this may not be",
-      "pt": "Erro invalid proj file structure this may not be",
-      "el": "Σφάλμα invalid proj file structure this may not be",
-      "no": "Feil invalid proj file structure this may not be"
+      "lt": "Klaida: neteisinga projekto failo struktūra, tai gali būti ne",
+      "es": "Error: estructura de archivo de proyecto no válida, puede que no sea",
+      "fr": "Erreur : structure de fichier de projet invalide, ce n'est peut-être pas",
+      "de": "Fehler: ungültige Projektdateistruktur, dies ist möglicherweise nicht",
+      "it": "Errore: struttura del file di progetto non valida, potrebbe non essere",
+      "pt": "Erro: estrutura de arquivo de projeto inválida, pode não ser",
+      "el": "Σφάλμα: μη έγκυρη δομή αρχείου έργου, αυτό μπορεί να μην είναι",
+      "no": "Feil: ugyldig prosjektfilstruktur, dette er kanskje ikke"
     },
     "common.messages.element_classified_as": {
       "en": "Element classified as:",

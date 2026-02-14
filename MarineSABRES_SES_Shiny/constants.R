@@ -222,7 +222,9 @@ CONFIDENCE_OPACITY <- c(
 )
 
 # ============================================================================
-# LEGACY GROUP COLORS/SHAPES (for backward compatibility)
+# DEPRECATED: LEGACY GROUP COLORS/SHAPES
+# These use hardcoded colors/shapes instead of the theme-based ELEMENT_COLORS/ELEMENT_SHAPES.
+# Still referenced by utils.R:get_node_colors() and utils.R:get_node_shapes().
 # ============================================================================
 
 # Group colors for marine SES visualization (including alternative names)
@@ -522,6 +524,88 @@ DYNAMICS_WEIGHT_MAP <- list(
   "-strong"  = -1.00,
   "-medium"  = -0.50,
   "-weak"    = -0.25
+)
+
+# ============================================================================
+# REACTIVE PIPELINE DEBOUNCING
+# ============================================================================
+
+# Delay before triggering CLD regeneration after ISA changes
+# Prevents excessive regenerations during rapid consecutive edits
+# Override via environment variable: MARINESABRES_ISA_DEBOUNCE_MS
+ISA_DEBOUNCE_MS <- as.numeric(Sys.getenv("MARINESABRES_ISA_DEBOUNCE_MS", "500"))
+
+# ============================================================================
+# GRAPHICAL SES CREATOR CONSTANTS
+# ============================================================================
+
+# Ghost node rendering (semi-transparent preview nodes in graphical creator)
+# NOTE: Ghost node opacity uses NODE_OPACITY_GHOST (defined in Visualization Constants above)
+GHOST_EDGE_OPACITY <- 0.4         # 40% opacity for ghost edges
+GHOST_NODE_BORDER_DASH <- c(5, 5) # Dashed border pattern
+
+# AI suggestion limits
+MAX_SUGGESTIONS_PER_EXPANSION <- 5  # Max number of ghost nodes per expansion
+MIN_CLASSIFICATION_CONFIDENCE <- 0.2 # Minimum confidence to show classification
+
+# Network validation
+MIN_NETWORK_NODES_FOR_EXPORT <- 2  # Minimum nodes required for ISA export
+MIN_NETWORK_EDGES_FOR_EXPORT <- 1  # Minimum edges required for ISA export
+
+# ============================================================================
+# CONNECTION & CONFIDENCE CONSTANTS
+# ============================================================================
+
+# Connection strength options
+CONNECTION_STRENGTH <- c("strong", "medium", "weak")
+
+# Connection polarity options
+CONNECTION_POLARITY <- c("+", "-")
+
+# Connection confidence levels (1-5 scale)
+CONFIDENCE_LEVELS <- 1:5
+
+# Connection confidence labels
+CONFIDENCE_LABELS <- c(
+  "1" = "Very Low",
+  "2" = "Low",
+  "3" = "Medium",
+  "4" = "High",
+  "5" = "Very High"
+)
+
+# ============================================================================
+# DOMAIN-SPECIFIC CATEGORY CONSTANTS
+# ============================================================================
+
+# Ecosystem service categories
+ECOSYSTEM_SERVICE_CATEGORIES <- c(
+  "Provisioning",
+  "Regulating",
+  "Cultural",
+  "Supporting"
+)
+
+# Pressure types
+PRESSURE_TYPES <- c(
+  "Exogenic (ExP)",
+  "Endogenic Managed (EnMP)"
+)
+
+# Spatial scales
+SPATIAL_SCALES <- c(
+  "Local",
+  "Regional",
+  "National",
+  "International"
+)
+
+# Activity scales
+ACTIVITY_SCALES <- c(
+  "Individual",
+  "Group/Sector",
+  "National",
+  "International"
 )
 
 # ============================================================================

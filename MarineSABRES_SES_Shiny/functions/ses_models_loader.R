@@ -48,14 +48,14 @@ if (!exists("detect_excel_format", mode = "function")) {
 #' @export
 scan_ses_models <- function(base_dir = "SESModels", use_cache = TRUE) {
 
-  cat("[SES_MODELS] scan_ses_models called with base_dir:", base_dir, "\n")
+  debug_log(paste("scan_ses_models called with base_dir:", base_dir), "SES_MODELS")
 
   # Find the SESModels directory relative to project root
   ses_models_path <- find_ses_models_dir(base_dir)
 
   if (is.null(ses_models_path)) {
-    cat("[SES_MODELS] WARNING: SESModels directory not found\n")
-    cat("[SES_MODELS] Current working directory:", getwd(), "\n")
+    debug_log("WARNING: SESModels directory not found", "SES_MODELS")
+    debug_log(paste("Current working directory:", getwd()), "SES_MODELS")
     return(list())
   }
 
@@ -63,12 +63,12 @@ scan_ses_models <- function(base_dir = "SESModels", use_cache = TRUE) {
   if (use_cache && !is.null(.ses_models_cache$models)) {
     cache_age <- difftime(Sys.time(), .ses_models_cache$last_scan, units = "secs")
     if (as.numeric(cache_age) < 60) {  # Cache valid for 60 seconds
-      cat("[SES_MODELS] Using cached models list (age:", round(as.numeric(cache_age)), "s)\n")
+      debug_log(paste("Using cached models list (age:", round(as.numeric(cache_age)), "s)"), "SES_MODELS")
       return(.ses_models_cache$models)
     }
   }
 
-  cat("[SES_MODELS] Scanning directory:", ses_models_path, "\n")
+  debug_log(paste("Scanning directory:", ses_models_path), "SES_MODELS")
 
   # Find all Excel files recursively
   excel_files <- list.files(
@@ -80,13 +80,13 @@ scan_ses_models <- function(base_dir = "SESModels", use_cache = TRUE) {
   )
 
   if (length(excel_files) == 0) {
-    cat("[SES_MODELS] WARNING: No Excel files found in SESModels directory\n")
+    debug_log("WARNING: No Excel files found in SESModels directory", "SES_MODELS")
     return(list())
   }
 
-  cat("[SES_MODELS] Found", length(excel_files), "Excel files:\n")
+  debug_log(paste("Found", length(excel_files), "Excel files:"), "SES_MODELS")
   for (f in excel_files) {
-    cat("[SES_MODELS]   -", basename(f), "\n")
+    debug_log(paste("-", basename(f)), "SES_MODELS")
   }
 
   # Group files by parent folder (Demonstration Area)
@@ -144,7 +144,7 @@ scan_ses_models <- function(base_dir = "SESModels", use_cache = TRUE) {
         is_supported = if (!is.null(format_info)) format_info$format != "unsupported" else FALSE
       )
 
-      cat("[SES_MODELS] Added model:", display_name, "to group:", group_name, "\n")
+      debug_log(paste("Added model:", display_name, "to group:", group_name), "SES_MODELS")
 
       # Add to group
       if (is.null(models_grouped[[group_name]])) {
@@ -153,7 +153,7 @@ scan_ses_models <- function(base_dir = "SESModels", use_cache = TRUE) {
       models_grouped[[group_name]] <- c(models_grouped[[group_name]], list(model_entry))
 
     }, error = function(e) {
-      cat("[SES_MODELS] ERROR processing file:", file_path, "-", e$message, "\n")
+      debug_log(paste("ERROR processing file:", file_path, "-", e$message), "SES_MODELS")
     })
   }
 
@@ -170,8 +170,7 @@ scan_ses_models <- function(base_dir = "SESModels", use_cache = TRUE) {
   .ses_models_cache$models <- models_grouped
   .ses_models_cache$last_scan <- Sys.time()
 
-  cat("[SES_MODELS] Scan complete. Found", length(models_grouped), "groups with",
-      sum(sapply(models_grouped, length)), "total models\n")
+  debug_log(paste("Scan complete. Found", length(models_grouped), "groups with", sum(sapply(models_grouped, length)), "total models"), "SES_MODELS")
 
   return(models_grouped)
 }
@@ -191,15 +190,10 @@ find_ses_models_dir <- function(base_dir = "SESModels") {
     file.path(dirname(getwd()), base_dir)
   )
 
-  # Also check if PROJECT_ROOT is set
-  if (exists("PROJECT_ROOT", envir = globalenv())) {
-    candidates <- c(candidates, file.path(get("PROJECT_ROOT", envir = globalenv()), base_dir))
-  }
-
-  cat("[SES_MODELS] Searching for directory in candidates:\n")
+  debug_log("Searching for directory in candidates", "SES_MODELS")
   for (path in candidates) {
     exists <- dir.exists(path)
-    cat("[SES_MODELS]   ", path, "->", if(exists) "FOUND" else "not found", "\n")
+    debug_log(paste(" ", path, "->", if(exists) "FOUND" else "not found"), "SES_MODELS")
     if (exists) {
       return(normalizePath(path, winslash = "/"))
     }
@@ -216,7 +210,7 @@ find_ses_models_dir <- function(base_dir = "SESModels") {
 #' @return Updated list of model groups
 #' @export
 reload_ses_models <- function(base_dir = "SESModels") {
-  cat("[SES_MODELS] Reloading models cache...\n")
+  debug_log("Reloading models cache...", "SES_MODELS")
 
   # Clear cache
   .ses_models_cache$models <- NULL
@@ -238,7 +232,7 @@ get_models_for_select <- function(base_dir = "SESModels") {
   models_grouped <- scan_ses_models(base_dir)
 
   if (length(models_grouped) == 0) {
-    cat("[SES_MODELS] No models found for select input\n")
+    debug_log("No models found for select input", "SES_MODELS")
     return(list())
   }
 
@@ -253,7 +247,7 @@ get_models_for_select <- function(base_dir = "SESModels") {
     choices[[group_name]] <- as.list(group_choices)
   }
 
-  cat("[SES_MODELS] Prepared select choices:", length(choices), "groups\n")
+  debug_log(paste("Prepared select choices:", length(choices), "groups"), "SES_MODELS")
   return(choices)
 }
 
@@ -292,7 +286,7 @@ get_all_models_flat <- function(base_dir = "SESModels") {
 load_ses_model_file <- function(file_path, validate = TRUE, variant_name = NULL) {
   # Check file exists first (before calling basename which fails on NULL)
   if (is.null(file_path) || !nzchar(file_path)) {
-    cat("[SES_MODELS] Loading model file: (empty or NULL)\n")
+    debug_log("Loading model file: (empty or NULL)", "SES_MODELS")
     return(list(
       elements = NULL,
       connections = NULL,
@@ -305,14 +299,14 @@ load_ses_model_file <- function(file_path, validate = TRUE, variant_name = NULL)
     ))
   }
 
-  cat("[SES_MODELS] Loading model file:", file_path, "\n")
+  debug_log(paste("Loading model file:", file_path), "SES_MODELS")
   if (!is.null(variant_name)) {
-    cat("[SES_MODELS] Requested variant:", variant_name, "\n")
+    debug_log(paste("Requested variant:", variant_name), "SES_MODELS")
   }
 
   # Use universal loader if available
   if (exists("load_ses_model_universal", mode = "function")) {
-    cat("[SES_MODELS] Using universal loader...\n")
+    debug_log("Using universal loader...", "SES_MODELS")
     universal_result <- load_ses_model_universal(file_path, variant_name = variant_name, validate = validate)
 
     # Convert to expected format
@@ -328,14 +322,14 @@ load_ses_model_file <- function(file_path, validate = TRUE, variant_name = NULL)
     )
 
     if (length(result$errors) == 0) {
-      cat("[SES_MODELS] Model loaded successfully via universal loader\n")
+      debug_log("Model loaded successfully via universal loader", "SES_MODELS")
     }
 
     return(result)
   }
 
   # Fallback to legacy loader (Elements/Connections sheets only)
-  cat("[SES_MODELS] Universal loader not available, using legacy loader...\n")
+  debug_log("Universal loader not available, using legacy loader...", "SES_MODELS")
 
   result <- list(
     elements = NULL,
@@ -358,7 +352,7 @@ load_ses_model_file <- function(file_path, validate = TRUE, variant_name = NULL)
     # Check sheets exist
     sheets <- readxl::excel_sheets(file_path)
     result$sheets_available <- sheets
-    cat("[SES_MODELS] Available sheets:", paste(sheets, collapse = ", "), "\n")
+    debug_log(paste("Available sheets:", paste(sheets, collapse = ", ")), "SES_MODELS")
 
     has_elements <- "Elements" %in% sheets
     has_connections <- "Connections" %in% sheets
@@ -377,20 +371,20 @@ load_ses_model_file <- function(file_path, validate = TRUE, variant_name = NULL)
     }
 
     # Read sheets
-    cat("[SES_MODELS] Reading Elements sheet...\n")
+    debug_log("Reading Elements sheet...", "SES_MODELS")
     elements <- readxl::read_excel(file_path, sheet = "Elements")
-    cat("[SES_MODELS] Elements sheet: ", nrow(elements), " rows, ", ncol(elements), " columns\n")
-    cat("[SES_MODELS] Elements columns:", paste(names(elements), collapse = ", "), "\n")
+    debug_log(paste("Elements sheet: ", nrow(elements), " rows, ", ncol(elements), " columns"), "SES_MODELS")
+    debug_log(paste("Elements columns:", paste(names(elements), collapse = ", ")), "SES_MODELS")
 
-    cat("[SES_MODELS] Reading Connections sheet...\n")
+    debug_log("Reading Connections sheet...", "SES_MODELS")
     connections <- readxl::read_excel(file_path, sheet = "Connections")
-    cat("[SES_MODELS] Connections sheet: ", nrow(connections), " rows, ", ncol(connections), " columns\n")
-    cat("[SES_MODELS] Connections columns:", paste(names(connections), collapse = ", "), "\n")
+    debug_log(paste("Connections sheet: ", nrow(connections), " rows, ", ncol(connections), " columns"), "SES_MODELS")
+    debug_log(paste("Connections columns:", paste(names(connections), collapse = ", ")), "SES_MODELS")
 
     list(success = TRUE, elements = elements, connections = connections)
 
   }, error = function(e) {
-    cat("[SES_MODELS] ERROR reading Excel file:", e$message, "\n")
+    debug_log(paste("ERROR reading Excel file:", e$message), "SES_MODELS")
     list(success = FALSE, error = e$message)
   })
 
@@ -407,16 +401,16 @@ load_ses_model_file <- function(file_path, validate = TRUE, variant_name = NULL)
 
   # Validate if requested
   if (validate && length(result$errors) == 0) {
-    cat("[SES_MODELS] Validating data structure...\n")
+    debug_log("Validating data structure...", "SES_MODELS")
     validation_result <- validate_ses_model_data(result$elements, result$connections)
     result$errors <- c(result$errors, validation_result$errors)
     result$warnings <- c(result$warnings, validation_result$warnings)
   }
 
   if (length(result$errors) == 0) {
-    cat("[SES_MODELS] Model loaded successfully\n")
+    debug_log("Model loaded successfully", "SES_MODELS")
   } else {
-    cat("[SES_MODELS] Model has errors:", paste(result$errors, collapse = "; "), "\n")
+    debug_log(paste("Model has errors:", paste(result$errors, collapse = "; ")), "SES_MODELS")
   }
 
   return(result)
@@ -471,7 +465,7 @@ validate_ses_model_data <- function(elements, connections) {
   } else {
     # Check element types
     unique_types <- unique(elements[[type_col]])
-    cat("[SES_MODELS] Element types found:", paste(unique_types, collapse = ", "), "\n")
+    debug_log(paste("Element types found:", paste(unique_types, collapse = ", ")), "SES_MODELS")
   }
 
   # Check connections
@@ -510,7 +504,7 @@ validate_ses_model_data <- function(elements, connections) {
 #' @return List with preview information (element count, connection count, etc.)
 #' @export
 get_model_preview <- function(file_path) {
-  cat("[SES_MODELS] Getting preview for:", file_path, "\n")
+  debug_log(paste("Getting preview for:", file_path), "SES_MODELS")
 
   preview <- list(
     file_name = if (!is.null(file_path) && nzchar(file_path)) basename(file_path) else "Unknown",
@@ -590,8 +584,7 @@ get_model_preview <- function(file_path) {
     }
   }
 
-  cat("[SES_MODELS] Preview complete: ", preview$elements_count, " elements, ",
-      preview$connections_count, " connections, valid=", preview$is_valid, "\n")
+  debug_log(paste("Preview complete: ", preview$elements_count, " elements, ", preview$connections_count, " connections, valid=", preview$is_valid), "SES_MODELS")
 
   return(preview)
 }
@@ -606,7 +599,7 @@ get_model_preview <- function(file_path) {
 #' @return List with diagnostic information
 #' @export
 diagnose_name_mismatches <- function(elements, connections) {
-  cat("\n[NAME_DIAGNOSTIC] ====== Analyzing name mismatches ======\n")
+  debug_log("====== Analyzing name mismatches ======", "NAME_DIAGNOSTIC")
 
   result <- list(
     element_names = character(),
@@ -622,7 +615,7 @@ diagnose_name_mismatches <- function(elements, connections) {
     result$element_names <- unique(trimws(as.character(elements$Label)))
     result$element_names <- result$element_names[!is.na(result$element_names) & nzchar(result$element_names)]
   } else {
-    cat("[NAME_DIAGNOSTIC] ERROR: No 'Label' column in elements\n")
+    debug_log("ERROR: No 'Label' column in elements", "NAME_DIAGNOSTIC")
     return(result)
   }
 
@@ -633,44 +626,44 @@ diagnose_name_mismatches <- function(elements, connections) {
     result$connection_refs <- unique(c(from_refs, to_refs))
     result$connection_refs <- result$connection_refs[!is.na(result$connection_refs) & nzchar(result$connection_refs)]
   } else {
-    cat("[NAME_DIAGNOSTIC] ERROR: No 'From'/'To' columns in connections\n")
+    debug_log("ERROR: No 'From'/'To' columns in connections", "NAME_DIAGNOSTIC")
     return(result)
   }
 
-  cat("[NAME_DIAGNOSTIC] Element names in node sheet:", length(result$element_names), "\n")
-  cat("[NAME_DIAGNOSTIC] Unique names in connections (From/To):", length(result$connection_refs), "\n")
+  debug_log(paste("Element names in node sheet:", length(result$element_names)), "NAME_DIAGNOSTIC")
+  debug_log(paste("Unique names in connections (From/To):", length(result$connection_refs)), "NAME_DIAGNOSTIC")
 
   # Find exact matches and mismatches
   result$exact_matches <- intersect(result$connection_refs, result$element_names)
   result$mismatched_names <- setdiff(result$connection_refs, result$element_names)
 
-  cat("[NAME_DIAGNOSTIC] Exact matches:", length(result$exact_matches), "\n")
-  cat("[NAME_DIAGNOSTIC] Mismatched (in connections but not in elements):", length(result$mismatched_names), "\n")
+  debug_log(paste("Exact matches:", length(result$exact_matches)), "NAME_DIAGNOSTIC")
+  debug_log(paste("Mismatched (in connections but not in elements):", length(result$mismatched_names)), "NAME_DIAGNOSTIC")
 
   # For mismatched names, try to find potential matches
   if (length(result$mismatched_names) > 0) {
-    cat("\n[NAME_DIAGNOSTIC] ====== MISMATCHED NAMES DETAIL ======\n")
+    debug_log("====== MISMATCHED NAMES DETAIL ======", "NAME_DIAGNOSTIC")
 
     # Create lowercase lookup for fuzzy matching
     element_names_lower <- tolower(result$element_names)
     names(element_names_lower) <- result$element_names
 
     for (mismatch in result$mismatched_names) {
-      cat(sprintf("[NAME_DIAGNOSTIC] Connection ref: '%s'\n", mismatch))
+      debug_log(sprintf("Connection ref: '%s'", mismatch), "NAME_DIAGNOSTIC")
 
       # Show hex codes for debugging invisible characters
       mismatch_bytes <- paste(sprintf("%02X", as.integer(charToRaw(mismatch))), collapse = " ")
-      cat(sprintf("  -> Hex bytes: %s\n", mismatch_bytes))
+      debug_log(sprintf("-> Hex bytes: %s", mismatch_bytes), "NAME_DIAGNOSTIC")
 
       # Try case-insensitive match
       mismatch_lower <- tolower(mismatch)
       case_matches <- names(element_names_lower)[element_names_lower == mismatch_lower]
 
       if (length(case_matches) > 0) {
-        cat(sprintf("  -> Potential match (case difference): '%s'\n", case_matches[1]))
+        debug_log(sprintf("-> Potential match (case difference): '%s'", case_matches[1]), "NAME_DIAGNOSTIC")
         # Show hex of the match for comparison
         match_bytes <- paste(sprintf("%02X", as.integer(charToRaw(case_matches[1]))), collapse = " ")
-        cat(sprintf("  -> Match hex bytes: %s\n", match_bytes))
+        debug_log(sprintf("-> Match hex bytes: %s", match_bytes), "NAME_DIAGNOSTIC")
         result$potential_matches[[mismatch]] <- list(type = "case", match = case_matches[1])
       } else {
         # Try substring/partial match (fixed to avoid warning)
@@ -682,29 +675,27 @@ diagnose_name_mismatches <- function(elements, connections) {
           }
         }
         if (length(partial_matches) > 0) {
-          cat(sprintf("  -> Potential partial matches: %s\n", paste(head(partial_matches, 3), collapse = ", ")))
+          debug_log(sprintf("-> Potential partial matches: %s", paste(head(partial_matches, 3), collapse = ", ")), "NAME_DIAGNOSTIC")
           # Show hex comparison for first partial match
           match_bytes <- paste(sprintf("%02X", as.integer(charToRaw(partial_matches[1]))), collapse = " ")
-          cat(sprintf("  -> First match hex bytes: %s\n", match_bytes))
+          debug_log(sprintf("-> First match hex bytes: %s", match_bytes), "NAME_DIAGNOSTIC")
 
           # Highlight character differences
           if (nchar(mismatch) == nchar(partial_matches[1])) {
             diff_positions <- which(strsplit(mismatch, "")[[1]] != strsplit(partial_matches[1], "")[[1]])
             if (length(diff_positions) > 0) {
-              cat(sprintf("  -> CHARACTER DIFFERENCES at positions: %s\n", paste(diff_positions, collapse = ", ")))
+              debug_log(sprintf("-> CHARACTER DIFFERENCES at positions: %s", paste(diff_positions, collapse = ", ")), "NAME_DIAGNOSTIC")
               for (pos in diff_positions) {
                 char1 <- substr(mismatch, pos, pos)
                 char2 <- substr(partial_matches[1], pos, pos)
-                cat(sprintf("     Position %d: '%s' (0x%02X) vs '%s' (0x%02X)\n",
-                            pos, char1, as.integer(charToRaw(char1)),
-                            char2, as.integer(charToRaw(char2))))
+                debug_log(sprintf("   Position %d: '%s' (0x%02X) vs '%s' (0x%02X)", pos, char1, as.integer(charToRaw(char1)), char2, as.integer(charToRaw(char2))), "NAME_DIAGNOSTIC")
               }
             }
           }
 
           result$potential_matches[[mismatch]] <- list(type = "partial", matches = partial_matches)
         } else {
-          cat("  -> NO MATCH FOUND in element names\n")
+          debug_log("-> NO MATCH FOUND in element names", "NAME_DIAGNOSTIC")
         }
       }
     }
@@ -717,38 +708,36 @@ diagnose_name_mismatches <- function(elements, connections) {
   orphan_mask <- !(from_vals %in% result$element_names) | !(to_vals %in% result$element_names)
   result$orphan_connections <- sum(orphan_mask, na.rm = TRUE)
 
-  cat(sprintf("\n[NAME_DIAGNOSTIC] Connections that will be LOST due to name mismatches: %d of %d (%.1f%%)\n",
-              result$orphan_connections, nrow(connections),
-              100 * result$orphan_connections / nrow(connections)))
+  debug_log(sprintf("Connections that will be LOST due to name mismatches: %d of %d (%.1f%%)", result$orphan_connections, nrow(connections), 100 * result$orphan_connections / nrow(connections)), "NAME_DIAGNOSTIC")
 
   # Show which specific connections are orphaned
   if (result$orphan_connections > 0 && result$orphan_connections <= 20) {
-    cat("[NAME_DIAGNOSTIC] Orphan connections:\n")
+    debug_log("Orphan connections:", "NAME_DIAGNOSTIC")
     orphan_indices <- which(orphan_mask)
     for (idx in orphan_indices) {
       from_ok <- from_vals[idx] %in% result$element_names
       to_ok <- to_vals[idx] %in% result$element_names
-      cat(sprintf("  %s -> %s [From:%s, To:%s]\n",
+      debug_log(sprintf("%s -> %s [From:%s, To:%s]",
                   from_vals[idx], to_vals[idx],
                   if(from_ok) "OK" else "MISSING",
-                  if(to_ok) "OK" else "MISSING"))
+                  if(to_ok) "OK" else "MISSING"), "NAME_DIAGNOSTIC")
     }
   }
 
   # Print all names for detailed comparison
-  cat("\n[NAME_DIAGNOSTIC] ====== ALL ELEMENT NAMES (from node sheet) ======\n")
+  debug_log("====== ALL ELEMENT NAMES (from node sheet) ======", "NAME_DIAGNOSTIC")
   for (i in seq_along(result$element_names)) {
-    cat(sprintf("  [%2d] '%s'\n", i, result$element_names[i]))
+    debug_log(sprintf("[%2d] '%s'", i, result$element_names[i]), "NAME_DIAGNOSTIC")
   }
 
-  cat("\n[NAME_DIAGNOSTIC] ====== ALL CONNECTION REFERENCES (From/To) ======\n")
+  debug_log("====== ALL CONNECTION REFERENCES (From/To) ======", "NAME_DIAGNOSTIC")
   for (i in seq_along(result$connection_refs)) {
     in_elements <- result$connection_refs[i] %in% result$element_names
     status <- if (in_elements) "OK" else "MISSING"
-    cat(sprintf("  [%2d] '%s' [%s]\n", i, result$connection_refs[i], status))
+    debug_log(sprintf("[%2d] '%s' [%s]", i, result$connection_refs[i], status), "NAME_DIAGNOSTIC")
   }
 
-  cat("[NAME_DIAGNOSTIC] ====== End diagnostic ======\n\n")
+  debug_log("====== End diagnostic ======", "NAME_DIAGNOSTIC")
 
   return(result)
 }
@@ -765,7 +754,7 @@ diagnose_name_mismatches <- function(elements, connections) {
 #' @return List with diagnostic information
 #' @export
 diagnose_ses_models <- function(base_dir = "SESModels") {
-  cat("\n========== SES MODELS DIAGNOSTICS ==========\n\n")
+  debug_log("========== SES MODELS DIAGNOSTICS ==========", "SES_MODELS")
 
   diagnostics <- list(
     working_dir = getwd(),
@@ -777,63 +766,62 @@ diagnose_ses_models <- function(base_dir = "SESModels") {
     load_tests = list()
   )
 
-  cat("Working directory:", diagnostics$working_dir, "\n")
-  cat("PROJECT_ROOT:", diagnostics$project_root, "\n\n")
+  debug_log(paste("Working directory:", diagnostics$working_dir), "SES_MODELS")
+  debug_log(paste("PROJECT_ROOT:", diagnostics$project_root), "SES_MODELS")
 
   # Find directory
   ses_dir <- find_ses_models_dir(base_dir)
   diagnostics$ses_models_dir <- ses_dir
 
   if (is.null(ses_dir)) {
-    cat("ERROR: SESModels directory not found!\n")
+    debug_log("ERROR: SESModels directory not found!", "SES_MODELS")
     return(diagnostics)
   }
 
-  cat("SESModels directory:", ses_dir, "\n\n")
+  debug_log(paste("SESModels directory:", ses_dir), "SES_MODELS")
 
   # List all files
   all_files <- list.files(ses_dir, pattern = "\\.xlsx$", recursive = TRUE, full.names = TRUE)
   diagnostics$files_found <- all_files
-  cat("Excel files found:", length(all_files), "\n")
+  debug_log(paste("Excel files found:", length(all_files)), "SES_MODELS")
   for (f in all_files) {
-    cat("  -", f, "\n")
+    debug_log(paste("  -", f), "SES_MODELS")
   }
-  cat("\n")
+  debug_log("", "SES_MODELS")
 
   # Scan models
   models <- scan_ses_models(base_dir, use_cache = FALSE)
   diagnostics$models_by_group <- models
 
-  cat("Models by group:\n")
+  debug_log("Models by group:", "SES_MODELS")
   for (group in names(models)) {
-    cat("  ", group, ":", length(models[[group]]), "models\n")
+    debug_log(paste("  ", group, ":", length(models[[group]]), "models"), "SES_MODELS")
     for (m in models[[group]]) {
-      cat("    -", m$display_name, "\n")
+      debug_log(paste("    -", m$display_name), "SES_MODELS")
     }
   }
-  cat("\n")
+  debug_log("", "SES_MODELS")
 
   # Test loading first file from each group
-  cat("Load tests:\n")
+  debug_log("Load tests:", "SES_MODELS")
   for (group in names(models)) {
     if (length(models[[group]]) > 0) {
       test_file <- models[[group]][[1]]$file_path
-      cat("  Testing:", basename(test_file), "...\n")
+      debug_log(paste("  Testing:", basename(test_file), "..."), "SES_MODELS")
 
       result <- load_ses_model_file(test_file, validate = TRUE)
 
       if (length(result$errors) == 0) {
-        cat("    SUCCESS: ", nrow(result$elements), " elements, ",
-            nrow(result$connections), " connections\n")
+        debug_log(paste("    SUCCESS: ", nrow(result$elements), " elements, ", nrow(result$connections), " connections"), "SES_MODELS")
         diagnostics$load_tests[[basename(test_file)]] <- "SUCCESS"
       } else {
-        cat("    FAILED:", paste(result$errors, collapse = "; "), "\n")
+        debug_log(paste("    FAILED:", paste(result$errors, collapse = "; ")), "SES_MODELS")
         diagnostics$load_tests[[basename(test_file)]] <- result$errors
       }
     }
   }
 
-  cat("\n========== END DIAGNOSTICS ==========\n\n")
+  debug_log("========== END DIAGNOSTICS ==========", "SES_MODELS")
 
   return(invisible(diagnostics))
 }

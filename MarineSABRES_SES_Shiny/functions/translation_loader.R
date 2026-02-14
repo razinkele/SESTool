@@ -39,7 +39,7 @@ load_translations <- function(base_path = "translations", debug = FALSE) {
   }
 
   if (debug) {
-    cat(sprintf("[TRANSLATION LOADER] Found %d translation files\n", length(json_files)))
+    debug_log(sprintf("Found %d translation files", length(json_files)), "TRANSLATION")
   }
 
   # Initialize with language list from first file
@@ -62,7 +62,7 @@ load_translations <- function(base_path = "translations", debug = FALSE) {
   # Load each file and merge
   for (file_path in json_files) {
     if (debug) {
-      cat(sprintf("[TRANSLATION LOADER] Loading: %s\n", basename(file_path)))
+      debug_log(sprintf("Loading: %s", basename(file_path)), "TRANSLATION")
     }
 
     tryCatch({
@@ -127,11 +127,11 @@ load_translations <- function(base_path = "translations", debug = FALSE) {
   }
 
   if (debug) {
-    cat(sprintf("[TRANSLATION LOADER] Summary:\n"))
-    cat(sprintf("  - Loaded %d files\n", file_count))
-    cat(sprintf("  - Total translation entries: %d\n", entry_count))
-    cat(sprintf("  - Total glossary terms: %d\n", glossary_count))
-    cat(sprintf("  - Languages: %s\n", paste(languages, collapse = ", ")))
+    debug_log(sprintf("Summary:"), "TRANSLATION")
+    debug_log(sprintf("- Loaded %d files", file_count), "TRANSLATION")
+    debug_log(sprintf("- Total translation entries: %d", entry_count), "TRANSLATION")
+    debug_log(sprintf("- Total glossary terms: %d", glossary_count), "TRANSLATION")
+    debug_log(sprintf("- Languages: %s", paste(languages, collapse = ", ")), "TRANSLATION")
   }
 
   return(result)
@@ -160,7 +160,7 @@ save_merged_translations <- function(translations, debug = FALSE, persistent = F
     # Object format: Convert to array format for shiny.i18n compatibility
     # shiny.i18n expects array format: [{key: "x", en: "...", es: "..."}]
     if (debug) {
-      cat("[TRANSLATION LOADER] Converting object format to array for shiny.i18n\n")
+      debug_log("Converting object format to array for shiny.i18n", "TRANSLATION")
     }
 
     # First, identify duplicate English texts
@@ -172,8 +172,7 @@ save_merged_translations <- function(translations, debug = FALSE, persistent = F
     duplicated_en_texts <- unique(en_texts[duplicated(en_texts) & en_texts != ""])
 
     if (debug && length(duplicated_en_texts) > 0) {
-      cat(sprintf("[TRANSLATION LOADER] Found %d duplicate English texts (will make unique for shiny.i18n)\n",
-                  length(duplicated_en_texts)))
+      debug_log(sprintf("Found %d duplicate English texts (will make unique for shiny.i18n)", length(duplicated_en_texts)), "TRANSLATION")
     }
 
     # Convert to array format, making English text unique where needed
@@ -222,20 +221,20 @@ save_merged_translations <- function(translations, debug = FALSE, persistent = F
   # shiny.i18n will use the "key" field as the unique identifier, not English text
 
   if (debug && !is.null(translations$translation) && length(translations$translation) > 0) {
-    cat(sprintf("[TRANSLATION LOADER] Skipping English text deduplication (namespaced keys allow duplicate English text)\n"))
-    cat(sprintf("[TRANSLATION LOADER] Total entries to save: %d\n", length(translations$translation)))
+    debug_log(sprintf("Skipping English text deduplication (namespaced keys allow duplicate English text)"), "TRANSLATION")
+    debug_log(sprintf("Total entries to save: %d", length(translations$translation)), "TRANSLATION")
   }
 
   # Create file path - persistent or temp
   if (persistent) {
     temp_file <- file.path("translations", "_merged_translations.json")
     if (debug) {
-      cat(sprintf("[TRANSLATION LOADER] Using persistent file: %s\n", temp_file))
+      debug_log(sprintf("Using persistent file: %s", temp_file), "TRANSLATION")
     }
   } else {
     temp_file <- tempfile(pattern = "marinesabres_translations_", fileext = ".json")
     if (debug) {
-      cat(sprintf("[TRANSLATION LOADER] Using temp file: %s\n", temp_file))
+      debug_log(sprintf("Using temp file: %s", temp_file), "TRANSLATION")
     }
   }
 
@@ -246,8 +245,7 @@ save_merged_translations <- function(translations, debug = FALSE, persistent = F
 
     if (debug) {
       file_size <- file.info(temp_file)$size
-      cat(sprintf("[TRANSLATION LOADER] Saved merged translations to: %s (%s bytes)\n",
-                  temp_file, format(file_size, big.mark = ",")))
+      debug_log(sprintf("Saved merged translations to: %s (%s bytes)", temp_file, format(file_size, big.mark = ",")), "TRANSLATION")
     }
 
     return(temp_file)
@@ -316,21 +314,17 @@ validate_translations <- function(translations, debug = FALSE) {
   # Report results
   if (length(issues) > 0) {
     if (debug) {
-      cat(sprintf("[TRANSLATION VALIDATOR] Found %d issues:\n", length(issues)))
+      debug_log(sprintf("Found %d issues:", length(issues)), "TRANSLATION")
       for (issue in head(issues, 10)) {
-        cat(sprintf("  - Entry #%d (%s): %s in %s\n",
-                    issue$entry_index,
-                    substr(issue$key, 1, 50),
-                    issue$problem,
-                    issue$language))
+        debug_log(sprintf("- Entry #%d (%s): %s in %s", issue$entry_index, substr(issue$key, 1, 50), issue$problem, issue$language), "TRANSLATION")
       }
       if (length(issues) > 10) {
-        cat(sprintf("  ... and %d more issues\n", length(issues) - 10))
+        debug_log(sprintf("... and %d more issues", length(issues) - 10), "TRANSLATION")
       }
     }
   } else {
     if (debug) {
-      cat("[TRANSLATION VALIDATOR] All translations are complete!\n")
+      debug_log("All translations are complete!", "TRANSLATION")
     }
   }
 
@@ -404,7 +398,7 @@ init_modular_translations <- function(base_path = "translations",
                                       enforce_namespaced = TRUE) {
 
   if (debug) {
-    cat("[TRANSLATION SYSTEM] Initializing modular translation system...\n")
+    debug_log("Initializing modular translation system...", "TRANSLATION")
   }
 
   # Load and merge all translation files
@@ -424,9 +418,9 @@ init_modular_translations <- function(base_path = "translations",
   # Get statistics if debug mode
   if (debug) {
     stats <- get_translation_stats(merged_translations)
-    cat(sprintf("[TRANSLATION SYSTEM] Statistics:\n"))
-    cat(sprintf("  - Total entries: %d\n", stats$total_entries))
-    cat(sprintf("  - Namespaced keys: %d\n", stats$namespaced_keys))
+    debug_log(sprintf("Statistics:"), "TRANSLATION")
+    debug_log(sprintf("- Total entries: %d", stats$total_entries), "TRANSLATION")
+    debug_log(sprintf("- Namespaced keys: %d", stats$namespaced_keys), "TRANSLATION")
 
     # Warn if flat keys found (should be zero in pure modular system)
     if (stats$flat_keys > 0 && enforce_namespaced) {
@@ -438,7 +432,7 @@ init_modular_translations <- function(base_path = "translations",
   temp_file <- save_merged_translations(merged_translations, debug = debug, persistent = persistent)
 
   if (debug) {
-    cat("[TRANSLATION SYSTEM] Initialization complete!\n")
+    debug_log("Initialization complete!", "TRANSLATION")
   }
 
   return(temp_file)
@@ -467,8 +461,7 @@ load_reverse_key_mapping <- function(mapping_path = "scripts/reverse_key_mapping
     mapping <- jsonlite::fromJSON(mapping_path, simplifyVector = TRUE)
 
     if (debug) {
-      cat(sprintf("[TRANSLATION WRAPPER] Loaded %d key mappings from %s\n",
-                  length(mapping), mapping_path))
+      debug_log(sprintf("Loaded %d key mappings from %s", length(mapping), mapping_path), "TRANSLATION")
     }
 
     return(mapping)
@@ -504,9 +497,9 @@ create_translation_wrapper <- function(i18n_translator,
 
   if (debug) {
     if (use_direct_lookup) {
-      cat("[TRANSLATION WRAPPER] Using direct key-based lookup (no reverse mapping needed)\n")
+      debug_log("Using direct key-based lookup (no reverse mapping needed)", "TRANSLATION")
     } else {
-      cat("[TRANSLATION WRAPPER] Using legacy reverse mapping mode\n")
+      debug_log("Using legacy reverse mapping mode", "TRANSLATION")
     }
   }
 
@@ -605,7 +598,7 @@ init_translation_system <- function(base_path = "translations",
                                     use_direct_lookup = TRUE) {
 
   if (debug) {
-    cat("[TRANSLATION SYSTEM] Initializing complete translation system...\n")
+    debug_log("Initializing complete translation system...", "TRANSLATION")
   }
 
   # Step 1: Load and merge modular translations
@@ -616,8 +609,7 @@ init_translation_system <- function(base_path = "translations",
   translation_obj <- merged_translations$translation
 
   if (debug) {
-    cat(sprintf("[TRANSLATION SYSTEM] Object format for wrapper: %d entries\n",
-                length(translation_obj)))
+    debug_log(sprintf("Object format for wrapper: %d entries", length(translation_obj)), "TRANSLATION")
   }
 
   # Step 2: Save merged translations to file for shiny.i18n
@@ -628,7 +620,7 @@ init_translation_system <- function(base_path = "translations",
   )
 
   if (debug) {
-    cat(sprintf("[TRANSLATION SYSTEM] Merged translation file: %s\n", translation_file))
+    debug_log(sprintf("Merged translation file: %s", translation_file), "TRANSLATION")
   }
 
   # Step 3: Initialize shiny.i18n Translator (primarily for language management)
@@ -643,14 +635,14 @@ init_translation_system <- function(base_path = "translations",
   })
 
   if (debug) {
-    cat("[TRANSLATION SYSTEM] shiny.i18n Translator initialized\n")
+    debug_log("shiny.i18n Translator initialized", "TRANSLATION")
   }
 
   # Step 4: Create wrapper function
   if (use_direct_lookup) {
     # NEW MODE: Use direct key-based lookup (no reverse mapping needed)
     if (debug) {
-      cat("[TRANSLATION SYSTEM] Using direct key-based lookup mode\n")
+      debug_log("Using direct key-based lookup mode", "TRANSLATION")
     }
 
     # Use the object format we created earlier
@@ -662,7 +654,7 @@ init_translation_system <- function(base_path = "translations",
   } else {
     # LEGACY MODE: Use reverse mapping
     if (debug) {
-      cat("[TRANSLATION SYSTEM] Using legacy reverse mapping mode\n")
+      debug_log("Using legacy reverse mapping mode", "TRANSLATION")
     }
     reverse_mapping <- load_reverse_key_mapping(mapping_path = mapping_path, debug = debug)
     wrapper <- create_translation_wrapper(
@@ -673,8 +665,8 @@ init_translation_system <- function(base_path = "translations",
   }
 
   if (debug) {
-    cat("[TRANSLATION SYSTEM] Translation wrapper created\n")
-    cat("[TRANSLATION SYSTEM] Initialization complete!\n")
+    debug_log("Translation wrapper created", "TRANSLATION")
+    debug_log("Initialization complete!", "TRANSLATION")
   }
 
   return(list(

@@ -548,78 +548,135 @@ validate_adjacency_matrices <- function(isa_data) {
   n_p <- if (!is.null(isa_data$pressures)) nrow(isa_data$pressures) else 0
   n_a <- if (!is.null(isa_data$activities)) nrow(isa_data$activities) else 0
   n_d <- if (!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0
+  n_r <- if (!is.null(isa_data$responses)) nrow(isa_data$responses) else 0
 
-  # Check GB-ES matrix (Goods & Benefits <- Ecosystem Services)
-  # Matrix format: rows=GB, cols=ES (GB × ES)
-  if (!is.null(isa_data$adjacency_matrices$gb_es)) {
-    mat <- isa_data$adjacency_matrices$gb_es
+  # MATRIX CONVENTION: SOURCE x TARGET (rows=SOURCE, cols=TARGET)
+  # Forward causal chain: D -> A -> P -> MPF -> ES -> GB
 
-    if (nrow(mat) != n_gb || ncol(mat) != n_es) {
+  # Check d_a matrix (Drivers -> Activities)
+  # Matrix format: rows=D, cols=A (D x A)
+  if (!is.null(isa_data$adjacency_matrices$d_a)) {
+    mat <- isa_data$adjacency_matrices$d_a
+
+    if (nrow(mat) != n_d || ncol(mat) != n_a) {
       errors <- c(errors,
-        sprintf("GB-ES matrix dimensions (%d rows × %d cols) don't match elements (%d GB × %d ES)",
-                nrow(mat), ncol(mat), n_gb, n_es))
+        sprintf("d_a matrix dimensions (%d rows x %d cols) don't match elements (%d D x %d A)",
+                nrow(mat), ncol(mat), n_d, n_a))
     }
   }
 
-  # Check ES-MPF matrix (Ecosystem Services <- Marine Processes)
-  # Matrix format: rows=ES, cols=MPF (ES × MPF)
-  if (!is.null(isa_data$adjacency_matrices$es_mpf)) {
-    mat <- isa_data$adjacency_matrices$es_mpf
+  # Check a_p matrix (Activities -> Pressures)
+  # Matrix format: rows=A, cols=P (A x P)
+  if (!is.null(isa_data$adjacency_matrices$a_p)) {
+    mat <- isa_data$adjacency_matrices$a_p
 
-    if (nrow(mat) != n_es || ncol(mat) != n_mpf) {
+    if (nrow(mat) != n_a || ncol(mat) != n_p) {
       errors <- c(errors,
-        sprintf("ES-MPF matrix dimensions (%d rows × %d cols) don't match elements (%d ES × %d MPF)",
-                nrow(mat), ncol(mat), n_es, n_mpf))
+        sprintf("a_p matrix dimensions (%d rows x %d cols) don't match elements (%d A x %d P)",
+                nrow(mat), ncol(mat), n_a, n_p))
     }
   }
 
-  # Check MPF-P matrix (Marine Processes <- Pressures)
-  # Matrix format: rows=MPF, cols=P (MPF × P)
-  if (!is.null(isa_data$adjacency_matrices$mpf_p)) {
-    mat <- isa_data$adjacency_matrices$mpf_p
+  # Check p_mpf matrix (Pressures -> Marine Processes & Functions)
+  # Matrix format: rows=P, cols=MPF (P x MPF)
+  if (!is.null(isa_data$adjacency_matrices$p_mpf)) {
+    mat <- isa_data$adjacency_matrices$p_mpf
 
-    if (nrow(mat) != n_mpf || ncol(mat) != n_p) {
+    if (nrow(mat) != n_p || ncol(mat) != n_mpf) {
       errors <- c(errors,
-        sprintf("MPF-P matrix dimensions (%d rows × %d cols) don't match elements (%d MPF × %d P)",
-                nrow(mat), ncol(mat), n_mpf, n_p))
+        sprintf("p_mpf matrix dimensions (%d rows x %d cols) don't match elements (%d P x %d MPF)",
+                nrow(mat), ncol(mat), n_p, n_mpf))
     }
   }
 
-  # Check P-A matrix (Pressures <- Activities)
-  # Matrix format: rows=P, cols=A (P × A)
-  if (!is.null(isa_data$adjacency_matrices$p_a)) {
-    mat <- isa_data$adjacency_matrices$p_a
+  # Check mpf_es matrix (Marine Processes -> Ecosystem Services)
+  # Matrix format: rows=MPF, cols=ES (MPF x ES)
+  if (!is.null(isa_data$adjacency_matrices$mpf_es)) {
+    mat <- isa_data$adjacency_matrices$mpf_es
 
-    if (nrow(mat) != n_p || ncol(mat) != n_a) {
+    if (nrow(mat) != n_mpf || ncol(mat) != n_es) {
       errors <- c(errors,
-        sprintf("P-A matrix dimensions (%d rows × %d cols) don't match elements (%d P × %d A)",
-                nrow(mat), ncol(mat), n_p, n_a))
+        sprintf("mpf_es matrix dimensions (%d rows x %d cols) don't match elements (%d MPF x %d ES)",
+                nrow(mat), ncol(mat), n_mpf, n_es))
     }
   }
 
-  # Check A-D matrix (Activities <- Drivers)
-  # Matrix format: rows=A, cols=D (A × D)
-  if (!is.null(isa_data$adjacency_matrices$a_d)) {
-    mat <- isa_data$adjacency_matrices$a_d
+  # Check es_gb matrix (Ecosystem Services -> Goods & Benefits)
+  # Matrix format: rows=ES, cols=GB (ES x GB)
+  if (!is.null(isa_data$adjacency_matrices$es_gb)) {
+    mat <- isa_data$adjacency_matrices$es_gb
 
-    if (nrow(mat) != n_a || ncol(mat) != n_d) {
+    if (nrow(mat) != n_es || ncol(mat) != n_gb) {
       errors <- c(errors,
-        sprintf("A-D matrix dimensions (%d rows × %d cols) don't match elements (%d A × %d D)",
-                nrow(mat), ncol(mat), n_a, n_d))
+        sprintf("es_gb matrix dimensions (%d rows x %d cols) don't match elements (%d ES x %d GB)",
+                nrow(mat), ncol(mat), n_es, n_gb))
     }
   }
 
-  # Check D-GB matrix (Drivers <- Goods & Benefits)
-  # Matrix format: rows=D, cols=GB (D × GB)
-  if (!is.null(isa_data$adjacency_matrices$d_gb)) {
-    mat <- isa_data$adjacency_matrices$d_gb
+  # Feedback loop closure
 
-    if (nrow(mat) != n_d || ncol(mat) != n_gb) {
+  # Check gb_d matrix (Goods & Benefits -> Drivers)
+  # Matrix format: rows=GB, cols=D (GB x D)
+  if (!is.null(isa_data$adjacency_matrices$gb_d)) {
+    mat <- isa_data$adjacency_matrices$gb_d
+
+    if (nrow(mat) != n_gb || ncol(mat) != n_d) {
       errors <- c(errors,
-        sprintf("D-GB matrix dimensions (%d rows × %d cols) don't match elements (%d D × %d GB)",
-                nrow(mat), ncol(mat), n_d, n_gb))
+        sprintf("gb_d matrix dimensions (%d rows x %d cols) don't match elements (%d GB x %d D)",
+                nrow(mat), ncol(mat), n_gb, n_d))
     }
   }
+
+  # Response measures matrices
+
+  # Check gb_r matrix (Goods & Benefits -> Responses)
+  # Matrix format: rows=GB, cols=R (GB x R)
+  if (!is.null(isa_data$adjacency_matrices$gb_r)) {
+    mat <- isa_data$adjacency_matrices$gb_r
+
+    if (nrow(mat) != n_gb || ncol(mat) != n_r) {
+      errors <- c(errors,
+        sprintf("gb_r matrix dimensions (%d rows x %d cols) don't match elements (%d GB x %d R)",
+                nrow(mat), ncol(mat), n_gb, n_r))
+    }
+  }
+
+  # Check r_d matrix (Responses -> Drivers)
+  # Matrix format: rows=R, cols=D (R x D)
+  if (!is.null(isa_data$adjacency_matrices$r_d)) {
+    mat <- isa_data$adjacency_matrices$r_d
+
+    if (nrow(mat) != n_r || ncol(mat) != n_d) {
+      errors <- c(errors,
+        sprintf("r_d matrix dimensions (%d rows x %d cols) don't match elements (%d R x %d D)",
+                nrow(mat), ncol(mat), n_r, n_d))
+    }
+  }
+
+  # Check r_a matrix (Responses -> Activities)
+  # Matrix format: rows=R, cols=A (R x A)
+  if (!is.null(isa_data$adjacency_matrices$r_a)) {
+    mat <- isa_data$adjacency_matrices$r_a
+
+    if (nrow(mat) != n_r || ncol(mat) != n_a) {
+      errors <- c(errors,
+        sprintf("r_a matrix dimensions (%d rows x %d cols) don't match elements (%d R x %d A)",
+                nrow(mat), ncol(mat), n_r, n_a))
+    }
+  }
+
+  # Check r_p matrix (Responses -> Pressures)
+  # Matrix format: rows=R, cols=P (R x P)
+  if (!is.null(isa_data$adjacency_matrices$r_p)) {
+    mat <- isa_data$adjacency_matrices$r_p
+
+    if (nrow(mat) != n_r || ncol(mat) != n_p) {
+      errors <- c(errors,
+        sprintf("r_p matrix dimensions (%d rows x %d cols) don't match elements (%d R x %d P)",
+                nrow(mat), ncol(mat), n_r, n_p))
+    }
+  }
+
 
   return(errors)
 }
@@ -665,180 +722,6 @@ export_project_rds <- function(project_data, file_path) {
   saveRDS(project_data, file_path)
   
   debug_log(paste("Project saved to:", file_path), "DATA")
-}
-
-#' Import ISA data from Excel workbook
-#' 
-#' @param file_path Path to Excel file
-#' @return ISA data list
-import_isa_excel <- function(file_path) {
-  
-  if (!file.exists(file_path)) {
-    stop("File does not exist: ", file_path)
-  }
-  
-  wb <- loadWorkbook(file_path)
-  sheets <- getSheetNames(file_path)
-  
-  isa_data <- list()
-  
-  # Read each element sheet
-  if ("Goods_Benefits" %in% sheets) {
-    isa_data$goods_benefits <- read.xlsx(wb, sheet = "Goods_Benefits")
-  }
-  
-  if ("Ecosystem_Services" %in% sheets) {
-    isa_data$ecosystem_services <- read.xlsx(wb, sheet = "Ecosystem_Services")
-  }
-  
-  if ("Marine_Processes" %in% sheets) {
-    isa_data$marine_processes <- read.xlsx(wb, sheet = "Marine_Processes")
-  }
-  
-  if ("Pressures" %in% sheets) {
-    isa_data$pressures <- read.xlsx(wb, sheet = "Pressures")
-  }
-  
-  if ("Activities" %in% sheets) {
-    isa_data$activities <- read.xlsx(wb, sheet = "Activities")
-  }
-  
-  if ("Drivers" %in% sheets) {
-    isa_data$drivers <- read.xlsx(wb, sheet = "Drivers")
-  }
-  
-  # Read adjacency matrices
-  isa_data$adjacency_matrices <- list()
-  
-  adj_sheets <- c("GB_ES", "ES_MPF", "MPF_P", "P_A", "A_D", "D_GB")
-  adj_names <- c("gb_es", "es_mpf", "mpf_p", "p_a", "a_d", "d_gb")
-  
-  for (i in seq_along(adj_sheets)) {
-    if (adj_sheets[i] %in% sheets) {
-      mat_df <- read.xlsx(wb, sheet = adj_sheets[i], rowNames = TRUE)
-      isa_data$adjacency_matrices[[adj_names[i]]] <- as.matrix(mat_df)
-    }
-  }
-  
-  return(isa_data)
-}
-
-#' Export ISA data to Excel workbook
-#' 
-#' @param isa_data ISA data list
-#' @param file_path Output file path
-#' @return NULL (side effect: saves file)
-export_isa_excel <- function(isa_data, file_path) {
-  
-  wb <- createWorkbook()
-  
-  # Add element sheets
-  if (!is.null(isa_data$goods_benefits)) {
-    addWorksheet(wb, "Goods_Benefits")
-    writeData(wb, "Goods_Benefits", isa_data$goods_benefits)
-  }
-  
-  if (!is.null(isa_data$ecosystem_services)) {
-    addWorksheet(wb, "Ecosystem_Services")
-    writeData(wb, "Ecosystem_Services", isa_data$ecosystem_services)
-  }
-  
-  if (!is.null(isa_data$marine_processes)) {
-    addWorksheet(wb, "Marine_Processes")
-    writeData(wb, "Marine_Processes", isa_data$marine_processes)
-  }
-  
-  if (!is.null(isa_data$pressures)) {
-    addWorksheet(wb, "Pressures")
-    writeData(wb, "Pressures", isa_data$pressures)
-  }
-  
-  if (!is.null(isa_data$activities)) {
-    addWorksheet(wb, "Activities")
-    writeData(wb, "Activities", isa_data$activities)
-  }
-  
-  if (!is.null(isa_data$drivers)) {
-    addWorksheet(wb, "Drivers")
-    writeData(wb, "Drivers", isa_data$drivers)
-  }
-  
-  # Add adjacency matrix sheets
-  adj_names <- names(isa_data$adjacency_matrices)
-  for (adj_name in adj_names) {
-    mat <- isa_data$adjacency_matrices[[adj_name]]
-    if (!is.null(mat)) {
-      sheet_name <- toupper(gsub("_", "_", adj_name))
-      addWorksheet(wb, sheet_name)
-      writeData(wb, sheet_name, mat, rowNames = TRUE)
-    }
-  }
-  
-  saveWorkbook(wb, file_path, overwrite = TRUE)
-  
-  debug_log(paste("ISA data exported to:", file_path), "DATA")
-}
-
-# ============================================================================
-# DATA MANIPULATION FUNCTIONS
-# ============================================================================
-
-#' Add element to ISA data
-#' 
-#' @param isa_data ISA data list
-#' @param element_type Element type (e.g., "goods_benefits")
-#' @param element_data Single row dataframe with element data
-#' @return Updated ISA data list
-add_element <- function(isa_data, element_type, element_data) {
-  
-  # Generate ID if not provided
-  if (is.null(element_data$id) || element_data$id == "") {
-    element_data$id <- generate_id(toupper(substr(element_type, 1, 2)))
-  }
-  
-  # Add to appropriate dataframe
-  if (is.null(isa_data[[element_type]]) || nrow(isa_data[[element_type]]) == 0) {
-    isa_data[[element_type]] <- element_data
-  } else {
-    isa_data[[element_type]] <- rbind(isa_data[[element_type]], element_data)
-  }
-  
-  return(isa_data)
-}
-
-#' Update element in ISA data
-#' 
-#' @param isa_data ISA data list
-#' @param element_type Element type
-#' @param element_id Element ID to update
-#' @param element_data Updated element data
-#' @return Updated ISA data list
-update_element <- function(isa_data, element_type, element_id, element_data) {
-  
-  idx <- which(isa_data[[element_type]]$id == element_id)
-  
-  if (length(idx) == 0) {
-    log_warning("DATA", paste("Element not found:", element_id))
-    return(isa_data)
-  }
-  
-  isa_data[[element_type]][idx, ] <- element_data
-  
-  return(isa_data)
-}
-
-#' Delete element from ISA data
-#' 
-#' @param isa_data ISA data list
-#' @param element_type Element type
-#' @param element_id Element ID to delete
-#' @return Updated ISA data list
-delete_element <- function(isa_data, element_type, element_id) {
-
-  isa_data[[element_type]] <- isa_data[[element_type]] %>%
-    filter(id != element_id)
-
-  return(isa_data)
 }
 
 # ============================================================================

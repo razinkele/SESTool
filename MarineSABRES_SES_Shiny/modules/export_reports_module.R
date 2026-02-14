@@ -3,8 +3,7 @@
 # Export & Reports Module
 # Purpose: Handle data export, visualization export, and report generation
 
-# Source the report generation functions
-source("functions/report_generation.R", local = TRUE)
+# Report generation functions sourced globally via app.R critical_sources
 
 # ============================================================================
 # UI FUNCTION
@@ -190,25 +189,18 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
       tryCatch({
         # Create a temporary Rmd file
         rmd_file <- tempfile(fileext = ".Rmd")
+        on.exit(unlink(rmd_file), add = TRUE)
 
         # Generate report content using the fixed function
         debug_log("Calling generate_report_content()...", "EXPORT")
         flush.console()
 
-        report_content <- tryCatch({
-          generate_report_content(
-            data = data,
-            report_type = report_type,
-            include_viz = include_viz,
-            include_data = include_data
-          )
-        }, error = function(e) {
-          debug_log("ERROR IN generate_report_content()", "EXPORT")
-          debug_log(paste("Error message:", e$message), "EXPORT")
-          debug_log(paste("Error class:", paste(class(e), collapse = ", ")), "EXPORT")
-          flush.console()
-          stop(e)
-        })
+        report_content <- generate_report_content(
+          data = data,
+          report_type = report_type,
+          include_viz = include_viz,
+          include_data = include_data
+        )
 
         debug_log("Report content generated successfully!", "EXPORT")
         debug_log(paste("Content length:", nchar(report_content), "characters"), "EXPORT")
@@ -236,6 +228,10 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
           ".html"  # default
         )
 
+        old_report <- report_file_path()
+        if (!is.null(old_report) && file.exists(old_report)) {
+          tryCatch(unlink(old_report), error = function(e) debug_log(paste("Cleanup failed:", e$message), "EXPORT"))
+        }
         output_file <- tempfile(fileext = output_ext)
 
         debug_log(paste("output_format:", output_format, "class:", class(output_format)), "EXPORT")
@@ -265,10 +261,15 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
           }
 
           if (!latex_available) {
-            stop("PDF generation requires LaTeX. Please install TinyTeX using:\n",
-                 "install.packages('tinytex')\n",
-                 "tinytex::install_tinytex()\n\n",
-                 "Alternatively, generate an HTML report and print to PDF from your browser.")
+            removeModal()
+            showNotification(
+              paste("PDF generation requires LaTeX. Please install TinyTeX using:",
+                    "install.packages('tinytex'); tinytex::install_tinytex().",
+                    "Alternatively, generate an HTML report and print to PDF from your browser."),
+              type = "error",
+              duration = 15
+            )
+            return()
           }
         }
 

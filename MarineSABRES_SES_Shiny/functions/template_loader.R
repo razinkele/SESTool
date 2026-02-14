@@ -488,7 +488,7 @@ load_all_templates <- function(data_dir = "data") {
 
   # If none found, return empty list with a message
   if (length(json_files) == 0) {
-    cat("No template JSON files found in candidates:", paste(candidates, collapse = ", "), "\n")
+    debug_log(paste("No template JSON files found in candidates:", paste(candidates, collapse = ", ")), "TEMPLATE")
     return(list())
   }
 
@@ -504,9 +504,9 @@ load_all_templates <- function(data_dir = "data") {
 
     if (!is.null(template)) {
       templates[[template_key]] <- template
-      cat("✓ Loaded template:", template_key, "\n")
+      debug_log(paste("Loaded template:", template_key), "TEMPLATE")
     } else {
-      cat("✗ Failed to load:", json_file, "\n")
+      debug_log(paste("Failed to load:", json_file), "TEMPLATE")
     }
   }
 

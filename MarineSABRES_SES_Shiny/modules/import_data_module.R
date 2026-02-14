@@ -95,7 +95,7 @@ import_data_ui <- function(id, i18n) {
       fluidRow(
         column(6,
           fileInput(ns("excel_file"),
-                    "Choose Excel File (.xlsx)",
+                    i18n$t("modules.import.data.choose_excel_file"),
                     accept = c(".xlsx", ".xls"),
                     buttonLabel = "Browse...",
                     placeholder = "No file selected")
@@ -103,7 +103,7 @@ import_data_ui <- function(id, i18n) {
         column(6,
           br(),
           actionButton(ns("load_sample"),
-                      "Load Sample (TuscanySES)",
+                      i18n$t("modules.import.data.load_sample"),
                       icon = icon("upload"),
                       class = "btn-info",
                       style = "margin-top: 25px;")
@@ -160,20 +160,20 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
           rv$validation_errors <- validate_import_data(rv$elements_data, rv$connections_data)
 
           showNotification(
-            "Sample file loaded successfully!",
+            i18n$t("modules.import.data.sample_loaded"),
             type = "message",
             duration = 3
           )
         } else {
           showNotification(
-            paste("Sample file not found at:", sample_file),
+            paste(i18n$t("modules.import.data.sample_not_found"), sample_file),
             type = "error",
             duration = 5
           )
         }
       }, error = function(e) {
         showNotification(
-          paste("Error loading sample file:", e$message),
+          paste(i18n$t("modules.import.data.error_loading_sample"), e$message),
           type = "error",
           duration = 10
         )
@@ -209,16 +209,15 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         if (!is.null(file_info$type) && nchar(file_info$type) > 0 &&
             !file_info$type %in% expected_mimes) {
           showNotification(
-            paste("Invalid file type detected:", file_info$type,
-                  "- Expected an Excel file (.xlsx or .xls)"),
+            sprintf(i18n$t("modules.import.data.invalid_mime_type"), file_info$type),
             type = "error", duration = 8
           )
           return()
         }
 
-        # === VALIDATION 2: File size check (max 50MB) ===
-        max_size_mb <- 50
-        if (file_size > max_size_mb * 1024 * 1024) {
+        # === VALIDATION 2: File size check ===
+        max_size_mb <- MAX_UPLOAD_SIZE_MB
+        if (file_size > MAX_UPLOAD_SIZE_BYTES) {
           showNotification(
             paste(i18n$t("common.messages.file_too_large_maximum_size_is"), max_size_mb, "MB"),
             type = "error",
@@ -253,7 +252,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
         if (!("Elements" %in% sheets) || !("Connections" %in% sheets)) {
           showNotification(
-            "Error: Excel file must contain 'Elements' and 'Connections' sheets!",
+            i18n$t("modules.import.data.missing_sheets"),
             type = "error",
             duration = 10
           )
@@ -269,14 +268,14 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         rv$validation_errors <- validate_import_data(rv$elements_data, rv$connections_data)
 
         showNotification(
-          "File uploaded successfully!",
+          i18n$t("modules.import.data.file_uploaded"),
           type = "message",
           duration = 3
         )
 
       }, error = function(e) {
         showNotification(
-          paste("Error reading Excel file:", e$message),
+          paste(i18n$t("modules.import.data.error_reading_file"), e$message),
           type = "error",
           duration = 10
         )
@@ -292,7 +291,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       if (!is.null(rv$validation_errors) && length(rv$validation_errors) > 0) {
         tagList(
           div(class = "alert alert-warning",
-            icon("exclamation-triangle"), " ", strong("Validation Warnings:"),
+            icon("exclamation-triangle"), " ", strong(i18n$t("modules.import.data.validation_warnings")),
             tags$ul(
               lapply(rv$validation_errors, function(err) tags$li(err))
             )
@@ -300,7 +299,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
           br(),
           div(align = "center",
             actionButton(ns("review_btn"),
-                        "Review Connections",
+                        i18n$t("modules.import.data.review_connections"),
                         icon = icon("search"),
                         class = "btn-warning btn-lg",
                         style = "font-size: 18px; padding: 15px 30px;")
@@ -310,21 +309,21 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         tagList(
           div(class = "alert alert-success",
             icon("check-circle"), " ",
-            strong("Data validated successfully!"),
+            strong(i18n$t("modules.import.data.data_validated")),
             br(),
-            sprintf("Found %d elements and %d connections",
+            sprintf(i18n$t("modules.import.data.found_elements_connections"),
                     nrow(rv$elements_data),
                     nrow(rv$connections_data))
           ),
           br(),
           div(align = "center",
             actionButton(ns("review_btn"),
-                        "Review Connections",
+                        i18n$t("modules.import.data.review_connections"),
                         icon = icon("search"),
                         class = "btn-primary btn-lg",
                         style = "font-size: 18px; padding: 15px 30px; margin-right: 10px;"),
             actionButton(ns("import_direct_btn"),
-                        "Import Without Review",
+                        i18n$t("modules.import.data.import_without_review"),
                         icon = icon("fast-forward"),
                         class = "btn-success btn-lg",
                         style = "font-size: 18px; padding: 15px 30px;")
@@ -340,20 +339,20 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       tagList(
         hr(),
         div(class = "import-container",
-          h3(icon("check-square"), " Review Imported Connections"),
-          p("Review and optionally edit the connections before importing. Connections are organized by DAPSI(W)R(M) stages for easier review."),
+          h3(icon("check-square"), " ", i18n$t("modules.import.data.review_imported_connections")),
+          p(i18n$t("modules.import.data.review_description")),
 
           connection_review_tabbed_ui(ns("conn_review"), i18n),
 
           br(),
           div(align = "center",
             actionButton(ns("finalize_import_btn"),
-                        "Finalize Import",
+                        i18n$t("modules.import.data.finalize_import"),
                         icon = icon("check-circle"),
                         class = "btn-success btn-lg",
                         style = "font-size: 18px; padding: 15px 30px; margin-right: 10px;"),
             actionButton(ns("cancel_review_btn"),
-                        "Cancel",
+                        i18n$t("common.buttons.cancel"),
                         icon = icon("times"),
                         class = "btn-secondary btn-lg",
                         style = "font-size: 18px; padding: 15px 30px;")
@@ -422,7 +421,12 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
         # Verify shared function is available
         if (!exists("convert_excel_to_isa", mode = "function")) {
-          stop("convert_excel_to_isa function not available. Ensure excel_import_helpers.R is sourced.")
+          showNotification(
+            i18n$t("modules.import.data.function_not_available"),
+            type = "error",
+            duration = 10
+          )
+          return()
         }
 
         # Convert to ISA structure (uses connection-first approach from excel_import_helpers.R)
@@ -447,7 +451,12 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
       tryCatch({
         # Verify shared function is available
         if (!exists("convert_excel_to_isa", mode = "function")) {
-          stop("convert_excel_to_isa function not available. Ensure excel_import_helpers.R is sourced.")
+          showNotification(
+            i18n$t("modules.import.data.function_not_available"),
+            type = "error",
+            duration = 10
+          )
+          return()
         }
 
         # Convert to ISA structure (uses connection-first approach from excel_import_helpers.R)

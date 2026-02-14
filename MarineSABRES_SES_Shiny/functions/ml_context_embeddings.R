@@ -242,10 +242,10 @@ get_context_embedding_dim <- function() {
 # Initialization Message
 # ==============================================================================
 
-cat("✓ ML Context Embeddings module loaded\n")
-cat(sprintf("  - Regional seas: 12 categories → 8-dim embeddings\n"))
-cat(sprintf("  - Ecosystems: 25 categories → 12-dim embeddings\n"))
-cat(sprintf("  - Focal issues: 52 categories → 16-dim embeddings\n"))
-cat(sprintf("  - Total output: %d dims (vs 88 sparse one-hot)\n", get_context_embedding_dim()))
-cat("  - context_embeddings(): Neural network module\n")
-cat("  - context_to_indices(): Convert strings to embedding indices\n")
+debug_log("ML Context Embeddings module loaded", "ML_EMBEDDINGS")
+debug_log("Regional seas: 12 categories -> 8-dim embeddings", "ML_EMBEDDINGS")
+debug_log("Ecosystems: 25 categories -> 12-dim embeddings", "ML_EMBEDDINGS")
+debug_log("Focal issues: 52 categories -> 16-dim embeddings", "ML_EMBEDDINGS")
+debug_log(sprintf("Total output: %d dims (vs 88 sparse one-hot)", get_context_embedding_dim()), "ML_EMBEDDINGS")
+debug_log("context_embeddings(): Neural network module", "ML_EMBEDDINGS")
+debug_log("context_to_indices(): Convert strings to embedding indices", "ML_EMBEDDINGS")

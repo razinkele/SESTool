@@ -19,39 +19,6 @@ generate_export_filename <- function(prefix, extension) {
 # VISUALIZATION EXPORT FUNCTIONS
 # ============================================================================
 
-#' Export CLD as PNG
-#' 
-#' @param visnet visNetwork object
-#' @param file_path Output file path
-#' @param width Image width in pixels
-#' @param height Image height in pixels
-#' @return NULL (side effect: saves file)
-export_cld_png <- function(visnet, file_path, width = 1200, height = 900) {
-
-  if (!requireNamespace("webshot", quietly = TRUE)) {
-    stop("Package 'webshot' is required for PNG export. Install with: webshot::install_phantomjs()")
-  }
-
-  temp_html <- NULL
-  tryCatch({
-    # Save as HTML first
-    temp_html <- tempfile(fileext = ".html")
-    htmlwidgets::saveWidget(visnet, temp_html, selfcontained = TRUE)
-
-    # Convert to PNG
-    webshot::webshot(temp_html, file_path, vwidth = width, vheight = height)
-
-    debug_log(paste("CLD exported as PNG:", file_path), "EXPORT")
-  }, error = function(e) {
-    stop(paste("Failed to export PNG:", e$message))
-  }, finally = {
-    # Clean up temp file
-    if (!is.null(temp_html) && file.exists(temp_html)) {
-      unlink(temp_html)
-    }
-  })
-}
-
 #' Export CLD as HTML
 #' 
 #' @param visnet visNetwork object
@@ -66,45 +33,6 @@ export_cld_html <- function(visnet, file_path) {
   )
   
   debug_log(paste("CLD exported as HTML:", file_path), "EXPORT")
-}
-
-#' Export BOT graphs as PDF
-#' 
-#' @param bot_data_list List of BOT data for different elements
-#' @param file_path Output file path
-#' @param width PDF width in inches
-#' @param height PDF height in inches
-#' @return NULL (side effect: saves file)
-export_bot_pdf <- function(bot_data_list, file_path, width = 11, height = 8.5) {
-  
-  pdf(file_path, width = width, height = height)
-  
-  for (element_name in names(bot_data_list)) {
-    bot_data <- bot_data_list[[element_name]]
-    
-    if (nrow(bot_data) > 0) {
-      p <- ggplot(bot_data, aes(x = date, y = value, color = element_id)) +
-        geom_line(linewidth = 1) +
-        geom_point(size = 2) +
-        labs(
-          title = paste("Behavior Over Time:", element_name),
-          x = "Time",
-          y = "Value",
-          color = "Element"
-        ) +
-        theme_minimal() +
-        theme(
-          plot.title = element_text(size = 14, face = "bold"),
-          legend.position = "bottom"
-        )
-      
-      print(p)
-    }
-  }
-  
-  dev.off()
-  
-  debug_log(paste("BOT graphs exported as PDF:", file_path), "EXPORT")
 }
 
 # ============================================================================
@@ -213,7 +141,8 @@ export_isa_to_workbook <- function(wb, isa_data) {
     "marine_processes" = "Marine_Processes",
     "pressures" = "Pressures",
     "activities" = "Activities",
-    "drivers" = "Drivers"
+    "drivers" = "Drivers",
+    "responses" = "Responses"
   )
   
   for (elem_name in names(element_mapping)) {
@@ -230,12 +159,16 @@ export_isa_to_workbook <- function(wb, isa_data) {
   
   if (!is.null(adj_matrices)) {
     adj_mapping <- list(
-      "gb_es" = "Matrix_GB_ES",
-      "es_mpf" = "Matrix_ES_MPF",
-      "mpf_p" = "Matrix_MPF_P",
-      "p_a" = "Matrix_P_A",
-      "a_d" = "Matrix_A_D",
-      "d_gb" = "Matrix_D_GB"
+      "d_a" = "Matrix_D_A",
+      "a_p" = "Matrix_A_P",
+      "p_mpf" = "Matrix_P_MPF",
+      "mpf_es" = "Matrix_MPF_ES",
+      "es_gb" = "Matrix_ES_GB",
+      "gb_d" = "Matrix_GB_D",
+      "gb_r" = "Matrix_GB_R",
+      "r_d" = "Matrix_R_D",
+      "r_a" = "Matrix_R_A",
+      "r_p" = "Matrix_R_P"
     )
     
     for (adj_name in names(adj_mapping)) {

@@ -103,7 +103,7 @@ create_igraph_from_data <- function(nodes, edges) {
 
   # Handle case with no edges - create graph with nodes only
   if (nrow(valid_edges) == 0) {
-    cat("[NETWORK_ANALYSIS] No edges found, creating graph with nodes only\n")
+    debug_log("No edges found, creating graph with nodes only", "NETWORK_ANALYSIS")
     # Create graph with no edges
     g <- igraph::graph_from_data_frame(
       d = data.frame(from = character(0), to = character(0)),
@@ -175,15 +175,6 @@ detect_feedback_loops <- function(graph, max_length = 5) {
     }
   }
   result
-}
-
-#' Classify loop type (Reinforcing or Balancing) based on edge sign vector
-#' @param loop_info list with edge_types (vector of '+' or '-')
-#' @return character 'Reinforcing' or 'Balancing'
-classify_loop_type <- function(loop_info) {
-  if (is.null(loop_info$edge_types)) return(NA_character_)
-  neg_count <- sum(loop_info$edge_types == "-")
-  if (neg_count %% 2 == 0) "Reinforcing" else "Balancing"
 }
 
 #' Simplify network by removing low-importance nodes
@@ -681,7 +672,8 @@ is_duplicate_cycle <- function(cycle, existing_cycles) {
 #' @return Normalized cycle
 normalize_cycle <- function(cycle) {
   min_idx <- which.min(cycle)
-  c(cycle[min_idx:length(cycle)], cycle[1:(min_idx-1)])
+  if (min_idx == 1) return(cycle)
+  c(cycle[min_idx:length(cycle)], cycle[1:(min_idx - 1)])
 }
 
 #' Classify loop type (reinforcing or balancing)
@@ -785,7 +777,7 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm 
   n_batches <- ceiling(n_cycles / batch_size)
 
   if (n_cycles > batch_size) {
-    cat(sprintf("[Loop Processing] Processing %d loops in %d batches\n", n_cycles, n_batches))
+    debug_log(sprintf("Processing %d loops in %d batches", n_cycles, n_batches), "NETWORK_ANALYSIS")
   }
 
   # Track invalid loops for reporting
@@ -794,8 +786,8 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm 
   loops_list <- lapply(seq_along(cycles), function(i) {
     # Progress monitoring for large datasets
     if (i %% batch_size == 0 && n_cycles > batch_size) {
-      cat(sprintf("[Loop Processing] Processed %d/%d loops (%.1f%%)\n",
-                  i, n_cycles, (i/n_cycles)*100))
+      debug_log(sprintf("Processed %d/%d loops (%.1f%%)",
+                  i, n_cycles, (i/n_cycles)*100), "NETWORK_ANALYSIS")
     }
 
     cycle <- cycles[[i]]
@@ -840,26 +832,26 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm 
 
   # Report on filtered loops
   if (validate_dapsirwrm && length(invalid_loops) > 0) {
-    cat(sprintf("\n[DAPSIRWRM Validation] Filtered out %d invalid loops that violate framework constraints:\n",
-                length(invalid_loops)))
+    debug_log(sprintf("Filtered out %d invalid loops that violate framework constraints:",
+                length(invalid_loops)), "NETWORK_ANALYSIS")
 
     # Show first few examples
     n_examples <- min(3, length(invalid_loops))
     for (i in 1:n_examples) {
       invalid <- invalid_loops[[i]]
-      cat(sprintf("  Loop %d: %s\n", invalid$loop_id, invalid$elements))
-      cat(sprintf("    Invalid transitions: %s\n",
-                  paste(invalid$invalid_edges, collapse="; ")))
+      debug_log(sprintf("Loop %d: %s", invalid$loop_id, invalid$elements), "NETWORK_ANALYSIS")
+      debug_log(sprintf("Invalid transitions: %s",
+                  paste(invalid$invalid_edges, collapse="; ")), "NETWORK_ANALYSIS")
     }
 
     if (length(invalid_loops) > n_examples) {
-      cat(sprintf("  ... and %d more invalid loops\n",
-                  length(invalid_loops) - n_examples))
+      debug_log(sprintf("... and %d more invalid loops",
+                  length(invalid_loops) - n_examples), "NETWORK_ANALYSIS")
     }
 
-    cat(sprintf("\nValid DAPSIRWRM transitions:\n"))
-    cat("  Forward: D→A→P→MPF→ES→GB→R\n")
-    cat("  Feedback: R→D, R→A, R→P, D→GB\n\n")
+    debug_log("Valid DAPSIRWRM transitions:", "NETWORK_ANALYSIS")
+    debug_log("Forward: D->A->P->MPF->ES->GB->R", "NETWORK_ANALYSIS")
+    debug_log("Feedback: R->D, R->A, R->P, D->GB", "NETWORK_ANALYSIS")
   }
 
   # Re-number loop IDs to be sequential
