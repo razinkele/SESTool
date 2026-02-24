@@ -279,10 +279,6 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
           "5. ", i18n$t("modules.entry_point.report_step_5"), "\n"
         )
 
-        # Create temporary file
-        temp_file <- tempfile(fileext = ".txt")
-        writeLines(report_text, temp_file)
-
         # Download the file
         session$sendCustomMessage(
           type = "download_pathway_report",

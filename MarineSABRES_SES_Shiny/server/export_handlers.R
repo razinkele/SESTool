@@ -222,11 +222,11 @@ setup_export_handlers <- function(input, output, session, project_data, i18n) {
              vertex.label.color = "black",
              vertex.frame.color = "gray",
              edge.curved = 0.2,
-             main = "MarineSABRES Causal Loop Diagram")
+             main = i18n$t("modules.export.cld_diagram_title"))
 
         # Add legend
         legend("bottomright",
-               legend = c("Positive link", "Negative link"),
+               legend = c(i18n$t("modules.export.positive_link"), i18n$t("modules.export.negative_link")),
                col = c("#06D6A0", "#E63946"),
                lty = 1, lwd = 2,
                bty = "n")

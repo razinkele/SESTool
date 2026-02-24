@@ -1632,6 +1632,48 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
     })
 
     # Data export handlers ----
+    output$export_data <- downloadHandler(
+      filename = function() {
+        name <- if (!is.null(input$export_filename) && nchar(input$export_filename) > 0) {
+          sanitize_filename(input$export_filename)
+        } else {
+          "ISA_Export"
+        }
+        paste0(name, ".xlsx")
+      },
+      content = function(file) {
+        wb <- createWorkbook()
+
+        addWorksheet(wb, "Goods_Benefits")
+        addWorksheet(wb, "Ecosystem_Services")
+        addWorksheet(wb, "Marine_Processes")
+        addWorksheet(wb, "Pressures")
+        addWorksheet(wb, "Activities")
+        addWorksheet(wb, "Drivers")
+
+        writeData(wb, "Goods_Benefits", isa_data$goods_benefits)
+        writeData(wb, "Ecosystem_Services", isa_data$ecosystem_services)
+        writeData(wb, "Marine_Processes", isa_data$marine_processes)
+        writeData(wb, "Pressures", isa_data$pressures)
+        writeData(wb, "Activities", isa_data$activities)
+        writeData(wb, "Drivers", isa_data$drivers)
+
+        # Add adjacency matrices if available
+        if (!is.null(isa_data$adjacency_matrices)) {
+          for (mat_name in names(isa_data$adjacency_matrices)) {
+            mat <- isa_data$adjacency_matrices[[mat_name]]
+            if (!is.null(mat) && is.matrix(mat)) {
+              sheet_name <- substr(paste0("Matrix_", mat_name), 1, 31)
+              addWorksheet(wb, sheet_name)
+              writeData(wb, sheet_name, as.data.frame(mat), rowNames = TRUE)
+            }
+          }
+        }
+
+        saveWorkbook(wb, file, overwrite = TRUE)
+      }
+    )
+
     output$download_excel <- downloadHandler(
       filename = function() {
         generate_export_filename("ISA_Analysis", ".xlsx")
@@ -1687,7 +1729,10 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
         write.csv(connections, file.path(temp_dir, "connections.csv"), row.names = FALSE)
 
         # Create zip file
-        zip(file, files = c(file.path(temp_dir, "elements.csv"), file.path(temp_dir, "connections.csv")))
+        csv_files <- c(file.path(temp_dir, "elements.csv"), file.path(temp_dir, "connections.csv"))
+        zip(file, files = csv_files)
+        # Clean up temp CSV files
+        unlink(csv_files)
       }
     )
 

@@ -451,6 +451,105 @@
       "it": "I nodi di Risposta e Misure possono ottenere punteggi più elevati nella centralità di intermediazione (una delle tre metriche nel punteggio composito) perché strutturalmente collegano i Driver e le Attività nel framework DAPSI(W)R(M). Questa è una proprietà intrinseca della topologia del framework. Considerate il tipo di nodo nell'interpretazione dei risultati.",
       "no": "Respons- og tiltaksnoder kan score høyere på mellomliggenhetssentralitet (en av tre metrikker i den sammensatte scoren) fordi de strukturelt kobler tilbake til drivere og aktiviteter i DAPSI(W)R(M)-rammeverket. Dette er en iboende egenskap ved rammeverkets topologi. Vurder nodetypen ved tolkning av resultater.",
       "el": "Οι κόμβοι Απόκρισης και Μέτρων μπορεί να βαθμολογούν υψηλότερα στην κεντρικότητα μεσοβαθμίδας (μία από τις τρεις μετρικές στη σύνθετη βαθμολογία) επειδή δομικά γεφυρώνουν πίσω στους Οδηγούς και τις Δραστηριότητες στο πλαίσιο DAPSI(W)R(M). Λάβετε υπόψη τον τύπο κόμβου κατά την ερμηνεία των αποτελεσμάτων."
+    },
+    "modules.analysis.leverage.analysis_settings": {
+      "en": "Analysis Settings",
+      "es": "Configuración del Análisis",
+      "fr": "Paramètres d'Analyse",
+      "de": "Analyseeinstellungen",
+      "lt": "Analizės nustatymai",
+      "pt": "Configurações da Análise",
+      "it": "Impostazioni dell'Analisi",
+      "no": "Analysis Settings",
+      "el": "Analysis Settings"
+    },
+    "modules.analysis.leverage.btn_calculate": {
+      "en": "Calculate Leverage Points",
+      "es": "Calcular Puntos de Apalancamiento",
+      "fr": "Calculer les Points de Levier",
+      "de": "Hebelpunkte berechnen",
+      "lt": "Apskaičiuoti svertinius taškus",
+      "pt": "Calcular Pontos de Alavancagem",
+      "it": "Calcola Punti Leva",
+      "no": "Calculate Leverage Points",
+      "el": "Calculate Leverage Points"
+    },
+    "modules.analysis.leverage.about_leverage_points": {
+      "en": "About Leverage Points",
+      "es": "Acerca de los Puntos de Apalancamiento",
+      "fr": "À propos des Points de Levier",
+      "de": "Über Hebelpunkte",
+      "lt": "Apie svertinius taškus",
+      "pt": "Sobre Pontos de Alavancagem",
+      "it": "Informazioni sui Punti Leva",
+      "no": "About Leverage Points",
+      "el": "About Leverage Points"
+    },
+    "modules.analysis.leverage.tab_leverage_points": {
+      "en": "Leverage Points",
+      "es": "Puntos de Apalancamiento",
+      "fr": "Points de Levier",
+      "de": "Hebelpunkte",
+      "lt": "Svertiniai taškai",
+      "pt": "Pontos de Alavancagem",
+      "it": "Punti Leva",
+      "no": "Leverage Points",
+      "el": "Leverage Points"
+    },
+    "modules.analysis.leverage.tab_network_view": {
+      "en": "Network View",
+      "es": "Vista de Red",
+      "fr": "Vue du Réseau",
+      "de": "Netzwerkansicht",
+      "lt": "Tinklo vaizdas",
+      "pt": "Visualização da Rede",
+      "it": "Vista della Rete",
+      "no": "Network View",
+      "el": "Network View"
+    },
+    "modules.analysis.leverage.tab_interpretation": {
+      "en": "Interpretation",
+      "es": "Interpretación",
+      "fr": "Interprétation",
+      "de": "Interpretation",
+      "lt": "Interpretacija",
+      "pt": "Interpretação",
+      "it": "Interpretazione",
+      "no": "Interpretation",
+      "el": "Interpretation"
+    },
+    "modules.analysis.leverage.top_leverage_point": {
+      "en": "Top Leverage Point",
+      "es": "Principal Punto de Apalancamiento",
+      "fr": "Point de Levier Principal",
+      "de": "Wichtigster Hebelpunkt",
+      "lt": "Svarbiausias svertinis taškas",
+      "pt": "Principal Ponto de Alavancagem",
+      "it": "Punto Leva Principale",
+      "no": "Top Leverage Point",
+      "el": "Top Leverage Point"
+    },
+    "modules.analysis.leverage.understanding_metrics": {
+      "en": "Understanding the Metrics",
+      "es": "Comprender las Métricas",
+      "fr": "Comprendre les Métriques",
+      "de": "Die Metriken verstehen",
+      "lt": "Metrikų supratimas",
+      "pt": "Compreendendo as Métricas",
+      "it": "Comprendere le Metriche",
+      "no": "Understanding the Metrics",
+      "el": "Understanding the Metrics"
+    },
+    "modules.analysis.leverage.intervention_strategies": {
+      "en": "Intervention Strategies",
+      "es": "Estrategias de Intervención",
+      "fr": "Stratégies d'Intervention",
+      "de": "Interventionsstrategien",
+      "lt": "Intervencijos strategijos",
+      "pt": "Estratégias de Intervenção",
+      "it": "Strategie di Intervento",
+      "no": "Intervention Strategies",
+      "el": "Intervention Strategies"
     }
   }
 }

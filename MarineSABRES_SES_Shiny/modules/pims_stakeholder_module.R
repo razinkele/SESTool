@@ -729,6 +729,101 @@ pims_stakeholder_server <- function(id, global_data, i18n) {
       }
     )
 
+    # Download Power-Interest grid as PNG
+    output$download_power_interest <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Power_Interest_Grid", ".png")
+      },
+      content = function(file) {
+        req(nrow(stakeholder_data$stakeholders) > 0)
+
+        df <- stakeholder_data$stakeholders
+        df$PowerNum <- ifelse(df$Power == "High", 3,
+                             ifelse(df$Power == "Medium", 2,
+                                   ifelse(df$Power == "Low", 1, NA)))
+        df$InterestNum <- ifelse(df$Interest == "High", 3,
+                                ifelse(df$Interest == "Medium", 2,
+                                      ifelse(df$Interest == "Low", 1, NA)))
+        df <- df[!is.na(df$PowerNum) & !is.na(df$InterestNum), ]
+
+        png(file, width = 800, height = 800, res = 150)
+
+        if (nrow(df) == 0) {
+          plot(1, 1, type = "n", xlab = "Interest/Impact", ylab = "Power/Influence",
+               main = "Power-Interest Grid (no data)", xlim = c(0.5, 3.5), ylim = c(0.5, 3.5))
+        } else {
+          df$PowerNum <- jitter(df$PowerNum, amount = 0.15)
+          df$InterestNum <- jitter(df$InterestNum, amount = 0.15)
+
+          plot(df$InterestNum, df$PowerNum,
+               xlim = c(0.5, 3.5), ylim = c(0.5, 3.5),
+               xlab = "Interest/Impact ->", ylab = "Power/Influence ->",
+               main = "Stakeholder Power-Interest Grid",
+               pch = 19, cex = 2, col = "#2E86AB",
+               xaxt = "n", yaxt = "n", cex.lab = 1.2, cex.main = 1.5)
+
+          abline(h = 2, v = 2, col = "gray30", lwd = 2, lty = 2)
+
+          # Quadrant labels
+          text(1.25, 2.75, "Keep Satisfied\n(High Power, Low Interest)", cex = 0.9, col = "gray30")
+          text(2.75, 2.75, "Key Players\n(High Power, High Interest)", cex = 0.9, col = "gray30", font = 2)
+          text(1.25, 1.25, "Monitor\n(Low Power, Low Interest)", cex = 0.9, col = "gray30")
+          text(2.75, 1.25, "Keep Informed\n(Low Power, High Interest)", cex = 0.9, col = "gray30")
+
+          axis(1, at = 1:3, labels = c("Low", "Medium", "High"))
+          axis(2, at = 1:3, labels = c("Low", "Medium", "High"))
+
+          # Background shading
+          rect(0.5, 0.5, 2, 2, col = rgb(0.9, 0.9, 0.9, 0.3), border = NA)
+          rect(2, 0.5, 3.5, 2, col = rgb(0.8, 0.9, 1, 0.3), border = NA)
+          rect(0.5, 2, 2, 3.5, col = rgb(1, 0.95, 0.8, 0.3), border = NA)
+          rect(2, 2, 3.5, 3.5, col = rgb(0.8, 1, 0.8, 0.3), border = NA)
+
+          points(df$InterestNum, df$PowerNum, pch = 19, cex = 2, col = "#2E86AB")
+          text(df$InterestNum, df$PowerNum, df$Name, pos = 3, cex = 0.7, offset = 0.5)
+        }
+
+        dev.off()
+      }
+    )
+
+    # Download stakeholder summary as Word document
+    output$download_summary <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Stakeholder_Summary", ".docx")
+      },
+      content = function(file) {
+        tryCatch({
+          df <- stakeholder_data$stakeholders
+          req(nrow(df) > 0)
+
+          doc <- officer::read_docx()
+          doc <- officer::body_add_par(doc, "Stakeholder Analysis Summary", style = "heading 1")
+          doc <- officer::body_add_par(doc, paste("Generated:", Sys.Date()))
+          doc <- officer::body_add_par(doc, "")
+
+          # Summary statistics
+          doc <- officer::body_add_par(doc, "Overview", style = "heading 2")
+          doc <- officer::body_add_par(doc, paste("Total Stakeholders:", nrow(df)))
+          key_players <- sum(df$Power == "High" & df$Interest == "High", na.rm = TRUE)
+          doc <- officer::body_add_par(doc, paste("Key Players (High Power, High Interest):", key_players))
+          doc <- officer::body_add_par(doc, "")
+
+          # Stakeholder table
+          doc <- officer::body_add_par(doc, "Stakeholder Details", style = "heading 2")
+          display_cols <- intersect(c("ID", "Name", "Organization", "Role", "Power", "Interest", "Attitude"), names(df))
+          ft <- flextable::flextable(df[, display_cols, drop = FALSE])
+          ft <- flextable::autofit(ft)
+          doc <- flextable::body_add_flextable(doc, ft)
+
+          print(doc, target = file)
+        }, error = function(e) {
+          debug_log(paste("Stakeholder summary export failed:", e$message), "EXPORT")
+          utils::write.csv(stakeholder_data$stakeholders, file, row.names = FALSE)
+        })
+      }
+    )
+
     # Help Modal ----
     create_help_observer(
       input,

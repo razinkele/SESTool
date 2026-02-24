@@ -590,6 +590,85 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
       }
     )
 
+    # Download priority report as Word document
+    output$download_priority_report <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Response_Priority_Report", ".docx")
+      },
+      content = function(file) {
+        tryCatch({
+          measures <- response_data$measures
+          req(nrow(measures) > 0)
+
+          doc <- officer::read_docx()
+          doc <- officer::body_add_par(doc, "Response Measures Priority Report", style = "heading 1")
+          doc <- officer::body_add_par(doc, paste("Generated:", Sys.Date()))
+          doc <- officer::body_add_par(doc, "")
+
+          # Summary
+          doc <- officer::body_add_par(doc, "Summary", style = "heading 2")
+          doc <- officer::body_add_par(doc, paste("Total Response Measures:", nrow(measures)))
+          by_type <- table(measures$Type)
+          for (t in names(by_type)) {
+            doc <- officer::body_add_par(doc, paste0("  ", t, ": ", by_type[t]))
+          }
+          doc <- officer::body_add_par(doc, "")
+
+          # Priority table sorted by effectiveness
+          doc <- officer::body_add_par(doc, "Measures by Priority", style = "heading 2")
+          priority_cols <- intersect(c("ID", "Name", "Type", "Target", "Effectiveness", "Feasibility", "Status"), names(measures))
+          priority_df <- measures[, priority_cols, drop = FALSE]
+          ft <- flextable::flextable(priority_df)
+          ft <- flextable::autofit(ft)
+          doc <- flextable::body_add_flextable(doc, ft)
+
+          print(doc, target = file)
+        }, error = function(e) {
+          debug_log(paste("Priority report export failed:", e$message), "EXPORT")
+          utils::write.csv(response_data$measures, file, row.names = FALSE)
+        })
+      }
+    )
+
+    # Download implementation plan as Word document
+    output$download_implementation_plan <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Implementation_Plan", ".docx")
+      },
+      content = function(file) {
+        tryCatch({
+          measures <- response_data$measures
+          milestones <- response_data$milestones
+          req(nrow(measures) > 0)
+
+          doc <- officer::read_docx()
+          doc <- officer::body_add_par(doc, "Response Measures Implementation Plan", style = "heading 1")
+          doc <- officer::body_add_par(doc, paste("Generated:", Sys.Date()))
+          doc <- officer::body_add_par(doc, "")
+
+          # Measures detail
+          doc <- officer::body_add_par(doc, "Response Measures", style = "heading 2")
+          ft <- flextable::flextable(measures)
+          ft <- flextable::autofit(ft)
+          doc <- flextable::body_add_flextable(doc, ft)
+          doc <- officer::body_add_par(doc, "")
+
+          # Milestones
+          if (nrow(milestones) > 0) {
+            doc <- officer::body_add_par(doc, "Implementation Milestones", style = "heading 2")
+            ft2 <- flextable::flextable(milestones)
+            ft2 <- flextable::autofit(ft2)
+            doc <- flextable::body_add_flextable(doc, ft2)
+          }
+
+          print(doc, target = file)
+        }, error = function(e) {
+          debug_log(paste("Implementation plan export failed:", e$message), "EXPORT")
+          utils::write.csv(response_data$measures, file, row.names = FALSE)
+        })
+      }
+    )
+
     create_help_observer(input, "help_response", "response_measures_help_title",
       tagList(
         h4(i18n$t("modules.response.measures.completing_dapsiwrm")),

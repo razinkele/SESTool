@@ -737,6 +737,182 @@
       "it": "elementi",
       "no": "elements",
       "el": "elements"
+    },
+    "modules.analysis.loops.tab_detect": {
+      "en": "Loop Detection",
+      "es": "Detección de Bucles",
+      "fr": "Détection de Boucles",
+      "de": "Schleifenerkennung",
+      "lt": "Kilpų aptikimas",
+      "pt": "Detecção de Loops",
+      "it": "Rilevamento dei Loop",
+      "no": "Loop Detection",
+      "el": "Loop Detection"
+    },
+    "modules.analysis.loops.tab_classification": {
+      "en": "Classification",
+      "es": "Clasificación",
+      "fr": "Classification",
+      "de": "Klassifizierung",
+      "lt": "Klasifikacija",
+      "pt": "Classificação",
+      "it": "Classificazione",
+      "no": "Classification",
+      "el": "Classification"
+    },
+    "modules.analysis.loops.tab_details": {
+      "en": "Details",
+      "es": "Detalles",
+      "fr": "Détails",
+      "de": "Details",
+      "lt": "Detalės",
+      "pt": "Detalhes",
+      "it": "Dettagli",
+      "no": "Details",
+      "el": "Details"
+    },
+    "modules.analysis.loops.tab_dominant": {
+      "en": "Dominant Loops",
+      "es": "Bucles Dominantes",
+      "fr": "Boucles Dominantes",
+      "de": "Dominante Schleifen",
+      "lt": "Dominuojančios kilpos",
+      "pt": "Loops Dominantes",
+      "it": "Loop Dominanti",
+      "no": "Dominant Loops",
+      "el": "Dominant Loops"
+    },
+    "modules.analysis.loops.tab_export": {
+      "en": "Export",
+      "es": "Exportar",
+      "fr": "Exporter",
+      "de": "Exportieren",
+      "lt": "Eksportuoti",
+      "pt": "Exportar",
+      "it": "Esporta",
+      "no": "Export",
+      "el": "Export"
+    },
+    "modules.analysis.loops.automatic_detection": {
+      "en": "Automatic Loop Detection",
+      "es": "Detección Automática de Bucles",
+      "fr": "Détection Automatique de Boucles",
+      "de": "Automatische Schleifenerkennung",
+      "lt": "Automatinis kilpų aptikimas",
+      "pt": "Detecção Automática de Loops",
+      "it": "Rilevamento Automatico dei Loop",
+      "no": "Automatic Loop Detection",
+      "el": "Automatic Loop Detection"
+    },
+    "modules.analysis.loops.detection_parameters": {
+      "en": "Detection Parameters",
+      "es": "Parámetros de Detección",
+      "fr": "Paramètres de Détection",
+      "de": "Erkennungsparameter",
+      "lt": "Aptikimo parametrai",
+      "pt": "Parâmetros de Detecção",
+      "it": "Parametri di Rilevamento",
+      "no": "Detection Parameters",
+      "el": "Detection Parameters"
+    },
+    "modules.analysis.loops.detection_summary": {
+      "en": "Detection Summary",
+      "es": "Resumen de Detección",
+      "fr": "Résumé de la Détection",
+      "de": "Erkennungszusammenfassung",
+      "lt": "Aptikimo santrauka",
+      "pt": "Resumo da Detecção",
+      "it": "Riepilogo del Rilevamento",
+      "no": "Detection Summary",
+      "el": "Detection Summary"
+    },
+    "modules.analysis.loops.detected_loops": {
+      "en": "Detected Loops",
+      "es": "Bucles Detectados",
+      "fr": "Boucles Détectées",
+      "de": "Erkannte Schleifen",
+      "lt": "Aptiktos kilpos",
+      "pt": "Loops Detectados",
+      "it": "Loop Rilevati",
+      "no": "Detected Loops",
+      "el": "Detected Loops"
+    },
+    "modules.analysis.loops.btn_detect": {
+      "en": "Detect Loops",
+      "es": "Detectar Bucles",
+      "fr": "Détecter les Boucles",
+      "de": "Schleifen erkennen",
+      "lt": "Aptikti kilpas",
+      "pt": "Detectar Loops",
+      "it": "Rileva Loop",
+      "no": "Detect Loops",
+      "el": "Detect Loops"
+    },
+    "modules.analysis.loops.reinforcing_vs_balancing": {
+      "en": "Reinforcing vs Balancing",
+      "es": "Refuerzo vs Equilibrio",
+      "fr": "Renforcement vs Équilibrage",
+      "de": "Verstärkend vs Ausgleichend",
+      "lt": "Stiprinančios vs Balansuojančios",
+      "pt": "Reforço vs Equilíbrio",
+      "it": "Rinforzo vs Bilanciamento",
+      "no": "Reinforcing vs Balancing",
+      "el": "Reinforcing vs Balancing"
+    },
+    "modules.analysis.loops.reinforcing_loops": {
+      "en": "Reinforcing Loops",
+      "es": "Bucles de Refuerzo",
+      "fr": "Boucles de Renforcement",
+      "de": "Verstärkende Schleifen",
+      "lt": "Stiprinančios kilpos",
+      "pt": "Loops de Reforço",
+      "it": "Loop di Rinforzo",
+      "no": "Reinforcing Loops",
+      "el": "Reinforcing Loops"
+    },
+    "modules.analysis.loops.balancing_loops": {
+      "en": "Balancing Loops",
+      "es": "Bucles de Equilibrio",
+      "fr": "Boucles d'Équilibrage",
+      "de": "Ausgleichende Schleifen",
+      "lt": "Balansuojančios kilpos",
+      "pt": "Loops de Equilíbrio",
+      "it": "Loop di Bilanciamento",
+      "no": "Balancing Loops",
+      "el": "Balancing Loops"
+    },
+    "modules.analysis.loops.detailed_loop_info": {
+      "en": "Detailed Loop Information",
+      "es": "Información Detallada del Bucle",
+      "fr": "Informations Détaillées sur la Boucle",
+      "de": "Detaillierte Schleifeninformationen",
+      "lt": "Detali kilpos informacija",
+      "pt": "Informações Detalhadas do Loop",
+      "it": "Informazioni Dettagliate del Loop",
+      "no": "Detailed Loop Information",
+      "el": "Detailed Loop Information"
+    },
+    "modules.analysis.loops.identify_key_drivers": {
+      "en": "Identify Key Drivers",
+      "es": "Identificar Impulsores Clave",
+      "fr": "Identifier les Facteurs Clés",
+      "de": "Schlüsselfaktoren identifizieren",
+      "lt": "Nustatyti pagrindinius veiksnius",
+      "pt": "Identificar Fatores-Chave",
+      "it": "Identificare i Fattori Chiave",
+      "no": "Identify Key Drivers",
+      "el": "Identify Key Drivers"
+    },
+    "modules.analysis.loops.export_analysis": {
+      "en": "Export Analysis",
+      "es": "Exportar Análisis",
+      "fr": "Exporter l'Analyse",
+      "de": "Analyse exportieren",
+      "lt": "Eksportuoti analizę",
+      "pt": "Exportar Análise",
+      "it": "Esporta Analisi",
+      "no": "Export Analysis",
+      "el": "Export Analysis"
     }
   }
 }

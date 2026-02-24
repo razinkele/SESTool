@@ -20,7 +20,7 @@
       "pt": "Importar Dados do Excel",
       "it": "Importa Dati da Excel",
       "no": "Importer data fra Excel",
-      "el": "Εισαγωγή Δεδομένα from Excel"
+      "el": "Εισαγωγή Δεδομένων από Excel"
     },
     "modules.import.data.subtitle": {
       "en": "Upload your ISA framework data from a properly formatted Excel file.",
@@ -31,7 +31,205 @@
       "pt": "Carregue seus dados da estrutura ISA de um arquivo Excel formatado corretamente.",
       "it": "Carica i tuoi dati del framework ISA da un file Excel formattato correttamente.",
       "no": "Last opp dine ISA-rammeverk-data fra en riktig formatert Excel-fil.",
-      "el": "Μεταφόρτωση your ISA framework data from a properly formatted Excel file."
+      "el": "Μεταφορτώστε τα δεδομένα ISA από ένα σωστά μορφοποιημένο αρχείο Excel."
+    },
+    "modules.import.data.choose_excel_file": {
+      "en": "Choose Excel File (.xlsx)",
+      "es": "Seleccionar Archivo Excel (.xlsx)",
+      "fr": "Choisir un Fichier Excel (.xlsx)",
+      "de": "Excel-Datei auswählen (.xlsx)",
+      "lt": "Pasirinkite Excel failą (.xlsx)",
+      "pt": "Escolher Arquivo Excel (.xlsx)",
+      "it": "Scegli File Excel (.xlsx)",
+      "no": "Velg Excel-fil (.xlsx)",
+      "el": "Επιλέξτε αρχείο Excel (.xlsx)"
+    },
+    "modules.import.data.load_sample": {
+      "en": "Load Sample (TuscanySES)",
+      "es": "Cargar Ejemplo (TuscanySES)",
+      "fr": "Charger l'Exemple (TuscanySES)",
+      "de": "Beispiel laden (TuscanySES)",
+      "lt": "Įkelti pavyzdį (TuscanySES)",
+      "pt": "Carregar Exemplo (TuscanySES)",
+      "it": "Carica Esempio (TuscanySES)",
+      "no": "Last eksempel (TuscanySES)",
+      "el": "Φόρτωση παραδείγματος (TuscanySES)"
+    },
+    "modules.import.data.sample_loaded": {
+      "en": "Sample file loaded successfully!",
+      "es": "¡Archivo de ejemplo cargado con éxito!",
+      "fr": "Fichier d'exemple chargé avec succès !",
+      "de": "Beispieldatei erfolgreich geladen!",
+      "lt": "Pavyzdinis failas sėkmingai įkeltas!",
+      "pt": "Arquivo de exemplo carregado com sucesso!",
+      "it": "File di esempio caricato con successo!",
+      "no": "Eksempelfil lastet inn!",
+      "el": "Το αρχείο παραδείγματος φορτώθηκε επιτυχώς!"
+    },
+    "modules.import.data.sample_not_found": {
+      "en": "Sample file not found at:",
+      "es": "Archivo de ejemplo no encontrado en:",
+      "fr": "Fichier d'exemple introuvable à :",
+      "de": "Beispieldatei nicht gefunden unter:",
+      "lt": "Pavyzdinis failas nerastas:",
+      "pt": "Arquivo de exemplo não encontrado em:",
+      "it": "File di esempio non trovato in:",
+      "no": "Eksempelfil ikke funnet på:",
+      "el": "Το αρχείο παραδείγματος δεν βρέθηκε:"
+    },
+    "modules.import.data.error_loading_sample": {
+      "en": "Error loading sample file:",
+      "es": "Error al cargar el archivo de ejemplo:",
+      "fr": "Erreur lors du chargement du fichier d'exemple :",
+      "de": "Fehler beim Laden der Beispieldatei:",
+      "lt": "Klaida įkeliant pavyzdinį failą:",
+      "pt": "Erro ao carregar o arquivo de exemplo:",
+      "it": "Errore nel caricamento del file di esempio:",
+      "no": "Feil ved lasting av eksempelfil:",
+      "el": "Σφάλμα φόρτωσης αρχείου παραδείγματος:"
+    },
+    "modules.import.data.invalid_mime_type": {
+      "en": "Invalid file type detected: %s - Expected an Excel file (.xlsx or .xls)",
+      "es": "Tipo de archivo no válido: %s - Se esperaba un archivo Excel (.xlsx o .xls)",
+      "fr": "Type de fichier non valide détecté : %s - Fichier Excel attendu (.xlsx ou .xls)",
+      "de": "Ungültiger Dateityp erkannt: %s - Excel-Datei erwartet (.xlsx oder .xls)",
+      "lt": "Aptiktas netinkamas failo tipas: %s - Tikimasi Excel failo (.xlsx arba .xls)",
+      "pt": "Tipo de arquivo inválido detectado: %s - Esperado arquivo Excel (.xlsx ou .xls)",
+      "it": "Tipo di file non valido: %s - Previsto file Excel (.xlsx o .xls)",
+      "no": "Ugyldig filtype oppdaget: %s - Forventet Excel-fil (.xlsx eller .xls)",
+      "el": "Μη έγκυρος τύπος αρχείου: %s - Αναμένεται αρχείο Excel (.xlsx ή .xls)"
+    },
+    "modules.import.data.missing_sheets": {
+      "en": "Error: Excel file must contain 'Elements' and 'Connections' sheets!",
+      "es": "Error: ¡El archivo Excel debe contener hojas 'Elements' y 'Connections'!",
+      "fr": "Erreur : Le fichier Excel doit contenir les feuilles 'Elements' et 'Connections' !",
+      "de": "Fehler: Excel-Datei muss Blätter 'Elements' und 'Connections' enthalten!",
+      "lt": "Klaida: Excel faile turi būti lapai 'Elements' ir 'Connections'!",
+      "pt": "Erro: O arquivo Excel deve conter as folhas 'Elements' e 'Connections'!",
+      "it": "Errore: Il file Excel deve contenere i fogli 'Elements' e 'Connections'!",
+      "no": "Feil: Excel-filen må inneholde arkene 'Elements' og 'Connections'!",
+      "el": "Σφάλμα: Το αρχείο Excel πρέπει να περιέχει φύλλα 'Elements' και 'Connections'!"
+    },
+    "modules.import.data.file_uploaded": {
+      "en": "File uploaded successfully!",
+      "es": "¡Archivo cargado con éxito!",
+      "fr": "Fichier téléchargé avec succès !",
+      "de": "Datei erfolgreich hochgeladen!",
+      "lt": "Failas sėkmingai įkeltas!",
+      "pt": "Arquivo carregado com sucesso!",
+      "it": "File caricato con successo!",
+      "no": "Fil lastet opp!",
+      "el": "Το αρχείο μεταφορτώθηκε επιτυχώς!"
+    },
+    "modules.import.data.error_reading_file": {
+      "en": "Error reading Excel file:",
+      "es": "Error al leer el archivo Excel:",
+      "fr": "Erreur lors de la lecture du fichier Excel :",
+      "de": "Fehler beim Lesen der Excel-Datei:",
+      "lt": "Klaida skaitant Excel failą:",
+      "pt": "Erro ao ler o arquivo Excel:",
+      "it": "Errore nella lettura del file Excel:",
+      "no": "Feil ved lesing av Excel-fil:",
+      "el": "Σφάλμα ανάγνωσης αρχείου Excel:"
+    },
+    "modules.import.data.validation_warnings": {
+      "en": "Validation Warnings:",
+      "es": "Advertencias de validación:",
+      "fr": "Avertissements de validation :",
+      "de": "Validierungswarnungen:",
+      "lt": "Validacijos įspėjimai:",
+      "pt": "Avisos de validação:",
+      "it": "Avvisi di validazione:",
+      "no": "Valideringsadvarsler:",
+      "el": "Προειδοποιήσεις επικύρωσης:"
+    },
+    "modules.import.data.data_validated": {
+      "en": "Data validated successfully!",
+      "es": "¡Datos validados con éxito!",
+      "fr": "Données validées avec succès !",
+      "de": "Daten erfolgreich validiert!",
+      "lt": "Duomenys sėkmingai patikrinti!",
+      "pt": "Dados validados com sucesso!",
+      "it": "Dati validati con successo!",
+      "no": "Data validert!",
+      "el": "Τα δεδομένα επικυρώθηκαν επιτυχώς!"
+    },
+    "modules.import.data.found_elements_connections": {
+      "en": "Found %d elements and %d connections",
+      "es": "Se encontraron %d elementos y %d conexiones",
+      "fr": "%d éléments et %d connexions trouvés",
+      "de": "%d Elemente und %d Verbindungen gefunden",
+      "lt": "Rasta %d elementų ir %d ryšių",
+      "pt": "Encontrados %d elementos e %d conexões",
+      "it": "Trovati %d elementi e %d connessioni",
+      "no": "Fant %d elementer og %d forbindelser",
+      "el": "Βρέθηκαν %d στοιχεία και %d συνδέσεις"
+    },
+    "modules.import.data.review_connections": {
+      "en": "Review Connections",
+      "es": "Revisar Conexiones",
+      "fr": "Vérifier les Connexions",
+      "de": "Verbindungen überprüfen",
+      "lt": "Peržiūrėti ryšius",
+      "pt": "Revisar Conexões",
+      "it": "Rivedi Connessioni",
+      "no": "Gjennomgå forbindelser",
+      "el": "Ελέγξτε τις συνδέσεις"
+    },
+    "modules.import.data.import_without_review": {
+      "en": "Import Without Review",
+      "es": "Importar sin Revisión",
+      "fr": "Importer sans Vérification",
+      "de": "Ohne Überprüfung importieren",
+      "lt": "Importuoti be peržiūros",
+      "pt": "Importar sem Revisão",
+      "it": "Importa senza Revisione",
+      "no": "Importer uten gjennomgang",
+      "el": "Εισαγωγή χωρίς έλεγχο"
+    },
+    "modules.import.data.review_imported_connections": {
+      "en": "Review Imported Connections",
+      "es": "Revisar Conexiones Importadas",
+      "fr": "Vérifier les Connexions Importées",
+      "de": "Importierte Verbindungen überprüfen",
+      "lt": "Peržiūrėti importuotus ryšius",
+      "pt": "Revisar Conexões Importadas",
+      "it": "Rivedi Connessioni Importate",
+      "no": "Gjennomgå importerte forbindelser",
+      "el": "Ελέγξτε τις εισαγόμενες συνδέσεις"
+    },
+    "modules.import.data.review_description": {
+      "en": "Review and optionally edit the connections before importing. Connections are organized by DAPSI(W)R(M) stages for easier review.",
+      "es": "Revise y opcionalmente edite las conexiones antes de importar. Las conexiones están organizadas por etapas DAPSI(W)R(M) para una revisión más fácil.",
+      "fr": "Vérifiez et modifiez éventuellement les connexions avant l'importation. Les connexions sont organisées par étapes DAPSI(W)R(M) pour faciliter la vérification.",
+      "de": "Überprüfen und bearbeiten Sie die Verbindungen vor dem Import. Die Verbindungen sind nach DAPSI(W)R(M)-Phasen organisiert.",
+      "lt": "Peržiūrėkite ir pasirinktinai redaguokite ryšius prieš importuodami. Ryšiai suskirstyti pagal DAPSI(W)R(M) etapus.",
+      "pt": "Revise e opcionalmente edite as conexões antes de importar. As conexões são organizadas por etapas DAPSI(W)R(M).",
+      "it": "Rivedi e modifica facoltativamente le connessioni prima dell'importazione. Le connessioni sono organizzate per fasi DAPSI(W)R(M).",
+      "no": "Gjennomgå og eventuelt rediger forbindelsene før import. Forbindelsene er organisert etter DAPSI(W)R(M)-stadier.",
+      "el": "Ελέγξτε και επεξεργαστείτε τις συνδέσεις πριν την εισαγωγή. Οι συνδέσεις είναι οργανωμένες κατά στάδια DAPSI(W)R(M)."
+    },
+    "modules.import.data.finalize_import": {
+      "en": "Finalize Import",
+      "es": "Finalizar Importación",
+      "fr": "Finaliser l'Importation",
+      "de": "Import abschließen",
+      "lt": "Užbaigti importą",
+      "pt": "Finalizar Importação",
+      "it": "Finalizza Importazione",
+      "no": "Fullfør import",
+      "el": "Ολοκλήρωση εισαγωγής"
+    },
+    "modules.import.data.function_not_available": {
+      "en": "Excel import function not available. Ensure excel_import_helpers.R is sourced.",
+      "es": "Función de importación Excel no disponible. Asegúrese de que excel_import_helpers.R esté cargado.",
+      "fr": "Fonction d'importation Excel non disponible. Vérifiez que excel_import_helpers.R est chargé.",
+      "de": "Excel-Importfunktion nicht verfügbar. Stellen Sie sicher, dass excel_import_helpers.R geladen ist.",
+      "lt": "Excel importo funkcija nepasiekiama. Įsitikinkite, kad excel_import_helpers.R yra įkeltas.",
+      "pt": "Função de importação Excel não disponível. Certifique-se de que excel_import_helpers.R está carregado.",
+      "it": "Funzione di importazione Excel non disponibile. Assicurarsi che excel_import_helpers.R sia caricato.",
+      "no": "Excel-importfunksjon ikke tilgjengelig. Kontroller at excel_import_helpers.R er lastet.",
+      "el": "Η λειτουργία εισαγωγής Excel δεν είναι διαθέσιμη. Βεβαιωθείτε ότι excel_import_helpers.R είναι φορτωμένο."
     }
   }
 }
