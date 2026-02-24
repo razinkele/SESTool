@@ -378,7 +378,7 @@ echo 'Shiny Server:' && systemctl is-active shiny-server
 
 # Write remote script to temp file, scp it, execute it
 $remoteScriptPath = Join-Path $env:TEMP "marinesabres-deploy-remote.sh"
-$remoteScript | Set-Content -Path $remoteScriptPath -Encoding UTF8 -NoNewline
+[System.IO.File]::WriteAllText($remoteScriptPath, $remoteScript, (New-Object System.Text.UTF8Encoding $false))
 
 & scp $remoteScriptPath "${RemoteUser}@${RemoteHost}:/tmp/marinesabres-deploy-remote.sh"
 & ssh -t "${RemoteUser}@${RemoteHost}" "bash /tmp/marinesabres-deploy-remote.sh && rm -f /tmp/marinesabres-deploy-remote.sh"
