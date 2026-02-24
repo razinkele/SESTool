@@ -439,6 +439,21 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
           Sys.sleep(0.1)
 
           if(length(all_loops) == 0) {
+            # Save empty result so prerequisite check recognises the analysis was run
+            project_data <- project_data_reactive()
+            if(is.null(project_data$data$analysis)) {
+              project_data$data$analysis <- list()
+            }
+            project_data$data$analysis$loops <- list(
+              loop_info = data.frame(),
+              all_loops = list(),
+              detection_complete = TRUE
+            )
+            project_data$last_modified <- Sys.time()
+            project_data_reactive(project_data)
+
+            loop_data$detection_complete <- TRUE
+
             output$detection_status <- renderText(i18n$t("modules.analysis.loops.analysis_no_loops_detected"))
             showNotification(i18n$t("modules.analysis.loops.analysis_no_loops_found"), type = "warning")
             return()

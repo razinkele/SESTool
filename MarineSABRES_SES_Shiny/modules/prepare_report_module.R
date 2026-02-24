@@ -149,9 +149,9 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
     check_prerequisites <- reactive({
       data <- project_data_reactive()
 
-      # Check if loop analysis has been performed
+      # Check if loop analysis has been performed (even if zero loops found)
       has_loops <- !is.null(data$data$analysis$loops) &&
-                   length(data$data$analysis$loops) > 0
+                   (length(data$data$analysis$loops) > 0)
 
       # Check if leverage point analysis has been performed
       has_leverage <- !is.null(data$data$cld$nodes) &&
