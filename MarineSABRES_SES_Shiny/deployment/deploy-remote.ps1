@@ -310,29 +310,66 @@ Write-Header "Deploying on Remote Server"
 Write-Status "Extracting files and restarting Shiny Server..."
 
 # Remote commands:
-#   1. Clear target directory contents (razinka owns it, no sudo needed)
-#   2. Extract tar archive into target
-#   3. Set ownership razinka:shiny
-#   4. Set permissions 755
-#   5. Clean up stale translation cache
+#   1. Move old shiny-owned subdirectories out of the way (razinka owns parent)
+#   2. Extract tar archive into target (creates fresh dirs owned by razinka)
+#   3. Set ownership razinka:shiny on all new files
+#   4. Set permissions: 755 default, 775 for runtime-writable dirs
+#   5. Clean up old .bak dirs and stale caches
 #   6. Remove uploaded tar
-#   7. Restart Shiny Server (sudo)
+#   7. Restart Shiny Server (sudo) or send SIGHUP as fallback
 #   8. Report status
 $remoteScript = @"
 set -e
-echo '==> Clearing target directory...'
-rm -rf ${RemoteTarget}/*
+
+echo '==> Preparing target directory...'
+cd ${RemoteTarget}
+
+# Move any shiny-owned subdirectories out of the way (razinka can mv because
+# razinka owns the parent directory, even if subdirs are owned by shiny)
+for dir in config data docs functions models modules scripts server SESModels translations www; do
+  if [ -d "`$dir" ] && [ "`$(stat -c '%U' "`$dir")" != "${RemoteOwner}" ]; then
+    mv "`$dir" "`${dir}.bak" 2>/dev/null && echo "  Moved old `$dir -> `${dir}.bak" || true
+  fi
+done
+
+# Remove files in target that razinka owns (top-level .R, .json, etc.)
+find ${RemoteTarget} -maxdepth 1 -type f -user ${RemoteOwner} -delete 2>/dev/null || true
+
 echo '==> Extracting archive...'
 tar -xzf /tmp/${TarFilename} -C ${RemoteTarget}/
+
 echo '==> Setting ownership (${RemoteOwner}:${RemoteGroup})...'
-chown -R ${RemoteOwner}:${RemoteGroup} ${RemoteTarget}
-chmod -R 755 ${RemoteTarget}
+chown -R ${RemoteOwner}:${RemoteGroup} ${RemoteTarget} 2>/dev/null || true
+
+echo '==> Setting permissions...'
+chmod -R 755 ${RemoteTarget} 2>/dev/null || true
+
+# Runtime-writable dirs need group write (775) so shiny user can write caches/reports
+chmod 775 ${RemoteTarget}/translations/ 2>/dev/null || true
+chmod 775 ${RemoteTarget}/www/ 2>/dev/null || true
+mkdir -p ${RemoteTarget}/www/reports
+chmod 775 ${RemoteTarget}/www/reports/ 2>/dev/null || true
+
+# Clean up stale caches
 rm -f ${RemoteTarget}/translations/_merged_translations.json 2>/dev/null || true
+
+# Remove old .bak directories (will fail silently for shiny-owned; cleaned up later with sudo)
+for bak in ${RemoteTarget}/*.bak; do
+  rm -rf "`$bak" 2>/dev/null || true
+done
+
 echo '==> Cleaning up...'
 rm -f /tmp/${TarFilename}
+
 echo '==> Restarting Shiny Server...'
-sudo systemctl restart shiny-server
+sudo -n systemctl restart shiny-server 2>/dev/null || {
+  echo '  sudo restart failed (password required), sending SIGHUP to reload...'
+  sudo -n kill -HUP `$(cat /var/run/shiny-server.pid 2>/dev/null) 2>/dev/null || {
+    echo '  SIGHUP also failed. Server will pick up changes on next request.'
+  }
+}
 sleep 2
+
 echo ''
 echo 'Version:' && cat ${RemoteTarget}/VERSION 2>/dev/null || echo 'unknown'
 echo 'Ownership:' && stat -c '%U:%G' ${RemoteTarget}
