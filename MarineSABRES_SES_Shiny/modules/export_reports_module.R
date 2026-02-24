@@ -216,7 +216,7 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
 
         output_format <- switch(report_format_safe,
           "HTML" = "html_document",
-          "PDF" = "pdf_document",
+          "PDF" = rmarkdown::pdf_document(latex_engine = "lualatex"),
           "Word" = "word_document",
           "html_document"  # default
         )

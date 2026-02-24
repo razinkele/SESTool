@@ -285,8 +285,12 @@ generate_executive_summary <- function(project_data, output_file) {
   writeLines(rmd_content, temp_rmd)
   
   # Render
-  output_format <- ifelse(grepl("\\.pdf$", output_file), "pdf_document", "html_document")
-  
+  output_format <- if (grepl("\\.pdf$", output_file)) {
+    rmarkdown::pdf_document(latex_engine = "lualatex")
+  } else {
+    "html_document"
+  }
+
   rmarkdown::render(
     temp_rmd,
     output_format = output_format,

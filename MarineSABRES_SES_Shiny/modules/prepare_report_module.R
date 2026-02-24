@@ -405,7 +405,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         temp_pdf <- tempfile(fileext = ".pdf")
         rmarkdown::render(
           input = rmd_file,
-          output_format = "pdf_document",
+          output_format = rmarkdown::pdf_document(latex_engine = "lualatex"),
           output_file = temp_pdf,
           quiet = FALSE
         )
@@ -915,6 +915,20 @@ generate_html_report <- function(data, title, author, sections) {
 #' @param output_file Output file path
 generate_word_report <- function(data, title, author, sections, output_file) {
 
+  # Helper: safely convert to data.frame (ISA data may be stored as lists)
+  safe_df <- function(x) {
+    if (is.null(x)) return(NULL)
+    if (is.data.frame(x)) return(x)
+    tryCatch(as.data.frame(x, stringsAsFactors = FALSE), error = function(e) NULL)
+  }
+
+  # Helper: safely get nrow (returns 0 for non-data.frame objects)
+  safe_nrow <- function(x) {
+    if (is.null(x)) return(0)
+    if (is.data.frame(x)) return(nrow(x))
+    tryCatch(nrow(as.data.frame(x, stringsAsFactors = FALSE)), error = function(e) 0)
+  }
+
   # Safely convert title and author to character strings
   title <- as.character(title)[1]
   author <- if (!is.null(author)) as.character(author)[1] else ""
@@ -939,18 +953,18 @@ generate_word_report <- function(data, title, author, sections, output_file) {
     project_name <- if (!is.null(data$data$metadata$project_name)) data$data$metadata$project_name else "Unnamed Project"
     doc <- officer::body_add_par(doc, paste("This report presents a comprehensive analysis of the Social-Ecological System:", project_name), style = "Normal")
 
-    # Count elements
-    n_drivers <- if (!is.null(data$data$isa_data$drivers)) nrow(data$data$isa_data$drivers) else 0
-    n_activities <- if (!is.null(data$data$isa_data$activities)) nrow(data$data$isa_data$activities) else 0
-    n_pressures <- if (!is.null(data$data$isa_data$pressures)) nrow(data$data$isa_data$pressures) else 0
-    n_marine <- if (!is.null(data$data$isa_data$marine_processes)) nrow(data$data$isa_data$marine_processes) else 0
-    n_ecosystem <- if (!is.null(data$data$isa_data$ecosystem_services)) nrow(data$data$isa_data$ecosystem_services) else 0
-    n_goods <- if (!is.null(data$data$isa_data$goods_benefits)) nrow(data$data$isa_data$goods_benefits) else 0
-    n_responses <- if (!is.null(data$data$isa_data$responses)) nrow(data$data$isa_data$responses) else 0
+    # Count elements (safe_nrow handles lists gracefully)
+    n_drivers <- safe_nrow(data$data$isa_data$drivers)
+    n_activities <- safe_nrow(data$data$isa_data$activities)
+    n_pressures <- safe_nrow(data$data$isa_data$pressures)
+    n_marine <- safe_nrow(data$data$isa_data$marine_processes)
+    n_ecosystem <- safe_nrow(data$data$isa_data$ecosystem_services)
+    n_goods <- safe_nrow(data$data$isa_data$goods_benefits)
+    n_responses <- safe_nrow(data$data$isa_data$responses)
 
     n_elements <- n_drivers + n_activities + n_pressures + n_marine + n_ecosystem + n_goods + n_responses
-    n_nodes <- if (!is.null(data$data$cld$nodes)) nrow(data$data$cld$nodes) else 0
-    n_edges <- if (!is.null(data$data$cld$edges)) nrow(data$data$cld$edges) else 0
+    n_nodes <- safe_nrow(data$data$cld$nodes)
+    n_edges <- safe_nrow(data$data$cld$edges)
     n_loops <- if (!is.null(data$data$analysis$loops)) length(data$data$analysis$loops) else 0
 
     doc <- officer::body_add_par(doc, paste("Total Elements:", n_elements), style = "Normal")
@@ -964,82 +978,33 @@ generate_word_report <- function(data, title, author, sections, output_file) {
   if ("isa" %in% sections) {
     doc <- officer::body_add_par(doc, "ISA Framework (DAPSIWRM)", style = "heading 2")
 
-    # Drivers
-    if (!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) {
-      doc <- officer::body_add_par(doc, "Drivers", style = "heading 3")
-      if (requireNamespace("flextable", quietly = TRUE)) {
-        ft <- flextable::flextable(data$data$isa_data$drivers[, c("ID", "Name", "Description")])
-        ft <- flextable::theme_vanilla(ft)
-        doc <- flextable::body_add_flextable(doc, ft)
+    # Helper to add an ISA element section with flextable
+    add_isa_section <- function(doc, element_data, heading) {
+      df <- safe_df(element_data)
+      if (!is.null(df) && nrow(df) > 0) {
+        doc <- officer::body_add_par(doc, heading, style = "heading 3")
+        if (requireNamespace("flextable", quietly = TRUE)) {
+          # Only include columns that exist
+          cols <- intersect(c("ID", "Name", "Description"), names(df))
+          if (length(cols) > 0) {
+            ft <- flextable::flextable(df[, cols, drop = FALSE])
+            ft <- flextable::theme_vanilla(ft)
+            doc <- flextable::body_add_flextable(doc, ft)
+          }
+        }
+        doc <- officer::body_add_par(doc, "", style = "Normal")
       }
-      doc <- officer::body_add_par(doc, "", style = "Normal")
+      doc
     }
 
-    # Activities
-    if (!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) {
-      doc <- officer::body_add_par(doc, "Activities", style = "heading 3")
-      if (requireNamespace("flextable", quietly = TRUE)) {
-        ft <- flextable::flextable(data$data$isa_data$activities[, c("ID", "Name", "Description")])
-        ft <- flextable::theme_vanilla(ft)
-        doc <- flextable::body_add_flextable(doc, ft)
-      }
-      doc <- officer::body_add_par(doc, "", style = "Normal")
-    }
+    doc <- add_isa_section(doc, data$data$isa_data$drivers, "Drivers")
+    doc <- add_isa_section(doc, data$data$isa_data$activities, "Activities")
+    doc <- add_isa_section(doc, data$data$isa_data$pressures, "Pressures")
+    doc <- add_isa_section(doc, data$data$isa_data$marine_processes, "Marine Processes & Functions")
+    doc <- add_isa_section(doc, data$data$isa_data$ecosystem_services, "Ecosystem Services")
+    doc <- add_isa_section(doc, data$data$isa_data$goods_benefits, "Goods & Benefits")
 
-    # Pressures
-    if (!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) {
-      doc <- officer::body_add_par(doc, "Pressures", style = "heading 3")
-      if (requireNamespace("flextable", quietly = TRUE)) {
-        ft <- flextable::flextable(data$data$isa_data$pressures[, c("ID", "Name", "Description")])
-        ft <- flextable::theme_vanilla(ft)
-        doc <- flextable::body_add_flextable(doc, ft)
-      }
-      doc <- officer::body_add_par(doc, "", style = "Normal")
-    }
-
-    # Marine Processes
-    if (!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) {
-      doc <- officer::body_add_par(doc, "Marine Processes & Functions", style = "heading 3")
-      if (requireNamespace("flextable", quietly = TRUE)) {
-        ft <- flextable::flextable(data$data$isa_data$marine_processes[, c("ID", "Name", "Description")])
-        ft <- flextable::theme_vanilla(ft)
-        doc <- flextable::body_add_flextable(doc, ft)
-      }
-      doc <- officer::body_add_par(doc, "", style = "Normal")
-    }
-
-    # Ecosystem Services
-    if (!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) {
-      doc <- officer::body_add_par(doc, "Ecosystem Services", style = "heading 3")
-      if (requireNamespace("flextable", quietly = TRUE)) {
-        ft <- flextable::flextable(data$data$isa_data$ecosystem_services[, c("ID", "Name", "Description")])
-        ft <- flextable::theme_vanilla(ft)
-        doc <- flextable::body_add_flextable(doc, ft)
-      }
-      doc <- officer::body_add_par(doc, "", style = "Normal")
-    }
-
-    # Goods & Benefits
-    if (!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) {
-      doc <- officer::body_add_par(doc, "Goods & Benefits", style = "heading 3")
-      if (requireNamespace("flextable", quietly = TRUE)) {
-        ft <- flextable::flextable(data$data$isa_data$goods_benefits[, c("ID", "Name", "Description")])
-        ft <- flextable::theme_vanilla(ft)
-        doc <- flextable::body_add_flextable(doc, ft)
-      }
-      doc <- officer::body_add_par(doc, "", style = "Normal")
-    }
-
-    # Responses
-    if (!is.null(data$data$isa_data$responses) && nrow(data$data$isa_data$responses) > 0) {
-      doc <- officer::body_add_par(doc, "Responses", style = "heading 3")
-      if (requireNamespace("flextable", quietly = TRUE)) {
-        ft <- flextable::flextable(data$data$isa_data$responses[, c("ID", "Name", "Description")])
-        ft <- flextable::theme_vanilla(ft)
-        doc <- flextable::body_add_flextable(doc, ft)
-      }
-      doc <- officer::body_add_par(doc, "", style = "Normal")
-    }
+    doc <- add_isa_section(doc, data$data$isa_data$responses, "Responses")
 
   }
 
@@ -1051,9 +1016,9 @@ generate_word_report <- function(data, title, author, sections, output_file) {
     if (length(loops) > 0) {
       doc <- officer::body_add_par(doc, paste("Detected", length(loops), "feedback loops in the system:"), style = "Normal")
 
-      # Count by type
-      n_reinforcing <- sum(sapply(loops, function(l) l$type == "reinforcing"))
-      n_balancing <- sum(sapply(loops, function(l) l$type == "balancing"))
+      # Count by type (safely handle different loop data structures)
+      n_reinforcing <- tryCatch(sum(sapply(loops, function(l) identical(l$type, "reinforcing"))), error = function(e) 0)
+      n_balancing <- tryCatch(sum(sapply(loops, function(l) identical(l$type, "balancing"))), error = function(e) 0)
 
       doc <- officer::body_add_par(doc, paste("Reinforcing Loops:", n_reinforcing, "(amplifying changes)"), style = "Normal")
       doc <- officer::body_add_par(doc, paste("Balancing Loops:", n_balancing, "(stabilizing system)"), style = "Normal")
@@ -1061,15 +1026,17 @@ generate_word_report <- function(data, title, author, sections, output_file) {
 
       # Loop details table
       if (requireNamespace("flextable", quietly = TRUE)) {
-        loop_df <- data.frame(
-          Loop_ID = paste("Loop", 1:length(loops)),
-          Type = toupper(sapply(loops, function(l) l$type)),
-          Length = sapply(loops, function(l) length(l$nodes)),
-          Nodes = sapply(loops, function(l) paste(l$nodes, collapse = " → "))
-        )
-        ft <- flextable::flextable(loop_df)
-        ft <- flextable::theme_vanilla(ft)
-        doc <- flextable::body_add_flextable(doc, ft)
+        tryCatch({
+          loop_df <- data.frame(
+            Loop_ID = paste("Loop", 1:length(loops)),
+            Type = toupper(sapply(loops, function(l) as.character(l$type)[1])),
+            Length = sapply(loops, function(l) length(l$nodes)),
+            Nodes = sapply(loops, function(l) paste(l$nodes, collapse = " -> "))
+          )
+          ft <- flextable::flextable(loop_df)
+          ft <- flextable::theme_vanilla(ft)
+          doc <- flextable::body_add_flextable(doc, ft)
+        }, error = function(e) NULL)
       }
       doc <- officer::body_add_par(doc, "", style = "Normal")
     }
@@ -1079,38 +1046,39 @@ generate_word_report <- function(data, title, author, sections, output_file) {
   if ("leverage" %in% sections && !is.null(data$data$cld$nodes)) {
     doc <- officer::body_add_par(doc, "Leverage Point Analysis", style = "heading 2")
 
-    nodes <- data$data$cld$nodes
-    nodes_with_leverage <- nodes[nodes$leverage_score > 0, ]
+    nodes <- safe_df(data$data$cld$nodes)
+    if (!is.null(nodes) && "leverage_score" %in% names(nodes)) {
+      nodes_with_leverage <- nodes[!is.na(nodes$leverage_score) & nodes$leverage_score > 0, , drop = FALSE]
 
-    if (nrow(nodes_with_leverage) > 0) {
-      # Sort by leverage score
-      nodes_with_leverage <- nodes_with_leverage[order(-nodes_with_leverage$leverage_score), ]
+      if (nrow(nodes_with_leverage) > 0) {
+        nodes_with_leverage <- nodes_with_leverage[order(-nodes_with_leverage$leverage_score), , drop = FALSE]
 
-      doc <- officer::body_add_par(doc, "Identified key leverage points in the system based on network centrality metrics:", style = "Normal")
+        doc <- officer::body_add_par(doc, "Identified key leverage points in the system based on network centrality metrics:", style = "Normal")
 
-      if (requireNamespace("flextable", quietly = TRUE)) {
-        # Extract top nodes with explicit null checking
-        n_top <- min(20, nrow(nodes_with_leverage))
-        top_nodes <- nodes_with_leverage[1:n_top, ]
+        if (requireNamespace("flextable", quietly = TRUE)) {
+          tryCatch({
+            n_top <- min(20, nrow(nodes_with_leverage))
+            top_nodes <- nodes_with_leverage[1:n_top, , drop = FALSE]
 
-        # Extract metrics with null checking
-        in_degrees <- if (!is.null(top_nodes$in_degree)) top_nodes$in_degree else rep(0, n_top)
-        out_degrees <- if (!is.null(top_nodes$out_degree)) top_nodes$out_degree else rep(0, n_top)
-        betweenness_vals <- if (!is.null(top_nodes$betweenness)) round(top_nodes$betweenness, 2) else rep(0, n_top)
+            in_degrees <- if ("in_degree" %in% names(top_nodes)) top_nodes$in_degree else rep(0, n_top)
+            out_degrees <- if ("out_degree" %in% names(top_nodes)) top_nodes$out_degree else rep(0, n_top)
+            betweenness_vals <- if ("betweenness" %in% names(top_nodes)) round(top_nodes$betweenness, 2) else rep(0, n_top)
 
-        leverage_df <- data.frame(
-          Rank = 1:n_top,
-          Node = top_nodes$label,
-          Leverage_Score = round(top_nodes$leverage_score, 2),
-          In_Degree = in_degrees,
-          Out_Degree = out_degrees,
-          Betweenness = betweenness_vals
-        )
-        ft <- flextable::flextable(leverage_df)
-        ft <- flextable::theme_vanilla(ft)
-        doc <- flextable::body_add_flextable(doc, ft)
+            leverage_df <- data.frame(
+              Rank = 1:n_top,
+              Node = as.character(top_nodes$label),
+              Leverage_Score = round(top_nodes$leverage_score, 2),
+              In_Degree = in_degrees,
+              Out_Degree = out_degrees,
+              Betweenness = betweenness_vals
+            )
+            ft <- flextable::flextable(leverage_df)
+            ft <- flextable::theme_vanilla(ft)
+            doc <- flextable::body_add_flextable(doc, ft)
+          }, error = function(e) NULL)
+        }
+        doc <- officer::body_add_par(doc, "", style = "Normal")
       }
-      doc <- officer::body_add_par(doc, "", style = "Normal")
     }
   }
 
@@ -1144,6 +1112,19 @@ generate_word_report <- function(data, title, author, sections, output_file) {
 #' @param output_file Output file path
 generate_ppt_report <- function(data, title, author, sections, output_file) {
 
+  # Helper: safely convert to data.frame
+  safe_df <- function(x) {
+    if (is.null(x)) return(NULL)
+    if (is.data.frame(x)) return(x)
+    tryCatch(as.data.frame(x, stringsAsFactors = FALSE), error = function(e) NULL)
+  }
+
+  safe_nrow <- function(x) {
+    if (is.null(x)) return(0)
+    if (is.data.frame(x)) return(nrow(x))
+    tryCatch(nrow(as.data.frame(x, stringsAsFactors = FALSE)), error = function(e) 0)
+  }
+
   # Safely convert title and author to character strings
   title <- as.character(title)[1]
   author <- if (!is.null(author)) as.character(author)[1] else ""
@@ -1163,20 +1144,14 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
     ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
     ppt <- officer::ph_with(ppt, value = "Executive Summary", location = officer::ph_location_type(type = "title"))
 
-    # Count elements
-    n_drivers <- if (!is.null(data$data$isa_data$drivers)) nrow(data$data$isa_data$drivers) else 0
-    n_activities <- if (!is.null(data$data$isa_data$activities)) nrow(data$data$isa_data$activities) else 0
-    n_pressures <- if (!is.null(data$data$isa_data$pressures)) nrow(data$data$isa_data$pressures) else 0
-    n_marine <- if (!is.null(data$data$isa_data$marine_processes)) nrow(data$data$isa_data$marine_processes) else 0
-    n_ecosystem <- if (!is.null(data$data$isa_data$ecosystem_services)) nrow(data$data$isa_data$ecosystem_services) else 0
-    n_goods <- if (!is.null(data$data$isa_data$goods_benefits)) nrow(data$data$isa_data$goods_benefits) else 0
-    n_responses <- if (!is.null(data$data$isa_data$responses)) nrow(data$data$isa_data$responses) else 0
+    n_elements <- safe_nrow(data$data$isa_data$drivers) + safe_nrow(data$data$isa_data$activities) +
+      safe_nrow(data$data$isa_data$pressures) + safe_nrow(data$data$isa_data$marine_processes) +
+      safe_nrow(data$data$isa_data$ecosystem_services) + safe_nrow(data$data$isa_data$goods_benefits) +
+      safe_nrow(data$data$isa_data$responses)
 
-    n_elements <- n_drivers + n_activities + n_pressures + n_marine + n_ecosystem + n_goods + n_responses
-
-    project_name <- if (!is.null(data$data$metadata$project_name)) data$data$metadata$project_name else "Unnamed Project"
-    n_nodes <- if (!is.null(data$data$cld$nodes)) nrow(data$data$cld$nodes) else 0
-    n_edges <- if (!is.null(data$data$cld$edges)) nrow(data$data$cld$edges) else 0
+    project_name <- if (!is.null(data$data$metadata$project_name)) as.character(data$data$metadata$project_name)[1] else "Unnamed Project"
+    n_nodes <- safe_nrow(data$data$cld$nodes)
+    n_edges <- safe_nrow(data$data$cld$edges)
     n_loops <- if (!is.null(data$data$analysis$loops)) length(data$data$analysis$loops) else 0
 
     summary_text <- paste(
@@ -1191,71 +1166,26 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
     ppt <- officer::ph_with(ppt, value = as.character(summary_text), location = officer::ph_location_type(type = "body"))
   }
 
-  # ISA Framework slides
+  # ISA Framework slides — helper to add element slides
+  add_ppt_isa_slide <- function(ppt, element_data, slide_title) {
+    df <- safe_df(element_data)
+    if (!is.null(df) && nrow(df) > 0 && "Name" %in% names(df)) {
+      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
+      ppt <- officer::ph_with(ppt, value = slide_title, location = officer::ph_location_type(type = "title"))
+      element_text <- paste(paste("-", as.character(df$Name)), collapse = "\n")
+      ppt <- officer::ph_with(ppt, value = as.character(element_text), location = officer::ph_location_type(type = "body"))
+    }
+    ppt
+  }
+
   if ("isa" %in% sections) {
-    # Drivers
-    if (!is.null(data$data$isa_data$drivers) && nrow(data$data$isa_data$drivers) > 0) {
-      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- officer::ph_with(ppt, value = "ISA Framework: Drivers", location = officer::ph_location_type(type = "title"))
-
-      drivers_text <- paste(paste("-", as.character(data$data$isa_data$drivers$Name)), collapse = "\n")
-      ppt <- officer::ph_with(ppt, value = as.character(drivers_text), location = officer::ph_location_type(type = "body"))
-    }
-
-    # Activities
-    if (!is.null(data$data$isa_data$activities) && nrow(data$data$isa_data$activities) > 0) {
-      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- officer::ph_with(ppt, value = "ISA Framework: Activities", location = officer::ph_location_type(type = "title"))
-
-      activities_text <- paste(paste("-", as.character(data$data$isa_data$activities$Name)), collapse = "\n")
-      ppt <- officer::ph_with(ppt, value = as.character(activities_text), location = officer::ph_location_type(type = "body"))
-    }
-
-    # Pressures
-    if (!is.null(data$data$isa_data$pressures) && nrow(data$data$isa_data$pressures) > 0) {
-      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- officer::ph_with(ppt, value = "ISA Framework: Pressures", location = officer::ph_location_type(type = "title"))
-
-      pressures_text <- paste(paste("-", as.character(data$data$isa_data$pressures$Name)), collapse = "\n")
-      ppt <- officer::ph_with(ppt, value = as.character(pressures_text), location = officer::ph_location_type(type = "body"))
-    }
-
-    # Marine Processes
-    if (!is.null(data$data$isa_data$marine_processes) && nrow(data$data$isa_data$marine_processes) > 0) {
-      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- officer::ph_with(ppt, value = "ISA Framework: Marine Processes & Functions", location = officer::ph_location_type(type = "title"))
-
-      marine_text <- paste(paste("-", as.character(data$data$isa_data$marine_processes$Name)), collapse = "\n")
-      ppt <- officer::ph_with(ppt, value = as.character(marine_text), location = officer::ph_location_type(type = "body"))
-    }
-
-    # Ecosystem Services
-    if (!is.null(data$data$isa_data$ecosystem_services) && nrow(data$data$isa_data$ecosystem_services) > 0) {
-      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- officer::ph_with(ppt, value = "ISA Framework: Ecosystem Services", location = officer::ph_location_type(type = "title"))
-
-      ecosystem_text <- paste(paste("-", as.character(data$data$isa_data$ecosystem_services$Name)), collapse = "\n")
-      ppt <- officer::ph_with(ppt, value = as.character(ecosystem_text), location = officer::ph_location_type(type = "body"))
-    }
-
-    # Goods & Benefits
-    if (!is.null(data$data$isa_data$goods_benefits) && nrow(data$data$isa_data$goods_benefits) > 0) {
-      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- officer::ph_with(ppt, value = "ISA Framework: Goods & Benefits", location = officer::ph_location_type(type = "title"))
-
-      goods_text <- paste(paste("-", as.character(data$data$isa_data$goods_benefits$Name)), collapse = "\n")
-      ppt <- officer::ph_with(ppt, value = as.character(goods_text), location = officer::ph_location_type(type = "body"))
-    }
-
-    # Responses
-    if (!is.null(data$data$isa_data$responses) && nrow(data$data$isa_data$responses) > 0) {
-      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- officer::ph_with(ppt, value = "ISA Framework: Responses", location = officer::ph_location_type(type = "title"))
-
-      responses_text <- paste(paste("-", as.character(data$data$isa_data$responses$Name)), collapse = "\n")
-      ppt <- officer::ph_with(ppt, value = as.character(responses_text), location = officer::ph_location_type(type = "body"))
-    }
-
+    ppt <- add_ppt_isa_slide(ppt, data$data$isa_data$drivers, "ISA Framework: Drivers")
+    ppt <- add_ppt_isa_slide(ppt, data$data$isa_data$activities, "ISA Framework: Activities")
+    ppt <- add_ppt_isa_slide(ppt, data$data$isa_data$pressures, "ISA Framework: Pressures")
+    ppt <- add_ppt_isa_slide(ppt, data$data$isa_data$marine_processes, "ISA Framework: Marine Processes & Functions")
+    ppt <- add_ppt_isa_slide(ppt, data$data$isa_data$ecosystem_services, "ISA Framework: Ecosystem Services")
+    ppt <- add_ppt_isa_slide(ppt, data$data$isa_data$goods_benefits, "ISA Framework: Goods & Benefits")
+    ppt <- add_ppt_isa_slide(ppt, data$data$isa_data$responses, "ISA Framework: Responses")
   }
 
   # Feedback Loops
@@ -1265,8 +1195,8 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
       ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
       ppt <- officer::ph_with(ppt, value = "Feedback Loop Analysis", location = officer::ph_location_type(type = "title"))
 
-      n_reinforcing <- sum(sapply(loops, function(l) l$type == "reinforcing"))
-      n_balancing <- sum(sapply(loops, function(l) l$type == "balancing"))
+      n_reinforcing <- tryCatch(sum(sapply(loops, function(l) identical(l$type, "reinforcing"))), error = function(e) 0)
+      n_balancing <- tryCatch(sum(sapply(loops, function(l) identical(l$type, "balancing"))), error = function(e) 0)
 
       loops_text <- paste(
         paste("Total Loops:", length(loops)),
@@ -1281,22 +1211,24 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
 
   # Leverage Points
   if ("leverage" %in% sections && !is.null(data$data$cld$nodes)) {
-    nodes <- data$data$cld$nodes
-    nodes_with_leverage <- nodes[nodes$leverage_score > 0, ]
+    nodes <- safe_df(data$data$cld$nodes)
+    if (!is.null(nodes) && "leverage_score" %in% names(nodes)) {
+      nodes_with_leverage <- nodes[!is.na(nodes$leverage_score) & nodes$leverage_score > 0, , drop = FALSE]
 
-    if (nrow(nodes_with_leverage) > 0) {
-      nodes_with_leverage <- nodes_with_leverage[order(-nodes_with_leverage$leverage_score), ]
+      if (nrow(nodes_with_leverage) > 0) {
+        nodes_with_leverage <- nodes_with_leverage[order(-nodes_with_leverage$leverage_score), , drop = FALSE]
 
-      ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
-      ppt <- officer::ph_with(ppt, value = "Top Leverage Points", location = officer::ph_location_type(type = "title"))
+        ppt <- officer::add_slide(ppt, layout = "Title and Content", master = "Office Theme")
+        ppt <- officer::ph_with(ppt, value = "Top Leverage Points", location = officer::ph_location_type(type = "title"))
 
-      top_nodes <- head(nodes_with_leverage, 10)
-      leverage_text <- paste(
-        paste(1:nrow(top_nodes), ".", as.character(top_nodes$label), "(Score:", round(top_nodes$leverage_score, 2), ")"),
-        collapse = "\n"
-      )
+        top_nodes <- head(nodes_with_leverage, 10)
+        leverage_text <- paste(
+          paste(1:nrow(top_nodes), ".", as.character(top_nodes$label), "(Score:", round(top_nodes$leverage_score, 2), ")"),
+          collapse = "\n"
+        )
 
-      ppt <- officer::ph_with(ppt, value = as.character(leverage_text), location = officer::ph_location_type(type = "body"))
+        ppt <- officer::ph_with(ppt, value = as.character(leverage_text), location = officer::ph_location_type(type = "body"))
+      }
     }
   }
 
