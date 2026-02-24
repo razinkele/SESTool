@@ -5,7 +5,7 @@
 
 A comprehensive Shiny application for Social-Ecological Systems (SES) analysis and visualization, developed as part of the [Marine-SABRES](https://marinesabres.eu/) Horizon Europe project.
 
-**Live deployment**: [laguna.ku.lt:3838/marinesabres](http://laguna.ku.lt:3838/marinesabres/)
+**Live deployment**: [laguna.ku.lt/marinesabres](https://laguna.ku.lt/marinesabres/)
 
 ## Overview
 

@@ -88,7 +88,7 @@ if ($Help) {
     Write-Host "  1. Windows 10/11 with OpenSSH (built-in)"
     Write-Host "  2. SSH key access to razinka@laguna.ku.lt"
     Write-Host ""
-    Write-Host "Target: http://laguna.ku.lt:3838/marinesabres/"
+    Write-Host "Target: https://laguna.ku.lt/marinesabres/"
     exit 0
 }
 
@@ -395,7 +395,7 @@ if ($deployExitCode -eq 0) {
     Write-Header "Deployment Complete"
     Write-Success "Remote deployment successful!"
     Write-Host ""
-    Write-Host "  Application URL: http://laguna.ku.lt:3838/marinesabres/"
+    Write-Host "  Application URL: https://laguna.ku.lt/marinesabres/"
     Write-Host ""
     Write-Host "Next steps:"
     Write-Host "  1. Open the URL in your browser"
@@ -405,7 +405,7 @@ if ($deployExitCode -eq 0) {
 
     $openBrowser = Read-Host "Open application in browser? (y/N)"
     if ($openBrowser -eq "y" -or $openBrowser -eq "Y") {
-        Start-Process "http://laguna.ku.lt:3838/marinesabres/"
+        Start-Process "https://laguna.ku.lt/marinesabres/"
     }
 } else {
     Write-Err "Deployment failed with exit code: $deployExitCode"

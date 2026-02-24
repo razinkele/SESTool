@@ -142,7 +142,7 @@ ssh razinka@laguna.ku.lt "sudo systemctl status shiny-server"
 ## Post-Deployment
 
 ### Access Your Application
-- **URL:** http://laguna.ku.lt:3838/marinesabres/
+- **URL:** https://laguna.ku.lt/marinesabres/
 - **Clear browser cache:** Ctrl+Shift+R
 - **Incognito mode:** For testing without cache
 
@@ -193,5 +193,5 @@ Host laguna
 - [ ] R and required packages installed locally
 - [ ] Test deployment with `.\deploy-remote.ps1 -DryRun`
 - [ ] Successful deployment to laguna.ku.lt
-- [ ] Application accessible at http://laguna.ku.lt:3838/marinesabres/
+- [ ] Application accessible at https://laguna.ku.lt/marinesabres/
 - [ ] Browser cache cleared and tested

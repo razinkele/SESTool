@@ -469,7 +469,7 @@ if (errors > 0) {
   cat("Next steps:\n")
   cat("  1. Run: .\\deploy-remote.ps1 -DryRun\n")
   cat("  2. If dry run looks good: .\\deploy-remote.ps1\n")
-  cat("  3. Test application at: http://laguna.ku.lt:3838/marinesabres/\n")
+  cat("  3. Test application at: https://laguna.ku.lt/marinesabres/\n")
   cat("\n")
   quit(status = 0)
 }

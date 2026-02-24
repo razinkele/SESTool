@@ -12,7 +12,7 @@ REM   deploy-remote.cmd --exclude-models   - Skip SESModels directory
 REM   deploy-remote.cmd --force            - Skip confirmation prompts
 REM   deploy-remote.cmd --help             - Show help
 REM
-REM Target: http://laguna.ku.lt:3838/marinesabres/
+REM Target: https://laguna.ku.lt/marinesabres/
 REM ============================================================================
 
 setlocal EnableDelayedExpansion
@@ -70,7 +70,7 @@ echo   deploy-remote.cmd                         Interactive deployment
 echo   deploy-remote.cmd --dry-run               Test run
 echo   deploy-remote.cmd --force --dry-run       Non-interactive test
 echo.
-echo Target: http://laguna.ku.lt:3838/marinesabres/
+echo Target: https://laguna.ku.lt/marinesabres/
 echo.
 exit /b 0
 
@@ -89,7 +89,7 @@ echo.
 if %EXIT_CODE%==0 (
     echo [OK] Deployment completed successfully
     echo.
-    echo URL: http://laguna.ku.lt:3838/marinesabres/
+    echo URL: https://laguna.ku.lt/marinesabres/
 ) else (
     echo [ERROR] Deployment failed with exit code: %EXIT_CODE%
 )
