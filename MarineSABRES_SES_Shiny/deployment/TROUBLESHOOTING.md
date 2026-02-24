@@ -174,7 +174,7 @@ If you've tried all of the above:
    ```bash
    ls -la /srv/shiny-server/marinesabres/ | grep shiny
    ```
-   All files should be owned by `shiny:shiny`
+   All files should be owned by `razinka:shiny`
 
 3. Check if Shiny Server config is correct:
    ```bash

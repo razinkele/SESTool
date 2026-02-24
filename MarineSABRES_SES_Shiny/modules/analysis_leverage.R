@@ -58,6 +58,13 @@ analysis_leverage_ui <- function(id, i18n) {
             br(),
             uiOutput(ns("leverage_status")),
             br(),
+            div(
+              style = "margin-bottom: 10px;",
+              downloadButton(ns("download_leverage_excel"), i18n$t("modules.analysis.leverage.btn_download_excel"),
+                             class = "btn-sm btn-outline-success"),
+              downloadButton(ns("download_leverage_png"), i18n$t("modules.analysis.leverage.btn_download_chart"),
+                             class = "btn-sm btn-outline-primary", style = "margin-left: 5px;")
+            ),
             DT::dataTableOutput(ns("leverage_table"))
           ),
 
@@ -369,6 +376,14 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
 
           hr(),
 
+          div(
+            style = "background: #fff3cd; padding: 12px; border-radius: 5px; border-left: 4px solid #ffc107; margin-bottom: 15px;",
+            h5(icon("exclamation-triangle"), " ", i18n$t("modules.analysis.leverage.structural_bias_title")),
+            p(style = "margin-bottom: 0;", i18n$t("modules.analysis.leverage.structural_bias_desc"))
+          ),
+
+          hr(),
+
           h4(icon("lightbulb"), " ", i18n$t("modules.analysis.leverage.intervention_strategies")),
           tags$ul(
             tags$li(
@@ -387,6 +402,82 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
         )
       )
     })
+
+    # === DOWNLOAD HANDLERS ===
+
+    # Download leverage results as Excel
+    output$download_leverage_excel <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Leverage_Points", ".xlsx")
+      },
+      content = function(file) {
+        req(rv$leverage_results)
+
+        df <- rv$leverage_results
+        df_export <- data.frame(
+          Rank = 1:nrow(df),
+          Node = df$Name,
+          Type = df$Type,
+          Composite_Score = round(df$Composite_Score, 4),
+          Betweenness = round(df$Betweenness, 4),
+          Eigenvector = round(df$Eigenvector, 4),
+          PageRank = round(df$PageRank, 4),
+          In_Degree = df$In_Degree,
+          Out_Degree = df$Out_Degree,
+          Degree = df$Degree,
+          check.names = FALSE
+        )
+
+        wb <- createWorkbook()
+        addWorksheet(wb, "Leverage_Points")
+        writeData(wb, "Leverage_Points", df_export)
+
+        # Add method description sheet
+        method_df <- data.frame(
+          Item = c("Algorithm", "Metrics", "Scoring", "Top N"),
+          Description = c(
+            "Composite centrality score (equal-weighted sum of 3 z-score normalized metrics)",
+            "Betweenness Centrality + Eigenvector Centrality + PageRank",
+            "Each metric is z-score normalized (mean=0, sd=1) before summing",
+            as.character(nrow(df))
+          )
+        )
+        addWorksheet(wb, "Method")
+        writeData(wb, "Method", method_df)
+
+        saveWorkbook(wb, file, overwrite = TRUE)
+      }
+    )
+
+    # Download leverage bar chart as PNG
+    output$download_leverage_png <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Leverage_Points_Chart", ".png")
+      },
+      content = function(file) {
+        req(rv$leverage_results)
+
+        df <- rv$leverage_results
+        df$Name <- factor(df$Name, levels = rev(df$Name))
+
+        p <- ggplot(df, aes(x = Name, y = Composite_Score, fill = Composite_Score)) +
+          geom_col(show.legend = FALSE) +
+          coord_flip() +
+          scale_fill_gradient(low = "#FFC107", high = "#4CAF50") +
+          labs(
+            title = "Leverage Point Analysis — Top Nodes by Composite Score",
+            x = NULL,
+            y = "Composite Score (Betweenness + Eigenvector + PageRank)"
+          ) +
+          theme_minimal(base_size = 14) +
+          theme(
+            plot.title = element_text(face = "bold", size = 16),
+            panel.grid.major.y = element_blank()
+          )
+
+        ggsave(file, plot = p, width = 10, height = max(6, nrow(df) * 0.4), dpi = 150, bg = "white")
+      }
+    )
 
     # Help Modal ----
     create_help_observer(

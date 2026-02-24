@@ -169,7 +169,7 @@ docker exec -it marinesabres-ses-tool /bin/bash
 2. **Copy application to Shiny Server directory**:
    ```bash
    sudo cp -r ../. /srv/shiny-server/marinesabres/
-   sudo chown -R shiny:shiny /srv/shiny-server/marinesabres
+   sudo chown -R razinka:shiny /srv/shiny-server/marinesabres
    ```
 
 3. **Configure Shiny Server**:
@@ -329,7 +329,7 @@ location /marinesabres {
 3. **Check permissions**:
    ```bash
    ls -la /srv/shiny-server/marinesabres
-   sudo chown -R shiny:shiny /srv/shiny-server/marinesabres
+   sudo chown -R razinka:shiny /srv/shiny-server/marinesabres
    ```
 
 ### Performance issues

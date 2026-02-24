@@ -1715,6 +1715,39 @@
       "it": "Identifica i nodi più influenti nella tua rete che potrebbero servire come punti chiave di intervento.",
       "no": "Identifiser de mest innflytelsesrike nodene i nettverket ditt som kan tjene som nøkkelintervensjonspunkter.",
       "el": "Identify the most influential nodes in your network that could serve as key intervention points."
+    },
+    "modules.analysis.network.btn_download_barplot": {
+      "en": "Download Bar Plot (PNG)",
+      "es": "Descargar gráfico de barras (PNG)",
+      "fr": "Télécharger le graphique à barres (PNG)",
+      "de": "Balkendiagramm herunterladen (PNG)",
+      "lt": "Atsisiųsti stulpelinę diagramą (PNG)",
+      "pt": "Baixar gráfico de barras (PNG)",
+      "it": "Scarica grafico a barre (PNG)",
+      "no": "Last ned stolpediagram (PNG)",
+      "el": "Λήψη ραβδογράμματος (PNG)"
+    },
+    "modules.analysis.network.btn_download_comparison": {
+      "en": "Download Comparison (PNG)",
+      "es": "Descargar comparación (PNG)",
+      "fr": "Télécharger la comparaison (PNG)",
+      "de": "Vergleich herunterladen (PNG)",
+      "lt": "Atsisiųsti palyginimą (PNG)",
+      "pt": "Baixar comparação (PNG)",
+      "it": "Scarica confronto (PNG)",
+      "no": "Last ned sammenligning (PNG)",
+      "el": "Λήψη σύγκρισης (PNG)"
+    },
+    "modules.analysis.network.btn_download_histogram": {
+      "en": "Download Distribution (PNG)",
+      "es": "Descargar distribución (PNG)",
+      "fr": "Télécharger la distribution (PNG)",
+      "de": "Verteilung herunterladen (PNG)",
+      "lt": "Atsisiųsti pasiskirstymą (PNG)",
+      "pt": "Baixar distribuição (PNG)",
+      "it": "Scarica distribuzione (PNG)",
+      "no": "Last ned distribusjon (PNG)",
+      "el": "Λήψη κατανομής (PNG)"
     }
   }
 }

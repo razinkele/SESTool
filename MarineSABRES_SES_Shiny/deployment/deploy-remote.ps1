@@ -1,26 +1,25 @@
 # ============================================================================
-# MarineSABRES Remote Deployment - PowerShell Wrapper for Windows
+# MarineSABRES Remote Deployment - Native Windows (tar + scp + ssh)
 # ============================================================================
 #
-# This PowerShell script provides a Windows-native wrapper for remote
-# deployment to laguna.ku.lt Shiny server
+# Deploys directly to laguna.ku.lt using native Windows OpenSSH tools.
+# No WSL or Git Bash required.
 #
 # Prerequisites:
-#   1. Windows Subsystem for Linux (WSL) OR Git Bash
-#   2. SSH access to laguna.ku.lt configured
-#   3. rsync available (via WSL or Git Bash)
+#   1. Windows 10/11 with OpenSSH client (built-in)
+#   2. SSH key-based access to razinka@laguna.ku.lt configured
+#
+# Ownership model: razinka:shiny
+#   - razinka owns the files (can deploy without sudo)
+#   - shiny group gives Shiny Server read access
+#   - Only systemctl restart requires sudo
 #
 # Usage:
-#   .\deploy-remote.ps1 [-DryRun] [-ExcludeModels] [-Force] [-UseWSL] [-UseGitBash]
+#   .\deploy-remote.ps1 [-DryRun] [-ExcludeModels] [-Force]
 #
-# Examples:
-#   .\deploy-remote.ps1                    # Interactive deployment via WSL
-#   .\deploy-remote.ps1 -DryRun            # Test run without actual deployment
-#   .\deploy-remote.ps1 -UseGitBash        # Use Git Bash instead of WSL
-#   .\deploy-remote.ps1 -ExcludeModels     # Skip SESModels directory
-#
-# Version: 1.1
+# Version: 2.0
 # Created: 2026-01-12
+# Updated: 2026-02-24
 #
 # ============================================================================
 
@@ -28,182 +27,142 @@ param(
     [switch]$DryRun,           # Show what would be deployed without deploying
     [switch]$ExcludeModels,    # Exclude SESModels directory
     [switch]$Force,            # Skip confirmation prompts
-    [switch]$UseWSL,           # Force use of WSL
-    [switch]$UseGitBash,       # Force use of Git Bash
     [switch]$Help              # Show help
 )
 
-# Color output functions
-function Write-ColorOutput($ForegroundColor) {
-    $fc = $host.UI.RawUI.ForegroundColor
-    $bc = $host.UI.RawUI.BackgroundColor
-    try {
-        $host.UI.RawUI.ForegroundColor = $ForegroundColor
-        if ($args) {
-            Write-Output $args
-        } else {
-            $input | Write-Output
-        }
-    } finally {
-        $host.UI.RawUI.ForegroundColor = $fc
-        $host.UI.RawUI.BackgroundColor = $bc
-    }
-}
+# ============================================================================
+# Configuration
+# ============================================================================
+
+$RemoteHost = "laguna.ku.lt"
+$RemoteUser = "razinka"
+$RemoteTarget = "/srv/shiny-server/marinesabres"
+$RemoteOwner = "razinka"
+$RemoteGroup = "shiny"
+$TarFilename = "marinesabres-deploy.tar.gz"
+
+# ============================================================================
+# Helper Functions
+# ============================================================================
 
 function Write-Header($message) {
     Write-Host ""
-    Write-ColorOutput "Cyan" "================================================================================"
-    Write-ColorOutput "Cyan" " $message"
-    Write-ColorOutput "Cyan" "================================================================================"
+    Write-Host "================================================================================" -ForegroundColor Cyan
+    Write-Host " $message" -ForegroundColor Cyan
+    Write-Host "================================================================================" -ForegroundColor Cyan
     Write-Host ""
 }
 
 function Write-Success($message) {
-    Write-ColorOutput "Green" "[OK] $message"
+    Write-Host "[OK] $message" -ForegroundColor Green
 }
 
-function Write-Error($message) {
-    Write-ColorOutput "Red" "[ERROR] $message"
+function Write-Err($message) {
+    Write-Host "[ERROR] $message" -ForegroundColor Red
 }
 
-function Write-Warning($message) {
-    Write-ColorOutput "Yellow" "[WARN] $message"
+function Write-Warn($message) {
+    Write-Host "[WARN] $message" -ForegroundColor Yellow
 }
 
 function Write-Status($message) {
-    Write-ColorOutput "Blue" "==> $message"
+    Write-Host "==> $message" -ForegroundColor Blue
 }
 
-# Show help
+# ============================================================================
+# Help
+# ============================================================================
+
 if ($Help) {
     Write-Host "MarineSABRES Remote Deployment for Windows"
     Write-Host ""
     Write-Host "Usage: .\deploy-remote.ps1 [OPTIONS]"
     Write-Host ""
     Write-Host "Options:"
-    Write-Host "  -DryRun         Show what would be deployed without actually deploying"
+    Write-Host "  -DryRun         Show what would be deployed (list files, no upload)"
     Write-Host "  -ExcludeModels  Exclude SESModels directory from deployment"
     Write-Host "  -Force          Skip confirmation prompts"
-    Write-Host "  -UseWSL         Force use of Windows Subsystem for Linux"
-    Write-Host "  -UseGitBash     Force use of Git Bash"
     Write-Host "  -Help           Show this help message"
     Write-Host ""
     Write-Host "Prerequisites:"
-    Write-Host "  1. SSH access to laguna.ku.lt configured"
-    Write-Host "  2. Either WSL or Git Bash installed"
-    Write-Host "  3. rsync available in chosen environment"
+    Write-Host "  1. Windows 10/11 with OpenSSH (built-in)"
+    Write-Host "  2. SSH key access to razinka@laguna.ku.lt"
     Write-Host ""
-    Write-Host "Examples:"
-    Write-Host "  .\deploy-remote.ps1                    # Interactive deployment"
-    Write-Host "  .\deploy-remote.ps1 -DryRun            # Test without deploying"
-    Write-Host "  .\deploy-remote.ps1 -UseGitBash        # Use Git Bash"
+    Write-Host "Target: http://laguna.ku.lt:3838/marinesabres/"
     exit 0
 }
 
-# Clear screen and show header
-Clear-Host
-Write-Header "MarineSABRES Remote Deployment - Windows to laguna.ku.lt"
+# ============================================================================
+# Initialization
+# ============================================================================
 
-# Get script directory
+Clear-Host
+Write-Header "MarineSABRES Remote Deployment v2.0 - Native Windows"
+
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $AppDir = Split-Path -Parent $ScriptDir
+$TarPath = Join-Path $env:TEMP $TarFilename
 
-Write-Host "  Script Directory: $ScriptDir"
-Write-Host "  App Directory:    $AppDir"
+Write-Host "  App Directory:  $AppDir"
+Write-Host "  Remote Target:  ${RemoteUser}@${RemoteHost}:${RemoteTarget}"
+Write-Host "  Ownership:      ${RemoteOwner}:${RemoteGroup}"
 Write-Host ""
 
-# Check if we're in the right directory
+# Verify app.R exists
 if (-not (Test-Path (Join-Path $AppDir "app.R"))) {
-    Write-Error "app.R not found in $AppDir"
-    Write-Host "Please run this script from the deployment directory of your MarineSABRES project."
+    Write-Err "app.R not found in $AppDir"
     exit 1
 }
-
 Write-Success "Found MarineSABRES application files"
 
 # ============================================================================
-# Environment Detection and Selection
+# Check Prerequisites
 # ============================================================================
 
-Write-Status "Detecting available environments..."
+Write-Header "Checking Prerequisites"
 
-# Check for WSL by actually testing if it can run commands
-$WSLAvailable = $false
-try {
-    $wslPath = Get-Command wsl.exe -ErrorAction SilentlyContinue
-    if ($wslPath) {
-        # Try to run a simple command in WSL to verify it works
-        $testResult = wsl echo "WSL_OK" 2>&1
-        if ($LASTEXITCODE -eq 0 -and $testResult -match "WSL_OK") {
-            $WSLAvailable = $true
-            Write-Success "Windows Subsystem for Linux (WSL) is available and working"
-        } else {
-            Write-Warning "WSL installed but no Linux distribution configured"
-            Write-Host "    To install Ubuntu: wsl --install -d Ubuntu"
-            Write-Host "    Will try Git Bash instead..."
-        }
-    }
-} catch {
-    # WSL not available
-}
-
-# Check for Git Bash
-$GitBashAvailable = $false
-$GitBashPath = $null
-$GitBashPaths = @(
-    "$env:ProgramFiles\Git\bin\bash.exe",
-    "${env:ProgramFiles(x86)}\Git\bin\bash.exe",
-    "$env:USERPROFILE\AppData\Local\Programs\Git\bin\bash.exe"
-)
-
-foreach ($path in $GitBashPaths) {
-    if (Test-Path $path) {
-        $GitBashPath = $path
-        $GitBashAvailable = $true
-        Write-Success "Git Bash detected at: $path"
-        break
+# Check for native Windows tools
+$toolsOk = $true
+foreach ($tool in @("ssh", "scp", "tar")) {
+    $cmd = Get-Command $tool -ErrorAction SilentlyContinue
+    if ($cmd) {
+        Write-Success "$tool found: $($cmd.Source)"
+    } else {
+        Write-Err "$tool not found in PATH"
+        $toolsOk = $false
     }
 }
 
-# Determine which environment to use
-$UseEnvironment = $null
-
-if ($UseWSL -and $WSLAvailable) {
-    $UseEnvironment = "WSL"
-} elseif ($UseGitBash -and $GitBashAvailable) {
-    $UseEnvironment = "GitBash"
-} elseif ($WSLAvailable) {
-    $UseEnvironment = "WSL"
-} elseif ($GitBashAvailable) {
-    $UseEnvironment = "GitBash"
-} else {
-    Write-Error "Neither WSL nor Git Bash is available!"
+if (-not $toolsOk) {
     Write-Host ""
-    Write-Host "Please install one of the following:"
-    Write-Host "  1. Windows Subsystem for Linux (WSL): https://docs.microsoft.com/en-us/windows/wsl/install"
-    Write-Host "  2. Git for Windows (includes Git Bash): https://git-scm.com/download/win"
-    Write-Host ""
+    Write-Err "Missing required tools. Windows OpenSSH should be enabled:"
+    Write-Host "  Settings > Apps > Optional Features > OpenSSH Client"
     exit 1
 }
 
-Write-Status "Using environment: $UseEnvironment"
+# Test SSH connectivity
+Write-Status "Testing SSH connection..."
+ssh -o ConnectTimeout=10 -o BatchMode=yes "${RemoteUser}@${RemoteHost}" "echo OK" 2>$null | Out-Null
+if ($LASTEXITCODE -eq 0) {
+    Write-Success "SSH connection to ${RemoteHost} successful"
+} else {
+    Write-Err "SSH connection failed. Check your SSH key configuration."
+    Write-Host "  Try: ssh ${RemoteUser}@${RemoteHost}"
+    exit 1
+}
 
 # ============================================================================
-# Pre-deployment Checks
+# Pre-Deployment R Validation
 # ============================================================================
 
 Write-Header "Pre-Deployment Validation"
 
-Write-Status "Running R validation script..."
-
-# Run R pre-deployment checks
 $RCheckScript = Join-Path $ScriptDir "pre-deploy-check-remote.R"
 
 if (Test-Path $RCheckScript) {
+    Write-Status "Running R validation script..."
     try {
         Push-Location $AppDir
-        Write-Host ""
-        # Run Rscript and let output display directly to console (don't capture)
         & Rscript $RCheckScript
         $rCheckExitCode = $LASTEXITCODE
         Pop-Location
@@ -212,169 +171,210 @@ if (Test-Path $RCheckScript) {
         if ($rCheckExitCode -eq 0) {
             Write-Success "All R validation checks passed"
         } elseif ($rCheckExitCode -eq 2) {
-            Write-Warning "R validation has warnings (see details above)"
+            Write-Warn "R validation has warnings (see above)"
             if (-not $Force) {
-                $continue = Read-Host "Continue with deployment despite warnings? (y/N)"
+                $continue = Read-Host "Continue despite warnings? (y/N)"
                 if ($continue -ne "y" -and $continue -ne "Y") {
-                    Write-Error "Deployment cancelled by user"
+                    Write-Err "Deployment cancelled"
                     exit 1
                 }
             }
         } else {
-            Write-Error "R validation failed with critical errors (see above)"
-            Write-Host "Please fix the errors before proceeding."
+            Write-Err "R validation failed with critical errors"
             exit 1
         }
     } catch {
-        Write-Warning "Could not run R validation - Rscript may not be in PATH"
-        Write-Host "Error: $($_.Exception.Message)"
+        Write-Warn "Could not run R validation: $($_.Exception.Message)"
     }
 } else {
-    Write-Warning "R validation script not found at: $RCheckScript"
+    Write-Warn "R validation script not found, skipping"
 }
 
 # ============================================================================
-# Build Deployment Command
+# Create Tar Archive
 # ============================================================================
 
-Write-Header "Preparing Deployment Command"
+Write-Header "Creating Deployment Archive"
 
-# Convert PowerShell paths to Unix-style for bash
-# WSL uses /mnt/c/..., Git Bash uses /c/...
-function Convert-ToUnixPath {
-    param([string]$WinPath, [string]$Environment)
-
-    $unixPath = $WinPath -replace "\\", "/"
-
-    if ($Environment -eq "WSL") {
-        # WSL format: /mnt/c/Users/... (lowercase drive letter)
-        if ($unixPath -match "^([A-Za-z]):(.*)") {
-            $drive = $Matches[1].ToLower()
-            $rest = $Matches[2]
-            $unixPath = "/mnt/$drive$rest"
-        }
-    } else {
-        # Git Bash format: /c/Users/... (lowercase drive letter)
-        if ($unixPath -match "^([A-Za-z]):(.*)") {
-            $drive = $Matches[1].ToLower()
-            $rest = $Matches[2]
-            $unixPath = "/$drive$rest"
-        }
-    }
-
-    return $unixPath
-}
-
-$UnixAppDir = Convert-ToUnixPath -WinPath $AppDir -Environment $UseEnvironment
-$UnixScriptDir = Convert-ToUnixPath -WinPath $ScriptDir -Environment $UseEnvironment
-
-# Build command arguments
-$deployArgs = @()
-
-if ($DryRun) {
-    $deployArgs += "--dry-run"
-    Write-Status "DRY RUN MODE enabled"
-}
+# Build tar exclude arguments
+$excludes = @(
+    "--exclude=.git",
+    "--exclude=.claude",
+    "--exclude=.playwright-mcp",
+    "--exclude=.Rhistory",
+    "--exclude=.Rproj.user",
+    "--exclude=.gitignore",
+    "--exclude=.dockerignore",
+    "--exclude=*.Rproj",
+    "--exclude=*.log",
+    "--exclude=*.tmp",
+    "--exclude=deployment",
+    "--exclude=tests",
+    "--exclude=DTU",
+    "--exclude=Documents",
+    "--exclude=CLEANUP_SCRIPT.R",
+    "--exclude=run_ui_tests.R",
+    "--exclude=fixture_list.txt",
+    "--exclude=abstract.docx",
+    "--exclude=*.png"
+)
 
 if ($ExcludeModels) {
-    $deployArgs += "--exclude-models"
+    $excludes += "--exclude=SESModels"
     Write-Status "SESModels directory will be excluded"
 }
 
-if ($Force) {
-    $deployArgs += "--force"
-    Write-Status "Force mode enabled - skipping confirmations"
+Write-Status "Archiving application files..."
+
+# Remove old tar if exists
+if (Test-Path $TarPath) {
+    Remove-Item $TarPath -Force
 }
 
-$argsString = $deployArgs -join " "
-$deployCommand = "cd '$UnixAppDir' && ./deployment/remote-deploy.sh $argsString"
+# Create tar.gz from the app directory
+$tarArgs = @("-czf", $TarPath) + $excludes + @("-C", $AppDir, ".")
+& tar @tarArgs
 
-Write-Status "Deployment command prepared"
-Write-Host "  Environment: $UseEnvironment"
-Write-Host "  Command: $deployCommand"
+if ($LASTEXITCODE -ne 0) {
+    Write-Err "Failed to create tar archive"
+    exit 1
+}
+
+$tarSize = [math]::Round((Get-Item $TarPath).Length / 1MB, 1)
+Write-Success "Archive created: $TarPath ($tarSize MB)"
 
 # ============================================================================
-# Execute Deployment
+# Dry Run — just list contents
+# ============================================================================
+
+if ($DryRun) {
+    Write-Header "DRY RUN - Archive Contents"
+    & tar -tzf $TarPath
+    Write-Host ""
+    Write-Warn "DRY RUN - no files were uploaded"
+    Write-Host "  Archive size: $tarSize MB"
+    Write-Host "  Run without -DryRun to deploy"
+
+    # Cleanup
+    Remove-Item $TarPath -Force -ErrorAction SilentlyContinue
+    exit 0
+}
+
+# ============================================================================
+# Confirmation
 # ============================================================================
 
 if (-not $Force) {
     Write-Host ""
-    Write-Warning "Ready to deploy to laguna.ku.lt"
+    Write-Warn "Ready to deploy to ${RemoteHost}"
     Write-Host ""
     Write-Host "This will:"
-    Write-Host "  1. Connect to laguna.ku.lt via SSH"
-    Write-Host "  2. Stop Shiny Server"
-    Write-Host "  3. Backup existing application"
-    Write-Host "  4. Upload new files via rsync"
-    Write-Host "  5. Restart Shiny Server"
+    Write-Host "  1. Upload $tarSize MB archive via scp"
+    Write-Host "  2. Clear existing app files on server"
+    Write-Host "  3. Extract new files"
+    Write-Host "  4. Set ownership to ${RemoteOwner}:${RemoteGroup}"
+    Write-Host "  5. Restart Shiny Server (requires sudo)"
     Write-Host ""
-
-    if ($DryRun) {
-        Write-Host "DRY RUN: No actual changes will be made"
-        Write-Host ""
-    }
 
     $proceed = Read-Host "Continue? (y/N)"
     if ($proceed -ne "y" -and $proceed -ne "Y") {
-        Write-Error "Deployment cancelled by user"
+        Write-Err "Deployment cancelled"
+        Remove-Item $TarPath -Force -ErrorAction SilentlyContinue
         exit 1
     }
 }
 
-Write-Header "Executing Remote Deployment"
+# ============================================================================
+# Upload via SCP
+# ============================================================================
 
-$deployExitCode = 1
+Write-Header "Uploading to ${RemoteHost}"
 
-try {
-    if ($UseEnvironment -eq "WSL") {
-        Write-Status "Executing via WSL..."
-        wsl bash -c $deployCommand
-        $deployExitCode = $LASTEXITCODE
-    } else {
-        Write-Status "Executing via Git Bash..."
-        & $GitBashPath -c $deployCommand
-        $deployExitCode = $LASTEXITCODE
-    }
+Write-Status "Uploading archive via scp..."
+& scp $TarPath "${RemoteUser}@${RemoteHost}:/tmp/${TarFilename}"
 
-    if ($deployExitCode -eq 0) {
-        Write-Header "Deployment Complete"
-        Write-Success "Remote deployment successful!"
-        Write-Host ""
-
-        if (-not $DryRun) {
-            Write-Host "Application URL: http://laguna.ku.lt:3838/marinesabres/"
-            Write-Host ""
-            Write-Host "Next steps:"
-            Write-Host "  1. Open the application URL in your browser"
-            Write-Host "  2. Clear browser cache if needed (Ctrl+Shift+R)"
-            Write-Host "  3. Test application functionality"
-            Write-Host ""
-            Write-Warning "Remember to clear your browser cache if you see old content!"
-        } else {
-            Write-Host "Dry run completed successfully"
-            Write-Host "  Run without -DryRun to perform actual deployment"
-        }
-    } else {
-        Write-Error "Deployment failed with exit code: $deployExitCode"
-        exit $deployExitCode
-    }
-
-} catch {
-    Write-Error "Deployment execution failed: $($_.Exception.Message)"
+if ($LASTEXITCODE -ne 0) {
+    Write-Err "scp upload failed"
+    Remove-Item $TarPath -Force -ErrorAction SilentlyContinue
     exit 1
 }
+Write-Success "Archive uploaded to /tmp/${TarFilename}"
 
 # ============================================================================
-# Optional: Open browser
+# Deploy on Remote Server
 # ============================================================================
 
-if ((-not $DryRun) -and ($deployExitCode -eq 0)) {
+Write-Header "Deploying on Remote Server"
+
+Write-Status "Extracting files and restarting Shiny Server..."
+
+# Remote commands:
+#   1. Clear target directory contents (razinka owns it, no sudo needed)
+#   2. Extract tar archive into target
+#   3. Set ownership razinka:shiny
+#   4. Set permissions 755
+#   5. Clean up stale translation cache
+#   6. Remove uploaded tar
+#   7. Restart Shiny Server (sudo)
+#   8. Report status
+$remoteScript = @"
+set -e
+echo '==> Clearing target directory...'
+rm -rf ${RemoteTarget}/*
+echo '==> Extracting archive...'
+tar -xzf /tmp/${TarFilename} -C ${RemoteTarget}/
+echo '==> Setting ownership (${RemoteOwner}:${RemoteGroup})...'
+chown -R ${RemoteOwner}:${RemoteGroup} ${RemoteTarget}
+chmod -R 755 ${RemoteTarget}
+rm -f ${RemoteTarget}/translations/_merged_translations.json 2>/dev/null || true
+echo '==> Cleaning up...'
+rm -f /tmp/${TarFilename}
+echo '==> Restarting Shiny Server...'
+sudo systemctl restart shiny-server
+sleep 2
+echo ''
+echo 'Version:' && cat ${RemoteTarget}/VERSION 2>/dev/null || echo 'unknown'
+echo 'Ownership:' && stat -c '%U:%G' ${RemoteTarget}
+echo 'Shiny Server:' && systemctl is-active shiny-server
+"@
+
+# Write remote script to temp file, scp it, execute it
+$remoteScriptPath = Join-Path $env:TEMP "marinesabres-deploy-remote.sh"
+$remoteScript | Set-Content -Path $remoteScriptPath -Encoding UTF8 -NoNewline
+
+& scp $remoteScriptPath "${RemoteUser}@${RemoteHost}:/tmp/marinesabres-deploy-remote.sh"
+& ssh -t "${RemoteUser}@${RemoteHost}" "bash /tmp/marinesabres-deploy-remote.sh && rm -f /tmp/marinesabres-deploy-remote.sh"
+$deployExitCode = $LASTEXITCODE
+
+# ============================================================================
+# Cleanup and Report
+# ============================================================================
+
+Remove-Item $TarPath -Force -ErrorAction SilentlyContinue
+Remove-Item $remoteScriptPath -Force -ErrorAction SilentlyContinue
+
+if ($deployExitCode -eq 0) {
+    Write-Header "Deployment Complete"
+    Write-Success "Remote deployment successful!"
     Write-Host ""
+    Write-Host "  Application URL: http://laguna.ku.lt:3838/marinesabres/"
+    Write-Host ""
+    Write-Host "Next steps:"
+    Write-Host "  1. Open the URL in your browser"
+    Write-Host "  2. Clear browser cache (Ctrl+Shift+R)"
+    Write-Host "  3. Test application functionality"
+    Write-Host ""
+
     $openBrowser = Read-Host "Open application in browser? (y/N)"
-    if (($openBrowser -eq "y") -or ($openBrowser -eq "Y")) {
-        $appUrl = "http://laguna.ku.lt:3838/marinesabres/"
-        Start-Process $appUrl
+    if ($openBrowser -eq "y" -or $openBrowser -eq "Y") {
+        Start-Process "http://laguna.ku.lt:3838/marinesabres/"
     }
+} else {
+    Write-Err "Deployment failed with exit code: $deployExitCode"
+    Write-Host ""
+    Write-Host "Troubleshooting:"
+    Write-Host "  ssh ${RemoteUser}@${RemoteHost} 'sudo journalctl -u shiny-server -n 50'"
+    exit $deployExitCode
 }
 
 Write-Host ""

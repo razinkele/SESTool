@@ -13,6 +13,12 @@ REMOTE_PORT="22"  # Default SSH port, change if different
 REMOTE_TARGET="/srv/shiny-server/marinesabres"
 REMOTE_BACKUP_BASE="/tmp/marinesabres-backups"
 
+# File Ownership
+# razinka owns the files (can deploy without sudo), shiny group gives
+# Shiny Server (run_as shiny) read access via group permissions
+REMOTE_OWNER="razinka"
+REMOTE_GROUP="shiny"
+
 # SSH Key Configuration (if not using default)
 # SSH_KEY_PATH="~/.ssh/id_rsa"  # Uncomment and set if using specific key
 

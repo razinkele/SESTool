@@ -197,10 +197,13 @@ echo ""
 echo "[3] Checking Permissions..."
 
 owner=$(stat -c '%U' "$app_dir")
-if [ "$owner" == "shiny" ]; then
-    print_check "Application directory ownership" "PASS"
+group=$(stat -c '%G' "$app_dir")
+if [ "$owner" == "razinka" ] && [ "$group" == "shiny" ]; then
+    print_check "Application directory ownership (razinka:shiny)" "PASS"
+elif [ "$owner" == "razinka" ]; then
+    print_check "Application directory ownership" "WARN" "Group is $group, should be shiny"
 else
-    print_check "Application directory ownership" "WARN" "Owner is $owner, should be shiny"
+    print_check "Application directory ownership" "WARN" "Owner is $owner:$group, should be razinka:shiny"
 fi
 
 # Check if shiny user can read files
@@ -287,7 +290,7 @@ fi
 echo ""
 echo "[7] Checking R Package Dependencies..."
 
-required_packages=("shiny" "bs4Dash" "shinyWidgets" "shinyjs" "shinyBS" "shiny.i18n" "igraph" "visNetwork" "DT" "jsonlite")
+required_packages=("shiny" "bs4Dash" "shinyWidgets" "shinyjs" "shinyBS" "shiny.i18n" "igraph" "visNetwork" "DT" "jsonlite" "officer" "flextable" "tinytex")
 
 missing_packages=()
 for pkg in "${required_packages[@]}"; do

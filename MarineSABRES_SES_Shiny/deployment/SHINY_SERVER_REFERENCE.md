@@ -85,7 +85,7 @@ sudo cp -r ../data /srv/shiny-server/marinesabres/
 sudo cp -r ../translations /srv/shiny-server/marinesabres/
 
 # Set permissions
-sudo chown -R shiny:shiny /srv/shiny-server/marinesabres
+sudo chown -R razinka:shiny /srv/shiny-server/marinesabres
 ```
 
 ### 5. Configure Shiny Server
@@ -169,7 +169,7 @@ sudo rm -rf /srv/shiny-server/marinesabres/*
 sudo cp -r /tmp/marinesabres-data-backup /srv/shiny-server/marinesabres/data
 
 # Set permissions
-sudo chown -R shiny:shiny /srv/shiny-server/marinesabres
+sudo chown -R razinka:shiny /srv/shiny-server/marinesabres
 
 # Start service
 sudo systemctl start shiny-server
@@ -422,7 +422,7 @@ fi
 
 sudo systemctl stop shiny-server
 sudo tar -xzf "$BACKUP_FILE" -C /
-sudo chown -R shiny:shiny /srv/shiny-server/marinesabres
+sudo chown -R razinka:shiny /srv/shiny-server/marinesabres
 sudo systemctl start shiny-server
 ```
 

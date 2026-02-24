@@ -212,7 +212,8 @@ additional_packages <- c(
   "igraph", "readxl", "writexl", "shinyFeedback", "waiter",
   "shinycssloaders", "shinyalert", "rmarkdown", "knitr",
   "htmltools", "htmlwidgets", "magrittr", "tidyr", "purrr",
-  "stringr", "lubridate", "ggplot2", "plotly", "scales"
+  "stringr", "lubridate", "ggplot2", "plotly", "scales",
+  "officer", "flextable", "tinytex"
 )
 
 # Optional packages (nice to have but not critical)
@@ -343,7 +344,7 @@ if (length(temp_files) == 0) {
   print_check("Temporary files", "PASS")
 } else {
   print_check("Temporary files", "WARN",
-              paste(length(temp_files), "files found (will be excluded by rsync)"),
+              paste(length(temp_files), "files found (will be excluded by tar)"),
               details = list(files = temp_files))
 }
 
@@ -353,12 +354,20 @@ if (length(temp_files) == 0) {
 
 print_status("Checking remote deployment readiness...")
 
-# Check if rsync is available (in PATH)
-rsync_available <- Sys.which("rsync") != ""
-if (rsync_available) {
-  print_check("rsync availability", "PASS")
+# Check if scp is available (native on Windows 10/11)
+scp_available <- Sys.which("scp") != ""
+if (scp_available) {
+  print_check("scp availability", "PASS")
 } else {
-  print_check("rsync availability", "WARN", "rsync not in PATH - may need WSL/Git Bash")
+  print_check("scp availability", "WARN", "scp not in PATH - enable OpenSSH in Windows settings")
+}
+
+# Check if tar is available (native on Windows 10/11)
+tar_available <- Sys.which("tar") != ""
+if (tar_available) {
+  print_check("tar availability", "PASS")
+} else {
+  print_check("tar availability", "WARN", "tar not in PATH")
 }
 
 # Check if SSH is available
@@ -366,7 +375,7 @@ ssh_available <- Sys.which("ssh") != ""
 if (ssh_available) {
   print_check("SSH availability", "PASS")
 } else {
-  print_check("SSH availability", "WARN", "SSH not in PATH - may need WSL/Git Bash")
+  print_check("SSH availability", "WARN", "SSH not in PATH - enable OpenSSH in Windows settings")
 }
 
 # Check git status for untracked important files
@@ -446,7 +455,7 @@ if (errors > 0) {
   cat("Recommendations:\n")
   cat("  1. Review all warnings above and fix if possible\n")
   cat("  2. Use --exclude-models if SESModels issues persist\n")
-  cat("  3. Ensure SSH access to laguna.ku.lt is configured\n")
+  cat("  3. Ensure SSH key access to razinka@laguna.ku.lt is configured\n")
   cat("  4. Run deployment with --dry-run first\n")
   cat("\n")
   quit(status = 2)
@@ -456,8 +465,8 @@ if (errors > 0) {
   cat("================================================================================\n")
   cat("\n")
   cat("Next steps:\n")
-  cat("  1. Run: ./remote-deploy.sh --dry-run\n")
-  cat("  2. If dry run looks good: ./remote-deploy.sh\n")
+  cat("  1. Run: .\\deploy-remote.ps1 -DryRun\n")
+  cat("  2. If dry run looks good: .\\deploy-remote.ps1\n")
   cat("  3. Test application at: http://laguna.ku.lt:3838/marinesabres/\n")
   cat("\n")
   quit(status = 0)

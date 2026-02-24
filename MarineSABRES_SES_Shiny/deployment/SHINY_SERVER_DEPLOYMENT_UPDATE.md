@@ -172,7 +172,7 @@ sudo ./deploy.sh --shiny-server
 # Method 2: Manual update
 sudo systemctl stop shiny-server
 # Copy new files...
-sudo chown -R shiny:shiny /srv/shiny-server/marinesabres
+sudo chown -R razinka:shiny /srv/shiny-server/marinesabres
 sudo systemctl start shiny-server
 ```
 
@@ -201,7 +201,7 @@ sudo systemctl restart shiny-server
 
 **3. Permission Errors**
 ```bash
-sudo chown -R shiny:shiny /srv/shiny-server/marinesabres
+sudo chown -R razinka:shiny /srv/shiny-server/marinesabres
 sudo chmod -R 755 /srv/shiny-server/marinesabres
 sudo systemctl restart shiny-server
 ```
@@ -352,7 +352,7 @@ sudo ./deploy.sh --shiny-server
 # Stop and restore data
 sudo systemctl stop shiny-server
 sudo cp -r ./data-backup/* /srv/shiny-server/marinesabres/data/
-sudo chown -R shiny:shiny /srv/shiny-server/marinesabres/data
+sudo chown -R razinka:shiny /srv/shiny-server/marinesabres/data
 sudo systemctl start shiny-server
 ```
 

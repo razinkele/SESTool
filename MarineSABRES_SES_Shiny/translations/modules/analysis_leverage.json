@@ -407,6 +407,50 @@
       "it": "Dare priorità al coinvolgimento degli attori associati a questi nodi",
       "no": "Prioritize engagement with actors associated with these nodes",
       "el": "Prioritize engagement with actors associated with these nodes"
+    },
+    "modules.analysis.leverage.btn_download_excel": {
+      "en": "Download Excel",
+      "es": "Descargar Excel",
+      "fr": "Télécharger Excel",
+      "de": "Excel herunterladen",
+      "lt": "Atsisiųsti Excel",
+      "pt": "Baixar Excel",
+      "it": "Scarica Excel",
+      "no": "Last ned Excel",
+      "el": "Λήψη Excel"
+    },
+    "modules.analysis.leverage.btn_download_chart": {
+      "en": "Download Chart (PNG)",
+      "es": "Descargar gráfico (PNG)",
+      "fr": "Télécharger le graphique (PNG)",
+      "de": "Diagramm herunterladen (PNG)",
+      "lt": "Atsisiųsti diagramą (PNG)",
+      "pt": "Baixar gráfico (PNG)",
+      "it": "Scarica grafico (PNG)",
+      "no": "Last ned diagram (PNG)",
+      "el": "Λήψη γραφήματος (PNG)"
+    },
+    "modules.analysis.leverage.structural_bias_title": {
+      "en": "Note on DAPSI(W)R(M) Framework Structure",
+      "es": "Nota sobre la estructura del marco DAPSI(W)R(M)",
+      "fr": "Note sur la structure du cadre DAPSI(W)R(M)",
+      "de": "Hinweis zur DAPSI(W)R(M)-Rahmenstruktur",
+      "lt": "Pastaba apie DAPSI(W)R(M) struktūrą",
+      "pt": "Nota sobre a estrutura do quadro DAPSI(W)R(M)",
+      "it": "Nota sulla struttura del framework DAPSI(W)R(M)",
+      "no": "Merknad om DAPSI(W)R(M)-rammeverkets struktur",
+      "el": "Σημείωση για τη δομή του πλαισίου DAPSI(W)R(M)"
+    },
+    "modules.analysis.leverage.structural_bias_desc": {
+      "en": "Response and Measures nodes may score higher in betweenness centrality (one of three metrics in the composite score) because they structurally bridge back to Drivers and Activities in the DAPSI(W)R(M) framework. This is an inherent property of the framework topology, not necessarily an indication of greater system importance. Consider the node type when interpreting results — high-scoring Response nodes may reflect their bridging position rather than independent influence.",
+      "es": "Los nodos de Respuesta y Medidas pueden obtener puntuaciones más altas en centralidad de intermediación (una de las tres métricas en la puntuación compuesta) porque estructuralmente conectan de vuelta con los Impulsores y Actividades en el marco DAPSI(W)R(M). Esta es una propiedad inherente de la topología del marco. Considere el tipo de nodo al interpretar los resultados.",
+      "fr": "Les nœuds de Réponse et Mesures peuvent obtenir des scores plus élevés en centralité d'intermédiarité (une des trois métriques du score composite) car ils relient structurellement les Moteurs et Activités dans le cadre DAPSI(W)R(M). C'est une propriété inhérente de la topologie du cadre. Considérez le type de nœud lors de l'interprétation des résultats.",
+      "de": "Reaktions- und Maßnahmenknoten können eine höhere Zwischenzentralität aufweisen (eine von drei Metriken im Komposit-Score), da sie strukturell eine Brücke zurück zu Treibern und Aktivitäten im DAPSI(W)R(M)-Rahmen bilden. Dies ist eine inhärente Eigenschaft der Rahmentopologie. Berücksichtigen Sie den Knotentyp bei der Interpretation der Ergebnisse.",
+      "lt": "Atsako ir Priemonių mazgai gali gauti aukštesnius tarpinės centralumo balus (viena iš trijų metrikos sudėtiniame bale), nes jie struktūriškai jungia atgal prie Veiksnių ir Veiklų DAPSI(W)R(M) sistemoje. Tai yra būdinga sistemos topologijos savybė. Interpretuodami rezultatus atsižvelkite į mazgo tipą.",
+      "pt": "Os nós de Resposta e Medidas podem pontuar mais alto em centralidade de intermediação (uma das três métricas na pontuação composta) porque estruturalmente conectam de volta aos Impulsores e Atividades no quadro DAPSI(W)R(M). Esta é uma propriedade inerente da topologia do quadro. Considere o tipo de nó ao interpretar os resultados.",
+      "it": "I nodi di Risposta e Misure possono ottenere punteggi più elevati nella centralità di intermediazione (una delle tre metriche nel punteggio composito) perché strutturalmente collegano i Driver e le Attività nel framework DAPSI(W)R(M). Questa è una proprietà intrinseca della topologia del framework. Considerate il tipo di nodo nell'interpretazione dei risultati.",
+      "no": "Respons- og tiltaksnoder kan score høyere på mellomliggenhetssentralitet (en av tre metrikker i den sammensatte scoren) fordi de strukturelt kobler tilbake til drivere og aktiviteter i DAPSI(W)R(M)-rammeverket. Dette er en iboende egenskap ved rammeverkets topologi. Vurder nodetypen ved tolkning av resultater.",
+      "el": "Οι κόμβοι Απόκρισης και Μέτρων μπορεί να βαθμολογούν υψηλότερα στην κεντρικότητα μεσοβαθμίδας (μία από τις τρεις μετρικές στη σύνθετη βαθμολογία) επειδή δομικά γεφυρώνουν πίσω στους Οδηγούς και τις Δραστηριότητες στο πλαίσιο DAPSI(W)R(M). Λάβετε υπόψη τον τύπο κόμβου κατά την ερμηνεία των αποτελεσμάτων."
     }
   }
 }

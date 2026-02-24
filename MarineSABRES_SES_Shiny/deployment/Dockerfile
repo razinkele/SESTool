@@ -63,8 +63,14 @@ RUN R -e "install.packages(c( \
     'xts', \
     'timevis', \
     'rmarkdown', \
-    'htmlwidgets' \
+    'htmlwidgets', \
+    'officer', \
+    'flextable', \
+    'tinytex' \
     ), repos='https://cran.rstudio.com/')"
+
+# Install TinyTeX LaTeX distribution for PDF export
+RUN R -e "tinytex::install_tinytex()"
 
 # Optional: Install torch for ML features (comment out if not needed)
 # RUN R -e "install.packages('torch', repos='https://cran.rstudio.com/')"

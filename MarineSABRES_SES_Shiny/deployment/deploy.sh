@@ -247,7 +247,7 @@ deploy_shiny_server() {
     fi
 
     # Set permissions
-    chown -R shiny:shiny /srv/shiny-server/marinesabres
+    chown -R razinka:shiny /srv/shiny-server/marinesabres
 
     print_success "Application files deployed"
 

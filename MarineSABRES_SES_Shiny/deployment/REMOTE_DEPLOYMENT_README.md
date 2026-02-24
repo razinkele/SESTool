@@ -1,22 +1,32 @@
 # Remote Deployment from Windows to laguna.ku.lt
 
-This directory contains tools for deploying the MarineSABRES SES Tool from your Windows development machine to the existing Shiny server on laguna.ku.lt.
+This directory contains tools for deploying the MarineSABRES SES Tool from your Windows development machine to the Shiny Server on laguna.ku.lt.
 
-## 🚀 Quick Start
+## Ownership Model
+
+Files are deployed with **razinka:shiny** ownership:
+- `razinka` (passwordless SSH user) owns the files — can deploy without sudo
+- `shiny` group gives Shiny Server (`run_as shiny`) read access via group permissions
+- Only `systemctl restart` requires sudo
+
+## Quick Start
 
 ### Option 1: PowerShell (Recommended for Windows)
 ```powershell
 # Interactive deployment
 .\deploy-remote.ps1
 
-# Test deployment (dry run)
+# Test deployment (dry run — lists files without uploading)
 .\deploy-remote.ps1 -DryRun
 
 # Force deployment without prompts
 .\deploy-remote.ps1 -Force
+
+# Exclude SESModels directory (faster upload)
+.\deploy-remote.ps1 -ExcludeModels
 ```
 
-### Option 2: Bash Script (WSL/Git Bash)
+### Option 2: Bash Script (Linux/Mac)
 ```bash
 # Interactive deployment
 ./remote-deploy.sh
@@ -28,10 +38,10 @@ This directory contains tools for deploying the MarineSABRES SES Tool from your 
 ./remote-deploy.sh --exclude-models
 ```
 
-## 📋 Prerequisites
+## Prerequisites
 
 ### 1. SSH Access to laguna.ku.lt
-You must have SSH access configured for the razinka user:
+You must have SSH key-based access configured for the razinka user:
 
 ```bash
 # Test SSH connection
@@ -42,115 +52,54 @@ ssh-keygen -t rsa -b 4096
 ssh-copy-id razinka@laguna.ku.lt
 ```
 
-### 2. Required Tools
-Choose **ONE** of these environments:
+### 2. Required Tools (Built into Windows 10/11)
+No additional software needed. The deployment uses native Windows tools:
+- `ssh` — remote commands (OpenSSH Client)
+- `scp` — file upload (OpenSSH Client)
+- `tar` — archive creation (bsdtar)
 
-**Option A: Windows Subsystem for Linux (WSL)**
-```powershell
-# Install WSL
-wsl --install
+If OpenSSH is not enabled:
+**Settings > Apps > Optional Features > OpenSSH Client**
 
-# Install rsync in WSL
-wsl sudo apt update && sudo apt install rsync
-```
-
-**Option B: Git Bash**
-```powershell
-# Download from: https://git-scm.com/download/win
-# Git Bash includes rsync
-```
-
-### 3. R Environment (for validation)
+### 3. R Environment (for pre-deploy validation)
 - R installed with required packages
 - Rscript available in PATH
 
-## 📁 Files Overview
+## Files Overview
 
 | File | Purpose |
 |------|---------|
-| `deploy-remote.ps1` | **PowerShell wrapper** - Windows-native interface |
-| `remote-deploy.sh` | **Main deployment script** - Cross-platform bash script |
-| `pre-deploy-check-remote.R` | **Validation script** - Checks app before deployment |
-| `remote-deploy-config.txt` | **Configuration template** - Customize deployment settings |
+| `deploy-remote.ps1` | **Main deployment script** — native Windows (tar + scp + ssh) |
+| `deploy-remote.cmd` | **Double-click launcher** — calls deploy-remote.ps1 |
+| `remote-deploy.sh` | **Bash alternative** — for Linux/Mac users (tar + scp + ssh) |
+| `pre-deploy-check-remote.R` | **R validation** — checks app integrity before deployment |
+| `remote-deploy-config.txt` | **Configuration** — deployment settings reference |
 
-## 🔧 Configuration
+## Deployment Process
 
-1. **Copy configuration template:**
-   ```bash
-   cp remote-deploy-config.txt remote-deploy-config.local.txt
-   ```
+The deployment uses **tar + scp** (no rsync required):
 
-2. **Edit your settings:**
-   ```bash
-   # Edit remote-deploy-config.local.txt
-   REMOTE_USER="razinka"  # Already configured for laguna.ku.lt
-   REMOTE_HOST="laguna.ku.lt"
-   ```
+### Phase 1: Pre-Deployment Validation (local)
+- Validate required files (app.R, global.R, etc.)
+- Check R syntax in all scripts
+- Verify translation JSON files
+- Test SSH connectivity to laguna.ku.lt
 
-## 🎯 Deployment Process
+### Phase 2: Archive and Upload
+- Create `.tar.gz` archive excluding dev files (.git, tests, deployment, etc.)
+- Upload single archive to laguna.ku.lt via `scp`
 
-The deployment follows these phases:
+### Phase 3: Deploy on Server (via ssh)
+- Clear existing app directory
+- Extract archive into `/srv/shiny-server/marinesabres/`
+- Set ownership to `razinka:shiny`, permissions to 755
+- Clear stale translation cache
 
-### Phase 1: Pre-Deployment Validation
-- ✅ Check required files (app.R, global.R, etc.)
-- ✅ Validate R syntax in all scripts
-- ✅ Check translation JSON files
-- ✅ Verify SESModels directory
-- ✅ Test SSH connectivity
+### Phase 4: Restart and Verify
+- Restart Shiny Server (`sudo systemctl restart shiny-server`)
+- Report deployed version and server status
 
-### Phase 2: Remote Server Preparation
-- 🛑 Stop Shiny Server on laguna.ku.lt
-- 💾 Create backup of existing application
-- 🧹 Kill old R processes and clear caches
-- 📁 Prepare deployment directory
-
-### Phase 3: File Upload
-- 📤 Upload files via rsync (efficient, resumable)
-- 🗂️ Include all directories: modules, functions, server, www, data, translations, **SESModels**
-- 🚫 Exclude: .git, logs, temporary files, node_modules
-
-### Phase 4: Service Restart
-- 🔧 Set correct file permissions
-- 🗑️ Clear translation caches
-- ▶️ Start Shiny Server
-- ✅ Validate HTTP access
-
-## 🏃‍♂️ Usage Examples
-
-### Basic Deployment
-```powershell
-# Windows PowerShell
-.\deploy-remote.ps1
-```
-
-### Test Run (No Changes)
-```powershell
-# See what would be deployed
-.\deploy-remote.ps1 -DryRun
-```
-
-### Automated Deployment
-```powershell
-# Skip all confirmations
-.\deploy-remote.ps1 -Force
-```
-
-### Exclude Large Models
-```powershell
-# Skip SESModels directory (faster upload)
-.\deploy-remote.ps1 -ExcludeModels
-```
-
-### Use Specific Environment
-```powershell
-# Force Git Bash instead of WSL
-.\deploy-remote.ps1 -UseGitBash
-
-# Force WSL instead of Git Bash
-.\deploy-remote.ps1 -UseWSL
-```
-
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### SSH Connection Issues
 ```bash
@@ -164,146 +113,85 @@ cat ~/.ssh/config
 ssh-keygen -t rsa -b 4096 -C "your-email@ku.lt"
 ```
 
-### rsync Not Found
-**WSL Solution:**
-```bash
-wsl sudo apt install rsync
-```
-
-**Git Bash Solution:**
-```bash
-# Download Git for Windows: https://git-scm.com/download/win
-```
-
 ### Permission Denied on Remote Server
 ```bash
 # Check if razinka user has sudo access on laguna.ku.lt
 ssh razinka@laguna.ku.lt sudo whoami
 
-# If not, ask system administrator for access
-```
-
-### Large File Upload Issues
-```bash
-# Use exclude models option
-./remote-deploy.sh --exclude-models
-
-# Or compress SESModels locally first
-tar -czf SESModels.tar.gz SESModels/
+# Check directory ownership
+ssh razinka@laguna.ku.lt "ls -la /srv/shiny-server/ | grep marinesabres"
 ```
 
 ### Application Not Starting
 ```bash
 # Check logs on remote server
-ssh razinka@laguna.ku.lt sudo tail -f /var/log/shiny-server/marinesabres.log
+ssh razinka@laguna.ku.lt "sudo tail -f /var/log/shiny-server/marinesabres.log"
 
 # Check Shiny Server status
-ssh razinka@laguna.ku.lt sudo systemctl status shiny-server
+ssh razinka@laguna.ku.lt "sudo systemctl status shiny-server"
 ```
 
-## 🌐 Post-Deployment
+### Old Version Still Showing
+1. **Clear browser cache**: Ctrl+Shift+R (or Cmd+Shift+R on Mac)
+2. **Force restart on server**:
+   ```bash
+   ssh razinka@laguna.ku.lt "sudo deployment/force-restart-shiny.sh"
+   ```
+3. **Try Incognito/Private mode**
+
+## Post-Deployment
 
 ### Access Your Application
 - **URL:** http://laguna.ku.lt:3838/marinesabres/
-- **Clear browser cache:** Ctrl+Shift+R (or Cmd+Shift+R on Mac)
+- **Clear browser cache:** Ctrl+Shift+R
 - **Incognito mode:** For testing without cache
 
 ### Monitor Application
 ```bash
 # View application logs
-ssh razinka@laguna.ku.lt sudo tail -f /var/log/shiny-server/marinesabres.log
+ssh razinka@laguna.ku.lt "sudo tail -f /var/log/shiny-server/marinesabres.log"
 
 # Check server status
-ssh razinka@laguna.ku.lt sudo systemctl status shiny-server
+ssh razinka@laguna.ku.lt "sudo systemctl status shiny-server"
 
-# View system resources
-ssh razinka@laguna.ku.lt htop
+# Validate deployment
+ssh razinka@laguna.ku.lt "sudo /srv/shiny-server/marinesabres/deployment/validate-deployment.sh"
 ```
 
-### Rollback if Needed
-```bash
-# Backups are created automatically in /tmp/marinesabres-backup-YYYYMMDD_HHMMSS
-ssh razinka@laguna.ku.lt ls /tmp/marinesabres-backup-*
+## Security Notes
 
-# Restore from backup
-ssh razinka@laguna.ku.lt sudo cp -r /tmp/marinesabres-backup-*/marinesabres /srv/shiny-server/
-ssh razinka@laguna.ku.lt sudo systemctl restart shiny-server
-```
+- Deployment uses SSH (encrypted) with key-based authentication
+- No passwords stored in scripts
+- Files uploaded as compressed archive via `scp` over SSH
+- Sensitive files (.env, credentials) excluded from archive
 
-## 🔐 Security Notes
+## SSH Config Example
 
-### SSH Best Practices
-- ✅ Use SSH keys (not passwords)
-- ✅ Disable password authentication
-- ✅ Use specific SSH config for laguna.ku.lt
-- ✅ Regularly rotate SSH keys
-
-### File Permissions
-- Files deployed with correct Shiny Server permissions
-- No sensitive files (secrets, keys) included in deployment
-- Temporary files automatically excluded
-
-### Network Security
-- Deployment uses SSH (encrypted)
-- No plain-text passwords in scripts
-- rsync over SSH tunnel
-
-## 📝 Configuration Reference
-
-### SSH Config Example
-Create `~/.ssh/config`:
+Create `~/.ssh/config` for convenience:
 ```
 Host laguna
     HostName laguna.ku.lt
     User razinka
-    IdentityFile ~/.ssh/id_rsa_laguna
+    IdentityFile ~/.ssh/id_rsa
     ServerAliveInterval 60
     ServerAliveCountMax 3
 ```
 
-Then deploy with:
-```bash
-# Uses SSH config alias
-./remote-deploy.sh
-```
+## Common Issues Quick Reference
 
-### Environment Variables
-Set these in your shell:
-```bash
-export REMOTE_HOST="laguna.ku.lt"
-export REMOTE_USER="razinka"
-```
+| Issue | Solution |
+|-------|----------|
+| "Permission denied" | Check SSH key setup: `ssh razinka@laguna.ku.lt` |
+| "Connection refused" | Check network/VPN access to laguna.ku.lt |
+| "scp not found" | Enable OpenSSH in Windows Optional Features |
+| "Application not loading" | Clear browser cache, check logs |
+| "Old version showing" | Hard refresh (Ctrl+Shift+R), try Incognito |
 
-## 🆘 Support
+## First-Time Setup Checklist
 
-### Common Issues Resolution
-1. **"Permission denied"** → Check SSH key setup
-2. **"rsync not found"** → Install via WSL or Git Bash
-3. **"Connection refused"** → Check network/VPN access to laguna.ku.lt
-4. **"Application not loading"** → Clear browser cache, check logs
-5. **"Old version showing"** → Hard refresh (Ctrl+Shift+R)
-
-### Getting Help
-- Check application logs: `/var/log/shiny-server/marinesabres.log`
-- Test with dry run: `--dry-run` or `-DryRun`
-- Use force restart on remote server: `sudo deployment/force-restart-shiny.sh`
-
-### Contact Information
-- **System Administrator:** Contact KU IT for laguna.ku.lt access
-- **Application Support:** Check project documentation
-- **Emergency Contact:** Use backup deployment methods
-
----
-
-## ✅ Checklist for First-Time Setup
-
-- [ ] SSH access to laguna.ku.lt working
-- [ ] WSL or Git Bash installed
-- [ ] R and required packages installed
-- [ ] Configuration file customized
-- [ ] Test deployment with `--dry-run`
+- [ ] SSH key access to razinka@laguna.ku.lt working
+- [ ] R and required packages installed locally
+- [ ] Test deployment with `.\deploy-remote.ps1 -DryRun`
 - [ ] Successful deployment to laguna.ku.lt
-- [ ] Application accessible via browser
+- [ ] Application accessible at http://laguna.ku.lt:3838/marinesabres/
 - [ ] Browser cache cleared and tested
-
-**Ready to deploy!** 🚀

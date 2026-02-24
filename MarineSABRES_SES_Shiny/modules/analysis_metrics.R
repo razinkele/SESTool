@@ -253,18 +253,30 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
                     plotOutput(ns("metrics_barplot"), height = PLOT_HEIGHT_LG)
                   )
                 ),
+                div(
+                  style = "margin: 10px 0;",
+                  downloadButton(ns("download_barplot_png"),
+                                i18n$t("modules.analysis.network.btn_download_barplot"),
+                                class = "btn-sm btn-outline-primary")
+                ),
                 hr(),
                 fluidRow(
                   column(6,
                     wellPanel(
                       h5(i18n$t("modules.analysis.common.comparison_plot_degree_vs_betweenness")),
-                      plotOutput(ns("metrics_comparison"), height = PLOT_HEIGHT_MD)
+                      plotOutput(ns("metrics_comparison"), height = PLOT_HEIGHT_MD),
+                      downloadButton(ns("download_comparison_png"),
+                                    i18n$t("modules.analysis.network.btn_download_comparison"),
+                                    class = "btn-sm btn-outline-primary", style = "margin-top: 8px;")
                     )
                   ),
                   column(6,
                     wellPanel(
                       h5(i18n$t("modules.analysis.common.distribution_histogram")),
-                      plotOutput(ns("metrics_histogram"), height = PLOT_HEIGHT_MD)
+                      plotOutput(ns("metrics_histogram"), height = PLOT_HEIGHT_MD),
+                      downloadButton(ns("download_histogram_png"),
+                                    i18n$t("modules.analysis.network.btn_download_histogram"),
+                                    class = "btn-sm btn-outline-primary", style = "margin-top: 8px;")
                     )
                   )
                 )
@@ -531,6 +543,97 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
         writeData(wb, "Network_Metrics", network_metrics_df)
 
         saveWorkbook(wb, file, overwrite = TRUE)
+      }
+    )
+
+    # Download bar plot as PNG
+    output$download_barplot_png <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Network_Metrics_Barplot", ".png")
+      },
+      content = function(file) {
+        req(metrics_rv$node_metrics_df, input$viz_metric, input$top_n_nodes)
+
+        df <- metrics_rv$node_metrics_df
+        metric_col <- input$viz_metric
+        top_n <- min(input$top_n_nodes, nrow(df))
+        df_sorted <- df[order(-df[[metric_col]]), ][1:top_n, ]
+
+        png(file, width = 1000, height = max(600, top_n * 40), res = 150)
+        par(mar = c(5, 12, 4, 2))
+        barplot(
+          rev(df_sorted[[metric_col]]),
+          names.arg = rev(df_sorted$Label),
+          horiz = TRUE,
+          las = 1,
+          col = colorRampPalette(c("#3498db", "#e74c3c"))(top_n),
+          main = paste("Top", top_n, "Nodes by", metric_col),
+          xlab = metric_col,
+          cex.names = 0.8
+        )
+        dev.off()
+      }
+    )
+
+    # Download comparison plot as PNG
+    output$download_comparison_png <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Network_Metrics_Comparison", ".png")
+      },
+      content = function(file) {
+        req(metrics_rv$node_metrics_df)
+
+        df <- metrics_rv$node_metrics_df
+        df_norm <- df
+        df_norm$Degree_norm <- df$Degree / max(df$Degree)
+        df_norm$Betweenness_norm <- df$Betweenness / max(df$Betweenness)
+        df_norm$PageRank_norm <- df$PageRank / max(df$PageRank)
+        top10 <- df_norm[order(-df_norm$Degree), ][1:min(10, nrow(df_norm)), ]
+
+        png(file, width = 800, height = 600, res = 150)
+        plot(top10$Degree_norm, top10$Betweenness_norm,
+             xlim = c(0, 1), ylim = c(0, 1),
+             xlab = "Degree Centrality",
+             ylab = "Betweenness Centrality",
+             main = "Degree vs Betweenness Centrality",
+             pch = 19,
+             cex = top10$PageRank_norm * 3 + 0.5,
+             col = adjustcolor("#3498db", alpha = 0.6))
+        text(top10$Degree_norm, top10$Betweenness_norm,
+             labels = top10$Label, pos = 3, cex = 0.7)
+        legend("topright", legend = "Bubble size = PageRank", bty = "n", cex = 0.8)
+        abline(h = 0.5, v = 0.5, col = "gray", lty = 2)
+        dev.off()
+      }
+    )
+
+    # Download histogram as PNG
+    output$download_histogram_png <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Network_Metrics_Distribution", ".png")
+      },
+      content = function(file) {
+        req(metrics_rv$node_metrics_df, input$viz_metric)
+
+        df <- metrics_rv$node_metrics_df
+        metric_col <- input$viz_metric
+        values <- df[[metric_col]]
+
+        png(file, width = 800, height = 600, res = 150)
+        hist(values,
+             breaks = 20,
+             col = "#3498db",
+             border = "white",
+             main = paste("Distribution of", metric_col),
+             xlab = metric_col,
+             ylab = "Frequency")
+        abline(v = mean(values), col = "red", lwd = 2, lty = 2)
+        abline(v = median(values), col = "darkgreen", lwd = 2, lty = 2)
+        legend("topright",
+               legend = c("Mean", "Median"),
+               col = c("red", "darkgreen"),
+               lty = 2, lwd = 2)
+        dev.off()
       }
     )
 

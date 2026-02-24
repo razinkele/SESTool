@@ -113,7 +113,12 @@ required_packages <- c(
   # Export/Reporting
   "rmarkdown",
   "htmlwidgets",
-  "knitr"
+  "knitr",
+
+  # Document generation (Word, PowerPoint, PDF)
+  "officer",     # Word (.docx) and PowerPoint (.pptx) export
+  "flextable",   # Rich tables in Word/PowerPoint reports
+  "tinytex"      # Lightweight LaTeX for PDF export
 )
 
 cat("Checking for missing packages...\n\n")
@@ -138,6 +143,26 @@ if (length(missing) == 0) {
       cat(sprintf("  ✗ ERROR installing %s: %s\n", pkg, e$message))
     })
   }
+}
+
+# Install TinyTeX LaTeX distribution for PDF export
+cat("\nChecking TinyTeX (LaTeX for PDF export)...\n")
+if (requireNamespace("tinytex", quietly = TRUE)) {
+  if (!tinytex::is_tinytex()) {
+    cat("Installing TinyTeX LaTeX distribution...\n")
+    tryCatch({
+      tinytex::install_tinytex()
+      cat("  TinyTeX installed successfully\n")
+    }, error = function(e) {
+      cat(sprintf("  WARNING: TinyTeX installation failed: %s\n", e$message))
+      cat("  PDF export will not be available. Install manually with:\n")
+      cat("    tinytex::install_tinytex()\n")
+    })
+  } else {
+    cat("  TinyTeX already installed\n")
+  }
+} else {
+  cat("  WARNING: tinytex package not available, skipping LaTeX installation\n")
 }
 
 cat("\n================================================================================\n")

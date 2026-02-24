@@ -3,12 +3,13 @@ REM ============================================================================
 REM MarineSABRES Remote Deployment - Windows Command File
 REM ============================================================================
 REM
+REM Uses native Windows tools (tar, scp, ssh). No WSL or Git Bash required.
+REM
 REM Usage:
 REM   deploy-remote.cmd                    - Interactive deployment
 REM   deploy-remote.cmd --dry-run          - Test without deploying
 REM   deploy-remote.cmd --exclude-models   - Skip SESModels directory
 REM   deploy-remote.cmd --force            - Skip confirmation prompts
-REM   deploy-remote.cmd --use-gitbash      - Force Git Bash (skip WSL)
 REM   deploy-remote.cmd --help             - Show help
 REM
 REM Target: http://laguna.ku.lt:3838/marinesabres/
@@ -42,8 +43,6 @@ if /i "%~1"=="--exclude-models" set "PS_ARGS=!PS_ARGS! -ExcludeModels" & shift &
 if /i "%~1"=="-e" set "PS_ARGS=!PS_ARGS! -ExcludeModels" & shift & goto parse_args
 if /i "%~1"=="--force" set "PS_ARGS=!PS_ARGS! -Force" & shift & goto parse_args
 if /i "%~1"=="-f" set "PS_ARGS=!PS_ARGS! -Force" & shift & goto parse_args
-if /i "%~1"=="--use-wsl" set "PS_ARGS=!PS_ARGS! -UseWSL" & shift & goto parse_args
-if /i "%~1"=="--use-gitbash" set "PS_ARGS=!PS_ARGS! -UseGitBash" & shift & goto parse_args
 if /i "%~1"=="--help" goto show_help
 if /i "%~1"=="-h" goto show_help
 if /i "%~1"=="/?" goto show_help
@@ -55,23 +54,20 @@ goto parse_args
 :show_help
 echo.
 echo ================================================================================
-echo  MarineSABRES Remote Deployment
+echo  MarineSABRES Remote Deployment (native Windows - tar + scp)
 echo ================================================================================
 echo.
 echo Usage: deploy-remote.cmd [OPTIONS]
 echo.
 echo Options:
-echo   --dry-run, -d         Test without deploying
+echo   --dry-run, -d         List files without deploying
 echo   --exclude-models, -e  Skip SESModels directory
 echo   --force, -f           Skip confirmation prompts
-echo   --use-wsl             Force WSL (requires Linux distro installed)
-echo   --use-gitbash         Force Git Bash (recommended if WSL not configured)
 echo   --help, -h            Show this help
 echo.
 echo Examples:
 echo   deploy-remote.cmd                         Interactive deployment
 echo   deploy-remote.cmd --dry-run               Test run
-echo   deploy-remote.cmd --use-gitbash           Use Git Bash instead of WSL
 echo   deploy-remote.cmd --force --dry-run       Non-interactive test
 echo.
 echo Target: http://laguna.ku.lt:3838/marinesabres/

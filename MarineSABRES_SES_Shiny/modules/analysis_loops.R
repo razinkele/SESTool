@@ -761,6 +761,147 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
       }
     )
 
+    # Download loop report as Word document
+    output$download_loop_report <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Loop_Analysis_Report", ".docx")
+      },
+      content = function(file) {
+        req(loop_data$loops)
+
+        tryCatch({
+          loops <- loop_data$loops
+          reinforcing <- sum(loops$Type == "Reinforcing")
+          balancing <- sum(loops$Type == "Balancing")
+
+          doc <- officer::read_docx()
+          doc <- officer::body_add_par(doc, "Loop Analysis Report", style = "heading 1")
+          doc <- officer::body_add_par(doc, paste("Generated:", Sys.Date()))
+          doc <- officer::body_add_par(doc, "")
+
+          # Summary section
+          doc <- officer::body_add_par(doc, "Summary", style = "heading 2")
+          doc <- officer::body_add_par(doc, paste("Total Loops Found:", nrow(loops)))
+          doc <- officer::body_add_par(doc, paste("Reinforcing Loops:", reinforcing))
+          doc <- officer::body_add_par(doc, paste("Balancing Loops:", balancing))
+          doc <- officer::body_add_par(doc, paste("Average Loop Length:", round(mean(loops$Length), 1)))
+          doc <- officer::body_add_par(doc, "")
+
+          # All loops table
+          doc <- officer::body_add_par(doc, "Detected Loops", style = "heading 2")
+          ft <- flextable::flextable(loops)
+          ft <- flextable::autofit(ft)
+          doc <- flextable::body_add_flextable(doc, ft)
+          doc <- officer::body_add_par(doc, "")
+
+          # Methodology note
+          doc <- officer::body_add_par(doc, "Methodology", style = "heading 2")
+          doc <- officer::body_add_par(doc, "Feedback loops were detected using depth-first search on the directed DAPSI(W)R(M) network. Loops are classified as Reinforcing (even number of negative connections, amplifying change) or Balancing (odd number of negative connections, seeking equilibrium).")
+
+          print(doc, target = file)
+
+        }, error = function(e) {
+          # Fallback: write a simple CSV if officer fails
+          debug_log(paste("Loop report generation failed:", e$message), "EXPORT")
+          utils::write.csv(loop_data$loops, file, row.names = FALSE)
+        })
+      }
+    )
+
+    # Download loop diagrams as ZIP
+    output$download_loop_viz <- downloadHandler(
+      filename = function() {
+        generate_export_filename("Loop_Diagrams", ".zip")
+      },
+      content = function(file) {
+        req(loop_data$loops, loop_data$all_loops, loop_data$graph)
+
+        tryCatch({
+          tmp_dir <- tempdir()
+          loop_dir <- file.path(tmp_dir, "loop_diagrams")
+          if (dir.exists(loop_dir)) unlink(loop_dir, recursive = TRUE)
+          dir.create(loop_dir, showWarnings = FALSE)
+
+          g <- loop_data$graph
+          loops <- loop_data$loops
+          all_loops <- loop_data$all_loops
+
+          # Generate a PNG for each loop (limit to first 50)
+          max_export <- min(nrow(loops), 50)
+          png_files <- character(0)
+
+          for (i in seq_len(max_export)) {
+            loop <- all_loops[[i]]
+            loop_row <- loops[i, ]
+
+            loop_vertex_ids <- V(g)$name[loop]
+            loop_vertex_labels <- V(g)$label[loop]
+
+            unique_indices <- !duplicated(loop_vertex_ids)
+            unique_ids <- loop_vertex_ids[unique_indices]
+            unique_labels <- loop_vertex_labels[unique_indices]
+
+            # Build edges for this loop
+            edges_list <- list()
+            loop_len <- length(loop)
+            for (j in seq_len(loop_len)) {
+              from_idx <- loop[j]
+              to_idx <- if (j == loop_len) loop[1] else loop[j + 1]
+              from_name <- V(g)$name[from_idx]
+              to_name <- V(g)$name[to_idx]
+
+              edge_id <- tryCatch(get_edge_ids(g, c(from_idx, to_idx)), error = function(e) 0)
+              polarity <- if (edge_id > 0) E(g)$polarity[edge_id] else "+"
+
+              edges_list[[j]] <- data.frame(
+                from = from_name, to = to_name,
+                polarity = polarity, stringsAsFactors = FALSE
+              )
+            }
+            edges_df <- do.call(rbind, edges_list)
+
+            # Create a subgraph and plot it
+            png_file <- file.path(loop_dir, paste0(loop_row$LoopID, "_", loop_row$Type, ".png"))
+            png(png_file, width = 800, height = 600, res = 150)
+
+            sub_g <- graph_from_data_frame(
+              d = edges_df[, c("from", "to")],
+              directed = TRUE,
+              vertices = data.frame(name = unique_ids, label = unique_labels, stringsAsFactors = FALSE)
+            )
+            E(sub_g)$color <- ifelse(edges_df$polarity == "+", "#06D6A0", "#E63946")
+            E(sub_g)$label <- edges_df$polarity
+            V(sub_g)$label <- unique_labels
+
+            plot(sub_g,
+                 layout = layout_in_circle(sub_g),
+                 vertex.size = 25,
+                 vertex.color = "#2B7CE9",
+                 vertex.label.color = "white",
+                 vertex.label.cex = 0.7,
+                 edge.arrow.size = 0.6,
+                 edge.width = 2,
+                 edge.curved = 0.2,
+                 main = paste(loop_row$LoopID, "-", loop_row$Type,
+                              "(Length:", loop_row$Length, ")"))
+            dev.off()
+
+            png_files <- c(png_files, png_file)
+          }
+
+          # Create ZIP
+          old_wd <- setwd(loop_dir)
+          on.exit(setwd(old_wd), add = TRUE)
+          utils::zip(file, files = basename(png_files))
+
+        }, error = function(e) {
+          debug_log(paste("Loop diagram ZIP failed:", e$message), "EXPORT")
+          # Write an empty file so download doesn't hang
+          writeLines("Export failed - see application logs", file)
+        })
+      }
+    )
+
     # Help Modal ----
     create_help_observer(
       input = input,
