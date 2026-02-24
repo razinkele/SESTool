@@ -232,7 +232,8 @@ if (Test-Path $TarPath) {
 }
 
 # Create tar.gz from the app directory
-$tarArgs = @("-czf", $TarPath) + $excludes + @("-C", $AppDir, ".")
+# --force-local prevents Git Bash tar from interpreting C: as a remote host
+$tarArgs = @("--force-local", "-czf", $TarPath) + $excludes + @("-C", $AppDir, ".")
 & tar @tarArgs
 
 if ($LASTEXITCODE -ne 0) {
@@ -249,7 +250,7 @@ Write-Success "Archive created: $TarPath ($tarSize MB)"
 
 if ($DryRun) {
     Write-Header "DRY RUN - Archive Contents"
-    & tar -tzf $TarPath
+    & tar --force-local -tzf $TarPath
     Write-Host ""
     Write-Warn "DRY RUN - no files were uploaded"
     Write-Host "  Archive size: $tarSize MB"
