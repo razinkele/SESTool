@@ -29,22 +29,41 @@ ai_isa_assistant_ui <- function(id, i18n) {
       tags$link(rel = "stylesheet", type = "text/css", href = "ai-isa-assistant.css"),
       # JavaScript for local storage - use ns() for proper namespacing
       tags$script(HTML(sprintf("
-        // Save data to localStorage
+        // SESSION-SCOPED localStorage for AI ISA Assistant
+        // CRITICAL: Prevents cross-session data leakage in multi-user deployments
+        var _ai_isa_session_id = null;
+
+        // Initialize session ID for scoped localStorage
+        Shiny.addCustomMessageHandler('init_ai_isa_session_id', function(message) {
+          _ai_isa_session_id = message.session_id;
+          console.log('[AI ISA] Session initialized:', _ai_isa_session_id);
+        });
+
+        // Helper to get session-scoped localStorage key
+        function getAiIsaKey(suffix) {
+          return _ai_isa_session_id ? 'ai_isa_' + _ai_isa_session_id + '_' + suffix : 'ai_isa_session_' + suffix;
+        }
+
+        // Save data to localStorage (SESSION-SCOPED)
         Shiny.addCustomMessageHandler('save_ai_isa_session', function(data) {
           try {
-            localStorage.setItem('ai_isa_session', JSON.stringify(data));
-            localStorage.setItem('ai_isa_session_timestamp', new Date().toISOString());
-            console.log('AI ISA session saved to localStorage');
+            var dataKey = getAiIsaKey('data');
+            var timestampKey = getAiIsaKey('timestamp');
+            localStorage.setItem(dataKey, JSON.stringify(data));
+            localStorage.setItem(timestampKey, new Date().toISOString());
+            console.log('[AI ISA] Session saved to localStorage (session:', _ai_isa_session_id, ')');
           } catch(e) {
-            console.error('Failed to save to localStorage:', e);
+            console.error('[AI ISA] Failed to save to localStorage:', e);
           }
         });
 
-        // Load data from localStorage
+        // Load data from localStorage (SESSION-SCOPED)
         Shiny.addCustomMessageHandler('load_ai_isa_session', function(message) {
           try {
-            var savedData = localStorage.getItem('ai_isa_session');
-            var timestamp = localStorage.getItem('ai_isa_session_timestamp');
+            var dataKey = getAiIsaKey('data');
+            var timestampKey = getAiIsaKey('timestamp');
+            var savedData = localStorage.getItem(dataKey);
+            var timestamp = localStorage.getItem(timestampKey);
 
             if (savedData) {
               Shiny.setInputValue('%s', {
@@ -55,27 +74,36 @@ ai_isa_assistant_ui <- function(id, i18n) {
               Shiny.setInputValue('%s', null, {priority: 'event'});
             }
           } catch(e) {
-            console.error('Failed to load from localStorage:', e);
+            console.error('[AI ISA] Failed to load from localStorage:', e);
             Shiny.setInputValue('%s', null, {priority: 'event'});
           }
         });
 
-        // Check for saved session on page load
+        // Check for saved session on page load (SESSION-SCOPED)
+        // NOTE: Only checks after session ID is initialized
         $(document).on('shiny:connected', function() {
-          var savedData = localStorage.getItem('ai_isa_session');
-          if (savedData) {
-            Shiny.setInputValue('%s', true, {priority: 'event'});
-          }
+          // Defer check until session ID is set
+          setTimeout(function() {
+            if (_ai_isa_session_id) {
+              var dataKey = getAiIsaKey('data');
+              var savedData = localStorage.getItem(dataKey);
+              if (savedData) {
+                Shiny.setInputValue('%s', true, {priority: 'event'});
+              }
+            }
+          }, 500);  // Wait for session ID initialization
         });
 
-        // Clear session from localStorage
+        // Clear session from localStorage (SESSION-SCOPED)
         Shiny.addCustomMessageHandler('clear_ai_isa_session', function(message) {
           try {
-            localStorage.removeItem('ai_isa_session');
-            localStorage.removeItem('ai_isa_session_timestamp');
-            console.log('AI ISA session cleared from localStorage');
+            var dataKey = getAiIsaKey('data');
+            var timestampKey = getAiIsaKey('timestamp');
+            localStorage.removeItem(dataKey);
+            localStorage.removeItem(timestampKey);
+            console.log('[AI ISA] Session cleared from localStorage (session:', _ai_isa_session_id, ')');
           } catch(e) {
-            console.error('Failed to clear localStorage:', e);
+            console.error('[AI ISA] Failed to clear localStorage:', e);
           }
         });
       ", ns("loaded_session_data"), ns("loaded_session_data"),
@@ -147,6 +175,26 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       show_text_input = FALSE,  # Flag to show text input when "Other" is selected
       render_counter = 0  # Counter to force UI re-render for selection highlighting
     )
+
+    # ========================================================================
+    # SESSION-SCOPED LOCALSTORAGE INITIALIZATION
+    # ========================================================================
+    # CRITICAL: Send session ID to JavaScript for session-scoped localStorage keys
+    # This prevents cross-session data leakage in multi-user shiny-server deployments
+    session_id <- if (!is.null(session$userData$session_id)) {
+      session$userData$session_id
+    } else if (!is.null(parent_session) && !is.null(parent_session$userData$session_id)) {
+      parent_session$userData$session_id
+    } else {
+      # Fallback: generate unique ID (legacy behavior)
+      paste0("ai_isa_", format(Sys.time(), "%Y%m%d_%H%M%S"), "_", sample(1000:9999, 1))
+    }
+
+    session$sendCustomMessage(
+      type = "init_ai_isa_session_id",
+      message = list(session_id = session_id)
+    )
+    debug_log(sprintf("[AI ISA] Initialized JavaScript with session ID: %s", session_id), "AI_ISA")
 
     # ========================================================================
     # CONTEXT-AWARE KNOWLEDGE BASE

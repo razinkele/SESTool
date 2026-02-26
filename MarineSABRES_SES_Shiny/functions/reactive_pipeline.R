@@ -4,11 +4,18 @@
 
 #' Create reactive event bus
 #'
-#' Creates a reactive event system for coordinating data updates across modules
+#' Creates a reactive event system for coordinating data updates across modules.
+#' Each session should have its own event bus to ensure complete isolation.
 #'
+#' @param session_id Optional session ID for debugging (recommended for multi-user)
 #' @return List with event triggers and handlers
-create_event_bus <- function() {
-  # Create reactive values first
+create_event_bus <- function(session_id = NULL) {
+  # Store session ID for debugging
+  bus_session_id <- session_id %||% "unknown"
+
+  # Create reactive values first - these are scoped to this function call
+  # and will be isolated per-session when called from server()
+
   isa_changed_val <- reactiveVal(0)
   cld_changed_val <- reactiveVal(0)
   analysis_invalidated_val <- reactiveVal(0)
@@ -16,7 +23,12 @@ create_event_bus <- function() {
   last_cld_signature_val <- reactiveVal(NULL)
   skip_next_cld_regen_val <- reactiveVal(FALSE)
 
+  debug_log(sprintf("Event bus created for session: %s", bus_session_id), "EVENT BUS")
+
   list(
+    # Session identifier for debugging
+    session_id = bus_session_id,
+
     # Event triggers (reactiveVal for each event type)
     isa_changed = isa_changed_val,
     cld_changed = cld_changed_val,
@@ -31,21 +43,24 @@ create_event_bus <- function() {
     emit_isa_change = function() {
       current_val <- isolate(isa_changed_val())
       isa_changed_val(current_val + 1)
-      debug_log(sprintf("ISA changed event emitted (#%d)", current_val + 1), "EVENT BUS")
+      debug_log(sprintf("[%s] ISA changed event emitted (#%d)",
+                  bus_session_id, current_val + 1), "EVENT BUS")
     },
 
     # Helper: Emit CLD changed event
     emit_cld_change = function() {
       current_val <- isolate(cld_changed_val())
       cld_changed_val(current_val + 1)
-      debug_log(sprintf("CLD changed event emitted (#%d)", current_val + 1), "EVENT BUS")
+      debug_log(sprintf("[%s] CLD changed event emitted (#%d)",
+                  bus_session_id, current_val + 1), "EVENT BUS")
     },
 
     # Helper: Emit analysis invalidation event
     emit_analysis_invalidation = function() {
       current_val <- isolate(analysis_invalidated_val())
       analysis_invalidated_val(current_val + 1)
-      debug_log(sprintf("Analysis invalidated event emitted (#%d)", current_val + 1), "EVENT BUS")
+      debug_log(sprintf("[%s] Analysis invalidated event emitted (#%d)",
+                  bus_session_id, current_val + 1), "EVENT BUS")
     }
   )
 }

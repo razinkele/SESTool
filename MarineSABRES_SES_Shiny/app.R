@@ -465,6 +465,13 @@ ui <- bs4DashPage(
 
 server <- function(input, output, session) {
 
+  # ========== SESSION ISOLATION (MUST BE FIRST) ==========
+  # Initialize session isolation for multi-user shiny-server deployments
+  # This creates a unique session ID and session-scoped temp directory
+  session_isolation <- init_session_isolation(session)
+
+  debug_log(sprintf("New session started: %s", session_isolation$session_id), "SESSION")
+
   # ========== REACTIVE VALUES ==========
   # NOTE: These must be initialized BEFORE any observe() blocks that use them
 
@@ -497,8 +504,8 @@ server <- function(input, output, session) {
   )
 
   # ========== REACTIVE EVENT BUS ==========
-  # Create event bus for reactive data pipeline
-  event_bus <- create_event_bus()
+  # Create event bus for reactive data pipeline (pass session ID for debugging)
+  event_bus <- create_event_bus(session_id = session_isolation$session_id)
 
   # === DIAGNOSTICS: Print project data element counts and IDs at startup and on load ===
   observe({
@@ -962,23 +969,50 @@ server <- function(input, output, session) {
 
   # ========== SESSION CLEANUP ==========
   # Clean up reactive values and temporary files when session ends
+  # NOTE: Session isolation cleanup is automatically handled by init_session_isolation()
+  # This block handles additional app-specific cleanup
   session$onSessionEnded(function() {
     tryCatch({
+      session_id <- session$userData$session_id %||% "unknown"
+      debug_log(sprintf("Session ending: %s", session_id), "SESSION")
+
       # Clean up any temporary report files created during this session
+      # Use session-scoped path if available
+      if (!is.null(session$userData$session_temp_dir)) {
+        session_report_dir <- file.path(session$userData$session_temp_dir, "reports")
+        if (dir.exists(session_report_dir)) {
+          unlink(session_report_dir, recursive = TRUE)
+        }
+      }
+
+      # Legacy cleanup: shared temp report directory (for backwards compatibility)
       temp_report_dir <- file.path(tempdir(), "reports")
       if (dir.exists(temp_report_dir)) {
         unlink(temp_report_dir, recursive = TRUE)
       }
 
       # Clean up www/reports directory (HTML reports served during session)
+      # Only remove session-specific files if we have a session ID
       www_reports_dir <- file.path(getwd(), "www", "reports")
       if (dir.exists(www_reports_dir)) {
-        unlink(www_reports_dir, recursive = TRUE)
+        if (!is.null(session$userData$session_id)) {
+          # Only remove files matching this session
+          session_files <- list.files(www_reports_dir,
+                                       pattern = session$userData$session_id,
+                                       full.names = TRUE)
+          if (length(session_files) > 0) {
+            file.remove(session_files)
+          }
+        } else {
+          # Fallback: remove all (legacy behavior)
+          unlink(www_reports_dir, recursive = TRUE)
+        }
       }
 
-      debug_log("Session ended - cleanup completed", "SESSION")
+      debug_log(sprintf("Session cleanup completed: %s", session_id), "SESSION")
     }, error = function(e) {
-      # Silently handle cleanup errors - session is ending anyway
+      # Log but don't fail - session is ending anyway
+      debug_log(sprintf("Session cleanup error (non-fatal): %s", e$message), "SESSION")
     })
   })
 

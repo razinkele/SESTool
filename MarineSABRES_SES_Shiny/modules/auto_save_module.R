@@ -12,13 +12,27 @@ auto_save_indicator_ui <- function(id) {
 
     # JavaScript handlers
     tags$script(HTML(sprintf("
-      // Handle auto-save to localStorage
+      // Session-scoped localStorage keys to prevent cross-session data leakage
+      // CRITICAL: Each session gets its own localStorage namespace
+      var _autosave_session_id = null;
+
+      // Initialize session ID (called from server when session starts)
+      Shiny.addCustomMessageHandler('init_autosave_session', function(message) {
+        _autosave_session_id = message.session_id;
+        console.log('[AUTO-SAVE] Session initialized:', _autosave_session_id);
+      });
+
+      // Handle auto-save to localStorage (SESSION-SCOPED)
       Shiny.addCustomMessageHandler('autosave_to_localstorage', function(message) {
         try {
-          localStorage.setItem('marinesabres_autosave_session', message.session_id);
-          localStorage.setItem('marinesabres_autosave_data', message.data);
-          localStorage.setItem('marinesabres_autosave_timestamp', message.timestamp);
-          console.log('[AUTO-SAVE] Saved to localStorage at', new Date(message.timestamp * 1000));
+          // Use session-scoped keys to prevent cross-session data overwrites
+          var sessionKey = 'marinesabres_autosave_' + message.session_id;
+          localStorage.setItem(sessionKey, JSON.stringify({
+            session_id: message.session_id,
+            data: message.data,
+            timestamp: message.timestamp
+          }));
+          console.log('[AUTO-SAVE] Saved to localStorage (session-scoped) at', new Date(message.timestamp * 1000));
         } catch(e) {
           console.error('[AUTO-SAVE] localStorage save failed:', e);
         }
@@ -63,8 +77,10 @@ auto_save_indicator_ui <- function(id) {
         modeBadge.data('label-full', message.mode_label_full);
         modeBadge.data('change-count', message.change_count);
 
-        // Get current expanded state from localStorage (defaults to false/collapsed)
-        var isExpanded = localStorage.getItem('marinesabres_mode_badge_expanded') === 'true';
+        // Get current expanded state from localStorage (SESSION-SCOPED, defaults to false/collapsed)
+        // Note: Mode badge expansion is a UI preference, scoped per session to prevent cross-session interference
+        var badgeKey = _autosave_session_id ? 'marinesabres_mode_badge_' + _autosave_session_id : 'marinesabres_mode_badge_expanded';
+        var isExpanded = localStorage.getItem(badgeKey) === 'true';
 
         // Update text based on expanded state
         if (isExpanded) {
@@ -109,19 +125,20 @@ auto_save_indicator_ui <- function(id) {
         var modeText = badge.find('#%s');
         var isExpanded = badge.hasClass('expanded');
 
-        // Toggle state
+        // Toggle state (SESSION-SCOPED localStorage)
+        var badgeKey = _autosave_session_id ? 'marinesabres_mode_badge_' + _autosave_session_id : 'marinesabres_mode_badge_expanded';
         if (isExpanded) {
           // Collapse
           modeText.text(badge.data('label-short'));
           badge.removeClass('expanded');
-          localStorage.setItem('marinesabres_mode_badge_expanded', 'false');
-          console.log('[AUTO-SAVE] Mode badge collapsed');
+          localStorage.setItem(badgeKey, 'false');
+          console.log('[AUTO-SAVE] Mode badge collapsed (session:', _autosave_session_id, ')');
         } else {
           // Expand
           modeText.text(badge.data('label-full'));
           badge.addClass('expanded');
-          localStorage.setItem('marinesabres_mode_badge_expanded', 'true');
-          console.log('[AUTO-SAVE] Mode badge expanded');
+          localStorage.setItem(badgeKey, 'true');
+          console.log('[AUTO-SAVE] Mode badge expanded (session:', _autosave_session_id, ')');
         }
       });
 
@@ -336,14 +353,29 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       enabled_triggers = c("elements", "context", "connections", "steps")  # Active triggers
     )
 
-    # Get temp directory for auto-saves
-    temp_dir <- file.path(tempdir(), "marinesabres_autosave")
-    if (!dir.exists(temp_dir)) {
-      dir.create(temp_dir, recursive = TRUE)
-    }
+    # Get session-scoped temp directory for auto-saves
+    # CRITICAL: Use session-isolated temp directory to prevent cross-session data leakage
+    # This ensures User A's auto-save doesn't overwrite User B's data on shiny-server
+    temp_dir <- reactive({
+      # Prefer session-isolated temp dir if available
+      if (!is.null(session$userData$session_temp_dir)) {
+        autosave_dir <- file.path(session$userData$session_temp_dir, "autosave")
+      } else {
+        # Fallback for backwards compatibility (single-user mode)
+        autosave_dir <- file.path(tempdir(), "marinesabres_autosave", session_id)
+      }
+
+      if (!dir.exists(autosave_dir)) {
+        dir.create(autosave_dir, recursive = TRUE, mode = "0700")
+      }
+
+      return(autosave_dir)
+    })
 
     # Debug: log temp directory location
-    debug_log(sprintf("Using temp directory: %s", temp_dir), "AUTO-SAVE")
+    observe({
+      debug_log(sprintf("Using session-scoped temp directory: %s", temp_dir()), "AUTO-SAVE")
+    }, priority = 100)  # Run early
 
     # Sync internal is_enabled flag with external autosave_enabled reactive
     # This ensures the module respects the user's auto-save preference from settings
@@ -425,9 +457,22 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       })
     }
 
-    # Function to generate unique session ID
-    session_id <- paste0("session_", format(Sys.time(), "%Y%m%d_%H%M%S"), "_",
-                        sample(1000:9999, 1))
+    # Get unique session ID from session isolation system (or generate fallback)
+    # CRITICAL: Use session$userData$session_id for consistent session identification
+    session_id <- if (!is.null(session$userData$session_id)) {
+      session$userData$session_id
+    } else {
+      # Fallback: generate local session ID (legacy behavior)
+      paste0("session_", format(Sys.time(), "%Y%m%d_%H%M%S"), "_", sample(1000:9999, 1))
+    }
+
+    # Send session ID to JavaScript for session-scoped localStorage keys
+    # CRITICAL: This ensures localStorage keys are namespaced per session
+    session$sendCustomMessage(
+      type = "init_autosave_session",
+      message = list(session_id = session_id)
+    )
+    debug_log(sprintf("Initialized JavaScript with session ID: %s", session_id), "AUTO-SAVE")
 
     # ========== ADAPTIVE DEBOUNCING HELPERS ==========
 
@@ -551,12 +596,16 @@ auto_save_server <- function(id, project_data_reactive, i18n,
           version = APP_VERSION
         )
 
-        # Save to temp directory
-        save_file <- file.path(temp_dir, paste0(session_id, ".rds"))
+        # Save to session-scoped temp directory
+        # CRITICAL: Each session has its own isolated directory
+        current_temp_dir <- temp_dir()
+        save_file <- file.path(current_temp_dir, paste0(session_id, ".rds"))
         saveRDS(current_data, save_file)
 
-        # Also save as "latest" for easy recovery
-        latest_file <- file.path(temp_dir, "latest_autosave.rds")
+        # Also save as "latest" for easy recovery (session-scoped, not shared!)
+        # This file is now in the session's isolated directory, so it won't
+        # interfere with other concurrent users on shiny-server
+        latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
         saveRDS(current_data, latest_file)
 
         # Save to localStorage via JavaScript (as JSON backup)
@@ -829,7 +878,8 @@ auto_save_server <- function(id, project_data_reactive, i18n,
 
     # Check for recoverable session on startup
     check_for_recovery <- function() {
-      latest_file <- file.path(temp_dir, "latest_autosave.rds")
+      current_temp_dir <- isolate(temp_dir())
+      latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
 
       if (file.exists(latest_file)) {
         # Get file modification time
@@ -887,7 +937,8 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       auto_save$recovery_pending <- FALSE
       debug_log("Recovery confirmed - auto-save will resume after page reload", "AUTO-SAVE")
 
-      latest_file <- file.path(temp_dir, "latest_autosave.rds")
+      current_temp_dir <- temp_dir()
+      latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
 
       tryCatch({
         recovered_data <- readRDS(latest_file)
@@ -948,8 +999,9 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       debug_log("Recovery discarded - auto-save resumed", "AUTO-SAVE")
 
       removeModal()
-      # Delete the recovery file
-      latest_file <- file.path(temp_dir, "latest_autosave.rds")
+      # Delete the recovery file from session-scoped temp directory
+      current_temp_dir <- temp_dir()
+      latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
       if (file.exists(latest_file)) {
         file.remove(latest_file)
       }

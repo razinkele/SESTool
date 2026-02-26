@@ -360,6 +360,9 @@ source("functions/error_handling.R", local = TRUE)
 # Reactive pipeline (event-based data flow)
 source("functions/reactive_pipeline.R", local = TRUE)
 
+# Session isolation utilities (for multi-user shiny-server deployments)
+source("functions/session_isolation.R", local = FALSE)  # FALSE = global scope for server access
+
 # Async computation helpers (lightweight progress-aware wrappers)
 source(get_project_file("functions", "async_helpers.R"), local = FALSE)
 
