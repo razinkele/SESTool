@@ -20,8 +20,8 @@ build_dashboard_header <- function(i18n) {
       href = "https://marinesabres.eu",
       image = "img/MSabres.png"
     ),
-    skin = "light",
-    status = "white",
+    skin = "dark",
+    status = "primary",
     border = TRUE,
     fixed = FALSE,
 

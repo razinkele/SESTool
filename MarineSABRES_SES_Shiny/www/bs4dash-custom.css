@@ -1,266 +1,737 @@
 /* =================================================================
    bs4dash-custom.css
-   Custom styling for MarineSABRES SES Toolbox using bs4Dash
-   Light Theme (following EcoNeTool architecture)
+   MarineSABRES SES Toolbox - "Deep Ocean Scientific" Theme
+   A refined, ocean-inspired aesthetic for marine science tools
    ================================================================= */
 
 /* =================================================================
-   BOOTSTRAP LIGHT THEME COLORS
+   GOOGLE FONTS - Distinctive Typography
+   DM Sans: Modern geometric sans with character
+   Source Serif 4: Scientific credibility for body text
+   ================================================================= */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap');
+
+/* =================================================================
+   OCEAN-INSPIRED COLOR PALETTE
+   Deep blues, teals, with bioluminescent coral accents
    ================================================================= */
 :root {
-  --marine-primary: #007bff;
-  --marine-secondary: #6c757d;
-  --marine-success: #28a745;
-  --marine-info: #17a2b8;
-  --marine-warning: #ffc107;
-  --marine-danger: #dc3545;
-  --marine-light: #f8f9fa;
-  --marine-dark: #343a40;
+  /* Primary Ocean Depths */
+  --ocean-abyss: #0a1628;
+  --ocean-deep: #0f2744;
+  --ocean-mid: #1a3a5c;
+  --ocean-shallow: #2d5a7b;
+  --ocean-surface: #4a90b8;
+
+  /* Bioluminescent Accents */
+  --bio-cyan: #00d4aa;
+  --bio-blue: #00b4d8;
+  --bio-teal: #48cae4;
+  --bio-glow: rgba(0, 212, 170, 0.15);
+
+  /* Coral & Warm Accents */
+  --coral-bright: #ff6b6b;
+  --coral-soft: #ffa07a;
+  --sand-warm: #f4e4c1;
+  --kelp-green: #52b788;
+
+  /* Neutrals - Cool Ocean Grays */
+  --foam-white: #f8fbfd;
+  --mist-light: #e8f1f8;
+  --salt-gray: #b8c9d9;
+  --stone-gray: #6b8299;
+  --slate-dark: #3d5a73;
+
+  /* Semantic Colors */
+  --marine-primary: var(--ocean-surface);
+  --marine-secondary: var(--slate-dark);
+  --marine-success: var(--kelp-green);
+  --marine-info: var(--bio-teal);
+  --marine-warning: var(--coral-soft);
+  --marine-danger: var(--coral-bright);
+  --marine-light: var(--mist-light);
+  --marine-dark: var(--ocean-abyss);
+
+  /* Typography */
+  --font-display: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Spacing Scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Shadows - Ocean Depth */
+  --shadow-subtle: 0 1px 3px rgba(10, 22, 40, 0.08);
+  --shadow-soft: 0 4px 12px rgba(10, 22, 40, 0.1);
+  --shadow-medium: 0 8px 24px rgba(10, 22, 40, 0.12);
+  --shadow-strong: 0 16px 48px rgba(10, 22, 40, 0.16);
+  --shadow-glow: 0 0 20px rgba(0, 212, 170, 0.3);
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* =================================================================
-   NAVBAR (replaces dashboardHeader)
+   BASE TYPOGRAPHY & BODY
    ================================================================= */
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ocean-abyss);
+  background: var(--foam-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-/* Main navbar styling - Light theme (EcoNeTool architecture) */
+/* Headers use display font */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ocean-deep);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+h1, .h1 { font-size: 2rem; font-weight: 700; }
+h2, .h2 { font-size: 1.625rem; }
+h3, .h3 { font-size: 1.375rem; }
+h4, .h4 { font-size: 1.125rem; }
+h5, .h5 { font-size: 1rem; }
+h6, .h6 { font-size: 0.875rem; }
+
+/* Labels and UI text */
+label, .form-label, .control-label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--slate-dark);
+  letter-spacing: 0.01em;
+}
+
+/* =================================================================
+   NAVBAR - Frosted Glass Ocean Header
+   ================================================================= */
 body .main-header .navbar {
-  background-color: #ffffff;
-  border-bottom: 1px solid #dee2e6;
-}
-
-/* Navbar links and icons */
-body .main-header .navbar .nav-link {
-  color: #6c757d;
-  padding: 0.5rem 0.75rem;
-  display: flex;
-  align-items: center;
-}
-
-body .main-header .navbar .nav-link:hover {
-  color: #007bff;
-  background-color: rgba(0, 123, 255, 0.05);
-}
-
-/* Navbar custom dropdown items (settings, language, help) */
-body .main-header .navbar-nav > li > a {
-  color: #6c757d;
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 0.75rem;
-  height: 3.5rem;
-}
-
-body .main-header .navbar-nav > li > a:hover {
-  color: #007bff;
-  background-color: rgba(0, 123, 255, 0.05);
+  background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-mid) 100%);
+  border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-soft);
 }
 
 /* =================================================================
-   SIDEBAR (replaces dashboardSidebar)
+   OVERRIDE Bootstrap .navbar-light styles (bs4Dash uses skin="light")
+   These MUST override Bootstrap's default dark text on light navbar
    ================================================================= */
-
-/* Main sidebar styling - Light theme */
-body .main-sidebar {
-  background-color: #f8f9fa;
-  border-right: 1px solid #dee2e6;
-  z-index: 1000; /* Lower than tooltips (99999) */
+body .main-header .navbar.navbar-light .navbar-nav .nav-link {
+  color: #ffffff !important;
 }
 
-/* Ensure sidebar content also has lower z-index */
+body .main-header .navbar.navbar-light .navbar-nav .nav-link:hover,
+body .main-header .navbar.navbar-light .navbar-nav .nav-link:focus {
+  color: var(--bio-cyan) !important;
+}
+
+body .main-header .navbar.navbar-light .navbar-nav .show > .nav-link,
+body .main-header .navbar.navbar-light .navbar-nav .active > .nav-link,
+body .main-header .navbar.navbar-light .navbar-nav .nav-link.show,
+body .main-header .navbar.navbar-light .navbar-nav .nav-link.active {
+  color: var(--bio-cyan) !important;
+}
+
+body .main-header .navbar.navbar-light .navbar-text {
+  color: #ffffff !important;
+}
+
+body .main-header .navbar.navbar-light .navbar-toggler {
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+body .main-header .navbar.navbar-light .navbar-toggler-icon {
+  filter: invert(1) !important;
+}
+
+/* Navbar links and icons - HIGH SPECIFICITY to override Bootstrap */
+body .main-header .navbar .nav-link,
+body .main-header.navbar-light .navbar-nav .nav-link,
+.main-header .navbar .navbar-nav .nav-link,
+.main-header .navbar .navbar-nav > li > a,
+.navbar-light .navbar-nav .nav-link {
+  font-family: var(--font-display);
+  color: #ffffff !important;
+  padding: 0.625rem 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+body .main-header .navbar .nav-link:hover,
+body .main-header.navbar-light .navbar-nav .nav-link:hover,
+.main-header .navbar .navbar-nav .nav-link:hover,
+.main-header .navbar .navbar-nav > li > a:hover,
+.navbar-light .navbar-nav .nav-link:hover {
+  color: var(--bio-cyan) !important;
+  background-color: rgba(0, 212, 170, 0.2);
+}
+
+body .main-header .navbar .nav-link i,
+.main-header .navbar .navbar-nav .nav-link i {
+  font-size: 1rem;
+  opacity: 1;
+  color: #ffffff !important;
+}
+
+body .main-header .navbar .nav-link:hover i {
+  color: var(--bio-cyan) !important;
+}
+
+/* Navbar custom items - HIGH SPECIFICITY */
+body .main-header .navbar-nav > li > a,
+body.layout-navbar-fixed .main-header .navbar-nav > li > a,
+.wrapper .main-header .navbar-nav > li > a {
+  font-family: var(--font-display);
+  color: #ffffff !important;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.875rem;
+  height: 3.5rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+body .main-header .navbar-nav > li > a:hover,
+body.layout-navbar-fixed .main-header .navbar-nav > li > a:hover,
+.wrapper .main-header .navbar-nav > li > a:hover {
+  color: var(--bio-cyan) !important;
+  background-color: rgba(0, 212, 170, 0.2);
+}
+
+/* =================================================================
+   HAMBURGER / SIDEBAR TOGGLE BUTTON
+   ================================================================= */
+body .main-header [data-widget="pushmenu"],
+body .main-header .nav-link[data-widget="pushmenu"] {
+  z-index: 1100 !important;
+  position: relative;
+  cursor: pointer;
+  color: var(--bio-cyan) !important;
+}
+
+body .main-header [data-widget="pushmenu"]:hover {
+  color: #ffffff !important;
+  background-color: rgba(0, 212, 170, 0.2);
+}
+
+
+/* =================================================================
+   SIDEBAR - Deep Ocean Navigation
+   ================================================================= */
+body .main-sidebar {
+  background: linear-gradient(180deg, var(--ocean-deep) 0%, var(--ocean-abyss) 100%);
+  border-right: 1px solid rgba(0, 180, 216, 0.15);
+  z-index: 1000;
+  box-shadow: var(--shadow-medium);
+}
+
+/* Subtle wave texture overlay */
+body .main-sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 80%, rgba(0, 180, 216, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(0, 212, 170, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 body .main-sidebar .sidebar,
 body .main-sidebar .nav-sidebar {
-  z-index: 1001; /* Lower than tooltips */
+  z-index: 1001;
+  position: relative;
 }
 
 /* Disable hover-to-expand behavior for collapsed sidebar */
-/* This prevents the sidebar from auto-expanding when mouse hovers over it */
-/* Only the hamburger menu button should toggle the sidebar */
 .sidebar-mini.sidebar-collapse .main-sidebar:hover {
-  width: 4.6rem !important; /* Keep collapsed width */
+  width: 4.6rem !important;
 }
 
 .sidebar-mini.sidebar-collapse .main-sidebar:hover .nav-sidebar {
-  width: 4.6rem !important; /* Keep collapsed width */
+  width: 4.6rem !important;
 }
 
-/* Prevent transition on hover to avoid expansion animation */
 .sidebar-mini.sidebar-collapse .main-sidebar {
   transition: none !important;
 }
 
-/* Keep sidebar collapsed state even on hover */
 body.sidebar-mini.sidebar-collapse .main-sidebar:hover {
-  overflow: visible !important; /* Allow tooltips to show */
-  width: 4.6rem !important; /* Maintain collapsed width */
+  overflow: visible !important;
+  width: 4.6rem !important;
 }
 
-/* Ensure sidebar doesn't clip tooltips */
 .main-sidebar,
 .main-sidebar .sidebar {
   overflow: visible !important;
 }
 
-/* Prevent any parent containers from hiding tooltips */
 .wrapper,
 .content-wrapper {
   overflow: visible !important;
 }
 
-/* Ensure content doesn't shift when hovering over collapsed sidebar */
 body.sidebar-mini.sidebar-collapse .main-sidebar:hover ~ .content-wrapper {
   margin-left: 4.6rem !important;
 }
 
 /* Sidebar menu items */
 .sidebar .nav-sidebar .nav-item .nav-link {
-  color: #495057;
+  font-family: var(--font-display);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  margin: 0.125rem 0.5rem;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-smooth);
+  position: relative;
+}
+
+.sidebar .nav-sidebar .nav-item .nav-link i {
+  margin-right: 0.75rem;
+  width: 1.25rem;
+  text-align: center;
+  opacity: 0.9;
+  transition: all var(--transition-fast);
 }
 
 .sidebar .nav-sidebar .nav-item .nav-link:hover {
-  background-color: rgba(0, 123, 255, 0.05);
-  color: #007bff;
+  background: linear-gradient(90deg, rgba(0, 212, 170, 0.15) 0%, transparent 100%);
+  color: var(--bio-cyan);
+  transform: translateX(4px);
 }
 
+.sidebar .nav-sidebar .nav-item .nav-link:hover i {
+  opacity: 1;
+  color: var(--bio-cyan);
+}
+
+/* Active state - Bioluminescent glow */
 body .sidebar .nav-sidebar .nav-item .nav-link.active {
-  background-color: #007bff;
-  color: #fff;
+  background: linear-gradient(90deg, var(--bio-cyan) 0%, var(--bio-blue) 100%);
+  color: var(--ocean-abyss);
+  font-weight: 600;
+  box-shadow: var(--shadow-glow);
+}
+
+body .sidebar .nav-sidebar .nav-item .nav-link.active i {
+  opacity: 1;
+  color: var(--ocean-abyss);
 }
 
 /* Sidebar submenu items */
 .sidebar .nav-treeview .nav-item .nav-link {
-  color: #6c757d;
-  padding-left: 2.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  padding-left: 2.75rem;
+  font-size: 0.85rem;
 }
 
 .sidebar .nav-treeview .nav-item .nav-link:hover {
-  background-color: rgba(0, 123, 255, 0.05);
-  color: #007bff;
+  background: rgba(0, 212, 170, 0.1);
+  color: var(--bio-cyan);
 }
 
 /* =================================================================
-   CARDS (replaces box)
+   BRAND / LOGO
    ================================================================= */
-
-/* Base card styling */
-.card {
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+body .main-sidebar .brand-link {
+  border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+  background: linear-gradient(135deg, var(--ocean-mid) 0%, var(--ocean-deep) 100%);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  min-height: 57px;
+  transition: all var(--transition-smooth);
+  pointer-events: auto;
+  position: relative;
+  z-index: 1000;
 }
 
-/* Card headers */
-.card-header {
-  background-color: var(--marine-primary);
+body .main-sidebar .brand-link .brand-text {
+  font-family: var(--font-display);
   color: #fff;
-  border-bottom: 2px solid var(--marine-dark);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-left: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.01em;
+  transition: opacity var(--transition-smooth), width var(--transition-smooth);
+}
+
+body .main-sidebar .brand-link .brand-image {
+  opacity: 1;
+  max-height: 36px;
+  width: auto;
+  float: none;
+  margin: 0;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: all var(--transition-smooth);
+}
+
+body .main-sidebar .brand-link:hover {
+  background: linear-gradient(135deg, var(--ocean-shallow) 0%, var(--ocean-mid) 100%);
+  text-decoration: none;
+}
+
+/* Collapsed sidebar brand */
+body.sidebar-mini.sidebar-collapse .main-sidebar .brand-link {
+  padding: 0.75rem;
+  justify-content: center;
+}
+
+body.sidebar-mini.sidebar-collapse .main-sidebar .brand-link .brand-text {
+  opacity: 0;
+  width: 0;
+  margin: 0;
+  display: none;
+}
+
+body.sidebar-mini.sidebar-collapse .main-sidebar .brand-link .brand-image {
+  max-height: 28px;
+  margin: 0 auto;
+}
+
+/* =================================================================
+   CONTENT AREA - Subtle Ocean Background
+   ================================================================= */
+.content-wrapper {
+  background:
+    linear-gradient(180deg, var(--foam-white) 0%, var(--mist-light) 100%);
+  min-height: 100vh;
+}
+
+/* Subtle wave pattern overlay */
+.content-wrapper::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(ellipse at 100% 0%, rgba(74, 144, 184, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 0% 100%, rgba(0, 212, 170, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+/* =================================================================
+   CARDS - Floating Ocean Panels
+   ================================================================= */
+.card {
+  font-family: var(--font-body);
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: var(--space-lg);
+  background: #ffffff;
+  overflow: hidden;
+  transition: all var(--transition-smooth);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+/* Card headers - Gradient Ocean */
+.card-header {
+  font-family: var(--font-display);
+  background: linear-gradient(135deg, var(--ocean-mid) 0%, var(--ocean-shallow) 100%);
+  color: #fff;
+  border-bottom: none;
   font-weight: 600;
+  font-size: 1rem;
+  padding: var(--space-md) var(--space-lg);
+  letter-spacing: -0.01em;
+}
+
+.card .card-header.bg-primary {
+  background: linear-gradient(135deg, var(--ocean-mid) 0%, var(--ocean-shallow) 100%);
 }
 
 .card .card-header.bg-info {
-  background-color: var(--marine-info);
+  background: linear-gradient(135deg, var(--bio-blue) 0%, var(--bio-teal) 100%);
 }
 
 .card .card-header.bg-success {
-  background-color: var(--marine-success);
+  background: linear-gradient(135deg, #2d8659 0%, var(--kelp-green) 100%);
 }
 
 .card .card-header.bg-warning {
-  background-color: var(--marine-warning);
+  background: linear-gradient(135deg, #e67e22 0%, var(--coral-soft) 100%);
+  color: var(--ocean-abyss);
 }
 
 .card .card-header.bg-danger {
-  background-color: var(--marine-danger);
+  background: linear-gradient(135deg, #c0392b 0%, var(--coral-bright) 100%);
 }
 
-/* Collapsible cards */
+/* Card body */
+.card-body {
+  padding: var(--space-lg);
+}
+
+/* Card tools */
 .card-tools .btn {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.85);
+  transition: all var(--transition-fast);
+}
+
+.card-tools .btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* =================================================================
-   VALUE BOXES (replaces valueBox)
+   VALUE BOXES / INFO BOXES - Floating Metrics
    ================================================================= */
-
-/* Value box styling */
 .info-box {
-  border-radius: 8px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--font-display);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  transition: all var(--transition-smooth);
+  border: none;
+  overflow: hidden;
 }
 
 .info-box:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
 }
 
-/* Value box colors */
-body .info-box.bg-blue {
-  background-color: var(--marine-primary);
+body .info-box.bg-blue,
+body .info-box.bg-primary {
+  background: linear-gradient(135deg, var(--ocean-mid) 0%, var(--ocean-shallow) 100%);
 }
 
-body .info-box.bg-green {
-  background-color: var(--marine-success);
+body .info-box.bg-green,
+body .info-box.bg-success {
+  background: linear-gradient(135deg, #2d8659 0%, var(--kelp-green) 100%);
 }
 
-body .info-box.bg-orange {
-  background-color: var(--marine-warning);
+body .info-box.bg-orange,
+body .info-box.bg-warning {
+  background: linear-gradient(135deg, #e67e22 0%, var(--coral-soft) 100%);
 }
 
-body .info-box.bg-red {
-  background-color: var(--marine-danger);
+body .info-box.bg-red,
+body .info-box.bg-danger {
+  background: linear-gradient(135deg, #c0392b 0%, var(--coral-bright) 100%);
 }
 
-/* Value box icons */
+body .info-box.bg-info {
+  background: linear-gradient(135deg, var(--bio-blue) 0%, var(--bio-teal) 100%);
+}
+
 .info-box-icon {
-  font-size: 3rem;
+  font-size: 2.5rem;
+  opacity: 0.9;
+}
+
+.info-box-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.info-box-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.75rem;
 }
 
 /* =================================================================
-   BUTTONS
+   BUTTONS - Ocean Interaction
    ================================================================= */
+.btn {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: var(--radius-md);
+  padding: 0.625rem 1.25rem;
+  transition: all var(--transition-smooth);
+  border: none;
+  letter-spacing: 0.01em;
+}
 
-/* Primary buttons */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Primary - Ocean Blue with glow */
 .btn-primary {
-  background-color: var(--marine-primary);
-  border-color: var(--marine-primary);
+  background: linear-gradient(135deg, var(--ocean-shallow) 0%, var(--ocean-surface) 100%);
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-  background-color: #2980b9;
-  border-color: #2980b9;
+  background: linear-gradient(135deg, var(--ocean-mid) 0%, var(--ocean-shallow) 100%);
+  box-shadow: 0 4px 16px rgba(74, 144, 184, 0.4);
 }
 
-/* Success buttons */
+/* Success - Kelp Green */
 .btn-success {
-  background-color: var(--marine-success);
-  border-color: var(--marine-success);
+  background: linear-gradient(135deg, #2d8659 0%, var(--kelp-green) 100%);
+  color: #ffffff;
 }
 
 .btn-success:hover {
-  background-color: #229954;
-  border-color: #229954;
+  background: linear-gradient(135deg, #236b47 0%, #2d8659 100%);
+  box-shadow: 0 4px 16px rgba(82, 183, 136, 0.4);
+}
+
+/* Info - Bioluminescent */
+.btn-info {
+  background: linear-gradient(135deg, var(--bio-blue) 0%, var(--bio-teal) 100%);
+  color: var(--ocean-abyss);
+}
+
+.btn-info:hover {
+  background: linear-gradient(135deg, #0095b8 0%, var(--bio-blue) 100%);
+  box-shadow: 0 4px 16px rgba(0, 180, 216, 0.4);
+}
+
+/* Warning - Coral */
+.btn-warning {
+  background: linear-gradient(135deg, #e67e22 0%, var(--coral-soft) 100%);
+  color: var(--ocean-abyss);
+}
+
+.btn-warning:hover {
+  background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
+  box-shadow: 0 4px 16px rgba(255, 160, 122, 0.4);
+}
+
+/* Danger - Coral Red */
+.btn-danger {
+  background: linear-gradient(135deg, #c0392b 0%, var(--coral-bright) 100%);
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #a93226 0%, #c0392b 100%);
+  box-shadow: 0 4px 16px rgba(255, 107, 107, 0.4);
+}
+
+/* Secondary - Slate */
+.btn-secondary {
+  background: linear-gradient(135deg, var(--stone-gray) 0%, var(--slate-dark) 100%);
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, var(--slate-dark) 0%, var(--stone-gray) 100%);
+}
+
+/* Outline variants */
+.btn-outline-primary {
+  border: 2px solid var(--ocean-surface);
+  color: var(--ocean-shallow);
+  background: transparent;
+}
+
+.btn-outline-primary:hover {
+  background: var(--ocean-surface);
+  color: #ffffff;
 }
 
 /* =================================================================
-   FORMS
+   FORMS - Clean Scientific Input
    ================================================================= */
+.form-control {
+  font-family: var(--font-body);
+  border: 2px solid var(--mist-light);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+  background: #ffffff;
+}
 
-/* Form inputs */
 .form-control:focus {
-  border-color: var(--marine-primary);
-  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+  border-color: var(--bio-cyan);
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.15);
+  outline: none;
+}
+
+.form-control::placeholder {
+  color: var(--stone-gray);
+  font-style: italic;
+  opacity: 0.7;
 }
 
 /* Select inputs */
+.selectize-input {
+  font-family: var(--font-body);
+  border: 2px solid var(--mist-light) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 0.5rem 0.75rem !important;
+  box-shadow: none !important;
+}
+
 .selectize-input.focus {
-  border-color: var(--marine-primary);
+  border-color: var(--bio-cyan) !important;
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.15) !important;
+}
+
+.selectize-dropdown {
+  border: 2px solid var(--mist-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-medium);
 }
 
 /* =================================================================
    CUSTOM DROPDOWNS (Header)
    ================================================================= */
-
-/* Settings dropdown styling */
 .settings-dropdown {
   position: relative;
 }
@@ -268,15 +739,16 @@ body .info-box.bg-red {
 body .settings-dropdown .settings-dropdown-toggle {
   display: flex;
   align-items: center;
-  padding: 8px 15px;
-  color: #fff;
+  padding: 0.5rem 1rem;
+  color: #ffffff !important;
   text-decoration: none;
-  transition: background-color 0.2s ease;
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-sm);
 }
 
 .settings-dropdown-toggle:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background-color: rgba(0, 212, 170, 0.2);
+  color: var(--bio-cyan) !important;
 }
 
 .settings-dropdown-menu {
@@ -284,60 +756,196 @@ body .settings-dropdown .settings-dropdown-toggle {
   position: absolute;
   top: 100%;
   right: 0;
-  background: white;
-  min-width: 220px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border-radius: 6px;
-  padding: 8px 0;
+  background: #ffffff;
+  min-width: 240px;
+  box-shadow: var(--shadow-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) 0;
+  padding-top: 12px; /* Internal padding instead of margin gap */
   z-index: 1000;
-  margin-top: 5px;
+  margin-top: 0; /* No gap - prevents hover loss */
+  border: 1px solid var(--mist-light);
+}
+
+/* Invisible bridge to prevent hover loss when moving to menu */
+.settings-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: transparent;
 }
 
 .settings-dropdown:hover .settings-dropdown-menu {
   display: block;
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .settings-dropdown-menu a {
+  font-family: var(--font-display);
   display: flex;
   align-items: center;
-  padding: 10px 16px;
-  color: #333;
+  padding: 0.75rem 1.25rem;
+  color: var(--ocean-deep);
   text-decoration: none;
-  transition: background-color 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
 }
 
 .settings-dropdown-menu a:hover {
-  background-color: #f8f9fa;
+  background: var(--bio-glow);
+  color: var(--ocean-mid);
 }
 
 .settings-dropdown-menu a i {
-  margin-right: 10px;
-  width: 20px;
+  margin-right: 0.75rem;
+  width: 1.25rem;
   text-align: center;
-  color: var(--marine-primary);
+  color: var(--bio-cyan);
 }
 
 /* =================================================================
-   PIPELINE STATUS INDICATOR
+   TABS - Ocean Navigation
    ================================================================= */
-
-.pipeline-status {
-  padding: 8px 15px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  color: #fff;
+.nav-tabs {
+  border-bottom: 2px solid var(--mist-light);
 }
 
-.pipeline-status .fa-spin {
-  margin-right: 8px;
+.nav-tabs .nav-link {
+  font-family: var(--font-display);
+  color: var(--slate-dark);
+  font-weight: 500;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: -2px;
+  transition: all var(--transition-fast);
+}
+
+.nav-tabs .nav-link.active {
+  background: transparent;
+  color: var(--ocean-shallow);
+  border-bottom-color: var(--bio-cyan);
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: transparent;
+  border-bottom-color: var(--salt-gray);
+  background: transparent;
 }
 
 /* =================================================================
-   LOADING OVERLAY
+   DATA TABLES - Scientific Data Display
    ================================================================= */
+.dataTables_wrapper {
+  font-family: var(--font-body);
+}
 
+table.dataTable {
+  border-collapse: collapse !important;
+}
+
+table.dataTable thead th {
+  font-family: var(--font-display);
+  background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-mid) 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.875rem 1rem;
+  border: none;
+}
+
+table.dataTable tbody tr {
+  transition: all var(--transition-fast);
+}
+
+table.dataTable tbody tr:hover {
+  background-color: var(--bio-glow) !important;
+}
+
+table.dataTable tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--mist-light);
+  vertical-align: middle;
+}
+
+body .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: linear-gradient(135deg, var(--ocean-shallow) 0%, var(--ocean-surface) 100%);
+  border: none;
+  color: #fff !important;
+  border-radius: var(--radius-sm);
+}
+
+body .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: var(--mist-light);
+  border: none;
+  color: var(--ocean-deep) !important;
+  border-radius: var(--radius-sm);
+}
+
+/* =================================================================
+   PROGRESS BARS
+   ================================================================= */
+.progress {
+  height: 0.625rem;
+  border-radius: var(--radius-xl);
+  background: var(--mist-light);
+  overflow: hidden;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--bio-cyan) 0%, var(--bio-blue) 100%);
+  border-radius: var(--radius-xl);
+  transition: width var(--transition-slow);
+}
+
+/* =================================================================
+   BADGES - Ocean Tags
+   ================================================================= */
+.badge {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-xl);
+  letter-spacing: 0.02em;
+}
+
+.badge-primary {
+  background: linear-gradient(135deg, var(--ocean-shallow) 0%, var(--ocean-surface) 100%);
+}
+
+.badge-success {
+  background: linear-gradient(135deg, #2d8659 0%, var(--kelp-green) 100%);
+}
+
+.badge-warning {
+  background: linear-gradient(135deg, #e67e22 0%, var(--coral-soft) 100%);
+  color: var(--ocean-abyss);
+}
+
+.badge-danger {
+  background: linear-gradient(135deg, #c0392b 0%, var(--coral-bright) 100%);
+}
+
+.badge-info {
+  background: linear-gradient(135deg, var(--bio-blue) 0%, var(--bio-teal) 100%);
+  color: var(--ocean-abyss);
+}
+
+/* =================================================================
+   LOADING OVERLAY - Ocean Depth
+   ================================================================= */
 #language-loading-overlay {
   display: none;
   position: fixed;
@@ -345,7 +953,7 @@ body .settings-dropdown .settings-dropdown-toggle {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-abyss) 100%);
   z-index: 99999;
   justify-content: center;
   align-items: center;
@@ -357,224 +965,75 @@ body .settings-dropdown .settings-dropdown-toggle {
 }
 
 .loading-spinner {
-  font-size: 48px;
-  color: var(--marine-primary);
-  animation: spin 1s linear infinite;
+  font-size: 3.5rem;
+  color: var(--bio-cyan);
+  animation: spinGlow 1.5s ease-in-out infinite;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes spinGlow {
+  0% {
+    transform: rotate(0deg);
+    filter: drop-shadow(0 0 8px rgba(0, 212, 170, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(0, 212, 170, 0.8));
+  }
+  100% {
+    transform: rotate(360deg);
+    filter: drop-shadow(0 0 8px rgba(0, 212, 170, 0.5));
+  }
 }
 
 .loading-message {
-  margin-top: 20px;
-  font-size: 24px;
-  color: var(--marine-primary);
-  font-weight: bold;
+  font-family: var(--font-display);
+  margin-top: var(--space-lg);
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .loading-submessage {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #666;
+  font-family: var(--font-body);
+  margin-top: var(--space-sm);
+  font-size: 0.95rem;
+  color: var(--salt-gray);
 }
 
 /* =================================================================
-   RESPONSIVE DESIGN
+   TOOLTIPS - Enhanced Ocean Theme
    ================================================================= */
-
-@media (max-width: 768px) {
-  .main-sidebar {
-    transform: translateX(-100%);
-  }
-
-  .main-sidebar.sidebar-open {
-    transform: translateX(0);
-  }
-
-  .settings-dropdown-menu {
-    right: auto;
-    left: 0;
-  }
-}
-
-/* =================================================================
-   LOGO AND BRANDING
-   ================================================================= */
-
-/* Brand link styling - Marine SABRES logo with darker background */
-body .main-sidebar .brand-link {
-  border-bottom: 1px solid #495057;
-  background-color: #343a40;
-  padding: 0.5rem 1rem;
-  text-align: left;
-  display: flex;
-  align-items: center;
-}
-
-body .main-sidebar .brand-link .brand-text {
-  color: #fff;
-  font-weight: 600;
-  margin-left: 0.5rem;
-}
-
-body .main-sidebar .brand-link .brand-image {
-  opacity: 1;
-  max-height: 40px;
-  float: none;
-  margin: 0;
-}
-
-body .main-sidebar .brand-link:hover {
-  background-color: #495057;
-  text-decoration: none;
-}
-
-/* Navbar brand in header */
-body .main-header .navbar-brand {
-  background-color: #343a40;
-  padding: 0.5rem 1rem;
-  border-right: 1px solid #495057;
-}
-
-body .main-header .navbar-brand img {
-  max-height: 40px;
-}
-
-body .main-header .navbar-brand:hover {
-  background-color: #495057;
-}
-
-/* =================================================================
-   TABS
-   ================================================================= */
-
-.nav-tabs .nav-link {
-  color: #333;
-}
-
-.nav-tabs .nav-link.active {
-  background-color: var(--marine-primary);
-  color: #fff;
-  border-color: var(--marine-primary);
-}
-
-.nav-tabs .nav-link:hover {
-  border-color: var(--marine-light);
-}
-
-/* =================================================================
-   DATA TABLES
-   ================================================================= */
-
-body .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-  background: var(--marine-primary);
-  border-color: var(--marine-primary);
-  color: #fff;
-}
-
-body .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-  background: var(--marine-light);
-  border-color: var(--marine-light);
-  color: #333;
-}
-
-/* =================================================================
-   PROGRESS BARS
-   ================================================================= */
-
-.progress-bar {
-  background-color: var(--marine-primary);
-}
-
-/* =================================================================
-   BADGES
-   ================================================================= */
-
-.badge-primary {
-  background-color: var(--marine-primary);
-}
-
-.badge-success {
-  background-color: var(--marine-success);
-}
-
-.badge-warning {
-  background-color: var(--marine-warning);
-}
-
-.badge-danger {
-  background-color: var(--marine-danger);
-}
-
-/* =================================================================
-   TOOLTIPS - Enhanced visibility for sidebar menu items
-   ================================================================= */
-
-/* Make tooltips larger and more visible */
-/* Note: .tooltip-inner is defined once below (line ~564) with !important overrides */
 .tooltip {
-  font-size: 14px;
-  z-index: 9999;
-}
-
-/* Arrow colors for different placements */
-.tooltip.bs-tooltip-right .arrow::before {
-  border-right-color: var(--marine-dark);
-}
-
-.tooltip.bs-tooltip-left .arrow::before {
-  border-left-color: var(--marine-dark);
-}
-
-.tooltip.bs-tooltip-top .arrow::before {
-  border-top-color: var(--marine-dark);
-}
-
-.tooltip.bs-tooltip-bottom .arrow::before {
-  border-bottom-color: var(--marine-dark);
-}
-
-/* Sidebar menu item hover effect to indicate tooltip availability */
-body .sidebar .nav-sidebar .nav-item .nav-link[title]:hover,
-body .sidebar .nav-sidebar .nav-item .nav-link[data-original-title]:hover {
-  cursor: help;
-  background-color: rgba(0, 123, 255, 0.1);
-}
-
-/* Bootstrap 4 tooltip styling - bs4Dash compatible */
-/* Tooltips are now initialized using bs4Dash's addTooltip() function */
-.tooltip {
-  z-index: 100000 !important; /* Ensure tooltips appear above sidebar (z-index: 1000) */
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  z-index: 100000 !important;
   opacity: 1 !important;
 }
 
 .tooltip-inner {
-  background-color: #343a40 !important;
+  background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-abyss) 100%) !important;
   color: #fff !important;
-  border: 1px solid #495057 !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+  border: 1px solid rgba(0, 212, 170, 0.3) !important;
+  box-shadow: var(--shadow-medium), 0 0 20px rgba(0, 212, 170, 0.2) !important;
   max-width: 300px;
-  padding: 10px 15px;
+  padding: 0.75rem 1rem;
   text-align: left;
-  font-size: 0.9rem;
+  border-radius: var(--radius-md);
 }
 
 .tooltip .arrow::before,
 .tooltip .tooltip-arrow::before {
-  border-right-color: #343a40 !important;
-  border-left-color: #343a40 !important;
-  border-top-color: #343a40 !important;
-  border-bottom-color: #343a40 !important;
+  border-right-color: var(--ocean-deep) !important;
+  border-left-color: var(--ocean-deep) !important;
+  border-top-color: var(--ocean-deep) !important;
+  border-bottom-color: var(--ocean-deep) !important;
 }
 
-/* Ensure bs4Dash sidebar tooltips are visible */
-.main-sidebar .nav-link[title] {
-  position: relative;
+.sidebar .nav-sidebar .nav-item .nav-link[title]:hover,
+.sidebar .nav-sidebar .nav-item .nav-link[data-original-title]:hover {
+  cursor: help;
 }
 
-/* Override any tooltip opacity issues */
 .bs-tooltip-auto,
 .bs-tooltip-top,
 .bs-tooltip-right,
@@ -590,86 +1049,47 @@ body .sidebar .nav-sidebar .nav-item .nav-link[data-original-title]:hover {
 .bs-tooltip-right .tooltip-inner,
 .bs-tooltip-bottom .tooltip-inner,
 .bs-tooltip-left .tooltip-inner {
-  background-color: #343a40 !important;
+  background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-abyss) 100%) !important;
   color: #fff !important;
-  border: 1px solid #495057 !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+  border: 1px solid rgba(0, 212, 170, 0.3) !important;
+  box-shadow: var(--shadow-medium) !important;
 }
 
 /* =================================================================
-   SKIN SELECTOR FIX
+   QUICK ACTIONS - Sidebar
    ================================================================= */
-
-/* Fix skinSelector modal/panel width and behavior */
-.skin-blue .control-sidebar,
-.control-sidebar {
-  width: 250px !important;
-  max-width: 250px !important;
-}
-
-/* Ensure skin selector closes properly */
-.control-sidebar-slide-open .control-sidebar {
-  right: 0;
-}
-
-body:not(.control-sidebar-slide-open) .control-sidebar {
-  right: -250px;
-}
-
-/* Add close button styling */
-.control-sidebar .nav-link {
-  cursor: pointer;
-}
-
-/* Prevent skin selector from taking too much space */
-#controlbar-toggle {
-  z-index: 1050;
-}
-
-/* Make sure overlay closes the skin selector */
-.control-sidebar-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 1040;
-  cursor: pointer;
-}
-
-/* =================================================================
-   QUICK ACTIONS - Responsive to Sidebar Collapse
-   ================================================================= */
-
-/* Quick actions container */
 .sidebar-quick-actions {
-  padding: 15px 10px;
+  padding: var(--space-md) var(--space-sm);
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all var(--transition-smooth);
+  border-top: 1px solid rgba(0, 180, 216, 0.15);
+  margin-top: var(--space-md);
 }
 
-/* Quick actions buttons - default expanded state */
+.sidebar-quick-actions h5 {
+  font-family: var(--font-display);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-md);
+  transition: opacity var(--transition-smooth);
+}
+
 .sidebar-quick-actions .quick-action-btn {
   width: 90%;
   min-width: 180px;
-  margin-bottom: 10px;
-  transition: all 0.3s ease;
+  margin-bottom: var(--space-sm);
+  transition: all var(--transition-smooth);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
-/* Quick actions title */
-.sidebar-quick-actions h5 {
-  margin-bottom: 15px;
-  transition: opacity 0.3s ease;
-}
-
-/* When sidebar is collapsed - show only icons */
+/* Collapsed sidebar quick actions */
 body.sidebar-mini.sidebar-collapse .sidebar-quick-actions {
-  padding: 10px 5px;
+  padding: var(--space-sm);
 }
 
 body.sidebar-mini.sidebar-collapse .sidebar-quick-actions h5 {
@@ -682,27 +1102,297 @@ body.sidebar-mini.sidebar-collapse .sidebar-quick-actions .quick-action-btn {
   height: 40px;
   padding: 0;
   border-radius: 50%;
-  margin: 5px auto;
+  margin: var(--space-xs) auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Hide button text when collapsed, show only icon */
 body.sidebar-mini.sidebar-collapse .sidebar-quick-actions .quick-action-btn .btn-text {
   display: none;
 }
 
 body.sidebar-mini.sidebar-collapse .sidebar-quick-actions .quick-action-btn i {
   margin: 0;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
-/* Icon-only buttons hover effect */
 body.sidebar-mini.sidebar-collapse .sidebar-quick-actions .quick-action-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
+  box-shadow: var(--shadow-glow);
 }
 
 /* =================================================================
-   END OF FILE
+   SKIN SELECTOR FIX
+   ================================================================= */
+.skin-blue .control-sidebar,
+.control-sidebar {
+  width: 280px !important;
+  max-width: 280px !important;
+  background: linear-gradient(180deg, var(--ocean-deep) 0%, var(--ocean-abyss) 100%);
+  border-left: 1px solid rgba(0, 180, 216, 0.2);
+}
+
+.control-sidebar-slide-open .control-sidebar {
+  right: 0;
+}
+
+body:not(.control-sidebar-slide-open) .control-sidebar {
+  right: -280px;
+}
+
+.control-sidebar .nav-link {
+  cursor: pointer;
+  color: var(--mist-light);
+}
+
+#controlbar-toggle {
+  z-index: 1050;
+}
+
+.control-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 22, 40, 0.6);
+  z-index: 1040;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+/* =================================================================
+   ALERTS & NOTIFICATIONS
+   ================================================================= */
+.alert {
+  font-family: var(--font-display);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  font-weight: 500;
+}
+
+.alert-primary {
+  background: linear-gradient(135deg, rgba(74, 144, 184, 0.15) 0%, rgba(45, 90, 123, 0.1) 100%);
+  color: var(--ocean-deep);
+  border-left: 4px solid var(--ocean-surface);
+}
+
+.alert-success {
+  background: linear-gradient(135deg, rgba(82, 183, 136, 0.15) 0%, rgba(45, 134, 89, 0.1) 100%);
+  color: #1e5631;
+  border-left: 4px solid var(--kelp-green);
+}
+
+.alert-warning {
+  background: linear-gradient(135deg, rgba(255, 160, 122, 0.2) 0%, rgba(230, 126, 34, 0.1) 100%);
+  color: #8a4500;
+  border-left: 4px solid var(--coral-soft);
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(192, 57, 43, 0.1) 100%);
+  color: #8b1a1a;
+  border-left: 4px solid var(--coral-bright);
+}
+
+.alert-info {
+  background: linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(0, 180, 216, 0.08) 100%);
+  color: var(--ocean-deep);
+  border-left: 4px solid var(--bio-cyan);
+}
+
+/* =================================================================
+   MODALS - Ocean Depth
+   ================================================================= */
+.modal-content {
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-strong);
+  overflow: hidden;
+}
+
+.modal-header {
+  font-family: var(--font-display);
+  background: linear-gradient(135deg, var(--ocean-mid) 0%, var(--ocean-shallow) 100%);
+  color: #ffffff;
+  border-bottom: none;
+  padding: var(--space-lg);
+}
+
+.modal-header .modal-title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.modal-header .close {
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: none;
+  opacity: 1;
+}
+
+.modal-header .close:hover {
+  color: #ffffff;
+}
+
+.modal-body {
+  padding: var(--space-xl);
+}
+
+.modal-footer {
+  border-top: 1px solid var(--mist-light);
+  padding: var(--space-lg);
+}
+
+.modal-backdrop.show {
+  opacity: 0.6;
+  background: var(--ocean-abyss);
+}
+
+/* =================================================================
+   RESPONSIVE DESIGN
+   ================================================================= */
+@media (max-width: 768px) {
+  .main-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .main-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .settings-dropdown-menu {
+    right: auto;
+    left: 0;
+  }
+
+  h1, .h1 { font-size: 1.625rem; }
+  h2, .h2 { font-size: 1.375rem; }
+  h3, .h3 { font-size: 1.125rem; }
+
+  .card-body {
+    padding: var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* =================================================================
+   SPECIAL ACCENTS & MICRO-INTERACTIONS
+   ================================================================= */
+
+/* Selection color */
+::selection {
+  background: rgba(0, 212, 170, 0.3);
+  color: var(--ocean-abyss);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--mist-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--ocean-shallow) 0%, var(--ocean-mid) 100%);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--mist-light);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--ocean-mid) 0%, var(--ocean-deep) 100%);
+}
+
+/* Focus ring for accessibility */
+:focus-visible {
+  outline: 3px solid var(--bio-cyan);
+  outline-offset: 2px;
+}
+
+/* Link styling */
+a {
+  color: var(--ocean-shallow);
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--bio-cyan);
+  text-decoration: none;
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--salt-gray) 50%, transparent 100%);
+  margin: var(--space-lg) 0;
+}
+
+/* =================================================================
+   DAPSI(W)R(M) ELEMENT COLORS - Scientific Framework
+   ================================================================= */
+.element-driver {
+  background: linear-gradient(135deg, #e67e22 0%, #FF8C00 100%);
+  color: #ffffff;
+}
+.element-activity {
+  background: linear-gradient(135deg, #a93226 0%, #DC143C 100%);
+  color: #ffffff;
+}
+.element-pressure {
+  background: linear-gradient(135deg, #7b4da0 0%, #9370DB 100%);
+  color: #ffffff;
+}
+.element-state {
+  background: linear-gradient(135deg, var(--ocean-mid) 0%, var(--ocean-shallow) 100%);
+  color: #ffffff;
+}
+.element-impact {
+  background: linear-gradient(135deg, #2980b9 0%, #4169E1 100%);
+  color: #ffffff;
+}
+.element-welfare {
+  background: linear-gradient(135deg, #27ae60 0%, #32CD32 100%);
+  color: #ffffff;
+}
+.element-response {
+  background: linear-gradient(135deg, #d4a800 0%, #FFD700 100%);
+  color: var(--ocean-abyss);
+}
+
+/* =================================================================
+   PIPELINE STATUS INDICATOR
+   ================================================================= */
+.pipeline-status {
+  font-family: var(--font-display);
+  padding: 0.5rem 1rem;
+  background: rgba(0, 212, 170, 0.15);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  color: var(--bio-cyan);
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.pipeline-status .fa-spin {
+  margin-right: 0.5rem;
+}
+
+/* =================================================================
+   END OF DEEP OCEAN SCIENTIFIC THEME
    ================================================================= */
