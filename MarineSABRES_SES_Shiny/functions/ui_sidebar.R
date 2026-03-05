@@ -214,38 +214,44 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     ))
   }
 
-  # Create SES (all levels, but beginner shows simplified menu)
+  # SES Creation (all levels) - Template based first, then AI guided
   if (should_show_menu_item("Create SES", user_level)) {
     if (user_level == "beginner") {
-      # Beginner: Show AI guided and Template based creation as direct links
+      # Beginner: Show SES Creation menu with Template and AI guided options only
       menu_items <- c(menu_items, list(
-        add_menu_tooltip(
-          bs4SidebarMenuItem(
-            safe_t("ui.sidebar.ai_guided_ses_creation", i18n_obj = i18n),
-            tabName = "create_ses_ai",
-            icon = icon("robot")
-          ),
-          safe_t("ui.sidebar.tooltip.ai_guided_ses", i18n_obj = i18n)
-        ),
-        add_menu_tooltip(
-          bs4SidebarMenuItem(
+        bs4SidebarMenuItem(
+          safe_t("ui.sidebar.ses_creation", i18n_obj = i18n),
+          icon = icon("layer-group"),
+          add_submenu_tooltip(
             safe_t("ui.sidebar.template_based_ses_creation", i18n_obj = i18n),
             tabName = "create_ses_template",
-            icon = icon("file-alt")
+            tooltip_text = safe_t("ui.sidebar.tooltip.template_based_ses", i18n_obj = i18n)
           ),
-          safe_t("ui.sidebar.tooltip.template_based_ses", i18n_obj = i18n)
+          add_submenu_tooltip(
+            safe_t("ui.sidebar.ai_guided_ses_creation", i18n_obj = i18n),
+            tabName = "create_ses_ai",
+            tooltip_text = safe_t("ui.sidebar.tooltip.ai_guided_ses", i18n_obj = i18n)
+          )
         )
       ))
     } else {
-      # Intermediate/Expert: Show full Create SES menu with all methods
+      # Intermediate/Expert: Show full SES Creation menu with all methods
       menu_items <- c(menu_items, list(
         bs4SidebarMenuItem(
-          safe_t("ui.sidebar.create_ses", i18n_obj = i18n),
+          safe_t("ui.sidebar.ses_creation", i18n_obj = i18n),
           icon = icon("layer-group"),
           bs4SidebarMenuSubItem(safe_t("ui.sidebar.choose_method", i18n_obj = i18n), tabName = "create_ses_choose"),
-          bs4SidebarMenuSubItem(safe_t("ui.sidebar.standard_entry", i18n_obj = i18n), tabName = "create_ses_standard"),
-          bs4SidebarMenuSubItem(safe_t("ui.sidebar.ai_assistant", i18n_obj = i18n), tabName = "create_ses_ai"),
-          bs4SidebarMenuSubItem(safe_t("ui.sidebar.template_based", i18n_obj = i18n), tabName = "create_ses_template")
+          add_submenu_tooltip(
+            safe_t("ui.sidebar.template_based_ses_creation", i18n_obj = i18n),
+            tabName = "create_ses_template",
+            tooltip_text = safe_t("ui.sidebar.tooltip.template_based_ses", i18n_obj = i18n)
+          ),
+          add_submenu_tooltip(
+            safe_t("ui.sidebar.ai_guided_ses_creation", i18n_obj = i18n),
+            tabName = "create_ses_ai",
+            tooltip_text = safe_t("ui.sidebar.tooltip.ai_guided_ses", i18n_obj = i18n)
+          ),
+          bs4SidebarMenuSubItem(safe_t("ui.sidebar.standard_entry", i18n_obj = i18n), tabName = "create_ses_standard")
         )
       ))
     }

@@ -78,6 +78,17 @@
       "no": "Opprett SES",
       "el": "Δημιουργία SES"
     },
+    "ui.sidebar.ses_creation": {
+      "en": "SES Creation",
+      "es": "Creación de SES",
+      "fr": "Création SES",
+      "de": "SES-Erstellung",
+      "lt": "SES kūrimas",
+      "pt": "Criação SES",
+      "it": "Creazione SES",
+      "no": "SES-opprettelse",
+      "el": "Δημιουργία SES"
+    },
     "ui.sidebar.dashboard": {
       "en": "Dashboard",
       "es": "Panel de Control",
