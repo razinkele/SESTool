@@ -218,7 +218,7 @@ get_version_history <- function(template_name,
         stringsAsFactors = FALSE
       ))
     }, error = function(e) {
-      warning(sprintf("Failed to load version file: %s (%s)", file, e$message))
+      debug_log(sprintf("Failed to load version file: %s (%s)", file, e$message), "TEMPLATE_VERSIONING")
     })
   }
 

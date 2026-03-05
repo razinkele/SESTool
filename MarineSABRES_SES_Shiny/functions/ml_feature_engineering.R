@@ -128,7 +128,7 @@ encode_dapsiwrm_type <- function(type_name) {
 
   if (is.na(idx)) {
     # Unknown type - return all zeros
-    warning(sprintf("Unknown DAPSI(W)R(M) type: %s", type_name))
+    debug_log(sprintf("Unknown DAPSI(W)R(M) type: %s", type_name), "ML_FEATURES")
     return(rep(0, length(DAPSIWRM_TYPES)))
   }
 

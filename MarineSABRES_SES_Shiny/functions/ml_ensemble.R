@@ -47,7 +47,7 @@ load_ensemble <- function(ensemble_dir = "models/ensemble",
   # Load metadata
   metadata_path <- file.path(ensemble_dir, metadata_file)
   if (!file.exists(metadata_path)) {
-    warning(sprintf("Ensemble metadata not found: %s", metadata_path))
+    debug_log(sprintf("Ensemble metadata not found: %s", metadata_path), "ML_ENSEMBLE")
     return(FALSE)
   }
 
@@ -61,7 +61,7 @@ load_ensemble <- function(ensemble_dir = "models/ensemble",
     model_path <- ensemble_env$metadata$model_paths[i]
 
     if (!file.exists(model_path)) {
-      warning(sprintf("Model %d not found: %s", i, model_path))
+      debug_log(sprintf("Ensemble model %d not found: %s", i, model_path), "ML_ENSEMBLE")
       next
     }
 
@@ -72,7 +72,7 @@ load_ensemble <- function(ensemble_dir = "models/ensemble",
       debug_log(sprintf("Loaded ensemble model %d (seed=%d)",
                   i, ensemble_env$metadata$seeds[i]), "ML_ENSEMBLE")
     }, error = function(e) {
-      warning(sprintf("Failed to load model %d: %s", i, e$message))
+      debug_log(sprintf("Failed to load ensemble model %d: %s", i, e$message), "ML_ENSEMBLE")
     })
   }
 

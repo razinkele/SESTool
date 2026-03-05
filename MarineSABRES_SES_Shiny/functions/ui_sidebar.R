@@ -21,7 +21,7 @@ safe_t <- function(key, fallback = key, i18n_obj = NULL) {
   }
 
   if (is.null(i18n_obj)) {
-    warning(sprintf("[TRANSLATION] No i18n object available for key: %s", key))
+    debug_log(sprintf("No i18n object available for key: %s", key), "SIDEBAR_TRANSLATION")
     return(fallback)
   }
 
@@ -36,7 +36,7 @@ safe_t <- function(key, fallback = key, i18n_obj = NULL) {
 
     return(result)
   }, error = function(e) {
-    warning(sprintf("[TRANSLATION ERROR] Key '%s': %s", key, e$message))
+    debug_log(sprintf("Translation error for key '%s': %s", key, e$message), "SIDEBAR_TRANSLATION")
     return(fallback)
   })
 }
