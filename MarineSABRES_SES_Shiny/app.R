@@ -622,10 +622,22 @@ server <- function(input, output, session) {
 
   debug_log("Session-local i18n translator created", "I18N")
 
-  # ========== AUTO-LOAD DEFAULT TEMPLATE IF EMPTY ========== 
+  # ========== AUTO-LOAD DEFAULT TEMPLATE IF EMPTY ==========
   observe({
     # Only run once at startup
     isolate({
+      # Check for fresh_start parameter (set by Clear Session button)
+      # If present, skip auto-loading the template to give user a truly empty start
+      query_params <- parseQueryString(session$clientData$url_search)
+      fresh_start <- isTRUE(query_params$fresh_start == "true")
+
+      if (fresh_start) {
+        debug_log("fresh_start=true detected, skipping template auto-load", "AUTOLOAD")
+        # Clear the URL parameter to avoid persisting it
+        shinyjs::runjs("if (window.history.replaceState) { window.history.replaceState({}, document.title, window.location.pathname); }")
+        return()  # Skip auto-load
+      }
+
       data <- project_data()
       # Check if all SES element types are empty or missing
       isa <- data$data$isa_data

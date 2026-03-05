@@ -350,10 +350,13 @@ $(document).ready(function() {
       // This ensures the recovery modal won't show the old data
       Shiny.setInputValue('clear_server_autosaves', Math.random(), {priority: 'event'});
 
-      // Give the server a moment to process, then reload
+      // Give the server a moment to process, then reload with fresh_start parameter
+      // The fresh_start=true parameter tells the app to skip auto-loading templates
       console.log('[Clear Session] Cleared ' + keysToRemove.length + ' localStorage items, sessionStorage, and IndexedDB');
       setTimeout(function() {
-        window.location.reload(true);
+        // Reload with fresh_start parameter to skip template auto-load
+        var baseUrl = window.location.pathname;
+        window.location.href = baseUrl + '?fresh_start=true';
       }, 500);
     }
   });
