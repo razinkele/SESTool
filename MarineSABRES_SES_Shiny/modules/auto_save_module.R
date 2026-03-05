@@ -201,6 +201,27 @@ auto_save_indicator_ui <- function(id) {
           margin-top: 3px;
         }
 
+        /* Dismiss button */
+        .save-indicator-dismiss {
+          position: absolute;
+          top: 3px;
+          right: 5px;
+          background: transparent;
+          border: none;
+          color: #999;
+          font-size: 14px;
+          cursor: pointer;
+          padding: 2px 6px;
+          line-height: 1;
+          border-radius: 3px;
+          transition: all 0.2s ease;
+        }
+
+        .save-indicator-dismiss:hover {
+          color: #333;
+          background: rgba(0, 0, 0, 0.1);
+        }
+
         /* Editing mode badge - clickable and toggleable */
         .editing-mode-badge {
           display: inline-block;
@@ -293,9 +314,18 @@ auto_save_indicator_ui <- function(id) {
         }
       ")),
 
+      # Dismiss button
+      tags$button(
+        class = "save-indicator-dismiss",
+        title = "Dismiss",
+        onclick = "$(this).closest('.auto-save-indicator').fadeOut(200);",
+        HTML("&times;")
+      ),
+
       # Save indicator content
       div(
         class = "save-indicator-content",
+        style = "padding-right: 15px;",  # Space for dismiss button
         div(
           style = "display: flex; align-items: center; justify-content: space-between;",
           div(

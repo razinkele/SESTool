@@ -55,13 +55,13 @@ cld_viz_ui <- function(id, i18n) {
         border: none !important;
         box-shadow: none !important;
       }
-      /* Remove frame from legend and add top margin */
+      /* Remove frame from legend */
       .cld-network-container .vis-legend {
         border: none !important;
         box-shadow: none !important;
         background: transparent !important;
         padding: 0 !important;
-        margin-top: 25px !important;
+        padding-top: 25px !important;
       }
       .cld-network-container .vis-legend-text {
         border: none !important;
@@ -81,6 +81,19 @@ cld_viz_ui <- function(id, i18n) {
       }
       .cld-controls-box .form-group {
         margin-bottom: 15px;
+      }
+      /* Compact card header */
+      .compact-card .card-header {
+        padding: 8px 12px !important;
+        min-height: auto !important;
+      }
+      .compact-card .card-header .card-title {
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        margin: 0 !important;
+      }
+      .compact-card .card-body {
+        padding: 10px !important;
       }
       /* Fullscreen toggle button */
       .fullscreen-toggle-btn {
@@ -145,25 +158,19 @@ cld_viz_ui <- function(id, i18n) {
     ")),
 
     fluidRow(
-      column(12,
-        uiOutput(ns("module_header"))
-      )
-    ),
-
-    fluidRow(
       # Left sidebar column with controls
       column(
         width = 3,
 
-        # Collapsible controls box
+        # Collapsible controls box - compact header
         bs4Card(
           width = NULL,
-          title = tagList(icon("sliders"), i18n$t("modules.cld.visualization.visualisation_controls")),
-          status = "primary",
-          solidHeader = TRUE,
+          title = i18n$t("modules.cld.visualization.controls"),
+          status = "secondary",
+          solidHeader = FALSE,
           collapsible = TRUE,
           collapsed = FALSE,
-          class = "cld-controls-box",
+          class = "cld-controls-box compact-card",
 
           # Note: CLD is automatically generated from ISA data
           # No manual generation needed - see automatic observer below
@@ -356,16 +363,6 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
         NULL
       })
     }
-
-    # === REACTIVE MODULE HEADER ===
-    create_reactive_header(
-      output = output,
-      ns = session$ns,
-      title_key = "modules.cld.visualization.title",
-      subtitle_key = "modules.cld.visualization.subtitle",
-      help_id = "help_cld",
-      i18n = i18n
-    )
 
     # === GENERATE CLD FROM ISA DATA ===
     # NOTE: Manual CLD generation removed - CLD is now automatically generated

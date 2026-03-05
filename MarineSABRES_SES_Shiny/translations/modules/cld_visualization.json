@@ -198,6 +198,17 @@
       "no": "Spacing:",
       "el": "Spacing:"
     },
+    "modules.cld.visualization.controls": {
+      "en": "Controls",
+      "es": "Controles",
+      "fr": "Contrôles",
+      "de": "Steuerung",
+      "lt": "Valdymas",
+      "pt": "Controles",
+      "it": "Controlli",
+      "no": "Kontroller",
+      "el": "Έλεγχοι"
+    },
     "modules.cld.visualization.visualisation_controls": {
       "en": "Visualisation Controls",
       "es": "Controles de Visualización",
