@@ -1346,21 +1346,42 @@ validate_edges <- function(edges, required = c("from", "to")) {
 }
 
 create_igraph_from_data_safe <- function(nodes, edges) {
-  if (is.null(nodes) || is.null(edges)) return(NULL)
-  if (!is.data.frame(nodes) || !is.data.frame(edges)) return(NULL)
-  if (!all(c("id", "name") %in% names(nodes))) return(NULL)
-  if (!all(c("from", "to") %in% names(edges))) return(NULL)
+  log_fn <- if (exists("debug_log", mode = "function")) debug_log else function(...) invisible(NULL)
+
+  if (is.null(nodes) || is.null(edges)) {
+    log_fn("create_igraph_from_data_safe: nodes or edges is NULL", "NETWORK")
+    return(NULL)
+  }
+  if (!is.data.frame(nodes) || !is.data.frame(edges)) {
+    log_fn(sprintf("create_igraph_from_data_safe: invalid types - nodes(%s), edges(%s)",
+                   class(nodes)[1], class(edges)[1]), "NETWORK")
+    return(NULL)
+  }
+  if (!all(c("id", "name") %in% names(nodes))) {
+    log_fn(sprintf("create_igraph_from_data_safe: nodes missing required columns. Has: %s",
+                   paste(names(nodes), collapse = ", ")), "NETWORK")
+    return(NULL)
+  }
+  if (!all(c("from", "to") %in% names(edges))) {
+    log_fn(sprintf("create_igraph_from_data_safe: edges missing required columns. Has: %s",
+                   paste(names(edges), collapse = ", ")), "NETWORK")
+    return(NULL)
+  }
 
   valid_nodes <- nodes$id
   valid_edges <- edges[edges$from %in% valid_nodes & edges$to %in% valid_nodes, , drop = FALSE]
 
-  if (nrow(nodes) == 0 || nrow(valid_edges) == 0) return(NULL)
+  if (nrow(nodes) == 0 || nrow(valid_edges) == 0) {
+    log_fn(sprintf("create_igraph_from_data_safe: empty data - nodes(%d), valid_edges(%d)",
+                   nrow(nodes), nrow(valid_edges)), "NETWORK")
+    return(NULL)
+  }
 
   tryCatch({
     g <- igraph::graph_from_data_frame(d = valid_edges, vertices = nodes, directed = TRUE)
     return(g)
   }, error = function(e) {
-    warning("Failed to create igraph: ", e$message)
+    log_fn(sprintf("create_igraph_from_data_safe: igraph creation failed - %s", e$message), "NETWORK")
     return(NULL)
   })
 }

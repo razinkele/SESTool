@@ -987,7 +987,8 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
       }
 
       # Collect and validate all GB entries
-      gb_df <- data.frame()
+      # Use list accumulation instead of rbind() in loop for O(n) performance
+      gb_rows <- list()
       validation_errors <- c()
 
       for(i in 1:isa_data$gb_counter) {
@@ -1027,9 +1028,9 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
             }
           }
 
-          # Add to data frame if individual validations pass
+          # Add to list if individual validations pass (O(1) append vs O(n) rbind)
           if (all(sapply(entry_validations, function(v) v$valid))) {
-            gb_df <- rbind(gb_df, data.frame(
+            gb_rows[[length(gb_rows) + 1]] <- data.frame(
               ID = generate_element_id(ELEMENT_ID_PREFIX$welfare, i),
               Name = entry_validations[[1]]$value,
               Type = entry_validations[[2]]$value,
@@ -1038,7 +1039,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
               Importance = importance_val,
               Trend = trend_val,
               stringsAsFactors = FALSE
-            ))
+            )
           }
         }
       }
@@ -1059,8 +1060,11 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
         return()
       }
 
+      # Combine all rows into data frame (O(n) operation at end vs O(n^2) with rbind in loop)
+      gb_df <- if (length(gb_rows) > 0) do.call(rbind, gb_rows) else data.frame()
+
       # Check if we have at least one valid entry
-      if (nrow(gb_df) == 0) {
+      if (length(gb_rows) == 0) {
         showNotification(i18n$t("modules.isa.data_entry.ex789.please_add_at_least_one_valid_goodbenefit_entry"),
                         type = "warning", session = session)
         return()
@@ -1122,7 +1126,8 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
       }
 
       # Collect and validate all ES entries
-      es_df <- data.frame()
+      # Use list accumulation instead of rbind() in loop for O(n) performance
+      es_rows <- list()
       validation_errors <- c()
 
       for(i in 1:isa_data$es_counter) {
@@ -1162,9 +1167,9 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
             }
           }
 
-          # Add to data frame if validations pass
+          # Add to list if validations pass (O(1) append vs O(n) rbind)
           if (all(sapply(entry_validations, function(v) v$valid))) {
-            es_df <- rbind(es_df, data.frame(
+            es_rows[[length(es_rows) + 1]] <- data.frame(
               ID = generate_element_id(ELEMENT_ID_PREFIX$impacts, i),
               Name = entry_validations[[1]]$value,
               Type = entry_validations[[2]]$value,
@@ -1173,7 +1178,7 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
               Mechanism = if (!is.null(entry_validations[[4]]$value)) entry_validations[[4]]$value else "",
               Confidence = confidence_val,
               stringsAsFactors = FALSE
-            ))
+            )
           }
         }
       }
@@ -1194,8 +1199,11 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
         return()
       }
 
+      # Combine all rows into data frame (O(n) operation at end vs O(n^2) with rbind in loop)
+      es_df <- if (length(es_rows) > 0) do.call(rbind, es_rows) else data.frame()
+
       # Check if we have at least one valid entry
-      if (nrow(es_df) == 0) {
+      if (length(es_rows) == 0) {
         showNotification(i18n$t("modules.isa.please_add_at_least_one_valid_ecosystem_service_en"),
                         type = "warning", session = session)
         return()
@@ -1248,11 +1256,12 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
     })
 
     observeEvent(input$save_ex2b, {
-      mpf_df <- data.frame()
+      # Use list accumulation instead of rbind() in loop for O(n) performance
+      mpf_rows <- list()
       for(i in 1:isa_data$mpf_counter) {
         name_val <- input[[paste0("mpf_name_", i)]]
         if(!is.null(name_val) && name_val != "") {
-          mpf_df <- rbind(mpf_df, data.frame(
+          mpf_rows[[length(mpf_rows) + 1]] <- data.frame(
             ID = generate_element_id(ELEMENT_ID_PREFIX$states, i),
             Name = name_val,
             Type = input[[paste0("mpf_type_", i)]],
@@ -1261,9 +1270,10 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
             Mechanism = input[[paste0("mpf_mechanism_", i)]],
             Spatial = input[[paste0("mpf_spatial_", i)]],
             stringsAsFactors = FALSE
-          ))
+          )
         }
       }
+      mpf_df <- if (length(mpf_rows) > 0) do.call(rbind, mpf_rows) else data.frame()
       isa_data$marine_processes <- mpf_df
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2b.exercise_2b_saved"), nrow(mpf_df), i18n$t("modules.isa.data_entry.common.marine_processes")), type = "message")
     })
@@ -1310,11 +1320,12 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
     })
 
     observeEvent(input$save_ex3, {
-      p_df <- data.frame()
+      # Use list accumulation instead of rbind() in loop for O(n) performance
+      p_rows <- list()
       for(i in 1:isa_data$p_counter) {
         name_val <- input[[paste0("p_name_", i)]]
         if(!is.null(name_val) && name_val != "") {
-          p_df <- rbind(p_df, data.frame(
+          p_rows[[length(p_rows) + 1]] <- data.frame(
             ID = generate_element_id(ELEMENT_ID_PREFIX$pressures, i),
             Name = name_val,
             Type = input[[paste0("p_type_", i)]],
@@ -1324,9 +1335,10 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
             Spatial = input[[paste0("p_spatial_", i)]],
             Temporal = input[[paste0("p_temporal_", i)]],
             stringsAsFactors = FALSE
-          ))
+          )
         }
       }
+      p_df <- if (length(p_rows) > 0) do.call(rbind, p_rows) else data.frame()
       isa_data$pressures <- p_df
       showNotification(paste(i18n$t("modules.isa.data_entry.ex3.exercise_3_saved"), nrow(p_df), i18n$t("modules.response.measures.pressures")), type = "message")
     })
@@ -1373,11 +1385,12 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
     })
 
     observeEvent(input$save_ex4, {
-      a_df <- data.frame()
+      # Use list accumulation instead of rbind() in loop for O(n) performance
+      a_rows <- list()
       for(i in 1:isa_data$a_counter) {
         name_val <- input[[paste0("a_name_", i)]]
         if(!is.null(name_val) && name_val != "") {
-          a_df <- rbind(a_df, data.frame(
+          a_rows[[length(a_rows) + 1]] <- data.frame(
             ID = generate_element_id(ELEMENT_ID_PREFIX$activities, i),
             Name = name_val,
             Sector = input[[paste0("a_sector_", i)]],
@@ -1386,9 +1399,10 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
             Scale = input[[paste0("a_scale_", i)]],
             Frequency = input[[paste0("a_frequency_", i)]],
             stringsAsFactors = FALSE
-          ))
+          )
         }
       }
+      a_df <- if (length(a_rows) > 0) do.call(rbind, a_rows) else data.frame()
       isa_data$activities <- a_df
       showNotification(paste(i18n$t("modules.isa.data_entry.ex4.exercise_4_saved"), nrow(a_df), i18n$t("modules.response.measures.activities")), type = "message")
     })
@@ -1435,11 +1449,12 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
     })
 
     observeEvent(input$save_ex5, {
-      d_df <- data.frame()
+      # Use list accumulation instead of rbind() in loop for O(n) performance
+      d_rows <- list()
       for(i in 1:isa_data$d_counter) {
         name_val <- input[[paste0("d_name_", i)]]
         if(!is.null(name_val) && name_val != "") {
-          d_df <- rbind(d_df, data.frame(
+          d_rows[[length(d_rows) + 1]] <- data.frame(
             ID = generate_element_id(ELEMENT_ID_PREFIX$drivers, i),
             Name = name_val,
             Type = input[[paste0("d_type_", i)]],
@@ -1448,9 +1463,10 @@ isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
             Trend = input[[paste0("d_trend_", i)]],
             Controllability = input[[paste0("d_control_", i)]],
             stringsAsFactors = FALSE
-          ))
+          )
         }
       }
+      d_df <- if (length(d_rows) > 0) do.call(rbind, d_rows) else data.frame()
       isa_data$drivers <- d_df
       showNotification(paste(i18n$t("modules.isa.data_entry.ex5.exercise_5_saved"), nrow(d_df), i18n$t("modules.response.measures.drivers")), type = "message")
     })

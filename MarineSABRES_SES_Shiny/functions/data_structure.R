@@ -906,6 +906,9 @@ create_empty_project_safe <- function(project_name = "New Project", da_site = NU
   proj <- tryCatch({
     create_empty_project(project_name, da_site)
   }, error = function(e) {
+    if (exists("debug_log", mode = "function")) {
+      debug_log(sprintf("create_empty_project_safe failed: %s", e$message), "DATA_STRUCTURE")
+    }
     NULL
   })
 
@@ -957,27 +960,63 @@ create_empty_element_df_safe <- function(element_type) {
 
 # Safe adjacency matrix and conversion helpers
 create_empty_adjacency_matrix_safe <- function(from_elements, to_elements) {
-  if (is.null(from_elements) || is.null(to_elements)) return(NULL)
+  if (is.null(from_elements) || is.null(to_elements)) {
+    if (exists("debug_log", mode = "function")) {
+      debug_log("create_empty_adjacency_matrix_safe: NULL from_elements or to_elements", "DATA_STRUCTURE")
+    }
+    return(NULL)
+  }
   # Remove duplicates and preserve order
   from_u <- unique(from_elements)
   to_u <- unique(to_elements)
   # If either vector empty, return empty matrix with 0 rows
-  if (length(from_u) == 0 || length(to_u) == 0) return(matrix(nrow = 0, ncol = 0))
+  if (length(from_u) == 0 || length(to_u) == 0) {
+    if (exists("debug_log", mode = "function")) {
+      debug_log("create_empty_adjacency_matrix_safe: empty from or to elements after deduplication", "DATA_STRUCTURE")
+    }
+    return(matrix(nrow = 0, ncol = 0))
+  }
   create_empty_adjacency_matrix(from_u, to_u)
 }
 
 adjacency_to_edgelist_safe <- function(mat, from_ids, to_ids) {
-  if (is.null(mat)) return(NULL)
-  if (!is.matrix(mat)) return(NULL)
-  if (is.null(rownames(mat)) || is.null(colnames(mat))) return(NULL)
-  if (length(from_ids) != nrow(mat) || length(to_ids) != ncol(mat)) return(NULL)
+  log_fn <- if (exists("debug_log", mode = "function")) debug_log else function(...) invisible(NULL)
+
+  if (is.null(mat)) {
+    log_fn("adjacency_to_edgelist_safe: mat is NULL", "DATA_STRUCTURE")
+    return(NULL)
+  }
+  if (!is.matrix(mat)) {
+    log_fn(sprintf("adjacency_to_edgelist_safe: mat is not a matrix (class: %s)", class(mat)[1]), "DATA_STRUCTURE")
+    return(NULL)
+  }
+  if (is.null(rownames(mat)) || is.null(colnames(mat))) {
+    log_fn("adjacency_to_edgelist_safe: mat missing rownames or colnames", "DATA_STRUCTURE")
+    return(NULL)
+  }
+  if (length(from_ids) != nrow(mat) || length(to_ids) != ncol(mat)) {
+    log_fn(sprintf("adjacency_to_edgelist_safe: dimension mismatch - from_ids(%d) vs rows(%d), to_ids(%d) vs cols(%d)",
+                   length(from_ids), nrow(mat), length(to_ids), ncol(mat)), "DATA_STRUCTURE")
+    return(NULL)
+  }
   adjacency_to_edgelist(mat, from_ids, to_ids)
 }
 
 edgelist_to_adjacency_safe <- function(edgelist, from_names, to_names) {
-  if (is.null(edgelist)) return(NULL)
-  if (!is.data.frame(edgelist)) return(NULL)
-  if (!all(c("from", "to", "value") %in% names(edgelist))) return(NULL)
+  log_fn <- if (exists("debug_log", mode = "function")) debug_log else function(...) invisible(NULL)
+
+  if (is.null(edgelist)) {
+    log_fn("edgelist_to_adjacency_safe: edgelist is NULL", "DATA_STRUCTURE")
+    return(NULL)
+  }
+  if (!is.data.frame(edgelist)) {
+    log_fn(sprintf("edgelist_to_adjacency_safe: edgelist is not a data.frame (class: %s)", class(edgelist)[1]), "DATA_STRUCTURE")
+    return(NULL)
+  }
+  if (!all(c("from", "to", "value") %in% names(edgelist))) {
+    log_fn(sprintf("edgelist_to_adjacency_safe: edgelist missing required columns. Has: %s", paste(names(edgelist), collapse = ", ")), "DATA_STRUCTURE")
+    return(NULL)
+  }
   edgelist_to_adjacency(edgelist, from_names, to_names)
 }
 

@@ -22,7 +22,9 @@
 generate_session_id <- function() {
 
   # Combine multiple entropy sources for uniqueness
-  timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S_%f")
+  # Note: %OS gives fractional seconds (e.g., "123456" for microseconds)
+  # %f is not a valid R strptime format code
+  timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S_%OS3")
   random_bytes <- paste0(sample(c(0:9, letters[1:6]), 16, replace = TRUE), collapse = "")
   process_id <- Sys.getpid()
 
