@@ -950,17 +950,19 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
                   callback(null);
                 }
               },
-              editEdge: function(edgeData, callback) {
-                // Store callback for later use after modal confirmation
-                window.editEdgeCallback_%s = callback;
-                window.pendingEdgeData_%s = edgeData;
-                // Trigger Shiny to show edge properties modal
-                Shiny.setInputValue('%s', {
-                  id: edgeData.id,
-                  from: edgeData.from,
-                  to: edgeData.to,
-                  nonce: Math.random()
-                });
+              editEdge: {
+                editWithoutDrag: function(edgeData, callback) {
+                  // Store callback for later use after modal confirmation
+                  window.editEdgeCallback_%s = callback;
+                  window.pendingEdgeData_%s = edgeData;
+                  // Trigger Shiny to show edge properties modal
+                  Shiny.setInputValue('%s', {
+                    id: edgeData.id,
+                    from: edgeData.from,
+                    to: edgeData.to,
+                    nonce: Math.random()
+                  });
+                }
               },
               deleteNode: function(nodeData, callback) {
                 if (confirm('Delete this element?')) {
