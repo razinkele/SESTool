@@ -540,10 +540,19 @@ server <- function(input, output, session) {
   debug_log("=====================================", "SESSION")
 
   # ========== SESSION-LOCAL I18N TRANSLATOR ==========
-  # IMPORTANT: Create a session-local i18n to prevent language changes from affecting
-
-  # other users' sessions. The global i18n in global.R is shared across all sessions,
-  # so we need a session-specific wrapper that maintains its own language state.
+  # ARCHITECTURE NOTE: The app uses a dual i18n system by design:
+  #
+  # 1. Global i18n (global.R) - Used for static UI rendering at app startup
+  #    - Loaded once, shared read-only translator
+  #    - Used in UI functions: xxx_ui(id, i18n)
+  #
+  # 2. Session-local session_i18n (here) - Used for runtime translations
+  #    - Created per-session with private language state
+  #    - Used in server functions: xxx_server(id, project_data, session_i18n, ...)
+  #    - Prevents User A's language change from affecting User B
+  #
+  # This dual system IS NECESSARY for multi-user shiny-server deployments.
+  # Do not simplify to a single global translator.
 
   # Session-local language state (defaults to English)
   session_language <- reactiveVal("en")
