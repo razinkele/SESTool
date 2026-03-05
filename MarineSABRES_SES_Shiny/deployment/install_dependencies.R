@@ -20,7 +20,7 @@ options(repos = c(CRAN = "https://cran.rstudio.com/"))
 
 # ============================================================================
 # PINNED PACKAGE VERSIONS (for reproducible builds)
-# Last verified: 2026-02-03
+# Last verified: 2026-03-05
 # ============================================================================
 # Core framework
 # shiny >= 1.8.0
@@ -75,6 +75,7 @@ required_packages <- c(
   "shinyWidgets",
   "shinyjs",
   "shinyBS",
+  "shinyFiles",
 
   # Internationalization
   "shiny.i18n",
@@ -89,8 +90,10 @@ required_packages <- c(
   "stringr",
   "forcats",
   "lubridate",
+  "magrittr",
   "DT",
   "openxlsx",
+  "readxl",
   "jsonlite",
   "digest",
 
@@ -163,6 +166,36 @@ if (requireNamespace("tinytex", quietly = TRUE)) {
   }
 } else {
   cat("  WARNING: tinytex package not available, skipping LaTeX installation\n")
+}
+
+# ============================================================================
+# Optional: Install ML packages (torch for deep learning features)
+# ============================================================================
+cat("\n================================================================================\n")
+cat("Optional: ML Package Installation (torch)\n")
+cat("================================================================================\n\n")
+
+cat("The torch package enables ML-assisted element classification features.\n")
+cat("This is OPTIONAL - the app works without it.\n\n")
+
+if (requireNamespace("torch", quietly = TRUE)) {
+  cat("✓ torch package already installed\n")
+  # Check if torch backend is installed
+  tryCatch({
+    if (torch::torch_is_installed()) {
+      cat("✓ torch backend already installed\n")
+    } else {
+      cat("  Installing torch backend...\n")
+      torch::install_torch()
+      cat("  ✓ torch backend installed\n")
+    }
+  }, error = function(e) {
+    cat(sprintf("  ⚠ torch backend check failed: %s\n", e$message))
+  })
+} else {
+  cat("  torch not installed. To enable ML features, run:\n")
+  cat("    install.packages('torch')\n")
+  cat("    torch::install_torch()\n")
 }
 
 cat("\n================================================================================\n")

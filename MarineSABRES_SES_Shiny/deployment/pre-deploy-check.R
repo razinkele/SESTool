@@ -215,11 +215,21 @@ if (all_subdirs_exist) {
 cat("\n[4] Checking R Package Dependencies...\n")
 
 required_packages <- c(
-  "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS",
-  "shiny.i18n", "tidyverse", "dplyr", "tidyr", "readr", "purrr",
-  "tibble", "stringr", "forcats", "lubridate", "DT", "openxlsx",
-  "jsonlite", "digest", "igraph", "visNetwork", "ggraph", "tidygraph",
-  "ggplot2", "plotly", "dygraphs", "xts", "zoo", "timevis", "rmarkdown", "htmlwidgets", "knitr"
+  # Core Shiny framework
+  "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS", "shinyFiles",
+  # Internationalization
+  "shiny.i18n",
+  # Data manipulation
+  "tidyverse", "dplyr", "tidyr", "readr", "purrr", "tibble", "stringr",
+  "forcats", "lubridate", "magrittr",
+  # Data tables and I/O
+  "DT", "openxlsx", "readxl", "jsonlite", "digest",
+  # Network visualization
+  "igraph", "visNetwork", "ggraph", "tidygraph",
+  # Plotting and time series
+  "ggplot2", "plotly", "dygraphs", "xts", "zoo", "timevis",
+  # Reporting
+  "rmarkdown", "htmlwidgets", "knitr"
 )
 
 missing_packages <- c()
@@ -238,6 +248,18 @@ if (length(missing_packages) == 0) {
 } else {
   cat(sprintf("\n   Missing packages: %s\n", paste(missing_packages, collapse = ", ")))
   cat("   Run: Rscript deployment/install_dependencies.R\n")
+}
+
+# Check optional packages (ML features)
+cat("\n[4.1] Checking Optional Packages (ML Features)...\n")
+
+optional_packages <- c("torch")
+for (pkg in optional_packages) {
+  if (requireNamespace(pkg, quietly = TRUE)) {
+    print_check(paste("Optional:", pkg), "PASS")
+  } else {
+    print_check(paste("Optional:", pkg), "WARN", "Not installed - ML features disabled")
+  }
 }
 
 # ============================================================================

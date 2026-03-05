@@ -46,6 +46,7 @@ RUN R -e "install.packages(c( \
     'stringi', \
     'forcats', \
     'lubridate', \
+    'magrittr', \
     'DT', \
     'openxlsx', \
     'readxl', \
