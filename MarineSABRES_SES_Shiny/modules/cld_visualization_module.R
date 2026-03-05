@@ -55,17 +55,22 @@ cld_viz_ui <- function(id, i18n) {
         border: none !important;
         box-shadow: none !important;
       }
-      /* Remove frame from legend */
+      /* Remove frame from legend and position it lower */
       .cld-network-container .vis-legend {
         border: none !important;
         box-shadow: none !important;
         background: transparent !important;
         padding: 0 !important;
-        padding-top: 25px !important;
+        top: 40px !important;
+        position: relative !important;
       }
       .cld-network-container .vis-legend-text {
         border: none !important;
         background: transparent !important;
+      }
+      /* Move legend wrapper down */
+      .cld-network-container div.vis-network div.vis-legend {
+        margin-top: 35px !important;
       }
       /* Style control sections inside box */
       .cld-controls-box h5 {

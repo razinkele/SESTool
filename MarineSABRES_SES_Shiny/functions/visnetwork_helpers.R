@@ -885,11 +885,11 @@ apply_standard_styling <- function(visnet) {
                   border = darken_color(ELEMENT_COLORS[["Responses"]])),
       shape = ELEMENT_SHAPES[["Responses"]]
     ) %>%
-    # Legend
+    # Legend - with main title styled to have top and left margin
     visLegend(
       width = 0.15,
       position = "right",
-      main = "DAPSI(W)R(M)"
+      main = list(text = "DAPSI(W)R(M)", style = "padding-top: 85px; padding-left: 35px; display: block;")
     ) %>%
     # Interaction options
     visInteraction(
