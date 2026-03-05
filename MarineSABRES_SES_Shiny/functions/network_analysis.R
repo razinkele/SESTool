@@ -466,8 +466,15 @@ validate_loop_dapsirwrm <- function(loop_node_ids, nodes) {
 #' @param edges Edges dataframe
 #' @param max_length Maximum cycle length to detect
 #' @param max_cycles Maximum number of cycles to find (default 1000)
+#' @param timeout_seconds Maximum time allowed for detection (default from constants)
 #' @return List of cycles (vectors of node IDs)
-find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
+#' @throws Error with message containing "timeout" if time limit exceeded
+find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000,
+                            timeout_seconds = LOOP_ANALYSIS_TIMEOUT_SECONDS) {
+
+  # Capture start time for timeout tracking across all components
+
+  start_time <- Sys.time()
 
   # Create igraph object
   g <- create_igraph_from_data(nodes, edges)
@@ -492,6 +499,15 @@ find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
   for (comp_id in unique(scc$membership)) {
     # Stop if we've reached the cycle limit
     if (length(cycles) >= max_cycles) break
+
+    # Check timeout before processing each component
+    elapsed <- as.numeric(difftime(Sys.time(), start_time, units = "secs"))
+    if (elapsed > timeout_seconds) {
+      debug_log(sprintf("Loop detection timed out after %.1f seconds while processing components", elapsed),
+                "NETWORK_ANALYSIS")
+      stop(sprintf("Loop detection timeout: exceeded %d seconds. Try reducing max loop length or max cycles.",
+                   timeout_seconds))
+    }
 
     comp_nodes <- which(scc$membership == comp_id)
     comp_size <- length(comp_nodes)
@@ -520,11 +536,15 @@ find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
         }
       }
 
-      # Calculate remaining cycle budget
+      # Calculate remaining cycle budget and time budget
       remaining_cycles <- max_cycles - length(cycles)
+      remaining_time <- timeout_seconds - as.numeric(difftime(Sys.time(), start_time, units = "secs"))
 
-      # Find cycles in this component
-      comp_cycles <- find_cycles_dfs(subg, max_length, max_cycles = remaining_cycles)
+      # Find cycles in this component with timeout
+      comp_cycles <- find_cycles_dfs(subg, max_length,
+                                      max_cycles = remaining_cycles,
+                                      timeout_seconds = remaining_time,
+                                      start_time = Sys.time())
 
       # CRITICAL: Remap subgraph indices to original graph indices
       # comp_cycles contains indices in the subgraph, we need to map them to the original graph
@@ -538,6 +558,11 @@ find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
     }
   }
 
+  # Log total time
+  total_time <- as.numeric(difftime(Sys.time(), start_time, units = "secs"))
+  debug_log(sprintf("find_all_cycles completed: %d cycles in %.2f seconds",
+                    length(cycles), total_time), "NETWORK_ANALYSIS")
+
   return(cycles)
 }
 
@@ -547,11 +572,19 @@ find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
 #' O(n) vector append/remove operations. Uses pre-allocated arrays
 #' for O(1) push/pop operations.
 #'
+#' Includes robust timeout checking that works even during C-level igraph calls
+#' by checking elapsed time periodically within the R-level DFS loop.
+#'
 #' @param graph igraph object
 #' @param max_length Maximum cycle length
 #' @param max_cycles Maximum number of cycles to find (default 1000)
+#' @param timeout_seconds Maximum time allowed for detection (default 30)
+#' @param start_time POSIXct start time (default: current time)
 #' @return List of cycles
-find_cycles_dfs <- function(graph, max_length, max_cycles = 1000) {
+#' @throws Error with message containing "timeout" if time limit exceeded
+find_cycles_dfs <- function(graph, max_length, max_cycles = 1000,
+                            timeout_seconds = LOOP_ANALYSIS_TIMEOUT_SECONDS,
+                            start_time = Sys.time()) {
 
   n_vertices <- vcount(graph)
   cycles <- list()
@@ -564,6 +597,21 @@ find_cycles_dfs <- function(graph, max_length, max_cycles = 1000) {
 
   # Use a hash environment for O(1) signature lookup
   cycle_signatures <- new.env(hash = TRUE, parent = emptyenv())
+
+  # Timeout tracking - check every N visits to avoid excessive time checks
+  visit_count <- 0L
+  timeout_check_interval <- 100L  # Check timeout every 100 DFS visits
+  timed_out <- FALSE
+
+  # Helper: check timeout (called periodically)
+  check_timeout <- function() {
+    elapsed <- as.numeric(difftime(Sys.time(), start_time, units = "secs"))
+    if (elapsed > timeout_seconds) {
+      timed_out <<- TRUE
+      stop(sprintf("Loop detection timeout: exceeded %d seconds. Try reducing max loop length or max cycles.",
+                   timeout_seconds))
+    }
+  }
 
   # Helper: push to stack (O(1))
   stack_push <- function(v) {
@@ -583,8 +631,14 @@ find_cycles_dfs <- function(graph, max_length, max_cycles = 1000) {
 
   # DFS visit function
   dfs_visit <- function(v, depth = 1L) {
-    # Stop if we've found enough cycles
-    if (length(cycles) >= max_cycles) return()
+    # Stop if we've found enough cycles or timed out
+    if (length(cycles) >= max_cycles || timed_out) return()
+
+    # Periodic timeout check (every N visits)
+    visit_count <<- visit_count + 1L
+    if (visit_count %% timeout_check_interval == 0L) {
+      check_timeout()
+    }
 
     if (depth > max_length) return()
 
@@ -596,8 +650,8 @@ find_cycles_dfs <- function(graph, max_length, max_cycles = 1000) {
     neighbor_list <- neighbors(graph, v, mode = "out")
 
     for (neighbor in neighbor_list) {
-      # Stop if we've found enough cycles
-      if (length(cycles) >= max_cycles) break
+      # Stop if we've found enough cycles or timed out
+      if (length(cycles) >= max_cycles || timed_out) break
 
       neighbor_idx <- as.integer(neighbor)
 
@@ -632,15 +686,22 @@ find_cycles_dfs <- function(graph, max_length, max_cycles = 1000) {
 
   # Start DFS from each node
   for (v in 1:n_vertices) {
-    # Stop if we've found enough cycles
-    if (length(cycles) >= max_cycles) break
+    # Stop if we've found enough cycles or timed out
+    if (length(cycles) >= max_cycles || timed_out) break
 
     dfs_visit(v)
   }
 
-  # Log if limit reached
-  if (length(cycles) >= max_cycles) {
-    debug_log(sprintf("Cycle detection stopped after finding %d cycles (limit reached). Network may contain more cycles.", max_cycles), "NETWORK_ANALYSIS")
+  # Log completion status
+  if (timed_out) {
+    debug_log(sprintf("Cycle detection timed out after %d seconds (%d cycles found, %d visits)",
+                      timeout_seconds, length(cycles), visit_count), "NETWORK_ANALYSIS")
+  } else if (length(cycles) >= max_cycles) {
+    debug_log(sprintf("Cycle detection stopped after finding %d cycles (limit reached). Network may contain more cycles.",
+                      max_cycles), "NETWORK_ANALYSIS")
+  } else {
+    debug_log(sprintf("Cycle detection completed: %d cycles found in %d visits",
+                      length(cycles), visit_count), "NETWORK_ANALYSIS")
   }
 
   return(cycles)

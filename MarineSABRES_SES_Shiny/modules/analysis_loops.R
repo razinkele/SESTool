@@ -393,30 +393,27 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
           incProgress(0.1, detail = i18n$t("modules.analysis.loops.progress_finding"))
           Sys.sleep(0.1)
 
-          # Run with timeout to prevent hanging
+          # Run loop detection with built-in timeout (more reliable than setTimeLimit)
+          # The find_all_cycles function now checks timeout internally during DFS
           all_loops <- NULL
           error_occurred <- FALSE
+          timeout_occurred <- FALSE
 
           tryCatch({
-            # Set a reasonable timeout (30 seconds)
-            setTimeLimit(cpu = LOOP_ANALYSIS_TIMEOUT_SECONDS, elapsed = LOOP_ANALYSIS_TIMEOUT_SECONDS, transient = TRUE)
-
             all_loops <- find_all_cycles(
               nodes, edges,
               max_length = safe_max_length,
-              max_cycles = max_cycles_limit
+              max_cycles = max_cycles_limit,
+              timeout_seconds = LOOP_ANALYSIS_TIMEOUT_SECONDS
             )
 
-            # Reset time limit
-            setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
-
           }, error = function(e) {
-            # Reset time limit
-            setTimeLimit(cpu = Inf, elapsed = Inf, transient = FALSE)
-
-            if (grepl("time limit", e$message, ignore.case = TRUE)) {
+            # Check if this was a timeout error (message contains "timeout")
+            if (grepl("timeout", e$message, ignore.case = TRUE)) {
+              timeout_occurred <<- TRUE
               showNotification(
-                i18n$t("modules.analysis.loop_detection_timed_out_after_30_seconds_try_redu"),
+                paste0(i18n$t("modules.analysis.loop_detection_timed_out_after_30_seconds_try_redu"),
+                       " (", LOOP_ANALYSIS_TIMEOUT_SECONDS, "s)"),
                 type = "error",
                 duration = 10
               )
@@ -428,10 +425,18 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
               )
             }
             error_occurred <<- TRUE
+            debug_log(sprintf("Loop detection error: %s", e$message), "LOOP DETECTION")
           })
 
           if (error_occurred || is.null(all_loops)) {
-            output$detection_status <- renderText(i18n$t("modules.analysis.loops.loop_detection_failed_or_timed_out"))
+            if (timeout_occurred) {
+              output$detection_status <- renderText(
+                paste0(i18n$t("modules.analysis.loops.loop_detection_failed_or_timed_out"),
+                       " (", LOOP_ANALYSIS_TIMEOUT_SECONDS, "s timeout)")
+              )
+            } else {
+              output$detection_status <- renderText(i18n$t("modules.analysis.loops.loop_detection_failed_or_timed_out"))
+            }
             return()
           }
 

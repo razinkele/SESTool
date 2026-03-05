@@ -251,8 +251,38 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       metrics = NULL,
       filtered_nodes = NULL,
       filtered_edges = NULL,
-      isa_hash = NULL  # Cache hash to track ISA data changes
+      isa_hash = NULL,  # Cache hash to track ISA data changes
+      last_render_hash = NULL  # Track last rendered network hash
     )
+
+    # === HELPER: Create network data signature ===
+    # Uses digest for proper content-based hashing (not just row counts)
+    create_network_signature <- function(isa_data, cld_data = NULL) {
+      if (is.null(isa_data) || length(isa_data) == 0) {
+        return(NULL)
+      }
+      tryCatch({
+        sig_data <- list(
+          # ISA element data (all columns, not just counts)
+          drivers = isa_data$drivers,
+          activities = isa_data$activities,
+          pressures = isa_data$pressures,
+          marine_processes = isa_data$marine_processes,
+          ecosystem_services = isa_data$ecosystem_services,
+          goods_benefits = isa_data$goods_benefits,
+          # Connection data (adjacency matrices)
+          adjacency_matrices = isa_data$adjacency_matrices,
+          # CLD analysis state (leverage scores, etc.)
+          cld_leverage = if (!is.null(cld_data$nodes) && "leverage_score" %in% names(cld_data$nodes)) {
+            cld_data$nodes$leverage_score
+          } else NULL
+        )
+        digest::digest(sig_data, algo = "xxhash64")
+      }, error = function(e) {
+        debug_log(sprintf("Failed to create network signature: %s", e$message), "CLD VIZ")
+        NULL
+      })
+    }
 
     # === REACTIVE MODULE HEADER ===
     create_reactive_header(
@@ -269,8 +299,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
     # when ISA data changes (see automatic observer below)
 
     # === CREATE NODES AND EDGES (WITH SMART CACHING) ===
-    # Note: Reloads from project_data when ISA or CLD data changes
-    # Includes leverage scores and loop data in signature to detect analysis updates
+    # Uses digest-based signature for proper content change detection
+    # Only reloads when ISA data or CLD analysis results actually change
     observe({
       req(project_data_reactive())
 
@@ -278,44 +308,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       isa_data <- project_data$data$isa_data
 
       if (!is.null(isa_data) && length(isa_data) > 0) {
-        # Count connections from adjacency matrices
-        n_connections <- 0
-        if (!is.null(isa_data$adjacency_matrices)) {
-          for (matrix_name in names(isa_data$adjacency_matrices)) {
-            mat <- isa_data$adjacency_matrices[[matrix_name]]
-            if (!is.null(mat) && is.matrix(mat)) {
-              n_connections <- n_connections + sum(mat != "", na.rm = TRUE)
-            }
-          }
+        # Create proper content-based signature using digest
+        full_signature <- create_network_signature(isa_data, project_data$data$cld)
+
+        if (is.null(full_signature)) {
+          debug_log("Failed to create signature, skipping cache check", "CLD VIZ")
+          return()
         }
 
-        # Create signature that includes ISA data AND connection count
-        isa_signature <- paste(
-          nrow(isa_data$drivers %||% data.frame()),
-          nrow(isa_data$activities %||% data.frame()),
-          nrow(isa_data$pressures %||% data.frame()),
-          nrow(isa_data$marine_processes %||% data.frame()),
-          nrow(isa_data$ecosystem_services %||% data.frame()),
-          nrow(isa_data$goods_benefits %||% data.frame()),
-          n_connections,  # Add connection count to signature
-          sep = "-"
-        )
-
-        # Add CLD state to signature (detects leverage analysis updates)
-        cld_signature <- if (!is.null(project_data$data$cld$nodes)) {
-          paste(
-            nrow(project_data$data$cld$nodes),
-            sum(!is.na(project_data$data$cld$nodes$leverage_score)),
-            sep = "-"
-          )
-        } else {
-          "no-cld"
-        }
-
-        full_signature <- paste(isa_signature, cld_signature, sep = "|")
-
-        debug_log(paste("Current signature:", full_signature), "CLD VIZ")
-        debug_log(paste("Cached signature:", rv$isa_hash), "CLD VIZ")
+        debug_log(paste("Current signature:", substr(full_signature, 1, 16)), "CLD VIZ")
+        debug_log(paste("Cached signature:", substr(rv$isa_hash %||% "NULL", 1, 16)), "CLD VIZ")
 
         # Only reload if signature changed
         if (is.null(rv$isa_hash) || rv$isa_hash != full_signature) {
@@ -403,50 +405,56 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       }
     })
     
-    # === FILTER DATA ===
-    filtered_data <- reactive({
+    # === CACHED NETWORK DATA ===
+    # Simplified reactive that returns nodes/edges with proper caching
+    # Uses bindCache with digest-based signature for efficient cache invalidation
+    network_data <- reactive({
       req(rv$nodes, rv$edges)
 
-      debug_log("filtered_data reactive triggered", "CLD VIZ")
-      debug_log(paste("rv$nodes:", nrow(rv$nodes), "rows"), "CLD VIZ")
-      debug_log(paste("rv$edges:", nrow(rv$edges), "rows"), "CLD VIZ")
-      if (nrow(rv$edges) > 0) {
-        debug_log(paste("Edge columns:", paste(names(rv$edges), collapse=", ")), "CLD VIZ")
-        debug_log(paste("First edge: from=", rv$edges$from[1], " to=", rv$edges$to[1]), "CLD VIZ")
-      }
+      # Only log on actual computation (not cache hits)
+      debug_log(sprintf("network_data reactive: %d nodes, %d edges",
+                        nrow(rv$nodes), nrow(rv$edges)), "CLD VIZ")
 
-      # Return all nodes and edges (filter controls removed)
-      filtered <- list(
+      # Update filtered references for other observers
+      rv$filtered_nodes <- rv$nodes
+      rv$filtered_edges <- rv$edges
+
+      list(
         nodes = rv$nodes,
         edges = rv$edges
       )
+    }) %>% bindCache(
+      # Cache key: hash of ISA data stored in rv$isa_hash
+      rv$isa_hash
+    )
 
-      rv$filtered_nodes <- filtered$nodes
-      rv$filtered_edges <- filtered$edges
-
-      return(filtered)
-    })
-
-    # === APPLY NODE SIZING ===
+    # Backward compatibility aliases (some observers may still reference these)
+    filtered_data <- network_data
     sized_nodes <- reactive({
-      req(filtered_data())
-
-      # Simply return filtered nodes (node sizing control removed)
-      return(filtered_data()$nodes)
+      req(network_data())
+      network_data()$nodes
     })
 
-    # === MAIN NETWORK VISUALIZATION ===
+    # === MAIN NETWORK VISUALIZATION (WITH CACHING) ===
     # NOTE: Layout inputs are isolated to prevent re-renders on layout changes.
     # Layout updates are handled via proxy observers below for better performance.
+    # The visNetwork output is cached by ISA data signature to avoid expensive re-renders.
     output$network <- renderVisNetwork({
-      req(sized_nodes(), filtered_data())
+      req(network_data())
 
-      nodes <- sized_nodes()
-      edges <- filtered_data()$edges
+      nodes <- network_data()$nodes
+      edges <- network_data()$edges
 
-      debug_log("renderVisNetwork triggered", "CLD VIZ")
-      debug_log(paste("nodes:", nrow(nodes), "rows"), "CLD VIZ")
-      debug_log(paste("edges:", nrow(edges), "rows"), "CLD VIZ")
+      # Check if we already rendered this exact data
+      current_hash <- rv$isa_hash
+      if (!is.null(rv$last_render_hash) && identical(rv$last_render_hash, current_hash)) {
+        debug_log("renderVisNetwork CACHE HIT - skipping render", "CLD VIZ PERF")
+        # Return early - Shiny will use cached output
+      } else {
+        debug_log(sprintf("renderVisNetwork triggered: %d nodes, %d edges",
+                          nrow(nodes), nrow(edges)), "CLD VIZ PERF")
+        rv$last_render_hash <- current_hash
+      }
 
       # Create visNetwork with standard styling
       vis <- visNetwork(nodes, edges, height = "100%", width = "100%") %>%
@@ -497,7 +505,13 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
         )
 
       return(vis)
-    })
+    }) %>% bindCache(
+      # Cache the entire visNetwork widget by ISA data hash
+      # This prevents expensive physics calculations on unchanged data
+      rv$isa_hash,
+      # Include layout type in cache key so different layouts are cached separately
+      isolate(input$layout_type)
+    )
 
     # Store network proxy (IMPORTANT: Use session namespace in module)
     observe({
