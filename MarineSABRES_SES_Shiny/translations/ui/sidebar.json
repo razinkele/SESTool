@@ -24,15 +24,15 @@
       "el": "AI guided SES creation"
     },
     "ui.sidebar.analysis_tools": {
-      "en": "Analysis Tools",
-      "es": "Herramientas de Análisis",
-      "fr": "Outils d'Analyse",
-      "de": "Analysewerkzeuge",
-      "lt": "Analizės įrankiai",
-      "pt": "Ferramentas de Análise",
-      "it": "Strumenti di Analisi",
-      "no": "Analyseverktøy",
-      "el": "Ανάλυση Tools"
+      "en": "SES Analysis",
+      "es": "Análisis SES",
+      "fr": "Analyse SES",
+      "de": "SES-Analyse",
+      "lt": "SES analizė",
+      "pt": "Análise SES",
+      "it": "Analisi SES",
+      "no": "SES-analyse",
+      "el": "Ανάλυση SES"
     },
     "ui.sidebar.bot_analysis": {
       "en": "BOT Analysis",
