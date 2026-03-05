@@ -303,6 +303,41 @@ $(document).ready(function() {
     Shiny.setInputValue('show_about_modal', Math.random());
   });
 
+  // Clear session and start fresh
+  $('#clear_session_btn').on('click', function(e) {
+    e.preventDefault();
+
+    // Confirm with user
+    var confirmMsg = 'This will clear all saved session data and reload the application.\n\nAre you sure you want to start fresh?';
+    if (confirm(confirmMsg)) {
+      // Clear all MarineSABRES-related localStorage
+      var keysToRemove = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key && (key.indexOf('marinesabres') !== -1 ||
+                    key.indexOf('autosave') !== -1 ||
+                    key.indexOf('ai_isa') !== -1 ||
+                    key.indexOf('shiny') !== -1)) {
+          keysToRemove.push(key);
+        }
+      }
+
+      // Remove the keys
+      keysToRemove.forEach(function(key) {
+        localStorage.removeItem(key);
+        console.log('[Clear Session] Removed:', key);
+      });
+
+      // Also clear sessionStorage
+      sessionStorage.clear();
+
+      console.log('[Clear Session] Cleared ' + keysToRemove.length + ' localStorage items and sessionStorage');
+
+      // Reload the page
+      window.location.reload(true);
+    }
+  });
+
   // Show persistent loading overlay for language change
   Shiny.addCustomMessageHandler('showLanguageLoading', function(message) {
     __dbg('[JS] showLanguageLoading called with message:', message.text);

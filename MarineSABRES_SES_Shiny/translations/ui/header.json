@@ -638,6 +638,17 @@
       "it": "Guida per Principianti",
       "no": "Beginner's Guide",
       "el": "Beginner's Guide"
+    },
+    "ui.header.clear_session": {
+      "en": "Clear Session & Start Fresh",
+      "es": "Limpiar Sesión y Empezar de Nuevo",
+      "fr": "Effacer la Session et Recommencer",
+      "de": "Sitzung Löschen und Neu Starten",
+      "lt": "Išvalyti Sesiją ir Pradėti Iš Naujo",
+      "pt": "Limpar Sessão e Recomeçar",
+      "it": "Cancella Sessione e Ricomincia",
+      "no": "Fjern Sesjon og Start På Nytt",
+      "el": "Εκκαθάριση Συνεδρίας και Νέα Εκκίνηση"
     }
   }
 }

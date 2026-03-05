@@ -91,6 +91,15 @@ build_dashboard_header <- function(i18n) {
             class = "action-button",
             icon("info-circle"),
             tags$span(i18n$t("ui.header.app_info"), `data-i18n`="App Info")
+          ),
+          tags$hr(style = "margin: 5px 0; border-color: #555;"),
+          tags$a(
+            href = "#",
+            id = "clear_session_btn",
+            class = "action-button",
+            icon("trash-alt"),
+            tags$span(i18n$t("ui.header.clear_session"), `data-i18n`="Clear Session & Start Fresh"),
+            style = "color: #dc3545;"
           )
         )
       ),
