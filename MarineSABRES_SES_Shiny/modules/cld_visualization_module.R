@@ -162,6 +162,102 @@ cld_viz_ui <- function(id, i18n) {
       }
     ")),
 
+    # Compact inline popup for adding new nodes (similar to visNetwork native style)
+    tags$style(HTML(sprintf("
+      #%s {
+        position: fixed;
+        top: 50%%;
+        left: 50%%;
+        transform: translate(-50%%, -50%%);
+        z-index: 10000;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        padding: 10px;
+        width: 280px;
+        font-size: 12px;
+      }
+      #%s .form-group {
+        margin-bottom: 8px;
+      }
+      #%s label {
+        font-size: 11px;
+        margin-bottom: 2px;
+        font-weight: 500;
+      }
+      #%s .form-control {
+        font-size: 12px;
+        padding: 4px 8px;
+        height: auto;
+      }
+      #%s .popup-header {
+        font-weight: 600;
+        font-size: 13px;
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #eee;
+      }
+      #%s .popup-buttons {
+        display: flex;
+        gap: 6px;
+        justify-content: flex-end;
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px solid #eee;
+      }
+      #%s .popup-buttons .btn {
+        font-size: 11px;
+        padding: 4px 12px;
+      }
+    ", ns("add_node_modal_container"), ns("add_node_modal_container"),
+       ns("add_node_modal_container"), ns("add_node_modal_container"),
+       ns("add_node_modal_container"), ns("add_node_modal_container"),
+       ns("add_node_modal_container")))),
+
+    shinyjs::hidden(
+      div(
+        id = ns("add_node_modal_container"),
+        div(class = "popup-header", i18n$t("modules.cld.visualization.add_new_element")),
+        selectInput(
+          ns("new_node_type"),
+          i18n$t("modules.cld.visualization.element_type"),
+          choices = c(
+            "Drivers" = "Drivers",
+            "Activities" = "Activities",
+            "Pressures" = "Pressures",
+            "Marine Processes & Functioning" = "Marine Processes & Functioning",
+            "Ecosystem Services" = "Ecosystem Services",
+            "Goods & Benefits" = "Goods & Benefits",
+            "Responses" = "Responses"
+          ),
+          selected = "Activities",
+          width = "100%"
+        ),
+        textInput(
+          ns("new_node_label"),
+          i18n$t("modules.cld.visualization.element_name"),
+          placeholder = i18n$t("modules.cld.visualization.enter_element_name"),
+          width = "100%"
+        ),
+        div(
+          class = "popup-buttons",
+          tags$button(
+            type = "button",
+            class = "btn btn-outline-secondary btn-sm",
+            onclick = sprintf("Shiny.setInputValue('%s', {cancel: true, nonce: Math.random()});", ns("add_node_response")),
+            i18n$t("common.buttons.cancel")
+          ),
+          tags$button(
+            type = "button",
+            class = "btn btn-primary btn-sm",
+            onclick = sprintf("Shiny.setInputValue('%s', {confirm: true, nonce: Math.random()});", ns("add_node_response")),
+            i18n$t("common.buttons.add")
+          )
+        )
+      )
+    ),
+
     fluidRow(
       # Left sidebar column with controls
       column(
@@ -213,6 +309,26 @@ cld_viz_ui <- function(id, i18n) {
               max = 300,
               value = 150,
               step = 10
+            )
+          ),
+
+          # Edit Mode Controls
+          hr(),
+          h5(icon("edit"), i18n$t("modules.cld.visualization.edit_mode")),
+
+          div(
+            style = "padding: 10px 0;",
+            shinyWidgets::materialSwitch(
+              inputId = ns("enable_manipulation"),
+              label = i18n$t("modules.cld.visualization.enable_editing"),
+              value = FALSE,
+              status = "primary",
+              right = TRUE
+            ),
+            tags$small(
+              class = "text-muted",
+              style = "display: block; margin-top: 5px;",
+              i18n$t("modules.cld.visualization.edit_mode_hint")
             )
           ),
 
@@ -337,7 +453,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       filtered_nodes = NULL,
       filtered_edges = NULL,
       isa_hash = NULL,  # Cache hash to track ISA data changes
-      last_render_hash = NULL  # Track last rendered network hash
+      last_render_hash = NULL,  # Track last rendered network hash
+      hierarchical_positions = NULL  # Saved node positions from hierarchical layout
     )
 
     # === HELPER: Create network data signature ===
@@ -566,8 +683,25 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
               this.setOptions({physics: false});
               window.network_%s = this;
               console.log('[CLD VIZ] Network stabilized and stored');
+
+              // Save hierarchical positions for later restoration
+              var positions = this.getPositions();
+              var nodePositions = [];
+              for (var nodeId in positions) {
+                if (positions.hasOwnProperty(nodeId) && !nodeId.startsWith('edgeId:')) {
+                  nodePositions.push({
+                    id: nodeId,
+                    x: positions[nodeId].x,
+                    y: positions[nodeId].y
+                  });
+                }
+              }
+              if (nodePositions.length > 0) {
+                Shiny.setInputValue('%s', JSON.stringify(nodePositions), {priority: 'event'});
+                console.log('[CLD VIZ] Saved ' + nodePositions.length + ' hierarchical positions');
+              }
             }",
-            id  # Use module id to create unique window variable
+            id, session$ns("hierarchical_positions_saved")
           ),
           type = "once",
           stabilized = sprintf(
@@ -593,6 +727,18 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       rv$network_proxy <- visNetworkProxy(session$ns("network"))
     })
 
+    # === HIERARCHICAL POSITION CACHING ===
+    # Store hierarchical positions when received from JavaScript
+    observeEvent(input$hierarchical_positions_saved, {
+      tryCatch({
+        positions <- jsonlite::fromJSON(input$hierarchical_positions_saved)
+        rv$hierarchical_positions <- positions
+        debug_log(sprintf("Stored %d hierarchical positions", nrow(positions)), "CLD VIZ")
+      }, error = function(e) {
+        debug_log(paste("Error parsing hierarchical positions:", e$message), "CLD VIZ")
+      })
+    }, ignoreInit = TRUE)
+
     # === PROXY-BASED LAYOUT UPDATES ===
     # These observers update layout without full re-render (50-80% faster)
 
@@ -604,18 +750,40 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       proxy <- visNetworkProxy(session$ns("network"))
 
       if (input$layout_type == "hierarchical") {
-        proxy %>%
-          visHierarchicalLayout(
-            direction = input$hierarchy_direction,
-            levelSeparation = input$level_separation,
-            nodeSpacing = 250,
-            treeSpacing = 250,
-            blockShifting = TRUE,
-            edgeMinimization = TRUE,
-            parentCentralization = TRUE,
-            sortMethod = "directed"
-          ) %>%
-          visPhysics(enabled = FALSE)
+        # Check if we have saved hierarchical positions to restore
+        if (!is.null(rv$hierarchical_positions) && nrow(rv$hierarchical_positions) > 0) {
+          # Restore saved positions directly - bypasses vis.js hierarchical layout validation
+          debug_log("Restoring saved hierarchical positions", "CLD VIZ")
+          positions_json <- jsonlite::toJSON(rv$hierarchical_positions, auto_unbox = TRUE)
+          runjs(sprintf("
+            if (window.network_%s) {
+              // Disable physics and hierarchical layout first
+              window.network_%s.setOptions({
+                layout: { hierarchical: { enabled: false } },
+                physics: { enabled: false }
+              });
+
+              // Restore saved positions
+              var positions = %s;
+              var updates = positions.map(function(p) {
+                return { id: p.id, x: p.x, y: p.y };
+              });
+
+              // Update node positions
+              window.network_%s.body.data.nodes.update(updates);
+
+              // Fit view to show all nodes
+              window.network_%s.fit({ animation: { duration: 300, easingFunction: 'easeInOutQuad' } });
+
+              console.log('[CLD VIZ] Restored ' + positions.length + ' hierarchical positions');
+            }
+          ", id, id, positions_json, id, id))
+        } else {
+          # No saved positions - trigger full re-render by invalidating cache
+          # This ensures proper hierarchical stabilization like the initial render
+          debug_log("No saved positions, triggering re-render for hierarchical layout", "CLD VIZ")
+          rv$last_render_hash <- NULL  # Force re-render
+        }
       } else if (input$layout_type == "physics") {
         proxy %>%
           visPhysics(
@@ -637,9 +805,13 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
     }, ignoreInit = TRUE)  # Don't run on initial load (already handled in render)
 
     # Handle hierarchy direction changes via proxy
+    # Note: Direction changes require re-stabilization, so we clear saved positions
     observeEvent(input$hierarchy_direction, {
       req(rv$nodes, input$layout_type == "hierarchical")
       debug_log(paste("Hierarchy direction changed to:", input$hierarchy_direction, "(via proxy)"), "CLD VIZ")
+
+      # Clear saved positions - direction change needs fresh layout
+      rv$hierarchical_positions <- NULL
 
       visNetworkProxy(session$ns("network")) %>%
         visHierarchicalLayout(
@@ -655,9 +827,13 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
     }, ignoreInit = TRUE)
 
     # Handle level separation changes via proxy (debounced for slider)
+    # Note: Level separation changes require re-stabilization, so we clear saved positions
     observeEvent(input$level_separation, {
       req(rv$nodes, input$layout_type == "hierarchical")
       debug_log(paste("Level separation changed to:", input$level_separation, "(via proxy)"), "CLD VIZ")
+
+      # Clear saved positions - level separation change needs fresh layout
+      rv$hierarchical_positions <- NULL
 
       visNetworkProxy(session$ns("network")) %>%
         visHierarchicalLayout(
@@ -671,6 +847,312 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
           sortMethod = "directed"
         )
     }, ignoreInit = TRUE)
+
+    # === EDIT MODE (MANIPULATION) ===
+    # Reactive value to store pending node position from visNetwork
+    rv$pending_node_position <- NULL
+
+    # Toggle manipulation mode when switch changes
+    observeEvent(input$enable_manipulation, {
+      req(rv$nodes)
+      debug_log(paste("Edit mode toggled:", input$enable_manipulation), "CLD VIZ")
+
+      if (input$enable_manipulation) {
+        # Enable manipulation mode with custom handlers
+        # Store callback globally so we can call it after modal confirmation
+        runjs(sprintf("
+          if (window.network_%s) {
+            window.addNodeCallback_%s = null;
+            window.network_%s.setOptions({
+              manipulation: {
+                enabled: true,
+                initiallyActive: true,
+                addNode: function(nodeData, callback) {
+                  // Store callback and node data for later use
+                  window.addNodeCallback_%s = callback;
+                  window.pendingNodeData_%s = nodeData;
+                  Shiny.setInputValue('%s', {
+                    x: nodeData.x,
+                    y: nodeData.y,
+                    nonce: Math.random()
+                  });
+                },
+                addEdge: function(edgeData, callback) {
+                  // Allow edge addition directly
+                  edgeData.arrows = 'to';
+                  edgeData.color = '#80b8d7';
+                  edgeData.width = 2;
+                  callback(edgeData);
+                  // Notify Shiny about the new edge
+                  Shiny.setInputValue('%s', {
+                    from: edgeData.from,
+                    to: edgeData.to,
+                    nonce: Math.random()
+                  });
+                },
+                editNode: function(nodeData, callback) {
+                  callback(nodeData);
+                },
+                deleteNode: function(nodeData, callback) {
+                  if (confirm('Delete this element?')) {
+                    callback(nodeData);
+                    Shiny.setInputValue('%s', {
+                      nodes: nodeData.nodes,
+                      nonce: Math.random()
+                    });
+                  } else {
+                    callback(null);
+                  }
+                },
+                deleteEdge: function(edgeData, callback) {
+                  if (confirm('Delete this connection?')) {
+                    callback(edgeData);
+                    Shiny.setInputValue('%s', {
+                      edges: edgeData.edges,
+                      nonce: Math.random()
+                    });
+                  } else {
+                    callback(null);
+                  }
+                }
+              }
+            });
+            console.log('[CLD VIZ] Manipulation mode enabled');
+          }
+        ", id, id, id, id, id,
+           session$ns("add_node_triggered"),
+           session$ns("edge_added"),
+           session$ns("nodes_deleted"),
+           session$ns("edges_deleted")))
+
+        showNotification(
+          i18n$t("modules.cld.visualization.edit_mode_enabled"),
+          type = "message",
+          duration = 3
+        )
+      } else {
+        # Disable manipulation mode
+        runjs(sprintf("
+          if (window.network_%s) {
+            window.network_%s.setOptions({
+              manipulation: {
+                enabled: false
+              }
+            });
+            console.log('[CLD VIZ] Manipulation mode disabled');
+          }
+        ", id, id))
+
+        showNotification(
+          i18n$t("modules.cld.visualization.edit_mode_disabled"),
+          type = "message",
+          duration = 3
+        )
+      }
+    }, ignoreInit = TRUE)
+
+    # Show modal when add node is triggered
+    observeEvent(input$add_node_triggered, {
+      req(input$add_node_triggered)
+      debug_log("Add node triggered, showing type selection modal", "CLD VIZ")
+
+      # Store the position
+      rv$pending_node_position <- list(
+        x = input$add_node_triggered$x,
+        y = input$add_node_triggered$y
+      )
+
+      # Clear previous input
+      updateTextInput(session, "new_node_label", value = "")
+
+      # Show the modal
+      shinyjs::show("add_node_modal_container")
+    })
+
+    # Handle modal response (confirm or cancel)
+    observeEvent(input$add_node_response, {
+      req(input$add_node_response)
+
+      if (isTRUE(input$add_node_response$confirm)) {
+        # User confirmed - add the node
+        req(input$new_node_type, input$new_node_label)
+
+        node_type <- input$new_node_type
+        node_label <- trimws(input$new_node_label)
+
+        if (nchar(node_label) == 0) {
+          showNotification(
+            i18n$t("modules.cld.visualization.enter_element_name"),
+            type = "warning"
+          )
+          return()
+        }
+
+        # Get styling from constants
+        node_color <- ELEMENT_COLORS[[node_type]]
+        node_shape <- ELEMENT_SHAPES[[node_type]]
+
+        # Generate unique ID based on type
+        prefix <- switch(node_type,
+          "Drivers" = "D",
+          "Activities" = "A",
+          "Pressures" = "P",
+          "Marine Processes & Functioning" = "MPF",
+          "Ecosystem Services" = "ES",
+          "Goods & Benefits" = "GB",
+          "Responses" = "R",
+          "X"
+        )
+
+        # Find next available number for this type
+        existing_ids <- rv$nodes$id[grepl(paste0("^", prefix, "_"), rv$nodes$id)]
+        if (length(existing_ids) > 0) {
+          nums <- as.numeric(gsub(paste0("^", prefix, "_"), "", existing_ids))
+          next_num <- max(nums, na.rm = TRUE) + 1
+        } else {
+          next_num <- 1
+        }
+        new_id <- paste0(prefix, "_", next_num)
+
+        # Get level for hierarchical layout
+        level <- switch(node_type,
+          "Goods & Benefits" = 0,
+          "Ecosystem Services" = 1,
+          "Marine Processes & Functioning" = 2,
+          "Pressures" = 3,
+          "Activities" = 4,
+          "Drivers" = 5,
+          "Responses" = 3,
+          3
+        )
+
+        debug_log(sprintf("Adding node: id=%s, type=%s, label=%s", new_id, node_type, node_label), "CLD VIZ")
+
+        # Create tooltip HTML
+        tooltip_html <- paste0(
+          "<div style='padding: 8px;'>",
+          "<b>", htmltools::htmlEscape(node_label), "</b><br>",
+          "<i>", node_type, "</i><br>",
+          "<hr style='margin: 5px 0;'>",
+          "Indicator: No indicator",
+          "</div>"
+        )
+        # Escape for JavaScript
+        tooltip_js <- gsub("'", "\\\\'", tooltip_html)
+        tooltip_js <- gsub("\n", "", tooltip_js)
+
+        # Use the stored callback to properly add the node via visNetwork
+        runjs(sprintf("
+          if (window.addNodeCallback_%s && window.pendingNodeData_%s) {
+            var nodeData = window.pendingNodeData_%s;
+            nodeData.id = '%s';
+            nodeData.label = '%s';
+            nodeData.group = '%s';
+            nodeData.color = '%s';
+            nodeData.shape = '%s';
+            nodeData.level = %d;
+            nodeData.size = 25;
+            nodeData.font = {size: 12};
+            nodeData.title = '%s';
+            nodeData.originalColor = '%s';
+
+            // Call the callback - visNetwork will handle adding the node properly
+            window.addNodeCallback_%s(nodeData);
+            window.addNodeCallback_%s = null;
+            window.pendingNodeData_%s = null;
+            console.log('[CLD VIZ] Node added via callback:', nodeData);
+          }
+        ", id, id, id, new_id,
+           gsub("'", "\\\\'", node_label),
+           node_type, node_color, node_shape, level, tooltip_js, node_color, id, id, id))
+
+        # Update internal state
+        new_node <- data.frame(
+          id = new_id,
+          label = node_label,
+          title = paste0("<b>", htmltools::htmlEscape(node_label), "</b><br><i>", node_type, "</i>"),
+          group = node_type,
+          level = level,
+          shape = node_shape,
+          image = NA_character_,
+          color = node_color,
+          size = 25,
+          font.size = 12,
+          indicator = "No indicator",
+          leverage_score = NA_real_,
+          x = rv$pending_node_position$x,
+          originalColor = node_color,
+          stringsAsFactors = FALSE
+        )
+        rv$nodes <- bind_rows(rv$nodes, new_node)
+
+        showNotification(
+          paste(i18n$t("modules.cld.visualization.element_added"), node_label),
+          type = "message",
+          duration = 3
+        )
+      } else {
+        # User cancelled - call callback with null to cancel the operation
+        runjs(sprintf("
+          if (window.addNodeCallback_%s) {
+            window.addNodeCallback_%s(null);
+            window.addNodeCallback_%s = null;
+            window.pendingNodeData_%s = null;
+            console.log('[CLD VIZ] Node addition cancelled');
+          }
+        ", id, id, id, id))
+      }
+
+      # Hide modal
+      shinyjs::hide("add_node_modal_container")
+      rv$pending_node_position <- NULL
+    })
+
+    # Handle edge addition
+    observeEvent(input$edge_added, {
+      req(input$edge_added)
+      debug_log(sprintf("Edge added: %s -> %s", input$edge_added$from, input$edge_added$to), "CLD VIZ")
+
+      # Add to internal state
+      new_edge <- data.frame(
+        id = nrow(rv$edges) + 1,
+        from = input$edge_added$from,
+        to = input$edge_added$to,
+        arrows = "to",
+        color = EDGE_COLORS$reinforcing,
+        width = 2,
+        opacity = 1,
+        title = paste0(input$edge_added$from, " → ", input$edge_added$to),
+        polarity = "+",
+        strength = "medium",
+        confidence = 3,
+        label = "+",
+        font.size = 10,
+        originalColor = EDGE_COLORS$reinforcing,
+        originalWidth = 2,
+        stringsAsFactors = FALSE
+      )
+      rv$edges <- bind_rows(rv$edges, new_edge)
+    })
+
+    # Handle node deletion
+    observeEvent(input$nodes_deleted, {
+      req(input$nodes_deleted$nodes)
+      deleted_ids <- input$nodes_deleted$nodes
+      debug_log(sprintf("Nodes deleted: %s", paste(deleted_ids, collapse = ", ")), "CLD VIZ")
+
+      rv$nodes <- rv$nodes %>% filter(!(id %in% deleted_ids))
+      rv$edges <- rv$edges %>% filter(!(from %in% deleted_ids | to %in% deleted_ids))
+    })
+
+    # Handle edge deletion
+    observeEvent(input$edges_deleted, {
+      req(input$edges_deleted$edges)
+      deleted_ids <- as.numeric(input$edges_deleted$edges)
+      debug_log(sprintf("Edges deleted: %s", paste(deleted_ids, collapse = ", ")), "CLD VIZ")
+
+      rv$edges <- rv$edges %>% filter(!(id %in% deleted_ids))
+    })
 
     # === HIGHLIGHT LEVERAGE POINTS ===
     observeEvent(input$highlight_leverage, {
