@@ -55,12 +55,13 @@ cld_viz_ui <- function(id, i18n) {
         border: none !important;
         box-shadow: none !important;
       }
-      /* Remove frame from legend */
+      /* Remove frame from legend and add top margin */
       .cld-network-container .vis-legend {
         border: none !important;
         box-shadow: none !important;
         background: transparent !important;
         padding: 0 !important;
+        margin-top: 25px !important;
       }
       .cld-network-container .vis-legend-text {
         border: none !important;
@@ -240,22 +241,21 @@ cld_viz_ui <- function(id, i18n) {
           status = "primary",
           solidHeader = FALSE,
           title = NULL,
-          # Fullscreen toggle button
+          # Network Visualization with fullscreen toggle
           div(
-            style = "position: absolute; top: 10px; right: 15px; z-index: 1000;",
+            id = ns("network_fullscreen_container"),
+            class = "cld-network-container network-fullscreen-container",
+            style = "position: relative;",
+            # Fullscreen toggle button - positioned at very top right corner
             tags$button(
               id = ns("fullscreen_toggle"),
               class = "btn btn-outline-secondary btn-sm fullscreen-toggle-btn",
+              style = "position: absolute; top: 0px; right: 5px; z-index: 1000; padding: 3px 6px; font-size: 10px;",
               title = i18n$t("common.misc.toggle_fullscreen"),
               onclick = sprintf("toggleVisualizationFullscreen('%s')", ns("network_fullscreen_container")),
               icon("expand"),
               span(class = "fullscreen-label", i18n$t("common.buttons.fullscreen"))
-            )
-          ),
-          # Network Visualization (uses Shiny's built-in loading indicator)
-          div(
-            id = ns("network_fullscreen_container"),
-            class = "cld-network-container network-fullscreen-container",
+            ),
             visNetworkOutput(ns("network"), height = PLOT_HEIGHT_XXL)
           )
         )

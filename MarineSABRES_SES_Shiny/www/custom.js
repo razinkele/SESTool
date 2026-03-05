@@ -448,7 +448,7 @@ Shiny.addCustomMessageHandler('clear_all_local_storage', function(message) {
 // ============================================================================
 
 /**
- * Toggle fullscreen mode for visualization containers
+ * Toggle fullscreen mode for visualization containers using native Fullscreen API
  * @param {string} containerId - The ID of the container element to toggle
  */
 function toggleVisualizationFullscreen(containerId) {
@@ -458,89 +458,140 @@ function toggleVisualizationFullscreen(containerId) {
     return;
   }
 
-  var isFullscreen = container.classList.contains('is-fullscreen');
+  // Check if currently in fullscreen
+  var isFullscreen = document.fullscreenElement === container ||
+                     document.webkitFullscreenElement === container ||
+                     document.mozFullScreenElement === container ||
+                     document.msFullscreenElement === container;
 
   if (isFullscreen) {
-    // Exit fullscreen
-    container.classList.remove('is-fullscreen');
-    document.body.style.overflow = '';
-
-    // Remove exit button if it exists
-    var exitBtn = document.getElementById('fullscreen-exit-btn-' + containerId);
-    if (exitBtn) {
-      exitBtn.remove();
+    // Exit fullscreen using the appropriate method
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
     }
-
-    // Update toggle button icon
-    var toggleBtn = container.parentElement.querySelector('.fullscreen-toggle-btn');
-    if (toggleBtn) {
-      var icon = toggleBtn.querySelector('i');
-      if (icon) {
-        icon.className = 'fa fa-expand';
-      }
-      var label = toggleBtn.querySelector('.fullscreen-label');
-      if (label) {
-        label.textContent = 'Fullscreen';
-      }
-    }
-
-    // Trigger visNetwork resize after exiting fullscreen
-    setTimeout(function() {
-      var visNetwork = container.querySelector('.vis-network');
-      if (visNetwork && window.dispatchEvent) {
-        window.dispatchEvent(new Event('resize'));
-      }
-    }, 100);
-
-    __dbg('[Fullscreen] Exited fullscreen mode for:', containerId);
+    __dbg('[Fullscreen] Exiting fullscreen mode for:', containerId);
   } else {
-    // Enter fullscreen
-    container.classList.add('is-fullscreen');
-    document.body.style.overflow = 'hidden';
-
-    // Create exit button
-    var exitBtn = document.createElement('button');
-    exitBtn.id = 'fullscreen-exit-btn-' + containerId;
-    exitBtn.className = 'fullscreen-exit-btn';
-    exitBtn.innerHTML = '<i class="fa fa-compress"></i> Exit Fullscreen';
-    exitBtn.style.display = 'flex';
-    exitBtn.onclick = function() {
-      toggleVisualizationFullscreen(containerId);
-    };
-    container.appendChild(exitBtn);
-
-    // Update toggle button icon (in case it's still visible)
-    var toggleBtn = container.parentElement.querySelector('.fullscreen-toggle-btn');
-    if (toggleBtn) {
-      var icon = toggleBtn.querySelector('i');
-      if (icon) {
-        icon.className = 'fa fa-compress';
-      }
-      var label = toggleBtn.querySelector('.fullscreen-label');
-      if (label) {
-        label.textContent = 'Exit';
-      }
+    // Store original dimensions before entering fullscreen
+    var visNetworkOutput = container.querySelector('[id$="-network"]');
+    if (visNetworkOutput) {
+      container.dataset.originalHeight = visNetworkOutput.style.height || visNetworkOutput.offsetHeight + 'px';
     }
 
-    // Trigger visNetwork resize after entering fullscreen
-    setTimeout(function() {
-      var visNetwork = container.querySelector('.vis-network');
-      if (visNetwork && window.dispatchEvent) {
-        window.dispatchEvent(new Event('resize'));
-      }
-    }, 100);
-
-    __dbg('[Fullscreen] Entered fullscreen mode for:', containerId);
+    // Enter fullscreen using the appropriate method
+    if (container.requestFullscreen) {
+      container.requestFullscreen();
+    } else if (container.webkitRequestFullscreen) {
+      container.webkitRequestFullscreen();
+    } else if (container.mozRequestFullScreen) {
+      container.mozRequestFullScreen();
+    } else if (container.msRequestFullscreen) {
+      container.msRequestFullscreen();
+    }
+    __dbg('[Fullscreen] Entering fullscreen mode for:', containerId);
   }
 }
 
-// Handle ESC key to exit fullscreen
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    var fullscreenContainer = document.querySelector('.network-fullscreen-container.is-fullscreen');
-    if (fullscreenContainer) {
-      toggleVisualizationFullscreen(fullscreenContainer.id);
+// Handle fullscreen change events to update UI
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+function handleFullscreenChange() {
+  var fullscreenElement = document.fullscreenElement ||
+                          document.webkitFullscreenElement ||
+                          document.mozFullScreenElement ||
+                          document.msFullscreenElement;
+
+  // Find all fullscreen toggle buttons and update their state
+  var toggleBtns = document.querySelectorAll('.fullscreen-toggle-btn');
+  toggleBtns.forEach(function(btn) {
+    var icon = btn.querySelector('i');
+    var label = btn.querySelector('.fullscreen-label');
+
+    if (fullscreenElement) {
+      // In fullscreen - show exit icon
+      if (icon) icon.className = 'fa fa-compress';
+      if (label) label.textContent = 'Exit';
+      btn.classList.add('in-fullscreen');
+    } else {
+      // Not in fullscreen - show expand icon
+      if (icon) icon.className = 'fa fa-expand';
+      if (label) label.textContent = 'Fullscreen';
+      btn.classList.remove('in-fullscreen');
     }
+  });
+
+  // Resize visNetwork elements when entering/exiting fullscreen
+  if (fullscreenElement && fullscreenElement.classList.contains('network-fullscreen-container')) {
+    // Entering fullscreen - resize network to full viewport
+    var visNetworkDiv = fullscreenElement.querySelector('.vis-network');
+    var visNetworkOutput = fullscreenElement.querySelector('[id$="-network"]');
+
+    // Set container styles
+    fullscreenElement.style.position = 'fixed';
+    fullscreenElement.style.top = '0';
+    fullscreenElement.style.left = '0';
+    fullscreenElement.style.width = '100vw';
+    fullscreenElement.style.height = '100vh';
+    fullscreenElement.style.background = '#ffffff';
+
+    if (visNetworkOutput) {
+      visNetworkOutput.style.width = '100vw';
+      visNetworkOutput.style.height = '100vh';
+      visNetworkOutput.style.background = '#ffffff';
+    }
+    if (visNetworkDiv) {
+      visNetworkDiv.style.position = 'absolute';
+      visNetworkDiv.style.top = '0';
+      visNetworkDiv.style.left = '0';
+      visNetworkDiv.style.width = '100vw';
+      visNetworkDiv.style.height = '100vh';
+      visNetworkDiv.style.background = '#ffffff';
+    }
+  } else {
+    // Exiting fullscreen - reset all styles to original
+    var containers = document.querySelectorAll('.network-fullscreen-container');
+    containers.forEach(function(container) {
+      // Get stored original height
+      var originalHeight = container.dataset.originalHeight || '700px';
+
+      // Reset container styles
+      container.style.position = 'relative';
+      container.style.top = '';
+      container.style.left = '';
+      container.style.width = '';
+      container.style.height = '';
+      container.style.background = '';
+
+      var visNetworkDiv = container.querySelector('.vis-network');
+      var visNetworkOutput = container.querySelector('[id$="-network"]');
+
+      if (visNetworkOutput) {
+        visNetworkOutput.style.width = '100%';
+        visNetworkOutput.style.height = originalHeight;
+        visNetworkOutput.style.background = '';
+      }
+      if (visNetworkDiv) {
+        visNetworkDiv.style.position = '';
+        visNetworkDiv.style.top = '';
+        visNetworkDiv.style.left = '';
+        visNetworkDiv.style.width = '100%';
+        visNetworkDiv.style.height = originalHeight;
+        visNetworkDiv.style.background = '';
+      }
+    });
   }
-});
+
+  // Trigger single resize for visNetwork after fullscreen change
+  setTimeout(function() {
+    window.dispatchEvent(new Event('resize'));
+  }, 100);
+}
 

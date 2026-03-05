@@ -863,3 +863,102 @@ h2 .fa, h2 .fas {
     text-decoration: none;
   }
 }
+
+/* =============================================================================
+   FULLSCREEN MODE FOR NETWORK VISUALIZATION (Native Fullscreen API)
+   ============================================================================= */
+
+/* Fullscreen toggle button on the network canvas */
+.fullscreen-toggle-btn {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #dee2e6;
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.fullscreen-toggle-btn:hover {
+  background: #f8f9fa;
+  border-color: #adb5bd;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.fullscreen-toggle-btn i {
+  font-size: 14px;
+}
+
+.fullscreen-toggle-btn .fullscreen-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Style for button when in fullscreen mode */
+.fullscreen-toggle-btn.in-fullscreen {
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  border-color: rgba(220, 53, 69, 1);
+}
+
+.fullscreen-toggle-btn.in-fullscreen:hover {
+  background: rgba(220, 53, 69, 1);
+}
+
+/* Native fullscreen container styling */
+.network-fullscreen-container:fullscreen,
+.network-fullscreen-container:-webkit-full-screen,
+.network-fullscreen-container:-moz-full-screen,
+.network-fullscreen-container:-ms-fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: #ffffff !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  box-sizing: border-box !important;
+}
+
+/* visNetwork output div inside fullscreen container - match all possible selectors */
+.network-fullscreen-container:fullscreen > div,
+.network-fullscreen-container:-webkit-full-screen > div {
+  width: 100% !important;
+  height: 100% !important;
+  background: #ffffff !important;
+}
+
+/* visNetwork canvas container inside fullscreen */
+.network-fullscreen-container:fullscreen .vis-network,
+.network-fullscreen-container:-webkit-full-screen .vis-network,
+.network-fullscreen-container:-moz-full-screen .vis-network,
+.network-fullscreen-container:-ms-fullscreen .vis-network {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: #ffffff !important;
+}
+
+/* vis-network canvas element */
+.network-fullscreen-container:fullscreen .vis-network canvas,
+.network-fullscreen-container:-webkit-full-screen .vis-network canvas {
+  background: #ffffff !important;
+}
+
+/* Keep the toggle button visible in fullscreen */
+.network-fullscreen-container:fullscreen .fullscreen-toggle-btn,
+.network-fullscreen-container:-webkit-full-screen .fullscreen-toggle-btn,
+.network-fullscreen-container:-moz-full-screen .fullscreen-toggle-btn,
+.network-fullscreen-container:-ms-fullscreen .fullscreen-toggle-btn {
+  position: fixed !important;
+  top: 15px !important;
+  right: 15px !important;
+  z-index: 10001 !important;
+}
