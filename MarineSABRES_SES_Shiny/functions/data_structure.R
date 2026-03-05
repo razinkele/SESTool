@@ -438,34 +438,28 @@ edgelist_to_adjacency <- function(edgelist, from_names, to_names) {
 # ============================================================================
 
 #' Validate project data structure
-#' 
+#'
+#' Wrapper around validate_project_structure() that returns list format
+#' and includes ISA/PIMS validation.
+#'
 #' @param project_data Project data list
 #' @return List with valid (logical) and errors (character vector)
 validate_project_data <- function(project_data) {
-  
-  errors <- c()
-  
-  # Check required top-level fields
-  required_fields <- c("project_id", "project_name", "created_at", "data")
-  missing_fields <- setdiff(required_fields, names(project_data))
-  
-  if (length(missing_fields) > 0) {
-    errors <- c(errors, paste("Missing required fields:", 
-                             paste(missing_fields, collapse = ", ")))
-  }
-  
-  # Validate ISA data
-  if (!is.null(project_data$data$isa_data)) {
+  # Delegate structural validation to canonical validator
+  errors <- validate_project_structure(project_data)
+
+  # Add ISA validation if data is present and no structural errors
+  if (length(errors) == 0 && !is.null(project_data$data$isa_data)) {
     isa_errors <- validate_isa_structure(project_data$data$isa_data)
     errors <- c(errors, isa_errors)
   }
-  
-  # Validate PIMS data
-  if (!is.null(project_data$data$pims)) {
+
+  # Add PIMS validation if data is present and no structural errors
+  if (length(errors) == 0 && !is.null(project_data$data$pims)) {
     pims_errors <- validate_pims_data(project_data$data$pims)
     errors <- c(errors, pims_errors)
   }
-  
+
   list(
     valid = length(errors) == 0,
     errors = errors
