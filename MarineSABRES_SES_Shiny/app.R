@@ -897,19 +897,19 @@ server <- function(input, output, session) {
 
   # ==================== CREATE SES MODULES ====================
   # Main Create SES module (method selector)
-  create_ses_server("create_ses_main", project_data, session_i18n, parent_session = session)
+  create_ses_server("create_ses_main", project_data, session_i18n, session)
 
   # Template-based SES module
-  template_ses_server("template_ses", project_data, session, event_bus, session_i18n)
+  template_ses_server("template_ses", project_data, session_i18n, session, event_bus)
 
   # AI ISA Assistant module
   ai_isa_assistant_server("ai_isa_mod", project_data, session_i18n, event_bus, autosave_enabled, user_level, session)
 
   # ISA data entry module (Standard Entry)
-  isa_data <- isa_data_entry_server("isa_module", project_data, event_bus)
+  isa_data <- isa_data_entry_server("isa_module", project_data, session_i18n, event_bus)
 
   # Graphical SES Creator module (AI-powered step-by-step network building)
-  graphical_ses_creator_server("graphical_ses_mod", project_data, session, session_i18n)
+  graphical_ses_creator_server("graphical_ses_mod", project_data, session_i18n, session)
 
   # CLD visualization
   cld_viz_server("cld_visual", project_data, session_i18n)

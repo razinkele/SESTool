@@ -40,7 +40,10 @@ isa_data_entry_ui <- function(id) {
 }
 
 # Module Server ----
-isa_data_entry_server <- function(id, global_data, event_bus = NULL, i18n) {
+# Standardized signature: (id, project_data, i18n, event_bus)
+isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
+  # Legacy alias for backwards compatibility within module
+  global_data <- project_data
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

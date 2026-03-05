@@ -89,7 +89,7 @@ template_ses_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-template_ses_server <- function(id, project_data_reactive, parent_session = NULL, event_bus = NULL, i18n) {
+template_ses_server <- function(id, project_data_reactive, i18n, parent_session = NULL, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

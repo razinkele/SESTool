@@ -333,7 +333,8 @@ pims_stakeholder_ui <- function(id, i18n) {
 }
 
 # Module Server ----
-pims_stakeholder_server <- function(id, global_data, i18n) {
+pims_stakeholder_server <- function(id, project_data_reactive, i18n) {
+  global_data <- project_data_reactive  # Legacy alias for internal code
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

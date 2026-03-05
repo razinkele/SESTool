@@ -164,7 +164,7 @@ create_ses_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-create_ses_server <- function(id, project_data_reactive, parent_session = NULL, i18n) {
+create_ses_server <- function(id, project_data_reactive, i18n, parent_session = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
