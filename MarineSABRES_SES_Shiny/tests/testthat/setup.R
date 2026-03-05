@@ -26,9 +26,10 @@ old_wd <- getwd()
 setwd(project_root)
 
 # Load global environment with error handling
+# Note: Use local = FALSE to make all functions (including debug_log) globally available
 tryCatch({
   if (file.exists("global.R")) {
-    source("global.R", local = TRUE)
+    source("global.R", local = FALSE)
   }
 }, error = function(e) {
   message("Warning: Could not fully load global.R: ", e$message)
@@ -88,9 +89,10 @@ tryCatch({
 })
 
 # Load helper functions (from project root)
+# Note: Use local = FALSE to make functions globally available for tests
 tryCatch({
   if (file.exists(file.path(project_root, "functions/data_structure.R"))) {
-    source(file.path(project_root, "functions/data_structure.R"), local = TRUE)
+    source(file.path(project_root, "functions/data_structure.R"), local = FALSE)
   }
 }, error = function(e) {
   message("Warning: Could not load data_structure.R")
@@ -98,7 +100,7 @@ tryCatch({
 
 tryCatch({
   if (file.exists(file.path(project_root, "functions/network_analysis.R"))) {
-    source(file.path(project_root, "functions/network_analysis.R"), local = TRUE)
+    source(file.path(project_root, "functions/network_analysis.R"), local = FALSE)
   }
 }, error = function(e) {
   message("Warning: Could not load network_analysis.R")
@@ -106,7 +108,7 @@ tryCatch({
 
 tryCatch({
   if (file.exists(file.path(project_root, "functions/ui_helpers.R"))) {
-    source(file.path(project_root, "functions/ui_helpers.R"), local = TRUE)
+    source(file.path(project_root, "functions/ui_helpers.R"), local = FALSE)
   }
 }, error = function(e) {
   message("Warning: Could not load ui_helpers.R")
@@ -114,7 +116,7 @@ tryCatch({
 
 tryCatch({
   if (file.exists(file.path(project_root, "functions/visnetwork_helpers.R"))) {
-    source(file.path(project_root, "functions/visnetwork_helpers.R"), local = TRUE)
+    source(file.path(project_root, "functions/visnetwork_helpers.R"), local = FALSE)
   }
 }, error = function(e) {
   message("Warning: Could not load visnetwork_helpers.R")
@@ -122,7 +124,7 @@ tryCatch({
 
 tryCatch({
   if (file.exists(file.path(project_root, "functions/export_functions.R"))) {
-    source(file.path(project_root, "functions/export_functions.R"), local = TRUE)
+    source(file.path(project_root, "functions/export_functions.R"), local = FALSE)
   }
 }, error = function(e) {
   message("Warning: Could not load export_functions.R")
@@ -130,10 +132,28 @@ tryCatch({
 
 tryCatch({
   if (file.exists(file.path(project_root, "functions/ml_feature_engineering.R"))) {
-    source(file.path(project_root, "functions/ml_feature_engineering.R"), local = TRUE)
+    source(file.path(project_root, "functions/ml_feature_engineering.R"), local = FALSE)
   }
 }, error = function(e) {
   message("Warning: Could not load ml_feature_engineering.R")
+})
+
+# Load DAPSIWRM connection rules (needed for connection tests)
+tryCatch({
+  if (file.exists(file.path(project_root, "functions/dapsiwrm_connection_rules.R"))) {
+    source(file.path(project_root, "functions/dapsiwrm_connection_rules.R"), local = FALSE)
+  }
+}, error = function(e) {
+  message("Warning: Could not load dapsiwrm_connection_rules.R: ", e$message)
+})
+
+# Load graphical SES AI classifier (needed for AI classification tests)
+tryCatch({
+  if (file.exists(file.path(project_root, "modules/graphical_ses_ai_classifier.R"))) {
+    source(file.path(project_root, "modules/graphical_ses_ai_classifier.R"), local = FALSE)
+  }
+}, error = function(e) {
+  message("Warning: Could not load graphical_ses_ai_classifier.R")
 })
 
 # Load SES templates for integration tests

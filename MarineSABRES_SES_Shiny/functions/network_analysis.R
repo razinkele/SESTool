@@ -1520,3 +1520,42 @@ classify_loop_type_safe <- function(loop, edges = NULL) {
   }
   NULL
 }
+
+# ============================================================================
+# CONFIDENCE FILTERING
+# ============================================================================
+
+#' Filter edges by minimum confidence level
+#'
+#' Filters an edges dataframe to include only edges with confidence >= min_confidence.
+#' If the edges dataframe doesn't have a confidence column, returns all edges unchanged.
+#'
+#' @param edges Dataframe with edge data (must have from, to columns; confidence optional)
+#' @param min_confidence Integer from 1-5, minimum confidence level to include
+#' @return Filtered edges dataframe
+#' @export
+filter_by_confidence <- function(edges, min_confidence = 1) {
+  # Input validation
+ if (is.null(edges) || !is.data.frame(edges)) {
+    return(edges)
+  }
+
+  # If no confidence column, return all edges unchanged
+  if (!"confidence" %in% names(edges)) {
+    return(edges)
+  }
+
+  # Validate min_confidence
+  min_confidence <- as.integer(min_confidence)
+  if (is.na(min_confidence) || min_confidence < 1) {
+    min_confidence <- 1
+  }
+  if (min_confidence > 5) {
+    min_confidence <- 5
+  }
+
+  # Filter edges by confidence
+  filtered <- edges[!is.na(edges$confidence) & edges$confidence >= min_confidence, , drop = FALSE]
+
+  return(filtered)
+}

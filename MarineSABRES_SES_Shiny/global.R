@@ -307,6 +307,33 @@ AVAILABLE_LANGUAGES <- list(
 # Note: local = FALSE makes constants available globally
 source("constants.R", local = FALSE)
 
+# ============================================================================
+# DEBUG MODE CONFIGURATION (must be early for use by other modules)
+# ============================================================================
+
+# Enable/disable debug logging via environment variable
+# Set MARINESABRES_DEBUG=TRUE in .Renviron or before running the app to enable debug logs
+# Default is FALSE for production use
+DEBUG_MODE <- Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE"
+
+#' Debug logging helper function
+#'
+#' Conditionally prints debug messages based on DEBUG_MODE flag.
+#' In production (DEBUG_MODE=FALSE), these calls are silently skipped.
+#'
+#' @param message Character string to log
+#' @param context Optional context string (e.g., "TEMPLATE", "NETWORK_ANALYSIS")
+#' @export
+debug_log <- function(message, context = NULL) {
+  if (DEBUG_MODE) {
+    if (!is.null(context)) {
+      cat(sprintf("[%s] %s\n", context, message))
+    } else {
+      cat(message, "\n")
+    }
+  }
+}
+
 # Application configuration from environment variables
 if (file.exists(get_project_file("config", "app_config.R"))) {
   source(get_project_file("config", "app_config.R"), local = FALSE)
@@ -480,46 +507,9 @@ if (ML_ENABLED) {
 }
 
 # ============================================================================
-# DEBUG MODE CONFIGURATION
+# DEBUG MODE STATUS MESSAGE
+# (DEBUG_MODE and debug_log() defined earlier, after constants.R)
 # ============================================================================
-
-# Enable/disable debug logging via environment variable
-# Set MARINESABRES_DEBUG=TRUE in .Renviron or before running the app to enable debug logs
-# Default is FALSE for production use
-DEBUG_MODE <- Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE"
-
-#' Debug logging helper function
-#'
-#' Conditionally prints debug messages based on DEBUG_MODE flag.
-#' In production (DEBUG_MODE=FALSE), these calls are silently skipped.
-#'
-#' STANDARDIZED DEBUG LOGGING PATTERN:
-#' - Use debug_log() for ALL debug messages (respects DEBUG_MODE)
-#' - NEVER use cat() directly for debug messages
-#' - Use consistent context tags: SETTINGS, CONFIG, I18N, ML, DIAGNOSTICS, etc.
-#' - Format: debug_log("message", "CONTEXT") → outputs "[CONTEXT] message"
-#'
-#' EXCEPTION: System status messages (ML loading, i18n init) that users should
-#' always see use cat() directly - these are informational, not debug messages.
-#'
-#' @param message Character string to log
-#' @param context Optional context string (e.g., "TEMPLATE", "NETWORK_ANALYSIS")
-#' @export
-#'
-#' @examples
-#' debug_log("Processing started", "TEMPLATE")  # [TEMPLATE] Processing started
-#' debug_log("Found 5 connections")              # Found 5 connections
-debug_log <- function(message, context = NULL) {
-  if (DEBUG_MODE) {
-    if (!is.null(context)) {
-      cat(sprintf("[%s] %s\n", context, message))
-    } else {
-      cat(message, "\n")
-    }
-  }
-}
-
-# NOTE: sanitize_filename() moved to functions/utils.R
 
 # Print debug mode status on startup
 if (DEBUG_MODE) {

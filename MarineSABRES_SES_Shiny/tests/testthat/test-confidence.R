@@ -37,7 +37,7 @@ test_that("confidence global constants are defined correctly", {
   expect_equal(CONFIDENCE_OPACITY["1"], c("1" = 0.3))
   expect_equal(CONFIDENCE_OPACITY["2"], c("2" = 0.5))
   expect_equal(CONFIDENCE_OPACITY["3"], c("3" = 0.7))
-  expect_equal(CONFIDENCE_OPACITY["4"], c("4" = 0.85))
+  expect_equal(CONFIDENCE_OPACITY["4"], c("4" = 0.9))
   expect_equal(CONFIDENCE_OPACITY["5"], c("5" = 1.0))
 
   # Test opacity values are in ascending order

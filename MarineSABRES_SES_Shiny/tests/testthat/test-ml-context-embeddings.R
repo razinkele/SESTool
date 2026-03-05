@@ -20,8 +20,8 @@ test_that("get_context_vocabularies returns correct structure", {
   expect_true("ecosystems" %in% names(vocabs))
   expect_true("focal_issues" %in% names(vocabs))
 
-  # Check counts
-  expect_equal(length(vocabs$regional_seas), 12)
+  # Check counts (12 seas + "Global" = 13)
+  expect_equal(length(vocabs$regional_seas), 13)
   expect_equal(length(vocabs$ecosystems), 25)
   expect_equal(length(vocabs$focal_issues), 52)
 

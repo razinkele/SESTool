@@ -311,26 +311,33 @@ test_that("Bug #3 FIXED: Amendments persist to final save", {
 
 test_that("Bug #4 FIXED: Auto-navigation is disabled", {
   # ORIGINAL BUG: "System keeps going back between elements, without us clicking on them"
-
-  # The fix: Auto-focus code should be commented out
-  # We can't directly test JavaScript from R, but we can verify the R code
-  # doesn't have the sendCustomMessage call active
+  # The fix: Auto-focus code should not exist or be commented out
+  # We verify the R code doesn't have active sendCustomMessage calls for focusing
 
   # Read the module file
   module_file <- readLines("../../modules/connection_review_tabbed.R")
 
-  # Find the approve button observer
+  # Find the approve button observer (confirms the module structure is correct)
   approve_lines <- grep("observeEvent.*approve_", module_file)
   expect_gt(length(approve_lines), 0)
 
-  # Check that sendCustomMessage is commented out in the approve handler
-  # Look for the DISABLED comment we added
-  disabled_comment <- grep("DISABLED: Auto-focus", module_file)
-  expect_gt(length(disabled_comment), 0)
+  # Verify that auto-focus sendCustomMessage is NOT active in the module
 
-  # Verify there's a comment explaining the bug
-  bug_comment <- grep("system keeps going back between elements", module_file, ignore.case = TRUE)
-  expect_gt(length(bug_comment), 0)
+  # This checks that there's no active code sending focusElement messages
+  active_focus_lines <- grep("^[^#]*sendCustomMessage.*focusElement", module_file)
+  expect_equal(
+    length(active_focus_lines),
+    0,
+    info = "Auto-focus sendCustomMessage should be disabled or removed"
+  )
+
+  # Also verify no active auto-navigation code patterns
+  active_autofocus <- grep("^[^#]*session\\$sendCustomMessage.*focus", module_file, ignore.case = TRUE)
+  expect_equal(
+    length(active_autofocus),
+    0,
+    info = "No active auto-focus code should exist"
+  )
 })
 
 # =============================================================================

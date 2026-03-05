@@ -153,13 +153,17 @@ format_number_display <- function(x) {
     if (length(parts) > 1) paste0(intstr, ".", parts[2]) else intstr
   }
 }
-# Network & export helpers (minimal behavior)
-build_network_from_isa <- function(isa) {
-  list(nodes = character(0), edges = data.frame())
+# Network & export helpers (minimal behavior) - only define if not already loaded
+if (!exists("build_network_from_isa", mode = "function", envir = .GlobalEnv)) {
+  build_network_from_isa <- function(isa) {
+    list(nodes = character(0), edges = data.frame())
+  }
 }
 
-convert_to_network_format <- function(x) {
-  x
+if (!exists("convert_to_network_format", mode = "function", envir = .GlobalEnv)) {
+  convert_to_network_format <- function(x) {
+    x
+  }
 }
 
 export_to_csv <- function(data, path) {
@@ -276,17 +280,23 @@ format_report_data <- function(data) data
 
 generate_summary_statistics <- function(data) list()
 
-# Network stubs (implemented later with more robust behavior)
-rank_node_importance <- function(graph) numeric(0)
-
-detect_feedback_loops <- function(graph, max_length = 5) {
-  # Minimal placeholder: return empty list of cycles
-  list()
+# Network stubs - only define if real functions not loaded
+if (!exists("rank_node_importance", mode = "function", envir = .GlobalEnv)) {
+  rank_node_importance <- function(graph) numeric(0)
 }
 
-simplify_network <- function(graph, threshold = NULL) {
-  # Minimal simplification: return graph unchanged
-  graph
+if (!exists("detect_feedback_loops", mode = "function", envir = .GlobalEnv)) {
+  detect_feedback_loops <- function(graph, max_length = 5) {
+    # Minimal placeholder: return empty list of cycles
+    list()
+  }
+}
+
+if (!exists("simplify_network", mode = "function", envir = .GlobalEnv)) {
+  simplify_network <- function(graph, threshold = NULL) {
+    # Minimal simplification: return graph unchanged
+    graph
+  }
 }
 
 # SES templates loader - prefers data/ (copied fixtures) or falls back to tests fixtures
@@ -489,110 +499,128 @@ rbind <- function(..., deparse.level = 1) {
 
 # ===========================================================================
 # Graphical SES AI Classifier stubs
+# Only define if real functions not already loaded
 # ===========================================================================
 
 # DAPSIWRM type list used by the classifier
-.DAPSIWRM_TYPES <- c("Drivers", "Activities", "Pressures",
-                      "Marine Processes & Functioning", "Ecosystem Services",
-                      "Goods & Benefits", "Responses", "State Changes",
-                      "Impacts")
-
-classify_element_with_ai <- function(element_name, context, i18n = NULL) {
-  if (is.null(element_name) || nchar(trimws(as.character(element_name))) == 0) {
-    stop("Element name cannot be empty")
-  }
-  element_name <- trimws(element_name)
-  el <- tolower(element_name)
-
-  # Simple keyword-based classification stub
-  primary_type <- if (grepl("fish|trawl|tourism|aquaculture|farm", el)) {
-    "Activities"
-  } else if (grepl("pollu|bycatch|erosion|overfish|nutrient|eutro|habitat damage", el)) {
-    "Pressures"
-  } else if (grepl("demand|growth|population|economic|food security", el)) {
-    "Drivers"
-  } else if (grepl("quota|protect|mpa|marine protected", el)) {
-    "Responses"
-  } else if (grepl("degrad|decline|depletion|habitat loss|loss|stock", el)) {
-    "Marine Processes & Functioning"
-  } else if (grepl("provision|livelihood|food|income", el)) {
-    "Goods & Benefits"
-  } else if (grepl("reduced|impact", el)) {
-    "Impacts"
-  } else if (grepl("temperature|co2|emission|benthic", el)) {
-    "Marine Processes & Functioning"
-  } else {
-    "Pressures"
-  }
-
-  alt_types <- setdiff(.DAPSIWRM_TYPES, primary_type)
-  list(
-    primary = list(type = primary_type, confidence = 0.7, reasoning = "Keyword match"),
-    alternatives = list(
-      list(type = alt_types[1], confidence = 0.2, reasoning = "Alternative"),
-      list(type = alt_types[2], confidence = 0.1, reasoning = "Alternative")
-    ),
-    element_name = element_name,
-    all_scores = setNames(rep(0.1, length(.DAPSIWRM_TYPES)), .DAPSIWRM_TYPES)
-  )
+if (!exists(".DAPSIWRM_TYPES", envir = .GlobalEnv)) {
+  .DAPSIWRM_TYPES <- c("Drivers", "Activities", "Pressures",
+                        "Marine Processes & Functioning", "Ecosystem Services",
+                        "Goods & Benefits", "Responses", "State Changes",
+                        "Impacts")
 }
 
-match_keywords_to_types <- function(element_name) {
-  el <- tolower(element_name)
-  scores <- setNames(rep(0.1, length(.DAPSIWRM_TYPES)), .DAPSIWRM_TYPES)
-  if (grepl("fish|trawl|tourism|farm", el)) scores["Activities"] <- 0.7
-  if (grepl("pollu|bycatch|overfish", el)) scores["Pressures"] <- 0.7
-  if (grepl("demand|growth|population", el)) scores["Drivers"] <- 0.7
-  scores
+if (!exists("classify_element_with_ai", mode = "function", envir = .GlobalEnv)) {
+  classify_element_with_ai <- function(element_name, context, i18n = NULL) {
+    if (is.null(element_name) || nchar(trimws(as.character(element_name))) == 0) {
+      stop("Element name cannot be empty")
+    }
+    element_name <- trimws(element_name)
+    el <- tolower(element_name)
+
+    # Simple keyword-based classification stub
+    primary_type <- if (grepl("fish|trawl|tourism|aquaculture|farm", el)) {
+      "Activities"
+    } else if (grepl("pollu|bycatch|erosion|overfish|nutrient|eutro|habitat damage", el)) {
+      "Pressures"
+    } else if (grepl("demand|growth|population|economic|food security", el)) {
+      "Drivers"
+    } else if (grepl("quota|protect|mpa|marine protected", el)) {
+      "Responses"
+    } else if (grepl("degrad|decline|depletion|habitat loss|loss|stock", el)) {
+      "Marine Processes & Functioning"
+    } else if (grepl("provision|livelihood|food|income", el)) {
+      "Goods & Benefits"
+    } else if (grepl("reduced|impact", el)) {
+      "Impacts"
+    } else if (grepl("temperature|co2|emission|benthic", el)) {
+      "Marine Processes & Functioning"
+    } else {
+      "Pressures"
+    }
+
+    alt_types <- setdiff(.DAPSIWRM_TYPES, primary_type)
+    list(
+      primary = list(type = primary_type, confidence = 0.7, reasoning = "Keyword match"),
+      alternatives = list(
+        list(type = alt_types[1], confidence = 0.2, reasoning = "Alternative"),
+        list(type = alt_types[2], confidence = 0.1, reasoning = "Alternative")
+      ),
+      element_name = element_name,
+      all_scores = setNames(rep(0.1, length(.DAPSIWRM_TYPES)), .DAPSIWRM_TYPES)
+    )
+  }
+}
+
+if (!exists("match_keywords_to_types", mode = "function", envir = .GlobalEnv)) {
+  match_keywords_to_types <- function(element_name) {
+    el <- tolower(element_name)
+    scores <- setNames(rep(0.1, length(.DAPSIWRM_TYPES)), .DAPSIWRM_TYPES)
+    if (grepl("fish|trawl|tourism|farm", el)) scores["Activities"] <- 0.7
+    if (grepl("pollu|bycatch|overfish", el)) scores["Pressures"] <- 0.7
+    if (grepl("demand|growth|population", el)) scores["Drivers"] <- 0.7
+    scores
+  }
 }
 
 # ===========================================================================
 # Graphical SES Network Builder stubs
+# Only define if real function not already loaded from dapsiwrm_connection_rules.R
 # ===========================================================================
 
-get_allowed_targets <- function(source_type) {
-  rules <- list(
-    "Drivers" = c("Activities"),
-    "Activities" = c("Pressures"),
-    "Pressures" = c("Marine Processes & Functioning", "State Changes"),
-    "Marine Processes & Functioning" = c("Ecosystem Services"),
-    "State Changes" = c("Impacts", "Ecosystem Services"),
-    "Ecosystem Services" = c("Goods & Benefits"),
-    "Goods & Benefits" = c("Responses"),
-    "Impacts" = c("Goods & Benefits", "Responses"),
-    "Responses" = c("Drivers", "Activities", "Pressures")
-  )
-  rules[[source_type]] %||% character(0)
-}
+# Check if the real function is loaded - if so, skip stub
+.real_get_allowed_targets_exists <- exists("get_allowed_targets", mode = "function", envir = .GlobalEnv) &&
+  exists("DAPSIWRM_ADJACENCY_RULES", envir = .GlobalEnv)
 
-suggest_connected_elements <- function(node_id, node_data, existing_network,
-                                       context, max_suggestions = 5) {
-  targets <- get_allowed_targets(node_data$type)
-  if (length(targets) == 0) return(list())
-  target_type <- targets[1]
-
-  suggestions <- list(
-    list(
-      name = paste("Suggested", target_type, "element"),
-      type = target_type,
-      connection_polarity = "+",
-      from_node = node_id,
-      reasoning = "Stub suggestion"
+if (!.real_get_allowed_targets_exists) {
+  get_allowed_targets <- function(source_type) {
+    rules <- list(
+      "Drivers" = c("Activities"),
+      "Activities" = c("Pressures"),
+      "Pressures" = c("Marine Processes & Functioning", "State Changes"),
+      "Marine Processes & Functioning" = c("Ecosystem Services"),
+      "State Changes" = c("Impacts", "Ecosystem Services"),
+      "Ecosystem Services" = c("Goods & Benefits"),
+      "Goods & Benefits" = c("Responses"),
+      "Impacts" = c("Goods & Benefits", "Responses"),
+      "Responses" = c("Drivers", "Activities", "Pressures")
     )
-  )
-  # Filter out existing
-  existing_names <- if (is.data.frame(existing_network)) existing_network$name else character(0)
-  suggestions <- Filter(function(s) !s$name %in% existing_names, suggestions)
-  suggestions[seq_len(min(length(suggestions), max_suggestions))]
+    rules[[source_type]] %||% character(0)
+  }
 }
 
-infer_connection_polarity <- function(from_name, to_name, from_type, to_type) {
-  from_lower <- tolower(from_name)
-  to_lower <- tolower(to_name)
-  if (grepl("quota|protect|mitigat|reduc", from_lower) || grepl("depletion|loss|degrad", to_lower)) {
-    return("-")
+if (!.real_get_allowed_targets_exists) {
+  suggest_connected_elements <- function(node_id, node_data, existing_network,
+                                         context, max_suggestions = 5) {
+    targets <- get_allowed_targets(node_data$type)
+    if (length(targets) == 0) return(list())
+    target_type <- targets[1]
+
+    suggestions <- list(
+      list(
+        name = paste("Suggested", target_type, "element"),
+        type = target_type,
+        connection_polarity = "+",
+        from_node = node_id,
+        reasoning = "Stub suggestion"
+      )
+    )
+    # Filter out existing
+    existing_names <- if (is.data.frame(existing_network)) existing_network$name else character(0)
+    suggestions <- Filter(function(s) !s$name %in% existing_names, suggestions)
+    suggestions[seq_len(min(length(suggestions), max_suggestions))]
   }
-  "+"
+}
+
+if (!.real_get_allowed_targets_exists) {
+  infer_connection_polarity <- function(from_name, to_name, from_type, to_type) {
+    from_lower <- tolower(from_name)
+    to_lower <- tolower(to_name)
+    if (grepl("quota|protect|mitigat|reduc", from_lower) || grepl("depletion|loss|degrad", to_lower)) {
+      return("-")
+    }
+    "+"
+  }
 }
 
 convert_graphical_to_isa <- function(nodes, edges, context) {

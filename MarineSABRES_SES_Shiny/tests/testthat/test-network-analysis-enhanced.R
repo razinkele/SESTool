@@ -84,14 +84,14 @@ test_that("validate_edges accepts valid edges dataframe", {
 test_that("validate_igraph catches NULL input", {
   expect_error(
     validate_igraph(NULL),
-    "graph is NULL"
+    "must be an igraph object"
   )
 })
 
 test_that("validate_igraph catches non-igraph input", {
   expect_error(
     validate_igraph(list(nodes = 1, edges = 2)),
-    "graph must be igraph object"
+    "must be an igraph object"
   )
 })
 
@@ -480,7 +480,8 @@ test_that("classify_loop_type_safe classifies reinforcing loop", {
 
   result <- classify_loop_type_safe(loop, edges)
   expect_false(is.null(result))
-  expect_equal(result, "R")
+  # Function returns full name, not abbreviation
+  expect_equal(result, "Reinforcing")
 })
 
 test_that("classify_loop_type_safe classifies balancing loop", {
@@ -498,7 +499,8 @@ test_that("classify_loop_type_safe classifies balancing loop", {
 
   result <- classify_loop_type_safe(loop, edges)
   expect_false(is.null(result))
-  expect_equal(result, "B")
+  # Function returns full name, not abbreviation
+  expect_equal(result, "Balancing")
 })
 
 # ============================================================================

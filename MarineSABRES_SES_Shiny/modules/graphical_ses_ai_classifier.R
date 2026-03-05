@@ -24,11 +24,10 @@
 #' @export
 classify_element_with_ai <- function(element_name, context, i18n = NULL) {
 
-  # Validate inputs
-  validate(need(
-    !is.null(element_name) && nchar(trimws(element_name)) > 0,
-    "Element name cannot be empty"
-  ))
+  # Validate inputs - use standard R validation for portability (works outside Shiny)
+  if (is.null(element_name) || nchar(trimws(as.character(element_name))) == 0) {
+    stop("Element name cannot be empty")
+  }
 
 
   element_name <- trimws(element_name)
