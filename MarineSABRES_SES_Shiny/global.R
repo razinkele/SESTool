@@ -390,6 +390,9 @@ source("functions/reactive_pipeline.R", local = TRUE)
 # Session isolation utilities (for multi-user shiny-server deployments)
 source("functions/session_isolation.R", local = FALSE)  # FALSE = global scope for server access
 
+# Persistent storage utilities (for saving projects to user's Documents folder)
+source("functions/persistent_storage.R", local = FALSE)  # FALSE = global scope for server access
+
 # Async computation helpers (lightweight progress-aware wrappers)
 source(get_project_file("functions", "async_helpers.R"), local = FALSE)
 
@@ -401,6 +404,9 @@ source("modules/navigation_helpers.R", local = TRUE)
 
 # Auto-save module
 source("modules/auto_save_module.R", local = TRUE)
+
+# Recent projects module (easy access to saved projects)
+source("modules/recent_projects_module.R", local = TRUE)
 
 # Tutorial system (contextual help for features)
 source("modules/tutorial_system.R", local = TRUE)

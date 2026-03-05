@@ -608,6 +608,19 @@ auto_save_server <- function(id, project_data_reactive, i18n,
         latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
         saveRDS(current_data, latest_file)
 
+        # PERSISTENT STORAGE: Also save to user's Documents folder (local mode only)
+        # This ensures autosaves are easily findable and persist across sessions
+        persistent_path <- get_persistent_autosave_path(session_id)
+        if (!is.null(persistent_path)) {
+          tryCatch({
+            saveRDS(current_data, persistent_path)
+            debug_log(sprintf("Persistent autosave: %s", persistent_path), "AUTO-SAVE")
+          }, error = function(e) {
+            # Non-fatal: continue even if persistent save fails
+            debug_log(sprintf("Persistent autosave failed (non-fatal): %s", e$message), "AUTO-SAVE")
+          })
+        }
+
         # Save to localStorage via JavaScript (as JSON backup)
         json_data <- jsonlite::toJSON(current_data, auto_unbox = TRUE, null = "null")
         session$sendCustomMessage(
@@ -878,9 +891,15 @@ auto_save_server <- function(id, project_data_reactive, i18n,
 
     # Check for recoverable session on startup
     check_for_recovery <- function() {
+      # First, check session temp directory (immediate session recovery)
       current_temp_dir <- isolate(temp_dir())
       latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
 
+      # Also check persistent folder for recoverable autosaves (cross-session recovery)
+      persistent_autosaves <- find_recoverable_autosaves(max_age_hours = 72)
+      has_persistent_recovery <- nrow(persistent_autosaves) > 0
+
+      # Prefer session temp file if it exists, otherwise use persistent
       if (file.exists(latest_file)) {
         # Get file modification time
         file_time <- file.mtime(latest_file)
@@ -914,7 +933,18 @@ auto_save_server <- function(id, project_data_reactive, i18n,
                 style = CSS_HINT_TEXT,
                 icon("info-circle"), " ",
                 i18n$t("common.misc.auto_save_helps_prevent_data_loss_from_unexpected_disconnections")
-              )
+              ),
+              # Show storage location info
+              if (!is.null(get_projects_folder(create_if_missing = FALSE))) {
+                tags$p(
+                  style = paste(CSS_HINT_TEXT, "margin-top: 10px; background: #e8f4f8; padding: 8px 12px; border-radius: 4px;"),
+                  icon("folder"), " ",
+                  i18n$t("common.misc.your_projects_are_saved_to"),
+                  tags$br(),
+                  tags$code(style = "font-size: 11px;",
+                            get_display_path(get_projects_folder(create_if_missing = FALSE)))
+                )
+              }
             ),
 
             footer = tagList(

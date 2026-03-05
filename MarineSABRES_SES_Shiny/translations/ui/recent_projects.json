@@ -1,0 +1,312 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "ui.recent_projects.projects_folder": {
+      "en": "Projects Folder",
+      "es": "Carpeta de Proyectos",
+      "fr": "Dossier des Projets",
+      "de": "Projektordner",
+      "lt": "Projektų aplankas",
+      "pt": "Pasta de Projetos",
+      "it": "Cartella Progetti",
+      "no": "Prosjektmappe",
+      "el": "Φάκελος Έργων"
+    },
+    "ui.recent_projects.open_folder": {
+      "en": "Open Folder",
+      "es": "Abrir Carpeta",
+      "fr": "Ouvrir le Dossier",
+      "de": "Ordner öffnen",
+      "lt": "Atidaryti aplanką",
+      "pt": "Abrir Pasta",
+      "it": "Apri Cartella",
+      "no": "Åpne mappe",
+      "el": "Άνοιγμα Φακέλου"
+    },
+    "ui.recent_projects.browser_storage": {
+      "en": "Browser Storage Mode",
+      "es": "Modo de Almacenamiento del Navegador",
+      "fr": "Mode Stockage Navigateur",
+      "de": "Browser-Speichermodus",
+      "lt": "Naršyklės saugojimo režimas",
+      "pt": "Modo de Armazenamento do Navegador",
+      "it": "Modalità Archiviazione Browser",
+      "no": "Nettleserlagringsmodus",
+      "el": "Λειτουργία Αποθήκευσης Προγράμματος Περιήγησης"
+    },
+    "ui.recent_projects.browser_storage_desc": {
+      "en": "Connect a local folder to save your projects persistently.",
+      "es": "Conecte una carpeta local para guardar sus proyectos de forma persistente.",
+      "fr": "Connectez un dossier local pour enregistrer vos projets de manière permanente.",
+      "de": "Verbinden Sie einen lokalen Ordner, um Ihre Projekte dauerhaft zu speichern.",
+      "lt": "Prijunkite vietinį aplanką, kad projektai būtų išsaugoti nuolat.",
+      "pt": "Conecte uma pasta local para salvar seus projetos permanentemente.",
+      "it": "Collega una cartella locale per salvare i tuoi progetti in modo permanente.",
+      "no": "Koble til en lokal mappe for å lagre prosjektene dine permanent.",
+      "el": "Συνδέστε έναν τοπικό φάκελο για να αποθηκεύσετε τα έργα σας μόνιμα."
+    },
+    "ui.recent_projects.select_folder": {
+      "en": "Select Folder",
+      "es": "Seleccionar Carpeta",
+      "fr": "Sélectionner un Dossier",
+      "de": "Ordner auswählen",
+      "lt": "Pasirinkti aplanką",
+      "pt": "Selecionar Pasta",
+      "it": "Seleziona Cartella",
+      "no": "Velg mappe",
+      "el": "Επιλογή Φακέλου"
+    },
+    "ui.recent_projects.no_projects": {
+      "en": "No saved projects yet",
+      "es": "Aún no hay proyectos guardados",
+      "fr": "Aucun projet enregistré pour l'instant",
+      "de": "Noch keine gespeicherten Projekte",
+      "lt": "Kol kas nėra išsaugotų projektų",
+      "pt": "Nenhum projeto salvo ainda",
+      "it": "Nessun progetto salvato ancora",
+      "no": "Ingen lagrede prosjekter ennå",
+      "el": "Δεν υπάρχουν αποθηκευμένα έργα ακόμη"
+    },
+    "ui.recent_projects.no_projects_desc": {
+      "en": "Start building your SES model and it will be automatically saved here.",
+      "es": "Comience a construir su modelo SES y se guardará automáticamente aquí.",
+      "fr": "Commencez à construire votre modèle SES et il sera automatiquement enregistré ici.",
+      "de": "Beginnen Sie mit dem Aufbau Ihres SES-Modells und es wird automatisch hier gespeichert.",
+      "lt": "Pradėkite kurti savo SES modelį ir jis bus automatiškai išsaugotas čia.",
+      "pt": "Comece a construir seu modelo SES e ele será salvo automaticamente aqui.",
+      "it": "Inizia a costruire il tuo modello SES e sarà salvato automaticamente qui.",
+      "no": "Begynn å bygge din SES-modell og den vil bli automatisk lagret her.",
+      "el": "Ξεκινήστε να δημιουργείτε το μοντέλο SES σας και θα αποθηκευτεί αυτόματα εδώ."
+    },
+    "ui.recent_projects.saved_projects": {
+      "en": "Saved Projects",
+      "es": "Proyectos Guardados",
+      "fr": "Projets Enregistrés",
+      "de": "Gespeicherte Projekte",
+      "lt": "Išsaugoti projektai",
+      "pt": "Projetos Salvos",
+      "it": "Progetti Salvati",
+      "no": "Lagrede prosjekter",
+      "el": "Αποθηκευμένα Έργα"
+    },
+    "ui.recent_projects.tip_title": {
+      "en": "Where are your files saved?",
+      "es": "¿Dónde se guardan sus archivos?",
+      "fr": "Où sont enregistrés vos fichiers ?",
+      "de": "Wo werden Ihre Dateien gespeichert?",
+      "lt": "Kur išsaugomi jūsų failai?",
+      "pt": "Onde seus arquivos são salvos?",
+      "it": "Dove vengono salvati i tuoi file?",
+      "no": "Hvor lagres filene dine?",
+      "el": "Πού αποθηκεύονται τα αρχεία σας;"
+    },
+    "ui.recent_projects.tip_text": {
+      "en": "Your projects are automatically saved to a '%s' folder in your Documents. You can open this folder anytime to find your work.",
+      "es": "Sus proyectos se guardan automáticamente en una carpeta '%s' en sus Documentos. Puede abrir esta carpeta en cualquier momento para encontrar su trabajo.",
+      "fr": "Vos projets sont automatiquement enregistrés dans un dossier '%s' dans vos Documents. Vous pouvez ouvrir ce dossier à tout moment pour retrouver votre travail.",
+      "de": "Ihre Projekte werden automatisch in einem Ordner '%s' in Ihren Dokumenten gespeichert. Sie können diesen Ordner jederzeit öffnen, um Ihre Arbeit zu finden.",
+      "lt": "Jūsų projektai automatiškai išsaugomi į '%s' aplanką jūsų Dokumentuose. Galite bet kada atidaryti šį aplanką, kad rastumėte savo darbą.",
+      "pt": "Seus projetos são salvos automaticamente em uma pasta '%s' em seus Documentos. Você pode abrir esta pasta a qualquer momento para encontrar seu trabalho.",
+      "it": "I tuoi progetti vengono salvati automaticamente in una cartella '%s' nei tuoi Documenti. Puoi aprire questa cartella in qualsiasi momento per trovare il tuo lavoro.",
+      "no": "Prosjektene dine lagres automatisk i en '%s'-mappe i Dokumentene dine. Du kan åpne denne mappen når som helst for å finne arbeidet ditt.",
+      "el": "Τα έργα σας αποθηκεύονται αυτόματα σε έναν φάκελο '%s' στα Έγγραφά σας. Μπορείτε να ανοίξετε αυτόν τον φάκελο ανά πάσα στιγμή για να βρείτε την εργασία σας."
+    },
+    "ui.recent_projects.confirm_delete_title": {
+      "en": "Delete Project?",
+      "es": "¿Eliminar Proyecto?",
+      "fr": "Supprimer le Projet ?",
+      "de": "Projekt löschen?",
+      "lt": "Ištrinti projektą?",
+      "pt": "Excluir Projeto?",
+      "it": "Eliminare il Progetto?",
+      "no": "Slette prosjekt?",
+      "el": "Διαγραφή Έργου;"
+    },
+    "ui.recent_projects.confirm_delete_message": {
+      "en": "Are you sure you want to delete '%s'? This action cannot be undone.",
+      "es": "¿Está seguro de que desea eliminar '%s'? Esta acción no se puede deshacer.",
+      "fr": "Êtes-vous sûr de vouloir supprimer '%s' ? Cette action ne peut pas être annulée.",
+      "de": "Sind Sie sicher, dass Sie '%s' löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "lt": "Ar tikrai norite ištrinti '%s'? Šis veiksmas negali būti atšauktas.",
+      "pt": "Tem certeza de que deseja excluir '%s'? Esta ação não pode ser desfeita.",
+      "it": "Sei sicuro di voler eliminare '%s'? Questa azione non può essere annullata.",
+      "no": "Er du sikker på at du vil slette '%s'? Denne handlingen kan ikke angres.",
+      "el": "Είστε σίγουροι ότι θέλετε να διαγράψετε το '%s'; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
+    },
+    "ui.recent_projects.use_settings_to_connect": {
+      "en": "Go to Settings > Local Storage to connect a folder.",
+      "es": "Vaya a Configuración > Almacenamiento Local para conectar una carpeta.",
+      "fr": "Allez dans Paramètres > Stockage Local pour connecter un dossier.",
+      "de": "Gehen Sie zu Einstellungen > Lokaler Speicher, um einen Ordner zu verbinden.",
+      "lt": "Eikite į Nustatymai > Vietinė saugykla, kad prijungtumėte aplanką.",
+      "pt": "Vá para Configurações > Armazenamento Local para conectar uma pasta.",
+      "it": "Vai su Impostazioni > Archiviazione Locale per connettere una cartella.",
+      "no": "Gå til Innstillinger > Lokal lagring for å koble til en mappe.",
+      "el": "Μεταβείτε στις Ρυθμίσεις > Τοπική Αποθήκευση για να συνδέσετε έναν φάκελο."
+    },
+    "ui.recent_projects.recent_projects": {
+      "en": "Recent Projects",
+      "es": "Proyectos Recientes",
+      "fr": "Projets Récents",
+      "de": "Letzte Projekte",
+      "lt": "Naujausi projektai",
+      "pt": "Projetos Recentes",
+      "it": "Progetti Recenti",
+      "no": "Nylige prosjekter",
+      "el": "Πρόσφατα Έργα"
+    },
+    "ui.recent_projects.setup_title": {
+      "en": "Set Up Your Projects Folder",
+      "es": "Configure su Carpeta de Proyectos",
+      "fr": "Configurez votre Dossier de Projets",
+      "de": "Richten Sie Ihren Projektordner ein",
+      "lt": "Nustatykite savo projektų aplanką",
+      "pt": "Configure sua Pasta de Projetos",
+      "it": "Configura la tua Cartella Progetti",
+      "no": "Sett opp prosjektmappen din",
+      "el": "Ρυθμίστε τον Φάκελο Έργων σας"
+    },
+    "ui.recent_projects.setup_description": {
+      "en": "Choose where to save your projects. We suggest the following location:",
+      "es": "Elija dónde guardar sus proyectos. Sugerimos la siguiente ubicación:",
+      "fr": "Choisissez où enregistrer vos projets. Nous suggérons l'emplacement suivant :",
+      "de": "Wählen Sie, wo Ihre Projekte gespeichert werden sollen. Wir schlagen folgenden Ort vor:",
+      "lt": "Pasirinkite, kur išsaugoti projektus. Siūlome šią vietą:",
+      "pt": "Escolha onde salvar seus projetos. Sugerimos o seguinte local:",
+      "it": "Scegli dove salvare i tuoi progetti. Suggeriamo la seguente posizione:",
+      "no": "Velg hvor du vil lagre prosjektene dine. Vi foreslår følgende plassering:",
+      "el": "Επιλέξτε πού θα αποθηκεύσετε τα έργα σας. Προτείνουμε την ακόλουθη τοποθεσία:"
+    },
+    "ui.recent_projects.use_this_folder": {
+      "en": "Use This Folder",
+      "es": "Usar Esta Carpeta",
+      "fr": "Utiliser ce Dossier",
+      "de": "Diesen Ordner verwenden",
+      "lt": "Naudoti šį aplanką",
+      "pt": "Usar Esta Pasta",
+      "it": "Usa Questa Cartella",
+      "no": "Bruk denne mappen",
+      "el": "Χρήση Αυτού του Φακέλου"
+    },
+    "ui.recent_projects.choose_different": {
+      "en": "Choose Different",
+      "es": "Elegir Otra",
+      "fr": "Choisir Autre",
+      "de": "Anderen wählen",
+      "lt": "Pasirinkti kitą",
+      "pt": "Escolher Outra",
+      "it": "Scegli Diversa",
+      "no": "Velg annen",
+      "el": "Επιλέξτε Διαφορετικό"
+    },
+    "ui.recent_projects.setup_note": {
+      "en": "Your projects and autosaves will be stored in this folder.",
+      "es": "Sus proyectos y guardados automáticos se almacenarán en esta carpeta.",
+      "fr": "Vos projets et sauvegardes automatiques seront stockés dans ce dossier.",
+      "de": "Ihre Projekte und automatischen Speicherungen werden in diesem Ordner gespeichert.",
+      "lt": "Jūsų projektai ir automatiniai išsaugojimai bus saugomi šiame aplanke.",
+      "pt": "Seus projetos e salvamentos automáticos serão armazenados nesta pasta.",
+      "it": "I tuoi progetti e salvataggi automatici saranno memorizzati in questa cartella.",
+      "no": "Prosjektene dine og automatiske lagringer vil bli lagret i denne mappen.",
+      "el": "Τα έργα σας και οι αυτόματες αποθηκεύσεις θα αποθηκευτούν σε αυτόν τον φάκελο."
+    },
+    "ui.recent_projects.no_folder_detected": {
+      "en": "Could not detect a suitable folder",
+      "es": "No se pudo detectar una carpeta adecuada",
+      "fr": "Impossible de détecter un dossier approprié",
+      "de": "Konnte keinen geeigneten Ordner erkennen",
+      "lt": "Nepavyko aptikti tinkamo aplanko",
+      "pt": "Não foi possível detectar uma pasta adequada",
+      "it": "Impossibile rilevare una cartella adatta",
+      "no": "Kunne ikke oppdage en passende mappe",
+      "el": "Δεν ήταν δυνατή η ανίχνευση κατάλληλου φακέλου"
+    },
+    "ui.recent_projects.folder_configured": {
+      "en": "Projects folder configured: %s",
+      "es": "Carpeta de proyectos configurada: %s",
+      "fr": "Dossier de projets configuré : %s",
+      "de": "Projektordner konfiguriert: %s",
+      "lt": "Projektų aplankas sukonfigūruotas: %s",
+      "pt": "Pasta de projetos configurada: %s",
+      "it": "Cartella progetti configurata: %s",
+      "no": "Prosjektmappe konfigurert: %s",
+      "el": "Ρυθμίστηκε ο φάκελος έργων: %s"
+    },
+    "ui.recent_projects.folder_setup_failed": {
+      "en": "Failed to set up folder:",
+      "es": "Error al configurar la carpeta:",
+      "fr": "Échec de la configuration du dossier :",
+      "de": "Ordnereinrichtung fehlgeschlagen:",
+      "lt": "Nepavyko nustatyti aplanko:",
+      "pt": "Falha ao configurar a pasta:",
+      "it": "Configurazione cartella fallita:",
+      "no": "Kunne ikke sette opp mappen:",
+      "el": "Αποτυχία ρύθμισης φακέλου:"
+    },
+    "ui.recent_projects.choose_folder_title": {
+      "en": "Choose Projects Folder",
+      "es": "Elegir Carpeta de Proyectos",
+      "fr": "Choisir le Dossier de Projets",
+      "de": "Projektordner auswählen",
+      "lt": "Pasirinkite projektų aplanką",
+      "pt": "Escolher Pasta de Projetos",
+      "it": "Scegli Cartella Progetti",
+      "no": "Velg prosjektmappe",
+      "el": "Επιλογή Φακέλου Έργων"
+    },
+    "ui.recent_projects.choose_folder_description": {
+      "en": "Enter the full path to the folder where you want to save your projects.",
+      "es": "Ingrese la ruta completa de la carpeta donde desea guardar sus proyectos.",
+      "fr": "Entrez le chemin complet du dossier où vous souhaitez enregistrer vos projets.",
+      "de": "Geben Sie den vollständigen Pfad zum Ordner ein, in dem Sie Ihre Projekte speichern möchten.",
+      "lt": "Įveskite pilną kelią į aplanką, kuriame norite išsaugoti savo projektus.",
+      "pt": "Digite o caminho completo da pasta onde deseja salvar seus projetos.",
+      "it": "Inserisci il percorso completo della cartella in cui vuoi salvare i tuoi progetti.",
+      "no": "Skriv inn hele banen til mappen der du vil lagre prosjektene dine.",
+      "el": "Εισάγετε την πλήρη διαδρομή προς τον φάκελο όπου θέλετε να αποθηκεύσετε τα έργα σας."
+    },
+    "ui.recent_projects.folder_path": {
+      "en": "Folder Path",
+      "es": "Ruta de la Carpeta",
+      "fr": "Chemin du Dossier",
+      "de": "Ordnerpfad",
+      "lt": "Aplanko kelias",
+      "pt": "Caminho da Pasta",
+      "it": "Percorso Cartella",
+      "no": "Mappebane",
+      "el": "Διαδρομή Φακέλου"
+    },
+    "ui.recent_projects.folder_path_hint": {
+      "en": "The folder will be created if it doesn't exist.",
+      "es": "La carpeta se creará si no existe.",
+      "fr": "Le dossier sera créé s'il n'existe pas.",
+      "de": "Der Ordner wird erstellt, falls er nicht existiert.",
+      "lt": "Aplankas bus sukurtas, jei jo nėra.",
+      "pt": "A pasta será criada se não existir.",
+      "it": "La cartella verrà creata se non esiste.",
+      "no": "Mappen vil bli opprettet hvis den ikke finnes.",
+      "el": "Ο φάκελος θα δημιουργηθεί αν δεν υπάρχει."
+    },
+    "ui.recent_projects.change_folder": {
+      "en": "Change Folder",
+      "es": "Cambiar Carpeta",
+      "fr": "Changer de Dossier",
+      "de": "Ordner ändern",
+      "lt": "Keisti aplanką",
+      "pt": "Alterar Pasta",
+      "it": "Cambia Cartella",
+      "no": "Endre mappe",
+      "el": "Αλλαγή Φακέλου"
+    }
+  }
+}

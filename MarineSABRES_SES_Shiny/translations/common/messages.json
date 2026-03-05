@@ -9008,6 +9008,50 @@
       "it": "Errore nella generazione del report:",
       "no": "Feil ved generering av rapport:",
       "el": "Σφάλμα κατά τη δημιουργία αναφοράς:"
+    },
+    "common.messages.project_loaded": {
+      "en": "Project '%s' loaded successfully",
+      "es": "Proyecto '%s' cargado con éxito",
+      "fr": "Projet '%s' chargé avec succès",
+      "de": "Projekt '%s' erfolgreich geladen",
+      "lt": "Projektas '%s' sėkmingai įkeltas",
+      "pt": "Projeto '%s' carregado com sucesso",
+      "it": "Progetto '%s' caricato con successo",
+      "no": "Prosjekt '%s' lastet inn vellykket",
+      "el": "Το έργο '%s' φορτώθηκε επιτυχώς"
+    },
+    "common.messages.project_load_failed": {
+      "en": "Failed to load project:",
+      "es": "Error al cargar el proyecto:",
+      "fr": "Échec du chargement du projet :",
+      "de": "Projekt konnte nicht geladen werden:",
+      "lt": "Nepavyko įkelti projekto:",
+      "pt": "Falha ao carregar o projeto:",
+      "it": "Impossibile caricare il progetto:",
+      "no": "Kunne ikke laste inn prosjektet:",
+      "el": "Αποτυχία φόρτωσης έργου:"
+    },
+    "common.messages.project_deleted": {
+      "en": "Project '%s' deleted",
+      "es": "Proyecto '%s' eliminado",
+      "fr": "Projet '%s' supprimé",
+      "de": "Projekt '%s' gelöscht",
+      "lt": "Projektas '%s' ištrintas",
+      "pt": "Projeto '%s' excluído",
+      "it": "Progetto '%s' eliminato",
+      "no": "Prosjekt '%s' slettet",
+      "el": "Το έργο '%s' διαγράφηκε"
+    },
+    "common.messages.project_delete_failed": {
+      "en": "Failed to delete project:",
+      "es": "Error al eliminar el proyecto:",
+      "fr": "Échec de la suppression du projet :",
+      "de": "Projekt konnte nicht gelöscht werden:",
+      "lt": "Nepavyko ištrinti projekto:",
+      "pt": "Falha ao excluir o projeto:",
+      "it": "Impossibile eliminare il progetto:",
+      "no": "Kunne ikke slette prosjektet:",
+      "el": "Αποτυχία διαγραφής έργου:"
     }
   }
 }

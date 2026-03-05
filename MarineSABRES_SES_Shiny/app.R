@@ -371,6 +371,12 @@ ui <- bs4DashPage(
         )
       ),
 
+      # ==================== RECENT PROJECTS ====================
+      bs4TabItem(
+        tabName = "recent_projects",
+        recent_projects_ui("recent_proj", i18n)
+      ),
+
       # ==================== PIMS MODULE ====================
       bs4TabItem(tabName = "pims_project", pims_project_ui("pims_proj", i18n)),
       bs4TabItem(tabName = "pims_stakeholders", pims_stakeholder_ui("pims_stake", i18n)),
@@ -483,8 +489,8 @@ server <- function(input, output, session) {
   user_level <- reactiveVal("beginner")
 
   # Auto-save enabled flag (controls AI ISA Assistant auto-save)
-  # Default to FALSE to avoid accidental overwrites
-  autosave_enabled <- reactiveVal(FALSE)
+  # Default to TRUE to prevent data loss - users expect their work to be saved
+  autosave_enabled <- reactiveVal(TRUE)
 
   # Advanced auto-save settings
   autosave_delay <- reactiveVal(2)  # Default: 2 seconds
@@ -709,6 +715,10 @@ server <- function(input, output, session) {
   # Initialize local storage functionality for saving/loading to user's computer
   # Uses File System Access API for modern browsers with download/upload fallback
   local_storage_control <- local_storage_server("local_storage", project_data, session_i18n, event_bus)
+
+  # ========== RECENT PROJECTS MODULE ==========
+  # Easy access to saved projects from the Documents folder
+  recent_projects_control <- recent_projects_server("recent_proj", project_data, session_i18n, event_bus)
 
   # ========== LANGUAGE STATE MANAGEMENT (EARLY) ==========
   # Load language from query parameter BEFORE anything else

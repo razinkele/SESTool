@@ -692,6 +692,17 @@
       "pt": "Iniciante",
       "el": "Αρχάριος",
       "no": "Nybegynner"
+    },
+    "common.misc.your_projects_are_saved_to": {
+      "en": "Your projects are saved to:",
+      "lt": "Jūsų projektai išsaugomi į:",
+      "es": "Sus proyectos se guardan en:",
+      "fr": "Vos projets sont enregistrés dans :",
+      "de": "Ihre Projekte werden gespeichert in:",
+      "it": "I tuoi progetti sono salvati in:",
+      "pt": "Seus projetos são salvos em:",
+      "el": "Τα έργα σας αποθηκεύονται στο:",
+      "no": "Prosjektene dine lagres i:"
     }
   }
 }

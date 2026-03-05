@@ -98,10 +98,6 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
       rv$current_step <- 0
     })
 
-    observeEvent(input$start_quick, {
-      showNotification(i18n$t("modules.entry_point.ep_notify_use_main_menu"), type = "message")
-    })
-
     # ========== EP0 ACTIONS ==========
     observeEvent(input$ep0_role_click, {
       # Toggle multi-select behavior
@@ -357,9 +353,10 @@ render_welcome_screen <- function(ns, i18n) {
         class = "jumbotron",
 
         fluidRow(
-          column(6,
+          column(12,
             div(
               class = "ep-card start-here-highlight",
+              style = "max-width: 600px; margin: 0 auto;",
               div(
                 class = "start-here-badge",
                 icon("star"), " ", i18n$t("modules.entry_point.start_here")
@@ -368,15 +365,6 @@ render_welcome_screen <- function(ns, i18n) {
               p(i18n$t("modules.entry_point.step_by_step_guidance_through_the_entry_points")),
               actionButton(ns("start_guided"), i18n$t("modules.entry_point.start_guided_journey"),
                           icon = icon("play"), class = "btn-primary btn-lg btn-block")
-            )
-          ),
-          column(6,
-            div(
-              class = "ep-card",
-              h3(icon("bolt"), " ", i18n$t("modules.entry_point.quick_access")),
-              p(i18n$t("modules.entry_point.i_know_what_tool_i_need")),
-              actionButton(ns("start_quick"), i18n$t("modules.entry_point.browse_tools"),
-                          icon = icon("tools"), class = "btn-success btn-lg btn-block")
             )
           )
         )
@@ -416,8 +404,7 @@ render_welcome_screen <- function(ns, i18n) {
             status = "success",
             collapsed = TRUE,
             p(i18n$t("modules.entry_point.faq_started_answer_1"), " ", strong(i18n$t("modules.entry_point.guided_pathway")), " ", i18n$t("modules.entry_point.faq_started_answer_1_suffix")),
-            p(i18n$t("modules.entry_point.faq_started_answer_2")),
-            p(i18n$t("modules.entry_point.faq_started_answer_3"), " ", strong(i18n$t("modules.entry_point.quick_access")), " ", i18n$t("modules.entry_point.faq_started_answer_3_suffix"))
+            p(i18n$t("modules.entry_point.faq_started_answer_2"))
           ),
           bs4AccordionItem(
             title = i18n$t("modules.entry_point.faq_expertise_question"),

@@ -442,6 +442,36 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
   )
 }
 
+.build_reset_settings_ui <- function(i18n) {
+  tagList(
+    tags$h4(icon("redo"), " ", i18n$t("ui.modals.reset_settings")),
+    tags$div(
+      style = "margin-top: 15px; padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px;",
+      tags$p(
+        style = "margin-bottom: 15px; color: #856404;",
+        icon("exclamation-triangle"), " ",
+        i18n$t("ui.modals.reset_settings_warning")
+      ),
+      tags$p(
+        style = "font-size: 13px; color: #666; margin-bottom: 15px;",
+        i18n$t("ui.modals.reset_settings_description")
+      ),
+      tags$ul(
+        style = "font-size: 13px; color: #666; margin-bottom: 15px;",
+        tags$li(i18n$t("ui.modals.reset_item_storage")),
+        tags$li(i18n$t("ui.modals.reset_item_autosave")),
+        tags$li(i18n$t("ui.modals.reset_item_preferences"))
+      ),
+      actionButton(
+        "btn_reset_all_settings",
+        i18n$t("ui.modals.start_from_scratch"),
+        icon = icon("trash-alt"),
+        class = "btn-warning"
+      )
+    )
+  )
+}
+
 .apply_settings <- function(input, i18n, autosave_enabled, autosave_delay,
                             autosave_notifications, autosave_indicator,
                             autosave_triggers, ses_models_directory) {
@@ -568,7 +598,9 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
         tags$hr(),
         .build_general_settings_ui(i18n),
         tags$hr(),
-        .build_ses_models_ui(i18n, ses_models_directory)
+        .build_ses_models_ui(i18n, ses_models_directory),
+        tags$hr(),
+        .build_reset_settings_ui(i18n)
       )
     ))
   })
@@ -589,6 +621,100 @@ setup_settings_modal_handlers <- function(input, output, session, i18n, autosave
   })
   observeEvent(input$btn_save_to_local, {
     session$sendCustomMessage("trigger_local_save", list())
+  })
+
+  # Reset all settings handler
+  observeEvent(input$btn_reset_all_settings, {
+    # Show confirmation modal
+    showModal(modalDialog(
+      title = tags$h4(icon("exclamation-triangle", style = "color: #dc3545;"), " ",
+                      i18n$t("ui.modals.confirm_reset_title")),
+      size = "m",
+      easyClose = FALSE,
+
+      tags$div(
+        style = "padding: 15px;",
+        tags$p(
+          style = "font-size: 15px;",
+          i18n$t("ui.modals.confirm_reset_message")
+        ),
+        tags$p(
+          style = "font-size: 13px; color: #666; margin-top: 15px;",
+          i18n$t("ui.modals.confirm_reset_note")
+        )
+      ),
+
+      footer = tagList(
+        modalButton(i18n$t("common.buttons.cancel")),
+        actionButton(
+          "btn_confirm_reset",
+          i18n$t("ui.modals.yes_reset_everything"),
+          icon = icon("trash-alt"),
+          class = "btn-danger"
+        )
+      )
+    ))
+  })
+
+  # Execute reset when confirmed
+  observeEvent(input$btn_confirm_reset, {
+    tryCatch({
+      # Clear storage configuration
+      clear_storage_config()
+
+      # Clear localStorage via JavaScript
+      session$sendCustomMessage("clear_all_local_storage", list())
+
+      # Reset autosave settings to defaults
+      autosave_enabled(TRUE)
+      if (!is.null(autosave_delay)) autosave_delay(2)
+      if (!is.null(autosave_notifications)) autosave_notifications(FALSE)
+      if (!is.null(autosave_indicator)) autosave_indicator(TRUE)
+      if (!is.null(autosave_triggers)) autosave_triggers(c("elements", "context", "connections", "steps"))
+
+      # Reset SES models directory
+      if (!is.null(ses_models_directory)) ses_models_directory("")
+
+      removeModal()
+
+      showNotification(
+        i18n$t("ui.modals.reset_complete"),
+        type = "warning",
+        duration = 5
+      )
+
+      # Suggest page reload for clean state
+      showModal(modalDialog(
+        title = i18n$t("ui.modals.reset_complete_title"),
+        size = "s",
+        easyClose = TRUE,
+
+        tags$div(
+          style = "text-align: center; padding: 20px;",
+          icon("check-circle", style = "font-size: 48px; color: #28a745;"),
+          tags$h4(style = "margin-top: 15px;", i18n$t("ui.modals.reset_complete")),
+          tags$p(i18n$t("ui.modals.reset_reload_suggestion"))
+        ),
+
+        footer = tagList(
+          modalButton(i18n$t("common.buttons.close")),
+          actionButton(
+            "btn_reload_page",
+            i18n$t("ui.modals.reload_now"),
+            icon = icon("sync"),
+            class = "btn-primary",
+            onclick = "location.reload();"
+          )
+        )
+      ))
+
+    }, error = function(e) {
+      showNotification(
+        paste(i18n$t("ui.modals.reset_failed"), e$message),
+        type = "error",
+        duration = 5
+      )
+    })
   })
 }
 

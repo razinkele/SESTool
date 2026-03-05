@@ -118,13 +118,14 @@ add_submenu_tooltip <- function(text, tabName, tooltip_text = NULL) {
 #' @param user_level User experience level ("beginner", "intermediate", "expert")
 #' @return TRUE if item should be shown, FALSE otherwise
 should_show_menu_item <- function(item_name, user_level) {
-  # Beginner: Only show essential items
+  # Beginner: Only show essential items (Graphical SES Creator removed to reduce confusion)
   if (user_level == "beginner") {
     beginner_items <- c(
       "Getting Started",
       "Dashboard",
+      "Recent Projects",  # Easy access to saved projects
       "Create SES",  # Will show AI guided and Template based creation
-      "Graphical SES Creator",  # AI-powered step-by-step network building
+      # "Graphical SES Creator" removed - too complex for beginners
       "SES Visualization",
       "Analysis Tools",  # Will show Loop Detection and Leverage Point Analysis only
       "Import Data",  # Import from Excel
@@ -180,6 +181,20 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
           icon = icon("dashboard")
         ),
         safe_t("ui.sidebar.overview_of_your_project_status_and_key_metrics", i18n_obj = i18n)
+      )
+    ))
+  }
+
+  # Recent Projects (all levels) - Easy access to saved projects
+  if (should_show_menu_item("Recent Projects", user_level)) {
+    menu_items <- c(menu_items, list(
+      add_menu_tooltip(
+        bs4SidebarMenuItem(
+          safe_t("ui.recent_projects.recent_projects", i18n_obj = i18n),
+          tabName = "recent_projects",
+          icon = icon("folder-open")
+        ),
+        safe_t("ui.recent_projects.tip_title", i18n_obj = i18n)
       )
     ))
   }

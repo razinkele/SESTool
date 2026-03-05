@@ -1608,6 +1608,182 @@
       "it": "SESModels (relativo alla directory dell'applicazione)",
       "no": "SESModels (relativ til programkatalogen)",
       "el": "SESModels (σχετικά με τον κατάλογο εφαρμογής)"
+    },
+    "ui.modals.reset_settings": {
+      "en": "Start From Scratch",
+      "es": "Empezar de Cero",
+      "fr": "Repartir de Zéro",
+      "de": "Von Vorne Beginnen",
+      "lt": "Pradėti iš Naujo",
+      "pt": "Começar do Zero",
+      "it": "Ricominciare da Zero",
+      "no": "Start på Nytt",
+      "el": "Ξεκινήστε από την Αρχή"
+    },
+    "ui.modals.reset_settings_warning": {
+      "en": "This will reset all your settings and clear saved data.",
+      "es": "Esto restablecerá todas sus configuraciones y borrará los datos guardados.",
+      "fr": "Cela réinitialisera tous vos paramètres et effacera les données enregistrées.",
+      "de": "Dies setzt alle Ihre Einstellungen zurück und löscht gespeicherte Daten.",
+      "lt": "Tai atstatys visus jūsų nustatymus ir ištrins išsaugotus duomenis.",
+      "pt": "Isso redefinirá todas as suas configurações e limpará os dados salvos.",
+      "it": "Questo resetterà tutte le tue impostazioni e cancellerà i dati salvati.",
+      "no": "Dette vil tilbakestille alle innstillingene dine og slette lagrede data.",
+      "el": "Αυτό θα επαναφέρει όλες τις ρυθμίσεις σας και θα διαγράψει τα αποθηκευμένα δεδομένα."
+    },
+    "ui.modals.reset_settings_description": {
+      "en": "The following will be reset:",
+      "es": "Se restablecerá lo siguiente:",
+      "fr": "Les éléments suivants seront réinitialisés :",
+      "de": "Folgendes wird zurückgesetzt:",
+      "lt": "Bus atstatyta:",
+      "pt": "O seguinte será redefinido:",
+      "it": "Verranno resettati:",
+      "no": "Følgende vil bli tilbakestilt:",
+      "el": "Θα επαναφερθούν τα εξής:"
+    },
+    "ui.modals.reset_item_storage": {
+      "en": "Projects folder configuration",
+      "es": "Configuración de la carpeta de proyectos",
+      "fr": "Configuration du dossier de projets",
+      "de": "Projektordner-Konfiguration",
+      "lt": "Projektų aplanko konfigūracija",
+      "pt": "Configuração da pasta de projetos",
+      "it": "Configurazione della cartella progetti",
+      "no": "Prosjektmappekonfigurasjon",
+      "el": "Διαμόρφωση φακέλου έργων"
+    },
+    "ui.modals.reset_item_autosave": {
+      "en": "Autosave settings",
+      "es": "Configuración de guardado automático",
+      "fr": "Paramètres de sauvegarde automatique",
+      "de": "Automatische Speichereinstellungen",
+      "lt": "Automatinio išsaugojimo nustatymai",
+      "pt": "Configurações de salvamento automático",
+      "it": "Impostazioni di salvataggio automatico",
+      "no": "Innstillinger for automatisk lagring",
+      "el": "Ρυθμίσεις αυτόματης αποθήκευσης"
+    },
+    "ui.modals.reset_item_preferences": {
+      "en": "All user preferences",
+      "es": "Todas las preferencias del usuario",
+      "fr": "Toutes les préférences utilisateur",
+      "de": "Alle Benutzereinstellungen",
+      "lt": "Visos vartotojo nuostatos",
+      "pt": "Todas as preferências do usuário",
+      "it": "Tutte le preferenze utente",
+      "no": "Alle brukerpreferanser",
+      "el": "Όλες οι προτιμήσεις χρήστη"
+    },
+    "ui.modals.start_from_scratch": {
+      "en": "Start From Scratch",
+      "es": "Empezar de Cero",
+      "fr": "Repartir de Zéro",
+      "de": "Von Vorne Beginnen",
+      "lt": "Pradėti iš Naujo",
+      "pt": "Começar do Zero",
+      "it": "Ricominciare da Zero",
+      "no": "Start på Nytt",
+      "el": "Ξεκινήστε από την Αρχή"
+    },
+    "ui.modals.confirm_reset_title": {
+      "en": "Confirm Reset",
+      "es": "Confirmar Restablecimiento",
+      "fr": "Confirmer la Réinitialisation",
+      "de": "Zurücksetzen Bestätigen",
+      "lt": "Patvirtinti Atstatymą",
+      "pt": "Confirmar Redefinição",
+      "it": "Conferma Reset",
+      "no": "Bekreft Tilbakestilling",
+      "el": "Επιβεβαίωση Επαναφοράς"
+    },
+    "ui.modals.confirm_reset_message": {
+      "en": "Are you sure you want to reset all settings? This action cannot be undone.",
+      "es": "¿Está seguro de que desea restablecer todas las configuraciones? Esta acción no se puede deshacer.",
+      "fr": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres ? Cette action ne peut pas être annulée.",
+      "de": "Sind Sie sicher, dass Sie alle Einstellungen zurücksetzen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "lt": "Ar tikrai norite atstatyti visus nustatymus? Šis veiksmas negali būti atšauktas.",
+      "pt": "Tem certeza de que deseja redefinir todas as configurações? Esta ação não pode ser desfeita.",
+      "it": "Sei sicuro di voler resettare tutte le impostazioni? Questa azione non può essere annullata.",
+      "no": "Er du sikker på at du vil tilbakestille alle innstillinger? Denne handlingen kan ikke angres.",
+      "el": "Είστε σίγουροι ότι θέλετε να επαναφέρετε όλες τις ρυθμίσεις; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
+    },
+    "ui.modals.confirm_reset_note": {
+      "en": "Your project data will not be deleted, but you will need to set up your projects folder again.",
+      "es": "Sus datos del proyecto no se eliminarán, pero deberá configurar su carpeta de proyectos nuevamente.",
+      "fr": "Vos données de projet ne seront pas supprimées, mais vous devrez reconfigurer votre dossier de projets.",
+      "de": "Ihre Projektdaten werden nicht gelöscht, aber Sie müssen Ihren Projektordner erneut einrichten.",
+      "lt": "Jūsų projekto duomenys nebus ištrinti, bet turėsite iš naujo nustatyti projektų aplanką.",
+      "pt": "Os dados do seu projeto não serão excluídos, mas você precisará configurar sua pasta de projetos novamente.",
+      "it": "I dati del tuo progetto non verranno eliminati, ma dovrai configurare nuovamente la cartella dei progetti.",
+      "no": "Prosjektdataene dine vil ikke bli slettet, men du må sette opp prosjektmappen på nytt.",
+      "el": "Τα δεδομένα του έργου σας δεν θα διαγραφούν, αλλά θα χρειαστεί να ρυθμίσετε ξανά τον φάκελο έργων."
+    },
+    "ui.modals.yes_reset_everything": {
+      "en": "Yes, Reset Everything",
+      "es": "Sí, Restablecer Todo",
+      "fr": "Oui, Tout Réinitialiser",
+      "de": "Ja, Alles Zurücksetzen",
+      "lt": "Taip, Atstatyti Viską",
+      "pt": "Sim, Redefinir Tudo",
+      "it": "Sì, Resetta Tutto",
+      "no": "Ja, Tilbakestill Alt",
+      "el": "Ναι, Επαναφορά Όλων"
+    },
+    "ui.modals.reset_complete": {
+      "en": "All settings have been reset",
+      "es": "Todas las configuraciones han sido restablecidas",
+      "fr": "Tous les paramètres ont été réinitialisés",
+      "de": "Alle Einstellungen wurden zurückgesetzt",
+      "lt": "Visi nustatymai buvo atstatyti",
+      "pt": "Todas as configurações foram redefinidas",
+      "it": "Tutte le impostazioni sono state resettate",
+      "no": "Alle innstillinger er tilbakestilt",
+      "el": "Όλες οι ρυθμίσεις έχουν επαναφερθεί"
+    },
+    "ui.modals.reset_complete_title": {
+      "en": "Reset Complete",
+      "es": "Restablecimiento Completo",
+      "fr": "Réinitialisation Terminée",
+      "de": "Zurücksetzen Abgeschlossen",
+      "lt": "Atstatymas Baigtas",
+      "pt": "Redefinição Concluída",
+      "it": "Reset Completato",
+      "no": "Tilbakestilling Fullført",
+      "el": "Επαναφορά Ολοκληρώθηκε"
+    },
+    "ui.modals.reset_reload_suggestion": {
+      "en": "Reload the page for a fresh start.",
+      "es": "Recarga la página para un nuevo comienzo.",
+      "fr": "Rechargez la page pour un nouveau départ.",
+      "de": "Laden Sie die Seite neu für einen Neustart.",
+      "lt": "Perkraukite puslapį, kad pradėtumėte iš naujo.",
+      "pt": "Recarregue a página para um novo começo.",
+      "it": "Ricarica la pagina per un nuovo inizio.",
+      "no": "Last inn siden på nytt for en ny start.",
+      "el": "Επαναφορτώστε τη σελίδα για μια νέα αρχή."
+    },
+    "ui.modals.reload_now": {
+      "en": "Reload Now",
+      "es": "Recargar Ahora",
+      "fr": "Recharger Maintenant",
+      "de": "Jetzt Neu Laden",
+      "lt": "Perkrauti Dabar",
+      "pt": "Recarregar Agora",
+      "it": "Ricarica Ora",
+      "no": "Last Inn På Nytt Nå",
+      "el": "Επαναφόρτωση Τώρα"
+    },
+    "ui.modals.reset_failed": {
+      "en": "Failed to reset settings:",
+      "es": "Error al restablecer configuraciones:",
+      "fr": "Échec de la réinitialisation des paramètres :",
+      "de": "Fehler beim Zurücksetzen der Einstellungen:",
+      "lt": "Nepavyko atstatyti nustatymų:",
+      "pt": "Falha ao redefinir configurações:",
+      "it": "Errore nel reset delle impostazioni:",
+      "no": "Kunne ikke tilbakestille innstillinger:",
+      "el": "Αποτυχία επαναφοράς ρυθμίσεων:"
     }
   }
 }

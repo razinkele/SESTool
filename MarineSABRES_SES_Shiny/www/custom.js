@@ -396,4 +396,51 @@ $(document).on('shiny:idle', function() {
   }
 });
 
+// Handler to clear all MarineSABRES localStorage and IndexedDB data
+Shiny.addCustomMessageHandler('clear_all_local_storage', function(message) {
+  __dbg('[JS] Clearing all MarineSABRES local storage data');
+
+  // Clear localStorage items related to MarineSABRES
+  var keysToRemove = [];
+  for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    if (key && (key.startsWith('marinesabres_') || key.startsWith('MarineSABRES'))) {
+      keysToRemove.push(key);
+    }
+  }
+  keysToRemove.forEach(function(key) {
+    localStorage.removeItem(key);
+    __dbg('[JS] Removed localStorage key: ' + key);
+  });
+
+  // Clear sessionStorage items
+  keysToRemove = [];
+  for (var i = 0; i < sessionStorage.length; i++) {
+    var key = sessionStorage.key(i);
+    if (key && (key.startsWith('marinesabres_') || key.startsWith('MarineSABRES'))) {
+      keysToRemove.push(key);
+    }
+  }
+  keysToRemove.forEach(function(key) {
+    sessionStorage.removeItem(key);
+    __dbg('[JS] Removed sessionStorage key: ' + key);
+  });
+
+  // Clear IndexedDB databases related to MarineSABRES
+  if (window.indexedDB) {
+    var dbNames = ['MarineSABRES_LocalStorage'];
+    dbNames.forEach(function(dbName) {
+      var deleteRequest = indexedDB.deleteDatabase(dbName);
+      deleteRequest.onsuccess = function() {
+        __dbg('[JS] Deleted IndexedDB database: ' + dbName);
+      };
+      deleteRequest.onerror = function() {
+        __dbg('[JS] Error deleting IndexedDB database: ' + dbName);
+      };
+    });
+  }
+
+  __dbg('[JS] All MarineSABRES local storage data cleared');
+});
+
 
