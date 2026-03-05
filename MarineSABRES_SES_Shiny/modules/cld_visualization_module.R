@@ -902,83 +902,110 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       if (input$enable_manipulation) {
         # Enable manipulation mode with custom handlers
         # Store callback globally so we can call it after modal confirmation
+        # Also store the manipulation config so we can re-apply it after operations
         runjs(sprintf("
           if (window.network_%s) {
             window.addNodeCallback_%s = null;
-            window.network_%s.setOptions({
-              manipulation: {
-                enabled: true,
-                initiallyActive: true,
-                addNode: function(nodeData, callback) {
-                  // Store callback and node data for later use
-                  window.addNodeCallback_%s = callback;
-                  window.pendingNodeData_%s = nodeData;
-                  Shiny.setInputValue('%s', {
-                    x: nodeData.x,
-                    y: nodeData.y,
-                    nonce: Math.random()
-                  });
-                },
-                addEdge: function(edgeData, callback) {
-                  // Allow edge addition directly
-                  edgeData.arrows = 'to';
-                  edgeData.color = '#80b8d7';
-                  edgeData.width = 2;
-                  callback(edgeData);
-                  // Notify Shiny about the new edge
-                  Shiny.setInputValue('%s', {
-                    from: edgeData.from,
-                    to: edgeData.to,
-                    nonce: Math.random()
-                  });
-                },
-                editNode: function(nodeData, callback) {
+
+            // Store manipulation config for re-enabling after operations
+            window.manipulationConfig_%s = {
+              enabled: true,
+              initiallyActive: true,
+              addNode: function(nodeData, callback) {
+                // Store callback and node data for later use
+                window.addNodeCallback_%s = callback;
+                window.pendingNodeData_%s = nodeData;
+                Shiny.setInputValue('%s', {
+                  x: nodeData.x,
+                  y: nodeData.y,
+                  nonce: Math.random()
+                });
+              },
+              addEdge: function(edgeData, callback) {
+                // Allow edge addition directly
+                edgeData.arrows = 'to';
+                edgeData.color = '#80b8d7';
+                edgeData.width = 2;
+                callback(edgeData);
+                // Notify Shiny about the new edge
+                Shiny.setInputValue('%s', {
+                  from: edgeData.from,
+                  to: edgeData.to,
+                  nonce: Math.random()
+                });
+              },
+              editNode: function(nodeData, callback) {
+                // Use native prompt for node label editing
+                var newLabel = prompt('Edit element name:', nodeData.label);
+                if (newLabel !== null && newLabel.trim() !== '') {
+                  nodeData.label = newLabel.trim();
                   callback(nodeData);
-                },
-                editEdge: function(edgeData, callback) {
-                  // Store callback for later use after modal confirmation
-                  window.editEdgeCallback_%s = callback;
-                  window.pendingEdgeData_%s = edgeData;
-                  // Trigger Shiny to show edge properties modal
+                  // Notify Shiny about the edit
                   Shiny.setInputValue('%s', {
-                    id: edgeData.id,
-                    from: edgeData.from,
-                    to: edgeData.to,
+                    id: nodeData.id,
+                    label: newLabel.trim(),
                     nonce: Math.random()
                   });
-                },
-                deleteNode: function(nodeData, callback) {
-                  if (confirm('Delete this element?')) {
-                    callback(nodeData);
-                    Shiny.setInputValue('%s', {
-                      nodes: nodeData.nodes,
-                      nonce: Math.random()
-                    });
-                  } else {
-                    callback(null);
-                  }
-                },
-                deleteEdge: function(edgeData, callback) {
-                  if (confirm('Delete this connection?')) {
-                    callback(edgeData);
-                    Shiny.setInputValue('%s', {
-                      edges: edgeData.edges,
-                      nonce: Math.random()
-                    });
-                  } else {
-                    callback(null);
-                  }
+                } else {
+                  callback(null);
+                }
+              },
+              editEdge: function(edgeData, callback) {
+                // Store callback for later use after modal confirmation
+                window.editEdgeCallback_%s = callback;
+                window.pendingEdgeData_%s = edgeData;
+                // Trigger Shiny to show edge properties modal
+                Shiny.setInputValue('%s', {
+                  id: edgeData.id,
+                  from: edgeData.from,
+                  to: edgeData.to,
+                  nonce: Math.random()
+                });
+              },
+              deleteNode: function(nodeData, callback) {
+                if (confirm('Delete this element?')) {
+                  callback(nodeData);
+                  Shiny.setInputValue('%s', {
+                    nodes: nodeData.nodes,
+                    nonce: Math.random()
+                  });
+                } else {
+                  callback(null);
+                }
+              },
+              deleteEdge: function(edgeData, callback) {
+                if (confirm('Delete this connection?')) {
+                  callback(edgeData);
+                  Shiny.setInputValue('%s', {
+                    edges: edgeData.edges,
+                    nonce: Math.random()
+                  });
+                } else {
+                  callback(null);
                 }
               }
-            });
+            };
+
+            // Helper function to re-enable manipulation mode
+            window.reEnableManipulation_%s = function() {
+              if (window.network_%s && window.manipulationConfig_%s) {
+                window.network_%s.setOptions({ manipulation: window.manipulationConfig_%s });
+                console.log('[CLD VIZ] Manipulation mode re-enabled');
+              }
+            };
+
+            // Apply initial config
+            window.network_%s.setOptions({ manipulation: window.manipulationConfig_%s });
             console.log('[CLD VIZ] Manipulation mode enabled');
           }
         ", id, id, id, id, id,
            session$ns("add_node_triggered"),
            session$ns("edge_added"),
+           session$ns("node_edited"),
            id, id, session$ns("edit_edge_triggered"),
            session$ns("nodes_deleted"),
-           session$ns("edges_deleted")))
+           session$ns("edges_deleted"),
+           id, id, id, id, id, id, id))
 
         showNotification(
           i18n$t("modules.cld.visualization.edit_mode_enabled"),
@@ -1117,9 +1144,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
             window.pendingNodeData_%s = null;
             console.log('[CLD VIZ] Node added via callback:', nodeData);
           }
+          // Re-enable manipulation mode after a short delay
+          setTimeout(function() {
+            if (window.network_%s) {
+              window.reEnableManipulation_%s();
+              console.log('[CLD VIZ] Manipulation mode re-enabled after node add');
+            }
+          }, 100);
         ", id, id, id, new_id,
            gsub("'", "\\\\'", node_label),
-           node_type, node_color, node_shape, level, tooltip_js, node_color, id, id, id))
+           node_type, node_color, node_shape, level, tooltip_js, node_color, id, id, id, id, id))
 
         # Update internal state
         new_node <- data.frame(
@@ -1164,7 +1198,14 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
             window.pendingNodeData_%s = null;
             console.log('[CLD VIZ] Node addition cancelled');
           }
-        ", id, id, id, id))
+          // Re-enable manipulation mode after a short delay
+          setTimeout(function() {
+            if (window.network_%s) {
+              window.reEnableManipulation_%s();
+              console.log('[CLD VIZ] Manipulation mode re-enabled after cancel');
+            }
+          }, 100);
+        ", id, id, id, id, id, id))
       }
 
       # Hide modal
@@ -1207,6 +1248,56 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
         debug_log(sprintf("Edge %s -> %s added and synced to project_data",
                           input$edge_added$from, input$edge_added$to), "CLD VIZ")
       })
+
+      # Re-enable manipulation mode after a short delay
+      runjs(sprintf("
+        setTimeout(function() {
+          if (window.network_%s) {
+            window.reEnableManipulation_%s();
+            console.log('[CLD VIZ] Manipulation mode re-enabled after edge add');
+          }
+        }, 100);
+      ", id, id))
+    })
+
+    # Handle node label edit
+    observeEvent(input$node_edited, {
+      req(input$node_edited)
+      node_id <- input$node_edited$id
+      new_label <- input$node_edited$label
+      debug_log(sprintf("Node edited: id=%s, new label=%s", node_id, new_label), "CLD VIZ")
+
+      # Update rv$nodes
+      node_idx <- which(rv$nodes$id == node_id)
+      if (length(node_idx) > 0) {
+        rv$nodes$label[node_idx] <- new_label
+        rv$nodes$title[node_idx] <- paste0("<b>", htmltools::htmlEscape(new_label), "</b><br><i>", rv$nodes$group[node_idx], "</i>")
+
+        # Sync to project_data for persistence
+        isolate({
+          pd <- project_data_reactive()
+          pd$data$cld$nodes <- rv$nodes
+          pd$last_modified <- Sys.time()
+          project_data_reactive(pd)
+          debug_log(sprintf("Node '%s' label updated and synced to project_data", new_label), "CLD VIZ")
+        })
+
+        showNotification(
+          paste("Element renamed to:", new_label),
+          type = "message",
+          duration = 3
+        )
+      }
+
+      # Re-enable manipulation mode after a short delay
+      runjs(sprintf("
+        setTimeout(function() {
+          if (window.network_%s) {
+            window.reEnableManipulation_%s();
+            console.log('[CLD VIZ] Manipulation mode re-enabled after node edit');
+          }
+        }, 100);
+      ", id, id))
     })
 
     # Handle edge edit triggered (show modal)
@@ -1341,16 +1432,24 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
         }
 
         # Call the visNetwork callback to confirm the edit (without geometry changes)
+        # Then re-enable manipulation mode since it gets disabled after the callback
         runjs(sprintf("
           if (window.editEdgeCallback_%s && window.pendingEdgeData_%s) {
             window.editEdgeCallback_%s(window.pendingEdgeData_%s);
             window.editEdgeCallback_%s = null;
             window.pendingEdgeData_%s = null;
           }
-        ", id, id, id, id, id, id))
+          // Re-enable manipulation mode after a short delay
+          setTimeout(function() {
+            if (window.network_%s) {
+              window.reEnableManipulation_%s();
+              console.log('[CLD VIZ] Manipulation mode re-enabled after edge edit');
+            }
+          }, 100);
+        ", id, id, id, id, id, id, id, id))
 
       } else {
-        # User cancelled - call callback with null
+        # User cancelled - call callback with null, then re-enable manipulation mode
         runjs(sprintf("
           if (window.editEdgeCallback_%s) {
             window.editEdgeCallback_%s(null);
@@ -1358,7 +1457,14 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
             window.pendingEdgeData_%s = null;
             console.log('[CLD VIZ] Edge edit cancelled');
           }
-        ", id, id, id, id))
+          // Re-enable manipulation mode after a short delay
+          setTimeout(function() {
+            if (window.network_%s) {
+              window.reEnableManipulation_%s();
+              console.log('[CLD VIZ] Manipulation mode re-enabled after cancel');
+            }
+          }, 100);
+        ", id, id, id, id, id, id))
       }
 
       # Hide modal
@@ -1384,6 +1490,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
         project_data_reactive(pd)
         debug_log("Deleted nodes synced to project_data", "CLD VIZ")
       })
+
+      # Re-enable manipulation mode after a short delay
+      runjs(sprintf("
+        setTimeout(function() {
+          if (window.network_%s) {
+            window.reEnableManipulation_%s();
+            console.log('[CLD VIZ] Manipulation mode re-enabled after node delete');
+          }
+        }, 100);
+      ", id, id))
     })
 
     # Handle edge deletion
@@ -1402,6 +1518,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
         project_data_reactive(pd)
         debug_log("Deleted edges synced to project_data", "CLD VIZ")
       })
+
+      # Re-enable manipulation mode after a short delay
+      runjs(sprintf("
+        setTimeout(function() {
+          if (window.network_%s) {
+            window.reEnableManipulation_%s();
+            console.log('[CLD VIZ] Manipulation mode re-enabled after edge delete');
+          }
+        }, 100);
+      ", id, id))
     })
 
     # === HIGHLIGHT LEVERAGE POINTS ===
