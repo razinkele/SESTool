@@ -198,6 +198,116 @@
       "no": "Spacing:",
       "el": "Spacing:"
     },
+    "modules.cld.visualization.edit_mode": {
+      "en": "Edit Mode",
+      "es": "Modo de edición",
+      "fr": "Mode édition",
+      "de": "Bearbeitungsmodus",
+      "lt": "Redagavimo režimas",
+      "pt": "Modo de edição",
+      "it": "Modalità modifica",
+      "no": "Redigeringsmodus",
+      "el": "Λειτουργία επεξεργασίας"
+    },
+    "modules.cld.visualization.enable_editing": {
+      "en": "Enable On-Screen Editing",
+      "es": "Habilitar edición en pantalla",
+      "fr": "Activer l'édition à l'écran",
+      "de": "Bildschirmbearbeitung aktivieren",
+      "lt": "Įjungti redagavimą ekrane",
+      "pt": "Ativar edição na tela",
+      "it": "Abilita modifica su schermo",
+      "no": "Aktiver redigering på skjermen",
+      "el": "Ενεργοποίηση επεξεργασίας στην οθόνη"
+    },
+    "modules.cld.visualization.edit_mode_hint": {
+      "en": "Add, edit, or delete elements directly on the diagram",
+      "es": "Agregar, editar o eliminar elementos directamente en el diagrama",
+      "fr": "Ajouter, modifier ou supprimer des éléments directement sur le diagramme",
+      "de": "Elemente direkt im Diagramm hinzufügen, bearbeiten oder löschen",
+      "lt": "Pridėkite, redaguokite arba ištrinkite elementus tiesiai diagramoje",
+      "pt": "Adicionar, editar ou excluir elementos diretamente no diagrama",
+      "it": "Aggiungi, modifica o elimina elementi direttamente sul diagramma",
+      "no": "Legg til, rediger eller slett elementer direkte på diagrammet",
+      "el": "Προσθήκη, επεξεργασία ή διαγραφή στοιχείων απευθείας στο διάγραμμα"
+    },
+    "modules.cld.visualization.edit_mode_enabled": {
+      "en": "Edit mode enabled - click to add nodes, drag to connect",
+      "es": "Modo de edición habilitado - haga clic para agregar nodos, arrastre para conectar",
+      "fr": "Mode édition activé - cliquez pour ajouter des nœuds, faites glisser pour connecter",
+      "de": "Bearbeitungsmodus aktiviert - klicken zum Hinzufügen, ziehen zum Verbinden",
+      "lt": "Redagavimo režimas įjungtas - spustelėkite, kad pridėtumėte mazgus, vilkite, kad sujungtumėte",
+      "pt": "Modo de edição ativado - clique para adicionar nós, arraste para conectar",
+      "it": "Modalità modifica attivata - clicca per aggiungere nodi, trascina per connettere",
+      "no": "Redigeringsmodus aktivert - klikk for å legge til noder, dra for å koble til",
+      "el": "Λειτουργία επεξεργασίας ενεργοποιήθηκε - κάντε κλικ για προσθήκη κόμβων"
+    },
+    "modules.cld.visualization.edit_mode_disabled": {
+      "en": "Edit mode disabled",
+      "es": "Modo de edición deshabilitado",
+      "fr": "Mode édition désactivé",
+      "de": "Bearbeitungsmodus deaktiviert",
+      "lt": "Redagavimo režimas išjungtas",
+      "pt": "Modo de edição desativado",
+      "it": "Modalità modifica disattivata",
+      "no": "Redigeringsmodus deaktivert",
+      "el": "Η λειτουργία επεξεργασίας απενεργοποιήθηκε"
+    },
+    "modules.cld.visualization.add_new_element": {
+      "en": "Add New Element",
+      "es": "Agregar nuevo elemento",
+      "fr": "Ajouter un nouvel élément",
+      "de": "Neues Element hinzufügen",
+      "lt": "Pridėti naują elementą",
+      "pt": "Adicionar novo elemento",
+      "it": "Aggiungi nuovo elemento",
+      "no": "Legg til nytt element",
+      "el": "Προσθήκη νέου στοιχείου"
+    },
+    "modules.cld.visualization.element_added": {
+      "en": "Element added:",
+      "es": "Elemento agregado:",
+      "fr": "Élément ajouté:",
+      "de": "Element hinzugefügt:",
+      "lt": "Elementas pridėtas:",
+      "pt": "Elemento adicionado:",
+      "it": "Elemento aggiunto:",
+      "no": "Element lagt til:",
+      "el": "Στοιχείο προστέθηκε:"
+    },
+    "modules.cld.visualization.element_type": {
+      "en": "Element Type:",
+      "es": "Tipo de elemento:",
+      "fr": "Type d'élément:",
+      "de": "Elementtyp:",
+      "lt": "Elemento tipas:",
+      "pt": "Tipo de elemento:",
+      "it": "Tipo di elemento:",
+      "no": "Elementtype:",
+      "el": "Τύπος στοιχείου:"
+    },
+    "modules.cld.visualization.element_name": {
+      "en": "Element Name:",
+      "es": "Nombre del elemento:",
+      "fr": "Nom de l'élément:",
+      "de": "Elementname:",
+      "lt": "Elemento pavadinimas:",
+      "pt": "Nome do elemento:",
+      "it": "Nome elemento:",
+      "no": "Elementnavn:",
+      "el": "Όνομα στοιχείου:"
+    },
+    "modules.cld.visualization.enter_element_name": {
+      "en": "Enter element name...",
+      "es": "Ingrese el nombre del elemento...",
+      "fr": "Entrez le nom de l'élément...",
+      "de": "Elementnamen eingeben...",
+      "lt": "Įveskite elemento pavadinimą...",
+      "pt": "Digite o nome do elemento...",
+      "it": "Inserisci il nome dell'elemento...",
+      "no": "Skriv inn elementnavn...",
+      "el": "Εισάγετε το όνομα του στοιχείου..."
+    },
     "modules.cld.visualization.controls": {
       "en": "Controls",
       "es": "Controles",
@@ -274,6 +384,72 @@
       "it": "Visualizzazione interattiva della rete del tuo sistema socio-ecologico",
       "no": "Interaktiv nettverksvisualisering av ditt sosial-økologiske system",
       "el": "Interactive network visualization of your social-ecological system"
+    },
+    "modules.cld.visualization.edit_connection": {
+      "en": "Edit Connection",
+      "es": "Editar Conexión",
+      "fr": "Modifier la Connexion",
+      "de": "Verbindung Bearbeiten",
+      "lt": "Redaguoti Ryšį",
+      "pt": "Editar Conexão",
+      "it": "Modifica Connessione",
+      "no": "Rediger Tilkobling",
+      "el": "Επεξεργασία Σύνδεσης"
+    },
+    "modules.cld.visualization.connection": {
+      "en": "Connection",
+      "es": "Conexión",
+      "fr": "Connexion",
+      "de": "Verbindung",
+      "lt": "Ryšys",
+      "pt": "Conexão",
+      "it": "Connessione",
+      "no": "Tilkobling",
+      "el": "Σύνδεση"
+    },
+    "modules.cld.visualization.polarity": {
+      "en": "Polarity:",
+      "es": "Polaridad:",
+      "fr": "Polarité:",
+      "de": "Polarität:",
+      "lt": "Poliarumas:",
+      "pt": "Polaridade:",
+      "it": "Polarità:",
+      "no": "Polaritet:",
+      "el": "Πολικότητα:"
+    },
+    "modules.cld.visualization.strength": {
+      "en": "Strength:",
+      "es": "Intensidad:",
+      "fr": "Intensité:",
+      "de": "Stärke:",
+      "lt": "Stiprumas:",
+      "pt": "Intensidade:",
+      "it": "Intensità:",
+      "no": "Styrke:",
+      "el": "Ένταση:"
+    },
+    "modules.cld.visualization.confidence": {
+      "en": "Confidence:",
+      "es": "Confianza:",
+      "fr": "Confiance:",
+      "de": "Konfidenz:",
+      "lt": "Patikimumas:",
+      "pt": "Confiança:",
+      "it": "Confidenza:",
+      "no": "Tillit:",
+      "el": "Εμπιστοσύνη:"
+    },
+    "modules.cld.visualization.connection_updated": {
+      "en": "Connection properties updated",
+      "es": "Propiedades de conexión actualizadas",
+      "fr": "Propriétés de connexion mises à jour",
+      "de": "Verbindungseigenschaften aktualisiert",
+      "lt": "Ryšio savybės atnaujintos",
+      "pt": "Propriedades da conexão atualizadas",
+      "it": "Proprietà della connessione aggiornate",
+      "no": "Tilkoblingsegenskaper oppdatert",
+      "el": "Οι ιδιότητες σύνδεσης ενημερώθηκαν"
     }
   }
 }

@@ -258,6 +258,132 @@ cld_viz_ui <- function(id, i18n) {
       )
     ),
 
+    # Edit Edge Modal - for editing edge properties
+    tags$style(HTML(sprintf("
+      #%s {
+        position: fixed;
+        top: 50%%;
+        left: 50%%;
+        transform: translate(-50%%, -50%%);
+        z-index: 10000;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        padding: 10px;
+        width: 300px;
+        font-size: 12px;
+      }
+      #%s .form-group {
+        margin-bottom: 8px;
+      }
+      #%s label {
+        font-size: 11px;
+        margin-bottom: 2px;
+        font-weight: 500;
+      }
+      #%s .form-control {
+        font-size: 12px;
+        padding: 4px 8px;
+        height: auto;
+      }
+      #%s .popup-header {
+        font-weight: 600;
+        font-size: 13px;
+        margin-bottom: 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #eee;
+      }
+      #%s .popup-buttons {
+        display: flex;
+        gap: 6px;
+        justify-content: flex-end;
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px solid #eee;
+      }
+      #%s .popup-buttons .btn {
+        font-size: 11px;
+        padding: 4px 12px;
+      }
+      #%s .edge-info {
+        background: #f8f9fa;
+        padding: 8px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        font-size: 11px;
+      }
+      #%s .edge-info strong {
+        color: #495057;
+      }
+    ", ns("edit_edge_modal_container"), ns("edit_edge_modal_container"),
+       ns("edit_edge_modal_container"), ns("edit_edge_modal_container"),
+       ns("edit_edge_modal_container"), ns("edit_edge_modal_container"),
+       ns("edit_edge_modal_container"), ns("edit_edge_modal_container"),
+       ns("edit_edge_modal_container")))),
+
+    shinyjs::hidden(
+      div(
+        id = ns("edit_edge_modal_container"),
+        div(class = "popup-header", i18n$t("modules.cld.visualization.edit_connection")),
+        div(
+          class = "edge-info",
+          id = ns("edit_edge_info"),
+          tags$strong(i18n$t("modules.cld.visualization.connection")), ": ",
+          span(id = ns("edit_edge_from_to"), "")
+        ),
+        selectInput(
+          ns("edit_edge_polarity"),
+          i18n$t("modules.cld.visualization.polarity"),
+          choices = c(
+            "Reinforcing (+)" = "+",
+            "Opposing (-)" = "-"
+          ),
+          selected = "+",
+          width = "100%"
+        ),
+        selectInput(
+          ns("edit_edge_strength"),
+          i18n$t("modules.cld.visualization.strength"),
+          choices = c(
+            "Weak" = "weak",
+            "Medium" = "medium",
+            "Strong" = "strong"
+          ),
+          selected = "medium",
+          width = "100%"
+        ),
+        selectInput(
+          ns("edit_edge_confidence"),
+          i18n$t("modules.cld.visualization.confidence"),
+          choices = c(
+            "Very Low (1/5)" = 1,
+            "Low (2/5)" = 2,
+            "Medium (3/5)" = 3,
+            "High (4/5)" = 4,
+            "Very High (5/5)" = 5
+          ),
+          selected = 3,
+          width = "100%"
+        ),
+        div(
+          class = "popup-buttons",
+          tags$button(
+            type = "button",
+            class = "btn btn-outline-secondary btn-sm",
+            onclick = sprintf("Shiny.setInputValue('%s', {cancel: true, nonce: Math.random()});", ns("edit_edge_response")),
+            i18n$t("common.buttons.cancel")
+          ),
+          tags$button(
+            type = "button",
+            class = "btn btn-primary btn-sm",
+            onclick = sprintf("Shiny.setInputValue('%s', {confirm: true, nonce: Math.random()});", ns("edit_edge_response")),
+            i18n$t("common.buttons.save")
+          )
+        )
+      )
+    ),
+
     fluidRow(
       # Left sidebar column with controls
       column(
@@ -809,6 +935,18 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
                 editNode: function(nodeData, callback) {
                   callback(nodeData);
                 },
+                editEdge: function(edgeData, callback) {
+                  // Store callback for later use after modal confirmation
+                  window.editEdgeCallback_%s = callback;
+                  window.pendingEdgeData_%s = edgeData;
+                  // Trigger Shiny to show edge properties modal
+                  Shiny.setInputValue('%s', {
+                    id: edgeData.id,
+                    from: edgeData.from,
+                    to: edgeData.to,
+                    nonce: Math.random()
+                  });
+                },
                 deleteNode: function(nodeData, callback) {
                   if (confirm('Delete this element?')) {
                     callback(nodeData);
@@ -838,6 +976,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
         ", id, id, id, id, id,
            session$ns("add_node_triggered"),
            session$ns("edge_added"),
+           id, id, session$ns("edit_edge_triggered"),
            session$ns("nodes_deleted"),
            session$ns("edges_deleted")))
 
@@ -1002,6 +1141,15 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
         )
         rv$nodes <- bind_rows(rv$nodes, new_node)
 
+        # Sync to project_data for persistence
+        isolate({
+          pd <- project_data_reactive()
+          pd$data$cld$nodes <- rv$nodes
+          pd$last_modified <- Sys.time()
+          project_data_reactive(pd)
+          debug_log(sprintf("Node '%s' added and synced to project_data", node_label), "CLD VIZ")
+        })
+
         showNotification(
           paste(i18n$t("modules.cld.visualization.element_added"), node_label),
           type = "message",
@@ -1049,6 +1197,173 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
         stringsAsFactors = FALSE
       )
       rv$edges <- bind_rows(rv$edges, new_edge)
+
+      # Sync to project_data for persistence
+      isolate({
+        pd <- project_data_reactive()
+        pd$data$cld$edges <- rv$edges
+        pd$last_modified <- Sys.time()
+        project_data_reactive(pd)
+        debug_log(sprintf("Edge %s -> %s added and synced to project_data",
+                          input$edge_added$from, input$edge_added$to), "CLD VIZ")
+      })
+    })
+
+    # Handle edge edit triggered (show modal)
+    rv$pending_edge_edit <- NULL
+
+    observeEvent(input$edit_edge_triggered, {
+      req(input$edit_edge_triggered)
+      debug_log(sprintf("Edit edge triggered: id=%s", input$edit_edge_triggered$id), "CLD VIZ")
+
+      edge_id <- input$edit_edge_triggered$id
+      from_id <- input$edit_edge_triggered$from
+      to_id <- input$edit_edge_triggered$to
+
+      # Find the edge in rv$edges
+      edge_row <- rv$edges[rv$edges$id == edge_id, ]
+
+      if (nrow(edge_row) == 0) {
+        # Edge might be new (not yet in our data), try to find by from/to
+        edge_row <- rv$edges[rv$edges$from == from_id & rv$edges$to == to_id, ]
+      }
+
+      # Get node labels for display
+      from_label <- rv$nodes$label[rv$nodes$id == from_id]
+      to_label <- rv$nodes$label[rv$nodes$id == to_id]
+
+      if (length(from_label) == 0) from_label <- from_id
+      if (length(to_label) == 0) to_label <- to_id
+
+      # Store the edge being edited
+      rv$pending_edge_edit <- list(
+        id = edge_id,
+        from = from_id,
+        to = to_id
+      )
+
+      # Update the info display
+      runjs(sprintf("
+        document.getElementById('%s').textContent = '%s → %s';
+      ", session$ns("edit_edge_from_to"),
+         gsub("'", "\\\\'", from_label),
+         gsub("'", "\\\\'", to_label)))
+
+      # Update form values with current edge properties
+      if (nrow(edge_row) > 0) {
+        updateSelectInput(session, "edit_edge_polarity", selected = edge_row$polarity[1])
+        updateSelectInput(session, "edit_edge_strength", selected = edge_row$strength[1])
+        updateSelectInput(session, "edit_edge_confidence", selected = as.character(edge_row$confidence[1]))
+      } else {
+        # Defaults for new/unknown edge
+        updateSelectInput(session, "edit_edge_polarity", selected = "+")
+        updateSelectInput(session, "edit_edge_strength", selected = "medium")
+        updateSelectInput(session, "edit_edge_confidence", selected = "3")
+      }
+
+      # Show the modal
+      shinyjs::show("edit_edge_modal_container")
+    })
+
+    # Handle edge edit response (confirm or cancel)
+    observeEvent(input$edit_edge_response, {
+      req(input$edit_edge_response)
+
+      if (isTRUE(input$edit_edge_response$confirm) && !is.null(rv$pending_edge_edit)) {
+        # User confirmed - update the edge
+        edge_id <- rv$pending_edge_edit$id
+        from_id <- rv$pending_edge_edit$from
+        to_id <- rv$pending_edge_edit$to
+
+        new_polarity <- input$edit_edge_polarity
+        new_strength <- input$edit_edge_strength
+        new_confidence <- as.integer(input$edit_edge_confidence)
+
+        debug_log(sprintf("Updating edge %s: polarity=%s, strength=%s, confidence=%d",
+                          edge_id, new_polarity, new_strength, new_confidence), "CLD VIZ")
+
+        # Determine color based on polarity
+        new_color <- if (new_polarity == "+") EDGE_COLORS$reinforcing else EDGE_COLORS$opposing
+
+        # Determine width based on strength
+        new_width <- switch(new_strength,
+          "weak" = 1,
+          "medium" = 2,
+          "strong" = 3,
+          2
+        )
+
+        # Update rv$edges
+        edge_idx <- which(rv$edges$id == edge_id)
+        if (length(edge_idx) == 0) {
+          # Try to find by from/to
+          edge_idx <- which(rv$edges$from == from_id & rv$edges$to == to_id)
+        }
+
+        if (length(edge_idx) > 0) {
+          rv$edges$polarity[edge_idx] <- new_polarity
+          rv$edges$strength[edge_idx] <- new_strength
+          rv$edges$confidence[edge_idx] <- new_confidence
+          rv$edges$color[edge_idx] <- new_color
+          rv$edges$width[edge_idx] <- new_width
+          rv$edges$label[edge_idx] <- new_polarity
+          rv$edges$originalColor[edge_idx] <- new_color
+          rv$edges$originalWidth[edge_idx] <- new_width
+
+          # Update the edge in visNetwork
+          runjs(sprintf("
+            if (window.network_%s) {
+              var edges = window.network_%s.body.data.edges;
+              edges.update({
+                id: %s,
+                color: '%s',
+                width: %d,
+                label: '%s'
+              });
+              console.log('[CLD VIZ] Edge %s updated');
+            }
+          ", id, id, edge_id, new_color, new_width, new_polarity, edge_id))
+
+          # Sync to project_data for persistence
+          isolate({
+            pd <- project_data_reactive()
+            pd$data$cld$edges <- rv$edges
+            pd$last_modified <- Sys.time()
+            project_data_reactive(pd)
+            debug_log("Edge updated and synced to project_data", "CLD VIZ")
+          })
+
+          showNotification(
+            i18n$t("modules.cld.visualization.connection_updated"),
+            type = "message",
+            duration = 3
+          )
+        }
+
+        # Call the visNetwork callback to confirm the edit (without geometry changes)
+        runjs(sprintf("
+          if (window.editEdgeCallback_%s && window.pendingEdgeData_%s) {
+            window.editEdgeCallback_%s(window.pendingEdgeData_%s);
+            window.editEdgeCallback_%s = null;
+            window.pendingEdgeData_%s = null;
+          }
+        ", id, id, id, id, id, id))
+
+      } else {
+        # User cancelled - call callback with null
+        runjs(sprintf("
+          if (window.editEdgeCallback_%s) {
+            window.editEdgeCallback_%s(null);
+            window.editEdgeCallback_%s = null;
+            window.pendingEdgeData_%s = null;
+            console.log('[CLD VIZ] Edge edit cancelled');
+          }
+        ", id, id, id, id))
+      }
+
+      # Hide modal
+      shinyjs::hide("edit_edge_modal_container")
+      rv$pending_edge_edit <- NULL
     })
 
     # Handle node deletion
@@ -1059,6 +1374,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
 
       rv$nodes <- rv$nodes %>% filter(!(id %in% deleted_ids))
       rv$edges <- rv$edges %>% filter(!(from %in% deleted_ids | to %in% deleted_ids))
+
+      # Sync to project_data for persistence
+      isolate({
+        pd <- project_data_reactive()
+        pd$data$cld$nodes <- rv$nodes
+        pd$data$cld$edges <- rv$edges
+        pd$last_modified <- Sys.time()
+        project_data_reactive(pd)
+        debug_log("Deleted nodes synced to project_data", "CLD VIZ")
+      })
     })
 
     # Handle edge deletion
@@ -1068,6 +1393,15 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       debug_log(sprintf("Edges deleted: %s", paste(deleted_ids, collapse = ", ")), "CLD VIZ")
 
       rv$edges <- rv$edges %>% filter(!(id %in% deleted_ids))
+
+      # Sync to project_data for persistence
+      isolate({
+        pd <- project_data_reactive()
+        pd$data$cld$edges <- rv$edges
+        pd$last_modified <- Sys.time()
+        project_data_reactive(pd)
+        debug_log("Deleted edges synced to project_data", "CLD VIZ")
+      })
     })
 
     # === HIGHLIGHT LEVERAGE POINTS ===
