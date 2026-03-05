@@ -454,7 +454,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       filtered_edges = NULL,
       isa_hash = NULL,  # Cache hash to track ISA data changes
       last_render_hash = NULL,  # Track last rendered network hash
-      hierarchical_positions = NULL  # Saved node positions from hierarchical layout
+      layout_render_trigger = 0  # Trigger to force re-render on layout changes
     )
 
     # === HELPER: Create network data signature ===
@@ -683,25 +683,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
               this.setOptions({physics: false});
               window.network_%s = this;
               console.log('[CLD VIZ] Network stabilized and stored');
-
-              // Save hierarchical positions for later restoration
-              var positions = this.getPositions();
-              var nodePositions = [];
-              for (var nodeId in positions) {
-                if (positions.hasOwnProperty(nodeId) && !nodeId.startsWith('edgeId:')) {
-                  nodePositions.push({
-                    id: nodeId,
-                    x: positions[nodeId].x,
-                    y: positions[nodeId].y
-                  });
-                }
-              }
-              if (nodePositions.length > 0) {
-                Shiny.setInputValue('%s', JSON.stringify(nodePositions), {priority: 'event'});
-                console.log('[CLD VIZ] Saved ' + nodePositions.length + ' hierarchical positions');
-              }
             }",
-            id, session$ns("hierarchical_positions_saved")
+            id
           ),
           type = "once",
           stabilized = sprintf(
@@ -718,8 +701,9 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       # Cache the entire visNetwork widget by ISA data hash
       # This prevents expensive physics calculations on unchanged data
       rv$isa_hash,
-      # Include layout type in cache key so different layouts are cached separately
-      isolate(input$layout_type)
+      # Include layout render trigger to force re-render when switching to hierarchical
+      # or changing hierarchy direction/level separation
+      rv$layout_render_trigger
     )
 
     # Store network proxy (IMPORTANT: Use session namespace in module)
@@ -727,65 +711,25 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       rv$network_proxy <- visNetworkProxy(session$ns("network"))
     })
 
-    # === HIERARCHICAL POSITION CACHING ===
-    # Store hierarchical positions when received from JavaScript
-    observeEvent(input$hierarchical_positions_saved, {
-      tryCatch({
-        positions <- jsonlite::fromJSON(input$hierarchical_positions_saved)
-        rv$hierarchical_positions <- positions
-        debug_log(sprintf("Stored %d hierarchical positions", nrow(positions)), "CLD VIZ")
-      }, error = function(e) {
-        debug_log(paste("Error parsing hierarchical positions:", e$message), "CLD VIZ")
-      })
-    }, ignoreInit = TRUE)
-
     # === PROXY-BASED LAYOUT UPDATES ===
     # These observers update layout without full re-render (50-80% faster)
 
-    # Handle layout type changes via proxy
+    # Handle layout type changes
+    # For hierarchical: trigger full re-render (proxy-based updates don't work due to vis.js limitations)
+    # For physics: use proxy for fast update
     observeEvent(input$layout_type, {
       req(rv$nodes)
-      debug_log(paste("Layout type changed to:", input$layout_type, "(via proxy)"), "CLD VIZ")
-
-      proxy <- visNetworkProxy(session$ns("network"))
+      debug_log(paste("Layout type changed to:", input$layout_type), "CLD VIZ")
 
       if (input$layout_type == "hierarchical") {
-        # Check if we have saved hierarchical positions to restore
-        if (!is.null(rv$hierarchical_positions) && nrow(rv$hierarchical_positions) > 0) {
-          # Restore saved positions directly - bypasses vis.js hierarchical layout validation
-          debug_log("Restoring saved hierarchical positions", "CLD VIZ")
-          positions_json <- jsonlite::toJSON(rv$hierarchical_positions, auto_unbox = TRUE)
-          runjs(sprintf("
-            if (window.network_%s) {
-              // Disable physics and hierarchical layout first
-              window.network_%s.setOptions({
-                layout: { hierarchical: { enabled: false } },
-                physics: { enabled: false }
-              });
-
-              // Restore saved positions
-              var positions = %s;
-              var updates = positions.map(function(p) {
-                return { id: p.id, x: p.x, y: p.y };
-              });
-
-              // Update node positions
-              window.network_%s.body.data.nodes.update(updates);
-
-              // Fit view to show all nodes
-              window.network_%s.fit({ animation: { duration: 300, easingFunction: 'easeInOutQuad' } });
-
-              console.log('[CLD VIZ] Restored ' + positions.length + ' hierarchical positions');
-            }
-          ", id, id, positions_json, id, id))
-        } else {
-          # No saved positions - trigger full re-render by invalidating cache
-          # This ensures proper hierarchical stabilization like the initial render
-          debug_log("No saved positions, triggering re-render for hierarchical layout", "CLD VIZ")
-          rv$last_render_hash <- NULL  # Force re-render
-        }
+        # Trigger full re-render for hierarchical layout
+        # This is necessary because vis.js proxy-based hierarchical updates fail
+        # due to edge placeholder nodes lacking level properties
+        debug_log("Triggering re-render for hierarchical layout", "CLD VIZ")
+        rv$layout_render_trigger <- rv$layout_render_trigger + 1
       } else if (input$layout_type == "physics") {
-        proxy %>%
+        # Physics can be applied via proxy (fast update)
+        visNetworkProxy(session$ns("network")) %>%
           visPhysics(
             enabled = TRUE,
             solver = "forceAtlas2Based",
@@ -804,48 +748,20 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
       }
     }, ignoreInit = TRUE)  # Don't run on initial load (already handled in render)
 
-    # Handle hierarchy direction changes via proxy
-    # Note: Direction changes require re-stabilization, so we clear saved positions
+    # Handle hierarchy direction changes - trigger re-render
     observeEvent(input$hierarchy_direction, {
       req(rv$nodes, input$layout_type == "hierarchical")
-      debug_log(paste("Hierarchy direction changed to:", input$hierarchy_direction, "(via proxy)"), "CLD VIZ")
-
-      # Clear saved positions - direction change needs fresh layout
-      rv$hierarchical_positions <- NULL
-
-      visNetworkProxy(session$ns("network")) %>%
-        visHierarchicalLayout(
-          direction = input$hierarchy_direction,
-          levelSeparation = input$level_separation,
-          nodeSpacing = 250,
-          treeSpacing = 250,
-          blockShifting = TRUE,
-          edgeMinimization = TRUE,
-          parentCentralization = TRUE,
-          sortMethod = "directed"
-        )
+      debug_log(paste("Hierarchy direction changed to:", input$hierarchy_direction), "CLD VIZ")
+      # Trigger re-render for proper hierarchical layout
+      rv$layout_render_trigger <- rv$layout_render_trigger + 1
     }, ignoreInit = TRUE)
 
-    # Handle level separation changes via proxy (debounced for slider)
-    # Note: Level separation changes require re-stabilization, so we clear saved positions
+    # Handle level separation changes - trigger re-render
     observeEvent(input$level_separation, {
       req(rv$nodes, input$layout_type == "hierarchical")
-      debug_log(paste("Level separation changed to:", input$level_separation, "(via proxy)"), "CLD VIZ")
-
-      # Clear saved positions - level separation change needs fresh layout
-      rv$hierarchical_positions <- NULL
-
-      visNetworkProxy(session$ns("network")) %>%
-        visHierarchicalLayout(
-          direction = input$hierarchy_direction,
-          levelSeparation = input$level_separation,
-          nodeSpacing = 250,
-          treeSpacing = 250,
-          blockShifting = TRUE,
-          edgeMinimization = TRUE,
-          parentCentralization = TRUE,
-          sortMethod = "directed"
-        )
+      debug_log(paste("Level separation changed to:", input$level_separation), "CLD VIZ")
+      # Trigger re-render for proper hierarchical layout
+      rv$layout_render_trigger <- rv$layout_render_trigger + 1
     }, ignoreInit = TRUE)
 
     # === EDIT MODE (MANIPULATION) ===
