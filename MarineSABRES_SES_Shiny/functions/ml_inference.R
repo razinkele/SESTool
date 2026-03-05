@@ -44,7 +44,8 @@ load_ml_model <- function(model_path = "models/connection_predictor_best.pt", fo
 
   # Check if model file exists
   if (!file.exists(model_path)) {
-    warning(sprintf("ML model file not found: %s", model_path))
+    debug_log(sprintf("ML model file not found: %s", model_path), "ML_INFERENCE")
+    debug_log(sprintf("Working directory: %s", getwd()), "ML_INFERENCE")
     .ml_env$model_loaded <- FALSE
     return(FALSE)
   }
@@ -58,7 +59,7 @@ load_ml_model <- function(model_path = "models/connection_predictor_best.pt", fo
     debug_log(sprintf("ML model loaded successfully from %s", model_path), "ML_INFERENCE")
     return(TRUE)
   }, error = function(e) {
-    warning(sprintf("Failed to load ML model: %s", e$message))
+    debug_log(sprintf("Failed to load ML model from %s: %s", model_path, e$message), "ML_INFERENCE")
     .ml_env$model_loaded <- FALSE
     return(FALSE)
   })
@@ -103,7 +104,7 @@ predict_connection_ml <- function(source_name, target_name,
                                    return_uncertainty = TRUE) {
   # Check if model is loaded
   if (!ml_model_available()) {
-    warning("ML model not loaded. Call load_ml_model() first.")
+    debug_log("predict_connection_ml: ML model not available, returning NULL", "ML_INFERENCE")
     return(NULL)
   }
 
@@ -215,7 +216,7 @@ predict_connection_ml <- function(source_name, target_name,
 #' @export
 predict_batch_ml <- function(pairs, context = list(), threshold = 0.5, return_uncertainty = TRUE) {
   if (!ml_model_available()) {
-    warning("ML model not loaded. Call load_ml_model() first.")
+    debug_log("predict_batch_ml: ML model not available, returning NULL", "ML_INFERENCE")
     return(NULL)
   }
 

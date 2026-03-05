@@ -95,10 +95,10 @@ create_igraph_from_data <- function(nodes, edges) {
 
   if (nrow(valid_edges) < nrow(edges)) {
     invalid_count <- nrow(edges) - nrow(valid_edges)
-    warning(sprintf(
+    debug_log(sprintf(
       "Removed %d edges referencing non-existent nodes. Check data consistency.",
       invalid_count
-    ))
+    ), "NETWORK_ANALYSIS")
   }
 
   # Handle case with no edges - create graph with nodes only
@@ -222,7 +222,7 @@ calculate_micmac <- function(nodes, edges) {
       stop("Nodes dataframe is empty or NULL")
     }
     if (is.null(edges) || nrow(edges) == 0) {
-      warning("Edges dataframe is empty - returning zero influence/exposure")
+      debug_log("Edges dataframe is empty - returning zero influence/exposure", "NETWORK_ANALYSIS")
       return(data.frame(
         node_id = nodes$id,
         influence = 0,
@@ -318,7 +318,7 @@ create_numeric_adjacency_matrix <- function(nodes, edges) {
     # Find valid edges (both endpoints exist)
     valid <- !is.na(from_indices) & !is.na(to_indices)
     if (any(!valid)) {
-      warning(sprintf("Skipped %d edges referencing non-existent nodes.", sum(!valid)))
+      debug_log(sprintf("Skipped %d edges referencing non-existent nodes.", sum(!valid)), "NETWORK_ANALYSIS")
     }
 
     # Fill adjacency matrix using matrix indexing (fully vectorized)
@@ -482,10 +482,10 @@ find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
   max_comp_size <- max(comp_sizes)
 
   if (max_comp_size > 50) {
-    warning(sprintf(
+    debug_log(sprintf(
       "Large strongly connected component detected (%d nodes). This may cause slow performance or timeout. Consider simplifying the network.",
       max_comp_size
-    ))
+    ), "NETWORK_ANALYSIS")
   }
 
   # Process each component
@@ -512,10 +512,10 @@ find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000) {
         max_density <- if (comp_size > 100) 0.05 else if (comp_size > 70) 0.08 else if (comp_size > 50) 0.10 else 0.15
 
         if (edge_density > max_density) {
-          warning(sprintf(
+          debug_log(sprintf(
             "Skipping large dense component (%d nodes, %d edges, %.1f%% density) to prevent hanging. Reduce network complexity or use simplification tools.",
             comp_size, edge_count, edge_density * 100
-          ))
+          ), "NETWORK_ANALYSIS")
           next
         }
       }
@@ -638,9 +638,9 @@ find_cycles_dfs <- function(graph, max_length, max_cycles = 1000) {
     dfs_visit(v)
   }
 
-  # Warn if limit reached
+  # Log if limit reached
   if (length(cycles) >= max_cycles) {
-    warning(sprintf("Cycle detection stopped after finding %d cycles (limit reached). Network may contain more cycles.", max_cycles))
+    debug_log(sprintf("Cycle detection stopped after finding %d cycles (limit reached). Network may contain more cycles.", max_cycles), "NETWORK_ANALYSIS")
   }
 
   return(cycles)
@@ -1420,7 +1420,7 @@ calculate_network_metrics_safe <- function(nodes, edges = NULL) {
       degree = raw$degree
     )
   }, error = function(e) {
-    warning("calculate_network_metrics failed: ", e$message)
+    debug_log(sprintf("calculate_network_metrics_safe failed: %s", e$message), "NETWORK")
     NULL
   })
 }
@@ -1437,7 +1437,7 @@ calculate_micmac_safe <- function(nodes, edges) {
     if ("exposure" %in% names(res)) names(res)[names(res) == "exposure"] <- "dependence"
     return(res)
   }, error = function(e) {
-    warning("calculate_micmac failed: ", e$message)
+    debug_log(sprintf("calculate_micmac_safe failed: %s", e$message), "NETWORK")
     NULL
   })
 }
@@ -1463,7 +1463,7 @@ create_numeric_adjacency_matrix_safe <- function(nodes, edges) {
     }
     adj
   }, error = function(e) {
-    warning("create_numeric_adjacency_matrix failed: ", e$message)
+    debug_log(sprintf("create_numeric_adjacency_matrix_safe failed: %s", e$message), "NETWORK")
     NULL
   })
 }
@@ -1489,17 +1489,22 @@ find_all_cycles_safe <- function(nodes, edges, max_length = 10, max_cycles = 100
       list(nodes = node_ids, polarities = pols)
     })
   }, error = function(e) {
-    warning("find_all_cycles failed: ", e$message)
+    debug_log(sprintf("find_all_cycles_safe failed: %s", e$message), "NETWORK")
     list()
   })
 }
 
 classify_loop_type_safe <- function(loop, edges = NULL) {
+
+  # Returns "Reinforcing" or "Balancing" (consistent with classify_loop_type)
+  # Even number of negative polarities = Reinforcing
+  # Odd number of negative polarities = Balancing
+
   if (is.null(loop)) return(NULL)
   if (!is.list(loop)) return(NULL)
   if (!is.null(loop$polarities)) {
     neg <- sum(loop$polarities == "-", na.rm = TRUE)
-    return(ifelse(neg %% 2 == 1, "B", "R"))
+    return(ifelse(neg %% 2 == 1, "Balancing", "Reinforcing"))
   }
   if (!is.null(edges) && is.data.frame(edges) && !is.null(loop$nodes)) {
     pals <- c()
@@ -1511,7 +1516,7 @@ classify_loop_type_safe <- function(loop, edges = NULL) {
       pals <- c(pals, row$polarity[1])
     }
     neg <- sum(pals == "-", na.rm = TRUE)
-    return(ifelse(neg %% 2 == 1, "B", "R"))
+    return(ifelse(neg %% 2 == 1, "Balancing", "Reinforcing"))
   }
   NULL
 }

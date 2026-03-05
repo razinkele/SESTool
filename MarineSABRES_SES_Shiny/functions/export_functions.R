@@ -502,7 +502,9 @@ export_project_excel_safe <- function(project, file_path) {
     }
     TRUE
   }, error = function(e) {
-    warning("Export failed: ", e$message)
+    if (exists("debug_log", mode = "function")) {
+      debug_log(sprintf("Export failed: %s", e$message), "EXPORT")
+    }
     FALSE
   })
 }
@@ -518,7 +520,9 @@ export_project_json_safe <- function(project, file_path) {
     }
     return(FALSE)
   }, error = function(e) {
-    warning("export_project_json_safe failed: ", e$message)
+    if (exists("debug_log", mode = "function")) {
+      debug_log(sprintf("export_project_json_safe failed: %s", e$message), "EXPORT")
+    }
     FALSE
   })
 }
@@ -534,7 +538,9 @@ export_project_csv_zip_safe <- function(project, file_path) {
     }
     return(FALSE)
   }, error = function(e) {
-    warning("export_project_csv_zip_safe failed: ", e$message)
+    if (exists("debug_log", mode = "function")) {
+      debug_log(sprintf("export_project_csv_zip_safe failed: %s", e$message), "EXPORT")
+    }
     FALSE
   })
 }
@@ -550,7 +556,9 @@ generate_executive_summary_safe <- function(project, file_path) {
     }
     return(FALSE)
   }, error = function(e) {
-    warning("generate_executive_summary_safe failed: ", e$message)
+    if (exists("debug_log", mode = "function")) {
+      debug_log(sprintf("generate_executive_summary_safe failed: %s", e$message), "EXPORT")
+    }
     FALSE
   })
 }

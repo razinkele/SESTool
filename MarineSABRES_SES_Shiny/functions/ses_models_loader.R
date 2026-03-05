@@ -127,7 +127,10 @@ scan_ses_models <- function(base_dir = "SESModels", use_cache = TRUE) {
       if (exists("detect_excel_format", mode = "function")) {
         format_info <- tryCatch(
           detect_excel_format(norm_file_path),
-          error = function(e) NULL
+          error = function(e) {
+            debug_log(sprintf("Format detection failed for %s: %s", basename(norm_file_path), e$message), "SES_MODELS")
+            NULL
+          }
         )
       }
 
