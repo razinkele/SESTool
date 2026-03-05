@@ -450,6 +450,17 @@
       "it": "Sfoglia...",
       "no": "Bla gjennom...",
       "el": "Αναζήτηση..."
+    },
+    "common.buttons.next_category": {
+      "en": "Next Category",
+      "es": "Siguiente Categoría",
+      "fr": "Catégorie Suivante",
+      "de": "Nächste Kategorie",
+      "lt": "Kita Kategorija",
+      "pt": "Próxima Categoria",
+      "it": "Categoria Successiva",
+      "no": "Neste Kategori",
+      "el": "Επόμενη Κατηγορία"
     }
   }
 }

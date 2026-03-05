@@ -263,10 +263,30 @@ calculate_relevance <- function(from_name, to_name, from_type, to_type) {
 generate_smart_connections <- function(from_elements, to_elements, from_type, to_type, matrix_name, max_count, min_relevance) {
   candidates <- list()
 
+  # Keywords indicating negative states/losses - used to filter double-negative connections
+  loss_keywords <- c(
+    "loss", "decline", "declin", "degrad", "reduc", "damag", "destruct",
+    "decreas", "diminish", "deplet", "erosion", "collapse", "extinct",
+    "mortality", "death", "disappear", "absent", "lack", "scarcity"
+  )
+
   for (i in seq_along(from_elements)) {
     for (j in seq_along(to_elements)) {
       relevance <- calculate_relevance(from_elements[[i]]$name, to_elements[[j]]$name, from_type, to_type)
       if (relevance >= min_relevance) {
+        # FILTER: Skip double-negative connections (loss → loss)
+        # These are confusing and difficult to interpret
+        from_lower <- tolower(from_elements[[i]]$name)
+        to_lower <- tolower(to_elements[[j]]$name)
+        from_is_loss <- any(sapply(loss_keywords, function(kw) grepl(kw, from_lower)))
+        to_is_loss <- any(sapply(loss_keywords, function(kw) grepl(kw, to_lower)))
+
+        if (from_is_loss && to_is_loss) {
+          debug_log(sprintf("Skipping double-negative connection: '%s' → '%s'",
+                     from_elements[[i]]$name, to_elements[[j]]$name), "AI ISA CONNECTIONS")
+          next  # Skip this connection
+        }
+
         polarity <- detect_polarity(from_elements[[i]]$name, to_elements[[j]]$name, from_type, to_type)
 
         # Choose appropriate verb based on connection type

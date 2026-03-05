@@ -307,6 +307,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
     rv <- reactiveValues(
       approved = c(),  # Vector of approved connection indices
       rejected = c(),  # Vector of rejected connection indices
+      swapped = c(),   # Vector of connection indices with swapped direction
       amended_data = list(),  # Store amended connection data
       batches_info = list(),  # Store batch categorization info
       active_tab = NULL  # Track the currently active tab to prevent unwanted navigation
@@ -491,8 +492,10 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           ),
 
           # Connection cards for this batch
-          div(style = "max-height: 600px; overflow-y: auto; padding: 10px;",
-            uiOutput(ns(paste0("batch_connections_", batch_id)))
+          div(class = "conn-batch-content", style = "max-height: 600px; overflow-y: auto; padding: 10px;",
+            uiOutput(ns(paste0("batch_connections_", batch_id))),
+            # Next Category button - appears at bottom when all connections in this batch are reviewed
+            uiOutput(ns(paste0("next_category_btn_", batch_id)))
           )
         )
       })
@@ -558,6 +561,47 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
           # Suspend when hidden to prevent unnecessary updates
           outputOptions(output, output_name, suspendWhenHidden = TRUE)
+
+          # Next Category button - appears when all connections in this batch are reviewed
+          next_btn_name <- paste0("next_category_btn_", local_batch_id)
+          output[[next_btn_name]] <- renderUI({
+            batch <- batch_lists[[local_batch_id]]
+            indices <- batch$indices
+            batch_reviewed <- length(intersect(indices, union(rv$approved, rv$rejected)))
+            batch_total <- length(indices)
+
+            # Only show if ALL connections in this batch have been reviewed
+            if (batch_reviewed >= batch_total && batch_total > 0) {
+              # Find next batch with connections
+              batch_names <- names(batch_lists)
+              current_idx <- which(batch_names == local_batch_id)
+
+              if (current_idx < length(batch_names)) {
+                next_batch_id <- batch_names[current_idx + 1]
+                next_batch_label <- batch_lists[[next_batch_id]]$info$label
+
+                div(style = "margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 8px; text-align: center;",
+                  p(style = "color: #2e7d32; margin-bottom: 10px;",
+                    icon("check-circle"),
+                    " ", i18n$t("common.misc.category_complete")),
+                  actionButton(ns(paste0("goto_next_", local_batch_id)),
+                              paste(i18n$t("common.buttons.next_category"), ":", next_batch_label),
+                              icon = icon("arrow-right"),
+                              class = "btn-success",
+                              style = "min-width: 200px;")
+                )
+              } else {
+                # This is the last batch - show completion message
+                div(style = "margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px; text-align: center;",
+                  p(style = "color: #1565c0; margin-bottom: 10px;",
+                    icon("flag-checkered"),
+                    " ", i18n$t("common.misc.all_categories_reviewed")),
+                  p(style = "color: #666;",
+                    i18n$t("common.misc.you_can_now_finish_and_continue"))
+                )
+              }
+            }
+          })
         })
       })
     })
@@ -610,6 +654,22 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               type = "warning",
               duration = 3
             )
+          })
+
+          # Next Category button - switches to next tab
+          observeEvent(input[[paste0("goto_next_", local_batch_id)]], {
+            batch_names <- names(batch_lists)
+            current_idx <- which(batch_names == local_batch_id)
+
+            if (current_idx < length(batch_names)) {
+              next_batch_id <- batch_names[current_idx + 1]
+              # Update active tab
+              rv$active_tab <- next_batch_id
+              # Update tabsetPanel
+              updateTabsetPanel(session, "batch_tabs", selected = next_batch_id)
+              # Scroll to top of the new tab content
+              shinyjs::runjs("setTimeout(function() { var el = document.querySelector('.conn-batch-content'); if (el) el.scrollTop = 0; }, 100);")
+            }
           })
         })
       })
@@ -719,8 +779,25 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             if (current_polarity == "+") "drives/increases" else "affects/reduces"
           })
 
+          # From name output (reactive to swap direction)
+          output[[paste0("from_name_", local_idx)]] <- renderUI({
+            is_swapped <- local_idx %in% rv$swapped
+            name <- if (is_swapped) (conn$to_name %|||% "Unknown") else (conn$from_name %|||% "Unknown")
+            span(name)
+          })
+
+          # To name output (reactive to swap direction)
+          output[[paste0("to_name_", local_idx)]] <- renderUI({
+            is_swapped <- local_idx %in% rv$swapped
+            name <- if (is_swapped) (conn$from_name %|||% "Unknown") else (conn$to_name %|||% "Unknown")
+            span(name)
+          })
+
           # Approve button - reads current slider values and applies them
           observeEvent(input[[paste0("approve_", local_idx)]], {
+            # SCROLL FIX: Save scroll position before updating state
+            shinyjs::runjs("window._connScrollTop = document.querySelector('.conn-batch-content')?.scrollTop || 0;")
+
             # Read current slider values
             strength_value <- input[[paste0("strength_", local_idx)]]
             conf_value <- input[[paste0("confidence_", local_idx)]]
@@ -754,16 +831,47 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               on_approve(local_idx, conn)
             }
 
+            # SCROLL FIX: Restore scroll position after state update
+            shinyjs::runjs("setTimeout(function() { var el = document.querySelector('.conn-batch-content'); if (el) el.scrollTop = window._connScrollTop || 0; }, 50);")
           })
 
           # Reject button
           observeEvent(input[[paste0("reject_", local_idx)]], {
+            # SCROLL FIX: Save scroll position before updating state
+            shinyjs::runjs("window._connScrollTop = document.querySelector('.conn-batch-content')?.scrollTop || 0;")
+
             rv$rejected <- union(rv$rejected, local_idx)
             rv$approved <- setdiff(rv$approved, local_idx)
 
             if (!is.null(on_reject)) {
               on_reject(local_idx, conn)
             }
+
+            # SCROLL FIX: Restore scroll position after state update
+            shinyjs::runjs("setTimeout(function() { var el = document.querySelector('.conn-batch-content'); if (el) el.scrollTop = window._connScrollTop || 0; }, 50);")
+          })
+
+          # Swap direction button - toggle the from/to direction
+          observeEvent(input[[paste0("swap_direction_", local_idx)]], {
+            # SCROLL FIX: Save scroll position before updating state
+            shinyjs::runjs("window._connScrollTop = document.querySelector('.conn-batch-content')?.scrollTop || 0;")
+
+            # Toggle swapped state for this connection
+            if (local_idx %in% rv$swapped) {
+              rv$swapped <- setdiff(rv$swapped, local_idx)
+            } else {
+              rv$swapped <- union(rv$swapped, local_idx)
+            }
+
+            # Show notification
+            showNotification(
+              i18n$t("common.misc.connection_direction_swapped"),
+              type = "message",
+              duration = 2
+            )
+
+            # SCROLL FIX: Restore scroll position after state update
+            shinyjs::runjs("setTimeout(function() { var el = document.querySelector('.conn-batch-content'); if (el) el.scrollTop = window._connScrollTop || 0; }, 50);")
           })
         })
       })
@@ -774,6 +882,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       list(
         approved = rv$approved,
         rejected = rv$rejected,
+        swapped = rv$swapped,  # Track which connections have swapped direction
         amended_data = rv$amended_data,
         batches = batched_connections()$batches
       )
@@ -810,15 +919,25 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
   div(class = status_class,
     # Connection header with polarity display and switch
     div(class = "conn-header-tabbed", style = "display: flex; justify-content: space-between; align-items: center;",
-      div(style = "flex: 1;",
-  span(conn$from_name %|||% "Unknown"),
-        span(" "),
+      div(style = "flex: 1; display: flex; align-items: center; flex-wrap: wrap; gap: 5px;",
+        # From element
+        span(style = "font-weight: 500;", uiOutput(ns(paste0("from_name_", conn_idx)), inline = TRUE)),
+        # Swap direction button
+        tags$button(
+          id = ns(paste0("swap_direction_", conn_idx)),
+          class = "btn btn-outline-secondary btn-xs",
+          style = "padding: 2px 6px; font-size: 0.75rem; margin: 0 5px;",
+          title = i18n$t("common.misc.swap_connection_direction"),
+          onclick = sprintf("Shiny.setInputValue('%s', Math.random())", ns(paste0("swap_direction_", conn_idx))),
+          icon("exchange-alt")
+        ),
+        # Polarity indicator
         uiOutput(ns(paste0("polarity_text_", conn_idx)), inline = TRUE),
-        span(" "),
+        # Rationale
         span(class = "conn-rationale",
              textOutput(ns(paste0("rationale_", conn_idx)), inline = TRUE)),
-        span(" "),
-  span(conn$to_name %|||% "Unknown")
+        # To element
+        span(style = "font-weight: 500;", uiOutput(ns(paste0("to_name_", conn_idx)), inline = TRUE))
       ),
       # Polarity switch in header
       div(style = "margin-left: 15px;",

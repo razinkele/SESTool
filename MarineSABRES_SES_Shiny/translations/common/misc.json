@@ -703,6 +703,72 @@
       "pt": "Seus projetos são salvos em:",
       "el": "Τα έργα σας αποθηκεύονται στο:",
       "no": "Prosjektene dine lagres i:"
+    },
+    "common.misc.category_complete": {
+      "en": "Category complete!",
+      "es": "¡Categoría completada!",
+      "fr": "Catégorie terminée !",
+      "de": "Kategorie abgeschlossen!",
+      "lt": "Kategorija baigta!",
+      "pt": "Categoria concluída!",
+      "it": "Categoria completata!",
+      "no": "Kategori fullført!",
+      "el": "Η κατηγορία ολοκληρώθηκε!"
+    },
+    "common.misc.all_categories_reviewed": {
+      "en": "All connection categories have been reviewed!",
+      "es": "¡Todas las categorías de conexiones han sido revisadas!",
+      "fr": "Toutes les catégories de connexions ont été examinées !",
+      "de": "Alle Verbindungskategorien wurden überprüft!",
+      "lt": "Visos ryšių kategorijos peržiūrėtos!",
+      "pt": "Todas as categorias de conexões foram revisadas!",
+      "it": "Tutte le categorie di connessioni sono state esaminate!",
+      "no": "Alle tilkoblingskategorier har blitt gjennomgått!",
+      "el": "Όλες οι κατηγορίες συνδέσεων έχουν αξιολογηθεί!"
+    },
+    "common.misc.you_can_now_finish_and_continue": {
+      "en": "You can now click 'Finish & Continue' below to save your model.",
+      "es": "Ahora puede hacer clic en 'Finalizar y continuar' a continuación para guardar su modelo.",
+      "fr": "Vous pouvez maintenant cliquer sur 'Terminer et continuer' ci-dessous pour enregistrer votre modèle.",
+      "de": "Sie können jetzt unten auf 'Fertig und Fortfahren' klicken, um Ihr Modell zu speichern.",
+      "lt": "Dabar galite spustelėti 'Baigti ir tęsti' žemiau, kad išsaugotumėte savo modelį.",
+      "pt": "Agora você pode clicar em 'Finalizar e continuar' abaixo para salvar seu modelo.",
+      "it": "Ora puoi cliccare 'Termina e continua' sotto per salvare il tuo modello.",
+      "no": "Du kan nå klikke 'Fullfør og fortsett' nedenfor for å lagre modellen din.",
+      "el": "Μπορείτε τώρα να κάνετε κλικ στο 'Ολοκλήρωση και συνέχεια' παρακάτω για να αποθηκεύσετε το μοντέλο σας."
+    },
+    "common.misc.review_connections_to_continue": {
+      "en": "Please review and approve some connections before continuing.",
+      "es": "Por favor, revise y apruebe algunas conexiones antes de continuar.",
+      "fr": "Veuillez examiner et approuver certaines connexions avant de continuer.",
+      "de": "Bitte überprüfen und genehmigen Sie einige Verbindungen, bevor Sie fortfahren.",
+      "lt": "Prašome peržiūrėti ir patvirtinti kai kuriuos ryšius prieš tęsiant.",
+      "pt": "Por favor, revise e aprove algumas conexões antes de continuar.",
+      "it": "Per favore, esamina e approva alcune connessioni prima di continuare.",
+      "no": "Vennligst gjennomgå og godkjenn noen tilkoblinger før du fortsetter.",
+      "el": "Παρακαλώ ελέγξτε και εγκρίνετε ορισμένες συνδέσεις πριν συνεχίσετε."
+    },
+    "common.misc.swap_connection_direction": {
+      "en": "Swap connection direction (reverse cause and effect)",
+      "es": "Intercambiar dirección de conexión (invertir causa y efecto)",
+      "fr": "Échanger la direction de connexion (inverser cause et effet)",
+      "de": "Verbindungsrichtung tauschen (Ursache und Wirkung umkehren)",
+      "lt": "Sukeisti ryšio kryptį (apversti priežastį ir pasekmę)",
+      "pt": "Trocar direção da conexão (inverter causa e efeito)",
+      "it": "Scambia direzione della connessione (inverti causa ed effetto)",
+      "no": "Bytt tilkoblingsretning (reverser årsak og virkning)",
+      "el": "Αντιμετάθεση κατεύθυνσης σύνδεσης (αντιστροφή αιτίου και αποτελέσματος)"
+    },
+    "common.misc.connection_direction_swapped": {
+      "en": "Connection direction swapped",
+      "es": "Dirección de conexión intercambiada",
+      "fr": "Direction de connexion échangée",
+      "de": "Verbindungsrichtung getauscht",
+      "lt": "Ryšio kryptis sukeista",
+      "pt": "Direção da conexão trocada",
+      "it": "Direzione della connessione scambiata",
+      "no": "Tilkoblingsretning byttet",
+      "el": "Η κατεύθυνση σύνδεσης αντιμετατέθηκε"
     }
   }
 }
