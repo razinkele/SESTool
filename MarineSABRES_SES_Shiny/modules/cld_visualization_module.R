@@ -81,6 +81,66 @@ cld_viz_ui <- function(id, i18n) {
       .cld-controls-box .form-group {
         margin-bottom: 15px;
       }
+      /* Fullscreen toggle button */
+      .fullscreen-toggle-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+      .fullscreen-toggle-btn:hover {
+        background: #f8f9fa;
+        border-color: #007bff;
+        color: #007bff;
+      }
+      .fullscreen-toggle-btn .fullscreen-label {
+        font-size: 0.85rem;
+      }
+      /* Fullscreen mode styles */
+      .network-fullscreen-container.is-fullscreen {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 9999 !important;
+        background: white !important;
+        padding: 20px !important;
+        margin: 0 !important;
+      }
+      .network-fullscreen-container.is-fullscreen .vis-network {
+        height: calc(100vh - 40px) !important;
+      }
+      /* Exit fullscreen button (shown in fullscreen mode) */
+      .fullscreen-exit-btn {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 10000;
+        display: none;
+        padding: 8px 16px;
+        background: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      .fullscreen-exit-btn:hover {
+        background: #c82333;
+      }
+      .network-fullscreen-container.is-fullscreen + .fullscreen-exit-btn,
+      .is-fullscreen .fullscreen-exit-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
     ")),
 
     fluidRow(
@@ -180,9 +240,22 @@ cld_viz_ui <- function(id, i18n) {
           status = "primary",
           solidHeader = FALSE,
           title = NULL,
+          # Fullscreen toggle button
+          div(
+            style = "position: absolute; top: 10px; right: 15px; z-index: 1000;",
+            tags$button(
+              id = ns("fullscreen_toggle"),
+              class = "btn btn-outline-secondary btn-sm fullscreen-toggle-btn",
+              title = i18n$t("common.misc.toggle_fullscreen"),
+              onclick = sprintf("toggleVisualizationFullscreen('%s')", ns("network_fullscreen_container")),
+              icon("expand"),
+              span(class = "fullscreen-label", i18n$t("common.buttons.fullscreen"))
+            )
+          ),
           # Network Visualization (uses Shiny's built-in loading indicator)
           div(
-            class = "cld-network-container",
+            id = ns("network_fullscreen_container"),
+            class = "cld-network-container network-fullscreen-container",
             visNetworkOutput(ns("network"), height = PLOT_HEIGHT_XXL)
           )
         )

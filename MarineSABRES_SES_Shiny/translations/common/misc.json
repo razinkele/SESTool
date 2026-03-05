@@ -769,6 +769,17 @@
       "it": "Direzione della connessione scambiata",
       "no": "Tilkoblingsretning byttet",
       "el": "Η κατεύθυνση σύνδεσης αντιμετατέθηκε"
+    },
+    "common.misc.toggle_fullscreen": {
+      "en": "Toggle fullscreen view",
+      "es": "Alternar vista de pantalla completa",
+      "fr": "Basculer en plein écran",
+      "de": "Vollbildansicht umschalten",
+      "lt": "Perjungti viso ekrano vaizdą",
+      "pt": "Alternar visualização em tela cheia",
+      "it": "Attiva/disattiva schermo intero",
+      "no": "Veksle fullskjermvisning",
+      "el": "Εναλλαγή πλήρους οθόνης"
     }
   }
 }

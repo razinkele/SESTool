@@ -461,6 +461,28 @@
       "it": "Categoria Successiva",
       "no": "Neste Kategori",
       "el": "Επόμενη Κατηγορία"
+    },
+    "common.buttons.fullscreen": {
+      "en": "Fullscreen",
+      "es": "Pantalla completa",
+      "fr": "Plein écran",
+      "de": "Vollbild",
+      "lt": "Visas ekranas",
+      "pt": "Tela cheia",
+      "it": "Schermo intero",
+      "no": "Fullskjerm",
+      "el": "Πλήρης οθόνη"
+    },
+    "common.buttons.exit_fullscreen": {
+      "en": "Exit Fullscreen",
+      "es": "Salir de pantalla completa",
+      "fr": "Quitter le plein écran",
+      "de": "Vollbild beenden",
+      "lt": "Išeiti iš viso ekrano",
+      "pt": "Sair da tela cheia",
+      "it": "Esci da schermo intero",
+      "no": "Avslutt fullskjerm",
+      "el": "Έξοδος από πλήρη οθόνη"
     }
   }
 }
