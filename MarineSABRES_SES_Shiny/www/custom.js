@@ -325,16 +325,36 @@ $(document).ready(function() {
       // Remove the keys
       keysToRemove.forEach(function(key) {
         localStorage.removeItem(key);
-        console.log('[Clear Session] Removed:', key);
+        console.log('[Clear Session] Removed localStorage:', key);
       });
 
       // Also clear sessionStorage
       sessionStorage.clear();
+      console.log('[Clear Session] Cleared sessionStorage');
 
-      console.log('[Clear Session] Cleared ' + keysToRemove.length + ' localStorage items and sessionStorage');
+      // Clear IndexedDB databases related to MarineSABRES
+      if (window.indexedDB) {
+        var dbNames = ['MarineSABRES_LocalStorage'];
+        dbNames.forEach(function(dbName) {
+          var deleteRequest = indexedDB.deleteDatabase(dbName);
+          deleteRequest.onsuccess = function() {
+            console.log('[Clear Session] Deleted IndexedDB:', dbName);
+          };
+          deleteRequest.onerror = function() {
+            console.log('[Clear Session] Error deleting IndexedDB:', dbName);
+          };
+        });
+      }
 
-      // Reload the page
-      window.location.reload(true);
+      // Tell the server to clear autosave files before reloading
+      // This ensures the recovery modal won't show the old data
+      Shiny.setInputValue('clear_server_autosaves', Math.random(), {priority: 'event'});
+
+      // Give the server a moment to process, then reload
+      console.log('[Clear Session] Cleared ' + keysToRemove.length + ' localStorage items, sessionStorage, and IndexedDB');
+      setTimeout(function() {
+        window.location.reload(true);
+      }, 500);
     }
   });
 

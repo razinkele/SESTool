@@ -697,6 +697,48 @@ server <- function(input, output, session) {
     })
   }, ignoreInit = TRUE)
 
+  # ========== CLEAR SERVER AUTOSAVES ==========
+  # Handler for "Clear Session & Start Fresh" button
+  # Clears all autosave files from the session temp directory
+  observeEvent(input$clear_server_autosaves, {
+    debug_log("Clearing server autosave files...", "CLEAR_SESSION")
+
+    tryCatch({
+      # Get session-scoped temp directory
+      session_temp_dir <- session$userData$session_temp_dir
+
+      if (!is.null(session_temp_dir) && dir.exists(session_temp_dir)) {
+        # Remove autosave directory
+        autosave_dir <- file.path(session_temp_dir, "autosave")
+        if (dir.exists(autosave_dir)) {
+          unlink(autosave_dir, recursive = TRUE)
+          debug_log(sprintf("Cleared autosave directory: %s", autosave_dir), "CLEAR_SESSION")
+        }
+
+        # Also remove any .rds files in the session temp dir
+        rds_files <- list.files(session_temp_dir, pattern = "\\.rds$", full.names = TRUE)
+        for (f in rds_files) {
+          file.remove(f)
+          debug_log(sprintf("Removed: %s", f), "CLEAR_SESSION")
+        }
+      }
+
+      # Also clear persistent autosave folder if in local mode
+      persistent_folder <- get_projects_folder(create_if_missing = FALSE)
+      if (!is.null(persistent_folder)) {
+        autosave_folder <- file.path(persistent_folder, ".autosave")
+        if (dir.exists(autosave_folder)) {
+          unlink(autosave_folder, recursive = TRUE)
+          debug_log(sprintf("Cleared persistent autosave folder: %s", autosave_folder), "CLEAR_SESSION")
+        }
+      }
+
+      debug_log("Server autosave files cleared successfully", "CLEAR_SESSION")
+    }, error = function(e) {
+      debug_log(sprintf("Error clearing autosaves: %s", e$message), "CLEAR_SESSION")
+    })
+  }, ignoreInit = TRUE)
+
   # ========== BOOKMARKING ==========
   # Bookmarking logic extracted to server/bookmarking.R for better maintainability
   setup_bookmarking(input, output, session, project_data, user_level,
