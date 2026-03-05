@@ -4036,6 +4036,72 @@
       "it": "Segui gli esercizi strutturati per costruire la tua analisi del Sistema Socio-Ecologico Marino.",
       "no": "Følg de strukturerte øvelsene for å bygge din analyse av det Marine Sosial-Økologiske Systemet.",
       "el": "Follow the structured exercises to build your marine Social-Ecological System analysis."
+    },
+    "modules.isa.ai_assistant.go_back": {
+      "en": "Back",
+      "es": "Atrás",
+      "fr": "Retour",
+      "de": "Zurück",
+      "lt": "Atgal",
+      "pt": "Voltar",
+      "it": "Indietro",
+      "no": "Tilbake",
+      "el": "Πίσω"
+    },
+    "modules.isa.ai_assistant.go_back_to_previous_step": {
+      "en": "Go back to the previous step",
+      "es": "Volver al paso anterior",
+      "fr": "Revenir à l'étape précédente",
+      "de": "Zum vorherigen Schritt zurückkehren",
+      "lt": "Grįžti į ankstesnį žingsnį",
+      "pt": "Voltar ao passo anterior",
+      "it": "Torna al passaggio precedente",
+      "no": "Gå tilbake til forrige trinn",
+      "el": "Επιστροφή στο προηγούμενο βήμα"
+    },
+    "modules.isa.ai_assistant.max_elements_beginner": {
+      "en": "Maximum 3 elements allowed per category in Beginner mode",
+      "es": "Máximo 3 elementos permitidos por categoría en modo Principiante",
+      "fr": "Maximum 3 éléments autorisés par catégorie en mode Débutant",
+      "de": "Maximal 3 Elemente pro Kategorie im Anfängermodus erlaubt",
+      "lt": "Pradedančiųjų režime leidžiami maksimaliai 3 elementai kategorijoje",
+      "pt": "Máximo de 3 elementos permitidos por categoria no modo Iniciante",
+      "it": "Massimo 3 elementi consentiti per categoria in modalità Principiante",
+      "no": "Maksimalt 3 elementer tillatt per kategori i nybegynnermodus",
+      "el": "Μέγιστο 3 στοιχεία ανά κατηγορία στη λειτουργία Αρχαρίων"
+    },
+    "modules.isa.ai_assistant.max_elements_warning": {
+      "en": "You have reached the maximum of 3 elements for this category. This limit helps keep your model manageable and reduces the number of connections to review. Click the continue button to proceed to the next category.",
+      "es": "Ha alcanzado el máximo de 3 elementos para esta categoría. Este límite ayuda a mantener su modelo manejable y reduce el número de conexiones a revisar. Haga clic en el botón continuar para pasar a la siguiente categoría.",
+      "fr": "Vous avez atteint le maximum de 3 éléments pour cette catégorie. Cette limite aide à garder votre modèle gérable et réduit le nombre de connexions à examiner. Cliquez sur le bouton continuer pour passer à la catégorie suivante.",
+      "de": "Sie haben die maximale Anzahl von 3 Elementen für diese Kategorie erreicht. Dieses Limit hilft, Ihr Modell überschaubar zu halten und reduziert die Anzahl der zu überprüfenden Verbindungen. Klicken Sie auf die Schaltfläche Weiter, um zur nächsten Kategorie zu gelangen.",
+      "lt": "Pasiekėte maksimalų 3 elementų skaičių šiai kategorijai. Šis limitas padeda išlaikyti modelį valdomą ir sumažina peržiūrimų ryšių skaičių. Spustelėkite mygtuką tęsti, kad pereitumėte į kitą kategoriją.",
+      "pt": "Você atingiu o máximo de 3 elementos para esta categoria. Este limite ajuda a manter seu modelo gerenciável e reduz o número de conexões a revisar. Clique no botão continuar para prosseguir para a próxima categoria.",
+      "it": "Hai raggiunto il massimo di 3 elementi per questa categoria. Questo limite aiuta a mantenere il modello gestibile e riduce il numero di connessioni da esaminare. Clicca il pulsante continua per passare alla categoria successiva.",
+      "no": "Du har nådd maksimalt 3 elementer for denne kategorien. Denne grensen hjelper med å holde modellen håndterbar og reduserer antall forbindelser å gjennomgå. Klikk på fortsett-knappen for å gå til neste kategori.",
+      "el": "Έχετε φτάσει το μέγιστο των 3 στοιχείων για αυτή την κατηγορία. Αυτό το όριο βοηθά να διατηρήσετε το μοντέλο σας διαχειρίσιμο και μειώνει τον αριθμό των συνδέσεων προς επανεξέταση. Κάντε κλικ στο κουμπί συνέχεια για να προχωρήσετε στην επόμενη κατηγορία."
+    },
+    "modules.isa.ai_assistant.min_elements_required": {
+      "en": "At least 2 elements required",
+      "es": "Se requieren al menos 2 elementos",
+      "fr": "Au moins 2 éléments requis",
+      "de": "Mindestens 2 Elemente erforderlich",
+      "lt": "Reikalingi bent 2 elementai",
+      "pt": "Pelo menos 2 elementos necessários",
+      "it": "Richiesti almeno 2 elementi",
+      "no": "Minst 2 elementer kreves",
+      "el": "Απαιτούνται τουλάχιστον 2 στοιχεία"
+    },
+    "modules.isa.ai_assistant.need_more_elements": {
+      "en": "Please add at least 2 elements to this category before continuing. Having only 1 element will prevent the system from detecting feedback loops, which are essential for analysis.",
+      "es": "Por favor, agregue al menos 2 elementos a esta categoría antes de continuar. Tener solo 1 elemento impedirá que el sistema detecte bucles de retroalimentación, que son esenciales para el análisis.",
+      "fr": "Veuillez ajouter au moins 2 éléments à cette catégorie avant de continuer. N'avoir qu'un seul élément empêchera le système de détecter les boucles de rétroaction, essentielles pour l'analyse.",
+      "de": "Bitte fügen Sie mindestens 2 Elemente zu dieser Kategorie hinzu, bevor Sie fortfahren. Nur 1 Element verhindert, dass das System Rückkopplungsschleifen erkennt, die für die Analyse wesentlich sind.",
+      "lt": "Prieš tęsdami pridėkite bent 2 elementus šiai kategorijai. Turint tik 1 elementą, sistema negalės aptikti grįžtamojo ryšio ciklų, kurie yra būtini analizei.",
+      "pt": "Por favor, adicione pelo menos 2 elementos a esta categoria antes de continuar. Ter apenas 1 elemento impedirá o sistema de detectar ciclos de retroalimentação, essenciais para a análise.",
+      "it": "Aggiungi almeno 2 elementi a questa categoria prima di continuare. Avere solo 1 elemento impedirà al sistema di rilevare i cicli di feedback, essenziali per l'analisi.",
+      "no": "Vennligst legg til minst 2 elementer i denne kategorien før du fortsetter. Å ha bare 1 element vil forhindre systemet fra å oppdage tilbakekoblingssløyfer, som er essensielle for analysen.",
+      "el": "Προσθέστε τουλάχιστον 2 στοιχεία σε αυτή την κατηγορία πριν συνεχίσετε. Έχοντας μόνο 1 στοιχείο θα εμποδίσει το σύστημα να ανιχνεύσει βρόχους ανατροφοδότησης, που είναι απαραίτητοι για την ανάλυση."
     }
   }
 }

@@ -1288,9 +1288,28 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           button_icon <- icon("check")
         }
 
-        actionButton(session$ns("skip_question"), button_label,
-                    icon = button_icon,
-                    class = "btn-success btn-block")
+        # Create both back and continue buttons in a row
+        # Back button only shown after step 0 (regional sea selection)
+        if (rv$current_step > 0) {
+          div(
+            class = "d-flex gap-2",
+            style = "gap: 10px;",
+            actionButton(session$ns("go_back"), i18n$t("modules.isa.ai_assistant.go_back"),
+                        icon = icon("arrow-left"),
+                        class = "btn-secondary",
+                        style = "flex: 0 0 auto;",
+                        title = i18n$t("modules.isa.ai_assistant.go_back_to_previous_step")),
+            actionButton(session$ns("skip_question"), button_label,
+                        icon = button_icon,
+                        class = "btn-success",
+                        style = "flex: 1;")
+          )
+        } else {
+          # No back button on first step
+          actionButton(session$ns("skip_question"), button_label,
+                      icon = button_icon,
+                      class = "btn-success btn-block")
+        }
       }
     })
 
@@ -1901,14 +1920,31 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                           rv$elements[[step_info$target]]
                         )
                       } else {
-                        # Add (select)
-                        debug_log(sprintf("[AI ISA QUICK] Adding %s to %s\n", suggestion_text, step_info$target))
-                        new_element <- list(
-                          name = suggestion_text,
-                          description = "",
-                          timestamp = Sys.time()
-                        )
-                        rv$elements[[step_info$target]] <- c(rv$elements[[step_info$target]], list(new_element))
+                        # BEGINNER MODE: Check max elements limit (3 per category)
+                        user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
+                        current_count <- length(rv$elements[[step_info$target]])
+
+                        if (user_level == "beginner" && current_count >= 3) {
+                          # Block adding 4th element, show warning
+                          showNotification(
+                            i18n$t("modules.isa.ai_assistant.max_elements_warning"),
+                            type = "warning",
+                            duration = 8
+                          )
+                          # Add AI message about the limit
+                          rv$conversation <- c(rv$conversation, list(
+                            list(type = "ai", message = i18n$t("modules.isa.ai_assistant.max_elements_warning"), timestamp = Sys.time())
+                          ))
+                        } else {
+                          # Add (select)
+                          debug_log(sprintf("[AI ISA QUICK] Adding %s to %s\n", suggestion_text, step_info$target))
+                          new_element <- list(
+                            name = suggestion_text,
+                            description = "",
+                            timestamp = Sys.time()
+                          )
+                          rv$elements[[step_info$target]] <- c(rv$elements[[step_info$target]], list(new_element))
+                        }
                       }
 
                       # Force UI re-render to update button classes
@@ -1933,7 +1969,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       }
     })
 
-    # Handle skip
+    # Handle skip / continue
     observeEvent(input$skip_question, {
       # If on main_issue step with multiple selections, save them before moving on
       if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
@@ -1953,9 +1989,35 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             list(type = "ai", message = ai_response, timestamp = Sys.time())
           ))
         }
+
+        # BEGINNER MODE: Check minimum elements for DAPSIWRM categories
+        # Only enforce minimum 2 elements for element entry steps (type = "multiple")
+        if (step_info$type == "multiple") {
+          user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
+          element_count <- length(rv$elements[[step_info$target]])
+
+          if (user_level == "beginner" && element_count == 1) {
+            # Show warning and prevent moving forward
+            showNotification(
+              i18n$t("modules.isa.ai_assistant.need_more_elements"),
+              type = "warning",
+              duration = 8
+            )
+            # Add AI message about needing more elements
+            rv$conversation <- c(rv$conversation, list(
+              list(type = "ai", message = i18n$t("modules.isa.ai_assistant.need_more_elements"), timestamp = Sys.time())
+            ))
+            return()  # Don't proceed
+          }
+        }
       }
 
       move_to_next_step()
+    })
+
+    # Handle go back button
+    observeEvent(input$go_back, {
+      move_to_previous_step()
     })
 
     # Process answer function
@@ -2047,6 +2109,26 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         # Store answer based on target
         if (step_info$type == "multiple") {
           debug_log(sprintf("[AI ISA PROCESS] Adding element to %s\n", step_info$target))
+
+          # BEGINNER MODE: Check max elements limit (3 per category) before adding
+          user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
+          current_count <- length(rv$elements[[step_info$target]])
+
+          if (user_level == "beginner" && current_count >= 3) {
+            # Block adding 4th element, show warning
+            showNotification(
+              i18n$t("modules.isa.ai_assistant.max_elements_warning"),
+              type = "warning",
+              duration = 8
+            )
+            # Add AI message about the limit
+            rv$conversation <- c(rv$conversation, list(
+              list(type = "ai", message = i18n$t("modules.isa.ai_assistant.max_elements_warning"), timestamp = Sys.time())
+            ))
+            # Hide text input
+            rv$show_text_input <- FALSE
+            return()  # Don't add the element
+          }
 
           # Add to list
           current_list <- rv$elements[[step_info$target]]
@@ -2502,6 +2584,36 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       debug_log(sprintf("[AI ISA CONNECTIONS] ========================================\n"))
 
       return(connections)
+    }
+
+    # Move to previous step (Back button functionality)
+    move_to_previous_step <- function() {
+      # Check if we can move backward
+      if (rv$current_step > 0) {
+        rv$current_step <- rv$current_step - 1
+
+        # Get the previous step info
+        prev_step <- QUESTION_FLOW[[rv$current_step + 1]]
+
+        # Add AI message indicating we're going back
+        rv$conversation <- c(rv$conversation, list(
+          list(type = "ai",
+               message = paste0(i18n$t("modules.isa.ai_assistant.go_back_to_previous_step"), ": ", prev_step$title),
+               timestamp = Sys.time())
+        ))
+
+        # Re-ask the previous question
+        rv$conversation <- c(rv$conversation, list(
+          list(type = "ai", message = prev_step$question, timestamp = Sys.time())
+        ))
+
+        # Force UI re-render
+        rv$render_counter <- (rv$render_counter %||% 0) + 1
+
+        # Scroll to bottom
+        shinyjs::runjs(sprintf("document.getElementById('%s').scrollTop = document.getElementById('%s').scrollHeight",
+                              session$ns("chat_container"), session$ns("chat_container")))
+      }
     }
 
     # Move to next step
