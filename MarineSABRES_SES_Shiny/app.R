@@ -821,23 +821,23 @@ server <- function(input, output, session) {
     })
   })
 
-  # Re-initialize tooltips for sidebar menu items after dynamic updates
+  # Initialize tooltips for sidebar menu items on load and after dynamic updates
   # The sidebar is rendered dynamically via renderMenu(), so tooltips need
-  # to be re-initialized each time language or user level changes
+  # to be initialized on first load and re-initialized when language or user level changes
   # We use custom JavaScript handler for full control over tooltip behavior
   # NOTE: Using shinyjs::delay instead of invalidateLater to avoid infinite re-trigger loop
   observeEvent(c(lang_trigger(), user_level()), {
     # Use shinyjs::delay for one-time delayed execution (not invalidateLater which loops)
     shinyjs::delay(600, {
-      # Send custom message to JavaScript to re-initialize tooltips
-      # This ensures sidebar menu tooltips work after dynamic updates
+      # Send custom message to JavaScript to initialize tooltips
+      # This ensures sidebar menu tooltips work on initial load and after dynamic updates
       session$sendCustomMessage("initSidebarTooltips", list(
         selector = ".main-sidebar .nav-link[title]"
       ))
 
-      debug_log("Sidebar tooltip re-initialization completed", "TOOLTIPS")
+      debug_log("Sidebar tooltip initialization completed", "TOOLTIPS")
     })
-  }, ignoreNULL = TRUE, ignoreInit = TRUE)
+  }, ignoreNULL = TRUE, ignoreInit = FALSE)
 
   # User info
   output$user_info <- renderText({
