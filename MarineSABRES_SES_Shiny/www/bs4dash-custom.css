@@ -1031,10 +1031,7 @@ body .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
   border-bottom-color: #0f2744 !important;
 }
 
-.sidebar .nav-sidebar .nav-item .nav-link[title]:hover,
-.sidebar .nav-sidebar .nav-item .nav-link[data-original-title]:hover {
-  cursor: help;
-}
+/* Removed cursor: help rule for sidebar tooltips - standardized on cursor: pointer */
 
 .bs-tooltip-auto,
 .bs-tooltip-top,
