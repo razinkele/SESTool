@@ -416,6 +416,9 @@ load_template_from_json <- function(json_path, use_cache = TRUE) {
     category <- .determine_template_category(json_data)
     icon <- .determine_template_icon(fmt$name)
 
+    # 5. Determine complexity (default to "simple" if not specified)
+    complexity <- json_data$complexity %||% "simple"
+
     # 5. Assemble result
     list(
       name = fmt$name,
@@ -424,6 +427,7 @@ load_template_from_json <- function(json_path, use_cache = TRUE) {
       description_key = fmt$description,
       icon = icon,
       category_key = category,
+      complexity = complexity,
       drivers = elems$drivers,
       activities = elems$activities,
       pressures = elems$pressures,

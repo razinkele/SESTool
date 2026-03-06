@@ -1,6 +1,7 @@
 {
   "template_name": "Climate Change Impacts on Marine Ecosystems",
   "template_description": "Template for analyzing climate change effects on marine ecosystems including ocean warming, acidification, sea level rise, and storm impacts",
+  "complexity": "complex",
   "regional_context": {
     "region": "Generic marine/coastal",
     "ecosystem_types": ["Marine ecosystems", "Coral reefs", "Coastal zones"],

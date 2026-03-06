@@ -1,6 +1,7 @@
 {
   "template_name": "Caribbean Island - Comprehensive SES Template",
   "template_description": "Comprehensive Social-Ecological System template for Caribbean islands focusing on major marine and coastal challenges including Sargassum invasions, coral reef degradation, chemical contamination, habitat loss, and overfishing",
+  "complexity": "complex",
   "regional_context": {
     "region": "Caribbean Sea",
     "location": "Lesser Antilles",

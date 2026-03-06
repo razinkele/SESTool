@@ -89,7 +89,7 @@ template_ses_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-template_ses_server <- function(id, project_data_reactive, i18n, parent_session = NULL, event_bus = NULL) {
+template_ses_server <- function(id, project_data_reactive, i18n, parent_session = NULL, event_bus = NULL, user_level_reactive = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -102,12 +102,37 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       pending_template_switch = NULL  # Stores template ID when awaiting confirmation to switch
     )
 
-    # Lazy template getter - loads templates on first access (not reactive, uses cache)
-    ses_templates <- function() {
+    # Lazy template getter - loads ALL templates on first access (not reactive, uses cache)
+    # Used for setting up observers (needs to work outside reactive context)
+    ses_templates_all <- function() {
       if (!exists("templates", envir = .template_module_cache)) {
         assign("templates", .load_templates_lazy(), envir = .template_module_cache)
       }
       get("templates", envir = .template_module_cache)
+    }
+
+    # Reactive filtered template getter - filters by user level (beginner only sees simple templates)
+    # Used for UI rendering (needs to work inside reactive context)
+    ses_templates_filtered <- reactive({
+      all_templates <- ses_templates_all()
+      current_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
+
+      # Beginners only see simple templates
+      if (current_level == "beginner") {
+        simple_templates <- Filter(function(tmpl) {
+          complexity <- tmpl$complexity %||% "simple"
+          complexity == "simple"
+        }, all_templates)
+        return(simple_templates)
+      }
+
+      # Intermediate and expert users see all templates
+      return(all_templates)
+    })
+
+    # Non-reactive wrapper for backward compatibility (uses all templates)
+    ses_templates <- function() {
+      ses_templates_all()
     }
 
     # Render header
@@ -185,11 +210,13 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
     })
 
     # Render template cards - compact grid layout with tooltips
+    # Uses ses_templates_filtered() to only show appropriate templates for user level
     output$template_cards <- renderUI({
+      filtered_templates <- ses_templates_filtered()
       tagList(
         div(class = "template-cards-grid",
-          lapply(names(ses_templates()), function(template_id) {
-            template <- ses_templates()[[template_id]]
+          lapply(names(filtered_templates), function(template_id) {
+            template <- filtered_templates[[template_id]]
 
             # Card with tooltip data attributes
             tags$div(

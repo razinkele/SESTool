@@ -1,5 +1,6 @@
 {
   "template_info": {"name": "Tourism", "description": "Representative tourism SES template (elements wrapper format)"},
+  "complexity": "simple",
   "elements": {
     "drivers": [{"id": "D1", "name": "Coastal Development"}],
     "activities": [{"id": "A1", "name": "Boat Traffic"}],
@@ -7,13 +8,17 @@
     "states": [{"id": "MP1", "name": "Disturbance"}],
     "impacts": [{"id": "ES1", "name": "Recreation Impact", "type": "Regulating"}],
     "welfare": [{"id": "GB1", "name": "Beach Quality"}],
-    "responses": [{"id": "R1", "name": "Zoning"}]
+    "responses": [{"id": "R1", "name": "Zoning"}],
+    "measures": [{"id": "M1", "name": "Speed Limits"}]
   },
   "connections": [
     {"from_id": "D1", "to_id": "A1", "from_type": "driver", "to_type": "activity", "polarity": "+", "strength": "medium", "confidence": 3},
     {"from_id": "A1", "to_id": "P1", "from_type": "activity", "to_type": "pressure", "polarity": "+", "strength": "medium", "confidence": 3},
     {"from_id": "P1", "to_id": "MP1", "from_type": "pressure", "to_type": "state", "polarity": "+", "strength": "low", "confidence": 2},
     {"from_id": "MP1", "to_id": "ES1", "from_type": "state", "to_type": "impact", "polarity": "+", "strength": "low", "confidence": 2},
-    {"from_id": "ES1", "to_id": "GB1", "from_type": "impact", "to_type": "welfare", "polarity": "+", "strength": "low", "confidence": 2}
+    {"from_id": "ES1", "to_id": "GB1", "from_type": "impact", "to_type": "welfare", "polarity": "+", "strength": "low", "confidence": 2},
+    {"from_id": "GB1", "to_id": "D1", "from_type": "welfare", "to_type": "driver", "polarity": "+", "strength": "low", "confidence": 2},
+    {"from_id": "M1", "to_id": "R1", "from_type": "measure", "to_type": "response", "polarity": "+", "strength": "medium", "confidence": 3},
+    {"from_id": "R1", "to_id": "A1", "from_type": "response", "to_type": "activity", "polarity": "-", "strength": "medium", "confidence": 3}
   ]
 }

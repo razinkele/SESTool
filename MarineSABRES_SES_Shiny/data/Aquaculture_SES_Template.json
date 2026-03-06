@@ -1,6 +1,7 @@
 {
   "template_name": "Aquaculture",
   "template_description": "Representative aquaculture SES template used for tests",
+  "complexity": "simple",
   "dapsiwrm_framework": {
     "drivers": [{"id": "D1", "name": "Overfishing"}],
     "activities": [{"id": "A1", "name": "Farming"}],
@@ -18,6 +19,7 @@
     {"from_id": "MP1", "to_id": "ES1", "from_type": "state", "to_type": "impact", "polarity": "+", "strength": "low", "confidence": 3},
     {"from_id": "ES1", "to_id": "GB1", "from_type": "impact", "to_type": "welfare", "polarity": "+", "strength": "medium", "confidence": 3},
     {"from_id": "GB1", "to_id": "D1", "from_type": "welfare", "to_type": "driver", "polarity": "+", "strength": "low", "confidence": 2},
-    {"from_id": "M1", "to_id": "R1", "from_type": "measure", "to_type": "response", "polarity": "+", "strength": "high", "confidence": 4}
+    {"from_id": "M1", "to_id": "R1", "from_type": "measure", "to_type": "response", "polarity": "+", "strength": "high", "confidence": 4},
+    {"from_id": "R1", "to_id": "A1", "from_type": "response", "to_type": "activity", "polarity": "-", "strength": "medium", "confidence": 3}
   ]
 }

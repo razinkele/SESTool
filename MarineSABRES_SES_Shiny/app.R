@@ -980,7 +980,7 @@ server <- function(input, output, session) {
   create_ses_server("create_ses_main", project_data, session_i18n, session)
 
   # Template-based SES module
-  template_ses_server("template_ses", project_data, session_i18n, session, event_bus)
+  template_ses_server("template_ses", project_data, session_i18n, session, event_bus, user_level)
 
   # AI ISA Assistant module
   ai_isa_assistant_server("ai_isa_mod", project_data, session_i18n, event_bus, autosave_enabled, user_level, session)
