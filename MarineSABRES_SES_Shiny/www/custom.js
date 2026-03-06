@@ -229,8 +229,10 @@ Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
           delay: { show: 300, hide: 100 }
         });
 
-        // Store original title as data attribute to prevent browser default tooltip
+        // Move title to data-original-title AND remove title attribute
+        // This prevents browser from showing its native tooltip alongside Bootstrap's
         $link.attr('data-original-title', titleText);
+        $link.removeAttr('title');
       }
     });
 
