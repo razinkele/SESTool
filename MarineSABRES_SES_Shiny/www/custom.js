@@ -223,7 +223,6 @@ Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
 
   if (sidebarLinks.length > 0) {
     var initializedCount = 0;
-    var skippedCount = 0;
 
     // Process each link
     sidebarLinks.forEach(function(link) {
@@ -231,43 +230,98 @@ Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
 
       // Only initialize if element has a title
       if (titleText) {
-        // Skip if Bootstrap tooltip is already properly initialized
-        if (link._bsTooltip && link._bsTooltip.element) {
-          skippedCount++;
-          return; // Already has a working tooltip, skip re-initialization
-        }
-
-        // Destroy existing jQuery UI tooltip first (if any)
-        try {
-          $(link).tooltip('destroy');
-        } catch(e) {
-          // Ignore if tooltip wasn't initialized
-        }
-
-        // Use Bootstrap's native Tooltip class directly
-        // This bypasses jQuery UI's tooltip override
-        var bsTooltip = new bootstrap.Tooltip(link, {
-          placement: 'right',
-          trigger: 'hover',
-          container: 'body',
-          title: titleText,
-          delay: { show: 300, hide: 100 }
+        // Check if tooltip event handlers already exist (bs4Dash may auto-init on hover)
+        var existingEvents = $._data(link, 'events') || {};
+        var hasTooltipHandlers = existingEvents.mouseover && existingEvents.mouseover.some(function(h) {
+          return h.namespace === 'bs.tooltip';
         });
 
-        // Store reference for potential cleanup
-        link._bsTooltip = bsTooltip;
+        if (hasTooltipHandlers) {
+          // Event handlers already exist - do NOT add more, just update config
+          var existingTooltip = $(link).data('bs.tooltip') || link._bsTooltip;
+          if (existingTooltip && existingTooltip.config) {
+            existingTooltip.config.animation = false;
+            existingTooltip.config.delay = { show: 300, hide: 100 };
+            existingTooltip.config.placement = 'right';
+          }
 
-        // Move title to data-original-title AND remove title attribute
-        // This prevents browser from showing its native tooltip alongside Bootstrap's
-        link.setAttribute('data-original-title', titleText);
-        link.removeAttribute('title');
+          // Ensure title attribute is removed
+          if (link.hasAttribute('title')) {
+            link.setAttribute('data-original-title', titleText);
+            link.removeAttribute('title');
+          }
 
-        initializedCount++;
+          __dbg('[TOOLTIPS] Skipped (handlers exist):', titleText.substring(0, 30));
+        } else {
+          // No existing handlers - safe to create tooltip
+
+          // Destroy any jQuery UI tooltip (if present)
+          try {
+            $(link).tooltip('destroy');
+          } catch(e) {}
+
+          // Create Bootstrap tooltip
+          var bsTooltip = new bootstrap.Tooltip(link, {
+            placement: 'right',
+            trigger: 'hover',
+            container: 'body',
+            title: titleText,
+            animation: false,
+            delay: { show: 300, hide: 100 }
+          });
+
+          link._bsTooltip = bsTooltip;
+
+          link.setAttribute('data-original-title', titleText);
+          link.removeAttribute('title');
+
+          initializedCount++;
+        }
       }
     });
 
-    __dbg('[TOOLTIPS] Sidebar tooltips: initialized', initializedCount, ', skipped (already active)', skippedCount);
+    __dbg('[TOOLTIPS] Sidebar tooltips initialized:', initializedCount);
     _tooltipInitialized = true;
+
+    // CRITICAL: Schedule cleanup to remove any duplicate handlers added by hover events
+    // bs4Dash/Bootstrap may auto-create tooltips on first hover, causing duplicates
+    setTimeout(function() {
+      sidebarLinks.forEach(function(link) {
+        var events = $._data(link, 'events') || {};
+        if (events.mouseover && events.mouseover.length > 1) {
+          // Multiple handlers found - remove all and re-attach single handler
+          var tooltip = $(link).data('bs.tooltip') || link._bsTooltip;
+          if (tooltip) {
+            // Get title before cleanup
+            var titleText = link.getAttribute('data-original-title');
+
+            // Remove all handlers
+            $(link).off('.bs.tooltip');
+
+            // Dispose tooltip data
+            try {
+              tooltip.dispose();
+            } catch(e) {}
+            $(link).removeData('bs.tooltip');
+            link._bsTooltip = null;
+
+            // Re-create single clean tooltip
+            var newTooltip = new bootstrap.Tooltip(link, {
+              placement: 'right',
+              trigger: 'hover',
+              container: 'body',
+              title: titleText,
+              animation: false,
+              delay: { show: 300, hide: 100 }
+            });
+            link._bsTooltip = newTooltip;
+
+            __dbg('[TOOLTIPS] Cleaned duplicate handlers for:', titleText.substring(0, 30));
+          }
+        }
+      });
+    }, 1000); // Run cleanup after 1 second to catch any hover-triggered duplicates
+
   } else {
     console.warn('[TOOLTIPS] No sidebar links with title attributes found');
   }
@@ -275,10 +329,69 @@ Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
 });
 
 $(document).ready(function() {
-  // Log when tooltips are rendered (for debugging)
-  $(document).on('shown.bs.tooltip', function(e) {
-    __dbg('[TOOLTIPS] Tooltip shown for:', $(e.target).attr('title'));
-  });
+  // CRITICAL FIX: Completely override AdminLTE/bs4Dash tooltip auto-initialization
+  // The problem: Both our code AND bs4Dash create tooltips, causing duplicates
+  // Solution: Intercept at the SOURCE - prevent bs4Dash from auto-creating tooltips
+
+  // Store a flag on elements we've fully initialized
+  var TOOLTIP_INIT_FLAG = '_marinesabres_tooltip_ready';
+
+  // APPROACH 1: Intercept and block duplicate tooltip creation via mouseover
+  // Must use 'mouseover' (not 'mouseenter') because Bootstrap tooltips use mouseover
+  // This handler runs BEFORE Bootstrap's handlers due to event delegation order
+  document.addEventListener('mouseover', function(e) {
+    var link = e.target.closest('.main-sidebar .nav-link');
+    if (!link) return;
+
+    // If we've already cleaned this element, let the tooltip work normally
+    if (link[TOOLTIP_INIT_FLAG]) return;
+
+    var events = $._data(link, 'events') || {};
+    var bsTooltipHandlers = events.mouseover ? events.mouseover.filter(function(h) {
+      return h.namespace === 'bs.tooltip';
+    }) : [];
+
+    // Only intervene if there are duplicates
+    if (bsTooltipHandlers.length > 1) {
+      var titleText = link.getAttribute('data-original-title') || link.getAttribute('title');
+      __dbg('[TOOLTIPS] Blocking duplicates for:', titleText);
+
+      // Stop ALL further propagation immediately
+      e.stopImmediatePropagation();
+      e.preventDefault();
+
+      // Hide any visible tooltips first
+      document.querySelectorAll('.tooltip').forEach(function(t) { t.remove(); });
+
+      // Clean up all tooltip state
+      $(link).off('.bs.tooltip');
+      $(link).removeData('bs.tooltip');
+      if (link._bsTooltip) {
+        try { link._bsTooltip.dispose(); } catch(ex) {}
+      }
+
+      // Create single clean tooltip with trigger:'manual' to have full control
+      var newTooltip = new bootstrap.Tooltip(link, {
+        placement: 'right',
+        trigger: 'hover',
+        container: 'body',
+        title: titleText,
+        animation: false,
+        delay: { show: 300, hide: 100 }
+      });
+      link._bsTooltip = newTooltip;
+
+      // Mark as fully initialized to skip future checks
+      link[TOOLTIP_INIT_FLAG] = true;
+
+      // Manually show tooltip after a brief delay
+      setTimeout(function() {
+        if (link.matches(':hover')) {
+          newTooltip.show();
+        }
+      }, 300);
+    }
+  }, true); // Use capture phase to run BEFORE other handlers
 
   // Handle any other elements with data-toggle="tooltip" (non-sidebar)
   // Uses Bootstrap's native Tooltip class to avoid jQuery UI conflict
@@ -288,18 +401,37 @@ $(document).ready(function() {
       otherTooltips.forEach(function(el) {
         var titleText = el.getAttribute('title') || el.getAttribute('data-original-title');
         if (titleText) {
-          // Dispose existing tooltip
-          try {
-            var existingTooltip = el._bsTooltip;
-            if (existingTooltip) existingTooltip.dispose();
-          } catch(e) {}
+          // CRITICAL: Complete cleanup before initialization to prevent duplicate handlers
 
-          // Use Bootstrap's native Tooltip class
+          // 1. Get existing Bootstrap tooltip from jQuery data
+          var existingTooltip = $(el).data('bs.tooltip');
+          if (existingTooltip) {
+            try {
+              existingTooltip.dispose();
+            } catch(e) {}
+          }
+
+          // 2. Also check element property
+          if (el._bsTooltip) {
+            try {
+              el._bsTooltip.dispose();
+            } catch(e) {}
+            el._bsTooltip = null;
+          }
+
+          // 3. Remove jQuery data for tooltip
+          $(el).removeData('bs.tooltip');
+
+          // 4. Unbind ALL existing .bs.tooltip events
+          $(el).off('.bs.tooltip');
+
+          // 5. Create fresh Bootstrap tooltip
           var bsTooltip = new bootstrap.Tooltip(el, {
             container: 'body',
             placement: 'auto',
             boundary: 'viewport',
             title: titleText,
+            animation: false,  // Disable animation to prevent flashing
             delay: { show: 300, hide: 100 }
           });
           el._bsTooltip = bsTooltip;
