@@ -681,6 +681,171 @@
       "it": "Valida i modelli con la conoscenza degli stakeholder",
       "no": "Valider mønstre med interessentenes kunnskap",
       "el": "Validate patterns with stakeholder knowledge"
+    },
+    "modules.analysis.bot.stats.num_observations": {
+      "en": "Number of observations",
+      "es": "Número de observaciones",
+      "fr": "Nombre d'observations",
+      "de": "Anzahl der Beobachtungen",
+      "lt": "Stebėjimų skaičius",
+      "pt": "Número de observações",
+      "it": "Numero di osservazioni",
+      "no": "Antall observasjoner",
+      "el": "Αριθμός παρατηρήσεων"
+    },
+    "modules.analysis.bot.stats.time_period": {
+      "en": "Time period",
+      "es": "Período de tiempo",
+      "fr": "Période de temps",
+      "de": "Zeitraum",
+      "lt": "Laikotarpis",
+      "pt": "Período de tempo",
+      "it": "Periodo di tempo",
+      "no": "Tidsperiode",
+      "el": "Χρονική περίοδος"
+    },
+    "modules.analysis.bot.stats.mean_value": {
+      "en": "Mean value",
+      "es": "Valor medio",
+      "fr": "Valeur moyenne",
+      "de": "Mittelwert",
+      "lt": "Vidurkis",
+      "pt": "Valor médio",
+      "it": "Valore medio",
+      "no": "Gjennomsnittsverdi",
+      "el": "Μέση τιμή"
+    },
+    "modules.analysis.bot.stats.std_deviation": {
+      "en": "Std deviation",
+      "es": "Desviación estándar",
+      "fr": "Écart type",
+      "de": "Standardabweichung",
+      "lt": "Standartinis nuokrypis",
+      "pt": "Desvio padrão",
+      "it": "Deviazione standard",
+      "no": "Standardavvik",
+      "el": "Τυπική απόκλιση"
+    },
+    "modules.analysis.bot.stats.min_value": {
+      "en": "Min value",
+      "es": "Valor mínimo",
+      "fr": "Valeur min",
+      "de": "Minimalwert",
+      "lt": "Min. reikšmė",
+      "pt": "Valor mínimo",
+      "it": "Valore minimo",
+      "no": "Minimumsverdi",
+      "el": "Ελάχιστη τιμή"
+    },
+    "modules.analysis.bot.stats.max_value": {
+      "en": "Max value",
+      "es": "Valor máximo",
+      "fr": "Valeur max",
+      "de": "Maximalwert",
+      "lt": "Maks. reikšmė",
+      "pt": "Valor máximo",
+      "it": "Valore massimo",
+      "no": "Maksimumsverdi",
+      "el": "Μέγιστη τιμή"
+    },
+    "modules.analysis.bot.stats.year": {
+      "en": "Year",
+      "es": "Año",
+      "fr": "Année",
+      "de": "Jahr",
+      "lt": "Metai",
+      "pt": "Ano",
+      "it": "Anno",
+      "no": "År",
+      "el": "Έτος"
+    },
+    "modules.analysis.bot.stats.trend_analysis": {
+      "en": "Trend Analysis",
+      "es": "Análisis de Tendencia",
+      "fr": "Analyse de Tendance",
+      "de": "Trendanalyse",
+      "lt": "Tendencijų analizė",
+      "pt": "Análise de Tendência",
+      "it": "Analisi delle Tendenze",
+      "no": "Trendanalyse",
+      "el": "Ανάλυση Τάσεων"
+    },
+    "modules.analysis.bot.stats.direction": {
+      "en": "Direction",
+      "es": "Dirección",
+      "fr": "Direction",
+      "de": "Richtung",
+      "lt": "Kryptis",
+      "pt": "Direção",
+      "it": "Direzione",
+      "no": "Retning",
+      "el": "Κατεύθυνση"
+    },
+    "modules.analysis.bot.stats.increasing": {
+      "en": "Increasing",
+      "es": "Creciente",
+      "fr": "Croissant",
+      "de": "Steigend",
+      "lt": "Didėjanti",
+      "pt": "Crescente",
+      "it": "Crescente",
+      "no": "Økende",
+      "el": "Αυξανόμενη"
+    },
+    "modules.analysis.bot.stats.decreasing": {
+      "en": "Decreasing",
+      "es": "Decreciente",
+      "fr": "Décroissant",
+      "de": "Fallend",
+      "lt": "Mažėjanti",
+      "pt": "Decrescente",
+      "it": "Decrescente",
+      "no": "Synkende",
+      "el": "Μειούμενη"
+    },
+    "modules.analysis.bot.stats.stable": {
+      "en": "Stable",
+      "es": "Estable",
+      "fr": "Stable",
+      "de": "Stabil",
+      "lt": "Stabili",
+      "pt": "Estável",
+      "it": "Stabile",
+      "no": "Stabil",
+      "el": "Σταθερή"
+    },
+    "modules.analysis.bot.stats.rate_of_change": {
+      "en": "Rate of change",
+      "es": "Tasa de cambio",
+      "fr": "Taux de changement",
+      "de": "Änderungsrate",
+      "lt": "Pokyčio greitis",
+      "pt": "Taxa de mudança",
+      "it": "Tasso di variazione",
+      "no": "Endringsrate",
+      "el": "Ρυθμός αλλαγής"
+    },
+    "modules.analysis.bot.stats.units_per_year": {
+      "en": "units/year",
+      "es": "unidades/año",
+      "fr": "unités/an",
+      "de": "Einheiten/Jahr",
+      "lt": "vienetai/metai",
+      "pt": "unidades/ano",
+      "it": "unità/anno",
+      "no": "enheter/år",
+      "el": "μονάδες/έτος"
+    },
+    "modules.analysis.bot.stats.r_squared": {
+      "en": "R-squared",
+      "es": "R-cuadrado",
+      "fr": "R-carré",
+      "de": "R-Quadrat",
+      "lt": "R-kvadratas",
+      "pt": "R-quadrado",
+      "it": "R-quadrato",
+      "no": "R-kvadrat",
+      "el": "R-τετράγωνο"
     }
   }
 }

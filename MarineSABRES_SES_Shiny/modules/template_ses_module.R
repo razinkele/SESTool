@@ -52,6 +52,7 @@ source(get_project_file("functions/template_loader.R"), local = TRUE)
 
 template_ses_ui <- function(id, i18n) {
   ns <- NS(id)
+  shiny.i18n::usei18n(i18n)  # Enable reactive translation updates
 
   fluidPage(
     # Custom CSS

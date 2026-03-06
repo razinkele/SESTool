@@ -21,97 +21,145 @@ utils::globalVariables(c('%|||%'))
 # ============================================================================
 
 # Define connection batches based on framework transitions
+# Labels use i18n keys - translations resolved at render time
 get_connection_batches <- function() {
   list(
     list(
       id = "drivers_activities",
-      label = "Drivers → Activities",
+      label_key = "modules.connection_review.batch.drivers_activities",
+      label_fallback = "Drivers → Activities",
       from_type = c("driver", "drivers"),
       to_type = c("activity", "activities"),
-      description = "How societal drivers lead to human activities",
+      description_key = "modules.connection_review.batch.drivers_activities_desc",
+      description_fallback = "How societal drivers lead to human activities",
       icon = "arrow-right"
     ),
     list(
       id = "activities_pressures",
-      label = "Activities → Pressures",
+      label_key = "modules.connection_review.batch.activities_pressures",
+      label_fallback = "Activities → Pressures",
       from_type = c("activity", "activities"),
       to_type = c("pressure", "pressures", "enmp"),
-      description = "How activities create environmental pressures",
+      description_key = "modules.connection_review.batch.activities_pressures_desc",
+      description_fallback = "How activities create environmental pressures",
       icon = "arrow-right"
     ),
     list(
       id = "pressures_mpf",
-      label = "Pressures → Marine Processes and Functions",
+      label_key = "modules.connection_review.batch.pressures_mpf",
+      label_fallback = "Pressures → Marine Processes and Functions",
       from_type = c("pressure", "pressures", "enmp"),
       to_type = c("state", "states", "state change", "marine_process", "marine_processes", "mpf"),
-      description = "How pressures affect marine processes and functions",
+      description_key = "modules.connection_review.batch.pressures_mpf_desc",
+      description_fallback = "How pressures affect marine processes and functions",
       icon = "arrow-right"
     ),
     list(
       id = "mpf_services",
-      label = "Marine Processes and Functions → Ecosystem Services",
+      label_key = "modules.connection_review.batch.mpf_services",
+      label_fallback = "Marine Processes and Functions → Ecosystem Services",
       from_type = c("state", "states", "state change", "marine_process", "marine_processes", "mpf"),
       to_type = c("impact", "impacts", "ecosystem_service", "ecosystem_services", "es"),
-      description = "How marine processes affect ecosystem services",
+      description_key = "modules.connection_review.batch.mpf_services_desc",
+      description_fallback = "How marine processes affect ecosystem services",
       icon = "arrow-right"
     ),
     list(
       id = "services_welfare",
-      label = "Ecosystem Services → Welfare",
+      label_key = "modules.connection_review.batch.services_welfare",
+      label_fallback = "Ecosystem Services → Welfare",
       from_type = c("impact", "impacts", "ecosystem_service", "ecosystem_services", "es"),
       to_type = c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing"),
-      description = "How ecosystem services affect human welfare",
+      description_key = "modules.connection_review.batch.services_welfare_desc",
+      description_fallback = "How ecosystem services affect human welfare",
       icon = "arrow-right"
     ),
     list(
       id = "welfare_responses",
-      label = "Welfare → Responses",
+      label_key = "modules.connection_review.batch.welfare_responses",
+      label_fallback = "Welfare → Responses",
       from_type = c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing"),
       to_type = c("response", "responses"),
-      description = "How welfare issues trigger management responses",
+      description_key = "modules.connection_review.batch.welfare_responses_desc",
+      description_fallback = "How welfare issues trigger management responses",
       icon = "arrow-right"
     ),
     list(
       id = "responses_drivers",
-      label = "Responses → Drivers",
+      label_key = "modules.connection_review.batch.responses_drivers",
+      label_fallback = "Responses → Drivers",
       from_type = c("response", "responses"),
       to_type = c("driver", "drivers"),
-      description = "How management responses address drivers",
+      description_key = "modules.connection_review.batch.responses_drivers_desc",
+      description_fallback = "How management responses address drivers",
       icon = "arrow-right"
     ),
     list(
       id = "responses_activities",
-      label = "Responses → Activities",
+      label_key = "modules.connection_review.batch.responses_activities",
+      label_fallback = "Responses → Activities",
       from_type = c("response", "responses"),
       to_type = c("activity", "activities"),
-      description = "How management responses regulate activities",
+      description_key = "modules.connection_review.batch.responses_activities_desc",
+      description_fallback = "How management responses regulate activities",
       icon = "arrow-right"
     ),
     list(
       id = "responses_pressures",
-      label = "Responses → Pressures",
+      label_key = "modules.connection_review.batch.responses_pressures",
+      label_fallback = "Responses → Pressures",
       from_type = c("response", "responses"),
       to_type = c("pressure", "pressures", "enmp"),
-      description = "How management responses mitigate pressures",
+      description_key = "modules.connection_review.batch.responses_pressures_desc",
+      description_fallback = "How management responses mitigate pressures",
       icon = "arrow-right"
     ),
     list(
       id = "drivers_welfare",
-      label = "Drivers → Welfare (Feedback)",
+      label_key = "modules.connection_review.batch.drivers_welfare",
+      label_fallback = "Drivers → Welfare (Feedback)",
       from_type = c("driver", "drivers"),
       to_type = c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing"),
-      description = "Feedback loops showing how drivers directly affect welfare outcomes",
+      description_key = "modules.connection_review.batch.drivers_welfare_desc",
+      description_fallback = "Feedback loops showing how drivers directly affect welfare outcomes",
       icon = "recycle"
     ),
     list(
       id = "other",
-      label = "Other Connections",
+      label_key = "modules.connection_review.batch.other",
+      label_fallback = "Other Connections",
       from_type = NULL,
       to_type = NULL,
-      description = "Connections not matching standard framework transitions",
+      description_key = "modules.connection_review.batch.other_desc",
+      description_fallback = "Connections not matching standard framework transitions",
       icon = "question-circle"
     )
   )
+}
+
+# Helper function to get translated batch label
+get_batch_label <- function(batch, i18n = NULL) {
+  if (!is.null(i18n) && !is.null(batch$label_key)) {
+    translated <- i18n$t(batch$label_key)
+    # If translation returns the key itself, use fallback
+    if (translated == batch$label_key && !is.null(batch$label_fallback)) {
+      return(batch$label_fallback)
+    }
+    return(translated)
+  }
+  return(batch$label_fallback %||% batch$label %||% batch$id)
+}
+
+# Helper function to get translated batch description
+get_batch_description <- function(batch, i18n = NULL) {
+  if (!is.null(i18n) && !is.null(batch$description_key)) {
+    translated <- i18n$t(batch$description_key)
+    if (translated == batch$description_key && !is.null(batch$description_fallback)) {
+      return(batch$description_fallback)
+    }
+    return(translated)
+  }
+  return(batch$description_fallback %||% batch$description %||% "")
 }
 
 # Categorize a connection into a batch
@@ -431,7 +479,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
         tab_label <- tags$span(
           icon(batch$info$icon),
           " ",
-          i18n$t(batch$info$label),
+          get_batch_label(batch$info, i18n),
           " ",
           tags$span(
             class = "tab-badge",
@@ -449,7 +497,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           # Batch description
           div(class = "batch-description",
             icon("info-circle"), " ",
-            i18n$t(batch$info$description)
+            get_batch_description(batch$info, i18n)
           ),
 
           # Batch-specific statistics and actions
@@ -575,7 +623,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
               if (current_idx < length(batch_names)) {
                 next_batch_id <- batch_names[current_idx + 1]
-                next_batch_label <- batch_lists[[next_batch_id]]$info$label
+                next_batch_label <- get_batch_label(batch_lists[[next_batch_id]]$info, i18n)
 
                 div(style = "margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 8px; text-align: center;",
                   p(style = "color: #2e7d32; margin-bottom: 10px;",
@@ -627,7 +675,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             showNotification(
               sprintf(i18n$t("common.misc.all_d_connections_in_s_approved"),
                      length(batch$indices),
-                     i18n$t(batch$info$label)),
+                     get_batch_label(batch$info, i18n)),
               type = "message",
               duration = 3
             )
@@ -647,7 +695,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             showNotification(
               sprintf(i18n$t("common.misc.all_d_connections_in_s_rejected"),
                      length(batch$indices),
-                     i18n$t(batch$info$label)),
+                     get_batch_label(batch$info, i18n)),
               type = "warning",
               duration = 3
             )

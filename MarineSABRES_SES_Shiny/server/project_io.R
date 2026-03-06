@@ -88,8 +88,17 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
     req(input$load_project_file)
 
     tryCatch({
-      # Load RDS file
-      loaded_data <- readRDS(input$load_project_file$datapath)
+      # Load RDS file safely with size and type validation
+      loaded_data <- safe_readRDS(input$load_project_file$datapath, max_size_mb = 50)
+
+      if (is.null(loaded_data)) {
+        showNotification(
+          i18n$t("common.messages.error_file_validation_failed"),
+          type = "error",
+          duration = 10
+        )
+        return()
+      }
 
       # Validate project structure
       validation_errors <- validate_project_structure(loaded_data)

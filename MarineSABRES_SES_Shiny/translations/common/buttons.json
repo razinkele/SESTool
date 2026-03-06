@@ -483,6 +483,17 @@
       "it": "Esci da schermo intero",
       "no": "Avslutt fullskjerm",
       "el": "Έξοδος από πλήρη οθόνη"
+    },
+    "common.buttons.dismiss": {
+      "en": "Dismiss",
+      "es": "Descartar",
+      "fr": "Fermer",
+      "de": "Schließen",
+      "lt": "Atmesti",
+      "pt": "Dispensar",
+      "it": "Chiudi",
+      "no": "Avvis",
+      "el": "Απόρριψη"
     }
   }
 }

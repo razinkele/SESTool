@@ -550,6 +550,28 @@
       "it": "Strategie di Intervento",
       "no": "Intervention Strategies",
       "el": "Intervention Strategies"
+    },
+    "modules.analysis.leverage.plot_title": {
+      "en": "Leverage Point Analysis — Top Nodes by Composite Score",
+      "es": "Análisis de Puntos de Apalancamiento — Nodos Principales por Puntuación Compuesta",
+      "fr": "Analyse des Points de Levier — Nœuds Principaux par Score Composite",
+      "de": "Hebelwirkungsanalyse — Top-Knoten nach Gesamtpunktzahl",
+      "lt": "Svertų taškų analizė — Pagrindiniai mazgai pagal sudėtinį balą",
+      "pt": "Análise de Pontos de Alavancagem — Principais Nós por Pontuação Composta",
+      "it": "Analisi dei Punti di Leva — Nodi Principali per Punteggio Composito",
+      "no": "Leverage Point Analysis — Top Nodes by Composite Score",
+      "el": "Leverage Point Analysis — Top Nodes by Composite Score"
+    },
+    "modules.analysis.leverage.plot_y_label": {
+      "en": "Composite Score (Betweenness + Eigenvector + PageRank)",
+      "es": "Puntuación Compuesta (Intermediación + Autovector + PageRank)",
+      "fr": "Score Composite (Intermédiarité + Vecteur Propre + PageRank)",
+      "de": "Gesamtpunktzahl (Betweenness + Eigenvektor + PageRank)",
+      "lt": "Sudėtinis balas (Tarpinumas + Savasis vektorius + PageRank)",
+      "pt": "Pontuação Composta (Intermediação + Autovetor + PageRank)",
+      "it": "Punteggio Composito (Betweenness + Eigenvector + PageRank)",
+      "no": "Composite Score (Betweenness + Eigenvector + PageRank)",
+      "el": "Composite Score (Betweenness + Eigenvector + PageRank)"
     }
   }
 }

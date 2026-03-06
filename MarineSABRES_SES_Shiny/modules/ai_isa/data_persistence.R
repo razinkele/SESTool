@@ -63,12 +63,13 @@ restore_session_data <- function(rv, data, i18n = NULL) {
     rv$approved_connections <- data$approved_connections %||% list()
     rv$conversation <- data$conversation %||% list()
 
-    # Show notification if i18n is available
-    if (!is.null(i18n)) {
-      showNotification(i18n$t("common.messages.session_restored_successfully"), type = "message", duration = 3)
+    # Show notification - use translated message or fallback key
+    msg <- if (!is.null(i18n)) {
+      i18n$t("common.messages.session_restored_successfully")
     } else {
-      showNotification("Session restored successfully!", type = "message", duration = 3)
+      "common.messages.session_restored_successfully"  # Fallback to key (will be looked up later)
     }
+    showNotification(msg, type = "message", duration = 3)
   }
 }
 

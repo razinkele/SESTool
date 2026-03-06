@@ -1,0 +1,26 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "modules.auto_save.adaptive_tooltip": {
+      "en": "Click to toggle details • Adaptive auto-save: adjusts delay based on editing speed",
+      "es": "Haga clic para alternar detalles • Guardado automático adaptativo: ajusta el retraso según la velocidad de edición",
+      "fr": "Cliquez pour afficher les détails • Sauvegarde automatique adaptative : ajuste le délai en fonction de la vitesse d'édition",
+      "de": "Klicken Sie, um Details umzuschalten • Adaptives automatisches Speichern: passt die Verzögerung an die Bearbeitungsgeschwindigkeit an",
+      "lt": "Spustelėkite, kad perjungtumėte detales • Adaptyvus automatinis išsaugojimas: pritaiko delsą pagal redagavimo greitį",
+      "pt": "Clique para alternar detalhes • Salvamento automático adaptativo: ajusta o atraso com base na velocidade de edição",
+      "it": "Clicca per mostrare i dettagli • Salvataggio automatico adattivo: regola il ritardo in base alla velocità di modifica",
+      "no": "Klikk for å vise detaljer • Adaptiv autolagring: justerer forsinkelse basert på redigeringshastighet",
+      "el": "Κάντε κλικ για εναλλαγή λεπτομερειών • Προσαρμοστική αυτόματη αποθήκευση: προσαρμόζει την καθυστέρηση με βάση την ταχύτητα επεξεργασίας"
+    }
+  }
+}

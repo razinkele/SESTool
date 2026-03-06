@@ -1,0 +1,257 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "modules.connection_review.batch.drivers_activities": {
+      "en": "Drivers → Activities",
+      "es": "Impulsores → Actividades",
+      "fr": "Facteurs → Activités",
+      "de": "Treiber → Aktivitäten",
+      "lt": "Varomosios jėgos → Veiklos",
+      "pt": "Fatores → Atividades",
+      "it": "Fattori → Attività",
+      "no": "Drivkrefter → Aktiviteter",
+      "el": "Κινητήριες δυνάμεις → Δραστηριότητες"
+    },
+    "modules.connection_review.batch.drivers_activities_desc": {
+      "en": "How societal drivers lead to human activities",
+      "es": "Cómo los impulsores sociales conducen a actividades humanas",
+      "fr": "Comment les facteurs sociétaux mènent aux activités humaines",
+      "de": "Wie gesellschaftliche Treiber zu menschlichen Aktivitäten führen",
+      "lt": "Kaip visuomeninės varomosios jėgos veda prie žmogaus veiklų",
+      "pt": "Como os fatores sociais levam a atividades humanas",
+      "it": "Come i fattori sociali portano alle attività umane",
+      "no": "Hvordan samfunnsmessige drivkrefter fører til menneskelige aktiviteter",
+      "el": "Πώς οι κοινωνικές κινητήριες δυνάμεις οδηγούν σε ανθρώπινες δραστηριότητες"
+    },
+    "modules.connection_review.batch.activities_pressures": {
+      "en": "Activities → Pressures",
+      "es": "Actividades → Presiones",
+      "fr": "Activités → Pressions",
+      "de": "Aktivitäten → Belastungen",
+      "lt": "Veiklos → Spaudimai",
+      "pt": "Atividades → Pressões",
+      "it": "Attività → Pressioni",
+      "no": "Aktiviteter → Press",
+      "el": "Δραστηριότητες → Πιέσεις"
+    },
+    "modules.connection_review.batch.activities_pressures_desc": {
+      "en": "How activities create environmental pressures",
+      "es": "Cómo las actividades crean presiones ambientales",
+      "fr": "Comment les activités créent des pressions environnementales",
+      "de": "Wie Aktivitäten Umweltbelastungen erzeugen",
+      "lt": "Kaip veiklos sukuria aplinkos spaudimus",
+      "pt": "Como as atividades criam pressões ambientais",
+      "it": "Come le attività creano pressioni ambientali",
+      "no": "Hvordan aktiviteter skaper miljøpress",
+      "el": "Πώς οι δραστηριότητες δημιουργούν περιβαλλοντικές πιέσεις"
+    },
+    "modules.connection_review.batch.pressures_mpf": {
+      "en": "Pressures → Marine Processes and Functions",
+      "es": "Presiones → Procesos y Funciones Marinas",
+      "fr": "Pressions → Processus et Fonctions Marines",
+      "de": "Belastungen → Marine Prozesse und Funktionen",
+      "lt": "Spaudimai → Jūriniai procesai ir funkcijos",
+      "pt": "Pressões → Processos e Funções Marinhas",
+      "it": "Pressioni → Processi e Funzioni Marine",
+      "no": "Press → Marine prosesser og funksjoner",
+      "el": "Πιέσεις → Θαλάσσιες διεργασίες και λειτουργίες"
+    },
+    "modules.connection_review.batch.pressures_mpf_desc": {
+      "en": "How pressures affect marine processes and functions",
+      "es": "Cómo las presiones afectan los procesos y funciones marinas",
+      "fr": "Comment les pressions affectent les processus et fonctions marines",
+      "de": "Wie Belastungen marine Prozesse und Funktionen beeinflussen",
+      "lt": "Kaip spaudimai veikia jūrinius procesus ir funkcijas",
+      "pt": "Como as pressões afetam os processos e funções marinhas",
+      "it": "Come le pressioni influenzano i processi e le funzioni marine",
+      "no": "Hvordan press påvirker marine prosesser og funksjoner",
+      "el": "Πώς οι πιέσεις επηρεάζουν τις θαλάσσιες διεργασίες και λειτουργίες"
+    },
+    "modules.connection_review.batch.mpf_services": {
+      "en": "Marine Processes and Functions → Ecosystem Services",
+      "es": "Procesos y Funciones Marinas → Servicios Ecosistémicos",
+      "fr": "Processus et Fonctions Marines → Services Écosystémiques",
+      "de": "Marine Prozesse und Funktionen → Ökosystemleistungen",
+      "lt": "Jūriniai procesai ir funkcijos → Ekosistemų paslaugos",
+      "pt": "Processos e Funções Marinhas → Serviços Ecossistêmicos",
+      "it": "Processi e Funzioni Marine → Servizi Ecosistemici",
+      "no": "Marine prosesser og funksjoner → Økosystemtjenester",
+      "el": "Θαλάσσιες διεργασίες και λειτουργίες → Υπηρεσίες οικοσυστήματος"
+    },
+    "modules.connection_review.batch.mpf_services_desc": {
+      "en": "How marine processes affect ecosystem services",
+      "es": "Cómo los procesos marinos afectan los servicios ecosistémicos",
+      "fr": "Comment les processus marins affectent les services écosystémiques",
+      "de": "Wie marine Prozesse Ökosystemleistungen beeinflussen",
+      "lt": "Kaip jūriniai procesai veikia ekosistemų paslaugas",
+      "pt": "Como os processos marinhos afetam os serviços ecossistêmicos",
+      "it": "Come i processi marini influenzano i servizi ecosistemici",
+      "no": "Hvordan marine prosesser påvirker økosystemtjenester",
+      "el": "Πώς οι θαλάσσιες διεργασίες επηρεάζουν τις υπηρεσίες οικοσυστήματος"
+    },
+    "modules.connection_review.batch.services_welfare": {
+      "en": "Ecosystem Services → Welfare",
+      "es": "Servicios Ecosistémicos → Bienestar",
+      "fr": "Services Écosystémiques → Bien-être",
+      "de": "Ökosystemleistungen → Wohlergehen",
+      "lt": "Ekosistemų paslaugos → Gerovė",
+      "pt": "Serviços Ecossistêmicos → Bem-estar",
+      "it": "Servizi Ecosistemici → Benessere",
+      "no": "Økosystemtjenester → Velferd",
+      "el": "Υπηρεσίες οικοσυστήματος → Ευημερία"
+    },
+    "modules.connection_review.batch.services_welfare_desc": {
+      "en": "How ecosystem services affect human welfare",
+      "es": "Cómo los servicios ecosistémicos afectan el bienestar humano",
+      "fr": "Comment les services écosystémiques affectent le bien-être humain",
+      "de": "Wie Ökosystemleistungen das menschliche Wohlergehen beeinflussen",
+      "lt": "Kaip ekosistemų paslaugos veikia žmogaus gerovę",
+      "pt": "Como os serviços ecossistêmicos afetam o bem-estar humano",
+      "it": "Come i servizi ecosistemici influenzano il benessere umano",
+      "no": "Hvordan økosystemtjenester påvirker menneskelig velferd",
+      "el": "Πώς οι υπηρεσίες οικοσυστήματος επηρεάζουν την ανθρώπινη ευημερία"
+    },
+    "modules.connection_review.batch.welfare_responses": {
+      "en": "Welfare → Responses",
+      "es": "Bienestar → Respuestas",
+      "fr": "Bien-être → Réponses",
+      "de": "Wohlergehen → Maßnahmen",
+      "lt": "Gerovė → Atsakai",
+      "pt": "Bem-estar → Respostas",
+      "it": "Benessere → Risposte",
+      "no": "Velferd → Responser",
+      "el": "Ευημερία → Αντιδράσεις"
+    },
+    "modules.connection_review.batch.welfare_responses_desc": {
+      "en": "How welfare issues trigger management responses",
+      "es": "Cómo los problemas de bienestar desencadenan respuestas de gestión",
+      "fr": "Comment les problèmes de bien-être déclenchent des réponses de gestion",
+      "de": "Wie Wohlfahrtsprobleme Managementmaßnahmen auslösen",
+      "lt": "Kaip gerovės problemos sukelia valdymo atsakus",
+      "pt": "Como questões de bem-estar desencadeiam respostas de gestão",
+      "it": "Come i problemi di benessere innescano risposte di gestione",
+      "no": "Hvordan velferdsproblemer utløser forvaltningsresponser",
+      "el": "Πώς τα ζητήματα ευημερίας ενεργοποιούν αντιδράσεις διαχείρισης"
+    },
+    "modules.connection_review.batch.responses_drivers": {
+      "en": "Responses → Drivers",
+      "es": "Respuestas → Impulsores",
+      "fr": "Réponses → Facteurs",
+      "de": "Maßnahmen → Treiber",
+      "lt": "Atsakai → Varomosios jėgos",
+      "pt": "Respostas → Fatores",
+      "it": "Risposte → Fattori",
+      "no": "Responser → Drivkrefter",
+      "el": "Αντιδράσεις → Κινητήριες δυνάμεις"
+    },
+    "modules.connection_review.batch.responses_drivers_desc": {
+      "en": "How management responses address drivers",
+      "es": "Cómo las respuestas de gestión abordan los impulsores",
+      "fr": "Comment les réponses de gestion traitent les facteurs",
+      "de": "Wie Managementmaßnahmen Treiber adressieren",
+      "lt": "Kaip valdymo atsakai sprendžia varomąsias jėgas",
+      "pt": "Como as respostas de gestão abordam os fatores",
+      "it": "Come le risposte di gestione affrontano i fattori",
+      "no": "Hvordan forvaltningsresponser adresserer drivkrefter",
+      "el": "Πώς οι αντιδράσεις διαχείρισης αντιμετωπίζουν τις κινητήριες δυνάμεις"
+    },
+    "modules.connection_review.batch.responses_activities": {
+      "en": "Responses → Activities",
+      "es": "Respuestas → Actividades",
+      "fr": "Réponses → Activités",
+      "de": "Maßnahmen → Aktivitäten",
+      "lt": "Atsakai → Veiklos",
+      "pt": "Respostas → Atividades",
+      "it": "Risposte → Attività",
+      "no": "Responser → Aktiviteter",
+      "el": "Αντιδράσεις → Δραστηριότητες"
+    },
+    "modules.connection_review.batch.responses_activities_desc": {
+      "en": "How management responses regulate activities",
+      "es": "Cómo las respuestas de gestión regulan las actividades",
+      "fr": "Comment les réponses de gestion régulent les activités",
+      "de": "Wie Managementmaßnahmen Aktivitäten regulieren",
+      "lt": "Kaip valdymo atsakai reguliuoja veiklas",
+      "pt": "Como as respostas de gestão regulam as atividades",
+      "it": "Come le risposte di gestione regolano le attività",
+      "no": "Hvordan forvaltningsresponser regulerer aktiviteter",
+      "el": "Πώς οι αντιδράσεις διαχείρισης ρυθμίζουν τις δραστηριότητες"
+    },
+    "modules.connection_review.batch.responses_pressures": {
+      "en": "Responses → Pressures",
+      "es": "Respuestas → Presiones",
+      "fr": "Réponses → Pressions",
+      "de": "Maßnahmen → Belastungen",
+      "lt": "Atsakai → Spaudimai",
+      "pt": "Respostas → Pressões",
+      "it": "Risposte → Pressioni",
+      "no": "Responser → Press",
+      "el": "Αντιδράσεις → Πιέσεις"
+    },
+    "modules.connection_review.batch.responses_pressures_desc": {
+      "en": "How management responses mitigate pressures",
+      "es": "Cómo las respuestas de gestión mitigan las presiones",
+      "fr": "Comment les réponses de gestion atténuent les pressions",
+      "de": "Wie Managementmaßnahmen Belastungen mindern",
+      "lt": "Kaip valdymo atsakai mažina spaudimus",
+      "pt": "Como as respostas de gestão mitigam as pressões",
+      "it": "Come le risposte di gestione mitigano le pressioni",
+      "no": "Hvordan forvaltningsresponser reduserer press",
+      "el": "Πώς οι αντιδράσεις διαχείρισης μετριάζουν τις πιέσεις"
+    },
+    "modules.connection_review.batch.drivers_welfare": {
+      "en": "Drivers → Welfare (Feedback)",
+      "es": "Impulsores → Bienestar (Retroalimentación)",
+      "fr": "Facteurs → Bien-être (Rétroaction)",
+      "de": "Treiber → Wohlergehen (Rückkopplung)",
+      "lt": "Varomosios jėgos → Gerovė (Grįžtamasis ryšys)",
+      "pt": "Fatores → Bem-estar (Retroalimentação)",
+      "it": "Fattori → Benessere (Feedback)",
+      "no": "Drivkrefter → Velferd (Tilbakemelding)",
+      "el": "Κινητήριες δυνάμεις → Ευημερία (Ανατροφοδότηση)"
+    },
+    "modules.connection_review.batch.drivers_welfare_desc": {
+      "en": "Feedback loops showing how drivers directly affect welfare outcomes",
+      "es": "Bucles de retroalimentación que muestran cómo los impulsores afectan directamente los resultados de bienestar",
+      "fr": "Boucles de rétroaction montrant comment les facteurs affectent directement les résultats de bien-être",
+      "de": "Rückkopplungsschleifen, die zeigen, wie Treiber direkt das Wohlergehen beeinflussen",
+      "lt": "Grįžtamojo ryšio ciklai, rodantys, kaip varomosios jėgos tiesiogiai veikia gerovės rezultatus",
+      "pt": "Ciclos de retroalimentação mostrando como os fatores afetam diretamente os resultados de bem-estar",
+      "it": "Cicli di feedback che mostrano come i fattori influenzano direttamente i risultati del benessere",
+      "no": "Tilbakekoblingssløyfer som viser hvordan drivkrefter direkte påvirker velferdsresultater",
+      "el": "Βρόχοι ανατροφοδότησης που δείχνουν πώς οι κινητήριες δυνάμεις επηρεάζουν άμεσα τα αποτελέσματα ευημερίας"
+    },
+    "modules.connection_review.batch.other": {
+      "en": "Other Connections",
+      "es": "Otras Conexiones",
+      "fr": "Autres Connexions",
+      "de": "Andere Verbindungen",
+      "lt": "Kiti ryšiai",
+      "pt": "Outras Conexões",
+      "it": "Altre Connessioni",
+      "no": "Andre tilkoblinger",
+      "el": "Άλλες συνδέσεις"
+    },
+    "modules.connection_review.batch.other_desc": {
+      "en": "Connections not matching standard framework transitions",
+      "es": "Conexiones que no coinciden con las transiciones estándar del marco",
+      "fr": "Connexions ne correspondant pas aux transitions standard du cadre",
+      "de": "Verbindungen, die nicht den Standard-Framework-Übergängen entsprechen",
+      "lt": "Ryšiai, neatitinkantys standartinių sistemos perėjimų",
+      "pt": "Conexões que não correspondem às transições padrão do framework",
+      "it": "Connessioni che non corrispondono alle transizioni standard del framework",
+      "no": "Tilkoblinger som ikke samsvarer med standard rammeoverganger",
+      "el": "Συνδέσεις που δεν ταιριάζουν με τις τυπικές μεταβάσεις πλαισίου"
+    }
+  }
+}

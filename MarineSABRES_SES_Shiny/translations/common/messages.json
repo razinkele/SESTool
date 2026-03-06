@@ -9052,6 +9052,17 @@
       "it": "Impossibile eliminare il progetto:",
       "no": "Kunne ikke slette prosjektet:",
       "el": "Αποτυχία διαγραφής έργου:"
+    },
+    "common.messages.error_file_validation_failed": {
+      "en": "Error: File validation failed. The file may be corrupted, too large, or contain invalid data.",
+      "es": "Error: Falló la validación del archivo. El archivo puede estar dañado, ser demasiado grande o contener datos inválidos.",
+      "fr": "Erreur : La validation du fichier a échoué. Le fichier peut être corrompu, trop volumineux ou contenir des données invalides.",
+      "de": "Fehler: Dateivalidierung fehlgeschlagen. Die Datei ist möglicherweise beschädigt, zu groß oder enthält ungültige Daten.",
+      "lt": "Klaida: Failo validacija nepavyko. Failas gali būti pažeistas, per didelis arba turėti netinkamų duomenų.",
+      "pt": "Erro: Falha na validação do arquivo. O arquivo pode estar corrompido, ser muito grande ou conter dados inválidos.",
+      "it": "Errore: Validazione del file fallita. Il file potrebbe essere danneggiato, troppo grande o contenere dati non validi.",
+      "no": "Feil: Filvalidering mislyktes. Filen kan være skadet, for stor eller inneholde ugyldige data.",
+      "el": "Σφάλμα: Η επαλήθευση του αρχείου απέτυχε. Το αρχείο μπορεί να είναι κατεστραμμένο, πολύ μεγάλο ή να περιέχει μη έγκυρα δεδομένα."
     }
   }
 }

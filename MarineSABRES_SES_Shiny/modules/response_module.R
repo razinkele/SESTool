@@ -66,7 +66,7 @@ response_measures_ui <- function(id, i18n) {
               fluidRow(
                 column(3,
                   textInput(ns("rm_target_element"), i18n$t("modules.response.measures.target_element_id"),
-                           placeholder = "e.g., A001, D002")
+                           placeholder = i18n$t("modules.response.measures.placeholder_element_ids"))
                 ),
                 column(3,
                   selectInput(ns("rm_effectiveness"), i18n$t("modules.response.measures.expected_effectiveness"),
@@ -131,7 +131,7 @@ response_measures_ui <- function(id, i18n) {
                     ),
                     column(4,
                       textInput(ns("impact_element_id"), i18n$t("modules.response.measures.problem_element_id"),
-                               placeholder = "e.g., P001, A002")
+                               placeholder = i18n$t("modules.response.measures.placeholder_element_ids"))
                     )
                   ),
                   fluidRow(

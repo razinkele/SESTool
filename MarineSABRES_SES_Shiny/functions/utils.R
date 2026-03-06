@@ -243,3 +243,187 @@ validate_isa_dataframe <- function(data, exercise_name, required_cols = c("ID", 
 
   return(errors)
 }
+
+# ============================================================================
+# JSON PROJECT DATA VALIDATION
+# ============================================================================
+
+#' Validate JSON project input data
+#'
+#' Validates project data received from client-side JSON (e.g., from localStorage
+#' or sessionStorage after language change). Checks structure, types, and limits
+#' to prevent malicious or malformed data from being loaded.
+#'
+#' @param data List parsed from JSON input
+#' @return List with: valid (logical), errors (character vector), data (validated data or NULL)
+#' @export
+validate_json_project_input <- function(data) {
+  errors <- c()
+
+  # Check basic structure
+
+  if (!is.list(data)) {
+    return(list(valid = FALSE, errors = "Data must be a list", data = NULL))
+  }
+
+  # Check for expected top-level structure
+  # Valid structures: direct project_data or wrapper with 'data' key
+  project_data <- data
+
+  # If data has a nested 'data' key containing the actual project, unwrap it
+  if (!is.null(data$data) && is.list(data$data)) {
+    # This is a wrapped structure
+    project_data <- data
+  }
+
+  # Validate string length limits to prevent DoS
+  max_string_length <- 10000  # 10KB per string field
+  max_name_length <- 500
+
+  # Validate project_id if present
+  if (!is.null(project_data$project_id)) {
+    if (!is.character(project_data$project_id) ||
+        nchar(as.character(project_data$project_id)) > max_name_length) {
+      errors <- c(errors, "Invalid or too long project_id")
+    }
+  }
+
+  # Validate project_name if present
+  if (!is.null(project_data$project_name)) {
+    if (!is.character(project_data$project_name) ||
+        nchar(as.character(project_data$project_name)) > max_name_length) {
+      errors <- c(errors, "Invalid or too long project_name")
+    }
+  }
+
+  # Validate nested data structure if present
+  if (!is.null(project_data$data) && is.list(project_data$data)) {
+    nested_data <- project_data$data
+
+    # Validate ISA data if present
+    if (!is.null(nested_data$isa_data) && is.list(nested_data$isa_data)) {
+      isa_data <- nested_data$isa_data
+
+      # Check elements count limit
+      if (!is.null(isa_data$elements) && is.list(isa_data$elements)) {
+        total_elements <- 0
+        for (type_name in names(isa_data$elements)) {
+          type_data <- isa_data$elements[[type_name]]
+          if (is.data.frame(type_data)) {
+            total_elements <- total_elements + nrow(type_data)
+          } else if (is.list(type_data)) {
+            total_elements <- total_elements + length(type_data)
+          }
+        }
+        if (total_elements > 10000) {
+          errors <- c(errors, "Too many elements in ISA data (max 10000)")
+        }
+      }
+
+      # Check connections count limit
+      if (!is.null(isa_data$connections)) {
+        conn_count <- 0
+        if (is.data.frame(isa_data$connections)) {
+          conn_count <- nrow(isa_data$connections)
+        } else if (is.list(isa_data$connections)) {
+          conn_count <- length(isa_data$connections)
+        }
+        if (conn_count > 50000) {
+          errors <- c(errors, "Too many connections in ISA data (max 50000)")
+        }
+      }
+    }
+
+    # Validate CLD data if present
+    if (!is.null(nested_data$cld_data) && is.list(nested_data$cld_data)) {
+      cld_data <- nested_data$cld_data
+
+      # Check nodes count limit
+      if (!is.null(cld_data$nodes)) {
+        node_count <- if (is.data.frame(cld_data$nodes)) nrow(cld_data$nodes) else length(cld_data$nodes)
+        if (node_count > 10000) {
+          errors <- c(errors, "Too many nodes in CLD data (max 10000)")
+        }
+      }
+
+      # Check edges count limit
+      if (!is.null(cld_data$edges)) {
+        edge_count <- if (is.data.frame(cld_data$edges)) nrow(cld_data$edges) else length(cld_data$edges)
+        if (edge_count > 50000) {
+          errors <- c(errors, "Too many edges in CLD data (max 50000)")
+        }
+      }
+    }
+  }
+
+  # Return validation result
+  if (length(errors) > 0) {
+    return(list(valid = FALSE, errors = errors, data = NULL))
+  }
+
+  return(list(valid = TRUE, errors = NULL, data = project_data))
+}
+
+# ============================================================================
+# SAFE RDS FILE LOADING
+# ============================================================================
+
+#' Safely load an RDS file with size and type validation
+#'
+#' Loads an RDS file with security checks to prevent loading excessively large
+#' files or malicious objects. Validates the result is a basic list structure.
+#'
+#' @param file Path to the RDS file
+#' @param max_size_mb Maximum allowed file size in megabytes (default: 50)
+#' @return The loaded data, or NULL with warning if validation fails
+#' @export
+safe_readRDS <- function(file, max_size_mb = 50) {
+  # Check file exists
+
+  if (!file.exists(file)) {
+    warning("File does not exist: ", file)
+    return(NULL)
+  }
+
+  # Check file size
+  file_size <- file.size(file)
+  max_size_bytes <- max_size_mb * 1024 * 1024
+
+  if (file_size > max_size_bytes) {
+    warning(sprintf("File exceeds maximum size limit (%.1f MB > %d MB)",
+                   file_size / (1024 * 1024), max_size_mb))
+    return(NULL)
+  }
+
+  # Attempt to load the file
+  data <- tryCatch({
+    readRDS(file)
+  }, error = function(e) {
+    warning("Failed to read RDS file: ", e$message)
+    return(NULL)
+  })
+
+  if (is.null(data)) {
+    return(NULL)
+  }
+
+  # Validate result is a basic list, not an environment or function
+  # These could potentially execute code
+  if (is.environment(data)) {
+    warning("RDS file contains an environment - this is not allowed for security reasons")
+    return(NULL)
+  }
+
+  if (is.function(data)) {
+    warning("RDS file contains a function - this is not allowed for security reasons")
+    return(NULL)
+  }
+
+  # Check for potentially dangerous object types at the top level
+  if (!is.list(data) && !is.data.frame(data) && !is.vector(data)) {
+    warning("RDS file contains unexpected object type: ", class(data)[1])
+    return(NULL)
+  }
+
+  return(data)
+}

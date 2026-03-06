@@ -301,12 +301,12 @@ analysis_bot_server <- function(id, project_data_reactive, i18n) {
       ts_data <- bot_rv$timeseries_data
 
       stats_text <- paste(
-        sprintf("Number of observations: %d", nrow(ts_data)),
-        sprintf("Time period: %d - %d", min(ts_data$Year), max(ts_data$Year)),
-        sprintf("Mean value: %.2f", mean(ts_data$Value, na.rm = TRUE)),
-        sprintf("Std deviation: %.2f", sd(ts_data$Value, na.rm = TRUE)),
-        sprintf("Min value: %.2f (Year %d)", min(ts_data$Value), ts_data$Year[which.min(ts_data$Value)]),
-        sprintf("Max value: %.2f (Year %d)", max(ts_data$Value), ts_data$Year[which.max(ts_data$Value)]),
+        sprintf("%s: %d", i18n$t("modules.analysis.bot.stats.num_observations"), nrow(ts_data)),
+        sprintf("%s: %d - %d", i18n$t("modules.analysis.bot.stats.time_period"), min(ts_data$Year), max(ts_data$Year)),
+        sprintf("%s: %.2f", i18n$t("modules.analysis.bot.stats.mean_value"), mean(ts_data$Value, na.rm = TRUE)),
+        sprintf("%s: %.2f", i18n$t("modules.analysis.bot.stats.std_deviation"), sd(ts_data$Value, na.rm = TRUE)),
+        sprintf("%s: %.2f (%s %d)", i18n$t("modules.analysis.bot.stats.min_value"), min(ts_data$Value), i18n$t("modules.analysis.bot.stats.year"), ts_data$Year[which.min(ts_data$Value)]),
+        sprintf("%s: %.2f (%s %d)", i18n$t("modules.analysis.bot.stats.max_value"), max(ts_data$Value), i18n$t("modules.analysis.bot.stats.year"), ts_data$Year[which.max(ts_data$Value)]),
         sep = "\n"
       )
 
@@ -316,15 +316,15 @@ analysis_bot_server <- function(id, project_data_reactive, i18n) {
         slope <- coef(lm_fit)[2]
         r_squared <- summary(lm_fit)$r.squared
 
-        trend_direction <- if(slope > 0) "Increasing" else if(slope < 0) "Decreasing" else "Stable"
+        trend_direction <- if(slope > 0) i18n$t("modules.analysis.bot.stats.increasing") else if(slope < 0) i18n$t("modules.analysis.bot.stats.decreasing") else i18n$t("modules.analysis.bot.stats.stable")
 
         stats_text <- paste(
           stats_text,
           "",
-          "Trend Analysis:",
-          sprintf("  Direction: %s", trend_direction),
-          sprintf("  Rate of change: %.2f units/year", slope),
-          sprintf("  R-squared: %.3f", r_squared),
+          paste0(i18n$t("modules.analysis.bot.stats.trend_analysis"), ":"),
+          sprintf("  %s: %s", i18n$t("modules.analysis.bot.stats.direction"), trend_direction),
+          sprintf("  %s: %.2f %s", i18n$t("modules.analysis.bot.stats.rate_of_change"), slope, i18n$t("modules.analysis.bot.stats.units_per_year")),
+          sprintf("  %s: %.3f", i18n$t("modules.analysis.bot.stats.r_squared"), r_squared),
           sep = "\n"
         )
       }

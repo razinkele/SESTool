@@ -4102,6 +4102,28 @@
       "it": "Aggiungi almeno 2 elementi a questa categoria prima di continuare. Avere solo 1 elemento impedirà al sistema di rilevare i cicli di feedback, essenziali per l'analisi.",
       "no": "Vennligst legg til minst 2 elementer i denne kategorien før du fortsetter. Å ha bare 1 element vil forhindre systemet fra å oppdage tilbakekoblingssløyfer, som er essensielle for analysen.",
       "el": "Προσθέστε τουλάχιστον 2 στοιχεία σε αυτή την κατηγορία πριν συνεχίσετε. Έχοντας μόνο 1 στοιχείο θα εμποδίσει το σύστημα να ανιχνεύσει βρόχους ανατροφοδότησης, που είναι απαραίτητοι για την ανάλυση."
+    },
+    "modules.isa.data_entry.title": {
+      "en": "ISA Data Entry",
+      "es": "Entrada de Datos ISA",
+      "fr": "Saisie de Données ISA",
+      "de": "ISA-Dateneingabe",
+      "lt": "ISA duomenų įvedimas",
+      "pt": "Entrada de Dados ISA",
+      "it": "Inserimento Dati ISA",
+      "no": "ISA-datainndata",
+      "el": "Εισαγωγή Δεδομένων ISA"
+    },
+    "modules.isa.data_entry.exercise_progress": {
+      "en": "Exercise Progress",
+      "es": "Progreso del Ejercicio",
+      "fr": "Progrès de l'Exercice",
+      "de": "Übungsfortschritt",
+      "lt": "Pratimo eiga",
+      "pt": "Progresso do Exercício",
+      "it": "Progresso dell'Esercizio",
+      "no": "Øvelsesfremdrift",
+      "el": "Πρόοδος Άσκησης"
     }
   }
 }

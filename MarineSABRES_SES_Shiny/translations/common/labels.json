@@ -846,6 +846,28 @@
       "it": "NO",
       "no": "AV",
       "el": "ΟΧΙ"
+    },
+    "common.labels.home": {
+      "en": "Home",
+      "es": "Inicio",
+      "fr": "Accueil",
+      "de": "Startseite",
+      "lt": "Pradžia",
+      "pt": "Início",
+      "it": "Home",
+      "no": "Hjem",
+      "el": "Αρχική"
+    },
+    "common.labels.initializing": {
+      "en": "Initializing...",
+      "es": "Inicializando...",
+      "fr": "Initialisation...",
+      "de": "Wird initialisiert...",
+      "lt": "Inicijuojama...",
+      "pt": "Inicializando...",
+      "it": "Inizializzazione...",
+      "no": "Initialiserer...",
+      "el": "Αρχικοποίηση..."
     }
   }
 }

@@ -311,10 +311,10 @@ auto_save_indicator_ui <- function(id) {
         }
       ")),
 
-      # Dismiss button
+      # Dismiss button - title set via JavaScript for i18n
       tags$button(
         class = "save-indicator-dismiss",
-        title = "Dismiss",
+        `data-i18n-title` = "common.buttons.dismiss",
         onclick = "$(this).closest('.auto-save-indicator').fadeOut(200);",
         HTML("&times;")
       ),
@@ -327,13 +327,13 @@ auto_save_indicator_ui <- function(id) {
           style = "display: flex; align-items: center; justify-content: space-between;",
           div(
             span(class = "save-status-icon", id = ns("status_icon")),
-            span(class = "save-status-text", id = ns("status_text"), "Initializing...")
+            span(class = "save-status-text", id = ns("status_text"), `data-i18n` = "common.labels.initializing")
           ),
           # Editing mode badge (clickable to toggle details)
           span(
             class = "editing-mode-badge mode-hidden",
             id = ns("mode_badge"),
-            title = "Click to toggle details • Adaptive auto-save: adjusts delay based on editing speed",
+            `data-i18n-title` = "modules.auto_save.adaptive_tooltip",
             span(id = ns("mode_text"), "")
           )
         ),

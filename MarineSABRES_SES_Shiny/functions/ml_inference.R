@@ -10,11 +10,15 @@
 # - ml_model_available(): Check if ML model is loaded
 # ==============================================================================
 
-if (!requireNamespace("torch", quietly = TRUE)) {
-  stop("Package 'torch' is required for ML features. Install with: install.packages('torch')")
+# Check for torch availability - graceful degradation if not installed
+.ml_torch_available <- requireNamespace("torch", quietly = TRUE)
+if (!.ml_torch_available) {
+  debug_log("Package 'torch' not available - ML features will be disabled", "ML_INFERENCE")
+  debug_log("To enable ML features, install torch: install.packages('torch')", "ML_INFERENCE")
+} else {
+  source("functions/ml_feature_engineering.R")
+  source("functions/ml_models.R")
 }
-source("functions/ml_feature_engineering.R")
-source("functions/ml_models.R")
 
 # ==============================================================================
 # Global Model Cache
@@ -67,9 +71,13 @@ load_ml_model <- function(model_path = "models/connection_predictor_best.pt", fo
 
 #' Check if ML model is available
 #'
-#' @return Logical. TRUE if model is loaded and ready
+#' @return Logical. TRUE if torch is installed and model is loaded and ready
 #' @export
 ml_model_available <- function() {
+  # First check if torch is available
+  if (!exists(".ml_torch_available") || !.ml_torch_available) {
+    return(FALSE)
+  }
   return(.ml_env$model_loaded && !is.null(.ml_env$model))
 }
 

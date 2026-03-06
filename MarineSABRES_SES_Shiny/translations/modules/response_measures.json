@@ -1484,6 +1484,17 @@
       "it": "[IT] Unknown",
       "no": "Unknown",
       "el": "Unknown"
+    },
+    "modules.response.measures.placeholder_element_ids": {
+      "en": "e.g., A001, D002",
+      "es": "ej., A001, D002",
+      "fr": "ex., A001, D002",
+      "de": "z.B., A001, D002",
+      "lt": "pvz., A001, D002",
+      "pt": "ex., A001, D002",
+      "it": "es., A001, D002",
+      "no": "f.eks., A001, D002",
+      "el": "π.χ., A001, D002"
     }
   }
 }

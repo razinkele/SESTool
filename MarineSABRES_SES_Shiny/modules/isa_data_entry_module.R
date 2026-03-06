@@ -320,8 +320,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         # Breadcrumb
         create_breadcrumb(
           items = list(
-            list(label = "Home", icon = "home"),
-            list(label = "ISA Data Entry", icon = "clipboard"),
+            list(label = i18n$t("common.labels.home"), icon = "home"),
+            list(label = i18n$t("modules.isa.data_entry.title"), icon = "clipboard"),
             list(label = tab_names[current])
           ),
           i18n = i18n
@@ -331,7 +331,7 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         create_progress_bar(
           current = current,
           total = total,
-          title = "Exercise Progress",
+          title = i18n$t("modules.isa.data_entry.exercise_progress"),
           i18n = i18n
         )
       )

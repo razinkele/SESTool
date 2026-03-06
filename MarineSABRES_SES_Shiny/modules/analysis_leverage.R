@@ -467,9 +467,9 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
           coord_flip() +
           scale_fill_gradient(low = "#FFC107", high = "#4CAF50") +
           labs(
-            title = "Leverage Point Analysis — Top Nodes by Composite Score",
+            title = i18n$t("modules.analysis.leverage.plot_title"),
             x = NULL,
-            y = "Composite Score (Betweenness + Eigenvector + PageRank)"
+            y = i18n$t("modules.analysis.leverage.plot_y_label")
           ) +
           theme_minimal(base_size = 14) +
           theme(
