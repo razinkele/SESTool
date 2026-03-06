@@ -798,7 +798,8 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       )
 
       # Listen to ISA change events (non-debounced)
-      observeEvent(event_bus$isa_changed(), {
+      # NOTE: Using on_isa_change() from the new event bus API (server/event_bus_setup.R)
+      observeEvent(event_bus$on_isa_change(), {
         # Check if "elements" trigger is enabled (isa_changed represents element changes)
         # NOTE: For more granular control, event_bus would need specific events for:
         #       - context_changed (region/ecosystem changes)

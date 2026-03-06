@@ -1024,9 +1024,12 @@ server <- function(input, output, session) {
   prepare_report_server("prep_report", project_data, session_i18n, parent_session = session)
 
   # ========== REACTIVE DATA PIPELINE ==========
-  # Setup event-based reactive pipeline for automatic data propagation
-  # ISA changes → auto-regenerate CLD → auto-invalidate analysis
-  setup_reactive_pipeline(project_data, event_bus)
+  # NOTE: setup_reactive_pipeline() from functions/reactive_pipeline.R is incompatible
+  # with the new event bus from server/event_bus_setup.R. The new event bus uses
+  # on_isa_change()/emit_isa_change() methods instead of isa_changed() reactiveVals.
+  # The pipeline functionality is now handled through the event_bus directly.
+  # Keeping this commented out until the two systems are reconciled.
+  # setup_reactive_pipeline(project_data, event_bus)
 
   # ========== DASHBOARD ==========
   # Dashboard logic extracted to server/dashboard.R for better maintainability

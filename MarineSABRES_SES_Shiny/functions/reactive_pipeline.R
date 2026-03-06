@@ -182,7 +182,7 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
       shinyjs::hide("pipeline_status_indicator")
     })
 
-  }) %>% bindEvent(isa_changed_debounced(), ignoreInit = TRUE)
+  })
 
   # ============================================================================
   # Observer 2: CLD/ISA changes → Invalidate analysis
@@ -223,7 +223,7 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
       shinyjs::hide("pipeline_status_indicator")
     }
 
-  }) %>% bindEvent(list(event_bus$isa_changed(), event_bus$cld_changed()), ignoreInit = TRUE)
+  })
 
   debug_log("Reactive pipeline setup complete", "PIPELINE")
   debug_log("- ISA changes will auto-regenerate CLD", "PIPELINE")
