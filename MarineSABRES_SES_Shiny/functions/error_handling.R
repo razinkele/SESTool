@@ -278,6 +278,135 @@ safe_render <- function(render_func, error_ui = NULL) {
   }
 }
 
+#' Safe renderUI wrapper with error handling
+#'
+#' Wraps renderUI to catch errors and display them gracefully
+#'
+#' @param expr Expression to render
+#' @param env Environment for evaluation
+#' @param quoted Whether expr is quoted
+#' @return A renderUI output with error handling
+#' @export
+safe_renderUI <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    expr <- substitute(expr)
+  }
+
+  renderUI({
+    tryCatch({
+      eval(expr, envir = env)
+    }, error = function(e) {
+      debug_log(sprintf("renderUI error: %s", e$message), "ERROR")
+      div(class = "alert alert-danger",
+          icon("exclamation-triangle"), " ",
+          strong("Error: "), e$message)
+    })
+  })
+}
+
+#' Safe renderDT wrapper with error handling
+#'
+#' Wraps DT::renderDT to catch errors and return empty table
+#'
+#' @param expr Expression to render
+#' @param ... Additional arguments passed to renderDT
+#' @param env Environment for evaluation
+#' @param quoted Whether expr is quoted
+#' @return A renderDT output with error handling
+#' @export
+safe_renderDT <- function(expr, ..., env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    expr <- substitute(expr)
+  }
+
+  DT::renderDT({
+    tryCatch({
+      eval(expr, envir = env)
+    }, error = function(e) {
+      debug_log(sprintf("renderDT error: %s", e$message), "ERROR")
+      data.frame(Error = e$message)
+    })
+  }, ...)
+}
+
+#' Safe renderPlot wrapper with error handling
+#'
+#' Wraps renderPlot to catch errors and display them gracefully
+#'
+#' @param expr Expression to render
+#' @param ... Additional arguments passed to renderPlot
+#' @param env Environment for evaluation
+#' @param quoted Whether expr is quoted
+#' @return A renderPlot output with error handling
+#' @export
+safe_renderPlot <- function(expr, ..., env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    expr <- substitute(expr)
+  }
+
+  renderPlot({
+    tryCatch({
+      eval(expr, envir = env)
+    }, error = function(e) {
+      debug_log(sprintf("renderPlot error: %s", e$message), "ERROR")
+      plot.new()
+      text(0.5, 0.5, paste("Error:", e$message), col = "red", cex = 1.2)
+    })
+  }, ...)
+}
+
+#' Safe renderTable wrapper with error handling
+#'
+#' Wraps renderTable to catch errors and return empty table
+#'
+#' @param expr Expression to render
+#' @param ... Additional arguments passed to renderTable
+#' @param env Environment for evaluation
+#' @param quoted Whether expr is quoted
+#' @return A renderTable output with error handling
+#' @export
+safe_renderTable <- function(expr, ..., env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    expr <- substitute(expr)
+  }
+
+  renderTable({
+    tryCatch({
+      eval(expr, envir = env)
+    }, error = function(e) {
+      debug_log(sprintf("renderTable error: %s", e$message), "ERROR")
+      data.frame(Error = e$message)
+    })
+  }, ...)
+}
+
+#' Safe renderVisNetwork wrapper with error handling
+#'
+#' Wraps visNetwork::renderVisNetwork to catch errors
+#'
+#' @param expr Expression to render
+#' @param env Environment for evaluation
+#' @param quoted Whether expr is quoted
+#' @return A renderVisNetwork output with error handling
+#' @export
+safe_renderVisNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    expr <- substitute(expr)
+  }
+
+  visNetwork::renderVisNetwork({
+    tryCatch({
+      eval(expr, envir = env)
+    }, error = function(e) {
+      debug_log(sprintf("renderVisNetwork error: %s", e$message), "ERROR")
+      visNetwork::visNetwork(
+        nodes = data.frame(id = 1, label = paste("Error:", e$message)),
+        edges = data.frame()
+      )
+    })
+  })
+}
+
 # ============================================================================
 # DATA VALIDATION HELPERS
 # ============================================================================

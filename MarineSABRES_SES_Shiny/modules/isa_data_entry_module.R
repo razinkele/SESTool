@@ -4,12 +4,10 @@
 # Follows the DAPSI(W)R(M) framework for marine ecosystem analysis
 
 # Module UI ----
-isa_data_entry_ui <- function(id) {
+isa_data_entry_ui <- function(id, i18n = NULL) {
   ns <- NS(id)
 
   tagList(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
 
     fluidRow(
       column(12,
