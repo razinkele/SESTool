@@ -61,10 +61,14 @@ cat("  Status:", toupper(version_info$status), "\n")
 cat("  R Version:", R.version.string, "\n")
 cat("  Working Directory:", getwd(), "\n")
 
-# Check minimum R version
-min_r_version <- as.numeric(gsub("(\\d+\\.\\d+).*", "\\1", version_info$minimum_r_version))
-current_r_version <- as.numeric(paste0(R.version$major, ".", R.version$minor))
-if (current_r_version < min_r_version) {
+# Check minimum R version (compare major.minor only)
+min_r_version <- tryCatch({
+  as.numeric(gsub("^(\\d+\\.\\d+).*", "\\1", version_info$minimum_r_version))
+}, error = function(e) NA)
+current_r_version <- tryCatch({
+  as.numeric(paste0(R.version$major, ".", gsub("^(\\d+).*", "\\1", R.version$minor)))
+}, error = function(e) NA)
+if (!is.na(min_r_version) && !is.na(current_r_version) && current_r_version < min_r_version) {
   cat("  ⚠ WARNING: R version", version_info$minimum_r_version, "or higher is recommended\n")
 }
 cat("\n")

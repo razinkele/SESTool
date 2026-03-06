@@ -199,7 +199,21 @@ function saveUserLevel(level) {
 // Custom message handler for sidebar tooltip initialization
 // IMPORTANT: Uses Bootstrap's native Tooltip class directly (not $.fn.tooltip)
 // because jQuery UI's tooltip overrides $.fn.tooltip in this application
+var _tooltipInitialized = false;
+var _tooltipInitPending = false;
+
 Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
+  // Debounce: ignore if already initialized or init is pending
+  if (_tooltipInitialized) {
+    __dbg('[TOOLTIPS] Already initialized, skipping');
+    return;
+  }
+  if (_tooltipInitPending) {
+    __dbg('[TOOLTIPS] Init already pending, skipping');
+    return;
+  }
+  _tooltipInitPending = true;
+
   __dbg('[TOOLTIPS] Initializing sidebar tooltips...');
 
   // Use a broader selector that includes elements with either title or data-original-title
@@ -208,27 +222,24 @@ Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
   __dbg('[TOOLTIPS] Found', sidebarLinks.length, 'sidebar links to process');
 
   if (sidebarLinks.length > 0) {
+    var initializedCount = 0;
+    var skippedCount = 0;
+
     // Process each link
     sidebarLinks.forEach(function(link) {
       var titleText = link.getAttribute('title') || link.getAttribute('data-original-title');
 
       // Only initialize if element has a title
       if (titleText) {
+        // Skip if Bootstrap tooltip is already properly initialized
+        if (link._bsTooltip && link._bsTooltip.element) {
+          skippedCount++;
+          return; // Already has a working tooltip, skip re-initialization
+        }
+
         // Destroy existing jQuery UI tooltip first (if any)
         try {
           $(link).tooltip('destroy');
-        } catch(e) {
-          // Ignore if tooltip wasn't initialized
-        }
-
-        // Dispose existing Bootstrap tooltip (if any)
-        try {
-          var existingTooltip = bootstrap.Tooltip.getInstance ?
-            bootstrap.Tooltip.getInstance(link) :
-            link._bsTooltip;
-          if (existingTooltip) {
-            existingTooltip.dispose();
-          }
         } catch(e) {
           // Ignore if tooltip wasn't initialized
         }
@@ -250,13 +261,17 @@ Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
         // This prevents browser from showing its native tooltip alongside Bootstrap's
         link.setAttribute('data-original-title', titleText);
         link.removeAttribute('title');
+
+        initializedCount++;
       }
     });
 
-    __dbg('[TOOLTIPS] Sidebar tooltips initialized successfully');
+    __dbg('[TOOLTIPS] Sidebar tooltips: initialized', initializedCount, ', skipped (already active)', skippedCount);
+    _tooltipInitialized = true;
   } else {
     console.warn('[TOOLTIPS] No sidebar links with title attributes found');
   }
+  _tooltipInitPending = false;
 });
 
 $(document).ready(function() {
