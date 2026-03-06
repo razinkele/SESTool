@@ -197,42 +197,59 @@ function saveUserLevel(level) {
 }
 
 // Custom message handler for sidebar tooltip initialization
-// This uses Bootstrap 4's native tooltip functionality (not bs4Dash's built-in)
-// We use custom implementation to avoid the bs4Dash help toggle in navbar
+// IMPORTANT: Uses Bootstrap's native Tooltip class directly (not $.fn.tooltip)
+// because jQuery UI's tooltip overrides $.fn.tooltip in this application
 Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
   __dbg('[TOOLTIPS] Initializing sidebar tooltips...');
 
-  var $sidebarLinks = $(data.selector);
-  __dbg('[TOOLTIPS] Found', $sidebarLinks.length, 'sidebar links with title attributes');
+  // Use a broader selector that includes elements with either title or data-original-title
+  // (data-original-title is set after first initialization)
+  var sidebarLinks = document.querySelectorAll('.main-sidebar .nav-link[title], .main-sidebar .nav-link[data-original-title]');
+  __dbg('[TOOLTIPS] Found', sidebarLinks.length, 'sidebar links to process');
 
-  if ($sidebarLinks.length > 0) {
+  if (sidebarLinks.length > 0) {
     // Process each link
-    $sidebarLinks.each(function() {
-      var $link = $(this);
-      var titleText = $link.attr('title');
+    sidebarLinks.forEach(function(link) {
+      var titleText = link.getAttribute('title') || link.getAttribute('data-original-title');
 
-      // Only initialize if element has a title attribute
+      // Only initialize if element has a title
       if (titleText) {
-        // Destroy existing tooltip first
+        // Destroy existing jQuery UI tooltip first (if any)
         try {
-          $link.tooltip('dispose');
+          $(link).tooltip('destroy');
         } catch(e) {
           // Ignore if tooltip wasn't initialized
         }
 
-        // Initialize Bootstrap 4 tooltip
-        // Title is read from the element's title attribute
-        $link.tooltip({
+        // Dispose existing Bootstrap tooltip (if any)
+        try {
+          var existingTooltip = bootstrap.Tooltip.getInstance ?
+            bootstrap.Tooltip.getInstance(link) :
+            link._bsTooltip;
+          if (existingTooltip) {
+            existingTooltip.dispose();
+          }
+        } catch(e) {
+          // Ignore if tooltip wasn't initialized
+        }
+
+        // Use Bootstrap's native Tooltip class directly
+        // This bypasses jQuery UI's tooltip override
+        var bsTooltip = new bootstrap.Tooltip(link, {
           placement: 'right',
           trigger: 'hover',
           container: 'body',
+          title: titleText,
           delay: { show: 300, hide: 100 }
         });
 
+        // Store reference for potential cleanup
+        link._bsTooltip = bsTooltip;
+
         // Move title to data-original-title AND remove title attribute
         // This prevents browser from showing its native tooltip alongside Bootstrap's
-        $link.attr('data-original-title', titleText);
-        $link.removeAttr('title');
+        link.setAttribute('data-original-title', titleText);
+        link.removeAttribute('title');
       }
     });
 
@@ -249,19 +266,35 @@ $(document).ready(function() {
   });
 
   // Handle any other elements with data-toggle="tooltip" (non-sidebar)
+  // Uses Bootstrap's native Tooltip class to avoid jQuery UI conflict
   function initializeOtherTooltips() {
-    var $otherTooltips = $('[data-toggle="tooltip"]').not('.main-sidebar [title]');
-    if ($otherTooltips.length > 0) {
-      try {
-        $otherTooltips.tooltip('dispose');
-      } catch(e) {}
-      $otherTooltips.tooltip({
-        container: 'body',
-        placement: 'auto',
-        boundary: 'viewport',
-        delay: { show: 300, hide: 100 }
+    var otherTooltips = document.querySelectorAll('[data-toggle="tooltip"]:not(.main-sidebar [title]):not(.main-sidebar [data-original-title])');
+    if (otherTooltips.length > 0) {
+      otherTooltips.forEach(function(el) {
+        var titleText = el.getAttribute('title') || el.getAttribute('data-original-title');
+        if (titleText) {
+          // Dispose existing tooltip
+          try {
+            var existingTooltip = el._bsTooltip;
+            if (existingTooltip) existingTooltip.dispose();
+          } catch(e) {}
+
+          // Use Bootstrap's native Tooltip class
+          var bsTooltip = new bootstrap.Tooltip(el, {
+            container: 'body',
+            placement: 'auto',
+            boundary: 'viewport',
+            title: titleText,
+            delay: { show: 300, hide: 100 }
+          });
+          el._bsTooltip = bsTooltip;
+
+          // Move title to data attribute to prevent native browser tooltip
+          el.setAttribute('data-original-title', titleText);
+          el.removeAttribute('title');
+        }
       });
-      __dbg('[TOOLTIPS] Initialized', $otherTooltips.length, 'non-sidebar tooltips');
+      __dbg('[TOOLTIPS] Initialized', otherTooltips.length, 'non-sidebar tooltips');
     }
   }
 
