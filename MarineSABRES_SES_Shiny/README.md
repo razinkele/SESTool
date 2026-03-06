@@ -1,58 +1,92 @@
 # MarineSABRES SES Toolbox
 
 [![R Version](https://img.shields.io/badge/R-%E2%89%A54.4.1-blue)](https://www.r-project.org/)
+[![Shiny](https://img.shields.io/badge/Shiny-bs4Dash-green)](https://bs4dash.rinterface.com/)
 [![License](https://img.shields.io/badge/license-EU%20Horizon%20Europe-lightgrey)](LICENSE)
+[![Languages](https://img.shields.io/badge/languages-9-orange)](translations/)
 
 A comprehensive Shiny application for Social-Ecological Systems (SES) analysis and visualization, developed as part of the [Marine-SABRES](https://marinesabres.eu/) Horizon Europe project.
 
 **Live deployment**: [laguna.ku.lt/marinesabres](https://laguna.ku.lt/marinesabres/)
 
+---
+
+## Screenshots
+
+### Home Page - Guided Workflow
+![Home Page](docs/images/screenshot-home.png)
+*Choose between a guided step-by-step journey or quick access to specific tools*
+
+### Network Visualization
+![Network Visualization](docs/images/screenshot-visualization.png)
+*Interactive Causal Loop Diagram with DAPSI(W)R(M) elements, edit mode, and auto-save*
+
+### Layout Controls
+![Layout Controls](docs/images/screenshot-layout.png)
+*Customize network layout with hierarchical views, spacing, and horizontal spread options*
+
+---
+
 ## Overview
 
-The MarineSABRES SES Toolbox enables researchers, policymakers, and stakeholders to model and analyze marine social-ecological systems using the **DAPSI(W)R(M)** framework (Drivers, Activities, Pressures, State changes, Impacts on human Welfare, Responses as Measures).
+The MarineSABRES SES Toolbox enables researchers, policymakers, and stakeholders to model and analyze marine social-ecological systems using the **DAPSI(W)R(M)** framework:
 
-Key capabilities:
+| Component | Description |
+|-----------|-------------|
+| **D**rivers | Root causes driving human activities (e.g., food security, economic growth) |
+| **A**ctivities | Human actions affecting the environment (e.g., fishing, tourism) |
+| **P**ressures | Environmental stressors from activities |
+| **S**tate Changes | Ecosystem state modifications |
+| **I**mpacts | Effects on ecosystem services |
+| **(W)**elfare | Human wellbeing outcomes |
+| **R**esponses | Policy and management interventions |
+| **(M)**easures | Implementation actions |
 
-- **Build SES models** from scratch or pre-configured templates (Fisheries, Tourism, Aquaculture, Pollution, Climate Change, Caribbean, Offshore Wind)
-- **Visualize causal relationships** through interactive Causal Loop Diagrams (CLD)
-- **Analyze system dynamics** — network metrics, feedback loops, leverage points, Boolean stability
+### Key Capabilities
+
+- **Build SES models** from scratch or use pre-configured templates
+- **Visualize causal relationships** through interactive Causal Loop Diagrams
+- **Analyze system dynamics** — network metrics, feedback loops, leverage points
 - **Design response measures** and evaluate intervention scenarios
 - **Generate reports** in HTML, Word, PowerPoint, and PDF formats
 - **9-language support**: English, Spanish, French, German, Lithuanian, Portuguese, Italian, Norwegian, Greek
 
+---
+
 ## Features
 
-### Core Workflow
+### SES Creation Options
 
-- **Template-based creation** — 7 pre-built SES templates for common marine contexts
-- **ISA Data Entry** — structured input for all DAPSI(W)R(M) elements with connection matrices
-- **AI-assisted classification** — intelligent suggestions for element categorization
-- **Connection review** — tabbed interface for reviewing and approving element relationships
-- **CLD Visualization** — interactive network diagrams powered by visNetwork/igraph
+| Method | Description |
+|--------|-------------|
+| **AI-Guided** | Intelligent assistant suggests elements and connections |
+| **Template-Based** | 7 pre-built templates (Fisheries, Tourism, Aquaculture, Pollution, Climate, Caribbean, Offshore Wind) |
+| **Graphical Builder** | Point-and-click diagram creation |
+| **ISA Data Entry** | Structured matrix-based input |
+| **Excel Import** | Load existing models from spreadsheets |
 
 ### Analysis Tools
 
-| Tool | Description | Export |
-|------|-------------|--------|
+| Tool | Description | Exports |
+|------|-------------|---------|
 | **Network Metrics** | Degree, betweenness, closeness, eigenvector centrality, PageRank | Excel, PNG |
-| **Feedback Loops** | Detect and classify reinforcing/balancing loops with dominance analysis | Excel, Word, ZIP |
+| **Feedback Loops** | Detect and classify reinforcing/balancing loops with dominance analysis | Excel, Word |
 | **Leverage Points** | Composite scoring to identify key intervention nodes | Excel, PNG |
 | **Boolean Stability** | Attractor analysis for system state stability | CSV |
-| **BOT Analysis** | Boundaries of Tipping points | CSV |
+| **BOT Analysis** | Boundaries of Tipping points assessment | CSV |
 | **Scenario Builder** | Test response measures and evaluate outcomes | — |
 | **Network Simplification** | Reduce complexity while preserving key dynamics | — |
 | **Intervention Analysis** | Model targeted interventions on specific nodes | — |
 
-### Stakeholder Engagement
+### User Experience
 
-- **PIMS Framework** — Project Information Management System for stakeholder tracking
-- **Guided workflows** — step-by-step entry point system with workflow stepper
-- **User experience levels** — Beginner, Intermediate, Expert modes
-- **Context-sensitive help** — modal-based guidance throughout the application
+- **Workflow Stepper** — Visual progress indicator (Get Started → Create SES → Visualize → Analyze → Report)
+- **Experience Levels** — Beginner, Intermediate, Expert modes
+- **Auto-Save** — Changes saved automatically with version history
+- **Context-Sensitive Help** — Integrated guidance throughout the application
+- **Responsive Design** — Works on desktop and tablet devices
 
-### Internationalization
-
-34 modular JSON translation files organized into `common/`, `modules/`, `ui/`, and `data/` subdirectories. Powered by `shiny.i18n` with session-local language to prevent cross-user bleeding.
+---
 
 ## Quick Start
 
@@ -64,7 +98,7 @@ Key capabilities:
 ### Installation
 
 ```r
-# Core packages
+# Install core packages
 install.packages(c(
   "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS",
   "shiny.i18n", "DT", "jsonlite", "openxlsx", "readxl",
@@ -74,97 +108,71 @@ install.packages(c(
   "officer", "flextable", "tinytex"
 ))
 
-# Install TinyTeX for PDF export
+# Install TinyTeX for PDF export (optional)
 tinytex::install_tinytex()
 ```
 
 ### Running the Application
 
 ```r
+# From the project directory
 shiny::runApp()
 ```
 
 The application opens at `http://127.0.0.1:3838`.
 
+---
+
 ## Project Structure
 
 ```
 MarineSABRES_SES_Shiny/
-├── app.R                       # Main entry point, bs4DashPage UI
-├── global.R                    # Package loading, source() calls, startup
-├── constants.R                 # 280+ constants, single source of truth
-├── io.R                        # File I/O utilities
-├── utils.R                     # Core utility functions
-├── VERSION                     # Current version (1.6.1)
-├── VERSION_INFO.json           # Detailed version metadata
-│
-├── modules/                    # 33 Shiny modules
-│   ├── isa_data_entry_module.R       # ISA data entry with matrices
-│   ├── cld_visualization_module.R    # CLD network visualization
-│   ├── analysis_metrics.R           # Network centrality metrics
-│   ├── analysis_loops.R            # Feedback loop detection
-│   ├── analysis_leverage.R         # Leverage point analysis
-│   ├── analysis_boolean.R          # Boolean stability analysis
-│   ├── analysis_bot.R              # BOT analysis
-│   ├── analysis_simulation.R       # System simulation
-│   ├── export_reports_module.R     # Report generation
-│   ├── scenario_builder_module.R   # Scenario evaluation
-│   └── ...                         # 23 more modules
-│
-├── functions/                  # 32 utility/helper files
-│   ├── data_structure.R            # Data model management
-│   ├── network_analysis.R          # igraph-based analysis
-│   ├── export_functions.R          # Export formatting
+├── app.R                       # Main entry point
+├── global.R                    # Package loading, startup
+├── constants.R                 # Configuration constants
+├── modules/                    # 33+ Shiny modules
+│   ├── isa_data_entry_module.R
+│   ├── cld_visualization_module.R
+│   ├── analysis_*.R            # Analysis modules
 │   └── ...
-│
-├── server/                     # 5 extracted server handlers
-│   ├── dashboard.R                 # Dashboard rendering
-│   ├── export_handlers.R           # Download handlers
-│   ├── modals.R                    # Modal dialogs
-│   ├── project_io.R                # Project save/load
-│   └── bookmarking.R               # URL bookmarking
-│
-├── translations/               # 34 modular JSON files, 9 languages
-│   ├── common/                     # Shared keys (messages, validation, labels)
-│   ├── modules/                    # Module-specific keys
-│   ├── ui/                         # UI chrome keys
-│   └── data/                       # Data-related keys
-│
-├── data/                       # 7 SES template JSON files
-├── config/                     # App configuration
-├── www/                        # Static assets (CSS, JS, images)
-├── deployment/                 # Deployment scripts and docs
-├── tests/                      # Test framework
-└── SESModels/                  # Pre-built Excel SES models
+├── functions/                  # Helper functions
+│   ├── data_structure.R
+│   ├── network_analysis.R
+│   ├── ml_*.R                  # ML classification
+│   └── ...
+├── server/                     # Server handlers
+├── translations/               # 9 languages, 34 JSON files
+│   ├── common/
+│   ├── modules/
+│   └── ui/
+├── data/                       # SES templates
+├── www/                        # Static assets
+├── tests/                      # Test suite (35+ test files)
+└── deployment/                 # Deployment scripts
 ```
+
+---
 
 ## Deployment
 
-The application deploys to a Shiny Server instance via `tar` + `scp` + `ssh` using native tools (no WSL or rsync required).
+### Remote Server (Production)
 
 ```powershell
 # Windows (PowerShell)
 .\deployment\deploy-remote.ps1 -DryRun    # Preview
 .\deployment\deploy-remote.ps1             # Deploy
+```
 
+```bash
 # Linux/Mac
 bash deployment/remote-deploy.sh --dry-run
 bash deployment/remote-deploy.sh
 ```
 
-**Target**: `razinka@laguna.ku.lt:/srv/shiny-server/marinesabres/` (ownership `razinka:shiny`)
+**Target**: `razinka@laguna.ku.lt:/srv/shiny-server/marinesabres/`
 
-Pre-deployment validation:
-```r
-Rscript deployment/pre-deploy-check-remote.R
-```
+### Docker
 
-Post-deployment validation:
-```bash
-sudo ./deployment/validate-deployment.sh
-```
-
-Docker is also supported:
 ```bash
 docker build -f deployment/Dockerfile -t marinesabres .
 docker run -p 3838:3838 marinesabres
@@ -172,41 +180,68 @@ docker run -p 3838:3838 marinesabres
 
 See [deployment/REMOTE_DEPLOYMENT_README.md](deployment/REMOTE_DEPLOYMENT_README.md) for full instructions.
 
+---
+
 ## Development
+
+### Running Tests
+
+```r
+# All tests
+Rscript tests/run_all_tests.R
+
+# testthat only
+Rscript -e "testthat::test_dir('tests/testthat')"
+
+# Specific test file
+Rscript -e "testthat::test_file('tests/testthat/test-network-analysis.R')"
+```
 
 ### Code Conventions
 
 - Constants in `constants.R`, not scattered across files
 - `debug_log(msg, context)` for logging (not `cat()` or `print()`)
-- `*_safe()` wrapper functions add NULL checks before calling core functions
-- Session-local i18n via `shiny.i18n` to prevent cross-user language bleeding
-- Matrix naming: SOURCE x TARGET convention (`d_a`, `a_p`, `p_mpf`, `mpf_es`, `es_gb`, `gb_d`)
 - All user-facing strings use `i18n$t()` keys
+- Module pattern: `module_name_ui()` + `module_name_server()`
 
-### Contributing
+### Documentation
 
-1. Create a feature branch from `main`
-2. Make changes following the conventions above
-3. Validate R syntax: `Rscript -e "parse('your_file.R')"`
-4. Validate JSON: ensure all translation files are valid JSON
-5. Run pre-deploy check: `Rscript deployment/pre-deploy-check-remote.R`
-6. Submit a pull request
+| Document | Description |
+|----------|-------------|
+| [CLAUDE.md](CLAUDE.md) | Development guide and conventions |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution guidelines |
+| [DAPSIWRM_FRAMEWORK_RULES.md](Documents/DAPSIWRM_FRAMEWORK_RULES.md) | Framework connection rules |
+| [ML_ARCHITECTURE.md](Documents/ML_ARCHITECTURE.md) | ML system documentation |
+| [MODULE_SIGNATURE_STANDARD.md](Documents/MODULE_SIGNATURE_STANDARD.md) | Module conventions |
+
+---
 
 ## Version History
 
-See [CHANGELOG.md](CHANGELOG.md) for detailed release notes.
-
 | Version | Date | Highlights |
 |---------|------|------------|
-| **1.6.1** | 2026-01-06 | Stability fixes, constants consolidation, i18n completion |
+| **1.6.1** | 2026-01 | Stability fixes, constants consolidation, i18n completion |
 | 1.6.0 | 2025-12 | Modular translations, AI ISA assistant, deployment framework |
 | 1.5.x | 2025-11 | Template system, Caribbean template, multi-language support |
+
+See [CHANGELOG.md](CHANGELOG.md) for detailed release notes.
+
+---
 
 ## Acknowledgments
 
 This project is developed as part of **Marine-SABRES** (Marine Systems Approaches for Biodiversity Resilient European Seas), funded by the European Union's Horizon Europe research and innovation programme under Grant Agreement No. 101136352.
 
+<p align="center">
+  <a href="https://marinesabres.eu/">
+    <img src="www/img/01 marinesabres_logo_transparent.png" alt="Marine-SABRES" height="60">
+  </a>
+</p>
+
+---
+
 ## Links
 
 - **Repository**: [github.com/razinkele/SESTool](https://github.com/razinkele/SESTool)
+- **Live App**: [laguna.ku.lt/marinesabres](https://laguna.ku.lt/marinesabres/)
 - **Marine-SABRES Project**: [marinesabres.eu](https://marinesabres.eu/)
