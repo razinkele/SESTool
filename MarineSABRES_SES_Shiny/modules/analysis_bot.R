@@ -6,9 +6,6 @@ analysis_bot_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     uiOutput(ns("module_header")),
 
     fluidRow(

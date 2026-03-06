@@ -37,7 +37,10 @@ critical_sources <- c(
   "server/dashboard.R",
   "server/project_io.R",
   "server/export_handlers.R",
-  "server/bookmarking.R"
+  "server/bookmarking.R",
+  "server/session_management.R",
+  "server/language_handling.R",
+  "server/event_bus_setup.R"
 )
 
 source_load_errors <- list()
@@ -68,19 +71,25 @@ if (length(source_load_errors) > 0) {
 # SOURCE MODULES (with error handling)
 # ============================================================================
 
-# Define module files for loading with error context
-module_files <- c(
+# P0 FIX: Define critical vs optional modules
+# Critical modules: App cannot function without these
+# Optional modules: App can run with reduced functionality
+
+CRITICAL_MODULES <- c(
   "modules/entry_point_module.R",        # Entry Point guidance system
   "modules/create_ses_module.R",         # Consolidated Create SES module
+  "modules/isa_data_entry_module.R",     # Standard ISA Data Entry
+  "modules/cld_visualization_module.R",  # CLD Visualization
+  "modules/analysis_loops.R"             # Loop Detection Analysis (core feature)
+)
+
+OPTIONAL_MODULES <- c(
   "modules/template_ses_module.R",       # Template-based SES creation
   "modules/ai_isa_assistant_module.R",   # AI-Assisted SES Creation
   "modules/import_data_module.R",        # Import Data from Excel
   "modules/ses_models_module.R",         # Load Pre-built SES Models
-  "modules/isa_data_entry_module.R",     # Standard ISA Data Entry
   "modules/pims_module.R",               # PIMS Project module
   "modules/pims_stakeholder_module.R",   # PIMS Stakeholder module
-  "modules/cld_visualization_module.R",  # CLD Visualization
-  "modules/analysis_loops.R",            # Loop Detection Analysis
   "modules/analysis_metrics.R",          # Network Metrics Analysis
   "modules/analysis_bot.R",              # BOT (Behaviour Over Time) Analysis
   "modules/analysis_simplify.R",         # Network Simplification Tools
@@ -95,30 +104,68 @@ module_files <- c(
   "modules/analysis_intervention.R"      # Intervention Simulation (DTU)
 )
 
-# Load all modules with error handling
-module_load_errors <- list()
-for (module_file in module_files) {
+# Load critical modules first - fail fast if any fail
+critical_load_errors <- list()
+for (module_file in CRITICAL_MODULES) {
+  tryCatch({
+    if (!file.exists(module_file)) {
+      stop(sprintf("Critical module file not found: %s", module_file))
+    }
+    source(module_file, local = TRUE)
+    debug_log(sprintf("Loaded critical module: %s", basename(module_file)), "MODULE_LOAD")
+  }, error = function(e) {
+    module_name <- basename(module_file)
+    error_msg <- sprintf("[CRITICAL] Failed to load %s: %s", module_name, e$message)
+    debug_log(error_msg, "MODULE_LOAD")
+    critical_load_errors[[module_name]] <<- e$message
+  })
+}
+
+# P0 FIX: Fail fast if critical modules failed to load
+if (length(critical_load_errors) > 0) {
+  stop(sprintf(
+    "CRITICAL: Failed to load %d critical module(s): %s. Application cannot start.\nErrors: %s",
+    length(critical_load_errors),
+    paste(names(critical_load_errors), collapse = ", "),
+    paste(sprintf("\n  - %s: %s", names(critical_load_errors), unlist(critical_load_errors)), collapse = "")
+  ))
+}
+
+# Load optional modules - continue even if some fail
+optional_load_errors <- list()
+LOADED_OPTIONAL_MODULES <- c()  # Track which optional modules loaded successfully
+
+for (module_file in OPTIONAL_MODULES) {
   tryCatch({
     if (!file.exists(module_file)) {
       stop(sprintf("Module file not found: %s", module_file))
     }
     source(module_file, local = TRUE)
+    LOADED_OPTIONAL_MODULES <<- c(LOADED_OPTIONAL_MODULES, basename(module_file))
+    debug_log(sprintf("Loaded optional module: %s", basename(module_file)), "MODULE_LOAD")
   }, error = function(e) {
     module_name <- basename(module_file)
-    error_msg <- sprintf("[MODULE_LOAD] Failed to load %s: %s", module_name, e$message)
+    error_msg <- sprintf("[OPTIONAL] Failed to load %s: %s", module_name, e$message)
     debug_log(error_msg, "MODULE_LOAD")
-    module_load_errors[[module_name]] <<- e$message
+    optional_load_errors[[module_name]] <<- e$message
   })
 }
 
-# Report any module loading failures
-if (length(module_load_errors) > 0) {
+# Report optional module loading failures (warning only, don't stop app)
+if (length(optional_load_errors) > 0) {
   warning(sprintf(
-    "Failed to load %d module(s): %s. Application may have reduced functionality.",
-    length(module_load_errors),
-    paste(names(module_load_errors), collapse = ", ")
+    "Failed to load %d optional module(s): %s. These features will be unavailable.",
+    length(optional_load_errors),
+    paste(names(optional_load_errors), collapse = ", ")
   ))
+  debug_log(sprintf("Optional modules failed: %s", paste(names(optional_load_errors), collapse = ", ")), "MODULE_LOAD")
 }
+
+# Summary of module loading
+debug_log(sprintf("Module loading complete: %d critical, %d optional loaded, %d optional failed",
+                 length(CRITICAL_MODULES),
+                 length(LOADED_OPTIONAL_MODULES),
+                 length(optional_load_errors)), "MODULE_LOAD")
 
 # NOTE: response_validation_server() is defined in response_module.R, not a separate file
 
@@ -142,31 +189,35 @@ ui <- bs4DashPage(
     html = tagList(
       tags$div(
         style = "display: flex; flex-direction: column; align-items: center; justify-content: center;",
-        # Animated spinner
+        # Animated spinner (using constants from constants.R)
         tags$div(
           class = "spinner",
-          style = "
-            width: 60px;
-            height: 60px;
-            border: 6px solid rgba(52, 152, 219, 0.2);
-            border-top-color: #3498db;
-            border-radius: 50%;
+          style = sprintf("
+            width: %s;
+            height: %s;
+            border: %s solid %s;
+            border-top-color: %s;
+            border-radius: 50%%;
             animation: spin 1s linear infinite;
-            margin-bottom: 25px;
-          "
+            margin-bottom: %s;
+          ", UI_SPINNER_SIZE, UI_SPINNER_SIZE, UI_SPINNER_BORDER_WIDTH,
+             UI_SPINNER_BORDER_COLOR, UI_SPINNER_ACTIVE_COLOR, UI_SPINNER_MARGIN)
         ),
         # Logo/Icon
         tags$div(
-          style = "font-size: 48px; color: #3498db; margin-bottom: 15px;",
+          style = sprintf("font-size: %s; color: %s; margin-bottom: %s;",
+                          UI_ICON_SIZE_LARGE, UI_PRIMARY_COLOR, UI_SPACING_MEDIUM),
           icon("water")
         ),
         # Loading text
         tags$div(
-          style = "font-size: 22px; font-weight: 600; color: #2c3e50; margin-bottom: 8px;",
+          style = sprintf("font-size: %s; font-weight: 600; color: %s; margin-bottom: %s;",
+                          UI_TITLE_FONT_SIZE, UI_TEXT_COLOR_DARK, UI_SPACING_SMALL),
           i18n$t("ui.header.preloader_title")
         ),
         tags$div(
-          style = "font-size: 14px; color: #7f8c8d;",
+          style = sprintf("font-size: %s; color: %s;",
+                          UI_SUBTITLE_FONT_SIZE, UI_TEXT_COLOR_LIGHT),
           i18n$t("ui.header.preloader_subtitle")
         ),
         # CSS animation
@@ -389,7 +440,7 @@ ui <- bs4DashPage(
       bs4TabItem(tabName = "create_ses_choose", create_ses_ui("create_ses_main", i18n)),
 
       # Standard Entry
-      bs4TabItem(tabName = "create_ses_standard", isa_data_entry_ui("isa_module")),
+      bs4TabItem(tabName = "create_ses_standard", isa_data_entry_ui("isa_module", i18n)),
 
       # AI Assistant
       bs4TabItem(tabName = "create_ses_ai", ai_isa_assistant_ui("ai_isa_mod", i18n)),
@@ -638,15 +689,15 @@ server <- function(input, output, session) {
       saved_data <- jsonlite::fromJSON(input$restore_project_data_from_lang_change, simplifyVector = FALSE)
 
       if (!is.null(saved_data)) {
-        # Validate project structure before restoring
-        required_keys <- c("project_id", "project_name", "data")
-        if (!is.list(saved_data) || !all(required_keys %in% names(saved_data))) {
-          debug_log("Invalid project structure in restored data — refusing to restore", "LANG_RESTORE")
+        # Validate JSON input for security and structure
+        validation_result <- validate_json_project_input(saved_data)
+        if (!validation_result$valid) {
+          debug_log(paste("Invalid project data in restored data:", paste(validation_result$errors, collapse = "; ")), "LANG_RESTORE")
           return()
         }
 
-        # Restore the project data
-        project_data(saved_data)
+        # Restore the validated project data
+        project_data(validation_result$data)
         debug_log("Project data restored successfully after language change", "LANG_RESTORE")
 
         # Show notification to user

@@ -11,9 +11,6 @@ response_measures_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     fluidRow(
       column(12,
         create_module_header(ns, "modules.response.measures.title", "modules.response.measures.subtitle", "help_response", i18n)

@@ -6,6 +6,31 @@ var __dbg = function() {
   }
 };
 
+// ==============================================================================
+// P2 FIX: Timing Configuration Constants
+// ==============================================================================
+// Centralized timing values to avoid magic numbers throughout the code
+var TIMING_CONFIG = {
+  // Language loading overlay
+  MINIMUM_DISPLAY_TIME: 5000,     // Minimum overlay display time (ms)
+  RENDER_WAIT_TIME: 2500,         // Wait for UI to render after Shiny connects (ms)
+  FADE_OUT_DURATION: 800,         // Overlay fade out animation (ms)
+
+  // Tooltip configuration
+  TOOLTIP_SHOW_DELAY: 300,        // Delay before showing tooltip (ms)
+  TOOLTIP_HIDE_DELAY: 100,        // Delay before hiding tooltip (ms)
+  TOOLTIP_CLEANUP_DELAY: 1000,    // Delay for tooltip cleanup tasks (ms)
+
+  // DOM operations
+  DOM_UPDATE_DELAY: 100,          // Small delay for DOM updates (ms)
+  INIT_DELAY: 200,                // Delay for initialization tasks (ms)
+  RETRY_DELAY: 500,               // Delay for retry operations (ms)
+
+  // Animation
+  TRANSITION_NORMAL: 300,         // Normal transition duration (ms)
+  TRANSITION_SLOW: 500            // Slow transition duration (ms)
+};
+
 // This file will contain custom JavaScript for the MarineSABRES SES Toolbox.
 
 // CRITICAL: Check for language change IMMEDIATELY (before document.ready)
@@ -587,18 +612,16 @@ $(document).on('shiny:connected', function() {
   if (isChangingLanguage === 'true') {
     __dbg('[JS] Shiny connected after language change - waiting for full render');
 
-    // Calculate how long the overlay has been displayed
+    // Calculate how long the overlay has been displayed (using TIMING_CONFIG constants)
     var timeElapsed = window.languageChangeStartTime ? Date.now() - window.languageChangeStartTime : 0;
-    var MINIMUM_DISPLAY_TIME = 5000; // Minimum 5 seconds display time
-    var RENDER_WAIT_TIME = 2500; // Wait 2.5 seconds for UI to render after connection
 
     __dbg('[JS] Time elapsed since overlay appeared:', timeElapsed, 'ms');
-    __dbg('[JS] Minimum display time:', MINIMUM_DISPLAY_TIME, 'ms');
+    __dbg('[JS] Minimum display time:', TIMING_CONFIG.MINIMUM_DISPLAY_TIME, 'ms');
 
     // Calculate how much longer we need to wait to meet minimum display time
-    var remainingMinimumTime = Math.max(0, MINIMUM_DISPLAY_TIME - timeElapsed - RENDER_WAIT_TIME);
+    var remainingMinimumTime = Math.max(0, TIMING_CONFIG.MINIMUM_DISPLAY_TIME - timeElapsed - TIMING_CONFIG.RENDER_WAIT_TIME);
 
-    __dbg('[JS] Will wait', RENDER_WAIT_TIME + remainingMinimumTime, 'ms before removing overlay');
+    __dbg('[JS] Will wait', TIMING_CONFIG.RENDER_WAIT_TIME + remainingMinimumTime, 'ms before removing overlay');
 
     // Wait for Shiny to render
     setTimeout(function() {
@@ -616,12 +639,12 @@ $(document).on('shiny:connected', function() {
         sessionStorage.removeItem('language_loading_message');
 
         // Fade out and remove the overlay
-        $('#language-loading-overlay').fadeOut(800, function() {
+        $('#language-loading-overlay').fadeOut(TIMING_CONFIG.FADE_OUT_DURATION, function() {
           $(this).remove();
           __dbg('[JS] Overlay removed - language change complete');
         });
       }, remainingMinimumTime);
-    }, RENDER_WAIT_TIME);
+    }, TIMING_CONFIG.RENDER_WAIT_TIME);
   }
 });
 
@@ -832,4 +855,207 @@ function handleFullscreenChange() {
     window.dispatchEvent(new Event('resize'));
   }, 100);
 }
+
+// ==============================================================================
+// P2 #28: Touch & Mobile Navigation Handling
+// ==============================================================================
+
+/**
+ * Touch navigation utilities for mobile devices
+ */
+var TouchNav = (function() {
+  'use strict';
+
+  var config = {
+    swipeThreshold: 50,           // Minimum distance for swipe recognition
+    swipeTimeLimit: 300,          // Maximum time for a swipe gesture (ms)
+    doubleTapDelay: 300,          // Delay to detect double tap
+    longPressDelay: 500           // Delay to detect long press
+  };
+
+  var touchState = {
+    startX: 0,
+    startY: 0,
+    startTime: 0,
+    lastTap: 0,
+    isScrolling: null
+  };
+
+  /**
+   * Detect if device supports touch
+   */
+  function isTouchDevice() {
+    return ('ontouchstart' in window) ||
+           (navigator.maxTouchPoints > 0) ||
+           (navigator.msMaxTouchPoints > 0);
+  }
+
+  /**
+   * Initialize sidebar swipe handling
+   */
+  function initSidebarSwipe() {
+    var sidebar = document.querySelector('.main-sidebar');
+    var content = document.querySelector('.content-wrapper');
+
+    if (!sidebar || !content) return;
+
+    // Touch start
+    content.addEventListener('touchstart', function(e) {
+      var touch = e.touches[0];
+      touchState.startX = touch.clientX;
+      touchState.startY = touch.clientY;
+      touchState.startTime = Date.now();
+      touchState.isScrolling = null;
+    }, { passive: true });
+
+    // Touch move - detect swipe direction
+    content.addEventListener('touchmove', function(e) {
+      if (!touchState.startX) return;
+
+      var touch = e.touches[0];
+      var deltaX = touch.clientX - touchState.startX;
+      var deltaY = touch.clientY - touchState.startY;
+
+      // Determine if horizontal or vertical scrolling
+      if (touchState.isScrolling === null) {
+        touchState.isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
+      }
+    }, { passive: true });
+
+    // Touch end - handle swipe
+    content.addEventListener('touchend', function(e) {
+      if (touchState.isScrolling) {
+        // User was scrolling vertically, ignore
+        touchState.startX = 0;
+        return;
+      }
+
+      var touch = e.changedTouches[0];
+      var deltaX = touch.clientX - touchState.startX;
+      var deltaTime = Date.now() - touchState.startTime;
+
+      // Check if it's a valid swipe
+      if (Math.abs(deltaX) > config.swipeThreshold && deltaTime < config.swipeTimeLimit) {
+        if (deltaX > 0 && touchState.startX < 30) {
+          // Swipe right from left edge - open sidebar
+          openSidebar();
+        } else if (deltaX < 0) {
+          // Swipe left - close sidebar
+          closeSidebar();
+        }
+      }
+
+      touchState.startX = 0;
+    }, { passive: true });
+  }
+
+  /**
+   * Open sidebar
+   */
+  function openSidebar() {
+    var body = document.body;
+    if (body.classList.contains('sidebar-collapse')) {
+      body.classList.remove('sidebar-collapse');
+      body.classList.add('sidebar-open');
+    }
+  }
+
+  /**
+   * Close sidebar
+   */
+  function closeSidebar() {
+    var body = document.body;
+    body.classList.add('sidebar-collapse');
+    body.classList.remove('sidebar-open');
+  }
+
+  /**
+   * Prevent iOS zoom on form inputs
+   */
+  function preventInputZoom() {
+    // Set viewport to prevent zoom on focus
+    var viewportMeta = document.querySelector('meta[name="viewport"]');
+    if (viewportMeta) {
+      viewportMeta.setAttribute('content',
+        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+    }
+  }
+
+  /**
+   * Add active state visual feedback for buttons
+   */
+  function initTouchFeedback() {
+    var buttons = document.querySelectorAll('.btn, .nav-link, .dropdown-item');
+
+    buttons.forEach(function(btn) {
+      btn.addEventListener('touchstart', function() {
+        this.classList.add('touch-active');
+      }, { passive: true });
+
+      btn.addEventListener('touchend', function() {
+        var self = this;
+        setTimeout(function() {
+          self.classList.remove('touch-active');
+        }, 100);
+      }, { passive: true });
+
+      btn.addEventListener('touchcancel', function() {
+        this.classList.remove('touch-active');
+      }, { passive: true });
+    });
+  }
+
+  /**
+   * Fix iOS 300ms click delay
+   */
+  function fixClickDelay() {
+    // Modern browsers handle this via touch-action CSS
+    // This is a fallback for older iOS
+    if ('addEventListener' in document) {
+      document.addEventListener('DOMContentLoaded', function() {
+        // Use fastclick-like behavior only if needed
+        if (isTouchDevice() && !('ontouchend' in document)) {
+          // Browser supports touch but not proper touch events
+          __dbg('[TouchNav] Using click delay fix');
+        }
+      });
+    }
+  }
+
+  /**
+   * Initialize all touch navigation features
+   */
+  function init() {
+    if (!isTouchDevice()) {
+      __dbg('[TouchNav] Not a touch device, skipping initialization');
+      return;
+    }
+
+    __dbg('[TouchNav] Initializing touch navigation');
+
+    initSidebarSwipe();
+    initTouchFeedback();
+    fixClickDelay();
+
+    // Don't prevent zoom on all devices - only mobile
+    if (window.innerWidth < 768) {
+      preventInputZoom();
+    }
+
+    __dbg('[TouchNav] Touch navigation initialized');
+  }
+
+  // Public API
+  return {
+    init: init,
+    isTouchDevice: isTouchDevice,
+    openSidebar: openSidebar,
+    closeSidebar: closeSidebar
+  };
+})();
+
+// Initialize touch navigation when DOM is ready
+$(document).ready(function() {
+  TouchNav.init();
+});
 

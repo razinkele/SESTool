@@ -41,9 +41,6 @@ cld_viz_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     tags$style(HTML("
       /* Remove all frames from visNetwork elements */
       .cld-network-container .vis-network {
@@ -564,7 +561,7 @@ cld_viz_ui <- function(id, i18n) {
 #' }
 #'
 #' @export
-cld_viz_server <- function(id, project_data_reactive, i18n) {
+cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # === REACTIVE VALUES ===
@@ -1652,7 +1649,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n) {
     })
 
     # === DISPLAY LOOP TOOLTIP ===
-    output$loop_tooltip <- renderUI({
+    output$loop_tooltip <- safe_renderUI({
       req(input$selected_loop)
 
       if (input$selected_loop == "none") {

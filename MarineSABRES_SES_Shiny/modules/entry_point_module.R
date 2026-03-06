@@ -1,18 +1,36 @@
-# modules/entry_point_module.R
-# Simplified Entry Point System for Marine Management DSS & Toolbox
-# Purpose: Guide users through EP0-EP4 to find appropriate tools
+# =============================================================================
+# MODULE: Entry Point System
+# File: modules/entry_point_module.R
+# =============================================================================
+#
+# Purpose:
+#   Simplified Entry Point System for Marine Management DSS & Toolbox.
+#   Guides users through EP0-EP4 to find appropriate tools based on their
+#   data availability and analysis needs.
+#
+# Dependencies:
+#   - www/entry-point.css (custom styling)
+#
+# Exports:
+#   - entry_point_ui(id, i18n)
+#   - entry_point_server(id, project_data, i18n, event_bus)
+#
+# =============================================================================
 
-# ============================================================================
+# =============================================================================
 # UI FUNCTION
-# ============================================================================
+# =============================================================================
 
+#' Entry Point System UI
+#'
+#' @param id Character. Module namespace ID
+#' @param i18n Translator object for internationalization
+#' @return A Shiny UI element with entry point navigation
+#' @export
 entry_point_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     # Custom CSS
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "entry-point.css"),

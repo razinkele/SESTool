@@ -1,9 +1,36 @@
-# Marine SES Network Analysis Constants
-# Centralized configuration for all magic numbers and thresholds
+# =============================================================================
+# CONSTANTS: Marine SES Network Analysis
+# File: constants.R
+# =============================================================================
+#
+#' @title MarineSABRES SES Toolbox Constants
+#'
+#' @description
+#' Centralized configuration for all constants, magic numbers, and thresholds
+#' used throughout the MarineSABRES SES Toolbox application. This file provides
+#' a single source of truth for configuration values.
+#'
+#' @section Constant Categories:
+#' \itemize{
+#'   \item Loop Analysis - Thresholds for feedback loop detection
+#'   \item Network Generation - Default sizes and density parameters
+#'   \item DAPSIWRM Elements - Framework category definitions
+#'   \item Visualization - Colors, shapes, and styling constants
+#'   \item Confidence Levels - Connection certainty parameters
+#'   \item UI Layout - Spacing, sizing, and timing values
+#' }
+#'
+#' @seealso
+#' \code{\link{DAPSIWRM_ELEMENTS}} for framework element types
+#' \code{\link{ELEMENT_COLORS}} for visualization colors
+#'
+#' @name constants
+#' @keywords internal
+NULL
 
-# ============================================================================
+# =============================================================================
 # LOOP ANALYSIS CONSTANTS
-# ============================================================================
+# =============================================================================
 
 # Performance thresholds for adaptive loop analysis
 LOOP_LARGE_GRAPH_THRESHOLD <- 20      # Nodes count for "large" graph classification
@@ -51,6 +78,38 @@ MARINE_WEIGHT_MIN <- 3.0
 MARINE_WEIGHT_MAX <- 8.0
 MARINE_STRENGTH_MIN <- -2.0
 MARINE_STRENGTH_MAX <- 4.0
+
+# ============================================================================
+# ML ENSEMBLE CONSTANTS (P2 #26)
+# ============================================================================
+
+# Ensemble size configuration
+ML_ENSEMBLE_DEFAULT_SIZE <- 5           # Default number of models in ensemble
+ML_ENSEMBLE_MIN_SIZE <- 3               # Minimum for meaningful diversity
+ML_ENSEMBLE_MAX_SIZE <- 10              # Maximum to limit memory/compute
+
+# Training seeds for reproducibility
+ML_ENSEMBLE_SEEDS <- c(42, 123, 456, 789, 1024, 2048, 3072, 4096, 5120, 6144)
+
+# Ensemble aggregation thresholds
+ML_ENSEMBLE_AGREEMENT_THRESHOLD <- 0.8  # High agreement = >80% models agree
+ML_ENSEMBLE_CONFIDENCE_THRESHOLD <- 0.7 # Minimum confidence for predictions
+
+# Active learning (disagreement-based)
+ML_ACTIVE_LEARNING_BATCH_SIZE <- 10     # Samples per active learning round
+ML_DISAGREEMENT_HIGH_THRESHOLD <- 0.4   # High disagreement = >40% variance
+ML_DISAGREEMENT_LOW_THRESHOLD <- 0.1    # Low disagreement = <10% variance
+
+# Model architecture
+ML_EMBEDDING_DIM <- 128                 # Embedding dimension
+ML_HIDDEN_DIMS <- c(256, 128, 64)       # Hidden layer dimensions
+ML_DROPOUT_RATE <- 0.3                  # Dropout for regularization
+
+# Training hyperparameters
+ML_DEFAULT_EPOCHS <- 100                # Default training epochs
+ML_DEFAULT_LEARNING_RATE <- 0.001       # Default learning rate
+ML_DEFAULT_BATCH_SIZE <- 32             # Default batch size
+ML_EARLY_STOPPING_PATIENCE <- 15        # Epochs to wait before early stopping
 
 # ============================================================================
 # MARINE SES CATEGORIES
@@ -607,6 +666,43 @@ ACTIVITY_SCALES <- c(
   "National",
   "International"
 )
+
+# ============================================================================
+# UI LAYOUT CONSTANTS (P2 #23)
+# ============================================================================
+
+# Preloader/spinner styling
+UI_SPINNER_SIZE <- "60px"
+UI_SPINNER_BORDER_WIDTH <- "6px"
+UI_SPINNER_BORDER_COLOR <- "rgba(52, 152, 219, 0.2)"
+UI_SPINNER_ACTIVE_COLOR <- "#3498db"
+UI_SPINNER_MARGIN <- "25px"
+
+# Typography sizes for preloader
+UI_ICON_SIZE_LARGE <- "48px"
+UI_TITLE_FONT_SIZE <- "22px"
+UI_SUBTITLE_FONT_SIZE <- "14px"
+UI_SPACING_SMALL <- "8px"
+UI_SPACING_MEDIUM <- "15px"
+
+# Color palette for UI elements
+UI_PRIMARY_COLOR <- "#3498db"
+UI_TEXT_COLOR_DARK <- "#2c3e50"
+UI_TEXT_COLOR_LIGHT <- "#7f8c8d"
+
+# Touch target sizes (accessibility)
+UI_TOUCH_TARGET_MIN <- "48px"
+UI_BUTTON_MIN_HEIGHT <- "44px"
+
+# Animation timings (in ms)
+UI_ANIMATION_FAST <- 200
+UI_ANIMATION_NORMAL <- 300
+UI_ANIMATION_SLOW <- 500
+
+# Network visualization defaults
+UI_NETWORK_MIN_HEIGHT <- "400px"
+UI_NETWORK_DEFAULT_HEIGHT <- "600px"
+UI_CARD_BORDER_RADIUS <- "8px"
 
 # ============================================================================
 # END OF CONSTANTS

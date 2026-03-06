@@ -1,7 +1,25 @@
-# Loop Detection Analysis Module
-# Extracted from analysis_tools_module.R
-# Detects and analyzes feedback loops in the CLD
-# Note: igraph is loaded in global.R
+# =============================================================================
+# MODULE: Loop Detection Analysis
+# File: modules/analysis_loops.R
+# =============================================================================
+#
+# Purpose:
+#   Detects and analyzes feedback loops in the Causal Loop Diagram (CLD).
+#   Classifies loops as reinforcing or balancing based on polarity.
+#
+# Dependencies:
+#   - igraph (loaded in global.R)
+#   - functions/network_analysis.R
+#
+# Exports:
+#   - analysis_loops_ui(id, i18n)
+#   - analysis_loops_server(id, project_data_reactive, i18n)
+#
+# =============================================================================
+
+# =============================================================================
+# UI FUNCTION
+# =============================================================================
 
 #' Loop Detection Analysis Module UI
 #'
@@ -28,9 +46,6 @@ analysis_loops_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     uiOutput(ns("module_header")),
 
     fluidRow(
@@ -249,7 +264,7 @@ analysis_loops_ui <- function(id, i18n) {
 #' }
 #'
 #' @export
-analysis_loops_server <- function(id, project_data_reactive, i18n) {
+analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -502,6 +517,11 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
           project_data$last_modified <- Sys.time()
           project_data_reactive(project_data)
 
+          # Emit event for other modules to react
+          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+            event_bus$emit_isa_change("analysis_loops")
+          }
+
           output$detection_status <- renderText(
             sprintf(i18n$t("modules.analysis.loops.detection_complete_n"), nrow(loop_info))
           )
@@ -548,7 +568,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Loops Table ----
-    output$loops_table <- renderDT({
+    output$loops_table <- safe_renderDT({
       req(loop_data$loops)
       datatable(loop_data$loops,
                options = list(pageLength = 10, scrollX = TRUE),
@@ -556,7 +576,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Reinforcing Loops Table ----
-    output$reinforcing_loops_table <- renderDT({
+    output$reinforcing_loops_table <- safe_renderDT({
       req(loop_data$loops)
       r_loops <- loop_data$loops[loop_data$loops$Type == "Reinforcing", ]
       datatable(r_loops,
@@ -565,7 +585,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Balancing Loops Table ----
-    output$balancing_loops_table <- renderDT({
+    output$balancing_loops_table <- safe_renderDT({
       req(loop_data$loops)
       b_loops <- loop_data$loops[loop_data$loops$Type == "Balancing", ]
       datatable(b_loops,
@@ -574,7 +594,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Loop Type Plot ----
-    output$loop_type_plot <- renderPlot({
+    output$loop_type_plot <- safe_renderPlot({
       req(loop_data$loops)
 
       type_counts <- table(loop_data$loops$Type)
@@ -618,7 +638,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Loop Network Visualization ----
-    output$loop_network <- renderVisNetwork({
+    output$loop_network <- safe_renderVisNetwork({
       req(input$selected_loop, loop_data$all_loops, loop_data$graph)
 
       # Get loop index
@@ -683,7 +703,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Loop Narrative ----
-    output$loop_narrative <- renderUI({
+    output$loop_narrative <- safe_renderUI({
       req(input$selected_loop, loop_data$loops)
 
       loop_row <- loop_data$loops[loop_data$loops$LoopID == input$selected_loop, ]
@@ -708,7 +728,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Dominant Loops Analysis ----
-    output$dominant_loops_table <- renderDT({
+    output$dominant_loops_table <- safe_renderDT({
       req(loop_data$loops)
 
       # Calculate dominance score (simple version)
@@ -723,7 +743,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Element Participation Plot ----
-    output$element_participation_plot <- renderPlot({
+    output$element_participation_plot <- safe_renderPlot({
       req(loop_data$all_loops)
 
       # Count how many loops each element appears in

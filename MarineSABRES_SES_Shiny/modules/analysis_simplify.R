@@ -8,10 +8,6 @@ analysis_simplify_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
-    # Header with information
     uiOutput(ns("module_header")),
 
     hr(),
@@ -426,7 +422,7 @@ analysis_simplify_ui <- function(id, i18n) {
   )
 }
 
-analysis_simplify_server <- function(id, project_data_reactive, i18n) {
+analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # ========== REACTIVE VALUES ==========
@@ -788,6 +784,11 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
 
           project_data_reactive(data)
 
+          # Emit event for other modules to react
+          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+            event_bus$emit_isa_change("analysis_simplify")
+          }
+
           showNotification(
             i18n$t("modules.analysis.network.simplified_network_saved"),
             type = "success",
@@ -845,6 +846,11 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n) {
         data$last_modified <- Sys.time()
 
         project_data_reactive(data)
+
+        # Emit event for other modules to react
+        if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+          event_bus$emit_isa_change("analysis_simplify_restore")
+        }
 
         rv$original_nodes <- data$data$cld$nodes
         rv$original_edges <- data$data$cld$edges

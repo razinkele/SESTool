@@ -1,15 +1,36 @@
-# Network Metrics Analysis Module
-# Extracted from analysis_tools_module.R
-# Calculates and visualizes centrality metrics for CLD networks
-# Note: igraph is loaded in global.R
+# =============================================================================
+# MODULE: Network Metrics Analysis
+# File: modules/analysis_metrics.R
+# =============================================================================
+#
+# Purpose:
+#   Calculates and visualizes centrality metrics for CLD networks including
+#   degree, betweenness, closeness, eigenvector centrality, and PageRank.
+#
+# Dependencies:
+#   - igraph (loaded in global.R)
+#   - functions/network_analysis.R
+#
+# Exports:
+#   - analysis_metrics_ui(id, i18n)
+#   - analysis_metrics_server(id, project_data_reactive, i18n)
+#
+# =============================================================================
 
+# =============================================================================
+# UI FUNCTION
+# =============================================================================
+
+#' Network Metrics Analysis UI
+#'
+#' @param id Character. Module namespace ID
+#' @param i18n Translator object for internationalization
+#' @return A Shiny UI element
+#' @export
 analysis_metrics_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     uiOutput(ns("module_header")),
 
     # Check if CLD exists
@@ -378,7 +399,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Metrics table
-    output$metrics_table <- renderDT({
+    output$metrics_table <- safe_renderDT({
       req(metrics_rv$node_metrics_df)
 
       datatable(
@@ -401,7 +422,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Metrics bar plot
-    output$metrics_barplot <- renderPlot({
+    output$metrics_barplot <- safe_renderPlot({
       req(metrics_rv$node_metrics_df, input$viz_metric, input$top_n_nodes)
 
       df <- metrics_rv$node_metrics_df
@@ -426,7 +447,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Metrics comparison plot
-    output$metrics_comparison <- renderPlot({
+    output$metrics_comparison <- safe_renderPlot({
       req(metrics_rv$node_metrics_df)
 
       df <- metrics_rv$node_metrics_df
@@ -464,7 +485,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Metrics histogram
-    output$metrics_histogram <- renderPlot({
+    output$metrics_histogram <- safe_renderPlot({
       req(metrics_rv$node_metrics_df, input$viz_metric)
 
       df <- metrics_rv$node_metrics_df
@@ -490,25 +511,25 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
     })
 
     # Top nodes tables
-    output$top_degree <- renderTable({
+    output$top_degree <- safe_renderTable({
       req(metrics_rv$node_metrics_df)
       df <- metrics_rv$node_metrics_df[order(-metrics_rv$node_metrics_df$Degree), ][1:5, c("Label", "Type", "Degree")]
       df
     })
 
-    output$top_betweenness <- renderTable({
+    output$top_betweenness <- safe_renderTable({
       req(metrics_rv$node_metrics_df)
       df <- metrics_rv$node_metrics_df[order(-metrics_rv$node_metrics_df$Betweenness), ][1:5, c("Label", "Type", "Betweenness")]
       df
     })
 
-    output$top_closeness <- renderTable({
+    output$top_closeness <- safe_renderTable({
       req(metrics_rv$node_metrics_df)
       df <- metrics_rv$node_metrics_df[order(-metrics_rv$node_metrics_df$Closeness), ][1:5, c("Label", "Type", "Closeness")]
       df
     })
 
-    output$top_pagerank <- renderTable({
+    output$top_pagerank <- safe_renderTable({
       req(metrics_rv$node_metrics_df)
       df <- metrics_rv$node_metrics_df[order(-metrics_rv$node_metrics_df$PageRank), ][1:5, c("Label", "Type", "PageRank")]
       df

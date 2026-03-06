@@ -10,9 +10,6 @@ analysis_leverage_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     uiOutput(ns("module_header")),
 
     fluidRow(
@@ -98,7 +95,7 @@ analysis_leverage_ui <- function(id, i18n) {
 #' @param id Module ID
 #' @param project_data_reactive Reactive project data
 #' @return Server logic
-analysis_leverage_server <- function(id, project_data_reactive, i18n) {
+analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive values
@@ -198,6 +195,11 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n) {
           project_data$data$cld$edges <- edges
           project_data$last_modified <- Sys.time()
           project_data_reactive(project_data)
+
+          # Emit event for other modules to react
+          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+            event_bus$emit_isa_change("analysis_leverage")
+          }
 
           incProgress(1.0, detail = i18n$t("modules.analysis.leverage.progress_complete"))
 

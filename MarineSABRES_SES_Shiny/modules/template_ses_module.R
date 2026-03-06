@@ -54,8 +54,6 @@ template_ses_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     # Custom CSS
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "template-ses.css")

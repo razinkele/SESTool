@@ -194,7 +194,7 @@ if (USE_MODULAR_TRANSLATIONS) {
 
   # Initialize modular translation system with wrapper
   if (DEBUG_I18N) {
-    cat("[I18N] Using modular translation system with wrapper\n")
+    debug_log("Using modular translation system with wrapper", "I18N")
   }
 
   translation_system <- init_translation_system(
@@ -242,10 +242,10 @@ if (USE_MODULAR_TRANSLATIONS) {
   }
 
   if (DEBUG_I18N) {
-    cat(sprintf("[I18N] Pure modular translation system with wrapper initialized\n"))
-    cat(sprintf("[I18N] Translation file: %s\n", translation_file))
-    cat(sprintf("[I18N] File size: %s KB\n", round(file.info(translation_file)$size / 1024, 1)))
-    cat(sprintf("[I18N] Use i18n$t(\"namespaced.key\") or t_(\"namespaced.key\")\n"))
+    debug_log("Pure modular translation system with wrapper initialized", "I18N")
+    debug_log(sprintf("Translation file: %s", translation_file), "I18N")
+    debug_log(sprintf("File size: %s KB", round(file.info(translation_file)$size / 1024, 1)), "I18N")
+    debug_log("Use i18n$t(\"namespaced.key\") or t_(\"namespaced.key\")", "I18N")
   }
 
   # Note: No cleanup needed for persistent translation file
@@ -253,7 +253,7 @@ if (USE_MODULAR_TRANSLATIONS) {
   # and will be overwritten on next initialization
 } else {
   # Fallback to monolithic translation file
-  cat("[I18N] Using legacy monolithic translation file\n")
+  debug_log("Using legacy monolithic translation file", "I18N")
   i18n_translator <- Translator$new(
     translation_json_path = "translations/translation.json.backup"
   )
@@ -285,6 +285,110 @@ if (USE_MODULAR_TRANSLATIONS) {
 
 # Set default language to English
 i18n$set_translation_language("en")
+
+# ==============================================================================
+# P2 FIX: Translation Validation at Startup
+# ==============================================================================
+
+#' Validate that all required translation keys exist
+#'
+#' Reports any missing translation keys at startup.
+#'
+#' @param i18n The i18n translator object
+#' @param required_keys Character vector of required keys (optional)
+#' @return Invisibly returns list of missing keys
+#' @export
+validate_translation_completeness <- function(i18n, required_keys = NULL) {
+  # Define critical keys that must exist
+  critical_keys <- c(
+    "ui.header.title",
+    "ui.header.preloader_title",
+    "ui.sidebar.home",
+    "buttons.save",
+    "buttons.cancel",
+    "buttons.delete",
+    "messages.success",
+    "messages.error"
+  )
+
+  keys_to_check <- if (!is.null(required_keys)) required_keys else critical_keys
+
+  missing_keys <- character()
+  for (key in keys_to_check) {
+    tryCatch({
+      translated <- i18n$t(key)
+      # If translation returns the key itself, it's missing
+      if (identical(translated, key)) {
+        missing_keys <- c(missing_keys, key)
+      }
+    }, error = function(e) {
+      missing_keys <<- c(missing_keys, key)
+    })
+  }
+
+  if (length(missing_keys) > 0) {
+    warning(sprintf(
+      "Missing %d translation key(s): %s",
+      length(missing_keys),
+      paste(head(missing_keys, 10), collapse = ", ")
+    ))
+  }
+
+  invisible(missing_keys)
+}
+
+#' Get all translation keys for a language
+#'
+#' @param i18n The i18n translator object
+#' @param language Language code (default: "en")
+#' @return Character vector of all translation keys
+#' @export
+get_translation_keys <- function(i18n, language = "en") {
+  tryCatch({
+    translations <- i18n$get_translations()
+    if (!is.null(translations) && language %in% names(translations)) {
+      return(names(translations[[language]]))
+    }
+    return(character())
+  }, error = function(e) {
+    return(character())
+  })
+}
+
+#' Check translation coverage across languages
+#'
+#' @param i18n The i18n translator object
+#' @return Data frame with language coverage stats
+#' @export
+check_translation_coverage <- function(i18n) {
+  languages <- tryCatch(i18n$get_languages(), error = function(e) character())
+  if (length(languages) == 0) return(NULL)
+
+  base_lang <- "en"
+  base_keys <- get_translation_keys(i18n, base_lang)
+  if (length(base_keys) == 0) return(NULL)
+
+  coverage <- data.frame(
+    language = languages,
+    total_keys = length(base_keys),
+    translated = sapply(languages, function(lang) {
+      keys <- get_translation_keys(i18n, lang)
+      sum(keys %in% base_keys)
+    }),
+    stringsAsFactors = FALSE
+  )
+  coverage$coverage_pct <- round(coverage$translated / coverage$total_keys * 100, 1)
+
+  coverage
+}
+
+# Run validation at startup (non-blocking)
+tryCatch({
+  validate_translation_completeness(i18n)
+}, error = function(e) {
+  # Don't fail startup on validation error
+  message("Translation validation skipped: ", e$message)
+})
 
 # Available languages
 AVAILABLE_LANGUAGES <- list(
@@ -334,6 +438,139 @@ debug_log <- function(message, context = NULL) {
   }
 }
 
+#' P1 FIX: Startup Log Function
+#'
+#' Logs startup messages. These are shown even in production mode since
+#' they provide important feedback during app initialization.
+#' Use debug_log() for ongoing diagnostic messages.
+#'
+#' @param message Character string to log
+#' @param type One of "info", "success", "warning", "error"
+#' @param verbose If FALSE, only show in DEBUG_MODE
+#' @keywords internal
+startup_log <- function(message, type = "info", verbose = TRUE) {
+  # Only show verbose messages in DEBUG_MODE
+  if (!verbose && !DEBUG_MODE) {
+    return(invisible(NULL))
+  }
+
+  prefix <- switch(type,
+    "success" = "\u2713 ",
+    "warning" = "\u26A0 ",
+    "error"   = "\u2717 ",
+    "info"    = "  "
+  )
+
+  cat(paste0(prefix, message, "\n"))
+}
+
+# ==============================================================================
+# P2 FIX: Reusable Logging Utilities
+# ==============================================================================
+
+#' Log a startup step with section and status
+#'
+#' Provides structured logging for application startup phases.
+#'
+#' @param section The startup section (e.g., "packages", "modules", "config")
+#' @param status Status of the step ("started", "completed", "failed")
+#' @param details Optional additional details
+#' @export
+log_startup_step <- function(section, status, details = NULL) {
+  timestamp <- format(Sys.time(), "%H:%M:%S")
+  status_icon <- switch(status,
+    "started"   = "\u25B6",
+    "completed" = "\u2713",
+    "failed"    = "\u2717",
+    "skipped"   = "\u25CB",
+    "\u2022"
+  )
+
+  msg <- sprintf("[%s] %s %s", timestamp, status_icon, section)
+  if (!is.null(details)) {
+    msg <- paste0(msg, " - ", details)
+  }
+
+  cat(msg, "\n")
+}
+
+#' Log a data structure with summary information
+#'
+#' Useful for debugging data flow through the application.
+#'
+#' @param name Name of the data structure
+#' @param type Type of structure (e.g., "data.frame", "list", "reactive")
+#' @param count Number of items/rows
+#' @param ids Optional vector of IDs to show (first 5)
+#' @export
+log_data_structure <- function(name, type, count, ids = NULL) {
+  if (!DEBUG_MODE) return(invisible(NULL))
+
+  msg <- sprintf("[DATA] %s (%s): %d items", name, type, count)
+  if (!is.null(ids) && length(ids) > 0) {
+    show_ids <- head(ids, 5)
+    msg <- paste0(msg, " [", paste(show_ids, collapse = ", "))
+    if (length(ids) > 5) msg <- paste0(msg, ", ...")
+    msg <- paste0(msg, "]")
+  }
+
+  cat(msg, "\n")
+}
+
+#' Log a module event
+#'
+#' Standardized logging for module lifecycle and user interactions.
+#'
+#' @param module Module name (e.g., "isa_data_entry", "cld_visualization")
+#' @param event Event type (e.g., "init", "render", "click", "save")
+#' @param data Optional data to include in log
+#' @export
+log_module_event <- function(module, event, data = NULL) {
+  if (!DEBUG_MODE) return(invisible(NULL))
+
+  timestamp <- format(Sys.time(), "%H:%M:%S.%OS3")
+  msg <- sprintf("[%s] [%s] %s", timestamp, module, event)
+
+  if (!is.null(data)) {
+    if (is.list(data)) {
+      data_str <- paste(names(data), "=", sapply(data, function(x) {
+        if (length(x) > 1) paste0("[", length(x), " items]")
+        else as.character(x)
+      }), collapse = ", ")
+      msg <- paste0(msg, " {", data_str, "}")
+    } else {
+      msg <- paste0(msg, " (", as.character(data), ")")
+    }
+  }
+
+  cat(msg, "\n")
+}
+
+#' Log an error with context
+#'
+#' Standardized error logging with stack trace option.
+#'
+#' @param context Where the error occurred
+#' @param error The error object or message
+#' @param include_trace Whether to include a simplified stack trace
+#' @export
+log_error <- function(context, error, include_trace = FALSE) {
+  timestamp <- format(Sys.time(), "%H:%M:%S")
+  msg <- if (inherits(error, "error")) error$message else as.character(error)
+
+  cat(sprintf("[%s] [ERROR] %s: %s\n", timestamp, context, msg))
+
+  if (include_trace && DEBUG_MODE) {
+    calls <- sys.calls()
+    if (length(calls) > 2) {
+      cat("  Stack trace:\n")
+      for (i in seq(max(1, length(calls) - 5), length(calls) - 1)) {
+        cat(sprintf("    %d: %s\n", i, deparse(calls[[i]])[1]))
+      }
+    }
+  }
+}
+
 # Application configuration from environment variables
 if (file.exists(get_project_file("config", "app_config.R"))) {
   source(get_project_file("config", "app_config.R"), local = FALSE)
@@ -363,6 +600,12 @@ source("functions/excel_import_helpers.R", local = FALSE)  # FALSE = global scop
 
 # Data structure functions
 source("functions/data_structure.R", local = TRUE)
+
+# Data accessor functions (simplifies deep reactive nesting)
+source("functions/data_accessors.R", local = TRUE)
+
+# Lazy loading system for optional modules (improves startup time)
+source("functions/lazy_loading.R", local = TRUE)
 
 # Network analysis functions
 source("functions/network_analysis.R", local = TRUE)
@@ -431,6 +674,7 @@ source("modules/workflow_stepper_module.R", local = TRUE)
 # ML can be enabled/disabled via environment variable or user preference
 ML_ENABLED <- Sys.getenv("MARINESABRES_ML_ENABLED", "TRUE") == "TRUE"
 ML_AVAILABLE <- FALSE  # Will be set to TRUE if model loads successfully
+ENSEMBLE_AVAILABLE <- FALSE  # Will be set to TRUE if ensemble loads successfully
 
 if (ML_ENABLED) {
   cat("\n")
@@ -481,6 +725,18 @@ if (ML_ENABLED) {
     source("functions/ml_feedback_logger.R", local = TRUE)
     cat("✓ ML feedback logger loaded\n")
 
+    # Load advanced text embeddings module (P1 enhancement)
+    if (file.exists("functions/ml_text_embeddings.R")) {
+      source("functions/ml_text_embeddings.R", local = TRUE)
+      cat("✓ ML text embeddings loaded\n")
+    }
+
+    # Load model registry (P1 enhancement)
+    if (file.exists("functions/ml_model_registry.R")) {
+      source("functions/ml_model_registry.R", local = TRUE)
+      cat("✓ ML model registry loaded\n")
+    }
+
     # Try to load trained model
     model_path <- "models/connection_predictor_best.pt"
     if (file.exists(model_path)) {
@@ -497,6 +753,24 @@ if (ML_ENABLED) {
       cat(sprintf("\n✗ ML model file not found: %s\n", model_path))
       cat("  ML predictions will not be available\n")
       cat("  To enable ML, run: Rscript scripts/train_connection_predictor.R\n")
+    }
+
+    # P1 FIX: Try to load ensemble models for improved predictions
+    ENSEMBLE_AVAILABLE <<- FALSE
+    ensemble_path <- "models/ensemble"
+    if (dir.exists(ensemble_path) && exists("load_ensemble", mode = "function")) {
+      tryCatch({
+        load_ensemble(ensemble_path)
+        ENSEMBLE_AVAILABLE <<- TRUE
+        cat(sprintf("\n✓ ML Ensemble Loaded Successfully\n"))
+        cat(sprintf("  - Path: %s\n", ensemble_path))
+        cat(sprintf("  - Ensemble predictions enabled\n"))
+      }, error = function(e) {
+        cat(sprintf("\n✗ ML Ensemble not loaded: %s\n", e$message))
+        cat("  Using single model predictions\n")
+      })
+    } else if (ML_AVAILABLE) {
+      cat("\n  Ensemble not available - using single model\n")
     }
 
   }, error = function(e) {
@@ -550,6 +824,10 @@ source(get_project_file("config", "entry_points.R"), local = FALSE)
 # NOTE: Default visualization constants (DEFAULT_NODE_SIZE, DEFAULT_EDGE_WIDTH, etc.)
 # are defined in constants.R — the single source of truth for all constants.
 source("functions/utils.R", local = FALSE)
+
+# Sidebar UI helpers (includes ARIA accessibility functions)
+# NOTE: Also sourced in app.R, but needed here for test availability
+source("functions/ui_sidebar.R", local = FALSE)
 
 # NOTE: validate_element_data() defined in functions/data_structure.R
 # NOTE: validate_adjacency_matrix() defined in functions/data_structure.R

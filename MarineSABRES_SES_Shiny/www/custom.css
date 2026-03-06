@@ -822,22 +822,228 @@ h2 .fa, h2 .fas {
 }
 
 /* ============================================================================
+   TOUCH & MOBILE NAVIGATION (P2 #28)
+   ============================================================================ */
+
+/* Ensure minimum touch target size (48px as per WCAG/Material Design) */
+@media (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .dropdown-item,
+  button,
+  [role="button"],
+  input[type="checkbox"] + label,
+  input[type="radio"] + label {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px 16px;
+  }
+
+  /* Larger touch targets for sidebar menu items */
+  .sidebar .nav-link,
+  .main-sidebar .nav-link {
+    padding: 14px 20px;
+    margin: 2px 8px;
+    border-radius: 8px;
+  }
+
+  /* Increase spacing between clickable elements */
+  .nav-item {
+    margin: 4px 0;
+  }
+
+  /* Larger form controls */
+  .form-control,
+  .form-select,
+  select.form-control {
+    min-height: 48px;
+    padding: 12px 16px;
+    font-size: 16px; /* Prevent iOS zoom on focus */
+  }
+
+  /* Larger close/dismiss buttons */
+  .close,
+  .btn-close,
+  [data-dismiss],
+  [data-bs-dismiss] {
+    min-width: 48px;
+    min-height: 48px;
+    font-size: 24px;
+  }
+
+  /* Network canvas touch improvements */
+  .vis-network canvas {
+    touch-action: manipulation; /* Disable double-tap zoom, allow pan/pinch */
+  }
+
+  /* Dropdown menus more accessible on touch */
+  .dropdown-menu {
+    min-width: 200px;
+    padding: 8px 0;
+  }
+
+  .dropdown-item {
+    padding: 12px 20px;
+  }
+
+  /* Action buttons in tables */
+  .dataTables_wrapper .btn-sm {
+    min-height: 40px;
+    min-width: 40px;
+    padding: 8px 12px;
+  }
+
+  /* Modal close button */
+  .modal-header .btn-close,
+  .modal-header .close {
+    padding: 16px;
+  }
+
+  /* Checkbox and radio larger hit areas */
+  .form-check {
+    min-height: 48px;
+    padding-left: 2em;
+    display: flex;
+    align-items: center;
+  }
+
+  .form-check-input {
+    width: 24px;
+    height: 24px;
+    margin-top: 0;
+  }
+
+  .form-check-label {
+    padding-left: 8px;
+    line-height: 48px;
+  }
+}
+
+/* Swipe-friendly sidebar */
+@media (max-width: 991.98px) {
+  .main-sidebar {
+    transition: transform 0.3s ease-out;
+    will-change: transform;
+  }
+
+  .main-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  /* Touch-friendly hamburger menu */
+  .navbar-toggler {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 12px;
+    border: none;
+  }
+
+  /* Sticky bottom navigation for key actions */
+  .mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+    z-index: 1050;
+  }
+
+  .mobile-bottom-nav .nav-item {
+    flex: 1;
+    text-align: center;
+  }
+
+  .mobile-bottom-nav .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 4px;
+    font-size: 11px;
+  }
+
+  .mobile-bottom-nav .nav-link i {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+}
+
+/* Prevent accidental taps during scrolling (momentum scrolling) */
+.scrollable-container {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Visual feedback for touch interactions */
+@media (hover: none) {
+  .btn:active,
+  .nav-link:active,
+  .dropdown-item:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+
+  /* Remove hover effects that don't work well on touch */
+  .btn:hover,
+  .card:hover,
+  .nav-link:hover {
+    transform: none;
+    box-shadow: inherit;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 991.98px) and (orientation: landscape) {
+  .content-wrapper {
+    padding: 8px 16px;
+  }
+
+  .vis-network {
+    min-height: 200px;
+    max-height: 60vh;
+  }
+
+  /* Reduce header size in landscape */
+  .main-header {
+    min-height: 48px;
+  }
+}
+
+/* ============================================================================
    PRINT STYLES
    ============================================================================ */
 
 @media print {
+  /* Hide navigation and UI chrome */
   .sidebar,
   .navbar,
   .main-sidebar,
   .main-header,
   .main-footer,
-  .btn,
   .no-print,
   .breadcrumb-container,
   .navigation-buttons,
   .progress-container,
   .settings-dropdown {
     display: none !important;
+  }
+
+  /* Hide most buttons, but allow explicit print-friendly ones */
+  .btn:not(.btn-print-visible):not(.btn-export):not([data-print="show"]) {
+    display: none !important;
+  }
+
+  /* Allow certain buttons to be visible in print */
+  .btn.btn-print-visible,
+  .btn.btn-export,
+  .btn[data-print="show"] {
+    display: inline-block !important;
+    background-color: #fff !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
   }
 
   .content-wrapper {
@@ -861,6 +1067,18 @@ h2 .fa, h2 .fas {
   a {
     color: #000000;
     text-decoration: none;
+  }
+
+  /* Show print-specific elements */
+  .print-only {
+    display: block !important;
+  }
+
+  /* Hide print-only elements in screen view */
+  @media screen {
+    .print-only {
+      display: none !important;
+    }
   }
 }
 
@@ -961,4 +1179,90 @@ h2 .fa, h2 .fas {
   top: 15px !important;
   right: 15px !important;
   z-index: 10001 !important;
+}
+
+/* ============================================================================
+   ACCESSIBILITY STYLES (P0 Accessibility Fix)
+   ============================================================================ */
+
+/* Screen reader only - visually hidden but accessible */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Skip link - visible on focus for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--ocean-primary, #1a5f7a);
+  color: white;
+  padding: 8px 16px;
+  z-index: 10000;
+  text-decoration: none;
+  font-weight: 600;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--bio-cyan, #00d4aa);
+  outline-offset: 2px;
+}
+
+/* Focus visible indicators for keyboard navigation */
+:focus-visible {
+  outline: 3px solid var(--bio-cyan, #00d4aa);
+  outline-offset: 2px;
+}
+
+/* ARIA live region for dynamic status updates */
+.aria-status {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Ensure interactive elements have visible focus */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--bio-cyan, #00d4aa);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.2);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn-primary,
+  .btn-success,
+  .btn-warning,
+  .btn-danger {
+    border: 2px solid currentColor;
+  }
+  
+  .box,
+  .card {
+    border: 2px solid #000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

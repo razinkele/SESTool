@@ -84,11 +84,6 @@ log_message <- function(message, level = "INFO") {
 
   # Print to console
   message(log_entry)
-
-  # Optionally write to log file
-  # log_file <- "logs/app.log"
-  # if (!dir.exists("logs")) dir.create("logs")
-  # write(log_entry, file = log_file, append = TRUE)
 }
 
 # ============================================================================

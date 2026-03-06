@@ -1,19 +1,39 @@
-# modules/create_ses_module.R
-# Consolidated "Create SES" Module
-# Purpose: Main entry point for creating Social-Ecological Systems with 3 methods
-# Methods: 1) Standard Entry, 2) AI Assistant, 3) Template-Based
+# =============================================================================
+# MODULE: Create SES
+# File: modules/create_ses_module.R
+# =============================================================================
+#
+# Purpose:
+#   Main entry point for creating Social-Ecological Systems with 3 methods:
+#   1) Standard Entry - Manual data input
+#   2) AI Assistant - ML-assisted element classification
+#   3) Template-Based - Pre-built SES templates
+#
+# Dependencies:
+#   - modules/entry_point_module.R (Standard Entry)
+#   - modules/ai_assistant_module.R (AI Assistant, if available)
+#   - modules/template_ses_module.R (Template-Based)
+#
+# Exports:
+#   - create_ses_ui(id, i18n)
+#   - create_ses_server(id, project_data, i18n, event_bus)
+#
+# =============================================================================
 
-# ============================================================================
+# =============================================================================
 # UI FUNCTION
-# ============================================================================
+# =============================================================================
 
+#' Create SES Module UI
+#'
+#' @param id Character. Module namespace ID
+#' @param i18n Translator object for internationalization
+#' @return A Shiny UI element with method selection cards
+#' @export
 create_ses_ui <- function(id, i18n) {
   ns <- NS(id)
 
   fluidPage(
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-    # REMOVED: useShinyjs() - only called once in main UI (app.R)
-
     # Custom CSS for the Create SES interface
     tags$head(
       tags$style(HTML("
@@ -164,7 +184,7 @@ create_ses_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-create_ses_server <- function(id, project_data_reactive, i18n, parent_session = NULL) {
+create_ses_server <- function(id, project_data_reactive, i18n, parent_session = NULL, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

@@ -7,9 +7,6 @@ auto_save_indicator_ui <- function(id) {
   ns <- NS(id)
 
   tagList(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     # JavaScript handlers
     tags$script(HTML(sprintf("
       // Session-scoped localStorage keys to prevent cross-session data leakage

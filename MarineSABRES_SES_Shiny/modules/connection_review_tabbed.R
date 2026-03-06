@@ -142,9 +142,6 @@ connection_review_tabbed_ui <- function(id, i18n) {
   debug_log(sprintf("UI function called with id: %s", id), "CONN-REVIEW-TABBED")
 
   tagList(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     # Custom CSS
     tags$head(
       tags$style(HTML("

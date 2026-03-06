@@ -13,9 +13,6 @@ export_reports_ui <- function(id, i18n) {
   ns <- NS(id)
 
   tagList(
-    # Use i18n for language support
-    # REMOVED: usei18n() - only called once in main UI (app.R)
-
     fluidRow(
       column(12,
         uiOutput(ns("module_header"))
