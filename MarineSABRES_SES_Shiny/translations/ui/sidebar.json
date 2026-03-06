@@ -442,15 +442,15 @@
       "el": "Template-Based"
     },
     "ui.sidebar.template_based_ses_creation": {
-      "en": "Template based SES creation",
-      "es": "Creación SES basada en plantillas",
-      "fr": "Création SES basée sur des modèles",
-      "de": "Vorlagenbasierte SES-Erstellung",
-      "lt": "SES kūrimas pagal šablonus",
-      "pt": "Criação SES baseada em modelos",
-      "it": "Creazione SES basata su modelli",
-      "no": "Malbasert SES-opprettelse",
-      "el": "Πρότυπο based SES creation"
+      "en": "Templates",
+      "es": "Plantillas",
+      "fr": "Modèles",
+      "de": "Vorlagen",
+      "lt": "Šablonai",
+      "pt": "Modelos",
+      "it": "Modelli",
+      "no": "Maler",
+      "el": "Πρότυπα"
     },
     "ui.sidebar.validation": {
       "en": "Validation",

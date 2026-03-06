@@ -196,12 +196,18 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
               )
             )
           ),
-          # Initialize Bootstrap tooltips after rendering
+          # Initialize Bootstrap native tooltips for template action buttons only
           tags$script(HTML("
             setTimeout(function() {
-              $('[data-toggle=\"tooltip\"]').tooltip({
-                container: 'body',
-                trigger: 'hover'
+              // Use Bootstrap's native Tooltip API - target only template action divs
+              document.querySelectorAll('#template_ses-template_actions [data-toggle=\"tooltip\"]').forEach(function(el) {
+                if (!el._bsTooltip) {
+                  el._bsTooltip = new bootstrap.Tooltip(el, {
+                    container: 'body',
+                    trigger: 'hover',
+                    placement: 'right'
+                  });
+                }
               });
             }, 200);
           "))
@@ -250,12 +256,18 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
             )
           })
         ),
-        # Initialize Bootstrap tooltips after rendering
+        # Initialize Bootstrap native tooltips for template cards only
         tags$script(HTML("
           setTimeout(function() {
-            $('.template-card[data-toggle=\"tooltip\"]').tooltip({
-              container: 'body',
-              trigger: 'hover'
+            // Use Bootstrap's native Tooltip API - target only template cards
+            document.querySelectorAll('.template-card[data-toggle=\"tooltip\"]').forEach(function(el) {
+              if (!el._bsTooltip) {
+                el._bsTooltip = new bootstrap.Tooltip(el, {
+                  container: 'body',
+                  trigger: 'hover',
+                  placement: 'right'
+                });
+              }
             });
           }, 200);
         "))

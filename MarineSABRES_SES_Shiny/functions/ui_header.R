@@ -24,6 +24,7 @@ build_dashboard_header <- function(i18n) {
     status = "primary",
     border = TRUE,
     fixed = FALSE,
+    controlbarIcon = NULL,  # Hide controlbar toggle (no controlbar in this app)
 
     # Right-side UI elements
     rightUi = tagList(

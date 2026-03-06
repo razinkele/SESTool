@@ -1266,3 +1266,21 @@ textarea:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ============================================================================
+   HIDE CONTROLBAR TOGGLE (not used in this app)
+   ============================================================================ */
+/* Hide the controlbar toggle button (grid icon) since controlbar is disabled */
+.navbar-nav > li > a[data-controlbar-slide],
+.navbar-nav > li > a[data-widget="control-sidebar"],
+.navbar .nav-item a .fa-table-cells,
+.navbar .nav-item a .fa-th-large,
+.navbar .nav-item a .fa-th {
+  display: none !important;
+}
+
+/* Also hide the parent li if it only contains the controlbar toggle */
+.navbar-nav > li:has(> a[data-controlbar-slide]),
+.navbar-nav > li:has(> a[data-widget="control-sidebar"]) {
+  display: none !important;
+}

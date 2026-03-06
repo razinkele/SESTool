@@ -418,6 +418,42 @@ $(document).ready(function() {
     }
   }, true); // Use capture phase to run BEFORE other handlers
 
+  // CRITICAL FIX: Force hide tooltips when mouse leaves sidebar items
+  // This prevents tooltip "cluttering" when moving cursor quickly between items
+  document.addEventListener('mouseout', function(e) {
+    var link = e.target.closest('.main-sidebar .nav-link');
+    if (!link) return;
+
+    // Check if we're moving to another nav-link (relatedTarget)
+    var relatedLink = e.relatedTarget ? e.relatedTarget.closest('.main-sidebar .nav-link') : null;
+
+    // If moving to a different link or outside sidebar, hide current tooltip immediately
+    if (!relatedLink || relatedLink !== link) {
+      // Hide tooltip for this element
+      var tooltip = link._bsTooltip || $(link).data('bs.tooltip');
+      if (tooltip) {
+        try {
+          tooltip.hide();
+        } catch(ex) {}
+      }
+
+      // Also remove any orphaned tooltip elements in the DOM
+      document.querySelectorAll('.tooltip.show, .tooltip.fade').forEach(function(t) {
+        // Check if this tooltip belongs to an element that's no longer hovered
+        var tooltipId = t.id;
+        if (tooltipId) {
+          var owner = document.querySelector('[aria-describedby="' + tooltipId + '"]');
+          if (!owner || !owner.matches(':hover')) {
+            t.remove();
+          }
+        } else {
+          // No ID, just remove if it's visible and orphaned
+          t.remove();
+        }
+      });
+    }
+  }, true); // Use capture phase
+
   // Handle any other elements with data-toggle="tooltip" (non-sidebar)
   // Uses Bootstrap's native Tooltip class to avoid jQuery UI conflict
   function initializeOtherTooltips() {
