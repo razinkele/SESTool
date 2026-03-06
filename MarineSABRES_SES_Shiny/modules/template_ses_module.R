@@ -12,36 +12,38 @@ source(get_project_file("functions/template_loader.R"), local = TRUE)
 # TEMPLATE LIBRARY
 # ============================================================================
 
-# Load templates from JSON files in data/ directory
-# Templates are automatically discovered and loaded from data/*_SES_Template.json files
-# This approach allows:
-# - Easy template maintenance (edit JSON instead of R code)
-# - Dynamic template addition (just add new JSON file)
-# - Comprehensive template data (JSON files contain full DAPSI(W)R(M) details)
+# Templates are loaded lazily (on-demand) when user visits the template module.
+# This improves app startup time by deferring JSON parsing until needed.
 #
 # To add a new template:
 # 1. Create a JSON file in data/ folder: YourTemplate_SES_Template.json
 # 2. Follow the JSON structure (see existing templates for examples)
-# 3. The template will be automatically loaded on next app start
+# 3. The template will be available on next module access
 #
 # Supported JSON formats:
 # - Format 1 (comprehensive): {"dapsiwrm_framework": {...}, "template_name": "...", ...}
 # - Format 2 (simplified): {"elements": {...}, "template_info": {...}, ...}
 
-debug_log("Loading SES templates from JSON files...", "TEMPLATE")
-ses_templates <- tryCatch({
-  result <- load_all_templates("data")
-  if (is.null(result) || length(result) == 0) {
-    debug_log("Warning: No templates loaded from data directory", "TEMPLATE", "WARN")
-    list()  # Return empty list instead of NULL
-  } else {
-    result
-  }
-}, error = function(e) {
-  debug_log(paste("Error loading templates:", e$message), "TEMPLATE", "ERROR")
-  list()  # Return empty list on error
-})
-debug_log(sprintf("Loaded %d templates: %s", length(ses_templates), paste(names(ses_templates), collapse=", ")), "TEMPLATE")
+# Lazy template loader - called once when module is first accessed
+.load_templates_lazy <- function() {
+  debug_log("Loading SES templates from JSON files (lazy)...", "TEMPLATE")
+  tryCatch({
+    result <- load_all_templates("data")
+    if (is.null(result) || length(result) == 0) {
+      debug_log("Warning: No templates loaded from data directory", "TEMPLATE", "WARN")
+      list()
+    } else {
+      debug_log(sprintf("Loaded %d templates: %s", length(result), paste(names(result), collapse=", ")), "TEMPLATE")
+      result
+    }
+  }, error = function(e) {
+    debug_log(paste("Error loading templates:", e$message), "TEMPLATE", "ERROR")
+    list()
+  })
+}
+
+# Module-level cache (populated on first access)
+.template_module_cache <- new.env(parent = emptyenv())
 
 
 # ============================================================================
@@ -101,6 +103,14 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       review_mode = NULL,  # "use" or "customize"
       pending_template_switch = NULL  # Stores template ID when awaiting confirmation to switch
     )
+
+    # Lazy template getter - loads templates on first access (not reactive, uses cache)
+    ses_templates <- function() {
+      if (!exists("templates", envir = .template_module_cache)) {
+        assign("templates", .load_templates_lazy(), envir = .template_module_cache)
+      }
+      get("templates", envir = .template_module_cache)
+    }
 
     # Render header
     output$template_header <- renderUI({
@@ -180,8 +190,8 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
     output$template_cards <- renderUI({
       tagList(
         div(class = "template-cards-grid",
-          lapply(names(ses_templates), function(template_id) {
-            template <- ses_templates[[template_id]]
+          lapply(names(ses_templates()), function(template_id) {
+            template <- ses_templates()[[template_id]]
 
             # Card with tooltip data attributes
             tags$div(
@@ -325,9 +335,9 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
     })
 
     # Preview button observers for each template
-    lapply(names(ses_templates), function(template_id) {
+    lapply(names(ses_templates()), function(template_id) {
       observeEvent(input[[paste0("preview_", template_id)]], {
-        template <- ses_templates[[template_id]]
+        template <- ses_templates()[[template_id]]
 
         # Show detailed preview modal
         showModal(modalDialog(
@@ -531,7 +541,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         ", ns(paste0("card_", template_id))))
 
         showNotification(
-          sprintf(i18n$t("Template '%s' selected"), i18n$t(ses_templates[[template_id]]$name_key)),
+          sprintf(i18n$t("Template '%s' selected"), i18n$t(ses_templates()[[template_id]]$name_key)),
           type = "message",
           duration = 2
         )
@@ -542,7 +552,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
     output$template_preview <- renderUI({
       req(rv$selected_template)
 
-      template <- ses_templates[[rv$selected_template]]
+      template <- ses_templates()[[rv$selected_template]]
 
       div(class = "template-preview",
         div(class = "preview-section",
@@ -576,7 +586,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
     output$template_preview_compact <- renderUI({
       req(rv$selected_template)
 
-      template <- ses_templates[[rv$selected_template]]
+      template <- ses_templates()[[rv$selected_template]]
 
       div(style = "font-size: 11px;",
         div(style = "margin-bottom: 5px;",
@@ -703,7 +713,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
     observeEvent(input$review_connections, {
       req(rv$selected_template)
 
-      template <- ses_templates[[rv$selected_template]]
+      template <- ses_templates()[[rv$selected_template]]
 
       # Parse connections for review
       rv$template_connections <- parse_template_connections(template)
@@ -719,7 +729,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
 
       debug_log("Load button clicked", "TEMPLATE")
 
-      template <- ses_templates[[rv$selected_template]]
+      template <- ses_templates()[[rv$selected_template]]
 
       # Load template data directly into project without review
       project_data <- isolate(project_data_reactive())
@@ -790,7 +800,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
     observeEvent(input$customize_template, {
       req(rv$selected_template)
 
-      template <- ses_templates[[rv$selected_template]]
+      template <- ses_templates()[[rv$selected_template]]
 
       # Parse connections for review
       rv$template_connections <- parse_template_connections(template)
@@ -813,7 +823,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       }
 
       req(rv$selected_template)
-      template <- ses_templates[[rv$selected_template]]
+      template <- ses_templates()[[rv$selected_template]]
 
       div(
         # Compact header matching card width
@@ -899,7 +909,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
     observeEvent(input$finalize_template, {
       req(rv$selected_template, rv$template_connections)
 
-      template <- ses_templates[[rv$selected_template]]
+      template <- ses_templates()[[rv$selected_template]]
 
       # Get review status
       status <- review_status()

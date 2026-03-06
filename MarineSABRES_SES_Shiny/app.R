@@ -622,52 +622,8 @@ server <- function(input, output, session) {
 
   debug_log("Session-local i18n translator created", "I18N")
 
-  # ========== AUTO-LOAD DEFAULT TEMPLATE IF EMPTY ==========
-  observe({
-    # Only run once at startup
-    isolate({
-      # Check for fresh_start parameter (set by Clear Session button)
-      # If present, skip auto-loading the template to give user a truly empty start
-      query_params <- parseQueryString(session$clientData$url_search)
-      fresh_start <- isTRUE(query_params$fresh_start == "true")
-
-      if (fresh_start) {
-        debug_log("fresh_start=true detected, skipping template auto-load", "AUTOLOAD")
-        # Clear the URL parameter to avoid persisting it
-        shinyjs::runjs("if (window.history.replaceState) { window.history.replaceState({}, document.title, window.location.pathname); }")
-        return()  # Skip auto-load
-      }
-
-      data <- project_data()
-      # Check if all SES element types are empty or missing
-      isa <- data$data$isa_data
-      if (is_empty_isa_data(isa)) {
-        debug_log("No SES data found, loading default template...", "AUTOLOAD")
-        # Load the migrated Caribbean template (update path if needed)
-        template_path <- "data/Caribbean_SES_Template.json"
-        if (file.exists(template_path)) {
-          template <- load_template_from_json(template_path)
-          # Build project_data structure
-          new_data <- data
-          new_data$data$isa_data$drivers <- template$drivers
-          new_data$data$isa_data$activities <- template$activities
-          new_data$data$isa_data$pressures <- template$pressures
-          new_data$data$isa_data$marine_processes <- template$marine_processes
-          new_data$data$isa_data$ecosystem_services <- template$ecosystem_services
-          new_data$data$isa_data$goods_benefits <- template$goods_benefits
-          new_data$data$isa_data$responses <- template$responses
-          new_data$data$isa_data$adjacency_matrices <- template$adjacency_matrices
-          new_data$data$metadata$template_used <- template$template_name %||% "Caribbean_SES_Template"
-          new_data$data$metadata$source <- "autoloaded_default_template"
-          new_data$last_modified <- Sys.time()
-          project_data(new_data)
-          debug_log("Default template loaded successfully", "AUTOLOAD")
-        } else {
-          debug_log(paste("ERROR: Default template file not found at:", template_path), "AUTOLOAD")
-        }
-      }
-    })
-  })
+  # NOTE: Auto-loading of default template was removed.
+  # Users now start with an empty project and must explicitly select a template.
 
   # ========== RESTORE PROJECT DATA AFTER LANGUAGE CHANGE ==========
   # When user changes language, the page reloads. To preserve their work,
