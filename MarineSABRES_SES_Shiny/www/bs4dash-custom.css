@@ -1011,22 +1011,24 @@ body .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
 }
 
 .tooltip-inner {
-  background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-abyss) 100%) !important;
-  color: #fff !important;
+  background: #0f2744 !important;
+  background: linear-gradient(135deg, #0f2744 0%, #0a1628 100%) !important;
+  color: #ffffff !important;
   border: 1px solid rgba(0, 212, 170, 0.3) !important;
-  box-shadow: var(--shadow-medium), 0 0 20px rgba(0, 212, 170, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(10, 22, 40, 0.3), 0 0 20px rgba(0, 212, 170, 0.2) !important;
   max-width: 300px;
   padding: 0.75rem 1rem;
   text-align: left;
-  border-radius: var(--radius-md);
+  border-radius: 10px;
+  opacity: 1 !important;
 }
 
 .tooltip .arrow::before,
 .tooltip .tooltip-arrow::before {
-  border-right-color: var(--ocean-deep) !important;
-  border-left-color: var(--ocean-deep) !important;
-  border-top-color: var(--ocean-deep) !important;
-  border-bottom-color: var(--ocean-deep) !important;
+  border-right-color: #0f2744 !important;
+  border-left-color: #0f2744 !important;
+  border-top-color: #0f2744 !important;
+  border-bottom-color: #0f2744 !important;
 }
 
 .sidebar .nav-sidebar .nav-item .nav-link[title]:hover,
@@ -1049,10 +1051,12 @@ body .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
 .bs-tooltip-right .tooltip-inner,
 .bs-tooltip-bottom .tooltip-inner,
 .bs-tooltip-left .tooltip-inner {
-  background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-abyss) 100%) !important;
-  color: #fff !important;
+  background: #0f2744 !important;
+  background: linear-gradient(135deg, #0f2744 0%, #0a1628 100%) !important;
+  color: #ffffff !important;
   border: 1px solid rgba(0, 212, 170, 0.3) !important;
-  box-shadow: var(--shadow-medium) !important;
+  box-shadow: 0 8px 24px rgba(10, 22, 40, 0.3) !important;
+  opacity: 1 !important;
 }
 
 /* =================================================================
