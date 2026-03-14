@@ -261,7 +261,15 @@ workflow_stepper_server <- function(id, project_data_reactive, i18n,
 
     # --- RENDER STEPPER BAR ---
     output$stepper_bar <- renderUI({
-      req(user_level_reactive() == "beginner")
+      # Use config system to determine if stepper should be shown
+      show_stepper <- tryCatch({
+        config <- get_level_config(user_level_reactive())
+        isTRUE(config$show_workflow_stepper)
+      }, error = function(e) {
+        # Fallback: show only for beginner
+        user_level_reactive() == "beginner"
+      })
+      req(show_stepper)
       req(wf$visible)
 
       cur <- current_step()

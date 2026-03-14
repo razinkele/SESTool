@@ -575,6 +575,12 @@ if (file.exists(get_project_file("config", "app_config.R"))) {
   source(get_project_file("config", "app_config.R"), local = FALSE)
 }
 
+# User level configuration system (centralised feature toggles per level)
+if (file.exists(get_project_file("config", "user_level_config.R"))) {
+  source(get_project_file("config", "user_level_config.R"), local = FALSE)
+  startup_log("User level config loaded", "success", verbose = FALSE)
+}
+
 # ============================================================================
 # SOURCE HELPER FUNCTIONS
 # ============================================================================

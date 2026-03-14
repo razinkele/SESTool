@@ -966,6 +966,8 @@ server <- function(input, output, session) {
     query <- parseQueryString(session$clientData$url_search)
     if (!is.null(query$user_level) && query$user_level %in% c("beginner", "intermediate", "expert")) {
       user_level(query$user_level)
+      # Initialize the in-memory level config (overrides loaded later from localStorage via modal handlers)
+      tryCatch(set_active_level_config(query$user_level), error = function(e) NULL)
       debug_log(sprintf("Loaded from URL: %s", query$user_level), "USER-LEVEL")
     }
   })

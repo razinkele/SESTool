@@ -1880,6 +1880,193 @@
       "it": "Errore nel reset delle impostazioni:",
       "no": "Kunne ikke tilbakestille innstillinger:",
       "el": "Αποτυχία επαναφοράς ρυθμίσεων:"
+    },
+    "ui.modals.level_section_elements": {
+      "en": "Elements",
+      "es": "Elementos",
+      "fr": "Éléments",
+      "de": "Elemente",
+      "lt": "Elementai",
+      "pt": "Elementos",
+      "it": "Elementi",
+      "no": "Elementer",
+      "el": "Στοιχεία"
+    },
+    "ui.modals.level_unlimited_elements": {
+      "en": "Unlimited elements per category",
+      "es": "Elementos ilimitados por categoría",
+      "fr": "Éléments illimités par catégorie",
+      "de": "Unbegrenzte Elemente pro Kategorie",
+      "lt": "Neribojamas elementų skaičius kategorijoje",
+      "pt": "Elementos ilimitados por categoria",
+      "it": "Elementi illimitati per categoria",
+      "no": "Ubegrensede elementer per kategori",
+      "el": "Απεριόριστα στοιχεία ανά κατηγορία"
+    },
+    "ui.modals.level_section_menu_items": {
+      "en": "Menu Items",
+      "es": "Elementos del Menú",
+      "fr": "Éléments du Menu",
+      "de": "Menüpunkte",
+      "lt": "Meniu elementai",
+      "pt": "Itens do Menu",
+      "it": "Voci del Menu",
+      "no": "Menyelementer",
+      "el": "Στοιχεία Μενού"
+    },
+    "ui.modals.level_show_pims": {
+      "en": "PIMS Module (Project Information Management)",
+      "es": "Módulo PIMS (Gestión de Información del Proyecto)",
+      "fr": "Module PIMS (Gestion des Informations du Projet)",
+      "de": "PIMS-Modul (Projektinformationsverwaltung)",
+      "lt": "PIMS modulis (Projekto informacijos valdymas)",
+      "pt": "Módulo PIMS (Gestão de Informação do Projeto)",
+      "it": "Modulo PIMS (Gestione Informazioni Progetto)",
+      "no": "PIMS-modul (Prosjektinformasjonsstyring)",
+      "el": "Μονάδα PIMS (Διαχείριση Πληροφοριών Έργου)"
+    },
+    "ui.modals.level_show_graphical_ses": {
+      "en": "Graphical SES Creator",
+      "es": "Creador gráfico de SES",
+      "fr": "Créateur graphique de SES",
+      "de": "Grafischer SES-Ersteller",
+      "lt": "Grafinis SES kūrėjas",
+      "pt": "Criador gráfico de SES",
+      "it": "Creatore grafico SES",
+      "no": "Grafisk SES-skaper",
+      "el": "Γραφικός δημιουργός SES"
+    },
+    "ui.modals.level_show_response_validation": {
+      "en": "Response & Validation module",
+      "es": "Módulo de Respuesta y Validación",
+      "fr": "Module de Réponse et Validation",
+      "de": "Antwort- & Validierungsmodul",
+      "lt": "Atsakymo ir patvirtinimo modulis",
+      "pt": "Módulo de Resposta e Validação",
+      "it": "Modulo di Risposta e Validazione",
+      "no": "Respons- og valideringsmodul",
+      "el": "Ενότητα Απόκρισης και Επικύρωσης"
+    },
+    "ui.modals.level_show_scenario_builder": {
+      "en": "Scenario Builder",
+      "es": "Constructor de Escenarios",
+      "fr": "Constructeur de Scénarios",
+      "de": "Szenario-Builder",
+      "lt": "Scenarijų kūrėjas",
+      "pt": "Construtor de Cenários",
+      "it": "Costruttore di Scenari",
+      "no": "Scenariobygger",
+      "el": "Δημιουργός Σεναρίων"
+    },
+    "ui.modals.level_show_all_analysis": {
+      "en": "Show all analysis tools (vs. simplified)",
+      "es": "Mostrar todas las herramientas de análisis (vs. simplificado)",
+      "fr": "Afficher tous les outils d'analyse (vs. simplifié)",
+      "de": "Alle Analysewerkzeuge anzeigen (vs. vereinfacht)",
+      "lt": "Rodyti visus analizės įrankius (vs. supaprastinta)",
+      "pt": "Mostrar todas as ferramentas de análise (vs. simplificado)",
+      "it": "Mostra tutti gli strumenti di analisi (vs. semplificato)",
+      "no": "Vis alle analyseverktøy (vs. forenklet)",
+      "el": "Εμφάνιση όλων των εργαλείων ανάλυσης (vs. απλοποιημένη)"
+    },
+    "ui.modals.level_show_method_chooser": {
+      "en": "Show Create SES method chooser",
+      "es": "Mostrar selector de método de creación SES",
+      "fr": "Afficher le sélecteur de méthode de création SES",
+      "de": "SES-Erstellungsmethoden-Auswahl anzeigen",
+      "lt": "Rodyti SES kūrimo metodo pasirinkimą",
+      "pt": "Mostrar seletor de método de criação SES",
+      "it": "Mostra selettore metodo creazione SES",
+      "no": "Vis SES-opprettelsesmetodevelger",
+      "el": "Εμφάνιση επιλογέα μεθόδου δημιουργίας SES"
+    },
+    "ui.modals.level_section_guidance": {
+      "en": "Guidance",
+      "es": "Orientación",
+      "fr": "Guidage",
+      "de": "Anleitung",
+      "lt": "Gairės",
+      "pt": "Orientação",
+      "it": "Guida",
+      "no": "Veiledning",
+      "el": "Καθοδήγηση"
+    },
+    "ui.modals.level_show_stepper": {
+      "en": "Show workflow stepper bar",
+      "es": "Mostrar barra de pasos del flujo de trabajo",
+      "fr": "Afficher la barre de progression du flux de travail",
+      "de": "Workflow-Schrittleiste anzeigen",
+      "lt": "Rodyti darbo eigos žingsnių juostą",
+      "pt": "Mostrar barra de etapas do fluxo de trabalho",
+      "it": "Mostra barra dei passaggi del flusso di lavoro",
+      "no": "Vis arbeidsflyt-trinnlinje",
+      "el": "Εμφάνιση γραμμής βημάτων ροής εργασίας"
+    },
+    "ui.modals.level_show_advanced_cld": {
+      "en": "Show advanced CLD controls (edit mode, filters)",
+      "es": "Mostrar controles avanzados de CLD (modo edición, filtros)",
+      "fr": "Afficher les contrôles CLD avancés (mode édition, filtres)",
+      "de": "Erweiterte CLD-Steuerungen anzeigen (Bearbeitungsmodus, Filter)",
+      "lt": "Rodyti išplėstinius CLD valdiklius (redagavimo režimas, filtrai)",
+      "pt": "Mostrar controles CLD avançados (modo edição, filtros)",
+      "it": "Mostra controlli CLD avanzati (modalità modifica, filtri)",
+      "no": "Vis avanserte CLD-kontroller (redigeringsmodus, filtre)",
+      "el": "Εμφάνιση προηγμένων ελέγχων CLD (λειτουργία επεξεργασίας, φίλτρα)"
+    },
+    "ui.modals.level_section_templates": {
+      "en": "Templates",
+      "es": "Plantillas",
+      "fr": "Modèles",
+      "de": "Vorlagen",
+      "lt": "Šablonai",
+      "pt": "Modelos",
+      "it": "Modelli",
+      "no": "Maler",
+      "el": "Πρότυπα"
+    },
+    "ui.modals.level_templates_all": {
+      "en": "Show all templates",
+      "es": "Mostrar todas las plantillas",
+      "fr": "Afficher tous les modèles",
+      "de": "Alle Vorlagen anzeigen",
+      "lt": "Rodyti visus šablonus",
+      "pt": "Mostrar todos os modelos",
+      "it": "Mostra tutti i modelli",
+      "no": "Vis alle maler",
+      "el": "Εμφάνιση όλων των προτύπων"
+    },
+    "ui.modals.level_templates_simple": {
+      "en": "Simple templates only",
+      "es": "Solo plantillas simples",
+      "fr": "Modèles simples uniquement",
+      "de": "Nur einfache Vorlagen",
+      "lt": "Tik paprasti šablonai",
+      "pt": "Apenas modelos simples",
+      "it": "Solo modelli semplici",
+      "no": "Kun enkle maler",
+      "el": "Μόνο απλά πρότυπα"
+    },
+    "ui.modals.level_reset_defaults": {
+      "en": "Reset to defaults",
+      "es": "Restablecer valores predeterminados",
+      "fr": "Réinitialiser par défaut",
+      "de": "Auf Standard zurücksetzen",
+      "lt": "Atstatyti numatytuosius",
+      "pt": "Redefinir para padrões",
+      "it": "Ripristina impostazioni predefinite",
+      "no": "Tilbakestill til standard",
+      "el": "Επαναφορά στις προεπιλογές"
+    },
+    "ui.modals.level_defaults_restored": {
+      "en": "Settings restored to level defaults.",
+      "es": "Configuraciones restauradas a los valores predeterminados del nivel.",
+      "fr": "Paramètres restaurés aux valeurs par défaut du niveau.",
+      "de": "Einstellungen auf Standardwerte der Stufe zurückgesetzt.",
+      "lt": "Nustatymai atstatyti į lygio numatytuosius.",
+      "pt": "Configurações restauradas para os padrões do nível.",
+      "it": "Impostazioni ripristinate ai valori predefiniti del livello.",
+      "no": "Innstillinger tilbakestilt til standardverdier for nivå.",
+      "el": "Οι ρυθμίσεις επαναφέρθηκαν στις προεπιλογές επιπέδου."
     }
   }
 }

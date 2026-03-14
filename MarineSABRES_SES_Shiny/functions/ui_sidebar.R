@@ -109,38 +109,56 @@ add_submenu_tooltip <- function(text, tabName, tooltip_text = NULL) {
 }
 
 # ============================================================================
-# USER LEVEL FILTER
+# USER LEVEL FILTER (config-driven)
 # ============================================================================
 
 #' Helper function to determine if menu item should be shown based on user level
+#'
+#' Uses the centralised USER_LEVEL_DEFAULTS / get_level_config() system when
+#' available, with a hardcoded fallback for backward compatibility.
 #'
 #' @param item_name Name of the menu item
 #' @param user_level User experience level ("beginner", "intermediate", "expert")
 #' @return TRUE if item should be shown, FALSE otherwise
 should_show_menu_item <- function(item_name, user_level) {
-  # Beginner: Only show essential items (Graphical SES Creator removed to reduce confusion)
+  # Try to use config-driven logic
+  config <- tryCatch(get_level_config(user_level), error = function(e) NULL)
+
+  if (!is.null(config)) {
+    # Map menu item names to config keys
+    config_map <- list(
+      "PIMS Module"              = "show_pims",
+      "Graphical SES Creator"    = "show_graphical_ses_creator",
+      "Response & Validation"    = "show_response_validation"
+    )
+
+    key <- config_map[[item_name]]
+    if (!is.null(key)) {
+      return(isTRUE(config[[key]]))
+    }
+
+    # Items that are always shown regardless of level
+    always_show <- c(
+      "Getting Started", "Dashboard", "Recent Projects",
+      "Create SES", "SES Visualization", "Analysis Tools",
+      "Import Data", "Export Data", "Prepare Report"
+    )
+    if (item_name %in% always_show) return(TRUE)
+
+    # Unknown item: show for non-beginner, hide for beginner
+    return(user_level != "beginner")
+  }
+
+  # ----- Fallback: hardcoded logic (if config system not loaded) -----
   if (user_level == "beginner") {
     beginner_items <- c(
-      "Getting Started",
-      "Dashboard",
-      "Recent Projects",  # Easy access to saved projects
-      "Create SES",  # Will show AI guided and Template based creation
-      # "Graphical SES Creator" removed - too complex for beginners
-      "SES Visualization",
-      "Analysis Tools",  # Will show Loop Detection and Leverage Point Analysis only
-      "Import Data",  # Import from Excel
-      "Export Data",
-      "Prepare Report"
+      "Getting Started", "Dashboard", "Recent Projects",
+      "Create SES", "SES Visualization", "Analysis Tools",
+      "Import Data", "Export Data", "Prepare Report"
     )
     return(item_name %in% beginner_items)
   }
 
-  # Intermediate: Show everything (same as Expert for now)
-  if (user_level == "intermediate") {
-    return(TRUE)
-  }
-
-  # Expert: Show everything
   return(TRUE)
 }
 
@@ -156,6 +174,9 @@ should_show_menu_item <- function(item_name, user_level) {
 generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
   # Initialize menu items list
   menu_items <- list()
+
+  # Load level config once for use throughout sidebar generation
+  level_config <- tryCatch(get_level_config(user_level), error = function(e) NULL)
 
   # Getting Started (all levels)
   if (should_show_menu_item("Getting Started", user_level)) {
@@ -216,8 +237,11 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
 
   # SES Creation (all levels) - Template based first, then AI guided
   if (should_show_menu_item("Create SES", user_level)) {
-    if (user_level == "beginner") {
-      # Beginner: Show SES Creation menu with Template and AI guided options only
+    # Use config to decide whether to show method chooser
+    show_method_chooser <- if (!is.null(level_config)) isTRUE(level_config$show_create_ses_method_chooser) else (user_level != "beginner")
+
+    if (!show_method_chooser) {
+      # Simplified: Show SES Creation menu with Template and AI guided options only
       menu_items <- c(menu_items, list(
         bs4SidebarMenuItem(
           safe_t("ui.sidebar.ses_creation", i18n_obj = i18n),
@@ -235,7 +259,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
         )
       ))
     } else {
-      # Intermediate/Expert: Show full SES Creation menu with all methods
+      # Full: Show SES Creation menu with all methods including chooser
       menu_items <- c(menu_items, list(
         bs4SidebarMenuItem(
           safe_t("ui.sidebar.ses_creation", i18n_obj = i18n),
@@ -285,10 +309,13 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     ))
   }
 
-  # Analysis Tools (all levels, but beginners see only key analyses)
+  # Analysis Tools (all levels, but simplified view hides advanced analyses)
   if (should_show_menu_item("Analysis Tools", user_level)) {
-    if (user_level == "beginner") {
-      # Beginner: Show only Loop Detection and Leverage Point Analysis
+    # Use config to decide whether to show all analysis tools
+    show_all_analysis <- if (!is.null(level_config)) isTRUE(level_config$show_all_analysis_tools) else (user_level != "beginner")
+
+    if (!show_all_analysis) {
+      # Simplified: Show only Loop Detection and Leverage Point Analysis
       menu_items <- c(menu_items, list(
         bs4SidebarMenuItem(
           safe_t("ui.sidebar.analysis_tools", i18n_obj = i18n),
@@ -306,7 +333,7 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
         )
       ))
     } else {
-      # Intermediate/Expert: Show all analysis tools
+      # Full: Show all analysis tools
       menu_items <- c(menu_items, list(
         bs4SidebarMenuItem(
           safe_t("ui.sidebar.analysis_tools", i18n_obj = i18n),

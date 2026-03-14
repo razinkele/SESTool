@@ -763,10 +763,188 @@ setup_language_modal_handlers <- function(input, output, session, i18n, autosave
 }
 
 # ============================================================================
-# USER LEVEL MODAL
+# USER LEVEL MODAL (with per-level feature configuration)
 # ============================================================================
 
+# ---------------------------------------------------------------------------
+# Helper: build the feature-configuration panel shown below the level picker
+# ---------------------------------------------------------------------------
+.build_level_features_ui <- function(i18n, level, config) {
+  # config is the effective config (defaults + overrides) for this level
+
+  # Max elements slider (unlimited = 0, shown as toggle + slider)
+  max_elem_val <- config$max_elements_per_category
+  max_elem_unlimited <- (max_elem_val == 0)
+  max_elem_slider_val <- if (max_elem_unlimited) BEGINNER_MAX_ELEMENTS_DEFAULT else max_elem_val
+
+  tags$div(
+    id = "level_features_panel",
+    style = "margin-top: 18px; padding: 16px; background: #f8f9fa; border-radius: 8px; border: 1px solid #dee2e6;",
+
+    # --- Section: Elements ---
+    tags$h5(
+      style = "margin-bottom: 12px; color: #495057;",
+      icon("cubes"), " ", i18n$t("ui.modals.level_section_elements")
+    ),
+    tags$div(
+      style = "margin-bottom: 8px;",
+      checkboxInput(
+        "level_unlimited_elements",
+        label = tags$span(style = "font-weight: 500;", i18n$t("ui.modals.level_unlimited_elements")),
+        value = max_elem_unlimited,
+        width = "100%"
+      )
+    ),
+    conditionalPanel(
+      condition = "!input.level_unlimited_elements",
+      tags$div(
+        style = "padding: 0 8px;",
+        sliderInput(
+          "level_max_elements",
+          label = i18n$t("ui.modals.max_elements_per_category"),
+          min = BEGINNER_MAX_ELEMENTS_MIN,
+          max = BEGINNER_MAX_ELEMENTS_MAX,
+          value = max_elem_slider_val,
+          step = 1,
+          width = "100%"
+        )
+      )
+    ),
+
+    tags$hr(style = "margin: 14px 0;"),
+
+    # --- Section: Menu Items ---
+    tags$h5(
+      style = "margin-bottom: 12px; color: #495057;",
+      icon("bars"), " ", i18n$t("ui.modals.level_section_menu_items")
+    ),
+    tags$div(
+      style = "padding-left: 4px;",
+      checkboxInput("level_show_pims",
+        label = i18n$t("ui.modals.level_show_pims"),
+        value = config$show_pims, width = "100%"),
+      checkboxInput("level_show_graphical_ses_creator",
+        label = i18n$t("ui.modals.level_show_graphical_ses"),
+        value = config$show_graphical_ses_creator, width = "100%"),
+      checkboxInput("level_show_response_validation",
+        label = i18n$t("ui.modals.level_show_response_validation"),
+        value = config$show_response_validation, width = "100%"),
+      checkboxInput("level_show_scenario_builder",
+        label = i18n$t("ui.modals.level_show_scenario_builder"),
+        value = config$show_scenario_builder, width = "100%"),
+      checkboxInput("level_show_all_analysis_tools",
+        label = i18n$t("ui.modals.level_show_all_analysis"),
+        value = config$show_all_analysis_tools, width = "100%"),
+      checkboxInput("level_show_create_ses_method_chooser",
+        label = i18n$t("ui.modals.level_show_method_chooser"),
+        value = config$show_create_ses_method_chooser, width = "100%")
+    ),
+
+    tags$hr(style = "margin: 14px 0;"),
+
+    # --- Section: Guidance ---
+    tags$h5(
+      style = "margin-bottom: 12px; color: #495057;",
+      icon("info-circle"), " ", i18n$t("ui.modals.level_section_guidance")
+    ),
+    tags$div(
+      style = "padding-left: 4px;",
+      checkboxInput("level_show_workflow_stepper",
+        label = i18n$t("ui.modals.level_show_stepper"),
+        value = config$show_workflow_stepper, width = "100%"),
+      checkboxInput("level_show_advanced_cld_controls",
+        label = i18n$t("ui.modals.level_show_advanced_cld"),
+        value = config$show_advanced_cld_controls, width = "100%")
+    ),
+
+    tags$hr(style = "margin: 14px 0;"),
+
+    # --- Section: Templates ---
+    tags$h5(
+      style = "margin-bottom: 12px; color: #495057;",
+      icon("file-alt"), " ", i18n$t("ui.modals.level_section_templates")
+    ),
+    radioButtons(
+      "level_template_filter",
+      label = NULL,
+      choices = setNames(
+        c("all", "simple"),
+        c(i18n$t("ui.modals.level_templates_all"), i18n$t("ui.modals.level_templates_simple"))
+      ),
+      selected = config$template_filter,
+      inline = TRUE,
+      width = "100%"
+    ),
+
+    tags$hr(style = "margin: 14px 0;"),
+
+    # --- Reset to defaults button ---
+    tags$div(
+      style = "text-align: right;",
+      actionButton(
+        "reset_level_defaults",
+        tagList(icon("undo"), " ", i18n$t("ui.modals.level_reset_defaults")),
+        class = "btn-outline-secondary btn-sm"
+      )
+    )
+  )
+}
+
+# ---------------------------------------------------------------------------
+# Collect overrides from modal inputs (only those differing from defaults)
+# ---------------------------------------------------------------------------
+.collect_level_overrides <- function(input, level) {
+  defaults <- USER_LEVEL_DEFAULTS[[level]]
+  if (is.null(defaults)) return(list())
+
+  overrides <- list()
+
+  # Max elements
+  if (isTRUE(input$level_unlimited_elements)) {
+    if (defaults$max_elements_per_category != 0L) {
+      overrides$max_elements_per_category <- 0L
+    }
+  } else {
+    val <- as.integer(input$level_max_elements %||% defaults$max_elements_per_category)
+    if (val != defaults$max_elements_per_category) {
+      overrides$max_elements_per_category <- val
+    }
+  }
+
+  # Boolean toggles
+  bool_keys <- c(
+    "show_pims", "show_graphical_ses_creator", "show_response_validation",
+    "show_scenario_builder", "show_all_analysis_tools",
+    "show_create_ses_method_chooser", "show_workflow_stepper",
+    "show_advanced_cld_controls"
+  )
+  input_names <- c(
+    "level_show_pims", "level_show_graphical_ses_creator", "level_show_response_validation",
+    "level_show_scenario_builder", "level_show_all_analysis_tools",
+    "level_show_create_ses_method_chooser", "level_show_workflow_stepper",
+    "level_show_advanced_cld_controls"
+  )
+
+  for (i in seq_along(bool_keys)) {
+    val <- input[[input_names[i]]]
+    if (!is.null(val) && as.logical(val) != defaults[[bool_keys[i]]]) {
+      overrides[[bool_keys[i]]] <- as.logical(val)
+    }
+  }
+
+  # Template filter
+  tf <- input$level_template_filter
+  if (!is.null(tf) && tf != defaults$template_filter) {
+    overrides$template_filter <- tf
+  }
+
+  overrides
+}
+
 #' Setup User Level Modal Handlers
+#'
+#' Provides a comprehensive settings modal with level selector at the top
+#' and per-level feature configuration below.
 #'
 #' @param input Shiny input object
 #' @param output Shiny output object
@@ -775,11 +953,78 @@ setup_language_modal_handlers <- function(input, output, session, i18n, autosave
 #' @param i18n shiny.i18n translator object
 setup_user_level_modal_handlers <- function(input, output, session, user_level, i18n) {
 
-  # Show user level modal
+  # ------ JavaScript for localStorage persistence of level config ------
+  # Register custom message handlers once (idempotent on client)
+  observe({
+    shinyjs::runjs("
+      // --- Level config localStorage helpers ---
+      if (!window._levelConfigHandlersRegistered) {
+        window._levelConfigHandlersRegistered = true;
+
+        Shiny.addCustomMessageHandler('save_level_config', function(message) {
+          try {
+            var key = 'marinesabres_level_config_' + message.level;
+            localStorage.setItem(key, JSON.stringify(message.overrides || {}));
+            console.log('[LEVEL_CONFIG] Saved overrides for', message.level);
+          } catch(e) {
+            console.error('[LEVEL_CONFIG] Save failed:', e);
+          }
+        });
+
+        Shiny.addCustomMessageHandler('load_level_config', function(message) {
+          try {
+            var level = message.level || 'beginner';
+            var key = 'marinesabres_level_config_' + level;
+            var raw = localStorage.getItem(key);
+            var overrides = raw ? JSON.parse(raw) : {};
+            Shiny.setInputValue('_level_config_loaded', {
+              level: level,
+              overrides: overrides
+            }, {priority: 'event'});
+          } catch(e) {
+            console.error('[LEVEL_CONFIG] Load failed:', e);
+            Shiny.setInputValue('_level_config_loaded', {level: message.level, overrides: {}}, {priority: 'event'});
+          }
+        });
+
+        Shiny.addCustomMessageHandler('clear_level_config', function(message) {
+          try {
+            var key = 'marinesabres_level_config_' + message.level;
+            localStorage.removeItem(key);
+            console.log('[LEVEL_CONFIG] Cleared overrides for', message.level);
+          } catch(e) {
+            console.error('[LEVEL_CONFIG] Clear failed:', e);
+          }
+        });
+      }
+    ")
+  }) |> bindEvent(session$clientData$url_search, once = TRUE)
+
+  # ------ Load config from localStorage on startup ------
+  observe({
+    level <- user_level()
+    session$sendCustomMessage("load_level_config", list(level = level))
+  }) |> bindEvent(user_level(), once = TRUE)
+
+  # Apply loaded config
+  observeEvent(input$`_level_config_loaded`, {
+    data <- input$`_level_config_loaded`
+    if (!is.null(data)) {
+      parsed <- parse_level_config_from_js(data)
+      set_active_level_config(parsed$level, parsed$overrides)
+      debug_log(sprintf("Level config restored from localStorage: level=%s, overrides=%d",
+                         parsed$level, length(parsed$overrides)), "LEVEL_CONFIG")
+    }
+  })
+
+  # ------ Show user level modal ------
   observeEvent(input$open_user_level_modal, {
+    current_level <- user_level()
+    config <- get_level_config(current_level)
+
     showModal(modalDialog(
       title = tags$h3(icon("user-cog"), " ", i18n$t("ui.header.user_experience_level")),
-      size = "m",
+      size = "l",
       easyClose = FALSE,
 
       tags$div(
@@ -790,7 +1035,7 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
           i18n$t("ui.modals.select_your_experience_level_with_marine_ecosystem_modeling")
         ),
 
-        # Single radio button group with all choices
+        # Level radio buttons
         radioButtons(
           "user_level_selector",
           label = NULL,
@@ -802,35 +1047,12 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
               paste("\U0001F534", i18n$t("ui.modals.expert"), "-", i18n$t("ui.modals.advanced_interface_showing_all_tools_technical_ter"))
             )
           ),
-          selected = user_level(),
+          selected = current_level,
           width = "100%"
         ),
 
-        # Beginner mode: max elements per category slider
-        conditionalPanel(
-          condition = "input.user_level_selector == 'beginner'",
-          tags$div(
-            style = "margin-top: 15px; padding: 12px; background: #e8f5e9; border-radius: 8px;",
-            tags$label(
-              style = "font-weight: 600; font-size: 13px; margin-bottom: 8px; display: block;",
-              icon("sliders-h"), " ",
-              i18n$t("ui.modals.max_elements_per_category")
-            ),
-            sliderInput(
-              "beginner_max_elements",
-              label = NULL,
-              min = BEGINNER_MAX_ELEMENTS_MIN,
-              max = BEGINNER_MAX_ELEMENTS_MAX,
-              value = BEGINNER_MAX_ELEMENTS_DEFAULT,
-              step = 1,
-              width = "100%"
-            ),
-            tags$small(
-              style = "color: #666; font-size: 11px;",
-              i18n$t("ui.modals.max_elements_hint")
-            )
-          )
-        ),
+        # Dynamic feature configuration panel
+        uiOutput("level_features_container"),
 
         tags$hr(),
 
@@ -848,23 +1070,70 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
     ))
   })
 
-  # Apply user level changes
+  # ------ Dynamic feature panel (re-renders when level selector changes) ------
+  output$level_features_container <- renderUI({
+    selected_level <- input$user_level_selector
+    req(selected_level)
+
+    # Get config for the newly selected level (with any stored overrides)
+    # When switching levels, show that level's defaults + its stored overrides
+    config <- get_level_config(selected_level)
+
+    .build_level_features_ui(i18n, selected_level, config)
+  })
+
+  # ------ Reset to defaults button ------
+  observeEvent(input$reset_level_defaults, {
+    selected_level <- input$user_level_selector
+    req(selected_level)
+
+    # Clear stored overrides for this level
+    session$sendCustomMessage("clear_level_config", list(level = selected_level))
+    reset_level_config(selected_level)
+
+    # Re-show the modal with fresh defaults
+    removeModal()
+
+    # Small delay then re-open
+    shinyjs::delay(MODAL_ANIMATION_DELAY_MS + 50, {
+      # Trigger the modal open handler again
+      shinyjs::click("open_user_level_modal")
+    })
+
+    showNotification(
+      i18n$t("ui.modals.level_defaults_restored"),
+      type = "message", duration = 3
+    )
+  })
+
+  # ------ Apply user level changes ------
   observeEvent(input$apply_user_level, {
     req(input$user_level_selector)
 
     new_level <- input$user_level_selector
+    overrides <- .collect_level_overrides(input, new_level)
+    effective_config <- get_level_config(new_level, overrides)
 
-    # Log the change
-    debug_log(sprintf("Changing from %s to %s", user_level(), new_level), "USER-LEVEL")
+    debug_log(sprintf("Applying level: %s -> %s (overrides: %d)", user_level(), new_level, length(overrides)), "USER-LEVEL")
 
-    # Save max elements setting if in beginner mode
-    max_elements <- input$beginner_max_elements %||% BEGINNER_MAX_ELEMENTS_DEFAULT
+    # Persist overrides to localStorage
+    session$sendCustomMessage(
+      type = "save_level_config",
+      message = list(level = new_level, overrides = overrides)
+    )
+
+    # Also save max_elements for backward compatibility with existing JS handler
+    max_elements <- effective_config$max_elements_per_category
+    if (max_elements == 0L) max_elements <- BEGINNER_MAX_ELEMENTS_DEFAULT
     session$sendCustomMessage(
       type = "save_beginner_max_elements",
       message = list(value = max_elements)
     )
 
-    # Save to localStorage and reload via JavaScript
+    # Update the in-memory config
+    set_active_level_config(new_level, overrides)
+
+    # Save to URL and reload via JavaScript (same as before)
     session$sendCustomMessage(
       type = "save_user_level",
       message = list(level = new_level)

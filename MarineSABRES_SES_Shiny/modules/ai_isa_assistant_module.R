@@ -1763,12 +1763,18 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                           rv$elements[[step_info$target]]
                         )
                       } else {
-                        # BEGINNER MODE: Check max elements limit (configurable per category)
+                        # Check max elements limit from level config (configurable per category)
                         user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
                         current_count <- length(rv$elements[[step_info$target]])
-                        max_elements <- if (!is.null(beginner_max_elements_reactive)) beginner_max_elements_reactive() else BEGINNER_MAX_ELEMENTS_DEFAULT
+                        max_elements <- tryCatch({
+                          config <- get_level_config(user_level)
+                          cfg_max <- config$max_elements_per_category
+                          if (is.null(cfg_max) || cfg_max == 0L) 0L else cfg_max
+                        }, error = function(e) {
+                          if (!is.null(beginner_max_elements_reactive)) beginner_max_elements_reactive() else BEGINNER_MAX_ELEMENTS_DEFAULT
+                        })
 
-                        if (user_level == "beginner" && current_count >= max_elements) {
+                        if (max_elements > 0L && current_count >= max_elements) {
                           # Block adding 4th element, show warning
                           showNotification(
                             i18n$t("modules.isa.ai_assistant.max_elements_warning"),
@@ -2021,12 +2027,18 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         if (step_info$type == "multiple") {
           debug_log(sprintf("[AI ISA PROCESS] Adding element to %s\n", step_info$target))
 
-          # BEGINNER MODE: Check max elements limit (configurable per category) before adding
+          # Check max elements limit from level config (configurable per category) before adding
           user_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
           current_count <- length(rv$elements[[step_info$target]])
-          max_elements <- if (!is.null(beginner_max_elements_reactive)) beginner_max_elements_reactive() else BEGINNER_MAX_ELEMENTS_DEFAULT
+          max_elements <- tryCatch({
+            config <- get_level_config(user_level)
+            cfg_max <- config$max_elements_per_category
+            if (is.null(cfg_max) || cfg_max == 0L) 0L else cfg_max
+          }, error = function(e) {
+            if (!is.null(beginner_max_elements_reactive)) beginner_max_elements_reactive() else BEGINNER_MAX_ELEMENTS_DEFAULT
+          })
 
-          if (user_level == "beginner" && current_count >= max_elements) {
+          if (max_elements > 0L && current_count >= max_elements) {
             # Block adding 4th element, show warning
             showNotification(
               i18n$t("modules.isa.ai_assistant.max_elements_warning"),

@@ -112,14 +112,23 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
       get("templates", envir = .template_module_cache)
     }
 
-    # Reactive filtered template getter - filters by user level (beginner only sees simple templates)
+    # Reactive filtered template getter - filters by level config's template_filter setting
     # Used for UI rendering (needs to work inside reactive context)
     ses_templates_filtered <- reactive({
       all_templates <- ses_templates_all()
       current_level <- if (!is.null(user_level_reactive)) user_level_reactive() else "intermediate"
 
-      # Beginners only see simple templates
-      if (current_level == "beginner") {
+      # Use config system to determine template filter
+      template_filter <- tryCatch({
+        config <- get_level_config(current_level)
+        config$template_filter %||% "all"
+      }, error = function(e) {
+        # Fallback: beginner = simple, others = all
+        if (current_level == "beginner") "simple" else "all"
+      })
+
+      # Filter to simple templates only when configured
+      if (template_filter == "simple") {
         simple_templates <- Filter(function(tmpl) {
           complexity <- tmpl$complexity %||% "simple"
           complexity == "simple"
@@ -127,7 +136,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         return(simple_templates)
       }
 
-      # Intermediate and expert users see all templates
+      # Show all templates
       return(all_templates)
     })
 
