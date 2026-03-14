@@ -360,28 +360,24 @@ generate_prediction_explanation <- function(elem1,
 get_type_based_reasoning <- function(type1, type2) {
   # DAPSIWRM flow relationships
   flow_pairs <- list(
-    c("D", "A") = "Drivers commonly influence Activities in the DAPSIWRM framework.",
-    c("A", "P") = "Activities typically create Pressures on the system.",
-    c("P", "MPF") = "Pressures affect Marine Processes & Functioning.",
-    c("P", "C") = "Pressures affect ecosystem Components/State.",
-    c("MPF", "ES") = "Marine Processes provide Ecosystem Services.",
-    c("C", "ES") = "Ecosystem state determines Services provision.",
-    c("ES", "GB") = "Ecosystem Services generate Goods & Benefits.",
-    c("GB", "D") = "Societal benefits can reinforce Drivers (feedback loop).",
-    c("R", "A") = "Response measures typically target Activities.",
-    c("R", "P") = "Response measures can directly address Pressures."
+    "D->A" = "Drivers commonly influence Activities in the DAPSIWRM framework.",
+    "A->P" = "Activities typically create Pressures on the system.",
+    "P->MPF" = "Pressures affect Marine Processes & Functioning.",
+    "P->C" = "Pressures affect ecosystem Components/State.",
+    "MPF->ES" = "Marine Processes provide Ecosystem Services.",
+    "C->ES" = "Ecosystem state determines Services provision.",
+    "ES->GB" = "Ecosystem Services generate Goods & Benefits.",
+    "GB->D" = "Societal benefits can reinforce Drivers (feedback loop).",
+    "R->A" = "Response measures typically target Activities.",
+    "R->P" = "Response measures can directly address Pressures."
   )
 
-  key <- paste(type1, type2, sep = "_")
+  # Check direct match and reverse
+  forward_key <- paste(type1, type2, sep = "->")
+  reverse_key <- paste(type2, type1, sep = "->")
 
-  # Check direct match
-  for (pair_key in names(flow_pairs)) {
-    pair <- strsplit(pair_key, ", ")[[1]]
-    if ((pair[1] == type1 && pair[2] == type2) ||
-        (pair[1] == type2 && pair[2] == type1)) {
-      return(flow_pairs[[pair_key]])
-    }
-  }
+  if (!is.null(flow_pairs[[forward_key]])) return(flow_pairs[[forward_key]])
+  if (!is.null(flow_pairs[[reverse_key]])) return(flow_pairs[[reverse_key]])
 
   NULL
 }

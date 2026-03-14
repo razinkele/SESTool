@@ -374,8 +374,7 @@ check_translation_coverage <- function(i18n) {
     translated = sapply(languages, function(lang) {
       keys <- get_translation_keys(i18n, lang)
       sum(keys %in% base_keys)
-    }),
-    stringsAsFactors = FALSE
+    })
   )
   coverage$coverage_pct <- round(coverage$translated / coverage$total_keys * 100, 1)
 
@@ -583,6 +582,9 @@ if (file.exists(get_project_file("config", "app_config.R"))) {
 # UI helper functions (global scope for use across modules)
 source("functions/ui_helpers.R", local = FALSE)
 
+# Shared UI component library (global scope for use across modules)
+source("functions/ui_components.R", local = FALSE)
+
 # Template loading functions (for JSON templates)
 source("functions/template_loader.R", local = TRUE)
 
@@ -601,6 +603,12 @@ source("functions/excel_import_helpers.R", local = FALSE)  # FALSE = global scop
 # Data structure functions
 source("functions/data_structure.R", local = TRUE)
 
+# ISA form builders and entry collection helpers (extracted from isa_data_entry_module)
+source("functions/isa_form_builders.R", local = TRUE)
+
+# ISA export helpers (extracted from isa_data_entry_module)
+source("functions/isa_export_helpers.R", local = TRUE)
+
 # Data accessor functions (simplifies deep reactive nesting)
 source("functions/data_accessors.R", local = TRUE)
 
@@ -612,6 +620,9 @@ source("functions/network_analysis.R", local = TRUE)
 
 # visNetwork helper functions
 source("functions/visnetwork_helpers.R", local = TRUE)
+
+# CLD interaction helpers (manipulation, node/edge creation, highlight logic)
+source("functions/cld_interaction_helpers.R", local = TRUE)
 
 # Export functions
 source("functions/export_functions.R", local = TRUE)
@@ -658,6 +669,11 @@ source("config/tutorial_content.R", local = TRUE)
 # Graphical SES Creator system (AI-powered step-by-step network building)
 # Note: Knowledge base must be global scope for use by both AI ISA and Graphical SES modules
 source("modules/ai_isa_knowledge_base.R", local = FALSE)
+
+# Marine SES Connection Knowledge Base (curated DAPSI(W)R(M) connections from published case studies)
+# Must be global scope for use by AI ISA connection generator and ML scoring
+source("data/ses_connection_knowledge_base.R", local = FALSE)
+
 source("data/dapsiwrm_element_keywords.R", local = TRUE)
 source("functions/dapsiwrm_connection_rules.R", local = TRUE)
 source("functions/ses_dynamics.R", local = TRUE)
@@ -706,6 +722,10 @@ if (ML_ENABLED) {
     if (file.exists("functions/ml_ensemble.R")) {
       source("functions/ml_ensemble.R", local = TRUE)
     }
+    if (file.exists("functions/ml_explainability.R")) {
+      source("functions/ml_explainability.R", local = TRUE)
+      cat("✓ ML explainability module loaded\n")
+    }
     if (file.exists("functions/ml_template_matching.R")) {
       source("functions/ml_template_matching.R", local = TRUE)
     }
@@ -737,40 +757,53 @@ if (ML_ENABLED) {
       cat("✓ ML model registry loaded\n")
     }
 
-    # Try to load trained model
+    # Try to load trained model (Phase 2 v2 preferred, fallback to Phase 1 v1)
+    # load_ml_model() auto-detects v1/v2 and tries v2 path if v1 not found
     model_path <- "models/connection_predictor_best.pt"
-    if (file.exists(model_path)) {
+    v2_model_path <- "models/connection_predictor_v2_best.pt"
+    if (file.exists(model_path) || file.exists(v2_model_path)) {
       load_ml_model(model_path)
       ML_AVAILABLE <- TRUE
 
       model_info <- get_ml_model_info()
       cat(sprintf("\n✓ ML Model Loaded Successfully\n"))
       cat(sprintf("  - Model: %s\n", model_info$architecture))
+      cat(sprintf("  - Version: %s\n", model_info$model_version %||% "v1"))
+      cat(sprintf("  - Input dim: %d\n", model_info$input_dim))
       cat(sprintf("  - Parameters: %s\n", format(model_info$parameters, big.mark = ",")))
       cat(sprintf("  - Size: %.2f MB\n", model_info$size_mb))
+      cat(sprintf("  - Pipeline: %s\n", model_info$pipeline %||% "phase1"))
       cat(sprintf("  - Status: Ready for predictions\n"))
     } else {
-      cat(sprintf("\n✗ ML model file not found: %s\n", model_path))
+      cat(sprintf("\n✗ ML model file not found: %s (or %s)\n", model_path, v2_model_path))
       cat("  ML predictions will not be available\n")
       cat("  To enable ML, run: Rscript scripts/train_connection_predictor.R\n")
     }
 
-    # P1 FIX: Try to load ensemble models for improved predictions
+    # Try to load ensemble models for improved predictions (Phase 2)
     ENSEMBLE_AVAILABLE <<- FALSE
     ensemble_path <- "models/ensemble"
     if (dir.exists(ensemble_path) && exists("load_ensemble", mode = "function")) {
       tryCatch({
         load_ensemble(ensemble_path)
-        ENSEMBLE_AVAILABLE <<- TRUE
-        cat(sprintf("\n✓ ML Ensemble Loaded Successfully\n"))
-        cat(sprintf("  - Path: %s\n", ensemble_path))
-        cat(sprintf("  - Ensemble predictions enabled\n"))
+        if (exists("ensemble_available", mode = "function") && ensemble_available()) {
+          ENSEMBLE_AVAILABLE <<- TRUE
+          n_ensemble <- if (exists("ensemble_env")) ensemble_env$n_models else 0
+          cat(sprintf("\n✓ ML Ensemble Loaded Successfully\n"))
+          cat(sprintf("  - Path: %s\n", ensemble_path))
+          cat(sprintf("  - Models: %d\n", n_ensemble))
+          cat(sprintf("  - Ensemble predictions enabled\n"))
+        } else {
+          cat("\n  Ensemble directory found but no valid models loaded\n")
+        }
       }, error = function(e) {
         cat(sprintf("\n✗ ML Ensemble not loaded: %s\n", e$message))
         cat("  Using single model predictions\n")
       })
     } else if (ML_AVAILABLE) {
       cat("\n  Ensemble not available - using single model\n")
+      # NOTE: To enable ensemble, train 5 models with different seeds and save to
+      # models/ensemble/ with ensemble_metadata.rds. See scripts/train_connection_predictor_v2.R
     }
 
   }, error = function(e) {

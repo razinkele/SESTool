@@ -95,8 +95,8 @@ convert_excel_to_isa <- function(elements, connections) {
   node_types <- data.frame(
     Name = all_connection_nodes,
     type = NA_character_,
-    source = "unknown",
-    stringsAsFactors = FALSE
+    source = "unknown"
+    
   )
 
   matched_count <- 0
@@ -204,8 +204,8 @@ convert_excel_to_isa <- function(elements, connections) {
           new_df <- data.frame(
             ID = paste0(substr(isa_key, 1, 1), (existing_count + 1):(existing_count + length(new_names))),
             Name = new_names,
-            Description = "",
-            stringsAsFactors = FALSE
+            Description = ""
+            
           )
           isa_data[[isa_key]] <- rbind(isa_data[[isa_key]], new_df)
         }
@@ -213,8 +213,8 @@ convert_excel_to_isa <- function(elements, connections) {
         df <- data.frame(
           ID = paste0(substr(isa_key, 1, 1), 1:nrow(type_nodes)),
           Name = type_nodes$Name,
-          Description = "",
-          stringsAsFactors = FALSE
+          Description = ""
+          
         )
         isa_data[[isa_key]] <- df
       }

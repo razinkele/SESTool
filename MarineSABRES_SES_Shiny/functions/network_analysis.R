@@ -164,13 +164,13 @@ calculate_centrality <- function(graph) {
 detect_feedback_loops <- function(graph, max_length = 5) {
   if (!inherits(graph, "igraph")) return(list())
   nodes <- igraph::V(graph)$name
-  result <- data.frame(path = character(0), stringsAsFactors = FALSE)
+  result <- data.frame(path = character(0))
   for (v in nodes) {
     paths <- igraph::all_simple_paths(graph, from = v, to = v, mode = "out", cutoff = max_length)
     for (p in paths) {
       if (length(p) > 1) {
         path_str <- paste(igraph::V(graph)$name[as.numeric(p)], collapse = "->")
-        result <- rbind(result, data.frame(path = path_str, stringsAsFactors = FALSE))
+        result <- rbind(result, data.frame(path = path_str))
       }
     }
   }
@@ -195,7 +195,7 @@ simplify_network <- function(graph, threshold = NULL) {
 rank_node_importance <- function(graph) {
   if (!inherits(graph, "igraph")) return(data.frame())
   pr <- igraph::page_rank(graph)$vector
-  data.frame(node = igraph::V(graph)$name, importance = pr, stringsAsFactors = FALSE)
+  data.frame(node = igraph::V(graph)$name, importance = pr)
 }
 
 #' Find simple pathways between two nodes (limited search)
@@ -227,8 +227,7 @@ calculate_micmac <- function(nodes, edges) {
         node_id = nodes$id,
         influence = 0,
         exposure = 0,
-        quadrant = "Autonomous",
-        stringsAsFactors = FALSE
+        quadrant = "Autonomous"
       ))
     }
     if (!"id" %in% names(nodes)) {
@@ -254,8 +253,7 @@ calculate_micmac <- function(nodes, edges) {
     micmac <- data.frame(
       node_id = nodes$id,
       influence = influence_direct + influence_indirect,
-      exposure = exposure_direct + exposure_indirect,
-      stringsAsFactors = FALSE
+      exposure = exposure_direct + exposure_indirect
     )
 
     # Classify nodes into quadrants
@@ -819,8 +817,7 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm 
       Elements = character(0),
       NodeIDs = character(0),
       Significance = character(0),
-      Story = character(0),
-      stringsAsFactors = FALSE
+      Story = character(0)
     ))
   }
 
@@ -883,8 +880,7 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm 
       Elements = paste(node_labels, collapse = " → "),
       NodeIDs = paste(node_ids, collapse = ","),
       Significance = NA_character_,
-      Story = NA_character_,
-      stringsAsFactors = FALSE
+      Story = NA_character_
     )
   })
 
@@ -930,8 +926,7 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm 
       Elements = character(0),
       NodeIDs = character(0),
       Significance = character(0),
-      Story = character(0),
-      stringsAsFactors = FALSE
+      Story = character(0)
     ))
   }
 }
@@ -1206,8 +1201,7 @@ calculate_all_centralities <- function(g) {
       Betweenness = numeric(0),
       Closeness = numeric(0),
       Eigenvector = numeric(0),
-      PageRank = numeric(0),
-      stringsAsFactors = FALSE
+      PageRank = numeric(0)
     ))
   }
 
@@ -1242,8 +1236,7 @@ calculate_all_centralities <- function(g) {
     Betweenness = safe_betweenness,
     Closeness = safe_closeness,
     Eigenvector = safe_eigenvector,
-    PageRank = safe_pagerank,
-    stringsAsFactors = FALSE
+    PageRank = safe_pagerank
   )
 }
 
@@ -1287,8 +1280,7 @@ identify_leverage_points <- function(nodes, edges = NULL, top_n = 10) {
       Closeness = numeric(0),
       Eigenvector = numeric(0),
       PageRank = numeric(0),
-      Composite_Score = numeric(0),
-      stringsAsFactors = FALSE
+      Composite_Score = numeric(0)
     ))
   }
 
@@ -1324,7 +1316,7 @@ add_node_incremental <- function(proxy_id, session, node_data) {
     visUpdateNodes(proxy, node_data)
   } else {
     # Convert list to single-row data.frame
-    node_df <- as.data.frame(node_data, stringsAsFactors = FALSE)
+    node_df <- as.data.frame(node_data)
     visUpdateNodes(proxy, node_df)
   }
 
@@ -1360,7 +1352,7 @@ add_edge_incremental <- function(proxy_id, session, edge_data) {
   if (is.data.frame(edge_data)) {
     visUpdateEdges(proxy, edge_data)
   } else {
-    edge_df <- as.data.frame(edge_data, stringsAsFactors = FALSE)
+    edge_df <- as.data.frame(edge_data)
     visUpdateEdges(proxy, edge_df)
   }
 

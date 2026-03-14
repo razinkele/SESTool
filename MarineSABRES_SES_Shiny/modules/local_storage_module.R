@@ -5,6 +5,7 @@
 # UI Component - Local Storage Controls
 local_storage_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   # Build JavaScript using paste0 to avoid sprintf 8192 character limit
   js_code <- paste0('
@@ -548,12 +549,21 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
       
       if (isTRUE(result$success)) {
         tryCatch({
-          # Parse JSON data
-          loaded_data <- jsonlite::fromJSON(result$data, simplifyVector = FALSE)
-          
+          # Parse JSON data safely
+          loaded_data <- safe_parse_json(result$data)
+
+          if (is.null(loaded_data)) {
+            showNotification(
+              i18n$t("common.messages.error_parsing_file"),
+              type = "error",
+              duration = 5
+            )
+            return()
+          }
+
           # Validate and load
           project_data_reactive(loaded_data)
-          
+
           showNotification(
             sprintf(i18n$t("common.messages.loaded_from_local_file"), result$filename),
             type = "message",
@@ -562,12 +572,12 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
           
           # Emit event if bus available
           if (!is.null(event_bus)) {
-            event_bus$emit_isa_changed()
+            event_bus$emit_isa_change("local_storage")
           }
           
         }, error = function(e) {
           showNotification(
-            paste(i18n$t("common.messages.error_parsing_file"), e$message),
+            format_user_error(e, i18n = i18n, context = "parsing project file", show_details = TRUE),
             type = "error",
             duration = 5
           )
@@ -780,7 +790,8 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
 #' @return Shiny UI elements
 local_storage_settings_ui <- function(id, i18n, is_connected, directory_name, has_api) {
   ns <- NS(id)
-  
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+
   tagList(
     tags$h4(icon("folder-open"), " ", i18n$t("ui.modals.local_storage_settings")),
     

@@ -31,7 +31,7 @@
       "pt": "Defina o escopo, objetivos e contexto do seu projeto.",
       "it": "Definisci l'ambito, gli obiettivi e il contesto del tuo progetto.",
       "no": "Definer prosjektomfang, mål og kontekst.",
-      "el": "Define your project scope, objectives, and context."
+      "el": "Καθορίστε το πεδίο εφαρμογής, τους στόχους και το πλαίσιο του έργου σας."
     },
     "modules.pims.stakeholders.title": {
       "en": "PIMS Stakeholder Analysis",
@@ -53,7 +53,7 @@
       "pt": "Identificar e analisar as principais partes interessadas e seus interesses.",
       "it": "Identificare e analizzare le principali parti interessate e i loro interessi.",
       "no": "Identifiser og analyser nøkkelinteressenter og deres interesser.",
-      "el": "Identify and analyze key stakeholders and their interests."
+      "el": "Αναγνώριση και ανάλυση βασικών ενδιαφερόμενων μερών και των συμφερόντων τους."
     },
     "modules.pims.resources.title": {
       "en": "PIMS Resource Management",
@@ -64,7 +64,7 @@
       "pt": "Gestão de Recursos PIMS",
       "it": "Gestione delle Risorse PIMS",
       "no": "PIMS Ressursstyring",
-      "el": "PIMS Resource Management"
+      "el": "Διαχείριση πόρων PIMS"
     },
     "modules.pims.resources.subtitle": {
       "en": "Document and manage project resources and budget.",
@@ -75,7 +75,7 @@
       "pt": "Documentar e gerenciar recursos e orçamento do projeto.",
       "it": "Documentare e gestire le risorse e il budget del progetto.",
       "no": "Dokumenter og administrer prosjektressurser og budsjett.",
-      "el": "Document and manage project resources and budget."
+      "el": "Τεκμηρίωση και διαχείριση πόρων και προϋπολογισμού έργου."
     },
     "modules.pims.data.title": {
       "en": "PIMS Data Management",
@@ -97,7 +97,7 @@
       "pt": "Planejar e gerenciar a coleta e armazenamento de dados do projeto.",
       "it": "Pianificare e gestire la raccolta e l'archiviazione dei dati del progetto.",
       "no": "Planlegg og administrer prosjektdatainnsamling og lagring.",
-      "el": "Plan and manage project data collection and storage."
+      "el": "Σχεδιασμός και διαχείριση συλλογής και αποθήκευσης δεδομένων έργου."
     },
     "modules.pims.evaluation.title": {
       "en": "PIMS Monitoring & Evaluation",
@@ -108,7 +108,7 @@
       "pt": "Monitoramento e Avaliação PIMS",
       "it": "Monitoraggio e Valutazione PIMS",
       "no": "PIMS Overvåking og Evaluering",
-      "el": "PIMS Monitoring & Evaluation"
+      "el": "Παρακολούθηση και αξιολόγηση PIMS"
     },
     "modules.pims.evaluation.subtitle": {
       "en": "Define indicators and evaluation framework for project success.",
@@ -119,7 +119,7 @@
       "pt": "Definir indicadores e estrutura de avaliação para o sucesso do projeto.",
       "it": "Definire indicatori e framework di valutazione per il successo del progetto.",
       "no": "Definer indikatorer og evalueringsrammeverk for prosjektsuksess.",
-      "el": "Define indicators and evaluation framework for project success."
+      "el": "Ορισμός δεικτών και πλαισίου αξιολόγησης για την επιτυχία του έργου."
     },
     "modules.pims.stakeholder.title": {
       "en": "PIMS Detailed Stakeholder Analysis",
@@ -130,7 +130,7 @@
       "pt": "Análise Detalhada de Partes Interessadas PIMS",
       "it": "Analisi Dettagliata delle Parti Interessate PIMS",
       "no": "PIMS Detaljert Interessentanalyse",
-      "el": "PIMS Detailed Stakeholder Analysis"
+      "el": "Λεπτομερής ανάλυση ενδιαφερόμενων μερών PIMS"
     },
     "modules.pims.stakeholder.subtitle": {
       "en": "Comprehensive stakeholder mapping and influence analysis.",
@@ -141,7 +141,7 @@
       "pt": "Mapeamento abrangente de partes interessadas e análise de influência.",
       "it": "Mappatura completa delle parti interessate e analisi dell'influenza.",
       "no": "Omfattende kartlegging av interessenter og påvirkningsanalyse.",
-      "el": "Comprehensive stakeholder mapping and influence analysis."
+      "el": "Ολοκληρωμένη χαρτογράφηση ενδιαφερόμενων μερών και ανάλυση επιρροής."
     },
     "modules.pims.stakeholder.aquaculture": {
       "en": "Aquaculture",
@@ -151,8 +151,8 @@
       "lt": "Akvakultūra",
       "pt": "Aquicultura",
       "it": "Acquacoltura",
-      "no": "Aquaculture",
-      "el": "Aquaculture"
+      "no": "Akvakultur",
+      "el": "Υδατοκαλλιέργεια"
     },
     "modules.pims.stakeholder.shipping": {
       "en": "Shipping",
@@ -162,8 +162,8 @@
       "lt": "Siuntimas",
       "pt": "Envio",
       "it": "Spedizione",
-      "no": "Shipping",
-      "el": "Shipping"
+      "no": "Skipsfart",
+      "el": "Ναυτιλία"
     },
     "modules.pims.stakeholder.tourism": {
       "en": "Tourism",
@@ -173,8 +173,8 @@
       "lt": "Turizmas",
       "pt": "Turismo",
       "it": "Turismo",
-      "no": "Tourism",
-      "el": "Tourism"
+      "no": "Turisme",
+      "el": "Τουρισμός"
     },
     "modules.isa.data_entry.common.add_activity": {
       "en": "Add Activity",
@@ -184,7 +184,7 @@
       "lt": "Pridėti veiklą",
       "pt": "Adicionar Atividade",
       "it": "Aggiungi Attività",
-      "no": "Add Activity",
+      "no": "Legg til aktivitet",
       "el": "Προσθήκη Δραστηριότητα"
     },
     "modules.isa.data_entry.common.frequency": {
@@ -195,8 +195,8 @@
       "lt": "[LT] Frequency",
       "pt": "[PT] Frequency",
       "it": "[IT] Frequency",
-      "no": "Frequency",
-      "el": "Frequency"
+      "no": "Frekvens",
+      "el": "Συχνότητα"
     },
     "modules.isa.data_entry.common.sector": {
       "en": "EP2: Activity Sectors",
@@ -206,8 +206,8 @@
       "lt": "EP2: Veiklos sektoriai",
       "pt": "EP2: Setores de Atividade",
       "it": "EP2: Settori di Attività",
-      "no": "EP2: Activity Sectors",
-      "el": "EP2: Activity Sectors"
+      "no": "ØP2: Aktivitetssektorer",
+      "el": "ΑΣ2: Τομείς δραστηριότητας"
     },
     "modules.pims.download_stakeholder_information_for_reporting_and": {
       "en": "Download Stakeholder Information For Reporting And",
@@ -217,7 +217,7 @@
       "lt": "[LT] Download Stakeholder Information For Reporting And",
       "pt": "[PT] Download Stakeholder Information For Reporting And",
       "it": "[IT] Download Stakeholder Information For Reporting And",
-      "no": "Download Stakeholder Information For Reporting And",
+      "no": "Last ned interessentinformasjon for rapportering og",
       "el": "Λήψη Ενδιαφερόμενο μέρος Πληροφορίες For Reporting And"
     },
     "modules.pims.identify_all_stakeholders_relevant_to_your_marine_": {
@@ -228,8 +228,8 @@
       "lt": "[LT] Identify All Stakeholders Relevant To Your Marine ",
       "pt": "[PT] Identify All Stakeholders Relevant To Your Marine ",
       "it": "[IT] Identify All Stakeholders Relevant To Your Marine ",
-      "no": "Identify All Stakeholders Relevant To Your Marine ",
-      "el": "Identify All Stakeholders Relevant To Your Marine "
+      "no": "Identifiser alle interessenter relevante for din marine ",
+      "el": "Αναγνώριση όλων των ενδιαφερόμενων μερών σχετικών με τη θαλάσσια "
     },
     "modules.pims.plan_and_track_communications_with_stakeholders_to": {
       "en": "Plan And Track Communications With Stakeholders To",
@@ -239,8 +239,8 @@
       "lt": "[LT] Plan And Track Communications With Stakeholders To",
       "pt": "[PT] Plan And Track Communications With Stakeholders To",
       "it": "[IT] Plan And Track Communications With Stakeholders To",
-      "no": "Plan And Track Communications With Stakeholders To",
-      "el": "Plan And Track Communications With Stakeholders To"
+      "no": "Planlegg og spor kommunikasjon med interessenter for",
+      "el": "Σχεδιασμός και παρακολούθηση επικοινωνιών με ενδιαφερόμενα μέρη για"
     },
     "modules.pims.plan_how_to_engage_with_each_stakeholder_group_bas": {
       "en": "Plan How To Engage With Each Stakeholder Group Bas",
@@ -250,8 +250,8 @@
       "lt": "[LT] Plan How To Engage With Each Stakeholder Group Bas",
       "pt": "[PT] Plan How To Engage With Each Stakeholder Group Bas",
       "it": "[IT] Plan How To Engage With Each Stakeholder Group Bas",
-      "no": "Plan How To Engage With Each Stakeholder Group Bas",
-      "el": "Plan How To Engage With Each Stakeholder Group Bas"
+      "no": "Planlegg hvordan man engasjerer seg med hver interessentgruppe bas",
+      "el": "Σχεδιασμός τρόπου εμπλοκής με κάθε ομάδα ενδιαφερόμενων μερών βάσ"
     },
     "modules.pims.power_interest_gridnadd_stakeholders_with_power_an": {
       "en": "Power Interest Gridnadd Stakeholders With Power An",
@@ -261,8 +261,8 @@
       "lt": "[LT] Power Interest Gridnadd Stakeholders With Power An",
       "pt": "[PT] Power Interest Gridnadd Stakeholders With Power An",
       "it": "[IT] Power Interest Gridnadd Stakeholders With Power An",
-      "no": "Power Interest Gridnadd Stakeholders With Power An",
-      "el": "Power Interest Gridnadd Stakeholders With Power An"
+      "no": "Makt-interesse-rutenett. Legg til interessenter med makt og",
+      "el": "Πλέγμα ισχύος-ενδιαφέροντος. Προσθήκη ενδιαφερόμενων μερών με ισχύ και"
     },
     "modules.pims.stakeholder.add_communication": {
       "en": "Add Communication",
@@ -272,7 +272,7 @@
       "lt": "[LT] Add Communication",
       "pt": "[PT] Add Communication",
       "it": "[IT] Add Communication",
-      "no": "Add Communication",
+      "no": "Legg til kommunikasjon",
       "el": "Προσθήκη Communication"
     },
     "modules.pims.stakeholder.add_communication_item": {
@@ -283,7 +283,7 @@
       "lt": "[LT] Add Communication Item",
       "pt": "[PT] Add Communication Item",
       "it": "[IT] Add Communication Item",
-      "no": "Add Communication Item",
+      "no": "Legg til kommunikasjonselement",
       "el": "Προσθήκη Communication Item"
     },
     "modules.pims.stakeholder.add_new_stakeholder": {
@@ -294,7 +294,7 @@
       "lt": "[LT] Add New Stakeholder",
       "pt": "[PT] Add New Stakeholder",
       "it": "[IT] Add New Stakeholder",
-      "no": "Add New Stakeholder",
+      "no": "Legg til ny interessent",
       "el": "Προσθήκη Νέο Ενδιαφερόμενο μέρος"
     },
     "modules.pims.stakeholder.add_stakeholder": {
@@ -305,7 +305,7 @@
       "lt": "[LT] Add Stakeholder",
       "pt": "[PT] Add Stakeholder",
       "it": "[IT] Add Stakeholder",
-      "no": "Add Stakeholder",
+      "no": "Legg til interessent",
       "el": "Προσθήκη Ενδιαφερόμενο μέρος"
     },
     "modules.pims.stakeholder.add_stakeholders_to_see_coverage": {
@@ -316,7 +316,7 @@
       "lt": "[LT] Add Stakeholders To See Coverage",
       "pt": "[PT] Add Stakeholders To See Coverage",
       "it": "[IT] Add Stakeholders To See Coverage",
-      "no": "Add Stakeholders To See Coverage",
+      "no": "Legg til interessenter for å se dekning",
       "el": "Προσθήκη Ενδιαφερόμενα μέρη To See Coverage"
     },
     "modules.pims.stakeholder.add_stakeholders_to_see_distribution": {
@@ -327,7 +327,7 @@
       "lt": "[LT] Add Stakeholders To See Distribution",
       "pt": "[PT] Add Stakeholders To See Distribution",
       "it": "[IT] Add Stakeholders To See Distribution",
-      "no": "Add Stakeholders To See Distribution",
+      "no": "Legg til interessenter for å se fordeling",
       "el": "Προσθήκη Ενδιαφερόμενα μέρη To See Distribution"
     },
     "modules.pims.stakeholder.advisory_committee": {
@@ -338,8 +338,8 @@
       "lt": "[LT] Advisory Committee",
       "pt": "[PT] Advisory Committee",
       "it": "[IT] Advisory Committee",
-      "no": "Advisory Committee",
-      "el": "Advisory Committee"
+      "no": "Rådgivende utvalg",
+      "el": "Συμβουλευτική επιτροπή"
     },
     "modules.pims.stakeholder.all_stakeholders": {
       "en": "All Stakeholders",
@@ -349,7 +349,7 @@
       "lt": "[LT] All Stakeholders",
       "pt": "[PT] All Stakeholders",
       "it": "[IT] All Stakeholders",
-      "no": "All Stakeholders",
+      "no": "Alle interessenter",
       "el": "Όλα Ενδιαφερόμενα μέρη"
     },
     "modules.pims.stakeholder.analysis_reports": {
@@ -360,7 +360,7 @@
       "lt": "Eksportuokite duomenis ir generuokite išsamias analizės ataskaitas",
       "pt": "Exportar dados e gerar relatórios de análise abrangentes",
       "it": "Esporta dati e genera rapporti di analisi completi",
-      "no": "Export data and generate comprehensive analysis reports",
+      "no": "Eksporter data og generer omfattende analyserapporter",
       "el": "Εξαγωγή Δεδομένα and generate comprehensive analysis reports"
     },
     "modules.pims.stakeholder.annual": {
@@ -371,8 +371,8 @@
       "lt": "[LT] Annual",
       "pt": "[PT] Annual",
       "it": "[IT] Annual",
-      "no": "Annual",
-      "el": "Annual"
+      "no": "Årlig",
+      "el": "Ετήσιο"
     },
     "modules.pims.stakeholder.as_needed": {
       "en": "As Needed",
@@ -382,8 +382,8 @@
       "lt": "[LT] As Needed",
       "pt": "[PT] As Needed",
       "it": "[IT] As Needed",
-      "no": "As Needed",
-      "el": "As Needed"
+      "no": "Etter behov",
+      "el": "Κατά περίπτωση"
     },
     "modules.pims.stakeholder.attitude": {
       "en": "Attitude",
@@ -393,8 +393,8 @@
       "lt": "[LT] Attitude",
       "pt": "[PT] Attitude",
       "it": "[IT] Attitude",
-      "no": "Attitude",
-      "el": "Attitude"
+      "no": "Holdning",
+      "el": "Στάση"
     },
     "modules.pims.stakeholder.cancelled": {
       "en": "Cancelled",
@@ -404,8 +404,8 @@
       "lt": "[LT] Cancelled",
       "pt": "[PT] Cancelled",
       "it": "[IT] Cancelled",
-      "no": "Cancelled",
-      "el": "Cancelled"
+      "no": "Avlyst",
+      "el": "Ακυρωμένο"
     },
     "modules.pims.stakeholder.clicked_stakeholder": {
       "en": "Clicked Stakeholder",
@@ -415,8 +415,8 @@
       "lt": "[LT] Clicked Stakeholder",
       "pt": "[PT] Clicked Stakeholder",
       "it": "[IT] Clicked Stakeholder",
-      "no": "Clicked Stakeholder",
-      "el": "Clicked Stakeholder"
+      "no": "Valgt interessent",
+      "el": "Επιλεγμένο ενδιαφερόμενο μέρος"
     },
     "modules.pims.stakeholder.click_on_a_point": {
       "en": "Click On A Point",
@@ -426,8 +426,8 @@
       "lt": "[LT] Click On A Point",
       "pt": "[PT] Click On A Point",
       "it": "[IT] Click On A Point",
-      "no": "Click On A Point",
-      "el": "Click On A Point"
+      "no": "Klikk på et punkt",
+      "el": "Κάντε κλικ σε ένα σημείο"
     },
     "modules.pims.stakeholder.collaborate": {
       "en": "Collaborate",
@@ -437,8 +437,8 @@
       "lt": "[LT] Collaborate",
       "pt": "[PT] Collaborate",
       "it": "[IT] Collaborate",
-      "no": "Collaborate",
-      "el": "Collaborate"
+      "no": "Samarbeide",
+      "el": "Συνεργασία"
     },
     "modules.pims.stakeholder.communication_added": {
       "en": "Communication Added",
@@ -448,8 +448,8 @@
       "lt": "[LT] Communication Added",
       "pt": "[PT] Communication Added",
       "it": "[IT] Communication Added",
-      "no": "Communication Added",
-      "el": "Communication Added"
+      "no": "Kommunikasjon lagt til",
+      "el": "Η επικοινωνία προστέθηκε"
     },
     "modules.pims.stakeholder.communication_plan": {
       "en": "Communication Plan",
@@ -459,8 +459,8 @@
       "lt": "[LT] Communication Plan",
       "pt": "[PT] Communication Plan",
       "it": "[IT] Communication Plan",
-      "no": "Communication Plan",
-      "el": "Communication Plan"
+      "no": "Kommunikasjonsplan",
+      "el": "Σχέδιο επικοινωνίας"
     },
     "modules.pims.stakeholder.communications_log": {
       "en": "Communications Log",
@@ -470,8 +470,8 @@
       "lt": "[LT] Communications Log",
       "pt": "[PT] Communications Log",
       "it": "[IT] Communications Log",
-      "no": "Communications Log",
-      "el": "Communications Log"
+      "no": "Kommunikasjonslogg",
+      "el": "Αρχείο καταγραφής επικοινωνιών"
     },
     "modules.pims.stakeholder.conservation": {
       "en": "Conservation & Restoration",
@@ -481,8 +481,8 @@
       "lt": "Išsaugojimas ir Atkūrimas",
       "pt": "Conservação e Restauração",
       "it": "Conservazione e Restauro",
-      "no": "Conservation & Restoration",
-      "el": "Conservation & Restoration"
+      "no": "Bevaring og restaurering",
+      "el": "Διατήρηση και αποκατάσταση"
     },
     "modules.pims.stakeholder.consult": {
       "en": "Consult",
@@ -492,8 +492,8 @@
       "lt": "[LT] Consult",
       "pt": "[PT] Consult",
       "it": "[IT] Consult",
-      "no": "Consult",
-      "el": "Consult"
+      "no": "Konsultere",
+      "el": "Διαβούλευση"
     },
     "modules.analysis.common.counteract_change_and_seek_equilibrium": {
       "en": " Counteract change and seek equilibrium.",
@@ -503,8 +503,8 @@
       "lt": "Priešinasi pokyčiams ir siekia pusiausvyros.",
       "pt": "Contrabalançam a mudança e buscam o equilíbrio.",
       "it": "Contrastano il cambiamento e cercano l'equilibrio.",
-      "no": " Counteract change and seek equilibrium.",
-      "el": " Counteract change and seek equilibrium."
+      "no": " Motvirker endring og søker likevekt.",
+      "el": " Αντισταθμίζουν την αλλαγή και αναζητούν ισορροπία."
     },
     "modules.pims.stakeholder.current_attitude": {
       "en": "Current Attitude",
@@ -514,8 +514,8 @@
       "lt": "[LT] Current Attitude",
       "pt": "[PT] Current Attitude",
       "it": "[IT] Current Attitude",
-      "no": "Current Attitude",
-      "el": "Current Attitude"
+      "no": "Nåværende holdning",
+      "el": "Τρέχουσα στάση"
     },
     "modules.pims.stakeholder.define_engagement_activities": {
       "en": "Define Engagement Activities",
@@ -525,8 +525,8 @@
       "lt": "[LT] Define Engagement Activities",
       "pt": "[PT] Define Engagement Activities",
       "it": "[IT] Define Engagement Activities",
-      "no": "Define Engagement Activities",
-      "el": "Define Engagement Activities"
+      "no": "Definer engasjementsaktiviteter",
+      "el": "Καθορισμός δραστηριοτήτων εμπλοκής"
     },
     "modules.pims.stakeholder.deleted": {
       "en": "Deleted response measure(s)",
@@ -536,7 +536,7 @@
       "lt": "Atsako priemonė(s) ištrinta(os)",
       "pt": "Medida(s) de resposta excluída(s)",
       "it": "Misura/e di risposta eliminata/e",
-      "no": "Deleted response measure(s)",
+      "no": "Slettede tiltaksmål",
       "el": "Διαγράφηκε Απόκριση measure(s)"
     },
     "modules.pims.stakeholder.download_full_report_excel": {
@@ -547,7 +547,7 @@
       "lt": "[LT] Download Full Report Excel",
       "pt": "[PT] Download Full Report Excel",
       "it": "[IT] Download Full Report Excel",
-      "no": "Download Full Report Excel",
+      "no": "Last ned fullstendig rapport (Excel)",
       "el": "Λήψη Full Report Excel"
     },
     "modules.pims.stakeholder.download_power_interest_grid_png": {
@@ -558,7 +558,7 @@
       "lt": "[LT] Download Power Interest Grid Png",
       "pt": "[PT] Download Power Interest Grid Png",
       "it": "[IT] Download Power Interest Grid Png",
-      "no": "Download Power Interest Grid Png",
+      "no": "Last ned makt-interesse-rutenett (PNG)",
       "el": "Λήψη Power Interest Grid Png"
     },
     "modules.pims.stakeholder.download_summary_pdf": {
@@ -569,7 +569,7 @@
       "lt": "[LT] Download Summary Pdf",
       "pt": "[PT] Download Summary Pdf",
       "it": "[IT] Download Summary Pdf",
-      "no": "Download Summary Pdf",
+      "no": "Last ned sammendrag (PDF)",
       "el": "Λήψη Περίληψη Pdf"
     },
     "modules.pims.stakeholder.eg_local_fishers_association": {
@@ -580,8 +580,8 @@
       "lt": "[LT] Eg Local Fishers Association",
       "pt": "[PT] Eg Local Fishers Association",
       "it": "[IT] Eg Local Fishers Association",
-      "no": "Eg Local Fishers Association",
-      "el": "Eg Local Fishers Association"
+      "no": "F.eks. lokal fiskerforening",
+      "el": "Π.χ. τοπικός σύλλογος αλιέων"
     },
     "modules.pims.stakeholder.email": {
       "en": "Email",
@@ -591,7 +591,7 @@
       "lt": "[LT] Email",
       "pt": "[PT] Email",
       "it": "[IT] Email",
-      "no": "Email",
+      "no": "E-post",
       "el": "Email"
     },
     "modules.pims.stakeholder.emailnewsletter": {
@@ -602,8 +602,8 @@
       "lt": "[LT] Emailnewsletter",
       "pt": "[PT] Emailnewsletter",
       "it": "[IT] Emailnewsletter",
-      "no": "Emailnewsletter",
-      "el": "Emailnewsletter"
+      "no": "E-postnyhetsbrev",
+      "el": "Ενημερωτικό δελτίο email"
     },
     "modules.pims.stakeholder.empower": {
       "en": "Empower",
@@ -613,8 +613,8 @@
       "lt": "[LT] Empower",
       "pt": "[PT] Empower",
       "it": "[IT] Empower",
-      "no": "Empower",
-      "el": "Empower"
+      "no": "Gi fullmakt",
+      "el": "Ενδυνάμωση"
     },
     "modules.pims.stakeholder.energy": {
       "en": "Energy Production",
@@ -624,8 +624,8 @@
       "lt": "Energijos Gamyba",
       "pt": "Produção de Energia",
       "it": "Produzione di Energia",
-      "no": "Energy Production",
-      "el": "Energy Production"
+      "no": "Energiproduksjon",
+      "el": "Παραγωγή ενέργειας"
     },
     "modules.pims.stakeholder.engage_closely_and_make_greatest_efforts_to_satisfy": {
       "en": "Engage Closely And Make Greatest Efforts To Satisfy",
@@ -635,8 +635,8 @@
       "lt": "[LT] Engage Closely And Make Greatest Efforts To Satisfy",
       "pt": "[PT] Engage Closely And Make Greatest Efforts To Satisfy",
       "it": "[IT] Engage Closely And Make Greatest Efforts To Satisfy",
-      "no": "Engage Closely And Make Greatest Efforts To Satisfy",
-      "el": "Engage Closely And Make Greatest Efforts To Satisfy"
+      "no": "Engasjer tett og gjør størst innsats for å tilfredsstille",
+      "el": "Εμπλοκή στενά και μέγιστες προσπάθειες ικανοποίησης"
     },
     "modules.pims.stakeholder.engaged": {
       "en": "Engaged",
@@ -646,8 +646,8 @@
       "lt": "[LT] Engaged",
       "pt": "[PT] Engaged",
       "it": "[IT] Engaged",
-      "no": "Engaged",
-      "el": "Engaged"
+      "no": "Engasjert",
+      "el": "Εμπλεκόμενος"
     },
     "modules.pims.stakeholder.engagement_activities_log": {
       "en": "Engagement Activities Log",
@@ -657,8 +657,8 @@
       "lt": "[LT] Engagement Activities Log",
       "pt": "[PT] Engagement Activities Log",
       "it": "[IT] Engagement Activities Log",
-      "no": "Engagement Activities Log",
-      "el": "Engagement Activities Log"
+      "no": "Logg for engasjementsaktiviteter",
+      "el": "Αρχείο δραστηριοτήτων εμπλοκής"
     },
     "modules.pims.stakeholder.engagement_activity_added": {
       "en": "Engagement Activity Added",
@@ -668,8 +668,8 @@
       "lt": "[LT] Engagement Activity Added",
       "pt": "[PT] Engagement Activity Added",
       "it": "[IT] Engagement Activity Added",
-      "no": "Engagement Activity Added",
-      "el": "Engagement Activity Added"
+      "no": "Engasjementsaktivitet lagt til",
+      "el": "Δραστηριότητα εμπλοκής προστέθηκε"
     },
     "modules.pims.stakeholder.engagement_coverage": {
       "en": "Engagement Coverage",
@@ -679,8 +679,8 @@
       "lt": "[LT] Engagement Coverage",
       "pt": "[PT] Engagement Coverage",
       "it": "[IT] Engagement Coverage",
-      "no": "Engagement Coverage",
-      "el": "Engagement Coverage"
+      "no": "Engasjementsdekning",
+      "el": "Κάλυψη εμπλοκής"
     },
     "modules.pims.stakeholder.engagement_level": {
       "en": "Engagement Level",
@@ -690,8 +690,8 @@
       "lt": "[LT] Engagement Level",
       "pt": "[PT] Engagement Level",
       "it": "[IT] Engagement Level",
-      "no": "Engagement Level",
-      "el": "Engagement Level"
+      "no": "Engasjementsnivå",
+      "el": "Επίπεδο εμπλοκής"
     },
     "modules.pims.stakeholder.engagement_method": {
       "en": "Engagement Method",
@@ -701,8 +701,8 @@
       "lt": "[LT] Engagement Method",
       "pt": "[PT] Engagement Method",
       "it": "[IT] Engagement Method",
-      "no": "Engagement Method",
-      "el": "Engagement Method"
+      "no": "Engasjementsmetode",
+      "el": "Μέθοδος εμπλοκής"
     },
     "modules.pims.stakeholder.engagement_objectives": {
       "en": "Engagement Objectives",
@@ -712,8 +712,8 @@
       "lt": "[LT] Engagement Objectives",
       "pt": "[PT] Engagement Objectives",
       "it": "[IT] Engagement Objectives",
-      "no": "Engagement Objectives",
-      "el": "Engagement Objectives"
+      "no": "Engasjementsmål",
+      "el": "Στόχοι εμπλοκής"
     },
     "modules.pims.stakeholder.engagement_planning": {
       "en": "Engagement Planning",
@@ -723,8 +723,8 @@
       "lt": "[LT] Engagement Planning",
       "pt": "[PT] Engagement Planning",
       "it": "[IT] Engagement Planning",
-      "no": "Engagement Planning",
-      "el": "Engagement Planning"
+      "no": "Engasjementsplanlegging",
+      "el": "Σχεδιασμός εμπλοκής"
     },
     "modules.pims.stakeholder.export_stakeholder_data": {
       "en": "Export Stakeholder Data",
@@ -734,7 +734,7 @@
       "lt": "[LT] Export Stakeholder Data",
       "pt": "[PT] Export Stakeholder Data",
       "it": "[IT] Export Stakeholder Data",
-      "no": "Export Stakeholder Data",
+      "no": "Eksporter interessentdata",
       "el": "Εξαγωγή Ενδιαφερόμενο μέρος Δεδομένα"
     },
     "modules.pims.stakeholder.facilitatorcontact": {
@@ -745,8 +745,8 @@
       "lt": "[LT] Facilitatorcontact",
       "pt": "[PT] Facilitatorcontact",
       "it": "[IT] Facilitatorcontact",
-      "no": "Facilitatorcontact",
-      "el": "Facilitatorcontact"
+      "no": "Tilrettelegger/kontakt",
+      "el": "Διευκολυντής/επαφή"
     },
     "modules.pims.stakeholder.fisheries": {
       "en": "Fisheries Management",
@@ -756,8 +756,8 @@
       "lt": "Žvejybos valdymas",
       "pt": "Gestão Pesqueira",
       "it": "Gestione della Pesca",
-      "no": "Fisheries Management",
-      "el": "Fisheries Management"
+      "no": "Fiskeriforvaltning",
+      "el": "Διαχείριση αλιείας"
     },
     "modules.pims.stakeholder.focus_group": {
       "en": "Focus Group",
@@ -767,8 +767,8 @@
       "lt": "[LT] Focus Group",
       "pt": "[PT] Focus Group",
       "it": "[IT] Focus Group",
-      "no": "Focus Group",
-      "el": "Focus Group"
+      "no": "Fokusgruppe",
+      "el": "Ομάδα εστίασης"
     },
     "modules.pims.stakeholder.government": {
       "en": "Government",
@@ -778,8 +778,8 @@
       "lt": "[LT] Government",
       "pt": "[PT] Government",
       "it": "[IT] Government",
-      "no": "Government",
-      "el": "Government"
+      "no": "Myndigheter",
+      "el": "Κυβέρνηση"
     },
     "modules.pims.stakeholder.governmentregulators": {
       "en": "Governmentregulators",
@@ -789,8 +789,8 @@
       "lt": "[LT] Governmentregulators",
       "pt": "[PT] Governmentregulators",
       "it": "[IT] Governmentregulators",
-      "no": "Governmentregulators",
-      "el": "Governmentregulators"
+      "no": "Myndigheter/regulatorer",
+      "el": "Κυβέρνηση/ρυθμιστές"
     },
     "modules.pims.stakeholder.grid_summary": {
       "en": "Grid Summary",
@@ -800,8 +800,8 @@
       "lt": "[LT] Grid Summary",
       "pt": "[PT] Grid Summary",
       "it": "[IT] Grid Summary",
-      "no": "Grid Summary",
-      "el": "Grid Summary"
+      "no": "Rutenettoversikt",
+      "el": "Σύνοψη πλέγματος"
     },
     "modules.pims.stakeholder.high_interest_stakeholders": {
       "en": "High Interest Stakeholders",
@@ -811,8 +811,8 @@
       "lt": "[LT] High Interest Stakeholders",
       "pt": "[PT] High Interest Stakeholders",
       "it": "[IT] High Interest Stakeholders",
-      "no": "High Interest Stakeholders",
-      "el": "High Interest Stakeholders"
+      "no": "Interessenter med høy interesse",
+      "el": "Ενδιαφερόμενα μέρη υψηλού ενδιαφέροντος"
     },
     "modules.pims.stakeholder.high_power_high_interest": {
       "en": "High Power High Interest",
@@ -822,8 +822,8 @@
       "lt": "[LT] High Power High Interest",
       "pt": "[PT] High Power High Interest",
       "it": "[IT] High Power High Interest",
-      "no": "High Power High Interest",
-      "el": "High Power High Interest"
+      "no": "Høy makt, høy interesse",
+      "el": "Υψηλή ισχύς, υψηλό ενδιαφέρον"
     },
     "modules.pims.stakeholder.high_power_high_interest_key_players": {
       "en": "High Power High Interest Key Players",
@@ -833,8 +833,8 @@
       "lt": "[LT] High Power High Interest Key Players",
       "pt": "[PT] High Power High Interest Key Players",
       "it": "[IT] High Power High Interest Key Players",
-      "no": "High Power High Interest Key Players",
-      "el": "High Power High Interest Key Players"
+      "no": "Høy makt, høy interesse - nøkkelspillere",
+      "el": "Υψηλή ισχύς, υψηλό ενδιαφέρον - βασικοί παράγοντες"
     },
     "modules.pims.stakeholder.high_power_low_interest": {
       "en": "High Power Low Interest",
@@ -844,8 +844,8 @@
       "lt": "[LT] High Power Low Interest",
       "pt": "[PT] High Power Low Interest",
       "it": "[IT] High Power Low Interest",
-      "no": "High Power Low Interest",
-      "el": "High Power Low Interest"
+      "no": "Høy makt, lav interesse",
+      "el": "Υψηλή ισχύς, χαμηλό ενδιαφέρον"
     },
     "modules.pims.stakeholder.high_power_low_interest_keep_satisfied": {
       "en": "High Power Low Interest Keep Satisfied",
@@ -855,8 +855,8 @@
       "lt": "[LT] High Power Low Interest Keep Satisfied",
       "pt": "[PT] High Power Low Interest Keep Satisfied",
       "it": "[IT] High Power Low Interest Keep Satisfied",
-      "no": "High Power Low Interest Keep Satisfied",
-      "el": "High Power Low Interest Keep Satisfied"
+      "no": "Høy makt, lav interesse - hold tilfreds",
+      "el": "Υψηλή ισχύς, χαμηλό ενδιαφέρον - διατήρηση ικανοποίησης"
     },
     "modules.pims.stakeholder.high_power_stakeholders": {
       "en": "High Power Stakeholders",
@@ -866,8 +866,8 @@
       "lt": "[LT] High Power Stakeholders",
       "pt": "[PT] High Power Stakeholders",
       "it": "[IT] High Power Stakeholders",
-      "no": "High Power Stakeholders",
-      "el": "High Power Stakeholders"
+      "no": "Interessenter med høy makt",
+      "el": "Ενδιαφερόμενα μέρη υψηλής ισχύος"
     },
     "modules.pims.stakeholder.indigenous_groups": {
       "en": "Indigenous Groups",
@@ -877,8 +877,8 @@
       "lt": "[LT] Indigenous Groups",
       "pt": "[PT] Indigenous Groups",
       "it": "[IT] Indigenous Groups",
-      "no": "Indigenous Groups",
-      "el": "Indigenous Groups"
+      "no": "Urfolk",
+      "el": "Αυτόχθονες ομάδες"
     },
     "modules.pims.stakeholder.industry": {
       "en": "Fishers as industry influencers",
@@ -888,8 +888,8 @@
       "lt": "Žvejai kaip pramonės įtakos asmenys",
       "pt": "Pescadores como influenciadores da indústria",
       "it": "Pescatori come influencer del settore",
-      "no": "Fishers as industry influencers",
-      "el": "Fishers as industry influencers"
+      "no": "Fiskere som bransjepåvirkere",
+      "el": "Αλιείς ως παράγοντες επιρροής στον κλάδο"
     },
     "modules.pims.stakeholder.industrybusiness": {
       "en": "Industrybusiness",
@@ -899,8 +899,8 @@
       "lt": "[LT] Industrybusiness",
       "pt": "[PT] Industrybusiness",
       "it": "[IT] Industrybusiness",
-      "no": "Industrybusiness",
-      "el": "Industrybusiness"
+      "no": "Næringsliv",
+      "el": "Βιομηχανία/επιχειρήσεις"
     },
     "modules.pims.stakeholder.inform": {
       "en": "How often a node lies on the shortest path between other nodes. Important for information flow.",
@@ -910,8 +910,8 @@
       "lt": "Kaip dažnai mazgas yra trumpiausiame kelyje tarp kitų mazgų. Svarbu informacijos srautui.",
       "pt": "Com que frequência um nó está no caminho mais curto entre outros nós. Importante para o fluxo de informações.",
       "it": "Quanto spesso un nodo si trova sul percorso più breve tra altri nodi. Importante per il flusso di informazioni.",
-      "no": "How often a node lies on the shortest path between other nodes. Important for information flow.",
-      "el": "How often a node lies on the shortest path between other nodes. Important for information flow."
+      "no": "Informere - Hvor ofte en node ligger på korteste sti mellom andre noder.",
+      "el": "Ενημέρωση - Πόσο συχνά ένας κόμβος βρίσκεται στη συντομότερη διαδρομή μεταξύ άλλων κόμβων."
     },
     "modules.pims.stakeholder.interest": {
       "en": "What topic areas are you interested in? (Select all that apply)",
@@ -921,8 +921,8 @@
       "lt": "Kokios teminės sritys jus domina? (Pasirinkite visas tinkamas)",
       "pt": "Que áreas temáticas lhe interessam? (Selecione todas as que se aplicam)",
       "it": "Quali aree tematiche ti interessano? (Seleziona tutte quelle applicabili)",
-      "no": "What topic areas are you interested in? (Select all that apply)",
-      "el": "What topic areas are you interested in? (Select all that apply)"
+      "no": "Hvilke emneområder er du interessert i? (Velg alle som gjelder)",
+      "el": "Ποιες θεματικές περιοχές σας ενδιαφέρουν; (Επιλέξτε όλες τις σχετικές)"
     },
     "modules.pims.stakeholder.interestimpact": {
       "en": "Interestimpact",
@@ -932,8 +932,8 @@
       "lt": "[LT] Interestimpact",
       "pt": "[PT] Interestimpact",
       "it": "[IT] Interestimpact",
-      "no": "Interestimpact",
-      "el": "Interestimpact"
+      "no": "Interesse/påvirkning",
+      "el": "Ενδιαφέρον/επίπτωση"
     },
     "modules.pims.stakeholder.interview": {
       "en": "Interview",
@@ -943,7 +943,7 @@
       "lt": "[LT] Interview",
       "pt": "[PT] Interview",
       "it": "[IT] Interview",
-      "no": "Interview",
+      "no": "Intervju",
       "el": "Συνέντευξη"
     },
     "modules.pims.stakeholder.involve": {
@@ -954,8 +954,8 @@
       "lt": "[LT] Involve",
       "pt": "[PT] Involve",
       "it": "[IT] Involve",
-      "no": "Involve",
-      "el": "Involve"
+      "no": "Involvere",
+      "el": "Εμπλοκή"
     },
     "modules.pims.stakeholder.keep_informed": {
       "en": "Keep Informed",
@@ -965,8 +965,8 @@
       "lt": "[LT] Keep Informed",
       "pt": "[PT] Keep Informed",
       "it": "[IT] Keep Informed",
-      "no": "Keep Informed",
-      "el": "Keep Informed"
+      "no": "Hold informert",
+      "el": "Κρατήστε ενημερωμένους"
     },
     "modules.pims.stakeholder.keep_informed_and_talk_to_regarding_their_interests": {
       "en": "Keep Informed And Talk To Regarding Their Interests",
@@ -976,8 +976,8 @@
       "lt": "[LT] Keep Informed And Talk To Regarding Their Interests",
       "pt": "[PT] Keep Informed And Talk To Regarding Their Interests",
       "it": "[IT] Keep Informed And Talk To Regarding Their Interests",
-      "no": "Keep Informed And Talk To Regarding Their Interests",
-      "el": "Keep Informed And Talk To Regarding Their Interests"
+      "no": "Hold informert og snakk med om deres interesser",
+      "el": "Κρατήστε ενημερωμένους και συζητήστε σχετικά με τα ενδιαφέροντά τους"
     },
     "modules.pims.stakeholder.keep_satisfied": {
       "en": "Keep Satisfied",
@@ -987,8 +987,8 @@
       "lt": "[LT] Keep Satisfied",
       "pt": "[PT] Keep Satisfied",
       "it": "[IT] Keep Satisfied",
-      "no": "Keep Satisfied",
-      "el": "Keep Satisfied"
+      "no": "Hold tilfreds",
+      "el": "Διατηρήστε ικανοποιημένους"
     },
     "modules.pims.stakeholder.keep_satisfied_but_avoid_excessive_communication": {
       "en": "Keep Satisfied But Avoid Excessive Communication",
@@ -998,8 +998,8 @@
       "lt": "[LT] Keep Satisfied But Avoid Excessive Communication",
       "pt": "[PT] Keep Satisfied But Avoid Excessive Communication",
       "it": "[IT] Keep Satisfied But Avoid Excessive Communication",
-      "no": "Keep Satisfied But Avoid Excessive Communication",
-      "el": "Keep Satisfied But Avoid Excessive Communication"
+      "no": "Hold tilfreds men unngå overdreven kommunikasjon",
+      "el": "Διατηρήστε ικανοποιημένους αλλά αποφύγετε υπερβολική επικοινωνία"
     },
     "modules.pims.stakeholder.key_interests": {
       "en": "Key Interests",
@@ -1009,8 +1009,8 @@
       "lt": "[LT] Key Interests",
       "pt": "[PT] Key Interests",
       "it": "[IT] Key Interests",
-      "no": "Key Interests",
-      "el": "Key Interests"
+      "no": "Nøkkelinteresser",
+      "el": "Βασικά ενδιαφέροντα"
     },
     "modules.pims.stakeholder.key_interestsconcerns": {
       "en": "Key Interestsconcerns",
@@ -1020,8 +1020,8 @@
       "lt": "[LT] Key Interestsconcerns",
       "pt": "[PT] Key Interestsconcerns",
       "it": "[IT] Key Interestsconcerns",
-      "no": "Key Interestsconcerns",
-      "el": "Key Interestsconcerns"
+      "no": "Nøkkelinteresser/-bekymringer",
+      "el": "Βασικά ενδιαφέροντα/ανησυχίες"
     },
     "modules.pims.stakeholder.key_messagecontent": {
       "en": "Key Messagecontent",
@@ -1031,8 +1031,8 @@
       "lt": "[LT] Key Messagecontent",
       "pt": "[PT] Key Messagecontent",
       "it": "[IT] Key Messagecontent",
-      "no": "Key Messagecontent",
-      "el": "Key Messagecontent"
+      "no": "Nøkkelbudskap/-innhold",
+      "el": "Βασικό μήνυμα/περιεχόμενο"
     },
     "modules.pims.stakeholder.key_players": {
       "en": "Key Players",
@@ -1042,8 +1042,8 @@
       "lt": "[LT] Key Players",
       "pt": "[PT] Key Players",
       "it": "[IT] Key Players",
-      "no": "Key Players",
-      "el": "Key Players"
+      "no": "Nøkkelspillere",
+      "el": "Βασικοί παράγοντες"
     },
     "modules.pims.stakeholder.local_communities": {
       "en": "Local Communities",
@@ -1053,8 +1053,8 @@
       "lt": "[LT] Local Communities",
       "pt": "[PT] Local Communities",
       "it": "[IT] Local Communities",
-      "no": "Local Communities",
-      "el": "Local Communities"
+      "no": "Lokalsamfunn",
+      "el": "Τοπικές κοινότητες"
     },
     "modules.pims.stakeholder.low_power_high_interest": {
       "en": "Low Power High Interest",
@@ -1064,8 +1064,8 @@
       "lt": "[LT] Low Power High Interest",
       "pt": "[PT] Low Power High Interest",
       "it": "[IT] Low Power High Interest",
-      "no": "Low Power High Interest",
-      "el": "Low Power High Interest"
+      "no": "Lav makt, høy interesse",
+      "el": "Χαμηλή ισχύς, υψηλό ενδιαφέρον"
     },
     "modules.pims.stakeholder.low_power_high_interest_keep_informed": {
       "en": "Low Power High Interest Keep Informed",
@@ -1075,8 +1075,8 @@
       "lt": "[LT] Low Power High Interest Keep Informed",
       "pt": "[PT] Low Power High Interest Keep Informed",
       "it": "[IT] Low Power High Interest Keep Informed",
-      "no": "Low Power High Interest Keep Informed",
-      "el": "Low Power High Interest Keep Informed"
+      "no": "Lav makt, høy interesse - hold informert",
+      "el": "Χαμηλή ισχύς, υψηλό ενδιαφέρον - κρατήστε ενημερωμένους"
     },
     "modules.pims.stakeholder.low_power_low_interest": {
       "en": "Low Power Low Interest",
@@ -1086,8 +1086,8 @@
       "lt": "[LT] Low Power Low Interest",
       "pt": "[PT] Low Power Low Interest",
       "it": "[IT] Low Power Low Interest",
-      "no": "Low Power Low Interest",
-      "el": "Low Power Low Interest"
+      "no": "Lav makt, lav interesse",
+      "el": "Χαμηλή ισχύς, χαμηλό ενδιαφέρον"
     },
     "modules.pims.stakeholder.low_power_low_interest_monitor": {
       "en": "Low Power Low Interest Monitor",
@@ -1097,8 +1097,8 @@
       "lt": "[LT] Low Power Low Interest Monitor",
       "pt": "[PT] Low Power Low Interest Monitor",
       "it": "[IT] Low Power Low Interest Monitor",
-      "no": "Low Power Low Interest Monitor",
-      "el": "Low Power Low Interest Monitor"
+      "no": "Lav makt, lav interesse - overvåk",
+      "el": "Χαμηλή ισχύς, χαμηλό ενδιαφέρον - παρακολούθηση"
     },
     "modules.pims.stakeholder.meeting_notes": {
       "en": "Meeting Notes",
@@ -1108,8 +1108,8 @@
       "lt": "[LT] Meeting Notes",
       "pt": "[PT] Meeting Notes",
       "it": "[IT] Meeting Notes",
-      "no": "Meeting Notes",
-      "el": "Meeting Notes"
+      "no": "Møtenotater",
+      "el": "Σημειώσεις συνάντησης"
     },
     "modules.pims.stakeholder.monitor": {
       "en": "Monitoring, scientific studies",
@@ -1119,8 +1119,8 @@
       "lt": "Stebėjimas, moksliniai tyrimai",
       "pt": "Monitorização, estudos científicos",
       "it": "Monitoraggio, studi scientifici",
-      "no": "Monitoring, scientific studies",
-      "el": "Monitoring, scientific studies"
+      "no": "Overvåking, vitenskapelige studier",
+      "el": "Παρακολούθηση, επιστημονικές μελέτες"
     },
     "modules.pims.stakeholder.monitor_with_minimum_effort": {
       "en": "Monitor With Minimum Effort",
@@ -1130,8 +1130,8 @@
       "lt": "[LT] Monitor With Minimum Effort",
       "pt": "[PT] Monitor With Minimum Effort",
       "it": "[IT] Monitor With Minimum Effort",
-      "no": "Monitor With Minimum Effort",
-      "el": "Monitor With Minimum Effort"
+      "no": "Overvåk med minimal innsats",
+      "el": "Παρακολούθηση με ελάχιστη προσπάθεια"
     },
     "modules.pims.stakeholder.monthly": {
       "en": "Monthly",
@@ -1141,8 +1141,8 @@
       "lt": "[LT] Monthly",
       "pt": "[PT] Monthly",
       "it": "[IT] Monthly",
-      "no": "Monthly",
-      "el": "Monthly"
+      "no": "Månedlig",
+      "el": "Μηνιαία"
     },
     "modules.pims.stakeholder.multiple": {
       "en": "Select all that apply (multiple selection allowed)",
@@ -1152,7 +1152,7 @@
       "lt": "Pasirinkite visus tinkamus (galima kelių pasirinkimas)",
       "pt": "Selecione todos os que se aplicam (seleção múltipla permitida)",
       "it": "Seleziona tutte quelle applicabili (selezione multipla consentita)",
-      "no": "Select all that apply (multiple selection allowed)",
+      "no": "Velg alle som gjelder (flervalg tillatt)",
       "el": "Επιλογή Όλα that apply (multiple selection allowed)"
     },
     "modules.pims.stakeholder.name_email_phone": {
@@ -1163,7 +1163,7 @@
       "lt": "[LT] Name Email Phone",
       "pt": "[PT] Name Email Phone",
       "it": "[IT] Name Email Phone",
-      "no": "Name Email Phone",
+      "no": "Navn, e-post, telefon",
       "el": "Όνομα Email Phone"
     },
     "modules.pims.stakeholder.neutral": {
@@ -1174,8 +1174,8 @@
       "lt": "neutralus",
       "pt": "neutro",
       "it": "neutro",
-      "no": "neutral",
-      "el": "neutral"
+      "no": "nøytral",
+      "el": "ουδέτερο"
     },
     "modules.pims.stakeholder.newsletter": {
       "en": "Newsletter",
@@ -1185,8 +1185,8 @@
       "lt": "[LT] Newsletter",
       "pt": "[PT] Newsletter",
       "it": "[IT] Newsletter",
-      "no": "Newsletter",
-      "el": "Newsletter"
+      "no": "Nyhetsbrev",
+      "el": "Ενημερωτικό δελτίο"
     },
     "modules.pims.stakeholder.ngocivil_society": {
       "en": "Ngocivil Society",
@@ -1196,8 +1196,8 @@
       "lt": "[LT] Ngocivil Society",
       "pt": "[PT] Ngocivil Society",
       "it": "[IT] Ngocivil Society",
-      "no": "Ngocivil Society",
-      "el": "Ngocivil Society"
+      "no": "NGO/sivilsamfunn",
+      "el": "ΜΚΟ/κοινωνία πολιτών"
     },
     "modules.pims.stakeholder.ngos": {
       "en": "Ngos",
@@ -1207,8 +1207,8 @@
       "lt": "[LT] Ngos",
       "pt": "[PT] Ngos",
       "it": "[IT] Ngos",
-      "no": "Ngos",
-      "el": "Ngos"
+      "no": "NGO-er",
+      "el": "ΜΚΟ"
     },
     "modules.pims.stakeholder.no_data": {
       "en": "No Data",
@@ -1218,7 +1218,7 @@
       "lt": "[LT] No Data",
       "pt": "[PT] No Data",
       "it": "[IT] No Data",
-      "no": "No Data",
+      "no": "Ingen data",
       "el": "Όχι Δεδομένα"
     },
     "modules.pims.stakeholder.no_stakeholders_added_yet": {
@@ -1229,7 +1229,7 @@
       "lt": "[LT] No Stakeholders Added Yet",
       "pt": "[PT] No Stakeholders Added Yet",
       "it": "[IT] No Stakeholders Added Yet",
-      "no": "No Stakeholders Added Yet",
+      "no": "Ingen interessenter lagt til ennå",
       "el": "Όχι Ενδιαφερόμενα μέρη Προστέθηκε Yet"
     },
     "modules.pims.stakeholder.no_stakeholders_selected": {
@@ -1240,7 +1240,7 @@
       "lt": "[LT] No Stakeholders Selected",
       "pt": "[PT] No Stakeholders Selected",
       "it": "[IT] No Stakeholders Selected",
-      "no": "No Stakeholders Selected",
+      "no": "Ingen interessenter valgt",
       "el": "Όχι Ενδιαφερόμενα μέρη Επιλεγμένο"
     },
     "modules.pims.stakeholder.not_engaged": {
@@ -1251,8 +1251,8 @@
       "lt": "[LT] Not Engaged",
       "pt": "[PT] Not Engaged",
       "it": "[IT] Not Engaged",
-      "no": "Not Engaged",
-      "el": "Not Engaged"
+      "no": "Ikke engasjert",
+      "el": "Μη εμπλεκόμενος"
     },
     "modules.pims.stakeholder.one_on_one_meeting": {
       "en": "One On One Meeting",
@@ -1262,8 +1262,8 @@
       "lt": "[LT] One On One Meeting",
       "pt": "[PT] One On One Meeting",
       "it": "[IT] One On One Meeting",
-      "no": "One On One Meeting",
-      "el": "One On One Meeting"
+      "no": "En-til-en-møte",
+      "el": "Συνάντηση ένας προς έναν"
     },
     "modules.pims.stakeholder.one_time": {
       "en": "One Time",
@@ -1273,8 +1273,8 @@
       "lt": "[LT] One Time",
       "pt": "[PT] One Time",
       "it": "[IT] One Time",
-      "no": "One Time",
-      "el": "One Time"
+      "no": "Engangs",
+      "el": "Μία φορά"
     },
     "modules.pims.stakeholder.ongoing": {
       "en": "Ongoing",
@@ -1284,8 +1284,8 @@
       "lt": "[LT] Ongoing",
       "pt": "[PT] Ongoing",
       "it": "[IT] Ongoing",
-      "no": "Ongoing",
-      "el": "Ongoing"
+      "no": "Pågående",
+      "el": "Σε εξέλιξη"
     },
     "modules.pims.stakeholder.percentage": {
       "en": "Percentage",
@@ -1295,8 +1295,8 @@
       "lt": "[LT] Percentage",
       "pt": "[PT] Percentage",
       "it": "[IT] Percentage",
-      "no": "Percentage",
-      "el": "Percentage"
+      "no": "Prosentandel",
+      "el": "Ποσοστό"
     },
     "modules.pims.stakeholder.pims_stakeholder_help_content": {
       "en": "Pims Stakeholder Help Content",
@@ -1306,7 +1306,7 @@
       "lt": "[LT] Pims Stakeholder Help Content",
       "pt": "[PT] Pims Stakeholder Help Content",
       "it": "[IT] Pims Stakeholder Help Content",
-      "no": "Pims Stakeholder Help Content",
+      "no": "Hjelpeinnhold for PIMS-interessenter",
       "el": "PIMS Ενδιαφερόμενο μέρος Βοήθεια Content"
     },
     "modules.pims.stakeholder.policymanagement": {
@@ -1317,8 +1317,8 @@
       "lt": "[LT] Policymanagement",
       "pt": "[PT] Policymanagement",
       "it": "[IT] Policymanagement",
-      "no": "Policymanagement",
-      "el": "Policymanagement"
+      "no": "Politikk/forvaltning",
+      "el": "Πολιτική/διαχείριση"
     },
     "modules.isa.this_ai_powered_assistant_helps_you_create_your_da": {
       "en": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
@@ -1328,8 +1328,8 @@
       "lt": "Šis dirbtinio intelekto asistentas padeda sukurti DAPSI(W)R(M) sistemą interaktyvia kalba. Tiesiog atsakykite į klausimus, o asistentas jus ves per kiekvieną žingsnį.",
       "pt": "Este assistente alimentado por IA ajuda você a criar sua estrutura DAPSI(W)R(M) através de conversação interativa. Simplesmente responda às perguntas e o assistente irá guiá-lo em cada etapa.",
       "it": "Questo assistente basato sull'intelligenza artificiale ti aiuta a creare il tuo framework DAPSI(W)R(M) attraverso una conversazione interattiva. Rispondi semplicemente alle domande e l'assistente ti guiderà in ogni passaggio.",
-      "no": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
-      "el": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step."
+      "no": "Denne KI-drevne assistenten hjelper deg med å lage ditt DAPSI(W)R(M)-rammeverk gjennom interaktiv samtale. Svar enkelt på spørsmålene, og assistenten veileder deg gjennom hvert trinn.",
+      "el": "Αυτός ο βοηθός τεχνητής νοημοσύνης σας βοηθά να δημιουργήσετε το πλαίσιο DAPSI(W)R(M) μέσω διαδραστικής συνομιλίας. Απλά απαντήστε στις ερωτήσεις και ο βοηθός θα σας καθοδηγήσει σε κάθε βήμα."
     },
     "modules.pims.stakeholder.powerinfluence": {
       "en": "Powerinfluence",
@@ -1339,8 +1339,8 @@
       "lt": "[LT] Powerinfluence",
       "pt": "[PT] Powerinfluence",
       "it": "[IT] Powerinfluence",
-      "no": "Powerinfluence",
-      "el": "Powerinfluence"
+      "no": "Makt/innflytelse",
+      "el": "Ισχύς/επιρροή"
     },
     "modules.pims.stakeholder.power_interest_analysis": {
       "en": "Power Interest Analysis",
@@ -1350,8 +1350,8 @@
       "lt": "[LT] Power Interest Analysis",
       "pt": "[PT] Power Interest Analysis",
       "it": "[IT] Power Interest Analysis",
-      "no": "Power Interest Analysis",
-      "el": "Power Interest Analysis"
+      "no": "Makt-interesse-analyse",
+      "el": "Ανάλυση ισχύος-ενδιαφέροντος"
     },
     "modules.pims.stakeholder.power_interest_grid_classification": {
       "en": "Power Interest Grid Classification",
@@ -1361,8 +1361,8 @@
       "lt": "[LT] Power Interest Grid Classification",
       "pt": "[PT] Power Interest Grid Classification",
       "it": "[IT] Power Interest Grid Classification",
-      "no": "Power Interest Grid Classification",
-      "el": "Power Interest Grid Classification"
+      "no": "Klassifisering i makt-interesse-rutenett",
+      "el": "Ταξινόμηση πλέγματος ισχύος-ενδιαφέροντος"
     },
     "modules.pims.stakeholder.presentation": {
       "en": "Stakeholder Presentation",
@@ -1372,7 +1372,7 @@
       "lt": "Suinteresuotų šalių pristatymas",
       "pt": "Apresentação às Partes Interessadas",
       "it": "Presentazione per gli Stakeholder",
-      "no": "Stakeholder Presentation",
+      "no": "Interessentpresentasjon",
       "el": "Ενδιαφερόμενο μέρος Presentation"
     },
     "modules.pims.stakeholder.press_release": {
@@ -1383,8 +1383,8 @@
       "lt": "[LT] Press Release",
       "pt": "[PT] Press Release",
       "it": "[IT] Press Release",
-      "no": "Press Release",
-      "el": "Press Release"
+      "no": "Pressemelding",
+      "el": "Δελτίο τύπου"
     },
     "modules.pims.stakeholder.primary_sector": {
       "en": "Primary Sector",
@@ -1394,8 +1394,8 @@
       "lt": "[LT] Primary Sector",
       "pt": "[PT] Primary Sector",
       "it": "[IT] Primary Sector",
-      "no": "Primary Sector",
-      "el": "Primary Sector"
+      "no": "Primærsektor",
+      "el": "Πρωτογενής τομέας"
     },
     "modules.pims.stakeholder.public_meeting": {
       "en": "Public Meeting",
@@ -1405,8 +1405,8 @@
       "lt": "[LT] Public Meeting",
       "pt": "[PT] Public Meeting",
       "it": "[IT] Public Meeting",
-      "no": "Public Meeting",
-      "el": "Public Meeting"
+      "no": "Offentlig møte",
+      "el": "Δημόσια συνάντηση"
     },
     "modules.pims.stakeholder.quarterly": {
       "en": "Quarterly",
@@ -1416,8 +1416,8 @@
       "lt": "[LT] Quarterly",
       "pt": "[PT] Quarterly",
       "it": "[IT] Quarterly",
-      "no": "Quarterly",
-      "el": "Quarterly"
+      "no": "Kvartalsvis",
+      "el": "Τριμηνιαίο"
     },
     "modules.response.measures.export": {
       "en": "Export Pathway Report",
@@ -1427,7 +1427,7 @@
       "lt": "Eksportuoti kelio ataskaitą",
       "pt": "Exportar Relatório de Percurso",
       "it": "Esporta Rapporto Percorso",
-      "no": "Export Pathway Report",
+      "no": "Eksporter veirapport",
       "el": "Εξαγωγή Pathway Report"
     },
     "modules.isa.data_entry.common.documentation": {
@@ -1438,8 +1438,8 @@
       "lt": "Patyrę vartotojai, akademiniai tyrimai, išsami dokumentacija",
       "pt": "Utilizadores experientes, pesquisa académica, documentação detalhada",
       "it": "Utenti esperti, ricerca accademica, documentazione dettagliata",
-      "no": "Experienced users, academic research, detailed documentation",
-      "el": "Experienced users, academic research, detailed documentation"
+      "no": "Erfarne brukere, akademisk forskning, detaljert dokumentasjon",
+      "el": "Έμπειροι χρήστες, ακαδημαϊκή έρευνα, λεπτομερής τεκμηρίωση"
     },
     "modules.pims.stakeholder.resistant": {
       "en": "Resistant",
@@ -1449,8 +1449,8 @@
       "lt": "[LT] Resistant",
       "pt": "[PT] Resistant",
       "it": "[IT] Resistant",
-      "no": "Resistant",
-      "el": "Resistant"
+      "no": "Motvillig",
+      "el": "Ανθεκτικός"
     },
     "modules.pims.stakeholder.resource_users": {
       "en": "Resource Users",
@@ -1460,8 +1460,8 @@
       "lt": "[LT] Resource Users",
       "pt": "[PT] Resource Users",
       "it": "[IT] Resource Users",
-      "no": "Resource Users",
-      "el": "Resource Users"
+      "no": "Ressursbrukere",
+      "el": "Χρήστες πόρων"
     },
     "modules.pims.stakeholder.responsible_person": {
       "en": "Responsible Person",
@@ -1471,8 +1471,8 @@
       "lt": "[LT] Responsible Person",
       "pt": "[PT] Responsible Person",
       "it": "[IT] Responsible Person",
-      "no": "Responsible Person",
-      "el": "Responsible Person"
+      "no": "Ansvarlig person",
+      "el": "Υπεύθυνο πρόσωπο"
     },
     "modules.pims.stakeholder.role_in_system": {
       "en": "Role In System",
@@ -1482,7 +1482,7 @@
       "lt": "[LT] Role In System",
       "pt": "[PT] Role In System",
       "it": "[IT] Role In System",
-      "no": "Role In System",
+      "no": "Rolle i systemet",
       "el": "Ρόλος In System"
     },
     "modules.pims.stakeholder.scientificacademic": {
@@ -1493,8 +1493,8 @@
       "lt": "[LT] Scientificacademic",
       "pt": "[PT] Scientificacademic",
       "it": "[IT] Scientificacademic",
-      "no": "Scientificacademic",
-      "el": "Scientificacademic"
+      "no": "Vitenskapelig/akademisk",
+      "el": "Επιστημονικός/ακαδημαϊκός"
     },
     "modules.pims.stakeholder.scientific_community": {
       "en": "Scientific Community",
@@ -1504,8 +1504,8 @@
       "lt": "[LT] Scientific Community",
       "pt": "[PT] Scientific Community",
       "it": "[IT] Scientific Community",
-      "no": "Scientific Community",
-      "el": "Scientific Community"
+      "no": "Vitenskapelig samfunn",
+      "el": "Επιστημονική κοινότητα"
     },
     "modules.pims.stakeholder.sector_distribution": {
       "en": "Sector Distribution",
@@ -1515,8 +1515,8 @@
       "lt": "[LT] Sector Distribution",
       "pt": "[PT] Sector Distribution",
       "it": "[IT] Sector Distribution",
-      "no": "Sector Distribution",
-      "el": "Sector Distribution"
+      "no": "Sektorfordeling",
+      "el": "Κατανομή τομέων"
     },
     "modules.pims.stakeholder.sectors_represented": {
       "en": "Sectors Represented",
@@ -1526,8 +1526,8 @@
       "lt": "[LT] Sectors Represented",
       "pt": "[PT] Sectors Represented",
       "it": "[IT] Sectors Represented",
-      "no": "Sectors Represented",
-      "el": "Sectors Represented"
+      "no": "Representerte sektorer",
+      "el": "Εκπροσωπούμενοι τομείς"
     },
     "modules.pims.stakeholder.select_stakeholder": {
       "en": "Select Stakeholder",
@@ -1537,7 +1537,7 @@
       "lt": "[LT] Select Stakeholder",
       "pt": "[PT] Select Stakeholder",
       "it": "[IT] Select Stakeholder",
-      "no": "Select Stakeholder",
+      "no": "Velg interessent",
       "el": "Επιλογή Ενδιαφερόμενο μέρος"
     },
     "modules.pims.stakeholder.site_visit": {
@@ -1548,8 +1548,8 @@
       "lt": "[LT] Site Visit",
       "pt": "[PT] Site Visit",
       "it": "[IT] Site Visit",
-      "no": "Site Visit",
-      "el": "Site Visit"
+      "no": "Stedsbefaring",
+      "el": "Επίσκεψη στον τόπο"
     },
     "modules.pims.stakeholder.social_media": {
       "en": "Social Media",
@@ -1559,8 +1559,8 @@
       "lt": "[LT] Social Media",
       "pt": "[PT] Social Media",
       "it": "[IT] Social Media",
-      "no": "Social Media",
-      "el": "Social Media"
+      "no": "Sosiale medier",
+      "el": "Μέσα κοινωνικής δικτύωσης"
     },
     "modules.pims.stakeholder.specific_stakeholder": {
       "en": "Specific Stakeholder",
@@ -1570,8 +1570,8 @@
       "lt": "[LT] Specific Stakeholder",
       "pt": "[PT] Specific Stakeholder",
       "it": "[IT] Specific Stakeholder",
-      "no": "Specific Stakeholder",
-      "el": "Specific Stakeholder"
+      "no": "Spesifikk interessent",
+      "el": "Συγκεκριμένο ενδιαφερόμενο μέρος"
     },
     "modules.pims.stakeholder.stakeholder_added_successfully": {
       "en": "Stakeholder Added Successfully",
@@ -1581,7 +1581,7 @@
       "lt": "[LT] Stakeholder Added Successfully",
       "pt": "[PT] Stakeholder Added Successfully",
       "it": "[IT] Stakeholder Added Successfully",
-      "no": "Stakeholder Added Successfully",
+      "no": "Interessent lagt til",
       "el": "Ενδιαφερόμενο μέρος Προστέθηκε Successfully"
     },
     "modules.pims.stakeholder.stakeholder_analysis_summary": {
@@ -1592,7 +1592,7 @@
       "lt": "[LT] Stakeholder Analysis Summary",
       "pt": "[PT] Stakeholder Analysis Summary",
       "it": "[IT] Stakeholder Analysis Summary",
-      "no": "Stakeholder Analysis Summary",
+      "no": "Sammendrag av interessentanalyse",
       "el": "Ενδιαφερόμενο μέρος Ανάλυση Περίληψη"
     },
     "modules.pims.stakeholder.stakeholder_communication_and_impact_management": {
@@ -1603,7 +1603,7 @@
       "lt": "[LT] Stakeholder Communication And Impact Management",
       "pt": "[PT] Stakeholder Communication And Impact Management",
       "it": "[IT] Stakeholder Communication And Impact Management",
-      "no": "Stakeholder Communication And Impact Management",
+      "no": "Interessentkommunikasjon og påvirkningsstyring",
       "el": "Ενδιαφερόμενο μέρος Communication And Impact Management"
     },
     "modules.pims.stakeholder.stakeholder_engagement_coverage": {
@@ -1614,7 +1614,7 @@
       "lt": "[LT] Stakeholder Engagement Coverage",
       "pt": "[PT] Stakeholder Engagement Coverage",
       "it": "[IT] Stakeholder Engagement Coverage",
-      "no": "Stakeholder Engagement Coverage",
+      "no": "Dekning av interessentengasjement",
       "el": "Ενδιαφερόμενο μέρος Engagement Coverage"
     },
     "modules.pims.stakeholder.stakeholder_engagement_strategy": {
@@ -1625,7 +1625,7 @@
       "lt": "[LT] Stakeholder Engagement Strategy",
       "pt": "[PT] Stakeholder Engagement Strategy",
       "it": "[IT] Stakeholder Engagement Strategy",
-      "no": "Stakeholder Engagement Strategy",
+      "no": "Strategi for interessentengasjement",
       "el": "Ενδιαφερόμενο μέρος Engagement Strategy"
     },
     "modules.pims.stakeholder.stakeholder_identification": {
@@ -1636,7 +1636,7 @@
       "lt": "[LT] Stakeholder Identification",
       "pt": "[PT] Stakeholder Identification",
       "it": "[IT] Stakeholder Identification",
-      "no": "Stakeholder Identification",
+      "no": "Interessentidentifisering",
       "el": "Ενδιαφερόμενο μέρος Identification"
     },
     "modules.pims.stakeholder.stakeholder_nameorganization": {
@@ -1647,7 +1647,7 @@
       "lt": "[LT] Stakeholder Nameorganization",
       "pt": "[PT] Stakeholder Nameorganization",
       "it": "[IT] Stakeholder Nameorganization",
-      "no": "Stakeholder Nameorganization",
+      "no": "Interessentnavn/-organisasjon",
       "el": "Ενδιαφερόμενο μέρος Nameorganization"
     },
     "modules.pims.stakeholder.stakeholder_power_interest_grid": {
@@ -1658,7 +1658,7 @@
       "lt": "[LT] Stakeholder Power Interest Grid",
       "pt": "[PT] Stakeholder Power Interest Grid",
       "it": "[IT] Stakeholder Power Interest Grid",
-      "no": "Stakeholder Power Interest Grid",
+      "no": "Makt-interesse-rutenett for interessenter",
       "el": "Ενδιαφερόμενο μέρος Power Interest Grid"
     },
     "modules.pims.stakeholder.stakeholder_register": {
@@ -1669,7 +1669,7 @@
       "lt": "[LT] Stakeholder Register",
       "pt": "[PT] Stakeholder Register",
       "it": "[IT] Stakeholder Register",
-      "no": "Stakeholder Register",
+      "no": "Interessentregister",
       "el": "Ενδιαφερόμενο μέρος Εγγραφή"
     },
     "modules.isa.data_entry.common.stakeholder": {
@@ -1680,8 +1680,8 @@
       "lt": "Apibrėžkite projekto tikslus, suinteresuotas šalis ir laikotarpį",
       "pt": "Defina os objetivos do seu projeto, partes interessadas e cronograma",
       "it": "Definisci gli obiettivi del progetto, gli stakeholder e la timeline",
-      "no": "Define your project goals, stakeholders, and timeline",
-      "el": "Define your project goals, stakeholders, and timeline"
+      "no": "Definer prosjektmål, interessenter og tidsplan",
+      "el": "Καθορίστε τους στόχους του έργου, τους ενδιαφερόμενους και το χρονοδιάγραμμα"
     },
     "modules.pims.stakeholder.stakeholders_by_sector": {
       "en": "Stakeholders By Sector",
@@ -1691,7 +1691,7 @@
       "lt": "[LT] Stakeholders By Sector",
       "pt": "[PT] Stakeholders By Sector",
       "it": "[IT] Stakeholders By Sector",
-      "no": "Stakeholders By Sector",
+      "no": "Interessenter etter sektor",
       "el": "Ενδιαφερόμενα μέρη By Sector"
     },
     "modules.pims.stakeholder.stakeholders_by_type": {
@@ -1702,7 +1702,7 @@
       "lt": "[LT] Stakeholders By Type",
       "pt": "[PT] Stakeholders By Type",
       "it": "[IT] Stakeholders By Type",
-      "no": "Stakeholders By Type",
+      "no": "Interessenter etter type",
       "el": "Ενδιαφερόμενα μέρη By Type"
     },
     "modules.pims.stakeholder.stakeholder_statistics": {
@@ -1713,7 +1713,7 @@
       "lt": "[LT] Stakeholder Statistics",
       "pt": "[PT] Stakeholder Statistics",
       "it": "[IT] Stakeholder Statistics",
-      "no": "Stakeholder Statistics",
+      "no": "Interessentstatistikk",
       "el": "Ενδιαφερόμενο μέρος Statistics"
     },
     "modules.pims.stakeholder.stakeholder_types": {
@@ -1724,7 +1724,7 @@
       "lt": "[LT] Stakeholder Types",
       "pt": "[PT] Stakeholder Types",
       "it": "[IT] Stakeholder Types",
-      "no": "Stakeholder Types",
+      "no": "Interessenttyper",
       "el": "Ενδιαφερόμενο μέρος Types"
     },
     "modules.pims.stakeholder.stakeholder_types_distribution": {
@@ -1735,7 +1735,7 @@
       "lt": "[LT] Stakeholder Types Distribution",
       "pt": "[PT] Stakeholder Types Distribution",
       "it": "[IT] Stakeholder Types Distribution",
-      "no": "Stakeholder Types Distribution",
+      "no": "Fordeling av interessenttyper",
       "el": "Ενδιαφερόμενο μέρος Types Distribution"
     },
     "modules.pims.stakeholder.supportive": {
@@ -1746,8 +1746,8 @@
       "lt": "[LT] Supportive",
       "pt": "[PT] Supportive",
       "it": "[IT] Supportive",
-      "no": "Supportive",
-      "el": "Supportive"
+      "no": "Støttende",
+      "el": "Υποστηρικτικός"
     },
     "modules.pims.stakeholder.survey": {
       "en": "Survey",
@@ -1757,7 +1757,7 @@
       "lt": "[LT] Survey",
       "pt": "[PT] Survey",
       "it": "[IT] Survey",
-      "no": "Survey",
+      "no": "Undersøkelse",
       "el": "Έρευνα"
     },
     "modules.pims.stakeholder.target_audience": {
@@ -1768,8 +1768,8 @@
       "lt": "[LT] Target Audience",
       "pt": "[PT] Target Audience",
       "it": "[IT] Target Audience",
-      "no": "Target Audience",
-      "el": "Target Audience"
+      "no": "Målgruppe",
+      "el": "Κοινό-στόχος"
     },
     "modules.pims.stakeholder.total_communications": {
       "en": "Total Communications",
@@ -1779,7 +1779,7 @@
       "lt": "[LT] Total Communications",
       "pt": "[PT] Total Communications",
       "it": "[IT] Total Communications",
-      "no": "Total Communications",
+      "no": "Totalt kommunikasjoner",
       "el": "Σύνολο Communications"
     },
     "modules.pims.stakeholder.total_engagements": {
@@ -1790,7 +1790,7 @@
       "lt": "[LT] Total Engagements",
       "pt": "[PT] Total Engagements",
       "it": "[IT] Total Engagements",
-      "no": "Total Engagements",
+      "no": "Totalt engasjementer",
       "el": "Σύνολο Engagements"
     },
     "modules.pims.stakeholder.total_stakeholders": {
@@ -1801,7 +1801,7 @@
       "lt": "[LT] Total Stakeholders",
       "pt": "[PT] Total Stakeholders",
       "it": "[IT] Total Stakeholders",
-      "no": "Total Stakeholders",
+      "no": "Totalt interessenter",
       "el": "Σύνολο Ενδιαφερόμενα μέρη"
     },
     "modules.pims.stakeholder.website_update": {
@@ -1812,8 +1812,8 @@
       "lt": "[LT] Website Update",
       "pt": "[PT] Website Update",
       "it": "[IT] Website Update",
-      "no": "Website Update",
-      "el": "Website Update"
+      "no": "Nettstedsoppdatering",
+      "el": "Ενημέρωση ιστότοπου"
     },
     "modules.pims.stakeholder.weekly": {
       "en": "Weekly",
@@ -1823,8 +1823,8 @@
       "lt": "[LT] Weekly",
       "pt": "[PT] Weekly",
       "it": "[IT] Weekly",
-      "no": "Weekly",
-      "el": "Weekly"
+      "no": "Ukentlig",
+      "el": "Εβδομαδιαίο"
     },
     "modules.pims.stakeholder.what_do_you_want_to_achieve": {
       "en": "What Do You Want To Achieve",
@@ -1834,8 +1834,8 @@
       "lt": "[LT] What Do You Want To Achieve",
       "pt": "[PT] What Do You Want To Achieve",
       "it": "[IT] What Do You Want To Achieve",
-      "no": "What Do You Want To Achieve",
-      "el": "What Do You Want To Achieve"
+      "no": "Hva ønsker du å oppnå",
+      "el": "Τι θέλετε να πετύχετε"
     },
     "modules.pims.stakeholder.what_information_is_being_communicated": {
       "en": "What Information Is Being Communicated",
@@ -1845,8 +1845,8 @@
       "lt": "[LT] What Information Is Being Communicated",
       "pt": "[PT] What Information Is Being Communicated",
       "it": "[IT] What Information Is Being Communicated",
-      "no": "What Information Is Being Communicated",
-      "el": "What Information Is Being Communicated"
+      "no": "Hvilken informasjon kommuniseres",
+      "el": "Ποιες πληροφορίες κοινοποιούνται"
     },
     "modules.pims.stakeholder.what_was_achieved_or_learned": {
       "en": "What Was Achieved Or Learned",
@@ -1856,8 +1856,8 @@
       "lt": "[LT] What Was Achieved Or Learned",
       "pt": "[PT] What Was Achieved Or Learned",
       "it": "[IT] What Was Achieved Or Learned",
-      "no": "What Was Achieved Or Learned",
-      "el": "What Was Achieved Or Learned"
+      "no": "Hva ble oppnådd eller lært",
+      "el": "Τι επιτεύχθηκε ή μάθατε"
     },
     "modules.pims.stakeholder.who_is_leading_this": {
       "en": "Who Is Leading This",
@@ -1867,8 +1867,8 @@
       "lt": "[LT] Who Is Leading This",
       "pt": "[PT] Who Is Leading This",
       "it": "[IT] Who Is Leading This",
-      "no": "Who Is Leading This",
-      "el": "Who Is Leading This"
+      "no": "Hvem leder dette",
+      "el": "Ποιος ηγείται αυτού"
     },
     "modules.pims.stakeholder.workshop": {
       "en": "Record stakeholder feedback, validation workshop results, expert reviews...",
@@ -1878,8 +1878,8 @@
       "lt": "Užrašykite suinteresuotųjų subjektų atsiliepimus, patvirtinimo dirbtuvių rezultatus, ekspertų vertinimus...",
       "pt": "Registe o feedback das partes interessadas, resultados de workshops de validação, revisões de especialistas...",
       "it": "Registrare il feedback delle parti interessate, i risultati dei workshop di validazione, le revisioni degli esperti...",
-      "no": "Record stakeholder feedback, validation workshop results, expert reviews...",
-      "el": "Record stakeholder feedback, validation workshop results, expert reviews..."
+      "no": "Registrer tilbakemeldinger fra interessenter, valideringsverksteder, fagfellevurderinger...",
+      "el": "Καταγράψτε ανατροφοδότηση ενδιαφερομένων, αποτελέσματα εργαστηρίων επικύρωσης, αξιολογήσεις εμπειρογνωμόνων..."
     },
     "modules.pims.visualize_stakeholders_based_on_their_powerinfluen": {
       "en": "Visualize Stakeholders Based On Their Powerinfluen",
@@ -1889,7 +1889,7 @@
       "lt": "[LT] Visualize Stakeholders Based On Their Powerinfluen",
       "pt": "[PT] Visualize Stakeholders Based On Their Powerinfluen",
       "it": "[IT] Visualize Stakeholders Based On Their Powerinfluen",
-      "no": "Visualize Stakeholders Based On Their Powerinfluen",
+      "no": "Visualiser interessenter basert på deres makt/innflytelse",
       "el": "Οπτικοποίηση Ενδιαφερόμενα μέρη Based On Their Powerinfluen"
     },
     "modules.pims.what_does_this_stakeholder_care_about_in_the_marin": {
@@ -1900,8 +1900,8 @@
       "lt": "[LT] What Does This Stakeholder Care About In The Marin",
       "pt": "[PT] What Does This Stakeholder Care About In The Marin",
       "it": "[IT] What Does This Stakeholder Care About In The Marin",
-      "no": "What Does This Stakeholder Care About In The Marin",
-      "el": "What Does This Stakeholder Care About In The Marin"
+      "no": "Hva bryr denne interessenten seg om i det marine",
+      "el": "Τι ενδιαφέρει αυτό το ενδιαφερόμενο μέρος στο θαλάσσιο"
     },
     "modules.pims.what_is_their_role_decision_maker_user_affected_pa": {
       "en": "What Is Their Role Decision Maker User Affected Pa",
@@ -1911,8 +1911,8 @@
       "lt": "[LT] What Is Their Role Decision Maker User Affected Pa",
       "pt": "[PT] What Is Their Role Decision Maker User Affected Pa",
       "it": "[IT] What Is Their Role Decision Maker User Affected Pa",
-      "no": "What Is Their Role Decision Maker User Affected Pa",
-      "el": "What Is Their Role Decision Maker User Affected Pa"
+      "no": "Hva er deres rolle - beslutningstaker, bruker, berørt part",
+      "el": "Ποιος είναι ο ρόλος τους - υπεύθυνος λήψης αποφάσεων, χρήστης, πληγέν μέρος"
     },
     "modules.response.measures.completed": {
       "en": "Validation Completed:",
@@ -1922,7 +1922,7 @@
       "lt": "Patvirtinimas baigtas:",
       "pt": "Validação Concluída:",
       "it": "Validazione Completata:",
-      "no": "Validation Completed:",
+      "no": "Validering fullført:",
       "el": "Επικύρωση Completed:"
     },
     "modules.response.measures.delete_selected": {
@@ -1933,7 +1933,7 @@
       "lt": "Ištrinti Pasirinktus",
       "pt": "Excluir Selecionados",
       "it": "Elimina Selezionati",
-      "no": "Delete Selected",
+      "no": "Slett valgte",
       "el": "Διαγραφή Επιλεγμένο"
     },
     "modules.response.measures.high": {
@@ -1944,7 +1944,7 @@
       "lt": "Bendras ryšių skaičius (įėjimas + išėjimas). Didelės reikšmės rodo koncentratoriaus mazgus.",
       "pt": "Número total de conexões (entrada + saída). Valores altos indicam nós concentradores.",
       "it": "Numero totale di connessioni (in + out). Valori elevati indicano nodi hub.",
-      "no": "Total number of connections (in + out). High values indicate hub nodes.",
+      "no": "Totalt antall forbindelser (inn + ut). Høye verdier indikerer knutepunkter.",
       "el": "Σύνολο number of connections (in + out). High values indicate hub nodes."
     },
     "modules.response.measures.low": {
@@ -1955,8 +1955,8 @@
       "lt": "Jūsų vaidmuo padeda mums rekomenduoti tinkamiausias priemones ir darbo eigas jūsų jūrų valdymo kontekstui.",
       "pt": "O seu papel ajuda-nos a recomendar as ferramentas e fluxos de trabalho mais relevantes para o seu contexto de gestão marinha.",
       "it": "Il tuo ruolo ci aiuta a raccomandare gli strumenti e i flussi di lavoro più rilevanti per il tuo contesto di gestione marina.",
-      "no": "Your role helps us recommend the most relevant tools and workflows for your marine management context.",
-      "el": "Your role helps us recommend the most relevant tools and workflows for your marine management context."
+      "no": "Din rolle hjelper oss å anbefale de mest relevante verktøyene og arbeidsflytene for din marine forvaltningskontekst.",
+      "el": "Ο ρόλος σας μας βοηθά να προτείνουμε τα πιο σχετικά εργαλεία και ροές εργασίας για το πλαίσιο θαλάσσιας διαχείρισής σας."
     },
     "modules.response.measures.medium": {
       "en": "Small/medium enterprise influencers",
@@ -1966,8 +1966,8 @@
       "lt": "Mažų/vidutinių įmonių įtakos asmenys",
       "pt": "Influenciadores de pequenas/médias empresas",
       "it": "Influencer di piccole/medie imprese",
-      "no": "Small/medium enterprise influencers",
-      "el": "Small/medium enterprise influencers"
+      "no": "Små/mellomstore bedriftspåvirkere",
+      "el": "Μικρές/μεσαίες επιχειρήσεις ως παράγοντες επιρροής"
     },
     "modules.response.measures.planned": {
       "en": "Planned",
@@ -1977,8 +1977,8 @@
       "lt": "Planuojamas",
       "pt": "Planeado",
       "it": "Pianificato",
-      "no": "Planned",
-      "el": "Planned"
+      "no": "Planlagt",
+      "el": "Προγραμματισμένο"
     },
     "modules.response.measures.unknown": {
       "en": "Unknown",
@@ -1988,8 +1988,8 @@
       "lt": "[LT] Unknown",
       "pt": "[PT] Unknown",
       "it": "[IT] Unknown",
-      "no": "Unknown",
-      "el": "Unknown"
+      "no": "Ukjent",
+      "el": "Άγνωστο"
     },
     "modules.pims.stakeholder.count": {
       "en": "Count",
@@ -1999,7 +1999,7 @@
       "lt": "[LT] Count",
       "pt": "[PT] Count",
       "it": "[IT] Count",
-      "no": "Count",
+      "no": "Antall",
       "el": "Αριθμός"
     },
     "modules.pims.stakeholder.power": {
@@ -2010,8 +2010,8 @@
       "lt": "[LT] Power",
       "pt": "[PT] Power",
       "it": "[IT] Power",
-      "no": "Power",
-      "el": "Power"
+      "no": "Makt",
+      "el": "Ισχύς"
     },
     "modules.pims.stakeholder.report": {
       "en": "Report",
@@ -2021,7 +2021,7 @@
       "lt": "[LT] Report",
       "pt": "[PT] Report",
       "it": "[IT] Report",
-      "no": "Report",
+      "no": "Rapport",
       "el": "Αναφορά"
     },
     "modules.pims.stakeholder.research": {
@@ -2032,8 +2032,8 @@
       "lt": "[LT] Research",
       "pt": "[PT] Research",
       "it": "[IT] Research",
-      "no": "Research",
-      "el": "Research"
+      "no": "Forskning",
+      "el": "Έρευνα"
     },
     "modules.pims.stakeholder.stakeholders": {
       "en": "Stakeholders",
@@ -2043,7 +2043,7 @@
       "lt": "[LT] Stakeholders",
       "pt": "[PT] Stakeholders",
       "it": "[IT] Stakeholders",
-      "no": "Stakeholders",
+      "no": "Interessenter",
       "el": "Ενδιαφερόμενα μέρη"
     }
   }

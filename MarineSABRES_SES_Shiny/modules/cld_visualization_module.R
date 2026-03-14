@@ -39,6 +39,7 @@
 #' @export
 cld_viz_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     tags$style(HTML("
@@ -381,137 +382,97 @@ cld_viz_ui <- function(id, i18n) {
       )
     ),
 
-    fluidRow(
-      # Left sidebar column with controls
-      column(
-        width = 3,
+    # Single-screen layout: controls sidebar + full network canvas (no bs4Card wrappers)
+    div(
+      style = "display: flex; gap: 10px; height: calc(100vh - 120px); min-height: 600px;",
 
-        # Collapsible controls box - compact header
-        bs4Card(
-          width = NULL,
-          title = i18n$t("modules.cld.visualization.controls"),
-          status = "secondary",
-          solidHeader = FALSE,
-          collapsible = TRUE,
-          collapsed = FALSE,
-          class = "cld-controls-box compact-card",
+      # Left sidebar - controls panel (no card wrapper)
+      div(
+        style = "width: 240px; min-width: 240px; overflow-y: auto; padding: 12px; background: var(--foam-white, #f8fbfd); border-right: 1px solid var(--mist-light, #e8f1f8); border-radius: 8px 0 0 8px; font-size: 13px;",
 
-          # Note: CLD is automatically generated from ISA data
-          # No manual generation needed - see automatic observer below
+        # Layout Controls
+        h5(icon("cogs"), " ", i18n$t("modules.cld.visualization.layout"), style = "font-size: 14px; margin-bottom: 10px;"),
+        selectInput(
+          ns("layout_type"),
+          NULL,
+          choices = c(
+            "Hierarchical (DAPSI)" = "hierarchical",
+            "Physics-based (Manual)" = "physics"
+          ),
+          selected = "hierarchical"
+        ),
 
-          # Layout Controls
-          h5(icon("cogs"), i18n$t("modules.cld.visualization.layout")),
+        conditionalPanel(
+          condition = sprintf("input['%s'] == 'hierarchical'", ns("layout_type")),
+          ns = ns,
           selectInput(
-            ns("layout_type"),
-            NULL,
-            choices = c(
-              "Hierarchical (DAPSI)" = "hierarchical",
-              "Physics-based (Manual)" = "physics"
-            ),
-            selected = "hierarchical"
+            ns("hierarchy_direction"),
+            i18n$t("modules.cld.visualization.direction"),
+            choices = c("Down-Up" = "DU", "Up-Down" = "UD", "Left-Right" = "LR", "Right-Left" = "RL"),
+            selected = "DU"
           ),
-
-          conditionalPanel(
-            condition = sprintf("input['%s'] == 'hierarchical'", ns("layout_type")),
-            ns = ns,
-            selectInput(
-              ns("hierarchy_direction"),
-              i18n$t("modules.cld.visualization.direction"),
-              choices = c(
-                "Down-Up" = "DU",
-                "Up-Down" = "UD",
-                "Left-Right" = "LR",
-                "Right-Left" = "RL"
-              ),
-              selected = "DU"
-            ),
-            sliderInput(
-              ns("level_separation"),
-              i18n$t("modules.cld.visualization.spacing"),
-              min = 50,
-              max = 300,
-              value = 150,
-              step = 10
-            )
-          ),
-
-          # Edit Mode Controls
-          hr(),
-          h5(icon("edit"), i18n$t("modules.cld.visualization.edit_mode")),
-
-          div(
-            style = "padding: 10px 0;",
-            shinyWidgets::materialSwitch(
-              inputId = ns("enable_manipulation"),
-              label = i18n$t("modules.cld.visualization.enable_editing"),
-              value = FALSE,
-              status = "primary",
-              right = TRUE
-            ),
-            tags$small(
-              class = "text-muted",
-              style = "display: block; margin-top: 5px;",
-              i18n$t("modules.cld.visualization.edit_mode_hint")
-            )
-          ),
-
-          # Highlight Controls
-          hr(),
-          h5(icon("lightbulb"), i18n$t("modules.cld.visualization.highlight")),
-
-          div(
-            style = "padding: 10px 0;",
-            shinyWidgets::materialSwitch(
-              inputId = ns("highlight_leverage"),
-              label = i18n$t("modules.isa.data_entry.common.leverage_points"),
-              value = FALSE,
-              status = "success",
-              right = TRUE
-            )
-          ),
-
-          div(
-            style = "padding: 10px 0;",
-            selectInput(
-              inputId = ns("selected_loop"),
-              label = i18n$t("modules.cld.visualization.highlight_loop"),
-              choices = c("None" = "none"),
-              selected = "none",
-              width = "100%"
-            ),
-            htmlOutput(ns("loop_tooltip"))
+          sliderInput(
+            ns("level_separation"),
+            i18n$t("modules.cld.visualization.spacing"),
+            min = 50, max = 300, value = 150, step = 10
           )
-        )  # Close box
-      ),  # Close column(width = 3)
+        ),
 
-      # Main content column with network visualization
-      column(
-        width = 9,
-        bs4Card(
-          width = NULL,
-          status = "primary",
-          solidHeader = FALSE,
-          title = NULL,
-          # Network Visualization with fullscreen toggle
-          div(
-            id = ns("network_fullscreen_container"),
-            class = "cld-network-container network-fullscreen-container",
-            style = "position: relative;",
-            # Fullscreen toggle button - positioned at very top right corner
-            tags$button(
-              id = ns("fullscreen_toggle"),
-              class = "btn btn-outline-secondary btn-sm fullscreen-toggle-btn",
-              style = "position: absolute; top: 0px; right: 5px; z-index: 1000; padding: 3px 6px; font-size: 10px;",
-              title = i18n$t("common.misc.toggle_fullscreen"),
-              onclick = sprintf("toggleVisualizationFullscreen('%s')", ns("network_fullscreen_container")),
-              icon("expand"),
-              span(class = "fullscreen-label", i18n$t("common.buttons.fullscreen"))
-            ),
-            visNetworkOutput(ns("network"), height = PLOT_HEIGHT_XXL)
+        # Edit Mode Controls
+        hr(style = "margin: 8px 0;"),
+        h5(icon("edit"), " ", i18n$t("modules.cld.visualization.edit_mode"), style = "font-size: 14px; margin-bottom: 8px;"),
+        div(
+          style = "padding: 4px 0;",
+          shinyWidgets::materialSwitch(
+            inputId = ns("enable_manipulation"),
+            label = i18n$t("modules.cld.visualization.enable_editing"),
+            value = FALSE, status = "primary", right = TRUE
+          ),
+          tags$small(class = "text-muted", style = "display: block; margin-top: 4px;",
+            i18n$t("modules.cld.visualization.edit_mode_hint"))
+        ),
+
+        # Highlight Controls
+        hr(style = "margin: 8px 0;"),
+        h5(icon("lightbulb"), " ", i18n$t("modules.cld.visualization.highlight"), style = "font-size: 14px; margin-bottom: 8px;"),
+        div(
+          style = "padding: 4px 0;",
+          shinyWidgets::materialSwitch(
+            inputId = ns("highlight_leverage"),
+            label = i18n$t("modules.isa.data_entry.common.leverage_points"),
+            value = FALSE, status = "success", right = TRUE
           )
+        ),
+        div(
+          style = "padding: 4px 0;",
+          selectInput(
+            inputId = ns("selected_loop"),
+            label = i18n$t("modules.cld.visualization.highlight_loop"),
+            choices = c("None" = "none"), selected = "none", width = "100%"
+          ),
+          htmlOutput(ns("loop_tooltip"))
         )
+      ),
+
+      # Network canvas - fills remaining space, no card wrapper
+      div(
+        id = ns("network_fullscreen_container"),
+        class = "cld-network-container network-fullscreen-container",
+        style = "flex: 1; position: relative; background: white; border-radius: 0 8px 8px 0; border: 1px solid var(--mist-light, #e8f1f8);",
+
+        # Fullscreen toggle
+        tags$button(
+          id = ns("fullscreen_toggle"),
+          class = "btn btn-outline-secondary btn-sm fullscreen-toggle-btn",
+          style = "position: absolute; top: 5px; right: 5px; z-index: 1000; padding: 3px 6px; font-size: 10px;",
+          title = i18n$t("common.misc.toggle_fullscreen"),
+          onclick = sprintf("toggleVisualizationFullscreen('%s')", ns("network_fullscreen_container")),
+          icon("expand"),
+          span(class = "fullscreen-label", i18n$t("common.buttons.fullscreen"))
+        ),
+        visNetworkOutput(ns("network"), height = "100%")
       )
-    )  # Close fluidRow
+    )
   )  # Close tagList
 }
 
@@ -898,113 +859,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
 
       if (input$enable_manipulation) {
         # Enable manipulation mode with custom handlers
-        # Store callback globally so we can call it after modal confirmation
-        # Also store the manipulation config so we can re-apply it after operations
-        runjs(sprintf("
-          if (window.network_%s) {
-            window.addNodeCallback_%s = null;
-
-            // Store manipulation config for re-enabling after operations
-            window.manipulationConfig_%s = {
-              enabled: true,
-              initiallyActive: true,
-              addNode: function(nodeData, callback) {
-                // Store callback and node data for later use
-                window.addNodeCallback_%s = callback;
-                window.pendingNodeData_%s = nodeData;
-                Shiny.setInputValue('%s', {
-                  x: nodeData.x,
-                  y: nodeData.y,
-                  nonce: Math.random()
-                });
-              },
-              addEdge: function(edgeData, callback) {
-                // Allow edge addition directly
-                edgeData.arrows = 'to';
-                edgeData.color = '#80b8d7';
-                edgeData.width = 2;
-                callback(edgeData);
-                // Notify Shiny about the new edge
-                Shiny.setInputValue('%s', {
-                  from: edgeData.from,
-                  to: edgeData.to,
-                  nonce: Math.random()
-                });
-              },
-              editNode: function(nodeData, callback) {
-                // Use native prompt for node label editing
-                var newLabel = prompt('Edit element name:', nodeData.label);
-                if (newLabel !== null && newLabel.trim() !== '') {
-                  nodeData.label = newLabel.trim();
-                  callback(nodeData);
-                  // Notify Shiny about the edit
-                  Shiny.setInputValue('%s', {
-                    id: nodeData.id,
-                    label: newLabel.trim(),
-                    nonce: Math.random()
-                  });
-                } else {
-                  callback(null);
-                }
-              },
-              editEdge: {
-                editWithoutDrag: function(edgeData, callback) {
-                  // Store callback for later use after modal confirmation
-                  window.editEdgeCallback_%s = callback;
-                  window.pendingEdgeData_%s = edgeData;
-                  // Trigger Shiny to show edge properties modal
-                  Shiny.setInputValue('%s', {
-                    id: edgeData.id,
-                    from: edgeData.from,
-                    to: edgeData.to,
-                    nonce: Math.random()
-                  });
-                }
-              },
-              deleteNode: function(nodeData, callback) {
-                if (confirm('Delete this element?')) {
-                  callback(nodeData);
-                  Shiny.setInputValue('%s', {
-                    nodes: nodeData.nodes,
-                    nonce: Math.random()
-                  });
-                } else {
-                  callback(null);
-                }
-              },
-              deleteEdge: function(edgeData, callback) {
-                if (confirm('Delete this connection?')) {
-                  callback(edgeData);
-                  Shiny.setInputValue('%s', {
-                    edges: edgeData.edges,
-                    nonce: Math.random()
-                  });
-                } else {
-                  callback(null);
-                }
-              }
-            };
-
-            // Helper function to re-enable manipulation mode
-            window.reEnableManipulation_%s = function() {
-              if (window.network_%s && window.manipulationConfig_%s) {
-                window.network_%s.setOptions({ manipulation: window.manipulationConfig_%s });
-                console.log('[CLD VIZ] Manipulation mode re-enabled');
-              }
-            };
-
-            // Apply initial config
-            window.network_%s.setOptions({ manipulation: window.manipulationConfig_%s });
-            console.log('[CLD VIZ] Manipulation mode enabled');
-          }
-        ", id, id, id, id, id,
-           session$ns("add_node_triggered"),
-           session$ns("edge_added"),
-           session$ns("node_edited"),
-           id, id, session$ns("edit_edge_triggered"),
-           session$ns("nodes_deleted"),
-           session$ns("edges_deleted"),
-           id, id, id, id, id, id, id))
+        runjs(generate_manipulation_enable_js(id, session$ns))
 
         showNotification(
           i18n$t("modules.cld.visualization.edit_mode_enabled"),
@@ -1013,16 +868,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         )
       } else {
         # Disable manipulation mode
-        runjs(sprintf("
-          if (window.network_%s) {
-            window.network_%s.setOptions({
-              manipulation: {
-                enabled: false
-              }
-            });
-            console.log('[CLD VIZ] Manipulation mode disabled');
-          }
-        ", id, id))
+        runjs(generate_manipulation_disable_js(id))
 
         showNotification(
           i18n$t("modules.cld.visualization.edit_mode_disabled"),
@@ -1069,110 +915,23 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           return()
         }
 
-        # Get styling from constants
-        node_color <- ELEMENT_COLORS[[node_type]]
-        node_shape <- ELEMENT_SHAPES[[node_type]]
-
-        # Generate unique ID based on type
-        prefix <- switch(node_type,
-          "Drivers" = "D",
-          "Activities" = "A",
-          "Pressures" = "P",
-          "Marine Processes & Functioning" = "MPF",
-          "Ecosystem Services" = "ES",
-          "Goods & Benefits" = "GB",
-          "Responses" = "R",
-          "X"
+        # Use helper to create node data
+        node_info <- create_new_node_data(
+          node_type, node_label, rv$nodes$id, rv$pending_node_position
         )
 
-        # Find next available number for this type
-        existing_ids <- rv$nodes$id[grepl(paste0("^", prefix, "_"), rv$nodes$id)]
-        if (length(existing_ids) > 0) {
-          nums <- as.numeric(gsub(paste0("^", prefix, "_"), "", existing_ids))
-          next_num <- max(nums, na.rm = TRUE) + 1
-        } else {
-          next_num <- 1
-        }
-        new_id <- paste0(prefix, "_", next_num)
-
-        # Get level for hierarchical layout
-        level <- switch(node_type,
-          "Goods & Benefits" = 0,
-          "Ecosystem Services" = 1,
-          "Marine Processes & Functioning" = 2,
-          "Pressures" = 3,
-          "Activities" = 4,
-          "Drivers" = 5,
-          "Responses" = 3,
-          3
-        )
-
-        debug_log(sprintf("Adding node: id=%s, type=%s, label=%s", new_id, node_type, node_label), "CLD VIZ")
-
-        # Create tooltip HTML
-        tooltip_html <- paste0(
-          "<div style='padding: 8px;'>",
-          "<b>", htmltools::htmlEscape(node_label), "</b><br>",
-          "<i>", node_type, "</i><br>",
-          "<hr style='margin: 5px 0;'>",
-          "Indicator: No indicator",
-          "</div>"
-        )
-        # Escape for JavaScript
-        tooltip_js <- gsub("'", "\\\\'", tooltip_html)
-        tooltip_js <- gsub("\n", "", tooltip_js)
+        debug_log(sprintf("Adding node: id=%s, type=%s, label=%s",
+                          node_info$new_id, node_type, node_label), "CLD VIZ")
 
         # Use the stored callback to properly add the node via visNetwork
-        runjs(sprintf("
-          if (window.addNodeCallback_%s && window.pendingNodeData_%s) {
-            var nodeData = window.pendingNodeData_%s;
-            nodeData.id = '%s';
-            nodeData.label = '%s';
-            nodeData.group = '%s';
-            nodeData.color = '%s';
-            nodeData.shape = '%s';
-            nodeData.level = %d;
-            nodeData.size = 25;
-            nodeData.font = {size: 12};
-            nodeData.title = '%s';
-            nodeData.originalColor = '%s';
-
-            // Call the callback - visNetwork will handle adding the node properly
-            window.addNodeCallback_%s(nodeData);
-            window.addNodeCallback_%s = null;
-            window.pendingNodeData_%s = null;
-            console.log('[CLD VIZ] Node added via callback:', nodeData);
-          }
-          // Re-enable manipulation mode after a short delay
-          setTimeout(function() {
-            if (window.network_%s) {
-              window.reEnableManipulation_%s();
-              console.log('[CLD VIZ] Manipulation mode re-enabled after node add');
-            }
-          }, 100);
-        ", id, id, id, new_id,
-           gsub("'", "\\\\'", node_label),
-           node_type, node_color, node_shape, level, tooltip_js, node_color, id, id, id, id, id))
+        runjs(generate_add_node_js(
+          id, node_info$new_id, node_label, node_type,
+          node_info$node_color, node_info$node_shape,
+          node_info$level, node_info$tooltip_html
+        ))
 
         # Update internal state
-        new_node <- data.frame(
-          id = new_id,
-          label = node_label,
-          title = paste0("<b>", htmltools::htmlEscape(node_label), "</b><br><i>", node_type, "</i>"),
-          group = node_type,
-          level = level,
-          shape = node_shape,
-          image = NA_character_,
-          color = node_color,
-          size = 25,
-          font.size = 12,
-          indicator = "No indicator",
-          leverage_score = NA_real_,
-          x = rv$pending_node_position$x,
-          originalColor = node_color,
-          stringsAsFactors = FALSE
-        )
-        rv$nodes <- bind_rows(rv$nodes, new_node)
+        rv$nodes <- bind_rows(rv$nodes, node_info$node_df)
 
         # Sync to project_data for persistence
         isolate({
@@ -1190,21 +949,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         )
       } else {
         # User cancelled - call callback with null to cancel the operation
-        runjs(sprintf("
-          if (window.addNodeCallback_%s) {
-            window.addNodeCallback_%s(null);
-            window.addNodeCallback_%s = null;
-            window.pendingNodeData_%s = null;
-            console.log('[CLD VIZ] Node addition cancelled');
-          }
-          // Re-enable manipulation mode after a short delay
-          setTimeout(function() {
-            if (window.network_%s) {
-              window.reEnableManipulation_%s();
-              console.log('[CLD VIZ] Manipulation mode re-enabled after cancel');
-            }
-          }, 100);
-        ", id, id, id, id, id, id))
+        runjs(generate_cancel_add_node_js(id))
       }
 
       # Hide modal
@@ -1217,25 +962,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       req(input$edge_added)
       debug_log(sprintf("Edge added: %s -> %s", input$edge_added$from, input$edge_added$to), "CLD VIZ")
 
-      # Add to internal state
-      new_edge <- data.frame(
-        id = nrow(rv$edges) + 1,
-        from = input$edge_added$from,
-        to = input$edge_added$to,
-        arrows = "to",
-        color = EDGE_COLORS$reinforcing,
-        width = 2,
-        opacity = 1,
-        title = paste0(input$edge_added$from, " → ", input$edge_added$to),
-        polarity = "+",
-        strength = "medium",
-        confidence = 3,
-        label = "+",
-        font.size = 10,
-        originalColor = EDGE_COLORS$reinforcing,
-        originalWidth = 2,
-        stringsAsFactors = FALSE
-      )
+      # Add to internal state using helper
+      new_edge <- create_new_edge_data(input$edge_added$from, input$edge_added$to, nrow(rv$edges))
       rv$edges <- bind_rows(rv$edges, new_edge)
 
       # Sync to project_data for persistence
@@ -1249,14 +977,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       })
 
       # Re-enable manipulation mode after a short delay
-      runjs(sprintf("
-        setTimeout(function() {
-          if (window.network_%s) {
-            window.reEnableManipulation_%s();
-            console.log('[CLD VIZ] Manipulation mode re-enabled after edge add');
-          }
-        }, 100);
-      ", id, id))
+      runjs(generate_reenable_manipulation_js(id, "edge add"))
     })
 
     # Handle node label edit
@@ -1270,7 +991,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       node_idx <- which(rv$nodes$id == node_id)
       if (length(node_idx) > 0) {
         rv$nodes$label[node_idx] <- new_label
-        rv$nodes$title[node_idx] <- paste0("<b>", htmltools::htmlEscape(new_label), "</b><br><i>", rv$nodes$group[node_idx], "</i>")
+        rv$nodes$title[node_idx] <- paste0("<b>", htmltools::htmlEscape(new_label), "</b><br><i>", htmltools::htmlEscape(rv$nodes$group[node_idx]), "</i>")
 
         # Sync to project_data for persistence
         isolate({
@@ -1289,14 +1010,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       }
 
       # Re-enable manipulation mode after a short delay
-      runjs(sprintf("
-        setTimeout(function() {
-          if (window.network_%s) {
-            window.reEnableManipulation_%s();
-            console.log('[CLD VIZ] Manipulation mode re-enabled after node edit');
-          }
-        }, 100);
-      ", id, id))
+      runjs(generate_reenable_manipulation_js(id, "node edit"))
     })
 
     # Handle edge edit triggered (show modal)
@@ -1332,12 +1046,13 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         to = to_id
       )
 
-      # Update the info display
-      runjs(sprintf("
-        document.getElementById('%s').textContent = '%s → %s';
-      ", session$ns("edit_edge_from_to"),
-         gsub("'", "\\\\'", from_label),
-         gsub("'", "\\\\'", to_label)))
+      # Update the info display (use JSON encoding for safe JS string injection)
+      safe_from <- jsonlite::toJSON(as.character(from_label), auto_unbox = TRUE)
+      safe_to <- jsonlite::toJSON(as.character(to_label), auto_unbox = TRUE)
+      runjs(sprintf(
+        "document.getElementById('%s').textContent = %s + ' \u2192 ' + %s;",
+        session$ns("edit_edge_from_to"), safe_from, safe_to
+      ))
 
       # Update form values with current edge properties
       if (nrow(edge_row) > 0) {
@@ -1372,16 +1087,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         debug_log(sprintf("Updating edge %s: polarity=%s, strength=%s, confidence=%d",
                           edge_id, new_polarity, new_strength, new_confidence), "CLD VIZ")
 
-        # Determine color based on polarity
-        new_color <- if (new_polarity == "+") EDGE_COLORS$reinforcing else EDGE_COLORS$opposing
-
-        # Determine width based on strength
-        new_width <- switch(new_strength,
-          "weak" = 1,
-          "medium" = 2,
-          "strong" = 3,
-          2
-        )
+        # Compute new visual properties using helper
+        edge_props <- compute_edge_properties(new_polarity, new_strength, new_confidence)
 
         # Update rv$edges
         edge_idx <- which(rv$edges$id == edge_id)
@@ -1394,25 +1101,14 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           rv$edges$polarity[edge_idx] <- new_polarity
           rv$edges$strength[edge_idx] <- new_strength
           rv$edges$confidence[edge_idx] <- new_confidence
-          rv$edges$color[edge_idx] <- new_color
-          rv$edges$width[edge_idx] <- new_width
+          rv$edges$color[edge_idx] <- edge_props$color
+          rv$edges$width[edge_idx] <- edge_props$width
           rv$edges$label[edge_idx] <- new_polarity
-          rv$edges$originalColor[edge_idx] <- new_color
-          rv$edges$originalWidth[edge_idx] <- new_width
+          rv$edges$originalColor[edge_idx] <- edge_props$color
+          rv$edges$originalWidth[edge_idx] <- edge_props$width
 
           # Update the edge in visNetwork
-          runjs(sprintf("
-            if (window.network_%s) {
-              var edges = window.network_%s.body.data.edges;
-              edges.update({
-                id: %s,
-                color: '%s',
-                width: %d,
-                label: '%s'
-              });
-              console.log('[CLD VIZ] Edge %s updated');
-            }
-          ", id, id, edge_id, new_color, new_width, new_polarity, edge_id))
+          runjs(generate_update_edge_js(id, edge_id, edge_props$color, edge_props$width, new_polarity))
 
           # Sync to project_data for persistence
           isolate({
@@ -1430,40 +1126,12 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           )
         }
 
-        # Call the visNetwork callback to confirm the edit (without geometry changes)
-        # Then re-enable manipulation mode since it gets disabled after the callback
-        runjs(sprintf("
-          if (window.editEdgeCallback_%s && window.pendingEdgeData_%s) {
-            window.editEdgeCallback_%s(window.pendingEdgeData_%s);
-            window.editEdgeCallback_%s = null;
-            window.pendingEdgeData_%s = null;
-          }
-          // Re-enable manipulation mode after a short delay
-          setTimeout(function() {
-            if (window.network_%s) {
-              window.reEnableManipulation_%s();
-              console.log('[CLD VIZ] Manipulation mode re-enabled after edge edit');
-            }
-          }, 100);
-        ", id, id, id, id, id, id, id, id))
+        # Call the visNetwork callback to confirm the edit, then re-enable manipulation
+        runjs(generate_edge_edit_callback_js(id, confirm = TRUE))
 
       } else {
         # User cancelled - call callback with null, then re-enable manipulation mode
-        runjs(sprintf("
-          if (window.editEdgeCallback_%s) {
-            window.editEdgeCallback_%s(null);
-            window.editEdgeCallback_%s = null;
-            window.pendingEdgeData_%s = null;
-            console.log('[CLD VIZ] Edge edit cancelled');
-          }
-          // Re-enable manipulation mode after a short delay
-          setTimeout(function() {
-            if (window.network_%s) {
-              window.reEnableManipulation_%s();
-              console.log('[CLD VIZ] Manipulation mode re-enabled after cancel');
-            }
-          }, 100);
-        ", id, id, id, id, id, id))
+        runjs(generate_edge_edit_callback_js(id, confirm = FALSE))
       }
 
       # Hide modal
@@ -1491,14 +1159,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       })
 
       # Re-enable manipulation mode after a short delay
-      runjs(sprintf("
-        setTimeout(function() {
-          if (window.network_%s) {
-            window.reEnableManipulation_%s();
-            console.log('[CLD VIZ] Manipulation mode re-enabled after node delete');
-          }
-        }, 100);
-      ", id, id))
+      runjs(generate_reenable_manipulation_js(id, "node delete"))
     })
 
     # Handle edge deletion
@@ -1519,14 +1180,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       })
 
       # Re-enable manipulation mode after a short delay
-      runjs(sprintf("
-        setTimeout(function() {
-          if (window.network_%s) {
-            window.reEnableManipulation_%s();
-            console.log('[CLD VIZ] Manipulation mode re-enabled after edge delete');
-          }
-        }, 100);
-      ", id, id))
+      runjs(generate_reenable_manipulation_js(id, "edge delete"))
     })
 
     # === HIGHLIGHT LEVERAGE POINTS ===
@@ -1542,55 +1196,21 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       }
 
       if (input$highlight_leverage) {
-        # Find nodes with leverage scores
-        leverage_nodes <- rv$nodes %>%
-          filter(!is.na(leverage_score) & leverage_score > 0) %>%
-          arrange(desc(leverage_score))
+        # Use helper to build highlight data
+        highlight_data <- build_leverage_highlight_data(rv$nodes, rv$edges, top_n = 10)
 
-        debug_log(paste("Filtered leverage nodes count:", nrow(leverage_nodes)), "CLD VIZ")
-
-        if (nrow(leverage_nodes) > 0) {
-          # Show only TOP 10 leverage points, hide others
-          top_leverage <- head(leverage_nodes$id, 10)
-
-          debug_log(paste("Highlighting top", length(top_leverage), "leverage points"), "CLD VIZ")
-
-          # Use 'hidden' property instead of opacity (more reliable in visNetwork)
-          highlighted_nodes <- data.frame(
-            id = rv$nodes$id,
-            hidden = !(rv$nodes$id %in% top_leverage),  # Hide non-leverage nodes
-            borderWidth = ifelse(rv$nodes$id %in% top_leverage, 10, 2),
-            font.size = ifelse(rv$nodes$id %in% top_leverage, 18, 14),
-            stringsAsFactors = FALSE
-          )
-
-          # Also set color for visible nodes (leverage points)
-          highlighted_nodes$color.border <- ifelse(
-            rv$nodes$id %in% top_leverage,
-            "#4CAF50",  # Green for leverage
-            "#2B7CE9"   # Default blue
-          )
-          highlighted_nodes$color.background <- rv$nodes$color
-
-          # Hide edges not connected to leverage points
-          highlighted_edges <- data.frame(
-            id = seq_len(nrow(rv$edges)),
-            hidden = !(rv$edges$from %in% top_leverage | rv$edges$to %in% top_leverage),
-            stringsAsFactors = FALSE
-          )
-
-          debug_log(paste("Hiding", sum(highlighted_nodes$hidden), "nodes, showing", sum(!highlighted_nodes$hidden), "leverage points"), "CLD VIZ")
-          debug_log(paste("Top leverage nodes:", paste(top_leverage, collapse=", ")), "CLD VIZ")
+        if (!is.null(highlight_data)) {
+          debug_log(paste("Highlighting top", length(highlight_data$top_leverage), "leverage points"), "CLD VIZ")
+          debug_log(paste("Top leverage nodes:", paste(highlight_data$top_leverage, collapse=", ")), "CLD VIZ")
 
           # IMPORTANT: Use session namespace for proxy in module context
-          # DON'T use visSelectNodes - it triggers highlightNearest which can interfere with custom highlighting
           visNetworkProxy(session$ns("network")) %>%
-            visUpdateNodes(highlighted_nodes) %>%
-            visUpdateEdges(highlighted_edges) %>%
-            visFit()  # Fit view to visible nodes
+            visUpdateNodes(highlight_data$highlighted_nodes) %>%
+            visUpdateEdges(highlight_data$highlighted_edges) %>%
+            visFit()
 
           showNotification(
-            paste("Showing top", length(top_leverage), "leverage points only"),
+            paste("Showing top", length(highlight_data$top_leverage), "leverage points only"),
             type = "message",
             duration = 3
           )
@@ -1603,29 +1223,13 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           updateMaterialSwitch(session, "highlight_leverage", value = FALSE)
         }
       } else {
-        # Reset highlighting - show all nodes/edges
-        reset_nodes <- data.frame(
-          id = rv$nodes$id,
-          hidden = FALSE,  # Show all nodes
-          color.border = "#2B7CE9",  # Default blue border
-          color.background = rv$nodes$color,
-          borderWidth = 2,
-          font.size = as.integer(rv$nodes$font.size),
-          stringsAsFactors = FALSE
-        )
-
-        reset_edges <- data.frame(
-          id = seq_len(nrow(rv$edges)),
-          hidden = FALSE,  # Show all edges
-          stringsAsFactors = FALSE
-        )
-
+        # Reset highlighting - show all nodes/edges using helper
+        reset_data <- build_leverage_reset_data(rv$nodes, rv$edges)
         debug_log("Resetting leverage highlighting - showing all nodes", "CLD VIZ")
 
-        # IMPORTANT: Use session namespace for proxy in module context
         visNetworkProxy(session$ns("network")) %>%
-          visUpdateNodes(reset_nodes) %>%
-          visUpdateEdges(reset_edges) %>%
+          visUpdateNodes(reset_data$reset_nodes) %>%
+          visUpdateEdges(reset_data$reset_edges) %>%
           visUnselectAll()
       }
     })
@@ -1649,7 +1253,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
     })
 
     # === DISPLAY LOOP TOOLTIP ===
-    output$loop_tooltip <- safe_renderUI({
+    output$loop_tooltip <- renderUI({
       req(input$selected_loop)
 
       if (input$selected_loop == "none") {
@@ -1707,84 +1311,15 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
             debug_log(paste("Converted to node IDs:", paste(loop_node_ids, collapse=", ")), "CLD VIZ")
             debug_log(paste("Highlighting loop", loop_idx, "with", length(loop_node_ids), "nodes"), "CLD VIZ")
 
-            # Use JavaScript to highlight loop (exact same approach as app_loops.R)
-            runjs(sprintf("
-              window.selectedLoopNodes_%s = %s;
-              console.log('[CLD VIZ] Selected loop nodes:', window.selectedLoopNodes_%s);
-
-              if (window.network_%s && window.network_%s.body) {
-                var allNodes = window.network_%s.body.data.nodes.get();
-                var allEdges = window.network_%s.body.data.edges.get();
-
-                // Highlight selected loop nodes
-                allNodes.forEach(function(node) {
-                  if (window.selectedLoopNodes_%s.includes(node.id)) {
-                    // Loop node - restore original appearance with thick black border
-                    node.color = node.originalColor;
-                    node.opacity = 1.0;
-                    node.borderWidth = 3;
-                    node.borderColor = '#000000';
-                  } else {
-                    // Non-loop node - fade using opacity (works for both color and image nodes)
-                    node.color = 'rgba(200,200,200,0.3)';
-                    node.opacity = 0.3;
-                    node.borderWidth = 1;
-                  }
-                });
-
-                // Highlight loop edges
-                allEdges.forEach(function(edge) {
-                  var isLoopEdge = false;
-                  for (var i = 0; i < window.selectedLoopNodes_%s.length; i++) {
-                    var currentNode = window.selectedLoopNodes_%s[i];
-                    var nextNode = window.selectedLoopNodes_%s[(i + 1) %% window.selectedLoopNodes_%s.length];
-                    if (edge.from === currentNode && edge.to === nextNode) {
-                      isLoopEdge = true;
-                      break;
-                    }
-                  }
-
-                  if (isLoopEdge) {
-                    // Keep original edge color and make loop edges 5x thicker for visibility
-                    edge.color = edge.originalColor;
-                    edge.width = (edge.originalWidth || 1) * 5;
-                  } else {
-                    edge.color = 'rgba(200,200,200,0.3)';
-                    edge.width = 1;
-                  }
-                });
-
-                window.network_%s.body.data.nodes.update(allNodes);
-                window.network_%s.body.data.edges.update(allEdges);
-              }
-            ", id, jsonlite::toJSON(loop_node_ids), id, id, id, id, id, id, id, id, id, id, id, id))
+            # Use JavaScript to highlight loop
+            runjs(generate_loop_highlight_js(id, loop_node_ids))
           }
         }
       } else {
-        # Clear highlighting when no loop is selected (exact same as app_loops.R)
+        # Clear highlighting when no loop is selected
         debug_log("Resetting loop highlighting", "CLD VIZ")
 
-        runjs(sprintf("
-          window.selectedLoopNodes_%s = [];
-          if (window.network_%s && window.network_%s.body) {
-            var allNodes = window.network_%s.body.data.nodes.get();
-            var allEdges = window.network_%s.body.data.edges.get();
-
-            allNodes.forEach(function(node) {
-              node.color = node.originalColor;
-              node.opacity = 1.0;
-              node.borderWidth = 1;
-            });
-
-            allEdges.forEach(function(edge) {
-              edge.color = edge.originalColor;
-              edge.width = edge.originalWidth || 1;
-            });
-
-            window.network_%s.body.data.nodes.update(allNodes);
-            window.network_%s.body.data.edges.update(allEdges);
-          }
-        ", id, id, id, id, id, id, id))
+        runjs(generate_loop_reset_js(id))
       }
     })
 

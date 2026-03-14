@@ -1,5 +1,15 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "ui.modals.advanced_interface_showing_all_tools_technical_ter": {
       "en": "Advanced interface showing all tools, technical terminology, and advanced options.",
@@ -9,8 +19,8 @@
       "lt": "Išplėstinė sąsaja, rodanti visus įrankius, techninę terminologiją ir išplėstines parinktis.",
       "pt": "Interface avançada mostrando todas as ferramentas, terminologia técnica e opções avançadas.",
       "it": "Interfaccia avanzata che mostra tutti gli strumenti, terminologia tecnica e opzioni avanzate.",
-      "no": "Advanced interface showing all tools, technical terminology, and advanced options.",
-      "el": "Προχωρημένος interface showing all tools, technical terminology, and advanced options."
+      "no": "Avansert grensesnitt som viser alle verktøy, teknisk terminologi og avanserte alternativer.",
+      "el": "Προηγμένη διεπαφή που εμφανίζει όλα τα εργαλεία, τεχνική ορολογία και προηγμένες επιλογές."
     },
     "ui.modals.apply_changes": {
       "en": "Apply Changes",
@@ -97,8 +107,8 @@
       "lt": "Atsisiųsti/Spausdinti",
       "pt": "Baixar/Imprimir",
       "it": "Scarica/Stampa",
-      "no": "Download/Print",
-      "el": "Download/Print"
+      "no": "Last ned/Skriv ut",
+      "el": "Λήψη/Εκτύπωση"
     },
     "ui.modals.english_manual": {
       "en": "English Manual",
@@ -108,8 +118,8 @@
       "lt": "Anglų Vadovas",
       "pt": "Manual em Inglês",
       "it": "Manuale Inglese",
-      "no": "English Manual",
-      "el": "English Manual"
+      "no": "Engelsk manual",
+      "el": "Αγγλικό Εγχειρίδιο"
     },
     "ui.modals.error_title": {
       "en": "Error",
@@ -130,7 +140,7 @@
       "lt": "Ekspertas",
       "pt": "Especialista",
       "it": "Esperto",
-      "no": "Expert",
+      "no": "Ekspert",
       "el": "Ειδικός"
     },
     "ui.modals.french_manual": {
@@ -141,8 +151,8 @@
       "lt": "Prancūzų Vadovas",
       "pt": "Manual em Francês",
       "it": "Manuale Francese",
-      "no": "French Manual",
-      "el": "French Manual"
+      "no": "Fransk manual",
+      "el": "Γαλλικό Εγχειρίδιο"
     },
     "ui.modals.html_version": {
       "en": "HTML Version",
@@ -152,8 +162,8 @@
       "lt": "HTML Versija",
       "pt": "Versão HTML",
       "it": "Versione HTML",
-      "no": "HTML Version",
-      "el": "HTML Version"
+      "no": "HTML-versjon",
+      "el": "Έκδοση HTML"
     },
     "ui.modals.info_title": {
       "en": "Information",
@@ -174,8 +184,8 @@
       "lt": "Įkelti anksčiau išsaugotą projektą",
       "pt": "Carregar um projeto guardado anteriormente",
       "it": "Carica un progetto salvato in precedenza",
-      "no": "Load a previously saved project",
-      "el": "Load a previously saved project"
+      "no": "Last inn et tidligere lagret prosjekt",
+      "el": "Φόρτωση ενός προηγουμένως αποθηκευμένου έργου"
     },
     "ui.modals.load_project_title": {
       "en": "Load Project",
@@ -186,7 +196,7 @@
       "pt": "Carregar Projeto",
       "it": "Carica Progetto",
       "no": "Last inn prosjekt",
-      "el": "Load Project"
+      "el": "Φόρτωση Έργου"
     },
     "ui.modals.pdf_version": {
       "en": "PDF Version",
@@ -196,8 +206,8 @@
       "lt": "PDF Versija",
       "pt": "Versão PDF",
       "it": "Versione PDF",
-      "no": "PDF Version",
-      "el": "PDF Version"
+      "no": "PDF-versjon",
+      "el": "Έκδοση PDF"
     },
     "ui.modals.recommended_for_new_users": {
       "en": "Recommended for New Users",
@@ -208,7 +218,7 @@
       "pt": "Recomendado para Novos Usuários",
       "it": "Raccomandato per Nuovi Utenti",
       "no": "Anbefalt for nye brukere",
-      "el": "Recommended for New Users"
+      "el": "Συνιστάται για Νέους Χρήστες"
     },
     "ui.modals.save_project_message": {
       "en": "Save your current project data, including all PIMS, ISA entries, and analysis results",
@@ -218,8 +228,8 @@
       "lt": "Išsaugokite dabartinio projekto duomenis, įskaitant visus PIMS, ISA įrašus ir analizės rezultatus",
       "pt": "Guarde os dados do seu projeto atual, incluindo todas as entradas PIMS, ISA e resultados de análise",
       "it": "Salva i dati del progetto corrente, incluse tutte le voci PIMS, ISA e i risultati dell'analisi",
-      "no": "Save your current project data, including all PIMS, ISA entries, and analysis results",
-      "el": "Αποθήκευση your current project data, including all PIMS, ISA entries, and analysis results"
+      "no": "Lagre gjeldende prosjektdata, inkludert alle PIMS-, ISA-oppføringer og analyseresultater",
+      "el": "Αποθηκεύστε τα τρέχοντα δεδομένα του έργου σας, συμπεριλαμβανομένων όλων των καταχωρίσεων PIMS, ISA και των αποτελεσμάτων ανάλυσης"
     },
     "ui.modals.save_project_title": {
       "en": "Save Project",
@@ -230,7 +240,7 @@
       "pt": "Salvar Projeto",
       "it": "Salva Progetto",
       "no": "Lagre prosjekt",
-      "el": "Αποθήκευση Έργο"
+      "el": "Αποθήκευση Έργου"
     },
     "ui.modals.scenarioconfirmdelete": {
       "en": "scenario_confirm_delete",
@@ -240,8 +250,8 @@
       "lt": "patvirtinti_scenarijaus_ištrynimą",
       "pt": "confirmar_exclusão_cenário",
       "it": "conferma_eliminazione_scenario",
-      "no": "scenario_confirm_delete",
-      "el": "scenario_confirm_delete"
+      "no": "bekreft_sletting_av_scenario",
+      "el": "επιβεβαίωση_διαγραφής_σεναρίου"
     },
     "ui.modals.select_your_experience_level_with_marine_ecosystem_modeling": {
       "en": "Select your experience level with marine ecosystem modeling:",
@@ -251,8 +261,8 @@
       "lt": "Pasirinkite savo patirties lygį su jūrų ekosistemų modeliavimu:",
       "pt": "Selecione seu nível de experiência com modelagem de ecossistemas marinhos:",
       "it": "Seleziona il tuo livello di esperienza con la modellazione degli ecosistemi marini:",
-      "no": "Select your experience level with marine ecosystem modeling:",
-      "el": "Επιλογή your experience level with marine ecosystem modeling:"
+      "no": "Velg ditt erfaringsnivå med modellering av marine økosystemer:",
+      "el": "Επιλέξτε το επίπεδο εμπειρίας σας στη μοντελοποίηση θαλάσσιων οικοσυστημάτων:"
     },
     "ui.modals.session_restored_message": {
       "en": "A previous session was found. Click 'Load Saved' to restore it.",
@@ -262,8 +272,8 @@
       "lt": "Rasta ankstesnė sesija. Spustelėkite 'Įkelti išsaugotą', kad ją atkurtumėte.",
       "pt": "Uma sessão anterior foi encontrada. Clique em 'Carregar Salvo' para restaurá-la.",
       "it": "È stata trovata una sessione precedente. Fai clic su 'Carica Salvato' per ripristinarla.",
-      "no": "A previous session was found. Click 'Load Saved' to restore it.",
-      "el": "A previous session was found. Click 'Load Saved' to restore it."
+      "no": "En tidligere økt ble funnet. Klikk «Last inn lagret» for å gjenopprette den.",
+      "el": "Βρέθηκε μια προηγούμενη συνεδρία. Κάντε κλικ στο «Φόρτωση αποθηκευμένου» για να την επαναφέρετε."
     },
     "ui.modals.session_restored_title": {
       "en": "Session Restored",
@@ -273,8 +283,8 @@
       "lt": "Sesija atkurta",
       "pt": "Sessão Restaurada",
       "it": "Sessione Ripristinata",
-      "no": "Session Restored",
-      "el": "Session Restored"
+      "no": "Økt gjenopprettet",
+      "el": "Συνεδρία Επαναφέρθηκε"
     },
     "ui.modals.simplified_interface_for_first_time_users_shows_essential_tools_only": {
       "en": "Simplified interface for first-time users. Shows essential tools only.",
@@ -284,8 +294,8 @@
       "lt": "Supaprastinta sąsaja pradedantiesiems. Rodo tik esminius įrankius.",
       "pt": "Interface simplificada para novos usuários. Mostra apenas ferramentas essenciais.",
       "it": "Interfaccia semplificata per nuovi utenti. Mostra solo strumenti essenziali.",
-      "no": "Simplified interface for first-time users. Shows essential tools only.",
-      "el": "Simplified interface for first-time users. Shows essential tools only."
+      "no": "Forenklet grensesnitt for førstegangsbrukere. Viser kun viktige verktøy.",
+      "el": "Απλοποιημένη διεπαφή για νέους χρήστες. Εμφανίζει μόνο βασικά εργαλεία."
     },
     "ui.modals.standard_interface_for_regular_users_shows_most_tools_and_features": {
       "en": "Standard interface for regular users. Shows most tools and features.",
@@ -295,8 +305,8 @@
       "lt": "Standartinė sąsaja įprastiems naudotojams. Rodo daugumą įrankių ir funkcijų.",
       "pt": "Interface padrão para usuários regulares. Mostra a maioria das ferramentas e recursos.",
       "it": "Interfaccia standard per utenti abituali. Mostra la maggior parte degli strumenti e delle funzionalità.",
-      "no": "Standard interface for regular users. Shows most tools and features.",
-      "el": "Standard interface for regular users. Shows most tools and features."
+      "no": "Standard grensesnitt for vanlige brukere. Viser de fleste verktøy og funksjoner.",
+      "el": "Τυπική διεπαφή για τακτικούς χρήστες. Εμφανίζει τα περισσότερα εργαλεία και λειτουργίες."
     },
     "ui.modals.success_title": {
       "en": "Success",
@@ -317,8 +327,8 @@
       "lt": "Programa bus perkrauta, kad būtų pritaikytas naujas naudotojo patirties lygis.",
       "pt": "A aplicação será recarregada para aplicar o novo nível de experiência do usuário.",
       "it": "L'applicazione si ricaricherà per applicare il nuovo livello di esperienza utente.",
-      "no": "The application will reload to apply the new user experience level.",
-      "el": "The application will reload to apply the new user experience level."
+      "no": "Applikasjonen vil lastes på nytt for å bruke det nye brukeropplevelsesnivået.",
+      "el": "Η εφαρμογή θα επαναφορτωθεί για να εφαρμόσει το νέο επίπεδο εμπειρίας χρήστη."
     },
     "ui.modals.unsaved_changes_message": {
       "en": "You have unsaved changes. Do you want to save before proceeding?",
@@ -328,8 +338,8 @@
       "lt": "Turite neišsaugotų pakeitimų. Ar norite išsaugoti prieš tęsiant?",
       "pt": "Você tem alterações não salvas. Deseja salvar antes de prosseguir?",
       "it": "Hai modifiche non salvate. Vuoi salvare prima di procedere?",
-      "no": "You have unsaved changes. Do you want to save before proceeding?",
-      "el": "You have unsaved changes. Do you want to save before proceeding?"
+      "no": "Du har ulagrede endringer. Vil du lagre før du fortsetter?",
+      "el": "Έχετε μη αποθηκευμένες αλλαγές. Θέλετε να αποθηκεύσετε πριν συνεχίσετε;"
     },
     "ui.modals.unsaved_changes_title": {
       "en": "Unsaved Changes",
@@ -350,8 +360,8 @@
       "lt": "Žiūrėti internete",
       "pt": "Ver online",
       "it": "Visualizza online",
-      "no": "View online",
-      "el": "Προβολή Συνδεδεμένο"
+      "no": "Se på nett",
+      "el": "Προβολή στο διαδίκτυο"
     },
     "ui.modals.warning_title": {
       "en": "Warning",
@@ -373,7 +383,7 @@
       "pt": "Configurações de Armazenamento Local",
       "it": "Impostazioni Archiviazione Locale",
       "no": "Lokale Lagringsinnstillinger",
-      "el": "Local Storage Settings"
+      "el": "Ρυθμίσεις Τοπικής Αποθήκευσης"
     },
     "ui.modals.local_storage_description": {
       "en": "Save and load projects directly to/from a folder on your computer. This keeps your data on your local machine instead of the server.",
@@ -384,7 +394,7 @@
       "pt": "Salvar e carregar projetos diretamente para/de uma pasta no seu computador. Isso mantém seus dados na sua máquina local em vez do servidor.",
       "it": "Salva e carica progetti direttamente su/da una cartella sul tuo computer. Questo mantiene i tuoi dati sulla tua macchina locale invece che sul server.",
       "no": "Lagre og laste prosjekter direkte til/fra en mappe på datamaskinen din. Dette holder dataene dine på din lokale maskin i stedet for serveren.",
-      "el": "Αποθήκευση and load projects directly to/from a folder on your computer. This keeps your data on your local machine instead of the server."
+      "el": "Αποθηκεύστε και φορτώστε έργα απευθείας από/σε φάκελο στον υπολογιστή σας. Αυτό διατηρεί τα δεδομένα σας στον τοπικό σας υπολογιστή αντί στον διακομιστή."
     },
     "ui.modals.local_storage_not_supported_title": {
       "en": "Browser Not Supported",
@@ -395,7 +405,7 @@
       "pt": "Navegador Não Suportado",
       "it": "Browser Non Supportato",
       "no": "Nettleser Ikke Støttet",
-      "el": "Browser Not Supported"
+      "el": "Ο Περιηγητής δεν Υποστηρίζεται"
     },
     "ui.modals.local_storage_not_supported_message": {
       "en": "Your browser does not support the File System Access API required for local folder access. Please use a modern Chromium-based browser (Chrome, Edge, Opera) for this feature.",
@@ -406,7 +416,7 @@
       "pt": "Seu navegador não suporta a API de Acesso ao Sistema de Arquivos necessária para acesso a pastas locais. Por favor, use um navegador moderno baseado em Chromium (Chrome, Edge, Opera) para este recurso.",
       "it": "Il tuo browser non supporta l'API di Accesso al File System richiesta per l'accesso alle cartelle locali. Si prega di utilizzare un browser moderno basato su Chromium (Chrome, Edge, Opera) per questa funzionalità.",
       "no": "Nettleseren din støtter ikke File System Access API som kreves for lokal mappeaksess. Vennligst bruk en moderne Chromium-basert nettleser (Chrome, Edge, Opera) for denne funksjonen.",
-      "el": "Your browser does not support the File System Access API required for local folder access. Please use a modern Chromium-based browser (Chrome, Edge, Opera) for this feature."
+      "el": "Ο περιηγητής σας δεν υποστηρίζει το File System Access API που απαιτείται για πρόσβαση σε τοπικούς φακέλους. Παρακαλώ χρησιμοποιήστε έναν σύγχρονο περιηγητή βασισμένο σε Chromium (Chrome, Edge, Opera) για αυτή τη λειτουργία."
     },
     "ui.modals.local_storage_fallback_message": {
       "en": "You can still use the Download/Upload buttons in the sidebar to save and load projects manually.",
@@ -417,7 +427,7 @@
       "pt": "Você ainda pode usar os botões Download/Upload na barra lateral para salvar e carregar projetos manualmente.",
       "it": "Puoi ancora utilizzare i pulsanti Scarica/Carica nella barra laterale per salvare e caricare progetti manualmente.",
       "no": "Du kan fortsatt bruke Last ned/Last opp-knappene i sidefeltet for å lagre og laste prosjekter manuelt.",
-      "el": "You can still use the Download/Upload buttons in the sidebar to save and load projects manually."
+      "el": "Μπορείτε ακόμα να χρησιμοποιήσετε τα κουμπιά Λήψη/Μεταφόρτωση στην πλαϊνή γραμμή για αποθήκευση και φόρτωση έργων χειροκίνητα."
     },
     "ui.modals.select_local_folder": {
       "en": "Select Local Folder",
@@ -428,7 +438,7 @@
       "pt": "Selecionar Pasta Local",
       "it": "Seleziona Cartella Locale",
       "no": "Velg Lokal Mappe",
-      "el": "Επιλογή Local Folder"
+      "el": "Επιλογή Τοπικού Φακέλου"
     },
     "ui.modals.disconnect_local_folder": {
       "en": "Disconnect",
@@ -450,7 +460,7 @@
       "pt": "Conectado a:",
       "it": "Connesso a:",
       "no": "Koblet til:",
-      "el": "Συνδεδεμένο to:"
+      "el": "Συνδεδεμένο σε:"
     },
     "ui.modals.no_folder_selected": {
       "en": "No folder selected",
@@ -461,7 +471,7 @@
       "pt": "Nenhuma pasta selecionada",
       "it": "Nessuna cartella selezionata",
       "no": "Ingen mappe valgt",
-      "el": "Όχι Φάκελος Επιλεγμένο"
+      "el": "Δεν έχει επιλεγεί φάκελος"
     },
     "ui.modals.saved_projects": {
       "en": "Saved Projects",
@@ -472,7 +482,7 @@
       "pt": "Projetos Salvos",
       "it": "Progetti Salvati",
       "no": "Lagrede Prosjekter",
-      "el": "Αποθηκεύτηκε Projects"
+      "el": "Αποθηκευμένα Έργα"
     },
     "ui.modals.no_saved_projects": {
       "en": "No saved projects in this folder",
@@ -483,7 +493,7 @@
       "pt": "Nenhum projeto salvo nesta pasta",
       "it": "Nessun progetto salvato in questa cartella",
       "no": "Ingen lagrede prosjekter i denne mappen",
-      "el": "Όχι Αποθηκεύτηκε projects in this folder"
+      "el": "Δεν υπάρχουν αποθηκευμένα έργα σε αυτόν τον φάκελο"
     },
     "ui.modals.save_current_project": {
       "en": "Save Current Project",
@@ -494,7 +504,7 @@
       "pt": "Salvar Projeto Atual",
       "it": "Salva Progetto Corrente",
       "no": "Lagre Nåværende Prosjekt",
-      "el": "Αποθήκευση Current Project"
+      "el": "Αποθήκευση Τρέχοντος Έργου"
     },
     "ui.modals.load_from_local": {
       "en": "Load from Local Folder",
@@ -505,7 +515,7 @@
       "pt": "Carregar da Pasta Local",
       "it": "Carica da Cartella Locale",
       "no": "Last fra Lokal Mappe",
-      "el": "Load from Local Folder"
+      "el": "Φόρτωση από Τοπικό Φάκελο"
     },
     "ui.modals.auto_save_to_local": {
       "en": "Auto-save to local folder",
@@ -516,7 +526,7 @@
       "pt": "Salvar automaticamente na pasta local",
       "it": "Salvataggio automatico nella cartella locale",
       "no": "Automatisk lagring til lokal mappe",
-      "el": "Auto-save to local folder"
+      "el": "Αυτόματη αποθήκευση σε τοπικό φάκελο"
     },
     "ui.modals.ses_models_directory": {
       "en": "SES Models Directory",
@@ -527,7 +537,7 @@
       "pt": "Diretório de Modelos SES",
       "it": "Directory Modelli SES",
       "no": "SES-modellkatalog",
-      "el": "SES Μοντέλα Directory"
+      "el": "Κατάλογος Μοντέλων SES"
     },
     "ui.modals.ses_models_source_label": {
       "en": "Select Models Source",
@@ -538,7 +548,7 @@
       "pt": "Selecionar Fonte de Modelos",
       "it": "Seleziona Origine Modelli",
       "no": "Velg Modellkilde",
-      "el": "Επιλογή Μοντέλα Source"
+      "el": "Επιλογή Πηγής Μοντέλων"
     },
     "ui.modals.ses_models_custom_path": {
       "en": "Custom Directory Path",
@@ -549,7 +559,7 @@
       "pt": "Caminho do Diretório Personalizado",
       "it": "Percorso Directory Personalizzata",
       "no": "Egendefinert Katalogbane",
-      "el": "Προσαρμοσμένο Directory Path"
+      "el": "Προσαρμοσμένη Διαδρομή Καταλόγου"
     },
     "ui.modals.ses_models_path_placeholder": {
       "en": "e.g., C:/MyModels or /home/user/models",
@@ -560,7 +570,7 @@
       "pt": "ex., C:/MeusModelos ou /home/usuario/modelos",
       "it": "es., C:/MieiModelli o /home/utente/modelli",
       "no": "f.eks., C:/MineModeller eller /home/bruker/modeller",
-      "el": "e.g., C:/MyModels or /home/user/models"
+      "el": "π.χ., C:/MyModels ή /home/user/models"
     },
     "ui.modals.browse": {
       "en": "Browse...",
@@ -571,7 +581,7 @@
       "pt": "Procurar...",
       "it": "Sfoglia...",
       "no": "Bla gjennom...",
-      "el": "Browse..."
+      "el": "Αναζήτηση..."
     },
     "ui.modals.select_ses_models_directory": {
       "en": "Select SES Models Directory",
@@ -582,7 +592,7 @@
       "pt": "Selecionar Diretório de Modelos SES",
       "it": "Seleziona Directory Modelli SES",
       "no": "Velg SES-modellkatalog",
-      "el": "Επιλογή SES Μοντέλα Directory"
+      "el": "Επιλογή Καταλόγου Μοντέλων SES"
     },
     "ui.modals.ses_models_directory_help": {
       "en": "Select a directory containing Excel files with SES model data. The directory should contain .xlsx files organized in subfolders.",
@@ -593,7 +603,7 @@
       "pt": "Selecione um diretório contendo arquivos Excel com dados de modelo SES. O diretório deve conter arquivos .xlsx organizados em subpastas.",
       "it": "Seleziona una directory contenente file Excel con dati del modello SES. La directory deve contenere file .xlsx organizzati in sottocartelle.",
       "no": "Velg en katalog som inneholder Excel-filer med SES-modelldata. Katalogen bør inneholde .xlsx-filer organisert i undermapper.",
-      "el": "Επιλογή a directory containing Excel files with SES model data. The directory should contain .xlsx files organized in subfolders."
+      "el": "Επιλέξτε έναν κατάλογο που περιέχει αρχεία Excel με δεδομένα μοντέλων SES. Ο κατάλογος πρέπει να περιέχει αρχεία .xlsx οργανωμένα σε υποφακέλους."
     },
     "ui.modals.current_directory": {
       "en": "Current Directory",
@@ -604,7 +614,7 @@
       "pt": "Diretório Atual",
       "it": "Directory Corrente",
       "no": "Gjeldende Katalog",
-      "el": "Current Directory"
+      "el": "Τρέχων Κατάλογος"
     },
     "ui.modals.directory_not_found": {
       "en": "Directory not found:",
@@ -615,7 +625,7 @@
       "pt": "Diretório não encontrado:",
       "it": "Directory non trovata:",
       "no": "Katalog ikke funnet:",
-      "el": "Directory not found:"
+      "el": "Ο κατάλογος δεν βρέθηκε:"
     },
     "ui.modals.settings_updated_successfully": {
       "en": "Settings updated successfully",
@@ -626,7 +636,7 @@
       "pt": "Configurações atualizadas com sucesso",
       "it": "Impostazioni aggiornate con successo",
       "no": "Innstillinger oppdatert",
-      "el": "Ρυθμίσεις Ενημερώθηκε successfully"
+      "el": "Οι ρυθμίσεις ενημερώθηκαν επιτυχώς"
     },
     "ui.modals.interface_language": {
       "en": "Interface Language",
@@ -637,7 +647,7 @@
       "pt": "Idioma da Interface",
       "it": "Lingua dell'Interfaccia",
       "no": "Grensesnittspråk",
-      "el": "Interface Language"
+      "el": "Γλώσσα Διεπαφής"
     },
     "ui.modals.select_your_preferred_language_for_the_application_interface": {
       "en": "Select your preferred language for the application interface.",
@@ -648,7 +658,7 @@
       "pt": "Selecione seu idioma preferido para a interface do aplicativo.",
       "it": "Seleziona la tua lingua preferita per l'interfaccia dell'applicazione.",
       "no": "Velg ditt foretrukne språk for applikasjonsgrensesnittet.",
-      "el": "Επιλογή your preferred language for the application interface."
+      "el": "Επιλέξτε τη γλώσσα προτίμησής σας για τη διεπαφή της εφαρμογής."
     },
     "ui.modals.the_application_will_reload_to_apply_the_language_change": {
       "en": "The application will reload to apply the language change.",
@@ -659,7 +669,7 @@
       "pt": "O aplicativo será recarregado para aplicar a mudança de idioma.",
       "it": "L'applicazione si ricaricherà per applicare la modifica della lingua.",
       "no": "Applikasjonen vil laste på nytt for å bruke språkendringen.",
-      "el": "The application will reload to apply the language change."
+      "el": "Η εφαρμογή θα επαναφορτωθεί για να εφαρμόσει την αλλαγή γλώσσας."
     },
     "ui.modals.applying_new_user_experience_level": {
       "en": "Applying new user experience level...",
@@ -670,7 +680,7 @@
       "pt": "Aplicando novo nível de experiência do usuário...",
       "it": "Applicazione del nuovo livello di esperienza utente...",
       "no": "Bruker nytt brukeropplevelsesnivå...",
-      "el": "Applying new user experience level..."
+      "el": "Εφαρμογή νέου επιπέδου εμπειρίας χρήστη..."
     },
     "ui.modals.simple_practical_guides_with_step_by_step_instruct": {
       "en": "Simple practical guides with step by step instruct",
@@ -680,8 +690,8 @@
       "de": "Einfache praktische Anleitungen mit Schritt-für-Schritt-Anweisungen",
       "it": "Guide pratiche semplici con istruzioni passo dopo passo",
       "pt": "Guias práticos simples com instruções passo a passo",
-      "el": "Simple practical guides with step by step instruct",
-      "no": "Simple practical guides with step by step instruct"
+      "el": "Απλοί πρακτικοί οδηγοί με οδηγίες βήμα προς βήμα",
+      "no": "Enkle praktiske guider med trinn-for-trinn-instruksjoner"
     },
     "ui.modals.5_minute_introduction": {
       "en": "5 minute introduction",
@@ -691,8 +701,8 @@
       "de": "5-Minuten-Einführung",
       "it": "Introduzione di 5 minuti",
       "pt": "Introdução de 5 minutos",
-      "el": "5 minute introduction",
-      "no": "5 minute introduction"
+      "el": "Εισαγωγή 5 λεπτών",
+      "no": "5 minutters introduksjon"
     },
     "ui.modals.20_minute_hands_on_walkthrough": {
       "en": "20 minute hands on walkthrough",
@@ -702,8 +712,8 @@
       "de": "20-Minuten-Praxisanleitung",
       "it": "Guida pratica di 20 minuti",
       "pt": "Passo a passo prático de 20 minutos",
-      "el": "20 minute hands on walkthrough",
-      "no": "20 minute hands on walkthrough"
+      "el": "20λεπτη πρακτική παρουσίαση",
+      "no": "20 minutters praktisk gjennomgang"
     },
     "ui.modals.quick_reference_guide": {
       "en": "Quick reference guide",
@@ -713,8 +723,8 @@
       "de": "Kurzreferenz",
       "it": "Guida di riferimento rapido",
       "pt": "Guia de referência rápida",
-      "el": "Quick reference guide",
-      "no": "Quick reference guide"
+      "el": "Οδηγός γρήγορης αναφοράς",
+      "no": "Hurtigreferanseguide"
     },
     "ui.modals.compact_reference_for_experienced_users_who_need_a_quick_reminder": {
       "en": "Compact reference for experienced users who need a quick reminder",
@@ -724,8 +734,8 @@
       "de": "Kompakte Referenz für erfahrene Benutzer, die eine kurze Erinnerung benötigen",
       "it": "Riferimento compatto per utenti esperti che necessitano di un promemoria rapido",
       "pt": "Referência compacta para utilizadores experientes que precisam de um lembrete rápido",
-      "el": "Compact reference for experienced users who need a quick reminder",
-      "no": "Compact reference for experienced users who need a quick reminder"
+      "el": "Συμπαγής αναφορά για έμπειρους χρήστες που χρειάζονται μια γρήγορη υπενθύμιση",
+      "no": "Kompakt referanse for erfarne brukere som trenger en rask påminnelse"
     },
     "ui.modals.open_in_browser": {
       "en": "Open in browser",
@@ -735,8 +745,8 @@
       "de": "Im Browser öffnen",
       "it": "Apri nel browser",
       "pt": "Abrir no navegador",
-      "el": "Open in browser",
-      "no": "Open in browser"
+      "el": "Άνοιγμα στον περιηγητή",
+      "no": "Åpne i nettleser"
     },
     "ui.modals.comprehensive_documentation_with_detailed_explanat": {
       "en": "Comprehensive documentation with detailed explanat",
@@ -746,8 +756,8 @@
       "de": "Umfassende Dokumentation mit detaillierten Erläuterungen",
       "it": "Documentazione completa con spiegazioni dettagliate",
       "pt": "Documentação abrangente com explicações detalhadas",
-      "el": "Comprehensive documentation with detailed explanat",
-      "no": "Comprehensive documentation with detailed explanat"
+      "el": "Ολοκληρωμένη τεκμηρίωση με λεπτομερείς επεξηγήσεις",
+      "no": "Omfattende dokumentasjon med detaljerte forklaringer"
     },
     "ui.modals.the_complete_manual_contains_approximately_75_page": {
       "en": "The complete manual contains approximately 75 page",
@@ -757,8 +767,8 @@
       "de": "Das vollständige Handbuch umfasst etwa 75 Seiten",
       "it": "Il manuale completo contiene circa 75 pagine",
       "pt": "O manual completo contém aproximadamente 75 páginas",
-      "el": "The complete manual contains approximately 75 page",
-      "no": "The complete manual contains approximately 75 page"
+      "el": "Το πλήρες εγχειρίδιο περιέχει περίπου 75 σελίδες",
+      "no": "Den fullstendige manualen inneholder omtrent 75 sider"
     },
     "ui.modals.additional_resources": {
       "en": "Additional resources",
@@ -768,8 +778,8 @@
       "de": "Zusätzliche Ressourcen",
       "it": "Risorse aggiuntive",
       "pt": "Recursos adicionais",
-      "el": "Additional resources",
-      "no": "Additional resources"
+      "el": "Πρόσθετοι πόροι",
+      "no": "Tilleggsressurser"
     },
     "ui.modals.video_tutorials": {
       "en": "Video tutorials",
@@ -779,8 +789,8 @@
       "de": "Video-Tutorials",
       "it": "Tutorial video",
       "pt": "Tutoriais em vídeo",
-      "el": "Video tutorials",
-      "no": "Video tutorials"
+      "el": "Εκπαιδευτικά βίντεο",
+      "no": "Videoopplæringer"
     },
     "ui.modals.coming_soon_check_back_later": {
       "en": "Coming soon check back later",
@@ -790,8 +800,8 @@
       "de": "Demnächst verfügbar, schauen Sie später vorbei",
       "it": "In arrivo, tornate più tardi",
       "pt": "Em breve, volte mais tarde",
-      "el": "Coming soon check back later",
-      "no": "Coming soon check back later"
+      "el": "Έρχεται σύντομα, ελέγξτε ξανά αργότερα",
+      "no": "Kommer snart, sjekk tilbake senere"
     },
     "ui.modals.example_projects": {
       "en": "Example projects",
@@ -801,8 +811,8 @@
       "de": "Beispielprojekte",
       "it": "Progetti di esempio",
       "pt": "Projetos de exemplo",
-      "el": "Example projects",
-      "no": "Example projects"
+      "el": "Παραδείγματα έργων",
+      "no": "Eksempelprosjekter"
     },
     "ui.modals.available_in_the_template_library": {
       "en": "Available in the template library",
@@ -812,8 +822,8 @@
       "de": "Verfügbar in der Vorlagenbibliothek",
       "it": "Disponibile nella libreria dei modelli",
       "pt": "Disponível na biblioteca de modelos",
-      "el": "Available in the template library",
-      "no": "Available in the template library"
+      "el": "Διαθέσιμο στη βιβλιοθήκη προτύπων",
+      "no": "Tilgjengelig i malbiblioteket"
     },
     "ui.modals.technical_documentation": {
       "en": "Technical documentation",
@@ -823,8 +833,8 @@
       "de": "Technische Dokumentation",
       "it": "Documentazione tecnica",
       "pt": "Documentação técnica",
-      "el": "Technical documentation",
-      "no": "Technical documentation"
+      "el": "Τεχνική τεκμηρίωση",
+      "no": "Teknisk dokumentasjon"
     },
     "ui.modals.for_developers_and_advanced_users": {
       "en": "For developers and advanced users",
@@ -834,8 +844,8 @@
       "de": "Für Entwickler und fortgeschrittene Benutzer",
       "it": "Per sviluppatori e utenti avanzati",
       "pt": "Para desenvolvedores e utilizadores avançados",
-      "el": "For developers and advanced users",
-      "no": "For developers and advanced users"
+      "el": "Για προγραμματιστές και προχωρημένους χρήστες",
+      "no": "For utviklere og avanserte brukere"
     },
     "ui.modals.autosave_title": {
       "en": "Auto-Save Settings",
@@ -845,8 +855,8 @@
       "lt": "Automatinio Išsaugojimo Nustatymai",
       "pt": "Configurações de Salvamento Automático",
       "it": "Impostazioni Salvataggio Automatico",
-      "no": "Auto-Save Settings",
-      "el": "Auto-Save Settings"
+      "no": "Innstillinger for automatisk lagring",
+      "el": "Ρυθμίσεις Αυτόματης Αποθήκευσης"
     },
     "ui.modals.autosave_description": {
       "en": "Configure automatic saving behavior for the AI ISA Assistant module.",
@@ -856,8 +866,8 @@
       "lt": "Konfigūruokite automatinio išsaugojimo elgseną AI ISA Assistant moduliui.",
       "pt": "Configure o comportamento de salvamento automático para o módulo AI ISA Assistant.",
       "it": "Configura il comportamento di salvataggio automatico per il modulo AI ISA Assistant.",
-      "no": "Configure automatic saving behavior for the AI ISA Assistant module.",
-      "el": "Configure automatic saving behavior for the AI ISA Assistant module."
+      "no": "Konfigurer automatisk lagring for AI ISA Assistant-modulen.",
+      "el": "Ρυθμίστε τη συμπεριφορά αυτόματης αποθήκευσης για τη μονάδα AI ISA Assistant."
     },
     "ui.modals.autosave_enable": {
       "en": "Enable Auto-Save",
@@ -867,8 +877,8 @@
       "lt": "Įjungti Automatinį Išsaugojimą",
       "pt": "Ativar Salvamento Automático",
       "it": "Attiva Salvataggio Automatico",
-      "no": "Enable Auto-Save",
-      "el": "Enable Auto-Save"
+      "no": "Aktiver automatisk lagring",
+      "el": "Ενεργοποίηση Αυτόματης Αποθήκευσης"
     },
     "ui.modals.autosave_on": {
       "en": "ON",
@@ -878,8 +888,8 @@
       "lt": "ON",
       "pt": "ON",
       "it": "ON",
-      "no": "ON",
-      "el": "ON"
+      "no": "PÅ",
+      "el": "ΕΝΕΡΓΟ"
     },
     "ui.modals.autosave_off": {
       "en": "OFF",
@@ -889,8 +899,8 @@
       "lt": "OFF",
       "pt": "OFF",
       "it": "OFF",
-      "no": "OFF",
-      "el": "OFF"
+      "no": "AV",
+      "el": "ΑΝΕΝΕΡΓΟ"
     },
     "ui.modals.autosave_advanced": {
       "en": "Advanced Auto-Save Options",
@@ -900,8 +910,8 @@
       "lt": "Išplėstinės Automatinio Išsaugojimo Parinktys",
       "pt": "Opções Avançadas de Salvamento Automático",
       "it": "Opzioni Avanzate di Salvataggio Automatico",
-      "no": "Advanced Auto-Save Options",
-      "el": "Advanced Auto-Save Options"
+      "no": "Avanserte alternativer for automatisk lagring",
+      "el": "Προηγμένες Επιλογές Αυτόματης Αποθήκευσης"
     },
     "ui.modals.autosave_delay_label": {
       "en": "Save Delay (seconds)",
@@ -911,8 +921,8 @@
       "lt": "Išsaugojimo Delsa (sekundės)",
       "pt": "Atraso de Salvamento (segundos)",
       "it": "Ritardo di Salvataggio (secondi)",
-      "no": "Save Delay (seconds)",
-      "el": "Save Delay (seconds)"
+      "no": "Lagringsforsinkelse (sekunder)",
+      "el": "Καθυστέρηση Αποθήκευσης (δευτερόλεπτα)"
     },
     "ui.modals.autosave_delay_help": {
       "en": "Delay before auto-save triggers after changes (prevents saving on every keystroke)",
@@ -922,8 +932,8 @@
       "lt": "Delsa prieš automatinį išsaugojimą po pakeitimų (neleidžia išsaugoti po kiekvieno klavišo paspaudimo)",
       "pt": "Atraso antes de o salvamento automático ser acionado após alterações (evita salvar a cada tecla pressionada)",
       "it": "Ritardo prima dell'attivazione del salvataggio automatico dopo le modifiche (impedisce il salvataggio ad ogni pressione di tasto)",
-      "no": "Delay before auto-save triggers after changes (prevents saving on every keystroke)",
-      "el": "Delay before auto-save triggers after changes (prevents saving on every keystroke)"
+      "no": "Forsinkelse før automatisk lagring utløses etter endringer (forhindrer lagring ved hvert tastetrykk)",
+      "el": "Καθυστέρηση πριν ενεργοποιηθεί η αυτόματη αποθήκευση μετά από αλλαγές (αποτρέπει την αποθήκευση σε κάθε πλήκτρο)"
     },
     "ui.modals.autosave_notifications_label": {
       "en": "Notifications",
@@ -933,8 +943,8 @@
       "lt": "Pranešimai",
       "pt": "Notificações",
       "it": "Notifiche",
-      "no": "Notifications",
-      "el": "Notifications"
+      "no": "Varsler",
+      "el": "Ειδοποιήσεις"
     },
     "ui.modals.autosave_show_notifications": {
       "en": "Show save notifications",
@@ -944,8 +954,8 @@
       "lt": "Rodyti išsaugojimo pranešimus",
       "pt": "Mostrar notificações de salvamento",
       "it": "Mostra notifiche di salvataggio",
-      "no": "Show save notifications",
-      "el": "Show save notifications"
+      "no": "Vis lagringsvarsler",
+      "el": "Εμφάνιση ειδοποιήσεων αποθήκευσης"
     },
     "ui.modals.autosave_notifications_help": {
       "en": "Display a notification each time auto-save occurs (can be distracting)",
@@ -955,8 +965,8 @@
       "lt": "Rodyti pranešimą kiekvieną kartą, kai vyksta automatinis išsaugojimas (gali blaškyt)",
       "pt": "Exibir uma notificação cada vez que o salvamento automático ocorre (pode ser perturbador)",
       "it": "Mostra una notifica ogni volta che avviene il salvataggio automatico (può distrarre)",
-      "no": "Display a notification each time auto-save occurs (can be distracting)",
-      "el": "Display a notification each time auto-save occurs (can be distracting)"
+      "no": "Vis et varsel hver gang automatisk lagring utføres (kan være forstyrrende)",
+      "el": "Εμφάνιση ειδοποίησης κάθε φορά που πραγματοποιείται αυτόματη αποθήκευση (μπορεί να αποσπά την προσοχή)"
     },
     "ui.modals.autosave_indicator_label": {
       "en": "Visual Indicator",
@@ -966,8 +976,8 @@
       "lt": "Vizualinis Indikatorius",
       "pt": "Indicador Visual",
       "it": "Indicatore Visivo",
-      "no": "Visual Indicator",
-      "el": "Visual Indicator"
+      "no": "Visuell indikator",
+      "el": "Οπτική Ένδειξη"
     },
     "ui.modals.autosave_show_indicator": {
       "en": "Show save status indicator",
@@ -977,8 +987,8 @@
       "lt": "Rodyti išsaugojimo būsenos indikatorių",
       "pt": "Mostrar indicador de estado de salvamento",
       "it": "Mostra indicatore di stato del salvataggio",
-      "no": "Show save status indicator",
-      "el": "Show save status indicator"
+      "no": "Vis statusindikator for lagring",
+      "el": "Εμφάνιση ένδειξης κατάστασης αποθήκευσης"
     },
     "ui.modals.autosave_indicator_help": {
       "en": "Display a small indicator showing when last auto-save occurred",
@@ -988,8 +998,8 @@
       "lt": "Rodyti mažą indikatorių, rodantį, kada įvyko paskutinis automatinis išsaugojimas",
       "pt": "Exibir um pequeno indicador mostrando quando ocorreu o último salvamento automático",
       "it": "Mostra un piccolo indicatore che indica quando è avvenuto l'ultimo salvataggio automatico",
-      "no": "Display a small indicator showing when last auto-save occurred",
-      "el": "Display a small indicator showing when last auto-save occurred"
+      "no": "Vis en liten indikator som viser når siste automatiske lagring ble utført",
+      "el": "Εμφάνιση μικρής ένδειξης που δείχνει πότε πραγματοποιήθηκε η τελευταία αυτόματη αποθήκευση"
     },
     "ui.modals.autosave_triggers_label": {
       "en": "Auto-Save Triggers",
@@ -999,8 +1009,8 @@
       "lt": "Automatinio Išsaugojimo Paleidikliai",
       "pt": "Acionadores de Salvamento Automático",
       "it": "Attivatori del Salvataggio Automatico",
-      "no": "Auto-Save Triggers",
-      "el": "Auto-Save Triggers"
+      "no": "Utløsere for automatisk lagring",
+      "el": "Ενεργοποιητές Αυτόματης Αποθήκευσης"
     },
     "ui.modals.autosave_trigger_element": {
       "en": "Element added/modified",
@@ -1010,8 +1020,8 @@
       "lt": "Elementas pridėtas/pakeistas",
       "pt": "Elemento adicionado/modificado",
       "it": "Elemento aggiunto/modificato",
-      "no": "Element added/modified",
-      "el": "Element added/modified"
+      "no": "Element lagt til/endret",
+      "el": "Στοιχείο προστέθηκε/τροποποιήθηκε"
     },
     "ui.modals.autosave_trigger_context": {
       "en": "Context changed (region, ecosystem)",
@@ -1021,8 +1031,8 @@
       "lt": "Kontekstas pakeistas (regionas, ekosistema)",
       "pt": "Contexto alterado (região, ecossistema)",
       "it": "Contesto modificato (regione, ecosistema)",
-      "no": "Context changed (region, ecosystem)",
-      "el": "Context changed (region, ecosystem)"
+      "no": "Kontekst endret (region, økosystem)",
+      "el": "Αλλαγή πλαισίου (περιοχή, οικοσύστημα)"
     },
     "ui.modals.autosave_trigger_connections": {
       "en": "Connections approved",
@@ -1032,8 +1042,8 @@
       "lt": "Ryšiai patvirtinti",
       "pt": "Conexões aprovadas",
       "it": "Connessioni approvate",
-      "no": "Connections approved",
-      "el": "Connections approved"
+      "no": "Tilkoblinger godkjent",
+      "el": "Συνδέσεις εγκρίθηκαν"
     },
     "ui.modals.autosave_trigger_step": {
       "en": "Step progression",
@@ -1043,8 +1053,8 @@
       "lt": "Žingsnio progresas",
       "pt": "Progressão de etapa",
       "it": "Avanzamento di fase",
-      "no": "Step progression",
-      "el": "Step progression"
+      "no": "Trinnprogresjon",
+      "el": "Προχώρηση βημάτων"
     },
     "ui.modals.autosave_triggers_help": {
       "en": "Select which actions trigger auto-save",
@@ -1054,8 +1064,8 @@
       "lt": "Pasirinkite, kurie veiksmai paleidžia automatinį išsaugojimą",
       "pt": "Selecione quais ações acionam o salvamento automático",
       "it": "Seleziona quali azioni attivano il salvataggio automatico",
-      "no": "Select which actions trigger auto-save",
-      "el": "Select which actions trigger auto-save"
+      "no": "Velg hvilke handlinger som utløser automatisk lagring",
+      "el": "Επιλέξτε ποιες ενέργειες ενεργοποιούν την αυτόματη αποθήκευση"
     },
     "ui.modals.autosave_tip": {
       "en": "Tip:",
@@ -1065,8 +1075,8 @@
       "lt": "Patarimas:",
       "pt": "Dica:",
       "it": "Suggerimento:",
-      "no": "Tip:",
-      "el": "Tip:"
+      "no": "Tips:",
+      "el": "Συμβουλή:"
     },
     "ui.modals.autosave_tip_text": {
       "en": "Auto-save only works in the AI ISA Assistant module. Your work in other modules is saved manually using the Save Project button in the sidebar.",
@@ -1076,8 +1086,8 @@
       "lt": "Automatinis išsaugojimas veikia tik AI ISA Assistant modulyje. Jūsų darbas kituose moduliuose išsaugomas rankiniu būdu, naudojant mygtuką Išsaugoti Projektą šoninėje juostoje.",
       "pt": "O salvamento automático funciona apenas no módulo AI ISA Assistant. O seu trabalho em outros módulos é salvo manualmente usando o botão Salvar Projeto na barra lateral.",
       "it": "Il salvataggio automatico funziona solo nel modulo AI ISA Assistant. Il tuo lavoro negli altri moduli viene salvato manualmente utilizzando il pulsante Salva Progetto nella barra laterale.",
-      "no": "Auto-save only works in the AI ISA Assistant module. Your work in other modules is saved manually using the Save Project button in the sidebar.",
-      "el": "Auto-save only works in the AI ISA Assistant module. Your work in other modules is saved manually using the Save Project button in the sidebar."
+      "no": "Automatisk lagring fungerer bare i AI ISA Assistant-modulen. Arbeidet ditt i andre moduler lagres manuelt ved å bruke Lagre prosjekt-knappen i sidepanelet.",
+      "el": "Η αυτόματη αποθήκευση λειτουργεί μόνο στη μονάδα AI ISA Assistant. Η εργασία σας σε άλλες μονάδες αποθηκεύεται χειροκίνητα χρησιμοποιώντας το κουμπί Αποθήκευση Έργου στην πλαϊνή γραμμή."
     },
     "ui.modals.autosave_local_sync_help": {
       "en": "When enabled, changes will be automatically saved to your local folder in addition to server auto-save.",
@@ -1087,8 +1097,8 @@
       "lt": "Kai įjungta, pakeitimai bus automatiškai išsaugoti jūsų vietiniame aplanke, be serverio automatinio išsaugojimo.",
       "pt": "Quando ativado, as alterações serão salvas automaticamente na sua pasta local, além do salvamento automático do servidor.",
       "it": "Quando attivato, le modifiche verranno salvate automaticamente nella cartella locale oltre al salvataggio automatico del server.",
-      "no": "When enabled, changes will be automatically saved to your local folder in addition to server auto-save.",
-      "el": "When enabled, changes will be automatically saved to your local folder in addition to server auto-save."
+      "no": "Når aktivert, vil endringer automatisk lagres i din lokale mappe i tillegg til serverens automatiske lagring.",
+      "el": "Όταν είναι ενεργοποιημένο, οι αλλαγές θα αποθηκεύονται αυτόματα στον τοπικό σας φάκελο εκτός από την αυτόματη αποθήκευση στον διακομιστή."
     },
     "ui.modals.general_settings": {
       "en": "General Settings",
@@ -1098,8 +1108,8 @@
       "lt": "Bendrieji Nustatymai",
       "pt": "Configurações Gerais",
       "it": "Impostazioni Generali",
-      "no": "General Settings",
-      "el": "General Settings"
+      "no": "Generelle innstillinger",
+      "el": "Γενικές Ρυθμίσεις"
     },
     "ui.modals.debug_logging": {
       "en": "Enable Debug Logging",
@@ -1109,8 +1119,8 @@
       "lt": "Įjungti Derinimo Registravimą",
       "pt": "Ativar Registro de Depuração",
       "it": "Attiva Registrazione di Debug",
-      "no": "Enable Debug Logging",
-      "el": "Enable Debug Logging"
+      "no": "Aktiver feilsøkingslogging",
+      "el": "Ενεργοποίηση Καταγραφής Αποσφαλμάτωσης"
     },
     "ui.modals.debug_logging_help": {
       "en": "Enable detailed logging to console (useful for troubleshooting, may slow down performance)",
@@ -1120,8 +1130,8 @@
       "lt": "Įjungti detalų registravimą konsolėje (naudinga trikčių šalinimui, gali sulėtinti veikimą)",
       "pt": "Ativar registro detalhado no console (útil para solução de problemas, pode diminuir o desempenho)",
       "it": "Attiva la registrazione dettagliata nella console (utile per la risoluzione dei problemi, può rallentare le prestazioni)",
-      "no": "Enable detailed logging to console (useful for troubleshooting, may slow down performance)",
-      "el": "Enable detailed logging to console (useful for troubleshooting, may slow down performance)"
+      "no": "Aktiver detaljert logging til konsoll (nyttig for feilsøking, kan redusere ytelsen)",
+      "el": "Ενεργοποίηση λεπτομερούς καταγραφής στην κονσόλα (χρήσιμο για αντιμετώπιση προβλημάτων, μπορεί να επιβραδύνει την απόδοση)"
     },
     "ui.modals.browser_not_supported": {
       "en": "Browser Not Fully Supported",
@@ -1131,8 +1141,8 @@
       "lt": "Naršyklė Nevisiškai Palaikoma",
       "pt": "Navegador Não Totalmente Suportado",
       "it": "Browser Non Completamente Supportato",
-      "no": "Browser Not Fully Supported",
-      "el": "Browser Not Fully Supported"
+      "no": "Nettleser ikke fullt støttet",
+      "el": "Ο Περιηγητής δεν Υποστηρίζεται Πλήρως"
     },
     "ui.modals.browser_warning": {
       "en": "Your browser does not support the File System Access API. Please use Chrome, Edge, or Opera for direct folder access. You can still use Download/Upload buttons to manually save and load projects.",
@@ -1142,8 +1152,8 @@
       "lt": "Jūsų naršyklė nepalaiko File System Access API. Prašome naudoti Chrome, Edge arba Opera tiesioginei prieigai prie aplankų. Vis tiek galite naudoti Atsisiųsti/Įkelti mygtukus, kad projektus išsaugotumėte ir įkeltumėte rankiniu būdu.",
       "pt": "Seu navegador não suporta a API de acesso ao sistema de arquivos. Por favor, use Chrome, Edge ou Opera para acesso direto a pastas. Você ainda pode usar os botões Download/Upload para salvar e carregar projetos manualmente.",
       "it": "Il tuo browser non supporta l'API di accesso al file system. Si prega di utilizzare Chrome, Edge o Opera per l'accesso diretto alle cartelle. Puoi comunque utilizzare i pulsanti Scarica/Carica per salvare e caricare progetti manualmente.",
-      "no": "Your browser does not support the File System Access API. Please use Chrome, Edge, or Opera for direct folder access. You can still use Download/Upload buttons to manually save and load projects.",
-      "el": "Your browser does not support the File System Access API. Please use Chrome, Edge, or Opera for direct folder access. You can still use Download/Upload buttons to manually save and load projects."
+      "no": "Nettleseren din støtter ikke File System Access API. Vennligst bruk Chrome, Edge eller Opera for direkte mappetilgang. Du kan fortsatt bruke Last ned/Last opp-knappene for å lagre og laste prosjekter manuelt.",
+      "el": "Ο περιηγητής σας δεν υποστηρίζει το File System Access API. Παρακαλώ χρησιμοποιήστε Chrome, Edge ή Opera για άμεση πρόσβαση σε φακέλους. Μπορείτε ακόμα να χρησιμοποιήσετε τα κουμπιά Λήψη/Μεταφόρτωση για αποθήκευση και φόρτωση έργων χειροκίνητα."
     },
     "ui.modals.connected_to": {
       "en": "Connected to:",
@@ -1153,8 +1163,8 @@
       "lt": "Prijungta prie:",
       "pt": "Conectado a:",
       "it": "Connesso a:",
-      "no": "Connected to:",
-      "el": "Connected to:"
+      "no": "Koblet til:",
+      "el": "Συνδεδεμένο σε:"
     },
     "ui.modals.about_title": {
       "en": "About MarineSABRES SES Toolbox",
@@ -1164,8 +1174,8 @@
       "lt": "Apie MarineSABRES SES Toolbox",
       "pt": "Sobre MarineSABRES SES Toolbox",
       "it": "Informazioni su MarineSABRES SES Toolbox",
-      "no": "About MarineSABRES SES Toolbox",
-      "el": "About MarineSABRES SES Toolbox"
+      "no": "Om MarineSABRES SES Toolbox",
+      "el": "Σχετικά με το MarineSABRES SES Toolbox"
     },
     "ui.modals.app_info": {
       "en": "Application Information",
@@ -1175,8 +1185,8 @@
       "lt": "Programos Informacija",
       "pt": "Informações da Aplicação",
       "it": "Informazioni sull'Applicazione",
-      "no": "Application Information",
-      "el": "Application Information"
+      "no": "Applikasjonsinformasjon",
+      "el": "Πληροφορίες Εφαρμογής"
     },
     "ui.modals.version_label": {
       "en": "Version:",
@@ -1186,8 +1196,8 @@
       "lt": "Versija:",
       "pt": "Versão:",
       "it": "Versione:",
-      "no": "Version:",
-      "el": "Version:"
+      "no": "Versjon:",
+      "el": "Έκδοση:"
     },
     "ui.modals.release_name": {
       "en": "Release Name:",
@@ -1197,8 +1207,8 @@
       "lt": "Leidimo Pavadinimas:",
       "pt": "Nome da Versão:",
       "it": "Nome della Versione:",
-      "no": "Release Name:",
-      "el": "Release Name:"
+      "no": "Utgivelsesnavn:",
+      "el": "Όνομα Έκδοσης:"
     },
     "ui.modals.release_date": {
       "en": "Release Date:",
@@ -1208,8 +1218,8 @@
       "lt": "Išleidimo Data:",
       "pt": "Data de Lançamento:",
       "it": "Data di Rilascio:",
-      "no": "Release Date:",
-      "el": "Release Date:"
+      "no": "Utgivelsesdato:",
+      "el": "Ημερομηνία Έκδοσης:"
     },
     "ui.modals.release_type": {
       "en": "Release Type:",
@@ -1219,8 +1229,8 @@
       "lt": "Leidimo Tipas:",
       "pt": "Tipo de Versão:",
       "it": "Tipo di Versione:",
-      "no": "Release Type:",
-      "el": "Release Type:"
+      "no": "Utgivelsestype:",
+      "el": "Τύπος Έκδοσης:"
     },
     "ui.modals.key_features": {
       "en": "Key Features",
@@ -1230,8 +1240,8 @@
       "lt": "Pagrindinės Funkcijos",
       "pt": "Funcionalidades Principais",
       "it": "Funzionalità Principali",
-      "no": "Key Features",
-      "el": "Key Features"
+      "no": "Hovedfunksjoner",
+      "el": "Βασικά Χαρακτηριστικά"
     },
     "ui.modals.technical_info": {
       "en": "Technical Information",
@@ -1241,8 +1251,8 @@
       "lt": "Techninė Informacija",
       "pt": "Informações Técnicas",
       "it": "Informazioni Tecniche",
-      "no": "Technical Information",
-      "el": "Technical Information"
+      "no": "Teknisk informasjon",
+      "el": "Τεχνικές Πληροφορίες"
     },
     "ui.modals.min_r_version": {
       "en": "Minimum R Version:",
@@ -1252,8 +1262,8 @@
       "lt": "Minimali R Versija:",
       "pt": "Versão Mínima de R:",
       "it": "Versione Minima di R:",
-      "no": "Minimum R Version:",
-      "el": "Minimum R Version:"
+      "no": "Minimum R-versjon:",
+      "el": "Ελάχιστη Έκδοση R:"
     },
     "ui.modals.current_r_version": {
       "en": "Current R Version:",
@@ -1263,8 +1273,8 @@
       "lt": "Dabartinė R Versija:",
       "pt": "Versão Atual de R:",
       "it": "Versione Attuale di R:",
-      "no": "Current R Version:",
-      "el": "Current R Version:"
+      "no": "Gjeldende R-versjon:",
+      "el": "Τρέχουσα Έκδοση R:"
     },
     "ui.modals.platform_label": {
       "en": "Platform:",
@@ -1274,8 +1284,8 @@
       "lt": "Platforma:",
       "pt": "Plataforma:",
       "it": "Piattaforma:",
-      "no": "Platform:",
-      "el": "Platform:"
+      "no": "Plattform:",
+      "el": "Πλατφόρμα:"
     },
     "ui.modals.git_branch": {
       "en": "Git Branch:",
@@ -1285,8 +1295,8 @@
       "lt": "Git Šaka:",
       "pt": "Branch Git:",
       "it": "Branch Git:",
-      "no": "Git Branch:",
-      "el": "Git Branch:"
+      "no": "Git-gren:",
+      "el": "Κλάδος Git:"
     },
     "ui.modals.contributors": {
       "en": "Contributors",
@@ -1296,8 +1306,8 @@
       "lt": "Bendraautoriai",
       "pt": "Colaboradores",
       "it": "Collaboratori",
-      "no": "Contributors",
-      "el": "Contributors"
+      "no": "Bidragsytere",
+      "el": "Συνεισφέροντες"
     },
     "ui.modals.documentation_label": {
       "en": "Documentation:",
@@ -1307,8 +1317,8 @@
       "lt": "Dokumentacija:",
       "pt": "Documentação:",
       "it": "Documentazione:",
-      "no": "Documentation:",
-      "el": "Documentation:"
+      "no": "Dokumentasjon:",
+      "el": "Τεκμηρίωση:"
     },
     "ui.modals.quick_guide": {
       "en": "Quick Guide",
@@ -1318,8 +1328,8 @@
       "lt": "Trumpas Vadovas",
       "pt": "Guia Rápido",
       "it": "Guida Rapida",
-      "no": "Quick Guide",
-      "el": "Quick Guide"
+      "no": "Hurtigguide",
+      "el": "Γρήγορος Οδηγός"
     },
     "ui.modals.manual_en_html": {
       "en": "Manual (EN HTML)",
@@ -1330,7 +1340,7 @@
       "pt": "Manual (EN HTML)",
       "it": "Manuale (EN HTML)",
       "no": "Manual (EN HTML)",
-      "el": "Manual (EN HTML)"
+      "el": "Εγχειρίδιο (EN HTML)"
     },
     "ui.modals.manual_en_pdf": {
       "en": "Manual (EN PDF)",
@@ -1341,7 +1351,7 @@
       "pt": "Manual (EN PDF)",
       "it": "Manuale (EN PDF)",
       "no": "Manual (EN PDF)",
-      "el": "Manual (EN PDF)"
+      "el": "Εγχειρίδιο (EN PDF)"
     },
     "ui.modals.manual_fr_html": {
       "en": "Manuel (FR HTML)",
@@ -1351,8 +1361,8 @@
       "lt": "Vadovas (FR HTML)",
       "pt": "Manual (FR HTML)",
       "it": "Manuale (FR HTML)",
-      "no": "Manuel (FR HTML)",
-      "el": "Manuel (FR HTML)"
+      "no": "Manual (FR HTML)",
+      "el": "Εγχειρίδιο (FR HTML)"
     },
     "ui.modals.manual_fr_pdf": {
       "en": "Manuel (FR PDF)",
@@ -1362,8 +1372,8 @@
       "lt": "Vadovas (FR PDF)",
       "pt": "Manual (FR PDF)",
       "it": "Manuale (FR PDF)",
-      "no": "Manuel (FR PDF)",
-      "el": "Manuel (FR PDF)"
+      "no": "Manual (FR PDF)",
+      "el": "Εγχειρίδιο (FR PDF)"
     },
     "ui.modals.manual_en_html_tooltip": {
       "en": "Comprehensive 75-page English manual - HTML version",
@@ -1373,8 +1383,8 @@
       "lt": "Išsamus 75 puslapių anglų kalbos vadovas - HTML versija",
       "pt": "Manual completo em inglês de 75 páginas - versão HTML",
       "it": "Manuale completo in inglese di 75 pagine - versione HTML",
-      "no": "Comprehensive 75-page English manual - HTML version",
-      "el": "Comprehensive 75-page English manual - HTML version"
+      "no": "Omfattende 75-siders engelsk manual - HTML-versjon",
+      "el": "Ολοκληρωμένο 75σέλιδο αγγλικό εγχειρίδιο - έκδοση HTML"
     },
     "ui.modals.manual_en_pdf_tooltip": {
       "en": "Comprehensive 75-page English manual - PDF version",
@@ -1384,8 +1394,8 @@
       "lt": "Išsamus 75 puslapių anglų kalbos vadovas - PDF versija",
       "pt": "Manual completo em inglês de 75 páginas - versão PDF",
       "it": "Manuale completo in inglese di 75 pagine - versione PDF",
-      "no": "Comprehensive 75-page English manual - PDF version",
-      "el": "Comprehensive 75-page English manual - PDF version"
+      "no": "Omfattende 75-siders engelsk manual - PDF-versjon",
+      "el": "Ολοκληρωμένο 75σέλιδο αγγλικό εγχειρίδιο - έκδοση PDF"
     },
     "ui.modals.manual_fr_html_tooltip": {
       "en": "Manuel français complet de 75 pages - version HTML",
@@ -1395,8 +1405,8 @@
       "lt": "Išsamus 75 puslapių prancūzų kalbos vadovas - HTML versija",
       "pt": "Manual completo em francês de 75 páginas - versão HTML",
       "it": "Manuale completo in francese di 75 pagine - versione HTML",
-      "no": "Manuel français complet de 75 pages - version HTML",
-      "el": "Manuel français complet de 75 pages - version HTML"
+      "no": "Omfattende 75-siders fransk manual - HTML-versjon",
+      "el": "Ολοκληρωμένο 75σέλιδο γαλλικό εγχειρίδιο - έκδοση HTML"
     },
     "ui.modals.manual_fr_pdf_tooltip": {
       "en": "Manuel français complet de 75 pages - version PDF",
@@ -1406,8 +1416,8 @@
       "lt": "Išsamus 75 puslapių prancūzų kalbos vadovas - PDF versija",
       "pt": "Manual completo em francês de 75 páginas - versão PDF",
       "it": "Manuale completo in francese di 75 pagine - versione PDF",
-      "no": "Manuel français complet de 75 pages - version PDF",
-      "el": "Manuel français complet de 75 pages - version PDF"
+      "no": "Omfattende 75-siders fransk manual - PDF-versjon",
+      "el": "Ολοκληρωμένο 75σέλιδο γαλλικό εγχειρίδιο - έκδοση PDF"
     },
     "ui.modals.changelog": {
       "en": "Changelog",
@@ -1417,8 +1427,8 @@
       "lt": "Pakeitimų Žurnalas",
       "pt": "Registro de Alterações",
       "it": "Registro delle Modifiche",
-      "no": "Changelog",
-      "el": "Changelog"
+      "no": "Endringslogg",
+      "el": "Αρχείο Αλλαγών"
     },
     "ui.modals.beginners_quick_start": {
       "en": "Beginner's Quick Start",
@@ -1428,32 +1438,96 @@
       "lt": "Pradedančiųjų Greitas Startas",
       "pt": "Início Rápido para Iniciantes",
       "it": "Avvio Rapido per Principianti",
-      "no": "Beginner's Quick Start",
-      "el": "Beginner's Quick Start"
+      "no": "Hurtigstart for nybegynnere",
+      "el": "Γρήγορη Εκκίνηση για Αρχάριους"
     },
     "ui.modals.save_project": {
-      "en": "Save Project"
+      "en": "Save Project",
+      "es": "Guardar Proyecto",
+      "fr": "Enregistrer le Projet",
+      "de": "Projekt Speichern",
+      "lt": "Išsaugoti Projektą",
+      "pt": "Salvar Projeto",
+      "it": "Salva Progetto",
+      "no": "Lagre prosjekt",
+      "el": "Αποθήκευση Έργου"
     },
     "ui.modals.project_name_label": {
-      "en": "Project Name:"
+      "en": "Project Name:",
+      "es": "Nombre del Proyecto:",
+      "fr": "Nom du Projet :",
+      "de": "Projektname:",
+      "lt": "Projekto Pavadinimas:",
+      "pt": "Nome do Projeto:",
+      "it": "Nome del Progetto:",
+      "no": "Prosjektnavn:",
+      "el": "Όνομα Έργου:"
     },
     "ui.modals.save": {
-      "en": "Save"
+      "en": "Save",
+      "es": "Guardar",
+      "fr": "Enregistrer",
+      "de": "Speichern",
+      "lt": "Išsaugoti",
+      "pt": "Salvar",
+      "it": "Salva",
+      "no": "Lagre",
+      "el": "Αποθήκευση"
     },
     "ui.modals.loading_files": {
-      "en": "Loading files..."
+      "en": "Loading files...",
+      "es": "Cargando archivos...",
+      "fr": "Chargement des fichiers...",
+      "de": "Dateien werden geladen...",
+      "lt": "Įkeliami failai...",
+      "pt": "Carregando arquivos...",
+      "it": "Caricamento file...",
+      "no": "Laster inn filer...",
+      "el": "Φόρτωση αρχείων..."
     },
     "ui.modals.load": {
-      "en": "Load"
+      "en": "Load",
+      "es": "Cargar",
+      "fr": "Charger",
+      "de": "Laden",
+      "lt": "Įkelti",
+      "pt": "Carregar",
+      "it": "Carica",
+      "no": "Last inn",
+      "el": "Φόρτωση"
     },
     "ui.modals.no_local_folder_connected": {
-      "en": "No local folder connected. Please go to Settings to connect a local folder first."
+      "en": "No local folder connected. Please go to Settings to connect a local folder first.",
+      "es": "No hay carpeta local conectada. Ve a Configuración para conectar una carpeta local primero.",
+      "fr": "Aucun dossier local connecté. Allez dans les Paramètres pour connecter un dossier local d'abord.",
+      "de": "Kein lokaler Ordner verbunden. Gehen Sie zu Einstellungen, um zuerst einen lokalen Ordner zu verbinden.",
+      "lt": "Neprijungtas vietinis aplankas. Pirmiausia eikite į Nustatymus, kad prijungtumėte vietinį aplanką.",
+      "pt": "Nenhuma pasta local conectada. Vá para Configurações para conectar uma pasta local primeiro.",
+      "it": "Nessuna cartella locale connessa. Vai nelle Impostazioni per connettere prima una cartella locale.",
+      "no": "Ingen lokal mappe tilkoblet. Gå til Innstillinger for å koble til en lokal mappe først.",
+      "el": "Δεν έχει συνδεθεί τοπικός φάκελος. Μεταβείτε στις Ρυθμίσεις για να συνδέσετε έναν τοπικό φάκελο πρώτα."
     },
     "ui.modals.no_saved_projects_in_folder": {
-      "en": "No saved projects found in the local folder."
+      "en": "No saved projects found in the local folder.",
+      "es": "No se encontraron proyectos guardados en la carpeta local.",
+      "fr": "Aucun projet enregistré trouvé dans le dossier local.",
+      "de": "Keine gespeicherten Projekte im lokalen Ordner gefunden.",
+      "lt": "Vietiniame aplanke nerasta išsaugotų projektų.",
+      "pt": "Nenhum projeto salvo encontrado na pasta local.",
+      "it": "Nessun progetto salvato trovato nella cartella locale.",
+      "no": "Ingen lagrede prosjekter funnet i den lokale mappen.",
+      "el": "Δεν βρέθηκαν αποθηκευμένα έργα στον τοπικό φάκελο."
     },
     "ui.modals.error_listing_files": {
-      "en": "Error listing files: "
+      "en": "Error listing files: ",
+      "es": "Error al listar archivos: ",
+      "fr": "Erreur lors de la liste des fichiers : ",
+      "de": "Fehler beim Auflisten der Dateien: ",
+      "lt": "Klaida sąrašuojant failus: ",
+      "pt": "Erro ao listar arquivos: ",
+      "it": "Errore nell'elencare i file: ",
+      "no": "Feil ved listing av filer: ",
+      "el": "Σφάλμα κατά την εμφάνιση αρχείων: "
     },
     "ui.modals.bookmark_created": {
       "en": "Bookmark Created",

@@ -29,6 +29,7 @@
 #' @export
 entry_point_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     # Custom CSS
@@ -310,7 +311,7 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
 
       }, error = function(e) {
         showNotification(
-          paste(i18n$t("modules.entry_point.error_generating_pathway_report"), e$message),
+          format_user_error(e, i18n = i18n, context = "generating pathway report"),
           type = "error",
           duration = 5
         )
@@ -426,7 +427,7 @@ render_welcome_screen <- function(ns, i18n) {
           ),
           bs4AccordionItem(
             title = i18n$t("modules.entry_point.faq_expertise_question"),
-            status = "warning",
+            status = "secondary",
             collapsed = TRUE,
             p(i18n$t("modules.entry_point.faq_expertise_answer")),
             tags$ul(

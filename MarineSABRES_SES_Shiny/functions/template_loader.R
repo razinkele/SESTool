@@ -46,8 +46,8 @@ json_elements_to_df <- function(elements, element_type) {
       Description = character(0),
       Stakeholder = character(0),
       Importance = character(0),
-      Trend = character(0),
-      stringsAsFactors = FALSE
+      Trend = character(0)
+      
     ))
   }
 
@@ -70,8 +70,8 @@ json_elements_to_df <- function(elements, element_type) {
     Description = sapply(elements, function(x) if (!is.null(x$description)) x$description else ""),
     Stakeholder = sapply(elements, function(x) if (!is.null(x$stakeholder)) x$stakeholder else ""),
     Importance = "",
-    Trend = "",
-    stringsAsFactors = FALSE
+    Trend = ""
+    
   )
 
   return(df)

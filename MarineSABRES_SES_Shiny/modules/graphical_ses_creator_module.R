@@ -12,6 +12,7 @@
 #' @export
 graphical_ses_creator_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     # Custom CSS
@@ -265,6 +266,21 @@ graphical_ses_creator_ui <- function(id, i18n) {
           color: #555;
         }
 
+        .ghost-suggestion .suggestion-feedback {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 4px;
+        }
+
+        .ml-feedback-btn:hover {
+          opacity: 0.8;
+        }
+
+        .ml-feedback-btn.voted {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+
         .action-bar {
           padding: 15px 20px;
           background: white;
@@ -312,7 +328,8 @@ graphical_ses_creator_ui <- function(id, i18n) {
         div(class = "panel-header",
           h4(icon("compass"), " ", i18n$t("modules.graphical_ses_creator.context_wizard")),
           actionButton(ns("toggle_context"), label = "", icon = icon("chevron-left"),
-                      class = "btn-sm", style = "border: none; background: none;")
+                      class = "btn-sm", style = "border: none; background: none;",
+                      `aria-label` = i18n$t("modules.graphical_ses_creator.toggle_context_panel"))
         ),
 
         # Wizard content
@@ -337,13 +354,17 @@ graphical_ses_creator_ui <- function(id, i18n) {
               )
             },
             actionButton(ns("zoom_fit"), label = "", icon = icon("expand"), title = i18n$t("modules.graphical_ses_creator.fit_to_view"),
-                        class = "btn-sm btn-default"),
+                        class = "btn-sm btn-default",
+                        `aria-label` = i18n$t("modules.graphical_ses_creator.fit_to_view")),
             actionButton(ns("undo"), label = "", icon = icon("undo"), title = i18n$t("modules.graphical_ses_creator.undo"),
-                        class = "btn-sm btn-default"),
+                        class = "btn-sm btn-default",
+                        `aria-label` = i18n$t("modules.graphical_ses_creator.undo")),
             actionButton(ns("clear_ghosts"), label = "", icon = icon("ghost"), title = i18n$t("modules.graphical_ses_creator.clear_suggestions"),
-                        class = "btn-sm btn-warning"),
+                        class = "btn-sm btn-warning",
+                        `aria-label` = i18n$t("modules.graphical_ses_creator.clear_suggestions")),
             actionButton(ns("save_network"), label = "", icon = icon("save"), title = i18n$t("modules.graphical_ses_creator.save"),
-                        class = "btn-sm btn-primary")
+                        class = "btn-sm btn-primary",
+                        `aria-label` = i18n$t("modules.graphical_ses_creator.save"))
           )
         ),
 
@@ -459,7 +480,10 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
 
       # Metadata
       network_created_at = NULL,
-      last_modified = Sys.time()
+      last_modified = Sys.time(),
+
+      # ML feedback tracking
+      ml_feedback_count = 0
     )
 
     # =========================================================================
@@ -648,7 +672,8 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
                     else "#F44336",
                     "; color: white; padding: 2px 6px; border-radius: 3px; margin-left: 5px;"
                   ),
-                    round(rv$classification_result$primary$confidence * 100), "%")
+                    round(rv$classification_result$primary$confidence * 100), "%"),
+                  ses_ml_feedback_buttons(ns, prediction_id = "classification_primary", i18n = i18n)
                 ),
                 div(class = "reasoning",
                   rv$classification_result$primary$reasoning)
@@ -841,8 +866,8 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
         is_ghost = FALSE,
         title = paste0("<b>", htmltools::htmlEscape(rv$classification_result$element_name), "</b><br>", i18n$t("modules.graphical_ses_creator.node_tooltip_type"), " ", htmltools::htmlEscape(rv$selected_classification_type)),
         hidden = FALSE,
-        physics = TRUE,
-        stringsAsFactors = FALSE
+        physics = TRUE
+        
       )
 
       rv$network_nodes <- rbind(rv$network_nodes, first_node)
@@ -1029,6 +1054,98 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
     }
 
     # =========================================================================
+    # ML PREDICTION FEEDBACK HANDLER
+    # =========================================================================
+
+    observeEvent(input$ml_feedback, {
+      feedback <- input$ml_feedback
+      req(feedback, feedback$id, feedback$vote)
+
+      prediction_id <- feedback$id
+      vote <- feedback$vote  # "up" or "down"
+      user_action <- if (vote == "up") "accepted" else "rejected"
+
+      # Determine if this is a classification or connection feedback
+      if (grepl("^classification_", prediction_id)) {
+        # Classification feedback
+        if (!is.null(rv$classification_result) && exists("log_classification_feedback")) {
+          tryCatch({
+            log_classification_feedback(
+              element_name = rv$classification_result$element_name %||% "unknown",
+              ml_prediction = rv$classification_result,
+              user_action = user_action,
+              user_selected_type = rv$selected_classification_type %||%
+                rv$classification_result$primary$type,
+              context = rv$context,
+              session_id = session$token
+            )
+          }, error = function(e) {
+            debug_log(paste("Classification feedback logging failed:", e$message), "GRAPHICAL SES")
+          })
+        }
+      } else {
+        # Connection/ghost node feedback
+        ghost_node <- rv$ghost_nodes[rv$ghost_nodes$id == prediction_id, ]
+        if (nrow(ghost_node) > 0 && exists("log_connection_feedback")) {
+          # Find the source node from ghost edges
+          ghost_edge <- rv$ghost_edges[rv$ghost_edges$to == prediction_id, ]
+          source_node <- if (nrow(ghost_edge) > 0) {
+            rv$network_nodes[rv$network_nodes$id == ghost_edge$from[1], ]
+          } else {
+            data.frame()
+          }
+
+          if (nrow(source_node) > 0) {
+            ml_prediction <- list(
+              existence_probability = ghost_node$ml_score %||% 0.5,
+              strength = ghost_edge$strength %||% "medium",
+              confidence = ghost_edge$confidence %||% 3,
+              polarity = ghost_edge$polarity %||% "+"
+            )
+
+            tryCatch({
+              log_connection_feedback(
+                source_element = list(name = source_node$name, type = source_node$type),
+                target_element = list(name = ghost_node$name, type = ghost_node$type),
+                ml_prediction = ml_prediction,
+                user_action = user_action,
+                context = rv$context,
+                session_id = session$token
+              )
+            }, error = function(e) {
+              debug_log(paste("Connection feedback logging failed:", e$message), "GRAPHICAL SES")
+            })
+          }
+        }
+      }
+
+      # Increment feedback counter
+      rv$ml_feedback_count <- rv$ml_feedback_count + 1
+
+      # Show brief thank-you notification
+      showNotification(
+        i18n$t("modules.graphical_ses_creator.feedback_thanks"),
+        type = "message",
+        duration = 2
+      )
+
+      # Check if active learning threshold is reached (every 10 feedbacks)
+      if (rv$ml_feedback_count %% 10 == 0 && exists("auto_retrain_check")) {
+        tryCatch({
+          trigger_info <- auto_retrain_check(threshold = 50, auto_start = FALSE)
+          if (trigger_info$should_retrain) {
+            debug_log(trigger_info$message, "GRAPHICAL SES")
+          }
+        }, error = function(e) {
+          debug_log(paste("Retrain check failed:", e$message), "GRAPHICAL SES")
+        })
+      }
+
+      debug_log(paste("ML feedback recorded:", vote, "for", prediction_id,
+                       "(total:", rv$ml_feedback_count, ")"), "GRAPHICAL SES")
+    })
+
+    # =========================================================================
     # DETAILS PANEL RENDERING
     # =========================================================================
 
@@ -1080,12 +1197,17 @@ graphical_ses_creator_server <- function(id, project_data_reactive,
                 lapply(1:nrow(rv$ghost_nodes), function(i) {
                   ghost <- rv$ghost_nodes[i, ]
                   div(class = "ghost-suggestion",
-                    onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'});",
-                                     ns("node_clicked"), ghost$id),
-                    div(class = "suggestion-name", ghost$name),
-                    div(class = "suggestion-type", icon("tag"), " ", ghost$type),
-                    div(class = "suggestion-connection",
-                      icon("arrow-right"), " ", i18n$t("modules.graphical_ses_creator.click_to_add"))
+                    div(
+                      onclick = sprintf("Shiny.setInputValue('%s', '%s', {priority: 'event'});",
+                                       ns("node_clicked"), ghost$id),
+                      div(class = "suggestion-name", ghost$name),
+                      div(class = "suggestion-type", icon("tag"), " ", ghost$type),
+                      div(class = "suggestion-connection",
+                        icon("arrow-right"), " ", i18n$t("modules.graphical_ses_creator.click_to_add"))
+                    ),
+                    div(class = "suggestion-feedback",
+                      ses_ml_feedback_buttons(ns, prediction_id = ghost$id, i18n = i18n)
+                    )
                   )
                 })
               )

@@ -17,6 +17,7 @@
 
 analysis_boolean_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     # Reactive module header
@@ -34,7 +35,7 @@ analysis_boolean_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-analysis_boolean_server <- function(id, project_data_reactive, i18n) {
+analysis_boolean_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -47,6 +48,20 @@ analysis_boolean_server <- function(id, project_data_reactive, i18n) {
       analysis_complete = FALSE,
       error_message = NULL
     )
+
+    # Listen for ISA changes via event bus to flag stale results
+    observe({
+      req(!is.null(event_bus))
+      event_bus$on_isa_change()
+      if (isolate(rv$analysis_complete)) {
+        showNotification(
+          i18n$t("modules.analysis.common.data_changed_rerun"),
+          type = "warning",
+          duration = 5,
+          id = ns("stale_data")
+        )
+      }
+    })
 
     # ── Standard header + help ───────────────────────────────────────────
     create_reactive_header(
@@ -340,8 +355,8 @@ analysis_boolean_server <- function(id, project_data_reactive, i18n) {
 
       df <- data.frame(
         node = names(eigs),
-        eigenvalue = as.numeric(eigs),
-        stringsAsFactors = FALSE
+        eigenvalue = as.numeric(eigs)
+        
       )
       df <- df[order(df$eigenvalue), ]
       df$node <- factor(df$node, levels = df$node)
@@ -398,8 +413,8 @@ analysis_boolean_server <- function(id, project_data_reactive, i18n) {
       eigs <- rv$laplacian_results$eigenvalues
       df <- data.frame(
         Node = names(eigs),
-        Eigenvalue = round(as.numeric(eigs), 6),
-        stringsAsFactors = FALSE
+        Eigenvalue = round(as.numeric(eigs), 6)
+        
       )
       DT::datatable(df, options = list(pageLength = 15, scrollX = TRUE),
                     rownames = FALSE)
@@ -475,8 +490,8 @@ analysis_boolean_server <- function(id, project_data_reactive, i18n) {
       basins <- rv$boolean_results$basins
       df <- data.frame(
         attractor = paste("Attractor", seq_along(basins)),
-        basin_size = basins,
-        stringsAsFactors = FALSE
+        basin_size = basins
+        
       )
 
       plotly::plot_ly(df, labels = ~attractor, values = ~basin_size,
@@ -596,8 +611,8 @@ analysis_boolean_server <- function(id, project_data_reactive, i18n) {
         if (!is.null(rv$laplacian_results)) {
           eigs <- rv$laplacian_results$eigenvalues
           sheets$laplacian <- data.frame(
-            Node = names(eigs), Eigenvalue = as.numeric(eigs),
-            stringsAsFactors = FALSE
+            Node = names(eigs), Eigenvalue = as.numeric(eigs)
+            
           )
         }
         if (!is.null(rv$boolean_rules)) {

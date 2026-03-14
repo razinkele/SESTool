@@ -96,7 +96,7 @@ setup_export_handlers <- function(input, output, session, project_data, i18n) {
             writeData(wb, name, item)
           } else if(is.list(item) && !is.data.frame(item)) {
             # Convert list to data frame
-            df <- as.data.frame(t(unlist(item)), stringsAsFactors = FALSE)
+            df <- as.data.frame(t(unlist(item)))
             addWorksheet(wb, name)
             writeData(wb, name, df)
           }
@@ -158,8 +158,8 @@ setup_export_handlers <- function(input, output, session, project_data, i18n) {
         nodes <- data$data$cld$nodes
         edges <- data$data$cld$edges
         if (is.null(edges) || !is.data.frame(edges) || nrow(edges) == 0) {
-          edges <- data.frame(from = character(0), to = character(0),
-                              stringsAsFactors = FALSE)
+          edges <- data.frame(from = character(0), to = character(0)
+                              )
         }
 
       format <- input$export_viz_format

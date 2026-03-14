@@ -3,6 +3,8 @@
 # ==============================================================================
 
 library(testthat)
+
+skip_if_not_installed("torch")
 library(torch)
 
 # Load module

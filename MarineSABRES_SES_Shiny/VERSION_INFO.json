@@ -1,150 +1,123 @@
 {
-  "version": "1.6.1",
-  "version_name": "Stability and Consistency Improvements",
-  "release_date": "2026-01-06",
-  "release_type": "patch",
+  "version": "1.7.0",
+  "version_name": "Security, DTU Dynamics & Accessibility",
+  "release_date": "2026-03-14",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.6.1",
+  "documentation_version": "1.7.0",
   "api_version": "1.0",
   "database_version": "1.0",
   "breaking_changes": false,
-  "security_updates": false,
+  "security_updates": true,
   "features": [
-    "✅ CRITICAL FIX - Removed duplicate sanitize_filename() function (global.R)",
-    "✅ CRITICAL FIX - Fixed reactive value initialization order (app.R:387-459)",
-    "✅ CRITICAL FIX - Consolidated duplicate constants into constants.R",
-    "✅ CONSISTENCY - Standardized all source() calls with explicit local parameter",
-    "✅ CONSISTENCY - Documented bs4Dash naming convention rationale",
-    "✅ CONSISTENCY - Completed i18n coverage (6 new dashboard translation keys)",
-    "✅ CONSISTENCY - Added missing i18n key for connection approval",
-    "✅ CONSISTENCY - Documented error handling patterns in error_handling.R",
-    "✅ CONSISTENCY - Standardized debug logging (replaced cat() with debug_log())",
-    "✅ CONSISTENCY - Applied UI dimension constants throughout dashboard",
-    "✅ CODE QUALITY - Eliminated duplicate function definitions",
-    "✅ CODE QUALITY - Prevented race condition in reactive initialization",
-    "✅ CODE QUALITY - Centralized constants management",
-    "✅ TESTING - All 3,729 tests passing after refactoring",
-    "✅ TESTING - Comprehensive test failure analysis completed",
-    "✅ TESTING - Zero regressions introduced",
-    "✅ DEPLOYMENT - All deployment scripts verified compatible",
-    "✅ DEPLOYMENT - Translation cache clearing mechanism confirmed",
-    "✅ DEPLOYMENT - Docker and Shiny Server configurations validated",
-    "📚 DOCUMENTATION - Created DEPLOYMENT_REVIEW_POST_REFACTORING.md",
-    "📚 DOCUMENTATION - Created TEST_FAILURE_DEEP_ANALYSIS.md"
+    "🔒 Security hardening: XSS protection, JSON validation, ML model verification, eval() guards",
+    "🧮 DTU Dynamics Engine: Laplacian stability, Boolean networks, simulation, Monte Carlo, intervention analysis",
+    "🤖 ML Phase 2 pipeline: 3-stage fallback (ensemble → v2 → v1 → rules) with graph features",
+    "♿ WCAG 2.1 AA accessibility: ARIA landmarks, keyboard navigation, focus traps, screen reader support",
+    "🌍 9 languages: Norwegian and Greek translations substantially completed (~2500+ entries)",
+    "📦 Module decomposition: AI assistant (-42%), CLD visualization (-23%), ISA entry (-25%)",
+    "🔗 Unified event bus: ISA → CLD → Analysis auto-propagation re-enabled",
+    "🧪 Comprehensive testing: 1,300+ tests, visual regression, load testing infrastructure",
+    "📐 Shared UI component library with 8 reusable builders",
+    "📊 Analysis modules now show stale-data warnings when ISA data changes",
+    "👍 ML prediction feedback UI (thumbs up/down) for active learning",
+    "🏗️ Architecture Decision Records (10 ADRs documented)",
+    "📋 Standardized error messages with format_user_error() across all modules",
+    "📄 DESCRIPTION file with all 35 dependencies formally declared",
+    "🧹 631 deprecated stringsAsFactors calls removed, trailing commas fixed",
+    "📝 Roxygen2 documentation for 14 previously undocumented functions"
   ],
   "fixes": {
     "critical": [
       {
-        "issue": "Duplicate sanitize_filename() function",
-        "file": "global.R",
-        "lines": "416-464, 1305-1328",
-        "impact": "Second definition overwrote first, losing max_length parameter",
-        "resolution": "Removed duplicate at lines 1305-1328, preserved proper implementation"
+        "issue": "HTML injection / XSS vulnerabilities",
+        "files": "10+ files (project_io, CLD viz, modals, modules)",
+        "impact": "User-supplied data rendered as raw HTML",
+        "resolution": "Added htmlEscape() in R and escHtml() in JS for all dynamic content"
       },
       {
-        "issue": "Reactive initialization race condition",
-        "file": "app.R",
-        "lines": "387-459",
-        "impact": "project_data reactive used in observe() before initialization",
-        "resolution": "Moved all reactive value declarations before observe() blocks"
+        "issue": "Event bus metadata not session-scoped",
+        "file": "server/event_bus_setup.R",
+        "impact": "Race conditions in multi-user deployments",
+        "resolution": "Moved metadata to per-session reactiveVals"
       },
       {
-        "issue": "Duplicate constant definitions",
-        "files": ["global.R", "constants.R"],
-        "impact": "DAPSIWRM_ELEMENTS, ELEMENT_COLORS defined in multiple places",
-        "resolution": "Consolidated all constants into constants.R, removed duplicates"
+        "issue": "Dual event bus implementations",
+        "files": "server/event_bus_setup.R, functions/reactive_pipeline.R",
+        "impact": "ISA → CLD auto-propagation was completely disabled",
+        "resolution": "Unified to single event bus API, re-enabled reactive pipeline"
       },
       {
-        "issue": "Inconsistent debug logging",
-        "file": "server/modals.R",
-        "impact": "6 settings messages used cat() instead of debug_log()",
-        "resolution": "Replaced all cat() calls with debug_log() for consistency"
+        "issue": "CLD showing 0 edges despite connections defined",
+        "file": "functions/visnetwork_helpers.R",
+        "impact": "Adjacency matrix naming mismatch between ISA entry and CLD generator",
+        "resolution": "Added get_matrix() helper checking both naming conventions"
+      },
+      {
+        "issue": "ml_explainability.R syntax error",
+        "file": "functions/ml_explainability.R",
+        "impact": "ML enhancement failed to load",
+        "resolution": "Fixed invalid list key syntax (c('D','A') = ... → 'D->A' = ...)"
       }
     ],
-    "consistency": [
+    "improvements": [
       {
-        "issue": "Inconsistent source() usage",
-        "files": ["global.R", "app.R"],
-        "count": "40+ source() calls",
-        "resolution": "Standardized all with explicit local parameter"
+        "issue": "Unconnected elements not warned about",
+        "file": "modules/ai_isa_assistant_module.R",
+        "resolution": "Added warning showing which elements lack connections before finishing"
       },
       {
-        "issue": "Missing i18n translations",
-        "file": "app.R",
-        "count": "6 hard-coded UI strings",
-        "resolution": "Added 6 new translation keys to translations/ui/dashboard.json"
+        "issue": "FAQ accordion 4th item text unreadable",
+        "file": "modules/entry_point_module.R",
+        "resolution": "Changed status from 'warning' (yellow) to 'secondary' (gray) for contrast"
       },
       {
-        "issue": "Missing i18n key",
-        "file": "connection review module",
-        "key": "common.misc.approve_this_connection_with_current_slider_values",
-        "resolution": "Added complete translation entry with all 8 languages"
-      },
-      {
-        "issue": "Undocumented error handling patterns",
-        "file": "functions/error_handling.R",
-        "resolution": "Added comprehensive pattern documentation"
-      },
-      {
-        "issue": "Mixed UI dimension values",
-        "file": "app.R",
-        "count": "Multiple hard-coded widths",
-        "resolution": "Applied UI_BOX_WIDTH_* constants consistently"
+        "issue": "Missing 'Got it' button translation",
+        "file": "translations/common/buttons.json",
+        "resolution": "Added common.buttons.got_it key in all 9 languages"
       }
     ]
   },
-  "constants_added": [
-    "DAPSIWRM_ELEMENTS (7 element types)",
-    "ELEMENT_COLORS (8 Kumu-style colors)",
-    "ELEMENT_SHAPES (7 visNetwork shapes)",
-    "EDGE_COLORS (reinforcing/opposing)",
-    "DA_SITES (3 demonstration areas)",
-    "STAKEHOLDER_TYPES (6 types from Newton & Elliott, 2016)",
-    "UI_BOX_WIDTH_QUARTER, UI_BOX_WIDTH_HALF, UI_BOX_WIDTH_FULL"
-  ],
-  "translations_added": [
-    "ui.dashboard.project_overview (8 languages)",
-    "ui.dashboard.status_summary (8 languages)",
-    "ui.dashboard.network_status (8 languages)",
-    "ui.dashboard.project_history (8 languages)",
-    "ui.dashboard.isa_data_status (8 languages)",
-    "ui.dashboard.analysis_status (8 languages)",
-    "common.misc.approve_this_connection_with_current_slider_values (8 languages)"
-  ],
   "metrics": {
-    "files_modified": 7,
-    "critical_issues_fixed": 4,
-    "consistency_issues_fixed": 7,
-    "translation_keys_added": 7,
-    "tests_passing": 3729,
-    "tests_failing_pre_existing": 8,
-    "source_calls_standardized": 40,
-    "debug_log_replacements": 6,
-    "constants_consolidated": 6
+    "files_modified": 123,
+    "lines_added": 8677,
+    "lines_removed": 8965,
+    "tests_total": 1300,
+    "test_files": 51,
+    "test_lines": 22551,
+    "languages_supported": 9,
+    "translation_keys": 3663,
+    "modules_total": 44,
+    "functions_total": 200,
+    "ml_feature_dimensions_v1": 358,
+    "ml_feature_dimensions_v2": 314,
+    "dtu_dynamics_functions": 11
   },
   "migration_notes": [
-    "No breaking changes - all changes are internal refactoring",
-    "No user-facing changes - functionality preserved exactly",
-    "No configuration changes required",
-    "Existing project files load without modification",
-    "Translation cache will be cleared on deployment (automatic)"
+    "No breaking changes - all changes are backward-compatible",
+    "Event bus API unified: modules should use emit_isa_change()/on_isa_change()",
+    "format_user_error() is now the standard for user-facing error notifications",
+    "All modules now have event_bus = NULL parameter (optional, backward-compatible)",
+    "shiny.i18n::usei18n(i18n) added to all module UI functions",
+    "stringsAsFactors = FALSE removed (R >= 4.4.1 default)"
   ],
   "developer_notes": [
+    "Use format_user_error(e, i18n, context) for user-facing errors, not paste('Error:', e$message)",
     "Use debug_log(message, category) instead of cat() for all debug output",
-    "Always specify local parameter in source() calls for clarity",
-    "Add magic numbers to constants.R with descriptive names",
-    "Use i18n$t() for all user-facing strings",
-    "Follow error handling patterns documented in functions/error_handling.R",
-    "Reactive values must be initialized before any observe() blocks"
+    "All analysis modules should subscribe to event_bus$on_isa_change() for stale-data warnings",
+    "See docs/ARCHITECTURE.md for 10 architecture decision records",
+    "ML inference uses 3-stage fallback: ensemble → v2 → v1 → rules",
+    "DTU dynamics functions are in functions/ses_dynamics.R (11 public functions)",
+    "UI components library in functions/ui_components.R (8 reusable builders)"
   ],
   "deployment_notes": [
-    "All deployment scripts verified compatible with refactored code",
-    "Pre-deployment checks will validate all changes",
-    "Translation cache clearing ensures new keys are loaded",
-    "Full server restart ensures reactive initialization fix takes effect",
-    "See DEPLOYMENT_REVIEW_POST_REFACTORING.md for full details"
+    "Set MARINESABRES_VERIFY_MODELS=TRUE in production for ML model checksum verification",
+    "Run scripts/generate_model_checksums.R after updating trained models",
+    "Translation cache (_merged_translations.json) will regenerate on first startup",
+    "Full server restart recommended to pick up event bus unification",
+    "renv::init() recommended for reproducible package management"
   ],
-  "previous_version": "1.6.0"
+  "previous_version": "1.6.1"
 }

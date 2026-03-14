@@ -282,10 +282,9 @@ create_comprehensive_marine_ses <- function() {
       rep("Activities", 4),
       rep("Ecosystem Services", 4),
       rep("Societal Goods and Services", 4)
-    ),
-    stringsAsFactors = FALSE
+    )
   )
-  
+
   # Create the graph
   g <- make_empty_graph(n = nrow(node_data), directed = TRUE)
   

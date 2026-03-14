@@ -187,6 +187,7 @@ categorize_connection <- function(conn, batches) {
 
 connection_review_tabbed_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
   debug_log(sprintf("UI function called with id: %s", id), "CONN-REVIEW-TABBED")
 
   tagList(
@@ -355,8 +356,53 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       swapped = c(),   # Vector of connection indices with swapped direction
       amended_data = list(),  # Store amended connection data
       batches_info = list(),  # Store batch categorization info
-      active_tab = NULL  # Track the currently active tab to prevent unwanted navigation
+      active_tab = NULL,  # Track the currently active tab to prevent unwanted navigation
+      scroll_to = NULL  # Target connection card ID to scroll to after re-render
     )
+
+    # Observer: scroll to target card AFTER UI has re-rendered
+    # If target card doesn't exist (last in batch), scroll to next-category button
+    observe({
+      req(rv$scroll_to)
+      target_id <- rv$scroll_to
+      # Invalidate immediately so this only fires once
+      isolate(rv$scroll_to <- NULL)
+
+      # Find fallback: if target card doesn't exist, find the next-category button
+      # Extract the connection index from the target ID (format: ns-conn_card_N)
+      # and find which batch it belongs to
+      fallback_id <- NULL
+      tryCatch({
+        bc <- batched_connections()
+        if (!is.null(bc$batches)) {
+          for (batch in bc$batches) {
+            if (length(batch$indices) > 0) {
+              last_idx <- max(batch$indices)
+              # If we're trying to scroll past the last card in this batch
+              # (i.e., target is conn_card_{last_idx+1} which doesn't exist),
+              # scroll to the next-category button instead
+              expected_next <- ns(paste0("conn_card_", last_idx + 1))
+              if (target_id == expected_next) {
+                fallback_id <- ns(paste0("next_category_btn_", batch$info$id))
+                break
+              }
+            }
+          }
+        }
+      }, error = function(e) NULL)
+
+      # Use shiny flush cycle + delay to ensure DOM is updated
+      shinyjs::runjs(sprintf(
+        "setTimeout(function() {
+          var el = document.getElementById('%s');
+          if (!el && '%s') { el = document.getElementById('%s'); }
+          if (el) { el.scrollIntoView({behavior: 'smooth', block: 'nearest'}); }
+        }, 250);",
+        target_id,
+        fallback_id %||% "",
+        fallback_id %||% target_id
+      ))
+    })
 
     # Categorize connections into batches
     batched_connections <- reactive({
@@ -840,9 +886,6 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
           # Approve button - reads current slider values and applies them
           observeEvent(input[[paste0("approve_", local_idx)]], {
-            # SCROLL FIX: Save scroll position before updating state
-            shinyjs::runjs("window._connScrollTop = document.querySelector('.conn-batch-content')?.scrollTop || 0;")
-
             # Read current slider values
             strength_value <- input[[paste0("strength_", local_idx)]]
             conf_value <- input[[paste0("confidence_", local_idx)]]
@@ -876,15 +919,12 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               on_approve(local_idx, conn)
             }
 
-            # SCROLL FIX: Restore scroll position after state update
-            shinyjs::runjs("setTimeout(function() { var el = document.querySelector('.conn-batch-content'); if (el) el.scrollTop = window._connScrollTop || 0; }, 50);")
+            # Schedule scroll to next card (fires after re-render via observer)
+            rv$scroll_to <- ns(paste0("conn_card_", local_idx + 1))
           })
 
           # Reject button
           observeEvent(input[[paste0("reject_", local_idx)]], {
-            # SCROLL FIX: Save scroll position before updating state
-            shinyjs::runjs("window._connScrollTop = document.querySelector('.conn-batch-content')?.scrollTop || 0;")
-
             rv$rejected <- union(rv$rejected, local_idx)
             rv$approved <- setdiff(rv$approved, local_idx)
 
@@ -892,15 +932,12 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               on_reject(local_idx, conn)
             }
 
-            # SCROLL FIX: Restore scroll position after state update
-            shinyjs::runjs("setTimeout(function() { var el = document.querySelector('.conn-batch-content'); if (el) el.scrollTop = window._connScrollTop || 0; }, 50);")
+            # Schedule scroll to next card (fires after re-render via observer)
+            rv$scroll_to <- ns(paste0("conn_card_", local_idx + 1))
           })
 
           # Swap direction button - toggle the from/to direction
           observeEvent(input[[paste0("swap_direction_", local_idx)]], {
-            # SCROLL FIX: Save scroll position before updating state
-            shinyjs::runjs("window._connScrollTop = document.querySelector('.conn-batch-content')?.scrollTop || 0;")
-
             # Toggle swapped state for this connection
             if (local_idx %in% rv$swapped) {
               rv$swapped <- setdiff(rv$swapped, local_idx)
@@ -908,15 +945,14 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               rv$swapped <- union(rv$swapped, local_idx)
             }
 
-            # Show notification
             showNotification(
               i18n$t("common.misc.connection_direction_swapped"),
               type = "message",
               duration = 2
             )
 
-            # SCROLL FIX: Restore scroll position after state update
-            shinyjs::runjs("setTimeout(function() { var el = document.querySelector('.conn-batch-content'); if (el) el.scrollTop = window._connScrollTop || 0; }, 50);")
+            # Stay on the same card after swap (fires after re-render)
+            rv$scroll_to <- ns(paste0("conn_card_", local_idx))
           })
         })
       })
@@ -961,7 +997,7 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
   # Polarity switch initial value
   polarity_initial <- isTRUE(current_polarity == "+")
 
-  div(class = status_class,
+  div(class = status_class, id = ns(paste0("conn_card_", conn_idx)),
     # Connection header with polarity display and switch
     div(class = "conn-header-tabbed", style = "display: flex; justify-content: space-between; align-items: center;",
       div(style = "flex: 1; display: flex; align-items: center; flex-wrap: wrap; gap: 5px;",

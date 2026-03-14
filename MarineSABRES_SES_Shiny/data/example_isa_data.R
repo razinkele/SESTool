@@ -19,8 +19,7 @@ example_isa_data <- list(
     time_horizon_end = as.Date(c("2023-12-31", "2023-12-31", "2023-12-31")),
     baseline_value = c(10000, 50000, 2.5),
     current_value = c(8500, 75000, 1.8),
-    notes = c("Declining trend", "Increasing trend", "Improved protection"),
-    stringsAsFactors = FALSE
+    notes = c("Declining trend", "Increasing trend", "Improved protection")
   ),
   
   # Ecosystem Services
@@ -37,8 +36,7 @@ example_isa_data <- list(
     time_horizon_end = as.Date(c("2023-12-31", "2023-12-31", "2023-12-31", "2023-12-31")),
     baseline_value = c(50000, 75, 40, 120),
     current_value = c(42000, 82, 55, 110),
-    notes = c("Declining stocks", "Improving", "Enhanced by seagrass", "Stable"),
-    stringsAsFactors = FALSE
+    notes = c("Declining stocks", "Improving", "Enhanced by seagrass", "Stable")
   ),
   
   # Marine Processes & Functioning
@@ -55,8 +53,7 @@ example_isa_data <- list(
     time_horizon_end = as.Date(c("2023-12-31", "2023-12-31", "2023-12-31", "2023-12-31")),
     baseline_value = c(500, 15, 2.8, 5),
     current_value = c(450, 12, 3.1, 3),
-    notes = c("Declining coverage", "Improving", "Increasing", "Stabilizing"),
-    stringsAsFactors = FALSE
+    notes = c("Declining coverage", "Improving", "Increasing", "Stabilizing")
   ),
   
   # Pressures
@@ -80,8 +77,7 @@ example_isa_data <- list(
     time_horizon_end = as.Date(c("2023-12-31", "2023-12-31", "2023-12-31", "2023-12-31")),
     baseline_value = c(500, 1.5, 17.5, 1000),
     current_value = c(800, 1.2, 18.2, 750),
-    notes = c("Increasing pressure", "Decreasing", "Rising temperature", "Reduced effort"),
-    stringsAsFactors = FALSE
+    notes = c("Increasing pressure", "Decreasing", "Rising temperature", "Reduced effort")
   ),
   
   # Activities
@@ -102,8 +98,7 @@ example_isa_data <- list(
     time_horizon_end = as.Date(c("2023-12-31", "2023-12-31", "2023-12-31", "2023-12-31")),
     baseline_value = c(1000, 50000, 500000, 50),
     current_value = c(1500, 75000, 520000, 35),
-    notes = c("Growing", "Expanded capacity", "Still rising", "Fleet reduction"),
-    stringsAsFactors = FALSE
+    notes = c("Growing", "Expanded capacity", "Still rising", "Fleet reduction")
   ),
   
   # Drivers
@@ -124,8 +119,7 @@ example_isa_data <- list(
     time_horizon_end = as.Date(c("2023-12-31", "2023-12-31", "2023-12-31", "2023-12-31")),
     baseline_value = c(100000, 150000, 100, 12000),
     current_value = c(125000, 180000, 115, 14000),
-    notes = c("Growing coastal population", "Expansion", "Rising demand", "Increasing"),
-    stringsAsFactors = FALSE
+    notes = c("Growing coastal population", "Expansion", "Rising demand", "Increasing")
   ),
   
   # Adjacency Matrices (simplified examples)

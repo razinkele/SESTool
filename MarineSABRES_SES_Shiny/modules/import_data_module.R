@@ -12,6 +12,7 @@
 
 import_data_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     # Custom CSS (using constants from constants.R)
@@ -170,7 +171,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         }
       }, error = function(e) {
         showNotification(
-          paste(i18n$t("modules.import.data.error_loading_sample"), e$message),
+          format_user_error(e, i18n = i18n, context = "loading sample data"),
           type = "error",
           duration = 10
         )
@@ -238,7 +239,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
           readxl::excel_sheets(file_path)
         }, error = function(e) {
           showNotification(
-            paste(i18n$t("common.messages.cannot_read_excel_file"), e$message),
+            format_user_error(e, i18n = i18n, context = "reading Excel file", show_details = TRUE),
             type = "error",
             duration = 10
           )
@@ -272,7 +273,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
       }, error = function(e) {
         showNotification(
-          paste(i18n$t("modules.import.data.error_reading_file"), e$message),
+          format_user_error(e, i18n = i18n, context = "reading uploaded file", show_details = TRUE),
           type = "error",
           duration = 10
         )
@@ -369,7 +370,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
       }, error = function(e) {
         showNotification(
-          paste("Error parsing connections:", e$message),
+          format_user_error(e, i18n = i18n, context = "parsing connections"),
           type = "error",
           duration = 10
         )
@@ -434,7 +435,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
       }, error = function(e) {
         showNotification(
-          paste("Error importing data:", e$message),
+          format_user_error(e, i18n = i18n, context = "importing data"),
           type = "error",
           duration = 10
         )
@@ -464,7 +465,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
       }, error = function(e) {
         showNotification(
-          paste("Error importing data:", e$message),
+          format_user_error(e, i18n = i18n, context = "importing data"),
           type = "error",
           duration = 10
         )

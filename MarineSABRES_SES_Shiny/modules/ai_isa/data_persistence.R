@@ -91,14 +91,14 @@ restore_session_data <- function(rv, data, i18n = NULL) {
 convert_to_isa_dataframe <- function(elements, element_type, id_prefix, type_label) {
   if (length(elements[[element_type]]) > 0) {
     data.frame(
-      ID = paste0(id_prefix, sprintf("%03d", seq_along(elements[[element_type]]))),
+      ID = generate_element_id(id_prefix, seq_along(elements[[element_type]])),
       Name = sapply(elements[[element_type]], function(x) x$name),
       Type = type_label,
       Description = sapply(elements[[element_type]], function(x) x$description %||% ""),
       Stakeholder = "",
       Importance = "",
-      Trend = "",
-      stringsAsFactors = FALSE
+      Trend = ""
+      
     )
   } else {
     # Return empty dataframe with proper structure
@@ -109,8 +109,8 @@ convert_to_isa_dataframe <- function(elements, element_type, id_prefix, type_lab
       Description = character(),
       Stakeholder = character(),
       Importance = character(),
-      Trend = character(),
-      stringsAsFactors = FALSE
+      Trend = character()
+      
     )
   }
 }
@@ -127,15 +127,15 @@ convert_responses_to_isa <- function(elements) {
     data.frame(
       Name = sapply(elements$responses, function(x) x$name),
       Description = sapply(elements$responses, function(x) x$description %||% ""),
-      Indicator = "",
-      stringsAsFactors = FALSE
+      Indicator = ""
+      
     )
   } else {
     data.frame(
       Name = character(),
       Description = character(),
-      Indicator = character(),
-      stringsAsFactors = FALSE
+      Indicator = character()
+      
     )
   }
 }
@@ -355,29 +355,29 @@ save_to_project_format <- function(rv, current_data, CONFIDENCE_DEFAULT = 70) {
     current_data$data$isa_data <- list()
   }
 
-  # Convert all elements to ISA format
+  # Convert all elements to ISA format using ELEMENT_ID_PREFIX from constants.R
   current_data$data$isa_data$drivers <- convert_to_isa_dataframe(
-    rv$elements, "drivers", "D", "Driver"
+    rv$elements, "drivers", ELEMENT_ID_PREFIX$drivers, "Driver"
   )
 
   current_data$data$isa_data$activities <- convert_to_isa_dataframe(
-    rv$elements, "activities", "A", "Activity"
+    rv$elements, "activities", ELEMENT_ID_PREFIX$activities, "Activity"
   )
 
   current_data$data$isa_data$pressures <- convert_to_isa_dataframe(
-    rv$elements, "pressures", "P", "Pressure"
+    rv$elements, "pressures", ELEMENT_ID_PREFIX$pressures, "Pressure"
   )
 
   current_data$data$isa_data$marine_processes <- convert_to_isa_dataframe(
-    rv$elements, "states", "S", "Marine Process/State"
+    rv$elements, "states", ELEMENT_ID_PREFIX$states, "Marine Process/State"
   )
 
   current_data$data$isa_data$ecosystem_services <- convert_to_isa_dataframe(
-    rv$elements, "impacts", "I", "Ecosystem Service/Impact"
+    rv$elements, "impacts", ELEMENT_ID_PREFIX$impacts, "Ecosystem Service/Impact"
   )
 
   current_data$data$isa_data$goods_benefits <- convert_to_isa_dataframe(
-    rv$elements, "welfare", "W", "Good/Benefit/Welfare"
+    rv$elements, "welfare", ELEMENT_ID_PREFIX$welfare, "Good/Benefit/Welfare"
   )
 
   current_data$data$isa_data$responses <- convert_responses_to_isa(rv$elements)

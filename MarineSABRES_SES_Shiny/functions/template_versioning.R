@@ -179,8 +179,8 @@ get_version_history <- function(template_name,
     val_loss = numeric(),
     model_path = character(),
     notes = character(),
-    filepath = character(),
-    stringsAsFactors = FALSE
+    filepath = character()
+    
   )
 
   for (file in files) {
@@ -214,8 +214,8 @@ get_version_history <- function(template_name,
         val_loss = val_loss,
         model_path = ifelse(is.null(meta$model_path), "", meta$model_path),
         notes = meta$notes,
-        filepath = file,
-        stringsAsFactors = FALSE
+        filepath = file
+        
       ))
     }, error = function(e) {
       debug_log(sprintf("Failed to load version file: %s (%s)", file, e$message), "TEMPLATE_VERSIONING")
@@ -585,8 +585,8 @@ list_all_templates <- function(versions_dir = "models/template_versions") {
     num_versions = integer(),
     latest_version = character(),
     latest_date = character(),
-    best_accuracy = numeric(),
-    stringsAsFactors = FALSE
+    best_accuracy = numeric()
+    
   )
 
   templates <- character()
@@ -614,8 +614,8 @@ list_all_templates <- function(versions_dir = "models/template_versions") {
         num_versions = nrow(history),
         latest_version = history$version[1],
         latest_date = history$created_date[1],
-        best_accuracy = best_acc,
-        stringsAsFactors = FALSE
+        best_accuracy = best_acc
+        
       ))
     }
   }

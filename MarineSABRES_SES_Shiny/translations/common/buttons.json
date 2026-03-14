@@ -494,6 +494,17 @@
       "it": "Chiudi",
       "no": "Avvis",
       "el": "Απόρριψη"
+    },
+    "common.buttons.got_it": {
+      "en": "Got it",
+      "es": "Entendido",
+      "fr": "Compris",
+      "de": "Verstanden",
+      "lt": "Supratau",
+      "pt": "Entendi",
+      "it": "Capito",
+      "no": "Forstått",
+      "el": "Κατάλαβα"
     }
   }
 }

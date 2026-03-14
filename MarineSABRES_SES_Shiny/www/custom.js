@@ -49,7 +49,12 @@ var TIMING_CONFIG = {
     var overlayHTML = '<div id="language-loading-overlay" class="active" style="position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(44,62,80,0.95);z-index:999999;display:flex;flex-direction:column;justify-content:center;align-items:center;">' +
       '<div class="loading-spinner" style="font-size:48px;color:#3498db;margin-bottom:20px;"><i class="fa fa-spinner fa-spin"></i></div>' +
       '<div class="loading-message" style="font-size:24px;color:#ffffff;font-weight:600;margin-bottom:10px;text-align:center;"><i class="fa fa-globe"></i> ' +
+      // i18n NOTE: This message is set from R (modals.R) via sessionStorage in the
+      // target language before page reload. The fallback is English for edge cases.
       (sessionStorage.getItem('language_loading_message') || 'Changing language...') + '</div>' +
+      // i18n NOTE: This submessage cannot use R's i18n system because it renders
+      // during page reload before Shiny/R is connected. Kept as English fallback;
+      // the translated loading_message above is the primary user-facing text.
       '<div class="loading-submessage" style="font-size:14px;color:#bdc3c7;text-align:center;">Please wait while the application reloads...</div>' +
       '</div>';
 
@@ -158,9 +163,16 @@ Shiny.addCustomMessageHandler('updateHeaderTranslations', function(translations)
   $('#open_about_modal span').text(translations.app_info);
 
   // Update help menu items by finding the correct links
-  $('.settings-dropdown-menu a[onclick*="beginner_guide"] span').text("Beginner's Guide"); // Keep as English
+  $('.settings-dropdown-menu a[onclick*="beginner_guide"] span').text(translations.beginners_guide);
   $('.settings-dropdown-menu a[onclick*="step_by_step_tutorial"] span').text(translations.step_by_step_tutorial);
   $('.settings-dropdown-menu a[onclick*="user_guide"] span').text(translations.quick_reference);
+
+  // Store fullscreen labels for use by the fullscreen toggle handler
+  // (JS cannot call R's i18n directly, so we cache translations sent from R)
+  if (translations.fullscreen) {
+    window._i18n_fullscreen = translations.fullscreen;
+    window._i18n_exit_fullscreen = translations.exit_fullscreen;
+  }
 });
 
 // Settings dropdown functionality
@@ -286,6 +298,7 @@ Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
           } catch(e) {}
 
           // Create Bootstrap tooltip
+          var tooltipId = 'tooltip-' + (link.id || 'nav-' + initializedCount);
           var bsTooltip = new bootstrap.Tooltip(link, {
             placement: 'right',
             trigger: 'hover',
@@ -297,6 +310,8 @@ Shiny.addCustomMessageHandler('initSidebarTooltips', function(data) {
 
           link._bsTooltip = bsTooltip;
 
+          // ARIA: Link tooltip to element for screen readers
+          link.setAttribute('aria-describedby', tooltipId);
           link.setAttribute('data-original-title', titleText);
           link.removeAttribute('title');
 
@@ -613,6 +628,9 @@ $(document).ready(function() {
     var overlay = $('<div id="language-loading-overlay" class="active" style="position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(44,62,80,0.95);z-index:999999;display:flex;flex-direction:column;justify-content:center;align-items:center;">' +
       '<div class="loading-spinner" style="font-size:48px;color:#3498db;margin-bottom:20px;"><i class="fa fa-spinner fa-spin"></i></div>' +
       '<div class="loading-message" style="font-size:24px;color:#ffffff;font-weight:600;margin-bottom:10px;text-align:center;"><i class="fa fa-globe"></i> ' + message.text + '</div>' +
+      // i18n NOTE: Submessage kept as English - this overlay displays during a page
+      // reload triggered by language change. The primary loading_message text above
+      // is already translated (passed from R's modals.R hardcoded per-language list).
       '<div class="loading-submessage" style="font-size:14px;color:#bdc3c7;text-align:center;">Please wait while the application reloads...</div>' +
       '</div>');
 
@@ -814,13 +832,15 @@ function handleFullscreenChange() {
 
     if (fullscreenElement) {
       // In fullscreen - show exit icon
+      // Use cached i18n translations if available (set by updateHeaderTranslations),
+      // fall back to English if translations haven't been received yet
       if (icon) icon.className = 'fa fa-compress';
-      if (label) label.textContent = 'Exit';
+      if (label) label.textContent = window._i18n_exit_fullscreen || 'Exit Fullscreen';
       btn.classList.add('in-fullscreen');
     } else {
       // Not in fullscreen - show expand icon
       if (icon) icon.className = 'fa fa-expand';
-      if (label) label.textContent = 'Fullscreen';
+      if (label) label.textContent = window._i18n_fullscreen || 'Fullscreen';
       btn.classList.remove('in-fullscreen');
     }
   });
@@ -1094,4 +1114,245 @@ var TouchNav = (function() {
 $(document).ready(function() {
   TouchNav.init();
 });
+
+// ==============================================================================
+// ACCESSIBILITY: ARIA Attributes & Keyboard Navigation
+// ==============================================================================
+
+$(document).ready(function() {
+  'use strict';
+
+  // ---- 1. Dropdown menus: toggle aria-expanded and add role="menu" ----
+  function initDropdownAria() {
+    // Add role="menu" to dropdown menus
+    $('.settings-dropdown-menu').attr('role', 'menu');
+    // Add role="menuitem" to links inside dropdown menus
+    $('.settings-dropdown-menu a').attr('role', 'menuitem');
+
+    // Toggle aria-expanded on dropdown toggles
+    $(document).on('click', '.settings-dropdown-toggle', function() {
+      var $dropdown = $(this).closest('.settings-dropdown');
+      var isOpen = $dropdown.hasClass('open');
+      // Close all others
+      $('.settings-dropdown-toggle').attr('aria-expanded', 'false');
+      // Toggle the clicked one
+      $(this).attr('aria-expanded', isOpen ? 'false' : 'true');
+    });
+
+    // Close: reset aria-expanded
+    $(document).on('click', function(e) {
+      if (!$(e.target).closest('.settings-dropdown').length) {
+        $('.settings-dropdown-toggle').attr('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // ---- 2. Keyboard navigation for dropdown menus ----
+  function initDropdownKeyboard() {
+    // Open dropdown with Enter or Space on toggle
+    $(document).on('keydown', '.settings-dropdown-toggle', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        $(this).trigger('click');
+        // Focus first menu item when opening
+        var $menu = $(this).siblings('.settings-dropdown-menu');
+        if ($(this).attr('aria-expanded') === 'true') {
+          $menu.find('a:first').focus();
+        }
+      }
+      // Close with Escape
+      if (e.key === 'Escape') {
+        $(this).closest('.settings-dropdown').removeClass('open');
+        $(this).attr('aria-expanded', 'false');
+        $(this).focus();
+      }
+    });
+
+    // Arrow key navigation within dropdown menus
+    $(document).on('keydown', '.settings-dropdown-menu a', function(e) {
+      var $items = $(this).closest('.settings-dropdown-menu').find('a:visible');
+      var currentIndex = $items.index(this);
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        var nextIndex = (currentIndex + 1) % $items.length;
+        $items.eq(nextIndex).focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        var prevIndex = (currentIndex - 1 + $items.length) % $items.length;
+        $items.eq(prevIndex).focus();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        var $dropdown = $(this).closest('.settings-dropdown');
+        $dropdown.removeClass('open');
+        $dropdown.find('.settings-dropdown-toggle').attr('aria-expanded', 'false').focus();
+      } else if (e.key === 'Tab') {
+        // Close dropdown on Tab out
+        var $dropdown = $(this).closest('.settings-dropdown');
+        $dropdown.removeClass('open');
+        $dropdown.find('.settings-dropdown-toggle').attr('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // ---- 3. Modal dialogs: add role="dialog" and aria-modal ----
+  function initModalAria() {
+    // Shiny modals are dynamically created; use MutationObserver
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeType !== 1) return;
+
+          // Look for Bootstrap modal dialogs
+          var modals = [];
+          if (node.classList && node.classList.contains('modal')) {
+            modals.push(node);
+          }
+          var childModals = node.querySelectorAll ? node.querySelectorAll('.modal') : [];
+          childModals.forEach(function(m) { modals.push(m); });
+
+          modals.forEach(function(modal) {
+            modal.setAttribute('role', 'dialog');
+            modal.setAttribute('aria-modal', 'true');
+
+            // Set aria-labelledby from modal title if available
+            var title = modal.querySelector('.modal-title, .modal-header h3, .modal-header h4');
+            if (title) {
+              if (!title.id) {
+                title.id = 'modal-title-' + Math.random().toString(36).substr(2, 9);
+              }
+              modal.setAttribute('aria-labelledby', title.id);
+            }
+
+            // Trap focus inside modal
+            initModalFocusTrap(modal);
+          });
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // ---- 4. Focus trap for modal dialogs ----
+  function initModalFocusTrap(modal) {
+    var focusableSelector = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    $(modal).on('keydown', function(e) {
+      if (e.key !== 'Tab') return;
+
+      var focusableElements = modal.querySelectorAll(focusableSelector);
+      if (focusableElements.length === 0) return;
+
+      var firstFocusable = focusableElements[0];
+      var lastFocusable = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        // Shift+Tab: if on first element, go to last
+        if (document.activeElement === firstFocusable) {
+          e.preventDefault();
+          lastFocusable.focus();
+        }
+      } else {
+        // Tab: if on last element, go to first
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          firstFocusable.focus();
+        }
+      }
+    });
+  }
+
+  // ---- 5. Tooltip ARIA: link elements to their tooltips via aria-describedby ----
+  function enhanceTooltipAria() {
+    // Bootstrap tooltips already add aria-describedby when shown.
+    // Ensure our custom tooltip initialization preserves this behavior.
+    // Listen for Bootstrap tooltip show events to verify aria-describedby is set.
+    $(document).on('shown.bs.tooltip', function(e) {
+      var trigger = e.target;
+      var tooltip = trigger._bsTooltip || $(trigger).data('bs.tooltip');
+      if (tooltip && tooltip.tip) {
+        var tipId = tooltip.tip.id;
+        if (tipId && !trigger.getAttribute('aria-describedby')) {
+          trigger.setAttribute('aria-describedby', tipId);
+        }
+      }
+    });
+
+    $(document).on('hidden.bs.tooltip', function(e) {
+      var trigger = e.target;
+      // Clean up aria-describedby when tooltip hides
+      if (trigger.getAttribute('aria-describedby') &&
+          trigger.getAttribute('aria-describedby').indexOf('tooltip') !== -1) {
+        trigger.removeAttribute('aria-describedby');
+      }
+    });
+  }
+
+  // ---- 6. ARIA live region helper for status announcements ----
+  window.announceToScreenReader = function(message, priority) {
+    var regionId = (priority === 'assertive') ? 'aria-live-alert' : 'aria-live-status';
+    var region = document.getElementById(regionId);
+    if (region) {
+      // Clear then set to ensure announcement is triggered
+      region.textContent = '';
+      setTimeout(function() {
+        region.textContent = message;
+      }, 50);
+    }
+  };
+
+  // Hook into Shiny notifications to announce them to screen readers
+  try {
+    $(document).on('shiny:notification', function(e) {
+      try {
+        if (e.notification && e.notification.html) {
+          var tempDiv = document.createElement('div');
+          tempDiv.innerHTML = e.notification.html;
+          var text = tempDiv.textContent || tempDiv.innerText || '';
+          if (text.trim()) {
+            var priority = (e.notification.type === 'error') ? 'assertive' : 'polite';
+            window.announceToScreenReader(text.trim(), priority);
+          }
+        }
+      } catch (err) { __dbg('[A11Y] Notification announce error:', err); }
+    });
+  } catch (err) { __dbg('[A11Y] Could not bind notification listener:', err); }
+
+  // ---- 7. Sidebar navigation: add aria-current for active item ----
+  function initSidebarAriaCurrent() {
+    $(document).on('click', '.main-sidebar .nav-link', function() {
+      // Remove aria-current from all sidebar links
+      $('.main-sidebar .nav-link').removeAttr('aria-current');
+      // Add to clicked item
+      $(this).attr('aria-current', 'page');
+    });
+
+    // Also update on Shiny tab changes
+    $(document).on('shiny:inputchanged', function(e) {
+      if (e.name === 'sidebar') {
+        setTimeout(function() {
+          $('.main-sidebar .nav-link').removeAttr('aria-current');
+          $('.main-sidebar .nav-link.active, .main-sidebar .nav-item.menu-open > .nav-link').attr('aria-current', 'page');
+        }, TIMING_CONFIG.DOM_UPDATE_DELAY);
+      }
+    });
+  }
+
+  // ---- Initialize all accessibility enhancements ----
+  initDropdownAria();
+  initDropdownKeyboard();
+  initModalAria();
+  enhanceTooltipAria();
+  initSidebarAriaCurrent();
+
+  __dbg('[A11Y] Accessibility enhancements initialized');
+});
+
+// ==============================================================================
+// VIS.JS TOOLTIP NOTE
+// ==============================================================================
+// CLD visualization uses a flat layout (no bs4Card wrappers) so vis.js tooltips
+// position correctly using their default absolute positioning. The network canvas
+// sits directly inside .content-wrapper with minimal nesting.
 

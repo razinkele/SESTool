@@ -20,7 +20,7 @@
       "pt": "Carregar Modelos SES Pré-construídos",
       "it": "Carica Modelli SES Precostituiti",
       "no": "Last inn forhåndsbygde SES-modeller",
-      "el": "Load Pre-built SES Models"
+      "el": "Φόρτωση προκατασκευασμένων μοντέλων SES"
     },
     "modules.ses_models.subtitle": {
       "en": "Select from existing SES models organized by Demonstration Area to quickly start your analysis.",
@@ -64,7 +64,7 @@
       "pt": "Carregar Modelos",
       "it": "Carica Modelli",
       "no": "Last inn modeller",
-      "el": "Load Models"
+      "el": "Φόρτωση μοντέλων"
     },
     "modules.ses_models.click_to_scan": {
       "en": "Click to scan SESModels directory",
@@ -75,7 +75,7 @@
       "pt": "Clique para verificar o diretório SESModels",
       "it": "Clicca per scansionare la directory SESModels",
       "no": "Klikk for å skanne SESModels-katalogen",
-      "el": "Click to scan SESModels directory"
+      "el": "Κάντε κλικ για σάρωση του καταλόγου SESModels"
     },
     "modules.ses_models.load_model": {
       "en": "Load Model",
@@ -86,7 +86,7 @@
       "pt": "Carregar Modelo",
       "it": "Carica Modello",
       "no": "Last inn modell",
-      "el": "Load Model"
+      "el": "Φόρτωση μοντέλου"
     },
     "modules.ses_models.confirm_title": {
       "en": "Confirm Load",
@@ -196,7 +196,7 @@
       "pt": "Modelo Inválido",
       "it": "Modello Non Valido",
       "no": "Ugyldig modell",
-      "el": "Invalid Model"
+      "el": "Μη έγκυρο μοντέλο"
     },
     "modules.ses_models.cannot_load_invalid": {
       "en": "Cannot load an invalid model. Please fix the errors first.",
@@ -207,7 +207,7 @@
       "pt": "Não é possível carregar um modelo inválido. Por favor, corrija os erros primeiro.",
       "it": "Impossibile caricare un modello non valido. Per favore, correggi prima gli errori.",
       "no": "Kan ikke laste inn en ugyldig modell. Vennligst rett feilene først.",
-      "el": "Cannot load an invalid model. Please fix the errors first."
+      "el": "Δεν είναι δυνατή η φόρτωση μη έγκυρου μοντέλου. Παρακαλώ διορθώστε πρώτα τα σφάλματα."
     },
     "modules.ses_models.load_error": {
       "en": "Error loading model:",
@@ -306,7 +306,7 @@
       "pt": "variantes disponíveis",
       "it": "varianti disponibili",
       "no": "varianter tilgjengelig",
-      "el": "variants available"
+      "el": "διαθέσιμες παραλλαγές"
     },
     "modules.ses_models.variant_info": {
       "en": "This file contains multiple model variants (e.g., different regions). Select the variant you want to load.",
@@ -317,7 +317,7 @@
       "pt": "Este arquivo contém múltiplas variantes de modelo (por exemplo, diferentes regiões). Selecione a variante que deseja carregar.",
       "it": "Questo file contiene più varianti del modello (ad esempio, regioni diverse). Seleziona la variante che vuoi caricare.",
       "no": "Denne filen inneholder flere modellvarianter (f.eks. forskjellige regioner). Velg varianten du vil laste inn.",
-      "el": "This file contains multiple model variants (e.g., different regions). Select the variant you want to load."
+      "el": "Αυτό το αρχείο περιέχει πολλαπλές παραλλαγές μοντέλου (π.χ. διαφορετικές περιοχές). Επιλέξτε την παραλλαγή που θέλετε να φορτώσετε."
     }
   }
 }

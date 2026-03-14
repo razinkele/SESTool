@@ -1,93 +1,63 @@
 # functions/reactive_pipeline.R
+# ============================================================================
 # Reactive Data Pipeline System
-# Purpose: Event-based reactive architecture for automatic data flow ISA → CLD → Analysis
-
-#' Create reactive event bus
-#'
-#' Creates a reactive event system for coordinating data updates across modules.
-#' Each session should have its own event bus to ensure complete isolation.
-#'
-#' @param session_id Optional session ID for debugging (recommended for multi-user)
-#' @return List with event triggers and handlers
-create_event_bus <- function(session_id = NULL) {
-  # Store session ID for debugging
-  bus_session_id <- session_id %||% "unknown"
-
-  # Create reactive values first - these are scoped to this function call
-  # and will be isolated per-session when called from server()
-
-  isa_changed_val <- reactiveVal(0)
-  cld_changed_val <- reactiveVal(0)
-  analysis_invalidated_val <- reactiveVal(0)
-  last_isa_signature_val <- reactiveVal(NULL)
-  last_cld_signature_val <- reactiveVal(NULL)
-  skip_next_cld_regen_val <- reactiveVal(FALSE)
-
-  debug_log(sprintf("Event bus created for session: %s", bus_session_id), "EVENT BUS")
-
-  list(
-    # Session identifier for debugging
-    session_id = bus_session_id,
-
-    # Event triggers (reactiveVal for each event type)
-    isa_changed = isa_changed_val,
-    cld_changed = cld_changed_val,
-    analysis_invalidated = analysis_invalidated_val,
-
-    # Event metadata
-    last_isa_signature = last_isa_signature_val,
-    last_cld_signature = last_cld_signature_val,
-    skip_next_cld_regen = skip_next_cld_regen_val,
-
-    # Helper: Emit ISA changed event
-    emit_isa_change = function() {
-      current_val <- isolate(isa_changed_val())
-      isa_changed_val(current_val + 1)
-      debug_log(sprintf("[%s] ISA changed event emitted (#%d)",
-                  bus_session_id, current_val + 1), "EVENT BUS")
-    },
-
-    # Helper: Emit CLD changed event
-    emit_cld_change = function() {
-      current_val <- isolate(cld_changed_val())
-      cld_changed_val(current_val + 1)
-      debug_log(sprintf("[%s] CLD changed event emitted (#%d)",
-                  bus_session_id, current_val + 1), "EVENT BUS")
-    },
-
-    # Helper: Emit analysis invalidation event
-    emit_analysis_invalidation = function() {
-      current_val <- isolate(analysis_invalidated_val())
-      analysis_invalidated_val(current_val + 1)
-      debug_log(sprintf("[%s] Analysis invalidated event emitted (#%d)",
-                  bus_session_id, current_val + 1), "EVENT BUS")
-    }
-  )
-}
+# ============================================================================
+#
+# Purpose: Automatic data flow propagation: ISA -> CLD -> Analysis
+#
+# Architecture:
+#   This module provides setup_reactive_pipeline() which wires observers to
+#   the event bus created by server/event_bus_setup.R. The event bus is the
+#   SINGLE source of truth for cross-module communication:
+#
+#     Modules emit:   event_bus$emit_isa_change(source)
+#     Pipeline hears: event_bus$on_isa_change()
+#     Pipeline emits: event_bus$emit_cld_update(source)
+#     Modules hear:   event_bus$on_cld_update()
+#
+#   The pipeline adds debounced ISA->CLD regeneration and automatic analysis
+#   invalidation on top of the event bus. Without this pipeline, modules would
+#   need to manually regenerate the CLD and invalidate analysis after each
+#   ISA change.
+#
+# Dependencies:
+#   - server/event_bus_setup.R  (create_event_bus, event bus API)
+#   - functions/error_handling.R (safe_execute, safe_get_nested)
+#   - functions/data_structure.R (validate_isa_data, create_nodes_df, create_edges_df)
+#   - constants.R               (ISA_DEBOUNCE_MS)
+#   - digest package            (for ISA signature hashing)
+# ============================================================================
 
 #' Setup reactive pipeline coordinator
 #'
 #' Sets up observers that handle automatic data propagation:
-#' - ISA changes → regenerate CLD
-#' - CLD changes → invalidate analysis
+#' - ISA changes -> regenerate CLD (debounced)
+#' - CLD/ISA changes -> invalidate analysis
+#'
+#' This function wires into the event bus from server/event_bus_setup.R.
+#' The event bus uses emit_isa_change()/on_isa_change() and
+#' emit_cld_update()/on_cld_update() methods.
 #'
 #' @param project_data Reactive value containing project data
-#' @param event_bus Event bus created by create_event_bus()
+#' @param event_bus Event bus created by create_event_bus() in server/event_bus_setup.R
 #' @return NULL (side effects only - sets up observers)
 setup_reactive_pipeline <- function(project_data, event_bus) {
 
   debug_log("Setting up reactive data pipeline...", "PIPELINE")
   debug_log(sprintf("ISA change debounce: %d ms", ISA_DEBOUNCE_MS), "PIPELINE")
 
+  # Private state for signature-based change detection
+  last_isa_signature <- reactiveVal(NULL)
+
   # ============================================================================
-  # Observer 1: ISA changes → Regenerate CLD (with debouncing)
+  # Observer 1: ISA changes -> Regenerate CLD (with debouncing)
   # ============================================================================
 
-  # Create debounced ISA change reactive
-  # This delays CLD regeneration by ISA_DEBOUNCE_MS after the last ISA change
-  # Prevents excessive regenerations during rapid consecutive edits
+  # Create debounced ISA change reactive using the new event bus API.
+  # event_bus$on_isa_change() returns the reactive trigger value.
+  # Debouncing prevents excessive CLD regenerations during rapid edits.
   isa_changed_debounced <- debounce(
-    reactive({ event_bus$isa_changed() }),
+    reactive({ event_bus$on_isa_change() }),
     millis = ISA_DEBOUNCE_MS
   )
 
@@ -98,12 +68,12 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
     data <- isolate(project_data())
     # Use safe_get_nested for defensive data access
     isa_data <- safe_get_nested(data, "data", "isa_data", default = NULL)
-    data_source <- safe_get_nested(data, "data", "metadata", "data_source", default = NULL)
 
-    # Skip if flagged (e.g., after import that already generated CLD)
-    if (isolate(event_bus$skip_next_cld_regen())) {
-      debug_log("Skipping CLD regeneration (skip flag set)", "PIPELINE")
-      event_bus$skip_next_cld_regen(FALSE)
+    # Skip if flagged (e.g., after import that already generated CLD).
+    # The flag is set by modules via event_bus$skip_next_cld_regen(TRUE)
+    # and consumed (reset to FALSE) here by get_skip_cld_regen(consume=TRUE).
+    if (isolate(event_bus$get_skip_cld_regen(consume = TRUE))) {
+      debug_log("Skipping CLD regeneration (skip flag set by module)", "PIPELINE")
       return()
     }
 
@@ -126,7 +96,7 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
 
     # Signature-based change detection
     current_isa_sig <- create_isa_signature(isa_data)
-    last_isa_sig <- isolate(event_bus$last_isa_signature())
+    last_isa_sig <- isolate(last_isa_signature())
 
     if (!is.null(current_isa_sig) && identical(current_isa_sig, last_isa_sig)) {
       debug_log("ISA data signature unchanged. Skipping CLD regeneration.", "PIPELINE")
@@ -134,7 +104,7 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
     }
 
     debug_log("ISA change detected, regenerating CLD...", "PIPELINE")
-    shinyjs::show("pipeline_status_indicator")
+    tryCatch(shinyjs::show("pipeline_status_indicator"), error = function(e) NULL)
 
     tryCatch({
       # Generate CLD from ISA with error handling
@@ -169,9 +139,9 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
       # Save back to reactive
       project_data(data)
 
-      # Update signature and emit CLD changed event
-      event_bus$last_isa_signature(current_isa_sig)
-      event_bus$emit_cld_change()
+      # Update signature and emit CLD update event via the event bus
+      last_isa_signature(current_isa_sig)
+      event_bus$emit_cld_update("reactive_pipeline")
 
       debug_log("CLD regeneration complete", "PIPELINE")
 
@@ -179,18 +149,18 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
       debug_log(sprintf("CLD regeneration failed: %s", e$message), "PIPELINE ERROR")
       warning(sprintf("CLD regeneration failed: %s", e$message))
     }, finally = {
-      shinyjs::hide("pipeline_status_indicator")
+      tryCatch(shinyjs::hide("pipeline_status_indicator"), error = function(e) NULL)
     })
 
   })
 
   # ============================================================================
-  # Observer 2: CLD/ISA changes → Invalidate analysis
+  # Observer 2: CLD/ISA changes -> Invalidate analysis
   # ============================================================================
   observe({
-    # Watch for ISA or CLD changes
-    event_bus$isa_changed()
-    event_bus$cld_changed()
+    # Watch for ISA or CLD changes using the new event bus API
+    event_bus$on_isa_change()
+    event_bus$on_cld_update()
 
     data <- isolate(project_data())
 
@@ -201,7 +171,7 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
 
     if (has_analysis) {
       debug_log("Data changed, invalidating analysis results...", "PIPELINE")
-      shinyjs::show("pipeline_status_indicator")
+      tryCatch(shinyjs::show("pipeline_status_indicator"), error = function(e) NULL)
 
       # Clear analysis data
       data$data$analysis <- list(
@@ -216,23 +186,27 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
       # Save back to reactive
       project_data(data)
 
-      # Emit analysis invalidation event
-      event_bus$emit_analysis_invalidation()
+      # Emit analysis request event via the event bus
+      event_bus$emit_analysis_request("invalidation", "reactive_pipeline")
 
       debug_log("Analysis invalidated", "PIPELINE")
-      shinyjs::hide("pipeline_status_indicator")
+      tryCatch(shinyjs::hide("pipeline_status_indicator"), error = function(e) NULL)
     }
 
   })
 
   debug_log("Reactive pipeline setup complete", "PIPELINE")
-  debug_log("- ISA changes will auto-regenerate CLD", "PIPELINE")
+  debug_log("- ISA changes will auto-regenerate CLD (debounced)", "PIPELINE")
   debug_log("- Data changes will auto-invalidate analysis", "PIPELINE")
+  debug_log("- Modules can call event_bus$skip_next_cld_regen() before emit_isa_change()", "PIPELINE")
+
+  invisible(NULL)
 }
 
 #' Helper: Create ISA data signature for change detection
 #'
-#' Creates a hash signature of ISA data to detect when it actually changes
+#' Creates a hash signature of ISA data to detect when it actually changes.
+#' Used by the pipeline to avoid redundant CLD regenerations.
 #'
 #' @param isa_data ISA data structure
 #' @return String signature or NULL if isa_data is invalid

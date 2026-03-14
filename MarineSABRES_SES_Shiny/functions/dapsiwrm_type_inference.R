@@ -358,8 +358,8 @@ analyze_type_inference <- function(element_names, actual_types = NULL) {
     element = element_names,
     inferred_type = character(length(element_names)),
     score = integer(length(element_names)),
-    matched_keywords = character(length(element_names)),
-    stringsAsFactors = FALSE
+    matched_keywords = character(length(element_names))
+    
   )
 
   if (!is.null(actual_types)) {

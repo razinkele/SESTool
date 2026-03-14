@@ -20,7 +20,7 @@
       "pt": "Criação SES Assistida por IA",
       "it": "Creazione SES Assistita da IA",
       "no": "AI-assistert SES-opprettelse",
-      "el": "AI-Assisted SES Creation"
+      "el": "Δημιουργία SES με υποβοήθηση τεχνητής νοημοσύνης"
     },
     "modules.isa.ai_assistant.subtitle": {
       "en": "Let me guide you step-by-step through building your DAPSI(W)R(M) model.",
@@ -31,7 +31,7 @@
       "pt": "Deixe-me guiá-lo passo a passo na construção do seu modelo DAPSI(W)R(M).",
       "it": "Lascia che ti guidi passo dopo passo nella costruzione del tuo modello DAPSI(W)R(M).",
       "no": "La meg veilede deg trinn for trinn gjennom å bygge din DAPSI(W)R(M)-modell.",
-      "el": "Let me guide you step-by-step through building your DAPSI(W)R(M) model."
+      "el": "Επιτρέψτε μου να σας καθοδηγήσω βήμα-βήμα στη δημιουργία του μοντέλου DAPSI(W)R(M) σας."
     },
     "modules.isa.ai_assistant.activities_human_actions": {
       "en": "Activities - Human Actions",
@@ -41,7 +41,7 @@
       "lt": "Veikla – Žmogaus veiksmai",
       "pt": "Atividades - Ações Humanas",
       "it": "Attività - Azioni umane",
-      "no": "Activities - Human Actions",
+      "no": "Aktiviteter - Menneskelige handlinger",
       "el": "Δραστηριότητες - Human Actions"
     },
     "modules.isa.ai_assistant.added": {
@@ -52,7 +52,7 @@
       "lt": "Pridėta",
       "pt": "Adicionado",
       "it": "Aggiunto",
-      "no": "Added",
+      "no": "Lagt til",
       "el": "Προστέθηκε"
     },
     "modules.isa.ai_assistant.ai_suggested_options": {
@@ -63,8 +63,8 @@
       "lt": "DI siūlomos parinktys",
       "pt": "Opções sugeridas por IA",
       "it": "Opzioni suggerite dall'IA",
-      "no": "AI-suggested options",
-      "el": "AI-suggested options"
+      "no": "KI-foreslåtte alternativer",
+      "el": "Επιλογές που προτείνονται από τεχνητή νοημοσύνη"
     },
     "modules.isa.ai_assistant.all_connections_approved": {
       "en": "All connections approved!",
@@ -74,7 +74,7 @@
       "lt": "Visos jungtys patvirtintos!",
       "pt": "Todas as conexões aprovadas!",
       "it": "Tutti i collegamenti approvati!",
-      "no": "All connections approved!",
+      "no": "Alle tilkoblinger godkjent!",
       "el": "Όλα Συνδέσεις approved!"
     },
     "modules.isa.ai_assistant.analyzing_your_elements_and_generating_connections": {
@@ -85,8 +85,8 @@
       "lt": "Analizuojami jūsų elementai ir generuojami ryšiai...",
       "pt": "Analisando seus elementos e gerando conexões...",
       "it": "Analisi degli elementi e generazione delle connessioni...",
-      "no": "Analyzing your elements and generating connections...",
-      "el": "Analyzing your elements and generating connections..."
+      "no": "Analyserer elementene dine og genererer tilkoblinger...",
+      "el": "Ανάλυση των στοιχείων σας και δημιουργία συνδέσεων..."
     },
     "modules.isa.ai_assistant.approve_all": {
       "en": "Approve All",
@@ -96,8 +96,8 @@
       "lt": "Patvirtinti viską",
       "pt": "Aprovar tudo",
       "it": "Approva tutto",
-      "no": "Approve All",
-      "el": "Approve All"
+      "no": "Godkjenn alle",
+      "el": "Έγκριση όλων"
     },
     "modules.isa.ai_assistant.auto_saved": {
       "en": "Auto-saved",
@@ -107,8 +107,8 @@
       "lt": "Automatiškai išsaugota",
       "pt": "Salvo automaticamente",
       "it": "Salvato automaticamente",
-      "no": "Auto-saved",
-      "el": "Auto-saved"
+      "no": "Automatisk lagret",
+      "el": "Αυτόματη αποθήκευση"
     },
     "modules.isa.ai_assistant.choose_a_pre_built_scenario": {
       "en": "Choose a pre-built scenario:",
@@ -118,7 +118,7 @@
       "lt": "Pasirinkite iš anksto sukurtą scenarijų:",
       "pt": "Escolha um cenário pré-construído:",
       "it": "Scegli uno scenario predefinito:",
-      "no": "Choose a pre-built scenario:",
+      "no": "Velg et ferdigbygget scenario:",
       "el": "Επιλέξτε a pre-built scenario:"
     },
     "modules.isa.ai_assistant.click_to_selectdeselect_multiple_selections_allowed": {
@@ -129,8 +129,8 @@
       "lt": "Spustelėkite, kad pasirinktumėte/atšauktumėte. Leidžiama kelių pasirinkimų.",
       "pt": "Clique para selecionar/desmarcar. Múltiplas seleções permitidas.",
       "it": "Fai clic per selezionare/deselezionare. Selezioni multiple consentite.",
-      "no": "Click to select/deselect. Multiple selections allowed.",
-      "el": "Click to select/deselect. Multiple selections allowed."
+      "no": "Klikk for å velge/fjerne valg. Flere valg er tillatt.",
+      "el": "Κάντε κλικ για επιλογή/αποεπιλογή. Επιτρέπονται πολλαπλές επιλογές."
     },
     "modules.isa.ai_assistant.climate_change_coral_reefs": {
       "en": "Climate Change & Coral Reefs",
@@ -140,8 +140,8 @@
       "lt": "Klimato kaita ir koraliniai rifai",
       "pt": "Mudanças Climáticas e Recifes de Coral",
       "it": "Cambiamenti climatici e barriere coralline",
-      "no": "Climate Change & Coral Reefs",
-      "el": "Climate Change & Coral Reefs"
+      "no": "Klimaendringer og korallrev",
+      "el": "Κλιματική αλλαγή και κοραλλιογενείς ύφαλοι"
     },
     "modules.isa.ai_assistant.climate_change_template_loaded_with_example_connections": {
       "en": "Climate Change template loaded with example connections!",
@@ -151,8 +151,8 @@
       "lt": "Klimato kaitos šablonas įkeltas su jungčių pavyzdžiais!",
       "pt": "Modelo de Mudanças Climáticas carregado com exemplos de conexões!",
       "it": "Modello sul cambiamento climatico caricato con collegamenti di esempio!",
-      "no": "Climate Change template loaded with example connections!",
-      "el": "Climate Change template loaded with example connections!"
+      "no": "Klimaendringsmal lastet med eksempeltilkoblinger!",
+      "el": "Πρότυπο κλιματικής αλλαγής φορτώθηκε με παραδείγματα συνδέσεων!"
     },
     "modules.isa.ai_assistant.coastal_tourism_impacts": {
       "en": "Coastal Tourism Impacts",
@@ -162,7 +162,7 @@
       "lt": "Pakrantės turizmo poveikis",
       "pt": "Impactos do Turismo Costeiro",
       "it": "Impatti del turismo costiero",
-      "no": "Coastal Tourism Impacts",
+      "no": "Påvirkning fra kystturisme",
       "el": "Παράκτιο Tourism Impacts"
     },
     "modules.isa.ai_assistant.common_issues_in_the_region": {
@@ -173,8 +173,8 @@
       "lt": "Įprastos problemos regione",
       "pt": "Problemas comuns na região",
       "it": "Problemi comuni nella regione",
-      "no": "Common issues in the region",
-      "el": "Common issues in the region"
+      "no": "Vanlige problemer i regionen",
+      "el": "Συνηθισμένα ζητήματα στην περιοχή"
     },
     "modules.isa.ai_assistant.connections": {
       "en": "Connections:",
@@ -184,8 +184,8 @@
       "lt": "Ryšiai:",
       "pt": "Conexões:",
       "it": "Connessioni:",
-      "no": "Connections:",
-      "el": "Connections:"
+      "no": "Tilkoblinger:",
+      "el": "Συνδέσεις:"
     },
     "modules.isa.ai_assistant.connections_out_of": {
       "en": "connections out of",
@@ -195,7 +195,7 @@
       "lt": "jungtys išjungtos",
       "pt": "conexões fora de",
       "it": "connessioni fuori",
-      "no": "connections out of",
+      "no": "tilkoblinger av",
       "el": "Συνδέσεις out of"
     },
     "modules.isa.ai_assistant.connections_saved_navigating_to_dashboard": {
@@ -206,7 +206,7 @@
       "lt": "ryšiai išsaugoti! Pereinama į valdymo skydą...",
       "pt": "conexões salvas! Navegando para o painel...",
       "it": "connessioni salvate! Navigazione alla dashboard...",
-      "no": "connections saved! Navigating to dashboard...",
+      "no": "tilkoblinger lagret! Navigerer til kontrollpanelet...",
       "el": "Συνδέσεις saved! Navigating to dashboard..."
     },
     "modules.isa.ai_assistant.connections_transferred_to_isa_data_entry": {
@@ -217,7 +217,7 @@
       "lt": "jungtys, perkeltos į ISA Data Entry.",
       "pt": "conexões transferidas para o ISA Data Entry.",
       "it": "connessioni trasferite a ISA Data Entry.",
-      "no": "connections transferred to ISA Data Entry.",
+      "no": "tilkoblinger overført til ISA-dataregistrering.",
       "el": "Συνδέσεις transferred to ISA Data Entry."
     },
     "modules.isa.ai_assistant.context_specific_suggestions": {
@@ -228,8 +228,8 @@
       "lt": "Kontekstui būdingos rekomendacijos",
       "pt": "Sugestões específicas do contexto",
       "it": "Suggerimenti specifici del contesto",
-      "no": "Context-specific suggestions",
-      "el": "Context-specific suggestions"
+      "no": "Kontekstspesifikke forslag",
+      "el": "Προτάσεις ανάλογα με το πλαίσιο"
     },
     "modules.isa.ai_assistant.continue_to_activities": {
       "en": "Continue to Activities",
@@ -239,7 +239,7 @@
       "lt": "Toliau eikite į „Veikla“.",
       "pt": "Continuar para Atividades",
       "it": "Continua alle Attività",
-      "no": "Continue to Activities",
+      "no": "Fortsett til aktiviteter",
       "el": "Συνέχεια to Activities"
     },
     "modules.isa.ai_assistant.continue_to_impacts": {
@@ -250,7 +250,7 @@
       "lt": "Toliau eikite į „Poveikis“.",
       "pt": "Continuar para Impactos",
       "it": "Continua su Impatti",
-      "no": "Continue to Impacts",
+      "no": "Fortsett til påvirkninger",
       "el": "Συνέχεια to Impacts"
     },
     "modules.isa.ai_assistant.continue_to_measures": {
@@ -261,7 +261,7 @@
       "lt": "Toliau eikite į Priemonės",
       "pt": "Continuar para Medidas",
       "it": "Continua con Misure",
-      "no": "Continue to Measures",
+      "no": "Fortsett til tiltak",
       "el": "Συνέχεια to Measures"
     },
     "modules.isa.ai_assistant.continue_to_pressures": {
@@ -272,7 +272,7 @@
       "lt": "Toliau eikite į Slėgiai",
       "pt": "Continuar para Pressões",
       "it": "Continua a Pressioni",
-      "no": "Continue to Pressures",
+      "no": "Fortsett til press",
       "el": "Συνέχεια to Pressures"
     },
     "modules.isa.ai_assistant.continue_to_responses": {
@@ -283,7 +283,7 @@
       "lt": "Toliau eikite į atsakymus",
       "pt": "Continuar para as respostas",
       "it": "Continua con le risposte",
-      "no": "Continue to Responses",
+      "no": "Fortsett til responser",
       "el": "Συνέχεια to Responses"
     },
     "modules.isa.ai_assistant.continue_to_state_changes": {
@@ -294,7 +294,7 @@
       "lt": "Tęskite būsenos pakeitimus",
       "pt": "Continuar para Mudanças de Estado",
       "it": "Continua con Cambiamenti di stato",
-      "no": "Continue to State Changes",
+      "no": "Fortsett til tilstandsendringer",
       "el": "Συνέχεια to State Changes"
     },
     "modules.isa.ai_assistant.continue_to_welfare": {
@@ -305,7 +305,7 @@
       "lt": "Toliau į Gerovė",
       "pt": "Continuar para o bem-estar",
       "it": "Continua su Welfare",
-      "no": "Continue to Welfare",
+      "no": "Fortsett til velferd",
       "el": "Συνέχεια to Welfare"
     },
     "modules.isa.ai_assistant.continue_with": {
@@ -316,7 +316,7 @@
       "lt": "Tęsti su",
       "pt": "Continuar com",
       "it": "Continua con",
-      "no": "Continue with",
+      "no": "Fortsett med",
       "el": "Συνέχεια with"
     },
     "modules.isa.ai_assistant.current_framework": {
@@ -327,8 +327,8 @@
       "lt": "Dabartinė sistema:",
       "pt": "Quadro Atual:",
       "it": "Quadro attuale:",
-      "no": "Current Framework:",
-      "el": "Current Framework:"
+      "no": "Nåværende rammeverk:",
+      "el": "Τρέχον πλαίσιο:"
     },
     "modules.isa.ai_assistant.do_you_want_to_restore_it": {
       "en": "Do you want to restore it?",
@@ -338,7 +338,7 @@
       "lt": "Ar norite jį atkurti?",
       "pt": "Você quer restaurá-lo?",
       "it": "Vuoi ripristinarlo?",
-      "no": "Do you want to restore it?",
+      "no": "Vil du gjenopprette den?",
       "el": "Θέλετε to restore it?"
     },
     "modules.isa.ai_assistant.drivers_societal_needs": {
@@ -349,7 +349,7 @@
       "lt": "Vairuotojai – visuomenės poreikiai",
       "pt": "Motivadores - Necessidades Sociais",
       "it": "Driver: bisogni della società",
-      "no": "Drivers - Societal Needs",
+      "no": "Drivkrefter - Samfunnsbehov",
       "el": "Κινητήριες δυνάμεις - Societal Needs"
     },
     "modules.isa.ai_assistant.ecosystem_type": {
@@ -360,7 +360,7 @@
       "lt": "Ekosistemos tipas",
       "pt": "Tipo de Ecossistema",
       "it": "Tipo di Ecosistema",
-      "no": "Ecosystem Type",
+      "no": "Økosystemtype",
       "el": "Οικοσύστημα Πληκτρολογήστε"
     },
     "modules.isa.ai_assistant.ecosystem_types": {
@@ -371,7 +371,7 @@
       "lt": "Ekosistemų tipai",
       "pt": "Tipos de ecossistemas",
       "it": "Tipi di ecosistemi",
-      "no": "Ecosystem types",
+      "no": "Økosystemtyper",
       "el": "Οικοσύστημα types"
     },
     "modules.isa.ai_assistant.elements_and": {
@@ -382,7 +382,7 @@
       "lt": "elementai ir",
       "pt": "elementos e",
       "it": "elementi e",
-      "no": "elements and",
+      "no": "elementer og",
       "el": "Στοιχεία and"
     },
     "modules.isa.ai_assistant.finalizing_connections": {
@@ -393,8 +393,8 @@
       "lt": "Baigiami ryšiai...",
       "pt": "Finalizando conexões...",
       "it": "Finalizzazione delle connessioni...",
-      "no": "Finalizing connections...",
-      "el": "Finalizing connections..."
+      "no": "Ferdigstiller tilkoblinger...",
+      "el": "Ολοκλήρωση συνδέσεων..."
     },
     "modules.isa.ai_assistant.finish_continue": {
       "en": "Finish & Continue",
@@ -404,7 +404,7 @@
       "lt": "Baigti ir tęsti",
       "pt": "Concluir e continuar",
       "it": "Termina e continua",
-      "no": "Finish & Continue",
+      "no": "Fullfør og fortsett",
       "el": "Ολοκλήρωση & Continue"
     },
     "modules.isa.ai_assistant.found_a_saved_session_from": {
@@ -415,8 +415,8 @@
       "lt": "Rasta išsaugota sesija iš",
       "pt": "Encontrou uma sessão salva de",
       "it": "Trovato una sessione salvata da",
-      "no": "Found a saved session from",
-      "el": "Found a saved session from"
+      "no": "Fant en lagret økt fra",
+      "el": "Βρέθηκε αποθηκευμένη συνεδρία από"
     },
     "modules.isa.ai_assistant.impacts": {
       "en": "Impacts:",
@@ -426,8 +426,8 @@
       "lt": "Poveikis:",
       "pt": "Impactos:",
       "it": "Impatti:",
-      "no": "Impacts:",
-      "el": "Impacts:"
+      "no": "Påvirkninger:",
+      "el": "Επιπτώσεις:"
     },
     "modules.isa.ai_assistant.impacts_effects_on_ecosystem_services": {
       "en": "Impacts - Effects on Ecosystem Services",
@@ -437,7 +437,7 @@
       "lt": "Poveikis – poveikis ekosistemų paslaugoms",
       "pt": "Impactos - Efeitos nos Serviços Ecossistêmicos",
       "it": "Impatti – Effetti sui Servizi Ecosistemici",
-      "no": "Impacts - Effects on Ecosystem Services",
+      "no": "Påvirkninger - Effekter på økosystemtjenester",
       "el": "Επιπτώσεις - Effects on Ecosystem Services"
     },
     "modules.isa.ai_assistant.load_example_template": {
@@ -448,8 +448,8 @@
       "lt": "Įkelti šablono pavyzdį",
       "pt": "Carregar modelo de exemplo",
       "it": "Carica modello di esempio",
-      "no": "Load Example Template",
-      "el": "Load Example Template"
+      "no": "Last inn eksempelmal",
+      "el": "Φόρτωση προτύπου παραδείγματος"
     },
     "modules.isa.ai_assistant.load_saved": {
       "en": "Load Saved",
@@ -459,8 +459,8 @@
       "lt": "Įkėlimas išsaugotas",
       "pt": "Carga salva",
       "it": "Carica salvato",
-      "no": "Load Saved",
-      "el": "Load Saved"
+      "no": "Last inn lagret",
+      "el": "Φόρτωση αποθηκευμένου"
     },
     "modules.isa.ai_assistant.main_issue_identification": {
       "en": "Main Issue Identification",
@@ -470,8 +470,8 @@
       "lt": "Pagrindinės problemos identifikavimas",
       "pt": "Identificação do problema principal",
       "it": "Identificazione del problema principale",
-      "no": "Main Issue Identification",
-      "el": "Main Issue Identification"
+      "no": "Identifisering av hovedproblem",
+      "el": "Προσδιορισμός κύριου ζητήματος"
     },
     "modules.isa.ai_assistant.marine_pollution_plastics": {
       "en": "Marine Pollution & Plastics",
@@ -481,7 +481,7 @@
       "lt": "Jūros tarša ir plastikai",
       "pt": "Poluição Marinha e Plásticos",
       "it": "Inquinamento marino e plastica",
-      "no": "Marine Pollution & Plastics",
+      "no": "Marin forurensning og plast",
       "el": "Θαλάσσιο Pollution & Plastics"
     },
     "modules.isa.ai_assistant.minutes_ago": {
@@ -492,7 +492,7 @@
       "lt": "prieš minutes",
       "pt": "minutos atrás",
       "it": "minuti fa",
-      "no": "minutes ago",
+      "no": "minutter siden",
       "el": "λεπτά πριν"
     },
     "modules.isa.ai_assistant.model_saved_successfully": {
@@ -503,7 +503,7 @@
       "lt": "Modelis sėkmingai išsaugotas!",
       "pt": "Modelo salvo com sucesso!",
       "it": "Modello salvato con successo!",
-      "no": "Model saved successfully!",
+      "no": "Modell lagret!",
       "el": "Μοντέλο Αποθηκεύτηκε successfully!"
     },
     "modules.isa.ai_assistant.no_saved_session_found": {
@@ -514,7 +514,7 @@
       "lt": "Nerasta jokių išsaugotų seansų.",
       "pt": "Nenhuma sessão salva encontrada.",
       "it": "Nessuna sessione salvata trovata.",
-      "no": "No saved session found.",
+      "no": "Ingen lagret økt funnet.",
       "el": "Όχι Αποθηκεύτηκε session found."
     },
     "modules.isa.ai_assistant.not_yet_saved": {
@@ -525,8 +525,8 @@
       "lt": "Dar neišsaugota",
       "pt": "Ainda não salvo",
       "it": "Non ancora salvato",
-      "no": "Not yet saved",
-      "el": "Not yet saved"
+      "no": "Ikke lagret ennå",
+      "el": "Δεν έχει αποθηκευτεί ακόμη"
     },
     "modules.isa.ai_assistant.note_i_found_more_connections_but_limited_to": {
       "en": "Note: I found more connections, but limited to",
@@ -536,8 +536,8 @@
       "lt": "Pastaba: radau daugiau ryšių, bet apribota iki",
       "pt": "Nota: Encontrei mais conexões, mas limitado a",
       "it": "Nota: Ho trovato più connessioni, ma limitato a",
-      "no": "Note: I found more connections, but limited to",
-      "el": "Note: I found more connections, but limited to"
+      "no": "Merk: Jeg fant flere tilkoblinger, men begrenset til",
+      "el": "Σημείωση: Βρήκα περισσότερες συνδέσεις, αλλά περιορίστηκα σε"
     },
     "modules.isa.ai_assistant.other": {
       "en": "Other",
@@ -547,7 +547,7 @@
       "lt": "Kita",
       "pt": "Outro",
       "it": "Altro",
-      "no": "Other",
+      "no": "Annet",
       "el": "Άλλο"
     },
     "modules.isa.ai_assistant.other_enter_your_own": {
@@ -558,7 +558,7 @@
       "lt": "Kitas (įveskite savo)",
       "pt": "Outro (insira o seu)",
       "it": "Altro (inserisci il tuo)",
-      "no": "Other (enter your own)",
+      "no": "Annet (skriv inn eget)",
       "el": "Άλλο (enter your own)"
     },
     "modules.isa.ai_assistant.overfishing_in_coastal_waters": {
@@ -569,8 +569,8 @@
       "lt": "Perteklinė žvejyba pakrantės vandenyse",
       "pt": "Pesca excessiva em águas costeiras",
       "it": "Pesca eccessiva nelle acque costiere",
-      "no": "Overfishing in Coastal Waters",
-      "el": "Overfishing in Coastal Waters"
+      "no": "Overfiske i kystfarvann",
+      "el": "Υπεραλίευση σε παράκτια ύδατα"
     },
     "modules.isa.ai_assistant.pressures_environmental_stressors": {
       "en": "Pressures - Environmental Stressors",
@@ -580,7 +580,7 @@
       "lt": "Spaudimai – aplinkos veiksniai",
       "pt": "Pressões - Estressores Ambientais",
       "it": "Pressioni - Fattori di stress ambientale",
-      "no": "Pressures - Environmental Stressors",
+      "no": "Press - Miljøbelastninger",
       "el": "Πιέσεις - Environmental Stressors"
     },
     "modules.isa.ai_assistant.preview_model": {
@@ -591,7 +591,7 @@
       "lt": "Peržiūros modelis",
       "pt": "Modelo de visualização",
       "it": "Anteprima del modello",
-      "no": "Preview Model",
+      "no": "Forhåndsvis modell",
       "el": "Προεπισκόπηση Μοντέλο"
     },
     "modules.isa.ai_assistant.quick_options_click_to_add": {
@@ -602,8 +602,8 @@
       "lt": "Greitos parinktys (spustelėkite, kad pridėtumėte):",
       "pt": "Opções rápidas (clique para adicionar):",
       "it": "Opzioni rapide (clicca per aggiungere):",
-      "no": "Quick options (click to add):",
-      "el": "Quick options (click to add):"
+      "no": "Hurtigvalg (klikk for å legge til):",
+      "el": "Γρήγορες επιλογές (κάντε κλικ για προσθήκη):"
     },
     "modules.isa.ai_assistant.regional_sea_changed_to": {
       "en": "Regional sea changed to",
@@ -613,7 +613,7 @@
       "lt": "Regioninė jūra pakeista į",
       "pt": "Mar regional alterado para",
       "it": "Mare regionale cambiato in",
-      "no": "Regional sea changed to",
+      "no": "Regionalt hav endret til",
       "el": "Περιφερειακή θάλασσα Άλλαξε to"
     },
     "modules.isa.ai_assistant.regional_sea_context": {
@@ -624,7 +624,7 @@
       "lt": "Regioninės jūros kontekstas",
       "pt": "Contexto do Mar Regional",
       "it": "Contesto del Mare Regionale",
-      "no": "Regional Sea Context",
+      "no": "Regionalt havkontekst",
       "el": "Περιφερειακή θάλασσα Context"
     },
     "modules.isa.ai_assistant.restore_previous_session": {
@@ -635,7 +635,7 @@
       "lt": "Atkurti ankstesnę sesiją?",
       "pt": "Restaurar sessão anterior?",
       "it": "Ripristinare la sessione precedente?",
-      "no": "Restore Previous Session?",
+      "no": "Gjenopprett forrige økt?",
       "el": "Επαναφορά Προηγούμενο Session?"
     },
     "modules.isa.ai_assistant.restore_your_last_saved_session": {
@@ -646,7 +646,7 @@
       "lt": "Atkurkite paskutinę išsaugotą seansą",
       "pt": "Restaure sua última sessão salva",
       "it": "Ripristina l'ultima sessione salvata",
-      "no": "Restore your last saved session",
+      "no": "Gjenopprett din siste lagrede økt",
       "el": "Επαναφορά your last saved session"
     },
     "modules.isa.ai_assistant.review_each_connection_below_and_approve_or_reject_them": {
@@ -657,8 +657,8 @@
       "lt": "Peržiūrėkite kiekvieną žemiau esantį ryšį ir patvirtinkite arba atmeskite juos.",
       "pt": "Revise cada conexão abaixo e aprove ou rejeite-as.",
       "it": "Esamina ciascuna connessione di seguito e approvala o rifiutala.",
-      "no": "Review each connection below and approve or reject them.",
-      "el": "Review each connection below and approve or reject them."
+      "no": "Gjennomgå hver tilkobling nedenfor og godkjenn eller avvis dem.",
+      "el": "Ελέγξτε κάθε σύνδεση παρακάτω και εγκρίνετε ή απορρίψτε τις."
     },
     "modules.isa.ai_assistant.review_suggested_connections": {
       "en": "Review Suggested Connections",
@@ -668,8 +668,8 @@
       "lt": "Peržiūrėkite siūlomus ryšius",
       "pt": "Revise as conexões sugeridas",
       "it": "Esaminare le connessioni suggerite",
-      "no": "Review Suggested Connections",
-      "el": "Review Suggested Connections"
+      "no": "Gjennomgå foreslåtte tilkoblinger",
+      "el": "Έλεγχος προτεινόμενων συνδέσεων"
     },
     "modules.isa.ai_assistant.save_progress": {
       "en": "Save Progress",
@@ -679,7 +679,7 @@
       "lt": "Išsaugoti pažangą",
       "pt": "Salvar progresso",
       "it": "Salva progressi",
-      "no": "Save Progress",
+      "no": "Lagre fremdrift",
       "el": "Αποθήκευση Progress"
     },
     "modules.isa.ai_assistant.save_to_isa_data_entry": {
@@ -690,7 +690,7 @@
       "lt": "Išsaugoti ISA duomenų įvedime",
       "pt": "Salvar na entrada de dados ISA",
       "it": "Salva in immissione dati ISA",
-      "no": "Save to ISA Data Entry",
+      "no": "Lagre til ISA-dataregistrering",
       "el": "Αποθήκευση to ISA Data Entry"
     },
     "modules.isa.ai_assistant.save_your_current_progress_to_browser_storage": {
@@ -701,7 +701,7 @@
       "lt": "Išsaugokite dabartinę eigą naršyklės saugykloje",
       "pt": "Salve seu progresso atual no armazenamento do navegador",
       "it": "Salva i tuoi progressi attuali nella memoria del browser",
-      "no": "Save your current progress to browser storage",
+      "no": "Lagre din nåværende fremdrift i nettleserlagring",
       "el": "Αποθήκευση your current progress to browser storage"
     },
     "modules.isa.ai_assistant.seconds_ago": {
@@ -712,7 +712,7 @@
       "lt": "prieš sekundes",
       "pt": "segundos atrás",
       "it": "secondi fa",
-      "no": "seconds ago",
+      "no": "sekunder siden",
       "el": "δευτερόλεπτα πριν"
     },
     "modules.isa.ai_assistant.selected": {
@@ -723,7 +723,7 @@
       "lt": "pasirinkta",
       "pt": "selecionado(s)",
       "it": "selezionato/i",
-      "no": "selected",
+      "no": "valgt",
       "el": "Επιλεγμένο"
     },
     "modules.isa.ai_assistant.session_management": {
@@ -734,8 +734,8 @@
       "lt": "Seansų valdymas",
       "pt": "Gerenciamento de sessão",
       "it": "Gestione della sessione",
-      "no": "Session Management",
-      "el": "Session Management"
+      "no": "Øktadministrasjon",
+      "el": "Διαχείριση συνεδρίας"
     },
     "modules.isa.ai_assistant.session_saved_successfully": {
       "en": "Session saved successfully!",
@@ -745,8 +745,8 @@
       "lt": "Sesija sėkmingai išsaugota!",
       "pt": "Sessão salva com sucesso!",
       "it": "Sessione salvata con successo!",
-      "no": "Session saved successfully!",
-      "el": "Session saved successfully!"
+      "no": "Økt lagret!",
+      "el": "Η συνεδρία αποθηκεύτηκε επιτυχώς!"
     },
     "modules.isa.ai_assistant.skip_this_question": {
       "en": "Skip This Question",
@@ -756,7 +756,7 @@
       "lt": "Praleiskite šį klausimą",
       "pt": "Pule esta pergunta",
       "it": "Salta questa domanda",
-      "no": "Skip This Question",
+      "no": "Hopp over dette spørsmålet",
       "el": "Παράλειψη This Question"
     },
     "modules.isa.ai_assistant.state_changes": {
@@ -767,7 +767,7 @@
       "lt": "Būsenos pakeitimai:",
       "pt": "Mudanças de estado:",
       "it": "Cambiamenti di stato:",
-      "no": "State Changes:",
+      "no": "Tilstandsendringer:",
       "el": "Κατάσταση Changes:"
     },
     "modules.isa.ai_assistant.state_changes_ecosystem_effects": {
@@ -778,7 +778,7 @@
       "lt": "Būsenos pokyčiai – ekosistemų poveikis",
       "pt": "Mudanças de Estado - Efeitos Ecossistêmicos",
       "it": "Cambiamenti di stato - Effetti sull'ecosistema",
-      "no": "State Changes - Ecosystem Effects",
+      "no": "Tilstandsendringer - Økosystemeffekter",
       "el": "Αλλαγές κατάστασης - Ecosystem Effects"
     },
     "modules.isa.ai_assistant.submit_answer": {
@@ -789,7 +789,7 @@
       "lt": "Pateikti atsakymą",
       "pt": "Enviar resposta",
       "it": "Invia risposta",
-      "no": "Submit Answer",
+      "no": "Send inn svar",
       "el": "Υποβολή Answer"
     },
     "modules.isa.ai_assistant.tailored_for": {
@@ -800,8 +800,8 @@
       "lt": "pritaikytas",
       "pt": "adaptado para",
       "it": "adattato per",
-      "no": "tailored for",
-      "el": "tailored for"
+      "no": "tilpasset for",
+      "el": "προσαρμοσμένο για"
     },
     "modules.isa.ai_assistant.thank_you_moving_to_the_next_question": {
       "en": "Thank you! Moving to the next question...",
@@ -811,8 +811,8 @@
       "lt": "Ačiū! Pereinant prie kito klausimo...",
       "pt": "Obrigado! Passando para a próxima pergunta...",
       "it": "Grazie! Passando alla domanda successiva...",
-      "no": "Thank you! Moving to the next question...",
-      "el": "Thank you! Moving to the next question..."
+      "no": "Takk! Går videre til neste spørsmål...",
+      "el": "Ευχαριστώ! Μετάβαση στην επόμενη ερώτηση..."
     },
     "modules.isa.ai_assistant.this_may_take_a_moment": {
       "en": "This may take a moment...",
@@ -822,8 +822,8 @@
       "lt": "Tai gali užtrukti...",
       "pt": "Isso pode levar um momento...",
       "it": "Potrebbe richiedere un momento...",
-      "no": "This may take a moment...",
-      "el": "This may take a moment..."
+      "no": "Dette kan ta et øyeblikk...",
+      "el": "Αυτό μπορεί να πάρει μια στιγμή..."
     },
     "modules.isa.ai_assistant.total": {
       "en": "total",
@@ -833,7 +833,7 @@
       "lt": "viso",
       "pt": "total",
       "it": "totale",
-      "no": "total",
+      "no": "totalt",
       "el": "Σύνολο"
     },
     "modules.isa.ai_assistant.total_elements_created": {
@@ -844,7 +844,7 @@
       "lt": "Iš viso sukurta elementų",
       "pt": "Total de elementos criados",
       "it": "Totale elementi creati",
-      "no": "Total elements created",
+      "no": "Totalt elementer opprettet",
       "el": "Σύνολο Στοιχεία Δημιουργήθηκε"
     },
     "modules.isa.ai_assistant.type_your_answer_here": {
@@ -855,7 +855,7 @@
       "lt": "Įvesk savo atsakymą čia...",
       "pt": "Digite sua resposta aqui...",
       "it": "Scrivi la tua risposta qui...",
-      "no": "Type your answer here...",
+      "no": "Skriv inn svaret ditt her...",
       "el": "Πληκτρολογήστε your answer here..."
     },
     "modules.isa.ai_assistant.welfare": {
@@ -866,8 +866,8 @@
       "lt": "Gerovė:",
       "pt": "Bem-estar:",
       "it": "Benessere:",
-      "no": "Welfare:",
-      "el": "Welfare:"
+      "no": "Velferd:",
+      "el": "Ευημερία:"
     },
     "modules.isa.ai_assistant.welfare_human_well_being_effects": {
       "en": "Welfare - Human Well-being Effects",
@@ -877,7 +877,7 @@
       "lt": "Gerovė – žmogaus gerovės poveikis",
       "pt": "Bem-estar - Efeitos no bem-estar humano",
       "it": "Welfare: effetti sul benessere umano",
-      "no": "Welfare - Human Well-being Effects",
+      "no": "Velferd - Effekter på menneskelig trivsel",
       "el": "Ευημερία - Human Well-being Effects"
     },
     "modules.isa.ai_assistant.what_type_of_marine_ecosystem_are_you_studying": {
@@ -888,8 +888,8 @@
       "lt": "Kokio tipo jūrų ekosistemą tyrinėjate?",
       "pt": "Que tipo de ecossistema marinho você está estudando?",
       "it": "Che tipo di ecosistema marino stai studiando?",
-      "no": "What type of marine ecosystem are you studying?",
-      "el": "What type of marine ecosystem are you studying?"
+      "no": "Hvilken type marint økosystem studerer du?",
+      "el": "Τι τύπο θαλάσσιου οικοσυστήματος μελετάτε;"
     },
     "modules.isa.ai_assistant.yes_restore": {
       "en": "Yes, Restore",
@@ -899,8 +899,8 @@
       "lt": "Taip, Atkurti",
       "pt": "Sim, restaurar",
       "it": "Sì, ripristina",
-      "no": "Yes, Restore",
-      "el": "Yes, Restore"
+      "no": "Ja, gjenopprett",
+      "el": "Ναι, επαναφορά"
     },
     "modules.isa.ai_assistant.yes_start_over": {
       "en": "Yes, Start Over",
@@ -910,8 +910,8 @@
       "lt": "Taip, pradėti iš naujo",
       "pt": "Sim, recomeçar",
       "it": "Sì, ricomincia da capo",
-      "no": "Yes, Start Over",
-      "el": "Yes, Start Over"
+      "no": "Ja, start på nytt",
+      "el": "Ναι, ξεκινήστε από την αρχή"
     },
     "modules.isa.ai_assistant.your_ses_model_progress": {
       "en": "Your SES Model Progress",
@@ -922,7 +922,7 @@
       "pt": "O progresso do seu modelo SES",
       "it": "I progressi del tuo modello SES",
       "no": "Din SES-modellfremdrift",
-      "el": "Your SES Model Progress"
+      "el": "Η πρόοδος του μοντέλου SES σας"
     },
     "modules.isa.are_you_sure_you_want_to_start_over_all_curr_progr": {
       "en": "Are you sure you want to start over? All current progress will be lost.",
@@ -932,7 +932,7 @@
       "lt": "Ar tikrai norite pradėti iš naujo? Visa dabartinė pažanga bus prarasta.",
       "pt": "Tem certeza de que deseja recomeçar? Todo o progresso atual será perdido.",
       "it": "Sei sicuro di voler ricominciare da capo? Tutti i progressi attuali andranno persi.",
-      "no": "Are you sure you want to start over? All current progress will be lost.",
+      "no": "Er du sikker på at du vil starte på nytt? All nåværende fremdrift vil gå tapt.",
       "el": "Είστε σίγουροι you want to start over? All current progress will be lost."
     },
     "modules.isa.click_quick_options_to_add_more_or_click_the_green": {
@@ -943,8 +943,8 @@
       "lt": "Spustelėkite greitąsias parinktis, kad pridėtumėte daugiau, arba spustelėkite žalią mygtuką, kad tęstumėte.",
       "pt": "Clique nas opções rápidas para adicionar mais ou clique no botão verde para continuar.",
       "it": "Fai clic sulle opzioni rapide per aggiungerne altre oppure fai clic sul pulsante verde per continuare.",
-      "no": "Click quick options to add more, or click the green button to continue.",
-      "el": "Click quick options to add more, or click the green button to continue."
+      "no": "Klikk hurtigvalg for å legge til flere, eller klikk den grønne knappen for å fortsette.",
+      "el": "Κάντε κλικ στις γρήγορες επιλογές για να προσθέσετε περισσότερα, ή κάντε κλικ στο πράσινο κουμπί για να συνεχίσετε."
     },
     "modules.isa.coastal_tourism_template_loaded_with_example_conne": {
       "en": "Coastal Tourism template loaded with example connections!",
@@ -954,7 +954,7 @@
       "lt": "Pakrančių turizmo šablonas su jungčių pavyzdžiais!",
       "pt": "Modelo de Turismo Costeiro carregado com exemplos de conexões!",
       "it": "Modello di turismo costiero caricato con collegamenti di esempio!",
-      "no": "Coastal Tourism template loaded with example connections!",
+      "no": "Kystturismemal lastet med eksempeltilkoblinger!",
       "el": "Παράκτιο Tourism template loaded with example connections!"
     },
     "modules.isa.complete_columns_ac_am_in_the_master_dat_sheet_lin": {
@@ -965,7 +965,7 @@
       "lt": "Užpildykite AC-AM stulpelius Pagrindinėje duomenų lentelėje. Susieti Spaudimus su JPF iš Pratimo 2b.",
       "pt": "Complete as colunas AC-AM na Folha de Dados Mestre. Ligue Pressões aos PFM do Exercício 2b.",
       "it": "Completare le colonne AC-AM nel Foglio Dati Principale. Collegare le Pressioni ai PFM dell'Esercizio 2b.",
-      "no": "Complete columns AC-AM in the Master Data Sheet. Link Pressures to MPF from Exercise 2b.",
+      "no": "Fyll ut kolonnene AC-AM i hoveddataarket. Koble press til MPF fra øvelse 2b.",
       "el": "Ολοκληρώθηκε columns AC-AM in the Master Data Sheet. Link Pressures to MPF from Exercise 2b."
     },
     "modules.isa.complete_columns_ao_ay_in_the_master_dat_sheet_lin": {
@@ -976,7 +976,7 @@
       "lt": "Užpildykite AO-AY stulpelius Pagrindinėje duomenų lentelėje. Susieti Veiklas su Spaudimais iš Pratimo 3.",
       "pt": "Complete as colunas AO-AY na Folha de Dados Mestre. Ligue Atividades às Pressões do Exercício 3.",
       "it": "Completare le colonne AO-AY nel Foglio Dati Principale. Collegare le Attività alle Pressioni dell'Esercizio 3.",
-      "no": "Complete columns AO-AY in the Master Data Sheet. Link Activities to Pressures from Exercise 3.",
+      "no": "Fyll ut kolonnene AO-AY i hoveddataarket. Koble aktiviteter til press fra øvelse 3.",
       "el": "Ολοκληρώθηκε columns AO-AY in the Master Data Sheet. Link Activities to Pressures from Exercise 3."
     },
     "modules.isa.complete_columns_b_h_in_the_master_dat_sheet_each_": {
@@ -987,7 +987,7 @@
       "lt": "Užpildykite B-H stulpelius Pagrindinėje duomenų lentelėje. Kiekviena Gėrybė/Nauda turėtų turėti unikalų ID ir klasifikaciją.",
       "pt": "Complete as colunas B-H na Folha de Dados Mestre. Cada Bem/Benefício deve ter um ID único e classificação.",
       "it": "Completare le colonne B-H nel Foglio Dati Principale. Ogni Bene/Beneficio deve avere un ID univoco e una classificazione.",
-      "no": "Complete columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification.",
+      "no": "Fyll ut kolonnene B-H i hoveddataarket. Hvert gode/fordel bør ha en unik ID og klassifisering.",
       "el": "Ολοκληρώθηκε columns B-H in the Master Data Sheet. Each Good/Benefit should have a unique ID and classification."
     },
     "modules.isa.complete_columns_bc_bk_in_the_master_dat_sheet_lin": {
@@ -998,7 +998,7 @@
       "lt": "Užpildykite BC-BK stulpelius Pagrindinėje duomenų lentelėje. Susieti Veiksnius su Veiklomis iš Pratimo 4.",
       "pt": "Complete as colunas BC-BK na Folha de Dados Mestre. Ligue Impulsores às Atividades do Exercício 4.",
       "it": "Completare le colonne BC-BK nel Foglio Dati Principale. Collegare i Fattori alle Attività dell'Esercizio 4.",
-      "no": "Complete columns BC-BK in the Master Data Sheet. Link Drivers to Activities from Exercise 4.",
+      "no": "Fyll ut kolonnene BC-BK i hoveddataarket. Koble drivkrefter til aktiviteter fra øvelse 4.",
       "el": "Ολοκληρώθηκε columns BC-BK in the Master Data Sheet. Link Drivers to Activities from Exercise 4."
     },
     "modules.isa.complete_columns_l_r_in_the_master_dat_sheet_link_": {
@@ -1009,7 +1009,7 @@
       "lt": "Užpildykite L-R stulpelius Pagrindinėje duomenų lentelėje. Susieti EP su Pratime 1 nustatytomis G&N.",
       "pt": "Complete as colunas L-R na Folha de Dados Mestre. Ligue SE aos B&B identificados no Exercício 1.",
       "it": "Completare le colonne L-R nel Foglio Dati Principale. Collegare i SE ai B&B identificati nell'Esercizio 1.",
-      "no": "Complete columns L-R in the Master Data Sheet. Link ES to the G&B identified in Exercise 1.",
+      "no": "Fyll ut kolonnene L-R i hoveddataarket. Koble ØT til G&F identifisert i øvelse 1.",
       "el": "Ολοκληρώθηκε columns L-R in the Master Data Sheet. Link ES to the G&B identified in Exercise 1."
     },
     "modules.isa.complete_columns_u_aa_in_the_master_dat_sheet_link": {
@@ -1020,7 +1020,7 @@
       "lt": "Užpildykite U-AA stulpelius Pagrindinėje duomenų lentelėje. Susieti JPF su EP iš Pratimo 2a.",
       "pt": "Complete as colunas U-AA na Folha de Dados Mestre. Ligue PFM aos SE do Exercício 2a.",
       "it": "Completare le colonne U-AA nel Foglio Dati Principale. Collegare PFM ai SE dell'Esercizio 2a.",
-      "no": "Complete columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a.",
+      "no": "Fyll ut kolonnene U-AA i hoveddataarket. Koble MPF til ØT fra øvelse 2a.",
       "el": "Ολοκληρώθηκε columns U-AA in the Master Data Sheet. Link MPF to ES from Exercise 2a."
     },
     "modules.isa.complete_the_feedback_loop_by_linking_drivers_back": {
@@ -1031,7 +1031,7 @@
       "lt": "Užbaikite grįžtamojo ryšio ciklą susiedami Veiksnius su Gėrybėmis ir Nauda.",
       "pt": "Complete o ciclo de feedback ligando os Impulsores aos Bens e Benefícios.",
       "it": "Completare il ciclo di feedback collegando i Fattori ai Beni e Benefici.",
-      "no": "Complete the feedback loop by linking Drivers back to Goods & Benefits.",
+      "no": "Fullfør tilbakekoblingsløkken ved å koble drivkrefter tilbake til goder og fordeler.",
       "el": "Ολοκληρώθηκε the feedback loop by linking Drivers back to Goods & Benefits."
     },
     "modules.isa.comprehensive_guides_for_using_the_isa_dat_entry_m": {
@@ -1042,8 +1042,8 @@
       "lt": "Išsamūs vadovai naudojantis ISA duomenų įvedimo moduliu:",
       "pt": "Guias completos para usar o módulo de Entrada de Dados ISA:",
       "it": "Guide complete per l'uso del modulo di Inserimento Dati ISA:",
-      "no": "Comprehensive guides for using the ISA Data Entry module:",
-      "el": "Comprehensive guides for using the ISA Data Entry module:"
+      "no": "Omfattende veiledninger for bruk av ISA-dataregistreringsmodulen:",
+      "el": "Ολοκληρωμένοι οδηγοί για τη χρήση της μονάδας καταχώρησης δεδομένων ISA:"
     },
     "modules.isa.data_entry.common.add_activities": {
       "en": "Add Activities",
@@ -1053,7 +1053,7 @@
       "lt": "Pridėti veiklas",
       "pt": "Adicionar Atividades",
       "it": "Aggiungere Attività",
-      "no": "Add Activities",
+      "no": "Legg til aktiviteter",
       "el": "Προσθήκη Δραστηριότητες"
     },
     "modules.isa.data_entry.common.add_activity": {
@@ -1064,7 +1064,7 @@
       "lt": "Pridėti veiklą",
       "pt": "Adicionar Atividade",
       "it": "Aggiungi Attività",
-      "no": "Add Activity",
+      "no": "Legg til aktivitet",
       "el": "Προσθήκη Δραστηριότητα"
     },
     "modules.isa.data_entry.common.add_data_point": {
@@ -1075,7 +1075,7 @@
       "lt": "Pridėti duomenų tašką",
       "pt": "Adicionar Ponto de Dados",
       "it": "Aggiungi Punto Dati",
-      "no": "Add Data Point",
+      "no": "Legg til datapunkt",
       "el": "Προσθήκη Δεδομένα Point"
     },
     "modules.isa.data_entry.common.add_marine_process": {
@@ -1086,7 +1086,7 @@
       "lt": "Pridėti jūros procesą",
       "pt": "Adicionar Processo Marinho",
       "it": "Aggiungi Processo Marino",
-      "no": "Add Marine Process",
+      "no": "Legg til marin prosess",
       "el": "Προσθήκη Θαλάσσιο Process"
     },
     "modules.isa.data_entry.common.add_marine_processes_and_functioning": {
@@ -1097,7 +1097,7 @@
       "lt": "Pridėti jūros procesus ir funkcionavimą",
       "pt": "Adicionar Processos e Funcionamento Marinhos",
       "it": "Aggiungere Processi e Funzionamento Marini",
-      "no": "Add Marine Processes and Functioning",
+      "no": "Legg til marine prosesser og funksjon",
       "el": "Προσθήκη Θαλάσσιες διεργασίες and Functioning"
     },
     "modules.isa.data_entry.common.add_pressure": {
@@ -1108,7 +1108,7 @@
       "lt": "Pridėti spaudimą",
       "pt": "Adicionar Pressão",
       "it": "Aggiungi Pressione",
-      "no": "Add Pressure",
+      "no": "Legg til press",
       "el": "Προσθήκη Πίεση"
     },
     "modules.isa.data_entry.common.add_pressures": {
@@ -1119,7 +1119,7 @@
       "lt": "Pridėti spaudimus",
       "pt": "Adicionar Pressões",
       "it": "Aggiungere Pressioni",
-      "no": "Add Pressures",
+      "no": "Legg til press",
       "el": "Προσθήκη Πιέσεις"
     },
     "modules.isa.data_entry.common.add_time_series_data": {
@@ -1130,7 +1130,7 @@
       "lt": "Pridėti laiko eilučių duomenis",
       "pt": "Adicionar Dados de Séries Temporais",
       "it": "Aggiungere Dati di Serie Temporali",
-      "no": "Add Time Series Data",
+      "no": "Legg til tidsseriedata",
       "el": "Προσθήκη Ώρα Series Data"
     },
     "modules.isa.data_entry.common.adjacency_matrix_review": {
@@ -1141,8 +1141,8 @@
       "lt": "Gretimumo matricos peržiūra",
       "pt": "Revisão da Matriz de Adjacência",
       "it": "Revisione della Matrice di Adiacenza",
-      "no": "Adjacency Matrix Review",
-      "el": "Adjacency Matrix Review"
+      "no": "Gjennomgang av naboskapsmatrise",
+      "el": "Επισκόπηση πίνακα γειτνίασης"
     },
     "modules.isa.data_entry.common.behaviour_over_time_bot_graphs": {
       "en": "Behaviour Over Time (BOT) Graphs",
@@ -1152,8 +1152,8 @@
       "lt": "Elgesio laike (BOT) grafikai",
       "pt": "Gráficos de Comportamento ao Longo do Tempo (BOT)",
       "it": "Grafici del Comportamento nel Tempo (BOT)",
-      "no": "Behaviour Over Time (BOT) Graphs",
-      "el": "Behaviour Over Time (BOT) Graphs"
+      "no": "Atferd over tid (BOT)-grafer",
+      "el": "Γραφήματα Συμπεριφοράς στον Χρόνο (BOT)"
     },
     "modules.isa.data_entry.common.bot_graphs": {
       "en": "BOT Graphs",
@@ -1163,8 +1163,8 @@
       "lt": "BOT grafikai",
       "pt": "Gráficos BOT",
       "it": "Grafici BOT",
-      "no": "BOT Graphs",
-      "el": "BOT Graphs"
+      "no": "BOT-grafer",
+      "el": "Γραφήματα BOT"
     },
     "modules.isa.data_entry.common.case_study_context": {
       "en": "Case Study Context",
@@ -1174,8 +1174,8 @@
       "lt": "Atvejo tyrimo kontekstas",
       "pt": "Contexto do Estudo de Caso",
       "it": "Contesto del Caso Studio",
-      "no": "Case Study Context",
-      "el": "Case Study Context"
+      "no": "Kontekst for casestudie",
+      "el": "Πλαίσιο μελέτης περίπτωσης"
     },
     "modules.isa.data_entry.common.causal_loop_diagram_creation_and_export": {
       "en": "Causal Loop Diagram Creation and Export",
@@ -1185,7 +1185,7 @@
       "lt": "Priežastinių ciklų diagramos kūrimas ir eksportas",
       "pt": "Criação e Exportação de Diagramas de Ciclos Causais",
       "it": "Creazione ed Esportazione di Diagrammi di Cicli Causali",
-      "no": "Causal Loop Diagram Creation and Export",
+      "no": "Oppretting og eksport av årsaksløkkediagram",
       "el": "Διάγραμμα αιτιακών βρόχων Creation and Export"
     },
     "modules.isa.data_entry.common.choose_excel_file_xlsx": {
@@ -1196,7 +1196,7 @@
       "lt": "Pasirinkite Excel failą (.xlsx):",
       "pt": "Escolher Ficheiro Excel (.xlsx):",
       "it": "Scegli File Excel (.xlsx):",
-      "no": "Choose Excel File (.xlsx):",
+      "no": "Velg Excel-fil (.xlsx):",
       "el": "Επιλέξτε Excel File (.xlsx):"
     },
     "modules.isa.data_entry.common.clarifying_endogenisation_and_encapsulation": {
@@ -1207,8 +1207,8 @@
       "lt": "Patikslinimas - Endogenizacija ir inkapsuliacija",
       "pt": "Clarificação - Endogenização e Encapsulamento",
       "it": "Chiarificazione - Endogenizzazione e Incapsulamento",
-      "no": "Clarifying - Endogenisation and Encapsulation",
-      "el": "Clarifying - Endogenisation and Encapsulation"
+      "no": "Klargjøring - Endogenisering og innkapsling",
+      "el": "Διευκρίνιση - Ενδογενοποίηση και ενθυλάκωση"
     },
     "modules.isa.data_entry.common.clarifying_metrics_and_validation": {
       "en": "Clarifying, Metrics, and Validation",
@@ -1218,8 +1218,8 @@
       "lt": "Patikslinimas, rodikliai ir patvirtinimas",
       "pt": "Clarificação, Métricas e Validação",
       "it": "Chiarificazione, Metriche e Validazione",
-      "no": "Clarifying, Metrics, and Validation",
-      "el": "Clarifying, Metrics, and Validation"
+      "no": "Klargjøring, metrikker og validering",
+      "el": "Διευκρίνιση, μετρικές και επικύρωση"
     },
     "modules.isa.data_entry.common.confidence": {
       "en": "Confidence:",
@@ -1229,8 +1229,8 @@
       "lt": "Pasitikėjimas:",
       "pt": "Confiança:",
       "it": "Confidenza:",
-      "no": "Confidence:",
-      "el": "Confidence:"
+      "no": "Tillit:",
+      "el": "Εμπιστοσύνη:"
     },
     "modules.isa.data_entry.common.current_activities": {
       "en": "Current Activities",
@@ -1240,8 +1240,8 @@
       "lt": "Dabartinės veiklos",
       "pt": "Atividades Atuais",
       "it": "Attività Attuali",
-      "no": "Current Activities",
-      "el": "Current Activities"
+      "no": "Nåværende aktiviteter",
+      "el": "Τρέχουσες δραστηριότητες"
     },
     "modules.isa.data_entry.common.current_data": {
       "en": "Current Data",
@@ -1251,8 +1251,8 @@
       "lt": "Dabartiniai duomenys",
       "pt": "Dados Atuais",
       "it": "Dati Attuali",
-      "no": "Current Data",
-      "el": "Current Data"
+      "no": "Nåværende data",
+      "el": "Τρέχοντα δεδομένα"
     },
     "modules.isa.data_entry.common.current_marine_processes": {
       "en": "Current Marine Processes",
@@ -1262,8 +1262,8 @@
       "lt": "Dabartiniai jūros procesai",
       "pt": "Processos Marinhos Atuais",
       "it": "Processi Marini Attuali",
-      "no": "Current Marine Processes",
-      "el": "Current Marine Processes"
+      "no": "Nåværende marine prosesser",
+      "el": "Τρέχουσες θαλάσσιες διεργασίες"
     },
     "modules.isa.data_entry.common.current_pressures": {
       "en": "Current Pressures",
@@ -1273,8 +1273,8 @@
       "lt": "Dabartiniai spaudimai",
       "pt": "Pressões Atuais",
       "it": "Pressioni Attuali",
-      "no": "Current Pressures",
-      "el": "Current Pressures"
+      "no": "Nåværende press",
+      "el": "Τρέχουσες πιέσεις"
     },
     "modules.isa.data_entry.common.data_management": {
       "en": "Data Management",
@@ -1284,7 +1284,7 @@
       "lt": "Duomenų valdymas",
       "pt": "Gestão de Dados",
       "it": "Gestione Dati",
-      "no": "Data Management",
+      "no": "Datahåndtering",
       "el": "Δεδομένα Διαχείριση"
     },
     "modules.isa.data_entry.common.describe_your_marine_case_study_context": {
@@ -1295,8 +1295,8 @@
       "lt": "Apibūdinkite savo jūrinio atvejo tyrimo kontekstą...",
       "pt": "Descreva o contexto do seu estudo de caso marinho...",
       "it": "Descrivete il contesto del vostro caso studio marino...",
-      "no": "Describe your marine case study context...",
-      "el": "Describe your marine case study context..."
+      "no": "Beskriv din marine casestudiekontekst...",
+      "el": "Περιγράψτε το πλαίσιο της θαλάσσιας μελέτης περίπτωσής σας..."
     },
     "modules.isa.data_entry.common.documentation": {
       "en": "Documentation",
@@ -1306,8 +1306,8 @@
       "lt": "Dokumentacija",
       "pt": "Documentação",
       "it": "Documentazione",
-      "no": "Documentation",
-      "el": "Documentation"
+      "no": "Dokumentasjon",
+      "el": "Τεκμηρίωση"
     },
     "modules.isa.data_entry.common.download_complete_excel_workbook": {
       "en": "Download Complete Excel Workbook",
@@ -1317,7 +1317,7 @@
       "lt": "Atsisiųsti visą Excel darbaknygę",
       "pt": "Transferir Livro Excel Completo",
       "it": "Scarica Cartella di Lavoro Excel Completa",
-      "no": "Download Complete Excel Workbook",
+      "no": "Last ned komplett Excel-arbeidsbok",
       "el": "Λήψη Ολοκληρώθηκε Excel Workbook"
     },
     "modules.isa.data_entry.common.download_kumu_csv_files": {
@@ -1328,7 +1328,7 @@
       "lt": "Atsisiųsti Kumu CSV failus",
       "pt": "Transferir Ficheiros CSV Kumu",
       "it": "Scarica File CSV Kumu",
-      "no": "Download Kumu CSV Files",
+      "no": "Last ned Kumu CSV-filer",
       "el": "Λήψη Kumu CSV Files"
     },
     "modules.isa.data_entry.common.eg_2000_2024": {
@@ -1339,8 +1339,8 @@
       "lt": "pvz., 2000-2024",
       "pt": "por exemplo, 2000-2024",
       "it": "ad es., 2000-2024",
-      "no": "e.g., 2000-2024",
-      "el": "e.g., 2000-2024"
+      "no": "f.eks. 2000-2024",
+      "el": "π.χ. 2000-2024"
     },
     "modules.isa.data_entry.common.eg_baltic_sea_fisheries": {
       "en": "e.g., Baltic Sea fisheries",
@@ -1350,8 +1350,8 @@
       "lt": "pvz., Baltijos jūros žuvininkystė",
       "pt": "por exemplo, pescarias do Mar Báltico",
       "it": "ad es., pesca nel Mar Baltico",
-      "no": "e.g., Baltic Sea fisheries",
-      "el": "e.g., Baltic Sea fisheries"
+      "no": "f.eks. fiskeri i Østersjøen",
+      "el": "π.χ. αλιεία Βαλτικής Θάλασσας"
     },
     "modules.isa.data_entry.common.eg_baltic_sea_north_atlantic": {
       "en": "e.g., Baltic Sea, North Atlantic",
@@ -1361,8 +1361,8 @@
       "lt": "pvz., Baltijos jūra, Šiaurės Atlanto vandenynas",
       "pt": "por exemplo, Mar Báltico, Atlântico Norte",
       "it": "ad es., Mar Baltico, Atlantico settentrionale",
-      "no": "e.g., Baltic Sea, North Atlantic",
-      "el": "e.g., Baltic Sea, North Atlantic"
+      "no": "f.eks. Østersjøen, Nord-Atlanteren",
+      "el": "π.χ. Βαλτική Θάλασσα, Βόρειος Ατλαντικός"
     },
     "modules.isa.data_entry.common.eg_tonnes_index": {
       "en": "e.g., tonnes, %, index",
@@ -1372,8 +1372,8 @@
       "lt": "pvz., tonos, %, indeksas",
       "pt": "por exemplo, toneladas, %, índice",
       "it": "ad es., tonnellate, %, indice",
-      "no": "e.g., tonnes, %, index",
-      "el": "e.g., tonnes, %, index"
+      "no": "f.eks. tonn, %, indeks",
+      "el": "π.χ. τόνοι, %, δείκτης"
     },
     "modules.isa.data_entry.common.exercises_10_12_analysis": {
       "en": "Exercises 10-12: Analysis",
@@ -1383,8 +1383,8 @@
       "lt": "Pratimai 10-12: Analizė",
       "pt": "Exercícios 10-12: Análise",
       "it": "Esercizi 10-12: Analisi",
-      "no": "Exercises 10-12: Analysis",
-      "el": "Exercises 10-12: Analysis"
+      "no": "Øvelse 10-12: Analyse",
+      "el": "Ασκήσεις 10-12: Ανάλυση"
     },
     "modules.isa.data_entry.common.exercises_7_9_cld": {
       "en": "Exercises 7-9: CLD",
@@ -1394,8 +1394,8 @@
       "lt": "Pratimai 7-9: PCS",
       "pt": "Exercícios 7-9: DCL",
       "it": "Esercizi 7-9: DCC",
-      "no": "Exercises 7-9: CLD",
-      "el": "Exercises 7-9: CLD"
+      "no": "Øvelse 7-9: CLD",
+      "el": "Ασκήσεις 7-9: CLD"
     },
     "modules.isa.data_entry.common.export_data": {
       "en": "Export Data",
@@ -1405,7 +1405,7 @@
       "lt": "Eksportuoti duomenis",
       "pt": "Exportar Dados",
       "it": "Esporta Dati",
-      "no": "Export Data",
+      "no": "Eksporter data",
       "el": "Εξαγωγή Δεδομένα"
     },
     "modules.isa.data_entry.common.export_to_excel": {
@@ -1416,7 +1416,7 @@
       "lt": "Eksportuoti į Excel",
       "pt": "Exportar para Excel",
       "it": "Esporta in Excel",
-      "no": "Export to Excel",
+      "no": "Eksporter til Excel",
       "el": "Εξαγωγή to Excel"
     },
     "modules.isa.data_entry.common.exporting_cld_for_further_analysis": {
@@ -1427,8 +1427,8 @@
       "lt": "PCS eksportavimas tolesnei analizei",
       "pt": "Exportando DCL para análise adicional",
       "it": "Esportazione di DCC per ulteriori analisi",
-      "no": "Exporting CLD for further analysis",
-      "el": "Exporting CLD for further analysis"
+      "no": "Eksporterer CLD for videre analyse",
+      "el": "Εξαγωγή CLD για περαιτέρω ανάλυση"
     },
     "modules.isa.data_entry.common.filename": {
       "en": "Filename:",
@@ -1438,8 +1438,8 @@
       "lt": "Failo pavadinimas:",
       "pt": "Nome do Ficheiro:",
       "it": "Nome File:",
-      "no": "Filename:",
-      "el": "Filename:"
+      "no": "Filnavn:",
+      "el": "Όνομα αρχείου:"
     },
     "modules.isa.data_entry.common.geographic_scope": {
       "en": "Geographic Scope:",
@@ -1449,8 +1449,8 @@
       "lt": "Geografinė apimtis:",
       "pt": "Âmbito Geográfico:",
       "it": "Ambito Geografico:",
-      "no": "Geographic Scope:",
-      "el": "Geographic Scope:"
+      "no": "Geografisk omfang:",
+      "el": "Γεωγραφικό εύρος:"
     },
     "modules.isa.data_entry.common.import_data": {
       "en": "Import Data",
@@ -1460,7 +1460,7 @@
       "lt": "Importuoti duomenis",
       "pt": "Importar Dados",
       "it": "Importa Dati",
-      "no": "Import Data",
+      "no": "Importer data",
       "el": "Εισαγωγή Δεδομένα"
     },
     "modules.isa.data_entry.common.importexport_and_data_management": {
@@ -1471,8 +1471,8 @@
       "lt": "Importavimas/Eksportavimas ir duomenų valdymas",
       "pt": "Importação/Exportação e Gestão de Dados",
       "it": "Importazione/Esportazione e Gestione dei Dati",
-      "no": "Import/Export and Data Management",
-      "el": "Import/Export and Data Management"
+      "no": "Import/eksport og datahåndtering",
+      "el": "Εισαγωγή/Εξαγωγή και Διαχείριση δεδομένων"
     },
     "modules.isa.data_entry.common.include_in_export": {
       "en": "Include in Export:",
@@ -1482,8 +1482,8 @@
       "lt": "Įtraukti į eksportą:",
       "pt": "Incluir na Exportação:",
       "it": "Includere nell'Esportazione:",
-      "no": "Include in Export:",
-      "el": "Include in Export:"
+      "no": "Inkluder i eksport:",
+      "el": "Συμπερίληψη στην εξαγωγή:"
     },
     "modules.isa.data_entry.common.initial_complexity_mapping": {
       "en": "Initial Complexity Mapping",
@@ -1493,8 +1493,8 @@
       "lt": "Pradinis sudėtingumo kartografavimas",
       "pt": "Mapeamento Inicial de Complexidade",
       "it": "Mappatura Iniziale della Complessità",
-      "no": "Initial Complexity Mapping",
-      "el": "Initial Complexity Mapping"
+      "no": "Innledende kartlegging av kompleksitet",
+      "el": "Αρχική χαρτογράφηση πολυπλοκότητας"
     },
     "modules.isa.data_entry.common.isa_guidance_document_pdf": {
       "en": "ISA Guidance Document (PDF)",
@@ -1504,8 +1504,8 @@
       "lt": "ISA vadovo dokumentas (PDF)",
       "pt": "Documento de Orientação ISA (PDF)",
       "it": "Documento di Orientamento ISA (PDF)",
-      "no": "ISA Guidance Document (PDF)",
-      "el": "ISA Guidance Document (PDF)"
+      "no": "ISA-veiledningsdokument (PDF)",
+      "el": "Οδηγός ISA (PDF)"
     },
     "modules.isa.data_entry.common.key_stakeholders": {
       "en": "Key Stakeholders:",
@@ -1515,8 +1515,8 @@
       "lt": "Pagrindiniai suinteresuotieji subjektai:",
       "pt": "Partes Interessadas Principais:",
       "it": "Principali Parti Interessate:",
-      "no": "Key Stakeholders:",
-      "el": "Key Stakeholders:"
+      "no": "Nøkkelinteressenter:",
+      "el": "Βασικοί ενδιαφερόμενοι:"
     },
     "modules.isa.data_entry.common.kumu_export_options": {
       "en": "Kumu Export Options",
@@ -1526,8 +1526,8 @@
       "lt": "Kumu eksportavimo parinktys",
       "pt": "Opções de Exportação Kumu",
       "it": "Opzioni di Esportazione Kumu",
-      "no": "Kumu Export Options",
-      "el": "Kumu Export Options"
+      "no": "Kumu-eksportalternativer",
+      "el": "Επιλογές εξαγωγής Kumu"
     },
     "modules.isa.data_entry.common.kumu_styling_code": {
       "en": "Kumu Styling Code",
@@ -1537,8 +1537,8 @@
       "lt": "Kumu stilizavimo kodas",
       "pt": "Código de Estilo Kumu",
       "it": "Codice di Stile Kumu",
-      "no": "Kumu Styling Code",
-      "el": "Kumu Styling Code"
+      "no": "Kumu-stilkode",
+      "el": "Κώδικας μορφοποίησης Kumu"
     },
     "modules.isa.data_entry.common.leverage_points": {
       "en": "Leverage Points",
@@ -1548,7 +1548,7 @@
       "lt": "Sverčiai",
       "pt": "Pontos de Alavancagem",
       "it": "Punti di Leva",
-      "no": "Leverage Points",
+      "no": "Innflytelsespunkter",
       "el": "Σημεία μόχλευσης"
     },
     "modules.isa.data_entry.common.load_existing_isa_data_from_excel_workbook": {
@@ -1559,8 +1559,8 @@
       "lt": "Įkelti esamus ISA duomenis iš Excel darbaknygės:",
       "pt": "Carregar dados ISA existentes do livro Excel:",
       "it": "Caricare dati ISA esistenti da cartella di lavoro Excel:",
-      "no": "Load existing ISA data from Excel workbook:",
-      "el": "Load existing ISA data from Excel workbook:"
+      "no": "Last inn eksisterende ISA-data fra Excel-arbeidsbok:",
+      "el": "Φόρτωση υπαρχόντων δεδομένων ISA από βιβλίο εργασίας Excel:"
     },
     "modules.isa.data_entry.common.loop_closure_summary": {
       "en": "Loop Closure Summary",
@@ -1570,8 +1570,8 @@
       "lt": "Ciklo uždarymo santrauka",
       "pt": "Resumo do Fecho do Ciclo",
       "it": "Riepilogo della Chiusura del Ciclo",
-      "no": "Loop Closure Summary",
-      "el": "Loop Closure Summary"
+      "no": "Oppsummering av løkkelukking",
+      "el": "Σύνοψη κλεισίματος βρόχου"
     },
     "modules.isa.data_entry.common.marine_processes": {
       "en": "Marine Processes",
@@ -1581,7 +1581,7 @@
       "lt": "Jūros procesai",
       "pt": "Processos Marinhos",
       "it": "Processi Marini",
-      "no": "Marine Processes",
+      "no": "Marine prosesser",
       "el": "Θαλάσσιες διεργασίες"
     },
     "modules.isa.data_entry.common.marine_processes_and_functioning_mpf": {
@@ -1592,7 +1592,7 @@
       "lt": "Jūros procesai ir funkcionavimas (JPF)",
       "pt": "Processos e Funcionamento Marinhos (PFM)",
       "it": "Processi e Funzionamento Marini (PFM)",
-      "no": "Marine Processes and Functioning (MPF)",
+      "no": "Marine prosesser og funksjon (MPF)",
       "el": "Θαλάσσιες διεργασίες and Functioning (MPF)"
     },
     "modules.isa.data_entry.common.metrics_root_causes_and_leverage_points": {
@@ -1603,8 +1603,8 @@
       "lt": "Rodikliai, pagrindinės priežastys ir sverčiai",
       "pt": "Métricas, Causas Raiz e Pontos de Alavancagem",
       "it": "Metriche, Cause Radice e Punti di Leva",
-      "no": "Metrics, Root Causes, and Leverage Points",
-      "el": "Metrics, Root Causes, and Leverage Points"
+      "no": "Metrikker, grunnårsaker og innflytelsespunkter",
+      "el": "Μετρικές, βαθύτερες αιτίες και σημεία μόχλευσης"
     },
     "modules.isa.data_entry.common.moving_from_causal_logic_chains_to_causal_loops": {
       "en": "Moving from Causal Logic Chains to Causal Loops",
@@ -1614,8 +1614,8 @@
       "lt": "Perėjimas nuo priežastinių loginių grandinių prie priežastinių ciklų",
       "pt": "Passando de Cadeias Lógicas Causais para Ciclos Causais",
       "it": "Passaggio da Catene Logiche Causali a Cicli Causali",
-      "no": "Moving from Causal Logic Chains to Causal Loops",
-      "el": "Moving from Causal Logic Chains to Causal Loops"
+      "no": "Fra kausale logikkjeder til kausale løkker",
+      "el": "Από αιτιακές λογικές αλυσίδες σε αιτιακούς βρόχους"
     },
     "modules.isa.data_entry.common.open_user_guide": {
       "en": "Open User Guide",
@@ -1626,7 +1626,7 @@
       "pt": "Abrir Guia do Utilizador",
       "it": "Apri Guida Utente",
       "no": "Åpne brukerveiledning",
-      "el": "Open User Guide"
+      "el": "Άνοιγμα οδηγού χρήστη"
     },
     "modules.isa.data_entry.common.presenting_and_validating_results": {
       "en": "Presenting and Validating Results",
@@ -1636,8 +1636,8 @@
       "lt": "Rezultatų pateikimas ir patvirtinimas",
       "pt": "Apresentando e Validando Resultados",
       "it": "Presentazione e Validazione dei Risultati",
-      "no": "Presenting and Validating Results",
-      "el": "Presenting and Validating Results"
+      "no": "Presentere og validere resultater",
+      "el": "Παρουσίαση και επικύρωση αποτελεσμάτων"
     },
     "modules.isa.data_entry.common.reset_all_data": {
       "en": "Reset All Data",
@@ -1647,7 +1647,7 @@
       "lt": "Atstatyti visus duomenis",
       "pt": "Redefinir Todos os Dados",
       "it": "Ripristina Tutti i Dati",
-      "no": "Reset All Data",
+      "no": "Tilbakestill alle data",
       "el": "Επαναφορά Όλα Δεδομένα"
     },
     "modules.isa.data_entry.common.reset_data": {
@@ -1658,7 +1658,7 @@
       "lt": "Atstatyti duomenis",
       "pt": "Redefinir Dados",
       "it": "Ripristina Dati",
-      "no": "Reset Data",
+      "no": "Tilbakestill data",
       "el": "Επαναφορά Δεδομένα"
     },
     "modules.isa.data_entry.common.root_causes_identified": {
@@ -1669,8 +1669,8 @@
       "lt": "Nustatytos pagrindinės priežastys",
       "pt": "Causas Raiz Identificadas",
       "it": "Cause Radice Identificate",
-      "no": "Root Causes Identified",
-      "el": "Root Causes Identified"
+      "no": "Grunnårsaker identifisert",
+      "el": "Βαθύτερες αιτίες που εντοπίστηκαν"
     },
     "modules.isa.data_entry.common.save_bot_data": {
       "en": "Save BOT Data",
@@ -1680,7 +1680,7 @@
       "lt": "Išsaugoti BOT duomenis",
       "pt": "Guardar Dados BOT",
       "it": "Salva Dati BOT",
-      "no": "Save BOT Data",
+      "no": "Lagre BOT-data",
       "el": "Αποθήκευση BOT Data"
     },
     "modules.isa.data_entry.common.save_current_isa_analysis_to_excel_workbook": {
@@ -1691,7 +1691,7 @@
       "lt": "Išsaugoti dabartinę ISA analizę į Excel darbaknygę:",
       "pt": "Guardar análise ISA atual no livro Excel:",
       "it": "Salvare l'analisi ISA corrente nella cartella di lavoro Excel:",
-      "no": "Save current ISA analysis to Excel workbook:",
+      "no": "Lagre nåværende ISA-analyse til Excel-arbeidsbok:",
       "el": "Αποθήκευση current ISA analysis to Excel workbook:"
     },
     "modules.isa.data_entry.common.save_exercises_10_12": {
@@ -1702,7 +1702,7 @@
       "lt": "Išsaugoti Pratimus 10-12",
       "pt": "Guardar Exercícios 10-12",
       "it": "Salva Esercizi 10-12",
-      "no": "Save Exercises 10-12",
+      "no": "Lagre øvelse 10-12",
       "el": "Αποθήκευση Exercises 10-12"
     },
     "modules.isa.data_entry.common.save_exercises_7_9": {
@@ -1713,7 +1713,7 @@
       "lt": "Išsaugoti Pratimus 7-9",
       "pt": "Guardar Exercícios 7-9",
       "it": "Salva Esercizi 7-9",
-      "no": "Save Exercises 7-9",
+      "no": "Lagre øvelse 7-9",
       "el": "Αποθήκευση Exercises 7-9"
     },
     "modules.isa.data_entry.common.specifying_activities_affecting_pressures": {
@@ -1724,8 +1724,8 @@
       "lt": "Veiklos, darančios įtaką spaudimams, specifikavimas",
       "pt": "Especificando Atividades que afetam as Pressões",
       "it": "Specificazione delle Attività che influenzano le Pressioni",
-      "no": "Specifying Activities affecting Pressures",
-      "el": "Specifying Activities affecting Pressures"
+      "no": "Spesifisere aktiviteter som påvirker press",
+      "el": "Καθορισμός δραστηριοτήτων που επηρεάζουν τις πιέσεις"
     },
     "modules.isa.data_entry.common.strength": {
       "en": "Strength:",
@@ -1735,8 +1735,8 @@
       "lt": "Stiprumas:",
       "pt": "Força:",
       "it": "Forza:",
-      "no": "Strength:",
-      "el": "Strength:"
+      "no": "Styrke:",
+      "el": "Ένταση:"
     },
     "modules.isa.data_entry.common.temporal_scope": {
       "en": "Temporal Scope:",
@@ -1746,8 +1746,8 @@
       "lt": "Laikotarpio apimtis:",
       "pt": "Âmbito Temporal:",
       "it": "Ambito Temporale:",
-      "no": "Temporal Scope:",
-      "el": "Temporal Scope:"
+      "no": "Tidsmessig omfang:",
+      "el": "Χρονικό εύρος:"
     },
     "modules.isa.data_entry.common.time_series_plot": {
       "en": "Time Series Plot",
@@ -1757,7 +1757,7 @@
       "lt": "Laiko eilučių grafikas",
       "pt": "Gráfico de Séries Temporais",
       "it": "Grafico di Serie Temporali",
-      "no": "Time Series Plot",
+      "no": "Tidsserieplott",
       "el": "Ώρα Series Plot"
     },
     "modules.isa.data_entry.common.unit": {
@@ -1768,8 +1768,8 @@
       "lt": "Vienetas:",
       "pt": "Unidade:",
       "it": "Unità:",
-      "no": "Unit:",
-      "el": "Unit:"
+      "no": "Enhet:",
+      "el": "Μονάδα:"
     },
     "modules.isa.data_entry.common.validation_completed": {
       "en": "Validation Completed:",
@@ -1779,7 +1779,7 @@
       "lt": "Patvirtinimas baigtas:",
       "pt": "Validação Concluída:",
       "it": "Validazione Completata:",
-      "no": "Validation Completed:",
+      "no": "Validering fullført:",
       "el": "Επικύρωση Completed:"
     },
     "modules.isa.data_entry.common.who_is_affected_who_makes_decisions": {
@@ -1790,8 +1790,8 @@
       "lt": "Kas yra paveiktas? Kas priima sprendimus?",
       "pt": "Quem é afetado? Quem toma as decisões?",
       "it": "Chi è interessato? Chi prende le decisioni?",
-      "no": "Who is affected? Who makes decisions?",
-      "el": "Who is affected? Who makes decisions?"
+      "no": "Hvem er berørt? Hvem tar beslutninger?",
+      "el": "Ποιοι επηρεάζονται; Ποιοι λαμβάνουν αποφάσεις;"
     },
     "modules.isa.data_entry.common.year": {
       "en": "Year:",
@@ -1801,8 +1801,8 @@
       "lt": "Metai:",
       "pt": "Ano:",
       "it": "Anno:",
-      "no": "Year:",
-      "el": "Year:"
+      "no": "År:",
+      "el": "Έτος:"
     },
     "modules.isa.data_entry.ex0.exercise_0_complexity": {
       "en": "Exercise 0: Complexity",
@@ -1812,8 +1812,8 @@
       "lt": "Pratimas 0: Sudėtingumas",
       "pt": "Exercício 0: Complexidade",
       "it": "Esercizio 0: Complessità",
-      "no": "Exercise 0: Complexity",
-      "el": "Exercise 0: Complexity"
+      "no": "Øvelse 0: Kompleksitet",
+      "el": "Άσκηση 0: Πολυπλοκότητα"
     },
     "modules.isa.data_entry.ex0.save_exercise_0": {
       "en": "Save Exercise 0",
@@ -1823,7 +1823,7 @@
       "lt": "Išsaugoti Pratimą 0",
       "pt": "Guardar Exercício 0",
       "it": "Salva Esercizio 0",
-      "no": "Save Exercise 0",
+      "no": "Lagre øvelse 0",
       "el": "Αποθήκευση Exercise 0"
     },
     "modules.isa.data_entry.ex1.add_driver": {
@@ -1834,7 +1834,7 @@
       "lt": "Pridėti veiksnį",
       "pt": "Adicionar Impulsor",
       "it": "Aggiungi Fattore",
-      "no": "Add Driver",
+      "no": "Legg til drivkraft",
       "el": "Προσθήκη Κινητήρια δύναμη"
     },
     "modules.isa.data_entry.ex1.add_drivers": {
@@ -1845,7 +1845,7 @@
       "lt": "Pridėti veiksnius",
       "pt": "Adicionar Impulsores",
       "it": "Aggiungere Fattori",
-      "no": "Add Drivers",
+      "no": "Legg til drivkrefter",
       "el": "Προσθήκη Κινητήριες δυνάμεις"
     },
     "modules.isa.data_entry.ex1.closing_the_loop_drivers_to_goods_benefits": {
@@ -1856,8 +1856,8 @@
       "lt": "Ciklo uždarymas: Veiksniai į gėrybes ir naudą",
       "pt": "Fecho do Ciclo: Impulsores para Bens e Benefícios",
       "it": "Chiusura del Ciclo: Fattori verso Beni e Benefici",
-      "no": "Closing the Loop: Drivers to Goods & Benefits",
-      "el": "Closing the Loop: Drivers to Goods & Benefits"
+      "no": "Lukke løkken: Drivkrefter til goder og fordeler",
+      "el": "Κλείσιμο του βρόχου: Κινητήριες δυνάμεις προς αγαθά και οφέλη"
     },
     "modules.isa.data_entry.ex1.current_drivers": {
       "en": "Current Drivers",
@@ -1867,8 +1867,8 @@
       "lt": "Dabartiniai veiksniai",
       "pt": "Impulsores Atuais",
       "it": "Fattori Attuali",
-      "no": "Current Drivers",
-      "el": "Current Drivers"
+      "no": "Nåværende drivkrefter",
+      "el": "Τρέχουσες κινητήριες δυνάμεις"
     },
     "modules.isa.data_entry.ex1.driver_to_goodsbenefits_connections": {
       "en": "Driver to Goods/Benefits Connections",
@@ -1878,7 +1878,7 @@
       "lt": "Veiksnių ir gėrybių/naudos ryšiai",
       "pt": "Ligações de Impulsores para Bens/Benefícios",
       "it": "Connessioni Fattori-Beni/Benefici",
-      "no": "Driver to Goods/Benefits Connections",
+      "no": "Tilkoblinger fra drivkraft til goder/fordeler",
       "el": "Κινητήρια δύναμη to Goods/Benefits Connections"
     },
     "modules.isa.data_entry.ex1.drivers_giving_rise_to_activities": {
@@ -1889,7 +1889,7 @@
       "lt": "Veiksniai, sukeliantys veiklą",
       "pt": "Impulsores que dão origem a Atividades",
       "it": "Fattori che danno origine alle Attività",
-      "no": "Drivers giving rise to Activities",
+      "no": "Drivkrefter som gir opphav til aktiviteter",
       "el": "Κινητήριες δυνάμεις giving rise to Activities"
     },
     "modules.isa.data_entry.ex1.exercise_10": {
@@ -1900,8 +1900,8 @@
       "lt": "Pratimas 10:",
       "pt": "Exercício 10:",
       "it": "Esercizio 10:",
-      "no": "Exercise 10:",
-      "el": "Exercise 10:"
+      "no": "Øvelse 10:",
+      "el": "Άσκηση 10:"
     },
     "modules.isa.data_entry.ex1.exercise_10_clarifying_the_cld": {
       "en": "Exercise 10: Clarifying the CLD",
@@ -1911,8 +1911,8 @@
       "lt": "Pratimas 10: PCS patikslinimas",
       "pt": "Exercício 10: Clarificação do DCL",
       "it": "Esercizio 10: Chiarificazione del DCC",
-      "no": "Exercise 10: Clarifying the CLD",
-      "el": "Exercise 10: Clarifying the CLD"
+      "no": "Øvelse 10: Klargjøring av CLD",
+      "el": "Άσκηση 10: Διευκρίνιση του CLD"
     },
     "modules.isa.data_entry.ex1.exercise_11": {
       "en": "Exercise 11:",
@@ -1922,8 +1922,8 @@
       "lt": "Pratimas 11:",
       "pt": "Exercício 11:",
       "it": "Esercizio 11:",
-      "no": "Exercise 11:",
-      "el": "Exercise 11:"
+      "no": "Øvelse 11:",
+      "el": "Άσκηση 11:"
     },
     "modules.isa.data_entry.ex1.exercise_11_metrics_and_leverage_points": {
       "en": "Exercise 11: Metrics and Leverage Points",
@@ -1933,8 +1933,8 @@
       "lt": "Pratimas 11: Rodikliai ir sverčiai",
       "pt": "Exercício 11: Métricas e Pontos de Alavancagem",
       "it": "Esercizio 11: Metriche e Punti di Leva",
-      "no": "Exercise 11: Metrics and Leverage Points",
-      "el": "Exercise 11: Metrics and Leverage Points"
+      "no": "Øvelse 11: Metrikker og innflytelsespunkter",
+      "el": "Άσκηση 11: Μετρικές και σημεία μόχλευσης"
     },
     "modules.isa.data_entry.ex1.exercise_12": {
       "en": "Exercise 12:",
@@ -1944,8 +1944,8 @@
       "lt": "Pratimas 12:",
       "pt": "Exercício 12:",
       "it": "Esercizio 12:",
-      "no": "Exercise 12:",
-      "el": "Exercise 12:"
+      "no": "Øvelse 12:",
+      "el": "Άσκηση 12:"
     },
     "modules.isa.data_entry.ex1.exercise_12_presenting_and_validating": {
       "en": "Exercise 12: Presenting and Validating",
@@ -1955,8 +1955,8 @@
       "lt": "Pratimas 12: Pateikimas ir patvirtinimas",
       "pt": "Exercício 12: Apresentação e Validação",
       "it": "Esercizio 12: Presentazione e Validazione",
-      "no": "Exercise 12: Presenting and Validating",
-      "el": "Exercise 12: Presenting and Validating"
+      "no": "Øvelse 12: Presentere og validere",
+      "el": "Άσκηση 12: Παρουσίαση και επικύρωση"
     },
     "modules.isa.data_entry.ex1.exercise_1_goods_benefits": {
       "en": "Exercise 1: Goods & Benefits",
@@ -1966,8 +1966,8 @@
       "lt": "Pratimas 1: Gėrybės ir nauda",
       "pt": "Exercício 1: Bens e Benefícios",
       "it": "Esercizio 1: Beni e Benefici",
-      "no": "Exercise 1: Goods & Benefits",
-      "el": "Exercise 1: Goods & Benefits"
+      "no": "Øvelse 1: Goder og fordeler",
+      "el": "Άσκηση 1: Αγαθά και οφέλη"
     },
     "modules.isa.data_entry.ex1.exercise_5_drivers": {
       "en": "Exercise 5: Drivers",
@@ -1977,8 +1977,8 @@
       "lt": "Pratimas 5: Veiksniai",
       "pt": "Exercício 5: Impulsores",
       "it": "Esercizio 5: Fattori",
-      "no": "Exercise 5: Drivers",
-      "el": "Exercise 5: Drivers"
+      "no": "Øvelse 5: Drivkrefter",
+      "el": "Άσκηση 5: Κινητήριες δυνάμεις"
     },
     "modules.isa.data_entry.ex1.save_exercise_1": {
       "en": "Save Exercise 1",
@@ -1988,7 +1988,7 @@
       "lt": "Išsaugoti Pratimą 1",
       "pt": "Guardar Exercício 1",
       "it": "Salva Esercizio 1",
-      "no": "Save Exercise 1",
+      "no": "Lagre øvelse 1",
       "el": "Αποθήκευση Exercise 1"
     },
     "modules.isa.data_entry.ex101112.review_the_connections_between_dapsiwrm_elements": {
@@ -1999,8 +1999,8 @@
       "lt": "Peržiūrėkite ryšius tarp DAPSI(W)R(M) elementų:",
       "pt": "Reveja as ligações entre os elementos DAPSI(W)R(M):",
       "it": "Rivedere le connessioni tra gli elementi DAPSI(W)R(M):",
-      "no": "Review the connections between DAPSI(W)R(M) elements:",
-      "el": "Review the connections between DAPSI(W)R(M) elements:"
+      "no": "Gjennomgå tilkoblingene mellom DAPSI(W)R(M)-elementer:",
+      "el": "Ελέγξτε τις συνδέσεις μεταξύ στοιχείων DAPSI(W)R(M):"
     },
     "modules.isa.data_entry.ex2a.exercise_2a_ecosystem_services": {
       "en": "Exercise 2a: Ecosystem Services",
@@ -2010,8 +2010,8 @@
       "lt": "Pratimas 2a: Ekosistemų paslaugos",
       "pt": "Exercício 2a: Serviços Ecossistémicos",
       "it": "Esercizio 2a: Servizi Ecosistemici",
-      "no": "Exercise 2a: Ecosystem Services",
-      "el": "Exercise 2a: Ecosystem Services"
+      "no": "Øvelse 2a: Økosystemtjenester",
+      "el": "Άσκηση 2a: Υπηρεσίες οικοσυστήματος"
     },
     "modules.isa.data_entry.ex2a.save_exercise_2a": {
       "en": "Save Exercise 2a",
@@ -2021,7 +2021,7 @@
       "lt": "Išsaugoti Pratimą 2a",
       "pt": "Guardar Exercício 2a",
       "it": "Salva Esercizio 2a",
-      "no": "Save Exercise 2a",
+      "no": "Lagre øvelse 2a",
       "el": "Αποθήκευση Exercise 2a"
     },
     "modules.isa.data_entry.ex2b.exercise_2b_marine_processes": {
@@ -2032,8 +2032,8 @@
       "lt": "Pratimas 2b: Jūros procesai",
       "pt": "Exercício 2b: Processos Marinhos",
       "it": "Esercizio 2b: Processi Marini",
-      "no": "Exercise 2b: Marine Processes",
-      "el": "Exercise 2b: Marine Processes"
+      "no": "Øvelse 2b: Marine prosesser",
+      "el": "Άσκηση 2b: Θαλάσσιες διεργασίες"
     },
     "modules.isa.data_entry.ex2b.save_exercise_2b": {
       "en": "Save Exercise 2b",
@@ -2043,7 +2043,7 @@
       "lt": "Išsaugoti Pratimą 2b",
       "pt": "Guardar Exercício 2b",
       "it": "Salva Esercizio 2b",
-      "no": "Save Exercise 2b",
+      "no": "Lagre øvelse 2b",
       "el": "Αποθήκευση Exercise 2b"
     },
     "modules.isa.data_entry.ex3.exercise_3_pressures": {
@@ -2054,8 +2054,8 @@
       "lt": "Pratimas 3: Spaudimai",
       "pt": "Exercício 3: Pressões",
       "it": "Esercizio 3: Pressioni",
-      "no": "Exercise 3: Pressures",
-      "el": "Exercise 3: Pressures"
+      "no": "Øvelse 3: Press",
+      "el": "Άσκηση 3: Πιέσεις"
     },
     "modules.isa.data_entry.ex3.save_exercise_3": {
       "en": "Save Exercise 3",
@@ -2065,7 +2065,7 @@
       "lt": "Išsaugoti Pratimą 3",
       "pt": "Guardar Exercício 3",
       "it": "Salva Esercizio 3",
-      "no": "Save Exercise 3",
+      "no": "Lagre øvelse 3",
       "el": "Αποθήκευση Exercise 3"
     },
     "modules.isa.data_entry.ex3.specifying_pressures_on_state_changes": {
@@ -2076,8 +2076,8 @@
       "lt": "Spaudimų, darančių įtaką būklės pokyčiams, specifikavimas",
       "pt": "Especificando Pressões sobre Mudanças de Estado",
       "it": "Specificazione delle Pressioni sui Cambiamenti di Stato",
-      "no": "Specifying Pressures on State Changes",
-      "el": "Specifying Pressures on State Changes"
+      "no": "Spesifisere press på tilstandsendringer",
+      "el": "Καθορισμός πιέσεων σε αλλαγές κατάστασης"
     },
     "modules.isa.data_entry.ex4.creating_impact_based_cld_in_kumu": {
       "en": "Creating Impact-based CLD in Kumu",
@@ -2087,8 +2087,8 @@
       "lt": "Poveikiu pagrįstos PCS kūrimas Kumu",
       "pt": "Criando DCL baseado em Impactos no Kumu",
       "it": "Creazione di DCC basato sugli Impatti in Kumu",
-      "no": "Creating Impact-based CLD in Kumu",
-      "el": "Creating Impact-based CLD in Kumu"
+      "no": "Opprette påvirkningsbasert CLD i Kumu",
+      "el": "Δημιουργία CLD βάσει επιπτώσεων στο Kumu"
     },
     "modules.isa.data_entry.ex4.exercise_4_activities": {
       "en": "Exercise 4: Activities",
@@ -2098,8 +2098,8 @@
       "lt": "Pratimas 4: Veiklos",
       "pt": "Exercício 4: Atividades",
       "it": "Esercizio 4: Attività",
-      "no": "Exercise 4: Activities",
-      "el": "Exercise 4: Activities"
+      "no": "Øvelse 4: Aktiviteter",
+      "el": "Άσκηση 4: Δραστηριότητες"
     },
     "modules.isa.data_entry.ex4.identified_welfare_impacts": {
       "en": "Identified Welfare Impacts:",
@@ -2109,8 +2109,8 @@
       "lt": "Nustatytas poveikis gerovei:",
       "pt": "Impactos no Bem-estar Identificados:",
       "it": "Impatti sul Benessere Identificati:",
-      "no": "Identified Welfare Impacts:",
-      "el": "Identified Welfare Impacts:"
+      "no": "Identifiserte velferdspåvirkninger:",
+      "el": "Εντοπισμένες επιπτώσεις στην ευημερία:"
     },
     "modules.isa.data_entry.ex4.save_exercise_4": {
       "en": "Save Exercise 4",
@@ -2120,7 +2120,7 @@
       "lt": "Išsaugoti Pratimą 4",
       "pt": "Guardar Exercício 4",
       "it": "Salva Esercizio 4",
-      "no": "Save Exercise 4",
+      "no": "Lagre øvelse 4",
       "el": "Αποθήκευση Exercise 4"
     },
     "modules.isa.data_entry.ex4.unfolding_complexity_and_impacts_on_welfare": {
@@ -2131,8 +2131,8 @@
       "lt": "Sudėtingumo atskleidimas ir poveikis gerovei",
       "pt": "Desdobrando a Complexidade e Impactos no Bem-estar",
       "it": "Dispiegamento della Complessità e Impatti sul Benessere",
-      "no": "Unfolding Complexity and Impacts on Welfare",
-      "el": "Unfolding Complexity and Impacts on Welfare"
+      "no": "Utfolde kompleksitet og påvirkninger på velferd",
+      "el": "Ανάπτυξη πολυπλοκότητας και επιπτώσεων στην ευημερία"
     },
     "modules.isa.data_entry.ex5.save_exercise_5": {
       "en": "Save Exercise 5",
@@ -2142,7 +2142,7 @@
       "lt": "Išsaugoti Pratimą 5",
       "pt": "Guardar Exercício 5",
       "it": "Salva Esercizio 5",
-      "no": "Save Exercise 5",
+      "no": "Lagre øvelse 5",
       "el": "Αποθήκευση Exercise 5"
     },
     "modules.isa.data_entry.ex6.exercise_6_closing_loop": {
@@ -2153,8 +2153,8 @@
       "lt": "Pratimas 6: Ciklo uždarymas",
       "pt": "Exercício 6: Fecho do Ciclo",
       "it": "Esercizio 6: Chiusura del Ciclo",
-      "no": "Exercise 6: Closing Loop",
-      "el": "Exercise 6: Closing Loop"
+      "no": "Øvelse 6: Lukke løkken",
+      "el": "Άσκηση 6: Κλείσιμο βρόχου"
     },
     "modules.isa.data_entry.ex6.save_exercise_6": {
       "en": "Save Exercise 6",
@@ -2164,7 +2164,7 @@
       "lt": "Išsaugoti Pratimą 6",
       "pt": "Guardar Exercício 6",
       "it": "Salva Esercizio 6",
-      "no": "Save Exercise 6",
+      "no": "Lagre øvelse 6",
       "el": "Αποθήκευση Exercise 6"
     },
     "modules.isa.data_entry.ex789.add_ecosystem_service": {
@@ -2175,7 +2175,7 @@
       "lt": "Pridėti ekosistemos paslaugą",
       "pt": "Adicionar Serviço Ecossistémico",
       "it": "Aggiungi Servizio Ecosistemico",
-      "no": "Add Ecosystem Service",
+      "no": "Legg til økosystemtjeneste",
       "el": "Προσθήκη Οικοσύστημα Service"
     },
     "modules.isa.data_entry.ex789.add_ecosystem_services": {
@@ -2186,7 +2186,7 @@
       "lt": "Pridėti ekosistemų paslaugas",
       "pt": "Adicionar Serviços Ecossistémicos",
       "it": "Aggiungere Servizi Ecosistemici",
-      "no": "Add Ecosystem Services",
+      "no": "Legg til økosystemtjenester",
       "el": "Προσθήκη Υπηρεσίες οικοσυστήματος"
     },
     "modules.isa.data_entry.ex789.add_goodbenefit": {
@@ -2197,7 +2197,7 @@
       "lt": "Pridėti Gėrybę/Naudą",
       "pt": "Adicionar Bem/Benefício",
       "it": "Aggiungi Bene/Beneficio",
-      "no": "Add Good/Benefit",
+      "no": "Legg til gode/fordel",
       "el": "Προσθήκη Good/Benefit"
     },
     "modules.isa.data_entry.ex789.add_goods_and_benefits": {
@@ -2208,7 +2208,7 @@
       "lt": "Pridėti gėrybes ir naudą",
       "pt": "Adicionar Bens e Benefícios",
       "it": "Aggiungere Beni e Benefici",
-      "no": "Add Goods and Benefits",
+      "no": "Legg til goder og fordeler",
       "el": "Προσθήκη Αγαθά και οφέλη"
     },
     "modules.isa.data_entry.ex789.current_ecosystem_services": {
@@ -2219,8 +2219,8 @@
       "lt": "Dabartinės ekosistemų paslaugos",
       "pt": "Serviços Ecossistémicos Atuais",
       "it": "Servizi Ecosistemici Attuali",
-      "no": "Current Ecosystem Services",
-      "el": "Current Ecosystem Services"
+      "no": "Nåværende økosystemtjenester",
+      "el": "Τρέχουσες υπηρεσίες οικοσυστήματος"
     },
     "modules.isa.data_entry.ex789.current_goods_and_benefits": {
       "en": "Current Goods and Benefits",
@@ -2230,8 +2230,8 @@
       "lt": "Dabartinės gėrybės ir nauda",
       "pt": "Bens e Benefícios Atuais",
       "it": "Beni e Benefici Attuali",
-      "no": "Current Goods and Benefits",
-      "el": "Current Goods and Benefits"
+      "no": "Nåværende goder og fordeler",
+      "el": "Τρέχοντα αγαθά και οφέλη"
     },
     "modules.isa.data_entry.ex789.ecosystem_services_es_affecting_goods_and_benefits": {
       "en": "Ecosystem Services (ES) affecting Goods and Benefits",
@@ -2241,7 +2241,7 @@
       "lt": "Ekosistemų paslaugos (EP), turinčios įtakos gėrybėms ir naudai",
       "pt": "Serviços Ecossistémicos (SE) que afetam Bens e Benefícios",
       "it": "Servizi Ecosistemici (SE) che influenzano Beni e Benefici",
-      "no": "Ecosystem Services (ES) affecting Goods and Benefits",
+      "no": "Økosystemtjenester (ES) som påvirker goder og fordeler",
       "el": "Υπηρεσίες οικοσυστήματος (ES) affecting Goods and Benefits"
     },
     "modules.isa.data_entry.ex789.exercise_7": {
@@ -2252,8 +2252,8 @@
       "lt": "Pratimas 7:",
       "pt": "Exercício 7:",
       "it": "Esercizio 7:",
-      "no": "Exercise 7:",
-      "el": "Exercise 7:"
+      "no": "Øvelse 7:",
+      "el": "Άσκηση 7:"
     },
     "modules.isa.data_entry.ex789.exercise_8": {
       "en": "Exercise 8:",
@@ -2263,8 +2263,8 @@
       "lt": "Pratimas 8:",
       "pt": "Exercício 8:",
       "it": "Esercizio 8:",
-      "no": "Exercise 8:",
-      "el": "Exercise 8:"
+      "no": "Øvelse 8:",
+      "el": "Άσκηση 8:"
     },
     "modules.isa.data_entry.ex789.exercise_9": {
       "en": "Exercise 9:",
@@ -2274,8 +2274,8 @@
       "lt": "Pratimas 9:",
       "pt": "Exercício 9:",
       "it": "Esercizio 9:",
-      "no": "Exercise 9:",
-      "el": "Exercise 9:"
+      "no": "Øvelse 9:",
+      "el": "Άσκηση 9:"
     },
     "modules.isa.data_entry.ex789.goods_benefits": {
       "en": "Goods & Benefits",
@@ -2285,7 +2285,7 @@
       "lt": "Prekės ir nauda",
       "pt": "Bens e Benefícios",
       "it": "Beni e Benefici",
-      "no": "Goods & Benefits",
+      "no": "Goder og fordeler",
       "el": "Αγαθά & Benefits"
     },
     "modules.isa.data_entry.ex789.specifying_goods_and_benefits_gb": {
@@ -2296,8 +2296,8 @@
       "lt": "Gėrybių ir naudos (G&N) specifikavimas",
       "pt": "Especificando Bens e Benefícios (B&B)",
       "it": "Specificazione di Beni e Benefici (B&B)",
-      "no": "Specifying Goods and Benefits (G&B)",
-      "el": "Specifying Goods and Benefits (G&B)"
+      "no": "Spesifisere goder og fordeler (G&B)",
+      "el": "Καθορισμός αγαθών και οφελών (G&B)"
     },
     "modules.isa.identify_and_classify_the_goods_and_benefits_deriv": {
       "en": "Identify and classify the goods and benefits derived from marine ecosystems.",
@@ -2307,8 +2307,8 @@
       "lt": "Nustatyti ir klasifikuoti gėrybes ir naudą, gaunamą iš jūrų ekosistemų.",
       "pt": "Identificar e classificar os bens e benefícios derivados dos ecossistemas marinhos.",
       "it": "Identificare e classificare i beni e i benefici derivati dagli ecosistemi marini.",
-      "no": "Identify and classify the goods and benefits derived from marine ecosystems.",
-      "el": "Identify and classify the goods and benefits derived from marine ecosystems."
+      "no": "Identifiser og klassifiser godene og fordelene fra marine økosystemer.",
+      "el": "Αναγνωρίστε και ταξινομήστε τα αγαθά και τα οφέλη που προέρχονται από τα θαλάσσια οικοσυστήματα."
     },
     "modules.isa.identify_ecosystem_services_that_contribute_to_eac": {
       "en": "Identify ecosystem services that contribute to each Good/Benefit.",
@@ -2318,8 +2318,8 @@
       "lt": "Nustatyti ekosistemų paslaugas, kurios prisideda prie kiekvienos Gėrybės/Naudos.",
       "pt": "Identificar os serviços ecossistémicos que contribuem para cada Bem/Benefício.",
       "it": "Identificare i servizi ecosistemici che contribuiscono a ciascun Bene/Beneficio.",
-      "no": "Identify ecosystem services that contribute to each Good/Benefit.",
-      "el": "Identify ecosystem services that contribute to each Good/Benefit."
+      "no": "Identifiser økosystemtjenester som bidrar til hvert gode/fordel.",
+      "el": "Προσδιορίστε τις υπηρεσίες οικοσυστήματος που συμβάλλουν σε κάθε αγαθό/όφελος."
     },
     "modules.isa.identify_human_activities_that_generate_pressures_": {
       "en": "Identify human activities that generate pressures on the marine environment.",
@@ -2329,8 +2329,8 @@
       "lt": "Nustatyti žmonių veiklą, kuri sukelia spaudimą jūrų aplinkai.",
       "pt": "Identificar as atividades humanas que geram pressões sobre o ambiente marinho.",
       "it": "Identificare le attività umane che generano pressioni sull'ambiente marino.",
-      "no": "Identify human activities that generate pressures on the marine environment.",
-      "el": "Identify human activities that generate pressures on the marine environment."
+      "no": "Identifiser menneskelige aktiviteter som skaper press på det marine miljøet.",
+      "el": "Προσδιορίστε τις ανθρώπινες δραστηριότητες που δημιουργούν πιέσεις στο θαλάσσιο περιβάλλον."
     },
     "modules.isa.identify_marine_processes_that_support_ecosystem_s": {
       "en": "Identify marine processes that support ecosystem services.",
@@ -2340,8 +2340,8 @@
       "lt": "Nustatyti jūros procesus, kurie palaiko ekosistemų paslaugas.",
       "pt": "Identificar os processos marinhos que suportam os serviços ecossistémicos.",
       "it": "Identificare i processi marini che supportano i servizi ecosistemici.",
-      "no": "Identify marine processes that support ecosystem services.",
-      "el": "Identify marine processes that support ecosystem services."
+      "no": "Identifiser marine prosesser som støtter økosystemtjenester.",
+      "el": "Προσδιορίστε τις θαλάσσιες διεργασίες που υποστηρίζουν τις υπηρεσίες οικοσυστήματος."
     },
     "modules.isa.identify_pressures_that_affect_marine_processes_an": {
       "en": "Identify pressures that affect marine processes and ecosystem state.",
@@ -2351,8 +2351,8 @@
       "lt": "Nustatyti spaudimus, turinčius įtakos jūros procesams ir ekosistemos būklei.",
       "pt": "Identificar as pressões que afetam os processos marinhos e o estado do ecossistema.",
       "it": "Identificare le pressioni che influenzano i processi marini e lo stato dell'ecosistema.",
-      "no": "Identify pressures that affect marine processes and ecosystem state.",
-      "el": "Identify pressures that affect marine processes and ecosystem state."
+      "no": "Identifiser press som påvirker marine prosesser og økosystemtilstand.",
+      "el": "Προσδιορίστε τις πιέσεις που επηρεάζουν τις θαλάσσιες διεργασίες και την κατάσταση του οικοσυστήματος."
     },
     "modules.isa.identify_the_underlying_drivers_that_motivate_huma": {
       "en": "Identify the underlying drivers that motivate human activities.",
@@ -2362,8 +2362,8 @@
       "lt": "Nustatyti pagrindinius veiksnius, skatinančius žmonių veiklą.",
       "pt": "Identificar os impulsores subjacentes que motivam as atividades humanas.",
       "it": "Identificare i fattori sottostanti che motivano le attività umane.",
-      "no": "Identify the underlying drivers that motivate human activities.",
-      "el": "Identify the underlying drivers that motivate human activities."
+      "no": "Identifiser de underliggende drivkreftene bak menneskelige aktiviteter.",
+      "el": "Προσδιορίστε τις υποκείμενες κινητήριες δυνάμεις πίσω από τις ανθρώπινες δραστηριότητες."
     },
     "modules.isa.marine_pollution_template_loaded_with_example_conn": {
       "en": "Marine Pollution template loaded with example connections!",
@@ -2373,7 +2373,7 @@
       "lt": "Jūros taršos šablonas su jungčių pavyzdžiais!",
       "pt": "Modelo de Poluição Marinha carregado com exemplos de conexões!",
       "it": "Modello di inquinamento marino caricato con collegamenti di esempio!",
-      "no": "Marine Pollution template loaded with example connections!",
+      "no": "Marin forurensningsmal lastet med eksempeltilkoblinger!",
       "el": "Θαλάσσιο Pollution template loaded with example connections!"
     },
     "modules.isa.overfishing_template_loaded_with_example_connectio": {
@@ -2384,8 +2384,8 @@
       "lt": "Perteklinės žvejybos šablonas įkeltas su jungčių pavyzdžiais! Dabar galite jį peržiūrėti arba modifikuoti.",
       "pt": "Modelo de sobrepesca carregado com exemplos de conexões! Agora você pode visualizá-lo ou modificá-lo.",
       "it": "Modello di pesca eccessiva caricato con connessioni di esempio! Ora puoi visualizzarlo in anteprima o modificarlo.",
-      "no": "Overfishing template loaded with example connections! You can now preview or modify it.",
-      "el": "Overfishing template loaded with example connections! You can now preview or modify it."
+      "no": "Overfiskemal lastet med eksempeltilkoblinger! Du kan nå forhåndsvise eller endre den.",
+      "el": "Πρότυπο υπεραλίευσης φορτώθηκε με παραδείγματα συνδέσεων! Μπορείτε τώρα να το προεπισκοπήσετε ή να το τροποποιήσετε."
     },
     "modules.isa.prepare_dat_for_import_into_kumu_visualization_sof": {
       "en": "Prepare data for import into Kumu visualization software:",
@@ -2395,8 +2395,8 @@
       "lt": "Paruoškite duomenis importuoti į Kumu vizualizavimo programinę įrangą:",
       "pt": "Prepare os dados para importação no software de visualização Kumu:",
       "it": "Preparare i dati per l'importazione nel software di visualizzazione Kumu:",
-      "no": "Prepare data for import into Kumu visualization software:",
-      "el": "Prepare data for import into Kumu visualization software:"
+      "no": "Forbered data for import til Kumu-visualiseringsprogramvare:",
+      "el": "Προετοιμασία δεδομένων για εισαγωγή στο λογισμικό οπτικοποίησης Kumu:"
     },
     "modules.isa.record_stakeholder_feedback_validation_workshop_re": {
       "en": "Record stakeholder feedback, validation workshop results, expert reviews...",
@@ -2406,8 +2406,8 @@
       "lt": "Užrašykite suinteresuotųjų subjektų atsiliepimus, patvirtinimo dirbtuvių rezultatus, ekspertų vertinimus...",
       "pt": "Registe o feedback das partes interessadas, resultados de workshops de validação, revisões de especialistas...",
       "it": "Registrare il feedback delle parti interessate, i risultati dei workshop di validazione, le revisioni degli esperti...",
-      "no": "Record stakeholder feedback, validation workshop results, expert reviews...",
-      "el": "Record stakeholder feedback, validation workshop results, expert reviews..."
+      "no": "Registrer tilbakemeldinger fra interessenter, valideringsverksteder, fagfellevurderinger...",
+      "el": "Καταγράψτε ανατροφοδότηση ενδιαφερομένων, αποτελέσματα εργαστηρίων επικύρωσης, αξιολογήσεις εμπειρογνωμόνων..."
     },
     "modules.isa.select_drivers_and_the_goodsbenefits_they_influenc": {
       "en": "Select drivers and the goods/benefits they influence (positively or negatively):",
@@ -2417,7 +2417,7 @@
       "lt": "Pasirinkite veiksnius ir gėrybes/naudą, kurioms jie turi įtakos (teigiamą arba neigiamą):",
       "pt": "Selecione os impulsores e os bens/benefícios que influenciam (positiva ou negativamente):",
       "it": "Selezionare i fattori e i beni/benefici che influenzano (positivamente o negativamente):",
-      "no": "Select drivers and the goods/benefits they influence (positively or negatively):",
+      "no": "Velg drivkrefter og godene/fordelene de påvirker (positivt eller negativt):",
       "el": "Επιλογή Κινητήριες δυνάμεις and the goods/benefits they influence (positively or negatively):"
     },
     "modules.isa.these_connections_will_be_included_in_your_saved_i": {
@@ -2428,8 +2428,8 @@
       "lt": "Šie ryšiai bus įtraukti į išsaugotus ISA duomenis.",
       "pt": "Essas conexões serão incluídas nos dados ISA salvos.",
       "it": "Queste connessioni verranno incluse nei dati ISA salvati.",
-      "no": "These connections will be included in your saved ISA data.",
-      "el": "These connections will be included in your saved ISA data."
+      "no": "Disse tilkoblingene vil bli inkludert i dine lagrede ISA-data.",
+      "el": "Αυτές οι συνδέσεις θα συμπεριληφθούν στα αποθηκευμένα δεδομένα ISA σας."
     },
     "modules.isa.this_ai_powered_assistant_helps_you_create_your_da": {
       "en": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
@@ -2439,8 +2439,8 @@
       "lt": "Šis dirbtinio intelekto asistentas padeda sukurti DAPSI(W)R(M) sistemą interaktyvia kalba. Tiesiog atsakykite į klausimus, o asistentas jus ves per kiekvieną žingsnį.",
       "pt": "Este assistente alimentado por IA ajuda você a criar sua estrutura DAPSI(W)R(M) através de conversação interativa. Simplesmente responda às perguntas e o assistente irá guiá-lo em cada etapa.",
       "it": "Questo assistente basato sull'intelligenza artificiale ti aiuta a creare il tuo framework DAPSI(W)R(M) attraverso una conversazione interattiva. Rispondi semplicemente alle domande e l'assistente ti guiderà in ogni passaggio.",
-      "no": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step.",
-      "el": "This AI-powered assistant helps you create your DAPSI(W)R(M) framework through interactive conversation. Simply answer the questions and the assistant will guide you through each step."
+      "no": "Denne KI-drevne assistenten hjelper deg med å lage ditt DAPSI(W)R(M)-rammeverk gjennom interaktiv samtale. Svar enkelt på spørsmålene, og assistenten veileder deg gjennom hvert trinn.",
+      "el": "Αυτός ο βοηθός τεχνητής νοημοσύνης σας βοηθά να δημιουργήσετε το πλαίσιο DAPSI(W)R(M) μέσω διαδραστικής συνομιλίας. Απλά απαντήστε στις ερωτήσεις και ο βοηθός θα σας καθοδηγήσει σε κάθε βήμα."
     },
     "modules.isa.this_creates_the_circular_dapsiwrm_framework_showi": {
       "en": "This creates the circular DAPSI(W)R(M) framework showing how drivers ultimately affect welfare.",
@@ -2450,8 +2450,8 @@
       "lt": "Tai sukuria žiedinę DAPSI(W)R(M) sistemą, parodančią, kaip veiksniai galiausiai veikia gerovę.",
       "pt": "Isto cria o quadro circular DAPSI(W)R(M) mostrando como os impulsores afetam o bem-estar.",
       "it": "Questo crea il quadro circolare DAPSI(W)R(M) che mostra come i fattori influenzino il benessere.",
-      "no": "This creates the circular DAPSI(W)R(M) framework showing how drivers ultimately affect welfare.",
-      "el": "This creates the circular DAPSI(W)R(M) framework showing how drivers ultimately affect welfare."
+      "no": "Dette skaper det sirkulære DAPSI(W)R(M)-rammeverket som viser hvordan drivkrefter til slutt påvirker velferd.",
+      "el": "Αυτό δημιουργεί το κυκλικό πλαίσιο DAPSI(W)R(M) που δείχνει πώς οι κινητήριες δυνάμεις επηρεάζουν τελικά την ευημερία."
     },
     "modules.isa.this_preliminary_exercise_helps_you_explore_the_fu": {
       "en": "This preliminary exercise helps you explore the full scope of your system before detailed analysis.",
@@ -2461,8 +2461,8 @@
       "lt": "Šis preliminarus pratimas padeda ištirti visą jūsų sistemos apimtį prieš išsamią analizę.",
       "pt": "Este exercício preliminar ajuda-o a explorar todo o âmbito do seu sistema antes da análise detalhada.",
       "it": "Questo esercizio preliminare aiuta a esplorare l'intera portata del vostro sistema prima dell'analisi dettagliata.",
-      "no": "This preliminary exercise helps you explore the full scope of your system before detailed analysis.",
-      "el": "This preliminary exercise helps you explore the full scope of your system before detailed analysis."
+      "no": "Denne innledende øvelsen hjelper deg å utforske hele omfanget av systemet ditt før detaljert analyse.",
+      "el": "Αυτή η προκαταρκτική άσκηση σας βοηθά να εξερευνήσετε το πλήρες εύρος του συστήματός σας πριν από τη λεπτομερή ανάλυση."
     },
     "modules.isa.this_will_clear_all_entered_dat_this_action_cannot": {
       "en": "This will clear all entered data. This action cannot be undone.",
@@ -2472,8 +2472,8 @@
       "lt": "Tai išvalys visus įvestus duomenis. Šio veiksmo negalima atšaukti.",
       "pt": "Isto irá limpar todos os dados introduzidos. Esta ação não pode ser desfeita.",
       "it": "Questo cancellerà tutti i dati inseriti. Questa azione non può essere annullata.",
-      "no": "This will clear all entered data. This action cannot be undone.",
-      "el": "This will clear all entered data. This action cannot be undone."
+      "no": "Dette vil slette alle registrerte data. Denne handlingen kan ikke angres.",
+      "el": "Αυτό θα διαγράψει όλα τα καταχωρημένα δεδομένα. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
     },
     "modules.isa.transfer_your_completed_model_to_the_standard_isa_": {
       "en": "Transfer your completed model to the standard ISA Data Entry module where you can view and edit it in detail",
@@ -2483,8 +2483,8 @@
       "lt": "Perkelkite užbaigtą modelį į standartinį ISA duomenų įvedimo modulį, kuriame galite jį peržiūrėti ir redaguoti detaliai",
       "pt": "Transfira seu modelo concluído para o módulo padrão de Entrada de Dados ISA, onde você pode visualizá-lo e editá-lo em detalhes",
       "it": "Trasferisci il tuo modello completato al modulo standard di Inserimento Dati ISA dove puoi visualizzarlo e modificarlo in dettaglio",
-      "no": "Transfer your completed model to the standard ISA Data Entry module where you can view and edit it in detail",
-      "el": "Transfer your completed model to the standard ISA Data Entry module where you can view and edit it in detail"
+      "no": "Overfør din fullførte modell til standard ISA-dataregistreringsmodulen der du kan se og redigere den i detalj",
+      "el": "Μεταφέρετε το ολοκληρωμένο μοντέλο σας στη βασική μονάδα καταχώρησης δεδομένων ISA όπου μπορείτε να το δείτε και να το επεξεργαστείτε αναλυτικά"
     },
     "modules.isa.understand_the_complexity_of_your_case_study_and_i": {
       "en": "Understand the complexity of your case study and identify impacts on human welfare.",
@@ -2494,8 +2494,8 @@
       "lt": "Supraskite savo atvejo tyrimo sudėtingumą ir nustatykite poveikį žmonių gerovei.",
       "pt": "Compreender a complexidade do seu estudo de caso e identificar impactos no bem-estar humano.",
       "it": "Comprendere la complessità del vostro caso studio e identificare gli impatti sul benessere umano.",
-      "no": "Understand the complexity of your case study and identify impacts on human welfare.",
-      "el": "Understand the complexity of your case study and identify impacts on human welfare."
+      "no": "Forstå kompleksiteten i casestudien din og identifiser påvirkninger på menneskelig velferd.",
+      "el": "Κατανοήστε την πολυπλοκότητα της μελέτης περίπτωσής σας και εντοπίστε τις επιπτώσεις στην ανθρώπινη ευημερία."
     },
     "modules.isa.visualize_how_indicators_change_over_time_to_under": {
       "en": "Visualize how indicators change over time to understand system dynamics.",
@@ -2505,7 +2505,7 @@
       "lt": "Vizualizuokite, kaip rodikliai keičiasi laikui bėgant, kad suprastumėte sistemos dinamiką.",
       "pt": "Visualize como os indicadores mudam ao longo do tempo para compreender a dinâmica do sistema.",
       "it": "Visualizzare come gli indicatori cambiano nel tempo per comprendere le dinamiche del sistema.",
-      "no": "Visualize how indicators change over time to understand system dynamics.",
+      "no": "Visualiser hvordan indikatorer endres over tid for å forstå systemdynamikk.",
       "el": "Οπτικοποίηση how indicators change over time to understand system dynamics."
     },
     "modules.isa.what_detailed_processes_can_be_simplified_or_group": {
@@ -2516,8 +2516,8 @@
       "lt": "Kokie detalūs procesai gali būti supaprastinti arba sugrupuoti?",
       "pt": "Que processos detalhados podem ser simplificados ou agrupados?",
       "it": "Quali processi dettagliati possono essere semplificati o raggruppati?",
-      "no": "What detailed processes can be simplified or grouped?",
-      "el": "What detailed processes can be simplified or grouped?"
+      "no": "Hvilke detaljerte prosesser kan forenkles eller grupperes?",
+      "el": "Ποιες λεπτομερείς διεργασίες μπορούν να απλοποιηθούν ή να ομαδοποιηθούν;"
     },
     "modules.isa.what_external_factors_should_be_brought_inside_the": {
       "en": "What external factors should be brought inside the system boundary?",
@@ -2527,8 +2527,8 @@
       "lt": "Kokie išoriniai veiksniai turėtų būti įtraukti į sistemos ribas?",
       "pt": "Que fatores externos devem ser trazidos para dentro da fronteira do sistema?",
       "it": "Quali fattori esterni dovrebbero essere portati all'interno del confine del sistema?",
-      "no": "What external factors should be brought inside the system boundary?",
-      "el": "What external factors should be brought inside the system boundary?"
+      "no": "Hvilke eksterne faktorer bør bringes innenfor systemgrensen?",
+      "el": "Ποιοι εξωτερικοί παράγοντες πρέπει να εισαχθούν εντός των ορίων του συστήματος;"
     },
     "modules.isa.you_are_changing_your_regional_sea_selection_this_": {
       "en": "You are changing your regional sea selection. This will affect the available options for:",
@@ -2538,8 +2538,8 @@
       "lt": "Keičiate regioninės jūros pasirinkimą. Tai paveiks galimas parinktis:",
       "pt": "Você está alterando sua seleção de mar regional. Isso afetará as opções disponíveis para:",
       "it": "Stai modificando la selezione del mare regionale. Questo influenzerà le opzioni disponibili per:",
-      "no": "You are changing your regional sea selection. This will affect the available options for:",
-      "el": "You are changing your regional sea selection. This will affect the available options for:"
+      "no": "Du endrer ditt regionale havvalg. Dette vil påvirke tilgjengelige alternativer for:",
+      "el": "Αλλάζετε την επιλογή της περιφερειακής θάλασσας. Αυτό θα επηρεάσει τις διαθέσιμες επιλογές για:"
     },
     "modules.isa.your_curr_ecosystem_and_issue_selections_may_no_lo": {
       "en": "Your current ecosystem and issue selections may no longer be valid for the new regional sea.",
@@ -2549,8 +2549,8 @@
       "lt": "Jūsų dabartiniai ekosistemos ir problemų pasirinkimai gali nebegalioti naujam regioniniam jūrai.",
       "pt": "Suas seleções atuais de ecossistema e problemas podem não ser mais válidas para o novo mar regional.",
       "it": "Le tue selezioni attuali di ecosistema e problemi potrebbero non essere più valide per il nuovo mare regionale.",
-      "no": "Your current ecosystem and issue selections may no longer be valid for the new regional sea.",
-      "el": "Your current ecosystem and issue selections may no longer be valid for the new regional sea."
+      "no": "Dine nåværende økosystem- og problemvalg er kanskje ikke lenger gyldige for det nye regionale havet.",
+      "el": "Οι τρέχουσες επιλογές οικοσυστήματος και ζητημάτων μπορεί να μην ισχύουν πλέον για τη νέα περιφερειακή θάλασσα."
     },
     "modules.isa.your_ecosystem_and_issue_selections_have_been_clea": {
       "en": "Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea.",
@@ -2560,8 +2560,8 @@
       "lt": "Jūsų ekosistemos ir problemų pasirinkimai buvo išvalyti. Prašome juos pasirinkti iš naujo naujam regioniniam jūrai.",
       "pt": "Suas seleções de ecossistema e problemas foram apagadas. Por favor, selecione-as novamente para o novo mar regional.",
       "it": "Le tue selezioni di ecosistema e problemi sono state cancellate. Si prega di ri-selezionarle per il nuovo mare regionale.",
-      "no": "Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea.",
-      "el": "Your ecosystem and issue selections have been cleared. Please re-select them for the new regional sea."
+      "no": "Dine økosystem- og problemvalg er fjernet. Vennligst velg dem på nytt for det nye regionale havet.",
+      "el": "Οι επιλογές οικοσυστήματος και ζητημάτων διαγράφηκαν. Παρακαλώ επιλέξτε τα ξανά για τη νέα περιφερειακή θάλασσα."
     },
     "modules.isa.what_pressures_do_these_activities_put_on_the_mari": {
       "en": "What PRESSURES do these activities put on the marine environment?",
@@ -2571,8 +2571,8 @@
       "lt": "Kokį SPAUDIMĄ šios veiklos daro jūrų aplinkai?",
       "pt": "Que PRESSÕES estas atividades exercem sobre o ambiente marinho?",
       "it": "Quali PRESSIONI queste attività esercitano sull'ambiente marino?",
-      "no": "What PRESSURES do these activities put on the marine environment?",
-      "el": "What PRESSURES do these activities put on the marine environment?"
+      "no": "Hvilke PRESS utøver disse aktivitetene på det marine miljøet?",
+      "el": "Ποιες ΠΙΕΣΕΙΣ ασκούν αυτές οι δραστηριότητες στο θαλάσσιο περιβάλλον;"
     },
     "modules.isa.how_do_these_pressures_change_the_state_of_the_mar": {
       "en": "How do these pressures change the STATE of the marine ecosystem?",
@@ -2582,8 +2582,8 @@
       "lt": "Kaip šis spaudimas keičia jūrų ekosistemos BŪSENĄ?",
       "pt": "Como essas pressões mudam o ESTADO do ecossistema marinho?",
       "it": "Come queste pressioni cambiano lo STATO dell'ecosistema marino?",
-      "no": "How do these pressures change the STATE of the marine ecosystem?",
-      "el": "How do these pressures change the STATE of the marine ecosystem?"
+      "no": "Hvordan endrer disse pressene TILSTANDEN til det marine økosystemet?",
+      "el": "Πώς αυτές οι πιέσεις αλλάζουν την ΚΑΤΑΣΤΑΣΗ του θαλάσσιου οικοσυστήματος;"
     },
     "modules.isa.what_are_the_impacts_on_ecosystem_services_and_ben": {
       "en": "What are the IMPACTS on ecosystem services and benefits? How do these changes affect what the ocean provides?",
@@ -2593,8 +2593,8 @@
       "lt": "Kokie POVEIKIAI ekosistemos paslaugoms ir privalumams? Kaip šie pokyčiai veikia tai, ką teikia vandenynas?",
       "pt": "Quais são os IMPACTOS nos serviços e benefícios do ecossistema? Como essas mudanças afetam o que o oceano fornece?",
       "it": "Quali sono gli IMPATTI sui servizi e benefici ecosistemici? Come questi cambiamenti influenzano ciò che l'oceano fornisce?",
-      "no": "What are the IMPACTS on ecosystem services and benefits? How do these changes affect what the ocean provides?",
-      "el": "What are the IMPACTS on ecosystem services and benefits? How do these changes affect what the ocean provides?"
+      "no": "Hva er PÅVIRKNINGENE på økosystemtjenester og goder? Hvordan påvirker disse endringene det havet gir?",
+      "el": "Ποιες είναι οι ΕΠΙΠΤΩΣΕΙΣ στις υπηρεσίες και τα οφέλη του οικοσυστήματος; Πώς αυτές οι αλλαγές επηρεάζουν αυτά που παρέχει ο ωκεανός;"
     },
     "modules.isa.how_do_these_impacts_affect_human_welfare_and_well": {
       "en": "How do these impacts affect human WELFARE and well-being?",
@@ -2604,8 +2604,8 @@
       "lt": "Kaip šie poveikiai veikia žmogaus GEROVĘ?",
       "pt": "Como esses impactos afetam o BEM-ESTAR humano?",
       "it": "Come questi impatti influenzano il BENESSERE umano?",
-      "no": "How do these impacts affect human WELFARE and well-being?",
-      "el": "How do these impacts affect human WELFARE and well-being?"
+      "no": "Hvordan påvirker disse påvirkningene menneskelig VELFERD og trivsel?",
+      "el": "Πώς αυτές οι επιπτώσεις επηρεάζουν την ανθρώπινη ΕΥΗΜΕΡΙΑ και ευζωία;"
     },
     "modules.isa.ai_assistant.response_measures_management_policy": {
       "en": "Response Measures - Management & Policy",
@@ -2615,7 +2615,7 @@
       "lt": "Reagavimo priemonės - Valdymas ir politika",
       "pt": "Medidas de Resposta - Gestão e Política",
       "it": "Misure di Risposta - Gestione e Politica",
-      "no": "Response Measures - Management & Policy",
+      "no": "Responstiltak - Forvaltning og politikk",
       "el": "Απόκριση Μέτρα - Management & Policy"
     },
     "modules.isa.what_response_measures_management_actions_policies": {
@@ -2626,8 +2626,8 @@
       "lt": "Kokios REAGAVIMO PRIEMONĖS (valdymo veiksmai, politika, reglamentai) imamasi (arba galėtų būti imamasi) sprendžiant šias problemas?",
       "pt": "Que MEDIDAS DE RESPOSTA (ações de gestão, políticas, regulamentos) estão sendo tomadas (ou poderiam ser tomadas) para resolver esses problemas?",
       "it": "Quali MISURE DI RISPOSTA (azioni di gestione, politiche, regolamenti) vengono adottate (o potrebbero essere adottate) per affrontare questi problemi?",
-      "no": "What RESPONSE MEASURES (management actions, policies, regulations) are being taken (or could be taken) to address these issues?",
-      "el": "What RESPONSE MEASURES (management actions, policies, regulations) are being taken (or could be taken) to address these issues?"
+      "no": "Hvilke RESPONSTILTAK (forvaltningshandlinger, politikk, reguleringer) tas (eller kan tas) for å håndtere disse problemene?",
+      "el": "Ποια ΜΕΤΡΑ ΑΠΟΚΡΙΣΗΣ (δράσεις διαχείρισης, πολιτικές, κανονισμοί) λαμβάνονται (ή θα μπορούσαν να ληφθούν) για την αντιμετώπιση αυτών των ζητημάτων;"
     },
     "modules.isa.data_entry.common.activities_label": {
       "en": "Activities Label",
@@ -2637,7 +2637,7 @@
       "lt": "[LT] Activities Label",
       "pt": "[PT] Activities Label",
       "it": "[IT] Activities Label",
-      "no": "Activities Label",
+      "no": "Aktiviteter",
       "el": "Δραστηριότητες Label"
     },
     "modules.isa.data_entry.common.bot_help_text": {
@@ -2648,8 +2648,8 @@
       "lt": "[LT] Bot Help Text",
       "pt": "[PT] Bot Help Text",
       "it": "[IT] Bot Help Text",
-      "no": "Bot Help Text",
-      "el": "Bot Help Text"
+      "no": "Bot-hjelpetekst",
+      "el": "Κείμενο βοήθειας Bot"
     },
     "modules.isa.data_entry.common.controllability": {
       "en": "Controllability",
@@ -2659,8 +2659,8 @@
       "lt": "[LT] Controllability",
       "pt": "[PT] Controllability",
       "it": "[IT] Controllability",
-      "no": "Controllability",
-      "el": "Controllability"
+      "no": "Kontrollerbarhet",
+      "el": "Ελεγξιμότητα"
     },
     "modules.isa.data_entry.common.effect": {
       "en": "Climate change effects on marine ecosystems",
@@ -2670,8 +2670,8 @@
       "lt": "Klimato kaitos poveikis jūrų ekosistemoms",
       "pt": "Efeitos das mudanças climáticas em ecossistemas marinhos",
       "it": "Effetti del cambiamento climatico sugli ecosistemi marini",
-      "no": "Climate change effects on marine ecosystems",
-      "el": "Climate change effects on marine ecosystems"
+      "no": "Klimaendringseffekter på marine økosystemer",
+      "el": "Επιπτώσεις κλιματικής αλλαγής στα θαλάσσια οικοσυστήματα"
     },
     "modules.isa.data_entry.common.eg_commercial_fishing": {
       "en": "Eg Commercial Fishing",
@@ -2681,8 +2681,8 @@
       "lt": "[LT] Eg Commercial Fishing",
       "pt": "[PT] Eg Commercial Fishing",
       "it": "[IT] Eg Commercial Fishing",
-      "no": "Eg Commercial Fishing",
-      "el": "Eg Commercial Fishing"
+      "no": "F.eks. kommersielt fiske",
+      "el": "Π.χ. Εμπορική αλιεία"
     },
     "modules.isa.data_entry.common.eg_economic_growth": {
       "en": "Eg Economic Growth",
@@ -2692,8 +2692,8 @@
       "lt": "[LT] Eg Economic Growth",
       "pt": "[PT] Eg Economic Growth",
       "it": "[IT] Eg Economic Growth",
-      "no": "Eg Economic Growth",
-      "el": "Eg Economic Growth"
+      "no": "F.eks. økonomisk vekst",
+      "el": "Π.χ. Οικονομική ανάπτυξη"
     },
     "modules.isa.data_entry.common.eg_fish_catch": {
       "en": "Eg Fish Catch",
@@ -2703,8 +2703,8 @@
       "lt": "[LT] Eg Fish Catch",
       "pt": "[PT] Eg Fish Catch",
       "it": "[IT] Eg Fish Catch",
-      "no": "Eg Fish Catch",
-      "el": "Eg Fish Catch"
+      "no": "F.eks. fangst av fisk",
+      "el": "Π.χ. Αλίευμα"
     },
     "modules.isa.data_entry.common.eg_fish_production": {
       "en": "Eg Fish Production",
@@ -2714,8 +2714,8 @@
       "lt": "[LT] Eg Fish Production",
       "pt": "[PT] Eg Fish Production",
       "it": "[IT] Eg Fish Production",
-      "no": "Eg Fish Production",
-      "el": "Eg Fish Production"
+      "no": "F.eks. fiskeproduksjon",
+      "el": "Π.χ. Παραγωγή ψαριών"
     },
     "modules.isa.data_entry.common.eg_nutrient_enrichment": {
       "en": "Eg Nutrient Enrichment",
@@ -2725,8 +2725,8 @@
       "lt": "[LT] Eg Nutrient Enrichment",
       "pt": "[PT] Eg Nutrient Enrichment",
       "it": "[IT] Eg Nutrient Enrichment",
-      "no": "Eg Nutrient Enrichment",
-      "el": "Eg Nutrient Enrichment"
+      "no": "F.eks. næringsstoffberikelse",
+      "el": "Π.χ. Εμπλουτισμός θρεπτικών"
     },
     "modules.isa.data_entry.common.eg_primary_production": {
       "en": "Eg Primary Production",
@@ -2736,8 +2736,8 @@
       "lt": "[LT] Eg Primary Production",
       "pt": "[PT] Eg Primary Production",
       "it": "[IT] Eg Primary Production",
-      "no": "Eg Primary Production",
-      "el": "Eg Primary Production"
+      "no": "F.eks. primærproduksjon",
+      "el": "Π.χ. Πρωτογενής παραγωγή"
     },
     "modules.isa.data_entry.common.entry_removed": {
       "en": "Entry Removed",
@@ -2747,8 +2747,8 @@
       "lt": "[LT] Entry Removed",
       "pt": "[PT] Entry Removed",
       "it": "[IT] Entry Removed",
-      "no": "Entry Removed",
-      "el": "Entry Removed"
+      "no": "Oppføring fjernet",
+      "el": "Η καταχώρηση αφαιρέθηκε"
     },
     "modules.isa.data_entry.common.ex0_help_text": {
       "en": "Ex0 Help Text",
@@ -2758,8 +2758,8 @@
       "lt": "[LT] Ex0 Help Text",
       "pt": "[PT] Ex0 Help Text",
       "it": "[IT] Ex0 Help Text",
-      "no": "Ex0 Help Text",
-      "el": "Ex0 Help Text"
+      "no": "Hjelpetekst for øvelse 0",
+      "el": "Κείμενο βοήθειας για άσκηση 0"
     },
     "modules.isa.data_entry.common.ex101112_help_text": {
       "en": "Ex101112 Help Text",
@@ -2769,8 +2769,8 @@
       "lt": "[LT] Ex101112 Help Text",
       "pt": "[PT] Ex101112 Help Text",
       "it": "[IT] Ex101112 Help Text",
-      "no": "Ex101112 Help Text",
-      "el": "Ex101112 Help Text"
+      "no": "Hjelpetekst for øvelse 10-12",
+      "el": "Κείμενο βοήθειας για ασκήσεις 10-12"
     },
     "modules.isa.data_entry.common.ex1_help_text": {
       "en": "Ex1 Help Text",
@@ -2780,8 +2780,8 @@
       "lt": "[LT] Ex1 Help Text",
       "pt": "[PT] Ex1 Help Text",
       "it": "[IT] Ex1 Help Text",
-      "no": "Ex1 Help Text",
-      "el": "Ex1 Help Text"
+      "no": "Hjelpetekst for øvelse 1",
+      "el": "Κείμενο βοήθειας για άσκηση 1"
     },
     "modules.isa.data_entry.common.ex2a_help_text": {
       "en": "Ex2A Help Text",
@@ -2791,8 +2791,8 @@
       "lt": "[LT] Ex2A Help Text",
       "pt": "[PT] Ex2A Help Text",
       "it": "[IT] Ex2A Help Text",
-      "no": "Ex2A Help Text",
-      "el": "Ex2A Help Text"
+      "no": "Hjelpetekst for øvelse 2A",
+      "el": "Κείμενο βοήθειας για άσκηση 2A"
     },
     "modules.isa.data_entry.common.ex2b_help_text": {
       "en": "Ex2B Help Text",
@@ -2802,8 +2802,8 @@
       "lt": "[LT] Ex2B Help Text",
       "pt": "[PT] Ex2B Help Text",
       "it": "[IT] Ex2B Help Text",
-      "no": "Ex2B Help Text",
-      "el": "Ex2B Help Text"
+      "no": "Hjelpetekst for øvelse 2B",
+      "el": "Κείμενο βοήθειας για άσκηση 2B"
     },
     "modules.isa.data_entry.common.ex3_help_text": {
       "en": "Ex3 Help Text",
@@ -2813,8 +2813,8 @@
       "lt": "[LT] Ex3 Help Text",
       "pt": "[PT] Ex3 Help Text",
       "it": "[IT] Ex3 Help Text",
-      "no": "Ex3 Help Text",
-      "el": "Ex3 Help Text"
+      "no": "Hjelpetekst for øvelse 3",
+      "el": "Κείμενο βοήθειας για άσκηση 3"
     },
     "modules.isa.data_entry.common.ex4_help_text": {
       "en": "Ex4 Help Text",
@@ -2824,8 +2824,8 @@
       "lt": "[LT] Ex4 Help Text",
       "pt": "[PT] Ex4 Help Text",
       "it": "[IT] Ex4 Help Text",
-      "no": "Ex4 Help Text",
-      "el": "Ex4 Help Text"
+      "no": "Hjelpetekst for øvelse 4",
+      "el": "Κείμενο βοήθειας για άσκηση 4"
     },
     "modules.isa.data_entry.common.ex5_help_text": {
       "en": "Ex5 Help Text",
@@ -2835,8 +2835,8 @@
       "lt": "[LT] Ex5 Help Text",
       "pt": "[PT] Ex5 Help Text",
       "it": "[IT] Ex5 Help Text",
-      "no": "Ex5 Help Text",
-      "el": "Ex5 Help Text"
+      "no": "Hjelpetekst for øvelse 5",
+      "el": "Κείμενο βοήθειας για άσκηση 5"
     },
     "modules.isa.data_entry.common.ex6_help_text": {
       "en": "Ex6 Help Text",
@@ -2846,8 +2846,8 @@
       "lt": "[LT] Ex6 Help Text",
       "pt": "[PT] Ex6 Help Text",
       "it": "[IT] Ex6 Help Text",
-      "no": "Ex6 Help Text",
-      "el": "Ex6 Help Text"
+      "no": "Hjelpetekst for øvelse 6",
+      "el": "Κείμενο βοήθειας για άσκηση 6"
     },
     "modules.isa.data_entry.common.ex789_help_text": {
       "en": "Ex789 Help Text",
@@ -2857,8 +2857,8 @@
       "lt": "[LT] Ex789 Help Text",
       "pt": "[PT] Ex789 Help Text",
       "it": "[IT] Ex789 Help Text",
-      "no": "Ex789 Help Text",
-      "el": "Ex789 Help Text"
+      "no": "Hjelpetekst for øvelse 7-9",
+      "el": "Κείμενο βοήθειας για ασκήσεις 7-9"
     },
     "modules.isa.data_entry.common.frequency": {
       "en": "Frequency",
@@ -2868,8 +2868,8 @@
       "lt": "[LT] Frequency",
       "pt": "[PT] Frequency",
       "it": "[IT] Frequency",
-      "no": "Frequency",
-      "el": "Frequency"
+      "no": "Frekvens",
+      "el": "Συχνότητα"
     },
     "modules.isa.data_entry.common.importance": {
       "en": "Importance based on incoming links (Google algorithm). High values indicate authority.",
@@ -2879,8 +2879,8 @@
       "lt": "Svarba pagrįsta įeinančiais nuorodomis (Google algoritmas). Didelės reikšmės rodo autoritetą.",
       "pt": "Importância baseada em links de entrada (algoritmo do Google). Valores altos indicam autoridade.",
       "it": "Importanza basata su link in entrata (algoritmo Google). Valori elevati indicano autorità.",
-      "no": "Importance based on incoming links (Google algorithm). High values indicate authority.",
-      "el": "Importance based on incoming links (Google algorithm). High values indicate authority."
+      "no": "Viktighet basert på innkommende lenker (Google-algoritme). Høye verdier indikerer autoritet.",
+      "el": "Σημασία βάσει εισερχόμενων συνδέσεων (αλγόριθμος Google). Υψηλές τιμές υποδεικνύουν αυθεντία."
     },
     "modules.isa.data_entry.common.intensity": {
       "en": "Intensity",
@@ -2890,8 +2890,8 @@
       "lt": "[LT] Intensity",
       "pt": "[PT] Intensity",
       "it": "[IT] Intensity",
-      "no": "Intensity",
-      "el": "Intensity"
+      "no": "Intensitet",
+      "el": "Ένταση"
     },
     "modules.isa.data_entry.common.isa_guide_dapsiwr_activities": {
       "en": "Isa Guide Dapsiwr Activities",
@@ -2901,8 +2901,8 @@
       "lt": "[LT] Isa Guide Dapsiwr Activities",
       "pt": "[PT] Isa Guide Dapsiwr Activities",
       "it": "[IT] Isa Guide Dapsiwr Activities",
-      "no": "Isa Guide Dapsiwr Activities",
-      "el": "Isa Guide Dapsiwr Activities"
+      "no": "ISA-veiledning DAPSI(W)R(M) Aktiviteter",
+      "el": "Οδηγός ISA DAPSI(W)R(M) Δραστηριότητες"
     },
     "modules.isa.data_entry.common.isa_guide_dapsiwr_p1": {
       "en": "Isa Guide Dapsiwr P1",
@@ -2912,8 +2912,8 @@
       "lt": "[LT] Isa Guide Dapsiwr P1",
       "pt": "[PT] Isa Guide Dapsiwr P1",
       "it": "[IT] Isa Guide Dapsiwr P1",
-      "no": "Isa Guide Dapsiwr P1",
-      "el": "Isa Guide Dapsiwr P1"
+      "no": "ISA-veiledning DAPSI(W)R(M) Del 1",
+      "el": "Οδηγός ISA DAPSI(W)R(M) Μέρος 1"
     },
     "modules.isa.data_entry.common.isa_guide_dapsiwr_pressures": {
       "en": "Isa Guide Dapsiwr Pressures",
@@ -2923,8 +2923,8 @@
       "lt": "[LT] Isa Guide Dapsiwr Pressures",
       "pt": "[PT] Isa Guide Dapsiwr Pressures",
       "it": "[IT] Isa Guide Dapsiwr Pressures",
-      "no": "Isa Guide Dapsiwr Pressures",
-      "el": "Isa Guide Dapsiwr Pressures"
+      "no": "ISA-veiledning DAPSI(W)R(M) Press",
+      "el": "Οδηγός ISA DAPSI(W)R(M) Πιέσεις"
     },
     "modules.isa.data_entry.common.isa_guide_dapsiwr_title": {
       "en": "Isa Guide Dapsiwr Title",
@@ -2934,8 +2934,8 @@
       "lt": "[LT] Isa Guide Dapsiwr Title",
       "pt": "[PT] Isa Guide Dapsiwr Title",
       "it": "[IT] Isa Guide Dapsiwr Title",
-      "no": "Isa Guide Dapsiwr Title",
-      "el": "Isa Guide Dapsiwr Title"
+      "no": "ISA-veiledning DAPSI(W)R(M) Tittel",
+      "el": "Οδηγός ISA DAPSI(W)R(M) Τίτλος"
     },
     "modules.isa.data_entry.common.isa_guide_how_to_use_p1": {
       "en": "Isa Guide How To Use P1",
@@ -2945,8 +2945,8 @@
       "lt": "[LT] Isa Guide How To Use P1",
       "pt": "[PT] Isa Guide How To Use P1",
       "it": "[IT] Isa Guide How To Use P1",
-      "no": "Isa Guide How To Use P1",
-      "el": "Isa Guide How To Use P1"
+      "no": "ISA-veiledning Slik bruker du Del 1",
+      "el": "Οδηγός ISA Πώς να χρησιμοποιήσετε Μέρος 1"
     },
     "modules.isa.data_entry.common.isa_guide_how_to_use_title": {
       "en": "Isa Guide How To Use Title",
@@ -2956,8 +2956,8 @@
       "lt": "[LT] Isa Guide How To Use Title",
       "pt": "[PT] Isa Guide How To Use Title",
       "it": "[IT] Isa Guide How To Use Title",
-      "no": "Isa Guide How To Use Title",
-      "el": "Isa Guide How To Use Title"
+      "no": "ISA-veiledning Slik bruker du Tittel",
+      "el": "Οδηγός ISA Πώς να χρησιμοποιήσετε Τίτλος"
     },
     "modules.isa.data_entry.common.isa_guide_what_is_isa_p1": {
       "en": "Isa Guide What Is Isa P1",
@@ -2967,8 +2967,8 @@
       "lt": "[LT] Isa Guide What Is Isa P1",
       "pt": "[PT] Isa Guide What Is Isa P1",
       "it": "[IT] Isa Guide What Is Isa P1",
-      "no": "Isa Guide What Is Isa P1",
-      "el": "Isa Guide What Is Isa P1"
+      "no": "ISA-veiledning Hva er ISA Del 1",
+      "el": "Οδηγός ISA Τι είναι η ISA Μέρος 1"
     },
     "modules.isa.data_entry.common.isa_guide_what_is_isa_p2": {
       "en": "Isa Guide What Is Isa P2",
@@ -2978,8 +2978,8 @@
       "lt": "[LT] Isa Guide What Is Isa P2",
       "pt": "[PT] Isa Guide What Is Isa P2",
       "it": "[IT] Isa Guide What Is Isa P2",
-      "no": "Isa Guide What Is Isa P2",
-      "el": "Isa Guide What Is Isa P2"
+      "no": "ISA-veiledning Hva er ISA Del 2",
+      "el": "Οδηγός ISA Τι είναι η ISA Μέρος 2"
     },
     "modules.isa.data_entry.common.isa_guide_what_is_isa_title": {
       "en": "Isa Guide What Is Isa Title",
@@ -2989,8 +2989,8 @@
       "lt": "[LT] Isa Guide What Is Isa Title",
       "pt": "[PT] Isa Guide What Is Isa Title",
       "it": "[IT] Isa Guide What Is Isa Title",
-      "no": "Isa Guide What Is Isa Title",
-      "el": "Isa Guide What Is Isa Title"
+      "no": "ISA-veiledning Hva er ISA Tittel",
+      "el": "Οδηγός ISA Τι είναι η ISA Τίτλος"
     },
     "modules.analysis.common.high_degree": {
       "en": "Find key stakeholders (high degree nodes)",
@@ -3000,8 +3000,8 @@
       "lt": "Rasti pagrindinius suinteresuotus subjektus (didelio laipsnio mazgai)",
       "pt": "Encontrar partes interessadas-chave (nós de alto grau)",
       "it": "Trovare le parti interessate chiave (nodi ad alto grado)",
-      "no": "Find key stakeholders (high degree nodes)",
-      "el": "Find key stakeholders (high degree nodes)"
+      "no": "Finn nøkkelinteressenter (noder med høy grad)",
+      "el": "Εύρεση βασικών ενδιαφερομένων (κόμβοι υψηλού βαθμού)"
     },
     "modules.isa.data_entry.common.linked_to_activity": {
       "en": "Linked To Activity",
@@ -3011,8 +3011,8 @@
       "lt": "[LT] Linked To Activity",
       "pt": "[PT] Linked To Activity",
       "it": "[IT] Linked To Activity",
-      "no": "Linked To Activity",
-      "el": "Linked To Activity"
+      "no": "Koblet til aktivitet",
+      "el": "Συνδεδεμένο με δραστηριότητα"
     },
     "modules.isa.data_entry.common.linked_to_es": {
       "en": "Linked To Es",
@@ -3022,8 +3022,8 @@
       "lt": "[LT] Linked To Es",
       "pt": "[PT] Linked To Es",
       "it": "[IT] Linked To Es",
-      "no": "Linked To Es",
-      "el": "Linked To Es"
+      "no": "Koblet til ØT",
+      "el": "Συνδεδεμένο με ΥΟ"
     },
     "modules.isa.data_entry.common.linked_to_gb": {
       "en": "Linked To Gb",
@@ -3033,8 +3033,8 @@
       "lt": "[LT] Linked To Gb",
       "pt": "[PT] Linked To Gb",
       "it": "[IT] Linked To Gb",
-      "no": "Linked To Gb",
-      "el": "Linked To Gb"
+      "no": "Koblet til G&F",
+      "el": "Συνδεδεμένο με Α&Ο"
     },
     "modules.isa.data_entry.common.linked_to_mpf": {
       "en": "Linked To Mpf",
@@ -3044,8 +3044,8 @@
       "lt": "[LT] Linked To Mpf",
       "pt": "[PT] Linked To Mpf",
       "it": "[IT] Linked To Mpf",
-      "no": "Linked To Mpf",
-      "el": "Linked To Mpf"
+      "no": "Koblet til MPF",
+      "el": "Συνδεδεμένο με ΘΔΛ"
     },
     "modules.isa.data_entry.common.linked_to_pressure": {
       "en": "Linked To Pressure",
@@ -3055,8 +3055,8 @@
       "lt": "[LT] Linked To Pressure",
       "pt": "[PT] Linked To Pressure",
       "it": "[IT] Linked To Pressure",
-      "no": "Linked To Pressure",
-      "el": "Linked To Pressure"
+      "no": "Koblet til press",
+      "el": "Συνδεδεμένο με πίεση"
     },
     "modules.response.measures.mechanism_of_action": {
       "en": "Mechanism of Action:",
@@ -3066,8 +3066,8 @@
       "lt": "Veikimo Mechanizmas:",
       "pt": "Mecanismo de Ação:",
       "it": "Meccanismo d'Azione:",
-      "no": "Mechanism of Action:",
-      "el": "Mechanism of Action:"
+      "no": "Virkningsmekanisme:",
+      "el": "Μηχανισμός δράσης:"
     },
     "modules.isa.data_entry.common.please_fix_the_following_issues_before_saving": {
       "en": "Please Fix The Following Issues Before Saving",
@@ -3077,7 +3077,7 @@
       "lt": "[LT] Please Fix The Following Issues Before Saving",
       "pt": "[PT] Please Fix The Following Issues Before Saving",
       "it": "[IT] Please Fix The Following Issues Before Saving",
-      "no": "Please Fix The Following Issues Before Saving",
+      "no": "Vennligst fiks følgende problemer før lagring",
       "el": "Παρακαλώ Fix The Following Issues Before Saving"
     },
     "modules.isa.data_entry.common.pressures_label": {
@@ -3088,7 +3088,7 @@
       "lt": "[LT] Pressures Label",
       "pt": "[PT] Pressures Label",
       "it": "[IT] Pressures Label",
-      "no": "Pressures Label",
+      "no": "Press",
       "el": "Πιέσεις Label"
     },
     "modules.isa.data_entry.common.scale": {
@@ -3099,8 +3099,8 @@
       "lt": "[LT] Scale",
       "pt": "[PT] Scale",
       "it": "[IT] Scale",
-      "no": "Scale",
-      "el": "Scale"
+      "no": "Skala",
+      "el": "Κλίμακα"
     },
     "modules.isa.data_entry.common.sector": {
       "en": "EP2: Activity Sectors",
@@ -3110,8 +3110,8 @@
       "lt": "EP2: Veiklos sektoriai",
       "pt": "EP2: Setores de Atividade",
       "it": "EP2: Settori di Attività",
-      "no": "EP2: Activity Sectors",
-      "el": "EP2: Activity Sectors"
+      "no": "ØP2: Aktivitetssektorer",
+      "el": "ΑΣ2: Τομείς δραστηριότητας"
     },
     "modules.isa.data_entry.common.select_element": {
       "en": "Select Element",
@@ -3121,7 +3121,7 @@
       "lt": "[LT] Select Element",
       "pt": "[PT] Select Element",
       "it": "[IT] Select Element",
-      "no": "Select Element",
+      "no": "Velg element",
       "el": "Επιλογή Στοιχείο"
     },
     "modules.isa.data_entry.common.spatial": {
@@ -3132,7 +3132,7 @@
       "lt": "Jūrų erdvinis planavimas",
       "pt": "Ordenamento do espaço marinho",
       "it": "Pianificazione dello spazio marino",
-      "no": "Marine spatial planning",
+      "no": "Marin arealplanlegging",
       "el": "Θαλάσσιο spatial planning"
     },
     "modules.isa.data_entry.common.spatial_scale": {
@@ -3143,8 +3143,8 @@
       "lt": "[LT] Spatial Scale",
       "pt": "[PT] Spatial Scale",
       "it": "[IT] Spatial Scale",
-      "no": "Spatial Scale",
-      "el": "Spatial Scale"
+      "no": "Romlig skala",
+      "el": "Χωρική κλίμακα"
     },
     "modules.isa.data_entry.common.stakeholder": {
       "en": "Define your project goals, stakeholders, and timeline",
@@ -3154,8 +3154,8 @@
       "lt": "Apibrėžkite projekto tikslus, suinteresuotas šalis ir laikotarpį",
       "pt": "Defina os objetivos do seu projeto, partes interessadas e cronograma",
       "it": "Definisci gli obiettivi del progetto, gli stakeholder e la timeline",
-      "no": "Define your project goals, stakeholders, and timeline",
-      "el": "Define your project goals, stakeholders, and timeline"
+      "no": "Definer prosjektmål, interessenter og tidsplan",
+      "el": "Καθορίστε τους στόχους του έργου, τους ενδιαφερόμενους και το χρονοδιάγραμμα"
     },
     "modules.response.measures.impact_strength": {
       "en": "Impact Strength:",
@@ -3165,7 +3165,7 @@
       "lt": "Poveikio Stiprumas:",
       "pt": "Força do Impacto:",
       "it": "Forza dell'Impatto:",
-      "no": "Impact Strength:",
+      "no": "Påvirkningsstyrke:",
       "el": "Επίπτωση Strength:"
     },
     "modules.isa.data_entry.common.temporal": {
@@ -3176,8 +3176,8 @@
       "lt": "Laikotarpio apimtis:",
       "pt": "Âmbito Temporal:",
       "it": "Ambito Temporale:",
-      "no": "Temporal Scope:",
-      "el": "Temporal Scope:"
+      "no": "Tidsmessig omfang:",
+      "el": "Χρονικό εύρος:"
     },
     "modules.isa.data_entry.common.trend": {
       "en": "Trend",
@@ -3198,7 +3198,7 @@
       "lt": "Patvirtinimas baigtas:",
       "pt": "Validação Concluída:",
       "it": "Validazione Completata:",
-      "no": "Validation Completed:",
+      "no": "Validering fullført:",
       "el": "Επικύρωση Completed:"
     },
     "modules.isa.data_entry.common.validation_errors": {
@@ -3209,7 +3209,7 @@
       "lt": "Tikrinimo klaidos:",
       "pt": "Erros de validação:",
       "it": "Errori di validazione:",
-      "no": "Validation errors:",
+      "no": "Valideringsfeil:",
       "el": "Επικύρωση errors:"
     },
     "modules.isa.data_entry.ex0.exercise_0_saved_successfully": {
@@ -3220,8 +3220,8 @@
       "lt": "[LT] Exercise 0 Saved Successfully",
       "pt": "[PT] Exercise 0 Saved Successfully",
       "it": "[IT] Exercise 0 Saved Successfully",
-      "no": "Exercise 0 Saved Successfully",
-      "el": "Exercise 0 Saved Successfully"
+      "no": "Øvelse 0 lagret",
+      "el": "Η άσκηση 0 αποθηκεύτηκε επιτυχώς"
     },
     "modules.isa.data_entry.ex101112.current_loop_connections": {
       "en": "Current Loop Connections",
@@ -3231,8 +3231,8 @@
       "lt": "[LT] Current Loop Connections",
       "pt": "[PT] Current Loop Connections",
       "it": "[IT] Current Loop Connections",
-      "no": "Current Loop Connections",
-      "el": "Current Loop Connections"
+      "no": "Nåværende løkketilkoblinger",
+      "el": "Τρέχουσες συνδέσεις βρόχου"
     },
     "modules.isa.data_entry.ex101112.loop_connection_added": {
       "en": "Loop Connection Added",
@@ -3242,8 +3242,8 @@
       "lt": "[LT] Loop Connection Added",
       "pt": "[PT] Loop Connection Added",
       "it": "[IT] Loop Connection Added",
-      "no": "Loop Connection Added",
-      "el": "Loop Connection Added"
+      "no": "Løkketilkobling lagt til",
+      "el": "Προστέθηκε σύνδεση βρόχου"
     },
     "modules.isa.data_entry.ex101112.loop_connections": {
       "en": "Loop Connections",
@@ -3253,8 +3253,8 @@
       "lt": "[LT] Loop Connections",
       "pt": "[PT] Loop Connections",
       "it": "[IT] Loop Connections",
-      "no": "Loop Connections",
-      "el": "Loop Connections"
+      "no": "Løkketilkoblinger",
+      "el": "Συνδέσεις βρόχου"
     },
     "modules.isa.data_entry.ex1.drivers_label": {
       "en": "Drivers Label",
@@ -3264,7 +3264,7 @@
       "lt": "[LT] Drivers Label",
       "pt": "[PT] Drivers Label",
       "it": "[IT] Drivers Label",
-      "no": "Drivers Label",
+      "no": "Drivkrefter",
       "el": "Κινητήριες δυνάμεις Label"
     },
     "modules.isa.data_entry.ex1.exercise_1_saved": {
@@ -3275,8 +3275,8 @@
       "lt": "[LT] Exercise 1 Saved",
       "pt": "[PT] Exercise 1 Saved",
       "it": "[IT] Exercise 1 Saved",
-      "no": "Exercise 1 Saved",
-      "el": "Exercise 1 Saved"
+      "no": "Øvelse 1 lagret",
+      "el": "Η άσκηση 1 αποθηκεύτηκε"
     },
     "modules.isa.data_entry.ex1.isa_guide_dapsiwr_drivers": {
       "en": "Isa Guide Dapsiwr Drivers",
@@ -3286,8 +3286,8 @@
       "lt": "[LT] Isa Guide Dapsiwr Drivers",
       "pt": "[PT] Isa Guide Dapsiwr Drivers",
       "it": "[IT] Isa Guide Dapsiwr Drivers",
-      "no": "Isa Guide Dapsiwr Drivers",
-      "el": "Isa Guide Dapsiwr Drivers"
+      "no": "ISA-veiledning DAPSI(W)R(M) Drivkrefter",
+      "el": "Οδηγός ISA DAPSI(W)R(M) Κινητήριες δυνάμεις"
     },
     "modules.isa.data_entry.ex2a.exercise_2a_saved": {
       "en": "Exercise 2A Saved",
@@ -3297,8 +3297,8 @@
       "lt": "[LT] Exercise 2A Saved",
       "pt": "[PT] Exercise 2A Saved",
       "it": "[IT] Exercise 2A Saved",
-      "no": "Exercise 2A Saved",
-      "el": "Exercise 2A Saved"
+      "no": "Øvelse 2A lagret",
+      "el": "Η άσκηση 2A αποθηκεύτηκε"
     },
     "modules.isa.data_entry.ex2b.exercise_2b_saved": {
       "en": "Exercise 2B Saved",
@@ -3308,8 +3308,8 @@
       "lt": "[LT] Exercise 2B Saved",
       "pt": "[PT] Exercise 2B Saved",
       "it": "[IT] Exercise 2B Saved",
-      "no": "Exercise 2B Saved",
-      "el": "Exercise 2B Saved"
+      "no": "Øvelse 2B lagret",
+      "el": "Η άσκηση 2B αποθηκεύτηκε"
     },
     "modules.isa.data_entry.ex3.exercise_3_saved": {
       "en": "Exercise 3 Saved",
@@ -3319,8 +3319,8 @@
       "lt": "[LT] Exercise 3 Saved",
       "pt": "[PT] Exercise 3 Saved",
       "it": "[IT] Exercise 3 Saved",
-      "no": "Exercise 3 Saved",
-      "el": "Exercise 3 Saved"
+      "no": "Øvelse 3 lagret",
+      "el": "Η άσκηση 3 αποθηκεύτηκε"
     },
     "modules.isa.data_entry.ex3.isa_guide_dapsiwr_state": {
       "en": "Isa Guide Dapsiwr State",
@@ -3330,8 +3330,8 @@
       "lt": "[LT] Isa Guide Dapsiwr State",
       "pt": "[PT] Isa Guide Dapsiwr State",
       "it": "[IT] Isa Guide Dapsiwr State",
-      "no": "Isa Guide Dapsiwr State",
-      "el": "Isa Guide Dapsiwr State"
+      "no": "ISA-veiledning DAPSI(W)R(M) Tilstand",
+      "el": "Οδηγός ISA DAPSI(W)R(M) Κατάσταση"
     },
     "modules.isa.data_entry.ex3.state_label": {
       "en": "State Label",
@@ -3341,7 +3341,7 @@
       "lt": "[LT] State Label",
       "pt": "[PT] State Label",
       "it": "[IT] State Label",
-      "no": "State Label",
+      "no": "Tilstand",
       "el": "Κατάσταση Label"
     },
     "modules.isa.data_entry.ex4.exercise_4_saved": {
@@ -3352,8 +3352,8 @@
       "lt": "[LT] Exercise 4 Saved",
       "pt": "[PT] Exercise 4 Saved",
       "it": "[IT] Exercise 4 Saved",
-      "no": "Exercise 4 Saved",
-      "el": "Exercise 4 Saved"
+      "no": "Øvelse 4 lagret",
+      "el": "Η άσκηση 4 αποθηκεύτηκε"
     },
     "modules.isa.data_entry.ex4.impacts_label": {
       "en": "Impacts Label",
@@ -3363,7 +3363,7 @@
       "lt": "[LT] Impacts Label",
       "pt": "[PT] Impacts Label",
       "it": "[IT] Impacts Label",
-      "no": "Impacts Label",
+      "no": "Påvirkninger",
       "el": "Επιπτώσεις Label"
     },
     "modules.isa.data_entry.ex4.isa_guide_dapsiwr_impacts": {
@@ -3374,8 +3374,8 @@
       "lt": "[LT] Isa Guide Dapsiwr Impacts",
       "pt": "[PT] Isa Guide Dapsiwr Impacts",
       "it": "[IT] Isa Guide Dapsiwr Impacts",
-      "no": "Isa Guide Dapsiwr Impacts",
-      "el": "Isa Guide Dapsiwr Impacts"
+      "no": "ISA-veiledning DAPSI(W)R(M) Påvirkninger",
+      "el": "Οδηγός ISA DAPSI(W)R(M) Επιπτώσεις"
     },
     "modules.isa.data_entry.ex5.exercise_5_saved": {
       "en": "Exercise 5 Saved",
@@ -3385,8 +3385,8 @@
       "lt": "[LT] Exercise 5 Saved",
       "pt": "[PT] Exercise 5 Saved",
       "it": "[IT] Exercise 5 Saved",
-      "no": "Exercise 5 Saved",
-      "el": "Exercise 5 Saved"
+      "no": "Øvelse 5 lagret",
+      "el": "Η άσκηση 5 αποθηκεύτηκε"
     },
     "modules.isa.data_entry.ex6.exercise_6_saved": {
       "en": "Exercise 6 Saved",
@@ -3396,8 +3396,8 @@
       "lt": "[LT] Exercise 6 Saved",
       "pt": "[PT] Exercise 6 Saved",
       "it": "[IT] Exercise 6 Saved",
-      "no": "Exercise 6 Saved",
-      "el": "Exercise 6 Saved"
+      "no": "Øvelse 6 lagret",
+      "el": "Η άσκηση 6 αποθηκεύτηκε"
     },
     "modules.isa.data_entry.ex6.isa_guide_dapsiwr_responses": {
       "en": "Isa Guide Dapsiwr Responses",
@@ -3407,8 +3407,8 @@
       "lt": "[LT] Isa Guide Dapsiwr Responses",
       "pt": "[PT] Isa Guide Dapsiwr Responses",
       "it": "[IT] Isa Guide Dapsiwr Responses",
-      "no": "Isa Guide Dapsiwr Responses",
-      "el": "Isa Guide Dapsiwr Responses"
+      "no": "ISA-veiledning DAPSI(W)R(M) Responser",
+      "el": "Οδηγός ISA DAPSI(W)R(M) Αποκρίσεις"
     },
     "modules.isa.data_entry.ex6.responses_label": {
       "en": "Responses Label",
@@ -3418,7 +3418,7 @@
       "lt": "[LT] Responses Label",
       "pt": "[PT] Responses Label",
       "it": "[IT] Responses Label",
-      "no": "Responses Label",
+      "no": "Responser",
       "el": "Αποκρίσεις Label"
     },
     "modules.isa.data_entry.ex789.goodsbenefit": {
@@ -3429,8 +3429,8 @@
       "lt": "[LT] Goodsbenefit",
       "pt": "[PT] Goodsbenefit",
       "it": "[IT] Goodsbenefit",
-      "no": "Goodsbenefit",
-      "el": "Goodsbenefit"
+      "no": "Goder og fordeler",
+      "el": "Αγαθά και οφέλη"
     },
     "modules.isa.data_entry.ex789.please_add_at_least_one_valid_goodbenefit_entry": {
       "en": "Please Add At Least One Valid Goodbenefit Entry",
@@ -3440,7 +3440,7 @@
       "lt": "[LT] Please Add At Least One Valid Goodbenefit Entry",
       "pt": "[PT] Please Add At Least One Valid Goodbenefit Entry",
       "it": "[IT] Please Add At Least One Valid Goodbenefit Entry",
-      "no": "Please Add At Least One Valid Goodbenefit Entry",
+      "no": "Legg til minst én gyldig oppføring for goder/fordeler",
       "el": "Παρακαλώ Προσθήκη At Least One Valid Goodbenefit Entry"
     },
     "modules.isa.leverage_points_anlys_will_be_displayed_here_based": {
@@ -3451,7 +3451,7 @@
       "lt": "[LT] Leverage Points Anlys Will Be Displayed Here Based",
       "pt": "[PT] Leverage Points Anlys Will Be Displayed Here Based",
       "it": "[IT] Leverage Points Anlys Will Be Displayed Here Based",
-      "no": "Leverage Points Anlys Will Be Displayed Here Based",
+      "no": "Analyse av innflytelsespunkter vil vises her basert",
       "el": "Σημεία μόχλευσης Anlys Will Be Displayed Here Based"
     },
     "modules.isa.please_add_at_least_one_ecosystem_service_entry_be": {
@@ -3462,7 +3462,7 @@
       "lt": "[LT] Please Add At Least One Ecosystem Service Entry Be",
       "pt": "[PT] Please Add At Least One Ecosystem Service Entry Be",
       "it": "[IT] Please Add At Least One Ecosystem Service Entry Be",
-      "no": "Please Add At Least One Ecosystem Service Entry Be",
+      "no": "Legg til minst én oppføring for økosystemtjeneste",
       "el": "Παρακαλώ Προσθήκη At Least One Ecosystem Service Entry Be"
     },
     "modules.isa.please_add_at_least_one_goodbenefit_entry_before_s": {
@@ -3473,7 +3473,7 @@
       "lt": "[LT] Please Add At Least One Goodbenefit Entry Before S",
       "pt": "[PT] Please Add At Least One Goodbenefit Entry Before S",
       "it": "[IT] Please Add At Least One Goodbenefit Entry Before S",
-      "no": "Please Add At Least One Goodbenefit Entry Before S",
+      "no": "Legg til minst én oppføring for goder/fordeler før",
       "el": "Παρακαλώ Προσθήκη At Least One Goodbenefit Entry Before S"
     },
     "modules.isa.please_add_at_least_one_valid_ecosystem_service_en": {
@@ -3484,7 +3484,7 @@
       "lt": "[LT] Please Add At Least One Valid Ecosystem Service En",
       "pt": "[PT] Please Add At Least One Valid Ecosystem Service En",
       "it": "[IT] Please Add At Least One Valid Ecosystem Service En",
-      "no": "Please Add At Least One Valid Ecosystem Service En",
+      "no": "Legg til minst én gyldig oppføring for økosystemtjeneste",
       "el": "Παρακαλώ Προσθήκη At Least One Valid Ecosystem Service En"
     },
     "modules.isa.please_complete_exercises_1_and_5_first_to_create_": {
@@ -3495,7 +3495,7 @@
       "lt": "[LT] Please Complete Exercises 1 And 5 First To Create ",
       "pt": "[PT] Please Complete Exercises 1 And 5 First To Create ",
       "it": "[IT] Please Complete Exercises 1 And 5 First To Create ",
-      "no": "Please Complete Exercises 1 And 5 First To Create ",
+      "no": "Fullfør øvelse 1 og 5 først for å lage",
       "el": "Παρακαλώ Ολοκληρώθηκε Exercises 1 And 5 First To Create "
     },
     "modules.isa.root_causes_anlys_will_be_displayed_here_based_on_": {
@@ -3506,8 +3506,8 @@
       "lt": "[LT] Root Causes Anlys Will Be Displayed Here Based On ",
       "pt": "[PT] Root Causes Anlys Will Be Displayed Here Based On ",
       "it": "[IT] Root Causes Anlys Will Be Displayed Here Based On ",
-      "no": "Root Causes Anlys Will Be Displayed Here Based On ",
-      "el": "Root Causes Anlys Will Be Displayed Here Based On "
+      "no": "Analyse av grunnårsaker vil vises her basert på",
+      "el": "Η ανάλυση βαθύτερων αιτιών θα εμφανιστεί εδώ βάσει"
     },
     "modules.ses.creation.ecosystem_services": {
       "en": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
@@ -3517,8 +3517,8 @@
       "lt": "Supratimas pagrindinio žmogaus poreikio už jūsų klausimo padeda nustatyti svarbias ekosistemų paslaugas ir valdymo prioritetus.",
       "pt": "Compreender a necessidade humana fundamental por trás da sua questão ajuda a identificar serviços ecossistémicos relevantes e prioridades de gestão.",
       "it": "Comprendere il bisogno umano fondamentale dietro la tua domanda aiuta a identificare i servizi ecosistemici rilevanti e le priorità di gestione.",
-      "no": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities.",
-      "el": "Understanding the fundamental human need behind your question helps identify relevant ecosystem services and management priorities."
+      "no": "Å forstå det grunnleggende menneskelige behovet bak spørsmålet ditt hjelper med å identifisere relevante økosystemtjenester og forvaltningsprioriteringer.",
+      "el": "Η κατανόηση της θεμελιώδους ανθρώπινης ανάγκης πίσω από την ερώτησή σας βοηθά στον εντοπισμό σχετικών υπηρεσιών οικοσυστήματος και προτεραιοτήτων διαχείρισης."
     },
     "modules.entry_point.start_over": {
       "en": "Start Over",
@@ -3528,7 +3528,7 @@
       "lt": "[LT] Start Over",
       "pt": "[PT] Start Over",
       "it": "[IT] Start Over",
-      "no": "Start Over",
+      "no": "Start på nytt",
       "el": "Έναρξη Over"
     },
     "modules.isa.ai_assistant.approved_connections": {
@@ -3539,7 +3539,7 @@
       "lt": "[LT] Approved Connections",
       "pt": "[PT] Approved Connections",
       "it": "[IT] Approved Connections",
-      "no": "Approved Connections",
+      "no": "Godkjente tilkoblinger",
       "el": "Εγκρίθηκε Συνδέσεις"
     },
     "modules.isa.ai_assistant.common_ecosystem_types_in": {
@@ -3550,8 +3550,8 @@
       "lt": "[LT] Common Ecosystem Types In",
       "pt": "[PT] Common Ecosystem Types In",
       "it": "[IT] Common Ecosystem Types In",
-      "no": "Common Ecosystem Types In",
-      "el": "Common Ecosystem Types In"
+      "no": "Vanlige økosystemtyper i",
+      "el": "Συνηθισμένοι τύποι οικοσυστημάτων σε"
     },
     "modules.isa.ai_assistant.common_issues_in_your_region": {
       "en": "Common Issues In Your Region",
@@ -3561,8 +3561,8 @@
       "lt": "[LT] Common Issues In Your Region",
       "pt": "[PT] Common Issues In Your Region",
       "it": "[IT] Common Issues In Your Region",
-      "no": "Common Issues In Your Region",
-      "el": "Common Issues In Your Region"
+      "no": "Vanlige problemer i din region",
+      "el": "Συνηθισμένα ζητήματα στην περιοχή σας"
     },
     "modules.isa.ai_assistant.connection_types": {
       "en": "Connection Types",
@@ -3572,7 +3572,7 @@
       "lt": "[LT] Connection Types",
       "pt": "[PT] Connection Types",
       "it": "[IT] Connection Types",
-      "no": "Connection Types",
+      "no": "Tilkoblingstyper",
       "el": "Σύνδεση Types"
     },
     "modules.isa.ai_assistant.elements": {
@@ -3583,7 +3583,7 @@
       "lt": "Elementai",
       "pt": "Elementos",
       "it": "Elementi",
-      "no": "Elements",
+      "no": "Elementer",
       "el": "Στοιχεία"
     },
     "modules.isa.ai_assistant.error_saving_model": {
@@ -3594,7 +3594,7 @@
       "lt": "[LT] Error Saving Model",
       "pt": "[PT] Error Saving Model",
       "it": "[IT] Error Saving Model",
-      "no": "Error Saving Model",
+      "no": "Feil ved lagring av modell",
       "el": "Σφάλμα Saving Model"
     },
     "modules.isa.ai_assistant.great_you_selected": {
@@ -3605,8 +3605,8 @@
       "lt": "[LT] Great You Selected",
       "pt": "[PT] Great You Selected",
       "it": "[IT] Great You Selected",
-      "no": "Great You Selected",
-      "el": "Great You Selected"
+      "no": "Flott, du valgte",
+      "el": "Υπέροχα, επιλέξατε"
     },
     "modules.isa.ai_assistant.impacts_service_effects": {
       "en": "Impacts Service Effects",
@@ -3616,7 +3616,7 @@
       "lt": "[LT] Impacts Service Effects",
       "pt": "[PT] Impacts Service Effects",
       "it": "[IT] Impacts Service Effects",
-      "no": "Impacts Service Effects",
+      "no": "Påvirkninger på tjenester",
       "el": "Επιπτώσεις Service Effects"
     },
     "modules.isa.ai_assistant.main_issue": {
@@ -3627,8 +3627,8 @@
       "lt": "[LT] Main Issue",
       "pt": "[PT] Main Issue",
       "it": "[IT] Main Issue",
-      "no": "Main Issue",
-      "el": "Main Issue"
+      "no": "Hovedproblem",
+      "el": "Κύριο ζήτημα"
     },
     "modules.isa.ai_assistant.perfect": {
       "en": "Perfect",
@@ -3638,8 +3638,8 @@
       "lt": "[LT] Perfect",
       "pt": "[PT] Perfect",
       "it": "[IT] Perfect",
-      "no": "Perfect",
-      "el": "Perfect"
+      "no": "Perfekt",
+      "el": "Τέλεια"
     },
     "modules.isa.ai_assistant.projectlocation": {
       "en": "Projectlocation",
@@ -3649,8 +3649,8 @@
       "lt": "[LT] Projectlocation",
       "pt": "[PT] Projectlocation",
       "it": "[IT] Projectlocation",
-      "no": "Projectlocation",
-      "el": "Projectlocation"
+      "no": "Prosjektsted",
+      "el": "Τοποθεσία έργου"
     },
     "modules.isa.ai_assistant.response_measures": {
       "en": "Response Measures",
@@ -3660,7 +3660,7 @@
       "lt": "[LT] Response Measures",
       "pt": "[PT] Response Measures",
       "it": "[IT] Response Measures",
-      "no": "Response Measures",
+      "no": "Responstiltak",
       "el": "Απόκριση Μέτρα"
     },
     "modules.isa.ai_assistant.responses": {
@@ -3671,7 +3671,7 @@
       "lt": "[LT] Responses",
       "pt": "[PT] Responses",
       "it": "[IT] Responses",
-      "no": "Responses",
+      "no": "Responser",
       "el": "Αποκρίσεις"
     },
     "modules.isa.ai_assistant.select_your_regional_sea": {
@@ -3682,7 +3682,7 @@
       "lt": "[LT] Select Your Regional Sea",
       "pt": "[PT] Select Your Regional Sea",
       "it": "[IT] Select Your Regional Sea",
-      "no": "Select Your Regional Sea",
+      "no": "Velg ditt regionale hav",
       "el": "Επιλογή Your Regional Sea"
     },
     "modules.isa.ai_assistant.suggested_connections": {
@@ -3693,8 +3693,8 @@
       "lt": "[LT] Suggested Connections",
       "pt": "[PT] Suggested Connections",
       "it": "[IT] Suggested Connections",
-      "no": "Suggested Connections",
-      "el": "Suggested Connections"
+      "no": "Foreslåtte tilkoblinger",
+      "el": "Προτεινόμενες συνδέσεις"
     },
     "modules.isa.ai_assistant.total_connections": {
       "en": "Total Connections",
@@ -3704,7 +3704,7 @@
       "lt": "[LT] Total Connections",
       "pt": "[PT] Total Connections",
       "it": "[IT] Total Connections",
-      "no": "Total Connections",
+      "no": "Totalt tilkoblinger",
       "el": "Σύνολο Συνδέσεις"
     },
     "modules.isa.ai_assistant.total_elements": {
@@ -3715,7 +3715,7 @@
       "lt": "[LT] Total Elements",
       "pt": "[PT] Total Elements",
       "it": "[IT] Total Elements",
-      "no": "Total Elements",
+      "no": "Totalt elementer",
       "el": "Σύνολο Στοιχεία"
     },
     "modules.isa.ai_assistant.welfare_human_well_being": {
@@ -3726,7 +3726,7 @@
       "lt": "[LT] Welfare Human Well Being",
       "pt": "[PT] Welfare Human Well Being",
       "it": "[IT] Welfare Human Well Being",
-      "no": "Welfare Human Well Being",
+      "no": "Velferd og menneskelig trivsel",
       "el": "Ευημερία Human Well Being"
     },
     "modules.isa.ai_assistant.your_custom_additions": {
@@ -3737,8 +3737,8 @@
       "lt": "[LT] Your Custom Additions",
       "pt": "[PT] Your Custom Additions",
       "it": "[IT] Your Custom Additions",
-      "no": "Your Custom Additions",
-      "el": "Your Custom Additions"
+      "no": "Dine egne tilføyelser",
+      "el": "Οι δικές σας προσθήκες"
     },
     "modules.isa.ai_assistant.your_dapsiwrm_model_preview": {
       "en": "Your Dapsiwrm Model Preview",
@@ -3748,8 +3748,8 @@
       "lt": "[LT] Your Dapsiwrm Model Preview",
       "pt": "[PT] Your Dapsiwrm Model Preview",
       "it": "[IT] Your Dapsiwrm Model Preview",
-      "no": "Your Dapsiwrm Model Preview",
-      "el": "Your Dapsiwrm Model Preview"
+      "no": "Forhåndsvisning av DAPSI(W)R(M)-modellen",
+      "el": "Προεπισκόπηση μοντέλου DAPSI(W)R(M) σας"
     },
     "modules.isa.approve_or_reject_each_connection_organized_by_fra": {
       "en": "Approve Or Reject Each Connection Organized By Fra",
@@ -3759,8 +3759,8 @@
       "lt": "[LT] Approve Or Reject Each Connection Organized By Fra",
       "pt": "[PT] Approve Or Reject Each Connection Organized By Fra",
       "it": "[IT] Approve Or Reject Each Connection Organized By Fra",
-      "no": "Approve Or Reject Each Connection Organized By Fra",
-      "el": "Approve Or Reject Each Connection Organized By Fra"
+      "no": "Godkjenn eller avvis hver tilkobling organisert etter",
+      "el": "Εγκρίνετε ή απορρίψτε κάθε σύνδεση οργανωμένη κατά"
     },
     "modules.isa.distributed_across_tabs_to_keep_the_interface_resp": {
       "en": "Distributed Across Tabs To Keep The Interface Resp",
@@ -3770,8 +3770,8 @@
       "lt": "[LT] Distributed Across Tabs To Keep The Interface Resp",
       "pt": "[PT] Distributed Across Tabs To Keep The Interface Resp",
       "it": "[IT] Distributed Across Tabs To Keep The Interface Resp",
-      "no": "Distributed Across Tabs To Keep The Interface Resp",
-      "el": "Distributed Across Tabs To Keep The Interface Resp"
+      "no": "Fordelt på faner for å holde grensesnittet responsivt",
+      "el": "Κατανεμημένα σε καρτέλες για να διατηρείται η απόκριση του περιβάλλοντος"
     },
     "modules.isa.please_go_back_through_the_previous_steps_and_add_": {
       "en": "Please Go Back Through The Previous Steps And Add ",
@@ -3781,7 +3781,7 @@
       "lt": "[LT] Please Go Back Through The Previous Steps And Add ",
       "pt": "[PT] Please Go Back Through The Previous Steps And Add ",
       "it": "[IT] Please Go Back Through The Previous Steps And Add ",
-      "no": "Please Go Back Through The Previous Steps And Add ",
+      "no": "Gå tilbake gjennom de forrige trinnene og legg til",
       "el": "Παρακαλώ Go Back Through The Previous Steps And Add "
     },
     "modules.isa.potential_connections_based_on_the_dapsiwrm_framew": {
@@ -3792,8 +3792,8 @@
       "lt": "[LT] Potential Connections Based On The Dapsiwrm Framew",
       "pt": "[PT] Potential Connections Based On The Dapsiwrm Framew",
       "it": "[IT] Potential Connections Based On The Dapsiwrm Framew",
-      "no": "Potential Connections Based On The Dapsiwrm Framew",
-      "el": "Potential Connections Based On The Dapsiwrm Framew"
+      "no": "Potensielle tilkoblinger basert på DAPSI(W)R(M)-rammeverket",
+      "el": "Πιθανές συνδέσεις βάσει του πλαισίου DAPSI(W)R(M)"
     },
     "modules.isa.this_will_help_me_suggest_relevant_activities_and_": {
       "en": "This Will Help Me Suggest Relevant Activities And ",
@@ -3803,8 +3803,8 @@
       "lt": "[LT] This Will Help Me Suggest Relevant Activities And ",
       "pt": "[PT] This Will Help Me Suggest Relevant Activities And ",
       "it": "[IT] This Will Help Me Suggest Relevant Activities And ",
-      "no": "This Will Help Me Suggest Relevant Activities And ",
-      "el": "This Will Help Me Suggest Relevant Activities And "
+      "no": "Dette vil hjelpe meg å foreslå relevante aktiviteter og",
+      "el": "Αυτό θα με βοηθήσει να προτείνω σχετικές δραστηριότητες και"
     },
     "modules.isa.to_create_connections_you_need_to_add_at_least_som": {
       "en": "To Create Connections You Need To Add At Least Som",
@@ -3814,8 +3814,8 @@
       "lt": "[LT] To Create Connections You Need To Add At Least Som",
       "pt": "[PT] To Create Connections You Need To Add At Least Som",
       "it": "[IT] To Create Connections You Need To Add At Least Som",
-      "no": "To Create Connections You Need To Add At Least Som",
-      "el": "To Create Connections You Need To Add At Least Som"
+      "no": "For å lage tilkoblinger må du legge til minst noen",
+      "el": "Για να δημιουργήσετε συνδέσεις πρέπει να προσθέσετε τουλάχιστον κάποια"
     },
     "modules.isa.try_adding_more_elements_to_different_categories_d": {
       "en": "Try Adding More Elements To Different Categories D",
@@ -3825,8 +3825,8 @@
       "lt": "[LT] Try Adding More Elements To Different Categories D",
       "pt": "[PT] Try Adding More Elements To Different Categories D",
       "it": "[IT] Try Adding More Elements To Different Categories D",
-      "no": "Try Adding More Elements To Different Categories D",
-      "el": "Try Adding More Elements To Different Categories D"
+      "no": "Prøv å legge til flere elementer i ulike kategorier",
+      "el": "Δοκιμάστε να προσθέσετε περισσότερα στοιχεία σε διαφορετικές κατηγορίες"
     },
     "modules.ses.creation.connection_review": {
       "en": "Connection Review",
@@ -3836,7 +3836,7 @@
       "lt": "[LT] Connection Review",
       "pt": "[PT] Connection Review",
       "it": "[IT] Connection Review",
-      "no": "Connection Review",
+      "no": "Tilkoblingsgjennomgang",
       "el": "Σύνδεση Review"
     },
     "modules.ses.creation.welfare": {
@@ -3847,7 +3847,7 @@
       "lt": "[LT] Welfare",
       "pt": "[PT] Welfare",
       "it": "[IT] Welfare",
-      "no": "Welfare",
+      "no": "Velferd",
       "el": "Ευημερία"
     },
     "modules.isa.data_entry.common.confidence_level": {
@@ -3858,7 +3858,7 @@
       "lt": "[LT] Confidence Level",
       "pt": "[PT] Confidence Level",
       "it": "[IT] Confidence Level",
-      "no": "Confidence Level",
+      "no": "Tillit",
       "el": "Εμπιστοσύνη Level"
     },
     "modules.isa.data_entry.common.mechanism": {
@@ -3869,8 +3869,8 @@
       "lt": "[LT] Mechanism",
       "pt": "[PT] Mechanism",
       "it": "[IT] Mechanism",
-      "no": "Mechanism",
-      "el": "Mechanism"
+      "no": "Mekanisme",
+      "el": "Μηχανισμός"
     },
     "modules.isa.data_entry.ex1.driver": {
       "en": "Driver",
@@ -3880,7 +3880,7 @@
       "lt": "[LT] Driver",
       "pt": "[PT] Driver",
       "it": "[IT] Driver",
-      "no": "Driver",
+      "no": "Drivkraft",
       "el": "Κινητήρια δύναμη"
     },
     "modules.isa.ai_assistant.welcome_message": {
@@ -3892,7 +3892,7 @@
       "pt": "Olá! Sou seu assistente de IA para criar um modelo DAPSI(W)R(M). Vamos começar selecionando seu mar regional ou oceano. Isso me ajuda a fornecer sugestões relevantes para sua área.",
       "it": "Ciao! Sono il tuo assistente AI per creare un modello DAPSI(W)R(M). Iniziamo selezionando il tuo mare regionale o oceano. Questo mi aiuta a fornire suggerimenti pertinenti per la tua area.",
       "no": "Hei! Jeg er din AI-assistent for å lage en DAPSI(W)R(M)-modell. La oss starte med å velge ditt regionale hav eller osean. Dette hjelper meg å gi relevante forslag for ditt område.",
-      "el": "Hello! I'm your AI assistant for creating a DAPSI(W)R(M) model. Let's start by selecting your regional sea or ocean. This helps me provide relevant suggestions for your area."
+      "el": "Γεια σας! Είμαι ο βοηθός τεχνητής νοημοσύνης σας για τη δημιουργία ενός μοντέλου DAPSI(W)R(M). Ας ξεκινήσουμε επιλέγοντας τη θάλασσα ή τον ωκεανό σας. Αυτό με βοηθά να παρέχω σχετικές προτάσεις για την περιοχή σας."
     },
     "modules.isa.ai_assistant.question_main_issues": {
       "en": "What are the main environmental or management issues you're addressing? (Select all that apply)",
@@ -3902,8 +3902,8 @@
       "lt": "Kokie pagrindiniai aplinkos ar valdymo klausimai sprendžiami? (Pasirinkite visus tinkamus)",
       "pt": "Quais são os principais problemas ambientais ou de gestão que você está abordando? (Selecione todos os aplicáveis)",
       "it": "Quali sono i principali problemi ambientali o gestionali che stai affrontando? (Seleziona tutti quelli applicabili)",
-      "no": "What are the main environmental or management issues you're addressing? (Select all that apply)",
-      "el": "What are the main environmental or management issues you're addressing? (Select all that apply)"
+      "no": "Hva er de viktigste miljø- eller forvaltningsproblemene du tar opp? (Velg alle som gjelder)",
+      "el": "Ποια είναι τα κύρια περιβαλλοντικά ζητήματα ή ζητήματα διαχείρισης που αντιμετωπίζετε; (Επιλέξτε όλα τα σχετικά)"
     },
     "modules.isa.ai_assistant.question_drivers": {
       "en": "Let's identify the DRIVERS - these are the basic human needs or societal demands driving activities in your area. What are the main societal needs?",
@@ -3913,8 +3913,8 @@
       "lt": "Identifikuokime VAROMĄSIAS JĖGAS - tai pagrindiniai žmonių poreikiai arba visuomenės poreikiai, skatinantys veiklas jūsų rajone. Kokie pagrindiniai visuomenės poreikiai?",
       "pt": "Vamos identificar os IMPULSIONADORES - estas são as necessidades humanas básicas ou demandas sociais que impulsionam as atividades em sua área. Quais são as principais necessidades sociais?",
       "it": "Identifichiamo i FATTORI TRAINANTI - questi sono i bisogni umani fondamentali o le richieste sociali che guidano le attività nella tua area. Quali sono i principali bisogni sociali?",
-      "no": "Let's identify the DRIVERS - these are the basic human needs or societal demands driving activities in your area. What are the main societal needs?",
-      "el": "Let's identify the DRIVERS - these are the basic human needs or societal demands driving activities in your area. What are the main societal needs?"
+      "no": "La oss identifisere DRIVKREFTENE - dette er de grunnleggende menneskelige behovene eller samfunnskravene som driver aktiviteter i ditt område. Hva er de viktigste samfunnsbehovene?",
+      "el": "Ας αναγνωρίσουμε τις ΚΙΝΗΤΗΡΙΕΣ ΔΥΝΑΜΕΙΣ - αυτές είναι οι βασικές ανθρώπινες ανάγκες ή κοινωνικές απαιτήσεις που οδηγούν τις δραστηριότητες στην περιοχή σας. Ποιες είναι οι κύριες κοινωνικές ανάγκες;"
     },
     "modules.isa.ai_assistant.question_activities": {
       "en": "Now let's identify ACTIVITIES - the human actions taken to meet those needs. What activities are happening in your marine area?",
@@ -3924,7 +3924,7 @@
       "lt": "Dabar identifikuokime VEIKLAS - žmonių veiksmus, skirtus tiems poreikiams patenkinti. Kokios veiklos vyksta jūsų jūrų rajone?",
       "pt": "Agora vamos identificar ATIVIDADES - as ações humanas tomadas para atender a essas necessidades. Quais atividades estão acontecendo em sua área marinha?",
       "it": "Ora identifichiamo le ATTIVITÀ - le azioni umane intraprese per soddisfare questi bisogni. Quali attività stanno avvenendo nella tua area marina?",
-      "no": "Now let's identify ACTIVITIES - the human actions taken to meet those needs. What activities are happening in your marine area?",
+      "no": "La oss nå identifisere AKTIVITETER - de menneskelige handlingene som utføres for å møte disse behovene. Hvilke aktiviteter foregår i ditt marine område?",
       "el": "Τώρα let's identify ACTIVITIES - the human actions taken to meet those needs. What activities are happening in your marine area?"
     },
     "modules.isa.ai_assistant.connection_review_intro": {
@@ -3935,8 +3935,8 @@
       "lt": "Puiku! Dabar pasiūlysiu loginius ryšius tarp jūsų nustatytų elementų. Šie ryšiai reiškia priežastinius santykius jūsų socialinėje-ekologinėje sistemoje. Galite peržiūrėti ir patvirtinti/atmesti kiekvieną pasiūlymą.",
       "pt": "Ótimo! Agora vou sugerir conexões lógicas entre os elementos que você identificou. Essas conexões representam relações causais em seu sistema socioecológico. Você pode revisar e aprovar/rejeitar cada sugestão.",
       "it": "Ottimo! Ora suggerirò connessioni logiche tra gli elementi che hai identificato. Queste connessioni rappresentano relazioni causali nel tuo sistema socio-ecologico. Puoi rivedere e approvare/rifiutare ogni suggerimento.",
-      "no": "Great! Now I'll suggest logical connections between the elements you've identified. These connections represent causal relationships in your social-ecological system. You can review and approve/reject each suggestion.",
-      "el": "Great! Now I'll suggest logical connections between the elements you've identified. These connections represent causal relationships in your social-ecological system. You can review and approve/reject each suggestion."
+      "no": "Flott! Nå vil jeg foreslå logiske tilkoblinger mellom elementene du har identifisert. Disse tilkoblingene representerer årsakssammenhenger i ditt sosial-økologiske system. Du kan gjennomgå og godkjenne/avvise hvert forslag.",
+      "el": "Τέλεια! Τώρα θα προτείνω λογικές συνδέσεις μεταξύ των στοιχείων που έχετε εντοπίσει. Αυτές οι συνδέσεις αντιπροσωπεύουν αιτιακές σχέσεις στο κοινωνικο-οικολογικό σας σύστημα. Μπορείτε να ελέγξετε και να εγκρίνετε/απορρίψετε κάθε πρόταση."
     },
     "modules.isa.ai_assistant.previous_session_found": {
       "en": "A previous session was found. Click 'Load Saved' to restore it.",
@@ -3946,8 +3946,8 @@
       "lt": "Rasta ankstesnė sesija. Spustelėkite 'Įkelti išsaugotą', kad ją atkurtumėte.",
       "pt": "Uma sessão anterior foi encontrada. Clique em 'Carregar salvo' para restaurá-la.",
       "it": "È stata trovata una sessione precedente. Fai clic su 'Carica salvato' per ripristinarla.",
-      "no": "A previous session was found. Click 'Load Saved' to restore it.",
-      "el": "A previous session was found. Click 'Load Saved' to restore it."
+      "no": "En tidligere økt ble funnet. Klikk «Last inn lagret» for å gjenopprette den.",
+      "el": "Βρέθηκε προηγούμενη συνεδρία. Κάντε κλικ στο «Φόρτωση αποθηκευμένου» για επαναφορά."
     },
     "modules.isa.ai_assistant.completion_message": {
       "en": "Great work! You've completed all the steps. Review your connections and finalize your model.",
@@ -3957,8 +3957,8 @@
       "lt": "Puikus darbas! Užbaigėte visus žingsnius. Peržiūrėkite savo ryšius ir užbaikite modelį.",
       "pt": "Ótimo trabalho! Você completou todas as etapas. Revise suas conexões e finalize seu modelo.",
       "it": "Ottimo lavoro! Hai completato tutti i passaggi. Rivedi le tue connessioni e finalizza il tuo modello.",
-      "no": "Great work! You've completed all the steps. Review your connections and finalize your model.",
-      "el": "Great work! You've completed all the steps. Review your connections and finalize your model."
+      "no": "Godt jobbet! Du har fullført alle trinnene. Gjennomgå tilkoblingene dine og fullfør modellen.",
+      "el": "Εξαιρετική δουλειά! Ολοκληρώσατε όλα τα βήματα. Ελέγξτε τις συνδέσεις σας και ολοκληρώστε το μοντέλο σας."
     },
     "modules.isa.ai_assistant.great_youve_approved": {
       "en": "Great! You've approved",
@@ -3968,8 +3968,8 @@
       "lt": "Puiku! Patvirtinote",
       "pt": "Ótimo! Você aprovou",
       "it": "Ottimo! Hai approvato",
-      "no": "Great! You've approved",
-      "el": "Great! You've approved"
+      "no": "Flott! Du har godkjent",
+      "el": "Υπέροχα! Εγκρίνατε"
     },
     "modules.isa.ai_assistant.ecosystems_unique_characteristics": {
       "en": "ecosystems have unique characteristics that I'll consider in my suggestions.",
@@ -3979,7 +3979,7 @@
       "lt": "ekosistemos turi unikalias savybes, kurias atsižvelgsiu į savo pasiūlymus.",
       "pt": "os ecossistemas têm características únicas que considerarei em minhas sugestões.",
       "it": "gli ecosistemi hanno caratteristiche uniche che prenderò in considerazione nei miei suggerimenti.",
-      "no": "ecosystems have unique characteristics that I'll consider in my suggestions.",
+      "no": "økosystemer har unike egenskaper som jeg vil ta hensyn til i mine forslag.",
       "el": "Οικοσυστήματα have unique characteristics that I'll consider in my suggestions."
     },
     "modules.isa.ai_assistant.understood_focus_suggestions": {
@@ -3990,8 +3990,8 @@
       "lt": "Supratau. Sutelksiu pasiūlymus į",
       "pt": "Entendido. Focarei as sugestões em",
       "it": "Capito. Concentrerò i suggerimenti su",
-      "no": "Understood. I'll focus suggestions on",
-      "el": "Understood. I'll focus suggestions on"
+      "no": "Forstått. Jeg vil fokusere forslagene på",
+      "el": "Κατανοητό. Θα εστιάσω τις προτάσεις σε"
     },
     "modules.isa.ai_assistant.now_lets_start_building": {
       "en": "Now let's start building your DAPSI(W)R(M) framework!",
@@ -4001,7 +4001,7 @@
       "lt": "Dabar pradėkime kurti jūsų DAPSI(W)R(M) sistemą!",
       "pt": "Agora vamos começar a construir sua estrutura DAPSI(W)R(M)!",
       "it": "Ora iniziamo a costruire il tuo framework DAPSI(W)R(M)!",
-      "no": "Now let's start building your DAPSI(W)R(M) framework!",
+      "no": "La oss nå begynne å bygge ditt DAPSI(W)R(M)-rammeverk!",
       "el": "Τώρα let's start building your DAPSI(W)R(M) framework!"
     },
     "modules.isa.ai_assistant.great_focus_on_issues": {
@@ -4012,19 +4012,19 @@
       "lt": "Puiku! Sutelksiu pasiūlymus į šias problemas:",
       "pt": "Ótimo! Focarei as sugestões nesses problemas:",
       "it": "Ottimo! Concentrerò i suggerimenti su questi problemi:",
-      "no": "Great! I'll focus suggestions on these issues:",
-      "el": "Great! I'll focus suggestions on these issues:"
+      "no": "Flott! Jeg vil fokusere forslagene på disse problemene:",
+      "el": "Τέλεια! Θα εστιάσω τις προτάσεις στα ακόλουθα ζητήματα:"
     },
     "modules.isa.data_entry.title": {
-      "en": "Integrated Systems Analysis (ISA) Data Entry",
-      "es": "Entrada de Datos de Análisis de Sistemas Integrados (ISA)",
-      "fr": "Saisie de Données d'Analyse de Systèmes Intégrés (ISA)",
-      "de": "Dateneingabe für Integrierte Systemanalyse (ISA)",
-      "lt": "Integruotos Sistemų Analizės (ISA) Duomenų Įvedimas",
-      "pt": "Entrada de Dados de Análise de Sistemas Integrados (ISA)",
-      "it": "Inserimento Dati di Analisi dei Sistemi Integrati (ISA)",
-      "no": "Integrert Systemanalyse (ISA) Datainnlegging",
-      "el": "Integrated Systems Analysis (ISA) Data Entry"
+      "en": "ISA Data Entry",
+      "es": "Entrada de Datos ISA",
+      "fr": "Saisie de Données ISA",
+      "de": "ISA-Dateneingabe",
+      "lt": "ISA duomenų įvedimas",
+      "pt": "Entrada de Dados ISA",
+      "it": "Inserimento Dati ISA",
+      "no": "ISA-datainndata",
+      "el": "Εισαγωγή Δεδομένων ISA"
     },
     "modules.isa.data_entry.subtitle": {
       "en": "Follow the structured exercises to build your marine Social-Ecological System analysis.",
@@ -4035,7 +4035,7 @@
       "pt": "Siga os exercícios estruturados para construir sua análise do Sistema Socio-Ecológico Marinho.",
       "it": "Segui gli esercizi strutturati per costruire la tua analisi del Sistema Socio-Ecologico Marino.",
       "no": "Følg de strukturerte øvelsene for å bygge din analyse av det Marine Sosial-Økologiske Systemet.",
-      "el": "Follow the structured exercises to build your marine Social-Ecological System analysis."
+      "el": "Ακολουθήστε τις δομημένες ασκήσεις για να δημιουργήσετε την ανάλυση του θαλάσσιου κοινωνικο-οικολογικού σας συστήματος."
     },
     "modules.isa.ai_assistant.go_back": {
       "en": "Back",
@@ -4102,17 +4102,6 @@
       "it": "Aggiungi almeno 2 elementi a questa categoria prima di continuare. Avere solo 1 elemento impedirà al sistema di rilevare i cicli di feedback, essenziali per l'analisi.",
       "no": "Vennligst legg til minst 2 elementer i denne kategorien før du fortsetter. Å ha bare 1 element vil forhindre systemet fra å oppdage tilbakekoblingssløyfer, som er essensielle for analysen.",
       "el": "Προσθέστε τουλάχιστον 2 στοιχεία σε αυτή την κατηγορία πριν συνεχίσετε. Έχοντας μόνο 1 στοιχείο θα εμποδίσει το σύστημα να ανιχνεύσει βρόχους ανατροφοδότησης, που είναι απαραίτητοι για την ανάλυση."
-    },
-    "modules.isa.data_entry.title": {
-      "en": "ISA Data Entry",
-      "es": "Entrada de Datos ISA",
-      "fr": "Saisie de Données ISA",
-      "de": "ISA-Dateneingabe",
-      "lt": "ISA duomenų įvedimas",
-      "pt": "Entrada de Dados ISA",
-      "it": "Inserimento Dati ISA",
-      "no": "ISA-datainndata",
-      "el": "Εισαγωγή Δεδομένων ISA"
     },
     "modules.isa.data_entry.exercise_progress": {
       "en": "Exercise Progress",

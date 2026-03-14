@@ -18,6 +18,7 @@
 
 analysis_simulation_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     uiOutput(ns("module_header")),
@@ -30,7 +31,7 @@ analysis_simulation_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-analysis_simulation_server <- function(id, project_data_reactive, i18n) {
+analysis_simulation_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -44,6 +45,20 @@ analysis_simulation_server <- function(id, project_data_reactive, i18n) {
       ss_complete = FALSE,
       error_message = NULL
     )
+
+    # Listen for ISA changes via event bus to flag stale results
+    observe({
+      req(!is.null(event_bus))
+      event_bus$on_isa_change()
+      if (isolate(rv$sim_complete) || isolate(rv$ss_complete)) {
+        showNotification(
+          i18n$t("modules.analysis.common.data_changed_rerun"),
+          type = "warning",
+          duration = 5,
+          id = ns("stale_data")
+        )
+      }
+    })
 
     # ── Standard header + help ───────────────────────────────────────────
     create_reactive_header(
@@ -434,8 +449,8 @@ analysis_simulation_server <- function(id, project_data_reactive, i18n) {
         data.frame(
           time = valid_cols,
           value = ts[i, valid_cols],
-          node = node_names[i],
-          stringsAsFactors = FALSE
+          node = node_names[i]
+          
         )
       }))
 
@@ -563,8 +578,8 @@ analysis_simulation_server <- function(id, project_data_reactive, i18n) {
       pos_frac <- apply(fs, 1, function(row) mean(row > 0, na.rm = TRUE))
       df <- data.frame(
         node = node_names,
-        positive_fraction = pos_frac,
-        stringsAsFactors = FALSE
+        positive_fraction = pos_frac
+        
       )
       df <- df[order(-df$positive_fraction), ]
       df$node <- factor(df$node, levels = df$node)

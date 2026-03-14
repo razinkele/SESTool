@@ -59,10 +59,9 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
           contact_email = character(),
           contact_phone = character(),
           communication_preference = character(),
-          notes = character(),
-          stringsAsFactors = FALSE
+          notes = character()
         ),
-        
+
         risks = data.frame(
           id = character(),
           date_identified = as.Date(character()),
@@ -71,10 +70,9 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
           severity = character(),
           mitigation_actions = character(),
           owner = character(),
-          status = character(),
-          stringsAsFactors = FALSE
+          status = character()
         ),
-        
+
         resources = data.frame(
           id = character(),
           type = character(),
@@ -83,10 +81,9 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
           unit = character(),
           cost = numeric(),
           allocated_to = character(),
-          notes = character(),
-          stringsAsFactors = FALSE
+          notes = character()
         ),
-        
+
         data_management = list(
           dmp_exists = FALSE,
           gdpr_compliant = FALSE,
@@ -95,8 +92,7 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
             type = character(),
             provider = character(),
             quality_rating = character(),
-            last_updated = as.Date(character()),
-            stringsAsFactors = FALSE
+            last_updated = as.Date(character())
           )
         ),
         
@@ -104,8 +100,7 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
           process = data.frame(
             question = character(),
             response_type = character(),
-            responses = character(),
-            stringsAsFactors = FALSE
+            responses = character()
           ),
           outcome = data.frame(
             objective = character(),
@@ -113,8 +108,7 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
             baseline = numeric(),
             target = numeric(),
             current = numeric(),
-            deadline = as.Date(character()),
-            stringsAsFactors = FALSE
+            deadline = as.Date(character())
           )
         )
       ),
@@ -134,44 +128,37 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
           goods_benefits = data.frame(
             date = as.Date(character()),
             element_id = character(),
-            value = numeric(),
-            stringsAsFactors = FALSE
+            value = numeric()
           ),
           ecosystem_services = data.frame(
             date = as.Date(character()),
             element_id = character(),
-            value = numeric(),
-            stringsAsFactors = FALSE
+            value = numeric()
           ),
           marine_processes = data.frame(
             date = as.Date(character()),
             element_id = character(),
-            value = numeric(),
-            stringsAsFactors = FALSE
+            value = numeric()
           ),
           pressures = data.frame(
             date = as.Date(character()),
             element_id = character(),
-            value = numeric(),
-            stringsAsFactors = FALSE
+            value = numeric()
           ),
           activities = data.frame(
             date = as.Date(character()),
             element_id = character(),
-            value = numeric(),
-            stringsAsFactors = FALSE
+            value = numeric()
           ),
           drivers = data.frame(
             date = as.Date(character()),
             element_id = character(),
-            value = numeric(),
-            stringsAsFactors = FALSE
+            value = numeric()
           ),
           responses = data.frame(
             date = as.Date(character()),
             element_id = character(),
-            value = numeric(),
-            stringsAsFactors = FALSE
+            value = numeric()
           )
         ),
         
@@ -298,8 +285,7 @@ create_empty_element_df <- function(element_type) {
     time_horizon_end = as.Date(character()),
     baseline_value = numeric(),
     current_value = numeric(),
-    notes = character(),
-    stringsAsFactors = FALSE
+    notes = character()
   )
   
   # Add element-specific columns
@@ -377,8 +363,7 @@ create_adjacency_matrix <- function(row_names, col_names) {
 adjacency_to_edgelist <- function(adj_matrix, from_ids, to_ids) {
 
   if (is.null(adj_matrix) || nrow(adj_matrix) == 0 || ncol(adj_matrix) == 0) {
-    return(data.frame(from = character(0), to = character(0), value = character(0),
-                      stringsAsFactors = FALSE))
+    return(data.frame(from = character(0), to = character(0), value = character(0)))
   }
 
   # Use list accumulation instead of incremental rbind (O(n) vs O(n^2))
@@ -394,16 +379,14 @@ adjacency_to_edgelist <- function(adj_matrix, from_ids, to_ids) {
         edges_list[[idx]] <- data.frame(
           from = from_ids[i],
           to = to_ids[j],
-          value = value,
-          stringsAsFactors = FALSE
+          value = value
         )
       }
     }
   }
 
   if (idx == 0L) {
-    return(data.frame(from = character(0), to = character(0), value = character(0),
-                      stringsAsFactors = FALSE))
+    return(data.frame(from = character(0), to = character(0), value = character(0)))
   }
 
   do.call(rbind, edges_list[seq_len(idx)])
@@ -864,6 +847,11 @@ validate_adjacency_matrix <- function(adj_matrix) {
 # These add NULL checks and error handling before calling the core functions above.
 # ============================================================================
 
+#' Validate a DAPSI(W)R(M) element type string
+#'
+#' @param type Character string of element type to validate
+#' @return TRUE if valid, otherwise stops with an error
+#' @export
 validate_element_type <- function(type) {
   if (is.null(type)) stop("Element type is NULL")
   valid_types <- c(
@@ -879,13 +867,26 @@ validate_element_type <- function(type) {
   TRUE
 }
 
+#' Validate that adjacency matrix dimension inputs are not NULL
+#'
+#' @param from_elements Vector of source element names
+#' @param to_elements Vector of target element names
+#' @return TRUE if valid, otherwise stops with an error
+#' @export
 validate_adjacency_dimensions <- function(from_elements, to_elements) {
   if (is.null(from_elements)) stop("from_elements is NULL")
   if (is.null(to_elements)) stop("to_elements is NULL")
   TRUE
 }
 
-# Safe create empty project wrapper
+#' Safe wrapper around create_empty_project with input validation
+#'
+#' Validates and sanitizes inputs before creating a project. Returns NULL on failure.
+#'
+#' @param project_name Character string for the project name (max 200 chars)
+#' @param da_site Optional demonstration area site (character or NULL)
+#' @return Project data list, or NULL if inputs are invalid
+#' @export
 create_empty_project_safe <- function(project_name = "New Project", da_site = NULL) {
   # Validate project_name
   if (is.null(project_name) || !is.character(project_name) || nchar(trimws(project_name)) == 0) return(NULL)
@@ -917,7 +918,15 @@ create_empty_project_safe <- function(project_name = "New Project", da_site = NU
   return(proj)
 }
 
-# Helper to safely add an element to isa_data lists
+#' Safely add an element row to an ISA data list
+#'
+#' Validates inputs and appends the row to the specified element type.
+#'
+#' @param isa_data ISA data list containing element data frames
+#' @param elem_name Character key for the element type (e.g., "drivers")
+#' @param elem_row Data frame row or list to append
+#' @return Updated ISA data list, NULL if isa_data is NULL, or unchanged isa_data on invalid input
+#' @export
 add_element_safe <- function(isa_data, elem_name, elem_row) {
   # If isa_data is NULL, return NULL per tests
   if (is.null(isa_data)) return(NULL)
@@ -935,13 +944,17 @@ add_element_safe <- function(isa_data, elem_name, elem_row) {
   }
 
   # Append row (coerce to data.frame if needed)
-  if (!is.data.frame(elem_row)) elem_row <- as.data.frame(elem_row, stringsAsFactors = FALSE)
+  if (!is.data.frame(elem_row)) elem_row <- as.data.frame(elem_row)
   isa_data[[elem_name]] <- rbind(isa_data[[elem_name]], elem_row)
 
   return(isa_data)
 }
 
-# Create empty element df safe wrapper
+#' Safe wrapper around create_empty_element_df with type validation
+#'
+#' @param element_type Character string of DAPSI(W)R(M) element type
+#' @return Empty data frame for the element type, or NULL if type is invalid
+#' @export
 create_empty_element_df_safe <- function(element_type) {
   if (is.null(element_type) || !is.character(element_type)) return(NULL)
   # Use existing implementation
@@ -952,7 +965,14 @@ create_empty_element_df_safe <- function(element_type) {
   create_empty_element_df(element_type)
 }
 
-# Safe adjacency matrix and conversion helpers
+#' Safe wrapper around create_empty_adjacency_matrix with NULL checks
+#'
+#' Deduplicates element names and returns NULL instead of erroring on bad input.
+#'
+#' @param from_elements Vector of source element names
+#' @param to_elements Vector of target element names
+#' @return Adjacency matrix, or NULL if inputs are NULL
+#' @export
 create_empty_adjacency_matrix_safe <- function(from_elements, to_elements) {
   if (is.null(from_elements) || is.null(to_elements)) {
     if (exists("debug_log", mode = "function")) {
@@ -973,6 +993,13 @@ create_empty_adjacency_matrix_safe <- function(from_elements, to_elements) {
   create_empty_adjacency_matrix(from_u, to_u)
 }
 
+#' Safe wrapper around adjacency_to_edgelist with input validation
+#'
+#' @param mat Adjacency matrix with row and column names
+#' @param from_ids Vector of source IDs matching matrix rows
+#' @param to_ids Vector of target IDs matching matrix columns
+#' @return Edge list data frame, or NULL on invalid input
+#' @export
 adjacency_to_edgelist_safe <- function(mat, from_ids, to_ids) {
   log_fn <- if (exists("debug_log", mode = "function")) debug_log else function(...) invisible(NULL)
 
@@ -996,6 +1023,13 @@ adjacency_to_edgelist_safe <- function(mat, from_ids, to_ids) {
   adjacency_to_edgelist(mat, from_ids, to_ids)
 }
 
+#' Safe wrapper around edgelist_to_adjacency with input validation
+#'
+#' @param edgelist Data frame with from, to, and value columns
+#' @param from_names Vector of row names for the resulting matrix
+#' @param to_names Vector of column names for the resulting matrix
+#' @return Adjacency matrix, or NULL on invalid input
+#' @export
 edgelist_to_adjacency_safe <- function(edgelist, from_names, to_names) {
   log_fn <- if (exists("debug_log", mode = "function")) debug_log else function(...) invisible(NULL)
 
@@ -1014,12 +1048,21 @@ edgelist_to_adjacency_safe <- function(edgelist, from_names, to_names) {
   edgelist_to_adjacency(edgelist, from_names, to_names)
 }
 
-# Project validation safe wrappers
+#' Safe wrapper around validate_project_data that handles NULL input
+#'
+#' @param project_data Project data list, or NULL
+#' @return List with valid (logical) and errors (character vector)
+#' @export
 validate_project_data_safe <- function(project_data) {
   if (is.null(project_data)) return(list(valid = FALSE, errors = c("Project is NULL")))
   validate_project_data(project_data)
 }
 
+#' Safe wrapper around validate_isa_structure with NULL and type checks
+#'
+#' @param isa_data ISA data list, or NULL
+#' @return Character vector of error messages
+#' @export
 validate_isa_structure_safe <- function(isa_data) {
   if (is.null(isa_data)) return(c("ISA data is NULL"))
   if (!is.list(isa_data)) return(c("ISA data must be a list"))
@@ -1038,6 +1081,11 @@ validate_isa_structure_safe <- function(isa_data) {
   errs
 }
 
+#' Safe wrapper around validate_pims_data with NULL handling
+#'
+#' @param pims_data PIMS data list, or NULL
+#' @return Character vector of error messages (empty if valid or NULL)
+#' @export
 validate_pims_data_safe <- function(pims_data) {
   errs <- c()
   if (is.null(pims_data)) return(errs)
@@ -1051,7 +1099,10 @@ validate_pims_data_safe <- function(pims_data) {
   errs
 }
 
-# Helpers for ISA structure creation and element updates
+#' Create a complete empty ISA data structure with all element types
+#'
+#' @return List of empty data frames for each DAPSI(W)R(M) element type
+#' @export
 create_empty_isa_structure_safe <- function() {
   list(
     goods_benefits = create_empty_element_df("Goods & Benefits"),
@@ -1063,6 +1114,14 @@ create_empty_isa_structure_safe <- function() {
   )
 }
 
+#' Safely update an element row in an ISA data list by ID
+#'
+#' @param isa_data ISA data list containing element data frames
+#' @param elem_name Character key for the element type (e.g., "drivers")
+#' @param id Character ID of the element to update
+#' @param new_element Named list or data frame row with updated values
+#' @return Updated ISA data list, or unchanged isa_data if element not found
+#' @export
 update_element_safe <- function(isa_data, elem_name, id, new_element) {
   if (is.null(isa_data) || is.null(isa_data[[elem_name]])) return(isa_data)
   df <- isa_data[[elem_name]]
@@ -1073,6 +1132,13 @@ update_element_safe <- function(isa_data, elem_name, id, new_element) {
   isa_data
 }
 
+#' Safely delete an element row from an ISA data list by ID
+#'
+#' @param isa_data ISA data list containing element data frames
+#' @param elem_name Character key for the element type (e.g., "drivers")
+#' @param id Character ID of the element to delete
+#' @return Updated ISA data list with the element removed
+#' @export
 delete_element_safe <- function(isa_data, elem_name, id) {
   if (is.null(isa_data) || is.null(isa_data[[elem_name]])) return(isa_data)
   df <- isa_data[[elem_name]]

@@ -1,5 +1,15 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "modules.analysis.loops.identify_all_desc": {
       "en": "Identify all feedback loops in your DAPSI(W)R(M) system.",
@@ -9,8 +19,8 @@
       "lt": "Nustatykite visas grįžtamojo ryšio kilpas savo DAPSI(W)R(M) sistemoje.",
       "pt": "Identifique todos os loops de retroalimentação no seu sistema DAPSI(W)R(M).",
       "it": "Identifica tutti i loop di retroazione nel tuo sistema DAPSI(W)R(M).",
-      "no": "Identify all feedback loops in your DAPSI(W)R(M) system.",
-      "el": "Identify all feedback loops in your DAPSI(W)R(M) system."
+      "no": "Identifiser alle tilbakekoblingsløkker i ditt DAPSI(W)R(M)-system.",
+      "el": "Προσδιορίστε όλους τους βρόχους ανατροφοδότησης στο σύστημα DAPSI(W)R(M) σας."
     },
     "modules.analysis.loops.max_loop_length": {
       "en": "Maximum Loop Length:",
@@ -20,8 +30,8 @@
       "lt": "Maksimalus kilpos ilgis:",
       "pt": "Comprimento máximo do loop:",
       "it": "Lunghezza massima del loop:",
-      "no": "Maximum Loop Length:",
-      "el": "Maximum Loop Length:"
+      "no": "Maksimal løkkelengde:",
+      "el": "Μέγιστο μήκος βρόχου:"
     },
     "modules.analysis.loops.max_cycles": {
       "en": "Maximum Cycles to Find:",
@@ -31,8 +41,8 @@
       "lt": "Maksimalus ciklų skaičius:",
       "pt": "Máximo de ciclos a encontrar:",
       "it": "Numero massimo di cicli da trovare:",
-      "no": "Maximum Cycles to Find:",
-      "el": "Maximum Cycles to Find:"
+      "no": "Maksimalt antall sykluser å finne:",
+      "el": "Μέγιστος αριθμός κύκλων προς εύρεση:"
     },
     "modules.analysis.loops.include_self_loops": {
       "en": "Include Self-Loops",
@@ -42,8 +52,8 @@
       "lt": "Įtraukti savikilpas",
       "pt": "Incluir auto-loops",
       "it": "Includi auto-loop",
-      "no": "Include Self-Loops",
-      "el": "Include Self-Loops"
+      "no": "Inkluder selvløkker",
+      "el": "Συμπερίληψη αυτο-βρόχων"
     },
     "modules.analysis.loops.filter_trivial": {
       "en": "Filter Trivial Loops",
@@ -53,8 +63,8 @@
       "lt": "Filtruoti trivialias kilpas",
       "pt": "Filtrar loops triviais",
       "it": "Filtra loop triviali",
-      "no": "Filter Trivial Loops",
-      "el": "Filter Trivial Loops"
+      "no": "Filtrer trivielle løkker",
+      "el": "Φιλτράρισμα τετριμμένων βρόχων"
     },
     "modules.analysis.loops.note_lower_values": {
       "en": "Note: Lower values prevent hanging on complex networks",
@@ -64,8 +74,8 @@
       "lt": "Pastaba: Mažesnės reikšmės apsaugo nuo užstrigimo sudėtinguose tinkluose",
       "pt": "Nota: Valores mais baixos evitam travamentos em redes complexas",
       "it": "Nota: Valori più bassi prevengono blocchi su reti complesse",
-      "no": "Note: Lower values prevent hanging on complex networks",
-      "el": "Note: Lower values prevent hanging on complex networks"
+      "no": "Merk: Lavere verdier forhindrer at komplekse nettverk henger seg opp",
+      "el": "Σημείωση: Χαμηλότερες τιμές αποτρέπουν το κόλλημα σε σύνθετα δίκτυα"
     },
     "modules.analysis.loops.processing_status": {
       "en": "Processing Status",
@@ -75,8 +85,8 @@
       "lt": "Apdorojimo būsena",
       "pt": "Estado do processamento",
       "it": "Stato dell'elaborazione",
-      "no": "Processing Status",
-      "el": "Processing Status"
+      "no": "Behandlingsstatus",
+      "el": "Κατάσταση επεξεργασίας"
     },
     "modules.analysis.loops.classify_desc": {
       "en": "Classify loops based on polarity and understand their system behavior.",
@@ -86,8 +96,8 @@
       "lt": "Klasifikuokite kilpas pagal poliškumą ir supraskite jų sistemos elgseną.",
       "pt": "Classifique os loops com base na polaridade e compreenda seu comportamento no sistema.",
       "it": "Classifica i loop in base alla polarità e comprendi il loro comportamento nel sistema.",
-      "no": "Classify loops based on polarity and understand their system behavior.",
-      "el": "Classify loops based on polarity and understand their system behavior."
+      "no": "Klassifiser løkker basert på polaritet og forstå deres systematferd.",
+      "el": "Ταξινομήστε βρόχους με βάση την πολικότητα και κατανοήστε τη συμπεριφορά τους στο σύστημα."
     },
     "modules.analysis.loops.reinforcing_desc": {
       "en": "Amplify change - can create virtuous or vicious cycles.",
@@ -97,8 +107,8 @@
       "lt": "Stiprina pokyčius - gali sukurti gerų ar blogų ciklų.",
       "pt": "Amplifica a mudança - pode criar ciclos virtuosos ou viciosos.",
       "it": "Amplifica il cambiamento - può creare cicli virtuosi o viziosi.",
-      "no": "Amplify change - can create virtuous or vicious cycles.",
-      "el": "Amplify change - can create virtuous or vicious cycles."
+      "no": "Forsterker endring - kan skape gode eller onde sirkler.",
+      "el": "Ενισχύουν την αλλαγή - μπορούν να δημιουργήσουν ενάρετους ή φαύλους κύκλους."
     },
     "modules.analysis.loops.balancing_desc": {
       "en": "Counteract change - seek equilibrium or stability.",
@@ -108,8 +118,8 @@
       "lt": "Atsveria pokyčius - siekia pusiausvyros ar stabilumo.",
       "pt": "Contrabalança a mudança - busca equilíbrio ou estabilidade.",
       "it": "Contrasta il cambiamento - cerca equilibrio o stabilità.",
-      "no": "Counteract change - seek equilibrium or stability.",
-      "el": "Counteract change - seek equilibrium or stability."
+      "no": "Motvirker endring - søker likevekt eller stabilitet.",
+      "el": "Αντισταθμίζουν την αλλαγή - αναζητούν ισορροπία ή σταθερότητα."
     },
     "modules.analysis.loops.type_distribution": {
       "en": "Loop Type Distribution",
@@ -119,8 +129,8 @@
       "lt": "Kilpų tipų pasiskirstymas",
       "pt": "Distribuição dos tipos de loop",
       "it": "Distribuzione dei tipi di loop",
-      "no": "Loop Type Distribution",
-      "el": "Loop Type Distribution"
+      "no": "Fordeling av løkketyper",
+      "el": "Κατανομή τύπων βρόχων"
     },
     "modules.analysis.loops.select_loop": {
       "en": "Select Loop",
@@ -130,8 +140,8 @@
       "lt": "Pasirinkti kilpą",
       "pt": "Selecionar loop",
       "it": "Seleziona loop",
-      "no": "Select Loop",
-      "el": "Select Loop"
+      "no": "Velg løkke",
+      "el": "Επιλογή βρόχου"
     },
     "modules.analysis.loops.loop_id": {
       "en": "Loop ID:",
@@ -141,8 +151,8 @@
       "lt": "Kilpos ID:",
       "pt": "ID do loop:",
       "it": "ID del loop:",
-      "no": "Loop ID:",
-      "el": "Loop ID:"
+      "no": "Løkke-ID:",
+      "el": "ID βρόχου:"
     },
     "modules.analysis.loops.loop_properties": {
       "en": "Loop Properties",
@@ -152,8 +162,8 @@
       "lt": "Kilpos savybės",
       "pt": "Propriedades do loop",
       "it": "Proprietà del loop",
-      "no": "Loop Properties",
-      "el": "Loop Properties"
+      "no": "Løkkeegenskaper",
+      "el": "Ιδιότητες βρόχου"
     },
     "modules.analysis.loops.loop_visualization": {
       "en": "Loop Visualization",
@@ -163,8 +173,8 @@
       "lt": "Kilpos vizualizacija",
       "pt": "Visualização do loop",
       "it": "Visualizzazione del loop",
-      "no": "Loop Visualization",
-      "el": "Loop Visualization"
+      "no": "Løkkevisualisering",
+      "el": "Οπτικοποίηση βρόχου"
     },
     "modules.analysis.loops.loop_narrative": {
       "en": "Loop Narrative",
@@ -174,8 +184,8 @@
       "lt": "Kilpos aprašymas",
       "pt": "Narrativa do loop",
       "it": "Narrazione del loop",
-      "no": "Loop Narrative",
-      "el": "Loop Narrative"
+      "no": "Løkkefortelling",
+      "el": "Αφήγηση βρόχου"
     },
     "modules.analysis.loops.dominant_desc": {
       "en": "Analyze which loops have the most influence on system behavior.",
@@ -185,8 +195,8 @@
       "lt": "Analizuokite, kurios kilpos turi didžiausią įtaką sistemos elgsenai.",
       "pt": "Analise quais loops têm mais influência no comportamento do sistema.",
       "it": "Analizza quali loop hanno la maggiore influenza sul comportamento del sistema.",
-      "no": "Analyze which loops have the most influence on system behavior.",
-      "el": "Analyze which loops have the most influence on system behavior."
+      "no": "Analyser hvilke løkker som har størst innflytelse på systematferden.",
+      "el": "Αναλύστε ποιοι βρόχοι έχουν τη μεγαλύτερη επιρροή στη συμπεριφορά του συστήματος."
     },
     "modules.analysis.loops.dominance_metrics": {
       "en": "Dominance Metrics",
@@ -196,8 +206,8 @@
       "lt": "Dominavimo metrikos",
       "pt": "Métricas de dominância",
       "it": "Metriche di dominanza",
-      "no": "Dominance Metrics",
-      "el": "Dominance Metrics"
+      "no": "Dominansmetrikker",
+      "el": "Μετρικές κυριαρχίας"
     },
     "modules.analysis.loops.dominance_desc": {
       "en": "Loops are ranked by length, centrality, and element importance.",
@@ -207,8 +217,8 @@
       "lt": "Kilpos rikiuojamos pagal ilgį, centrališkumą ir elementų svarbą.",
       "pt": "Os loops são classificados por comprimento, centralidade e importância dos elementos.",
       "it": "I loop sono classificati per lunghezza, centralità e importanza degli elementi.",
-      "no": "Loops are ranked by length, centrality, and element importance.",
-      "el": "Loops are ranked by length, centrality, and element importance."
+      "no": "Løkker rangeres etter lengde, sentralitet og elementviktighet.",
+      "el": "Οι βρόχοι κατατάσσονται κατά μήκος, κεντρικότητα και σημασία στοιχείων."
     },
     "modules.analysis.loops.strength_analysis": {
       "en": "Loop Strength Analysis",
@@ -218,8 +228,8 @@
       "lt": "Kilpos stiprumo analizė",
       "pt": "Análise de força do loop",
       "it": "Analisi della forza del loop",
-      "no": "Loop Strength Analysis",
-      "el": "Loop Strength Analysis"
+      "no": "Analyse av løkkestyrke",
+      "el": "Ανάλυση ισχύος βρόχου"
     },
     "modules.analysis.loops.element_participation": {
       "en": "Element Participation",
@@ -229,8 +239,8 @@
       "lt": "Elementų dalyvavimas",
       "pt": "Participação de elementos",
       "it": "Partecipazione degli elementi",
-      "no": "Element Participation",
-      "el": "Element Participation"
+      "no": "Elementdeltakelse",
+      "el": "Συμμετοχή στοιχείων"
     },
     "modules.analysis.loops.element_participation_desc": {
       "en": "How many loops each element appears in:",
@@ -240,8 +250,8 @@
       "lt": "Kiek kilpų kiekvienas elementas pasirodo:",
       "pt": "Em quantos loops cada elemento aparece:",
       "it": "In quanti loop appare ciascun elemento:",
-      "no": "How many loops each element appears in:",
-      "el": "How many loops each element appears in:"
+      "no": "Hvor mange løkker hvert element forekommer i:",
+      "el": "Σε πόσους βρόχους εμφανίζεται κάθε στοιχείο:"
     },
     "modules.analysis.loops.download_options": {
       "en": "Download Options",
@@ -251,8 +261,8 @@
       "lt": "Atsisiuntimo parinktys",
       "pt": "Opções de download",
       "it": "Opzioni di download",
-      "no": "Download Options",
-      "el": "Download Options"
+      "no": "Nedlastingsalternativer",
+      "el": "Επιλογές λήψης"
     },
     "modules.analysis.loops.download_desc": {
       "en": "Export loop detection results for documentation and reporting.",
@@ -262,8 +272,8 @@
       "lt": "Eksportuokite kilpų aptikimo rezultatus dokumentacijai ir ataskaitoms.",
       "pt": "Exporte os resultados de detecção de loops para documentação e relatórios.",
       "it": "Esporta i risultati del rilevamento dei loop per documentazione e reportistica.",
-      "no": "Export loop detection results for documentation and reporting.",
-      "el": "Export loop detection results for documentation and reporting."
+      "no": "Eksporter resultater fra løkkedeteksjon for dokumentasjon og rapportering.",
+      "el": "Εξαγωγή αποτελεσμάτων ανίχνευσης βρόχων για τεκμηρίωση και αναφορά."
     },
     "modules.analysis.loops.download_excel": {
       "en": "Download Loops (Excel)",
@@ -273,8 +283,8 @@
       "lt": "Atsisiųsti kilpas (Excel)",
       "pt": "Baixar loops (Excel)",
       "it": "Scarica loop (Excel)",
-      "no": "Download Loops (Excel)",
-      "el": "Download Loops (Excel)"
+      "no": "Last ned løkker (Excel)",
+      "el": "Λήψη βρόχων (Excel)"
     },
     "modules.analysis.loops.download_pdf": {
       "en": "Download Loop Report (PDF)",
@@ -284,8 +294,8 @@
       "lt": "Atsisiųsti kilpų ataskaitą (PDF)",
       "pt": "Baixar relatório de loops (PDF)",
       "it": "Scarica rapporto dei loop (PDF)",
-      "no": "Download Loop Report (PDF)",
-      "el": "Download Loop Report (PDF)"
+      "no": "Last ned løkkerapport (PDF)",
+      "el": "Λήψη αναφοράς βρόχων (PDF)"
     },
     "modules.analysis.loops.download_zip": {
       "en": "Download Loop Diagrams (ZIP)",
@@ -295,8 +305,8 @@
       "lt": "Atsisiųsti kilpų diagramas (ZIP)",
       "pt": "Baixar diagramas de loops (ZIP)",
       "it": "Scarica diagrammi dei loop (ZIP)",
-      "no": "Download Loop Diagrams (ZIP)",
-      "el": "Download Loop Diagrams (ZIP)"
+      "no": "Last ned løkkediagrammer (ZIP)",
+      "el": "Λήψη διαγραμμάτων βρόχων (ZIP)"
     },
     "modules.analysis.loops.summary_stats": {
       "en": "Loop Summary Statistics",
@@ -306,8 +316,8 @@
       "lt": "Kilpų suvestinė statistika",
       "pt": "Estatísticas resumidas dos loops",
       "it": "Statistiche riepilogative dei loop",
-      "no": "Loop Summary Statistics",
-      "el": "Loop Summary Statistics"
+      "no": "Sammendragsstatistikk for løkker",
+      "el": "Συνοπτικά στατιστικά βρόχων"
     },
     "modules.analysis.loops.progress_detecting": {
       "en": "Detecting loops (this may take 10-30 seconds)...",
@@ -317,8 +327,8 @@
       "lt": "Aptinkamos kilpos (tai gali užtrukti 10-30 sekundžių)...",
       "pt": "Detectando loops (isso pode levar 10-30 segundos)...",
       "it": "Rilevamento dei loop (potrebbe richiedere 10-30 secondi)...",
-      "no": "Detecting loops (this may take 10-30 seconds)...",
-      "el": "Detecting loops (this may take 10-30 seconds)..."
+      "no": "Oppdager løkker (dette kan ta 10-30 sekunder)...",
+      "el": "Ανίχνευση βρόχων (αυτό μπορεί να διαρκέσει 10-30 δευτερόλεπτα)..."
     },
     "modules.analysis.loops.progress_preparing": {
       "en": "Preparing detection parameters...",
@@ -328,8 +338,8 @@
       "lt": "Ruošiami aptikimo parametrai...",
       "pt": "Preparando parâmetros de detecção...",
       "it": "Preparazione dei parametri di rilevamento...",
-      "no": "Preparing detection parameters...",
-      "el": "Preparing detection parameters..."
+      "no": "Forbereder deteksjonsparametre...",
+      "el": "Προετοιμασία παραμέτρων ανίχνευσης..."
     },
     "modules.analysis.loops.progress_components": {
       "en": "Analyzing components...",
@@ -339,8 +349,8 @@
       "lt": "Analizuojami komponentai...",
       "pt": "Analisando componentes...",
       "it": "Analisi dei componenti...",
-      "no": "Analyzing components...",
-      "el": "Analyzing components..."
+      "no": "Analyserer komponenter...",
+      "el": "Ανάλυση στοιχείων..."
     },
     "modules.analysis.loops.progress_finding": {
       "en": "Finding cycles (please wait)...",
@@ -350,8 +360,8 @@
       "lt": "Ieškomi ciklai (prašome palaukti)...",
       "pt": "Encontrando ciclos (por favor aguarde)...",
       "it": "Ricerca di cicli (attendere prego)...",
-      "no": "Finding cycles (please wait)...",
-      "el": "Finding cycles (please wait)..."
+      "no": "Finner sykluser (vennligst vent)...",
+      "el": "Εύρεση κύκλων (παρακαλώ περιμένετε)..."
     },
     "modules.analysis.loops.progress_processing": {
       "en": "Processing detected loops...",
@@ -361,8 +371,8 @@
       "lt": "Apdorojamos aptiktos kilpos...",
       "pt": "Processando loops detectados...",
       "it": "Elaborazione dei loop rilevati...",
-      "no": "Processing detected loops...",
-      "el": "Processing detected loops..."
+      "no": "Behandler oppdagede løkker...",
+      "el": "Επεξεργασία ανιχνευμένων βρόχων..."
     },
     "modules.analysis.loops.progress_details": {
       "en": "Processing loop details...",
@@ -372,8 +382,8 @@
       "lt": "Apdorojamos kilpos detalės...",
       "pt": "Processando detalhes do loop...",
       "it": "Elaborazione dei dettagli del loop...",
-      "no": "Processing loop details...",
-      "el": "Processing loop details..."
+      "no": "Behandler løkkedetaljer...",
+      "el": "Επεξεργασία λεπτομερειών βρόχου..."
     },
     "modules.analysis.loops.progress_finalizing": {
       "en": "Finalizing results...",
@@ -383,8 +393,8 @@
       "lt": "Rezultatai baigiami...",
       "pt": "Finalizando resultados...",
       "it": "Finalizzazione dei risultati...",
-      "no": "Finalizing results...",
-      "el": "Finalizing results..."
+      "no": "Sluttfører resultater...",
+      "el": "Ολοκλήρωση αποτελεσμάτων..."
     },
     "modules.analysis.loops.detection_complete_n": {
       "en": "Detection complete! Found %d loops.",
@@ -394,8 +404,8 @@
       "lt": "Aptikimas baigtas! Rasta %d kilpų.",
       "pt": "Detecção completa! Encontrados %d loops.",
       "it": "Rilevamento completato! Trovati %d loop.",
-      "no": "Detection complete! Found %d loops.",
-      "el": "Detection complete! Found %d loops."
+      "no": "Deteksjon fullført! Fant %d løkker.",
+      "el": "Η ανίχνευση ολοκληρώθηκε! Βρέθηκαν %d βρόχοι."
     },
     "modules.analysis.loops.click_detect": {
       "en": "Click 'Detect Loops' to begin analysis.",
@@ -405,8 +415,8 @@
       "lt": "Paspauskite 'Aptikti kilpas', kad pradėtumėte analizę.",
       "pt": "Clique em 'Detectar loops' para iniciar a análise.",
       "it": "Clicca su 'Rileva loop' per iniziare l'analisi.",
-      "no": "Click 'Detect Loops' to begin analysis.",
-      "el": "Click 'Detect Loops' to begin analysis."
+      "no": "Klikk «Oppdag løkker» for å starte analysen.",
+      "el": "Κάντε κλικ στο «Ανίχνευση βρόχων» για να ξεκινήσει η ανάλυση."
     },
     "modules.analysis.loops.summary_total": {
       "en": "Total Loops Found",
@@ -416,8 +426,8 @@
       "lt": "Iš viso rastų kilpų",
       "pt": "Total de loops encontrados",
       "it": "Totale loop trovati",
-      "no": "Total Loops Found",
-      "el": "Total Loops Found"
+      "no": "Totalt antall løkker funnet",
+      "el": "Συνολικοί βρόχοι που βρέθηκαν"
     },
     "modules.analysis.loops.summary_reinforcing": {
       "en": "Reinforcing Loops",
@@ -427,8 +437,8 @@
       "lt": "Stiprinančios kilpos",
       "pt": "Loops de reforço",
       "it": "Loop di rinforzo",
-      "no": "Reinforcing Loops",
-      "el": "Reinforcing Loops"
+      "no": "Forsterkende løkker",
+      "el": "Ενισχυτικοί βρόχοι"
     },
     "modules.analysis.loops.summary_balancing": {
       "en": "Balancing Loops",
@@ -438,8 +448,8 @@
       "lt": "Balansuojančios kilpos",
       "pt": "Loops de equilíbrio",
       "it": "Loop di bilanciamento",
-      "no": "Balancing Loops",
-      "el": "Balancing Loops"
+      "no": "Balanserende løkker",
+      "el": "Εξισορροπητικοί βρόχοι"
     },
     "modules.analysis.loops.summary_avg_length": {
       "en": "Average Loop Length",
@@ -449,8 +459,8 @@
       "lt": "Vidutinis kilpos ilgis",
       "pt": "Comprimento médio do loop",
       "it": "Lunghezza media del loop",
-      "no": "Average Loop Length",
-      "el": "Average Loop Length"
+      "no": "Gjennomsnittlig løkkelengde",
+      "el": "Μέσο μήκος βρόχου"
     },
     "modules.analysis.loops.summary_shortest": {
       "en": "Shortest Loop",
@@ -460,8 +470,8 @@
       "lt": "Trumpiausia kilpa",
       "pt": "Loop mais curto",
       "it": "Loop più corto",
-      "no": "Shortest Loop",
-      "el": "Shortest Loop"
+      "no": "Korteste løkke",
+      "el": "Συντομότερος βρόχος"
     },
     "modules.analysis.loops.summary_longest": {
       "en": "Longest Loop",
@@ -471,8 +481,8 @@
       "lt": "Ilgiausia kilpa",
       "pt": "Loop mais longo",
       "it": "Loop più lungo",
-      "no": "Longest Loop",
-      "el": "Longest Loop"
+      "no": "Lengste løkke",
+      "el": "Μακρύτερος βρόχος"
     },
     "modules.analysis.loops.num_loops": {
       "en": "Number of Loops",
@@ -482,8 +492,8 @@
       "lt": "Kilpų skaičius",
       "pt": "Número de loops",
       "it": "Numero di loop",
-      "no": "Number of Loops",
-      "el": "Number of Loops"
+      "no": "Antall løkker",
+      "el": "Αριθμός βρόχων"
     },
     "modules.analysis.loops.legend_reinforcing": {
       "en": "Reinforcing (amplify change)",
@@ -493,8 +503,8 @@
       "lt": "Stiprinanti (stiprina pokyčius)",
       "pt": "Reforço (amplifica a mudança)",
       "it": "Rinforzo (amplifica il cambiamento)",
-      "no": "Reinforcing (amplify change)",
-      "el": "Reinforcing (amplify change)"
+      "no": "Forsterkende (forsterker endring)",
+      "el": "Ενισχυτικός (ενισχύει την αλλαγή)"
     },
     "modules.analysis.loops.legend_balancing": {
       "en": "Balancing (seek equilibrium)",
@@ -504,8 +514,8 @@
       "lt": "Balansuojanti (siekia pusiausvyros)",
       "pt": "Equilíbrio (busca equilíbrio)",
       "it": "Bilanciamento (cerca equilibrio)",
-      "no": "Balancing (seek equilibrium)",
-      "el": "Balancing (seek equilibrium)"
+      "no": "Balanserende (søker likevekt)",
+      "el": "Εξισορροπητικός (αναζητά ισορροπία)"
     },
     "modules.analysis.loops.no_loops_detected": {
       "en": "No loops detected",
@@ -515,8 +525,8 @@
       "lt": "Kilpų neaptikta",
       "pt": "Nenhum loop detectado",
       "it": "Nessun loop rilevato",
-      "no": "No loops detected",
-      "el": "No loops detected"
+      "no": "Ingen løkker oppdaget",
+      "el": "Δεν ανιχνεύθηκαν βρόχοι"
     },
     "modules.analysis.loops.prop_loop_id": {
       "en": "Loop ID",
@@ -526,8 +536,8 @@
       "lt": "Kilpos ID",
       "pt": "ID do loop",
       "it": "ID del loop",
-      "no": "Loop ID",
-      "el": "Loop ID"
+      "no": "Løkke-ID",
+      "el": "ID βρόχου"
     },
     "modules.analysis.loops.prop_type": {
       "en": "Type",
@@ -548,8 +558,8 @@
       "lt": "Poliškumas",
       "pt": "Polaridade",
       "it": "Polarità",
-      "no": "Polarity",
-      "el": "Polarity"
+      "no": "Polaritet",
+      "el": "Πολικότητα"
     },
     "modules.analysis.loops.prop_length": {
       "en": "Length",
@@ -559,8 +569,8 @@
       "lt": "Ilgis",
       "pt": "Comprimento",
       "it": "Lunghezza",
-      "no": "Length",
-      "el": "Length"
+      "no": "Lengde",
+      "el": "Μήκος"
     },
     "modules.analysis.loops.prop_path": {
       "en": "Path",
@@ -570,8 +580,8 @@
       "lt": "Kelias",
       "pt": "Caminho",
       "it": "Percorso",
-      "no": "Path",
-      "el": "Path"
+      "no": "Bane",
+      "el": "Διαδρομή"
     },
     "modules.analysis.loops.narrative_reinforcing_title": {
       "en": "Reinforcing Loop",
@@ -581,8 +591,8 @@
       "lt": "Stiprinanti kilpa",
       "pt": "Loop de reforço",
       "it": "Loop di rinforzo",
-      "no": "Reinforcing Loop",
-      "el": "Reinforcing Loop"
+      "no": "Forsterkende løkke",
+      "el": "Ενισχυτικός βρόχος"
     },
     "modules.analysis.loops.narrative_reinforcing_desc": {
       "en": "This loop amplifies change in the system. When one element increases, it causes downstream elements to increase (or decrease through negative links), which eventually feeds back to increase the original element even more. This creates exponential growth or decline.",
@@ -592,8 +602,8 @@
       "lt": "Ši kilpa stiprina pokyčius sistemoje. Kai vienas elementas padidėja, jis sukelia tolesnių elementų padidėjimą (arba sumažėjimą per neigiamus ryšius), kuris galiausiai grįžta ir dar labiau padidina pradinį elementą. Tai sukuria eksponentinį augimą arba mažėjimą.",
       "pt": "Este loop amplifica a mudança no sistema. Quando um elemento aumenta, faz com que os elementos subsequentes aumentem (ou diminuam através de links negativos), o que eventualmente retroalimenta para aumentar ainda mais o elemento original. Isso cria crescimento ou declínio exponencial.",
       "it": "Questo loop amplifica il cambiamento nel sistema. Quando un elemento aumenta, provoca l'aumento degli elementi a valle (o la diminuzione attraverso collegamenti negativi), che alla fine ritorna per aumentare ulteriormente l'elemento originale. Questo crea una crescita o un declino esponenziale.",
-      "no": "This loop amplifies change in the system. When one element increases, it causes downstream elements to increase (or decrease through negative links), which eventually feeds back to increase the original element even more. This creates exponential growth or decline.",
-      "el": "This loop amplifies change in the system. When one element increases, it causes downstream elements to increase (or decrease through negative links), which eventually feeds back to increase the original element even more. This creates exponential growth or decline."
+      "no": "Denne løkken forsterker endring i systemet. Når ett element øker, forårsaker det at nedstrøms elementer øker (eller minker gjennom negative forbindelser), som til slutt virker tilbake for å øke det opprinnelige elementet enda mer. Dette skaper eksponentiell vekst eller nedgang.",
+      "el": "Αυτός ο βρόχος ενισχύει την αλλαγή στο σύστημα. Όταν ένα στοιχείο αυξάνεται, προκαλεί αύξηση των κατάντη στοιχείων (ή μείωση μέσω αρνητικών συνδέσεων), η οποία τελικά ανατροφοδοτεί για να αυξήσει ακόμη περισσότερο το αρχικό στοιχείο. Αυτό δημιουργεί εκθετική αύξηση ή μείωση."
     },
     "modules.analysis.loops.narrative_system_behavior": {
       "en": "System Behavior",
@@ -603,8 +613,8 @@
       "lt": "Sistemos elgsena",
       "pt": "Comportamento do sistema",
       "it": "Comportamento del sistema",
-      "no": "System Behavior",
-      "el": "System Behavior"
+      "no": "Systematferd",
+      "el": "Συμπεριφορά συστήματος"
     },
     "modules.analysis.loops.narrative_reinforcing_behavior": {
       "en": "Can create 'virtuous cycles' (positive growth) or 'vicious cycles' (degradation spirals).",
@@ -614,8 +624,8 @@
       "lt": "Gali sukurti 'gerų ciklų' (teigiamas augimas) arba 'blogų ciklų' (degradacijos spiralės).",
       "pt": "Pode criar 'ciclos virtuosos' (crescimento positivo) ou 'ciclos viciosos' (espirais de degradação).",
       "it": "Può creare 'cicli virtuosi' (crescita positiva) o 'cicli viziosi' (spirali di degradazione).",
-      "no": "Can create 'virtuous cycles' (positive growth) or 'vicious cycles' (degradation spirals).",
-      "el": "Can create 'virtuous cycles' (positive growth) or 'vicious cycles' (degradation spirals)."
+      "no": "Kan skape «gode sirkler» (positiv vekst) eller «onde sirkler» (nedbrytningsspiraler).",
+      "el": "Μπορεί να δημιουργήσει «ενάρετους κύκλους» (θετική ανάπτυξη) ή «φαύλους κύκλους» (σπείρες υποβάθμισης)."
     },
     "modules.analysis.loops.narrative_management": {
       "en": "Management Implication",
@@ -625,8 +635,8 @@
       "lt": "Pasekmės valdymui",
       "pt": "Implicação para a gestão",
       "it": "Implicazione per la gestione",
-      "no": "Management Implication",
-      "el": "Management Implication"
+      "no": "Implikasjon for forvaltning",
+      "el": "Επίπτωση στη διαχείριση"
     },
     "modules.analysis.loops.narrative_reinforcing_mgmt": {
       "en": "Intervention points in reinforcing loops can have large leverage effects.",
@@ -636,8 +646,8 @@
       "lt": "Intervencijos taškai stiprinančiose kilpose gali turėti didelį svertinį poveikį.",
       "pt": "Pontos de intervenção em loops de reforço podem ter grandes efeitos de alavancagem.",
       "it": "I punti di intervento nei loop di rinforzo possono avere grandi effetti leva.",
-      "no": "Intervention points in reinforcing loops can have large leverage effects.",
-      "el": "Intervention points in reinforcing loops can have large leverage effects."
+      "no": "Intervensjonspunkter i forsterkende løkker kan ha store innflytelseseffekter.",
+      "el": "Τα σημεία παρέμβασης σε ενισχυτικούς βρόχους μπορούν να έχουν μεγάλες επιδράσεις μόχλευσης."
     },
     "modules.analysis.loops.narrative_balancing_title": {
       "en": "Balancing Loop",
@@ -647,8 +657,8 @@
       "lt": "Balansuojanti kilpa",
       "pt": "Loop de equilíbrio",
       "it": "Loop di bilanciamento",
-      "no": "Balancing Loop",
-      "el": "Balancing Loop"
+      "no": "Balanserende løkke",
+      "el": "Εξισορροπητικός βρόχος"
     },
     "modules.analysis.loops.narrative_balancing_desc": {
       "en": "This loop counteracts change in the system. When one element increases, the feedback loop causes forces that push it back down toward equilibrium. This creates self-regulation and stability-seeking behavior.",
@@ -658,8 +668,8 @@
       "lt": "Ši kilpa atsveria pokyčius sistemoje. Kai vienas elementas padidėja, grįžtamojo ryšio kilpa sukuria jėgas, kurios stumia jį atgal link pusiausvyros. Tai sukuria savireguliaciją ir stabilumo siekiantį elgesį.",
       "pt": "Este loop contrabalança a mudança no sistema. Quando um elemento aumenta, o loop de retroalimentação causa forças que o empurram de volta em direção ao equilíbrio. Isso cria autorregulação e comportamento de busca de estabilidade.",
       "it": "Questo loop contrasta il cambiamento nel sistema. Quando un elemento aumenta, il loop di retroazione causa forze che lo spingono indietro verso l'equilibrio. Questo crea autoregolazione e comportamento di ricerca della stabilità.",
-      "no": "This loop counteracts change in the system. When one element increases, the feedback loop causes forces that push it back down toward equilibrium. This creates self-regulation and stability-seeking behavior.",
-      "el": "This loop counteracts change in the system. When one element increases, the feedback loop causes forces that push it back down toward equilibrium. This creates self-regulation and stability-seeking behavior."
+      "no": "Denne løkken motvirker endring i systemet. Når ett element øker, skaper tilbakekoblingsløkken krefter som skyver det tilbake mot likevekt. Dette skaper selvregulering og stabilitetssøkende atferd.",
+      "el": "Αυτός ο βρόχος αντισταθμίζει την αλλαγή στο σύστημα. Όταν ένα στοιχείο αυξάνεται, ο βρόχος ανατροφοδότησης δημιουργεί δυνάμεις που το ωθούν πίσω προς την ισορροπία. Αυτό δημιουργεί αυτορρύθμιση και συμπεριφορά αναζήτησης σταθερότητας."
     },
     "modules.analysis.loops.narrative_balancing_behavior": {
       "en": "Maintains stability, resists change, seeks goal or equilibrium state.",
@@ -669,8 +679,8 @@
       "lt": "Palaiko stabilumą, priešinasi pokyčiams, siekia tikslo arba pusiausvyros būsenos.",
       "pt": "Mantém a estabilidade, resiste à mudança, busca um objetivo ou estado de equilíbrio.",
       "it": "Mantiene la stabilità, resiste al cambiamento, cerca un obiettivo o uno stato di equilibrio.",
-      "no": "Maintains stability, resists change, seeks goal or equilibrium state.",
-      "el": "Maintains stability, resists change, seeks goal or equilibrium state."
+      "no": "Opprettholder stabilitet, motstår endring, søker mål eller likevektstilstand.",
+      "el": "Διατηρεί τη σταθερότητα, αντιστέκεται στην αλλαγή, αναζητά στόχο ή κατάσταση ισορροπίας."
     },
     "modules.analysis.loops.narrative_balancing_mgmt": {
       "en": "Balancing loops can resist policy interventions and maintain status quo.",
@@ -680,8 +690,8 @@
       "lt": "Balansuojančios kilpos gali priešintis politikos intervencijoms ir palaikyti esamą padėtį.",
       "pt": "Os loops de equilíbrio podem resistir a intervenções políticas e manter o status quo.",
       "it": "I loop di bilanciamento possono resistere agli interventi politici e mantenere lo status quo.",
-      "no": "Balancing loops can resist policy interventions and maintain status quo.",
-      "el": "Balancing loops can resist policy interventions and maintain status quo."
+      "no": "Balanserende løkker kan motstå politiske intervensjoner og opprettholde status quo.",
+      "el": "Οι εξισορροπητικοί βρόχοι μπορούν να αντισταθούν στις πολιτικές παρεμβάσεις και να διατηρήσουν το status quo."
     },
     "modules.analysis.loops.elements_in_most_loops": {
       "en": "Elements in Most Loops (Top 15)",
@@ -691,8 +701,8 @@
       "lt": "Elementai daugiausiai kilpų (Top 15)",
       "pt": "Elementos em mais loops (Top 15)",
       "it": "Elementi nella maggior parte dei loop (Top 15)",
-      "no": "Elements in Most Loops (Top 15)",
-      "el": "Elements in Most Loops (Top 15)"
+      "no": "Elementer i flest løkker (Topp 15)",
+      "el": "Στοιχεία στους περισσότερους βρόχους (Κορυφαία 15)"
     },
     "modules.analysis.loops.export_summary_title": {
       "en": "Export Summary",
@@ -702,8 +712,8 @@
       "lt": "Eksporto santrauka",
       "pt": "Resumo da exportação",
       "it": "Riepilogo dell'esportazione",
-      "no": "Export Summary",
-      "el": "Export Summary"
+      "no": "Eksportsammendrag",
+      "el": "Σύνοψη εξαγωγής"
     },
     "modules.analysis.loops.ready_for_export": {
       "en": "Ready for export in multiple formats.",
@@ -713,8 +723,8 @@
       "lt": "Paruošta eksportui keliais formatais.",
       "pt": "Pronto para exportação em múltiplos formatos.",
       "it": "Pronto per l'esportazione in più formati.",
-      "no": "Ready for export in multiple formats.",
-      "el": "Ready for export in multiple formats."
+      "no": "Klar for eksport i flere formater.",
+      "el": "Έτοιμο για εξαγωγή σε πολλαπλές μορφές."
     },
     "modules.analysis.loops.help_title": {
       "en": "Feedback Loop Detection and Analysis Guide",
@@ -724,8 +734,8 @@
       "lt": "Grįžtamojo ryšio kilpų aptikimo ir analizės vadovas",
       "pt": "Guia de detecção e análise de loops de retroalimentação",
       "it": "Guida al rilevamento e all'analisi dei loop di retroazione",
-      "no": "Feedback Loop Detection and Analysis Guide",
-      "el": "Feedback Loop Detection and Analysis Guide"
+      "no": "Veiledning for deteksjon og analyse av tilbakekoblingsløkker",
+      "el": "Οδηγός ανίχνευσης και ανάλυσης βρόχων ανατροφοδότησης"
     },
     "modules.analysis.loops.elements_label": {
       "en": "elements",
@@ -735,8 +745,8 @@
       "lt": "elementai",
       "pt": "elementos",
       "it": "elementi",
-      "no": "elements",
-      "el": "elements"
+      "no": "elementer",
+      "el": "στοιχεία"
     },
     "modules.analysis.loops.tab_detect": {
       "en": "Loop Detection",
@@ -746,8 +756,8 @@
       "lt": "Kilpų aptikimas",
       "pt": "Detecção de Loops",
       "it": "Rilevamento dei Loop",
-      "no": "Loop Detection",
-      "el": "Loop Detection"
+      "no": "Løkkedeteksjon",
+      "el": "Ανίχνευση βρόχων"
     },
     "modules.analysis.loops.tab_classification": {
       "en": "Classification",
@@ -757,8 +767,8 @@
       "lt": "Klasifikacija",
       "pt": "Classificação",
       "it": "Classificazione",
-      "no": "Classification",
-      "el": "Classification"
+      "no": "Klassifisering",
+      "el": "Ταξινόμηση"
     },
     "modules.analysis.loops.tab_details": {
       "en": "Details",
@@ -768,8 +778,8 @@
       "lt": "Detalės",
       "pt": "Detalhes",
       "it": "Dettagli",
-      "no": "Details",
-      "el": "Details"
+      "no": "Detaljer",
+      "el": "Λεπτομέρειες"
     },
     "modules.analysis.loops.tab_dominant": {
       "en": "Dominant Loops",
@@ -779,8 +789,8 @@
       "lt": "Dominuojančios kilpos",
       "pt": "Loops Dominantes",
       "it": "Loop Dominanti",
-      "no": "Dominant Loops",
-      "el": "Dominant Loops"
+      "no": "Dominerende løkker",
+      "el": "Κυρίαρχοι βρόχοι"
     },
     "modules.analysis.loops.tab_export": {
       "en": "Export",
@@ -790,8 +800,8 @@
       "lt": "Eksportuoti",
       "pt": "Exportar",
       "it": "Esporta",
-      "no": "Export",
-      "el": "Export"
+      "no": "Eksporter",
+      "el": "Εξαγωγή"
     },
     "modules.analysis.loops.automatic_detection": {
       "en": "Automatic Loop Detection",
@@ -801,8 +811,8 @@
       "lt": "Automatinis kilpų aptikimas",
       "pt": "Detecção Automática de Loops",
       "it": "Rilevamento Automatico dei Loop",
-      "no": "Automatic Loop Detection",
-      "el": "Automatic Loop Detection"
+      "no": "Automatisk løkkedeteksjon",
+      "el": "Αυτόματη ανίχνευση βρόχων"
     },
     "modules.analysis.loops.detection_parameters": {
       "en": "Detection Parameters",
@@ -812,8 +822,8 @@
       "lt": "Aptikimo parametrai",
       "pt": "Parâmetros de Detecção",
       "it": "Parametri di Rilevamento",
-      "no": "Detection Parameters",
-      "el": "Detection Parameters"
+      "no": "Deteksjonsparametre",
+      "el": "Παράμετροι ανίχνευσης"
     },
     "modules.analysis.loops.detection_summary": {
       "en": "Detection Summary",
@@ -823,8 +833,8 @@
       "lt": "Aptikimo santrauka",
       "pt": "Resumo da Detecção",
       "it": "Riepilogo del Rilevamento",
-      "no": "Detection Summary",
-      "el": "Detection Summary"
+      "no": "Deteksjonssammendrag",
+      "el": "Σύνοψη ανίχνευσης"
     },
     "modules.analysis.loops.detected_loops": {
       "en": "Detected Loops",
@@ -834,8 +844,8 @@
       "lt": "Aptiktos kilpos",
       "pt": "Loops Detectados",
       "it": "Loop Rilevati",
-      "no": "Detected Loops",
-      "el": "Detected Loops"
+      "no": "Oppdagede løkker",
+      "el": "Ανιχνευμένοι βρόχοι"
     },
     "modules.analysis.loops.btn_detect": {
       "en": "Detect Loops",
@@ -845,8 +855,8 @@
       "lt": "Aptikti kilpas",
       "pt": "Detectar Loops",
       "it": "Rileva Loop",
-      "no": "Detect Loops",
-      "el": "Detect Loops"
+      "no": "Oppdag løkker",
+      "el": "Ανίχνευση βρόχων"
     },
     "modules.analysis.loops.reinforcing_vs_balancing": {
       "en": "Reinforcing vs Balancing",
@@ -856,8 +866,8 @@
       "lt": "Stiprinančios vs Balansuojančios",
       "pt": "Reforço vs Equilíbrio",
       "it": "Rinforzo vs Bilanciamento",
-      "no": "Reinforcing vs Balancing",
-      "el": "Reinforcing vs Balancing"
+      "no": "Forsterkende vs Balanserende",
+      "el": "Ενισχυτικοί έναντι Εξισορροπητικών"
     },
     "modules.analysis.loops.reinforcing_loops": {
       "en": "Reinforcing Loops",
@@ -867,8 +877,8 @@
       "lt": "Stiprinančios kilpos",
       "pt": "Loops de Reforço",
       "it": "Loop di Rinforzo",
-      "no": "Reinforcing Loops",
-      "el": "Reinforcing Loops"
+      "no": "Forsterkende løkker",
+      "el": "Ενισχυτικοί βρόχοι"
     },
     "modules.analysis.loops.balancing_loops": {
       "en": "Balancing Loops",
@@ -878,8 +888,8 @@
       "lt": "Balansuojančios kilpos",
       "pt": "Loops de Equilíbrio",
       "it": "Loop di Bilanciamento",
-      "no": "Balancing Loops",
-      "el": "Balancing Loops"
+      "no": "Balanserende løkker",
+      "el": "Εξισορροπητικοί βρόχοι"
     },
     "modules.analysis.loops.detailed_loop_info": {
       "en": "Detailed Loop Information",
@@ -889,8 +899,8 @@
       "lt": "Detali kilpos informacija",
       "pt": "Informações Detalhadas do Loop",
       "it": "Informazioni Dettagliate del Loop",
-      "no": "Detailed Loop Information",
-      "el": "Detailed Loop Information"
+      "no": "Detaljert løkkeinformasjon",
+      "el": "Λεπτομερείς πληροφορίες βρόχου"
     },
     "modules.analysis.loops.identify_key_drivers": {
       "en": "Identify Key Drivers",
@@ -900,8 +910,8 @@
       "lt": "Nustatyti pagrindinius veiksnius",
       "pt": "Identificar Fatores-Chave",
       "it": "Identificare i Fattori Chiave",
-      "no": "Identify Key Drivers",
-      "el": "Identify Key Drivers"
+      "no": "Identifiser nøkkeldrivkrefter",
+      "el": "Προσδιορισμός κύριων κινητήριων δυνάμεων"
     },
     "modules.analysis.loops.export_analysis": {
       "en": "Export Analysis",
@@ -911,8 +921,8 @@
       "lt": "Eksportuoti analizę",
       "pt": "Exportar Análise",
       "it": "Esporta Analisi",
-      "no": "Export Analysis",
-      "el": "Export Analysis"
+      "no": "Eksporter analyse",
+      "el": "Εξαγωγή ανάλυσης"
     }
   }
 }

@@ -249,6 +249,78 @@ safe_create_igraph <- function(nodes, edges) {
 }
 
 # ============================================================================
+# EVAL SAFETY GUARD
+# ============================================================================
+
+#' Validate that an expression is safe to eval
+#'
+#' INTERNAL ONLY - expressions must never contain user input.
+#' Guards against accidental eval of character strings which could enable
+#' code injection. Only call, expression, name, and { objects are permitted.
+#'
+#' @param expr The expression to validate
+#' @param context Character. Caller context for logging
+#' @return TRUE if safe, stops with error if not
+#' @keywords internal
+.assert_safe_expr <- function(expr, context = "eval") {
+
+  if (is.character(expr)) {
+    stop(sprintf("[%s] Refusing to eval() a character string - potential code injection risk", context))
+  }
+  if (!is.language(expr) && !is.expression(expr) && !is.function(expr) && !is.null(expr)) {
+    stop(sprintf("[%s] eval() received unexpected type '%s' - only language objects are permitted",
+                 context, class(expr)[1]))
+  }
+  invisible(TRUE)
+}
+
+# ============================================================================
+# USER-FACING ERROR FORMATTING
+# ============================================================================
+
+#' Format an error for user display
+#'
+#' Converts a raw R error into a user-friendly notification message.
+#' Technical details are logged server-side only; the user sees a clean message.
+#' Use this in tryCatch blocks for showNotification() calls.
+#'
+#' @param error Error object from tryCatch
+#' @param i18n Translation object (optional). If provided, uses i18n$t() for prefix.
+#' @param context Character. Human-readable context (e.g., "saving project", "loading data")
+#' @param show_details Logical. If TRUE, appends a sanitized version of the R error. Default FALSE.
+#' @return Character string suitable for showNotification()
+#' @export
+format_user_error <- function(error, i18n = NULL, context = NULL, show_details = FALSE) {
+  # Log full technical details server-side
+  detail <- if (inherits(error, "error")) error$message else as.character(error)
+  debug_log(sprintf("User-facing error [%s]: %s", context %||% "unknown", detail), "ERROR")
+
+  # Build user message
+  prefix <- if (!is.null(i18n) && is.function(i18n$t)) {
+    i18n$t("common.messages.error_occurred")
+  } else {
+    "An error occurred"
+  }
+
+  msg <- if (!is.null(context)) {
+    paste0(prefix, " ", context, ".")
+  } else {
+    paste0(prefix, ".")
+  }
+
+  # Optionally append sanitized detail (strip file paths, stack traces)
+  if (show_details && nchar(detail) > 0) {
+    # Remove file paths and line numbers from error messages
+    clean_detail <- gsub("\\s*\\(.*?\\)\\s*$", "", detail)
+    clean_detail <- gsub("[A-Z]:/[^ ]+", "[file]", clean_detail)
+    clean_detail <- substr(clean_detail, 1, 150)  # Truncate long messages
+    msg <- paste0(msg, " ", clean_detail)
+  }
+
+  msg
+}
+
+# ============================================================================
 # ERROR BOUNDARIES FOR SHINY OUTPUTS
 # ============================================================================
 
@@ -288,20 +360,31 @@ safe_render <- function(render_func, error_ui = NULL) {
 #' @return A renderUI output with error handling
 #' @export
 safe_renderUI <- function(expr, env = parent.frame(), quoted = FALSE) {
+  # Standard Shiny quoting pattern: capture expression and forward to renderUI
+  # which handles its own environment correctly
+  installExprFunction <- get("installExprFunction", envir = asNamespace("shiny"), inherits = FALSE)
+
+  func <- NULL
   if (!quoted) {
     expr <- substitute(expr)
   }
+  .assert_safe_expr(expr, "safe_renderUI")
 
-  renderUI({
+  # Wrap the user expression in tryCatch for error boundary
+  wrapped_expr <- bquote(
     tryCatch({
-      eval(expr, envir = env)
+      .(expr)
     }, error = function(e) {
-      debug_log(sprintf("renderUI error: %s", e$message), "ERROR")
+      if (exists("debug_log", mode = "function")) {
+        debug_log(sprintf("renderUI error: %s", e$message), "ERROR")
+      }
       div(class = "alert alert-danger",
           icon("exclamation-triangle"), " ",
           strong("Error: "), e$message)
     })
-  })
+  )
+
+  renderUI(wrapped_expr, env = env, quoted = TRUE)
 }
 
 #' Safe renderDT wrapper with error handling
@@ -318,15 +401,17 @@ safe_renderDT <- function(expr, ..., env = parent.frame(), quoted = FALSE) {
   if (!quoted) {
     expr <- substitute(expr)
   }
+  .assert_safe_expr(expr, "safe_renderDT")
 
-  DT::renderDT({
+  wrapped_expr <- bquote(
     tryCatch({
-      eval(expr, envir = env)
+      .(expr)
     }, error = function(e) {
-      debug_log(sprintf("renderDT error: %s", e$message), "ERROR")
+      if (exists("debug_log", mode = "function")) debug_log(sprintf("renderDT error: %s", e$message), "ERROR")
       data.frame(Error = e$message)
     })
-  }, ...)
+  )
+  DT::renderDT(wrapped_expr, env = env, quoted = TRUE, ...)
 }
 
 #' Safe renderPlot wrapper with error handling
@@ -343,16 +428,18 @@ safe_renderPlot <- function(expr, ..., env = parent.frame(), quoted = FALSE) {
   if (!quoted) {
     expr <- substitute(expr)
   }
+  .assert_safe_expr(expr, "safe_renderPlot")
 
-  renderPlot({
+  wrapped_expr <- bquote(
     tryCatch({
-      eval(expr, envir = env)
+      .(expr)
     }, error = function(e) {
-      debug_log(sprintf("renderPlot error: %s", e$message), "ERROR")
+      if (exists("debug_log", mode = "function")) debug_log(sprintf("renderPlot error: %s", e$message), "ERROR")
       plot.new()
       text(0.5, 0.5, paste("Error:", e$message), col = "red", cex = 1.2)
     })
-  }, ...)
+  )
+  renderPlot(wrapped_expr, env = env, quoted = TRUE, ...)
 }
 
 #' Safe renderTable wrapper with error handling
@@ -369,15 +456,17 @@ safe_renderTable <- function(expr, ..., env = parent.frame(), quoted = FALSE) {
   if (!quoted) {
     expr <- substitute(expr)
   }
+  .assert_safe_expr(expr, "safe_renderTable")
 
-  renderTable({
+  wrapped_expr <- bquote(
     tryCatch({
-      eval(expr, envir = env)
+      .(expr)
     }, error = function(e) {
-      debug_log(sprintf("renderTable error: %s", e$message), "ERROR")
+      if (exists("debug_log", mode = "function")) debug_log(sprintf("renderTable error: %s", e$message), "ERROR")
       data.frame(Error = e$message)
     })
-  }, ...)
+  )
+  renderTable(wrapped_expr, env = env, quoted = TRUE, ...)
 }
 
 #' Safe renderVisNetwork wrapper with error handling
@@ -393,18 +482,20 @@ safe_renderVisNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) {
     expr <- substitute(expr)
   }
+  .assert_safe_expr(expr, "safe_renderVisNetwork")
 
-  visNetwork::renderVisNetwork({
+  wrapped_expr <- bquote(
     tryCatch({
-      eval(expr, envir = env)
+      .(expr)
     }, error = function(e) {
-      debug_log(sprintf("renderVisNetwork error: %s", e$message), "ERROR")
+      if (exists("debug_log", mode = "function")) debug_log(sprintf("renderVisNetwork error: %s", e$message), "ERROR")
       visNetwork::visNetwork(
         nodes = data.frame(id = 1, label = paste("Error:", e$message)),
         edges = data.frame()
       )
     })
-  })
+  )
+  visNetwork::renderVisNetwork(wrapped_expr, env = env, quoted = TRUE)
 }
 
 # ============================================================================

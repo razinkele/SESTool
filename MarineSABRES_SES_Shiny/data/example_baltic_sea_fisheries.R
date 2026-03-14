@@ -53,8 +53,8 @@ create_baltic_sea_example <- function() {
       "Local consumers, restaurants"
     ),
     Importance = c("High", "High", "Medium", "High", "Medium", "Medium"),
-    Trend = c("Decreasing", "Stable", "Decreasing", "Increasing", "Decreasing", "Decreasing"),
-    stringsAsFactors = FALSE
+    Trend = c("Decreasing", "Stable", "Decreasing", "Increasing", "Decreasing", "Decreasing")
+    
   )
 
   # ============================================================================
@@ -91,8 +91,8 @@ create_baltic_sea_example <- function() {
       "Species diversity attracts recreational users",
       "Photosynthesis in seagrass and algae captures CO2"
     ),
-    Confidence = c("High", "High", "Medium", "Medium", "High", "Medium"),
-    stringsAsFactors = FALSE
+    Confidence = c("High", "High", "Medium", "Medium", "High", "Medium")
+    
   )
 
   # ============================================================================
@@ -130,8 +130,8 @@ create_baltic_sea_example <- function() {
       "Salinity affects cod egg buoyancy and survival"
     ),
     Spatial = c("Bornholm Basin", "Basin-wide", "Coastal zones", "Coastal zones",
-                "Deep basins", "Basin-wide"),
-    stringsAsFactors = FALSE
+                "Deep basins", "Basin-wide")
+    
   )
 
   # ============================================================================
@@ -164,8 +164,8 @@ create_baltic_sea_example <- function() {
     Spatial = c("Fishing grounds", "Trawling areas", "Entire Baltic",
                 "Deep basins", "Fishing grounds", "Entire Baltic"),
     Temporal = c("Continuous", "Seasonal", "Continuous", "Seasonal (summer)",
-                "Continuous", "Long-term trend"),
-    stringsAsFactors = FALSE
+                "Continuous", "Long-term trend")
+    
   )
 
   # ============================================================================
@@ -195,8 +195,8 @@ create_baltic_sea_example <- function() {
                "P003: Nutrient enrichment (eutrophication)", "P003: Nutrient enrichment (eutrophication)",
                "P002: Bottom trawling disturbance", "P006: Climate change warming"),
     Scale = c("Regional", "Regional", "National", "Local", "Local", "International"),
-    Frequency = c("Continuous", "Seasonal", "Seasonal", "Continuous", "Occasional", "Continuous"),
-    stringsAsFactors = FALSE
+    Frequency = c("Continuous", "Seasonal", "Seasonal", "Continuous", "Occasional", "Continuous")
+    
   )
 
   # ============================================================================
@@ -230,8 +230,8 @@ create_baltic_sea_example <- function() {
                "A002: Commercial gillnet fishing"),
     Trend = c("Increasing", "Stable", "Increasing", "Increasing", "Increasing",
              "Increasing", "Decreasing"),
-    Controllability = c("Low", "High", "Medium", "High", "Medium", "Low", "High"),
-    stringsAsFactors = FALSE
+    Controllability = c("Low", "High", "Medium", "High", "Medium", "Low", "High")
+    
   )
 
   # ============================================================================
@@ -283,8 +283,8 @@ create_baltic_sea_example <- function() {
                 "Supportive", "Resistant", "Supportive"),
     EngagementLevel = c("Collaborate", "Collaborate", "Empower", "Consult", "Collaborate",
                        "Inform", "Involve", "Collaborate"),
-    DateAdded = rep(as.character(Sys.Date()), 8),
-    stringsAsFactors = FALSE
+    DateAdded = rep(as.character(Sys.Date()), 8)
+    
   )
 
   # ============================================================================
@@ -314,8 +314,8 @@ create_baltic_sea_example <- function() {
     Unit = c(
       rep("tonnes", 10), rep("million EUR", 10), rep("thousand tonnes N", 10),
       rep("index (2014=100)", 10)
-    ),
-    stringsAsFactors = FALSE
+    )
+    
   )
 
   # ============================================================================
@@ -330,8 +330,8 @@ create_baltic_sea_example <- function() {
       "High demand leads to overfishing which depletes stocks reducing catch",
       "Overcapacity increases competition and fishing pressure reducing stocks",
       "Improved regulations can help restore stocks improving future catches"
-    ),
-    stringsAsFactors = FALSE
+    )
+    
   )
 
   # ============================================================================
@@ -359,8 +359,8 @@ create_baltic_sea_example <- function() {
       "Identified cultural heritage sites and seasonal fishing patterns"
     ),
     Status = c("Completed", "Completed", "Completed", "Completed"),
-    Facilitator = c("Project Team", "Dr. Anna Kowalski", "ICES Secretariat", "Local NGO"),
-    stringsAsFactors = FALSE
+    Facilitator = c("Project Team", "Dr. Anna Kowalski", "ICES Secretariat", "Local NGO")
+    
   )
 
   # ============================================================================
@@ -378,8 +378,8 @@ create_baltic_sea_example <- function() {
       "Comprehensive SES analysis results and policy recommendations for Baltic cod recovery",
       "Presentation of Causal Loop Diagram and key feedback loops at marine science conference"
     ),
-    Responsible = c("Communications Officer", "Project Lead", "Lead Scientist"),
-    stringsAsFactors = FALSE
+    Responsible = c("Communications Officer", "Project Lead", "Lead Scientist")
+    
   )
 
   # ============================================================================
@@ -552,8 +552,8 @@ wb <- createWorkbook()
 addWorksheet(wb, "Metadata")
 metadata_df <- data.frame(
   Field = names(project_data$data$metadata),
-  Value = unlist(project_data$data$metadata),
-  stringsAsFactors = FALSE
+  Value = unlist(project_data$data$metadata)
+  
 )
 writeData(wb, "Metadata", metadata_df)
 
@@ -561,8 +561,8 @@ writeData(wb, "Metadata", metadata_df)
 addWorksheet(wb, "Case_Info")
 case_df <- data.frame(
   Field = names(baltic_sea_data$case_info),
-  Value = unlist(baltic_sea_data$case_info),
-  stringsAsFactors = FALSE
+  Value = unlist(baltic_sea_data$case_info)
+  
 )
 writeData(wb, "Case_Info", case_df)
 

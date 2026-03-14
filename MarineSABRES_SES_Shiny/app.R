@@ -310,6 +310,30 @@ ui <- bs4DashPage(
     # Enable shinyjs
     useShinyjs(),
 
+    # Skip link for keyboard navigation (visible only on focus)
+    tags$a(
+      href = "#main-content",
+      class = "skip-link",
+      "Skip to main content"
+    ),
+
+    # ARIA live region for dynamic status announcements to screen readers
+    tags$div(
+      id = "aria-live-status",
+      class = "aria-status",
+      role = "status",
+      `aria-live` = "polite",
+      `aria-atomic` = "true"
+    ),
+    # ARIA live region for urgent announcements (errors)
+    tags$div(
+      id = "aria-live-alert",
+      class = "aria-status",
+      role = "alert",
+      `aria-live` = "assertive",
+      `aria-atomic` = "true"
+    ),
+
     # User level script (for localStorage)
     uiOutput("user_level_script"),
 
@@ -324,6 +348,9 @@ ui <- bs4DashPage(
 
     # Workflow stepper bar (beginner guidance)
     workflow_stepper_ui("workflow_stepper"),
+
+    # Main content landmark for skip-link target and screen readers
+    tags$div(id = "main-content", role = "main", `aria-label` = "Main content"),
 
     bs4TabItems(
 
@@ -685,8 +712,8 @@ server <- function(input, output, session) {
     tryCatch({
       debug_log("Restoring project data after language change...", "LANG_RESTORE")
 
-      # Parse the JSON data sent from JavaScript
-      saved_data <- jsonlite::fromJSON(input$restore_project_data_from_lang_change, simplifyVector = FALSE)
+      # Parse the JSON data sent from JavaScript (safely)
+      saved_data <- safe_parse_json(input$restore_project_data_from_lang_change)
 
       if (!is.null(saved_data)) {
         # Validate JSON input for security and structure
@@ -812,9 +839,12 @@ server <- function(input, output, session) {
           download_manuals = as.character(session_i18n$t("ui.header.download_manuals")),
           app_info = as.character(session_i18n$t("ui.header.app_info")),
           help = as.character(session_i18n$t("ui.header.help")),
+          beginners_guide = as.character(session_i18n$t("ui.header.beginners_guide")),
           step_by_step_tutorial = as.character(session_i18n$t("ui.header.step_by_step_tutorial")),
           quick_reference = as.character(session_i18n$t("ui.header.quick_reference")),
-          bookmark = as.character(session_i18n$t("ui.header.bookmark"))
+          bookmark = as.character(session_i18n$t("ui.header.bookmark")),
+          fullscreen = as.character(session_i18n$t("common.buttons.fullscreen")),
+          exit_fullscreen = as.character(session_i18n$t("common.buttons.exit_fullscreen"))
         )
         debug_log(sprintf("Header translations captured: %s, %s, %s",
                     header_translations$language, header_translations$settings, header_translations$help), "LANGUAGE")
@@ -995,16 +1025,16 @@ server <- function(input, output, session) {
   cld_viz_server("cld_visual", project_data, session_i18n)
 
   # Analysis modules
-  analysis_metrics_server("analysis_met", project_data, session_i18n)
-  analysis_loops_server("analysis_loop", project_data, session_i18n)
-  analysis_leverage_server("analysis_lev", project_data, session_i18n)
-  analysis_bot_server("analysis_b", project_data, session_i18n)
-  analysis_simplify_server("analysis_simp", project_data, session_i18n)
+  analysis_metrics_server("analysis_met", project_data, session_i18n, event_bus = event_bus)
+  analysis_loops_server("analysis_loop", project_data, session_i18n, event_bus = event_bus)
+  analysis_leverage_server("analysis_lev", project_data, session_i18n, event_bus = event_bus)
+  analysis_bot_server("analysis_b", project_data, session_i18n, event_bus = event_bus)
+  analysis_simplify_server("analysis_simp", project_data, session_i18n, event_bus = event_bus)
 
   # DTU dynamics analysis modules
-  analysis_boolean_server("analysis_bool", project_data, session_i18n)
-  analysis_simulation_server("analysis_sim", project_data, session_i18n)
-  analysis_intervention_server("analysis_intv", project_data, session_i18n)
+  analysis_boolean_server("analysis_bool", project_data, session_i18n, event_bus = event_bus)
+  analysis_simulation_server("analysis_sim", project_data, session_i18n, event_bus = event_bus)
+  analysis_intervention_server("analysis_intv", project_data, session_i18n, event_bus = event_bus)
 
   # Response & validation modules
   response_measures_server("resp_meas", project_data, session_i18n)
@@ -1024,12 +1054,11 @@ server <- function(input, output, session) {
   prepare_report_server("prep_report", project_data, session_i18n, parent_session = session)
 
   # ========== REACTIVE DATA PIPELINE ==========
-  # NOTE: setup_reactive_pipeline() from functions/reactive_pipeline.R is incompatible
-  # with the new event bus from server/event_bus_setup.R. The new event bus uses
-  # on_isa_change()/emit_isa_change() methods instead of isa_changed() reactiveVals.
-  # The pipeline functionality is now handled through the event_bus directly.
-  # Keeping this commented out until the two systems are reconciled.
-  # setup_reactive_pipeline(project_data, event_bus)
+  # Automatic propagation: ISA changes -> CLD regeneration -> Analysis invalidation
+  # The pipeline observes event_bus$on_isa_change() and emits event_bus$emit_cld_update()
+  # so modules only need to emit ISA changes; CLD and analysis updates happen automatically.
+  # See functions/reactive_pipeline.R for implementation details.
+  setup_reactive_pipeline(project_data, event_bus)
 
   # ========== DASHBOARD ==========
   # Dashboard logic extracted to server/dashboard.R for better maintainability

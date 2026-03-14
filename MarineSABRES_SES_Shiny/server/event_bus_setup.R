@@ -28,10 +28,15 @@ create_event_bus <- function(session_id = NULL) {
   triggers$project_loaded <- shiny::reactiveVal(0)
   triggers$navigation_request <- shiny::reactiveVal(NULL)
 
-  # Event metadata storage
-  metadata <- new.env(parent = emptyenv())
-  metadata$last_event <- NULL
-  metadata$event_count <- 0
+  # Per-session event metadata stored as reactiveVals for proper isolation
+  last_event_val <- shiny::reactiveVal(NULL)
+  event_count_val <- shiny::reactiveVal(0)
+  bus_session_id <- session_id
+
+  # Pipeline control flag: when TRUE, the reactive pipeline will skip
+  # the next CLD regeneration (used by import/load modules that already
+  # build CLD from connection data). Read and reset by setup_reactive_pipeline().
+  skip_cld_regen_val <- shiny::reactiveVal(FALSE)
 
   # Create the event bus object
   event_bus <- list(
@@ -40,8 +45,8 @@ create_event_bus <- function(session_id = NULL) {
     emit_isa_change = function(source = "unknown") {
       current <- triggers$isa_change()
       triggers$isa_change(current + 1)
-      metadata$last_event <- list(type = "isa_change", source = source, time = Sys.time())
-      metadata$event_count <- metadata$event_count + 1
+      last_event_val(list(type = "isa_change", source = source, time = Sys.time()))
+      event_count_val(event_count_val() + 1)
       debug_log(sprintf("Event: isa_change emitted by %s (count: %d)", source, current + 1), "EVENT_BUS")
     },
 
@@ -54,8 +59,8 @@ create_event_bus <- function(session_id = NULL) {
     emit_cld_update = function(source = "unknown") {
       current <- triggers$cld_update()
       triggers$cld_update(current + 1)
-      metadata$last_event <- list(type = "cld_update", source = source, time = Sys.time())
-      metadata$event_count <- metadata$event_count + 1
+      last_event_val(list(type = "cld_update", source = source, time = Sys.time()))
+      event_count_val(event_count_val() + 1)
       debug_log(sprintf("Event: cld_update emitted by %s (count: %d)", source, current + 1), "EVENT_BUS")
     },
 
@@ -68,9 +73,9 @@ create_event_bus <- function(session_id = NULL) {
     emit_analysis_request = function(analysis_type = "all", source = "unknown") {
       current <- triggers$analysis_request()
       triggers$analysis_request(current + 1)
-      metadata$last_event <- list(type = "analysis_request", analysis_type = analysis_type,
-                                   source = source, time = Sys.time())
-      metadata$event_count <- metadata$event_count + 1
+      last_event_val(list(type = "analysis_request", analysis_type = analysis_type,
+                          source = source, time = Sys.time()))
+      event_count_val(event_count_val() + 1)
       debug_log(sprintf("Event: analysis_request (%s) emitted by %s", analysis_type, source), "EVENT_BUS")
     },
 
@@ -83,9 +88,9 @@ create_event_bus <- function(session_id = NULL) {
     emit_template_loaded = function(template_name = "unknown", source = "unknown") {
       current <- triggers$template_loaded()
       triggers$template_loaded(current + 1)
-      metadata$last_event <- list(type = "template_loaded", template = template_name,
-                                   source = source, time = Sys.time())
-      metadata$event_count <- metadata$event_count + 1
+      last_event_val(list(type = "template_loaded", template = template_name,
+                          source = source, time = Sys.time()))
+      event_count_val(event_count_val() + 1)
       debug_log(sprintf("Event: template_loaded (%s) emitted by %s", template_name, source), "EVENT_BUS")
     },
 
@@ -97,9 +102,9 @@ create_event_bus <- function(session_id = NULL) {
     emit_project_saved = function(project_name = "unknown", source = "unknown") {
       current <- triggers$project_saved()
       triggers$project_saved(current + 1)
-      metadata$last_event <- list(type = "project_saved", project = project_name,
-                                   source = source, time = Sys.time())
-      metadata$event_count <- metadata$event_count + 1
+      last_event_val(list(type = "project_saved", project = project_name,
+                          source = source, time = Sys.time()))
+      event_count_val(event_count_val() + 1)
       debug_log(sprintf("Event: project_saved (%s) emitted by %s", project_name, source), "EVENT_BUS")
     },
 
@@ -110,9 +115,9 @@ create_event_bus <- function(session_id = NULL) {
     emit_project_loaded = function(project_name = "unknown", source = "unknown") {
       current <- triggers$project_loaded()
       triggers$project_loaded(current + 1)
-      metadata$last_event <- list(type = "project_loaded", project = project_name,
-                                   source = source, time = Sys.time())
-      metadata$event_count <- metadata$event_count + 1
+      last_event_val(list(type = "project_loaded", project = project_name,
+                          source = source, time = Sys.time()))
+      event_count_val(event_count_val() + 1)
       debug_log(sprintf("Event: project_loaded (%s) emitted by %s", project_name, source), "EVENT_BUS")
     },
 
@@ -124,9 +129,9 @@ create_event_bus <- function(session_id = NULL) {
     # Emitted to request navigation to a specific tab
     emit_navigation_request = function(target_tab, source = "unknown") {
       triggers$navigation_request(list(tab = target_tab, time = Sys.time()))
-      metadata$last_event <- list(type = "navigation_request", target = target_tab,
-                                   source = source, time = Sys.time())
-      metadata$event_count <- metadata$event_count + 1
+      last_event_val(list(type = "navigation_request", target = target_tab,
+                          source = source, time = Sys.time()))
+      event_count_val(event_count_val() + 1)
       debug_log(sprintf("Event: navigation_request to %s emitted by %s", target_tab, source), "EVENT_BUS")
     },
 
@@ -134,17 +139,36 @@ create_event_bus <- function(session_id = NULL) {
       triggers$navigation_request()
     },
 
+    # ========== Pipeline Control ==========
+    # Signal the reactive pipeline to skip the next CLD regeneration.
+    # Used by modules that import data with pre-built CLD (e.g., import, ses_models).
+    skip_next_cld_regen = function(value = TRUE) {
+      skip_cld_regen_val(value)
+      if (value) {
+        debug_log("Pipeline: skip_next_cld_regen flag set", "EVENT_BUS")
+      }
+    },
+
+    # Read (and optionally consume) the skip flag. Called by setup_reactive_pipeline().
+    get_skip_cld_regen = function(consume = TRUE) {
+      val <- skip_cld_regen_val()
+      if (consume && val) {
+        skip_cld_regen_val(FALSE)
+      }
+      val
+    },
+
     # ========== Utility Functions ==========
     get_event_count = function() {
-      metadata$event_count
+      event_count_val()
     },
 
     get_last_event = function() {
-      metadata$last_event
+      last_event_val()
     },
 
     get_session_id = function() {
-      session_id
+      bus_session_id
     }
   )
 

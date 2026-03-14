@@ -75,7 +75,7 @@ generate_test_network <- function(n_nodes, edge_density = 0.3) {
     id = paste0("node_", seq_len(n_nodes)),
     label = paste("Element", seq_len(n_nodes)),
     type = sample(types, n_nodes, replace = TRUE),
-    stringsAsFactors = FALSE
+    
   )
 
   # Generate edges based on density
@@ -101,7 +101,7 @@ generate_test_network <- function(n_nodes, edge_density = 0.3) {
           to = nodes$id[to_idx],
           polarity = sample(c("+", "-"), 1),
           confidence = runif(1, 0.5, 1.0),
-          stringsAsFactors = FALSE
+          
         )
         used_pairs <- c(used_pairs, pair_key)
         i <- i + 1
@@ -446,7 +446,7 @@ results_df <- data.frame(
   nodes = integer(0),
   median_ms = numeric(0),
   mem_mb = numeric(0),
-  stringsAsFactors = FALSE
+  
 )
 
 # Add network results
@@ -459,7 +459,7 @@ for (size in names(network_results)) {
     nodes = as.integer(size),
     median_ms = as.numeric(result$median) * 1000,
     mem_mb = as.numeric(result$mem_alloc) / 1024 / 1024,
-    stringsAsFactors = FALSE
+    
   ))
 }
 
@@ -473,7 +473,7 @@ for (size in names(igraph_results)) {
     nodes = as.integer(size),
     median_ms = as.numeric(result$median) * 1000,
     mem_mb = as.numeric(result$mem_alloc) / 1024 / 1024,
-    stringsAsFactors = FALSE
+    
   ))
 }
 

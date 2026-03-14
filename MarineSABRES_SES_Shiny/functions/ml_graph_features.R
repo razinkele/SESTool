@@ -13,14 +13,16 @@
 # ==============================================================================
 
 if (!requireNamespace("igraph", quietly = TRUE)) {
-  stop("Package 'igraph' is required for graph features. Install with: install.packages('igraph')")
+  warning("Package 'igraph' is required for graph features. Graph features will be unavailable.")
 }
 
-# Source dependencies
-if (file.exists("functions/network_analysis.R")) {
+# Source dependencies (only if not already loaded by global.R)
+if (!exists("create_igraph_from_data", mode = "function") &&
+    file.exists("functions/network_analysis.R")) {
   source("functions/network_analysis.R", chdir = TRUE)
 }
-if (file.exists("functions/dapsiwrm_connection_rules.R")) {
+if (!exists("get_dapsiwrm_connection_rules", mode = "function") &&
+    file.exists("functions/dapsiwrm_connection_rules.R")) {
   source("functions/dapsiwrm_connection_rules.R", chdir = TRUE)
 }
 

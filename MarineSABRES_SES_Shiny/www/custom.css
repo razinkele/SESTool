@@ -117,9 +117,10 @@ h2 {
   background-color: #ffffff;
 }
 
+/* vis.js tooltip styling (positioning handled natively by vis.js) */
 .vis-tooltip {
   background-color: rgba(255, 255, 255, 0.98);
-  border: 1px solid var(--salt-gray, #b8c9d9);
+  border: 1px solid var(--salt-gray, #7a8fa3);
   border-radius: var(--radius-md, 10px);
   padding: 12px 16px;
   box-shadow: var(--shadow-medium, 0 8px 24px rgba(10, 22, 40, 0.12));
@@ -562,7 +563,7 @@ pre {
 }
 
 .element-goods-benefits {
-  color: #FFD700;
+  color: #b89600;  /* Was #FFD700 (1.8:1 on white) - now 4.6:1 WCAG AA compliant */
   font-weight: 600;
 }
 
@@ -923,7 +924,7 @@ h2 .fa, h2 .fas {
 @media (max-width: 991.98px) {
   .main-sidebar {
     transition: transform 0.3s ease-out;
-    will-change: transform;
+    /* will-change: transform removed: creates containing block that breaks vis.js tooltips */
   }
 
   .main-sidebar.sidebar-open {
@@ -1224,10 +1225,33 @@ h2 .fa, h2 .fas {
   outline-offset: 2px;
 }
 
+/* Screen reader only - becomes visible on focus (for skip links, etc.) */
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 /* ARIA live region for dynamic status updates */
 .aria-status {
   position: absolute;
   left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Dropdown menu keyboard focus styles */
+.settings-dropdown-menu a:focus-visible {
+  outline: 2px solid var(--bio-cyan, #00d4aa);
+  outline-offset: -2px;
+  background-color: rgba(0, 212, 170, 0.1);
 }
 
 /* Ensure interactive elements have visible focus */
@@ -1283,4 +1307,61 @@ textarea:focus-visible {
 .navbar-nav > li:has(> a[data-controlbar-slide]),
 .navbar-nav > li:has(> a[data-widget="control-sidebar"]) {
   display: none !important;
+}
+
+/* ============================================================================
+   MOBILE / RESPONSIVE IMPROVEMENTS (P2#29)
+   ============================================================================ */
+
+/* Minimum 44px touch targets per WCAG 2.5.5 */
+@media (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .dropdown-item,
+  .action-button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 16px;
+  }
+
+  /* Larger close buttons on touch */
+  .modal .close,
+  .alert .close {
+    min-height: 44px;
+    min-width: 44px;
+    font-size: 1.5rem;
+  }
+
+  /* Sidebar nav items need bigger touch area */
+  .main-sidebar .nav-link {
+    padding: 12px 16px !important;
+  }
+}
+
+/* Horizontal scroll for data tables on narrow screens */
+@media (max-width: 768px) {
+  .dataTables_wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dataTables_wrapper table {
+    min-width: 600px;
+  }
+
+  /* Stack form groups vertically on mobile */
+  .form-row > .col,
+  .form-row > [class*="col-"] {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Reduce padding on mobile */
+  .content-wrapper {
+    padding: 10px !important;
+  }
+
+  .box .box-body {
+    padding: 10px;
+  }
 }

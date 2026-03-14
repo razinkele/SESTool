@@ -21,9 +21,12 @@ if (!exists("ml_model_available")) {
 #' @param ml_weight Weight for ML predictions (default: 0.7)
 #' @return List with connection prediction
 #' @export
-predict_connection_enhanced <- function(from_element, to_element, context, ml_weight = 0.7) {
+predict_connection_enhanced <- function(from_element, to_element, context,
+                                        ml_weight = 0.7,
+                                        graph = NULL, nodes = NULL) {
 
   # Try ML prediction first
+  # Phase 2: pass graph/nodes for graph feature extraction when available
   ml_result <- NULL
   if (ml_model_available()) {
     tryCatch({
@@ -33,7 +36,11 @@ predict_connection_enhanced <- function(from_element, to_element, context, ml_we
         target_name = to_element$name,
         target_type = to_element$type,
         context = context,
-        threshold = 0.5
+        threshold = 0.5,
+        graph = graph,
+        nodes = nodes,
+        source_id = from_element$id,
+        target_id = to_element$id
       )
     }, error = function(e) {
       debug_log(paste("ML prediction failed:", e$message), "ML_ENHANCER")

@@ -328,7 +328,7 @@ import_from_csv <- function(csv_file) {
 
   # Read CSV
   # Expected columns: key, en, es, fr, de, lt, pt, it, file
-  data <- read.csv(csv_file, stringsAsFactors = FALSE, encoding = "UTF-8")
+  data <- read.csv(csv_file, encoding = "UTF-8")
 
   required_cols <- c("en", REQUIRED_LANGUAGES)
   missing_cols <- setdiff(required_cols, names(data))

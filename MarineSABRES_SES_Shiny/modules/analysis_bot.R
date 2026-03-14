@@ -4,6 +4,7 @@
 
 analysis_bot_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     uiOutput(ns("module_header")),
@@ -117,7 +118,7 @@ analysis_bot_ui <- function(id, i18n) {
   )
 }
 
-analysis_bot_server <- function(id, project_data_reactive, i18n) {
+analysis_bot_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
     ns <- session$ns
@@ -127,6 +128,20 @@ analysis_bot_server <- function(id, project_data_reactive, i18n) {
       current_element = NULL,
       timeseries_data = data.frame(Year = integer(), Value = numeric())
     )
+
+    # Listen for ISA changes via event bus to flag stale results
+    observe({
+      req(!is.null(event_bus))
+      event_bus$on_isa_change()
+      if (nrow(isolate(bot_rv$timeseries_data)) > 0) {
+        showNotification(
+          i18n$t("modules.analysis.common.data_changed_rerun"),
+          type = "warning",
+          duration = 5,
+          id = ns("stale_data")
+        )
+      }
+    })
 
     # === REACTIVE MODULE HEADER ===
     output$module_header <- renderUI({
@@ -210,7 +225,7 @@ analysis_bot_server <- function(id, project_data_reactive, i18n) {
           showNotification(i18n$t("modules.analysis.common.analysis_csv_columns_error"), type = "error")
         }
       }, error = function(e) {
-        showNotification(paste(i18n$t("modules.analysis.common.analysis_error_loading_csv"), e$message), type = "error")
+        showNotification(format_user_error(e, i18n = i18n, context = "loading CSV data"), type = "error")
       })
     })
 

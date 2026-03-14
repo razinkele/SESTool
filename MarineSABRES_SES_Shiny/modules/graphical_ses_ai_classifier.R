@@ -309,8 +309,8 @@ rank_dapsiwrm_types <- function(scores, top_n = 3) {
   # Convert to data frame for sorting
   df <- data.frame(
     type = names(scores),
-    score = unlist(scores),
-    stringsAsFactors = FALSE
+    score = unlist(scores)
+    
   )
 
   # Sort by score descending

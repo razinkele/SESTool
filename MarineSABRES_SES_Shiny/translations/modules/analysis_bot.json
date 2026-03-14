@@ -42,7 +42,7 @@
       "pt": "Séries Temporais",
       "it": "Serie Temporali",
       "no": "Tidsserier",
-      "el": "Time Series"
+      "el": "Χρονοσειρά"
     },
     "modules.analysis.bot.summary_statistics": {
       "en": "Summary Statistics",
@@ -75,7 +75,7 @@
       "pt": "Dados",
       "it": "Dati",
       "no": "Data",
-      "el": "Data"
+      "el": "Δεδομένα"
     },
     "modules.analysis.bot.tab_scenario_comparison": {
       "en": "Scenario Comparison",
@@ -196,7 +196,7 @@
       "pt": "Ano:",
       "it": "Anno:",
       "no": "År:",
-      "el": "Year:"
+      "el": "Έτος:"
     },
     "modules.analysis.bot.value": {
       "en": "Value:",
@@ -284,7 +284,7 @@
       "pt": "Ajuda",
       "it": "Aiuto",
       "no": "Hjelp",
-      "el": "Help"
+      "el": "Βοήθεια"
     },
     "modules.analysis.bot.temporal_pattern_detection": {
       "en": "Temporal Pattern Detection",

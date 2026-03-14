@@ -4,8 +4,11 @@
 # Follows the DAPSI(W)R(M) framework for marine ecosystem analysis
 
 # Module UI ----
-isa_data_entry_ui <- function(id, i18n = NULL) {
+isa_data_entry_ui <- function(id, i18n) {
   ns <- NS(id)
+
+  # Enable reactive translation updates for this module
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
 
   tagList(
 
@@ -60,8 +63,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         Description = character(),
         Stakeholder = character(),
         Importance = character(),
-        Trend = character(),
-        stringsAsFactors = FALSE
+        Trend = character()
+        
       ),
       gb_counter = 0,
 
@@ -73,8 +76,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         Description = character(),
         LinkedGB = character(),
         Mechanism = character(),
-        Confidence = character(),
-        stringsAsFactors = FALSE
+        Confidence = character()
+        
       ),
       es_counter = 0,
 
@@ -86,8 +89,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         Description = character(),
         LinkedES = character(),
         Mechanism = character(),
-        Spatial = character(),
-        stringsAsFactors = FALSE
+        Spatial = character()
+        
       ),
       mpf_counter = 0,
 
@@ -100,8 +103,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         LinkedMPF = character(),
         Intensity = character(),
         Spatial = character(),
-        Temporal = character(),
-        stringsAsFactors = FALSE
+        Temporal = character()
+        
       ),
       p_counter = 0,
 
@@ -113,8 +116,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         Description = character(),
         LinkedP = character(),
         Scale = character(),
-        Frequency = character(),
-        stringsAsFactors = FALSE
+        Frequency = character()
+        
       ),
       a_counter = 0,
 
@@ -126,8 +129,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         Description = character(),
         LinkedA = character(),
         Trend = character(),
-        Controllability = character(),
-        stringsAsFactors = FALSE
+        Controllability = character()
+        
       ),
       d_counter = 0,
 
@@ -138,8 +141,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         Effect = character(),
         Strength = character(),
         Confidence = integer(),
-        Mechanism = character(),
-        stringsAsFactors = FALSE
+        Mechanism = character()
+        
       ),
 
       # BOT data
@@ -148,8 +151,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         ElementID = character(),
         Year = numeric(),
         Value = numeric(),
-        Unit = character(),
-        stringsAsFactors = FALSE
+        Unit = character()
+        
       ),
 
       # Exercises 10-12
@@ -187,70 +190,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       project <- global_data()
 
       if (!is.null(project) && !is.null(project$data) && !is.null(project$data$isa_data)) {
-        isa_saved <- project$data$isa_data
         debug_log("Found saved ISA data in project", "ISA Module")
-
-        # Load Drivers
-        if (!is.null(isa_saved$drivers) && nrow(isa_saved$drivers) > 0) {
-          debug_log(sprintf("Loading %d drivers", nrow(isa_saved$drivers)), "ISA Module")
-          isa_data$drivers <- isa_saved$drivers
-          isa_data$d_counter <- nrow(isa_saved$drivers)
-        }
-
-        # Load Activities
-        if (!is.null(isa_saved$activities) && nrow(isa_saved$activities) > 0) {
-          debug_log(sprintf("Loading %d activities", nrow(isa_saved$activities)), "ISA Module")
-          isa_data$activities <- isa_saved$activities
-          isa_data$a_counter <- nrow(isa_saved$activities)
-        }
-
-        # Load Pressures
-        if (!is.null(isa_saved$pressures) && nrow(isa_saved$pressures) > 0) {
-          debug_log(sprintf("Loading %d pressures", nrow(isa_saved$pressures)), "ISA Module")
-          isa_data$pressures <- isa_saved$pressures
-          isa_data$p_counter <- nrow(isa_saved$pressures)
-        }
-
-        # Load Marine Processes
-        if (!is.null(isa_saved$marine_processes) && nrow(isa_saved$marine_processes) > 0) {
-          debug_log(sprintf("Loading %d marine processes", nrow(isa_saved$marine_processes)), "ISA Module")
-          isa_data$marine_processes <- isa_saved$marine_processes
-          isa_data$mpf_counter <- nrow(isa_saved$marine_processes)
-        }
-
-        # Load Ecosystem Services
-        if (!is.null(isa_saved$ecosystem_services) && nrow(isa_saved$ecosystem_services) > 0) {
-          debug_log(sprintf("Loading %d ecosystem services", nrow(isa_saved$ecosystem_services)), "ISA Module")
-          isa_data$ecosystem_services <- isa_saved$ecosystem_services
-          isa_data$es_counter <- nrow(isa_saved$ecosystem_services)
-        }
-
-        # Load Goods & Benefits
-        if (!is.null(isa_saved$goods_benefits) && nrow(isa_saved$goods_benefits) > 0) {
-          debug_log(sprintf("Loading %d goods/benefits", nrow(isa_saved$goods_benefits)), "ISA Module")
-          isa_data$goods_benefits <- isa_saved$goods_benefits
-          isa_data$gb_counter <- nrow(isa_saved$goods_benefits)
-        }
-
-        # Load adjacency matrices if they exist
-        if (!is.null(isa_saved$adjacency_matrices)) {
-          debug_log("Loading adjacency matrices", "ISA Module")
-          isa_data$adjacency_matrices <- isa_saved$adjacency_matrices
-
-          # Count non-empty connections
-          n_connections <- 0
-          for (matrix_name in names(isa_saved$adjacency_matrices)) {
-            mat <- isa_saved$adjacency_matrices[[matrix_name]]
-            if (!is.null(mat) && is.matrix(mat)) {
-              n_connections <- n_connections + sum(mat != "", na.rm = TRUE)
-            }
-          }
-          debug_log(sprintf("Loaded %d connections from adjacency matrices", n_connections), "ISA Module")
-        }
-
-        # Note: responses from AI Assistant don't map to ISA Data Entry
-        # They would need to be handled separately or shown in a different section
-
+        load_isa_elements_from_saved(isa_data, project$data$isa_data)
         debug_log("Data loading complete", "ISA Module")
         data_initialized(TRUE)
       } else {
@@ -947,32 +888,10 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       insertUI(
         selector = paste0("#", ns("gb_entries")),
         where = "beforeEnd",
-        ui = div(
-          id = ns(paste0("gb_panel_", current_id)),
-          class = "isa-entry-panel",
-          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
-          fluidRow(
-            column(3, textInput(ns(paste0("gb_name_", current_id)), i18n$t("common.labels.name"), placeholder = i18n$t("modules.isa.data_entry.common.eg_fish_catch"))),
-            column(3, selectInput(ns(paste0("gb_type_", current_id)), i18n$t("common.labels.type"),
-                                 choices = c("Provisioning", "Regulating", "Cultural", "Supporting"))),
-            column(6, textInput(ns(paste0("gb_desc_", current_id)), i18n$t("common.labels.description")))
-          ),
-          fluidRow(
-            column(3, textInput(ns(paste0("gb_stakeholder_", current_id)), i18n$t("modules.isa.data_entry.common.stakeholder"))),
-            column(3, selectInput(ns(paste0("gb_importance_", current_id)), i18n$t("modules.isa.data_entry.common.importance"),
-                                 choices = c("High", "Medium", "Low"))),
-            column(3, selectInput(ns(paste0("gb_trend_", current_id)), i18n$t("modules.isa.data_entry.common.trend"),
-                                 choices = c("Increasing", "Stable", "Decreasing", "Unknown"))),
-            column(3, actionButton(ns(paste0("gb_remove_", current_id)), i18n$t("common.buttons.remove"), class = "btn-danger btn-sm"))
-          )
-        )
+        ui = build_entry_panel_ui(ns, "gb", current_id, isa_fields_gb(i18n), i18n)
       )
 
-      # Add remove button handler for this entry
-      observeEvent(input[[paste0("gb_remove_", current_id)]], {
-        removeUI(selector = paste0("#", ns(paste0("gb_panel_", current_id))))
-        showNotification(i18n$t("modules.isa.data_entry.common.entry_removed"), type = "message", duration = 2)
-      }, ignoreInit = TRUE, once = TRUE)
+      register_remove_observer(input, ns, "gb", current_id, i18n)
     })
 
     output$gb_table <- renderDT({
@@ -980,102 +899,29 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
     })
 
     observeEvent(input$save_ex1, {
-      # Check if at least one entry exists
       if (isa_data$gb_counter == 0) {
         showNotification(i18n$t("modules.isa.please_add_at_least_one_goodbenefit_entry_before_s"),
                         type = "warning", session = session)
         return()
       }
 
-      # Collect and validate all GB entries
-      # Use list accumulation instead of rbind() in loop for O(n) performance
-      gb_rows <- list()
-      validation_errors <- c()
+      result <- validate_and_collect_gb(input, isa_data$gb_counter, session, i18n)
 
-      for(i in 1:isa_data$gb_counter) {
-        name_val <- input[[paste0("gb_name_", i)]]
-        type_val <- input[[paste0("gb_type_", i)]]
-        desc_val <- input[[paste0("gb_desc_", i)]]
-        stakeholder_val <- input[[paste0("gb_stakeholder_", i)]]
-        importance_val <- input[[paste0("gb_importance_", i)]]
-        trend_val <- input[[paste0("gb_trend_", i)]]
-
-        # Skip removed entries (where name is NULL)
-        if(is.null(name_val)) next
-
-        # Only validate and include entries with a name
-        if(name_val != "") {
-          # Validate this entry
-          entry_validations <- list(
-            validate_text_input(name_val, paste0("G&B ", i, " Name"),
-                               required = TRUE, min_length = 2, max_length = 200,
-                               session = NULL),  # Don't show notification per entry
-            validate_select_input(type_val, paste0("G&B ", i, " Type"),
-                                 required = TRUE,
-                                 valid_choices = c("Provisioning", "Regulating", "Cultural", "Supporting"),
-                                 session = NULL),
-            validate_text_input(desc_val, paste0("G&B ", i, " Description"),
-                               required = FALSE, max_length = 500,
-                               session = NULL),
-            validate_text_input(stakeholder_val, paste0("G&B ", i, " Stakeholder"),
-                               required = FALSE, max_length = 200,
-                               session = NULL)
-          )
-
-          # Collect validation errors
-          for (v in entry_validations) {
-            if (!v$valid) {
-              validation_errors <- c(validation_errors, v$message)
-            }
-          }
-
-          # Add to list if individual validations pass (O(1) append vs O(n) rbind)
-          if (all(sapply(entry_validations, function(v) v$valid))) {
-            gb_rows[[length(gb_rows) + 1]] <- data.frame(
-              ID = generate_element_id(ELEMENT_ID_PREFIX$welfare, i),
-              Name = entry_validations[[1]]$value,
-              Type = entry_validations[[2]]$value,
-              Description = if (!is.null(entry_validations[[3]]$value)) entry_validations[[3]]$value else "",
-              Stakeholder = if (!is.null(entry_validations[[4]]$value)) entry_validations[[4]]$value else "",
-              Importance = importance_val,
-              Trend = trend_val,
-              stringsAsFactors = FALSE
-            )
-          }
-        }
-      }
-
-      # Show validation errors if any
-      if (length(validation_errors) > 0) {
-        showModal(modalDialog(
-          title = tags$div(icon("exclamation-triangle"), i18n$t("modules.isa.data_entry.common.validation_errors")),
-          tags$div(
-            tags$p(strong(i18n$t("modules.isa.data_entry.common.please_fix_the_following_issues_before_saving"))),
-            tags$ul(
-              lapply(validation_errors, function(err) tags$li(err))
-            )
-          ),
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("common.buttons.ok"))
-        ))
+      if (length(result$errors) > 0) {
+        show_validation_error_modal(result$errors, i18n)
         return()
       }
 
-      # Combine all rows into data frame (O(n) operation at end vs O(n^2) with rbind in loop)
-      gb_df <- if (length(gb_rows) > 0) do.call(rbind, gb_rows) else data.frame()
-
-      # Check if we have at least one valid entry
-      if (length(gb_rows) == 0) {
+      if (result$n_rows == 0) {
         showNotification(i18n$t("modules.isa.data_entry.ex789.please_add_at_least_one_valid_goodbenefit_entry"),
                         type = "warning", session = session)
         return()
       }
 
-      # Save if all validations pass
-      isa_data$goods_benefits <- gb_df
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex1.exercise_1_saved"), nrow(gb_df), i18n$t("modules.isa.data_entry.ex789.goods_benefits")),
+      isa_data$goods_benefits <- result$df
+      showNotification(paste(i18n$t("modules.isa.data_entry.ex1.exercise_1_saved"), nrow(result$df), i18n$t("modules.isa.data_entry.ex789.goods_benefits")),
                       type = "message", session = session)
-      log_message(paste("Exercise 1 saved with", nrow(gb_df), "entries"), "INFO")
+      log_message(paste("Exercise 1 saved with", nrow(result$df), "entries"), "INFO")
     })
 
     # Exercise 2a: Ecosystem Services ----
@@ -1083,35 +929,14 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       isa_data$es_counter <- isa_data$es_counter + 1
       current_id <- isa_data$es_counter
 
+      linked_choices <- c("", paste0(isa_data$goods_benefits$ID, ": ", isa_data$goods_benefits$Name))
       insertUI(
         selector = paste0("#", ns("es_entries")),
         where = "beforeEnd",
-        ui = div(
-          id = ns(paste0("es_panel_", current_id)),
-          class = "isa-entry-panel",
-          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
-          fluidRow(
-            column(3, textInput(ns(paste0("es_name_", current_id)), i18n$t("common.labels.name"), placeholder = i18n$t("modules.isa.data_entry.common.eg_fish_production"))),
-            column(3, selectInput(ns(paste0("es_type_", current_id)), i18n$t("common.labels.es_type"),
-                                 choices = c("Provisioning", "Regulating", "Cultural", "Supporting"))),
-            column(6, textInput(ns(paste0("es_desc_", current_id)), i18n$t("common.labels.description")))
-          ),
-          fluidRow(
-            column(3, selectInput(ns(paste0("es_linkedgb_", current_id)), i18n$t("modules.isa.data_entry.common.linked_to_gb"),
-                                 choices = c("", paste0(isa_data$goods_benefits$ID, ": ", isa_data$goods_benefits$Name)))),
-            column(3, textInput(ns(paste0("es_mechanism_", current_id)), i18n$t("modules.isa.data_entry.common.mechanism"))),
-            column(4, selectInput(ns(paste0("es_confidence_", current_id)), i18n$t("modules.isa.data_entry.common.confidence"),
-                                 choices = c("High", "Medium", "Low"))),
-            column(2, actionButton(ns(paste0("es_remove_", current_id)), i18n$t("common.buttons.remove"), class = "btn-danger btn-sm"))
-          )
-        )
+        ui = build_entry_panel_ui(ns, "es", current_id, isa_fields_es(i18n, linked_choices), i18n)
       )
 
-      # Add remove button handler for this entry
-      observeEvent(input[[paste0("es_remove_", current_id)]], {
-        removeUI(selector = paste0("#", ns(paste0("es_panel_", current_id))))
-        showNotification(i18n$t("modules.isa.data_entry.common.entry_removed"), type = "message", duration = 2)
-      }, ignoreInit = TRUE, once = TRUE)
+      register_remove_observer(input, ns, "es", current_id, i18n)
     })
 
     output$es_table <- renderDT({
@@ -1119,102 +944,29 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
     })
 
     observeEvent(input$save_ex2a, {
-      # Check if at least one entry exists
       if (isa_data$es_counter == 0) {
         showNotification(i18n$t("modules.isa.please_add_at_least_one_ecosystem_service_entry_be"),
                         type = "warning", session = session)
         return()
       }
 
-      # Collect and validate all ES entries
-      # Use list accumulation instead of rbind() in loop for O(n) performance
-      es_rows <- list()
-      validation_errors <- c()
+      result <- validate_and_collect_es(input, isa_data$es_counter, session, i18n)
 
-      for(i in 1:isa_data$es_counter) {
-        name_val <- input[[paste0("es_name_", i)]]
-        type_val <- input[[paste0("es_type_", i)]]
-        desc_val <- input[[paste0("es_desc_", i)]]
-        linkedgb_val <- input[[paste0("es_linkedgb_", i)]]
-        mechanism_val <- input[[paste0("es_mechanism_", i)]]
-        confidence_val <- input[[paste0("es_confidence_", i)]]
-
-        # Skip removed entries
-        if(is.null(name_val)) next
-
-        # Only validate and include entries with a name
-        if(name_val != "") {
-          # Validate this entry
-          entry_validations <- list(
-            validate_text_input(name_val, paste0("ES ", i, " Name"),
-                               required = TRUE, min_length = 2, max_length = 200,
-                               session = NULL),
-            validate_select_input(type_val, paste0("ES ", i, " Type"),
-                                 required = TRUE,
-                                 valid_choices = c("Provisioning", "Regulating", "Cultural", "Supporting"),
-                                 session = NULL),
-            validate_text_input(desc_val, paste0("ES ", i, " Description"),
-                               required = FALSE, max_length = 500,
-                               session = NULL),
-            validate_text_input(mechanism_val, paste0("ES ", i, " Mechanism"),
-                               required = FALSE, max_length = 300,
-                               session = NULL)
-          )
-
-          # Collect validation errors
-          for (v in entry_validations) {
-            if (!v$valid) {
-              validation_errors <- c(validation_errors, v$message)
-            }
-          }
-
-          # Add to list if validations pass (O(1) append vs O(n) rbind)
-          if (all(sapply(entry_validations, function(v) v$valid))) {
-            es_rows[[length(es_rows) + 1]] <- data.frame(
-              ID = generate_element_id(ELEMENT_ID_PREFIX$impacts, i),
-              Name = entry_validations[[1]]$value,
-              Type = entry_validations[[2]]$value,
-              Description = if (!is.null(entry_validations[[3]]$value)) entry_validations[[3]]$value else "",
-              LinkedGB = linkedgb_val,
-              Mechanism = if (!is.null(entry_validations[[4]]$value)) entry_validations[[4]]$value else "",
-              Confidence = confidence_val,
-              stringsAsFactors = FALSE
-            )
-          }
-        }
-      }
-
-      # Show validation errors if any
-      if (length(validation_errors) > 0) {
-        showModal(modalDialog(
-          title = tags$div(icon("exclamation-triangle"), i18n$t("modules.isa.data_entry.common.validation_errors")),
-          tags$div(
-            tags$p(strong(i18n$t("modules.isa.data_entry.common.please_fix_the_following_issues_before_saving"))),
-            tags$ul(
-              lapply(validation_errors, function(err) tags$li(err))
-            )
-          ),
-          easyClose = TRUE,
-          footer = modalButton(i18n$t("common.buttons.ok"))
-        ))
+      if (length(result$errors) > 0) {
+        show_validation_error_modal(result$errors, i18n)
         return()
       }
 
-      # Combine all rows into data frame (O(n) operation at end vs O(n^2) with rbind in loop)
-      es_df <- if (length(es_rows) > 0) do.call(rbind, es_rows) else data.frame()
-
-      # Check if we have at least one valid entry
-      if (length(es_rows) == 0) {
+      if (result$n_rows == 0) {
         showNotification(i18n$t("modules.isa.please_add_at_least_one_valid_ecosystem_service_en"),
                         type = "warning", session = session)
         return()
       }
 
-      # Save if all validations pass
-      isa_data$ecosystem_services <- es_df
-      showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(es_df), i18n$t("modules.ses.creation.ecosystem_services")),
+      isa_data$ecosystem_services <- result$df
+      showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(result$df), i18n$t("modules.ses.creation.ecosystem_services")),
                       type = "message", session = session)
-      log_message(paste("Exercise 2a saved with", nrow(es_df), "entries"), "INFO")
+      log_message(paste("Exercise 2a saved with", nrow(result$df), "entries"), "INFO")
     })
 
     # Exercise 2b: Marine Processes and Functioning ----
@@ -1222,34 +974,14 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       current_id <- isa_data$mpf_counter + 1
       isa_data$mpf_counter <- current_id
 
+      linked_choices <- c("", paste0(isa_data$ecosystem_services$ID, ": ", isa_data$ecosystem_services$Name))
       insertUI(
         selector = paste0("#", ns("mpf_entries")),
         where = "beforeEnd",
-        ui = div(
-          id = ns(paste0("mpf_panel_", current_id)),
-          class = "isa-entry-panel",
-          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
-          fluidRow(
-            column(3, textInput(ns(paste0("mpf_name_", current_id)), i18n$t("common.labels.name"), placeholder = i18n$t("modules.isa.data_entry.common.eg_primary_production"))),
-            column(3, selectInput(ns(paste0("mpf_type_", current_id)), i18n$t("common.labels.process_type"),
-                                 choices = c("Biological", "Chemical", "Physical", "Ecological"))),
-            column(6, textInput(ns(paste0("mpf_desc_", current_id)), i18n$t("common.labels.description")))
-          ),
-          fluidRow(
-            column(3, selectInput(ns(paste0("mpf_linkedes_", current_id)), i18n$t("modules.isa.data_entry.common.linked_to_es"),
-                                 choices = c("", paste0(isa_data$ecosystem_services$ID, ": ", isa_data$ecosystem_services$Name)))),
-            column(3, textInput(ns(paste0("mpf_mechanism_", current_id)), i18n$t("modules.isa.data_entry.common.mechanism"))),
-            column(4, textInput(ns(paste0("mpf_spatial_", current_id)), i18n$t("modules.isa.data_entry.common.spatial_scale"))),
-            column(2, actionButton(ns(paste0("mpf_remove_", current_id)), i18n$t("common.buttons.remove"), class = "btn-danger btn-sm"))
-          )
-        )
+        ui = build_entry_panel_ui(ns, "mpf", current_id, isa_fields_mpf(i18n, linked_choices), i18n)
       )
 
-      # Add remove button handler for this entry
-      observeEvent(input[[paste0("mpf_remove_", current_id)]], {
-        removeUI(selector = paste0("#", ns(paste0("mpf_panel_", current_id))))
-        showNotification(i18n$t("modules.isa.data_entry.common.entry_removed"), type = "message", duration = 2)
-      }, ignoreInit = TRUE, once = TRUE)
+      register_remove_observer(input, ns, "mpf", current_id, i18n)
     })
 
     output$mpf_table <- renderDT({
@@ -1257,24 +989,11 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
     })
 
     observeEvent(input$save_ex2b, {
-      # Use list accumulation instead of rbind() in loop for O(n) performance
-      mpf_rows <- list()
-      for(i in 1:isa_data$mpf_counter) {
-        name_val <- input[[paste0("mpf_name_", i)]]
-        if(!is.null(name_val) && name_val != "") {
-          mpf_rows[[length(mpf_rows) + 1]] <- data.frame(
-            ID = generate_element_id(ELEMENT_ID_PREFIX$states, i),
-            Name = name_val,
-            Type = input[[paste0("mpf_type_", i)]],
-            Description = input[[paste0("mpf_desc_", i)]],
-            LinkedES = input[[paste0("mpf_linkedes_", i)]],
-            Mechanism = input[[paste0("mpf_mechanism_", i)]],
-            Spatial = input[[paste0("mpf_spatial_", i)]],
-            stringsAsFactors = FALSE
-          )
-        }
-      }
-      mpf_df <- if (length(mpf_rows) > 0) do.call(rbind, mpf_rows) else data.frame()
+      mpf_df <- collect_element_entries(
+        input, "mpf", isa_data$mpf_counter, ELEMENT_ID_PREFIX$states,
+        field_ids = c("name", "type", "desc", "linkedes", "mechanism", "spatial"),
+        col_names = c("Name", "Type", "Description", "LinkedES", "Mechanism", "Spatial")
+      )
       isa_data$marine_processes <- mpf_df
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2b.exercise_2b_saved"), nrow(mpf_df), i18n$t("modules.isa.data_entry.common.marine_processes")), type = "message")
     })
@@ -1284,36 +1003,14 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       current_id <- isa_data$p_counter + 1
       isa_data$p_counter <- current_id
 
+      linked_choices <- c("", paste0(isa_data$marine_processes$ID, ": ", isa_data$marine_processes$Name))
       insertUI(
         selector = paste0("#", ns("p_entries")),
         where = "beforeEnd",
-        ui = div(
-          id = ns(paste0("p_panel_", current_id)),
-          class = "isa-entry-panel",
-          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
-          fluidRow(
-            column(3, textInput(ns(paste0("p_name_", current_id)), i18n$t("common.labels.name"), placeholder = i18n$t("modules.isa.data_entry.common.eg_nutrient_enrichment"))),
-            column(3, selectInput(ns(paste0("p_type_", current_id)), i18n$t("common.labels.pressure_type"),
-                                 choices = c("Physical", "Chemical", "Biological", "Multiple"))),
-            column(6, textInput(ns(paste0("p_desc_", current_id)), i18n$t("common.labels.description")))
-          ),
-          fluidRow(
-            column(3, selectInput(ns(paste0("p_linkedmpf_", current_id)), i18n$t("modules.isa.data_entry.common.linked_to_mpf"),
-                                 choices = c("", paste0(isa_data$marine_processes$ID, ": ", isa_data$marine_processes$Name)))),
-            column(3, selectInput(ns(paste0("p_intensity_", current_id)), i18n$t("modules.isa.data_entry.common.intensity"),
-                                 choices = c("High", "Medium", "Low", "Unknown"))),
-            column(2, textInput(ns(paste0("p_spatial_", current_id)), i18n$t("modules.isa.data_entry.common.spatial"))),
-            column(2, textInput(ns(paste0("p_temporal_", current_id)), i18n$t("modules.isa.data_entry.common.temporal"))),
-            column(2, actionButton(ns(paste0("p_remove_", current_id)), i18n$t("common.buttons.remove"), class = "btn-danger btn-sm"))
-          )
-        )
+        ui = build_entry_panel_ui(ns, "p", current_id, isa_fields_p(i18n, linked_choices), i18n)
       )
 
-      # Add remove button handler for this entry
-      observeEvent(input[[paste0("p_remove_", current_id)]], {
-        removeUI(selector = paste0("#", ns(paste0("p_panel_", current_id))))
-        showNotification(i18n$t("modules.isa.data_entry.common.entry_removed"), type = "message", duration = 2)
-      }, ignoreInit = TRUE, once = TRUE)
+      register_remove_observer(input, ns, "p", current_id, i18n)
     })
 
     output$p_table <- renderDT({
@@ -1321,25 +1018,11 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
     })
 
     observeEvent(input$save_ex3, {
-      # Use list accumulation instead of rbind() in loop for O(n) performance
-      p_rows <- list()
-      for(i in 1:isa_data$p_counter) {
-        name_val <- input[[paste0("p_name_", i)]]
-        if(!is.null(name_val) && name_val != "") {
-          p_rows[[length(p_rows) + 1]] <- data.frame(
-            ID = generate_element_id(ELEMENT_ID_PREFIX$pressures, i),
-            Name = name_val,
-            Type = input[[paste0("p_type_", i)]],
-            Description = input[[paste0("p_desc_", i)]],
-            LinkedMPF = input[[paste0("p_linkedmpf_", i)]],
-            Intensity = input[[paste0("p_intensity_", i)]],
-            Spatial = input[[paste0("p_spatial_", i)]],
-            Temporal = input[[paste0("p_temporal_", i)]],
-            stringsAsFactors = FALSE
-          )
-        }
-      }
-      p_df <- if (length(p_rows) > 0) do.call(rbind, p_rows) else data.frame()
+      p_df <- collect_element_entries(
+        input, "p", isa_data$p_counter, ELEMENT_ID_PREFIX$pressures,
+        field_ids = c("name", "type", "desc", "linkedmpf", "intensity", "spatial", "temporal"),
+        col_names = c("Name", "Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal")
+      )
       isa_data$pressures <- p_df
       showNotification(paste(i18n$t("modules.isa.data_entry.ex3.exercise_3_saved"), nrow(p_df), i18n$t("modules.response.measures.pressures")), type = "message")
     })
@@ -1349,36 +1032,14 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       current_id <- isa_data$a_counter + 1
       isa_data$a_counter <- current_id
 
+      linked_choices <- c("", paste0(isa_data$pressures$ID, ": ", isa_data$pressures$Name))
       insertUI(
         selector = paste0("#", ns("a_entries")),
         where = "beforeEnd",
-        ui = div(
-          id = ns(paste0("a_panel_", current_id)),
-          class = "isa-entry-panel",
-          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
-          fluidRow(
-            column(3, textInput(ns(paste0("a_name_", current_id)), i18n$t("common.labels.name"), placeholder = i18n$t("modules.isa.data_entry.common.eg_commercial_fishing"))),
-            column(3, selectInput(ns(paste0("a_sector_", current_id)), i18n$t("modules.isa.data_entry.common.sector"),
-                                 choices = c("Fisheries", "Aquaculture", "Tourism", "Shipping", "Energy", "Mining", "Other"))),
-            column(6, textInput(ns(paste0("a_desc_", current_id)), i18n$t("common.labels.description")))
-          ),
-          fluidRow(
-            column(3, selectInput(ns(paste0("a_linkedp_", current_id)), i18n$t("modules.isa.data_entry.common.linked_to_pressure"),
-                                 choices = c("", paste0(isa_data$pressures$ID, ": ", isa_data$pressures$Name)))),
-            column(3, selectInput(ns(paste0("a_scale_", current_id)), i18n$t("modules.isa.data_entry.common.scale"),
-                                 choices = c("Local", "Regional", "National", "International"))),
-            column(4, selectInput(ns(paste0("a_frequency_", current_id)), i18n$t("modules.isa.data_entry.common.frequency"),
-                                 choices = c("Continuous", "Seasonal", "Occasional", "One-time"))),
-            column(2, actionButton(ns(paste0("a_remove_", current_id)), i18n$t("common.buttons.remove"), class = "btn-danger btn-sm"))
-          )
-        )
+        ui = build_entry_panel_ui(ns, "a", current_id, isa_fields_a(i18n, linked_choices), i18n)
       )
 
-      # Add remove button handler for this entry
-      observeEvent(input[[paste0("a_remove_", current_id)]], {
-        removeUI(selector = paste0("#", ns(paste0("a_panel_", current_id))))
-        showNotification(i18n$t("modules.isa.data_entry.common.entry_removed"), type = "message", duration = 2)
-      }, ignoreInit = TRUE, once = TRUE)
+      register_remove_observer(input, ns, "a", current_id, i18n)
     })
 
     output$a_table <- renderDT({
@@ -1386,24 +1047,11 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
     })
 
     observeEvent(input$save_ex4, {
-      # Use list accumulation instead of rbind() in loop for O(n) performance
-      a_rows <- list()
-      for(i in 1:isa_data$a_counter) {
-        name_val <- input[[paste0("a_name_", i)]]
-        if(!is.null(name_val) && name_val != "") {
-          a_rows[[length(a_rows) + 1]] <- data.frame(
-            ID = generate_element_id(ELEMENT_ID_PREFIX$activities, i),
-            Name = name_val,
-            Sector = input[[paste0("a_sector_", i)]],
-            Description = input[[paste0("a_desc_", i)]],
-            LinkedP = input[[paste0("a_linkedp_", i)]],
-            Scale = input[[paste0("a_scale_", i)]],
-            Frequency = input[[paste0("a_frequency_", i)]],
-            stringsAsFactors = FALSE
-          )
-        }
-      }
-      a_df <- if (length(a_rows) > 0) do.call(rbind, a_rows) else data.frame()
+      a_df <- collect_element_entries(
+        input, "a", isa_data$a_counter, ELEMENT_ID_PREFIX$activities,
+        field_ids = c("name", "sector", "desc", "linkedp", "scale", "frequency"),
+        col_names = c("Name", "Sector", "Description", "LinkedP", "Scale", "Frequency")
+      )
       isa_data$activities <- a_df
       showNotification(paste(i18n$t("modules.isa.data_entry.ex4.exercise_4_saved"), nrow(a_df), i18n$t("modules.response.measures.activities")), type = "message")
     })
@@ -1413,36 +1061,14 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       current_id <- isa_data$d_counter + 1
       isa_data$d_counter <- current_id
 
+      linked_choices <- c("", paste0(isa_data$activities$ID, ": ", isa_data$activities$Name))
       insertUI(
         selector = paste0("#", ns("d_entries")),
         where = "beforeEnd",
-        ui = div(
-          id = ns(paste0("d_panel_", current_id)),
-          class = "isa-entry-panel",
-          style = "background-color: #ffffff !important; border: 1px solid #dee2e6 !important; border-radius: 8px; padding: 20px; margin-bottom: 15px;",
-          fluidRow(
-            column(3, textInput(ns(paste0("d_name_", current_id)), i18n$t("common.labels.name"), placeholder = i18n$t("modules.isa.data_entry.common.eg_economic_growth"))),
-            column(3, selectInput(ns(paste0("d_type_", current_id)), i18n$t("common.labels.driver_type"),
-                                 choices = c("Economic", "Social", "Technological", "Political", "Environmental", "Demographic"))),
-            column(6, textInput(ns(paste0("d_desc_", current_id)), i18n$t("common.labels.description")))
-          ),
-          fluidRow(
-            column(3, selectInput(ns(paste0("d_linkeda_", current_id)), i18n$t("modules.isa.data_entry.common.linked_to_activity"),
-                                 choices = c("", paste0(isa_data$activities$ID, ": ", isa_data$activities$Name)))),
-            column(3, selectInput(ns(paste0("d_trend_", current_id)), i18n$t("modules.isa.data_entry.common.trend"),
-                                 choices = c("Increasing", "Stable", "Decreasing", "Cyclical", "Uncertain"))),
-            column(4, selectInput(ns(paste0("d_control_", current_id)), i18n$t("modules.isa.data_entry.common.controllability"),
-                                 choices = c("High", "Medium", "Low", "None"))),
-            column(2, actionButton(ns(paste0("d_remove_", current_id)), i18n$t("common.buttons.remove"), class = "btn-danger btn-sm"))
-          )
-        )
+        ui = build_entry_panel_ui(ns, "d", current_id, isa_fields_d(i18n, linked_choices), i18n)
       )
 
-      # Add remove button handler for this entry
-      observeEvent(input[[paste0("d_remove_", current_id)]], {
-        removeUI(selector = paste0("#", ns(paste0("d_panel_", current_id))))
-        showNotification(i18n$t("modules.isa.data_entry.common.entry_removed"), type = "message", duration = 2)
-      }, ignoreInit = TRUE, once = TRUE)
+      register_remove_observer(input, ns, "d", current_id, i18n)
     })
 
     output$d_table <- renderDT({
@@ -1450,24 +1076,11 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
     })
 
     observeEvent(input$save_ex5, {
-      # Use list accumulation instead of rbind() in loop for O(n) performance
-      d_rows <- list()
-      for(i in 1:isa_data$d_counter) {
-        name_val <- input[[paste0("d_name_", i)]]
-        if(!is.null(name_val) && name_val != "") {
-          d_rows[[length(d_rows) + 1]] <- data.frame(
-            ID = generate_element_id(ELEMENT_ID_PREFIX$drivers, i),
-            Name = name_val,
-            Type = input[[paste0("d_type_", i)]],
-            Description = input[[paste0("d_desc_", i)]],
-            LinkedA = input[[paste0("d_linkeda_", i)]],
-            Trend = input[[paste0("d_trend_", i)]],
-            Controllability = input[[paste0("d_control_", i)]],
-            stringsAsFactors = FALSE
-          )
-        }
-      }
-      d_df <- if (length(d_rows) > 0) do.call(rbind, d_rows) else data.frame()
+      d_df <- collect_element_entries(
+        input, "d", isa_data$d_counter, ELEMENT_ID_PREFIX$drivers,
+        field_ids = c("name", "type", "desc", "linkeda", "trend", "control"),
+        col_names = c("Name", "Type", "Description", "LinkedA", "Trend", "Controllability")
+      )
       isa_data$drivers <- d_df
       showNotification(paste(i18n$t("modules.isa.data_entry.ex5.exercise_5_saved"), nrow(d_df), i18n$t("modules.response.measures.drivers")), type = "message")
     })
@@ -1546,8 +1159,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         Effect = input$loop_effect,
         Strength = input$loop_strength,
         Confidence = input$loop_confidence,
-        Mechanism = "",
-        stringsAsFactors = FALSE
+        Mechanism = ""
+        
       )
 
       isa_data$loop_connections <- rbind(isa_data$loop_connections, new_connection)
@@ -1660,33 +1273,7 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       },
       content = function(file) {
         wb <- createWorkbook()
-
-        addWorksheet(wb, "Goods_Benefits")
-        addWorksheet(wb, "Ecosystem_Services")
-        addWorksheet(wb, "Marine_Processes")
-        addWorksheet(wb, "Pressures")
-        addWorksheet(wb, "Activities")
-        addWorksheet(wb, "Drivers")
-
-        writeData(wb, "Goods_Benefits", isa_data$goods_benefits)
-        writeData(wb, "Ecosystem_Services", isa_data$ecosystem_services)
-        writeData(wb, "Marine_Processes", isa_data$marine_processes)
-        writeData(wb, "Pressures", isa_data$pressures)
-        writeData(wb, "Activities", isa_data$activities)
-        writeData(wb, "Drivers", isa_data$drivers)
-
-        # Add adjacency matrices if available
-        if (!is.null(isa_data$adjacency_matrices)) {
-          for (mat_name in names(isa_data$adjacency_matrices)) {
-            mat <- isa_data$adjacency_matrices[[mat_name]]
-            if (!is.null(mat) && is.matrix(mat)) {
-              sheet_name <- substr(paste0("Matrix_", mat_name), 1, 31)
-              addWorksheet(wb, sheet_name)
-              writeData(wb, sheet_name, as.data.frame(mat), rowNames = TRUE)
-            }
-          }
-        }
-
+        write_isa_element_sheets(wb, isa_data, include_adjacency = TRUE)
         saveWorkbook(wb, file, overwrite = TRUE)
       }
     )
@@ -1696,28 +1283,7 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         generate_export_filename("ISA_Analysis", ".xlsx")
       },
       content = function(file) {
-        # Create Excel workbook with all ISA data
-        wb <- createWorkbook()
-
-        # Add sheets for each exercise
-        addWorksheet(wb, "Case_Info")
-        addWorksheet(wb, "Goods_Benefits")
-        addWorksheet(wb, "Ecosystem_Services")
-        addWorksheet(wb, "Marine_Processes")
-        addWorksheet(wb, "Pressures")
-        addWorksheet(wb, "Activities")
-        addWorksheet(wb, "Drivers")
-        addWorksheet(wb, "BOT_Data")
-
-        # Write data
-        writeData(wb, "Goods_Benefits", isa_data$goods_benefits)
-        writeData(wb, "Ecosystem_Services", isa_data$ecosystem_services)
-        writeData(wb, "Marine_Processes", isa_data$marine_processes)
-        writeData(wb, "Pressures", isa_data$pressures)
-        writeData(wb, "Activities", isa_data$activities)
-        writeData(wb, "Drivers", isa_data$drivers)
-        writeData(wb, "BOT_Data", isa_data$bot_data)
-
+        wb <- create_isa_analysis_workbook(isa_data)
         saveWorkbook(wb, file, overwrite = TRUE)
       }
     )
@@ -1727,29 +1293,7 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         generate_export_filename("Kumu_Export", ".zip")
       },
       content = function(file) {
-        # Create Kumu-compatible CSV files
-        temp_dir <- tempdir()
-
-        # Elements file
-        all_elements <- rbind(
-          data.frame(Label = isa_data$goods_benefits$Name, Type = "Goods & Benefits", ID = isa_data$goods_benefits$ID),
-          data.frame(Label = isa_data$ecosystem_services$Name, Type = "Ecosystem Service", ID = isa_data$ecosystem_services$ID),
-          data.frame(Label = isa_data$marine_processes$Name, Type = "Marine Process", ID = isa_data$marine_processes$ID),
-          data.frame(Label = isa_data$pressures$Name, Type = "Pressure", ID = isa_data$pressures$ID),
-          data.frame(Label = isa_data$activities$Name, Type = "Activity", ID = isa_data$activities$ID),
-          data.frame(Label = isa_data$drivers$Name, Type = "Driver", ID = isa_data$drivers$ID)
-        )
-        write.csv(all_elements, file.path(temp_dir, "elements.csv"), row.names = FALSE)
-
-        # Connections file (to be built from adjacency matrices)
-        connections <- data.frame(From = character(), To = character(), Type = character())
-        write.csv(connections, file.path(temp_dir, "connections.csv"), row.names = FALSE)
-
-        # Create zip file
-        csv_files <- c(file.path(temp_dir, "elements.csv"), file.path(temp_dir, "connections.csv"))
-        zip(file, files = csv_files)
-        # Clean up temp CSV files
-        unlink(csv_files)
+        create_kumu_export_zip(isa_data, file)
       }
     )
 

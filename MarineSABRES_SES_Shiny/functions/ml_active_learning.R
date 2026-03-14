@@ -424,8 +424,8 @@ batch_uncertainty_scores <- function(predictions, return_components = FALSE) {
   # Create result data frame
   result <- data.frame(
     uncertainty_score = overall_scores,
-    confidence_category = categories,
-    stringsAsFactors = FALSE
+    confidence_category = categories
+    
   )
 
   # Optionally include component scores

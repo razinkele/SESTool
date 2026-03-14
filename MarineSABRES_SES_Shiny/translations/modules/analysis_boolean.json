@@ -1,5 +1,15 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "modules.analysis_boolean.title": {
       "en": "Boolean Network & Stability Analysis",
@@ -9,8 +19,8 @@
       "lt": "Būlio tinklo ir stabilumo analizė",
       "pt": "Análise de Rede Booleana e Estabilidade",
       "it": "Analisi della Rete Booleana e Stabilità",
-      "no": "Boolean Network & Stability Analysis",
-      "el": "Boolean Network & Stability Analysis"
+      "no": "Boolsk nettverk og stabilitetsanalyse",
+      "el": "Ανάλυση Μπουλιανού δικτύου και σταθερότητας"
     },
     "modules.analysis_boolean.subtitle": {
       "en": "Analyze system stability through Laplacian eigenvalues and Boolean attractor dynamics",
@@ -20,8 +30,8 @@
       "lt": "Analizuokite sistemos stabilumą naudodami Laplaso tikrinių verčių ir Būlio atraktorių dinamiką",
       "pt": "Analisar a estabilidade do sistema através de autovalores Laplacianos e dinâmica de atratores booleanos",
       "it": "Analizzare la stabilità del sistema attraverso gli autovalori laplaciani e la dinamica degli attrattori booleani",
-      "no": "Analyze system stability through Laplacian eigenvalues and Boolean attractor dynamics",
-      "el": "Analyze system stability through Laplacian eigenvalues and Boolean attractor dynamics"
+      "no": "Analyser systemstabilitet gjennom Laplace-egenverdier og boolsk attraktor-dynamikk",
+      "el": "Ανάλυση σταθερότητας συστήματος μέσω ιδιοτιμών Λαπλασιανού και δυναμικής ελκυστών Μπουλ"
     },
     "modules.analysis_boolean.help_title": {
       "en": "Boolean Network & Stability Help",
@@ -31,8 +41,8 @@
       "lt": "Būlio tinklo ir stabilumo pagalba",
       "pt": "Ajuda Rede Booleana e Estabilidade",
       "it": "Aiuto Rete Booleana e Stabilità",
-      "no": "Boolean Network & Stability Help",
-      "el": "Boolean Network & Stability Help"
+      "no": "Hjelp for boolsk nettverk og stabilitet",
+      "el": "Βοήθεια για Μπουλιανό δίκτυο και σταθερότητα"
     },
     "modules.analysis_boolean.help_heading": {
       "en": "Understanding Stability Analysis",
@@ -42,8 +52,8 @@
       "lt": "Stabilumo analizės supratimas",
       "pt": "Compreender a Análise de Estabilidade",
       "it": "Comprendere l'Analisi della Stabilità",
-      "no": "Understanding Stability Analysis",
-      "el": "Understanding Stability Analysis"
+      "no": "Forstå stabilitetsanalyse",
+      "el": "Κατανόηση ανάλυσης σταθερότητας"
     },
     "modules.analysis_boolean.help_laplacian": {
       "en": "Laplacian eigenvalue analysis characterizes the structural stability of your SES network. The Fiedler value (smallest non-zero eigenvalue) indicates how easily the system can be disconnected.",
@@ -86,8 +96,8 @@
       "lt": "Analizės valdymas",
       "pt": "Controles de Análise",
       "it": "Controlli di Analisi",
-      "no": "Analysis Controls",
-      "el": "Analysis Controls"
+      "no": "Analysekontroller",
+      "el": "Ρυθμίσεις ανάλυσης"
     },
     "modules.analysis_boolean.nodes": {
       "en": "nodes",
@@ -97,8 +107,8 @@
       "lt": "mazgai",
       "pt": "nós",
       "it": "nodi",
-      "no": "nodes",
-      "el": "nodes"
+      "no": "noder",
+      "el": "κόμβοι"
     },
     "modules.analysis_boolean.edges": {
       "en": "edges",
@@ -108,8 +118,8 @@
       "lt": "briaunos",
       "pt": "arestas",
       "it": "archi",
-      "no": "edges",
-      "el": "edges"
+      "no": "kanter",
+      "el": "ακμές"
     },
     "modules.analysis_boolean.laplacian_direction": {
       "en": "Laplacian Direction",
@@ -119,8 +129,8 @@
       "lt": "Laplaso kryptis",
       "pt": "Direção Laplaciana",
       "it": "Direzione Laplaciana",
-      "no": "Laplacian Direction",
-      "el": "Laplacian Direction"
+      "no": "Laplace-retning",
+      "el": "Κατεύθυνση Λαπλασιανού"
     },
     "modules.analysis_boolean.out_degree": {
       "en": "Out-degree (columns)",
@@ -130,8 +140,8 @@
       "lt": "Išeinantis laipsnis (stulpeliai)",
       "pt": "Grau de saída (colunas)",
       "it": "Grado uscente (colonne)",
-      "no": "Out-degree (columns)",
-      "el": "Out-degree (columns)"
+      "no": "Ut-grad (kolonner)",
+      "el": "Βαθμός εξόδου (στήλες)"
     },
     "modules.analysis_boolean.in_degree": {
       "en": "In-degree (rows)",
@@ -141,8 +151,8 @@
       "lt": "Įeinantis laipsnis (eilutės)",
       "pt": "Grau de entrada (linhas)",
       "it": "Grado entrante (righe)",
-      "no": "In-degree (rows)",
-      "el": "In-degree (rows)"
+      "no": "Inn-grad (rader)",
+      "el": "Βαθμός εισόδου (γραμμές)"
     },
     "modules.analysis_boolean.max_nodes": {
       "en": "Max nodes for Boolean analysis",
@@ -152,8 +162,8 @@
       "lt": "Maks. mazgų Būlio analizei",
       "pt": "Máximo de nós para análise booleana",
       "it": "Nodi max per analisi booleana",
-      "no": "Max nodes for Boolean analysis",
-      "el": "Max nodes for Boolean analysis"
+      "no": "Maks noder for boolsk analyse",
+      "el": "Μέγιστοι κόμβοι για ανάλυση Μπουλ"
     },
     "modules.analysis_boolean.scale_by_confidence": {
       "en": "Scale weights by confidence level",
@@ -163,8 +173,8 @@
       "lt": "Svorius skalinti pagal patikimumo lygį",
       "pt": "Escalar pesos por nível de confiança",
       "it": "Scalare pesi per livello di confidenza",
-      "no": "Scale weights by confidence level",
-      "el": "Scale weights by confidence level"
+      "no": "Skaler vekter etter tillitsnivå",
+      "el": "Κλιμάκωση βαρών κατά επίπεδο εμπιστοσύνης"
     },
     "modules.analysis_boolean.run_analysis": {
       "en": "Run Analysis",
@@ -174,8 +184,8 @@
       "lt": "Vykdyti analizę",
       "pt": "Executar Análise",
       "it": "Esegui Analisi",
-      "no": "Run Analysis",
-      "el": "Run Analysis"
+      "no": "Kjør analyse",
+      "el": "Εκτέλεση ανάλυσης"
     },
     "modules.analysis_boolean.download": {
       "en": "Download Results",
@@ -185,8 +195,8 @@
       "lt": "Atsisiųsti rezultatus",
       "pt": "Baixar Resultados",
       "it": "Scarica Risultati",
-      "no": "Download Results",
-      "el": "Download Results"
+      "no": "Last ned resultater",
+      "el": "Λήψη αποτελεσμάτων"
     },
     "modules.analysis_boolean.running": {
       "en": "Running stability analysis...",
@@ -196,8 +206,8 @@
       "lt": "Vykdoma stabilumo analizė...",
       "pt": "Executando análise de estabilidade...",
       "it": "Analisi di stabilità in corso...",
-      "no": "Running stability analysis...",
-      "el": "Running stability analysis..."
+      "no": "Kjører stabilitetsanalyse...",
+      "el": "Εκτέλεση ανάλυσης σταθερότητας..."
     },
     "modules.analysis_boolean.building_matrix": {
       "en": "Building adjacency matrix...",
@@ -207,8 +217,8 @@
       "lt": "Kuriama gretimybių matrica...",
       "pt": "Construindo matriz de adjacência...",
       "it": "Costruzione matrice di adiacenza...",
-      "no": "Building adjacency matrix...",
-      "el": "Building adjacency matrix..."
+      "no": "Bygger naboskapsmatrise...",
+      "el": "Κατασκευή πίνακα γειτνίασης..."
     },
     "modules.analysis_boolean.computing_laplacian": {
       "en": "Computing Laplacian eigenvalues...",
@@ -218,8 +228,8 @@
       "lt": "Skaičiuojamos Laplaso tikrinės vertės...",
       "pt": "Calculando autovalores Laplacianos...",
       "it": "Calcolo degli autovalori laplaciani...",
-      "no": "Computing Laplacian eigenvalues...",
-      "el": "Computing Laplacian eigenvalues..."
+      "no": "Beregner Laplace-egenverdier...",
+      "el": "Υπολογισμός ιδιοτιμών Λαπλασιανού..."
     },
     "modules.analysis_boolean.creating_rules": {
       "en": "Creating Boolean rules...",
@@ -229,8 +239,8 @@
       "lt": "Kuriamos Būlio taisyklės...",
       "pt": "Criando regras booleanas...",
       "it": "Creazione regole booleane...",
-      "no": "Creating Boolean rules...",
-      "el": "Creating Boolean rules..."
+      "no": "Lager boolske regler...",
+      "el": "Δημιουργία κανόνων Μπουλ..."
     },
     "modules.analysis_boolean.finding_attractors": {
       "en": "Finding attractors...",
@@ -240,8 +250,8 @@
       "lt": "Ieškoma atraktorių...",
       "pt": "Buscando atratores...",
       "it": "Ricerca attrattori...",
-      "no": "Finding attractors...",
-      "el": "Finding attractors..."
+      "no": "Finner attraktorer...",
+      "el": "Εύρεση ελκυστών..."
     },
     "modules.analysis_boolean.complete": {
       "en": "Analysis complete",
@@ -251,8 +261,8 @@
       "lt": "Analizė baigta",
       "pt": "Análise completa",
       "it": "Analisi completata",
-      "no": "Analysis complete",
-      "el": "Analysis complete"
+      "no": "Analyse fullført",
+      "el": "Η ανάλυση ολοκληρώθηκε"
     },
     "modules.analysis_boolean.click_to_start": {
       "en": "Click 'Run Analysis' to begin stability analysis",
@@ -273,8 +283,8 @@
       "lt": "CLD duomenų nėra",
       "pt": "Nenhum dado CLD disponível",
       "it": "Nessun dato CLD disponibile",
-      "no": "No CLD data available",
-      "el": "No CLD data available"
+      "no": "Ingen CLD-data tilgjengelig",
+      "el": "Δεν υπάρχουν διαθέσιμα δεδομένα CLD"
     },
     "modules.analysis_boolean.no_cld_data_hint": {
       "en": "Please create your SES framework and generate a CLD first.",
@@ -284,8 +294,8 @@
       "lt": "Pirmiausia sukurkite SES struktūrą ir sugeneruokite CLD.",
       "pt": "Por favor crie seu framework SES e gere um CLD primeiro.",
       "it": "Si prega di creare il framework SES e generare un CLD prima.",
-      "no": "Please create your SES framework and generate a CLD first.",
-      "el": "Please create your SES framework and generate a CLD first."
+      "no": "Vennligst opprett SES-rammeverket ditt og generer en CLD først.",
+      "el": "Παρακαλώ δημιουργήστε πρώτα το πλαίσιο SES σας και δημιουργήστε ένα CLD."
     },
     "modules.analysis_boolean.too_many_nodes": {
       "en": "Network has %d nodes, exceeding the maximum of %d for Boolean analysis. Boolean analysis will be skipped.",
@@ -328,8 +338,8 @@
       "lt": "Laplaso tikrinės vertės",
       "pt": "Autovalores Laplacianos",
       "it": "Autovalori Laplaciani",
-      "no": "Laplacian Eigenvalues",
-      "el": "Laplacian Eigenvalues"
+      "no": "Laplace-egenverdier",
+      "el": "Ιδιοτιμές Λαπλασιανού"
     },
     "modules.analysis_boolean.boolean_tab": {
       "en": "Boolean Network",
@@ -339,8 +349,8 @@
       "lt": "Būlio tinklas",
       "pt": "Rede Booleana",
       "it": "Rete Booleana",
-      "no": "Boolean Network",
-      "el": "Boolean Network"
+      "no": "Boolsk nettverk",
+      "el": "Μπουλιανό δίκτυο"
     },
     "modules.analysis_boolean.stability_tab": {
       "en": "Stability Summary",
@@ -350,8 +360,8 @@
       "lt": "Stabilumo santrauka",
       "pt": "Resumo de Estabilidade",
       "it": "Riepilogo Stabilità",
-      "no": "Stability Summary",
-      "el": "Stability Summary"
+      "no": "Stabilitetssammendrag",
+      "el": "Σύνοψη σταθερότητας"
     },
     "modules.analysis_boolean.eigenvalues_chart_title": {
       "en": "Laplacian Eigenvalue Spectrum",
@@ -361,8 +371,8 @@
       "lt": "Laplaso tikrinių verčių spektras",
       "pt": "Espectro de Autovalores Laplacianos",
       "it": "Spettro degli Autovalori Laplaciani",
-      "no": "Laplacian Eigenvalue Spectrum",
-      "el": "Laplacian Eigenvalue Spectrum"
+      "no": "Laplace-egenverdispektrum",
+      "el": "Φάσμα ιδιοτιμών Λαπλασιανού"
     },
     "modules.analysis_boolean.eigenvalue": {
       "en": "Eigenvalue",
@@ -372,8 +382,8 @@
       "lt": "Tikrinė vertė",
       "pt": "Autovalor",
       "it": "Autovalore",
-      "no": "Eigenvalue",
-      "el": "Eigenvalue"
+      "no": "Egenverdi",
+      "el": "Ιδιοτιμή"
     },
     "modules.analysis_boolean.fiedler_value": {
       "en": "Fiedler Value",
@@ -383,8 +393,8 @@
       "lt": "Fiedlerio vertė",
       "pt": "Valor de Fiedler",
       "it": "Valore di Fiedler",
-      "no": "Fiedler Value",
-      "el": "Fiedler Value"
+      "no": "Fiedler-verdi",
+      "el": "Τιμή Fiedler"
     },
     "modules.analysis_boolean.connected_components": {
       "en": "Connected Components",
@@ -394,8 +404,8 @@
       "lt": "Sujungtos komponentės",
       "pt": "Componentes Conectados",
       "it": "Componenti Connesse",
-      "no": "Connected Components",
-      "el": "Connected Components"
+      "no": "Sammenhengende komponenter",
+      "el": "Συνδεδεμένα στοιχεία"
     },
     "modules.analysis_boolean.total_eigenvalues": {
       "en": "Total Eigenvalues",
@@ -405,8 +415,8 @@
       "lt": "Viso tikrinių verčių",
       "pt": "Total de Autovalores",
       "it": "Autovalori Totali",
-      "no": "Total Eigenvalues",
-      "el": "Total Eigenvalues"
+      "no": "Totalt egenverdier",
+      "el": "Συνολικές ιδιοτιμές"
     },
     "modules.analysis_boolean.genes": {
       "en": "Genes",
@@ -416,8 +426,8 @@
       "lt": "Genai",
       "pt": "Genes",
       "it": "Geni",
-      "no": "Genes",
-      "el": "Genes"
+      "no": "Gener",
+      "el": "Γονίδια"
     },
     "modules.analysis_boolean.state_space": {
       "en": "State Space (2^n)",
@@ -427,8 +437,8 @@
       "lt": "Būsenų erdvė (2^n)",
       "pt": "Espaço de Estados (2^n)",
       "it": "Spazio degli Stati (2^n)",
-      "no": "State Space (2^n)",
-      "el": "State Space (2^n)"
+      "no": "Tilstandsrom (2^n)",
+      "el": "Χώρος καταστάσεων (2^n)"
     },
     "modules.analysis_boolean.attractors_found": {
       "en": "Attractors Found",
@@ -438,8 +448,8 @@
       "lt": "Rasti atraktoriai",
       "pt": "Atratores Encontrados",
       "it": "Attrattori Trovati",
-      "no": "Attractors Found",
-      "el": "Attractors Found"
+      "no": "Attraktorer funnet",
+      "el": "Ελκυστές που βρέθηκαν"
     },
     "modules.analysis_boolean.largest_basin": {
       "en": "Largest Basin",
@@ -449,8 +459,8 @@
       "lt": "Didžiausias baseinas",
       "pt": "Maior Bacia",
       "it": "Bacino Più Grande",
-      "no": "Largest Basin",
-      "el": "Largest Basin"
+      "no": "Størst basseng",
+      "el": "Μεγαλύτερη λεκάνη"
     },
     "modules.analysis_boolean.basin_sizes": {
       "en": "Attractor Basin Sizes",
@@ -460,8 +470,8 @@
       "lt": "Atraktorių baseinų dydžiai",
       "pt": "Tamanhos das Bacias de Atratores",
       "it": "Dimensioni dei Bacini degli Attrattori",
-      "no": "Attractor Basin Sizes",
-      "el": "Attractor Basin Sizes"
+      "no": "Attraktorbassengs størrelse",
+      "el": "Μεγέθη λεκανών ελκυστών"
     },
     "modules.analysis_boolean.basin_distribution": {
       "en": "Basin Size Distribution",
@@ -471,8 +481,8 @@
       "lt": "Baseinų dydžių pasiskirstymas",
       "pt": "Distribuição de Tamanhos de Bacias",
       "it": "Distribuzione Dimensioni Bacini",
-      "no": "Basin Size Distribution",
-      "el": "Basin Size Distribution"
+      "no": "Fordeling av bassengstørrelser",
+      "el": "Κατανομή μεγεθών λεκανών"
     },
     "modules.analysis_boolean.boolean_rules": {
       "en": "Boolean Network Rules",
@@ -482,8 +492,8 @@
       "lt": "Būlio tinklo taisyklės",
       "pt": "Regras da Rede Booleana",
       "it": "Regole della Rete Booleana",
-      "no": "Boolean Network Rules",
-      "el": "Boolean Network Rules"
+      "no": "Boolske nettverksregler",
+      "el": "Κανόνες Μπουλιανού δικτύου"
     },
     "modules.analysis_boolean.target": {
       "en": "Target",
@@ -493,8 +503,8 @@
       "lt": "Tikslas",
       "pt": "Alvo",
       "it": "Obiettivo",
-      "no": "Target",
-      "el": "Target"
+      "no": "Mål",
+      "el": "Στόχος"
     },
     "modules.analysis_boolean.rule": {
       "en": "Boolean Rule",
@@ -504,8 +514,8 @@
       "lt": "Būlio taisyklė",
       "pt": "Regra Booleana",
       "it": "Regola Booleana",
-      "no": "Boolean Rule",
-      "el": "Boolean Rule"
+      "no": "Boolsk regel",
+      "el": "Κανόνας Μπουλ"
     },
     "modules.analysis_boolean.attractor_details": {
       "en": "Attractor State Details",
@@ -515,8 +525,8 @@
       "lt": "Atraktorių būsenų detalės",
       "pt": "Detalhes dos Estados Atratores",
       "it": "Dettagli degli Stati Attrattori",
-      "no": "Attractor State Details",
-      "el": "Attractor State Details"
+      "no": "Attraktor-tilstandsdetaljer",
+      "el": "Λεπτομέρειες κατάστασης ελκυστή"
     },
     "modules.analysis_boolean.attractor": {
       "en": "Attractor",
@@ -526,8 +536,8 @@
       "lt": "Atraktorius",
       "pt": "Atrator",
       "it": "Attrattore",
-      "no": "Attractor",
-      "el": "Attractor"
+      "no": "Attraktor",
+      "el": "Ελκυστής"
     },
     "modules.analysis_boolean.basin_size": {
       "en": "Basin size:",
@@ -537,8 +547,8 @@
       "lt": "Baseino dydis:",
       "pt": "Tamanho da bacia:",
       "it": "Dimensione bacino:",
-      "no": "Basin size:",
-      "el": "Basin size:"
+      "no": "Bassengstørrelse:",
+      "el": "Μέγεθος λεκάνης:"
     },
     "modules.analysis_boolean.no_attractors": {
       "en": "No attractors found",
@@ -548,8 +558,8 @@
       "lt": "Atraktorių nerasta",
       "pt": "Nenhum atrator encontrado",
       "it": "Nessun attrattore trovato",
-      "no": "No attractors found",
-      "el": "No attractors found"
+      "no": "Ingen attraktorer funnet",
+      "el": "Δεν βρέθηκαν ελκυστές"
     },
     "modules.analysis_boolean.empty_attractor": {
       "en": "Attractor data unavailable",
@@ -559,8 +569,8 @@
       "lt": "Atraktoriaus duomenys neprieinami",
       "pt": "Dados do atrator indisponíveis",
       "it": "Dati dell'attrattore non disponibili",
-      "no": "Attractor data unavailable",
-      "el": "Attractor data unavailable"
+      "no": "Attraktordata utilgjengelig",
+      "el": "Τα δεδομένα ελκυστή δεν είναι διαθέσιμα"
     },
     "modules.analysis_boolean.boolean_skipped": {
       "en": "Boolean analysis was skipped (network has %d nodes, exceeding the maximum). Only Laplacian analysis was performed.",
@@ -581,8 +591,8 @@
       "lt": "Laplaso stabilumo interpretacija",
       "pt": "Interpretação de Estabilidade Laplaciana",
       "it": "Interpretazione Stabilità Laplaciana",
-      "no": "Laplacian Stability Interpretation",
-      "el": "Laplacian Stability Interpretation"
+      "no": "Tolkning av Laplace-stabilitet",
+      "el": "Ερμηνεία σταθερότητας Λαπλασιανού"
     },
     "modules.analysis_boolean.algebraic_connectivity": {
       "en": "Algebraic Connectivity (Fiedler Value)",
@@ -592,8 +602,8 @@
       "lt": "Algebrinė jungiamumas (Fiedlerio vertė)",
       "pt": "Conectividade Algébrica (Valor de Fiedler)",
       "it": "Connettività Algebrica (Valore di Fiedler)",
-      "no": "Algebraic Connectivity (Fiedler Value)",
-      "el": "Algebraic Connectivity (Fiedler Value)"
+      "no": "Algebraisk konnektivitet (Fiedler-verdi)",
+      "el": "Αλγεβρική συνδεσιμότητα (τιμή Fiedler)"
     },
     "modules.analysis_boolean.stability_high": {
       "en": "The system shows high structural stability. Perturbations are expected to decay quickly, and the network is well-connected.",
@@ -636,8 +646,8 @@
       "lt": "Būlio tinklo interpretacija",
       "pt": "Interpretação da Rede Booleana",
       "it": "Interpretazione Rete Booleana",
-      "no": "Boolean Network Interpretation",
-      "el": "Boolean Network Interpretation"
+      "no": "Tolkning av boolsk nettverk",
+      "el": "Ερμηνεία Μπουλιανού δικτύου"
     },
     "modules.analysis_boolean.n_stable_states": {
       "en": "Stable States (Attractors)",
@@ -647,8 +657,8 @@
       "lt": "Stabilios būsenos (Atraktoriai)",
       "pt": "Estados Estáveis (Atratores)",
       "it": "Stati Stabili (Attrattori)",
-      "no": "Stable States (Attractors)",
-      "el": "Stable States (Attractors)"
+      "no": "Stabile tilstander (attraktorer)",
+      "el": "Σταθερές καταστάσεις (ελκυστές)"
     },
     "modules.analysis_boolean.dominant_basin": {
       "en": "Dominant Basin Coverage",
@@ -658,8 +668,8 @@
       "lt": "Dominuojančio baseino aprėptis",
       "pt": "Cobertura da Bacia Dominante",
       "it": "Copertura del Bacino Dominante",
-      "no": "Dominant Basin Coverage",
-      "el": "Dominant Basin Coverage"
+      "no": "Dominerende bassengdekning",
+      "el": "Κάλυψη κυρίαρχης λεκάνης"
     },
     "modules.analysis_boolean.single_attractor_text": {
       "en": "The system has a single stable state. All initial conditions converge to the same outcome, indicating a highly deterministic system.",

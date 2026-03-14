@@ -14,6 +14,7 @@
 #' @export
 recent_projects_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     # CSS for recent projects panel
@@ -547,7 +548,7 @@ recent_projects_server <- function(id, project_data_reactive, i18n,
 
           # Emit event if bus available
           if (!is.null(event_bus)) {
-            event_bus$emit_isa_changed()
+            event_bus$emit_isa_change("recent_projects")
           }
 
           showNotification(

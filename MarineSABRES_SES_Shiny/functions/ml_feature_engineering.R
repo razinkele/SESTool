@@ -514,7 +514,7 @@ create_feature_matrix <- function(data, embedding_dim = 128) {
 # Utility Functions
 # ==============================================================================
 
-#' Get feature dimension
+#' Get feature dimension for Phase 1 model
 #'
 #' @param embedding_dim Integer. Embedding dimension per element
 #' @return Integer. Total feature vector dimension
@@ -522,6 +522,28 @@ get_feature_dim <- function(embedding_dim = 128) {
   # Actual dimensions: 2 * embedding + 2 * 7 (types) + context
   # Context = 12 (seas) + 25 (ecosystems) + 51 (issues) = 88
   return(2 * embedding_dim + 2 * 7 + 88)
+}
+
+#' Get element-only feature dimension for Phase 2 model
+#'
+#' Phase 2 separates element features (270 dims) from context embeddings (36)
+#' and graph features (8). This returns the element-only dimension.
+#'
+#' @param embedding_dim Integer. Embedding dimension per element (default 128)
+#' @return Integer. Element feature dimension (2*embedding + 2*7 = 270)
+get_elem_feature_dim <- function(embedding_dim = 128) {
+  return(2 * embedding_dim + 2 * 7)
+}
+
+#' Get Phase 2 total input dimension
+#'
+#' @param embedding_dim Integer. Embedding dimension per element (default 128)
+#' @return Integer. Total input dimension (270 + 36 + 8 = 314)
+get_v2_feature_dim <- function(embedding_dim = 128) {
+  elem_dim <- get_elem_feature_dim(embedding_dim)
+  context_dim <- 36  # From context embeddings (8 + 12 + 16)
+  graph_dim <- 8     # From graph structural features
+  return(elem_dim + context_dim + graph_dim)
 }
 
 #' Print feature vector summary
@@ -543,4 +565,6 @@ debug_log(sprintf("Regional seas: %d", length(REGIONAL_SEAS)), "ML_FEATURES")
 debug_log(sprintf("Ecosystem types: %d", length(ECOSYSTEM_TYPES)), "ML_FEATURES")
 debug_log(sprintf("Focal issues: %d", length(FOCAL_ISSUES)), "ML_FEATURES")
 debug_log(sprintf("Marine vocabulary: %d terms", length(MARINE_VOCABULARY)), "ML_FEATURES")
-debug_log(sprintf("Default feature dimension: %d", get_feature_dim()), "ML_FEATURES")
+debug_log(sprintf("Phase 1 feature dimension: %d", get_feature_dim()), "ML_FEATURES")
+debug_log(sprintf("Phase 2 feature dimension: %d (elem=%d + context=36 + graph=8)",
+                  get_v2_feature_dim(), get_elem_feature_dim()), "ML_FEATURES")

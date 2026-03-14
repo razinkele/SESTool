@@ -79,13 +79,13 @@
     },
     "Pressures": {
       "en": "Pressures",
-      "es": "Pressures",
-      "fr": "Pressures",
-      "de": "Pressures",
-      "lt": "Pressures",
-      "pt": "Pressures",
-      "it": "Pressures",
-      "no": "Pressures",
+      "es": "Presiones",
+      "fr": "Pressions",
+      "de": "Belastungen",
+      "lt": "Spaudimai",
+      "pt": "Pressões",
+      "it": "Pressioni",
+      "no": "Belastninger",
       "el": "Πιέσεις"
     },
     "common.labels.3_details": {

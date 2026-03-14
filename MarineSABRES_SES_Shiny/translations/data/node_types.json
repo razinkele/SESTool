@@ -19,8 +19,8 @@
       "lt": "5. Elementų dalyvavimas:",
       "pt": "5. Participação de elementos:",
       "it": "5. Partecipazione di elementi:",
-      "no": "5. Element participation:",
-      "el": "5. Element participation:"
+      "no": "5. Elementdeltakelse:",
+      "el": "5. Συμμετοχή στοιχείων:"
     },
     "data.node_types._elements_appearing_in_multiple_loops_are_potentia": {
       "en": " Elements appearing in multiple loops are potential leverage points for interventions.",
@@ -30,8 +30,8 @@
       "lt": "Elementai, pasirodyantys keliuose cikluose, yra potencialūs sverties taškai intervencijoms.",
       "pt": "Elementos que aparecem em múltiplos loops são pontos de alavancagem potenciais para intervenções.",
       "it": "Gli elementi che compaiono in più loop sono potenziali punti di leva per gli interventi.",
-      "no": " Elements appearing in multiple loops are potential leverage points for interventions.",
-      "el": "Στοιχεία  appearing in multiple loops are potential leverage points for interventions."
+      "no": " Elementer som opptrer i flere sløyfer er potensielle virkemidler for intervensjoner.",
+      "el": " Στοιχεία που εμφανίζονται σε πολλαπλούς βρόχους είναι πιθανά σημεία μόχλευσης για παρεμβάσεις."
     },
     "data.node_types._identify_which_system_elements_participate_in_mos": {
       "en": " Identify which system elements participate in most loops",
@@ -41,8 +41,8 @@
       "lt": "Nustatykite, kurie sistemos elementai dalyvauja daugumoje ciklų",
       "pt": "Identifique quais elementos do sistema participam na maioria dos loops",
       "it": "Identifica quali elementi del sistema partecipano alla maggior parte dei loop",
-      "no": " Identify which system elements participate in most loops",
-      "el": " Identify which system elements participate in most loops"
+      "no": " Identifiser hvilke systemelementer som deltar i flest sløyfer",
+      "el": " Προσδιορίστε ποια στοιχεία του συστήματος συμμετέχουν στους περισσότερους βρόχους"
     },
     "data.node_types._number_of_elements_in_the_loop_shorter_loops_35_e": {
       "en": " Number of elements in the loop. Shorter loops (3-5 elements) tend to have greater influence.",
@@ -52,8 +52,8 @@
       "lt": "Elementų skaičius cikle. Trumpesni ciklai (3-5 elementai) turi didesnę įtaką.",
       "pt": "Número de elementos no loop. Loops mais curtos (3-5 elementos) tendem a ter maior influência.",
       "it": "Numero di elementi nel loop. Loop più corti (3-5 elementi) tendono ad avere maggiore influenza.",
-      "no": " Number of elements in the loop. Shorter loops (3-5 elements) tend to have greater influence.",
-      "el": " Number of elements in the loop. Shorter loops (3-5 elements) tend to have greater influence."
+      "no": " Antall elementer i sløyfen. Kortere sløyfer (3-5 elementer) har en tendens til å ha større innflytelse.",
+      "el": " Αριθμός στοιχείων στον βρόχο. Μικρότεροι βρόχοι (3-5 στοιχεία) τείνουν να έχουν μεγαλύτερη επιρροή."
     },
     "data.node_types._show_causal_connections_between_elements_arrow_di": {
       "en": " Show causal connections between elements. Arrow direction indicates the direction of influence",
@@ -63,8 +63,8 @@
       "lt": " Rodo priežastinius ryšius tarp elementų. Rodyklės kryptis nurodo įtakos kryptį",
       "pt": " Mostram conexões causais entre elementos. A direção da seta indica a direção da influência",
       "it": " Mostrano connessioni causali tra elementi. La direzione della freccia indica la direzione dell'influenza",
-      "no": " Show causal connections between elements. Arrow direction indicates the direction of influence",
-      "el": "Εμφάνιση  causal connections between elements. Arrow direction indicates the direction of influence"
+      "no": " Vis årsakssammenhenger mellom elementer. Pilens retning angir påvirkningsretningen",
+      "el": " Εμφάνιση αιτιωδών συνδέσεων μεταξύ στοιχείων. Η κατεύθυνση του βέλους υποδεικνύει την κατεύθυνση της επιρροής"
     },
     "data.node_types._visualization_module_ui_elements": {
       "en": "# Visualization Module - UI Elements",
@@ -85,8 +85,8 @@
       "lt": "Priežastinių kilpų diagrama (CLD) yra vizualinis vaizdavimas, kaip skirtingi jūsų socialinės-ekologinės sistemos elementai yra susiję priežasties ir pasekmės ryšiais.",
       "pt": "Um Diagrama de Loops Causais (CLD) é uma representação visual de como diferentes elementos no seu sistema socioecológico estão conectados através de relações de causa e efeito.",
       "it": "Un Diagramma dei Loop Causali (CLD) è una rappresentazione visiva di come diversi elementi del tuo sistema socio-ecologico sono collegati attraverso relazioni causa-effetto.",
-      "no": "A Causal Loop Diagram (CLD) is a visual representation of how different elements in your social-ecological system are connected through cause-and-effect relationships.",
-      "el": "A Causal Loop Diagram (CLD) is a visual representation of how different elements in your social-ecological system are connected through cause-and-effect relationships."
+      "no": "Et kausalt sløyfediagram (CLD) er en visuell fremstilling av hvordan ulike elementer i ditt sosial-økologiske system er forbundet gjennom årsak-virkning-forhold.",
+      "el": "Ένα Διάγραμμα Αιτιωδών Βρόχων (CLD) είναι μια οπτική αναπαράσταση του πώς διαφορετικά στοιχεία στο κοινωνικο-οικολογικό σας σύστημα συνδέονται μέσω σχέσεων αιτίας-αποτελέσματος."
     },
     "data.node_types.activities.subtitle": {
       "en": "Human Actions",
@@ -96,8 +96,8 @@
       "lt": "Žmogaus veiksmai",
       "pt": "Ações Humanas",
       "it": "Azioni Umane",
-      "no": "Human Actions",
-      "el": "Human Actions"
+      "no": "Menneskelige handlinger",
+      "el": "Ανθρώπινες Δραστηριότητες"
     },
     "data.node_types.activities.title": {
       "en": "Activities",
@@ -107,7 +107,7 @@
       "lt": "Veiklos",
       "pt": "Atividades",
       "it": "Attività",
-      "no": "Activities",
+      "no": "Aktiviteter",
       "el": "Δραστηριότητες"
     },
     "data.node_types.analyzing_your_elements_and_generating_connections": {
@@ -118,8 +118,8 @@
       "lt": "Analizuojami jūsų elementai ir generuojami ryšiai...",
       "pt": "Analisando seus elementos e gerando conexões...",
       "it": "Analisi degli elementi e generazione delle connessioni...",
-      "no": "Analyzing your elements and generating connections...",
-      "el": "Analyzing your elements and generating connections..."
+      "no": "Analyserer elementene dine og genererer tilkoblinger...",
+      "el": "Ανάλυση των στοιχείων σας και δημιουργία συνδέσεων..."
     },
     "data.node_types.automatic_element_generation": {
       "en": "Automatic element generation",
@@ -129,8 +129,8 @@
       "lt": "Automatinis elementų generavimas",
       "pt": "Geração automática de elementos",
       "it": "Generazione automatica di elementi",
-      "no": "Automatic element generation",
-      "el": "Automatic element generation"
+      "no": "Automatisk elementgenerering",
+      "el": "Αυτόματη δημιουργία στοιχείων"
     },
     "data.node_types.average_shortest_path_between_any_two_nodes": {
       "en": "Average shortest path between any two nodes",
@@ -140,8 +140,8 @@
       "lt": "Average shortest path between any two nodes",
       "pt": "Average shortest path between any two nodes",
       "it": "Average shortest path between any two nodes",
-      "no": "Average shortest path between any two nodes",
-      "el": "Average shortest path between any two nodes"
+      "no": "Gjennomsnittlig korteste vei mellom to noder",
+      "el": "Μέση συντομότερη διαδρομή μεταξύ δύο κόμβων"
     },
     "data.node_types.average_steps_needed_to_reach_any_node_from_any_ot": {
       "en": "Average steps needed to reach any node from any other node.",
@@ -151,8 +151,8 @@
       "lt": "Average steps needed to reach any node from any other node.",
       "pt": "Average steps needed to reach any node from any other node.",
       "it": "Average steps needed to reach any node from any other node.",
-      "no": "Average steps needed to reach any node from any other node.",
-      "el": "Average steps needed to reach any node from any other node."
+      "no": "Gjennomsnittlig antall steg for å nå en node fra en annen node.",
+      "el": "Μέσος αριθμός βημάτων που απαιτούνται για να φτάσετε σε οποιονδήποτε κόμβο από οποιονδήποτε άλλο κόμβο."
     },
     "data.node_types.calculate_and_visualize_centrality_metrics_to_iden": {
       "en": "Calculate and visualize centrality metrics to identify key nodes and understand network structure.",
@@ -162,8 +162,8 @@
       "lt": "Apskaičiuokite ir vizualizuokite centrinio svarbos metrikos, kad nustatytumėte pagrindinius mazgus ir suprastumėte tinklo struktūrą.",
       "pt": "Calcule e visualize métricas de centralidade para identificar nós-chave e compreender a estrutura da rede.",
       "it": "Calcola e visualizza le metriche di centralità per identificare i nodi chiave e comprendere la struttura della rete.",
-      "no": "Calculate and visualize centrality metrics to identify key nodes and understand network structure.",
-      "el": "Υπολογισμός and visualize centrality metrics to identify key nodes and understand network structure."
+      "no": "Beregn og visualiser sentralitetsmål for å identifisere nøkkelnoder og forstå nettverksstrukturen.",
+      "el": "Υπολογίστε και οπτικοποιήστε μετρικές κεντρικότητας για να εντοπίσετε βασικούς κόμβους και να κατανοήσετε τη δομή του δικτύου."
     },
     "data.node_types.combine_with_loop_analysis_nodes_that_appear_in_mu": {
       "en": "Combine with loop analysis: Nodes that appear in multiple feedback loops AND have high leverage scores are especially important for system-wide change.",
@@ -173,8 +173,8 @@
       "lt": "Derinti su ciklų analize: Mazgai, pasirodyantys keliuose grįžtamojo ryšio cikluose IR turintys didelius sverties balus, yra ypač svarbūs sistemos pokyčiams.",
       "pt": "Combine com análise de loops: Nós que aparecem em múltiplos loops de feedback E têm altas pontuações de alavancagem são especialmente importantes para mudanças em todo o sistema.",
       "it": "Combinare con l'analisi dei loop: I nodi che compaiono in più loop di feedback E hanno alti punteggi di leva sono particolarmente importanti per il cambiamento a livello di sistema.",
-      "no": "Combine with loop analysis: Nodes that appear in multiple feedback loops AND have high leverage scores are especially important for system-wide change.",
-      "el": "Combine with loop analysis: Nodes that appear in multiple feedback loops AND have high leverage scores are especially important for system-wide change."
+      "no": "Kombiner med sløyfeanalyse: Noder som opptrer i flere tilbakekoblingssløyfer OG har høye virkemiddelskår er spesielt viktige for systemomfattende endring.",
+      "el": "Συνδυάστε με ανάλυση βρόχων: Οι κόμβοι που εμφανίζονται σε πολλαπλούς βρόχους ανατροφοδότησης ΚΑΙ έχουν υψηλές βαθμολογίες μόχλευσης είναι ιδιαίτερα σημαντικοί για αλλαγές σε επίπεδο συστήματος."
     },
     "data.node_types.complete_control_over_all_elements": {
       "en": "Complete control over all elements",
@@ -184,8 +184,8 @@
       "lt": "Visiškas kontrolė virš visų elementų",
       "pt": "Controle completo sobre todos os elementos",
       "it": "Controllo completo su tutti gli elementi",
-      "no": "Complete control over all elements",
-      "el": "Ολοκληρώθηκε control over all elements"
+      "no": "Fullstendig kontroll over alle elementer",
+      "el": "Πλήρης έλεγχος όλων των στοιχείων"
     },
     "data.node_types.conflicting_modifications_for_nodes_s": {
       "en": "Conflicting modifications for nodes: %s",
@@ -195,8 +195,8 @@
       "lt": "Prieštaringi pakeitimai mazgams: %s",
       "pt": "Modificações conflitantes para nós: %s",
       "it": "Modifiche in conflitto per i nodi: %s",
-      "no": "Conflicting modifications for nodes: %s",
-      "el": "Conflicting modifications for nodes: %s"
+      "no": "Motstridende endringer for noder: %s",
+      "el": "Αντικρουόμενες τροποποιήσεις για κόμβους: %s"
     },
     "data.node_types.critical_bridge_nodes_connecting_different_parts": {
       "en": "Critical bridge nodes connecting different parts",
@@ -206,8 +206,8 @@
       "lt": "Kritiniai tilto mazgai, jungiantys skirtingas dalis",
       "pt": "Nós de ponte críticos conectando diferentes partes",
       "it": "Nodi ponte critici che collegano diverse parti",
-      "no": "Critical bridge nodes connecting different parts",
-      "el": "Critical bridge nodes connecting different parts"
+      "no": "Kritiske bronoder som forbinder ulike deler",
+      "el": "Κρίσιμοι γεφυρικοί κόμβοι που συνδέουν διαφορετικά μέρη"
     },
     "data.node_types.dapsiwrm_elements": {
       "en": "DAPSI(W)R(M) Elements",
@@ -217,8 +217,8 @@
       "lt": "DAPSI(W)R(M) elementai",
       "pt": "Elementos DAPSI(W)R(M)",
       "it": "Elementi DAPSI(W)R(M)",
-      "no": "DAPSI(W)R(M) Elements",
-      "el": "DAPSI(W)R(M) Elements"
+      "no": "DAPSI(W)R(M)-elementer",
+      "el": "Στοιχεία DAPSI(W)R(M)"
     },
     "data.node_types.drivers.subtitle": {
       "en": "Root Causes & Needs",
@@ -228,8 +228,8 @@
       "lt": "Pagrindinės priežastys ir poreikiai",
       "pt": "Causas Raízes e Necessidades",
       "it": "Cause Radici e Bisogni",
-      "no": "Root Causes & Needs",
-      "el": "Root Causes & Needs"
+      "no": "Grunnleggende årsaker og behov",
+      "el": "Βασικές Αιτίες & Ανάγκες"
     },
     "data.node_types.drivers.title": {
       "en": "Drivers",
@@ -239,7 +239,7 @@
       "lt": "Varomosios jėgos",
       "pt": "Impulsores",
       "it": "Driver",
-      "no": "Drivers",
+      "no": "Drivkrefter",
       "el": "Κινητήριες δυνάμεις"
     },
     "data.node_types.ecosystem_services.subtitle": {
@@ -250,8 +250,8 @@
       "lt": "Gamtos nauda",
       "pt": "Benefícios da Natureza",
       "it": "Benefici della Natura",
-      "no": "Nature's Benefits",
-      "el": "Nature's Benefits"
+      "no": "Naturens goder",
+      "el": "Οφέλη της Φύσης"
     },
     "data.node_types.ecosystem_services.title": {
       "en": "Ecosystem Services",
@@ -261,7 +261,7 @@
       "lt": "Ekosistemos paslaugos",
       "pt": "Serviços Ecossistêmicos",
       "it": "Servizi Ecosistemici",
-      "no": "Ecosystem Services",
+      "no": "Økosystemtjenester",
       "el": "Υπηρεσίες οικοσυστήματος"
     },
     "data.node_types.element_participation": {
@@ -272,8 +272,8 @@
       "lt": "Elementų dalyvavimas:",
       "pt": "Participação de elementos:",
       "it": "Partecipazione di elementi:",
-      "no": "Element participation:",
-      "el": "Στοιχείο participation:"
+      "no": "Elementdeltakelse:",
+      "el": "Συμμετοχή στοιχείων:"
     },
     "data.node_types.element_type": {
       "en": "Element Type:",
@@ -283,8 +283,8 @@
       "lt": "Elemento tipas:",
       "pt": "Tipo de Elemento:",
       "it": "Tipo di Elemento:",
-      "no": "Element Type:",
-      "el": "Στοιχείο Type:"
+      "no": "Elementtype:",
+      "el": "Τύπος Στοιχείου:"
     },
     "data.node_types.elements": {
       "en": "Elements:",
@@ -294,8 +294,8 @@
       "lt": "Elementai",
       "pt": "Elementos",
       "it": "Elementi",
-      "no": "Elements:",
-      "el": "Elements:"
+      "no": "Elementer:",
+      "el": "Στοιχεία:"
     },
     "data.node_types.elements_and": {
       "en": "elements and",
@@ -305,8 +305,8 @@
       "lt": "elementai ir",
       "pt": "elementos e",
       "it": "elementi e",
-      "no": "elements and",
-      "el": "Στοιχεία and"
+      "no": "elementer og",
+      "el": "στοιχεία και"
     },
     "data.node_types.elements_but_i_couldn": {
       "en": "elements, but I couldn",
@@ -327,8 +327,8 @@
       "lt": "elementai sukurti",
       "pt": "elementos criados",
       "it": "elementi creati",
-      "no": "elements created",
-      "el": "Στοιχεία Δημιουργήθηκε"
+      "no": "elementer opprettet",
+      "el": "στοιχεία δημιουργήθηκαν"
     },
     "data.node_types.elements_sheet_columns": {
       "en": "Elements sheet columns:",
@@ -338,8 +338,8 @@
       "lt": "Elementai sheet columns:",
       "pt": "Elementos sheet columns:",
       "it": "Elementi sheet columns:",
-      "no": "Elements sheet columns:",
-      "el": "Στοιχεία sheet columns:"
+      "no": "Kolonner i elementarket:",
+      "el": "Στήλες φύλλου στοιχείων:"
     },
     "data.node_types.feedback_loops_are_circular_patterns_in_the_system": {
       "en": "Feedback loops are circular patterns in the system where an element eventually affects itself through a chain of causal connections. These loops are fundamental to understanding system dynamics and behavior.",
@@ -349,8 +349,8 @@
       "lt": "Grįžtamojo ryšio ciklai yra žiediniai modeliai sistemoje, kai elementas galiausiai veikia save per priežastinių ryšių grandinę. Šie ciklai yra esminiai suprantant sistemos dinamiką ir elgseną.",
       "pt": "Loops de feedback são padrões circulares no sistema onde um elemento eventualmente afeta a si mesmo através de uma cadeia de conexões causais. Esses loops são fundamentais para entender a dinâmica e o comportamento do sistema.",
       "it": "I loop di feedback sono modelli circolari nel sistema in cui un elemento finisce per influenzare se stesso attraverso una catena di connessioni causali. Questi loop sono fondamentali per comprendere la dinamica e il comportamento del sistema.",
-      "no": "Feedback loops are circular patterns in the system where an element eventually affects itself through a chain of causal connections. These loops are fundamental to understanding system dynamics and behavior.",
-      "el": "Βρόχοι ανατροφοδότησης are circular patterns in the system where an element eventually affects itself through a chain of causal connections. These loops are fundamental to understanding system dynamics and behavior."
+      "no": "Tilbakekoblingssløyfer er sirkulære mønstre i systemet der et element til slutt påvirker seg selv gjennom en kjede av årsakssammenhenger. Disse sløyfene er grunnleggende for å forstå systemdynamikk og atferd.",
+      "el": "Οι βρόχοι ανατροφοδότησης είναι κυκλικά μοτίβα στο σύστημα όπου ένα στοιχείο τελικά επηρεάζει τον εαυτό του μέσω μιας αλυσίδας αιτιωδών συνδέσεων. Αυτοί οι βρόχοι είναι θεμελιώδεις για την κατανόηση της δυναμικής και της συμπεριφοράς του συστήματος."
     },
     "data.node_types.goods_benefits.subtitle": {
       "en": "Human Welfare",
@@ -360,8 +360,8 @@
       "lt": "Žmonių gerovė",
       "pt": "Bem-estar Humano",
       "it": "Benessere Umano",
-      "no": "Human Welfare",
-      "el": "Human Welfare"
+      "no": "Menneskelig velferd",
+      "el": "Ανθρώπινη Ευημερία"
     },
     "data.node_types.goods_benefits.title": {
       "en": "Goods & Benefits",
@@ -371,8 +371,8 @@
       "lt": "Gėriai ir nauda",
       "pt": "Bens e Benefícios",
       "it": "Beni e Benefici",
-      "no": "Goods & Benefits",
-      "el": "Αγαθά & Benefits"
+      "no": "Goder og fordeler",
+      "el": "Αγαθά & Οφέλη"
     },
     "data.node_types.high_composite_score_these_nodes_are_your_top_leve": {
       "en": "High Composite Score: These nodes are your top leverage points. Interventions here can have cascading effects throughout the system.",
@@ -382,8 +382,8 @@
       "lt": "Didelis kompozitinis balas: Šie mazgai yra jūsų pagrindiniai sverties taškai. Intervencijos čia gali turėti kaskadines pasekmes visoje sistemoje.",
       "pt": "Pontuação Composta Alta: Estes nós são seus principais pontos de alavancagem. Intervenções aqui podem ter efeitos em cascata em todo o sistema.",
       "it": "Punteggio Composito Alto: Questi nodi sono i tuoi principali punti di leva. Gli interventi qui possono avere effetti a cascata in tutto il sistema.",
-      "no": "High Composite Score: These nodes are your top leverage points. Interventions here can have cascading effects throughout the system.",
-      "el": "High Composite Score: These nodes are your top leverage points. Interventions here can have cascading effects throughout the system."
+      "no": "Høy sammensatt skår: Disse nodene er dine viktigste virkemidler. Intervensjoner her kan ha kaskadeeffekter gjennom hele systemet.",
+      "el": "Υψηλή Σύνθετη Βαθμολογία: Αυτοί οι κόμβοι είναι τα κύρια σημεία μόχλευσής σας. Οι παρεμβάσεις εδώ μπορούν να έχουν διαδοχικά αποτελέσματα σε ολόκληρο το σύστημα."
     },
     "data.node_types.high_eigenvector_target_nodes_that_are_influential": {
       "en": "High Eigenvector: Target nodes that are influential because they",
@@ -393,8 +393,8 @@
       "lt": "High Eigenvector: Target nodes that are influential because they",
       "pt": "High Eigenvector: Target nodes that are influential because they",
       "it": "High Eigenvector: Target nodes that are influential because they",
-      "no": "High Eigenvector: Target nodes that are influential because they",
-      "el": "High Eigenvector: Target nodes that are influential because they"
+      "no": "Høy egenvektor: Målnoder som er innflytelsesrike fordi de",
+      "el": "Υψηλός Eigenvector: Στόχοι κόμβοι που είναι σημαντικοί επειδή"
     },
     "data.node_types.how_close_a_node_is_to_all_other_nodes_high_closen": {
       "en": "How close a node is to all other nodes. High closeness = can quickly reach or be reached by others.",
@@ -404,8 +404,8 @@
       "lt": "How close a node is to all other nodes. High closeness = can quickly reach or be reached by others.",
       "pt": "How close a node is to all other nodes. High closeness = can quickly reach or be reached by others.",
       "it": "How close a node is to all other nodes. High closeness = can quickly reach or be reached by others.",
-      "no": "How close a node is to all other nodes. High closeness = can quickly reach or be reached by others.",
-      "el": "How close a node is to all other nodes. High closeness = can quickly reach or be reached by others."
+      "no": "Hvor nær en node er alle andre noder. Høy nærhet = kan raskt nå eller nås av andre.",
+      "el": "Πόσο κοντά είναι ένας κόμβος σε όλους τους άλλους κόμβους. Υψηλή εγγύτητα = μπορεί γρήγορα να φτάσει ή να προσεγγιστεί από άλλους."
     },
     "data.node_types.how_often_a_node_lies_on_shortest_paths_between_ot": {
       "en": "How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck.",
@@ -415,8 +415,8 @@
       "lt": "How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck.",
       "pt": "How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck.",
       "it": "How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck.",
-      "no": "How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck.",
-      "el": "How often a node lies on shortest paths between other nodes. High betweenness = important bridge or bottleneck."
+      "no": "Hvor ofte en node ligger på korteste veier mellom andre noder. Høy mellomleddsverdi = viktig bro eller flaskehals.",
+      "el": "Πόσο συχνά ένας κόμβος βρίσκεται σε συντομότερες διαδρομές μεταξύ άλλων κόμβων. Υψηλή ενδιαμεσότητα = σημαντική γέφυρα ή σημείο συμφόρησης."
     },
     "data.node_types.importance_based_on_connections_to_other_important": {
       "en": "Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs.",
@@ -426,8 +426,8 @@
       "lt": "Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs.",
       "pt": "Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs.",
       "it": "Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs.",
-      "no": "Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs.",
-      "el": "Importance based on connections to other important nodes. High eigenvector = well-connected to other hubs."
+      "no": "Betydning basert på tilkoblinger til andre viktige noder. Høy egenvektor = godt forbundet med andre knutepunkter.",
+      "el": "Σημασία βασισμένη σε συνδέσεις με άλλους σημαντικούς κόμβους. Υψηλός eigenvector = καλά συνδεδεμένος με άλλους κόμβους-κέντρα."
     },
     "data.node_types.key_nodes": {
       "en": "Key Nodes",
@@ -437,8 +437,8 @@
       "lt": "Pagrindiniai mazgai",
       "pt": "Nós-Chave",
       "it": "Nodi Chiave",
-      "no": "Key Nodes",
-      "el": "Key Nodes"
+      "no": "Nøkkelnoder",
+      "el": "Βασικοί Κόμβοι"
     },
     "data.node_types.marine_processes.title": {
       "en": "Marine Processes & Functioning",
@@ -448,8 +448,8 @@
       "lt": "Jūrų procesai ir funkcijos",
       "pt": "Processos e Funcionamento Marinho",
       "it": "Processi e Funzionamento Marino",
-      "no": "Marine Processes & Functioning",
-      "el": "Θαλάσσιες διεργασίες & Functioning"
+      "no": "Marine prosesser og funksjoner",
+      "el": "Θαλάσσιες Διεργασίες & Λειτουργίες"
     },
     "data.node_types.measures.subtitle": {
       "en": "Implementation Tools",
@@ -459,8 +459,8 @@
       "lt": "Įgyvendinimo priemonės",
       "pt": "Ferramentas de Implementação",
       "it": "Strumenti di Implementazione",
-      "no": "Implementation Tools",
-      "el": "Implementation Tools"
+      "no": "Gjennomføringsverktøy",
+      "el": "Εργαλεία Εφαρμογής"
     },
     "data.node_types.measures.title": {
       "en": "Measures",
@@ -470,7 +470,7 @@
       "lt": "Priemonės",
       "pt": "Medidas",
       "it": "Misure",
-      "no": "Measures",
+      "no": "Tiltak",
       "el": "Μέτρα"
     },
     "data.node_types.most_central_nodes_with_shortest_paths_to_others": {
@@ -481,8 +481,8 @@
       "lt": "Centriškiausi mazgai su trumpiausiais keliais į kitus",
       "pt": "Nós mais centrais com caminhos mais curtos para outros",
       "it": "Nodi più centrali con percorsi più brevi verso gli altri",
-      "no": "Most central nodes with shortest paths to others",
-      "el": "Most central nodes with shortest paths to others"
+      "no": "Mest sentrale noder med korteste veier til andre",
+      "el": "Οι πιο κεντρικοί κόμβοι με τις συντομότερες διαδρομές προς τους άλλους"
     },
     "data.node_types.most_connected_nodes_in_the_network": {
       "en": "Most connected nodes in the network",
@@ -492,8 +492,8 @@
       "lt": "Labiausiai susiję mazgai tinkle",
       "pt": "Nós mais conectados na rede",
       "it": "Nodi più connessi nella rete",
-      "no": "Most connected nodes in the network",
-      "el": "Most connected nodes in the network"
+      "no": "Mest tilkoblede noder i nettverket",
+      "el": "Οι πιο συνδεδεμένοι κόμβοι στο δίκτυο"
     },
     "data.node_types.most_important_nodes_by_different_metrics": {
       "en": "Most Important Nodes by Different Metrics",
@@ -503,8 +503,8 @@
       "lt": "Most Important Nodes by Different Metrics",
       "pt": "Most Important Nodes by Different Metrics",
       "it": "Most Important Nodes by Different Metrics",
-      "no": "Most Important Nodes by Different Metrics",
-      "el": "Most Important Nodes by Different Metrics"
+      "no": "Viktigste noder etter ulike målinger",
+      "el": "Σημαντικότεροι Κόμβοι κατά Διαφορετικές Μετρικές"
     },
     "data.node_types.most_influential_nodes_based_on_incoming_connectio": {
       "en": "Most influential nodes based on incoming connections",
@@ -514,8 +514,8 @@
       "lt": "Įtakingiausi mazgai pagal įeinančius ryšius",
       "pt": "Nós mais influentes com base em conexões de entrada",
       "it": "Nodi più influenti in base alle connessioni in entrata",
-      "no": "Most influential nodes based on incoming connections",
-      "el": "Most influential nodes based on incoming connections"
+      "no": "Mest innflytelsesrike noder basert på innkommende tilkoblinger",
+      "el": "Οι πιο σημαντικοί κόμβοι βάσει εισερχόμενων συνδέσεων"
     },
     "data.node_types.most_influential_system_components": {
       "en": "Most influential system components",
@@ -525,8 +525,8 @@
       "lt": "Most influential system components",
       "pt": "Most influential system components",
       "it": "Most influential system components",
-      "no": "Most influential system components",
-      "el": "Most influential system components"
+      "no": "Mest innflytelsesrike systemkomponenter",
+      "el": "Τα πιο σημαντικά συστατικά του συστήματος"
     },
     "data.node_types.node_centrality_metrics": {
       "en": "Node Centrality Metrics",
@@ -536,7 +536,7 @@
       "lt": "Mazgas Centrality Metrikos",
       "pt": "No Centrality Metricas",
       "it": "Nodo Centrality Metriche",
-      "no": "Node Centrality Metrics",
+      "no": "Sentralitetsmål for noder",
       "el": "Κόμβος Κεντρικότητα Μετρικές"
     },
     "data.node_types.nodelevel_centrality_metrics": {
@@ -547,8 +547,8 @@
       "lt": "Node-Level Centrality Metrikos",
       "pt": "Node-Level Centrality Metricas",
       "it": "Node-Level Centrality Metriche",
-      "no": "Node-Level Centrality Metrics",
-      "el": "Node-Level Centrality Metrics"
+      "no": "Sentralitetsmål på nodenivå",
+      "el": "Μετρικές Κεντρικότητας σε Επίπεδο Κόμβου"
     },
     "data.node_types.nodes": {
       "en": "Nodes:",
@@ -558,8 +558,8 @@
       "lt": "Mazgai:",
       "pt": "Nós:",
       "it": "Nodi:",
-      "no": "Nodes:",
-      "el": "Nodes:"
+      "no": "Noder:",
+      "el": "Κόμβοι:"
     },
     "data.node_types.nodes_in_cld": {
       "en": "nodes in CLD",
@@ -569,8 +569,8 @@
       "lt": "mazgai CLD",
       "pt": "nós no CLD",
       "it": "nodi nel CLD",
-      "no": "nodes in CLD",
-      "el": "Κόμβοι in CLD"
+      "no": "noder i CLD",
+      "el": "κόμβοι στο CLD"
     },
     "data.node_types.polarity_means_the_elements_change_in_the_same_dir": {
       "en": "Polarity: + means the elements change in the same direction, - means they change in opposite directions",
@@ -580,8 +580,8 @@
       "lt": "Polaritetas: + reiškia, kad elementai keičiasi ta pačia kryptimi, - reiškia, kad jie keičiasi priešingomis kryptimis",
       "pt": "Polaridade: + significa que os elementos mudam na mesma direção, - significa que eles mudam em direções opostas",
       "it": "Polarità: + significa che gli elementi cambiano nella stessa direzione, - significa che cambiano in direzioni opposte",
-      "no": "Polarity: + means the elements change in the same direction, - means they change in opposite directions",
-      "el": "Polarity: + means the elements change in the same direction, - means they change in opposite directions"
+      "no": "Polaritet: + betyr at elementene endres i samme retning, - betyr at de endres i motsatte retninger",
+      "el": "Πολικότητα: + σημαίνει ότι τα στοιχεία αλλάζουν προς την ίδια κατεύθυνση, - σημαίνει ότι αλλάζουν προς αντίθετες κατευθύνσεις"
     },
     "data.node_types.pressures.subtitle": {
       "en": "Environmental Stressors",
@@ -591,8 +591,8 @@
       "lt": "Aplinkos streso veiksniai",
       "pt": "Estressores Ambientais",
       "it": "Fattori di Stress Ambientale",
-      "no": "Environmental Stressors",
-      "el": "Environmental Stressors"
+      "no": "Miljøbelastninger",
+      "el": "Περιβαλλοντικοί Παράγοντες Πίεσης"
     },
     "data.node_types.pressures.title": {
       "en": "Pressures",
@@ -602,7 +602,7 @@
       "lt": "Spaudimai",
       "pt": "Pressões",
       "it": "Pressioni",
-      "no": "Pressures",
+      "no": "Belastninger",
       "el": "Πιέσεις"
     },
     "data.node_types.previewexogenousnodesbeforeremoval": {
@@ -624,8 +624,8 @@
       "lt": "Nustatyti intervencijų prioritetus: Sutelkti išteklius į didelės sverto galios mazgus, o ne sklaidos pastangas tarp daugelio mazgų.",
       "pt": "Priorizar intervenções: Concentre recursos em nós de alta alavancagem em vez de espalhar esforços por muitos nós.",
       "it": "Dare priorità agli interventi: Concentra le risorse sui nodi ad alta leva anziché distribuire gli sforzi su molti nodi.",
-      "no": "Prioritize interventions: Focus resources on high-leverage nodes rather than spreading efforts thinly across many nodes.",
-      "el": "Prioritize interventions: Focus resources on high-leverage nodes rather than spreading efforts thinly across many nodes."
+      "no": "Prioriter intervensjoner: Fokuser ressurser på noder med høy innflytelse i stedet for å spre innsatsen tynt over mange noder.",
+      "el": "Ιεράρχηση παρεμβάσεων: Εστιάστε τους πόρους σε κόμβους υψηλής μόχλευσης αντί να κατανέμετε τις προσπάθειες σε πολλούς κόμβους."
     },
     "data.node_types.problem_element_id": {
       "en": "Problem Element ID:",
@@ -635,8 +635,8 @@
       "lt": "Problemos Elemento ID:",
       "pt": "ID do Elemento do Problema:",
       "it": "ID Elemento del Problema:",
-      "no": "Problem Element ID:",
-      "el": "Problem Element ID:"
+      "no": "Problem-element-ID:",
+      "el": "ID Στοιχείου Προβλήματος:"
     },
     "data.node_types.readytocustomize_elements": {
       "en": "Ready-to-customize elements",
@@ -646,8 +646,8 @@
       "lt": "Paruošti pritaikymui elementai",
       "pt": "Elementos prontos para personalizar",
       "it": "Elementi pronti da personalizzare",
-      "no": "Ready-to-customize elements",
-      "el": "Ready-to-customize elements"
+      "no": "Klare til å tilpasse elementer",
+      "el": "Στοιχεία έτοιμα για προσαρμογή"
     },
     "data.node_types.responses.subtitle": {
       "en": "Management Actions",
@@ -657,8 +657,8 @@
       "lt": "Valdymo veiksmai",
       "pt": "Ações de Gestão",
       "it": "Azioni di Gestione",
-      "no": "Management Actions",
-      "el": "Διαχείριση Actions"
+      "no": "Forvaltningshandlinger",
+      "el": "Ενέργειες Διαχείρισης"
     },
     "data.node_types.responses.title": {
       "en": "Responses",
@@ -668,7 +668,7 @@
       "lt": "Atsakai",
       "pt": "Respostas",
       "it": "Risposte",
-      "no": "Responses",
+      "no": "Responser",
       "el": "Αποκρίσεις"
     },
     "data.node_types.review_the_connections_between_dapsiwrm_elements": {
@@ -679,8 +679,8 @@
       "lt": "Peržiūrėkite ryšius tarp DAPSI(W)R(M) elementų:",
       "pt": "Reveja as ligações entre os elementos DAPSI(W)R(M):",
       "it": "Rivedere le connessioni tra gli elementi DAPSI(W)R(M):",
-      "no": "Review the connections between DAPSI(W)R(M) elements:",
-      "el": "Review the connections between DAPSI(W)R(M) elements:"
+      "no": "Gjennomgå forbindelsene mellom DAPSI(W)R(M)-elementene:",
+      "el": "Ελέγξτε τις συνδέσεις μεταξύ των στοιχείων DAPSI(W)R(M):"
     },
     "data.node_types.scenarioaddmodifynodes": {
       "en": "scenario_add_modify_nodes",
@@ -855,8 +855,8 @@
       "lt": "Ekosistemos būklė",
       "pt": "Condição do Ecossistema",
       "it": "Condizione dell'Ecosistema",
-      "no": "Ecosystem Condition",
-      "el": "Οικοσύστημα Condition"
+      "no": "Økosystemtilstand",
+      "el": "Κατάσταση Οικοσυστήματος"
     },
     "data.node_types.state.title": {
       "en": "State",
@@ -866,7 +866,7 @@
       "lt": "Būsena",
       "pt": "Estado",
       "it": "Stato",
-      "no": "State",
+      "no": "Tilstand",
       "el": "Κατάσταση"
     },
     "data.node_types.target_element_id": {
@@ -877,8 +877,8 @@
       "lt": "Tikslo Elemento ID:",
       "pt": "ID do Elemento Alvo:",
       "it": "ID Elemento Obiettivo:",
-      "no": "Target Element ID:",
-      "el": "Target Element ID:"
+      "no": "Mål-element-ID:",
+      "el": "ID Στοιχείου Στόχου:"
     },
     "data.node_types.this_template_includes_d_predefined_connections_be": {
       "en": "This template includes %d predefined connections between elements.",
@@ -888,8 +888,8 @@
       "lt": "Šis šablonas apima %d iš anksto apibrėžtų ryšių tarp elementų.",
       "pt": "Este modelo inclui %d conexões predefinidas entre elementos.",
       "it": "Questo modello include %d connessioni predefinite tra elementi.",
-      "no": "This template includes %d predefined connections between elements.",
-      "el": "This template includes %d predefined connections between elements."
+      "no": "Denne malen inkluderer %d forhåndsdefinerte forbindelser mellom elementer.",
+      "el": "Αυτό το πρότυπο περιλαμβάνει %d προκαθορισμένες συνδέσεις μεταξύ στοιχείων."
     },
     "data.node_types.top_5_nodes_by_betweenness": {
       "en": "Top 5 Nodes by Betweenness",
@@ -899,8 +899,8 @@
       "lt": "Top 5 mazgai pagal tarpininkavimą",
       "pt": "Top 5 Nós por Intermediação",
       "it": "Top 5 Nodi per Betweenness",
-      "no": "Top 5 Nodes by Betweenness",
-      "el": "Top 5 Nodes by Betweenness"
+      "no": "Topp 5 noder etter mellomleddsverdi",
+      "el": "Κορυφαίοι 5 Κόμβοι κατά Ενδιαμεσότητα"
     },
     "data.node_types.top_5_nodes_by_closeness": {
       "en": "Top 5 Nodes by Closeness",
@@ -910,8 +910,8 @@
       "lt": "Top 5 mazgai pagal artumą",
       "pt": "Top 5 Nós por Proximidade",
       "it": "Top 5 Nodi per Vicinanza",
-      "no": "Top 5 Nodes by Closeness",
-      "el": "Top 5 Nodes by Closeness"
+      "no": "Topp 5 noder etter nærhet",
+      "el": "Κορυφαίοι 5 Κόμβοι κατά Εγγύτητα"
     },
     "data.node_types.top_5_nodes_by_degree": {
       "en": "Top 5 Nodes by Degree",
@@ -921,8 +921,8 @@
       "lt": "Top 5 mazgai pagal laipsnį",
       "pt": "Top 5 Nós por Grau",
       "it": "Top 5 Nodi per Grado",
-      "no": "Top 5 Nodes by Degree",
-      "el": "Top 5 Nodes by Degree"
+      "no": "Topp 5 noder etter grad",
+      "el": "Κορυφαίοι 5 Κόμβοι κατά Βαθμό"
     },
     "data.node_types.top_n_nodes": {
       "en": "Top N Nodes",
@@ -932,8 +932,8 @@
       "lt": "Top N mazgai",
       "pt": "Top N Nós",
       "it": "Top N Nodi",
-      "no": "Top N Nodes",
-      "el": "Top N Nodes"
+      "no": "Topp N noder",
+      "el": "Κορυφαίοι N Κόμβοι"
     },
     "data.node_types.total_elements": {
       "en": "Total elements:",
@@ -943,8 +943,8 @@
       "lt": "Total elements:",
       "pt": "Total elements:",
       "it": "Total elements:",
-      "no": "Total elements:",
-      "el": "Σύνολο elements:"
+      "no": "Totalt antall elementer:",
+      "el": "Συνολικά στοιχεία:"
     },
     "data.node_types.total_elements_created": {
       "en": "Total elements created",
@@ -954,8 +954,8 @@
       "lt": "Iš viso sukurta elementų",
       "pt": "Total de elementos criados",
       "it": "Totale elementi creati",
-      "no": "Total elements created",
-      "el": "Σύνολο Στοιχεία Δημιουργήθηκε"
+      "no": "Totalt antall elementer opprettet",
+      "el": "Συνολικά στοιχεία που δημιουργήθηκαν"
     },
     "data.node_types.total_nodes": {
       "en": "Total Nodes",
@@ -965,8 +965,8 @@
       "lt": "Viso mazgų",
       "pt": "Total de Nós",
       "it": "Totale Nodi",
-      "no": "Total Nodes",
-      "el": "Σύνολο Κόμβοι"
+      "no": "Totalt antall noder",
+      "el": "Σύνολο Κόμβων"
     },
     "data.node_types.use_isa_data_entry_to_map_dapsiwrm_elements_with_c": {
       "en": "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection",
@@ -976,8 +976,8 @@
       "lt": "Naudokite ISA duomenų įvedimą DAPSI(W)R(M) elementams susieti su pasitikėjimo lygiais (1-5) kiekvienam ryšiui",
       "pt": "Use Entrada de Dados ISA para mapear elementos DAPSI(W)R(M) com níveis de confiança (1-5) para cada conexão",
       "it": "Usa Inserimento Dati ISA per mappare elementi DAPSI(W)R(M) con livelli di confidenza (1-5) per ogni connessione",
-      "no": "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection",
-      "el": "Use ISA Data Entry to map DAPSI(W)R(M) elements with confidence levels (1-5) for each connection"
+      "no": "Bruk ISA-dataregistrering for å kartlegge DAPSI(W)R(M)-elementer med tillitsnivåer (1-5) for hver forbindelse",
+      "el": "Χρησιμοποιήστε την Εισαγωγή Δεδομένων ISA για να χαρτογραφήσετε τα στοιχεία DAPSI(W)R(M) με επίπεδα εμπιστοσύνης (1-5) για κάθε σύνδεση"
     }
   }
 }

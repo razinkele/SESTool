@@ -62,7 +62,7 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
 
       }, error = function(e) {
         showNotification(
-          paste(i18n$t("common.misc.error_saving_project"), e$message),
+          format_user_error(e, i18n = i18n, context = "saving project"),
           type = "error",
           duration = 10
         )
@@ -123,7 +123,7 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
 
     }, error = function(e) {
       showNotification(
-        paste(i18n$t("common.misc.error_loading_project"), e$message),
+        format_user_error(e, i18n = i18n, context = "loading project"),
         type = "error",
         duration = 10
       )
@@ -208,17 +208,26 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
                       return;
                     }
 
+                    // Sanitize text for safe HTML insertion
+                    function escHtml(str) {
+                      var div = document.createElement('div');
+                      div.appendChild(document.createTextNode(str));
+                      return div.innerHTML;
+                    }
+
                     var html = '<div class=\"local-files-list\">';
                     files.forEach(function(file) {
                       var date = new Date(file.lastModified);
                       var sizeKB = Math.round(file.size / 1024);
-                      html += '<div class=\"local-file-item\" data-filename=\"' + file.name + '\">';
+                      var safeName = escHtml(file.name);
+                      var safeAttrName = file.name.replace(/\"/g, '&quot;');
+                      html += '<div class=\"local-file-item\" data-filename=\"' + safeAttrName + '\">';
                       html += '<div class=\"local-file-info\">';
-                      html += '<div class=\"local-file-name\"><i class=\"fa fa-file\"></i> ' + file.name + '</div>';
+                      html += '<div class=\"local-file-name\"><i class=\"fa fa-file\"></i> ' + safeName + '</div>';
                       html += '<div class=\"local-file-meta\">' + sizeKB + ' KB \\u2022 ' + date.toLocaleString() + '</div>';
                       html += '</div>';
                       html += '<div class=\"local-file-actions\">';
-                      html += '<button class=\"btn btn-sm btn-primary load-local-file\" data-filename=\"' + file.name + '\">';
+                      html += '<button class=\"btn btn-sm btn-primary load-local-file\" data-filename=\"' + safeAttrName + '\">';
                       html += '<i class=\"fa fa-upload\"></i> ' + i18n_loadLabel + '</button>';
                       html += '</div>';
                       html += '</div>';

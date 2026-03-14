@@ -20,7 +20,7 @@
       "pt": "Preparar Relatório Abrangente",
       "it": "Prepara Rapporto Completo",
       "no": "Forbered Omfattende Rapport",
-      "el": "Prepare Comprehensive Report"
+      "el": "Προετοιμασία ολοκληρωμένης αναφοράς"
     },
     "modules.prepare.report.subtitle": {
       "en": "Generate a detailed analysis report of your Social-Ecological System model.",
@@ -31,7 +31,7 @@
       "pt": "Gere um relatório de análise detalhado do seu modelo de Sistema Socio-Ecológico.",
       "it": "Genera un rapporto di analisi dettagliato del tuo modello di Sistema Socio-Ecologico.",
       "no": "Generer en detaljert analyserapport av din sosial-økologiske systemmodell.",
-      "el": "Generate a detailed analysis report of your Social-Ecological System model."
+      "el": "Δημιουργήστε μια λεπτομερή αναφορά ανάλυσης του μοντέλου κοινωνικο-οικολογικού συστήματός σας."
     },
     "modules.prepare.report.requirements": {
       "en": "Both Loop Detection and Leverage Point Analysis must be completed before generating a report.",
@@ -42,7 +42,7 @@
       "pt": "Tanto a Detecção de Ciclos quanto a Análise de Pontos de Alavancagem devem ser concluídas antes de gerar um relatório.",
       "it": "Sia il rilevamento dei cicli che l'analisi dei punti di leva devono essere completati prima di generare un rapporto.",
       "no": "Både Loop-deteksjon og Leverage Point-analyse må fullføres før du genererer en rapport.",
-      "el": "Both Loop Detection and Leverage Point Analysis must be completed before generating a report."
+      "el": "Τόσο η ανίχνευση βρόχων όσο και η ανάλυση σημείων μόχλευσης πρέπει να ολοκληρωθούν πριν τη δημιουργία αναφοράς."
     },
     "modules.prepare.report.requirements_label": {
       "en": "Requirements:",
@@ -53,7 +53,7 @@
       "pt": "Requisitos:",
       "it": "Requisiti:",
       "no": "Krav:",
-      "el": "Requirements:"
+      "el": "Απαιτήσεις:"
     },
     "modules.prepare.report.prerequisites_status": {
       "en": "Prerequisites Status",
@@ -64,7 +64,7 @@
       "pt": "Status dos Pré-requisitos",
       "it": "Stato dei Prerequisiti",
       "no": "Forutsetningsstatus",
-      "el": "Prerequisites Status"
+      "el": "Κατάσταση προαπαιτούμενων"
     },
     "modules.prepare.report.report_configuration": {
       "en": "Report Configuration",
@@ -75,7 +75,7 @@
       "pt": "Configuração do Relatório",
       "it": "Configurazione del Rapporto",
       "no": "Rapportkonfigurasjon",
-      "el": "Report Configuration"
+      "el": "Ρύθμιση αναφοράς"
     },
     "modules.prepare.report.report_title_label": {
       "en": "Report Title:",
@@ -86,7 +86,7 @@
       "pt": "Título do Relatório:",
       "it": "Titolo del Rapporto:",
       "no": "Rapporttittel:",
-      "el": "Report Title:"
+      "el": "Τίτλος αναφοράς:"
     },
     "modules.prepare.report.default_report_title": {
       "en": "SES Analysis Report",
@@ -97,7 +97,7 @@
       "pt": "Relatório de Análise SES",
       "it": "Rapporto di Analisi SES",
       "no": "SES-analyserapport",
-      "el": "SES Analysis Report"
+      "el": "Αναφορά ανάλυσης SES"
     },
     "modules.prepare.report.author_label": {
       "en": "Author(s):",
@@ -108,7 +108,7 @@
       "pt": "Autor(es):",
       "it": "Autore(i):",
       "no": "Forfatter(e):",
-      "el": "Author(s):"
+      "el": "Συγγραφέας(-είς):"
     },
     "modules.prepare.report.author_placeholder": {
       "en": "Enter author name(s)",
@@ -119,7 +119,7 @@
       "pt": "Digite o(s) nome(s) do(s) autor(es)",
       "it": "Inserisci il/i nome/i dell'autore",
       "no": "Skriv inn forfatternavn",
-      "el": "Enter author name(s)"
+      "el": "Εισαγάγετε το όνομα(-τα) συγγραφέα"
     },
     "modules.prepare.report.include_sections": {
       "en": "Include Sections:",
@@ -130,7 +130,7 @@
       "pt": "Incluir Seções:",
       "it": "Includi Sezioni:",
       "no": "Inkluder Seksjoner:",
-      "el": "Include Sections:"
+      "el": "Συμπερίληψη ενοτήτων:"
     },
     "modules.prepare.report.section_summary": {
       "en": "Executive Summary",
@@ -141,7 +141,7 @@
       "pt": "Resumo Executivo",
       "it": "Sommario Esecutivo",
       "no": "Sammendrag",
-      "el": "Executive Summary"
+      "el": "Εκτελεστική σύνοψη"
     },
     "modules.prepare.report.section_isa": {
       "en": "ISA Framework",
@@ -152,7 +152,7 @@
       "pt": "Estrutura ISA",
       "it": "Quadro ISA",
       "no": "ISA-rammeverk",
-      "el": "ISA Framework"
+      "el": "Πλαίσιο ISA"
     },
     "modules.prepare.report.section_cld": {
       "en": "CLD Visualization",
@@ -163,7 +163,7 @@
       "pt": "Visualização CLD",
       "it": "Visualizzazione CLD",
       "no": "CLD-visualisering",
-      "el": "CLD Visualization"
+      "el": "Οπτικοποίηση CLD"
     },
     "modules.prepare.report.section_metrics": {
       "en": "Network Metrics",
@@ -174,7 +174,7 @@
       "pt": "Métricas de Rede",
       "it": "Metriche di Rete",
       "no": "Nettverksmetrikker",
-      "el": "Network Metrics"
+      "el": "Μετρικές δικτύου"
     },
     "modules.prepare.report.section_loops": {
       "en": "Loop Analysis",
@@ -185,7 +185,7 @@
       "pt": "Análise de Ciclos",
       "it": "Analisi dei Cicli",
       "no": "Sløyfeanalyse",
-      "el": "Loop Analysis"
+      "el": "Ανάλυση βρόχων"
     },
     "modules.prepare.report.section_leverage": {
       "en": "Leverage Points",
@@ -196,7 +196,7 @@
       "pt": "Pontos de Alavancagem",
       "it": "Punti di Leva",
       "no": "Innflytelsespunkter",
-      "el": "Leverage Points"
+      "el": "Σημεία μόχλευσης"
     },
     "modules.prepare.report.section_recommendations": {
       "en": "Recommendations",
@@ -207,7 +207,7 @@
       "pt": "Recomendações",
       "it": "Raccomandazioni",
       "no": "Anbefalinger",
-      "el": "Recommendations"
+      "el": "Συστάσεις"
     },
     "modules.prepare.report.generate_report": {
       "en": "Generate Report",
@@ -218,7 +218,7 @@
       "pt": "Gerar Relatório",
       "it": "Genera Rapporto",
       "no": "Generer Rapport",
-      "el": "Generate Report"
+      "el": "Δημιουργία αναφοράς"
     },
     "modules.prepare.report.select_format": {
       "en": "Select the report format you wish to generate:",
@@ -229,7 +229,7 @@
       "pt": "Selecione o formato de relatório que deseja gerar:",
       "it": "Seleziona il formato del rapporto che desideri generare:",
       "no": "Velg rapportformatet du ønsker å generere:",
-      "el": "Select the report format you wish to generate:"
+      "el": "Επιλέξτε τη μορφή αναφοράς που θέλετε να δημιουργήσετε:"
     },
     "modules.prepare.report.btn_html": {
       "en": "HTML Report",
@@ -240,7 +240,7 @@
       "pt": "Relatório HTML",
       "it": "Rapporto HTML",
       "no": "HTML-rapport",
-      "el": "HTML Report"
+      "el": "Αναφορά HTML"
     },
     "modules.prepare.report.btn_pdf": {
       "en": "PDF Report",
@@ -251,7 +251,7 @@
       "pt": "Relatório PDF",
       "it": "Rapporto PDF",
       "no": "PDF-rapport",
-      "el": "PDF Report"
+      "el": "Αναφορά PDF"
     },
     "modules.prepare.report.btn_word": {
       "en": "Word Document",
@@ -262,7 +262,7 @@
       "pt": "Documento Word",
       "it": "Documento Word",
       "no": "Word-dokument",
-      "el": "Word Document"
+      "el": "Έγγραφο Word"
     },
     "modules.prepare.report.btn_ppt": {
       "en": "PowerPoint",
@@ -284,7 +284,7 @@
       "pt": "Análise de Detecção de Ciclos",
       "it": "Analisi di Rilevamento dei Cicli",
       "no": "Sløyfedeteksjonsanalyse",
-      "el": "Loop Detection Analysis"
+      "el": "Ανάλυση ανίχνευσης βρόχων"
     },
     "modules.prepare.report.complete_loop_detection": {
       "en": "Please complete loop detection analysis before generating report.",
@@ -295,7 +295,7 @@
       "pt": "Complete a análise de detecção de ciclos antes de gerar o relatório.",
       "it": "Completa l'analisi di rilevamento dei cicli prima di generare il rapporto.",
       "no": "Fullfør sløyfedeteksjonsanalysen før du genererer rapporten.",
-      "el": "Please complete loop detection analysis before generating report."
+      "el": "Παρακαλώ ολοκληρώστε την ανάλυση ανίχνευσης βρόχων πριν τη δημιουργία αναφοράς."
     },
     "modules.prepare.report.goto_loops": {
       "en": "Go to Loop Detection →",
@@ -306,7 +306,7 @@
       "pt": "Ir para Detecção de Ciclos →",
       "it": "Vai al Rilevamento dei Cicli →",
       "no": "Gå til Sløyfedeteksjon →",
-      "el": "Go to Loop Detection →"
+      "el": "Μετάβαση στην ανίχνευση βρόχων →"
     },
     "modules.prepare.report.leverage_analysis": {
       "en": "Leverage Point Analysis",
@@ -317,7 +317,7 @@
       "pt": "Análise de Pontos de Alavancagem",
       "it": "Analisi dei Punti di Leva",
       "no": "Innflytelsespunktanalyse",
-      "el": "Leverage Point Analysis"
+      "el": "Ανάλυση σημείων μόχλευσης"
     },
     "modules.prepare.report.complete_leverage_analysis": {
       "en": "Please complete leverage point analysis before generating report.",
@@ -328,7 +328,7 @@
       "pt": "Complete a análise de pontos de alavancagem antes de gerar o relatório.",
       "it": "Completa l'analisi dei punti di leva prima di generare il rapporto.",
       "no": "Fullfør innflytelsespunktanalysen før du genererer rapporten.",
-      "el": "Please complete leverage point analysis before generating report."
+      "el": "Παρακαλώ ολοκληρώστε την ανάλυση σημείων μόχλευσης πριν τη δημιουργία αναφοράς."
     },
     "modules.prepare.report.goto_leverage": {
       "en": "Go to Leverage Analysis →",
@@ -339,7 +339,7 @@
       "pt": "Ir para Análise de Alavancagem →",
       "it": "Vai all'Analisi dei Punti di Leva →",
       "no": "Gå til Innflytelsespunktanalyse →",
-      "el": "Go to Leverage Analysis →"
+      "el": "Μετάβαση στην ανάλυση μόχλευσης →"
     },
     "modules.prepare.report.all_prerequisites_met": {
       "en": "All Prerequisites Met",
@@ -350,7 +350,7 @@
       "pt": "Todos os Pré-requisitos Atendidos",
       "it": "Tutti i Prerequisiti Soddisfatti",
       "no": "Alle Forutsetninger Oppfylt",
-      "el": "All Prerequisites Met"
+      "el": "Όλα τα προαπαιτούμενα πληρούνται"
     },
     "modules.prepare.report.can_generate": {
       "en": "You can now generate your comprehensive report.",
@@ -361,7 +361,7 @@
       "pt": "Agora você pode gerar seu relatório abrangente.",
       "it": "Ora puoi generare il tuo rapporto completo.",
       "no": "Du kan nå generere din omfattende rapport.",
-      "el": "You can now generate your comprehensive report."
+      "el": "Μπορείτε τώρα να δημιουργήσετε την ολοκληρωμένη αναφορά σας."
     },
     "modules.prepare.report.prerequisites_not_met": {
       "en": "Prerequisites Not Met",
@@ -372,7 +372,7 @@
       "pt": "Pré-requisitos Não Atendidos",
       "it": "Prerequisiti Non Soddisfatti",
       "no": "Forutsetninger Ikke Oppfylt",
-      "el": "Prerequisites Not Met"
+      "el": "Τα προαπαιτούμενα δεν πληρούνται"
     },
     "modules.prepare.report.complete_analyses": {
       "en": "Complete required analyses to enable report generation.",
@@ -383,7 +383,7 @@
       "pt": "Complete as análises necessárias para habilitar a geração de relatórios.",
       "it": "Completa le analisi richieste per abilitare la generazione del rapporto.",
       "no": "Fullfør nødvendige analyser for å aktivere rapportgenerering.",
-      "el": "Complete required analyses to enable report generation."
+      "el": "Ολοκληρώστε τις απαιτούμενες αναλύσεις για να ενεργοποιήσετε τη δημιουργία αναφοράς."
     },
     "modules.prepare.report.report_opened": {
       "en": "Report opened in a new window!",
@@ -394,7 +394,7 @@
       "pt": "Relatório aberto em uma nova janela!",
       "it": "Rapporto aperto in una nuova finestra!",
       "no": "Rapport åpnet i et nytt vindu!",
-      "el": "Report opened in a new window!"
+      "el": "Η αναφορά άνοιξε σε νέο παράθυρο!"
     },
     "modules.prepare.report.error_generating": {
       "en": "Error generating report:",
@@ -405,7 +405,7 @@
       "pt": "Erro ao gerar o relatório:",
       "it": "Errore nella generazione del rapporto:",
       "no": "Feil ved generering av rapport:",
-      "el": "Error generating report:"
+      "el": "Σφάλμα κατά τη δημιουργία αναφοράς:"
     },
     "modules.prepare.report.error_pdf": {
       "en": "Error generating PDF report:",
@@ -416,7 +416,7 @@
       "pt": "Erro ao gerar o relatório PDF:",
       "it": "Errore nella generazione del rapporto PDF:",
       "no": "Feil ved generering av PDF-rapport:",
-      "el": "Error generating PDF report:"
+      "el": "Σφάλμα κατά τη δημιουργία αναφοράς PDF:"
     },
     "modules.prepare.report.error_word": {
       "en": "Error generating Word report:",
@@ -427,7 +427,7 @@
       "pt": "Erro ao gerar o relatório Word:",
       "it": "Errore nella generazione del rapporto Word:",
       "no": "Feil ved generering av Word-rapport:",
-      "el": "Error generating Word report:"
+      "el": "Σφάλμα κατά τη δημιουργία αναφοράς Word:"
     },
     "modules.prepare.report.error_ppt": {
       "en": "Error generating PowerPoint report:",
@@ -438,7 +438,7 @@
       "pt": "Erro ao gerar o relatório PowerPoint:",
       "it": "Errore nella generazione del rapporto PowerPoint:",
       "no": "Feil ved generering av PowerPoint-rapport:",
-      "el": "Error generating PowerPoint report:"
+      "el": "Σφάλμα κατά τη δημιουργία αναφοράς PowerPoint:"
     },
     "modules.prepare.report.pdf_not_available": {
       "en": "PDF Generation Not Available",
@@ -449,7 +449,7 @@
       "pt": "Geração de PDF Não Disponível",
       "it": "Generazione PDF Non Disponibile",
       "no": "PDF-generering Ikke Tilgjengelig",
-      "el": "PDF Generation Not Available"
+      "el": "Η δημιουργία PDF δεν είναι διαθέσιμη"
     },
     "modules.prepare.report.pdf_requires_latex": {
       "en": "PDF generation requires LaTeX",
@@ -460,7 +460,7 @@
       "pt": "A geração de PDF requer LaTeX",
       "it": "La generazione PDF richiede LaTeX",
       "no": "PDF-generering krever LaTeX",
-      "el": "PDF generation requires LaTeX"
+      "el": "Η δημιουργία PDF απαιτεί LaTeX"
     },
     "modules.prepare.report.pdf_latex_options": {
       "en": "PDF reports require a LaTeX distribution. You have two options:",
@@ -471,7 +471,7 @@
       "pt": "Relatórios PDF requerem uma distribuição LaTeX. Você tem duas opções:",
       "it": "I rapporti PDF richiedono una distribuzione LaTeX. Hai due opzioni:",
       "no": "PDF-rapporter krever en LaTeX-distribusjon. Du har to alternativer:",
-      "el": "PDF reports require a LaTeX distribution. You have two options:"
+      "el": "Οι αναφορές PDF απαιτούν διανομή LaTeX. Έχετε δύο επιλογές:"
     },
     "modules.prepare.report.option_tinytex": {
       "en": "Option 1: Install TinyTeX (Recommended)",
@@ -482,7 +482,7 @@
       "pt": "Opção 1: Instalar TinyTeX (Recomendado)",
       "it": "Opzione 1: Installare TinyTeX (Consigliato)",
       "no": "Alternativ 1: Installer TinyTeX (Anbefalt)",
-      "el": "Option 1: Install TinyTeX (Recommended)"
+      "el": "Επιλογή 1: Εγκατάσταση TinyTeX (Συνιστάται)"
     },
     "modules.prepare.report.run_commands_in_r": {
       "en": "Run these commands in R:",
@@ -493,7 +493,7 @@
       "pt": "Execute estes comandos no R:",
       "it": "Esegui questi comandi in R:",
       "no": "Kjør disse kommandoene i R:",
-      "el": "Run these commands in R:"
+      "el": "Εκτελέστε αυτές τις εντολές στο R:"
     },
     "modules.prepare.report.option_html_report": {
       "en": "Option 2: Use HTML Report",
@@ -504,7 +504,7 @@
       "pt": "Opção 2: Usar Relatório HTML",
       "it": "Opzione 2: Usa Rapporto HTML",
       "no": "Alternativ 2: Bruk HTML-rapport",
-      "el": "Option 2: Use HTML Report"
+      "el": "Επιλογή 2: Χρήση αναφοράς HTML"
     },
     "modules.prepare.report.html_alternative": {
       "en": "Generate an HTML report instead, which you can:",
@@ -515,7 +515,7 @@
       "pt": "Gere um relatório HTML em vez disso, que você pode:",
       "it": "Genera invece un rapporto HTML, che puoi:",
       "no": "Generer en HTML-rapport i stedet, som du kan:",
-      "el": "Generate an HTML report instead, which you can:"
+      "el": "Δημιουργήστε αντί αυτού μια αναφορά HTML, την οποία μπορείτε:"
     },
     "modules.prepare.report.view_in_browser": {
       "en": "View in your browser",
@@ -526,7 +526,7 @@
       "pt": "Visualizar no navegador",
       "it": "Visualizza nel browser",
       "no": "Se i nettleseren",
-      "el": "View in your browser"
+      "el": "Προβολή στον περιηγητή σας"
     },
     "modules.prepare.report.print_to_pdf": {
       "en": "Print to PDF using your browser's print function (Ctrl+P → Save as PDF)",
@@ -537,7 +537,7 @@
       "pt": "Imprimir em PDF usando a função de impressão do navegador (Ctrl+P → Salvar como PDF)",
       "it": "Stampa in PDF usando la funzione di stampa del browser (Ctrl+P → Salva come PDF)",
       "no": "Skriv ut til PDF via nettleserens utskriftsfunksjon (Ctrl+P → Lagre som PDF)",
-      "el": "Print to PDF using your browser's print function (Ctrl+P → Save as PDF)"
+      "el": "Εκτύπωση σε PDF χρησιμοποιώντας τη λειτουργία εκτύπωσης του περιηγητή σας (Ctrl+P → Αποθήκευση ως PDF)"
     },
     "modules.prepare.report.generate_html_instead": {
       "en": "Generate HTML Report Instead",
@@ -548,7 +548,7 @@
       "pt": "Gerar Relatório HTML em vez disso",
       "it": "Genera Rapporto HTML Invece",
       "no": "Generer HTML-rapport i Stedet",
-      "el": "Generate HTML Report Instead"
+      "el": "Δημιουργία αναφοράς HTML αντ' αυτού"
     },
     "modules.prepare.report.pdf_success": {
       "en": "PDF Report Generated Successfully",
@@ -559,7 +559,7 @@
       "pt": "Relatório PDF Gerado com Sucesso",
       "it": "Rapporto PDF Generato con Successo",
       "no": "PDF-rapport Generert Vellykket",
-      "el": "PDF Report Generated Successfully"
+      "el": "Η αναφορά PDF δημιουργήθηκε επιτυχώς"
     },
     "modules.prepare.report.pdf_success_message": {
       "en": "Your PDF report has been generated successfully.",
@@ -570,7 +570,7 @@
       "pt": "Seu relatório PDF foi gerado com sucesso.",
       "it": "Il tuo rapporto PDF è stato generato con successo.",
       "no": "Din PDF-rapport har blitt generert vellykket.",
-      "el": "Your PDF report has been generated successfully."
+      "el": "Η αναφορά PDF σας δημιουργήθηκε επιτυχώς."
     },
     "modules.prepare.report.word_success": {
       "en": "Word Report Generated Successfully",
@@ -581,7 +581,7 @@
       "pt": "Relatório Word Gerado com Sucesso",
       "it": "Rapporto Word Generato con Successo",
       "no": "Word-rapport Generert Vellykket",
-      "el": "Word Report Generated Successfully"
+      "el": "Η αναφορά Word δημιουργήθηκε επιτυχώς"
     },
     "modules.prepare.report.word_success_message": {
       "en": "Your Word document has been generated successfully.",
@@ -592,7 +592,7 @@
       "pt": "Seu documento Word foi gerado com sucesso.",
       "it": "Il tuo documento Word è stato generato con successo.",
       "no": "Ditt Word-dokument har blitt generert vellykket.",
-      "el": "Your Word document has been generated successfully."
+      "el": "Το έγγραφο Word σας δημιουργήθηκε επιτυχώς."
     },
     "modules.prepare.report.ppt_success": {
       "en": "PowerPoint Report Generated Successfully",
@@ -603,7 +603,7 @@
       "pt": "Relatório PowerPoint Gerado com Sucesso",
       "it": "Rapporto PowerPoint Generato con Successo",
       "no": "PowerPoint-rapport Generert Vellykket",
-      "el": "PowerPoint Report Generated Successfully"
+      "el": "Η αναφορά PowerPoint δημιουργήθηκε επιτυχώς"
     },
     "modules.prepare.report.ppt_success_message": {
       "en": "Your PowerPoint presentation has been generated successfully.",
@@ -614,7 +614,7 @@
       "pt": "Sua apresentação PowerPoint foi gerada com sucesso.",
       "it": "La tua presentazione PowerPoint è stata generata con successo.",
       "no": "Din PowerPoint-presentasjon har blitt generert vellykket.",
-      "el": "Your PowerPoint presentation has been generated successfully."
+      "el": "Η παρουσίαση PowerPoint σας δημιουργήθηκε επιτυχώς."
     },
     "modules.prepare.report.file_location": {
       "en": "File location:",
@@ -625,7 +625,7 @@
       "pt": "Localização do arquivo:",
       "it": "Posizione del file:",
       "no": "Filplassering:",
-      "el": "File location:"
+      "el": "Τοποθεσία αρχείου:"
     },
     "modules.prepare.report.download_report": {
       "en": "Download Report",
@@ -636,7 +636,7 @@
       "pt": "Baixar Relatório",
       "it": "Scarica Rapporto",
       "no": "Last ned Rapport",
-      "el": "Download Report"
+      "el": "Λήψη αναφοράς"
     },
     "modules.prepare.report.requires_officer_flextable": {
       "en": "Word generation requires the 'officer' and 'flextable' packages. Please install them.",
@@ -647,7 +647,7 @@
       "pt": "A geração do Word requer os pacotes 'officer' e 'flextable'. Por favor, instale-os.",
       "it": "La generazione Word richiede i pacchetti 'officer' e 'flextable'. Si prega di installarli.",
       "no": "Word-generering krever pakkene 'officer' og 'flextable'. Vennligst installer dem.",
-      "el": "Word generation requires the 'officer' and 'flextable' packages. Please install them."
+      "el": "Η δημιουργία Word απαιτεί τα πακέτα 'officer' και 'flextable'. Παρακαλώ εγκαταστήστε τα."
     },
     "modules.prepare.report.requires_officer": {
       "en": "PowerPoint generation requires the 'officer' package. Please install it.",
@@ -658,7 +658,7 @@
       "pt": "A geração do PowerPoint requer o pacote 'officer'. Por favor, instale-o.",
       "it": "La generazione PowerPoint richiede il pacchetto 'officer'. Si prega di installarlo.",
       "no": "PowerPoint-generering krever pakken 'officer'. Vennligst installer den.",
-      "el": "PowerPoint generation requires the 'officer' package. Please install it."
+      "el": "Η δημιουργία PowerPoint απαιτεί το πακέτο 'officer'. Παρακαλώ εγκαταστήστε το."
     }
   }
 }

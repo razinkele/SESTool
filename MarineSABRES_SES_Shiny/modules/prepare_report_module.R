@@ -8,6 +8,7 @@
 
 prepare_report_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     fluidRow(
@@ -322,7 +323,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       }, error = function(e) {
         showNotification(
-          paste(i18n$t("modules.prepare.report.error_generating"), e$message),
+          format_user_error(e, i18n = i18n, context = "generating HTML report"),
           type = "error",
           duration = 10
         )
@@ -426,7 +427,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       }, error = function(e) {
         showNotification(
-          paste(i18n$t("modules.prepare.report.error_pdf"), e$message),
+          format_user_error(e, i18n = i18n, context = "generating PDF report", show_details = TRUE),
           type = "error",
           duration = 10
         )
@@ -495,7 +496,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       }, error = function(e) {
         showNotification(
-          paste(i18n$t("modules.prepare.report.error_word"), e$message),
+          format_user_error(e, i18n = i18n, context = "generating Word document", show_details = TRUE),
           type = "error",
           duration = 10
         )
@@ -557,7 +558,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       }, error = function(e) {
         showNotification(
-          paste(i18n$t("modules.prepare.report.error_ppt"), e$message),
+          format_user_error(e, i18n = i18n, context = "generating PowerPoint presentation", show_details = TRUE),
           type = "error",
           duration = 10
         )
@@ -919,14 +920,14 @@ generate_word_report <- function(data, title, author, sections, output_file) {
   safe_df <- function(x) {
     if (is.null(x)) return(NULL)
     if (is.data.frame(x)) return(x)
-    tryCatch(as.data.frame(x, stringsAsFactors = FALSE), error = function(e) NULL)
+    tryCatch(as.data.frame(x), error = function(e) NULL)
   }
 
   # Helper: safely get nrow (returns 0 for non-data.frame objects)
   safe_nrow <- function(x) {
     if (is.null(x)) return(0)
     if (is.data.frame(x)) return(nrow(x))
-    tryCatch(nrow(as.data.frame(x, stringsAsFactors = FALSE)), error = function(e) 0)
+    tryCatch(nrow(as.data.frame(x)), error = function(e) 0)
   }
 
   # Safely convert title and author to character strings
@@ -1116,13 +1117,13 @@ generate_ppt_report <- function(data, title, author, sections, output_file) {
   safe_df <- function(x) {
     if (is.null(x)) return(NULL)
     if (is.data.frame(x)) return(x)
-    tryCatch(as.data.frame(x, stringsAsFactors = FALSE), error = function(e) NULL)
+    tryCatch(as.data.frame(x), error = function(e) NULL)
   }
 
   safe_nrow <- function(x) {
     if (is.null(x)) return(0)
     if (is.data.frame(x)) return(nrow(x))
-    tryCatch(nrow(as.data.frame(x, stringsAsFactors = FALSE)), error = function(e) 0)
+    tryCatch(nrow(as.data.frame(x)), error = function(e) 0)
   }
 
   # Safely convert title and author to character strings

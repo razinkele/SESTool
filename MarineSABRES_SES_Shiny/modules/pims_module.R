@@ -10,7 +10,8 @@
 
 pims_project_ui <- function(id, i18n) {
   ns <- NS(id)
-  
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+
   fluidPage(
     create_module_header(ns, "modules.pims.project.title", "modules.pims.project.subtitle", "pims_project_help", i18n),
     hr(),
@@ -52,7 +53,7 @@ pims_project_ui <- function(id, i18n) {
   )
 }
 
-pims_project_server <- function(id, project_data_reactive, i18n) {
+pims_project_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Load existing data with NULL checks
@@ -156,7 +157,8 @@ pims_project_server <- function(id, project_data_reactive, i18n) {
 
 pims_stakeholders_ui <- function(id, i18n) {
   ns <- NS(id)
-  
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+
   fluidPage(
     create_module_header(ns, "modules.pims.stakeholders.title", "modules.pims.stakeholders.subtitle", "pims_stakeholders_help", i18n),
     hr(),
@@ -172,7 +174,7 @@ pims_stakeholders_ui <- function(id, i18n) {
   )
 }
 
-pims_stakeholders_server <- function(id, project_data_reactive, i18n) {
+pims_stakeholders_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Display stakeholders table with NULL checks
@@ -193,8 +195,8 @@ pims_stakeholders_server <- function(id, project_data_reactive, i18n) {
         stakeholders <- data.frame(
           Name = character(0),
           Role = character(0),
-          Organization = character(0),
-          stringsAsFactors = FALSE
+          Organization = character(0)
+          
         )
       }
 
@@ -230,7 +232,8 @@ pims_stakeholders_server <- function(id, project_data_reactive, i18n) {
 
 pims_resources_ui <- function(id, i18n) {
   ns <- NS(id)
-  
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+
   fluidPage(
     create_module_header(ns, "modules.pims.resources.title", "modules.pims.resources.subtitle", "pims_resources_help", i18n),
     hr(),
@@ -248,7 +251,7 @@ pims_resources_ui <- function(id, i18n) {
   )
 }
 
-pims_resources_server <- function(id, project_data_reactive, i18n) {
+pims_resources_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     # Placeholder
     return(reactive(project_data_reactive()))
@@ -261,7 +264,8 @@ pims_resources_server <- function(id, project_data_reactive, i18n) {
 
 pims_data_ui <- function(id, i18n) {
   ns <- NS(id)
-  
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+
   fluidPage(
     create_module_header(ns, "modules.pims.data.title", "modules.pims.data.subtitle", "pims_data_help", i18n),
     hr(),
@@ -270,7 +274,7 @@ pims_data_ui <- function(id, i18n) {
   )
 }
 
-pims_data_server <- function(id, project_data_reactive, i18n) {
+pims_data_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     # Placeholder
     return(reactive(project_data_reactive()))
@@ -283,7 +287,8 @@ pims_data_server <- function(id, project_data_reactive, i18n) {
 
 pims_evaluation_ui <- function(id, i18n) {
   ns <- NS(id)
-  
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+
   fluidPage(
     create_module_header(ns, "modules.pims.evaluation.title", "modules.pims.evaluation.subtitle", "pims_evaluation_help", i18n),
     hr(),
@@ -292,7 +297,7 @@ pims_evaluation_ui <- function(id, i18n) {
   )
 }
 
-pims_evaluation_server <- function(id, project_data_reactive, i18n) {
+pims_evaluation_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     # ========== HELP MODAL ==========
     create_help_observer(

@@ -8,6 +8,7 @@
 
 scenario_builder_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     tags$head(
@@ -100,7 +101,7 @@ scenario_builder_ui <- function(id, i18n) {
 # SCENARIO BUILDER SERVER
 # ============================================================================
 
-scenario_builder_server <- function(id, project_data_reactive, i18n) {
+scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -1188,8 +1189,8 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
             id = n$id,
             label = n$label,
             dapsi = n$dapsi,
-            description = ifelse(is.null(n$description), "", n$description),
-            stringsAsFactors = FALSE
+            description = ifelse(is.null(n$description), "", n$description)
+            
           )
 
           # Add any missing columns from baseline with default values
@@ -1231,8 +1232,8 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
             to = l$to,
             from_label = from_label,
             to_label = to_label,
-            polarity = l$polarity,
-            stringsAsFactors = FALSE
+            polarity = l$polarity
+            
           )
         }))
         edges <- rbind(edges, new_edges)
@@ -1309,8 +1310,8 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
             node = node_label,
             impact_magnitude = 3,
             impact_direction = "negative",
-            reason = i18n$t("modules.scenario.builder.scenario_node_marked_for_removal"),
-            stringsAsFactors = FALSE
+            reason = i18n$t("modules.scenario.builder.scenario_node_marked_for_removal")
+            
           ))
         }
 
@@ -1381,8 +1382,8 @@ scenario_builder_server <- function(id, project_data_reactive, i18n) {
           node = node_label,
           impact_magnitude = impact_magnitude,
           impact_direction = impact_direction,
-          reason = reason,
-          stringsAsFactors = FALSE
+          reason = reason
+          
         )
       })
 

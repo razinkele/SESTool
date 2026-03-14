@@ -19,6 +19,7 @@
 
 analysis_intervention_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     uiOutput(ns("module_header")),
@@ -31,7 +32,7 @@ analysis_intervention_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-analysis_intervention_server <- function(id, project_data_reactive, i18n) {
+analysis_intervention_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -44,6 +45,20 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n) {
       analysis_complete = FALSE,
       error_message = NULL
     )
+
+    # Listen for ISA changes via event bus to flag stale results
+    observe({
+      req(!is.null(event_bus))
+      event_bus$on_isa_change()
+      if (isolate(rv$analysis_complete)) {
+        showNotification(
+          i18n$t("modules.analysis.common.data_changed_rerun"),
+          type = "warning",
+          duration = 5,
+          id = ns("stale_data")
+        )
+      }
+    })
 
     # ── Standard header + help ───────────────────────────────────────────
     create_reactive_header(
@@ -240,7 +255,10 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n) {
         # Clear inputs
         updateTextInput(session, "intervention_name", value = "")
       }, error = function(e) {
-        showNotification(paste("Error:", e$message), type = "error")
+        showNotification(
+          format_user_error(e, i18n = i18n, context = "adding intervention", show_details = TRUE),
+          type = "error"
+        )
       })
     })
 

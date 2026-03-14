@@ -34,7 +34,7 @@ minimal_server <- function(input, output, session, ...) {
 }
 
 # Module stubs
-isa_data_entry_ui <- function(id) minimal_ui(id)
+isa_data_entry_ui <- function(id, i18n = NULL) minimal_ui(id)
 isa_data_entry_server <- function(id, project_data = NULL) {
   moduleServer(id, function(input, output, session) minimal_server(input, output, session))
 }
@@ -80,7 +80,7 @@ create_ses_server <- function(id, project_data_reactive = NULL, parent_session =
   moduleServer(id, function(input, output, session) {
     # Provide a minimal comparison table output
     output$comparison_table <- renderTable({
-      data.frame(Method = c("Standard", "AI", "Template"), Description = c("Standard entry", "AI assisted", "Template based"), stringsAsFactors = FALSE)
+      data.frame(Method = c("Standard", "AI", "Template"), Description = c("Standard entry", "AI assisted", "Template based"))
     }, rownames = FALSE)
 
     # Keep minimal server reactive values
@@ -335,7 +335,7 @@ if (!exists("simplify_network", mode = "function", envir = .GlobalEnv)) {
   normalize_df <- function(df) {
     # Ensure we always return a data.frame with id,name,description columns (possibly 0 rows)
     if (is.null(df) || !is.data.frame(df)) {
-      return(data.frame(id = character(0), name = character(0), description = character(0), stringsAsFactors = FALSE))
+      return(data.frame(id = character(0), name = character(0), description = character(0)))
     }
     # Lowercase column names
     colnames(df) <- tolower(colnames(df))
@@ -389,7 +389,7 @@ if (!exists("simplify_network", mode = "function", envir = .GlobalEnv)) {
     for (field in c("drivers", "activities", "pressures")) {
       df <- out[[k]][[field]]
       if (!is.data.frame(df)) {
-        out[[k]][[field]] <- data.frame(id = character(0), name = character(0), description = character(0), stringsAsFactors = FALSE)
+        out[[k]][[field]] <- data.frame(id = character(0), name = character(0), description = character(0))
       } else {
         colnames(out[[k]][[field]]) <- tolower(colnames(out[[k]][[field]]))
         for (cname in c("id", "name", "description")) {
@@ -481,15 +481,15 @@ rbind <- function(..., deparse.level = 1) {
         args[[1]] <- data.frame(
           id = as.character(a1$id),
           name = as.character(a1$name),
-          description = as.character(a1$description),
-          stringsAsFactors = FALSE
+          description = as.character(a1$description)
+          
         )
       } else {
         # Fallback: ensure first arg is a 0-row df with expected columns in the same order as args[[2]]
         target_cols <- tolower(colnames(args[[2]]))
         empty <- lapply(seq_along(target_cols), function(i) character(0))
         names(empty) <- target_cols
-        args[[1]] <- as.data.frame(empty, stringsAsFactors = FALSE)
+        args[[1]] <- as.data.frame(empty)
       }
     }
   }
@@ -643,12 +643,12 @@ convert_graphical_to_isa <- function(nodes, edges, context) {
       isa[[key]] <- data.frame(
         id = subset$id,
         name = subset$name,
-        description = rep("", nrow(subset)),
-        stringsAsFactors = FALSE
+        description = rep("", nrow(subset))
+        
       )
     } else {
       isa[[key]] <- data.frame(id = character(0), name = character(0),
-                               description = character(0), stringsAsFactors = FALSE)
+                               description = character(0))
     }
   }
   # Build adjacency matrices
@@ -691,8 +691,8 @@ create_ghost_node_data <- function(suggestion, index) {
     id = paste0("GHOST_", index),
     name = suggestion$name %||% "Ghost Node",
     type = suggestion$type %||% "Pressures",
-    is_ghost = TRUE,
-    stringsAsFactors = FALSE
+    is_ghost = TRUE
+    
   )
 }
 

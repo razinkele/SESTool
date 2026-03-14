@@ -381,8 +381,8 @@ calculate_all_template_similarities <- function(training_data) {
     vocabulary_sim = numeric(),
     type_dist_sim = numeric(),
     size_sim = numeric(),
-    recommendation = character(),
-    stringsAsFactors = FALSE
+    recommendation = character()
+    
   )
 
   # Calculate pairwise similarities
@@ -409,8 +409,8 @@ calculate_all_template_similarities <- function(training_data) {
         vocabulary_sim = sim$components$vocabulary,
         type_dist_sim = sim$components$type_distribution,
         size_sim = sim$components$size,
-        recommendation = sim$recommendation,
-        stringsAsFactors = FALSE
+        recommendation = sim$recommendation
+        
       ))
 
       # Reverse direction
@@ -424,8 +424,8 @@ calculate_all_template_similarities <- function(training_data) {
         vocabulary_sim = sim$components$vocabulary,
         type_dist_sim = sim$components$type_distribution,
         size_sim = sim$components$size,
-        recommendation = sim$recommendation,
-        stringsAsFactors = FALSE
+        recommendation = sim$recommendation
+        
       ))
     }
   }

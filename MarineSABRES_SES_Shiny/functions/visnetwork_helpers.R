@@ -243,8 +243,8 @@ create_nodes_df <- function(isa_data) {
       group = character(), level = integer(), shape = character(),
       image = character(), color = character(), size = numeric(),
       font.size = numeric(), indicator = character(),
-      leverage_score = numeric(), x = numeric(),
-      stringsAsFactors = FALSE
+      leverage_score = numeric(), x = numeric()
+      
     ))
   }
 
@@ -303,8 +303,8 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     strength = character(),
     confidence = integer(),
     label = character(),
-    font.size = numeric(),
-    stringsAsFactors = FALSE
+    font.size = numeric()
+    
   )
 
   # Get actual element counts for validation
@@ -333,10 +333,18 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   # - Cell [i,j]: Connection from SOURCE[i] to TARGET[j]
   # DAPSIWRM FORWARD CAUSAL FLOW: Drivers → Activities → Pressures → Marine Processes → Ecosystem Services → Welfare
 
+  # Helper: get matrix by primary or alternate name
+  get_matrix <- function(primary, alternate = NULL) {
+    if (!is.null(adjacency_matrices[[primary]])) return(adjacency_matrices[[primary]])
+    if (!is.null(alternate) && !is.null(adjacency_matrices[[alternate]])) return(adjacency_matrices[[alternate]])
+    NULL
+  }
+
   # 1. Drivers → Activities
-  if (!is.null(adjacency_matrices$d_a)) {
+  mat_d_a <- get_matrix("d_a", "a_d")
+  if (!is.null(mat_d_a)) {
     edges_d_a <- process_adjacency_matrix(
-      adjacency_matrices$d_a,  # D×A (rows=D, cols=A): D→A connections
+      mat_d_a,  # D×A (rows=D, cols=A): D→A connections
       from_prefix = "D",
       to_prefix = "A",
       expected_rows = n_d,
@@ -346,9 +354,10 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   # 2. Activities → Pressures
-  if (!is.null(adjacency_matrices$a_p)) {
+  mat_a_p <- get_matrix("a_p", "p_a")
+  if (!is.null(mat_a_p)) {
     edges_a_p <- process_adjacency_matrix(
-      adjacency_matrices$a_p,  # A×P (rows=A, cols=P): A→P connections
+      mat_a_p,
       from_prefix = "A",
       to_prefix = "P",
       expected_rows = n_a,
@@ -358,53 +367,38 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   # 3. Pressures → Marine Processes & Functions
-  if (!is.null(adjacency_matrices$p_mpf)) {
+  mat_p_mpf <- get_matrix("p_mpf", "mpf_p")
+  if (is.null(mat_p_mpf)) mat_p_mpf <- get_matrix("p_mp", "mp_p")
+  if (!is.null(mat_p_mpf)) {
     edges_p_mpf <- process_adjacency_matrix(
-      adjacency_matrices$p_mpf,  # P×MPF (rows=P, cols=MPF): P→MPF connections
+      mat_p_mpf,
       from_prefix = "P",
       to_prefix = "MPF",
       expected_rows = n_p,
       expected_cols = n_mpf
     )
     edges <- bind_rows(edges, edges_p_mpf)
-  } else if (!is.null(adjacency_matrices$p_mp)) {
-    # Alternative naming: p_mp instead of p_mpf
-    edges_p_mp <- process_adjacency_matrix(
-      adjacency_matrices$p_mp,  # P×MP (rows=P, cols=MP): P→MP connections
-      from_prefix = "P",
-      to_prefix = "MPF",
-      expected_rows = n_p,
-      expected_cols = n_mpf
-    )
-    edges <- bind_rows(edges, edges_p_mp)
   }
 
   # 4. Marine Processes → Ecosystem Services
-  if (!is.null(adjacency_matrices$mpf_es)) {
+  mat_mpf_es <- get_matrix("mpf_es", "es_mpf")
+  if (is.null(mat_mpf_es)) mat_mpf_es <- get_matrix("mp_es", "es_mp")
+  if (!is.null(mat_mpf_es)) {
     edges_mpf_es <- process_adjacency_matrix(
-      adjacency_matrices$mpf_es,  # MPF×ES (rows=MPF, cols=ES): MPF→ES connections
+      mat_mpf_es,
       from_prefix = "MPF",
       to_prefix = "ES",
       expected_rows = n_mpf,
       expected_cols = n_es
     )
     edges <- bind_rows(edges, edges_mpf_es)
-  } else if (!is.null(adjacency_matrices$mp_es)) {
-    # Alternative naming: mp_es instead of mpf_es
-    edges_mp_es <- process_adjacency_matrix(
-      adjacency_matrices$mp_es,  # MP×ES (rows=MP, cols=ES): MP→ES connections
-      from_prefix = "MPF",
-      to_prefix = "ES",
-      expected_rows = n_mpf,
-      expected_cols = n_es
-    )
-    edges <- bind_rows(edges, edges_mp_es)
   }
 
   # 5. Ecosystem Services → Welfare (Goods & Benefits)
-  if (!is.null(adjacency_matrices$es_gb)) {
+  mat_es_gb <- get_matrix("es_gb", "gb_es")
+  if (!is.null(mat_es_gb)) {
     edges_es_gb <- process_adjacency_matrix(
-      adjacency_matrices$es_gb,  # ES×GB (rows=ES, cols=GB): ES→GB connections
+      mat_es_gb,
       from_prefix = "ES",
       to_prefix = "GB",
       expected_rows = n_es,
@@ -414,9 +408,10 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   # 6. Welfare → Drivers (feedback loop closure)
-  if (!is.null(adjacency_matrices$gb_d)) {
+  mat_gb_d <- get_matrix("gb_d", "d_gb")
+  if (!is.null(mat_gb_d)) {
     edges_gb_d <- process_adjacency_matrix(
-      adjacency_matrices$gb_d,  # GB×D (rows=GB, cols=D): GB→D connections
+      mat_gb_d,
       from_prefix = "GB",
       to_prefix = "D",
       expected_rows = n_gb,
@@ -428,9 +423,10 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   # === RESPONSE MEASURES (Management Interventions) ===
   
   # 7. Welfare → Responses (problems drive management responses)
-  if (!is.null(adjacency_matrices$gb_r)) {
+  mat_gb_r <- get_matrix("gb_r", "r_gb")
+  if (!is.null(mat_gb_r)) {
     edges_gb_r <- process_adjacency_matrix(
-      adjacency_matrices$gb_r,  # GB×R (rows=GB, cols=R): GB→R connections
+      mat_gb_r,
       from_prefix = "GB",
       to_prefix = "R",
       expected_rows = n_gb,
@@ -786,7 +782,7 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
               confidence = connection$confidence,
               label = connection$polarity,
               font.size = 10,
-              stringsAsFactors = FALSE,
+              
               row.names = NULL  # Explicitly prevent row name issues
             )
 
@@ -1136,8 +1132,8 @@ create_ghost_node_data <- function(suggestion, index) {
     is_ghost = TRUE,
     title = tooltip,
     hidden = FALSE,
-    physics = TRUE,
-    stringsAsFactors = FALSE
+    physics = TRUE
+    
   )
 }
 
@@ -1194,8 +1190,8 @@ create_ghost_edge_data <- function(suggestion, ghost_index) {
     arrowStrikethrough = FALSE,
     is_ghost = TRUE,
     title = tooltip,
-    physics = TRUE,
-    stringsAsFactors = FALSE
+    physics = TRUE
+    
   )
 }
 

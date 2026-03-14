@@ -3,7 +3,7 @@ library(jsonlite)
 
 csv_path <- 'missing_translation_keys.csv'
 if (!file.exists(csv_path)) stop('missing_translation_keys.csv not found; run report_missing_keys.R first')
-missing <- read.csv(csv_path, stringsAsFactors = FALSE)$missing
+missing <- read.csv(csv_path)$missing
 if (length(missing) == 0) {
   cat('No missing keys to process\n')
   quit(status = 0)

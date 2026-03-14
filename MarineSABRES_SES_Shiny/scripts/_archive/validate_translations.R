@@ -81,7 +81,7 @@ for (f in files) {
 }
 
 # Output summary
-rep_df <- do.call(rbind, lapply(report, as.data.frame, stringsAsFactors = FALSE))
+rep_df <- do.call(rbind, lapply(report, as.data.frame))
 write.csv(rep_df, file = "translation_report.csv", row.names = FALSE)
 cat("Wrote translation_report.csv with", nrow(rep_df), "rows\n")
 

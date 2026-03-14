@@ -120,7 +120,8 @@ predict_ensemble <- function(elem_features, context_data, graph_features,
                              aggregation = "mean") {
 
   if (!ensemble_available()) {
-    stop("Ensemble not loaded. Call load_ensemble() first.")
+    debug_log("predict_ensemble: Ensemble not loaded, returning NULL", "ML_ENSEMBLE")
+    return(NULL)
   }
 
   n_models <- ensemble_env$n_models
@@ -363,46 +364,86 @@ predict_connection_ensemble <- function(source_name, target_name,
                                        source_type, target_type,
                                        context = list(),
                                        threshold = 0.5,
-                                       return_disagreement = TRUE) {
+                                       return_disagreement = TRUE,
+                                       graph = NULL, nodes = NULL,
+                                       source_id = NULL, target_id = NULL) {
 
   if (!ensemble_available()) {
-    stop("Ensemble not loaded. Call load_ensemble() first.")
+    debug_log("predict_connection_ensemble: Ensemble not loaded, returning NULL", "ML_ENSEMBLE")
+    return(NULL)
   }
 
   # Prepare features (same as single model)
   # This requires ml_feature_engineering functions
-  if (!exists("create_element_embedding")) {
-    stop("ML feature engineering functions not loaded")
+  if (!exists("create_element_embedding", mode = "function")) {
+    debug_log("ML feature engineering functions not loaded, returning NULL", "ML_ENSEMBLE")
+    return(NULL)
   }
 
   regional_sea <- context$regional_sea %||% "Other"
   ecosystem_types <- context$ecosystem_types %||% "Other"
   main_issues <- context$main_issues %||% "Other"
 
-  # Element features
+  # Element features (270-dim: 2x128 embeddings + 2x7 type encodings)
   source_emb <- create_element_embedding(source_name, 128)
-  target_emb <- create_element_embedding(target_name, 128)
   source_type_enc <- encode_dapsiwrm_type(source_type)
+  target_emb <- create_element_embedding(target_name, 128)
   target_type_enc <- encode_dapsiwrm_type(target_type)
 
   elem_features <- torch_tensor(
-    matrix(c(source_emb, target_emb, source_type_enc, target_type_enc), nrow = 1),
+    matrix(c(source_emb, source_type_enc, target_emb, target_type_enc), nrow = 1),
     dtype = torch_float()
   )
 
-  # Context indices
-  ctx_indices <- prepare_context_indices(regional_sea, ecosystem_types, main_issues)
-  context_data <- list(
-    sea_idx = torch_tensor(as.numeric(ctx_indices$sea_idx)[1], dtype = torch_long())$view(c(1)),
-    eco_idx = torch_tensor(as.numeric(ctx_indices$eco_idx)[1], dtype = torch_long())$view(c(1)),
-    issue_idx = torch_tensor(as.numeric(ctx_indices$issue_idx)[1], dtype = torch_long())$view(c(1))
-  )
+  # Context indices -- use context_to_indices if available, else prepare_context_indices
+  context_data <- tryCatch({
+    if (exists("context_to_indices", mode = "function")) {
+      idx <- context_to_indices(regional_sea, ecosystem_types, main_issues)
+      list(
+        sea_idx = idx$sea_idx$view(c(1, -1)),
+        eco_idx = idx$eco_idx$view(c(1, -1)),
+        issue_idx = idx$issue_idx$view(c(1, -1))
+      )
+    } else {
+      ctx_indices <- prepare_context_indices(regional_sea, ecosystem_types, main_issues)
+      list(
+        sea_idx = torch_tensor(matrix(ctx_indices$sea_idx, nrow = 1), dtype = torch_long()),
+        eco_idx = torch_tensor(matrix(ctx_indices$eco_idx, nrow = 1), dtype = torch_long()),
+        issue_idx = torch_tensor(matrix(ctx_indices$issue_idx, nrow = 1), dtype = torch_long())
+      )
+    }
+  }, error = function(e) {
+    debug_log(sprintf("Ensemble context index prep failed: %s", e$message), "ML_ENSEMBLE")
+    list(
+      sea_idx = torch_tensor(matrix(1L, nrow = 1), dtype = torch_long()),
+      eco_idx = torch_tensor(matrix(1L, nrow = 1), dtype = torch_long()),
+      issue_idx = torch_tensor(matrix(1L, nrow = 1), dtype = torch_long())
+    )
+  })
 
-  # Graph features (zero-padded for now)
-  graph_features <- torch_zeros(c(1, 8))
+  # Graph features (use real graph features when available, otherwise zero-pad)
+  graph_features <- tryCatch({
+    if (exists("extract_graph_features", mode = "function") &&
+        !is.null(graph) && !is.null(nodes) &&
+        !is.null(source_id) && !is.null(target_id)) {
+      gf <- extract_graph_features(source_id, target_id, graph, nodes)
+      torch_tensor(matrix(gf, nrow = 1), dtype = torch_float())
+    } else {
+      torch_zeros(c(1, 8))
+    }
+  }, error = function(e) {
+    debug_log(sprintf("Ensemble graph feature extraction failed: %s", e$message), "ML_ENSEMBLE")
+    torch_zeros(c(1, 8))
+  })
 
   # Ensemble prediction
   ensemble_preds <- predict_ensemble(elem_features, context_data, graph_features)
+
+  # Handle ensemble failure gracefully
+  if (is.null(ensemble_preds)) {
+    debug_log("predict_connection_ensemble: predict_ensemble returned NULL", "ML_ENSEMBLE")
+    return(NULL)
+  }
 
   # Process aggregated predictions
   agg <- ensemble_preds$aggregated

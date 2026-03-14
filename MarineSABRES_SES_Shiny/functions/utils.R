@@ -245,6 +245,40 @@ validate_isa_dataframe <- function(data, exercise_name, required_cols = c("ID", 
 }
 
 # ============================================================================
+# JSON PARSING
+# ============================================================================
+
+#' Safely parse and validate JSON input
+#'
+#' Wraps jsonlite::fromJSON with input validation and error handling to prevent
+#' crashes from malformed or malicious JSON strings (e.g., user-uploaded files,
+#' browser sessionStorage data).
+#'
+#' @param json_str Character string of JSON data
+#' @param required_fields Character vector of required top-level fields (optional)
+#' @return Parsed list or NULL on failure
+safe_parse_json <- function(json_str, required_fields = NULL) {
+  tryCatch({
+    if (!is.character(json_str) || length(json_str) != 1 || nchar(trimws(json_str)) == 0) {
+      debug_log("Invalid JSON input: not a non-empty string", "ERROR")
+      return(NULL)
+    }
+    data <- jsonlite::fromJSON(json_str, simplifyVector = FALSE)
+    if (!is.null(required_fields)) {
+      missing <- setdiff(required_fields, names(data))
+      if (length(missing) > 0) {
+        debug_log(paste("JSON missing required fields:", paste(missing, collapse = ", ")), "ERROR")
+        return(NULL)
+      }
+    }
+    data
+  }, error = function(e) {
+    debug_log(paste("JSON parse error:", e$message), "ERROR")
+    NULL
+  })
+}
+
+# ============================================================================
 # JSON PROJECT DATA VALIDATION
 # ============================================================================
 

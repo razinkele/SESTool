@@ -44,6 +44,7 @@
 #' @export
 analysis_loops_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     uiOutput(ns("module_header")),
@@ -276,6 +277,20 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
       detection_complete = FALSE
     )
 
+    # Listen for ISA changes via event bus to flag stale results
+    observe({
+      req(!is.null(event_bus))
+      event_bus$on_isa_change()
+      if (isolate(loop_data$detection_complete)) {
+        showNotification(
+          i18n$t("modules.analysis.common.data_changed_rerun"),
+          type = "warning",
+          duration = 5,
+          id = ns("stale_data")
+        )
+      }
+    })
+
     # === REACTIVE MODULE HEADER ===
     create_reactive_header(
       output = output,
@@ -434,7 +449,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
               )
             } else {
               showNotification(
-                paste(i18n$t("modules.analysis.loops.error_during_loop_detection"), e$message),
+                format_user_error(e, i18n = i18n, context = "detecting feedback loops"),
                 type = "error",
                 duration = 10
               )
@@ -554,6 +569,11 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
       req(loop_data$loops)
 
       loops <- loop_data$loops
+
+      if (nrow(loops) == 0) {
+        return(i18n$t("modules.analysis.loops.no_loops_found"))
+      }
+
       reinforcing <- sum(loops$Type == "Reinforcing")
       balancing <- sum(loops$Type == "Balancing")
 
@@ -660,8 +680,8 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
         label = unique_labels,
         color = "#2B7CE9",
         shape = "dot",
-        size = 20,
-        stringsAsFactors = FALSE
+        size = 20
+        
       )
 
       # Prepare edges (including closing the loop)
@@ -689,8 +709,8 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           arrows = "to",
           color = ifelse(polarity == "+", "#06D6A0", "#E63946"),
           label = polarity,
-          width = 5,
-          stringsAsFactors = FALSE
+          width = 5
+          
         )
       }
 
@@ -703,7 +723,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     # Loop Narrative ----
-    output$loop_narrative <- safe_renderUI({
+    output$loop_narrative <- renderUI({
       req(input$selected_loop, loop_data$loops)
 
       loop_row <- loop_data$loops[loop_data$loops$LoopID == input$selected_loop, ]
@@ -895,7 +915,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
 
               edges_list[[j]] <- data.frame(
                 from = from_name, to = to_name,
-                polarity = polarity, stringsAsFactors = FALSE
+                polarity = polarity
               )
             }
             edges_df <- do.call(rbind, edges_list)
@@ -907,7 +927,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
             sub_g <- graph_from_data_frame(
               d = edges_df[, c("from", "to")],
               directed = TRUE,
-              vertices = data.frame(name = unique_ids, label = unique_labels, stringsAsFactors = FALSE)
+              vertices = data.frame(name = unique_ids, label = unique_labels)
             )
             E(sub_g)$color <- ifelse(edges_df$polarity == "+", "#06D6A0", "#E63946")
             E(sub_g)$label <- edges_df$polarity

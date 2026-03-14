@@ -11,6 +11,7 @@
 
 export_reports_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     fluidRow(
@@ -138,7 +139,7 @@ export_reports_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-export_reports_server <- function(id, project_data_reactive, i18n) {
+export_reports_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive value to store output file path
@@ -355,7 +356,7 @@ export_reports_server <- function(id, project_data_reactive, i18n) {
         debug_log("ERROR IN REPORT GENERATION", "EXPORT")
         debug_log(paste("Error message:", e$message), "EXPORT")
         debug_log(paste("Error class:", paste(class(e), collapse = ", ")), "EXPORT")
-        showNotification(paste(i18n$t("common.messages.error_generating_report"), e$message),
+        showNotification(format_user_error(e, i18n = i18n, context = "generating report"),
                          type = "error", duration = 10)
       })
     })

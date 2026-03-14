@@ -353,12 +353,326 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
   }
 
+  # Add habitat-specific suggestions based on regional_sea × ecosystem_type combination
+  habitat_suggestions <- get_habitat_specific_suggestions(category, regional_sea, ecosystem_type)
+  if (length(habitat_suggestions) > 0) {
+    suggestions$habitat <- habitat_suggestions
+  }
+
   # Combine all suggestions and remove exact duplicates
   all_suggestions <- unique(c(suggestions$universal, suggestions$regional,
-                              suggestions$ecosystem, suggestions$issue))
+                              suggestions$ecosystem, suggestions$habitat, suggestions$issue))
 
   # Apply semantic deduplication to remove similar terms
   deduplicated <- deduplicate_suggestions(all_suggestions)
 
   return(deduplicated)
+}
+
+# ============================================================================
+# REGIONAL SEA × HABITAT KNOWLEDGE BASE
+# ============================================================================
+#
+# Comprehensive DAPSIWRM element suggestions for each combination of
+# regional sea and ecosystem/habitat type. Based on published marine
+# SES case studies and the MSFD, IPBES, and DAPSIWRM literature.
+
+#' Get habitat-specific DAPSIWRM suggestions
+#'
+#' Returns element suggestions tailored to the combination of regional sea
+#' and ecosystem/habitat type. Provides much more specific suggestions than
+#' the generic regional or ecosystem branches.
+#'
+#' @param category DAPSIWRM category
+#' @param regional_sea Regional sea key
+#' @param ecosystem_type Ecosystem/habitat type string
+#' @return Character vector of suggestions (may be empty)
+get_habitat_specific_suggestions <- function(category, regional_sea, ecosystem_type) {
+  if (is.null(regional_sea) || is.null(ecosystem_type)) return(character())
+
+  eco_lower <- tolower(ecosystem_type)
+
+  # Build a lookup key from habitat type
+  habitat_key <- if (grepl("coral|reef", eco_lower)) "coral_reef"
+    else if (grepl("mangrove", eco_lower)) "mangrove"
+    else if (grepl("seagrass|sea grass", eco_lower)) "seagrass"
+    else if (grepl("estuar", eco_lower)) "estuary"
+    else if (grepl("lagoon", eco_lower)) "lagoon"
+    else if (grepl("tidal|mudflat|mud flat", eco_lower)) "tidal_flat"
+    else if (grepl("rocky|rock shore", eco_lower)) "rocky_shore"
+    else if (grepl("sandy|sand beach", eco_lower)) "sandy_beach"
+    else if (grepl("kelp", eco_lower)) "kelp_forest"
+    else if (grepl("fjord", eco_lower)) "fjord"
+    else if (grepl("delta", eco_lower)) "delta"
+    else if (grepl("archipelago", eco_lower)) "archipelago"
+    else if (grepl("offshore|open ocean|open water|deep sea|continental shelf", eco_lower)) "offshore"
+    else if (grepl("ice|arctic", eco_lower)) "sea_ice"
+    else if (grepl("upwelling", eco_lower)) "upwelling"
+    else if (grepl("coast", eco_lower)) "open_coast"
+    else "generic"
+
+  # Sea groupings for regional matching
+  northern_seas <- c("baltic", "north_sea", "irish_sea")
+  warm_seas <- c("mediterranean", "caribbean", "pacific", "indian")
+  atlantic_seas <- c("atlantic", "east_atlantic")
+
+  sea_group <- if (regional_sea %in% northern_seas) "northern"
+    else if (regional_sea %in% warm_seas) "warm"
+    else if (regional_sea %in% atlantic_seas) "atlantic"
+    else if (regional_sea == "arctic") "arctic"
+    else if (regional_sea == "black_sea") "black_sea"
+    else "generic"
+
+  # ---- DRIVERS ----
+  if (category == "drivers") {
+    return(switch(habitat_key,
+      coral_reef = c("Reef tourism demand", "Coastal protection need", "Ornamental fish trade",
+                     "Reef fisheries dependence", "Climate vulnerability"),
+      mangrove = c("Coastal protection need", "Shrimp aquaculture demand", "Timber demand",
+                   "Carbon sequestration value", "Nursery habitat dependence"),
+      seagrass = c("Water quality requirements", "Carbon storage value", "Nursery habitat need",
+                   "Recreational boating demand", "Sediment stabilization need"),
+      estuary = switch(sea_group,
+        northern = c("Port and harbor expansion", "Flood risk management", "Industrial water demand",
+                     "Dredging requirements", "Recreational fishing demand"),
+        warm = c("Aquaculture expansion", "Urban water demand", "Flood protection",
+                 "Tourism access", "Agricultural runoff"),
+        c("Urban expansion", "Flood management", "Agricultural demand", "Port development")),
+      lagoon = c("Aquaculture demand", "Tourism development", "Water abstraction",
+                 "Salt production", "Flood buffer need"),
+      tidal_flat = c("Coastal development pressure", "Bait collection demand",
+                     "Bird watching tourism", "Coastal squeeze from sea level rise"),
+      rocky_shore = c("Recreational harvesting", "Scientific research interest",
+                      "Coastal access demand", "Kelp harvesting"),
+      sandy_beach = c("Beach tourism demand", "Coastal protection need",
+                      "Sand mining demand", "Recreational fishing"),
+      fjord = c("Aquaculture expansion", "Tourism demand", "Hydropower influence",
+                "Shipping access", "Freshwater runoff management"),
+      offshore = switch(sea_group,
+        northern = c("Wind energy demand", "Oil and gas extraction", "Shipping routes",
+                     "Sand and gravel extraction", "Cable and pipeline corridors"),
+        warm = c("Deep-sea mining interest", "Shipping lanes", "Tuna fisheries demand",
+                 "Oil exploration", "Telecommunications cables"),
+        arctic = c("Arctic shipping routes", "Hydrocarbon exploration",
+                   "Strategic mineral extraction", "Scientific exploration"),
+        c("Energy demand", "Shipping", "Deep-sea resource extraction")),
+      sea_ice = c("Arctic shipping route opening", "Resource exploration demand",
+                  "Indigenous subsistence needs", "Scientific research", "Climate monitoring"),
+      delta = c("Agricultural expansion", "Urban development", "Flood protection",
+                "Sediment management", "Freshwater demand"),
+      archipelago = c("Island tourism demand", "Ferry transport need",
+                      "Aquaculture expansion", "Wind energy potential"),
+      character()
+    ))
+  }
+
+  # ---- ACTIVITIES ----
+  if (category == "activities") {
+    return(switch(habitat_key,
+      coral_reef = c("Reef diving and snorkeling", "Reef fishing", "Anchor damage from boats",
+                     "Coral harvesting", "Glass-bottom boat tours", "Reef monitoring"),
+      mangrove = c("Mangrove clearance for aquaculture", "Charcoal production",
+                   "Timber harvesting", "Coastal construction", "Ecotourism"),
+      seagrass = c("Bottom trawling over seagrass", "Boat anchoring in meadows",
+                   "Dredging near seagrass", "Nutrient discharge into seagrass areas",
+                   "Seagrass restoration planting"),
+      estuary = switch(sea_group,
+        northern = c("Port dredging", "Industrial discharge", "Commercial trawling",
+                     "Recreational boating", "Coastal flood defense construction",
+                     "Mussel and oyster harvesting"),
+        warm = c("Shellfish aquaculture", "Urban wastewater discharge",
+                 "Tourist boat traffic", "Artisanal fishing", "Salt harvesting"),
+        c("Dredging", "Industrial discharge", "Fishing", "Aquaculture")),
+      lagoon = c("Shellfish farming", "Fish pond aquaculture", "Reed harvesting",
+                 "Tourism infrastructure", "Wastewater inflow"),
+      tidal_flat = c("Bait digging", "Cockle and clam harvesting", "Land reclamation",
+                     "Sea defense construction", "Recreational walking"),
+      rocky_shore = c("Intertidal harvesting", "Rock pooling tourism",
+                      "Seaweed collection", "Coastal path maintenance"),
+      sandy_beach = c("Beach nourishment", "Beach tourism activities", "Sand extraction",
+                      "Dune stabilization works", "Coastal construction"),
+      fjord = switch(sea_group,
+        northern = c("Salmon aquaculture", "Tourism cruises", "Hydropower discharge",
+                     "Recreational fishing", "Industrial activities"),
+        arctic = c("Arctic aquaculture", "Cruise tourism", "Mining discharge",
+                   "Small-scale fishing", "Fjord monitoring"),
+        c("Aquaculture", "Tourism", "Fishing")),
+      offshore = switch(sea_group,
+        northern = c("Offshore wind farm construction", "Bottom trawling", "Oil platform operations",
+                     "Submarine cable laying", "Aggregate dredging", "Shipping traffic"),
+        warm = c("Purse seine fishing", "Longline fishing", "Oil exploration",
+                 "Deep-water trawling", "Shipping traffic"),
+        arctic = c("Ice-class shipping", "Seismic surveys", "Exploratory drilling",
+                   "Long-range fishing"),
+        c("Commercial fishing", "Shipping", "Energy extraction")),
+      sea_ice = c("Icebreaker shipping", "Under-ice research", "Polar tourism",
+                  "Seal hunting", "Indigenous marine harvesting"),
+      delta = c("Upstream dam operations", "Agricultural irrigation", "Dredging for navigation",
+                "Urban expansion on deltaic land", "Aquaculture in delta channels"),
+      character()
+    ))
+  }
+
+  # ---- PRESSURES ----
+  if (category == "pressures") {
+    return(switch(habitat_key,
+      coral_reef = c("Ocean warming and bleaching", "Ocean acidification", "Sedimentation from runoff",
+                     "Physical damage from anchoring", "Overharvesting of reef fish",
+                     "Nutrient enrichment from sewage", "Coral disease spread"),
+      mangrove = c("Habitat conversion for aquaculture", "Altered freshwater flow",
+                   "Oil pollution", "Sedimentation changes", "Sea level rise inundation"),
+      seagrass = c("Light reduction from turbidity", "Nutrient loading causing algal overgrowth",
+                   "Physical damage from mooring", "Propeller scarring",
+                   "Sediment disturbance from dredging"),
+      estuary = switch(sea_group,
+        northern = c("Nutrient enrichment from agriculture", "Industrial chemical discharge",
+                     "Habitat loss from port expansion", "Altered salinity from water management",
+                     "Noise from shipping and construction", "Microplastic accumulation"),
+        warm = c("Freshwater diversion", "Urban sewage discharge", "Pesticide runoff",
+                 "Thermal pollution", "Invasive species introduction"),
+        black_sea = c("Eutrophication from Danube inputs", "Hydrogen sulfide zones",
+                      "Invasive jellyfish (Mnemiopsis)", "Overfishing of anchovy and sprat"),
+        c("Nutrient pollution", "Habitat loss", "Altered hydrology")),
+      lagoon = c("Eutrophication", "Reduced water exchange", "Salinity fluctuations",
+                 "Sedimentation and infilling", "Invasive species"),
+      tidal_flat = c("Coastal squeeze from sea level rise", "Land claim and reclamation",
+                     "Disruption of sediment transport", "Disturbance to wading birds"),
+      rocky_shore = c("Oil spill exposure", "Microplastic accumulation",
+                      "Invasive species colonization", "Thermal stress from warming",
+                      "Ocean acidification weakening shells"),
+      sandy_beach = c("Coastal erosion", "Sand mining depletion", "Light pollution affecting nesting",
+                      "Litter and microplastics", "Disturbance to nesting species"),
+      offshore = switch(sea_group,
+        northern = c("Bottom trawling disturbance", "Underwater noise from construction",
+                     "Electromagnetic fields from cables", "Sediment plumes from dredging",
+                     "Chemical contamination from oil platforms"),
+        warm = c("Overfishing of pelagic stocks", "Marine debris accumulation",
+                 "Ship-strike risk to cetaceans", "Deep-sea habitat disturbance"),
+        arctic = c("Oil spill risk in ice", "Noise from seismic surveys",
+                   "Black carbon deposition", "Arctic warming amplification"),
+        c("Overfishing", "Pollution", "Habitat disturbance")),
+      sea_ice = c("Ice extent reduction", "Earlier ice breakup", "Ocean freshening",
+                  "Habitat loss for ice-dependent species", "Increased UV exposure"),
+      delta = c("Reduced sediment supply from dams", "Saltwater intrusion",
+                "Land subsidence", "Flooding regime changes", "Pollutant concentration"),
+      character()
+    ))
+  }
+
+  # ---- STATES (Marine Processes & Functioning) ----
+  if (category == "states") {
+    return(switch(habitat_key,
+      coral_reef = c("Coral cover and health", "Reef fish assemblage", "Reef structural complexity",
+                     "Algal cover balance", "Water clarity", "Calcification rates"),
+      mangrove = c("Mangrove forest extent", "Root system integrity", "Sediment trapping capacity",
+                   "Nursery habitat quality", "Carbon burial rates"),
+      seagrass = c("Seagrass bed extent", "Shoot density", "Epiphyte load",
+                   "Sediment stability", "Associated fauna diversity"),
+      estuary = c("Water column stratification", "Dissolved oxygen levels", "Nutrient cycling efficiency",
+                  "Benthic community health", "Fish migration patterns", "Salinity gradient"),
+      lagoon = c("Water exchange rate", "Trophic status", "Sediment quality",
+                 "Phytoplankton community", "Macroalgal coverage"),
+      tidal_flat = c("Intertidal area extent", "Benthic invertebrate abundance",
+                     "Sediment grain size distribution", "Wading bird populations"),
+      rocky_shore = c("Intertidal community zonation", "Algal canopy cover",
+                      "Limpet and barnacle populations", "Rock pool biodiversity"),
+      sandy_beach = c("Beach profile dynamics", "Infauna community", "Dune vegetation cover",
+                      "Turtle nesting success", "Shorebird foraging habitat"),
+      offshore = c("Pelagic food web structure", "Demersal community composition",
+                   "Primary productivity", "Water column mixing", "Seabed integrity"),
+      sea_ice = c("Sea ice extent and thickness", "Under-ice algal production",
+                  "Ice-dependent species populations", "Polar food web dynamics"),
+      delta = c("Sediment budget balance", "Wetland extent", "Freshwater-saltwater interface",
+                "Delta morphodynamics", "Floodplain connectivity"),
+      fjord = c("Water column stratification", "Deep water renewal frequency",
+                "Benthic oxygen conditions", "Plankton community composition"),
+      character()
+    ))
+  }
+
+  # ---- IMPACTS (Ecosystem Services) ----
+  if (category == "impacts") {
+    return(switch(habitat_key,
+      coral_reef = c("Reef fishery productivity", "Coastal wave protection", "Tourism attraction value",
+                     "Biodiversity reservoir", "Pharmaceutical potential",
+                     "Cultural and spiritual significance"),
+      mangrove = c("Storm surge protection", "Nursery function for fisheries",
+                   "Blue carbon storage", "Water filtration", "Timber provision",
+                   "Erosion prevention"),
+      seagrass = c("Carbon sequestration", "Nursery grounds for commercial species",
+                   "Water clarity maintenance", "Sediment stabilization",
+                   "Nutrient cycling support"),
+      estuary = c("Fish and shellfish nursery", "Nutrient processing and removal",
+                  "Flood attenuation", "Navigation channel provision",
+                  "Recreational and aesthetic value", "Carbon burial"),
+      lagoon = c("Aquaculture production capacity", "Water purification",
+                 "Bird habitat provision", "Flood buffering", "Salt production"),
+      offshore = c("Fish stock provision", "Climate regulation", "Nutrient cycling",
+                   "Waste assimilation", "Shipping route provision"),
+      sea_ice = c("Climate regulation (albedo)", "Habitat for ice-dependent species",
+                  "Indigenous food provision", "Freshwater storage"),
+      sandy_beach = c("Coastal protection", "Tourism and recreation value",
+                      "Nesting habitat for turtles and birds", "Sand resource provision"),
+      rocky_shore = c("Food provision (shellfish, seaweed)", "Education and research value",
+                      "Recreation (rock pooling)", "Coastal protection"),
+      character()
+    ))
+  }
+
+  # ---- WELFARE (Goods & Benefits) ----
+  if (category == "welfare") {
+    return(switch(habitat_key,
+      coral_reef = c("Reef tourism revenue", "Reef fishery livelihoods", "Coastal property protection",
+                     "Cultural heritage value", "Dive industry employment"),
+      mangrove = c("Coastal community safety", "Fishery catch value", "Carbon credit revenue",
+                   "Traditional resource access", "Ecotourism income"),
+      seagrass = c("Commercial fish catch value", "Carbon offset potential",
+                   "Recreational value", "Shoreline protection savings"),
+      estuary = c("Port and shipping revenue", "Fishery income", "Flood damage avoidance",
+                  "Waterfront property values", "Recreational spending"),
+      offshore = c("Commercial fish catch value", "Energy production revenue",
+                   "Shipping trade value", "Employment in marine sectors"),
+      sea_ice = c("Indigenous food security", "Arctic shipping savings",
+                  "Resource extraction revenue", "Climate stability contribution"),
+      character()
+    ))
+  }
+
+  # ---- RESPONSES ----
+  if (category == "responses") {
+    return(switch(habitat_key,
+      coral_reef = c("Marine Protected Area designation", "Coral reef restoration",
+                     "Mooring buoy installation", "Reef-safe sunscreen regulations",
+                     "Coral nursery programs", "Tourism carrying capacity limits"),
+      mangrove = c("Mangrove replanting programs", "Aquaculture zoning regulations",
+                   "Community mangrove management", "Blue carbon REDD+ projects",
+                   "Mangrove protected area designation"),
+      seagrass = c("Seagrass protection zones", "Mooring management areas",
+                   "Nutrient reduction programs", "Seagrass transplanting initiatives",
+                   "Water quality monitoring"),
+      estuary = switch(sea_group,
+        northern = c("Nutrient Action Plans (HELCOM/OSPAR)", "Fish passage restoration",
+                     "Industrial discharge permits", "Managed realignment",
+                     "Shellfish water quality monitoring"),
+        warm = c("Wastewater treatment upgrades", "River basin management plans",
+                 "Estuary habitat restoration", "Fishery co-management"),
+        c("Water Framework Directive measures", "Habitat restoration", "Pollution control")),
+      lagoon = c("Water exchange improvement structures", "Nutrient input reduction",
+                 "Lagoon habitat restoration", "Sustainable aquaculture certification"),
+      offshore = switch(sea_group,
+        northern = c("Fishery quota management", "Marine spatial planning", "Offshore wind farm EIA",
+                     "Ship traffic separation schemes", "Decommissioning standards"),
+        warm = c("Regional fisheries management", "High seas protection agreements",
+                 "Vessel monitoring systems", "Bycatch reduction devices"),
+        c("Fishery management", "Marine spatial planning", "Pollution prevention")),
+      sea_ice = c("Arctic environmental protection", "Polar Code shipping regulations",
+                  "Ice-dependent species protection", "Climate adaptation planning",
+                  "Indigenous co-management agreements"),
+      sandy_beach = c("Beach nourishment programs", "Dune restoration",
+                      "Light pollution regulations for nesting", "Litter cleanup initiatives"),
+      character()
+    ))
+  }
+
+  character()  # Default: no habitat-specific suggestions
 }

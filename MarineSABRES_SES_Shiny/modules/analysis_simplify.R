@@ -6,6 +6,7 @@
 
 analysis_simplify_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     uiOutput(ns("module_header")),
@@ -437,6 +438,20 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
       has_simplified = FALSE
     )
 
+    # Listen for ISA changes via event bus to flag stale results
+    observe({
+      req(!is.null(event_bus))
+      event_bus$on_isa_change()
+      if (isolate(rv$has_simplified)) {
+        showNotification(
+          i18n$t("modules.analysis.common.data_changed_rerun"),
+          type = "warning",
+          duration = 5,
+          id = ns("stale_data")
+        )
+      }
+    })
+
     # === REACTIVE MODULE HEADER ===
     output$module_header <- renderUI({
       fluidRow(
@@ -808,7 +823,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
       }, error = function(e) {
         debug_log(paste("Error in simplification:", e$message), "SIMPLIFY")
         showNotification(
-          paste(i18n$t("modules.analysis.simplify.error_applying"), e$message),
+          format_user_error(e, i18n = i18n, context = "applying simplification"),
           type = "error",
           duration = 10
         )

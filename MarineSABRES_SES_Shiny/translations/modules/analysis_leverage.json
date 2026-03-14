@@ -1,5 +1,15 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "modules.analysis.leverage.num_top_nodes": {
       "en": "Number of Top Nodes:",
@@ -9,8 +19,8 @@
       "lt": "Svarbiausių mazgų skaičius:",
       "pt": "Número de nós principais:",
       "it": "Numero di nodi principali:",
-      "no": "Number of Top Nodes:",
-      "el": "Number of Top Nodes:"
+      "no": "Antall toppnoder:",
+      "el": "Αριθμός κορυφαίων κόμβων:"
     },
     "modules.analysis.leverage.about_description": {
       "en": "Leverage points are nodes that have the highest potential for system-wide impact based on:",
@@ -20,8 +30,8 @@
       "lt": "Svertiniai taškai yra mazgai, turintys didžiausią potencialą poveikiui visoje sistemoje, remiantis:",
       "pt": "Pontos de alavancagem são nós com o maior potencial de impacto em todo o sistema, com base em:",
       "it": "I punti leva sono nodi con il massimo potenziale di impatto sull'intero sistema, basati su:",
-      "no": "Leverage points are nodes that have the highest potential for system-wide impact based on:",
-      "el": "Leverage points are nodes that have the highest potential for system-wide impact based on:"
+      "no": "Innflytelsespunkter er noder med høyest potensial for systemomfattende påvirkning basert på:",
+      "el": "Τα σημεία μόχλευσης είναι κόμβοι με το υψηλότερο δυναμικό για επίδραση σε ολόκληρο το σύστημα βάσει:"
     },
     "modules.analysis.leverage.betweenness_label": {
       "en": "Betweenness:",
@@ -31,8 +41,8 @@
       "lt": "Tarpininkavimas:",
       "pt": "Intermediação:",
       "it": "Intermediazione:",
-      "no": "Betweenness:",
-      "el": "Betweenness:"
+      "no": "Mellomliggenhet:",
+      "el": "Μεσοκεντρικότητα:"
     },
     "modules.analysis.leverage.betweenness_desc": {
       "en": "Control over information flow",
@@ -42,8 +52,8 @@
       "lt": "Informacijos srauto kontrolė",
       "pt": "Controle sobre o fluxo de informação",
       "it": "Controllo sul flusso di informazioni",
-      "no": "Control over information flow",
-      "el": "Control over information flow"
+      "no": "Kontroll over informasjonsflyt",
+      "el": "Έλεγχος ροής πληροφοριών"
     },
     "modules.analysis.leverage.eigenvector_label": {
       "en": "Eigenvector:",
@@ -53,8 +63,8 @@
       "lt": "Tikrasis vektorius:",
       "pt": "Autovetor:",
       "it": "Autovettore:",
-      "no": "Eigenvector:",
-      "el": "Eigenvector:"
+      "no": "Egenvektor:",
+      "el": "Ιδιοδιάνυσμα:"
     },
     "modules.analysis.leverage.eigenvector_desc": {
       "en": "Connection to other important nodes",
@@ -64,8 +74,8 @@
       "lt": "Ryšys su kitais svarbiais mazgais",
       "pt": "Conexão com outros nós importantes",
       "it": "Connessione ad altri nodi importanti",
-      "no": "Connection to other important nodes",
-      "el": "Connection to other important nodes"
+      "no": "Forbindelse til andre viktige noder",
+      "el": "Σύνδεση με άλλους σημαντικούς κόμβους"
     },
     "modules.analysis.leverage.pagerank_label": {
       "en": "PageRank:",
@@ -86,8 +96,8 @@
       "lt": "Bendra svarba tinkle",
       "pt": "Importância geral na rede",
       "it": "Importanza complessiva nella rete",
-      "no": "Overall importance in the network",
-      "el": "Overall importance in the network"
+      "no": "Samlet viktighet i nettverket",
+      "el": "Συνολική σημασία στο δίκτυο"
     },
     "modules.analysis.leverage.network_info": {
       "en": "Node sizes reflect composite leverage scores. Larger nodes = higher leverage.",
@@ -97,8 +107,8 @@
       "lt": "Mazgų dydžiai atspindi sudėtinius svertinio taško balus. Didesni mazgai = didesnis svertas.",
       "pt": "Os tamanhos dos nós refletem as pontuações compostas de alavancagem. Nós maiores = maior alavancagem.",
       "it": "Le dimensioni dei nodi riflettono i punteggi di leva compositi. Nodi più grandi = maggiore leva.",
-      "no": "Node sizes reflect composite leverage scores. Larger nodes = higher leverage.",
-      "el": "Node sizes reflect composite leverage scores. Larger nodes = higher leverage."
+      "no": "Nodestørrelser gjenspeiler sammensatte innflytelsespoeng. Større noder = høyere innflytelse.",
+      "el": "Τα μεγέθη κόμβων αντικατοπτρίζουν σύνθετες βαθμολογίες μόχλευσης. Μεγαλύτεροι κόμβοι = υψηλότερη μόχλευση."
     },
     "modules.analysis.leverage.progress_analyzing": {
       "en": "Analyzing leverage points...",
@@ -108,8 +118,8 @@
       "lt": "Analizuojami svertiniai taškai...",
       "pt": "Analisando pontos de alavancagem...",
       "it": "Analisi dei punti leva...",
-      "no": "Analyzing leverage points...",
-      "el": "Analyzing leverage points..."
+      "no": "Analyserer innflytelsespunkter...",
+      "el": "Ανάλυση σημείων μόχλευσης..."
     },
     "modules.analysis.leverage.progress_building": {
       "en": "Building network from ISA data...",
@@ -119,8 +129,8 @@
       "lt": "Kuriamas tinklas iš ISA duomenų...",
       "pt": "Construindo rede a partir dos dados ISA...",
       "it": "Costruzione della rete dai dati ISA...",
-      "no": "Building network from ISA data...",
-      "el": "Building network from ISA data..."
+      "no": "Bygger nettverk fra ISA-data...",
+      "el": "Κατασκευή δικτύου από δεδομένα ISA..."
     },
     "modules.analysis.leverage.progress_creating_graph": {
       "en": "Creating network graph...",
@@ -130,8 +140,8 @@
       "lt": "Kuriamas tinklo grafas...",
       "pt": "Criando gráfico de rede...",
       "it": "Creazione del grafo di rete...",
-      "no": "Creating network graph...",
-      "el": "Creating network graph..."
+      "no": "Lager nettverksgraf...",
+      "el": "Δημιουργία γραφήματος δικτύου..."
     },
     "modules.analysis.leverage.progress_ranking": {
       "en": "Ranking nodes...",
@@ -141,8 +151,8 @@
       "lt": "Ranguojami mazgai...",
       "pt": "Classificando nós...",
       "it": "Classificazione dei nodi...",
-      "no": "Ranking nodes...",
-      "el": "Ranking nodes..."
+      "no": "Rangerer noder...",
+      "el": "Κατάταξη κόμβων..."
     },
     "modules.analysis.leverage.progress_updating": {
       "en": "Updating node attributes...",
@@ -152,8 +162,8 @@
       "lt": "Atnaujinami mazgų atributai...",
       "pt": "Atualizando atributos dos nós...",
       "it": "Aggiornamento degli attributi dei nodi...",
-      "no": "Updating node attributes...",
-      "el": "Updating node attributes..."
+      "no": "Oppdaterer nodeattributter...",
+      "el": "Ενημέρωση χαρακτηριστικών κόμβων..."
     },
     "modules.analysis.leverage.progress_complete": {
       "en": "Complete!",
@@ -163,8 +173,8 @@
       "lt": "Baigta!",
       "pt": "Concluído!",
       "it": "Completato!",
-      "no": "Complete!",
-      "el": "Complete!"
+      "no": "Fullført!",
+      "el": "Ολοκληρώθηκε!"
     },
     "modules.analysis.leverage.found_n_points": {
       "en": "Found %d leverage points! Scores saved to CLD nodes.",
@@ -174,8 +184,8 @@
       "lt": "Rasta %d svertinių taškų! Balai išsaugoti CLD mazguose.",
       "pt": "Encontrados %d pontos de alavancagem! Pontuações salvas nos nós CLD.",
       "it": "Trovati %d punti leva! Punteggi salvati nei nodi CLD.",
-      "no": "Found %d leverage points! Scores saved to CLD nodes.",
-      "el": "Found %d leverage points! Scores saved to CLD nodes."
+      "no": "Fant %d innflytelsespunkter! Poeng lagret i CLD-noder.",
+      "el": "Βρέθηκαν %d σημεία μόχλευσης! Οι βαθμολογίες αποθηκεύτηκαν στους κόμβους CLD."
     },
     "modules.analysis.leverage.error_analyzing": {
       "en": "Error analyzing leverage points:",
@@ -185,8 +195,8 @@
       "lt": "Klaida analizuojant svertinius taškus:",
       "pt": "Erro ao analisar pontos de alavancagem:",
       "it": "Errore nell'analisi dei punti leva:",
-      "no": "Error analyzing leverage points:",
-      "el": "Error analyzing leverage points:"
+      "no": "Feil ved analyse av innflytelsespunkter:",
+      "el": "Σφάλμα κατά την ανάλυση σημείων μόχλευσης:"
     },
     "modules.analysis.leverage.no_network_data": {
       "en": "<strong>No network data available.</strong> Please create your SES network first using the <em>Create SES</em> menu.",
@@ -196,8 +206,8 @@
       "lt": "<strong>Tinklo duomenų nėra.</strong> Pirmiausia sukurkite savo SES tinklą naudodami meniu <em>Sukurti SES</em>.",
       "pt": "<strong>Nenhum dado de rede disponível.</strong> Por favor, crie primeiro a sua rede SES usando o menu <em>Criar SES</em>.",
       "it": "<strong>Nessun dato di rete disponibile.</strong> Per favore, crea prima la tua rete SES usando il menu <em>Crea SES</em>.",
-      "no": "<strong>No network data available.</strong> Please create your SES network first using the <em>Create SES</em> menu.",
-      "el": "<strong>No network data available.</strong> Please create your SES network first using the <em>Create SES</em> menu."
+      "no": "<strong>Ingen nettverksdata tilgjengelig.</strong> Vennligst opprett SES-nettverket ditt først ved å bruke menyen <em>Opprett SES</em>.",
+      "el": "<strong>Δεν υπάρχουν διαθέσιμα δεδομένα δικτύου.</strong> Παρακαλώ δημιουργήστε πρώτα το δίκτυο SES χρησιμοποιώντας το μενού <em>Δημιουργία SES</em>."
     },
     "modules.analysis.leverage.click_calculate": {
       "en": "Click <strong>Calculate Leverage Points</strong> to analyze your network.",
@@ -207,8 +217,8 @@
       "lt": "Spustelėkite <strong>Apskaičiuoti svertinius taškus</strong>, kad analizuotumėte savo tinklą.",
       "pt": "Clique em <strong>Calcular pontos de alavancagem</strong> para analisar sua rede.",
       "it": "Fai clic su <strong>Calcola punti leva</strong> per analizzare la tua rete.",
-      "no": "Click <strong>Calculate Leverage Points</strong> to analyze your network.",
-      "el": "Click <strong>Calculate Leverage Points</strong> to analyze your network."
+      "no": "Klikk <strong>Beregn innflytelsespunkter</strong> for å analysere nettverket ditt.",
+      "el": "Κάντε κλικ στο <strong>Υπολογισμός σημείων μόχλευσης</strong> για να αναλύσετε το δίκτυό σας."
     },
     "modules.analysis.leverage.found_ranked": {
       "en": "<strong>Found %d leverage points</strong> - Nodes are ranked by their composite influence score.",
@@ -218,8 +228,8 @@
       "lt": "<strong>Rasta %d svertinių taškų</strong> - Mazgai suranguoti pagal jų sudėtinį įtakos balą.",
       "pt": "<strong>Encontrados %d pontos de alavancagem</strong> - Os nós estão classificados pela sua pontuação de influência composta.",
       "it": "<strong>Trovati %d punti leva</strong> - I nodi sono classificati in base al punteggio di influenza composito.",
-      "no": "<strong>Found %d leverage points</strong> - Nodes are ranked by their composite influence score.",
-      "el": "<strong>Found %d leverage points</strong> - Nodes are ranked by their composite influence score."
+      "no": "<strong>Fant %d innflytelsespunkter</strong> - Noder er rangert etter deres sammensatte innflytelsespoeng.",
+      "el": "<strong>Βρέθηκαν %d σημεία μόχλευσης</strong> - Οι κόμβοι κατατάσσονται βάσει της σύνθετης βαθμολογίας επιρροής τους."
     },
     "modules.analysis.leverage.tooltip_type": {
       "en": "Type: ",
@@ -230,7 +240,7 @@
       "pt": "Tipo: ",
       "it": "Tipo: ",
       "no": "Type: ",
-      "el": "Type: "
+      "el": "Τύπος: "
     },
     "modules.analysis.leverage.tooltip_score": {
       "en": "Leverage Score: ",
@@ -240,8 +250,8 @@
       "lt": "Svertinio taško balas: ",
       "pt": "Pontuação de alavancagem: ",
       "it": "Punteggio leva: ",
-      "no": "Leverage Score: ",
-      "el": "Leverage Score: "
+      "no": "Innflytelsespoeng: ",
+      "el": "Βαθμολογία μόχλευσης: "
     },
     "modules.analysis.leverage.top_point_desc": {
       "en": " has the highest composite score (%.2f) and represents the most strategic intervention point in your network.",
@@ -251,8 +261,8 @@
       "lt": " turi aukščiausią sudėtinį balą (%.2f) ir yra strategiškiausias intervencijos taškas jūsų tinkle.",
       "pt": " tem a pontuação composta mais alta (%.2f) e representa o ponto de intervenção mais estratégico na sua rede.",
       "it": " ha il punteggio composito più alto (%.2f) e rappresenta il punto di intervento più strategico nella tua rete.",
-      "no": " has the highest composite score (%.2f) and represents the most strategic intervention point in your network.",
-      "el": " has the highest composite score (%.2f) and represents the most strategic intervention point in your network."
+      "no": " har den høyeste sammensatte poengsummen (%.2f) og representerer det mest strategiske intervensjonspunktet i nettverket ditt.",
+      "el": " έχει την υψηλότερη σύνθετη βαθμολογία (%.2f) και αντιπροσωπεύει το πιο στρατηγικό σημείο παρέμβασης στο δίκτυό σας."
     },
     "modules.analysis.leverage.metric_betweenness": {
       "en": " Betweenness Centrality",
@@ -262,8 +272,8 @@
       "lt": " Tarpininkavimo centralumas",
       "pt": " Centralidade de intermediação",
       "it": " Centralità di intermediazione",
-      "no": " Betweenness Centrality",
-      "el": " Betweenness Centrality"
+      "no": " Mellomliggenhetssentralitet",
+      "el": " Κεντρικότητα μεσοβαθμίδας"
     },
     "modules.analysis.leverage.metric_betweenness_desc": {
       "en": "Measures how often a node lies on the shortest path between other nodes. High betweenness means the node controls information flow and serves as a bridge.",
@@ -273,8 +283,8 @@
       "lt": "Matuoja, kaip dažnai mazgas yra trumpiausiame kelyje tarp kitų mazgų. Aukštas tarpininkavimas reiškia, kad mazgas kontroliuoja informacijos srautą ir tarnauja kaip tiltas.",
       "pt": "Mede com que frequência um nó se encontra no caminho mais curto entre outros nós. Alta intermediação significa que o nó controla o fluxo de informação e serve como ponte.",
       "it": "Misura quanto spesso un nodo si trova sul percorso più breve tra altri nodi. Un'alta intermediazione significa che il nodo controlla il flusso di informazioni e funge da ponte.",
-      "no": "Measures how often a node lies on the shortest path between other nodes. High betweenness means the node controls information flow and serves as a bridge.",
-      "el": "Measures how often a node lies on the shortest path between other nodes. High betweenness means the node controls information flow and serves as a bridge."
+      "no": "Måler hvor ofte en node ligger på den korteste veien mellom andre noder. Høy mellomliggenhet betyr at noden kontrollerer informasjonsflyten og fungerer som en bro.",
+      "el": "Μετρά πόσο συχνά ένας κόμβος βρίσκεται στη συντομότερη διαδρομή μεταξύ άλλων κόμβων. Υψηλή μεσοκεντρικότητα σημαίνει ότι ο κόμβος ελέγχει τη ροή πληροφοριών και λειτουργεί ως γέφυρα."
     },
     "modules.analysis.leverage.metric_eigenvector": {
       "en": " Eigenvector Centrality",
@@ -284,8 +294,8 @@
       "lt": " Tikrojo vektoriaus centralumas",
       "pt": " Centralidade de autovetor",
       "it": " Centralità di autovettore",
-      "no": " Eigenvector Centrality",
-      "el": " Eigenvector Centrality"
+      "no": " Eigenvektorsentralitet",
+      "el": " Κεντρικότητα ιδιοδιανύσματος"
     },
     "modules.analysis.leverage.metric_eigenvector_desc": {
       "en": "Measures a node's influence based on the importance of its neighbors. A node with high eigenvector centrality is connected to other important nodes.",
@@ -295,8 +305,8 @@
       "lt": "Matuoja mazgo įtaką pagal jo kaimynų svarbą. Mazgas su aukštu tikrojo vektoriaus centralumu yra sujungtas su kitais svarbiais mazgais.",
       "pt": "Mede a influência de um nó com base na importância de seus vizinhos. Um nó com alta centralidade de autovetor está conectado a outros nós importantes.",
       "it": "Misura l'influenza di un nodo in base all'importanza dei suoi vicini. Un nodo con alta centralità di autovettore è connesso ad altri nodi importanti.",
-      "no": "Measures a node's influence based on the importance of its neighbors. A node with high eigenvector centrality is connected to other important nodes.",
-      "el": "Measures a node's influence based on the importance of its neighbors. A node with high eigenvector centrality is connected to other important nodes."
+      "no": "Måler en nodes innflytelse basert på viktigheten av dens naboer. En node med høy eigenvektorsentralitet er koblet til andre viktige noder.",
+      "el": "Μετρά την επιρροή ενός κόμβου βάσει της σημασίας των γειτόνων του. Ένας κόμβος με υψηλή κεντρικότητα ιδιοδιανύσματος είναι συνδεδεμένος με άλλους σημαντικούς κόμβους."
     },
     "modules.analysis.leverage.metric_pagerank": {
       "en": " PageRank",
@@ -317,8 +327,8 @@
       "lt": "Iš pradžių sukurtas tinklalapiams, PageRank matuoja svarbą pagal įeinančius ryšius ir šaltinio mazgų svarbą.",
       "pt": "Originalmente desenvolvido para páginas web, o PageRank mede a importância com base nas conexões de entrada e na importância dos nós de origem.",
       "it": "Originariamente sviluppato per le pagine web, PageRank misura l'importanza in base alle connessioni in entrata e all'importanza dei nodi sorgente.",
-      "no": "Originally developed for web pages, PageRank measures importance based on incoming connections and the importance of source nodes.",
-      "el": "Originally developed for web pages, PageRank measures importance based on incoming connections and the importance of source nodes."
+      "no": "Opprinnelig utviklet for nettsider, PageRank måler viktighet basert på innkommende forbindelser og viktigheten av kildenoder.",
+      "el": "Αρχικά αναπτύχθηκε για ιστοσελίδες, το PageRank μετρά τη σημασία βάσει εισερχόμενων συνδέσεων και της σημασίας των κόμβων προέλευσης."
     },
     "modules.analysis.leverage.strategy_direct": {
       "en": "Direct Intervention: ",
@@ -328,8 +338,8 @@
       "lt": "Tiesioginė intervencija: ",
       "pt": "Intervenção direta: ",
       "it": "Intervento diretto: ",
-      "no": "Direct Intervention: ",
-      "el": "Direct Intervention: "
+      "no": "Direkte intervensjon: ",
+      "el": "Άμεση παρέμβαση: "
     },
     "modules.analysis.leverage.strategy_direct_desc": {
       "en": "Focus management actions directly on high-leverage nodes",
@@ -339,8 +349,8 @@
       "lt": "Valdymo veiksmus nukreipti tiesiai į aukšto sverto mazgus",
       "pt": "Concentrar ações de gestão diretamente nos nós de alta alavancagem",
       "it": "Concentrare le azioni di gestione direttamente sui nodi ad alta leva",
-      "no": "Focus management actions directly on high-leverage nodes",
-      "el": "Focus management actions directly on high-leverage nodes"
+      "no": "Fokuser forvaltningshandlinger direkte på noder med høy innflytelse",
+      "el": "Εστιάστε τις ενέργειες διαχείρισης απευθείας στους κόμβους υψηλής μόχλευσης"
     },
     "modules.analysis.leverage.strategy_monitoring": {
       "en": "Monitoring: ",
@@ -350,8 +360,8 @@
       "lt": "Stebėjimas: ",
       "pt": "Monitoramento: ",
       "it": "Monitoraggio: ",
-      "no": "Monitoring: ",
-      "el": "Monitoring: "
+      "no": "Overvåking: ",
+      "el": "Παρακολούθηση: "
     },
     "modules.analysis.leverage.strategy_monitoring_desc": {
       "en": "Track changes in leverage points as early warning indicators",
@@ -361,8 +371,8 @@
       "lt": "Sekti pokyčius svertiniuose taškuose kaip ankstyvojo perspėjimo rodiklius",
       "pt": "Acompanhar mudanças nos pontos de alavancagem como indicadores de alerta precoce",
       "it": "Monitorare i cambiamenti nei punti leva come indicatori di allerta precoce",
-      "no": "Track changes in leverage points as early warning indicators",
-      "el": "Track changes in leverage points as early warning indicators"
+      "no": "Spor endringer i innflytelsespunkter som tidlige varslingsindikatorer",
+      "el": "Παρακολουθήστε αλλαγές στα σημεία μόχλευσης ως δείκτες έγκαιρης προειδοποίησης"
     },
     "modules.analysis.leverage.strategy_policy": {
       "en": "Policy Design: ",
@@ -372,8 +382,8 @@
       "lt": "Politikos formavimas: ",
       "pt": "Desenho de políticas: ",
       "it": "Progettazione delle politiche: ",
-      "no": "Policy Design: ",
-      "el": "Policy Design: "
+      "no": "Politikkutforming: ",
+      "el": "Σχεδιασμός πολιτικής: "
     },
     "modules.analysis.leverage.strategy_policy_desc": {
       "en": "Design policies that strengthen or weaken connections to leverage points",
@@ -383,8 +393,8 @@
       "lt": "Kurti politikas, kurios stiprintų arba silpnintų ryšius su svertiniais taškais",
       "pt": "Projetar políticas que fortaleçam ou enfraqueçam conexões com pontos de alavancagem",
       "it": "Progettare politiche che rafforzino o indeboliscano le connessioni ai punti leva",
-      "no": "Design policies that strengthen or weaken connections to leverage points",
-      "el": "Design policies that strengthen or weaken connections to leverage points"
+      "no": "Utform politikk som styrker eller svekker forbindelser til innflytelsespunkter",
+      "el": "Σχεδιάστε πολιτικές που ενισχύουν ή αποδυναμώνουν τις συνδέσεις με τα σημεία μόχλευσης"
     },
     "modules.analysis.leverage.strategy_stakeholder": {
       "en": "Stakeholder Engagement: ",
@@ -394,8 +404,8 @@
       "lt": "Suinteresuotųjų šalių įtraukimas: ",
       "pt": "Engajamento das partes interessadas: ",
       "it": "Coinvolgimento degli stakeholder: ",
-      "no": "Stakeholder Engagement: ",
-      "el": "Stakeholder Engagement: "
+      "no": "Interessentengasjement: ",
+      "el": "Συμμετοχή ενδιαφερομένων: "
     },
     "modules.analysis.leverage.strategy_stakeholder_desc": {
       "en": "Prioritize engagement with actors associated with these nodes",
@@ -405,8 +415,8 @@
       "lt": "Pirmenybę teikti bendradarbiavimui su veikėjais, susijusiais su šiais mazgais",
       "pt": "Priorizar o engajamento com os atores associados a estes nós",
       "it": "Dare priorità al coinvolgimento degli attori associati a questi nodi",
-      "no": "Prioritize engagement with actors associated with these nodes",
-      "el": "Prioritize engagement with actors associated with these nodes"
+      "no": "Prioriter engasjement med aktører knyttet til disse nodene",
+      "el": "Δώστε προτεραιότητα στη συνεργασία με τους φορείς που σχετίζονται με αυτούς τους κόμβους"
     },
     "modules.analysis.leverage.btn_download_excel": {
       "en": "Download Excel",
@@ -460,8 +470,8 @@
       "lt": "Analizės nustatymai",
       "pt": "Configurações da Análise",
       "it": "Impostazioni dell'Analisi",
-      "no": "Analysis Settings",
-      "el": "Analysis Settings"
+      "no": "Analyseinnstillinger",
+      "el": "Ρυθμίσεις ανάλυσης"
     },
     "modules.analysis.leverage.btn_calculate": {
       "en": "Calculate Leverage Points",
@@ -471,8 +481,8 @@
       "lt": "Apskaičiuoti svertinius taškus",
       "pt": "Calcular Pontos de Alavancagem",
       "it": "Calcola Punti Leva",
-      "no": "Calculate Leverage Points",
-      "el": "Calculate Leverage Points"
+      "no": "Beregn innflytelsespunkter",
+      "el": "Υπολογισμός σημείων μόχλευσης"
     },
     "modules.analysis.leverage.about_leverage_points": {
       "en": "About Leverage Points",
@@ -482,8 +492,8 @@
       "lt": "Apie svertinius taškus",
       "pt": "Sobre Pontos de Alavancagem",
       "it": "Informazioni sui Punti Leva",
-      "no": "About Leverage Points",
-      "el": "About Leverage Points"
+      "no": "Om innflytelsespunkter",
+      "el": "Σχετικά με τα σημεία μόχλευσης"
     },
     "modules.analysis.leverage.tab_leverage_points": {
       "en": "Leverage Points",
@@ -493,8 +503,8 @@
       "lt": "Svertiniai taškai",
       "pt": "Pontos de Alavancagem",
       "it": "Punti Leva",
-      "no": "Leverage Points",
-      "el": "Leverage Points"
+      "no": "Innflytelsespunkter",
+      "el": "Σημεία μόχλευσης"
     },
     "modules.analysis.leverage.tab_network_view": {
       "en": "Network View",
@@ -504,8 +514,8 @@
       "lt": "Tinklo vaizdas",
       "pt": "Visualização da Rede",
       "it": "Vista della Rete",
-      "no": "Network View",
-      "el": "Network View"
+      "no": "Nettverksvisning",
+      "el": "Προβολή δικτύου"
     },
     "modules.analysis.leverage.tab_interpretation": {
       "en": "Interpretation",
@@ -515,8 +525,8 @@
       "lt": "Interpretacija",
       "pt": "Interpretação",
       "it": "Interpretazione",
-      "no": "Interpretation",
-      "el": "Interpretation"
+      "no": "Tolkning",
+      "el": "Ερμηνεία"
     },
     "modules.analysis.leverage.top_leverage_point": {
       "en": "Top Leverage Point",
@@ -526,8 +536,8 @@
       "lt": "Svarbiausias svertinis taškas",
       "pt": "Principal Ponto de Alavancagem",
       "it": "Punto Leva Principale",
-      "no": "Top Leverage Point",
-      "el": "Top Leverage Point"
+      "no": "Viktigste innflytelsespunkt",
+      "el": "Κορυφαίο σημείο μόχλευσης"
     },
     "modules.analysis.leverage.understanding_metrics": {
       "en": "Understanding the Metrics",
@@ -537,8 +547,8 @@
       "lt": "Metrikų supratimas",
       "pt": "Compreendendo as Métricas",
       "it": "Comprendere le Metriche",
-      "no": "Understanding the Metrics",
-      "el": "Understanding the Metrics"
+      "no": "Forstå metrikkene",
+      "el": "Κατανόηση των μετρικών"
     },
     "modules.analysis.leverage.intervention_strategies": {
       "en": "Intervention Strategies",
@@ -548,8 +558,8 @@
       "lt": "Intervencijos strategijos",
       "pt": "Estratégias de Intervenção",
       "it": "Strategie di Intervento",
-      "no": "Intervention Strategies",
-      "el": "Intervention Strategies"
+      "no": "Intervensjonsstrategier",
+      "el": "Στρατηγικές παρέμβασης"
     },
     "modules.analysis.leverage.plot_title": {
       "en": "Leverage Point Analysis — Top Nodes by Composite Score",
@@ -559,8 +569,8 @@
       "lt": "Svertų taškų analizė — Pagrindiniai mazgai pagal sudėtinį balą",
       "pt": "Análise de Pontos de Alavancagem — Principais Nós por Pontuação Composta",
       "it": "Analisi dei Punti di Leva — Nodi Principali per Punteggio Composito",
-      "no": "Leverage Point Analysis — Top Nodes by Composite Score",
-      "el": "Leverage Point Analysis — Top Nodes by Composite Score"
+      "no": "Analyse av innflytelsespunkter — Toppnoder etter sammensatt poengsum",
+      "el": "Ανάλυση σημείων μόχλευσης — Κορυφαίοι κόμβοι κατά σύνθετη βαθμολογία"
     },
     "modules.analysis.leverage.plot_y_label": {
       "en": "Composite Score (Betweenness + Eigenvector + PageRank)",
@@ -570,8 +580,8 @@
       "lt": "Sudėtinis balas (Tarpinumas + Savasis vektorius + PageRank)",
       "pt": "Pontuação Composta (Intermediação + Autovetor + PageRank)",
       "it": "Punteggio Composito (Betweenness + Eigenvector + PageRank)",
-      "no": "Composite Score (Betweenness + Eigenvector + PageRank)",
-      "el": "Composite Score (Betweenness + Eigenvector + PageRank)"
+      "no": "Sammensatt poengsum (Mellomliggenhet + Egenvektor + PageRank)",
+      "el": "Σύνθετη βαθμολογία (Μεσοκεντρικότητα + Ιδιοδιάνυσμα + PageRank)"
     }
   }
 }

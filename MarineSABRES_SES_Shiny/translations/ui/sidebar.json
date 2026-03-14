@@ -10,7 +10,7 @@
       "pt": "Assistente IA",
       "it": "Assistente IA",
       "no": "AI-assistent",
-      "el": "AI Assistant"
+      "el": "Βοηθός AI"
     },
     "ui.sidebar.ai_guided_ses_creation": {
       "en": "AI guided SES creation",
@@ -21,7 +21,7 @@
       "pt": "Criação SES guiada por IA",
       "it": "Creazione SES guidata da IA",
       "no": "AI-veiledet SES-opprettelse",
-      "el": "AI guided SES creation"
+      "el": "Δημιουργία SES με καθοδήγηση AI"
     },
     "ui.sidebar.analysis_tools": {
       "en": "SES Analysis",
@@ -43,7 +43,7 @@
       "pt": "Análise BOT",
       "it": "Analisi BOT",
       "no": "BOT-analyse",
-      "el": "BOT Analysis"
+      "el": "Ανάλυση BOT"
     },
     "ui.sidebar.choose_method": {
       "en": "Choose Method",
@@ -109,7 +109,7 @@
       "pt": "Ponto de Entrada",
       "it": "Punto di Ingresso",
       "no": "Innganspunkt",
-      "el": "Entry Point"
+      "el": "Σημείο Εισόδου"
     },
     "ui.sidebar.evaluation": {
       "en": "Evaluation",
@@ -131,7 +131,7 @@
       "pt": "Exportar Dados",
       "it": "Esporta Dati",
       "no": "Eksporter data",
-      "el": "Εξαγωγή Δεδομένα"
+      "el": "Εξαγωγή Δεδομένων"
     },
     "ui.sidebar.getting_started": {
       "en": "Getting Started",
@@ -142,7 +142,7 @@
       "pt": "Começar",
       "it": "Iniziare",
       "no": "Kom i gang",
-      "el": "Getting Started"
+      "el": "Ξεκινώντας"
     },
     "ui.sidebar.guided_entry_point_to_find_the_right_tools_for_you": {
       "en": "Guided entry point to find the right tools for your marine management needs",
@@ -153,7 +153,7 @@
       "pt": "Ponto de entrada guiado para encontrar as ferramentas certas para suas necessidades de gestão marinha",
       "it": "Punto di ingresso guidato per trovare gli strumenti giusti per le tue esigenze di gestione marina",
       "no": "Veiledet innganspunkt for å finne de rette verktøyene for dine marine forvaltningsbehov",
-      "el": "Guided entry point to find the right tools for your marine management needs"
+      "el": "Καθοδηγούμενο σημείο εισόδου για να βρείτε τα κατάλληλα εργαλεία για τις ανάγκες θαλάσσιας διαχείρισής σας"
     },
     "ui.sidebar.import_data": {
       "en": "Import Data",
@@ -164,7 +164,7 @@
       "pt": "Importar Dados",
       "it": "Importa Dati",
       "no": "Importer data",
-      "el": "Εισαγωγή Δεδομένα"
+      "el": "Εισαγωγή Δεδομένων"
     },
     "ui.sidebar.leverage_point_analysis": {
       "en": "Leverage Point Analysis",
@@ -175,7 +175,7 @@
       "pt": "Análise de Pontos de Alavancagem",
       "it": "Analisi dei Punti di Leva",
       "no": "Påvirkningspunktanalyse",
-      "el": "Σημείο μόχλευσης Ανάλυση"
+      "el": "Ανάλυση Σημείων Μόχλευσης"
     },
     "ui.sidebar.load_a_previously_saved_project": {
       "en": "Load a previously saved project",
@@ -186,7 +186,7 @@
       "pt": "Carregar um projeto guardado anteriormente",
       "it": "Carica un progetto salvato in precedenza",
       "no": "Last inn et tidligere lagret prosjekt",
-      "el": "Load a previously saved project"
+      "el": "Φόρτωση ενός προηγουμένως αποθηκευμένου έργου"
     },
     "ui.sidebar.local_storage": {
       "en": "Local Folder",
@@ -197,7 +197,7 @@
       "pt": "Pasta Local",
       "it": "Cartella Locale",
       "no": "Lokal Mappe",
-      "el": "Local Folder"
+      "el": "Τοπικός Φάκελος"
     },
     "ui.sidebar.save_to_local_folder": {
       "en": "Save project to your local folder",
@@ -208,7 +208,7 @@
       "pt": "Salvar projeto na sua pasta local",
       "it": "Salva progetto nella tua cartella locale",
       "no": "Lagre prosjekt til din lokale mappe",
-      "el": "Αποθήκευση Έργο to your local folder"
+      "el": "Αποθήκευση έργου στον τοπικό σας φάκελο"
     },
     "ui.sidebar.load_from_local_folder": {
       "en": "Load project from your local folder",
@@ -219,7 +219,7 @@
       "pt": "Carregar projeto da sua pasta local",
       "it": "Carica progetto dalla tua cartella locale",
       "no": "Last prosjekt fra din lokale mappe",
-      "el": "Load project from your local folder"
+      "el": "Φόρτωση έργου από τον τοπικό σας φάκελο"
     },
     "ui.sidebar.loop_detection": {
       "en": "Loop Detection",
@@ -241,7 +241,7 @@
       "pt": "Navigate to",
       "it": "Navigate to",
       "no": "Naviger til ",
-      "el": "Navigate to "
+      "el": "Μετάβαση σε "
     },
     "ui.sidebar.navigating_to_s": {
       "en": "Navigating to %s...",
@@ -252,7 +252,7 @@
       "pt": "Navegando para %s...",
       "it": "Navigando verso %s...",
       "no": "Navigerer til %s...",
-      "el": "Navigating to %s..."
+      "el": "Μετάβαση σε %s..."
     },
     "ui.sidebar.network_metrics": {
       "en": "Network Metrics",
@@ -263,7 +263,7 @@
       "pt": "Métricas de Rede",
       "it": "Metriche di Rete",
       "no": "Nettverksmålinger",
-      "el": "Δίκτυο Μετρικές"
+      "el": "Μετρικές Δικτύου"
     },
     "ui.sidebar.overview_of_your_project_status_and_key_metrics": {
       "en": "Overview of your project status and key metrics",
@@ -274,7 +274,7 @@
       "pt": "Visão geral do status do projeto e métricas-chave",
       "it": "Panoramica dello stato del progetto e metriche chiave",
       "no": "Oversikt over prosjektstatus og nøkkelparametre",
-      "el": "Επισκόπηση of your project status and key metrics"
+      "el": "Επισκόπηση της κατάστασης του έργου σας και βασικών μετρήσεων"
     },
     "ui.sidebar.pims": {
       "en": "PIMS",
@@ -296,7 +296,7 @@
       "pt": "Módulo PIMS",
       "it": "Modulo PIMS",
       "no": "PIMS-modul",
-      "el": "PIMS Module"
+      "el": "Μονάδα PIMS"
     },
     "ui.sidebar.prepare_report": {
       "en": "Prepare Report",
@@ -307,7 +307,7 @@
       "pt": "Preparar Relatório",
       "it": "Prepara Report",
       "no": "Forbered rapport",
-      "el": "Prepare Report"
+      "el": "Προετοιμασία Αναφοράς"
     },
     "ui.sidebar.project_setup": {
       "en": "Project Setup",
@@ -318,7 +318,7 @@
       "pt": "Configuração do Projeto",
       "it": "Configurazione Progetto",
       "no": "Prosjektoppsett",
-      "el": "Έργο Setup"
+      "el": "Ρύθμιση Έργου"
     },
     "ui.sidebar.quick_actions": {
       "en": "Quick Actions",
@@ -329,7 +329,7 @@
       "pt": "Ações Rápidas",
       "it": "Azioni Rapide",
       "no": "Hurtighandlinger",
-      "el": "Quick Actions"
+      "el": "Γρήγορες Ενέργειες"
     },
     "ui.sidebar.resources_risks": {
       "en": "Resources & Risks",
@@ -340,7 +340,7 @@
       "pt": "Recursos e Riscos",
       "it": "Risorse e Rischi",
       "no": "Ressurser og risikoer",
-      "el": "Resources & Risks"
+      "el": "Πόροι & Κίνδυνοι"
     },
     "ui.sidebar.response_measures": {
       "en": "Response Measures",
@@ -351,7 +351,7 @@
       "pt": "Medidas de Resposta",
       "it": "Misure di Risposta",
       "no": "Responstiltak",
-      "el": "Απόκριση Μέτρα"
+      "el": "Μέτρα Απόκρισης"
     },
     "ui.sidebar.response_validation": {
       "en": "Response & Validation",
@@ -362,7 +362,7 @@
       "pt": "Resposta e Validação",
       "it": "Risposta e Validazione",
       "no": "Respons og validering",
-      "el": "Απόκριση & Validation"
+      "el": "Απόκριση & Επικύρωση"
     },
     "ui.sidebar.save_your_curr_proj_dat_incl_all_pims_isa_ent_and_": {
       "en": "Save your current project data, including all PIMS, ISA entries, and analysis results",
@@ -373,7 +373,7 @@
       "pt": "Guarde os dados do seu projeto atual, incluindo todas as entradas PIMS, ISA e resultados de análise",
       "it": "Salva i dati del progetto corrente, incluse tutte le voci PIMS, ISA e i risultati dell'analisi",
       "no": "Lagre dine nåværende prosjektdata, inkludert alle PIMS, ISA-oppføringer og analyseresultater",
-      "el": "Αποθήκευση your current project data, including all PIMS, ISA entries, and analysis results"
+      "el": "Αποθηκεύστε τα τρέχοντα δεδομένα του έργου σας, συμπεριλαμβανομένων όλων των καταχωρήσεων PIMS, ISA και αποτελεσμάτων ανάλυσης"
     },
     "ui.sidebar.scenario_builder": {
       "en": "Scenario Builder",
@@ -384,7 +384,7 @@
       "pt": "Construtor de Cenários",
       "it": "Costruttore di Scenari",
       "no": "Scenariobygger",
-      "el": "Σενάριο Builder"
+      "el": "Δημιουργός Σεναρίων"
     },
     "ui.sidebar.ses_visualization": {
       "en": "SES Visualization",
@@ -395,7 +395,7 @@
       "pt": "Visualização SES",
       "it": "Visualizzazione SES",
       "no": "SES-visualisering",
-      "el": "SES Οπτικοποίηση"
+      "el": "Οπτικοποίηση SES"
     },
     "ui.sidebar.simplification": {
       "en": "Simplification",
@@ -428,7 +428,7 @@
       "pt": "Entrada Padrão",
       "it": "Inserimento Standard",
       "no": "Standard inngang",
-      "el": "Standard Entry"
+      "el": "Τυπική Εισαγωγή"
     },
     "ui.sidebar.template_based": {
       "en": "Template-Based",
@@ -439,7 +439,7 @@
       "pt": "Baseado em Modelos",
       "it": "Basato su Modelli",
       "no": "Malbasert",
-      "el": "Template-Based"
+      "el": "Βασισμένο σε Πρότυπα"
     },
     "ui.sidebar.template_based_ses_creation": {
       "en": "Templates",
@@ -483,7 +483,7 @@
       "pt": "Sistema de Gestão de Informação de Projetos para planeamento e acompanhamento de iniciativas de gestão marinha",
       "it": "Sistema di Gestione delle Informazioni di Progetto per pianificare e monitorare le iniziative di gestione marina",
       "no": "Prosjektinformasjonsstyringssystem for planlegging og oppfølging av marine forvaltningsinitiativ",
-      "el": "Πληροφορίες έργου Διαχείριση System for planning and tracking your marine management initiatives"
+      "el": "Σύστημα Διαχείρισης Πληροφοριών Έργου για τον σχεδιασμό και την παρακολούθηση πρωτοβουλιών θαλάσσιας διαχείρισης"
     },
     "ui.sidebar.tooltip.ai_guided_ses": {
       "en": "Guided question-based SES creation with AI assistance to help you build your model step by step",
@@ -494,7 +494,7 @@
       "pt": "Criação SES guiada por perguntas com assistência de IA para ajudá-lo a construir seu modelo passo a passo",
       "it": "Creazione SES guidata da domande con assistenza IA per aiutarti a costruire il tuo modello passo dopo passo",
       "no": "Veiledet spørsmålsbasert SES-opprettelse med AI-assistanse for å hjelpe deg med å bygge modellen din trinn for trinn",
-      "el": "Guided question-based SES creation with AI assistance to help you build your model step by step"
+      "el": "Καθοδηγούμενη δημιουργία SES βασισμένη σε ερωτήσεις με βοήθεια AI για να σας βοηθήσει να δημιουργήσετε το μοντέλο σας βήμα προς βήμα"
     },
     "ui.sidebar.tooltip.template_based_ses": {
       "en": "Start from pre-built SES templates for common marine management scenarios (pollution, overfishing, tourism)",
@@ -505,7 +505,7 @@
       "pt": "Comece a partir de modelos SES pré-construídos para cenários comuns de gestão marinha (poluição, sobrepesca, turismo)",
       "it": "Inizia da modelli SES precostituiti per scenari comuni di gestione marina (inquinamento, sovrapesca, turismo)",
       "no": "Start fra forhåndsbygde SES-maler for vanlige marine forvaltningsscenarier (forurensning, overfiske, turisme)",
-      "el": "Έναρξη from pre-built SES templates for common marine management scenarios (pollution, overfishing, tourism)"
+      "el": "Ξεκινήστε από προκατασκευασμένα πρότυπα SES για κοινά σενάρια θαλάσσιας διαχείρισης (ρύπανση, υπεραλίευση, τουρισμός)"
     },
     "ui.sidebar.tooltip.create_ses": {
       "en": "Create your Social-Ecological System using structured methods: standard DAPSI(W)R(M) framework, AI guidance, or templates",
@@ -516,7 +516,7 @@
       "pt": "Crie seu Sistema Sócio-Ecológico usando métodos estruturados: estrutura DAPSI(W)R(M) padrão, orientação de IA ou modelos",
       "it": "Crea il tuo Sistema Socio-Ecologico utilizzando metodi strutturati: framework DAPSI(W)R(M) standard, guida IA o modelli",
       "no": "Opprett ditt sosial-økologiske system ved hjelp av strukturerte metoder: standard DAPSI(W)R(M)-rammeverk, AI-veiledning eller maler",
-      "el": "Δημιουργία your Social-Ecological System using structured methods: standard DAPSI(W)R(M) framework, AI guidance, or templates"
+      "el": "Δημιουργήστε το Κοινωνικο-Οικολογικό σας Σύστημα χρησιμοποιώντας δομημένες μεθόδους: τυπικό πλαίσιο DAPSI(W)R(M), καθοδήγηση AI ή πρότυπα"
     },
     "ui.sidebar.tooltip.ses_visualization": {
       "en": "Interactive visualization of your Social-Ecological System network showing connections, feedback loops, and system structure",
@@ -527,7 +527,7 @@
       "pt": "Visualização interativa da rede do seu Sistema Sócio-Ecológico mostrando conexões, ciclos de retroalimentação e estrutura do sistema",
       "it": "Visualizzazione interattiva della rete del tuo Sistema Socio-Ecologico che mostra connessioni, cicli di feedback e struttura del sistema",
       "no": "Interaktiv visualisering av ditt sosial-økologiske systemnettverksom viser forbindelser, tilbakekoblingssløyfer og systemstruktur",
-      "el": "Interactive visualization of your Social-Ecological System network showing connections, feedback loops, and system structure"
+      "el": "Διαδραστική οπτικοποίηση του δικτύου του Κοινωνικο-Οικολογικού σας Συστήματος που δείχνει συνδέσεις, βρόχους ανάδρασης και δομή συστήματος"
     },
     "ui.sidebar.tooltip.analysis_tools_beginner": {
       "en": "Essential network analysis tools for understanding feedback loops and identifying key intervention points in your SES",
@@ -538,7 +538,7 @@
       "pt": "Ferramentas essenciais de análise de rede para compreender ciclos de retroalimentação e identificar pontos-chave de intervenção no seu SES",
       "it": "Strumenti essenziali di analisi di rete per comprendere i cicli di feedback e identificare i punti chiave di intervento nel tuo SES",
       "no": "Essensielle nettverksanalyseverktøy for å forstå tilbakekoblingssløyfer og identifisere sentrale intervensjonspunkter i SES-en din",
-      "el": "Essential network analysis tools for understanding feedback loops and identifying key intervention points in your SES"
+      "el": "Βασικά εργαλεία ανάλυσης δικτύου για την κατανόηση βρόχων ανάδρασης και τον εντοπισμό βασικών σημείων παρέμβασης στο SES σας"
     },
     "ui.sidebar.tooltip.analysis_tools_advanced": {
       "en": "Advanced network analysis and metrics tools including centrality measures, BOT analysis, and model simplification techniques",
@@ -549,7 +549,7 @@
       "pt": "Ferramentas avançadas de análise de rede e métricas, incluindo medidas de centralidade, análise BOT e técnicas de simplificação de modelos",
       "it": "Strumenti avanzati di analisi di rete e metriche incluse misure di centralità, analisi BOT e tecniche di semplificazione del modello",
       "no": "Avanserte nettverksanalyse- og metrikkverktøy inkludert sentralitetsmål, BOT-analyse og modellforenklingsteknkker",
-      "el": "Προχωρημένος Δίκτυο Ανάλυση and metrics tools including centrality measures, BOT analysis, and model simplification techniques"
+      "el": "Προηγμένα εργαλεία ανάλυσης δικτύου και μετρικών, συμπεριλαμβανομένων μέτρων κεντρικότητας, ανάλυσης BOT και τεχνικών απλοποίησης μοντέλου"
     },
     "ui.sidebar.tooltip.response_validation": {
       "en": "Design response measures, build management scenarios, and validate your model with stakeholder feedback",
@@ -560,7 +560,7 @@
       "pt": "Projete medidas de resposta, construa cenários de gestão e valide seu modelo com feedback das partes interessadas",
       "it": "Progetta misure di risposta, costruisci scenari di gestione e convalida il tuo modello con il feedback delle parti interessate",
       "no": "Utform responstiltak, bygg forvaltningsscenarier og valider modellen din med tilbakemelding fra interessenter",
-      "el": "Design response measures, build management scenarios, and validate your model with stakeholder feedback"
+      "el": "Σχεδιάστε μέτρα απόκρισης, δημιουργήστε σενάρια διαχείρισης και επικυρώστε το μοντέλο σας με ανατροφοδότηση ενδιαφερομένων"
     },
     "ui.sidebar.tooltip.import_data": {
       "en": "Import existing data from Excel files with Elements and Connections sheets to quickly populate your SES model",
@@ -571,7 +571,7 @@
       "pt": "Importe dados existentes de arquivos Excel com planilhas de Elementos e Conexões para preencher rapidamente seu modelo SES",
       "it": "Importa dati esistenti da file Excel con fogli Elementi e Connessioni per popolare rapidamente il tuo modello SES",
       "no": "Importer eksisterende data fra Excel-filer med Element- og Forbindelsesark for raskt å fylle ut SES-modellen din",
-      "el": "Εισαγωγή existing data from Excel files with Elements and Connections sheets to quickly populate your SES model"
+      "el": "Εισάγετε υπάρχοντα δεδομένα από αρχεία Excel με φύλλα Στοιχείων και Συνδέσεων για γρήγορη συμπλήρωση του μοντέλου SES σας"
     },
     "ui.sidebar.tooltip.export_data": {
       "en": "Export your SES data and analysis results to Excel, Kumu JSON, or generate comprehensive analysis reports",
@@ -582,7 +582,7 @@
       "pt": "Exporte seus dados SES e resultados de análise para Excel, JSON Kumu ou gere relatórios de análise abrangentes",
       "it": "Esporta i tuoi dati SES e risultati di analisi in Excel, JSON Kumu o genera report di analisi completi",
       "no": "Eksporter SES-dataene dine og analyseresultater til Excel, Kumu JSON, eller generer omfattende analyserapporter",
-      "el": "Εξαγωγή your SES data and analysis results to Excel, Kumu JSON, or generate comprehensive analysis reports"
+      "el": "Εξάγετε τα δεδομένα SES και τα αποτελέσματα ανάλυσης σε Excel, Kumu JSON ή δημιουργήστε ολοκληρωμένες αναφορές ανάλυσης"
     },
     "ui.sidebar.tooltip.prepare_report": {
       "en": "Generate a comprehensive analysis report combining loop detection and leverage point analysis results (requires both analyses to be completed)",
@@ -593,7 +593,7 @@
       "pt": "Gere um relatório de análise abrangente combinando resultados de deteção de ciclos e análise de pontos de alavancagem (requer ambas as análises concluídas)",
       "it": "Genera un report di analisi completo che combina i risultati del rilevamento dei cicli e dell'analisi dei punti di leva (richiede che entrambe le analisi siano completate)",
       "no": "Generer en omfattende analyserapport som kombinerer resultater fra sløyfedeteksjon og påvirkningspunktanalyse (krever at begge analysene er fullført)",
-      "el": "Generate a comprehensive analysis report combining loop detection and leverage point analysis results (requires both analyses to be completed)"
+      "el": "Δημιουργήστε μια ολοκληρωμένη αναφορά ανάλυσης συνδυάζοντας αποτελέσματα ανίχνευσης βρόχων και ανάλυσης σημείων μόχλευσης (απαιτούνται και οι δύο αναλύσεις)"
     },
     "ui.sidebar.tooltip.network_metrics": {
       "en": "Calculate network centrality metrics (degree, betweenness, closeness, eigenvector, PageRank) to identify the most important and influential nodes in your system",
@@ -604,7 +604,7 @@
       "pt": "Calcule métricas de centralidade de rede (grau, intermediação, proximidade, vetor próprio, PageRank) para identificar os nós mais importantes e influentes no seu sistema",
       "it": "Calcola le metriche di centralità della rete (grado, betweenness, closeness, eigenvector, PageRank) per identificare i nodi più importanti e influenti nel tuo sistema",
       "no": "Beregn nettverkssentralitetsmålinger (grad, mellomliggende sentralitet, nærhetssentralitet, egenvektor, PageRank) for å identifisere de viktigste og mest innflytelsesrike nodene i systemet ditt",
-      "el": "Υπολογισμός Δίκτυο Κεντρικότητα Μετρικές (degree, betweenness, closeness, eigenvector, PageRank) to identify the most important and influential nodes in your system"
+      "el": "Υπολογίστε μετρικές κεντρικότητας δικτύου (βαθμός, μεσολάβηση, εγγύτητα, ιδιοδιάνυσμα, PageRank) για τον εντοπισμό των πιο σημαντικών και επιδραστικών κόμβων στο σύστημά σας"
     },
     "ui.sidebar.tooltip.loop_detection": {
       "en": "Identify feedback loops (reinforcing and balancing) in your causal network to understand system behavior, resilience, and potential intervention points",
@@ -615,7 +615,7 @@
       "pt": "Identifique ciclos de retroalimentação (reforçadores e equilibradores) na sua rede causal para compreender o comportamento do sistema, resiliência e pontos potenciais de intervenção",
       "it": "Identifica i cicli di feedback (di rinforzo e di bilanciamento) nella tua rete causale per comprendere il comportamento del sistema, la resilienza e i potenziali punti di intervento",
       "no": "Identifiser tilbakekoblingssløyfer (forsterkende og balanserende) i ditt årsaksnettverk for å forstå systemadferd, motstandsdyktighet og potensielle intervensjonspunkter",
-      "el": "Identify feedback loops (reinforcing and balancing) in your causal network to understand system behavior, resilience, and potential intervention points"
+      "el": "Εντοπίστε βρόχους ανάδρασης (ενισχυτικούς και εξισορροπητικούς) στο αιτιακό σας δίκτυο για να κατανοήσετε τη συμπεριφορά του συστήματος, την ανθεκτικότητα και τα πιθανά σημεία παρέμβασης"
     },
     "ui.sidebar.tooltip.leverage_point_analysis": {
       "en": "Identify high-leverage intervention points by combining centrality metrics and loop participation to find nodes where small changes can have large system-wide effects",
@@ -626,7 +626,7 @@
       "pt": "Identifique pontos de intervenção de alta alavancagem combinando métricas de centralidade e participação em ciclos para encontrar nós onde pequenas mudanças podem ter grandes efeitos em todo o sistema",
       "it": "Identifica punti di intervento ad alta leva combinando metriche di centralità e partecipazione ai cicli per trovare nodi dove piccoli cambiamenti possono avere grandi effetti sull'intero sistema",
       "no": "Identifiser høye påvirkningspunkter for intervensjon ved å kombinere sentralitetsmålinger og sløyfedeltakelse for å finne noder der små endringer kan ha store systemomfattende effekter",
-      "el": "Identify high-leverage intervention points by combining centrality metrics and loop participation to find nodes where small changes can have large system-wide effects"
+      "el": "Εντοπίστε σημεία παρέμβασης υψηλής μόχλευσης συνδυάζοντας μετρικές κεντρικότητας και συμμετοχή σε βρόχους για να βρείτε κόμβους όπου μικρές αλλαγές μπορούν να έχουν μεγάλες επιπτώσεις σε ολόκληρο το σύστημα"
     },
     "ui.sidebar.tooltip.bot_analysis": {
       "en": "Balance Over Time (BOT) analysis identifies structural patterns that may lead to policy resistance, unintended consequences, or system delays requiring careful intervention design",
@@ -637,7 +637,7 @@
       "pt": "A análise de Equilíbrio ao Longo do Tempo (BOT) identifica padrões estruturais que podem levar à resistência a políticas, consequências não intencionais ou atrasos do sistema que requerem design cuidadoso de intervenção",
       "it": "L'analisi di Balance Over Time (BOT) identifica modelli strutturali che possono portare a resistenza politica, conseguenze indesiderate o ritardi del sistema che richiedono una progettazione attenta dell'intervento",
       "no": "Balance Over Time (BOT)-analyse identifiserer strukturelle mønstre som kan føre til politikk-motstand, utilsiktede konsekvenser eller systemforsinkelser som krever nøye intervensjonsdesign",
-      "el": "Balance Over Time (BOT) analysis identifies structural patterns that may lead to policy resistance, unintended consequences, or system delays requiring careful intervention design"
+      "el": "Η ανάλυση Ισορροπίας στο Χρόνο (BOT) εντοπίζει δομικά πρότυπα που μπορεί να οδηγήσουν σε αντίσταση πολιτικής, ακούσιες συνέπειες ή καθυστερήσεις συστήματος που απαιτούν προσεκτικό σχεδιασμό παρέμβασης"
     },
     "ui.sidebar.tooltip.simplification": {
       "en": "Simplify your network by identifying and removing less important nodes while preserving the core system structure, feedback loops, and key relationships for clearer communication",
@@ -648,7 +648,7 @@
       "pt": "Simplifique sua rede identificando e removendo nós menos importantes enquanto preserva a estrutura central do sistema, ciclos de retroalimentação e relações-chave para comunicação mais clara",
       "it": "Semplifica la tua rete identificando e rimuovendo i nodi meno importanti preservando la struttura centrale del sistema, i cicli di feedback e le relazioni chiave per una comunicazione più chiara",
       "no": "Forenkle nettverket ditt ved å identifisere og fjerne mindre viktige noder samtidig som du bevarer kjernesystemstrukturen, tilbakekoblingssløyfer og nøkkelrelasjoner for klarere kommunikasjon",
-      "el": "Απλοποίηση your network by identifying and removing less important nodes while preserving the core system structure, feedback loops, and key relationships for clearer communication"
+      "el": "Απλοποιήστε το δίκτυό σας εντοπίζοντας και αφαιρώντας λιγότερο σημαντικούς κόμβους, διατηρώντας τη βασική δομή του συστήματος, τους βρόχους ανάδρασης και τις βασικές σχέσεις για σαφέστερη επικοινωνία"
     },
     "ui.sidebar.import_from_excel": {
       "en": "Import from Excel",
@@ -659,7 +659,7 @@
       "pt": "Importar do Excel",
       "it": "Importa da Excel",
       "no": "Importer fra Excel",
-      "el": "Εισαγωγή from Excel"
+      "el": "Εισαγωγή από Excel"
     },
     "ui.sidebar.load_ses_models": {
       "en": "Load SES Models",
@@ -670,7 +670,7 @@
       "pt": "Carregar Modelos SES",
       "it": "Carica Modelli SES",
       "no": "Last inn SES-modeller",
-      "el": "Load SES Models"
+      "el": "Φόρτωση Μοντέλων SES"
     },
     "ui.sidebar.tooltip.load_ses_models": {
       "en": "Load pre-built SES models from the SESModels directory organized by Demonstration Area",
@@ -681,7 +681,7 @@
       "pt": "Carregue modelos SES pré-construídos do diretório SESModels organizados por Área de Demonstração",
       "it": "Carica modelli SES precostituiti dalla directory SESModels organizzati per Area di Dimostrazione",
       "no": "Last inn forhåndsbygde SES-modeller fra SESModels-katalogen organisert etter Demonstrasjonsområde",
-      "el": "Load pre-built SES models from the SESModels directory organized by Demonstration Area"
+      "el": "Φορτώστε προκατασκευασμένα μοντέλα SES από τον κατάλογο SESModels οργανωμένα ανά Περιοχή Επίδειξης"
     },
     "ui.sidebar.boolean_analysis": {
       "en": "Boolean & Stability",
@@ -691,8 +691,8 @@
       "lt": "Būlio ir stabilumas",
       "pt": "Booleano e Estabilidade",
       "it": "Booleano e Stabilità",
-      "no": "Boolean & Stability",
-      "el": "Boolean & Stability"
+      "no": "Boolsk & Stabilitet",
+      "el": "Μπουλ & Σταθερότητα"
     },
     "ui.sidebar.tooltip.boolean_analysis": {
       "en": "Analyze system stability through Laplacian eigenvalue spectra and Boolean network attractor dynamics to understand resilience",
@@ -702,8 +702,8 @@
       "lt": "Analizuokite sistemos stabilumą naudodami Laplaso tikrinių verčių spektrus ir Būlio tinklo atraktorių dinamiką",
       "pt": "Analise a estabilidade do sistema através de espectros de autovalores Laplacianos e dinâmica de atratores de redes booleanas",
       "it": "Analizza la stabilità del sistema attraverso spettri di autovalori laplaciani e dinamica degli attrattori di reti booleane",
-      "no": "Analyze system stability through Laplacian eigenvalue spectra and Boolean network attractor dynamics",
-      "el": "Analyze system stability through Laplacian eigenvalue spectra and Boolean network attractor dynamics"
+      "no": "Analyser systemstabilitet gjennom Laplacian egenverdispektra og boolske nettverksattraktordynamikker",
+      "el": "Αναλύστε τη σταθερότητα του συστήματος μέσω φασμάτων ιδιοτιμών Laplace και δυναμικής ελκυστών Μπουλ δικτύων"
     },
     "ui.sidebar.dynamic_simulation": {
       "en": "Dynamic Simulation",
@@ -713,8 +713,8 @@
       "lt": "Dinaminė simuliacija",
       "pt": "Simulação Dinâmica",
       "it": "Simulazione Dinamica",
-      "no": "Dynamic Simulation",
-      "el": "Dynamic Simulation"
+      "no": "Dynamisk Simulering",
+      "el": "Δυναμική Προσομοίωση"
     },
     "ui.sidebar.tooltip.dynamic_simulation": {
       "en": "Run deterministic time-series simulations and Monte Carlo state-shift robustness analysis on your SES network",
@@ -724,8 +724,8 @@
       "lt": "Vykdykite deterministines laiko eilučių simuliacijas ir Monte Karlo būsenos pokyčių patikimumo analizę savo SES tinkle",
       "pt": "Execute simulações determinísticas de séries temporais e análise de robustez Monte Carlo de mudança de estado na sua rede SES",
       "it": "Esegui simulazioni deterministiche di serie temporali e analisi di robustezza Monte Carlo del cambiamento di stato sulla tua rete SES",
-      "no": "Run deterministic time-series simulations and Monte Carlo state-shift robustness analysis on your SES network",
-      "el": "Run deterministic time-series simulations and Monte Carlo state-shift robustness analysis on your SES network"
+      "no": "Kjør deterministiske tidsserie-simuleringer og Monte Carlo tilstandsendring-robusthetsanalyse på SES-nettverket ditt",
+      "el": "Εκτελέστε ντετερμινιστικές προσομοιώσεις χρονοσειρών και ανάλυση αντοχής μετατόπισης κατάστασης Monte Carlo στο δίκτυο SES σας"
     },
     "ui.sidebar.intervention_analysis": {
       "en": "Intervention Analysis",
@@ -735,8 +735,8 @@
       "lt": "Intervencijos analizė",
       "pt": "Análise de Intervenção",
       "it": "Analisi dell'Intervento",
-      "no": "Intervention Analysis",
-      "el": "Intervention Analysis"
+      "no": "Intervensjonsanalyse",
+      "el": "Ανάλυση Παρέμβασης"
     },
     "ui.sidebar.tooltip.intervention_analysis": {
       "en": "Design management interventions, simulate their effects on the SES network, and compare multiple intervention scenarios side by side",
@@ -746,8 +746,8 @@
       "lt": "Projektuokite valdymo intervencijas, simuliuokite jų poveikį SES tinklui ir palyginkite kelis intervencijų scenarijus greta",
       "pt": "Projete intervenções de gestão, simule seus efeitos na rede SES e compare múltiplos cenários de intervenção lado a lado",
       "it": "Progetta interventi di gestione, simula i loro effetti sulla rete SES e confronta più scenari di intervento fianco a fianco",
-      "no": "Design management interventions, simulate their effects on the SES network, and compare multiple intervention scenarios side by side",
-      "el": "Design management interventions, simulate their effects on the SES network, and compare multiple intervention scenarios side by side"
+      "no": "Utform forvaltningsintervensjoner, simuler effektene på SES-nettverket, og sammenlign flere intervensjonsscenarier side om side",
+      "el": "Σχεδιάστε παρεμβάσεις διαχείρισης, προσομοιώστε τις επιδράσεις τους στο δίκτυο SES και συγκρίνετε πολλαπλά σενάρια παρέμβασης πλάι-πλάι"
     },
     "ui.sidebar.graphical_ses_creator": {
       "en": "Graphical SES Creator",
@@ -757,8 +757,8 @@
       "lt": "Grafinis SES kūrėjas",
       "pt": "Criador Gráfico de SES",
       "it": "Creatore Grafico di SES",
-      "no": "Graphical SES Creator",
-      "el": "Graphical SES Creator"
+      "no": "Grafisk SES-opprettar",
+      "el": "Γραφικός Δημιουργός SES"
     },
     "ui.sidebar.graphical_ses_tooltip": {
       "en": "Build your SES network step-by-step with AI guidance",
@@ -768,8 +768,8 @@
       "lt": "Kurkite savo SES tinklą žingsnis po žingsnio su DI pagalba",
       "pt": "Construa a sua rede SES passo a passo com orientação de IA",
       "it": "Costruisci la tua rete SES passo dopo passo con la guida dell'IA",
-      "no": "Build your SES network step-by-step with AI guidance",
-      "el": "Build your SES network step-by-step with AI guidance"
+      "no": "Bygg SES-nettverket ditt steg for steg med AI-veiledning",
+      "el": "Δημιουργήστε το δίκτυο SES σας βήμα-βήμα με καθοδήγηση AI"
     }
   }
 }

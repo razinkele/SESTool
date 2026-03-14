@@ -9,6 +9,7 @@
 
 response_measures_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     fluidRow(
@@ -324,7 +325,7 @@ response_measures_ui <- function(id, i18n) {
   )
 }
 
-response_measures_server <- function(id, project_data_reactive, i18n) {
+response_measures_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -344,24 +345,24 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
         Status = character(),
         Stakeholders = character(),
         Barriers = character(),
-        DateAdded = character(),
-        stringsAsFactors = FALSE
+        DateAdded = character()
+        
       ),
       impacts = data.frame(
         ResponseID = character(),
         ProblemType = character(),
         ProblemElementID = character(),
         ImpactStrength = character(),
-        Timeframe = character(),
-        stringsAsFactors = FALSE
+        Timeframe = character()
+        
       ),
       milestones = data.frame(
         ResponseID = character(),
         Milestone = character(),
         TargetDate = character(),
         Status = character(),
-        Notes = character(),
-        stringsAsFactors = FALSE
+        Notes = character()
+        
       ),
       counter = 0
     )
@@ -387,8 +388,8 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
         Status = input$rm_status,
         Stakeholders = input$rm_stakeholders,
         Barriers = input$rm_barriers,
-        DateAdded = as.character(Sys.Date()),
-        stringsAsFactors = FALSE
+        DateAdded = as.character(Sys.Date())
+        
       )
 
       response_data$measures <- rbind(response_data$measures, new_row)
@@ -444,8 +445,8 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
         ProblemType = input$impact_problem,
         ProblemElementID = input$impact_element_id,
         ImpactStrength = input$impact_strength,
-        Timeframe = input$impact_timeframe,
-        stringsAsFactors = FALSE
+        Timeframe = input$impact_timeframe
+        
       )
 
       response_data$impacts <- rbind(response_data$impacts, new_row)
@@ -549,8 +550,8 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
         Milestone = input$impl_milestone,
         TargetDate = as.character(input$impl_date),
         Status = input$impl_status,
-        Notes = input$impl_notes,
-        stringsAsFactors = FALSE
+        Notes = input$impl_notes
+        
       )
 
       response_data$milestones <- rbind(response_data$milestones, new_row)
@@ -725,6 +726,7 @@ response_measures_server <- function(id, project_data_reactive, i18n) {
 
 response_validation_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
   fluidPage(
     h2(i18n$t("modules.response.measures.model_validation")),
     p(i18n$t("modules.response.track_validation_activities_and_model_confidence_a")),
@@ -732,7 +734,7 @@ response_validation_ui <- function(id, i18n) {
   )
 }
 
-response_validation_server <- function(id, project_data_reactive, i18n) {
+response_validation_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     # Placeholder
   })

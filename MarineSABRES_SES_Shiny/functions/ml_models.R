@@ -20,8 +20,8 @@ if (!requireNamespace("torch", quietly = TRUE)) {
   stop("Package 'torch' is required for ML features. Install with: install.packages('torch')")
 }
 
-# Load context embeddings module (Phase 2)
-if (file.exists("functions/ml_context_embeddings.R")) {
+# Load context embeddings module (Phase 2) - only if not already loaded
+if (!exists("context_embeddings") && file.exists("functions/ml_context_embeddings.R")) {
   source("functions/ml_context_embeddings.R", local = TRUE)
 }
 

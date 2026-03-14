@@ -3,22 +3,32 @@
 # Purpose: AI/ML algorithms for intelligent connection suggestions
 #
 # This module contains pure functions for generating, filtering, and ranking
-# connections between DAPSI(W)R(M) framework elements. It uses keyword-based
-# semantic matching and polarity detection to suggest relevant ecological
-# relationships.
+# connections between DAPSI(W)R(M) framework elements. It uses a multi-layered
+# scoring approach:
+#   1. Knowledge base lookup (curated marine SES connections)
+#   2. ML model predictions (trained neural network, when available)
+#   3. TF-IDF weighted keyword matching with synonym expansion
+#   4. Negation-aware polarity detection
 #
 # Author: Refactored from ai_isa_assistant_module.R
-# Date: 2026-01-04
+# Date: 2026-01-04 (ML integration: 2026-03-14)
 # Dependencies: Base R only (no Shiny, no reactivity)
+#   Optional: functions/ml_inference.R (for ML scoring)
+#   Optional: data/ses_connection_knowledge_base.R (for knowledge base)
 
 # ==============================================================================
-# POLARITY DETECTION
+# POLARITY DETECTION (Enhanced with negation + knowledge base)
 # ==============================================================================
 
 #' Detect Connection Polarity
 #'
 #' Determines whether a connection between two elements is positive (+) or
-#' negative (-) based on keyword analysis and DAPSI(W)R(M) framework rules.
+#' negative (-) based on:
+#'   1. Knowledge base lookup (highest priority)
+#'   2. Negation-aware phrase analysis
+#'   3. Compound phrase handling (e.g., "pollution reduction" = positive)
+#'   4. DAPSI(W)R(M) framework rules
+#'   5. Keyword matching (fallback)
 #'
 #' @param from_name Character string of source element name
 #' @param to_name Character string of target element name
@@ -29,10 +39,12 @@
 #' @return Character: "+" (positive/increasing) or "-" (negative/decreasing)
 #'
 #' @details
-#' Polarity detection uses:
-#' - Keyword matching for negative impacts (decline, degradation, loss)
-#' - Keyword matching for positive changes (increase, recovery, improvement)
-#' - Framework-specific rules (e.g., Responses → Pressures is typically "-")
+#' Polarity detection uses a layered approach:
+#' - Knowledge base: Returns known polarity from published case studies
+#' - Negation detection: Handles "no", "without", "prevent", "reduce", "ban on"
+#' - Compound phrases: "pollution reduction" -> positive (reducing negative)
+#' - Framework rules: e.g., Responses -> Pressures is typically "-"
+#' - Keywords: Matching for negative/positive impacts (fallback)
 #'
 #' @examples
 #' \dontrun{
@@ -41,10 +53,35 @@
 #'
 #' detect_polarity("Protection", "Biodiversity", "responses", "states")
 #' # Returns: "+" (protection increases biodiversity)
+#'
+#' detect_polarity("Pollution reduction", "Water quality", "responses", "pressures")
+#' # Returns: "-" (response reduces pressure)
 #' }
 #'
 #' @export
 detect_polarity <- function(from_name, to_name, from_type, to_type) {
+  # ---- Step 1: Knowledge base lookup (highest confidence) ----
+  if (exists("lookup_knowledge_base", mode = "function")) {
+    kb_result <- tryCatch(
+      lookup_knowledge_base(from_name, from_type, to_name, to_type),
+      error = function(e) NULL
+    )
+    if (!is.null(kb_result) && !is.null(kb_result$polarity)) {
+      debug_log(sprintf("Polarity from knowledge base: %s -> %s = '%s' (source: %s)",
+                         from_name, to_name, kb_result$polarity, kb_result$source),
+                "AI ISA CONNECTIONS")
+      return(kb_result$polarity)
+    }
+  }
+
+  # ---- Step 2: Negation-aware phrase analysis ----
+  from_lower <- tolower(from_name)
+  to_lower <- tolower(to_name)
+
+  # Analyze both element names for negation and compound phrases
+  from_analysis <- .analyze_polarity_phrase(from_lower)
+  to_analysis <- .analyze_polarity_phrase(to_lower)
+
   # Keywords that suggest negative impacts/changes
   negative_keywords <- c(
     "declin", "degrad", "loss", "reduc", "damag", "destruct", "pollut",
@@ -67,9 +104,6 @@ detect_polarity <- function(from_name, to_name, from_type, to_type) {
     "stop", "remov", "clean", "treat"
   )
 
-  from_lower <- tolower(from_name)
-  to_lower <- tolower(to_name)
-
   # Check characteristics of target element
   to_is_negative <- any(sapply(negative_keywords, function(kw) grepl(kw, to_lower)))
   to_is_positive <- any(sapply(positive_keywords, function(kw) grepl(kw, to_lower)))
@@ -77,16 +111,16 @@ detect_polarity <- function(from_name, to_name, from_type, to_type) {
   # Check if source is a mitigation action
   from_is_mitigation <- any(sapply(mitigation_keywords, function(kw) grepl(kw, from_lower)))
 
-  # Special case: Response Measures → Pressures
+  # ---- Step 3: Framework-specific rules with negation awareness ----
+
+  # Special case: Response Measures -> Pressures
   if (from_type == "responses" && to_type == "pressures") {
     # Response measures typically reduce pressures
     return("-")
   }
 
-  # Special case: Response Measures → States
+  # Special case: Response Measures -> States
   if (from_type == "responses" && to_type == "states") {
-    # If state is negative (decline, loss), response reduces it → "-"
-    # If state is positive (recovery, increase), response increases it → "+"
     if (to_is_negative) {
       return("-")  # Reduces bad state
     } else if (to_is_positive) {
@@ -95,16 +129,18 @@ detect_polarity <- function(from_name, to_name, from_type, to_type) {
     return("+")  # Default: responses improve states
   }
 
-  # Activities → Pressures
+  # Activities -> Pressures
   if (from_type == "activities" && to_type == "pressures") {
+    # If the activity is a mitigation/reduction activity, it reduces pressure
+    if (from_is_mitigation || from_analysis$sentiment == "positive") {
+      return("-")
+    }
     # Activities generally cause pressures
     return("+")
   }
 
-  # Pressures → States
+  # Pressures -> States
   if (from_type == "pressures" && to_type == "states") {
-    # If state is negative (fish stock decline), pressure increases it → "+"
-    # If state is positive (fish stock recovery), pressure reduces it → "-"
     if (to_is_negative) {
       return("+")  # Pressure increases negative state
     } else if (to_is_positive) {
@@ -113,12 +149,14 @@ detect_polarity <- function(from_name, to_name, from_type, to_type) {
     return("-")  # Default: pressures degrade states
   }
 
-  # States → Impacts
+  # States -> Impacts
   if (from_type == "states" && to_type == "impacts") {
-    # If state is negative and impact is negative → "+" (bad state causes bad impact)
-    # If state is positive and impact is positive → "+" (good state causes good impact)
     from_is_negative <- any(sapply(negative_keywords, function(kw) grepl(kw, from_lower)))
     from_is_positive <- any(sapply(positive_keywords, function(kw) grepl(kw, from_lower)))
+
+    # Account for negation in element names
+    if (from_analysis$negated && from_is_negative) from_is_negative <- FALSE
+    if (to_analysis$negated && to_is_negative) to_is_negative <- FALSE
 
     if ((from_is_negative && to_is_negative) || (from_is_positive && to_is_positive)) {
       return("+")
@@ -128,12 +166,13 @@ detect_polarity <- function(from_name, to_name, from_type, to_type) {
     return("-")  # Default: degraded states reduce services
   }
 
-  # Impacts → Welfare
+  # Impacts -> Welfare
   if (from_type == "impacts" && to_type == "welfare") {
-    # Negative impacts reduce welfare → "-"
-    # Positive impacts increase welfare → "+"
     from_is_negative <- any(sapply(negative_keywords, function(kw) grepl(kw, from_lower)))
     from_is_positive <- any(sapply(positive_keywords, function(kw) grepl(kw, from_lower)))
+
+    # Account for negation
+    if (from_analysis$negated && from_is_negative) from_is_negative <- FALSE
 
     if (from_is_negative) {
       return("-")
@@ -147,15 +186,57 @@ detect_polarity <- function(from_name, to_name, from_type, to_type) {
   return("+")
 }
 
+
+#' Analyze a phrase for polarity with negation detection (internal)
+#'
+#' Lightweight version of analyze_phrase_polarity for use within detect_polarity.
+#' Falls back to the full knowledge base version if available.
+#'
+#' @param phrase_lower Lowercase phrase to analyze
+#' @return List with sentiment, negated, base_sentiment
+#' @keywords internal
+.analyze_polarity_phrase <- function(phrase_lower) {
+  # Use the full knowledge base function if available
+
+  if (exists("analyze_phrase_polarity", mode = "function")) {
+    return(tryCatch(
+      analyze_phrase_polarity(phrase_lower),
+      error = function(e) list(sentiment = "neutral", negated = FALSE, base_sentiment = "neutral")
+    ))
+  }
+
+  # Inline fallback (minimal negation detection)
+  negation_words <- c("\\bno\\b", "\\bnot\\b", "\\bnon[- ]", "\\bwithout\\b",
+                       "\\bprevent", "\\bban\\b", "\\breduc", "\\bremov",
+                       "\\bcontrol", "\\blimit", "\\brestrict")
+
+  has_negation <- any(sapply(negation_words, function(p) grepl(p, phrase_lower, perl = TRUE)))
+
+  # Reversal compounds (negation of negative = positive)
+  reversal_compounds <- c("pollut.*reduc", "emission.*reduc", "pressure.*reduc",
+                           "litter.*reduc", "waste.*reduc", "noise.*reduc",
+                           "overfish.*prevent", "erosion.*control")
+  is_reversal <- any(sapply(reversal_compounds, function(p) grepl(p, phrase_lower, perl = TRUE)))
+
+  if (is_reversal) {
+    return(list(sentiment = "positive", negated = TRUE, base_sentiment = "negative"))
+  }
+
+  return(list(sentiment = "neutral", negated = has_negation, base_sentiment = "neutral"))
+}
+
+
 # ==============================================================================
-# RELEVANCE CALCULATION
+# RELEVANCE CALCULATION (Enhanced with KB + ML + TF-IDF)
 # ==============================================================================
 
 #' Calculate Semantic Relevance Between Elements
 #'
-#' Calculates a relevance score (0-1) between two elements based on keyword
-#' matching and connection type. Higher scores indicate stronger semantic
-#' relationships.
+#' Calculates a relevance score (0-1) between two elements using a multi-layered
+#' approach:
+#'   1. Knowledge base lookup (highest confidence)
+#'   2. ML model prediction (when available)
+#'   3. TF-IDF weighted keyword matching with synonym expansion
 #'
 #' @param from_name Character string of source element name
 #' @param to_name Character string of target element name
@@ -163,42 +244,129 @@ detect_polarity <- function(from_name, to_name, from_type, to_type) {
 #' @param to_type Character string of target element type
 #'
 #' @return Numeric relevance score between 0 and 1
-#'   - 0.9: High relevance (2+ keyword matches)
-#'   - 0.6: Moderate relevance (1 keyword match)
-#'   - 0.3: Low relevance (no keyword matches)
-#'   - 0.5: Default for unknown connection types
 #'
 #' @details
-#' Uses connection-type-specific keyword lists to identify semantically
-#' related elements. For example, "fishing" and "fish stock decline" would
-#' score high for an activities→pressures connection.
+#' The scoring layers are combined as follows:
+#' - If ML model is available: 0.3 * keyword_score + 0.7 * ml_score
+#' - If knowledge base matches: uses KB probability directly
+#' - Otherwise: TF-IDF weighted keyword matching with synonym bonus
 #'
 #' @examples
 #' \dontrun{
 #' calculate_relevance("Commercial Fishing", "Overfishing", "activities", "pressures")
-#' # Returns: 0.9 (high relevance - multiple keyword matches)
+#' # Returns: ~0.93 (knowledge base match)
 #'
 #' calculate_relevance("Tourism", "Fish Decline", "activities", "pressures")
-#' # Returns: 0.3 (low relevance - no keyword matches)
+#' # Returns: ~0.3 (low relevance - no keyword matches)
 #' }
 #'
 #' @export
 calculate_relevance <- function(from_name, to_name, from_type, to_type) {
-  # Normalize names to lowercase for comparison
+  # ---- Step 1: Try enhanced relevance with knowledge base + TF-IDF ----
+  if (exists("calculate_enhanced_relevance", mode = "function")) {
+    keyword_relevance <- tryCatch(
+      calculate_enhanced_relevance(from_name, to_name, from_type, to_type),
+      error = function(e) {
+        debug_log(sprintf("Enhanced relevance failed: %s, using basic", e$message),
+                  "AI ISA CONNECTIONS")
+        NULL
+      }
+    )
+  } else {
+    keyword_relevance <- NULL
+  }
+
+  # Fallback to basic keyword matching if enhanced is not available
+  if (is.null(keyword_relevance)) {
+    keyword_relevance <- .calculate_basic_relevance(from_name, to_name, from_type, to_type)
+  }
+
+  # ---- Step 2: ML scoring (optional, highest-quality signal) ----
+  ml_score <- NULL
+  if (exists("predict_connection_ml", mode = "function") &&
+      exists("ml_model_available", mode = "function")) {
+    if (ml_model_available()) {
+      tryCatch({
+        ml_result <- predict_connection_ml(
+          source_name = from_name,
+          target_name = to_name,
+          source_type = from_type,
+          target_type = to_type
+        )
+        if (!is.null(ml_result) && !is.null(ml_result$existence_probability)) {
+          ml_score <- ml_result$existence_probability  # 0-1 probability
+          debug_log(sprintf("ML score for %s -> %s: %.3f (method: %s)",
+                            from_name, to_name, ml_score,
+                            ml_result$method %||% "unknown"),
+                    "AI ISA CONNECTIONS")
+        }
+      }, error = function(e) {
+        debug_log(sprintf("ML scoring failed for %s -> %s: %s",
+                          from_name, to_name, e$message),
+                  "AI ISA CONNECTIONS")
+      })
+    }
+  }
+
+  # ---- Step 3: Combine scores ----
+  if (!is.null(ml_score)) {
+    # ML-weighted combination: ML signal is more reliable when available
+    relevance <- 0.3 * keyword_relevance + 0.7 * ml_score
+    debug_log(sprintf("Combined relevance for %s -> %s: %.3f (kw=%.3f, ml=%.3f)",
+                      from_name, to_name, relevance, keyword_relevance, ml_score),
+              "AI ISA CONNECTIONS")
+  } else {
+    relevance <- keyword_relevance  # Fallback to keyword/KB only
+  }
+
+  return(relevance)
+}
+
+
+#' Basic keyword-based relevance calculation (fallback)
+#'
+#' Original bag-of-words approach used when knowledge base and ML are not
+#' available. Kept as a reliable fallback.
+#'
+#' @param from_name Character string of source element name
+#' @param to_name Character string of target element name
+#' @param from_type Character string of source element type
+#' @param to_type Character string of target element type
+#'
+#' @return Numeric relevance score between 0 and 1
+#' @keywords internal
+.calculate_basic_relevance <- function(from_name, to_name, from_type, to_type) {
   from_lower <- tolower(from_name)
   to_lower <- tolower(to_name)
 
   # Keywords that suggest strong relationships
   connection_keywords <- list(
-    drivers_activities = c("fish", "food", "econom", "livelihood", "subsistence", "commerc", "industr", "recreat", "tourism", "develop", "demand", "need", "cultural", "spiritual"),
-    activities_pressures = c("fish", "extract", "harvest", "develop", "construct", "pollut", "discharge", "emission", "waste", "noise", "disturb", "remov", "introduc", "invasive"),
-    pressures_states = c("pollut", "nutrient", "contamin", "extract", "remov", "habitat", "species", "abundance", "diversity", "structure", "function", "ecosystem", "chemical", "physical", "biological"),
-    states_impacts = c("decline", "loss", "degrad", "change", "abundance", "diversity", "habitat", "ecosystem", "service", "provision", "regulat", "cultural", "support"),
-    impacts_welfare = c("food", "protein", "nutrition", "income", "livelihood", "employ", "health", "wellbeing", "recreation", "cultural", "spiritual", "aesthetic", "economic", "social"),
-    responses_pressures = c("regulat", "protect", "conserv", "restor", "manag", "monitor", "enforc", "limit", "restrict", "ban", "quota", "closure", "zone", "designation"),
-    welfare_responses = c("concern", "awareness", "demand", "advocacy", "pressure", "policy", "legislation", "management", "action", "intervention"),
-    responses_drivers = c("policy", "awareness", "education", "incentiv", "subsid", "tax", "regulation", "enforcement", "behavior", "demand"),
-    responses_activities = c("limit", "restrict", "ban", "regulat", "control", "manage", "permit", "license", "quota", "closure", "zone")
+    drivers_activities = c("fish", "food", "econom", "livelihood", "subsistence",
+                           "commerc", "industr", "recreat", "tourism", "develop",
+                           "demand", "need", "cultural", "spiritual"),
+    activities_pressures = c("fish", "extract", "harvest", "develop", "construct",
+                              "pollut", "discharge", "emission", "waste", "noise",
+                              "disturb", "remov", "introduc", "invasive"),
+    pressures_states = c("pollut", "nutrient", "contamin", "extract", "remov",
+                          "habitat", "species", "abundance", "diversity", "structure",
+                          "function", "ecosystem", "chemical", "physical", "biological"),
+    states_impacts = c("decline", "loss", "degrad", "change", "abundance",
+                        "diversity", "habitat", "ecosystem", "service", "provision",
+                        "regulat", "cultural", "support"),
+    impacts_welfare = c("food", "protein", "nutrition", "income", "livelihood",
+                         "employ", "health", "wellbeing", "recreation", "cultural",
+                         "spiritual", "aesthetic", "economic", "social"),
+    responses_pressures = c("regulat", "protect", "conserv", "restor", "manag",
+                             "monitor", "enforc", "limit", "restrict", "ban",
+                             "quota", "closure", "zone", "designation"),
+    welfare_responses = c("concern", "awareness", "demand", "advocacy", "pressure",
+                           "policy", "legislation", "management", "action",
+                           "intervention"),
+    responses_drivers = c("policy", "awareness", "education", "incentiv", "subsid",
+                           "tax", "regulation", "enforcement", "behavior", "demand"),
+    responses_activities = c("limit", "restrict", "ban", "regulat", "control",
+                              "manage", "permit", "license", "quota", "closure",
+                              "zone")
   )
 
   # Get relevant keywords for this connection type
@@ -225,7 +393,11 @@ calculate_relevance <- function(from_name, to_name, from_type, to_type) {
 #' Generate Smart Connections Between Element Sets
 #'
 #' Generates filtered and ranked connections between two sets of elements
-#' using relevance scoring and polarity detection.
+#' using a multi-layered scoring approach:
+#'   1. Knowledge base + TF-IDF keyword relevance scoring
+#'   2. ML model predictions (when available, weighted 70%)
+#'   3. Negation-aware polarity detection
+#'   4. Knowledge base polarity lookup
 #'
 #' @param from_elements List of source elements (each with $name attribute)
 #' @param to_elements List of target elements (each with $name attribute)
@@ -242,10 +414,11 @@ calculate_relevance <- function(from_name, to_name, from_type, to_type) {
 #' - from_type, from_index, from_name
 #' - to_type, to_index, to_name
 #' - polarity ("+"/"-")
-#' - strength ("medium" default)
-#' - confidence (3 default)
+#' - strength ("weak"/"medium"/"strong")
+#' - confidence (1-5)
 #' - rationale (human-readable description)
 #' - matrix (connection matrix identifier)
+#' - scoring_method ("ml+kb", "kb", "keyword")
 #'
 #' The function filters out low-relevance connections and returns only the
 #' top-ranked suggestions up to max_count.
@@ -272,22 +445,58 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
 
   for (i in seq_along(from_elements)) {
     for (j in seq_along(to_elements)) {
-      relevance <- calculate_relevance(from_elements[[i]]$name, to_elements[[j]]$name, from_type, to_type)
+      from_name <- from_elements[[i]]$name
+      to_name <- to_elements[[j]]$name
+
+      relevance <- calculate_relevance(from_name, to_name, from_type, to_type)
       if (relevance >= min_relevance) {
-        # FILTER: Skip double-negative connections (loss → loss)
-        # These are confusing and difficult to interpret
-        from_lower <- tolower(from_elements[[i]]$name)
-        to_lower <- tolower(to_elements[[j]]$name)
+        # FILTER: Skip double-negative connections (loss -> loss)
+        from_lower <- tolower(from_name)
+        to_lower <- tolower(to_name)
         from_is_loss <- any(sapply(loss_keywords, function(kw) grepl(kw, from_lower)))
         to_is_loss <- any(sapply(loss_keywords, function(kw) grepl(kw, to_lower)))
 
         if (from_is_loss && to_is_loss) {
-          debug_log(sprintf("Skipping double-negative connection: '%s' → '%s'",
-                     from_elements[[i]]$name, to_elements[[j]]$name), "AI ISA CONNECTIONS")
+          debug_log(sprintf("Skipping double-negative connection: '%s' -> '%s'",
+                     from_name, to_name), "AI ISA CONNECTIONS")
           next  # Skip this connection
         }
 
-        polarity <- detect_polarity(from_elements[[i]]$name, to_elements[[j]]$name, from_type, to_type)
+        polarity <- detect_polarity(from_name, to_name, from_type, to_type)
+
+        # Determine strength from knowledge base or ML if available
+        strength <- "medium"
+        confidence <- 3
+        scoring_method <- "keyword"
+
+        # Check knowledge base for strength info
+        if (exists("lookup_knowledge_base", mode = "function")) {
+          kb_match <- tryCatch(
+            lookup_knowledge_base(from_name, from_type, to_name, to_type),
+            error = function(e) NULL
+          )
+          if (!is.null(kb_match)) {
+            strength <- kb_match$strength %||% "medium"
+            scoring_method <- "kb"
+            # Adjust confidence based on match quality
+            confidence <- switch(kb_match$match_quality %||% "exact",
+              "exact"   = 4,
+              "synonym" = 3,
+              3
+            )
+          }
+        }
+
+        # ML can further refine confidence
+        if (exists("ml_model_available", mode = "function") && ml_model_available()) {
+          scoring_method <- if (scoring_method == "kb") "ml+kb" else "ml"
+          # ML already factored into relevance score; use relevance for confidence
+          if (relevance >= 0.85) {
+            confidence <- max(confidence, 4)
+          } else if (relevance >= 0.7) {
+            confidence <- max(confidence, 3)
+          }
+        }
 
         # Choose appropriate verb based on connection type
         verb <- if (from_type == "drivers") {
@@ -312,15 +521,16 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
           conn = list(
             from_type = from_type,
             from_index = i,
-            from_name = from_elements[[i]]$name,
+            from_name = from_name,
             to_type = to_type,
             to_index = j,
-            to_name = to_elements[[j]]$name,
+            to_name = to_name,
             polarity = polarity,
-            strength = "medium",
-            confidence = 3,
-            rationale = paste(from_elements[[i]]$name, verb, to_elements[[j]]$name),
-            matrix = matrix_name
+            strength = strength,
+            confidence = confidence,
+            rationale = paste(from_name, verb, to_name),
+            matrix = matrix_name,
+            scoring_method = scoring_method
           ),
           relevance = relevance
         )
@@ -333,13 +543,20 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
     candidates <- candidates[order(sapply(candidates, function(x) x$relevance), decreasing = TRUE)]
     n_to_return <- min(length(candidates), max_count)
     result <- lapply(1:n_to_return, function(i) candidates[[i]]$conn)
-    debug_log(sprintf("Generated %d %s→%s connections (from %d candidates, %.0f%% filtered)",
+
+    # Log scoring method distribution
+    methods <- sapply(result, function(c) c$scoring_method %||% "keyword")
+    method_counts <- table(methods)
+    method_str <- paste(names(method_counts), method_counts, sep = ":", collapse = " ")
+
+    debug_log(sprintf("Generated %d %s->%s connections (from %d candidates, %.0f%% filtered) [methods: %s]",
                 n_to_return, toupper(substring(from_type, 1, 1)), toupper(substring(to_type, 1, 1)),
-                length(candidates), (1 - n_to_return/length(candidates)) * 100), "AI ISA CONNECTIONS")
+                length(candidates), (1 - n_to_return/length(candidates)) * 100, method_str),
+              "AI ISA CONNECTIONS")
     return(result)
   }
 
-  debug_log(sprintf("No relevant %s→%s connections found", from_type, to_type), "AI ISA CONNECTIONS")
+  debug_log(sprintf("No relevant %s->%s connections found", from_type, to_type), "AI ISA CONNECTIONS")
   return(list())
 }
 
@@ -364,16 +581,16 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
 #' - After colon: confidence level (1-5)
 #'
 #' Supported matrices:
-#' - d_a: Drivers → Activities
-#' - a_p: Activities → Pressures
-#' - p_mpf: Pressures → States
-#' - mpf_es: States → Impacts
-#' - es_gb: Impacts → Welfare
-#' - gb_d: Welfare → Drivers
-#' - gb_r: Welfare → Responses
-#' - r_d: Responses → Drivers
-#' - r_a: Responses → Activities
-#' - r_p: Responses → Pressures
+#' - d_a: Drivers -> Activities
+#' - a_p: Activities -> Pressures
+#' - p_mpf: Pressures -> States
+#' - mpf_es: States -> Impacts
+#' - es_gb: Impacts -> Welfare
+#' - gb_d: Welfare -> Drivers
+#' - gb_r: Welfare -> Responses
+#' - r_d: Responses -> Drivers
+#' - r_a: Responses -> Activities
+#' - r_p: Responses -> Pressures
 #'
 #' @examples
 #' \dontrun{
@@ -490,13 +707,18 @@ convert_matrices_to_connections <- function(matrices, elements) {
 #'
 #' @details
 #' Generates connections for 10 connection types:
-#' - Forward chain: D→A→P→S→I→W
-#' - Response interventions: R→P, R→D, R→A
-#' - Feedback loops: W→D, W→R
+#' - Forward chain: D->A->P->S->I->W
+#' - Response interventions: R->P, R->D, R->A
+#' - Feedback loops: W->D, W->R
 #'
 #' Default limits:
 #' - MAX_PER_TYPE: 15 connections per type (max 150 total)
 #' - MIN_RELEVANCE: 0.3 (30% relevance threshold)
+#'
+#' Scoring layers (in order of priority):
+#' 1. ML model predictions (70% weight when available)
+#' 2. Knowledge base lookup (curated marine SES connections)
+#' 3. TF-IDF weighted keyword matching with synonym expansion
 #'
 #' @examples
 #' \dontrun{
@@ -515,22 +737,35 @@ convert_matrices_to_connections <- function(matrices, elements) {
 #' @export
 generate_connections <- function(elements) {
   connections <- list()
-  MAX_PER_TYPE <- 15  # Reduced limit for better quality (10 types × 15 = max 150 total)
+  MAX_PER_TYPE <- 15  # Reduced limit for better quality (10 types x 15 = max 150 total)
   MIN_RELEVANCE <- 0.3  # Lower threshold to ensure core DAPSIWR connections are generated
 
   # Per-type counters
-  count_da <- 0  # Drivers → Activities
-  count_ap <- 0  # Activities → Pressures
-  count_ps <- 0  # Pressures → States
-  count_si <- 0  # States → Impacts
-  count_iw <- 0  # Impacts → Welfare
-  count_rp <- 0  # Responses → Pressures
-  count_wd <- 0  # Welfare → Drivers (feedback)
-  count_wr <- 0  # Welfare → Responses (feedback)
-  count_rd <- 0  # Responses → Drivers (feedback)
-  count_ra <- 0  # Responses → Activities (feedback)
+  count_da <- 0  # Drivers -> Activities
+  count_ap <- 0  # Activities -> Pressures
+  count_ps <- 0  # Pressures -> States
+  count_si <- 0  # States -> Impacts
+  count_iw <- 0  # Impacts -> Welfare
+  count_rp <- 0  # Responses -> Pressures
+  count_wd <- 0  # Welfare -> Drivers (feedback)
+  count_wr <- 0  # Welfare -> Responses (feedback)
+  count_rd <- 0  # Responses -> Drivers (feedback)
+  count_ra <- 0  # Responses -> Activities (feedback)
+
+  # Log ML availability status
+  ml_status <- if (exists("ml_model_available", mode = "function") && ml_model_available()) {
+    "ML model ACTIVE"
+  } else {
+    "ML model not available (using KB + keywords)"
+  }
+  kb_status <- if (exists("SES_CONNECTION_DB") && length(SES_CONNECTION_DB) > 0) {
+    sprintf("Knowledge base ACTIVE (%d entries)", length(SES_CONNECTION_DB))
+  } else {
+    "Knowledge base not loaded"
+  }
 
   debug_log(sprintf("Generating connections (max %d per type)...", MAX_PER_TYPE), "AI ISA CONNECTIONS")
+  debug_log(sprintf("Scoring: %s | %s", ml_status, kb_status), "AI ISA CONNECTIONS")
   debug_log(sprintf("Element counts: D=%d, A=%d, P=%d, S=%d, I=%d, W=%d, R=%d",
               length(elements$drivers %||% list()),
               length(elements$activities %||% list()),
@@ -548,42 +783,42 @@ generate_connections <- function(elements) {
     debug_log(sprintf("Activities: %s", paste(sapply(elements$activities, function(x) x$name), collapse=", ")), "AI ISA CONNECTIONS")
   }
 
-  # D → A (Drivers → Activities): Smart connection generation
+  # D -> A (Drivers -> Activities): Smart connection generation
   if (length(elements$drivers) > 0 && length(elements$activities) > 0) {
     new_conns <- generate_smart_connections(elements$drivers, elements$activities, "drivers", "activities", "d_a", MAX_PER_TYPE, MIN_RELEVANCE)
     connections <- c(connections, new_conns)
     count_da <- length(new_conns)
   }
 
-  # A → P (Activities → Pressures): Smart connection generation
+  # A -> P (Activities -> Pressures): Smart connection generation
   if (length(elements$activities) > 0 && length(elements$pressures) > 0) {
     new_conns <- generate_smart_connections(elements$activities, elements$pressures, "activities", "pressures", "a_p", MAX_PER_TYPE, MIN_RELEVANCE)
     connections <- c(connections, new_conns)
     count_ap <- length(new_conns)
   }
 
-  # P → S (Pressures → States): Smart connection generation
+  # P -> S (Pressures -> States): Smart connection generation
   if (length(elements$pressures) > 0 && length(elements$states) > 0) {
     new_conns <- generate_smart_connections(elements$pressures, elements$states, "pressures", "states", "p_mpf", MAX_PER_TYPE, MIN_RELEVANCE)
     connections <- c(connections, new_conns)
     count_ps <- length(new_conns)
   }
 
-  # S → I (States → Impacts): Smart connection generation
+  # S -> I (States -> Impacts): Smart connection generation
   if (length(elements$states) > 0 && length(elements$impacts) > 0) {
     new_conns <- generate_smart_connections(elements$states, elements$impacts, "states", "impacts", "mpf_es", MAX_PER_TYPE, MIN_RELEVANCE)
     connections <- c(connections, new_conns)
     count_si <- length(new_conns)
   }
 
-  # I → W (Impacts → Welfare): Smart connection generation
+  # I -> W (Impacts -> Welfare): Smart connection generation
   if (length(elements$impacts) > 0 && length(elements$welfare) > 0) {
     new_conns <- generate_smart_connections(elements$impacts, elements$welfare, "impacts", "welfare", "es_gb", MAX_PER_TYPE, MIN_RELEVANCE)
     connections <- c(connections, new_conns)
     count_iw <- length(new_conns)
   }
 
-  # R → P (Responses → Pressures): Smart connection generation
+  # R -> P (Responses -> Pressures): Smart connection generation
   if (length(elements$responses) > 0 && length(elements$pressures) > 0) {
     new_conns <- generate_smart_connections(elements$responses, elements$pressures, "responses", "pressures", "r_p", MAX_PER_TYPE, MIN_RELEVANCE)
     connections <- c(connections, new_conns)
@@ -594,28 +829,28 @@ generate_connections <- function(elements) {
   # FEEDBACK LOOPS - Additional logical connections
   # ========================================================================
 
-  # W → D (Welfare → Drivers): Smart feedback loop generation
+  # W -> D (Welfare -> Drivers): Smart feedback loop generation
   if (length(elements$welfare) > 0 && length(elements$drivers) > 0) {
     new_conns <- generate_smart_connections(elements$welfare, elements$drivers, "welfare", "drivers", "gb_d", MAX_PER_TYPE, MIN_RELEVANCE)
     connections <- c(connections, new_conns)
     count_wd <- length(new_conns)
   }
 
-  # W → R (Welfare → Responses): Smart feedback loop generation
+  # W -> R (Welfare -> Responses): Smart feedback loop generation
   if (length(elements$welfare) > 0 && length(elements$responses) > 0) {
     new_conns <- generate_smart_connections(elements$welfare, elements$responses, "welfare", "responses", "gb_r", MAX_PER_TYPE, MIN_RELEVANCE)
     connections <- c(connections, new_conns)
     count_wr <- length(new_conns)
   }
 
-  # R → D (Responses → Drivers): Smart feedback loop generation
+  # R -> D (Responses -> Drivers): Smart feedback loop generation
   if (length(elements$responses) > 0 && length(elements$drivers) > 0) {
     new_conns <- generate_smart_connections(elements$responses, elements$drivers, "responses", "drivers", "r_d", MAX_PER_TYPE, MIN_RELEVANCE)
     connections <- c(connections, new_conns)
     count_rd <- length(new_conns)
   }
 
-  # R → A (Responses → Activities): Smart feedback loop generation
+  # R -> A (Responses -> Activities): Smart feedback loop generation
   if (length(elements$responses) > 0 && length(elements$activities) > 0) {
     new_conns <- generate_smart_connections(elements$responses, elements$activities, "responses", "activities", "r_a", MAX_PER_TYPE, MIN_RELEVANCE)
     connections <- c(connections, new_conns)
@@ -623,7 +858,7 @@ generate_connections <- function(elements) {
   }
 
   # Log final count and per-type breakdown
-  debug_log(sprintf("TOTAL GENERATED: %d connections | D→A:%d A→P:%d P→S:%d S→I:%d I→W:%d R→P:%d W→D:%d W→R:%d R→D:%d R→A:%d",
+  debug_log(sprintf("TOTAL GENERATED: %d connections | D->A:%d A->P:%d P->S:%d S->I:%d I->W:%d R->P:%d W->D:%d W->R:%d R->D:%d R->A:%d",
     length(connections), count_da, count_ap, count_ps, count_si, count_iw, count_rp, count_wd, count_wr, count_rd, count_ra),
     "AI ISA CONNECTIONS")
 
@@ -638,3 +873,5 @@ message("[INFO] AI ISA Connection Generator module loaded successfully")
 message("       Available functions: detect_polarity, calculate_relevance,")
 message("       generate_smart_connections, convert_matrices_to_connections,")
 message("       generate_connections")
+message("       Enhanced with: ML integration, knowledge base lookup, TF-IDF scoring,")
+message("       negation-aware polarity detection, synonym expansion")

@@ -1,5 +1,15 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "modules.analysis_simulation.title": {
       "en": "Dynamic Simulation & State-Shift Analysis",
@@ -9,8 +19,8 @@
       "lt": "Dinaminė simuliacija ir būsenos pokyčių analizė",
       "pt": "Simulação Dinâmica e Análise de Mudança de Estado",
       "it": "Simulazione Dinamica e Analisi del Cambiamento di Stato",
-      "no": "Dynamic Simulation & State-Shift Analysis",
-      "el": "Dynamic Simulation & State-Shift Analysis"
+      "no": "Dynamisk simulering og tilstandsskiftanalyse",
+      "el": "Δυναμική προσομοίωση και ανάλυση μετατόπισης κατάστασης"
     },
     "modules.analysis_simulation.subtitle": {
       "en": "Run deterministic simulations and Monte Carlo state-shift robustness analysis on your SES network",
@@ -20,8 +30,8 @@
       "lt": "Vykdykite deterministines simuliacijas ir Monte Karlo būsenos pokyčių patikimumo analizę savo SES tinkle",
       "pt": "Execute simulações determinísticas e análise de robustez de mudança de estado Monte Carlo na sua rede SES",
       "it": "Esegui simulazioni deterministiche e analisi di robustezza del cambiamento di stato Monte Carlo sulla tua rete SES",
-      "no": "Run deterministic simulations and Monte Carlo state-shift robustness analysis on your SES network",
-      "el": "Run deterministic simulations and Monte Carlo state-shift robustness analysis on your SES network"
+      "no": "Kjør deterministiske simuleringer og Monte Carlo tilstandsskift-robusthetsanalyse på SES-nettverket ditt",
+      "el": "Εκτελέστε ντετερμινιστικές προσομοιώσεις και ανάλυση ευρωστίας μετατόπισης κατάστασης Monte Carlo στο δίκτυο SES σας"
     },
     "modules.analysis_simulation.help_title": {
       "en": "Dynamic Simulation Help",
@@ -31,8 +41,8 @@
       "lt": "Dinaminės simuliacijos pagalba",
       "pt": "Ajuda Simulação Dinâmica",
       "it": "Aiuto Simulazione Dinamica",
-      "no": "Dynamic Simulation Help",
-      "el": "Dynamic Simulation Help"
+      "no": "Hjelp for dynamisk simulering",
+      "el": "Βοήθεια δυναμικής προσομοίωσης"
     },
     "modules.analysis_simulation.help_heading": {
       "en": "Understanding Dynamic Simulation",
@@ -42,8 +52,8 @@
       "lt": "Dinaminės simuliacijos supratimas",
       "pt": "Compreender a Simulação Dinâmica",
       "it": "Comprendere la Simulazione Dinamica",
-      "no": "Understanding Dynamic Simulation",
-      "el": "Understanding Dynamic Simulation"
+      "no": "Forstå dynamisk simulering",
+      "el": "Κατανόηση δυναμικής προσομοίωσης"
     },
     "modules.analysis_simulation.help_simulation": {
       "en": "Deterministic simulation propagates initial node states through the adjacency matrix over time, showing how the system evolves and whether it converges or diverges.",
@@ -86,8 +96,8 @@
       "lt": "CLD duomenų nėra",
       "pt": "Nenhum dado CLD disponível",
       "it": "Nessun dato CLD disponibile",
-      "no": "No CLD data available",
-      "el": "No CLD data available"
+      "no": "Ingen CLD-data tilgjengelig",
+      "el": "Δεν υπάρχουν διαθέσιμα δεδομένα CLD"
     },
     "modules.analysis_simulation.no_cld_data_hint": {
       "en": "Please create your SES framework and generate a CLD first.",
@@ -97,8 +107,8 @@
       "lt": "Pirmiausia sukurkite SES struktūrą ir sugeneruokite CLD.",
       "pt": "Por favor crie seu framework SES e gere um CLD primeiro.",
       "it": "Si prega di creare il framework SES e generare un CLD prima.",
-      "no": "Please create your SES framework and generate a CLD first.",
-      "el": "Please create your SES framework and generate a CLD first."
+      "no": "Vennligst opprett SES-rammeverket ditt og generer en CLD først.",
+      "el": "Παρακαλώ δημιουργήστε πρώτα το πλαίσιο SES σας και δημιουργήστε ένα CLD."
     },
     "modules.analysis_simulation.simulation_controls": {
       "en": "Simulation Controls",
@@ -108,8 +118,8 @@
       "lt": "Simuliacijos valdymas",
       "pt": "Controles de Simulação",
       "it": "Controlli di Simulazione",
-      "no": "Simulation Controls",
-      "el": "Simulation Controls"
+      "no": "Simuleringskontroller",
+      "el": "Ρυθμίσεις προσομοίωσης"
     },
     "modules.analysis_simulation.iterations": {
       "en": "Iterations",
@@ -119,8 +129,8 @@
       "lt": "Iteracijos",
       "pt": "Iterações",
       "it": "Iterazioni",
-      "no": "Iterations",
-      "el": "Iterations"
+      "no": "Iterasjoner",
+      "el": "Επαναλήψεις"
     },
     "modules.analysis_simulation.scale_by_confidence": {
       "en": "Scale weights by confidence level",
@@ -130,8 +140,8 @@
       "lt": "Svorius skalinti pagal patikimumo lygį",
       "pt": "Escalar pesos por nível de confiança",
       "it": "Scalare pesi per livello di confidenza",
-      "no": "Scale weights by confidence level",
-      "el": "Scale weights by confidence level"
+      "no": "Skaler vekter etter tillitsnivå",
+      "el": "Κλιμάκωση βαρών κατά επίπεδο εμπιστοσύνης"
     },
     "modules.analysis_simulation.run_simulation": {
       "en": "Run Simulation",
@@ -141,8 +151,8 @@
       "lt": "Vykdyti simuliaciją",
       "pt": "Executar Simulação",
       "it": "Esegui Simulazione",
-      "no": "Run Simulation",
-      "el": "Run Simulation"
+      "no": "Kjør simulering",
+      "el": "Εκτέλεση προσομοίωσης"
     },
     "modules.analysis_simulation.state_shift_controls": {
       "en": "State-Shift Controls",
@@ -152,8 +162,8 @@
       "lt": "Būsenos pokyčių valdymas",
       "pt": "Controles de Mudança de Estado",
       "it": "Controlli Cambiamento di Stato",
-      "no": "State-Shift Controls",
-      "el": "State-Shift Controls"
+      "no": "Tilstandsskiftkontroller",
+      "el": "Ρυθμίσεις μετατόπισης κατάστασης"
     },
     "modules.analysis_simulation.n_simulations": {
       "en": "Number of simulations",
@@ -163,8 +173,8 @@
       "lt": "Simuliacijų skaičius",
       "pt": "Número de simulações",
       "it": "Numero di simulazioni",
-      "no": "Number of simulations",
-      "el": "Number of simulations"
+      "no": "Antall simuleringer",
+      "el": "Αριθμός προσομοιώσεων"
     },
     "modules.analysis_simulation.randomization": {
       "en": "Randomization type",
@@ -174,8 +184,8 @@
       "lt": "Atsitiktinumo tipas",
       "pt": "Tipo de aleatorização",
       "it": "Tipo di randomizzazione",
-      "no": "Randomization type",
-      "el": "Randomization type"
+      "no": "Randomiseringstype",
+      "el": "Τύπος τυχαιοποίησης"
     },
     "modules.analysis_simulation.uniform": {
       "en": "Uniform random",
@@ -185,8 +195,8 @@
       "lt": "Tolygiai atsitiktinis",
       "pt": "Aleatório uniforme",
       "it": "Casuale uniforme",
-      "no": "Uniform random",
-      "el": "Uniform random"
+      "no": "Uniform tilfeldig",
+      "el": "Ομοιόμορφα τυχαίο"
     },
     "modules.analysis_simulation.ordinal": {
       "en": "Ordinal (-1/0/+1)",
@@ -197,7 +207,7 @@
       "pt": "Ordinal (-1/0/+1)",
       "it": "Ordinale (-1/0/+1)",
       "no": "Ordinal (-1/0/+1)",
-      "el": "Ordinal (-1/0/+1)"
+      "el": "Τακτικός (-1/0/+1)"
     },
     "modules.analysis_simulation.target_nodes": {
       "en": "Target nodes (optional)",
@@ -207,8 +217,8 @@
       "lt": "Tiksliniai mazgai (neprivaloma)",
       "pt": "Nós alvo (opcional)",
       "it": "Nodi obiettivo (opzionale)",
-      "no": "Target nodes (optional)",
-      "el": "Target nodes (optional)"
+      "no": "Målnoder (valgfritt)",
+      "el": "Κόμβοι στόχοι (προαιρετικό)"
     },
     "modules.analysis_simulation.select_targets": {
       "en": "Select target nodes...",
@@ -218,8 +228,8 @@
       "lt": "Pasirinkite tikslinius mazgus...",
       "pt": "Selecionar nós alvo...",
       "it": "Seleziona nodi obiettivo...",
-      "no": "Select target nodes...",
-      "el": "Select target nodes..."
+      "no": "Velg målnoder...",
+      "el": "Επιλέξτε κόμβους στόχους..."
     },
     "modules.analysis_simulation.target_nodes_help": {
       "en": "If specified, success rate is calculated based on positive outcomes for these nodes only.",
@@ -229,8 +239,8 @@
       "lt": "Jei nurodyta, sėkmės rodiklis skaičiuojamas tik pagal teigiamus šių mazgų rezultatus.",
       "pt": "Se especificados, a taxa de sucesso é calculada com base em resultados positivos apenas para estes nós.",
       "it": "Se specificati, il tasso di successo viene calcolato in base ai risultati positivi solo per questi nodi.",
-      "no": "If specified, success rate is calculated based on positive outcomes for these nodes only.",
-      "el": "If specified, success rate is calculated based on positive outcomes for these nodes only."
+      "no": "Hvis angitt, beregnes suksessraten basert på positive utfall kun for disse nodene.",
+      "el": "Εάν καθοριστεί, ο ρυθμός επιτυχίας υπολογίζεται βάσει θετικών αποτελεσμάτων μόνο για αυτούς τους κόμβους."
     },
     "modules.analysis_simulation.run_state_shift": {
       "en": "Run State-Shift Analysis",
@@ -240,8 +250,8 @@
       "lt": "Vykdyti būsenos pokyčių analizę",
       "pt": "Executar Análise de Mudança de Estado",
       "it": "Esegui Analisi Cambiamento di Stato",
-      "no": "Run State-Shift Analysis",
-      "el": "Run State-Shift Analysis"
+      "no": "Kjør tilstandsskiftanalyse",
+      "el": "Εκτέλεση ανάλυσης μετατόπισης κατάστασης"
     },
     "modules.analysis_simulation.download": {
       "en": "Download Results",
@@ -251,8 +261,8 @@
       "lt": "Atsisiųsti rezultatus",
       "pt": "Baixar Resultados",
       "it": "Scarica Risultati",
-      "no": "Download Results",
-      "el": "Download Results"
+      "no": "Last ned resultater",
+      "el": "Λήψη αποτελεσμάτων"
     },
     "modules.analysis_simulation.running_sim": {
       "en": "Running simulation...",
@@ -262,8 +272,8 @@
       "lt": "Vykdoma simuliacija...",
       "pt": "Executando simulação...",
       "it": "Simulazione in corso...",
-      "no": "Running simulation...",
-      "el": "Running simulation..."
+      "no": "Kjører simulering...",
+      "el": "Εκτέλεση προσομοίωσης..."
     },
     "modules.analysis_simulation.building_matrix": {
       "en": "Building adjacency matrix...",
@@ -273,8 +283,8 @@
       "lt": "Kuriama gretimybių matrica...",
       "pt": "Construindo matriz de adjacência...",
       "it": "Costruzione matrice di adiacenza...",
-      "no": "Building adjacency matrix...",
-      "el": "Building adjacency matrix..."
+      "no": "Bygger naboskapsmatrise...",
+      "el": "Κατασκευή πίνακα γειτνίασης..."
     },
     "modules.analysis_simulation.simulating": {
       "en": "Simulating dynamics...",
@@ -284,8 +294,8 @@
       "lt": "Simuliuojama dinamika...",
       "pt": "Simulando dinâmica...",
       "it": "Simulazione della dinamica...",
-      "no": "Simulating dynamics...",
-      "el": "Simulating dynamics..."
+      "no": "Simulerer dynamikk...",
+      "el": "Προσομοίωση δυναμικής..."
     },
     "modules.analysis_simulation.computing_pr": {
       "en": "Computing participation ratio...",
@@ -295,8 +305,8 @@
       "lt": "Skaičiuojamas dalyvavimo santykis...",
       "pt": "Calculando razão de participação...",
       "it": "Calcolo del rapporto di partecipazione...",
-      "no": "Computing participation ratio...",
-      "el": "Computing participation ratio..."
+      "no": "Beregner deltakelsesforhold...",
+      "el": "Υπολογισμός αναλογίας συμμετοχής..."
     },
     "modules.analysis_simulation.running_ss": {
       "en": "Running state-shift analysis...",
@@ -306,8 +316,8 @@
       "lt": "Vykdoma būsenos pokyčių analizė...",
       "pt": "Executando análise de mudança de estado...",
       "it": "Analisi del cambiamento di stato in corso...",
-      "no": "Running state-shift analysis...",
-      "el": "Running state-shift analysis..."
+      "no": "Kjører tilstandsskiftanalyse...",
+      "el": "Εκτέλεση ανάλυσης μετατόπισης κατάστασης..."
     },
     "modules.analysis_simulation.click_to_start": {
       "en": "Click 'Run Simulation' to begin dynamic analysis",
@@ -328,8 +338,8 @@
       "lt": "Laiko eilutė",
       "pt": "Série Temporal",
       "it": "Serie Temporale",
-      "no": "Time Series",
-      "el": "Time Series"
+      "no": "Tidsserie",
+      "el": "Χρονοσειρά"
     },
     "modules.analysis_simulation.pr_tab": {
       "en": "Participation Ratio",
@@ -339,8 +349,8 @@
       "lt": "Dalyvavimo santykis",
       "pt": "Razão de Participação",
       "it": "Rapporto di Partecipazione",
-      "no": "Participation Ratio",
-      "el": "Participation Ratio"
+      "no": "Deltakelsesforhold",
+      "el": "Αναλογία συμμετοχής"
     },
     "modules.analysis_simulation.state_shift_tab": {
       "en": "State-Shift Results",
@@ -350,8 +360,8 @@
       "lt": "Būsenos pokyčių rezultatai",
       "pt": "Resultados de Mudança de Estado",
       "it": "Risultati Cambiamento di Stato",
-      "no": "State-Shift Results",
-      "el": "State-Shift Results"
+      "no": "Tilstandsskiftresultater",
+      "el": "Αποτελέσματα μετατόπισης κατάστασης"
     },
     "modules.analysis_simulation.outcome_distribution": {
       "en": "Outcome Distribution",
@@ -361,8 +371,8 @@
       "lt": "Rezultatų pasiskirstymas",
       "pt": "Distribuição de Resultados",
       "it": "Distribuzione dei Risultati",
-      "no": "Outcome Distribution",
-      "el": "Outcome Distribution"
+      "no": "Utfallsfordeling",
+      "el": "Κατανομή αποτελεσμάτων"
     },
     "modules.analysis_simulation.nodes": {
       "en": "Nodes",
@@ -383,8 +393,8 @@
       "lt": "Atliktos iteracijos",
       "pt": "Iterações executadas",
       "it": "Iterazioni eseguite",
-      "no": "Iterations run",
-      "el": "Iterations run"
+      "no": "Iterasjoner kjørt",
+      "el": "Εκτελεσμένες επαναλήψεις"
     },
     "modules.analysis_simulation.yes": {
       "en": "Yes",
@@ -395,7 +405,7 @@
       "pt": "Sim",
       "it": "Sì",
       "no": "Ja",
-      "el": "Yes"
+      "el": "Ναι"
     },
     "modules.analysis_simulation.no": {
       "en": "No",
@@ -416,8 +426,8 @@
       "lt": "Divergavo",
       "pt": "Divergiu",
       "it": "Divergente",
-      "no": "Diverged",
-      "el": "Diverged"
+      "no": "Divergert",
+      "el": "Απέκλινε"
     },
     "modules.analysis_simulation.diverged_at": {
       "en": "Diverged at step",
@@ -427,8 +437,8 @@
       "lt": "Divergavo žingsnyje",
       "pt": "Divergiu no passo",
       "it": "Divergente al passo",
-      "no": "Diverged at step",
-      "el": "Diverged at step"
+      "no": "Divergerte ved trinn",
+      "el": "Απέκλινε στο βήμα"
     },
     "modules.analysis_simulation.time_series_title": {
       "en": "System State Evolution Over Time",
@@ -438,8 +448,8 @@
       "lt": "Sistemos būsenos raida laike",
       "pt": "Evolução do Estado do Sistema ao Longo do Tempo",
       "it": "Evoluzione dello Stato del Sistema nel Tempo",
-      "no": "System State Evolution Over Time",
-      "el": "System State Evolution Over Time"
+      "no": "Systemtilstandsutvikling over tid",
+      "el": "Εξέλιξη κατάστασης συστήματος στον χρόνο"
     },
     "modules.analysis_simulation.time_step": {
       "en": "Time step",
@@ -449,8 +459,8 @@
       "lt": "Laiko žingsnis",
       "pt": "Passo de tempo",
       "it": "Passo temporale",
-      "no": "Time step",
-      "el": "Time step"
+      "no": "Tidstrinn",
+      "el": "Χρονικό βήμα"
     },
     "modules.analysis_simulation.state_value": {
       "en": "State value",
@@ -460,8 +470,8 @@
       "lt": "Būsenos vertė",
       "pt": "Valor de estado",
       "it": "Valore di stato",
-      "no": "State value",
-      "el": "State value"
+      "no": "Tilstandsverdi",
+      "el": "Τιμή κατάστασης"
     },
     "modules.analysis_simulation.pr_title": {
       "en": "Participation Ratio by Node",
@@ -471,8 +481,8 @@
       "lt": "Dalyvavimo santykis pagal mazgą",
       "pt": "Razão de Participação por Nó",
       "it": "Rapporto di Partecipazione per Nodo",
-      "no": "Participation Ratio by Node",
-      "el": "Participation Ratio by Node"
+      "no": "Deltakelsesforhold per node",
+      "el": "Αναλογία συμμετοχής ανά κόμβο"
     },
     "modules.analysis_simulation.participation_ratio": {
       "en": "Participation Ratio",
@@ -482,8 +492,8 @@
       "lt": "Dalyvavimo santykis",
       "pt": "Razão de Participação",
       "it": "Rapporto di Partecipazione",
-      "no": "Participation Ratio",
-      "el": "Participation Ratio"
+      "no": "Deltakelsesforhold",
+      "el": "Αναλογία συμμετοχής"
     },
     "modules.analysis_simulation.simulations_run": {
       "en": "Simulations run",
@@ -493,8 +503,8 @@
       "lt": "Atliktos simuliacijos",
       "pt": "Simulações executadas",
       "it": "Simulazioni eseguite",
-      "no": "Simulations run",
-      "el": "Simulations run"
+      "no": "Simuleringer kjørt",
+      "el": "Εκτελεσμένες προσομοιώσεις"
     },
     "modules.analysis_simulation.randomization_type": {
       "en": "Randomization type",
@@ -504,8 +514,8 @@
       "lt": "Atsitiktinumo tipas",
       "pt": "Tipo de aleatorização",
       "it": "Tipo di randomizzazione",
-      "no": "Randomization type",
-      "el": "Randomization type"
+      "no": "Randomiseringstype",
+      "el": "Τύπος τυχαιοποίησης"
     },
     "modules.analysis_simulation.success_rate": {
       "en": "Success rate",
@@ -515,8 +525,8 @@
       "lt": "Sėkmės rodiklis",
       "pt": "Taxa de sucesso",
       "it": "Tasso di successo",
-      "no": "Success rate",
-      "el": "Success rate"
+      "no": "Suksessrate",
+      "el": "Ρυθμός επιτυχίας"
     },
     "modules.analysis_simulation.target_count": {
       "en": "Target nodes",
@@ -526,8 +536,8 @@
       "lt": "Tiksliniai mazgai",
       "pt": "Nós alvo",
       "it": "Nodi obiettivo",
-      "no": "Target nodes",
-      "el": "Target nodes"
+      "no": "Målnoder",
+      "el": "Κόμβοι στόχοι"
     },
     "modules.analysis_simulation.final_states_heatmap": {
       "en": "Final States Heatmap",
@@ -537,8 +547,8 @@
       "lt": "Galutinių būsenų šilumos žemėlapis",
       "pt": "Mapa de Calor dos Estados Finais",
       "it": "Mappa di Calore degli Stati Finali",
-      "no": "Final States Heatmap",
-      "el": "Final States Heatmap"
+      "no": "Varmekart over sluttilstander",
+      "el": "Θερμικός χάρτης τελικών καταστάσεων"
     },
     "modules.analysis_simulation.simulation_number": {
       "en": "Simulation #",
@@ -548,8 +558,8 @@
       "lt": "Simuliacija #",
       "pt": "Simulação #",
       "it": "Simulazione #",
-      "no": "Simulation #",
-      "el": "Simulation #"
+      "no": "Simulering #",
+      "el": "Προσομοίωση #"
     },
     "modules.analysis_simulation.outcome_distribution_title": {
       "en": "Fraction of Simulations with Positive Outcome per Node",
@@ -559,8 +569,8 @@
       "lt": "Simuliacijų su teigiamu rezultatu dalis pagal mazgą",
       "pt": "Fração de Simulações com Resultado Positivo por Nó",
       "it": "Frazione di Simulazioni con Risultato Positivo per Nodo",
-      "no": "Fraction of Simulations with Positive Outcome per Node",
-      "el": "Fraction of Simulations with Positive Outcome per Node"
+      "no": "Andel simuleringer med positivt utfall per node",
+      "el": "Κλάσμα προσομοιώσεων με θετικό αποτέλεσμα ανά κόμβο"
     },
     "modules.analysis_simulation.fraction_positive": {
       "en": "Fraction positive",
@@ -570,8 +580,8 @@
       "lt": "Teigiama dalis",
       "pt": "Fração positiva",
       "it": "Frazione positiva",
-      "no": "Fraction positive",
-      "el": "Fraction positive"
+      "no": "Andel positiv",
+      "el": "Κλάσμα θετικών"
     }
   }
 }

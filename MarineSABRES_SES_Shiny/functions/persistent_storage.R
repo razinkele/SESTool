@@ -306,8 +306,8 @@ list_saved_projects <- function(folder_path = NULL) {
       path = character(),
       size_kb = numeric(),
       modified = as.POSIXct(character()),
-      type = character(),
-      stringsAsFactors = FALSE
+      type = character()
+      
     ))
   }
 
@@ -325,8 +325,8 @@ list_saved_projects <- function(folder_path = NULL) {
       path = character(),
       size_kb = numeric(),
       modified = as.POSIXct(character()),
-      type = character(),
-      stringsAsFactors = FALSE
+      type = character()
+      
     ))
   }
 
@@ -339,8 +339,8 @@ list_saved_projects <- function(folder_path = NULL) {
     path = files,
     size_kb = round(file_info$size / 1024, 1),
     modified = file_info$mtime,
-    type = ifelse(grepl("\\.rds$", files, ignore.case = TRUE), "rds", "json"),
-    stringsAsFactors = FALSE
+    type = ifelse(grepl("\\.rds$", files, ignore.case = TRUE), "rds", "json")
+    
   )
 
   # Sort by modification time (newest first)
@@ -448,12 +448,16 @@ load_project_persistent <- function(file_path) {
     if (is_rds) {
       project_data <- readRDS(file_path)
     } else {
-      # JSON format
+      # JSON format - use safe parser for user-provided files
       json_content <- readLines(file_path, warn = FALSE)
-      project_data <- jsonlite::fromJSON(
-        paste(json_content, collapse = "\n"),
-        simplifyVector = FALSE
-      )
+      project_data <- safe_parse_json(paste(json_content, collapse = "\n"))
+      if (is.null(project_data)) {
+        return(list(
+          success = FALSE,
+          error = "Invalid or malformed JSON in project file",
+          data = NULL
+        ))
+      }
     }
 
     debug_log(sprintf("Loaded project from: %s", file_path), "PERSISTENT_STORAGE")
@@ -568,8 +572,8 @@ find_recoverable_autosaves <- function(max_age_hours = 72) {
   return(data.frame(
     path = valid_files,
     modified = valid_info$mtime,
-    size_kb = round(valid_info$size / 1024, 1),
-    stringsAsFactors = FALSE
+    size_kb = round(valid_info$size / 1024, 1)
+    
   ))
 }
 

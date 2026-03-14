@@ -1,5 +1,15 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "modules.analysis.simplify.choose_techniques": {
       "en": "Choose one or more simplification techniques:",
@@ -9,8 +19,8 @@
       "lt": "Pasirinkite vieną ar daugiau supaprastinimo metodų:",
       "pt": "Escolha uma ou mais técnicas de simplificação:",
       "it": "Scegli una o più tecniche di semplificazione:",
-      "no": "Choose one or more simplification techniques:",
-      "el": "Choose one or more simplification techniques:"
+      "no": "Velg en eller flere forenklingsteknikker:",
+      "el": "Επιλέξτε μία ή περισσότερες τεχνικές απλοποίησης:"
     },
     "modules.analysis.simplify.siso_info_title": {
       "en": "Single-Input-Single-Output (SISO) Variables",
@@ -20,8 +30,8 @@
       "lt": "Vieno įėjimo-vieno išėjimo (SISO) kintamieji",
       "pt": "Variáveis de Entrada Única-Saída Única (SISO)",
       "it": "Variabili a Singolo Ingresso-Singola Uscita (SISO)",
-      "no": "Single-Input-Single-Output (SISO) Variables",
-      "el": "Single-Input-Single-Output (SISO) Variables"
+      "no": "Variabler med enkel inngang og enkel utgang (SISO)",
+      "el": "Μεταβλητές μονής εισόδου-μονής εξόδου (SISO)"
     },
     "modules.analysis.simplify.siso_description": {
       "en": "Identifies nodes with exactly one incoming and one outgoing connection. Creates a 'bridge' edge that preserves the causal relationship while removing the intermediate node.",
@@ -31,8 +41,8 @@
       "lt": "Nustato mazgus su lygiai viena įeinančia ir viena išeinančia jungtimi. Sukuria 'tilto' briauną, kuri išsaugo priežastinį ryšį pašalindama tarpinį mazgą.",
       "pt": "Identifica nós com exatamente uma conexão de entrada e uma de saída. Cria uma aresta 'ponte' que preserva a relação causal enquanto remove o nó intermediário.",
       "it": "Identifica nodi con esattamente una connessione in entrata e una in uscita. Crea un arco 'ponte' che preserva la relazione causale rimuovendo il nodo intermedio.",
-      "no": "Identifies nodes with exactly one incoming and one outgoing connection. Creates a 'bridge' edge that preserves the causal relationship while removing the intermediate node.",
-      "el": "Identifies nodes with exactly one incoming and one outgoing connection. Creates a 'bridge' edge that preserves the causal relationship while removing the intermediate node."
+      "no": "Identifiserer noder med nøyaktig én innkommende og én utgående forbindelse. Oppretter en 'bro'-kant som bevarer årsaksforholdet mens den mellomliggende noden fjernes.",
+      "el": "Αναγνωρίζει κόμβους με ακριβώς μία εισερχόμενη και μία εξερχόμενη σύνδεση. Δημιουργεί μια ακμή 'γέφυρα' που διατηρεί την αιτιακή σχέση ενώ αφαιρεί τον ενδιάμεσο κόμβο."
     },
     "modules.analysis.simplify.siso_bullet_chains": {
       "en": "Reduces chains of simple relationships",
@@ -42,8 +52,8 @@
       "lt": "Sumažina paprastų ryšių grandines",
       "pt": "Reduz cadeias de relações simples",
       "it": "Riduce le catene di relazioni semplici",
-      "no": "Reduces chains of simple relationships",
-      "el": "Reduces chains of simple relationships"
+      "no": "Reduserer kjeder av enkle relasjoner",
+      "el": "Μειώνει αλυσίδες απλών σχέσεων"
     },
     "modules.analysis.simplify.siso_bullet_polarity": {
       "en": "Preserves polarity through the chain",
@@ -53,8 +63,8 @@
       "lt": "Išsaugo poliariškumą per grandinę",
       "pt": "Preserva a polaridade ao longo da cadeia",
       "it": "Preserva la polarità lungo la catena",
-      "no": "Preserves polarity through the chain",
-      "el": "Preserves polarity through the chain"
+      "no": "Bevarer polaritet gjennom kjeden",
+      "el": "Διατηρεί την πολικότητα μέσω της αλυσίδας"
     },
     "modules.analysis.simplify.siso_bullet_structure": {
       "en": "Maintains overall network structure",
@@ -64,8 +74,8 @@
       "lt": "Išlaiko bendrą tinklo struktūrą",
       "pt": "Mantém a estrutura geral da rede",
       "it": "Mantiene la struttura complessiva della rete",
-      "no": "Maintains overall network structure",
-      "el": "Maintains overall network structure"
+      "no": "Opprettholder den overordnede nettverksstrukturen",
+      "el": "Διατηρεί τη συνολική δομή του δικτύου"
     },
     "modules.analysis.simplify.exogenous_info_title": {
       "en": "Exogenous Variables (External Drivers)",
@@ -75,8 +85,8 @@
       "lt": "Egzogeniniai kintamieji (išoriniai veiksniai)",
       "pt": "Variáveis Exógenas (Fatores Externos)",
       "it": "Variabili Esogene (Fattori Esterni)",
-      "no": "Exogenous Variables (External Drivers)",
-      "el": "Exogenous Variables (External Drivers)"
+      "no": "Eksogene variabler (eksterne drivere)",
+      "el": "Εξωγενείς μεταβλητές (εξωτερικοί παράγοντες)"
     },
     "modules.analysis.simplify.exogenous_description": {
       "en": "Identifies nodes with outgoing connections but no incoming connections. These are external drivers that influence the system but are not influenced by it.",
@@ -86,8 +96,8 @@
       "lt": "Nustato mazgus su išeinančiomis jungtimis, bet be įeinančių jungčių. Tai išoriniai veiksniai, kurie daro įtaką sistemai, bet patys nėra sistemos veikiami.",
       "pt": "Identifica nós com conexões de saída, mas sem conexões de entrada. Estes são fatores externos que influenciam o sistema, mas não são influenciados por ele.",
       "it": "Identifica nodi con connessioni in uscita ma senza connessioni in entrata. Questi sono fattori esterni che influenzano il sistema ma non sono influenzati da esso.",
-      "no": "Identifies nodes with outgoing connections but no incoming connections. These are external drivers that influence the system but are not influenced by it.",
-      "el": "Identifies nodes with outgoing connections but no incoming connections. These are external drivers that influence the system but are not influenced by it."
+      "no": "Identifiserer noder med utgående forbindelser men ingen innkommende forbindelser. Disse er eksterne drivere som påvirker systemet, men som ikke påvirkes av det.",
+      "el": "Αναγνωρίζει κόμβους με εξερχόμενες συνδέσεις αλλά χωρίς εισερχόμενες συνδέσεις. Αυτοί είναι εξωτερικοί παράγοντες που επηρεάζουν το σύστημα αλλά δεν επηρεάζονται από αυτό."
     },
     "modules.analysis.simplify.exogenous_bullet_endogenous": {
       "en": "Focuses on endogenous dynamics",
@@ -97,8 +107,8 @@
       "lt": "Sutelkia dėmesį į endogeninę dinamiką",
       "pt": "Concentra-se na dinâmica endógena",
       "it": "Si concentra sulla dinamica endogena",
-      "no": "Focuses on endogenous dynamics",
-      "el": "Focuses on endogenous dynamics"
+      "no": "Fokuserer på endogen dynamikk",
+      "el": "Εστιάζει στην ενδογενή δυναμική"
     },
     "modules.analysis.simplify.exogenous_bullet_feedback": {
       "en": "Useful for understanding internal feedback",
@@ -108,8 +118,8 @@
       "lt": "Naudinga norint suprasti vidinį grįžtamąjį ryšį",
       "pt": "Útil para entender o feedback interno",
       "it": "Utile per comprendere il feedback interno",
-      "no": "Useful for understanding internal feedback",
-      "el": "Useful for understanding internal feedback"
+      "no": "Nyttig for å forstå intern tilbakekobling",
+      "el": "Χρήσιμο για την κατανόηση της εσωτερικής ανατροφοδότησης"
     },
     "modules.analysis.simplify.exogenous_bullet_degree": {
       "en": "Removes nodes with outdegree > 0, indegree = 0",
@@ -119,8 +129,8 @@
       "lt": "Pašalina mazgus su išėjimo laipsniu > 0, įėjimo laipsniu = 0",
       "pt": "Remove nós com grau de saída > 0, grau de entrada = 0",
       "it": "Rimuove nodi con grado di uscita > 0, grado di entrata = 0",
-      "no": "Removes nodes with outdegree > 0, indegree = 0",
-      "el": "Removes nodes with outdegree > 0, indegree = 0"
+      "no": "Fjerner noder med utgrad > 0, inngrad = 0",
+      "el": "Αφαιρεί κόμβους με βαθμό εξόδου > 0, βαθμό εισόδου = 0"
     },
     "modules.analysis.simplify.weak_conn_info_title": {
       "en": "Connection Strength Filtering",
@@ -130,8 +140,8 @@
       "lt": "Filtravimas pagal jungties stiprumą",
       "pt": "Filtragem por Força de Conexão",
       "it": "Filtraggio per Forza di Connessione",
-      "no": "Connection Strength Filtering",
-      "el": "Connection Strength Filtering"
+      "no": "Filtrering av forbindelsesstyrke",
+      "el": "Φιλτράρισμα ισχύος σύνδεσης"
     },
     "modules.analysis.simplify.weak_conn_description": {
       "en": "Removes connections below a specified strength threshold to focus on dominant causal relationships.",
@@ -141,8 +151,8 @@
       "lt": "Pašalina jungtis žemiau nurodyto stiprumo slenksčio, kad būtų galima sutelkti dėmesį į dominuojančius priežastinius ryšius.",
       "pt": "Remove conexões abaixo de um limiar de força especificado para focar nas relações causais dominantes.",
       "it": "Rimuove le connessioni al di sotto di una soglia di forza specificata per concentrarsi sulle relazioni causali dominanti.",
-      "no": "Removes connections below a specified strength threshold to focus on dominant causal relationships.",
-      "el": "Removes connections below a specified strength threshold to focus on dominant causal relationships."
+      "no": "Fjerner forbindelser under en angitt styrketerskel for å fokusere på dominerende årsakssammenhenger.",
+      "el": "Αφαιρεί συνδέσεις κάτω από ένα καθορισμένο όριο ισχύος για εστίαση στις κυρίαρχες αιτιακές σχέσεις."
     },
     "modules.analysis.simplify.min_strength_to_keep": {
       "en": "Minimum strength to keep:",
@@ -152,8 +162,8 @@
       "lt": "Minimali išlaikoma stiprumo reikšmė:",
       "pt": "Força mínima a manter:",
       "it": "Forza minima da mantenere:",
-      "no": "Minimum strength to keep:",
-      "el": "Minimum strength to keep:"
+      "no": "Minimum styrke å beholde:",
+      "el": "Ελάχιστη ισχύς για διατήρηση:"
     },
     "modules.analysis.simplify.keep_medium_strong": {
       "en": "Keep Medium & Strong only",
@@ -163,8 +173,8 @@
       "lt": "Palikti tik vidutines ir stiprias",
       "pt": "Manter apenas Médio e Forte",
       "it": "Mantieni solo Medio e Forte",
-      "no": "Keep Medium & Strong only",
-      "el": "Keep Medium & Strong only"
+      "no": "Behold kun middels og sterke",
+      "el": "Διατήρηση μόνο μεσαίων και ισχυρών"
     },
     "modules.analysis.simplify.keep_strong_only": {
       "en": "Keep Strong only",
@@ -174,8 +184,8 @@
       "lt": "Palikti tik stiprias",
       "pt": "Manter apenas Forte",
       "it": "Mantieni solo Forte",
-      "no": "Keep Strong only",
-      "el": "Keep Strong only"
+      "no": "Behold kun sterke",
+      "el": "Διατήρηση μόνο ισχυρών"
     },
     "modules.analysis.simplify.weak_bullet_dominant": {
       "en": "Highlights dominant relationships",
@@ -185,8 +195,8 @@
       "lt": "Išryškina dominuojančius ryšius",
       "pt": "Destaca as relações dominantes",
       "it": "Evidenzia le relazioni dominanti",
-      "no": "Highlights dominant relationships",
-      "el": "Highlights dominant relationships"
+      "no": "Fremhever dominerende relasjoner",
+      "el": "Αναδεικνύει τις κυρίαρχες σχέσεις"
     },
     "modules.analysis.simplify.weak_bullet_clutter": {
       "en": "Reduces visual clutter",
@@ -196,8 +206,8 @@
       "lt": "Sumažina vizualinį triukšmą",
       "pt": "Reduz a desordem visual",
       "it": "Riduce il disordine visivo",
-      "no": "Reduces visual clutter",
-      "el": "Reduces visual clutter"
+      "no": "Reduserer visuelt rot",
+      "el": "Μειώνει την οπτική ακαταστασία"
     },
     "modules.analysis.simplify.weak_bullet_disconnect": {
       "en": "May disconnect some nodes",
@@ -207,8 +217,8 @@
       "lt": "Gali atjungti kai kuriuos mazgus",
       "pt": "Pode desconectar alguns nós",
       "it": "Potrebbe disconnettere alcuni nodi",
-      "no": "May disconnect some nodes",
-      "el": "May disconnect some nodes"
+      "no": "Kan koble fra noen noder",
+      "el": "Μπορεί να αποσυνδέσει κάποιους κόμβους"
     },
     "modules.analysis.simplify.centrality_info_title": {
       "en": "Centrality-Based Filtering",
@@ -218,8 +228,8 @@
       "lt": "Centralumu pagrįstas filtravimas",
       "pt": "Filtragem Baseada em Centralidade",
       "it": "Filtraggio Basato sulla Centralità",
-      "no": "Centrality-Based Filtering",
-      "el": "Centrality-Based Filtering"
+      "no": "Sentralitetsbasert filtrering",
+      "el": "Φιλτράρισμα βασισμένο στην κεντρικότητα"
     },
     "modules.analysis.simplify.centrality_description": {
       "en": "Removes peripheral nodes with low importance based on network centrality metrics.",
@@ -229,8 +239,8 @@
       "lt": "Pašalina periferinius mazgus su maža svarba pagal tinklo centralumo metrikas.",
       "pt": "Remove nós periféricos com baixa importância com base em métricas de centralidade da rede.",
       "it": "Rimuove nodi periferici con bassa importanza in base alle metriche di centralità della rete.",
-      "no": "Removes peripheral nodes with low importance based on network centrality metrics.",
-      "el": "Removes peripheral nodes with low importance based on network centrality metrics."
+      "no": "Fjerner perifere noder med lav betydning basert på nettverkssentralitetsmål.",
+      "el": "Αφαιρεί περιφερειακούς κόμβους χαμηλής σημασίας βάσει μετρικών κεντρικότητας δικτύου."
     },
     "modules.analysis.simplify.centrality_metric_label": {
       "en": "Centrality metric:",
@@ -240,8 +250,8 @@
       "lt": "Centralumo metrika:",
       "pt": "Métrica de centralidade:",
       "it": "Metrica di centralità:",
-      "no": "Centrality metric:",
-      "el": "Centrality metric:"
+      "no": "Sentralitetsmål:",
+      "el": "Μετρική κεντρικότητας:"
     },
     "modules.analysis.simplify.metric_degree": {
       "en": "Degree (Total connections)",
@@ -251,8 +261,8 @@
       "lt": "Laipsnis (Visų jungčių skaičius)",
       "pt": "Grau (Total de conexões)",
       "it": "Grado (Connessioni totali)",
-      "no": "Degree (Total connections)",
-      "el": "Degree (Total connections)"
+      "no": "Grad (totale forbindelser)",
+      "el": "Βαθμός (συνολικές συνδέσεις)"
     },
     "modules.analysis.simplify.metric_betweenness": {
       "en": "Betweenness (Bridge importance)",
@@ -262,8 +272,8 @@
       "lt": "Tarpininkavimas (Tilto svarba)",
       "pt": "Intermediação (Importância de ponte)",
       "it": "Betweenness (Importanza di ponte)",
-      "no": "Betweenness (Bridge importance)",
-      "el": "Betweenness (Bridge importance)"
+      "no": "Mellomleddsentralitet (brobetydning)",
+      "el": "Ενδιαμεσότητα (σημασία γέφυρας)"
     },
     "modules.analysis.simplify.metric_pagerank": {
       "en": "PageRank (Influence score)",
@@ -273,8 +283,8 @@
       "lt": "PageRank (Įtakos balas)",
       "pt": "PageRank (Pontuação de influência)",
       "it": "PageRank (Punteggio di influenza)",
-      "no": "PageRank (Influence score)",
-      "el": "PageRank (Influence score)"
+      "no": "PageRank (innflytelsesscore)",
+      "el": "PageRank (βαθμολογία επιρροής)"
     },
     "modules.analysis.simplify.metric_eigenvector": {
       "en": "Eigenvector (Connected to important nodes)",
@@ -284,8 +294,8 @@
       "lt": "Tikrinio vektoriaus (Sujungtas su svarbiais mazgais)",
       "pt": "Autovetor (Conectado a nós importantes)",
       "it": "Autovettore (Connesso a nodi importanti)",
-      "no": "Eigenvector (Connected to important nodes)",
-      "el": "Eigenvector (Connected to important nodes)"
+      "no": "Egenvektor (koblet til viktige noder)",
+      "el": "Ιδιοδιάνυσμα (συνδεδεμένο με σημαντικούς κόμβους)"
     },
     "modules.analysis.simplify.keep_above_percentile": {
       "en": "Keep nodes above percentile:",
@@ -295,8 +305,8 @@
       "lt": "Palikti mazgus virš percentilio:",
       "pt": "Manter nós acima do percentil:",
       "it": "Mantieni nodi sopra il percentile:",
-      "no": "Keep nodes above percentile:",
-      "el": "Keep nodes above percentile:"
+      "no": "Behold noder over persentil:",
+      "el": "Διατήρηση κόμβων πάνω από εκατοστημόριο:"
     },
     "modules.analysis.simplify.centrality_bullet_important": {
       "en": "Focuses on structurally important nodes",
@@ -306,8 +316,8 @@
       "lt": "Sutelkia dėmesį į struktūriškai svarbius mazgus",
       "pt": "Concentra-se em nós estruturalmente importantes",
       "it": "Si concentra sui nodi strutturalmente importanti",
-      "no": "Focuses on structurally important nodes",
-      "el": "Focuses on structurally important nodes"
+      "no": "Fokuserer på strukturelt viktige noder",
+      "el": "Εστιάζει σε δομικά σημαντικούς κόμβους"
     },
     "modules.analysis.simplify.centrality_bullet_adjustable": {
       "en": "Adjustable threshold for control",
@@ -317,8 +327,8 @@
       "lt": "Reguliuojamas slenkstis valdymui",
       "pt": "Limiar ajustável para controle",
       "it": "Soglia regolabile per il controllo",
-      "no": "Adjustable threshold for control",
-      "el": "Adjustable threshold for control"
+      "no": "Justerbar terskel for kontroll",
+      "el": "Ρυθμιζόμενο όριο για έλεγχο"
     },
     "modules.analysis.simplify.centrality_bullet_aspects": {
       "en": "Different metrics highlight different aspects",
@@ -328,8 +338,8 @@
       "lt": "Skirtingos metrikos išryškina skirtingus aspektus",
       "pt": "Diferentes métricas destacam diferentes aspectos",
       "it": "Metriche diverse evidenziano aspetti diversi",
-      "no": "Different metrics highlight different aspects",
-      "el": "Different metrics highlight different aspects"
+      "no": "Ulike mål fremhever ulike aspekter",
+      "el": "Διαφορετικές μετρικές αναδεικνύουν διαφορετικές πτυχές"
     },
     "modules.analysis.simplify.element_info_title": {
       "en": "DAPSI(W)R(M) Element Selection",
@@ -339,8 +349,8 @@
       "lt": "DAPSI(W)R(M) elementų pasirinkimas",
       "pt": "Seleção de Elementos DAPSI(W)R(M)",
       "it": "Selezione degli Elementi DAPSI(W)R(M)",
-      "no": "DAPSI(W)R(M) Element Selection",
-      "el": "DAPSI(W)R(M) Element Selection"
+      "no": "DAPSI(W)R(M) elementvalg",
+      "el": "Επιλογή στοιχείων DAPSI(W)R(M)"
     },
     "modules.analysis.simplify.element_description": {
       "en": "Focus on specific components of the SES framework.",
@@ -350,8 +360,8 @@
       "lt": "Sutelkite dėmesį į konkrečius SES sistemos komponentus.",
       "pt": "Concentre-se em componentes específicos da estrutura SES.",
       "it": "Concentrarsi su componenti specifici del framework SES.",
-      "no": "Focus on specific components of the SES framework.",
-      "el": "Focus on specific components of the SES framework."
+      "no": "Fokuser på spesifikke komponenter i SES-rammeverket.",
+      "el": "Εστίαση σε συγκεκριμένα στοιχεία του πλαισίου SES."
     },
     "modules.analysis.simplify.elements_to_keep": {
       "en": "Elements to keep:",
@@ -361,8 +371,8 @@
       "lt": "Paliekami elementai:",
       "pt": "Elementos a manter:",
       "it": "Elementi da mantenere:",
-      "no": "Elements to keep:",
-      "el": "Elements to keep:"
+      "no": "Elementer å beholde:",
+      "el": "Στοιχεία προς διατήρηση:"
     },
     "modules.analysis.simplify.elem_drivers": {
       "en": "Drivers",
@@ -372,8 +382,8 @@
       "lt": "Veiksniai",
       "pt": "Fatores",
       "it": "Fattori",
-      "no": "Drivers",
-      "el": "Drivers"
+      "no": "Drivkrefter",
+      "el": "Κινητήριες δυνάμεις"
     },
     "modules.analysis.simplify.elem_activities": {
       "en": "Activities",
@@ -383,8 +393,8 @@
       "lt": "Veiklos",
       "pt": "Atividades",
       "it": "Attività",
-      "no": "Activities",
-      "el": "Activities"
+      "no": "Aktiviteter",
+      "el": "Δραστηριότητες"
     },
     "modules.analysis.simplify.elem_pressures": {
       "en": "Pressures",
@@ -394,8 +404,8 @@
       "lt": "Spaudimai",
       "pt": "Pressões",
       "it": "Pressioni",
-      "no": "Pressures",
-      "el": "Pressures"
+      "no": "Belastninger",
+      "el": "Πιέσεις"
     },
     "modules.analysis.simplify.elem_marine_processes": {
       "en": "Marine Processes & Functioning",
@@ -405,8 +415,8 @@
       "lt": "Jūriniai procesai ir funkcionavimas",
       "pt": "Processos Marinhos e Funcionamento",
       "it": "Processi Marini e Funzionamento",
-      "no": "Marine Processes & Functioning",
-      "el": "Marine Processes & Functioning"
+      "no": "Marine prosesser og funksjon",
+      "el": "Θαλάσσιες διεργασίες και λειτουργία"
     },
     "modules.analysis.simplify.elem_ecosystem_services": {
       "en": "Ecosystem Services",
@@ -416,8 +426,8 @@
       "lt": "Ekosistemos paslaugos",
       "pt": "Serviços Ecossistêmicos",
       "it": "Servizi Ecosistemici",
-      "no": "Ecosystem Services",
-      "el": "Ecosystem Services"
+      "no": "Økosystemtjenester",
+      "el": "Υπηρεσίες οικοσυστήματος"
     },
     "modules.analysis.simplify.elem_goods_benefits": {
       "en": "Goods & Benefits",
@@ -427,8 +437,8 @@
       "lt": "Prekės ir nauda",
       "pt": "Bens e Benefícios",
       "it": "Beni e Benefici",
-      "no": "Goods & Benefits",
-      "el": "Goods & Benefits"
+      "no": "Goder og fordeler",
+      "el": "Αγαθά και οφέλη"
     },
     "modules.analysis.simplify.export_simplified_network": {
       "en": "Export Simplified Network",
@@ -438,8 +448,8 @@
       "lt": "Eksportuoti supaprastintą tinklą",
       "pt": "Exportar Rede Simplificada",
       "it": "Esporta Rete Semplificata",
-      "no": "Export Simplified Network",
-      "el": "Export Simplified Network"
+      "no": "Eksporter forenklet nettverk",
+      "el": "Εξαγωγή απλοποιημένου δικτύου"
     },
     "modules.analysis.simplify.about_why_title": {
       "en": "Why Simplify Networks?",
@@ -449,8 +459,8 @@
       "lt": "Kodėl reikia supaprastinti tinklus?",
       "pt": "Por que Simplificar as Redes?",
       "it": "Perché Semplificare le Reti?",
-      "no": "Why Simplify Networks?",
-      "el": "Why Simplify Networks?"
+      "no": "Hvorfor forenkle nettverk?",
+      "el": "Γιατί να απλοποιήσουμε τα δίκτυα;"
     },
     "modules.analysis.simplify.about_why_description": {
       "en": "Complex social-ecological systems often contain hundreds of variables and connections. While comprehensive models capture full system complexity, simplified models offer:",
@@ -460,63 +470,63 @@
       "lt": "Sudėtingos socialinės-ekologinės sistemos dažnai apima šimtus kintamųjų ir ryšių. Nors išsamūs modeliai atspindi visą sistemos sudėtingumą, supaprastinti modeliai siūlo:",
       "pt": "Sistemas socioecológicos complexos frequentemente contêm centenas de variáveis e conexões. Embora modelos abrangentes capturem toda a complexidade do sistema, modelos simplificados oferecem:",
       "it": "I sistemi socio-ecologici complessi spesso contengono centinaia di variabili e connessioni. Mentre i modelli completi catturano tutta la complessità del sistema, i modelli semplificati offrono:",
-      "no": "Complex social-ecological systems often contain hundreds of variables and connections. While comprehensive models capture full system complexity, simplified models offer:",
-      "el": "Complex social-ecological systems often contain hundreds of variables and connections. While comprehensive models capture full system complexity, simplified models offer:"
+      "no": "Komplekse sosial-økologiske systemer inneholder ofte hundrevis av variabler og forbindelser. Mens omfattende modeller fanger full systemkompleksitet, tilbyr forenklede modeller:",
+      "el": "Τα πολύπλοκα κοινωνικο-οικολογικά συστήματα συχνά περιέχουν εκατοντάδες μεταβλητές και συνδέσεις. Ενώ τα ολοκληρωμένα μοντέλα αποτυπώνουν την πλήρη πολυπλοκότητα του συστήματος, τα απλοποιημένα μοντέλα προσφέρουν:"
     },
     "modules.analysis.simplify.about_better_communication": {
-      "en": "<strong>Better Communication:<\/strong> Easier to explain to stakeholders and decision-makers",
-      "es": "<strong>Mejor Comunicación:<\/strong> Más fácil de explicar a las partes interesadas y los tomadores de decisiones",
-      "fr": "<strong>Meilleure Communication :<\/strong> Plus facile à expliquer aux parties prenantes et aux décideurs",
-      "de": "<strong>Bessere Kommunikation:<\/strong> Einfacher zu erklären für Stakeholder und Entscheidungsträger",
-      "lt": "<strong>Geresnė komunikacija:<\/strong> Lengviau paaiškinti suinteresuotosioms šalims ir sprendimų priėmėjams",
-      "pt": "<strong>Melhor Comunicação:<\/strong> Mais fácil de explicar a partes interessadas e tomadores de decisão",
-      "it": "<strong>Migliore Comunicazione:<\/strong> Più facile da spiegare a stakeholder e decisori",
-      "no": "<strong>Better Communication:<\/strong> Easier to explain to stakeholders and decision-makers",
-      "el": "<strong>Better Communication:<\/strong> Easier to explain to stakeholders and decision-makers"
+      "en": "<strong>Better Communication:</strong> Easier to explain to stakeholders and decision-makers",
+      "es": "<strong>Mejor Comunicación:</strong> Más fácil de explicar a las partes interesadas y los tomadores de decisiones",
+      "fr": "<strong>Meilleure Communication :</strong> Plus facile à expliquer aux parties prenantes et aux décideurs",
+      "de": "<strong>Bessere Kommunikation:</strong> Einfacher zu erklären für Stakeholder und Entscheidungsträger",
+      "lt": "<strong>Geresnė komunikacija:</strong> Lengviau paaiškinti suinteresuotosioms šalims ir sprendimų priėmėjams",
+      "pt": "<strong>Melhor Comunicação:</strong> Mais fácil de explicar a partes interessadas e tomadores de decisão",
+      "it": "<strong>Migliore Comunicazione:</strong> Più facile da spiegare a stakeholder e decisori",
+      "no": "<strong>Bedre kommunikasjon:</strong> Enklere å forklare til interessenter og beslutningstakere",
+      "el": "<strong>Καλύτερη επικοινωνία:</strong> Ευκολότερο να εξηγηθεί σε ενδιαφερόμενα μέρη και υπεύθυνους λήψης αποφάσεων"
     },
     "modules.analysis.simplify.about_focused_analysis": {
-      "en": "<strong>Focused Analysis:<\/strong> Concentrate on key drivers and feedback loops",
-      "es": "<strong>Análisis Enfocado:<\/strong> Concentrarse en los conductores clave y los ciclos de retroalimentación",
-      "fr": "<strong>Analyse Ciblée :<\/strong> Se concentrer sur les facteurs clés et les boucles de rétroaction",
-      "de": "<strong>Fokussierte Analyse:<\/strong> Konzentration auf Schlüsseltreiber und Rückkopplungsschleifen",
-      "lt": "<strong>Susikaupusi analizė:<\/strong> Sutelkti dėmesį į pagrindinius veiksnius ir grįžtamojo ryšio kilpas",
-      "pt": "<strong>Análise Focada:<\/strong> Concentrar-se em fatores-chave e ciclos de feedback",
-      "it": "<strong>Analisi Mirata:<\/strong> Concentrarsi sui fattori chiave e i cicli di feedback",
-      "no": "<strong>Focused Analysis:<\/strong> Concentrate on key drivers and feedback loops",
-      "el": "<strong>Focused Analysis:<\/strong> Concentrate on key drivers and feedback loops"
+      "en": "<strong>Focused Analysis:</strong> Concentrate on key drivers and feedback loops",
+      "es": "<strong>Análisis Enfocado:</strong> Concentrarse en los conductores clave y los ciclos de retroalimentación",
+      "fr": "<strong>Analyse Ciblée :</strong> Se concentrer sur les facteurs clés et les boucles de rétroaction",
+      "de": "<strong>Fokussierte Analyse:</strong> Konzentration auf Schlüsseltreiber und Rückkopplungsschleifen",
+      "lt": "<strong>Susikaupusi analizė:</strong> Sutelkti dėmesį į pagrindinius veiksnius ir grįžtamojo ryšio kilpas",
+      "pt": "<strong>Análise Focada:</strong> Concentrar-se em fatores-chave e ciclos de feedback",
+      "it": "<strong>Analisi Mirata:</strong> Concentrarsi sui fattori chiave e i cicli di feedback",
+      "no": "<strong>Fokusert analyse:</strong> Konsentrer deg om viktige drivere og tilbakekoblingsløyfer",
+      "el": "<strong>Εστιασμένη ανάλυση:</strong> Συγκέντρωση σε βασικούς παράγοντες και βρόχους ανατροφοδότησης"
     },
     "modules.analysis.simplify.about_computational_efficiency": {
-      "en": "<strong>Computational Efficiency:<\/strong> Faster analysis and visualization",
-      "es": "<strong>Eficiencia Computacional:<\/strong> Análisis y visualización más rápidos",
-      "fr": "<strong>Efficacité Computationnelle :<\/strong> Analyse et visualisation plus rapides",
-      "de": "<strong>Recheneffizienz:<\/strong> Schnellere Analyse und Visualisierung",
-      "lt": "<strong>Skaičiavimo efektyvumas:<\/strong> Greitesnė analizė ir vizualizacija",
-      "pt": "<strong>Eficiência Computacional:<\/strong> Análise e visualização mais rápidas",
-      "it": "<strong>Efficienza Computazionale:<\/strong> Analisi e visualizzazione più veloci",
-      "no": "<strong>Computational Efficiency:<\/strong> Faster analysis and visualization",
-      "el": "<strong>Computational Efficiency:<\/strong> Faster analysis and visualization"
+      "en": "<strong>Computational Efficiency:</strong> Faster analysis and visualization",
+      "es": "<strong>Eficiencia Computacional:</strong> Análisis y visualización más rápidos",
+      "fr": "<strong>Efficacité Computationnelle :</strong> Analyse et visualisation plus rapides",
+      "de": "<strong>Recheneffizienz:</strong> Schnellere Analyse und Visualisierung",
+      "lt": "<strong>Skaičiavimo efektyvumas:</strong> Greitesnė analizė ir vizualizacija",
+      "pt": "<strong>Eficiência Computacional:</strong> Análise e visualização mais rápidas",
+      "it": "<strong>Efficienza Computazionale:</strong> Analisi e visualizzazione più veloci",
+      "no": "<strong>Beregningseffektivitet:</strong> Raskere analyse og visualisering",
+      "el": "<strong>Υπολογιστική αποτελεσματικότητα:</strong> Ταχύτερη ανάλυση και οπτικοποίηση"
     },
     "modules.analysis.simplify.about_pattern_recognition": {
-      "en": "<strong>Pattern Recognition:<\/strong> Clearer identification of core system dynamics",
-      "es": "<strong>Reconocimiento de Patrones:<\/strong> Identificación más clara de la dinámica central del sistema",
-      "fr": "<strong>Reconnaissance de Motifs :<\/strong> Identification plus claire de la dynamique centrale du système",
-      "de": "<strong>Mustererkennung:<\/strong> Klarere Identifizierung der Kerndynamik des Systems",
-      "lt": "<strong>Šablonų atpažinimas:<\/strong> Aiškesnis pagrindinės sistemos dinamikos identifikavimas",
-      "pt": "<strong>Reconhecimento de Padrões:<\/strong> Identificação mais clara da dinâmica central do sistema",
-      "it": "<strong>Riconoscimento di Modelli:<\/strong> Identificazione più chiara delle dinamiche fondamentali del sistema",
-      "no": "<strong>Pattern Recognition:<\/strong> Clearer identification of core system dynamics",
-      "el": "<strong>Pattern Recognition:<\/strong> Clearer identification of core system dynamics"
+      "en": "<strong>Pattern Recognition:</strong> Clearer identification of core system dynamics",
+      "es": "<strong>Reconocimiento de Patrones:</strong> Identificación más clara de la dinámica central del sistema",
+      "fr": "<strong>Reconnaissance de Motifs :</strong> Identification plus claire de la dynamique centrale du système",
+      "de": "<strong>Mustererkennung:</strong> Klarere Identifizierung der Kerndynamik des Systems",
+      "lt": "<strong>Šablonų atpažinimas:</strong> Aiškesnis pagrindinės sistemos dinamikos identifikavimas",
+      "pt": "<strong>Reconhecimento de Padrões:</strong> Identificação mais clara da dinâmica central do sistema",
+      "it": "<strong>Riconoscimento di Modelli:</strong> Identificazione più chiara delle dinamiche fondamentali del sistema",
+      "no": "<strong>Mønstergjenkjenning:</strong> Tydeligere identifisering av kjernedynamikk i systemet",
+      "el": "<strong>Αναγνώριση προτύπων:</strong> Σαφέστερη αναγνώριση της βασικής δυναμικής του συστήματος"
     },
     "modules.analysis.simplify.about_scenario_testing": {
-      "en": "<strong>Scenario Testing:<\/strong> More manageable models for policy simulation",
-      "es": "<strong>Prueba de Escenarios:<\/strong> Modelos más manejables para simulación de políticas",
-      "fr": "<strong>Test de Scénarios :<\/strong> Modèles plus gérables pour la simulation de politiques",
-      "de": "<strong>Szenariotests:<\/strong> Besser handhabbare Modelle für Politiksimulation",
-      "lt": "<strong>Scenarijų testavimas:<\/strong> Labiau valdomi modeliai politikos simuliacijai",
-      "pt": "<strong>Teste de Cenários:<\/strong> Modelos mais gerenciáveis para simulação de políticas",
-      "it": "<strong>Test di Scenari:<\/strong> Modelli più gestibili per la simulazione di politiche",
-      "no": "<strong>Scenario Testing:<\/strong> More manageable models for policy simulation",
-      "el": "<strong>Scenario Testing:<\/strong> More manageable models for policy simulation"
+      "en": "<strong>Scenario Testing:</strong> More manageable models for policy simulation",
+      "es": "<strong>Prueba de Escenarios:</strong> Modelos más manejables para simulación de políticas",
+      "fr": "<strong>Test de Scénarios :</strong> Modèles plus gérables pour la simulation de politiques",
+      "de": "<strong>Szenariotests:</strong> Besser handhabbare Modelle für Politiksimulation",
+      "lt": "<strong>Scenarijų testavimas:</strong> Labiau valdomi modeliai politikos simuliacijai",
+      "pt": "<strong>Teste de Cenários:</strong> Modelos mais gerenciáveis para simulação de políticas",
+      "it": "<strong>Test di Scenari:</strong> Modelli più gestibili per la simulazione di politiche",
+      "no": "<strong>Scenariotesting:</strong> Mer håndterbare modeller for politikksimulering",
+      "el": "<strong>Δοκιμή σεναρίων:</strong> Πιο διαχειρίσιμα μοντέλα για προσομοίωση πολιτικής"
     },
     "modules.analysis.simplify.about_best_practices_title": {
       "en": "Simplification Best Practices",
@@ -526,74 +536,74 @@
       "lt": "Supaprastinimo geriausios praktikos",
       "pt": "Melhores Práticas de Simplificação",
       "it": "Migliori Pratiche di Semplificazione",
-      "no": "Simplification Best Practices",
-      "el": "Simplification Best Practices"
+      "no": "Beste praksis for forenkling",
+      "el": "Βέλτιστες πρακτικές απλοποίησης"
     },
     "modules.analysis.simplify.about_bp_feedback": {
-      "en": "<strong>Preserve Feedback Loops:<\/strong> Ensure key reinforcing and balancing loops remain intact",
-      "es": "<strong>Preservar Ciclos de Retroalimentación:<\/strong> Asegurar que los ciclos de refuerzo y equilibrio clave permanezcan intactos",
-      "fr": "<strong>Préserver les Boucles de Rétroaction :<\/strong> S'assurer que les boucles de renforcement et d'équilibre clés restent intactes",
-      "de": "<strong>Rückkopplungsschleifen erhalten:<\/strong> Sicherstellen, dass wichtige verstärkende und ausgleichende Schleifen intakt bleiben",
-      "lt": "<strong>Išsaugoti grįžtamojo ryšio kilpas:<\/strong> Užtikrinti, kad pagrindinės stiprinančios ir balansuojančios kilpos išliktų nepažeistos",
-      "pt": "<strong>Preservar Ciclos de Feedback:<\/strong> Garantir que os ciclos de reforço e equilíbrio chave permaneçam intactos",
-      "it": "<strong>Preservare i Cicli di Feedback:<\/strong> Assicurarsi che i cicli di rinforzo e bilanciamento chiave rimangano intatti",
-      "no": "<strong>Preserve Feedback Loops:<\/strong> Ensure key reinforcing and balancing loops remain intact",
-      "el": "<strong>Preserve Feedback Loops:<\/strong> Ensure key reinforcing and balancing loops remain intact"
+      "en": "<strong>Preserve Feedback Loops:</strong> Ensure key reinforcing and balancing loops remain intact",
+      "es": "<strong>Preservar Ciclos de Retroalimentación:</strong> Asegurar que los ciclos de refuerzo y equilibrio clave permanezcan intactos",
+      "fr": "<strong>Préserver les Boucles de Rétroaction :</strong> S'assurer que les boucles de renforcement et d'équilibre clés restent intactes",
+      "de": "<strong>Rückkopplungsschleifen erhalten:</strong> Sicherstellen, dass wichtige verstärkende und ausgleichende Schleifen intakt bleiben",
+      "lt": "<strong>Išsaugoti grįžtamojo ryšio kilpas:</strong> Užtikrinti, kad pagrindinės stiprinančios ir balansuojančios kilpos išliktų nepažeistos",
+      "pt": "<strong>Preservar Ciclos de Feedback:</strong> Garantir que os ciclos de reforço e equilíbrio chave permaneçam intactos",
+      "it": "<strong>Preservare i Cicli di Feedback:</strong> Assicurarsi che i cicli di rinforzo e bilanciamento chiave rimangano intatti",
+      "no": "<strong>Bevar tilbakekoblingsløyfer:</strong> Sikre at viktige forsterkende og balanserende løyfer forblir intakte",
+      "el": "<strong>Διατήρηση βρόχων ανατροφοδότησης:</strong> Εξασφάλιση ότι βασικοί ενισχυτικοί και εξισορροπητικοί βρόχοι παραμένουν ανέπαφοι"
     },
     "modules.analysis.simplify.about_bp_causality": {
-      "en": "<strong>Maintain Causality:<\/strong> Keep polarity and direction of relationships accurate",
-      "es": "<strong>Mantener la Causalidad:<\/strong> Mantener la polaridad y dirección de las relaciones precisas",
-      "fr": "<strong>Maintenir la Causalité :<\/strong> Garder la polarité et la direction des relations précises",
-      "de": "<strong>Kausalität beibehalten:<\/strong> Polarität und Richtung der Beziehungen genau beibehalten",
-      "lt": "<strong>Išlaikyti priežastingumą:<\/strong> Išsaugoti tikslų ryšių poliariškumą ir kryptį",
-      "pt": "<strong>Manter a Causalidade:<\/strong> Manter a polaridade e direção das relações precisas",
-      "it": "<strong>Mantenere la Causalità:<\/strong> Mantenere la polarità e la direzione delle relazioni accurate",
-      "no": "<strong>Maintain Causality:<\/strong> Keep polarity and direction of relationships accurate",
-      "el": "<strong>Maintain Causality:<\/strong> Keep polarity and direction of relationships accurate"
+      "en": "<strong>Maintain Causality:</strong> Keep polarity and direction of relationships accurate",
+      "es": "<strong>Mantener la Causalidad:</strong> Mantener la polaridad y dirección de las relaciones precisas",
+      "fr": "<strong>Maintenir la Causalité :</strong> Garder la polarité et la direction des relations précises",
+      "de": "<strong>Kausalität beibehalten:</strong> Polarität und Richtung der Beziehungen genau beibehalten",
+      "lt": "<strong>Išlaikyti priežastingumą:</strong> Išsaugoti tikslų ryšių poliariškumą ir kryptį",
+      "pt": "<strong>Manter a Causalidade:</strong> Manter a polaridade e direção das relações precisas",
+      "it": "<strong>Mantenere la Causalità:</strong> Mantenere la polarità e la direzione delle relazioni accurate",
+      "no": "<strong>Oppretthold kausalitet:</strong> Behold polaritet og retning på relasjoner korrekt",
+      "el": "<strong>Διατήρηση αιτιότητας:</strong> Διατήρηση πολικότητας και κατεύθυνσης των σχέσεων με ακρίβεια"
     },
     "modules.analysis.simplify.about_bp_document": {
-      "en": "<strong>Document Changes:<\/strong> Track what was removed and why",
-      "es": "<strong>Documentar Cambios:<\/strong> Registrar lo que se eliminó y por qué",
-      "fr": "<strong>Documenter les Changements :<\/strong> Suivre ce qui a été supprimé et pourquoi",
-      "de": "<strong>Änderungen dokumentieren:<\/strong> Verfolgen, was entfernt wurde und warum",
-      "lt": "<strong>Dokumentuoti pakeitimus:<\/strong> Sekti, kas buvo pašalinta ir kodėl",
-      "pt": "<strong>Documentar Mudanças:<\/strong> Rastrear o que foi removido e por quê",
-      "it": "<strong>Documentare i Cambiamenti:<\/strong> Tracciare cosa è stato rimosso e perché",
-      "no": "<strong>Document Changes:<\/strong> Track what was removed and why",
-      "el": "<strong>Document Changes:<\/strong> Track what was removed and why"
+      "en": "<strong>Document Changes:</strong> Track what was removed and why",
+      "es": "<strong>Documentar Cambios:</strong> Registrar lo que se eliminó y por qué",
+      "fr": "<strong>Documenter les Changements :</strong> Suivre ce qui a été supprimé et pourquoi",
+      "de": "<strong>Änderungen dokumentieren:</strong> Verfolgen, was entfernt wurde und warum",
+      "lt": "<strong>Dokumentuoti pakeitimus:</strong> Sekti, kas buvo pašalinta ir kodėl",
+      "pt": "<strong>Documentar Mudanças:</strong> Rastrear o que foi removido e por quê",
+      "it": "<strong>Documentare i Cambiamenti:</strong> Tracciare cosa è stato rimosso e perché",
+      "no": "<strong>Dokumenter endringer:</strong> Spor hva som ble fjernet og hvorfor",
+      "el": "<strong>Τεκμηρίωση αλλαγών:</strong> Παρακολούθηση του τι αφαιρέθηκε και γιατί"
     },
     "modules.analysis.simplify.about_bp_validate": {
-      "en": "<strong>Validate with Experts:<\/strong> Confirm simplified model still represents reality",
-      "es": "<strong>Validar con Expertos:<\/strong> Confirmar que el modelo simplificado todavía representa la realidad",
-      "fr": "<strong>Valider avec des Experts :<\/strong> Confirmer que le modèle simplifié représente toujours la réalité",
-      "de": "<strong>Mit Experten validieren:<\/strong> Bestätigen, dass das vereinfachte Modell die Realität noch abbildet",
-      "lt": "<strong>Patvirtinti su ekspertais:<\/strong> Patvirtinti, kad supaprastintas modelis vis dar atspindi tikrovę",
-      "pt": "<strong>Validar com Especialistas:<\/strong> Confirmar que o modelo simplificado ainda representa a realidade",
-      "it": "<strong>Validare con gli Esperti:<\/strong> Confermare che il modello semplificato rappresenti ancora la realtà",
-      "no": "<strong>Validate with Experts:<\/strong> Confirm simplified model still represents reality",
-      "el": "<strong>Validate with Experts:<\/strong> Confirm simplified model still represents reality"
+      "en": "<strong>Validate with Experts:</strong> Confirm simplified model still represents reality",
+      "es": "<strong>Validar con Expertos:</strong> Confirmar que el modelo simplificado todavía representa la realidad",
+      "fr": "<strong>Valider avec des Experts :</strong> Confirmer que le modèle simplifié représente toujours la réalité",
+      "de": "<strong>Mit Experten validieren:</strong> Bestätigen, dass das vereinfachte Modell die Realität noch abbildet",
+      "lt": "<strong>Patvirtinti su ekspertais:</strong> Patvirtinti, kad supaprastintas modelis vis dar atspindi tikrovę",
+      "pt": "<strong>Validar com Especialistas:</strong> Confirmar que o modelo simplificado ainda representa a realidade",
+      "it": "<strong>Validare con gli Esperti:</strong> Confermare che il modello semplificato rappresenti ancora la realtà",
+      "no": "<strong>Valider med eksperter:</strong> Bekreft at den forenklede modellen fortsatt representerer virkeligheten",
+      "el": "<strong>Επικύρωση με ειδικούς:</strong> Επιβεβαίωση ότι το απλοποιημένο μοντέλο εξακολουθεί να αντιπροσωπεύει την πραγματικότητα"
     },
     "modules.analysis.simplify.about_bp_multiple": {
-      "en": "<strong>Use Multiple Methods:<\/strong> Combine techniques for comprehensive simplification",
-      "es": "<strong>Usar Múltiples Métodos:<\/strong> Combinar técnicas para una simplificación integral",
-      "fr": "<strong>Utiliser Plusieurs Méthodes :<\/strong> Combiner les techniques pour une simplification complète",
-      "de": "<strong>Mehrere Methoden verwenden:<\/strong> Techniken für eine umfassende Vereinfachung kombinieren",
-      "lt": "<strong>Naudoti kelis metodus:<\/strong> Derinti metodus išsamiam supaprastinimui",
-      "pt": "<strong>Usar Múltiplos Métodos:<\/strong> Combinar técnicas para simplificação abrangente",
-      "it": "<strong>Usare Metodi Multipli:<\/strong> Combinare le tecniche per una semplificazione completa",
-      "no": "<strong>Use Multiple Methods:<\/strong> Combine techniques for comprehensive simplification",
-      "el": "<strong>Use Multiple Methods:<\/strong> Combine techniques for comprehensive simplification"
+      "en": "<strong>Use Multiple Methods:</strong> Combine techniques for comprehensive simplification",
+      "es": "<strong>Usar Múltiples Métodos:</strong> Combinar técnicas para una simplificación integral",
+      "fr": "<strong>Utiliser Plusieurs Méthodes :</strong> Combiner les techniques pour une simplification complète",
+      "de": "<strong>Mehrere Methoden verwenden:</strong> Techniken für eine umfassende Vereinfachung kombinieren",
+      "lt": "<strong>Naudoti kelis metodus:</strong> Derinti metodus išsamiam supaprastinimui",
+      "pt": "<strong>Usar Múltiplos Métodos:</strong> Combinar técnicas para simplificação abrangente",
+      "it": "<strong>Usare Metodi Multipli:</strong> Combinare le tecniche per una semplificazione completa",
+      "no": "<strong>Bruk flere metoder:</strong> Kombiner teknikker for omfattende forenkling",
+      "el": "<strong>Χρήση πολλαπλών μεθόδων:</strong> Συνδυασμός τεχνικών για ολοκληρωμένη απλοποίηση"
     },
     "modules.analysis.simplify.about_bp_iterate": {
-      "en": "<strong>Iterate:<\/strong> Apply methods gradually and review results at each step",
-      "es": "<strong>Iterar:<\/strong> Aplicar métodos gradualmente y revisar resultados en cada paso",
-      "fr": "<strong>Itérer :<\/strong> Appliquer les méthodes progressivement et examiner les résultats à chaque étape",
-      "de": "<strong>Iterieren:<\/strong> Methoden schrittweise anwenden und Ergebnisse bei jedem Schritt überprüfen",
-      "lt": "<strong>Kartoti:<\/strong> Taikyti metodus palaipsniui ir peržiūrėti rezultatus kiekviename etape",
-      "pt": "<strong>Iterar:<\/strong> Aplicar métodos gradualmente e revisar resultados em cada etapa",
-      "it": "<strong>Iterare:<\/strong> Applicare i metodi gradualmente e rivedere i risultati ad ogni passo",
-      "no": "<strong>Iterate:<\/strong> Apply methods gradually and review results at each step",
-      "el": "<strong>Iterate:<\/strong> Apply methods gradually and review results at each step"
+      "en": "<strong>Iterate:</strong> Apply methods gradually and review results at each step",
+      "es": "<strong>Iterar:</strong> Aplicar métodos gradualmente y revisar resultados en cada paso",
+      "fr": "<strong>Itérer :</strong> Appliquer les méthodes progressivement et examiner les résultats à chaque étape",
+      "de": "<strong>Iterieren:</strong> Methoden schrittweise anwenden und Ergebnisse bei jedem Schritt überprüfen",
+      "lt": "<strong>Kartoti:</strong> Taikyti metodus palaipsniui ir peržiūrėti rezultatus kiekviename etape",
+      "pt": "<strong>Iterar:</strong> Aplicar métodos gradualmente e revisar resultados em cada etapa",
+      "it": "<strong>Iterare:</strong> Applicare i metodi gradualmente e rivedere i risultati ad ogni passo",
+      "no": "<strong>Iterer:</strong> Bruk metoder gradvis og gjennomgå resultater ved hvert trinn",
+      "el": "<strong>Επανάληψη:</strong> Σταδιακή εφαρμογή μεθόδων και αναθεώρηση αποτελεσμάτων σε κάθε βήμα"
     },
     "modules.analysis.simplify.about_recommendations_title": {
       "en": "Method Recommendations by Goal",
@@ -603,63 +613,63 @@
       "lt": "Metodų rekomendacijos pagal tikslą",
       "pt": "Recomendações de Métodos por Objetivo",
       "it": "Raccomandazioni di Metodi per Obiettivo",
-      "no": "Method Recommendations by Goal",
-      "el": "Method Recommendations by Goal"
+      "no": "Metodeanbefalinger etter mål",
+      "el": "Συστάσεις μεθόδων κατά στόχο"
     },
     "modules.analysis.simplify.about_rec_internal": {
-      "en": "<strong>Focus on Internal Dynamics:<\/strong> Remove exogenous variables",
-      "es": "<strong>Enfoque en la Dinámica Interna:<\/strong> Eliminar variables exógenas",
-      "fr": "<strong>Se Concentrer sur la Dynamique Interne :<\/strong> Supprimer les variables exogènes",
-      "de": "<strong>Fokus auf interne Dynamik:<\/strong> Exogene Variablen entfernen",
-      "lt": "<strong>Sutelkti dėmesį į vidinę dinamiką:<\/strong> Pašalinti egzogeninius kintamuosius",
-      "pt": "<strong>Foco na Dinâmica Interna:<\/strong> Remover variáveis exógenas",
-      "it": "<strong>Focus sulla Dinamica Interna:<\/strong> Rimuovere le variabili esogene",
-      "no": "<strong>Focus on Internal Dynamics:<\/strong> Remove exogenous variables",
-      "el": "<strong>Focus on Internal Dynamics:<\/strong> Remove exogenous variables"
+      "en": "<strong>Focus on Internal Dynamics:</strong> Remove exogenous variables",
+      "es": "<strong>Enfoque en la Dinámica Interna:</strong> Eliminar variables exógenas",
+      "fr": "<strong>Se Concentrer sur la Dynamique Interne :</strong> Supprimer les variables exogènes",
+      "de": "<strong>Fokus auf interne Dynamik:</strong> Exogene Variablen entfernen",
+      "lt": "<strong>Sutelkti dėmesį į vidinę dinamiką:</strong> Pašalinti egzogeninius kintamuosius",
+      "pt": "<strong>Foco na Dinâmica Interna:</strong> Remover variáveis exógenas",
+      "it": "<strong>Focus sulla Dinamica Interna:</strong> Rimuovere le variabili esogene",
+      "no": "<strong>Fokus på intern dynamikk:</strong> Fjern eksogene variabler",
+      "el": "<strong>Εστίαση στην εσωτερική δυναμική:</strong> Αφαίρεση εξωγενών μεταβλητών"
     },
     "modules.analysis.simplify.about_rec_visual": {
-      "en": "<strong>Reduce Visual Complexity:<\/strong> Filter weak connections + SISO encapsulation",
-      "es": "<strong>Reducir la Complejidad Visual:<\/strong> Filtrar conexiones débiles + encapsulación SISO",
-      "fr": "<strong>Réduire la Complexité Visuelle :<\/strong> Filtrer les connexions faibles + encapsulation SISO",
-      "de": "<strong>Visuelle Komplexität reduzieren:<\/strong> Schwache Verbindungen filtern + SISO-Kapselung",
-      "lt": "<strong>Sumažinti vizualinį sudėtingumą:<\/strong> Filtruoti silpnas jungtis + SISO inkapsuliacija",
-      "pt": "<strong>Reduzir a Complexidade Visual:<\/strong> Filtrar conexões fracas + encapsulamento SISO",
-      "it": "<strong>Ridurre la Complessità Visiva:<\/strong> Filtrare connessioni deboli + incapsulamento SISO",
-      "no": "<strong>Reduce Visual Complexity:<\/strong> Filter weak connections + SISO encapsulation",
-      "el": "<strong>Reduce Visual Complexity:<\/strong> Filter weak connections + SISO encapsulation"
+      "en": "<strong>Reduce Visual Complexity:</strong> Filter weak connections + SISO encapsulation",
+      "es": "<strong>Reducir la Complejidad Visual:</strong> Filtrar conexiones débiles + encapsulación SISO",
+      "fr": "<strong>Réduire la Complexité Visuelle :</strong> Filtrer les connexions faibles + encapsulation SISO",
+      "de": "<strong>Visuelle Komplexität reduzieren:</strong> Schwache Verbindungen filtern + SISO-Kapselung",
+      "lt": "<strong>Sumažinti vizualinį sudėtingumą:</strong> Filtruoti silpnas jungtis + SISO inkapsuliacija",
+      "pt": "<strong>Reduzir a Complexidade Visual:</strong> Filtrar conexões fracas + encapsulamento SISO",
+      "it": "<strong>Ridurre la Complessità Visiva:</strong> Filtrare connessioni deboli + incapsulamento SISO",
+      "no": "<strong>Reduser visuell kompleksitet:</strong> Filtrer svake forbindelser + SISO-innkapsling",
+      "el": "<strong>Μείωση οπτικής πολυπλοκότητας:</strong> Φιλτράρισμα ασθενών συνδέσεων + SISO ενθυλάκωση"
     },
     "modules.analysis.simplify.about_rec_leverage": {
-      "en": "<strong>Highlight Key Leverage Points:<\/strong> Low-centrality node removal with PageRank",
-      "es": "<strong>Resaltar Puntos Clave de Apalancamiento:<\/strong> Eliminación de nodos de baja centralidad con PageRank",
-      "fr": "<strong>Mettre en Évidence les Points de Levier Clés :<\/strong> Suppression des nœuds de faible centralité avec PageRank",
-      "de": "<strong>Wichtige Hebelpunkte hervorheben:<\/strong> Entfernung von Knoten mit niedriger Zentralität mit PageRank",
-      "lt": "<strong>Išryškinti svarbiausius svertų taškus:<\/strong> Mažo centralumo mazgų pašalinimas su PageRank",
-      "pt": "<strong>Destacar Pontos de Alavancagem Chave:<\/strong> Remoção de nós de baixa centralidade com PageRank",
-      "it": "<strong>Evidenziare i Punti Leva Chiave:<\/strong> Rimozione dei nodi a bassa centralità con PageRank",
-      "no": "<strong>Highlight Key Leverage Points:<\/strong> Low-centrality node removal with PageRank",
-      "el": "<strong>Highlight Key Leverage Points:<\/strong> Low-centrality node removal with PageRank"
+      "en": "<strong>Highlight Key Leverage Points:</strong> Low-centrality node removal with PageRank",
+      "es": "<strong>Resaltar Puntos Clave de Apalancamiento:</strong> Eliminación de nodos de baja centralidad con PageRank",
+      "fr": "<strong>Mettre en Évidence les Points de Levier Clés :</strong> Suppression des nœuds de faible centralité avec PageRank",
+      "de": "<strong>Wichtige Hebelpunkte hervorheben:</strong> Entfernung von Knoten mit niedriger Zentralität mit PageRank",
+      "lt": "<strong>Išryškinti svarbiausius svertų taškus:</strong> Mažo centralumo mazgų pašalinimas su PageRank",
+      "pt": "<strong>Destacar Pontos de Alavancagem Chave:</strong> Remoção de nós de baixa centralidade com PageRank",
+      "it": "<strong>Evidenziare i Punti Leva Chiave:</strong> Rimozione dei nodi a bassa centralità con PageRank",
+      "no": "<strong>Fremhev viktige innflytelsespunkter:</strong> Fjerning av noder med lav sentralitet med PageRank",
+      "el": "<strong>Ανάδειξη βασικών σημείων μόχλευσης:</strong> Αφαίρεση κόμβων χαμηλής κεντρικότητας με PageRank"
     },
     "modules.analysis.simplify.about_rec_sector": {
-      "en": "<strong>Sector-Specific Analysis:<\/strong> Element type filtering",
-      "es": "<strong>Análisis Específico por Sector:<\/strong> Filtrado por tipo de elemento",
-      "fr": "<strong>Analyse Spécifique au Secteur :<\/strong> Filtrage par type d'élément",
-      "de": "<strong>Sektorspezifische Analyse:<\/strong> Filterung nach Elementtyp",
-      "lt": "<strong>Sektoriui būdinga analizė:<\/strong> Filtravimas pagal elemento tipą",
-      "pt": "<strong>Análise Específica por Setor:<\/strong> Filtragem por tipo de elemento",
-      "it": "<strong>Analisi Specifica per Settore:<\/strong> Filtraggio per tipo di elemento",
-      "no": "<strong>Sector-Specific Analysis:<\/strong> Element type filtering",
-      "el": "<strong>Sector-Specific Analysis:<\/strong> Element type filtering"
+      "en": "<strong>Sector-Specific Analysis:</strong> Element type filtering",
+      "es": "<strong>Análisis Específico por Sector:</strong> Filtrado por tipo de elemento",
+      "fr": "<strong>Analyse Spécifique au Secteur :</strong> Filtrage par type d'élément",
+      "de": "<strong>Sektorspezifische Analyse:</strong> Filterung nach Elementtyp",
+      "lt": "<strong>Sektoriui būdinga analizė:</strong> Filtravimas pagal elemento tipą",
+      "pt": "<strong>Análise Específica por Setor:</strong> Filtragem por tipo de elemento",
+      "it": "<strong>Analisi Specifica per Settore:</strong> Filtraggio per tipo di elemento",
+      "no": "<strong>Sektorspesifikk analyse:</strong> Filtrering etter elementtype",
+      "el": "<strong>Τομεακή ανάλυση:</strong> Φιλτράρισμα κατά τύπο στοιχείου"
     },
     "modules.analysis.simplify.about_rec_maximum": {
-      "en": "<strong>Maximum Simplification:<\/strong> Combine all methods with careful thresholds",
-      "es": "<strong>Simplificación Máxima:<\/strong> Combinar todos los métodos con umbrales cuidadosos",
-      "fr": "<strong>Simplification Maximale :<\/strong> Combiner toutes les méthodes avec des seuils soigneux",
-      "de": "<strong>Maximale Vereinfachung:<\/strong> Alle Methoden mit sorgfältigen Schwellenwerten kombinieren",
-      "lt": "<strong>Maksimalus supaprastinimas:<\/strong> Derinti visus metodus su atsargiais slenkstiniais",
-      "pt": "<strong>Simplificação Máxima:<\/strong> Combinar todos os métodos com limiares cuidadosos",
-      "it": "<strong>Semplificazione Massima:<\/strong> Combinare tutti i metodi con soglie attente",
-      "no": "<strong>Maximum Simplification:<\/strong> Combine all methods with careful thresholds",
-      "el": "<strong>Maximum Simplification:<\/strong> Combine all methods with careful thresholds"
+      "en": "<strong>Maximum Simplification:</strong> Combine all methods with careful thresholds",
+      "es": "<strong>Simplificación Máxima:</strong> Combinar todos los métodos con umbrales cuidadosos",
+      "fr": "<strong>Simplification Maximale :</strong> Combiner toutes les méthodes avec des seuils soigneux",
+      "de": "<strong>Maximale Vereinfachung:</strong> Alle Methoden mit sorgfältigen Schwellenwerten kombinieren",
+      "lt": "<strong>Maksimalus supaprastinimas:</strong> Derinti visus metodus su atsargiais slenkstiniais",
+      "pt": "<strong>Simplificação Máxima:</strong> Combinar todos os métodos com limiares cuidadosos",
+      "it": "<strong>Semplificazione Massima:</strong> Combinare tutti i metodi con soglie attente",
+      "no": "<strong>Maksimal forenkling:</strong> Kombiner alle metoder med nøyaktige terskler",
+      "el": "<strong>Μέγιστη απλοποίηση:</strong> Συνδυασμός όλων των μεθόδων με προσεκτικά όρια"
     },
     "modules.analysis.simplify.header_description": {
       "en": "Reduce network complexity while preserving essential causal structures and feedback loops. Apply multiple simplification methods to create focused, interpretable models.",
@@ -669,8 +679,8 @@
       "lt": "Sumažinkite tinklo sudėtingumą išsaugodami esmines priežastines struktūras ir grįžtamojo ryšio kilpas. Taikykite kelis supaprastinimo metodus, kad sukurtumėte sutelktus, interpretuojamus modelius.",
       "pt": "Reduza a complexidade da rede preservando estruturas causais essenciais e ciclos de feedback. Aplique múltiplos métodos de simplificação para criar modelos focados e interpretáveis.",
       "it": "Riduci la complessità della rete preservando le strutture causali essenziali e i cicli di feedback. Applica molteplici metodi di semplificazione per creare modelli mirati e interpretabili.",
-      "no": "Reduce network complexity while preserving essential causal structures and feedback loops. Apply multiple simplification methods to create focused, interpretable models.",
-      "el": "Reduce network complexity while preserving essential causal structures and feedback loops. Apply multiple simplification methods to create focused, interpretable models."
+      "no": "Reduser nettverkskompleksitet mens du bevarer essensielle årsaksstrukturer og tilbakekoblingsløyfer. Bruk flere forenklingsmetoder for å fokusere på kjernedynamikk i systemet.",
+      "el": "Μειώστε την πολυπλοκότητα του δικτύου διατηρώντας τις βασικές αιτιακές δομές και βρόχους ανατροφοδότησης. Εφαρμόστε πολλαπλές τεχνικές απλοποίησης για εστίαση στη βασική δυναμική του συστήματος."
     },
     "modules.analysis.simplify.original_nodes": {
       "en": "Original Nodes",
@@ -680,8 +690,8 @@
       "lt": "Pradiniai mazgai",
       "pt": "Nós Originais",
       "it": "Nodi Originali",
-      "no": "Original Nodes",
-      "el": "Original Nodes"
+      "no": "Opprinnelige noder",
+      "el": "Αρχικοί κόμβοι"
     },
     "modules.analysis.simplify.original_edges": {
       "en": "Original Edges",
@@ -691,8 +701,8 @@
       "lt": "Pradinės briaunos",
       "pt": "Arestas Originais",
       "it": "Archi Originali",
-      "no": "Original Edges",
-      "el": "Original Edges"
+      "no": "Opprinnelige kanter",
+      "el": "Αρχικές ακμές"
     },
     "modules.analysis.simplify.simplified_nodes_label": {
       "en": "Simplified Nodes",
@@ -702,8 +712,8 @@
       "lt": "Supaprastinti mazgai",
       "pt": "Nós Simplificados",
       "it": "Nodi Semplificati",
-      "no": "Simplified Nodes",
-      "el": "Simplified Nodes"
+      "no": "Forenklede noder",
+      "el": "Απλοποιημένοι κόμβοι"
     },
     "modules.analysis.simplify.simplified_edges_label": {
       "en": "Simplified Edges",
@@ -713,8 +723,8 @@
       "lt": "Supaprastintos briaunos",
       "pt": "Arestas Simplificadas",
       "it": "Archi Semplificati",
-      "no": "Simplified Edges",
-      "el": "Simplified Edges"
+      "no": "Forenklede kanter",
+      "el": "Απλοποιημένες ακμές"
     },
     "modules.analysis.simplify.reduction_pct": {
       "en": "reduction",
@@ -724,8 +734,8 @@
       "lt": "sumažinimas",
       "pt": "redução",
       "it": "riduzione",
-      "no": "reduction",
-      "el": "reduction"
+      "no": "reduksjon",
+      "el": "μείωση"
     },
     "modules.analysis.simplify.network_components": {
       "en": "Network Components:",
@@ -735,8 +745,8 @@
       "lt": "Tinklo komponentai:",
       "pt": "Componentes da Rede:",
       "it": "Componenti della Rete:",
-      "no": "Network Components:",
-      "el": "Network Components:"
+      "no": "Nettverkskomponenter:",
+      "el": "Στοιχεία δικτύου:"
     },
     "modules.analysis.simplify.connection_strengths": {
       "en": "Connection Strengths:",
@@ -746,8 +756,8 @@
       "lt": "Jungčių stiprumai:",
       "pt": "Forças de Conexão:",
       "it": "Forze di Connessione:",
-      "no": "Connection Strengths:",
-      "el": "Connection Strengths:"
+      "no": "Forbindelsesstyrker:",
+      "el": "Ισχύς συνδέσεων:"
     },
     "modules.analysis.simplify.polarity_distribution": {
       "en": "Polarity Distribution:",
@@ -757,8 +767,8 @@
       "lt": "Poliariškumo pasiskirstymas:",
       "pt": "Distribuição de Polaridade:",
       "it": "Distribuzione della Polarità:",
-      "no": "Polarity Distribution:",
-      "el": "Polarity Distribution:"
+      "no": "Polaritetsfordeling:",
+      "el": "Κατανομή πολικότητας:"
     },
     "modules.analysis.simplify.reinforcing": {
       "en": "Reinforcing",
@@ -768,8 +778,8 @@
       "lt": "Stiprinantis",
       "pt": "Reforçante",
       "it": "Rinforzante",
-      "no": "Reinforcing",
-      "el": "Reinforcing"
+      "no": "Forsterkende",
+      "el": "Ενισχυτική"
     },
     "modules.analysis.simplify.opposing": {
       "en": "Opposing",
@@ -779,8 +789,8 @@
       "lt": "Priešingas",
       "pt": "Oposto",
       "it": "Opposto",
-      "no": "Opposing",
-      "el": "Opposing"
+      "no": "Motvirkende",
+      "el": "Ανταγωνιστική"
     },
     "modules.analysis.simplify.no_simplification_yet": {
       "en": "No simplification applied yet.",
@@ -790,8 +800,8 @@
       "lt": "Supaprastinimas dar nepritaikytas.",
       "pt": "Nenhuma simplificação aplicada ainda.",
       "it": "Nessuna semplificazione applicata ancora.",
-      "no": "No simplification applied yet.",
-      "el": "No simplification applied yet."
+      "no": "Ingen forenkling anvendt ennå.",
+      "el": "Δεν έχει εφαρμοστεί απλοποίηση ακόμη."
     },
     "modules.analysis.simplify.select_methods_instruction": {
       "en": "Select simplification methods from the left panel and click 'Apply Simplification' to begin.",
@@ -801,8 +811,8 @@
       "lt": "Pasirinkite supaprastinimo metodus kairiajame skydelyje ir spauskite 'Taikyti supaprastinimą', kad pradėtumėte.",
       "pt": "Selecione métodos de simplificação no painel esquerdo e clique em 'Aplicar Simplificação' para começar.",
       "it": "Seleziona i metodi di semplificazione dal pannello sinistro e clicca su 'Applica Semplificazione' per iniziare.",
-      "no": "Select simplification methods from the left panel and click 'Apply Simplification' to begin.",
-      "el": "Select simplification methods from the left panel and click 'Apply Simplification' to begin."
+      "no": "Velg forenklingsmetoder fra venstre panel og klikk 'Bruk forenkling' for å begynne.",
+      "el": "Επιλέξτε μεθόδους απλοποίησης από τον αριστερό πίνακα και κάντε κλικ στο 'Εφαρμογή απλοποίησης' για να ξεκινήσετε."
     },
     "modules.analysis.simplify.nodes_removed_count": {
       "en": "Nodes removed:",
@@ -812,8 +822,8 @@
       "lt": "Pašalinti mazgai:",
       "pt": "Nós removidos:",
       "it": "Nodi rimossi:",
-      "no": "Nodes removed:",
-      "el": "Nodes removed:"
+      "no": "Noder fjernet:",
+      "el": "Κόμβοι που αφαιρέθηκαν:"
     },
     "modules.analysis.simplify.edges_removed_count": {
       "en": "Edges removed:",
@@ -823,8 +833,8 @@
       "lt": "Pašalintos briaunos:",
       "pt": "Arestas removidas:",
       "it": "Archi rimossi:",
-      "no": "Edges removed:",
-      "el": "Edges removed:"
+      "no": "Kanter fjernet:",
+      "el": "Ακμές που αφαιρέθηκαν:"
     },
     "modules.analysis.simplify.progress_applying": {
       "en": "Applying simplification methods...",
@@ -834,8 +844,8 @@
       "lt": "Taikomi supaprastinimo metodai...",
       "pt": "Aplicando métodos de simplificação...",
       "it": "Applicazione dei metodi di semplificazione...",
-      "no": "Applying simplification methods...",
-      "el": "Applying simplification methods..."
+      "no": "Bruker forenklingsmetoder...",
+      "el": "Εφαρμογή μεθόδων απλοποίησης..."
     },
     "modules.analysis.simplify.progress_siso": {
       "en": "Encapsulating SISO variables...",
@@ -845,8 +855,8 @@
       "lt": "Inkapsuliuojami SISO kintamieji...",
       "pt": "Encapsulando variáveis SISO...",
       "it": "Incapsulamento delle variabili SISO...",
-      "no": "Encapsulating SISO variables...",
-      "el": "Encapsulating SISO variables..."
+      "no": "Innkapsler SISO-variabler...",
+      "el": "Ενθυλάκωση μεταβλητών SISO..."
     },
     "modules.analysis.simplify.progress_exogenous": {
       "en": "Removing exogenous variables...",
@@ -856,8 +866,8 @@
       "lt": "Šalinami egzogeniniai kintamieji...",
       "pt": "Removendo variáveis exógenas...",
       "it": "Rimozione delle variabili esogene...",
-      "no": "Removing exogenous variables...",
-      "el": "Removing exogenous variables..."
+      "no": "Fjerner eksogene variabler...",
+      "el": "Αφαίρεση εξωγενών μεταβλητών..."
     },
     "modules.analysis.simplify.progress_weak": {
       "en": "Filtering weak connections...",
@@ -867,8 +877,8 @@
       "lt": "Filtruojamos silpnos jungtys...",
       "pt": "Filtrando conexões fracas...",
       "it": "Filtraggio delle connessioni deboli...",
-      "no": "Filtering weak connections...",
-      "el": "Filtering weak connections..."
+      "no": "Filtrerer svake forbindelser...",
+      "el": "Φιλτράρισμα ασθενών συνδέσεων..."
     },
     "modules.analysis.simplify.progress_centrality": {
       "en": "Calculating centrality metrics...",
@@ -878,8 +888,8 @@
       "lt": "Skaičiuojamos centralumo metrikos...",
       "pt": "Calculando métricas de centralidade...",
       "it": "Calcolo delle metriche di centralità...",
-      "no": "Calculating centrality metrics...",
-      "el": "Calculating centrality metrics..."
+      "no": "Beregner sentralitetsmål...",
+      "el": "Υπολογισμός μετρικών κεντρικότητας..."
     },
     "modules.analysis.simplify.progress_element_type": {
       "en": "Filtering by element type...",
@@ -889,8 +899,8 @@
       "lt": "Filtruojama pagal elemento tipą...",
       "pt": "Filtrando por tipo de elemento...",
       "it": "Filtraggio per tipo di elemento...",
-      "no": "Filtering by element type...",
-      "el": "Filtering by element type..."
+      "no": "Filtrerer etter elementtype...",
+      "el": "Φιλτράρισμα κατά τύπο στοιχείου..."
     },
     "modules.analysis.simplify.progress_finalizing": {
       "en": "Finalizing simplification...",
@@ -900,8 +910,8 @@
       "lt": "Baigiamas supaprastinimas...",
       "pt": "Finalizando simplificação...",
       "it": "Finalizzazione della semplificazione...",
-      "no": "Finalizing simplification...",
-      "el": "Finalizing simplification..."
+      "no": "Fullfører forenkling...",
+      "el": "Ολοκλήρωση απλοποίησης..."
     },
     "modules.analysis.simplify.error_applying": {
       "en": "Error applying simplification:",
@@ -911,8 +921,8 @@
       "lt": "Klaida taikant supaprastinimą:",
       "pt": "Erro ao aplicar a simplificação:",
       "it": "Errore nell'applicazione della semplificazione:",
-      "no": "Error applying simplification:",
-      "el": "Error applying simplification:"
+      "no": "Feil ved bruk av forenkling:",
+      "el": "Σφάλμα κατά την εφαρμογή απλοποίησης:"
     },
     "modules.analysis.simplify.network_reset": {
       "en": "Network reset to original state",
@@ -922,8 +932,8 @@
       "lt": "Tinklas atstatytas į pradinę būseną",
       "pt": "Rede redefinida para o estado original",
       "it": "Rete ripristinata allo stato originale",
-      "no": "Network reset to original state",
-      "el": "Network reset to original state"
+      "no": "Nettverk tilbakestilt til opprinnelig tilstand",
+      "el": "Το δίκτυο επαναφέρθηκε στην αρχική κατάσταση"
     },
     "modules.analysis.simplify.stat_total_nodes": {
       "en": "Total Nodes",
@@ -933,8 +943,8 @@
       "lt": "Iš viso mazgų",
       "pt": "Total de Nós",
       "it": "Nodi Totali",
-      "no": "Total Nodes",
-      "el": "Total Nodes"
+      "no": "Totalt antall noder",
+      "el": "Συνολικοί κόμβοι"
     },
     "modules.analysis.simplify.stat_total_edges": {
       "en": "Total Edges",
@@ -944,8 +954,8 @@
       "lt": "Iš viso briaunų",
       "pt": "Total de Arestas",
       "it": "Archi Totali",
-      "no": "Total Edges",
-      "el": "Total Edges"
+      "no": "Totalt antall kanter",
+      "el": "Συνολικές ακμές"
     },
     "modules.analysis.simplify.stat_avg_degree": {
       "en": "Avg. Degree",
@@ -955,8 +965,8 @@
       "lt": "Vid. laipsnis",
       "pt": "Grau Médio",
       "it": "Grado Medio",
-      "no": "Avg. Degree",
-      "el": "Avg. Degree"
+      "no": "Gj.snittlig grad",
+      "el": "Μέσος βαθμός"
     },
     "modules.analysis.simplify.stat_network_density": {
       "en": "Network Density",
@@ -966,8 +976,8 @@
       "lt": "Tinklo tankis",
       "pt": "Densidade da Rede",
       "it": "Densità della Rete",
-      "no": "Network Density",
-      "el": "Network Density"
+      "no": "Nettverkstetthet",
+      "el": "Πυκνότητα δικτύου"
     },
     "modules.analysis.simplify.stat_original": {
       "en": "Original",
@@ -977,8 +987,8 @@
       "lt": "Pradinis",
       "pt": "Original",
       "it": "Originale",
-      "no": "Original",
-      "el": "Original"
+      "no": "Opprinnelig",
+      "el": "Αρχικό"
     },
     "modules.analysis.simplify.stat_simplified": {
       "en": "Simplified",
@@ -988,8 +998,8 @@
       "lt": "Supaprastintas",
       "pt": "Simplificado",
       "it": "Semplificato",
-      "no": "Simplified",
-      "el": "Simplified"
+      "no": "Forenklet",
+      "el": "Απλοποιημένο"
     },
     "modules.analysis.simplify.stat_change": {
       "en": "Change",
@@ -999,8 +1009,8 @@
       "lt": "Pokytis",
       "pt": "Mudança",
       "it": "Variazione",
-      "no": "Change",
-      "el": "Change"
+      "no": "Endring",
+      "el": "Αλλαγή"
     },
     "modules.analysis.simplify.no_nodes_removed": {
       "en": "No nodes removed",
@@ -1010,8 +1020,8 @@
       "lt": "Nepašalinta jokių mazgų",
       "pt": "Nenhum nó removido",
       "it": "Nessun nodo rimosso",
-      "no": "No nodes removed",
-      "el": "No nodes removed"
+      "no": "Ingen noder fjernet",
+      "el": "Δεν αφαιρέθηκαν κόμβοι"
     },
     "modules.analysis.simplify.no_edges_removed": {
       "en": "No edges removed",
@@ -1021,8 +1031,8 @@
       "lt": "Nepašalinta jokių briaunų",
       "pt": "Nenhuma aresta removida",
       "it": "Nessun arco rimosso",
-      "no": "No edges removed",
-      "el": "No edges removed"
+      "no": "Ingen kanter fjernet",
+      "el": "Δεν αφαιρέθηκαν ακμές"
     },
     "modules.analysis.simplify.no_methods_applied": {
       "en": "No simplification methods applied yet.",
@@ -1032,8 +1042,8 @@
       "lt": "Supaprastinimo metodai dar nepritaikyti.",
       "pt": "Nenhum método de simplificação aplicado ainda.",
       "it": "Nessun metodo di semplificazione applicato ancora.",
-      "no": "No simplification methods applied yet.",
-      "el": "No simplification methods applied yet."
+      "no": "Ingen forenklingsmetoder anvendt ennå.",
+      "el": "Δεν έχουν εφαρμοστεί μέθοδοι απλοποίησης ακόμη."
     },
     "modules.analysis.simplify.log_title": {
       "en": "SIMPLIFICATION HISTORY",
@@ -1043,8 +1053,8 @@
       "lt": "SUPAPRASTINIMO ISTORIJA",
       "pt": "HISTÓRICO DE SIMPLIFICAÇÃO",
       "it": "CRONOLOGIA DELLA SEMPLIFICAZIONE",
-      "no": "SIMPLIFICATION HISTORY",
-      "el": "SIMPLIFICATION HISTORY"
+      "no": "FORENKLINGSHISTORIKK",
+      "el": "ΙΣΤΟΡΙΚΟ ΑΠΛΟΠΟΙΗΣΗΣ"
     },
     "modules.analysis.simplify.log_step": {
       "en": "Step",
@@ -1054,8 +1064,8 @@
       "lt": "Žingsnis",
       "pt": "Passo",
       "it": "Passo",
-      "no": "Step",
-      "el": "Step"
+      "no": "Trinn",
+      "el": "Βήμα"
     },
     "modules.analysis.simplify.log_nodes_removed": {
       "en": "-> Nodes removed:",
@@ -1065,8 +1075,8 @@
       "lt": "-> Pašalinti mazgai:",
       "pt": "-> Nós removidos:",
       "it": "-> Nodi rimossi:",
-      "no": "-> Nodes removed:",
-      "el": "-> Nodes removed:"
+      "no": "-> Noder fjernet:",
+      "el": "-> Κόμβοι που αφαιρέθηκαν:"
     },
     "modules.analysis.simplify.log_edges_removed": {
       "en": "-> Edges removed:",
@@ -1076,8 +1086,8 @@
       "lt": "-> Pašalintos briaunos:",
       "pt": "-> Arestas removidas:",
       "it": "-> Archi rimossi:",
-      "no": "-> Edges removed:",
-      "el": "-> Edges removed:"
+      "no": "-> Kanter fjernet:",
+      "el": "-> Ακμές που αφαιρέθηκαν:"
     },
     "modules.analysis.simplify.log_total_impact": {
       "en": "TOTAL IMPACT",
@@ -1087,8 +1097,8 @@
       "lt": "BENDRAS POVEIKIS",
       "pt": "IMPACTO TOTAL",
       "it": "IMPATTO TOTALE",
-      "no": "TOTAL IMPACT",
-      "el": "TOTAL IMPACT"
+      "no": "TOTAL PÅVIRKNING",
+      "el": "ΣΥΝΟΛΙΚΟΣ ΑΝΤΙΚΤΥΠΟΣ"
     },
     "modules.analysis.simplify.log_total_nodes": {
       "en": "Total nodes removed:",
@@ -1098,8 +1108,8 @@
       "lt": "Iš viso pašalintų mazgų:",
       "pt": "Total de nós removidos:",
       "it": "Totale nodi rimossi:",
-      "no": "Total nodes removed:",
-      "el": "Total nodes removed:"
+      "no": "Totalt noder fjernet:",
+      "el": "Συνολικοί κόμβοι που αφαιρέθηκαν:"
     },
     "modules.analysis.simplify.log_total_edges": {
       "en": "Total edges removed:",
@@ -1109,8 +1119,8 @@
       "lt": "Iš viso pašalintų briaunų:",
       "pt": "Total de arestas removidas:",
       "it": "Totale archi rimossi:",
-      "no": "Total edges removed:",
-      "el": "Total edges removed:"
+      "no": "Totalt kanter fjernet:",
+      "el": "Συνολικές ακμές που αφαιρέθηκαν:"
     },
     "modules.analysis.simplify.apply_to_see_chart": {
       "en": "Apply simplification to see impact chart",
@@ -1120,8 +1130,8 @@
       "lt": "Taikykite supaprastinimą, kad pamatytumėte poveikio diagramą",
       "pt": "Aplique a simplificação para ver o gráfico de impacto",
       "it": "Applica la semplificazione per vedere il grafico di impatto",
-      "no": "Apply simplification to see impact chart",
-      "el": "Apply simplification to see impact chart"
+      "no": "Bruk forenkling for å se effektdiagram",
+      "el": "Εφαρμόστε απλοποίηση για να δείτε το διάγραμμα επιπτώσεων"
     },
     "modules.analysis.simplify.chart_title": {
       "en": "Simplification Impact: Before and After",
@@ -1131,8 +1141,8 @@
       "lt": "Supaprastinimo poveikis: prieš ir po",
       "pt": "Impacto da Simplificação: Antes e Depois",
       "it": "Impatto della Semplificazione: Prima e Dopo",
-      "no": "Simplification Impact: Before and After",
-      "el": "Simplification Impact: Before and After"
+      "no": "Forenklingseffekt: Før og etter",
+      "el": "Επίπτωση απλοποίησης: Πριν και μετά"
     },
     "modules.analysis.simplify.chart_subtitle_fmt": {
       "en": "%.1f%% node reduction, %.1f%% edge reduction",
@@ -1142,8 +1152,8 @@
       "lt": "%.1f%% mazgų sumažinimas, %.1f%% briaunų sumažinimas",
       "pt": "%.1f%% redução de nós, %.1f%% redução de arestas",
       "it": "%.1f%% riduzione nodi, %.1f%% riduzione archi",
-      "no": "%.1f%% node reduction, %.1f%% edge reduction",
-      "el": "%.1f%% node reduction, %.1f%% edge reduction"
+      "no": "%.1f%% nodereduksjon, %.1f%% kantreduksjon",
+      "el": "%.1f%% μείωση κόμβων, %.1f%% μείωση ακμών"
     },
     "modules.analysis.simplify.chart_nodes": {
       "en": "Nodes",
@@ -1153,8 +1163,8 @@
       "lt": "Mazgai",
       "pt": "Nós",
       "it": "Nodi",
-      "no": "Nodes",
-      "el": "Nodes"
+      "no": "Noder",
+      "el": "Κόμβοι"
     },
     "modules.analysis.simplify.chart_edges": {
       "en": "Edges",
@@ -1164,8 +1174,8 @@
       "lt": "Briaunos",
       "pt": "Arestas",
       "it": "Archi",
-      "no": "Edges",
-      "el": "Edges"
+      "no": "Kanter",
+      "el": "Ακμές"
     },
     "modules.analysis.simplify.chart_count": {
       "en": "Count",
@@ -1175,8 +1185,8 @@
       "lt": "Skaičius",
       "pt": "Contagem",
       "it": "Conteggio",
-      "no": "Count",
-      "el": "Count"
+      "no": "Antall",
+      "el": "Πλήθος"
     },
     "modules.analysis.simplify.chart_network_state": {
       "en": "Network State",
@@ -1186,8 +1196,8 @@
       "lt": "Tinklo būsena",
       "pt": "Estado da Rede",
       "it": "Stato della Rete",
-      "no": "Network State",
-      "el": "Network State"
+      "no": "Nettverkstilstand",
+      "el": "Κατάσταση δικτύου"
     },
     "modules.analysis.simplify.export_success": {
       "en": "Simplified network exported successfully!",
@@ -1197,8 +1207,8 @@
       "lt": "Supaprastintas tinklas sėkmingai eksportuotas!",
       "pt": "Rede simplificada exportada com sucesso!",
       "it": "Rete semplificata esportata con successo!",
-      "no": "Simplified network exported successfully!",
-      "el": "Simplified network exported successfully!"
+      "no": "Forenklet nettverk eksportert!",
+      "el": "Το απλοποιημένο δίκτυο εξήχθη επιτυχώς!"
     },
     "modules.analysis.simplify.table_message": {
       "en": "Message",
@@ -1208,8 +1218,8 @@
       "lt": "Pranešimas",
       "pt": "Mensagem",
       "it": "Messaggio",
-      "no": "Message",
-      "el": "Message"
+      "no": "Melding",
+      "el": "Μήνυμα"
     },
     "modules.analysis.simplify.table_metric": {
       "en": "Metric",
@@ -1219,8 +1229,8 @@
       "lt": "Metrika",
       "pt": "Métrica",
       "it": "Metrica",
-      "no": "Metric",
-      "el": "Metric"
+      "no": "Metrikk",
+      "el": "Μετρική"
     },
     "modules.analysis.simplify.table_id": {
       "en": "ID",
@@ -1241,8 +1251,8 @@
       "lt": "Etiketė",
       "pt": "Rótulo",
       "it": "Etichetta",
-      "no": "Label",
-      "el": "Label"
+      "no": "Etikett",
+      "el": "Ετικέτα"
     },
     "modules.analysis.simplify.table_type": {
       "en": "Type",
@@ -1253,7 +1263,7 @@
       "pt": "Tipo",
       "it": "Tipo",
       "no": "Type",
-      "el": "Type"
+      "el": "Τύπος"
     },
     "modules.analysis.simplify.table_reason": {
       "en": "Reason",
@@ -1263,8 +1273,8 @@
       "lt": "Priežastis",
       "pt": "Razão",
       "it": "Motivo",
-      "no": "Reason",
-      "el": "Reason"
+      "no": "Årsak",
+      "el": "Αιτία"
     },
     "modules.analysis.simplify.table_from": {
       "en": "From",
@@ -1274,8 +1284,8 @@
       "lt": "Nuo",
       "pt": "De",
       "it": "Da",
-      "no": "From",
-      "el": "From"
+      "no": "Fra",
+      "el": "Από"
     },
     "modules.analysis.simplify.table_to": {
       "en": "To",
@@ -1285,8 +1295,8 @@
       "lt": "Iki",
       "pt": "Para",
       "it": "A",
-      "no": "To",
-      "el": "To"
+      "no": "Til",
+      "el": "Προς"
     },
     "modules.analysis.simplify.table_polarity": {
       "en": "Polarity",
@@ -1296,8 +1306,8 @@
       "lt": "Poliariškumas",
       "pt": "Polaridade",
       "it": "Polarità",
-      "no": "Polarity",
-      "el": "Polarity"
+      "no": "Polaritet",
+      "el": "Πολικότητα"
     },
     "modules.analysis.simplify.table_strength": {
       "en": "Strength",
@@ -1307,8 +1317,8 @@
       "lt": "Stiprumas",
       "pt": "Força",
       "it": "Forza",
-      "no": "Strength",
-      "el": "Strength"
+      "no": "Styrke",
+      "el": "Ισχύς"
     },
     "modules.analysis.simplify.hist_siso_encapsulation": {
       "en": "SISO Encapsulation",
@@ -1318,8 +1328,8 @@
       "lt": "SISO inkapsuliacija",
       "pt": "Encapsulamento SISO",
       "it": "Incapsulamento SISO",
-      "no": "SISO Encapsulation",
-      "el": "SISO Encapsulation"
+      "no": "SISO-innkapsling",
+      "el": "Ενθυλάκωση SISO"
     },
     "modules.analysis.simplify.hist_encapsulated_fmt": {
       "en": "Encapsulated %d SISO variables",
@@ -1329,8 +1339,8 @@
       "lt": "Inkapsuliuoti %d SISO kintamieji",
       "pt": "%d variáveis SISO encapsuladas",
       "it": "%d variabili SISO incapsulate",
-      "no": "Encapsulated %d SISO variables",
-      "el": "Encapsulated %d SISO variables"
+      "no": "Innkapslet %d SISO-variabler",
+      "el": "Ενθυλακώθηκαν %d μεταβλητές SISO"
     },
     "modules.analysis.simplify.hist_no_siso_found": {
       "en": "No SISO variables found",
@@ -1340,8 +1350,8 @@
       "lt": "SISO kintamųjų nerasta",
       "pt": "Nenhuma variável SISO encontrada",
       "it": "Nessuna variabile SISO trovata",
-      "no": "No SISO variables found",
-      "el": "No SISO variables found"
+      "no": "Ingen SISO-variabler funnet",
+      "el": "Δεν βρέθηκαν μεταβλητές SISO"
     },
     "modules.analysis.simplify.hist_exogenous_removal": {
       "en": "Exogenous Removal",
@@ -1351,8 +1361,8 @@
       "lt": "Egzogeninis pašalinimas",
       "pt": "Remoção Exógena",
       "it": "Rimozione Esogena",
-      "no": "Exogenous Removal",
-      "el": "Exogenous Removal"
+      "no": "Fjerning av eksogene",
+      "el": "Αφαίρεση εξωγενών"
     },
     "modules.analysis.simplify.hist_removed_exogenous_fmt": {
       "en": "Removed %d exogenous variables",
@@ -1362,8 +1372,8 @@
       "lt": "Pašalinta %d egzogeninių kintamųjų",
       "pt": "%d variáveis exógenas removidas",
       "it": "%d variabili esogene rimosse",
-      "no": "Removed %d exogenous variables",
-      "el": "Removed %d exogenous variables"
+      "no": "Fjernet %d eksogene variabler",
+      "el": "Αφαιρέθηκαν %d εξωγενείς μεταβλητές"
     },
     "modules.analysis.simplify.hist_no_exogenous_found": {
       "en": "No exogenous variables found",
@@ -1373,8 +1383,8 @@
       "lt": "Egzogeninių kintamųjų nerasta",
       "pt": "Nenhuma variável exógena encontrada",
       "it": "Nessuna variabile esogena trovata",
-      "no": "No exogenous variables found",
-      "el": "No exogenous variables found"
+      "no": "Ingen eksogene variabler funnet",
+      "el": "Δεν βρέθηκαν εξωγενείς μεταβλητές"
     },
     "modules.analysis.simplify.hist_weak_edge_filtering": {
       "en": "Weak Edge Filtering",
@@ -1384,8 +1394,8 @@
       "lt": "Silpnų briaunų filtravimas",
       "pt": "Filtragem de Arestas Fracas",
       "it": "Filtraggio degli Archi Deboli",
-      "no": "Weak Edge Filtering",
-      "el": "Weak Edge Filtering"
+      "no": "Filtrering av svake kanter",
+      "el": "Φιλτράρισμα ασθενών ακμών"
     },
     "modules.analysis.simplify.hist_weak_edges_fmt": {
       "en": "Removed %d weak edges, %d orphaned nodes",
@@ -1395,8 +1405,8 @@
       "lt": "Pašalinta %d silpnų briaunų, %d našlaičių mazgų",
       "pt": "%d arestas fracas removidas, %d nós órfãos",
       "it": "%d archi deboli rimossi, %d nodi orfani",
-      "no": "Removed %d weak edges, %d orphaned nodes",
-      "el": "Removed %d weak edges, %d orphaned nodes"
+      "no": "Fjernet %d svake kanter, %d foreldreløse noder",
+      "el": "Αφαιρέθηκαν %d ασθενείς ακμές, %d ορφανοί κόμβοι"
     },
     "modules.analysis.simplify.hist_low_centrality_removal": {
       "en": "Low Centrality Removal",
@@ -1406,8 +1416,8 @@
       "lt": "Mažo centralumo pašalinimas",
       "pt": "Remoção de Baixa Centralidade",
       "it": "Rimozione di Bassa Centralità",
-      "no": "Low Centrality Removal",
-      "el": "Low Centrality Removal"
+      "no": "Fjerning av lav sentralitet",
+      "el": "Αφαίρεση χαμηλής κεντρικότητας"
     },
     "modules.analysis.simplify.hist_low_centrality_fmt": {
       "en": "Removed %d nodes below %d%% %s centrality",
@@ -1417,8 +1427,8 @@
       "lt": "Pašalinta %d mazgų žemiau %d%% %s centralumo",
       "pt": "%d nós removidos abaixo de %d%% de centralidade %s",
       "it": "%d nodi rimossi sotto il %d%% di centralità %s",
-      "no": "Removed %d nodes below %d%% %s centrality",
-      "el": "Removed %d nodes below %d%% %s centrality"
+      "no": "Fjernet %d noder under %d%% %s sentralitet",
+      "el": "Αφαιρέθηκαν %d κόμβοι κάτω από %d%% κεντρικότητα %s"
     },
     "modules.analysis.simplify.hist_element_type_filtering": {
       "en": "Element Type Filtering",
@@ -1428,8 +1438,8 @@
       "lt": "Filtravimas pagal elemento tipą",
       "pt": "Filtragem por Tipo de Elemento",
       "it": "Filtraggio per Tipo di Elemento",
-      "no": "Element Type Filtering",
-      "el": "Element Type Filtering"
+      "no": "Filtrering etter elementtype",
+      "el": "Φιλτράρισμα κατά τύπο στοιχείου"
     },
     "modules.analysis.simplify.hist_kept_only_fmt": {
       "en": "Kept only: %s",
@@ -1439,8 +1449,8 @@
       "lt": "Palikta tik: %s",
       "pt": "Mantido apenas: %s",
       "it": "Mantenuto solo: %s",
-      "no": "Kept only: %s",
-      "el": "Kept only: %s"
+      "no": "Beholdt kun: %s",
+      "el": "Διατηρήθηκαν μόνο: %s"
     },
     "modules.analysis.simplify.reason_siso": {
       "en": "SISO Encapsulation",
@@ -1450,8 +1460,8 @@
       "lt": "SISO inkapsuliacija",
       "pt": "Encapsulamento SISO",
       "it": "Incapsulamento SISO",
-      "no": "SISO Encapsulation",
-      "el": "SISO Encapsulation"
+      "no": "SISO-innkapsling",
+      "el": "Ενθυλάκωση SISO"
     },
     "modules.analysis.simplify.reason_exogenous": {
       "en": "Exogenous Variable",
@@ -1461,8 +1471,8 @@
       "lt": "Egzogeninis kintamasis",
       "pt": "Variável Exógena",
       "it": "Variabile Esogena",
-      "no": "Exogenous Variable",
-      "el": "Exogenous Variable"
+      "no": "Eksogen variabel",
+      "el": "Εξωγενής μεταβλητή"
     },
     "modules.analysis.simplify.reason_connected_exogenous": {
       "en": "Connected to Exogenous",
@@ -1472,8 +1482,8 @@
       "lt": "Sujungtas su egzogeniniu",
       "pt": "Conectado a Exógeno",
       "it": "Connesso a Esogeno",
-      "no": "Connected to Exogenous",
-      "el": "Connected to Exogenous"
+      "no": "Koblet til eksogen",
+      "el": "Συνδεδεμένο με εξωγενές"
     },
     "modules.analysis.simplify.reason_weak_connection": {
       "en": "Weak Connection",
@@ -1483,8 +1493,8 @@
       "lt": "Silpna jungtis",
       "pt": "Conexão Fraca",
       "it": "Connessione Debole",
-      "no": "Weak Connection",
-      "el": "Weak Connection"
+      "no": "Svak forbindelse",
+      "el": "Ασθενής σύνδεση"
     },
     "modules.analysis.simplify.reason_orphaned": {
       "en": "Orphaned after edge filtering",
@@ -1494,8 +1504,8 @@
       "lt": "Našlaitis po briaunų filtravimo",
       "pt": "Órfão após filtragem de arestas",
       "it": "Orfano dopo il filtraggio degli archi",
-      "no": "Orphaned after edge filtering",
-      "el": "Orphaned after edge filtering"
+      "no": "Foreldreløs etter kantfiltrering",
+      "el": "Ορφανός μετά το φιλτράρισμα ακμών"
     },
     "modules.analysis.simplify.reason_low_centrality_fmt": {
       "en": "Low %s centrality",
@@ -1505,8 +1515,8 @@
       "lt": "Mažas %s centralumas",
       "pt": "Baixa centralidade %s",
       "it": "Bassa centralità %s",
-      "no": "Low %s centrality",
-      "el": "Low %s centrality"
+      "no": "Lav %s sentralitet",
+      "el": "Χαμηλή κεντρικότητα %s"
     },
     "modules.analysis.simplify.reason_connected_low_centrality": {
       "en": "Connected to low-centrality node",
@@ -1516,8 +1526,8 @@
       "lt": "Sujungtas su mažo centralumo mazgu",
       "pt": "Conectado a nó de baixa centralidade",
       "it": "Connesso a nodo di bassa centralità",
-      "no": "Connected to low-centrality node",
-      "el": "Connected to low-centrality node"
+      "no": "Koblet til node med lav sentralitet",
+      "el": "Συνδεδεμένο με κόμβο χαμηλής κεντρικότητας"
     },
     "modules.analysis.simplify.reason_element_excluded": {
       "en": "Element type excluded",
@@ -1527,8 +1537,8 @@
       "lt": "Elemento tipas pašalintas",
       "pt": "Tipo de elemento excluído",
       "it": "Tipo di elemento escluso",
-      "no": "Element type excluded",
-      "el": "Element type excluded"
+      "no": "Elementtype ekskludert",
+      "el": "Τύπος στοιχείου αποκλείστηκε"
     },
     "modules.analysis.simplify.reason_connected_excluded": {
       "en": "Connected to excluded element",
@@ -1538,8 +1548,8 @@
       "lt": "Sujungtas su pašalintu elementu",
       "pt": "Conectado a elemento excluído",
       "it": "Connesso a elemento escluso",
-      "no": "Connected to excluded element",
-      "el": "Connected to excluded element"
+      "no": "Koblet til ekskludert element",
+      "el": "Συνδεδεμένο με αποκλεισμένο στοιχείο"
     },
     "modules.analysis.simplify.current_network_status": {
       "en": "Current Network Status",
@@ -1549,8 +1559,8 @@
       "lt": "Dabartinė tinklo būsena",
       "pt": "Estado Atual da Rede",
       "it": "Stato Attuale della Rete",
-      "no": "Current Network Status",
-      "el": "Current Network Status"
+      "no": "Gjeldende nettverksstatus",
+      "el": "Τρέχουσα κατάσταση δικτύου"
     },
     "modules.analysis.simplify.original_network_summary": {
       "en": "Original Network Summary",
@@ -1560,8 +1570,8 @@
       "lt": "Pradinio tinklo santrauka",
       "pt": "Resumo da Rede Original",
       "it": "Riepilogo della Rete Originale",
-      "no": "Original Network Summary",
-      "el": "Original Network Summary"
+      "no": "Sammendrag av opprinnelig nettverk",
+      "el": "Σύνοψη αρχικού δικτύου"
     },
     "modules.analysis.simplify.simplified_network_summary": {
       "en": "Simplified Network Summary",
@@ -1571,8 +1581,8 @@
       "lt": "Supaprastinto tinklo santrauka",
       "pt": "Resumo da Rede Simplificada",
       "it": "Riepilogo della Rete Semplificata",
-      "no": "Simplified Network Summary",
-      "el": "Simplified Network Summary"
+      "no": "Sammendrag av forenklet nettverk",
+      "el": "Σύνοψη απλοποιημένου δικτύου"
     },
     "modules.analysis.simplify.simplification_methods": {
       "en": "Simplification Methods",
@@ -1582,8 +1592,8 @@
       "lt": "Supaprastinimo metodai",
       "pt": "Métodos de Simplificação",
       "it": "Metodi di Semplificazione",
-      "no": "Simplification Methods",
-      "el": "Simplification Methods"
+      "no": "Forenklingsmetoder",
+      "el": "Μέθοδοι απλοποίησης"
     },
     "modules.analysis.simplify.select_methods": {
       "en": "Select Methods",
@@ -1593,8 +1603,8 @@
       "lt": "Pasirinkti metodus",
       "pt": "Selecionar Métodos",
       "it": "Seleziona Metodi",
-      "no": "Select Methods",
-      "el": "Select Methods"
+      "no": "Velg metoder",
+      "el": "Επιλογή μεθόδων"
     },
     "modules.analysis.simplify.siso_encapsulation": {
       "en": "SISO Encapsulation",
@@ -1604,8 +1614,8 @@
       "lt": "SISO inkapsuliacija",
       "pt": "Encapsulamento SISO",
       "it": "Incapsulamento SISO",
-      "no": "SISO Encapsulation",
-      "el": "SISO Encapsulation"
+      "no": "SISO-innkapsling",
+      "el": "Ενθυλάκωση SISO"
     },
     "modules.analysis.simplify.remove_exogenous": {
       "en": "Remove Exogenous Variables",
@@ -1615,8 +1625,8 @@
       "lt": "Pašalinti egzogeninius kintamuosius",
       "pt": "Remover Variáveis Exógenas",
       "it": "Rimuovi Variabili Esogene",
-      "no": "Remove Exogenous Variables",
-      "el": "Remove Exogenous Variables"
+      "no": "Fjern eksogene variabler",
+      "el": "Αφαίρεση εξωγενών μεταβλητών"
     },
     "modules.analysis.simplify.filter_weak_connections": {
       "en": "Filter Weak Connections",
@@ -1626,8 +1636,8 @@
       "lt": "Filtruoti silpnas jungtis",
       "pt": "Filtrar Conexões Fracas",
       "it": "Filtra Connessioni Deboli",
-      "no": "Filter Weak Connections",
-      "el": "Filter Weak Connections"
+      "no": "Filtrer svake forbindelser",
+      "el": "Φιλτράρισμα ασθενών συνδέσεων"
     },
     "modules.analysis.simplify.remove_low_centrality": {
       "en": "Remove Low Centrality Nodes",
@@ -1637,8 +1647,8 @@
       "lt": "Pašalinti mažo centralumo mazgus",
       "pt": "Remover Nós de Baixa Centralidade",
       "it": "Rimuovi Nodi a Bassa Centralità",
-      "no": "Remove Low Centrality Nodes",
-      "el": "Remove Low Centrality Nodes"
+      "no": "Fjern noder med lav sentralitet",
+      "el": "Αφαίρεση κόμβων χαμηλής κεντρικότητας"
     },
     "modules.analysis.simplify.filter_by_element_type": {
       "en": "Filter by Element Type",
@@ -1648,8 +1658,8 @@
       "lt": "Filtruoti pagal elemento tipą",
       "pt": "Filtrar por Tipo de Elemento",
       "it": "Filtra per Tipo di Elemento",
-      "no": "Filter by Element Type",
-      "el": "Filter by Element Type"
+      "no": "Filtrer etter elementtype",
+      "el": "Φιλτράρισμα κατά τύπο στοιχείου"
     },
     "modules.analysis.simplify.btn_apply": {
       "en": "Apply Simplification",
@@ -1659,8 +1669,8 @@
       "lt": "Taikyti supaprastinimą",
       "pt": "Aplicar Simplificação",
       "it": "Applica Semplificazione",
-      "no": "Apply Simplification",
-      "el": "Apply Simplification"
+      "no": "Bruk forenkling",
+      "el": "Εφαρμογή απλοποίησης"
     },
     "modules.analysis.simplify.btn_reset": {
       "en": "Reset to Original",
@@ -1670,8 +1680,8 @@
       "lt": "Atstatyti į pradinę būseną",
       "pt": "Redefinir para o Original",
       "it": "Ripristina l'Originale",
-      "no": "Reset to Original",
-      "el": "Reset to Original"
+      "no": "Tilbakestill til original",
+      "el": "Επαναφορά στο αρχικό"
     },
     "modules.analysis.simplify.network_visualization": {
       "en": "Network Visualization",
@@ -1681,8 +1691,8 @@
       "lt": "Tinklo vizualizacija",
       "pt": "Visualização da Rede",
       "it": "Visualizzazione della Rete",
-      "no": "Network Visualization",
-      "el": "Network Visualization"
+      "no": "Nettverksvisualisering",
+      "el": "Οπτικοποίηση δικτύου"
     },
     "modules.analysis.simplify.tab_side_by_side": {
       "en": "Side by Side",
@@ -1692,8 +1702,8 @@
       "lt": "Šalia vienas kito",
       "pt": "Lado a Lado",
       "it": "Affiancati",
-      "no": "Side by Side",
-      "el": "Side by Side"
+      "no": "Side om side",
+      "el": "Δίπλα-δίπλα"
     },
     "modules.analysis.simplify.tab_simplified_view": {
       "en": "Simplified View",
@@ -1703,8 +1713,8 @@
       "lt": "Supaprastintas vaizdas",
       "pt": "Visualização Simplificada",
       "it": "Vista Semplificata",
-      "no": "Simplified View",
-      "el": "Simplified View"
+      "no": "Forenklet visning",
+      "el": "Απλοποιημένη προβολή"
     },
     "modules.analysis.simplify.tab_history": {
       "en": "History",
@@ -1714,8 +1724,8 @@
       "lt": "Istorija",
       "pt": "Histórico",
       "it": "Cronologia",
-      "no": "History",
-      "el": "History"
+      "no": "Historikk",
+      "el": "Ιστορικό"
     },
     "modules.analysis.simplify.original_network": {
       "en": "Original Network",
@@ -1725,8 +1735,8 @@
       "lt": "Pradinis tinklas",
       "pt": "Rede Original",
       "it": "Rete Originale",
-      "no": "Original Network",
-      "el": "Original Network"
+      "no": "Opprinnelig nettverk",
+      "el": "Αρχικό δίκτυο"
     },
     "modules.analysis.simplify.simplified_network": {
       "en": "Simplified Network",
@@ -1736,8 +1746,8 @@
       "lt": "Supaprastintas tinklas",
       "pt": "Rede Simplificada",
       "it": "Rete Semplificata",
-      "no": "Simplified Network",
-      "el": "Simplified Network"
+      "no": "Forenklet nettverk",
+      "el": "Απλοποιημένο δίκτυο"
     },
     "modules.analysis.simplify.simplification_statistics": {
       "en": "Simplification Statistics",
@@ -1747,8 +1757,8 @@
       "lt": "Supaprastinimo statistika",
       "pt": "Estatísticas de Simplificação",
       "it": "Statistiche di Semplificazione",
-      "no": "Simplification Statistics",
-      "el": "Simplification Statistics"
+      "no": "Forenklingsstatistikk",
+      "el": "Στατιστικά απλοποίησης"
     },
     "modules.analysis.simplify.removed_nodes": {
       "en": "Removed Nodes",
@@ -1758,8 +1768,8 @@
       "lt": "Pašalinti mazgai",
       "pt": "Nós Removidos",
       "it": "Nodi Rimossi",
-      "no": "Removed Nodes",
-      "el": "Removed Nodes"
+      "no": "Fjernede noder",
+      "el": "Αφαιρεθέντες κόμβοι"
     },
     "modules.analysis.simplify.removed_edges": {
       "en": "Removed Edges",
@@ -1769,8 +1779,8 @@
       "lt": "Pašalintos briaunos",
       "pt": "Arestas Removidas",
       "it": "Archi Rimossi",
-      "no": "Removed Edges",
-      "el": "Removed Edges"
+      "no": "Fjernede kanter",
+      "el": "Αφαιρεθείσες ακμές"
     },
     "modules.analysis.simplify.applied_methods": {
       "en": "Applied Methods",
@@ -1780,8 +1790,8 @@
       "lt": "Pritaikyti metodai",
       "pt": "Métodos Aplicados",
       "it": "Metodi Applicati",
-      "no": "Applied Methods",
-      "el": "Applied Methods"
+      "no": "Anvendte metoder",
+      "el": "Εφαρμοσμένες μέθοδοι"
     },
     "modules.analysis.simplify.impact_summary": {
       "en": "Impact Summary",
@@ -1791,8 +1801,8 @@
       "lt": "Poveikio santrauka",
       "pt": "Resumo do Impacto",
       "it": "Riepilogo dell'Impatto",
-      "no": "Impact Summary",
-      "el": "Impact Summary"
+      "no": "Effektsammendrag",
+      "el": "Σύνοψη επιπτώσεων"
     },
     "modules.analysis.simplify.about_simplification": {
       "en": "About Simplification",
@@ -1802,8 +1812,8 @@
       "lt": "Apie supaprastinimą",
       "pt": "Sobre a Simplificação",
       "it": "Informazioni sulla Semplificazione",
-      "no": "About Simplification",
-      "el": "About Simplification"
+      "no": "Om forenkling",
+      "el": "Σχετικά με την απλοποίηση"
     },
     "modules.analysis.simplify.model_simplification_tools": {
       "en": "Model Simplification Tools",
@@ -1813,8 +1823,8 @@
       "lt": "Modelio supaprastinimo įrankiai",
       "pt": "Ferramentas de Simplificação de Modelos",
       "it": "Strumenti di Semplificazione del Modello",
-      "no": "Model Simplification Tools",
-      "el": "Model Simplification Tools"
+      "no": "Verktøy for modellforenkling",
+      "el": "Εργαλεία απλοποίησης μοντέλου"
     }
   }
 }

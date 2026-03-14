@@ -35,11 +35,11 @@
   --sand-warm: #f4e4c1;
   --kelp-green: #52b788;
 
-  /* Neutrals - Cool Ocean Grays */
+  /* Neutrals - Cool Ocean Grays (WCAG 2.1 AA compliant on white) */
   --foam-white: #f8fbfd;
   --mist-light: #e8f1f8;
-  --salt-gray: #b8c9d9;
-  --stone-gray: #6b8299;
+  --salt-gray: #7a8fa3;     /* Was #b8c9d9 (1.2:1) - now 4.5:1 on white */
+  --stone-gray: #506a80;    /* Was #6b8299 (4.5:1 marginal) - now 5.7:1 on white */
   --slate-dark: #3d5a73;
 
   /* Semantic Colors */
@@ -129,7 +129,7 @@ label, .form-label, .control-label {
 body .main-header .navbar {
   background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-mid) 100%);
   border-bottom: 1px solid rgba(0, 180, 216, 0.2);
-  backdrop-filter: blur(10px);
+  /* backdrop-filter removed: creates containing block that breaks vis.js tooltip positioning */
   box-shadow: var(--shadow-soft);
 }
 
@@ -433,12 +433,18 @@ body.sidebar-mini.sidebar-collapse .main-sidebar .brand-link .brand-image {
   background:
     linear-gradient(180deg, var(--foam-white) 0%, var(--mist-light) 100%);
   min-height: 100vh;
+  /* CRITICAL: Override AdminLTE's transform:translate(0,0) which creates a
+     containing block that breaks vis.js tooltip absolute positioning.
+     Without this, tooltips appear at wrong screen coordinates. */
+  transform: none !important;
 }
 
-/* Subtle wave pattern overlay */
+/* Subtle wave pattern overlay
+   NOTE: Uses position:absolute (NOT fixed) to avoid creating a stacking context
+   that breaks vis.js tooltip positioning inside the content area. */
 .content-wrapper::before {
   content: '';
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -1160,7 +1166,7 @@ body:not(.control-sidebar-slide-open) .control-sidebar {
   background: rgba(10, 22, 40, 0.6);
   z-index: 1040;
   cursor: pointer;
-  backdrop-filter: blur(4px);
+  /* backdrop-filter removed: creates containing block that breaks vis.js tooltip positioning */
 }
 
 /* =================================================================

@@ -13,7 +13,7 @@
 #
 # Exports:
 #   - analysis_metrics_ui(id, i18n)
-#   - analysis_metrics_server(id, project_data_reactive, i18n)
+#   - analysis_metrics_server(id, project_data_reactive, i18n, event_bus = NULL)
 #
 # =============================================================================
 
@@ -29,6 +29,7 @@
 #' @export
 analysis_metrics_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   fluidPage(
     uiOutput(ns("module_header")),
@@ -41,7 +42,7 @@ analysis_metrics_ui <- function(id, i18n) {
   )
 }
 
-analysis_metrics_server <- function(id, project_data_reactive, i18n) {
+analysis_metrics_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -50,6 +51,20 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
       calculated_metrics = NULL,
       node_metrics_df = NULL
     )
+
+    # Listen for ISA changes via event bus to flag stale results
+    observe({
+      req(!is.null(event_bus))
+      event_bus$on_isa_change()
+      if (!is.null(isolate(metrics_rv$calculated_metrics))) {
+        showNotification(
+          i18n$t("modules.analysis.common.data_changed_rerun"),
+          type = "warning",
+          duration = 5,
+          id = ns("stale_data")
+        )
+      }
+    })
 
     # === REACTIVE MODULE HEADER ===
     output$module_header <- renderUI({
@@ -135,8 +150,8 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
           Betweenness = round(metrics$betweenness, 2),
           Closeness = round(metrics$closeness, 4),
           Eigenvector = round(metrics$eigenvector, 4),
-          PageRank = round(metrics$pagerank, 4),
-          stringsAsFactors = FALSE
+          PageRank = round(metrics$pagerank, 4)
+          
         )
 
         metrics_rv$node_metrics_df <- node_metrics_df
@@ -149,7 +164,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n) {
 
       }, error = function(e) {
         showNotification(
-          paste(i18n$t("modules.analysis.network.error_calculating_metrics"), e$message),
+          format_user_error(e, i18n = i18n, context = "calculating network metrics"),
           type = "error",
           duration = 10
         )

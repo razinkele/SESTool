@@ -1,5 +1,15 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "modules.analysis_intervention.title": {
       "en": "Intervention & Measure Simulation",
@@ -9,8 +19,8 @@
       "lt": "Intervencijų ir priemonių simuliacija",
       "pt": "Simulação de Intervenções e Medidas",
       "it": "Simulazione di Interventi e Misure",
-      "no": "Intervention & Measure Simulation",
-      "el": "Intervention & Measure Simulation"
+      "no": "Intervensjons- og tiltakssimulering",
+      "el": "Προσομοίωση παρεμβάσεων και μέτρων"
     },
     "modules.analysis_intervention.subtitle": {
       "en": "Design interventions, simulate their effects on the SES network, and compare multiple management scenarios",
@@ -20,8 +30,8 @@
       "lt": "Projektuokite intervencijas, simuliuokite jų poveikį SES tinklui ir palyginkite kelis valdymo scenarijus",
       "pt": "Projete intervenções, simule seus efeitos na rede SES e compare múltiplos cenários de gestão",
       "it": "Progetta interventi, simula i loro effetti sulla rete SES e confronta più scenari di gestione",
-      "no": "Design interventions, simulate their effects on the SES network, and compare multiple management scenarios",
-      "el": "Design interventions, simulate their effects on the SES network, and compare multiple management scenarios"
+      "no": "Utform intervensjoner, simuler effektene på SES-nettverket og sammenlign flere forvaltningsscenarier",
+      "el": "Σχεδιάστε παρεμβάσεις, προσομοιώστε τις επιδράσεις τους στο δίκτυο SES και συγκρίνετε πολλαπλά σενάρια διαχείρισης"
     },
     "modules.analysis_intervention.help_title": {
       "en": "Intervention Analysis Help",
@@ -31,8 +41,8 @@
       "lt": "Intervencijos analizės pagalba",
       "pt": "Ajuda Análise de Intervenção",
       "it": "Aiuto Analisi dell'Intervento",
-      "no": "Intervention Analysis Help",
-      "el": "Intervention Analysis Help"
+      "no": "Hjelp for intervensjonsanalyse",
+      "el": "Βοήθεια ανάλυσης παρεμβάσεων"
     },
     "modules.analysis_intervention.help_heading": {
       "en": "Understanding Intervention Simulation",
@@ -42,8 +52,8 @@
       "lt": "Intervencijos simuliacijos supratimas",
       "pt": "Compreender a Simulação de Intervenção",
       "it": "Comprendere la Simulazione dell'Intervento",
-      "no": "Understanding Intervention Simulation",
-      "el": "Understanding Intervention Simulation"
+      "no": "Forstå intervensjonssimulering",
+      "el": "Κατανόηση προσομοίωσης παρεμβάσεων"
     },
     "modules.analysis_intervention.help_design": {
       "en": "Design interventions by specifying which nodes they affect, indicator nodes to monitor outcomes, and the range of possible effect strengths. Each intervention adds a virtual node to the system matrix.",
@@ -75,8 +85,8 @@
       "lt": "CLD duomenų nėra",
       "pt": "Nenhum dado CLD disponível",
       "it": "Nessun dato CLD disponibile",
-      "no": "No CLD data available",
-      "el": "No CLD data available"
+      "no": "Ingen CLD-data tilgjengelig",
+      "el": "Δεν υπάρχουν διαθέσιμα δεδομένα CLD"
     },
     "modules.analysis_intervention.no_cld_data_hint": {
       "en": "Please create your SES framework and generate a CLD first.",
@@ -86,8 +96,8 @@
       "lt": "Pirmiausia sukurkite SES struktūrą ir sugeneruokite CLD.",
       "pt": "Por favor crie seu framework SES e gere um CLD primeiro.",
       "it": "Si prega di creare il framework SES e generare un CLD prima.",
-      "no": "Please create your SES framework and generate a CLD first.",
-      "el": "Please create your SES framework and generate a CLD first."
+      "no": "Vennligst opprett SES-rammeverket ditt og generer en CLD først.",
+      "el": "Παρακαλώ δημιουργήστε πρώτα το πλαίσιο SES σας και δημιουργήστε ένα CLD."
     },
     "modules.analysis_intervention.design": {
       "en": "Intervention Design",
@@ -97,8 +107,8 @@
       "lt": "Intervencijos projektavimas",
       "pt": "Design de Intervenção",
       "it": "Progettazione dell'Intervento",
-      "no": "Intervention Design",
-      "el": "Intervention Design"
+      "no": "Intervensjonsdesign",
+      "el": "Σχεδιασμός παρέμβασης"
     },
     "modules.analysis_intervention.name": {
       "en": "Intervention name",
@@ -108,8 +118,8 @@
       "lt": "Intervencijos pavadinimas",
       "pt": "Nome da intervenção",
       "it": "Nome dell'intervento",
-      "no": "Intervention name",
-      "el": "Intervention name"
+      "no": "Intervensjonsnavn",
+      "el": "Όνομα παρέμβασης"
     },
     "modules.analysis_intervention.name_placeholder": {
       "en": "e.g., Marine Protected Area",
@@ -119,8 +129,8 @@
       "lt": "pvz., Jūrų saugoma teritorija",
       "pt": "p. ex., Área Marinha Protegida",
       "it": "es., Area Marina Protetta",
-      "no": "e.g., Marine Protected Area",
-      "el": "e.g., Marine Protected Area"
+      "no": "f.eks. Marint verneområde",
+      "el": "π.χ. Θαλάσσια προστατευόμενη περιοχή"
     },
     "modules.analysis_intervention.from_responses": {
       "en": "Quick-fill from Response Measures",
@@ -130,8 +140,8 @@
       "lt": "Greitas užpildymas iš atsakomųjų priemonių",
       "pt": "Preenchimento rápido a partir de Medidas de Resposta",
       "it": "Compilazione rapida dalle Misure di Risposta",
-      "no": "Quick-fill from Response Measures",
-      "el": "Quick-fill from Response Measures"
+      "no": "Hurtigfyll fra responstiltak",
+      "el": "Γρήγορη συμπλήρωση από μέτρα απόκρισης"
     },
     "modules.analysis_intervention.select_response": {
       "en": "Select a response measure...",
@@ -141,8 +151,8 @@
       "lt": "Pasirinkite atsakomąją priemonę...",
       "pt": "Selecionar uma medida de resposta...",
       "it": "Seleziona una misura di risposta...",
-      "no": "Select a response measure...",
-      "el": "Select a response measure..."
+      "no": "Velg et responstiltak...",
+      "el": "Επιλέξτε ένα μέτρο απόκρισης..."
     },
     "modules.analysis_intervention.affected_nodes": {
       "en": "Affected nodes",
@@ -152,8 +162,8 @@
       "lt": "Paveikti mazgai",
       "pt": "Nós afetados",
       "it": "Nodi interessati",
-      "no": "Affected nodes",
-      "el": "Affected nodes"
+      "no": "Berørte noder",
+      "el": "Επηρεαζόμενοι κόμβοι"
     },
     "modules.analysis_intervention.select_affected": {
       "en": "Select affected nodes...",
@@ -163,8 +173,8 @@
       "lt": "Pasirinkite paveiktus mazgus...",
       "pt": "Selecionar nós afetados...",
       "it": "Seleziona nodi interessati...",
-      "no": "Select affected nodes...",
-      "el": "Select affected nodes..."
+      "no": "Velg berørte noder...",
+      "el": "Επιλέξτε επηρεαζόμενους κόμβους..."
     },
     "modules.analysis_intervention.indicator_nodes": {
       "en": "Indicator nodes (to monitor)",
@@ -174,8 +184,8 @@
       "lt": "Indikatoriniai mazgai (stebėjimui)",
       "pt": "Nós indicadores (para monitorar)",
       "it": "Nodi indicatori (da monitorare)",
-      "no": "Indicator nodes (to monitor)",
-      "el": "Indicator nodes (to monitor)"
+      "no": "Indikatornoder (for overvåking)",
+      "el": "Κόμβοι δεικτών (για παρακολούθηση)"
     },
     "modules.analysis_intervention.select_indicators": {
       "en": "Select indicator nodes...",
@@ -185,8 +195,8 @@
       "lt": "Pasirinkite indikatorinius mazgus...",
       "pt": "Selecionar nós indicadores...",
       "it": "Seleziona nodi indicatori...",
-      "no": "Select indicator nodes...",
-      "el": "Select indicator nodes..."
+      "no": "Velg indikatornoder...",
+      "el": "Επιλέξτε κόμβους δεικτών..."
     },
     "modules.analysis_intervention.effect_range": {
       "en": "Effect strength range",
@@ -196,8 +206,8 @@
       "lt": "Efekto stiprumo diapazonas",
       "pt": "Faixa de força do efeito",
       "it": "Intervallo di intensità dell'effetto",
-      "no": "Effect strength range",
-      "el": "Effect strength range"
+      "no": "Effektstyrkeområde",
+      "el": "Εύρος ισχύος επίδρασης"
     },
     "modules.analysis_intervention.iterations": {
       "en": "Simulation iterations",
@@ -207,8 +217,8 @@
       "lt": "Simuliacijos iteracijos",
       "pt": "Iterações de simulação",
       "it": "Iterazioni di simulazione",
-      "no": "Simulation iterations",
-      "el": "Simulation iterations"
+      "no": "Simuleringsiterasjoner",
+      "el": "Επαναλήψεις προσομοίωσης"
     },
     "modules.analysis_intervention.add": {
       "en": "Add Intervention",
@@ -218,8 +228,8 @@
       "lt": "Pridėti intervenciją",
       "pt": "Adicionar Intervenção",
       "it": "Aggiungi Intervento",
-      "no": "Add Intervention",
-      "el": "Add Intervention"
+      "no": "Legg til intervensjon",
+      "el": "Προσθήκη παρέμβασης"
     },
     "modules.analysis_intervention.run": {
       "en": "Run Comparison",
@@ -229,8 +239,8 @@
       "lt": "Vykdyti palyginimą",
       "pt": "Executar Comparação",
       "it": "Esegui Confronto",
-      "no": "Run Comparison",
-      "el": "Run Comparison"
+      "no": "Kjør sammenligning",
+      "el": "Εκτέλεση σύγκρισης"
     },
     "modules.analysis_intervention.saved": {
       "en": "Saved Interventions",
@@ -240,8 +250,8 @@
       "lt": "Išsaugotos intervencijos",
       "pt": "Intervenções Salvas",
       "it": "Interventi Salvati",
-      "no": "Saved Interventions",
-      "el": "Saved Interventions"
+      "no": "Lagrede intervensjoner",
+      "el": "Αποθηκευμένες παρεμβάσεις"
     },
     "modules.analysis_intervention.name_required": {
       "en": "Please enter an intervention name.",
@@ -251,8 +261,8 @@
       "lt": "Prašome įvesti intervencijos pavadinimą.",
       "pt": "Por favor insira um nome de intervenção.",
       "it": "Si prega di inserire un nome dell'intervento.",
-      "no": "Please enter an intervention name.",
-      "el": "Please enter an intervention name."
+      "no": "Vennligst skriv inn et intervensjonsnavn.",
+      "el": "Παρακαλώ εισάγετε ένα όνομα παρέμβασης."
     },
     "modules.analysis_intervention.affected_required": {
       "en": "Please select at least one affected node.",
@@ -262,8 +272,8 @@
       "lt": "Prašome pasirinkti bent vieną paveiktą mazgą.",
       "pt": "Por favor selecione pelo menos um nó afetado.",
       "it": "Si prega di selezionare almeno un nodo interessato.",
-      "no": "Please select at least one affected node.",
-      "el": "Please select at least one affected node."
+      "no": "Velg minst én berørt node.",
+      "el": "Παρακαλώ επιλέξτε τουλάχιστον έναν επηρεαζόμενο κόμβο."
     },
     "modules.analysis_intervention.added": {
       "en": "Intervention added:",
@@ -273,8 +283,8 @@
       "lt": "Intervencija pridėta:",
       "pt": "Intervenção adicionada:",
       "it": "Intervento aggiunto:",
-      "no": "Intervention added:",
-      "el": "Intervention added:"
+      "no": "Intervensjon lagt til:",
+      "el": "Η παρέμβαση προστέθηκε:"
     },
     "modules.analysis_intervention.no_interventions": {
       "en": "No interventions defined yet. Use the form above to add one.",
@@ -284,8 +294,8 @@
       "lt": "Dar nėra apibrėžtų intervencijų. Naudokite aukščiau esančią formą, kad pridėtumėte.",
       "pt": "Nenhuma intervenção definida ainda. Use o formulário acima para adicionar uma.",
       "it": "Nessun intervento definito ancora. Usa il modulo sopra per aggiungerne uno.",
-      "no": "No interventions defined yet. Use the form above to add one.",
-      "el": "No interventions defined yet. Use the form above to add one."
+      "no": "Ingen intervensjoner definert ennå. Bruk skjemaet over for å legge til en.",
+      "el": "Δεν έχουν οριστεί παρεμβάσεις ακόμη. Χρησιμοποιήστε τη φόρμα παραπάνω για να προσθέσετε μία."
     },
     "modules.analysis_intervention.nodes_affected": {
       "en": "nodes affected",
@@ -295,8 +305,8 @@
       "lt": "paveikti mazgai",
       "pt": "nós afetados",
       "it": "nodi interessati",
-      "no": "nodes affected",
-      "el": "nodes affected"
+      "no": "noder berørt",
+      "el": "κόμβοι που επηρεάζονται"
     },
     "modules.analysis_intervention.add_first": {
       "en": "Please add at least one intervention before running.",
@@ -306,8 +316,8 @@
       "lt": "Prašome pridėti bent vieną intervenciją prieš vykdymą.",
       "pt": "Por favor adicione pelo menos uma intervenção antes de executar.",
       "it": "Si prega di aggiungere almeno un intervento prima dell'esecuzione.",
-      "no": "Please add at least one intervention before running.",
-      "el": "Please add at least one intervention before running."
+      "no": "Legg til minst én intervensjon før kjøring.",
+      "el": "Παρακαλώ προσθέσετε τουλάχιστον μία παρέμβαση πριν την εκτέλεση."
     },
     "modules.analysis_intervention.running": {
       "en": "Running intervention comparison...",
@@ -317,8 +327,8 @@
       "lt": "Vykdomas intervencijų palyginimas...",
       "pt": "Executando comparação de intervenção...",
       "it": "Confronto dell'intervento in corso...",
-      "no": "Running intervention comparison...",
-      "el": "Running intervention comparison..."
+      "no": "Kjører intervensjonssammenligning...",
+      "el": "Εκτέλεση σύγκρισης παρεμβάσεων..."
     },
     "modules.analysis_intervention.click_to_start": {
       "en": "Add interventions and click 'Run Comparison' to see results",
@@ -328,8 +338,8 @@
       "lt": "Pridėkite intervencijų ir spustelėkite 'Vykdyti palyginimą' rezultatams matyti",
       "pt": "Adicione intervenções e clique em 'Executar Comparação' para ver resultados",
       "it": "Aggiungi interventi e fai clic su 'Esegui Confronto' per vedere i risultati",
-      "no": "Add interventions and click 'Run Comparison' to see results",
-      "el": "Add interventions and click 'Run Comparison' to see results"
+      "no": "Legg til intervensjoner og klikk «Kjør sammenligning» for å se resultater",
+      "el": "Προσθέστε παρεμβάσεις και κάντε κλικ στο «Εκτέλεση σύγκρισης» για αποτελέσματα"
     },
     "modules.analysis_intervention.comparison": {
       "en": "Multi-Intervention Comparison",
@@ -339,8 +349,8 @@
       "lt": "Kelių intervencijų palyginimas",
       "pt": "Comparação Multi-Intervenção",
       "it": "Confronto Multi-Intervento",
-      "no": "Multi-Intervention Comparison",
-      "el": "Multi-Intervention Comparison"
+      "no": "Sammenligning av flere intervensjoner",
+      "el": "Σύγκριση πολλαπλών παρεμβάσεων"
     },
     "modules.analysis_intervention.original": {
       "en": "Original (no intervention)",
@@ -350,8 +360,8 @@
       "lt": "Originalas (be intervencijos)",
       "pt": "Original (sem intervenção)",
       "it": "Originale (senza intervento)",
-      "no": "Original (no intervention)",
-      "el": "Original (no intervention)"
+      "no": "Original (ingen intervensjon)",
+      "el": "Αρχικό (χωρίς παρέμβαση)"
     },
     "modules.analysis_intervention.comparison_title": {
       "en": "Intervention Comparison:",
@@ -361,8 +371,8 @@
       "lt": "Intervencijos palyginimas:",
       "pt": "Comparação de Intervenção:",
       "it": "Confronto dell'Intervento:",
-      "no": "Intervention Comparison:",
-      "el": "Intervention Comparison:"
+      "no": "Intervensjonssammenligning:",
+      "el": "Σύγκριση παρεμβάσεων:"
     },
     "modules.analysis_intervention.final_state": {
       "en": "Final state value",
@@ -372,8 +382,8 @@
       "lt": "Galutinės būsenos vertė",
       "pt": "Valor de estado final",
       "it": "Valore di stato finale",
-      "no": "Final state value",
-      "el": "Final state value"
+      "no": "Endelig tilstandsverdi",
+      "el": "Τελική τιμή κατάστασης"
     },
     "modules.analysis_intervention.multi_comparison_title": {
       "en": "State Change (Delta) Across Interventions",
@@ -383,8 +393,8 @@
       "lt": "Būsenos pokytis (Delta) tarp intervencijų",
       "pt": "Mudança de Estado (Delta) entre Intervenções",
       "it": "Cambiamento di Stato (Delta) tra Interventi",
-      "no": "State Change (Delta) Across Interventions",
-      "el": "State Change (Delta) Across Interventions"
+      "no": "Tilstandsendring (Delta) på tvers av intervensjoner",
+      "el": "Αλλαγή κατάστασης (Δέλτα) μεταξύ παρεμβάσεων"
     },
     "modules.analysis_intervention.state_delta": {
       "en": "State delta (intervention - original)",
@@ -394,8 +404,8 @@
       "lt": "Būsenos delta (intervencija - originalas)",
       "pt": "Delta de estado (intervenção - original)",
       "it": "Delta di stato (intervento - originale)",
-      "no": "State delta (intervention - original)",
-      "el": "State delta (intervention - original)"
+      "no": "Tilstandsdelta (intervensjon - original)",
+      "el": "Δέλτα κατάστασης (παρέμβαση - αρχικό)"
     }
   }
 }

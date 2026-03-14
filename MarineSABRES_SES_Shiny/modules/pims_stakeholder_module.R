@@ -6,7 +6,7 @@
 
 # Module UI ----
 pims_stakeholder_ui <- function(id, i18n) {
-  # shiny.i18n::usei18n(i18n) removed - only call once in main UI
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
   ns <- NS(id)
 
   tagList(
@@ -333,7 +333,7 @@ pims_stakeholder_ui <- function(id, i18n) {
 }
 
 # Module Server ----
-pims_stakeholder_server <- function(id, project_data_reactive, i18n) {
+pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   global_data <- project_data_reactive  # Legacy alias for internal code
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
@@ -352,8 +352,8 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n) {
         Interest = character(),
         Attitude = character(),
         EngagementLevel = character(),
-        DateAdded = character(),
-        stringsAsFactors = FALSE
+        DateAdded = character()
+        
       ),
 
       engagements = data.frame(
@@ -365,8 +365,8 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n) {
         Objectives = character(),
         Outcomes = character(),
         Status = character(),
-        Facilitator = character(),
-        stringsAsFactors = FALSE
+        Facilitator = character()
+        
       ),
 
       communications = data.frame(
@@ -376,8 +376,8 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n) {
         Date = character(),
         Frequency = character(),
         Message = character(),
-        Responsible = character(),
-        stringsAsFactors = FALSE
+        Responsible = character()
+        
       ),
 
       stakeholder_counter = 0,
@@ -404,8 +404,8 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n) {
         Interest = input$sh_interest,
         Attitude = input$sh_attitude,
         EngagementLevel = input$sh_engagement_level,
-        DateAdded = as.character(Sys.Date()),
-        stringsAsFactors = FALSE
+        DateAdded = as.character(Sys.Date())
+        
       )
 
       stakeholder_data$stakeholders <- rbind(stakeholder_data$stakeholders, new_row)
@@ -584,8 +584,8 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n) {
         Objectives = input$eng_objectives,
         Outcomes = input$eng_outcomes,
         Status = input$eng_status,
-        Facilitator = input$eng_facilitator,
-        stringsAsFactors = FALSE
+        Facilitator = input$eng_facilitator
+        
       )
 
       stakeholder_data$engagements <- rbind(stakeholder_data$engagements, new_row)
@@ -619,8 +619,8 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n) {
         Date = as.character(input$comm_date),
         Frequency = input$comm_frequency,
         Message = input$comm_message,
-        Responsible = input$comm_responsible,
-        stringsAsFactors = FALSE
+        Responsible = input$comm_responsible
+        
       )
 
       stakeholder_data$communications <- rbind(stakeholder_data$communications, new_row)

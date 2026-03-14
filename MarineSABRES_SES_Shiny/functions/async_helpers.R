@@ -46,7 +46,7 @@ run_with_progress <- function(expr, session, message = "Processing...", timeout_
       )
     } else {
       showNotification(
-        paste("Error:", e$message),
+        format_user_error(e, context = "async operation", show_details = TRUE),
         type = "error",
         duration = 8,
         session = session

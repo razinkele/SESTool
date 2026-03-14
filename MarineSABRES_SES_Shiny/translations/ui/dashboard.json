@@ -130,8 +130,8 @@
       "lt": "briaunos CLD",
       "pt": "arestas no CLD",
       "it": "archi nel CLD",
-      "no": "edges in CLD",
-      "el": "Ακμές in CLD"
+      "no": "kanter i CLD",
+      "el": "ακμές στο CLD"
     },
     "ui.dashboard.elements_created": {
       "en": "elements created",
@@ -152,8 +152,8 @@
       "lt": "Klaida atvaizdavimo skydelyje:",
       "pt": "Erro ao renderizar o painel:",
       "it": "Errore nel rendering della dashboard:",
-      "no": "Error rendering dashboard:",
-      "el": "Σφάλμα rendering dashboard:"
+      "no": "Feil ved visning av dashbord:",
+      "el": "Σφάλμα απεικόνισης πίνακα ελέγχου:"
     },
     "ui.dashboard.focal_issue": {
       "en": "Focal Issue:",
@@ -218,8 +218,8 @@
       "lt": "mazgai CLD",
       "pt": "nós no CLD",
       "it": "nodi nel CLD",
-      "no": "nodes in CLD",
-      "el": "Κόμβοι in CLD"
+      "no": "noder i CLD",
+      "el": "κόμβοι στο CLD"
     },
     "ui.dashboard.not_defined": {
       "en": "Not defined",

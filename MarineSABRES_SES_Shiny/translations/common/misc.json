@@ -118,8 +118,8 @@
       "lt": "Automatinis išsaugojimas padeda išvengti duomenų praradimo dėl netikėtų atjungimų.",
       "pt": "O salvamento automático ajuda a prevenir perda de dados de desconexões inesperadas.",
       "it": "Il salvataggio automatico aiuta a prevenire la perdita di dati da disconnessioni inattese.",
-      "no": "Auto-save helps prevent data loss from unexpected disconnections.",
-      "el": "Auto-save helps prevent data loss from unexpected disconnections."
+      "no": "Automatisk lagring forhindrer tap av data ved uventede frakoblinger.",
+      "el": "Η αυτόματη αποθήκευση βοηθά στην αποφυγή απώλειας δεδομένων από απροσδόκητες αποσυνδέσεις."
     },
     "common.misc.adaptive_auto_save": {
       "en": "Adaptive Auto-Save",
@@ -129,8 +129,8 @@
       "lt": "Adaptyvus Automatinis Išsaugojimas",
       "pt": "Salvamento Automático Adaptativo",
       "it": "Salvataggio Automatico Adattivo",
-      "no": "Adaptive Auto-Save",
-      "el": "Adaptive Auto-Save"
+      "no": "Adaptiv automatisk lagring",
+      "el": "Προσαρμοστική Αυτόματη Αποθήκευση"
     },
     "common.misc.this_badge_shows_your_editing_mode": {
       "en": "This badge shows your current editing mode and adjusts save delays automatically.",
@@ -140,8 +140,8 @@
       "lt": "Šis ženklelis rodo jūsų dabartinį redagavimo režimą ir automatiškai koreguoja išsaugojimo vėlavimus.",
       "pt": "Este distintivo mostra seu modo de edição atual e ajusta os atrasos de salvamento automaticamente.",
       "it": "Questo badge mostra la tua modalità di modifica corrente e regola automaticamente i ritardi di salvataggio.",
-      "no": "This badge shows your current editing mode and adjusts save delays automatically.",
-      "el": "This badge shows your current editing mode and adjusts save delays automatically."
+      "no": "Dette merket viser gjeldende redigeringsmodus og justerer lagringsforsinkelser automatisk.",
+      "el": "Αυτό το σήμα δείχνει την τρέχουσα λειτουργία επεξεργασίας και ρυθμίζει αυτόματα τις καθυστερήσεις αποθήκευσης."
     },
     "common.misc.click_to_toggle": {
       "en": "Click to toggle between views:",
@@ -151,8 +151,8 @@
       "lt": "Spustelėkite, kad perjungtumėte rodinius:",
       "pt": "Clique para alternar entre visualizações:",
       "it": "Fai clic per passare tra le visualizzazioni:",
-      "no": "Click to toggle between views:",
-      "el": "Click to toggle between views:"
+      "no": "Klikk for å veksle mellom visninger:",
+      "el": "Κάντε κλικ για εναλλαγή μεταξύ προβολών:"
     },
     "common.misc.compact_view_shows_save_delay": {
       "en": "Compact: Shows save delay in seconds",
@@ -162,8 +162,8 @@
       "lt": "Kompaktiškas: Rodo išsaugojimo vėlavimą sekundėmis",
       "pt": "Compacto: Mostra atraso de salvamento em segundos",
       "it": "Compatto: Mostra ritardo di salvataggio in secondi",
-      "no": "Compact: Shows save delay in seconds",
-      "el": "Compact: Shows save delay in seconds"
+      "no": "Kompakt: Viser lagringsforsinkelse i sekunder",
+      "el": "Συμπαγής: Εμφανίζει καθυστέρηση αποθήκευσης σε δευτερόλεπτα"
     },
     "common.misc.detailed_view_shows_full_info": {
       "en": "Detailed: Shows mode, delay, and recent edit count",
@@ -173,8 +173,8 @@
       "lt": "Detalus: Rodo režimą, vėlavimą ir naujausių redagavimų skaičių",
       "pt": "Detalhado: Mostra modo, atraso e contagem de edições recentes",
       "it": "Dettagliato: Mostra modalità, ritardo e conteggio modifiche recenti",
-      "no": "Detailed: Shows mode, delay, and recent edit count",
-      "el": "Detailed: Shows mode, delay, and recent edit count"
+      "no": "Detaljert: Viser modus, forsinkelse og antall nylige redigeringer",
+      "el": "Λεπτομερής: Εμφανίζει λειτουργία, καθυστέρηση και αριθμό πρόσφατων επεξεργασιών"
     },
     "common.misc.baltic_sea": {
       "en": "Baltic Sea",
@@ -217,8 +217,8 @@
       "lt": "Pasirinkti RDS Failą:",
       "pt": "Escolher Ficheiro RDS:",
       "it": "Scegli File RDS:",
-      "no": "Choose RDS File:",
-      "el": "Επιλέξτε RDS File:"
+      "no": "Velg RDS-fil:",
+      "el": "Επιλέξτε αρχείο RDS:"
     },
     "common.misc.connections_sheet_columns": {
       "en": "Connections sheet columns:",
@@ -228,8 +228,8 @@
       "lt": "Ryšių lapo stulpeliai:",
       "pt": "Colunas da folha de Conexões:",
       "it": "Colonne del foglio Connessioni:",
-      "no": "Connections sheet columns:",
-      "el": "Συνδέσεις sheet columns:"
+      "no": "Kolonner i forbindelsesarket:",
+      "el": "Στήλες φύλλου συνδέσεων:"
     },
     "common.misc.east_atlantic": {
       "en": "East Atlantic",
@@ -250,8 +250,8 @@
       "lt": "Elementų lapo stulpeliai:",
       "pt": "Colunas da folha de Elementos:",
       "it": "Colonne del foglio Elementi:",
-      "no": "Elements sheet columns:",
-      "el": "Στοιχεία sheet columns:"
+      "no": "Kolonner i elementarket:",
+      "el": "Στήλες φύλλου στοιχείων:"
     },
     "common.misc.indian_ocean": {
       "en": "Indian Ocean",
@@ -272,8 +272,8 @@
       "lt": "Importuokite savo SES modelį iš Excel failo su Elementų ir Ryšių lapais. Failas turi atitikti standartinį formatą su reikalingais stulpeliais.",
       "pt": "Importe seu modelo SES de um arquivo Excel com folhas de Elementos e Conexões. O arquivo deve seguir o formato padrão com as colunas necessárias.",
       "it": "Importa il tuo modello SES da un file Excel con fogli Elementi e Connessioni. Il file deve seguire il formato standard con le colonne richieste.",
-      "no": "Import your SES model from an Excel file with Elements and Connections sheets. The file should follow the standard format with required columns.",
-      "el": "Εισαγωγή your SES model from an Excel file with Elements and Connections sheets. The file should follow the standard format with required columns."
+      "no": "Importer SES-modellen din fra en Excel-fil med Element- og Forbindelsesark. Filen bør følge standardformatet med nødvendige kolonner.",
+      "el": "Εισάγετε το μοντέλο SES σας από ένα αρχείο Excel με φύλλα Στοιχείων και Συνδέσεων. Το αρχείο πρέπει να ακολουθεί τη τυπική μορφή με τις απαιτούμενες στήλες."
     },
     "common.misc.irish_sea": {
       "en": "Irish Sea",
@@ -294,8 +294,8 @@
       "lt": "Paskutinį kartą išsaugota prieš %d minučių",
       "pt": "Última gravação: %d minutos atrás",
       "it": "Ultimo salvataggio: %d minuti fa",
-      "no": "Last saved: %d minutes ago",
-      "el": "Τελευταίο saved: %d minutes ago"
+      "no": "Sist lagret: for %d minutter siden",
+      "el": "Τελευταία αποθήκευση: πριν %d λεπτά"
     },
     "common.misc.last_saved_d_seconds_ago": {
       "en": "Last saved: %d seconds ago",
@@ -305,8 +305,8 @@
       "lt": "Paskutinį kartą išsaugota prieš %d sekundes",
       "pt": "Última gravação: %d segundos atrás",
       "it": "Ultimo salvataggio: %d secondi fa",
-      "no": "Last saved: %d seconds ago",
-      "el": "Τελευταίο saved: %d seconds ago"
+      "no": "Sist lagret: for %d sekunder siden",
+      "el": "Τελευταία αποθήκευση: πριν %d δευτερόλεπτα"
     },
     "common.misc.mediterranean_sea": {
       "en": "Mediterranean Sea",
@@ -327,8 +327,8 @@
       "lt": "Nėra ryšių, kuriuos būtų galima peržiūrėti.",
       "pt": "Não há conexões para revisar.",
       "it": "Nessuna connessione da rivedere.",
-      "no": "No connections to review.",
-      "el": "Όχι Συνδέσεις to review."
+      "no": "Ingen forbindelser å gjennomgå.",
+      "el": "Δεν υπάρχουν συνδέσεις για αξιολόγηση."
     },
     "common.misc.north_sea": {
       "en": "North Sea",
@@ -338,7 +338,7 @@
       "lt": "Šiaurės jūra",
       "pt": "Mar do Norte",
       "it": "Mare del Nord",
-      "no": "North Sea",
+      "no": "Nordsjøen",
       "el": "Βόρεια Θάλασσα"
     },
     "common.misc.otherregional": {
@@ -360,8 +360,8 @@
       "lt": "Įvertinkite savo projekto pažangą ir rezultatus pagal nustatytus tikslus ir rodiklius.",
       "pt": "Avalie o progresso e os resultados do seu projeto em relação aos objetivos e indicadores definidos.",
       "it": "Valuta i progressi e i risultati del tuo progetto rispetto agli obiettivi e agli indicatori definiti.",
-      "no": "Evaluate your project progress and outcomes against defined goals and indicators.",
-      "el": "Evaluate your project progress and outcomes against defined goals and indicators."
+      "no": "Evaluer prosjektfremdrift og resultater mot definerte mål og indikatorer.",
+      "el": "Αξιολογήστε την πρόοδο και τα αποτελέσματα του έργου σας σε σχέση με καθορισμένους στόχους και δείκτες."
     },
     "common.misc.pims_project_help_content": {
       "en": "Define your project information including title, description, goals, timeline, and key milestones.",
@@ -371,8 +371,8 @@
       "lt": "Apibrėžkite savo projekto informaciją, įskaitant pavadinimą, aprašymą, tikslus, laiko planą ir pagrindinius etapus.",
       "pt": "Defina as informações do seu projeto, incluindo título, descrição, objetivos, cronograma e marcos principais.",
       "it": "Definisci le informazioni del tuo progetto, inclusi titolo, descrizione, obiettivi, cronologia e tappe fondamentali.",
-      "no": "Define your project information including title, description, goals, timeline, and key milestones.",
-      "el": "Define your project information including title, description, goals, timeline, and key milestones."
+      "no": "Definer prosjektinformasjonen din inkludert tittel, beskrivelse, mål, tidslinje og viktige milepæler.",
+      "el": "Καθορίστε τις πληροφορίες του έργου σας, συμπεριλαμβανομένων τίτλου, περιγραφής, στόχων, χρονοδιαγράμματος και βασικών ορόσημων."
     },
     "common.misc.pims_stakeholders_help_content": {
       "en": "Identify and manage stakeholders involved in your project, including their roles, interests, and influence.",
@@ -382,8 +382,8 @@
       "lt": "Identifikuokite ir valdykite suinteresuotąsias šalis, dalyvaujančias jūsų projekte, įskaitant jų vaidmenis, interesus ir įtaką.",
       "pt": "Identifique e gerencie as partes interessadas envolvidas no seu projeto, incluindo seus papéis, interesses e influência.",
       "it": "Identifica e gestisci le parti interessate coinvolte nel tuo progetto, inclusi i loro ruoli, interessi e influenza.",
-      "no": "Identify and manage stakeholders involved in your project, including their roles, interests, and influence.",
-      "el": "Identify and manage stakeholders involved in your project, including their roles, interests, and influence."
+      "no": "Identifiser og administrer interessenter involvert i prosjektet ditt, inkludert deres roller, interesser og innflytelse.",
+      "el": "Εντοπίστε και διαχειριστείτε τα ενδιαφερόμενα μέρη που εμπλέκονται στο έργο σας, συμπεριλαμβανομένων των ρόλων, των συμφερόντων και της επιρροής τους."
     },
     "common.misc.pacific_ocean": {
       "en": "Pacific Ocean",
@@ -481,8 +481,8 @@
       "lt": "Reikalingas Excel formatas",
       "pt": "Formato Excel Necessário",
       "it": "Formato Excel Richiesto",
-      "no": "Required Excel Format",
-      "el": "Απαιτείται Excel Format"
+      "no": "Nødvendig Excel-format",
+      "el": "Απαιτούμενη Μορφή Excel"
     },
     "common.misc.save_failed": {
       "en": "Save failed",
@@ -558,8 +558,8 @@
       "lt": "Reikalingi du lapai:",
       "pt": "Duas folhas necessárias:",
       "it": "Due fogli richiesti:",
-      "no": "Two sheets required:",
-      "el": "Two sheets required:"
+      "no": "To ark nødvendig:",
+      "el": "Απαιτούνται δύο φύλλα:"
     },
     "common.misc.unsaved_work_detected": {
       "en": "Unsaved Work Detected",
@@ -580,8 +580,8 @@
       "lt": "Radome automatiškai išsaugotą jūsų darbo versiją iš",
       "pt": "Encontramos uma versão salva automaticamente do seu trabalho de",
       "it": "Abbiamo trovato una versione salvata automaticamente del tuo lavoro da",
-      "no": "We found an auto-saved version of your work from",
-      "el": "We found an auto-saved version of your work from"
+      "no": "Vi fant en automatisk lagret versjon av arbeidet ditt fra",
+      "el": "Βρήκαμε μια αυτόματα αποθηκευμένη έκδοση της εργασίας σας από"
     },
     "common.misc.welcome_to_the_computer_assisted_ses_creation_and_analysis_platform": {
       "en": "Welcome to the computer-assisted SES creation and analysis platform.",
@@ -591,8 +591,8 @@
       "lt": "Sveiki atvykę į kompiuterio pagalbą naudojančią SES kūrimo ir analizės platformą.",
       "pt": "Bem-vindo à plataforma de criação e análise de SES assistida por computador.",
       "it": "Benvenuto nella piattaforma di creazione e analisi SES assistita da computer.",
-      "no": "Welcome to the computer-assisted SES creation and analysis platform.",
-      "el": "Καλώς ήρθατε to the computer-assisted SES creation and analysis platform."
+      "no": "Velkommen til den datastøttede plattformen for opprettelse og analyse av SES.",
+      "el": "Καλώς ήρθατε στην πλατφόρμα δημιουργίας και ανάλυσης SES με υποβοήθηση υπολογιστή."
     },
     "common.misc.would_you_like_to_recover_this_data": {
       "en": "Would you like to recover this data?",
@@ -602,8 +602,8 @@
       "lt": "Ar norite atkurti šiuos duomenis?",
       "pt": "Gostaria de recuperar esses dados?",
       "it": "Vuoi recuperare questi dati?",
-      "no": "Would you like to recover this data?",
-      "el": "Θα θέλατε to recover this data?"
+      "no": "Vil du gjenopprette disse dataene?",
+      "el": "Θέλετε να ανακτήσετε αυτά τα δεδομένα;"
     },
     "common.misc.no_connections_in_this_category": {
       "en": "No connections in this category",

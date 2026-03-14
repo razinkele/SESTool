@@ -8,6 +8,7 @@
 #' @return UI elements
 analysis_leverage_ui <- function(id, i18n) {
   ns <- NS(id)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
 
   tagList(
     uiOutput(ns("module_header")),
@@ -103,6 +104,20 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
       leverage_results = NULL,
       has_data = FALSE
     )
+
+    # Listen for ISA changes via event bus to flag stale results
+    observe({
+      req(!is.null(event_bus))
+      event_bus$on_isa_change()
+      if (!is.null(isolate(rv$leverage_results))) {
+        showNotification(
+          i18n$t("modules.analysis.common.data_changed_rerun"),
+          type = "warning",
+          duration = 5,
+          id = ns("stale_data")
+        )
+      }
+    })
 
     # === REACTIVE MODULE HEADER ===
     create_reactive_header(
@@ -211,7 +226,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
 
         }, error = function(e) {
           showNotification(
-            paste(i18n$t("modules.analysis.leverage.error_analyzing"), e$message),
+            format_user_error(e, i18n = i18n, context = "analyzing leverage points"),
             type = "error",
             duration = 10
           )
@@ -323,7 +338,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
         # Override tooltips to include leverage score
         nodes$title <- paste0(
           "<b>", htmltools::htmlEscape(nodes$label), "</b><br>",
-          i18n$t("modules.analysis.leverage.tooltip_type"), nodes$group, "<br>",
+          i18n$t("modules.analysis.leverage.tooltip_type"), htmltools::htmlEscape(nodes$group), "<br>",
           i18n$t("modules.analysis.leverage.tooltip_score"), sprintf("%.3f", nodes$leverage_score)
         )
 

@@ -36,6 +36,9 @@ build_dashboard_header <- function(i18n) {
           href = "#",
           id = "language_dropdown_toggle",
           class = "settings-dropdown-toggle",
+          `aria-haspopup` = "true",
+          `aria-expanded` = "false",
+          `aria-label` = i18n$t("ui.header.language"),
           icon("globe"),
           tags$span(i18n$t("ui.header.language"), `data-i18n`="Language"),
           tags$span(class = "caret", style = "margin-left: 5px;")
@@ -59,6 +62,9 @@ build_dashboard_header <- function(i18n) {
           href = "#",
           id = "settings_dropdown_toggle",
           class = "settings-dropdown-toggle",
+          `aria-haspopup` = "true",
+          `aria-expanded` = "false",
+          `aria-label` = i18n$t("ui.header.settings"),
           icon("cog"),
           tags$span(i18n$t("ui.header.settings"), `data-i18n`="Settings"),
           tags$span(class = "caret", style = "margin-left: 5px;")
@@ -112,6 +118,9 @@ build_dashboard_header <- function(i18n) {
           href = "#",
           id = "help_dropdown_toggle",
           class = "settings-dropdown-toggle",
+          `aria-haspopup` = "true",
+          `aria-expanded` = "false",
+          `aria-label` = i18n$t("ui.header.help"),
           icon("question-circle"),
           tags$span(i18n$t("ui.header.help"), `data-i18n`="Help"),
           tags$span(class = "caret", style = "margin-left: 5px;")
@@ -145,6 +154,8 @@ build_dashboard_header <- function(i18n) {
         tags$a(
           href = "#",
           id = "bookmark_btn",
+          `aria-label` = i18n$t("ui.header.save_current_state_as_bookmark"),
+          role = "button",
           icon("bookmark"),
           tags$span(i18n$t("ui.header.bookmark"), `data-i18n`="Bookmark"),
           style = "cursor: pointer;",

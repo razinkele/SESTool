@@ -74,17 +74,22 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
     # Close the modal first
     removeModal()
 
-    # Show loading overlay with translated message
+    # Show loading overlay with translated message.
+    # NOTE: These messages are intentionally hardcoded per-language rather than using
+    # i18n$t(). This code runs during a language switch: the overlay is shown via JS
+    # (showLanguageLoading handler) and must display the TARGET language's text
+    # immediately, before the page reloads and i18n re-initializes with the new
+    # language. Using i18n$t() here would show the OLD language's text instead.
     loading_messages <- list(
       en = "Changing Language",
       es = "Cambiando Idioma",
       fr = "Changement de Langue",
-      de = "Sprache Ändern",
-      lt = "Keičiama Kalba",
+      de = "Sprache \u00c4ndern",
+      lt = "Kei\u010diama Kalba",
       pt = "Mudando Idioma",
       it = "Cambio Lingua",
-      no = "Endrer Språk",
-      el = "Αλλαγή Γλώσσας"
+      no = "Endrer Spr\u00e5k",
+      el = "\u0391\u03bb\u03bb\u03b1\u03b3\u03ae \u0393\u03bb\u03ce\u03c3\u03c3\u03b1\u03c2"
     )
 
     session$sendCustomMessage(
@@ -293,10 +298,14 @@ setup_language_modal_only <- function(input, output, session, i18n, AVAILABLE_LA
               $('#local_storage_controls').hide();
             } else if (isConnected) {
               var dirName = window.localStorageModule.directoryHandle.name;
+              // Sanitize directory name to prevent XSS
+              var escDiv = document.createElement('div');
+              escDiv.appendChild(document.createTextNode(dirName));
+              var safeDirName = escDiv.innerHTML;
               $('#local_storage_api_status').html(
                 '<div class=\"directory-status connected\">' +
                 '<span class=\"directory-status-icon\">\U0001F4C1</span>' +
-                '<div><strong>' + i18n_connectedTo + '</strong> ' + dirName + '</div>' +
+                '<div><strong>' + i18n_connectedTo + '</strong> ' + safeDirName + '</div>' +
                 '</div>'
               );
               $('#btn_connect_local').hide();
@@ -1160,49 +1169,52 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
           )
         ),
 
-        # Links
+        # Links - use light background with dark text/links for readability
         tags$div(
-          class = "alert alert-info",
-          icon("book"),
+          class = "alert",
+          style = "background-color: var(--foam-white, #f8fbfd); border: 1px solid var(--mist-light, #e8f1f8); color: var(--ocean-deep, #0f2744);",
+          icon("book", style = "color: var(--ocean-shallow, #2d5a7b);"),
           tags$strong(" ", i18n$t("ui.modals.documentation_label"), " "),
+          tags$br(),
           tags$a(
             href = "#",
             onclick = "window.open('user_guide.html', '_blank'); return false;",
             i18n$t("ui.modals.quick_guide"),
-            style = "margin-right: 15px;"
+            style = "margin-right: 15px; color: #1a5276; text-decoration: underline; font-weight: 500;"
           ),
           tags$a(
             href = "#",
             onclick = "window.open('docs/MarineSABRES_User_Manual_EN.html', '_blank'); return false;",
             i18n$t("ui.modals.manual_en_html"),
-            style = "margin-right: 15px;",
+            style = "margin-right: 15px; color: #1a5276; text-decoration: underline; font-weight: 500;",
             title = i18n$t("ui.modals.manual_en_html_tooltip")
           ),
           tags$a(
             href = "#",
             onclick = "window.open('docs/MarineSABRES_User_Manual_EN.pdf', '_blank'); return false;",
             i18n$t("ui.modals.manual_en_pdf"),
-            style = "margin-right: 15px;",
+            style = "margin-right: 15px; color: #1a5276; text-decoration: underline; font-weight: 500;",
             title = i18n$t("ui.modals.manual_en_pdf_tooltip")
           ),
           tags$a(
             href = "#",
             onclick = "window.open('docs/MarineSABRES_User_Manual_FR.html', '_blank'); return false;",
             i18n$t("ui.modals.manual_fr_html"),
-            style = "margin-right: 15px;",
+            style = "margin-right: 15px; color: #1a5276; text-decoration: underline; font-weight: 500;",
             title = i18n$t("ui.modals.manual_fr_html_tooltip")
           ),
           tags$a(
             href = "#",
             onclick = "window.open('docs/MarineSABRES_User_Manual_FR.pdf', '_blank'); return false;",
             i18n$t("ui.modals.manual_fr_pdf"),
-            style = "margin-right: 15px;",
+            style = "margin-right: 15px; color: #1a5276; text-decoration: underline; font-weight: 500;",
             title = i18n$t("ui.modals.manual_fr_pdf_tooltip")
           ),
           tags$a(
             href = "#",
             onclick = sprintf("window.open('%s', '_blank'); return false;", version_info$changelog_url),
-            i18n$t("ui.modals.changelog")
+            i18n$t("ui.modals.changelog"),
+            style = "color: #1a5276; text-decoration: underline; font-weight: 500;"
           )
         )
       )
