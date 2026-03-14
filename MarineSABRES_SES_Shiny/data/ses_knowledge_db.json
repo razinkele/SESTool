@@ -234,14 +234,16 @@
         {"name": "Physical habitat loss from channelisation", "relevance": 0.85},
         {"name": "Blocked fish migration routes (dams, weirs)", "relevance": 0.9},
         {"name": "Altered salinity gradient from flow regulation", "relevance": 0.7},
-        {"name": "Sediment resuspension from dredging", "relevance": 0.75}
+        {"name": "Sediment resuspension from dredging", "relevance": 0.75},
+        {"name": "Altered freshwater flow regime from upstream regulation", "relevance": 0.75}
       ],
       "states": [
         {"name": "Atlantic salmon migration success", "relevance": 0.9},
         {"name": "Dissolved oxygen levels in stratified waters", "relevance": 0.8},
         {"name": "Estuarine benthic invertebrate communities", "relevance": 0.75},
         {"name": "Sea lamprey (Petromyzon marinus) population viability", "relevance": 0.7},
-        {"name": "Estuarine water quality (nutrients, contaminants)", "relevance": 0.85}
+        {"name": "Estuarine water quality (nutrients, contaminants)", "relevance": 0.85},
+        {"name": "Estuarine salinity gradient and mixing zone dynamics", "relevance": 0.85}
       ],
       "impacts": [
         {"name": "Salmon fishery productivity", "relevance": 0.85},
@@ -1220,6 +1222,71 @@
           "strength": "medium",
           "confidence": 4,
           "rationale": "Tropical invasives like Siganus compete with native herbivores and alter reef community structure"
+        },
+        {
+          "from": "Sea urchin population density",
+          "from_type": "states",
+          "to": "Macroalgal canopy cover (Cystoseira, Sargassum)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "High sea urchin density causes barren formation by grazing macroalgal canopies to bare rock, a well-documented trophic cascade on Mediterranean rocky reefs",
+          "references": ["Sala et al. 1998", "Guidetti 2006"],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Artisanal fisher income and cultural continuity",
+          "from_type": "welfare",
+          "to": "Artisanal fishing tradition and cultural demand",
+          "to_type": "drivers",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Feedback loop: viable fishing income sustains artisanal traditions, reinforcing cultural demand for continued fishing access on rocky reefs",
+          "references": ["Colloca et al. 2004"],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "No-take marine reserve designation",
+          "from_type": "responses",
+          "to": "Large predatory fish abundance (grouper, dentex)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Marine reserves enable predatory fish recovery through reduced mortality; grouper and dentex biomass can increase 5-10x within reserves",
+          "references": ["Guidetti & Sala 2007", "Claudet et al. 2008"],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Cystoseira habitat restoration projects",
+          "from_type": "responses",
+          "to": "Macroalgal canopy cover (Cystoseira, Sargassum)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Active restoration transplants and recruits Cystoseira thalli onto barren substrates, initiating canopy recovery where natural recruitment is limited",
+          "references": ["Verdura et al. 2018", "Gianni et al. 2013"],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Macroalgal canopy cover (Cystoseira, Sargassum)",
+          "from_type": "states",
+          "to": "Fish provisioning from artisanal rocky reef fishery",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Macroalgal canopies support higher fish recruitment and biomass by providing nursery habitat and food web support for commercially targeted species",
+          "references": ["Cheminee et al. 2013"],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -1414,14 +1481,16 @@
         {"name": "Turbidity maximum zone expansion from dredging", "relevance": 0.8},
         {"name": "Thermal discharge from power stations", "relevance": 0.7},
         {"name": "Loss of intertidal habitat from hard defences", "relevance": 0.85},
-        {"name": "Pharmaceutical and endocrine disruptor contamination", "relevance": 0.65}
+        {"name": "Pharmaceutical and endocrine disruptor contamination", "relevance": 0.65},
+        {"name": "Altered freshwater flow regime from upstream regulation", "relevance": 0.75}
       ],
       "states": [
         {"name": "European eel recruitment and passage", "relevance": 0.85},
         {"name": "Estuarine saltmarsh extent and condition", "relevance": 0.8},
         {"name": "Dissolved oxygen in turbidity maximum zone", "relevance": 0.8},
         {"name": "Estuarine fish community (smelt, flounder, bass)", "relevance": 0.75},
-        {"name": "Sediment contaminant levels and bioavailability", "relevance": 0.7}
+        {"name": "Sediment contaminant levels and bioavailability", "relevance": 0.7},
+        {"name": "Estuarine salinity gradient and mixing zone dynamics", "relevance": 0.85}
       ],
       "impacts": [
         {"name": "Port and navigation accessibility", "relevance": 0.9},
@@ -1566,7 +1635,7 @@
       ],
       "pressures": [
         {"name": "Mass coral bleaching from thermal stress", "relevance": 0.95},
-        {"name": "Lionfish (Pterois volitans) invasion and predation", "relevance": 0.85},
+        {"name": "Lionfish (Pterois volitans/miles) invasion and predation", "relevance": 0.85},
         {"name": "Hurricane physical damage to reef structure", "relevance": 0.8},
         {"name": "Sargassum inundation events", "relevance": 0.7},
         {"name": "Stony coral tissue loss disease (SCTLD)", "relevance": 0.9},
@@ -1630,7 +1699,7 @@
           "rationale": "SCTLD has killed millions of corals across the Caribbean since 2014"
         },
         {
-          "from": "Lionfish (Pterois volitans) invasion and predation",
+          "from": "Lionfish (Pterois volitans/miles) invasion and predation",
           "from_type": "pressures",
           "to": "Reef fish species diversity and biomass",
           "to_type": "states",
@@ -1702,7 +1771,7 @@
         {
           "from": "Lionfish culling bounty programmes",
           "from_type": "responses",
-          "to": "Lionfish (Pterois volitans) invasion and predation",
+          "to": "Lionfish (Pterois volitans/miles) invasion and predation",
           "to_type": "pressures",
           "polarity": "-",
           "strength": "medium",
@@ -2133,7 +2202,12 @@
         {"from": "Posidonia oceanica meadow extent and health", "from_type": "states", "to": "Coastal protection by Posidonia banquettes", "to_type": "impacts", "polarity": "+", "strength": "medium", "confidence": 4, "rationale": "Healthy Posidonia meadows produce leaf litter banquettes that protect beaches from erosion"},
         {"from": "Coastal water quality (bathing water standards)", "from_type": "states", "to": "Tourism and recreation value of beaches", "to_type": "impacts", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Good bathing water quality is essential for beach tourism attractiveness"},
         {"from": "Tourism and recreation value of beaches", "from_type": "impacts", "to": "Tourism industry employment and revenue", "to_type": "welfare", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Beach quality directly determines tourist numbers and spending"},
-        {"from": "Mooring buoy installation to prevent anchor damage", "from_type": "responses", "to": "Anchor damage to Posidonia oceanica meadows", "to_type": "pressures", "polarity": "-", "strength": "strong", "confidence": 4, "rationale": "Mooring buoys eliminate the need for anchoring in sensitive Posidonia areas"}
+        {"from": "Mooring buoy installation to prevent anchor damage", "from_type": "responses", "to": "Anchor damage to Posidonia oceanica meadows", "to_type": "pressures", "polarity": "-", "strength": "strong", "confidence": 4, "rationale": "Mooring buoys eliminate the need for anchoring in sensitive Posidonia areas"},
+        {"from": "Coastal construction and marina development", "from_type": "activities", "to": "Physical habitat loss from coastal construction", "to_type": "pressures", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Marina and coastal infrastructure construction directly destroys nearshore habitats including subtidal rocky and sandy substrates", "references": ["Claudet & Fraschetti 2010"], "temporal_lag": "short-term", "reversibility": "irreversible"},
+        {"from": "Physical habitat loss from coastal construction", "from_type": "pressures", "to": "Posidonia oceanica meadow extent and health", "to_type": "states", "polarity": "-", "strength": "strong", "confidence": 5, "rationale": "Coastal construction eliminates Posidonia habitat through direct burial and altered hydrodynamics; recovery takes centuries if at all possible", "references": ["Boudouresque et al. 2009"], "temporal_lag": "medium-term", "reversibility": "irreversible"},
+        {"from": "Posidonia oceanica meadow extent and health", "from_type": "states", "to": "Coastal protection by Posidonia banquettes", "to_type": "impacts", "polarity": "+", "strength": "medium", "confidence": 4, "rationale": "Healthy Posidonia meadows produce leaf litter that forms banquettes on beaches, attenuating wave energy and reducing coastal erosion", "references": ["De Falco et al. 2008"], "temporal_lag": "medium-term", "reversibility": "partially_reversible"},
+        {"from": "Tourism industry employment and revenue", "from_type": "welfare", "to": "Mass beach tourism demand", "to_type": "drivers", "polarity": "+", "strength": "medium", "confidence": 3, "rationale": "Feedback loop: tourism revenue generates investment in marketing and infrastructure that further stimulates beach tourism demand", "references": ["UNWTO 2019"], "temporal_lag": "short-term", "reversibility": "reversible"},
+        {"from": "Marine Protected Areas (no-take zones)", "from_type": "responses", "to": "Rocky reef fish assemblage composition", "to_type": "states", "polarity": "+", "strength": "medium", "confidence": 4, "rationale": "No-take marine reserves allow recovery of fish biomass and trophic structure on rocky reefs through the well-documented reserve effect", "references": ["Guidetti & Sala 2007"], "temporal_lag": "medium-term", "reversibility": "reversible"}
       ]
   },
   "black_sea_open_coast": {
@@ -2196,7 +2270,15 @@
         {"from": "Invasive comb jelly (Mnemiopsis leidyi)", "from_type": "pressures", "to": "Anchovy and sprat stock biomass", "to_type": "states", "polarity": "-", "strength": "strong", "confidence": 5, "rationale": "Mnemiopsis competes with and preys on fish larvae, devastating small pelagic stocks"},
         {"from": "Anchovy and sprat stock biomass", "from_type": "states", "to": "Small pelagic fishery productivity", "to_type": "impacts", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Fish stock biomass directly determines fishery catch potential"},
         {"from": "Small pelagic fishery productivity", "from_type": "impacts", "to": "Fishing fleet employment and income", "to_type": "welfare", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Fishery productivity supports the economic viability of the fishing fleet"},
-        {"from": "Danube basin nutrient reduction plans (ICPDR)", "from_type": "responses", "to": "Eutrophication from Danube nutrient inputs", "to_type": "pressures", "polarity": "-", "strength": "medium", "confidence": 3, "rationale": "Basin-wide nutrient reduction targets have partially reduced nutrient loads since the 1990s"}
+        {"from": "Danube basin nutrient reduction plans (ICPDR)", "from_type": "responses", "to": "Eutrophication from Danube nutrient inputs", "to_type": "pressures", "polarity": "-", "strength": "medium", "confidence": 3, "rationale": "Basin-wide nutrient reduction targets have partially reduced nutrient loads since the 1990s"},
+        {"from": "Danube-origin nutrient and pollutant loading", "from_type": "activities", "to": "Hypoxia and hydrogen sulphide in deep waters", "to_type": "pressures", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Danube nutrient inputs fuel algal blooms whose decomposition drives deep-water hypoxia and H2S formation on the northwestern shelf", "references": ["Capet et al. 2013"], "temporal_lag": "short-term", "reversibility": "partially_reversible"},
+        {"from": "Hypoxia and hydrogen sulphide in deep waters", "from_type": "pressures", "to": "Anchovy and sprat stock biomass", "to_type": "states", "polarity": "-", "strength": "strong", "confidence": 4, "rationale": "Hypoxic and anoxic zones reduce suitable habitat for small pelagic fish, compressing their distribution and reducing stock biomass", "references": ["Oguz & Gilbert 2007"], "temporal_lag": "medium-term", "reversibility": "partially_reversible"},
+        {"from": "Overfishing of small pelagics and turbot", "from_type": "pressures", "to": "Turbot and Black Sea sturgeon populations", "to_type": "states", "polarity": "-", "strength": "strong", "confidence": 5, "rationale": "Excessive fishing mortality has driven turbot and sturgeon populations to critically low levels in the Black Sea", "references": ["GFCM 2020"], "temporal_lag": "medium-term", "reversibility": "partially_reversible"},
+        {"from": "Turbot and Black Sea sturgeon populations", "from_type": "states", "to": "Cultural value of traditional fishing communities", "to_type": "impacts", "polarity": "+", "strength": "medium", "confidence": 3, "rationale": "Healthy turbot and sturgeon stocks sustain traditional fishing practices that underpin community cultural identity along the Black Sea coast", "references": ["BSC 2019"], "temporal_lag": "long-term", "reversibility": "partially_reversible"},
+        {"from": "Mnemiopsis and Beroe zooplankton dynamics", "from_type": "states", "to": "Anchovy and sprat stock biomass", "to_type": "states", "polarity": "-", "strength": "strong", "confidence": 5, "rationale": "Mnemiopsis leidyi competes with anchovy larvae for zooplankton prey and directly consumes fish eggs, devastating small pelagic recruitment", "references": ["Kideys 2002"], "temporal_lag": "short-term", "reversibility": "reversible"},
+        {"from": "Fishing fleet employment and income", "from_type": "welfare", "to": "Demand for Black Sea anchovy and sprat", "to_type": "drivers", "polarity": "+", "strength": "medium", "confidence": 3, "rationale": "Feedback loop: fishing fleet economic dependence reinforces demand pressure for continued anchovy and sprat exploitation", "references": ["Ulman et al. 2013"], "temporal_lag": "medium-term", "reversibility": "reversible"},
+        {"from": "Coastal tourism revenue", "from_type": "welfare", "to": "Coastal resort and beach tourism demand", "to_type": "drivers", "polarity": "+", "strength": "medium", "confidence": 3, "rationale": "Feedback loop: tourism revenue generates investment and marketing that further stimulates coastal tourism demand", "references": ["BSC 2019"], "temporal_lag": "short-term", "reversibility": "reversible"},
+        {"from": "Turbot and sturgeon fishing bans and quotas", "from_type": "responses", "to": "Overfishing of small pelagics and turbot", "to_type": "pressures", "polarity": "-", "strength": "medium", "confidence": 3, "rationale": "Fishing bans and quotas directly reduce fishing mortality on overexploited turbot and sturgeon stocks", "references": ["GFCM 2020"], "temporal_lag": "medium-term", "reversibility": "partially_reversible"}
       ]
   },
   "caribbean_seagrass": {
@@ -5356,14 +5438,16 @@
         {"name": "Invasive species (Chinese mitten crab, Pacific oyster)", "relevance": 0.8},
         {"name": "Habitat loss from land claim and channelization", "relevance": 0.85},
         {"name": "Microplastic accumulation in estuarine sediments", "relevance": 0.75},
-        {"name": "Thermal plumes from coastal power stations", "relevance": 0.7}
+        {"name": "Thermal plumes from coastal power stations", "relevance": 0.7},
+        {"name": "Altered freshwater flow regime from upstream regulation", "relevance": 0.75}
       ],
       "states": [
         {"name": "European eel (Anguilla anguilla) recruitment", "relevance": 0.9},
         {"name": "Allis shad (Alosa alosa) migration success", "relevance": 0.85},
         {"name": "Benthic invertebrate diversity in estuarine mud", "relevance": 0.8},
         {"name": "Turbidity maximum zone dynamics and position", "relevance": 0.75},
-        {"name": "Saltmarsh extent and condition", "relevance": 0.85}
+        {"name": "Saltmarsh extent and condition", "relevance": 0.85},
+        {"name": "Estuarine salinity gradient and mixing zone dynamics", "relevance": 0.85}
       ],
       "impacts": [
         {"name": "Migratory fish provisioning (eel, shad, lamprey)", "relevance": 0.85},
