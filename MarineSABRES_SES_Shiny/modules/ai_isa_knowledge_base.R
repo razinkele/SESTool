@@ -370,10 +370,15 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
   }
 
-  # Add habitat-specific suggestions based on regional_sea × ecosystem_type combination
-  habitat_suggestions <- get_habitat_specific_suggestions(category, regional_sea, ecosystem_type)
-  if (length(habitat_suggestions) > 0) {
-    suggestions$habitat <- habitat_suggestions
+  # NOTE: Habitat-specific suggestions are now provided by the JSON knowledge database
+  # (data/ses_knowledge_db.json) which is the single source of truth for context-specific
+  # elements. The old get_habitat_specific_suggestions() function is kept as fallback only
+  # for habitat types not yet in the JSON database.
+  if (length(suggestions$knowledge_db) == 0) {
+    habitat_suggestions <- get_habitat_specific_suggestions(category, regional_sea, ecosystem_type)
+    if (length(habitat_suggestions) > 0) {
+      suggestions$habitat <- habitat_suggestions
+    }
   }
 
   # Combine all suggestions and remove exact duplicates

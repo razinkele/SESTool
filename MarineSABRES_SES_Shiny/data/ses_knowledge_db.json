@@ -739,6 +739,7 @@
       ],
       "activities": [
         {"name": "Shellfish farming (mussels, oysters, Manila clam)", "relevance": 0.95},
+        {"name": "Vallicultura extensive lagoon fish farming (sea bass, gilthead bream, eel)", "relevance": 0.85},
         {"name": "Traditional fixed-net fishing (trabucco, lavoriero)", "relevance": 0.8},
         {"name": "Flamingo and waterbird watching tourism", "relevance": 0.75},
         {"name": "Artisanal salt harvesting", "relevance": 0.65},
@@ -2070,7 +2071,134 @@
           "rationale": "Vessel strikes are the leading cause of North Atlantic right whale mortality"
         }
       ]
-    }
+    },
+    "mediterranean_open_coast": {
+      "regional_sea": "mediterranean",
+      "habitat": "open_coast",
+      "description": "Mediterranean open coastline including sandy and rocky sections, posidonia fringes, and small harbours. High tourism pressure, artisanal fishing tradition, and rapid urbanisation.",
+      "drivers": [
+        {"name": "Mass beach tourism demand", "relevance": 0.95},
+        {"name": "Coastal urbanisation and second-home demand", "relevance": 0.9},
+        {"name": "Artisanal fishing tradition and livelihoods", "relevance": 0.8},
+        {"name": "Maritime transport and cruise tourism", "relevance": 0.75},
+        {"name": "Coastal protection from storm waves", "relevance": 0.7}
+      ],
+      "activities": [
+        {"name": "Beach tourism and bathing", "relevance": 0.95},
+        {"name": "Coastal construction and marina development", "relevance": 0.9},
+        {"name": "Small-scale trammel net and longline fishing", "relevance": 0.85},
+        {"name": "Recreational boat anchoring", "relevance": 0.8},
+        {"name": "Cruise ship and ferry operations", "relevance": 0.7},
+        {"name": "Coastal wastewater discharge", "relevance": 0.75}
+      ],
+      "pressures": [
+        {"name": "Physical habitat loss from coastal construction", "relevance": 0.9},
+        {"name": "Marine litter and microplastic accumulation", "relevance": 0.85},
+        {"name": "Anchor damage to Posidonia oceanica meadows", "relevance": 0.85},
+        {"name": "Sewage and nutrient discharge in bathing areas", "relevance": 0.8},
+        {"name": "Invasive species spread via ballast water", "relevance": 0.7},
+        {"name": "Noise and visual disturbance from tourism", "relevance": 0.65}
+      ],
+      "states": [
+        {"name": "Posidonia oceanica meadow extent and health", "relevance": 0.9},
+        {"name": "Coastal water quality (bathing water standards)", "relevance": 0.85},
+        {"name": "Rocky reef fish assemblage composition", "relevance": 0.8},
+        {"name": "Beach sediment budget and erosion rates", "relevance": 0.75},
+        {"name": "Marine litter density on beaches and seafloor", "relevance": 0.7}
+      ],
+      "impacts": [
+        {"name": "Tourism and recreation value of beaches", "relevance": 0.95},
+        {"name": "Artisanal fishery provision", "relevance": 0.8},
+        {"name": "Coastal protection by Posidonia banquettes", "relevance": 0.75},
+        {"name": "Cultural and aesthetic seascape value", "relevance": 0.7}
+      ],
+      "welfare": [
+        {"name": "Tourism industry employment and revenue", "relevance": 0.95},
+        {"name": "Fisher household income", "relevance": 0.8},
+        {"name": "Coastal property values", "relevance": 0.75},
+        {"name": "Recreational well-being of residents and visitors", "relevance": 0.7}
+      ],
+      "responses": [
+        {"name": "Marine Protected Areas (no-take zones)", "relevance": 0.9},
+        {"name": "Posidonia protection legislation (EU Habitats Directive)", "relevance": 0.85},
+        {"name": "Beach nourishment and coastal defence planning", "relevance": 0.8},
+        {"name": "Mooring buoy installation to prevent anchor damage", "relevance": 0.8},
+        {"name": "Marine litter reduction and beach cleanup programmes", "relevance": 0.75}
+      ],
+      "connections": [
+        {"from": "Mass beach tourism demand", "from_type": "drivers", "to": "Beach tourism and bathing", "to_type": "activities", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Tourism demand directly drives beach visitor numbers and associated activities"},
+        {"from": "Coastal construction and marina development", "from_type": "activities", "to": "Physical habitat loss from coastal construction", "to_type": "pressures", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Coastal construction directly destroys nearshore habitats and alters sediment dynamics"},
+        {"from": "Recreational boat anchoring", "from_type": "activities", "to": "Anchor damage to Posidonia oceanica meadows", "to_type": "pressures", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Boat anchors physically uproot Posidonia shoots, creating expanding dead patches"},
+        {"from": "Anchor damage to Posidonia oceanica meadows", "from_type": "pressures", "to": "Posidonia oceanica meadow extent and health", "to_type": "states", "polarity": "-", "strength": "strong", "confidence": 5, "rationale": "Cumulative anchor damage reduces meadow extent and recovery takes decades"},
+        {"from": "Posidonia oceanica meadow extent and health", "from_type": "states", "to": "Coastal protection by Posidonia banquettes", "to_type": "impacts", "polarity": "+", "strength": "medium", "confidence": 4, "rationale": "Healthy Posidonia meadows produce leaf litter banquettes that protect beaches from erosion"},
+        {"from": "Coastal water quality (bathing water standards)", "from_type": "states", "to": "Tourism and recreation value of beaches", "to_type": "impacts", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Good bathing water quality is essential for beach tourism attractiveness"},
+        {"from": "Tourism and recreation value of beaches", "from_type": "impacts", "to": "Tourism industry employment and revenue", "to_type": "welfare", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Beach quality directly determines tourist numbers and spending"},
+        {"from": "Mooring buoy installation to prevent anchor damage", "from_type": "responses", "to": "Anchor damage to Posidonia oceanica meadows", "to_type": "pressures", "polarity": "-", "strength": "strong", "confidence": 4, "rationale": "Mooring buoys eliminate the need for anchoring in sensitive Posidonia areas"}
+      ]
+  },
+  "black_sea_open_coast": {
+      "regional_sea": "black_sea",
+      "habitat": "open_coast",
+      "description": "Black Sea coastal waters with limited tidal range, reduced salinity, frequent anoxic events, and strong influence from major river inputs (Danube, Dnieper).",
+      "drivers": [
+        {"name": "Demand for Black Sea anchovy and sprat", "relevance": 0.9},
+        {"name": "Coastal resort and beach tourism demand", "relevance": 0.85},
+        {"name": "Agricultural production in Danube basin", "relevance": 0.9},
+        {"name": "Industrial and urban development along coast", "relevance": 0.75},
+        {"name": "Energy infrastructure demand (offshore pipelines)", "relevance": 0.65}
+      ],
+      "activities": [
+        {"name": "Purse seine fishing for anchovy and sprat", "relevance": 0.9},
+        {"name": "Bottom trawling for turbot and other demersal species", "relevance": 0.8},
+        {"name": "Beach tourism along Bulgarian and Romanian coast", "relevance": 0.85},
+        {"name": "Danube-origin nutrient and pollutant loading", "relevance": 0.95},
+        {"name": "Mussel and rapana whelk harvesting", "relevance": 0.7},
+        {"name": "Coastal construction and port development", "relevance": 0.65}
+      ],
+      "pressures": [
+        {"name": "Eutrophication from Danube nutrient inputs", "relevance": 0.95},
+        {"name": "Hypoxia and hydrogen sulphide in deep waters", "relevance": 0.9},
+        {"name": "Invasive comb jelly (Mnemiopsis leidyi)", "relevance": 0.85},
+        {"name": "Overfishing of small pelagics and turbot", "relevance": 0.8},
+        {"name": "Marine litter from rivers and coastal sources", "relevance": 0.7},
+        {"name": "Coastal erosion from reduced sediment supply", "relevance": 0.65}
+      ],
+      "states": [
+        {"name": "Anchovy and sprat stock biomass", "relevance": 0.9},
+        {"name": "Mnemiopsis and Beroe zooplankton dynamics", "relevance": 0.85},
+        {"name": "Northwestern shelf dissolved oxygen levels", "relevance": 0.9},
+        {"name": "Phyllophora red algae field extent", "relevance": 0.7},
+        {"name": "Turbot and Black Sea sturgeon populations", "relevance": 0.8}
+      ],
+      "impacts": [
+        {"name": "Small pelagic fishery productivity", "relevance": 0.9},
+        {"name": "Beach tourism amenity value", "relevance": 0.8},
+        {"name": "Nutrient processing by shelf ecosystems", "relevance": 0.7},
+        {"name": "Cultural value of traditional fishing communities", "relevance": 0.65}
+      ],
+      "welfare": [
+        {"name": "Fishing fleet employment and income", "relevance": 0.85},
+        {"name": "Coastal tourism revenue", "relevance": 0.8},
+        {"name": "Seafood supply for local markets", "relevance": 0.75},
+        {"name": "Coastal community livelihoods", "relevance": 0.7}
+      ],
+      "responses": [
+        {"name": "Bucharest Convention (Black Sea Commission) measures", "relevance": 0.85},
+        {"name": "Danube basin nutrient reduction plans (ICPDR)", "relevance": 0.9},
+        {"name": "Turbot and sturgeon fishing bans and quotas", "relevance": 0.8},
+        {"name": "Mnemiopsis biocontrol via Beroe ovata introduction", "relevance": 0.7},
+        {"name": "Marine Protected Areas (Phyllophora, Danube delta)", "relevance": 0.75}
+      ],
+      "connections": [
+        {"from": "Agricultural production in Danube basin", "from_type": "drivers", "to": "Danube-origin nutrient and pollutant loading", "to_type": "activities", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Intensive agriculture in the Danube basin is the primary source of nutrients reaching the Black Sea"},
+        {"from": "Danube-origin nutrient and pollutant loading", "from_type": "activities", "to": "Eutrophication from Danube nutrient inputs", "to_type": "pressures", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "River-borne nutrients drive massive eutrophication on the northwestern shelf"},
+        {"from": "Eutrophication from Danube nutrient inputs", "from_type": "pressures", "to": "Northwestern shelf dissolved oxygen levels", "to_type": "states", "polarity": "-", "strength": "strong", "confidence": 5, "rationale": "Algal blooms from eutrophication deplete oxygen creating large hypoxic zones"},
+        {"from": "Invasive comb jelly (Mnemiopsis leidyi)", "from_type": "pressures", "to": "Anchovy and sprat stock biomass", "to_type": "states", "polarity": "-", "strength": "strong", "confidence": 5, "rationale": "Mnemiopsis competes with and preys on fish larvae, devastating small pelagic stocks"},
+        {"from": "Anchovy and sprat stock biomass", "from_type": "states", "to": "Small pelagic fishery productivity", "to_type": "impacts", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Fish stock biomass directly determines fishery catch potential"},
+        {"from": "Small pelagic fishery productivity", "from_type": "impacts", "to": "Fishing fleet employment and income", "to_type": "welfare", "polarity": "+", "strength": "strong", "confidence": 5, "rationale": "Fishery productivity supports the economic viability of the fishing fleet"},
+        {"from": "Danube basin nutrient reduction plans (ICPDR)", "from_type": "responses", "to": "Eutrophication from Danube nutrient inputs", "to_type": "pressures", "polarity": "-", "strength": "medium", "confidence": 3, "rationale": "Basin-wide nutrient reduction targets have partially reduced nutrient loads since the 1990s"}
+      ]
+  }
   },
   "generic_fallback": {
     "description": "Generic suggestions when no specific regional sea x habitat match is found",
