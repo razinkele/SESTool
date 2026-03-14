@@ -201,7 +201,7 @@
           "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 4,
+          "confidence": 5,
           "rationale": "Excess nutrients, especially phosphorus, fuel cyanobacteria blooms in warm shallow lagoons",
           "references": [
             "Paerl et al. 2011",
@@ -345,7 +345,7 @@
           "to_type": "pressures",
           "polarity": "-",
           "strength": "medium",
-          "confidence": 3,
+          "confidence": 4,
           "rationale": "International nutrient targets drive national measures that reduce agricultural nutrient loads",
           "references": [
             "HELCOM 2021",
@@ -367,7 +367,7 @@
             "HELCOM 2018",
             "Uusi-Kämppä and Jauhiainen 2010"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -383,7 +383,7 @@
             "HELCOM 2018",
             "ICES 2020"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -414,7 +414,7 @@
           "references": [
             "Aps et al. 2004"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -453,7 +453,7 @@
           "to": "Reduced water exchange with open sea",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Progressive sedimentation narrows and shallows lagoon inlets, further restricting water exchange with the open sea and exacerbating stagnation",
           "references": [
@@ -485,7 +485,7 @@
           "to": "Pike-perch population dynamics",
           "to_type": "states",
           "polarity": "-",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Shift from diatom to cyanobacteria dominance reduces zooplankton food quality, impacting pike-perch larval survival through trophic cascade effects on prey availability",
           "references": [
@@ -670,7 +670,7 @@
           "to": "Salmon stocking and hatchery operations",
           "to_type": "activities",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Demand for salmon fishing drives hatchery stocking programmes to supplement wild runs",
           "references": [
@@ -693,7 +693,7 @@
             "HELCOM 2018",
             "Elliott and Cutts 2004"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -751,7 +751,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 4,
+          "confidence": 5,
           "rationale": "Excessive nutrients fuel algal growth; decomposition consumes oxygen in stratified estuary waters",
           "references": [
             "HELCOM 2018",
@@ -782,7 +782,7 @@
           "to": "Recreational fishing tourism revenue",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Productive salmon runs attract recreational anglers and generate local tourism income",
           "references": [
@@ -799,13 +799,13 @@
           "to_type": "pressures",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Removing dams or installing fish ladders directly eliminates migration barriers",
           "references": [
             "HELCOM 2011",
             "ICES 2021"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -862,7 +862,7 @@
           "to": "Recreational salmon fishing",
           "to_type": "activities",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Growing angler demand for salmon and sea trout drives recreational fishing participation and effort in Baltic estuaries",
           "references": [
@@ -913,7 +913,7 @@
           "references": [
             "Seitz et al. 2014"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -1120,7 +1120,7 @@
             "ICES 2021",
             "HELCOM 2018"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -1136,7 +1136,7 @@
             "ICES 2021",
             "Casini et al. 2016"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
         },
         {
@@ -1161,7 +1161,7 @@
           "to": "Bycatch of harbour porpoise and seabirds",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "medium",
+          "strength": "strong",
           "confidence": 4,
           "rationale": "Gillnets and trawls incidentally catch harbour porpoise and diving seabirds",
           "references": [
@@ -1257,7 +1257,7 @@
           "to": "Overfishing of Eastern Baltic cod",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Quota reductions directly limit fishing mortality on cod stocks",
           "references": [
@@ -1280,7 +1280,7 @@
             "HELCOM 2018",
             "Hiddink et al. 2017"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -1396,7 +1396,7 @@
           "to": "Deep-water hypoxia (dead zones)",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Cod stock collapse reduces predation on sprat, allowing sprat to overgraze zooplankton, increasing phytoplankton biomass and worsening eutrophication-driven hypoxia",
           "references": [
@@ -1412,7 +1412,7 @@
           "to": "Central Baltic herring recruitment",
           "to_type": "states",
           "polarity": "-",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Cod collapse released sprat from predation pressure, causing sprat to outcompete herring larvae for zooplankton prey, depressing herring recruitment through competitive exclusion",
           "references": [
@@ -1428,7 +1428,7 @@
           "to": "Pelagic fishing for herring and sprat",
           "to_type": "activities",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Cod quota reductions redirect fishing effort toward pelagic species (herring, sprat), increasing pressure on small pelagic stocks as fishers substitute target species",
           "references": [
@@ -1608,7 +1608,7 @@
             "HELCOM 2018",
             "Ahtiainen et al. 2014"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -1624,7 +1624,7 @@
             "HELCOM 2013",
             "IPCC 2019"
           ],
-          "temporal_lag": "long-term",
+          "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
         },
         {
@@ -1634,7 +1634,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "medium",
-          "confidence": 4,
+          "confidence": 2,
           "rationale": "Litter reduces aesthetic quality and microplastics pose emerging health concerns",
           "references": [
             "HELCOM 2018",
@@ -1649,7 +1649,7 @@
           "to": "Beach recreation and tourism amenity",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Good water quality is essential for beach tourism attractiveness",
           "references": [
@@ -1681,8 +1681,8 @@
           "to": "Coastal tourism employment and revenue",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Beach amenity directly supports the coastal tourism economy",
           "references": [
             "HELCOM 2018",
@@ -1704,7 +1704,7 @@
             "HELCOM 2013",
             "Hanson et al. 2002"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -1730,7 +1730,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "weak",
-          "confidence": 3,
+          "confidence": 4,
           "rationale": "Repeated disturbance can reduce seal resting time and pup survival",
           "references": [
             "HELCOM 2018",
@@ -1752,7 +1752,7 @@
             "HELCOM 2018",
             "Sundqvist et al. 2012"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -1782,7 +1782,7 @@
           "references": [
             "Toivonen et al. 2004"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -2053,7 +2053,7 @@
             "Coll et al. 2010",
             "UNEP-MAP 2017"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -2079,7 +2079,7 @@
           "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Mass die-off of macroalgae creates oxygen-depleting decomposition events",
           "references": [
             "Viaroli et al. 2008",
@@ -2197,7 +2197,7 @@
             "UNEP-MAP 2017",
             "Coll et al. 2010"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -2206,14 +2206,14 @@
           "to": "Reduced tidal exchange from inlet narrowing",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Active inlet management improves water circulation and reduces stagnation",
           "references": [
             "Viaroli et al. 2008",
             "UNEP-MAP 2017"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -2223,7 +2223,7 @@
           "to_type": "pressures",
           "polarity": "-",
           "strength": "medium",
-          "confidence": 4,
+          "confidence": 5,
           "rationale": "Reducing agricultural nutrient inputs lowers the fuel supply for macroalgal blooms",
           "references": [
             "UNEP-MAP 2017",
@@ -2492,7 +2492,7 @@
             "UNEP-MAP 2017",
             "Boudouresque et al. 2009"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -2524,7 +2524,7 @@
             "Boudouresque et al. 2009",
             "Francour et al. 1999"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
         },
         {
@@ -2533,7 +2533,7 @@
           "to": "Posidonia oceanica meadow extent and density",
           "to_type": "states",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Caulerpa spp. colonise damaged areas and outcompete Posidonia in degraded meadows",
           "references": [
@@ -2565,7 +2565,7 @@
           "to": "Blue carbon sequestration in seagrass matte",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Posidonia matte accumulates carbon over millennia; meadow loss releases stored carbon",
           "references": [
@@ -2613,14 +2613,14 @@
           "to": "Mechanical damage from boat anchoring and mooring",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Anchoring bans directly prevent physical damage to protected Posidonia areas",
           "references": [
             "Boudouresque et al. 2009",
             "UNEP-MAP 2017"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -2630,13 +2630,13 @@
           "to_type": "pressures",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Eco-moorings eliminate the need for anchoring, preventing seabed damage",
           "references": [
             "Francour et al. 1999",
             "UNEP-MAP 2017"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -2692,7 +2692,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Posidonia meadow extent and density directly determine the habitat available for seagrass-associated fish assemblages",
           "references": [
             "Guidetti 2000"
@@ -2742,7 +2742,7 @@
           "references": [
             "Boudouresque et al. 2012"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -2955,14 +2955,14 @@
           "to": "Overharvesting of predatory fish (grouper, dentex)",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "medium",
+          "strength": "strong",
           "confidence": 4,
           "rationale": "Artisanal fishing selectively targets large predatory fish on rocky reefs",
           "references": [
             "Coll et al. 2010",
             "UNEP-MAP 2017"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -2971,8 +2971,8 @@
           "to": "Overharvesting of predatory fish (grouper, dentex)",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "No-take reserves allow predatory fish populations to recover (the reserve effect)",
           "references": [
             "Guidetti 2006",
@@ -2987,7 +2987,7 @@
           "to": "Diving and snorkeling tourism attraction",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Large fish are the primary attraction for diving tourists on Mediterranean reefs",
           "references": [
@@ -3004,7 +3004,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Macroalgal canopies create habitat complexity supporting diverse invertebrate and fish communities",
           "references": [
             "Sala et al. 1998",
@@ -3019,8 +3019,8 @@
           "to": "Dive centre and marine tourism revenue",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Attractive underwater scenery directly drives dive tourism spending",
           "references": [
             "UNEP-MAP 2017",
@@ -3084,7 +3084,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "High sea urchin density causes barren formation by grazing macroalgal canopies to bare rock, a well-documented trophic cascade on Mediterranean rocky reefs",
           "references": [
             "Sala et al. 1998",
@@ -3099,13 +3099,13 @@
           "to": "Artisanal fishing tradition and cultural demand",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "medium",
-          "confidence": 4,
+          "strength": "weak",
+          "confidence": 3,
           "rationale": "Feedback loop: viable fishing income sustains artisanal traditions, reinforcing cultural demand for continued fishing access on rocky reefs",
           "references": [
             "Colloca et al. 2004"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "long-term",
           "reversibility": "reversible"
         },
         {
@@ -3115,7 +3115,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Marine reserves enable predatory fish recovery through reduced mortality; grouper and dentex biomass can increase 5-10x within reserves",
           "references": [
             "Guidetti & Sala 2007",
@@ -3152,7 +3152,7 @@
           "references": [
             "Cheminee et al. 2013"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -3161,7 +3161,7 @@
           "to": "Scuba diving tourism on rocky reefs",
           "to_type": "activities",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Underwater recreation demand directly drives scuba diving tourism operations on Mediterranean rocky reefs",
           "references": [
@@ -3177,7 +3177,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Large predatory fish control sea urchin populations through predation, preventing overgrazing of macroalgae",
           "references": [
             "Sala et al. 1998"
@@ -3207,7 +3207,7 @@
           "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Removal of sea urchin predators (grouper, wrasse, sea breams) triggers urchin population explosions that create barren grounds by overgrazing macroalgal canopy",
           "references": [
             "Sala et al. 1998",
@@ -3222,7 +3222,7 @@
           "to": "Invasive tropical species establishment",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Marine heatwaves weaken native Mediterranean communities and create ecological niches that facilitate establishment of Lessepsian migrants and tropical invasive species",
           "references": [
@@ -3238,8 +3238,8 @@
           "to": "Recreational spearfishing",
           "to_type": "activities",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Marine reserve designation eliminates spearfishing within boundaries, redistributing diving pressure to adjacent unprotected rocky shore areas",
           "references": [
             "Guidetti et al. 2008",
@@ -3431,8 +3431,8 @@
           "to": "Underwater noise from pile-driving",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Monopile installation generates high-intensity impulsive noise harmful to cetaceans",
           "references": [
             "Gill 2005",
@@ -3543,7 +3543,7 @@
           "to": "Sandeel stock depletion affecting seabirds",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Closure zones protect sandeel spawning and feeding areas from fishing mortality",
           "references": [
@@ -3566,7 +3566,7 @@
             "OSPAR 2017",
             "Gill 2005"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -3622,7 +3622,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Sandeel availability is the critical prey resource determining breeding success for most North Sea seabird colonies",
           "references": [
             "Frederiksen et al. 2006"
@@ -3666,13 +3666,13 @@
           "to": "Sandeel industrial fishery",
           "to_type": "activities",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Spatial closure zones directly exclude sandeel fishing from key areas, reducing total industrial catch",
           "references": [
             "Frederiksen et al. 2006"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -3872,7 +3872,7 @@
             "OSPAR 2017",
             "Elliott and Cutts 2004"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -3945,14 +3945,14 @@
           "to": "Saltmarsh carbon sequestration and wave attenuation",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Healthy saltmarsh provides natural wave attenuation and blue carbon storage",
           "references": [
             "OSPAR 2017",
             "Barbier et al. 2011"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -3977,7 +3977,7 @@
           "to": "Loss of intertidal habitat from hard defences",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Setting back defences creates new intertidal habitat, reversing coastal squeeze",
           "references": [
@@ -4100,7 +4100,7 @@
           "to": "Flood risk management for coastal cities",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Property owners' experience of flood damage avoidance sustains political demand for continued flood risk management investment",
           "references": [
@@ -4387,7 +4387,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Parrotfish grazing controls macroalgae, preventing algal phase shifts on reefs",
           "references": [
             "Jackson et al. 2014",
@@ -4434,8 +4434,8 @@
           "to": "Tourism-dependent community livelihoods",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Reef tourism is the primary economic driver for many Caribbean island communities",
           "references": [
             "Burke et al. 2011",
@@ -4473,7 +4473,7 @@
             "Morris et al. 2009",
             "NOAA 2020"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -4499,7 +4499,7 @@
           "to_type": "activities",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Tourism demand directly drives the volume of snorkeling and diving operations on Caribbean coral reefs",
           "references": [
             "Spalding et al. 2017"
@@ -4529,7 +4529,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Living coral growth maintains and builds reef structural complexity, which collapses when corals die and erode",
           "references": [
             "Alvarez-Filip et al. 2009"
@@ -4588,8 +4588,8 @@
           "to": "Sargassum inundation events",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "moderate",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Elevated nutrient levels from terrestrial runoff fuel pelagic Sargassum blooms and promote macroalgal overgrowth on reef substrate, compounding reef degradation",
           "references": [
             "Lapointe et al. 2019",
@@ -4896,7 +4896,7 @@
             "AMAP 2017",
             "IMO 2017"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -4921,14 +4921,14 @@
           "to": "Arctic oil and gas seismic exploration",
           "to_type": "activities",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Moratoriums directly halt oil exploration activities in protected areas",
           "references": [
             "AMAP 2017",
             "CAFF 2013"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -4959,7 +4959,7 @@
           "references": [
             "Hovelsrud et al. 2008"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -4969,7 +4969,7 @@
           "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Declining ice extent directly causes earlier spring breakup, disrupting the timing of seal and seabird breeding on ice",
           "references": [
             "Laidre et al. 2015"
@@ -4998,7 +4998,7 @@
           "to": "Global climate stability benefit",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Arctic ice-albedo feedback is a critical regulator of global climate, and its disruption undermines climate stability for all nations",
           "references": [
@@ -5013,8 +5013,8 @@
           "to": "Indigenous community food sovereignty",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Declining food security reinforces political and cultural demands for maintaining indigenous food sovereignty",
           "references": [
             "Ford 2009"
@@ -5034,7 +5034,7 @@
           "references": [
             "IMO 2017"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         }
       ]
@@ -5211,7 +5211,7 @@
             "ICCAT 2020",
             "Halpern et al. 2008"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -5332,7 +5332,7 @@
           "to": "Overfishing of Atlantic bluefin tuna",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "ICCAT quotas have reduced fishing mortality, enabling partial stock recovery",
           "references": [
@@ -5348,14 +5348,14 @@
           "to": "Deep-sea habitat destruction from bottom trawling",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "VME closures protect seamount ecosystems from trawling",
           "references": [
             "Clark et al. 2016",
             "OSPAR 2017"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -5364,14 +5364,14 @@
           "to": "Seabird and turtle bycatch in longline fisheries",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Bird-scaring lines and weighted hooks reduce seabird bycatch by 80-90%",
           "references": [
             "Anderson et al. 2011",
             "ICCAT 2020"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -5471,13 +5471,13 @@
           "to": "Longline fishing for tuna and swordfish",
           "to_type": "activities",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "ICCAT catch quotas directly constrain the allowable longline fishing effort for tuna and swordfish",
           "references": [
             "ICCAT 2018"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -5670,7 +5670,7 @@
             "UNEP-MAP 2017",
             "Coll et al. 2010"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -5718,7 +5718,7 @@
             "Boudouresque et al. 2009",
             "Francour et al. 1999"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
         },
         {
@@ -5743,7 +5743,7 @@
           "to": "Tourism and recreation value of beaches",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Good bathing water quality is essential for beach tourism attractiveness",
           "references": [
@@ -5759,8 +5759,8 @@
           "to": "Tourism industry employment and revenue",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Beach quality directly determines tourist numbers and spending",
           "references": [
             "UNEP-MAP 2017",
@@ -5776,13 +5776,13 @@
           "to_type": "pressures",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 4,
+          "confidence": 5,
           "rationale": "Mooring buoys eliminate the need for anchoring in sensitive Posidonia areas",
           "references": [
             "Boudouresque et al. 2009",
             "UNEP-MAP 2017"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -5842,7 +5842,7 @@
           "references": [
             "UNWTO 2019"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -5941,7 +5941,7 @@
           "to": "Small-scale trammel net and longline fishing",
           "to_type": "activities",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "No-take MPA designation excludes artisanal fishers from traditional fishing grounds, redistributing effort to adjacent unprotected coastal waters",
           "references": [
@@ -6166,7 +6166,7 @@
           "to": "Anchovy and sprat stock biomass",
           "to_type": "states",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Mnemiopsis competes with and preys on fish larvae, devastating small pelagic stocks",
           "references": [
@@ -6291,7 +6291,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Mnemiopsis leidyi competes with anchovy larvae for zooplankton prey and directly consumes fish eggs, devastating small pelagic recruitment",
           "references": [
             "Kideys 2002"
@@ -6326,7 +6326,7 @@
           "references": [
             "BSC 2019"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -6365,7 +6365,7 @@
           "to": "Coastal tourism revenue",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Beach quality and amenity value directly determine tourism revenue for Black Sea coastal municipalities",
           "references": [
@@ -6411,7 +6411,7 @@
           "to": "Northwestern shelf dissolved oxygen levels",
           "to_type": "states",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Collapsed anchovy and sprat stocks reduce grazing pressure on zooplankton, allowing phytoplankton blooms that sink and decompose, worsening bottom water hypoxia on the northwestern shelf",
           "references": [
@@ -6427,7 +6427,7 @@
           "to": "Purse seine fishing for anchovy and sprat",
           "to_type": "activities",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Turbot fishing restrictions redirect fishing effort toward small pelagic species, intensifying purse seine pressure on anchovy and sprat stocks",
           "references": [
@@ -6707,7 +6707,7 @@
             "Stoner, 2003",
             "Childress & Herrnkind, 2001"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -6755,7 +6755,7 @@
             "Cullen-Unsworth et al., 2014",
             "Nordlund et al., 2016"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -6771,7 +6771,7 @@
             "Hallac et al., 2012",
             "Whitfield et al., 2002"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -6787,7 +6787,7 @@
             "Appeldoorn, 2020",
             "Stoner et al., 2012"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -7140,7 +7140,7 @@
           "to": "Blue carbon storage in mangrove soils",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Intact mangrove forests accumulate large quantities of organic carbon in waterlogged soils over centuries",
           "references": [
@@ -7211,7 +7211,7 @@
             "Barbier, 2006",
             "Aburto-Oropeza et al., 2008"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -7299,12 +7299,12 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Active mangrove canopy produces litter and root biomass that drives high soil carbon sequestration rates",
           "references": [
             "Donato et al. 2011"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -7334,7 +7334,7 @@
           "references": [
             "Dahdouh-Guebas et al. 2005"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -7343,7 +7343,7 @@
           "to": "Overharvesting of mangrove timber and fuelwood",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Aquaculture-driven clearance fragments remaining mangrove patches, increasing edge-to-interior ratio and exposing remnants to intensified fuelwood harvesting pressure from adjacent communities",
           "references": [
@@ -7360,7 +7360,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Rhizophora prop roots provide essential predation refuge and foraging habitat for juvenile penaeid shrimp; root complexity loss eliminates nursery function through increased predation mortality",
           "references": [
             "Ronnback et al. 1999",
@@ -7553,7 +7553,7 @@
           "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Salmon farms release feed waste, faeces, and dissolved nutrients directly into fjord waters",
           "references": [
             "Taranger et al., 2015",
@@ -7633,7 +7633,7 @@
           "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 3,
           "rationale": "Accelerating glacier melt increases freshwater and glacial sediment discharge into fjords",
           "references": [
             "Meire et al., 2017",
@@ -7681,7 +7681,7 @@
           "to_type": "welfare",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Healthy salmon runs attract anglers and generate substantial tourism revenue for rural fjord communities",
           "references": [
             "Liu et al., 2011",
@@ -7744,7 +7744,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "medium",
-          "confidence": 3,
+          "confidence": 4,
           "rationale": "Genetic introgression from farmed escapees reduces fitness and adaptive capacity of wild salmon populations",
           "references": [
             "Glover et al. 2017"
@@ -7773,7 +7773,7 @@
           "to": "Cruise tourism revenue for fjord communities",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "High scenic value of pristine fjord landscapes underpins tourist willingness to pay for cruise visits",
           "references": [
@@ -7788,7 +7788,7 @@
           "to": "Coastal community employment needs",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "medium",
+          "strength": "weak",
           "confidence": 3,
           "rationale": "Strong cultural identity in fishing villages sustains local demand for maritime employment opportunities",
           "references": [
@@ -8060,7 +8060,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Red knot and other shorebirds depend on cockle and mussel prey; depleted food leads to reduced survival",
           "references": [
             "van Gils et al., 2006",
@@ -8155,14 +8155,14 @@
           "to": "Mechanical cockle and mussel harvesting",
           "to_type": "activities",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Dutch food reservation policy ensures minimum shellfish biomass is left for eider ducks and oystercatchers before harvesting is permitted",
           "references": [
             "Ens et al., 2004",
             "Camphuysen et al., 2002"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -8194,7 +8194,7 @@
             "CWSS, 2010",
             "Reise et al., 2010"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -8224,7 +8224,7 @@
           "references": [
             "Troost 2010"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -8248,7 +8248,7 @@
           "to": "Wadden Sea tourism and recreation income",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Nature education and ecotourism experiences generate substantial tourism income for Wadden Sea communities",
           "references": [
@@ -8284,7 +8284,7 @@
           "references": [
             "CWSS 2010"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -8293,14 +8293,14 @@
           "to": "Sediment regime changes from coastal engineering",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Sea level rise triggers intensified coastal defence construction which disrupts natural sediment transport pathways, altering the sediment budget of tidal flat systems",
           "references": [
             "Oost et al. 2012",
             "Wang et al. 2012"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "long-term",
           "reversibility": "poorly_reversible"
         }
       ]
@@ -8614,7 +8614,7 @@
           "to": "Summer cottage property values and quality of life",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Clean water and healthy ecosystems directly influence property values and enjoyment of archipelago life",
           "references": [
@@ -8637,7 +8637,7 @@
             "HELCOM, 2018",
             "Finnish Environment Institute, 2015"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -8668,7 +8668,7 @@
           "references": [
             "Salmi 2005"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -8722,7 +8722,7 @@
           "to": "Summer cottage and second-home culture",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "weak",
           "confidence": 4,
           "rationale": "Rising property values and quality of life reinforce demand for summer cottage ownership and archipelago recreation",
           "references": [
@@ -8965,7 +8965,7 @@
           "to": "Overfishing of herbivorous reef fish (parrotfish, surgeonfish)",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Unmanaged artisanal fishing depletes herbivorous fish that control algal growth on reefs",
           "references": [
@@ -8998,7 +8998,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Dense macroalgae overgrow and shade coral recruits, preventing reef recovery after bleaching",
           "references": [
             "Hughes et al., 2007",
@@ -9030,7 +9030,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Complex reef structure provides shelter and microhabitats that support diverse and abundant fish assemblages",
           "references": [
             "Graham & Nash, 2013",
@@ -9109,7 +9109,7 @@
           "to": "Overfishing of herbivorous reef fish (parrotfish, surgeonfish)",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Parrotfish fishing bans allow herbivore populations to recover, restoring top-down control of macroalgae",
           "references": [
@@ -9157,7 +9157,7 @@
           "to_type": "drivers",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 4,
+          "confidence": 3,
           "rationale": "Household-level food security outcomes reinforce community dependence on artisanal fishing as a livelihood strategy",
           "references": [
             "Hicks et al. 2015"
@@ -9172,7 +9172,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Live coral provides habitat structure supporting reef fish diversity, biomass, and trophic complexity",
           "references": [
             "Graham & Nash 2013"
@@ -9186,7 +9186,7 @@
           "to": "Dive tourism operator and resort employment",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Reef aesthetic quality directly determines dive tourism patronage and resort employment levels",
           "references": [
@@ -9201,8 +9201,8 @@
           "to": "Crown-of-thorns starfish (Acanthaster planci) outbreaks",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "moderate",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Bleaching-weakened corals are more susceptible to crown-of-thorns predation; reduced reef fish predation on COTS larvae from degraded reefs amplifies outbreak severity",
           "references": [
             "Kayal et al. 2012",
@@ -9509,7 +9509,7 @@
             "Montefalcone et al., 2008",
             "Boudouresque et al., 2009"
           ],
-          "temporal_lag": "long-term",
+          "temporal_lag": "immediate",
           "reversibility": "slowly_reversible"
         },
         {
@@ -9550,7 +9550,7 @@
           "to": "Aesthetic and recreational value of clear island waters",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Clean, clear waters are the primary attraction for island tourism and recreation",
           "references": [
@@ -9566,8 +9566,8 @@
           "to": "Tourism industry employment and island household income",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Water quality directly determines tourist satisfaction, repeat visits, and island tourism revenue",
           "references": [
             "Vaz et al., 2009",
@@ -9615,13 +9615,13 @@
           "to_type": "pressures",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 4,
+          "confidence": 5,
           "rationale": "Mooring buoys eliminate anchoring in sensitive Posidonia areas, halting physical damage",
           "references": [
             "Francour et al., 1999",
             "Boudouresque et al., 2009"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -9637,7 +9637,7 @@
             "Spilanis et al., 2012",
             "EEA, 2006"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -9662,7 +9662,7 @@
           "to": "Artisanal fishing tradition and cultural heritage",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "medium",
+          "strength": "weak",
           "confidence": 3,
           "rationale": "Cultural identity rooted in island traditions reinforces community demand for preserving artisanal fishing heritage",
           "references": [
@@ -9692,7 +9692,7 @@
           "to": "Native seabird colony breeding success (Audouin's gull, shearwaters)",
           "to_type": "states",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Invasive mammalian predators depredate eggs, chicks, and nesting adults, severely reducing seabird breeding success on mediterranean island systems",
           "references": [
@@ -9708,8 +9708,8 @@
           "to": "Invasive mammalian predators (rats, feral cats) on native wildlife",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Systematic eradication and ongoing biosecurity measures remove invasive predators, allowing native wildlife recovery on islands",
           "references": [
             "Medina et al., 2011",
@@ -9741,7 +9741,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Posidonia meadows serve as essential nursery and feeding habitat for many demersal fish species; meadow loss directly reduces juvenile recruitment and adult fish biomass around islands",
           "references": [
             "Guidetti 2000",
@@ -9756,7 +9756,7 @@
           "to": "Endemic island fish community composition",
           "to_type": "states",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Algal canopy on rocky reefs provides three-dimensional habitat structure and food sources; canopy loss simplifies habitat and reduces endemic fish species that depend on canopy-associated prey",
           "references": [
@@ -9772,14 +9772,14 @@
           "to": "Recreational boat anchoring in coves",
           "to_type": "activities",
           "polarity": "-",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Beach and cove carrying capacity limits reduce vessel anchoring pressure in popular bays, redistributing tourism activity to less sensitive areas",
           "references": [
             "Ecologic Institute 2016",
             "Davenport & Davenport 2006"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         }
       ]
@@ -9986,7 +9986,7 @@
           "to_type": "activities",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Growing cruise industry drives more port calls and onshore excursion activities",
           "references": [
             "Brida & Zapata-Aguirre, 2010",
@@ -10001,7 +10001,7 @@
           "to": "Overfishing of reef herbivores (parrotfish, surgeonfish)",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Unregulated trap fishing removes herbivorous fish that maintain reef health through grazing",
           "references": [
@@ -10097,7 +10097,7 @@
           "to": "Reef-based tourism and recreation value",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Healthy, colourful reefs with abundant fish are the primary attraction for dive and snorkel tourism",
           "references": [
@@ -10129,8 +10129,8 @@
           "to": "Tourism-dependent household income and employment",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Reef tourism generates the majority of island tourism revenue and employment",
           "references": [
             "Spalding et al., 2017",
@@ -10177,7 +10177,7 @@
           "to": "Overfishing of reef herbivores (parrotfish, surgeonfish)",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Banning parrotfish harvest allows herbivore recovery, restoring grazing pressure on macroalgae",
           "references": [
@@ -10210,7 +10210,7 @@
           "to_type": "drivers",
           "polarity": "-",
           "strength": "medium",
-          "confidence": 4,
+          "confidence": 3,
           "rationale": "Improved fisher livelihoods reduce dependency on food imports, but declining fisheries increase it (feedback)",
           "references": [
             "FAO, 2018",
@@ -10255,7 +10255,7 @@
           "to": "Native seabird colony breeding success (terns, boobies, frigatebirds)",
           "to_type": "states",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Invasive mammalian predators depredate eggs, chicks, and nesting adults, severely reducing seabird breeding success on caribbean island systems",
           "references": [
@@ -10271,8 +10271,8 @@
           "to": "Invasive mammalian predators (rats, mongoose) on native wildlife",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Systematic eradication and ongoing biosecurity measures remove invasive predators, allowing native wildlife recovery on islands",
           "references": [
             "Horrocks et al., 2001",
@@ -10319,7 +10319,7 @@
           "to": "Coral bleaching from marine heatwaves",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Overfished herbivore populations cannot control macroalgae, reducing coral resilience to thermal stress and increasing susceptibility to bleaching mortality",
           "references": [
@@ -10336,7 +10336,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Reef structural complexity provides shelter, feeding habitat and recruitment sites; loss of coral cover drives exponential decline in reef fish biomass and species richness",
           "references": [
             "Graham et al. 2006",
@@ -10351,7 +10351,7 @@
           "to": "Seagrass (Thalassia testudinum) bed coverage",
           "to_type": "states",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Mangrove fringes trap terrestrial sediments and buffer wave energy, maintaining water clarity conditions required for seagrass photosynthesis in adjacent shallow waters",
           "references": [
@@ -10367,7 +10367,7 @@
           "to": "Small-scale trap and line fishing",
           "to_type": "activities",
           "polarity": "-",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "MPA enforcement restricts fishing access in protected reef areas, redistributing fishing effort to unprotected zones and potentially increasing pressure on remaining open areas",
           "references": [
@@ -10563,7 +10563,7 @@
             "Bell et al., 2009",
             "Gillett, 2016"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -10595,7 +10595,7 @@
             "Friedman et al., 2011",
             "Bell et al., 2009"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -10627,7 +10627,7 @@
             "Terry & Falkland, 2010",
             "Storlazzi et al., 2018"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "long-term",
           "reversibility": "slowly_reversible"
         },
         {
@@ -10732,14 +10732,14 @@
           "to": "Food security from reef and lagoon fisheries",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Declining food security reinforces the driver for more reef fishing, creating a potential overharvest feedback",
           "references": [
             "Bell et al., 2009",
             "Gillett, 2016"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -10748,7 +10748,7 @@
           "to": "Overharvesting of reef invertebrates (giant clams, sea cucumbers)",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Traditional taboos on harvesting certain areas or species allow stocks to recover during closed periods",
           "references": [
@@ -10780,8 +10780,8 @@
           "to": "Traditional ocean governance and cultural identity",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "medium",
-          "confidence": 4,
+          "strength": "weak",
+          "confidence": 3,
           "rationale": "Strong cultural identity sustains traditional governance systems that support ocean stewardship (feedback)",
           "references": [
             "Johannes, 2002",
@@ -10803,7 +10803,7 @@
             "Terry & Falkland, 2010",
             "White et al., 2007"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "long-term",
           "reversibility": "reversible"
         },
         {
@@ -10812,7 +10812,7 @@
           "to": "Food security from reef and lagoon fisheries",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "medium",
+          "strength": "weak",
           "confidence": 3,
           "rationale": "Cultural continuity reinforces traditional reliance on reef fisheries for community food security",
           "references": [
@@ -10828,12 +10828,12 @@
           "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Sea level rise increases frequency and severity of overwash events that salinise the freshwater lens",
           "references": [
             "White & Falkland 2010"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "long-term",
           "reversibility": "irreversible"
         },
         {
@@ -10842,7 +10842,7 @@
           "to": "Native seabird colony breeding success (noddies, terns, shearwaters)",
           "to_type": "states",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Invasive mammalian predators depredate eggs, chicks, and nesting adults, severely reducing seabird breeding success on pacific island atoll systems",
           "references": [
@@ -10858,8 +10858,8 @@
           "to": "Invasive mammalian predators (rats, feral cats) on native wildlife",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Systematic eradication and ongoing biosecurity measures remove invasive predators, allowing native wildlife recovery on islands",
           "references": [
             "Jones et al., 2016",
@@ -10890,7 +10890,7 @@
           "to": "Ocean acidification reducing coral calcification",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Bleached and dead coral reefs shift from net calcification to net dissolution, locally amplifying ocean acidification effects and further reducing calcification potential",
           "references": [
@@ -10907,7 +10907,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Intact reef crests dissipate wave energy protecting atolls from overwash events; reef crest degradation increases wave overtopping frequency, salinising the freshwater lens through a tipping point mechanism",
           "references": [
             "Quataert et al. 2015",
@@ -10923,7 +10923,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Lagoon coral cover provides essential habitat for reef fish; degradation of lagoon corals triggers fish community collapse affecting subsistence harvest availability",
           "references": [
             "Cinner et al. 2016",
@@ -11147,8 +11147,8 @@
           "to": "Ship strikes and acoustic disturbance to cetaceans",
           "to_type": "pressures",
           "polarity": "+",
-          "strength": "medium",
-          "confidence": 4,
+          "strength": "weak",
+          "confidence": 3,
           "rationale": "Increasing vessel traffic for whale watching adds to acoustic disturbance and collision risk if unregulated",
           "references": [
             "Parsons, 2012",
@@ -11259,8 +11259,8 @@
           "to": "Ecotourism employment and island economic diversification",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Whale watching generates significant revenue and employment, diversifying island economies beyond fishing",
           "references": [
             "Hoyt, 2001",
@@ -11291,14 +11291,14 @@
           "to": "Ship strikes and acoustic disturbance to cetaceans",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Distance regulations and speed limits reduce strike risk and acoustic disturbance during encounters",
           "references": [
             "Parsons, 2012",
             "Hoyt, 2001"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -11323,7 +11323,7 @@
           "to": "Conservation of unique Macaronesian biodiversity",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "medium",
+          "strength": "weak",
           "confidence": 3,
           "rationale": "Community appreciation of natural heritage strengthens support for conservation policies (feedback)",
           "references": [
@@ -11399,7 +11399,7 @@
           "to": "Native seabird colony breeding success (Cory's shearwater, petrels)",
           "to_type": "states",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Invasive mammalian predators depredate eggs, chicks, and nesting adults, severely reducing seabird breeding success on atlantic island systems",
           "references": [
@@ -11415,8 +11415,8 @@
           "to": "Invasive mammalian predators (rats, feral cats, mice) on native wildlife",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Systematic eradication and ongoing biosecurity measures remove invasive predators, allowing native wildlife recovery on islands",
           "references": [
             "Medina et al., 2011",
@@ -11447,7 +11447,7 @@
           "to": "Whale and dolphin watching excursions",
           "to_type": "activities",
           "polarity": "-",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Vessel distance regulations and approach speed limits reduce the intensity and proximity of whale watching operations, limiting disturbance to cetacean populations",
           "references": [
@@ -11729,7 +11729,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 3,
           "rationale": "Acanthaster planci outbreaks consume live coral tissue, devastating reef cover when combined with bleaching",
           "references": [
             "Pratchett et al., 2014",
@@ -11792,8 +11792,8 @@
           "to": "Tourism-sector employment and household income",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "The pristine image directly sustains the premium tourism market and associated employment",
           "references": [
             "Gossling, 2003",
@@ -11856,8 +11856,8 @@
           "to": "Invasive species threatening endemic island biota",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Rat and cat eradication on islets has restored seabird colonies and endemic reptile populations",
           "references": [
             "Russell et al., 2016",
@@ -11872,7 +11872,7 @@
           "to": "Blue economy diversification strategy",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "medium",
+          "strength": "weak",
           "confidence": 3,
           "rationale": "International recognition of blue economy achievements reinforces political commitment to the strategy (feedback)",
           "references": [
@@ -11894,7 +11894,7 @@
           "references": [
             "Cinner 2014"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -11903,8 +11903,8 @@
           "to": "Food security from artisanal fisheries",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Community food access outcomes reinforce the demand for maintaining artisanal fisheries as a food security strategy",
           "references": [
             "Cinner 2014"
@@ -11933,7 +11933,7 @@
           "to": "Native seabird colony breeding success (sooty tern, white tern, frigatebird)",
           "to_type": "states",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Invasive mammalian predators depredate eggs, chicks, and nesting adults, severely reducing seabird breeding success on indian ocean island systems",
           "references": [
@@ -11949,8 +11949,8 @@
           "to": "Invasive mammalian predators (rats, cats, tenrecs) on native wildlife",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Systematic eradication and ongoing biosecurity measures remove invasive predators, allowing native wildlife recovery on islands",
           "references": [
             "Russell et al., 2016",
@@ -11998,7 +11998,7 @@
           "to_type": "states",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Healthy coral cover on granitic and coralline reefs provides the structural complexity essential for maintaining diverse reef fish assemblages in island waters",
           "references": [
             "Graham et al. 2006",
@@ -12013,7 +12013,7 @@
           "to": "Sea turtle nesting success (hawksbill, green turtle)",
           "to_type": "states",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 3,
           "rationale": "Mangrove and coastal wetland systems provide foraging habitat for juvenile sea turtles; their extent influences turtle population recruitment and nesting beach stability",
           "references": [
@@ -12036,7 +12036,7 @@
             "Kaplan et al. 2014",
             "IOTC 2019"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         }
       ]
@@ -12334,7 +12334,7 @@
           "to": "Recreational and aesthetic value of island beaches",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Clear water is essential for island beach tourism; algal blooms and turbidity deter visitors",
           "references": [
@@ -12382,8 +12382,8 @@
           "to": "Tourism and hospitality employment on islands",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Beach and nature quality directly determines tourist visitor numbers and tourism sector employment",
           "references": [
             "Ahtiainen et al., 2014",
@@ -12463,7 +12463,7 @@
           "to_type": "pressures",
           "polarity": "-",
           "strength": "medium",
-          "confidence": 3,
+          "confidence": 4,
           "rationale": "Restored coastal meadow vegetation stabilises shoreline sediments and reduces erosion rates on island coasts",
           "references": [
             "Rannap et al., 2017",
@@ -12478,7 +12478,7 @@
           "to": "Traditional Baltic fishing and farming livelihoods",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "medium",
+          "strength": "weak",
           "confidence": 3,
           "rationale": "Strong maritime cultural identity on Baltic islands sustains demand for traditional fishing and farming livelihoods",
           "references": [
@@ -12508,7 +12508,7 @@
           "to": "Native seabird colony breeding success (eider, terns, guillemots)",
           "to_type": "states",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Invasive mammalian predators depredate eggs, chicks, and nesting adults, severely reducing seabird breeding success on baltic island systems",
           "references": [
@@ -12524,8 +12524,8 @@
           "to": "Invasive mammalian predators (American mink, rats) on native wildlife",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Systematic eradication and ongoing biosecurity measures remove invasive predators, allowing native wildlife recovery on islands",
           "references": [
             "Nordstrom et al., 2002",
@@ -12556,7 +12556,7 @@
           "to": "Herring and perch stock condition around islands",
           "to_type": "states",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Fucus canopy provides spawning substrate and nursery habitat for coastal herring and perch; shift to filamentous algae degrades habitat quality for juvenile fish",
           "references": [
@@ -12572,14 +12572,14 @@
           "to": "Small-scale coastal fishing (herring, perch, pike)",
           "to_type": "activities",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Seal management measures reducing gear damage encourage fishers to maintain or resume coastal gillnet fishing operations around islands",
           "references": [
             "Waldo et al. 2020",
             "Vanhatalo et al. 2014"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         }
       ]
@@ -12766,7 +12766,7 @@
           "to_type": "activities",
           "polarity": "+",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Growing global demand for polar wilderness experiences drives increasing expedition cruise landings at Arctic island sites",
           "references": [
             "Dawson et al., 2014",
@@ -12861,7 +12861,7 @@
           "to": "Carbon storage in permafrost soils",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Intact permafrost coasts maintain vast carbon stores; erosion releases ancient organic carbon into the marine system",
           "references": [
@@ -13005,8 +13005,8 @@
           "to": "Indigenous subsistence needs (hunting, fishing)",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "weak",
+          "confidence": 3,
           "rationale": "Feedback loop: food security outcomes and cultural continuity reinforce community commitment to subsistence harvesting, sustaining the driver for traditional hunting and fishing practices",
           "references": [
             "Nuttall et al., 2005",
@@ -13051,7 +13051,7 @@
           "to": "Native seabird colony breeding success (little auk, guillemots, puffins)",
           "to_type": "states",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Invasive mammalian predators depredate eggs, chicks, and nesting adults, severely reducing seabird breeding success on arctic island systems",
           "references": [
@@ -13067,8 +13067,8 @@
           "to": "Invasive mammalian predators (Arctic fox, rats) on native wildlife",
           "to_type": "pressures",
           "polarity": "-",
-          "strength": "strong",
-          "confidence": 4,
+          "strength": "medium",
+          "confidence": 3,
           "rationale": "Systematic eradication and ongoing biosecurity measures remove invasive predators, allowing native wildlife recovery on islands",
           "references": [
             "Fuglei & Ims, 2008",
@@ -13084,7 +13084,7 @@
           "to_type": "pressures",
           "polarity": "+",
           "strength": "medium",
-          "confidence": 4,
+          "confidence": 3,
           "rationale": "Tourism and island activities generate waste volumes that exceed limited island disposal and recycling capacity, particularly during peak season",
           "references": [
             "Diaz et al., 2019",
@@ -13316,7 +13316,7 @@
           "to": "Allis shad (Alosa alosa) migration success",
           "to_type": "states",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Dams block upstream spawning migration of allis shad and altered flows disrupt migration cues essential for this anadromous species",
           "references": [
@@ -13403,7 +13403,7 @@
             "ICES, 2020",
             "Dekker, 2003"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -13467,7 +13467,7 @@
             "Penning-Rowsell et al., 2014",
             "IPCC, 2019"
           ],
-          "temporal_lag": "short-term",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -13477,13 +13477,13 @@
           "to_type": "activities",
           "polarity": "-",
           "strength": "medium",
-          "confidence": 4,
+          "confidence": 3,
           "rationale": "EU eel regulation and national management plans restrict fishing effort, seasonal closures, and glass eel catch quotas across Atlantic estuaries",
           "references": [
             "EC, 2007",
             "ICES, 2020"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "long-term",
           "reversibility": "reversible"
         },
         {
@@ -13492,7 +13492,7 @@
           "to": "Port and shipping expansion demand",
           "to_type": "drivers",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Feedback loop: port employment and economic benefits create political and commercial momentum for further port expansion and shipping infrastructure investment",
           "references": [
@@ -13553,7 +13553,7 @@
           "to": "European eel (Anguilla anguilla) recruitment",
           "to_type": "states",
           "polarity": "+",
-          "strength": "moderate",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Saltmarsh creeks provide critical feeding and growth habitat for glass eels during estuarine recruitment; saltmarsh loss reduces available nursery habitat and eel recruitment success",
           "references": [
@@ -13753,7 +13753,7 @@
             "ICES, 2021",
             "Fernandes et al., 2017"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
         },
         {
@@ -13763,7 +13763,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "medium",
-          "confidence": 3,
+          "confidence": 5,
           "rationale": "Trophic cascade effects and bycatch from intensive demersal trawling can indirectly affect pelagic species community structure",
           "references": [
             "Coll et al., 2008",
@@ -13826,7 +13826,7 @@
           "to": "Beach recreational and surf tourism amenity",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Beach width, sand quality, and wave-breaking bathymetry are critical determinants of surf and recreational beach tourism value",
           "references": [
@@ -13842,8 +13842,8 @@
           "to": "Surf and beach tourism revenue",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
+          "strength": "medium",
+          "confidence": 4,
           "rationale": "Beach and surf quality directly drive tourism spending; Atlantic surf destinations generate billions in annual revenue",
           "references": [
             "Nelsen et al., 2007",
@@ -13874,7 +13874,7 @@
           "to": "Bottom trawling for demersal species (hake, monkfish, megrim)",
           "to_type": "activities",
           "polarity": "-",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "TAC quotas and fishing effort limitations under the CFP constrain trawling activity to reduce overfishing pressure",
           "references": [
@@ -14005,7 +14005,7 @@
           "references": [
             "Spalding et al. 2014"
           ],
-          "temporal_lag": "medium-term",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -14272,7 +14272,7 @@
           "to_type": "states",
           "polarity": "-",
           "strength": "strong",
-          "confidence": 5,
+          "confidence": 4,
           "rationale": "Feedback loop: filamentous algae overgrowth shades and smothers Fucus, reducing canopy which further opens space for filamentous colonization",
           "references": [
             "Worm & Sommer, 2000",
@@ -14335,7 +14335,7 @@
           "to": "Recreational fishing quality for sea trout anglers",
           "to_type": "impacts",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 5,
           "rationale": "Sea trout abundance directly determines catch rates and trophy potential for shore-based spinning anglers on Baltic rocky coasts",
           "references": [
@@ -14351,7 +14351,7 @@
           "to": "Sea trout recreational fishing tourism revenue",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "High-quality sea trout fishing attracts dedicated anglers who generate accommodation, guide, and equipment spending in coastal communities",
           "references": [
@@ -14399,7 +14399,7 @@
           "to": "Summer cottage and archipelago property values",
           "to_type": "welfare",
           "polarity": "+",
-          "strength": "strong",
+          "strength": "medium",
           "confidence": 4,
           "rationale": "Clear water, healthy rocky shore communities, and attractive archipelago landscapes drive property demand and values along the coast",
           "references": [
@@ -14437,7 +14437,7 @@
           "references": [
             "Toivonen et al. 2004"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         },
         {
@@ -14447,7 +14447,7 @@
           "to_type": "pressures",
           "polarity": "+",
           "strength": "weak",
-          "confidence": 2,
+          "confidence": 4,
           "rationale": "Oil contamination weakens macroalgae and grazer communities, creating conditions that favour cyanobacterial mat accumulation on rocky surfaces",
           "references": [
             "Peterson et al. 2003"
