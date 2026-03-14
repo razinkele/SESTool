@@ -1001,12 +1001,42 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # Finish connection review
     # NOTE: Element-to-ISA conversion and matrix building delegated to
     # save_to_project_format() in modules/ai_isa/data_persistence.R
-    observeEvent(input$finish_connections, {
+    # Helper: find unconnected elements from approved connections
+    .find_unconnected <- function() {
+      all_elements <- character()
+      if (!is.null(rv$elements) && length(rv$elements) > 0) {
+        for (el_list in rv$elements) {
+          if (is.list(el_list)) {
+            for (el in el_list) {
+              if (!is.null(el$name) && nchar(trimws(el$name)) > 0) {
+                all_elements <- c(all_elements, el$name)
+              }
+            }
+          }
+        }
+      }
+      all_elements <- unique(all_elements)
+
+      connected <- character()
+      for (idx in rv$approved_connections) {
+        conn <- rv$suggested_connections[[idx]]
+        if (!is.null(conn)) {
+          if (!is.null(conn$from_name)) connected <- c(connected, conn$from_name)
+          if (!is.null(conn$to_name)) connected <- c(connected, conn$to_name)
+        }
+      }
+      connected <- unique(connected)
+
+      list(
+        all = all_elements,
+        connected = connected,
+        unconnected = setdiff(all_elements, connected)
+      )
+    }
+
+    # Helper: execute the actual save and navigate
+    .do_finish_and_save <- function() {
       approved_count <- length(rv$approved_connections)
-      debug_log(sprintf("[AI ISA CONNECTIONS] FINISH clicked - %d approved, %d total suggested\n",
-                 approved_count, length(rv$suggested_connections)))
-      debug_log(sprintf("[AI ISA CONNECTIONS] Approved indices: %s\n",
-                 paste(rv$approved_connections, collapse = ", ")))
 
       rv$conversation <- c(rv$conversation, list(
         list(type = "ai",
@@ -1017,38 +1047,124 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
              timestamp = Sys.time())
       ))
 
-      # Save using shared conversion function (modules/ai_isa/data_persistence.R)
       debug_log("[AI ISA CONNECTIONS] Saving with save_to_project_format()\n")
       current_data <- project_data_reactive()
       current_data <- save_to_project_format(rv, current_data, CONFIDENCE_DEFAULT)
-
-      # Update project data
       project_data_reactive(current_data)
 
-      # Emit ISA change event to trigger CLD regeneration via reactive pipeline
       if (!is.null(event_bus)) {
         event_bus$emit_isa_change("ai_isa_assistant")
         debug_log("[AI ISA CONNECTIONS] Emitted ISA change event for CLD regeneration\n")
       }
 
-      # Mark as saved and move to completion
       rv$auto_saved_step_10 <- TRUE
-      debug_log("[AI ISA CONNECTIONS] Moving to completion\n")
       rv$current_step <- 12
 
       showNotification(
         paste0(approved_count, " ", i18n$t("modules.isa.ai_assistant.connections_saved_navigating_to_dashboard")),
-        type = "message",
-        duration = 3
+        type = "message", duration = 3
       )
 
-      # Navigate to dashboard after finishing connection review
       if (!is.null(parent_session)) {
-        debug_log("[AI ISA CONNECTIONS] Navigating to dashboard\n")
         updateTabItems(parent_session, "sidebar_menu", "dashboard")
-      } else {
-        debug_log("[AI ISA CONNECTIONS] Warning: parent_session is NULL, cannot navigate\n")
       }
+    }
+
+    # Finish button: check for unconnected elements first
+    observeEvent(input$finish_connections, {
+      approved_count <- length(rv$approved_connections)
+      debug_log(sprintf("[AI ISA CONNECTIONS] FINISH clicked - %d approved, %d total suggested\n",
+                 approved_count, length(rv$suggested_connections)))
+
+      result <- .find_unconnected()
+
+      if (length(result$unconnected) > 0 && length(result$all) > 0) {
+        # Show confirmation dialog with options
+        showModal(modalDialog(
+          title = tagList(icon("exclamation-triangle", style = "color: #ff9800;"), " ",
+                          i18n$t("modules.isa.ai_assistant.unconnected_elements_title")),
+          size = "m",
+
+          tags$div(
+            style = "padding: 10px;",
+            tags$p(
+              style = "font-size: 14px; margin-bottom: 12px;",
+              sprintf(i18n$t("modules.isa.ai_assistant.unconnected_elements_warning"),
+                      length(result$unconnected), length(result$all))
+            ),
+            tags$div(
+              style = "background: #fff3e0; padding: 12px; border-radius: 6px; margin-bottom: 15px; max-height: 200px; overflow-y: auto;",
+              tags$ul(
+                style = "margin: 0; padding-left: 20px;",
+                lapply(result$unconnected, function(name) {
+                  tags$li(style = "margin-bottom: 4px;", tags$strong(name))
+                })
+              )
+            ),
+            tags$p(
+              style = "font-size: 13px; color: #666;",
+              i18n$t("modules.isa.ai_assistant.unconnected_elements_hint")
+            )
+          ),
+
+          footer = tagList(
+            actionButton(session$ns("finish_remove_unconnected"),
+              tagList(icon("trash-alt"), " ", i18n$t("modules.isa.ai_assistant.remove_unconnected_finish")),
+              class = "btn-warning"),
+            actionButton(session$ns("finish_review_again"),
+              tagList(icon("undo"), " ", i18n$t("modules.isa.ai_assistant.review_connections_again")),
+              class = "btn-info"),
+            actionButton(session$ns("finish_keep_all"),
+              tagList(icon("check"), " ", i18n$t("modules.isa.ai_assistant.keep_all_finish")),
+              class = "btn-primary")
+          ),
+          easyClose = FALSE
+        ))
+      } else {
+        # No unconnected elements - save directly
+        .do_finish_and_save()
+      }
+    })
+
+    # Dialog: Remove unconnected elements then finish
+    observeEvent(input$finish_remove_unconnected, {
+      removeModal()
+      result <- .find_unconnected()
+
+      # Remove unconnected elements from rv$elements
+      for (cat_name in names(rv$elements)) {
+        if (is.list(rv$elements[[cat_name]])) {
+          rv$elements[[cat_name]] <- Filter(
+            function(el) el$name %in% result$connected,
+            rv$elements[[cat_name]]
+          )
+        }
+      }
+
+      removed_count <- length(result$unconnected)
+      showNotification(
+        sprintf(i18n$t("modules.isa.ai_assistant.removed_unconnected_elements"), removed_count),
+        type = "message", duration = 4
+      )
+      debug_log(sprintf("[AI ISA] Removed %d unconnected elements: %s",
+                 removed_count, paste(result$unconnected, collapse = ", ")), "AI ISA")
+
+      .do_finish_and_save()
+    })
+
+    # Dialog: Go back to review connections
+    observeEvent(input$finish_review_again, {
+      removeModal()
+      showNotification(
+        i18n$t("modules.isa.ai_assistant.review_connections_again_hint"),
+        type = "message", duration = 5
+      )
+    })
+
+    # Dialog: Keep all elements and finish anyway
+    observeEvent(input$finish_keep_all, {
+      removeModal()
+      .do_finish_and_save()
     })
 
     # Render continue button with context-aware label

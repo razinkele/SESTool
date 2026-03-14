@@ -9085,6 +9085,72 @@
       "it": "Ogni elemento dovrebbe avere almeno una connessione per un modello SES completo. Considera di approvare più connessioni o di aggiungerle manualmente in seguito.",
       "no": "Hvert element bør ha minst én forbindelse for en komplett SES-modell. Vurder å godkjenne flere forbindelser eller legge dem til manuelt senere.",
       "el": "Κάθε στοιχείο πρέπει να έχει τουλάχιστον μία σύνδεση για ένα πλήρες μοντέλο SES. Σκεφτείτε να εγκρίνετε περισσότερες συνδέσεις ή να τις προσθέσετε χειροκίνητα αργότερα."
+    },
+    "modules.isa.ai_assistant.unconnected_elements_title": {
+      "en": "Unconnected Elements Detected",
+      "es": "Elementos sin conexión detectados",
+      "fr": "Éléments non connectés détectés",
+      "de": "Nicht verbundene Elemente erkannt",
+      "lt": "Aptikti neprijungti elementai",
+      "pt": "Elementos não conectados detectados",
+      "it": "Elementi non connessi rilevati",
+      "no": "Ikke-tilkoblede elementer oppdaget",
+      "el": "Εντοπίστηκαν μη συνδεδεμένα στοιχεία"
+    },
+    "modules.isa.ai_assistant.remove_unconnected_finish": {
+      "en": "Remove unconnected & finish",
+      "es": "Eliminar no conectados y terminar",
+      "fr": "Supprimer les non-connectés et terminer",
+      "de": "Nicht verbundene entfernen und beenden",
+      "lt": "Pašalinti neprijungtus ir baigti",
+      "pt": "Remover não conectados e finalizar",
+      "it": "Rimuovi non connessi e termina",
+      "no": "Fjern ikke-tilkoblede og fullfør",
+      "el": "Αφαίρεση μη συνδεδεμένων και ολοκλήρωση"
+    },
+    "modules.isa.ai_assistant.review_connections_again": {
+      "en": "Review connections again",
+      "es": "Revisar conexiones de nuevo",
+      "fr": "Revoir les connexions",
+      "de": "Verbindungen erneut prüfen",
+      "lt": "Peržiūrėti jungtis dar kartą",
+      "pt": "Revisar conexões novamente",
+      "it": "Rivedi le connessioni",
+      "no": "Gjennomgå forbindelser på nytt",
+      "el": "Επανεξέταση συνδέσεων"
+    },
+    "modules.isa.ai_assistant.review_connections_again_hint": {
+      "en": "Review the connections above. Approve more connections to link the unconnected elements, or remove unwanted elements.",
+      "es": "Revise las conexiones anteriores. Apruebe más conexiones para vincular los elementos no conectados.",
+      "fr": "Révisez les connexions ci-dessus. Approuvez plus de connexions pour relier les éléments non connectés.",
+      "de": "Überprüfen Sie die Verbindungen oben. Genehmigen Sie weitere Verbindungen, um die nicht verbundenen Elemente zu verknüpfen.",
+      "lt": "Peržiūrėkite jungtis aukščiau. Patvirtinkite daugiau jungčių, kad sujungtumėte neprijungtus elementus.",
+      "pt": "Revise as conexões acima. Aprove mais conexões para vincular os elementos não conectados.",
+      "it": "Rivedi le connessioni sopra. Approva più connessioni per collegare gli elementi non connessi.",
+      "no": "Gjennomgå forbindelsene ovenfor. Godkjenn flere forbindelser for å koble de ikke-tilkoblede elementene.",
+      "el": "Ελέγξτε τις συνδέσεις παραπάνω. Εγκρίνετε περισσότερες συνδέσεις για να συνδέσετε τα μη συνδεδεμένα στοιχεία."
+    },
+    "modules.isa.ai_assistant.keep_all_finish": {
+      "en": "Keep all & finish",
+      "es": "Mantener todos y terminar",
+      "fr": "Tout garder et terminer",
+      "de": "Alle behalten und beenden",
+      "lt": "Palikti visus ir baigti",
+      "pt": "Manter todos e finalizar",
+      "it": "Mantieni tutti e termina",
+      "no": "Behold alle og fullfør",
+      "el": "Διατήρηση όλων και ολοκλήρωση"
+    },
+    "modules.isa.ai_assistant.removed_unconnected_elements": {
+      "en": "%d unconnected elements removed from the SES model",
+      "es": "%d elementos sin conexión eliminados del modelo SES",
+      "fr": "%d éléments non connectés supprimés du modèle SES",
+      "de": "%d nicht verbundene Elemente aus dem SES-Modell entfernt",
+      "lt": "%d neprijungtų elementų pašalinta iš SES modelio",
+      "pt": "%d elementos não conectados removidos do modelo SES",
+      "it": "%d elementi non connessi rimossi dal modello SES",
+      "no": "%d ikke-tilkoblede elementer fjernet fra SES-modellen",
+      "el": "%d μη συνδεδεμένα στοιχεία αφαιρέθηκαν από το μοντέλο SES"
     }
   }
 }
