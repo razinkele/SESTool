@@ -102,7 +102,8 @@ if (is.null(db_path)) {
     else if (grepl("estuar", hab)) "estuary"
     else if (grepl("offshore|open ocean|open water|deep sea|continental shelf", hab)) "offshore"
     else if (grepl("seagrass|sea grass|posidonia", hab)) "seagrass"
-    else if (grepl("rocky|rock shore", hab)) "rocky_shore"
+    else if (grepl("sch.ren|sk.rg.rd|rocky coast", hab)) "rocky_coast"  # Baltic Schären
+    else if (grepl("rocky|rock shore", hab)) "rocky_shore"  # Mediterranean rocky shore
     else if (grepl("atoll", hab)) "island"  # Atoll → island context
     else if (grepl("coral|reef", hab)) "coral_reef"
     else if (grepl("island|insular", hab)) "island"  # Island ecosystems

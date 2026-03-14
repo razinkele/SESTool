@@ -19,7 +19,7 @@ get_regional_seas_knowledge_base <- function(i18n) {
       name_en = "Baltic Sea",
       name_i18n = i18n$t("common.misc.baltic_sea"),
       common_issues = c("Eutrophication", "Overfishing", "Pollution", "Invasive species", "Climate change"),
-      ecosystem_types = c("Open coast", "Archipelago", "Island", "Estuary", "Coastal lagoon", "Offshore waters")
+      ecosystem_types = c("Open coast", "Rocky coast (Schären)", "Archipelago", "Island", "Estuary", "Coastal lagoon", "Offshore waters")
     ),
     mediterranean = list(
       name_en = "Mediterranean Sea",
@@ -55,7 +55,7 @@ get_regional_seas_knowledge_base <- function(i18n) {
       name_en = "Atlantic Ocean",
       name_i18n = i18n$t("common.misc.atlantic_ocean"),
       common_issues = c("Overfishing", "Climate change", "Ocean acidification", "Shipping", "Deep-sea mining"),
-      ecosystem_types = c("Open ocean", "Island", "Continental shelf", "Coastal upwelling", "Open coast", "Offshore waters")
+      ecosystem_types = c("Open ocean", "Island", "Estuary", "Continental shelf", "Coastal upwelling", "Open coast", "Offshore waters")
     ),
     pacific = list(
       name_en = "Pacific Ocean",
@@ -79,7 +79,7 @@ get_regional_seas_knowledge_base <- function(i18n) {
       name_en = "Arctic Ocean",
       name_i18n = i18n$t("common.misc.arctic_ocean"),
       common_issues = c("Climate change", "Sea ice loss", "Oil and gas exploration", "Shipping increase", "Arctic fisheries"),
-      ecosystem_types = c("Sea ice", "Open ocean", "Fjord", "Coastal waters", "Continental shelf")
+      ecosystem_types = c("Sea ice", "Island", "Open ocean", "Fjord", "Coastal waters", "Continental shelf")
     ),
     other = list(
       name_en = "Other/Regional",
