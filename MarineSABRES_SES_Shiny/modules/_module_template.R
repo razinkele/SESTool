@@ -10,8 +10,8 @@
 #   - [List required packages/modules]
 #
 # Exports:
-#   - [module_name]_ui(id, i18n)   - Module UI function
-#   - [module_name]_server(id, ...) - Module server function
+#   - template_example_ui(id, i18n)   - Module UI function
+#   - template_example_server(id, ...) - Module server function
 #
 # =============================================================================
 
@@ -38,11 +38,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' ui <- fluidPage([module_name]_ui("my_module", i18n))
+#' ui <- fluidPage(template_example_ui("my_module", i18n))
 #' }
 #'
 #' @export
-[module_name]_ui <- function(id, i18n) {
+template_example_ui <- function(id, i18n) {
   # REQUIRED: Enable reactive translations
   tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
@@ -83,7 +83,7 @@
 #' }
 #'
 #' @export
-[module_name]_server <- function(id, project_data, i18n, event_bus = NULL, ...) {
+template_example_server <- function(id, project_data, i18n, event_bus = NULL, ...) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
