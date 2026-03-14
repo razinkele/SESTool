@@ -584,6 +584,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
           # Connection cards for this batch
           div(class = "conn-batch-content", style = "max-height: 600px; overflow-y: auto; padding: 10px;",
+              `aria-live` = "polite", `aria-atomic` = "false",
             uiOutput(ns(paste0("batch_connections_", batch_id))),
             # Next Category button - appears at bottom when all connections in this batch are reviewed
             uiOutput(ns(paste0("next_category_btn_", batch_id)))
