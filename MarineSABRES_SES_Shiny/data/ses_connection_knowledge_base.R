@@ -179,31 +179,31 @@ SES_CONNECTION_DB <- list(
   # A -> P: Activities to Pressures (Eutrophication)
   list(from_type = "activities", to_type = "pressures",
        from_pattern = "wastewater|sewage|domestic.*discharg",
-       to_pattern = "nutrient.*load|nitrogen|phosphor|organic.*enrich",
+       to_pattern = "nutrient.*load|nutrient.*enrich.*sewage|nitrogen|phosphor|organic.*enrich",
        probability = 0.95, polarity = "+", strength = "strong",
        source = "HELCOM 2018"),
 
   list(from_type = "activities", to_type = "pressures",
        from_pattern = "agricultur|farm|fertili|livestock",
-       to_pattern = "nutrient.*runoff|nitrogen|phosphor|diffuse.*pollut",
+       to_pattern = "nutrient.*runoff|nutrient.*enrich.*agricult|nitrogen|phosphor|diffuse.*pollut",
        probability = 0.93, polarity = "+", strength = "strong",
        source = "HELCOM 2018"),
 
   list(from_type = "activities", to_type = "pressures",
        from_pattern = "aquacultur|fish.*farm|maricult",
-       to_pattern = "nutrient.*enrich|organic.*load|waste.*discharg",
+       to_pattern = "nutrient.*enrich.*aquacult|nutrient.*enrich|organic.*load|waste.*discharg",
        probability = 0.88, polarity = "+", strength = "strong",
        source = "Borja et al. 2016"),
 
   # P -> S: Pressures to States (Eutrophication)
   list(from_type = "pressures", to_type = "states",
-       from_pattern = "nutrient.*load|nitrogen.*load|phosphor.*load",
+       from_pattern = "nutrient.*load|nutrient.*enrich|nitrogen.*load|phosphor.*load",
        to_pattern = "algal.*bloom|phytoplankton|chlorophyll|eutrophic",
        probability = 0.92, polarity = "+", strength = "strong",
        source = "HELCOM 2018"),
 
   list(from_type = "pressures", to_type = "states",
-       from_pattern = "nutrient|eutrophic|organic.*enrich",
+       from_pattern = "nutrient.*enrich|nutrient|eutrophic|organic.*enrich",
        to_pattern = "hypox|oxygen.*deplet|anox|dead.*zone",
        probability = 0.88, polarity = "+", strength = "strong",
        source = "HELCOM 2018"),
@@ -505,7 +505,7 @@ SES_CONNECTION_DB <- list(
 
   list(from_type = "activities", to_type = "pressures",
        from_pattern = "ship|vessel|cargo",
-       to_pattern = "invasive.*species|non.?native|ballast.*introduc",
+       to_pattern = "invasive.*species|non.?native|ballast.*introduc|invasion|ballast.*mediat",
        probability = 0.78, polarity = "+", strength = "medium",
        source = "Halpern et al. 2015"),
 
@@ -535,7 +535,7 @@ SES_CONNECTION_DB <- list(
        source = "HELCOM 2018"),
 
   list(from_type = "pressures", to_type = "states",
-       from_pattern = "invasive.*species|non.?native|alien.*species",
+       from_pattern = "invasive.*species|non.?native|alien.*species|invasion|ballast.*mediat",
        to_pattern = "native.*species|biodiver|communit.*composit|ecosystem.*structur",
        probability = 0.83, polarity = "-", strength = "medium",
        source = "HELCOM 2018"),
