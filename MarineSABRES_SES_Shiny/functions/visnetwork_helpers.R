@@ -302,9 +302,10 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     polarity = character(),
     strength = character(),
     confidence = integer(),
+    lag = numeric(),  # Temporal lag in years (0 = immediate, NA = unknown)
     label = character(),
     font.size = numeric()
-    
+
   )
 
   # Get actual element counts for validation
@@ -763,27 +764,35 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
 
           # Create edge with defensive error handling
           tryCatch({
+            # Parse lag from connection value if present (format: "+strong:4:2.5" where last is lag in years)
+            edge_lag <- NA_real_
+            if (!is.null(connection$lag)) {
+              edge_lag <- as.numeric(connection$lag)
+            }
+
             edge <- data.frame(
               from = paste0(from_prefix, "_", i),
               to = paste0(to_prefix, "_", j),
               arrows = "to",
               color = edge_color_with_opacity,
               width = edge_width,
-              opacity = edge_opacity,  # Store for potential use
+              opacity = edge_opacity,
               title = create_edge_tooltip(
                 from_name,
                 to_name,
                 connection$polarity,
                 connection$strength,
-                connection$confidence
+                connection$confidence,
+                edge_lag
               ),
               polarity = connection$polarity,
               strength = connection$strength,
               confidence = connection$confidence,
+              lag = edge_lag,
               label = connection$polarity,
               font.size = 10,
-              
-              row.names = NULL  # Explicitly prevent row name issues
+
+              row.names = NULL
             )
 
             edges <- bind_rows(edges, edge)
@@ -809,11 +818,21 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
 #' @param strength Connection strength
 #' @param confidence Connection confidence (1-5, optional)
 #' @return HTML string for tooltip
-create_edge_tooltip <- function(from_name, to_name, polarity, strength, confidence = CONFIDENCE_DEFAULT) {
+create_edge_tooltip <- function(from_name, to_name, polarity, strength, confidence = CONFIDENCE_DEFAULT, lag = NA_real_) {
   polarity_text <- ifelse(polarity == "+", "Reinforcing", "Opposing")
 
   # Get confidence label from global constant
   confidence_text <- CONFIDENCE_LABELS[as.character(confidence)]
+
+  # Lag display
+  lag_html <- ""
+  if (!is.na(lag) && is.numeric(lag)) {
+    lag_text <- if (lag == 0) "Immediate"
+      else if (lag < 1) paste0(round(lag * 12), " months")
+      else if (lag == 1) "1 year"
+      else paste0(round(lag, 1), " years")
+    lag_html <- sprintf("<br>Temporal lag: %s", lag_text)
+  }
 
   # HTML-escape user-supplied values to prevent XSS in visNetwork tooltips
   esc <- htmltools::htmlEscape
@@ -822,9 +841,9 @@ create_edge_tooltip <- function(from_name, to_name, polarity, strength, confiden
       <b>%s \u2192 %s</b><br>
       Polarity: %s (%s)<br>
       Strength: %s<br>
-      Confidence: %s (%d/5)
+      Confidence: %s (%d/5)%s
     </div>",
-    esc(from_name), esc(to_name), esc(polarity), polarity_text, esc(strength), confidence_text, confidence
+    esc(from_name), esc(to_name), esc(polarity), polarity_text, esc(strength), confidence_text, confidence, lag_html
   )
 }
 

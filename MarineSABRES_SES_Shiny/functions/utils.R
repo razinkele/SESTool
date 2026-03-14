@@ -48,7 +48,9 @@ parse_connection_value <- function(value) {
     return(NULL)
   }
 
-  # Check if confidence is included (format: "+strong:4")
+  lag <- NA_real_  # Temporal lag in years (NA = unknown)
+
+  # Check if confidence/lag is included (format: "+strong:4" or "+strong:4:2.5")
   if (grepl(":", value)) {
     parts <- strsplit(value, ":")[[1]]
     polarity_strength <- parts[1]
@@ -57,6 +59,12 @@ parse_connection_value <- function(value) {
     # Validate confidence is within allowed range
     if (is.na(confidence) || !confidence %in% CONFIDENCE_LEVELS) {
       confidence <- CONFIDENCE_DEFAULT  # Default if invalid
+    }
+
+    # Parse optional lag (3rd colon-separated value, in years)
+    if (length(parts) >= 3) {
+      lag <- as.numeric(parts[3])
+      if (is.na(lag) || lag < 0) lag <- NA_real_
     }
   } else {
     # No confidence specified, use default
@@ -67,7 +75,7 @@ parse_connection_value <- function(value) {
   polarity <- substr(polarity_strength, 1, 1)
   strength <- substr(polarity_strength, 2, nchar(polarity_strength))
 
-  list(polarity = polarity, strength = strength, confidence = confidence)
+  list(polarity = polarity, strength = strength, confidence = confidence, lag = lag)
 }
 
 # ============================================================================
