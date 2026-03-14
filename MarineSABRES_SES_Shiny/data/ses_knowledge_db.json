@@ -20,7 +20,7 @@
         {"name": "Recreational angling for pike and perch", "relevance": 0.8},
         {"name": "Agricultural drainage into lagoon", "relevance": 0.9},
         {"name": "Bird-watching and nature tourism", "relevance": 0.75},
-        {"name": "Small-scale shellfish gathering", "relevance": 0.6}
+        {"name": "Eel fishing with fyke nets", "relevance": 0.7}
       ],
       "pressures": [
         {"name": "Eutrophication from agricultural runoff", "relevance": 0.95},
