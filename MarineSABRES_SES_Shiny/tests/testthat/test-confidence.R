@@ -166,8 +166,8 @@ test_that("filter_by_confidence filters edges correctly", {
     to = c("B", "C", "D", "E", "A"),
     polarity = c("+", "-", "+", "-", "+"),
     strength = c("weak", "medium", "strong", "weak", "medium"),
-    confidence = c(1, 2, 3, 4, 5),
-    stringsAsFactors = FALSE
+    confidence = c(1, 2, 3, 4, 5)
+    
   )
 
   # Test 1: Filter for confidence >= 3
@@ -197,8 +197,8 @@ test_that("filter_by_confidence handles missing confidence column", {
     from = c("A", "B"),
     to = c("B", "C"),
     polarity = c("+", "-"),
-    strength = c("weak", "medium"),
-    stringsAsFactors = FALSE
+    strength = c("weak", "medium")
+    
   )
 
   # Should return all edges unchanged
@@ -248,8 +248,8 @@ test_that("create_igraph_from_data handles optional confidence column", {
   # Create sample nodes
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    label = c("Node A", "Node B", "Node C"),
-    stringsAsFactors = FALSE
+    label = c("Node A", "Node B", "Node C")
+    
   )
 
   # Test 1: Edges WITH confidence
@@ -258,8 +258,8 @@ test_that("create_igraph_from_data handles optional confidence column", {
     to = c("B", "C"),
     polarity = c("+", "-"),
     strength = c("strong", "medium"),
-    confidence = c(4, 3),
-    stringsAsFactors = FALSE
+    confidence = c(4, 3)
+    
   )
 
   graph1 <- create_igraph_from_data(nodes, edges_with_conf)
@@ -271,8 +271,8 @@ test_that("create_igraph_from_data handles optional confidence column", {
     from = c("A", "B"),
     to = c("B", "C"),
     polarity = c("+", "-"),
-    strength = c("strong", "medium"),
-    stringsAsFactors = FALSE
+    strength = c("strong", "medium")
+    
   )
 
   graph2 <- create_igraph_from_data(nodes, edges_without_conf)
@@ -329,16 +329,16 @@ test_that("Excel export includes confidence column for CLD edges", {
       cld = list(
         nodes = data.frame(
           id = c("A", "B", "C"),
-          label = c("Node A", "Node B", "Node C"),
-          stringsAsFactors = FALSE
+          label = c("Node A", "Node B", "Node C")
+          
         ),
         edges = data.frame(
           from = c("A", "B"),
           to = c("B", "C"),
           polarity = c("+", "-"),
           strength = c("strong", "medium"),
-          confidence = c(4, 3),
-          stringsAsFactors = FALSE
+          confidence = c(4, 3)
+          
         )
       )
     )

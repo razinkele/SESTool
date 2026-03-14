@@ -107,8 +107,8 @@ test_that("export_project_excel_safe handles project with data", {
     contact_email = "test@example.com",
     contact_phone = "123-456-7890",
     communication_preference = "Email",
-    notes = "Test notes",
-    stringsAsFactors = FALSE
+    notes = "Test notes"
+    
   )
 
   # Add a driver
@@ -124,8 +124,8 @@ test_that("export_project_excel_safe handles project with data", {
     current_value = 1200,
     notes = "Test driver",
     needs_category = "Economic",
-    trends = "Increasing",
-    stringsAsFactors = FALSE
+    trends = "Increasing"
+    
   )
 
   project$data$isa_data <- add_element_safe(
@@ -163,8 +163,8 @@ test_that("export_project_excel_safe creates multiple sheets", {
     severity = "High",
     mitigation_actions = "Test",
     owner = "Test",
-    status = "Open",
-    stringsAsFactors = FALSE
+    status = "Open"
+    
   )
 
   file_path <- file.path(test_temp_dir, "test_multiple_sheets.xlsx")
@@ -272,8 +272,8 @@ test_that("export_project_csv_zip_safe succeeds with valid input", {
     indicator = "", indicator_unit = "", data_source = "",
     time_horizon_start = as.Date(NA), time_horizon_end = as.Date(NA),
     baseline_value = NA_real_, current_value = NA_real_,
-    notes = "", needs_category = "", trends = "",
-    stringsAsFactors = FALSE
+    notes = "", needs_category = "", trends = ""
+    
   )
 
   project$data$isa_data <- add_element_safe(
@@ -331,8 +331,8 @@ test_that("generate_executive_summary_safe succeeds with valid input for HTML", 
     indicator = "", indicator_unit = "", data_source = "",
     time_horizon_start = as.Date(NA), time_horizon_end = as.Date(NA),
     baseline_value = NA_real_, current_value = NA_real_,
-    notes = "", needs_category = "", trends = "",
-    stringsAsFactors = FALSE
+    notes = "", needs_category = "", trends = ""
+    
   )
 
   project$data$isa_data <- add_element_safe(
@@ -385,8 +385,8 @@ test_that("generate_element_summary_md_safe succeeds with data", {
     indicator = "", indicator_unit = "", data_source = "",
     time_horizon_start = as.Date(NA), time_horizon_end = as.Date(NA),
     baseline_value = NA_real_, current_value = NA_real_,
-    notes = "", needs_category = "", trends = "",
-    stringsAsFactors = FALSE
+    notes = "", needs_category = "", trends = ""
+    
   )
 
   isa_data <- add_element_safe(isa_data, "drivers", driver_element)
@@ -454,8 +454,8 @@ test_that("generate_recommendations_md_safe succeeds with data", {
       expected_effect = c("Positive", "Negative"),
       implementation_cost = c(1000, 2000),
       feasibility = c("High", "Medium"),
-      stakeholder_acceptance = c("High", "Low"),
-      stringsAsFactors = FALSE
+      stakeholder_acceptance = c("High", "Low")
+      
     ),
     scenarios = list()
   )

@@ -62,38 +62,38 @@ create_test_project <- function(n_elements = 10) {
         goods_benefits = data.frame(
           id = paste0("gb_", 1:n_elements),
           name = paste("Benefit", 1:n_elements),
-          description = paste("Description", 1:n_elements),
-          stringsAsFactors = FALSE
+          description = paste("Description", 1:n_elements)
+          
         ),
         ecosystem_services = data.frame(
           id = paste0("es_", 1:n_elements),
           name = paste("Service", 1:n_elements),
-          description = paste("Description", 1:n_elements),
-          stringsAsFactors = FALSE
+          description = paste("Description", 1:n_elements)
+          
         ),
         marine_processes = data.frame(
           id = paste0("mpf_", 1:n_elements),
           name = paste("Process", 1:n_elements),
-          description = paste("Description", 1:n_elements),
-          stringsAsFactors = FALSE
+          description = paste("Description", 1:n_elements)
+          
         ),
         pressures = data.frame(
           id = paste0("p_", 1:n_elements),
           name = paste("Pressure", 1:n_elements),
-          description = paste("Description", 1:n_elements),
-          stringsAsFactors = FALSE
+          description = paste("Description", 1:n_elements)
+          
         ),
         activities = data.frame(
           id = paste0("a_", 1:n_elements),
           name = paste("Activity", 1:n_elements),
-          description = paste("Description", 1:n_elements),
-          stringsAsFactors = FALSE
+          description = paste("Description", 1:n_elements)
+          
         ),
         drivers = data.frame(
           id = paste0("d_", 1:n_elements),
           name = paste("Driver", 1:n_elements),
-          description = paste("Description", 1:n_elements),
-          stringsAsFactors = FALSE
+          description = paste("Description", 1:n_elements)
+          
         )
       ),
       cld = list(
@@ -103,15 +103,15 @@ create_test_project <- function(n_elements = 10) {
           type = rep(c("Drivers", "Activities", "Pressures",
                        "Marine Processes & Functioning",
                        "Ecosystem Services", "Goods & Benefits"),
-                     each = n_elements),
-          stringsAsFactors = FALSE
+                     each = n_elements)
+          
         ),
         edges = data.frame(
           from = paste0("node_", sample(1:(n_elements * 6), n_elements * 3, replace = TRUE)),
           to = paste0("node_", sample(1:(n_elements * 6), n_elements * 3, replace = TRUE)),
           polarity = sample(c("+", "-"), n_elements * 3, replace = TRUE),
-          strength = sample(c("weak", "medium", "strong"), n_elements * 3, replace = TRUE),
-          stringsAsFactors = FALSE
+          strength = sample(c("weak", "medium", "strong"), n_elements * 3, replace = TRUE)
+          
         )
       )
     )
@@ -286,8 +286,8 @@ test_that("DataFrame binding is efficient", {
     data.frame(
       id = paste0("id_", ((i-1)*n_rows + 1):(i*n_rows)),
       value = runif(n_rows),
-      label = paste("Label", 1:n_rows),
-      stringsAsFactors = FALSE
+      label = paste("Label", 1:n_rows)
+      
     )
   })
 

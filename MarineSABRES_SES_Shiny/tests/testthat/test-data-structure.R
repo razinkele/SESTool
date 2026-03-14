@@ -42,13 +42,13 @@ test_that("data export to data frame works", {
   test_data <- list(
     drivers = data.frame(
       ID = c("D1", "D2"),
-      Name = c("Driver 1", "Driver 2"),
-      stringsAsFactors = FALSE
+      Name = c("Driver 1", "Driver 2")
+      
     ),
     activities = data.frame(
       ID = c("A1", "A2"),
-      Name = c("Activity 1", "Activity 2"),
-      stringsAsFactors = FALSE
+      Name = c("Activity 1", "Activity 2")
+      
     )
   )
 
@@ -62,14 +62,14 @@ test_that("element merging works correctly", {
   # Create test data
   data1 <- data.frame(
     ID = c("E1", "E2"),
-    Name = c("Element 1", "Element 2"),
-    stringsAsFactors = FALSE
+    Name = c("Element 1", "Element 2")
+    
   )
 
   data2 <- data.frame(
     ID = c("E3", "E4"),
-    Name = c("Element 3", "Element 4"),
-    stringsAsFactors = FALSE
+    Name = c("Element 3", "Element 4")
+    
   )
 
   merged <- merge_isa_elements(data1, data2)
@@ -85,14 +85,14 @@ test_that("data structure conversion functions work", {
     nodes = data.frame(
       id = c("N1", "N2", "N3"),
       label = c("Node 1", "Node 2", "Node 3"),
-      type = c("Driver", "Activity", "Pressure"),
-      stringsAsFactors = FALSE
+      type = c("Driver", "Activity", "Pressure")
+      
     ),
     edges = data.frame(
       from = c("N1", "N2"),
       to = c("N2", "N3"),
-      type = c("+", "-"),
-      stringsAsFactors = FALSE
+      type = c("+", "-")
+      
     )
   )
 

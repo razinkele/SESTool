@@ -36,38 +36,38 @@ create_mock_template <- function() {
     name_key = "test.template",
     drivers = data.frame(
       ID = paste0("D", 1:5),
-      Name = paste("Driver", 1:5),
-      stringsAsFactors = FALSE
+      Name = paste("Driver", 1:5)
+      
     ),
     activities = data.frame(
       ID = paste0("A", 1:5),
-      Name = paste("Activity", 1:5),
-      stringsAsFactors = FALSE
+      Name = paste("Activity", 1:5)
+      
     ),
     pressures = data.frame(
       ID = paste0("P", 1:3),
-      Name = paste("Pressure", 1:3),
-      stringsAsFactors = FALSE
+      Name = paste("Pressure", 1:3)
+      
     ),
     marine_processes = data.frame(
       ID = paste0("MPF", 1:3),
-      Name = paste("Marine Process", 1:3),
-      stringsAsFactors = FALSE
+      Name = paste("Marine Process", 1:3)
+      
     ),
     ecosystem_services = data.frame(
       ID = paste0("ES", 1:3),
-      Name = paste("Ecosystem Service", 1:3),
-      stringsAsFactors = FALSE
+      Name = paste("Ecosystem Service", 1:3)
+      
     ),
     goods_benefits = data.frame(
       ID = paste0("GB", 1:3),
-      Name = paste("Goods/Benefit", 1:3),
-      stringsAsFactors = FALSE
+      Name = paste("Goods/Benefit", 1:3)
+      
     ),
     responses = data.frame(
       ID = paste0("R", 1:2),
-      Name = paste("Response", 1:2),
-      stringsAsFactors = FALSE
+      Name = paste("Response", 1:2)
+      
     )
   )
 }

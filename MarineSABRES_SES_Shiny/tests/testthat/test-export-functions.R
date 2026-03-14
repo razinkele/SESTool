@@ -44,7 +44,7 @@ test_that("export to CSV works correctly", {
   expect_true(file.exists(temp_file))
 
   # Read and verify
-  loaded_df <- read.csv(temp_file, stringsAsFactors = FALSE)
+  loaded_df <- read.csv(temp_file)
   expect_equal(nrow(loaded_df), 3)
   expect_equal(loaded_df$Name, c("Item 1", "Item 2", "Item 3"))
 

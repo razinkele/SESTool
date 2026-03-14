@@ -279,8 +279,8 @@ test_that("validate_file_upload validates file extension", {
     name = "test.pdf",
     size = 1000,
     type = "application/pdf",
-    datapath = tempfile(),
-    stringsAsFactors = FALSE
+    datapath = tempfile()
+    
   )
 
   # Create the file so it exists
@@ -302,8 +302,8 @@ test_that("validate_file_upload validates file size", {
     name = "test.xlsx",
     size = 20 * 1024 * 1024,
     type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    datapath = tempfile(),
-    stringsAsFactors = FALSE
+    datapath = tempfile()
+    
   )
 
   file.create(mock_file$datapath)
@@ -323,8 +323,8 @@ test_that("validate_file_upload accepts valid file", {
     name = "test.xlsx",
     size = 1024 * 1024,  # 1MB
     type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    datapath = tempfile(),
-    stringsAsFactors = FALSE
+    datapath = tempfile()
+    
   )
 
   file.create(mock_file$datapath)

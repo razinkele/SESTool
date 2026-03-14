@@ -1,0 +1,23 @@
+{
+  "template_name": "Aquaculture",
+  "template_description": "Representative aquaculture SES template used for tests",
+  "dapsiwrm_framework": {
+    "drivers": [{"id": "D1", "name": "Overfishing"}],
+    "activities": [{"id": "A1", "name": "Farming"}],
+    "pressures": [{"id": "P1", "name": "Nutrient Runoff"}],
+    "marine_processes": [{"id": "MP1", "name": "Hypoxia"}],
+    "ecosystem_services": [{"id": "ES1", "name": "Food Provisioning", "type": "Provisioning"}],
+    "goods_benefits": [{"id": "GB1", "name": "Fish Supply"}],
+    "responses": [{"id": "R1", "name": "Regulations"}],
+    "measures": [{"id": "M1", "name": "Best Practices"}]
+  },
+  "connections": [
+    {"from_id": "D1", "to_id": "A1", "from_type": "driver", "to_type": "activity", "polarity": "+", "strength": "high", "confidence": 4},
+    {"from_id": "A1", "to_id": "P1", "from_type": "activity", "to_type": "pressure", "polarity": "+", "strength": "medium", "confidence": 3},
+    {"from_id": "P1", "to_id": "MP1", "from_type": "pressure", "to_type": "state", "polarity": "+", "strength": "strong", "confidence": 2},
+    {"from_id": "MP1", "to_id": "ES1", "from_type": "state", "to_type": "impact", "polarity": "+", "strength": "low", "confidence": 3},
+    {"from_id": "ES1", "to_id": "GB1", "from_type": "impact", "to_type": "welfare", "polarity": "+", "strength": "medium", "confidence": 3},
+    {"from_id": "GB1", "to_id": "D1", "from_type": "welfare", "to_type": "driver", "polarity": "+", "strength": "low", "confidence": 2},
+    {"from_id": "M1", "to_id": "R1", "from_type": "measure", "to_type": "response", "polarity": "+", "strength": "high", "confidence": 4}
+  ]
+}

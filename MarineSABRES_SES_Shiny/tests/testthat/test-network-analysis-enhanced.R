@@ -44,8 +44,8 @@ test_that("validate_nodes catches missing name column", {
 test_that("validate_nodes accepts valid nodes dataframe", {
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    name = c("Node A", "Node B", "Node C"),
-    stringsAsFactors = FALSE
+    name = c("Node A", "Node B", "Node C")
+    
   )
   expect_true(validate_nodes(nodes))
 })
@@ -75,8 +75,8 @@ test_that("validate_edges catches missing required columns", {
 test_that("validate_edges accepts valid edges dataframe", {
   edges <- data.frame(
     from = c("A", "B"),
-    to = c("B", "C"),
-    stringsAsFactors = FALSE
+    to = c("B", "C")
+    
   )
   expect_true(validate_edges(edges, c("from", "to")))
 })
@@ -133,15 +133,15 @@ test_that("create_igraph_from_data_safe handles invalid edges structure", {
 test_that("create_igraph_from_data_safe handles edges referencing non-existent nodes", {
   nodes <- data.frame(
     id = c("A", "B"),
-    name = c("Node A", "Node B"),
-    stringsAsFactors = FALSE
+    name = c("Node A", "Node B")
+    
   )
   edges <- data.frame(
     from = c("A", "C"),  # C doesn't exist
     to = c("B", "D"),    # D doesn't exist
     polarity = c("+", "+"),
-    strength = c(1, 1),
-    stringsAsFactors = FALSE
+    strength = c(1, 1)
+    
   )
 
   result <- create_igraph_from_data_safe(nodes, edges)
@@ -156,15 +156,15 @@ test_that("create_igraph_from_data_safe handles edges referencing non-existent n
 test_that("create_igraph_from_data_safe succeeds with valid data", {
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    name = c("Node A", "Node B", "Node C"),
-    stringsAsFactors = FALSE
+    name = c("Node A", "Node B", "Node C")
+    
   )
   edges <- data.frame(
     from = c("A", "B"),
     to = c("B", "C"),
     polarity = c("+", "-"),
-    strength = c(1, 2),
-    stringsAsFactors = FALSE
+    strength = c(1, 2)
+    
   )
 
   result <- create_igraph_from_data_safe(nodes, edges)
@@ -178,13 +178,13 @@ test_that("create_igraph_from_data_safe succeeds with valid data", {
 test_that("create_igraph_from_data_safe handles empty graph", {
   nodes <- data.frame(
     id = character(),
-    name = character(),
-    stringsAsFactors = FALSE
+    name = character()
+    
   )
   edges <- data.frame(
     from = character(),
-    to = character(),
-    stringsAsFactors = FALSE
+    to = character()
+    
   )
 
   result <- create_igraph_from_data_safe(nodes, edges)
@@ -227,15 +227,15 @@ test_that("calculate_network_metrics_safe works with igraph input", {
 test_that("calculate_network_metrics_safe works with nodes/edges input", {
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    name = c("Node A", "Node B", "Node C"),
-    stringsAsFactors = FALSE
+    name = c("Node A", "Node B", "Node C")
+    
   )
   edges <- data.frame(
     from = c("A", "B"),
     to = c("B", "C"),
     polarity = c("+", "+"),
-    strength = c(1, 1),
-    stringsAsFactors = FALSE
+    strength = c(1, 1)
+    
   )
 
   result <- calculate_network_metrics_safe(nodes, edges)
@@ -254,15 +254,15 @@ test_that("calculate_network_metrics_safe works with nodes/edges input", {
 test_that("calculate_network_metrics_safe handles disconnected graph", {
   nodes <- data.frame(
     id = c("A", "B", "C", "D"),
-    name = c("A", "B", "C", "D"),
-    stringsAsFactors = FALSE
+    name = c("A", "B", "C", "D")
+    
   )
   edges <- data.frame(
     from = c("A"),
     to = c("B"),
     polarity = c("+"),
-    strength = c(1),
-    stringsAsFactors = FALSE
+    strength = c(1)
+    
   )
 
   result <- calculate_network_metrics_safe(nodes, edges)
@@ -275,15 +275,15 @@ test_that("calculate_network_metrics_safe returns defaults for failed individual
   # Create minimal graph that might cause some metrics to fail
   nodes <- data.frame(
     id = c("A"),
-    name = c("Node A"),
-    stringsAsFactors = FALSE
+    name = c("Node A")
+    
   )
   edges <- data.frame(
     from = character(),
     to = character(),
     polarity = character(),
-    strength = numeric(),
-    stringsAsFactors = FALSE
+    strength = numeric()
+    
   )
 
   result <- calculate_network_metrics_safe(nodes, edges)
@@ -320,15 +320,15 @@ test_that("calculate_micmac_safe handles empty graph", {
 test_that("calculate_micmac_safe succeeds with valid data", {
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    name = c("Node A", "Node B", "Node C"),
-    stringsAsFactors = FALSE
+    name = c("Node A", "Node B", "Node C")
+    
   )
   edges <- data.frame(
     from = c("A", "B", "C"),
     to = c("B", "C", "A"),
     polarity = c("+", "+", "+"),
-    strength = c(1, 1, 1),
-    stringsAsFactors = FALSE
+    strength = c(1, 1, 1)
+    
   )
 
   result <- calculate_micmac_safe(nodes, edges)
@@ -349,15 +349,15 @@ test_that("create_numeric_adjacency_matrix_safe handles invalid inputs", {
 test_that("create_numeric_adjacency_matrix_safe succeeds with valid data", {
   nodes <- data.frame(
     id = c("A", "B"),
-    name = c("Node A", "Node B"),
-    stringsAsFactors = FALSE
+    name = c("Node A", "Node B")
+    
   )
   edges <- data.frame(
     from = c("A"),
     to = c("B"),
     polarity = c("+"),
-    strength = c(2),
-    stringsAsFactors = FALSE
+    strength = c(2)
+    
   )
 
   result <- create_numeric_adjacency_matrix_safe(nodes, edges)
@@ -389,15 +389,15 @@ test_that("find_all_cycles_safe handles invalid nodes", {
 test_that("find_all_cycles_safe handles graph with no cycles", {
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    name = c("A", "B", "C"),
-    stringsAsFactors = FALSE
+    name = c("A", "B", "C")
+    
   )
   edges <- data.frame(
     from = c("A", "B"),
     to = c("B", "C"),
     polarity = c("+", "+"),
-    strength = c(1, 1),
-    stringsAsFactors = FALSE
+    strength = c(1, 1)
+    
   )
 
   result <- find_all_cycles_safe(nodes, edges)
@@ -409,15 +409,15 @@ test_that("find_all_cycles_safe handles graph with no cycles", {
 test_that("find_all_cycles_safe detects simple cycle", {
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    name = c("A", "B", "C"),
-    stringsAsFactors = FALSE
+    name = c("A", "B", "C")
+    
   )
   edges <- data.frame(
     from = c("A", "B", "C"),
     to = c("B", "C", "A"),
     polarity = c("+", "+", "+"),
-    strength = c(1, 1, 1),
-    stringsAsFactors = FALSE
+    strength = c(1, 1, 1)
+    
   )
 
   result <- find_all_cycles_safe(nodes, edges)
@@ -434,15 +434,15 @@ test_that("find_all_cycles_safe respects max_length parameter", {
   # Create a long chain: A->B->C->D->E->A
   nodes <- data.frame(
     id = c("A", "B", "C", "D", "E"),
-    name = c("A", "B", "C", "D", "E"),
-    stringsAsFactors = FALSE
+    name = c("A", "B", "C", "D", "E")
+    
   )
   edges <- data.frame(
     from = c("A", "B", "C", "D", "E"),
     to = c("B", "C", "D", "E", "A"),
     polarity = rep("+", 5),
-    strength = rep(1, 5),
-    stringsAsFactors = FALSE
+    strength = rep(1, 5)
+    
   )
 
   # With max_length = 3, should not find the 5-node cycle
@@ -474,8 +474,8 @@ test_that("classify_loop_type_safe classifies reinforcing loop", {
   edges <- data.frame(
     from = c("A", "B", "C"),
     to = c("B", "C", "A"),
-    polarity = c("+", "+", "+"),
-    stringsAsFactors = FALSE
+    polarity = c("+", "+", "+")
+    
   )
 
   result <- classify_loop_type_safe(loop, edges)
@@ -493,8 +493,8 @@ test_that("classify_loop_type_safe classifies balancing loop", {
   edges <- data.frame(
     from = c("A", "B", "C"),
     to = c("B", "C", "A"),
-    polarity = c("+", "-", "+"),
-    stringsAsFactors = FALSE
+    polarity = c("+", "-", "+")
+    
   )
 
   result <- classify_loop_type_safe(loop, edges)
@@ -511,16 +511,16 @@ test_that("Complete network analysis workflow with error recovery", {
   # Start with valid data
   nodes <- data.frame(
     id = c("A", "B", "C", "D"),
-    name = c("Driver", "Pressure", "State", "Response"),
-    stringsAsFactors = FALSE
+    name = c("Driver", "Pressure", "State", "Response")
+    
   )
 
   edges <- data.frame(
     from = c("A", "B", "C"),
     to = c("B", "C", "D"),
     polarity = c("+", "-", "+"),
-    strength = c(1, 2, 1),
-    stringsAsFactors = FALSE
+    strength = c(1, 2, 1)
+    
   )
 
   # Calculate metrics
@@ -549,8 +549,8 @@ test_that("Complete network analysis workflow with error recovery", {
 test_that("Error handling preserves partial results in analysis pipeline", {
   nodes <- data.frame(
     id = c("A", "B"),
-    name = c("Node A", "Node B"),
-    stringsAsFactors = FALSE
+    name = c("Node A", "Node B")
+    
   )
 
   # Valid edges for basic metrics
@@ -558,8 +558,8 @@ test_that("Error handling preserves partial results in analysis pipeline", {
     from = c("A"),
     to = c("B"),
     polarity = c("+"),
-    strength = c(1),
-    stringsAsFactors = FALSE
+    strength = c(1)
+    
   )
 
   # Metrics should succeed

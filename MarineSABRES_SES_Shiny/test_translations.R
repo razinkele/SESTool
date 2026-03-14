@@ -66,7 +66,7 @@ results <- data.frame(
   ES = character(),
   FR = character(),
   Status = character(),
-  stringsAsFactors = FALSE
+  
 )
 
 for (key in test_keys) {
@@ -94,7 +94,7 @@ for (key in test_keys) {
     ES = substr(es_text, 1, 20),
     FR = substr(fr_text, 1, 20),
     Status = status,
-    stringsAsFactors = FALSE
+    
   ))
 }
 

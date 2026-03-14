@@ -34,15 +34,15 @@ create_test_network <- function() {
       "Ecosystem Services",
       "Goods & Benefits",
       "Responses"
-    ),
-    stringsAsFactors = FALSE
+    )
+    
   )
 
   edges <- data.frame(
     from = c("D1", "A1", "P1", "MPF1", "ES1", "GB1", "R1"),
     to = c("A1", "P1", "MPF1", "ES1", "GB1", "R1", "A1"),
-    polarity = c("+", "+", "+", "-", "+", "+", "-"),
-    stringsAsFactors = FALSE
+    polarity = c("+", "+", "+", "-", "+", "+", "-")
+    
   )
 
   list(nodes = nodes, edges = edges)
@@ -174,8 +174,8 @@ test_that("extract_graph_features handles unreachable nodes", {
     data.frame(
       id = "ISOLATED",
       label = "Isolated element",
-      group = "Drivers",
-      stringsAsFactors = FALSE
+      group = "Drivers"
+      
     )
   )
 

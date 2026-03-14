@@ -19,13 +19,13 @@ test_that("validate_cld_data accepts valid CLD structure", {
   valid_cld <- list(
     nodes = data.frame(
       id = c("N1", "N2", "N3"),
-      label = c("Node 1", "Node 2", "Node 3"),
-      stringsAsFactors = FALSE
+      label = c("Node 1", "Node 2", "Node 3")
+      
     ),
     edges = data.frame(
       from = c("N1", "N2"),
-      to = c("N2", "N3"),
-      stringsAsFactors = FALSE
+      to = c("N2", "N3")
+      
     )
   )
 
@@ -301,13 +301,13 @@ test_that("safe_get_nested returns default for non-list intermediate", {
 test_that("safe_create_igraph creates valid graph from valid data", {
   nodes <- data.frame(
     id = c("N1", "N2", "N3"),
-    label = c("Node 1", "Node 2", "Node 3"),
-    stringsAsFactors = FALSE
+    label = c("Node 1", "Node 2", "Node 3")
+    
   )
   edges <- data.frame(
     from = c("N1", "N2"),
-    to = c("N2", "N3"),
-    stringsAsFactors = FALSE
+    to = c("N2", "N3")
+    
   )
 
   g <- safe_create_igraph(nodes, edges)
@@ -320,13 +320,13 @@ test_that("safe_create_igraph creates valid graph from valid data", {
 test_that("safe_create_igraph handles empty edges", {
   nodes <- data.frame(
     id = c("N1", "N2"),
-    label = c("Node 1", "Node 2"),
-    stringsAsFactors = FALSE
+    label = c("Node 1", "Node 2")
+    
   )
   edges <- data.frame(
     from = character(0),
-    to = character(0),
-    stringsAsFactors = FALSE
+    to = character(0)
+    
   )
 
   g <- safe_create_igraph(nodes, edges)
@@ -610,13 +610,13 @@ test_that("validation functions work together for complete workflow", {
   cld <- list(
     nodes = data.frame(
       id = c("D1", "A1", "P1"),
-      label = c("Driver 1", "Activity 1", "Pressure 1"),
-      stringsAsFactors = FALSE
+      label = c("Driver 1", "Activity 1", "Pressure 1")
+      
     ),
     edges = data.frame(
       from = c("D1", "A1"),
-      to = c("A1", "P1"),
-      stringsAsFactors = FALSE
+      to = c("A1", "P1")
+      
     )
   )
 

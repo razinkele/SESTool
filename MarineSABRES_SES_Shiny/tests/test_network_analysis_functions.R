@@ -18,16 +18,16 @@ context("Network Analysis Functions - Complete Suite")
 create_small_test_network <- function() {
   nodes <- data.frame(
     id = paste0("N", 1:10),
-    label = paste("Node", 1:10),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:10)
+    
   )
 
   edges <- data.frame(
     from = c("N1", "N2", "N3", "N4", "N5", "N1", "N2", "N6"),
     to = c("N2", "N3", "N4", "N5", "N1", "N6", "N7", "N1"),
     polarity = c("+", "-", "+", "-", "+", "+", "-", "+"),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   list(nodes = nodes, edges = edges)
@@ -55,10 +55,10 @@ test_that("calculate_network_metrics works correctly", {
 })
 
 test_that("calculate_network_metrics handles empty network", {
-  nodes <- data.frame(id = character(0), label = character(0), stringsAsFactors = FALSE)
+  nodes <- data.frame(id = character(0), label = character(0))
   edges <- data.frame(from = character(0), to = character(0),
-                      polarity = character(0), strength = character(0),
-                      stringsAsFactors = FALSE)
+                      polarity = character(0), strength = character(0)
+                      )
 
   expect_error(
     calculate_network_metrics(nodes, edges),
@@ -90,16 +90,16 @@ test_that("calculate_micmac works correctly", {
 test_that("calculate_micmac handles network with no edges", {
   nodes <- data.frame(
     id = paste0("N", 1:5),
-    label = paste("Node", 1:5),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:5)
+    
   )
 
   edges <- data.frame(
     from = character(0),
     to = character(0),
     polarity = character(0),
-    strength = character(0),
-    stringsAsFactors = FALSE
+    strength = character(0)
+    
   )
 
   expect_warning(
@@ -141,8 +141,8 @@ test_that("classify_loop_type correctly identifies reinforcing loops", {
     from = c("N1", "N2", "N3", "N4"),
     to = c("N2", "N3", "N4", "N1"),
     polarity = c("+", "-", "+", "-"),  # 2 negatives = even
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   type <- classify_loop_type(loop_nodes, edges)
@@ -157,8 +157,8 @@ test_that("classify_loop_type correctly identifies balancing loops", {
     from = c("N1", "N2", "N3"),
     to = c("N2", "N3", "N1"),
     polarity = c("+", "-", "+"),  # 1 negative = odd
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   type <- classify_loop_type(loop_nodes, edges)
@@ -172,8 +172,8 @@ test_that("classify_loop_type works with edge lookup table", {
     from = c("N1", "N2", "N3"),
     to = c("N2", "N3", "N1"),
     polarity = c("+", "+", "+"),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   edge_lookup <- create_edge_lookup_table(edges)
@@ -206,7 +206,7 @@ test_that("identify_leverage_points returns correct structure", {
 })
 
 test_that("identify_leverage_points handles empty network", {
-  nodes <- data.frame(id = character(0), label = character(0), stringsAsFactors = FALSE)
+  nodes <- data.frame(id = character(0), label = character(0))
 
   # Create empty igraph
   g <- make_empty_graph(n = 0, directed = TRUE)
@@ -234,8 +234,8 @@ test_that("find_shortest_path works correctly", {
 test_that("find_shortest_path returns NULL for unreachable nodes", {
   nodes <- data.frame(
     id = c("N1", "N2", "N3", "N4"),
-    label = c("Node 1", "Node 2", "Node 3", "Node 4"),
-    stringsAsFactors = FALSE
+    label = c("Node 1", "Node 2", "Node 3", "Node 4")
+    
   )
 
   # N1->N2, N3->N4, but no path from N1 to N4
@@ -243,8 +243,8 @@ test_that("find_shortest_path returns NULL for unreachable nodes", {
     from = c("N1", "N3"),
     to = c("N2", "N4"),
     polarity = c("+", "+"),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   path <- find_shortest_path(nodes, edges, "N1", "N4")
@@ -273,8 +273,8 @@ test_that("get_neighborhood works correctly", {
 test_that("identify_exogenous_variables works correctly", {
   nodes <- data.frame(
     id = c("N1", "N2", "N3", "N4"),
-    label = paste("Node", 1:4),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:4)
+    
   )
 
   # N1 is exogenous (only outputs, no inputs)
@@ -282,8 +282,8 @@ test_that("identify_exogenous_variables works correctly", {
     from = c("N1", "N2", "N3"),
     to = c("N2", "N3", "N4"),
     polarity = c("+", "+", "+"),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   exogenous <- identify_exogenous_variables(nodes, edges)
@@ -296,8 +296,8 @@ test_that("identify_exogenous_variables works correctly", {
 test_that("identify_siso_variables works correctly", {
   nodes <- data.frame(
     id = c("N1", "N2", "N3"),
-    label = paste("Node", 1:3),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:3)
+    
   )
 
   # N2 is SISO (single input from N1, single output to N3)
@@ -305,8 +305,8 @@ test_that("identify_siso_variables works correctly", {
     from = c("N1", "N2"),
     to = c("N2", "N3"),
     polarity = c("+", "+"),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   siso <- identify_siso_variables(nodes, edges)

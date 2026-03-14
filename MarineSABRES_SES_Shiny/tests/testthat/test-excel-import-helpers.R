@@ -19,8 +19,8 @@ create_test_elements <- function() {
              "Marine Process and Function", "Ecosystem Service", "Good and Benefit"),
     Description = c("Global warming impacts", "Commercial fishing",
                     "Nutrient runoff", "Stock status", "Species richness",
-                    "Seafood supply"),
-    stringsAsFactors = FALSE
+                    "Seafood supply")
+    
   )
 }
 
@@ -30,8 +30,8 @@ create_test_connections <- function() {
              "Fish stock health", "Biodiversity"),
     To = c("Fish stock health", "Fish stock health", "Biodiversity",
            "Biodiversity", "Food provision"),
-    Label = c("+", "-", "-", "+", "+"),
-    stringsAsFactors = FALSE
+    Label = c("+", "-", "-", "+", "+")
+    
   )
 }
 
@@ -42,8 +42,8 @@ create_test_connections <- function() {
 test_that("find_type_column finds standard type column", {
   df <- data.frame(
     Label = c("A", "B"),
-    Type = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    Type = c("Driver", "Activity")
+    
   )
 
   result <- find_type_column(df)
@@ -53,8 +53,8 @@ test_that("find_type_column finds standard type column", {
 test_that("find_type_column finds lowercase type column", {
   df <- data.frame(
     label = c("A", "B"),
-    type = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    type = c("Driver", "Activity")
+    
   )
 
   result <- find_type_column(df)
@@ -65,7 +65,7 @@ test_that("find_type_column finds type column with suffix", {
   df <- data.frame(
     Label = c("A", "B"),
     `type...2` = c("Driver", "Activity"),
-    stringsAsFactors = FALSE,
+    
     check.names = FALSE
   )
 
@@ -76,8 +76,8 @@ test_that("find_type_column finds type column with suffix", {
 test_that("find_type_column finds category column", {
   df <- data.frame(
     Label = c("A", "B"),
-    category = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    category = c("Driver", "Activity")
+    
   )
 
   result <- find_type_column(df)
@@ -87,8 +87,8 @@ test_that("find_type_column finds category column", {
 test_that("find_type_column returns NULL when no type column exists", {
   df <- data.frame(
     Label = c("A", "B"),
-    Name = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    Name = c("Driver", "Activity")
+    
   )
 
   result <- find_type_column(df)
@@ -98,8 +98,8 @@ test_that("find_type_column returns NULL when no type column exists", {
 test_that("find_type_column handles partial matches", {
   df <- data.frame(
     Label = c("A", "B"),
-    element_type = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    element_type = c("Driver", "Activity")
+    
   )
 
   result <- find_type_column(df)
@@ -299,14 +299,14 @@ test_that("adjacency matrices contain polarity values", {
 test_that("convert_excel_to_isa handles whitespace in names", {
   elements <- data.frame(
     Label = c("  Climate change  ", "Fishing activity "),
-    Type = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    Type = c("Driver", "Activity")
+    
   )
   connections <- data.frame(
     From = c(" Climate change", "Fishing activity"),
     To = c("Fishing activity", "Climate change"),
-    Label = c("+", "-"),
-    stringsAsFactors = FALSE
+    Label = c("+", "-")
+    
   )
 
   result <- convert_excel_to_isa(elements, connections)
@@ -318,14 +318,14 @@ test_that("convert_excel_to_isa handles whitespace in names", {
 test_that("convert_excel_to_isa handles non-breaking spaces", {
   elements <- data.frame(
     Label = c("Climate\u00A0change", "Fishing activity"),
-    Type = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    Type = c("Driver", "Activity")
+    
   )
   connections <- data.frame(
     From = c("Climate change"),
     To = c("Fishing activity"),
-    Label = c("+"),
-    stringsAsFactors = FALSE
+    Label = c("+")
+    
   )
 
   result <- convert_excel_to_isa(elements, connections)
@@ -337,14 +337,14 @@ test_that("convert_excel_to_isa handles non-breaking spaces", {
 test_that("convert_excel_to_isa handles missing element types gracefully", {
   elements <- data.frame(
     Label = c("Unknown element", "Fishing activity"),
-    Type = c(NA, "Activity"),
-    stringsAsFactors = FALSE
+    Type = c(NA, "Activity")
+    
   )
   connections <- data.frame(
     From = c("Unknown element"),
     To = c("Fishing activity"),
-    Label = c("+"),
-    stringsAsFactors = FALSE
+    Label = c("+")
+    
   )
 
   # Should not throw error
@@ -356,13 +356,13 @@ test_that("convert_excel_to_isa handles case-insensitive type matching", {
   elements <- data.frame(
     Label = c("Climate change", "Fishing activity"),
     Type = c("DRIVER", "activity"),  # Different cases
-    stringsAsFactors = FALSE
+    
   )
   connections <- data.frame(
     From = c("Climate change"),
     To = c("Fishing activity"),
-    Label = c("+"),
-    stringsAsFactors = FALSE
+    Label = c("+")
+    
   )
 
   result <- convert_excel_to_isa(elements, connections)
@@ -376,8 +376,8 @@ test_that("convert_excel_to_isa works without elements sheet", {
   connections <- data.frame(
     From = c("Element A", "Element B"),
     To = c("Element B", "Element C"),
-    Label = c("+", "-"),
-    stringsAsFactors = FALSE
+    Label = c("+", "-")
+    
   )
 
   # Should work even without elements (will try to infer types)
@@ -392,14 +392,14 @@ test_that("convert_excel_to_isa works without elements sheet", {
 test_that("positive polarity is correctly parsed", {
   elements <- data.frame(
     Label = c("A", "B"),
-    Type = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    Type = c("Driver", "Activity")
+    
   )
   connections <- data.frame(
     From = c("A"),
     To = c("B"),
-    Label = c("+"),
-    stringsAsFactors = FALSE
+    Label = c("+")
+    
   )
 
   result <- convert_excel_to_isa(elements, connections)
@@ -417,14 +417,14 @@ test_that("positive polarity is correctly parsed", {
 test_that("negative polarity is correctly parsed", {
   elements <- data.frame(
     Label = c("A", "B"),
-    Type = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    Type = c("Driver", "Activity")
+    
   )
   connections <- data.frame(
     From = c("A"),
     To = c("B"),
-    Label = c("-"),
-    stringsAsFactors = FALSE
+    Label = c("-")
+    
   )
 
   result <- convert_excel_to_isa(elements, connections)
@@ -442,14 +442,14 @@ test_that("negative polarity is correctly parsed", {
 test_that("missing polarity defaults to positive", {
   elements <- data.frame(
     Label = c("A", "B"),
-    Type = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    Type = c("Driver", "Activity")
+    
   )
   connections <- data.frame(
     From = c("A"),
     To = c("B"),
-    Label = c(NA),
-    stringsAsFactors = FALSE
+    Label = c(NA)
+    
   )
 
   result <- convert_excel_to_isa(elements, connections)
@@ -471,14 +471,14 @@ test_that("missing polarity defaults to positive", {
 test_that("alternative type names are mapped correctly", {
   elements <- data.frame(
     Label = c("A", "B", "C", "D"),
-    Type = c("State", "State Change", "Impact", "Welfare"),
-    stringsAsFactors = FALSE
+    Type = c("State", "State Change", "Impact", "Welfare")
+    
   )
   connections <- data.frame(
     From = c("A", "B", "C"),
     To = c("B", "C", "D"),
-    Label = c("+", "+", "+"),
-    stringsAsFactors = FALSE
+    Label = c("+", "+", "+")
+    
   )
 
   result <- convert_excel_to_isa(elements, connections)
@@ -497,14 +497,14 @@ test_that("alternative type names are mapped correctly", {
 test_that("Response and Measure types are handled", {
   elements <- data.frame(
     Label = c("Policy A", "Measure B"),
-    Type = c("Response", "Measure"),
-    stringsAsFactors = FALSE
+    Type = c("Response", "Measure")
+    
   )
   connections <- data.frame(
     From = c("Policy A"),
     To = c("Measure B"),
-    Label = c("+"),
-    stringsAsFactors = FALSE
+    Label = c("+")
+    
   )
 
   result <- convert_excel_to_isa(elements, connections)
@@ -521,15 +521,15 @@ test_that("Response and Measure types are handled", {
 test_that("strength values are extracted when present", {
   elements <- data.frame(
     Label = c("A", "B"),
-    Type = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    Type = c("Driver", "Activity")
+    
   )
   connections <- data.frame(
     From = c("A"),
     To = c("B"),
     Label = c("+"),
-    Strength = c("strong"),
-    stringsAsFactors = FALSE
+    Strength = c("strong")
+    
   )
 
   result <- convert_excel_to_isa(elements, connections)
@@ -546,15 +546,15 @@ test_that("strength values are extracted when present", {
 test_that("confidence values are extracted when present", {
   elements <- data.frame(
     Label = c("A", "B"),
-    Type = c("Driver", "Activity"),
-    stringsAsFactors = FALSE
+    Type = c("Driver", "Activity")
+    
   )
   connections <- data.frame(
     From = c("A"),
     To = c("B"),
     Label = c("+"),
-    Confidence = c(5),
-    stringsAsFactors = FALSE
+    Confidence = c(5)
+    
   )
 
   result <- convert_excel_to_isa(elements, connections)
@@ -576,15 +576,15 @@ test_that("build_adjacency_matrices_from_connections_v2 creates proper matrices"
   node_types <- data.frame(
     Name = c("Driver A", "Activity B"),
     type = c("Driver", "Activity"),
-    source = c("test", "test"),
-    stringsAsFactors = FALSE
+    source = c("test", "test")
+    
   )
 
   connections <- data.frame(
     From = c("Driver A"),
     To = c("Activity B"),
-    Label = c("+"),
-    stringsAsFactors = FALSE
+    Label = c("+")
+    
   )
 
   type_mapping <- list(
@@ -593,8 +593,8 @@ test_that("build_adjacency_matrices_from_connections_v2 creates proper matrices"
   )
 
   isa_data <- list(
-    drivers = data.frame(Name = "Driver A", stringsAsFactors = FALSE),
-    activities = data.frame(Name = "Activity B", stringsAsFactors = FALSE)
+    drivers = data.frame(Name = "Driver A"),
+    activities = data.frame(Name = "Activity B")
   )
 
   result <- build_adjacency_matrices_from_connections_v2(

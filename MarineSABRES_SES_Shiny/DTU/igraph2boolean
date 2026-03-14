@@ -1,0 +1,33 @@
+library(igraph)
+library(BoolNet)
+
+igraph_to_boolnet <- function(graph) {
+  # Ensure it's a directed graph
+  if (!is.directed(graph)) {
+    stop("Graph must be directed.")
+  }
+  
+  nodes <- V(graph)$name
+  if (is.null(nodes)) {
+    nodes <- as.character(V(graph))
+  }
+  
+  # Generate Boolean rules for each node
+  rules <- sapply(nodes, function(node) {
+    regulators <- neighbors(graph, node, mode = "in")
+    regulator_names <- V(graph)[regulators]$name
+    
+    if (length(regulator_names) == 0) {
+      # No regulators: assume constant 0 (or 1 if desired)
+      return(paste0(node, " = ", node))
+    } else {
+      # Use OR logic for all regulators (can be adjusted)
+      rule_body <- paste(regulator_names, collapse = " | ")
+      return(paste0(node, " = ", rule_body))
+    }
+  }, USE.NAMES = FALSE)
+  
+  # Convert rules to a BooleanNetwork object
+  net <- loadNetwork(string = paste(rules, collapse = "\n"))
+  return(net)
+}

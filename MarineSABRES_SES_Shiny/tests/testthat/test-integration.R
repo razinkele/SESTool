@@ -12,15 +12,15 @@ test_that("Complete ISA workflow: create, connect, visualize", {
   project_data$data$isa_data$drivers <- data.frame(
     ID = c("D1", "D2"),
     Name = c("Population Growth", "Economic Development"),
-    Indicator = c("Population change rate", "GDP growth"),
-    stringsAsFactors = FALSE
+    Indicator = c("Population change rate", "GDP growth")
+    
   )
 
   project_data$data$isa_data$activities <- data.frame(
     ID = c("A1", "A2"),
     Name = c("Fishing", "Tourism"),
-    Indicator = c("Fish catch volume", "Tourist numbers"),
-    stringsAsFactors = FALSE
+    Indicator = c("Fish catch volume", "Tourist numbers")
+    
   )
 
   # Verify data is stored correctly
@@ -47,17 +47,17 @@ test_that("Complete ISA workflow: create, connect, visualize", {
     # Create network structure
     nodes <- rbind(
       data.frame(id = c("D1", "D2"), label = c("Population Growth", "Economic Development"),
-                type = "Driver", stringsAsFactors = FALSE),
+                type = "Driver"),
       data.frame(id = c("A1", "A2"), label = c("Fishing", "Tourism"),
-                type = "Activity", stringsAsFactors = FALSE)
+                type = "Activity")
     )
 
     edges <- data.frame(
       from = c("D1", "D2"),
       to = c("A1", "A2"),
       link_type = c("positive", "positive"),
-      strength = c("strong", "medium"),
-      stringsAsFactors = FALSE
+      strength = c("strong", "medium")
+      
     )
 
     project_data$data$cld$nodes <- nodes
@@ -86,8 +86,8 @@ test_that("PIMS to ISA data flow works", {
     stakeholders = data.frame(
       ID = c("S1", "S2"),
       Name = c("Local Fishers", "Environmental NGO"),
-      Type = c("Extractors", "Influencers"),
-      stringsAsFactors = FALSE
+      Type = c("Extractors", "Influencers")
+      
     )
   )
 
@@ -99,8 +99,8 @@ test_that("PIMS to ISA data flow works", {
     ID = "A1",
     Name = "Commercial Fishing",
     Indicator = "Fish catch",
-    Stakeholder = "S1",
-    stringsAsFactors = FALSE
+    Stakeholder = "S1"
+    
   )
 
   # Verify linkage
@@ -114,8 +114,8 @@ test_that("Save and load project workflow", {
   original_project$data$metadata$da_site <- "Test Site"
   original_project$data$isa_data$drivers <- data.frame(
     ID = "D1",
-    Name = "Test Driver",
-    stringsAsFactors = FALSE
+    Name = "Test Driver"
+    
   )
 
   # Validate before save
@@ -144,8 +144,8 @@ test_that("Network analysis workflow", {
 
   edges <- data.frame(
     from = c("A", "B", "C", "D"),
-    to = c("B", "C", "D", "A"),
-    stringsAsFactors = FALSE
+    to = c("B", "C", "D", "A")
+    
   )
 
   g <- graph_from_data_frame(edges, directed = TRUE)
@@ -169,8 +169,8 @@ test_that("Export workflow works", {
   project_data$data$isa_data$drivers <- data.frame(
     ID = c("D1", "D2"),
     Name = c("Driver 1", "Driver 2"),
-    Indicator = c("Indicator 1", "Indicator 2"),
-    stringsAsFactors = FALSE
+    Indicator = c("Indicator 1", "Indicator 2")
+    
   )
 
   # Test JSON export
@@ -195,7 +195,7 @@ test_that("Export workflow works", {
 
   expect_true(file.exists(temp_csv))
 
-  loaded_csv <- read.csv(temp_csv, stringsAsFactors = FALSE)
+  loaded_csv <- read.csv(temp_csv)
   expect_equal(nrow(loaded_csv), 2)
   expect_equal(loaded_csv$Name, c("Driver 1", "Driver 2"))
 
@@ -323,8 +323,8 @@ test_that("Create SES template customization workflow", {
   new_driver <- data.frame(
     id = "D_CUSTOM",
     name = "Custom Driver",
-    description = "User-added driver",
-    stringsAsFactors = FALSE
+    description = "User-added driver"
+    
   )
 
   project_data$data$isa_data$drivers <- rbind(

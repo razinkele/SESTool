@@ -18,8 +18,8 @@ create_test_network_data <- function() {
   nodes <- data.frame(
     id = c("D1", "A1", "P1", "S1", "I1"),
     label = c("Climate Change", "Fishing", "Overfishing", "Stock Decline", "Revenue Loss"),
-    group = c("Driver", "Activity", "Pressure", "State", "Impact"),
-    stringsAsFactors = FALSE
+    group = c("Driver", "Activity", "Pressure", "State", "Impact")
+    
   )
 
   edges <- data.frame(
@@ -27,8 +27,8 @@ create_test_network_data <- function() {
     to = c("A1", "P1", "S1", "S1", "I1"),
     polarity = c("+", "+", "+", "-", "-"),
     strength = c("Strong", "Medium", "Strong", "Strong", "Medium"),
-    confidence = c(5, 4, 5, 3, 4),
-    stringsAsFactors = FALSE
+    confidence = c(5, 4, 5, 3, 4)
+    
   )
 
   list(nodes = nodes, edges = edges)
@@ -39,16 +39,16 @@ create_empty_network_data <- function() {
     nodes = data.frame(
       id = character(0),
       label = character(0),
-      group = character(0),
-      stringsAsFactors = FALSE
+      group = character(0)
+      
     ),
     edges = data.frame(
       from = character(0),
       to = character(0),
       polarity = character(0),
       strength = character(0),
-      confidence = numeric(0),
-      stringsAsFactors = FALSE
+      confidence = numeric(0)
+      
     )
   )
 }
@@ -171,8 +171,8 @@ test_that("calculate_network_metrics handles single node", {
   single_node <- data.frame(
     id = "N1",
     label = "Node 1",
-    group = "Driver",
-    stringsAsFactors = FALSE
+    group = "Driver"
+    
   )
 
   # No edges - empty edges dataframe with proper structure
@@ -180,8 +180,8 @@ test_that("calculate_network_metrics handles single node", {
     from = character(0),
     to = character(0),
     polarity = character(0),
-    strength = character(0),
-    stringsAsFactors = FALSE
+    strength = character(0)
+    
   )
 
   # Should fail as expected
@@ -211,8 +211,8 @@ test_that("node metrics dataframe is created correctly", {
     Betweenness = round(metrics$betweenness, 2),
     Closeness = round(metrics$closeness, 4),
     Eigenvector = round(metrics$eigenvector, 4),
-    PageRank = round(metrics$pagerank, 4),
-    stringsAsFactors = FALSE
+    PageRank = round(metrics$pagerank, 4)
+    
   )
 
   # Check structure
@@ -244,8 +244,8 @@ test_that("top nodes by degree are identified correctly", {
   node_metrics_df <- data.frame(
     ID = test_data$nodes$id,
     Label = test_data$nodes$label,
-    Degree = metrics$degree,
-    stringsAsFactors = FALSE
+    Degree = metrics$degree
+    
   )
 
   # Get top 3 by degree
@@ -269,8 +269,8 @@ test_that("top nodes by betweenness are identified correctly", {
   node_metrics_df <- data.frame(
     ID = test_data$nodes$id,
     Label = test_data$nodes$label,
-    Betweenness = round(metrics$betweenness, 2),
-    stringsAsFactors = FALSE
+    Betweenness = round(metrics$betweenness, 2)
+    
   )
 
   # Get top 3 by betweenness
@@ -293,8 +293,8 @@ test_that("top nodes by pagerank are identified correctly", {
   node_metrics_df <- data.frame(
     ID = test_data$nodes$id,
     Label = test_data$nodes$label,
-    PageRank = round(metrics$pagerank, 4),
-    stringsAsFactors = FALSE
+    PageRank = round(metrics$pagerank, 4)
+    
   )
 
   # Get top 3 by pagerank
@@ -363,8 +363,8 @@ test_that("metrics calculation handles invalid edges", {
     to = "A1",
     polarity = "+",
     strength = "Strong",
-    confidence = 3,
-    stringsAsFactors = FALSE
+    confidence = 3
+    
   )
 
   test_data$edges <- rbind(test_data$edges, bad_edge)
@@ -384,8 +384,8 @@ test_that("metrics calculation handles disconnected components", {
   nodes <- data.frame(
     id = c("A", "B", "C", "D"),
     label = c("Node A", "Node B", "Node C", "Node D"),
-    group = c("Driver", "Activity", "Driver", "Activity"),
-    stringsAsFactors = FALSE
+    group = c("Driver", "Activity", "Driver", "Activity")
+    
   )
 
   edges <- data.frame(
@@ -393,8 +393,8 @@ test_that("metrics calculation handles disconnected components", {
     to = c("B", "D"),
     polarity = c("+", "+"),
     strength = c("Strong", "Strong"),
-    confidence = c(5, 5),
-    stringsAsFactors = FALSE
+    confidence = c(5, 5)
+    
   )
 
   metrics <- calculate_network_metrics(nodes, edges)
@@ -420,8 +420,8 @@ test_that("metrics calculation handles large network", {
     id = paste0("N", 1:n_nodes),
     label = paste("Node", 1:n_nodes),
     group = rep(c("Driver", "Activity", "Pressure", "State", "Impact"),
-                length.out = n_nodes),
-    stringsAsFactors = FALSE
+                length.out = n_nodes)
+    
   )
 
   # Create random edges (about 100 edges)
@@ -432,8 +432,8 @@ test_that("metrics calculation handles large network", {
     to = sample(nodes$id, n_edges, replace = TRUE),
     polarity = sample(c("+", "-"), n_edges, replace = TRUE),
     strength = sample(c("Strong", "Medium", "Weak"), n_edges, replace = TRUE),
-    confidence = sample(1:5, n_edges, replace = TRUE),
-    stringsAsFactors = FALSE
+    confidence = sample(1:5, n_edges, replace = TRUE)
+    
   ) %>%
     filter(from != to)  # Remove self-loops
 
@@ -506,8 +506,8 @@ test_that("data is prepared correctly for bar plot", {
   node_metrics_df <- data.frame(
     Label = test_data$nodes$label,
     Degree = metrics$degree,
-    Betweenness = round(metrics$betweenness, 2),
-    stringsAsFactors = FALSE
+    Betweenness = round(metrics$betweenness, 2)
+    
   )
 
   # Select top 10 for degree (or all if less than 10)
@@ -535,7 +535,7 @@ test_that("data is prepared correctly for comparison plot", {
     Degree = metrics$degree,
     Betweenness = round(metrics$betweenness, 2),
     PageRank = round(metrics$pagerank, 4) * 100,  # Scale for visibility
-    stringsAsFactors = FALSE
+    
   )
 
   # Check that all columns exist for scatter plot

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /s \"C:\\\\Users\\\\DELL\\\\OneDrive - ku.lt\\\\HORIZON_EUROPE\\\\Marine-SABRES\\\\SESToolbox\\\\MarineSABRES_SES_Shiny\\\\SESModels\")",
+      "Bash(Rscript:*)",
+      "Bash(dir:*)"
+    ]
+  }
+}

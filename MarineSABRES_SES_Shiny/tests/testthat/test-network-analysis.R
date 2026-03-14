@@ -20,8 +20,8 @@ if (!exists("calculate_network_metrics")) {
 # ============================================================================
 
 test_that("create_numeric_adjacency_matrix handles empty edges", {
-  nodes <- data.frame(id = c("A", "B", "C"), stringsAsFactors = FALSE)
-  edges <- data.frame(from = character(0), to = character(0), stringsAsFactors = FALSE)
+  nodes <- data.frame(id = c("A", "B", "C"))
+  edges <- data.frame(from = character(0), to = character(0))
 
   adj <- create_numeric_adjacency_matrix(nodes, edges)
 
@@ -31,8 +31,8 @@ test_that("create_numeric_adjacency_matrix handles empty edges", {
 })
 
 test_that("create_numeric_adjacency_matrix handles single node", {
-  nodes <- data.frame(id = "A", stringsAsFactors = FALSE)
-  edges <- data.frame(from = character(0), to = character(0), stringsAsFactors = FALSE)
+  nodes <- data.frame(id = "A")
+  edges <- data.frame(from = character(0), to = character(0))
 
   adj <- create_numeric_adjacency_matrix(nodes, edges)
 
@@ -42,11 +42,11 @@ test_that("create_numeric_adjacency_matrix handles single node", {
 })
 
 test_that("create_numeric_adjacency_matrix skips edges with non-existent nodes", {
-  nodes <- data.frame(id = c("A", "B"), stringsAsFactors = FALSE)
+  nodes <- data.frame(id = c("A", "B"))
   edges <- data.frame(
     from = c("A", "C"),
-    to = c("B", "A"),
-    stringsAsFactors = FALSE
+    to = c("B", "A")
+    
   )
 
   # In production mode, warnings may be suppressed
@@ -56,11 +56,11 @@ test_that("create_numeric_adjacency_matrix skips edges with non-existent nodes",
 })
 
 test_that("create_numeric_adjacency_matrix handles self-loops", {
-  nodes <- data.frame(id = c("A", "B"), stringsAsFactors = FALSE)
+  nodes <- data.frame(id = c("A", "B"))
   edges <- data.frame(
     from = c("A", "A"),
-    to = c("B", "A"),
-    stringsAsFactors = FALSE
+    to = c("B", "A")
+    
   )
 
   adj <- create_numeric_adjacency_matrix(nodes, edges)
@@ -76,14 +76,14 @@ test_that("calculate_network_metrics handles disconnected graph", {
   # Create a graph with two disconnected components
   nodes <- data.frame(
     id = c("A", "B", "C", "D"),
-    label = c("A", "B", "C", "D"),
-    stringsAsFactors = FALSE
+    label = c("A", "B", "C", "D")
+    
   )
   edges <- data.frame(
     from = c("A", "C"),
     to = c("B", "D"),
-    polarity = c("+", "+"),
-    stringsAsFactors = FALSE
+    polarity = c("+", "+")
+    
   )
 
   metrics <- calculate_network_metrics(nodes, edges)
@@ -111,14 +111,14 @@ test_that("calculate_network_metrics handles graph with isolated nodes", {
 test_that("calculate_network_metrics works on connected graph", {
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    label = c("A", "B", "C"),
-    stringsAsFactors = FALSE
+    label = c("A", "B", "C")
+    
   )
   edges <- data.frame(
     from = c("A", "B", "C"),
     to = c("B", "C", "A"),
-    polarity = c("+", "+", "+"),
-    stringsAsFactors = FALSE
+    polarity = c("+", "+", "+")
+    
   )
 
   metrics <- calculate_network_metrics(nodes, edges)
@@ -131,13 +131,13 @@ test_that("calculate_network_metrics works on connected graph", {
 test_that("calculate_network_metrics errors on empty edge set", {
   nodes <- data.frame(
     id = c("A", "B"),
-    label = c("A", "B"),
-    stringsAsFactors = FALSE
+    label = c("A", "B")
+    
   )
   edges <- data.frame(
     from = character(0),
-    to = character(0),
-    stringsAsFactors = FALSE
+    to = character(0)
+    
   )
 
   expect_error(
@@ -180,8 +180,8 @@ test_that("classify_loop_type works with node IDs and edge lookup", {
   edges <- data.frame(
     from = c("A", "B", "C"),
     to = c("B", "C", "A"),
-    polarity = c("+", "-", "+"),
-    stringsAsFactors = FALSE
+    polarity = c("+", "-", "+")
+    
   )
   lookup <- create_edge_lookup_table(edges)
 
@@ -223,14 +223,14 @@ test_that("normalize_cycle preserves order after rotation", {
 test_that("find_all_cycles finds cycles in simple graph", {
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    label = c("A", "B", "C"),
-    stringsAsFactors = FALSE
+    label = c("A", "B", "C")
+    
   )
   edges <- data.frame(
     from = c("A", "B", "C"),
     to = c("B", "C", "A"),
-    polarity = c("+", "+", "+"),
-    stringsAsFactors = FALSE
+    polarity = c("+", "+", "+")
+    
   )
 
   cycles <- find_all_cycles(nodes, edges, max_length = 5)
@@ -240,14 +240,14 @@ test_that("find_all_cycles finds cycles in simple graph", {
 test_that("find_all_cycles returns empty for acyclic graph", {
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    label = c("A", "B", "C"),
-    stringsAsFactors = FALSE
+    label = c("A", "B", "C")
+    
   )
   edges <- data.frame(
     from = c("A", "B"),
     to = c("B", "C"),
-    polarity = c("+", "+"),
-    stringsAsFactors = FALSE
+    polarity = c("+", "+")
+    
   )
 
   cycles <- find_all_cycles(nodes, edges, max_length = 5)
@@ -258,11 +258,11 @@ test_that("find_all_cycles respects max_cycles limit", {
   # Create a dense graph that has many cycles
   nodes <- data.frame(
     id = paste0("N", 1:6),
-    label = paste0("Node", 1:6),
-    stringsAsFactors = FALSE
+    label = paste0("Node", 1:6)
+    
   )
   # Create a complete directed graph (many cycles)
-  edges <- expand.grid(from = nodes$id, to = nodes$id, stringsAsFactors = FALSE)
+  edges <- expand.grid(from = nodes$id, to = nodes$id)
   edges <- edges[edges$from != edges$to, ]
   edges$polarity <- "+"
 
@@ -273,14 +273,14 @@ test_that("find_all_cycles respects max_cycles limit", {
 test_that("find_all_cycles handles graph with self-loops only", {
   nodes <- data.frame(
     id = c("A", "B"),
-    label = c("A", "B"),
-    stringsAsFactors = FALSE
+    label = c("A", "B")
+    
   )
   edges <- data.frame(
     from = c("A"),
     to = c("A"),
-    polarity = c("+"),
-    stringsAsFactors = FALSE
+    polarity = c("+")
+    
   )
 
   # Self-loops do not form strongly connected components of size > 1
@@ -296,13 +296,13 @@ test_that("find_all_cycles handles graph with self-loops only", {
 test_that("create_igraph_from_data handles empty edges gracefully", {
   nodes <- data.frame(
     id = c("A", "B"),
-    label = c("A", "B"),
-    stringsAsFactors = FALSE
+    label = c("A", "B")
+    
   )
   edges <- data.frame(
     from = character(0),
-    to = character(0),
-    stringsAsFactors = FALSE
+    to = character(0)
+    
   )
 
   g <- create_igraph_from_data(nodes, edges)
@@ -313,13 +313,13 @@ test_that("create_igraph_from_data handles empty edges gracefully", {
 test_that("create_igraph_from_data warns about invalid edges", {
   nodes <- data.frame(
     id = c("A", "B"),
-    label = c("A", "B"),
-    stringsAsFactors = FALSE
+    label = c("A", "B")
+    
   )
   edges <- data.frame(
     from = c("A", "X"),
-    to = c("B", "Y"),
-    stringsAsFactors = FALSE
+    to = c("B", "Y")
+    
   )
 
   # In production mode, warnings may be suppressed
@@ -331,15 +331,15 @@ test_that("create_igraph_from_data warns about invalid edges", {
 test_that("create_igraph_from_data preserves edge attributes", {
   nodes <- data.frame(
     id = c("A", "B"),
-    label = c("A", "B"),
-    stringsAsFactors = FALSE
+    label = c("A", "B")
+    
   )
   edges <- data.frame(
     from = c("A"),
     to = c("B"),
     polarity = c("+"),
-    strength = c("strong"),
-    stringsAsFactors = FALSE
+    strength = c("strong")
+    
   )
 
   g <- create_igraph_from_data(nodes, edges)
@@ -351,13 +351,13 @@ test_that("create_igraph_from_data preserves edge attributes", {
 test_that("create_igraph_from_data creates directed graph", {
   nodes <- data.frame(
     id = c("A", "B"),
-    label = c("A", "B"),
-    stringsAsFactors = FALSE
+    label = c("A", "B")
+    
   )
   edges <- data.frame(
     from = c("A"),
-    to = c("B"),
-    stringsAsFactors = FALSE
+    to = c("B")
+    
   )
 
   g <- create_igraph_from_data(nodes, edges)
@@ -399,13 +399,13 @@ test_that("is_valid_dapsirwrm_transition handles case and whitespace", {
 
 test_that("calculate_micmac handles empty edges", {
   nodes <- data.frame(
-    id = c("A", "B", "C"),
-    stringsAsFactors = FALSE
+    id = c("A", "B", "C")
+    
   )
   edges <- data.frame(
     from = character(0),
-    to = character(0),
-    stringsAsFactors = FALSE
+    to = character(0)
+    
   )
 
   result <- calculate_micmac(nodes, edges)
@@ -417,13 +417,13 @@ test_that("calculate_micmac handles empty edges", {
 
 test_that("calculate_micmac computes influence and exposure", {
   nodes <- data.frame(
-    id = c("A", "B", "C"),
-    stringsAsFactors = FALSE
+    id = c("A", "B", "C")
+    
   )
   edges <- data.frame(
     from = c("A", "A", "B"),
-    to = c("B", "C", "C"),
-    stringsAsFactors = FALSE
+    to = c("B", "C", "C")
+    
   )
 
   result <- calculate_micmac(nodes, edges)
@@ -435,8 +435,8 @@ test_that("calculate_micmac computes influence and exposure", {
 })
 
 test_that("calculate_micmac errors on empty nodes", {
-  nodes <- data.frame(id = character(0), stringsAsFactors = FALSE)
-  edges <- data.frame(from = character(0), to = character(0), stringsAsFactors = FALSE)
+  nodes <- data.frame(id = character(0))
+  edges <- data.frame(from = character(0), to = character(0))
 
   expect_error(calculate_micmac(nodes, edges))
 })
@@ -448,13 +448,13 @@ test_that("calculate_micmac errors on empty nodes", {
 test_that("identify_leverage_points returns correct structure", {
   nodes <- data.frame(
     id = c("A", "B", "C"),
-    label = c("A", "B", "C"),
-    stringsAsFactors = FALSE
+    label = c("A", "B", "C")
+    
   )
   edges <- data.frame(
     from = c("A", "B", "C"),
-    to = c("B", "C", "A"),
-    stringsAsFactors = FALSE
+    to = c("B", "C", "A")
+    
   )
 
   result <- identify_leverage_points(nodes, edges, top_n = 2)
@@ -519,8 +519,8 @@ test_that("create_edge_lookup_table creates correct lookup", {
   edges <- data.frame(
     from = c("A", "B"),
     to = c("B", "C"),
-    polarity = c("+", "-"),
-    stringsAsFactors = FALSE
+    polarity = c("+", "-")
+    
   )
 
   lookup <- create_edge_lookup_table(edges)
@@ -585,13 +585,13 @@ test_that("build_network_from_isa creates igraph from valid isa", {
   isa <- list(
     nodes = data.frame(
       id = c("A", "B"),
-      label = c("A", "B"),
-      stringsAsFactors = FALSE
+      label = c("A", "B")
+      
     ),
     edges = data.frame(
       from = c("A"),
-      to = c("B"),
-      stringsAsFactors = FALSE
+      to = c("B")
+      
     )
   )
 

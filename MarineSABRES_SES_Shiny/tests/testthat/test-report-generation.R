@@ -24,38 +24,38 @@ create_test_project_data <- function() {
         goods_benefits = data.frame(
           id = "gb_1",
           name = "Fish provision",
-          description = "Provisioning of fish for consumption",
-          stringsAsFactors = FALSE
+          description = "Provisioning of fish for consumption"
+          
         ),
         ecosystem_services = data.frame(
           id = "es_1",
           name = "Fish production",
-          description = "Production of harvestable fish",
-          stringsAsFactors = FALSE
+          description = "Production of harvestable fish"
+          
         ),
         marine_processes = data.frame(
           id = "mpf_1",
           name = "Fish population dynamics",
-          description = "Population dynamics of fish species",
-          stringsAsFactors = FALSE
+          description = "Population dynamics of fish species"
+          
         ),
         pressures = data.frame(
           id = "p_1",
           name = "Overfishing",
-          description = "Extraction beyond sustainable limits",
-          stringsAsFactors = FALSE
+          description = "Extraction beyond sustainable limits"
+          
         ),
         activities = data.frame(
           id = "a_1",
           name = "Commercial fishing",
-          description = "Commercial fishing activities",
-          stringsAsFactors = FALSE
+          description = "Commercial fishing activities"
+          
         ),
         drivers = data.frame(
           id = "d_1",
           name = "Food demand",
-          description = "Demand for seafood",
-          stringsAsFactors = FALSE
+          description = "Demand for seafood"
+          
         )
       ),
       cld = list(
@@ -63,22 +63,22 @@ create_test_project_data <- function() {
           id = c("d_1", "a_1", "p_1"),
           label = c("Food demand", "Commercial fishing", "Overfishing"),
           type = c("Drivers", "Activities", "Pressures"),
-          color = c("#FF6B6B", "#4ECDC4", "#45B7D1"),
-          stringsAsFactors = FALSE
+          color = c("#FF6B6B", "#4ECDC4", "#45B7D1")
+          
         ),
         edges = data.frame(
           from = c("d_1", "a_1"),
           to = c("a_1", "p_1"),
           polarity = c("+", "+"),
-          strength = c("medium", "strong"),
-          stringsAsFactors = FALSE
+          strength = c("medium", "strong")
+          
         ),
         loops = data.frame(
           id = "L1",
           type = "R",
           name = "Fishing Pressure Loop",
-          nodes = "d_1,a_1,p_1",
-          stringsAsFactors = FALSE
+          nodes = "d_1,a_1,p_1"
+          
         )
       ),
       analysis = list(
@@ -86,16 +86,16 @@ create_test_project_data <- function() {
           loop_info = data.frame(
             id = "L1",
             type = "R",
-            name = "Fishing Pressure Loop",
-            stringsAsFactors = FALSE
+            name = "Fishing Pressure Loop"
+            
           )
         )
       ),
       responses = data.frame(
         id = "r_1",
         name = "Fishing quota",
-        description = "Implement fishing quotas",
-        stringsAsFactors = FALSE
+        description = "Implement fishing quotas"
+        
       )
     )
   )

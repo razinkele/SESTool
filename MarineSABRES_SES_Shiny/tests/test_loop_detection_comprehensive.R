@@ -17,16 +17,16 @@ context("Loop Detection - Comprehensive Tests")
 test_that("Small network completes quickly", {
   nodes <- data.frame(
     id = paste0("N", 1:10),
-    label = paste("Node", 1:10),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:10)
+    
   )
 
   edges <- data.frame(
     from = c("N1", "N2", "N3", "N4", "N5"),
     to = c("N2", "N3", "N4", "N5", "N1"),
     polarity = c("+", "-", "+", "-", "+"),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   start_time <- Sys.time()
@@ -46,8 +46,8 @@ test_that("Large sparse network completes", {
   n <- 50
   nodes <- data.frame(
     id = paste0("N", 1:n),
-    label = paste("Node", 1:n),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:n)
+    
   )
 
   # Sparse: only ring + few random edges (density ~3%)
@@ -55,8 +55,8 @@ test_that("Large sparse network completes", {
     from = c(paste0("N", 1:n), paste0("N", sample(1:n, 10))),
     to = c(paste0("N", c(2:n, 1)), paste0("N", sample(1:n, 10))),
     polarity = sample(c("+", "-"), n + 10, replace = TRUE),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   start_time <- Sys.time()
@@ -75,8 +75,8 @@ test_that("Large dense component is skipped with warning", {
   n <- 40
   nodes <- data.frame(
     id = paste0("N", 1:n),
-    label = paste("Node", 1:n),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:n)
+    
   )
 
   # Dense: each node connects to next 3 (7.7% density)
@@ -89,8 +89,8 @@ test_that("Large dense component is skipped with warning", {
     from = from_nodes,
     to = to_nodes,
     polarity = sample(c("+", "-"), length(from_nodes), replace = TRUE),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   start_time <- Sys.time()
@@ -112,8 +112,8 @@ test_that("Multiple small components work efficiently", {
   # Create 5 separate components of 7 nodes each (smaller than max_length=8)
   nodes <- data.frame(
     id = paste0("N", 1:35),
-    label = paste("Node", 1:35),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:35)
+    
   )
 
   # Each component is a 7-node ring (will fit in max_length=8)
@@ -123,8 +123,8 @@ test_that("Multiple small components work efficiently", {
       from = paste0("N", base + 1:7),
       to = paste0("N", base + c(2:7, 1)),
       polarity = sample(c("+", "-"), 7, replace = TRUE),
-      strength = "medium",
-      stringsAsFactors = FALSE
+      strength = "medium"
+      
     )
   })
 
@@ -143,9 +143,9 @@ test_that("Multiple small components work efficiently", {
 # ==============================================================================
 
 test_that("Empty network returns empty result", {
-  nodes <- data.frame(id = character(0), label = character(0), stringsAsFactors = FALSE)
+  nodes <- data.frame(id = character(0), label = character(0))
   edges <- data.frame(from = character(0), to = character(0), polarity = character(0),
-                      strength = character(0), stringsAsFactors = FALSE)
+                      strength = character(0))
 
   expect_error(
     result <- find_all_cycles(nodes, edges, max_length = 8, max_cycles = 100),
@@ -156,8 +156,8 @@ test_that("Empty network returns empty result", {
 test_that("Network with no cycles returns empty", {
   nodes <- data.frame(
     id = paste0("N", 1:5),
-    label = paste("Node", 1:5),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:5)
+    
   )
 
   # Tree structure - no cycles
@@ -165,8 +165,8 @@ test_that("Network with no cycles returns empty", {
     from = c("N1", "N1", "N2", "N2"),
     to = c("N2", "N3", "N4", "N5"),
     polarity = rep("+", 4),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   result <- find_all_cycles(nodes, edges, max_length = 8, max_cycles = 100)
@@ -176,16 +176,16 @@ test_that("Network with no cycles returns empty", {
 test_that("Self-loop is detected", {
   nodes <- data.frame(
     id = c("N1"),
-    label = c("Node 1"),
-    stringsAsFactors = FALSE
+    label = c("Node 1")
+    
   )
 
   edges <- data.frame(
     from = c("N1"),
     to = c("N1"),
     polarity = "+",
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   result <- find_all_cycles(nodes, edges, max_length = 8, max_cycles = 100)
@@ -201,8 +201,8 @@ test_that("Detection respects max_cycles limit", {
   n <- 20
   nodes <- data.frame(
     id = paste0("N", 1:n),
-    label = paste("Node", 1:n),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:n)
+    
   )
 
   # Dense connections
@@ -234,8 +234,8 @@ test_that("DFS uses O(1) data structures", {
   n <- 25
   nodes <- data.frame(
     id = paste0("N", 1:n),
-    label = paste("Node", 1:n),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:n)
+    
   )
 
   # Moderate density
@@ -243,8 +243,8 @@ test_that("DFS uses O(1) data structures", {
     from = c(paste0("N", 1:n), paste0("N", rep(1:(n/2), each = 2))),
     to = c(paste0("N", c(2:n, 1)), paste0("N", rep((n/2+1):n, each = 2))),
     polarity = sample(c("+", "-"), n + n/2*2, replace = TRUE),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   start_time <- Sys.time()
@@ -265,8 +265,8 @@ test_that("Component size warnings are triggered", {
   n <- 55
   nodes <- data.frame(
     id = paste0("N", 1:n),
-    label = paste("Node", 1:n),
-    stringsAsFactors = FALSE
+    label = paste("Node", 1:n)
+    
   )
 
   # Sparse ring (will trigger size warning but not density warning)
@@ -274,8 +274,8 @@ test_that("Component size warnings are triggered", {
     from = paste0("N", 1:n),
     to = paste0("N", c(2:n, 1)),
     polarity = sample(c("+", "-"), n, replace = TRUE),
-    strength = "medium",
-    stringsAsFactors = FALSE
+    strength = "medium"
+    
   )
 
   expect_warning(
@@ -311,35 +311,35 @@ benchmark_test <- function(name, nodes, edges, expected_time) {
 }
 
 # Small network
-nodes_small <- data.frame(id = paste0("N", 1:10), label = paste("Node", 1:10), stringsAsFactors = FALSE)
+nodes_small <- data.frame(id = paste0("N", 1:10), label = paste("Node", 1:10))
 edges_small <- data.frame(
   from = paste0("N", 1:10),
   to = paste0("N", c(2:10, 1)),
   polarity = rep("+", 10),
-  strength = "medium",
-  stringsAsFactors = FALSE
+  strength = "medium"
+  
 )
 benchmark_test("Small network (10 nodes, ring)", nodes_small, edges_small, 0.5)
 
 # Medium network
-nodes_med <- data.frame(id = paste0("N", 1:30), label = paste("Node", 1:30), stringsAsFactors = FALSE)
+nodes_med <- data.frame(id = paste0("N", 1:30), label = paste("Node", 1:30))
 edges_med <- data.frame(
   from = c(paste0("N", 1:30), paste0("N", 1:10)),
   to = c(paste0("N", c(2:30, 1)), paste0("N", 11:20)),
   polarity = sample(c("+", "-"), 40, replace = TRUE),
-  strength = "medium",
-  stringsAsFactors = FALSE
+  strength = "medium"
+  
 )
 benchmark_test("Medium network (30 nodes, sparse)", nodes_med, edges_med, 1.5)
 
 # Large sparse
-nodes_large_sparse <- data.frame(id = paste0("N", 1:60), label = paste("Node", 1:60), stringsAsFactors = FALSE)
+nodes_large_sparse <- data.frame(id = paste0("N", 1:60), label = paste("Node", 1:60))
 edges_large_sparse <- data.frame(
   from = paste0("N", 1:60),
   to = paste0("N", c(2:60, 1)),
   polarity = sample(c("+", "-"), 60, replace = TRUE),
-  strength = "medium",
-  stringsAsFactors = FALSE
+  strength = "medium"
+  
 )
 benchmark_test("Large sparse (60 nodes, ring only)", nodes_large_sparse, edges_large_sparse, 3)
 

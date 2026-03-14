@@ -92,8 +92,8 @@ test_that("validate_element_data accepts valid dataframe", {
   df <- data.frame(
     id = "TEST_01",
     name = "Test Element",
-    indicator = "Test Indicator",
-    stringsAsFactors = FALSE
+    indicator = "Test Indicator"
+    
   )
   errors <- validate_element_data(df, "driver")
   expect_equal(length(errors), 0)
@@ -331,8 +331,8 @@ test_that("edgelist_to_adjacency_safe converts edgelist successfully", {
   edgelist <- data.frame(
     from = c("A", "B"),
     to = c("C", "D"),
-    value = c("+", "-"),
-    stringsAsFactors = FALSE
+    value = c("+", "-")
+    
   )
 
   result <- edgelist_to_adjacency_safe(edgelist, c("A", "B"), c("C", "D"))
@@ -347,8 +347,8 @@ test_that("edgelist_to_adjacency_safe skips invalid edges", {
   edgelist <- data.frame(
     from = c("A", "X"),  # X doesn't exist
     to = c("C", "Y"),    # Y doesn't exist
-    value = c("+", "-"),
-    stringsAsFactors = FALSE
+    value = c("+", "-")
+    
   )
 
   result <- edgelist_to_adjacency_safe(edgelist, c("A", "B"), c("C", "D"))
@@ -463,8 +463,8 @@ test_that("add_element_safe succeeds with valid input", {
     current_value = 120,
     notes = "Test note",
     needs_category = "Social",
-    trends = "Increasing",
-    stringsAsFactors = FALSE
+    trends = "Increasing"
+    
   )
 
   result <- add_element_safe(isa_data, "drivers", element)
@@ -499,8 +499,8 @@ test_that("update_element_safe succeeds with valid element", {
     current_value = NA_real_,
     notes = "",
     needs_category = "",
-    trends = "",
-    stringsAsFactors = FALSE
+    trends = ""
+    
   )
 
   isa_data <- add_element_safe(isa_data, "drivers", element)
@@ -538,8 +538,8 @@ test_that("delete_element_safe succeeds with valid element", {
     current_value = NA_real_,
     notes = "",
     needs_category = "",
-    trends = "",
-    stringsAsFactors = FALSE
+    trends = ""
+    
   )
 
   isa_data <- add_element_safe(isa_data, "drivers", element)
@@ -577,8 +577,8 @@ test_that("Complete project workflow with error handling", {
     current_value = 1200,
     notes = "Test driver element",
     needs_category = "Economic",
-    trends = "Increasing",
-    stringsAsFactors = FALSE
+    trends = "Increasing"
+    
   )
 
   project$data$isa_data <- add_element_safe(
@@ -623,8 +623,8 @@ test_that("Error recovery in element operations", {
     current_value = NA_real_,
     notes = "",
     needs_category = "",
-    trends = "",
-    stringsAsFactors = FALSE
+    trends = ""
+    
   )
 
   result <- add_element_safe(isa_data, "drivers", good_element)
@@ -647,8 +647,8 @@ test_that("Validation catches multiple errors", {
     contact_email = "invalid_email",  # Invalid format
     contact_phone = "",
     communication_preference = "",
-    notes = "",
-    stringsAsFactors = FALSE
+    notes = ""
+    
   )
 
   # Validate

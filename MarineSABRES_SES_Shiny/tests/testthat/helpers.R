@@ -11,41 +11,41 @@ create_mock_isa_data <- function() {
       ID = c("D1", "D2", "D3"),
       Name = c("Population Growth", "Economic Development", "Climate Change"),
       Indicator = c("Population change rate", "GDP growth", "Temperature increase"),
-      Description = c("Increasing coastal population", "Growing blue economy", "Rising sea temperatures"),
-      stringsAsFactors = FALSE
+      Description = c("Increasing coastal population", "Growing blue economy", "Rising sea temperatures")
+      
     ),
     activities = data.frame(
       ID = c("A1", "A2", "A3"),
       Name = c("Commercial Fishing", "Tourism", "Aquaculture"),
       Indicator = c("Fish catch volume", "Tourist numbers", "Farm production"),
-      Description = c("Industrial fishing", "Coastal tourism", "Fish farming"),
-      stringsAsFactors = FALSE
+      Description = c("Industrial fishing", "Coastal tourism", "Fish farming")
+      
     ),
     pressures = data.frame(
       ID = c("P1", "P2", "P3"),
       Name = c("Overfishing", "Pollution", "Habitat Destruction"),
       Indicator = c("Fishing effort", "Pollutant levels", "Habitat loss"),
-      Type = c("EnMP", "EnMP", "EnMP"),
-      stringsAsFactors = FALSE
+      Type = c("EnMP", "EnMP", "EnMP")
+      
     ),
     marine_processes = data.frame(
       ID = c("MP1", "MP2"),
       Name = c("Fish Stock Decline", "Habitat Degradation"),
-      Indicator = c("Stock biomass", "Habitat quality index"),
-      stringsAsFactors = FALSE
+      Indicator = c("Stock biomass", "Habitat quality index")
+      
     ),
     ecosystem_services = data.frame(
       ID = c("ES1", "ES2"),
       Name = c("Fish Provision", "Recreation"),
       Indicator = c("Fish availability", "Recreation opportunities"),
-      Category = c("Provisioning", "Cultural"),
-      stringsAsFactors = FALSE
+      Category = c("Provisioning", "Cultural")
+      
     ),
     goods_benefits = data.frame(
       ID = c("GB1", "GB2"),
       Name = c("Food Security", "Coastal Livelihoods"),
-      Indicator = c("Fish consumption", "Employment rate"),
-      stringsAsFactors = FALSE
+      Indicator = c("Fish consumption", "Employment rate")
+      
     )
   )
 }
@@ -71,8 +71,8 @@ create_mock_project_data <- function(include_isa = TRUE, include_cld = FALSE) {
       ID = c("ST1", "ST2", "ST3"),
       Name = c("Local Fishers", "Environmental NGO", "Coastal Authority"),
       Type = c("Extractors", "Influencers", "Regulators"),
-      Interest = c("High", "High", "Medium"),
-      stringsAsFactors = FALSE
+      Interest = c("High", "High", "Medium")
+      
     )
   )
 
@@ -97,16 +97,16 @@ create_mock_cld_data <- function() {
     id = c("N1", "N2", "N3", "N4", "N5"),
     label = c("Fishing Effort", "Fish Stock", "Fish Catch", "Fisher Income", "Investment"),
     type = c("Activity", "State", "Pressure", "Benefit", "Driver"),
-    color = c("#5abc67", "#bce2ee", "#fec05a", "#fff1a2", "#776db3"),
-    stringsAsFactors = FALSE
+    color = c("#5abc67", "#bce2ee", "#fec05a", "#fff1a2", "#776db3")
+    
   )
 
   edges <- data.frame(
     from = c("N1", "N2", "N3", "N4", "N5"),
     to = c("N3", "N3", "N4", "N5", "N1"),
     link_type = c("positive", "positive", "positive", "positive", "positive"),
-    strength = c("strong", "medium", "strong", "medium", "weak"),
-    stringsAsFactors = FALSE
+    strength = c("strong", "medium", "strong", "medium", "weak")
+    
   )
 
   list(nodes = nodes, edges = edges)

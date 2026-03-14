@@ -229,8 +229,8 @@ test_that("validate_element_data validates DAPSI(W)R(M) element data", {
   valid_data <- data.frame(
     id = c("D1", "D2"),
     name = c("Driver 1", "Driver 2"),
-    indicator = c("Indicator 1", "Indicator 2"),
-    stringsAsFactors = FALSE
+    indicator = c("Indicator 1", "Indicator 2")
+    
   )
 
   errors <- validate_element_data(valid_data, "Drivers")
@@ -249,8 +249,8 @@ test_that("validate_element_data validates DAPSI(W)R(M) element data", {
   invalid_data2 <- data.frame(
     id = c("D1", "D1"),
     name = c("Driver 1", "Driver 2"),
-    indicator = c("Indicator 1", "Indicator 2"),
-    stringsAsFactors = FALSE
+    indicator = c("Indicator 1", "Indicator 2")
+    
   )
   errors2 <- validate_element_data(invalid_data2, "Drivers")
   expect_true(length(errors2) > 0)
@@ -260,8 +260,8 @@ test_that("validate_element_data validates DAPSI(W)R(M) element data", {
   invalid_data3 <- data.frame(
     id = c("D1", "D2"),
     name = c("Driver 1", ""),
-    indicator = c("Indicator 1", "Indicator 2"),
-    stringsAsFactors = FALSE
+    indicator = c("Indicator 1", "Indicator 2")
+    
   )
   errors3 <- validate_element_data(invalid_data3, "Drivers")
   expect_true(length(errors3) > 0)
@@ -274,8 +274,8 @@ test_that("validate_isa_dataframe validates ISA data frames", {
   valid_data <- data.frame(
     ID = c("1", "2", "3"),
     Name = c("Item 1", "Item 2", "Item 3"),
-    Description = c("Desc 1", "Desc 2", "Desc 3"),
-    stringsAsFactors = FALSE
+    Description = c("Desc 1", "Desc 2", "Desc 3")
+    
   )
 
   errors <- validate_isa_dataframe(valid_data, "Test Exercise")
@@ -303,8 +303,8 @@ test_that("validate_isa_dataframe validates ISA data frames", {
   # Empty names
   invalid_data2 <- data.frame(
     ID = c("1", "2"),
-    Name = c("Item 1", ""),
-    stringsAsFactors = FALSE
+    Name = c("Item 1", "")
+    
   )
   errors4 <- validate_isa_dataframe(invalid_data2, "Test Exercise")
   expect_true(length(errors4) > 0)
@@ -313,8 +313,8 @@ test_that("validate_isa_dataframe validates ISA data frames", {
   # Duplicate names
   invalid_data3 <- data.frame(
     ID = c("1", "2"),
-    Name = c("Item 1", "Item 1"),
-    stringsAsFactors = FALSE
+    Name = c("Item 1", "Item 1")
+    
   )
   errors5 <- validate_isa_dataframe(invalid_data3, "Test Exercise")
   expect_true(length(errors5) > 0)

@@ -208,8 +208,8 @@ test_that("suggest_connected_elements generates valid suggestions", {
   existing_network <- data.frame(
     id = "A_1",
     name = "Commercial fishing",
-    type = "Activities",
-    stringsAsFactors = FALSE
+    type = "Activities"
+    
   )
 
   context <- list(
@@ -248,8 +248,8 @@ test_that("suggest_connected_elements respects DAPSIWRM rules", {
   existing_network <- data.frame(
     id = "A_1",
     name = "Bottom trawling",
-    type = "Activities",
-    stringsAsFactors = FALSE
+    type = "Activities"
+    
   )
 
   context <- list(
@@ -285,8 +285,8 @@ test_that("suggest_connected_elements filters existing elements", {
   existing_network <- data.frame(
     id = c("A_1", "P_1", "P_2", "P_3"),
     name = c("Commercial fishing", "Bycatch", "Overfishing", "Habitat damage"),
-    type = c("Activities", "Pressures", "Pressures", "Pressures"),
-    stringsAsFactors = FALSE
+    type = c("Activities", "Pressures", "Pressures", "Pressures")
+    
   )
 
   context <- list(
@@ -323,8 +323,8 @@ test_that("suggest_connected_elements handles empty network", {
   existing_network <- data.frame(
     id = "D_1",
     name = "First element",
-    type = "Drivers",
-    stringsAsFactors = FALSE
+    type = "Drivers"
+    
   )
 
   context <- list(
@@ -499,15 +499,15 @@ test_that("Network statistics calculation", {
       rv$network_nodes <- data.frame(
         id = c("D_1", "A_1", "P_1"),
         name = c("Driver", "Activity", "Pressure"),
-        type = c("Drivers", "Activities", "Pressures"),
-        stringsAsFactors = FALSE
+        type = c("Drivers", "Activities", "Pressures")
+        
       )
 
       rv$network_edges <- data.frame(
         id = c("E_1", "E_2"),
         from = c("D_1", "A_1"),
-        to = c("A_1", "P_1"),
-        stringsAsFactors = FALSE
+        to = c("A_1", "P_1")
+        
       )
 
       # Verify statistics output
@@ -530,8 +530,8 @@ test_that("History and undo functionality", {
       initial_nodes <- data.frame(
         id = "D_1",
         name = "Test Node",
-        type = "Drivers",
-        stringsAsFactors = FALSE
+        type = "Drivers"
+        
       )
       rv$network_nodes <- initial_nodes
 
@@ -556,8 +556,8 @@ test_that("convert_graphical_to_isa creates valid ISA structure", {
   nodes <- data.frame(
     id = c("D_1", "A_1", "P_1", "S_1"),
     name = c("Tourism demand", "Beach tourism", "Coastal erosion", "Beach degradation"),
-    type = c("Drivers", "Activities", "Pressures", "State Changes"),
-    stringsAsFactors = FALSE
+    type = c("Drivers", "Activities", "Pressures", "State Changes")
+    
   )
 
   edges <- data.frame(
@@ -565,8 +565,8 @@ test_that("convert_graphical_to_isa creates valid ISA structure", {
     from = c("D_1", "A_1", "P_1"),
     to = c("A_1", "P_1", "S_1"),
     polarity = c("positive", "negative", "negative"),
-    strength = c("high", "medium", "high"),
-    stringsAsFactors = FALSE
+    strength = c("high", "medium", "high")
+    
   )
 
   context <- list(
@@ -598,8 +598,8 @@ test_that("ISA export includes adjacency matrices", {
   nodes <- data.frame(
     id = c("D_1", "A_1"),
     name = c("Driver 1", "Activity 1"),
-    type = c("Drivers", "Activities"),
-    stringsAsFactors = FALSE
+    type = c("Drivers", "Activities")
+    
   )
 
   edges <- data.frame(
@@ -607,8 +607,8 @@ test_that("ISA export includes adjacency matrices", {
     from = "D_1",
     to = "A_1",
     polarity = "positive",
-    strength = "high",
-    stringsAsFactors = FALSE
+    strength = "high"
+    
   )
 
   context <- list(regional_sea = "Baltic Sea")
@@ -631,15 +631,15 @@ test_that("Network validation catches invalid structures", {
   valid_nodes <- data.frame(
     id = c("D_1", "A_1"),
     name = c("Driver", "Activity"),
-    type = c("Drivers", "Activities"),
-    stringsAsFactors = FALSE
+    type = c("Drivers", "Activities")
+    
   )
 
   valid_edges <- data.frame(
     id = "E_1",
     from = "D_1",
-    to = "A_1",
-    stringsAsFactors = FALSE
+    to = "A_1"
+    
   )
 
   validation1 <- validate_network_for_export(valid_nodes, valid_edges)
@@ -649,8 +649,8 @@ test_that("Network validation catches invalid structures", {
   disconnected_nodes <- data.frame(
     id = c("D_1", "A_1"),
     name = c("Node 1", "Node 2"),
-    type = c("Drivers", "Activities"),
-    stringsAsFactors = FALSE
+    type = c("Drivers", "Activities")
+    
   )
 
   no_edges <- data.frame()
@@ -681,8 +681,8 @@ test_that("Complete workflow: Classify -> Create -> Expand -> Export", {
   network_nodes <- data.frame(
     id = "A_1",
     name = "Commercial fishing",
-    type = classification$primary$type,
-    stringsAsFactors = FALSE
+    type = classification$primary$type
+    
   )
 
   # Step 3: Get suggestions for expansion
@@ -702,8 +702,8 @@ test_that("Complete workflow: Classify -> Create -> Expand -> Export", {
     new_node <- data.frame(
       id = paste0(substr(suggestions[[1]]$type, 1, 1), "_2"),
       name = suggestions[[1]]$name,
-      type = suggestions[[1]]$type,
-      stringsAsFactors = FALSE
+      type = suggestions[[1]]$type
+      
     )
 
     network_nodes <- rbind(network_nodes, new_node)
@@ -713,8 +713,8 @@ test_that("Complete workflow: Classify -> Create -> Expand -> Export", {
       from = "A_1",
       to = new_node$id,
       polarity = suggestions[[1]]$connection_polarity,
-      strength = "medium",
-      stringsAsFactors = FALSE
+      strength = "medium"
+      
     )
 
     # Step 5: Export to ISA
@@ -807,8 +807,8 @@ test_that("Network builder handles missing context gracefully", {
   existing_network <- data.frame(
     id = "A_1",
     name = "Test element",
-    type = "Activities",
-    stringsAsFactors = FALSE
+    type = "Activities"
+    
   )
 
   # NULL context
@@ -840,8 +840,8 @@ test_that("Export handles minimal network", {
   single_node <- data.frame(
     id = "D_1",
     name = "Single driver",
-    type = "Drivers",
-    stringsAsFactors = FALSE
+    type = "Drivers"
+    
   )
 
   no_edges <- data.frame()

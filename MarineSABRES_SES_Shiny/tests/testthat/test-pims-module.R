@@ -57,8 +57,8 @@ create_partial_project_data <- function(include_data = TRUE,
         stakeholders = data.frame(
           Name = c("Stakeholder 1", "Stakeholder 2"),
           Role = c("Manager", "Researcher"),
-          Organization = c("Org A", "Org B"),
-          stringsAsFactors = FALSE
+          Organization = c("Org A", "Org B")
+          
         )
       )
     }
@@ -197,8 +197,8 @@ test_that("empty stakeholder list returns valid empty dataframe", {
     stakeholders <- data.frame(
       Name = character(0),
       Role = character(0),
-      Organization = character(0),
-      stringsAsFactors = FALSE
+      Organization = character(0)
+      
     )
   }
 

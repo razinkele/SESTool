@@ -1,0 +1,147 @@
+From,To,strength,Confidence,country
+Catch mackerel,Blue employment,Weak positive,3,Greenland
+Catch blue whiting,Blue employment,Medium negative,3,Greenland
+Catch herring,Blue employment,Weak positive,3,Greenland
+Catch mackerel,Food provision,Strong positive,4,Greenland
+Catch blue whiting,Food provision,Strong positive,4,Greenland
+Catch herring,Food provision,Strong positive,4,Greenland
+Catch mackerel,Economic Contribution,Medium positive,3,Greenland
+Catch blue whiting,Economic Contribution,Medium positive,4,Greenland
+Catch herring,Economic Contribution,Medium positive,4,Greenland
+Catch mackerel,Community Development,Weak positive,4,Greenland
+Catch blue whiting,Community Development,Weak positive,4,Greenland
+Catch herring,Community Development,Weak positive,4,Greenland
+SSB mackerel,Catch mackerel,Strong positive,5,Greenland
+SSB blue whiting,Catch blue whiting,Strong positive,5,Greenland
+SSB herring,Catch herring,Strong positive,5,Greenland
+Fishing Mortality,SSB mackerel,Weak negative,4,Greenland
+Fishing Mortality,SSB blue whiting,Medium negative,4,Greenland
+Fishing Mortality,SSB herring,Medium negative,4,Greenland
+Greenhouse gas emissions,SSB mackerel,Medium negative,2,Greenland
+Greenhouse gas emissions,SSB blue whiting,Medium negative,2,Greenland
+Greenhouse gas emissions,SSB herring,Medium negative,2,Greenland
+consumer purchasing,Fishing Mortality,Strong positive,5,Greenland
+Pelagic fishing,Fishing Mortality,strong negative,3,Greenland
+Pelagic fishing,Greenhouse gas emissions,Strong positive,5,Greenland
+consumer purchasing,Greenhouse gas emissions,Weak negative,1,Greenland
+Technology and product Development,Greenhouse gas emissions,Medium negative,2,Greenland
+Food security (global),Pelagic fishing,Strong positive,4,Greenland
+Identity,Pelagic fishing,weak positive,3,Greenland
+Employment rate,Pelagic fishing,weak positive,4,Greenland
+Identity,consumer purchasing,Weak positive,1,Greenland
+Climate Mitigation,consumer purchasing,Weak positive,1,Greenland
+Consumer Preferences,consumer purchasing,Weak positive,1,Greenland
+Food security (global),Technology and product Development,strong positive,3,Greenland
+Identity,Technology and product Development,weak positive,2,Greenland
+Employment rate,Technology and product Development,medium positive,4,Greenland
+Climate Mitigation,Technology and product Development,Medium positive,3,Greenland
+Blue employment,Food security (global),weak positive,3,Greenland
+Economic Contribution,Food security (global),weak positive,3,Greenland
+Community Development,Food security (global),Medium positive,3,Greenland
+Blue employment,Identity,Weak positive,1,Greenland
+Economic Contribution,Identity,Weak positive,1,Greenland
+Community Development,Identity,weak positive,5,Greenland
+Blue employment,Employment rate,Strong positive,5,Greenland
+Economic Contribution,Employment rate,Medium positive,5,Greenland
+Community Development,Employment rate,Medium positive,5,Greenland
+Catch mackerel,Blue employment,Weak positive,3,Iceland
+Catch blue whiting,Blue employment,Weak positive,3,Iceland
+Catch herring,Blue employment,Weak positive,3,Iceland
+Catch mackerel,Food provision,Strong positive,4,Iceland
+Catch blue whiting,Food provision,Strong positive,4,Iceland
+Catch herring,Food provision,Strong positive,4,Iceland
+Catch mackerel,Economic Contribution,Strong positive,5,Iceland
+Catch blue whiting,Economic Contribution,Strong positive,5,Iceland
+Catch herring,Economic Contribution,Strong positive,5,Iceland
+Catch mackerel,Community Development,Strong positive,4,Iceland
+Catch blue whiting,Community Development,Strong positive,4,Iceland
+Catch herring,Community Development,Strong positive,4,Iceland
+SSB mackerel,Catch mackerel,Strong positive,5,Iceland
+SSB blue whiting,Catch blue whiting,Strong positive,5,Iceland
+SSB herring,Catch herring,Strong positive,5,Iceland
+Fishing Mortality,SSB mackerel,Medium negative,4,Iceland
+Fishing Mortality,SSB blue whiting,Medium negative,4,Iceland
+Fishing Mortality,SSB herring,Medium negative,4,Iceland
+Greenhouse gas emissions,SSB mackerel,Medium negative,1,Iceland
+Greenhouse gas emissions,SSB blue whiting,Medium negative,1,Iceland
+Greenhouse gas emissions,SSB herring,Medium negative,1,Iceland
+Pelagic fishing,Fishing Mortality,Strong positive,5,Iceland
+consumer purchasing,Fishing Mortality,Medium negative,3,Iceland
+Pelagic fishing,Greenhouse gas emissions,Strong positive,5,Iceland
+consumer purchasing,Greenhouse gas emissions,Weak negative,1,Iceland
+Technology and product Development,Greenhouse gas emissions,Medium negative,2,Iceland
+Food security (global),Pelagic fishing,Strong positive,4,Iceland
+Identity,Pelagic fishing,Medium positive,3,Iceland
+Employment rate,Pelagic fishing,Strong positive,4,Iceland
+Identity,consumer purchasing,Weak positive,1,Iceland
+Climate Mitigation,consumer purchasing,Weak positive,1,Iceland
+Consumer Preferences,consumer purchasing,Weak positive,1,Iceland
+Food security (global),Technology and product Development,Strong positive,3,Iceland
+Identity,Technology and product Development,Medium positive,2,Iceland
+Employment rate,Technology and product Development,Strong positive,4,Iceland
+Climate Mitigation,Technology and product Development,Medium positive,3,Iceland
+Blue employment,Food security (global),Medium positive,3,Iceland
+Economic Contribution,Food security (global),Medium positive,3,Iceland
+Community Development,Food security (global),Medium positive,3,Iceland
+Blue employment,Identity,Weak positive,1,Iceland
+Economic Contribution,Identity,Weak positive,1,Iceland
+Community Development,Identity,Strong positive,5,Iceland
+Blue employment,Employment rate,Strong positive,5,Iceland
+Economic Contribution,Employment rate,Medium positive,5,Iceland
+Community Development,Employment rate,Medium positive,5,Iceland
+Aquaculture,Salmon from aquaculture,Strong positive,5,Faroes
+Salmon from aquaculture,Blue employment,Weak positive,2,Faroes
+Catch mackerel,Blue employment,Weak positive,3,Faroes
+Catch blue whiting,Blue employment,Weak positive,3,Faroes
+Catch herring,Blue employment,Weak positive,3,Faroes
+Salmon from aquaculture,Food provision,Strong positive,4,Faroes
+Catch mackerel,Food provision,Strong positive,4,Faroes
+Catch blue whiting,Food provision,Strong positive,4,Faroes
+Catch herring,Food provision,Strong positive,4,Faroes
+Salmon from aquaculture,Economic Contribution,Weak positive,2,Faroes
+Catch mackerel,Economic Contribution,Strong positive,5,Faroes
+Catch blue whiting,Economic Contribution,Medium positive,5,Faroes
+Catch herring,Economic Contribution,Strong positive,5,Faroes
+Salmon from aquaculture,Community Development,Strong positive,4,Faroes
+Catch mackerel,Community Development,Strong positive,5,Faroes
+Catch blue whiting,Community Development,Strong positive,5,Faroes
+Catch herring,Community Development,Strong positive,5,Faroes
+SSB mackerel,Catch mackerel,Strong positive,4,Faroes
+SSB blue whiting,Catch blue whiting,Strong positive,4,Faroes
+SSB herring,Catch herring,Strong positive,4,Faroes
+Fishing Mortality,SSB mackerel,Medium negative,4,Faroes
+Fishing Mortality,SSB blue whiting,Weak negative,4,Faroes
+Fishing Mortality,SSB herring,Weak negative,4,Faroes
+Greenhouse gas emissions,SSB mackerel,Medium negative,1,Faroes
+Greenhouse gas emissions,SSB blue whiting,Medium negative,1,Faroes
+Greenhouse gas emissions,SSB herring,Medium negative,1,Faroes
+Pelagic fishing,Fishing Mortality,Strong positive,5,Faroes
+consumer purchasing,Fishing Mortality,Medium negative,3,Faroes
+Pelagic fishing,Greenhouse gas emissions,Strong positive,NA,Faroes
+Technology and product Development,Greenhouse gas emissions,Medium negative,2,Faroes
+consumer purchasing,Greenhouse gas emissions,Weak negative,1,Faroes
+Food security (global),Pelagic fishing,Strong positive,4,Faroes
+Identity,Pelagic fishing,Strong positive,3,Faroes
+Employment rate,Pelagic fishing,Strong positive,4,Faroes
+Food security (global),Technology and product Development,Medium positive,3,Faroes
+Identity,Technology and product Development,Medium positive,3,Faroes
+Employment rate,Technology and product Development,Medium positive,3,Faroes
+Climate Mitigation,Technology and product Development,Medium positive,3,Faroes
+Food security (global),Aquaculture,Strong positive,3,Faroes
+Identity,Aquaculture,Strong positive,3,Faroes
+Employment rate,Aquaculture,Strong positive,4,Faroes
+Identity,consumer purchasing,Weak positive,1,Faroes
+Climate Mitigation,consumer purchasing,Weak positive,1,Faroes
+Consumer Preferences,consumer purchasing,Weak positive,1,Faroes
+Blue employment,Food security (global),Medium positive,3,Faroes
+Economic Contribution,Food security (global),Medium positive,3,Faroes
+Community Development,Food security (global),Medium positive,3,Faroes
+Blue employment,Identity,Weak positive,1,Faroes
+Economic Contribution,Identity,Weak positive,1,Faroes
+Community Development,Identity,Weak positive,5,Faroes
+Blue employment,Employment rate,Strong positive,5,Faroes
+Economic Contribution,Employment rate,Medium positive,5,Faroes
+Community Development,Employment rate,Medium positive,5,Faroes
+SSB mackerel,SSB mackerel,Strong positive,5,common
+SSB herring,SSB herring,Strong positive,5,common
+SSB blue whiting,SSB blue whiting,Strong positive,5,common
