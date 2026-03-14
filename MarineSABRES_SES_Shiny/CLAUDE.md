@@ -39,7 +39,7 @@ Rscript scripts/add_translation.R
 ├── global.R              # Package loading, PROJECT_ROOT, utility functions
 ├── constants.R           # DAPSIWRM_ELEMENTS, colors, shapes, site configs
 ├── DESCRIPTION           # Package dependency manifest
-├── modules/              # Shiny modules (25+ modules)
+├── modules/              # Shiny modules (44 modules)
 │   ├── *_module.R        # Module pattern: module_name_ui() + module_name_server()
 │   ├── analysis_*.R      # Analysis modules (loops, metrics, boolean, etc.)
 │   └── ai_isa/           # AI-assisted ISA workflow

@@ -1345,12 +1345,49 @@ $(document).ready(function() {
     });
   }
 
+  // ---- 8. WCAG landmarks on major page sections ----
+  function initLandmarks() {
+    // Add role="navigation" to sidebar
+    var sidebar = document.querySelector('.main-sidebar');
+    if (sidebar && !sidebar.getAttribute('role')) {
+      sidebar.setAttribute('role', 'navigation');
+      sidebar.setAttribute('aria-label', 'Main navigation');
+    }
+
+    // Add role="banner" to header
+    var header = document.querySelector('.main-header');
+    if (header && !header.getAttribute('role')) {
+      header.setAttribute('role', 'banner');
+    }
+
+    // Add role="main" to content-wrapper (wraps all tab content)
+    var content = document.querySelector('.content-wrapper');
+    if (content && !content.getAttribute('role')) {
+      content.setAttribute('role', 'main');
+      content.setAttribute('aria-label', 'Main content');
+    }
+
+    // Add role="contentinfo" to footer
+    var footer = document.querySelector('.main-footer');
+    if (footer && !footer.getAttribute('role')) {
+      footer.setAttribute('role', 'contentinfo');
+    }
+
+    // Add aria-live="polite" to notification container
+    var notifContainer = document.querySelector('#shiny-notification-panel');
+    if (notifContainer) {
+      notifContainer.setAttribute('aria-live', 'polite');
+      notifContainer.setAttribute('aria-atomic', 'false');
+    }
+  }
+
   // ---- Initialize all accessibility enhancements ----
   initDropdownAria();
   initDropdownKeyboard();
   initModalAria();
   enhanceTooltipAria();
   initSidebarAriaCurrent();
+  initLandmarks();
 
   __dbg('[A11Y] Accessibility enhancements initialized');
 });

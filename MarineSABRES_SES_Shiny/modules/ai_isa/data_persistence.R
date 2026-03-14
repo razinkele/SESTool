@@ -302,9 +302,24 @@ build_adjacency_matrices <- function(elements, suggested_connections,
   for (conn_idx in approved_connections) {
     conn <- suggested_connections[[conn_idx]]
 
-    # Format: "+strength:confidence"
+    # Format: "+strength:confidence" or "+strength:confidence:lag" (lag in years)
     confidence <- conn$confidence %||% CONFIDENCE_DEFAULT
-    value <- paste0(conn$polarity, conn$strength, ":", confidence)
+    lag <- conn$lag %||% conn$temporal_lag_years %||% NA
+    # Convert text temporal_lag to numeric if needed
+    if (is.character(lag)) {
+      lag <- switch(tolower(lag),
+        "immediate" = 0,
+        "short-term" = 0.5,
+        "medium-term" = 3,
+        "long-term" = 10,
+        NA_real_
+      )
+    }
+    value <- if (!is.na(lag) && is.numeric(lag)) {
+      paste0(conn$polarity, conn$strength, ":", confidence, ":", lag)
+    } else {
+      paste0(conn$polarity, conn$strength, ":", confidence)
+    }
 
     # Determine which matrix and fill it
     if (conn$matrix == "d_a" && !is.null(matrices$d_a)) {

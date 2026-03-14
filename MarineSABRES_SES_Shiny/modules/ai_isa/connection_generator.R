@@ -467,9 +467,10 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
         # Determine strength from knowledge base or ML if available
         strength <- "medium"
         confidence <- 3
+        temporal_lag <- NA_real_  # Lag in years (NA = unknown)
         scoring_method <- "keyword"
 
-        # Check knowledge base for strength info
+        # Check knowledge base for strength info and temporal lag
         if (exists("lookup_knowledge_base", mode = "function")) {
           kb_match <- tryCatch(
             lookup_knowledge_base(from_name, from_type, to_name, to_type),
@@ -484,6 +485,11 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
               "synonym" = 3,
               3
             )
+            # Extract temporal lag if available
+            if (!is.null(kb_match$temporal_lag)) {
+              temporal_lag <- switch(tolower(kb_match$temporal_lag),
+                "immediate" = 0, "short-term" = 0.5, "medium-term" = 3, "long-term" = 10, NA_real_)
+            }
           }
         }
 
@@ -528,6 +534,7 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
             polarity = polarity,
             strength = strength,
             confidence = confidence,
+            lag = temporal_lag,  # Temporal lag in years (0=immediate, NA=unknown)
             rationale = paste(from_name, verb, to_name),
             matrix = matrix_name,
             scoring_method = scoring_method
