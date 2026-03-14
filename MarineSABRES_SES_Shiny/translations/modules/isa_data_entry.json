@@ -3894,6 +3894,72 @@
       "no": "Hei! Jeg er din AI-assistent for å lage en DAPSI(W)R(M)-modell. La oss starte med å velge ditt regionale hav eller osean. Dette hjelper meg å gi relevante forslag for ditt område.",
       "el": "Γεια σας! Είμαι ο βοηθός τεχνητής νοημοσύνης σας για τη δημιουργία ενός μοντέλου DAPSI(W)R(M). Ας ξεκινήσουμε επιλέγοντας τη θάλασσα ή τον ωκεανό σας. Αυτό με βοηθά να παρέχω σχετικές προτάσεις για την περιοχή σας."
     },
+    "modules.isa.ai_assistant.country_selection": {
+      "en": "Country Selection",
+      "es": "Selección de País",
+      "fr": "Sélection du Pays",
+      "de": "Länderauswahl",
+      "lt": "Šalies pasirinkimas",
+      "pt": "Seleção de País",
+      "it": "Selezione del Paese",
+      "no": "Landsvalg",
+      "el": "Επιλογή Χώρας"
+    },
+    "modules.isa.ai_assistant.question_countries": {
+      "en": "Which countries are involved in your study area? Select all that apply.",
+      "es": "¿Qué países están involucrados en su área de estudio? Seleccione todos los que correspondan.",
+      "fr": "Quels pays sont impliqués dans votre zone d'étude ? Sélectionnez tous ceux qui s'appliquent.",
+      "de": "Welche Länder sind in Ihrem Untersuchungsgebiet beteiligt? Wählen Sie alle zutreffenden aus.",
+      "lt": "Kurios šalys dalyvauja jūsų tyrimo zonoje? Pasirinkite visas tinkamas.",
+      "pt": "Quais países estão envolvidos na sua área de estudo? Selecione todos os aplicáveis.",
+      "it": "Quali paesi sono coinvolti nella tua area di studio? Seleziona tutti quelli applicabili.",
+      "no": "Hvilke land er involvert i ditt studieområde? Velg alle som gjelder.",
+      "el": "Ποιες χώρες εμπλέκονται στην περιοχή μελέτης σας; Επιλέξτε όλες τις σχετικές."
+    },
+    "modules.isa.ai_assistant.countries_selected": {
+      "en": "countries selected",
+      "es": "países seleccionados",
+      "fr": "pays sélectionnés",
+      "de": "Länder ausgewählt",
+      "lt": "šalys pasirinktos",
+      "pt": "países selecionados",
+      "it": "paesi selezionati",
+      "no": "land valgt",
+      "el": "χώρες επιλέχθηκαν"
+    },
+    "modules.isa.ai_assistant.select_all_countries": {
+      "en": "Select All",
+      "es": "Seleccionar Todo",
+      "fr": "Tout Sélectionner",
+      "de": "Alle Auswählen",
+      "lt": "Pasirinkti Viską",
+      "pt": "Selecionar Tudo",
+      "it": "Seleziona Tutto",
+      "no": "Velg Alle",
+      "el": "Επιλογή Όλων"
+    },
+    "modules.isa.ai_assistant.clear_countries": {
+      "en": "Clear All",
+      "es": "Limpiar Todo",
+      "fr": "Tout Effacer",
+      "de": "Alle Löschen",
+      "lt": "Išvalyti Viską",
+      "pt": "Limpar Tudo",
+      "it": "Cancella Tutto",
+      "no": "Fjern Alle",
+      "el": "Εκκαθάριση Όλων"
+    },
+    "modules.isa.ai_assistant.country_confirmed": {
+      "en": "I'll tailor governance and socio-economic suggestions based on your selected countries.",
+      "es": "Adaptaré las sugerencias de gobernanza y socioeconómicas según los países seleccionados.",
+      "fr": "Je vais adapter les suggestions de gouvernance et socio-économiques en fonction de vos pays sélectionnés.",
+      "de": "Ich werde die Governance- und sozioökonomischen Vorschläge basierend auf Ihren ausgewählten Ländern anpassen.",
+      "lt": "Pritaikysiu valdymo ir socialines-ekonomines pasiūlymus pagal jūsų pasirinktas šalis.",
+      "pt": "Vou adaptar as sugestões de governança e socioeconômicas com base nos países selecionados.",
+      "it": "Adatterò i suggerimenti di governance e socio-economici in base ai paesi selezionati.",
+      "no": "Jeg vil tilpasse styrings- og sosioøkonomiske forslag basert på dine valgte land.",
+      "el": "Θα προσαρμόσω τις προτάσεις διακυβέρνησης και κοινωνικοοικονομικές με βάση τις επιλεγμένες χώρες σας."
+    },
     "modules.isa.ai_assistant.question_main_issues": {
       "en": "What are the main environmental or management issues you're addressing? (Select all that apply)",
       "es": "¿Cuáles son los principales problemas ambientales o de gestión que está abordando? (Seleccione todos los que correspondan)",

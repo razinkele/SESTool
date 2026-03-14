@@ -25,7 +25,7 @@
 #'
 #' @details
 #' Each step contains:
-#' - step: Numeric step index (0-10)
+#' - step: Numeric step index (0-11)
 #' - title_key: Translation key for navigation
 #' - title: Translated title text
 #' - question: AI assistant question text
@@ -54,6 +54,15 @@ define_question_flow <- function(i18n) {
     ),
     list(
       step = 2,
+      title_key = "countries",
+      title = i18n$t("modules.isa.ai_assistant.country_selection"),
+      question_key = "modules.isa.ai_assistant.question_countries",
+      question = i18n$t("modules.isa.ai_assistant.question_countries"),
+      type = "country_multiple",
+      target = "countries"
+    ),
+    list(
+      step = 3,
       title_key = "main_issue",
       title = i18n$t("modules.isa.ai_assistant.main_issue_identification"),
       question = i18n$t("modules.isa.ai_assistant.question_main_issues"),
@@ -61,7 +70,7 @@ define_question_flow <- function(i18n) {
       target = "main_issue"
     ),
     list(
-      step = 3,
+      step = 4,
       title_key = "drivers",
       title = i18n$t("modules.isa.ai_assistant.drivers_societal_needs"),
       question = i18n$t("modules.isa.ai_assistant.question_drivers"),
@@ -70,7 +79,7 @@ define_question_flow <- function(i18n) {
       use_context_examples = TRUE
     ),
     list(
-      step = 4,
+      step = 5,
       title_key = "activities",
       title = i18n$t("modules.isa.ai_assistant.activities_human_actions"),
       question = i18n$t("modules.isa.ai_assistant.question_activities"),
@@ -79,7 +88,7 @@ define_question_flow <- function(i18n) {
       use_context_examples = TRUE
     ),
     list(
-      step = 5,
+      step = 6,
       title_key = "pressures",
       title = i18n$t("modules.isa.ai_assistant.pressures_environmental_stressors"),
       question = i18n$t("modules.isa.what_pressures_do_these_activities_put_on_the_mari"),
@@ -88,7 +97,7 @@ define_question_flow <- function(i18n) {
       use_context_examples = TRUE
     ),
     list(
-      step = 6,
+      step = 7,
       title_key = "states",
       title = i18n$t("modules.isa.ai_assistant.state_changes_ecosystem_effects"),
       question = i18n$t("modules.isa.how_do_these_pressures_change_the_state_of_the_mar"),
@@ -97,7 +106,7 @@ define_question_flow <- function(i18n) {
       use_context_examples = TRUE
     ),
     list(
-      step = 7,
+      step = 8,
       title_key = "impacts",
       title = i18n$t("modules.isa.ai_assistant.impacts_effects_on_ecosystem_services"),
       question = i18n$t("modules.isa.what_are_the_impacts_on_ecosystem_services_and_ben"),
@@ -106,7 +115,7 @@ define_question_flow <- function(i18n) {
       use_context_examples = TRUE
     ),
     list(
-      step = 8,
+      step = 9,
       title_key = "welfare",
       title = i18n$t("modules.isa.ai_assistant.welfare_human_well_being_effects"),
       question = i18n$t("modules.isa.how_do_these_impacts_affect_human_welfare_and_well"),
@@ -115,7 +124,7 @@ define_question_flow <- function(i18n) {
       use_context_examples = TRUE
     ),
     list(
-      step = 9,
+      step = 10,
       title_key = "responses",
       title = i18n$t("modules.isa.ai_assistant.response_measures_management_policy"),
       question = i18n$t("modules.isa.what_response_measures_management_actions_policies"),
@@ -124,7 +133,7 @@ define_question_flow <- function(i18n) {
       use_context_examples = TRUE
     ),
     list(
-      step = 10,
+      step = 11,
       title_key = "connection_review",
       title = i18n$t("modules.ses.creation.connection_review"),
       question = i18n$t("modules.isa.ai_assistant.connection_review_intro"),
@@ -309,8 +318,8 @@ setup_session_initialization <- function(project_data_reactive, rv, convert_matr
                         length(rv$suggested_connections)), "AI ISA")
           }
 
-          # Set to step 10 (completed) since data was recovered
-          rv$current_step <- 10
+          # Set to step 11 (completed) since data was recovered
+          rv$current_step <- 11
 
           total_recovered <- sum(
             length(rv$elements$drivers),
@@ -520,9 +529,9 @@ setup_breadcrumb_navigation <- function(output, input, session, rv, i18n, QUESTI
       debug_log(sprintf("Breadcrumb: Going back to step %d from step %d",
                  target_step, rv$current_step), "AI ISA")
 
-      # Clear connections if navigating back from connection review (step 10)
-      # This will force regeneration when returning to step 10
-      if (rv$current_step == 10 && target_step < 10) {
+      # Clear connections if navigating back from connection review (step 11)
+      # This will force regeneration when returning to step 11
+      if (rv$current_step == 11 && target_step < 11) {
         debug_log("Breadcrumb: Clearing connections for regeneration", "AI ISA")
         # Don't set timestamp on empty list to prevent reactive loop
         rv$suggested_connections <- list()
@@ -532,9 +541,9 @@ setup_breadcrumb_navigation <- function(output, input, session, rv, i18n, QUESTI
 
       rv$current_step <- target_step
 
-      # Restore selected issues if going back to issue selection step (current_step==1 shows QUESTION_FLOW[[2]])
-      if (target_step == 1) {
-        # Restore from context
+      # Restore selected issues/countries if going back to steps before main_issue (step 3)
+      if (target_step <= 2) {
+        # Restore issues from context
         if (length(rv$context$main_issue) > 0) {
           rv$selected_issues <- rv$context$main_issue
           debug_log(sprintf("Breadcrumb: Restored %d selected issues: %s",
@@ -544,10 +553,19 @@ setup_breadcrumb_navigation <- function(output, input, session, rv, i18n, QUESTI
           rv$selected_issues <- character(0)
           debug_log("Breadcrumb: No issues in context to restore", "AI ISA")
         }
-      } else if (target_step < 1) {
-        # Clear selected issues if going before issue selection
+        # Restore countries from context
+        if (length(rv$context$countries) > 0) {
+          rv$selected_countries <- rv$context$countries
+          debug_log(sprintf("Breadcrumb: Restored %d selected countries", length(rv$selected_countries)), "AI ISA")
+        } else {
+          rv$selected_countries <- character(0)
+        }
+      }
+      if (target_step < 1) {
+        # Clear selected issues and countries if going before ecosystem selection
         rv$selected_issues <- character(0)
-        debug_log("Breadcrumb: Cleared selected issues (before step 1)", "AI ISA")
+        rv$selected_countries <- character(0)
+        debug_log("Breadcrumb: Cleared selected issues and countries (before step 1)", "AI ISA")
       }
 
       # Force UI re-render
@@ -925,8 +943,12 @@ setup_start_over_modal <- function(input, session, rv, i18n, project_data_reacti
       regional_sea = NULL,
       ecosystem_type = NULL,
       ecosystem_subtype = NULL,
+      countries = character(0),
       main_issue = NULL
     )
+
+    # Reset country selection
+    rv$selected_countries <- character(0)
 
     # Reset connections
     rv$suggested_connections <- list()

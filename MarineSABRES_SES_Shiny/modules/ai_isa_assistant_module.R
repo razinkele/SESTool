@@ -165,10 +165,12 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         regional_sea = NULL,
         ecosystem_type = NULL,
         ecosystem_subtype = NULL,
+        countries = character(0),
         main_issue = character(0)  # Changed to vector for multiple selections
       ),
+      selected_countries = character(0),  # Track selected countries for UI highlighting
       selected_issues = character(0),  # Track selected issues for UI highlighting
-      total_steps = 10,  # Updated: merged responses and measures into one step
+      total_steps = 11,  # Updated: added country selection step
       suggested_connections = list(),  # AI-generated connection suggestions
       approved_connections = list(),   # User-approved connections
       last_save_time = NULL,  # Track last save timestamp
@@ -359,8 +361,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                           length(rv$suggested_connections)))
             }
 
-            # Set to step 10 (completed) since data was recovered
-            rv$current_step <- 10
+            # Set to step 11 (completed) since data was recovered
+            rv$current_step <- 11
 
             total_recovered <- sum(
               length(rv$elements$drivers),
@@ -1182,8 +1184,19 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         button_label <- i18n$t("modules.isa.ai_assistant.skip_this_question")
         button_icon <- icon("forward")
 
+        # For countries step (multiple selection), show count of selected countries
+        if (step_info$target == "countries") {
+          selected_count <- length(rv$selected_countries)
+          if (selected_count > 0) {
+            button_label <- paste0(i18n$t("modules.isa.ai_assistant.continue_with"), " ", selected_count, " ", i18n$t("modules.isa.ai_assistant.countries_selected"))
+            button_icon <- icon("arrow-right")
+          } else {
+            button_label <- i18n$t("modules.isa.ai_assistant.skip_this_question")
+            button_icon <- icon("forward")
+          }
+        }
         # For main_issue step (multiple selection), show count of selected items
-        if (step_info$target == "main_issue") {
+        else if (step_info$target == "main_issue") {
           selected_count <- length(rv$selected_issues)
           if (selected_count > 0) {
             button_label <- paste0(i18n$t("modules.isa.ai_assistant.continue_with"), " ", selected_count, " ", i18n$t("modules.isa.ai_assistant.selected"))
@@ -1347,6 +1360,100 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           }
         }
 
+        # Handle country selection (multiple toggle)
+        else if (step_info$type == "country_multiple") {
+          # Get countries for the selected regional sea
+          countries_list <- tryCatch(
+            get_countries_for_sea(rv$context$regional_sea),
+            error = function(e) {
+              debug_log(sprintf("get_countries_for_sea error: %s", e$message), "AI ISA QUICK")
+              NULL
+            }
+          )
+
+          if (!is.null(countries_list) && length(countries_list) > 0) {
+            # Separate EU and non-EU countries
+            eu_countries <- countries_list[sapply(countries_list, function(c) isTRUE(c$eu_member))]
+            non_eu_countries <- countries_list[sapply(countries_list, function(c) !isTRUE(c$eu_member))]
+
+            make_country_buttons <- function(country_list) {
+              lapply(country_list, function(country) {
+                country_code <- country$code
+                is_selected <- country_code %in% rv$selected_countries
+                button_class <- if (is_selected) "quick-option selected" else "quick-option"
+
+                eu_badge <- if (isTRUE(country$eu_member)) {
+                  tags$span(
+                    class = "badge badge-primary",
+                    style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
+                    title = "EU Member State",
+                    "EU"
+                  )
+                } else {
+                  NULL
+                }
+
+                actionButton(
+                  inputId = session$ns(paste0("country_", country_code, render_suffix)),
+                  label = tagList(country$name, eu_badge),
+                  class = button_class,
+                  style = "margin: 3px; min-width: 150px;"
+                )
+              })
+            }
+
+            eu_buttons <- make_country_buttons(eu_countries)
+            non_eu_buttons <- make_country_buttons(non_eu_countries)
+
+            # Utility buttons (Select All / Clear All)
+            select_all_btn <- actionButton(
+              inputId = session$ns(paste0("country_select_all", render_suffix)),
+              label = tagList(icon("check-double"), " ", i18n$t("modules.isa.ai_assistant.select_all_countries")),
+              class = "btn-outline-primary btn-sm",
+              style = "margin: 3px;"
+            )
+            clear_all_btn <- actionButton(
+              inputId = session$ns(paste0("country_clear_all", render_suffix)),
+              label = tagList(icon("times"), " ", i18n$t("modules.isa.ai_assistant.clear_countries")),
+              class = "btn-outline-secondary btn-sm",
+              style = "margin: 3px;"
+            )
+
+            selected_count <- length(rv$selected_countries)
+            count_text <- if (selected_count > 0) {
+              paste0(" (", selected_count, " ", i18n$t("modules.isa.ai_assistant.countries_selected"), ")")
+            } else {
+              ""
+            }
+
+            return(div(
+              h5(style = "font-weight: 600; color: #667eea;",
+                 paste0(i18n$t("modules.isa.ai_assistant.country_selection"), count_text)),
+              p(style = "font-size: 0.9em; color: #666; margin-top: 5px;",
+                i18n$t("modules.isa.ai_assistant.click_to_selectdeselect_multiple_selections_allowed")),
+              div(style = "margin-top: 5px;", select_all_btn, clear_all_btn),
+              if (length(eu_buttons) > 0) {
+                tagList(
+                  h6(style = "font-weight: 600; color: #28a745; margin-top: 10px;", "EU Member States"),
+                  div(style = "margin-top: 5px;", eu_buttons)
+                )
+              },
+              if (length(non_eu_buttons) > 0) {
+                tagList(
+                  h6(style = "font-weight: 600; color: #6c757d; margin-top: 10px;", "Non-EU Countries"),
+                  div(style = "margin-top: 5px;", non_eu_buttons)
+                )
+              }
+            ))
+          } else {
+            # Fallback when no country data available
+            return(div(
+              p(style = "color: #666;",
+                i18n$t("modules.isa.ai_assistant.skip_this_question"))
+            ))
+          }
+        }
+
         # Handle main issue with suggestions (multiple selection)
         else if (step_info$type == "choice_with_custom_multiple") {
           if (!is.null(rv$context$regional_sea)) {
@@ -1416,6 +1523,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             regional_sea = rv$context$regional_sea,
             ecosystem_type = rv$context$ecosystem_type,
             main_issue = rv$context$main_issue,
+            countries = rv$context$countries,
             return_sources = TRUE
           )
           suggestions <- suggestion_result$suggestions
@@ -1436,7 +1544,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               is_selected <- suggestion_name %in% element_names
               button_class <- if (is_selected) "quick-option selected" else "quick-option"
 
-              # P3: Add KB source badge for knowledge_db sourced suggestions
+              # P3: Add source badge for knowledge_db, governance, and socioeconomic sourced suggestions
               source_type <- suggestion_sources[suggestion_name]
               kb_badge <- if (!is.null(source_type) && source_type == "knowledge_db") {
                 tags$span(
@@ -1444,6 +1552,20 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                   style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
                   title = i18n$t("modules.isa.ai_assistant.from_knowledge_database"),
                   "KB"
+                )
+              } else if (!is.null(source_type) && source_type == "governance") {
+                tags$span(
+                  class = "badge badge-warning",
+                  style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
+                  title = "Governance suggestion based on selected countries",
+                  "GOV"
+                )
+              } else if (!is.null(source_type) && source_type == "socioeconomic") {
+                tags$span(
+                  class = "badge badge-success",
+                  style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
+                  title = "Socioeconomic suggestion based on selected countries",
+                  "SE"
                 )
               } else {
                 NULL
@@ -1645,7 +1767,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                         # Clear dependent selections
                         rv$context$ecosystem_type <- NULL
                         rv$context$ecosystem_subtype <- NULL
+                        rv$context$countries <- character(0)
                         rv$context$main_issue <- character(0)
+                        rv$selected_countries <- character(0)
                         rv$selected_issues <- character(0)
 
                         debug_log(sprintf("[AI ISA] Regional sea changed to %s, cleared dependent selections\n", sea_key))
@@ -1736,7 +1860,68 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             }
           }
 
-          # === HANDLE MAIN ISSUE SELECTION - MULTIPLE (Step 2) ===
+          # === HANDLE COUNTRY SELECTION - MULTIPLE (Step 2) ===
+          else if (step_info$type == "country_multiple") {
+            countries_list <- tryCatch(
+              get_countries_for_sea(rv$context$regional_sea),
+              error = function(e) {
+                debug_log(sprintf("get_countries_for_sea error in observer: %s", e$message), "AI ISA")
+                NULL
+              }
+            )
+
+            if (!is.null(countries_list) && length(countries_list) > 0) {
+              # Set up observers for each country toggle button
+              new_obs <- lapply(countries_list, function(country) {
+                local({
+                  country_code <- country$code
+                  country_name <- country$name
+                  button_id <- paste0("country_", country_code, "_s", current_step)
+
+                  observeEvent(input[[button_id]], {
+                    if (rv$current_step == current_step) {
+                      # Toggle selection
+                      if (country_code %in% rv$selected_countries) {
+                        debug_log(sprintf("[AI ISA] Country deselected: %s\n", country_name))
+                        rv$selected_countries <- setdiff(rv$selected_countries, country_code)
+                      } else {
+                        debug_log(sprintf("[AI ISA] Country selected: %s\n", country_name))
+                        rv$selected_countries <- c(rv$selected_countries, country_code)
+                      }
+
+                      # Force UI re-render
+                      rv$render_counter <- (rv$render_counter %||% 0) + 1
+                    }
+                  }, ignoreInit = TRUE)
+                })
+              })
+
+              active_observers <<- c(active_observers, new_obs)
+
+              # Observer for "Select All" button
+              obs_select_all <- observeEvent(input[[paste0("country_select_all_s", current_step)]], {
+                if (rv$current_step == current_step) {
+                  debug_log("[AI ISA] Country 'Select All' clicked\n")
+                  all_codes <- sapply(countries_list, function(c) c$code)
+                  rv$selected_countries <- all_codes
+                  rv$render_counter <- (rv$render_counter %||% 0) + 1
+                }
+              }, ignoreInit = TRUE)
+              active_observers <<- c(active_observers, list(obs_select_all))
+
+              # Observer for "Clear All" button
+              obs_clear_all <- observeEvent(input[[paste0("country_clear_all_s", current_step)]], {
+                if (rv$current_step == current_step) {
+                  debug_log("[AI ISA] Country 'Clear All' clicked\n")
+                  rv$selected_countries <- character(0)
+                  rv$render_counter <- (rv$render_counter %||% 0) + 1
+                }
+              }, ignoreInit = TRUE)
+              active_observers <<- c(active_observers, list(obs_clear_all))
+            }
+          }
+
+          # === HANDLE MAIN ISSUE SELECTION - MULTIPLE (Step 3) ===
           else if (step_info$type == "choice_with_custom_multiple") {
             if (!is.null(rv$context$regional_sea)) {
               issues <- REGIONAL_SEAS[[rv$context$regional_sea]]$common_issues
@@ -1851,7 +2036,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               category = step_info$target,
               regional_sea = rv$context$regional_sea,
               ecosystem_type = rv$context$ecosystem_type,
-              main_issue = rv$context$main_issue
+              main_issue = rv$context$main_issue,
+              countries = rv$context$countries
             )
 
             if (length(suggestions) > 0) {
@@ -1940,6 +2126,34 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # If on main_issue step with multiple selections, save them before moving on
       if (rv$current_step >= 0 && rv$current_step < length(QUESTION_FLOW)) {
         step_info <- QUESTION_FLOW[[rv$current_step + 1]]
+
+        if (step_info$target == "countries") {
+          # Save selected countries to context
+          rv$context$countries <- rv$selected_countries
+
+          if (length(rv$selected_countries) > 0) {
+            # Look up country names for the confirmation message
+            countries_list <- tryCatch(
+              get_countries_for_sea(rv$context$regional_sea),
+              error = function(e) NULL
+            )
+            country_names <- if (!is.null(countries_list)) {
+              sapply(countries_list[sapply(countries_list, function(c) c$code %in% rv$selected_countries)],
+                     function(c) c$name)
+            } else {
+              rv$selected_countries
+            }
+            country_list_str <- paste(country_names, collapse = ", ")
+
+            ai_response <- paste0(
+              country_list_str, " - ",
+              i18n$t("modules.isa.ai_assistant.country_confirmed")
+            )
+            rv$conversation <- c(rv$conversation, list(
+              list(type = "ai", message = ai_response, timestamp = Sys.time())
+            ))
+          }
+        }
 
         if (step_info$target == "main_issue" && length(rv$selected_issues) > 0) {
           # Save selected issues to context
@@ -2119,6 +2333,13 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           return()
         }
 
+        # Countries (text input fallback - not typical, but handle gracefully)
+        else if (step_info$target == "countries") {
+          # Skip through - countries are selected via toggle buttons
+          move_to_next_step()
+          return()
+        }
+
         # Main issue (text input)
         else if (step_info$target == "main_issue") {
           rv$context$main_issue <- answer
@@ -2233,7 +2454,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     # Template loading handlers extracted to modules/ai_isa/template_handlers.R
     setup_template_handlers(input, session, rv, i18n)
 
-    # Auto-save when ISA framework generation is complete (step 10)
+    # Auto-save when ISA framework generation is complete (step 11)
     # This ensures auto-save module can recover the data without requiring manual save
     # Uses isolate() and a flag to prevent infinite loop
     # NOTE: Element-to-ISA conversion delegated to save_to_project_format()
@@ -2242,9 +2463,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       debug_log(sprintf("[AI ISA SAVE] Observer fired - current_step: %s\n",
                   if(is.null(rv$current_step)) "NULL" else rv$current_step))
 
-      # Only trigger when step reaches 10
-      if (!is.null(rv$current_step) && rv$current_step == 10) {
-        debug_log(sprintf("[AI ISA SAVE] Step is 10, checking auto_saved_step_10 flag: %s\n",
+      # Only trigger when step reaches 11 (connection review)
+      if (!is.null(rv$current_step) && rv$current_step == 11) {
+        debug_log(sprintf("[AI ISA SAVE] Step is 11, checking auto_saved_step_10 flag: %s\n",
                     isTRUE(rv$auto_saved_step_10)))
 
         # Use isolate() to prevent reactive loop when updating project_data_reactive

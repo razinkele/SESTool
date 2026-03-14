@@ -684,6 +684,10 @@ source("data/ses_connection_knowledge_base.R", local = FALSE)
 # Must be global scope for use by AI ISA knowledge base and connection generator
 source("functions/ses_knowledge_db_loader.R", local = FALSE)
 
+# Country Governance and Socio-Economic Database loader
+# Must be global scope for country-specific governance and socioeconomic element suggestions
+source("functions/country_governance_loader.R", local = FALSE)
+
 source("data/dapsiwrm_element_keywords.R", local = TRUE)
 source("functions/dapsiwrm_connection_rules.R", local = TRUE)
 source("functions/ses_dynamics.R", local = TRUE)

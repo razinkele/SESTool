@@ -207,8 +207,11 @@ setup_action_handlers <- function(input, session, rv, i18n, project_data_reactiv
       regional_sea = NULL,
       ecosystem_type = NULL,
       ecosystem_subtype = NULL,
+      countries = character(0),
       main_issue = NULL
     )
+
+    rv$selected_countries <- character(0)
 
     rv$suggested_connections <- list()
     rv$approved_connections <- list()

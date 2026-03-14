@@ -91,6 +91,275 @@ get_regional_seas_knowledge_base <- function(i18n) {
 }
 
 # ============================================================================
+# COUNTRY DATA FOR REGIONAL SEAS
+# ============================================================================
+
+#' Get Countries for a Regional Sea
+#'
+#' Returns a list of countries bordering the specified regional sea,
+#' with metadata including EU membership status.
+#'
+#' @param regional_sea Regional sea key (e.g., "baltic", "mediterranean")
+#' @return List of country entries, each with $code, $name, $eu_member
+get_countries_for_sea <- function(regional_sea) {
+  if (is.null(regional_sea)) return(list())
+
+  country_db <- list(
+    baltic = list(
+      list(code = "SE", name = "Sweden", eu_member = TRUE),
+      list(code = "FI", name = "Finland", eu_member = TRUE),
+      list(code = "DK", name = "Denmark", eu_member = TRUE),
+      list(code = "DE", name = "Germany", eu_member = TRUE),
+      list(code = "PL", name = "Poland", eu_member = TRUE),
+      list(code = "LT", name = "Lithuania", eu_member = TRUE),
+      list(code = "LV", name = "Latvia", eu_member = TRUE),
+      list(code = "EE", name = "Estonia", eu_member = TRUE),
+      list(code = "RU", name = "Russia", eu_member = FALSE)
+    ),
+    mediterranean = list(
+      list(code = "ES", name = "Spain", eu_member = TRUE),
+      list(code = "FR", name = "France", eu_member = TRUE),
+      list(code = "IT", name = "Italy", eu_member = TRUE),
+      list(code = "GR", name = "Greece", eu_member = TRUE),
+      list(code = "HR", name = "Croatia", eu_member = TRUE),
+      list(code = "SI", name = "Slovenia", eu_member = TRUE),
+      list(code = "MT", name = "Malta", eu_member = TRUE),
+      list(code = "CY", name = "Cyprus", eu_member = TRUE),
+      list(code = "TR", name = "Turkey", eu_member = FALSE),
+      list(code = "TN", name = "Tunisia", eu_member = FALSE),
+      list(code = "DZ", name = "Algeria", eu_member = FALSE),
+      list(code = "MA", name = "Morocco", eu_member = FALSE),
+      list(code = "LY", name = "Libya", eu_member = FALSE),
+      list(code = "EG", name = "Egypt", eu_member = FALSE),
+      list(code = "IL", name = "Israel", eu_member = FALSE),
+      list(code = "LB", name = "Lebanon", eu_member = FALSE),
+      list(code = "SY", name = "Syria", eu_member = FALSE),
+      list(code = "ME", name = "Montenegro", eu_member = FALSE),
+      list(code = "AL", name = "Albania", eu_member = FALSE)
+    ),
+    north_sea = list(
+      list(code = "GB", name = "United Kingdom", eu_member = FALSE),
+      list(code = "NL", name = "Netherlands", eu_member = TRUE),
+      list(code = "BE", name = "Belgium", eu_member = TRUE),
+      list(code = "DE", name = "Germany", eu_member = TRUE),
+      list(code = "DK", name = "Denmark", eu_member = TRUE),
+      list(code = "NO", name = "Norway", eu_member = FALSE),
+      list(code = "SE", name = "Sweden", eu_member = TRUE),
+      list(code = "FR", name = "France", eu_member = TRUE)
+    ),
+    irish_sea = list(
+      list(code = "IE", name = "Ireland", eu_member = TRUE),
+      list(code = "GB", name = "United Kingdom", eu_member = FALSE)
+    ),
+    east_atlantic = list(
+      list(code = "PT", name = "Portugal", eu_member = TRUE),
+      list(code = "ES", name = "Spain", eu_member = TRUE),
+      list(code = "FR", name = "France", eu_member = TRUE),
+      list(code = "IE", name = "Ireland", eu_member = TRUE),
+      list(code = "GB", name = "United Kingdom", eu_member = FALSE),
+      list(code = "NO", name = "Norway", eu_member = FALSE),
+      list(code = "IS", name = "Iceland", eu_member = FALSE),
+      list(code = "MA", name = "Morocco", eu_member = FALSE),
+      list(code = "MR", name = "Mauritania", eu_member = FALSE),
+      list(code = "SN", name = "Senegal", eu_member = FALSE)
+    ),
+    black_sea = list(
+      list(code = "BG", name = "Bulgaria", eu_member = TRUE),
+      list(code = "RO", name = "Romania", eu_member = TRUE),
+      list(code = "TR", name = "Turkey", eu_member = FALSE),
+      list(code = "GE", name = "Georgia", eu_member = FALSE),
+      list(code = "UA", name = "Ukraine", eu_member = FALSE),
+      list(code = "RU", name = "Russia", eu_member = FALSE)
+    ),
+    atlantic = list(
+      list(code = "PT", name = "Portugal", eu_member = TRUE),
+      list(code = "ES", name = "Spain", eu_member = TRUE),
+      list(code = "FR", name = "France", eu_member = TRUE),
+      list(code = "IE", name = "Ireland", eu_member = TRUE),
+      list(code = "GB", name = "United Kingdom", eu_member = FALSE),
+      list(code = "US", name = "United States", eu_member = FALSE),
+      list(code = "CA", name = "Canada", eu_member = FALSE),
+      list(code = "BR", name = "Brazil", eu_member = FALSE),
+      list(code = "NO", name = "Norway", eu_member = FALSE),
+      list(code = "IS", name = "Iceland", eu_member = FALSE)
+    ),
+    pacific = list(
+      list(code = "AU", name = "Australia", eu_member = FALSE),
+      list(code = "NZ", name = "New Zealand", eu_member = FALSE),
+      list(code = "JP", name = "Japan", eu_member = FALSE),
+      list(code = "PH", name = "Philippines", eu_member = FALSE),
+      list(code = "ID", name = "Indonesia", eu_member = FALSE),
+      list(code = "FJ", name = "Fiji", eu_member = FALSE),
+      list(code = "PG", name = "Papua New Guinea", eu_member = FALSE),
+      list(code = "US", name = "United States", eu_member = FALSE),
+      list(code = "CL", name = "Chile", eu_member = FALSE),
+      list(code = "CN", name = "China", eu_member = FALSE)
+    ),
+    indian = list(
+      list(code = "IN", name = "India", eu_member = FALSE),
+      list(code = "LK", name = "Sri Lanka", eu_member = FALSE),
+      list(code = "MV", name = "Maldives", eu_member = FALSE),
+      list(code = "KE", name = "Kenya", eu_member = FALSE),
+      list(code = "TZ", name = "Tanzania", eu_member = FALSE),
+      list(code = "MZ", name = "Mozambique", eu_member = FALSE),
+      list(code = "MG", name = "Madagascar", eu_member = FALSE),
+      list(code = "AU", name = "Australia", eu_member = FALSE),
+      list(code = "ZA", name = "South Africa", eu_member = FALSE),
+      list(code = "OM", name = "Oman", eu_member = FALSE)
+    ),
+    caribbean = list(
+      list(code = "CU", name = "Cuba", eu_member = FALSE),
+      list(code = "JM", name = "Jamaica", eu_member = FALSE),
+      list(code = "DO", name = "Dominican Republic", eu_member = FALSE),
+      list(code = "TT", name = "Trinidad and Tobago", eu_member = FALSE),
+      list(code = "BB", name = "Barbados", eu_member = FALSE),
+      list(code = "BS", name = "Bahamas", eu_member = FALSE),
+      list(code = "MX", name = "Mexico", eu_member = FALSE),
+      list(code = "CO", name = "Colombia", eu_member = FALSE),
+      list(code = "VE", name = "Venezuela", eu_member = FALSE),
+      list(code = "BZ", name = "Belize", eu_member = FALSE),
+      list(code = "HN", name = "Honduras", eu_member = FALSE),
+      list(code = "FR", name = "France (overseas)", eu_member = TRUE),
+      list(code = "NL", name = "Netherlands (overseas)", eu_member = TRUE)
+    ),
+    arctic = list(
+      list(code = "NO", name = "Norway", eu_member = FALSE),
+      list(code = "RU", name = "Russia", eu_member = FALSE),
+      list(code = "CA", name = "Canada", eu_member = FALSE),
+      list(code = "US", name = "United States", eu_member = FALSE),
+      list(code = "DK", name = "Denmark (Greenland)", eu_member = TRUE),
+      list(code = "IS", name = "Iceland", eu_member = FALSE),
+      list(code = "SE", name = "Sweden", eu_member = TRUE),
+      list(code = "FI", name = "Finland", eu_member = TRUE)
+    )
+  )
+
+  # Return countries for the regional sea, or empty list for unknown seas
+  result <- country_db[[regional_sea]]
+  if (is.null(result)) return(list())
+  return(result)
+}
+
+#' Get Governance Elements Based on Countries
+#'
+#' Returns governance-related DAPSIWRM suggestions based on selected countries.
+#' Focuses on policy frameworks, regulations, and institutional responses
+#' relevant to the selected countries.
+#'
+#' @param countries Character vector of country codes
+#' @param category DAPSIWRM category
+#' @return Character vector of governance-related suggestions
+get_governance_elements <- function(countries, category) {
+  if (is.null(countries) || length(countries) == 0) return(character(0))
+
+  # Only relevant for responses category
+  if (category != "responses") return(character(0))
+
+  governance <- character(0)
+
+  # Check if any EU member states are selected
+  eu_countries <- c("SE", "FI", "DK", "DE", "PL", "LT", "LV", "EE",
+                    "ES", "FR", "IT", "GR", "HR", "SI", "MT", "CY",
+                    "NL", "BE", "PT", "IE", "BG", "RO")
+  has_eu <- any(countries %in% eu_countries)
+
+  if (has_eu) {
+    governance <- c(governance,
+      "EU Marine Strategy Framework Directive (MSFD)",
+      "EU Common Fisheries Policy (CFP)",
+      "EU Water Framework Directive",
+      "Natura 2000 marine sites",
+      "EU Biodiversity Strategy 2030",
+      "EU Blue Economy Strategy"
+    )
+  }
+
+  # Regional convention-based governance
+  if (any(countries %in% c("SE", "FI", "DK", "DE", "PL", "LT", "LV", "EE", "RU"))) {
+    governance <- c(governance, "HELCOM Baltic Sea Action Plan")
+  }
+  if (any(countries %in% c("ES", "FR", "IT", "GR", "HR", "SI", "MT", "CY",
+                            "TR", "TN", "DZ", "MA", "LY", "EG", "IL", "LB",
+                            "SY", "ME", "AL"))) {
+    governance <- c(governance, "Barcelona Convention (UNEP/MAP)")
+  }
+  if (any(countries %in% c("GB", "NL", "BE", "DE", "DK", "NO", "SE", "FR",
+                            "PT", "ES", "IE", "IS"))) {
+    governance <- c(governance, "OSPAR Convention")
+  }
+  if (any(countries %in% c("NO", "RU", "CA", "US", "DK", "IS", "SE", "FI"))) {
+    governance <- c(governance, "Arctic Council frameworks")
+  }
+
+  return(unique(governance))
+}
+
+#' Get Socioeconomic Elements Based on Countries
+#'
+#' Returns socioeconomic-related DAPSIWRM suggestions based on selected countries.
+#' Focuses on drivers and welfare elements specific to the economic profiles
+#' of selected countries.
+#'
+#' @param countries Character vector of country codes
+#' @param category DAPSIWRM category
+#' @return Character vector of socioeconomic suggestions
+get_socioeconomic_elements <- function(countries, category) {
+  if (is.null(countries) || length(countries) == 0) return(character(0))
+
+  suggestions <- character(0)
+
+  # Socioeconomic drivers
+  if (category == "drivers") {
+    # Small island developing states or coastal-dependent economies
+    coastal_dependent <- c("FJ", "MV", "BB", "BS", "JM", "TT", "MT",
+                           "CY", "IS", "MG", "MZ", "BZ")
+    if (any(countries %in% coastal_dependent)) {
+      suggestions <- c(suggestions,
+        "Tourism-dependent economy",
+        "Coastal community livelihoods",
+        "Small-scale fisheries dependency"
+      )
+    }
+
+    # Major fishing nations
+    fishing_nations <- c("NO", "IS", "ES", "JP", "CN", "ID", "PH",
+                          "IN", "TH", "PE", "CL")
+    if (any(countries %in% fishing_nations)) {
+      suggestions <- c(suggestions,
+        "Industrial fisheries demand",
+        "Seafood export economy",
+        "Fish processing industry"
+      )
+    }
+
+    # Major shipping nations
+    shipping_nations <- c("NL", "DE", "GB", "NO", "DK", "GR", "CN",
+                           "JP", "SG", "US")
+    if (any(countries %in% shipping_nations)) {
+      suggestions <- c(suggestions,
+        "Maritime transport demand",
+        "Port infrastructure development"
+      )
+    }
+  }
+
+  # Socioeconomic welfare impacts
+  if (category == "welfare") {
+    coastal_dependent <- c("FJ", "MV", "BB", "BS", "JM", "TT", "MT",
+                           "CY", "IS", "MG", "MZ", "BZ")
+    if (any(countries %in% coastal_dependent)) {
+      suggestions <- c(suggestions,
+        "Tourism revenue vulnerability",
+        "Coastal community displacement risk",
+        "Food security from marine resources"
+      )
+    }
+  }
+
+  return(unique(suggestions))
+}
+
+# ============================================================================
 # CONTEXT-AWARE SUGGESTIONS
 # ============================================================================
 
@@ -165,7 +434,7 @@ deduplicate_suggestions <- function(suggestions) {
 #' @param main_issue Main environmental issue
 #' @param return_sources If TRUE, return a list with suggestions and source attribution (for UI badges)
 #' @return Character vector of context-aware suggestions, or list with $suggestions and $sources if return_sources=TRUE
-get_context_suggestions <- function(category, regional_sea, ecosystem_type, main_issue, return_sources = FALSE) {
+get_context_suggestions <- function(category, regional_sea, ecosystem_type, main_issue, countries = NULL, return_sources = FALSE) {
   suggestions <- list()
 
   # ---- Priority 1: JSON Knowledge Database (context-specific, ecologically validated) ----
@@ -405,11 +674,45 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
   }
 
+  # ---- Country-based governance and socioeconomic suggestions ----
+  if (!is.null(countries) && length(countries) > 0) {
+    gov_elements <- tryCatch(
+      get_governance_elements(countries, category),
+      error = function(e) {
+        debug_log(sprintf("get_governance_elements error: %s", e$message), "AI ISA KB")
+        character(0)
+      }
+    )
+    if (length(gov_elements) > 0) {
+      suggestions$governance <- gov_elements
+      debug_log(sprintf("Governance provided %d %s suggestions for countries: %s",
+                        length(gov_elements), category,
+                        paste(countries, collapse = ", ")),
+                "AI ISA KB")
+    }
+
+    se_elements <- tryCatch(
+      get_socioeconomic_elements(countries, category),
+      error = function(e) {
+        debug_log(sprintf("get_socioeconomic_elements error: %s", e$message), "AI ISA KB")
+        character(0)
+      }
+    )
+    if (length(se_elements) > 0) {
+      suggestions$socioeconomic <- se_elements
+      debug_log(sprintf("Socioeconomic provided %d %s suggestions for countries: %s",
+                        length(se_elements), category,
+                        paste(countries, collapse = ", ")),
+                "AI ISA KB")
+    }
+  }
+
   # Combine all suggestions and remove exact duplicates
   # Knowledge DB suggestions come first (highest quality, context-specific)
   all_suggestions <- unique(c(suggestions$knowledge_db, suggestions$universal,
                               suggestions$regional, suggestions$ecosystem,
-                              suggestions$habitat, suggestions$issue))
+                              suggestions$habitat, suggestions$issue,
+                              suggestions$governance, suggestions$socioeconomic))
 
   # Apply semantic deduplication to remove similar terms
   deduplicated <- deduplicate_suggestions(all_suggestions)
@@ -422,6 +725,10 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     for (s in deduplicated) {
       if (s %in% kb_items) {
         source_map[s] <- "knowledge_db"
+      } else if (s %in% (suggestions$governance %||% character(0))) {
+        source_map[s] <- "governance"
+      } else if (s %in% (suggestions$socioeconomic %||% character(0))) {
+        source_map[s] <- "socioeconomic"
       } else if (s %in% (suggestions$regional %||% character(0))) {
         source_map[s] <- "regional"
       } else if (s %in% (suggestions$issue %||% character(0))) {

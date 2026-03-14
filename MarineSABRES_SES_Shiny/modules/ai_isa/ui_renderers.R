@@ -71,7 +71,7 @@ setup_ui_renderers <- function(input, output, session, rv, i18n, QUESTION_FLOW) 
       debug_log(sprintf("[AI ISA] Breadcrumb: Going back to step %d from step %d",
                  target_step, rv$current_step))
 
-      if (rv$current_step == 10 && target_step < 10) {
+      if (rv$current_step == 11 && target_step < 11) {
         debug_log("[AI ISA] Breadcrumb: Clearing connections for regeneration")
         rv$suggested_connections <- list()
         rv$approved_connections <- list()
@@ -79,14 +79,22 @@ setup_ui_renderers <- function(input, output, session, rv, i18n, QUESTION_FLOW) 
 
       rv$current_step <- target_step
 
-      if (target_step == 1) {
+      if (target_step <= 2) {
+        # Restore selected issues/countries when navigating back to steps before main_issue (step 3)
         if (length(rv$context$main_issue) > 0) {
           rv$selected_issues <- rv$context$main_issue
         } else {
           rv$selected_issues <- character(0)
         }
-      } else if (target_step < 1) {
+        if (length(rv$context$countries) > 0) {
+          rv$selected_countries <- rv$context$countries
+        } else {
+          rv$selected_countries <- character(0)
+        }
+      }
+      if (target_step < 1) {
         rv$selected_issues <- character(0)
+        rv$selected_countries <- character(0)
       }
 
       rv$render_counter <- (rv$render_counter %||% 0) + 1

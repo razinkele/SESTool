@@ -114,7 +114,7 @@ setup_template_handlers <- function(input, session, rv, i18n) {
     )
 
     rv$approved_connections <- seq_along(rv$suggested_connections)
-    rv$current_step <- 10
+    rv$current_step <- 11
     removeModal()
     showNotification(i18n$t("modules.isa.overfishing_template_loaded_with_example_connectio"), type = "message", duration = 5)
   })
@@ -192,7 +192,7 @@ setup_template_handlers <- function(input, session, rv, i18n) {
     )
 
     rv$approved_connections <- seq_along(rv$suggested_connections)
-    rv$current_step <- 10
+    rv$current_step <- 11
     removeModal()
     showNotification(i18n$t("modules.isa.marine_pollution_template_loaded_with_example_conn"), type = "message", duration = 5)
   })
@@ -267,7 +267,7 @@ setup_template_handlers <- function(input, session, rv, i18n) {
     )
 
     rv$approved_connections <- seq_along(rv$suggested_connections)
-    rv$current_step <- 10
+    rv$current_step <- 11
     removeModal()
     showNotification(i18n$t("modules.isa.coastal_tourism_template_loaded_with_example_conne"), type = "message", duration = 5)
   })
@@ -344,7 +344,7 @@ setup_template_handlers <- function(input, session, rv, i18n) {
     )
 
     rv$approved_connections <- seq_along(rv$suggested_connections)
-    rv$current_step <- 10
+    rv$current_step <- 11
     removeModal()
     showNotification(i18n$t("modules.isa.ai_assistant.climate_change_template_loaded_with_example_connections"), type = "message", duration = 5)
   })
