@@ -563,6 +563,13 @@ MSG_LARGE_GRAPH_LIMIT <- "Large graph detected. Limiting search to loops of leng
 MSG_MEDIUM_GRAPH_LIMIT <- "Medium graph detected. Limiting search to loops of length %d or less, max %d loops"
 
 # ============================================================================
+# BEGINNER MODE ELEMENT LIMITS
+# ============================================================================
+BEGINNER_MAX_ELEMENTS_DEFAULT <- 3L   # Default max elements per DAPSIWRM category in beginner mode
+BEGINNER_MAX_ELEMENTS_MIN     <- 2L   # Minimum allowed
+BEGINNER_MAX_ELEMENTS_MAX     <- 10L  # Maximum allowed (slider range)
+
+# ============================================================================
 # DTU DYNAMICS ANALYSIS CONSTANTS
 # ============================================================================
 

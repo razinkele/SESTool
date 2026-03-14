@@ -220,6 +220,12 @@ $(document).ready(function() {
   });
 });
 
+// Custom message handler for saving beginner max elements setting
+Shiny.addCustomMessageHandler('save_beginner_max_elements', function(message) {
+  localStorage.setItem('marinesabres_beginner_max_elements', message.value);
+  __dbg('[SETTINGS] Saved beginner max elements:', message.value);
+});
+
 // Custom message handler for saving user level
 Shiny.addCustomMessageHandler('save_user_level', function(message) {
   saveUserLevel(message.level);

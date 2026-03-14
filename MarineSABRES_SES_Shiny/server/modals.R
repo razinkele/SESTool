@@ -806,6 +806,32 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
           width = "100%"
         ),
 
+        # Beginner mode: max elements per category slider
+        conditionalPanel(
+          condition = "input.user_level_selector == 'beginner'",
+          tags$div(
+            style = "margin-top: 15px; padding: 12px; background: #e8f5e9; border-radius: 8px;",
+            tags$label(
+              style = "font-weight: 600; font-size: 13px; margin-bottom: 8px; display: block;",
+              icon("sliders-h"), " ",
+              i18n$t("ui.modals.max_elements_per_category")
+            ),
+            sliderInput(
+              "beginner_max_elements",
+              label = NULL,
+              min = BEGINNER_MAX_ELEMENTS_MIN,
+              max = BEGINNER_MAX_ELEMENTS_MAX,
+              value = BEGINNER_MAX_ELEMENTS_DEFAULT,
+              step = 1,
+              width = "100%"
+            ),
+            tags$small(
+              style = "color: #666; font-size: 11px;",
+              i18n$t("ui.modals.max_elements_hint")
+            )
+          )
+        ),
+
         tags$hr(),
 
         tags$p(
@@ -830,6 +856,13 @@ setup_user_level_modal_handlers <- function(input, output, session, user_level, 
 
     # Log the change
     debug_log(sprintf("Changing from %s to %s", user_level(), new_level), "USER-LEVEL")
+
+    # Save max elements setting if in beginner mode
+    max_elements <- input$beginner_max_elements %||% BEGINNER_MAX_ELEMENTS_DEFAULT
+    session$sendCustomMessage(
+      type = "save_beginner_max_elements",
+      message = list(value = max_elements)
+    )
 
     # Save to localStorage and reload via JavaScript
     session$sendCustomMessage(

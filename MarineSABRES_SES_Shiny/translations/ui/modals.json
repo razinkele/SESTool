@@ -33,6 +33,28 @@
       "no": "Bruk endringer",
       "el": "Εφαρμογή Αλλαγών"
     },
+    "ui.modals.max_elements_per_category": {
+      "en": "Maximum elements per DAPSIWRM category",
+      "es": "Máximo de elementos por categoría DAPSIWRM",
+      "fr": "Maximum d'éléments par catégorie DAPSIWRM",
+      "de": "Maximum Elemente pro DAPSIWRM-Kategorie",
+      "lt": "Maksimalus elementų skaičius DAPSIWRM kategorijoje",
+      "pt": "Máximo de elementos por categoria DAPSIWRM",
+      "it": "Massimo elementi per categoria DAPSIWRM",
+      "no": "Maksimalt antall elementer per DAPSIWRM-kategori",
+      "el": "Μέγιστα στοιχεία ανά κατηγορία DAPSIWRM"
+    },
+    "ui.modals.max_elements_hint": {
+      "en": "Controls how many elements can be added per category in beginner mode (AI assistant and templates).",
+      "es": "Controla cuántos elementos se pueden agregar por categoría en modo principiante.",
+      "fr": "Contrôle le nombre d'éléments pouvant être ajoutés par catégorie en mode débutant.",
+      "de": "Steuert, wie viele Elemente pro Kategorie im Anfängermodus hinzugefügt werden können.",
+      "lt": "Kontroliuoja, kiek elementų galima pridėti kiekvienai kategorijai pradedančiojo režime.",
+      "pt": "Controla quantos elementos podem ser adicionados por categoria no modo iniciante.",
+      "it": "Controlla quanti elementi possono essere aggiunti per categoria in modalità principiante.",
+      "no": "Kontrollerer hvor mange elementer som kan legges til per kategori i nybegynnermodus.",
+      "el": "Ελέγχει πόσα στοιχεία μπορούν να προστεθούν ανά κατηγορία σε λειτουργία αρχαρίου."
+    },
     "ui.modals.beginner_friendly_guides": {
       "en": "Beginner-Friendly Guides",
       "es": "Guías para Principiantes",

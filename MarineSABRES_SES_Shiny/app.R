@@ -566,6 +566,27 @@ server <- function(input, output, session) {
   # Default to beginner for new users and stakeholder testing
   user_level <- reactiveVal("beginner")
 
+  # Beginner mode: max elements per DAPSIWRM category (configurable via settings modal)
+  beginner_max_elements <- reactiveVal(BEGINNER_MAX_ELEMENTS_DEFAULT)
+
+  # Read saved value from localStorage via JS on session start
+  observe({
+    query <- parseQueryString(session$clientData$url_search)
+    # Also listen for localStorage value via custom input
+    shinyjs::runjs("
+      var saved = localStorage.getItem('marinesabres_beginner_max_elements');
+      if (saved) Shiny.setInputValue('_beginner_max_elements_init', parseInt(saved));
+    ")
+  }) |> bindEvent(session$clientData$url_search, once = TRUE)
+
+  observeEvent(input$`_beginner_max_elements_init`, {
+    val <- as.integer(input$`_beginner_max_elements_init`)
+    if (!is.na(val) && val >= BEGINNER_MAX_ELEMENTS_MIN && val <= BEGINNER_MAX_ELEMENTS_MAX) {
+      beginner_max_elements(val)
+      debug_log(sprintf("Restored beginner max elements from localStorage: %d", val), "SETTINGS")
+    }
+  })
+
   # Auto-save enabled flag (controls AI ISA Assistant auto-save)
   # Default to TRUE to prevent data loss - users expect their work to be saved
   autosave_enabled <- reactiveVal(TRUE)
@@ -1013,7 +1034,7 @@ server <- function(input, output, session) {
   template_ses_server("template_ses", project_data, session_i18n, session, event_bus, user_level)
 
   # AI ISA Assistant module
-  ai_isa_assistant_server("ai_isa_mod", project_data, session_i18n, event_bus, autosave_enabled, user_level, session)
+  ai_isa_assistant_server("ai_isa_mod", project_data, session_i18n, event_bus, autosave_enabled, user_level, session, beginner_max_elements)
 
   # ISA data entry module (Standard Entry)
   isa_data <- isa_data_entry_server("isa_module", project_data, session_i18n, event_bus)
