@@ -1143,6 +1143,46 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         }
       }
 
+      # Remap connection indices after element removal.
+      # Connections store from_index/to_index referencing positions in original
+      # element lists. After filtering, positions change, so we rebuild indices
+      # by name lookup and drop any connections referencing removed elements.
+      matrix_to_categories <- list(
+        d_a = c("drivers", "activities"), a_p = c("activities", "pressures"),
+        p_mpf = c("pressures", "states"), mpf_es = c("states", "impacts"),
+        es_gb = c("impacts", "welfare"), gb_d = c("welfare", "drivers"),
+        gb_r = c("welfare", "responses"), r_d = c("responses", "drivers"),
+        r_a = c("responses", "activities"), r_p = c("responses", "pressures")
+      )
+
+      # Build name-to-index maps for each category
+      name_index_maps <- list()
+      for (cat_name in names(rv$elements)) {
+        if (is.list(rv$elements[[cat_name]])) {
+          names_vec <- sapply(rv$elements[[cat_name]], function(x) x$name)
+          name_index_maps[[cat_name]] <- setNames(seq_along(names_vec), names_vec)
+        }
+      }
+
+      valid_approved <- integer()
+      for (conn_idx in rv$approved_connections) {
+        conn <- rv$suggested_connections[[conn_idx]]
+        cats <- matrix_to_categories[[conn$matrix]]
+        if (is.null(cats)) next
+
+        from_map <- name_index_maps[[cats[1]]]
+        to_map <- name_index_maps[[cats[2]]]
+        new_from <- if (!is.null(from_map)) from_map[[conn$from_name]] else NULL
+        new_to <- if (!is.null(to_map)) to_map[[conn$to_name]] else NULL
+
+        if (!is.null(new_from) && !is.null(new_to)) {
+          rv$suggested_connections[[conn_idx]]$from_index <- unname(new_from)
+          rv$suggested_connections[[conn_idx]]$to_index <- unname(new_to)
+          valid_approved <- c(valid_approved, conn_idx)
+        }
+      }
+      rv$approved_connections <- valid_approved
+
       removed_count <- length(result$unconnected)
       showNotification(
         sprintf(i18n$t("modules.isa.ai_assistant.removed_unconnected_elements"), removed_count),

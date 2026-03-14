@@ -321,27 +321,16 @@ build_adjacency_matrices <- function(elements, suggested_connections,
       paste0(conn$polarity, conn$strength, ":", confidence)
     }
 
-    # Determine which matrix and fill it
-    if (conn$matrix == "d_a" && !is.null(matrices$d_a)) {
-      matrices$d_a[conn$from_index, conn$to_index] <- value
-    } else if (conn$matrix == "a_p" && !is.null(matrices$a_p)) {
-      matrices$a_p[conn$from_index, conn$to_index] <- value
-    } else if (conn$matrix == "p_mpf" && !is.null(matrices$p_mpf)) {
-      matrices$p_mpf[conn$from_index, conn$to_index] <- value
-    } else if (conn$matrix == "mpf_es" && !is.null(matrices$mpf_es)) {
-      matrices$mpf_es[conn$from_index, conn$to_index] <- value
-    } else if (conn$matrix == "es_gb" && !is.null(matrices$es_gb)) {
-      matrices$es_gb[conn$from_index, conn$to_index] <- value
-    } else if (conn$matrix == "gb_d" && !is.null(matrices$gb_d)) {
-      matrices$gb_d[conn$from_index, conn$to_index] <- value
-    } else if (conn$matrix == "gb_r" && !is.null(matrices$gb_r)) {
-      matrices$gb_r[conn$from_index, conn$to_index] <- value
-    } else if (conn$matrix == "r_d" && !is.null(matrices$r_d)) {
-      matrices$r_d[conn$from_index, conn$to_index] <- value
-    } else if (conn$matrix == "r_a" && !is.null(matrices$r_a)) {
-      matrices$r_a[conn$from_index, conn$to_index] <- value
-    } else if (conn$matrix == "r_p" && !is.null(matrices$r_p)) {
-      matrices$r_p[conn$from_index, conn$to_index] <- value
+    # Determine which matrix and fill it (with bounds check)
+    mat_name <- conn$matrix
+    mat <- matrices[[mat_name]]
+    if (!is.null(mat) &&
+        conn$from_index >= 1 && conn$from_index <= nrow(mat) &&
+        conn$to_index >= 1 && conn$to_index <= ncol(mat)) {
+      matrices[[mat_name]][conn$from_index, conn$to_index] <- value
+    } else if (!is.null(mat)) {
+      debug_log(sprintf("Skipping out-of-bounds connection: matrix=%s, from=%d/%d, to=%d/%d",
+                 mat_name, conn$from_index, nrow(mat), conn$to_index, ncol(mat)), "AI ISA")
     }
   }
 
