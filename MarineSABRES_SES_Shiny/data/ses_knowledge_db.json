@@ -79,6 +79,10 @@
         {
           "name": "Microplastic accumulation in sediments",
           "relevance": 0.6
+        },
+        {
+          "name": "Fishing mortality on pike-perch stock",
+          "relevance": 0.9
         }
       ],
       "states": [
@@ -387,22 +391,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Small-scale gillnet fishing for pike-perch",
-          "from_type": "activities",
-          "to": "Pike-perch population dynamics",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "medium",
-          "confidence": 4,
-          "rationale": "Gillnet fishing removes pike-perch from the population, reducing stock size",
-          "references": [
-            "ICES 2020",
-            "Lappalainen et al. 2016"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Food security from local fisheries",
           "from_type": "drivers",
           "to": "Small-scale gillnet fishing for pike-perch",
@@ -491,6 +479,38 @@
           "references": [
             "Kangur et al. 2007",
             "Olin et al. 2002"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Small-scale gillnet fishing for pike-perch",
+          "from_type": "activities",
+          "to": "Fishing mortality on pike-perch stock",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Gillnet fishing directly creates fishing mortality pressure on pike-perch stocks",
+          "references": [
+            "ICES 2020",
+            "Lappalainen et al. 2016"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Fishing mortality on pike-perch stock",
+          "from_type": "pressures",
+          "to": "Pike-perch population dynamics",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Fishing mortality reduces pike-perch stock size and alters population age structure",
+          "references": [
+            "ICES 2020",
+            "Lappalainen et al. 2016"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -1430,7 +1450,7 @@
           "polarity": "+",
           "strength": "medium",
           "confidence": 4,
-          "rationale": "Cod quota reductions redirect fishing effort toward pelagic species (herring, sprat), increasing pressure on small pelagic stocks as fishers substitute target species",
+          "rationale": "Cod quota reductions redirect fishing effort toward pelagic species (herring, sprat), increasing pressure on small pelagic stocks as fishers substitute target species. Note: positive polarity reflects fleet displacement effect - when cod quotas are cut, fishing effort shifts to pelagic species (herring and sprat)",
           "references": [
             "Quaas et al. 2012",
             "ICES 2019"
@@ -2834,6 +2854,14 @@
         {
           "name": "Ghost fishing from lost nets on rocky substrate",
           "relevance": 0.6
+        },
+        {
+          "name": "Overharvesting of predatory fish",
+          "relevance": 0.9
+        },
+        {
+          "name": "Physical habitat degradation of rocky substrate",
+          "relevance": 0.8
         }
       ],
       "states": [
@@ -3109,38 +3137,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "No-take marine reserve designation",
-          "from_type": "responses",
-          "to": "Large predatory fish abundance (grouper, dentex)",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 4,
-          "rationale": "Marine reserves enable predatory fish recovery through reduced mortality; grouper and dentex biomass can increase 5-10x within reserves",
-          "references": [
-            "Guidetti & Sala 2007",
-            "Claudet et al. 2008"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "reversible"
-        },
-        {
-          "from": "Cystoseira habitat restoration projects",
-          "from_type": "responses",
-          "to": "Macroalgal canopy cover (Cystoseira, Sargassum)",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Active restoration transplants and recruits Cystoseira thalli onto barren substrates, initiating canopy recovery where natural recruitment is limited",
-          "references": [
-            "Verdura et al. 2018",
-            "Gianni et al. 2013"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Macroalgal canopy cover (Cystoseira, Sargassum)",
           "from_type": "states",
           "to": "Fish provisioning from artisanal rocky reef fishery",
@@ -3247,6 +3243,70 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "No-take marine reserve designation",
+          "from_type": "responses",
+          "to": "Overharvesting of predatory fish",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "No-take marine reserves eliminate fishing pressure on predatory fish within protected areas",
+          "references": [
+            "Guidetti & Sala 2007",
+            "Claudet et al. 2008"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Overharvesting of predatory fish",
+          "from_type": "pressures",
+          "to": "Large predatory fish abundance (grouper, dentex)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Overharvesting directly reduces predatory fish abundance on rocky shores",
+          "references": [
+            "Guidetti & Sala 2007",
+            "Claudet et al. 2008"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Cystoseira habitat restoration projects",
+          "from_type": "responses",
+          "to": "Physical habitat degradation of rocky substrate",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Cystoseira restoration counteracts physical habitat degradation by reestablishing canopy-forming algae",
+          "references": [
+            "Verdura et al. 2018",
+            "Gianni et al. 2013"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Physical habitat degradation of rocky substrate",
+          "from_type": "pressures",
+          "to": "Macroalgal canopy cover (Cystoseira, Sargassum)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Physical degradation of rocky substrate reduces macroalgal canopy recruitment and persistence",
+          "references": [
+            "Verdura et al. 2018",
+            "Gianni et al. 2013"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -3742,6 +3802,10 @@
         {
           "name": "Recreational sailing and powerboating",
           "relevance": 0.6
+        },
+        {
+          "name": "Commercial and recreational eel fishing",
+          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -3988,22 +4052,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Eel Management Plans (EU Eel Regulation)",
-          "from_type": "responses",
-          "to": "European eel recruitment and passage",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Eel management measures aim to increase silver eel escapement to the sea",
-          "references": [
-            "ICES 2020",
-            "OSPAR 2017"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Turbidity maximum zone expansion from dredging",
           "from_type": "pressures",
           "to": "Dissolved oxygen in turbidity maximum zone",
@@ -4138,6 +4186,22 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Eel Management Plans (EU Eel Regulation)",
+          "from_type": "responses",
+          "to": "Commercial and recreational eel fishing",
+          "to_type": "activities",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "The response restricts commercial and recreational eel fishing to allow recovery",
+          "references": [
+            "ICES 2020",
+            "OSPAR 2017"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -4191,6 +4255,10 @@
         {
           "name": "Coral reef monitoring and research",
           "relevance": 0.65
+        },
+        {
+          "name": "Global greenhouse gas emissions",
+          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -4217,6 +4285,14 @@
         {
           "name": "Nutrient enrichment from agricultural sources",
           "relevance": 0.75
+        },
+        {
+          "name": "Overharvesting of herbivorous reef fish",
+          "relevance": 0.9
+        },
+        {
+          "name": "Coral habitat loss and degradation",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -4301,22 +4377,6 @@
       ],
       "connections": [
         {
-          "from": "Climate change and ocean warming",
-          "from_type": "drivers",
-          "to": "Mass coral bleaching from thermal stress",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Rising sea temperatures directly trigger mass bleaching when corals exceed thermal thresholds",
-          "references": [
-            "IPCC 2019",
-            "Hoegh-Guldberg et al. 2007"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Mass coral bleaching from thermal stress",
           "from_type": "pressures",
           "to": "Live coral cover percentage",
@@ -4360,22 +4420,6 @@
           "references": [
             "Morris et al. 2009",
             "NOAA 2020"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Trap and spear fishing on reef",
-          "from_type": "activities",
-          "to": "Parrotfish population (key herbivores)",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Unregulated fishing of parrotfish removes crucial algae grazers from the reef",
-          "references": [
-            "Burke et al. 2011",
-            "Jackson et al. 2014"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -4445,22 +4489,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Parrotfish and herbivore harvest bans",
-          "from_type": "responses",
-          "to": "Parrotfish population (key herbivores)",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Harvest bans allow parrotfish recovery, restoring herbivory on reefs",
-          "references": [
-            "Jackson et al. 2014",
-            "NOAA 2020"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Lionfish culling bounty programmes",
           "from_type": "responses",
           "to": "Lionfish (Pterois volitans/miles) invasion and predation",
@@ -4474,22 +4502,6 @@
             "NOAA 2020"
           ],
           "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Coral nursery and outplanting programmes",
-          "from_type": "responses",
-          "to": "Live coral cover percentage",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Coral outplanting can restore cover locally but is limited in scale and species diversity",
-          "references": [
-            "NOAA 2020",
-            "Hoegh-Guldberg et al. 2007"
-          ],
-          "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
         },
         {
@@ -4597,6 +4609,118 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Trap and spear fishing on reef",
+          "from_type": "activities",
+          "to": "Overharvesting of herbivorous reef fish",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Trap and spear fishing on reefs directly targets herbivorous fish including parrotfish, creating overharvesting pressure",
+          "references": [
+            "Burke et al. 2011",
+            "Jackson et al. 2014"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Overharvesting of herbivorous reef fish",
+          "from_type": "pressures",
+          "to": "Parrotfish population (key herbivores)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Sustained overharvesting depletes parrotfish populations, reducing herbivory on reef algae",
+          "references": [
+            "Burke et al. 2011",
+            "Jackson et al. 2014"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Climate change and ocean warming",
+          "from_type": "drivers",
+          "to": "Global greenhouse gas emissions",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "The driver 'Climate change and ocean warming' is mediated through global greenhouse gas emissions that alter the climate system",
+          "references": [
+            "IPCC 2019",
+            "Hoegh-Guldberg et al. 2007"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "poorly_reversible"
+        },
+        {
+          "from": "Global greenhouse gas emissions",
+          "from_type": "activities",
+          "to": "Mass coral bleaching from thermal stress",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Rising sea temperatures directly trigger mass bleaching when corals exceed thermal thresholds",
+          "references": [
+            "IPCC 2019",
+            "Hoegh-Guldberg et al. 2007"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Parrotfish and herbivore harvest bans",
+          "from_type": "responses",
+          "to": "Overharvesting of herbivorous reef fish",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Parrotfish harvest bans directly reduce overharvesting pressure on herbivorous reef fish",
+          "references": [
+            "Jackson et al. 2014",
+            "NOAA 2020"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Coral nursery and outplanting programmes",
+          "from_type": "responses",
+          "to": "Coral habitat loss and degradation",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Coral nursery programmes and outplanting directly counteract coral habitat loss by restoring live coral framework",
+          "references": [
+            "NOAA 2020",
+            "Hoegh-Guldberg et al. 2007"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Coral habitat loss and degradation",
+          "from_type": "pressures",
+          "to": "Live coral cover percentage",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Ongoing coral habitat loss and degradation reduces live coral cover on reef structures",
+          "references": [
+            "NOAA 2020",
+            "Hoegh-Guldberg et al. 2007"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -4650,6 +4774,10 @@
         {
           "name": "Climate and sea ice monitoring research",
           "relevance": 0.7
+        },
+        {
+          "name": "Global greenhouse gas emissions",
+          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -4755,22 +4883,6 @@
         }
       ],
       "connections": [
-        {
-          "from": "Climate change and ocean warming",
-          "from_type": "drivers",
-          "to": "Accelerating sea ice extent and thickness loss",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Arctic warming at 2-4x the global average is the primary driver of sea ice loss",
-          "references": [
-            "IPCC 2019",
-            "AMAP 2017"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "partially_reversible"
-        },
         {
           "from": "Accelerating sea ice extent and thickness loss",
           "from_type": "pressures",
@@ -5036,6 +5148,38 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Climate change and ocean warming",
+          "from_type": "drivers",
+          "to": "Global greenhouse gas emissions",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "The driver 'Climate change and ocean warming' is mediated through global greenhouse gas emissions that alter the climate system",
+          "references": [
+            "IPCC 2019",
+            "AMAP 2017"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "poorly_reversible"
+        },
+        {
+          "from": "Global greenhouse gas emissions",
+          "from_type": "activities",
+          "to": "Accelerating sea ice extent and thickness loss",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Arctic warming at 2-4x the global average is the primary driver of sea ice loss",
+          "references": [
+            "IPCC 2019",
+            "AMAP 2017"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -5574,6 +5718,10 @@
         {
           "name": "Noise and visual disturbance from tourism",
           "relevance": 0.65
+        },
+        {
+          "name": "Overfishing pressure on reef fish",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -5786,21 +5934,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Coastal construction and marina development",
-          "from_type": "activities",
-          "to": "Physical habitat loss from coastal construction",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Marina and coastal infrastructure construction directly destroys nearshore habitats including subtidal rocky and sandy substrates",
-          "references": [
-            "Claudet & Fraschetti 2010"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "irreversible"
-        },
-        {
           "from": "Physical habitat loss from coastal construction",
           "from_type": "pressures",
           "to": "Posidonia oceanica meadow extent and health",
@@ -5816,21 +5949,6 @@
           "reversibility": "irreversible"
         },
         {
-          "from": "Posidonia oceanica meadow extent and health",
-          "from_type": "states",
-          "to": "Coastal protection by Posidonia banquettes",
-          "to_type": "impacts",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 4,
-          "rationale": "Healthy Posidonia meadows produce leaf litter that forms banquettes on beaches, attenuating wave energy and reducing coastal erosion",
-          "references": [
-            "De Falco et al. 2008"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Tourism industry employment and revenue",
           "from_type": "welfare",
           "to": "Mass beach tourism demand",
@@ -5844,36 +5962,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "reversible"
-        },
-        {
-          "from": "Marine Protected Areas (no-take zones)",
-          "from_type": "responses",
-          "to": "Rocky reef fish assemblage composition",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 4,
-          "rationale": "No-take marine reserves allow recovery of fish biomass and trophic structure on rocky reefs through the well-documented reserve effect",
-          "references": [
-            "Guidetti & Sala 2007"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "reversible"
-        },
-        {
-          "from": "Coastal urbanisation and second-home demand",
-          "from_type": "drivers",
-          "to": "Coastal construction and marina development",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Second-home demand drives marina and coastal construction projects along the Mediterranean open coast",
-          "references": [
-            "EEA 2006"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "partially_reversible"
         },
         {
           "from": "Marine litter and microplastic accumulation",
@@ -5950,6 +6038,51 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Marine Protected Areas (no-take zones)",
+          "from_type": "responses",
+          "to": "Overfishing pressure on reef fish",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Marine Protected Areas reduce fishing pressure on rocky reef fish assemblages within protected zones",
+          "references": [
+            "Guidetti & Sala 2007"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Overfishing pressure on reef fish",
+          "from_type": "pressures",
+          "to": "Rocky reef fish assemblage composition",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Overfishing depletes reef fish populations and alters community structure",
+          "references": [
+            "Guidetti & Sala 2007"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Coastal urbanisation and second-home demand",
+          "from_type": "drivers",
+          "to": "Coastal construction and marina development",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Demand for coastal urbanisation and second homes drives coastal construction and marina development",
+          "references": [
+            "EEA 2006"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "poorly_reversible"
         }
       ]
     },
@@ -6429,7 +6562,7 @@
           "polarity": "+",
           "strength": "medium",
           "confidence": 4,
-          "rationale": "Turbot fishing restrictions redirect fishing effort toward small pelagic species, intensifying purse seine pressure on anchovy and sprat stocks",
+          "rationale": "Turbot fishing restrictions redirect fishing effort toward small pelagic species, intensifying purse seine pressure on anchovy and sprat stocks. Note: positive polarity reflects fleet displacement effect - bans on turbot and sturgeon fishing redirect effort to pelagic purse seine fisheries",
           "references": [
             "Daskalov et al. 2007",
             "GFCM 2018"
@@ -6488,6 +6621,10 @@
         },
         {
           "name": "Agricultural and urban watershed runoff",
+          "relevance": 0.85
+        },
+        {
+          "name": "Green turtle foraging on seagrass beds",
           "relevance": 0.85
         }
       ],
@@ -6791,22 +6928,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Green turtle population recovery (post-harvest moratorium)",
-          "from_type": "drivers",
-          "to": "Overgrazing by recovering green turtle populations",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Successful conservation has led to turtle population increases that intensify grazing on Thalassia meadows",
-          "references": [
-            "Fourqurean et al., 2010",
-            "Heithaus et al., 2014"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Demand for queen conch and spiny lobster fisheries",
           "from_type": "drivers",
           "to": "Artisanal conch and lobster harvesting",
@@ -6896,6 +7017,38 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Green turtle population recovery (post-harvest moratorium)",
+          "from_type": "drivers",
+          "to": "Green turtle foraging on seagrass beds",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Recovery of green turtle populations increases the intensity and frequency of foraging on seagrass beds",
+          "references": [
+            "Fourqurean et al., 2010",
+            "Heithaus et al., 2014"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Green turtle foraging on seagrass beds",
+          "from_type": "activities",
+          "to": "Overgrazing by recovering green turtle populations",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Successful conservation has led to turtle population increases that intensify grazing on Thalassia meadows",
+          "references": [
+            "Fourqurean et al., 2010",
+            "Heithaus et al., 2014"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -7215,22 +7368,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Mangrove restoration and replanting programmes",
-          "from_type": "responses",
-          "to": "Mangrove canopy cover and forest extent",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Restoration can recover forest cover but success depends on hydrological conditions; monoculture plantings often fail",
-          "references": [
-            "Lewis, 2005",
-            "Ellison, 2000"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Aquaculture zoning and setback regulations",
           "from_type": "responses",
           "to": "Shrimp pond conversion of mangrove areas",
@@ -7368,6 +7505,22 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Mangrove restoration and replanting programmes",
+          "from_type": "responses",
+          "to": "Mangrove clearance for aquaculture ponds",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Mangrove restoration programmes directly counteract habitat loss by replanting and protecting cleared mangrove areas",
+          "references": [
+            "Lewis, 2005",
+            "Ellison, 2000"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -7421,6 +7574,10 @@
         {
           "name": "Marine research and monitoring stations",
           "relevance": 0.6
+        },
+        {
+          "name": "Global greenhouse gas emissions",
+          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -7447,6 +7604,10 @@
         {
           "name": "Cruise ship discharge (grey water, air emissions)",
           "relevance": 0.7
+        },
+        {
+          "name": "Destructive bottom trawling on coral habitat",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -7627,22 +7788,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Climate-driven Arctic warming and glacial retreat",
-          "from_type": "drivers",
-          "to": "Glacial retreat altering freshwater and sediment inputs",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 3,
-          "rationale": "Accelerating glacier melt increases freshwater and glacial sediment discharge into fjords",
-          "references": [
-            "Meire et al., 2017",
-            "Hopwood et al., 2020"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "irreversible"
-        },
-        {
           "from": "Glacial retreat altering freshwater and sediment inputs",
           "from_type": "pressures",
           "to": "Deep-water renewal frequency and oxygen levels",
@@ -7705,22 +7850,6 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
-        },
-        {
-          "from": "Cold-water coral habitat protection regulations",
-          "from_type": "responses",
-          "to": "Cold-water coral (Lophelia pertusa) reef condition",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 4,
-          "rationale": "Protection from trawling and anchoring allows slow-growing Lophelia reefs to persist and recover",
-          "references": [
-            "Fosså et al., 2002",
-            "Roberts et al., 2009"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "partially_reversible"
         },
         {
           "from": "Arctic cruise tourism growth",
@@ -7843,6 +7972,70 @@
           ],
           "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Climate-driven Arctic warming and glacial retreat",
+          "from_type": "drivers",
+          "to": "Global greenhouse gas emissions",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "The driver 'Climate-driven Arctic warming and glacial retreat' is mediated through global greenhouse gas emissions that alter the climate system",
+          "references": [
+            "Meire et al., 2017",
+            "Hopwood et al., 2020"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "poorly_reversible"
+        },
+        {
+          "from": "Global greenhouse gas emissions",
+          "from_type": "activities",
+          "to": "Glacial retreat altering freshwater and sediment inputs",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 3,
+          "rationale": "Accelerating glacier melt increases freshwater and glacial sediment discharge into fjords",
+          "references": [
+            "Meire et al., 2017",
+            "Hopwood et al., 2020"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Cold-water coral habitat protection regulations",
+          "from_type": "responses",
+          "to": "Destructive bottom trawling on coral habitat",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Cold-water coral protection regulations restrict destructive bottom trawling in coral areas",
+          "references": [
+            "Fosså et al., 2002",
+            "Roberts et al., 2009"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Destructive bottom trawling on coral habitat",
+          "from_type": "pressures",
+          "to": "Cold-water coral (Lophelia pertusa) reef condition",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Bottom trawling physically damages cold-water coral reefs, reducing reef condition and structural complexity",
+          "references": [
+            "Fosså et al., 2002",
+            "Roberts et al., 2009"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -7922,6 +8115,10 @@
         {
           "name": "Pacific oyster (Magallana gigas) reef expansion displacing native beds",
           "relevance": 0.75
+        },
+        {
+          "name": "Coastal squeeze and intertidal habitat loss",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -8166,22 +8363,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Managed realignment and de-poldering for habitat creation",
-          "from_type": "responses",
-          "to": "Intertidal mudflat and sandflat extent",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 4,
-          "rationale": "Removing sea walls and allowing tidal flooding creates new intertidal habitat offsetting coastal squeeze losses",
-          "references": [
-            "Reise et al., 2010",
-            "French, 2006"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Trilateral Wadden Sea Plan (NL-DE-DK cooperation)",
           "from_type": "responses",
           "to": "Disturbance to roosting and foraging wading birds",
@@ -8302,6 +8483,38 @@
           ],
           "temporal_lag": "long-term",
           "reversibility": "poorly_reversible"
+        },
+        {
+          "from": "Managed realignment and de-poldering for habitat creation",
+          "from_type": "responses",
+          "to": "Coastal squeeze and intertidal habitat loss",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Managed realignment reduces coastal squeeze by allowing landward migration of intertidal habitats",
+          "references": [
+            "Reise et al., 2010",
+            "French, 2006"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Coastal squeeze and intertidal habitat loss",
+          "from_type": "pressures",
+          "to": "Intertidal mudflat and sandflat extent",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Coastal squeeze between hard defences and rising sea levels progressively reduces intertidal mudflat extent",
+          "references": [
+            "Reise et al., 2010",
+            "French, 2006"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -8739,7 +8952,7 @@
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
-          "rationale": "Spawning bay restoration improves pike recruitment, supporting sustained gillnet fishing catches",
+          "rationale": "Spawning bay restoration improves pike recruitment, supporting sustained gillnet fishing catches. Note: positive polarity indicates that successful spawning bay restoration improves pike stocks, which in turn supports and enables continued small-scale gillnet fishing",
           "references": [
             "Sundblad et al. 2014"
           ],
@@ -8798,6 +9011,10 @@
         {
           "name": "Reef-based mariculture (giant clam, sea cucumber)",
           "relevance": 0.65
+        },
+        {
+          "name": "Global greenhouse gas emissions",
+          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -8911,22 +9128,6 @@
         }
       ],
       "connections": [
-        {
-          "from": "Climate change and ocean warming",
-          "from_type": "drivers",
-          "to": "Mass coral bleaching from marine heatwaves",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Indian Ocean warming drives increasingly frequent and severe marine heatwaves that trigger mass coral bleaching",
-          "references": [
-            "Hughes et al., 2018",
-            "McClanahan et al., 2007"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
         {
           "from": "Mass coral bleaching from marine heatwaves",
           "from_type": "pressures",
@@ -9223,6 +9424,38 @@
           "references": [
             "Silbiger et al. 2018",
             "Smith et al. 2016"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Climate change and ocean warming",
+          "from_type": "drivers",
+          "to": "Global greenhouse gas emissions",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "The driver 'Climate change and ocean warming' is mediated through global greenhouse gas emissions that alter the climate system",
+          "references": [
+            "Hughes et al., 2018",
+            "McClanahan et al., 2007"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "poorly_reversible"
+        },
+        {
+          "from": "Global greenhouse gas emissions",
+          "from_type": "activities",
+          "to": "Mass coral bleaching from marine heatwaves",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Indian Ocean warming drives increasingly frequent and severe marine heatwaves that trigger mass coral bleaching",
+          "references": [
+            "Hughes et al., 2018",
+            "McClanahan et al., 2007"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -9834,6 +10067,10 @@
         {
           "name": "Coastal sand mining for construction",
           "relevance": 0.7
+        },
+        {
+          "name": "Hurricane formation and intensification",
+          "relevance": 0.85
         }
       ],
       "pressures": [
@@ -10010,22 +10247,6 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
-        },
-        {
-          "from": "Climate vulnerability and hurricane exposure",
-          "from_type": "drivers",
-          "to": "Hurricane physical damage to reefs and coastline",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Intensifying hurricane seasons cause increasing physical destruction of reef frameworks and coastal infrastructure",
-          "references": [
-            "Gardner et al., 2005",
-            "Hoegh-Guldberg et al., 2007"
-          ],
-          "temporal_lag": "immediate",
-          "reversibility": "slowly_reversible"
         },
         {
           "from": "Sugar cane and rum production (agricultural runoff)",
@@ -10298,22 +10519,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Climate vulnerability and hurricane exposure",
-          "from_type": "drivers",
-          "to": "Freshwater lens integrity and volume",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "strong",
-          "confidence": 4,
-          "rationale": "Sea level rise and associated overwash events drive saltwater intrusion into the freshwater lens, reducing potable water volume",
-          "references": [
-            "Terry & Falkland, 2010",
-            "White et al., 2007"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "slowly_reversible"
-        },
-        {
           "from": "Overfishing of reef herbivores (parrotfish, surgeonfish)",
           "from_type": "pressures",
           "to": "Coral bleaching from marine heatwaves",
@@ -10376,6 +10581,38 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Climate vulnerability and hurricane exposure",
+          "from_type": "drivers",
+          "to": "Hurricane formation and intensification",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Climate vulnerability and ocean warming increase the frequency and intensity of hurricane formation",
+          "references": [
+            "Gardner et al., 2005",
+            "Hoegh-Guldberg et al., 2007"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "poorly_reversible"
+        },
+        {
+          "from": "Hurricane formation and intensification",
+          "from_type": "activities",
+          "to": "Hurricane physical damage to reefs and coastline",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Intensifying hurricane seasons cause increasing physical destruction of reef frameworks and coastal infrastructure",
+          "references": [
+            "Gardner et al., 2005",
+            "Hoegh-Guldberg et al., 2007"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "slowly_reversible"
         }
       ]
     },
@@ -10428,6 +10665,10 @@
         },
         {
           "name": "Seawall and coastal defence construction",
+          "relevance": 0.8
+        },
+        {
+          "name": "Global greenhouse gas emissions",
           "relevance": 0.8
         }
       ],
@@ -10597,22 +10838,6 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Climate change and ocean warming",
-          "from_type": "drivers",
-          "to": "Sea level rise from thermal expansion and ice melt",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Global warming drives sea level rise that directly threatens low-lying atoll land (avg elevation 1-2m)",
-          "references": [
-            "Storlazzi et al., 2018",
-            "Duvat, 2019"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "irreversible"
         },
         {
           "from": "Sea level rise from thermal expansion and ice melt",
@@ -10931,6 +11156,38 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Climate change and ocean warming",
+          "from_type": "drivers",
+          "to": "Global greenhouse gas emissions",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "The driver 'Climate change and ocean warming' is mediated through global greenhouse gas emissions that alter the climate system",
+          "references": [
+            "Storlazzi et al., 2018",
+            "Duvat, 2019"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "poorly_reversible"
+        },
+        {
+          "from": "Global greenhouse gas emissions",
+          "from_type": "activities",
+          "to": "Sea level rise from thermal expansion and ice melt",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Global warming drives sea level rise that directly threatens low-lying atoll land (avg elevation 1-2m)",
+          "references": [
+            "Storlazzi et al., 2018",
+            "Duvat, 2019"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
         }
       ]
     },
@@ -11509,6 +11766,10 @@
         {
           "name": "Marine scientific research and monitoring",
           "relevance": 0.65
+        },
+        {
+          "name": "Global greenhouse gas emissions",
+          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -11689,22 +11950,6 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Climate change and ocean warming",
-          "from_type": "drivers",
-          "to": "Coral bleaching from Indian Ocean warming events",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Indian Ocean warming (esp. IOD events) drives mass coral bleaching affecting up to 90% of shallow reefs",
-          "references": [
-            "McClanahan et al., 2007",
-            "Ateweberhan et al., 2013"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "slowly_reversible"
         },
         {
           "from": "Coral bleaching from Indian Ocean warming events",
@@ -11976,22 +12221,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Climate change and coral bleaching impacts",
-          "from_type": "drivers",
-          "to": "Freshwater lens integrity and volume",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "strong",
-          "confidence": 4,
-          "rationale": "Sea level rise and associated overwash events drive saltwater intrusion into the freshwater lens, reducing potable water volume",
-          "references": [
-            "Terry & Falkland, 2010",
-            "White et al., 2007"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "slowly_reversible"
-        },
-        {
           "from": "Granitic reef vs coralline reef condition and cover",
           "from_type": "states",
           "to": "Reef fish assemblage diversity and biomass",
@@ -12031,13 +12260,45 @@
           "polarity": "+",
           "strength": "weak",
           "confidence": 3,
-          "rationale": "Industrial tuna fishing restrictions under IOTC measures shift fishing pressure toward artisanal methods and nearshore reef resources as alternative livelihood sources",
+          "rationale": "Industrial tuna fishing restrictions under IOTC measures shift fishing pressure toward artisanal methods and nearshore reef resources as alternative livelihood sources. Note: positive polarity reflects effort displacement - industrial tuna management restrictions redirect fishing effort toward artisanal trap and handline methods",
           "references": [
             "Kaplan et al. 2014",
             "IOTC 2019"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Climate change and ocean warming",
+          "from_type": "drivers",
+          "to": "Global greenhouse gas emissions",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "The driver 'Climate change and ocean warming' is mediated through global greenhouse gas emissions that alter the climate system",
+          "references": [
+            "McClanahan et al., 2007",
+            "Ateweberhan et al., 2013"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "poorly_reversible"
+        },
+        {
+          "from": "Global greenhouse gas emissions",
+          "from_type": "activities",
+          "to": "Coral bleaching from Indian Ocean warming events",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Indian Ocean warming (esp. IOD events) drives mass coral bleaching affecting up to 90% of shallow reefs",
+          "references": [
+            "McClanahan et al., 2007",
+            "Ateweberhan et al., 2013"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "slowly_reversible"
         }
       ]
     },
@@ -12668,6 +12929,14 @@
         {
           "name": "Limited waste disposal capacity and landfill pressure",
           "relevance": 0.7
+        },
+        {
+          "name": "Disturbance to seabird breeding colonies from tourism",
+          "relevance": 0.85
+        },
+        {
+          "name": "Direct harvest mortality on marine mammals",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -12776,22 +13045,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Polar expedition cruise tourism",
-          "from_type": "activities",
-          "to": "Seabird colony populations (little auk, Brünnich's guillemot)",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Tourist landings near seabird colonies cause disturbance-induced nest abandonment, particularly in little auks and Brünnich's guillemots during incubation",
-          "references": [
-            "Burger & Gochfeld, 2007",
-            "Descamps et al., 2015"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Indigenous subsistence needs (hunting, fishing)",
           "from_type": "drivers",
           "to": "Subsistence hunting (seal, walrus, seabird)",
@@ -12806,22 +13059,6 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
-        },
-        {
-          "from": "Subsistence hunting (seal, walrus, seabird)",
-          "from_type": "activities",
-          "to": "Walrus (Odobenus rosmarus) haul-out site occupancy",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "medium",
-          "confidence": 4,
-          "rationale": "Hunting pressure and associated disturbance reduce walrus haul-out site fidelity and local population density",
-          "references": [
-            "Born et al., 2017",
-            "NAMMCO, 2019"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         },
         {
           "from": "Sea ice loss reducing habitat for ice-dependent species",
@@ -13092,6 +13329,70 @@
           ],
           "temporal_lag": "immediate",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Polar expedition cruise tourism",
+          "from_type": "activities",
+          "to": "Disturbance to seabird breeding colonies from tourism",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "The activity directly creates the pressure of disturbance to seabird breeding colonies from tourism",
+          "references": [
+            "Burger & Gochfeld, 2007",
+            "Descamps et al., 2015"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Disturbance to seabird breeding colonies from tourism",
+          "from_type": "pressures",
+          "to": "Seabird colony populations (little auk, Brünnich's guillemot)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Tourist landings near seabird colonies cause disturbance-induced nest abandonment, particularly in little auks and Brünnich's guillemots during incubation",
+          "references": [
+            "Burger & Gochfeld, 2007",
+            "Descamps et al., 2015"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Subsistence hunting (seal, walrus, seabird)",
+          "from_type": "activities",
+          "to": "Direct harvest mortality on marine mammals",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "The activity directly creates the pressure of direct harvest mortality on marine mammals",
+          "references": [
+            "Born et al., 2017",
+            "NAMMCO, 2019"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Direct harvest mortality on marine mammals",
+          "from_type": "pressures",
+          "to": "Walrus (Odobenus rosmarus) haul-out site occupancy",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Hunting pressure and associated disturbance reduce walrus haul-out site fidelity and local population density",
+          "references": [
+            "Born et al., 2017",
+            "NAMMCO, 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -13439,22 +13740,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Managed realignment for flood defence and habitat creation",
-          "from_type": "responses",
-          "to": "Saltmarsh extent and condition",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 4,
-          "rationale": "Managed realignment breaches sea walls to create new intertidal habitat, increasing saltmarsh area and restoring natural flood storage",
-          "references": [
-            "French, 2006",
-            "Esteves, 2014"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Flood damage avoidance for estuarine settlements",
           "from_type": "welfare",
           "to": "Flood risk management for estuarine communities",
@@ -13562,6 +13847,22 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Managed realignment for flood defence and habitat creation",
+          "from_type": "responses",
+          "to": "Habitat loss from land claim and channelization",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Managed realignment counteracts habitat loss from historical land claim by breaching sea walls and allowing saltmarsh to develop",
+          "references": [
+            "French, 2006",
+            "Esteves, 2014"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -13641,6 +13942,10 @@
         {
           "name": "Marine thermal stress from ocean warming",
           "relevance": 0.8
+        },
+        {
+          "name": "Coastal erosion and sediment deficit",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -13885,22 +14190,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Beach nourishment and sediment management programmes",
-          "from_type": "responses",
-          "to": "Sandy beach morphodynamics and sediment budget",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 4,
-          "rationale": "Periodic sand nourishment replenishes eroded beaches and maintains sediment budgets, though effects are temporary (3-10 years)",
-          "references": [
-            "Hanson et al., 2002",
-            "Hamm et al., 2002"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Surf and beach tourism revenue",
           "from_type": "welfare",
           "to": "Surf and beach tourism demand",
@@ -14022,6 +14311,38 @@
             "Casini et al. 2009"
           ],
           "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Beach nourishment and sediment management programmes",
+          "from_type": "responses",
+          "to": "Coastal erosion and sediment deficit",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Beach nourishment directly counteracts coastal erosion by replenishing sediment supply",
+          "references": [
+            "Hanson et al., 2002",
+            "Hamm et al., 2002"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Coastal erosion and sediment deficit",
+          "from_type": "pressures",
+          "to": "Sandy beach morphodynamics and sediment budget",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Coastal erosion and sediment deficit degrade sandy beach morphology and reduce beach width",
+          "references": [
+            "Hanson et al., 2002",
+            "Hamm et al., 2002"
+          ],
+          "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
         }
       ]
