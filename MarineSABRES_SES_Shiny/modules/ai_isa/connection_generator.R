@@ -735,7 +735,7 @@ convert_matrices_to_connections <- function(matrices, elements) {
 #' }
 #'
 #' @export
-generate_connections <- function(elements) {
+generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) {
   connections <- list()
   MAX_PER_TYPE <- 15  # Reduced limit for better quality (10 types x 15 = max 150 total)
   MIN_RELEVANCE <- 0.3  # Lower threshold to ensure core DAPSIWR connections are generated
@@ -781,6 +781,122 @@ generate_connections <- function(elements) {
   }
   if (length(elements$activities) > 0) {
     debug_log(sprintf("Activities: %s", paste(sapply(elements$activities, function(x) x$name), collapse=", ")), "AI ISA CONNECTIONS")
+  }
+
+  # ========================================================================
+  # SEED: Knowledge Database Connections (highest confidence)
+  # ========================================================================
+  # If a regional_sea and habitat context is available, seed connections
+  # from the JSON knowledge database. These are pre-validated, ecologically
+  # plausible connections with curated polarity, strength, and rationale.
+  kb_seeded <- 0
+  kb_seeded_keys <- character(0)  # Track seeded connections to avoid duplicates
+
+  if (!is.null(regional_sea) && !is.null(habitat) &&
+      exists("ses_knowledge_db_available", mode = "function") &&
+      ses_knowledge_db_available()) {
+    tryCatch({
+      kb_connections <- get_context_connections(regional_sea, habitat)
+      if (length(kb_connections) > 0) {
+        # Build a name lookup for elements (lowercase name -> index per type)
+        element_index <- list()
+        for (etype in c("drivers", "activities", "pressures", "states", "impacts", "welfare", "responses")) {
+          el_list <- elements[[etype]] %||% list()
+          if (length(el_list) > 0) {
+            element_index[[etype]] <- setNames(
+              seq_along(el_list),
+              tolower(sapply(el_list, function(x) x$name))
+            )
+          }
+        }
+
+        # Matrix name mapping for DAPSI(W)R(M) connection types
+        matrix_map <- list(
+          "drivers_activities" = "d_a", "activities_pressures" = "a_p",
+          "pressures_states" = "p_mpf", "states_impacts" = "mpf_es",
+          "impacts_welfare" = "es_gb", "welfare_drivers" = "gb_d",
+          "welfare_responses" = "gb_r", "responses_drivers" = "r_d",
+          "responses_activities" = "r_a", "responses_pressures" = "r_p"
+        )
+
+        for (kb_conn in kb_connections) {
+          from_type <- kb_conn$from_type
+          to_type <- kb_conn$to_type
+          from_name <- kb_conn$from
+          to_name <- kb_conn$to
+
+          if (is.null(from_type) || is.null(to_type) ||
+              is.null(from_name) || is.null(to_name)) next
+
+          # Find matching elements by name (case-insensitive partial match)
+          from_idx <- NULL
+          to_idx <- NULL
+
+          from_lookup <- element_index[[from_type]]
+          to_lookup <- element_index[[to_type]]
+          if (is.null(from_lookup) || is.null(to_lookup)) next
+
+          # Exact match first, then partial
+          from_lower <- tolower(from_name)
+          to_lower <- tolower(to_name)
+
+          if (from_lower %in% names(from_lookup)) {
+            from_idx <- from_lookup[[from_lower]]
+          } else {
+            # Partial match: check if any element name is contained in or contains the KB name
+            for (nm in names(from_lookup)) {
+              if (grepl(nm, from_lower, fixed = TRUE) || grepl(from_lower, nm, fixed = TRUE)) {
+                from_idx <- from_lookup[[nm]]
+                from_name <- elements[[from_type]][[from_idx]]$name
+                break
+              }
+            }
+          }
+
+          if (to_lower %in% names(to_lookup)) {
+            to_idx <- to_lookup[[to_lower]]
+          } else {
+            for (nm in names(to_lookup)) {
+              if (grepl(nm, to_lower, fixed = TRUE) || grepl(to_lower, nm, fixed = TRUE)) {
+                to_idx <- to_lookup[[nm]]
+                to_name <- elements[[to_type]][[to_idx]]$name
+                break
+              }
+            }
+          }
+
+          if (is.null(from_idx) || is.null(to_idx)) next
+
+          # Determine matrix name
+          type_key <- paste(from_type, to_type, sep = "_")
+          mat_name <- matrix_map[[type_key]] %||% type_key
+
+          conn_key <- paste(from_type, from_idx, to_type, to_idx, sep = "_")
+          kb_seeded_keys <- c(kb_seeded_keys, conn_key)
+
+          connections[[length(connections) + 1]] <- list(
+            from_type = from_type,
+            from_index = from_idx,
+            from_name = from_name,
+            to_type = to_type,
+            to_index = to_idx,
+            to_name = to_name,
+            polarity = kb_conn$polarity %||% "+",
+            strength = kb_conn$strength %||% "medium",
+            confidence = kb_conn$confidence %||% 4,
+            rationale = kb_conn$rationale %||% paste(from_name, "affects", to_name),
+            matrix = mat_name,
+            scoring_method = "knowledge_db"
+          )
+          kb_seeded <- kb_seeded + 1
+        }
+
+        debug_log(sprintf("Seeded %d connections from SES Knowledge DB (%s/%s)",
+                          kb_seeded, regional_sea, habitat), "AI ISA CONNECTIONS")
+      }
+    }, error = function(e) {
+      debug_log(sprintf("SES KB connection seeding failed: %s", e$message), "AI ISA CONNECTIONS")
+    })
   }
 
   # D -> A (Drivers -> Activities): Smart connection generation
@@ -858,8 +974,8 @@ generate_connections <- function(elements) {
   }
 
   # Log final count and per-type breakdown
-  debug_log(sprintf("TOTAL GENERATED: %d connections | D->A:%d A->P:%d P->S:%d S->I:%d I->W:%d R->P:%d W->D:%d W->R:%d R->D:%d R->A:%d",
-    length(connections), count_da, count_ap, count_ps, count_si, count_iw, count_rp, count_wd, count_wr, count_rd, count_ra),
+  debug_log(sprintf("TOTAL GENERATED: %d connections (KB seeded: %d) | D->A:%d A->P:%d P->S:%d S->I:%d I->W:%d R->P:%d W->D:%d W->R:%d R->D:%d R->A:%d",
+    length(connections), kb_seeded, count_da, count_ap, count_ps, count_si, count_iw, count_rp, count_wd, count_wr, count_rd, count_ra),
     "AI ISA CONNECTIONS")
 
   return(connections)

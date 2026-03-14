@@ -165,6 +165,23 @@ deduplicate_suggestions <- function(suggestions) {
 get_context_suggestions <- function(category, regional_sea, ecosystem_type, main_issue) {
   suggestions <- list()
 
+  # ---- Priority 1: JSON Knowledge Database (context-specific, ecologically validated) ----
+  if (exists("ses_knowledge_db_available", mode = "function") && ses_knowledge_db_available()) {
+    kb_elements <- tryCatch(
+      get_context_elements(regional_sea, ecosystem_type, category, min_relevance = 0.5),
+      error = function(e) character(0)
+    )
+    if (length(kb_elements) > 0) {
+      suggestions$knowledge_db <- kb_elements
+      debug_log(sprintf("SES KB provided %d %s suggestions for %s/%s",
+                        length(kb_elements), category,
+                        regional_sea %||% "NULL", ecosystem_type %||% "NULL"),
+                "AI ISA KB")
+    }
+  }
+
+  # ---- Priority 2: Hardcoded suggestions (generic and region-specific fallbacks) ----
+
   if (category == "drivers") {
     # Universal drivers
     suggestions$universal <- c("Food security", "Economic development", "Recreation and tourism",
@@ -360,8 +377,10 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
   }
 
   # Combine all suggestions and remove exact duplicates
-  all_suggestions <- unique(c(suggestions$universal, suggestions$regional,
-                              suggestions$ecosystem, suggestions$habitat, suggestions$issue))
+  # Knowledge DB suggestions come first (highest quality, context-specific)
+  all_suggestions <- unique(c(suggestions$knowledge_db, suggestions$universal,
+                              suggestions$regional, suggestions$ecosystem,
+                              suggestions$habitat, suggestions$issue))
 
   # Apply semantic deduplication to remove similar terms
   deduplicated <- deduplicate_suggestions(all_suggestions)

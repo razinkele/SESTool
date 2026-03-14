@@ -1,0 +1,2121 @@
+{
+  "version": "1.0",
+  "description": "Marine SES DAPSIWRM knowledge database - context-specific element and connection suggestions for Social-Ecological Systems analysis. Each context represents a regional sea x habitat combination with ecologically plausible elements and scientifically defensible connections.",
+  "last_updated": "2026-03-14",
+  "contexts": {
+    "baltic_lagoon": {
+      "regional_sea": "baltic",
+      "habitat": "lagoon",
+      "description": "Baltic coastal lagoons (e.g., Curonian, Vistula, Szczecin). Shallow, brackish, highly productive systems with limited water exchange, extensive reed beds, and strong agricultural nutrient inputs.",
+      "drivers": [
+        {"name": "Food security from local fisheries", "relevance": 0.9},
+        {"name": "Recreational demand for nature tourism", "relevance": 0.8},
+        {"name": "Agricultural intensification in catchment", "relevance": 0.95},
+        {"name": "Urban wastewater management needs", "relevance": 0.7},
+        {"name": "Cultural heritage of traditional fishing", "relevance": 0.75}
+      ],
+      "activities": [
+        {"name": "Small-scale gillnet fishing for pike-perch", "relevance": 0.95},
+        {"name": "Reed harvesting for thatching and bioenergy", "relevance": 0.85},
+        {"name": "Recreational angling for pike and perch", "relevance": 0.8},
+        {"name": "Agricultural drainage into lagoon", "relevance": 0.9},
+        {"name": "Bird-watching and nature tourism", "relevance": 0.75},
+        {"name": "Small-scale shellfish gathering", "relevance": 0.6}
+      ],
+      "pressures": [
+        {"name": "Eutrophication from agricultural runoff", "relevance": 0.95},
+        {"name": "Cyanobacteria bloom formation", "relevance": 0.9},
+        {"name": "Reduced water exchange with open sea", "relevance": 0.85},
+        {"name": "Sedimentation and lagoon infilling", "relevance": 0.7},
+        {"name": "Invasive species (round goby, Chinese mitten crab)", "relevance": 0.75},
+        {"name": "Microplastic accumulation in sediments", "relevance": 0.6}
+      ],
+      "states": [
+        {"name": "Pike-perch population dynamics", "relevance": 0.9},
+        {"name": "Submerged macrophyte coverage (e.g., Potamogeton)", "relevance": 0.85},
+        {"name": "Phytoplankton community composition", "relevance": 0.8},
+        {"name": "Reed bed extent and condition", "relevance": 0.85},
+        {"name": "Water transparency and light penetration", "relevance": 0.9}
+      ],
+      "impacts": [
+        {"name": "Fish provisioning from lagoon fisheries", "relevance": 0.9},
+        {"name": "Water purification by reed beds and macrophytes", "relevance": 0.8},
+        {"name": "Bird habitat provision (breeding, staging)", "relevance": 0.85},
+        {"name": "Flood buffering and coastal protection", "relevance": 0.7}
+      ],
+      "welfare": [
+        {"name": "Fisher household income from pike-perch sales", "relevance": 0.9},
+        {"name": "Recreational value for local communities", "relevance": 0.8},
+        {"name": "Cultural identity of lagoon fishing villages", "relevance": 0.75},
+        {"name": "Tourism revenue from birdwatching and angling", "relevance": 0.7}
+      ],
+      "responses": [
+        {"name": "HELCOM nutrient reduction targets for lagoon catchments", "relevance": 0.9},
+        {"name": "Reed bed restoration programmes", "relevance": 0.8},
+        {"name": "Pike-perch minimum landing size regulations", "relevance": 0.85},
+        {"name": "Agricultural buffer zone requirements", "relevance": 0.85},
+        {"name": "Natura 2000 lagoon habitat protection", "relevance": 0.8}
+      ],
+      "connections": [
+        {
+          "from": "Agricultural intensification in catchment",
+          "from_type": "drivers",
+          "to": "Agricultural drainage into lagoon",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Intensified farming increases fertiliser use and drainage volumes flowing into the lagoon"
+        },
+        {
+          "from": "Agricultural drainage into lagoon",
+          "from_type": "activities",
+          "to": "Eutrophication from agricultural runoff",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Drainage channels deliver nitrogen and phosphorus directly to the lagoon, driving eutrophication"
+        },
+        {
+          "from": "Eutrophication from agricultural runoff",
+          "from_type": "pressures",
+          "to": "Cyanobacteria bloom formation",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Excess nutrients, especially phosphorus, fuel cyanobacteria blooms in warm shallow lagoons"
+        },
+        {
+          "from": "Eutrophication from agricultural runoff",
+          "from_type": "pressures",
+          "to": "Submerged macrophyte coverage (e.g., Potamogeton)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Nutrient loading increases phytoplankton turbidity, shading out submerged macrophytes"
+        },
+        {
+          "from": "Cyanobacteria bloom formation",
+          "from_type": "pressures",
+          "to": "Water transparency and light penetration",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Dense cyanobacteria blooms drastically reduce water clarity in shallow lagoons"
+        },
+        {
+          "from": "Reduced water exchange with open sea",
+          "from_type": "pressures",
+          "to": "Phytoplankton community composition",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Poor flushing allows nutrient accumulation and dominance by bloom-forming species"
+        },
+        {
+          "from": "Pike-perch population dynamics",
+          "from_type": "states",
+          "to": "Fish provisioning from lagoon fisheries",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Healthy pike-perch stocks directly support lagoon fishery catches"
+        },
+        {
+          "from": "Reed bed extent and condition",
+          "from_type": "states",
+          "to": "Bird habitat provision (breeding, staging)",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Extensive reed beds provide essential nesting and staging habitat for waterbirds"
+        },
+        {
+          "from": "Reed bed extent and condition",
+          "from_type": "states",
+          "to": "Water purification by reed beds and macrophytes",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Reed beds filter nutrients and trap sediment, improving water quality"
+        },
+        {
+          "from": "Fish provisioning from lagoon fisheries",
+          "from_type": "impacts",
+          "to": "Fisher household income from pike-perch sales",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Fish catches directly translate to fisher income in lagoon communities"
+        },
+        {
+          "from": "Bird habitat provision (breeding, staging)",
+          "from_type": "impacts",
+          "to": "Tourism revenue from birdwatching and angling",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Rich bird populations attract birdwatching tourists and generate local revenue"
+        },
+        {
+          "from": "HELCOM nutrient reduction targets for lagoon catchments",
+          "from_type": "responses",
+          "to": "Eutrophication from agricultural runoff",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "International nutrient targets drive national measures that reduce agricultural nutrient loads"
+        },
+        {
+          "from": "Agricultural buffer zone requirements",
+          "from_type": "responses",
+          "to": "Agricultural drainage into lagoon",
+          "to_type": "activities",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Buffer zones intercept nutrients before they reach drainage channels flowing to the lagoon"
+        },
+        {
+          "from": "Pike-perch minimum landing size regulations",
+          "from_type": "responses",
+          "to": "Small-scale gillnet fishing for pike-perch",
+          "to_type": "activities",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Minimum size limits reduce fishing pressure on juvenile pike-perch"
+        },
+        {
+          "from": "Small-scale gillnet fishing for pike-perch",
+          "from_type": "activities",
+          "to": "Pike-perch population dynamics",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Gillnet fishing removes pike-perch from the population, reducing stock size"
+        }
+      ]
+    },
+    "baltic_estuary": {
+      "regional_sea": "baltic",
+      "habitat": "estuary",
+      "description": "Baltic river estuaries and river mouths (e.g., Daugava, Nemunas, Oder). Transitional waters with salinity gradients, migratory fish passages, and legacy industrial contamination.",
+      "drivers": [
+        {"name": "Salmon and sea trout fishery demand", "relevance": 0.85},
+        {"name": "Port and harbour expansion pressure", "relevance": 0.8},
+        {"name": "Flood risk management needs", "relevance": 0.85},
+        {"name": "Industrial water supply demand", "relevance": 0.7},
+        {"name": "Recreational boating and waterfront access", "relevance": 0.75}
+      ],
+      "activities": [
+        {"name": "Navigation channel dredging", "relevance": 0.9},
+        {"name": "Salmon stocking and hatchery operations", "relevance": 0.8},
+        {"name": "Industrial and municipal wastewater discharge", "relevance": 0.85},
+        {"name": "Recreational salmon fishing", "relevance": 0.75},
+        {"name": "Flood defence construction and maintenance", "relevance": 0.8},
+        {"name": "Sand and gravel extraction from river bed", "relevance": 0.65}
+      ],
+      "pressures": [
+        {"name": "Nutrient loading from upstream agriculture", "relevance": 0.9},
+        {"name": "Heavy metal contamination from industrial legacy", "relevance": 0.8},
+        {"name": "Physical habitat loss from channelisation", "relevance": 0.85},
+        {"name": "Blocked fish migration routes (dams, weirs)", "relevance": 0.9},
+        {"name": "Altered salinity gradient from flow regulation", "relevance": 0.7},
+        {"name": "Sediment resuspension from dredging", "relevance": 0.75}
+      ],
+      "states": [
+        {"name": "Atlantic salmon migration success", "relevance": 0.9},
+        {"name": "Dissolved oxygen levels in stratified waters", "relevance": 0.8},
+        {"name": "Estuarine benthic invertebrate communities", "relevance": 0.75},
+        {"name": "Lamprey population viability", "relevance": 0.7},
+        {"name": "Estuarine water quality (nutrients, contaminants)", "relevance": 0.85}
+      ],
+      "impacts": [
+        {"name": "Salmon fishery productivity", "relevance": 0.85},
+        {"name": "Nutrient filtration by estuarine wetlands", "relevance": 0.75},
+        {"name": "Nursery function for coastal fish species", "relevance": 0.8},
+        {"name": "Navigation and port accessibility", "relevance": 0.7}
+      ],
+      "welfare": [
+        {"name": "Recreational fishing tourism revenue", "relevance": 0.8},
+        {"name": "Port and shipping economic value", "relevance": 0.75},
+        {"name": "Flood damage avoidance for riverside communities", "relevance": 0.85},
+        {"name": "Drinking water quality for downstream users", "relevance": 0.7}
+      ],
+      "responses": [
+        {"name": "Fish passage restoration (dam removal, fish ladders)", "relevance": 0.9},
+        {"name": "Wastewater treatment plant upgrades", "relevance": 0.85},
+        {"name": "Salmon stock recovery plans (HELCOM)", "relevance": 0.8},
+        {"name": "River basin nutrient management plans", "relevance": 0.85},
+        {"name": "Contaminated sediment remediation programmes", "relevance": 0.7}
+      ],
+      "connections": [
+        {
+          "from": "Salmon and sea trout fishery demand",
+          "from_type": "drivers",
+          "to": "Salmon stocking and hatchery operations",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Demand for salmon fishing drives hatchery stocking programmes to supplement wild runs"
+        },
+        {
+          "from": "Port and harbour expansion pressure",
+          "from_type": "drivers",
+          "to": "Navigation channel dredging",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Expanding port capacity requires deepening and maintaining navigation channels"
+        },
+        {
+          "from": "Navigation channel dredging",
+          "from_type": "activities",
+          "to": "Sediment resuspension from dredging",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Dredging operations directly resuspend contaminated sediments and increase turbidity"
+        },
+        {
+          "from": "Industrial and municipal wastewater discharge",
+          "from_type": "activities",
+          "to": "Heavy metal contamination from industrial legacy",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Ongoing discharges add to legacy contamination in estuarine sediments"
+        },
+        {
+          "from": "Blocked fish migration routes (dams, weirs)",
+          "from_type": "pressures",
+          "to": "Atlantic salmon migration success",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Dams and weirs block upstream migration, preventing salmon from reaching spawning grounds"
+        },
+        {
+          "from": "Nutrient loading from upstream agriculture",
+          "from_type": "pressures",
+          "to": "Dissolved oxygen levels in stratified waters",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Excessive nutrients fuel algal growth; decomposition consumes oxygen in stratified estuary waters"
+        },
+        {
+          "from": "Atlantic salmon migration success",
+          "from_type": "states",
+          "to": "Salmon fishery productivity",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Successful salmon migration sustains spawning populations and future fishery catches"
+        },
+        {
+          "from": "Salmon fishery productivity",
+          "from_type": "impacts",
+          "to": "Recreational fishing tourism revenue",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Productive salmon runs attract recreational anglers and generate local tourism income"
+        },
+        {
+          "from": "Fish passage restoration (dam removal, fish ladders)",
+          "from_type": "responses",
+          "to": "Blocked fish migration routes (dams, weirs)",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Removing dams or installing fish ladders directly eliminates migration barriers"
+        },
+        {
+          "from": "Wastewater treatment plant upgrades",
+          "from_type": "responses",
+          "to": "Heavy metal contamination from industrial legacy",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Modern treatment removes heavy metals from effluent, reducing ongoing contamination"
+        },
+        {
+          "from": "Physical habitat loss from channelisation",
+          "from_type": "pressures",
+          "to": "Estuarine benthic invertebrate communities",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Channelisation removes natural substrate and flow variability, reducing benthic habitat quality"
+        },
+        {
+          "from": "Estuarine benthic invertebrate communities",
+          "from_type": "states",
+          "to": "Nursery function for coastal fish species",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Healthy benthic communities provide prey for juvenile fish in estuarine nurseries"
+        }
+      ]
+    },
+    "baltic_offshore": {
+      "regional_sea": "baltic",
+      "habitat": "offshore",
+      "description": "Open Baltic Sea waters. Semi-enclosed, brackish, with permanent halocline, deep-water hypoxia, and important pelagic fisheries (cod, herring, sprat).",
+      "drivers": [
+        {"name": "Demand for Baltic cod and herring", "relevance": 0.9},
+        {"name": "Offshore wind energy expansion targets", "relevance": 0.85},
+        {"name": "Maritime shipping route demand", "relevance": 0.8},
+        {"name": "Climate change mitigation goals", "relevance": 0.75},
+        {"name": "Sand and aggregate resource needs", "relevance": 0.6}
+      ],
+      "activities": [
+        {"name": "Demersal trawling for Baltic cod", "relevance": 0.9},
+        {"name": "Pelagic fishing for herring and sprat", "relevance": 0.9},
+        {"name": "Offshore wind farm construction and operation", "relevance": 0.85},
+        {"name": "Merchant shipping and ferry traffic", "relevance": 0.8},
+        {"name": "Submarine cable and pipeline installation", "relevance": 0.65},
+        {"name": "Military munition dumping legacy", "relevance": 0.5}
+      ],
+      "pressures": [
+        {"name": "Deep-water hypoxia (dead zones)", "relevance": 0.95},
+        {"name": "Overfishing of Eastern Baltic cod", "relevance": 0.9},
+        {"name": "Underwater noise from shipping and construction", "relevance": 0.75},
+        {"name": "Bycatch of harbour porpoise and seabirds", "relevance": 0.8},
+        {"name": "Seabed disturbance from bottom trawling", "relevance": 0.85},
+        {"name": "Contamination from dumped munitions", "relevance": 0.6}
+      ],
+      "states": [
+        {"name": "Eastern Baltic cod stock biomass", "relevance": 0.95},
+        {"name": "Central Baltic herring recruitment", "relevance": 0.85},
+        {"name": "Halocline dynamics and deep-water renewal", "relevance": 0.8},
+        {"name": "Harbour porpoise population in Baltic Proper", "relevance": 0.8},
+        {"name": "Benthic macrofauna in deep basins", "relevance": 0.75}
+      ],
+      "impacts": [
+        {"name": "Commercial fish stock provision (cod, herring, sprat)", "relevance": 0.9},
+        {"name": "Climate regulation through carbon cycling", "relevance": 0.7},
+        {"name": "Shipping route provision", "relevance": 0.75},
+        {"name": "Renewable energy generation from offshore wind", "relevance": 0.8}
+      ],
+      "welfare": [
+        {"name": "Fishing fleet economic viability", "relevance": 0.9},
+        {"name": "Energy security from Baltic wind farms", "relevance": 0.8},
+        {"name": "Fish processing industry employment", "relevance": 0.75},
+        {"name": "Maritime trade revenue", "relevance": 0.7}
+      ],
+      "responses": [
+        {"name": "Baltic cod fishing quota reductions (EU TAC)", "relevance": 0.95},
+        {"name": "HELCOM Baltic Sea Action Plan", "relevance": 0.9},
+        {"name": "Maritime spatial planning for wind and fisheries", "relevance": 0.85},
+        {"name": "Harbour porpoise bycatch mitigation (pingers)", "relevance": 0.8},
+        {"name": "Trawling closure zones in spawning areas", "relevance": 0.85}
+      ],
+      "connections": [
+        {
+          "from": "Demand for Baltic cod and herring",
+          "from_type": "drivers",
+          "to": "Demersal trawling for Baltic cod",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Market demand for cod directly drives trawling effort in the Baltic"
+        },
+        {
+          "from": "Demersal trawling for Baltic cod",
+          "from_type": "activities",
+          "to": "Overfishing of Eastern Baltic cod",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Excessive trawling effort has driven Eastern Baltic cod below safe biological limits"
+        },
+        {
+          "from": "Demersal trawling for Baltic cod",
+          "from_type": "activities",
+          "to": "Seabed disturbance from bottom trawling",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Bottom trawls physically disturb soft-sediment seabed habitats"
+        },
+        {
+          "from": "Demersal trawling for Baltic cod",
+          "from_type": "activities",
+          "to": "Bycatch of harbour porpoise and seabirds",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Gillnets and trawls incidentally catch harbour porpoise and diving seabirds"
+        },
+        {
+          "from": "Overfishing of Eastern Baltic cod",
+          "from_type": "pressures",
+          "to": "Eastern Baltic cod stock biomass",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Chronic overfishing has collapsed the Eastern Baltic cod stock"
+        },
+        {
+          "from": "Deep-water hypoxia (dead zones)",
+          "from_type": "pressures",
+          "to": "Benthic macrofauna in deep basins",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Hypoxic conditions eliminate benthic fauna over large areas of the Baltic deep basins"
+        },
+        {
+          "from": "Deep-water hypoxia (dead zones)",
+          "from_type": "pressures",
+          "to": "Eastern Baltic cod stock biomass",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Hypoxia reduces cod spawning success and juvenile survival in deep-water spawning areas"
+        },
+        {
+          "from": "Eastern Baltic cod stock biomass",
+          "from_type": "states",
+          "to": "Commercial fish stock provision (cod, herring, sprat)",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Cod biomass directly determines available catch for commercial fisheries"
+        },
+        {
+          "from": "Commercial fish stock provision (cod, herring, sprat)",
+          "from_type": "impacts",
+          "to": "Fishing fleet economic viability",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Fish stock availability determines whether fishing fleets can operate profitably"
+        },
+        {
+          "from": "Baltic cod fishing quota reductions (EU TAC)",
+          "from_type": "responses",
+          "to": "Overfishing of Eastern Baltic cod",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Quota reductions directly limit fishing mortality on cod stocks"
+        },
+        {
+          "from": "Trawling closure zones in spawning areas",
+          "from_type": "responses",
+          "to": "Seabed disturbance from bottom trawling",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Spatial closures prevent trawl damage in ecologically sensitive spawning areas"
+        },
+        {
+          "from": "Offshore wind energy expansion targets",
+          "from_type": "drivers",
+          "to": "Offshore wind farm construction and operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Government renewable energy targets drive rapid expansion of offshore wind installations"
+        },
+        {
+          "from": "Offshore wind farm construction and operation",
+          "from_type": "activities",
+          "to": "Underwater noise from shipping and construction",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Pile-driving during construction generates intense underwater noise affecting marine mammals"
+        }
+      ]
+    },
+    "baltic_open_coast": {
+      "regional_sea": "baltic",
+      "habitat": "open_coast",
+      "description": "Baltic open coastal waters and sandy/gravel beaches. Exposed coastlines with beach tourism, coastal erosion, seal haul-outs, and seasonal recreation pressure.",
+      "drivers": [
+        {"name": "Beach tourism and summer recreation demand", "relevance": 0.9},
+        {"name": "Coastal property development pressure", "relevance": 0.8},
+        {"name": "Coastal erosion risk management", "relevance": 0.85},
+        {"name": "Seal population recovery concerns", "relevance": 0.7},
+        {"name": "Recreational fishing demand (sea trout, flounder)", "relevance": 0.75}
+      ],
+      "activities": [
+        {"name": "Beach recreation and bathing", "relevance": 0.9},
+        {"name": "Coastal erosion protection works (groynes, nourishment)", "relevance": 0.85},
+        {"name": "Recreational sea trout and flounder fishing", "relevance": 0.75},
+        {"name": "Coastal residential and hotel development", "relevance": 0.8},
+        {"name": "Seal watching tourism", "relevance": 0.65},
+        {"name": "Seaweed and wrack harvesting", "relevance": 0.5}
+      ],
+      "pressures": [
+        {"name": "Coastal erosion from storms and sea level rise", "relevance": 0.9},
+        {"name": "Beach litter and microplastic pollution", "relevance": 0.8},
+        {"name": "Human disturbance at seal haul-out sites", "relevance": 0.7},
+        {"name": "Nutrient-driven filamentous algae on shores", "relevance": 0.75},
+        {"name": "Loss of natural coastal habitats from hardening", "relevance": 0.8}
+      ],
+      "states": [
+        {"name": "Grey seal and ringed seal population trends", "relevance": 0.8},
+        {"name": "Coastal vegetation and dune stability", "relevance": 0.85},
+        {"name": "Bathing water quality", "relevance": 0.9},
+        {"name": "Nearshore fish community (flounder, perch)", "relevance": 0.75},
+        {"name": "Wrack (bladderwrack) belt condition", "relevance": 0.7}
+      ],
+      "impacts": [
+        {"name": "Beach recreation and tourism amenity", "relevance": 0.9},
+        {"name": "Coastal protection from natural dunes", "relevance": 0.85},
+        {"name": "Nearshore recreational fishery", "relevance": 0.7},
+        {"name": "Aesthetic and cultural landscape value", "relevance": 0.75}
+      ],
+      "welfare": [
+        {"name": "Coastal tourism employment and revenue", "relevance": 0.9},
+        {"name": "Property values in coastal settlements", "relevance": 0.8},
+        {"name": "Quality of life for coastal residents", "relevance": 0.75},
+        {"name": "Health benefits from beach recreation", "relevance": 0.7}
+      ],
+      "responses": [
+        {"name": "Beach nourishment and managed retreat programmes", "relevance": 0.9},
+        {"name": "Bathing water quality monitoring (EU BWD)", "relevance": 0.85},
+        {"name": "Seal protection zones and visitor management", "relevance": 0.75},
+        {"name": "Dune habitat restoration", "relevance": 0.8},
+        {"name": "Marine litter reduction campaigns", "relevance": 0.7}
+      ],
+      "connections": [
+        {
+          "from": "Beach tourism and summer recreation demand",
+          "from_type": "drivers",
+          "to": "Beach recreation and bathing",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Tourism demand directly drives the number of beach visitors and recreation intensity"
+        },
+        {
+          "from": "Coastal erosion from storms and sea level rise",
+          "from_type": "pressures",
+          "to": "Coastal vegetation and dune stability",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Storm erosion removes dune fronts and destabilises coastal vegetation"
+        },
+        {
+          "from": "Beach litter and microplastic pollution",
+          "from_type": "pressures",
+          "to": "Bathing water quality",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Litter reduces aesthetic quality and microplastics pose emerging health concerns"
+        },
+        {
+          "from": "Bathing water quality",
+          "from_type": "states",
+          "to": "Beach recreation and tourism amenity",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Good water quality is essential for beach tourism attractiveness"
+        },
+        {
+          "from": "Coastal vegetation and dune stability",
+          "from_type": "states",
+          "to": "Coastal protection from natural dunes",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Stable dunes with vegetation provide natural coastal flood protection"
+        },
+        {
+          "from": "Beach recreation and tourism amenity",
+          "from_type": "impacts",
+          "to": "Coastal tourism employment and revenue",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Beach amenity directly supports the coastal tourism economy"
+        },
+        {
+          "from": "Beach nourishment and managed retreat programmes",
+          "from_type": "responses",
+          "to": "Coastal erosion from storms and sea level rise",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Beach nourishment temporarily counteracts erosion by adding sediment"
+        },
+        {
+          "from": "Nutrient-driven filamentous algae on shores",
+          "from_type": "pressures",
+          "to": "Wrack (bladderwrack) belt condition",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Filamentous algae outcompete bladderwrack by smothering and shading"
+        },
+        {
+          "from": "Human disturbance at seal haul-out sites",
+          "from_type": "pressures",
+          "to": "Grey seal and ringed seal population trends",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Repeated disturbance can reduce seal resting time and pup survival"
+        },
+        {
+          "from": "Seal protection zones and visitor management",
+          "from_type": "responses",
+          "to": "Human disturbance at seal haul-out sites",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Exclusion zones reduce direct human disturbance at sensitive haul-out sites"
+        }
+      ]
+    },
+    "mediterranean_lagoon": {
+      "regional_sea": "mediterranean",
+      "habitat": "lagoon",
+      "description": "Mediterranean coastal lagoons (e.g., Venice Lagoon, Etang de Thau, Mar Menor, Orbetello). Warm, shallow, highly productive systems supporting shellfish farming, traditional fishing, flamingo colonies, and salt pans.",
+      "drivers": [
+        {"name": "Demand for shellfish (mussels, oysters, clams)", "relevance": 0.95},
+        {"name": "Ecotourism and flamingo-watching demand", "relevance": 0.8},
+        {"name": "Salt production tradition", "relevance": 0.7},
+        {"name": "Agricultural intensification in surrounding plains", "relevance": 0.85},
+        {"name": "Coastal urbanisation pressure", "relevance": 0.75}
+      ],
+      "activities": [
+        {"name": "Shellfish farming (mussels, oysters, Manila clam)", "relevance": 0.95},
+        {"name": "Traditional fixed-net fishing (trabucco, lavoriero)", "relevance": 0.8},
+        {"name": "Flamingo and waterbird watching tourism", "relevance": 0.75},
+        {"name": "Artisanal salt harvesting", "relevance": 0.65},
+        {"name": "Agricultural drainage and irrigation return flows", "relevance": 0.9},
+        {"name": "Recreational boating in lagoon channels", "relevance": 0.6}
+      ],
+      "pressures": [
+        {"name": "Eutrophication and macroalgal blooms (Ulva)", "relevance": 0.95},
+        {"name": "Anoxic events from decomposing algal biomass", "relevance": 0.85},
+        {"name": "Reduced tidal exchange from inlet narrowing", "relevance": 0.8},
+        {"name": "Invasive Manila clam (Ruditapes philippinarum) spread", "relevance": 0.7},
+        {"name": "Pesticide contamination from agriculture", "relevance": 0.75},
+        {"name": "Pathogen loading affecting shellfish safety", "relevance": 0.8}
+      ],
+      "states": [
+        {"name": "Shellfish stock health and condition index", "relevance": 0.9},
+        {"name": "Greater flamingo colony size and breeding success", "relevance": 0.8},
+        {"name": "Seagrass (Zostera noltei, Cymodocea) presence", "relevance": 0.75},
+        {"name": "Water column dissolved oxygen dynamics", "relevance": 0.85},
+        {"name": "Lagoon salinity regime and water residence time", "relevance": 0.8}
+      ],
+      "impacts": [
+        {"name": "Shellfish production for local and export markets", "relevance": 0.95},
+        {"name": "Nutrient cycling and water purification", "relevance": 0.75},
+        {"name": "Waterbird habitat and biodiversity support", "relevance": 0.85},
+        {"name": "Cultural landscape and heritage value", "relevance": 0.7}
+      ],
+      "welfare": [
+        {"name": "Shellfish farmer livelihoods", "relevance": 0.9},
+        {"name": "Nature tourism revenue for local communities", "relevance": 0.8},
+        {"name": "Traditional fishing community identity", "relevance": 0.7},
+        {"name": "Public health from safe shellfish consumption", "relevance": 0.75}
+      ],
+      "responses": [
+        {"name": "Lagoon water exchange improvement (inlet management)", "relevance": 0.85},
+        {"name": "Shellfish sanitary monitoring programmes", "relevance": 0.9},
+        {"name": "Nutrient input reduction from agricultural best practice", "relevance": 0.85},
+        {"name": "Ramsar and Natura 2000 lagoon designations", "relevance": 0.8},
+        {"name": "Macroalgal biomass removal campaigns", "relevance": 0.7}
+      ],
+      "connections": [
+        {
+          "from": "Demand for shellfish (mussels, oysters, clams)",
+          "from_type": "drivers",
+          "to": "Shellfish farming (mussels, oysters, Manila clam)",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Growing market demand for Mediterranean shellfish drives expansion of lagoon aquaculture"
+        },
+        {
+          "from": "Agricultural drainage and irrigation return flows",
+          "from_type": "activities",
+          "to": "Eutrophication and macroalgal blooms (Ulva)",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Agricultural return flows deliver nitrogen and phosphorus, fuelling macroalgal blooms"
+        },
+        {
+          "from": "Eutrophication and macroalgal blooms (Ulva)",
+          "from_type": "pressures",
+          "to": "Anoxic events from decomposing algal biomass",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Mass die-off of macroalgae creates oxygen-depleting decomposition events"
+        },
+        {
+          "from": "Anoxic events from decomposing algal biomass",
+          "from_type": "pressures",
+          "to": "Shellfish stock health and condition index",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Anoxia causes mass shellfish mortality events in Mediterranean lagoons"
+        },
+        {
+          "from": "Eutrophication and macroalgal blooms (Ulva)",
+          "from_type": "pressures",
+          "to": "Seagrass (Zostera noltei, Cymodocea) presence",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Macroalgal mats smother seagrass and algal turbidity reduces light for seagrass growth"
+        },
+        {
+          "from": "Shellfish stock health and condition index",
+          "from_type": "states",
+          "to": "Shellfish production for local and export markets",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Healthy shellfish stocks support reliable production for markets"
+        },
+        {
+          "from": "Greater flamingo colony size and breeding success",
+          "from_type": "states",
+          "to": "Waterbird habitat and biodiversity support",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Thriving flamingo colonies indicate good lagoon habitat quality"
+        },
+        {
+          "from": "Shellfish production for local and export markets",
+          "from_type": "impacts",
+          "to": "Shellfish farmer livelihoods",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Shellfish production directly supports farmer incomes and employment"
+        },
+        {
+          "from": "Waterbird habitat and biodiversity support",
+          "from_type": "impacts",
+          "to": "Nature tourism revenue for local communities",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Flamingo and waterbird populations attract birdwatching tourists"
+        },
+        {
+          "from": "Shellfish sanitary monitoring programmes",
+          "from_type": "responses",
+          "to": "Pathogen loading affecting shellfish safety",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Monitoring enables harvest closures that protect public health, driving source reduction"
+        },
+        {
+          "from": "Lagoon water exchange improvement (inlet management)",
+          "from_type": "responses",
+          "to": "Reduced tidal exchange from inlet narrowing",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Active inlet management improves water circulation and reduces stagnation"
+        },
+        {
+          "from": "Nutrient input reduction from agricultural best practice",
+          "from_type": "responses",
+          "to": "Eutrophication and macroalgal blooms (Ulva)",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Reducing agricultural nutrient inputs lowers the fuel supply for macroalgal blooms"
+        }
+      ]
+    },
+    "mediterranean_seagrass": {
+      "regional_sea": "mediterranean",
+      "habitat": "seagrass",
+      "description": "Mediterranean Posidonia oceanica meadows and Cymodocea nodosa beds. Endemic seagrass ecosystems providing nursery habitat, carbon storage, and sediment stability, threatened by anchoring and coastal development.",
+      "drivers": [
+        {"name": "Recreational boating and yacht tourism demand", "relevance": 0.9},
+        {"name": "Coastal resort and marina development", "relevance": 0.85},
+        {"name": "Climate change and sea temperature rise", "relevance": 0.8},
+        {"name": "Demand for sustainable blue carbon credits", "relevance": 0.65},
+        {"name": "Water quality requirements for tourism", "relevance": 0.75}
+      ],
+      "activities": [
+        {"name": "Yacht and sailboat anchoring over Posidonia", "relevance": 0.95},
+        {"name": "Coastal construction and marina expansion", "relevance": 0.85},
+        {"name": "Trawling near seagrass bed margins", "relevance": 0.8},
+        {"name": "Desalination brine discharge", "relevance": 0.7},
+        {"name": "Snorkeling and dive tourism over meadows", "relevance": 0.7},
+        {"name": "Underwater seagrass monitoring surveys", "relevance": 0.6}
+      ],
+      "pressures": [
+        {"name": "Mechanical damage from boat anchoring and mooring", "relevance": 0.95},
+        {"name": "Turbidity increase from coastal works", "relevance": 0.8},
+        {"name": "Invasive algae (Caulerpa taxifolia, C. cylindracea)", "relevance": 0.85},
+        {"name": "Sea temperature rise and marine heatwaves", "relevance": 0.8},
+        {"name": "Hypersaline discharge from desalination", "relevance": 0.65}
+      ],
+      "states": [
+        {"name": "Posidonia oceanica meadow extent and density", "relevance": 0.95},
+        {"name": "Seagrass-associated fish assemblage", "relevance": 0.85},
+        {"name": "Matte (root mat) integrity and accretion rate", "relevance": 0.8},
+        {"name": "Epiphyte community on seagrass leaves", "relevance": 0.7},
+        {"name": "Water clarity over meadow areas", "relevance": 0.8}
+      ],
+      "impacts": [
+        {"name": "Nursery habitat for commercial fish (Sparidae, Labridae)", "relevance": 0.9},
+        {"name": "Blue carbon sequestration in seagrass matte", "relevance": 0.8},
+        {"name": "Sediment stabilisation and coastal protection", "relevance": 0.85},
+        {"name": "Water clarity maintenance through particle trapping", "relevance": 0.75}
+      ],
+      "welfare": [
+        {"name": "Dive tourism and snorkeling amenity value", "relevance": 0.85},
+        {"name": "Artisanal fishery catch value (seagrass-dependent species)", "relevance": 0.8},
+        {"name": "Coastal property protection from wave buffering", "relevance": 0.7},
+        {"name": "Climate mitigation value of blue carbon storage", "relevance": 0.65}
+      ],
+      "responses": [
+        {"name": "Posidonia protection zones (anchoring bans)", "relevance": 0.95},
+        {"name": "Eco-mooring buoy installation programmes", "relevance": 0.9},
+        {"name": "Environmental impact assessment for coastal works", "relevance": 0.85},
+        {"name": "Caulerpa invasive species removal programmes", "relevance": 0.7},
+        {"name": "Seagrass transplanting and restoration trials", "relevance": 0.75}
+      ],
+      "connections": [
+        {
+          "from": "Recreational boating and yacht tourism demand",
+          "from_type": "drivers",
+          "to": "Yacht and sailboat anchoring over Posidonia",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Growing yacht tourism increases the number of boats anchoring in seagrass areas"
+        },
+        {
+          "from": "Yacht and sailboat anchoring over Posidonia",
+          "from_type": "activities",
+          "to": "Mechanical damage from boat anchoring and mooring",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Each anchor deployment tears up Posidonia shoots and rhizomes"
+        },
+        {
+          "from": "Mechanical damage from boat anchoring and mooring",
+          "from_type": "pressures",
+          "to": "Posidonia oceanica meadow extent and density",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Repeated anchoring creates expanding bare patches in Posidonia meadows; recovery takes decades"
+        },
+        {
+          "from": "Invasive algae (Caulerpa taxifolia, C. cylindracea)",
+          "from_type": "pressures",
+          "to": "Posidonia oceanica meadow extent and density",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Caulerpa spp. colonise damaged areas and outcompete Posidonia in degraded meadows"
+        },
+        {
+          "from": "Posidonia oceanica meadow extent and density",
+          "from_type": "states",
+          "to": "Nursery habitat for commercial fish (Sparidae, Labridae)",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Dense Posidonia meadows provide essential nursery habitat for juvenile fish"
+        },
+        {
+          "from": "Posidonia oceanica meadow extent and density",
+          "from_type": "states",
+          "to": "Blue carbon sequestration in seagrass matte",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Posidonia matte accumulates carbon over millennia; meadow loss releases stored carbon"
+        },
+        {
+          "from": "Posidonia oceanica meadow extent and density",
+          "from_type": "states",
+          "to": "Sediment stabilisation and coastal protection",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Posidonia root mats bind sediment and leaves attenuate wave energy"
+        },
+        {
+          "from": "Nursery habitat for commercial fish (Sparidae, Labridae)",
+          "from_type": "impacts",
+          "to": "Artisanal fishery catch value (seagrass-dependent species)",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Loss of nursery habitat reduces recruitment to adult fish populations exploited by fishers"
+        },
+        {
+          "from": "Posidonia protection zones (anchoring bans)",
+          "from_type": "responses",
+          "to": "Mechanical damage from boat anchoring and mooring",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Anchoring bans directly prevent physical damage to protected Posidonia areas"
+        },
+        {
+          "from": "Eco-mooring buoy installation programmes",
+          "from_type": "responses",
+          "to": "Mechanical damage from boat anchoring and mooring",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Eco-moorings eliminate the need for anchoring, preventing seabed damage"
+        },
+        {
+          "from": "Sea temperature rise and marine heatwaves",
+          "from_type": "pressures",
+          "to": "Posidonia oceanica meadow extent and density",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Marine heatwaves cause shoot mortality at the upper thermal tolerance of Posidonia"
+        }
+      ]
+    },
+    "mediterranean_rocky_shore": {
+      "regional_sea": "mediterranean",
+      "habitat": "rocky_shore",
+      "description": "Mediterranean rocky shores and sublittoral rocky reefs. Supports sea urchin barrens vs. macroalgal forests, artisanal fishing, and marine reserves with the reserve effect.",
+      "drivers": [
+        {"name": "Artisanal fishing tradition and cultural demand", "relevance": 0.9},
+        {"name": "Diving tourism and underwater recreation", "relevance": 0.85},
+        {"name": "Sea urchin and shellfish harvesting demand", "relevance": 0.8},
+        {"name": "Marine biodiversity conservation goals", "relevance": 0.75},
+        {"name": "Climate change and tropicalisation of biota", "relevance": 0.7}
+      ],
+      "activities": [
+        {"name": "Artisanal trammel net and longline fishing", "relevance": 0.9},
+        {"name": "Sea urchin (Paracentrotus lividus) harvesting", "relevance": 0.85},
+        {"name": "Recreational spearfishing", "relevance": 0.75},
+        {"name": "Scuba diving tourism on rocky reefs", "relevance": 0.8},
+        {"name": "Scientific monitoring and underwater surveys", "relevance": 0.6},
+        {"name": "Octopus and cuttlefish pot fishing", "relevance": 0.7}
+      ],
+      "pressures": [
+        {"name": "Overgrazing by sea urchins (urchin barrens)", "relevance": 0.9},
+        {"name": "Overharvesting of predatory fish (grouper, dentex)", "relevance": 0.85},
+        {"name": "Invasive tropical species establishment", "relevance": 0.75},
+        {"name": "Mucilage events and marine heatwaves", "relevance": 0.7},
+        {"name": "Ghost fishing from lost nets on rocky substrate", "relevance": 0.6}
+      ],
+      "states": [
+        {"name": "Macroalgal canopy cover (Cystoseira, Sargassum)", "relevance": 0.9},
+        {"name": "Sea urchin population density", "relevance": 0.85},
+        {"name": "Large predatory fish abundance (grouper, dentex)", "relevance": 0.85},
+        {"name": "Rocky reef biodiversity index", "relevance": 0.8},
+        {"name": "Invasive species presence (e.g., Siganus, Fistularia)", "relevance": 0.7}
+      ],
+      "impacts": [
+        {"name": "Fish provisioning from artisanal rocky reef fishery", "relevance": 0.85},
+        {"name": "Diving and snorkeling tourism attraction", "relevance": 0.8},
+        {"name": "Biodiversity and genetic resource conservation", "relevance": 0.75},
+        {"name": "Coastal food web integrity", "relevance": 0.7}
+      ],
+      "welfare": [
+        {"name": "Artisanal fisher income and cultural continuity", "relevance": 0.85},
+        {"name": "Dive centre and marine tourism revenue", "relevance": 0.8},
+        {"name": "Seafood quality and gastronomic heritage", "relevance": 0.7},
+        {"name": "Scientific and educational value", "relevance": 0.6}
+      ],
+      "responses": [
+        {"name": "No-take marine reserve designation", "relevance": 0.95},
+        {"name": "Sea urchin harvesting quota management", "relevance": 0.85},
+        {"name": "Spearfishing regulations (ban in reserves)", "relevance": 0.8},
+        {"name": "Lost fishing gear retrieval programmes", "relevance": 0.65},
+        {"name": "Cystoseira habitat restoration projects", "relevance": 0.7}
+      ],
+      "connections": [
+        {
+          "from": "Overharvesting of predatory fish (grouper, dentex)",
+          "from_type": "pressures",
+          "to": "Sea urchin population density",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Removal of sea urchin predators (fish) triggers urchin population explosion via trophic cascade"
+        },
+        {
+          "from": "Overgrazing by sea urchins (urchin barrens)",
+          "from_type": "pressures",
+          "to": "Macroalgal canopy cover (Cystoseira, Sargassum)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Dense urchin populations graze macroalgal forests to bare rock (barren grounds)"
+        },
+        {
+          "from": "Artisanal trammel net and longline fishing",
+          "from_type": "activities",
+          "to": "Overharvesting of predatory fish (grouper, dentex)",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Artisanal fishing selectively targets large predatory fish on rocky reefs"
+        },
+        {
+          "from": "No-take marine reserve designation",
+          "from_type": "responses",
+          "to": "Overharvesting of predatory fish (grouper, dentex)",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "No-take reserves allow predatory fish populations to recover (the reserve effect)"
+        },
+        {
+          "from": "Large predatory fish abundance (grouper, dentex)",
+          "from_type": "states",
+          "to": "Diving and snorkeling tourism attraction",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Large fish are the primary attraction for diving tourists on Mediterranean reefs"
+        },
+        {
+          "from": "Macroalgal canopy cover (Cystoseira, Sargassum)",
+          "from_type": "states",
+          "to": "Rocky reef biodiversity index",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Macroalgal canopies create habitat complexity supporting diverse invertebrate and fish communities"
+        },
+        {
+          "from": "Diving and snorkeling tourism attraction",
+          "from_type": "impacts",
+          "to": "Dive centre and marine tourism revenue",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Attractive underwater scenery directly drives dive tourism spending"
+        },
+        {
+          "from": "Fish provisioning from artisanal rocky reef fishery",
+          "from_type": "impacts",
+          "to": "Artisanal fisher income and cultural continuity",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Fish catches provide the economic basis for artisanal fishing communities"
+        },
+        {
+          "from": "Sea urchin harvesting quota management",
+          "from_type": "responses",
+          "to": "Overgrazing by sea urchins (urchin barrens)",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Managed harvesting can reduce urchin density, allowing macroalgal recovery"
+        },
+        {
+          "from": "Invasive tropical species establishment",
+          "from_type": "pressures",
+          "to": "Rocky reef biodiversity index",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Tropical invasives like Siganus compete with native herbivores and alter reef community structure"
+        }
+      ]
+    },
+    "north_sea_offshore": {
+      "regional_sea": "north_sea",
+      "habitat": "offshore",
+      "description": "North Sea offshore waters. Highly industrialised shelf sea with oil/gas platforms, major wind farm arrays, sandeel fisheries, aggregate extraction, and busy shipping lanes.",
+      "drivers": [
+        {"name": "Offshore wind energy policy targets (EU, UK)", "relevance": 0.95},
+        {"name": "Oil and gas production demand (declining)", "relevance": 0.8},
+        {"name": "Sand and gravel resource demand for construction", "relevance": 0.7},
+        {"name": "Industrial-scale fisheries demand (sandeel, herring)", "relevance": 0.85},
+        {"name": "International shipping and trade growth", "relevance": 0.8}
+      ],
+      "activities": [
+        {"name": "Offshore wind farm construction (monopile, jacket)", "relevance": 0.95},
+        {"name": "Oil and gas platform operation and decommissioning", "relevance": 0.8},
+        {"name": "Sandeel industrial fishery", "relevance": 0.85},
+        {"name": "Beam trawling for flatfish (sole, plaice)", "relevance": 0.8},
+        {"name": "Marine aggregate (sand/gravel) dredging", "relevance": 0.7},
+        {"name": "Container and tanker shipping traffic", "relevance": 0.8}
+      ],
+      "pressures": [
+        {"name": "Seabed habitat loss from wind farm foundations", "relevance": 0.8},
+        {"name": "Underwater noise from pile-driving", "relevance": 0.9},
+        {"name": "Sandeel stock depletion affecting seabirds", "relevance": 0.9},
+        {"name": "Chronic hydrocarbon contamination from platforms", "relevance": 0.7},
+        {"name": "Seabed disturbance from beam trawling", "relevance": 0.85},
+        {"name": "Ship-strike and collision risk for marine mammals", "relevance": 0.65}
+      ],
+      "states": [
+        {"name": "Sandeel stock abundance and distribution", "relevance": 0.9},
+        {"name": "Seabird breeding success (kittiwake, puffin, tern)", "relevance": 0.85},
+        {"name": "Harbour porpoise and minke whale abundance", "relevance": 0.8},
+        {"name": "Benthic community recovery around wind farms", "relevance": 0.75},
+        {"name": "North Sea herring stock biomass", "relevance": 0.8}
+      ],
+      "impacts": [
+        {"name": "Fish stock provisioning for human consumption", "relevance": 0.85},
+        {"name": "Renewable energy generation capacity", "relevance": 0.9},
+        {"name": "Shipping and trade route services", "relevance": 0.8},
+        {"name": "Seabird population sustainability", "relevance": 0.75}
+      ],
+      "welfare": [
+        {"name": "Fishing industry employment and revenue", "relevance": 0.85},
+        {"name": "Energy security and carbon reduction benefits", "relevance": 0.9},
+        {"name": "Decommissioning cost burden (oil sector)", "relevance": 0.7},
+        {"name": "Seabird conservation value (public concern)", "relevance": 0.65}
+      ],
+      "responses": [
+        {"name": "Sandeel fishery closure zones (UK, Denmark)", "relevance": 0.9},
+        {"name": "Maritime spatial planning (North Sea)", "relevance": 0.85},
+        {"name": "Underwater noise mitigation requirements (bubble curtains)", "relevance": 0.85},
+        {"name": "OSPAR regional action plans for marine litter", "relevance": 0.7},
+        {"name": "Platform decommissioning regulations", "relevance": 0.75}
+      ],
+      "connections": [
+        {
+          "from": "Offshore wind energy policy targets (EU, UK)",
+          "from_type": "drivers",
+          "to": "Offshore wind farm construction (monopile, jacket)",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Government targets directly drive massive investment in offshore wind construction"
+        },
+        {
+          "from": "Offshore wind farm construction (monopile, jacket)",
+          "from_type": "activities",
+          "to": "Underwater noise from pile-driving",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Monopile installation generates high-intensity impulsive noise harmful to cetaceans"
+        },
+        {
+          "from": "Sandeel industrial fishery",
+          "from_type": "activities",
+          "to": "Sandeel stock depletion affecting seabirds",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Industrial sandeel fishing reduces prey availability for surface-feeding seabirds"
+        },
+        {
+          "from": "Sandeel stock depletion affecting seabirds",
+          "from_type": "pressures",
+          "to": "Seabird breeding success (kittiwake, puffin, tern)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Sandeel shortage causes chick starvation and breeding failure in kittiwakes and puffins"
+        },
+        {
+          "from": "Sandeel stock depletion affecting seabirds",
+          "from_type": "pressures",
+          "to": "Sandeel stock abundance and distribution",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Overfishing directly reduces sandeel biomass in the North Sea"
+        },
+        {
+          "from": "Underwater noise from pile-driving",
+          "from_type": "pressures",
+          "to": "Harbour porpoise and minke whale abundance",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Pile-driving noise causes harbour porpoise displacement and potential hearing damage"
+        },
+        {
+          "from": "Beam trawling for flatfish (sole, plaice)",
+          "from_type": "activities",
+          "to": "Seabed disturbance from beam trawling",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Beam trawls physically scrape and flatten seabed habitats"
+        },
+        {
+          "from": "Sandeel stock abundance and distribution",
+          "from_type": "states",
+          "to": "Fish stock provisioning for human consumption",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Sandeel abundance supports both direct fishery and prey base for commercial fish"
+        },
+        {
+          "from": "Sandeel fishery closure zones (UK, Denmark)",
+          "from_type": "responses",
+          "to": "Sandeel stock depletion affecting seabirds",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Closure zones protect sandeel spawning and feeding areas from fishing mortality"
+        },
+        {
+          "from": "Underwater noise mitigation requirements (bubble curtains)",
+          "from_type": "responses",
+          "to": "Underwater noise from pile-driving",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Bubble curtains reduce noise propagation during pile-driving by 10-20 dB"
+        },
+        {
+          "from": "Renewable energy generation capacity",
+          "from_type": "impacts",
+          "to": "Energy security and carbon reduction benefits",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Offshore wind directly contributes to energy security and decarbonisation"
+        }
+      ]
+    },
+    "north_sea_estuary": {
+      "regional_sea": "north_sea",
+      "habitat": "estuary",
+      "description": "North Sea estuaries (e.g., Thames, Elbe, Scheldt, Humber). Major port estuaries with heavy industrial legacy, flood defence infrastructure, migratory fish restoration, and high economic importance.",
+      "drivers": [
+        {"name": "Major port and container terminal expansion", "relevance": 0.9},
+        {"name": "Flood risk management for coastal cities", "relevance": 0.95},
+        {"name": "Migratory fish (salmon, eel) recovery goals", "relevance": 0.8},
+        {"name": "Industrial and petrochemical water demand", "relevance": 0.75},
+        {"name": "Water Framework Directive compliance pressure", "relevance": 0.85}
+      ],
+      "activities": [
+        {"name": "Capital and maintenance dredging for shipping", "relevance": 0.9},
+        {"name": "Tidal flood barrier and sea wall operation", "relevance": 0.85},
+        {"name": "Industrial cooling water abstraction and discharge", "relevance": 0.8},
+        {"name": "Brownfield site remediation on estuarine banks", "relevance": 0.7},
+        {"name": "Managed realignment and saltmarsh creation", "relevance": 0.75},
+        {"name": "Recreational sailing and powerboating", "relevance": 0.6}
+      ],
+      "pressures": [
+        {"name": "Legacy contaminants in estuarine sediments (PCBs, metals)", "relevance": 0.85},
+        {"name": "Tidal regime alteration from flood defences", "relevance": 0.8},
+        {"name": "Turbidity maximum zone expansion from dredging", "relevance": 0.8},
+        {"name": "Thermal discharge from power stations", "relevance": 0.7},
+        {"name": "Loss of intertidal habitat from hard defences", "relevance": 0.85},
+        {"name": "Pharmaceutical and endocrine disruptor contamination", "relevance": 0.65}
+      ],
+      "states": [
+        {"name": "European eel recruitment and passage", "relevance": 0.85},
+        {"name": "Estuarine saltmarsh extent and condition", "relevance": 0.8},
+        {"name": "Dissolved oxygen in turbidity maximum zone", "relevance": 0.8},
+        {"name": "Estuarine fish community (smelt, flounder, bass)", "relevance": 0.75},
+        {"name": "Sediment contaminant levels and bioavailability", "relevance": 0.7}
+      ],
+      "impacts": [
+        {"name": "Port and navigation accessibility", "relevance": 0.9},
+        {"name": "Flood protection for low-lying areas", "relevance": 0.9},
+        {"name": "Estuarine nursery function for marine fish", "relevance": 0.75},
+        {"name": "Saltmarsh carbon sequestration and wave attenuation", "relevance": 0.7}
+      ],
+      "welfare": [
+        {"name": "Port and logistics industry employment", "relevance": 0.9},
+        {"name": "Flood damage avoidance for riverside properties", "relevance": 0.85},
+        {"name": "Recreational amenity of estuarine waterfront", "relevance": 0.7},
+        {"name": "Water supply security for industry", "relevance": 0.65}
+      ],
+      "responses": [
+        {"name": "Managed realignment projects (set-back flood defences)", "relevance": 0.85},
+        {"name": "Water Framework Directive improvement measures", "relevance": 0.85},
+        {"name": "Eel Management Plans (EU Eel Regulation)", "relevance": 0.8},
+        {"name": "Contaminated sediment management strategies", "relevance": 0.75},
+        {"name": "Nature-based solutions for flood resilience", "relevance": 0.8}
+      ],
+      "connections": [
+        {
+          "from": "Major port and container terminal expansion",
+          "from_type": "drivers",
+          "to": "Capital and maintenance dredging for shipping",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Larger vessels require deeper navigation channels, driving continuous dredging"
+        },
+        {
+          "from": "Capital and maintenance dredging for shipping",
+          "from_type": "activities",
+          "to": "Turbidity maximum zone expansion from dredging",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Dredging resuspends fine sediment, expanding and intensifying the turbidity maximum"
+        },
+        {
+          "from": "Tidal flood barrier and sea wall operation",
+          "from_type": "activities",
+          "to": "Loss of intertidal habitat from hard defences",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Hard flood defences prevent landward migration of intertidal habitats (coastal squeeze)"
+        },
+        {
+          "from": "Loss of intertidal habitat from hard defences",
+          "from_type": "pressures",
+          "to": "Estuarine saltmarsh extent and condition",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Coastal squeeze from sea walls prevents saltmarsh migration, causing net loss"
+        },
+        {
+          "from": "Legacy contaminants in estuarine sediments (PCBs, metals)",
+          "from_type": "pressures",
+          "to": "European eel recruitment and passage",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "PCB bioaccumulation in eels impairs reproduction and reduces population viability"
+        },
+        {
+          "from": "Estuarine saltmarsh extent and condition",
+          "from_type": "states",
+          "to": "Saltmarsh carbon sequestration and wave attenuation",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Healthy saltmarsh provides natural wave attenuation and blue carbon storage"
+        },
+        {
+          "from": "Port and navigation accessibility",
+          "from_type": "impacts",
+          "to": "Port and logistics industry employment",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Accessible ports maintain the logistics industry that employs riverside communities"
+        },
+        {
+          "from": "Managed realignment projects (set-back flood defences)",
+          "from_type": "responses",
+          "to": "Loss of intertidal habitat from hard defences",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Setting back defences creates new intertidal habitat, reversing coastal squeeze"
+        },
+        {
+          "from": "Eel Management Plans (EU Eel Regulation)",
+          "from_type": "responses",
+          "to": "European eel recruitment and passage",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Eel management measures aim to increase silver eel escapement to the sea"
+        },
+        {
+          "from": "Turbidity maximum zone expansion from dredging",
+          "from_type": "pressures",
+          "to": "Dissolved oxygen in turbidity maximum zone",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Enhanced turbidity increases oxygen demand from resuspended organic matter"
+        }
+      ]
+    },
+    "caribbean_coral_reef": {
+      "regional_sea": "caribbean",
+      "habitat": "coral_reef",
+      "description": "Caribbean coral reef systems. Declining reef health from bleaching, hurricanes, and lionfish invasion. Tourism-dependent economies with small-scale reef fisheries.",
+      "drivers": [
+        {"name": "Reef tourism and cruise ship visitor demand", "relevance": 0.95},
+        {"name": "Reef fishery dependence for food security", "relevance": 0.85},
+        {"name": "Climate change and ocean warming trends", "relevance": 0.9},
+        {"name": "Coastal development for resort infrastructure", "relevance": 0.8},
+        {"name": "Demand for reef-derived ornamental species", "relevance": 0.6}
+      ],
+      "activities": [
+        {"name": "Reef snorkeling and scuba diving tourism", "relevance": 0.95},
+        {"name": "Trap and spear fishing on reef", "relevance": 0.85},
+        {"name": "Lionfish removal programmes (culling dives)", "relevance": 0.75},
+        {"name": "Cruise ship anchoring and wastewater discharge", "relevance": 0.7},
+        {"name": "Coastal resort and marina construction", "relevance": 0.8},
+        {"name": "Coral reef monitoring and research", "relevance": 0.65}
+      ],
+      "pressures": [
+        {"name": "Mass coral bleaching from thermal stress", "relevance": 0.95},
+        {"name": "Lionfish (Pterois volitans) invasion and predation", "relevance": 0.85},
+        {"name": "Hurricane physical damage to reef structure", "relevance": 0.8},
+        {"name": "Sargassum inundation events", "relevance": 0.7},
+        {"name": "Stony coral tissue loss disease (SCTLD)", "relevance": 0.9},
+        {"name": "Nutrient and sediment runoff from land clearance", "relevance": 0.75}
+      ],
+      "states": [
+        {"name": "Live coral cover percentage", "relevance": 0.95},
+        {"name": "Reef fish species diversity and biomass", "relevance": 0.9},
+        {"name": "Parrotfish population (key herbivores)", "relevance": 0.85},
+        {"name": "Reef structural complexity (rugosity)", "relevance": 0.8},
+        {"name": "Macroalgal cover on reef substrate", "relevance": 0.8}
+      ],
+      "impacts": [
+        {"name": "Reef-based tourism attraction value", "relevance": 0.95},
+        {"name": "Coastal wave protection by reef barrier", "relevance": 0.85},
+        {"name": "Reef fishery production for local food supply", "relevance": 0.8},
+        {"name": "Biodiversity and pharmaceutical potential", "relevance": 0.65}
+      ],
+      "welfare": [
+        {"name": "Tourism-dependent community livelihoods", "relevance": 0.95},
+        {"name": "Food security from reef protein sources", "relevance": 0.8},
+        {"name": "Coastal property protection value", "relevance": 0.75},
+        {"name": "Cultural and spiritual connection to reefs", "relevance": 0.7}
+      ],
+      "responses": [
+        {"name": "Parrotfish and herbivore harvest bans", "relevance": 0.9},
+        {"name": "Marine Protected Area network expansion", "relevance": 0.85},
+        {"name": "Coral nursery and outplanting programmes", "relevance": 0.8},
+        {"name": "Lionfish culling bounty programmes", "relevance": 0.8},
+        {"name": "Watershed management to reduce runoff", "relevance": 0.75}
+      ],
+      "connections": [
+        {
+          "from": "Climate change and ocean warming trends",
+          "from_type": "drivers",
+          "to": "Mass coral bleaching from thermal stress",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Rising sea temperatures directly trigger mass bleaching when corals exceed thermal thresholds"
+        },
+        {
+          "from": "Mass coral bleaching from thermal stress",
+          "from_type": "pressures",
+          "to": "Live coral cover percentage",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Severe bleaching causes widespread coral mortality, reducing live coral cover"
+        },
+        {
+          "from": "Stony coral tissue loss disease (SCTLD)",
+          "from_type": "pressures",
+          "to": "Live coral cover percentage",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "SCTLD has killed millions of corals across the Caribbean since 2014"
+        },
+        {
+          "from": "Lionfish (Pterois volitans) invasion and predation",
+          "from_type": "pressures",
+          "to": "Reef fish species diversity and biomass",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Lionfish consume juvenile reef fish, reducing recruitment and native fish diversity"
+        },
+        {
+          "from": "Trap and spear fishing on reef",
+          "from_type": "activities",
+          "to": "Parrotfish population (key herbivores)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Unregulated fishing of parrotfish removes crucial algae grazers from the reef"
+        },
+        {
+          "from": "Parrotfish population (key herbivores)",
+          "from_type": "states",
+          "to": "Macroalgal cover on reef substrate",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Parrotfish grazing controls macroalgae, preventing algal phase shifts on reefs"
+        },
+        {
+          "from": "Live coral cover percentage",
+          "from_type": "states",
+          "to": "Reef-based tourism attraction value",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "High coral cover and reef colour directly determine tourist satisfaction and revisit rates"
+        },
+        {
+          "from": "Reef structural complexity (rugosity)",
+          "from_type": "states",
+          "to": "Coastal wave protection by reef barrier",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "3D reef structure dissipates wave energy, protecting shorelines from storm damage"
+        },
+        {
+          "from": "Reef-based tourism attraction value",
+          "from_type": "impacts",
+          "to": "Tourism-dependent community livelihoods",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Reef tourism is the primary economic driver for many Caribbean island communities"
+        },
+        {
+          "from": "Parrotfish and herbivore harvest bans",
+          "from_type": "responses",
+          "to": "Parrotfish population (key herbivores)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Harvest bans allow parrotfish recovery, restoring herbivory on reefs"
+        },
+        {
+          "from": "Lionfish culling bounty programmes",
+          "from_type": "responses",
+          "to": "Lionfish (Pterois volitans) invasion and predation",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Targeted culling reduces lionfish density on managed reefs, but recolonisation is rapid"
+        },
+        {
+          "from": "Coral nursery and outplanting programmes",
+          "from_type": "responses",
+          "to": "Live coral cover percentage",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Coral outplanting can restore cover locally but is limited in scale and species diversity"
+        }
+      ]
+    },
+    "arctic_sea_ice": {
+      "regional_sea": "arctic",
+      "habitat": "sea_ice",
+      "description": "Arctic sea ice habitats and ice-edge ecosystems. Rapidly declining due to climate change, affecting ice-dependent species, indigenous communities, and opening new shipping routes.",
+      "drivers": [
+        {"name": "Arctic shipping route economic viability", "relevance": 0.85},
+        {"name": "Hydrocarbon and mineral resource exploration", "relevance": 0.8},
+        {"name": "Indigenous community food sovereignty", "relevance": 0.9},
+        {"name": "Global climate change acceleration", "relevance": 0.95},
+        {"name": "Scientific research and monitoring demand", "relevance": 0.7}
+      ],
+      "activities": [
+        {"name": "Northern Sea Route commercial shipping", "relevance": 0.8},
+        {"name": "Indigenous subsistence hunting (seal, walrus, whale)", "relevance": 0.9},
+        {"name": "Arctic oil and gas seismic exploration", "relevance": 0.75},
+        {"name": "Polar expedition cruise tourism", "relevance": 0.7},
+        {"name": "Ice-edge fisheries (Arctic cod, polar cod)", "relevance": 0.65},
+        {"name": "Climate and sea ice monitoring research", "relevance": 0.7}
+      ],
+      "pressures": [
+        {"name": "Accelerating sea ice extent and thickness loss", "relevance": 0.95},
+        {"name": "Earlier spring ice breakup disrupting breeding cycles", "relevance": 0.85},
+        {"name": "Oil spill risk in ice-covered waters", "relevance": 0.8},
+        {"name": "Underwater noise from increased shipping", "relevance": 0.7},
+        {"name": "Black carbon deposition accelerating ice melt", "relevance": 0.75}
+      ],
+      "states": [
+        {"name": "Polar bear population and body condition", "relevance": 0.9},
+        {"name": "Ringed seal and bearded seal abundance", "relevance": 0.85},
+        {"name": "Ice algae and under-ice primary production", "relevance": 0.8},
+        {"name": "Narwhal and bowhead whale habitat availability", "relevance": 0.8},
+        {"name": "Multi-year ice coverage (critical habitat)", "relevance": 0.9}
+      ],
+      "impacts": [
+        {"name": "Indigenous marine mammal harvest provision", "relevance": 0.9},
+        {"name": "Arctic climate regulation (ice-albedo feedback)", "relevance": 0.85},
+        {"name": "Shipping route accessibility in summer", "relevance": 0.75},
+        {"name": "Polar ecosystem biodiversity maintenance", "relevance": 0.8}
+      ],
+      "welfare": [
+        {"name": "Inuit and indigenous community food security", "relevance": 0.95},
+        {"name": "Cultural continuity of ice-based livelihoods", "relevance": 0.9},
+        {"name": "Arctic shipping cost savings vs. Suez route", "relevance": 0.65},
+        {"name": "Global climate stability benefit", "relevance": 0.85}
+      ],
+      "responses": [
+        {"name": "IMO Polar Code for Arctic shipping", "relevance": 0.85},
+        {"name": "Arctic oil exploration moratoriums", "relevance": 0.8},
+        {"name": "Indigenous co-management of marine resources", "relevance": 0.9},
+        {"name": "Arctic Council conservation measures", "relevance": 0.85},
+        {"name": "Black carbon emission reduction agreements", "relevance": 0.7}
+      ],
+      "connections": [
+        {
+          "from": "Global climate change acceleration",
+          "from_type": "drivers",
+          "to": "Accelerating sea ice extent and thickness loss",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Arctic warming at 2-4x the global average is the primary driver of sea ice loss"
+        },
+        {
+          "from": "Accelerating sea ice extent and thickness loss",
+          "from_type": "pressures",
+          "to": "Multi-year ice coverage (critical habitat)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Multi-year ice is declining rapidly, replaced by thin first-year ice"
+        },
+        {
+          "from": "Accelerating sea ice extent and thickness loss",
+          "from_type": "pressures",
+          "to": "Polar bear population and body condition",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Ice loss reduces hunting platform for polar bears, leading to poor body condition"
+        },
+        {
+          "from": "Earlier spring ice breakup disrupting breeding cycles",
+          "from_type": "pressures",
+          "to": "Ringed seal and bearded seal abundance",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Ringed seals depend on stable ice for pupping lairs; early breakup kills pups"
+        },
+        {
+          "from": "Ringed seal and bearded seal abundance",
+          "from_type": "states",
+          "to": "Indigenous marine mammal harvest provision",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Seal populations directly determine the availability of traditional marine foods"
+        },
+        {
+          "from": "Multi-year ice coverage (critical habitat)",
+          "from_type": "states",
+          "to": "Arctic climate regulation (ice-albedo feedback)",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "White ice surface reflects solar radiation; ice loss triggers warming amplification"
+        },
+        {
+          "from": "Indigenous marine mammal harvest provision",
+          "from_type": "impacts",
+          "to": "Inuit and indigenous community food security",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Traditional marine foods are nutritionally and culturally irreplaceable for Inuit communities"
+        },
+        {
+          "from": "Indigenous marine mammal harvest provision",
+          "from_type": "impacts",
+          "to": "Cultural continuity of ice-based livelihoods",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Hunting practices transmit traditional ecological knowledge across generations"
+        },
+        {
+          "from": "IMO Polar Code for Arctic shipping",
+          "from_type": "responses",
+          "to": "Oil spill risk in ice-covered waters",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Polar Code mandates double hulls and oil spill preparedness for Arctic vessels"
+        },
+        {
+          "from": "Indigenous co-management of marine resources",
+          "from_type": "responses",
+          "to": "Indigenous subsistence hunting (seal, walrus, whale)",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Co-management ensures sustainable harvest levels and protects indigenous hunting rights"
+        },
+        {
+          "from": "Arctic oil exploration moratoriums",
+          "from_type": "responses",
+          "to": "Arctic oil and gas seismic exploration",
+          "to_type": "activities",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Moratoriums directly halt oil exploration activities in protected areas"
+        },
+        {
+          "from": "Ice algae and under-ice primary production",
+          "from_type": "states",
+          "to": "Polar ecosystem biodiversity maintenance",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Ice algae form the base of the Arctic marine food web supporting all higher trophic levels"
+        }
+      ]
+    },
+    "atlantic_offshore": {
+      "regional_sea": "atlantic",
+      "habitat": "offshore",
+      "description": "Open Atlantic Ocean and continental shelf waters. Large pelagic fisheries (tuna, swordfish), emerging deep-sea mining interest, major transatlantic shipping lanes, and deep-water ecosystems.",
+      "drivers": [
+        {"name": "Global demand for tuna and swordfish", "relevance": 0.9},
+        {"name": "Deep-sea mineral resource interest (polymetallic nodules)", "relevance": 0.7},
+        {"name": "Transatlantic shipping and trade demand", "relevance": 0.85},
+        {"name": "Climate change and ocean circulation shifts", "relevance": 0.8},
+        {"name": "Telecommunications cable network expansion", "relevance": 0.6}
+      ],
+      "activities": [
+        {"name": "Longline fishing for tuna and swordfish", "relevance": 0.9},
+        {"name": "Purse seine fishing for skipjack and yellowfin", "relevance": 0.85},
+        {"name": "Deep-sea bottom trawling on seamounts", "relevance": 0.75},
+        {"name": "Transatlantic container shipping", "relevance": 0.85},
+        {"name": "Deep-sea mining exploration and piloting", "relevance": 0.6},
+        {"name": "Pelagic scientific research surveys", "relevance": 0.55}
+      ],
+      "pressures": [
+        {"name": "Overfishing of Atlantic bluefin tuna", "relevance": 0.9},
+        {"name": "Seabird and turtle bycatch in longline fisheries", "relevance": 0.85},
+        {"name": "Deep-sea habitat destruction from bottom trawling", "relevance": 0.8},
+        {"name": "Marine plastic accumulation (North Atlantic gyre)", "relevance": 0.75},
+        {"name": "Ocean acidification affecting deep-water corals", "relevance": 0.7},
+        {"name": "Ship-strike mortality of large whales", "relevance": 0.7}
+      ],
+      "states": [
+        {"name": "Atlantic bluefin tuna stock recovery status", "relevance": 0.9},
+        {"name": "Deep-water coral and sponge garden condition", "relevance": 0.8},
+        {"name": "North Atlantic right whale population", "relevance": 0.85},
+        {"name": "Mesopelagic fish biomass (biological carbon pump)", "relevance": 0.7},
+        {"name": "Sargasso Sea ecosystem health", "relevance": 0.65}
+      ],
+      "impacts": [
+        {"name": "High-value pelagic fishery provision (tuna, swordfish)", "relevance": 0.9},
+        {"name": "Ocean carbon sequestration (biological pump)", "relevance": 0.8},
+        {"name": "Transatlantic shipping corridor services", "relevance": 0.85},
+        {"name": "Deep-sea biodiversity and genetic resources", "relevance": 0.7}
+      ],
+      "welfare": [
+        {"name": "Tuna fishing fleet and processing industry revenue", "relevance": 0.85},
+        {"name": "Global seafood supply chain contribution", "relevance": 0.8},
+        {"name": "Climate regulation benefits (carbon sink)", "relevance": 0.75},
+        {"name": "Marine scientific knowledge advancement", "relevance": 0.6}
+      ],
+      "responses": [
+        {"name": "ICCAT bluefin tuna quota management", "relevance": 0.9},
+        {"name": "BBNJ Treaty for high seas biodiversity", "relevance": 0.8},
+        {"name": "Vulnerable Marine Ecosystem closures (seamounts)", "relevance": 0.85},
+        {"name": "Seabird bycatch mitigation (tori lines, weighted hooks)", "relevance": 0.8},
+        {"name": "ISA deep-sea mining environmental regulations", "relevance": 0.65}
+      ],
+      "connections": [
+        {
+          "from": "Global demand for tuna and swordfish",
+          "from_type": "drivers",
+          "to": "Longline fishing for tuna and swordfish",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "High market value drives sustained longline fishing effort in the Atlantic"
+        },
+        {
+          "from": "Longline fishing for tuna and swordfish",
+          "from_type": "activities",
+          "to": "Seabird and turtle bycatch in longline fisheries",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Longlines incidentally hook albatrosses, petrels, and sea turtles"
+        },
+        {
+          "from": "Longline fishing for tuna and swordfish",
+          "from_type": "activities",
+          "to": "Overfishing of Atlantic bluefin tuna",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "High fishing mortality has historically depleted bluefin tuna stocks"
+        },
+        {
+          "from": "Overfishing of Atlantic bluefin tuna",
+          "from_type": "pressures",
+          "to": "Atlantic bluefin tuna stock recovery status",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Overfishing directly prevents stock recovery to healthy biomass levels"
+        },
+        {
+          "from": "Deep-sea bottom trawling on seamounts",
+          "from_type": "activities",
+          "to": "Deep-sea habitat destruction from bottom trawling",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Bottom trawls destroy slow-growing deep-water corals and sponges on seamounts"
+        },
+        {
+          "from": "Deep-sea habitat destruction from bottom trawling",
+          "from_type": "pressures",
+          "to": "Deep-water coral and sponge garden condition",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Deep-water corals take centuries to recover from physical damage; many are irreplaceable"
+        },
+        {
+          "from": "Atlantic bluefin tuna stock recovery status",
+          "from_type": "states",
+          "to": "High-value pelagic fishery provision (tuna, swordfish)",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Tuna stock health determines the sustainable catch available to fishing fleets"
+        },
+        {
+          "from": "High-value pelagic fishery provision (tuna, swordfish)",
+          "from_type": "impacts",
+          "to": "Tuna fishing fleet and processing industry revenue",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Tuna catches directly support fishing vessel operations and processing jobs"
+        },
+        {
+          "from": "ICCAT bluefin tuna quota management",
+          "from_type": "responses",
+          "to": "Overfishing of Atlantic bluefin tuna",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "ICCAT quotas have reduced fishing mortality, enabling partial stock recovery"
+        },
+        {
+          "from": "Vulnerable Marine Ecosystem closures (seamounts)",
+          "from_type": "responses",
+          "to": "Deep-sea habitat destruction from bottom trawling",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "VME closures protect seamount ecosystems from trawling"
+        },
+        {
+          "from": "Seabird bycatch mitigation (tori lines, weighted hooks)",
+          "from_type": "responses",
+          "to": "Seabird and turtle bycatch in longline fisheries",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Bird-scaring lines and weighted hooks reduce seabird bycatch by 80-90%"
+        },
+        {
+          "from": "Ship-strike mortality of large whales",
+          "from_type": "pressures",
+          "to": "North Atlantic right whale population",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Vessel strikes are the leading cause of North Atlantic right whale mortality"
+        }
+      ]
+    }
+  },
+  "generic_fallback": {
+    "description": "Generic suggestions when no specific regional sea x habitat match is found",
+    "drivers": [
+      {"name": "Food security from marine resources", "relevance": 0.8},
+      {"name": "Economic development pressure", "relevance": 0.7},
+      {"name": "Recreational and tourism demand", "relevance": 0.7},
+      {"name": "Climate change impacts", "relevance": 0.8},
+      {"name": "Coastal protection needs", "relevance": 0.7}
+    ],
+    "activities": [
+      {"name": "Commercial fishing", "relevance": 0.8},
+      {"name": "Aquaculture", "relevance": 0.7},
+      {"name": "Coastal development", "relevance": 0.7},
+      {"name": "Tourism and recreation", "relevance": 0.7},
+      {"name": "Shipping and transport", "relevance": 0.7}
+    ],
+    "pressures": [
+      {"name": "Overfishing", "relevance": 0.8},
+      {"name": "Nutrient enrichment", "relevance": 0.7},
+      {"name": "Habitat loss", "relevance": 0.7},
+      {"name": "Marine pollution", "relevance": 0.7},
+      {"name": "Climate-related changes", "relevance": 0.7}
+    ],
+    "states": [
+      {"name": "Fish stock biomass", "relevance": 0.7},
+      {"name": "Water quality indicators", "relevance": 0.7},
+      {"name": "Habitat condition", "relevance": 0.7},
+      {"name": "Biodiversity levels", "relevance": 0.7}
+    ],
+    "impacts": [
+      {"name": "Fishery production capacity", "relevance": 0.7},
+      {"name": "Coastal protection services", "relevance": 0.7},
+      {"name": "Recreation and tourism amenity", "relevance": 0.7}
+    ],
+    "welfare": [
+      {"name": "Fishing community livelihoods", "relevance": 0.7},
+      {"name": "Coastal community well-being", "relevance": 0.7},
+      {"name": "Tourism-related employment", "relevance": 0.7}
+    ],
+    "responses": [
+      {"name": "Marine Protected Areas", "relevance": 0.7},
+      {"name": "Fishing regulations", "relevance": 0.7},
+      {"name": "Pollution control measures", "relevance": 0.7},
+      {"name": "Habitat restoration programmes", "relevance": 0.7}
+    ]
+  }
+}

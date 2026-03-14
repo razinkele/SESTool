@@ -674,6 +674,10 @@ source("modules/ai_isa_knowledge_base.R", local = FALSE)
 # Must be global scope for use by AI ISA connection generator and ML scoring
 source("data/ses_connection_knowledge_base.R", local = FALSE)
 
+# SES Knowledge Database loader (JSON-based context-specific element and connection suggestions)
+# Must be global scope for use by AI ISA knowledge base and connection generator
+source("functions/ses_knowledge_db_loader.R", local = FALSE)
+
 source("data/dapsiwrm_element_keywords.R", local = TRUE)
 source("functions/dapsiwrm_connection_rules.R", local = TRUE)
 source("functions/ses_dynamics.R", local = TRUE)
