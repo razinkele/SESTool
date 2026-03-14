@@ -19,13 +19,13 @@ get_regional_seas_knowledge_base <- function(i18n) {
       name_en = "Baltic Sea",
       name_i18n = i18n$t("common.misc.baltic_sea"),
       common_issues = c("Eutrophication", "Overfishing", "Pollution", "Invasive species", "Climate change"),
-      ecosystem_types = c("Open coast", "Archipelago", "Estuary", "Coastal lagoon", "Offshore waters")
+      ecosystem_types = c("Open coast", "Archipelago", "Island", "Estuary", "Coastal lagoon", "Offshore waters")
     ),
     mediterranean = list(
       name_en = "Mediterranean Sea",
       name_i18n = i18n$t("common.misc.mediterranean_sea"),
       common_issues = c("Overfishing", "Coastal development", "Tourism pressure", "Marine litter", "Invasive species", "Climate change"),
-      ecosystem_types = c("Open coast", "Coastal lagoon", "Rocky shore", "Sandy beach", "Seagrass meadow", "Offshore waters")
+      ecosystem_types = c("Open coast", "Island", "Coastal lagoon", "Rocky shore", "Sandy beach", "Seagrass meadow", "Offshore waters")
     ),
     north_sea = list(
       name_en = "North Sea",
@@ -55,25 +55,25 @@ get_regional_seas_knowledge_base <- function(i18n) {
       name_en = "Atlantic Ocean",
       name_i18n = i18n$t("common.misc.atlantic_ocean"),
       common_issues = c("Overfishing", "Climate change", "Ocean acidification", "Shipping", "Deep-sea mining"),
-      ecosystem_types = c("Open ocean", "Continental shelf", "Coastal upwelling", "Open coast", "Offshore waters")
+      ecosystem_types = c("Open ocean", "Island", "Continental shelf", "Coastal upwelling", "Open coast", "Offshore waters")
     ),
     pacific = list(
       name_en = "Pacific Ocean",
       name_i18n = i18n$t("common.misc.pacific_ocean"),
       common_issues = c("Overfishing", "Coral bleaching", "Plastic pollution", "Climate change", "Illegal fishing"),
-      ecosystem_types = c("Coral reef", "Open ocean", "Coastal waters", "Mangrove", "Offshore waters")
+      ecosystem_types = c("Coral reef", "Island", "Atoll", "Open ocean", "Coastal waters", "Mangrove", "Offshore waters")
     ),
     indian = list(
       name_en = "Indian Ocean",
       name_i18n = i18n$t("common.misc.indian_ocean"),
       common_issues = c("Overfishing", "Coastal erosion", "Mangrove loss", "Climate change", "Illegal fishing"),
-      ecosystem_types = c("Coral reef", "Mangrove", "Open coast", "Lagoon", "Offshore waters")
+      ecosystem_types = c("Coral reef", "Island", "Mangrove", "Open coast", "Lagoon", "Offshore waters")
     ),
     caribbean = list(
       name_en = "Caribbean Sea",
       name_i18n = i18n$t("common.misc.caribbean_sea"),
       common_issues = c("Coral bleaching", "Overfishing", "Tourism pressure", "Hurricanes", "Sargassum blooms"),
-      ecosystem_types = c("Coral reef", "Mangrove", "Seagrass bed", "Sandy beach", "Open coast")
+      ecosystem_types = c("Coral reef", "Island", "Mangrove", "Seagrass bed", "Sandy beach", "Open coast")
     ),
     arctic = list(
       name_en = "Arctic Ocean",

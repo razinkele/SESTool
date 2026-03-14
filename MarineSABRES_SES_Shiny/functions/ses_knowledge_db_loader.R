@@ -103,7 +103,10 @@ if (is.null(db_path)) {
     else if (grepl("offshore|open ocean|open water|deep sea|continental shelf", hab)) "offshore"
     else if (grepl("seagrass|sea grass|posidonia", hab)) "seagrass"
     else if (grepl("rocky|rock shore", hab)) "rocky_shore"
+    else if (grepl("atoll", hab)) "island"  # Atoll → island context
     else if (grepl("coral|reef", hab)) "coral_reef"
+    else if (grepl("island|insular", hab)) "island"  # Island ecosystems
+    else if (grepl("archipelago", hab)) "archipelago"
     else if (grepl("ice|arctic", hab)) "sea_ice"
     else if (grepl("open coast|coast(?!al lagoon)", hab, perl = TRUE)) "open_coast"
     else if (grepl("mangrove", hab)) "mangrove"
@@ -139,6 +142,15 @@ if (is.null(db_path)) {
   context_key <- .build_context_key(regional_sea, habitat)
   if (!is.null(context_key) && !is.null(db$contexts[[context_key]])) {
     return(list(context = db$contexts[[context_key]], key = context_key, match = "exact"))
+  }
+
+  # Try prefix match (handles pacific_island matching pacific_island_atoll etc.)
+  if (!is.null(context_key)) {
+    for (key in names(db$contexts)) {
+      if (startsWith(key, context_key) || startsWith(context_key, key)) {
+        return(list(context = db$contexts[[key]], key = key, match = "prefix"))
+      }
+    }
   }
 
   # Try partial match: same habitat, any sea
