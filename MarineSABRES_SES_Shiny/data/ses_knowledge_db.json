@@ -240,7 +240,7 @@
         {"name": "Atlantic salmon migration success", "relevance": 0.9},
         {"name": "Dissolved oxygen levels in stratified waters", "relevance": 0.8},
         {"name": "Estuarine benthic invertebrate communities", "relevance": 0.75},
-        {"name": "Lamprey population viability", "relevance": 0.7},
+        {"name": "Sea lamprey (Petromyzon marinus) population viability", "relevance": 0.7},
         {"name": "Estuarine water quality (nutrients, contaminants)", "relevance": 0.85}
       ],
       "impacts": [
@@ -2651,7 +2651,7 @@
   "arctic_fjord": {
       "regional_sea": "arctic_norwegian",
       "habitat": "fjord",
-      "description": "High-latitude fjord systems of Norway, Svalbard, and Greenland. These deep, glacially carved inlets feature stratified water columns, cold-water coral gardens (Lophelia pertusa), and increasing influence from Atlantic water intrusion. They face pressures from expanding salmon aquaculture, cruise tourism, and glacial retreat altering freshwater inputs.",
+      "description": "High-latitude fjord systems of Norway, Svalbard, and Greenland. These deep, glacially carved inlets feature stratified water columns, cold-water coral gardens (Lophelia pertusa at southern distribution limit, making them temperature-sensitive), and increasing influence from Atlantic water intrusion. They face pressures from expanding salmon aquaculture, cruise tourism, and glacial retreat altering freshwater inputs.",
       "drivers": [
         {"name": "Global demand for farmed Atlantic salmon", "relevance": 0.95},
         {"name": "Arctic cruise tourism growth", "relevance": 0.85},
@@ -3309,7 +3309,8 @@
         {"name": "Plastic debris accumulation on reef and beach habitats", "relevance": 0.8},
         {"name": "Sedimentation from coastal construction and land clearing", "relevance": 0.75},
         {"name": "Overfishing of herbivorous reef fish (parrotfish, surgeonfish)", "relevance": 0.85},
-        {"name": "Ocean acidification reducing coral calcification rates", "relevance": 0.8}
+        {"name": "Ocean acidification reducing coral calcification rates", "relevance": 0.8},
+        {"name": "Crown-of-thorns starfish (Acanthaster planci) outbreaks", "relevance": 0.7}
       ],
       "states": [
         {"name": "Live coral cover (Acropora, Porites, massive faviids)", "relevance": 0.95},
