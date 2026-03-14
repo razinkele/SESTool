@@ -1294,12 +1294,16 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
         # Handle context-aware examples for DAPSI(W)R(M) elements
         else if (!is.null(step_info$use_context_examples) && step_info$use_context_examples) {
-          suggestions <- get_context_suggestions(
+          # P3: Request source attribution for KB badge display
+          suggestion_result <- get_context_suggestions(
             category = step_info$target,
             regional_sea = rv$context$regional_sea,
             ecosystem_type = rv$context$ecosystem_type,
-            main_issue = rv$context$main_issue
+            main_issue = rv$context$main_issue,
+            return_sources = TRUE
           )
+          suggestions <- suggestion_result$suggestions
+          suggestion_sources <- suggestion_result$sources
 
           debug_log(sprintf("Context suggestions: %d for %s", length(suggestions), step_info$target),
                     "AI ISA QUICK")
@@ -1316,9 +1320,22 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               is_selected <- suggestion_name %in% element_names
               button_class <- if (is_selected) "quick-option selected" else "quick-option"
 
+              # P3: Add KB source badge for knowledge_db sourced suggestions
+              source_type <- suggestion_sources[suggestion_name]
+              kb_badge <- if (!is.null(source_type) && source_type == "knowledge_db") {
+                tags$span(
+                  class = "badge badge-info",
+                  style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
+                  title = i18n$t("modules.isa.ai_assistant.from_knowledge_database"),
+                  "KB"
+                )
+              } else {
+                NULL
+              }
+
               actionButton(
                 inputId = session$ns(paste0("quick_opt_", i)),
-                label = suggestion_name,
+                label = tagList(suggestion_name, kb_badge),
                 class = button_class,
                 style = "margin: 3px;"
               )
@@ -1834,6 +1851,73 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               list(type = "ai", message = i18n$t("modules.isa.ai_assistant.need_more_elements"), timestamp = Sys.time())
             ))
             return()  # Don't proceed
+          }
+
+          # P1: Warn when a DAPSIWRM category has 0 elements
+          if (element_count == 0) {
+            # Map category targets to human-readable labels and consequences
+            category_label <- switch(step_info$target,
+              "drivers"    = i18n$t("modules.isa.ai_assistant.drivers_societal_needs"),
+              "activities" = i18n$t("modules.isa.ai_assistant.activities_human_actions"),
+              "pressures"  = i18n$t("modules.isa.ai_assistant.pressures_environmental_stressors"),
+              "states"     = i18n$t("modules.isa.ai_assistant.state_changes_ecosystem_effects"),
+              "impacts"    = i18n$t("modules.isa.ai_assistant.impacts_effects_on_ecosystem_services"),
+              "welfare"    = i18n$t("modules.isa.ai_assistant.welfare_human_well_being_effects"),
+              "responses"  = i18n$t("modules.isa.ai_assistant.response_measures_management_policy"),
+              step_info$target
+            )
+
+            # Map to downstream consequence
+            consequence <- switch(step_info$target,
+              "drivers"    = i18n$t("modules.isa.ai_assistant.no_drivers_activities_connections"),
+              "activities" = i18n$t("modules.isa.ai_assistant.no_activities_pressures_connections"),
+              "pressures"  = i18n$t("modules.isa.ai_assistant.no_pressures_state_connections"),
+              "states"     = i18n$t("modules.isa.ai_assistant.no_state_impacts_connections"),
+              "impacts"    = i18n$t("modules.isa.ai_assistant.no_impacts_welfare_connections"),
+              "welfare"    = i18n$t("modules.isa.ai_assistant.no_welfare_feedback_connections"),
+              "responses"  = i18n$t("modules.isa.ai_assistant.no_response_connections"),
+              i18n$t("modules.isa.ai_assistant.no_connections_for_category")
+            )
+
+            warning_msg <- paste0(
+              i18n$t("modules.isa.ai_assistant.no_elements_warning_prefix"), " ",
+              category_label, " ",
+              i18n$t("modules.isa.ai_assistant.no_elements_warning_suffix"), " ",
+              consequence, " ",
+              i18n$t("modules.isa.ai_assistant.are_you_sure_continue")
+            )
+
+            # Show warning notification
+            showNotification(warning_msg, type = "warning", duration = 10)
+
+            # Add AI warning message to conversation
+            rv$conversation <- c(rv$conversation, list(
+              list(type = "ai", message = warning_msg, timestamp = Sys.time())
+            ))
+
+            # Note: We still proceed (don't return) - this is a warning, not a block
+          }
+
+          # P4: Info note when fewer than 2 elements added
+          if (element_count > 0 && element_count < 2) {
+            category_label <- switch(step_info$target,
+              "drivers"    = i18n$t("modules.isa.ai_assistant.drivers_societal_needs"),
+              "activities" = i18n$t("modules.isa.ai_assistant.activities_human_actions"),
+              "pressures"  = i18n$t("modules.isa.ai_assistant.pressures_environmental_stressors"),
+              "states"     = i18n$t("modules.isa.ai_assistant.state_changes_ecosystem_effects"),
+              "impacts"    = i18n$t("modules.isa.ai_assistant.impacts_effects_on_ecosystem_services"),
+              "welfare"    = i18n$t("modules.isa.ai_assistant.welfare_human_well_being_effects"),
+              "responses"  = i18n$t("modules.isa.ai_assistant.response_measures_management_policy"),
+              step_info$target
+            )
+
+            few_elements_msg <- paste0(
+              i18n$t("modules.isa.ai_assistant.only"), " ", element_count, " ",
+              category_label, " ",
+              i18n$t("modules.isa.ai_assistant.added_consider_more")
+            )
+
+            showNotification(few_elements_msg, type = "message", duration = 6)
           }
         }
       }

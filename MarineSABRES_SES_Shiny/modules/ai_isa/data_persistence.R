@@ -152,11 +152,13 @@ convert_responses_to_isa <- function(elements) {
 #' @param elements List of AI ISA elements
 #' @param suggested_connections List of all suggested connections
 #' @param approved_connections Vector of approved connection indices
-#' @param CONFIDENCE_DEFAULT Default confidence value
+#' @param CONFIDENCE_DEFAULT Default confidence value on the 1-5 scale
+#'   (matches CONFIDENCE_LEVELS in constants.R: 1=Very Low, 2=Low, 3=Medium, 4=High, 5=Very High).
+#'   Matrix cell format: "+strength:confidence" e.g. "+medium:3"
 #'
 #' @return List of adjacency matrices
 build_adjacency_matrices <- function(elements, suggested_connections,
-                                     approved_connections, CONFIDENCE_DEFAULT = 70) {
+                                     approved_connections, CONFIDENCE_DEFAULT = 3) {
 
   # Get dimensions
   n_drivers <- length(elements$drivers)
@@ -339,10 +341,11 @@ build_adjacency_matrices <- function(elements, suggested_connections,
 #'
 #' @param rv Reactive values containing AI ISA data
 #' @param current_data Current project data structure
-#' @param CONFIDENCE_DEFAULT Default confidence value for connections
+#' @param CONFIDENCE_DEFAULT Default confidence value on the 1-5 scale
+#'   (matches CONFIDENCE_LEVELS and CONFIDENCE_DEFAULT in constants.R)
 #'
 #' @return Updated project data structure
-save_to_project_format <- function(rv, current_data, CONFIDENCE_DEFAULT = 70) {
+save_to_project_format <- function(rv, current_data, CONFIDENCE_DEFAULT = 3) {
 
   # Initialize data structure if needed
   if (is.null(current_data) || length(current_data) == 0) {

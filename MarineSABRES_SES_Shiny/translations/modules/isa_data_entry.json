@@ -4113,6 +4113,160 @@
       "it": "Progresso dell'Esercizio",
       "no": "Øvelsesfremdrift",
       "el": "Πρόοδος Άσκησης"
+    },
+    "modules.isa.ai_assistant.no_elements_warning_prefix": {
+      "en": "No",
+      "es": "No se agregaron",
+      "fr": "Aucun",
+      "de": "Keine",
+      "lt": "Nepridėta jokių",
+      "pt": "Nenhum",
+      "it": "Nessun",
+      "no": "Ingen",
+      "el": "Κανένα"
+    },
+    "modules.isa.ai_assistant.no_elements_warning_suffix": {
+      "en": "elements were added.",
+      "es": "elementos.",
+      "fr": "éléments ajoutés.",
+      "de": "Elemente hinzugefügt.",
+      "lt": "elementų.",
+      "pt": "elementos adicionados.",
+      "it": "elementi aggiunti.",
+      "no": "elementer lagt til.",
+      "el": "στοιχεία προστέθηκαν."
+    },
+    "modules.isa.ai_assistant.are_you_sure_continue": {
+      "en": "Are you sure you want to continue?",
+      "es": "¿Está seguro de que desea continuar?",
+      "fr": "Êtes-vous sûr de vouloir continuer ?",
+      "de": "Sind Sie sicher, dass Sie fortfahren möchten?",
+      "lt": "Ar tikrai norite tęsti?",
+      "pt": "Tem certeza de que deseja continuar?",
+      "it": "Sei sicuro di voler continuare?",
+      "no": "Er du sikker på at du vil fortsette?",
+      "el": "Είστε σίγουροι ότι θέλετε να συνεχίσετε;"
+    },
+    "modules.isa.ai_assistant.no_drivers_activities_connections": {
+      "en": "This means no Drivers→Activities connections can be generated.",
+      "es": "Esto significa que no se pueden generar conexiones Impulsores→Actividades.",
+      "fr": "Cela signifie qu'aucune connexion Facteurs→Activités ne peut être générée.",
+      "de": "Das bedeutet, dass keine Treiber→Aktivitäten-Verbindungen erzeugt werden können.",
+      "lt": "Tai reiškia, kad negalės būti sugeneruotos Veiksniai→Veiklos jungtys.",
+      "pt": "Isso significa que nenhuma conexão Drivers→Atividades pode ser gerada.",
+      "it": "Ciò significa che non possono essere generate connessioni Driver→Attività.",
+      "no": "Dette betyr at ingen Drivere→Aktiviteter-forbindelser kan genereres.",
+      "el": "Αυτό σημαίνει ότι δεν μπορούν να δημιουργηθούν συνδέσεις Κινητήριες Δυνάμεις→Δραστηριότητες."
+    },
+    "modules.isa.ai_assistant.no_activities_pressures_connections": {
+      "en": "This means no Activities→Pressures connections can be generated.",
+      "es": "Esto significa que no se pueden generar conexiones Actividades→Presiones.",
+      "fr": "Cela signifie qu'aucune connexion Activités→Pressions ne peut être générée.",
+      "de": "Das bedeutet, dass keine Aktivitäten→Belastungen-Verbindungen erzeugt werden können.",
+      "lt": "Tai reiškia, kad negalės būti sugeneruotos Veiklos→Spaudimų jungtys.",
+      "pt": "Isso significa que nenhuma conexão Atividades→Pressões pode ser gerada.",
+      "it": "Ciò significa che non possono essere generate connessioni Attività→Pressioni.",
+      "no": "Dette betyr at ingen Aktiviteter→Press-forbindelser kan genereres.",
+      "el": "Αυτό σημαίνει ότι δεν μπορούν να δημιουργηθούν συνδέσεις Δραστηριότητες→Πιέσεις."
+    },
+    "modules.isa.ai_assistant.no_pressures_state_connections": {
+      "en": "This means no Pressures→State connections can be generated.",
+      "es": "Esto significa que no se pueden generar conexiones Presiones→Estado.",
+      "fr": "Cela signifie qu'aucune connexion Pressions→État ne peut être générée.",
+      "de": "Das bedeutet, dass keine Belastungen→Zustand-Verbindungen erzeugt werden können.",
+      "lt": "Tai reiškia, kad negalės būti sugeneruotos Spaudimai→Būklė jungtys.",
+      "pt": "Isso significa que nenhuma conexão Pressões→Estado pode ser gerada.",
+      "it": "Ciò significa che non possono essere generate connessioni Pressioni→Stato.",
+      "no": "Dette betyr at ingen Press→Tilstand-forbindelser kan genereres.",
+      "el": "Αυτό σημαίνει ότι δεν μπορούν να δημιουργηθούν συνδέσεις Πιέσεις→Κατάσταση."
+    },
+    "modules.isa.ai_assistant.no_state_impacts_connections": {
+      "en": "This means no State→Impacts connections can be generated.",
+      "es": "Esto significa que no se pueden generar conexiones Estado→Impactos.",
+      "fr": "Cela signifie qu'aucune connexion État→Impacts ne peut être générée.",
+      "de": "Das bedeutet, dass keine Zustand→Auswirkungen-Verbindungen erzeugt werden können.",
+      "lt": "Tai reiškia, kad negalės būti sugeneruotos Būklė→Poveikiai jungtys.",
+      "pt": "Isso significa que nenhuma conexão Estado→Impactos pode ser gerada.",
+      "it": "Ciò significa che non possono essere generate connessioni Stato→Impatti.",
+      "no": "Dette betyr at ingen Tilstand→Påvirkninger-forbindelser kan genereres.",
+      "el": "Αυτό σημαίνει ότι δεν μπορούν να δημιουργηθούν συνδέσεις Κατάσταση→Επιπτώσεις."
+    },
+    "modules.isa.ai_assistant.no_impacts_welfare_connections": {
+      "en": "This means no Impacts→Welfare connections can be generated.",
+      "es": "Esto significa que no se pueden generar conexiones Impactos→Bienestar.",
+      "fr": "Cela signifie qu'aucune connexion Impacts→Bien-être ne peut être générée.",
+      "de": "Das bedeutet, dass keine Auswirkungen→Wohlfahrt-Verbindungen erzeugt werden können.",
+      "lt": "Tai reiškia, kad negalės būti sugeneruotos Poveikiai→Gerovė jungtys.",
+      "pt": "Isso significa que nenhuma conexão Impactos→Bem-estar pode ser gerada.",
+      "it": "Ciò significa che non possono essere generate connessioni Impatti→Benessere.",
+      "no": "Dette betyr at ingen Påvirkninger→Velferd-forbindelser kan genereres.",
+      "el": "Αυτό σημαίνει ότι δεν μπορούν να δημιουργηθούν συνδέσεις Επιπτώσεις→Ευημερία."
+    },
+    "modules.isa.ai_assistant.no_welfare_feedback_connections": {
+      "en": "This means no Welfare→Drivers feedback connections can be generated.",
+      "es": "Esto significa que no se pueden generar conexiones de retroalimentación Bienestar→Impulsores.",
+      "fr": "Cela signifie qu'aucune connexion de rétroaction Bien-être→Facteurs ne peut être générée.",
+      "de": "Das bedeutet, dass keine Wohlfahrt→Treiber-Rückkopplungsverbindungen erzeugt werden können.",
+      "lt": "Tai reiškia, kad negalės būti sugeneruotos Gerovė→Veiksniai grįžtamojo ryšio jungtys.",
+      "pt": "Isso significa que nenhuma conexão de retroalimentação Bem-estar→Drivers pode ser gerada.",
+      "it": "Ciò significa che non possono essere generate connessioni di feedback Benessere→Driver.",
+      "no": "Dette betyr at ingen Velferd→Drivere-tilbakekoblingsforbindelser kan genereres.",
+      "el": "Αυτό σημαίνει ότι δεν μπορούν να δημιουργηθούν συνδέσεις ανατροφοδότησης Ευημερία→Κινητήριες Δυνάμεις."
+    },
+    "modules.isa.ai_assistant.no_response_connections": {
+      "en": "This means no Response connections to Drivers, Activities or Pressures can be generated.",
+      "es": "Esto significa que no se pueden generar conexiones de Respuesta a Impulsores, Actividades o Presiones.",
+      "fr": "Cela signifie qu'aucune connexion de Réponse aux Facteurs, Activités ou Pressions ne peut être générée.",
+      "de": "Das bedeutet, dass keine Antwort-Verbindungen zu Treibern, Aktivitäten oder Belastungen erzeugt werden können.",
+      "lt": "Tai reiškia, kad negalės būti sugeneruotos Atsakų jungtys su Veiksniais, Veiklomis ar Spaudimais.",
+      "pt": "Isso significa que nenhuma conexão de Resposta a Drivers, Atividades ou Pressões pode ser gerada.",
+      "it": "Ciò significa che non possono essere generate connessioni di Risposta a Driver, Attività o Pressioni.",
+      "no": "Dette betyr at ingen Respons-forbindelser til Drivere, Aktiviteter eller Press kan genereres.",
+      "el": "Αυτό σημαίνει ότι δεν μπορούν να δημιουργηθούν συνδέσεις Απόκρισης σε Κινητήριες Δυνάμεις, Δραστηριότητες ή Πιέσεις."
+    },
+    "modules.isa.ai_assistant.no_connections_for_category": {
+      "en": "This means no connections can be generated for this category.",
+      "es": "Esto significa que no se pueden generar conexiones para esta categoría.",
+      "fr": "Cela signifie qu'aucune connexion ne peut être générée pour cette catégorie.",
+      "de": "Das bedeutet, dass für diese Kategorie keine Verbindungen erzeugt werden können.",
+      "lt": "Tai reiškia, kad šiai kategorijai negalės būti sugeneruota jokių jungčių.",
+      "pt": "Isso significa que nenhuma conexão pode ser gerada para esta categoria.",
+      "it": "Ciò significa che non possono essere generate connessioni per questa categoria.",
+      "no": "Dette betyr at ingen forbindelser kan genereres for denne kategorien.",
+      "el": "Αυτό σημαίνει ότι δεν μπορούν να δημιουργηθούν συνδέσεις για αυτή την κατηγορία."
+    },
+    "modules.isa.ai_assistant.only": {
+      "en": "Only",
+      "es": "Solo",
+      "fr": "Seulement",
+      "de": "Nur",
+      "lt": "Tik",
+      "pt": "Apenas",
+      "it": "Solo",
+      "no": "Bare",
+      "el": "Μόνο"
+    },
+    "modules.isa.ai_assistant.added_consider_more": {
+      "en": "added. Consider adding more for a richer SES model.",
+      "es": "agregado(s). Considere agregar más para un modelo SES más rico.",
+      "fr": "ajouté(s). Envisagez d'en ajouter davantage pour un modèle SES plus riche.",
+      "de": "hinzugefügt. Erwägen Sie, mehr hinzuzufügen für ein reichhaltigeres SES-Modell.",
+      "lt": "pridėta. Apsvarstykite galimybę pridėti daugiau turtingesniam SES modeliui.",
+      "pt": "adicionado(s). Considere adicionar mais para um modelo SES mais rico.",
+      "it": "aggiunto/i. Considera di aggiungerne di più per un modello SES più ricco.",
+      "no": "lagt til. Vurder å legge til flere for en rikere SES-modell.",
+      "el": "προστέθηκαν. Εξετάστε το ενδεχόμενο προσθήκης περισσότερων για ένα πλουσιότερο μοντέλο SES."
+    },
+    "modules.isa.ai_assistant.from_knowledge_database": {
+      "en": "Sourced from knowledge database",
+      "es": "Obtenido de la base de conocimiento",
+      "fr": "Issu de la base de connaissances",
+      "de": "Aus der Wissensdatenbank",
+      "lt": "Iš žinių bazės",
+      "pt": "Da base de conhecimento",
+      "it": "Dalla base di conoscenza",
+      "no": "Fra kunnskapsdatabasen",
+      "el": "Από τη βάση γνώσεων"
     }
   }
 }

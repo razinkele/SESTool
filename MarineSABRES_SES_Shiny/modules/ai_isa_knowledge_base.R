@@ -155,14 +155,17 @@ deduplicate_suggestions <- function(suggestions) {
 #' Get Context-Aware Suggestions for DAPSI(W)R(M) Elements
 #'
 #' Returns intelligent suggestions based on regional sea, ecosystem type,
-#' and main issue context.
+#' and main issue context. When the JSON knowledge database provides 3+
+#' suggestions for a category, generic universal suggestions are suppressed
+#' to avoid polluting context-specific results.
 #'
 #' @param category DAPSIWRM category (drivers, activities, pressures, states, impacts, welfare, responses)
 #' @param regional_sea Selected regional sea key
 #' @param ecosystem_type Selected ecosystem type
 #' @param main_issue Main environmental issue
-#' @return Character vector of context-aware suggestions
-get_context_suggestions <- function(category, regional_sea, ecosystem_type, main_issue) {
+#' @param return_sources If TRUE, return a list with suggestions and source attribution (for UI badges)
+#' @return Character vector of context-aware suggestions, or list with $suggestions and $sources if return_sources=TRUE
+get_context_suggestions <- function(category, regional_sea, ecosystem_type, main_issue, return_sources = FALSE) {
   suggestions <- list()
 
   # ---- Priority 1: JSON Knowledge Database (context-specific, ecologically validated) ----
@@ -180,13 +183,22 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
     }
   }
 
+  # Determine if KB has sufficient context-specific suggestions (3+ items).
+  # When KB provides enough items, universal (generic) suggestions are suppressed
+
+  # to prevent context pollution (e.g., "Coastal protection" showing up for a
+  # lagoon focused on eutrophication).
+  kb_sufficient <- length(suggestions$knowledge_db) >= 3
+
   # ---- Priority 2: Hardcoded suggestions (generic and region-specific fallbacks) ----
 
   if (category == "drivers") {
-    # Universal drivers
-    suggestions$universal <- c("Food security", "Economic development", "Recreation and tourism",
-                               "Energy needs", "Coastal protection", "Cultural heritage",
-                               "Employment", "Trade and commerce")
+    # Universal drivers - only add as padding when KB has fewer than 3 items
+    if (!kb_sufficient) {
+      suggestions$universal <- c("Food security", "Economic development", "Recreation and tourism",
+                                 "Energy needs", "Coastal protection", "Cultural heritage",
+                                 "Employment", "Trade and commerce")
+    }
 
     # Add region-specific drivers
     if (!is.null(regional_sea)) {
@@ -201,8 +213,10 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
   }
 
   else if (category == "activities") {
-    # Universal activities
-    suggestions$universal <- c("Commercial fishing", "Aquaculture", "Shipping", "Coastal development")
+    # Universal activities - only add as padding when KB has fewer than 3 items
+    if (!kb_sufficient) {
+      suggestions$universal <- c("Commercial fishing", "Aquaculture", "Shipping", "Coastal development")
+    }
 
     # Region-specific
     if (!is.null(regional_sea)) {
@@ -234,9 +248,11 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
   }
 
   else if (category == "pressures") {
-    # Universal pressures
-    suggestions$universal <- c("Nutrient enrichment", "Overfishing", "Physical disturbance",
-                               "Marine litter", "Underwater noise", "Habitat loss")
+    # Universal pressures - only add as padding when KB has fewer than 3 items
+    if (!kb_sufficient) {
+      suggestions$universal <- c("Nutrient enrichment", "Overfishing", "Physical disturbance",
+                                 "Marine litter", "Underwater noise", "Habitat loss")
+    }
 
     # Region-specific
     if (!is.null(regional_sea)) {
@@ -264,9 +280,11 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
   }
 
   else if (category == "states") {
-    # Universal state changes
-    suggestions$universal <- c("Water quality decline", "Biodiversity loss", "Habitat degradation",
-                               "Species population changes", "Oxygen depletion")
+    # Universal state changes - only add as padding when KB has fewer than 3 items
+    if (!kb_sufficient) {
+      suggestions$universal <- c("Water quality decline", "Biodiversity loss", "Habitat degradation",
+                                 "Species population changes", "Oxygen depletion")
+    }
 
     # Region-specific
     if (!is.null(regional_sea)) {
@@ -294,9 +312,11 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
   }
 
   else if (category == "impacts") {
-    # Universal impacts
-    suggestions$universal <- c("Loss of ecosystem services", "Reduced fish catches", "Coastal vulnerability",
-                               "Economic losses", "Health risks", "Cultural loss")
+    # Universal impacts - only add as padding when KB has fewer than 3 items
+    if (!kb_sufficient) {
+      suggestions$universal <- c("Loss of ecosystem services", "Reduced fish catches", "Coastal vulnerability",
+                                 "Economic losses", "Health risks", "Cultural loss")
+    }
 
     # Ecosystem-specific
     if (!is.null(ecosystem_type)) {
@@ -324,9 +344,11 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
   }
 
   else if (category == "welfare") {
-    # Universal welfare impacts
-    suggestions$universal <- c("Income loss", "Food insecurity", "Health impacts", "Cultural identity loss",
-                               "Displacement", "Recreational opportunities loss")
+    # Universal welfare impacts - only add as padding when KB has fewer than 3 items
+    if (!kb_sufficient) {
+      suggestions$universal <- c("Income loss", "Food insecurity", "Health impacts", "Cultural identity loss",
+                                 "Displacement", "Recreational opportunities loss")
+    }
 
     # Issue-specific
     if (length(main_issue) > 0) {
@@ -341,9 +363,11 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
   }
 
   else if (category == "responses") {
-    # Universal responses
-    suggestions$universal <- c("Marine Protected Areas", "Fishing regulations", "Pollution controls",
-                               "Monitoring programs", "Ecosystem restoration", "Stakeholder engagement")
+    # Universal responses - only add as padding when KB has fewer than 3 items
+    if (!kb_sufficient) {
+      suggestions$universal <- c("Marine Protected Areas", "Fishing regulations", "Pollution controls",
+                                 "Monitoring programs", "Ecosystem restoration", "Stakeholder engagement")
+    }
 
     # Region-specific
     if (!is.null(regional_sea)) {
@@ -389,6 +413,29 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
 
   # Apply semantic deduplication to remove similar terms
   deduplicated <- deduplicate_suggestions(all_suggestions)
+
+  # Build source attribution map for UI badges (P3)
+  if (return_sources) {
+    source_map <- character(length(deduplicated))
+    names(source_map) <- deduplicated
+    kb_items <- suggestions$knowledge_db %||% character(0)
+    for (s in deduplicated) {
+      if (s %in% kb_items) {
+        source_map[s] <- "knowledge_db"
+      } else if (s %in% (suggestions$regional %||% character(0))) {
+        source_map[s] <- "regional"
+      } else if (s %in% (suggestions$issue %||% character(0))) {
+        source_map[s] <- "issue"
+      } else if (s %in% (suggestions$ecosystem %||% character(0))) {
+        source_map[s] <- "ecosystem"
+      } else if (s %in% (suggestions$habitat %||% character(0))) {
+        source_map[s] <- "habitat"
+      } else {
+        source_map[s] <- "generic"
+      }
+    }
+    return(list(suggestions = deduplicated, sources = source_map))
+  }
 
   return(deduplicated)
 }
