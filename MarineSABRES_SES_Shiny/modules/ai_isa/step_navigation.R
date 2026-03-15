@@ -50,6 +50,15 @@ setup_step_navigation <- function(rv, session, i18n, QUESTION_FLOW) {
 
   # Move to next step
   move_to_next_step <- function() {
+    # Debounce: prevent double-advance from rapid reactive cascades
+    current_time <- as.numeric(Sys.time())
+    last_advance <- rv$.last_step_advance_time %||% 0
+    if ((current_time - last_advance) < 0.3 && rv$current_step > 0) {
+      debug_log(sprintf("[AI ISA] Debounced rapid step advance at step %d", rv$current_step), "AI ISA")
+      return()
+    }
+    rv$.last_step_advance_time <- current_time
+
     # Check if we can move forward before incrementing
     if (rv$current_step < length(QUESTION_FLOW)) {
       rv$current_step <- rv$current_step + 1
