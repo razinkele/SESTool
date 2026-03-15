@@ -302,21 +302,30 @@ build_adjacency_matrices <- function(elements, suggested_connections,
   for (conn_idx in approved_connections) {
     conn <- suggested_connections[[conn_idx]]
 
-    # Format: "+strength:confidence" or "+strength:confidence:lag" (lag in years)
+    # Format: "+strength:confidence" or "+strength:confidence:delay_category"
+    # or "+strength:confidence:delay_category:delay_years"
     confidence <- conn$confidence %||% CONFIDENCE_DEFAULT
-    lag <- conn$lag %||% conn$temporal_lag_years %||% NA
-    # Convert text temporal_lag to numeric if needed
-    if (is.character(lag)) {
-      lag <- switch(tolower(lag),
-        "immediate" = 0,
-        "short-term" = 0.5,
-        "medium-term" = 3,
-        "long-term" = 10,
-        NA_real_
-      )
+
+    # Read delay from connection (with backward compat for old `lag` field)
+    delay_cat <- conn$delay %||% NA_character_
+    delay_yrs <- conn$delay_years %||% NA_real_
+
+    # Backward compat: convert old `lag` field to new delay fields
+    if (is.na(delay_cat) && !is.null(conn$lag)) {
+      if (is.numeric(conn$lag)) {
+        delay_cat <- derive_delay_category(conn$lag)
+        delay_yrs <- conn$lag
+      } else if (is.character(conn$lag) && conn$lag %in% DELAY_CATEGORIES) {
+        delay_cat <- conn$lag
+      }
     }
-    value <- if (!is.na(lag) && is.numeric(lag)) {
-      paste0(conn$polarity, conn$strength, ":", confidence, ":", lag)
+
+    value <- if (!is.na(delay_cat)) {
+      if (!is.na(delay_yrs)) {
+        paste0(conn$polarity, conn$strength, ":", confidence, ":", delay_cat, ":", delay_yrs)
+      } else {
+        paste0(conn$polarity, conn$strength, ":", confidence, ":", delay_cat)
+      }
     } else {
       paste0(conn$polarity, conn$strength, ":", confidence)
     }
