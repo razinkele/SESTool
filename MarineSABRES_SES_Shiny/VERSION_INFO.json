@@ -1,123 +1,91 @@
 {
-  "version": "1.7.0",
-  "version_name": "Security, DTU Dynamics & Accessibility",
-  "release_date": "2026-03-14",
+  "version": "1.8.0",
+  "version_name": "Knowledge Base Validation & Country Governance",
+  "release_date": "2026-03-15",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.7.0",
+  "documentation_version": "1.8.0",
   "api_version": "1.0",
-  "database_version": "1.0",
+  "database_version": "1.1",
   "breaking_changes": false,
-  "security_updates": true,
+  "security_updates": false,
   "features": [
-    "🔒 Security hardening: XSS protection, JSON validation, ML model verification, eval() guards",
-    "🧮 DTU Dynamics Engine: Laplacian stability, Boolean networks, simulation, Monte Carlo, intervention analysis",
-    "🤖 ML Phase 2 pipeline: 3-stage fallback (ensemble → v2 → v1 → rules) with graph features",
-    "♿ WCAG 2.1 AA accessibility: ARIA landmarks, keyboard navigation, focus traps, screen reader support",
-    "🌍 9 languages: Norwegian and Greek translations substantially completed (~2500+ entries)",
-    "📦 Module decomposition: AI assistant (-42%), CLD visualization (-23%), ISA entry (-25%)",
-    "🔗 Unified event bus: ISA → CLD → Analysis auto-propagation re-enabled",
-    "🧪 Comprehensive testing: 1,300+ tests, visual regression, load testing infrastructure",
-    "📐 Shared UI component library with 8 reusable builders",
-    "📊 Analysis modules now show stale-data warnings when ISA data changes",
-    "👍 ML prediction feedback UI (thumbs up/down) for active learning",
-    "🏗️ Architecture Decision Records (10 ADRs documented)",
-    "📋 Standardized error messages with format_user_error() across all modules",
-    "📄 DESCRIPTION file with all 35 dependencies formally declared",
-    "🧹 631 deprecated stringsAsFactors calls removed, trailing commas fixed",
-    "📝 Roxygen2 documentation for 14 previously undocumented functions"
+    "🌍 Country selection with governance and socio-economic element suggestions (97 countries, 11 regional seas)",
+    "🔬 Evidence-based strength, confidence, and temporal lag across 620+ curated connections",
+    "📚 SES Knowledge Base expanded to 30 contexts with 620 scientifically validated connections",
+    "🏝️ 6 insular ecosystem contexts added (Caribbean, Pacific atoll, Indian Ocean, Arctic, Baltic, Atlantic islands)",
+    "🧊 Arctic island, Atlantic estuary/coast, Baltic rocky coast ecosystem contexts",
+    "🔗 Graphical SES network builder module for visual CLD construction",
+    "📖 Tutorial system module with guided walkthroughs",
+    "🔧 Universal Excel loader for flexible SES model import",
+    "🧠 ML model registry and text embeddings infrastructure",
+    "🎓 DTU dynamics integration with Boolean network analysis"
   ],
   "fixes": {
     "critical": [
       {
-        "issue": "HTML injection / XSS vulnerabilities",
-        "files": "10+ files (project_io, CLD viz, modals, modules)",
-        "impact": "User-supplied data rendered as raw HTML",
-        "resolution": "Added htmlEscape() in R and escHtml() in JS for all dynamic content"
+        "issue": "Subscript out of bounds crash when removing unconnected elements",
+        "file": "modules/ai_isa_assistant_module.R, modules/ai_isa/data_persistence.R",
+        "impact": "App crashed when user selected 'Remove unconnected and continue'",
+        "resolution": "Remap connection indices by name lookup after element removal; added bounds checking in build_adjacency_matrices"
       },
       {
-        "issue": "Event bus metadata not session-scoped",
-        "file": "server/event_bus_setup.R",
-        "impact": "Race conditions in multi-user deployments",
-        "resolution": "Moved metadata to per-session reactiveVals"
+        "issue": "28 invalid DAPSIWRM flow directions in knowledge database",
+        "file": "data/ses_knowledge_db.json",
+        "impact": "Erroneous connection suggestions skipping framework levels (D->P, A->S, R->S)",
+        "resolution": "Routed all connections through proper intermediate elements per DAPSIWRM rules"
       },
       {
-        "issue": "Dual event bus implementations",
-        "files": "server/event_bus_setup.R, functions/reactive_pipeline.R",
-        "impact": "ISA → CLD auto-propagation was completely disabled",
-        "resolution": "Unified to single event bus API, re-enabled reactive pipeline"
-      },
-      {
-        "issue": "CLD showing 0 edges despite connections defined",
-        "file": "functions/visnetwork_helpers.R",
-        "impact": "Adjacency matrix naming mismatch between ISA entry and CLD generator",
-        "resolution": "Added get_matrix() helper checking both naming conventions"
-      },
-      {
-        "issue": "ml_explainability.R syntax error",
-        "file": "functions/ml_explainability.R",
-        "impact": "ML enhancement failed to load",
-        "resolution": "Fixed invalid list key syntax (c('D','A') = ... → 'D->A' = ...)"
+        "issue": "Translation file write permission denied on server",
+        "file": "deployment/remote-deploy.sh",
+        "impact": "App failed to start after deployment",
+        "resolution": "Set group-writable permissions on translations directory during deployment"
       }
     ],
     "improvements": [
       {
-        "issue": "Unconnected elements not warned about",
-        "file": "modules/ai_isa_assistant_module.R",
-        "resolution": "Added warning showing which elements lack connections before finishing"
+        "issue": "Duplicate connections in mediterranean_open_coast context",
+        "file": "data/ses_knowledge_db.json",
+        "resolution": "Removed duplicate entries"
       },
       {
-        "issue": "FAQ accordion 4th item text unreadable",
-        "file": "modules/entry_point_module.R",
-        "resolution": "Changed status from 'warning' (yellow) to 'secondary' (gray) for contrast"
-      },
-      {
-        "issue": "Missing 'Got it' button translation",
-        "file": "translations/common/buttons.json",
-        "resolution": "Added common.buttons.got_it key in all 9 languages"
+        "issue": "Orphan element reference in indian_ocean_island context",
+        "file": "data/ses_knowledge_db.json",
+        "resolution": "Fixed element name to match existing driver"
       }
     ]
   },
   "metrics": {
-    "files_modified": 123,
-    "lines_added": 8677,
-    "lines_removed": 8965,
-    "tests_total": 1300,
-    "test_files": 51,
-    "test_lines": 22551,
+    "files_modified": 135,
+    "knowledge_db_contexts": 30,
+    "knowledge_db_connections": 620,
+    "knowledge_db_elements": 1102,
+    "r_kb_connections": 112,
+    "r_kb_synonym_groups": 17,
+    "countries_in_governance_db": 97,
+    "regional_seas": 11,
     "languages_supported": 9,
-    "translation_keys": 3663,
-    "modules_total": 44,
-    "functions_total": 200,
-    "ml_feature_dimensions_v1": 358,
-    "ml_feature_dimensions_v2": 314,
-    "dtu_dynamics_functions": 11
+    "modules_total": 46,
+    "test_files": 55
   },
   "migration_notes": [
     "No breaking changes - all changes are backward-compatible",
-    "Event bus API unified: modules should use emit_isa_change()/on_isa_change()",
-    "format_user_error() is now the standard for user-facing error notifications",
-    "All modules now have event_bus = NULL parameter (optional, backward-compatible)",
-    "shiny.i18n::usei18n(i18n) added to all module UI functions",
-    "stringsAsFactors = FALSE removed (R >= 4.4.1 default)"
+    "Knowledge database version bumped to 1.1 (structural fixes)",
+    "New modules (graphical_ses_network_builder, tutorial_system) are optional",
+    "Country governance database is a new feature, no migration needed"
   ],
   "developer_notes": [
-    "Use format_user_error(e, i18n, context) for user-facing errors, not paste('Error:', e$message)",
-    "Use debug_log(message, category) instead of cat() for all debug output",
-    "All analysis modules should subscribe to event_bus$on_isa_change() for stale-data warnings",
-    "See docs/ARCHITECTURE.md for 10 architecture decision records",
-    "ML inference uses 3-stage fallback: ensemble → v2 → v1 → rules",
-    "DTU dynamics functions are in functions/ses_dynamics.R (11 public functions)",
-    "UI components library in functions/ui_components.R (8 reusable builders)"
+    "Run scripts/audit_kb.R to validate knowledge base after any KB changes",
+    "Connection indices are now remapped by name after element removal",
+    "build_adjacency_matrices has bounds checking as safety net",
+    "Country governance data in functions/country_governance_loader.R"
   ],
   "deployment_notes": [
-    "Set MARINESABRES_VERIFY_MODELS=TRUE in production for ML model checksum verification",
-    "Run scripts/generate_model_checksums.R after updating trained models",
-    "Translation cache (_merged_translations.json) will regenerate on first startup",
-    "Full server restart recommended to pick up event bus unification",
-    "renv::init() recommended for reproducible package management"
+    "Ensure translations/ directory has group-write permission (chmod 775)",
+    "Translation cache (_merged_translations.json) regenerates on first startup",
+    "Full server restart recommended for new modules"
   ],
-  "previous_version": "1.6.1"
+  "previous_version": "1.7.0"
 }

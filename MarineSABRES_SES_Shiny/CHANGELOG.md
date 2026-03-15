@@ -5,6 +5,48 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-03-15
+
+### Knowledge Base Validation & Country Governance
+
+Minor release delivering validated SES knowledge base, country-level governance integration, graphical network builder, tutorial system, and critical bug fixes for the AI assistant workflow.
+
+### Added
+- **Country Governance Database**: 97 countries across 11 regional seas with governance and socio-economic element suggestions
+- **Graphical SES Network Builder**: New module (`modules/graphical_ses_network_builder.R`) for visual CLD construction
+- **Tutorial System**: Guided walkthrough module (`modules/tutorial_system.R`) with step-by-step onboarding
+- **Universal Excel Loader**: Flexible SES model import from varied Excel formats (`functions/universal_excel_loader.R`)
+- **ML Model Registry**: Centralized model management (`functions/ml_model_registry.R`)
+- **ML Text Embeddings**: Text embedding infrastructure (`functions/ml_text_embeddings.R`)
+- **Data Accessors**: Unified data access layer (`functions/data_accessors.R`)
+- **Lazy Loading**: Deferred module loading for faster startup (`functions/lazy_loading.R`)
+- **DTU Integration**: DTU dynamics app and Boolean network analysis (`DTU/`)
+- **SES Models Collection**: Arctic, Macaronesia, and Tuscan DA model files (`SESModels/`)
+- **KB Audit Script**: Automated validation of knowledge base connections (`scripts/audit_kb.R`)
+- **6 Insular Ecosystem Contexts**: Caribbean island, Pacific atoll, Indian Ocean island, Arctic island, Baltic island, Atlantic island
+- **3 Additional Contexts**: Arctic island, Atlantic estuary/coast, Baltic rocky coast
+- **20+ New Test Files**: Comprehensive test coverage for ML, modules, accessibility, and E2E
+
+### Changed
+- **Knowledge Database v1.1**: 620 connections across 30 contexts, all structurally validated against DAPSIWRM rules
+- **Evidence-Based Connections**: Strength, confidence (1-5 scale), and temporal lag metadata across all 620 connections
+- **Connection Index Remapping**: AI assistant now properly remaps indices after element removal
+
+### Fixed
+- **Critical**: App crash on "Remove unconnected elements and continue" — connection `from_index`/`to_index` pointed to stale positions after element removal, causing `subscript out of bounds` in `build_adjacency_matrices`
+- **Critical**: 25 invalid DAPSIWRM flow directions in knowledge database — connections skipping framework levels (D→P, A→S, R→S) now routed through proper intermediate elements
+- **Critical**: Translation file write permission denied on server deployment — `translations/` directory now set to group-writable
+- 2 duplicate connections removed from mediterranean_open_coast context
+- 1 orphan element reference fixed in indian_ocean_island context
+- Bounds checking added to `build_adjacency_matrices` as safety net for out-of-range indices
+
+### Knowledge Base Quality
+- All 620 JSON connections pass structural validation (valid flows, types, polarity, strength, confidence)
+- All 112 R KB pattern rules pass validation (valid regex, flows, probabilities)
+- 8 scientifically valid "unusual" polarities reviewed and confirmed (trophic cascades, fishing displacement effects)
+
+---
+
 ## [1.7.0] - 2026-03-14
 
 ### Security Hardening, DTU Integration & Accessibility
