@@ -103,7 +103,16 @@ create_kumu_export_zip <- function(isa_data, output_file) {
   write.csv(all_elements, file.path(temp_dir, "elements.csv"), row.names = FALSE)
 
   # Connections file (to be built from adjacency matrices)
-  connections <- data.frame(From = character(), To = character(), Type = character())
+  connections <- data.frame(
+    From = character(),
+    To = character(),
+    Type = character(),
+    Strength = character(),
+    Confidence = integer(),
+    Delay = character(),
+    `Delay (years)` = numeric(),
+    check.names = FALSE
+  )
   write.csv(connections, file.path(temp_dir, "connections.csv"), row.names = FALSE)
 
   csv_files <- c(file.path(temp_dir, "elements.csv"), file.path(temp_dir, "connections.csv"))
