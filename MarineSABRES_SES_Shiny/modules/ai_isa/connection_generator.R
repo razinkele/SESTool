@@ -467,7 +467,7 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
         # Determine strength from knowledge base or ML if available
         strength <- "medium"
         confidence <- 3
-        temporal_lag <- NA_real_  # Lag in years (NA = unknown)
+        delay_category <- NA_character_
         scoring_method <- "keyword"
 
         # Check knowledge base for strength info and temporal lag
@@ -485,10 +485,15 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
               "synonym" = 3,
               3
             )
-            # Extract temporal lag if available
+            # Extract delay category if available
             if (!is.null(kb_match$temporal_lag)) {
-              temporal_lag <- switch(tolower(kb_match$temporal_lag),
-                "immediate" = 0, "short-term" = 0.5, "medium-term" = 3, "long-term" = 10, NA_real_)
+              delay_category <- switch(tolower(kb_match$temporal_lag),
+                "immediate" = "immediate",
+                "short-term" = "short-term",
+                "medium-term" = "medium-term",
+                "long-term" = "long-term",
+                NA_character_
+              )
             }
           }
         }
@@ -534,7 +539,8 @@ generate_smart_connections <- function(from_elements, to_elements, from_type, to
             polarity = polarity,
             strength = strength,
             confidence = confidence,
-            lag = temporal_lag,  # Temporal lag in years (0=immediate, NA=unknown)
+            delay = delay_category,
+            delay_years = NA_real_,
             rationale = paste(from_name, verb, to_name),
             matrix = matrix_name,
             scoring_method = scoring_method
