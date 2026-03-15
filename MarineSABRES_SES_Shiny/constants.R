@@ -285,6 +285,55 @@ DEFAULT_GROUP_COLOR <- "#95A5A6"
 DEFAULT_GROUP_SHAPE <- "ellipse"
 
 # ============================================================================
+# DELAY (TEMPORAL LAG) CONSTANTS
+# ============================================================================
+
+# Delay categories for temporal lag between cause and effect
+DELAY_CATEGORIES <- c("immediate", "short-term", "medium-term", "long-term")
+
+DELAY_LABELS <- c(
+  "immediate" = "Immediate",
+  "short-term" = "Short-term",
+  "medium-term" = "Medium-term",
+  "long-term" = "Long-term"
+)
+
+DELAY_RANGES <- c(
+  "immediate" = "< 1 month",
+  "short-term" = "1-6 months",
+  "medium-term" = "6 months - 3 years",
+  "long-term" = "3+ years"
+)
+
+DELAY_DASH_PATTERNS <- list(
+  "immediate" = FALSE,
+  "short-term" = c(15, 10),
+  "medium-term" = c(8, 8),
+  "long-term" = c(3, 5)
+)
+
+#' Derive delay category from numeric years
+#'
+#' @param years Numeric value in years (NA returns NA)
+#' @return Character delay category or NA_character_
+derive_delay_category <- function(years) {
+  if (is.na(years)) return(NA_character_)
+  if (years <= 1/12) return("immediate")
+  if (years < 0.5) return("short-term")
+  if (years < 3) return("medium-term")
+  return("long-term")
+}
+
+#' Convert delay category to visNetwork dash pattern
+#'
+#' @param delay_category Character delay category or NA
+#' @return FALSE (solid) or numeric vector for dashes
+delay_to_dashes <- function(delay_category) {
+  if (is.null(delay_category) || is.na(delay_category)) return(FALSE)
+  DELAY_DASH_PATTERNS[[delay_category]] %||% FALSE
+}
+
+# ============================================================================
 # NETWORK OPTIMIZATION CONSTANTS
 # ============================================================================
 
