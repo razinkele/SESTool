@@ -350,6 +350,22 @@ body .sidebar .nav-sidebar .nav-item .nav-link.active i {
   color: var(--ocean-abyss);
 }
 
+/* Expanded treeview parent - keep visible when submenu is open */
+.sidebar .nav-sidebar .nav-item.has-treeview.menu-open > .nav-link {
+  background: rgba(0, 212, 170, 0.12);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.sidebar .nav-sidebar .nav-item.has-treeview.menu-open > .nav-link i {
+  color: var(--bio-cyan);
+  opacity: 1;
+}
+
+.sidebar .nav-sidebar .nav-item.has-treeview.menu-open > .nav-link > p > .right {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 /* Sidebar submenu items */
 .sidebar .nav-treeview .nav-item .nav-link {
   color: rgba(255, 255, 255, 0.7);
