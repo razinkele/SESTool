@@ -1,12 +1,12 @@
 {
-  "version": "1.8.0",
-  "version_name": "Knowledge Base Validation & Country Governance",
+  "version": "1.8.1",
+  "version_name": "Codebase Audit & Cleanup",
   "release_date": "2026-03-15",
-  "release_type": "minor",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.8.0",
+  "documentation_version": "1.8.1",
   "api_version": "1.0",
   "database_version": "1.1",
   "breaking_changes": false,
@@ -87,5 +87,5 @@
     "Translation cache (_merged_translations.json) regenerates on first startup",
     "Full server restart recommended for new modules"
   ],
-  "previous_version": "1.7.0"
+  "previous_version": "1.8.0"
 }

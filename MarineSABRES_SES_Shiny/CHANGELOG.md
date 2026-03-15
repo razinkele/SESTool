@@ -5,6 +5,38 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.1] - 2026-03-15
+
+### Comprehensive Codebase Audit & Cleanup
+
+Patch release addressing 12 issue categories discovered during deep codebase audit: critical bug fixes, duplicate definition resolution, dead code removal, test strengthening, and documentation alignment.
+
+### Fixed
+- **Critical**: `1:nrow()` on zero-row data frames crashed with "subscript out of bounds" — replaced with `seq_len(nrow())` in 7 files (`data_structure.R`, `network_analysis.R`, `template_versioning.R`, `connection_generator.R`, `analysis_leverage.R`, `graphical_ses_network_builder.R`, `isa_data_entry_module.R`)
+- **Critical**: Duplicate `log_error()` definitions with incompatible signatures (`global.R` vs `error_handling.R`) — removed weaker version, fixed source scoping
+- **Critical**: Duplicate `init_session_isolation()` — weaker version in `session_management.R` (using `digest(runif(1))`) was overwriting stronger SHA-256 version from `session_isolation.R`
+- **Critical**: Raw `readRDS()` in auto-save recovery bypassed `safe_readRDS()` security validation
+- **Important**: `el$ID` case mismatch in diagnostics (should be `el$id`) — produced NULL output silently
+- **Important**: Reactive pipeline Observer 2 double-fired on ISA changes (watched both `on_isa_change` and `on_cld_update`) — now only watches `on_cld_update`
+- **Important**: `utils.R` sourced with `local = TRUE` making its functions invisible globally
+- **Important**: `error_handling.R` sourced with `local = TRUE` preventing `log_error`, `safe_execute` from global access
+
+### Removed
+- **Deprecated `GROUP_COLORS`/`GROUP_SHAPES`** constants with wrong color values — `get_node_colors()`/`get_node_shapes()` now use canonical `ELEMENT_COLORS`/`ELEMENT_SHAPES`
+- **Dead `functions/lazy_loading.R`** (354 lines) — fully implemented module registry with zero registered modules
+- **Inline `session_i18n` duplication** in `app.R` — now calls `create_session_i18n()` from `server/language_handling.R`
+
+### Changed
+- **i18n enforcement tests strengthened**: Tests 2, 3, 7 now use `expect_lte()` with ratcheted thresholds instead of always calling `succeed()`
+- **Test validation expanded**: Translation file checks now validate ALL entries (were sampling only first 5-10)
+- **`required_languages`** in tests updated to include Norwegian (`no`) and Greek (`el`)
+- **Non-existent modules** removed from i18n test critical list (`analysis_tools_module.R`, `progress_indicator_module.R`)
+- **`options(warn = -1)` removed** from test `setup.R` — was hiding real warnings across entire test suite
+- **`translations/README.md`** updated with Norwegian and Greek language documentation
+- **`CLAUDE.md`** server signature updated to match codebase reality (`project_data_reactive` not `project_data`)
+
+---
+
 ## [1.8.0] - 2026-03-15
 
 ### Knowledge Base Validation & Country Governance
@@ -19,7 +51,7 @@ Minor release delivering validated SES knowledge base, country-level governance 
 - **ML Model Registry**: Centralized model management (`functions/ml_model_registry.R`)
 - **ML Text Embeddings**: Text embedding infrastructure (`functions/ml_text_embeddings.R`)
 - **Data Accessors**: Unified data access layer (`functions/data_accessors.R`)
-- **Lazy Loading**: Deferred module loading for faster startup (`functions/lazy_loading.R`)
+- **Lazy Loading**: Deferred module loading for faster startup (`functions/lazy_loading.R`) *(removed in 1.8.1 — unused)*
 - **DTU Integration**: DTU dynamics app and Boolean network analysis (`DTU/`)
 - **SES Models Collection**: Arctic, Macaronesia, and Tuscan DA model files (`SESModels/`)
 - **KB Audit Script**: Automated validation of knowledge base connections (`scripts/audit_kb.R`)

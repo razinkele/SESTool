@@ -130,7 +130,7 @@ MarineSABRES_SES_Shiny/
 ├── app.R                       # Main entry point
 ├── global.R                    # Package loading, startup
 ├── constants.R                 # Configuration constants
-├── modules/                    # 33+ Shiny modules
+├── modules/                    # 44 Shiny modules
 │   ├── isa_data_entry_module.R
 │   ├── cld_visualization_module.R
 │   ├── analysis_*.R            # Analysis modules
@@ -141,13 +141,13 @@ MarineSABRES_SES_Shiny/
 │   ├── ml_*.R                  # ML classification
 │   └── ...
 ├── server/                     # Server handlers
-├── translations/               # 9 languages, 34 JSON files
+├── translations/               # 9 languages, 38 JSON files
 │   ├── common/
 │   ├── modules/
 │   └── ui/
 ├── data/                       # SES templates
 ├── www/                        # Static assets
-├── tests/                      # Test suite (35+ test files)
+├── tests/                      # Test suite (55 test files, 3700+ tests)
 └── deployment/                 # Deployment scripts
 ```
 
@@ -220,7 +220,10 @@ Rscript -e "testthat::test_file('tests/testthat/test-network-analysis.R')"
 
 | Version | Date | Highlights |
 |---------|------|------------|
-| **1.6.1** | 2026-01 | Stability fixes, constants consolidation, i18n completion |
+| **1.8.1** | 2026-03-15 | Codebase audit: 12 bug fixes, dead code removal, test strengthening |
+| **1.8.0** | 2026-03-15 | Knowledge base validation, country governance, graphical builder |
+| 1.7.0 | 2026-03-14 | Security hardening, DTU integration, accessibility, Norwegian/Greek |
+| 1.6.1 | 2026-01 | Stability fixes, constants consolidation, i18n completion |
 | 1.6.0 | 2025-12 | Modular translations, AI ISA assistant, deployment framework |
 | 1.5.x | 2025-11 | Template system, Caribbean template, multi-language support |
 
