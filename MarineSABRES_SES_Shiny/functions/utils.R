@@ -35,22 +35,24 @@ is_valid_email <- function(email) {
 # CONNECTION PARSING
 # ============================================================================
 
-#' Parse a connection value string into components
+#' Parse Connection Value
 #'
-#' Converts adjacency matrix value to list with polarity, strength, and confidence.
-#' Format: "+strong:4" or "-medium:3" where :X is confidence (1-5).
-#' If confidence is omitted, defaults to CONFIDENCE_DEFAULT (medium confidence).
+#' Converts adjacency matrix value to list with polarity, strength, confidence,
+#' delay (category), and delay_years (numeric override).
+#' Format: "+strong:4" or "+strong:4:short-term" or "+strong:4:short-term:2.5"
+#' Old numeric lag format ("+strong:4:2.5") is auto-converted to category.
 #'
-#' @param value Character string like "+strong:4" or "-medium"
-#' @return List with polarity, strength, confidence; or NULL if empty/NA
+#' @param value Character string like "+strong:4" or "+strong:4:short-term:2.5"
+#' @return List with polarity, strength, confidence, delay, delay_years; or NULL if empty/NA
 parse_connection_value <- function(value) {
   if (is.na(value) || value == "") {
     return(NULL)
   }
 
-  lag <- NA_real_  # Temporal lag in years (NA = unknown)
+  delay <- NA_character_
+  delay_years <- NA_real_
 
-  # Check if confidence/lag is included (format: "+strong:4" or "+strong:4:2.5")
+  # Check if confidence/delay is included (format: "+strong:4" or "+strong:4:short-term:2.5")
   if (grepl(":", value)) {
     parts <- strsplit(value, ":")[[1]]
     polarity_strength <- parts[1]
@@ -58,13 +60,28 @@ parse_connection_value <- function(value) {
 
     # Validate confidence is within allowed range
     if (is.na(confidence) || !confidence %in% CONFIDENCE_LEVELS) {
-      confidence <- CONFIDENCE_DEFAULT  # Default if invalid
+      confidence <- CONFIDENCE_DEFAULT
     }
 
-    # Parse optional lag (3rd colon-separated value, in years)
+    # Parse optional delay (3rd colon-separated value)
     if (length(parts) >= 3) {
-      lag <- as.numeric(parts[3])
-      if (is.na(lag) || lag < 0) lag <- NA_real_
+      if (parts[3] %in% DELAY_CATEGORIES) {
+        # New category format: "+strong:4:short-term"
+        delay <- parts[3]
+      } else {
+        # Backward compatibility: old numeric lag format "+strong:4:2.5"
+        old_lag <- suppressWarnings(as.numeric(parts[3]))
+        if (!is.na(old_lag) && old_lag >= 0) {
+          delay <- derive_delay_category(old_lag)
+          delay_years <- old_lag
+        }
+      }
+    }
+
+    # Parse optional delay_years (4th colon-separated value)
+    if (length(parts) >= 4) {
+      yrs <- suppressWarnings(as.numeric(parts[4]))
+      if (!is.na(yrs) && yrs >= 0) delay_years <- yrs
     }
   } else {
     # No confidence specified, use default
@@ -75,7 +92,8 @@ parse_connection_value <- function(value) {
   polarity <- substr(polarity_strength, 1, 1)
   strength <- substr(polarity_strength, 2, nchar(polarity_strength))
 
-  list(polarity = polarity, strength = strength, confidence = confidence, lag = lag)
+  list(polarity = polarity, strength = strength, confidence = confidence,
+       delay = delay, delay_years = delay_years)
 }
 
 # ============================================================================
