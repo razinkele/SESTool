@@ -457,8 +457,33 @@ build_adjacency_matrices_from_connections_v2 <- function(node_types, connections
         }
       }
 
-      # Format cell value: +strength:confidence or -strength:confidence
-      cell_value <- paste0(polarity_sign, strength, ":", confidence)
+      # Read Delay column if present
+      delay <- NA_character_
+      if ("Delay" %in% names(connections)) {
+        delay_val <- tolower(trimws(as.character(connections$Delay[j])))
+        if (!is.na(delay_val) && nzchar(delay_val) && delay_val %in% DELAY_CATEGORIES) {
+          delay <- delay_val
+        }
+      }
+
+      delay_years <- NA_real_
+      if ("Delay (years)" %in% names(connections)) {
+        yr_val <- suppressWarnings(as.numeric(connections[["Delay (years)"]][j]))
+        if (!is.na(yr_val) && yr_val >= 0) {
+          delay_years <- yr_val
+        }
+      }
+
+      # Format cell value: +strength:confidence or -strength:confidence[:delay[:delay_years]]
+      cell_value <- if (!is.na(delay)) {
+        if (!is.na(delay_years)) {
+          paste0(polarity_sign, strength, ":", confidence, ":", delay, ":", delay_years)
+        } else {
+          paste0(polarity_sign, strength, ":", confidence, ":", delay)
+        }
+      } else {
+        paste0(polarity_sign, strength, ":", confidence)
+      }
       mat[from_label, to_label] <- cell_value
       connections_in_matrix <- connections_in_matrix + 1
     }
