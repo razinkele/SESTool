@@ -50,17 +50,9 @@ setup_step_navigation <- function(rv, session, i18n, QUESTION_FLOW) {
 
   # Move to next step
   move_to_next_step <- function() {
-    # Temporary forced logging to diagnose country step skip
-    message(sprintf("[STEP-NAV] move_to_next_step called: current_step=%d -> %d",
-                    rv$current_step, rv$current_step + 1))
-    message(sprintf("[STEP-NAV] call stack: %s",
-                    paste(sapply(sys.calls(), function(x) deparse(x[[1]])), collapse=" > ")))
-
     # Check if we can move forward before incrementing
     if (rv$current_step < length(QUESTION_FLOW)) {
       rv$current_step <- rv$current_step + 1
-      message(sprintf("[STEP-NAV] Step now = %d (target: %s)",
-                      rv$current_step, QUESTION_FLOW[[rv$current_step + 1]]$target))
     }
 
     if (rv$current_step < length(QUESTION_FLOW)) {
