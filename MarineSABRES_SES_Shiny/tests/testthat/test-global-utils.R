@@ -84,6 +84,108 @@ test_that("parse_connection_value parses connection values correctly", {
   expect_null(parse_connection_value(""))
 })
 
+test_that("parse_connection_value parses delay categories correctly", {
+  skip_if_not(exists("parse_connection_value", mode = "function"),
+              "parse_connection_value not available")
+  skip_if_not(exists("DELAY_CATEGORIES"), "DELAY_CATEGORIES not available")
+
+  # No delay (backward compat)
+  result1 <- parse_connection_value("+strong:4")
+  expect_equal(result1$polarity, "+")
+  expect_equal(result1$strength, "strong")
+  expect_equal(result1$confidence, 4L)
+  expect_true(is.na(result1$delay))
+  expect_true(is.na(result1$delay_years))
+
+  # Category only
+  result2 <- parse_connection_value("+medium:3:short-term")
+  expect_equal(result2$delay, "short-term")
+  expect_true(is.na(result2$delay_years))
+
+  # Category + numeric override
+  result3 <- parse_connection_value("-strong:4:medium-term:2.5")
+  expect_equal(result3$delay, "medium-term")
+  expect_equal(result3$delay_years, 2.5)
+
+  # All four categories
+  for (cat in DELAY_CATEGORIES) {
+    result <- parse_connection_value(paste0("+medium:3:", cat))
+    expect_equal(result$delay, cat, info = paste("Category:", cat))
+  }
+
+  # Old numeric lag format (backward compat)
+  result4 <- parse_connection_value("+strong:4:2.5")
+  expect_equal(result4$delay, "medium-term")
+  expect_equal(result4$delay_years, 2.5)
+
+  # Old numeric lag = 0 (immediate)
+  result5 <- parse_connection_value("+medium:3:0")
+  expect_equal(result5$delay, "immediate")
+  expect_equal(result5$delay_years, 0)
+
+  # Invalid 3rd field
+  result6 <- parse_connection_value("+medium:3:invalid")
+  expect_true(is.na(result6$delay))
+
+  # Negative delay_years
+  result7 <- parse_connection_value("+medium:3:short-term:-1")
+  expect_equal(result7$delay, "short-term")
+  expect_true(is.na(result7$delay_years))
+})
+
+test_that("delay round-trip: serialize then parse preserves values", {
+  skip_if_not(exists("parse_connection_value", mode = "function"),
+              "parse_connection_value not available")
+  skip_if_not(exists("DELAY_CATEGORIES"), "DELAY_CATEGORIES not available")
+
+  # Round-trip with category only
+  cell1 <- "+strong:4:short-term"
+  parsed1 <- parse_connection_value(cell1)
+  rebuilt1 <- paste0(parsed1$polarity, parsed1$strength, ":", parsed1$confidence, ":", parsed1$delay)
+  expect_equal(rebuilt1, cell1)
+
+  # Round-trip with category + years
+  cell2 <- "+medium:3:long-term:5.5"
+  parsed2 <- parse_connection_value(cell2)
+  rebuilt2 <- paste0(parsed2$polarity, parsed2$strength, ":", parsed2$confidence, ":", parsed2$delay, ":", parsed2$delay_years)
+  expect_equal(rebuilt2, cell2)
+
+  # Round-trip with no delay
+  cell3 <- "-weak:2"
+  parsed3 <- parse_connection_value(cell3)
+  rebuilt3 <- paste0(parsed3$polarity, parsed3$strength, ":", parsed3$confidence)
+  expect_equal(rebuilt3, cell3)
+  expect_true(is.na(parsed3$delay))
+})
+
+test_that("derive_delay_category maps numeric years to categories", {
+  skip_if_not(exists("derive_delay_category", mode = "function"),
+              "derive_delay_category not available")
+
+  expect_true(is.na(derive_delay_category(NA)))
+  expect_equal(derive_delay_category(0), "immediate")
+  expect_equal(derive_delay_category(1/12), "immediate")
+  expect_equal(derive_delay_category(0.25), "short-term")
+  expect_equal(derive_delay_category(0.49), "short-term")
+  expect_equal(derive_delay_category(0.5), "medium-term")
+  expect_equal(derive_delay_category(2.9), "medium-term")
+  expect_equal(derive_delay_category(3), "long-term")
+  expect_equal(derive_delay_category(10), "long-term")
+})
+
+test_that("delay_to_dashes returns correct patterns", {
+  skip_if_not(exists("delay_to_dashes", mode = "function"),
+              "delay_to_dashes not available")
+
+  expect_equal(delay_to_dashes(NA), FALSE)
+  expect_equal(delay_to_dashes(NULL), FALSE)
+  expect_equal(delay_to_dashes("immediate"), FALSE)
+  expect_equal(delay_to_dashes("short-term"), c(15, 10))
+  expect_equal(delay_to_dashes("medium-term"), c(8, 8))
+  expect_equal(delay_to_dashes("long-term"), c(3, 5))
+  expect_equal(delay_to_dashes("unknown-value"), FALSE)
+})
+
 # Test sanitize_color function
 test_that("sanitize_color validates and sanitizes colors", {
   # Valid hex colors
