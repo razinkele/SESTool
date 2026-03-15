@@ -357,8 +357,14 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       amended_data = list(),  # Store amended connection data
       batches_info = list(),  # Store batch categorization info
       active_tab = NULL,  # Track the currently active tab to prevent unwanted navigation
-      scroll_to = NULL  # Target connection card ID to scroll to after re-render
+      scroll_to = NULL,  # Target connection card ID to scroll to after re-render
+      show_delay = FALSE  # Whether to show delay inputs on connection cards
     )
+
+    # Delay toggle observer
+    observeEvent(input$show_delay_toggle, {
+      rv$show_delay <- isTRUE(input$show_delay_toggle)
+    })
 
     # Observer: scroll to target card AFTER UI has re-rendered
     # If target card doesn't exist (last in batch), scroll to next-category button
@@ -606,7 +612,18 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       # Preserve the currently selected tab when re-rendering
       selected_tab <- if (!is.null(rv$active_tab)) rv$active_tab else names(batch_lists)[1]
 
-      do.call(tabsetPanel, c(list(id = ns("batch_tabs"), type = "pills", selected = selected_tab), tabs))
+      tagList(
+        div(style = "margin-bottom: 10px; padding: 8px 12px; background: #f8f9fa; border-radius: 4px;",
+          shinyWidgets::materialSwitch(
+            inputId = ns("show_delay_toggle"),
+            label = span(icon("clock"), " ", i18n$t("common.labels.show_temporal_delay")),
+            value = FALSE,
+            status = "warning",
+            right = TRUE
+          )
+        ),
+        do.call(tabsetPanel, c(list(id = ns("batch_tabs"), type = "pills", selected = selected_tab), tabs))
+      )
     })
 
     # Render connections for each batch
@@ -641,6 +658,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
           debug_log(sprintf("Creating batch output: %s (session %d)", output_name, current_session), "CONN-REVIEW-TABBED")
 
           output[[output_name]] <- renderUI({
+            show_delay <- rv$show_delay
             batch <- batch_lists[[local_batch_id]]
             conns <- batch$connections
             indices <- batch$indices
@@ -656,7 +674,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
               conn <- conns[[i]]
               conn_idx <- indices[i]  # Original index in full list
 
-              render_connection_card(conn, conn_idx, ns, i18n, rv, indices, i)
+              render_connection_card(conn, conn_idx, ns, i18n, rv, indices, i, show_delay = show_delay)
             })
 
             do.call(tagList, connection_cards)
@@ -910,11 +928,26 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             # Convert polarity switch (TRUE/FALSE) to +/-
             polarity <- if (is.null(polarity_value) || polarity_value) "+" else "-"
 
+            # Read delay values
+            delay_cat <- input[[paste0("delay_cat_", local_idx)]]
+            delay_yrs <- input[[paste0("delay_years_", local_idx)]]
+
+            # Normalize
+            if (is.null(delay_cat) || delay_cat == "") delay_cat <- NA_character_
+            if (is.null(delay_yrs) || is.na(delay_yrs)) delay_yrs <- NA_real_
+
+            # If numeric was set but no category, derive it
+            if (!is.na(delay_yrs) && is.na(delay_cat)) {
+              delay_cat <- derive_delay_category(delay_yrs)
+            }
+
             # Store amended data
             rv$amended_data[[as.character(local_idx)]] <- list(
               strength = strength_label,
               confidence = conf_value,
-              polarity = polarity
+              polarity = polarity,
+              delay = delay_cat,
+              delay_years = delay_yrs
             )
 
             # Call amend callback if provided
@@ -987,7 +1020,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 # HELPER FUNCTION: RENDER CONNECTION CARD
 # ============================================================================
 
-render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices = NULL, pos_in_batch = NULL) {
+render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices = NULL, pos_in_batch = NULL, show_delay = FALSE) {
   # Determine status class
   status_class <- "conn-card-tabbed"
   if (conn_idx %in% rv$approved) {
@@ -1099,6 +1132,63 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
         width = "100%"
       )
     ),
+
+    # Delay input (visible when toggle is on)
+    if (isTRUE(show_delay)) {
+      amended <- rv$amended_data[[as.character(conn_idx)]]
+      current_delay <- if (!is.null(amended$delay) && !is.na(amended$delay)) {
+        amended$delay
+      } else {
+        conn$delay %||% ""
+      }
+      current_delay_years <- if (!is.null(amended$delay_years) && !is.na(amended$delay_years)) {
+        amended$delay_years
+      } else {
+        conn$delay_years %||% NA_real_
+      }
+
+      delay_choices <- stats::setNames(
+        c("", DELAY_CATEGORIES),
+        c("(Not set)", sapply(DELAY_CATEGORIES, function(cat) {
+          paste0(DELAY_LABELS[[cat]], " (", DELAY_RANGES[[cat]], ")")
+        }))
+      )
+
+      tags$div(
+        style = "border-top: 1px dashed #dee2e6; margin-top: 8px; padding-top: 8px;",
+        tags$div(
+          class = "conn-slider-container",
+          style = "display: flex; align-items: center; gap: 8px; flex-wrap: wrap;",
+          tags$span(
+            style = "color: #f0c040; min-width: 60px;",
+            icon("clock"), " Delay:"
+          ),
+          tags$div(
+            style = "flex: 1; min-width: 140px;",
+            selectInput(
+              ns(paste0("delay_cat_", conn_idx)),
+              label = NULL,
+              choices = delay_choices,
+              selected = current_delay,
+              width = "100%"
+            )
+          ),
+          tags$span(style = "color: #999;", "or"),
+          tags$div(
+            style = "width: 80px;",
+            numericInput(
+              ns(paste0("delay_years_", conn_idx)),
+              label = NULL,
+              value = if (!is.na(current_delay_years)) current_delay_years else NA,
+              min = 0,
+              step = 0.1,
+              width = "100%"
+            )
+          ),
+          tags$span(style = "color: #999; font-size: 0.85em;", "years")
+        )
+      )
+    },
 
     # Control buttons (Approve/Reject only - sliders are used directly on approve)
     div(class = "conn-controls",
