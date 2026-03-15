@@ -545,30 +545,9 @@ log_module_event <- function(module, event, data = NULL) {
   cat(msg, "\n")
 }
 
-#' Log an error with context
-#'
-#' Standardized error logging with stack trace option.
-#'
-#' @param context Where the error occurred
-#' @param error The error object or message
-#' @param include_trace Whether to include a simplified stack trace
-#' @export
-log_error <- function(context, error, include_trace = FALSE) {
-  timestamp <- format(Sys.time(), "%H:%M:%S")
-  msg <- if (inherits(error, "error")) error$message else as.character(error)
-
-  cat(sprintf("[%s] [ERROR] %s: %s\n", timestamp, context, msg))
-
-  if (include_trace && DEBUG_MODE) {
-    calls <- sys.calls()
-    if (length(calls) > 2) {
-      cat("  Stack trace:\n")
-      for (i in seq(max(1, length(calls) - 5), length(calls) - 1)) {
-        cat(sprintf("    %d: %s\n", i, deparse(calls[[i]])[1]))
-      }
-    }
-  }
-}
+# log_error() is defined in functions/error_handling.R (line 550)
+# Signature: log_error(context, message, error = NULL)
+# Uses debug_log() for consistent logging output
 
 # Application configuration from environment variables
 if (file.exists(get_project_file("config", "app_config.R"))) {
@@ -619,7 +598,7 @@ source("functions/isa_export_helpers.R", local = TRUE)
 source("functions/data_accessors.R", local = TRUE)
 
 # Lazy loading system for optional modules (improves startup time)
-source("functions/lazy_loading.R", local = TRUE)
+# Lazy loading infrastructure removed - all modules are eagerly loaded
 
 # Network analysis functions
 source("functions/network_analysis.R", local = TRUE)
@@ -642,7 +621,7 @@ source("functions/module_validation_helpers.R", local = TRUE)
 source(get_project_file("functions", "cld_validation.R"), local = FALSE)
 
 # Error handling and validation
-source("functions/error_handling.R", local = TRUE)
+source("functions/error_handling.R", local = FALSE)  # FALSE = global scope for log_error, safe_execute, etc.
 
 # Reactive pipeline (event-based data flow)
 source("functions/reactive_pipeline.R", local = TRUE)
@@ -657,7 +636,7 @@ source("functions/persistent_storage.R", local = FALSE)  # FALSE = global scope 
 source(get_project_file("functions", "async_helpers.R"), local = FALSE)
 
 # Utility functions (general helper functions)
-source("utils.R", local = TRUE)
+source("utils.R", local = FALSE)  # FALSE = global scope for get_node_colors, get_node_shapes, etc.
 
 # Navigation helpers (breadcrumbs, progress bars, nav buttons)
 source("modules/navigation_helpers.R", local = TRUE)

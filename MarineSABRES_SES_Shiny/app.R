@@ -622,7 +622,7 @@ server <- function(input, output, session) {
         el <- data$data$isa_data[[etype]]
         if (!is.null(el) && nrow(el) > 0) {
           debug_log(sprintf("%s: %d elements", etype, nrow(el)), "DIAGNOSTICS")
-          debug_log(sprintf("%s IDs: %s", etype, paste(head(el$ID, 10), collapse=", ")), "DIAGNOSTICS")
+          debug_log(sprintf("%s IDs: %s", etype, paste(head(el$id, 10), collapse=", ")), "DIAGNOSTICS")
         } else {
           debug_log(sprintf("%s: 0 elements", etype), "DIAGNOSTICS")
         }
@@ -662,58 +662,8 @@ server <- function(input, output, session) {
   # Session-local language state (defaults to English)
   session_language <- reactiveVal("en")
 
-  # Create session-local i18n wrapper that uses session-specific language
-  # This wraps the global translator but maintains its own language setting
-  session_i18n <- local({
-    # Private environment to store session-specific state
-    env <- new.env(parent = emptyenv())
-    env$current_lang <- "en"
-
-    # Get reference to the underlying translator from global i18n
-    translator <- i18n$translator
-
-    list(
-      t = function(key) {
-        # Temporarily set the translator's language, translate, then restore
-        # This is thread-safe because Shiny processes one session at a time per worker
-        old_lang <- translator$get_translation_language()
-        if (old_lang != env$current_lang) {
-          translator$set_translation_language(env$current_lang)
-        }
-        result <- tryCatch({
-          i18n$t(key)  # Use the wrapper's t() which handles namespaced keys
-        }, error = function(e) {
-          key  # Fallback to key on error
-        })
-        if (old_lang != env$current_lang) {
-          translator$set_translation_language(old_lang)
-        }
-        result
-      },
-      set_translation_language = function(lang) {
-        env$current_lang <- lang
-        session_language(lang)  # Update reactive value
-        debug_log(sprintf("Session language set to: %s", lang), "I18N")
-      },
-      get_translation_language = function() {
-        env$current_lang
-      },
-      get_translations = function() {
-        translator$get_translations()
-      },
-      use_js = function() {
-        translator$use_js()
-      },
-      get_languages = function() {
-        translator$get_languages()
-      },
-      get_key_translation = function() {
-        translator$get_key_translation()
-      },
-      translator = translator  # Access to underlying translator if needed
-    )
-  })
-  class(session_i18n) <- c("session_translator", "wrapped_translator", "list")
+  # Create session-local i18n wrapper using extracted function (server/language_handling.R)
+  session_i18n <- create_session_i18n(i18n, session_language)
 
   # Store in session$userData for access by modules if needed
   session$userData$i18n <- session_i18n

@@ -404,7 +404,7 @@ edgelist_to_adjacency <- function(edgelist, from_names, to_names) {
   rownames(mat) <- from_names
   colnames(mat) <- to_names
   
-  for (i in 1:nrow(edgelist)) {
+  for (i in seq_len(nrow(edgelist))) {
     from_idx <- which(from_names == edgelist$from[i])
     to_idx <- which(to_names == edgelist$to[i])
     

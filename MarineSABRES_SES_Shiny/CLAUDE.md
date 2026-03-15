@@ -116,7 +116,7 @@ module_name_ui <- function(id, i18n) {
 }
 
 # Server Function - Standard parameter order
-module_name_server <- function(id, project_data, session, i18n, event_bus = NULL, ...) {
+module_name_server <- function(id, project_data_reactive, i18n, event_bus = NULL, ...) {
   moduleServer(id, function(input, output, session) {
     # ...
   })

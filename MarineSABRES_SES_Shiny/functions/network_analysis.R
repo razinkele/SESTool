@@ -790,7 +790,7 @@ classify_loop_type <- function(loop_nodes, edges = NULL, edge_lookup = NULL) {
 create_edge_lookup_table <- function(edges) {
   lookup <- list()
 
-  for (i in 1:nrow(edges)) {
+  for (i in seq_len(nrow(edges))) {
     key <- paste(edges$from[i], edges$to[i], sep = "->")
     lookup[[key]] <- edges$polarity[i]
   }

@@ -95,70 +95,21 @@ test_that("P3 - app.R includes new server files in critical_sources", {
 })
 
 # ============================================================================
-# Issue #14: Performance Optimization (Lazy Loading)
+# Issue #14: Performance Optimization (Lazy Loading) - REMOVED
+# Lazy loading infrastructure was removed as all modules are eagerly loaded.
+# The lazy_loading.R file and its source line in global.R have been removed.
 # ============================================================================
 
-test_that("P3 - functions/lazy_loading.R exists and has required functions", {
+test_that("P3 - lazy_loading.R has been removed (modules are eagerly loaded)", {
   file_path <- file.path(project_root, "functions/lazy_loading.R")
-  expect_true(file.exists(file_path), info = "lazy_loading.R should exist")
+  expect_false(file.exists(file_path),
+               info = "lazy_loading.R should no longer exist - modules are eagerly loaded")
 
-  content <- readLines(file_path, warn = FALSE)
-  content_text <- paste(content, collapse = "\n")
-
-  # Check for lazy loading functions
-  expect_true(grepl("register_lazy_module", content_text),
-              info = "Should have register_lazy_module function")
-  expect_true(grepl("load_lazy_module", content_text),
-              info = "Should have load_lazy_module function")
-  expect_true(grepl("is_module_loaded", content_text),
-              info = "Should have is_module_loaded function")
-  expect_true(grepl("get_loaded_modules", content_text),
-              info = "Should have get_loaded_modules function")
-  expect_true(grepl("require_lazy_module", content_text),
-              info = "Should have require_lazy_module function")
-  expect_true(grepl("init_lazy_module_registry", content_text),
-              info = "Should have init_lazy_module_registry function")
-})
-
-test_that("P3 - Lazy loading registry environment exists", {
-  file_path <- file.path(project_root, "functions/lazy_loading.R")
-  content <- readLines(file_path, warn = FALSE)
-  content_text <- paste(content, collapse = "\n")
-
-  # Check for module registry
-  expect_true(grepl("\\.lazy_module_registry", content_text),
-              info = "Should have .lazy_module_registry environment")
-})
-
-test_that("P3 - ML feature caching is implemented", {
-  file_path <- file.path(project_root, "functions/lazy_loading.R")
-  content <- readLines(file_path, warn = FALSE)
-  content_text <- paste(content, collapse = "\n")
-
-  # Check for ML caching functions
-  expect_true(grepl("\\.ml_feature_cache", content_text),
-              info = "Should have .ml_feature_cache environment")
-  expect_true(grepl("cache_ml_features", content_text),
-              info = "Should have cache_ml_features function")
-  expect_true(grepl("get_cached_ml_features", content_text),
-              info = "Should have get_cached_ml_features function")
-  expect_true(grepl("prune_ml_feature_cache", content_text),
-              info = "Should have prune_ml_feature_cache function")
-  expect_true(grepl("clear_ml_feature_cache", content_text),
-              info = "Should have clear_ml_feature_cache function")
-  expect_true(grepl("get_ml_cache_stats", content_text),
-              info = "Should have get_ml_cache_stats function")
-})
-
-test_that("P3 - global.R sources lazy_loading.R", {
-  file_path <- file.path(project_root, "global.R")
-  expect_true(file.exists(file_path), info = "global.R should exist")
-
-  content <- readLines(file_path, warn = FALSE)
-  content_text <- paste(content, collapse = "\n")
-
-  expect_true(grepl("lazy_loading\\.R", content_text),
-              info = "global.R should source lazy_loading.R")
+  # global.R should have a comment explaining removal
+  global_content <- paste(readLines(file.path(project_root, "global.R"), warn = FALSE), collapse = "
+")
+  expect_true(grepl("Lazy loading infrastructure removed", global_content),
+              info = "global.R should have comment about lazy loading removal")
 })
 
 # ============================================================================
@@ -268,20 +219,7 @@ test_that("P3 - event_bus_setup functions are syntactically correct", {
   expect_true(result, info = "event_bus_setup.R should have valid R syntax")
 })
 
-test_that("P3 - lazy_loading functions are syntactically correct", {
-  file_path <- file.path(project_root, "functions/lazy_loading.R")
-  skip_if_not(file.exists(file_path), "lazy_loading.R not found")
-
-  # Try to parse the file - will error if syntax is invalid
-  result <- tryCatch({
-    parse(file_path)
-    TRUE
-  }, error = function(e) {
-    FALSE
-  })
-
-  expect_true(result, info = "lazy_loading.R should have valid R syntax")
-})
+# lazy_loading syntax test removed - file no longer exists (modules are eagerly loaded)
 
 # ============================================================================
 # Event Bus Functional Tests
@@ -405,8 +343,7 @@ test_that("P3 - All P3 files are valid R code", {
   p3_files <- c(
     "server/session_management.R",
     "server/language_handling.R",
-    "server/event_bus_setup.R",
-    "functions/lazy_loading.R"
+    "server/event_bus_setup.R"
   )
 
   for (rel_path in p3_files) {

@@ -6,47 +6,9 @@
 # for multi-user shiny-server deployments.
 # ============================================================================
 
-#' Initialize Session Isolation
-#'
-#' Creates a unique session ID and session-scoped temp directory.
-#' This is essential for multi-user deployments to prevent data leakage.
-#'
-#' @param session The Shiny session object
-#' @return List containing session_id, session_temp_dir, and cleanup function
-#' @export
-init_session_isolation <- function(session) {
-  # Generate unique session ID
-  session_id <- paste0(
-    format(Sys.time(), "%Y%m%d_%H%M%S"),
-    "_",
-    substr(digest::digest(runif(1)), 1, 8)
-  )
-
-  # Create session-scoped temp directory
-  session_temp_dir <- file.path(tempdir(), paste0("ses_session_", session_id))
-  if (!dir.exists(session_temp_dir)) {
-    dir.create(session_temp_dir, recursive = TRUE)
-    debug_log(sprintf("Created session temp dir: %s", session_temp_dir), "SESSION")
-  }
-
-  # Store in session$userData for access by other modules
-  session$userData$session_id <- session_id
-  session$userData$session_temp_dir <- session_temp_dir
-  session$userData$session_start_time <- Sys.time()
-
-  # Return isolation context
-  list(
-    session_id = session_id,
-    session_temp_dir = session_temp_dir,
-    cleanup = function() {
-      # Cleanup function to be called on session end
-      if (dir.exists(session_temp_dir)) {
-        unlink(session_temp_dir, recursive = TRUE)
-        debug_log(sprintf("Cleaned up session temp dir: %s", session_temp_dir), "SESSION")
-      }
-    }
-  )
-}
+# init_session_isolation() is defined in functions/session_isolation.R (line 52)
+# Uses SHA-256 session IDs, mode="0700" directory permissions, and auto-cleanup via onSessionEnded
+# Sourced with local = FALSE in global.R, so available globally
 
 #' Initialize Session Reactive Values
 #'
@@ -175,7 +137,7 @@ log_session_diagnostics <- function(project_data_reactive) {
       el <- data$data$isa_data[[etype]]
       if (!is.null(el) && nrow(el) > 0) {
         debug_log(sprintf("%s: %d elements", etype, nrow(el)), "DIAGNOSTICS")
-        debug_log(sprintf("%s IDs: %s", etype, paste(head(el$ID, 10), collapse = ", ")), "DIAGNOSTICS")
+        debug_log(sprintf("%s IDs: %s", etype, paste(head(el$id, 10), collapse = ", ")), "DIAGNOSTICS")
       } else {
         debug_log(sprintf("%s: 0 elements", etype), "DIAGNOSTICS")
       }

@@ -193,7 +193,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
           nodes$out_degree <- NA_real_
           nodes$betweenness <- NA_real_
 
-          for (i in 1:nrow(all_centralities)) {
+          for (i in seq_len(nrow(all_centralities))) {
             node_label <- all_centralities$Name[i]
             node_idx <- which(nodes$label == node_label)
             if (length(node_idx) > 0) {

@@ -8,7 +8,7 @@
 library(testthat)
 
 # Suppress warnings during tests
-options(warn = -1)
+# options(warn = -1)  # Removed: suppressing all warnings hides real problems
 
 # Set random seed for reproducibility
 set.seed(42)

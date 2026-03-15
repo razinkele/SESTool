@@ -640,7 +640,7 @@ convert_matrices_to_connections <- function(matrices, elements) {
         length(map_info$from) == 0 || length(map_info$to) == 0) next
 
     # Loop through matrix cells
-    for (i in 1:nrow(mat)) {
+    for (i in seq_len(nrow(mat))) {
       for (j in 1:ncol(mat)) {
         value <- mat[i, j]
         # Skip empty cells

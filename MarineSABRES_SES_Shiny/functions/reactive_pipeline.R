@@ -155,11 +155,10 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
   })
 
   # ============================================================================
-  # Observer 2: CLD/ISA changes -> Invalidate analysis
+  # Observer 2: CLD updates -> Invalidate analysis
   # ============================================================================
   observe({
-    # Watch for ISA or CLD changes using the new event bus API
-    event_bus$on_isa_change()
+    # Watch for CLD updates (ISA changes trigger CLD regen which emits cld_update)
     event_bus$on_cld_update()
 
     data <- isolate(project_data())

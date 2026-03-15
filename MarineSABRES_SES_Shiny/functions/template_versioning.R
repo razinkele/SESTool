@@ -494,7 +494,7 @@ generate_version_report <- function(template_name,
                              "Version", "Date", "Strategy", "Source", "Accuracy"))
   report <- c(report, "───────────────────────────────────────────────────────────────────────")
 
-  for (i in 1:nrow(history)) {
+  for (i in seq_len(nrow(history))) {
     row <- history[i, ]
     acc_str <- if (!is.na(row$accuracy)) {
       sprintf("%.2f%%", row$accuracy * 100)

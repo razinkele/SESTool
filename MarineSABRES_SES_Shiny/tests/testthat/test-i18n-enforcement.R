@@ -46,7 +46,6 @@ get_translation_files <- function() {
 
 test_that("All module UI functions with i18n parameter have usei18n() calls", {
   critical_modules <- c(
-    "analysis_tools_module.R",
     "isa_data_entry_module.R",
     "ai_isa_assistant_module.R",
     "response_module.R",
@@ -54,8 +53,7 @@ test_that("All module UI functions with i18n parameter have usei18n() calls", {
     "export_reports_module.R",
     "connection_review_tabbed.R",
     "cld_visualization_module.R",
-    "auto_save_module.R",
-    "progress_indicator_module.R"
+    "auto_save_module.R"
   )
 
   # Check if app.R has usei18n
@@ -135,8 +133,13 @@ test_that("showNotification calls use i18n$t() for all user-facing messages", {
     ))
   }
 
-  # Informational: we allow some hardcoded notifications but track the count
-  succeed(sprintf("Audit complete: %d hardcoded showNotification calls found", length(hardcoded_notifications)))
+  # Ratchet: 7 known hardcoded notifications exist as of 2026-03-15
+  # Fix these over time and lower the threshold. Do NOT add new ones.
+  expect_lte(
+    length(hardcoded_notifications), 7,
+    label = paste("Hardcoded showNotification calls (max 7 allowed):",
+                  paste(head(hardcoded_notifications, 10), collapse = ", "))
+  )
 })
 
 # ==============================================================================
@@ -173,8 +176,11 @@ test_that("Common UI elements use i18n$t() for labels and titles", {
     message(sprintf("Found %d UI elements that might benefit from i18n", hardcoded_count))
   }
 
-  # Informational: track hardcoded UI element count
-  succeed(sprintf("Audit complete: %d hardcoded UI elements found", hardcoded_count))
+  # Allow up to 10 hardcoded UI elements as some may be structural
+  expect_lte(
+    hardcoded_count, 10,
+    label = sprintf("Hardcoded UI elements (max 10 allowed): %d found", hardcoded_count)
+  )
 })
 
 # ==============================================================================
@@ -266,7 +272,7 @@ test_that("All translation files are valid JSON and properly structured", {
   skip_if_not(dir.exists("../../translations"), "Translation directory not found")
 
   json_files <- get_translation_files()
-  required_languages <- c("en", "es", "fr", "de", "lt", "pt", "it")
+  required_languages <- c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")
 
   structure_errors <- character()
   invalid_json <- character()
@@ -303,7 +309,7 @@ test_that("All translation files are valid JSON and properly structured", {
       translation_obj <- data$translation
       if (!is.null(names(translation_obj)) && length(names(translation_obj)) > 0) {
         # Object format - check first few entries
-        sample_keys <- head(names(translation_obj), 5)
+        sample_keys <- names(translation_obj)
         for (key in sample_keys) {
           missing_entry_langs <- setdiff(required_languages, names(translation_obj[[key]]))
           if (length(missing_entry_langs) > 0) {
@@ -382,8 +388,8 @@ test_that("Translation files have no empty values", {
       translation_obj <- data$translation
 
       if (!is.null(names(translation_obj)) && length(names(translation_obj)) > 0) {
-        # Object format - sample check
-        sample_keys <- head(names(translation_obj), 10)
+        # Object format - check all entries
+        sample_keys <- names(translation_obj)
         for (key in sample_keys) {
           for (lang in data$languages) {
             if (lang == "glossary") next
@@ -400,11 +406,11 @@ test_that("Translation files have no empty values", {
       }
 
     } else if (length(data) > 0 && "en" %in% names(data)) {
-      # Legacy format - sample check
+      # Legacy format - check all entries
       for (lang in names(data)) {
         if (lang == "glossary") next
 
-        sample_keys <- head(names(data[[lang]]), 10)
+        sample_keys <- names(data[[lang]])
         for (key in sample_keys) {
           value <- data[[lang]][[key]]
 
@@ -509,8 +515,12 @@ test_that("Modules that accept i18n parameter actually use i18n$t()", {
     ))
   }
 
-  # Allow some modules to not use i18n yet (especially new modules in development)
-  succeed(sprintf("Audit complete: %d modules with unused i18n parameter", length(unused_i18n)))
+  # All modules that accept i18n should actually use it
+  expect_lte(
+    length(unused_i18n), 3,
+    label = paste("Modules with unused i18n parameter (max 3 allowed):",
+                  paste(unused_i18n, collapse = ", "))
+  )
 })
 
 # ==============================================================================

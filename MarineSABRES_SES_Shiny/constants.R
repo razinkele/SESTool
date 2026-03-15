@@ -280,37 +280,7 @@ CONFIDENCE_OPACITY <- c(
   "5" = 1.0
 )
 
-# ============================================================================
-# DEPRECATED: LEGACY GROUP COLORS/SHAPES
-# These use hardcoded colors/shapes instead of the theme-based ELEMENT_COLORS/ELEMENT_SHAPES.
-# Still referenced by utils.R:get_node_colors() and utils.R:get_node_shapes().
-# ============================================================================
-
-# Group colors for marine SES visualization (including alternative names)
-GROUP_COLORS <- list(
-  "Activities" = "#FF9999",
-  "Pressures" = "#99FF99",
-  "Drivers" = "#9999FF",
-  "Societal Goods and Services" = "#FFFF99",
-  "Goods and benefits" = "#FFFF99",  # Alternative name
-  "Ecosystem Services" = "#FF99FF",
-  "Marine Processes" = "#99FFFF",
-  "Marine Processes and Functioning" = "#99FFFF"  # Alternative name
-)
-
-# Group shapes for marine SES visualization (including alternative names)
-GROUP_SHAPES <- list(
-  "Activities" = "diamond",
-  "Pressures" = "square",
-  "Drivers" = "hexagon",
-  "Societal Goods and Services" = "star",
-  "Goods and benefits" = "star",  # Alternative name
-  "Ecosystem Services" = "triangle",
-  "Marine Processes" = "dot",
-  "Marine Processes and Functioning" = "dot"  # Alternative name
-)
-
-# Default color/shape for unknown groups
+# Default color/shape for unknown element types
 DEFAULT_GROUP_COLOR <- "#95A5A6"
 DEFAULT_GROUP_SHAPE <- "ellipse"
 

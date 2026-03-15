@@ -3,7 +3,7 @@
 
 # Load constants (should be sourced by main app.R first)
 # This is a fallback for standalone testing
-if (!exists("GROUP_COLORS")) {
+if (!exists("ELEMENT_COLORS")) {
   if (file.exists("constants.R")) {
     source("constants.R")
   } else {
@@ -119,7 +119,7 @@ convert_strength_to_numeric <- function(strength_text, direction_indicator = NUL
 #' Get Node Colors from Groups
 #'
 #' Maps node group names to their corresponding colors using the centralized
-#' GROUP_COLORS constant. Returns default color for unknown groups.
+#' ELEMENT_COLORS constant. Returns default color for unknown groups.
 #'
 #' @param groups Character vector of group names
 #'
@@ -135,14 +135,14 @@ convert_strength_to_numeric <- function(strength_text, direction_indicator = NUL
 #' @export
 get_node_colors <- function(groups) {
   vapply(groups, function(grp) {
-    if (grp %in% names(GROUP_COLORS)) GROUP_COLORS[[grp]] else DEFAULT_GROUP_COLOR
+    if (grp %in% names(ELEMENT_COLORS)) ELEMENT_COLORS[[grp]] else DEFAULT_GROUP_COLOR
   }, character(1), USE.NAMES = FALSE)
 }
 
 #' Get Node Shapes from Groups
 #'
 #' Maps node group names to their corresponding visNetwork shapes using the
-#' centralized GROUP_SHAPES constant. Returns default shape for unknown groups.
+#' centralized ELEMENT_SHAPES constant. Returns default shape for unknown groups.
 #'
 #' @param groups Character vector of group names
 #'
@@ -158,7 +158,7 @@ get_node_colors <- function(groups) {
 #' @export
 get_node_shapes <- function(groups) {
   vapply(groups, function(grp) {
-    if (grp %in% names(GROUP_SHAPES)) GROUP_SHAPES[[grp]] else DEFAULT_GROUP_SHAPE
+    if (grp %in% names(ELEMENT_SHAPES)) ELEMENT_SHAPES[[grp]] else DEFAULT_GROUP_SHAPE
   }, character(1), USE.NAMES = FALSE)
 }
 

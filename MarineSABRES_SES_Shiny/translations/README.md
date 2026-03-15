@@ -16,6 +16,8 @@ Currently supported languages:
 - **Lithuanian (lt)** 🇱🇹
 - **Portuguese (pt)** 🇵🇹
 - **Italian (it)** 🇮🇹
+- **Norwegian (no)** 🇳🇴
+- **Greek (el)** 🇬🇷
 
 ## File Structure (Modular System)
 
@@ -84,7 +86,7 @@ Modular translation files follow this structure:
 
 ```json
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it"],
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
   "translation": [
     {
       "key": "common.buttons.save",
@@ -94,14 +96,16 @@ Modular translation files follow this structure:
       "de": "Speichern",
       "lt": "Išsaugoti",
       "pt": "Salvar",
-      "it": "Salva"
+      "it": "Salva",
+      "no": "Lagre",
+      "el": "Αποθήκευση"
     }
   ]
 }
 ```
 
 **Key points**:
-- All 7 languages required
+- All 9 languages required
 - `key` field is optional but recommended for new translations
 - Use namespaced keys: `category.subcategory.name`
 
@@ -185,7 +189,7 @@ h2(i18n$t("New text to translate"))
 1. Add the language code to the `languages` array:
 
 ```json
-"languages": ["en", "es", "fr", "de", "pt", "it"]
+"languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"]
 ```
 
 2. Add translations for all existing keys:
@@ -197,7 +201,9 @@ h2(i18n$t("New text to translate"))
   "fr": "Bienvenue",
   "de": "Willkommen",
   "pt": "Bem-vindo",
-  "it": "Benvenuto"  // New language
+  "it": "Benvenuto",
+  "no": "Velkommen",
+  "el": "Καλωσόρισμα"  // All 9 languages included
 }
 ```
 
@@ -212,7 +218,9 @@ AVAILABLE_LANGUAGES <- list(
   "fr" = list(name = "Français", flag = "🇫🇷"),
   "de" = list(name = "Deutsch", flag = "🇩🇪"),
   "pt" = list(name = "Português", flag = "🇵🇹"),
-  "it" = list(name = "Italiano", flag = "🇮🇹")  // New language
+  "it" = list(name = "Italiano", flag = "🇮🇹"),
+  "no" = list(name = "Norsk", flag = "🇳🇴"),
+  "el" = list(name = "Ελληνικά", flag = "🇬🇷")  // All 9 languages
 )
 ```
 
@@ -383,11 +391,14 @@ For questions or issues with translations:
 ## Version History
 
 - **v1.0** (2025-10-21): Initial internationalization implementation
+- **v1.1** (2026-03-15): Added Norwegian and Greek support
+  - 9 languages supported (en, es, fr, de, lt, pt, it, no, el)
+  - Updated documentation to reflect all supported languages
   - 5 languages supported (en, es, fr, de, pt)
   - Entry Point module fully translated
   - Language selector in header
 
 ---
 
-**Last Updated**: 2025-10-21
+**Last Updated**: 2026-03-15
 **Maintained by**: MarineSABRES Development Team

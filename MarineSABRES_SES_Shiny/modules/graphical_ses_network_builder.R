@@ -408,7 +408,7 @@ create_adjacency_matrices_from_edges <- function(edges, drivers, activities,
     )
 
     # Fill matrix with connection values
-    for (i in 1:nrow(relevant_edges)) {
+    for (i in seq_len(nrow(relevant_edges))) {
       edge <- relevant_edges[i, ]
 
       from_name <- source_nodes$name[source_nodes$id == edge$from]

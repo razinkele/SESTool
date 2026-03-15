@@ -1199,7 +1199,7 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
         colnames(gb_d_matrix) <- isa_data$drivers$ID
 
         # Fill matrix with connections
-        for (i in 1:nrow(isa_data$loop_connections)) {
+        for (i in seq_len(nrow(isa_data$loop_connections))) {
           conn <- isa_data$loop_connections[i, ]
           gb_idx <- which(isa_data$goods_benefits$ID == conn$GBID)
           d_idx <- which(isa_data$drivers$ID == conn$DriverID)
