@@ -391,16 +391,27 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
         }
       }, error = function(e) NULL)
 
-      # Use shiny flush cycle + delay to ensure DOM is updated
+      # Use retry loop to wait for DOM rebuild after renderUI re-render
       shinyjs::runjs(sprintf(
-        "setTimeout(function() {
-          var el = document.getElementById('%s');
-          if (!el && '%s') { el = document.getElementById('%s'); }
-          if (el) { el.scrollIntoView({behavior: 'smooth', block: 'nearest'}); }
-        }, 250);",
+        "(function() {
+          var targetId = '%s';
+          var fallbackId = '%s';
+          var attempts = 0;
+          var maxAttempts = 20;
+          function tryScroll() {
+            attempts++;
+            var el = document.getElementById(targetId);
+            if (!el && fallbackId) { el = document.getElementById(fallbackId); }
+            if (el) {
+              el.scrollIntoView({behavior: 'smooth', block: 'center'});
+            } else if (attempts < maxAttempts) {
+              setTimeout(tryScroll, 100);
+            }
+          }
+          setTimeout(tryScroll, 150);
+        })();",
         target_id,
-        fallback_id %||% "",
-        fallback_id %||% target_id
+        fallback_id %||% ""
       ))
     })
 
