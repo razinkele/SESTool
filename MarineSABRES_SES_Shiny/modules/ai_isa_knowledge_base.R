@@ -240,16 +240,17 @@ get_countries_for_sea <- function(regional_sea) {
   return(result)
 }
 
-#' Get Governance Elements Based on Countries
+#' Get Governance Elements Based on Countries (hardcoded fallback)
 #'
 #' Returns governance-related DAPSIWRM suggestions based on selected countries.
 #' Focuses on policy frameworks, regulations, and institutional responses
-#' relevant to the selected countries.
+#' relevant to the selected countries. Used as fallback when the JSON-based
+#' country governance database is not available.
 #'
 #' @param countries Character vector of country codes
 #' @param category DAPSIWRM category
 #' @return Character vector of governance-related suggestions
-get_governance_elements <- function(countries, category) {
+.get_governance_elements_hardcoded <- function(countries, category) {
   if (is.null(countries) || length(countries) == 0) return(character(0))
 
   # Only relevant for responses category
@@ -294,16 +295,17 @@ get_governance_elements <- function(countries, category) {
   return(unique(governance))
 }
 
-#' Get Socioeconomic Elements Based on Countries
+#' Get Socioeconomic Elements Based on Countries (hardcoded fallback)
 #'
 #' Returns socioeconomic-related DAPSIWRM suggestions based on selected countries.
 #' Focuses on drivers and welfare elements specific to the economic profiles
-#' of selected countries.
+#' of selected countries. Used as fallback when the JSON-based country
+#' governance database is not available.
 #'
 #' @param countries Character vector of country codes
 #' @param category DAPSIWRM category
 #' @return Character vector of socioeconomic suggestions
-get_socioeconomic_elements <- function(countries, category) {
+.get_socioeconomic_elements_hardcoded <- function(countries, category) {
   if (is.null(countries) || length(countries) == 0) return(character(0))
 
   suggestions <- character(0)
@@ -675,35 +677,48 @@ get_context_suggestions <- function(category, regional_sea, ecosystem_type, main
   }
 
   # ---- Country-based governance and socioeconomic suggestions ----
+  # Uses JSON-based country governance database (functions/country_governance_loader.R)
+  # when available, falling back to hardcoded lookup tables defined above.
   if (!is.null(countries) && length(countries) > 0) {
-    gov_elements <- tryCatch(
-      get_governance_elements(countries, category),
-      error = function(e) {
-        debug_log(sprintf("get_governance_elements error: %s", e$message), "AI ISA KB")
-        character(0)
+    use_json_gov <- exists("country_governance_db_available", mode = "function") &&
+                    tryCatch(country_governance_db_available(), error = function(e) FALSE)
+
+    # Governance elements (responses, drivers)
+    gov_elements <- tryCatch({
+      if (use_json_gov) {
+        get_governance_elements(countries, category)
+      } else {
+        .get_governance_elements_hardcoded(countries, category)
       }
-    )
+    }, error = function(e) {
+      debug_log(sprintf("Governance lookup error: %s — using hardcoded fallback", e$message), "AI ISA KB")
+      tryCatch(.get_governance_elements_hardcoded(countries, category), error = function(e2) character(0))
+    })
     if (length(gov_elements) > 0) {
       suggestions$governance <- gov_elements
-      debug_log(sprintf("Governance provided %d %s suggestions for countries: %s",
+      debug_log(sprintf("%s governance: %d %s suggestions for countries: %s",
+                        if (use_json_gov) "JSON DB" else "Hardcoded",
                         length(gov_elements), category,
-                        paste(countries, collapse = ", ")),
-                "AI ISA KB")
+                        paste(countries, collapse = ", ")), "AI ISA KB")
     }
 
-    se_elements <- tryCatch(
-      get_socioeconomic_elements(countries, category),
-      error = function(e) {
-        debug_log(sprintf("get_socioeconomic_elements error: %s", e$message), "AI ISA KB")
-        character(0)
+    # Socioeconomic elements (drivers, welfare)
+    se_elements <- tryCatch({
+      if (use_json_gov) {
+        get_socioeconomic_elements(countries, category)
+      } else {
+        .get_socioeconomic_elements_hardcoded(countries, category)
       }
-    )
+    }, error = function(e) {
+      debug_log(sprintf("Socioeconomic lookup error: %s — using hardcoded fallback", e$message), "AI ISA KB")
+      tryCatch(.get_socioeconomic_elements_hardcoded(countries, category), error = function(e2) character(0))
+    })
     if (length(se_elements) > 0) {
       suggestions$socioeconomic <- se_elements
-      debug_log(sprintf("Socioeconomic provided %d %s suggestions for countries: %s",
+      debug_log(sprintf("%s socioeconomic: %d %s suggestions for countries: %s",
+                        if (use_json_gov) "JSON DB" else "Hardcoded",
                         length(se_elements), category,
-                        paste(countries, collapse = ", ")),
-                "AI ISA KB")
+                        paste(countries, collapse = ", ")), "AI ISA KB")
     }
   }
 
