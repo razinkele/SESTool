@@ -302,7 +302,8 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     polarity = character(),
     strength = character(),
     confidence = integer(),
-    lag = numeric(),  # Temporal lag in years (0 = immediate, NA = unknown)
+    delay = character(),
+    delay_years = numeric(),
     label = character(),
     font.size = numeric()
 
@@ -764,11 +765,8 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
 
           # Create edge with defensive error handling
           tryCatch({
-            # Parse lag from connection value if present (format: "+strong:4:2.5" where last is lag in years)
-            edge_lag <- NA_real_
-            if (!is.null(connection$lag)) {
-              edge_lag <- as.numeric(connection$lag)
-            }
+            edge_delay <- connection$delay %||% NA_character_
+            edge_delay_years <- connection$delay_years %||% NA_real_
 
             edge <- data.frame(
               from = paste0(from_prefix, "_", i),
@@ -778,22 +776,23 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
               width = edge_width,
               opacity = edge_opacity,
               title = create_edge_tooltip(
-                from_name,
-                to_name,
-                connection$polarity,
-                connection$strength,
+                from_name, to_name,
+                connection$polarity, connection$strength,
                 connection$confidence,
-                edge_lag
+                edge_delay, edge_delay_years
               ),
               polarity = connection$polarity,
               strength = connection$strength,
               confidence = connection$confidence,
-              lag = edge_lag,
+              delay = edge_delay %||% NA_character_,
+              delay_years = edge_delay_years %||% NA_real_,
               label = connection$polarity,
               font.size = 10,
 
               row.names = NULL
             )
+
+            edge$dashes <- I(list(delay_to_dashes(edge_delay)))
 
             edges <- bind_rows(edges, edge)
           }, error = function(e) {
@@ -818,23 +817,23 @@ process_adjacency_matrix <- function(adj_matrix, from_prefix, to_prefix,
 #' @param strength Connection strength
 #' @param confidence Connection confidence (1-5, optional)
 #' @return HTML string for tooltip
-create_edge_tooltip <- function(from_name, to_name, polarity, strength, confidence = CONFIDENCE_DEFAULT, lag = NA_real_) {
+create_edge_tooltip <- function(from_name, to_name, polarity, strength,
+                                confidence = CONFIDENCE_DEFAULT,
+                                delay = NA_character_, delay_years = NA_real_) {
   polarity_text <- ifelse(polarity == "+", "Reinforcing", "Opposing")
-
-  # Get confidence label from global constant
   confidence_text <- CONFIDENCE_LABELS[as.character(confidence)]
 
-  # Lag display
-  lag_html <- ""
-  if (!is.na(lag) && is.numeric(lag)) {
-    lag_text <- if (lag == 0) "Immediate"
-      else if (lag < 1) paste0(round(lag * 12), " months")
-      else if (lag == 1) "1 year"
-      else paste0(round(lag, 1), " years")
-    lag_html <- sprintf("<br>Temporal lag: %s", lag_text)
+  # Delay display
+  delay_html <- ""
+  if (!is.na(delay)) {
+    if (!is.na(delay_years)) {
+      delay_text <- paste0(DELAY_LABELS[[delay]], " (~", round(delay_years, 1), " years)")
+    } else {
+      delay_text <- paste0(DELAY_LABELS[[delay]], " (", DELAY_RANGES[[delay]], ")")
+    }
+    delay_html <- sprintf("<br>Temporal delay: %s", delay_text)
   }
 
-  # HTML-escape user-supplied values to prevent XSS in visNetwork tooltips
   esc <- htmltools::htmlEscape
   sprintf(
     "<div style='padding: 8px;'>
@@ -843,7 +842,8 @@ create_edge_tooltip <- function(from_name, to_name, polarity, strength, confiden
       Strength: %s<br>
       Confidence: %s (%d/5)%s
     </div>",
-    esc(from_name), esc(to_name), esc(polarity), polarity_text, esc(strength), confidence_text, confidence, lag_html
+    esc(from_name), esc(to_name), esc(polarity), polarity_text,
+    esc(strength), confidence_text, confidence, delay_html
   )
 }
 
@@ -1203,7 +1203,7 @@ create_ghost_edge_data <- function(suggestion, ghost_index) {
     confidence = suggestion$connection_confidence,
     color = ghost_edge_color,
     width = width,
-    dashes = TRUE,  # Dashed line for ghost
+    dashes = I(list(c(10, 10))),  # Dashed line for ghost
     smooth = list(enabled = TRUE, type = "curvedCW", roundness = 0.2),
     arrows = "to",
     arrowStrikethrough = FALSE,
