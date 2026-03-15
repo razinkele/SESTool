@@ -252,6 +252,39 @@
       "it": "Connessioni che non corrispondono alle transizioni standard del framework",
       "no": "Tilkoblinger som ikke samsvarer med standard rammeoverganger",
       "el": "Συνδέσεις που δεν ταιριάζουν με τις τυπικές μεταβάσεις πλαισίου"
+    },
+    "modules.connection_review.show_temporal_delay": {
+      "en": "Show temporal delay",
+      "es": "Mostrar retardo temporal",
+      "fr": "Afficher le délai temporel",
+      "de": "Zeitliche Verzögerung anzeigen",
+      "lt": "Rodyti laiko vėlavimą",
+      "pt": "Mostrar atraso temporal",
+      "it": "Mostra ritardo temporale",
+      "no": "Vis tidsforsinkelse",
+      "el": "Εμφάνιση χρονικής καθυστέρησης"
+    },
+    "modules.connection_review.temporal_delay": {
+      "en": "Temporal delay",
+      "es": "Retardo temporal",
+      "fr": "Délai temporel",
+      "de": "Zeitliche Verzögerung",
+      "lt": "Laiko vėlavimas",
+      "pt": "Atraso temporal",
+      "it": "Ritardo temporale",
+      "no": "Tidsforsinkelse",
+      "el": "Χρονική καθυστέρηση"
+    },
+    "modules.connection_review.delay_tooltip": {
+      "en": "How long before this connection's effect is observed",
+      "es": "Cuánto tiempo antes de observar el efecto",
+      "fr": "Combien de temps avant d'observer l'effet",
+      "de": "Wie lange dauert es bis die Wirkung eintritt",
+      "lt": "Kiek laiko praeina iki ryšio efekto",
+      "pt": "Quanto tempo até o efeito ser observado",
+      "it": "Quanto tempo prima che l'effetto sia osservato",
+      "no": "Hvor lang tid før effekten observeres",
+      "el": "Πόσο χρόνο πριν παρατηρηθεί το αποτέλεσμα"
     }
   }
 }
