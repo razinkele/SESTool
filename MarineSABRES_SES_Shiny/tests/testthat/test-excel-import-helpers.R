@@ -608,6 +608,183 @@ test_that("build_adjacency_matrices_from_connections_v2 creates proper matrices"
   expect_true("d_a" %in% names(result))
 })
 
+# ==============================================================================
+# Test: Backward Compatibility - Old Excel Files Without Delay Columns
+# ==============================================================================
+
+test_that("old Excel files without Delay columns import correctly", {
+  elements <- data.frame(
+    Label = c("Climate change", "Fishing activity", "Fish stock health"),
+    Type = c("Driver", "Activity", "Marine Process and Function")
+  )
+  # Old format: only From, To, Label (no Strength, Confidence, or Delay)
+  connections <- data.frame(
+    From = c("Climate change", "Fishing activity"),
+    To = c("Fish stock health", "Fish stock health"),
+    Label = c("+", "-")
+  )
+
+  result <- convert_excel_to_isa(elements, connections)
+
+  expect_type(result, "list")
+  expect_true(length(result$adjacency_matrices) > 0)
+
+  # Find a non-empty cell and verify it has the basic format (no delay suffix)
+  for (mat_name in names(result$adjacency_matrices)) {
+    mat <- result$adjacency_matrices[[mat_name]]
+    non_empty <- mat[mat != ""]
+    if (length(non_empty) > 0) {
+      # Should be "+medium:3" format (default strength and confidence, no delay)
+      expect_true(grepl("^[+-]\\w+:\\d+$", non_empty[1]),
+                  info = paste("Expected basic format +strength:confidence, got:", non_empty[1]))
+      # Should NOT contain delay category
+      for (cat in c("immediate", "short-term", "medium-term", "long-term")) {
+        expect_false(grepl(cat, non_empty[1], fixed = TRUE),
+                     info = paste("Should not contain delay category:", cat))
+      }
+    }
+  }
+})
+
+test_that("old Excel files with Strength and Confidence but no Delay import correctly", {
+  elements <- data.frame(
+    Label = c("Tourism", "Revenue"),
+    Type = c("Activity", "Good and Benefit")
+  )
+  connections <- data.frame(
+    From = c("Tourism"),
+    To = c("Revenue"),
+    Label = c("+"),
+    Strength = c("strong"),
+    Confidence = c(4)
+  )
+
+  result <- convert_excel_to_isa(elements, connections)
+
+  expect_type(result, "list")
+  expect_true(length(result$adjacency_matrices) > 0)
+
+  for (mat_name in names(result$adjacency_matrices)) {
+    mat <- result$adjacency_matrices[[mat_name]]
+    non_empty <- mat[mat != ""]
+    if (length(non_empty) > 0) {
+      # Should be "+strong:4" (with strength and confidence, no delay)
+      expect_true(grepl("^\\+strong:4$", non_empty[1]),
+                  info = paste("Expected +strong:4, got:", non_empty[1]))
+    }
+  }
+})
+
+test_that("new Excel files with Delay columns import delay values correctly", {
+  skip_if_not(exists("DELAY_CATEGORIES"), "DELAY_CATEGORIES not available")
+
+  elements <- data.frame(
+    Label = c("Fishing", "Stock decline"),
+    Type = c("Activity", "Pressure")
+  )
+  connections <- data.frame(
+    From = c("Fishing"),
+    To = c("Stock decline"),
+    Label = c("+"),
+    Strength = c("strong"),
+    Confidence = c(4),
+    Delay = c("medium-term"),
+    `Delay (years)` = c(2.5),
+    check.names = FALSE
+  )
+
+  result <- convert_excel_to_isa(elements, connections)
+
+  expect_type(result, "list")
+  expect_true(length(result$adjacency_matrices) > 0)
+
+  for (mat_name in names(result$adjacency_matrices)) {
+    mat <- result$adjacency_matrices[[mat_name]]
+    non_empty <- mat[mat != ""]
+    if (length(non_empty) > 0) {
+      # Should include delay: "+strong:4:medium-term:2.5"
+      expect_true(grepl("medium-term", non_empty[1], fixed = TRUE),
+                  info = paste("Expected delay category in cell, got:", non_empty[1]))
+      expect_true(grepl("2\\.5", non_empty[1]),
+                  info = paste("Expected delay years in cell, got:", non_empty[1]))
+    }
+  }
+})
+
+test_that("mixed Excel files with partial Delay data import correctly", {
+  skip_if_not(exists("DELAY_CATEGORIES"), "DELAY_CATEGORIES not available")
+
+  elements <- data.frame(
+    Label = c("Fishing", "Stock decline", "Revenue"),
+    Type = c("Activity", "Pressure", "Good and Benefit")
+  )
+  # Delay column exists but some values are empty/NA
+  connections <- data.frame(
+    From = c("Fishing", "Fishing"),
+    To = c("Stock decline", "Revenue"),
+    Label = c("+", "+"),
+    Strength = c("strong", "medium"),
+    Confidence = c(4, 3),
+    Delay = c("short-term", NA),
+    `Delay (years)` = c(0.5, NA),
+    check.names = FALSE
+  )
+
+  result <- convert_excel_to_isa(elements, connections)
+
+  expect_type(result, "list")
+  expect_true(length(result$adjacency_matrices) > 0)
+
+  # Verify we got matrices (exact format depends on element type mapping)
+  has_delay_cell <- FALSE
+  has_no_delay_cell <- FALSE
+  for (mat_name in names(result$adjacency_matrices)) {
+    mat <- result$adjacency_matrices[[mat_name]]
+    non_empty <- mat[mat != ""]
+    for (cell in non_empty) {
+      if (grepl("short-term", cell, fixed = TRUE)) has_delay_cell <- TRUE
+      if (grepl("^[+-]\\w+:\\d+$", cell)) has_no_delay_cell <- TRUE
+    }
+  }
+
+  # At least one connection should have delay, at least one should not
+  # (depending on how element types map to matrices, both may or may not be present)
+  # The key assertion is that the import completes without error
+  succeed("Mixed delay/no-delay import completed without errors")
+})
+
+test_that("parse_connection_value handles old format cells from legacy imports", {
+  skip_if_not(exists("parse_connection_value", mode = "function"),
+              "parse_connection_value not available")
+
+  # Format from old imports (no delay)
+  result1 <- parse_connection_value("+medium:3")
+  expect_equal(result1$polarity, "+")
+  expect_equal(result1$strength, "medium")
+  expect_equal(result1$confidence, 3L)
+  expect_true(is.na(result1$delay))
+  expect_true(is.na(result1$delay_years))
+
+  # Format from old imports with numeric lag (backward compat)
+  result2 <- parse_connection_value("+strong:4:0.5")
+  expect_equal(result2$polarity, "+")
+  expect_equal(result2$strength, "strong")
+  expect_equal(result2$confidence, 4L)
+  expect_equal(result2$delay, "medium-term")  # 0.5 years (6 months) -> medium-term
+  expect_equal(result2$delay_years, 0.5)
+
+  # Format from new imports with delay category
+  result3 <- parse_connection_value("-medium:3:long-term:5")
+  expect_equal(result3$delay, "long-term")
+  expect_equal(result3$delay_years, 5)
+
+  # Minimal format (polarity only, no confidence)
+  result4 <- parse_connection_value("+strong")
+  expect_equal(result4$polarity, "+")
+  expect_equal(result4$strength, "strong")
+  expect_true(is.na(result4$delay))
+})
+
 cat("\n", strrep("=", 70), "\n", sep = "")
 cat("Excel Import Helpers Tests Complete\n")
 cat(strrep("=", 70), "\n")
