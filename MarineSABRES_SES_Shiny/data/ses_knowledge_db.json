@@ -12324,7 +12324,7 @@
           "relevance": 0.65
         },
         {
-          "name": "Nutrient enrichment from agricultural sources",
+          "name": "Agricultural production and food supply demand",
           "relevance": 0.9
         }
       ],
@@ -12386,6 +12386,10 @@
         {
           "name": "Limited waste disposal capacity and landfill pressure",
           "relevance": 0.7
+        },
+        {
+          "name": "Nutrient enrichment from agricultural sources",
+          "relevance": 0.9
         }
       ],
       "states": [
@@ -12478,7 +12482,7 @@
       ],
       "connections": [
         {
-          "from": "Nutrient enrichment from agricultural sources",
+          "from": "Agricultural production and food supply demand",
           "from_type": "drivers",
           "to": "Coastal farmland drainage to nearshore waters",
           "to_type": "activities",
@@ -12672,7 +12676,7 @@
         {
           "from": "Resident quality of life during summer algal bloom events",
           "from_type": "welfare",
-          "to": "Nutrient enrichment from agricultural sources",
+          "to": "Agricultural production and food supply demand",
           "to_type": "drivers",
           "polarity": "-",
           "strength": "weak",
@@ -12842,6 +12846,36 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Coastal farmland drainage to nearshore waters",
+          "from_type": "activities",
+          "to": "Nutrient enrichment from agricultural sources",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Agricultural drainage carries dissolved nutrients (nitrogen, phosphorus) from farmland into nearshore island waters.",
+          "references": [
+            "HELCOM 2018 - Sources of nutrient inputs to the Baltic Sea"
+          ],
+          "temporal_lag": 0.5,
+          "reversibility": "moderate"
+        },
+        {
+          "from": "Nutrient enrichment from agricultural sources",
+          "from_type": "pressures",
+          "to": "Eutrophication and cyanobacteria washing ashore on island beaches",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Agricultural nutrient enrichment drives eutrophication and cyanobacteria blooms in shallow island waters.",
+          "references": [
+            "HELCOM 2018 - Eutrophication in the Baltic Sea"
+          ],
+          "temporal_lag": 0.5,
+          "reversibility": "slow"
         }
       ]
     },
