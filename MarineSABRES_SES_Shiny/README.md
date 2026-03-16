@@ -220,6 +220,7 @@ Rscript -e "testthat::test_file('tests/testthat/test-network-analysis.R')"
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| **1.9.0** | 2026-03-16 | Delay attribute for connections: temporal lag categories, UI, import/export, i18n |
 | **1.8.1** | 2026-03-15 | Codebase audit: 12 bug fixes, dead code removal, test strengthening |
 | **1.8.0** | 2026-03-15 | Knowledge base validation, country governance, graphical builder |
 | 1.7.0 | 2026-03-14 | Security hardening, DTU integration, accessibility, Norwegian/Greek |

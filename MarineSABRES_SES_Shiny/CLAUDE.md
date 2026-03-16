@@ -4,7 +4,7 @@
 
 R/Shiny application for Social-Ecological Systems (SES) analysis using the DAPSIWRM framework. Supports 9 languages with reactive i18n, network visualization, and ML-assisted element classification.
 
-**Version**: 1.8.1 | **R Version**: >= 4.4.1 | **Framework**: bs4Dash + shiny.i18n
+**Version**: 1.9.0 | **R Version**: >= 4.4.1 | **Framework**: bs4Dash + shiny.i18n
 
 ## Quick Commands
 

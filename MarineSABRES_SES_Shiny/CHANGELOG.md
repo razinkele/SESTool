@@ -5,6 +5,37 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-03-16
+
+### Delay Attribute for Connections
+
+Minor release adding temporal delay attributes to connections, enabling users to capture time-lag relationships between DAPSI(W)R(M) elements. Full backward compatibility with existing Excel files and project data.
+
+### Added
+- **Delay constants**: `DELAY_CATEGORIES` (immediate, short-term, medium-term, long-term), `derive_delay_category()`, `delay_to_dashes()` in `constants.R`
+- **Delay parsing**: Extended `parse_connection_value()` with `delay` and `delay_years` fields, backward-compatible with old numeric lag format
+- **Adjacency matrix serialization**: Delay category and years stored in matrix cells as `+strength:confidence:delay:delay_years`
+- **Knowledge base integration**: `temporal_lag` from KB connections mapped to delay categories via `derive_delay_category()`
+- **Edge visualization**: Dash patterns for delay categories in visNetwork (immediate=solid, short-term=short dash, medium-term=medium dash, long-term=long dash)
+- **Connection review UI**: Toggle, dropdown (delay category), and numeric input (delay years) on connection review cards
+- **Excel/Kumu import**: Reads `Delay` and `Delay (years)` columns when present, gracefully skips when absent
+- **Excel/Kumu export**: Includes `Delay` and `Delay (years)` columns in exported connection schema
+- **i18n**: Delay-related translation keys added for all 9 languages (`translations/common/labels.json`, `translations/modules/connection_review.json`)
+- **Backward compatibility tests**: 170+ assertions covering old Excel formats (no delay), new formats (with delay), mixed formats, numeric lag migration, and real Kumu file loading (`test-old-excel-backward-compat.R`, `test-excel-import-helpers.R`)
+- **Design documentation**: Delay attribute design spec and implementation plan (`docs/specs/`, `docs/plans/`)
+
+### Changed
+- **Connection tooltip**: Updated to display delay information when available
+- **`parse_connection_value()`**: Auto-migrates old numeric lag format (`+strong:4:2.5`) to delay categories
+
+### Backward Compatibility
+- Old Excel files without `Delay`/`Delay (years)` columns load without errors
+- Old adjacency matrix cell format (`+strength:confidence`) parsed correctly with `delay=NA`
+- Old numeric lag format (`+strength:confidence:years`) auto-converted to delay category
+- No migration required for existing project data
+
+---
+
 ## [1.8.1] - 2026-03-15
 
 ### Comprehensive Codebase Audit & Cleanup

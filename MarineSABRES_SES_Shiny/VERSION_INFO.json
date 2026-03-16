@@ -1,91 +1,63 @@
 {
-  "version": "1.8.1",
-  "version_name": "Codebase Audit & Cleanup",
-  "release_date": "2026-03-15",
-  "release_type": "patch",
+  "version": "1.9.0",
+  "version_name": "Delay Attribute for Connections",
+  "release_date": "2026-03-16",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.8.1",
+  "documentation_version": "1.9.0",
   "api_version": "1.0",
   "database_version": "1.1",
   "breaking_changes": false,
   "security_updates": false,
   "features": [
-    "🌍 Country selection with governance and socio-economic element suggestions (97 countries, 11 regional seas)",
-    "🔬 Evidence-based strength, confidence, and temporal lag across 620+ curated connections",
-    "📚 SES Knowledge Base expanded to 30 contexts with 620 scientifically validated connections",
-    "🏝️ 6 insular ecosystem contexts added (Caribbean, Pacific atoll, Indian Ocean, Arctic, Baltic, Atlantic islands)",
-    "🧊 Arctic island, Atlantic estuary/coast, Baltic rocky coast ecosystem contexts",
-    "🔗 Graphical SES network builder module for visual CLD construction",
-    "📖 Tutorial system module with guided walkthroughs",
-    "🔧 Universal Excel loader for flexible SES model import",
-    "🧠 ML model registry and text embeddings infrastructure",
-    "🎓 DTU dynamics integration with Boolean network analysis"
+    "⏱️ Temporal delay attributes on connections (immediate, short-term, medium-term, long-term)",
+    "📊 Delay category and years stored in adjacency matrix cells",
+    "🔗 Dash-pattern edge visualization for delay categories in network diagrams",
+    "📝 Connection review UI with delay toggle, category dropdown, and years input",
+    "📥 Excel/Kumu import reads Delay columns when present, skips gracefully when absent",
+    "📤 Excel/Kumu export includes Delay and Delay (years) columns",
+    "🌍 Delay translation keys for all 9 languages",
+    "🔄 Backward-compatible: old numeric lag format auto-migrated to delay categories"
   ],
   "fixes": {
-    "critical": [
-      {
-        "issue": "Subscript out of bounds crash when removing unconnected elements",
-        "file": "modules/ai_isa_assistant_module.R, modules/ai_isa/data_persistence.R",
-        "impact": "App crashed when user selected 'Remove unconnected and continue'",
-        "resolution": "Remap connection indices by name lookup after element removal; added bounds checking in build_adjacency_matrices"
-      },
-      {
-        "issue": "28 invalid DAPSIWRM flow directions in knowledge database",
-        "file": "data/ses_knowledge_db.json",
-        "impact": "Erroneous connection suggestions skipping framework levels (D->P, A->S, R->S)",
-        "resolution": "Routed all connections through proper intermediate elements per DAPSIWRM rules"
-      },
-      {
-        "issue": "Translation file write permission denied on server",
-        "file": "deployment/remote-deploy.sh",
-        "impact": "App failed to start after deployment",
-        "resolution": "Set group-writable permissions on translations directory during deployment"
-      }
-    ],
+    "critical": [],
     "improvements": [
       {
-        "issue": "Duplicate connections in mediterranean_open_coast context",
-        "file": "data/ses_knowledge_db.json",
-        "resolution": "Removed duplicate entries"
-      },
-      {
-        "issue": "Orphan element reference in indian_ocean_island context",
-        "file": "data/ses_knowledge_db.json",
-        "resolution": "Fixed element name to match existing driver"
+        "issue": "Old numeric lag format in adjacency cells not human-readable",
+        "file": "functions/utils.R",
+        "resolution": "Auto-migrated to named delay categories via derive_delay_category()"
       }
     ]
   },
   "metrics": {
-    "files_modified": 135,
+    "files_modified": 14,
+    "insertions": 2001,
+    "deletions": 65,
     "knowledge_db_contexts": 30,
     "knowledge_db_connections": 620,
-    "knowledge_db_elements": 1102,
-    "r_kb_connections": 112,
-    "r_kb_synonym_groups": 17,
-    "countries_in_governance_db": 97,
-    "regional_seas": 11,
     "languages_supported": 9,
     "modules_total": 46,
     "test_files": 55
   },
   "migration_notes": [
-    "No breaking changes - all changes are backward-compatible",
-    "Knowledge database version bumped to 1.1 (structural fixes)",
-    "New modules (graphical_ses_network_builder, tutorial_system) are optional",
-    "Country governance database is a new feature, no migration needed"
+    "No breaking changes - fully backward-compatible with v1.8.x data",
+    "Old Excel files without Delay columns load without modification",
+    "Old adjacency matrix cells (+strength:confidence) parsed with delay=NA",
+    "Old numeric lag format (+strength:confidence:years) auto-converted to delay category"
   ],
   "developer_notes": [
-    "Run scripts/audit_kb.R to validate knowledge base after any KB changes",
-    "Connection indices are now remapped by name after element removal",
-    "build_adjacency_matrices has bounds checking as safety net",
-    "Country governance data in functions/country_governance_loader.R"
+    "Delay constants defined in constants.R: DELAY_CATEGORIES, DELAY_DEFAULTS",
+    "parse_connection_value() returns delay and delay_years fields",
+    "derive_delay_category() converts numeric years to named categories",
+    "delay_to_dashes() converts delay category to visNetwork dash array",
+    "Connection review module uses delay toggle with conditional UI"
   ],
   "deployment_notes": [
-    "Ensure translations/ directory has group-write permission (chmod 775)",
-    "Translation cache (_merged_translations.json) regenerates on first startup",
-    "Full server restart recommended for new modules"
+    "No special deployment steps required",
+    "New translation keys in labels.json and connection_review.json",
+    "Translation cache regenerates automatically on first startup"
   ],
-  "previous_version": "1.8.0"
+  "previous_version": "1.8.1"
 }
