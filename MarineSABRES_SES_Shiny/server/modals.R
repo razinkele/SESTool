@@ -1541,7 +1541,7 @@ setup_kb_references_modal_handlers <- function(input, output, session, i18n) {
   observeEvent(input$show_kb_references_modal, {
 
     # Parse top references from KB JSON
-    top_refs <- tryCatch({
+    kb_refs <- tryCatch({
       kb_path <- file.path(PROJECT_ROOT %||% ".", "data", "ses_knowledge_db.json")
       if (file.exists(kb_path)) {
         kb <- jsonlite::fromJSON(kb_path, simplifyVector = FALSE)
@@ -1554,15 +1554,14 @@ setup_kb_references_modal_handlers <- function(input, output, session, i18n) {
           }
         }
         ref_counts <- sort(table(all_refs), decreasing = TRUE)
-        head(ref_counts, 25)
+        list(top = head(ref_counts, 25), total = length(unique(all_refs)))
       } else {
         NULL
       }
     }, error = function(e) NULL)
 
-    total_refs <- tryCatch({
-      length(unique(all_refs))
-    }, error = function(e) 0)
+    top_refs <- if (!is.null(kb_refs)) kb_refs$top else NULL
+    total_refs <- if (!is.null(kb_refs)) kb_refs$total else 0
 
     # Build top references table
     top_refs_ui <- if (!is.null(top_refs) && length(top_refs) > 0) {
@@ -1574,6 +1573,8 @@ setup_kb_references_modal_handlers <- function(input, output, session, i18n) {
         )
       })
       tags$div(
+        tags$p(style = "color: #555; margin-bottom: 10px;",
+          paste0(total_refs, " ", i18n$t("ui.modals.unique_references_found"))),
         tags$div(style = "max-height: 500px; overflow-y: auto;",
           tags$table(
             class = "table table-sm table-striped",
@@ -1589,7 +1590,7 @@ setup_kb_references_modal_handlers <- function(input, output, session, i18n) {
         )
       )
     } else {
-      tags$p(class = "text-muted", "No references available")
+      tags$p(class = "text-muted", i18n$t("ui.modals.no_references_available"))
     }
 
     showModal(modalDialog(

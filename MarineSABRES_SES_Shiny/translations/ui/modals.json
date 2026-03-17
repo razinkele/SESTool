@@ -1507,6 +1507,28 @@
       "no": "Siteringer",
       "el": "Αναφορές"
     },
+    "ui.modals.no_references_available": {
+      "en": "No references available",
+      "es": "No hay referencias disponibles",
+      "fr": "Aucune référence disponible",
+      "de": "Keine Referenzen verfügbar",
+      "lt": "Nėra nuorodų",
+      "pt": "Nenhuma referência disponível",
+      "it": "Nessun riferimento disponibile",
+      "no": "Ingen referanser tilgjengelig",
+      "el": "Δεν υπάρχουν διαθέσιμες αναφορές"
+    },
+    "ui.modals.unique_references_found": {
+      "en": "unique references found",
+      "es": "referencias únicas encontradas",
+      "fr": "références uniques trouvées",
+      "de": "eindeutige Referenzen gefunden",
+      "lt": "unikalių nuorodų rasta",
+      "pt": "referências únicas encontradas",
+      "it": "riferimenti unici trovati",
+      "no": "unike referanser funnet",
+      "el": "μοναδικές αναφορές βρέθηκαν"
+    },
     "ui.modals.beginners_quick_start": {
       "en": "Beginner's Quick Start",
       "es": "Inicio Rápido para Principiantes",
