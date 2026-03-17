@@ -1883,6 +1883,67 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Beach recreation and bathing",
+          "from_type": "activities",
+          "to": "Beach litter and microplastic pollution",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Increased beach visitor numbers generate more litter and contribute to microplastic accumulation on shores",
+          "references": [
+            "HELCOM 2018"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Coastal erosion protection works (groynes, nourishment)",
+          "from_type": "activities",
+          "to": "Loss of natural coastal habitats from hardening",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Hard coastal defence structures replace natural shoreline habitats with artificial surfaces, reducing biodiversity",
+          "references": [
+            "Nordstrom 2008",
+            "Masselink & Russell 2013"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Seal watching tourism",
+          "from_type": "activities",
+          "to": "Human disturbance at seal haul-out sites",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Unregulated seal watching tourism increases noise and proximity disturbance at haul-out and breeding sites",
+          "references": [
+            "Sundqvist et al. 2012"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Coastal residential and hotel development",
+          "from_type": "activities",
+          "to": "Loss of natural coastal habitats from hardening",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Coastal construction converts dunes and natural shoreline into impervious surfaces, fragmenting coastal habitats",
+          "references": [
+            "European Commission 2007"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
