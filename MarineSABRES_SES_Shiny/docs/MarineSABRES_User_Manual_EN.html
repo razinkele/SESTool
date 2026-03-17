@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="MarineSABRES Project" />
+  <title>MarineSABRES SES Toolbox - User Manual</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      font-size: 11pt;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">MarineSABRES SES Toolbox - User Manual</h1>
+<p class="subtitle">Social-Ecological Systems Analysis Platform</p>
+<p class="author">MarineSABRES Project</p>
+<p class="date">Version 1.10.0 - March 2026</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a>
+<ul>
+<li><a href="#about-marinesabres-ses-toolbox"
+id="toc-about-marinesabres-ses-toolbox">About MarineSABRES SES
+Toolbox</a>
+<ul>
+<li><a href="#key-capabilities" id="toc-key-capabilities">Key
+Capabilities</a></li>
+</ul></li>
+<li><a href="#target-users" id="toc-target-users">Target Users</a></li>
+<li><a href="#system-requirements" id="toc-system-requirements">System
+Requirements</a>
+<ul>
+<li><a href="#software-requirements"
+id="toc-software-requirements">Software Requirements</a></li>
+<li><a href="#hardware-requirements"
+id="toc-hardware-requirements">Hardware Requirements</a></li>
+<li><a href="#internet-connection" id="toc-internet-connection">Internet
+Connection</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#whats-new" id="toc-whats-new">What’s New</a>
+<ul>
+<li><a href="#version-1.10.0-march-2026"
+id="toc-version-1.10.0-march-2026">Version 1.10.0 (March 2026)</a>
+<ul>
+<li><a href="#knowledge-base-quality-review-scientific-validation"
+id="toc-knowledge-base-quality-review-scientific-validation">Knowledge
+Base Quality Review &amp; Scientific Validation</a></li>
+<li><a href="#governance-socio-economic-enhancements"
+id="toc-governance-socio-economic-enhancements">Governance &amp;
+Socio-Economic Enhancements</a></li>
+<li><a href="#connection-review-improvements"
+id="toc-connection-review-improvements">Connection Review
+Improvements</a></li>
+</ul></li>
+<li><a href="#version-1.9.0-march-2026"
+id="toc-version-1.9.0-march-2026">Version 1.9.0 (March 2026)</a>
+<ul>
+<li><a href="#temporal-delay-attributes"
+id="toc-temporal-delay-attributes">Temporal Delay Attributes</a></li>
+</ul></li>
+<li><a href="#version-1.8.1-march-2026"
+id="toc-version-1.8.1-march-2026">Version 1.8.1 (March 2026)</a>
+<ul>
+<li><a href="#codebase-audit-cleanup"
+id="toc-codebase-audit-cleanup">Codebase Audit &amp; Cleanup</a></li>
+</ul></li>
+<li><a href="#version-1.8.0-march-2026"
+id="toc-version-1.8.0-march-2026">Version 1.8.0 (March 2026)</a>
+<ul>
+<li><a href="#knowledge-base-country-governance"
+id="toc-knowledge-base-country-governance">Knowledge Base &amp; Country
+Governance</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#getting-started" id="toc-getting-started">Getting
+Started</a>
+<ul>
+<li><a href="#installation" id="toc-installation">Installation</a>
+<ul>
+<li><a href="#step-1-install-r-and-rstudio"
+id="toc-step-1-install-r-and-rstudio">Step 1: Install R and
+RStudio</a></li>
+<li><a href="#step-2-install-required-packages"
+id="toc-step-2-install-required-packages">Step 2: Install Required
+Packages</a></li>
+<li><a href="#step-3-launch-the-application"
+id="toc-step-3-launch-the-application">Step 3: Launch the
+Application</a></li>
+</ul></li>
+<li><a href="#first-launch" id="toc-first-launch">First Launch</a>
+<ul>
+<li><a href="#interface-overview" id="toc-interface-overview">Interface
+Overview</a></li>
+<li><a href="#creating-your-first-project"
+id="toc-creating-your-first-project">Creating Your First
+Project</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#core-modules" id="toc-core-modules">Core Modules</a>
+<ul>
+<li><a href="#pims-project-information-management-system"
+id="toc-pims-project-information-management-system">PIMS (Project
+Information Management System)</a>
+<ul>
+<li><a href="#project-setup" id="toc-project-setup">Project
+Setup</a></li>
+<li><a href="#stakeholder-management"
+id="toc-stakeholder-management">Stakeholder Management</a></li>
+</ul></li>
+<li><a href="#create-ses-social-ecological-system"
+id="toc-create-ses-social-ecological-system">Create SES
+(Social-Ecological System)</a>
+<ul>
+<li><a href="#method-1-standard-isa-data-entry"
+id="toc-method-1-standard-isa-data-entry">Method 1: Standard ISA Data
+Entry</a></li>
+<li><a href="#method-2-ai-assisted-isa-creation"
+id="toc-method-2-ai-assisted-isa-creation">Method 2: AI-Assisted ISA
+Creation</a></li>
+<li><a href="#method-3-template-based-ses-creation"
+id="toc-method-3-template-based-ses-creation">Method 3: Template-Based
+SES Creation</a></li>
+<li><a href="#method-4-import-data-from-excel"
+id="toc-method-4-import-data-from-excel">Method 4: Import Data from
+Excel</a></li>
+</ul></li>
+<li><a href="#cld-visualization" id="toc-cld-visualization">CLD
+Visualization</a>
+<ul>
+<li><a href="#network-display" id="toc-network-display">Network
+Display</a></li>
+<li><a href="#layout-algorithms" id="toc-layout-algorithms">Layout
+Algorithms</a></li>
+<li><a href="#interactive-controls"
+id="toc-interactive-controls">Interactive Controls</a></li>
+<li><a href="#highlighting-features"
+id="toc-highlighting-features">Highlighting Features</a></li>
+<li><a href="#export-options" id="toc-export-options">Export
+Options</a></li>
+</ul></li>
+<li><a href="#analysis-tools" id="toc-analysis-tools">Analysis Tools</a>
+<ul>
+<li><a href="#loop-detection" id="toc-loop-detection">Loop
+Detection</a></li>
+<li><a href="#network-metrics" id="toc-network-metrics">Network
+Metrics</a></li>
+<li><a href="#simplification-tools"
+id="toc-simplification-tools">Simplification Tools</a></li>
+</ul></li>
+<li><a href="#response-validation" id="toc-response-validation">Response
+&amp; Validation</a>
+<ul>
+<li><a href="#response-measures" id="toc-response-measures">Response
+Measures</a></li>
+<li><a href="#scenario-builder" id="toc-scenario-builder">Scenario
+Builder</a></li>
+<li><a href="#validation" id="toc-validation">Validation</a></li>
+</ul></li>
+<li><a href="#export-reports" id="toc-export-reports">Export &amp;
+Reports</a>
+<ul>
+<li><a href="#data-export" id="toc-data-export">Data Export</a></li>
+<li><a href="#visualization-export"
+id="toc-visualization-export">Visualization Export</a></li>
+<li><a href="#report-generation" id="toc-report-generation">Report
+Generation</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#workflows-best-practices"
+id="toc-workflows-best-practices">Workflows &amp; Best Practices</a>
+<ul>
+<li><a href="#recommended-workflows"
+id="toc-recommended-workflows">Recommended Workflows</a>
+<ul>
+<li><a href="#standard-participatory-workshop-3-days"
+id="toc-standard-participatory-workshop-3-days">Standard Participatory
+Workshop (3 days)</a></li>
+<li><a href="#soloresearch-workflow-25-days"
+id="toc-soloresearch-workflow-25-days">Solo/Research Workflow (25
+days)</a></li>
+<li><a href="#rapid-assessment-ai-assisted-1-day"
+id="toc-rapid-assessment-ai-assisted-1-day">Rapid Assessment
+(AI-Assisted, 1 day)</a></li>
+</ul></li>
+<li><a href="#best-practices" id="toc-best-practices">Best Practices</a>
+<ul>
+<li><a href="#data-quality" id="toc-data-quality">Data Quality</a></li>
+<li><a href="#network-design" id="toc-network-design">Network
+Design</a></li>
+<li><a href="#stakeholder-engagement"
+id="toc-stakeholder-engagement">Stakeholder Engagement</a></li>
+<li><a href="#technical-tips" id="toc-technical-tips">Technical
+Tips</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#troubleshooting"
+id="toc-troubleshooting">Troubleshooting</a>
+<ul>
+<li><a href="#common-issues" id="toc-common-issues">Common Issues</a>
+<ul>
+<li><a href="#installation-problems"
+id="toc-installation-problems">Installation Problems</a></li>
+<li><a href="#data-entry-issues" id="toc-data-entry-issues">Data Entry
+Issues</a></li>
+<li><a href="#visualization-issues"
+id="toc-visualization-issues">Visualization Issues</a></li>
+<li><a href="#analysis-issues" id="toc-analysis-issues">Analysis
+Issues</a></li>
+<li><a href="#report-generation-issues"
+id="toc-report-generation-issues">Report Generation Issues</a></li>
+<li><a href="#performance-issues"
+id="toc-performance-issues">Performance Issues</a></li>
+<li><a href="#file-issues" id="toc-file-issues">File Issues</a></li>
+</ul></li>
+<li><a href="#getting-help" id="toc-getting-help">Getting Help</a>
+<ul>
+<li><a href="#in-app-help" id="toc-in-app-help">In-App Help</a></li>
+<li><a href="#documentation"
+id="toc-documentation">Documentation</a></li>
+<li><a href="#online-resources" id="toc-online-resources">Online
+Resources</a></li>
+<li><a href="#contact-support" id="toc-contact-support">Contact
+Support</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#glossary" id="toc-glossary">Glossary</a></li>
+<li><a href="#appendix-a-keyboard-shortcuts"
+id="toc-appendix-a-keyboard-shortcuts">Appendix A: Keyboard
+Shortcuts</a></li>
+<li><a href="#appendix-b-file-formats"
+id="toc-appendix-b-file-formats">Appendix B: File Formats</a>
+<ul>
+<li><a href="#native-format-.rds" id="toc-native-format-.rds">Native
+Format (.rds)</a></li>
+<li><a href="#excel-import-template"
+id="toc-excel-import-template">Excel Import Template</a></li>
+</ul></li>
+<li><a href="#appendix-c-dapsiwrm-framework-details"
+id="toc-appendix-c-dapsiwrm-framework-details">Appendix C: DAPSI(W)R(M)
+Framework Details</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<h2 id="about-marinesabres-ses-toolbox">About MarineSABRES SES
+Toolbox</h2>
+<p>The <strong>MarineSABRES Social-Ecological Systems (SES)
+Toolbox</strong> is a comprehensive web-based application designed to
+support participatory analysis and management of marine
+social-ecological systems. It implements the <strong>DAPSI(W)R(M)
+framework</strong> (Drivers-Activities-Pressures-State changes-Welfare
+impacts-Response Measures) to analyze complex interactions between
+marine ecosystems and human activities.</p>
+<blockquote>
+<p><strong>Note on Framework Terminology:</strong> In DAPSI(W)R(M), “R”
+and “M” refer to policy/management Responses and implementing Measures.
+This tool treats them as a unified “Response Measures” category to
+represent management interventions comprehensively.</p>
+</blockquote>
+<h3 id="key-capabilities">Key Capabilities</h3>
+<ul>
+<li><strong>Integrated Systems Analysis (ISA)</strong>: Structured
+13-exercise approach to map cause-effect relationships</li>
+<li><strong>AI-Assisted Creation</strong>: Conversational interface for
+rapid system mapping</li>
+<li><strong>Interactive Visualization</strong>: Dynamic Causal Loop
+Diagrams (CLD) with advanced network layouts</li>
+<li><strong>Feedback Loop Detection</strong>: Automatic identification
+of reinforcing and balancing loops</li>
+<li><strong>Network Analysis</strong>: Centrality metrics, leverage
+points, and MICMAC analysis</li>
+<li><strong>Response Planning</strong>: Prioritization and impact
+assessment of management interventions</li>
+<li><strong>Stakeholder Management</strong>: Power-Interest analysis and
+engagement planning</li>
+<li><strong>Context-Specific Recommendations</strong>: Data-driven
+strategic and management guidance</li>
+<li><strong>Multilingual Support</strong>: Available in 9 languages (EN,
+ES, FR, DE, LT, PT, IT, NO, EL)</li>
+<li><strong>Temporal Delay Attributes</strong>: Capture time-lag
+relationships between connections</li>
+<li><strong>Knowledge Base</strong>: 1,120 scientifically validated
+connections across 30 marine ecosystem contexts</li>
+<li><strong>Country Governance</strong>: 97 countries with governance
+and socio-economic element suggestions</li>
+<li><strong>Template System</strong>: 7 pre-built SES templates for
+common marine scenarios</li>
+</ul>
+<h2 id="target-users">Target Users</h2>
+<ul>
+<li><strong>Marine Resource Managers</strong>: Plan and evaluate
+management interventions</li>
+<li><strong>Policy Analysts</strong>: Assess policy impacts on marine
+systems</li>
+<li><strong>Environmental Consultants</strong>: Support marine spatial
+planning and impact assessments</li>
+<li><strong>Researchers</strong>: Study marine social-ecological system
+dynamics</li>
+<li><strong>Stakeholder Facilitators</strong>: Guide participatory
+system mapping workshops</li>
+</ul>
+<h2 id="system-requirements">System Requirements</h2>
+<h3 id="software-requirements">Software Requirements</h3>
+<ul>
+<li><strong>R</strong> version 4.4.1 or higher</li>
+<li><strong>Modern Web Browser</strong>: Chrome (recommended), Firefox,
+Edge, or Safari</li>
+<li><strong>Optional</strong>: Pandoc (for PDF/Word report
+generation)</li>
+</ul>
+<h3 id="hardware-requirements">Hardware Requirements</h3>
+<ul>
+<li><strong>Processor</strong>: Dual-core 2.0 GHz or faster</li>
+<li><strong>RAM</strong>: 4 GB minimum, 8 GB recommended</li>
+<li><strong>Storage</strong>: 500 MB free disk space</li>
+<li><strong>Display</strong>: 1366x768 minimum resolution, 1920x1080
+recommended</li>
+</ul>
+<h3 id="internet-connection">Internet Connection</h3>
+<ul>
+<li>Required for initial R package installation only</li>
+<li>Offline operation supported after installation</li>
+</ul>
+<h1 id="whats-new">What’s New</h1>
+<h2 id="version-1.10.0-march-2026">Version 1.10.0 (March 2026)</h2>
+<h3 id="knowledge-base-quality-review-scientific-validation">Knowledge
+Base Quality Review &amp; Scientific Validation</h3>
+<ul>
+<li>68 element misclassifications corrected across the DAPSI(W)R(M)
+knowledge base</li>
+<li>213 connection attributes scientifically validated against published
+literature (HELCOM, ICES, OSPAR, UNEP-MAP, GCRMN, IPCC AR6, AMAP)</li>
+<li>1,120 total connections across 30 marine ecosystem contexts (up from
+622)</li>
+<li>Zero orphan elements — every element connected to at least one
+other</li>
+<li>Confidence distribution recalibrated to evidence-based levels</li>
+<li>KB References accessible from Help menu in the topbar</li>
+</ul>
+<h3 id="governance-socio-economic-enhancements">Governance &amp;
+Socio-Economic Enhancements</h3>
+<ul>
+<li>2 new regional conventions: SPREP/Noumea (Pacific) and Abidjan (West
+Africa)</li>
+<li>Governance gaps filled for 4 groups (non-EU European, Latin
+American, African Coastal, Asia-Pacific)</li>
+<li>16 governance/SE element reclassifications for accuracy</li>
+</ul>
+<h3 id="connection-review-improvements">Connection Review
+Improvements</h3>
+<ul>
+<li>New W→D, P→P, and S→S connection batch tabs for feedback loops and
+cascading effects</li>
+<li>Delay toggle persistence across tab changes</li>
+<li>Internationalized strength/confidence labels and tooltips</li>
+</ul>
+<h2 id="version-1.9.0-march-2026">Version 1.9.0 (March 2026)</h2>
+<h3 id="temporal-delay-attributes">Temporal Delay Attributes</h3>
+<ul>
+<li>Delay categories for connections: immediate, short-term,
+medium-term, long-term</li>
+<li>Visual dash patterns on network edges showing delay</li>
+<li>Connection review cards with delay toggle, dropdown, and numeric
+input</li>
+<li>Full Excel/Kumu import and export support for delay columns</li>
+<li>Backward-compatible with older project files</li>
+</ul>
+<h2 id="version-1.8.1-march-2026">Version 1.8.1 (March 2026)</h2>
+<h3 id="codebase-audit-cleanup">Codebase Audit &amp; Cleanup</h3>
+<ul>
+<li>12 critical bug fixes across 20 files</li>
+<li>Dead code removal and test strengthening</li>
+</ul>
+<h2 id="version-1.8.0-march-2026">Version 1.8.0 (March 2026)</h2>
+<h3 id="knowledge-base-country-governance">Knowledge Base &amp; Country
+Governance</h3>
+<ul>
+<li>Country governance database with 97 countries across 11 regional
+seas</li>
+<li>Graphical SES network builder module</li>
+<li>Tutorial system with guided walkthroughs</li>
+<li>Universal Excel loader for flexible SES model import</li>
+<li>ML model registry and text embeddings infrastructure</li>
+</ul>
+<h1 id="getting-started">Getting Started</h1>
+<h2 id="installation">Installation</h2>
+<h3 id="step-1-install-r-and-rstudio">Step 1: Install R and RStudio</h3>
+<ol type="1">
+<li><strong>Download R</strong> from <a
+href="https://cran.r-project.org/">https://cran.r-project.org/</a></li>
+<li><strong>Download RStudio</strong> (optional but recommended) from <a
+href="https://posit.co/downloads/">https://posit.co/downloads/</a></li>
+<li>Install both applications following standard procedures</li>
+</ol>
+<h3 id="step-2-install-required-packages">Step 2: Install Required
+Packages</h3>
+<p>Open R or RStudio and run:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install required packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;shiny&quot;</span>, <span class="st">&quot;shinydashboard&quot;</span>, <span class="st">&quot;shinyjs&quot;</span>, <span class="st">&quot;shiny.i18n&quot;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;DT&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;tidyr&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;plotly&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;visNetwork&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;DiagrammeR&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;openxlsx&quot;</span>, <span class="st">&quot;jsonlite&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;knitr&quot;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;digest&quot;</span>, <span class="st">&quot;htmlwidgets&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<h3 id="step-3-launch-the-application">Step 3: Launch the
+Application</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set working directory</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/path/to/MarineSABRES_SES_Shiny&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the application</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">runApp</span>()</span></code></pre></div>
+<p><strong>Alternative using run_app.R:</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/MarineSABRES_SES_Shiny</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> run_app.R</span></code></pre></div>
+<h2 id="first-launch">First Launch</h2>
+<h3 id="interface-overview">Interface Overview</h3>
+<p>Upon launching, you’ll see the <strong>Dashboard</strong> with:</p>
+<p><strong>Header Bar:</strong> - Application title and logo - Language
+selector (9 languages available) - User level selector
+(Beginner/Intermediate/Expert) - Help button</p>
+<p><strong>Sidebar Menu:</strong> - Navigation to all modules -
+Save/Load project buttons - Auto-save indicator</p>
+<p><strong>Main Panel:</strong> - Summary value boxes (elements,
+connections, loops, completion %) - Project status overview - Quick
+action buttons</p>
+<h3 id="creating-your-first-project">Creating Your First Project</h3>
+<ol type="1">
+<li><strong>Navigate to Entry Point</strong> (Getting Started)
+<ul>
+<li>Choose “Guided Pathway” or “Quick Access”</li>
+<li>Answer contextual questions about your role and objectives</li>
+<li>Receive personalized tool recommendations</li>
+</ul></li>
+<li><strong>Set Up Project Information</strong> (PIMS → Project Setup)
+<ul>
+<li>Enter project name</li>
+<li>Select demonstration area</li>
+<li>Define focal issue</li>
+<li>Specify system boundaries</li>
+</ul></li>
+<li><strong>Choose Your Workflow</strong>
+<ul>
+<li><strong>Standard ISA</strong>: Structured 13-exercise approach
+(recommended for thorough analysis)</li>
+<li><strong>AI-Assisted</strong>: Conversational 11-step interview (fast
+track for experienced users)</li>
+<li><strong>Template-Based</strong>: Pre-configured models for common
+scenarios</li>
+<li><strong>Import Data</strong>: Load existing ISA data from Excel</li>
+</ul></li>
+<li><strong>Save Your Work</strong>
+<ul>
+<li>Click “Save Project” in sidebar</li>
+<li>Choose filename (e.g., <code>my_project_2025-11-16.rds</code>)</li>
+<li>Save regularly throughout your session</li>
+</ul></li>
+</ol>
+<h1 id="core-modules">Core Modules</h1>
+<h2 id="pims-project-information-management-system">PIMS (Project
+Information Management System)</h2>
+<h3 id="project-setup">Project Setup</h3>
+<p>Define the scope and context of your analysis.</p>
+<p><strong>Fields to Complete:</strong></p>
+<ul>
+<li><strong>Project Name</strong>: Unique identifier for your
+project</li>
+<li><strong>Project ID</strong>: Auto-generated or custom code</li>
+<li><strong>Demonstration Area</strong>: Geographic focus
+<ul>
+<li>Tuscan Archipelago</li>
+<li>Arctic NE Atlantic</li>
+<li>Macaronesia</li>
+<li>Custom (specify)</li>
+</ul></li>
+<li><strong>Focal Issue</strong>: Primary management question or
+concern</li>
+<li><strong>Temporal Scale</strong>: Time horizon
+(years/decades/centuries)</li>
+<li><strong>Spatial Scale</strong>: Geographic extent
+(local/regional/national/international)</li>
+<li><strong>System Boundaries</strong>: What’s included/excluded from
+analysis</li>
+</ul>
+<p><strong>Best Practices:</strong> - Be specific about focal issue
+(e.g., “Decline in seagrass meadows due to nutrient pollution”
+vs. “Water quality”) - Define boundaries clearly to scope your analysis
+- Consider multiple temporal scales for different system components</p>
+<h3 id="stakeholder-management">Stakeholder Management</h3>
+<p>Identify and categorize stakeholders in your marine system.</p>
+<p><strong>Stakeholder Register:</strong></p>
+<p>Create entries with: - <strong>Name</strong>: Organization or group
+name - <strong>Type</strong>: - Inputters (provide resources/inputs) -
+Extractors (harvest/remove resources) - Regulators (set rules/policies)
+- Affectees (experience impacts) - Beneficiaries (receive benefits) -
+Influencers (shape decisions) - <strong>Contact Information</strong>:
+Email, phone, address - <strong>Power</strong>: Influence level
+(High/Medium/Low) - <strong>Interest</strong>: Stake in outcomes
+(High/Medium/Low) - <strong>Engagement Level</strong>: Current
+participation (IAP2 spectrum) - Inform - Consult - Involve - Collaborate
+- Empower - <strong>Notes</strong>: Additional context</p>
+<p><strong>Power-Interest Grid:</strong></p>
+<p>Visual matrix automatically plots stakeholders by power and interest:
+- <strong>High Power, High Interest</strong>: Key players - collaborate
+closely - <strong>High Power, Low Interest</strong>: Keep satisfied -
+regular updates - <strong>Low Power, High Interest</strong>: Keep
+informed - engage actively - <strong>Low Power, Low Interest</strong>:
+Monitor - minimum effort</p>
+<p><strong>Export:</strong> Download stakeholder register as Excel for
+external sharing</p>
+<h2 id="create-ses-social-ecological-system">Create SES
+(Social-Ecological System)</h2>
+<h3 id="method-1-standard-isa-data-entry">Method 1: Standard ISA Data
+Entry</h3>
+<p>Comprehensive 13-exercise structured approach following DAPSI(W)R(M)
+framework.</p>
+<h4 id="exercise-0-complexity-scoping">Exercise 0: Complexity
+Scoping</h4>
+<p>Establish the context for your analysis.</p>
+<p><strong>Key Questions:</strong> 1. What is the case study area? 2.
+What is the geographic and temporal scope? 3. What welfare impacts are
+of concern? 4. Who are the key stakeholders?</p>
+<p><strong>Output:</strong> Contextual foundation for subsequent
+exercises</p>
+<h4 id="exercise-1-goods-benefits-gb">Exercise 1: Goods &amp; Benefits
+(G&amp;B)</h4>
+<p>Identify valued outputs from the marine system.</p>
+<p><strong>Data Entry Form:</strong> - <strong>ID</strong>:
+Auto-generated unique identifier - <strong>Name</strong>: Descriptive
+name (e.g., “Commercial fish catch”) - <strong>Type</strong>: -
+Provisioning (food, materials) - Regulating (climate, water quality) -
+Cultural (recreation, heritage) - Supporting (nutrient cycling, habitat)
+- <strong>Description</strong>: Detailed explanation -
+<strong>Stakeholder</strong>: Who benefits? -
+<strong>Importance</strong>: Socio-economic significance
+(High/Medium/Low) - <strong>Trend</strong>: Historical trajectory
+(Increasing/Stable/Decreasing/Unknown)</p>
+<p><strong>Interactive Table:</strong> - Add, edit, delete entries -
+Sort and filter by any column - Search functionality - Export to
+Excel</p>
+<p><strong>Example Entries:</strong></p>
+<pre><code>Name: Recreational fishing opportunities
+Type: Cultural
+Stakeholder: Local fishing community, tourists
+Importance: High
+Trend: Decreasing</code></pre>
+<h4 id="exercise-2a-ecosystem-services-es">Exercise 2a: Ecosystem
+Services (ES)</h4>
+<p>Map services that support goods and benefits.</p>
+<p><strong>Fields:</strong> - <strong>Name</strong>: Service description
+(e.g., “Fish stock replenishment”) - <strong>Type</strong>:
+Provisioning/Regulating/Cultural/Supporting - <strong>Linked
+G&amp;B</strong>: Select which goods/benefits this service supports -
+<strong>Mechanism</strong>: How the service provides the benefit -
+<strong>Confidence</strong>: Evidence quality (High/Medium/Low)</p>
+<p><strong>Adjacency Matrix:</strong> - Rows: Ecosystem Services -
+Columns: Goods &amp; Benefits - Cells: Relationship strength -
+<code>+strong</code>, <code>+medium</code>, <code>+weak</code> (positive
+contributions) - Empty (no relationship)</p>
+<h4 id="exercise-2b-marine-processes-functioning-mpf">Exercise 2b:
+Marine Processes &amp; Functioning (MPF)</h4>
+<p>Identify ecological processes that enable services.</p>
+<p><strong>Additional Fields:</strong> - <strong>Process Type</strong>:
+Biological/Chemical/Physical - <strong>Sensitivity</strong>:
+Vulnerability to change (High/Medium/Low) - <strong>Spatial
+Scale</strong>: Geographic extent (m²/km²/regional)</p>
+<p><strong>Examples:</strong> - Biological: “Seagrass photosynthesis” -
+Chemical: “Nutrient uptake by macroalgae” - Physical: “Sediment
+stabilization by roots”</p>
+<h4 id="exercise-3-pressures-p">Exercise 3: Pressures (P)</h4>
+<p>Document stressors affecting marine processes.</p>
+<p><strong>Pressure Categories (aligned with MSFD):</strong> - Physical:
+Smothering, abrasion, habitat loss - Chemical: Contaminants, nutrients,
+acidification - Biological: Introduction of species, pathogens - Other:
+Noise, light, electromagnetic fields</p>
+<p><strong>Fields:</strong> - <strong>Intensity</strong>: Magnitude of
+pressure (High/Medium/Low/Unknown) - <strong>Spatial Pattern</strong>:
+Point source/Diffuse/Regional - <strong>Temporal Pattern</strong>:
+Continuous/Seasonal/Episodic/Permanent</p>
+<h4 id="exercise-4-activities-a">Exercise 4: Activities (A)</h4>
+<p>Identify human actions that generate pressures.</p>
+<p><strong>Activity Sectors:</strong> - Fisheries
+(Commercial/Recreational) - Aquaculture - Tourism and Recreation -
+Shipping and Navigation - Energy Production - Coastal Development -
+Agriculture and Forestry - Industry and Mining - Waste Disposal -
+Research and Monitoring</p>
+<p><strong>Fields:</strong> - <strong>Scale</strong>: Operational extent
+(Local/Regional/National/International) - <strong>Frequency</strong>:
+How often (Daily/Weekly/Seasonal/Annual/Irregular)</p>
+<h4 id="exercise-5-drivers-d">Exercise 5: Drivers (D)</h4>
+<p>Analyze root causes behind activities.</p>
+<p><strong>Driver Types:</strong> - <strong>Economic</strong>: Market
+demand, prices, subsidies, trade - <strong>Social</strong>: Population,
+demographics, lifestyle, traditions - <strong>Technological</strong>:
+Innovation, efficiency, capacity - <strong>Environmental</strong>:
+Climate, resources availability - <strong>Policy/Institutional</strong>:
+Regulations, governance, property rights</p>
+<p><strong>Fields:</strong> - <strong>Trend</strong>: Direction of
+change (Increasing/Stable/Decreasing/Cyclical) -
+<strong>Controllability</strong>: Can it be managed?
+(High/Medium/Low/None)</p>
+<h4 id="exercise-6-loop-closure-feedback">Exercise 6: Loop Closure
+(Feedback)</h4>
+<p>Complete the causal chain with responses from welfare back to
+drivers.</p>
+<p><strong>Feedback Connections:</strong> - Select G&amp;B (starting
+point) - Select Driver (endpoint) - Specify: - <strong>Effect
+Type</strong>: Positive (amplifying) / Negative (dampening) -
+<strong>Strength</strong>: Strong/Medium/Weak -
+<strong>Confidence</strong>: High/Medium/Low -
+<strong>Mechanism</strong>: Explanatory pathway</p>
+<p><strong>Example:</strong></p>
+<pre><code>G&amp;B: &quot;Declining fish catch&quot; →
+Driver: &quot;Market demand for fish&quot;
+Effect: Negative (reduced demand as less fish available)
+Strength: Medium
+Delay: short-term
+Mechanism: &quot;Lower catches reduce market supply, potentially
+           decreasing consumer demand for locally caught fish&quot;</code></pre>
+<p><strong>Temporal Delay Attributes:</strong></p>
+<p>Each connection can optionally include a delay attribute to capture
+time-lag relationships:</p>
+<ul>
+<li><strong>Immediate</strong>: Effect occurs within days</li>
+<li><strong>Short-term</strong>: Effect occurs within weeks to
+months</li>
+<li><strong>Medium-term</strong>: Effect occurs within months to a
+year</li>
+<li><strong>Long-term</strong>: Effect occurs over years</li>
+</ul>
+<p>Delay values are shown as dash patterns on CLD edges and can be
+toggled on connection review cards. Delay columns are preserved during
+Excel and Kumu import/export.</p>
+<h4 id="exercise-7-9-cld-creation">Exercise 7-9: CLD Creation</h4>
+<p><strong>Exercise 7</strong>: Review all elements and connections
+(including delay attributes and new W→D, P→P, S→S batch tabs for
+feedback loops) <strong>Exercise 8</strong>: Generate Causal Loop
+Diagram <strong>Exercise 9</strong>: Export to visualization platforms
+(Kumu.io)</p>
+<p><strong>Automatic Features:</strong> - Element compilation from all
+exercises - Adjacency matrix conversion to edges - DAPSI(W)R(M) color
+coding - Kumu-compatible JSON export</p>
+<h4 id="exercise-10-12-analysis-documentation">Exercise 10-12: Analysis
+&amp; Documentation</h4>
+<p><strong>Exercise 10</strong>: System dynamics analysis
+<strong>Exercise 11</strong>: Behavior Over Time (BOT) graphs
+<strong>Exercise 12</strong>: Validation documentation</p>
+<p><strong>BOT Graph Features:</strong> - Time series data entry -
+Multiple indicators on same plot - Trend lines and annotations - Export
+as PNG/PDF</p>
+<h4 id="data-management-tab">Data Management Tab</h4>
+<p><strong>Import from Excel:</strong> 1. Download template (button
+provided) 2. Fill template with your data 3. Upload completed Excel file
+4. Review import preview 5. Confirm import (merge or replace existing
+data)</p>
+<p><strong>Export to Excel:</strong> - Multi-sheet workbook - All ISA
+tables included - Adjacency matrices - Connection attributes including
+Delay columns (has_delay, delay_type, delay_value, delay_units) - Ready
+for external analysis</p>
+<p><strong>Clear All Data:</strong> - Reset entire ISA dataset -
+Confirmation required - Cannot be undone</p>
+<h3 id="method-2-ai-assisted-isa-creation">Method 2: AI-Assisted ISA
+Creation</h3>
+<p>Conversational step-by-step guidance for rapid system mapping.</p>
+<p><strong>11-Step Interview Process:</strong></p>
+<p><strong>Step 1: Introduction</strong> - Welcome and overview -
+Explanation of process - Estimated time: 30-60 minutes</p>
+<p><strong>Step 2: Project Context</strong> - Project name and
+description - Primary objectives - Expected outcomes</p>
+<p><strong>Step 3: Regional Sea Selection</strong> Choose from 13
+regional seas: - Baltic Sea - Mediterranean Sea - Black Sea - Northeast
+Atlantic - Arctic Ocean - And 8 others…</p>
+<p><strong>Step 4: Ecosystem Type</strong> 12 ecosystem categories: -
+Seagrass meadows - Coral reefs - Kelp forests - Rocky reefs - Sandy
+beaches - Mudflats - Estuaries - Deep sea - And 4 others…</p>
+<p><strong>Step 5: Ecosystem Subtype</strong> Context-specific
+refinement based on Step 4 selection</p>
+<p><strong>Step 6: Main Issues</strong> Select from 25+ pre-defined
+issues or specify custom: - Overfishing - Pollution (nutrients,
+plastics, chemicals) - Habitat degradation - Climate change impacts -
+Invasive species - Coastal development - Tourism pressure - And many
+others…</p>
+<p><strong>Steps 7-11: Element Definition</strong> For each DAPSI(W)R(M)
+level: - Pre-populated suggestions based on your context - Free-text
+entry option - Multiple elements can be added - Real-time preview of
+created elements</p>
+<p><strong>Session Features:</strong> - <strong>Auto-save</strong>:
+Progress saved to browser localStorage - <strong>Session
+Recovery</strong>: Resume if interrupted - <strong>Chat
+Interface</strong>: Conversational prompts -
+<strong>Context-Aware</strong>: Suggestions adapt to previous answers -
+<strong>Direct Integration</strong>: Saves to main project data</p>
+<p><strong>When to Use:</strong> - Time-limited projects (rapid
+assessment) - Initial scoping phase - Experienced users familiar with
+DAPSI(W)R(M) - When expert knowledge can fill gaps quickly</p>
+<p><strong>Advantages:</strong> - Faster than standard ISA (10x speed
+improvement) - Context-aware suggestions reduce errors - Natural
+conversation flow - Immediate results</p>
+<p><strong>Limitations:</strong> - Less detailed than standard ISA - May
+miss complex relationships - Requires user expertise to evaluate
+suggestions</p>
+<h3 id="method-3-template-based-ses-creation">Method 3: Template-Based
+SES Creation</h3>
+<p>Quick start with pre-configured models for common scenarios.</p>
+<p><strong>Available Templates:</strong> - Baltic Sea Fisheries -
+Mediterranean Tourism - Atlantic Aquaculture - Arctic Shipping - (More
+templates in development)</p>
+<p><strong>How to Use:</strong> 1. Select template from dropdown 2.
+Review pre-populated elements 3. Customize to your specific context 4.
+Add/remove/modify elements as needed 5. Proceed to analysis</p>
+<p><strong>When to Use:</strong> - Similar case to existing template -
+Teaching and training scenarios - Benchmarking against known systems -
+Rapid prototyping</p>
+<h3 id="method-4-import-data-from-excel">Method 4: Import Data from
+Excel</h3>
+<p>Load existing ISA data from spreadsheet.</p>
+<p><strong>Process:</strong> 1. Download Excel template 2. Complete all
+required sheets: - Goods_Benefits - Ecosystem_Services -
+Marine_Processes - Pressures - Activities - Drivers - (Adjacency
+matrices sheets) 3. Upload filled template 4. Review validation report
+5. Confirm import</p>
+<p><strong>Data Validation:</strong> - Column name checking - Data type
+verification - Required field validation - Relationship integrity -
+Delay columns recognized automatically (backward-compatible with older
+files without Delay columns)</p>
+<p><strong>Import Options:</strong> - <strong>Merge</strong>: Add to
+existing data - <strong>Replace</strong>: Overwrite all data</p>
+<h2 id="cld-visualization">CLD Visualization</h2>
+<p>Interactive network visualization of your social-ecological
+system.</p>
+<h3 id="network-display">Network Display</h3>
+<p><strong>Visual Encoding:</strong></p>
+<p><strong>Node Colors (DAPSI(W)R(M) levels):</strong> - Purple: Drivers
+- Green: Activities - Orange: Pressures - Light Blue: Marine Processes -
+Dark Blue: Ecosystem Services - Light Yellow: Goods &amp; Benefits</p>
+<p><strong>Node Shapes:</strong> - Star: Drivers - Hexagon: Activities -
+Diamond: Pressures - Dot: Marine Processes - Square: Ecosystem Services
+- Triangle: Goods &amp; Benefits</p>
+<p><strong>Edge Colors:</strong> - Light Blue: Positive/reinforcing
+connections - Red: Negative/opposing connections</p>
+<p><strong>Edge Styles:</strong> - Solid line: Direct causal link - Line
+thickness: Relationship strength (strong/medium/weak)</p>
+<h3 id="layout-algorithms">Layout Algorithms</h3>
+<p><strong>1. Hierarchical Layout (Recommended)</strong> -
+<strong>Direction</strong>: Down-Up (shows DAPSI flow), Up-Down,
+Left-Right, Right-Left - <strong>Level Separation</strong>: Adjust
+spacing (50-300px) - <strong>Best for</strong>: Understanding DAPSI
+structure, presentations</p>
+<p><strong>2. Physics-Based (Force Atlas 2)</strong> -
+<strong>Gravity</strong>: Attraction strength between connected nodes -
+<strong>Spring Length</strong>: Ideal edge length - <strong>Best
+for</strong>: Discovering clusters, identifying central nodes</p>
+<p><strong>3. Circular Layout</strong> - Nodes arranged in circle -
+<strong>Best for</strong>: Small networks, pattern recognition</p>
+<p><strong>4. Manual Positioning</strong> - Drag nodes to desired
+positions - Positions saved with project - <strong>Best for</strong>:
+Custom arrangements, final presentations</p>
+<h3 id="interactive-controls">Interactive Controls</h3>
+<p><strong>Navigation:</strong> - <strong>Zoom</strong>: Mouse wheel or
+pinch gesture - <strong>Pan</strong>: Click and drag background -
+<strong>Reset View</strong>: Button to restore initial view -
+<strong>Fit to Screen</strong>: Auto-zoom to show all nodes</p>
+<p><strong>Node Interactions:</strong> - <strong>Click</strong>: Select
+node (highlights neighbors) - <strong>Double-click</strong>: Center view
+on node - <strong>Hover</strong>: Show tooltip with details</p>
+<p><strong>Edge Interactions:</strong> - <strong>Hover</strong>: Show
+relationship details - <strong>Click</strong>: Highlight connection</p>
+<p><strong>Search:</strong> - Type node name to find and highlight -
+Dropdown list of all nodes - Auto-center on selected node</p>
+<h3 id="highlighting-features">Highlighting Features</h3>
+<p><strong>Leverage Points:</strong> - Highlight high-influence nodes -
+Based on centrality metrics - Toggle on/off</p>
+<p><strong>Loop Highlighting:</strong> - Select loop from dropdown - All
+nodes and edges in loop highlighted - Other elements faded - Useful for
+loop-specific discussions</p>
+<p><strong>Interactive Legend:</strong> - Shows color/shape coding -
+Clickable to filter display - Toggle element types on/off</p>
+<h3 id="export-options">Export Options</h3>
+<p><strong>PNG Export:</strong> - High-resolution raster image (150 dpi)
+- Custom dimensions (400-4000px) - Transparent background option -
+<strong>Use for</strong>: Reports, presentations, publications</p>
+<p><strong>SVG Export:</strong> - Scalable vector graphics - Editable in
+Illustrator, Inkscape - No quality loss at any size - <strong>Use
+for</strong>: Professional publications, posters</p>
+<p><strong>HTML Export:</strong> - Fully interactive standalone file -
+Share with stakeholders - No server required - <strong>Use for</strong>:
+Stakeholder sharing, web embedding</p>
+<p><strong>PDF Export:</strong> - Print-ready document - Requires Pandoc
+installation - <strong>Use for</strong>: Formal reports, archiving</p>
+<h2 id="analysis-tools">Analysis Tools</h2>
+<h3 id="loop-detection">Loop Detection</h3>
+<p>Identify feedback loops in your system automatically.</p>
+<p><strong>How Feedback Loops Work:</strong></p>
+<ul>
+<li><strong>Reinforcing Loops (R)</strong>: Amplify change (even number
+of negative links)
+<ul>
+<li>Example: More fish → More fishing effort → Fewer fish → Less fishing
+effort → More fish</li>
+<li>Leads to exponential growth or decline</li>
+</ul></li>
+<li><strong>Balancing Loops (B)</strong>: Stabilize system (odd number
+of negative links)
+<ul>
+<li>Example: Overfishing → Depleted stocks → Regulations → Reduced
+fishing → Stock recovery</li>
+<li>Leads to equilibrium or oscillation</li>
+</ul></li>
+</ul>
+<p><strong>Detection Parameters:</strong></p>
+<ul>
+<li><strong>Maximum Loop Length</strong>: 3-15 elements (default: 8)
+<ul>
+<li>Shorter: Find tight feedback cycles</li>
+<li>Longer: Discover complex multi-step loops</li>
+</ul></li>
+<li><strong>Maximum Cycles</strong>: 50-2000 (default: 500)
+<ul>
+<li>Limits computation time</li>
+<li>More cycles = longer processing but more complete results</li>
+</ul></li>
+<li><strong>Include Self-Loops</strong>: Yes/No
+<ul>
+<li>Self-loop: Element influences itself directly</li>
+</ul></li>
+<li><strong>Filter Trivial Loops</strong>: Yes (recommended)
+<ul>
+<li>Removes simple 2-node loops</li>
+<li>Focuses on complex feedback</li>
+</ul></li>
+</ul>
+<p><strong>Detection Process:</strong></p>
+<ol type="1">
+<li>Click “Detect Loops” button</li>
+<li>Algorithm runs (may take 10-60 seconds for large networks)</li>
+<li>Progress indicator shows status</li>
+<li>Results appear in 5 tabs</li>
+</ol>
+<p><strong>Tab 1: Detect Loops</strong> - Detection controls - Summary
+statistics - Total loops found - Reinforcing count - Balancing count -
+Loops data table (ID, Type, Length, Elements, Link polarities)</p>
+<p><strong>Tab 2: Loop Classification</strong> - Distribution charts (R
+vs. B) - Separate tables for each type - Statistical summary</p>
+<p><strong>Tab 3: Loop Details</strong> - Select specific loop from
+dropdown - View loop properties: - Type (R/B) - Length (number of
+elements) - Path (element sequence) - Link polarities - Narrative
+description (auto-generated causal chain) - Loop highlighted in CLD
+visualization</p>
+<p><strong>Tab 4: Dominant Loops</strong> - Ranking by: -
+<strong>Occurrence</strong>: How many times elements appear in loops -
+<strong>Participation</strong>: Percentage of loops involving element -
+Most influential loops table - Element participation charts -
+<strong>Strategic value</strong>: Identifies intervention points</p>
+<p><strong>Tab 5: Export Results</strong> - <strong>Excel
+Export</strong>: Multi-sheet workbook - All loops - R loops only - B
+loops only - Summary statistics - <strong>Loop Report</strong>: PDF
+document with analysis - <strong>Loop Diagrams</strong>: ZIP file of
+individual loop visualizations</p>
+<p><strong>Interpretation Guidance:</strong></p>
+<p><strong>High proportion of R loops (&gt;70%):</strong> - System prone
+to rapid changes - Tipping points likely - High management urgency -
+Focus: Strengthen balancing mechanisms</p>
+<p><strong>High proportion of B loops (&gt;70%):</strong> - System
+highly stable/resistant to change - Interventions may face resistance -
+Persistent effort required - Focus: Shift equilibrium points</p>
+<p><strong>Balanced mix (30-70% each):</strong> - Moderate stability -
+Both change potential and self-regulation - Focus: Leverage R loops for
+desired changes, use B loops to stabilize</p>
+<h3 id="network-metrics">Network Metrics</h3>
+<p>Quantify node importance and network structure.</p>
+<p><strong>Centrality Measures:</strong></p>
+<p><strong>1. Degree Centrality</strong> - <strong>In-Degree</strong>:
+Number of incoming connections - High in-degree = heavily influenced by
+other elements - Good indicators of system state</p>
+<ul>
+<li><strong>Out-Degree</strong>: Number of outgoing connections
+<ul>
+<li>High out-degree = influences many other elements</li>
+<li>Good intervention targets</li>
+</ul></li>
+</ul>
+<p><strong>2. Betweenness Centrality</strong> - Measures how often a
+node lies on shortest paths - High betweenness = bridges different parts
+of system - Critical for information/influence flow - Removal
+disconnects system</p>
+<p><strong>3. Closeness Centrality</strong> - Average distance to all
+other nodes - High closeness = quick influence propagation - Important
+for rapid system responses</p>
+<p><strong>4. Eigenvector Centrality</strong> - Importance based on
+importance of neighbors - High eigenvector = connected to other
+important nodes - Identifies truly influential elements</p>
+<p><strong>5. PageRank</strong> - Google’s algorithm adapted to networks
+- Weighted importance score - Good overall influence measure</p>
+<p><strong>Network-Level Metrics:</strong></p>
+<ul>
+<li><strong>Density</strong>: Proportion of possible connections that
+exist
+<ul>
+<li>Low (&lt;0.1): Sparse, modular system</li>
+<li>Medium (0.1-0.3): Moderately connected</li>
+<li>High (&gt;0.3): Tightly coupled system</li>
+</ul></li>
+<li><strong>Diameter</strong>: Longest shortest path between any two
+nodes
+<ul>
+<li>Measures how “wide” the system is</li>
+</ul></li>
+<li><strong>Average Path Length</strong>: Mean shortest path
+<ul>
+<li>Measures how quickly influence spreads</li>
+</ul></li>
+</ul>
+<p><strong>MICMAC Analysis:</strong></p>
+<p>Classifies nodes by influence and dependency:</p>
+<p><strong>Four Quadrants:</strong></p>
+<ol type="1">
+<li><strong>Relay Variables</strong> (High influence, High dependency)
+<ul>
+<li>Unstable, transmit effects</li>
+<li>Complex interdependencies</li>
+<li>Require careful management</li>
+</ul></li>
+<li><strong>Influential Variables</strong> (High influence, Low
+dependency)
+<ul>
+<li>Strong drivers of system</li>
+<li>Independent of other elements</li>
+<li>Prime intervention targets</li>
+</ul></li>
+<li><strong>Dependent Variables</strong> (Low influence, High
+dependency)
+<ul>
+<li>Outcomes/indicators</li>
+<li>Sensitive to changes</li>
+<li>Good monitoring points</li>
+</ul></li>
+<li><strong>Autonomous Variables</strong> (Low influence, Low
+dependency)
+<ul>
+<li>Weakly connected</li>
+<li>Limited role in dynamics</li>
+<li>May be removed to simplify</li>
+</ul></li>
+</ol>
+<p><strong>Leverage Point Analysis:</strong></p>
+<p>Identifies high-impact intervention points using composite score:</p>
+<pre><code>Leverage Score = Betweenness + Eigenvector + PageRank</code></pre>
+<p><strong>Top 10 Leverage Points</strong> ranked by score</p>
+<p><strong>Categories:</strong> - <strong>Drivers</strong>: High
+out-degree nodes → Cascading interventions - <strong>Receivers</strong>:
+High in-degree nodes → Monitoring indicators -
+<strong>Connectors</strong>: High betweenness nodes → Critical for
+resilience</p>
+<p><strong>Strategic Recommendations Section:</strong></p>
+<p>Based on analysis outputs, generates context-specific guidance:</p>
+<ol type="1">
+<li><strong>Priority Intervention Points</strong>: Names top 3 leverage
+nodes with scores</li>
+<li><strong>Cascading Strategy</strong>: Driver nodes with average
+influence counts</li>
+<li><strong>Early Warning System</strong>: Receiver nodes as monitoring
+indicators</li>
+<li><strong>System Dynamics Alerts</strong>: Loop-based warnings
+(tipping points vs. resistance)</li>
+<li><strong>Resilience Protection</strong>: Connector nodes to
+preserve</li>
+</ol>
+<h3 id="simplification-tools">Simplification Tools</h3>
+<p>Reduce network complexity while preserving essential dynamics.</p>
+<p><strong>Techniques:</strong></p>
+<p><strong>1. Endogenization</strong> - Remove exogenous variables (no
+incoming connections) - Focuses on internally-driven dynamics -
+<strong>Use when</strong>: External drivers are outside scope</p>
+<p><strong>2. Encapsulation</strong> - Remove SISO nodes (Single Input,
+Single Output) - Merges upstream and downstream connections -
+<strong>Use when</strong>: Simplifying intermediate steps</p>
+<p><strong>3. Edge Filtering</strong> - Remove weak connections - Keep
+only strong/medium relationships - <strong>Use when</strong>: Reducing
+visual clutter</p>
+<p><strong>4. Core Loop Extraction</strong> - Extract dominant feedback
+loops only - Remove elements not in key loops - <strong>Use
+when</strong>: Focusing on feedback dynamics</p>
+<p><strong>Workflow:</strong> 1. Select simplification method 2. Set
+parameters (e.g., minimum strength for edge filtering) 3. Preview
+simplified network 4. Apply or revert 5. Save simplified version as new
+project</p>
+<h2 id="response-validation">Response &amp; Validation</h2>
+<h3 id="response-measures">Response Measures</h3>
+<p>Document and prioritize management interventions.</p>
+<p><strong>Tab 1: Response Register</strong></p>
+<p>Create intervention entries with:</p>
+<ul>
+<li><strong>ID</strong>: Auto-generated</li>
+<li><strong>Name</strong>: Intervention description</li>
+<li><strong>Type</strong>:
+<ul>
+<li>Regulatory: Laws, quotas, closures</li>
+<li>Economic: Subsidies, taxes, market-based</li>
+<li>Educational: Awareness, training</li>
+<li>Technical: Infrastructure, technology</li>
+<li>Institutional: Governance reforms</li>
+<li>Voluntary: Codes of conduct, certification</li>
+<li>Mixed: Combination</li>
+</ul></li>
+<li><strong>Description</strong>: Detailed explanation</li>
+<li><strong>Target Level</strong>: Which DAPSI(W)R(M) level?
+<ul>
+<li>Drivers</li>
+<li>Activities</li>
+<li>Pressures</li>
+<li>State</li>
+<li>Multiple</li>
+</ul></li>
+<li><strong>Target Element</strong>: Specific node ID</li>
+<li><strong>Effectiveness</strong>: Expected impact
+(High/Medium/Low/Unknown)</li>
+<li><strong>Feasibility</strong>: Implementation ease
+(High/Medium/Low)</li>
+<li><strong>Cost</strong>: 1-10 scale (1=minimal, 10=very
+expensive)</li>
+<li><strong>Responsible Stakeholders</strong>: Who implements?</li>
+<li><strong>Implementation Barriers</strong>: Challenges
+anticipated</li>
+<li><strong>Status</strong>:
+<ul>
+<li>Proposed</li>
+<li>Planned</li>
+<li>Implemented</li>
+<li>Partially Implemented</li>
+<li>Abandoned</li>
+</ul></li>
+</ul>
+<p><strong>Interactive Table:</strong> - CRUD operations (Create, Read,
+Update, Delete) - Sort, filter, search - Export to Excel</p>
+<p><strong>Tab 2: Impact Assessment</strong></p>
+<p>Map responses to problems they address.</p>
+<p><strong>Create Impact Links:</strong> - Select Response measure -
+Select Problem (Pressure/Activity/Driver) - Specify: - <strong>Impact
+Strength</strong>: Strong/Moderate/Weak - <strong>Timeframe</strong>:
+Immediate/Short-term (1-2y)/Medium-term (3-5y)/Long-term (&gt;5y) -
+<strong>Confidence</strong>: Evidence quality</p>
+<p><strong>Impact Matrix Table:</strong> - Rows: Responses - Columns:
+Problems - Cells: Strength + timeframe</p>
+<p><strong>Visual Heatmap:</strong> - Color-coded impact strength -
+Quick identification of multi-benefit responses</p>
+<p><strong>Tab 3: Prioritization</strong></p>
+<p>Multi-criteria ranking of responses.</p>
+<p><strong>Weighting Sliders:</strong> - <strong>Effectiveness
+Weight</strong> (0-1): How important is impact magnitude? -
+<strong>Feasibility Weight</strong> (0-1): How important is ease of
+implementation? - <strong>Cost Weight</strong> (0-1, inverse): How
+sensitive are we to cost?</p>
+<p><strong>Priority Score Calculation:</strong></p>
+<pre><code>Priority = (Effectiveness × W_eff) +
+           (Feasibility × W_feas) -
+           (Cost/10 × W_cost)</code></pre>
+<p><strong>Ranked Table:</strong> - Responses sorted by priority score -
+Shows all input values and weights - Identify top candidates</p>
+<p><strong>Scatter Plots:</strong> - <strong>Effectiveness
+vs. Feasibility</strong>: Identify “quick wins” (high both) -
+<strong>Cost vs. Impact</strong>: Assess cost-effectiveness</p>
+<p><strong>Sensitivity Analysis:</strong> - Adjust weights to test
+robustness - See how rankings change - Identify stable top choices</p>
+<p><strong>Tab 4: Implementation Plan</strong></p>
+<p>Track response deployment over time.</p>
+<p><strong>Milestones:</strong> - <strong>Milestone Name</strong>: Key
+deliverable/checkpoint - <strong>Response ID</strong>: Which measure? -
+<strong>Target Date</strong>: Planned completion -
+<strong>Status</strong>: Pending/In Progress/Completed/Delayed -
+<strong>Notes</strong>: Progress updates</p>
+<p><strong>Gantt Chart:</strong> - Timeline visualization - Milestone
+dependencies - Critical path highlighted - Export as PNG</p>
+<p><strong>Implementation Checklist:</strong> - Pre-implementation:
+Stakeholder buy-in, budget secured, regulations approved - During
+implementation: Monitoring protocols, adaptive management triggers -
+Post-implementation: Evaluation plan, reporting schedule</p>
+<p><strong>Tab 5: Export</strong></p>
+<p>Download response planning documentation: - Excel workbook (all tabs)
+- PDF summary report - Implementation timeline chart</p>
+<h3 id="scenario-builder">Scenario Builder</h3>
+<p>Explore “what-if” alternatives and compare scenarios.</p>
+<p><strong>Scenario Management:</strong></p>
+<p><strong>Create New Scenario:</strong> 1. Click “New Scenario” 2.
+Enter name and description 3. Scenario card appears in gallery</p>
+<p><strong>Scenario Cards Display:</strong> - Thumbnail preview -
+Scenario name - Creation date - Number of modifications - Active status
+indicator</p>
+<p><strong>Configure Tab:</strong></p>
+<p>Make changes to network for scenario:</p>
+<p><strong>Add Nodes:</strong> - New elements to represent alternative
+states - Example: “Marine Protected Area established”</p>
+<p><strong>Remove Nodes:</strong> - Simulate element removal - Example:
+Remove “Bottom trawling” activity</p>
+<p><strong>Modify Nodes:</strong> - Change properties (importance,
+trend, etc.) - Example: Increase “Tourism” intensity</p>
+<p><strong>Add Links:</strong> - New causal connections - Example: “MPA”
+→ “Fish biomass” (+strong)</p>
+<p><strong>Remove Links:</strong> - Break existing connections -
+Example: Remove “Fishing effort” → “Fish stock”</p>
+<p><strong>Modify Links:</strong> - Change polarity or strength -
+Example: Weaken “Pollution” → “Seagrass health”</p>
+<p><strong>Modification Tracker:</strong> - Lists all changes made -
+Undo individual modifications - Reset scenario to baseline</p>
+<p><strong>Impact Analysis Tab:</strong></p>
+<p>Assess scenario effects on:</p>
+<p><strong>Network Metrics:</strong> - Compare density, centrality, etc.
+to baseline - Identify structural changes</p>
+<p><strong>Loop Dynamics:</strong> - Re-run loop detection for scenario
+- Compare R/B distribution - Identify new/removed loops</p>
+<p><strong>Leverage Points:</strong> - Recalculate top nodes - See how
+intervention points shift</p>
+<p><strong>Impact Propagation:</strong> - Trace effects of changes -
+Identify cascading consequences</p>
+<p><strong>Compare Tab:</strong></p>
+<p>Side-by-side comparison of scenarios:</p>
+<p><strong>Table View:</strong> - Metric-by-metric comparison - Baseline
+vs. Scenario A vs. Scenario B - Difference columns (Δ)</p>
+<p><strong>Chart View:</strong> - Radar charts for multi-metric
+comparison - Bar charts for key indicators - Network structure
+comparison</p>
+<p><strong>Report Generation:</strong> - Scenario comparison PDF -
+Includes all metrics, charts, and narratives - Export for stakeholder
+presentation</p>
+<p><strong>When to Use Scenarios:</strong></p>
+<ul>
+<li><strong>Policy Analysis</strong>: Compare regulatory
+alternatives</li>
+<li><strong>Climate Futures</strong>: Explore different climate
+scenarios</li>
+<li><strong>Intervention Testing</strong>: Assess management options
+before implementation</li>
+<li><strong>Stakeholder Engagement</strong>: Facilitate participatory
+visioning</li>
+</ul>
+<h3 id="validation">Validation</h3>
+<p>Document evidence quality and expert review.</p>
+<p><strong>Validation Protocols:</strong></p>
+<p><strong>Element-Level Validation:</strong> - For each ISA element: -
+<strong>Evidence Source</strong>: Literature, data, expert judgment -
+<strong>Evidence Quality</strong>: Strong/Moderate/Weak -
+<strong>Confidence</strong>: High/Medium/Low -
+<strong>Uncertainty</strong>: Known limitations</p>
+<p><strong>Relationship Validation:</strong> - For each causal link: -
+<strong>Mechanism</strong>: Explanatory pathway -
+<strong>Evidence</strong>: Supporting studies/data -
+<strong>Strength</strong>: Quantitative if available - <strong>Temporal
+Lag</strong>: Time delay in effect</p>
+<p><strong>Expert Elicitation:</strong> - <strong>Expert Name</strong>:
+Who provided input? - <strong>Affiliation</strong>: Organization/role -
+<strong>Date</strong>: When consulted? - <strong>Comments</strong>:
+Expert feedback</p>
+<p><strong>Stakeholder Review:</strong> - <strong>Workshop
+Date</strong>: When was CLD reviewed? - <strong>Participants</strong>:
+List of attendees - <strong>Feedback</strong>: Suggested modifications -
+<strong>Resolution</strong>: How feedback was addressed</p>
+<p><strong>Validation Checklist:</strong> - [ ] All elements have
+descriptions - [ ] All links have mechanisms documented - [ ] Confidence
+scores assigned - [ ] Expert review completed - [ ] Stakeholder feedback
+incorporated - [ ] Validation report generated</p>
+<p><strong>Version Control:</strong> - Track changes over time -
+Document who made changes and when - Maintain change log - Enable
+rollback if needed</p>
+<h2 id="export-reports">Export &amp; Reports</h2>
+<h3 id="data-export">Data Export</h3>
+<p>Export your project data in multiple formats.</p>
+<p><strong>Excel Export (.xlsx)</strong></p>
+<p>Multi-sheet workbook containing: - Project metadata - All ISA tables
+(G&amp;B, ES, MPF, P, A, D) - Adjacency matrices - CLD nodes and edges -
+Loop detection results - Network metrics - Stakeholder register -
+Response measures - Scenario comparisons</p>
+<p><strong>Component Selection:</strong> - Choose which datasets to
+include - Customize export for specific uses</p>
+<p><strong>CSV Export (.csv)</strong> - Single table export - Choose
+specific dataset - Compatible with any spreadsheet software</p>
+<p><strong>JSON Export (.json)</strong> - Hierarchical structured data -
+Complete project including nested structures - Compatible with web
+applications, databases - Kumu.io compatible (with styling)</p>
+<p><strong>R Data Export (.RData)</strong> - Native R format - Preserves
+all object types - Load directly in R for custom analysis</p>
+<h3 id="visualization-export">Visualization Export</h3>
+<p>Export CLD visualizations in multiple formats.</p>
+<p><strong>HTML (Interactive)</strong> - Fully interactive network -
+Standalone file (no server needed) - Share via email or web - Recipients
+can explore, zoom, pan - <strong>File size</strong>: 500KB - 2MB typical
+- <strong>Best for</strong>: Stakeholder sharing, website embedding</p>
+<p><strong>PNG (Raster Image)</strong> - High-resolution bitmap (150 dpi
+default) - Custom dimensions (400-4000px width/height) - Transparent
+background option - <strong>File size</strong>: 100KB - 5MB -
+<strong>Best for</strong>: Reports, presentations, posters</p>
+<p><strong>SVG (Vector Graphics)</strong> - Scalable to any size without
+quality loss - Editable in vector graphics software - Small file size -
+<strong>Best for</strong>: Publications, professional design,
+large-format printing</p>
+<p><strong>PDF (Print-Ready)</strong> - Publication quality - Embeddable
+in documents - Requires Pandoc + LaTeX installation - <strong>Best
+for</strong>: Formal reports, archiving</p>
+<p><strong>Export Settings:</strong></p>
+<ul>
+<li><strong>Dimensions</strong>: Width and height in pixels</li>
+<li><strong>Resolution</strong>: DPI for raster formats</li>
+<li><strong>Background</strong>: Transparent or white</li>
+<li><strong>Quality</strong>: Compression level</li>
+</ul>
+<p><strong>Recommended Sizes:</strong> - Presentation slide: 1920 x 1080
+px - Report figure: 2400 x 1800 px (8” x 6” at 300 dpi) - Poster: 4000 x
+3000 px - Web: 1200 x 900 px</p>
+<h3 id="report-generation">Report Generation</h3>
+<p>Create comprehensive analysis reports automatically.</p>
+<p><strong>Report Types:</strong></p>
+<p><strong>1. Executive Summary (2-3 pages)</strong></p>
+<p>Target audience: Decision-makers, policy-makers</p>
+<p>Contents: - Project overview (1 paragraph) - Key findings (bullet
+points): - Number of elements and connections - Feedback loops detected
+(R vs. B count) - Top 3 leverage points - Critical management challenges
+- High-priority recommendations (3-5 items) - Visual: Simplified CLD
+diagram</p>
+<p><strong>2. Technical Report (10-15 pages)</strong></p>
+<p>Target audience: Researchers, technical analysts</p>
+<p>Contents: - Complete DAPSI(W)R(M) analysis - Element counts by type
+(table) - Network metrics (density, centrality, etc.) - Detailed loop
+analysis: - Loop classification - Dominant loops - System implications -
+Leverage point analysis (top 10) - Data tables (all ISA exercises)</p>
+<p><strong>3. Stakeholder Presentation (5-7 pages)</strong></p>
+<p>Target audience: General stakeholders, community groups</p>
+<p>Contents: - Plain language system description - Visual-heavy (CLD,
+charts, infographics) - System overview: - Main drivers identified - Key
+pressures - Ecosystem impacts - Welfare consequences - Opportunities for
+action - Engagement opportunities - Discussion questions</p>
+<p><strong>4. Full Project Report (20-30 pages)</strong></p>
+<p>Target audience: Comprehensive documentation for all audiences</p>
+<p>Contents: - All above sections combined - Complete methodology - All
+data tables - All visualizations - Detailed recommendations
+(context-specific):</p>
+<p><strong>Strategic Recommendations:</strong> - Priority intervention
+points (named, with scores) - Cascading intervention strategy (specific
+Driver nodes) - Early warning monitoring system (specific Receiver
+nodes) - System dynamics alerts (based on loop composition) - Resilience
+protection (specific Connector nodes)</p>
+<p><strong>Management Recommendations:</strong> - Intervention design
+(network density-specific advice) - Monitoring strategy (data-driven
+indicator selection) - Adaptive management (loop-informed strategy with
+timing) - Stakeholder engagement (strategic alignment to leverage
+points) - Immediate next steps (5 detailed action plans)</p>
+<ul>
+<li>Appendices:
+<ul>
+<li>Glossary</li>
+<li>Data sources</li>
+<li>Validation documentation</li>
+<li>References</li>
+</ul></li>
+</ul>
+<p><strong>Report Options:</strong></p>
+<p><strong>Include Visualizations:</strong> - [x] CLD network diagram -
+[x] Loop distribution charts - [x] Leverage point rankings - [x] Network
+metrics plots</p>
+<p><strong>Include Data Tables:</strong> - [x] All ISA element tables -
+[x] Adjacency matrices - [x] Loop details table - [x] Metrics
+summary</p>
+<p><strong>Custom Branding:</strong> - Add your logo - Custom color
+scheme - Organization footer</p>
+<p><strong>Report Formats:</strong></p>
+<p><strong>HTML (Web Version)</strong> - Interactive table of contents
+(floating sidebar) - Collapsible sections - Hyperlinked cross-references
+- Embedded interactive visualizations - <strong>File size</strong>: 1-5
+MB - <strong>Best for</strong>: Sharing via email, web publishing,
+screen viewing</p>
+<p><strong>PDF (Print Version)</strong> - Professional formatting - Page
+numbers and headers - Print-ready quality - Requires Pandoc +
+LaTeX/TinyTeX - <strong>File size</strong>: 2-10 MB - <strong>Best
+for</strong>: Formal distribution, archiving, printing</p>
+<p><strong>Word (.docx)</strong> - Editable document - Tables and
+figures - Requires Pandoc installation - <strong>File size</strong>: 1-5
+MB - <strong>Best for</strong>: Collaborative editing, custom
+formatting</p>
+<p><strong>Generation Process:</strong></p>
+<ol type="1">
+<li>Navigate to “Prepare Report” module</li>
+<li>Select report type</li>
+<li>Choose options (visualizations, data tables)</li>
+<li>Click “Generate Report”</li>
+<li>Processing (10-30 seconds)</li>
+<li>Download button appears</li>
+<li>Open/save report file</li>
+</ol>
+<p><strong>Troubleshooting:</strong></p>
+<ul>
+<li><p><strong>PDF generation fails</strong>: Install Pandoc and
+TinyTeX</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tinytex&quot;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code></pre></div></li>
+<li><p><strong>Report is empty</strong>: Ensure you’ve completed ISA
+data entry and run analyses</p></li>
+<li><p><strong>Charts not appearing</strong>: Check that analysis
+modules have been executed</p></li>
+</ul>
+<h1 id="workflows-best-practices">Workflows &amp; Best Practices</h1>
+<h2 id="recommended-workflows">Recommended Workflows</h2>
+<h3 id="standard-participatory-workshop-3-days">Standard Participatory
+Workshop (3 days)</h3>
+<p><strong>Day 1: System Mapping (6 hours)</strong> - Morning:
+Introduction and project setup (1h) - Present DAPSI(W)R(M) framework -
+Define focal issue and boundaries - Identify stakeholders</p>
+<ul>
+<li>Late morning: Goods &amp; Benefits (1.5h)
+<ul>
+<li>Brainstorm valued outcomes (Exercise 1)</li>
+<li>Prioritize by importance</li>
+</ul></li>
+<li>Afternoon: Working backwards (3.5h)
+<ul>
+<li>Ecosystem Services (Exercise 2a)</li>
+<li>Marine Processes (Exercise 2b)</li>
+<li>Break</li>
+<li>Pressures (Exercise 3)</li>
+</ul></li>
+</ul>
+<p><strong>Day 2: Causal Chains and Visualization (6 hours)</strong> -
+Morning: Drivers and Activities (2h) - Activities generating pressures
+(Exercise 4) - Root cause drivers (Exercise 5)</p>
+<ul>
+<li>Late morning: Loop closure (1.5h)
+<ul>
+<li>Feedback connections (Exercise 6)</li>
+<li>Validate connections</li>
+</ul></li>
+<li>Afternoon: CLD creation and exploration (2.5h)
+<ul>
+<li>Generate network (Exercise 7-8)</li>
+<li>Interactive exploration</li>
+<li>Identify patterns</li>
+</ul></li>
+</ul>
+<p><strong>Day 3: Analysis and Planning (6 hours)</strong> - Morning:
+Analysis (2h) - Loop detection - Network metrics - Leverage points</p>
+<ul>
+<li>Late morning: Response planning (2h)
+<ul>
+<li>Brainstorm interventions</li>
+<li>Multi-criteria prioritization</li>
+</ul></li>
+<li>Afternoon: Synthesis (2h)
+<ul>
+<li>Report generation</li>
+<li>Action planning</li>
+<li>Next steps agreement</li>
+</ul></li>
+</ul>
+<h3 id="soloresearch-workflow-25-days">Solo/Research Workflow (25
+days)</h3>
+<p><strong>Week 1: Foundation (5 days)</strong> - Day 1-2: Project
+setup, literature review - Day 3-4: ISA data entry (Exercises 0-3) - Day
+5: ISA data entry (Exercises 4-6)</p>
+<p><strong>Week 2: Analysis (5 days)</strong> - Day 6: CLD generation
+and exploration - Day 7-8: Loop detection and interpretation - Day 9:
+Network metrics calculation - Day 10: Leverage point analysis</p>
+<p><strong>Week 3: Validation (5 days)</strong> - Day 11-13: Expert
+consultation - Day 14-15: Stakeholder review and revision</p>
+<p><strong>Week 4: Response Planning (5 days)</strong> - Day 16-17:
+Response measure identification - Day 18-19: Impact assessment and
+prioritization - Day 20: Implementation planning</p>
+<p><strong>Week 5: Documentation (5 days)</strong> - Day 21-22: Scenario
+analysis - Day 23-24: Report generation - Day 25: Final review and
+submission</p>
+<h3 id="rapid-assessment-ai-assisted-1-day">Rapid Assessment
+(AI-Assisted, 1 day)</h3>
+<p><strong>Morning (3 hours)</strong> - 0-30min: Project setup -
+30-90min: AI-Assisted ISA interview (11 steps) - 90-120min: Review and
+refine generated elements - 120-180min: CLD visualization and
+exploration</p>
+<p><strong>Afternoon (3 hours)</strong> - 180-240min: Loop detection and
+analysis - 240-300min: Response brainstorming - 300-360min: Report
+generation and next steps</p>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="data-quality">Data Quality</h3>
+<p><strong>1. Clear Naming Conventions</strong> - Use descriptive,
+specific names - Avoid jargon or acronyms (or define them) - Be
+consistent across similar elements</p>
+<p><strong>Examples:</strong> - Good: “Commercial bottom trawl fishing”
+- Poor: “Fishing” (too vague) - Poor: “CBT” (acronym unclear)</p>
+<p><strong>2. Complete Descriptions</strong> - Provide context for each
+element - Explain mechanisms for relationships - Document evidence
+sources</p>
+<p><strong>3. Appropriate Granularity</strong> - Not too broad:
+“Pollution” → “Nutrient pollution from agriculture” - Not too narrow:
+“Nitrogen runoff from Field 23A” → “Agricultural nutrient runoff” -
+Match analysis scale to decision context</p>
+<p><strong>4. Validation</strong> - Assign confidence scores honestly -
+Document uncertainties - Seek expert review - Incorporate stakeholder
+feedback</p>
+<h3 id="network-design">Network Design</h3>
+<p><strong>1. Optimal Network Size</strong> - Sweet spot: 20-60 nodes -
+Too small (&lt;15): Misses important dynamics - Too large (&gt;100):
+Difficult to analyze and communicate - Focus on most important
+elements</p>
+<p><strong>2. Balance Across DAPSI Levels</strong> - Aim for similar
+numbers at each level - Avoid overrepresenting one level - Example
+distribution: 5D, 8A, 10P, 8S, 6W, 5R</p>
+<p><strong>3. Connection Density</strong> - Target: 1.5-3 connections
+per node average - Too sparse: May miss key feedbacks - Too dense: Hard
+to interpret, less useful</p>
+<p><strong>4. Feedback Loops</strong> - Deliberately design some
+feedback - Every D should ultimately connect back to a G&amp;B - Look
+for unintended consequences</p>
+<h3 id="stakeholder-engagement">Stakeholder Engagement</h3>
+<p><strong>1. Participatory Mapping</strong> - Involve diverse
+stakeholders - Use visualization to facilitate discussion - Capture
+local/traditional knowledge - Validate expert knowledge</p>
+<p><strong>2. Power-Interest Management</strong> - Engage high
+power/high interest closely (collaborate) - Keep high power/low interest
+satisfied (inform regularly) - Keep low power/high interest informed
+(consult) - Monitor low power/low interest (minimum effort)</p>
+<p><strong>3. Transparent Process</strong> - Document all assumptions -
+Make data sources explicit - Explain uncertainties - Share preliminary
+results for feedback</p>
+<p><strong>4. Actionable Outputs</strong> - Link analysis to management
+questions - Prioritize practical recommendations - Develop clear next
+steps - Assign responsibilities</p>
+<h3 id="technical-tips">Technical Tips</h3>
+<p><strong>1. Save Often</strong> - Use Auto-save feature - Manual save
+every 15-30 minutes - Use descriptive filenames with dates - Keep backup
+copies</p>
+<p><strong>2. Incremental Development</strong> - Start simple, add
+complexity gradually - Test small sections before building full network
+- Validate frequently during development</p>
+<p><strong>3. Use Templates</strong> - Leverage existing templates when
+applicable - Customize rather than starting from scratch - Document your
+own templates for reuse</p>
+<p><strong>4. Export Regularly</strong> - Export to Excel for external
+backup - Export visualizations at key milestones - Generate reports
+periodically to check completeness</p>
+<p><strong>5. Browser Recommendations</strong> - Chrome (best
+performance) - Firefox (good alternative) - Avoid Internet Explorer -
+Keep browser updated</p>
+<p><strong>6. Performance</strong> - Close other browser
+tabs/applications - Clear browser cache if slow - Reduce network size if
+&gt;100 nodes causing lag - Use hierarchical layout for large
+networks</p>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<h2 id="common-issues">Common Issues</h2>
+<h3 id="installation-problems">Installation Problems</h3>
+<p><strong>Issue: Package installation fails</strong></p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try installing from different CRAN mirror</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repos =</span> <span class="st">&quot;https://cloud.r-project.org/&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;package_name&quot;</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Or use RStudio&#39;s package installer (Tools &gt; Install Packages)</span></span></code></pre></div>
+<p><strong>Issue: Application won’t start</strong></p>
+<p>Solutions: 1. Check R version (must be 4.0+)
+<code>r    R.version.string</code> 2. Verify all packages installed
+<code>r    required_packages &lt;- c("shiny", "shinydashboard", "shinyjs", ...)    missing &lt;- required_packages[!required_packages %in% installed.packages()]    if(length(missing) &gt; 0) install.packages(missing)</code>
+3. Check for error messages in R console</p>
+<p><strong>Issue: Port already in use</strong></p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use different port</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">runApp</span>(<span class="at">port =</span> <span class="dv">8080</span>)</span></code></pre></div>
+<h3 id="data-entry-issues">Data Entry Issues</h3>
+<p><strong>Issue: Cannot add new elements</strong></p>
+<p>Solutions: - Ensure all required fields completed - Check for
+duplicate IDs - Verify data type (numeric vs. text) - Clear browser
+cache</p>
+<p><strong>Issue: Adjacency matrix not saving</strong></p>
+<p>Solutions: - Fill at least one cell in matrix - Use correct format:
+<code>+strong</code>, <code>+medium</code>, <code>+weak</code>,
+<code>-strong</code>, etc. - Save exercise before moving to next</p>
+<p><strong>Issue: Data disappears after reload</strong></p>
+<p>Solutions: - Always save project before closing - Check Auto-save
+indicator is active - Verify save file exists in expected location</p>
+<h3 id="visualization-issues">Visualization Issues</h3>
+<p><strong>Issue: CLD not displaying</strong></p>
+<p>Solutions: - Ensure ISA data entered (Exercises 1-6) - Check browser
+JavaScript enabled - Try refreshing page (F5) - Check browser console
+for errors (F12 → Console tab)</p>
+<p><strong>Issue: Nodes overlapping/messy layout</strong></p>
+<p>Solutions: - Use Hierarchical layout (Down-Up direction) - Increase
+level separation (150-200px) - Try Physics layout with higher gravity -
+Manually reposition nodes and save</p>
+<p><strong>Issue: Cannot export visualization</strong></p>
+<p>Solutions: - <strong>PNG</strong>: Allow popup windows in browser -
+<strong>HTML</strong>: Check download folder permissions -
+<strong>PDF</strong>: Install Pandoc and LaTeX
+<code>r   install.packages("tinytex")   tinytex::install_tinytex()</code></p>
+<h3 id="analysis-issues">Analysis Issues</h3>
+<p><strong>Issue: Loop detection hangs</strong></p>
+<p>Solutions: - Network too large (&gt;100 nodes) - Reduce max loop
+length (try 6-8) - Reduce max cycles (try 200-500) - Filter trivial
+loops: Yes - Simplify network (remove low-importance elements)</p>
+<p><strong>Issue: No loops detected</strong></p>
+<p>Solutions: - Check that Exercise 6 (Loop Closure) completed - Verify
+feedback connections exist (D → G&amp;B links) - Increase max loop
+length (try 10-12) - Check network is fully connected</p>
+<p><strong>Issue: Network metrics fail</strong></p>
+<p>Solutions: - Ensure CLD generated - Check for disconnected components
+- Remove self-loops if present - Verify edge polarity values valid</p>
+<h3 id="report-generation-issues">Report Generation Issues</h3>
+<p><strong>Issue: Report generation fails</strong></p>
+<p>Solutions: - Complete minimum data entry first - Run required
+analyses before report - Check available disk space - Try HTML format
+first (most compatible)</p>
+<p><strong>Issue: PDF generation fails</strong></p>
+<p>Solutions:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install required tools</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tinytex&quot;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify installation</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">:::</span><span class="fu">is_tinytex</span>()  <span class="co"># Should return TRUE</span></span></code></pre></div>
+<p><strong>Issue: Report missing sections</strong></p>
+<p>Solutions: - Run all analyses before generating report - Check that
+data exists for missing sections - Try different report type - Generate
+Full Report for all content</p>
+<h3 id="performance-issues">Performance Issues</h3>
+<p><strong>Issue: Application slow/laggy</strong></p>
+<p>Solutions: - Close other applications - Reduce network size (&lt;60
+nodes ideal) - Use hierarchical layout instead of physics - Disable loop
+highlighting when not needed - Clear browser cache - Restart R
+session</p>
+<p><strong>Issue: Browser crashes</strong></p>
+<p>Solutions: - Use Chrome or Firefox (most stable) - Increase browser
+memory allocation - Reduce visualization complexity - Export data and
+reload project</p>
+<h3 id="file-issues">File Issues</h3>
+<p><strong>Issue: Cannot load saved project</strong></p>
+<p>Solutions: - Verify file extension is <code>.rds</code> - Check file
+not corrupted (size &gt;0 bytes) - Try loading in fresh R session -
+Restore from backup if available</p>
+<p><strong>Issue: Excel import fails</strong></p>
+<p>Solutions: - Use provided template exactly - Check column names match
+template - Verify data types (numbers, text, dates) - Remove empty rows
+- Check file not open in Excel</p>
+<p><strong>Issue: Cannot export to Excel</strong></p>
+<p>Solutions: - Check write permissions in target folder - Close Excel
+if file open - Try different filename - Verify <code>openxlsx</code>
+package installed</p>
+<h2 id="getting-help">Getting Help</h2>
+<h3 id="in-app-help">In-App Help</h3>
+<ul>
+<li><strong>Module Help Buttons</strong>: Click (?) icon for
+context-sensitive help</li>
+<li><strong>Tooltips</strong>: Hover over fields for descriptions</li>
+<li><strong>User Guide</strong>: Accessible from Help menu</li>
+</ul>
+<h3 id="documentation">Documentation</h3>
+<ul>
+<li><strong>Quick Start Guide</strong>:
+<code>/docs/QUICK_START.md</code></li>
+<li><strong>Installation Guide</strong>:
+<code>/docs/INSTALLATION.md</code></li>
+<li><strong>Framework Documentation</strong>:
+<code>/docs/framework_documentation.md</code></li>
+<li><strong>Complete User Guide</strong>:
+<code>/Documents/MarineSABRES_Complete_User_Guide.md</code></li>
+</ul>
+<h3 id="online-resources">Online Resources</h3>
+<ul>
+<li><strong>GitHub Repository</strong>: <a
+href="https://github.com/marinesabres">github.com/marinesabres/SESToolbox</a></li>
+<li><strong>Issue Tracker</strong>: Report bugs and request
+features</li>
+<li><strong>Wiki</strong>: Community-contributed guides and
+examples</li>
+</ul>
+<h3 id="contact-support">Contact Support</h3>
+<p>For technical issues not resolved by troubleshooting: - Email:
+support@marinesabres.eu - Include: - Error messages (exact text or
+screenshot) - Steps to reproduce - R and package versions - Operating
+system</p>
+<h1 id="glossary">Glossary</h1>
+<p><strong>Activity (A)</strong>: Human actions that generate pressures
+on marine systems (e.g., fishing, shipping, tourism)</p>
+<p><strong>Adjacency Matrix</strong>: Table showing connections between
+two sets of elements; rows and columns represent elements, cells contain
+relationship information</p>
+<p><strong>Balancing Loop (B)</strong>: Feedback loop with odd number of
+negative links; stabilizes system toward equilibrium</p>
+<p><strong>Betweenness Centrality</strong>: Network measure of how often
+a node lies on shortest paths between other nodes; indicates bridging
+importance</p>
+<p><strong>Causal Loop Diagram (CLD)</strong>: Network visualization
+showing cause-effect relationships and feedback loops</p>
+<p><strong>Centrality</strong>: Family of metrics quantifying node
+importance in networks (degree, betweenness, closeness, eigenvector)</p>
+<p><strong>CRUD</strong>: Create, Read, Update, Delete - basic data
+operations</p>
+<p><strong>DAPSI(W)R(M)</strong>: Drivers-Activities-Pressures-State
+changes-Welfare impacts-Response Measures framework for SES analysis.
+The “R/M” represents management interventions, combining policy
+responses and implementing measures into one unified category.</p>
+<p><strong>Degree Centrality</strong>: Count of connections; in-degree
+(incoming), out-degree (outgoing)</p>
+<p><strong>Driver (D)</strong>: Root causes behind activities (economic,
+social, technological, environmental, policy factors)</p>
+<p><strong>Ecosystem Service (ES/W)</strong>: Benefits ecosystems
+provide to humans (provisioning, regulating, cultural, supporting)</p>
+<p><strong>Edge</strong>: Connection/link between nodes in network;
+represents causal relationship</p>
+<p><strong>Eigenvector Centrality</strong>: Importance based on
+importance of neighbors; high score = connected to other important
+nodes</p>
+<p><strong>Feedback Loop</strong>: Circular pathway in network where
+element influences itself through chain of other elements</p>
+<p><strong>Goods &amp; Benefits (G&amp;B/R)</strong>: Valued outputs
+from marine systems received by stakeholders</p>
+<p><strong>Hierarchical Layout</strong>: Network visualization algorithm
+organizing nodes in levels/layers</p>
+<p><strong>ISA</strong>: Integrated Systems Analysis - structured
+methodology for SES analysis</p>
+<p><strong>Kumu.io</strong>: Online network visualization platform
+compatible with tool’s JSON exports</p>
+<p><strong>Leverage Point</strong>: High-impact intervention location
+identified through centrality metrics</p>
+<p><strong>Marine Process/Functioning (MPF/S/I)</strong>: Ecological
+processes and state changes in marine environment</p>
+<p><strong>MICMAC</strong>: Matrix of Crossed Impacts - analysis
+classifying nodes by influence and dependency</p>
+<p><strong>Network Density</strong>: Proportion of possible connections
+that actually exist; measure of connectivity</p>
+<p><strong>Network Metrics</strong>: Quantitative measures of network
+structure (density, centrality, diameter, etc.)</p>
+<p><strong>Node</strong>: Element in network diagram representing system
+component</p>
+<p><strong>PageRank</strong>: Google’s algorithm for ranking importance;
+adapted for network analysis</p>
+<p><strong>PIMS</strong>: Project Information Management System - module
+for project metadata and stakeholders</p>
+<p><strong>Polarity</strong>: Sign of causal relationship - positive (+)
+or negative (-)</p>
+<p><strong>Pressure (P)</strong>: Direct stressors on marine environment
+(physical, chemical, biological)</p>
+<p><strong>Reinforcing Loop (R)</strong>: Feedback loop with even number
+of negative links; amplifies change</p>
+<p><strong>Response/Measure (R/M)</strong>: Management interventions
+addressing drivers, activities, or pressures</p>
+<p><strong>SES</strong>: Social-Ecological System - coupled
+human-natural system</p>
+<p><strong>Stakeholder</strong>: Individual or group with interest or
+stake in system outcomes</p>
+<p><strong>Strongly Connected Component (SCC)</strong>: Subset of
+network where every node can reach every other node</p>
+<p><strong>Tooltip</strong>: Hover text providing additional information
+about interface element</p>
+<p><strong>visNetwork</strong>: R package for interactive network
+visualization using vis.js library</p>
+<h1 id="appendix-a-keyboard-shortcuts">Appendix A: Keyboard
+Shortcuts</h1>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Shortcut</th>
+<th>Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save project</td>
+<td>Ctrl+S</td>
+<td>Global</td>
+</tr>
+<tr>
+<td>Zoom in</td>
+<td>Ctrl + Plus</td>
+<td>CLD Visualization</td>
+</tr>
+<tr>
+<td>Zoom out</td>
+<td>Ctrl + Minus</td>
+<td>CLD Visualization</td>
+</tr>
+<tr>
+<td>Fit to screen</td>
+<td>Ctrl+0</td>
+<td>CLD Visualization</td>
+</tr>
+<tr>
+<td>Select all</td>
+<td>Ctrl+A</td>
+<td>Data tables</td>
+</tr>
+<tr>
+<td>Search</td>
+<td>Ctrl+F</td>
+<td>Data tables</td>
+</tr>
+<tr>
+<td>Export</td>
+<td>Ctrl+E</td>
+<td>Most modules</td>
+</tr>
+<tr>
+<td>Refresh</td>
+<td>F5</td>
+<td>Global</td>
+</tr>
+<tr>
+<td>Help</td>
+<td>F1</td>
+<td>Module-specific</td>
+</tr>
+</tbody>
+</table>
+<h1 id="appendix-b-file-formats">Appendix B: File Formats</h1>
+<h2 id="native-format-.rds">Native Format (.rds)</h2>
+<p><strong>Structure:</strong></p>
+<pre><code>project_data &lt;- list(
+  project_id = &quot;unique_id&quot;,
+  project_name = &quot;My Project&quot;,
+  created_at = timestamp,
+  last_modified = timestamp,
+  user = &quot;username&quot;,
+  version = &quot;1.5.0&quot;,
+  data = list(
+    metadata = list(...),
+    pims = list(...),
+    isa_data = list(...),
+    cld = list(nodes, edges, loops),
+    responses = list(...),
+    scenarios = list(...)
+  )
+)</code></pre>
+<h2 id="excel-import-template">Excel Import Template</h2>
+<p><strong>Sheets:</strong> 1. Goods_Benefits: ID, Name, Type,
+Description, Stakeholder, Importance, Trend 2. Ecosystem_Services: ID,
+Name, Type, Description, LinkedGB, Mechanism, Confidence 3.
+Marine_Processes: ID, Name, Type, Description, LinkedES, Mechanism,
+Sensitivity, SpatialScale 4. Pressures: ID, Name, Type, Description,
+LinkedMPF, Intensity, SpatialPattern, TemporalPattern 5. Activities: ID,
+Name, Sector, Description, LinkedP, Scale, Frequency 6. Drivers: ID,
+Name, Type, Description, LinkedA, Trend, Controllability 7.
+GB_ES_Matrix: Rows=G&amp;B, Cols=ES, Cells=relationship 8.
+ES_MPF_Matrix: Rows=ES, Cols=MPF, Cells=relationship 9. MPF_P_Matrix:
+Rows=MPF, Cols=P, Cells=relationship 10. P_A_Matrix: Rows=P, Cols=A,
+Cells=relationship 11. A_D_Matrix: Rows=A, Cols=D, Cells=relationship
+12. D_GB_Matrix: Rows=D, Cols=G&amp;B, Cells=relationship (feedback)</p>
+<h1 id="appendix-c-dapsiwrm-framework-details">Appendix C: DAPSI(W)R(M)
+Framework Details</h1>
+<p><strong>Framework Levels:</strong></p>
+<p><strong>Level 1: Drivers (D)</strong> - Economic: Market forces,
+globalization, economic growth - Social: Demographics, cultural values,
+migration - Technological: Innovation, efficiency improvements -
+Environmental: Climate, natural resource availability -
+Policy/Institutional: Regulations, governance structures</p>
+<p><strong>Level 2: Activities (A)</strong> - Primary: Resource
+extraction (fishing, mining) - Secondary: Processing, manufacturing -
+Tertiary: Services (tourism, shipping) - Infrastructure: Ports, energy,
+coastal development</p>
+<p><strong>Level 3: Pressures (P)</strong> - Physical: Habitat loss,
+sealing, abrasion, noise - Chemical: Contaminants, nutrients, pH changes
+- Biological: Extraction, introduction of species, pathogens</p>
+<p><strong>Level 4: State Changes (S/I)</strong> - Ecosystem structure:
+Species composition, biomass - Ecosystem functioning: Primary
+production, nutrient cycling - Habitat condition: Extent, quality,
+connectivity</p>
+<p><strong>Level 5: Welfare Impacts (W)</strong> - Ecosystem services
+affected - Social impacts: Livelihoods, culture, health - Economic
+impacts: Income, employment, market value</p>
+<p><strong>Level 6: Responses (R)</strong> - Regulatory: Laws, quotas,
+protected areas - Economic: Taxes, subsidies, markets - Technical:
+Infrastructure, monitoring - Educational: Awareness, capacity
+building</p>
+<p><strong>Level 7: Measures (M)</strong> - Preventive: Reduce drivers -
+Mitigative: Reduce pressures - Restorative: Recover state - Adaptive:
+Adjust management</p>
+<hr />
+<p><strong>Document Version:</strong> 1.5.0 <strong>Last
+Updated:</strong> November 2025 <strong>License:</strong> CC BY 4.0
+<strong>Contact:</strong> support@marinesabres.eu
+<strong>Website:</strong> www.marinesabres.eu</p>
+<hr />
+</body>
+</html>

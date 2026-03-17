@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Projet MarineSABRES" />
+  <title>Boîte à Outils SES MarineSABRES - Manuel d'Utilisation</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      font-size: 11pt;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Boîte à Outils SES MarineSABRES - Manuel
+d'Utilisation</h1>
+<p class="subtitle">Plateforme d’Analyse des Systèmes
+Socio-Écologiques</p>
+<p class="author">Projet MarineSABRES</p>
+<p class="date">Version 1.10.0 - Mars 2026</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a>
+<ul>
+<li><a href="#à-propos-de-la-boîte-à-outils-ses-marinesabres"
+id="toc-à-propos-de-la-boîte-à-outils-ses-marinesabres">À Propos de la
+Boîte à Outils SES MarineSABRES</a>
+<ul>
+<li><a href="#capacités-clés" id="toc-capacités-clés">Capacités
+Clés</a></li>
+</ul></li>
+<li><a href="#utilisateurs-cibles"
+id="toc-utilisateurs-cibles">Utilisateurs Cibles</a></li>
+<li><a href="#exigences-système" id="toc-exigences-système">Exigences
+Système</a>
+<ul>
+<li><a href="#logiciels-requis" id="toc-logiciels-requis">Logiciels
+Requis</a></li>
+<li><a href="#matériel-requis" id="toc-matériel-requis">Matériel
+Requis</a></li>
+<li><a href="#connexion-internet" id="toc-connexion-internet">Connexion
+Internet</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#nouveautés" id="toc-nouveautés">Nouveautés</a>
+<ul>
+<li><a href="#version-1.10.0-mars-2026"
+id="toc-version-1.10.0-mars-2026">Version 1.10.0 (Mars 2026)</a>
+<ul>
+<li><a
+href="#revue-qualité-validation-scientifique-de-la-base-de-connaissances"
+id="toc-revue-qualité-validation-scientifique-de-la-base-de-connaissances">Revue
+Qualité &amp; Validation Scientifique de la Base de
+Connaissances</a></li>
+<li><a href="#améliorations-de-gouvernance-socio-économiques"
+id="toc-améliorations-de-gouvernance-socio-économiques">Améliorations de
+Gouvernance &amp; Socio-Économiques</a></li>
+<li><a href="#améliorations-de-la-revue-des-connexions"
+id="toc-améliorations-de-la-revue-des-connexions">Améliorations de la
+Revue des Connexions</a></li>
+</ul></li>
+<li><a href="#version-1.9.0-mars-2026"
+id="toc-version-1.9.0-mars-2026">Version 1.9.0 (Mars 2026)</a>
+<ul>
+<li><a href="#attributs-de-délai-temporel"
+id="toc-attributs-de-délai-temporel">Attributs de Délai
+Temporel</a></li>
+</ul></li>
+<li><a href="#version-1.8.1-mars-2026"
+id="toc-version-1.8.1-mars-2026">Version 1.8.1 (Mars 2026)</a>
+<ul>
+<li><a href="#audit-nettoyage-du-code-source"
+id="toc-audit-nettoyage-du-code-source">Audit &amp; Nettoyage du Code
+Source</a></li>
+</ul></li>
+<li><a href="#version-1.8.0-mars-2026"
+id="toc-version-1.8.0-mars-2026">Version 1.8.0 (Mars 2026)</a>
+<ul>
+<li><a href="#base-de-connaissances-gouvernance-par-pays"
+id="toc-base-de-connaissances-gouvernance-par-pays">Base de
+Connaissances &amp; Gouvernance par Pays</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#démarrage" id="toc-démarrage">Démarrage</a>
+<ul>
+<li><a href="#installation" id="toc-installation">Installation</a>
+<ul>
+<li><a href="#étape-1-installer-r-et-rstudio"
+id="toc-étape-1-installer-r-et-rstudio">Étape 1: Installer R et
+RStudio</a></li>
+<li><a href="#étape-2-installer-les-packages-requis"
+id="toc-étape-2-installer-les-packages-requis">Étape 2: Installer les
+Packages Requis</a></li>
+<li><a href="#étape-3-lancer-lapplication"
+id="toc-étape-3-lancer-lapplication">Étape 3: Lancer
+l’Application</a></li>
+</ul></li>
+<li><a href="#premier-lancement" id="toc-premier-lancement">Premier
+Lancement</a>
+<ul>
+<li><a href="#vue-densemble-de-linterface"
+id="toc-vue-densemble-de-linterface">Vue d’Ensemble de
+l’Interface</a></li>
+<li><a href="#créer-votre-premier-projet"
+id="toc-créer-votre-premier-projet">Créer Votre Premier Projet</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#modules-principaux" id="toc-modules-principaux">Modules
+Principaux</a>
+<ul>
+<li><a href="#pims-système-de-gestion-dinformation-projet"
+id="toc-pims-système-de-gestion-dinformation-projet">PIMS (Système de
+Gestion d’Information Projet)</a>
+<ul>
+<li><a href="#configuration-du-projet"
+id="toc-configuration-du-projet">Configuration du Projet</a></li>
+<li><a href="#gestion-des-parties-prenantes"
+id="toc-gestion-des-parties-prenantes">Gestion des Parties
+Prenantes</a></li>
+</ul></li>
+<li><a href="#créer-ses-système-socio-écologique"
+id="toc-créer-ses-système-socio-écologique">Créer SES (Système
+Socio-Écologique)</a>
+<ul>
+<li><a href="#méthode-1-saisie-isa-standard"
+id="toc-méthode-1-saisie-isa-standard">Méthode 1: Saisie ISA
+Standard</a></li>
+<li><a href="#méthode-2-création-isa-assistée-par-ia"
+id="toc-méthode-2-création-isa-assistée-par-ia">Méthode 2: Création ISA
+Assistée par IA</a></li>
+</ul></li>
+<li><a href="#visualisation-cld"
+id="toc-visualisation-cld">Visualisation CLD</a>
+<ul>
+<li><a href="#affichage-du-réseau"
+id="toc-affichage-du-réseau">Affichage du Réseau</a></li>
+<li><a href="#algorithmes-de-disposition"
+id="toc-algorithmes-de-disposition">Algorithmes de Disposition</a></li>
+<li><a href="#contrôles-interactifs"
+id="toc-contrôles-interactifs">Contrôles Interactifs</a></li>
+<li><a href="#fonctionnalités-de-mise-en-évidence"
+id="toc-fonctionnalités-de-mise-en-évidence">Fonctionnalités de Mise en
+Évidence</a></li>
+<li><a href="#options-dexport" id="toc-options-dexport">Options
+d’Export</a></li>
+</ul></li>
+<li><a href="#outils-danalyse" id="toc-outils-danalyse">Outils
+d’Analyse</a>
+<ul>
+<li><a href="#détection-de-boucles"
+id="toc-détection-de-boucles">Détection de Boucles</a></li>
+<li><a href="#métriques-de-réseau"
+id="toc-métriques-de-réseau">Métriques de Réseau</a></li>
+</ul></li>
+<li><a href="#réponse-validation" id="toc-réponse-validation">Réponse
+&amp; Validation</a>
+<ul>
+<li><a href="#mesures-de-réponse" id="toc-mesures-de-réponse">Mesures de
+Réponse</a></li>
+<li><a href="#générateur-de-scénarios"
+id="toc-générateur-de-scénarios">Générateur de Scénarios</a></li>
+</ul></li>
+<li><a href="#export-rapports" id="toc-export-rapports">Export &amp;
+Rapports</a>
+<ul>
+<li><a href="#export-de-données" id="toc-export-de-données">Export de
+Données</a></li>
+<li><a href="#export-de-visualisation"
+id="toc-export-de-visualisation">Export de Visualisation</a></li>
+<li><a href="#génération-de-rapports"
+id="toc-génération-de-rapports">Génération de Rapports</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#flux-de-travail-meilleures-pratiques"
+id="toc-flux-de-travail-meilleures-pratiques">Flux de Travail &amp;
+Meilleures Pratiques</a>
+<ul>
+<li><a href="#flux-de-travail-recommandés"
+id="toc-flux-de-travail-recommandés">Flux de Travail Recommandés</a>
+<ul>
+<li><a href="#atelier-participatif-standard-3-jours"
+id="toc-atelier-participatif-standard-3-jours">Atelier Participatif
+Standard (3 jours)</a></li>
+<li><a href="#flux-de-travail-solorecherche-25-jours"
+id="toc-flux-de-travail-solorecherche-25-jours">Flux de Travail
+Solo/Recherche (25 jours)</a></li>
+<li><a href="#évaluation-rapide-assistée-par-ia-1-jour"
+id="toc-évaluation-rapide-assistée-par-ia-1-jour">Évaluation Rapide
+(Assistée par IA, 1 jour)</a></li>
+</ul></li>
+<li><a href="#meilleures-pratiques"
+id="toc-meilleures-pratiques">Meilleures Pratiques</a>
+<ul>
+<li><a href="#qualité-des-données" id="toc-qualité-des-données">Qualité
+des Données</a></li>
+<li><a href="#conception-de-réseau"
+id="toc-conception-de-réseau">Conception de Réseau</a></li>
+<li><a href="#engagement-des-parties-prenantes"
+id="toc-engagement-des-parties-prenantes">Engagement des Parties
+Prenantes</a></li>
+<li><a href="#conseils-techniques" id="toc-conseils-techniques">Conseils
+Techniques</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#dépannage" id="toc-dépannage">Dépannage</a>
+<ul>
+<li><a href="#problèmes-courants" id="toc-problèmes-courants">Problèmes
+Courants</a>
+<ul>
+<li><a href="#problèmes-dinstallation"
+id="toc-problèmes-dinstallation">Problèmes d’Installation</a></li>
+<li><a href="#problèmes-de-saisie-de-données"
+id="toc-problèmes-de-saisie-de-données">Problèmes de Saisie de
+Données</a></li>
+<li><a href="#problèmes-de-visualisation"
+id="toc-problèmes-de-visualisation">Problèmes de Visualisation</a></li>
+<li><a href="#problèmes-danalyse" id="toc-problèmes-danalyse">Problèmes
+d’Analyse</a></li>
+<li><a href="#problèmes-de-génération-de-rapport"
+id="toc-problèmes-de-génération-de-rapport">Problèmes de Génération de
+Rapport</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#glossaire" id="toc-glossaire">Glossaire</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<h2 id="à-propos-de-la-boîte-à-outils-ses-marinesabres">À Propos de la
+Boîte à Outils SES MarineSABRES</h2>
+<p>La <strong>Boîte à Outils des Systèmes Socio-Écologiques (SES)
+MarineSABRES</strong> est une application web complète conçue pour
+soutenir l’analyse participative et la gestion des systèmes
+socio-écologiques marins. Elle met en œuvre le <strong>cadre
+DAPSI(W)R(M)</strong> (Drivers-Activities-Pressures-State
+changes-Welfare impacts-Response Measures /
+Moteurs-Activités-Pressions-Changements d’État-Impacts sur le
+Bien-être-Mesures de Réponse) pour analyser les interactions complexes
+entre les écosystèmes marins et les activités humaines.</p>
+<blockquote>
+<p><strong>Note sur la Terminologie du Cadre:</strong> Dans
+DAPSI(W)R(M), “R” et “M” font référence aux Réponses politiques/de
+gestion et aux Mesures d’application. Cet outil les traite comme une
+catégorie unifiée “Mesures de Réponse” pour représenter de manière
+exhaustive les interventions de gestion.</p>
+</blockquote>
+<h3 id="capacités-clés">Capacités Clés</h3>
+<ul>
+<li><strong>Analyse Intégrée des Systèmes (ISA)</strong>: Approche
+structurée en 13 exercices pour cartographier les relations de cause à
+effet</li>
+<li><strong>Création Assistée par IA</strong>: Interface
+conversationnelle pour une cartographie rapide du système</li>
+<li><strong>Visualisation Interactive</strong>: Diagrammes de Boucles
+Causales (CLD) dynamiques avec des layouts réseau avancés</li>
+<li><strong>Détection des Boucles de Rétroaction</strong>:
+Identification automatique des boucles de renforcement et
+d’équilibrage</li>
+<li><strong>Analyse de Réseau</strong>: Métriques de centralité, points
+de levier et analyse MICMAC</li>
+<li><strong>Planification des Réponses</strong>: Priorisation et
+évaluation d’impact des interventions de gestion</li>
+<li><strong>Gestion des Parties Prenantes</strong>: Analyse
+Pouvoir-Intérêt et planification de l’engagement</li>
+<li><strong>Recommandations Contextuelles</strong>: Orientations
+stratégiques et de gestion basées sur les données</li>
+<li><strong>Support Multilingue</strong>: Disponible en 9 langues (EN,
+ES, FR, DE, LT, PT, IT, NO, EL)</li>
+<li><strong>Attributs de Délai Temporel</strong> : Capturer les
+relations de décalage temporel entre les connexions</li>
+<li><strong>Base de Connaissances</strong> : 1 120 connexions
+scientifiquement validées à travers 30 contextes d’écosystèmes
+marins</li>
+<li><strong>Gouvernance par Pays</strong> : 97 pays avec suggestions
+d’éléments de gouvernance et socio-économiques</li>
+<li><strong>Système de Modèles</strong> : 7 modèles SES pré-construits
+pour les scénarios marins courants</li>
+</ul>
+<h2 id="utilisateurs-cibles">Utilisateurs Cibles</h2>
+<ul>
+<li><strong>Gestionnaires de Ressources Marines</strong>: Planifier et
+évaluer les interventions de gestion</li>
+<li><strong>Analystes Politiques</strong>: Évaluer les impacts des
+politiques sur les systèmes marins</li>
+<li><strong>Consultants Environnementaux</strong>: Soutenir la
+planification spatiale marine et les évaluations d’impact</li>
+<li><strong>Chercheurs</strong>: Étudier la dynamique des systèmes
+socio-écologiques marins</li>
+<li><strong>Facilitateurs de Parties Prenantes</strong>: Guider les
+ateliers de cartographie participative du système</li>
+</ul>
+<h2 id="exigences-système">Exigences Système</h2>
+<h3 id="logiciels-requis">Logiciels Requis</h3>
+<ul>
+<li><strong>R</strong> version 4.4.1 ou supérieure</li>
+<li><strong>Navigateur Web Moderne</strong>: Chrome (recommandé),
+Firefox, Edge ou Safari</li>
+<li><strong>Optionnel</strong>: Pandoc (pour la génération de rapports
+PDF/Word)</li>
+</ul>
+<h3 id="matériel-requis">Matériel Requis</h3>
+<ul>
+<li><strong>Processeur</strong>: Dual-core 2.0 GHz ou plus rapide</li>
+<li><strong>RAM</strong>: 4 GB minimum, 8 GB recommandé</li>
+<li><strong>Stockage</strong>: 500 MB d’espace disque libre</li>
+<li><strong>Affichage</strong>: Résolution minimale 1366x768, 1920x1080
+recommandé</li>
+</ul>
+<h3 id="connexion-internet">Connexion Internet</h3>
+<ul>
+<li>Requis uniquement pour l’installation initiale des packages R</li>
+<li>Fonctionnement hors ligne supporté après installation</li>
+</ul>
+<h1 id="nouveautés">Nouveautés</h1>
+<h2 id="version-1.10.0-mars-2026">Version 1.10.0 (Mars 2026)</h2>
+<h3
+id="revue-qualité-validation-scientifique-de-la-base-de-connaissances">Revue
+Qualité &amp; Validation Scientifique de la Base de Connaissances</h3>
+<ul>
+<li>68 erreurs de classification d’éléments corrigées dans la base
+DAPSI(W)R(M)</li>
+<li>213 attributs de connexion validés scientifiquement par rapport à la
+littérature publiée (HELCOM, ICES, OSPAR, UNEP-MAP, GCRMN, GIEC RE6,
+AMAP)</li>
+<li>1 120 connexions totales à travers 30 contextes d’écosystèmes marins
+(contre 622 précédemment)</li>
+<li>Zéro éléments orphelins — chaque élément connecté à au moins un
+autre</li>
+<li>Distribution de confiance recalibrée selon les niveaux de
+preuve</li>
+<li>Références de la BC accessibles depuis le menu Aide dans la barre
+supérieure</li>
+</ul>
+<h3 id="améliorations-de-gouvernance-socio-économiques">Améliorations de
+Gouvernance &amp; Socio-Économiques</h3>
+<ul>
+<li>2 nouvelles conventions régionales : PROE/Nouméa (Pacifique) et
+Abidjan (Afrique de l’Ouest)</li>
+<li>Lacunes de gouvernance comblées pour 4 groupes (Européens non-UE,
+Latino-Américains, Côtiers Africains, Asie-Pacifique)</li>
+<li>16 reclassifications d’éléments de gouvernance/SE pour plus de
+précision</li>
+</ul>
+<h3 id="améliorations-de-la-revue-des-connexions">Améliorations de la
+Revue des Connexions</h3>
+<ul>
+<li>Nouveaux onglets de lots W→D, P→P et S→S pour les boucles de
+rétroaction et effets en cascade</li>
+<li>Persistance du bouton de délai entre les changements d’onglets</li>
+<li>Labels de force/confiance et infobulles internationalisés</li>
+</ul>
+<h2 id="version-1.9.0-mars-2026">Version 1.9.0 (Mars 2026)</h2>
+<h3 id="attributs-de-délai-temporel">Attributs de Délai Temporel</h3>
+<ul>
+<li>Catégories de délai pour les connexions : immédiat, court terme,
+moyen terme, long terme</li>
+<li>Motifs de tirets visuels sur les arêtes du réseau indiquant le
+délai</li>
+<li>Cartes de revue des connexions avec bouton de délai, menu déroulant
+et saisie numérique</li>
+<li>Support complet d’import et export Excel/Kumu pour les colonnes de
+délai</li>
+<li>Rétro-compatible avec les fichiers de projet antérieurs</li>
+</ul>
+<h2 id="version-1.8.1-mars-2026">Version 1.8.1 (Mars 2026)</h2>
+<h3 id="audit-nettoyage-du-code-source">Audit &amp; Nettoyage du Code
+Source</h3>
+<ul>
+<li>12 corrections de bogues critiques dans 20 fichiers</li>
+<li>Suppression de code mort et renforcement des tests</li>
+</ul>
+<h2 id="version-1.8.0-mars-2026">Version 1.8.0 (Mars 2026)</h2>
+<h3 id="base-de-connaissances-gouvernance-par-pays">Base de
+Connaissances &amp; Gouvernance par Pays</h3>
+<ul>
+<li>Base de données de gouvernance par pays avec 97 pays sur 11 mers
+régionales</li>
+<li>Module de construction graphique de réseau SES</li>
+<li>Système de tutoriels avec visites guidées</li>
+<li>Chargeur Excel universel pour l’import flexible de modèles SES</li>
+<li>Registre de modèles ML et infrastructure d’embeddings textuels</li>
+</ul>
+<h1 id="démarrage">Démarrage</h1>
+<h2 id="installation">Installation</h2>
+<h3 id="étape-1-installer-r-et-rstudio">Étape 1: Installer R et
+RStudio</h3>
+<ol type="1">
+<li><strong>Télécharger R</strong> depuis <a
+href="https://cran.r-project.org/">https://cran.r-project.org/</a></li>
+<li><strong>Télécharger RStudio</strong> (optionnel mais recommandé)
+depuis <a
+href="https://posit.co/downloads/">https://posit.co/downloads/</a></li>
+<li>Installer les deux applications en suivant les procédures
+standard</li>
+</ol>
+<h3 id="étape-2-installer-les-packages-requis">Étape 2: Installer les
+Packages Requis</h3>
+<p>Ouvrir R ou RStudio et exécuter:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Installer les packages requis</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;shiny&quot;</span>, <span class="st">&quot;shinydashboard&quot;</span>, <span class="st">&quot;shinyjs&quot;</span>, <span class="st">&quot;shiny.i18n&quot;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;DT&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;tidyr&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;plotly&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;visNetwork&quot;</span>, <span class="st">&quot;igraph&quot;</span>, <span class="st">&quot;DiagrammeR&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;openxlsx&quot;</span>, <span class="st">&quot;jsonlite&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;knitr&quot;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;digest&quot;</span>, <span class="st">&quot;htmlwidgets&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<h3 id="étape-3-lancer-lapplication">Étape 3: Lancer l’Application</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Définir le répertoire de travail</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/chemin/vers/MarineSABRES_SES_Shiny&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lancer l&#39;application</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">runApp</span>()</span></code></pre></div>
+<p><strong>Alternative avec run_app.R:</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /chemin/vers/MarineSABRES_SES_Shiny</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> run_app.R</span></code></pre></div>
+<h2 id="premier-lancement">Premier Lancement</h2>
+<h3 id="vue-densemble-de-linterface">Vue d’Ensemble de l’Interface</h3>
+<p>Au lancement, vous verrez le <strong>Tableau de Bord</strong>
+avec:</p>
+<p><strong>Barre d’En-tête:</strong> - Titre et logo de l’application -
+Sélecteur de langue (9 langues disponibles) - Sélecteur de niveau
+utilisateur (Débutant/Intermédiaire/Expert) - Bouton d’aide</p>
+<p><strong>Menu Latéral:</strong> - Navigation vers tous les modules -
+Boutons Sauvegarder/Charger projet - Indicateur de sauvegarde
+automatique</p>
+<p><strong>Panneau Principal:</strong> - Boîtes de valeur
+récapitulatives (éléments, connexions, boucles, % d’achèvement) - Vue
+d’ensemble du statut du projet - Boutons d’action rapide</p>
+<h3 id="créer-votre-premier-projet">Créer Votre Premier Projet</h3>
+<ol type="1">
+<li><strong>Naviguer vers Point d’Entrée</strong> (Démarrage)
+<ul>
+<li>Choisir “Parcours Guidé” ou “Accès Rapide”</li>
+<li>Répondre aux questions contextuelles sur votre rôle et
+objectifs</li>
+<li>Recevoir des recommandations d’outils personnalisées</li>
+</ul></li>
+<li><strong>Configurer les Informations du Projet</strong> (PIMS →
+Configuration du Projet)
+<ul>
+<li>Entrer le nom du projet</li>
+<li>Sélectionner la zone de démonstration</li>
+<li>Définir le problème focal</li>
+<li>Spécifier les limites du système</li>
+</ul></li>
+<li><strong>Choisir Votre Flux de Travail</strong>
+<ul>
+<li><strong>ISA Standard</strong>: Approche structurée en 13 exercices
+(recommandé pour une analyse approfondie)</li>
+<li><strong>Assisté par IA</strong>: Entretien conversationnel en 11
+étapes (voie rapide pour utilisateurs expérimentés)</li>
+<li><strong>Basé sur Modèle</strong>: Modèles pré-configurés pour
+scénarios courants</li>
+<li><strong>Importer Données</strong>: Charger des données ISA
+existantes depuis Excel</li>
+</ul></li>
+<li><strong>Sauvegarder Votre Travail</strong>
+<ul>
+<li>Cliquer sur “Sauvegarder Projet” dans la barre latérale</li>
+<li>Choisir un nom de fichier (ex:
+<code>mon_projet_2025-11-16.rds</code>)</li>
+<li>Sauvegarder régulièrement tout au long de votre session</li>
+</ul></li>
+</ol>
+<h1 id="modules-principaux">Modules Principaux</h1>
+<h2 id="pims-système-de-gestion-dinformation-projet">PIMS (Système de
+Gestion d’Information Projet)</h2>
+<h3 id="configuration-du-projet">Configuration du Projet</h3>
+<p>Définir la portée et le contexte de votre analyse.</p>
+<p><strong>Champs à Compléter:</strong></p>
+<ul>
+<li><strong>Nom du Projet</strong>: Identifiant unique pour votre
+projet</li>
+<li><strong>ID Projet</strong>: Code auto-généré ou personnalisé</li>
+<li><strong>Zone de Démonstration</strong>: Focus géographique
+<ul>
+<li>Archipel Toscan</li>
+<li>Atlantique Nord-Est Arctique</li>
+<li>Macaronésie</li>
+<li>Personnalisé (spécifier)</li>
+</ul></li>
+<li><strong>Problème Focal</strong>: Question ou préoccupation de
+gestion primaire</li>
+<li><strong>Échelle Temporelle</strong>: Horizon temporel
+(années/décennies/siècles)</li>
+<li><strong>Échelle Spatiale</strong>: Étendue géographique
+(local/régional/national/international)</li>
+<li><strong>Limites du Système</strong>: Ce qui est inclus/exclu de
+l’analyse</li>
+</ul>
+<p><strong>Meilleures Pratiques:</strong> - Être spécifique sur le
+problème focal (ex: “Déclin des herbiers marins dû à la pollution
+nutritive” vs “Qualité de l’eau”) - Définir clairement les limites pour
+délimiter votre analyse - Considérer plusieurs échelles temporelles pour
+différents composants du système</p>
+<h3 id="gestion-des-parties-prenantes">Gestion des Parties
+Prenantes</h3>
+<p>Identifier et catégoriser les parties prenantes dans votre système
+marin.</p>
+<p><strong>Registre des Parties Prenantes:</strong></p>
+<p>Créer des entrées avec: - <strong>Nom</strong>: Nom de l’organisation
+ou du groupe - <strong>Type</strong>: - Contributeurs (fournissent
+ressources/intrants) - Extracteurs (récoltent/retirent des ressources) -
+Régulateurs (établissent règles/politiques) - Affectés (subissent des
+impacts) - Bénéficiaires (reçoivent des bénéfices) - Influenceurs
+(façonnent les décisions) - <strong>Informations de Contact</strong>:
+Email, téléphone, adresse - <strong>Pouvoir</strong>: Niveau d’influence
+(Élevé/Moyen/Faible) - <strong>Intérêt</strong>: Enjeu dans les
+résultats (Élevé/Moyen/Faible) - <strong>Niveau d’Engagement</strong>:
+Participation actuelle (spectre IAP2) - Informer - Consulter - Impliquer
+- Collaborer - Responsabiliser - <strong>Notes</strong>: Contexte
+additionnel</p>
+<p><strong>Grille Pouvoir-Intérêt:</strong></p>
+<p>Matrice visuelle positionnant automatiquement les parties prenantes
+par pouvoir et intérêt: - <strong>Pouvoir Élevé, Intérêt Élevé</strong>:
+Acteurs clés - collaborer étroitement - <strong>Pouvoir Élevé, Intérêt
+Faible</strong>: Maintenir satisfaits - mises à jour régulières -
+<strong>Pouvoir Faible, Intérêt Élevé</strong>: Maintenir informés -
+engager activement - <strong>Pouvoir Faible, Intérêt Faible</strong>:
+Surveiller - effort minimal</p>
+<p><strong>Export:</strong> Télécharger le registre des parties
+prenantes en Excel pour partage externe</p>
+<h2 id="créer-ses-système-socio-écologique">Créer SES (Système
+Socio-Écologique)</h2>
+<h3 id="méthode-1-saisie-isa-standard">Méthode 1: Saisie ISA
+Standard</h3>
+<p>Approche structurée complète en 13 exercices suivant le cadre
+DAPSI(W)R(M).</p>
+<h4 id="exercice-0-cadrage-de-la-complexité">Exercice 0: Cadrage de la
+Complexité</h4>
+<p>Établir le contexte pour votre analyse.</p>
+<p><strong>Questions Clés:</strong> 1. Quelle est la zone d’étude de
+cas? 2. Quelle est la portée géographique et temporelle? 3. Quels
+impacts sur le bien-être sont préoccupants? 4. Qui sont les parties
+prenantes clés?</p>
+<p><strong>Résultat:</strong> Fondation contextuelle pour les exercices
+suivants</p>
+<h4 id="exercice-1-biens-bénéfices-bb">Exercice 1: Biens &amp; Bénéfices
+(B&amp;B)</h4>
+<p>Identifier les résultats valorisés du système marin.</p>
+<p><strong>Formulaire de Saisie de Données:</strong> -
+<strong>ID</strong>: Identifiant unique auto-généré -
+<strong>Nom</strong>: Nom descriptif (ex: “Capture de poissons
+commerciaux”) - <strong>Type</strong>: - Approvisionnement (nourriture,
+matériaux) - Régulation (climat, qualité de l’eau) - Culturel
+(récréation, patrimoine) - Support (cycle des nutriments, habitat) -
+<strong>Description</strong>: Explication détaillée - <strong>Partie
+Prenante</strong>: Qui bénéficie? - <strong>Importance</strong>:
+Signification socio-économique (Élevée/Moyenne/Faible) -
+<strong>Tendance</strong>: Trajectoire historique
+(Croissante/Stable/Décroissante/Inconnue)</p>
+<p><strong>Table Interactive:</strong> - Ajouter, éditer, supprimer des
+entrées - Trier et filtrer par n’importe quelle colonne - Fonctionnalité
+de recherche - Export vers Excel</p>
+<h4 id="exercice-2a-services-écosystémiques-se">Exercice 2a: Services
+Écosystémiques (SE)</h4>
+<p>Cartographier les services qui soutiennent les biens et
+bénéfices.</p>
+<p><strong>Champs:</strong> - <strong>Nom</strong>: Description du
+service (ex: “Reconstitution des stocks de poissons”) -
+<strong>Type</strong>: Approvisionnement/Régulation/Culturel/Support -
+<strong>B&amp;B Liés</strong>: Sélectionner quels biens/bénéfices ce
+service soutient - <strong>Mécanisme</strong>: Comment le service
+fournit le bénéfice - <strong>Confiance</strong>: Qualité de la preuve
+(Élevée/Moyenne/Faible)</p>
+<p><strong>Matrice d’Adjacence:</strong> - Lignes: Services
+Écosystémiques - Colonnes: Biens &amp; Bénéfices - Cellules: Force de la
+relation - <code>+fort</code>, <code>+moyen</code>, <code>+faible</code>
+(contributions positives) - Vide (pas de relation)</p>
+<h4 id="exercice-2b-processus-fonctionnement-marins-pfm">Exercice 2b:
+Processus &amp; Fonctionnement Marins (PFM)</h4>
+<p>Identifier les processus écologiques qui permettent les services.</p>
+<p><strong>Champs Additionnels:</strong> - <strong>Type de
+Processus</strong>: Biologique/Chimique/Physique -
+<strong>Sensibilité</strong>: Vulnérabilité au changement
+(Élevée/Moyenne/Faible) - <strong>Échelle Spatiale</strong>: Étendue
+géographique (m²/km²/régional)</p>
+<p><strong>Exemples:</strong> - Biologique: “Photosynthèse des herbiers
+marins” - Chimique: “Absorption de nutriments par les macroalgues” -
+Physique: “Stabilisation des sédiments par les racines”</p>
+<h4 id="exercice-3-pressions-p">Exercice 3: Pressions (P)</h4>
+<p>Documenter les facteurs de stress affectant les processus marins.</p>
+<p><strong>Catégories de Pression (alignées avec DCSMM):</strong> -
+Physique: Étouffement, abrasion, perte d’habitat - Chimique:
+Contaminants, nutriments, acidification - Biologique: Introduction
+d’espèces, pathogènes - Autre: Bruit, lumière, champs
+électromagnétiques</p>
+<p><strong>Champs:</strong> - <strong>Intensité</strong>: Magnitude de
+la pression (Élevée/Moyenne/Faible/Inconnue) - <strong>Modèle
+Spatial</strong>: Source ponctuelle/Diffuse/Régionale - <strong>Modèle
+Temporel</strong>: Continue/Saisonnière/Épisodique/Permanente</p>
+<h4 id="exercice-4-activités-a">Exercice 4: Activités (A)</h4>
+<p>Identifier les actions humaines qui génèrent des pressions.</p>
+<p><strong>Secteurs d’Activité:</strong> - Pêche
+(Commerciale/Récréative) - Aquaculture - Tourisme et Récréation -
+Navigation et Transport - Production d’Énergie - Développement Côtier -
+Agriculture et Sylviculture - Industrie et Extraction Minière -
+Élimination des Déchets - Recherche et Surveillance</p>
+<p><strong>Champs:</strong> - <strong>Échelle</strong>: Étendue
+opérationnelle (Local/Régional/National/International) -
+<strong>Fréquence</strong>: À quelle fréquence
+(Quotidienne/Hebdomadaire/Saisonnière/Annuelle/Irrégulière)</p>
+<h4 id="exercice-5-moteurs-m">Exercice 5: Moteurs (M)</h4>
+<p>Analyser les causes profondes derrière les activités.</p>
+<p><strong>Types de Moteurs:</strong> - <strong>Économique</strong>:
+Demande du marché, prix, subventions, commerce -
+<strong>Social</strong>: Population, démographie, mode de vie,
+traditions - <strong>Technologique</strong>: Innovation, efficacité,
+capacité - <strong>Environnemental</strong>: Climat, disponibilité des
+ressources - <strong>Politique/Institutionnel</strong>: Réglementations,
+gouvernance, droits de propriété</p>
+<p><strong>Champs:</strong> - <strong>Tendance</strong>: Direction du
+changement (Croissante/Stable/Décroissante/Cyclique) -
+<strong>Contrôlabilité</strong>: Peut-il être géré?
+(Élevée/Moyenne/Faible/Aucune)</p>
+<h4 id="exercice-6-fermeture-de-boucle-rétroaction">Exercice 6:
+Fermeture de Boucle (Rétroaction)</h4>
+<p>Compléter la chaîne causale avec les réponses du bien-être vers les
+moteurs.</p>
+<p><strong>Connexions de Rétroaction:</strong> - Sélectionner B&amp;B
+(point de départ) - Sélectionner Moteur (point d’arrivée) - Spécifier: -
+<strong>Type d’Effet</strong>: Positif (amplification) / Négatif
+(atténuation) - <strong>Force</strong>: Fort/Moyen/Faible -
+<strong>Confiance</strong>: Élevée/Moyenne/Faible -
+<strong>Délai</strong>: Immédiat/Court terme/Moyen terme/Long terme
+(durée optionnelle en années) - <strong>Mécanisme</strong>: Voie
+explicative</p>
+<h4 id="exercice-7-9-création-de-cld">Exercice 7-9: Création de CLD</h4>
+<p><strong>Exercice 7</strong>: Examiner tous les éléments et connexions
+<strong>Exercice 8</strong>: Générer le Diagramme de Boucles Causales
+<strong>Exercice 9</strong>: Exporter vers des plateformes de
+visualisation (Kumu.io)</p>
+<h4 id="exercice-10-12-analyse-documentation">Exercice 10-12: Analyse
+&amp; Documentation</h4>
+<p><strong>Exercice 10</strong>: Analyse de la dynamique du système
+<strong>Exercice 11</strong>: Graphiques de Comportement dans le Temps
+(BOT) <strong>Exercice 12</strong>: Documentation de validation</p>
+<h4 id="onglet-gestion-des-données">Onglet Gestion des Données</h4>
+<p><strong>Importer depuis Excel:</strong> 1. Télécharger le modèle
+(bouton fourni) 2. Remplir le modèle avec vos données 3. Téléverser le
+fichier Excel complété 4. Examiner l’aperçu d’importation 5. Confirmer
+l’importation (fusionner ou remplacer les données existantes)</p>
+<p><strong>Exporter vers Excel:</strong> - Classeur multi-feuilles -
+Tous les tableaux ISA inclus (y compris les colonnes de Délai) -
+Matrices d’adjacence - Compatible avec le format Kumu.io - Prêt pour
+l’analyse externe</p>
+<h3 id="méthode-2-création-isa-assistée-par-ia">Méthode 2: Création ISA
+Assistée par IA</h3>
+<p>Guidance conversationnelle étape par étape pour une cartographie
+rapide du système.</p>
+<p><strong>Processus d’Entretien en 11 Étapes:</strong></p>
+<p><strong>Étape 1: Introduction</strong> - Accueil et vue d’ensemble -
+Explication du processus - Temps estimé: 30-60 minutes</p>
+<p><strong>Étape 2: Contexte du Projet</strong> - Nom et description du
+projet - Objectifs primaires - Résultats attendus</p>
+<p><strong>Étape 3: Sélection de la Mer Régionale</strong> Choisir parmi
+13 mers régionales: - Mer Baltique - Mer Méditerranée - Mer Noire -
+Atlantique Nord-Est - Océan Arctique - Et 8 autres…</p>
+<p><strong>Étape 4: Type d’Écosystème</strong> 12 catégories
+d’écosystèmes: - Herbiers marins - Récifs coralliens - Forêts de kelp -
+Récifs rocheux - Plages de sable - Vasières - Estuaires - Mer profonde -
+Et 4 autres…</p>
+<p><strong>Étape 5: Sous-type d’Écosystème</strong> Raffinement
+contextuel basé sur la sélection de l’Étape 4</p>
+<p><strong>Étape 6: Problèmes Principaux</strong> Sélectionner parmi 25+
+problèmes pré-définis ou spécifier personnalisé: - Surpêche - Pollution
+(nutriments, plastiques, produits chimiques) - Dégradation de l’habitat
+- Impacts du changement climatique - Espèces invasives - Développement
+côtier - Pression touristique - Et beaucoup d’autres…</p>
+<p><strong>Étapes 7-11: Définition des Éléments</strong> Pour chaque
+niveau DAPSI(W)R(M): - Suggestions pré-remplies basées sur votre
+contexte - Option de saisie en texte libre - Plusieurs éléments peuvent
+être ajoutés - Aperçu en temps réel des éléments créés</p>
+<p><strong>Fonctionnalités de Session:</strong> - <strong>Sauvegarde
+Automatique</strong>: Progrès sauvegardé dans localStorage du navigateur
+- <strong>Récupération de Session</strong>: Reprendre si interrompu -
+<strong>Interface de Chat</strong>: Invites conversationnelles -
+<strong>Conscience du Contexte</strong>: Suggestions s’adaptant aux
+réponses précédentes - <strong>Intégration Directe</strong>: Sauvegarde
+dans les données principales du projet</p>
+<p><strong>Quand Utiliser:</strong> - Projets avec contraintes de temps
+(évaluation rapide) - Phase de cadrage initiale - Utilisateurs
+expérimentés familiers avec DAPSI(W)R(M) - Lorsque les connaissances
+expertes peuvent combler rapidement les lacunes</p>
+<h2 id="visualisation-cld">Visualisation CLD</h2>
+<p>Visualisation de réseau interactive de votre système
+socio-écologique.</p>
+<h3 id="affichage-du-réseau">Affichage du Réseau</h3>
+<p><strong>Encodage Visuel:</strong></p>
+<p><strong>Couleurs des Nœuds (niveaux DAPSI(W)R(M)):</strong> - Violet:
+Moteurs - Vert: Activités - Orange: Pressions - Bleu Clair: Processus
+Marins - Bleu Foncé: Services Écosystémiques - Jaune Clair: Biens &amp;
+Bénéfices</p>
+<p><strong>Formes des Nœuds:</strong> - Étoile: Moteurs - Hexagone:
+Activités - Losange: Pressions - Point: Processus Marins - Carré:
+Services Écosystémiques - Triangle: Biens &amp; Bénéfices</p>
+<p><strong>Couleurs des Arêtes:</strong> - Bleu Clair: Connexions
+positives/de renforcement - Rouge: Connexions négatives/d’opposition</p>
+<h3 id="algorithmes-de-disposition">Algorithmes de Disposition</h3>
+<p><strong>1. Disposition Hiérarchique (Recommandé)</strong> -
+<strong>Direction</strong>: Bas-Haut (montre le flux DAPSI), Haut-Bas,
+Gauche-Droite, Droite-Gauche - <strong>Séparation de Niveau</strong>:
+Ajuster l’espacement (50-300px) - <strong>Idéal pour</strong>:
+Comprendre la structure DAPSI, présentations</p>
+<p><strong>2. Basé sur la Physique (Force Atlas 2)</strong> -
+<strong>Gravité</strong>: Force d’attraction entre nœuds connectés -
+<strong>Longueur de Ressort</strong>: Longueur d’arête idéale -
+<strong>Idéal pour</strong>: Découvrir des clusters, identifier des
+nœuds centraux</p>
+<p><strong>3. Disposition Circulaire</strong> - Nœuds arrangés en cercle
+- <strong>Idéal pour</strong>: Petits réseaux, reconnaissance de
+motifs</p>
+<p><strong>4. Positionnement Manuel</strong> - Glisser les nœuds vers
+les positions désirées - Positions sauvegardées avec le projet -
+<strong>Idéal pour</strong>: Arrangements personnalisés, présentations
+finales</p>
+<h3 id="contrôles-interactifs">Contrôles Interactifs</h3>
+<p><strong>Navigation:</strong> - <strong>Zoom</strong>: Molette de
+souris ou geste de pincement - <strong>Panoramique</strong>: Cliquer et
+glisser l’arrière-plan - <strong>Réinitialiser la Vue</strong>: Bouton
+pour restaurer la vue initiale - <strong>Ajuster à l’Écran</strong>:
+Auto-zoom pour afficher tous les nœuds</p>
+<p><strong>Interactions de Nœud:</strong> - <strong>Clic</strong>:
+Sélectionner le nœud (met en surbrillance les voisins) -
+<strong>Double-clic</strong>: Centrer la vue sur le nœud -
+<strong>Survol</strong>: Afficher l’infobulle avec les détails</p>
+<p><strong>Recherche:</strong> - Taper le nom du nœud pour trouver et
+mettre en surbrillance - Liste déroulante de tous les nœuds -
+Auto-centrage sur le nœud sélectionné</p>
+<h3 id="fonctionnalités-de-mise-en-évidence">Fonctionnalités de Mise en
+Évidence</h3>
+<p><strong>Points de Levier:</strong> - Mettre en évidence les nœuds à
+haute influence - Basé sur les métriques de centralité -
+Activer/désactiver</p>
+<p><strong>Mise en Évidence de Boucle:</strong> - Sélectionner la boucle
+dans le menu déroulant - Tous les nœuds et arêtes de la boucle mis en
+évidence - Autres éléments estompés - Utile pour les discussions
+spécifiques à une boucle</p>
+<h3 id="options-dexport">Options d’Export</h3>
+<p><strong>Export PNG:</strong> - Image raster haute résolution (150
+dpi) - Dimensions personnalisées (400-4000px) - Option de fond
+transparent - <strong>Utiliser pour</strong>: Rapports, présentations,
+publications</p>
+<p><strong>Export SVG:</strong> - Graphiques vectoriels évolutifs -
+Éditable dans Illustrator, Inkscape - Pas de perte de qualité à
+n’importe quelle taille - <strong>Utiliser pour</strong>: Publications
+professionnelles, affiches</p>
+<p><strong>Export HTML:</strong> - Fichier autonome entièrement
+interactif - Partager avec les parties prenantes - Aucun serveur requis
+- <strong>Utiliser pour</strong>: Partage avec les parties prenantes,
+intégration web</p>
+<h2 id="outils-danalyse">Outils d’Analyse</h2>
+<h3 id="détection-de-boucles">Détection de Boucles</h3>
+<p>Identifier automatiquement les boucles de rétroaction dans votre
+système.</p>
+<p><strong>Comment Fonctionnent les Boucles de Rétroaction:</strong></p>
+<ul>
+<li><strong>Boucles de Renforcement (R)</strong>: Amplifient le
+changement (nombre pair de liens négatifs)
+<ul>
+<li>Exemple: Plus de poissons → Plus d’effort de pêche → Moins de
+poissons → Moins d’effort de pêche → Plus de poissons</li>
+<li>Conduit à une croissance ou un déclin exponentiel</li>
+</ul></li>
+<li><strong>Boucles d’Équilibrage (B)</strong>: Stabilisent le système
+(nombre impair de liens négatifs)
+<ul>
+<li>Exemple: Surpêche → Stocks épuisés → Réglementations → Pêche réduite
+→ Récupération des stocks</li>
+<li>Conduit à l’équilibre ou à l’oscillation</li>
+</ul></li>
+</ul>
+<p><strong>Paramètres de Détection:</strong></p>
+<ul>
+<li><strong>Longueur Maximale de Boucle</strong>: 3-15 éléments (par
+défaut: 8)
+<ul>
+<li>Plus court: Trouver des cycles de rétroaction serrés</li>
+<li>Plus long: Découvrir des boucles complexes multi-étapes</li>
+</ul></li>
+<li><strong>Cycles Maximaux</strong>: 50-2000 (par défaut: 500)
+<ul>
+<li>Limite le temps de calcul</li>
+<li>Plus de cycles = traitement plus long mais résultats plus
+complets</li>
+</ul></li>
+<li><strong>Inclure les Auto-Boucles</strong>: Oui/Non
+<ul>
+<li>Auto-boucle: Élément s’influence directement</li>
+</ul></li>
+<li><strong>Filtrer les Boucles Triviales</strong>: Oui (recommandé)
+<ul>
+<li>Supprime les boucles simples à 2 nœuds</li>
+<li>Se concentre sur la rétroaction complexe</li>
+</ul></li>
+</ul>
+<p><strong>Processus de Détection:</strong></p>
+<ol type="1">
+<li>Cliquer sur le bouton “Détecter les Boucles”</li>
+<li>L’algorithme s’exécute (peut prendre 10-60 secondes pour les grands
+réseaux)</li>
+<li>L’indicateur de progrès affiche le statut</li>
+<li>Les résultats apparaissent dans 5 onglets</li>
+</ol>
+<p><strong>Onglet 1: Détecter les Boucles</strong> - Contrôles de
+détection - Statistiques récapitulatives - Total de boucles trouvées -
+Nombre de renforcements - Nombre d’équilibrages - Table de données des
+boucles (ID, Type, Longueur, Éléments, Polarités des liens)</p>
+<p><strong>Onglet 2: Classification des Boucles</strong> - Graphiques de
+distribution (R vs. B) - Tables séparées pour chaque type - Résumé
+statistique</p>
+<p><strong>Onglet 3: Détails de la Boucle</strong> - Sélectionner une
+boucle spécifique dans le menu déroulant - Voir les propriétés de la
+boucle: - Type (R/B) - Longueur (nombre d’éléments) - Chemin (séquence
+d’éléments) - Polarités des liens - Description narrative (chaîne
+causale auto-générée) - Boucle mise en évidence dans la visualisation
+CLD</p>
+<p><strong>Onglet 4: Boucles Dominantes</strong> - Classement par: -
+<strong>Occurrence</strong>: Combien de fois les éléments apparaissent
+dans les boucles - <strong>Participation</strong>: Pourcentage de
+boucles impliquant l’élément - Table des boucles les plus influentes -
+Graphiques de participation des éléments - <strong>Valeur
+stratégique</strong>: Identifie les points d’intervention</p>
+<p><strong>Onglet 5: Exporter les Résultats</strong> - <strong>Export
+Excel</strong>: Classeur multi-feuilles - Toutes les boucles - Boucles R
+uniquement - Boucles B uniquement - Statistiques récapitulatives -
+<strong>Rapport de Boucle</strong>: Document PDF avec analyse -
+<strong>Diagrammes de Boucle</strong>: Fichier ZIP des visualisations de
+boucles individuelles</p>
+<p><strong>Guidance d’Interprétation:</strong></p>
+<p><strong>Haute proportion de boucles R (&gt;70%):</strong> - Système
+sujet à des changements rapides - Points de basculement probables -
+Urgence de gestion élevée - Focus: Renforcer les mécanismes
+d’équilibrage</p>
+<p><strong>Haute proportion de boucles B (&gt;70%):</strong> - Système
+très stable/résistant au changement - Les interventions peuvent
+rencontrer de la résistance - Effort persistant requis - Focus: Déplacer
+les points d’équilibre</p>
+<p><strong>Mélange équilibré (30-70% chacun):</strong> - Stabilité
+modérée - Potentiel de changement et d’autorégulation - Focus: Tirer
+parti des boucles R pour les changements souhaités, utiliser les boucles
+B pour stabiliser</p>
+<h3 id="métriques-de-réseau">Métriques de Réseau</h3>
+<p>Quantifier l’importance des nœuds et la structure du réseau.</p>
+<p><strong>Mesures de Centralité:</strong></p>
+<p><strong>1. Centralité de Degré</strong> - <strong>Degré
+Entrant</strong>: Nombre de connexions entrantes - Degré entrant élevé =
+fortement influencé par d’autres éléments - Bons indicateurs de l’état
+du système</p>
+<ul>
+<li><strong>Degré Sortant</strong>: Nombre de connexions sortantes
+<ul>
+<li>Degré sortant élevé = influence de nombreux autres éléments</li>
+<li>Bonnes cibles d’intervention</li>
+</ul></li>
+</ul>
+<p><strong>2. Centralité d’Intermédiarité</strong> - Mesure à quelle
+fréquence un nœud se trouve sur les chemins les plus courts -
+Intermédiarité élevée = fait le pont entre différentes parties du
+système - Critique pour le flux d’information/influence - La suppression
+déconnecte le système</p>
+<p><strong>3. Centralité de Proximité</strong> - Distance moyenne vers
+tous les autres nœuds - Proximité élevée = propagation rapide de
+l’influence - Important pour les réponses rapides du système</p>
+<p><strong>4. Centralité de Vecteur Propre</strong> - Importance basée
+sur l’importance des voisins - Vecteur propre élevé = connecté à
+d’autres nœuds importants - Identifie les éléments vraiment
+influents</p>
+<p><strong>5. PageRank</strong> - Algorithme de Google adapté aux
+réseaux - Score d’importance pondéré - Bonne mesure d’influence
+globale</p>
+<p><strong>Métriques au Niveau du Réseau:</strong></p>
+<ul>
+<li><strong>Densité</strong>: Proportion de connexions possibles qui
+existent
+<ul>
+<li>Faible (&lt;0.1): Système clairsemé, modulaire</li>
+<li>Moyenne (0.1-0.3): Modérément connecté</li>
+<li>Élevée (&gt;0.3): Système étroitement couplé</li>
+</ul></li>
+<li><strong>Diamètre</strong>: Plus long chemin le plus court entre deux
+nœuds quelconques
+<ul>
+<li>Mesure la “largeur” du système</li>
+</ul></li>
+<li><strong>Longueur Moyenne du Chemin</strong>: Chemin le plus court
+moyen
+<ul>
+<li>Mesure la rapidité de propagation de l’influence</li>
+</ul></li>
+</ul>
+<p><strong>Analyse MICMAC:</strong></p>
+<p>Classe les nœuds par influence et dépendance:</p>
+<p><strong>Quatre Quadrants:</strong></p>
+<ol type="1">
+<li><strong>Variables Relais</strong> (Influence élevée, Dépendance
+élevée)
+<ul>
+<li>Instables, transmettent les effets</li>
+<li>Interdépendances complexes</li>
+<li>Nécessitent une gestion prudente</li>
+</ul></li>
+<li><strong>Variables Influentes</strong> (Influence élevée, Dépendance
+faible)
+<ul>
+<li>Forts moteurs du système</li>
+<li>Indépendants des autres éléments</li>
+<li>Cibles d’intervention primaires</li>
+</ul></li>
+<li><strong>Variables Dépendantes</strong> (Influence faible, Dépendance
+élevée)
+<ul>
+<li>Résultats/indicateurs</li>
+<li>Sensibles aux changements</li>
+<li>Bons points de surveillance</li>
+</ul></li>
+<li><strong>Variables Autonomes</strong> (Influence faible, Dépendance
+faible)
+<ul>
+<li>Faiblement connectées</li>
+<li>Rôle limité dans la dynamique</li>
+<li>Peuvent être supprimées pour simplifier</li>
+</ul></li>
+</ol>
+<p><strong>Analyse des Points de Levier:</strong></p>
+<p>Identifie les points d’intervention à fort impact utilisant un score
+composite:</p>
+<pre><code>Score de Levier = Intermédiarité + Vecteur Propre + PageRank</code></pre>
+<p><strong>Top 10 des Points de Levier</strong> classés par score</p>
+<p><strong>Catégories:</strong> - <strong>Moteurs</strong>: Nœuds à
+degré sortant élevé → Interventions en cascade -
+<strong>Récepteurs</strong>: Nœuds à degré entrant élevé → Indicateurs
+de surveillance - <strong>Connecteurs</strong>: Nœuds à intermédiarité
+élevée → Critiques pour la résilience</p>
+<p><strong>Section Recommandations Stratégiques:</strong></p>
+<p>Basé sur les résultats d’analyse, génère des orientations
+contextuelles:</p>
+<ol type="1">
+<li><strong>Points d’Intervention Prioritaires</strong>: Nomme les 3
+premiers nœuds de levier avec scores</li>
+<li><strong>Stratégie en Cascade</strong>: Nœuds moteurs avec nombres
+d’influence moyens</li>
+<li><strong>Système d’Alerte Précoce</strong>: Nœuds récepteurs comme
+indicateurs de surveillance</li>
+<li><strong>Alertes de Dynamique du Système</strong>: Avertissements
+basés sur les boucles (points de basculement vs. résistance)</li>
+<li><strong>Protection de la Résilience</strong>: Nœuds connecteurs à
+préserver</li>
+</ol>
+<h2 id="réponse-validation">Réponse &amp; Validation</h2>
+<h3 id="mesures-de-réponse">Mesures de Réponse</h3>
+<p>Documenter et prioriser les interventions de gestion.</p>
+<p><strong>Onglet 1: Registre des Réponses</strong></p>
+<p>Créer des entrées d’intervention avec:</p>
+<ul>
+<li><strong>ID</strong>: Auto-généré</li>
+<li><strong>Nom</strong>: Description de l’intervention</li>
+<li><strong>Type</strong>:
+<ul>
+<li>Réglementaire: Lois, quotas, fermetures</li>
+<li>Économique: Subventions, taxes, basé sur le marché</li>
+<li>Éducatif: Sensibilisation, formation</li>
+<li>Technique: Infrastructure, technologie</li>
+<li>Institutionnel: Réformes de gouvernance</li>
+<li>Volontaire: Codes de conduite, certification</li>
+<li>Mixte: Combinaison</li>
+</ul></li>
+<li><strong>Description</strong>: Explication détaillée</li>
+<li><strong>Niveau Cible</strong>: Quel niveau DAPSI(W)R(M)?
+<ul>
+<li>Moteurs</li>
+<li>Activités</li>
+<li>Pressions</li>
+<li>État</li>
+<li>Multiple</li>
+</ul></li>
+<li><strong>Élément Cible</strong>: ID de nœud spécifique</li>
+<li><strong>Efficacité</strong>: Impact attendu
+(Élevée/Moyenne/Faible/Inconnue)</li>
+<li><strong>Faisabilité</strong>: Facilité de mise en œuvre
+(Élevée/Moyenne/Faible)</li>
+<li><strong>Coût</strong>: Échelle 1-10 (1=minimal, 10=très
+coûteux)</li>
+<li><strong>Parties Prenantes Responsables</strong>: Qui met en
+œuvre?</li>
+<li><strong>Obstacles à la Mise en Œuvre</strong>: Défis anticipés</li>
+<li><strong>Statut</strong>:
+<ul>
+<li>Proposé</li>
+<li>Planifié</li>
+<li>Mis en Œuvre</li>
+<li>Partiellement Mis en Œuvre</li>
+<li>Abandonné</li>
+</ul></li>
+</ul>
+<p><strong>Onglet 2: Évaluation d’Impact</strong></p>
+<p>Cartographier les réponses aux problèmes qu’elles abordent.</p>
+<p><strong>Créer des Liens d’Impact:</strong> - Sélectionner Mesure de
+réponse - Sélectionner Problème (Pression/Activité/Moteur) - Spécifier:
+- <strong>Force d’Impact</strong>: Fort/Modéré/Faible -
+<strong>Échéance</strong>: Immédiate/Court-terme (1-2a)/Moyen-terme
+(3-5a)/Long-terme (&gt;5a) - <strong>Confiance</strong>: Qualité de la
+preuve</p>
+<p><strong>Table Matrice d’Impact:</strong> - Lignes: Réponses -
+Colonnes: Problèmes - Cellules: Force + échéance</p>
+<p><strong>Carte Thermique Visuelle:</strong> - Force d’impact codée par
+couleur - Identification rapide des réponses multi-bénéfices</p>
+<p><strong>Onglet 3: Priorisation</strong></p>
+<p>Classement multicritères des réponses.</p>
+<p><strong>Curseurs de Pondération:</strong> - <strong>Poids
+d’Efficacité</strong> (0-1): Quelle importance a la magnitude de
+l’impact? - <strong>Poids de Faisabilité</strong> (0-1): Quelle
+importance a la facilité de mise en œuvre? - <strong>Poids du
+Coût</strong> (0-1, inverse): Quelle sensibilité avons-nous au coût?</p>
+<p><strong>Calcul du Score de Priorité:</strong></p>
+<pre><code>Priorité = (Efficacité × P_eff) +
+           (Faisabilité × P_fais) -
+           (Coût/10 × P_coût)</code></pre>
+<p><strong>Table Classée:</strong> - Réponses triées par score de
+priorité - Affiche toutes les valeurs d’entrée et poids - Identifier les
+meilleurs candidats</p>
+<p><strong>Nuages de Points:</strong> - <strong>Efficacité
+vs. Faisabilité</strong>: Identifier les “victoires rapides” (les deux
+élevés) - <strong>Coût vs. Impact</strong>: Évaluer la rentabilité</p>
+<p><strong>Analyse de Sensibilité:</strong> - Ajuster les poids pour
+tester la robustesse - Voir comment les classements changent -
+Identifier les meilleurs choix stables</p>
+<p><strong>Onglet 4: Plan de Mise en Œuvre</strong></p>
+<p>Suivre le déploiement des réponses dans le temps.</p>
+<p><strong>Jalons:</strong> - <strong>Nom du Jalon</strong>:
+Livrable/point de contrôle clé - <strong>ID de Réponse</strong>: Quelle
+mesure? - <strong>Date Cible</strong>: Achèvement planifié -
+<strong>Statut</strong>: En Attente/En Cours/Complété/Retardé -
+<strong>Notes</strong>: Mises à jour de progrès</p>
+<p><strong>Diagramme de Gantt:</strong> - Visualisation de la
+chronologie - Dépendances des jalons - Chemin critique mis en évidence -
+Export en PNG</p>
+<p><strong>Onglet 5: Export</strong></p>
+<p>Télécharger la documentation de planification des réponses: -
+Classeur Excel (tous les onglets) - Rapport récapitulatif PDF -
+Graphique de chronologie de mise en œuvre</p>
+<h3 id="générateur-de-scénarios">Générateur de Scénarios</h3>
+<p>Explorer des alternatives “et si” et comparer des scénarios.</p>
+<p><strong>Gestion de Scénarios:</strong></p>
+<p><strong>Créer un Nouveau Scénario:</strong> 1. Cliquer sur “Nouveau
+Scénario” 2. Entrer le nom et la description 3. La carte de scénario
+apparaît dans la galerie</p>
+<p><strong>Affichage des Cartes de Scénario:</strong> - Aperçu miniature
+- Nom du scénario - Date de création - Nombre de modifications -
+Indicateur de statut actif</p>
+<p><strong>Onglet Configurer:</strong></p>
+<p>Apporter des modifications au réseau pour le scénario:</p>
+<p><strong>Ajouter des Nœuds:</strong> - Nouveaux éléments pour
+représenter des états alternatifs - Exemple: “Zone Marine Protégée
+établie”</p>
+<p><strong>Supprimer des Nœuds:</strong> - Simuler la suppression
+d’éléments - Exemple: Supprimer l’activité “Chalutage de fond”</p>
+<p><strong>Modifier des Nœuds:</strong> - Changer les propriétés
+(importance, tendance, etc.) - Exemple: Augmenter l’intensité du
+“Tourisme”</p>
+<p><strong>Ajouter des Liens:</strong> - Nouvelles connexions causales -
+Exemple: “ZMP” → “Biomasse de poissons” (+fort)</p>
+<p><strong>Supprimer des Liens:</strong> - Briser les connexions
+existantes - Exemple: Supprimer “Effort de pêche” → “Stock de
+poissons”</p>
+<p><strong>Modifier des Liens:</strong> - Changer la polarité ou la
+force - Exemple: Affaiblir “Pollution” → “Santé des herbiers”</p>
+<p><strong>Onglet Analyse d’Impact:</strong></p>
+<p>Évaluer les effets du scénario sur:</p>
+<p><strong>Métriques de Réseau:</strong> - Comparer densité, centralité,
+etc. à la ligne de base - Identifier les changements structurels</p>
+<p><strong>Dynamique de Boucle:</strong> - Re-exécuter la détection de
+boucle pour le scénario - Comparer la distribution R/B - Identifier les
+nouvelles boucles/boucles supprimées</p>
+<p><strong>Points de Levier:</strong> - Recalculer les nœuds principaux
+- Voir comment les points d’intervention se déplacent</p>
+<p><strong>Propagation d’Impact:</strong> - Tracer les effets des
+changements - Identifier les conséquences en cascade</p>
+<p><strong>Onglet Comparer:</strong></p>
+<p>Comparaison côte à côte des scénarios:</p>
+<p><strong>Vue Table:</strong> - Comparaison métrique par métrique -
+Ligne de base vs. Scénario A vs. Scénario B - Colonnes de différence
+(Δ)</p>
+<p><strong>Vue Graphique:</strong> - Graphiques radar pour comparaison
+multi-métrique - Graphiques à barres pour indicateurs clés - Comparaison
+de structure de réseau</p>
+<p><strong>Génération de Rapport:</strong> - PDF de comparaison de
+scénarios - Inclut toutes les métriques, graphiques et narratifs -
+Export pour présentation aux parties prenantes</p>
+<h2 id="export-rapports">Export &amp; Rapports</h2>
+<h3 id="export-de-données">Export de Données</h3>
+<p>Exporter les données de votre projet dans plusieurs formats.</p>
+<p><strong>Export Excel (.xlsx)</strong></p>
+<p>Classeur multi-feuilles contenant: - Métadonnées du projet - Tous les
+tableaux ISA (B&amp;B, SE, PFM, P, A, M) - Matrices d’adjacence - Nœuds
+et arêtes CLD - Résultats de détection de boucle - Métriques de réseau -
+Registre des parties prenantes - Mesures de réponse - Comparaisons de
+scénarios</p>
+<p><strong>Export CSV (.csv)</strong> - Export de table unique - Choisir
+un ensemble de données spécifique - Compatible avec tout logiciel de
+feuille de calcul</p>
+<p><strong>Export JSON (.json)</strong> - Données structurées
+hiérarchiques - Projet complet incluant les structures imbriquées -
+Compatible avec applications web, bases de données - Compatible Kumu.io
+(avec style)</p>
+<p><strong>Export de Données R (.RData)</strong> - Format R natif -
+Préserve tous les types d’objets - Charger directement dans R pour
+analyse personnalisée</p>
+<h3 id="export-de-visualisation">Export de Visualisation</h3>
+<p>Exporter les visualisations CLD dans plusieurs formats.</p>
+<p><strong>HTML (Interactif)</strong> - Réseau entièrement interactif -
+Fichier autonome (aucun serveur nécessaire) - Partager par email ou web
+- Les destinataires peuvent explorer, zoomer, panoramiquer -
+<strong>Taille du fichier</strong>: 500KB - 2MB typique - <strong>Idéal
+pour</strong>: Partage avec parties prenantes, intégration web</p>
+<p><strong>PNG (Image Raster)</strong> - Bitmap haute résolution (150
+dpi par défaut) - Dimensions personnalisées (400-4000px largeur/hauteur)
+- Option de fond transparent - <strong>Taille du fichier</strong>: 100KB
+- 5MB - <strong>Idéal pour</strong>: Rapports, présentations,
+affiches</p>
+<p><strong>SVG (Graphiques Vectoriels)</strong> - Évolutif à n’importe
+quelle taille sans perte de qualité - Éditable dans un logiciel de
+graphiques vectoriels - Petite taille de fichier - <strong>Idéal
+pour</strong>: Publications, design professionnel, impression grand
+format</p>
+<p><strong>PDF (Prêt à Imprimer)</strong> - Qualité publication -
+Intégrable dans des documents - Nécessite l’installation de Pandoc +
+LaTeX - <strong>Idéal pour</strong>: Rapports formels, archivage</p>
+<h3 id="génération-de-rapports">Génération de Rapports</h3>
+<p>Créer automatiquement des rapports d’analyse complets.</p>
+<p><strong>Types de Rapports:</strong></p>
+<p><strong>1. Résumé Exécutif (2-3 pages)</strong></p>
+<p>Public cible: Décideurs, responsables politiques</p>
+<p>Contenu: - Vue d’ensemble du projet (1 paragraphe) - Résultats clés
+(points): - Nombre d’éléments et connexions - Boucles de rétroaction
+détectées (nombre R vs. B) - Top 3 des points de levier - Défis de
+gestion critiques - Recommandations prioritaires (3-5 items) - Visuel:
+Diagramme CLD simplifié</p>
+<p><strong>2. Rapport Technique (10-15 pages)</strong></p>
+<p>Public cible: Chercheurs, analystes techniques</p>
+<p>Contenu: - Analyse complète DAPSI(W)R(M) - Comptes d’éléments par
+type (table) - Métriques de réseau (densité, centralité, etc.) - Analyse
+détaillée des boucles: - Classification des boucles - Boucles dominantes
+- Implications système - Analyse des points de levier (top 10) - Tables
+de données (tous les exercices ISA)</p>
+<p><strong>3. Présentation aux Parties Prenantes (5-7
+pages)</strong></p>
+<p>Public cible: Parties prenantes générales, groupes communautaires</p>
+<p>Contenu: - Description du système en langage simple - Lourd en visuel
+(CLD, graphiques, infographies) - Vue d’ensemble du système: -
+Principaux moteurs identifiés - Pressions clés - Impacts écosystémiques
+- Conséquences sur le bien-être - Opportunités d’action - Opportunités
+d’engagement - Questions de discussion</p>
+<p><strong>4. Rapport de Projet Complet (20-30 pages)</strong></p>
+<p>Public cible: Documentation complète pour tous les publics</p>
+<p>Contenu: - Toutes les sections ci-dessus combinées - Méthodologie
+complète - Tous les tableaux de données - Toutes les visualisations -
+Recommandations détaillées (contextuelles):</p>
+<p><strong>Recommandations Stratégiques:</strong> - Points
+d’intervention prioritaires (nommés, avec scores) - Stratégie
+d’intervention en cascade (nœuds Moteurs spécifiques) - Système de
+surveillance d’alerte précoce (nœuds Récepteurs spécifiques) - Alertes
+de dynamique du système (basées sur composition des boucles) -
+Protection de la résilience (nœuds Connecteurs spécifiques)</p>
+<p><strong>Recommandations de Gestion:</strong> - Conception
+d’intervention (conseils spécifiques à la densité du réseau) - Stratégie
+de surveillance (sélection d’indicateurs basée sur les données) -
+Gestion adaptative (stratégie informée par les boucles avec timing) -
+Engagement des parties prenantes (alignement stratégique aux points de
+levier) - Prochaines étapes immédiates (5 plans d’action détaillés)</p>
+<ul>
+<li>Annexes:
+<ul>
+<li>Glossaire</li>
+<li>Sources de données</li>
+<li>Documentation de validation</li>
+<li>Références</li>
+</ul></li>
+</ul>
+<p><strong>Options de Rapport:</strong></p>
+<p><strong>Inclure les Visualisations:</strong> - [x] Diagramme de
+réseau CLD - [x] Graphiques de distribution des boucles - [x]
+Classements des points de levier - [x] Graphiques de métriques de
+réseau</p>
+<p><strong>Inclure les Tables de Données:</strong> - [x] Tous les
+tableaux d’éléments ISA - [x] Matrices d’adjacence - [x] Table de
+détails des boucles - [x] Résumé des métriques</p>
+<p><strong>Marque Personnalisée:</strong> - Ajouter votre logo - Palette
+de couleurs personnalisée - Pied de page de l’organisation</p>
+<p><strong>Formats de Rapport:</strong></p>
+<p><strong>HTML (Version Web)</strong> - Table des matières interactive
+(barre latérale flottante) - Sections repliables - Références croisées
+hyperliens - Visualisations interactives intégrées - <strong>Taille du
+fichier</strong>: 1-5 MB - <strong>Idéal pour</strong>: Partage par
+email, publication web, visionnage à l’écran</p>
+<p><strong>PDF (Version Imprimée)</strong> - Formatage professionnel -
+Numéros de page et en-têtes - Qualité prête à imprimer - Nécessite
+Pandoc + LaTeX/TinyTeX - <strong>Taille du fichier</strong>: 2-10 MB -
+<strong>Idéal pour</strong>: Distribution formelle, archivage,
+impression</p>
+<p><strong>Word (.docx)</strong> - Document éditable - Tables et figures
+- Nécessite l’installation de Pandoc - <strong>Taille du
+fichier</strong>: 1-5 MB - <strong>Idéal pour</strong>: Édition
+collaborative, formatage personnalisé</p>
+<p><strong>Processus de Génération:</strong></p>
+<ol type="1">
+<li>Naviguer vers le module “Préparer Rapport”</li>
+<li>Sélectionner le type de rapport</li>
+<li>Choisir les options (visualisations, tables de données)</li>
+<li>Cliquer sur “Générer Rapport”</li>
+<li>Traitement (10-30 secondes)</li>
+<li>Le bouton de téléchargement apparaît</li>
+<li>Ouvrir/sauvegarder le fichier de rapport</li>
+</ol>
+<p><strong>Dépannage:</strong></p>
+<ul>
+<li><p><strong>La génération de PDF échoue</strong>: Installer Pandoc et
+TinyTeX</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tinytex&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code></pre></div></li>
+<li><p><strong>Le rapport est vide</strong>: Assurez-vous d’avoir
+complété la saisie des données ISA et exécuté les analyses</p></li>
+<li><p><strong>Les graphiques n’apparaissent pas</strong>: Vérifier que
+les modules d’analyse ont été exécutés</p></li>
+</ul>
+<h1 id="flux-de-travail-meilleures-pratiques">Flux de Travail &amp;
+Meilleures Pratiques</h1>
+<h2 id="flux-de-travail-recommandés">Flux de Travail Recommandés</h2>
+<h3 id="atelier-participatif-standard-3-jours">Atelier Participatif
+Standard (3 jours)</h3>
+<p><strong>Jour 1: Cartographie du Système (6 heures)</strong> - Matin:
+Introduction et configuration du projet (1h) - Présenter le cadre
+DAPSI(W)R(M) - Définir le problème focal et les limites - Identifier les
+parties prenantes</p>
+<ul>
+<li>Fin de matinée: Biens &amp; Bénéfices (1.5h)
+<ul>
+<li>Brainstorm des résultats valorisés (Exercice 1)</li>
+<li>Prioriser par importance</li>
+</ul></li>
+<li>Après-midi: Travail à rebours (3.5h)
+<ul>
+<li>Services Écosystémiques (Exercice 2a)</li>
+<li>Processus Marins (Exercice 2b)</li>
+<li>Pause</li>
+<li>Pressions (Exercice 3)</li>
+</ul></li>
+</ul>
+<p><strong>Jour 2: Chaînes Causales et Visualisation (6 heures)</strong>
+- Matin: Moteurs et Activités (2h) - Activités générant des pressions
+(Exercice 4) - Moteurs de cause profonde (Exercice 5)</p>
+<ul>
+<li>Fin de matinée: Fermeture de boucle (1.5h)
+<ul>
+<li>Connexions de rétroaction (Exercice 6)</li>
+<li>Valider les connexions</li>
+</ul></li>
+<li>Après-midi: Création et exploration de CLD (2.5h)
+<ul>
+<li>Générer le réseau (Exercice 7-8)</li>
+<li>Exploration interactive</li>
+<li>Identifier les motifs</li>
+</ul></li>
+</ul>
+<p><strong>Jour 3: Analyse et Planification (6 heures)</strong> - Matin:
+Analyse (2h) - Détection de boucles - Métriques de réseau - Points de
+levier</p>
+<ul>
+<li>Fin de matinée: Planification des réponses (2h)
+<ul>
+<li>Brainstorm des interventions</li>
+<li>Priorisation multicritères</li>
+</ul></li>
+<li>Après-midi: Synthèse (2h)
+<ul>
+<li>Génération de rapport</li>
+<li>Planification d’action</li>
+<li>Accord sur les prochaines étapes</li>
+</ul></li>
+</ul>
+<h3 id="flux-de-travail-solorecherche-25-jours">Flux de Travail
+Solo/Recherche (25 jours)</h3>
+<p><strong>Semaine 1: Fondation (5 jours)</strong> - Jour 1-2:
+Configuration du projet, revue de littérature - Jour 3-4: Saisie des
+données ISA (Exercices 0-3) - Jour 5: Saisie des données ISA (Exercices
+4-6)</p>
+<p><strong>Semaine 2: Analyse (5 jours)</strong> - Jour 6: Génération et
+exploration de CLD - Jour 7-8: Détection et interprétation des boucles -
+Jour 9: Calcul des métriques de réseau - Jour 10: Analyse des points de
+levier</p>
+<p><strong>Semaine 3: Validation (5 jours)</strong> - Jour 11-13:
+Consultation d’experts - Jour 14-15: Revue des parties prenantes et
+révision</p>
+<p><strong>Semaine 4: Planification des Réponses (5 jours)</strong> -
+Jour 16-17: Identification des mesures de réponse - Jour 18-19:
+Évaluation d’impact et priorisation - Jour 20: Planification de la mise
+en œuvre</p>
+<p><strong>Semaine 5: Documentation (5 jours)</strong> - Jour 21-22:
+Analyse de scénarios - Jour 23-24: Génération de rapport - Jour 25:
+Revue finale et soumission</p>
+<h3 id="évaluation-rapide-assistée-par-ia-1-jour">Évaluation Rapide
+(Assistée par IA, 1 jour)</h3>
+<p><strong>Matin (3 heures)</strong> - 0-30min: Configuration du projet
+- 30-90min: Entretien ISA assisté par IA (11 étapes) - 90-120min:
+Examiner et affiner les éléments générés - 120-180min: Visualisation et
+exploration de CLD</p>
+<p><strong>Après-midi (3 heures)</strong> - 180-240min: Détection et
+analyse des boucles - 240-300min: Brainstorm de réponses - 300-360min:
+Génération de rapport et prochaines étapes</p>
+<h2 id="meilleures-pratiques">Meilleures Pratiques</h2>
+<h3 id="qualité-des-données">Qualité des Données</h3>
+<p><strong>1. Conventions de Dénomination Claires</strong> - Utiliser
+des noms descriptifs et spécifiques - Éviter le jargon ou les acronymes
+(ou les définir) - Être cohérent à travers des éléments similaires</p>
+<p><strong>Exemples:</strong> - Bon: “Pêche commerciale au chalut de
+fond” - Mauvais: “Pêche” (trop vague) - Mauvais: “PCCF” (acronyme peu
+clair)</p>
+<p><strong>2. Descriptions Complètes</strong> - Fournir un contexte pour
+chaque élément - Expliquer les mécanismes pour les relations -
+Documenter les sources de preuves</p>
+<p><strong>3. Granularité Appropriée</strong> - Pas trop large:
+“Pollution” → “Pollution nutritive de l’agriculture” - Pas trop étroit:
+“Ruissellement d’azote du champ 23A” → “Ruissellement nutritif agricole”
+- Faire correspondre l’échelle d’analyse au contexte de décision</p>
+<p><strong>4. Validation</strong> - Attribuer honnêtement les scores de
+confiance - Documenter les incertitudes - Chercher une revue d’experts -
+Incorporer les retours des parties prenantes</p>
+<h3 id="conception-de-réseau">Conception de Réseau</h3>
+<p><strong>1. Taille Optimale du Réseau</strong> - Point idéal: 20-60
+nœuds - Trop petit (&lt;15): Manque des dynamiques importantes - Trop
+grand (&gt;100): Difficile à analyser et communiquer - Se concentrer sur
+les éléments les plus importants</p>
+<p><strong>2. Équilibre à Travers les Niveaux DAPSI</strong> - Viser des
+nombres similaires à chaque niveau - Éviter de surreprésenter un niveau
+- Exemple de distribution: 5M, 8A, 10P, 8E, 6W, 5R</p>
+<p><strong>3. Densité de Connexion</strong> - Cible: 1.5-3 connexions
+par nœud en moyenne - Trop clairsemé: Peut manquer des rétroactions clés
+- Trop dense: Difficile à interpréter, moins utile</p>
+<p><strong>4. Boucles de Rétroaction</strong> - Concevoir délibérément
+une certaine rétroaction - Chaque M devrait ultimement se connecter à un
+B&amp;B - Chercher des conséquences involontaires</p>
+<h3 id="engagement-des-parties-prenantes">Engagement des Parties
+Prenantes</h3>
+<p><strong>1. Cartographie Participative</strong> - Impliquer des
+parties prenantes diverses - Utiliser la visualisation pour faciliter la
+discussion - Capturer les connaissances locales/traditionnelles -
+Valider les connaissances d’experts</p>
+<p><strong>2. Gestion Pouvoir-Intérêt</strong> - Engager étroitement
+pouvoir élevé/intérêt élevé (collaborer) - Maintenir satisfaits pouvoir
+élevé/intérêt faible (informer régulièrement) - Maintenir informés
+pouvoir faible/intérêt élevé (consulter) - Surveiller pouvoir
+faible/intérêt faible (effort minimal)</p>
+<p><strong>3. Processus Transparent</strong> - Documenter toutes les
+hypothèses - Rendre explicites les sources de données - Expliquer les
+incertitudes - Partager les résultats préliminaires pour retour</p>
+<p><strong>4. Résultats Actionnables</strong> - Lier l’analyse aux
+questions de gestion - Prioriser les recommandations pratiques -
+Développer des prochaines étapes claires - Attribuer des
+responsabilités</p>
+<h3 id="conseils-techniques">Conseils Techniques</h3>
+<p><strong>1. Sauvegarder Souvent</strong> - Utiliser la fonction de
+Sauvegarde Automatique - Sauvegarde manuelle toutes les 15-30 minutes -
+Utiliser des noms de fichiers descriptifs avec dates - Garder des copies
+de sauvegarde</p>
+<p><strong>2. Développement Incrémental</strong> - Commencer simple,
+ajouter de la complexité graduellement - Tester de petites sections
+avant de construire le réseau complet - Valider fréquemment pendant le
+développement</p>
+<p><strong>3. Utiliser les Modèles</strong> - Tirer parti des modèles
+existants quand applicable - Personnaliser plutôt que partir de zéro -
+Documenter vos propres modèles pour réutilisation</p>
+<p><strong>4. Exporter Régulièrement</strong> - Exporter vers Excel pour
+sauvegarde externe - Exporter les visualisations aux jalons clés -
+Générer des rapports périodiquement pour vérifier l’exhaustivité</p>
+<p><strong>5. Recommandations de Navigateur</strong> - Chrome (meilleure
+performance) - Firefox (bonne alternative) - Éviter Internet Explorer -
+Garder le navigateur à jour</p>
+<p><strong>6. Performance</strong> - Fermer les autres
+onglets/applications du navigateur - Vider le cache du navigateur si
+lent - Réduire la taille du réseau si &gt;100 nœuds causent du retard -
+Utiliser la disposition hiérarchique pour les grands réseaux</p>
+<h1 id="dépannage">Dépannage</h1>
+<h2 id="problèmes-courants">Problèmes Courants</h2>
+<h3 id="problèmes-dinstallation">Problèmes d’Installation</h3>
+<p><strong>Problème: L’installation du package échoue</strong></p>
+<p>Solution:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Essayer d&#39;installer depuis un miroir CRAN différent</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repos =</span> <span class="st">&quot;https://cloud.r-project.org/&quot;</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;nom_du_package&quot;</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ou utiliser l&#39;installateur de package de RStudio (Outils &gt; Installer des Packages)</span></span></code></pre></div>
+<p><strong>Problème: L’application ne démarre pas</strong></p>
+<p>Solutions: 1. Vérifier la version de R (doit être 4.0+)
+<code>r    R.version.string</code> 2. Vérifier que tous les packages
+sont installés
+<code>r    packages_requis &lt;- c("shiny", "shinydashboard", "shinyjs", ...)    manquants &lt;- packages_requis[!packages_requis %in% installed.packages()]    if(length(manquants) &gt; 0) install.packages(manquants)</code>
+3. Vérifier les messages d’erreur dans la console R</p>
+<h3 id="problèmes-de-saisie-de-données">Problèmes de Saisie de
+Données</h3>
+<p><strong>Problème: Impossible d’ajouter de nouveaux
+éléments</strong></p>
+<p>Solutions: - Assurez-vous que tous les champs requis sont complétés -
+Vérifier les ID en double - Vérifier le type de données (numérique
+vs. texte) - Vider le cache du navigateur</p>
+<p><strong>Problème: La matrice d’adjacence ne se sauvegarde
+pas</strong></p>
+<p>Solutions: - Remplir au moins une cellule dans la matrice - Utiliser
+le format correct: <code>+fort</code>, <code>+moyen</code>,
+<code>+faible</code>, <code>-fort</code>, etc. - Sauvegarder l’exercice
+avant de passer au suivant</p>
+<h3 id="problèmes-de-visualisation">Problèmes de Visualisation</h3>
+<p><strong>Problème: Le CLD ne s’affiche pas</strong></p>
+<p>Solutions: - Assurez-vous que les données ISA sont entrées (Exercices
+1-6) - Vérifier que JavaScript du navigateur est activé - Essayer de
+rafraîchir la page (F5) - Vérifier la console du navigateur pour les
+erreurs (F12 → onglet Console)</p>
+<p><strong>Problème: Nœuds qui se chevauchent/disposition
+désordonnée</strong></p>
+<p>Solutions: - Utiliser la disposition Hiérarchique (direction
+Bas-Haut) - Augmenter la séparation de niveau (150-200px) - Essayer la
+disposition Physique avec une gravité plus élevée - Repositionner
+manuellement les nœuds et sauvegarder</p>
+<h3 id="problèmes-danalyse">Problèmes d’Analyse</h3>
+<p><strong>Problème: La détection de boucles se bloque</strong></p>
+<p>Solutions: - Réseau trop grand (&gt;100 nœuds) - Réduire la longueur
+max de boucle (essayer 6-8) - Réduire les cycles max (essayer 200-500) -
+Filtrer les boucles triviales: Oui - Simplifier le réseau (supprimer les
+éléments de faible importance)</p>
+<p><strong>Problème: Aucune boucle détectée</strong></p>
+<p>Solutions: - Vérifier que l’Exercice 6 (Fermeture de Boucle) est
+complété - Vérifier que des connexions de rétroaction existent (liens M
+→ B&amp;B) - Augmenter la longueur max de boucle (essayer 10-12) -
+Vérifier que le réseau est entièrement connecté</p>
+<h3 id="problèmes-de-génération-de-rapport">Problèmes de Génération de
+Rapport</h3>
+<p><strong>Problème: La génération de rapport échoue</strong></p>
+<p>Solutions: - Compléter d’abord la saisie minimale de données -
+Exécuter les analyses requises avant le rapport - Vérifier l’espace
+disque disponible - Essayer d’abord le format HTML (plus compatible)</p>
+<p><strong>Problème: La génération de PDF échoue</strong></p>
+<p>Solutions:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Installer les outils requis</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tinytex&quot;</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Vérifier l&#39;installation</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">:::</span><span class="fu">is_tinytex</span>()  <span class="co"># Devrait retourner TRUE</span></span></code></pre></div>
+<h1 id="glossaire">Glossaire</h1>
+<p><strong>Activité (A)</strong>: Actions humaines qui génèrent des
+pressions sur les systèmes marins (ex: pêche, navigation, tourisme)</p>
+<p><strong>Matrice d’Adjacence</strong>: Table montrant les connexions
+entre deux ensembles d’éléments; lignes et colonnes représentent les
+éléments, cellules contiennent des informations de relation</p>
+<p><strong>Boucle d’Équilibrage (B)</strong>: Boucle de rétroaction avec
+nombre impair de liens négatifs; stabilise le système vers
+l’équilibre</p>
+<p><strong>Centralité d’Intermédiarité</strong>: Mesure de réseau de la
+fréquence à laquelle un nœud se trouve sur les chemins les plus courts
+entre d’autres nœuds; indique l’importance de pontage</p>
+<p><strong>Diagramme de Boucles Causales (CLD)</strong>: Visualisation
+de réseau montrant les relations de cause à effet et les boucles de
+rétroaction</p>
+<p><strong>Centralité</strong>: Famille de métriques quantifiant
+l’importance des nœuds dans les réseaux (degré, intermédiarité,
+proximité, vecteur propre)</p>
+<p><strong>DAPSI(W)R(M)</strong>: Cadre
+Drivers-Activities-Pressures-State changes-Welfare impacts-Response
+Measures (Moteurs-Activités-Pressions-Changements d’État-Impacts sur le
+Bien-être-Mesures de Réponse) pour l’analyse SES. Le “R/M” représente
+les interventions de gestion, combinant les réponses politiques et les
+mesures d’application en une seule catégorie unifiée.</p>
+<p><strong>Centralité de Degré</strong>: Nombre de connexions; degré
+entrant (entrant), degré sortant (sortant)</p>
+<p><strong>Moteur (D)</strong>: Causes profondes derrière les activités
+(facteurs économiques, sociaux, technologiques, environnementaux,
+politiques)</p>
+<p><strong>Service Écosystémique (SE/W)</strong>: Avantages que les
+écosystèmes fournissent aux humains (approvisionnement, régulation,
+culturel, support)</p>
+<p><strong>Arête</strong>: Connexion/lien entre nœuds dans le réseau;
+représente une relation causale</p>
+<p><strong>Centralité de Vecteur Propre</strong>: Importance basée sur
+l’importance des voisins; score élevé = connecté à d’autres nœuds
+importants</p>
+<p><strong>Boucle de Rétroaction</strong>: Chemin circulaire dans le
+réseau où l’élément s’influence lui-même à travers une chaîne d’autres
+éléments</p>
+<p><strong>Biens &amp; Bénéfices (B&amp;B/R)</strong>: Résultats
+valorisés des systèmes marins reçus par les parties prenantes</p>
+<p><strong>Disposition Hiérarchique</strong>: Algorithme de
+visualisation de réseau organisant les nœuds en niveaux/couches</p>
+<p><strong>ISA</strong>: Analyse Intégrée des Systèmes - méthodologie
+structurée pour l’analyse SES</p>
+<p><strong>Point de Levier</strong>: Emplacement d’intervention à fort
+impact identifié à travers les métriques de centralité</p>
+<p><strong>Processus/Fonctionnement Marin (PFM/E/I)</strong>: Processus
+écologiques et changements d’état dans l’environnement marin</p>
+<p><strong>MICMAC</strong>: Matrice des Impacts Croisés - analyse
+classant les nœuds par influence et dépendance</p>
+<p><strong>Densité de Réseau</strong>: Proportion de connexions
+possibles qui existent réellement; mesure de connectivité</p>
+<p><strong>Métriques de Réseau</strong>: Mesures quantitatives de la
+structure du réseau (densité, centralité, diamètre, etc.)</p>
+<p><strong>Nœud</strong>: Élément dans le diagramme de réseau
+représentant un composant du système</p>
+<p><strong>PageRank</strong>: Algorithme de Google pour classer
+l’importance; adapté pour l’analyse de réseau</p>
+<p><strong>PIMS</strong>: Système de Gestion d’Information Projet -
+module pour les métadonnées de projet et les parties prenantes</p>
+<p><strong>Polarité</strong>: Signe de la relation causale - positif (+)
+ou négatif (-)</p>
+<p><strong>Pression (P)</strong>: Facteurs de stress directs sur
+l’environnement marin (physique, chimique, biologique)</p>
+<p><strong>Boucle de Renforcement (R)</strong>: Boucle de rétroaction
+avec nombre pair de liens négatifs; amplifie le changement</p>
+<p><strong>Mesures de Réponse (R/M)</strong>: Interventions de gestion
+et instruments politiques conçus pour aborder les moteurs, activités ou
+pressions. Englobe à la fois les réponses au niveau politique et les
+mesures d’application spécifiques. Exemples : réglementations (quotas de
+pêche, AMP), instruments économiques (taxes, subventions), programmes
+éducatifs et solutions techniques. Partie du cadre DAPSI(W)R(M).</p>
+<p><strong>SES</strong>: Système Socio-Écologique - système couplé
+humain-naturel</p>
+<p><strong>Partie Prenante</strong>: Individu ou groupe avec intérêt ou
+enjeu dans les résultats du système</p>
+<p><strong>visNetwork</strong>: Package R pour visualisation de réseau
+interactive utilisant la bibliothèque vis.js</p>
+<hr />
+<p><strong>Version du Document:</strong> 1.10.0 <strong>Dernière Mise à
+Jour:</strong> Mars 2026 <strong>Licence:</strong> CC BY 4.0
+<strong>Contact:</strong> support@marinesabres.eu <strong>Site
+Web:</strong> www.marinesabres.eu</p>
+<hr />
+</body>
+</html>
