@@ -877,7 +877,7 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       )
 
       showNotification(i18n$t("modules.isa.data_entry.ex0.exercise_0_saved_successfully"), type = "message")
-      log_message("Exercise 0 case information saved", "INFO")
+      debug_log("Exercise 0 case information saved", "INFO")
     })
 
     # Exercise 1: Goods & Benefits ----
@@ -921,7 +921,7 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       isa_data$goods_benefits <- result$df
       showNotification(paste(i18n$t("modules.isa.data_entry.ex1.exercise_1_saved"), nrow(result$df), i18n$t("modules.isa.data_entry.ex789.goods_benefits")),
                       type = "message", session = session)
-      log_message(paste("Exercise 1 saved with", nrow(result$df), "entries"), "INFO")
+      debug_log(paste("Exercise 1 saved with", nrow(result$df), "entries"), "INFO")
     })
 
     # Exercise 2a: Ecosystem Services ----
@@ -966,7 +966,7 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       isa_data$ecosystem_services <- result$df
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(result$df), i18n$t("modules.ses.creation.ecosystem_services")),
                       type = "message", session = session)
-      log_message(paste("Exercise 2a saved with", nrow(result$df), "entries"), "INFO")
+      debug_log(paste("Exercise 2a saved with", nrow(result$df), "entries"), "INFO")
     })
 
     # Exercise 2b: Marine Processes and Functioning ----

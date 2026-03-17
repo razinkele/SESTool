@@ -998,9 +998,6 @@ generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) 
 # MODULE INITIALIZATION MESSAGE
 # ==============================================================================
 
-message("[INFO] AI ISA Connection Generator module loaded successfully")
-message("       Available functions: detect_polarity, calculate_relevance,")
-message("       generate_smart_connections, convert_matrices_to_connections,")
-message("       generate_connections")
-message("       Enhanced with: ML integration, knowledge base lookup, TF-IDF scoring,")
-message("       negation-aware polarity detection, synonym expansion")
+debug_log("AI ISA Connection Generator module loaded successfully", "INIT")
+debug_log("Available functions: detect_polarity, calculate_relevance, generate_smart_connections, convert_matrices_to_connections, generate_connections", "INIT")
+debug_log("Enhanced with: ML integration, knowledge base lookup, TF-IDF scoring, negation-aware polarity detection, synonym expansion", "INIT")

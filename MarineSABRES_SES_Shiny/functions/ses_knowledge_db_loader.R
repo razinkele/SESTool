@@ -332,4 +332,4 @@ get_available_contexts <- function() {
 # Auto-load on source
 load_ses_knowledge_db()
 
-message("[INFO] SES Knowledge Database loader initialized")
+debug_log("SES Knowledge Database loader initialized", "INIT")

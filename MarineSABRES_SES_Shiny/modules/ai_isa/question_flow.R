@@ -1112,6 +1112,5 @@ setup_element_viewer_modals <- function(input, session, rv, i18n) {
 # MODULE INITIALIZATION MESSAGE
 # ==============================================================================
 
-message("[INFO] AI ISA Question Flow module loaded successfully")
-message("       Available functions: define_question_flow, get_session_data,")
-message("       restore_session_data, setup_* functions")
+debug_log("AI ISA Question Flow module loaded successfully", "INIT")
+debug_log("Available functions: define_question_flow, get_session_data, restore_session_data, setup_* functions", "INIT")

@@ -452,5 +452,5 @@ setup_ui_outputs <- function(output, input, session, rv, i18n, QUESTION_FLOW) {
 # MODULE INITIALIZATION MESSAGE
 # ==============================================================================
 
-message("[INFO] AI ISA UI Components module loaded successfully")
-message("       Available functions: setup_ui_outputs, highlight_keywords, get_ai_isa_css, get_ai_isa_js")
+debug_log("AI ISA UI Components module loaded successfully", "INIT")
+debug_log("Available functions: setup_ui_outputs, highlight_keywords, get_ai_isa_css, get_ai_isa_js", "INIT")

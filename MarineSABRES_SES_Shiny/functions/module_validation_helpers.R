@@ -87,7 +87,7 @@ validate_text_input <- function(value, field_name, required = TRUE,
     return(list(valid = TRUE, message = NULL, value = value))
 
   }, error = function(e) {
-    log_message(paste("Error validating text input:", e$message), "ERROR")
+    debug_log(paste("Error validating text input:", e$message), "ERROR")
     msg <- paste("Validation error for", field_name)
     if (!is.null(session)) {
       showNotification(msg, type = "error", session = session)
@@ -195,7 +195,7 @@ validate_numeric_input <- function(value, field_name, required = TRUE,
     return(list(valid = TRUE, message = NULL, value = value))
 
   }, error = function(e) {
-    log_message(paste("Error validating numeric input:", e$message), "ERROR")
+    debug_log(paste("Error validating numeric input:", e$message), "ERROR")
     msg <- paste("Validation error for", field_name)
     if (!is.null(session)) {
       showNotification(msg, type = "error", session = session)
@@ -249,7 +249,7 @@ validate_select_input <- function(value, field_name, required = TRUE,
     return(list(valid = TRUE, message = NULL, value = value))
 
   }, error = function(e) {
-    log_message(paste("Error validating select input:", e$message), "ERROR")
+    debug_log(paste("Error validating select input:", e$message), "ERROR")
     msg <- paste("Validation error for", field_name)
     if (!is.null(session)) {
       showNotification(msg, type = "error", session = session)
@@ -339,7 +339,7 @@ validate_date_input <- function(value, field_name, required = TRUE,
     return(list(valid = TRUE, message = NULL, value = date_value))
 
   }, error = function(e) {
-    log_message(paste("Error validating date input:", e$message), "ERROR")
+    debug_log(paste("Error validating date input:", e$message), "ERROR")
     msg <- paste("Validation error for", field_name)
     if (!is.null(session)) {
       showNotification(msg, type = "error", session = session)
@@ -429,7 +429,7 @@ validate_file_upload <- function(file_input, field_name, required = TRUE,
     ))
 
   }, error = function(e) {
-    log_message(paste("Error validating file upload:", e$message), "ERROR")
+    debug_log(paste("Error validating file upload:", e$message), "ERROR")
     msg <- paste("File validation error")
     if (!is.null(session)) {
       showNotification(msg, type = "error", session = session)
@@ -454,7 +454,7 @@ validate_all <- function(validations, session = NULL) {
   tryCatch({
 
     if (!is.list(validations)) {
-      log_message("validate_all requires list of validation results", "ERROR")
+      debug_log("validate_all requires list of validation results", "ERROR")
       return(FALSE)
     }
 
@@ -466,7 +466,7 @@ validate_all <- function(validations, session = NULL) {
       validation <- validations[[i]]
 
       if (!is.list(validation) || !"valid" %in% names(validation)) {
-        log_message(paste("Invalid validation result at index", i), "WARNING")
+        debug_log(paste("Invalid validation result at index", i), "WARNING")
         all_valid <- FALSE
         next
       }
@@ -491,7 +491,7 @@ validate_all <- function(validations, session = NULL) {
     return(all_valid)
 
   }, error = function(e) {
-    log_message(paste("Error in validate_all:", e$message), "ERROR")
+    debug_log(paste("Error in validate_all:", e$message), "ERROR")
     return(FALSE)
   })
 }
@@ -511,7 +511,7 @@ reactive_validation <- function(validation_expr) {
     tryCatch({
       validation_expr
     }, error = function(e) {
-      log_message(paste("Error in reactive validation:", e$message), "ERROR")
+      debug_log(paste("Error in reactive validation:", e$message), "ERROR")
       list(valid = FALSE, message = "Validation error")
     })
   })
@@ -707,7 +707,7 @@ validate_dataframe_columns <- function(df, required_cols, df_name = "Data frame"
     return(list(valid = TRUE, message = NULL, missing_cols = character(0)))
 
   }, error = function(e) {
-    log_message(paste("Error validating data frame columns:", e$message), "ERROR")
+    debug_log(paste("Error validating data frame columns:", e$message), "ERROR")
     msg <- paste("Validation error for", df_name)
     if (!is.null(session)) {
       showNotification(msg, type = "error", session = session)

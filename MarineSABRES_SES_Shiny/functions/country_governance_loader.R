@@ -321,4 +321,4 @@ get_country_enriched_suggestions <- function(country_codes, category) {
 # Auto-load on source
 load_country_governance_db()
 
-message("[INFO] Country Governance Database loader initialized")
+debug_log("Country Governance Database loader initialized", "INIT")

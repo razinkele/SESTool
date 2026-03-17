@@ -1088,6 +1088,28 @@
       "it": "Molto Alto",
       "no": "Veldig Høy",
       "el": "Πολύ Υψηλό"
+    },
+    "common.labels.strength_tooltip": {
+      "en": "1: Very Weak - Minimal influence\n2: Weak - Small influence\n3: Medium - Moderate influence\n4: Strong - Significant influence\n5: Very Strong - Major influence",
+      "es": "1: Muy Débil - Influencia mínima\n2: Débil - Influencia pequeña\n3: Medio - Influencia moderada\n4: Fuerte - Influencia significativa\n5: Muy Fuerte - Influencia mayor",
+      "fr": "1: Très Faible - Influence minimale\n2: Faible - Petite influence\n3: Moyen - Influence modérée\n4: Fort - Influence significative\n5: Très Fort - Influence majeure",
+      "de": "1: Sehr Schwach - Minimaler Einfluss\n2: Schwach - Geringer Einfluss\n3: Mittel - Mäßiger Einfluss\n4: Stark - Bedeutender Einfluss\n5: Sehr Stark - Großer Einfluss",
+      "lt": "1: Labai silpnas - Minimali įtaka\n2: Silpnas - Maža įtaka\n3: Vidutinis - Vidutinė įtaka\n4: Stiprus - Reikšminga įtaka\n5: Labai stiprus - Didelė įtaka",
+      "pt": "1: Muito Fraco - Influência mínima\n2: Fraco - Influência pequena\n3: Médio - Influência moderada\n4: Forte - Influência significativa\n5: Muito Forte - Influência maior",
+      "it": "1: Molto Debole - Influenza minima\n2: Debole - Influenza ridotta\n3: Medio - Influenza moderata\n4: Forte - Influenza significativa\n5: Molto Forte - Influenza maggiore",
+      "no": "1: Veldig Svak - Minimal innflytelse\n2: Svak - Liten innflytelse\n3: Middels - Moderat innflytelse\n4: Sterk - Betydelig innflytelse\n5: Veldig Sterk - Stor innflytelse",
+      "el": "1: Πολύ Αδύναμο - Ελάχιστη επιρροή\n2: Αδύναμο - Μικρή επιρροή\n3: Μέτριο - Μέτρια επιρροή\n4: Ισχυρό - Σημαντική επιρροή\n5: Πολύ Ισχυρό - Μεγάλη επιρροή"
+    },
+    "common.labels.confidence_tooltip": {
+      "en": "1: Very Low - Highly uncertain\n2: Low - Uncertain with limited evidence\n3: Medium - Moderately certain\n4: High - Confident with good evidence\n5: Very High - Highly confident, well-established",
+      "es": "1: Muy Bajo - Muy incierto\n2: Bajo - Incierto con evidencia limitada\n3: Medio - Moderadamente seguro\n4: Alto - Seguro con buena evidencia\n5: Muy Alto - Muy seguro, bien establecido",
+      "fr": "1: Très Bas - Très incertain\n2: Bas - Incertain avec preuves limitées\n3: Moyen - Modérément certain\n4: Haut - Confiant avec de bonnes preuves\n5: Très Haut - Très confiant, bien établi",
+      "de": "1: Sehr Niedrig - Sehr unsicher\n2: Niedrig - Unsicher mit begrenzten Belegen\n3: Mittel - Mäßig sicher\n4: Hoch - Sicher mit guten Belegen\n5: Sehr Hoch - Sehr sicher, gut belegt",
+      "lt": "1: Labai žemas - Labai neapibrėžtas\n2: Žemas - Neapibrėžtas su ribotais įrodymais\n3: Vidutinis - Vidutiniškai tikras\n4: Aukštas - Patikimas su gerais įrodymais\n5: Labai aukštas - Labai patikimas, gerai pagrįstas",
+      "pt": "1: Muito Baixo - Muito incerto\n2: Baixo - Incerto com evidências limitadas\n3: Médio - Moderadamente certo\n4: Alto - Confiante com boas evidências\n5: Muito Alto - Muito confiante, bem estabelecido",
+      "it": "1: Molto Basso - Molto incerto\n2: Basso - Incerto con evidenze limitate\n3: Medio - Moderatamente certo\n4: Alto - Sicuro con buone evidenze\n5: Molto Alto - Molto sicuro, ben consolidato",
+      "no": "1: Veldig Lav - Svært usikkert\n2: Lav - Usikkert med begrenset evidens\n3: Middels - Moderat sikkert\n4: Høy - Sikker med god evidens\n5: Veldig Høy - Svært sikker, veletablert",
+      "el": "1: Πολύ Χαμηλό - Πολύ αβέβαιο\n2: Χαμηλό - Αβέβαιο με περιορισμένα στοιχεία\n3: Μέτριο - Μετρίως βέβαιο\n4: Υψηλό - Σίγουρο με καλά στοιχεία\n5: Πολύ Υψηλό - Πολύ σίγουρο, καλά τεκμηριωμένο"
     }
   }
 }

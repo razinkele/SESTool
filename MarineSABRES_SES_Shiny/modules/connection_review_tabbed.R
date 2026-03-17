@@ -1132,7 +1132,7 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
             icon("info-circle", style = "color: #17a2b8; cursor: help; margin-left: 5px; font-size: 0.9em;"),
             `data-toggle` = "tooltip",
             `data-placement` = "top",
-            title = "1: Very Weak - Minimal influence\n2: Weak - Small influence\n3: Medium - Moderate influence\n4: Strong - Significant influence\n5: Very Strong - Major influence" # TODO: i18n tooltip
+            title = i18n$t("common.labels.strength_tooltip")
           )
         ),
         span(textOutput(ns(paste0("strength_label_", conn_idx)), inline = TRUE))
@@ -1158,7 +1158,7 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
             icon("info-circle", style = "color: #17a2b8; cursor: help; margin-left: 5px; font-size: 0.9em;"),
             `data-toggle` = "tooltip",
             `data-placement` = "top",
-            title = "1: Very Low - Highly uncertain\n2: Low - Uncertain with limited evidence\n3: Medium - Moderately certain\n4: High - Confident with good evidence\n5: Very High - Highly confident, well-established" # TODO: i18n tooltip
+            title = i18n$t("common.labels.confidence_tooltip")
           )
         ),
         span(textOutput(ns(paste0("confidence_label_", conn_idx)), inline = TRUE))
