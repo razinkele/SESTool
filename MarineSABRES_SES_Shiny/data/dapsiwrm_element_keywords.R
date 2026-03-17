@@ -36,7 +36,11 @@ DAPSIWRM_KEYWORDS <- list(
 
       # Environmental drivers
       "climate change", "sea level rise", "temperature increase",
-      "natural variability", "environmental change"
+      "natural variability", "environmental change",
+
+      # Additional drivers
+      "agricultural", "vulnerability", "blue economy", "diversification",
+      "intensification", "adaptation", "urbanisation", "infrastructure"
     ),
 
     patterns = c(
@@ -48,7 +52,14 @@ DAPSIWRM_KEYWORDS <- list(
     context_boost = list(
       fishing = c("food security", "livelihood", "employment", "market demand"),
       tourism = c("tourism demand", "economic growth", "employment"),
-      eutrophication = c("food security", "population growth", "development")
+      eutrophication = c("food security", "population growth", "development"),
+      aquaculture = c("food security", "market demand", "livelihood", "employment"),
+      shipping = c("economic growth", "market demand", "development"),
+      coastal_development = c("urbanization", "infrastructure", "population growth", "development"),
+      pollution = c("population growth", "development", "demand"),
+      climate = c("climate change", "sea level rise", "adaptation", "vulnerability"),
+      invasive_species = c("environmental change", "natural variability"),
+      arctic = c("climate change", "vulnerability", "adaptation", "livelihood")
     )
   ),
 
@@ -89,7 +100,12 @@ DAPSIWRM_KEYWORDS <- list(
 
       # Other activities
       "renewable energy", "wind farms", "wave energy",
-      "desalination", "coastal defense"
+      "desalination", "coastal defense",
+
+      # Additional activities
+      "harvesting", "anchoring", "mooring", "remediation", "monitoring",
+      "nourishment", "seismic", "cultivation", "stocking", "hatchery",
+      "dredging", "discharge", "extraction"
     ),
 
     patterns = c(
@@ -102,7 +118,14 @@ DAPSIWRM_KEYWORDS <- list(
     context_boost = list(
       fishing = c("commercial fishing", "trawling", "overfishing"),
       eutrophication = c("agriculture", "farming", "fertilizer use"),
-      tourism = c("tourism", "recreational activities", "coastal development")
+      tourism = c("tourism", "recreational activities", "coastal development"),
+      aquaculture = c("aquaculture", "fish farming", "shellfish farming", "cage", "feed", "pen", "hatchery"),
+      shipping = c("shipping", "port operations", "vessel traffic", "navigation", "ballast"),
+      coastal_development = c("construction", "coastal development", "urbanization", "resort", "infrastructure"),
+      pollution = c("wastewater discharge", "discharge", "land runoff"),
+      climate = c("coastal defense", "renewable energy"),
+      invasive_species = c("introduction of species", "stocking"),
+      arctic = c("extraction", "mining", "monitoring")
     )
   ),
 
@@ -135,7 +158,13 @@ DAPSIWRM_KEYWORDS <- list(
 
       # Hydrological pressures
       "salinity change", "coastal erosion", "wave exposure change",
-      "current alteration"
+      "current alteration",
+
+      # Additional pressures
+      "altered", "anoxic", "anoxia", "antifouling", "leaching", "bleaching",
+      "heatwave", "accumulation", "overgrazing", "trampling", "sewage",
+      "warming", "blocked", "barrier", "hypoxia", "turbidity",
+      "salinisation", "acidification"
     ),
 
     patterns = c(
@@ -148,7 +177,14 @@ DAPSIWRM_KEYWORDS <- list(
     context_boost = list(
       fishing = c("overfishing", "bycatch", "seabed disturbance"),
       eutrophication = c("nutrient enrichment", "eutrophication", "hypoxia"),
-      tourism = c("marine litter", "noise pollution", "physical disturbance")
+      tourism = c("marine litter", "noise pollution", "physical disturbance"),
+      aquaculture = c("nutrient enrichment", "disease", "pathogen introduction", "chemical pollution"),
+      shipping = c("oil spills", "noise pollution", "invasive species", "ballast", "antifouling"),
+      coastal_development = c("habitat destruction", "coastal erosion", "siltation", "turbidity"),
+      pollution = c("contamination", "toxic substances", "sewage", "chemical pollution", "microplastic"),
+      climate = c("warming", "acidification", "bleaching", "heatwave", "ocean acidification"),
+      invasive_species = c("invasive species", "alien species", "introduction of species", "non-native"),
+      arctic = c("warming", "permafrost", "ice", "acidification", "anoxia")
     )
   ),
 
@@ -179,7 +215,12 @@ DAPSIWRM_KEYWORDS <- list(
       # Ecosystem functioning
       "primary production", "productivity", "nutrient cycling",
       "food web", "trophic structure", "community composition",
-      "ecosystem health", "resilience"
+      "ecosystem health", "resilience",
+
+      # Additional state keywords
+      "migration", "sediment budget", "clarity", "salinity",
+      "filamentous", "freshwater lens", "permafrost", "recruitment",
+      "canopy", "benthos", "benthic", "matte", "halocline"
     ),
 
     patterns = c(
@@ -191,7 +232,14 @@ DAPSIWRM_KEYWORDS <- list(
     context_boost = list(
       fishing = c("population decline", "stock size", "abundance"),
       eutrophication = c("hypoxia", "water quality", "primary production"),
-      habitat_loss = c("habitat extent", "habitat quality", "biodiversity")
+      habitat_loss = c("habitat extent", "habitat quality", "biodiversity"),
+      aquaculture = c("benthos", "benthic", "water quality", "nutrient cycling"),
+      shipping = c("community composition", "habitat condition"),
+      coastal_development = c("habitat extent", "sediment budget", "benthos"),
+      pollution = c("water quality", "community composition", "biodiversity"),
+      climate = c("recruitment", "migration", "canopy", "bleaching", "resilience"),
+      invasive_species = c("community composition", "biodiversity", "trophic structure"),
+      arctic = c("permafrost", "halocline", "salinity", "migration", "canopy")
     )
   ),
 
@@ -217,7 +265,12 @@ DAPSIWRM_KEYWORDS <- list(
 
       # Cultural services
       "recreation", "aesthetic value", "cultural heritage",
-      "education", "research", "spiritual value"
+      "education", "research", "spiritual value",
+
+      # Additional ecosystem services
+      "amenity", "blue carbon", "endemism", "pharmaceutical",
+      "ecotourism", "filtration", "flyway", "food web",
+      "nursery function", "wave attenuation", "shoreline stabilisation"
     ),
 
     patterns = c(
@@ -228,8 +281,14 @@ DAPSIWRM_KEYWORDS <- list(
 
     context_boost = list(
       fishing = c("fish provision", "food provision", "nursery function"),
-      climate = c("carbon sequestration", "climate regulation"),
-      tourism = c("recreation", "aesthetic value", "cultural heritage")
+      climate = c("carbon sequestration", "climate regulation", "blue carbon"),
+      tourism = c("recreation", "aesthetic value", "cultural heritage", "ecotourism", "amenity"),
+      aquaculture = c("food provision", "nursery function", "water purification"),
+      shipping = c("migration corridor"),
+      coastal_development = c("coastal protection", "erosion control", "wave attenuation", "shoreline stabilisation"),
+      pollution = c("water purification", "waste treatment", "filtration"),
+      invasive_species = c("nursery function", "food web", "endemism"),
+      arctic = c("carbon sequestration", "blue carbon", "climate regulation")
     )
   ),
 
@@ -253,7 +312,12 @@ DAPSIWRM_KEYWORDS <- list(
       "recreational opportunities", "leisure",
 
       # Environmental benefits
-      "clean environment", "healthy ecosystem", "ecosystem resilience"
+      "clean environment", "healthy ecosystem", "ecosystem resilience",
+
+      # Additional welfare keywords
+      "safety", "flood damage", "avoided costs", "decommissioning",
+      "drinking water", "pride", "viability", "displacement",
+      "overcrowding", "gentrification"
     ),
 
     patterns = c(
@@ -265,7 +329,14 @@ DAPSIWRM_KEYWORDS <- list(
     context_boost = list(
       fishing = c("income", "employment", "food security"),
       tourism = c("revenue", "employment", "recreational opportunities"),
-      general = c("quality of life", "wellbeing", "health")
+      general = c("quality of life", "wellbeing", "health"),
+      aquaculture = c("income", "employment", "food security", "livelihood"),
+      shipping = c("revenue", "employment", "economic value"),
+      coastal_development = c("flood damage", "avoided costs", "safety", "displacement", "gentrification"),
+      pollution = c("health", "drinking water", "clean environment"),
+      climate = c("safety", "flood damage", "avoided costs", "ecosystem resilience"),
+      invasive_species = c("livelihood", "viability", "food security"),
+      arctic = c("livelihood", "safety", "cultural identity", "pride")
     )
   ),
 
@@ -307,7 +378,12 @@ DAPSIWRM_KEYWORDS <- list(
       # Other responses
       "environmental policy", "regulation", "legislation",
       "management plan", "conservation strategy",
-      "awareness campaign", "education program"
+      "awareness campaign", "education program",
+
+      # Additional responses
+      "buffer zone", "moratorium", "treaty", "convention", "clean-up",
+      "pump-out", "community-based", "co-management", "decommissioning",
+      "early warning", "carrying capacity", "biosecurity", "eradication"
     ),
 
     patterns = c(
@@ -320,7 +396,14 @@ DAPSIWRM_KEYWORDS <- list(
     context_boost = list(
       fishing = c("fishing quota", "MPA", "catch limit"),
       eutrophication = c("nutrient reduction", "emission limit", "wastewater treatment"),
-      general = c("regulation", "policy", "monitoring program")
+      general = c("regulation", "policy", "monitoring program"),
+      aquaculture = c("regulation", "permit", "zoning", "carrying capacity"),
+      shipping = c("regulation", "pollution control", "discharge regulation", "convention"),
+      coastal_development = c("spatial planning", "zoning", "buffer zone", "ICZM"),
+      pollution = c("pollution control", "clean-up", "pump-out", "discharge regulation", "ban"),
+      climate = c("conservation strategy", "ecosystem restoration", "early warning"),
+      invasive_species = c("biosecurity", "eradication", "monitoring program", "ban"),
+      arctic = c("MPA", "treaty", "conservation strategy", "moratorium", "co-management")
     )
   )
 )
