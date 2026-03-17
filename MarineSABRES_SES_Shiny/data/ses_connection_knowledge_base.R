@@ -98,7 +98,7 @@ SES_CONNECTION_DB <- list(
   list(from_type = "activities", to_type = "pressures",
        from_pattern = "fish|trawl|seine|gillnet",
        to_pattern = "ghost.*net|abandon.*gear|marine.*litter",
-       probability = 0.70, polarity = "+", strength = "medium",
+       probability = 0.45, polarity = "+", strength = "weak",
        source = "UNEP-MAP 2017"),
 
   # P -> S: Pressures to States (Fishing)
@@ -450,13 +450,13 @@ SES_CONNECTION_DB <- list(
   list(from_type = "activities", to_type = "pressures",
        from_pattern = "aquacultur|fish.*farm",
        to_pattern = "antibiot|chemic|medicin|pestici",
-       probability = 0.75, polarity = "+", strength = "medium",
+       probability = 0.50, polarity = "+", strength = "weak",
        source = "Borja et al. 2016"),
 
   list(from_type = "activities", to_type = "pressures",
        from_pattern = "aquacultur|fish.*farm",
        to_pattern = "escap|genetic.*introgress|invasive|non.?native",
-       probability = 0.72, polarity = "+", strength = "medium",
+       probability = 0.45, polarity = "+", strength = "weak",
        source = "Borja et al. 2016"),
 
   list(from_type = "activities", to_type = "pressures",
@@ -475,7 +475,7 @@ SES_CONNECTION_DB <- list(
   list(from_type = "pressures", to_type = "states",
        from_pattern = "escap|genetic.*introgress",
        to_pattern = "wild.*stock|genetic.*divers|native.*populat",
-       probability = 0.75, polarity = "-", strength = "medium",
+       probability = 0.50, polarity = "-", strength = "weak",
        source = "Borja et al. 2016"),
 
   # ============================================================================
@@ -518,7 +518,7 @@ SES_CONNECTION_DB <- list(
   list(from_type = "activities", to_type = "pressures",
        from_pattern = "ship|vessel|cargo|port",
        to_pattern = "ship.*strike|collision|marine.*mammal.*disturb",
-       probability = 0.75, polarity = "+", strength = "medium",
+       probability = 0.50, polarity = "+", strength = "weak",
        source = "Halpern et al. 2015"),
 
   # P -> S
@@ -756,7 +756,7 @@ SES_CONNECTION_DB <- list(
   list(from_type = "responses", to_type = "drivers",
        from_pattern = "education|awareness|campaign|outreach",
        to_pattern = "demand|consum|behavio|preference",
-       probability = 0.75, polarity = "-", strength = "medium",
+       probability = 0.45, polarity = "-", strength = "weak",
        source = "Elliott et al. 2017"),
 
   list(from_type = "responses", to_type = "drivers",
@@ -804,8 +804,211 @@ SES_CONNECTION_DB <- list(
   list(from_type = "welfare", to_type = "drivers",
        from_pattern = "recreat.*loss|quality.*life.*declin",
        to_pattern = "recreat.*demand|tourism.*demand|leisure",
+       probability = 0.50, polarity = "+", strength = "weak",
+       source = "Elliott et al. 2017"),
+
+  # ============================================================================
+  # FEEDBACK LOOP PATTERNS: W -> D (welfare feeding back to drivers)
+  # ============================================================================
+
+  # W -> D: Fishing community livelihood loss reducing food security demand
+  list(from_type = "welfare", to_type = "drivers",
+       from_pattern = "fish.*communit.*livelihood.*loss|fish.*livelihood.*declin|artisan.*livelihood",
+       to_pattern = "food.*secur.*demand|food.*demand|protein.*demand",
+       probability = 0.85, polarity = "-", strength = "strong",
+       source = "Elliott et al. 2017"),
+
+  # W -> D: Tourism revenue decline reducing coastal development demand
+  list(from_type = "welfare", to_type = "drivers",
+       from_pattern = "tourism.*revenue.*declin|tourism.*income.*loss|visitor.*declin",
+       to_pattern = "coastal.*develop.*demand|resort.*demand|hotel.*demand|develop.*pressure",
+       probability = 0.80, polarity = "+", strength = "medium",
+       source = "Costanza et al. 2014"),
+
+  # W -> D: Coastal property damage increasing flood protection demand
+  list(from_type = "welfare", to_type = "drivers",
+       from_pattern = "coastal.*property.*damage|property.*loss|storm.*damage|flood.*damage",
+       to_pattern = "flood.*protect.*demand|coastal.*defence|protect.*demand|resili.*demand",
+       probability = 0.90, polarity = "+", strength = "strong",
+       source = "Costanza et al. 2014"),
+
+  # W -> D: Food security improvement increasing fishing demand
+  list(from_type = "welfare", to_type = "drivers",
+       from_pattern = "food.*secur.*improv|nutrition.*improv|food.*access.*improv",
+       to_pattern = "fish.*demand|seafood.*demand|harvest.*demand",
        probability = 0.75, polarity = "+", strength = "medium",
-       source = "Elliott et al. 2017")
+       source = "Costanza et al. 2014"),
+
+  # W -> D: Cultural identity preservation maintaining traditional fishing demand
+  list(from_type = "welfare", to_type = "drivers",
+       from_pattern = "cultur.*identity.*preserv|heritage.*preserv|cultur.*continu",
+       to_pattern = "tradition.*fish.*demand|artisan.*demand|subsist.*demand|cultur.*practic",
+       probability = 0.70, polarity = "+", strength = "weak",
+       source = "Elliott et al. 2017"),
+
+  # ============================================================================
+  # FEEDBACK LOOP PATTERNS: W -> R (welfare motivating responses)
+  # ============================================================================
+
+  # W -> R: Community health impacts driving pollution regulation
+  list(from_type = "welfare", to_type = "responses",
+       from_pattern = "communit.*health.*impact|public.*health.*concern|health.*effect|contamin.*health",
+       to_pattern = "pollut.*regulat|pollut.*control|emission.*standard|discharg.*regulat",
+       probability = 0.80, polarity = "+", strength = "strong",
+       source = "Borja et al. 2016"),
+
+  # W -> R: Livelihood loss driving fisheries management reform
+  list(from_type = "welfare", to_type = "responses",
+       from_pattern = "livelihood.*loss|fisher.*income.*loss|fish.*communit.*declin",
+       to_pattern = "fisher.*manag.*reform|fish.*policy|fish.*regulat|stock.*recover.*plan",
+       probability = 0.75, polarity = "+", strength = "medium",
+       source = "Elliott et al. 2017"),
+
+  # W -> R: Property damage from storms driving coastal defence policy
+  list(from_type = "welfare", to_type = "responses",
+       from_pattern = "property.*damage.*storm|storm.*damage|flood.*property|coastal.*damage",
+       to_pattern = "coastal.*defen|flood.*policy|coastal.*protect.*policy|seawall|breakwater",
+       probability = 0.85, polarity = "+", strength = "strong",
+       source = "Costanza et al. 2014"),
+
+  # ============================================================================
+  # FEEDBACK LOOP PATTERNS: R -> D (responses modifying drivers)
+  # ============================================================================
+
+  # R -> D: Marine protected area reducing extractive demand
+  list(from_type = "responses", to_type = "drivers",
+       from_pattern = "mpa|marine.*protect.*area|no.?take.*zone|sanctuary",
+       to_pattern = "extract.*demand|resource.*demand|fish.*demand.*area",
+       probability = 0.70, polarity = "-", strength = "medium",
+       source = "Elliott et al. 2017"),
+
+  # R -> D: Fishing quota restrictions diversifying livelihood demand
+  list(from_type = "responses", to_type = "drivers",
+       from_pattern = "fish.*quota|catch.*restrict|tac.*restrict|harvest.*limit",
+       to_pattern = "diversif.*livelihood|alternat.*livelihood|econom.*diversif|tourism.*demand",
+       probability = 0.65, polarity = "+", strength = "medium",
+       source = "Costanza et al. 2014"),
+
+  # R -> D: Renewable energy targets increasing offshore energy demand
+  list(from_type = "responses", to_type = "drivers",
+       from_pattern = "renew.*energy.*target|clean.*energy.*policy|green.*energy|carbon.*neutral",
+       to_pattern = "offshore.*energy.*demand|wind.*energy.*demand|tidal.*demand|wave.*energy",
+       probability = 0.80, polarity = "+", strength = "strong",
+       source = "Costanza et al. 2014"),
+
+  # ============================================================================
+  # MINERAL/AGGREGATE EXTRACTION PATHWAY
+  # ============================================================================
+
+  # D -> A: Mineral resource demand driving mining/dredging
+  list(from_type = "drivers", to_type = "activities",
+       from_pattern = "mineral.*demand|aggregat.*demand|sand.*demand|gravel.*demand|resource.*extract",
+       to_pattern = "mining|dredg|aggregat.*extract|seabed.*mining|sand.*extract",
+       probability = 0.85, polarity = "+", strength = "strong",
+       source = "Halpern et al. 2015"),
+
+  # A -> P: Mining/dredging causing seabed disturbance
+  list(from_type = "activities", to_type = "pressures",
+       from_pattern = "mining|dredg|aggregat.*extract|seabed.*mining|sand.*extract",
+       to_pattern = "seabed.*disturb|habitat.*destruct|benthic.*disturb|sediment.*plume|substrate.*remov",
+       probability = 0.90, polarity = "+", strength = "strong",
+       source = "Halpern et al. 2015"),
+
+  # P -> S: Seabed disturbance causing benthic decline
+  list(from_type = "pressures", to_type = "states",
+       from_pattern = "seabed.*disturb|substrate.*remov|benthic.*disturb|dredg.*damage",
+       to_pattern = "benthic.*communit.*declin|benthic.*fauna|infauna.*declin|seabed.*habitat.*loss",
+       probability = 0.85, polarity = "-", strength = "strong",
+       source = "Halpern et al. 2015"),
+
+  # S -> I: Benthic decline reducing habitat provision
+  list(from_type = "states", to_type = "impacts",
+       from_pattern = "benthic.*communit.*declin|benthic.*loss|infauna.*declin|seabed.*habitat",
+       to_pattern = "habitat.*provision|nursery.*habitat|shelter.*service|benthic.*ecosystem.*service",
+       probability = 0.80, polarity = "-", strength = "medium",
+       source = "Liquete et al. 2013"),
+
+  # ============================================================================
+  # OFFSHORE WIND PATHWAY
+  # ============================================================================
+
+  # D -> A: Energy demand driving wind farm construction
+  list(from_type = "drivers", to_type = "activities",
+       from_pattern = "energy.*demand|electri.*demand|renew.*target|decarbon",
+       to_pattern = "wind.*farm.*construct|offshore.*wind|turbine.*install|wind.*energy.*develop",
+       probability = 0.85, polarity = "+", strength = "strong",
+       source = "Costanza et al. 2014"),
+
+  # A -> P: Wind construction causing underwater noise and habitat loss
+  list(from_type = "activities", to_type = "pressures",
+       from_pattern = "wind.*farm|offshore.*wind|turbine.*install|pile.*driv",
+       to_pattern = "underwat.*noise|seabed.*habitat.*loss|electromagnetic|vibrat|construct.*noise",
+       probability = 0.90, polarity = "+", strength = "strong",
+       source = "Halpern et al. 2015"),
+
+  # P -> S: Noise/habitat loss affecting marine mammals and seabirds
+  list(from_type = "pressures", to_type = "states",
+       from_pattern = "underwat.*noise.*wind|construct.*noise|turbine.*noise|wind.*habitat.*loss",
+       to_pattern = "marine.*mammal|seabird|cetacean|porpoise|bird.*collision|migrat.*disrupt",
+       probability = 0.80, polarity = "-", strength = "medium",
+       source = "Halpern et al. 2015"),
+
+  # S -> I: Ecosystem effects changing biodiversity/energy service trade-off
+  list(from_type = "states", to_type = "impacts",
+       from_pattern = "marine.*mammal.*effect|seabird.*effect|wind.*ecosystem|turbine.*ecolog",
+       to_pattern = "biodiver.*chang|energy.*service|reef.*effect|ecosystem.*trade.?off",
+       probability = 0.75, polarity = "-", strength = "medium",
+       source = "Liquete et al. 2013"),
+
+  # ============================================================================
+  # INVASIVE SPECIES MANAGEMENT PATHWAY
+  # ============================================================================
+
+  # R -> P: Invasive species control reducing invasive pressure
+  list(from_type = "responses", to_type = "pressures",
+       from_pattern = "invasive.*species.*control|invasive.*manag|eradicat.*program|alien.*species.*control",
+       to_pattern = "invasive.*pressure|invasive.*spread|non.?native.*pressure|alien.*species.*impact",
+       probability = 0.70, polarity = "-", strength = "medium",
+       source = "HELCOM 2018"),
+
+  # R -> A: Biosecurity regulation modifying shipping/aquaculture practices
+  list(from_type = "responses", to_type = "activities",
+       from_pattern = "biosecur.*regulat|ballast.*convention|ballast.*manag|invasive.*legislat",
+       to_pattern = "ship.*practic|ballast.*water.*treat|aquacult.*practic|biosecur.*protocol",
+       probability = 0.65, polarity = "-", strength = "medium",
+       source = "HELCOM 2018"),
+
+  # A -> P: Ballast water treatment reducing introduction risk
+  list(from_type = "activities", to_type = "pressures",
+       from_pattern = "ballast.*water.*treat|ballast.*exchang|biosecur.*practic",
+       to_pattern = "invasive.*introduc|non.?native.*introduc|alien.*species.*risk|bioinvasion",
+       probability = 0.80, polarity = "-", strength = "medium",
+       source = "HELCOM 2018"),
+
+  # ============================================================================
+  # ARCTIC-SPECIFIC PATTERNS
+  # ============================================================================
+
+  # P -> S: Sea ice loss reducing ice-dependent species habitat
+  list(from_type = "pressures", to_type = "states",
+       from_pattern = "sea.*ice.*loss|ice.*cover.*reduc|arctic.*warm|ice.*melt|ice.*retreat",
+       to_pattern = "ice.*depend.*species|polar.*bear|walrus|ice.*seal|arctic.*fauna|ice.*habitat",
+       probability = 0.90, polarity = "-", strength = "strong",
+       source = "Halpern et al. 2015"),
+
+  # P -> S: Permafrost thaw causing coastal erosion and infrastructure damage
+  list(from_type = "pressures", to_type = "states",
+       from_pattern = "permafrost.*thaw|permafrost.*degrad|ground.*ice.*melt|thermokarst",
+       to_pattern = "coastal.*erosion.*arctic|infrastruc.*damage|shoreline.*retreat|land.*subsid",
+       probability = 0.85, polarity = "+", strength = "strong",
+       source = "Halpern et al. 2015"),
+
+  # S -> I: Polar ecosystem change reducing indigenous subsistence provision
+  list(from_type = "states", to_type = "impacts",
+       from_pattern = "polar.*ecosystem.*chang|arctic.*ecosystem|ice.*depend.*declin|arctic.*biodiver",
+       to_pattern = "indigenous.*subsist|tradit.*harvest|subsist.*provision|inuit.*livelihood|arctic.*food.*secur",
+       probability = 0.80, polarity = "-", strength = "medium",
+       source = "Costanza et al. 2014")
 )
 
 
