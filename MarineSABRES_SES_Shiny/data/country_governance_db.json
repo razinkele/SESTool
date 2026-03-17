@@ -130,17 +130,17 @@
         "EU Biodiversity Strategy 2030 targets",
         "EU Green Deal marine policy alignment",
         "Natura 2000 marine protected area network",
-        "REACH chemical regulation for marine pollution"
-      ],
-      "drivers": [
+        "REACH chemical regulation for marine pollution",
         "EU Green Deal regulatory compliance pressure",
         "EU farm-to-fork strategy effects on coastal agriculture",
-        "EU renewable energy targets driving offshore wind development",
-        "Cohesion Fund investments in coastal infrastructure"
+        "Cohesion Fund investments in coastal infrastructure",
+        "EU structural fund employment in maritime sectors"
+      ],
+      "drivers": [
+        "Energy transition and decarbonization demand"
       ],
       "welfare": [
-        "EU structural fund employment in maritime sectors",
-        "Common Agricultural Policy impacts on coastal communities"
+        "Coastal community economic stability"
       ]
     },
     "non_eu_european": {
@@ -186,7 +186,7 @@
       ],
       "drivers": [
         "Rapid coastal urbanization and population growth",
-        "Artisanal fishing as major employment sector",
+        "Food security and livelihood needs from artisanal fishing",
         "Marine protein as critical food security source"
       ],
       "welfare": []
@@ -200,8 +200,8 @@
         "WCPFC tuna stock management measures"
       ],
       "drivers": [
-        "Aquaculture intensification for export markets",
-        "Coastal mega-city development and land reclamation"
+        "Export market demand for aquaculture products",
+        "Coastal urbanization and housing demand"
       ],
       "welfare": []
     },
@@ -222,27 +222,29 @@
     "high": {
       "label": "High-Income Economies",
       "drivers": [
-        "Blue economy innovation and marine technology R&D",
-        "Offshore wind and wave energy development",
-        "Marine biotechnology and bioprospecting",
-        "Coastal property market speculation and development",
-        "Cruise industry demand and port-of-call expansion",
-        "Marine conservation philanthropy and impact investment"
+        "Demand for marine technological innovation",
+        "Renewable energy demand and energy security",
+        "Demand for novel marine-derived products",
+        "Coastal property demand and investment pressure",
+        "Cruise tourism demand",
+        "Public concern for marine conservation"
       ],
       "welfare": [
         "Recreational coastal well-being and beach access",
         "Marine-adjacent property values and coastal gentrification",
-        "Blue-collar maritime employment sector transition",
+        "Blue-collar maritime employment sector transition"
+      ],
+      "responses": [
         "Ocean literacy and marine environmental education"
       ]
     },
     "upper_middle": {
       "label": "Upper-Middle-Income Economies",
       "drivers": [
-        "Mass tourism coastal resort development",
-        "Aquaculture sector expansion for domestic and export markets",
-        "Port expansion and maritime trade infrastructure",
-        "Coastal industrialization and special economic zones"
+        "Mass tourism demand",
+        "Growing demand for aquaculture products",
+        "Maritime trade growth demand",
+        "Industrial development demand on coast"
       ],
       "welfare": [
         "Tourism employment dependency and seasonal vulnerability",
@@ -256,7 +258,7 @@
       "drivers": [
         "Subsistence fishing as primary protein source",
         "Population pressure on coastal zones and mangroves",
-        "Foreign fishing fleet access agreements and licence revenue",
+        "Government revenue needs from marine resource licensing",
         "Climate-driven migration to coastal urban centres"
       ],
       "welfare": [
