@@ -449,7 +449,7 @@
             "Duck & da Silva 2012"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Submerged macrophyte coverage (e.g., Potamogeton)",
@@ -465,7 +465,7 @@
             "Hilt et al. 2011"
           ],
           "temporal_lag": "short-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Phytoplankton community composition",
@@ -4389,7 +4389,7 @@
             "Bianchi et al. 2019"
           ],
           "temporal_lag": "medium-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "No-take marine reserve designation",
@@ -6402,7 +6402,7 @@
             "Hoegh-Guldberg et al. 2007"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Global greenhouse gas emissions",
@@ -7067,7 +7067,7 @@
             "AMAP 2017"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Global greenhouse gas emissions",
@@ -8393,7 +8393,7 @@
             "EEA 2006"
           ],
           "temporal_lag": "medium-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Maritime transport and cruise tourism",
@@ -11023,7 +11023,7 @@
             "Hopwood et al., 2020"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Global greenhouse gas emissions",
@@ -11662,7 +11662,7 @@
             "Wang et al. 2012"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Managed realignment and de-poldering for habitat creation",
@@ -12994,7 +12994,7 @@
             "McClanahan et al., 2007"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Global greenhouse gas emissions",
@@ -13433,7 +13433,7 @@
             "Montefalcone et al., 2008"
           ],
           "temporal_lag": "immediate",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Seawater desalination for freshwater supply",
@@ -13481,7 +13481,7 @@
             "Boudouresque et al., 2009"
           ],
           "temporal_lag": "immediate",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Invasive Caulerpa cylindracea displacement of native habitats",
@@ -13719,7 +13719,7 @@
             "Boudouresque et al. 2009"
           ],
           "temporal_lag": "medium-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Infralittoral rocky reef algal assemblages",
@@ -14146,7 +14146,7 @@
             "Jackson et al., 2014"
           ],
           "temporal_lag": "short-term",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Overfishing of reef herbivores (parrotfish, surgeonfish)",
@@ -14416,7 +14416,7 @@
             "Rogers et al. 2014"
           ],
           "temporal_lag": "medium-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Mangrove fringe extent and condition",
@@ -14464,7 +14464,7 @@
             "Hoegh-Guldberg et al., 2007"
           ],
           "temporal_lag": "immediate",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Climate vulnerability and hurricane exposure",
@@ -14836,7 +14836,7 @@
             "Storlazzi et al., 2018"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Coral bleaching from ocean warming",
@@ -14852,7 +14852,7 @@
             "Hoegh-Guldberg et al., 2007"
           ],
           "temporal_lag": "medium-term",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Ocean acidification reducing coral calcification",
@@ -14868,7 +14868,7 @@
             "Fabricius et al., 2011"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Atoll reef crest structural integrity",
@@ -14884,7 +14884,7 @@
             "Storlazzi et al., 2018"
           ],
           "temporal_lag": "immediate",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Reef fish abundance for subsistence harvest",
@@ -14996,7 +14996,7 @@
             "Cinner & Aswani, 2007"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Freshwater lens protection and rainwater harvesting",
@@ -15106,7 +15106,7 @@
             "Silverman et al. 2009"
           ],
           "temporal_lag": "short-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Atoll reef crest structural integrity",
@@ -15122,7 +15122,7 @@
             "Storlazzi et al. 2018"
           ],
           "temporal_lag": "short-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Lagoon water quality and coral cover",
@@ -15154,7 +15154,7 @@
             "Duvat, 2019"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Global greenhouse gas emissions",
@@ -15596,7 +15596,7 @@
             "Parsons, 2012"
           ],
           "temporal_lag": "medium-term",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Invasive algae colonisation of volcanic substrates",
@@ -15628,7 +15628,7 @@
             "Ramos et al., 2012"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Cetacean population abundance (sperm whale, bottlenose dolphin)",
@@ -16303,7 +16303,7 @@
             "Graham et al., 2015"
           ],
           "temporal_lag": "short-term",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Crown-of-thorns starfish (Acanthaster planci) outbreaks",
@@ -16367,7 +16367,7 @@
             "Shah, 2011"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Pristine reef and beach tourism experience value",
@@ -16540,7 +16540,7 @@
             "Wilson et al. 2006"
           ],
           "temporal_lag": "medium-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Mangrove and coastal wetland extent",
@@ -16588,7 +16588,7 @@
             "Ateweberhan et al., 2013"
           ],
           "temporal_lag": "long-term",
-          "reversibility": "poorly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Global greenhouse gas emissions",
@@ -16604,7 +16604,7 @@
             "Ateweberhan et al., 2013"
           ],
           "temporal_lag": "short-term",
-          "reversibility": "slowly_reversible"
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Climate change adaptation needs",
@@ -17328,8 +17328,8 @@
           "references": [
             "HELCOM 2018 - Sources of nutrient inputs to the Baltic Sea"
           ],
-          "temporal_lag": 0.5,
-          "reversibility": "moderate"
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Nutrient enrichment from agricultural sources",
@@ -17343,8 +17343,8 @@
           "references": [
             "HELCOM 2018 - Eutrophication in the Baltic Sea"
           ],
-          "temporal_lag": 0.5,
-          "reversibility": "slow"
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
         },
         {
           "from": "Wind energy development in shallow island waters",
@@ -20186,15 +20186,15 @@
     "drivers": [
       {
         "name": "Food security from marine resources",
-        "relevance": 0.8
+        "relevance": 0.85
       },
       {
         "name": "Economic development pressure",
-        "relevance": 0.7
+        "relevance": 0.75
       },
       {
         "name": "Recreational and tourism demand",
-        "relevance": 0.7
+        "relevance": 0.65
       },
       {
         "name": "Coastal protection needs",
@@ -20202,17 +20202,17 @@
       },
       {
         "name": "Climate change adaptation and resilience needs",
-        "relevance": 0.8
+        "relevance": 0.9
       }
     ],
     "activities": [
       {
         "name": "Commercial fishing",
-        "relevance": 0.8
+        "relevance": 0.85
       },
       {
         "name": "Aquaculture",
-        "relevance": 0.7
+        "relevance": 0.65
       },
       {
         "name": "Coastal development",
@@ -20220,17 +20220,17 @@
       },
       {
         "name": "Tourism and recreation",
-        "relevance": 0.7
+        "relevance": 0.6
       },
       {
         "name": "Shipping and transport",
-        "relevance": 0.7
+        "relevance": 0.55
       }
     ],
     "pressures": [
       {
         "name": "Overfishing",
-        "relevance": 0.8
+        "relevance": 0.85
       },
       {
         "name": "Nutrient enrichment",
@@ -20238,29 +20238,29 @@
       },
       {
         "name": "Habitat loss",
-        "relevance": 0.7
+        "relevance": 0.8
       },
       {
         "name": "Marine pollution",
-        "relevance": 0.7
+        "relevance": 0.65
       },
       {
         "name": "Climate-related changes",
-        "relevance": 0.7
+        "relevance": 0.75
       },
       {
         "name": "Climate change impacts",
-        "relevance": 0.8
+        "relevance": 0.9
       }
     ],
     "states": [
       {
         "name": "Fish stock biomass",
-        "relevance": 0.7
+        "relevance": 0.8
       },
       {
         "name": "Water quality indicators",
-        "relevance": 0.7
+        "relevance": 0.75
       },
       {
         "name": "Habitat condition",
@@ -20268,53 +20268,77 @@
       },
       {
         "name": "Biodiversity levels",
-        "relevance": 0.7
+        "relevance": 0.65
       }
     ],
     "impacts": [
       {
         "name": "Fishery production capacity",
-        "relevance": 0.7
+        "relevance": 0.8
       },
       {
         "name": "Coastal protection services",
-        "relevance": 0.7
+        "relevance": 0.65
       },
       {
         "name": "Recreation and tourism amenity",
+        "relevance": 0.6
+      },
+      {
+        "name": "Carbon sequestration and climate regulation",
+        "relevance": 0.8
+      },
+      {
+        "name": "Water purification and nutrient cycling",
+        "relevance": 0.75
+      },
+      {
+        "name": "Nursery habitat for commercial species",
         "relevance": 0.7
       }
     ],
     "welfare": [
       {
         "name": "Fishing community livelihoods",
-        "relevance": 0.7
+        "relevance": 0.8
       },
       {
         "name": "Coastal community well-being",
-        "relevance": 0.7
+        "relevance": 0.75
       },
       {
         "name": "Tourism-related employment",
+        "relevance": 0.6
+      },
+      {
+        "name": "Coastal community food security",
+        "relevance": 0.85
+      },
+      {
+        "name": "Cultural identity and sense of place",
         "relevance": 0.7
+      },
+      {
+        "name": "Coastal property protection value",
+        "relevance": 0.65
       }
     ],
     "responses": [
       {
         "name": "Marine Protected Areas",
-        "relevance": 0.7
+        "relevance": 0.8
       },
       {
         "name": "Fishing regulations",
-        "relevance": 0.7
+        "relevance": 0.75
       },
       {
         "name": "Pollution control measures",
-        "relevance": 0.7
+        "relevance": 0.65
       },
       {
         "name": "Habitat restoration programmes",
-        "relevance": 0.7
+        "relevance": 0.6
       }
     ]
   },
@@ -20542,7 +20566,62 @@
         "Procaccini et al. 2007"
       ],
       "temporal_lag": "long-term",
-      "reversibility": "poorly_reversible"
+      "reversibility": "partially_reversible"
+    },
+    {
+      "from_context": "north_sea_tidal_flat",
+      "from_element": "Benthic invertebrate biomass (cockle, mussel, lugworm)",
+      "to_context": "north_sea_offshore",
+      "to_element": "North Sea herring stock biomass",
+      "polarity": "+",
+      "strength": "medium",
+      "rationale": "Tidal flat invertebrate productivity supports juvenile fish nursery function for North Sea offshore stocks.",
+      "temporal_lag": "medium-term",
+      "reversibility": "partially_reversible"
+    },
+    {
+      "from_context": "north_sea_estuary",
+      "from_element": "Estuarine fish community (smelt, flounder, bass)",
+      "to_context": "north_sea_offshore",
+      "to_element": "North Sea herring stock biomass",
+      "polarity": "+",
+      "strength": "medium",
+      "rationale": "Estuaries serve as critical nursery habitats exporting juvenile fish to North Sea offshore populations.",
+      "temporal_lag": "medium-term",
+      "reversibility": "partially_reversible"
+    },
+    {
+      "from_context": "arctic_fjord",
+      "from_element": "Deep-water renewal frequency and oxygen levels",
+      "to_context": "arctic_sea_ice",
+      "to_element": "Multi-year ice coverage (critical habitat)",
+      "polarity": "+",
+      "strength": "medium",
+      "rationale": "Fjord deep-water renewal is driven by dense water formation linked to sea ice dynamics.",
+      "temporal_lag": "medium-term",
+      "reversibility": "partially_reversible"
+    },
+    {
+      "from_context": "atlantic_open_coast",
+      "from_element": "Kelp forest (Laminaria hyperborea/digitata) canopy cover",
+      "to_context": "atlantic_offshore",
+      "to_element": "Mesopelagic fish biomass (biological carbon pump)",
+      "polarity": "+",
+      "strength": "weak",
+      "rationale": "Kelp-derived particulate organic carbon contributes to offshore biological carbon pump through detrital export.",
+      "temporal_lag": "medium-term",
+      "reversibility": "partially_reversible"
+    },
+    {
+      "from_context": "pacific_island_atoll",
+      "from_element": "Atoll reef crest structural integrity",
+      "to_context": "caribbean_coral_reef",
+      "to_element": "Live coral cover percentage",
+      "polarity": "+",
+      "strength": "weak",
+      "rationale": "Global coral reef health is interconnected through ocean-scale larval dispersal and shared climate stressors.",
+      "temporal_lag": "long-term",
+      "reversibility": "partially_reversible"
     }
   ]
 }
