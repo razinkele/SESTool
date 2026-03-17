@@ -17,7 +17,7 @@
           "relevance": 0.8
         },
         {
-          "name": "Agricultural intensification in catchment",
+          "name": "Agricultural production demand in catchment",
           "relevance": 0.95
         },
         {
@@ -73,10 +73,6 @@
           "relevance": 0.7
         },
         {
-          "name": "Round goby and Chinese mitten crab (Neogobius melanostomus, Eriocheir sinensis) invasion",
-          "relevance": 0.75
-        },
-        {
           "name": "Microplastic accumulation in sediments",
           "relevance": 0.6
         },
@@ -105,6 +101,10 @@
         {
           "name": "Water transparency and light penetration",
           "relevance": 0.9
+        },
+        {
+          "name": "Round goby and Chinese mitten crab (Neogobius melanostomus, Eriocheir sinensis) invasion",
+          "relevance": 0.75
         }
       ],
       "impacts": [
@@ -167,7 +167,7 @@
       ],
       "connections": [
         {
-          "from": "Agricultural intensification in catchment",
+          "from": "Agricultural production demand in catchment",
           "from_type": "drivers",
           "to": "Agricultural drainage into lagoon",
           "to_type": "activities",
@@ -637,10 +637,6 @@
         {
           "name": "Nursery function for coastal fish species",
           "relevance": 0.8
-        },
-        {
-          "name": "Navigation and port accessibility",
-          "relevance": 0.7
         }
       ],
       "welfare": [
@@ -658,6 +654,10 @@
         },
         {
           "name": "Drinking water quality for downstream users",
+          "relevance": 0.7
+        },
+        {
+          "name": "Port and navigation accessibility",
           "relevance": 0.7
         }
       ],
@@ -1014,17 +1014,9 @@
         {
           "name": "Submarine cable and pipeline installation",
           "relevance": 0.65
-        },
-        {
-          "name": "Military munition dumping legacy",
-          "relevance": 0.5
         }
       ],
       "pressures": [
-        {
-          "name": "Deep-water hypoxia (dead zones)",
-          "relevance": 0.95
-        },
         {
           "name": "Overfishing of Eastern Baltic cod",
           "relevance": 0.9
@@ -1044,6 +1036,10 @@
         {
           "name": "Contamination from dumped munitions",
           "relevance": 0.6
+        },
+        {
+          "name": "Military munition dumping legacy",
+          "relevance": 0.5
         }
       ],
       "states": [
@@ -1066,6 +1062,10 @@
         {
           "name": "Benthic macrofauna in deep basins",
           "relevance": 0.75
+        },
+        {
+          "name": "Deep-water hypoxia (dead zones)",
+          "relevance": 0.95
         }
       ],
       "impacts": [
@@ -1076,14 +1076,6 @@
         {
           "name": "Climate regulation through carbon cycling",
           "relevance": 0.7
-        },
-        {
-          "name": "Shipping route provision",
-          "relevance": 0.75
-        },
-        {
-          "name": "Renewable energy generation from offshore wind",
-          "relevance": 0.8
         }
       ],
       "welfare": [
@@ -1102,6 +1094,14 @@
         {
           "name": "Maritime trade revenue",
           "relevance": 0.7
+        },
+        {
+          "name": "Renewable energy generation from offshore wind",
+          "relevance": 0.8
+        },
+        {
+          "name": "Shipping route provision",
+          "relevance": 0.75
         }
       ],
       "responses": [
@@ -1209,7 +1209,7 @@
         },
         {
           "from": "Deep-water hypoxia (dead zones)",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Benthic macrofauna in deep basins",
           "to_type": "states",
           "polarity": "-",
@@ -1225,7 +1225,7 @@
         },
         {
           "from": "Deep-water hypoxia (dead zones)",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Eastern Baltic cod stock biomass",
           "to_type": "states",
           "polarity": "-",
@@ -1354,7 +1354,7 @@
           "from": "Seabed disturbance from bottom trawling",
           "from_type": "pressures",
           "to": "Deep-water hypoxia (dead zones)",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -1381,21 +1381,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Renewable energy generation from offshore wind",
-          "from_type": "impacts",
-          "to": "Energy security from Baltic wind farms",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Offshore wind generation directly contributes to national energy security and reduces fossil fuel dependence",
-          "references": [
-            "WindEurope 2021"
-          ],
-          "temporal_lag": "immediate",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Fishing fleet economic viability",
           "from_type": "welfare",
           "to": "Demand for Baltic cod and herring",
@@ -1414,7 +1399,7 @@
           "from": "Overfishing of Eastern Baltic cod",
           "from_type": "pressures",
           "to": "Deep-water hypoxia (dead zones)",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "medium",
           "confidence": 4,
@@ -1478,12 +1463,12 @@
           "relevance": 0.85
         },
         {
-          "name": "Seal population recovery concerns",
-          "relevance": 0.7
-        },
-        {
           "name": "Recreational fishing demand (sea trout, flounder)",
           "relevance": 0.75
+        },
+        {
+          "name": "Marine biodiversity conservation demand",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -1553,6 +1538,10 @@
         },
         {
           "name": "Wrack (bladderwrack) belt condition",
+          "relevance": 0.7
+        },
+        {
+          "name": "Seal population recovery concerns",
           "relevance": 0.7
         }
       ],
@@ -1915,11 +1904,11 @@
           "relevance": 0.7
         },
         {
-          "name": "Agricultural intensification in surrounding plains",
+          "name": "Agricultural production demand",
           "relevance": 0.85
         },
         {
-          "name": "Coastal urbanisation pressure",
+          "name": "Coastal housing and infrastructure demand",
           "relevance": 0.75
         }
       ],
@@ -1967,10 +1956,6 @@
           "relevance": 0.8
         },
         {
-          "name": "Invasive Manila clam (Ruditapes philippinarum) spread",
-          "relevance": 0.7
-        },
-        {
           "name": "Pesticide contamination from agriculture",
           "relevance": 0.75
         },
@@ -1999,6 +1984,10 @@
         {
           "name": "Lagoon salinity regime and water residence time",
           "relevance": 0.8
+        },
+        {
+          "name": "Invasive Manila clam (Ruditapes philippinarum) spread",
+          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -2328,7 +2317,7 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Agricultural intensification in surrounding plains",
+          "from": "Agricultural production demand",
           "from_type": "drivers",
           "to": "Agricultural drainage and irrigation return flows",
           "to_type": "activities",
@@ -2354,12 +2343,8 @@
           "relevance": 0.9
         },
         {
-          "name": "Coastal resort and marina development",
+          "name": "Coastal resort and marina demand",
           "relevance": 0.85
-        },
-        {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.8
         },
         {
           "name": "Demand for sustainable blue carbon credits",
@@ -2368,6 +2353,10 @@
         {
           "name": "Water quality requirements for tourism",
           "relevance": 0.75
+        },
+        {
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -2416,6 +2405,10 @@
         {
           "name": "Hypersaline discharge from desalination",
           "relevance": 0.65
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.8
         }
       ],
       "states": [
@@ -2456,6 +2449,10 @@
         {
           "name": "Water clarity maintenance through particle trapping",
           "relevance": 0.75
+        },
+        {
+          "name": "Climate mitigation value of blue carbon storage",
+          "relevance": 0.65
         }
       ],
       "welfare": [
@@ -2470,10 +2467,6 @@
         {
           "name": "Coastal property protection from wave buffering",
           "relevance": 0.7
-        },
-        {
-          "name": "Climate mitigation value of blue carbon storage",
-          "relevance": 0.65
         }
       ],
       "responses": [
@@ -2676,7 +2669,7 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Coastal resort and marina development",
+          "from": "Coastal resort and marina demand",
           "from_type": "drivers",
           "to": "Coastal construction and marina expansion",
           "to_type": "activities",
@@ -2804,8 +2797,8 @@
           "relevance": 0.75
         },
         {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.7
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -2844,10 +2837,6 @@
           "relevance": 0.85
         },
         {
-          "name": "Invasive tropical species establishment",
-          "relevance": 0.75
-        },
-        {
           "name": "Mucilage events and marine heatwaves",
           "relevance": 0.7
         },
@@ -2862,6 +2851,10 @@
         {
           "name": "Physical habitat degradation of rocky substrate",
           "relevance": 0.8
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.7
         }
       ],
       "states": [
@@ -2884,6 +2877,14 @@
         {
           "name": "Invasive species presence (e.g., Siganus, Fistularia)",
           "relevance": 0.7
+        },
+        {
+          "name": "Invasive tropical species establishment",
+          "relevance": 0.75
+        },
+        {
+          "name": "Coastal food web integrity",
+          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -2900,8 +2901,8 @@
           "relevance": 0.75
         },
         {
-          "name": "Coastal food web integrity",
-          "relevance": 0.7
+          "name": "Scientific and educational value",
+          "relevance": 0.6
         }
       ],
       "welfare": [
@@ -2916,10 +2917,6 @@
         {
           "name": "Seafood quality and gastronomic heritage",
           "relevance": 0.7
-        },
-        {
-          "name": "Scientific and educational value",
-          "relevance": 0.6
         }
       ],
       "responses": [
@@ -3091,7 +3088,7 @@
         },
         {
           "from": "Invasive tropical species establishment",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Rocky reef biodiversity index",
           "to_type": "states",
           "polarity": "-",
@@ -3216,7 +3213,7 @@
           "from": "Mucilage events and marine heatwaves",
           "from_type": "pressures",
           "to": "Invasive tropical species establishment",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "medium",
           "confidence": 4,
@@ -3408,6 +3405,10 @@
         {
           "name": "North Sea herring stock biomass",
           "relevance": 0.8
+        },
+        {
+          "name": "Seabird population sustainability",
+          "relevance": 0.75
         }
       ],
       "impacts": [
@@ -3416,16 +3417,8 @@
           "relevance": 0.85
         },
         {
-          "name": "Renewable energy generation capacity",
-          "relevance": 0.9
-        },
-        {
-          "name": "Shipping and trade route services",
-          "relevance": 0.8
-        },
-        {
-          "name": "Seabird population sustainability",
-          "relevance": 0.75
+          "name": "Seabird conservation value (public concern)",
+          "relevance": 0.65
         }
       ],
       "welfare": [
@@ -3442,8 +3435,12 @@
           "relevance": 0.7
         },
         {
-          "name": "Seabird conservation value (public concern)",
-          "relevance": 0.65
+          "name": "Renewable energy generation capacity",
+          "relevance": 0.9
+        },
+        {
+          "name": "Shipping and trade route services",
+          "relevance": 0.8
         }
       ],
       "responses": [
@@ -3625,22 +3622,6 @@
           "references": [
             "OSPAR 2017",
             "Gill 2005"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
-          "from": "Renewable energy generation capacity",
-          "from_type": "impacts",
-          "to": "Energy security and carbon reduction benefits",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Offshore wind directly contributes to energy security and decarbonisation",
-          "references": [
-            "OSPAR 2017",
-            "IPCC 2019"
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
@@ -3866,10 +3847,6 @@
       ],
       "impacts": [
         {
-          "name": "Port and navigation accessibility",
-          "relevance": 0.9
-        },
-        {
           "name": "Flood protection for low-lying areas",
           "relevance": 0.9
         },
@@ -3898,6 +3875,10 @@
         {
           "name": "Water supply security for industry",
           "relevance": 0.65
+        },
+        {
+          "name": "Port and navigation accessibility",
+          "relevance": 0.9
         }
       ],
       "responses": [
@@ -4018,22 +3999,6 @@
           ],
           "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Port and navigation accessibility",
-          "from_type": "impacts",
-          "to": "Port and logistics industry employment",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Accessible ports maintain the logistics industry that employs riverside communities",
-          "references": [
-            "OSPAR 2017",
-            "Elliott et al. 2014"
-          ],
-          "temporal_lag": "immediate",
-          "reversibility": "reversible"
         },
         {
           "from": "Managed realignment projects (set-back flood defences)",
@@ -4219,16 +4184,16 @@
           "relevance": 0.85
         },
         {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.9
-        },
-        {
-          "name": "Coastal development for resort infrastructure",
+          "name": "Tourism infrastructure demand",
           "relevance": 0.8
         },
         {
           "name": "Demand for reef-derived ornamental species",
           "relevance": 0.6
+        },
+        {
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -4255,10 +4220,6 @@
         {
           "name": "Coral reef monitoring and research",
           "relevance": 0.65
-        },
-        {
-          "name": "Global greenhouse gas emissions",
-          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -4275,14 +4236,6 @@
           "relevance": 0.8
         },
         {
-          "name": "Sargassum inundation events",
-          "relevance": 0.7
-        },
-        {
-          "name": "Stony coral tissue loss disease (SCTLD)",
-          "relevance": 0.9
-        },
-        {
           "name": "Nutrient enrichment from agricultural sources",
           "relevance": 0.75
         },
@@ -4293,6 +4246,14 @@
         {
           "name": "Coral habitat loss and degradation",
           "relevance": 0.85
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.9
+        },
+        {
+          "name": "Global greenhouse gas emissions",
+          "relevance": 0.8
         }
       ],
       "states": [
@@ -4315,6 +4276,14 @@
         {
           "name": "Macroalgal cover on reef substrate",
           "relevance": 0.8
+        },
+        {
+          "name": "Stony coral tissue loss disease (SCTLD)",
+          "relevance": 0.9
+        },
+        {
+          "name": "Sargassum inundation events",
+          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -4394,7 +4363,7 @@
         },
         {
           "from": "Stony coral tissue loss disease (SCTLD)",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Live coral cover percentage",
           "to_type": "states",
           "polarity": "-",
@@ -4523,7 +4492,7 @@
           "from": "Mass coral bleaching from thermal stress",
           "from_type": "pressures",
           "to": "Stony coral tissue loss disease (SCTLD)",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -4598,7 +4567,7 @@
           "from": "Nutrient enrichment from agricultural sources",
           "from_type": "pressures",
           "to": "Sargassum inundation events",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -4644,9 +4613,9 @@
         },
         {
           "from": "Climate change and ocean warming",
-          "from_type": "drivers",
+          "from_type": "pressures",
           "to": "Global greenhouse gas emissions",
-          "to_type": "activities",
+          "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
           "confidence": 5,
@@ -4660,7 +4629,7 @@
         },
         {
           "from": "Global greenhouse gas emissions",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Mass coral bleaching from thermal stress",
           "to_type": "pressures",
           "polarity": "+",
@@ -4742,12 +4711,12 @@
           "relevance": 0.9
         },
         {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.95
-        },
-        {
           "name": "Scientific research and monitoring demand",
           "relevance": 0.7
+        },
+        {
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -4774,10 +4743,6 @@
         {
           "name": "Climate and sea ice monitoring research",
           "relevance": 0.7
-        },
-        {
-          "name": "Global greenhouse gas emissions",
-          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -4800,6 +4765,14 @@
         {
           "name": "Black carbon deposition accelerating ice melt",
           "relevance": 0.75
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.95
+        },
+        {
+          "name": "Global greenhouse gas emissions",
+          "relevance": 0.8
         }
       ],
       "states": [
@@ -4834,12 +4807,12 @@
           "relevance": 0.85
         },
         {
-          "name": "Shipping route accessibility in summer",
-          "relevance": 0.75
-        },
-        {
           "name": "Polar ecosystem biodiversity maintenance",
           "relevance": 0.8
+        },
+        {
+          "name": "Global climate stability benefit",
+          "relevance": 0.85
         }
       ],
       "welfare": [
@@ -4856,8 +4829,8 @@
           "relevance": 0.65
         },
         {
-          "name": "Global climate stability benefit",
-          "relevance": 0.85
+          "name": "Shipping route accessibility in summer",
+          "relevance": 0.75
         }
       ],
       "responses": [
@@ -5105,21 +5078,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Arctic climate regulation (ice-albedo feedback)",
-          "from_type": "impacts",
-          "to": "Global climate stability benefit",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 5,
-          "rationale": "Arctic ice-albedo feedback is a critical regulator of global climate, and its disruption undermines climate stability for all nations",
-          "references": [
-            "Screen & Simmonds 2010"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "irreversible"
-        },
-        {
           "from": "Inuit and indigenous community food security",
           "from_type": "welfare",
           "to": "Indigenous community food sovereignty",
@@ -5151,9 +5109,9 @@
         },
         {
           "from": "Climate change and ocean warming",
-          "from_type": "drivers",
+          "from_type": "pressures",
           "to": "Global greenhouse gas emissions",
-          "to_type": "activities",
+          "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
           "confidence": 5,
@@ -5167,7 +5125,7 @@
         },
         {
           "from": "Global greenhouse gas emissions",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Accelerating sea ice extent and thickness loss",
           "to_type": "pressures",
           "polarity": "+",
@@ -5201,12 +5159,12 @@
           "relevance": 0.85
         },
         {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.8
-        },
-        {
           "name": "Telecommunications cable network expansion",
           "relevance": 0.6
+        },
+        {
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -5259,6 +5217,10 @@
         {
           "name": "Ship-strike mortality of large whales",
           "relevance": 0.7
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.8
         }
       ],
       "states": [
@@ -5293,12 +5255,16 @@
           "relevance": 0.8
         },
         {
-          "name": "Transatlantic shipping corridor services",
-          "relevance": 0.85
-        },
-        {
           "name": "Deep-sea biodiversity and genetic resources",
           "relevance": 0.7
+        },
+        {
+          "name": "Climate regulation benefits (carbon sink)",
+          "relevance": 0.75
+        },
+        {
+          "name": "Marine scientific knowledge advancement",
+          "relevance": 0.6
         }
       ],
       "welfare": [
@@ -5311,12 +5277,8 @@
           "relevance": 0.8
         },
         {
-          "name": "Climate regulation benefits (carbon sink)",
-          "relevance": 0.75
-        },
-        {
-          "name": "Marine scientific knowledge advancement",
-          "relevance": 0.6
+          "name": "Transatlantic shipping corridor services",
+          "relevance": 0.85
         }
       ],
       "responses": [
@@ -6100,11 +6062,11 @@
           "relevance": 0.85
         },
         {
-          "name": "Agricultural production in Danube basin",
+          "name": "Food production demand from Danube basin",
           "relevance": 0.9
         },
         {
-          "name": "Industrial and urban development along coast",
+          "name": "Industrial and urban land demand on coast",
           "relevance": 0.75
         },
         {
@@ -6126,10 +6088,6 @@
           "relevance": 0.85
         },
         {
-          "name": "Danube-origin nutrient and pollutant loading",
-          "relevance": 0.95
-        },
-        {
           "name": "Mussel and rapana whelk harvesting",
           "relevance": 0.7
         },
@@ -6144,14 +6102,6 @@
           "relevance": 0.95
         },
         {
-          "name": "Hypoxia and hydrogen sulphide in deep waters",
-          "relevance": 0.9
-        },
-        {
-          "name": "Invasive comb jelly (Mnemiopsis leidyi)",
-          "relevance": 0.85
-        },
-        {
           "name": "Overfishing of small pelagics and turbot",
           "relevance": 0.8
         },
@@ -6162,6 +6112,10 @@
         {
           "name": "Coastal erosion from reduced sediment supply",
           "relevance": 0.65
+        },
+        {
+          "name": "Danube-origin nutrient and pollutant loading",
+          "relevance": 0.95
         }
       ],
       "states": [
@@ -6184,6 +6138,14 @@
         {
           "name": "Turbot and Black Sea sturgeon populations",
           "relevance": 0.8
+        },
+        {
+          "name": "Invasive comb jelly (Mnemiopsis leidyi)",
+          "relevance": 0.85
+        },
+        {
+          "name": "Hypoxia and hydrogen sulphide in deep waters",
+          "relevance": 0.9
         }
       ],
       "impacts": [
@@ -6246,24 +6208,8 @@
       ],
       "connections": [
         {
-          "from": "Agricultural production in Danube basin",
-          "from_type": "drivers",
-          "to": "Danube-origin nutrient and pollutant loading",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Intensive agriculture in the Danube basin is the primary source of nutrients reaching the Black Sea",
-          "references": [
-            "BSC 2019",
-            "Oguz et al. 2008"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Danube-origin nutrient and pollutant loading",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Eutrophication from Danube nutrient inputs",
           "to_type": "pressures",
           "polarity": "+",
@@ -6295,7 +6241,7 @@
         },
         {
           "from": "Invasive comb jelly (Mnemiopsis leidyi)",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Anchovy and sprat stock biomass",
           "to_type": "states",
           "polarity": "-",
@@ -6359,9 +6305,9 @@
         },
         {
           "from": "Danube-origin nutrient and pollutant loading",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Hypoxia and hydrogen sulphide in deep waters",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "strong",
           "confidence": 5,
@@ -6374,7 +6320,7 @@
         },
         {
           "from": "Hypoxia and hydrogen sulphide in deep waters",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Anchovy and sprat stock biomass",
           "to_type": "states",
           "polarity": "-",
@@ -6511,7 +6457,7 @@
           "from": "Eutrophication from Danube nutrient inputs",
           "from_type": "pressures",
           "to": "Invasive comb jelly (Mnemiopsis leidyi)",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -6526,7 +6472,7 @@
           "from": "Eutrophication from Danube nutrient inputs",
           "from_type": "pressures",
           "to": "Hypoxia and hydrogen sulphide in deep waters",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "strong",
           "confidence": 5,
@@ -6582,20 +6528,20 @@
           "relevance": 0.9
         },
         {
-          "name": "Coastal tourism and resort development",
+          "name": "Coastal tourism demand",
           "relevance": 0.9
         },
         {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.85
+          "name": "Agricultural land-use demand in watershed",
+          "relevance": 0.75
         },
         {
-          "name": "Green turtle population recovery (post-harvest moratorium)",
+          "name": "Climate change adaptation needs",
           "relevance": 0.8
         },
         {
-          "name": "Watershed land-use intensification",
-          "relevance": 0.75
+          "name": "Marine biodiversity conservation demand",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -6618,14 +6564,6 @@
         {
           "name": "Dredging for navigation channels and harbours",
           "relevance": 0.75
-        },
-        {
-          "name": "Agricultural and urban watershed runoff",
-          "relevance": 0.85
-        },
-        {
-          "name": "Green turtle foraging on seagrass beds",
-          "relevance": 0.85
         }
       ],
       "pressures": [
@@ -6646,12 +6584,20 @@
           "relevance": 0.8
         },
         {
-          "name": "Overgrazing by recovering green turtle populations",
-          "relevance": 0.7
-        },
-        {
           "name": "Epiphyte smothering from nutrient enrichment",
           "relevance": 0.75
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.85
+        },
+        {
+          "name": "Green turtle foraging on seagrass beds",
+          "relevance": 0.85
+        },
+        {
+          "name": "Agricultural and urban watershed runoff",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -6674,6 +6620,14 @@
         {
           "name": "Seagrass epiphyte load and algal community composition",
           "relevance": 0.75
+        },
+        {
+          "name": "Green turtle population recovery (post-harvest moratorium)",
+          "relevance": 0.8
+        },
+        {
+          "name": "Overgrazing by recovering green turtle populations",
+          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -6736,7 +6690,7 @@
       ],
       "connections": [
         {
-          "from": "Coastal tourism and resort development",
+          "from": "Coastal tourism demand",
           "from_type": "drivers",
           "to": "Coastal construction and marina development",
           "to_type": "activities",
@@ -6769,7 +6723,7 @@
         },
         {
           "from": "Agricultural and urban watershed runoff",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Nutrient enrichment from agricultural sources",
           "to_type": "pressures",
           "polarity": "+",
@@ -7019,26 +6973,10 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Green turtle population recovery (post-harvest moratorium)",
-          "from_type": "drivers",
-          "to": "Green turtle foraging on seagrass beds",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Recovery of green turtle populations increases the intensity and frequency of foraging on seagrass beds",
-          "references": [
-            "Fourqurean et al., 2010",
-            "Heithaus et al., 2014"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Green turtle foraging on seagrass beds",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Overgrazing by recovering green turtle populations",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -7062,12 +7000,8 @@
           "relevance": 0.95
         },
         {
-          "name": "Coastal population growth and urbanisation",
+          "name": "Coastal population growth and housing demand",
           "relevance": 0.9
-        },
-        {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.85
         },
         {
           "name": "Energy demand for charcoal and firewood",
@@ -7076,6 +7010,10 @@
         {
           "name": "Ecotourism and mangrove recreation demand",
           "relevance": 0.7
+        },
+        {
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -7124,6 +7062,10 @@
         {
           "name": "Overharvesting of mangrove timber and fuelwood",
           "relevance": 0.8
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -7447,7 +7389,7 @@
         {
           "from": "Avoided storm damage costs for coastal settlements",
           "from_type": "welfare",
-          "to": "Coastal population growth and urbanisation",
+          "to": "Coastal population growth and housing demand",
           "to_type": "drivers",
           "polarity": "+",
           "strength": "weak",
@@ -7542,12 +7484,12 @@
           "relevance": 0.8
         },
         {
-          "name": "Climate-driven Arctic warming and glacial retreat",
-          "relevance": 0.9
-        },
-        {
           "name": "Coastal community employment needs",
           "relevance": 0.75
+        },
+        {
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -7574,10 +7516,6 @@
         {
           "name": "Marine research and monitoring stations",
           "relevance": 0.6
-        },
-        {
-          "name": "Global greenhouse gas emissions",
-          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -7608,6 +7546,14 @@
         {
           "name": "Destructive bottom trawling on coral habitat",
           "relevance": 0.85
+        },
+        {
+          "name": "Climate-driven Arctic warming and glacial retreat",
+          "relevance": 0.9
+        },
+        {
+          "name": "Global greenhouse gas emissions",
+          "relevance": 0.8
         }
       ],
       "states": [
@@ -7975,9 +7921,9 @@
         },
         {
           "from": "Climate-driven Arctic warming and glacial retreat",
-          "from_type": "drivers",
+          "from_type": "pressures",
           "to": "Global greenhouse gas emissions",
-          "to_type": "activities",
+          "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
           "confidence": 5,
@@ -7991,7 +7937,7 @@
         },
         {
           "from": "Global greenhouse gas emissions",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Glacial retreat altering freshwater and sediment inputs",
           "to_type": "pressures",
           "polarity": "+",
@@ -8053,16 +7999,16 @@
           "relevance": 0.85
         },
         {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.9
-        },
-        {
           "name": "Recreational and educational use of tidal flats",
           "relevance": 0.75
         },
         {
           "name": "International flyway conservation obligations",
           "relevance": 0.85
+        },
+        {
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -8113,12 +8059,12 @@
           "relevance": 0.7
         },
         {
-          "name": "Pacific oyster (Magallana gigas) reef expansion displacing native beds",
-          "relevance": 0.75
-        },
-        {
           "name": "Coastal squeeze and intertidal habitat loss",
           "relevance": 0.85
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.9
         }
       ],
       "states": [
@@ -8141,6 +8087,10 @@
         {
           "name": "Common seal and grey seal haul-out populations",
           "relevance": 0.8
+        },
+        {
+          "name": "Pacific oyster (Magallana gigas) reef expansion displacing native beds",
+          "relevance": 0.75
         }
       ],
       "impacts": [
@@ -8159,13 +8109,13 @@
         {
           "name": "Nature education and ecotourism amenity value",
           "relevance": 0.75
-        }
-      ],
-      "welfare": [
+        },
         {
           "name": "Shorebird conservation as international heritage value",
           "relevance": 0.85
-        },
+        }
+      ],
+      "welfare": [
         {
           "name": "Shellfish industry employment and revenue",
           "relevance": 0.8
@@ -8315,22 +8265,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "East Atlantic Flyway staging habitat for migratory birds",
-          "from_type": "impacts",
-          "to": "Shorebird conservation as international heritage value",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "The Wadden Sea's role as an irreplaceable flyway node drives its international conservation value",
-          "references": [
-            "van de Kam et al., 2004",
-            "CWSS, 2010"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Shellfish provisioning for commercial fisheries",
           "from_type": "impacts",
           "to": "Shellfish industry employment and revenue",
@@ -8397,7 +8331,7 @@
           "from": "Sea level rise from thermal expansion and ice melt",
           "from_type": "pressures",
           "to": "Pacific oyster (Magallana gigas) reef expansion displacing native beds",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "weak",
           "confidence": 2,
@@ -8540,8 +8474,8 @@
           "relevance": 0.8
         },
         {
-          "name": "Climate warming of shallow Baltic bays",
-          "relevance": 0.85
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -8594,6 +8528,10 @@
         {
           "name": "Nutrient enrichment from agricultural sources",
           "relevance": 0.8
+        },
+        {
+          "name": "Climate warming of shallow Baltic bays",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -8975,16 +8913,16 @@
           "relevance": 0.9
         },
         {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.95
-        },
-        {
-          "name": "Coastal population growth and urbanisation",
+          "name": "Coastal population growth and housing demand",
           "relevance": 0.85
         },
         {
           "name": "Global ornamental fish and coral trade demand",
           "relevance": 0.7
+        },
+        {
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -9011,10 +8949,6 @@
         {
           "name": "Reef-based mariculture (giant clam, sea cucumber)",
           "relevance": 0.65
-        },
-        {
-          "name": "Global greenhouse gas emissions",
-          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -9043,8 +8977,12 @@
           "relevance": 0.8
         },
         {
-          "name": "Crown-of-thorns starfish (Acanthaster planci) outbreaks",
-          "relevance": 0.7
+          "name": "Climate change and ocean warming",
+          "relevance": 0.95
+        },
+        {
+          "name": "Global greenhouse gas emissions",
+          "relevance": 0.8
         }
       ],
       "states": [
@@ -9067,6 +9005,10 @@
         {
           "name": "Macroalgal cover on reef substrate",
           "relevance": 0.8
+        },
+        {
+          "name": "Crown-of-thorns starfish (Acanthaster planci) outbreaks",
+          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -9400,7 +9342,7 @@
           "from": "Mass coral bleaching from marine heatwaves",
           "from_type": "pressures",
           "to": "Crown-of-thorns starfish (Acanthaster planci) outbreaks",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -9430,9 +9372,9 @@
         },
         {
           "from": "Climate change and ocean warming",
-          "from_type": "drivers",
+          "from_type": "pressures",
           "to": "Global greenhouse gas emissions",
-          "to_type": "activities",
+          "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
           "confidence": 5,
@@ -9446,7 +9388,7 @@
         },
         {
           "from": "Global greenhouse gas emissions",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Mass coral bleaching from marine heatwaves",
           "to_type": "pressures",
           "polarity": "+",
@@ -9484,8 +9426,8 @@
           "relevance": 0.85
         },
         {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.75
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -9524,10 +9466,6 @@
           "relevance": 0.9
         },
         {
-          "name": "Invasive Caulerpa cylindracea displacement of native habitats",
-          "relevance": 0.8
-        },
-        {
           "name": "Coastal waste accumulation from limited island disposal capacity",
           "relevance": 0.85
         },
@@ -9541,6 +9479,10 @@
         },
         {
           "name": "Invasive mammalian predators (rats, feral cats) on native wildlife",
+          "relevance": 0.75
+        },
+        {
+          "name": "Climate change and ocean warming",
           "relevance": 0.75
         }
       ],
@@ -9567,6 +9509,10 @@
         },
         {
           "name": "Native seabird colony breeding success (Audouin's gull, shearwaters)",
+          "relevance": 0.8
+        },
+        {
+          "name": "Invasive Caulerpa cylindracea displacement of native habitats",
           "relevance": 0.8
         }
       ],
@@ -9747,7 +9693,7 @@
         },
         {
           "from": "Invasive Caulerpa cylindracea displacement of native habitats",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Infralittoral rocky reef algal assemblages",
           "to_type": "states",
           "polarity": "-",
@@ -9908,7 +9854,7 @@
           "from": "Sewage overload during peak tourist season",
           "from_type": "pressures",
           "to": "Invasive Caulerpa cylindracea displacement of native habitats",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "weak",
           "confidence": 2,
@@ -10067,20 +10013,12 @@
         {
           "name": "Coastal sand mining for construction",
           "relevance": 0.7
-        },
-        {
-          "name": "Hurricane formation and intensification",
-          "relevance": 0.85
         }
       ],
       "pressures": [
         {
           "name": "Coral bleaching from marine heatwaves",
           "relevance": 0.95
-        },
-        {
-          "name": "Sargassum mass inundation events",
-          "relevance": 0.85
         },
         {
           "name": "Hurricane physical damage to reefs and coastline",
@@ -10105,6 +10043,10 @@
         {
           "name": "Saltwater intrusion from sea level rise and over-extraction",
           "relevance": 0.8
+        },
+        {
+          "name": "Hurricane formation and intensification",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -10134,6 +10076,10 @@
         },
         {
           "name": "Freshwater lens integrity and volume",
+          "relevance": 0.85
+        },
+        {
+          "name": "Sargassum inundation events",
           "relevance": 0.85
         }
       ],
@@ -10297,8 +10243,8 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Sargassum mass inundation events",
-          "from_type": "pressures",
+          "from": "Sargassum inundation events",
+          "from_type": "states",
           "to": "Seagrass (Thalassia testudinum) bed coverage",
           "to_type": "states",
           "polarity": "-",
@@ -10583,24 +10529,8 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Climate vulnerability and hurricane exposure",
-          "from_type": "drivers",
-          "to": "Hurricane formation and intensification",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Climate vulnerability and ocean warming increase the frequency and intensity of hurricane formation",
-          "references": [
-            "Gardner et al., 2005",
-            "Hoegh-Guldberg et al., 2007"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "poorly_reversible"
-        },
-        {
           "from": "Hurricane formation and intensification",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Hurricane physical damage to reefs and coastline",
           "to_type": "pressures",
           "polarity": "+",
@@ -10626,10 +10556,6 @@
           "relevance": 0.95
         },
         {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.95
-        },
-        {
           "name": "Tuna access fee revenue for national budgets",
           "relevance": 0.85
         },
@@ -10640,6 +10566,10 @@
         {
           "name": "Population growth on limited land area",
           "relevance": 0.75
+        },
+        {
+          "name": "Climate change adaptation needs",
+          "relevance": 0.8
         }
       ],
       "activities": [
@@ -10665,10 +10595,6 @@
         },
         {
           "name": "Seawall and coastal defence construction",
-          "relevance": 0.8
-        },
-        {
-          "name": "Global greenhouse gas emissions",
           "relevance": 0.8
         }
       ],
@@ -10700,6 +10626,14 @@
         {
           "name": "Limited waste disposal capacity and landfill pressure",
           "relevance": 0.7
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.95
+        },
+        {
+          "name": "Global greenhouse gas emissions",
+          "relevance": 0.8
         }
       ],
       "states": [
@@ -10806,22 +10740,6 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
-        },
-        {
-          "from": "Climate change and ocean warming",
-          "from_type": "drivers",
-          "to": "Seawall and coastal defence construction",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Rising sea levels and increasing overwash events drive urgent construction of seawalls and coastal defences",
-          "references": [
-            "Duvat, 2019",
-            "Storlazzi et al., 2018"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "partially_reversible"
         },
         {
           "from": "Subsistence reef gleaning and spearfishing",
@@ -11159,9 +11077,9 @@
         },
         {
           "from": "Climate change and ocean warming",
-          "from_type": "drivers",
+          "from_type": "pressures",
           "to": "Global greenhouse gas emissions",
-          "to_type": "activities",
+          "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
           "confidence": 5,
@@ -11175,7 +11093,7 @@
         },
         {
           "from": "Global greenhouse gas emissions",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Sea level rise from thermal expansion and ice melt",
           "to_type": "pressures",
           "polarity": "+",
@@ -11249,10 +11167,6 @@
           "relevance": 0.85
         },
         {
-          "name": "Invasive algae colonisation of volcanic substrates",
-          "relevance": 0.8
-        },
-        {
           "name": "Oil and bilge water pollution from shipping lanes",
           "relevance": 0.75
         },
@@ -11300,6 +11214,10 @@
         },
         {
           "name": "Native seabird colony breeding success (Cory's shearwater, petrels)",
+          "relevance": 0.8
+        },
+        {
+          "name": "Invasive algae colonisation of volcanic substrates",
           "relevance": 0.8
         }
       ],
@@ -11448,7 +11366,7 @@
         },
         {
           "from": "Invasive algae colonisation of volcanic substrates",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Intertidal and subtidal volcanic reef community composition",
           "to_type": "states",
           "polarity": "-",
@@ -11734,11 +11652,11 @@
           "relevance": 0.8
         },
         {
-          "name": "Climate change and ocean warming",
-          "relevance": 0.9
+          "name": "Food security from artisanal fisheries",
+          "relevance": 0.8
         },
         {
-          "name": "Food security from artisanal fisheries",
+          "name": "Climate change adaptation needs",
           "relevance": 0.8
         }
       ],
@@ -11766,10 +11684,6 @@
         {
           "name": "Marine scientific research and monitoring",
           "relevance": 0.65
-        },
-        {
-          "name": "Global greenhouse gas emissions",
-          "relevance": 0.8
         }
       ],
       "pressures": [
@@ -11782,16 +11696,8 @@
           "relevance": 0.8
         },
         {
-          "name": "Crown-of-thorns starfish (Acanthaster) outbreaks",
-          "relevance": 0.8
-        },
-        {
           "name": "Poaching of sea turtles and giant tortoises",
           "relevance": 0.65
-        },
-        {
-          "name": "Invasive species threatening endemic island biota",
-          "relevance": 0.75
         },
         {
           "name": "Coastal erosion from reef degradation",
@@ -11807,6 +11713,14 @@
         },
         {
           "name": "Saltwater intrusion from sea level rise and over-extraction",
+          "relevance": 0.8
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.9
+        },
+        {
+          "name": "Global greenhouse gas emissions",
           "relevance": 0.8
         }
       ],
@@ -11838,16 +11752,20 @@
         {
           "name": "Freshwater lens integrity and volume",
           "relevance": 0.85
+        },
+        {
+          "name": "Crown-of-thorns starfish (Acanthaster planci) outbreaks",
+          "relevance": 0.8
+        },
+        {
+          "name": "Invasive species threatening endemic island biota",
+          "relevance": 0.75
         }
       ],
       "impacts": [
         {
           "name": "Pristine reef and beach tourism experience value",
           "relevance": 0.95
-        },
-        {
-          "name": "Tuna export revenue and processing employment",
-          "relevance": 0.85
         },
         {
           "name": "Artisanal fish protein provisioning",
@@ -11874,6 +11792,10 @@
         {
           "name": "National pride in blue economy leadership",
           "relevance": 0.7
+        },
+        {
+          "name": "Tuna export revenue and processing employment",
+          "relevance": 0.85
         }
       ],
       "responses": [
@@ -11968,8 +11890,8 @@
           "reversibility": "slowly_reversible"
         },
         {
-          "from": "Crown-of-thorns starfish (Acanthaster) outbreaks",
-          "from_type": "pressures",
+          "from": "Crown-of-thorns starfish (Acanthaster planci) outbreaks",
+          "from_type": "states",
           "to": "Granitic reef vs coralline reef condition and cover",
           "to_type": "states",
           "polarity": "-",
@@ -12048,22 +11970,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Tuna export revenue and processing employment",
-          "from_type": "impacts",
-          "to": "Tuna industry worker livelihoods",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Tuna canning employs thousands of workers directly and supports port and transport service jobs",
-          "references": [
-            "Marsac et al., 2014",
-            "IOTC, 2021"
-          ],
-          "temporal_lag": "immediate",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Tourism-sector employment and household income",
           "from_type": "welfare",
           "to": "Luxury tourism and resort development demand",
@@ -12094,22 +12000,6 @@
           ],
           "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Invasive predator eradication on seabird islands",
-          "from_type": "responses",
-          "to": "Invasive species threatening endemic island biota",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Rat and cat eradication on islets has restored seabird colonies and endemic reptile populations",
-          "references": [
-            "Russell et al., 2016",
-            "Jones et al., 2016"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "reversible"
         },
         {
           "from": "National pride in blue economy leadership",
@@ -12270,9 +12160,9 @@
         },
         {
           "from": "Climate change and ocean warming",
-          "from_type": "drivers",
+          "from_type": "pressures",
           "to": "Global greenhouse gas emissions",
-          "to_type": "activities",
+          "to_type": "pressures",
           "polarity": "+",
           "strength": "strong",
           "confidence": 5,
@@ -12286,7 +12176,7 @@
         },
         {
           "from": "Global greenhouse gas emissions",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Coral bleaching from Indian Ocean warming events",
           "to_type": "pressures",
           "polarity": "+",
@@ -12334,10 +12224,6 @@
           "relevance": 0.9
         },
         {
-          "name": "Coastal farmland drainage to nearshore waters",
-          "relevance": 0.85
-        },
-        {
           "name": "Limestone quarrying (Gotland, Saaremaa)",
           "relevance": 0.7
         },
@@ -12360,20 +12246,8 @@
           "relevance": 0.95
         },
         {
-          "name": "Coastal erosion of limestone and glacial till shores",
-          "relevance": 0.8
-        },
-        {
-          "name": "Grey seal predation on coastal fish stocks and gear damage",
-          "relevance": 0.8
-        },
-        {
           "name": "Recreational boating disturbance to breeding seabirds",
           "relevance": 0.75
-        },
-        {
-          "name": "Invasive round goby altering nearshore food webs",
-          "relevance": 0.8
         },
         {
           "name": "Winter ice reduction affecting ice-dependent species",
@@ -12390,6 +12264,10 @@
         {
           "name": "Nutrient enrichment from agricultural sources",
           "relevance": 0.9
+        },
+        {
+          "name": "Coastal farmland drainage to nearshore waters",
+          "relevance": 0.85
         }
       ],
       "states": [
@@ -12415,6 +12293,18 @@
         },
         {
           "name": "Native seabird colony breeding success (eider, terns, guillemots)",
+          "relevance": 0.8
+        },
+        {
+          "name": "Invasive round goby altering nearshore food webs",
+          "relevance": 0.8
+        },
+        {
+          "name": "Grey seal predation on coastal fish stocks and gear damage",
+          "relevance": 0.8
+        },
+        {
+          "name": "Coastal erosion of limestone and glacial till shores",
           "relevance": 0.8
         }
       ],
@@ -12482,22 +12372,6 @@
       ],
       "connections": [
         {
-          "from": "Agricultural production and food supply demand",
-          "from_type": "drivers",
-          "to": "Coastal farmland drainage to nearshore waters",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 5,
-          "rationale": "Nutrient loads from mainland rivers and local farm drainage both contribute to nearshore eutrophication around islands",
-          "references": [
-            "HELCOM, 2018",
-            "Elmgren & Larsson, 2001"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Seasonal tourism and cultural heritage visitation",
           "from_type": "drivers",
           "to": "Recreational boating and sailing",
@@ -12515,7 +12389,7 @@
         },
         {
           "from": "Coastal farmland drainage to nearshore waters",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Eutrophication and cyanobacteria washing ashore on island beaches",
           "to_type": "pressures",
           "polarity": "+",
@@ -12579,7 +12453,7 @@
         },
         {
           "from": "Grey seal predation on coastal fish stocks and gear damage",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Herring and perch stock condition around islands",
           "to_type": "states",
           "polarity": "-",
@@ -12722,22 +12596,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Coastal meadow grazing restoration schemes",
-          "from_type": "responses",
-          "to": "Coastal erosion of limestone and glacial till shores",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "medium",
-          "confidence": 4,
-          "rationale": "Restored coastal meadow vegetation stabilises shoreline sediments and reduces erosion rates on island coasts",
-          "references": [
-            "Rannap et al., 2017",
-            "HELCOM, 2018"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Cultural identity linked to island maritime heritage",
           "from_type": "welfare",
           "to": "Traditional Baltic fishing and farming livelihoods",
@@ -12756,7 +12614,7 @@
           "from": "Eutrophication and cyanobacteria washing ashore on island beaches",
           "from_type": "pressures",
           "to": "Invasive round goby altering nearshore food webs",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "weak",
           "confidence": 2,
@@ -12849,7 +12707,7 @@
         },
         {
           "from": "Coastal farmland drainage to nearshore waters",
-          "from_type": "activities",
+          "from_type": "pressures",
           "to": "Nutrient enrichment from agricultural sources",
           "to_type": "pressures",
           "polarity": "+",
@@ -13448,7 +13306,7 @@
           "relevance": 0.8
         },
         {
-          "name": "Agricultural intensification in catchment",
+          "name": "Agricultural production demand in catchment",
           "relevance": 0.85
         },
         {
@@ -13492,10 +13350,6 @@
           "relevance": 0.85
         },
         {
-          "name": "Chinese mitten crab and Pacific oyster (Eriocheir sinensis, Magallana gigas) invasion",
-          "relevance": 0.8
-        },
-        {
           "name": "Habitat loss from land claim and channelization",
           "relevance": 0.85
         },
@@ -13536,6 +13390,10 @@
         {
           "name": "Estuarine salinity gradient and mixing zone dynamics",
           "relevance": 0.85
+        },
+        {
+          "name": "Chinese mitten crab and Pacific oyster (Eriocheir sinensis, Magallana gigas) invasion",
+          "relevance": 0.8
         }
       ],
       "impacts": [
@@ -13630,7 +13488,7 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Agricultural intensification in catchment",
+          "from": "Agricultural production demand in catchment",
           "from_type": "drivers",
           "to": "Industrial and urban wastewater discharge",
           "to_type": "activities",
@@ -13840,7 +13698,7 @@
           "from": "Chronic chemical contamination (heavy metals, PCBs)",
           "from_type": "pressures",
           "to": "Chinese mitten crab and Pacific oyster (Eriocheir sinensis, Magallana gigas) invasion",
-          "to_type": "pressures",
+          "to_type": "states",
           "polarity": "+",
           "strength": "weak",
           "confidence": 2,
@@ -13976,10 +13834,6 @@
         {
           "name": "Marine thermal stress from ocean warming",
           "relevance": 0.8
-        },
-        {
-          "name": "Coastal erosion and sediment deficit",
-          "relevance": 0.85
         }
       ],
       "states": [
@@ -14002,6 +13856,10 @@
         {
           "name": "Coastal water clarity and photic zone depth",
           "relevance": 0.75
+        },
+        {
+          "name": "Coastal erosion and sediment deficit",
+          "relevance": 0.85
         }
       ],
       "impacts": [
@@ -14016,10 +13874,6 @@
         {
           "name": "Beach recreational and surf tourism amenity",
           "relevance": 0.85
-        },
-        {
-          "name": "Shellfish aquaculture production",
-          "relevance": 0.8
         }
       ],
       "welfare": [
@@ -14037,6 +13891,10 @@
         },
         {
           "name": "Cultural identity tied to maritime heritage",
+          "relevance": 0.8
+        },
+        {
+          "name": "Shellfish aquaculture production",
           "relevance": 0.8
         }
       ],
@@ -14348,24 +14206,8 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Beach nourishment and sediment management programmes",
-          "from_type": "responses",
-          "to": "Coastal erosion and sediment deficit",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "medium",
-          "confidence": 4,
-          "rationale": "Beach nourishment directly counteracts coastal erosion by replenishing sediment supply",
-          "references": [
-            "Hanson et al., 2002",
-            "Hamm et al., 2002"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Coastal erosion and sediment deficit",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Sandy beach morphodynamics and sediment budget",
           "to_type": "states",
           "polarity": "-",
@@ -14453,10 +14295,6 @@
         {
           "name": "Eutrophication-driven filamentous algae overgrowth",
           "relevance": 0.9
-        },
-        {
-          "name": "Grey seal predation on coastal fish stocks and gear damage",
-          "relevance": 0.8
         }
       ],
       "states": [
@@ -14479,6 +14317,10 @@
         {
           "name": "Sea trout (Salmo trutta) coastal populations",
           "relevance": 0.85
+        },
+        {
+          "name": "Grey seal predation on coastal fish stocks and gear damage",
+          "relevance": 0.8
         }
       ],
       "impacts": [
@@ -14670,7 +14512,7 @@
         },
         {
           "from": "Grey seal predation on coastal fish stocks and gear damage",
-          "from_type": "pressures",
+          "from_type": "states",
           "to": "Sea trout (Salmo trutta) coastal populations",
           "to_type": "states",
           "polarity": "-",
@@ -14860,12 +14702,12 @@
         "relevance": 0.7
       },
       {
-        "name": "Climate change impacts",
-        "relevance": 0.8
-      },
-      {
         "name": "Coastal protection needs",
         "relevance": 0.7
+      },
+      {
+        "name": "Climate change adaptation and resilience needs",
+        "relevance": 0.8
       }
     ],
     "activities": [
@@ -14910,6 +14752,10 @@
       {
         "name": "Climate-related changes",
         "relevance": 0.7
+      },
+      {
+        "name": "Climate change impacts",
+        "relevance": 0.8
       }
     ],
     "states": [
