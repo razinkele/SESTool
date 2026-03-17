@@ -220,6 +220,7 @@ Rscript -e "testthat::test_file('tests/testthat/test-network-analysis.R')"
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| **1.10.0** | 2026-03-17 | KB quality review: 68 reclassifications, 213 scientific corrections, 1120 connections |
 | **1.9.0** | 2026-03-16 | Delay attribute for connections: temporal lag categories, UI, import/export, i18n |
 | **1.8.1** | 2026-03-15 | Codebase audit: 12 bug fixes, dead code removal, test strengthening |
 | **1.8.0** | 2026-03-15 | Knowledge base validation, country governance, graphical builder |

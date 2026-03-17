@@ -5,6 +5,60 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0] - 2026-03-17
+
+### Knowledge Base Quality Review & Scientific Validation
+
+Minor release delivering a comprehensive audit and scientific validation of the DAPSI(W)R(M) knowledge base. All 1,120 connections across 30 marine ecosystem contexts reviewed against published literature from HELCOM, ICES, OSPAR, UNEP-MAP, GCRMN, IPCC AR6, AMAP, and other authoritative sources.
+
+### Fixed
+- **68 element misclassifications** across 5 systematic patterns:
+  - 17 Activities/processes reclassified from Drivers (renamed to demand-phrasing)
+  - 23 ecosystem states/conditions reclassified from Pressures (invasive species presence, hypoxia, erosion)
+  - 12 human economic outputs reclassified from Impacts to Welfare (shipping, energy, port services)
+  - 7 natural processes reclassified from Activities to Pressures (hurricanes, GHG emissions, runoff)
+  - 7 ecosystem services reclassified from Welfare to Impacts (carbon regulation, conservation value)
+  - 3 near-duplicate element pairs merged
+- **16 governance/SE misclassifications** in country_governance_db.json:
+  - EU policy instruments moved from Drivers to Responses (Green Deal, Farm-to-Fork, Cohesion Fund)
+  - Activity-phrased drivers replaced with need/demand phrasing across high-income, upper-middle, and regional groups
+- **~52 polarity corrections** across all regions (e.g., warming/pollution incorrectly marked positive for ecosystem health)
+- **baltic_open_coast** missing Activity→Pressure connections restored
+- **Reversibility vocabulary** standardized from 7 terms to 3 (reversible, partially_reversible, irreversible)
+- **2 numeric temporal_lag values** converted to categorical strings
+- **90 bridge connections** added to eliminate disconnected subgraphs in all 30 contexts
+
+### Added
+- **KB validation script** (`scripts/validate_kb.py`) — automated 6-check integrity validation
+- **416 orphan element connections** — reduced orphan rate from 25-51% to 0% across all contexts
+- **5 new cross-ecosystem links** (North Sea, Mediterranean, Baltic, Arctic, Indian Ocean pairs)
+- **6 generic fallback elements** (3 Impacts + 3 Welfare) with differentiated relevance scores
+- **~86 keyword stems** across all 7 DAPSI(W)R(M) categories in keyword classification DB
+- **7 context boosts** (aquaculture, shipping, coastal development, pollution, climate, invasive species, Arctic)
+- **25 R connection KB patterns** (11 feedback loops, 14 pathway patterns for mineral extraction, offshore wind, invasive species, Arctic)
+- **Governance elements** for 4 groups: non_eu_european (D+W), latin_american (D+W), african_coastal (W), asia_pacific (W)
+- **2 regional conventions**: SPREP/Noumea (Pacific, 14 countries) and Abidjan (West Africa, 16 countries)
+
+### Changed
+- **213 connection attribute corrections** based on scientific literature review:
+  - Strength recalibrated (120 downgrades for indirect links, 15 upgrades for well-documented links)
+  - Confidence redistributed from 80% at levels 4-5 to bell-curve (3.1% L1, 7.8% L2, 43.8% L3, 23.6% L4, 21.7% L5)
+  - Temporal lag and reversibility corrected for ~10 connections (coral recovery, genetic introgression, SCTLD)
+- **R connection KB probability range** widened from 0.70-0.95 to 0.40-0.95 for better discrimination
+- **Total connections**: 622 → 1,120 across 30 contexts
+- **Total R KB patterns**: 112 → 137
+
+### Knowledge Base Quality Metrics
+- Element classification accuracy: 93.7% → 100%
+- Orphan element rate: 25-51% → 0%
+- Disconnected subgraphs: 30 contexts affected → 0
+- Cross-ecosystem links: 15 → 20
+- Keyword match rate: 52-66% → estimated 80%+ per category
+- Connection polarity errors: ~52 → 0
+- Governance groups with complete D+W coverage: 2/6 → 6/6
+
+---
+
 ## [1.9.0] - 2026-03-16
 
 ### Delay Attribute for Connections

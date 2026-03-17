@@ -1,6 +1,6 @@
 Type: ShinyApp
 Title: MarineSABRES SES Toolbox
-Version: 1.9.0
+Version: 1.10.0
 Description: R/Shiny application for Social-Ecological Systems (SES) analysis
     using the DAPSIWRM framework. Supports 9 languages with reactive i18n,
     network visualization, and ML-assisted element classification.
