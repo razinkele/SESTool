@@ -952,7 +952,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
             # Call amend callback if provided
             if (!is.null(on_amend)) {
-              on_amend(local_idx, polarity, strength_label, conf_value)
+              on_amend(local_idx, polarity, strength_label, conf_value, delay_cat, delay_yrs)
             }
 
             # Mark as approved

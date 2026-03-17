@@ -884,12 +884,14 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         debug_log(sprintf("[AI ISA CONN REVIEW] Connection #%d rejected (total approved: %d)\n",
                    index, length(rv$approved_connections)))
       },
-      on_amend = function(index, polarity, strength, confidence) {
+      on_amend = function(index, polarity, strength, confidence, delay = NA_character_, delay_years = NA_real_) {
         # Update the connection with amended values
         if (index <= length(rv$suggested_connections)) {
           rv$suggested_connections[[index]]$polarity <- polarity
           rv$suggested_connections[[index]]$strength <- strength
           rv$suggested_connections[[index]]$confidence <- confidence
+          rv$suggested_connections[[index]]$delay <- delay
+          rv$suggested_connections[[index]]$delay_years <- delay_years
           debug_log(sprintf("[AI ISA CONN REVIEW] Connection #%d amended: %s, %s, %d\n",
                      index, polarity, strength, confidence))
         }

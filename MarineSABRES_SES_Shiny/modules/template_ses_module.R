@@ -919,12 +919,14 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         })
       }),
       i18n = i18n,
-      on_amend = function(idx, polarity, strength, confidence) {
+      on_amend = function(idx, polarity, strength, confidence, delay = NA_character_, delay_years = NA_real_) {
         # Update the connection by index (ID-based logic)
         debug_log(sprintf("Connection #%d amended: %s, %s, %d", idx, polarity, strength, confidence), "TEMPLATE")
         rv$template_connections[[idx]]$polarity <- polarity
         rv$template_connections[[idx]]$strength <- strength
         rv$template_connections[[idx]]$confidence <- confidence
+        rv$template_connections[[idx]]$delay <- delay
+        rv$template_connections[[idx]]$delay_years <- delay_years
         rationale <- if (polarity == "+") "drives/increases" else "affects/reduces"
         rv$template_connections[[idx]]$rationale <- paste(
           rv$template_connections[[idx]]$from_name,
