@@ -353,6 +353,17 @@
       "no": "Hurtigreferanse",
       "el": "Γρήγορη Αναφορά"
     },
+    "ui.header.kb_references": {
+      "en": "KB References",
+      "es": "Referencias de la BC",
+      "fr": "Références de la BC",
+      "de": "KB-Referenzen",
+      "lt": "ZB nuorodos",
+      "pt": "Referências da BC",
+      "it": "Riferimenti della BC",
+      "no": "KB-referanser",
+      "el": "Αναφορές ΒΓ"
+    },
     "ui.header.recommended_for_new_users": {
       "en": "Recommended for New Users",
       "es": "Recomendado para Nuevos Usuarios",

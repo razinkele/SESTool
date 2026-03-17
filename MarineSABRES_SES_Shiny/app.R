@@ -950,6 +950,9 @@ server <- function(input, output, session) {
   # Setup about modal
   setup_about_modal_handlers(input, output, session, session_i18n)
 
+  # Setup KB references modal
+  setup_kb_references_modal_handlers(input, output, session, session_i18n)
+
   # ========== CONTROLBAR HANDLERS - REMOVED ==========
   # Controlbar has been removed - settings now in main settings modal
   # User level and autosave settings accessible via Settings dropdown in header

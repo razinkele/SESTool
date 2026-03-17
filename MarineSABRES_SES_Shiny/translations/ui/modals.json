@@ -1452,6 +1452,61 @@
       "no": "Endringslogg",
       "el": "Αρχείο Αλλαγών"
     },
+    "ui.modals.kb_references_title": {
+      "en": "Knowledge Base References",
+      "es": "Referencias de la Base de Conocimiento",
+      "fr": "Références de la Base de Connaissances",
+      "de": "Wissensdatenbank-Referenzen",
+      "lt": "Žinių bazės nuorodos",
+      "pt": "Referências da Base de Conhecimento",
+      "it": "Riferimenti della Base di Conoscenza",
+      "no": "Kunnskapsbase-referanser",
+      "el": "Αναφορές Βάσης Γνώσεων"
+    },
+    "ui.modals.kb_references_description": {
+      "en": "Scientific references cited in the DAPSI(W)R(M) knowledge base, ranked by citation frequency across 1,120 connections in 30 marine ecosystem contexts.",
+      "es": "Referencias científicas citadas en la base de conocimiento DAPSI(W)R(M), ordenadas por frecuencia de citación en 1.120 conexiones de 30 contextos de ecosistemas marinos.",
+      "fr": "Références scientifiques citées dans la base de connaissances DAPSI(W)R(M), classées par fréquence de citation dans 1 120 connexions de 30 contextes d'écosystèmes marins.",
+      "de": "Wissenschaftliche Referenzen der DAPSI(W)R(M)-Wissensdatenbank, sortiert nach Zitierhäufigkeit über 1.120 Verbindungen in 30 marinen Ökosystemkontexten.",
+      "lt": "Mokslinės nuorodos, cituojamos DAPSI(W)R(M) žinių bazėje, surikiuotos pagal citavimo dažnumą 1 120 ryšiuose 30 jūrinių ekosistemų kontekstuose.",
+      "pt": "Referências científicas citadas na base de conhecimento DAPSI(W)R(M), classificadas por frequência de citação em 1.120 conexões de 30 contextos de ecossistemas marinhos.",
+      "it": "Riferimenti scientifici citati nella base di conoscenza DAPSI(W)R(M), classificati per frequenza di citazione in 1.120 connessioni in 30 contesti di ecosistemi marini.",
+      "no": "Vitenskapelige referanser sitert i DAPSI(W)R(M)-kunnskapsbasen, rangert etter siteringsfrekvens over 1 120 forbindelser i 30 marine økosystemkontekster.",
+      "el": "Επιστημονικές αναφορές που αναφέρονται στη βάση γνώσεων DAPSI(W)R(M), ταξινομημένες κατά συχνότητα αναφοράς σε 1.120 συνδέσεις σε 30 πλαίσια θαλάσσιων οικοσυστημάτων."
+    },
+    "ui.modals.top_cited_references": {
+      "en": "Top Cited References",
+      "es": "Referencias más citadas",
+      "fr": "Références les plus citées",
+      "de": "Meistzitierte Referenzen",
+      "lt": "Dažniausiai cituojamos nuorodos",
+      "pt": "Referências mais citadas",
+      "it": "Riferimenti più citati",
+      "no": "Mest siterte referanser",
+      "el": "Πιο αναφερόμενες αναφορές"
+    },
+    "ui.modals.reference": {
+      "en": "Reference",
+      "es": "Referencia",
+      "fr": "Référence",
+      "de": "Referenz",
+      "lt": "Nuoroda",
+      "pt": "Referência",
+      "it": "Riferimento",
+      "no": "Referanse",
+      "el": "Αναφορά"
+    },
+    "ui.modals.citations": {
+      "en": "Citations",
+      "es": "Citaciones",
+      "fr": "Citations",
+      "de": "Zitierungen",
+      "lt": "Citatos",
+      "pt": "Citações",
+      "it": "Citazioni",
+      "no": "Siteringer",
+      "el": "Αναφορές"
+    },
     "ui.modals.beginners_quick_start": {
       "en": "Beginner's Quick Start",
       "es": "Inicio Rápido para Principiantes",

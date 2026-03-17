@@ -55,7 +55,7 @@ build_dashboard_header <- function(i18n) {
         )
       ),
 
-      # Settings dropdown
+      # Settings dropdown (no About — About is a separate widget)
       tags$li(
         class = "dropdown settings-dropdown",
         tags$a(
@@ -92,13 +92,6 @@ build_dashboard_header <- function(i18n) {
             icon("download"),
             tags$span(i18n$t("ui.header.download_manuals"), `data-i18n`="Download Manuals")
           ),
-          tags$a(
-            href = "#",
-            id = "open_about_modal",
-            class = "action-button",
-            icon("info-circle"),
-            tags$span(i18n$t("ui.header.app_info"), `data-i18n`="App Info")
-          ),
           tags$hr(style = "margin: 5px 0; border-color: #555;"),
           tags$a(
             href = "#",
@@ -111,7 +104,39 @@ build_dashboard_header <- function(i18n) {
         )
       ),
 
-      # Help button (User Guides)
+      # Bookmark button
+      tags$li(
+        class = "dropdown",
+        tags$a(
+          href = "#",
+          id = "bookmark_btn",
+          `aria-label` = i18n$t("ui.header.save_current_state_as_bookmark"),
+          role = "button",
+          icon("bookmark"),
+          tags$span(i18n$t("ui.header.bookmark"), `data-i18n`="Bookmark"),
+          style = "cursor: pointer;",
+          title = i18n$t("ui.header.save_current_state_as_bookmark"),
+          `data-i18n-title`="Save current state as bookmark"
+        )
+      ),
+
+      # About button (standalone, extracted from Settings)
+      tags$li(
+        class = "dropdown",
+        tags$a(
+          href = "#",
+          id = "open_about_modal",
+          `aria-label` = i18n$t("ui.header.app_info"),
+          role = "button",
+          icon("info-circle"),
+          tags$span(i18n$t("ui.header.app_info"), `data-i18n`="About"),
+          style = "cursor: pointer;",
+          title = i18n$t("ui.header.app_info"),
+          onclick = "Shiny.setInputValue('show_about_modal', Math.random()); return false;"
+        )
+      ),
+
+      # Help dropdown (rightmost, with KB References)
       tags$li(
         class = "dropdown settings-dropdown",
         tags$a(
@@ -144,23 +169,15 @@ build_dashboard_header <- function(i18n) {
             onclick = "window.open('user_guide.html', '_blank'); return false;",
             icon("book"),
             tags$span(i18n$t("ui.header.quick_reference"), `data-i18n`="Quick Reference")
+          ),
+          tags$hr(style = "margin: 5px 0; border-color: #eee;"),
+          tags$a(
+            href = "#",
+            id = "open_kb_references_modal",
+            class = "action-button",
+            icon("book-open"),
+            tags$span(i18n$t("ui.header.kb_references"), `data-i18n`="KB References")
           )
-        )
-      ),
-
-      # Bookmark button
-      tags$li(
-        class = "dropdown",
-        tags$a(
-          href = "#",
-          id = "bookmark_btn",
-          `aria-label` = i18n$t("ui.header.save_current_state_as_bookmark"),
-          role = "button",
-          icon("bookmark"),
-          tags$span(i18n$t("ui.header.bookmark"), `data-i18n`="Bookmark"),
-          style = "cursor: pointer;",
-          title = i18n$t("ui.header.save_current_state_as_bookmark"),
-          `data-i18n-title`="Save current state as bookmark"
         )
       ),
 

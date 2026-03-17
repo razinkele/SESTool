@@ -1523,3 +1523,89 @@ setup_about_modal_handlers <- function(input, output, session, i18n) {
     ))
   })
 }
+
+# ============================================================================
+# KB REFERENCES MODAL
+# ============================================================================
+
+#' Setup KB References Modal Handler
+#'
+#' Shows the knowledge base bibliography in a scrollable modal.
+#'
+#' @param input Shiny input
+#' @param output Shiny output
+#' @param session Shiny session
+#' @param i18n Translator object
+setup_kb_references_modal_handlers <- function(input, output, session, i18n) {
+
+  observeEvent(input$show_kb_references_modal, {
+
+    # Parse top references from KB JSON
+    top_refs <- tryCatch({
+      kb_path <- file.path(PROJECT_ROOT %||% ".", "data", "ses_knowledge_db.json")
+      if (file.exists(kb_path)) {
+        kb <- jsonlite::fromJSON(kb_path, simplifyVector = FALSE)
+        all_refs <- c()
+        for (ctx in kb$contexts) {
+          for (conn in ctx$connections) {
+            if (!is.null(conn$references)) {
+              all_refs <- c(all_refs, unlist(conn$references))
+            }
+          }
+        }
+        ref_counts <- sort(table(all_refs), decreasing = TRUE)
+        head(ref_counts, 25)
+      } else {
+        NULL
+      }
+    }, error = function(e) NULL)
+
+    total_refs <- tryCatch({
+      length(unique(all_refs))
+    }, error = function(e) 0)
+
+    # Build top references table
+    top_refs_ui <- if (!is.null(top_refs) && length(top_refs) > 0) {
+      rows <- lapply(seq_along(top_refs), function(i) {
+        tags$tr(
+          tags$td(style = "padding: 4px 8px; text-align: center;", i),
+          tags$td(style = "padding: 4px 8px;", names(top_refs)[i]),
+          tags$td(style = "padding: 4px 8px; text-align: center;", as.integer(top_refs[i]))
+        )
+      })
+      tags$div(
+        tags$div(style = "max-height: 500px; overflow-y: auto;",
+          tags$table(
+            class = "table table-sm table-striped",
+            tags$thead(
+              tags$tr(
+                tags$th("#"),
+                tags$th(i18n$t("ui.modals.reference")),
+                tags$th(i18n$t("ui.modals.citations"))
+              )
+            ),
+            tags$tbody(rows)
+          )
+        )
+      )
+    } else {
+      tags$p(class = "text-muted", "No references available")
+    }
+
+    showModal(modalDialog(
+      title = tags$h3(icon("book-open"), " ", i18n$t("ui.modals.kb_references_title")),
+      size = "l",
+      easyClose = TRUE,
+      footer = modalButton(i18n$t("common.buttons.close")),
+      tags$div(
+        style = "padding: 10px;",
+        tags$p(
+          style = "color: #666; font-style: italic; margin-bottom: 15px;",
+          i18n$t("ui.modals.kb_references_description")
+        ),
+        tags$h5(icon("star"), " ", i18n$t("ui.modals.top_cited_references")),
+        top_refs_ui
+      )
+    ))
+  })
+}

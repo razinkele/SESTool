@@ -567,6 +567,12 @@ $(document).ready(function() {
     Shiny.setInputValue('show_about_modal', Math.random());
   });
 
+  // Open KB references modal
+  $('#open_kb_references_modal').on('click', function(e) {
+    e.preventDefault();
+    Shiny.setInputValue('show_kb_references_modal', Math.random());
+  });
+
   // Clear session and start fresh
   $('#clear_session_btn').on('click', function(e) {
     e.preventDefault();
