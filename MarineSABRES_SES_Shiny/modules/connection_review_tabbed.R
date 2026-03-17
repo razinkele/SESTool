@@ -115,6 +115,16 @@ get_connection_batches <- function() {
       icon = "arrow-right"
     ),
     list(
+      id = "welfare_drivers",
+      label_key = "modules.connection_review.batch.welfare_drivers",
+      label_fallback = "Welfare \u2192 Drivers (Feedback)",
+      from_type = c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing"),
+      to_type = c("driver", "drivers"),
+      description_key = "modules.connection_review.batch.welfare_drivers_desc",
+      description_fallback = "Feedback loops showing how welfare outcomes reinforce or dampen societal drivers",
+      icon = "recycle"
+    ),
+    list(
       id = "drivers_welfare",
       label_key = "modules.connection_review.batch.drivers_welfare",
       label_fallback = "Drivers → Welfare (Feedback)",
@@ -123,6 +133,26 @@ get_connection_batches <- function() {
       description_key = "modules.connection_review.batch.drivers_welfare_desc",
       description_fallback = "Feedback loops showing how drivers directly affect welfare outcomes",
       icon = "recycle"
+    ),
+    list(
+      id = "pressures_pressures",
+      label_key = "modules.connection_review.batch.pressures_pressures",
+      label_fallback = "Pressures \u2192 Pressures (Cascading)",
+      from_type = c("pressure", "pressures", "enmp"),
+      to_type = c("pressure", "pressures", "enmp"),
+      description_key = "modules.connection_review.batch.pressures_pressures_desc",
+      description_fallback = "How one environmental pressure triggers or amplifies another",
+      icon = "arrows-alt"
+    ),
+    list(
+      id = "states_states",
+      label_key = "modules.connection_review.batch.states_states",
+      label_fallback = "States \u2192 States (Cascading)",
+      from_type = c("state", "states", "state change", "marine_process", "marine_processes", "mpf"),
+      to_type = c("state", "states", "state change", "marine_process", "marine_processes", "mpf"),
+      description_key = "modules.connection_review.batch.states_states_desc",
+      description_fallback = "How changes in one ecosystem component cascade to another",
+      icon = "arrows-alt"
     ),
     list(
       id = "other",
@@ -616,8 +646,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
         div(style = "margin-bottom: 10px; padding: 8px 12px; background: #f8f9fa; border-radius: 4px;",
           shinyWidgets::materialSwitch(
             inputId = ns("show_delay_toggle"),
-            label = span(icon("clock"), " ", i18n$t("common.labels.show_temporal_delay")),
-            value = FALSE,
+            label = span(icon("clock"), " ", i18n$t("modules.connection_review.show_temporal_delay")),
+            value = isolate(rv$show_delay),
             status = "warning",
             right = TRUE
           )
@@ -857,14 +887,26 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
             amended <- rv$amended_data[[as.character(local_idx)]]
             strength_value <- input[[paste0("strength_", local_idx)]] %||% 3
 
-            strength_labels <- c("Very Weak", "Weak", "Medium", "Strong", "Very Strong")
+            strength_labels <- c(
+              i18n$t("common.labels.very_weak"),
+              i18n$t("common.labels.weak"),
+              i18n$t("common.labels.medium"),
+              i18n$t("common.labels.strong"),
+              i18n$t("common.labels.very_strong")
+            )
             strength_labels[strength_value]
           })
 
           # Confidence label output
           output[[paste0("confidence_label_", local_idx)]] <- renderText({
             conf_value <- input[[paste0("confidence_", local_idx)]] %||% 3
-            conf_labels <- c("Very Low", "Low", "Medium", "High", "Very High")
+            conf_labels <- c(
+              i18n$t("common.labels.very_low"),
+              i18n$t("common.labels.low"),
+              i18n$t("common.labels.medium"),
+              i18n$t("common.labels.high"),
+              i18n$t("common.labels.very_high")
+            )
             conf_labels[conf_value]
           })
 
@@ -1090,7 +1132,7 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
             icon("info-circle", style = "color: #17a2b8; cursor: help; margin-left: 5px; font-size: 0.9em;"),
             `data-toggle` = "tooltip",
             `data-placement` = "top",
-            title = "1: Very Weak - Minimal influence\n2: Weak - Small influence\n3: Medium - Moderate influence\n4: Strong - Significant influence\n5: Very Strong - Major influence"
+            title = "1: Very Weak - Minimal influence\n2: Weak - Small influence\n3: Medium - Moderate influence\n4: Strong - Significant influence\n5: Very Strong - Major influence" # TODO: i18n tooltip
           )
         ),
         span(textOutput(ns(paste0("strength_label_", conn_idx)), inline = TRUE))
@@ -1116,7 +1158,7 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
             icon("info-circle", style = "color: #17a2b8; cursor: help; margin-left: 5px; font-size: 0.9em;"),
             `data-toggle` = "tooltip",
             `data-placement` = "top",
-            title = "1: Very Low - Highly uncertain\n2: Low - Uncertain with limited evidence\n3: Medium - Moderately certain\n4: High - Confident with good evidence\n5: Very High - Highly confident, well-established"
+            title = "1: Very Low - Highly uncertain\n2: Low - Uncertain with limited evidence\n3: Medium - Moderately certain\n4: High - Confident with good evidence\n5: Very High - Highly confident, well-established" # TODO: i18n tooltip
           )
         ),
         span(textOutput(ns(paste0("confidence_label_", conn_idx)), inline = TRUE))
@@ -1161,7 +1203,7 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
           style = "display: flex; align-items: center; gap: 8px; flex-wrap: wrap;",
           tags$span(
             style = "color: #f0c040; min-width: 60px;",
-            icon("clock"), " Delay:"
+            icon("clock"), " ", i18n$t("modules.connection_review.temporal_delay"), ":"
           ),
           tags$div(
             style = "flex: 1; min-width: 140px;",

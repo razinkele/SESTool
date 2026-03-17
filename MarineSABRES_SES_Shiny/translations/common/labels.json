@@ -989,6 +989,105 @@
       "it": "o",
       "no": "eller",
       "el": "ή"
+    },
+    "common.labels.very_weak": {
+      "en": "Very Weak",
+      "es": "Muy Débil",
+      "fr": "Très Faible",
+      "de": "Sehr Schwach",
+      "lt": "Labai silpnas",
+      "pt": "Muito Fraco",
+      "it": "Molto Debole",
+      "no": "Veldig Svak",
+      "el": "Πολύ Αδύναμο"
+    },
+    "common.labels.weak": {
+      "en": "Weak",
+      "es": "Débil",
+      "fr": "Faible",
+      "de": "Schwach",
+      "lt": "Silpnas",
+      "pt": "Fraco",
+      "it": "Debole",
+      "no": "Svak",
+      "el": "Αδύναμο"
+    },
+    "common.labels.medium": {
+      "en": "Medium",
+      "es": "Medio",
+      "fr": "Moyen",
+      "de": "Mittel",
+      "lt": "Vidutinis",
+      "pt": "Médio",
+      "it": "Medio",
+      "no": "Middels",
+      "el": "Μέτριο"
+    },
+    "common.labels.strong": {
+      "en": "Strong",
+      "es": "Fuerte",
+      "fr": "Fort",
+      "de": "Stark",
+      "lt": "Stiprus",
+      "pt": "Forte",
+      "it": "Forte",
+      "no": "Sterk",
+      "el": "Ισχυρό"
+    },
+    "common.labels.very_strong": {
+      "en": "Very Strong",
+      "es": "Muy Fuerte",
+      "fr": "Très Fort",
+      "de": "Sehr Stark",
+      "lt": "Labai stiprus",
+      "pt": "Muito Forte",
+      "it": "Molto Forte",
+      "no": "Veldig Sterk",
+      "el": "Πολύ Ισχυρό"
+    },
+    "common.labels.very_low": {
+      "en": "Very Low",
+      "es": "Muy Bajo",
+      "fr": "Très Bas",
+      "de": "Sehr Niedrig",
+      "lt": "Labai žemas",
+      "pt": "Muito Baixo",
+      "it": "Molto Basso",
+      "no": "Veldig Lav",
+      "el": "Πολύ Χαμηλό"
+    },
+    "common.labels.low": {
+      "en": "Low",
+      "es": "Bajo",
+      "fr": "Bas",
+      "de": "Niedrig",
+      "lt": "Žemas",
+      "pt": "Baixo",
+      "it": "Basso",
+      "no": "Lav",
+      "el": "Χαμηλό"
+    },
+    "common.labels.high": {
+      "en": "High",
+      "es": "Alto",
+      "fr": "Haut",
+      "de": "Hoch",
+      "lt": "Aukštas",
+      "pt": "Alto",
+      "it": "Alto",
+      "no": "Høy",
+      "el": "Υψηλό"
+    },
+    "common.labels.very_high": {
+      "en": "Very High",
+      "es": "Muy Alto",
+      "fr": "Très Haut",
+      "de": "Sehr Hoch",
+      "lt": "Labai aukštas",
+      "pt": "Muito Alto",
+      "it": "Molto Alto",
+      "no": "Veldig Høy",
+      "el": "Πολύ Υψηλό"
     }
   }
 }
