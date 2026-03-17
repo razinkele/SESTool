@@ -2,121 +2,1109 @@
   "version": "1.0",
   "description": "Country governance and socio-economic database for MarineSABRES SES Toolbox. Provides country-level governance frameworks, regional conventions, and income-stratified socioeconomic DAPSI(W)R(M) elements.",
   "last_updated": "2026-03-15",
-
   "countries_by_sea": {
-    "baltic": ["SE", "FI", "EE", "LV", "LT", "PL", "DE", "DK", "RU"],
-    "mediterranean": ["ES", "FR", "IT", "GR", "TR", "HR", "ME", "AL", "TN", "DZ", "MA", "EG", "IL", "LB", "SY", "CY", "MT", "SI", "LY"],
-    "north_sea": ["GB", "NO", "NL", "BE", "DE", "DK", "SE"],
-    "irish_sea": ["GB", "IE"],
-    "east_atlantic": ["PT", "ES", "FR", "GB", "IE", "MA", "SN", "GM", "GW", "MR"],
-    "caribbean": ["CU", "JM", "HT", "DO", "BS", "BB", "TT", "BZ", "MX", "CO", "VE", "PA", "CR", "GD", "LC", "VC", "AG", "KN", "DM", "PR", "VI"],
-    "arctic": ["NO", "RU", "CA", "US", "DK", "IS", "SE", "FI"],
-    "atlantic": ["PT", "ES", "FR", "GB", "IE", "IS", "BR", "AR", "UY", "CV", "SN"],
-    "pacific": ["AU", "NZ", "FJ", "WS", "TO", "KI", "MH", "PW", "PG", "SB", "VU", "FM", "NR", "TV"],
-    "indian": ["IN", "LK", "MV", "SC", "MU", "KE", "TZ", "MZ", "MG", "SO", "OM", "YE", "ZA", "AU"],
-    "black_sea": ["RO", "BG", "TR", "UA", "GE", "RU"]
+    "baltic": [
+      "SE",
+      "FI",
+      "EE",
+      "LV",
+      "LT",
+      "PL",
+      "DE",
+      "DK",
+      "RU"
+    ],
+    "mediterranean": [
+      "ES",
+      "FR",
+      "IT",
+      "GR",
+      "TR",
+      "HR",
+      "ME",
+      "AL",
+      "TN",
+      "DZ",
+      "MA",
+      "EG",
+      "IL",
+      "LB",
+      "SY",
+      "CY",
+      "MT",
+      "SI",
+      "LY"
+    ],
+    "north_sea": [
+      "GB",
+      "NO",
+      "NL",
+      "BE",
+      "DE",
+      "DK",
+      "SE"
+    ],
+    "irish_sea": [
+      "GB",
+      "IE"
+    ],
+    "east_atlantic": [
+      "PT",
+      "ES",
+      "FR",
+      "GB",
+      "IE",
+      "MA",
+      "SN",
+      "GM",
+      "GW",
+      "MR"
+    ],
+    "caribbean": [
+      "CU",
+      "JM",
+      "HT",
+      "DO",
+      "BS",
+      "BB",
+      "TT",
+      "BZ",
+      "MX",
+      "CO",
+      "VE",
+      "PA",
+      "CR",
+      "GD",
+      "LC",
+      "VC",
+      "AG",
+      "KN",
+      "DM",
+      "PR",
+      "VI"
+    ],
+    "arctic": [
+      "NO",
+      "RU",
+      "CA",
+      "US",
+      "DK",
+      "IS",
+      "SE",
+      "FI"
+    ],
+    "atlantic": [
+      "PT",
+      "ES",
+      "FR",
+      "GB",
+      "IE",
+      "IS",
+      "BR",
+      "AR",
+      "UY",
+      "CV",
+      "SN"
+    ],
+    "pacific": [
+      "AU",
+      "NZ",
+      "FJ",
+      "WS",
+      "TO",
+      "KI",
+      "MH",
+      "PW",
+      "PG",
+      "SB",
+      "VU",
+      "FM",
+      "NR",
+      "TV"
+    ],
+    "indian": [
+      "IN",
+      "LK",
+      "MV",
+      "SC",
+      "MU",
+      "KE",
+      "TZ",
+      "MZ",
+      "MG",
+      "SO",
+      "OM",
+      "YE",
+      "ZA",
+      "AU"
+    ],
+    "black_sea": [
+      "RO",
+      "BG",
+      "TR",
+      "UA",
+      "GE",
+      "RU"
+    ]
   },
-
   "countries": {
-    "SE": { "code": "SE", "name_en": "Sweden", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["helcom", "ospar"] },
-    "FI": { "code": "FI", "name_en": "Finland", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["helcom"] },
-    "EE": { "code": "EE", "name_en": "Estonia", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["helcom"] },
-    "LV": { "code": "LV", "name_en": "Latvia", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["helcom"] },
-    "LT": { "code": "LT", "name_en": "Lithuania", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["helcom"] },
-    "PL": { "code": "PL", "name_en": "Poland", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["helcom"] },
-    "DE": { "code": "DE", "name_en": "Germany", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["helcom", "ospar"] },
-    "DK": { "code": "DK", "name_en": "Denmark", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["helcom", "ospar"] },
-    "RU": { "code": "RU", "name_en": "Russia", "eu_member": false, "income_level": "upper_middle", "governance_group": "non_eu_european", "regional_conventions": ["helcom", "bucharest"] },
-    "ES": { "code": "ES", "name_en": "Spain", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["ospar", "unep_map"] },
-    "FR": { "code": "FR", "name_en": "France", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["ospar", "unep_map"] },
-    "IT": { "code": "IT", "name_en": "Italy", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["unep_map"] },
-    "GR": { "code": "GR", "name_en": "Greece", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["unep_map"] },
-    "TR": { "code": "TR", "name_en": "Turkey", "eu_member": false, "income_level": "upper_middle", "governance_group": "non_eu_european", "regional_conventions": ["unep_map", "bucharest"] },
-    "HR": { "code": "HR", "name_en": "Croatia", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["unep_map"] },
-    "ME": { "code": "ME", "name_en": "Montenegro", "eu_member": false, "income_level": "upper_middle", "governance_group": "non_eu_european", "regional_conventions": ["unep_map"] },
-    "AL": { "code": "AL", "name_en": "Albania", "eu_member": false, "income_level": "upper_middle", "governance_group": "non_eu_european", "regional_conventions": ["unep_map"] },
-    "TN": { "code": "TN", "name_en": "Tunisia", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": ["unep_map"] },
-    "DZ": { "code": "DZ", "name_en": "Algeria", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": ["unep_map"] },
-    "MA": { "code": "MA", "name_en": "Morocco", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": ["unep_map"] },
-    "EG": { "code": "EG", "name_en": "Egypt", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": ["unep_map"] },
-    "IL": { "code": "IL", "name_en": "Israel", "eu_member": false, "income_level": "high", "governance_group": "non_eu_european", "regional_conventions": ["unep_map"] },
-    "LB": { "code": "LB", "name_en": "Lebanon", "eu_member": false, "income_level": "lower_middle", "governance_group": "non_eu_european", "regional_conventions": ["unep_map"] },
-    "SY": { "code": "SY", "name_en": "Syria", "eu_member": false, "income_level": "lower_middle", "governance_group": "non_eu_european", "regional_conventions": ["unep_map"] },
-    "CY": { "code": "CY", "name_en": "Cyprus", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["unep_map"] },
-    "MT": { "code": "MT", "name_en": "Malta", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["unep_map"] },
-    "SI": { "code": "SI", "name_en": "Slovenia", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["unep_map"] },
-    "LY": { "code": "LY", "name_en": "Libya", "eu_member": false, "income_level": "upper_middle", "governance_group": "african_coastal", "regional_conventions": ["unep_map"] },
-    "GB": { "code": "GB", "name_en": "United Kingdom", "eu_member": false, "income_level": "high", "governance_group": "non_eu_european", "regional_conventions": ["ospar"] },
-    "NO": { "code": "NO", "name_en": "Norway", "eu_member": false, "income_level": "high", "governance_group": "non_eu_european", "regional_conventions": ["ospar"] },
-    "NL": { "code": "NL", "name_en": "Netherlands", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["ospar"] },
-    "BE": { "code": "BE", "name_en": "Belgium", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["ospar"] },
-    "IE": { "code": "IE", "name_en": "Ireland", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["ospar"] },
-    "IS": { "code": "IS", "name_en": "Iceland", "eu_member": false, "income_level": "high", "governance_group": "non_eu_european", "regional_conventions": ["ospar"] },
-    "PT": { "code": "PT", "name_en": "Portugal", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["ospar"] },
-    "RO": { "code": "RO", "name_en": "Romania", "eu_member": true, "income_level": "high", "governance_group": "eu", "regional_conventions": ["bucharest"] },
-    "BG": { "code": "BG", "name_en": "Bulgaria", "eu_member": true, "income_level": "upper_middle", "governance_group": "eu", "regional_conventions": ["bucharest"] },
-    "UA": { "code": "UA", "name_en": "Ukraine", "eu_member": false, "income_level": "lower_middle", "governance_group": "non_eu_european", "regional_conventions": ["bucharest"] },
-    "GE": { "code": "GE", "name_en": "Georgia", "eu_member": false, "income_level": "upper_middle", "governance_group": "non_eu_european", "regional_conventions": ["bucharest"] },
-    "CA": { "code": "CA", "name_en": "Canada", "eu_member": false, "income_level": "high", "governance_group": "non_eu_european", "regional_conventions": [] },
-    "US": { "code": "US", "name_en": "United States", "eu_member": false, "income_level": "high", "governance_group": "non_eu_european", "regional_conventions": [] },
-    "CU": { "code": "CU", "name_en": "Cuba", "eu_member": false, "income_level": "upper_middle", "governance_group": "latin_american", "regional_conventions": ["cartagena"] },
-    "JM": { "code": "JM", "name_en": "Jamaica", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "HT": { "code": "HT", "name_en": "Haiti", "eu_member": false, "income_level": "lower_middle", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "DO": { "code": "DO", "name_en": "Dominican Republic", "eu_member": false, "income_level": "upper_middle", "governance_group": "latin_american", "regional_conventions": ["cartagena"] },
-    "BS": { "code": "BS", "name_en": "Bahamas", "eu_member": false, "income_level": "high", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "BB": { "code": "BB", "name_en": "Barbados", "eu_member": false, "income_level": "high", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "TT": { "code": "TT", "name_en": "Trinidad and Tobago", "eu_member": false, "income_level": "high", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "BZ": { "code": "BZ", "name_en": "Belize", "eu_member": false, "income_level": "upper_middle", "governance_group": "latin_american", "regional_conventions": ["cartagena"] },
-    "MX": { "code": "MX", "name_en": "Mexico", "eu_member": false, "income_level": "upper_middle", "governance_group": "latin_american", "regional_conventions": ["cartagena"] },
-    "CO": { "code": "CO", "name_en": "Colombia", "eu_member": false, "income_level": "upper_middle", "governance_group": "latin_american", "regional_conventions": ["cartagena"] },
-    "VE": { "code": "VE", "name_en": "Venezuela", "eu_member": false, "income_level": "upper_middle", "governance_group": "latin_american", "regional_conventions": ["cartagena"] },
-    "PA": { "code": "PA", "name_en": "Panama", "eu_member": false, "income_level": "high", "governance_group": "latin_american", "regional_conventions": ["cartagena"] },
-    "CR": { "code": "CR", "name_en": "Costa Rica", "eu_member": false, "income_level": "upper_middle", "governance_group": "latin_american", "regional_conventions": ["cartagena"] },
-    "GD": { "code": "GD", "name_en": "Grenada", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "LC": { "code": "LC", "name_en": "Saint Lucia", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "VC": { "code": "VC", "name_en": "Saint Vincent and the Grenadines", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "AG": { "code": "AG", "name_en": "Antigua and Barbuda", "eu_member": false, "income_level": "high", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "KN": { "code": "KN", "name_en": "Saint Kitts and Nevis", "eu_member": false, "income_level": "high", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "DM": { "code": "DM", "name_en": "Dominica", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": ["cartagena"] },
-    "PR": { "code": "PR", "name_en": "Puerto Rico (US)", "eu_member": false, "income_level": "high", "governance_group": "latin_american", "regional_conventions": ["cartagena"] },
-    "VI": { "code": "VI", "name_en": "US Virgin Islands", "eu_member": false, "income_level": "high", "governance_group": "latin_american", "regional_conventions": ["cartagena"] },
-    "BR": { "code": "BR", "name_en": "Brazil", "eu_member": false, "income_level": "upper_middle", "governance_group": "latin_american", "regional_conventions": [] },
-    "AR": { "code": "AR", "name_en": "Argentina", "eu_member": false, "income_level": "upper_middle", "governance_group": "latin_american", "regional_conventions": [] },
-    "UY": { "code": "UY", "name_en": "Uruguay", "eu_member": false, "income_level": "high", "governance_group": "latin_american", "regional_conventions": [] },
-    "CV": { "code": "CV", "name_en": "Cabo Verde", "eu_member": false, "income_level": "lower_middle", "governance_group": "sids", "regional_conventions": [] },
-    "SN": { "code": "SN", "name_en": "Senegal", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": [] },
-    "GM": { "code": "GM", "name_en": "Gambia", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": [] },
-    "GW": { "code": "GW", "name_en": "Guinea-Bissau", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": [] },
-    "MR": { "code": "MR", "name_en": "Mauritania", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": [] },
-    "AU": { "code": "AU", "name_en": "Australia", "eu_member": false, "income_level": "high", "governance_group": "asia_pacific", "regional_conventions": [] },
-    "NZ": { "code": "NZ", "name_en": "New Zealand", "eu_member": false, "income_level": "high", "governance_group": "asia_pacific", "regional_conventions": [] },
-    "FJ": { "code": "FJ", "name_en": "Fiji", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": [] },
-    "WS": { "code": "WS", "name_en": "Samoa", "eu_member": false, "income_level": "lower_middle", "governance_group": "sids", "regional_conventions": [] },
-    "TO": { "code": "TO", "name_en": "Tonga", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": [] },
-    "KI": { "code": "KI", "name_en": "Kiribati", "eu_member": false, "income_level": "lower_middle", "governance_group": "sids", "regional_conventions": [] },
-    "MH": { "code": "MH", "name_en": "Marshall Islands", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": [] },
-    "PW": { "code": "PW", "name_en": "Palau", "eu_member": false, "income_level": "high", "governance_group": "sids", "regional_conventions": [] },
-    "PG": { "code": "PG", "name_en": "Papua New Guinea", "eu_member": false, "income_level": "lower_middle", "governance_group": "asia_pacific", "regional_conventions": [] },
-    "SB": { "code": "SB", "name_en": "Solomon Islands", "eu_member": false, "income_level": "lower_middle", "governance_group": "sids", "regional_conventions": [] },
-    "VU": { "code": "VU", "name_en": "Vanuatu", "eu_member": false, "income_level": "lower_middle", "governance_group": "sids", "regional_conventions": [] },
-    "FM": { "code": "FM", "name_en": "Micronesia", "eu_member": false, "income_level": "lower_middle", "governance_group": "sids", "regional_conventions": [] },
-    "NR": { "code": "NR", "name_en": "Nauru", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": [] },
-    "TV": { "code": "TV", "name_en": "Tuvalu", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": [] },
-    "IN": { "code": "IN", "name_en": "India", "eu_member": false, "income_level": "lower_middle", "governance_group": "asia_pacific", "regional_conventions": [] },
-    "LK": { "code": "LK", "name_en": "Sri Lanka", "eu_member": false, "income_level": "lower_middle", "governance_group": "asia_pacific", "regional_conventions": [] },
-    "MV": { "code": "MV", "name_en": "Maldives", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": [] },
-    "SC": { "code": "SC", "name_en": "Seychelles", "eu_member": false, "income_level": "high", "governance_group": "sids", "regional_conventions": ["nairobi"] },
-    "MU": { "code": "MU", "name_en": "Mauritius", "eu_member": false, "income_level": "upper_middle", "governance_group": "sids", "regional_conventions": ["nairobi"] },
-    "KE": { "code": "KE", "name_en": "Kenya", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": ["nairobi"] },
-    "TZ": { "code": "TZ", "name_en": "Tanzania", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": ["nairobi"] },
-    "MZ": { "code": "MZ", "name_en": "Mozambique", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": ["nairobi"] },
-    "MG": { "code": "MG", "name_en": "Madagascar", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": ["nairobi"] },
-    "SO": { "code": "SO", "name_en": "Somalia", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": ["nairobi"] },
-    "OM": { "code": "OM", "name_en": "Oman", "eu_member": false, "income_level": "high", "governance_group": "non_eu_european", "regional_conventions": [] },
-    "YE": { "code": "YE", "name_en": "Yemen", "eu_member": false, "income_level": "lower_middle", "governance_group": "african_coastal", "regional_conventions": [] },
-    "ZA": { "code": "ZA", "name_en": "South Africa", "eu_member": false, "income_level": "upper_middle", "governance_group": "african_coastal", "regional_conventions": ["nairobi"] }
+    "SE": {
+      "code": "SE",
+      "name_en": "Sweden",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "helcom",
+        "ospar"
+      ]
+    },
+    "FI": {
+      "code": "FI",
+      "name_en": "Finland",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "helcom"
+      ]
+    },
+    "EE": {
+      "code": "EE",
+      "name_en": "Estonia",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "helcom"
+      ]
+    },
+    "LV": {
+      "code": "LV",
+      "name_en": "Latvia",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "helcom"
+      ]
+    },
+    "LT": {
+      "code": "LT",
+      "name_en": "Lithuania",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "helcom"
+      ]
+    },
+    "PL": {
+      "code": "PL",
+      "name_en": "Poland",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "helcom"
+      ]
+    },
+    "DE": {
+      "code": "DE",
+      "name_en": "Germany",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "helcom",
+        "ospar"
+      ]
+    },
+    "DK": {
+      "code": "DK",
+      "name_en": "Denmark",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "helcom",
+        "ospar"
+      ]
+    },
+    "RU": {
+      "code": "RU",
+      "name_en": "Russia",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "helcom",
+        "bucharest"
+      ]
+    },
+    "ES": {
+      "code": "ES",
+      "name_en": "Spain",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "ospar",
+        "unep_map"
+      ]
+    },
+    "FR": {
+      "code": "FR",
+      "name_en": "France",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "ospar",
+        "unep_map"
+      ]
+    },
+    "IT": {
+      "code": "IT",
+      "name_en": "Italy",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "GR": {
+      "code": "GR",
+      "name_en": "Greece",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "TR": {
+      "code": "TR",
+      "name_en": "Turkey",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "unep_map",
+        "bucharest"
+      ]
+    },
+    "HR": {
+      "code": "HR",
+      "name_en": "Croatia",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "ME": {
+      "code": "ME",
+      "name_en": "Montenegro",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "AL": {
+      "code": "AL",
+      "name_en": "Albania",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "TN": {
+      "code": "TN",
+      "name_en": "Tunisia",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "DZ": {
+      "code": "DZ",
+      "name_en": "Algeria",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "MA": {
+      "code": "MA",
+      "name_en": "Morocco",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "EG": {
+      "code": "EG",
+      "name_en": "Egypt",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "IL": {
+      "code": "IL",
+      "name_en": "Israel",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "LB": {
+      "code": "LB",
+      "name_en": "Lebanon",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "SY": {
+      "code": "SY",
+      "name_en": "Syria",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "CY": {
+      "code": "CY",
+      "name_en": "Cyprus",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "MT": {
+      "code": "MT",
+      "name_en": "Malta",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "SI": {
+      "code": "SI",
+      "name_en": "Slovenia",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "LY": {
+      "code": "LY",
+      "name_en": "Libya",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "unep_map"
+      ]
+    },
+    "GB": {
+      "code": "GB",
+      "name_en": "United Kingdom",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "ospar"
+      ]
+    },
+    "NO": {
+      "code": "NO",
+      "name_en": "Norway",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "ospar"
+      ]
+    },
+    "NL": {
+      "code": "NL",
+      "name_en": "Netherlands",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "ospar"
+      ]
+    },
+    "BE": {
+      "code": "BE",
+      "name_en": "Belgium",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "ospar"
+      ]
+    },
+    "IE": {
+      "code": "IE",
+      "name_en": "Ireland",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "ospar"
+      ]
+    },
+    "IS": {
+      "code": "IS",
+      "name_en": "Iceland",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "ospar"
+      ]
+    },
+    "PT": {
+      "code": "PT",
+      "name_en": "Portugal",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "ospar"
+      ]
+    },
+    "RO": {
+      "code": "RO",
+      "name_en": "Romania",
+      "eu_member": true,
+      "income_level": "high",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "bucharest"
+      ]
+    },
+    "BG": {
+      "code": "BG",
+      "name_en": "Bulgaria",
+      "eu_member": true,
+      "income_level": "upper_middle",
+      "governance_group": "eu",
+      "regional_conventions": [
+        "bucharest"
+      ]
+    },
+    "UA": {
+      "code": "UA",
+      "name_en": "Ukraine",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "bucharest"
+      ]
+    },
+    "GE": {
+      "code": "GE",
+      "name_en": "Georgia",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "non_eu_european",
+      "regional_conventions": [
+        "bucharest"
+      ]
+    },
+    "CA": {
+      "code": "CA",
+      "name_en": "Canada",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "non_eu_european",
+      "regional_conventions": []
+    },
+    "US": {
+      "code": "US",
+      "name_en": "United States",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "non_eu_european",
+      "regional_conventions": []
+    },
+    "CU": {
+      "code": "CU",
+      "name_en": "Cuba",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "JM": {
+      "code": "JM",
+      "name_en": "Jamaica",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "HT": {
+      "code": "HT",
+      "name_en": "Haiti",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "DO": {
+      "code": "DO",
+      "name_en": "Dominican Republic",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "BS": {
+      "code": "BS",
+      "name_en": "Bahamas",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "BB": {
+      "code": "BB",
+      "name_en": "Barbados",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "TT": {
+      "code": "TT",
+      "name_en": "Trinidad and Tobago",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "BZ": {
+      "code": "BZ",
+      "name_en": "Belize",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "MX": {
+      "code": "MX",
+      "name_en": "Mexico",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "CO": {
+      "code": "CO",
+      "name_en": "Colombia",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "VE": {
+      "code": "VE",
+      "name_en": "Venezuela",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "PA": {
+      "code": "PA",
+      "name_en": "Panama",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "CR": {
+      "code": "CR",
+      "name_en": "Costa Rica",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "GD": {
+      "code": "GD",
+      "name_en": "Grenada",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "LC": {
+      "code": "LC",
+      "name_en": "Saint Lucia",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "VC": {
+      "code": "VC",
+      "name_en": "Saint Vincent and the Grenadines",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "AG": {
+      "code": "AG",
+      "name_en": "Antigua and Barbuda",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "KN": {
+      "code": "KN",
+      "name_en": "Saint Kitts and Nevis",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "DM": {
+      "code": "DM",
+      "name_en": "Dominica",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "PR": {
+      "code": "PR",
+      "name_en": "Puerto Rico (US)",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "VI": {
+      "code": "VI",
+      "name_en": "US Virgin Islands",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "latin_american",
+      "regional_conventions": [
+        "cartagena"
+      ]
+    },
+    "BR": {
+      "code": "BR",
+      "name_en": "Brazil",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": []
+    },
+    "AR": {
+      "code": "AR",
+      "name_en": "Argentina",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "latin_american",
+      "regional_conventions": []
+    },
+    "UY": {
+      "code": "UY",
+      "name_en": "Uruguay",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "latin_american",
+      "regional_conventions": []
+    },
+    "CV": {
+      "code": "CV",
+      "name_en": "Cabo Verde",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "sids",
+      "regional_conventions": []
+    },
+    "SN": {
+      "code": "SN",
+      "name_en": "Senegal",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "abidjan"
+      ]
+    },
+    "GM": {
+      "code": "GM",
+      "name_en": "Gambia",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "abidjan"
+      ]
+    },
+    "GW": {
+      "code": "GW",
+      "name_en": "Guinea-Bissau",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "abidjan"
+      ]
+    },
+    "MR": {
+      "code": "MR",
+      "name_en": "Mauritania",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "abidjan"
+      ]
+    },
+    "AU": {
+      "code": "AU",
+      "name_en": "Australia",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "asia_pacific",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "NZ": {
+      "code": "NZ",
+      "name_en": "New Zealand",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "asia_pacific",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "FJ": {
+      "code": "FJ",
+      "name_en": "Fiji",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "WS": {
+      "code": "WS",
+      "name_en": "Samoa",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "TO": {
+      "code": "TO",
+      "name_en": "Tonga",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "KI": {
+      "code": "KI",
+      "name_en": "Kiribati",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "MH": {
+      "code": "MH",
+      "name_en": "Marshall Islands",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "PW": {
+      "code": "PW",
+      "name_en": "Palau",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "PG": {
+      "code": "PG",
+      "name_en": "Papua New Guinea",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "asia_pacific",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "SB": {
+      "code": "SB",
+      "name_en": "Solomon Islands",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "VU": {
+      "code": "VU",
+      "name_en": "Vanuatu",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "FM": {
+      "code": "FM",
+      "name_en": "Micronesia",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "NR": {
+      "code": "NR",
+      "name_en": "Nauru",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "TV": {
+      "code": "TV",
+      "name_en": "Tuvalu",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "sprep"
+      ]
+    },
+    "IN": {
+      "code": "IN",
+      "name_en": "India",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "asia_pacific",
+      "regional_conventions": []
+    },
+    "LK": {
+      "code": "LK",
+      "name_en": "Sri Lanka",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "asia_pacific",
+      "regional_conventions": []
+    },
+    "MV": {
+      "code": "MV",
+      "name_en": "Maldives",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": []
+    },
+    "SC": {
+      "code": "SC",
+      "name_en": "Seychelles",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "nairobi"
+      ]
+    },
+    "MU": {
+      "code": "MU",
+      "name_en": "Mauritius",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "sids",
+      "regional_conventions": [
+        "nairobi"
+      ]
+    },
+    "KE": {
+      "code": "KE",
+      "name_en": "Kenya",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "nairobi"
+      ]
+    },
+    "TZ": {
+      "code": "TZ",
+      "name_en": "Tanzania",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "nairobi"
+      ]
+    },
+    "MZ": {
+      "code": "MZ",
+      "name_en": "Mozambique",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "nairobi"
+      ]
+    },
+    "MG": {
+      "code": "MG",
+      "name_en": "Madagascar",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "nairobi"
+      ]
+    },
+    "SO": {
+      "code": "SO",
+      "name_en": "Somalia",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "nairobi"
+      ]
+    },
+    "OM": {
+      "code": "OM",
+      "name_en": "Oman",
+      "eu_member": false,
+      "income_level": "high",
+      "governance_group": "non_eu_european",
+      "regional_conventions": []
+    },
+    "YE": {
+      "code": "YE",
+      "name_en": "Yemen",
+      "eu_member": false,
+      "income_level": "lower_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": []
+    },
+    "ZA": {
+      "code": "ZA",
+      "name_en": "South Africa",
+      "eu_member": false,
+      "income_level": "upper_middle",
+      "governance_group": "african_coastal",
+      "regional_conventions": [
+        "nairobi",
+        "abidjan"
+      ]
+    }
   },
-
   "governance_elements": {
     "eu": {
       "label": "EU Member States",
@@ -151,8 +1139,17 @@
         "OSPAR/HELCOM participation as non-EU contracting party",
         "National maritime spatial planning legislation"
       ],
-      "drivers": [],
-      "welfare": []
+      "drivers": [
+        "Post-Brexit fisheries sovereignty and quota access",
+        "Petroleum export revenue and energy transition",
+        "Arctic resource access and Northern Sea Route development",
+        "Coastal tourism and recreation demand"
+      ],
+      "welfare": [
+        "Fishing community livelihoods outside CFP framework",
+        "Coastal community resilience to climate change",
+        "Maritime industry employment and port revenue"
+      ]
     },
     "sids": {
       "label": "Small Island Developing States",
@@ -189,7 +1186,13 @@
         "Food security and livelihood needs from artisanal fishing",
         "Marine protein as critical food security source"
       ],
-      "welfare": []
+      "welfare": [
+        "Artisanal fisher income and food access",
+        "Coastal community vulnerability to storm damage",
+        "Marine protein contribution to child nutrition",
+        "Fishing community cultural identity and traditions",
+        "Public health impacts from marine pollution"
+      ]
     },
     "asia_pacific": {
       "label": "Asia-Pacific States",
@@ -203,7 +1206,12 @@
         "Export market demand for aquaculture products",
         "Coastal urbanization and housing demand"
       ],
-      "welfare": []
+      "welfare": [
+        "Aquaculture worker livelihoods and working conditions",
+        "Coastal community displacement from sea level rise",
+        "Small-scale fisher income stability",
+        "Maritime cultural heritage preservation"
+      ]
     },
     "latin_american": {
       "label": "Latin American and Caribbean States",
@@ -213,11 +1221,20 @@
         "Mesoamerican Reef Initiative transboundary management",
         "National marine protected area system expansion"
       ],
-      "drivers": [],
-      "welfare": []
+      "drivers": [
+        "Coastal urbanization and population growth pressure",
+        "Artisanal fishing and food security demand",
+        "Export fisheries and aquaculture market demand",
+        "Coastal tourism development demand"
+      ],
+      "welfare": [
+        "Artisanal fisher household food security",
+        "Coastal community displacement from development",
+        "Tourism-dependent community livelihoods",
+        "Marine pollution health impacts on coastal populations"
+      ]
     }
   },
-
   "socioeconomic_elements": {
     "high": {
       "label": "High-Income Economies",
@@ -270,12 +1287,21 @@
       ]
     }
   },
-
   "regional_conventions": {
     "helcom": {
       "name": "HELCOM (Helsinki Commission)",
       "full_name": "Baltic Marine Environment Protection Commission",
-      "member_codes": ["SE", "FI", "EE", "LV", "LT", "PL", "DE", "DK", "RU"],
+      "member_codes": [
+        "SE",
+        "FI",
+        "EE",
+        "LV",
+        "LT",
+        "PL",
+        "DE",
+        "DK",
+        "RU"
+      ],
       "responses": [
         "HELCOM Baltic Sea Action Plan nutrient reduction targets",
         "HELCOM marine protected area network coordination",
@@ -286,7 +1312,20 @@
     "ospar": {
       "name": "OSPAR Commission",
       "full_name": "Convention for the Protection of the Marine Environment of the North-East Atlantic",
-      "member_codes": ["NO", "GB", "IE", "FR", "ES", "PT", "IS", "BE", "NL", "DE", "DK", "SE"],
+      "member_codes": [
+        "NO",
+        "GB",
+        "IE",
+        "FR",
+        "ES",
+        "PT",
+        "IS",
+        "BE",
+        "NL",
+        "DE",
+        "DK",
+        "SE"
+      ],
       "responses": [
         "OSPAR North-East Atlantic Environment Strategy",
         "OSPAR marine protected area network (incl. high seas)",
@@ -298,7 +1337,27 @@
     "unep_map": {
       "name": "UNEP/MAP (Barcelona Convention)",
       "full_name": "United Nations Environment Programme Mediterranean Action Plan",
-      "member_codes": ["ES", "FR", "IT", "GR", "TR", "HR", "ME", "AL", "TN", "DZ", "MA", "EG", "IL", "LB", "SY", "CY", "MT", "SI", "LY"],
+      "member_codes": [
+        "ES",
+        "FR",
+        "IT",
+        "GR",
+        "TR",
+        "HR",
+        "ME",
+        "AL",
+        "TN",
+        "DZ",
+        "MA",
+        "EG",
+        "IL",
+        "LB",
+        "SY",
+        "CY",
+        "MT",
+        "SI",
+        "LY"
+      ],
       "responses": [
         "Barcelona Convention integrated coastal zone management protocol",
         "UNEP/MAP Mediterranean marine protected area targets",
@@ -309,7 +1368,14 @@
     "bucharest": {
       "name": "Bucharest Convention",
       "full_name": "Convention on the Protection of the Black Sea Against Pollution",
-      "member_codes": ["RO", "BG", "TR", "UA", "GE", "RU"],
+      "member_codes": [
+        "RO",
+        "BG",
+        "TR",
+        "UA",
+        "GE",
+        "RU"
+      ],
       "responses": [
         "Black Sea Strategic Action Plan pollution reduction",
         "Black Sea biodiversity and habitat conservation protocol",
@@ -320,7 +1386,16 @@
     "nairobi": {
       "name": "Nairobi Convention",
       "full_name": "Convention for the Protection, Management and Development of the Marine and Coastal Environment of the Western Indian Ocean",
-      "member_codes": ["KE", "TZ", "MZ", "MG", "SO", "ZA", "SC", "MU"],
+      "member_codes": [
+        "KE",
+        "TZ",
+        "MZ",
+        "MG",
+        "SO",
+        "ZA",
+        "SC",
+        "MU"
+      ],
       "responses": [
         "Nairobi Convention Western Indian Ocean governance framework",
         "WIO marine protected area network development",
@@ -331,12 +1406,90 @@
     "cartagena": {
       "name": "Cartagena Convention",
       "full_name": "Convention for the Protection and Development of the Marine Environment of the Wider Caribbean Region",
-      "member_codes": ["CU", "JM", "HT", "DO", "BS", "BB", "TT", "BZ", "MX", "CO", "VE", "PA", "CR", "GD", "LC", "VC", "AG", "KN", "DM", "PR", "VI"],
+      "member_codes": [
+        "CU",
+        "JM",
+        "HT",
+        "DO",
+        "BS",
+        "BB",
+        "TT",
+        "BZ",
+        "MX",
+        "CO",
+        "VE",
+        "PA",
+        "CR",
+        "GD",
+        "LC",
+        "VC",
+        "AG",
+        "KN",
+        "DM",
+        "PR",
+        "VI"
+      ],
       "responses": [
         "Cartagena Convention wider Caribbean marine protection",
         "SPAW Protocol specially protected areas and wildlife",
         "LBS Protocol land-based sources of marine pollution",
         "Caribbean regional oil spill response cooperation"
+      ]
+    },
+    "sprep": {
+      "name": "sprep",
+      "full_name": "Noumea Convention (SPREP) for Protection of the Natural Resources and Environment of the South Pacific Region",
+      "member_codes": [
+        "AU",
+        "NZ",
+        "FJ",
+        "WS",
+        "TO",
+        "KI",
+        "MH",
+        "PW",
+        "PG",
+        "SB",
+        "VU",
+        "FM",
+        "NR",
+        "TV"
+      ],
+      "responses": [
+        "SPREP Strategic Plan for biodiversity and ecosystem management",
+        "Pacific Islands Regional Marine Species Programme",
+        "Pacific Regional Environment Programme waste management",
+        "Noumea Convention pollution prevention protocols",
+        "Pacific Islands Framework for Nature Conservation"
+      ]
+    },
+    "abidjan": {
+      "name": "abidjan",
+      "full_name": "Abidjan Convention for Cooperation in the Protection, Management and Development of the Marine and Coastal Environment of the Atlantic Coast of the West, Central and Southern Africa Region",
+      "member_codes": [
+        "SN",
+        "GM",
+        "GW",
+        "MR",
+        "CI",
+        "GH",
+        "TG",
+        "BJ",
+        "NG",
+        "CM",
+        "GA",
+        "CG",
+        "CD",
+        "AO",
+        "NA",
+        "ZA"
+      ],
+      "responses": [
+        "Abidjan Convention Protocol on sustainable mangrove management",
+        "West African Regional Fisheries Commission (CSRP) measures",
+        "Abidjan Convention ICZM Protocol for coastal zone management",
+        "Large Marine Ecosystem programmes (Guinea Current, Canary Current)",
+        "Abidjan Convention Protocol on environmental standards from seabed activities"
       ]
     }
   }
