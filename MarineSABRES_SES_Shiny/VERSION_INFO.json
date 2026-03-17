@@ -1,12 +1,12 @@
 {
-  "version": "1.10.0",
-  "version_name": "Knowledge Base Quality Review & Scientific Validation",
+  "version": "1.10.1",
+  "version_name": "UI Polish, Consistency & Documentation",
   "release_date": "2026-03-17",
-  "release_type": "minor",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.10.0",
+  "documentation_version": "1.10.1",
   "api_version": "1.0",
   "database_version": "2.0",
   "breaking_changes": false,
@@ -92,5 +92,5 @@
     "KB validation runs automatically — no app code changes",
     "Translation cache regenerates on first startup"
   ],
-  "previous_version": "1.9.0"
+  "previous_version": "1.10.0"
 }

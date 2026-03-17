@@ -5,6 +5,44 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.1] - 2026-03-17
+
+### UI Polish, Consistency Fixes & Documentation Update
+
+Patch release with topbar reorganization, connection review bug fixes, codebase consistency improvements, and complete manual updates.
+
+### Fixed
+- **Critical**: `on_amend` callback now passes delay values — user-edited delays were silently lost on save
+- **Critical**: KB References modal scoping bug — `all_refs` variable inaccessible outside `tryCatch`
+- **Critical**: Hardcoded "No references available" string now translated via i18n
+- Standardized 26 logging calls from `log_message()`/`message()` to `debug_log()`
+- Resolved 2 TODO i18n tooltip items in connection review (strength/confidence descriptions)
+- Translated 27 hardcoded English strings in export modules (loops, BOT, PIMS)
+- Delay toggle now persists state across tab re-renders (`isolate(rv$show_delay)`)
+- Delay label uses correct translation key (`modules.connection_review.temporal_delay`)
+
+### Added
+- **About button**: Extracted from Settings dropdown into standalone topbar widget
+- **KB References**: New submenu in Help dropdown with modal showing top 25 cited scientific sources
+- **Connection review batches**: W→D (feedback), P→P (cascading pressures), S→S (cascading states)
+- **KB Bibliography**: `docs/KB_BIBLIOGRAPHY.md` with 511 references and DOI links
+- Translation keys for strength/confidence tooltips, KB references modal (all 9 languages)
+- 3 new translation files: `analysis_loops.json`, `analysis_bot.json`, `pims.json`
+
+### Changed
+- **Topbar layout**: Language | Settings | Bookmark | About | Help | User
+- Help dropdown moved to rightmost position (before status indicators)
+- Extracted duplicated DAPSIWRM summary UI into shared `render_element_summary_ui()` function (133 lines saved)
+- Removed dead function `rank_suggestions_by_relevance()` (56 lines)
+
+### Documentation
+- English user manual updated to v1.10.0 (What's New, delay attributes, KB refs, 9 languages)
+- French user manual updated to v1.10.0 (Nouveautés, délai temporel, réf. BC, 9 langues)
+- HTML/PDF versions regenerated via Pandoc 3.8.3
+- Beginner guide, step-by-step tutorial, user guide HTML files updated
+
+---
+
 ## [1.10.0] - 2026-03-17
 
 ### Knowledge Base Quality Review & Scientific Validation
