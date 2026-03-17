@@ -846,6 +846,160 @@
       "it": "R-quadrato",
       "no": "R-kvadrat",
       "el": "R-τετράγωνο"
+    },
+    "modules.analysis.bot.chart.actual": {
+      "en": "Actual",
+      "es": "Real",
+      "fr": "Réel",
+      "de": "Ist",
+      "lt": "Faktinis",
+      "pt": "Real",
+      "it": "Effettivo",
+      "no": "Faktisk",
+      "el": "Πραγματικό"
+    },
+    "modules.analysis.bot.chart.trend": {
+      "en": "Trend",
+      "es": "Tendencia",
+      "fr": "Tendance",
+      "de": "Trend",
+      "lt": "Tendencija",
+      "pt": "Tendência",
+      "it": "Tendenza",
+      "no": "Trend",
+      "el": "Τάση"
+    },
+    "modules.analysis.bot.chart.moving_avg": {
+      "en": "Moving Avg",
+      "es": "Media Móvil",
+      "fr": "Moy. Mobile",
+      "de": "Gleit. Durchschn.",
+      "lt": "Slank. Vidurk.",
+      "pt": "Média Móvel",
+      "it": "Media Mobile",
+      "no": "Glid. Gj.snitt",
+      "el": "Κιν. Μέσος"
+    },
+    "modules.analysis.bot.pattern.increasing_trend": {
+      "en": "Significant Increasing Trend Detected",
+      "es": "Tendencia creciente significativa detectada",
+      "fr": "Tendance croissante significative détectée",
+      "de": "Signifikanter Aufwärtstrend erkannt",
+      "lt": "Aptikta reikšminga didėjimo tendencija",
+      "pt": "Tendência crescente significativa detectada",
+      "it": "Tendenza crescente significativa rilevata",
+      "no": "Signifikant økende trend oppdaget",
+      "el": "Ανιχνεύθηκε σημαντική αυξητική τάση"
+    },
+    "modules.analysis.bot.pattern.increasing_trend_desc": {
+      "en": "The data shows a statistically significant upward trend (p < 0.05) with an average increase of %.2f units per year.",
+      "es": "Los datos muestran una tendencia ascendente estadísticamente significativa (p < 0,05) con un aumento promedio de %.2f unidades por año.",
+      "fr": "Les données montrent une tendance à la hausse statistiquement significative (p < 0,05) avec une augmentation moyenne de %.2f unités par an.",
+      "de": "Die Daten zeigen einen statistisch signifikanten Aufwärtstrend (p < 0,05) mit einer durchschnittlichen Zunahme von %.2f Einheiten pro Jahr.",
+      "lt": "Duomenys rodo statistiškai reikšmingą didėjimo tendenciją (p < 0,05) su vidutiniu %.2f vienetų padidėjimu per metus.",
+      "pt": "Os dados mostram uma tendência ascendente estatisticamente significativa (p < 0,05) com um aumento médio de %.2f unidades por ano.",
+      "it": "I dati mostrano una tendenza al rialzo statisticamente significativa (p < 0,05) con un aumento medio di %.2f unità all'anno.",
+      "no": "Dataene viser en statistisk signifikant oppgående trend (p < 0,05) med en gjennomsnittlig økning på %.2f enheter per år.",
+      "el": "Τα δεδομένα δείχνουν μια στατιστικά σημαντική ανοδική τάση (p < 0,05) με μέση αύξηση %.2f μονάδων ανά έτος."
+    },
+    "modules.analysis.bot.pattern.decreasing_trend": {
+      "en": "Significant Decreasing Trend Detected",
+      "es": "Tendencia decreciente significativa detectada",
+      "fr": "Tendance décroissante significative détectée",
+      "de": "Signifikanter Abwärtstrend erkannt",
+      "lt": "Aptikta reikšminga mažėjimo tendencija",
+      "pt": "Tendência decrescente significativa detectada",
+      "it": "Tendenza decrescente significativa rilevata",
+      "no": "Signifikant synkende trend oppdaget",
+      "el": "Ανιχνεύθηκε σημαντική πτωτική τάση"
+    },
+    "modules.analysis.bot.pattern.decreasing_trend_desc": {
+      "en": "The data shows a statistically significant downward trend (p < 0.05) with an average decrease of %.2f units per year.",
+      "es": "Los datos muestran una tendencia descendente estadísticamente significativa (p < 0,05) con una disminución promedio de %.2f unidades por año.",
+      "fr": "Les données montrent une tendance à la baisse statistiquement significative (p < 0,05) avec une diminution moyenne de %.2f unités par an.",
+      "de": "Die Daten zeigen einen statistisch signifikanten Abwärtstrend (p < 0,05) mit einer durchschnittlichen Abnahme von %.2f Einheiten pro Jahr.",
+      "lt": "Duomenys rodo statistiškai reikšmingą mažėjimo tendenciją (p < 0,05) su vidutiniu %.2f vienetų sumažėjimu per metus.",
+      "pt": "Os dados mostram uma tendência descendente estatisticamente significativa (p < 0,05) com uma diminuição média de %.2f unidades por ano.",
+      "it": "I dati mostrano una tendenza al ribasso statisticamente significativa (p < 0,05) con una diminuzione media di %.2f unità all'anno.",
+      "no": "Dataene viser en statistisk signifikant nedgående trend (p < 0,05) med en gjennomsnittlig nedgang på %.2f enheter per år.",
+      "el": "Τα δεδομένα δείχνουν μια στατιστικά σημαντική πτωτική τάση (p < 0,05) με μέση μείωση %.2f μονάδων ανά έτος."
+    },
+    "modules.analysis.bot.pattern.high_volatility": {
+      "en": "High Volatility Detected",
+      "es": "Alta volatilidad detectada",
+      "fr": "Haute volatilité détectée",
+      "de": "Hohe Volatilität erkannt",
+      "lt": "Aptiktas didelis kintamumas",
+      "pt": "Alta volatilidade detectada",
+      "it": "Alta volatilità rilevata",
+      "no": "Høy volatilitet oppdaget",
+      "el": "Ανιχνεύθηκε υψηλή μεταβλητότητα"
+    },
+    "modules.analysis.bot.pattern.high_volatility_desc": {
+      "en": "Coefficient of variation: %.1f%%. The system shows high variability, suggesting instability or external shocks.",
+      "es": "Coeficiente de variación: %.1f%%. El sistema muestra alta variabilidad, lo que sugiere inestabilidad o choques externos.",
+      "fr": "Coefficient de variation : %.1f%%. Le système montre une forte variabilité, suggérant une instabilité ou des chocs externes.",
+      "de": "Variationskoeffizient: %.1f%%. Das System zeigt hohe Variabilität, was auf Instabilität oder externe Schocks hindeutet.",
+      "lt": "Variacijos koeficientas: %.1f%%. Sistema rodo didelį kintamumą, rodantį nestabilumą arba išorinius sukrėtimus.",
+      "pt": "Coeficiente de variação: %.1f%%. O sistema mostra alta variabilidade, sugerindo instabilidade ou choques externos.",
+      "it": "Coefficiente di variazione: %.1f%%. Il sistema mostra alta variabilità, suggerendo instabilità o shock esterni.",
+      "no": "Variasjonskoeffisient: %.1f%%. Systemet viser høy variabilitet, noe som antyder ustabilitet eller eksterne sjokk.",
+      "el": "Συντελεστής μεταβλητότητας: %.1f%%. Το σύστημα παρουσιάζει υψηλή μεταβλητότητα, υποδεικνύοντας αστάθεια ή εξωτερικές διαταραχές."
+    },
+    "modules.analysis.bot.pattern.growth_phase": {
+      "en": "Predominantly Growth Phase",
+      "es": "Fase predominantemente de crecimiento",
+      "fr": "Phase de croissance prédominante",
+      "de": "Vorwiegend Wachstumsphase",
+      "lt": "Vyraujanti augimo fazė",
+      "pt": "Fase predominantemente de crescimento",
+      "it": "Fase prevalentemente di crescita",
+      "no": "Hovedsakelig vekstfase",
+      "el": "Κυρίως φάση ανάπτυξης"
+    },
+    "modules.analysis.bot.pattern.growth_phase_desc": {
+      "en": "%d periods of growth vs %d periods of decline.",
+      "es": "%d períodos de crecimiento vs %d períodos de declive.",
+      "fr": "%d périodes de croissance vs %d périodes de déclin.",
+      "de": "%d Wachstumsperioden gegenüber %d Rückgangsperioden.",
+      "lt": "%d augimo laikotarpiai prieš %d nuosmukio laikotarpius.",
+      "pt": "%d períodos de crescimento vs %d períodos de declínio.",
+      "it": "%d periodi di crescita vs %d periodi di declino.",
+      "no": "%d vekstperioder mot %d nedgangsperioder.",
+      "el": "%d περίοδοι ανάπτυξης έναντι %d περιόδων πτώσης."
+    },
+    "modules.analysis.bot.pattern.decline_phase": {
+      "en": "Predominantly Decline Phase",
+      "es": "Fase predominantemente de declive",
+      "fr": "Phase de déclin prédominante",
+      "de": "Vorwiegend Rückgangsphase",
+      "lt": "Vyraujanti nuosmukio fazė",
+      "pt": "Fase predominantemente de declínio",
+      "it": "Fase prevalentemente di declino",
+      "no": "Hovedsakelig nedgangsfase",
+      "el": "Κυρίως φάση πτώσης"
+    },
+    "modules.analysis.bot.pattern.decline_phase_desc": {
+      "en": "%d periods of decline vs %d periods of growth.",
+      "es": "%d períodos de declive vs %d períodos de crecimiento.",
+      "fr": "%d périodes de déclin vs %d périodes de croissance.",
+      "de": "%d Rückgangsperioden gegenüber %d Wachstumsperioden.",
+      "lt": "%d nuosmukio laikotarpiai prieš %d augimo laikotarpius.",
+      "pt": "%d períodos de declínio vs %d períodos de crescimento.",
+      "it": "%d periodi di declino vs %d periodi di crescita.",
+      "no": "%d nedgangsperioder mot %d vekstperioder.",
+      "el": "%d περίοδοι πτώσης έναντι %d περιόδων ανάπτυξης."
+    },
+    "modules.analysis.bot.pattern.no_patterns": {
+      "en": "No significant patterns detected in the current time series.",
+      "es": "No se detectaron patrones significativos en la serie temporal actual.",
+      "fr": "Aucun modèle significatif détecté dans la série temporelle actuelle.",
+      "de": "Keine signifikanten Muster in der aktuellen Zeitreihe erkannt.",
+      "lt": "Dabartinėje laiko eilutėje reikšmingų modelių neaptikta.",
+      "pt": "Nenhum padrão significativo detectado na série temporal atual.",
+      "it": "Nessun modello significativo rilevato nella serie temporale attuale.",
+      "no": "Ingen signifikante mønstre oppdaget i den nåværende tidsserien.",
+      "el": "Δεν εντοπίστηκαν σημαντικά μοτίβα στην τρέχουσα χρονοσειρά."
     }
   }
 }

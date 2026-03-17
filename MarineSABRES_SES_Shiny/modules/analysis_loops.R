@@ -835,28 +835,28 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           balancing <- sum(loops$Type == "Balancing")
 
           doc <- officer::read_docx()
-          doc <- officer::body_add_par(doc, "Loop Analysis Report", style = "heading 1")
-          doc <- officer::body_add_par(doc, paste("Generated:", Sys.Date()))
+          doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_title"), style = "heading 1")
+          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_generated"), Sys.Date()))
           doc <- officer::body_add_par(doc, "")
 
           # Summary section
-          doc <- officer::body_add_par(doc, "Summary", style = "heading 2")
-          doc <- officer::body_add_par(doc, paste("Total Loops Found:", nrow(loops)))
-          doc <- officer::body_add_par(doc, paste("Reinforcing Loops:", reinforcing))
-          doc <- officer::body_add_par(doc, paste("Balancing Loops:", balancing))
-          doc <- officer::body_add_par(doc, paste("Average Loop Length:", round(mean(loops$Length), 1)))
+          doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_summary"), style = "heading 2")
+          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_total_loops"), nrow(loops)))
+          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_reinforcing_loops"), reinforcing))
+          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_balancing_loops"), balancing))
+          doc <- officer::body_add_par(doc, paste(i18n$t("modules.analysis.loops.report_avg_length"), round(mean(loops$Length), 1)))
           doc <- officer::body_add_par(doc, "")
 
           # All loops table
-          doc <- officer::body_add_par(doc, "Detected Loops", style = "heading 2")
+          doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_detected_loops"), style = "heading 2")
           ft <- flextable::flextable(loops)
           ft <- flextable::autofit(ft)
           doc <- flextable::body_add_flextable(doc, ft)
           doc <- officer::body_add_par(doc, "")
 
           # Methodology note
-          doc <- officer::body_add_par(doc, "Methodology", style = "heading 2")
-          doc <- officer::body_add_par(doc, "Feedback loops were detected using depth-first search on the directed DAPSI(W)R(M) network. Loops are classified as Reinforcing (even number of negative connections, amplifying change) or Balancing (odd number of negative connections, seeking equilibrium).")
+          doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_methodology"), style = "heading 2")
+          doc <- officer::body_add_par(doc, i18n$t("modules.analysis.loops.report_methodology_text"))
 
           print(doc, target = file)
 

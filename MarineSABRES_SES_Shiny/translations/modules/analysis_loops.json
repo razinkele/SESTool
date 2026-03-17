@@ -923,6 +923,116 @@
       "it": "Esporta Analisi",
       "no": "Eksporter analyse",
       "el": "Εξαγωγή ανάλυσης"
+    },
+    "modules.analysis.loops.report_title": {
+      "en": "Loop Analysis Report",
+      "es": "Informe de Análisis de Bucles",
+      "fr": "Rapport d'Analyse des Boucles",
+      "de": "Schleifenanalysebericht",
+      "lt": "Kilpų analizės ataskaita",
+      "pt": "Relatório de Análise de Loops",
+      "it": "Rapporto di Analisi dei Loop",
+      "no": "Løkkeanalyserapport",
+      "el": "Αναφορά ανάλυσης βρόχων"
+    },
+    "modules.analysis.loops.report_generated": {
+      "en": "Generated:",
+      "es": "Generado:",
+      "fr": "Généré :",
+      "de": "Erstellt:",
+      "lt": "Sugeneruota:",
+      "pt": "Gerado:",
+      "it": "Generato:",
+      "no": "Generert:",
+      "el": "Δημιουργήθηκε:"
+    },
+    "modules.analysis.loops.report_summary": {
+      "en": "Summary",
+      "es": "Resumen",
+      "fr": "Résumé",
+      "de": "Zusammenfassung",
+      "lt": "Santrauka",
+      "pt": "Resumo",
+      "it": "Riepilogo",
+      "no": "Sammendrag",
+      "el": "Σύνοψη"
+    },
+    "modules.analysis.loops.report_total_loops": {
+      "en": "Total Loops Found:",
+      "es": "Total de bucles encontrados:",
+      "fr": "Total de boucles trouvées :",
+      "de": "Gefundene Schleifen insgesamt:",
+      "lt": "Iš viso rastų kilpų:",
+      "pt": "Total de loops encontrados:",
+      "it": "Totale loop trovati:",
+      "no": "Totalt antall løkker funnet:",
+      "el": "Σύνολο βρόχων που βρέθηκαν:"
+    },
+    "modules.analysis.loops.report_reinforcing_loops": {
+      "en": "Reinforcing Loops:",
+      "es": "Bucles de refuerzo:",
+      "fr": "Boucles de renforcement :",
+      "de": "Verstärkende Schleifen:",
+      "lt": "Stiprinančios kilpos:",
+      "pt": "Loops de reforço:",
+      "it": "Loop di rinforzo:",
+      "no": "Forsterkende løkker:",
+      "el": "Ενισχυτικοί βρόχοι:"
+    },
+    "modules.analysis.loops.report_balancing_loops": {
+      "en": "Balancing Loops:",
+      "es": "Bucles de equilibrio:",
+      "fr": "Boucles d'équilibrage :",
+      "de": "Ausgleichende Schleifen:",
+      "lt": "Balansuojančios kilpos:",
+      "pt": "Loops de equilíbrio:",
+      "it": "Loop di bilanciamento:",
+      "no": "Balanserende løkker:",
+      "el": "Εξισορροπητικοί βρόχοι:"
+    },
+    "modules.analysis.loops.report_avg_length": {
+      "en": "Average Loop Length:",
+      "es": "Longitud media del bucle:",
+      "fr": "Longueur moyenne des boucles :",
+      "de": "Durchschnittliche Schleifenlänge:",
+      "lt": "Vidutinis kilpos ilgis:",
+      "pt": "Comprimento médio do loop:",
+      "it": "Lunghezza media del loop:",
+      "no": "Gjennomsnittlig løkkelengde:",
+      "el": "Μέσο μήκος βρόχου:"
+    },
+    "modules.analysis.loops.report_detected_loops": {
+      "en": "Detected Loops",
+      "es": "Bucles Detectados",
+      "fr": "Boucles Détectées",
+      "de": "Erkannte Schleifen",
+      "lt": "Aptiktos kilpos",
+      "pt": "Loops Detectados",
+      "it": "Loop Rilevati",
+      "no": "Oppdagede løkker",
+      "el": "Εντοπισμένοι βρόχοι"
+    },
+    "modules.analysis.loops.report_methodology": {
+      "en": "Methodology",
+      "es": "Metodología",
+      "fr": "Méthodologie",
+      "de": "Methodik",
+      "lt": "Metodologija",
+      "pt": "Metodologia",
+      "it": "Metodologia",
+      "no": "Metodologi",
+      "el": "Μεθοδολογία"
+    },
+    "modules.analysis.loops.report_methodology_text": {
+      "en": "Feedback loops were detected using depth-first search on the directed DAPSI(W)R(M) network. Loops are classified as Reinforcing (even number of negative connections, amplifying change) or Balancing (odd number of negative connections, seeking equilibrium).",
+      "es": "Los bucles de retroalimentación se detectaron mediante búsqueda en profundidad en la red dirigida DAPSI(W)R(M). Los bucles se clasifican como de Refuerzo (número par de conexiones negativas, amplificando el cambio) o de Equilibrio (número impar de conexiones negativas, buscando equilibrio).",
+      "fr": "Les boucles de rétroaction ont été détectées par recherche en profondeur sur le réseau dirigé DAPSI(W)R(M). Les boucles sont classées comme de Renforcement (nombre pair de connexions négatives, amplifiant le changement) ou d'Équilibrage (nombre impair de connexions négatives, cherchant l'équilibre).",
+      "de": "Rückkopplungsschleifen wurden mittels Tiefensuche im gerichteten DAPSI(W)R(M)-Netzwerk erkannt. Schleifen werden als Verstärkend (gerade Anzahl negativer Verbindungen, Veränderung verstärkend) oder Ausgleichend (ungerade Anzahl negativer Verbindungen, Gleichgewicht suchend) klassifiziert.",
+      "lt": "Grįžtamojo ryšio kilpos buvo aptiktos naudojant paiešką gilyn nukreiptame DAPSI(W)R(M) tinkle. Kilpos klasifikuojamos kaip Stiprinančios (lyginis neigiamų jungčių skaičius, stiprinančios pokytį) arba Balansuojančios (nelyginis neigiamų jungčių skaičius, siekiančios pusiausvyros).",
+      "pt": "Os loops de retroalimentação foram detectados usando busca em profundidade na rede direcionada DAPSI(W)R(M). Os loops são classificados como de Reforço (número par de conexões negativas, amplificando a mudança) ou de Equilíbrio (número ímpar de conexões negativas, buscando equilíbrio).",
+      "it": "I loop di retroazione sono stati rilevati mediante ricerca in profondità sulla rete diretta DAPSI(W)R(M). I loop sono classificati come di Rinforzo (numero pari di connessioni negative, che amplificano il cambiamento) o di Bilanciamento (numero dispari di connessioni negative, che cercano l'equilibrio).",
+      "no": "Tilbakekoblingsløkker ble oppdaget ved hjelp av dybde-først-søk på det rettede DAPSI(W)R(M)-nettverket. Løkker klassifiseres som Forsterkende (partall negative forbindelser, forsterker endring) eller Balanserende (oddetall negative forbindelser, søker likevekt).",
+      "el": "Οι βρόχοι ανατροφοδότησης εντοπίστηκαν χρησιμοποιώντας αναζήτηση κατά βάθος στο κατευθυνόμενο δίκτυο DAPSI(W)R(M). Οι βρόχοι ταξινομούνται ως Ενισχυτικοί (ζυγός αριθμός αρνητικών συνδέσεων, ενισχύοντας την αλλαγή) ή Εξισορροπητικοί (μονός αριθμός αρνητικών συνδέσεων, αναζητώντας ισορροπία)."
     }
   }
 }

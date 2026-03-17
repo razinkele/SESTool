@@ -133,9 +133,9 @@ pims_project_server <- function(id, project_data_reactive, i18n, event_bus = NUL
       created_at <- if (!is.null(data$created_at)) format(data$created_at, "%Y-%m-%d %H:%M") else i18n$t("modules.pims.status_unknown")
       last_modified <- if (!is.null(data$last_modified)) format(data$last_modified, "%Y-%m-%d %H:%M") else i18n$t("modules.pims.status_never")
 
-      cat("Project ID:", project_id, "\n")
-      cat("Created:", created_at, "\n")
-      cat("Last Modified:", last_modified, "\n")
+      cat(i18n$t("modules.pims.status_project_id"), project_id, "\n")
+      cat(i18n$t("modules.pims.status_created"), created_at, "\n")
+      cat(i18n$t("modules.pims.status_last_modified"), last_modified, "\n")
     })
     
     # ========== HELP MODAL ==========

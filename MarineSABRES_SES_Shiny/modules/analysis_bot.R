@@ -274,11 +274,13 @@ analysis_bot_server <- function(id, project_data_reactive, i18n, event_bus = NUL
         trend_xts <- xts::xts(trend_values, order.by = as.Date(paste0(ts_data$Year, "-01-01")))
 
         combined <- merge(ts_xts, trend_xts)
-        names(combined) <- c("Actual", "Trend")
+        actual_label <- i18n$t("modules.analysis.bot.chart.actual")
+        trend_label <- i18n$t("modules.analysis.bot.chart.trend")
+        names(combined) <- c(actual_label, trend_label)
 
         dg <- dygraph(combined) %>%
-          dySeries("Actual", color = "#2196F3", strokeWidth = 2, drawPoints = TRUE, pointSize = 4) %>%
-          dySeries("Trend", color = "#FF5722", strokeWidth = 2, strokePattern = "dashed") %>%
+          dySeries(actual_label, color = "#2196F3", strokeWidth = 2, drawPoints = TRUE, pointSize = 4) %>%
+          dySeries(trend_label, color = "#FF5722", strokeWidth = 2, strokePattern = "dashed") %>%
           dyRangeSelector() %>%
           dyHighlight(highlightCircleSize = 5)
       }
@@ -287,21 +289,24 @@ analysis_bot_server <- function(id, project_data_reactive, i18n, event_bus = NUL
       if(input$show_moving_avg && nrow(ts_data) > input$moving_avg_window) {
         ma_values <- stats::filter(ts_data$Value, rep(1/input$moving_avg_window, input$moving_avg_window), sides = 2)
         ma_xts <- xts::xts(ma_values, order.by = as.Date(paste0(ts_data$Year, "-01-01")))
+        actual_label <- i18n$t("modules.analysis.bot.chart.actual")
+        trend_label <- i18n$t("modules.analysis.bot.chart.trend")
+        ma_label <- i18n$t("modules.analysis.bot.chart.moving_avg")
 
         if(input$show_trend) {
           combined <- merge(combined, ma_xts)
-          names(combined) <- c("Actual", "Trend", "Moving Avg")
+          names(combined) <- c(actual_label, trend_label, ma_label)
           dg <- dygraph(combined) %>%
-            dySeries("Actual", color = "#2196F3", strokeWidth = 2, drawPoints = TRUE, pointSize = 4) %>%
-            dySeries("Trend", color = "#FF5722", strokeWidth = 2, strokePattern = "dashed") %>%
-            dySeries("Moving Avg", color = "#4CAF50", strokeWidth = 2) %>%
+            dySeries(actual_label, color = "#2196F3", strokeWidth = 2, drawPoints = TRUE, pointSize = 4) %>%
+            dySeries(trend_label, color = "#FF5722", strokeWidth = 2, strokePattern = "dashed") %>%
+            dySeries(ma_label, color = "#4CAF50", strokeWidth = 2) %>%
             dyRangeSelector()
         } else {
           combined <- merge(ts_xts, ma_xts)
-          names(combined) <- c("Actual", "Moving Avg")
+          names(combined) <- c(actual_label, ma_label)
           dg <- dygraph(combined) %>%
-            dySeries("Actual", color = "#2196F3", strokeWidth = 2, drawPoints = TRUE, pointSize = 4) %>%
-            dySeries("Moving Avg", color = "#4CAF50", strokeWidth = 2) %>%
+            dySeries(actual_label, color = "#2196F3", strokeWidth = 2, drawPoints = TRUE, pointSize = 4) %>%
+            dySeries(ma_label, color = "#4CAF50", strokeWidth = 2) %>%
             dyRangeSelector()
         }
       }
@@ -366,14 +371,14 @@ analysis_bot_server <- function(id, project_data_reactive, i18n, event_bus = NUL
           if(slope > 0) {
             patterns <- c(patterns, list(tags$div(
               class = "alert alert-info",
-              icon("arrow-up"), strong(" Significant Increasing Trend Detected"),
-              p(sprintf("The data shows a statistically significant upward trend (p < 0.05) with an average increase of %.2f units per year.", slope))
+              icon("arrow-up"), strong(paste0(" ", i18n$t("modules.analysis.bot.pattern.increasing_trend"))),
+              p(sprintf(i18n$t("modules.analysis.bot.pattern.increasing_trend_desc"), slope))
             )))
           } else {
             patterns <- c(patterns, list(tags$div(
               class = "alert alert-warning",
-              icon("arrow-down"), strong(" Significant Decreasing Trend Detected"),
-              p(sprintf("The data shows a statistically significant downward trend (p < 0.05) with an average decrease of %.2f units per year.", abs(slope)))
+              icon("arrow-down"), strong(paste0(" ", i18n$t("modules.analysis.bot.pattern.decreasing_trend"))),
+              p(sprintf(i18n$t("modules.analysis.bot.pattern.decreasing_trend_desc"), abs(slope)))
             )))
           }
         }
@@ -385,8 +390,8 @@ analysis_bot_server <- function(id, project_data_reactive, i18n, event_bus = NUL
         if(cv > 30) {
           patterns <- c(patterns, list(tags$div(
             class = "alert alert-danger",
-            icon("exclamation-triangle"), strong(" High Volatility Detected"),
-            p(sprintf("Coefficient of variation: %.1f%%. The system shows high variability, suggesting instability or external shocks.", cv))
+            icon("exclamation-triangle"), strong(paste0(" ", i18n$t("modules.analysis.bot.pattern.high_volatility"))),
+            p(sprintf(i18n$t("modules.analysis.bot.pattern.high_volatility_desc"), cv))
           )))
         }
       }
@@ -400,14 +405,14 @@ analysis_bot_server <- function(id, project_data_reactive, i18n, event_bus = NUL
         if(growth_phases > decline_phases * 2) {
           patterns <- c(patterns, list(tags$div(
             class = "alert alert-success",
-            icon("chart-line"), strong(" Predominantly Growth Phase"),
-            p(sprintf("%d periods of growth vs %d periods of decline.", growth_phases, decline_phases))
+            icon("chart-line"), strong(paste0(" ", i18n$t("modules.analysis.bot.pattern.growth_phase"))),
+            p(sprintf(i18n$t("modules.analysis.bot.pattern.growth_phase_desc"), growth_phases, decline_phases))
           )))
         } else if(decline_phases > growth_phases * 2) {
           patterns <- c(patterns, list(tags$div(
             class = "alert alert-warning",
-            icon("chart-line"), strong(" Predominantly Decline Phase"),
-            p(sprintf("%d periods of decline vs %d periods of growth.", decline_phases, growth_phases))
+            icon("chart-line"), strong(paste0(" ", i18n$t("modules.analysis.bot.pattern.decline_phase"))),
+            p(sprintf(i18n$t("modules.analysis.bot.pattern.decline_phase_desc"), decline_phases, growth_phases))
           )))
         }
       }
@@ -415,7 +420,7 @@ analysis_bot_server <- function(id, project_data_reactive, i18n, event_bus = NUL
       if(length(patterns) == 0) {
         return(tags$div(
           class = "alert alert-secondary",
-          icon("info-circle"), " No significant patterns detected in the current time series."
+          icon("info-circle"), " ", i18n$t("modules.analysis.bot.pattern.no_patterns")
         ))
       }
 

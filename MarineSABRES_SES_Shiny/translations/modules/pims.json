@@ -329,6 +329,39 @@
       "it": "Funzionalità di valutazione da implementare",
       "no": "Evalueringsfunksjonalitet som skal implementeres",
       "el": "Λειτουργία αξιολόγησης προς υλοποίηση"
+    },
+    "modules.pims.status_project_id": {
+      "en": "Project ID:",
+      "es": "ID del Proyecto:",
+      "fr": "ID du Projet :",
+      "de": "Projekt-ID:",
+      "lt": "Projekto ID:",
+      "pt": "ID do Projeto:",
+      "it": "ID Progetto:",
+      "no": "Prosjekt-ID:",
+      "el": "Αναγνωριστικό έργου:"
+    },
+    "modules.pims.status_created": {
+      "en": "Created:",
+      "es": "Creado:",
+      "fr": "Créé :",
+      "de": "Erstellt:",
+      "lt": "Sukurta:",
+      "pt": "Criado:",
+      "it": "Creato:",
+      "no": "Opprettet:",
+      "el": "Δημιουργήθηκε:"
+    },
+    "modules.pims.status_last_modified": {
+      "en": "Last Modified:",
+      "es": "Última Modificación:",
+      "fr": "Dernière Modification :",
+      "de": "Zuletzt geändert:",
+      "lt": "Paskutinį kartą keista:",
+      "pt": "Última Modificação:",
+      "it": "Ultima Modifica:",
+      "no": "Sist endret:",
+      "el": "Τελευταία τροποποίηση:"
     }
   }
 }
