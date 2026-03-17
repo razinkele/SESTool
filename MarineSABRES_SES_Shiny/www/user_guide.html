@@ -145,8 +145,8 @@ strong {
 <div class="container" style="position: relative;">
 <a href="javascript:window.close()" class="close-button">✕ Close Help</a>
 <h1 id="marinesabres-ses-tool-complete-user-guide">MarineSABRES SES Tool - Complete User Guide</h1>
-<p><strong>Version:</strong> 1.5.0 - i18n Fixes & Deployment Enhancement
-<strong>Last Updated:</strong> November 17, 2025
+<p><strong>Version:</strong> 1.10.0 - Temporal Delays, Knowledge Base & 9-Language Support
+<strong>Last Updated:</strong> March 17, 2026
 <strong>Project:</strong> Marine Social-Ecological Systems Analysis Tool
 <strong>Status:</strong> Stable Production Release</p>
 <hr />
@@ -156,7 +156,7 @@ strong {
 <ul>
 <li>1.1 What is the MarineSABRES SES Tool?</li>
 <li>1.2 Key Features</li>
-<li>1.2a What's New in v1.5.0</li>
+<li>1.2a What's New in v1.10.0</li>
 <li>1.3 Target Users</li>
 <li>1.4 System Requirements</li>
 <li>1.5 Language Support</li>
@@ -188,7 +188,7 @@ strong {
 <p>The MarineSABRES Social-Ecological Systems (SES) Analysis Tool is a comprehensive Shiny application designed to support participatory analysis of marine social-ecological systems. It implements the <strong>DAPSI(W)R(M) framework</strong> (Drivers-Activities-Pressures-State changes-(Welfare impacts)-Responses-(Measures)) and Integrated Systems Analysis (ISA) methodology.</p>
 <h3 id="1-2-key-features">1.2 Key Features</h3>
 <ul>
-<li><strong>Full Internationalization (i18n)</strong>: Support for 7 languages (English, Spanish, French, German, Lithuanian, Portuguese, Italian) with 1,196+ translations</li>
+<li><strong>Full Internationalization (i18n)</strong>: Support for 9 languages (English, Spanish, French, German, Lithuanian, Portuguese, Italian, Norwegian, Greek) with 1,300+ translations</li>
 <li><strong>AI-Assisted ISA Creation</strong>: Context-aware 11-step guided workflow with regional sea selection and intelligent connection generation</li>
 <li><strong>Auto-Save System</strong>: Comprehensive auto-save with browser localStorage and RDS backups, session recovery modal</li>
 <li><strong>Enhanced Navigation</strong>: Breadcrumb navigation, color-coded progress bars, Back/Next/Skip buttons, mobile-responsive design</li>
@@ -202,16 +202,17 @@ strong {
 <li><strong>Export &amp; Reports</strong>: Comprehensive data export (CSV, JSON, Excel) and report generation (HTML, PDF, Word)</li>
 </ul>
 
-<h3 id="1-2a-whats-new-in-v150">1.2a What's New in v1.5.0</h3>
+<h3 id="1-2a-whats-new-in-v1100">1.2a What's New in v1.10.0</h3>
 <ul>
-<li><strong>🌍 Complete Internationalization</strong>: All UI elements, modals, notifications, and reports now fully translated across 7 languages</li>
-<li><strong>🤖 AI Assistant Overhaul</strong>: Redesigned 11-step workflow with regional sea selection, dynamic suggestions, and intelligent polarity detection</li>
+<li><strong>🕐 Temporal Delay Attributes</strong>: Connections now support a delay toggle with configurable delay type (Short-term, Medium-term, Long-term) and numeric delay value, visible in connection review cards and included in Excel/Kumu exports</li>
+<li><strong>📚 Knowledge Base</strong>: Built-in knowledge base with 1,120 validated connections across 30 marine contexts, accessible via <strong>KB References</strong> in the Help menu</li>
+<li><strong>🌍 9-Language Support</strong>: Added Norwegian (Norsk) and Greek (Ellinika) translations, bringing the total to 9 fully supported languages</li>
+<li><strong>🔗 Connection Review Batch Tabs</strong>: Connection review now organized into batch tabs by transition type (W to D, P to P, S to S, etc.) for easier navigation</li>
+<li><strong>ℹ️ Standalone About Button</strong>: The About button is now a standalone item in the topbar (rightmost position), separate from the Help menu</li>
 <li><strong>💾 Auto-Save Protection</strong>: Never lose work again with automatic saves every 30 seconds and session recovery on app restart</li>
 <li><strong>🧭 Navigation System</strong>: Breadcrumbs, progress indicators, and smart Back/Next buttons guide users through complex workflows</li>
 <li><strong>📊 Enhanced Reports</strong>: HTML reports now open automatically in browser with context-specific recommendations based on actual analysis data</li>
-<li><strong>🚀 Deployment Ready</strong>: Automated pre-deployment validation with 20 checks, Docker configuration, comprehensive checklists</li>
-<li><strong>🐛 Bug Fixes</strong>: Fixed intervention analysis impact prediction, deleted nodes save-to-project, connection review batch operations</li>
-<li><strong>✅ 174 Passing Tests</strong>: Comprehensive test coverage with automated validation before deployment</li>
+<li><strong>✅ 3,700+ Passing Tests</strong>: Comprehensive test coverage with automated validation before deployment</li>
 </ul>
 <h3 id="1-3-target-users">1.3 Target Users</h3>
 <ul>
@@ -232,19 +233,21 @@ strong {
 </ul>
 
 <h3 id="1-5-language-support">1.5 Language Support</h3>
-<p>The application supports <strong>7 languages</strong> with complete translations across all modules:</p>
+<p>The application supports <strong>9 languages</strong> with complete translations across all modules:</p>
 <table>
 <thead>
 <tr><th>Language</th><th>Code</th><th>Translation Keys</th><th>Status</th></tr>
 </thead>
 <tbody>
-<tr><td>English</td><td>en</td><td>1,196</td><td>✅ Complete</td></tr>
-<tr><td>Spanish (Español)</td><td>es</td><td>1,196</td><td>✅ Complete</td></tr>
-<tr><td>French (Français)</td><td>fr</td><td>1,196</td><td>✅ Complete</td></tr>
-<tr><td>German (Deutsch)</td><td>de</td><td>1,196</td><td>✅ Complete</td></tr>
-<tr><td>Lithuanian (Lietuvių)</td><td>lt</td><td>1,196</td><td>✅ Complete</td></tr>
-<tr><td>Portuguese (Português)</td><td>pt</td><td>1,196</td><td>✅ Complete</td></tr>
-<tr><td>Italian (Italiano)</td><td>it</td><td>1,196</td><td>✅ Complete</td></tr>
+<tr><td>English</td><td>en</td><td>1,300+</td><td>✅ Complete</td></tr>
+<tr><td>Spanish (Español)</td><td>es</td><td>1,300+</td><td>✅ Complete</td></tr>
+<tr><td>French (Français)</td><td>fr</td><td>1,300+</td><td>✅ Complete</td></tr>
+<tr><td>German (Deutsch)</td><td>de</td><td>1,300+</td><td>✅ Complete</td></tr>
+<tr><td>Lithuanian (Lietuvių)</td><td>lt</td><td>1,300+</td><td>✅ Complete</td></tr>
+<tr><td>Portuguese (Português)</td><td>pt</td><td>1,300+</td><td>✅ Complete</td></tr>
+<tr><td>Italian (Italiano)</td><td>it</td><td>1,300+</td><td>✅ Complete</td></tr>
+<tr><td>Norwegian (Norsk)</td><td>no</td><td>1,300+</td><td>✅ Complete</td></tr>
+<tr><td>Greek (Ellinika)</td><td>el</td><td>1,300+</td><td>✅ Complete</td></tr>
 </tbody>
 </table>
 <p><strong>How to change language:</strong> Click Settings (⚙️) in the top menu bar → Select your preferred language → Changes apply immediately without page reload</p>
@@ -270,7 +273,7 @@ shiny::runApp()
 <p><strong>Select Your Language:</strong></p>
 <ul>
 <li>Click Settings (⚙️) icon in top-right menu bar</li>
-<li>Choose from 7 available languages</li>
+<li>Choose from 9 available languages</li>
 <li>Language changes apply immediately</li>
 </ul>
 </li>
@@ -323,9 +326,10 @@ shiny::runApp()
 <p><strong>Header (Top Bar):</strong></p>
 <ul>
 <li><strong>Left</strong>: MarineSABRES logo and title</li>
-<li><strong>Right</strong>: Settings (⚙️), About (ℹ️), Bookmark (🔖) buttons</li>
+<li><strong>Right</strong>: Settings (⚙️), Help (with KB References), About (standalone, rightmost), Bookmark (🔖) buttons</li>
 <li><strong>Settings Menu</strong>: Language selection, Application Settings (auto-save toggle), User Experience Level</li>
-<li><strong>About Menu</strong>: Version info, documentation links, citation, contact</li>
+<li><strong>Help Menu</strong>: Beginner Guide, Step-by-Step Tutorial, User Guide, KB References (Knowledge Base with 1,120 validated connections across 30 contexts)</li>
+<li><strong>About Button</strong>: Standalone button showing version info, documentation links, citation, and contact</li>
 <li>All menu items fully translated in your selected language</li>
 </ul>
 <p><strong>Sidebar Menu (Left):</strong></p>
@@ -595,9 +599,9 @@ shiny::runApp()
 <li><strong>Button-Based Selection</strong>: Click suggested options or choose "Other" to enter custom text</li>
 <li><strong>Step Counter with Progress Bar</strong>: Animated progress showing "Step X of 11"</li>
 <li><strong>Intelligent Polarity Detection</strong>: Connections automatically assigned positive/negative relationships using semantic analysis</li>
-<li><strong>Connection Review</strong>: Approve/reject generated connections with batch operations ("Approve All"/"Reject All" per DAPSI(W)R(M) transition)</li>
+<li><strong>Connection Review</strong>: Approve/reject generated connections with batch operations ("Approve All"/"Reject All") organized into batch tabs by transition type (W to D, P to P, S to S, etc.), with optional temporal delay toggle per connection</li>
 <li><strong>No Question Stacking</strong>: Each question replaces the previous (clean interface)</li>
-<li><strong>Full i18n Support</strong>: All questions and suggestions available in 7 languages</li>
+<li><strong>Full i18n Support</strong>: All questions and suggestions available in 9 languages</li>
 </ul>
 
 <p><strong>Tips for Best Results:</strong></p>
@@ -663,7 +667,7 @@ shiny::runApp()
 <hr />
 <h2 id="5-isa-data-entry">5. ISA Data Entry</h2>
 <p>The Integrated Systems Analysis (ISA) module implements a 13-exercise structured approach to mapping social-ecological systems using the DAPSI(W)R(M) framework.</p>
-<p><strong>✨ New in v1.5.0:</strong> Enhanced with breadcrumb navigation, progress bars, and Back/Next/Skip buttons for guided workflow.</p>
+<p><strong>✨ Enhanced in v1.10.0:</strong> Breadcrumb navigation, progress bars, Back/Next/Skip buttons for guided workflow, and temporal delay attributes on connections.</p>
 <h3 id="5-1-overview-of-13-exercises">5.1 Overview of 13 Exercises</h3>
 <table>
 <thead>
@@ -974,6 +978,7 @@ shiny::runApp()
 <li><strong>To</strong>: Destination element</li>
 <li><strong>Link Type</strong>: Positive (+) / Negative (-)</li>
 <li><strong>Lag Time</strong>: Immediate / Short / Medium / Long</li>
+<li><strong>Delay</strong> (new in v1.10.0): Toggle to enable temporal delay, with delay type (Short-term / Medium-term / Long-term) and numeric delay value</li>
 <li><strong>Description</strong>: Explain the causal mechanism</li>
 </ul>
 <p><strong>Link Types:</strong></p>
@@ -2588,8 +2593,8 @@ Recommended sequence of steps for conducting SES analysis from project setup thr
 <hr />
 <h2 id="document-information">Document Information</h2>
 <p><strong>Document Title:</strong> MarineSABRES SES Tool - Complete User Guide
-<strong>Version:</strong> 1.5.0 - i18n Fixes & Deployment Enhancement
-<strong>Date:</strong> November 17, 2025
+<strong>Version:</strong> 1.10.0 - Temporal Delays, Knowledge Base & 9-Language Support
+<strong>Date:</strong> March 17, 2026
 <strong>Status:</strong> Stable Production Release
 <strong>Authors:</strong> MarineSABRES Development Team
 <strong>Contributors:</strong> Claude Code (AI Assistant), User Testing Community
@@ -2608,6 +2613,12 @@ Recommended sequence of steps for conducting SES analysis from project setup thr
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>1.10.0</td>
+<td>2026-03-17</td>
+<td>Major: Temporal delay attributes on connections, Knowledge Base (1,120 connections, 30 contexts), 9-language support (added Norwegian, Greek), connection review batch tabs, standalone About button, 3,700+ tests</td>
+<td>MarineSABRES + Claude Code</td>
+</tr>
 <tr>
 <td>1.5.0</td>
 <td>2025-11-17</td>
@@ -2631,21 +2642,21 @@ Recommended sequence of steps for conducting SES analysis from project setup thr
 
 <p><strong>Test Coverage:</strong></p>
 <ul>
-<li>Total Tests: 174 (all passing)</li>
+<li>Total Tests: 3,700+ (all passing)</li>
 <li>Pre-Deployment Checks: 20 automated validations</li>
-<li>Translation Validation: 1,196 entries in 7 languages</li>
+<li>Translation Validation: 1,300+ entries in 9 languages</li>
 <li>Code Quality Score: 8.5/10 - Excellent</li>
 </ul>
 
-<p><strong>Supported Languages:</strong> English, Spanish, French, German, Lithuanian, Portuguese, Italian</p>
+<p><strong>Supported Languages:</strong> English, Spanish, French, German, Lithuanian, Portuguese, Italian, Norwegian, Greek</p>
 
 <p><strong>Acknowledgments:</strong>
-This tool and guide were developed as part of the MarineSABRES Horizon Europe project. We acknowledge contributions from domain experts, stakeholders, the R Shiny community, and AI-assisted development by Claude Code (Anthropic). Special thanks to the user testing community for feedback that shaped v1.5.0.</p>
+This tool and guide were developed as part of the MarineSABRES Horizon Europe project. We acknowledge contributions from domain experts, stakeholders, the R Shiny community, and AI-assisted development by Claude Code (Anthropic). Special thanks to the user testing community for feedback that shaped v1.10.0.</p>
 
 <p><strong>Citation:</strong>
 If using this tool in research or reports, please cite as:</p>
-<pre><code>MarineSABRES Team (2025). MarineSABRES Social-Ecological Systems Analysis Tool: User Guide.
-Version 1.5.0. Available at: https://www.marinesabres.eu
+<pre><code>MarineSABRES Team (2026). MarineSABRES Social-Ecological Systems Analysis Tool: User Guide.
+Version 1.10.0. Available at: https://www.marinesabres.eu
 </code></pre>
 
 <p><strong>Additional Documentation:</strong></p>
