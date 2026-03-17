@@ -194,62 +194,6 @@ dapsiwrm_type_to_category <- function(dapsiwrm_type) {
 }
 
 
-#' Rank Suggestions by Relevance
-#'
-#' Scores and sorts suggestions based on connection strength, confidence, and context
-#'
-#' @param suggestions List of suggestion objects
-#' @param context User's context
-#' @return Sorted list of suggestions
-rank_suggestions_by_relevance <- function(suggestions, context) {
-
-  if (length(suggestions) == 0) {
-    return(suggestions)
-  }
-
-  # Calculate relevance score for each suggestion
-  for (i in seq_along(suggestions)) {
-    sugg <- suggestions[[i]]
-
-    score <- 0
-
-    # Strength contributes to score
-    if (sugg$connection_strength == "strong") {
-      score <- score + 3
-    } else if (sugg$connection_strength == "medium") {
-      score <- score + 2
-    } else {
-      score <- score + 1
-    }
-
-    # Confidence contributes to score
-    score <- score + sugg$connection_confidence
-
-    # Context relevance (check if suggestion name matches context keywords)
-    if (!is.null(context$main_issue)) {
-      issue_lower <- tolower(context$main_issue)
-      sugg_lower <- tolower(sugg$name)
-
-      # Extract keywords from both
-      issue_words <- strsplit(issue_lower, "[\\s,.-]+")[[1]]
-      sugg_words <- strsplit(sugg_lower, "[\\s,.-]+")[[1]]
-
-      # Overlap bonus
-      overlap <- length(intersect(issue_words, sugg_words))
-      score <- score + (overlap * 2)
-    }
-
-    suggestions[[i]]$relevance_score <- score
-  }
-
-  # Sort by score descending
-  sorted_indices <- order(sapply(suggestions, function(s) s$relevance_score),
-                          decreasing = TRUE)
-
-  return(suggestions[sorted_indices])
-}
-
-
 #' Generate Suggestion Reasoning
 #'
 #' Creates human-readable explanation for why an element was suggested

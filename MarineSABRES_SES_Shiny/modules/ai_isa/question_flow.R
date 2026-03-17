@@ -734,75 +734,8 @@ setup_preview_modal <- function(input, session, rv, i18n) {
         )
       },
 
-      # Drivers
-      if (length(rv$elements$drivers) > 0) {
-        div(
-          h4(style = "color: #776db3;", icon("flag"), " ", i18n$t("modules.isa.ai_assistant.drivers_societal_needs")),
-          tags$ul(
-            lapply(rv$elements$drivers, function(d) tags$li(d$name))
-          )
-        )
-      },
-
-      # Activities
-      if (length(rv$elements$activities) > 0) {
-        div(
-          h4(style = "color: #5abc67;", icon("running"), " ", i18n$t("modules.isa.ai_assistant.activities_human_actions")),
-          tags$ul(
-            lapply(rv$elements$activities, function(a) tags$li(a$name))
-          )
-        )
-      },
-
-      # Pressures
-      if (length(rv$elements$pressures) > 0) {
-        div(
-          h4(style = "color: #fec05a;", icon("exclamation-triangle"), " ", i18n$t("modules.isa.ai_assistant.pressures_environmental_stressors")),
-          tags$ul(
-            lapply(rv$elements$pressures, function(p) tags$li(p$name))
-          )
-        )
-      },
-
-      # State Changes
-      if (length(rv$elements$states) > 0) {
-        div(
-          h4(style = "color: #bce2ee;", icon("water"), " ", i18n$t("modules.isa.ai_assistant.state_changes_ecosystem_effects")),
-          tags$ul(
-            lapply(rv$elements$states, function(s) tags$li(s$name))
-          )
-        )
-      },
-
-      # Impacts
-      if (length(rv$elements$impacts) > 0) {
-        div(
-          h4(style = "color: #313695;", icon("chart-line"), " ", i18n$t("modules.isa.ai_assistant.impacts_service_effects")),
-          tags$ul(
-            lapply(rv$elements$impacts, function(i) tags$li(i$name))
-          )
-        )
-      },
-
-      # Welfare
-      if (length(rv$elements$welfare) > 0) {
-        div(
-          h4(style = "color: #fff1a2; text-shadow: 1px 1px 2px #666;", icon("heart"), " ", i18n$t("modules.isa.ai_assistant.welfare_human_well_being")),
-          tags$ul(
-            lapply(rv$elements$welfare, function(w) tags$li(w$name))
-          )
-        )
-      },
-
-      # Responses
-      if (length(rv$elements$responses) > 0) {
-        div(
-          h4(style = "color: #66c2a5;", icon("shield-alt"), " ", i18n$t("modules.isa.ai_assistant.response_measures_management_policy")),
-          tags$ul(
-            lapply(rv$elements$responses, function(r) tags$li(r$name))
-          )
-        )
-      },
+      # Element summary (shared rendering function)
+      render_element_summary_ui(rv$elements, i18n),
 
       hr(),
 
