@@ -323,10 +323,12 @@ laplacian_eigenvalues <- function(mat, direction = "cols") {
   tryCatch({
     .validate_matrix(mat, "laplacian_eigenvalues")
 
+    n <- nrow(mat)
     if (direction == "rows") {
-      L <- diag(rowSums(t(mat))) - t(mat)
+      tmat <- t(mat)
+      L <- diag(rowSums(tmat), nrow = n) - tmat
     } else {
-      L <- diag(rowSums(mat)) - mat
+      L <- diag(rowSums(mat), nrow = n) - mat
     }
 
     eig_vals <- Re(eigen(L)$values)

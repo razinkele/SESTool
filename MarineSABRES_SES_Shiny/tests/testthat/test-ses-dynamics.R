@@ -309,7 +309,7 @@ test_that("cld_to_numeric_matrix handles duplicate labels", {
   mat <- cld_to_numeric_matrix(nodes, edges)
   # Should make names unique
   expect_equal(nrow(mat), 3)
-  expect_false(anyDuplicated(rownames(mat)))
+  expect_equal(anyDuplicated(rownames(mat)), 0L)
 })
 
 
@@ -676,7 +676,7 @@ test_that("simulate_dynamics uses custom initial state", {
   result <- simulate_dynamics(mat, n_iter = 50, initial_state = init)
 
   expect_equal(result$initial_state, init)
-  expect_equal(result$time_series[, 1], init)
+  expect_equal(unname(result$time_series[, 1]), init)
 })
 
 test_that("simulate_dynamics rejects wrong-length initial state", {
@@ -707,7 +707,7 @@ test_that("simulate_dynamics does not diverge for zero matrix", {
 
   expect_false(result$diverged)
   # Zero matrix: t(mat) %*% state = 0 for all t > 1
-  expect_equal(result$time_series[, 1], c(1, 2, 3))
+  expect_equal(unname(result$time_series[, 1]), c(1, 2, 3))
   expect_true(all(result$time_series[, 2] == 0))
 })
 

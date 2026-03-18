@@ -355,14 +355,12 @@ test_that("convert_excel_to_isa handles missing element types gracefully", {
 test_that("convert_excel_to_isa handles case-insensitive type matching", {
   elements <- data.frame(
     Label = c("Climate change", "Fishing activity"),
-    Type = c("DRIVER", "activity"),  # Different cases
-    
+    Type = c("DRIVER", "activity")  # Different cases
   )
   connections <- data.frame(
     From = c("Climate change"),
     To = c("Fishing activity"),
     Label = c("+")
-    
   )
 
   result <- convert_excel_to_isa(elements, connections)

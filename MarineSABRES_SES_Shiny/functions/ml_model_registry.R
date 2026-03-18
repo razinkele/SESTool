@@ -57,7 +57,7 @@ parse_model_version <- function(version_str) {
 #' @param version2 Second version string
 #' @return -1 if v1 < v2, 0 if equal, 1 if v1 > v2
 #' @export
-compare_versions <- function(version1, version2) {
+compare_model_versions <- function(version1, version2) {
   v1 <- parse_model_version(version1)
   v2 <- parse_model_version(version2)
 
@@ -85,7 +85,7 @@ version_satisfies <- function(version, requirement) {
   operator <- match[2]
   req_version <- match[3]
 
-  comparison <- compare_versions(version, req_version)
+  comparison <- compare_model_versions(version, req_version)
 
   switch(operator,
          ">=" = comparison >= 0,

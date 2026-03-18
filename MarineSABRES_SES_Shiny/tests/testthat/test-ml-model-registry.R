@@ -56,37 +56,37 @@ test_that("parse_model_version handles short versions", {
 # VERSION COMPARISON TESTS
 # ============================================================================
 
-test_that("compare_versions function exists", {
-  skip_if_not(exists("compare_versions", mode = "function"),
-              "compare_versions function not available")
+test_that("compare_model_versions function exists", {
+  skip_if_not(exists("compare_model_versions", mode = "function"),
+              "compare_model_versions function not available")
 
-  expect_true(is.function(compare_versions))
+  expect_true(is.function(compare_model_versions))
 })
 
-test_that("compare_versions identifies equal versions", {
-  skip_if_not(exists("compare_versions", mode = "function"),
-              "compare_versions function not available")
+test_that("compare_model_versions identifies equal versions", {
+  skip_if_not(exists("compare_model_versions", mode = "function"),
+              "compare_model_versions function not available")
 
-  expect_equal(compare_versions("1.0.0", "1.0.0"), 0)
-  expect_equal(compare_versions("2.1.3", "2.1.3"), 0)
+  expect_equal(compare_model_versions("1.0.0", "1.0.0"), 0)
+  expect_equal(compare_model_versions("2.1.3", "2.1.3"), 0)
 })
 
-test_that("compare_versions identifies greater versions", {
-  skip_if_not(exists("compare_versions", mode = "function"),
-              "compare_versions function not available")
+test_that("compare_model_versions identifies greater versions", {
+  skip_if_not(exists("compare_model_versions", mode = "function"),
+              "compare_model_versions function not available")
 
-  expect_equal(compare_versions("2.0.0", "1.0.0"), 1)
-  expect_equal(compare_versions("1.1.0", "1.0.0"), 1)
-  expect_equal(compare_versions("1.0.1", "1.0.0"), 1)
+  expect_equal(compare_model_versions("2.0.0", "1.0.0"), 1)
+  expect_equal(compare_model_versions("1.1.0", "1.0.0"), 1)
+  expect_equal(compare_model_versions("1.0.1", "1.0.0"), 1)
 })
 
-test_that("compare_versions identifies lesser versions", {
-  skip_if_not(exists("compare_versions", mode = "function"),
-              "compare_versions function not available")
+test_that("compare_model_versions identifies lesser versions", {
+  skip_if_not(exists("compare_model_versions", mode = "function"),
+              "compare_model_versions function not available")
 
-  expect_equal(compare_versions("1.0.0", "2.0.0"), -1)
-  expect_equal(compare_versions("1.0.0", "1.1.0"), -1)
-  expect_equal(compare_versions("1.0.0", "1.0.1"), -1)
+  expect_equal(compare_model_versions("1.0.0", "2.0.0"), -1)
+  expect_equal(compare_model_versions("1.0.0", "1.1.0"), -1)
+  expect_equal(compare_model_versions("1.0.0", "1.0.1"), -1)
 })
 
 # ============================================================================

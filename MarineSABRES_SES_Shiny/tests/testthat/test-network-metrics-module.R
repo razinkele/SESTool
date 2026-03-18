@@ -534,8 +534,7 @@ test_that("data is prepared correctly for comparison plot", {
     Label = test_data$nodes$label,
     Degree = metrics$degree,
     Betweenness = round(metrics$betweenness, 2),
-    PageRank = round(metrics$pagerank, 4) * 100,  # Scale for visibility
-    
+    PageRank = round(metrics$pagerank, 4) * 100  # Scale for visibility
   )
 
   # Check that all columns exist for scatter plot
