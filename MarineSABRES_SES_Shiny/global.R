@@ -623,6 +623,9 @@ source(get_project_file("functions", "cld_validation.R"), local = FALSE)
 # Error handling and validation
 source("functions/error_handling.R", local = FALSE)  # FALSE = global scope for log_error, safe_execute, etc.
 
+# Project transaction wrappers (atomic state changes, cross-reference validation)
+source("functions/project_transactions.R", local = FALSE)  # FALSE = global scope for test access
+
 # Reactive pipeline (event-based data flow)
 source("functions/reactive_pipeline.R", local = TRUE)
 
