@@ -29,7 +29,7 @@
 #' @return A list with \code{success} (logical) and \code{error} (character or NULL).
 #' @export
 with_project_transaction <- function(project_data,
-                                     event_bus,
+                                     event_bus = NULL,
                                      operation,
                                      emit_change = TRUE,
                                      silent = FALSE) {
