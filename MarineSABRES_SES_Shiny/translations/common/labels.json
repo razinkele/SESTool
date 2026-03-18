@@ -264,6 +264,17 @@
       "no": "E-post",
       "el": "Ηλ. ταχυδρομείο"
     },
+    "common.labels.error": {
+      "en": "Error",
+      "es": "Error",
+      "fr": "Erreur",
+      "de": "Fehler",
+      "lt": "Klaida",
+      "pt": "Erro",
+      "it": "Errore",
+      "no": "Feil",
+      "el": "Σφάλμα"
+    },
     "common.labels.encapsulation_notes": {
       "en": "Encapsulation Notes:",
       "es": "Notas de Encapsulación:",

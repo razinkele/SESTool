@@ -549,3 +549,161 @@ get_connection_examples <- function(from_type, to_type) {
   #  but we can infer from the allowed targets)
   return(rule$examples)
 }
+
+
+#' Validate Connection with Feedback
+#'
+#' Validates a DAPSI(W)R(M) connection and returns structured feedback
+#' including validity, severity level, message, and suggestions.
+#'
+#' @param from_type Source DAPSIWRM type
+#' @param to_type Target DAPSIWRM type
+#' @param strict If TRUE, reject non-standard connections. If FALSE, warn but allow.
+#' @return List with: valid (logical), level (character), message (character),
+#'   suggestion (character or NULL), warning (logical)
+#' @export
+validate_connection_with_feedback <- function(from_type, to_type, strict = FALSE) {
+  # Check if from_type is known
+
+  if (!from_type %in% names(DAPSIWRM_ADJACENCY_RULES)) {
+    if (strict) {
+      return(list(
+        valid = FALSE,
+        level = "error",
+        message = paste("Unknown source type:", from_type),
+        suggestion = paste("Valid types:", paste(names(DAPSIWRM_ADJACENCY_RULES), collapse = ", ")),
+        warning = FALSE
+      ))
+    } else {
+      return(list(
+        valid = TRUE,
+        level = "warning",
+        message = paste("Unknown source type:", from_type, "- connection allowed in permissive mode"),
+        suggestion = NULL,
+        warning = TRUE
+      ))
+    }
+  }
+
+  rule <- DAPSIWRM_ADJACENCY_RULES[[from_type]]
+  is_standard <- to_type %in% rule$targets
+
+  if (is_standard) {
+    # Standard DAPSIWRM connection
+    return(list(
+      valid = TRUE,
+      level = "success",
+      message = paste("Valid DAPSI(W)R(M) connection:", from_type, "->", to_type),
+      suggestion = NULL,
+      warning = FALSE
+    ))
+  }
+
+  # Non-standard connection
+
+  valid_targets <- rule$targets
+  suggestion_text <- paste("Standard targets for", from_type, "are:",
+                           paste(valid_targets, collapse = ", "))
+
+  if (strict) {
+    return(list(
+      valid = FALSE,
+      level = "error",
+      message = paste("Non-standard connection:", from_type, "->", to_type,
+                       "is not allowed in strict mode"),
+      suggestion = suggestion_text,
+      warning = FALSE
+    ))
+  } else {
+    return(list(
+      valid = TRUE,
+      level = "warning",
+      message = paste("Non-standard connection:", from_type, "->", to_type,
+                       "- allowed but not typical in DAPSI(W)R(M)"),
+      suggestion = suggestion_text,
+      warning = TRUE
+    ))
+  }
+}
+
+
+#' Get Connection Validation Message
+#'
+#' Returns a human-readable validation message for a connection.
+#'
+#' @param from_type Source DAPSIWRM type
+#' @param to_type Target DAPSIWRM type
+#' @param strict If TRUE, use strict validation
+#' @return Character string with validation message
+#' @export
+get_connection_validation_message <- function(from_type, to_type, strict = FALSE) {
+  result <- validate_connection_with_feedback(from_type, to_type, strict = strict)
+  return(result$message)
+}
+
+
+#' Check Connection with Notification
+#'
+#' Validates a connection and optionally shows a Shiny notification.
+#'
+#' @param from_type Source DAPSIWRM type
+#' @param to_type Target DAPSIWRM type
+#' @param strict If TRUE, use strict validation
+#' @param notify If TRUE, show a Shiny notification (requires active session)
+#' @return List with validation result (same as validate_connection_with_feedback)
+#' @export
+check_connection_with_notification <- function(from_type, to_type, strict = FALSE, notify = TRUE) {
+  result <- validate_connection_with_feedback(from_type, to_type, strict = strict)
+
+  if (notify && requireNamespace("shiny", quietly = TRUE)) {
+    notification_type <- switch(result$level,
+      "success" = "message",
+      "warning" = "warning",
+      "error" = "error",
+      "default"
+    )
+    tryCatch({
+      shiny::showNotification(result$message, type = notification_type)
+    }, error = function(e) {
+      # No active Shiny session - silently skip notification
+      debug_log(paste("Could not show notification:", e$message), "CONNECTION")
+    })
+  }
+
+  return(result)
+}
+
+
+#' Get Valid Targets for UI
+#'
+#' Returns a data frame of valid target types for a given source type,
+#' suitable for populating UI dropdown menus.
+#'
+#' @param from_type Source DAPSIWRM type
+#' @return Data frame with columns: type, description
+#' @export
+get_valid_targets_for_ui <- function(from_type) {
+  if (!from_type %in% names(DAPSIWRM_ADJACENCY_RULES)) {
+    return(data.frame(type = character(0), description = character(0),
+                      stringsAsFactors = FALSE))
+  }
+
+  rule <- DAPSIWRM_ADJACENCY_RULES[[from_type]]
+  targets <- rule$targets
+
+  # Build descriptions for each target
+  descriptions <- vapply(targets, function(target_type) {
+    if (target_type %in% names(DAPSIWRM_ADJACENCY_RULES)) {
+      # Use the description from the target's own rule entry
+      target_rule <- DAPSIWRM_ADJACENCY_RULES[[target_type]]
+      return(paste(from_type, "->", target_type))
+    }
+    return(paste(from_type, "->", target_type))
+  }, character(1))
+
+  data.frame(
+    type = targets,
+    description = descriptions,
+    stringsAsFactors = FALSE
+  )
+}
