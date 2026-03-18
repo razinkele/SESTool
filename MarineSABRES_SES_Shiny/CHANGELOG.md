@@ -5,6 +5,56 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.2] - 2026-03-18
+
+### Test Suite Hardening & Function Implementation
+
+Patch release resolving all 46 pre-existing test failures, implementing previously-stubbed functions, and expanding test coverage from 3,530 to 4,094 passing tests.
+
+### Added
+- **Project transaction functions**: `with_project_transaction()`, `with_project_transaction_batch()`, `create_isa_modifier()` in new `functions/project_transactions.R`
+- **Cross-reference validation**: `validate_cross_references()`, `repair_adjacency_matrices()` for ISA data integrity
+- **Connection validation with feedback**: `validate_connection_with_feedback()`, `get_valid_targets_for_ui()` for DAPSI(W)R(M) flow validation with user-friendly messages
+- **Shared stale-data observer**: `create_stale_data_observer()` extracted to `functions/ui_components.R`
+- **9 new test files** (398 tests):
+  - `test-isa-export-helpers.R` (55 tests) — ISA workbook and Kumu export
+  - `test-ui-components.R` (45 tests) — 8 shared UI builder functions
+  - `test-universal-excel-loader.R` (73 tests) — Excel format detection and normalization
+  - `test-cld-validation.R` (49 tests) — CLD/ISA validation edge cases
+  - `test-import-data-module.R` (35 tests) — Import validation and connection parsing
+  - `test-create-ses-module.R` (17 tests) — SES creation workflow
+  - `test-prepare-report-module.R` (28 tests) — Report generation
+  - `test-workflow-stepper-module.R` (31 tests) — Step definitions and navigation
+  - `test-persistent-storage.R` (65 tests) — Save/load round-trips and file management
+
+### Fixed
+- **46 pre-existing test failures** resolved (0 remaining):
+  - 19 P0 failures: implemented 5 missing transaction/validation functions
+  - 12 P1 failures: implemented connection validation and UI target functions
+  - 2 trailing comma syntax errors in test data.frame() calls
+  - 5 SES dynamics edge cases (single-node matrices, duplicate labels, zero matrices)
+  - 2 template versioning failures (function name collision with ML registry)
+  - 1 flaky auto-save session ID uniqueness test
+  - 1 ML ensemble error message format mismatch
+  - 3 safe_render factory signature inconsistencies
+  - 1 missing `common.labels.error` translation key
+- **`compare_versions` name collision**: Renamed ML registry version to `compare_model_versions()` to avoid overwriting template versioning function
+- **`diag()` single-node bug** in SES dynamics: `diag(scalar)` creates identity matrix of that size, not 1x1 — fixed with explicit `nrow` parameter
+- **Orphan function files** wired into `global.R`: `ml_feature_cache.R`, `undo_redo.R`
+- **`safe_readRDS` fallback** removed in auto_save_module (unconditional usage)
+- **`shell.exec` path sanitization** added in recent_projects_module
+- **Dead `import_project_rds`** function removed (bypassed safe_readRDS)
+- **Constants inconsistency**: Added "Measures" to ELEMENT_SHAPES
+- **Hardcoded English** in project_transactions notification and AI ISA tooltips translated
+- **VERSION file path** now uses PROJECT_ROOT
+
+### Changed
+- Test suite: 3,530 → **4,094 passing tests** (+564)
+- Test files: 54 → **63** (+9 new)
+- Test failures: 46 → **0**
+
+---
+
 ## [1.10.1] - 2026-03-17
 
 ### UI Polish, Consistency Fixes & Documentation Update
