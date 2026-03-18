@@ -63,7 +63,7 @@ if (!is.function(operation)) {
     if (!silent) {
       tryCatch(
         shiny::showNotification(
-          paste("Transaction failed:", e$message),
+          paste0("[Transaction Error] ", e$message),
           type = "error"
         ),
         error = function(e2) invisible(NULL)
@@ -152,7 +152,10 @@ create_isa_modifier <- function(category, action) {
     ))
   }
 
-  # Return a modifier function that operates on the project state
+  # NOTE: Stub implementation — returns identity modifier.
+  # The modifier validates inputs but does not perform actual ISA modifications.
+  # This scaffolding supports test infrastructure and will be extended when
+  # ISA data entry modules adopt the transaction wrapper pattern.
   function(state, ...) {
     debug_log(sprintf("ISA modifier: %s / %s", category, action), "TRANSACTION")
     state

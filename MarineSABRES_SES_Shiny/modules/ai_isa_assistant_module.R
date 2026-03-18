@@ -1503,14 +1503,14 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                 tags$span(
                   class = "badge badge-warning",
                   style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
-                  title = "Governance suggestion based on selected countries",
+                  title = i18n$t("modules.isa.ai_assistant.governance_suggestion_tooltip"),
                   "GOV"
                 )
               } else if (!is.null(source_type) && source_type == "socioeconomic") {
                 tags$span(
                   class = "badge badge-success",
                   style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
-                  title = "Socioeconomic suggestion based on selected countries",
+                  title = i18n$t("modules.isa.ai_assistant.socioeconomic_suggestion_tooltip"),
                   "SE"
                 )
               } else {

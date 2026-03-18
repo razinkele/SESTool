@@ -4333,6 +4333,28 @@
       "it": "Dalla base di conoscenza",
       "no": "Fra kunnskapsdatabasen",
       "el": "Από τη βάση γνώσεων"
+    },
+    "modules.isa.ai_assistant.governance_suggestion_tooltip": {
+      "en": "Governance suggestion based on selected countries",
+      "es": "Sugerencia de gobernanza basada en los países seleccionados",
+      "fr": "Suggestion de gouvernance basée sur les pays sélectionnés",
+      "de": "Governance-Vorschlag basierend auf den ausgewählten Ländern",
+      "lt": "Valdymo pasiūlymas pagal pasirinktas šalis",
+      "pt": "Sugestão de governança com base nos países selecionados",
+      "it": "Suggerimento di governance basato sui paesi selezionati",
+      "no": "Styringsforslag basert på valgte land",
+      "el": "Πρόταση διακυβέρνησης βάσει των επιλεγμένων χωρών"
+    },
+    "modules.isa.ai_assistant.socioeconomic_suggestion_tooltip": {
+      "en": "Socioeconomic suggestion based on selected countries",
+      "es": "Sugerencia socioeconómica basada en los países seleccionados",
+      "fr": "Suggestion socio-économique basée sur les pays sélectionnés",
+      "de": "Sozioökonomischer Vorschlag basierend auf den ausgewählten Ländern",
+      "lt": "Socialinis-ekonominis pasiūlymas pagal pasirinktas šalis",
+      "pt": "Sugestão socioeconômica com base nos países selecionados",
+      "it": "Suggerimento socioeconomico basato sui paesi selezionati",
+      "no": "Sosioøkonomisk forslag basert på valgte land",
+      "el": "Κοινωνικοοικονομική πρόταση βάσει των επιλεγμένων χωρών"
     }
   }
 }

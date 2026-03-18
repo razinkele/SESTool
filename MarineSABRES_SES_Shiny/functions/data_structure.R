@@ -662,29 +662,6 @@ validate_adjacency_matrices <- function(isa_data) {
 # DATA IMPORT/EXPORT FUNCTIONS
 # ============================================================================
 
-#' Import project from RDS file
-#' 
-#' @param file_path Path to RDS file
-#' @return Project data list
-import_project_rds <- function(file_path) {
-  
-  if (!file.exists(file_path)) {
-    stop("File does not exist: ", file_path)
-  }
-  
-  project_data <- readRDS(file_path)
-  
-  # Validate
-  validation <- validate_project_data(project_data)
-  
-  if (!validation$valid) {
-    log_warning("DATA", paste("Project data validation errors:",
-                              paste(validation$errors, collapse = "; ")))
-  }
-  
-  return(project_data)
-}
-
 #' Export project to RDS file
 #' 
 #' @param project_data Project data list

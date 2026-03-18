@@ -638,7 +638,7 @@ source("functions/persistent_storage.R", local = FALSE)  # FALSE = global scope 
 # Async computation helpers (lightweight progress-aware wrappers)
 source(get_project_file("functions", "async_helpers.R"), local = FALSE)
 
-# Utility functions (general helper functions)
+# Root utils.R: Network visualization helpers (convert_strength, get_node_colors, get_node_shapes, etc.)
 source("utils.R", local = FALSE)  # FALSE = global scope for get_node_colors, get_node_shapes, etc.
 
 # Navigation helpers (breadcrumbs, progress bars, nav buttons)
@@ -852,6 +852,7 @@ source(get_project_file("config", "entry_points.R"), local = FALSE)
 #   sanitize_color, sanitize_filename, validate_isa_dataframe
 # NOTE: Default visualization constants (DEFAULT_NODE_SIZE, DEFAULT_EDGE_WIDTH, etc.)
 # are defined in constants.R — the single source of truth for all constants.
+# functions/utils.R: Core utilities (generate_id, format_date, parse_connection_value, safe_readRDS, etc.)
 source("functions/utils.R", local = FALSE)
 
 # Sidebar UI helpers (includes ARIA accessibility functions)

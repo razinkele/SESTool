@@ -259,7 +259,8 @@ ELEMENT_SHAPES <- list(
   "Marine Processes & Functioning" = "dot",      # Kumu: pill → dot (circular, label outside)
   "Ecosystem Services" = "square",               # Kumu: square (EXACT MATCH!)
   "Goods & Benefits" = "triangle",               # Kumu: triangle (EXACT MATCH!)
-  "Responses" = "triangleDown"                   # Inverted triangle for management responses
+  "Responses" = "triangleDown",                   # Inverted triangle for management responses
+  "Measures" = "triangleDown"                     # Same as Responses (Measures are a subtype)
 )
 
 # Edge colors (following Kumu style guide)
