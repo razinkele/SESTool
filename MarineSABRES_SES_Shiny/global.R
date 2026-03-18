@@ -159,7 +159,7 @@ startup_check_directories()
 
 # Read version from VERSION file (single source of truth)
 APP_VERSION <- tryCatch({
-  version_text <- readLines("VERSION", warn = FALSE)[1]
+  version_text <- readLines(file.path(PROJECT_ROOT, "VERSION"), warn = FALSE)[1]
   trimws(version_text)
 }, error = function(e) {
   "1.0.0-unknown"  # Fallback if VERSION file not found
@@ -626,6 +626,9 @@ source("functions/error_handling.R", local = FALSE)  # FALSE = global scope for 
 # Project transaction wrappers (atomic state changes, cross-reference validation)
 source("functions/project_transactions.R", local = FALSE)  # FALSE = global scope for test access
 
+# Undo/redo system (command pattern-based history)
+source("functions/undo_redo.R", local = FALSE)  # FALSE = global scope for module access
+
 # Reactive pipeline (event-based data flow)
 source("functions/reactive_pipeline.R", local = TRUE)
 
@@ -740,6 +743,12 @@ if (ML_ENABLED) {
 
     source("functions/ml_feedback_logger.R", local = TRUE)
     cat("✓ ML feedback logger loaded\n")
+
+    # ML feature cache (LRU cache for feature vectors)
+    if (file.exists("functions/ml_feature_cache.R")) {
+      source("functions/ml_feature_cache.R", local = TRUE)
+      cat("✓ ML feature cache loaded\n")
+    }
 
     # Load advanced text embeddings module (P1 enhancement)
     if (file.exists("functions/ml_text_embeddings.R")) {

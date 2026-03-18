@@ -622,7 +622,7 @@ recent_projects_server <- function(id, project_data_reactive, i18n,
       if (!is.null(folder) && dir.exists(folder)) {
         # Open folder in file explorer
         if (.Platform$OS.type == "windows") {
-          shell.exec(folder)
+          shell.exec(normalizePath(folder, mustWork = FALSE))
         } else if (Sys.info()["sysname"] == "Darwin") {
           system2("open", folder)
         } else {

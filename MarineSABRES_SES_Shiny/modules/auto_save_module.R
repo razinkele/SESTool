@@ -999,7 +999,7 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
 
       tryCatch({
-        recovered_data <- if (exists("safe_readRDS")) safe_readRDS(latest_file) else readRDS(latest_file)
+        recovered_data <- safe_readRDS(latest_file)
 
         # Remove auto-save metadata before returning
         recovered_data$autosave_metadata <- NULL

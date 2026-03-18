@@ -451,6 +451,40 @@ ses_ml_feedback_buttons <- function(ns, prediction_id, i18n = NULL) {
 #' setup_stale_data_observer(event_bus,
 #'   has_results_fn = function() !is.null(rv$results),
 #'   ns = session$ns, i18n = i18n)
+#' Create a stale-data observer using reactiveValues flag
+#'
+#' Convenience wrapper around setup_stale_data_observer for the common case
+#' where a reactiveValues object has a boolean flag indicating analysis
+#' completion. Modules that currently implement this pattern manually:
+#'   - analysis_boolean.R     (rv$analysis_complete)
+#'   - analysis_intervention.R (rv$analysis_complete)
+#'   - analysis_loops.R       (loop_data$detection_complete)
+#'   - analysis_metrics.R     (metrics_rv$calculated_metrics != NULL)
+#'   - analysis_leverage.R    (rv$leverage_results != NULL)
+#'   - analysis_simulation.R  (rv$sim_complete || rv$ss_complete)
+#'   - analysis_simplify.R    (rv$has_simplified)
+#'   - analysis_bot.R         (nrow(bot_rv$timeseries_data) > 0)
+#'
+#' @param event_bus The event bus object (or NULL if not available).
+#' @param rv A reactiveValues object containing the completion flag.
+#' @param i18n Translator object for the notification message.
+#' @param complete_flag Character. Name of the logical flag in rv. Default "analysis_complete".
+#' @return An observe() handle (invisible).
+#' @export
+create_stale_data_observer <- function(event_bus, rv, i18n, complete_flag = "analysis_complete") {
+  observe({
+    req(!is.null(event_bus))
+    event_bus$on_isa_change()
+    if (isolate(rv[[complete_flag]])) {
+      showNotification(
+        i18n$t("modules.analysis.common.data_changed_rerun"),
+        type = "warning",
+        duration = 8
+      )
+    }
+  })
+}
+
 setup_stale_data_observer <- function(event_bus, has_results_fn, ns, i18n) {
   observe({
     req(!is.null(event_bus))
