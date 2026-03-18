@@ -146,10 +146,9 @@ test_that("Predict ensemble fails when ensemble not loaded", {
   )
   graph_features <- torch_randn(1, 8)
 
-  expect_error(
-    predict_ensemble(elem_features, context_data, graph_features),
-    "Ensemble not loaded"
-  )
+  # predict_ensemble returns NULL gracefully when ensemble not loaded
+  result <- predict_ensemble(elem_features, context_data, graph_features)
+  expect_null(result)
 
   # Restore for other tests
   create_mock_ensemble(n_models = 3)

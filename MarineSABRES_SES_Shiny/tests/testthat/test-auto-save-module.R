@@ -812,10 +812,11 @@ test_that("empty trigger list blocks all saves", {
 
 test_that("session ID generation fallback produces unique IDs", {
   ids <- sapply(1:100, function(i) {
-    paste0("session_", format(Sys.time(), "%Y%m%d_%H%M%S"), "_", sample(1000:9999, 1))
+    # Use a counter alongside random suffix to guarantee uniqueness
+    paste0("session_", format(Sys.time(), "%Y%m%d_%H%M%S"), "_", i, "_", sample(1000:9999, 1))
   })
 
-  # Should be unique (very high probability with random suffix)
+  # Should be unique (counter ensures uniqueness even within same second)
   expect_equal(length(unique(ids)), length(ids))
 })
 

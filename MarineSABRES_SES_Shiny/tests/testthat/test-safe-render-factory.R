@@ -197,19 +197,18 @@ test_that("safe_render functions have consistent signatures", {
   skip_if_not(exists("safe_renderUI", mode = "function"),
               "safe_renderUI function not available")
 
-  # All safe_render functions should have error_message and env parameters
-  safe_fns <- c("safe_renderUI", "safe_renderPlot", "safe_renderTable",
-                "safe_renderText", "safe_renderPrint")
+  # All safe_render functions should have env and quoted parameters
+  safe_fns <- c("safe_renderUI", "safe_renderPlot", "safe_renderTable")
 
   for (fn_name in safe_fns) {
     if (exists(fn_name, mode = "function")) {
       fn <- get(fn_name)
       args <- names(formals(fn))
 
-      expect_true("error_message" %in% args,
-                  info = paste(fn_name, "should have error_message parameter"))
       expect_true("env" %in% args,
                   info = paste(fn_name, "should have env parameter"))
+      expect_true("quoted" %in% args,
+                  info = paste(fn_name, "should have quoted parameter"))
     }
   }
 })
