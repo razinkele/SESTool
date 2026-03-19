@@ -1177,10 +1177,13 @@ get_neighborhood <- function(nodes, edges, node_id, degree = 1) {
 #' @param x Numeric vector to scale
 #' @return Scaled vector (or original if sd is 0)
 safe_scale <- function(x) {
-  if (sd(x, na.rm = TRUE) == 0) {
+  x_clean <- x[!is.na(x)]
+  if (length(x_clean) == 0 || sd(x_clean) == 0) {
     return(rep(0, length(x)))
   }
-  scale(x)[,1]
+  result <- scale(x)[,1]
+  result[is.na(result) | is.nan(result)] <- 0
+  result
 }
 
 #' Calculate All Centrality Metrics for Nodes
@@ -1191,7 +1194,9 @@ safe_scale <- function(x) {
 #' @return A data frame with centrality metrics
 calculate_all_centralities <- function(g) {
 
-  if (vcount(g) == 0) {
+  n <- vcount(g)
+
+  if (n == 0) {
     return(data.frame(
       Node = integer(0),
       Name = character(0),
@@ -1205,26 +1210,57 @@ calculate_all_centralities <- function(g) {
     ))
   }
 
+  # For graphs with no edges, centrality metrics are trivially zero
+  # (avoids igraph hanging on disconnected/edgeless graphs)
+  if (ecount(g) == 0) {
+    return(data.frame(
+      Node = 1:n,
+      Name = if (!is.null(V(g)$label)) V(g)$label else if (!is.null(V(g)$name)) V(g)$name else paste("Node", 1:n),
+      Degree = rep(0L, n),
+      In_Degree = rep(0L, n),
+      Out_Degree = rep(0L, n),
+      Betweenness = rep(0, n),
+      Closeness = rep(0, n),
+      Eigenvector = rep(0, n),
+      PageRank = rep(1/n, n)
+    ))
+  }
+
   # Safe centrality calculation with fallbacks
   safe_betweenness <- tryCatch(
     betweenness(g, directed = TRUE),
-    error = function(e) rep(0, vcount(g))
+    error = function(e) rep(0, n)
   )
 
   safe_closeness <- tryCatch({
     cl <- closeness(g, mode = "all")
     cl[is.nan(cl) | is.infinite(cl)] <- 0
     cl
-  }, error = function(e) rep(0, vcount(g)))
+  }, error = function(e) rep(0, n))
 
-  safe_eigenvector <- tryCatch(
-    eigen_centrality(g, directed = TRUE)$vector,
-    error = function(e) rep(0, vcount(g))
-  )
+  # eigen_centrality can hang on disconnected graphs — only run on connected component
+  safe_eigenvector <- tryCatch({
+    if (is_connected(g, mode = "weak")) {
+      eigen_centrality(g, directed = TRUE)$vector
+    } else {
+      # Compute per largest connected component, zero for isolated nodes
+      comp <- components(g, mode = "weak")
+      ev <- rep(0, n)
+      largest <- which.max(comp$csize)
+      vids <- which(comp$membership == largest)
+      if (length(vids) > 1) {
+        sub_g <- induced_subgraph(g, vids)
+        sub_ev <- tryCatch(eigen_centrality(sub_g, directed = TRUE)$vector,
+                           error = function(e) rep(0, length(vids)))
+        ev[vids] <- sub_ev
+      }
+      ev
+    }
+  }, error = function(e) rep(0, n))
 
   safe_pagerank <- tryCatch(
     page_rank(g)$vector,
-    error = function(e) rep(0, vcount(g))
+    error = function(e) rep(0, n)
   )
 
   data.frame(

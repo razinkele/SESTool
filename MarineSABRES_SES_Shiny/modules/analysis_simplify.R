@@ -799,9 +799,9 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
 
           project_data_reactive(data)
 
-          # Emit event for other modules to react
-          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-            event_bus$emit_isa_change("analysis_simplify")
+          # Emit CLD update (not ISA change — simplify modifies CLD, not ISA data)
+          if (!is.null(event_bus) && is.function(event_bus$emit_cld_update)) {
+            event_bus$emit_cld_update("analysis_simplify")
           }
 
           showNotification(
@@ -862,9 +862,9 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
 
         project_data_reactive(data)
 
-        # Emit event for other modules to react
-        if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-          event_bus$emit_isa_change("analysis_simplify_restore")
+        # Emit CLD update (not ISA change — restore modifies CLD, not ISA data)
+        if (!is.null(event_bus) && is.function(event_bus$emit_cld_update)) {
+          event_bus$emit_cld_update("analysis_simplify_restore")
         }
 
         rv$original_nodes <- data$data$cld$nodes

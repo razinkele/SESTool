@@ -161,6 +161,16 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
           nodes <- create_nodes_df(isa_data)
           edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
 
+          # Guard: need at least some edges for meaningful analysis
+          if (is.null(edges) || nrow(edges) == 0) {
+            showNotification(
+              i18n$t("modules.analysis.leverage.no_network_data"),
+              type = "warning",
+              duration = 5
+            )
+            return()
+          }
+
           incProgress(0.4, detail = i18n$t("modules.analysis.leverage.progress_creating_graph"))
 
           all_centralities <- calculate_all_centralities(
@@ -211,9 +221,9 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
           project_data$last_modified <- Sys.time()
           project_data_reactive(project_data)
 
-          # Emit event for other modules to react
-          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-            event_bus$emit_isa_change("analysis_leverage")
+          # Emit CLD update (not ISA change — leverage modifies CLD nodes, not ISA data)
+          if (!is.null(event_bus) && is.function(event_bus$emit_cld_update)) {
+            event_bus$emit_cld_update("analysis_leverage")
           }
 
           incProgress(1.0, detail = i18n$t("modules.analysis.leverage.progress_complete"))

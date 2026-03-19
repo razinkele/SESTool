@@ -532,9 +532,9 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           project_data$last_modified <- Sys.time()
           project_data_reactive(project_data)
 
-          # Emit event for other modules to react
-          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-            event_bus$emit_isa_change("analysis_loops")
+          # Emit CLD update (not ISA change — loops modifies CLD metadata, not ISA data)
+          if (!is.null(event_bus) && is.function(event_bus$emit_cld_update)) {
+            event_bus$emit_cld_update("analysis_loops")
           }
 
           output$detection_status <- renderText(
