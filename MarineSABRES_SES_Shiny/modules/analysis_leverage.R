@@ -310,10 +310,10 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
 
         # Map leverage scores to nodes
         leverage_df <- rv$leverage_results
-        leverage_lookup <- setNames(leverage_df$Composite_Score, leverage_df$ID)
+        leverage_lookup <- setNames(leverage_df$Composite_Score, leverage_df$Name)
 
-        # Add leverage scores to nodes
-        nodes$leverage_score <- leverage_lookup[nodes$id]
+        # Add leverage scores to nodes (match by label since Name contains node labels)
+        nodes$leverage_score <- leverage_lookup[nodes$label]
         nodes$leverage_score[is.na(nodes$leverage_score)] <- 0
 
         # Normalize scores to node sizes (15-60 range for better visibility)
