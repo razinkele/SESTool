@@ -157,9 +157,30 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
   # ============================================================================
   # Observer 2: CLD updates -> Invalidate analysis
   # ============================================================================
+  # Only invalidate analysis when the CLD structure itself changed (e.g., ISA
+
+  # data changed and CLD was regenerated). Analysis modules emit cld_update to
+  # refresh the CLD visualization, but they should NOT trigger invalidation of
+  # the analysis results they just produced.
+  # ============================================================================
   observe({
     # Watch for CLD updates (ISA changes trigger CLD regen which emits cld_update)
     event_bus$on_cld_update()
+
+    # Check the source of the event — only invalidate for structural CLD changes,
+    # not for analysis modules adding metadata (leverage scores, loops, etc.)
+    last_event <- isolate(event_bus$get_last_event())
+    event_source <- if (!is.null(last_event)) last_event$source else "unknown"
+
+    # Analysis modules emit cld_update to refresh the CLD visualization, but
+    # their results should NOT be wiped. Only invalidate when the underlying
+    # data actually changed (reactive_pipeline = ISA->CLD regen).
+    analysis_sources <- c("analysis_loops", "analysis_leverage", "analysis_simplify",
+                          "analysis_simplify_restore")
+    if (event_source %in% analysis_sources) {
+      debug_log(sprintf("Skipping analysis invalidation for analysis-origin event: %s", event_source), "PIPELINE")
+      return()
+    }
 
     data <- isolate(project_data())
 
@@ -169,7 +190,7 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
                      length(data$data$analysis$metrics) > 0)
 
     if (has_analysis) {
-      debug_log("Data changed, invalidating analysis results...", "PIPELINE")
+      debug_log(sprintf("CLD changed (source: %s), invalidating analysis results...", event_source), "PIPELINE")
       tryCatch(shinyjs::show("pipeline_status_indicator"), error = function(e) NULL)
 
       # Clear analysis data
