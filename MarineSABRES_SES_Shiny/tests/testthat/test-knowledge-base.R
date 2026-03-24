@@ -125,9 +125,9 @@ test_that("KB has expected version field", {
   expect_true(nchar(.kb_raw$version) > 0)
 })
 
-test_that("KB has exactly 30 contexts", {
+test_that("KB has exactly 33 contexts", {
   skip_if_not(!is.null(.kb_raw), "KB not loaded")
-  expect_equal(length(.kb_raw$contexts), 30)
+  expect_equal(length(.kb_raw$contexts), 33)
 })
 
 test_that("All context keys follow the {sea}_{habitat} naming pattern", {
@@ -161,7 +161,7 @@ test_that("get_available_contexts() returns 30 context keys", {
   skip_if_not(exists("get_available_contexts", mode = "function"),
               "get_available_contexts not available")
   ctx <- get_available_contexts()
-  expect_equal(length(ctx), 30)
+  expect_equal(length(ctx), 33)
   expect_type(ctx, "character")
 })
 
@@ -531,6 +531,38 @@ test_that("Caribbean contexts don't contain 'baltic', 'north sea', or 'black sea
     info = paste("Caribbean geo issue:", paste(bad, collapse = "; ")))
 })
 
+
+test_that("Macaronesia contexts don't contain 'baltic', 'north sea', 'danube', or 'black sea'", {
+  skip_if_not(!is.null(.kb_raw), "KB not loaded")
+  contexts <- .kb_raw$contexts
+  mac_contexts <- names(contexts)[startsWith(names(contexts), "macaronesia")]
+  expect_true(length(mac_contexts) >= 3, info = "Must have at least 3 Macaronesia contexts")
+  bad_terms <- c("baltic", "north sea", "black sea", "danube", "bosphorus", "helcom")
+  bad <- character(0)
+  for (ctx_name in mac_contexts) {
+    text <- .get_context_text_lower(contexts[[ctx_name]])
+    for (term in bad_terms) {
+      pattern <- paste0("\\b", term, "\\b")
+      if (grepl(pattern, text, perl = TRUE)) {
+        bad <- c(bad, sprintf("%s contains '%s'", ctx_name, term))
+      }
+    }
+  }
+  expect_true(length(bad) == 0,
+    info = paste("Macaronesia geo issue:", paste(bad, collapse = "; ")))
+})
+
+test_that("Macaronesia contexts have Macaronesia-specific content", {
+  skip_if_not(!is.null(.kb_raw), "KB not loaded")
+  contexts <- .kb_raw$contexts
+  mac_contexts <- names(contexts)[startsWith(names(contexts), "macaronesia")]
+  for (ctx_name in mac_contexts) {
+    text <- .get_context_text_lower(contexts[[ctx_name]])
+    has_mac_terms <- grepl("azores|canary|canaries|madeira|cape verde|macaronesia", text, perl = TRUE)
+    expect_true(has_mac_terms,
+      info = paste(ctx_name, "must reference Macaronesian locations"))
+  }
+})
 
 # ==============================================================================
 # 6. KB API Functions
