@@ -2144,6 +2144,215 @@
       "it": "Impostazioni ripristinate ai valori predefiniti del livello.",
       "no": "Innstillinger tilbakestilt til standardverdier for nivå.",
       "el": "Οι ρυθμίσεις επαναφέρθηκαν στις προεπιλογές επιπέδου."
+    },
+    "ui.modals.feedback.button_label": {
+      "en": "Feedback",
+      "es": "Comentarios",
+      "fr": "Commentaires",
+      "de": "Feedback",
+      "lt": "Atsiliepimai",
+      "pt": "Feedback",
+      "it": "Feedback",
+      "no": "Tilbakemelding",
+      "el": "Σχόλια"
+    },
+    "ui.modals.feedback.modal_title": {
+      "en": "Send Feedback",
+      "es": "Enviar comentarios",
+      "fr": "Envoyer un commentaire",
+      "de": "Feedback senden",
+      "lt": "Siųsti atsiliepimą",
+      "pt": "Enviar feedback",
+      "it": "Invia feedback",
+      "no": "Send tilbakemelding",
+      "el": "Αποστολή σχολίων"
+    },
+    "ui.modals.feedback.type_label": {
+      "en": "Report Type",
+      "es": "Tipo de informe",
+      "fr": "Type de rapport",
+      "de": "Berichtstyp",
+      "lt": "Pranešimo tipas",
+      "pt": "Tipo de relatório",
+      "it": "Tipo di segnalazione",
+      "no": "Rapporttype",
+      "el": "Τύπος αναφοράς"
+    },
+    "ui.modals.feedback.type_bug": {
+      "en": "Bug Report",
+      "es": "Informe de error",
+      "fr": "Rapport de bogue",
+      "de": "Fehlerbericht",
+      "lt": "Klaidos pranešimas",
+      "pt": "Relatório de erro",
+      "it": "Segnalazione bug",
+      "no": "Feilrapport",
+      "el": "Αναφορά σφάλματος"
+    },
+    "ui.modals.feedback.type_suggestion": {
+      "en": "Improvement Suggestion",
+      "es": "Sugerencia de mejora",
+      "fr": "Suggestion d'amélioration",
+      "de": "Verbesserungsvorschlag",
+      "lt": "Patobulinimo pasiūlymas",
+      "pt": "Sugestão de melhoria",
+      "it": "Suggerimento di miglioramento",
+      "no": "Forbedringsforslag",
+      "el": "Πρόταση βελτίωσης"
+    },
+    "ui.modals.feedback.type_general": {
+      "en": "General Feedback",
+      "es": "Comentario general",
+      "fr": "Commentaire général",
+      "de": "Allgemeines Feedback",
+      "lt": "Bendras atsiliepimas",
+      "pt": "Feedback geral",
+      "it": "Feedback generale",
+      "no": "Generell tilbakemelding",
+      "el": "Γενικά σχόλια"
+    },
+    "ui.modals.feedback.title_label": {
+      "en": "Title",
+      "es": "Título",
+      "fr": "Titre",
+      "de": "Titel",
+      "lt": "Pavadinimas",
+      "pt": "Título",
+      "it": "Titolo",
+      "no": "Tittel",
+      "el": "Τίτλος"
+    },
+    "ui.modals.feedback.title_placeholder": {
+      "en": "Brief summary of your feedback",
+      "es": "Breve resumen de su comentario",
+      "fr": "Bref résumé de votre commentaire",
+      "de": "Kurze Zusammenfassung Ihres Feedbacks",
+      "lt": "Trumpas jūsų atsiliepimo aprašymas",
+      "pt": "Breve resumo do seu feedback",
+      "it": "Breve riepilogo del tuo feedback",
+      "no": "Kort oppsummering av tilbakemeldingen",
+      "el": "Σύντομη περίληψη των σχολίων σας"
+    },
+    "ui.modals.feedback.description_label": {
+      "en": "Description",
+      "es": "Descripción",
+      "fr": "Description",
+      "de": "Beschreibung",
+      "lt": "Aprašymas",
+      "pt": "Descrição",
+      "it": "Descrizione",
+      "no": "Beskrivelse",
+      "el": "Περιγραφή"
+    },
+    "ui.modals.feedback.description_placeholder": {
+      "en": "Please describe in detail...",
+      "es": "Por favor, describa en detalle...",
+      "fr": "Veuillez décrire en détail...",
+      "de": "Bitte beschreiben Sie ausführlich...",
+      "lt": "Prašome aprašyti detaliai...",
+      "pt": "Por favor, descreva em detalhe...",
+      "it": "Per favore descrivi in dettaglio...",
+      "no": "Vennligst beskriv i detalj...",
+      "el": "Παρακαλώ περιγράψτε λεπτομερώς..."
+    },
+    "ui.modals.feedback.steps_label": {
+      "en": "Steps to Reproduce",
+      "es": "Pasos para reproducir",
+      "fr": "Étapes pour reproduire",
+      "de": "Schritte zur Reproduktion",
+      "lt": "Atkūrimo žingsniai",
+      "pt": "Passos para reproduzir",
+      "it": "Passaggi per riprodurre",
+      "no": "Steg for å reprodusere",
+      "el": "Βήματα αναπαραγωγής"
+    },
+    "ui.modals.feedback.steps_placeholder": {
+      "en": "1. Go to...\n2. Click on...\n3. See error...",
+      "es": "1. Ir a...\n2. Hacer clic en...\n3. Ver error...",
+      "fr": "1. Aller à...\n2. Cliquer sur...\n3. Voir l'erreur...",
+      "de": "1. Gehen Sie zu...\n2. Klicken Sie auf...\n3. Fehler sehen...",
+      "lt": "1. Eikite į...\n2. Spustelėkite...\n3. Matote klaidą...",
+      "pt": "1. Vá para...\n2. Clique em...\n3. Veja o erro...",
+      "it": "1. Vai a...\n2. Clicca su...\n3. Vedi errore...",
+      "no": "1. Gå til...\n2. Klikk på...\n3. Se feil...",
+      "el": "1. Μεταβείτε σε...\n2. Κάντε κλικ στο...\n3. Δείτε το σφάλμα..."
+    },
+    "ui.modals.feedback.context_label": {
+      "en": "System Information",
+      "es": "Información del sistema",
+      "fr": "Informations système",
+      "de": "Systeminformationen",
+      "lt": "Sistemos informacija",
+      "pt": "Informações do sistema",
+      "it": "Informazioni di sistema",
+      "no": "Systeminformasjon",
+      "el": "Πληροφορίες συστήματος"
+    },
+    "ui.modals.feedback.submit": {
+      "en": "Submit Feedback",
+      "es": "Enviar comentario",
+      "fr": "Envoyer le commentaire",
+      "de": "Feedback absenden",
+      "lt": "Pateikti atsiliepimą",
+      "pt": "Enviar feedback",
+      "it": "Invia feedback",
+      "no": "Send tilbakemelding",
+      "el": "Υποβολή σχολίων"
+    },
+    "ui.modals.feedback.success_github": {
+      "en": "Thank you! Your feedback has been submitted.",
+      "es": "¡Gracias! Su comentario ha sido enviado.",
+      "fr": "Merci ! Votre commentaire a été envoyé.",
+      "de": "Vielen Dank! Ihr Feedback wurde eingereicht.",
+      "lt": "Ačiū! Jūsų atsiliepimas pateiktas.",
+      "pt": "Obrigado! Seu feedback foi enviado.",
+      "it": "Grazie! Il tuo feedback è stato inviato.",
+      "no": "Takk! Din tilbakemelding er sendt.",
+      "el": "Ευχαριστούμε! Τα σχόλιά σας υποβλήθηκαν."
+    },
+    "ui.modals.feedback.success_local": {
+      "en": "Thank you! Your feedback has been saved.",
+      "es": "¡Gracias! Su comentario ha sido guardado.",
+      "fr": "Merci ! Votre commentaire a été enregistré.",
+      "de": "Vielen Dank! Ihr Feedback wurde gespeichert.",
+      "lt": "Ačiū! Jūsų atsiliepimas išsaugotas.",
+      "pt": "Obrigado! Seu feedback foi salvo.",
+      "it": "Grazie! Il tuo feedback è stato salvato.",
+      "no": "Takk! Din tilbakemelding er lagret.",
+      "el": "Ευχαριστούμε! Τα σχόλιά σας αποθηκεύτηκαν."
+    },
+    "ui.modals.feedback.error_empty_title": {
+      "en": "Please enter a title.",
+      "es": "Por favor, ingrese un título.",
+      "fr": "Veuillez entrer un titre.",
+      "de": "Bitte geben Sie einen Titel ein.",
+      "lt": "Prašome įvesti pavadinimą.",
+      "pt": "Por favor, insira um título.",
+      "it": "Per favore inserisci un titolo.",
+      "no": "Vennligst skriv inn en tittel.",
+      "el": "Παρακαλώ εισάγετε έναν τίτλο."
+    },
+    "ui.modals.feedback.error_empty_desc": {
+      "en": "Please enter a description.",
+      "es": "Por favor, ingrese una descripción.",
+      "fr": "Veuillez entrer une description.",
+      "de": "Bitte geben Sie eine Beschreibung ein.",
+      "lt": "Prašome įvesti aprašymą.",
+      "pt": "Por favor, insira uma descrição.",
+      "it": "Per favore inserisci una descrizione.",
+      "no": "Vennligst skriv inn en beskrivelse.",
+      "el": "Παρακαλώ εισάγετε μια περιγραφή."
+    },
+    "ui.modals.feedback.rate_limited": {
+      "en": "Please wait before submitting again.",
+      "es": "Por favor, espere antes de enviar de nuevo.",
+      "fr": "Veuillez patienter avant de soumettre à nouveau.",
+      "de": "Bitte warten Sie, bevor Sie erneut einreichen.",
+      "lt": "Prašome palaukti prieš pateikiant dar kartą.",
+      "pt": "Por favor, aguarde antes de enviar novamente.",
+      "it": "Per favore attendi prima di inviare di nuovo.",
+      "no": "Vennligst vent før du sender igjen.",
+      "el": "Παρακαλώ περιμένετε πριν υποβάλετε ξανά."
     }
   }
 }
