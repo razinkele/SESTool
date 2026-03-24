@@ -129,6 +129,56 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
     "**Created:** ", created_date, "\n\n",
     "**Last Modified:** ", modified_date, "\n\n"
   )
+  # ========== REGIONAL CONTEXT (from KB) ==========
+  # V1: Same full regional section for all report types.
+  regional_section <- ""
+  regional_sea <- data$data$metadata$regional_sea
+  ecosystem_type <- data$data$metadata$ecosystem_type
+  include_regional <- data$include_regional_context %||% (!is.null(regional_sea))
+  if (include_regional && !is.null(regional_sea) && !is.null(ecosystem_type)) {
+    tryCatch({
+      kb_ctx <- get_kb_context_for_report(regional_sea, ecosystem_type)
+
+      # Get user edges with labels for matching — resolve IDs to names via nodes
+      user_edges <- tryCatch({
+        if (!is.null(data$data$cld$edges)) {
+          data$data$cld$edges
+        } else if (!is.null(data$data$isa_data)) {
+          create_edges_df(data$data$isa_data, data$data$isa_data$adjacency_matrices)
+        } else {
+          data.frame()
+        }
+      }, error = function(e) data.frame())
+
+      if (nrow(user_edges) > 0 && !"from_label" %in% names(user_edges)) {
+        nodes <- tryCatch({
+          if (!is.null(data$data$cld$nodes)) data$data$cld$nodes
+          else if (!is.null(data$data$isa_data)) create_nodes_df(data$data$isa_data)
+          else data.frame(id = character(), label = character())
+        }, error = function(e) data.frame(id = character(), label = character()))
+
+        if (nrow(nodes) > 0 && "id" %in% names(nodes) && "label" %in% names(nodes)) {
+          id_to_label <- setNames(nodes$label, nodes$id)
+          user_edges$from_label <- id_to_label[user_edges$from]
+          user_edges$to_label <- id_to_label[user_edges$to]
+        } else {
+          user_edges$from_label <- user_edges$from
+          user_edges$to_label <- user_edges$to
+        }
+      }
+
+      matched <- match_user_connections_to_kb(user_edges, regional_sea, ecosystem_type)
+      gov <- get_governance_context(regional_sea)
+      kb_body <- format_kb_section_for_report(kb_ctx, matched, gov)
+      if (nchar(trimws(kb_body)) > 0) {
+        regional_section <- paste0("# Regional Context\n\n", kb_body)
+      }
+    }, error = function(e) {
+      debug_log(sprintf("Regional context generation failed: %s", e$message), "REPORT")
+      # regional_section stays "" (its initialized value)
+    })
+  }
+
   # ========== REPORT TYPE-SPECIFIC CONTENT ==========
   if (report_type_safe == "executive") {
     content <- generate_executive_content(data)
@@ -148,7 +198,7 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
     "*", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "*\n"
   )
 
-  result <- paste0(header, intro, content, footer)
+  result <- paste0(header, intro, regional_section, content, footer)
   debug_log("Report content generated successfully", "REPORT")
 
   return(result)
@@ -421,6 +471,41 @@ generate_strategic_recommendations <- function(data, top_leverage, high_in, high
       "   - Strengthen connections around these critical bridges\n",
       "   - Use these nodes as communication pathways for system-wide changes\n\n"
     ))
+  }
+
+  # KB-informed regional recommendations (no signature change — reads from data)
+  regional_sea <- data$data$metadata$regional_sea
+  ecosystem_type <- data$data$metadata$ecosystem_type
+  if (!is.null(regional_sea) && !is.null(ecosystem_type)) {
+    tryCatch({
+      kb_ctx <- get_kb_context_for_report(regional_sea, ecosystem_type)
+      if (kb_ctx$available && length(kb_ctx$top_elements) > 0) {
+        top_pressures <- kb_ctx$top_elements$pressures
+        top_responses <- kb_ctx$top_elements$responses
+        if (!is.null(top_pressures) && length(top_pressures) > 0) {
+          recs <- c(recs, paste0(
+            "**Regional Management Priorities**: For ", regional_sea, " ",
+            ecosystem_type, " systems, published literature highlights these key pressures: ",
+            paste(head(top_pressures, 3), collapse = ", "), ".\n\n"
+          ))
+        }
+        if (!is.null(top_responses) && length(top_responses) > 0) {
+          recs <- c(recs, paste0(
+            "**KB-Suggested Responses**: ",
+            paste(head(top_responses, 3), collapse = ", "), ".\n\n"
+          ))
+        }
+      }
+      gov <- get_governance_context(regional_sea)
+      if (gov$available && length(gov$frameworks) > 0) {
+        recs <- c(recs, paste0(
+          "**Relevant Governance Frameworks**: ",
+          paste(gov$frameworks, collapse = ", "), ".\n\n"
+        ))
+      }
+    }, error = function(e) {
+      debug_log(sprintf("KB recommendations failed: %s", e$message), "REPORT")
+    })
   }
 
   # If no recommendations were generated, provide a fallback message

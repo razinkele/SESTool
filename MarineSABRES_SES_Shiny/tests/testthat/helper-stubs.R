@@ -780,6 +780,30 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
     "**Focal Issue:** ", issue, "\n\n"
   )
 
+  # ========== REGIONAL CONTEXT (from KB) ==========
+  regional_section <- ""
+  regional_sea <- data$data$metadata$regional_sea
+  ecosystem_type <- data$data$metadata$ecosystem_type
+  include_regional <- data$include_regional_context %||% (!is.null(regional_sea))
+  if (include_regional && !is.null(regional_sea) && !is.null(ecosystem_type)) {
+    tryCatch({
+      if (exists("get_kb_context_for_report", mode = "function") &&
+          exists("format_kb_section_for_report", mode = "function") &&
+          exists("get_governance_context", mode = "function")) {
+        kb_ctx <- get_kb_context_for_report(regional_sea, ecosystem_type)
+        gov <- get_governance_context(regional_sea)
+        kb_body <- format_kb_section_for_report(kb_ctx, data.frame(), gov)
+        if (nchar(trimws(kb_body)) > 0) {
+          regional_section <- paste0("# Regional Context\n\n", kb_body)
+        }
+      }
+    }, error = function(e) {
+      # regional_section stays ""
+    })
+  }
+
+  rmd <- paste0(rmd, regional_section)
+
   if (report_type_safe == "technical" || report_type_safe == "full") {
     rmd <- paste0(rmd, "# Technical Details\n\nDetailed technical analysis.\n\n")
   }

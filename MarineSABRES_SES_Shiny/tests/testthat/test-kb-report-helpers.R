@@ -197,3 +197,37 @@ test_that("format_kb_section_for_report handles NULL/empty inputs without error"
   expect_true(is.character(result_empty),
               info = "Should return character string for empty/unavailable inputs")
 })
+
+test_that("generate_report_content includes regional context when metadata set", {
+  skip_if_not(exists("generate_report_content", mode = "function"), "not available")
+  skip_if_not(exists("ses_knowledge_db_available", mode = "function") && ses_knowledge_db_available(), "KB not loaded")
+  proj <- create_empty_project("Test Project")
+  proj$data$metadata$regional_sea <- "baltic"
+  proj$data$metadata$ecosystem_type <- "lagoon"
+  proj$data$isa_data <- list(
+    drivers = data.frame(ID = "D1", Name = "Food demand", stringsAsFactors = FALSE),
+    activities = data.frame(ID = "A1", Name = "Fishing", stringsAsFactors = FALSE)
+  )
+  content <- generate_report_content(proj, "full")
+  expect_true(grepl("Regional Context", content),
+              info = "Report must include Regional Context section when metadata is set")
+})
+
+test_that("generate_report_content works without regional metadata", {
+  skip_if_not(exists("generate_report_content", mode = "function"), "not available")
+  proj <- create_empty_project("Test Project")
+  content <- generate_report_content(proj, "executive")
+  expect_true(is.character(content))
+  expect_true(nchar(content) > 0)
+})
+
+test_that("generate_strategic_recommendations does not crash with regional metadata", {
+  skip_if_not(exists("generate_strategic_recommendations", mode = "function"), "not available")
+  data <- create_empty_project("Test")
+  data$data$metadata$regional_sea <- "baltic"
+  data$data$metadata$ecosystem_type <- "lagoon"
+  top_lev <- data.frame(label = "Fishing", leverage_score = 0.9,
+                         in_degree = 3, out_degree = 5, stringsAsFactors = FALSE)
+  recs <- generate_strategic_recommendations(data, top_lev, NULL, NULL, NULL, NULL)
+  expect_true(is.character(recs))
+})
