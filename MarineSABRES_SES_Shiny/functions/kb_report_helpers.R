@@ -280,14 +280,14 @@ format_kb_section_for_report <- function(kb_context = NULL,
   if (!is.null(kb_context) && isTRUE(kb_context$available)) {
     desc <- kb_context$description %||% ""
     if (nchar(trimws(desc)) > 0) {
-      heading <- .kb_t(i18n, "kb_report.site_context", "## Site Ecological Context")
+      heading <- .kb_t(i18n, "modules.kb_report.site_context", "## Site Ecological Context")
       sections <- c(sections, heading, "", desc, "")
     }
 
     # ---- Top elements per category ----
     top_elements <- kb_context$top_elements %||% list()
     if (length(top_elements) > 0) {
-      cat_heading <- .kb_t(i18n, "kb_report.key_elements",
+      cat_heading <- .kb_t(i18n, "modules.kb_report.key_elements",
                            "### Key DAPSI(W)R(M) Elements from Knowledge Base")
       sections <- c(sections, cat_heading, "")
 
@@ -319,7 +319,7 @@ format_kb_section_for_report <- function(kb_context = NULL,
     matched_only <- matched_connections[matched_connections$kb_matched == TRUE, , drop = FALSE]
 
     if (nrow(matched_only) > 0) {
-      ref_heading <- .kb_t(i18n, "kb_report.scientific_evidence",
+      ref_heading <- .kb_t(i18n, "modules.kb_report.scientific_evidence",
                            "### Scientific Evidence for Connections")
       sections <- c(sections, ref_heading, "")
 
@@ -342,7 +342,7 @@ format_kb_section_for_report <- function(kb_context = NULL,
   if (!is.null(governance) && isTRUE(governance$available)) {
     frameworks <- governance$frameworks %||% character(0)
     if (length(frameworks) > 0) {
-      gov_heading <- .kb_t(i18n, "kb_report.governance_frameworks",
+      gov_heading <- .kb_t(i18n, "modules.kb_report.governance_frameworks",
                            "### Relevant Governance Frameworks")
       sections <- c(sections, gov_heading, "")
       sections <- c(sections, paste0("- ", frameworks), "")
@@ -350,7 +350,7 @@ format_kb_section_for_report <- function(kb_context = NULL,
 
     country_policies <- governance$country_policies %||% list()
     if (length(country_policies) > 0) {
-      pol_heading <- .kb_t(i18n, "kb_report.country_policies",
+      pol_heading <- .kb_t(i18n, "modules.kb_report.country_policies",
                            "#### Country-Specific Governance Groups")
       sections <- c(sections, pol_heading, "")
       for (code in names(country_policies)) {

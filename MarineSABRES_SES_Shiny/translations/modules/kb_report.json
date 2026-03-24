@@ -1,0 +1,70 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "modules.kb_report.site_context": {
+      "en": "Site Ecological Context",
+      "es": "Contexto Ecológico del Sitio",
+      "fr": "Contexte Écologique du Site",
+      "de": "Ökologischer Standortkontext",
+      "lt": "Vietos ekologinis kontekstas",
+      "pt": "Contexto Ecológico do Local",
+      "it": "Contesto Ecologico del Sito",
+      "no": "Stedets økologiske kontekst",
+      "el": "Οικολογικό Πλαίσιο Τοποθεσίας"
+    },
+    "modules.kb_report.key_elements": {
+      "en": "Key Regional Elements",
+      "es": "Elementos Regionales Clave",
+      "fr": "Éléments Régionaux Clés",
+      "de": "Wichtige regionale Elemente",
+      "lt": "Pagrindiniai regioniniai elementai",
+      "pt": "Elementos Regionais Chave",
+      "it": "Elementi Regionali Chiave",
+      "no": "Viktige regionale elementer",
+      "el": "Βασικά Περιφερειακά Στοιχεία"
+    },
+    "modules.kb_report.scientific_evidence": {
+      "en": "Scientific Evidence for Connections",
+      "es": "Evidencia Científica para las Conexiones",
+      "fr": "Preuves Scientifiques pour les Connexions",
+      "de": "Wissenschaftliche Belege für Verbindungen",
+      "lt": "Moksliniai įrodymai ryšiams",
+      "pt": "Evidência Científica para as Conexões",
+      "it": "Prove Scientifiche per le Connessioni",
+      "no": "Vitenskapelig bevis for forbindelser",
+      "el": "Επιστημονικά Στοιχεία για τις Συνδέσεις"
+    },
+    "modules.kb_report.governance_frameworks": {
+      "en": "Governance Frameworks",
+      "es": "Marcos de Gobernanza",
+      "fr": "Cadres de Gouvernance",
+      "de": "Governance-Rahmenwerke",
+      "lt": "Valdymo sistemos",
+      "pt": "Estruturas de Governança",
+      "it": "Quadri di Governance",
+      "no": "Styringsrammer",
+      "el": "Πλαίσια Διακυβέρνησης"
+    },
+    "modules.kb_report.country_policies": {
+      "en": "Country-Specific Policies",
+      "es": "Políticas Específicas por País",
+      "fr": "Politiques Spécifiques par Pays",
+      "de": "Länderspezifische Richtlinien",
+      "lt": "Šaliai būdinga politika",
+      "pt": "Políticas Específicas por País",
+      "it": "Politiche Specifiche per Paese",
+      "no": "Landsspesifikke retningslinjer",
+      "el": "Πολιτικές Ανά Χώρα"
+    }
+  }
+}
