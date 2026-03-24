@@ -957,6 +957,10 @@ server <- function(input, output, session) {
   # Setup KB references modal
   setup_kb_references_modal_handlers(input, output, session, session_i18n)
 
+  # Feedback modal (bug reports & suggestions)
+  setup_feedback_modal_handlers(input, output, session, session_i18n,
+                                project_data = project_data, user_level = user_level)
+
   # ========== CONTROLBAR HANDLERS - REMOVED ==========
   # Controlbar has been removed - settings now in main settings modal
   # User level and autosave settings accessible via Settings dropdown in header

@@ -136,6 +136,22 @@ build_dashboard_header <- function(i18n) {
         )
       ),
 
+      # Feedback button (bug reports & suggestions)
+      tags$li(
+        class = "dropdown",
+        tags$a(
+          href = "#",
+          id = "open_feedback_modal",
+          `aria-label` = i18n$t("ui.modals.feedback.button_label"),
+          role = "button",
+          icon("comment-dots"),
+          tags$span(i18n$t("ui.modals.feedback.button_label"), `data-i18n`="Feedback"),
+          style = "cursor: pointer;",
+          title = i18n$t("ui.modals.feedback.button_label"),
+          onclick = "Shiny.setInputValue('show_feedback_modal', Math.random()); return false;"
+        )
+      ),
+
       # Help dropdown (rightmost, with KB References)
       tags$li(
         class = "dropdown settings-dropdown",

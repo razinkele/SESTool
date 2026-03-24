@@ -1610,3 +1610,178 @@ setup_kb_references_modal_handlers <- function(input, output, session, i18n) {
     ))
   })
 }
+
+# ============================================================================
+# FEEDBACK MODAL
+# ============================================================================
+
+#' Setup Feedback Modal Handlers
+#'
+#' @param input Shiny input object
+#' @param output Shiny output object
+#' @param session Shiny session object
+#' @param i18n shiny.i18n translator object
+#' @param project_data Project data (reactive value or NULL)
+#' @param user_level User level reactive value (or NULL)
+setup_feedback_modal_handlers <- function(input, output, session, i18n,
+                                          project_data = NULL, user_level = NULL) {
+
+  # Server-side rate limiting
+  last_submit_time <- reactiveVal(NULL)
+
+  observeEvent(input$show_feedback_modal, {
+    showModal(modalDialog(
+      title = tags$h3(icon("comment-dots"), " ", i18n$t("ui.modals.feedback.modal_title")),
+      size = "l",
+      easyClose = TRUE,
+      footer = tagList(
+        modalButton(i18n$t("common.buttons.cancel")),
+        actionButton("feedback_submit", i18n$t("ui.modals.feedback.submit"),
+                     class = "btn-primary", icon = icon("paper-plane"))
+      ),
+
+      # JS to collect browser info
+      tags$script("Shiny.setInputValue('feedback_browser_info', navigator.userAgent);"),
+
+      tags$div(
+        style = "padding: 10px;",
+
+        # Report type (i18n-translated labels)
+        radioButtons("feedback_type",
+                     i18n$t("ui.modals.feedback.type_label"),
+                     choices = setNames(
+                       c("bug", "suggestion", "general"),
+                       c(i18n$t("ui.modals.feedback.type_bug"),
+                         i18n$t("ui.modals.feedback.type_suggestion"),
+                         i18n$t("ui.modals.feedback.type_general"))
+                     ),
+                     selected = "bug"),
+
+        # Title
+        textInput("feedback_title",
+                  i18n$t("ui.modals.feedback.title_label"),
+                  placeholder = i18n$t("ui.modals.feedback.title_placeholder"),
+                  width = "100%"),
+        tags$script(HTML("document.getElementById('feedback_title').maxLength = 200;")),
+
+        # Description
+        textAreaInput("feedback_description",
+                      i18n$t("ui.modals.feedback.description_label"),
+                      placeholder = i18n$t("ui.modals.feedback.description_placeholder"),
+                      rows = 5, width = "100%"),
+        tags$script(HTML("document.getElementById('feedback_description').maxLength = 5000;")),
+
+        # Steps to reproduce (bug only)
+        conditionalPanel(
+          condition = "input.feedback_type == 'bug'",
+          textAreaInput("feedback_steps",
+                        i18n$t("ui.modals.feedback.steps_label"),
+                        placeholder = i18n$t("ui.modals.feedback.steps_placeholder"),
+                        rows = 3, width = "100%")
+          # Note: maxlength for steps enforced server-side (substr to 2000) since
+          # this field is inside conditionalPanel and JS getElementById may fail
+        ),
+
+        # Collapsible system info
+        tags$details(
+          style = "margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px;",
+          tags$summary(style = "cursor: pointer; font-weight: bold;",
+                       icon("info-circle"), " ", i18n$t("ui.modals.feedback.context_label")),
+          tags$div(
+            style = "margin-top: 10px; font-size: 12px; color: #666;",
+            uiOutput("feedback_context_display")
+          )
+        )
+      )
+    ))
+  })
+
+  # Render system context in modal
+  output$feedback_context_display <- renderUI({
+    pd <- if (!is.null(project_data)) {
+      tryCatch(isolate(project_data()), error = function(e) NULL)
+    } else NULL
+    ul <- if (!is.null(user_level)) tryCatch(isolate(user_level()), error = function(e) "unknown") else "unknown"
+    lang <- tryCatch(i18n$get_translation_language(), error = function(e) "en")
+    ctx <- collect_system_context(session, input, pd, user_level = ul, language = lang)
+    tags$pre(style = "font-size: 11px; white-space: pre-wrap;",
+      paste(
+        sprintf("App Version: %s", ctx$app_version),
+        sprintf("User Level: %s", ctx$user_level),
+        sprintf("Current Page: %s", ctx$current_tab),
+        sprintf("Language: %s", ctx$language),
+        sprintf("Elements: %d", ctx$element_count),
+        sprintf("Connections: %d", ctx$connection_count),
+        sprintf("Browser: %s", ctx$browser_info),
+        sep = "\n"
+      )
+    )
+  })
+
+  # Submit handler
+  observeEvent(input$feedback_submit, {
+    # Disable button immediately
+    shinyjs::disable("feedback_submit")
+
+    # Server-side rate limit
+    if (!is.null(last_submit_time()) &&
+        difftime(Sys.time(), last_submit_time(), units = "secs") < 30) {
+      showNotification(i18n$t("ui.modals.feedback.rate_limited"), type = "warning")
+      shinyjs::enable("feedback_submit")
+      return()
+    }
+
+    # Validate
+    title <- trimws(input$feedback_title %||% "")
+    desc <- trimws(input$feedback_description %||% "")
+
+    if (nchar(title) == 0) {
+      showNotification(i18n$t("ui.modals.feedback.error_empty_title"), type = "error")
+      shinyjs::enable("feedback_submit")
+      return()
+    }
+    if (nchar(desc) == 0) {
+      showNotification(i18n$t("ui.modals.feedback.error_empty_desc"), type = "error")
+      shinyjs::enable("feedback_submit")
+      return()
+    }
+
+    # Enforce server-side length limits
+    title <- substr(title, 1, 200)
+    desc <- substr(desc, 1, 5000)
+    steps <- substr(trimws(input$feedback_steps %||% ""), 1, 2000)
+
+    # Collect context
+    pd <- if (!is.null(project_data)) {
+      tryCatch(isolate(project_data()), error = function(e) NULL)
+    } else NULL
+    ul <- if (!is.null(user_level)) tryCatch(isolate(user_level()), error = function(e) "unknown") else "unknown"
+    lang <- tryCatch(i18n$get_translation_language(), error = function(e) "en")
+    ctx <- collect_system_context(session, input, pd, user_level = ul, language = lang)
+
+    # Submit
+    result <- submit_feedback(title, desc, input$feedback_type, steps, ctx)
+
+    # Update rate limit
+    last_submit_time(Sys.time())
+
+    # Show result
+    if (result$github_success) {
+      showNotification(
+        tagList(
+          i18n$t("ui.modals.feedback.success_github"),
+          if (!is.null(result$github_url)) tags$a(href = result$github_url, target = "_blank", " View")
+        ),
+        type = "message", duration = 8
+      )
+    } else {
+      showNotification(i18n$t("ui.modals.feedback.success_local"), type = "message", duration = 5)
+    }
+
+    # Close modal
+    removeModal()
+
+    # Re-enable after 30s (for if user reopens modal)
+    shinyjs::delay(30000, shinyjs::enable("feedback_submit"))
+  })
+}
