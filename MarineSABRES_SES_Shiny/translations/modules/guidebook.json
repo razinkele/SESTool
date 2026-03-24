@@ -1,0 +1,81 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "modules.guidebook.menu_item": {
+      "en": "Guidebook",
+      "es": "Guía de usuario",
+      "fr": "Guide d'utilisation",
+      "de": "Benutzerhandbuch",
+      "lt": "Vadovas",
+      "pt": "Guia do utilizador",
+      "it": "Guida utente",
+      "no": "Brukerhåndbok",
+      "el": "Εγχειρίδιο χρήστη"
+    },
+    "modules.guidebook.title": {
+      "en": "User Guidebook",
+      "es": "Guía de usuario",
+      "fr": "Guide d'utilisation",
+      "de": "Benutzerhandbuch",
+      "lt": "Naudotojo vadovas",
+      "pt": "Guia do utilizador",
+      "it": "Guida utente",
+      "no": "Brukerhåndbok",
+      "el": "Εγχειρίδιο χρήστη"
+    },
+    "modules.guidebook.subtitle": {
+      "en": "A step-by-step guide to Social-Ecological System analysis",
+      "es": "Una guía paso a paso para el análisis de sistemas socioecológicos",
+      "fr": "Un guide étape par étape pour l'analyse des systèmes socio-écologiques",
+      "de": "Eine Schritt-für-Schritt-Anleitung zur Analyse sozial-ökologischer Systeme",
+      "lt": "Žingsnis po žingsnio socialinių-ekologinių sistemų analizės vadovas",
+      "pt": "Um guia passo a passo para a análise de sistemas socioecológicos",
+      "it": "Una guida passo dopo passo per l'analisi dei sistemi socio-ecologici",
+      "no": "En trinn-for-trinn-guide til analyse av sosial-økologiske systemer",
+      "el": "Ένας οδηγός βήμα προς βήμα για την ανάλυση κοινωνικο-οικολογικών συστημάτων"
+    },
+    "modules.guidebook.download_pdf": {
+      "en": "Download PDF",
+      "es": "Descargar PDF",
+      "fr": "Télécharger PDF",
+      "de": "PDF herunterladen",
+      "lt": "Atsisiųsti PDF",
+      "pt": "Descarregar PDF",
+      "it": "Scarica PDF",
+      "no": "Last ned PDF",
+      "el": "Λήψη PDF"
+    },
+    "modules.guidebook.download_html": {
+      "en": "Download HTML",
+      "es": "Descargar HTML",
+      "fr": "Télécharger HTML",
+      "de": "HTML herunterladen",
+      "lt": "Atsisiųsti HTML",
+      "pt": "Descarregar HTML",
+      "it": "Scarica HTML",
+      "no": "Last ned HTML",
+      "el": "Λήψη HTML"
+    },
+    "modules.guidebook.fallback_message": {
+      "en": "Guidebook is being prepared. Please download the PDF version.",
+      "es": "La guía se está preparando. Por favor, descargue la versión PDF.",
+      "fr": "Le guide est en cours de préparation. Veuillez télécharger la version PDF.",
+      "de": "Das Handbuch wird vorbereitet. Bitte laden Sie die PDF-Version herunter.",
+      "lt": "Vadovas ruošiamas. Prašome atsisiųsti PDF versiją.",
+      "pt": "O guia está a ser preparado. Por favor, descarregue a versão PDF.",
+      "it": "La guida è in fase di preparazione. Si prega di scaricare la versione PDF.",
+      "no": "Håndboken forberedes. Vennligst last ned PDF-versjonen.",
+      "el": "Το εγχειρίδιο ετοιμάζεται. Παρακαλώ κατεβάστε την έκδοση PDF."
+    }
+  }
+}

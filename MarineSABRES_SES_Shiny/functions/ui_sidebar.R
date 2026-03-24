@@ -444,6 +444,18 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     ))
   }
 
+  # Guidebook (all levels)
+  menu_items <- c(menu_items, list(
+    add_menu_tooltip(
+      bs4SidebarMenuItem(
+        safe_t("modules.guidebook.menu_item", i18n_obj = i18n),
+        tabName = "guidebook",
+        icon = icon("book")
+      ),
+      safe_t("modules.guidebook.subtitle", i18n_obj = i18n)
+    )
+  ))
+
   # Add horizontal rule and Quick Actions (all levels)
   menu_items <- c(menu_items, list(
     hr(),
