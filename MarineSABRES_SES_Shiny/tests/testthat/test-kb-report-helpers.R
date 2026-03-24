@@ -231,3 +231,20 @@ test_that("generate_strategic_recommendations does not crash with regional metad
   recs <- generate_strategic_recommendations(data, top_lev, NULL, NULL, NULL, NULL)
   expect_true(is.character(recs))
 })
+
+test_that("regional context selectors exist in dashboard code", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  dashboard_files <- c("server/dashboard.R", "app.R")
+  found <- FALSE
+  for (f in dashboard_files) {
+    fp <- file.path(project_root, f)
+    if (file.exists(fp)) {
+      code <- paste(readLines(fp), collapse = "\n")
+      if (grepl("regional_sea_select", code) && grepl("ecosystem_type_select", code)) {
+        found <- TRUE
+        break
+      }
+    }
+  }
+  expect_true(found, info = "Dashboard must contain regional_sea_select and ecosystem_type_select inputs")
+})
