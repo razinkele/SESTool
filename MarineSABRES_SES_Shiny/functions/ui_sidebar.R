@@ -456,6 +456,20 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
     )
   ))
 
+  # Admin panel (only when ADMIN_MODE is enabled)
+  if (exists("ADMIN_MODE") && ADMIN_MODE) {
+    menu_items <- c(menu_items, list(
+      add_menu_tooltip(
+        bs4SidebarMenuItem(
+          safe_t("modules.feedback_admin.menu_label", i18n_obj = i18n),
+          tabName = "feedback_admin",
+          icon = icon("lock")
+        ),
+        safe_t("modules.feedback_admin.dashboard_tab", i18n_obj = i18n)
+      )
+    ))
+  }
+
   # Add horizontal rule and Quick Actions (all levels)
   menu_items <- c(menu_items, list(
     hr(),

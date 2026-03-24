@@ -395,3 +395,12 @@ test_that("feedback_admin_server has correct signature", {
   expect_true("id" %in% params)
   expect_true("i18n" %in% params)
 })
+
+test_that("admin sidebar item is conditional on ADMIN_MODE", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  sidebar_code <- paste(readLines(file.path(project_root, "functions/ui_sidebar.R")), collapse = "\n")
+  expect_true(grepl("ADMIN_MODE", sidebar_code),
+              info = "Sidebar must check ADMIN_MODE for admin menu item")
+  expect_true(grepl("feedback_admin", sidebar_code),
+              info = "Sidebar must contain feedback_admin tabName")
+})
