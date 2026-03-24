@@ -172,7 +172,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n, event_bus =
     })
 
     # Metrics results UI
-    output$metrics_results_ui <- renderUI({
+    output$metrics_results_ui <- safe_renderUI(function() {
       req(metrics_rv$calculated_metrics)
 
       metrics <- metrics_rv$calculated_metrics
@@ -411,7 +411,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n, event_bus =
           )
         )
       )
-    })
+    }, i18n = i18n, context = "analysis_metrics_results")
 
     # Metrics table
     output$metrics_table <- safe_renderDT({

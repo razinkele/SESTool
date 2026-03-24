@@ -741,7 +741,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
     })
 
     # Loop Narrative ----
-    output$loop_narrative <- renderUI({
+    output$loop_narrative <- safe_renderUI(function() {
       req(input$selected_loop, loop_data$loops)
 
       loop_row <- loop_data$loops[loop_data$loops$LoopID == input$selected_loop, ]
@@ -763,7 +763,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
 
       HTML(narrative)
-    })
+    }, i18n = i18n, context = "analysis_loops_narrative")
 
     # Dominant Loops Analysis ----
     output$dominant_loops_table <- safe_renderDT({
