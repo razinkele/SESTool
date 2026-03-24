@@ -98,6 +98,9 @@ passwords.txt
 credentials.json
 api_keys.txt
 
+# User feedback log (contains potentially sensitive user-submitted data)
+data/user_feedback_log.ndjson
+
 # ML model files
 models/
 *.pt
