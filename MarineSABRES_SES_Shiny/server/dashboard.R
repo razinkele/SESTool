@@ -269,6 +269,9 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
     pd <- project_data()
     val <- if (nchar(input$regional_sea_select) == 0) NULL else input$regional_sea_select
     pd$data$metadata$regional_sea <- val
+    # Use match() for first-match (avoids returning multiple names for mediterranean/atlantic)
+    idx <- match(val, REGIONAL_SEA_KB_KEYS)
+    pd$data$metadata$regional_sea_display <- if (!is.na(idx)) names(REGIONAL_SEA_KB_KEYS)[idx] else NULL
     project_data(pd)
   }, ignoreInit = TRUE)
 
