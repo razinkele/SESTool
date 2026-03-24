@@ -42,16 +42,20 @@
 get_kb_context_for_report <- function(regional_sea, ecosystem_type) {
   # Input validation
   if (is.null(regional_sea) || is.null(ecosystem_type)) {
+    debug_log("get_kb_context_for_report: NULL regional_sea or ecosystem_type", "KB REPORT")
     return(list(available = FALSE, description = "", top_elements = list()))
   }
 
   if (!ses_knowledge_db_available()) {
+    debug_log("get_kb_context_for_report: SES knowledge DB not available", "KB REPORT")
     return(list(available = FALSE, description = "", top_elements = list()))
   }
 
   # Check if context exists in the database
   context_result <- .find_context(regional_sea, ecosystem_type)
   if (is.null(context_result)) {
+    debug_log(sprintf("get_kb_context_for_report: no context found for %s/%s",
+                      regional_sea, ecosystem_type), "KB REPORT")
     return(list(available = FALSE, description = "", top_elements = list()))
   }
 
@@ -312,8 +316,7 @@ format_kb_section_for_report <- function(kb_context = NULL,
 
   # ---- Scientific references table ----
   if (!is.null(matched_connections) && nrow(matched_connections) > 0) {
-    matched_only <- matched_connections[isTRUE(matched_connections$kb_matched) |
-                                          matched_connections$kb_matched == TRUE, , drop = FALSE]
+    matched_only <- matched_connections[matched_connections$kb_matched == TRUE, , drop = FALSE]
 
     if (nrow(matched_only) > 0) {
       ref_heading <- .kb_t(i18n, "kb_report.scientific_evidence",

@@ -241,8 +241,8 @@ find_duplicate_pairs <- function(df, threshold = 0.7) {
   }
 
   texts <- paste(
-    as.character(df_clean$title       %||% ""),
-    as.character(df_clean$description %||% ""),
+    ifelse(is.na(df_clean$title), "", as.character(df_clean$title)),
+    ifelse(is.na(df_clean$description), "", as.character(df_clean$description)),
     sep = " "
   )
 
@@ -329,7 +329,12 @@ mark_as_duplicate <- function(log_path, line_num, duplicate_of_line) {
     # Atomic write: write to temp file, then rename
     tmp_path <- paste0(log_path, ".tmp.", Sys.getpid())
     writeLines(raw_lines, con = tmp_path, useBytes = FALSE)
-    file.rename(tmp_path, log_path)
+    rename_ok <- file.rename(tmp_path, log_path)
+    if (!isTRUE(rename_ok)) {
+      debug_log(paste("mark_as_duplicate: file.rename failed for line", line_num), "ERROR")
+      try(file.remove(tmp_path), silent = TRUE)
+      return(FALSE)
+    }
 
     TRUE
   }, error = function(e) {

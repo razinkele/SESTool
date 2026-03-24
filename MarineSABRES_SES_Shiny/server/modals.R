@@ -1765,12 +1765,14 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
     # Update rate limit
     last_submit_time(Sys.time())
 
-    # Show result
-    if (result$github_success) {
+    # Show result — 3-way check: both failed, github success, or local-only success
+    if (!result$local_success && !result$github_success) {
+      showNotification("Failed to save feedback. Please try again.", type = "error", duration = 8)
+    } else if (result$github_success) {
       showNotification(
         tagList(
           i18n$t("ui.modals.feedback.success_github"),
-          if (!is.null(result$github_url)) tags$a(href = result$github_url, target = "_blank", " View")
+          if (!is.null(result$github_url)) tags$a(href = result$github_url, target = "_blank", i18n$t("common.buttons.view"))
         ),
         type = "message", duration = 8
       )

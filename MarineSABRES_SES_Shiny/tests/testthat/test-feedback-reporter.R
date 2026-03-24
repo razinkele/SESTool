@@ -42,8 +42,12 @@ test_that("collect_system_context returns all expected fields", {
   mock_project <- list(
     data = list(
       isa_data = list(
-        elements    = data.frame(id = 1:5),
-        connections = data.frame(from = 1:3, to = 2:4)
+        drivers    = data.frame(id = 1:2, name = c("d1", "d2")),
+        activities = data.frame(id = 3:5, name = c("a1", "a2", "a3")),
+        adjacency_matrices = list(
+          m1 = matrix(c("", "+", "", "", "-", "", "", "", "+"),
+                      nrow = 3, ncol = 3)
+        )
       )
     )
   )
