@@ -370,6 +370,13 @@ test_that("validate_element_data validates DAPSI(W)R(M) element data", {
   expect_true(any(grepl("Empty names", errors3)))
 })
 
+# Test readxl is attached
+test_that("readxl package is attached and read_excel is directly available", {
+  # Check readxl is in attached packages (library() was called, not just installed)
+  expect_true("readxl" %in% (.packages()),
+              info = "readxl must be attached via library() in global.R, not just installed")
+})
+
 # Test validate_isa_dataframe function
 test_that("validate_isa_dataframe validates ISA data frames", {
   # Valid data
