@@ -240,7 +240,10 @@ analysis_loops_ui <- function(id, i18n) {
           )
         )
       )
-    )
+    ),
+
+    # Next Steps panel — shown after analysis completes
+    uiOutput(ns("next_steps_ui"))
   )
 }
 
@@ -1026,6 +1029,24 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
       ),
       i18n = i18n
     )
+
+    # === NEXT STEPS PANEL ===
+    output$next_steps_ui <- renderUI({
+      req(loop_data$detection_complete)
+      build_next_steps_ui("analysis_loops", ns, i18n)
+    })
+
+    # Cross-tool navigation observers
+    local({
+      recs <- get_next_steps("analysis_loops")
+      lapply(seq_along(recs), function(i) {
+        observeEvent(input[[paste0("next_step_", i)]], {
+          if (!is.null(event_bus) && is.function(event_bus$emit_navigation_request)) {
+            event_bus$emit_navigation_request(recs[[i]]$tab_id, "analysis_loops")
+          }
+        })
+      })
+    })
 
     return(reactive({ loop_data }))
   })

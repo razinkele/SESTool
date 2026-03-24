@@ -63,7 +63,10 @@ analysis_leverage_ui <- function(id, i18n) {
               downloadButton(ns("download_leverage_png"), i18n$t("modules.analysis.leverage.btn_download_chart"),
                              class = "btn-sm btn-outline-primary", style = "margin-left: 5px;")
             ),
-            DT::dataTableOutput(ns("leverage_table"))
+            DT::dataTableOutput(ns("leverage_table")),
+
+            # Next Steps panel — shown after analysis completes
+            uiOutput(ns("next_steps_ui"))
           ),
 
           # Network Visualization Tab
@@ -505,6 +508,24 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
         ggsave(file, plot = p, width = 10, height = max(6, nrow(df) * 0.4), dpi = 150, bg = "white")
       }
     )
+
+    # === NEXT STEPS PANEL ===
+    output$next_steps_ui <- renderUI({
+      req(!is.null(rv$leverage_results))
+      build_next_steps_ui("analysis_leverage", session$ns, i18n)
+    })
+
+    # Cross-tool navigation observers
+    local({
+      recs <- get_next_steps("analysis_leverage")
+      lapply(seq_along(recs), function(i) {
+        observeEvent(input[[paste0("next_step_", i)]], {
+          if (!is.null(event_bus) && is.function(event_bus$emit_navigation_request)) {
+            event_bus$emit_navigation_request(recs[[i]]$tab_id, "analysis_leverage")
+          }
+        })
+      })
+    })
 
     # Help Modal ----
     create_help_observer(
