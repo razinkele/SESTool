@@ -1636,18 +1636,18 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
       easyClose = TRUE,
       footer = tagList(
         modalButton(i18n$t("common.buttons.cancel")),
-        actionButton("feedback_submit", i18n$t("ui.modals.feedback.submit"),
+        actionButton("fb_submit", i18n$t("ui.modals.feedback.submit"),
                      class = "btn-primary", icon = icon("paper-plane"))
       ),
 
       # JS to collect browser info
-      tags$script("Shiny.setInputValue('feedback_browser_info', navigator.userAgent);"),
+      tags$script("Shiny.setInputValue('fb_browser_info', navigator.userAgent);"),
 
       tags$div(
         style = "padding: 10px;",
 
         # Report type (i18n-translated labels)
-        radioButtons("feedback_type",
+        radioButtons("fb_type",
                      i18n$t("ui.modals.feedback.type_label"),
                      choices = setNames(
                        c("bug", "suggestion", "general"),
@@ -1658,23 +1658,23 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
                      selected = "bug"),
 
         # Title
-        textInput("feedback_title",
+        textInput("fb_title",
                   i18n$t("ui.modals.feedback.title_label"),
                   placeholder = i18n$t("ui.modals.feedback.title_placeholder"),
                   width = "100%"),
-        tags$script(HTML("document.getElementById('feedback_title').maxLength = 200;")),
+        tags$script(HTML("document.getElementById('fb_title').maxLength = 200;")),
 
         # Description
-        textAreaInput("feedback_description",
+        textAreaInput("fb_description",
                       i18n$t("ui.modals.feedback.description_label"),
                       placeholder = i18n$t("ui.modals.feedback.description_placeholder"),
                       rows = 5, width = "100%"),
-        tags$script(HTML("document.getElementById('feedback_description').maxLength = 5000;")),
+        tags$script(HTML("document.getElementById('fb_description').maxLength = 5000;")),
 
         # Steps to reproduce (bug only)
         conditionalPanel(
-          condition = "input.feedback_type == 'bug'",
-          textAreaInput("feedback_steps",
+          condition = "input.fb_type == 'bug'",
+          textAreaInput("fb_steps",
                         i18n$t("ui.modals.feedback.steps_label"),
                         placeholder = i18n$t("ui.modals.feedback.steps_placeholder"),
                         rows = 3, width = "100%")
@@ -1689,7 +1689,7 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
                        icon("info-circle"), " ", i18n$t("ui.modals.feedback.context_label")),
           tags$div(
             style = "margin-top: 10px; font-size: 12px; color: #666;",
-            uiOutput("feedback_context_display")
+            uiOutput("fb_context_display")
           )
         )
       )
@@ -1697,7 +1697,7 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
   })
 
   # Render system context in modal
-  output$feedback_context_display <- renderUI({
+  output$fb_context_display <- renderUI({
     pd <- if (!is.null(project_data)) {
       tryCatch(isolate(project_data()), error = function(e) NULL)
     } else NULL
@@ -1719,37 +1719,37 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
   })
 
   # Submit handler
-  observeEvent(input$feedback_submit, {
+  observeEvent(input$fb_submit, {
     # Disable button immediately
-    shinyjs::disable("feedback_submit")
+    shinyjs::disable("fb_submit")
 
     # Server-side rate limit
     if (!is.null(last_submit_time()) &&
         difftime(Sys.time(), last_submit_time(), units = "secs") < 30) {
       showNotification(i18n$t("ui.modals.feedback.rate_limited"), type = "warning")
-      shinyjs::enable("feedback_submit")
+      shinyjs::enable("fb_submit")
       return()
     }
 
     # Validate
-    title <- trimws(input$feedback_title %||% "")
-    desc <- trimws(input$feedback_description %||% "")
+    title <- trimws(input$fb_title %||% "")
+    desc <- trimws(input$fb_description %||% "")
 
     if (nchar(title) == 0) {
       showNotification(i18n$t("ui.modals.feedback.error_empty_title"), type = "error")
-      shinyjs::enable("feedback_submit")
+      shinyjs::enable("fb_submit")
       return()
     }
     if (nchar(desc) == 0) {
       showNotification(i18n$t("ui.modals.feedback.error_empty_desc"), type = "error")
-      shinyjs::enable("feedback_submit")
+      shinyjs::enable("fb_submit")
       return()
     }
 
     # Enforce server-side length limits
     title <- substr(title, 1, 200)
     desc <- substr(desc, 1, 5000)
-    steps <- substr(trimws(input$feedback_steps %||% ""), 1, 2000)
+    steps <- substr(trimws(input$fb_steps %||% ""), 1, 2000)
 
     # Collect context
     pd <- if (!is.null(project_data)) {
@@ -1760,7 +1760,7 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
     ctx <- collect_system_context(session, input, pd, user_level = ul, language = lang)
 
     # Submit
-    result <- submit_feedback(title, desc, input$feedback_type, steps, ctx)
+    result <- submit_feedback(title, desc, input$fb_type, steps, ctx)
 
     # Update rate limit
     last_submit_time(Sys.time())
@@ -1787,6 +1787,6 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
     removeModal()
 
     # Re-enable after 30s (for if user reopens modal)
-    shinyjs::delay(30000, shinyjs::enable("feedback_submit"))
+    shinyjs::delay(30000, shinyjs::enable("fb_submit"))
   })
 }

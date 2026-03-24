@@ -264,15 +264,16 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       tryCatch({
         data <- project_data_reactive()
-        data$include_regional_context <- input$include_regional_context
         debug_log("Using generate_report_content() from functions/report_generation.R", "REPORT")
 
         # Use the fixed report generation function from functions/report_generation.R
+        opts <- list(include_regional_context = input$include_regional_context)
         report_md <- generate_report_content(
           data = data,
           report_type = "full",  # Use full report type
           include_viz = TRUE,
-          include_data = FALSE
+          include_data = FALSE,
+          options = opts
         )
         debug_log("Markdown content generated successfully", "REPORT")
 
@@ -350,7 +351,6 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       tryCatch({
         data <- project_data_reactive()
-        data$include_regional_context <- input$include_regional_context
 
         # Check if LaTeX is available
         latex_available <- tryCatch({
@@ -397,11 +397,13 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
         }
 
         # Generate markdown content
+        opts <- list(include_regional_context = input$include_regional_context)
         report_md <- generate_report_content(
           data = data,
           report_type = "full",
           include_viz = TRUE,
-          include_data = FALSE
+          include_data = FALSE,
+          options = opts
         )
 
         # Render to PDF

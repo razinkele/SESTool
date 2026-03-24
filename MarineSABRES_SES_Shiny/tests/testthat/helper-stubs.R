@@ -759,7 +759,7 @@ get_loop_data <- function(data) {
   NULL
 }
 
-generate_report_content <- function(data, report_type, include_viz = TRUE, include_data = FALSE) {
+generate_report_content <- function(data, report_type, include_viz = TRUE, include_data = FALSE, options = list()) {
   report_type_safe <- as.character(report_type)[1]
   site <- tryCatch(as.character(data$data$metadata$da_site %||% "Unknown Site"), error = function(e) "Unknown Site")
   issue <- tryCatch(as.character(data$data$metadata$focal_issue %||% ""), error = function(e) "")

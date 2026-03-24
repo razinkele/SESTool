@@ -34,7 +34,7 @@ get_loop_data <- function(data) {
 #' @param include_viz Whether to include visualizations (currently unused)
 #' @param include_data Whether to include raw data tables (currently unused)
 #' @return Character string containing complete R Markdown document
-generate_report_content <- function(data, report_type, include_viz = TRUE, include_data = FALSE) {
+generate_report_content <- function(data, report_type, include_viz = TRUE, include_data = FALSE, options = list()) {
 
   debug_log(sprintf("Report generation started: type=%s", report_type), "REPORT")
 
@@ -134,7 +134,7 @@ generate_report_content <- function(data, report_type, include_viz = TRUE, inclu
   regional_section <- ""
   regional_sea <- data$data$metadata$regional_sea
   ecosystem_type <- data$data$metadata$ecosystem_type
-  include_regional <- data$include_regional_context %||% (!is.null(regional_sea))
+  include_regional <- options$include_regional_context %||% (!is.null(regional_sea))
   if (include_regional && !is.null(regional_sea) && !is.null(ecosystem_type)) {
     tryCatch({
       kb_ctx <- get_kb_context_for_report(regional_sea, ecosystem_type)

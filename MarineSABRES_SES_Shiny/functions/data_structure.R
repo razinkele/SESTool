@@ -46,6 +46,7 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
         meta_system = NULL,
         sub_systems = NULL,
         regional_sea = NULL,
+        regional_sea_display = NULL,
         ecosystem_type = NULL
       ),
       
