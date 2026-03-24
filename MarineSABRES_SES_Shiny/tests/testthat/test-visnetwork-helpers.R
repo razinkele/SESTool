@@ -29,3 +29,24 @@ test_that("create_edges_df deduplicates edges from overlapping matrices", {
   expect_equal(nrow(r_to_p), 1,
                info = "Duplicate edges from r_p and p_r matrices must be deduplicated")
 })
+
+# ---------------------------------------------------------------------------
+# Task 4: Behavioral test — create_edges_df deduplicates gb_es/es_gb legacy matrices
+# ---------------------------------------------------------------------------
+test_that("create_edges_df deduplicates gb_es and es_gb legacy matrices", {
+  skip_if_not(exists("create_edges_df", mode = "function"), "not available")
+  isa_data <- list(
+    drivers = NULL, activities = NULL, pressures = NULL,
+    marine_processes = NULL,
+    ecosystem_services = data.frame(id = "ES1", name = "Service1", stringsAsFactors = FALSE),
+    goods_benefits = data.frame(id = "GB1", name = "Benefit1", stringsAsFactors = FALSE),
+    responses = NULL
+  )
+  es_gb_mat <- matrix("+", nrow = 1, ncol = 1, dimnames = list("Service1", "Benefit1"))
+  gb_es_mat <- matrix("+", nrow = 1, ncol = 1, dimnames = list("Benefit1", "Service1"))
+  adj <- list(es_gb = es_gb_mat, gb_es = gb_es_mat)
+  edges <- create_edges_df(isa_data, adj)
+  es_to_gb <- edges[grepl("ES", edges$from) & grepl("GB", edges$to), ]
+  expect_true(nrow(es_to_gb) <= 1,
+              info = "Duplicate es_gb/gb_es edges must be deduplicated")
+})

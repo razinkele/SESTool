@@ -405,6 +405,34 @@ test_that("admin sidebar item is conditional on ADMIN_MODE", {
               info = "Sidebar must contain feedback_admin tabName")
 })
 
+# ---------------------------------------------------------------------------
+# Task 5: Hard-fail source loading test
+# ---------------------------------------------------------------------------
+test_that("source file loads without error", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  expect_no_error(source(file.path(project_root, "functions/feedback_analyzer.R"), local = FALSE))
+})
+
+# ---------------------------------------------------------------------------
+# Task 4: Behavioral test — mark_as_duplicate with blank lines interspersed
+# ---------------------------------------------------------------------------
+test_that("mark_as_duplicate works with blank lines interspersed", {
+  skip_if_not(exists("mark_as_duplicate", mode = "function"), "not available")
+  tmp <- tempfile(fileext = ".ndjson")
+  on.exit(unlink(tmp))
+  writeLines(c(
+    '{"type":"bug","title":"First"}',
+    '',
+    '{"type":"suggestion","title":"Third"}'
+  ), tmp)
+  result <- mark_as_duplicate(tmp, line_num = 3, duplicate_of_line = 1)
+  expect_true(result)
+  lines <- readLines(tmp)
+  expect_equal(length(lines), 3)
+  entry3 <- jsonlite::fromJSON(lines[3])
+  expect_equal(as.character(entry3$duplicate_of), "1")
+})
+
 test_that("all feedback_admin i18n keys exist for all 9 languages", {
   project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
   trans_path <- file.path(project_root, "translations/modules/feedback_admin.json")
