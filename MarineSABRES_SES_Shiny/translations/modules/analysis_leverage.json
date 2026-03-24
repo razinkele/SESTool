@@ -582,6 +582,160 @@
       "it": "Punteggio Composito (Betweenness + Eigenvector + PageRank)",
       "no": "Sammensatt poengsum (Mellomliggenhet + Egenvektor + PageRank)",
       "el": "Σύνθετη βαθμολογία (Μεσοκεντρικότητα + Ιδιοδιάνυσμα + PageRank)"
+    },
+    "modules.analysis.leverage.interp_top_leverage": {
+      "en": "is a top leverage point. Changes here will ripple through the system.",
+      "es": "es un punto de apalancamiento principal. Los cambios aquí se propagarán por todo el sistema.",
+      "fr": "est un point de levier majeur. Les changements ici se propageront dans tout le système.",
+      "de": "ist ein Top-Hebelpunkt. Veränderungen hier werden das gesamte System beeinflussen.",
+      "lt": "yra pagrindinis svertinis taškas. Pokyčiai čia atsilieps visai sistemai.",
+      "pt": "é um ponto de alavancagem principal. As mudanças aqui se propagarão por todo o sistema.",
+      "it": "è un punto leva principale. I cambiamenti qui si propagheranno in tutto il sistema.",
+      "no": "er et toppinnflytelsespunkt. Endringer her vil forplante seg gjennom systemet.",
+      "el": "είναι κορυφαίο σημείο μόχλευσης. Οι αλλαγές εδώ θα αντηχήσουν σε ολόκληρο το σύστημα."
+    },
+    "modules.analysis.leverage.interp_above_avg": {
+      "en": "has above-average influence in the network.",
+      "es": "tiene una influencia superior a la media en la red.",
+      "fr": "a une influence supérieure à la moyenne dans le réseau.",
+      "de": "hat einen überdurchschnittlichen Einfluss im Netzwerk.",
+      "lt": "turi aukštesnę nei vidutinę įtaką tinkle.",
+      "pt": "tem influência acima da média na rede.",
+      "it": "ha un'influenza superiore alla media nella rete.",
+      "no": "har over gjennomsnittet innflytelse i nettverket.",
+      "el": "έχει επάνω από τον μέσο όρο επιρροή στο δίκτυο."
+    },
+    "modules.analysis.leverage.interp_moderate": {
+      "en": "has moderate influence. Consider indirect interventions.",
+      "es": "tiene una influencia moderada. Considere intervenciones indirectas.",
+      "fr": "a une influence modérée. Envisagez des interventions indirectes.",
+      "de": "hat moderaten Einfluss. Erwägen Sie indirekte Interventionen.",
+      "lt": "turi vidutinę įtaką. Apsvarstykite netiesiogines intervencijas.",
+      "pt": "tem influência moderada. Considere intervenções indiretas.",
+      "it": "ha un'influenza moderata. Considerare interventi indiretti.",
+      "no": "har moderat innflytelse. Vurder indirekte intervensjoner.",
+      "el": "έχει μέτρια επιρροή. Εξετάστε έμμεσες παρεμβάσεις."
+    },
+    "modules.analysis.leverage.what_to_do": {
+      "en": "What Should I Do With These Results?",
+      "es": "¿Qué debo hacer con estos resultados?",
+      "fr": "Que dois-je faire avec ces résultats ?",
+      "de": "Was soll ich mit diesen Ergebnissen tun?",
+      "lt": "Ką daryti su šiais rezultatais?",
+      "pt": "O que devo fazer com esses resultados?",
+      "it": "Cosa devo fare con questi risultati?",
+      "no": "Hva bør jeg gjøre med disse resultatene?",
+      "el": "Τι πρέπει να κάνω με αυτά τα αποτελέσματα;"
+    },
+    "modules.analysis.leverage.step1_identify": {
+      "en": "1. Look at the top 3-5 nodes. ",
+      "es": "1. Mire los 3-5 nodos principales. ",
+      "fr": "1. Regardez les 3 à 5 premiers nœuds. ",
+      "de": "1. Betrachten Sie die Top 3-5 Knoten. ",
+      "lt": "1. Pažvelkite į 3-5 pagrindinius mazgus. ",
+      "pt": "1. Observe os 3-5 nós principais. ",
+      "it": "1. Guarda i primi 3-5 nodi. ",
+      "no": "1. Se på de 3-5 øverste nodene. ",
+      "el": "1. Κοιτάξτε τους κορυφαίους 3-5 κόμβους. "
+    },
+    "modules.analysis.leverage.step1_detail": {
+      "en": "These are where small changes create the biggest ripple effects across your system.",
+      "es": "Aquí es donde los pequeños cambios crean los mayores efectos en cascada en su sistema.",
+      "fr": "C'est là que de petits changements créent les plus grands effets d'entraînement dans votre système.",
+      "de": "Hier erzeugen kleine Veränderungen die größten Welleneffekte im gesamten System.",
+      "lt": "Čia maži pokyčiai sukelia didžiausią bangavimo efektą jūsų sistemoje.",
+      "pt": "É aqui que pequenas mudanças criam os maiores efeitos cascata em todo o seu sistema.",
+      "it": "Questi sono i punti in cui piccoli cambiamenti creano i maggiori effetti a catena nel sistema.",
+      "no": "Dette er der små endringer skaper de største ringvirkningene i systemet ditt.",
+      "el": "Εδώ μικρές αλλαγές δημιουργούν τα μεγαλύτερα κυματιστά αποτελέσματα σε ολόκληρο το σύστημά σας."
+    },
+    "modules.analysis.leverage.step2_assess": {
+      "en": "2. Check feasibility. ",
+      "es": "2. Verifique la viabilidad. ",
+      "fr": "2. Vérifiez la faisabilité. ",
+      "de": "2. Überprüfen Sie die Machbarkeit. ",
+      "lt": "2. Patikrinkite įgyvendinamumą. ",
+      "pt": "2. Verifique a viabilidade. ",
+      "it": "2. Verificare la fattibilità. ",
+      "no": "2. Sjekk gjennomførbarhet. ",
+      "el": "2. Ελέγξτε τη σκοπιμότητα. "
+    },
+    "modules.analysis.leverage.step2_detail": {
+      "en": "Can your stakeholders realistically influence these nodes? Response/Measure nodes are designed for intervention. Driver nodes may require policy changes.",
+      "es": "¿Pueden sus partes interesadas influir de manera realista en estos nodos? Los nodos de Respuesta/Medida están diseñados para la intervención. Los nodos de Impulsor pueden requerir cambios de política.",
+      "fr": "Vos parties prenantes peuvent-elles réalistement influencer ces nœuds ? Les nœuds Réponse/Mesure sont conçus pour l'intervention. Les nœuds Moteur peuvent nécessiter des changements de politique.",
+      "de": "Können Ihre Stakeholder diese Knoten realistischerweise beeinflussen? Antwort-/Maßnahmenknoten sind für Interventionen ausgelegt. Treiberknoten erfordern möglicherweise Politikänderungen.",
+      "lt": "Ar jūsų suinteresuotosios šalys gali realiai paveikti šiuos mazgus? Atsakomųjų priemonių mazgai skirti intervencijai. Varomosios jėgos mazgai gali reikalauti politikos pokyčių.",
+      "pt": "Seus stakeholders podem realisticamente influenciar esses nós? Os nós de Resposta/Medida são projetados para intervenção. Os nós de Driver podem exigir mudanças de política.",
+      "it": "Gli stakeholder possono influenzare realisticamente questi nodi? I nodi Risposta/Misura sono progettati per l'intervento. I nodi Driver potrebbero richiedere cambiamenti politici.",
+      "no": "Kan interessentene dine realistisk påvirke disse nodene? Respons/Tiltak-noder er designet for intervensjon. Driverknoder kan kreve politikkendringer.",
+      "el": "Μπορούν οι ενδιαφερόμενοι σας να επηρεάσουν ρεαλιστικά αυτούς τους κόμβους; Οι κόμβοι Απόκρισης/Μέτρου είναι σχεδιασμένοι για παρέμβαση. Οι κόμβοι Driver ενδέχεται να απαιτούν αλλαγές πολιτικής."
+    },
+    "modules.analysis.leverage.step3_design": {
+      "en": "3. Design targeted responses. ",
+      "es": "3. Diseñe respuestas específicas. ",
+      "fr": "3. Concevez des réponses ciblées. ",
+      "de": "3. Entwickeln Sie gezielte Maßnahmen. ",
+      "lt": "3. Sukurkite tikslines atsakomąsias priemones. ",
+      "pt": "3. Projete respostas direcionadas. ",
+      "it": "3. Progettare risposte mirate. ",
+      "no": "3. Utform målrettede responser. ",
+      "el": "3. Σχεδιάστε στοχευμένες αποκρίσεις. "
+    },
+    "modules.analysis.leverage.step3_detail": {
+      "en": "Go to Response Measures to create interventions targeting your top leverage points.",
+      "es": "Vaya a Medidas de Respuesta para crear intervenciones dirigidas a sus principales puntos de apalancamiento.",
+      "fr": "Accédez aux Mesures de Réponse pour créer des interventions ciblant vos principaux points de levier.",
+      "de": "Gehen Sie zu Antwortmaßnahmen, um Interventionen zu erstellen, die auf Ihre Top-Hebelpunkte abzielen.",
+      "lt": "Eikite į Atsakomąsias priemones, kad sukurtumėte intervencijas, nukreiptas į pagrindinius svertines taškus.",
+      "pt": "Vá para Medidas de Resposta para criar intervenções direcionadas aos seus principais pontos de alavancagem.",
+      "it": "Vai alle Misure di Risposta per creare interventi mirati ai tuoi principali punti leva.",
+      "no": "Gå til Responstiltak for å lage intervensjoner rettet mot dine viktigste innflytelsespunkter.",
+      "el": "Μεταβείτε στα Μέτρα Απόκρισης για να δημιουργήσετε παρεμβάσεις που στοχεύουν τα κορυφαία σημεία μόχλευσής σας."
+    },
+    "modules.analysis.leverage.step4_validate": {
+      "en": "4. Cross-check with loops. ",
+      "es": "4. Verifique con los bucles. ",
+      "fr": "4. Vérifiez avec les boucles. ",
+      "de": "4. Überprüfen Sie mit Schleifen. ",
+      "lt": "4. Palyginkite su kilpomis. ",
+      "pt": "4. Verifique com os loops. ",
+      "it": "4. Verificare con i cicli. ",
+      "no": "4. Krysskontroller med løkker. ",
+      "el": "4. Διασταυρώστε με βρόχους. "
+    },
+    "modules.analysis.leverage.step4_detail": {
+      "en": "Run Loop Detection to see if your leverage points sit on reinforcing or balancing feedback loops.",
+      "es": "Ejecute la Detección de Bucles para ver si sus puntos de apalancamiento se encuentran en bucles de retroalimentación de refuerzo o de equilibrio.",
+      "fr": "Exécutez la Détection de Boucles pour voir si vos points de levier se trouvent sur des boucles de rétroaction de renforcement ou d'équilibre.",
+      "de": "Führen Sie die Schleifenerkennung aus, um zu sehen, ob Ihre Hebelpunkte auf verstärkenden oder ausgleichenden Rückkopplungsschleifen liegen.",
+      "lt": "Paleiskite kilpų aptikimą, kad pamatytumėte, ar jūsų svertiniai taškai yra stiprinančiose ar balansuojančiose grįžtamojo ryšio kilpose.",
+      "pt": "Execute a Detecção de Loops para ver se seus pontos de alavancagem estão em loops de feedback de reforço ou de equilíbrio.",
+      "it": "Eseguire il Rilevamento dei Cicli per vedere se i punti leva si trovano su cicli di feedback di rinforzo o di bilanciamento.",
+      "no": "Kjør Løkkedeteksjon for å se om innflytelsespunktene dine er på forsterkende eller balanserende tilbakemeldingsløkker.",
+      "el": "Εκτελέστε Ανίχνευση Βρόχων για να δείτε αν τα σημεία μόχλευσής σας βρίσκονται σε ενισχυτικούς ή εξισορροπητικούς βρόχους ανατροφοδότησης."
+    },
+    "modules.analysis.leverage.note_framework_bias_title": {
+      "en": "Important note:",
+      "es": "Nota importante:",
+      "fr": "Note importante :",
+      "de": "Wichtiger Hinweis:",
+      "lt": "Svarbi pastaba:",
+      "pt": "Nota importante:",
+      "it": "Nota importante:",
+      "no": "Viktig merknad:",
+      "el": "Σημαντική σημείωση:"
+    },
+    "modules.analysis.leverage.note_framework_bias_detail": {
+      "en": "Response and Measure nodes may score higher due to their structural bridging position in the DAPSI(W)R(M) framework. Consider node type when interpreting results.",
+      "es": "Los nodos de Respuesta y Medida pueden obtener puntuaciones más altas debido a su posición de puente estructural en el marco DAPSI(W)R(M). Considere el tipo de nodo al interpretar los resultados.",
+      "fr": "Les nœuds Réponse et Mesure peuvent obtenir des scores plus élevés en raison de leur position de passerelle structurelle dans le cadre DAPSI(W)R(M). Tenez compte du type de nœud lors de l'interprétation des résultats.",
+      "de": "Antwort- und Maßnahmenknoten können aufgrund ihrer strukturellen Brückenposition im DAPSI(W)R(M)-Rahmen höhere Punktzahlen erzielen. Berücksichtigen Sie den Knotentyp bei der Interpretation der Ergebnisse.",
+      "lt": "Atsakomųjų priemonių mazgai gali gauti aukštesnius balus dėl jų struktūrinės tilto pozicijos DAPSI(W)R(M) sistemoje. Interpretuodami rezultatus atsižvelkite į mazgo tipą.",
+      "pt": "Os nós de Resposta e Medida podem pontuar mais alto devido à sua posição de ponte estrutural no framework DAPSI(W)R(M). Considere o tipo de nó ao interpretar os resultados.",
+      "it": "I nodi Risposta e Misura possono ottenere punteggi più alti a causa della loro posizione di collegamento strutturale nel framework DAPSI(W)R(M). Considerare il tipo di nodo nell'interpretazione dei risultati.",
+      "no": "Respons- og Tiltaksnoder kan score høyere på grunn av sin strukturelle broposisjon i DAPSI(W)R(M)-rammeverket. Vurder nodetype ved tolkning av resultater.",
+      "el": "Οι κόμβοι Απόκρισης και Μέτρου ενδέχεται να βαθμολογούνται υψηλότερα λόγω της δομικής τους θέσης γέφυρας στο πλαίσιο DAPSI(W)R(M). Λάβετε υπόψη τον τύπο κόμβου κατά την ερμηνεία των αποτελεσμάτων."
     }
   }
 }
