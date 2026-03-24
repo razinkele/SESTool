@@ -1997,8 +1997,7 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Climate change mitigation goals",
           "references": [
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -3427,7 +3426,7 @@
           "rationale": "Salt production and shellfish farming coexist in Mediterranean lagoons (e.g., Thau, Orbetello) but the causal link is indirect - shared infrastructure rather than a direct driver. Limited evidence for a causal relationship.",
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\""
+            "Micheli et al. (2013) \"Cumulative human impacts on Mediterranean ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -3458,8 +3457,7 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Vallicultura extensive lagoon fish farming (sea bass, gilthead bream, eel)",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Viaroli et al. (2008) \"Community shifts in eutrophic coastal lagoons\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -3474,8 +3472,7 @@
           "confidence": 2,
           "rationale": "Traditional fixed-net fishing (trabucco, lavoriero) is a passive capture method with negligible direct nutrient contribution to lagoons. Any link to eutrophication is extremely indirect. Strength reduced from medium.",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Viaroli et al. (2008) \"Community shifts in eutrophic coastal lagoons\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -3490,8 +3487,7 @@
           "confidence": 2,
           "rationale": "Salt harvesting has minimal nutrient inputs; salt pans concentrate seawater through evaporation with negligible organic matter addition. No published evidence linking artisanal salt harvesting to eutrophication in Mediterranean lagoons.",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Viaroli et al. (2008) \"Community shifts in eutrophic coastal lagoons\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -3523,7 +3519,7 @@
           "rationale": "Pesticide contamination negatively affects shellfish health through bioaccumulation, endocrine disruption, and immune suppression (multiple studies in Thau lagoon, Venice lagoon). Polarity corrected from + to -.",
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Micheli et al. (2013) \"Cumulative human impacts on Mediterranean ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -3539,7 +3535,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Water column dissolved oxygen dynamics",
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\""
+            "Micheli et al. (2013) \"Cumulative human impacts on Mediterranean ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -3586,8 +3582,7 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Nutrient cycling and water purification",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Micheli et al. (2013) \"Cumulative human impacts on Mediterranean ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -3699,7 +3694,7 @@
           "rationale": "Pathogen loading and anoxic events are co-occurring indicators of poor water quality but pathogen contamination does not cause oxygen depletion. The causal mechanism is absent. Structural bridge connection.",
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\""
+            "Micheli et al. (2013) \"Cumulative human impacts on Mediterranean ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -4188,8 +4183,8 @@
           "confidence": 1,
           "rationale": "No scientific mechanism links climate change adaptation needs to yacht anchoring over Posidonia. Structural connection without ecological basis.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Coll et al. (2012) \"The Mediterranean Sea under siege\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -4268,8 +4263,8 @@
           "confidence": 4,
           "rationale": "Ocean warming causes Posidonia shoot mortality at upper thermal limits (>28-29C), with marine heatwaves documented to cause mass die-offs (Marba & Duarte 2010, Savva et al. 2018). Polarity corrected from + to - (warming reduces meadow extent).",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Coll et al. (2012) \"The Mediterranean Sea under siege\""
           ],
           "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
@@ -4348,8 +4343,8 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Climate mitigation value of blue carbon storage",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Coll et al. (2012) \"The Mediterranean Sea under siege\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -4396,8 +4391,8 @@
           "confidence": 1,
           "rationale": "Local coastal construction has negligible contribution to global climate change and ocean warming. The GHG emissions from individual construction projects are insignificant at the scale needed to affect sea temperature. Structural bridge connection without scientific basis.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Coll et al. (2012) \"The Mediterranean Sea under siege\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -4412,8 +4407,8 @@
           "confidence": 1,
           "rationale": "Hypersaline brine discharge has no causal mechanism linking it to climate change or ocean warming. Energy consumption of desalination plants contributes marginally to GHG emissions but the effect is negligible at the local scale. Structural bridge connection.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Viaroli et al. (2008) \"Community shifts in eutrophic coastal lagoons\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -5072,8 +5067,8 @@
           "confidence": 4,
           "rationale": "Ocean warming and marine heatwaves cause mass mortality of heat-sensitive canopy-forming algae (Cystoseira, Sargassum) in the Mediterranean, facilitating replacement by turf algae (Thibaut et al. 2005, Vergés et al. 2014). Polarity corrected from + to -.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Coll et al. (2012) \"The Mediterranean Sea under siege\""
           ],
           "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
@@ -5787,7 +5782,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for North Sea herring stock biomass",
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\""
+            "Jennings & Kaiser (1998) \"Effects of fishing on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -5883,7 +5878,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Shipping and trade route services",
           "references": [
             "Emeis et al. (2015) \"The North Sea - A shelf sea in the Anthropocene\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -5931,7 +5926,7 @@
           "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network",
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\""
+            "Jennings & Kaiser (1998) \"Effects of fishing on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -7387,7 +7382,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Biodiversity and pharmaceutical potential",
           "references": [
             "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Coll et al. (2010) \"The biodiversity of the Mediterranean Sea\""
+            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -7467,7 +7462,7 @@
           "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network",
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Mora (2008) \"A clear human footprint in the coral reefs of the Caribbean\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -7482,8 +7477,7 @@
           "confidence": 3,
           "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Mora (2008) \"A clear human footprint in the coral reefs of the Caribbean\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -8825,8 +8819,8 @@
           "confidence": 3,
           "rationale": "Ocean warming disrupts bluefin tuna spawning habitat, alters prey distribution, and shifts thermal habitat boundaries, complicating stock recovery (ICCAT SCRS).",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Borja et al. (2010) \"Marine management towards an integrated implementation\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -8906,7 +8900,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Transatlantic shipping corridor services",
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Borja et al. (2010) \"Marine management towards an integrated implementation\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -8953,7 +8947,6 @@
           "confidence": 3,
           "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
@@ -10220,7 +10213,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Bottom trawling for turbot and other demersal species",
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\""
+            "Daskalov (2002) \"Overfishing drives a trophic cascade in the Black Sea\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -10235,8 +10228,7 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Mussel and rapana whelk harvesting",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Daskalov (2002) \"Overfishing drives a trophic cascade in the Black Sea\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -10252,7 +10244,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Coastal construction and port development",
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\""
+            "Oguz et al. (2006) \"Abrupt transition of the northwestern Black Sea shelf ecosystem\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -10284,7 +10276,7 @@
           "rationale": "Coastal erosion from reduced sediment supply has no documented direct effect on pelagic anchovy and sprat stocks. These occupy different ecological niches (coastal geomorphology vs. open water column). Polarity set to negative (increased turbidity could marginally affect larval survival). Very weak link.",
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\""
+            "Daskalov (2002) \"Overfishing drives a trophic cascade in the Black Sea\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -10363,8 +10355,7 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Bucharest Convention (Black Sea Commission) measures",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Oguz et al. (2006) \"Abrupt transition of the northwestern Black Sea shelf ecosystem\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -10380,7 +10371,7 @@
           "rationale": "Beroe ovata is a predator of Mnemiopsis leidyi, not a eutrophication control measure. While reduced Mnemiopsis could indirectly affect plankton dynamics, the pathway to eutrophication reduction is extremely tenuous. The target should be Mnemiopsis populations, not Danube nutrient eutrophication. Structural connection.",
           "references": [
             "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\""
+            "Oguz et al. (2006) \"Abrupt transition of the northwestern Black Sea shelf ecosystem\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -10931,8 +10922,8 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Climate change adaptation needs",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Mora (2008) \"A clear human footprint in the coral reefs of the Caribbean\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -10948,7 +10939,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Marine biodiversity conservation demand",
           "references": [
             "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Coll et al. (2010) \"The biodiversity of the Mediterranean Sea\""
+            "Burke et al. (2011) \"Reefs at Risk Revisited\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -10995,8 +10986,8 @@
           "confidence": 3,
           "rationale": "Rising sea temperatures cause thermal stress that reduces Thalassia shoot density and canopy height through die-offs in shallow waters (Koch et al. 2007).",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Mora (2008) \"A clear human footprint in the coral reefs of the Caribbean\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -11107,8 +11098,7 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Watershed nutrient management and setback regulations",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Mora (2008) \"A clear human footprint in the coral reefs of the Caribbean\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -12454,8 +12444,7 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Regulated hydropower discharge into fjords",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -12470,8 +12459,7 @@
           "confidence": 2,
           "rationale": "Small-scale fishing contributes negligible nutrient enrichment compared to aquaculture; the direct causal link is very weak. Strength and confidence lowered.",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -12486,8 +12474,7 @@
           "confidence": 2,
           "rationale": "Kelp harvesting removes a nutrient sink (kelp absorbs dissolved nutrients), indirectly allowing higher ambient nutrient levels, but this is not a direct source of aquaculture-derived nutrient enrichment. Causal link is weak.",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -12502,8 +12489,7 @@
           "confidence": 2,
           "rationale": "Research stations contribute negligible nutrient loading compared to aquaculture operations. Causal link is very weak.",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -12518,8 +12504,7 @@
           "confidence": 2,
           "rationale": "Cruise ship grey water and air emissions degrade water quality rather than promoting deep-water renewal. Effect is negative but weak relative to physical oceanographic drivers. Polarity corrected from + to -.",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -12535,7 +12520,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Fjord biodiversity and habitat provision",
           "references": [
             "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Coll et al. (2010) \"The biodiversity of the Mediterranean Sea\""
+            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -12582,8 +12567,7 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Fjord emission control areas for cruise ships",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -12615,7 +12599,7 @@
           "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network",
           "references": [
             "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\""
+            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13161,8 +13145,8 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for International flyway conservation obligations",
           "references": [
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\"",
-            "OSPAR (2017) \"Intermediate Assessment\""
+            "OSPAR (2017) \"Intermediate Assessment\"",
+            "Jennings & Kaiser (1998) \"Effects of fishing on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13177,8 +13161,8 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Climate change adaptation needs",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Jennings & Kaiser (1998) \"Effects of fishing on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13193,8 +13177,7 @@
           "confidence": 2,
           "rationale": "Subsea gas extraction in Wadden Sea concessions causes localized ground subsidence, not global sea level rise. The contribution to relative sea level change is small and localized. Strength and confidence reduced.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
+            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13210,7 +13193,7 @@
           "rationale": "Offshore wind farm cable landfall through tidal flats does not cause sea level rise. These are completely independent processes. No scientific basis. Strength to weak, confidence to 1.",
           "references": [
             "Emeis et al. (2015) \"The North Sea - A shelf sea in the Anthropocene\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13225,8 +13208,7 @@
           "confidence": 1,
           "rationale": "Bait digging for lugworm does not cause sea level rise. These are completely unrelated processes. No scientific basis for causal link. Strength to weak, confidence to 1.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
+            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13241,8 +13223,7 @@
           "confidence": 1,
           "rationale": "Bottom trawling for brown shrimp does not cause sea level rise. These are completely unrelated processes. No scientific basis. Strength to weak, confidence to 1.",
           "references": [
-            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13273,8 +13254,8 @@
           "confidence": 4,
           "rationale": "Climate change and ocean warming negatively affect migratory shorebirds through phenological mismatch with invertebrate prey, intertidal habitat loss, and Arctic breeding ground changes. Well-documented in flyway studies. Polarity corrected from + to -; confidence raised to 4.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13353,8 +13334,8 @@
           "confidence": 1,
           "rationale": "UNESCO World Heritage site management obligations cannot reduce sea level rise, which is driven by global climate processes. Local management has no effect on this pressure. Strength to weak, confidence to 1.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13881,7 +13862,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Climate change adaptation needs",
           "references": [
             "Ronnback et al. (2007) \"Ecosystem goods and services from Swedish coastal habitats\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "HELCOM (2018) \"State of the Baltic Sea\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13960,8 +13941,8 @@
           "confidence": 4,
           "rationale": "Climate warming reduces Fucus vesiculosus coverage through thermal stress and enhanced competition from filamentous algae. Multiple studies document upper thermal limits for Baltic Fucus. Polarity corrected from + to -; confidence raised to 4.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "HELCOM (2018) \"State of the Baltic Sea\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -14690,7 +14671,7 @@
           "rationale": "Coral mining causes direct physical reef destruction but does not cause mass bleaching events (which are driven by marine heatwaves). These are independent stressors. Connection conflates different impact pathways.",
           "references": [
             "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\""
+            "McClanahan et al. (2007) \"Effects of climate and seawater temperature variation on coral bleaching\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -14706,7 +14687,7 @@
           "rationale": "Desalination brine causes localized thermal and salinity stress but does not trigger mass bleaching events (driven by basin-scale marine heatwaves). Connection conflates local vs. regional stressors.",
           "references": [
             "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -14834,7 +14815,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Coral reef restoration (coral gardening, larval reseeding)",
           "references": [
             "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\""
+            "McClanahan et al. (2007) \"Effects of climate and seawater temperature variation on coral bleaching\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -15504,8 +15485,8 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Climate change adaptation needs",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Coll et al. (2012) \"The Mediterranean Sea under siege\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -15552,8 +15533,8 @@
           "confidence": 4,
           "rationale": "Ocean warming and marine heatwaves cause Posidonia shoot mortality around island shelves, particularly at the upper thermal tolerance limit (Marba & Duarte 2010). Mediterranean island Posidonia meadows are among the most vulnerable to climate change. Polarity corrected from + to -.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Coll et al. (2012) \"The Mediterranean Sea under siege\""
           ],
           "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
@@ -15633,7 +15614,7 @@
           "rationale": "Anchor damage to Posidonia has a very indirect effect on bathing water quality. While Posidonia meadows contribute to water clarity, the link from anchor damage to bacterial contamination (E. coli, enterococci) is not scientifically supported.",
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -16295,8 +16276,8 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Climate vulnerability and hurricane exposure",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Mora (2008) \"A clear human footprint in the coral reefs of the Caribbean\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -17178,8 +17159,7 @@
           "confidence": 2,
           "rationale": "Pearl farming does not cause sea level rise. These are independent processes. Connection is spurious.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
+            "Nurse et al. (2014) \"Small islands\" IPCC AR5 Chapter 29"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -17194,8 +17174,7 @@
           "confidence": 2,
           "rationale": "Groundwater extraction does not cause global sea level rise from thermal expansion. These are independent processes (though extraction affects freshwater lens separately). Connection is spurious.",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
+            "Nurse et al. (2014) \"Small islands\" IPCC AR5 Chapter 29"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -17211,7 +17190,7 @@
           "rationale": "Seawall construction does not cause sea level rise. Seawalls are a response to sea level rise, not a driver. Connection direction appears reversed.",
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Nurse et al. (2014) \"Small islands\" IPCC AR5 Chapter 29"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -17290,8 +17269,7 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Nationally Determined Contributions under Paris Agreement",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
+            "Nurse et al. (2014) \"Small islands\" IPCC AR5 Chapter 29"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -17307,7 +17285,7 @@
           "rationale": "WCPFC tuna management measures do not affect global sea level rise. These are independent processes. Connection is spurious.",
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Nurse et al. (2014) \"Small islands\" IPCC AR5 Chapter 29"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -17339,7 +17317,7 @@
           "rationale": "Copra production on atolls contributes negligible GHG emissions relative to global climate forcing. Connection is spurious.",
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Nurse et al. (2014) \"Small islands\" IPCC AR5 Chapter 29"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -18008,7 +17986,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Unique volcanic landscape and marine biodiversity aesthetic",
           "references": [
             "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Coll et al. (2010) \"The biodiversity of the Mediterranean Sea\""
+            "Spalding et al. (2007) \"Marine ecoregions of the world\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -18119,8 +18097,7 @@
           "confidence": 3,
           "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Wassmann et al. (2011) \"Footprints of climate change in the Arctic marine ecosystem\""
+            "Spalding et al. (2007) \"Marine ecoregions of the world\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -18790,7 +18767,7 @@
           "rationale": "Poaching does not improve reef condition. Hawksbill turtles feed on sponges that compete with corals, so turtle removal could indirectly harm reefs. Effect is negative but weak and indirect. Polarity corrected from + to -.",
           "references": [
             "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\""
+            "Obura et al. (2017) \"Coral reef status report for the Western Indian Ocean\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -18805,8 +18782,7 @@
           "confidence": 2,
           "rationale": "Saltwater intrusion primarily affects terrestrial freshwater resources. Any reef effect would be through altered groundwater discharge (submarine groundwater can carry nutrients/pollutants). Polarity corrected; effect is weak and indirect.",
           "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\""
+            "Obura et al. (2017) \"Coral reef status report for the Western Indian Ocean\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -18934,7 +18910,7 @@
           "rationale": "Invasive predator eradication on islands has no direct effect on coral bleaching events (driven by marine heatwaves). Seabird recovery may indirectly benefit reef nutrient cycling but does not affect thermal stress. Connection is spurious.",
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\""
+            "Obura et al. (2017) \"Coral reef status report for the Western Indian Ocean\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -18982,7 +18958,7 @@
           "rationale": "Invasive predators on islands do not drive global climate change and ocean warming. These are independent processes. Connection is spurious.",
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "McClanahan et al. (2007) \"Effects of climate and seawater temperature variation on coral bleaching\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -19655,7 +19631,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Winter ice reduction affecting ice-dependent species",
           "references": [
             "Ronnback et al. (2007) \"Ecosystem goods and services from Swedish coastal habitats\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -19703,7 +19679,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Coastal meadow biodiversity and grazing landscape heritage",
           "references": [
             "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Coll et al. (2010) \"The biodiversity of the Mediterranean Sea\""
+            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -19766,8 +19742,8 @@
           "confidence": 1,
           "rationale": "Invasive mammalian predators (mink, rats) do not directly cause coastal erosion of limestone and glacial till shorelines. No scientific basis for this causal link. Strength reduced to weak, confidence to 1.",
           "references": [
-            "Coll et al. (2010) \"The biodiversity of the Mediterranean Sea\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -21251,8 +21227,7 @@
           "confidence": 3,
           "rationale": "Flow regulation disrupts migration cues and creates physical barriers to glass eel passage, reducing recruitment success (ICES WGEEL reports).",
           "references": [
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Borja et al. (2010) \"Marine management towards an integrated implementation\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -21940,8 +21915,8 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Mussel and oyster raft aquaculture",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
+            "Borja et al. (2010) \"Marine management towards an integrated implementation\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -21957,7 +21932,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Kelp and seaweed harvesting",
           "references": [
             "Spalding et al. (2007) \"Marine ecoregions of the world\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -21972,7 +21947,6 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Offshore wind and wave energy development",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
@@ -21988,7 +21962,6 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Coastal property development and urbanization",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
@@ -22004,8 +21977,7 @@
           "confidence": 3,
           "rationale": "Nutrient enrichment from agricultural runoff promotes epiphyte smothering and turbidity that reduces light to kelp canopies, driving kelp decline.",
           "references": [
-            "Spalding et al. (2007) \"Marine ecoregions of the world\"",
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\""
+            "Spalding et al. (2007) \"Marine ecoregions of the world\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -22068,7 +22040,6 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for OSPAR marine protected areas network",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
@@ -22085,7 +22056,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Integrated coastal zone management plans",
           "references": [
             "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -22100,7 +22071,6 @@
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Marine spatial planning for offshore energy",
           "references": [
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
@@ -22117,7 +22087,7 @@
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Beach nourishment and sediment management programmes",
           "references": [
             "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\""
+            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\""
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
