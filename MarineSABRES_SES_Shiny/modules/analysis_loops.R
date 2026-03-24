@@ -470,6 +470,24 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
             return()
           }
 
+          # Apply user's checkbox filters to detected loops
+          include_self <- input$include_self_loops
+          filter_triv <- input$filter_trivial
+
+          if (!is.null(all_loops) && length(all_loops) > 0) {
+            # Filter self-loops (single-node cycles) unless user opted in
+            if (!include_self) {
+              all_loops <- Filter(function(loop) length(loop$nodes) > 1, all_loops)
+            }
+
+            # Filter trivial 2-node back-and-forth loops
+            if (filter_triv) {
+              all_loops <- Filter(function(loop) length(loop$nodes) > 2, all_loops)
+            }
+
+            debug_log(sprintf("After user filters: %d loops remaining", length(all_loops)), "LOOPS")
+          }
+
           incProgress(0.1, detail = i18n$t("modules.analysis.loops.progress_processing"))
           Sys.sleep(0.1)
 

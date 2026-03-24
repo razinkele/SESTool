@@ -470,6 +470,11 @@ validate_loop_dapsirwrm <- function(loop_node_ids, nodes) {
 find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000,
                             timeout_seconds = LOOP_ANALYSIS_TIMEOUT_SECONDS) {
 
+  if (is.null(edges) || nrow(edges) == 0) {
+    debug_log("find_all_cycles: no edges provided, returning empty list", "NETWORK")
+    return(list())
+  }
+
   # Capture start time for timeout tracking across all components
 
   start_time <- Sys.time()
