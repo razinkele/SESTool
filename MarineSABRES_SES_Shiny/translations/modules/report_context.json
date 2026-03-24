@@ -1,0 +1,257 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "modules.report_context.section_title": {
+      "en": "Regional Context",
+      "es": "Contexto Regional",
+      "fr": "Contexte Régional",
+      "de": "Regionaler Kontext",
+      "lt": "Regioninis kontekstas",
+      "pt": "Contexto Regional",
+      "it": "Contesto Regionale",
+      "no": "Regionalt Kontekst",
+      "el": "Περιφερειακό Πλαίσιο"
+    },
+    "modules.report_context.site_description": {
+      "en": "Site Description",
+      "es": "Descripción del Sitio",
+      "fr": "Description du Site",
+      "de": "Standortbeschreibung",
+      "lt": "Vietos aprašymas",
+      "pt": "Descrição do Local",
+      "it": "Descrizione del Sito",
+      "no": "Stedsbeskrivelse",
+      "el": "Περιγραφή Τοποθεσίας"
+    },
+    "modules.report_context.scientific_references": {
+      "en": "Scientific References",
+      "es": "Referencias Científicas",
+      "fr": "Références Scientifiques",
+      "de": "Wissenschaftliche Referenzen",
+      "lt": "Mokslinės nuorodos",
+      "pt": "Referências Científicas",
+      "it": "Riferimenti Scientifici",
+      "no": "Vitenskapelige Referanser",
+      "el": "Επιστημονικές Αναφορές"
+    },
+    "modules.report_context.confidence_assessment": {
+      "en": "Confidence Assessment",
+      "es": "Evaluación de Confianza",
+      "fr": "Évaluation de la Confiance",
+      "de": "Konfidenzbewertung",
+      "lt": "Pasitikėjimo vertinimas",
+      "pt": "Avaliação de Confiança",
+      "it": "Valutazione della Fiducia",
+      "no": "Konfidensvurdering",
+      "el": "Αξιολόγηση Εμπιστοσύνης"
+    },
+    "modules.report_context.governance_frameworks": {
+      "en": "Governance Frameworks",
+      "es": "Marcos de Gobernanza",
+      "fr": "Cadres de Gouvernance",
+      "de": "Governance-Rahmen",
+      "lt": "Valdymo sistemos",
+      "pt": "Quadros de Governança",
+      "it": "Quadri di Governance",
+      "no": "Styringsrammer",
+      "el": "Πλαίσια Διακυβέρνησης"
+    },
+    "modules.report_context.regional_priorities": {
+      "en": "Regional Management Priorities",
+      "es": "Prioridades de Gestión Regional",
+      "fr": "Priorités de Gestion Régionale",
+      "de": "Regionale Managementprioritäten",
+      "lt": "Regioninės valdymo prioritetai",
+      "pt": "Prioridades de Gestão Regional",
+      "it": "Priorità di Gestione Regionale",
+      "no": "Regionale Forvaltningsprioriteringer",
+      "el": "Περιφερειακές Προτεραιότητες Διαχείρισης"
+    },
+    "modules.report_context.kb_supported": {
+      "en": "connections have scientific literature support",
+      "es": "conexiones tienen respaldo de literatura científica",
+      "fr": "connexions ont un appui de la littérature scientifique",
+      "de": "Verbindungen haben wissenschaftliche Literaturunterstützung",
+      "lt": "ryšiai turi mokslinės literatūros pagrindą",
+      "pt": "conexões têm suporte de literatura científica",
+      "it": "connessioni hanno supporto della letteratura scientifica",
+      "no": "forbindelser har støtte fra vitenskapelig litteratur",
+      "el": "συνδέσεις έχουν υποστήριξη επιστημονικής βιβλιογραφίας"
+    },
+    "modules.report_context.user_defined": {
+      "en": "User-defined (no KB reference)",
+      "es": "Definido por el usuario (sin referencia KB)",
+      "fr": "Défini par l'utilisateur (sans référence KB)",
+      "de": "Benutzerdefiniert (keine KB-Referenz)",
+      "lt": "Vartotojo apibrėžtas (be KB nuorodos)",
+      "pt": "Definido pelo utilizador (sem referência KB)",
+      "it": "Definito dall'utente (nessun riferimento KB)",
+      "no": "Brukerdefinert (ingen KB-referanse)",
+      "el": "Ορισμένο από χρήστη (χωρίς αναφορά KB)"
+    },
+    "modules.report_context.connection": {
+      "en": "Connection",
+      "es": "Conexión",
+      "fr": "Connexion",
+      "de": "Verbindung",
+      "lt": "Ryšys",
+      "pt": "Conexão",
+      "it": "Connessione",
+      "no": "Forbindelse",
+      "el": "Σύνδεση"
+    },
+    "modules.report_context.rationale": {
+      "en": "Rationale",
+      "es": "Justificación",
+      "fr": "Justification",
+      "de": "Begründung",
+      "lt": "Pagrindimas",
+      "pt": "Justificativa",
+      "it": "Motivazione",
+      "no": "Begrunnelse",
+      "el": "Αιτιολογία"
+    },
+    "modules.report_context.references": {
+      "en": "References",
+      "es": "Referencias",
+      "fr": "Références",
+      "de": "Referenzen",
+      "lt": "Nuorodos",
+      "pt": "Referências",
+      "it": "Riferimenti",
+      "no": "Referanser",
+      "el": "Αναφορές"
+    },
+    "modules.report_context.temporal_lag": {
+      "en": "Temporal Lag",
+      "es": "Retraso Temporal",
+      "fr": "Décalage Temporel",
+      "de": "Zeitliche Verzögerung",
+      "lt": "Laiko vėlavimas",
+      "pt": "Atraso Temporal",
+      "it": "Ritardo Temporale",
+      "no": "Tidsforsinkelse",
+      "el": "Χρονική Υστέρηση"
+    },
+    "modules.report_context.reversibility": {
+      "en": "Reversibility",
+      "es": "Reversibilidad",
+      "fr": "Réversibilité",
+      "de": "Reversibilität",
+      "lt": "Grįžtamumas",
+      "pt": "Reversibilidade",
+      "it": "Reversibilità",
+      "no": "Reverserbarhet",
+      "el": "Αναστρεψιμότητα"
+    },
+    "modules.report_context.confidence": {
+      "en": "Confidence",
+      "es": "Confianza",
+      "fr": "Confiance",
+      "de": "Konfidenz",
+      "lt": "Pasitikėjimas",
+      "pt": "Confiança",
+      "it": "Fiducia",
+      "no": "Konfidens",
+      "el": "Εμπιστοσύνη"
+    },
+    "modules.report_context.relevant_policies": {
+      "en": "Relevant Policies",
+      "es": "Políticas Relevantes",
+      "fr": "Politiques Pertinentes",
+      "de": "Relevante Richtlinien",
+      "lt": "Aktualios politikos",
+      "pt": "Políticas Relevantes",
+      "it": "Politiche Rilevanti",
+      "no": "Relevante Retningslinjer",
+      "el": "Σχετικές Πολιτικές"
+    },
+    "modules.report_context.regional_sea_label": {
+      "en": "Regional Sea",
+      "es": "Mar Regional",
+      "fr": "Mer Régionale",
+      "de": "Regionales Meer",
+      "lt": "Regioninė jūra",
+      "pt": "Mar Regional",
+      "it": "Mare Regionale",
+      "no": "Regionalt Hav",
+      "el": "Περιφερειακή Θάλασσα"
+    },
+    "modules.report_context.ecosystem_type_label": {
+      "en": "Ecosystem Type",
+      "es": "Tipo de Ecosistema",
+      "fr": "Type d'Écosystème",
+      "de": "Ökosystemtyp",
+      "lt": "Ekosistemos tipas",
+      "pt": "Tipo de Ecossistema",
+      "it": "Tipo di Ecosistema",
+      "no": "Økosystemtype",
+      "el": "Τύπος Οικοσυστήματος"
+    },
+    "modules.report_context.not_set": {
+      "en": "Not set",
+      "es": "No establecido",
+      "fr": "Non défini",
+      "de": "Nicht festgelegt",
+      "lt": "Nenustatyta",
+      "pt": "Não definido",
+      "it": "Non impostato",
+      "no": "Ikke satt",
+      "el": "Δεν έχει οριστεί"
+    },
+    "modules.report_context.include_context": {
+      "en": "Include Regional Context",
+      "es": "Incluir Contexto Regional",
+      "fr": "Inclure le Contexte Régional",
+      "de": "Regionalen Kontext einschließen",
+      "lt": "Įtraukti regioninį kontekstą",
+      "pt": "Incluir Contexto Regional",
+      "it": "Includi Contesto Regionale",
+      "no": "Inkluder Regionalt Kontekst",
+      "el": "Συμπερίληψη Περιφερειακού Πλαισίου"
+    },
+    "modules.report_context.kb_match_summary": {
+      "en": "%d of %d connections have KB support",
+      "es": "%d de %d conexiones tienen soporte KB",
+      "fr": "%d sur %d connexions ont un support KB",
+      "de": "%d von %d Verbindungen haben KB-Unterstützung",
+      "lt": "%d iš %d ryšių turi KB palaikymą",
+      "pt": "%d de %d conexões têm suporte KB",
+      "it": "%d di %d connessioni hanno supporto KB",
+      "no": "%d av %d forbindelser har KB-støtte",
+      "el": "%d από %d συνδέσεις έχουν υποστήριξη KB"
+    },
+    "modules.report_context.no_context_available": {
+      "en": "No regional context available. Set Regional Sea and Ecosystem Type in project settings.",
+      "es": "No hay contexto regional disponible. Configure el Mar Regional y el Tipo de Ecosistema en la configuración del proyecto.",
+      "fr": "Aucun contexte régional disponible. Définissez la Mer Régionale et le Type d'Écosystème dans les paramètres du projet.",
+      "de": "Kein regionaler Kontext verfügbar. Legen Sie das Regionale Meer und den Ökosystemtyp in den Projekteinstellungen fest.",
+      "lt": "Nėra regioninio konteksto. Nustatykite regioninę jūrą ir ekosistemos tipą projekto nustatymuose.",
+      "pt": "Nenhum contexto regional disponível. Defina o Mar Regional e o Tipo de Ecossistema nas configurações do projeto.",
+      "it": "Nessun contesto regionale disponibile. Imposta il Mare Regionale e il Tipo di Ecosistema nelle impostazioni del progetto.",
+      "no": "Ingen regionalt kontekst tilgjengelig. Angi Regionalt Hav og Økosystemtype i prosjektinnstillingene.",
+      "el": "Δεν υπάρχει διαθέσιμο περιφερειακό πλαίσιο. Ορίστε την Περιφερειακή Θάλασσα και τον Τύπο Οικοσυστήματος στις ρυθμίσεις του έργου."
+    },
+    "modules.report_context.suggested_responses": {
+      "en": "KB-Suggested Responses",
+      "es": "Respuestas Sugeridas por KB",
+      "fr": "Réponses Suggérées par KB",
+      "de": "KB-vorgeschlagene Antworten",
+      "lt": "KB pasiūlyti atsakymai",
+      "pt": "Respostas Sugeridas pelo KB",
+      "it": "Risposte Suggerite da KB",
+      "no": "KB-foreslåtte Svar",
+      "el": "Προτεινόμενες Απαντήσεις KB"
+    }
+  }
+}

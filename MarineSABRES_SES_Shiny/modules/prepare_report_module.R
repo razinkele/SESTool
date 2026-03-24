@@ -60,7 +60,11 @@ prepare_report_ui <- function(id, i18n) {
                                 i18n$t("modules.prepare.report.section_leverage"),
                                 i18n$t("modules.prepare.report.section_recommendations"))
                             ),
-                            selected = c("summary", "isa", "cld", "loops", "leverage"))
+                            selected = c("summary", "isa", "cld", "loops", "leverage")),
+
+          checkboxInput(ns("include_regional_context"),
+                        i18n$t("modules.report_context.include_context"),
+                        value = TRUE)
         )
       )
     ),
@@ -260,6 +264,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       tryCatch({
         data <- project_data_reactive()
+        data$include_regional_context <- input$include_regional_context
         debug_log("Using generate_report_content() from functions/report_generation.R", "REPORT")
 
         # Use the fixed report generation function from functions/report_generation.R
@@ -345,6 +350,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       tryCatch({
         data <- project_data_reactive()
+        data$include_regional_context <- input$include_regional_context
 
         # Check if LaTeX is available
         latex_available <- tryCatch({
