@@ -262,3 +262,34 @@ test_that("AI ISA module persists regional context to project metadata", {
   expect_true(grepl("rv\\$context\\$ecosystem_type", module_code),
               info = "AI ISA must read ecosystem_type from rv$context")
 })
+
+test_that("all report_context i18n keys exist for all 9 languages", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  trans_path <- file.path(project_root, "translations/modules/report_context.json")
+  skip_if_not(file.exists(trans_path), "report_context.json not found")
+  trans <- jsonlite::fromJSON(trans_path, simplifyVector = FALSE)
+  required_keys <- c(
+    "modules.report_context.section_title", "modules.report_context.site_description",
+    "modules.report_context.scientific_references", "modules.report_context.confidence_assessment",
+    "modules.report_context.governance_frameworks", "modules.report_context.regional_priorities",
+    "modules.report_context.kb_supported", "modules.report_context.user_defined",
+    "modules.report_context.connection", "modules.report_context.rationale",
+    "modules.report_context.references", "modules.report_context.temporal_lag",
+    "modules.report_context.reversibility", "modules.report_context.confidence",
+    "modules.report_context.relevant_policies", "modules.report_context.regional_sea_label",
+    "modules.report_context.ecosystem_type_label", "modules.report_context.not_set",
+    "modules.report_context.include_context", "modules.report_context.kb_match_summary",
+    "modules.report_context.no_context_available", "modules.report_context.suggested_responses"
+  )
+  langs <- c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")
+  for (key in required_keys) {
+    key_data <- trans$translation[[key]]
+    expect_false(is.null(key_data), info = paste("Missing key:", key))
+    if (!is.null(key_data)) {
+      for (lang in langs) {
+        expect_true(!is.null(key_data[[lang]]) && nchar(key_data[[lang]]) > 0,
+                    info = paste("Missing", lang, "for", key))
+      }
+    }
+  }
+})
