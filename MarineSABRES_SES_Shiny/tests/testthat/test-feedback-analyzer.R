@@ -404,3 +404,40 @@ test_that("admin sidebar item is conditional on ADMIN_MODE", {
   expect_true(grepl("feedback_admin", sidebar_code),
               info = "Sidebar must contain feedback_admin tabName")
 })
+
+test_that("all feedback_admin i18n keys exist for all 9 languages", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  trans_path <- file.path(project_root, "translations/modules/feedback_admin.json")
+  skip_if_not(file.exists(trans_path), "feedback_admin.json not found")
+
+  trans <- jsonlite::fromJSON(trans_path, simplifyVector = FALSE)
+  required_keys <- c(
+    "modules.feedback_admin.menu_label", "modules.feedback_admin.dashboard_tab",
+    "modules.feedback_admin.duplicates_tab", "modules.feedback_admin.total_reports",
+    "modules.feedback_admin.bug_reports", "modules.feedback_admin.suggestions",
+    "modules.feedback_admin.general_feedback", "modules.feedback_admin.last_7_days",
+    "modules.feedback_admin.github_submitted", "modules.feedback_admin.local_only",
+    "modules.feedback_admin.no_feedback", "modules.feedback_admin.similarity_threshold",
+    "modules.feedback_admin.find_duplicates", "modules.feedback_admin.no_duplicates",
+    "modules.feedback_admin.mark_duplicate", "modules.feedback_admin.marked_duplicate",
+    "modules.feedback_admin.mark_error", "modules.feedback_admin.detail_title",
+    "modules.feedback_admin.recalculate", "modules.feedback_admin.scale_note",
+    "modules.feedback_admin.col_date", "modules.feedback_admin.col_type",
+    "modules.feedback_admin.col_title", "modules.feedback_admin.col_description",
+    "modules.feedback_admin.col_github", "modules.feedback_admin.col_report_a",
+    "modules.feedback_admin.col_report_b", "modules.feedback_admin.col_similarity",
+    "modules.feedback_admin.col_action"
+  )
+  langs <- c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")
+
+  for (key in required_keys) {
+    key_data <- trans$translation[[key]]
+    expect_false(is.null(key_data), info = paste("Missing key:", key))
+    if (!is.null(key_data)) {
+      for (lang in langs) {
+        expect_true(!is.null(key_data[[lang]]) && nchar(key_data[[lang]]) > 0,
+                    info = paste("Missing", lang, "for", key))
+      }
+    }
+  }
+})
