@@ -420,6 +420,7 @@ source("constants.R", local = FALSE)
 # Set MARINESABRES_DEBUG=TRUE in .Renviron or before running the app to enable debug logs
 # Default is FALSE for production use
 DEBUG_MODE <- Sys.getenv("MARINESABRES_DEBUG", "FALSE") == "TRUE"
+ADMIN_MODE <- Sys.getenv("MARINESABRES_ADMIN_MODE", "FALSE") == "TRUE"
 
 #' Debug logging helper function
 #'
@@ -627,6 +628,9 @@ source("functions/error_handling.R", local = FALSE)  # FALSE = global scope for 
 
 # Feedback reporter (local NDJSON log + optional GitHub Issues)
 source("functions/feedback_reporter.R", local = FALSE)
+
+# Feedback analyzer (NDJSON loader, TF-IDF similarity, duplicate detection)
+source("functions/feedback_analyzer.R", local = FALSE)
 
 # Project transaction wrappers (atomic state changes, cross-reference validation)
 source("functions/project_transactions.R", local = FALSE)  # FALSE = global scope for test access
