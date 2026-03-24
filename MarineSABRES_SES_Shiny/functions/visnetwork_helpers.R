@@ -520,7 +520,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   # === LEGACY/BACKWARD COMPATIBILITY ===
   # Support old matrix names for existing projects (will be converted on load)
   
-  if (!is.null(adjacency_matrices$gb_es)) {
+  if (!is.null(adjacency_matrices$gb_es) && is.null(adjacency_matrices$es_gb)) {
     debug_log("WARNING: Found legacy matrix 'gb_es' - treating as forward flow 'es_gb'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$gb_es),  # Transpose to convert GB→ES to ES→GB
@@ -532,7 +532,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     edges <- bind_rows(edges, edges_legacy)
   }
 
-  if (!is.null(adjacency_matrices$es_mpf)) {
+  if (!is.null(adjacency_matrices$es_mpf) && is.null(adjacency_matrices$mpf_es)) {
     debug_log("WARNING: Found legacy matrix 'es_mpf' - treating as forward flow 'mpf_es'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$es_mpf),  # Transpose
@@ -544,7 +544,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     edges <- bind_rows(edges, edges_legacy)
   }
 
-  if (!is.null(adjacency_matrices$mpf_p)) {
+  if (!is.null(adjacency_matrices$mpf_p) && is.null(adjacency_matrices$p_mpf)) {
     debug_log("WARNING: Found legacy matrix 'mpf_p' - treating as forward flow 'p_mpf'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$mpf_p),  # Transpose
@@ -556,7 +556,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     edges <- bind_rows(edges, edges_legacy)
   }
 
-  if (!is.null(adjacency_matrices$p_a)) {
+  if (!is.null(adjacency_matrices$p_a) && is.null(adjacency_matrices$a_p)) {
     debug_log("WARNING: Found legacy matrix 'p_a' - treating as forward flow 'a_p'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$p_a),  # Transpose
@@ -568,7 +568,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     edges <- bind_rows(edges, edges_legacy)
   }
 
-  if (!is.null(adjacency_matrices$a_d)) {
+  if (!is.null(adjacency_matrices$a_d) && is.null(adjacency_matrices$d_a)) {
     debug_log("WARNING: Found legacy matrix 'a_d' - treating as forward flow 'd_a'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$a_d),  # Transpose
@@ -580,7 +580,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     edges <- bind_rows(edges, edges_legacy)
   }
 
-  if (!is.null(adjacency_matrices$d_gb)) {
+  if (!is.null(adjacency_matrices$d_gb) && is.null(adjacency_matrices$gb_d)) {
     debug_log("WARNING: Found legacy matrix 'd_gb' - treating as feedback 'gb_d'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$d_gb),  # Transpose
@@ -592,7 +592,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     edges <- bind_rows(edges, edges_legacy)
   }
 
-  if (!is.null(adjacency_matrices$p_r)) {
+  if (!is.null(adjacency_matrices$p_r) && is.null(adjacency_matrices$r_p)) {
     debug_log("WARNING: Found legacy matrix 'p_r' - treating as 'r_p'", "VISNETWORK")
     edges_legacy <- process_adjacency_matrix(
       t(adjacency_matrices$p_r),  # Transpose
@@ -605,7 +605,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
   }
 
   # Handle legacy r_m (responses-to-measures) matrix by converting to r_r (responses-to-responses)
-  if (!is.null(adjacency_matrices$r_m)) {
+  if (!is.null(adjacency_matrices$r_m) && is.null(adjacency_matrices$r_r)) {
     debug_log("INFO: Found legacy matrix 'r_m' (responses->measures), converting to 'r_r' (responses->responses)", "VISNETWORK")
     edges_r_m <- process_adjacency_matrix(
       adjacency_matrices$r_m,  # R×M (rows=R, cols=M): R→M connections (legacy)
@@ -664,6 +664,18 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
           }
         }
       }
+    }
+  }
+
+  # Deduplicate edges: same from+to pair should appear only once
+  # Keep the first occurrence (primary matrix takes precedence over legacy)
+  if (nrow(edges) > 0) {
+    before_dedup <- nrow(edges)
+    edges <- edges %>% dplyr::distinct(from, to, .keep_all = TRUE)
+    after_dedup <- nrow(edges)
+    if (before_dedup != after_dedup) {
+      debug_log(sprintf("Deduplicated edges: %d -> %d (removed %d duplicates)",
+                  before_dedup, after_dedup, before_dedup - after_dedup), "VISNETWORK")
     }
   }
 
