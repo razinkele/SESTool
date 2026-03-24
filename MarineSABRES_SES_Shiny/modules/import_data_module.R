@@ -182,6 +182,11 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
     observeEvent(input$excel_file, {
       req(input$excel_file)
 
+      # Clear previous state before new upload attempt (prevents memory accumulation from retries)
+      rv$elements_data <- NULL
+      rv$connections_data <- NULL
+      rv$file_loaded <- FALSE
+
       tryCatch({
         file_path <- input$excel_file$datapath
         file_name <- input$excel_file$name
@@ -272,12 +277,16 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         )
 
       }, error = function(e) {
+        # Clear partial state on error so next attempt starts clean
+        rv$elements_data <- NULL
+        rv$connections_data <- NULL
+        rv$file_loaded <- FALSE
+        debug_log(paste("Upload failed:", e$message), "ERROR")
         showNotification(
-          format_user_error(e, i18n = i18n, context = "reading uploaded file", show_details = TRUE),
+          format_user_error(e, i18n = i18n, context = "importing file"),
           type = "error",
           duration = 10
         )
-        rv$file_loaded <- FALSE
       })
     })
 
