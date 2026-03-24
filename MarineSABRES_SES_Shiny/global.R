@@ -20,6 +20,7 @@ suppressPackageStartupMessages({
   library(tidyverse)
   library(DT)
   library(openxlsx)
+  library(readxl)     # Excel reading for template imports
   library(jsonlite)
   library(digest)  # For ISA change detection in reactive pipeline
 
