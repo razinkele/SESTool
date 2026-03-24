@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "description": "Marine SES DAPSIWRM knowledge database - context-specific element and connection suggestions for Social-Ecological Systems analysis. Each context represents a regional sea x habitat combination with ecologically plausible elements and scientifically defensible connections.",
-  "last_updated": "2026-03-17",
+  "last_updated": "2026-03-24",
   "contexts": {
     "baltic_lagoon": {
       "regional_sea": "baltic",
@@ -24145,6 +24145,2424 @@
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        }
+      ]
+    },
+    "macaronesia_island": {
+      "regional_sea": "macaronesia",
+      "habitat": "volcanic_island_coast",
+      "description": "Volcanic island coastal ecosystems of the Macaronesian archipelagos (Azores, Madeira, Canary Islands, Cape Verde). Characterized by steep rocky shorelines, Cystoseira and Sargassum macroalgal forests, high endemism, and cetacean-rich waters subject to intense tourism and artisanal fishing pressure.",
+      "drivers": [
+        {
+          "name": "Tourism demand for marine recreation",
+          "relevance": 0.95
+        },
+        {
+          "name": "EU Common Fisheries Policy requirements",
+          "relevance": 0.85
+        },
+        {
+          "name": "Climate change and ocean warming",
+          "relevance": 0.9
+        },
+        {
+          "name": "Population growth on island communities",
+          "relevance": 0.8
+        },
+        {
+          "name": "Global seafood demand",
+          "relevance": 0.75
+        },
+        {
+          "name": "Renewable ocean energy targets",
+          "relevance": 0.65
+        },
+        {
+          "name": "Cultural heritage of island fishing traditions",
+          "relevance": 0.8
+        },
+        {
+          "name": "EU Biodiversity Strategy 2030 targets",
+          "relevance": 0.7
+        }
+      ],
+      "activities": [
+        {
+          "name": "Recreational diving and whale watching",
+          "relevance": 0.95
+        },
+        {
+          "name": "Artisanal demersal fishing",
+          "relevance": 0.9
+        },
+        {
+          "name": "Port and marina development",
+          "relevance": 0.8
+        },
+        {
+          "name": "Coastal aquaculture (sea bass, sea bream)",
+          "relevance": 0.7
+        },
+        {
+          "name": "Desalination plant operation",
+          "relevance": 0.75
+        },
+        {
+          "name": "Recreational boating and anchoring",
+          "relevance": 0.85
+        },
+        {
+          "name": "Scientific research and monitoring",
+          "relevance": 0.65
+        },
+        {
+          "name": "Submarine cable and pipeline installation",
+          "relevance": 0.6
+        }
+      ],
+      "pressures": [
+        {
+          "name": "Marine litter accumulation on island coasts",
+          "relevance": 0.9
+        },
+        {
+          "name": "Overfishing of demersal fish stocks",
+          "relevance": 0.85
+        },
+        {
+          "name": "Ocean warming and marine heatwaves",
+          "relevance": 0.9
+        },
+        {
+          "name": "Invasive species introduction (e.g., Caulerpa, Asparagopsis)",
+          "relevance": 0.8
+        },
+        {
+          "name": "Habitat degradation from boat anchoring",
+          "relevance": 0.75
+        },
+        {
+          "name": "Brine discharge from desalination",
+          "relevance": 0.65
+        },
+        {
+          "name": "Underwater noise from vessel traffic",
+          "relevance": 0.7
+        },
+        {
+          "name": "Coastal urbanization and land reclamation",
+          "relevance": 0.75
+        }
+      ],
+      "states": [
+        {
+          "name": "Cystoseira and Sargassum forest extent and health",
+          "relevance": 0.9
+        },
+        {
+          "name": "Cetacean population abundance and diversity",
+          "relevance": 0.85
+        },
+        {
+          "name": "Demersal fish stock biomass",
+          "relevance": 0.85
+        },
+        {
+          "name": "Rocky reef community structure and endemism",
+          "relevance": 0.8
+        },
+        {
+          "name": "Sea surface temperature regime",
+          "relevance": 0.85
+        },
+        {
+          "name": "Coastal water quality index",
+          "relevance": 0.75
+        }
+      ],
+      "impacts": [
+        {
+          "name": "Reduced artisanal fish catches",
+          "relevance": 0.85
+        },
+        {
+          "name": "Loss of endemic marine species",
+          "relevance": 0.8
+        },
+        {
+          "name": "Degraded diving and snorkeling site quality",
+          "relevance": 0.85
+        },
+        {
+          "name": "Altered nearshore food web structure",
+          "relevance": 0.75
+        },
+        {
+          "name": "Decline in coastal carbon sequestration",
+          "relevance": 0.65
+        }
+      ],
+      "welfare": [
+        {
+          "name": "Fishing community livelihoods and income",
+          "relevance": 0.9
+        },
+        {
+          "name": "Marine tourism revenue",
+          "relevance": 0.95
+        },
+        {
+          "name": "Cultural identity of island fishing communities",
+          "relevance": 0.8
+        },
+        {
+          "name": "Local food security from seafood",
+          "relevance": 0.75
+        },
+        {
+          "name": "Recreational wellbeing from ocean access",
+          "relevance": 0.7
+        },
+        {
+          "name": "Coastal property values",
+          "relevance": 0.65
+        }
+      ],
+      "responses": [
+        {
+          "name": "Azores Marine Park and MPA network expansion",
+          "relevance": 0.9
+        },
+        {
+          "name": "Fishing effort and quota regulations",
+          "relevance": 0.85
+        },
+        {
+          "name": "Marine spatial planning for Macaronesian waters",
+          "relevance": 0.8
+        },
+        {
+          "name": "Invasive species monitoring and removal programmes",
+          "relevance": 0.75
+        },
+        {
+          "name": "EU Biodiversity Strategy implementation",
+          "relevance": 0.75
+        },
+        {
+          "name": "Sustainable tourism certification schemes",
+          "relevance": 0.7
+        },
+        {
+          "name": "Marine litter reduction action plans",
+          "relevance": 0.8
+        },
+        {
+          "name": "OSPAR Convention measures for NE Atlantic",
+          "relevance": 0.7
+        }
+      ],
+      "connections": [
+        {
+          "from": "Tourism demand for marine recreation",
+          "from_type": "drivers",
+          "to": "Recreational diving and whale watching",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Growing international tourism demand drives expansion of whale watching in the Azores and diving tourism in the Canary Islands, making marine recreation the primary economic activity for many coastal communities across Macaronesia.",
+          "references": [
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Tourism demand for marine recreation",
+          "from_type": "drivers",
+          "to": "Port and marina development",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Increasing tourist arrivals to the Canary Islands and Azores drive demand for new marina berths and port infrastructure expansions, particularly for recreational boating and cruise ship operations.",
+          "references": [
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "EU Common Fisheries Policy requirements",
+          "from_type": "drivers",
+          "to": "Artisanal demersal fishing",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "CFP regulations shape artisanal fishing effort across Macaronesia, with specific provisions for outermost regions (Azores, Madeira, Canaries) that determine fleet size, gear restrictions, and total allowable catches for demersal species.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Climate change and ocean warming",
+          "from_type": "drivers",
+          "to": "Ocean warming and marine heatwaves",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Macaronesian waters are experiencing accelerating sea surface temperature rise, with marine heatwaves becoming more frequent around the Canary Islands and Azores, shifting isotherms and altering species distributions at the subtropical-temperate boundary.",
+          "references": [
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Santos et al. (2020) Marine litter in the Macaronesian region",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Global seafood demand",
+          "from_type": "drivers",
+          "to": "Artisanal demersal fishing",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Rising global and regional demand for fresh seafood increases fishing pressure on Macaronesian demersal stocks, particularly high-value species like black scabbardfish (Aphanopus carbo) and wreckfish exported from the Azores and Madeira.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Population growth on island communities",
+          "from_type": "drivers",
+          "to": "Desalination plant operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Growing resident and tourist populations on water-scarce Canary Islands and Cape Verde drive rapid expansion of desalination capacity, with the Canaries operating over 300 desalination plants to meet freshwater demand.",
+          "references": [
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Population growth on island communities",
+          "from_type": "drivers",
+          "to": "Coastal urbanization and land reclamation",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Population pressure on the limited coastal plains of volcanic Macaronesian islands, particularly in Gran Canaria and Tenerife, drives coastal construction and land reclamation that destroys intertidal habitats.",
+          "references": [
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Recreational diving and whale watching",
+          "from_type": "activities",
+          "to": "Underwater noise from vessel traffic",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Intensive whale-watching operations in the Azores and southern Tenerife generate chronic underwater noise from repeated vessel approaches to cetacean groups, potentially causing behavioral disruption and habitat displacement.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Recreational boating and anchoring",
+          "from_type": "activities",
+          "to": "Habitat degradation from boat anchoring",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Anchor damage from recreational boats in the Canary Islands and Madeira physically destroys Cystoseira forests and rocky reef communities, with studies documenting significant macroalgal canopy loss in popular anchorage sites.",
+          "references": [
+            "Sangil et al. (2012) Decline of Cystoseira forests in the Canary Islands",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Artisanal demersal fishing",
+          "from_type": "activities",
+          "to": "Overfishing of demersal fish stocks",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Artisanal fishing fleets across the Azores, Madeira, and Canaries exert significant cumulative pressure on slow-growing demersal species like blackspot seabream (Pagellus bogaraveo) and black scabbardfish, which have limited recovery potential.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Desalination plant operation",
+          "from_type": "activities",
+          "to": "Brine discharge from desalination",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Desalination plants in the Canary Islands and Cape Verde discharge hypersaline brine into nearshore waters, locally increasing salinity and temperature, which can stress benthic communities on the volcanic rocky substrate.",
+          "references": [
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Artisanal demersal fishing",
+          "from_type": "activities",
+          "to": "Marine litter accumulation on island coasts",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Lost and discarded fishing gear from artisanal fleets contributes to marine litter on Macaronesian coastlines, with beach surveys documenting fishing-related debris as a major litter category across all archipelagos.",
+          "references": [
+            "Santos et al. (2020) Marine litter in the Macaronesian region",
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Ocean warming and marine heatwaves",
+          "from_type": "pressures",
+          "to": "Cystoseira and Sargassum forest extent and health",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Marine heatwaves in the Canary Islands cause bleaching and mortality of Cystoseira abies-marina and other canopy-forming macroalgae, with documented declines across the eastern Canary Islands correlating with rising sea surface temperatures.",
+          "references": [
+            "Sangil et al. (2012) Decline of Cystoseira forests in the Canary Islands",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Wirtz et al. (2013) The invasive species of Macaronesia"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Ocean warming and marine heatwaves",
+          "from_type": "pressures",
+          "to": "Cetacean population abundance and diversity",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Warming waters around the Azores alter prey distribution and migration patterns for resident cetacean populations including sperm whales and bottlenose dolphins, potentially reducing habitat suitability in traditionally productive areas.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Invasive species introduction (e.g., Caulerpa, Asparagopsis)",
+          "from_type": "pressures",
+          "to": "Cystoseira and Sargassum forest extent and health",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Invasive macroalgae such as Asparagopsis taxiformis and Caulerpa cylindracea compete with native Cystoseira and Sargassum forests in the Canary Islands and Madeira, altering community composition and reducing native canopy cover.",
+          "references": [
+            "Wirtz et al. (2013) The invasive species of Macaronesia",
+            "Sangil et al. (2012) Decline of Cystoseira forests in the Canary Islands",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Overfishing of demersal fish stocks",
+          "from_type": "pressures",
+          "to": "Demersal fish stock biomass",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Chronic overfishing of slow-growing demersal species in Macaronesian waters has depleted stocks of blackspot seabream, wreckfish, and red porgy, with stock assessments indicating biomass levels below sustainable reference points.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Habitat degradation from boat anchoring",
+          "from_type": "pressures",
+          "to": "Cystoseira and Sargassum forest extent and health",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Mechanical damage from anchor chains on shallow rocky reefs in the Canary Islands and Madeira fragments and uproots Cystoseira canopies, with recovery taking years to decades on volcanic substrate.",
+          "references": [
+            "Sangil et al. (2012) Decline of Cystoseira forests in the Canary Islands",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Underwater noise from vessel traffic",
+          "from_type": "pressures",
+          "to": "Cetacean population abundance and diversity",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Chronic underwater noise from whale-watching vessels and shipping around the Azores and southern Tenerife causes behavioral changes in sperm whales and Risso's dolphins, including reduced foraging time and habitat avoidance.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Marine litter accumulation on island coasts",
+          "from_type": "pressures",
+          "to": "Rocky reef community structure and endemism",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Marine litter, including microplastics, accumulates in Macaronesian coastal waters and sediments, entering food webs through ingestion by endemic invertebrates and fish species on volcanic rocky reefs.",
+          "references": [
+            "Santos et al. (2020) Marine litter in the Macaronesian region",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Cystoseira and Sargassum forest extent and health",
+          "from_type": "states",
+          "to": "Degraded diving and snorkeling site quality",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Decline of Cystoseira forests reduces the structural complexity and biodiversity of Canary Island dive sites, diminishing the aesthetic and ecological value that attracts recreational divers to Macaronesian waters.",
+          "references": [
+            "Sangil et al. (2012) Decline of Cystoseira forests in the Canary Islands",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Demersal fish stock biomass",
+          "from_type": "states",
+          "to": "Reduced artisanal fish catches",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Declining demersal fish biomass in Azores, Madeira, and Canary Islands waters directly reduces catch per unit effort for artisanal fishers targeting blackspot seabream, parrotfish, and other reef-associated species.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Rocky reef community structure and endemism",
+          "from_type": "states",
+          "to": "Loss of endemic marine species",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Degradation of rocky reef communities threatens Macaronesian endemic species, including the Azores chromis (Chromis limbata) and numerous endemic invertebrates found only on volcanic island reefs.",
+          "references": [
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Wirtz et al. (2013) The invasive species of Macaronesia"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Cystoseira and Sargassum forest extent and health",
+          "from_type": "states",
+          "to": "Altered nearshore food web structure",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Loss of Cystoseira canopy in the Canary Islands removes critical nursery habitat and trophic base for nearshore fish and invertebrate communities, cascading through the coastal food web.",
+          "references": [
+            "Sangil et al. (2012) Decline of Cystoseira forests in the Canary Islands",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Brito et al. (2011) Fishes of the Canary Islands"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Cetacean population abundance and diversity",
+          "from_type": "states",
+          "to": "Degraded diving and snorkeling site quality",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Declining cetacean populations in Azores and Canary Islands waters reduce the quality and reliability of whale-watching and swim-with-dolphin experiences that form a major tourist attraction.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Reduced artisanal fish catches",
+          "from_type": "impacts",
+          "to": "Fishing community livelihoods and income",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Declining catches directly reduce income for artisanal fishing households across all Macaronesian archipelagos, where fishing remains a primary livelihood for many coastal communities with limited alternative employment.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Degraded diving and snorkeling site quality",
+          "from_type": "impacts",
+          "to": "Marine tourism revenue",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Reduced quality of diving sites and whale-watching encounters in the Canary Islands and Azores threatens the marine tourism sector that generates hundreds of millions of euros annually for island economies.",
+          "references": [
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Reduced artisanal fish catches",
+          "from_type": "impacts",
+          "to": "Local food security from seafood",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Declining local fish landings reduce the availability and increase the price of fresh seafood in Macaronesian island markets, affecting food security in communities historically dependent on locally caught fish.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Loss of endemic marine species",
+          "from_type": "impacts",
+          "to": "Cultural identity of island fishing communities",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Loss of endemic species and traditional target fish erodes the cultural connection between Macaronesian island communities and their marine environment, diminishing traditions of knowledge and identity built around specific species.",
+          "references": [
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Fishing community livelihoods and income",
+          "from_type": "welfare",
+          "to": "Fishing effort and quota regulations",
+          "to_type": "responses",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Declining fisher incomes across Macaronesian islands create political pressure for both quota adjustments and socioeconomic support measures, driving policy responses at regional and EU levels.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Afonso et al. (2020) Azores marine protected areas"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Marine tourism revenue",
+          "from_type": "welfare",
+          "to": "Sustainable tourism certification schemes",
+          "to_type": "responses",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "The economic importance of marine tourism to Macaronesian island economies motivates development of sustainability certifications for whale watching, diving operators, and coastal hotels to protect the resource base.",
+          "references": [
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Afonso et al. (2020) Azores marine protected areas"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Azores Marine Park and MPA network expansion",
+          "from_type": "responses",
+          "to": "Overfishing of demersal fish stocks",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "The Azores Marine Park network, including no-take reserves at Formigas and Dollabarat, reduces fishing pressure on demersal stocks within protected areas, allowing stock recovery and spillover to adjacent fishing grounds.",
+          "references": [
+            "Afonso et al. (2020) Azores marine protected areas",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Invasive species monitoring and removal programmes",
+          "from_type": "responses",
+          "to": "Invasive species introduction (e.g., Caulerpa, Asparagopsis)",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Monitoring and early detection programmes in the Canary Islands and Azores aim to control invasive macroalgae and fish species before establishment, though eradication success remains limited for established populations.",
+          "references": [
+            "Wirtz et al. (2013) The invasive species of Macaronesia",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Afonso et al. (2020) Azores marine protected areas"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Marine litter reduction action plans",
+          "from_type": "responses",
+          "to": "Marine litter accumulation on island coasts",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Coordinated marine litter action plans across Macaronesian archipelagos, including beach cleanups and fishing gear recycling programmes, reduce litter inputs though oceanic transport of debris from distant sources remains uncontrolled.",
+          "references": [
+            "Santos et al. (2020) Marine litter in the Macaronesian region",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems",
+            "OSPAR (2010) Background Document on Seamounts"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Marine spatial planning for Macaronesian waters",
+          "from_type": "responses",
+          "to": "Habitat degradation from boat anchoring",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Marine spatial planning in Macaronesian waters designates mooring zones and anchoring restrictions near sensitive Cystoseira habitats, reducing physical damage to benthic communities from unregulated anchoring.",
+          "references": [
+            "Afonso et al. (2020) Azores marine protected areas",
+            "Sangil et al. (2012) Decline of Cystoseira forests in the Canary Islands",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Fishing effort and quota regulations",
+          "from_type": "responses",
+          "to": "Demersal fish stock biomass",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Quota restrictions and effort controls for Macaronesian demersal fisheries allow partial stock recovery, though effectiveness is limited by enforcement challenges across remote island waters.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Afonso et al. (2020) Azores marine protected areas"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Coastal aquaculture (sea bass, sea bream)",
+          "from_type": "activities",
+          "to": "Coastal water quality index",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Fish farm effluents from sea bass and sea bream cage culture in the Canary Islands and Madeira release nutrients and organic matter that reduce water quality in the oligotrophic waters surrounding volcanic islands.",
+          "references": [
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Coastal water quality index",
+          "from_type": "states",
+          "to": "Decline in coastal carbon sequestration",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Degraded water quality in nearshore Macaronesian waters can reduce productivity of macroalgal forests and seagrass patches that contribute to coastal blue carbon sequestration on volcanic island shelves.",
+          "references": [
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Sangil et al. (2012) Decline of Cystoseira forests in the Canary Islands",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        }
+      ]
+    },
+    "macaronesia_seamount": {
+      "regional_sea": "macaronesia",
+      "habitat": "deep_sea_seamount",
+      "description": "Deep-sea seamount ecosystems of Macaronesia, including the Great Meteor Seamount, Josephine Bank, and numerous unnamed seamounts surrounding the Azores. These elevated underwater volcanic features host cold-water coral gardens, deep-sea sponge aggregations, and hydrothermal vent communities with exceptionally high endemism.",
+      "drivers": [
+        {
+          "name": "Global seafood demand for deep-water species",
+          "relevance": 0.85
+        },
+        {
+          "name": "Scientific research interest in deep-sea biodiversity",
+          "relevance": 0.8
+        },
+        {
+          "name": "EU deep-sea access regulations",
+          "relevance": 0.8
+        },
+        {
+          "name": "Renewable energy and mineral exploration targets",
+          "relevance": 0.7
+        },
+        {
+          "name": "Climate change and deep-ocean warming",
+          "relevance": 0.75
+        },
+        {
+          "name": "OSPAR and CBD conservation commitments",
+          "relevance": 0.85
+        },
+        {
+          "name": "Submarine cable infrastructure demand",
+          "relevance": 0.6
+        }
+      ],
+      "activities": [
+        {
+          "name": "Deep-water bottom trawling on seamount flanks",
+          "relevance": 0.9
+        },
+        {
+          "name": "Deep-water longline fishing for black scabbardfish",
+          "relevance": 0.85
+        },
+        {
+          "name": "Scientific ROV surveys and sampling",
+          "relevance": 0.75
+        },
+        {
+          "name": "Submarine cable and pipeline laying",
+          "relevance": 0.65
+        },
+        {
+          "name": "Deep-sea mining exploration",
+          "relevance": 0.55
+        },
+        {
+          "name": "Pelagic fishing over seamount aggregations",
+          "relevance": 0.8
+        }
+      ],
+      "pressures": [
+        {
+          "name": "Physical destruction of seamount benthos by trawling",
+          "relevance": 0.95
+        },
+        {
+          "name": "Overfishing of seamount-aggregating species",
+          "relevance": 0.85
+        },
+        {
+          "name": "Deep-ocean warming and deoxygenation",
+          "relevance": 0.75
+        },
+        {
+          "name": "Sedimentation from bottom-contact gear",
+          "relevance": 0.8
+        },
+        {
+          "name": "Potential disturbance from deep-sea mining",
+          "relevance": 0.55
+        },
+        {
+          "name": "Marine debris accumulation on seamount summits",
+          "relevance": 0.65
+        },
+        {
+          "name": "Ocean acidification effects on deep corals",
+          "relevance": 0.7
+        }
+      ],
+      "states": [
+        {
+          "name": "Cold-water coral garden coverage on seamount flanks",
+          "relevance": 0.9
+        },
+        {
+          "name": "Deep-sea sponge aggregation integrity",
+          "relevance": 0.85
+        },
+        {
+          "name": "Hydrothermal vent community health (Azores)",
+          "relevance": 0.8
+        },
+        {
+          "name": "Seamount-associated fish biomass",
+          "relevance": 0.85
+        },
+        {
+          "name": "Deep-sea benthic invertebrate diversity",
+          "relevance": 0.8
+        }
+      ],
+      "impacts": [
+        {
+          "name": "Loss of vulnerable marine ecosystem structure",
+          "relevance": 0.9
+        },
+        {
+          "name": "Reduced deep-water fishery productivity",
+          "relevance": 0.8
+        },
+        {
+          "name": "Loss of undiscovered genetic resources",
+          "relevance": 0.75
+        },
+        {
+          "name": "Disrupted deep-sea nutrient cycling",
+          "relevance": 0.7
+        }
+      ],
+      "welfare": [
+        {
+          "name": "Deep-water fishing fleet viability",
+          "relevance": 0.8
+        },
+        {
+          "name": "Scientific knowledge and discovery value",
+          "relevance": 0.85
+        },
+        {
+          "name": "Existence value of unique deep-sea ecosystems",
+          "relevance": 0.8
+        },
+        {
+          "name": "Biotechnology potential from vent organisms",
+          "relevance": 0.7
+        },
+        {
+          "name": "Intergenerational equity in deep-sea resources",
+          "relevance": 0.75
+        }
+      ],
+      "responses": [
+        {
+          "name": "OSPAR seamount and hydrothermal vent protection",
+          "relevance": 0.9
+        },
+        {
+          "name": "EU deep-sea access regulation (bottom trawl ban)",
+          "relevance": 0.9
+        },
+        {
+          "name": "Azores deep-sea MPA designations",
+          "relevance": 0.85
+        },
+        {
+          "name": "VME encounter protocols for fishing vessels",
+          "relevance": 0.8
+        },
+        {
+          "name": "Deep-sea research and monitoring programmes",
+          "relevance": 0.75
+        },
+        {
+          "name": "ISA regulations for deep-sea mining",
+          "relevance": 0.65
+        },
+        {
+          "name": "NEAFC bottom fishing closures",
+          "relevance": 0.8
+        }
+      ],
+      "connections": [
+        {
+          "from": "Global seafood demand for deep-water species",
+          "from_type": "drivers",
+          "to": "Deep-water bottom trawling on seamount flanks",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "International demand for orange roughy, alfonsinos, and other deep-water species historically drove expansion of bottom trawling on Macaronesian seamounts, particularly around the Azores and Madeira.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Global seafood demand for deep-water species",
+          "from_type": "drivers",
+          "to": "Deep-water longline fishing for black scabbardfish",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Market demand for black scabbardfish (Aphanopus carbo), a Macaronesian specialty, drives longline fishing operations from Madeira and Azores ports targeting seamount-associated aggregations.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Brito et al. (2011) Fishes of the Canary Islands"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Scientific research interest in deep-sea biodiversity",
+          "from_type": "drivers",
+          "to": "Scientific ROV surveys and sampling",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "The exceptional biodiversity and endemism of Azores seamounts and hydrothermal vents attracts international research expeditions, with the Azores recognized as a deep-sea biodiversity hotspot in the NE Atlantic.",
+          "references": [
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Cardigos et al. (2005) Hydrothermal vent habitats of the Azores",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "EU deep-sea access regulations",
+          "from_type": "drivers",
+          "to": "Deep-water bottom trawling on seamount flanks",
+          "to_type": "activities",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "EU Regulation 2016/2336 restricting deep-sea bottom trawling below 800m has significantly curtailed trawl effort on Macaronesian seamounts, protecting vulnerable marine ecosystems from physical destruction.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Afonso et al. (2020) Azores marine protected areas"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Climate change and deep-ocean warming",
+          "from_type": "drivers",
+          "to": "Deep-ocean warming and deoxygenation",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Climate-driven warming of intermediate and deep water masses in the NE Atlantic is gradually altering temperature and oxygen conditions around Macaronesian seamounts, threatening temperature-sensitive cold-water coral species.",
+          "references": [
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "OSPAR (2010) Background Document on Seamounts",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Deep-water bottom trawling on seamount flanks",
+          "from_type": "activities",
+          "to": "Physical destruction of seamount benthos by trawling",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Bottom trawling on Macaronesian seamounts causes catastrophic and essentially irreversible destruction of cold-water corals, sponge gardens, and other sessile fauna that take centuries to millennia to grow on volcanic substrate.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Deep-water bottom trawling on seamount flanks",
+          "from_type": "activities",
+          "to": "Sedimentation from bottom-contact gear",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Trawl gear resuspends fine volcanic sediments on Macaronesian seamount flanks, creating turbidity plumes that smother filter-feeding corals and sponges across wide areas downstream of trawl tracks.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Deep-water longline fishing for black scabbardfish",
+          "from_type": "activities",
+          "to": "Overfishing of seamount-aggregating species",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Longline fishing targeting black scabbardfish aggregations over Macaronesian seamounts can deplete local populations rapidly due to the species' slow growth and the predictable nature of seamount aggregations.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "OSPAR (2010) Background Document on Seamounts"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic fishing over seamount aggregations",
+          "from_type": "activities",
+          "to": "Overfishing of seamount-aggregating species",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Pelagic fishing targeting tuna and other migratory species over Macaronesian seamounts exploits the aggregation effect that concentrates prey and predators around topographic features.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Physical destruction of seamount benthos by trawling",
+          "from_type": "pressures",
+          "to": "Cold-water coral garden coverage on seamount flanks",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Trawling has devastated cold-water coral gardens on previously fished Macaronesian seamounts, with ROV surveys showing near-complete removal of Lophelia pertusa and Madrepora oculata frameworks on trawled summits.",
+          "references": [
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "OSPAR (2010) Background Document on Seamounts",
+            "Cardigos et al. (2005) Hydrothermal vent habitats of the Azores"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Physical destruction of seamount benthos by trawling",
+          "from_type": "pressures",
+          "to": "Deep-sea sponge aggregation integrity",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Bottom trawling removes or fragments large structure-forming sponges on Macaronesian seamounts that may be hundreds of years old, with virtually no recovery potential on human timescales.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Sedimentation from bottom-contact gear",
+          "from_type": "pressures",
+          "to": "Deep-sea sponge aggregation integrity",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Resuspended sediment from trawling smothers filter-feeding sponge communities on Azores seamounts, clogging their aquiferous systems and reducing their ability to process food particles.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Overfishing of seamount-aggregating species",
+          "from_type": "pressures",
+          "to": "Seamount-associated fish biomass",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Serial depletion of fish stocks on Macaronesian seamounts, documented for orange roughy and alfonsinos, has reduced biomass to fractions of pre-exploitation levels with slow recovery due to species longevity.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Deep-ocean warming and deoxygenation",
+          "from_type": "pressures",
+          "to": "Cold-water coral garden coverage on seamount flanks",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Warming and shoaling of the aragonite saturation horizon in the NE Atlantic threatens cold-water coral survival on Macaronesian seamounts, as reduced carbonate saturation weakens coral skeletal integrity.",
+          "references": [
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "OSPAR (2010) Background Document on Seamounts",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Ocean acidification effects on deep corals",
+          "from_type": "pressures",
+          "to": "Cold-water coral garden coverage on seamount flanks",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Ocean acidification reduces calcification rates in cold-water corals on Azores seamounts, with projected aragonite undersaturation threatening Lophelia and Madrepora communities at their current depth ranges.",
+          "references": [
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "OSPAR (2010) Background Document on Seamounts",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Cold-water coral garden coverage on seamount flanks",
+          "from_type": "states",
+          "to": "Loss of vulnerable marine ecosystem structure",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Loss of cold-water coral frameworks on Macaronesian seamounts eliminates critical three-dimensional habitat that supports hundreds of associated species, representing irreversible loss of vulnerable marine ecosystems.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Cardigos et al. (2005) Hydrothermal vent habitats of the Azores"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Seamount-associated fish biomass",
+          "from_type": "states",
+          "to": "Reduced deep-water fishery productivity",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Depleted seamount fish stocks directly reduce the productivity and economic viability of deep-water fishing operations from Azores and Madeira ports, leading to fleet contraction.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Deep-sea benthic invertebrate diversity",
+          "from_type": "states",
+          "to": "Loss of undiscovered genetic resources",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Destruction of diverse benthic communities on Macaronesian seamounts eliminates potentially valuable genetic resources before they can be catalogued, given that an estimated 80% of seamount species remain undescribed.",
+          "references": [
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Cardigos et al. (2005) Hydrothermal vent habitats of the Azores",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Hydrothermal vent community health (Azores)",
+          "from_type": "states",
+          "to": "Disrupted deep-sea nutrient cycling",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Hydrothermal vents on the Mid-Atlantic Ridge near the Azores support chemosynthetic communities that drive local nutrient cycling; disruption of these communities alters energy and material flows in the deep-sea ecosystem.",
+          "references": [
+            "Cardigos et al. (2005) Hydrothermal vent habitats of the Azores",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "OSPAR (2010) Background Document on Seamounts"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Loss of vulnerable marine ecosystem structure",
+          "from_type": "impacts",
+          "to": "Existence value of unique deep-sea ecosystems",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Irreversible destruction of unique Macaronesian seamount habitats diminishes their existence value for society, as these ecosystems are recognized as globally significant and irreplaceable natural heritage.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Reduced deep-water fishery productivity",
+          "from_type": "impacts",
+          "to": "Deep-water fishing fleet viability",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Declining productivity of deep-water fisheries around Macaronesian seamounts threatens the economic viability of specialized fishing fleets based in the Azores and Madeira.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "OSPAR (2010) Background Document on Seamounts"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Loss of undiscovered genetic resources",
+          "from_type": "impacts",
+          "to": "Biotechnology potential from vent organisms",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Destruction of Azores hydrothermal vent and seamount communities eliminates potential biotechnology resources, as extremophile organisms from these habitats produce unique enzymes and bioactive compounds of pharmaceutical interest.",
+          "references": [
+            "Cardigos et al. (2005) Hydrothermal vent habitats of the Azores",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Loss of vulnerable marine ecosystem structure",
+          "from_type": "impacts",
+          "to": "Intergenerational equity in deep-sea resources",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Irreversible destruction of Macaronesian seamount ecosystems that took millennia to develop fundamentally compromises future generations' access to these natural resources and the services they provide.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Existence value of unique deep-sea ecosystems",
+          "from_type": "welfare",
+          "to": "OSPAR seamount and hydrothermal vent protection",
+          "to_type": "responses",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Growing public awareness of the unique value of Macaronesian deep-sea ecosystems has driven OSPAR to designate seamounts and hydrothermal vents as protected features requiring conservation measures.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Cardigos et al. (2005) Hydrothermal vent habitats of the Azores",
+            "Afonso et al. (2020) Azores marine protected areas"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Deep-water fishing fleet viability",
+          "from_type": "welfare",
+          "to": "EU deep-sea access regulation (bottom trawl ban)",
+          "to_type": "responses",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Economic decline of Macaronesian deep-water fleets, combined with environmental concerns, provided impetus for EU deep-sea access regulations restricting destructive fishing practices on seamounts.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "OSPAR seamount and hydrothermal vent protection",
+          "from_type": "responses",
+          "to": "Physical destruction of seamount benthos by trawling",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "OSPAR protection measures for Macaronesian seamounts, including listing of seamount and hydrothermal vent habitats as threatened and/or declining, have contributed to fishing closures that reduce physical destruction of benthic communities.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Afonso et al. (2020) Azores marine protected areas",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "EU deep-sea access regulation (bottom trawl ban)",
+          "from_type": "responses",
+          "to": "Physical destruction of seamount benthos by trawling",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "The EU bottom trawling depth restriction has been the single most effective measure reducing physical destruction of deep-sea habitats on Macaronesian seamounts, essentially eliminating trawl impacts below 800m.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Afonso et al. (2020) Azores marine protected areas"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Azores deep-sea MPA designations",
+          "from_type": "responses",
+          "to": "Overfishing of seamount-aggregating species",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Designation of deep-sea MPAs around Azores seamounts restricts fishing activity within protected areas, reducing exploitation pressure on seamount-aggregating fish populations.",
+          "references": [
+            "Afonso et al. (2020) Azores marine protected areas",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "VME encounter protocols for fishing vessels",
+          "from_type": "responses",
+          "to": "Physical destruction of seamount benthos by trawling",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "VME encounter protocols require fishing vessels to move away when catching indicator species such as cold-water corals on Macaronesian seamounts, providing real-time protection for previously unknown vulnerable habitats.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "NEAFC bottom fishing closures",
+          "from_type": "responses",
+          "to": "Physical destruction of seamount benthos by trawling",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "NEAFC bottom fishing closures on international waters around Macaronesian seamounts complement EU and national measures, providing protection for seamounts beyond national jurisdiction.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Deep-sea research and monitoring programmes",
+          "from_type": "responses",
+          "to": "Hydrothermal vent community health (Azores)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Ongoing research programmes at Azores hydrothermal vent sites (Lucky Strike, Menez Gwen, Rainbow) improve understanding and inform adaptive management, though research activities themselves can cause minor physical disturbance.",
+          "references": [
+            "Cardigos et al. (2005) Hydrothermal vent habitats of the Azores",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Scientific knowledge and discovery value",
+          "from_type": "welfare",
+          "to": "Deep-sea research and monitoring programmes",
+          "to_type": "responses",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "The high scientific value of Macaronesian seamount and vent ecosystems attracts research funding and drives establishment of long-term monitoring programmes, particularly at Azores hydrothermal vent sites.",
+          "references": [
+            "Cardigos et al. (2005) Hydrothermal vent habitats of the Azores",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Submarine cable and pipeline laying",
+          "from_type": "activities",
+          "to": "Marine debris accumulation on seamount summits",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Submarine cable installation across Macaronesian seamount areas can disturb summit habitats and abandoned cables contribute to marine debris, though this impact is localized compared to trawling.",
+          "references": [
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "OSPAR (2010) Background Document on Seamounts",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "OSPAR and CBD conservation commitments",
+          "from_type": "drivers",
+          "to": "Azores deep-sea MPA designations",
+          "to_type": "responses",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "International commitments under OSPAR and the Convention on Biological Diversity drive Portugal and Spain to designate deep-sea MPAs around Macaronesian seamounts, meeting targets for protecting vulnerable marine ecosystems.",
+          "references": [
+            "OSPAR (2010) Background Document on Seamounts",
+            "Afonso et al. (2020) Azores marine protected areas",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Marine debris accumulation on seamount summits",
+          "from_type": "pressures",
+          "to": "Deep-sea benthic invertebrate diversity",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Marine debris including abandoned fishing gear and plastic waste accumulates on Macaronesian seamount summits, entangling deep-sea corals and sponges and introducing microplastics into the benthic food web.",
+          "references": [
+            "Santos et al. (2020) Marine litter in the Macaronesian region",
+            "Martins et al. (2021) Deep-sea ecosystems of the Azores",
+            "OSPAR (2010) Background Document on Seamounts"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        }
+      ]
+    },
+    "macaronesia_open_coast": {
+      "regional_sea": "macaronesia",
+      "habitat": "open_coast_pelagic",
+      "description": "Open coast and pelagic ecosystems of the Macaronesian region, encompassing the productive waters between volcanic archipelagos where the Canary Current, Azores Current, and North Atlantic subtropical gyre create dynamic oceanographic conditions supporting major tuna fisheries, cetacean migration corridors, and pelagic Sargassum communities.",
+      "drivers": [
+        {
+          "name": "Global tuna and pelagic fish market demand",
+          "relevance": 0.9
+        },
+        {
+          "name": "Climate change and shifting ocean currents",
+          "relevance": 0.85
+        },
+        {
+          "name": "EU Common Fisheries Policy for pelagic stocks",
+          "relevance": 0.8
+        },
+        {
+          "name": "Offshore renewable energy development targets",
+          "relevance": 0.7
+        },
+        {
+          "name": "International shipping route expansion",
+          "relevance": 0.75
+        },
+        {
+          "name": "Marine ecotourism demand (pelagic wildlife)",
+          "relevance": 0.8
+        }
+      ],
+      "activities": [
+        {
+          "name": "Industrial tuna purse-seine and pole-and-line fishing",
+          "relevance": 0.9
+        },
+        {
+          "name": "Pelagic longline fishing for swordfish and sharks",
+          "relevance": 0.85
+        },
+        {
+          "name": "Commercial shipping and vessel transit",
+          "relevance": 0.8
+        },
+        {
+          "name": "Offshore wind and wave energy development",
+          "relevance": 0.6
+        },
+        {
+          "name": "Pelagic whale and dolphin watching excursions",
+          "relevance": 0.8
+        },
+        {
+          "name": "Marine scientific research expeditions",
+          "relevance": 0.65
+        },
+        {
+          "name": "Military sonar exercises",
+          "relevance": 0.55
+        }
+      ],
+      "pressures": [
+        {
+          "name": "Overfishing of pelagic and highly migratory stocks",
+          "relevance": 0.9
+        },
+        {
+          "name": "Bycatch of sea turtles and seabirds in longlines",
+          "relevance": 0.85
+        },
+        {
+          "name": "Ocean warming and current regime shifts",
+          "relevance": 0.85
+        },
+        {
+          "name": "Pelagic marine litter and microplastic pollution",
+          "relevance": 0.8
+        },
+        {
+          "name": "Ship strike risk to large cetaceans",
+          "relevance": 0.75
+        },
+        {
+          "name": "Underwater noise from shipping and sonar",
+          "relevance": 0.7
+        },
+        {
+          "name": "Shark finning and targeted shark mortality",
+          "relevance": 0.75
+        }
+      ],
+      "states": [
+        {
+          "name": "Atlantic tuna stock abundance (bluefin, skipjack, bigeye)",
+          "relevance": 0.9
+        },
+        {
+          "name": "Large cetacean population health (sperm whale, beaked whales)",
+          "relevance": 0.85
+        },
+        {
+          "name": "Pelagic shark and ray population status",
+          "relevance": 0.8
+        },
+        {
+          "name": "Loggerhead and leatherback sea turtle abundance",
+          "relevance": 0.8
+        },
+        {
+          "name": "Pelagic Sargassum community extent",
+          "relevance": 0.7
+        },
+        {
+          "name": "Cory's shearwater and other seabird colony size",
+          "relevance": 0.75
+        }
+      ],
+      "impacts": [
+        {
+          "name": "Declining pelagic fishery catch rates",
+          "relevance": 0.85
+        },
+        {
+          "name": "Loss of apex predator trophic function",
+          "relevance": 0.8
+        },
+        {
+          "name": "Reduced marine wildlife encounter rates for ecotourism",
+          "relevance": 0.75
+        },
+        {
+          "name": "Disrupted pelagic food web connectivity",
+          "relevance": 0.75
+        },
+        {
+          "name": "Decline in seabird breeding success",
+          "relevance": 0.7
+        }
+      ],
+      "welfare": [
+        {
+          "name": "Tuna fishing industry revenue and employment",
+          "relevance": 0.9
+        },
+        {
+          "name": "Marine ecotourism income from pelagic wildlife",
+          "relevance": 0.8
+        },
+        {
+          "name": "Regional food security from pelagic fish protein",
+          "relevance": 0.75
+        },
+        {
+          "name": "Cultural significance of traditional tuna fishing",
+          "relevance": 0.7
+        },
+        {
+          "name": "Aesthetic and spiritual value of ocean wilderness",
+          "relevance": 0.65
+        }
+      ],
+      "responses": [
+        {
+          "name": "ICCAT tuna stock management measures",
+          "relevance": 0.9
+        },
+        {
+          "name": "EU shark finning ban and catch limits",
+          "relevance": 0.85
+        },
+        {
+          "name": "IMO shipping lane adjustments for cetacean protection",
+          "relevance": 0.75
+        },
+        {
+          "name": "Seabird bycatch mitigation requirements",
+          "relevance": 0.8
+        },
+        {
+          "name": "Pelagic MPA and OECM designations",
+          "relevance": 0.8
+        },
+        {
+          "name": "OSPAR marine litter regional action plan",
+          "relevance": 0.7
+        },
+        {
+          "name": "Marine spatial planning for offshore activities",
+          "relevance": 0.75
+        },
+        {
+          "name": "Cetacean critical habitat identification programmes",
+          "relevance": 0.7
+        }
+      ],
+      "connections": [
+        {
+          "from": "Global tuna and pelagic fish market demand",
+          "from_type": "drivers",
+          "to": "Industrial tuna purse-seine and pole-and-line fishing",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "International demand for canned and fresh tuna drives the major purse-seine and pole-and-line fleets operating in Macaronesian waters, particularly from the Azores and Canary Islands where tuna fishing is a cornerstone industry.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Global tuna and pelagic fish market demand",
+          "from_type": "drivers",
+          "to": "Pelagic longline fishing for swordfish and sharks",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "High market value of swordfish and blue shark drives longline operations across Macaronesian open waters, with the Azores serving as a major base for Portuguese and Spanish pelagic longline fleets.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Brito et al. (2011) Fishes of the Canary Islands"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Climate change and shifting ocean currents",
+          "from_type": "drivers",
+          "to": "Ocean warming and current regime shifts",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Climate change is altering the strength and position of the Canary Current and Azores Current systems, with warming shifting the subtropical-temperate boundary northward and affecting upwelling patterns that sustain Macaronesian pelagic productivity.",
+          "references": [
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Spalding et al. (2007) Marine Ecoregions of the World",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "International shipping route expansion",
+          "from_type": "drivers",
+          "to": "Commercial shipping and vessel transit",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Growing global trade volumes increase shipping traffic through Macaronesian waters, which lie on major transatlantic shipping routes between Europe, Africa, and the Americas.",
+          "references": [
+            "Spalding et al. (2007) Marine Ecoregions of the World",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems",
+            "Santos et al. (2020) Marine litter in the Macaronesian region"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Marine ecotourism demand (pelagic wildlife)",
+          "from_type": "drivers",
+          "to": "Pelagic whale and dolphin watching excursions",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Growing ecotourism demand drives expansion of open-ocean whale watching from the Azores, where sperm whales and over 20 cetacean species attract thousands of visitors annually to pelagic excursions.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Industrial tuna purse-seine and pole-and-line fishing",
+          "from_type": "activities",
+          "to": "Overfishing of pelagic and highly migratory stocks",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Industrial tuna fishing in Macaronesian waters contributes to cumulative fishing mortality on shared Atlantic tuna stocks, with skipjack and bigeye tuna showing signs of overexploitation from combined fleet pressure.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic longline fishing for swordfish and sharks",
+          "from_type": "activities",
+          "to": "Bycatch of sea turtles and seabirds in longlines",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Pelagic longlines set in Macaronesian waters incidentally catch loggerhead sea turtles and Cory's shearwaters, with the Azores and Canary Islands longline fisheries identified as significant bycatch hotspots for both species.",
+          "references": [
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic longline fishing for swordfish and sharks",
+          "from_type": "activities",
+          "to": "Shark finning and targeted shark mortality",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Longline fleets operating in Macaronesian waters target blue sharks and shortfin mako sharks alongside swordfish, contributing to severe population declines of pelagic shark species in the NE Atlantic.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Commercial shipping and vessel transit",
+          "from_type": "activities",
+          "to": "Ship strike risk to large cetaceans",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Shipping traffic through Macaronesian waters poses lethal ship strike risk to sperm whales, fin whales, and beaked whales, with the Canary Islands documented as a high-risk area for ship-whale collisions.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Commercial shipping and vessel transit",
+          "from_type": "activities",
+          "to": "Pelagic marine litter and microplastic pollution",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Commercial vessels transiting Macaronesian waters contribute to pelagic marine litter through operational discharges and cargo loss, adding to oceanic debris accumulation in the subtropical convergence zone.",
+          "references": [
+            "Santos et al. (2020) Marine litter in the Macaronesian region",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Commercial shipping and vessel transit",
+          "from_type": "activities",
+          "to": "Underwater noise from shipping and sonar",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Chronic low-frequency noise from shipping in Macaronesian waters masks cetacean communication signals, particularly affecting deep-diving species like sperm whales and beaked whales in the acoustic-sensitive deep channels between islands.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Overfishing of pelagic and highly migratory stocks",
+          "from_type": "pressures",
+          "to": "Atlantic tuna stock abundance (bluefin, skipjack, bigeye)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Cumulative fishing pressure from multiple fleets reduces tuna stock abundance in Macaronesian waters, with ICCAT assessments showing several Atlantic tuna stocks at or below maximum sustainable yield.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Shark finning and targeted shark mortality",
+          "from_type": "pressures",
+          "to": "Pelagic shark and ray population status",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Intensive shark fishing in Macaronesian waters has driven severe population declines in blue sharks, shortfin makos, and hammerheads, with the NE Atlantic identified as a global hotspot for shark overexploitation.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Bycatch of sea turtles and seabirds in longlines",
+          "from_type": "pressures",
+          "to": "Loggerhead and leatherback sea turtle abundance",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Longline bycatch mortality in Macaronesian waters significantly affects loggerhead sea turtle populations, as juvenile loggerheads from western Atlantic nesting beaches concentrate in the Azores-Canaries region during their oceanic developmental phase.",
+          "references": [
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Bycatch of sea turtles and seabirds in longlines",
+          "from_type": "pressures",
+          "to": "Cory's shearwater and other seabird colony size",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Longline bycatch kills adult Cory's shearwaters during the breeding season in the Azores and Canary Islands, where Macaronesia hosts the world's largest breeding population of this species.",
+          "references": [
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Ship strike risk to large cetaceans",
+          "from_type": "pressures",
+          "to": "Large cetacean population health (sperm whale, beaked whales)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Ship strikes are a documented cause of mortality for sperm whales and fin whales in the Canary Islands, where high shipping traffic intersects with critical cetacean habitat and migration routes.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "immediate",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Ocean warming and current regime shifts",
+          "from_type": "pressures",
+          "to": "Atlantic tuna stock abundance (bluefin, skipjack, bigeye)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Warming waters in the Macaronesian region are shifting tuna distribution patterns, with tropical species expanding northward and temperate species retreating, altering traditional fishing grounds around the Azores and Canaries.",
+          "references": [
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic marine litter and microplastic pollution",
+          "from_type": "pressures",
+          "to": "Loggerhead and leatherback sea turtle abundance",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Juvenile loggerhead sea turtles in Macaronesian waters ingest floating plastic debris mistaken for jellyfish prey, with studies documenting microplastic contamination in a high proportion of stranded turtles across the Canary Islands.",
+          "references": [
+            "Santos et al. (2020) Marine litter in the Macaronesian region",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Atlantic tuna stock abundance (bluefin, skipjack, bigeye)",
+          "from_type": "states",
+          "to": "Declining pelagic fishery catch rates",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Reduced tuna stock abundance translates directly to declining catch rates for Macaronesian tuna fleets, threatening the viability of pole-and-line and purse-seine operations based in the Azores and Canary Islands.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic shark and ray population status",
+          "from_type": "states",
+          "to": "Loss of apex predator trophic function",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Decline of pelagic sharks in Macaronesian waters removes top-down control on mesopredator populations, with documented trophic cascades affecting prey community structure in the open NE Atlantic.",
+          "references": [
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Large cetacean population health (sperm whale, beaked whales)",
+          "from_type": "states",
+          "to": "Reduced marine wildlife encounter rates for ecotourism",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Declining cetacean populations reduce encounter rates for whale-watching operations in the Azores and Canary Islands, directly affecting the reliability and quality of the ecotourism product.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Cory's shearwater and other seabird colony size",
+          "from_type": "states",
+          "to": "Decline in seabird breeding success",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Reduced colony sizes of Cory's shearwaters and other seabirds on Macaronesian islands diminish breeding success through Allee effects and reduced social facilitation at colonies in the Azores, Madeira, and Canary Islands.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Tuya et al. (2014) Biogeography of the Macaronesian region"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Declining pelagic fishery catch rates",
+          "from_type": "impacts",
+          "to": "Tuna fishing industry revenue and employment",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Declining tuna catch rates directly reduce revenue and threaten employment in the Macaronesian tuna fishing industry, which is a major employer in Azores and Canary Islands coastal communities.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Reduced marine wildlife encounter rates for ecotourism",
+          "from_type": "impacts",
+          "to": "Marine ecotourism income from pelagic wildlife",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Lower cetacean encounter rates reduce tourist satisfaction and willingness to pay for whale-watching excursions in the Azores and Canary Islands, threatening the viability of marine ecotourism businesses.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Declining pelagic fishery catch rates",
+          "from_type": "impacts",
+          "to": "Regional food security from pelagic fish protein",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Reduced local tuna and pelagic fish landings affect food security on Macaronesian islands where fresh fish is a dietary staple, increasing dependence on imported frozen seafood.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Tuna fishing industry revenue and employment",
+          "from_type": "welfare",
+          "to": "ICCAT tuna stock management measures",
+          "to_type": "responses",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Economic pressure from declining Macaronesian tuna fisheries contributes to political support for ICCAT management measures, though industry also resists strict quota reductions that threaten short-term livelihoods.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Marine ecotourism income from pelagic wildlife",
+          "from_type": "welfare",
+          "to": "Cetacean critical habitat identification programmes",
+          "to_type": "responses",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "The economic value of whale watching in the Azores and Canary Islands motivates investment in cetacean research and critical habitat mapping to support conservation of the resource base.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Afonso et al. (2020) Azores marine protected areas"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "ICCAT tuna stock management measures",
+          "from_type": "responses",
+          "to": "Overfishing of pelagic and highly migratory stocks",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "ICCAT quota allocations and fishing effort controls for Atlantic tuna stocks reduce cumulative fishing mortality in Macaronesian waters, with the successful recovery of Atlantic bluefin tuna demonstrating management effectiveness.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Brito et al. (2011) Fishes of the Canary Islands",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "EU shark finning ban and catch limits",
+          "from_type": "responses",
+          "to": "Shark finning and targeted shark mortality",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "The EU fins-attached regulation and emerging catch limits for blue and mako sharks reduce targeted shark mortality by Macaronesian-based longline fleets, though enforcement at sea remains challenging.",
+          "references": [
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "IMO shipping lane adjustments for cetacean protection",
+          "from_type": "responses",
+          "to": "Ship strike risk to large cetaceans",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "IMO-endorsed traffic separation scheme adjustments in the Canary Islands have reduced ship strike risk by rerouting vessels away from known sperm whale and fin whale concentration areas.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Seabird bycatch mitigation requirements",
+          "from_type": "responses",
+          "to": "Bycatch of sea turtles and seabirds in longlines",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Mandatory use of bird-scaring lines, weighted hooks, and night setting by longline vessels in Macaronesian waters reduces incidental capture of Cory's shearwaters and other seabirds during fishing operations.",
+          "references": [
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Pelagic MPA and OECM designations",
+          "from_type": "responses",
+          "to": "Overfishing of pelagic and highly migratory stocks",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Designation of pelagic MPAs and other effective conservation measures in Macaronesian waters provides spatial protection for critical tuna spawning and feeding areas, complementing stock-wide management measures.",
+          "references": [
+            "Afonso et al. (2020) Azores marine protected areas",
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Spalding et al. (2007) Marine Ecoregions of the World"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "OSPAR marine litter regional action plan",
+          "from_type": "responses",
+          "to": "Pelagic marine litter and microplastic pollution",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "OSPAR's Regional Action Plan on Marine Litter addresses land-based and sea-based sources of litter entering Macaronesian waters, though oceanic transport from distant sources limits the effectiveness of regional measures alone.",
+          "references": [
+            "Santos et al. (2020) Marine litter in the Macaronesian region",
+            "OSPAR (2010) Background Document on Seamounts",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Underwater noise from shipping and sonar",
+          "from_type": "pressures",
+          "to": "Large cetacean population health (sperm whale, beaked whales)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Chronic anthropogenic noise in Macaronesian deep channels affects beaked whales and sperm whales, with mass strandings of beaked whales in the Canary Islands linked to military sonar exercises in adjacent waters.",
+          "references": [
+            "Monteiro et al. (2008) Cetacean diversity in the Azores",
+            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Loss of apex predator trophic function",
+          "from_type": "impacts",
+          "to": "Disrupted pelagic food web connectivity",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Removal of sharks and large tuna from Macaronesian pelagic ecosystems triggers mesopredator release and trophic cascades that propagate through the open ocean food web, reducing overall ecosystem stability.",
+          "references": [
+            "Friedlander et al. (2017) Marine biodiversity in the Azores",
+            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
+            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
+          ],
+          "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
         }
       ]
