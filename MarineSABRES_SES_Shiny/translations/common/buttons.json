@@ -505,6 +505,17 @@
       "it": "Capito",
       "no": "Forstått",
       "el": "Κατάλαβα"
+    },
+    "common.buttons.next_steps": {
+      "en": "Next Steps",
+      "es": "Siguientes Pasos",
+      "fr": "Étapes Suivantes",
+      "de": "Nächste Schritte",
+      "lt": "Kiti Žingsniai",
+      "pt": "Próximos Passos",
+      "it": "Passi Successivi",
+      "no": "Neste Steg",
+      "el": "Επόμενα Βήματα"
     }
   }
 }

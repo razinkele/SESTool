@@ -1,0 +1,191 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "modules.tool_recommendations.loops.leverage_label": {
+      "en": "Leverage Point Analysis",
+      "es": "Análisis de Puntos de Apalancamiento",
+      "fr": "Analyse des Points de Levier",
+      "de": "Hebelwirkungsanalyse",
+      "lt": "Sverto Taškų Analizė",
+      "pt": "Análise de Pontos de Alavancagem",
+      "it": "Analisi dei Punti di Leva",
+      "no": "Analyse av Løftepunkter",
+      "el": "Ανάλυση Σημείων Μόχλευσης"
+    },
+    "modules.tool_recommendations.loops.leverage_desc": {
+      "en": "Identify which nodes in your loops have the most system-wide influence",
+      "es": "Identifique qué nodos de sus bucles tienen la mayor influencia en todo el sistema",
+      "fr": "Identifiez les nœuds de vos boucles ayant la plus grande influence sur l'ensemble du système",
+      "de": "Identifizieren Sie, welche Knoten in Ihren Schleifen den größten systemweiten Einfluss haben",
+      "lt": "Nustatykite, kurie jūsų kilpų mazgai turi didžiausią įtaką visai sistemai",
+      "pt": "Identifique quais nós dos seus loops têm maior influência em todo o sistema",
+      "it": "Identifica quali nodi dei tuoi loop hanno la maggiore influenza sull'intero sistema",
+      "no": "Identifiser hvilke noder i løkkene dine som har størst systemomfattende innflytelse",
+      "el": "Προσδιορίστε ποιοι κόμβοι στους βρόχους σας έχουν τη μεγαλύτερη επίδραση σε ολόκληρο το σύστημα"
+    },
+    "modules.tool_recommendations.loops.metrics_label": {
+      "en": "Network Metrics",
+      "es": "Métricas de Red",
+      "fr": "Métriques Réseau",
+      "de": "Netzwerkmetriken",
+      "lt": "Tinklo Metrikos",
+      "pt": "Métricas de Rede",
+      "it": "Metriche di Rete",
+      "no": "Nettverksmålinger",
+      "el": "Μετρικές Δικτύου"
+    },
+    "modules.tool_recommendations.loops.metrics_desc": {
+      "en": "Get detailed centrality and connectivity statistics for your network",
+      "es": "Obtenga estadísticas detalladas de centralidad y conectividad para su red",
+      "fr": "Obtenez des statistiques détaillées de centralité et de connectivité pour votre réseau",
+      "de": "Detaillierte Zentralitäts- und Konnektivitätsstatistiken für Ihr Netzwerk abrufen",
+      "lt": "Gaukite išsamią tinklo centralizuotumo ir ryšių statistiką",
+      "pt": "Obtenha estatísticas detalhadas de centralidade e conectividade para a sua rede",
+      "it": "Ottieni statistiche dettagliate di centralità e connettività per la tua rete",
+      "no": "Få detaljerte sentralitets- og tilkoblingsstatistikker for nettverket ditt",
+      "el": "Αποκτήστε λεπτομερή στατιστικά κεντρικότητας και συνδεσιμότητας για το δίκτυό σας"
+    },
+    "modules.tool_recommendations.loops.report_label": {
+      "en": "Prepare Report",
+      "es": "Preparar Informe",
+      "fr": "Préparer le Rapport",
+      "de": "Bericht Erstellen",
+      "lt": "Parengti Ataskaitą",
+      "pt": "Preparar Relatório",
+      "it": "Prepara Report",
+      "no": "Forbered Rapport",
+      "el": "Προετοιμασία Αναφοράς"
+    },
+    "modules.tool_recommendations.loops.report_desc": {
+      "en": "Generate a report including your loop analysis results",
+      "es": "Genere un informe que incluya los resultados del análisis de bucles",
+      "fr": "Générez un rapport incluant les résultats de votre analyse des boucles",
+      "de": "Erstellen Sie einen Bericht mit Ihren Schleifenanalyseergebnissen",
+      "lt": "Sukurkite ataskaitą, apimančią jūsų kilpų analizės rezultatus",
+      "pt": "Gere um relatório com os resultados da análise de loops",
+      "it": "Genera un report con i risultati dell'analisi dei loop",
+      "no": "Generer en rapport som inkluderer resultatene av løkkeanalysen din",
+      "el": "Δημιουργήστε μια αναφορά που περιλαμβάνει τα αποτελέσματα ανάλυσης βρόχων σας"
+    },
+    "modules.tool_recommendations.leverage.loops_label": {
+      "en": "Loop Detection",
+      "es": "Detección de Bucles",
+      "fr": "Détection de Boucles",
+      "de": "Schleifenerkennung",
+      "lt": "Kilpų Aptikimas",
+      "pt": "Deteção de Loops",
+      "it": "Rilevamento dei Loop",
+      "no": "Løkkegjenkjenning",
+      "el": "Ανίχνευση Βρόχων"
+    },
+    "modules.tool_recommendations.leverage.loops_desc": {
+      "en": "Find feedback loops that pass through your high-leverage nodes",
+      "es": "Encuentre bucles de retroalimentación que pasan por sus nodos de alto apalancamiento",
+      "fr": "Trouvez les boucles de rétroaction qui passent par vos nœuds à fort levier",
+      "de": "Finden Sie Rückkopplungsschleifen, die durch Ihre Hochhebel-Knoten verlaufen",
+      "lt": "Raskite grįžtamojo ryšio kilpas, einančias per jūsų aukšto sverto mazgus",
+      "pt": "Encontre loops de retroalimentação que passam pelos seus nós de alta alavancagem",
+      "it": "Trova i loop di retroazione che passano attraverso i tuoi nodi ad alta leva",
+      "no": "Finn tilbakekoblingsløkker som går gjennom dine høy-leverage noder",
+      "el": "Βρείτε βρόχους ανατροφοδότησης που διέρχονται από τους κόμβους υψηλής μόχλευσης"
+    },
+    "modules.tool_recommendations.leverage.responses_label": {
+      "en": "Response Measures",
+      "es": "Medidas de Respuesta",
+      "fr": "Mesures de Réponse",
+      "de": "Reaktionsmaßnahmen",
+      "lt": "Atsako Priemonės",
+      "pt": "Medidas de Resposta",
+      "it": "Misure di Risposta",
+      "no": "Responstiltak",
+      "el": "Μέτρα Αντίδρασης"
+    },
+    "modules.tool_recommendations.leverage.responses_desc": {
+      "en": "Design response measures targeting your top leverage points",
+      "es": "Diseñe medidas de respuesta orientadas a sus principales puntos de apalancamiento",
+      "fr": "Concevez des mesures de réponse ciblant vos principaux points de levier",
+      "de": "Entwickeln Sie Reaktionsmaßnahmen, die auf Ihre wichtigsten Hebelpunkte abzielen",
+      "lt": "Suprojektuokite atsako priemones, skirtas jūsų svarbiausiais sverto taškais",
+      "pt": "Conceba medidas de resposta direcionadas para os seus principais pontos de alavancagem",
+      "it": "Progetta misure di risposta mirate ai tuoi principali punti di leva",
+      "no": "Design responstiltak rettet mot dine viktigste løftepunkter",
+      "el": "Σχεδιάστε μέτρα αντίδρασης που στοχεύουν τα κορυφαία σημεία μόχλευσής σας"
+    },
+    "modules.tool_recommendations.leverage.report_label": {
+      "en": "Prepare Report",
+      "es": "Preparar Informe",
+      "fr": "Préparer le Rapport",
+      "de": "Bericht Erstellen",
+      "lt": "Parengti Ataskaitą",
+      "pt": "Preparar Relatório",
+      "it": "Prepara Report",
+      "no": "Forbered Rapport",
+      "el": "Προετοιμασία Αναφοράς"
+    },
+    "modules.tool_recommendations.leverage.report_desc": {
+      "en": "Generate a report with your leverage analysis findings",
+      "es": "Genere un informe con los hallazgos de su análisis de apalancamiento",
+      "fr": "Générez un rapport avec les résultats de votre analyse de levier",
+      "de": "Erstellen Sie einen Bericht mit Ihren Hebelanalyseergebnissen",
+      "lt": "Sukurkite ataskaitą su jūsų sverto analizės išvadomis",
+      "pt": "Gere um relatório com os resultados da análise de alavancagem",
+      "it": "Genera un report con i risultati dell'analisi della leva",
+      "no": "Generer en rapport med funnene fra leverage-analysen din",
+      "el": "Δημιουργήστε μια αναφορά με τα ευρήματα ανάλυσης μόχλευσης"
+    },
+    "modules.tool_recommendations.metrics.leverage_label": {
+      "en": "Leverage Point Analysis",
+      "es": "Análisis de Puntos de Apalancamiento",
+      "fr": "Analyse des Points de Levier",
+      "de": "Hebelwirkungsanalyse",
+      "lt": "Sverto Taškų Analizė",
+      "pt": "Análise de Pontos de Alavancagem",
+      "it": "Analisi dei Punti di Leva",
+      "no": "Analyse av Løftepunkter",
+      "el": "Ανάλυση Σημείων Μόχλευσης"
+    },
+    "modules.tool_recommendations.metrics.leverage_desc": {
+      "en": "Use centrality metrics to identify system leverage points",
+      "es": "Utilice métricas de centralidad para identificar puntos de apalancamiento del sistema",
+      "fr": "Utilisez les métriques de centralité pour identifier les points de levier du système",
+      "de": "Verwenden Sie Zentralitätsmetriken, um Systemhebelpunkte zu identifizieren",
+      "lt": "Naudokite centralizuotumo metrikas sistemos sverto taškams nustatyti",
+      "pt": "Use métricas de centralidade para identificar pontos de alavancagem do sistema",
+      "it": "Usa le metriche di centralità per identificare i punti di leva del sistema",
+      "no": "Bruk sentralitetsmålinger for å identifisere systemets løftepunkter",
+      "el": "Χρησιμοποιήστε μετρικές κεντρικότητας για να εντοπίσετε σημεία μόχλευσης συστήματος"
+    },
+    "modules.tool_recommendations.metrics.loops_label": {
+      "en": "Loop Detection",
+      "es": "Detección de Bucles",
+      "fr": "Détection de Boucles",
+      "de": "Schleifenerkennung",
+      "lt": "Kilpų Aptikimas",
+      "pt": "Deteção de Loops",
+      "it": "Rilevamento dei Loop",
+      "no": "Løkkegjenkjenning",
+      "el": "Ανίχνευση Βρόχων"
+    },
+    "modules.tool_recommendations.metrics.loops_desc": {
+      "en": "Discover feedback loops in your network structure",
+      "es": "Descubra bucles de retroalimentación en la estructura de su red",
+      "fr": "Découvrez les boucles de rétroaction dans la structure de votre réseau",
+      "de": "Entdecken Sie Rückkopplungsschleifen in Ihrer Netzwerkstruktur",
+      "lt": "Atraskite grįžtamojo ryšio kilpas savo tinklo struktūroje",
+      "pt": "Descubra loops de retroalimentação na estrutura da sua rede",
+      "it": "Scopri i loop di retroazione nella struttura della tua rete",
+      "no": "Oppdag tilbakekoblingsløkker i nettverksstrukturen din",
+      "el": "Ανακαλύψτε βρόχους ανατροφοδότησης στη δομή του δικτύου σας"
+    }
+  }
+}
