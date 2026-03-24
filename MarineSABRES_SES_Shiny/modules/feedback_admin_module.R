@@ -401,18 +401,23 @@ feedback_admin_server <- function(id, i18n) {
 
     observe({
       req(run_detection() > 0)
-      df        <- rv$feedback_df
-      threshold <- input$similarity_threshold %||% 0.7
+      df <- rv$feedback_df
+      req(!is.null(df) && nrow(df) >= 2)
 
-      pairs <- tryCatch(
-        find_duplicate_pairs(df, threshold = threshold),
-        error = function(e) {
-          debug_log(paste("feedback_admin dup detection error:", e$message), "ERROR")
-          data.frame(line_num_a = integer(0), line_num_b = integer(0),
-                     similarity = numeric(0), stringsAsFactors = FALSE)
-        }
-      )
-      rv$dup_pairs <- pairs
+      withProgress(message = i18n$t("modules.feedback_admin.find_duplicates"), {
+        incProgress(0.3, detail = "Computing similarity...")
+        pairs <- tryCatch(
+          find_duplicate_pairs(df, threshold = input$similarity_threshold %||% 0.7),
+          error = function(e) {
+            debug_log(paste("feedback_admin dup detection error:", e$message), "ERROR")
+            showNotification(i18n$t("modules.feedback_admin.mark_error"), type = "error")
+            data.frame(line_num_a = integer(0), line_num_b = integer(0),
+                       similarity = numeric(0), stringsAsFactors = FALSE)
+          }
+        )
+        incProgress(0.7, detail = "Done")
+        rv$dup_pairs <- pairs
+      })
     })
 
     # ------------------------------------------------------------------
