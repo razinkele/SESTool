@@ -29,7 +29,7 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
     "Ionian Sea and Central Mediterranean Sea" = "mediterranean",
     "Aegean-Levantine Sea" = "mediterranean",
     "Black Sea" = "black_sea",
-    "Macaronesia" = "macaronesia",
+    "Macaronesia" = "atlantic",  # No dedicated KB context; falls back to atlantic (Azores, Madeira, Canaries)
     "Arctic Ocean" = "arctic",
     "Caribbean Sea" = "caribbean"
   )
