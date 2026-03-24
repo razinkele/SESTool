@@ -516,6 +516,17 @@
       "it": "Passi Successivi",
       "no": "Neste Steg",
       "el": "Επόμενα Βήματα"
+    },
+    "common.buttons.view": {
+      "en": "View",
+      "es": "Ver",
+      "fr": "Voir",
+      "de": "Ansehen",
+      "lt": "Peržiūrėti",
+      "pt": "Ver",
+      "it": "Visualizza",
+      "no": "Vis",
+      "el": "Προβολή"
     }
   }
 }

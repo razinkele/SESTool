@@ -33,32 +33,58 @@ collect_system_context <- function(session     = NULL,
     ver_file <- file.path(getwd(), "VERSION")
     if (file.exists(ver_file)) trimws(readLines(ver_file, n = 1L, warn = FALSE))
     else "unknown"
-  }, error = function(e) "unknown")
+  }, error = function(e) {
+    if (exists("debug_log", mode = "function")) debug_log(paste("collect_system_context app_version:", e$message), "WARN")
+    "unknown"
+  })
 
   # --- current_tab -----------------------------------------------------------
   current_tab <- tryCatch({
     val <- if (!is.null(input)) input$sidebar else NULL
     if (is.null(val) || identical(val, "")) "unknown" else as.character(val)
-  }, error = function(e) "unknown") %||% "unknown"
+  }, error = function(e) {
+    if (exists("debug_log", mode = "function")) debug_log(paste("collect_system_context current_tab:", e$message), "WARN")
+    "unknown"
+  }) %||% "unknown"
 
   # --- browser_info ----------------------------------------------------------
   browser_info <- tryCatch({
     val <- if (!is.null(input)) input$feedback_browser_info else NULL
     if (is.null(val) || identical(val, "")) "unknown" else as.character(val)
-  }, error = function(e) "unknown") %||% "unknown"
+  }, error = function(e) {
+    if (exists("debug_log", mode = "function")) debug_log(paste("collect_system_context browser_info:", e$message), "WARN")
+    "unknown"
+  }) %||% "unknown"
 
   # --- element_count / connection_count -------------------------------------
-  element_count    <- tryCatch({
+  element_count <- tryCatch({
     isa <- project_data$data$isa_data
-    if (is.null(isa) || is.null(isa$elements)) 0L
-    else nrow(isa$elements)
-  }, error = function(e) 0L) %||% 0L
+    if (is.null(isa)) 0L
+    else {
+      count <- 0L
+      for (cat in c("drivers", "activities", "pressures", "marine_processes",
+                     "ecosystem_services", "goods_benefits", "responses")) {
+        if (!is.null(isa[[cat]]) && is.data.frame(isa[[cat]])) count <- count + nrow(isa[[cat]])
+      }
+      count
+    }
+  }, error = function(e) {
+    if (exists("debug_log", mode = "function")) debug_log(paste("collect_system_context element_count:", e$message), "WARN")
+    0L
+  }) %||% 0L
 
   connection_count <- tryCatch({
     isa <- project_data$data$isa_data
-    if (is.null(isa) || is.null(isa$connections)) 0L
-    else nrow(isa$connections)
-  }, error = function(e) 0L) %||% 0L
+    if (is.null(isa) || is.null(isa$adjacency_matrices)) 0L
+    else {
+      sum(sapply(isa$adjacency_matrices, function(m) {
+        if (is.matrix(m)) sum(m != "" & m != "0" & !is.na(m)) else 0L
+      }))
+    }
+  }, error = function(e) {
+    if (exists("debug_log", mode = "function")) debug_log(paste("collect_system_context connection_count:", e$message), "WARN")
+    0L
+  }) %||% 0L
 
   # --- timestamp -------------------------------------------------------------
   timestamp <- format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")

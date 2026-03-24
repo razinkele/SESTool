@@ -275,11 +275,12 @@ feedback_admin_server <- function(id, i18n) {
         ))
       }
 
-      # Build display data.frame
-      github_html <- ifelse(
-        !is.na(df$github_url) & nzchar(df$github_url) & df$github_url != "NA",
-        paste0('<a href="', df$github_url,
-               '" target="_blank"><i class="fa fa-check-circle text-success"></i></a>'),
+      # Build display data.frame — validate URL starts with https:// to prevent XSS
+      is_valid_url <- !is.na(df$github_url) & nzchar(df$github_url) &
+                      df$github_url != "NA" & grepl("^https://", df$github_url)
+      github_html <- ifelse(is_valid_url,
+        paste0('<a href="', htmltools::htmlEscape(df$github_url),
+               '" target="_blank" rel="noopener"><i class="fa fa-check-circle text-success"></i></a>'),
         '<i class="fa fa-times-circle text-muted"></i>'
       )
 
@@ -289,18 +290,13 @@ feedback_admin_server <- function(id, i18n) {
           "%Y-%m-%d", tz = "UTC"),
         Type        = df$type,
         Title       = df$title,
-        Description = strtoi(nchar(df$description) > 100) *
-          paste0(substr(df$description, 1, 100), "...") +
-          strtoi(nchar(df$description) <= 100) * df$description,
+        Description = ifelse(
+          nchar(df$description) > 100,
+          paste0(substr(df$description, 1, 100), "\u2026"),
+          df$description
+        ),
         GitHub      = github_html,
         stringsAsFactors = FALSE
-      )
-
-      # Fix Description truncation (using ifelse instead of arithmetic)
-      disp$Description <- ifelse(
-        nchar(df$description) > 100,
-        paste0(substr(df$description, 1, 100), "\u2026"),
-        df$description
       )
 
       DT::datatable(
@@ -351,12 +347,12 @@ feedback_admin_server <- function(id, i18n) {
           tags$dd(as.character(row$title)),
           tags$dt(i18n$t("modules.feedback_admin.col_description")),
           tags$dd(as.character(row$description)),
-          tags$dt("Steps"),
+          tags$dt(i18n$t("modules.feedback_admin.steps_label")),
           tags$dd(as.character(row$steps)),
           tags$dt(i18n$t("modules.feedback_admin.col_github")),
           tags$dd(if (!is.na(row$github_url) && nzchar(row$github_url) &&
-                      row$github_url != "NA")
-                    tags$a(href = row$github_url, target = "_blank", row$github_url)
+                      grepl("^https://", row$github_url))
+                    tags$a(href = row$github_url, target = "_blank", rel = "noopener", row$github_url)
                   else
                     tags$em("—"))
         ),
@@ -451,7 +447,7 @@ feedback_admin_server <- function(id, i18n) {
         sprintf(
           '<button class="btn btn-xs btn-warning" onclick="Shiny.setInputValue(\'%s\', {line: %d, dup_of: %d, rand: Math.random()})">%s</button>',
           ns_id, lb, la,
-          i18n$t("modules.feedback_admin.mark_duplicate")
+          htmltools::htmlEscape(i18n$t("modules.feedback_admin.mark_duplicate"))
         )
       }, pairs$line_num_a, pairs$line_num_b, SIMPLIFY = TRUE)
 

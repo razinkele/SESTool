@@ -329,6 +329,17 @@
       "it": "Azione",
       "no": "Handling",
       "el": "Ενέργεια"
+    },
+    "modules.feedback_admin.steps_label": {
+      "en": "Steps to Reproduce",
+      "es": "Pasos para Reproducir",
+      "fr": "Étapes pour Reproduire",
+      "de": "Schritte zum Reproduzieren",
+      "lt": "Atkūrimo Žingsniai",
+      "pt": "Passos para Reproduzir",
+      "it": "Passaggi per Riprodurre",
+      "no": "Steg for å Reprodusere",
+      "el": "Βήματα Αναπαραγωγής"
     }
   }
 }
