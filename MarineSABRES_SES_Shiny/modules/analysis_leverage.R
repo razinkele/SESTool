@@ -400,7 +400,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
     })
 
     # Interpretation guide
-    output$interpretation_ui <- safe_renderUI(function() {
+    output$interpretation_ui <- safe_renderUI({
       req(rv$leverage_results)
 
       top_node <- rv$leverage_results$Name[1]
@@ -473,7 +473,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
           )
         )
       )
-    }, i18n = i18n, context = "analysis_leverage_results")
+    })
 
     # === DOWNLOAD HANDLERS ===
 

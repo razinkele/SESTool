@@ -624,9 +624,6 @@ source(get_project_file("functions", "cld_validation.R"), local = FALSE)
 # Error handling and validation
 source("functions/error_handling.R", local = FALSE)  # FALSE = global scope for log_error, safe_execute, etc.
 
-# Safe renderUI wrapper (error boundary for complex UI outputs)
-source("functions/safe_render.R", local = FALSE)  # FALSE = global scope for module access
-
 # Project transaction wrappers (atomic state changes, cross-reference validation)
 source("functions/project_transactions.R", local = FALSE)  # FALSE = global scope for test access
 
