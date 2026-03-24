@@ -273,3 +273,35 @@ test_that("setup_feedback_modal_handlers exists with correct signature", {
   expect_true("project_data" %in% params)
   expect_true("user_level" %in% params)
 })
+
+test_that("all feedback i18n keys exist in modals.json for all 9 languages", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  trans_path <- file.path(project_root, "translations/ui/modals.json")
+  skip_if_not(file.exists(trans_path), "modals.json not found")
+
+  trans <- jsonlite::fromJSON(trans_path, simplifyVector = FALSE)
+  required_keys <- c(
+    "ui.modals.feedback.button_label", "ui.modals.feedback.modal_title",
+    "ui.modals.feedback.type_label", "ui.modals.feedback.type_bug",
+    "ui.modals.feedback.type_suggestion", "ui.modals.feedback.type_general",
+    "ui.modals.feedback.title_label", "ui.modals.feedback.title_placeholder",
+    "ui.modals.feedback.description_label", "ui.modals.feedback.description_placeholder",
+    "ui.modals.feedback.steps_label", "ui.modals.feedback.steps_placeholder",
+    "ui.modals.feedback.context_label", "ui.modals.feedback.submit",
+    "ui.modals.feedback.success_github", "ui.modals.feedback.success_local",
+    "ui.modals.feedback.error_empty_title", "ui.modals.feedback.error_empty_desc",
+    "ui.modals.feedback.rate_limited"
+  )
+  langs <- c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")
+
+  for (key in required_keys) {
+    key_data <- trans$translation[[key]]
+    expect_false(is.null(key_data), info = paste("Missing key:", key))
+    if (!is.null(key_data)) {
+      for (lang in langs) {
+        expect_true(!is.null(key_data[[lang]]) && nchar(key_data[[lang]]) > 0,
+                    info = paste("Missing", lang, "translation for", key))
+      }
+    }
+  }
+})
