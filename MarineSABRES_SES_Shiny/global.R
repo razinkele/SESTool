@@ -21,6 +21,7 @@ suppressPackageStartupMessages({
   library(DT)
   library(openxlsx)
   library(readxl)     # Excel reading for template imports
+  library(httr)       # HTTP client for GitHub Issues API
   library(jsonlite)
   library(digest)  # For ISA change detection in reactive pipeline
 

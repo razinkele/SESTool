@@ -377,6 +377,12 @@ test_that("readxl package is attached and read_excel is directly available", {
               info = "readxl must be attached via library() in global.R, not just installed")
 })
 
+# Test httr is attached
+test_that("httr package is attached for GitHub API calls", {
+  expect_true("httr" %in% (.packages()),
+              info = "httr must be attached via library() in global.R")
+})
+
 # Test validate_isa_dataframe function
 test_that("validate_isa_dataframe validates ISA data frames", {
   # Valid data
