@@ -44,7 +44,9 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
         spatial_scale = NULL,
         system_in_focus = NULL,
         meta_system = NULL,
-        sub_systems = NULL
+        sub_systems = NULL,
+        regional_sea = NULL,
+        ecosystem_type = NULL
       ),
       
       # PIMS data
