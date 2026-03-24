@@ -29,7 +29,7 @@ USER_LEVEL_DEFAULTS <- list(
     show_response_validation   = TRUE,
     show_all_analysis_tools    = TRUE,
     show_create_ses_method_chooser = TRUE,
-    show_workflow_stepper      = FALSE,
+    show_workflow_stepper      = TRUE,
     show_scenario_builder      = TRUE,
     template_filter            = "all",
     show_advanced_cld_controls = TRUE
@@ -41,7 +41,7 @@ USER_LEVEL_DEFAULTS <- list(
     show_response_validation   = TRUE,
     show_all_analysis_tools    = TRUE,
     show_create_ses_method_chooser = TRUE,
-    show_workflow_stepper      = FALSE,
+    show_workflow_stepper      = TRUE,
     show_scenario_builder      = TRUE,
     template_filter            = "all",
     show_advanced_cld_controls = TRUE

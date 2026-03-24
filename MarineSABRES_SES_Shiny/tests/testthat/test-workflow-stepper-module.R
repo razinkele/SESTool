@@ -172,3 +172,26 @@ test_that("workflow stepper requires 2+ elements for step 2 completion", {
   expect_true(grepl("n >= 2", fn_text),
               info = "Step 2 should require at least 2 ISA elements")
 })
+
+# ============================================================================
+# CONFIGURATION TESTS
+# ============================================================================
+
+test_that("workflow stepper is enabled for all user levels in config", {
+  test_dir <- getwd()
+  root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
+  config_path <- file.path(root, "config", "user_level_config.R")
+
+  expect_true(file.exists(config_path),
+              info = "user_level_config.R should exist")
+
+  # Source the config file
+  source(config_path, local = TRUE)
+
+  expect_true(USER_LEVEL_DEFAULTS$beginner$show_workflow_stepper,
+              info = "Beginner level should show workflow stepper")
+  expect_true(USER_LEVEL_DEFAULTS$intermediate$show_workflow_stepper,
+              info = "Intermediate level should show workflow stepper")
+  expect_true(USER_LEVEL_DEFAULTS$expert$show_workflow_stepper,
+              info = "Expert level should show workflow stepper")
+})
