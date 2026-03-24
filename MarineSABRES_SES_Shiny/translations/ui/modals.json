@@ -2353,6 +2353,105 @@
       "it": "Per favore attendi prima di inviare di nuovo.",
       "no": "Vennligst vent før du sender igjen.",
       "el": "Παρακαλώ περιμένετε πριν υποβάλετε ξανά."
+    },
+    "ui.modals.feedback.ctx_version": {
+      "en": "App Version",
+      "es": "Versión de la Aplicación",
+      "fr": "Version de l'Application",
+      "de": "App-Version",
+      "lt": "Programos versija",
+      "pt": "Versão do Aplicativo",
+      "it": "Versione dell'App",
+      "no": "App-versjon",
+      "el": "Έκδοση Εφαρμογής"
+    },
+    "ui.modals.feedback.ctx_level": {
+      "en": "User Level",
+      "es": "Nivel de Usuario",
+      "fr": "Niveau d'Utilisateur",
+      "de": "Benutzerebene",
+      "lt": "Vartotojo lygis",
+      "pt": "Nível do Utilizador",
+      "it": "Livello Utente",
+      "no": "Brukernivå",
+      "el": "Επίπεδο Χρήστη"
+    },
+    "ui.modals.feedback.ctx_page": {
+      "en": "Current Page",
+      "es": "Página Actual",
+      "fr": "Page Actuelle",
+      "de": "Aktuelle Seite",
+      "lt": "Dabartinis puslapis",
+      "pt": "Página Atual",
+      "it": "Pagina Corrente",
+      "no": "Gjeldende side",
+      "el": "Τρέχουσα Σελίδα"
+    },
+    "ui.modals.feedback.ctx_language": {
+      "en": "Language",
+      "es": "Idioma",
+      "fr": "Langue",
+      "de": "Sprache",
+      "lt": "Kalba",
+      "pt": "Idioma",
+      "it": "Lingua",
+      "no": "Språk",
+      "el": "Γλώσσα"
+    },
+    "ui.modals.feedback.ctx_elements": {
+      "en": "Elements",
+      "es": "Elementos",
+      "fr": "Éléments",
+      "de": "Elemente",
+      "lt": "Elementai",
+      "pt": "Elementos",
+      "it": "Elementi",
+      "no": "Elementer",
+      "el": "Στοιχεία"
+    },
+    "ui.modals.feedback.ctx_connections": {
+      "en": "Connections",
+      "es": "Conexiones",
+      "fr": "Connexions",
+      "de": "Verbindungen",
+      "lt": "Ryšiai",
+      "pt": "Conexões",
+      "it": "Connessioni",
+      "no": "Forbindelser",
+      "el": "Συνδέσεις"
+    },
+    "ui.modals.feedback.ctx_browser": {
+      "en": "Browser",
+      "es": "Navegador",
+      "fr": "Navigateur",
+      "de": "Browser",
+      "lt": "Naršyklė",
+      "pt": "Navegador",
+      "it": "Browser",
+      "no": "Nettleser",
+      "el": "Πρόγραμμα Περιήγησης"
+    },
+    "ui.modals.feedback.error_save_failed": {
+      "en": "Failed to save feedback. Please try again.",
+      "es": "Error al guardar el comentario. Por favor, inténtelo de nuevo.",
+      "fr": "Échec de l'enregistrement du commentaire. Veuillez réessayer.",
+      "de": "Feedback konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "lt": "Nepavyko išsaugoti atsiliepimo. Bandykite dar kartą.",
+      "pt": "Falha ao guardar o comentário. Por favor, tente novamente.",
+      "it": "Salvataggio del feedback non riuscito. Riprova.",
+      "no": "Kunne ikke lagre tilbakemeldingen. Vennligst prøv igjen.",
+      "el": "Αποτυχία αποθήκευσης σχολίων. Παρακαλώ δοκιμάστε ξανά."
+    },
+    "ui.modals.feedback.github_failed": {
+      "en": "GitHub submission failed. Feedback saved locally.",
+      "es": "Error al enviar a GitHub. El comentario se guardó localmente.",
+      "fr": "Échec de la soumission GitHub. Le commentaire a été enregistré localement.",
+      "de": "GitHub-Übermittlung fehlgeschlagen. Feedback lokal gespeichert.",
+      "lt": "Nepavyko pateikti į GitHub. Atsiliepimas išsaugotas vietoje.",
+      "pt": "Falha no envio para o GitHub. Comentário guardado localmente.",
+      "it": "Invio a GitHub non riuscito. Feedback salvato localmente.",
+      "no": "GitHub-innsending mislyktes. Tilbakemeldingen ble lagret lokalt.",
+      "el": "Αποτυχία υποβολής στο GitHub. Τα σχόλια αποθηκεύτηκαν τοπικά."
     }
   }
 }

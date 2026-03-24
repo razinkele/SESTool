@@ -1706,13 +1706,13 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
     ctx <- collect_system_context(session, input, pd, user_level = ul, language = lang)
     tags$pre(style = "font-size: 11px; white-space: pre-wrap;",
       paste(
-        sprintf("App Version: %s", ctx$app_version),
-        sprintf("User Level: %s", ctx$user_level),
-        sprintf("Current Page: %s", ctx$current_tab),
-        sprintf("Language: %s", ctx$language),
-        sprintf("Elements: %d", ctx$element_count),
-        sprintf("Connections: %d", ctx$connection_count),
-        sprintf("Browser: %s", ctx$browser_info),
+        sprintf("%s: %s", i18n$t("ui.modals.feedback.ctx_version"), ctx$app_version),
+        sprintf("%s: %s", i18n$t("ui.modals.feedback.ctx_level"), ctx$user_level),
+        sprintf("%s: %s", i18n$t("ui.modals.feedback.ctx_page"), ctx$current_tab),
+        sprintf("%s: %s", i18n$t("ui.modals.feedback.ctx_language"), ctx$language),
+        sprintf("%s: %d", i18n$t("ui.modals.feedback.ctx_elements"), ctx$element_count),
+        sprintf("%s: %d", i18n$t("ui.modals.feedback.ctx_connections"), ctx$connection_count),
+        sprintf("%s: %s", i18n$t("ui.modals.feedback.ctx_browser"), ctx$browser_info),
         sep = "\n"
       )
     )
@@ -1767,7 +1767,7 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
 
     # Show result — 3-way check: both failed, github success, or local-only success
     if (!result$local_success && !result$github_success) {
-      showNotification("Failed to save feedback. Please try again.", type = "error", duration = 8)
+      showNotification(i18n$t("ui.modals.feedback.error_save_failed"), type = "error", duration = 8)
     } else if (result$github_success) {
       showNotification(
         tagList(
@@ -1777,6 +1777,9 @@ setup_feedback_modal_handlers <- function(input, output, session, i18n,
         type = "message", duration = 8
       )
     } else {
+      if (!result$github_success && nchar(Sys.getenv("MARINESABRES_GITHUB_TOKEN", "")) > 0) {
+        showNotification(i18n$t("ui.modals.feedback.github_failed"), type = "warning", duration = 8)
+      }
       showNotification(i18n$t("ui.modals.feedback.success_local"), type = "message", duration = 5)
     }
 

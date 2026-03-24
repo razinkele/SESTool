@@ -232,6 +232,31 @@ test_that("generate_strategic_recommendations does not crash with regional metad
   expect_true(is.character(recs))
 })
 
+test_that("all kb_report i18n keys exist for all 9 languages", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  trans_path <- file.path(project_root, "translations/modules/kb_report.json")
+  expect_true(file.exists(trans_path), info = "translations/modules/kb_report.json must exist")
+  trans <- jsonlite::fromJSON(trans_path, simplifyVector = FALSE)
+  required_keys <- c(
+    "modules.kb_report.site_context",
+    "modules.kb_report.key_elements",
+    "modules.kb_report.scientific_evidence",
+    "modules.kb_report.governance_frameworks",
+    "modules.kb_report.country_policies"
+  )
+  langs <- c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")
+  for (key in required_keys) {
+    key_data <- trans$translation[[key]]
+    expect_false(is.null(key_data), info = paste("Missing key:", key))
+    if (!is.null(key_data)) {
+      for (lang in langs) {
+        expect_true(!is.null(key_data[[lang]]) && nchar(key_data[[lang]]) > 0,
+                    info = paste("Missing", lang, "for", key))
+      }
+    }
+  }
+})
+
 test_that("regional context selectors exist in dashboard code", {
   project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
   dashboard_files <- c("server/dashboard.R", "app.R")
@@ -292,4 +317,50 @@ test_that("all report_context i18n keys exist for all 9 languages", {
       }
     }
   }
+})
+
+# ---------------------------------------------------------------------------
+# Task 5: Hard-fail source loading test
+# ---------------------------------------------------------------------------
+test_that("source file loads without error", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  expect_no_error(source(file.path(project_root, "functions/kb_report_helpers.R"), local = FALSE))
+})
+
+# ---------------------------------------------------------------------------
+# Task 4: Behavioral tests — match_user_connections_to_kb and
+#          format_kb_section_for_report with multiple edges
+# ---------------------------------------------------------------------------
+test_that("match_user_connections_to_kb handles multiple edges correctly", {
+  skip_if_not(exists("match_user_connections_to_kb", mode = "function"), "not available")
+  skip_if_not(exists("ses_knowledge_db_available", mode = "function") && ses_knowledge_db_available(), "KB not loaded")
+  user_edges <- data.frame(
+    from = c("D_1", "D_2", "X_1"),
+    to = c("A_1", "A_2", "Y_1"),
+    from_label = c("Food demand", "Tourism growth", "Completely unique xyz"),
+    to_label = c("Commercial fishing", "Recreational diving", "Another unique abc"),
+    stringsAsFactors = FALSE
+  )
+  result <- match_user_connections_to_kb(user_edges, "baltic", "lagoon")
+  expect_equal(nrow(result), 3)
+  expect_true("kb_matched" %in% names(result))
+})
+
+test_that("format_kb_section_for_report handles multiple matched connections", {
+  skip_if_not(exists("format_kb_section_for_report", mode = "function"), "not available")
+  matched <- data.frame(
+    user_from = c("A", "C", "E"), user_to = c("B", "D", "F"),
+    kb_matched = c(TRUE, TRUE, FALSE),
+    rationale = c("Reason 1", "Reason 2", NA),
+    references = c("Smith 2020", "Jones 2021", NA),
+    temporal_lag = c("short-term", "medium-term", NA),
+    reversibility = c("reversible", "irreversible", NA),
+    kb_confidence = c(4, 3, NA),
+    stringsAsFactors = FALSE
+  )
+  kb_ctx <- list(available = TRUE, description = "Test.", top_elements = list())
+  gov <- list(available = FALSE, frameworks = character())
+  result <- format_kb_section_for_report(kb_ctx, matched, gov)
+  expect_true(grepl("Reason 1", result))
+  expect_true(grepl("Reason 2", result))
 })
