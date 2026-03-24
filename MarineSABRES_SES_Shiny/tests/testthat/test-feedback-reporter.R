@@ -253,3 +253,23 @@ test_that("feedback log file is gitignored", {
   expect_true(has_entry,
               info = "data/user_feedback_log.ndjson must be in .gitignore")
 })
+
+test_that("feedback button exists in ui_header.R", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  header_code <- paste(readLines(file.path(project_root, "functions/ui_header.R")), collapse = "\n")
+  expect_true(grepl("show_feedback_modal", header_code),
+              info = "ui_header.R must contain feedback button trigger")
+  expect_true(grepl("comment-dots", header_code),
+              info = "ui_header.R must use comment-dots icon for feedback")
+})
+
+test_that("setup_feedback_modal_handlers exists with correct signature", {
+  skip_if_not(exists("setup_feedback_modal_handlers", mode = "function"),
+              "setup_feedback_modal_handlers not available")
+  params <- names(formals(setup_feedback_modal_handlers))
+  expect_true("input" %in% params)
+  expect_true("session" %in% params)
+  expect_true("i18n" %in% params)
+  expect_true("project_data" %in% params)
+  expect_true("user_level" %in% params)
+})
