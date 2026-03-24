@@ -280,3 +280,37 @@ test_that("parse_connections_for_review includes rationale with types", {
   expect_true(grepl("Driver", result[[1]]$rationale))
   expect_true(grepl("Activity", result[[1]]$rationale))
 })
+
+# ============================================================================
+# REGRESSION TESTS: Error boundary and reactive state cleanup (Task 2)
+# ============================================================================
+
+# -- Structural test (quick guard) --
+test_that("import module clears reactive state before new upload", {
+  module_code <- readLines(
+    file.path(dirname(dirname(getwd())), "modules", "import_data_module.R")
+  )
+  upload_section <- paste(module_code, collapse = "\n")
+  expect_true(grepl("rv\\$elements_data\\s*<-\\s*NULL", upload_section),
+              info = "Upload handler must clear elements_data before reading new file")
+  expect_true(grepl("rv\\$connections_data\\s*<-\\s*NULL", upload_section),
+              info = "Upload handler must clear connections_data before reading new file")
+})
+
+# -- Behavioral test: validate_import_data rejects corrupt/empty data --
+test_that("validate_import_data returns errors for empty elements sheet", {
+  skip_if_not(exists("validate_import_data", mode = "function"),
+              "validate_import_data not available")
+  elements <- data.frame(Label = character(), type = character(), stringsAsFactors = FALSE)
+  connections <- data.frame(From = "A", To = "B", Label = "+", stringsAsFactors = FALSE)
+  errors <- validate_import_data(elements, connections)
+  expect_true(length(errors) > 0, info = "Empty elements should produce validation errors")
+})
+
+# -- Behavioral test: validate_import_data handles NULL gracefully --
+test_that("validate_import_data handles NULL inputs without crashing", {
+  skip_if_not(exists("validate_import_data", mode = "function"),
+              "validate_import_data not available")
+  errors <- validate_import_data(NULL, NULL)
+  expect_true(length(errors) > 0, info = "NULL inputs should produce validation errors, not crash")
+})
