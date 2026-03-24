@@ -376,3 +376,22 @@ test_that("mark_as_duplicate returns FALSE for out-of-range line_num", {
   # Line 5 (above range - only 1 line exists)
   expect_false(mark_as_duplicate(tmp, line_num = 5L, duplicate_of_line = "ref"))
 })
+
+
+# =============================================================================
+# feedback_admin_module tests
+# =============================================================================
+
+test_that("feedback_admin_ui returns valid shiny tags when available", {
+  skip_if_not(exists("feedback_admin_ui", mode = "function"), "not available")
+  skip_if_not(exists("create_mock_i18n", mode = "function"), "create_mock_i18n not available")
+  ui <- feedback_admin_ui("test_admin", i18n = create_mock_i18n())
+  expect_true(inherits(ui, "shiny.tag") || inherits(ui, "shiny.tag.list"))
+})
+
+test_that("feedback_admin_server has correct signature", {
+  skip_if_not(exists("feedback_admin_server", mode = "function"), "not available")
+  params <- names(formals(feedback_admin_server))
+  expect_true("id" %in% params)
+  expect_true("i18n" %in% params)
+})
