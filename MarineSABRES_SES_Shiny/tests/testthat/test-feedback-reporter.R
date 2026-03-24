@@ -309,3 +309,23 @@ test_that("all feedback i18n keys exist in modals.json for all 9 languages", {
     }
   }
 })
+
+# ---------------------------------------------------------------------------
+# Task 5: Hard-fail source loading test
+# ---------------------------------------------------------------------------
+test_that("source file loads without error", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  expect_no_error(source(file.path(project_root, "functions/feedback_reporter.R"), local = FALSE))
+})
+
+# ---------------------------------------------------------------------------
+# Task 4: Behavioral test — collect_system_context handles all NULL inputs
+# ---------------------------------------------------------------------------
+test_that("collect_system_context handles all NULL inputs gracefully", {
+  skip_if_not(exists("collect_system_context", mode = "function"), "not available")
+  ctx <- collect_system_context(session = NULL, input = NULL, project_data = NULL,
+                                user_level = "unknown", language = "en")
+  expect_true(is.list(ctx))
+  expect_equal(ctx$element_count, 0L)
+  expect_equal(ctx$connection_count, 0L)
+})

@@ -124,3 +124,23 @@ test_that("tool_recommendations translation file has all 9 languages for every k
                  info = paste("Key", key, "is missing languages:", paste(missing, collapse = ", ")))
   }
 })
+
+# ---------------------------------------------------------------------------
+# Task 4: Behavioral tests — build_next_steps_ui
+# ---------------------------------------------------------------------------
+test_that("build_next_steps_ui returns NULL for unknown module", {
+  skip_if_not(exists("build_next_steps_ui", mode = "function"), "not available")
+  mock_ns <- function(x) paste0("test-", x)
+  mock_i18n <- list(t = function(key) key)
+  result <- build_next_steps_ui("nonexistent_module", mock_ns, mock_i18n)
+  expect_null(result)
+})
+
+test_that("build_next_steps_ui returns valid shiny tag for known module", {
+  skip_if_not(exists("build_next_steps_ui", mode = "function"), "not available")
+  mock_ns <- function(x) paste0("test-", x)
+  mock_i18n <- list(t = function(key) key)
+  result <- build_next_steps_ui("analysis_loops", mock_ns, mock_i18n)
+  expect_true(!is.null(result))
+  expect_true(inherits(result, "shiny.tag") || inherits(result, "shiny.tag.list"))
+})
