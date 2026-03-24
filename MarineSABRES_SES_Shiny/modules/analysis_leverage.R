@@ -63,6 +63,15 @@ analysis_leverage_ui <- function(id, i18n) {
               downloadButton(ns("download_leverage_png"), i18n$t("modules.analysis.leverage.btn_download_chart"),
                              class = "btn-sm btn-outline-primary", style = "margin-left: 5px;")
             ),
+            tags$div(
+              class = "alert alert-info",
+              style = "margin-bottom: 15px;",
+              icon("info-circle"),
+              " ",
+              tags$strong(i18n$t("modules.analysis.leverage.note_framework_bias_title")),
+              " ",
+              i18n$t("modules.analysis.leverage.note_framework_bias_detail")
+            ),
             DT::dataTableOutput(ns("leverage_table")),
 
             # Next Steps panel — shown after analysis completes
@@ -274,7 +283,23 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
     output$leverage_table <- DT::renderDataTable({
       req(rv$leverage_results)
 
-      df <- rv$leverage_results
+      results <- rv$leverage_results
+
+      # Add plain-language interpretation column — all text via i18n
+      results$interpretation <- sapply(seq_len(nrow(results)), function(i) {
+        score <- results$Composite_Score[i]
+        name <- results$Name[i]
+
+        if (i <= 3) {
+          paste0(name, " ", i18n$t("modules.analysis.leverage.interp_top_leverage"))
+        } else if (score > mean(results$Composite_Score)) {
+          paste0(name, " ", i18n$t("modules.analysis.leverage.interp_above_avg"))
+        } else {
+          paste0(name, " ", i18n$t("modules.analysis.leverage.interp_moderate"))
+        }
+      })
+
+      df <- results
 
       # Format for display
       df_display <- data.frame(
@@ -286,6 +311,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
         PageRank = round(df$PageRank, 3),
         `In-Degree` = df$In_Degree,
         `Out-Degree` = df$Out_Degree,
+        Interpretation = df$interpretation,
         check.names = FALSE
       )
 
@@ -410,6 +436,22 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
             style = "background: #fff3cd; padding: 12px; border-radius: 5px; border-left: 4px solid #ffc107; margin-bottom: 15px;",
             h5(icon("exclamation-triangle"), " ", i18n$t("modules.analysis.leverage.structural_bias_title")),
             p(style = "margin-bottom: 0;", i18n$t("modules.analysis.leverage.structural_bias_desc"))
+          ),
+
+          tags$div(
+            class = "action-framework",
+            style = "margin-top: 20px; padding: 15px; background: #f0f7ff; border-radius: 10px; border-left: 4px solid #3498db;",
+            h5(icon("tasks"), " ", i18n$t("modules.analysis.leverage.what_to_do")),
+            tags$ol(
+              tags$li(tags$strong(i18n$t("modules.analysis.leverage.step1_identify")),
+                      i18n$t("modules.analysis.leverage.step1_detail")),
+              tags$li(tags$strong(i18n$t("modules.analysis.leverage.step2_assess")),
+                      i18n$t("modules.analysis.leverage.step2_detail")),
+              tags$li(tags$strong(i18n$t("modules.analysis.leverage.step3_design")),
+                      i18n$t("modules.analysis.leverage.step3_detail")),
+              tags$li(tags$strong(i18n$t("modules.analysis.leverage.step4_validate")),
+                      i18n$t("modules.analysis.leverage.step4_detail"))
+            )
           ),
 
           hr(),
