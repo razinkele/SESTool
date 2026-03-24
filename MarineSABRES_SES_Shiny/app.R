@@ -519,9 +519,12 @@ ui <- bs4DashPage(
       bs4TabItem(tabName = "guidebook", guidebook_ui("guidebook", i18n)),
 
       # ==================== FEEDBACK ADMIN (ADMIN_MODE only) ====================
-      if (exists("ADMIN_MODE") && ADMIN_MODE)
-        bs4TabItem(tabName = "feedback_admin",
-                   feedback_admin_ui("feedback_admin", i18n = i18n))
+      bs4TabItem(tabName = "feedback_admin",
+                 if (exists("ADMIN_MODE") && ADMIN_MODE && exists("feedback_admin_ui", mode = "function"))
+                   feedback_admin_ui("feedback_admin", i18n = i18n)
+                 else
+                   tags$div()
+      )
     )
   ),
 
