@@ -39,6 +39,7 @@ guidebook_server <- function(id, project_data_reactive, i18n, event_bus = NULL) 
         rmarkdown::render("guidebook/guidebook.Rmd",
                          output_format = "html_fragment",
                          output_dir = tempdir(),
+                         intermediates_dir = tempdir(),
                          quiet = TRUE)
       }, error = function(e) {
         debug_log(paste("Guidebook render failed:", e$message), "ERROR")
@@ -64,6 +65,7 @@ guidebook_server <- function(id, project_data_reactive, i18n, event_bus = NULL) 
         rmarkdown::render("guidebook/guidebook.Rmd",
                          output_format = "pdf_document",
                          output_file = file,
+                         intermediates_dir = tempdir(),
                          quiet = TRUE)
       }
     )
@@ -74,6 +76,7 @@ guidebook_server <- function(id, project_data_reactive, i18n, event_bus = NULL) 
         rmarkdown::render("guidebook/guidebook.Rmd",
                          output_format = "html_document",
                          output_file = file,
+                         intermediates_dir = tempdir(),
                          quiet = TRUE)
       }
     )
