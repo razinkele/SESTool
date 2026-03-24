@@ -1,0 +1,90 @@
+---
+title: "MarineSABRES SES Toolbox — User Guidebook"
+subtitle: "A step-by-step guide to Social-Ecological System analysis"
+author: "MarineSABRES Consortium"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: flatly
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+# Quick Start Guide
+
+## What is the SES Toolbox?
+
+The Social-Ecological Systems (SES) Toolbox helps you understand how human activities
+and natural ecosystems interact. Using the DAPSI(W)R(M) framework, you map out:
+
+- **Drivers** — root causes (e.g., food security needs)
+- **Activities** — human actions (e.g., fishing, tourism)
+- **Pressures** — environmental stressors
+- **State Changes** — ecosystem impacts
+- **Impacts** — effects on ecosystem services
+- **Welfare** — human wellbeing consequences
+- **Responses/Measures** — policy interventions
+
+## Your First SES in 5 Steps
+
+1. **Get Started** — Select your role and what you need from the tool
+2. **Create Your SES** — Enter elements and connections (manually, from template, or AI-assisted)
+3. **Visualize** — See your Causal Loop Diagram (CLD)
+4. **Analyze** — Detect feedback loops and leverage points
+5. **Report** — Export your findings
+
+# Detailed Workflow Guide
+
+## Step 1: Getting Started
+
+The Entry Point guides you through selecting your role, understanding your data needs,
+and recommending the right tools for your goals.
+
+## Step 2: Creating Your SES
+
+You can create your SES model in three ways:
+- **Standard method** — Enter elements and connections manually
+- **Template import** — Upload a pre-filled Excel template
+- **AI-assisted** — Let the AI guide you through the DAPSI(W)R(M) framework
+
+## Step 3: Visualization
+
+The Causal Loop Diagram (CLD) shows your system as a network of interconnected elements.
+Nodes represent elements, edges represent connections with polarity (+/-).
+
+## Step 4: Analysis
+
+### Feedback Loop Detection
+Identifies reinforcing and balancing feedback loops in your system.
+
+### Leverage Point Analysis
+Finds nodes with the highest potential for system-wide impact.
+
+### Network Metrics
+Provides centrality and connectivity statistics.
+
+## Step 5: Reporting
+
+Export your findings as HTML, PDF, Word, or PowerPoint reports.
+
+# Glossary
+
+- **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)
+- **CLD** — Causal Loop Diagram
+- **Leverage Point** — A node with high influence across the system
+- **Feedback Loop** — A circular chain of cause-and-effect relationships
+
+# Troubleshooting & FAQ
+
+**Q: My upload keeps disconnecting.**
+A: Ensure your Excel file has "Elements" and "Connections" sheets. Try refreshing the page.
+
+**Q: Loop detection finds no loops.**
+A: Your system may not have feedback loops. Check that you have connections forming circular paths.
+
+**Q: What do leverage point scores mean?**
+A: Higher composite scores indicate greater system influence. See the Leverage Point Analysis section.

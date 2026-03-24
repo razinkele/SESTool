@@ -101,7 +101,8 @@ OPTIONAL_MODULES <- c(
   "modules/local_storage_module.R",      # Local storage for saving to user's computer
   "modules/analysis_boolean.R",          # Boolean Network & Laplacian Stability (DTU)
   "modules/analysis_simulation.R",       # Dynamic Simulation & State-Shift (DTU)
-  "modules/analysis_intervention.R"      # Intervention Simulation (DTU)
+  "modules/analysis_intervention.R",     # Intervention Simulation (DTU)
+  "modules/guidebook_module.R"           # Standalone Guidebook
 )
 
 # Load critical modules first - fail fast if any fail
@@ -511,7 +512,10 @@ ui <- bs4DashPage(
       ),
 
       # ==================== PREPARE REPORT ====================
-      bs4TabItem(tabName = "prepare_report", prepare_report_ui("prep_report", i18n))
+      bs4TabItem(tabName = "prepare_report", prepare_report_ui("prep_report", i18n)),
+
+      # ==================== GUIDEBOOK ====================
+      bs4TabItem(tabName = "guidebook", guidebook_ui("guidebook", i18n))
     )
   ),
 
@@ -1028,6 +1032,9 @@ server <- function(input, output, session) {
 
   # Prepare Report module (comprehensive)
   prepare_report_server("prep_report", project_data, session_i18n, parent_session = session)
+
+  # Guidebook module
+  guidebook_server("guidebook", project_data_reactive = project_data, i18n = session_i18n)
 
   # ========== REACTIVE DATA PIPELINE ==========
   # Automatic propagation: ISA changes -> CLD regeneration -> Analysis invalidation
