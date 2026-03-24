@@ -18,6 +18,22 @@
 #' @param i18n shiny.i18n translator object
 setup_dashboard_rendering <- function(input, output, session, project_data, i18n) {
 
+  # Regional sea dropdown — maps display names to KB short keys
+  REGIONAL_SEA_KB_KEYS <- c(
+    "Baltic Sea" = "baltic",
+    "North Sea" = "north_sea",
+    "Celtic Seas" = "atlantic",
+    "Bay of Biscay and Iberian Coast" = "atlantic",
+    "Western Mediterranean Sea" = "mediterranean",
+    "Adriatic Sea" = "mediterranean",
+    "Ionian Sea and Central Mediterranean Sea" = "mediterranean",
+    "Aegean-Levantine Sea" = "mediterranean",
+    "Black Sea" = "black_sea",
+    "Macaronesia" = "macaronesia",
+    "Arctic Ocean" = "arctic",
+    "Caribbean Sea" = "caribbean"
+  )
+
   # ========== CACHED STATS (shared by value boxes, status, and timeline) ==========
   dashboard_stats <- reactive({
     data <- project_data()
@@ -169,6 +185,20 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
           tags$span(style = CSS_TEXT_MUTED, data$data$metadata$focal_issue %||% i18n$t("ui.dashboard.not_defined"))
         ),
         tags$hr(style = "margin: 10px 0;"),
+        selectInput("regional_sea_select",
+          i18n$t("modules.report_context.regional_sea_label"),
+          choices = c(setNames("", i18n$t("modules.report_context.not_set")),
+                      setNames(unname(REGIONAL_SEA_KB_KEYS), names(REGIONAL_SEA_KB_KEYS))),
+          selected = isolate(project_data()$data$metadata$regional_sea) %||% ""
+        ),
+        selectInput("ecosystem_type_select",
+          i18n$t("modules.report_context.ecosystem_type_label"),
+          choices = c(setNames("", i18n$t("modules.report_context.not_set")),
+                      setNames(tolower(ECOSYSTEM_TYPE_CHOICES_DETAILED),
+                              ECOSYSTEM_TYPE_CHOICES_DETAILED)),
+          selected = isolate(project_data()$data$metadata$ecosystem_type) %||% ""
+        ),
+        tags$hr(style = "margin: 10px 0;"),
         tags$h5(style = "margin-bottom: 8px; font-size: 14px;", i18n$t("ui.dashboard.dapsiwrm_elements")),
         tags$ul(style = "list-style-type: none; padding-left: 5px; margin-bottom: 5px; font-size: 12px;",
           tags$li(style = "margin-bottom: 3px;",
@@ -232,6 +262,22 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
       )
     })
   })
+
+  # ========== REGIONAL CONTEXT OBSERVERS ==========
+
+  observeEvent(input$regional_sea_select, {
+    pd <- project_data()
+    val <- if (nchar(input$regional_sea_select) == 0) NULL else input$regional_sea_select
+    pd$data$metadata$regional_sea <- val
+    project_data(pd)
+  }, ignoreInit = TRUE)
+
+  observeEvent(input$ecosystem_type_select, {
+    pd <- project_data()
+    val <- if (nchar(input$ecosystem_type_select) == 0) NULL else input$ecosystem_type_select
+    pd$data$metadata$ecosystem_type <- val
+    project_data(pd)
+  }, ignoreInit = TRUE)
 
   # ========== STATUS SUMMARY RENDERS ==========
 
