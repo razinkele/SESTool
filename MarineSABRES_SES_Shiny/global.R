@@ -632,6 +632,9 @@ source("functions/feedback_reporter.R", local = FALSE)
 # Feedback analyzer (NDJSON loader, TF-IDF similarity, duplicate detection)
 source("functions/feedback_analyzer.R", local = FALSE)
 
+# KB report helpers (KB context, citation matching, governance lookup for report generation)
+source("functions/kb_report_helpers.R", local = FALSE)
+
 # Project transaction wrappers (atomic state changes, cross-reference validation)
 source("functions/project_transactions.R", local = FALSE)  # FALSE = global scope for test access
 
