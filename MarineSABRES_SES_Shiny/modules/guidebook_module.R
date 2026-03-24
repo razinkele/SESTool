@@ -62,22 +62,26 @@ guidebook_server <- function(id, project_data_reactive, i18n, event_bus = NULL) 
     output$download_pdf <- downloadHandler(
       filename = function() paste0("SES_Toolbox_Guidebook_", Sys.Date(), ".pdf"),
       content = function(file) {
-        rmarkdown::render("guidebook/guidebook.Rmd",
-                         output_format = "pdf_document",
-                         output_file = file,
-                         intermediates_dir = tempdir(),
-                         quiet = TRUE)
+        withProgress(message = "Generating PDF...", {
+          rmarkdown::render("guidebook/guidebook.Rmd",
+                           output_format = "pdf_document",
+                           output_file = file,
+                           intermediates_dir = tempdir(),
+                           quiet = TRUE)
+        })
       }
     )
 
     output$download_html <- downloadHandler(
       filename = function() paste0("SES_Toolbox_Guidebook_", Sys.Date(), ".html"),
       content = function(file) {
-        rmarkdown::render("guidebook/guidebook.Rmd",
-                         output_format = "html_document",
-                         output_file = file,
-                         intermediates_dir = tempdir(),
-                         quiet = TRUE)
+        withProgress(message = "Generating HTML...", {
+          rmarkdown::render("guidebook/guidebook.Rmd",
+                           output_format = "html_document",
+                           output_file = file,
+                           intermediates_dir = tempdir(),
+                           quiet = TRUE)
+        })
       }
     )
   })
