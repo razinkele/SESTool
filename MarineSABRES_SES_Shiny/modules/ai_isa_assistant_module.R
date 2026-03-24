@@ -958,6 +958,9 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       debug_log("[AI ISA CONNECTIONS] Saving with save_to_project_format()\n")
       current_data <- project_data_reactive()
       current_data <- save_to_project_format(rv, current_data, CONFIDENCE_DEFAULT)
+      # Persist regional context to project-level metadata
+      current_data$data$metadata$regional_sea <- rv$context$regional_sea
+      current_data$data$metadata$ecosystem_type <- rv$context$ecosystem_type
       project_data_reactive(current_data)
 
       if (!is.null(event_bus)) {
@@ -2507,6 +2510,10 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           created_by = "AI ISA Assistant",
           created_at = Sys.time()
         )
+
+        # Persist regional context to project-level metadata
+        current_data$data$metadata$regional_sea <- rv$context$regional_sea
+        current_data$data$metadata$ecosystem_type <- rv$context$ecosystem_type
 
         # Update the reactive value
         debug_log("[AI ISA] Updating project_data reactive\n")

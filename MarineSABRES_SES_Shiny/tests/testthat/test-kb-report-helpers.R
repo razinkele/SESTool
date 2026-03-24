@@ -248,3 +248,17 @@ test_that("regional context selectors exist in dashboard code", {
   }
   expect_true(found, info = "Dashboard must contain regional_sea_select and ecosystem_type_select inputs")
 })
+
+test_that("AI ISA module persists regional context to project metadata", {
+  project_root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = FALSE)
+  module_code <- paste(readLines(file.path(project_root, "modules/ai_isa_assistant_module.R")),
+                       collapse = "\n")
+  expect_true(grepl("metadata\\$regional_sea", module_code),
+              info = "AI ISA must write regional_sea to project metadata")
+  expect_true(grepl("rv\\$context\\$regional_sea", module_code),
+              info = "AI ISA must read regional_sea from rv$context")
+  expect_true(grepl("metadata\\$ecosystem_type", module_code),
+              info = "AI ISA must write ecosystem_type to project metadata")
+  expect_true(grepl("rv\\$context\\$ecosystem_type", module_code),
+              info = "AI ISA must read ecosystem_type from rv$context")
+})
