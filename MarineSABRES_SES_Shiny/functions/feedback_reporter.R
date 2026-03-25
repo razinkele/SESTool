@@ -112,7 +112,9 @@ collect_system_context <- function(session     = NULL,
 #' @param path     Path to the NDJSON log file
 #' @return TRUE on success, FALSE on error
 save_feedback_local <- function(payload,
-                                 path = "data/user_feedback_log.ndjson") {
+                                 path = file.path(
+                                   if (exists("PROJECT_ROOT")) PROJECT_ROOT else ".",
+                                   "data", "user_feedback_log.ndjson")) {
   tryCatch({
     dir_path <- dirname(path)
     if (!dir.exists(dir_path)) dir.create(dir_path, recursive = TRUE)
@@ -211,7 +213,9 @@ submit_feedback <- function(title,
                              type      = "general",
                              steps     = "",
                              context   = list(),
-                             log_path  = "data/user_feedback_log.ndjson") {
+                             log_path  = file.path(
+                               if (exists("PROJECT_ROOT")) PROJECT_ROOT else ".",
+                               "data", "user_feedback_log.ndjson")) {
 
   # --- label mapping --------------------------------------------------------
   labels <- switch(type,
