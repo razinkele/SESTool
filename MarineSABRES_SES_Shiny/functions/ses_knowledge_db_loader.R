@@ -100,7 +100,7 @@ if (is.null(db_path)) {
   # Map habitat free text to standard keys
   habitat_key <- if (grepl("lagoon", hab)) "lagoon"
     else if (grepl("estuar", hab)) "estuary"
-    else if (grepl("offshore|open ocean|open water|deep sea|continental shelf", hab)) "offshore"
+    else if (grepl("offshore|open ocean|open water|deep sea|continental shelf|shelf|pelagic", hab)) "offshore"
     else if (grepl("seagrass|sea grass|posidonia", hab)) "seagrass"
     else if (grepl("sch.ren|sk.rg.rd|rocky coast", hab)) "rocky_coast"  # Baltic Schären
     else if (grepl("rocky|rock shore", hab)) "rocky_shore"  # Mediterranean rocky shore
@@ -112,6 +112,8 @@ if (is.null(db_path)) {
     else if (grepl("open coast|coast(?!al lagoon)", hab, perl = TRUE)) "open_coast"
     else if (grepl("mangrove", hab)) "mangrove"
     else if (grepl("tidal|mudflat", hab)) "tidal_flat"
+    else if (grepl("saltmarsh|salt marsh|marsh", hab)) "estuary"
+    else if (grepl("benthic|benthos", hab)) "offshore"
     else if (grepl("kelp", hab)) "kelp_forest"
     else if (grepl("fjord", hab)) "fjord"
     else if (grepl("delta", hab)) "delta"

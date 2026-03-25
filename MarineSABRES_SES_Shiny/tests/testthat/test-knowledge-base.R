@@ -859,3 +859,126 @@ test_that("format_kb_section_for_report produces non-empty Markdown with expecte
   expect_true(grepl("Governance Frameworks", md, fixed = TRUE),
               info = "Markdown missing 'Governance Frameworks' heading")
 })
+
+
+# ==============================================================================
+# 9. Orphan, Habitat Pattern, and Connection Integrity Tests
+# ==============================================================================
+
+test_that("no context has orphan elements (elements not referenced in connections)", {
+  skip_if_not(!is.null(.kb_raw), "KB not loaded")
+  orphans <- character()
+  for (ctx_name in names(.kb_raw$contexts)) {
+    ctx <- .kb_raw$contexts[[ctx_name]]
+    conn_elements <- character()
+    for (conn in ctx$connections %||% list()) {
+      conn_elements <- c(conn_elements, tolower(trimws(conn$from %||% "")))
+      conn_elements <- c(conn_elements, tolower(trimws(conn$to   %||% "")))
+    }
+    conn_elements <- unique(conn_elements)
+    for (cat in c("drivers","activities","pressures","states","impacts","welfare","responses")) {
+      for (elem in ctx[[cat]] %||% list()) {
+        if (is.list(elem) && !is.null(elem$name)) {
+          name_lower <- tolower(trimws(elem$name))
+          # Fuzzy: element name is substring of any connection element or vice versa
+          found <- any(sapply(conn_elements, function(ce) {
+            nchar(name_lower) > 2 && nchar(ce) > 2 &&
+              (grepl(name_lower, ce, fixed = TRUE) || grepl(ce, name_lower, fixed = TRUE))
+          }))
+          if (!found) {
+            orphans <- c(orphans, paste0(ctx_name, "/", cat, ": ", elem$name))
+          }
+        }
+      }
+    }
+  }
+  expect_equal(length(orphans), 0,
+    info = paste("Orphan elements found:", paste(head(orphans, 10), collapse = "; ")))
+})
+
+test_that(".build_context_key maps all ECOSYSTEM_TYPE_CHOICES_DETAILED except 'other'", {
+  skip_if_not(file.exists(KB_PATH), "ses_knowledge_db.json not found")
+  .ensure_kb_functions()
+  skip_if_not(exists(".build_context_key", mode = "function"),
+              ".build_context_key not available")
+  # Ecosystem types that must resolve to a non-NULL key
+  ecosystem_types <- c(
+    "Coastal", "Shelf", "Deep Sea", "Pelagic", "Benthic",
+    "Rocky Shore", "Sandy Shore", "Mudflat", "Saltmarsh",
+    "Seagrass", "Kelp Forest", "Coral Reef", "Mangrove",
+    "Estuary", "Lagoon", "Fjord"
+  )
+  for (eco in ecosystem_types) {
+    key <- .build_context_key("test_sea", eco)
+    expect_false(is.null(key),
+      info = paste("Ecosystem type", eco, "must map to a habitat key, not NULL"))
+  }
+  # "Other" is a valid generic fallback that returns NULL
+  expect_null(.build_context_key("test_sea", "Other"))
+})
+
+test_that("all connection from/to elements exist in their context's element lists", {
+  skip_if_not(!is.null(.kb_raw), "KB not loaded")
+  hanging <- character()
+  for (ctx_name in names(.kb_raw$contexts)) {
+    ctx <- .kb_raw$contexts[[ctx_name]]
+    all_elements <- character()
+    for (cat in c("drivers","activities","pressures","states","impacts","welfare","responses")) {
+      for (elem in ctx[[cat]] %||% list()) {
+        if (is.list(elem) && !is.null(elem$name)) {
+          all_elements <- c(all_elements, tolower(trimws(elem$name)))
+        }
+      }
+    }
+    for (i in seq_along(ctx$connections %||% list())) {
+      conn <- ctx$connections[[i]]
+      from_name <- tolower(trimws(conn$from %||% ""))
+      to_name   <- tolower(trimws(conn$to   %||% ""))
+      from_found <- from_name %in% all_elements ||
+        any(sapply(all_elements, function(e) {
+          grepl(from_name, e, fixed = TRUE) || grepl(e, from_name, fixed = TRUE)
+        }))
+      to_found <- to_name %in% all_elements ||
+        any(sapply(all_elements, function(e) {
+          grepl(to_name, e, fixed = TRUE) || grepl(e, to_name, fixed = TRUE)
+        }))
+      if (!from_found)
+        hanging <- c(hanging, paste0(ctx_name, " conn ", i, ": FROM '", conn$from, "' not found"))
+      if (!to_found)
+        hanging <- c(hanging, paste0(ctx_name, " conn ", i, ": TO '", conn$to, "' not found"))
+    }
+  }
+  expect_equal(length(hanging), 0,
+    info = paste("Hanging nodes:", paste(head(hanging, 10), collapse = "; ")))
+})
+
+test_that("connection from_type/to_type matches element category", {
+  skip_if_not(!is.null(.kb_raw), "KB not loaded")
+  mismatches <- character()
+  for (ctx_name in names(.kb_raw$contexts)) {
+    ctx <- .kb_raw$contexts[[ctx_name]]
+    elem_cats <- list()
+    for (cat in c("drivers","activities","pressures","states","impacts","welfare","responses")) {
+      for (elem in ctx[[cat]] %||% list()) {
+        if (is.list(elem) && !is.null(elem$name)) {
+          elem_cats[[tolower(trimws(elem$name))]] <- cat
+        }
+      }
+    }
+    for (i in seq_along(ctx$connections %||% list())) {
+      conn      <- ctx$connections[[i]]
+      from_name <- tolower(trimws(conn$from      %||% ""))
+      from_type <- conn$from_type %||% ""
+      if (from_name %in% names(elem_cats) &&
+          nchar(from_type) > 0 &&
+          elem_cats[[from_name]] != from_type) {
+        mismatches <- c(mismatches, paste0(
+          ctx_name, " conn ", i, ": ", conn$from,
+          " from_type='", from_type, "' but in '", elem_cats[[from_name]], "'"
+        ))
+      }
+    }
+  }
+  expect_equal(length(mismatches), 0,
+    info = paste("Type mismatches:", paste(head(mismatches, 10), collapse = "; ")))
+})
