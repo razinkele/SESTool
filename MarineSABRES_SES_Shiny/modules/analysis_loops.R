@@ -480,12 +480,12 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           if (!is.null(all_loops) && length(all_loops) > 0) {
             # Filter self-loops (single-node cycles) unless user opted in
             if (!include_self) {
-              all_loops <- Filter(function(loop) length(loop$nodes) > 1, all_loops)
+              all_loops <- Filter(function(loop) length(loop) > 1, all_loops)
             }
 
             # Filter trivial 2-node back-and-forth loops
             if (filter_triv) {
-              all_loops <- Filter(function(loop) length(loop$nodes) > 2, all_loops)
+              all_loops <- Filter(function(loop) length(loop) > 2, all_loops)
             }
 
             debug_log(sprintf("After user filters: %d loops remaining", length(all_loops)), "LOOPS")
@@ -672,7 +672,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
       paste0(
         i18n$t("modules.analysis.loops.prop_loop_id"), ": ", loop_row$LoopID, "\n",
         i18n$t("modules.analysis.loops.prop_type"), ": ", loop_row$Type, "\n",
-        i18n$t("modules.analysis.loops.prop_polarity"), ": ", loop_row$Polarity, "\n",
+        i18n$t("modules.analysis.loops.prop_polarity"), ": ", loop_row$Type, "\n",
         i18n$t("modules.analysis.loops.prop_length"), ": ", loop_row$Length, " ", i18n$t("modules.analysis.loops.elements_label"), "\n",
         "\n", i18n$t("modules.analysis.loops.prop_path"), ":\n", loop_row$Elements
       )
@@ -680,20 +680,23 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Loop Network Visualization ----
     output$loop_network <- safe_renderVisNetwork({
-      req(input$selected_loop, loop_data$all_loops, loop_data$graph)
+      req(input$selected_loop, loop_data$loops, loop_data$graph)
 
-      # Get loop index
-      loop_idx <- as.integer(gsub("L", "", input$selected_loop))
-      loop <- loop_data$all_loops[[loop_idx]]
+      # Get loop data from the loops dataframe (not from all_loops index)
+      loop_row <- loop_data$loops[loop_data$loops$LoopID == as.integer(input$selected_loop), ]
+      req(nrow(loop_row) > 0)
 
-      # Get vertex IDs and labels from igraph vertex indices
-      loop_vertex_ids <- V(loop_data$graph)$name[loop]
-      loop_vertex_labels <- V(loop_data$graph)$label[loop]
+      # Parse node IDs from the stored comma-separated string
+      node_ids <- strsplit(loop_row$NodeIDs, ",")[[1]]
+
+      # Map node IDs to graph vertex indices
+      vertex_indices <- match(node_ids, V(loop_data$graph)$name)
+      loop_vertex_labels <- V(loop_data$graph)$label[vertex_indices]
 
       # Ensure unique nodes
-      unique_indices <- !duplicated(loop_vertex_ids)
-      unique_ids <- loop_vertex_ids[unique_indices]
-      unique_labels <- loop_vertex_labels[unique_indices]
+      unique_mask <- !duplicated(node_ids)
+      unique_ids <- node_ids[unique_mask]
+      unique_labels <- loop_vertex_labels[unique_mask]
 
       # Prepare nodes with proper descriptive labels
       nodes_df <- data.frame(
@@ -702,24 +705,22 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
         color = "#2B7CE9",
         shape = "dot",
         size = 20
-        
       )
 
       # Prepare edges (including closing the loop)
       edges_list <- list()
-      loop_length <- length(loop_vertex_ids)
+      loop_length <- length(node_ids)
 
       for(i in 1:loop_length) {
-        from_node_idx <- loop[i]
-        # Close the loop: last node connects back to first
-        to_node_idx <- if(i == loop_length) loop[1] else loop[i+1]
+        from_name <- node_ids[i]
+        to_name <- if(i == loop_length) node_ids[1] else node_ids[i+1]
 
-        from_name <- V(loop_data$graph)$name[from_node_idx]
-        to_name <- V(loop_data$graph)$name[to_node_idx]
+        from_idx <- vertex_indices[i]
+        to_idx <- if(i == loop_length) vertex_indices[1] else vertex_indices[i+1]
 
         # Get edge polarity
         edge_id <- tryCatch({
-          get_edge_ids(loop_data$graph, c(from_node_idx, to_node_idx))
+          get_edge_ids(loop_data$graph, c(from_idx, to_idx))
         }, error = function(e) 0)
 
         polarity <- if(edge_id > 0) E(loop_data$graph)$polarity[edge_id] else "+"
@@ -731,7 +732,6 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           color = ifelse(polarity == "+", "#06D6A0", "#E63946"),
           label = polarity,
           width = 5
-          
         )
       }
 
@@ -785,10 +785,9 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
 
     # Element Participation Plot ----
     output$element_participation_plot <- safe_renderPlot({
-      req(loop_data$all_loops)
-
-      # Count how many loops each element appears in
-      element_counts <- table(unlist(lapply(loop_data$all_loops, names)))
+      # Count how many loops each element appears in (use Elements column from loops df)
+      req(loop_data$loops, nrow(loop_data$loops) > 0)
+      element_counts <- table(unlist(strsplit(loop_data$loops$Elements, " \u2192 ")))
       element_counts <- sort(element_counts, decreasing = TRUE)
 
       if(length(element_counts) > 15) {
@@ -895,7 +894,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
         generate_export_filename("Loop_Diagrams", ".zip")
       },
       content = function(file) {
-        req(loop_data$loops, loop_data$all_loops, loop_data$graph)
+        req(loop_data$loops, loop_data$graph)
 
         tryCatch({
           tmp_dir <- tempdir()
@@ -905,31 +904,32 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
 
           g <- loop_data$graph
           loops <- loop_data$loops
-          all_loops <- loop_data$all_loops
 
           # Generate a PNG for each loop (limit to first 50)
           max_export <- min(nrow(loops), 50)
           png_files <- character(0)
 
           for (i in seq_len(max_export)) {
-            loop <- all_loops[[i]]
             loop_row <- loops[i, ]
 
-            loop_vertex_ids <- V(g)$name[loop]
-            loop_vertex_labels <- V(g)$label[loop]
+            # Parse node IDs from the stored comma-separated string
+            node_ids <- strsplit(loop_row$NodeIDs, ",")[[1]]
+            vertex_indices <- match(node_ids, V(g)$name)
+            loop_vertex_labels <- V(g)$label[vertex_indices]
 
-            unique_indices <- !duplicated(loop_vertex_ids)
-            unique_ids <- loop_vertex_ids[unique_indices]
-            unique_labels <- loop_vertex_labels[unique_indices]
+            unique_mask <- !duplicated(node_ids)
+            unique_ids <- node_ids[unique_mask]
+            unique_labels <- loop_vertex_labels[unique_mask]
 
             # Build edges for this loop
             edges_list <- list()
-            loop_len <- length(loop)
+            loop_len <- length(node_ids)
             for (j in seq_len(loop_len)) {
-              from_idx <- loop[j]
-              to_idx <- if (j == loop_len) loop[1] else loop[j + 1]
-              from_name <- V(g)$name[from_idx]
-              to_name <- V(g)$name[to_idx]
+              from_name <- node_ids[j]
+              to_name <- if (j == loop_len) node_ids[1] else node_ids[j + 1]
+
+              from_idx <- vertex_indices[j]
+              to_idx <- if (j == loop_len) vertex_indices[1] else vertex_indices[j + 1]
 
               edge_id <- tryCatch(get_edge_ids(g, c(from_idx, to_idx)), error = function(e) 0)
               polarity <- if (edge_id > 0) E(g)$polarity[edge_id] else "+"
