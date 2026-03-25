@@ -564,6 +564,64 @@ test_that("Macaronesia contexts have Macaronesia-specific content", {
   }
 })
 
+# --- Context lookup: cross-region fallback regression test ---
+
+test_that("KB API: North Sea query does NOT return Black Sea data", {
+  skip_if_not(exists("get_context_connections", mode = "function"), "KB API not available")
+  skip_if_not(exists("ses_knowledge_db_available", mode = "function") &&
+              ses_knowledge_db_available(), "KB not loaded")
+
+  # This was the original bug: .find_context("north_sea", "open coast")
+  # returned black_sea_open_coast due to broken regex fallback
+  conns <- get_context_connections("north_sea", "open coast")
+  if (length(conns) > 0) {
+    all_text <- tolower(paste(sapply(conns, function(c) {
+      paste(c$from %||% "", c$to %||% "", c$rationale %||% "")
+    }), collapse = " "))
+    expect_false(grepl("\\bbulgarian\\b", all_text, perl = TRUE),
+                 info = "North Sea query must not return Bulgarian content")
+    expect_false(grepl("\\bromanian\\b", all_text, perl = TRUE),
+                 info = "North Sea query must not return Romanian content")
+    expect_false(grepl("\\bblack sea\\b", all_text, perl = TRUE),
+                 info = "North Sea query must not return Black Sea content")
+  }
+})
+
+test_that("KB API: Black Sea query returns Black Sea data (not North Sea)", {
+  skip_if_not(exists("get_context_connections", mode = "function"), "KB API not available")
+  skip_if_not(exists("ses_knowledge_db_available", mode = "function") &&
+              ses_knowledge_db_available(), "KB not loaded")
+
+  conns <- get_context_connections("black_sea", "open coast")
+  expect_true(length(conns) > 0, info = "Black Sea open coast must have connections")
+})
+
+test_that("KB API: context lookup never crosses regional boundaries", {
+  skip_if_not(exists("get_context_connections", mode = "function"), "KB API not available")
+  skip_if_not(exists("ses_knowledge_db_available", mode = "function") &&
+              ses_knowledge_db_available(), "KB not loaded")
+
+  # Test multiple cross-region cases that the old bug would have matched
+  test_cases <- list(
+    list(sea = "north_sea", hab = "open coast", forbidden = "black sea"),
+    list(sea = "baltic", hab = "sea ice", forbidden = "arctic"),
+    list(sea = "pacific", hab = "coral reef", forbidden = "caribbean")
+  )
+
+  for (tc in test_cases) {
+    conns <- get_context_connections(tc$sea, tc$hab)
+    if (length(conns) > 0) {
+      all_text <- tolower(paste(sapply(conns, function(c) {
+        paste(c$from %||% "", c$to %||% "", c$rationale %||% "")
+      }), collapse = " "))
+      pattern <- paste0("\\b", tc$forbidden, "\\b")
+      expect_false(grepl(pattern, all_text, perl = TRUE),
+                   info = sprintf("%s+%s must not return %s content",
+                                  tc$sea, tc$hab, tc$forbidden))
+    }
+  }
+})
+
 # ==============================================================================
 # 6. KB API Functions
 # ==============================================================================

@@ -129,7 +129,9 @@ if (is.null(db_path)) {
 #' Find Matching Context in Database
 #'
 #' Attempts to find an exact context match, then falls back to partial matches
-#' (same habitat in different sea, or same sea different habitat).
+#' within the SAME regional sea only. Cross-region fallbacks are intentionally
+#' excluded to prevent content contamination (e.g., Black Sea data appearing
+#' when North Sea is selected).
 #'
 #' @param regional_sea Regional sea key
 #' @param habitat Habitat/ecosystem type string
@@ -146,32 +148,30 @@ if (is.null(db_path)) {
   }
 
   # Try prefix match (handles pacific_island matching pacific_island_atoll etc.)
+  # Only allow matches that share the same regional sea prefix
+  sea <- tolower(trimws(regional_sea))
   if (!is.null(context_key)) {
     for (key in names(db$contexts)) {
-      if (startsWith(key, context_key) || startsWith(context_key, key)) {
+      if (startsWith(key, paste0(sea, "_")) &&
+          (startsWith(key, context_key) || startsWith(context_key, key))) {
         return(list(context = db$contexts[[key]], key = key, match = "prefix"))
       }
     }
   }
 
-  # Try partial match: same habitat, any sea
-  if (!is.null(context_key)) {
-    hab_part <- sub("^[^_]+_", "", context_key)
-    for (key in names(db$contexts)) {
-      if (grepl(paste0("_", hab_part, "$"), key)) {
-        return(list(context = db$contexts[[key]], key = key, match = "habitat_only"))
-      }
-    }
-  }
-
-  # Try partial match: same sea, any habitat
-  sea <- tolower(trimws(regional_sea))
+  # Fallback: same sea, different habitat (never cross-region)
+  # This ensures we only return data from the same regional sea
   for (key in names(db$contexts)) {
-    if (grepl(paste0("^", sea, "_"), key)) {
+    if (startsWith(key, paste0(sea, "_"))) {
+      if (exists("debug_log", mode = "function")) {
+        debug_log(sprintf("SES KB: No exact match for '%s', falling back to '%s' (sea_only)",
+                          context_key %||% "NULL", key), "SES KB")
+      }
       return(list(context = db$contexts[[key]], key = key, match = "sea_only"))
     }
   }
 
+  # No match found for this regional sea -- caller will use generic_fallback
   return(NULL)
 }
 
