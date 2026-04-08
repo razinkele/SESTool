@@ -247,7 +247,11 @@ deploy_shiny_server() {
     fi
 
     # Set permissions
-    chown -R razinka:shiny /srv/shiny-server/marinesabres
+    if id razinka &>/dev/null; then
+        chown -R razinka:shiny /srv/shiny-server/marinesabres
+    else
+        chown -R "$USER":shiny /srv/shiny-server/marinesabres
+    fi
 
     print_success "Application files deployed"
 
