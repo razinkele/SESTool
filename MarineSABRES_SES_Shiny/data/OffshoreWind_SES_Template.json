@@ -26,18 +26,6 @@
         "description": "Offshore wind energy policy targets (EU, UK)"
       },
       {
-        "id": "D002",
-        "name": "Oil and gas production demand (declining)",
-        "type": "Driver",
-        "description": "Oil and gas production demand (declining)"
-      },
-      {
-        "id": "D003",
-        "name": "Sand and gravel resource demand for construction",
-        "type": "Driver",
-        "description": "Sand and gravel resource demand for construction"
-      },
-      {
         "id": "D004",
         "name": "Industrial-scale fisheries demand (sandeel, herring)",
         "type": "Driver",
@@ -136,12 +124,6 @@
         "name": "Energy security and carbon reduction benefits",
         "type": "Welfare",
         "description": "Energy security and carbon reduction benefits"
-      },
-      {
-        "id": "GB003",
-        "name": "Decommissioning cost burden (oil sector)",
-        "type": "Welfare",
-        "description": "Decommissioning cost burden (oil sector)"
       },
       {
         "id": "GB004",
@@ -395,16 +377,6 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Energy security and carbon reduction benefits reinforce offshore wind energy policy targets"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D002",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Decommissioning cost burden accelerates transition away from oil and gas production"
     },
     {
       "from_id": "GB004",

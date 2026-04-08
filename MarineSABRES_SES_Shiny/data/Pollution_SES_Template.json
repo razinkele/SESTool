@@ -30,24 +30,6 @@
         "name": "Port and harbour expansion pressure",
         "type": "Driver",
         "description": "Port and harbour expansion pressure"
-      },
-      {
-        "id": "D003",
-        "name": "Flood risk management needs",
-        "type": "Driver",
-        "description": "Flood risk management needs"
-      },
-      {
-        "id": "D004",
-        "name": "Industrial water supply demand",
-        "type": "Driver",
-        "description": "Industrial water supply demand"
-      },
-      {
-        "id": "D005",
-        "name": "Recreational boating and waterfront access",
-        "type": "Driver",
-        "description": "Recreational boating and waterfront access"
       }
     ],
     "activities": [
@@ -166,18 +148,6 @@
         "name": "Recreational fishing tourism revenue",
         "type": "Welfare",
         "description": "Recreational fishing tourism revenue"
-      },
-      {
-        "id": "GB003",
-        "name": "Flood damage avoidance for riverside communities",
-        "type": "Welfare",
-        "description": "Flood damage avoidance for riverside communities"
-      },
-      {
-        "id": "GB004",
-        "name": "Drinking water quality for downstream users",
-        "type": "Welfare",
-        "description": "Drinking water quality for downstream users"
       },
       {
         "id": "GB005",
@@ -463,36 +433,6 @@
       "strength": "medium",
       "confidence": 4,
       "description": "Green infrastructure implements river basin nutrient management plan objectives"
-    },
-    {
-      "from_id": "GB001",
-      "to_id": "D005",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Recreational fishing tourism revenue reinforces Recreational boating and waterfront access"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D003",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Flood damage avoidance for riverside communities reinforces Flood risk management needs"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D004",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Drinking water quality for downstream users reinforces Industrial water supply demand"
     },
     {
       "from_id": "GB005",

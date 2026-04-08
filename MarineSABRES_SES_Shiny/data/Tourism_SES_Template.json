@@ -20,12 +20,6 @@
   "dapsiwrm_framework": {
     "drivers": [
       {
-        "id": "D001",
-        "name": "Artisanal fishing tradition and cultural demand",
-        "type": "Driver",
-        "description": "Artisanal fishing tradition and cultural demand"
-      },
-      {
         "id": "D002",
         "name": "Diving tourism and underwater recreation",
         "type": "Driver",
@@ -160,12 +154,6 @@
         "name": "Dive centre and marine tourism revenue",
         "type": "Welfare",
         "description": "Dive centre and marine tourism revenue"
-      },
-      {
-        "id": "GB003",
-        "name": "Seafood quality and gastronomic heritage",
-        "type": "Welfare",
-        "description": "Seafood quality and gastronomic heritage"
       }
     ],
     "responses": [
@@ -485,16 +473,6 @@
       "description": "Mooring buoys protect benthic habitat from anchor damage within marine reserves"
     },
     {
-      "from_id": "GB001",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Artisanal fisher income and cultural continuity reinforces Artisanal fishing tradition and cultural demand"
-    },
-    {
       "from_id": "GB002",
       "to_id": "D002",
       "from_type": "welfare",
@@ -503,16 +481,6 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Dive centre and marine tourism revenue reinforces diving tourism and underwater recreation demand"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Seafood quality and gastronomic heritage reinforces artisanal fishing tradition and cultural demand"
     }
   ]
 }

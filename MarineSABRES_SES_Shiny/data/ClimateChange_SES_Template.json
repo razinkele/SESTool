@@ -20,28 +20,10 @@
   "dapsiwrm_framework": {
     "drivers": [
       {
-        "id": "D001",
-        "name": "Arctic shipping route economic viability",
-        "type": "Driver",
-        "description": "Arctic shipping route economic viability"
-      },
-      {
-        "id": "D002",
-        "name": "Hydrocarbon and mineral resource exploration",
-        "type": "Driver",
-        "description": "Hydrocarbon and mineral resource exploration"
-      },
-      {
         "id": "D003",
         "name": "Indigenous community food sovereignty",
         "type": "Driver",
         "description": "Indigenous community food sovereignty"
-      },
-      {
-        "id": "D004",
-        "name": "Scientific research and monitoring demand",
-        "type": "Driver",
-        "description": "Scientific research and monitoring demand"
       }
     ],
     "activities": [
@@ -166,18 +148,6 @@
         "name": "Cultural continuity of ice-based livelihoods",
         "type": "Welfare",
         "description": "Cultural continuity of ice-based livelihoods"
-      },
-      {
-        "id": "GB003",
-        "name": "Arctic shipping cost savings vs. Suez route",
-        "type": "Welfare",
-        "description": "Arctic shipping cost savings vs. Suez route"
-      },
-      {
-        "id": "GB004",
-        "name": "Shipping route accessibility in summer",
-        "type": "Welfare",
-        "description": "Shipping route accessibility in summer"
       }
     ],
     "responses": [
@@ -198,21 +168,9 @@
         "name": "Indigenous co-management of marine resources",
         "type": "Response",
         "description": "Indigenous co-management of marine resources"
-      },
-      {
-        "id": "R005",
-        "name": "Black carbon emission reduction agreements",
-        "type": "Response",
-        "description": "Black carbon emission reduction agreements"
       }
     ],
     "measures": [
-      {
-        "id": "M001",
-        "name": "Black carbon emission filters",
-        "type": "Measure",
-        "description": "Diesel particulate filters and scrubbers for Arctic vessel emissions"
-      },
       {
         "id": "M002",
         "name": "Adaptive ice management protocols",
@@ -423,16 +381,6 @@
       "description": "Seismic exploration does not directly cause sea ice loss. The link through eventual fossil fuel extraction and GHG emissions is very indirect at the exploration stage."
     },
     {
-      "from_id": "M001",
-      "to_id": "R005",
-      "from_type": "measure",
-      "to_type": "response",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 4,
-      "description": "Emission filters implement Arctic Council black carbon reduction commitments"
-    },
-    {
       "from_id": "M002",
       "to_id": "R001",
       "from_type": "measure",
@@ -461,26 +409,6 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Cultural continuity of ice-based livelihoods reinforces indigenous community food sovereignty needs"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Arctic shipping cost savings versus Suez route reinforce Northern Sea Route economic viability"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D004",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Shipping route accessibility in summer reinforces Scientific research and monitoring demand"
     }
   ]
 }

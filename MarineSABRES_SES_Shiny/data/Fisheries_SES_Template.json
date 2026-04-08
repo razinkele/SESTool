@@ -30,18 +30,6 @@
         "name": "Offshore wind energy expansion targets",
         "type": "Driver",
         "description": "Offshore wind energy expansion targets"
-      },
-      {
-        "id": "D003",
-        "name": "Maritime shipping route demand",
-        "type": "Driver",
-        "description": "Maritime shipping route demand"
-      },
-      {
-        "id": "D004",
-        "name": "Climate change mitigation goals",
-        "type": "Driver",
-        "description": "Climate change mitigation goals"
       }
     ],
     "activities": [
@@ -160,12 +148,6 @@
         "name": "Fish processing industry employment",
         "type": "Welfare",
         "description": "Fish processing industry employment"
-      },
-      {
-        "id": "GB004",
-        "name": "Maritime trade revenue",
-        "type": "Welfare",
-        "description": "Maritime trade revenue"
       }
     ],
     "responses": [
@@ -483,16 +465,6 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Fish processing industry employment reinforces demand for Baltic cod and herring fisheries"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D003",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Maritime trade revenue reinforces demand for shipping routes through the Baltic"
     }
   ]
 }

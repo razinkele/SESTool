@@ -26,22 +26,10 @@
         "description": "Food security from local fisheries"
       },
       {
-        "id": "D002",
-        "name": "Recreational demand for nature tourism",
-        "type": "Driver",
-        "description": "Recreational demand for nature tourism"
-      },
-      {
         "id": "D003",
         "name": "Agricultural production demand in catchment",
         "type": "Driver",
         "description": "Agricultural production demand in catchment"
-      },
-      {
-        "id": "D005",
-        "name": "Cultural heritage of traditional fishing",
-        "type": "Driver",
-        "description": "Cultural heritage of traditional fishing"
       }
     ],
     "activities": [
@@ -166,18 +154,6 @@
         "name": "Fisher household income from pike-perch sales",
         "type": "Welfare",
         "description": "Fisher household income from pike-perch sales"
-      },
-      {
-        "id": "GB002",
-        "name": "Recreational value for local communities",
-        "type": "Welfare",
-        "description": "Recreational value for local communities"
-      },
-      {
-        "id": "GB003",
-        "name": "Cultural identity of lagoon fishing villages",
-        "type": "Welfare",
-        "description": "Cultural identity of lagoon fishing villages"
       },
       {
         "id": "GB004",
@@ -497,36 +473,6 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Fisher household income from pike-perch sales reinforces Food security from local fisheries"
-    },
-    {
-      "from_id": "GB002",
-      "to_id": "D002",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Recreational value for local communities reinforces Recreational demand for nature tourism"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D005",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Cultural identity of lagoon fishing villages reinforces Cultural heritage of traditional fishing"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D002",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Tourism revenue from birdwatching and angling reinforces recreational demand for nature tourism"
     }
   ]
 }
