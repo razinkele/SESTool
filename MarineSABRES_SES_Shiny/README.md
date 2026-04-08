@@ -60,7 +60,7 @@ The MarineSABRES SES Toolbox enables researchers, policymakers, and stakeholders
 | Method | Description |
 |--------|-------------|
 | **AI-Guided** | Intelligent assistant suggests elements and connections |
-| **Template-Based** | 7 pre-built templates (Fisheries, Tourism, Aquaculture, Pollution, Climate, Caribbean, Offshore Wind) |
+| **Template-Based** | 7 pre-built templates (Fisheries, Coastal Lagoon, Tourism, Pollution, Climate Change, Caribbean, Offshore Wind) |
 | **Graphical Builder** | Point-and-click diagram creation |
 | **ISA Data Entry** | Structured matrix-based input |
 | **Excel Import** | Load existing models from spreadsheets |
@@ -100,10 +100,10 @@ The MarineSABRES SES Toolbox enables researchers, policymakers, and stakeholders
 ```r
 # Install core packages
 install.packages(c(
-  "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS",
-  "shiny.i18n", "DT", "jsonlite", "openxlsx", "readxl",
-  "igraph", "visNetwork", "ggplot2", "plotly",
-  "dplyr", "tidyr", "purrr", "stringr", "lubridate",
+  "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS", "shinyFiles",
+  "shiny.i18n", "DT", "jsonlite", "openxlsx", "readxl", "httr", "digest",
+  "igraph", "visNetwork", "ggraph", "tidygraph", "ggplot2", "plotly",
+  "dygraphs", "xts", "timevis", "tidyverse",
   "htmltools", "htmlwidgets", "rmarkdown", "knitr",
   "officer", "flextable", "tinytex"
 ))
@@ -130,7 +130,7 @@ MarineSABRES_SES_Shiny/
 ├── app.R                       # Main entry point
 ├── global.R                    # Package loading, startup
 ├── constants.R                 # Configuration constants
-├── modules/                    # 44 Shiny modules
+├── modules/                    # 46 Shiny modules
 │   ├── isa_data_entry_module.R
 │   ├── cld_visualization_module.R
 │   ├── analysis_*.R            # Analysis modules
@@ -141,13 +141,13 @@ MarineSABRES_SES_Shiny/
 │   ├── ml_*.R                  # ML classification
 │   └── ...
 ├── server/                     # Server handlers
-├── translations/               # 9 languages, 38 JSON files
+├── translations/               # 9 languages, 34+ JSON files
 │   ├── common/
 │   ├── modules/
 │   └── ui/
-├── data/                       # SES templates
+├── data/                       # SES templates & knowledge base
 ├── www/                        # Static assets
-├── tests/                      # Test suite (55 test files, 3700+ tests)
+├── tests/                      # Test suite (56 test files, 4,094+ tests)
 └── deployment/                 # Deployment scripts
 ```
 
@@ -220,6 +220,7 @@ Rscript -e "testthat::test_file('tests/testthat/test-network-analysis.R')"
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| **1.11.0** | 2026-04-08 | KB & Template Overhaul: 6 templates rebuilt from KB, Caribbean polarity/feedback, scientific review, deployment fixes |
 | **1.10.2** | 2026-03-18 | Test hardening: 46→0 failures, 9 new test files, 4,094 passing tests, function implementations |
 | **1.10.1** | 2026-03-17 | UI polish: topbar reorg, KB references, connection review fixes, manual updates |
 | **1.10.0** | 2026-03-17 | KB quality review: 68 reclassifications, 213 scientific corrections, 1120 connections |
