@@ -267,7 +267,8 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
 
   observeEvent(input$regional_sea_select, {
     pd <- project_data()
-    val <- if (nchar(input$regional_sea_select) == 0) NULL else input$regional_sea_select
+    raw <- input$regional_sea_select
+    val <- if (is.null(raw) || !nzchar(raw)) NULL else raw
     pd$data$metadata$regional_sea <- val
     # Use match() for first-match (avoids returning multiple names for mediterranean/atlantic)
     idx <- match(val, REGIONAL_SEA_KB_KEYS)
@@ -277,7 +278,8 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
 
   observeEvent(input$ecosystem_type_select, {
     pd <- project_data()
-    val <- if (nchar(input$ecosystem_type_select) == 0) NULL else input$ecosystem_type_select
+    raw <- input$ecosystem_type_select
+    val <- if (is.null(raw) || !nzchar(raw)) NULL else raw
     pd$data$metadata$ecosystem_type <- val
     project_data(pd)
   }, ignoreInit = TRUE)
