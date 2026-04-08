@@ -1403,8 +1403,8 @@
       "from_type": "activity",
       "from_id": "A3",
       "to_type": "pressure",
-      "to_id": "P9",
-      "description": "Beach tourism causes physical damage from trampling",
+      "to_id": "P10",
+      "description": "Beach tourism causes physical damage to benthic habitats from trampling and anchoring",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3
@@ -1413,8 +1413,8 @@
       "from_type": "activity",
       "from_id": "A4",
       "to_type": "pressure",
-      "to_id": "P9",
-      "description": "Diving activities cause physical damage to reefs",
+      "to_id": "P10",
+      "description": "Diving and snorkeling activities cause physical damage to coral reef habitats",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3
@@ -1464,7 +1464,7 @@
       "from_id": "P3",
       "to_type": "state",
       "to_id": "S2",
-      "description": "Sedimentation smothers and stresses coral reefs",
+      "description": "Heavy metal pollution causes toxicological stress to coral organisms, contributing to bleaching and mortality",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3
@@ -1474,7 +1474,7 @@
       "from_id": "P3",
       "to_type": "state",
       "to_id": "S5",
-      "description": "Sedimentation degrades seagrass meadows",
+      "description": "Heavy metal contamination impairs seagrass photosynthesis and growth, leading to meadow decline",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3
@@ -1485,16 +1485,6 @@
       "to_type": "state",
       "to_id": "S8",
       "description": "Ocean acidification degrades coastal water quality",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3
-    },
-    {
-      "from_type": "pressure",
-      "from_id": "P7",
-      "to_type": "state",
-      "to_id": "S1",
-      "description": "Altered ocean currents transport Sargassum to coasts",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3
@@ -2295,7 +2285,9 @@
       "to_type": "driver",
       "to_id": "D1",
       "polarity": "+",
-      "description": "Loss of fishing income reinforces food security needs"
+      "description": "Loss of fishing income reinforces food security needs",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
@@ -2303,7 +2295,9 @@
       "to_type": "driver",
       "to_id": "D2",
       "polarity": "+",
-      "description": "Decline in tourism revenue reinforces economic development aspirations"
+      "description": "Decline in tourism revenue reinforces economic development aspirations",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
@@ -2311,7 +2305,9 @@
       "to_type": "driver",
       "to_id": "D2",
       "polarity": "+",
-      "description": "Job losses reinforce economic development aspirations"
+      "description": "Job losses reinforce economic development aspirations",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
@@ -2319,7 +2315,9 @@
       "to_type": "driver",
       "to_id": "D5",
       "polarity": "+",
-      "description": "Coastal flooding reinforces climate change adaptation needs"
+      "description": "Coastal flooding reinforces climate change adaptation needs",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
@@ -2327,7 +2325,9 @@
       "to_type": "driver",
       "to_id": "D6",
       "polarity": "+",
-      "description": "Reduced quality of life reinforces housing and infrastructure needs"
+      "description": "Reduced quality of life reinforces housing and infrastructure needs",
+      "strength": "medium",
+      "confidence": 3
     }
   ],
   "usage_notes": "This template represents the complex, multi-faceted marine environmental challenges facing Caribbean islands. It can be adapted for other tropical island contexts by adjusting specific regional seas, ecosystem types, and local pollutants. The template emphasizes the interconnected nature of problems (Sargassum, coral bleaching, contamination, overfishing, habitat loss) and the need for integrated coastal zone management approaches."

@@ -42,12 +42,6 @@
         "name": "Industrial-scale fisheries demand (sandeel, herring)",
         "type": "Driver",
         "description": "Industrial-scale fisheries demand (sandeel, herring)"
-      },
-      {
-        "id": "D005",
-        "name": "International shipping and trade growth",
-        "type": "Driver",
-        "description": "International shipping and trade growth"
       }
     ],
     "activities": [
@@ -56,12 +50,6 @@
         "name": "Offshore wind farm construction (monopile, jacket)",
         "type": "Activity",
         "description": "Offshore wind farm construction (monopile, jacket)"
-      },
-      {
-        "id": "A002",
-        "name": "Oil and gas platform operation and decommissioning",
-        "type": "Activity",
-        "description": "Oil and gas platform operation and decommissioning"
       },
       {
         "id": "A003",
@@ -74,18 +62,6 @@
         "name": "Beam trawling for flatfish (sole, plaice)",
         "type": "Activity",
         "description": "Beam trawling for flatfish (sole, plaice)"
-      },
-      {
-        "id": "A005",
-        "name": "Marine aggregate (sand/gravel) dredging",
-        "type": "Activity",
-        "description": "Marine aggregate (sand/gravel) dredging"
-      },
-      {
-        "id": "A006",
-        "name": "Container and tanker shipping traffic",
-        "type": "Activity",
-        "description": "Container and tanker shipping traffic"
       }
     ],
     "pressures": [
@@ -138,24 +114,6 @@
         "name": "Harbour porpoise and minke whale abundance",
         "type": "State Change",
         "description": "Harbour porpoise and minke whale abundance"
-      },
-      {
-        "id": "MPF004",
-        "name": "Benthic community recovery around wind farms",
-        "type": "State Change",
-        "description": "Benthic community recovery around wind farms"
-      },
-      {
-        "id": "MPF005",
-        "name": "North Sea herring stock biomass",
-        "type": "State Change",
-        "description": "North Sea herring stock biomass"
-      },
-      {
-        "id": "MPF006",
-        "name": "Seabird population sustainability",
-        "type": "State Change",
-        "description": "Seabird population sustainability"
       }
     ],
     "ecosystem_services": [
@@ -164,12 +122,6 @@
         "name": "Fish stock provisioning for human consumption",
         "type": "Provisioning",
         "description": "Fish stock provisioning for human consumption"
-      },
-      {
-        "id": "ES002",
-        "name": "Seabird conservation value (public concern)",
-        "type": "Provisioning",
-        "description": "Seabird conservation value (public concern)"
       }
     ],
     "goods_benefits": [
@@ -196,12 +148,6 @@
         "name": "Renewable energy generation capacity",
         "type": "Welfare",
         "description": "Renewable energy generation capacity"
-      },
-      {
-        "id": "GB005",
-        "name": "Shipping and trade route services",
-        "type": "Welfare",
-        "description": "Shipping and trade route services"
       }
     ],
     "responses": [
@@ -222,18 +168,6 @@
         "name": "Underwater noise mitigation requirements (bubble curtains)",
         "type": "Response",
         "description": "Underwater noise mitigation requirements (bubble curtains)"
-      },
-      {
-        "id": "R004",
-        "name": "OSPAR regional action plans for marine litter",
-        "type": "Response",
-        "description": "OSPAR regional action plans for marine litter"
-      },
-      {
-        "id": "R005",
-        "name": "Platform decommissioning regulations",
-        "type": "Response",
-        "description": "Platform decommissioning regulations"
       }
     ],
     "measures": [
@@ -320,7 +254,7 @@
       "polarity": "+",
       "strength": "strong",
       "confidence": 5,
-      "description": "Beam trawls physically scrape and flatten seabed habitats. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features (e"
+      "description": "Beam trawls physically scrape and flatten seabed habitats. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features."
     },
     {
       "from_id": "MPF001",
@@ -393,16 +327,6 @@
       "description": "Fish stock productivity directly determines fishing fleet revenue and coastal community employment. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience"
     },
     {
-      "from_id": "GB001",
-      "to_id": "D004",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Fishing industry employment sustains political lobby for maintaining industrial-scale fishery access and quotas"
-    },
-    {
       "from_id": "R001",
       "to_id": "A003",
       "from_type": "response",
@@ -423,66 +347,6 @@
       "description": "Maritime spatial planning designates areas for wind energy and nature protection that exclude beam trawling"
     },
     {
-      "from_id": "D002",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Oil and gas production demand (declining)"
-    },
-    {
-      "from_id": "D003",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Sand and gravel resource demand for construction"
-    },
-    {
-      "from_id": "D005",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for International shipping and trade growth"
-    },
-    {
-      "from_id": "A002",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Oil and gas platform operation and decommissioning"
-    },
-    {
-      "from_id": "A005",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Marine aggregate (sand/gravel) dredging"
-    },
-    {
-      "from_id": "A006",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Container and tanker shipping traffic"
-    },
-    {
       "from_id": "P004",
       "to_id": "MPF001",
       "from_type": "pressure",
@@ -491,106 +355,6 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Chronic hydrocarbon contamination from oil/gas platforms harms sandeel through toxic effects on eggs, larvae, and prey organisms. Polarity corrected from + to - (contamination reduces, not increases, sandeel abundance)."
-    },
-    {
-      "from_id": "MPF004",
-      "to_id": "ES001",
-      "from_type": "state",
-      "to_type": "impact",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Benthic community recovery around wind farms. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features (e"
-    },
-    {
-      "from_id": "MPF005",
-      "to_id": "ES001",
-      "from_type": "state",
-      "to_type": "impact",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for North Sea herring stock biomass. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience"
-    },
-    {
-      "from_id": "MPF006",
-      "to_id": "ES001",
-      "from_type": "state",
-      "to_type": "impact",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Seabird population sustainability. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience"
-    },
-    {
-      "from_id": "ES002",
-      "to_id": "GB001",
-      "from_type": "impact",
-      "to_type": "welfare",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Seabird conservation value (public concern)"
-    },
-    {
-      "from_id": "GB002",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Energy security and carbon reduction benefits"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Decommissioning cost burden (oil sector)"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Renewable energy generation capacity"
-    },
-    {
-      "from_id": "GB005",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Shipping and trade route services"
-    },
-    {
-      "from_id": "R004",
-      "to_id": "P001",
-      "from_type": "response",
-      "to_type": "pressure",
-      "polarity": "-",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for OSPAR regional action plans for marine litter"
-    },
-    {
-      "from_id": "R005",
-      "to_id": "P001",
-      "from_type": "response",
-      "to_type": "pressure",
-      "polarity": "-",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Platform decommissioning regulations"
     },
     {
       "from_id": "M001",
@@ -611,6 +375,46 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Habitat compensation schemes are part of maritime spatial planning EIA requirements"
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Fishing industry employment and revenue reinforces Offshore wind energy policy targets (EU, UK)"
+    },
+    {
+      "from_id": "GB002",
+      "to_id": "D002",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Energy security and carbon reduction benefits reinforces Oil and gas production demand (declining)"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D003",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Decommissioning cost burden (oil sector) reinforces Sand and gravel resource demand for construction"
+    },
+    {
+      "from_id": "GB004",
+      "to_id": "D004",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Renewable energy generation capacity reinforces Industrial-scale fisheries demand (sandeel, herring)"
     }
   ]
 }

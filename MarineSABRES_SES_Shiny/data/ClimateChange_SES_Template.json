@@ -42,12 +42,6 @@
         "name": "Scientific research and monitoring demand",
         "type": "Driver",
         "description": "Scientific research and monitoring demand"
-      },
-      {
-        "id": "D005",
-        "name": "Climate change adaptation needs",
-        "type": "Driver",
-        "description": "Climate change adaptation needs"
       }
     ],
     "activities": [
@@ -134,12 +128,6 @@
         "description": "Ice algae and under-ice primary production"
       },
       {
-        "id": "MPF004",
-        "name": "Narwhal and bowhead whale habitat availability",
-        "type": "State Change",
-        "description": "Narwhal and bowhead whale habitat availability"
-      },
-      {
         "id": "MPF005",
         "name": "Multi-year ice coverage (critical habitat)",
         "type": "State Change",
@@ -164,12 +152,6 @@
         "name": "Polar ecosystem biodiversity maintenance",
         "type": "Provisioning",
         "description": "Polar ecosystem biodiversity maintenance"
-      },
-      {
-        "id": "ES004",
-        "name": "Global climate stability benefit",
-        "type": "Provisioning",
-        "description": "Global climate stability benefit"
       }
     ],
     "goods_benefits": [
@@ -216,12 +198,6 @@
         "name": "Indigenous co-management of marine resources",
         "type": "Response",
         "description": "Indigenous co-management of marine resources"
-      },
-      {
-        "id": "R004",
-        "name": "Arctic Council conservation measures",
-        "type": "Response",
-        "description": "Arctic Council conservation measures"
       },
       {
         "id": "R005",
@@ -387,16 +363,6 @@
       "description": "Multi-year ice provides stable substrate for ice algal communities driving under-ice primary production. Sea ice loss extends the phytoplankton growing season and increases light availability, but reduces ice-algal production which forms the base of sympagic food webs"
     },
     {
-      "from_id": "GB001",
-      "to_id": "D003",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "strong",
-      "confidence": 4,
-      "description": "Food security is a core component of food sovereignty for indigenous communities. This is well-documented in Arctic Human Development Reports and IPCC AR6 CCP6. Confidence and strength upgraded."
-    },
-    {
       "from_id": "R001",
       "to_id": "A001",
       "from_type": "response",
@@ -407,14 +373,14 @@
       "description": "Polar Code safety and environmental requirements increase compliance costs and restrict Arctic commercial shipping operations"
     },
     {
-      "from_id": "P006",
-      "to_id": "P007",
+      "from_id": "P007",
+      "to_id": "P006",
       "from_type": "pressure",
       "to_type": "pressure",
       "polarity": "+",
       "strength": "strong",
       "confidence": 4,
-      "description": "The driver 'Climate change and ocean warming' is mediated through global greenhouse gas emissions that alter the climate system"
+      "description": "Greenhouse gas emissions drive climate change and ocean warming"
     },
     {
       "from_id": "P007",
@@ -425,46 +391,6 @@
       "strength": "strong",
       "confidence": 4,
       "description": "Arctic warming at 2-4x the global average is the primary driver of sea ice loss. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
-    },
-    {
-      "from_id": "D001",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Arctic shipping route economic viability"
-    },
-    {
-      "from_id": "D002",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Hydrocarbon and mineral resource exploration"
-    },
-    {
-      "from_id": "D004",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Scientific research and monitoring demand"
-    },
-    {
-      "from_id": "D005",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Climate change adaptation needs"
     },
     {
       "from_id": "P004",
@@ -485,76 +411,6 @@
       "strength": "medium",
       "confidence": 4,
       "description": "Black carbon deposition accelerates sea ice melt, reducing polar bear hunting habitat and prey access. AMAP (2021) documents this as a significant contributor to Arctic warming. Effect is clearly negative on bear populations. Polarity corrected from + to -."
-    },
-    {
-      "from_id": "MPF004",
-      "to_id": "ES001",
-      "from_type": "state",
-      "to_type": "impact",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Narwhal and bowhead whale habitat availability"
-    },
-    {
-      "from_id": "ES004",
-      "to_id": "GB001",
-      "from_type": "impact",
-      "to_type": "welfare",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Global climate stability benefit"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Arctic shipping cost savings vs. Suez route"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Shipping route accessibility in summer"
-    },
-    {
-      "from_id": "R004",
-      "to_id": "P001",
-      "from_type": "response",
-      "to_type": "pressure",
-      "polarity": "-",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Arctic Council conservation measures"
-    },
-    {
-      "from_id": "R005",
-      "to_id": "P001",
-      "from_type": "response",
-      "to_type": "pressure",
-      "polarity": "-",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Black carbon emission reduction agreements"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D003",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 2,
-      "description": "The relationship between Arctic shipping expansion and indigenous food sovereignty is contested. Increased shipping may bring economic benefits but also disrupts marine mammal migration routes and traditional subsistence patterns. Evidence is mixed."
     },
     {
       "from_id": "A003",
@@ -585,6 +441,46 @@
       "strength": "medium",
       "confidence": 4,
       "description": "Adaptive ice protocols implement IMO Polar Code Part I-A safety requirements"
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "D003",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Inuit and indigenous community food security reinforces Indigenous community food sovereignty"
+    },
+    {
+      "from_id": "GB002",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Cultural continuity of ice-based livelihoods reinforces Arctic shipping route economic viability"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D002",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Arctic shipping cost savings vs. Suez route reinforces Hydrocarbon and mineral resource exploration"
+    },
+    {
+      "from_id": "GB004",
+      "to_id": "D004",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Shipping route accessibility in summer reinforces Scientific research and monitoring demand"
     }
   ]
 }

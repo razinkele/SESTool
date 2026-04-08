@@ -124,12 +124,6 @@
         "name": "Sediment resuspension from dredging",
         "type": "Pressure",
         "description": "Sediment resuspension from dredging"
-      },
-      {
-        "id": "P007",
-        "name": "Altered freshwater flow regime from upstream regulation",
-        "type": "Pressure",
-        "description": "Altered freshwater flow regime from upstream regulation"
       }
     ],
     "marine_processes": [
@@ -150,24 +144,6 @@
         "name": "Estuarine benthic invertebrate communities",
         "type": "State Change",
         "description": "Estuarine benthic invertebrate communities"
-      },
-      {
-        "id": "MPF004",
-        "name": "Sea lamprey (Petromyzon marinus) population viability",
-        "type": "State Change",
-        "description": "Sea lamprey (Petromyzon marinus) population viability"
-      },
-      {
-        "id": "MPF005",
-        "name": "Estuarine water quality (nutrients, contaminants)",
-        "type": "State Change",
-        "description": "Estuarine water quality (nutrients, contaminants)"
-      },
-      {
-        "id": "MPF006",
-        "name": "Estuarine salinity gradient and mixing zone dynamics",
-        "type": "State Change",
-        "description": "Estuarine salinity gradient and mixing zone dynamics"
       }
     ],
     "ecosystem_services": [
@@ -176,12 +152,6 @@
         "name": "Salmon fishery productivity",
         "type": "Provisioning",
         "description": "Salmon fishery productivity"
-      },
-      {
-        "id": "ES002",
-        "name": "Nutrient filtration by estuarine wetlands",
-        "type": "Provisioning",
-        "description": "Nutrient filtration by estuarine wetlands"
       },
       {
         "id": "ES003",
@@ -272,7 +242,7 @@
       "polarity": "+",
       "strength": "medium",
       "confidence": 4,
-      "description": "Demand for salmon fishing drives hatchery stocking programmes to supplement wild runs. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
+      "description": "Salmon and sea trout fishery demand affects Salmon stocking and hatchery operations"
     },
     {
       "from_id": "D002",
@@ -332,7 +302,7 @@
       "polarity": "+",
       "strength": "strong",
       "confidence": 5,
-      "description": "Successful salmon migration sustains spawning populations and future fishery catches. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
+      "description": "Atlantic salmon migration success affects Salmon fishery productivity"
     },
     {
       "from_id": "ES001",
@@ -382,7 +352,7 @@
       "polarity": "+",
       "strength": "medium",
       "confidence": 4,
-      "description": "Healthy benthic communities provide prey for juvenile fish in estuarine nurseries. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features (e"
+      "description": "Healthy benthic communities provide prey for juvenile fish in estuarine nurseries. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features."
     },
     {
       "from_id": "D001",
@@ -422,7 +392,7 @@
       "polarity": "+",
       "strength": "strong",
       "confidence": 4,
-      "description": "Healthy nursery function sustains fish populations that attract recreational anglers and generate tourism revenue. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
+      "description": "Nursery function for coastal fish species affects Recreational fishing tourism revenue"
     },
     {
       "from_id": "R004",
@@ -433,36 +403,6 @@
       "strength": "medium",
       "confidence": 4,
       "description": "River basin nutrient management plans impose discharge limits that reduce industrial and municipal wastewater nutrient loads"
-    },
-    {
-      "from_id": "D003",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Flood risk management needs. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
-    },
-    {
-      "from_id": "D004",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Industrial water supply demand"
-    },
-    {
-      "from_id": "D005",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Recreational boating and waterfront access"
     },
     {
       "from_id": "A005",
@@ -485,56 +425,6 @@
       "description": "Sand and gravel extraction may resuspend some nutrients from sediments but is not a significant source of nutrient enrichment compared to agricultural/wastewater sources. Strength reduced to weak."
     },
     {
-      "from_id": "P007",
-      "to_id": "MPF001",
-      "from_type": "pressure",
-      "to_type": "state",
-      "polarity": "-",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Altered freshwater flow regime from upstream regulation"
-    },
-    {
-      "from_id": "MPF004",
-      "to_id": "ES001",
-      "from_type": "state",
-      "to_type": "impact",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Sea lamprey (Petromyzon marinus) population viability. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
-    },
-    {
-      "from_id": "MPF005",
-      "to_id": "ES001",
-      "from_type": "state",
-      "to_type": "impact",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Estuarine water quality (nutrients, contaminants)"
-    },
-    {
-      "from_id": "MPF006",
-      "to_id": "ES001",
-      "from_type": "state",
-      "to_type": "impact",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Estuarine salinity gradient and mixing zone dynamics"
-    },
-    {
-      "from_id": "ES002",
-      "to_id": "GB001",
-      "from_type": "impact",
-      "to_type": "welfare",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Nutrient filtration by estuarine wetlands. Marine tourism generates substantial economic value — reef tourism alone contributes ~USD 36 billion/year globally"
-    },
-    {
       "from_id": "R003",
       "to_id": "P001",
       "from_type": "response",
@@ -555,46 +445,6 @@
       "description": "Contaminated sediment remediation targets heavy metals and organic pollutants, not nutrient enrichment. May even temporarily increase nutrient release during disturbance. Strength and confidence reduced."
     },
     {
-      "from_id": "GB001",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Recreational fishing tourism revenue reinforces Salmon and sea trout fishery demand"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D002",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Flood damage avoidance for riverside communities reinforces Port and harbour expansion pressure"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D003",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Drinking water quality for downstream users reinforces Flood risk management needs"
-    },
-    {
-      "from_id": "GB005",
-      "to_id": "D004",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Port and navigation accessibility reinforces Industrial water supply demand"
-    },
-    {
       "from_id": "M001",
       "to_id": "R002",
       "from_type": "measure",
@@ -613,6 +463,46 @@
       "strength": "medium",
       "confidence": 4,
       "description": "Green infrastructure implements river basin nutrient management plan objectives"
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "D005",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Recreational fishing tourism revenue reinforces Recreational boating and waterfront access"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D003",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Flood damage avoidance for riverside communities reinforces Flood risk management needs"
+    },
+    {
+      "from_id": "GB004",
+      "to_id": "D004",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Drinking water quality for downstream users reinforces Industrial water supply demand"
+    },
+    {
+      "from_id": "GB005",
+      "to_id": "D002",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Port and navigation accessibility reinforces Port and harbour expansion pressure"
     }
   ]
 }

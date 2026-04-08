@@ -38,12 +38,6 @@
         "description": "Agricultural production demand in catchment"
       },
       {
-        "id": "D004",
-        "name": "Urban wastewater management needs",
-        "type": "Driver",
-        "description": "Urban wastewater management needs"
-      },
-      {
         "id": "D005",
         "name": "Cultural heritage of traditional fishing",
         "type": "Driver",
@@ -144,12 +138,6 @@
         "name": "Water transparency and light penetration",
         "type": "State Change",
         "description": "Water transparency and light penetration"
-      },
-      {
-        "id": "MPF006",
-        "name": "Round goby and Chinese mitten crab (Neogobius melanostomus, Eriocheir sinensis) invasion",
-        "type": "State Change",
-        "description": "Round goby and Chinese mitten crab (Neogobius melanostomus, Eriocheir sinensis) invasion"
       }
     ],
     "ecosystem_services": [
@@ -170,12 +158,6 @@
         "name": "Bird habitat provision (breeding, staging)",
         "type": "Provisioning",
         "description": "Bird habitat provision (breeding, staging)"
-      },
-      {
-        "id": "ES004",
-        "name": "Flood buffering and coastal protection",
-        "type": "Provisioning",
-        "description": "Flood buffering and coastal protection"
       }
     ],
     "goods_benefits": [
@@ -210,12 +192,6 @@
         "name": "HELCOM nutrient reduction targets for lagoon catchments",
         "type": "Response",
         "description": "HELCOM nutrient reduction targets for lagoon catchments"
-      },
-      {
-        "id": "R002",
-        "name": "Reed bed restoration programmes",
-        "type": "Response",
-        "description": "Reed bed restoration programmes"
       },
       {
         "id": "R003",
@@ -320,7 +296,7 @@
       "polarity": "+",
       "strength": "strong",
       "confidence": 5,
-      "description": "Healthy pike-perch stocks directly support lagoon fishery catches. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
+      "description": "Pike-perch population dynamics affects Fish provisioning from lagoon fisheries"
     },
     {
       "from_id": "MPF004",
@@ -450,7 +426,7 @@
       "polarity": "+",
       "strength": "medium",
       "confidence": 4,
-      "description": "Gillnet fishing directly creates fishing mortality pressure on pike-perch stocks. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
+      "description": "Small-scale gillnet fishing for pike-perch affects Fishing mortality on pike-perch stock"
     },
     {
       "from_id": "P006",
@@ -460,37 +436,7 @@
       "polarity": "-",
       "strength": "medium",
       "confidence": 4,
-      "description": "Fishing mortality reduces pike-perch stock size and alters population age structure. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
-    },
-    {
-      "from_id": "D002",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Recreational demand for nature tourism"
-    },
-    {
-      "from_id": "D004",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Urban wastewater management needs"
-    },
-    {
-      "from_id": "D005",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Cultural heritage of traditional fishing"
+      "description": "Fishing mortality on pike-perch stock affects Pike-perch population dynamics"
     },
     {
       "from_id": "A002",
@@ -523,34 +469,24 @@
       "description": "Microplastic effects on pike-perch populations are poorly documented and likely negative (not positive) through ingestion, inflammation, and endocrine disruption. Limited evidence for population-level effects. Polarity corrected to -, strength to weak, confidence to 2."
     },
     {
-      "from_id": "MPF006",
-      "to_id": "ES001",
-      "from_type": "state",
-      "to_type": "impact",
+      "from_id": "M001",
+      "to_id": "R001",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Best management practices directly reduce nutrient discharge, supporting HELCOM targets"
+    },
+    {
+      "from_id": "M002",
+      "to_id": "R001",
+      "from_type": "measure",
+      "to_type": "response",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Round goby and Chinese mitten crab (Neogobius melanostomus, Eriocheir sinensis) invasion"
-    },
-    {
-      "from_id": "ES004",
-      "to_id": "GB001",
-      "from_type": "impact",
-      "to_type": "welfare",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Flood buffering and coastal protection"
-    },
-    {
-      "from_id": "R002",
-      "to_id": "P001",
-      "from_type": "response",
-      "to_type": "pressure",
-      "polarity": "-",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Reed bed restoration programmes"
+      "description": "IMTA reduces N/P discharge by co-culturing filter feeders, supporting HELCOM nutrient reduction targets"
     },
     {
       "from_id": "GB001",
@@ -574,43 +510,23 @@
     },
     {
       "from_id": "GB003",
+      "to_id": "D005",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Cultural identity of lagoon fishing villages reinforces Cultural heritage of traditional fishing"
+    },
+    {
+      "from_id": "GB004",
       "to_id": "D003",
       "from_type": "welfare",
       "to_type": "driver",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "Cultural identity of lagoon fishing villages reinforces Agricultural production demand in catchment"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D004",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Tourism revenue from birdwatching and angling reinforces Urban wastewater management needs"
-    },
-    {
-      "from_id": "M001",
-      "to_id": "R001",
-      "from_type": "measure",
-      "to_type": "response",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 4,
-      "description": "Best management practices directly reduce nutrient discharge, supporting HELCOM targets"
-    },
-    {
-      "from_id": "M002",
-      "to_id": "R001",
-      "from_type": "measure",
-      "to_type": "response",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "IMTA reduces N/P discharge by co-culturing filter feeders, supporting HELCOM nutrient reduction targets"
+      "description": "Tourism revenue from birdwatching and angling reinforces Agricultural production demand in catchment"
     }
   ]
 }
