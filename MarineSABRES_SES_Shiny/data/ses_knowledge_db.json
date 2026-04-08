@@ -105,6 +105,10 @@
         {
           "name": "Round goby and Chinese mitten crab (Neogobius melanostomus, Eriocheir sinensis) invasion",
           "relevance": 0.75
+        },
+        {
+          "name": "Zostera marina (eelgrass/seagrass) bed extent and condition",
+          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -903,6 +907,10 @@
         {
           "name": "Estuarine salinity gradient and mixing zone dynamics",
           "relevance": 0.85
+        },
+        {
+          "name": "Zostera marina (eelgrass/seagrass) meadow coverage in brackish estuarine waters",
+          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -1676,6 +1684,10 @@
         {
           "name": "Deep-water hypoxia (dead zones)",
           "relevance": 0.95
+        },
+        {
+          "name": "Zostera marina (seagrass) distribution in nearshore subtidal zones",
+          "relevance": 0.6
         }
       ],
       "impacts": [
@@ -2483,6 +2495,10 @@
         {
           "name": "Seal population recovery concerns",
           "relevance": 0.7
+        },
+        {
+          "name": "Seagrass (Zostera marina) bed coverage along brackish open coastline",
+          "relevance": 0.75
         }
       ],
       "impacts": [
@@ -3242,6 +3258,10 @@
         },
         {
           "name": "Invasive Manila clam (Ruditapes philippinarum) spread",
+          "relevance": 0.7
+        },
+        {
+          "name": "Cymodocea nodosa and Zostera noltei seagrass coverage in lagoon, with Posidonia oceanica at lagoon-sea connections",
           "relevance": 0.7
         }
       ],
@@ -7212,6 +7232,14 @@
         {
           "name": "Sargassum inundation events",
           "relevance": 0.7
+        },
+        {
+          "name": "Adjacent mangrove forest extent and connectivity to reef system",
+          "relevance": 0.75
+        },
+        {
+          "name": "Seagrass bed coverage between reef and shore",
+          "relevance": 0.75
         }
       ],
       "impacts": [
@@ -11152,6 +11180,10 @@
         {
           "name": "Overgrazing by recovering green turtle populations",
           "relevance": 0.7
+        },
+        {
+          "name": "Mangrove-seagrass habitat connectivity and nursery function",
+          "relevance": 0.8
         }
       ],
       "impacts": [
@@ -14285,6 +14317,10 @@
         {
           "name": "Perch (Perca fluviatilis) population structure",
           "relevance": 0.75
+        },
+        {
+          "name": "Zostera marina (seagrass) meadows in brackish archipelago waters",
+          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -20223,6 +20259,10 @@
         {
           "name": "Coastal erosion of limestone and glacial till shores",
           "relevance": 0.8
+        },
+        {
+          "name": "Seagrass (Zostera marina) beds in brackish shallow island waters",
+          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -23474,6 +23514,10 @@
         {
           "name": "Grey seal predation on coastal fish stocks and gear damage",
           "relevance": 0.8
+        },
+        {
+          "name": "Seagrass (Zostera marina) patches in brackish sheltered bays along rocky coast",
+          "relevance": 0.65
         }
       ],
       "impacts": [
