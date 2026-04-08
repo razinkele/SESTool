@@ -243,10 +243,24 @@ build_adjacency_matrix <- function(connections, from_elements, to_elements,
       connections, elems$activities$ID, elems$pressures$ID,
       "activity", "pressure", elems$activities$Name, elems$pressures$Name)
 
+  if (nrow(elems$pressures) > 1) {
+    p_p <- build_adjacency_matrix(
+      connections, elems$pressures$ID, elems$pressures$ID,
+      "pressure", "pressure", elems$pressures$Name, elems$pressures$Name)
+    if (any(p_p != "")) matrices$p_p <- p_p
+  }
+
   if (nrow(elems$marine_processes) > 0 && nrow(elems$pressures) > 0)
     matrices$p_mpf <- build_adjacency_matrix(
       connections, elems$pressures$ID, elems$marine_processes$ID,
       "pressure", "state", elems$pressures$Name, elems$marine_processes$Name)
+
+  if (nrow(elems$marine_processes) > 1) {
+    s_s <- build_adjacency_matrix(
+      connections, elems$marine_processes$ID, elems$marine_processes$ID,
+      "state", "state", elems$marine_processes$Name, elems$marine_processes$Name)
+    if (any(s_s != "")) matrices$s_s <- s_s
+  }
 
   if (nrow(elems$ecosystem_services) > 0 && nrow(elems$marine_processes) > 0)
     matrices$mpf_es <- build_adjacency_matrix(

@@ -635,7 +635,7 @@ create_edges_df <- function(isa_data, adjacency_matrices) {
     # Mapping from abbreviations to prefixes
     abbrev_to_prefix <- c(
       "gb" = "GB", "es" = "ES", "mpf" = "MPF", "p" = "P",
-      "a" = "A", "d" = "D", "r" = "R", "m" = "M"
+      "a" = "A", "d" = "D", "r" = "R", "m" = "M", "s" = "MPF"
     )
 
     for (matrix_name in additional_matrices) {

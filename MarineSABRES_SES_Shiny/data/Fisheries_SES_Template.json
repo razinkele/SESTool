@@ -235,6 +235,20 @@
         "type": "Response",
         "description": "Trawling closure zones in spawning areas"
       }
+    ],
+    "measures": [
+      {
+        "id": "M001",
+        "name": "Seasonal fishing closures",
+        "type": "Measure",
+        "description": "Seasonal fishing closures during spawning periods"
+      },
+      {
+        "id": "M002",
+        "name": "Selective gear technology (acoustic pingers)",
+        "type": "Measure",
+        "description": "Acoustic deterrent devices on gillnets to reduce cetacean bycatch"
+      }
     ]
   },
   "connections": [
@@ -607,6 +621,26 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Renewable energy generation from offshore wind reinforces Sand and aggregate resource needs"
+    },
+    {
+      "from_id": "M001",
+      "to_id": "R001",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Seasonal closures are the primary implementation tool for Baltic cod quota reductions"
+    },
+    {
+      "from_id": "M002",
+      "to_id": "R004",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Acoustic pingers implement harbour porpoise bycatch mitigation requirements (EU Reg 812/2004)"
     }
   ]
 }
