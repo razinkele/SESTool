@@ -266,23 +266,25 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
   # ========== REGIONAL CONTEXT OBSERVERS ==========
 
   observeEvent(input$regional_sea_select, {
+    req(input$regional_sea_select)
     pd <- project_data()
     raw <- input$regional_sea_select
-    val <- if (is.null(raw) || !nzchar(raw)) NULL else raw
+    val <- if (!nzchar(raw)) NULL else raw
     pd$data$metadata$regional_sea <- val
     # Use match() for first-match (avoids returning multiple names for mediterranean/atlantic)
     idx <- match(val, REGIONAL_SEA_KB_KEYS)
     pd$data$metadata$regional_sea_display <- if (!is.na(idx)) names(REGIONAL_SEA_KB_KEYS)[idx] else NULL
     project_data(pd)
-  }, ignoreInit = TRUE)
+  }, ignoreInit = TRUE, ignoreNULL = TRUE)
 
   observeEvent(input$ecosystem_type_select, {
+    req(input$ecosystem_type_select)
     pd <- project_data()
     raw <- input$ecosystem_type_select
-    val <- if (is.null(raw) || !nzchar(raw)) NULL else raw
+    val <- if (!nzchar(raw)) NULL else raw
     pd$data$metadata$ecosystem_type <- val
     project_data(pd)
-  }, ignoreInit = TRUE)
+  }, ignoreInit = TRUE, ignoreNULL = TRUE)
 
   # ========== STATUS SUMMARY RENDERS ==========
 
