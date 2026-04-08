@@ -632,6 +632,8 @@ convert_matrices_to_connections <- function(matrices, elements) {
     r_d = list(from_type = "responses", to_type = "drivers", from = elements$responses, to = elements$drivers),
     r_a = list(from_type = "responses", to_type = "activities", from = elements$responses, to = elements$activities),
     r_p = list(from_type = "responses", to_type = "pressures", from = elements$responses, to = elements$pressures),
+    r_mpf = list(from_type = "responses", to_type = "states", from = elements$responses, to = elements$states),
+    r_r = list(from_type = "responses", to_type = "responses", from = elements$responses, to = elements$responses),
     p_p = list(from_type = "pressures", to_type = "pressures", from = elements$pressures, to = elements$pressures),
     s_s = list(from_type = "states", to_type = "states", from = elements$states, to = elements$states)
   )
@@ -832,6 +834,7 @@ generate_connections <- function(elements, regional_sea = NULL, habitat = NULL) 
           "impacts_welfare" = "es_gb", "welfare_drivers" = "gb_d",
           "welfare_responses" = "gb_r", "responses_drivers" = "r_d",
           "responses_activities" = "r_a", "responses_pressures" = "r_p",
+          "responses_states" = "r_mpf", "responses_responses" = "r_r",
           "pressures_pressures" = "p_p", "states_states" = "s_s"
         )
 

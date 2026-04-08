@@ -32,12 +32,6 @@
         "description": "Diving tourism and underwater recreation"
       },
       {
-        "id": "D003",
-        "name": "Sea urchin and shellfish harvesting demand",
-        "type": "Driver",
-        "description": "Sea urchin and shellfish harvesting demand"
-      },
-      {
         "id": "D004",
         "name": "Marine biodiversity conservation goals",
         "type": "Driver",
@@ -150,12 +144,6 @@
         "name": "Invasive tropical species establishment",
         "type": "State Change",
         "description": "Invasive tropical species establishment"
-      },
-      {
-        "id": "MPF007",
-        "name": "Coastal food web integrity",
-        "type": "State Change",
-        "description": "Coastal food web integrity"
       }
     ],
     "ecosystem_services": [
@@ -170,18 +158,6 @@
         "name": "Diving and snorkeling tourism attraction",
         "type": "Provisioning",
         "description": "Diving and snorkeling tourism attraction"
-      },
-      {
-        "id": "ES003",
-        "name": "Biodiversity and genetic resource conservation",
-        "type": "Provisioning",
-        "description": "Biodiversity and genetic resource conservation"
-      },
-      {
-        "id": "ES004",
-        "name": "Scientific and educational value",
-        "type": "Provisioning",
-        "description": "Scientific and educational value"
       }
     ],
     "goods_benefits": [
@@ -216,18 +192,6 @@
         "name": "Sea urchin harvesting quota management",
         "type": "Response",
         "description": "Sea urchin harvesting quota management"
-      },
-      {
-        "id": "R003",
-        "name": "Spearfishing regulations (ban in reserves)",
-        "type": "Response",
-        "description": "Spearfishing regulations (ban in reserves)"
-      },
-      {
-        "id": "R004",
-        "name": "Lost fishing gear retrieval programmes",
-        "type": "Response",
-        "description": "Lost fishing gear retrieval programmes"
       },
       {
         "id": "R005",
@@ -473,16 +437,6 @@
       "description": "Physical degradation of rocky substrate reduces macroalgal canopy recruitment and persistence"
     },
     {
-      "from_id": "D003",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Sea urchin and shellfish harvesting demand"
-    },
-    {
       "from_id": "D004",
       "to_id": "A001",
       "from_type": "driver",
@@ -533,86 +487,6 @@
       "description": "Invasive herbivorous fish (Siganus spp.) overgraze macroalgal canopies, reducing habitat for native commercial species. While some invasives are commercially exploited in the eastern Mediterranean, the net effect on traditional artisanal fishery provision is generally negative (Azzurro et al. 2019). Polarity changed to negative."
     },
     {
-      "from_id": "MPF007",
-      "to_id": "ES001",
-      "from_type": "state",
-      "to_type": "impact",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Coastal food web integrity. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
-    },
-    {
-      "from_id": "ES003",
-      "to_id": "GB001",
-      "from_type": "impact",
-      "to_type": "welfare",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Biodiversity and genetic resource conservation"
-    },
-    {
-      "from_id": "ES004",
-      "to_id": "GB001",
-      "from_type": "impact",
-      "to_type": "welfare",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Scientific and educational value"
-    },
-    {
-      "from_id": "R003",
-      "to_id": "P001",
-      "from_type": "response",
-      "to_type": "pressure",
-      "polarity": "-",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Spearfishing regulations (ban in reserves). Well-enforced marine protected areas increase fish biomass by an average of 670%, density by 446%, and species richness by 21% relative to unprotected areas"
-    },
-    {
-      "from_id": "R004",
-      "to_id": "P001",
-      "from_type": "response",
-      "to_type": "pressure",
-      "polarity": "-",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Lost fishing gear retrieval programmes"
-    },
-    {
-      "from_id": "GB001",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Artisanal fisher income and cultural continuity reinforces Artisanal fishing tradition and cultural demand"
-    },
-    {
-      "from_id": "GB002",
-      "to_id": "D002",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Dive centre and marine tourism revenue reinforces Diving tourism and underwater recreation"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D003",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Seafood quality and gastronomic heritage reinforces Sea urchin and shellfish harvesting demand"
-    },
-    {
       "from_id": "M001",
       "to_id": "R001",
       "from_type": "measure",
@@ -631,6 +505,36 @@
       "strength": "medium",
       "confidence": 4,
       "description": "Mooring buoys protect benthic habitat from anchor damage within marine reserves"
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Artisanal fisher income and cultural continuity reinforces Artisanal fishing tradition and cultural demand"
+    },
+    {
+      "from_id": "GB002",
+      "to_id": "D004",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Dive centre and marine tourism revenue reinforces Marine biodiversity conservation goals"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D002",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Seafood quality and gastronomic heritage reinforces Diving tourism and underwater recreation"
     }
   ]
 }

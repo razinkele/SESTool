@@ -42,12 +42,6 @@
         "name": "Climate change mitigation goals",
         "type": "Driver",
         "description": "Climate change mitigation goals"
-      },
-      {
-        "id": "D005",
-        "name": "Sand and aggregate resource needs",
-        "type": "Driver",
-        "description": "Sand and aggregate resource needs"
       }
     ],
     "activities": [
@@ -68,18 +62,6 @@
         "name": "Offshore wind farm construction and operation",
         "type": "Activity",
         "description": "Offshore wind farm construction and operation"
-      },
-      {
-        "id": "A004",
-        "name": "Merchant shipping and ferry traffic",
-        "type": "Activity",
-        "description": "Merchant shipping and ferry traffic"
-      },
-      {
-        "id": "A005",
-        "name": "Submarine cable and pipeline installation",
-        "type": "Activity",
-        "description": "Submarine cable and pipeline installation"
       }
     ],
     "pressures": [
@@ -140,12 +122,6 @@
         "description": "Halocline dynamics and deep-water renewal"
       },
       {
-        "id": "MPF004",
-        "name": "Harbour porpoise population in Baltic Proper",
-        "type": "State Change",
-        "description": "Harbour porpoise population in Baltic Proper"
-      },
-      {
         "id": "MPF005",
         "name": "Benthic macrofauna in deep basins",
         "type": "State Change",
@@ -164,12 +140,6 @@
         "name": "Commercial fish stock provision (cod, herring, sprat)",
         "type": "Provisioning",
         "description": "Commercial fish stock provision (cod, herring, sprat)"
-      },
-      {
-        "id": "ES002",
-        "name": "Climate regulation through carbon cycling",
-        "type": "Provisioning",
-        "description": "Climate regulation through carbon cycling"
       }
     ],
     "goods_benefits": [
@@ -196,12 +166,6 @@
         "name": "Maritime trade revenue",
         "type": "Welfare",
         "description": "Maritime trade revenue"
-      },
-      {
-        "id": "GB005",
-        "name": "Renewable energy generation from offshore wind",
-        "type": "Welfare",
-        "description": "Renewable energy generation from offshore wind"
       }
     ],
     "responses": [
@@ -210,18 +174,6 @@
         "name": "Baltic cod fishing quota reductions (EU TAC)",
         "type": "Response",
         "description": "Baltic cod fishing quota reductions (EU TAC)"
-      },
-      {
-        "id": "R002",
-        "name": "HELCOM Baltic Sea Action Plan",
-        "type": "Response",
-        "description": "HELCOM Baltic Sea Action Plan"
-      },
-      {
-        "id": "R003",
-        "name": "Maritime spatial planning for wind and fisheries",
-        "type": "Response",
-        "description": "Maritime spatial planning for wind and fisheries"
       },
       {
         "id": "R004",
@@ -280,7 +232,7 @@
       "polarity": "+",
       "strength": "strong",
       "confidence": 5,
-      "description": "Bottom trawls physically disturb soft-sediment seabed habitats. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features (e"
+      "description": "Bottom trawls physically disturb soft-sediment seabed habitats. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features."
     },
     {
       "from_id": "A001",
@@ -300,7 +252,7 @@
       "polarity": "-",
       "strength": "strong",
       "confidence": 5,
-      "description": "Chronic overfishing has collapsed the Eastern Baltic cod stock. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
+      "description": "Overfishing of Eastern Baltic cod affects Eastern Baltic cod stock biomass"
     },
     {
       "from_id": "MPF006",
@@ -330,7 +282,7 @@
       "polarity": "+",
       "strength": "strong",
       "confidence": 5,
-      "description": "Cod biomass directly determines available catch for commercial fisheries. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
+      "description": "Eastern Baltic cod stock biomass affects Commercial fish stock provision (cod, herring, sprat)"
     },
     {
       "from_id": "ES001",
@@ -340,7 +292,7 @@
       "polarity": "+",
       "strength": "strong",
       "confidence": 5,
-      "description": "Fish stock availability determines whether fishing fleets can operate profitably. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
+      "description": "Commercial fish stock provision (cod, herring, sprat) affects Fishing fleet economic viability"
     },
     {
       "from_id": "R001",
@@ -350,7 +302,7 @@
       "polarity": "-",
       "strength": "medium",
       "confidence": 4,
-      "description": "Quota reductions directly limit fishing mortality on cod stocks. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
+      "description": "Baltic cod fishing quota reductions (EU TAC) affects Overfishing of Eastern Baltic cod"
     },
     {
       "from_id": "R005",
@@ -360,7 +312,7 @@
       "polarity": "-",
       "strength": "medium",
       "confidence": 4,
-      "description": "Spatial closures prevent trawl damage in ecologically sensitive spawning areas. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features (e"
+      "description": "Spatial closures prevent trawl damage in ecologically sensitive spawning areas. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features."
     },
     {
       "from_id": "D002",
@@ -443,56 +395,6 @@
       "description": "Cod quota reductions redirect fishing effort toward pelagic species (herring, sprat), increasing pressure on small pelagic stocks as fishers substitute target species. Note: positive polarity reflects fleet displacement effect - when cod quotas are cut, fishing effort shifts to pelagic species (herring and sprat)"
     },
     {
-      "from_id": "D003",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Maritime shipping route demand"
-    },
-    {
-      "from_id": "D004",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Climate change mitigation goals"
-    },
-    {
-      "from_id": "D005",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Sand and aggregate resource needs"
-    },
-    {
-      "from_id": "A004",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "Merchant shipping and ferry traffic do not cause overfishing of Eastern Baltic cod. These are independent human activities. No scientific basis for causal link. Strength to weak, confidence to 1."
-    },
-    {
-      "from_id": "A005",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "Submarine cable and pipeline installation does not cause overfishing of cod. These are independent activities with different environmental pathways. Strength to weak, confidence to 1."
-    },
-    {
       "from_id": "P005",
       "to_id": "MPF001",
       "from_type": "pressure",
@@ -513,46 +415,6 @@
       "description": "Military munition dumping introduces toxic compounds harmful to marine life including cod. Polarity corrected from + to -. Limited evidence for population-level effects. Strength to weak, confidence to 2."
     },
     {
-      "from_id": "MPF004",
-      "to_id": "ES001",
-      "from_type": "state",
-      "to_type": "impact",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Harbour porpoise population in Baltic Proper. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
-    },
-    {
-      "from_id": "ES002",
-      "to_id": "GB001",
-      "from_type": "impact",
-      "to_type": "welfare",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Climate regulation through carbon cycling"
-    },
-    {
-      "from_id": "R002",
-      "to_id": "P001",
-      "from_type": "response",
-      "to_type": "pressure",
-      "polarity": "-",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for HELCOM Baltic Sea Action Plan"
-    },
-    {
-      "from_id": "R003",
-      "to_id": "P001",
-      "from_type": "response",
-      "to_type": "pressure",
-      "polarity": "-",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Maritime spatial planning for wind and fisheries"
-    },
-    {
       "from_id": "R004",
       "to_id": "P001",
       "from_type": "response",
@@ -571,6 +433,26 @@
       "strength": "medium",
       "confidence": 4,
       "description": "Offshore wind farm development creates trawling exclusion zones, reducing demersal trawling activity in those areas. Multiple North Sea and Baltic studies document fisheries displacement from wind farm areas. Polarity corrected from + to -."
+    },
+    {
+      "from_id": "M001",
+      "to_id": "R001",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Seasonal closures are the primary implementation tool for Baltic cod quota reductions"
+    },
+    {
+      "from_id": "M002",
+      "to_id": "R004",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Acoustic pingers implement harbour porpoise bycatch mitigation requirements (EU Reg 812/2004)"
     },
     {
       "from_id": "GB001",
@@ -611,36 +493,6 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Maritime trade revenue reinforces Climate change mitigation goals"
-    },
-    {
-      "from_id": "GB005",
-      "to_id": "D005",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Renewable energy generation from offshore wind reinforces Sand and aggregate resource needs"
-    },
-    {
-      "from_id": "M001",
-      "to_id": "R001",
-      "from_type": "measure",
-      "to_type": "response",
-      "polarity": "+",
-      "strength": "strong",
-      "confidence": 5,
-      "description": "Seasonal closures are the primary implementation tool for Baltic cod quota reductions"
-    },
-    {
-      "from_id": "M002",
-      "to_id": "R004",
-      "from_type": "measure",
-      "to_type": "response",
-      "polarity": "+",
-      "strength": "strong",
-      "confidence": 4,
-      "description": "Acoustic pingers implement harbour porpoise bycatch mitigation requirements (EU Reg 812/2004)"
     }
   ]
 }

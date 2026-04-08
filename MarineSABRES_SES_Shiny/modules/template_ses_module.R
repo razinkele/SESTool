@@ -694,6 +694,8 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         r_d = list(from = "responses", to = "drivers"),
         r_a = list(from = "responses", to = "activities"),
         r_p = list(from = "responses", to = "pressures"),
+        r_mpf = list(from = "responses", to = "marine_processes"),
+        r_r = list(from = "responses", to = "responses"),
         p_p = list(from = "pressures", to = "pressures"),
         s_s = list(from = "marine_processes", to = "marine_processes")
       )
