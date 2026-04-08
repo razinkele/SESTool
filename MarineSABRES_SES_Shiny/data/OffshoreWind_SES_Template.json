@@ -387,6 +387,26 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Renewable energy generation capacity reinforces offshore wind energy policy targets"
+    },
+    {
+      "from_id": "P002",
+      "to_id": "MPF001",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 2,
+      "description": "Underwater noise from pile-driving connects to Sandeel stock abundance and distribution"
+    },
+    {
+      "from_id": "P005",
+      "to_id": "MPF001",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 2,
+      "description": "Seabed disturbance from beam trawling connects to Sandeel stock abundance and distribution"
     }
   ]
 }

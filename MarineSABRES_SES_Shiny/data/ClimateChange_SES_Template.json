@@ -409,6 +409,16 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Cultural continuity of ice-based livelihoods reinforces indigenous community food sovereignty needs"
+    },
+    {
+      "from_id": "P003",
+      "to_id": "MPF002",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 2,
+      "description": "Oil spill risk in ice-covered waters connects to Ringed seal and bearded seal abundance"
     }
   ]
 }

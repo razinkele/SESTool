@@ -443,6 +443,36 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Port and navigation accessibility reinforces Port and harbour expansion pressure"
+    },
+    {
+      "from_id": "P002",
+      "to_id": "MPF002",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 2,
+      "description": "Heavy metal contamination from industrial legacy connects to Dissolved oxygen levels in stratified waters"
+    },
+    {
+      "from_id": "P006",
+      "to_id": "MPF002",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 2,
+      "description": "Sediment resuspension from dredging connects to Dissolved oxygen levels in stratified waters"
+    },
+    {
+      "from_id": "A004",
+      "to_id": "P001",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 2,
+      "description": "Recreational salmon fishing connects to Nutrient enrichment from agricultural sources"
     }
   ]
 }

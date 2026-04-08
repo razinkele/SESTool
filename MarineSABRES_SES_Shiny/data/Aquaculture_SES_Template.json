@@ -473,6 +473,26 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Fisher household income from pike-perch sales reinforces Food security from local fisheries"
+    },
+    {
+      "from_id": "P005",
+      "to_id": "MPF002",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 2,
+      "description": "Microplastic accumulation in sediments connects to Submerged macrophyte coverage (e.g., Potamogeton)"
+    },
+    {
+      "from_id": "P001",
+      "to_id": "MPF004",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 2,
+      "description": "Nutrient enrichment from agricultural sources connects to Reed bed extent and condition"
     }
   ]
 }
