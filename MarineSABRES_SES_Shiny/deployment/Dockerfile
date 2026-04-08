@@ -5,7 +5,7 @@ FROM rocker/shiny-verse:4.4.1
 # Maintainer information
 LABEL maintainer="MarineSABRES Team"
 LABEL description="MarineSABRES Social-Ecological Systems Analysis Tool"
-LABEL version="1.6.1"
+LABEL version="1.11.0"
 
 # Set working directory
 WORKDIR /srv/shiny-server/marinesabres

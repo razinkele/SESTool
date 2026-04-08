@@ -496,23 +496,23 @@
     },
     {
       "from_id": "GB002",
-      "to_id": "D004",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Dive centre and marine tourism revenue reinforces Marine biodiversity conservation goals"
-    },
-    {
-      "from_id": "GB003",
       "to_id": "D002",
       "from_type": "welfare",
       "to_type": "driver",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "Seafood quality and gastronomic heritage reinforces Diving tourism and underwater recreation"
+      "description": "Dive centre and marine tourism revenue reinforces diving tourism and underwater recreation demand"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Seafood quality and gastronomic heritage reinforces artisanal fishing tradition and cultural demand"
     }
   ]
 }

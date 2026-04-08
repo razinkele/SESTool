@@ -454,23 +454,23 @@
     },
     {
       "from_id": "GB002",
+      "to_id": "D003",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Cultural continuity of ice-based livelihoods reinforces indigenous community food sovereignty needs"
+    },
+    {
+      "from_id": "GB003",
       "to_id": "D001",
       "from_type": "welfare",
       "to_type": "driver",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "Cultural continuity of ice-based livelihoods reinforces Arctic shipping route economic viability"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D002",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Arctic shipping cost savings vs. Suez route reinforces Hydrocarbon and mineral resource exploration"
+      "description": "Arctic shipping cost savings versus Suez route reinforce Northern Sea Route economic viability"
     },
     {
       "from_id": "GB004",

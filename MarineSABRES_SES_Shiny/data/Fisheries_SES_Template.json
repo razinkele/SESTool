@@ -476,23 +476,23 @@
     },
     {
       "from_id": "GB003",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Fish processing industry employment reinforces demand for Baltic cod and herring fisheries"
+    },
+    {
+      "from_id": "GB004",
       "to_id": "D003",
       "from_type": "welfare",
       "to_type": "driver",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "Fish processing industry employment reinforces Maritime shipping route demand"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D004",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Maritime trade revenue reinforces Climate change mitigation goals"
+      "description": "Maritime trade revenue reinforces demand for shipping routes through the Baltic"
     }
   ]
 }

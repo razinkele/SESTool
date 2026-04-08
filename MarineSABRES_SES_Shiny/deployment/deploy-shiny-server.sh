@@ -10,8 +10,8 @@
 #   sudo ./deploy-shiny-server.sh
 #
 # Version: 1.3
-# App Version: 1.6.1
-# Last Updated: 2026-01-07
+# App Version: 1.11.0
+# Last Updated: 2026-04-08
 #
 # ============================================================================
 

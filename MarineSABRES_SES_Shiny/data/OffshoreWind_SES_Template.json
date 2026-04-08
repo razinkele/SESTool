@@ -378,43 +378,43 @@
     },
     {
       "from_id": "GB001",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Fishing industry employment and revenue reinforces Offshore wind energy policy targets (EU, UK)"
-    },
-    {
-      "from_id": "GB002",
-      "to_id": "D002",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Energy security and carbon reduction benefits reinforces Oil and gas production demand (declining)"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D003",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Decommissioning cost burden (oil sector) reinforces Sand and gravel resource demand for construction"
-    },
-    {
-      "from_id": "GB004",
       "to_id": "D004",
       "from_type": "welfare",
       "to_type": "driver",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "Renewable energy generation capacity reinforces Industrial-scale fisheries demand (sandeel, herring)"
+      "description": "Fishing industry employment and revenue reinforces industrial-scale fisheries demand"
+    },
+    {
+      "from_id": "GB002",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Energy security and carbon reduction benefits reinforce offshore wind energy policy targets"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D002",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Decommissioning cost burden accelerates transition away from oil and gas production"
+    },
+    {
+      "from_id": "GB004",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Renewable energy generation capacity reinforces offshore wind energy policy targets"
     }
   ]
 }

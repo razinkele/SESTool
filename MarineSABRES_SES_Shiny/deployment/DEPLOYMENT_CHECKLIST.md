@@ -170,6 +170,6 @@ After successful deployment:
 
 ---
 
-**Last Updated:** 2025-11-17  
-**Version:** 1.4.0+i18n-fix  
-**Branch:** refactor/i18n-fix
+**Last Updated:** 2026-04-08  
+**Version:** 1.11.0  
+**Branch:** main

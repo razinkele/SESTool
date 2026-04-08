@@ -148,7 +148,7 @@ jobs:
           choco install chromedriver -y
 
       - name: Run shinytest2 E2E tests
-        if: matrix.r-version == '4.3'
+        if: matrix.r-version == '4.4'
         run: |
           library(testthat)
           library(shinytest2)
@@ -162,7 +162,7 @@ jobs:
           SHINYTEST2_TIMEOUT: 30000
 
       - name: Upload E2E test screenshots
-        if: failure() && matrix.r-version == '4.3'
+        if: failure() && matrix.r-version == '4.4'
         uses: actions/upload-artifact@v3
         with:
           name: e2e-screenshots-${{ matrix.os }}
@@ -170,7 +170,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Test coverage
-        if: runner.os == 'Linux' && matrix.r-version == '4.3'
+        if: runner.os == 'Linux' && matrix.r-version == '4.4'
         run: |
           library(covr)
 
@@ -213,7 +213,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Generate coverage summary
-        if: runner.os == 'Linux' && matrix.r-version == '4.3'
+        if: runner.os == 'Linux' && matrix.r-version == '4.4'
         run: |
           library(covr)
           coverage <- readRDS("coverage.rds")
@@ -258,13 +258,13 @@ jobs:
         shell: Rscript {0}
 
       - name: Add coverage to step summary
-        if: runner.os == 'Linux' && matrix.r-version == '4.3'
+        if: runner.os == 'Linux' && matrix.r-version == '4.4'
         run: |
           cat coverage-summary.md >> $GITHUB_STEP_SUMMARY
         shell: bash
 
       - name: Upload coverage report
-        if: runner.os == 'Linux' && matrix.r-version == '4.3'
+        if: runner.os == 'Linux' && matrix.r-version == '4.4'
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report

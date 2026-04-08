@@ -520,13 +520,13 @@
     },
     {
       "from_id": "GB004",
-      "to_id": "D003",
+      "to_id": "D002",
       "from_type": "welfare",
       "to_type": "driver",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "Tourism revenue from birdwatching and angling reinforces Agricultural production demand in catchment"
+      "description": "Tourism revenue from birdwatching and angling reinforces recreational demand for nature tourism"
     }
   ]
 }
