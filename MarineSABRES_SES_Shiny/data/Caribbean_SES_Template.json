@@ -253,15 +253,15 @@
         "id": "A10",
         "name": "Cruise ship and yacht tourism",
         "description": "Cruise ship and yacht tourism",
-        "sector": "Fisheries",
-        "scale": "Small-scale/opportunistic",
+        "sector": "Tourism",
+        "scale": "Large-scale commercial",
         "drivers": [
-          "D1",
-          "D2"
+          "D3"
         ],
         "related_issues": [
-          "Stock depletion",
-          "Enforcement challenges"
+          "Physical habitat damage",
+          "Waste discharge",
+          "Anchoring impacts"
         ]
       },
       {
@@ -435,18 +435,6 @@
         "spatial_scale": "Island-wide",
         "temporal_pattern": "Ongoing since introduction",
         "intensity": "Medium to high"
-      },
-      {
-        "id": "P13",
-        "name": "Hydrogen sulfide emissions from decomposing Sargassum",
-        "description": "Release of toxic H₂S gas from Sargassum decomposition on beaches and in shallow waters",
-        "type": "Air and water pollution",
-        "source_activities": [
-          "Natural Sargassum influx"
-        ],
-        "spatial_scale": "Coastal areas",
-        "temporal_pattern": "Seasonal (bloom-dependent)",
-        "intensity": "Very high during blooms"
       }
     ],
     "states": [
@@ -1530,16 +1518,6 @@
       "confidence": 3
     },
     {
-      "from_type": "pressure",
-      "from_id": "P13",
-      "to_type": "state",
-      "to_id": "S3",
-      "description": "Chemical pollutants contaminate marine environment",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3
-    },
-    {
       "from_type": "state",
       "from_id": "S4",
       "to_type": "impact",
@@ -1754,7 +1732,7 @@
       "from_id": "RC6",
       "to_type": "pressure",
       "to_id": "P2",
-      "description": "Fishing bans reduce chemical contamination risk",
+      "description": "Seafood safety programmes restrict fishing in contaminated zones, reducing human exposure to chlordecone — does not reduce the environmental contamination itself",
       "polarity": "-",
       "strength": "medium",
       "confidence": 3
@@ -2168,16 +2146,6 @@
       "strength": "medium",
       "confidence": 4,
       "description": "Habitat loss removes natural coastal protection increasing erosion"
-    },
-    {
-      "from_type": "pressure",
-      "from_id": "P13",
-      "to_type": "state",
-      "to_id": "S1",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "H2S emissions result from Sargassum decomposition (not a driver)"
     },
     {
       "from_type": "state",

@@ -1,6 +1,6 @@
 {
-  "template_name": "Aquaculture",
-  "template_description": "Social-ecological system template for coastal aquaculture, covering nutrient enrichment, eutrophication pressures, ecosystem service impacts, and management responses. Applicable to lagoon and sheltered coastal systems.",
+  "template_name": "Coastal Lagoon",
+  "template_description": "Social-ecological system template for coastal lagoon ecosystems, covering eutrophication, fisheries, habitat change, and management responses. Applicable to Baltic and Mediterranean lagoon systems.",
   "complexity": "simple",
   "regional_context": {
     "regional_sea": "baltic",
@@ -215,15 +215,15 @@
     "measures": [
       {
         "id": "M001",
-        "name": "Best management practices for lagoon aquaculture",
+        "name": "Best management practices for lagoon nutrient control",
         "type": "Measure",
-        "description": "Nutrient management protocols and feed optimization for coastal aquaculture"
+        "description": "Nutrient management protocols and feed optimization for lagoon fisheries and agriculture"
       },
       {
         "id": "M002",
-        "name": "Integrated multi-trophic aquaculture",
+        "name": "Constructed wetland buffer zones",
         "type": "Measure",
-        "description": "Co-culturing species at different trophic levels to reduce waste nutrient discharge"
+        "description": "Engineered wetlands at lagoon margins to intercept nutrient runoff from agricultural catchments"
       }
     ]
   },
@@ -476,7 +476,7 @@
       "polarity": "+",
       "strength": "medium",
       "confidence": 4,
-      "description": "Best management practices directly reduce nutrient discharge, supporting HELCOM targets"
+      "description": "Best management practices directly reduce nutrient discharge from lagoon catchment activities, supporting HELCOM targets"
     },
     {
       "from_id": "M002",
@@ -486,7 +486,7 @@
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "IMTA reduces N/P discharge by co-culturing filter feeders, supporting HELCOM nutrient reduction targets"
+      "description": "Constructed wetland buffers intercept nitrogen and phosphorus before entering lagoon, supporting HELCOM nutrient reduction targets"
     },
     {
       "from_id": "GB001",

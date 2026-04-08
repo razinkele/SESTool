@@ -90,12 +90,6 @@
         "description": "Ghost fishing from lost nets on rocky substrate"
       },
       {
-        "id": "P005",
-        "name": "Overharvesting of predatory fish",
-        "type": "Pressure",
-        "description": "Overharvesting of predatory fish"
-      },
-      {
         "id": "P006",
         "name": "Physical habitat degradation of rocky substrate",
         "type": "Pressure",
@@ -138,12 +132,6 @@
         "name": "Invasive species presence (e.g., Siganus, Fistularia)",
         "type": "State Change",
         "description": "Invasive species presence (e.g., Siganus, Fistularia)"
-      },
-      {
-        "id": "MPF006",
-        "name": "Invasive tropical species establishment",
-        "type": "State Change",
-        "description": "Invasive tropical species establishment"
       }
     ],
     "ecosystem_services": [
@@ -307,7 +295,7 @@
       "description": "Managed harvesting can reduce urchin density, allowing macroalgal recovery. The negative feedback reflects a trade-off or antagonistic interaction where increases in the source variable suppress or reduce the target through competitive exclusion, resource limitation, or regulatory mechanisms"
     },
     {
-      "from_id": "MPF006",
+      "from_id": "MPF005",
       "to_id": "MPF004",
       "from_type": "state",
       "to_type": "state",
@@ -378,7 +366,7 @@
     },
     {
       "from_id": "P003",
-      "to_id": "MPF006",
+      "to_id": "MPF005",
       "from_type": "pressure",
       "to_type": "state",
       "polarity": "+",
@@ -397,17 +385,7 @@
       "description": "Marine reserve designation eliminates spearfishing within boundaries, redistributing diving pressure to adjacent unprotected rocky shore areas"
     },
     {
-      "from_id": "R001",
-      "to_id": "P005",
-      "from_type": "response",
-      "to_type": "pressure",
-      "polarity": "-",
-      "strength": "strong",
-      "confidence": 4,
-      "description": "No-take marine reserves eliminate fishing pressure on predatory fish within protected areas. Well-enforced marine protected areas increase fish biomass by an average of 670%, density by 446%, and species richness by 21% relative to unprotected areas"
-    },
-    {
-      "from_id": "P005",
+      "from_id": "P002",
       "to_id": "MPF003",
       "from_type": "pressure",
       "to_type": "state",

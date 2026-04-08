@@ -1,6 +1,6 @@
 {
-  "template_name": "Aquaculture",
-  "template_description": "Representative aquaculture SES template used for tests",
+  "template_name": "Coastal Lagoon",
+  "template_description": "Representative coastal lagoon SES template used for tests",
   "dapsiwrm_framework": {
     "drivers": [
       {
