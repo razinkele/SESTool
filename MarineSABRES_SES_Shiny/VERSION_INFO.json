@@ -1,96 +1,80 @@
 {
-  "version": "1.10.2",
-  "version_name": "Test Suite Hardening & Function Implementation",
-  "release_date": "2026-03-18",
-  "release_type": "patch",
+  "version": "1.11.0",
+  "version_name": "Knowledge Base & Template Overhaul",
+  "release_date": "2026-04-08",
+  "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.10.2",
+  "documentation_version": "1.11.0",
   "api_version": "1.0",
-  "database_version": "2.0",
+  "database_version": "2.1",
   "breaking_changes": false,
   "security_updates": false,
   "features": [
-    "68 element misclassifications fixed across 5 systematic patterns",
-    "213 connection attributes scientifically validated against published literature",
-    "52 polarity corrections (wrong direction of effect)",
-    "1,120 total connections (up from 622) — zero orphan elements",
-    "Zero disconnected subgraphs across all 30 contexts",
-    "16 governance/SE reclassifications in country governance database",
-    "2 new regional conventions: SPREP/Noumea (Pacific) and Abidjan (West Africa)",
-    "Governance gaps filled for 4 groups (non_eu_european, latin_american, african_coastal, asia_pacific)",
-    "86 new keyword stems and 7 context boosts in classification database",
-    "25 new R connection KB patterns (feedback loops, offshore wind, Arctic, invasive species)",
-    "Confidence distribution recalibrated to evidence-based bell curve",
-    "Reversibility vocabulary standardized to 3 terms",
-    "KB validation script (scripts/validate_kb.py) for automated integrity checks"
+    "6 SES templates rebuilt from knowledge base with full DAPSIWRM coverage",
+    "Caribbean template: 87 connections gain polarity, A10 corrected, P13 removed, 5 feedback loops added",
+    "Same-type matrix support (p_p, s_s) for pressure-pressure and state-state connections",
+    "Domain-specific measures added to all 6 rebuilt templates",
+    "KB habitat enrichment: Zostera marina, Cymodocea nodosa, mangrove-seagrass connectivity",
+    "5 new validation tests for template structure, orphans, feedback loops, measures",
+    "Claude Code automations: pre-deploy skill, kb-audit skill, dapsiwrm-validator subagent"
   ],
   "fixes": {
     "critical": [
       {
-        "issue": "52 connections had incorrect polarity (wrong direction of effect)",
-        "file": "data/ses_knowledge_db.json",
-        "impact": "Incorrect causal relationships shown to users (e.g., warming marked positive for Posidonia, hurricanes positive for coral)",
-        "resolution": "All polarities reviewed against HELCOM, ICES, UNEP-MAP, GCRMN, IPCC AR6, AMAP literature"
+        "issue": "70+ spurious 'chain completion' connections with no scientific basis",
+        "file": "data/*_SES_Template.json",
+        "impact": "False causal relationships shown to users",
+        "resolution": "Removed all self-documented invalid connections and orphaned elements"
       },
       {
-        "issue": "68 elements in wrong DAPSI(W)R(M) categories",
-        "file": "data/ses_knowledge_db.json",
-        "impact": "Degraded suggestion quality — activities classified as drivers, states as pressures, etc.",
-        "resolution": "Reclassified per DAPSI(W)R(M) framework definitions from Elliott et al."
+        "issue": "Caribbean A10 mislabeled as 'IUU fishing' — all connections described cruise ships",
+        "file": "data/Caribbean_SES_Template.json",
+        "impact": "Element name contradicted every connection description",
+        "resolution": "Renamed to 'Cruise ship and yacht tourism', fixed metadata"
+      },
+      {
+        "issue": "r_r matrix (measure→response connections) silently dropped in CLD visualization",
+        "file": "modules/template_ses_module.R, modules/ai_isa/connection_generator.R",
+        "impact": "Measures never appeared in causal loop diagrams",
+        "resolution": "Added r_r and r_mpf to all downstream matrix maps"
       }
     ],
     "improvements": [
       {
-        "issue": "25-51% orphan elements per context (listed but unconnected)",
-        "resolution": "Added connections for all orphans + bridge connections for subgraphs → 0% orphan rate"
+        "issue": "Templates had 1 element per category (8 total, 8 connections)",
+        "resolution": "Rebuilt from KB: 25-36 elements, 23-39 connections, feedback loops, measures per template"
       },
       {
-        "issue": "Confidence scores inflated (80% at levels 4-5)",
-        "resolution": "Recalibrated to bell curve: 3.1% L1, 7.8% L2, 43.8% L3, 23.6% L4, 21.7% L5"
+        "issue": "3 Baltic habitat entries placed Z. marina in freshwater systems",
+        "resolution": "Removed inaccurate entries, kept 4 scientifically verified coastal contexts"
       },
       {
-        "issue": "Keyword classification matched only 52-66% of KB element names",
-        "resolution": "Added ~86 keyword stems and 7 context boosts"
+        "issue": "Deployment scripts hardcoded 'razinka' user",
+        "resolution": "Dynamic user fallback for portability"
       }
     ]
   },
   "metrics": {
-    "knowledge_db_contexts": 30,
+    "knowledge_db_contexts": 33,
     "knowledge_db_connections": 1120,
     "knowledge_db_elements": 1119,
-    "element_classification_accuracy": "100%",
+    "template_count": 7,
+    "template_total_elements": 285,
+    "template_total_connections": 300,
     "orphan_element_rate": "0%",
-    "disconnected_subgraphs": 0,
+    "polarity_coverage": "100%",
     "cross_ecosystem_links": 20,
-    "r_kb_connections": 137,
-    "r_kb_synonym_groups": 17,
-    "keyword_stems_added": 86,
-    "countries_in_governance_db": 97,
-    "regional_seas": 11,
-    "regional_conventions": 8,
     "languages_supported": 9,
     "modules_total": 46,
-    "test_files": 55
+    "test_files": 56
   },
   "migration_notes": [
-    "No breaking changes — fully backward-compatible with v1.9.x data",
-    "Knowledge database version bumped to 2.0 (major quality improvements)",
-    "All existing project data loads without modification",
-    "Connection count increased from 622 to 1120 — new connections have default confidence=3"
+    "No breaking changes — fully backward-compatible with v1.10.x data",
+    "Aquaculture template renamed to 'Coastal Lagoon' — filename unchanged",
+    "Template element IDs changed from D1/A1 to D001/A001 format",
+    "Caribbean P13 (H2S emissions) removed — health impacts covered by S1→I10→W4 chain"
   ],
-  "developer_notes": [
-    "Run scripts/validate_kb.py to validate KB integrity after any KB changes",
-    "Reversibility must be exactly: reversible, partially_reversible, or irreversible",
-    "Temporal lag must be: immediate, short-term, medium-term, or long-term",
-    "All elements in every context must appear in at least one connection",
-    "R connection KB patterns now cover 10 flow types including W->D, W->R, R->D feedback"
-  ],
-  "deployment_notes": [
-    "No special deployment steps required",
-    "KB validation runs automatically — no app code changes",
-    "Translation cache regenerates on first startup"
-  ],
-  "previous_version": "1.10.1"
+  "previous_version": "1.10.2"
 }
