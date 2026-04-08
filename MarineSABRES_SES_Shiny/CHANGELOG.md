@@ -5,6 +5,36 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.0] - 2026-04-08
+
+### Knowledge Base & Template Overhaul
+
+Major release rebuilding all SES templates from the knowledge base, with comprehensive scientific review and data quality improvements across 7 review cycles.
+
+### Added
+- **6 rebuilt SES templates** from knowledge base contexts with full DAPSIWRM coverage (5–7 elements per category, 23–39 connections each, feedback loops, measures):
+  - Fisheries (Baltic/North Sea offshore), Coastal Lagoon (Baltic/Mediterranean lagoons), Pollution (Baltic/North Sea estuaries), Tourism (Mediterranean rocky shore), Climate Change (Arctic sea ice), Offshore Wind (North Sea/Atlantic)
+- **Caribbean feedback loops**: 5 welfare→driver connections closing the DAPSIWRM primary cycle
+- **KB habitat enrichment**: Zostera marina in 4 Baltic coastal contexts, Cymodocea/Zostera noltei in Mediterranean lagoon, mangrove-seagrass connectivity in 2 Caribbean contexts
+- **Domain-specific measures** for all 6 rebuilt templates (seasonal closures, acoustic pingers, wetland buffers, IMTA, pre-treatment systems, bubble curtains, etc.)
+- **Same-type matrix support** (p_p, s_s) in template_loader.R for pressure→pressure and state→state connections
+- **5 new validation tests** in test-kb-audit-fixes.R (template completeness, orphans, feedback loops, measures, Caribbean polarity)
+- **Claude Code automations**: pre-deploy skill, kb-audit skill, dapsiwrm-validator subagent, auto-test hook, deployment config guard hook
+
+### Fixed
+- **Caribbean template**: renamed A10 from "IUU fishing" to "Cruise ship and yacht tourism" (element was mislabeled — all 4 connection descriptions referenced cruise ships), added polarity to 87 connections, fixed 11 description mismatches, removed 3 invalid connections, removed P13 (H2S is a consequence of Sargassum, not an independent DAPSIWRM pressure), fixed RC6→P2 description transparency
+- **All templates**: removed 70+ spurious "chain completion" connections from KB data, rebuilt welfare→driver feedback with domain-matched pairing (was positional), removed orphan elements
+- **Scientific accuracy**: fixed Fisheries ES002 type Provisioning→Regulating, reversed ClimateChange P006→P007 causation, retargeted Tourism R003/R004 to correct pressure, retargeted Caribbean A3/A4 from bycatch to physical damage
+- **Tourism**: merged duplicate elements P002/P005 and MPF005/MPF006
+- **Knowledge DB**: removed 3 inaccurate Baltic habitat entries (Z. marina absent from freshwater lagoons/estuaries/offshore), corrected Zostera noltii→noltei nomenclature
+- **Downstream code**: added r_r and r_mpf to matrix_type_map (template_ses_module.R) and both matrix_maps (connection_generator.R), added "s"→"MPF" prefix mapping in visnetwork_helpers.R
+- **Deployment pipeline**: fixed hardcoded razinka user in deploy scripts, added missing httr/htmltools to Dockerfile, updated test.yml (bs4Dash not shinydashboard, dropped R 4.2/4.3), removed stale CI branch names, updated checklist language count to 9
+
+### Changed
+- **Aquaculture template renamed to "Coastal Lagoon"** — template contains lagoon fishery/eutrophication activities, not aquaculture
+- **Template structure**: all rebuilt templates use standardized dapsiwrm_framework format with regional_context, metadata, and measures sections
+- **Test fixtures**: updated with complexity, regional_context, and metadata fields; Tourism fixture kept in elements format for format detection coverage
+
 ## [1.10.2] - 2026-03-18
 
 ### Test Suite Hardening & Function Implementation

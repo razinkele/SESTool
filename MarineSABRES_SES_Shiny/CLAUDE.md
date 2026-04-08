@@ -4,7 +4,7 @@
 
 R/Shiny application for Social-Ecological Systems (SES) analysis using the DAPSIWRM framework. Supports 9 languages with reactive i18n, network visualization, and ML-assisted element classification.
 
-**Version**: 1.10.2 | **R Version**: >= 4.4.1 | **Framework**: bs4Dash + shiny.i18n
+**Version**: 1.11.0 | **R Version**: >= 4.4.1 | **Framework**: bs4Dash + shiny.i18n
 
 ## Quick Commands
 
@@ -279,3 +279,8 @@ i18n$get_translations()  # See loaded keys
 - `tests/README.md` - Testing framework documentation
 - `tests/E2E_TESTING.md` - Browser-based test setup
 - `docs/ARCHITECTURE.md` - Architecture Decision Records
+
+## Shell Commands
+
+- Never use `cd <path> && git <cmd>`. Always use `git -C <path> <cmd>` instead.
+- If you need to run multiple commands in a subdirectory, use separate tool calls rather than chaining with `&&`.
