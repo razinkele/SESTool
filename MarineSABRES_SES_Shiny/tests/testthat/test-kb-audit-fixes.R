@@ -107,3 +107,73 @@ test_that("Caribbean seagrass KB context mentions mangrove connectivity", {
   expect_true(grepl("mangrove", text),
     info = "caribbean_seagrass should reference mangrove connectivity")
 })
+
+# ==============================================================================
+# 3. Template structure validation
+# ==============================================================================
+test_that("All rebuilt templates load with complete DAPSIWRM categories", {
+  templates <- c("Fisheries", "Aquaculture", "Pollution", "Tourism",
+                 "ClimateChange", "OffshoreWind")
+  for (tpl_name in templates) {
+    d <- load_template(tpl_name)
+    fw <- d$dapsiwrm_framework
+    expect_true(!is.null(fw), info = paste(tpl_name, "missing dapsiwrm_framework"))
+    for (cat in c("drivers", "activities", "pressures", "marine_processes",
+                  "ecosystem_services", "goods_benefits", "responses")) {
+      expect_true(length(fw[[cat]]) >= 2,
+        info = paste(tpl_name, "has <2 elements in", cat))
+    }
+  }
+})
+
+test_that("All rebuilt templates have no orphan elements", {
+  templates <- c("Fisheries", "Aquaculture", "Pollution", "Tourism",
+                 "ClimateChange", "OffshoreWind")
+  for (tpl_name in templates) {
+    d <- load_template(tpl_name)
+    fw <- d$dapsiwrm_framework
+    all_ids <- unlist(lapply(fw, function(arr) {
+      if (is.list(arr)) sapply(arr, function(e) e[["id"]]) else NULL
+    }))
+    conn_ids <- unique(c(
+      sapply(d$connections, function(c) c[["from_id"]]),
+      sapply(d$connections, function(c) c[["to_id"]])
+    ))
+    orphans <- setdiff(all_ids, conn_ids)
+    expect_equal(length(orphans), 0,
+      info = paste(tpl_name, "has orphans:", paste(orphans, collapse = ", ")))
+  }
+})
+
+test_that("All rebuilt templates have feedback loops", {
+  templates <- c("Fisheries", "Aquaculture", "Pollution", "Tourism",
+                 "ClimateChange", "OffshoreWind")
+  for (tpl_name in templates) {
+    d <- load_template(tpl_name)
+    feedback <- Filter(function(conn) {
+      ft <- tolower(conn$from_type %||% "")
+      tt <- tolower(conn$to_type %||% "")
+      grepl("welfare", ft) && grepl("driver", tt)
+    }, d$connections)
+    expect_gte(length(feedback), 1,
+      info = paste(tpl_name, "has no welfare->driver feedback"))
+  }
+})
+
+test_that("All rebuilt templates have measures", {
+  templates <- c("Fisheries", "Aquaculture", "Pollution", "Tourism",
+                 "ClimateChange", "OffshoreWind")
+  for (tpl_name in templates) {
+    d <- load_template(tpl_name)
+    fw <- d$dapsiwrm_framework
+    expect_true(!is.null(fw$measures) && length(fw$measures) >= 1,
+      info = paste(tpl_name, "missing measures section"))
+  }
+})
+
+test_that("Caribbean template has polarity on all connections", {
+  d <- load_template("Caribbean")
+  missing <- Filter(function(conn) is.null(conn$polarity), d$connections)
+  expect_equal(length(missing), 0,
+    info = paste(length(missing), "Caribbean connections still missing polarity"))
+})

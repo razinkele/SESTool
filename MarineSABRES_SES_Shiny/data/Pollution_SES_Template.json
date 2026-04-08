@@ -247,6 +247,20 @@
         "type": "Response",
         "description": "Contaminated sediment remediation programmes"
       }
+    ],
+    "measures": [
+      {
+        "id": "M001",
+        "name": "Industrial pre-treatment systems",
+        "type": "Measure",
+        "description": "On-site treatment of industrial effluents before discharge to municipal wastewater systems"
+      },
+      {
+        "id": "M002",
+        "name": "Green infrastructure for nutrient retention",
+        "type": "Measure",
+        "description": "Constructed wetlands, buffer strips, and retention ponds for diffuse nutrient removal"
+      }
     ]
   },
   "connections": [
@@ -579,6 +593,26 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Port and navigation accessibility reinforces Industrial water supply demand"
+    },
+    {
+      "from_id": "M001",
+      "to_id": "R002",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Industrial pre-treatment reduces pollutant load entering wastewater treatment plants"
+    },
+    {
+      "from_id": "M002",
+      "to_id": "R004",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Green infrastructure implements river basin nutrient management plan objectives"
     }
   ]
 }

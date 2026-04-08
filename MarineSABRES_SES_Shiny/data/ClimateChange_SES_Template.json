@@ -229,6 +229,20 @@
         "type": "Response",
         "description": "Black carbon emission reduction agreements"
       }
+    ],
+    "measures": [
+      {
+        "id": "M001",
+        "name": "Black carbon emission filters",
+        "type": "Measure",
+        "description": "Diesel particulate filters and scrubbers for Arctic vessel emissions"
+      },
+      {
+        "id": "M002",
+        "name": "Adaptive ice management protocols",
+        "type": "Measure",
+        "description": "Dynamic routing and speed management for vessels in ice-affected waters"
+      }
     ]
   },
   "connections": [
@@ -551,6 +565,26 @@
       "strength": "weak",
       "confidence": 3,
       "description": "Seismic exploration does not directly cause sea ice loss. The link through eventual fossil fuel extraction and GHG emissions is very indirect at the exploration stage."
+    },
+    {
+      "from_id": "M001",
+      "to_id": "R005",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Emission filters implement Arctic Council black carbon reduction commitments"
+    },
+    {
+      "from_id": "M002",
+      "to_id": "R001",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Adaptive ice protocols implement IMO Polar Code Part I-A safety requirements"
     }
   ]
 }

@@ -693,7 +693,9 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         gb_r = list(from = "goods_benefits", to = "responses"),
         r_d = list(from = "responses", to = "drivers"),
         r_a = list(from = "responses", to = "activities"),
-        r_p = list(from = "responses", to = "pressures")
+        r_p = list(from = "responses", to = "pressures"),
+        p_p = list(from = "pressures", to = "pressures"),
+        s_s = list(from = "marine_processes", to = "marine_processes")
       )
 
       # Helper to get ID by name from SES element data frame

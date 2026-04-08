@@ -235,6 +235,20 @@
         "type": "Response",
         "description": "Natura 2000 lagoon habitat protection"
       }
+    ],
+    "measures": [
+      {
+        "id": "M001",
+        "name": "Best management practices for lagoon aquaculture",
+        "type": "Measure",
+        "description": "Nutrient management protocols and feed optimization for coastal aquaculture"
+      },
+      {
+        "id": "M002",
+        "name": "Integrated multi-trophic aquaculture",
+        "type": "Measure",
+        "description": "Co-culturing species at different trophic levels to reduce waste nutrient discharge"
+      }
     ]
   },
   "connections": [
@@ -577,6 +591,26 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Tourism revenue from birdwatching and angling reinforces Urban wastewater management needs"
+    },
+    {
+      "from_id": "M001",
+      "to_id": "R001",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Best management practices directly reduce nutrient discharge, supporting HELCOM targets"
+    },
+    {
+      "from_id": "M002",
+      "to_id": "R001",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "IMTA reduces N/P discharge by co-culturing filter feeders, supporting HELCOM nutrient reduction targets"
     }
   ]
 }

@@ -251,8 +251,8 @@
       },
       {
         "id": "A10",
-        "name": "Illegal, unreported, and unregulated (IUU) fishing",
-        "description": "Fishing activities that violate regulations, quotas, or protected areas; unreported catches",
+        "name": "Cruise ship and yacht tourism",
+        "description": "Cruise ship and yacht tourism",
         "sector": "Fisheries",
         "scale": "Small-scale/opportunistic",
         "drivers": [
@@ -974,630 +974,870 @@
       "from_id": "D4",
       "to_type": "activity",
       "to_id": "A1",
-      "description": "Agricultural production needs drive banana plantation activities"
+      "description": "Agricultural production needs drive banana plantation activities",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "driver",
       "from_id": "D1",
       "to_type": "activity",
       "to_id": "A2",
-      "description": "Food security needs drive artisanal fishing"
+      "description": "Food security needs drive artisanal fishing",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "driver",
       "from_id": "D3",
       "to_type": "activity",
       "to_id": "A3",
-      "description": "Tourism demand drives beach tourism and coastal recreation"
+      "description": "Tourism demand drives beach tourism and coastal recreation",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "driver",
       "from_id": "D3",
       "to_type": "activity",
       "to_id": "A4",
-      "description": "Tourism demand drives diving and snorkeling activities"
+      "description": "Tourism demand drives diving and snorkeling activities",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "driver",
       "from_id": "D6",
       "to_type": "activity",
       "to_id": "A6",
-      "description": "Housing needs drive coastal urbanization"
+      "description": "Housing needs drive coastal urbanization",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W3",
       "to_type": "response",
       "to_id": "RC4",
-      "description": "Public health concerns drive chlordecone soil remediation"
+      "description": "Public health concerns drive chlordecone soil remediation",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W6",
       "to_type": "response",
       "to_id": "RC11",
-      "description": "Coastal flooding risk triggers climate adaptation planning"
+      "description": "Coastal flooding risk triggers climate adaptation planning",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W6",
       "to_type": "response",
       "to_id": "RC3",
-      "description": "Property damage drives mangrove and seagrass restoration"
+      "description": "Property damage drives mangrove and seagrass restoration",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W7",
       "to_type": "response",
       "to_id": "RC1",
-      "description": "Municipal cleanup costs drive Sargassum valorization programs"
+      "description": "Municipal cleanup costs drive Sargassum valorization programs",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W10",
       "to_type": "response",
       "to_id": "RC12",
-      "description": "Quality of life decline triggers public awareness campaigns"
+      "description": "Quality of life decline triggers public awareness campaigns",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC5",
       "to_type": "activity",
       "to_id": "A2",
-      "description": "Fisheries management regulates artisanal fishing practices"
+      "description": "Fisheries management regulates artisanal fishing practices",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC10",
       "to_type": "activity",
       "to_id": "A3",
-      "description": "Sustainable tourism certification regulates beach tourism"
+      "description": "Sustainable tourism certification regulates beach tourism",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC10",
       "to_type": "activity",
       "to_id": "A4",
-      "description": "Best practices guide diving and snorkeling activities"
+      "description": "Best practices guide diving and snorkeling activities",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC8",
       "to_type": "activity",
       "to_id": "A6",
-      "description": "Coastal land-use planning restricts urbanization"
+      "description": "Coastal land-use planning restricts urbanization",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC4",
       "to_type": "activity",
       "to_id": "A11",
-      "description": "Agricultural pollution control regulates farming practices"
+      "description": "Agricultural pollution control regulates farming practices",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC7",
       "to_type": "driver",
       "to_id": "D1",
-      "description": "Aquaculture development provides alternative to meet food security needs"
+      "description": "Aquaculture development provides alternative to meet food security needs",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC7",
       "to_type": "driver",
       "to_id": "D2",
-      "description": "Livelihood diversification addresses economic development needs"
+      "description": "Livelihood diversification addresses economic development needs",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC10",
       "to_type": "driver",
       "to_id": "D3",
-      "description": "Sustainable tourism practices shape tourism demand"
+      "description": "Sustainable tourism practices shape tourism demand",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC11",
       "to_type": "driver",
       "to_id": "D5",
-      "description": "Climate adaptation planning addresses adaptation needs"
+      "description": "Climate adaptation planning addresses adaptation needs",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC8",
       "to_type": "driver",
       "to_id": "D6",
-      "description": "Coastal planning manages housing and infrastructure needs"
+      "description": "Coastal planning manages housing and infrastructure needs",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W2",
       "to_type": "response",
       "to_id": "RC17",
-      "description": "Loss of fishing income triggers blue economy innovation programs"
+      "description": "Loss of fishing income triggers blue economy innovation programs",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W5",
       "to_type": "response",
       "to_id": "RC17",
-      "description": "Job losses drive blue economy entrepreneurship development"
+      "description": "Job losses drive blue economy entrepreneurship development",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W10",
       "to_type": "response",
       "to_id": "RC14",
-      "description": "Quality of life concerns trigger community-based monitoring programs"
+      "description": "Quality of life concerns trigger community-based monitoring programs",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W2",
       "to_type": "response",
       "to_id": "RC15",
-      "description": "Loss of fishing income drives livelihood diversification training"
+      "description": "Loss of fishing income drives livelihood diversification training",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W5",
       "to_type": "response",
       "to_id": "RC15",
-      "description": "Job losses trigger comprehensive skills training programs"
+      "description": "Job losses trigger comprehensive skills training programs",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W1",
       "to_type": "response",
       "to_id": "RC16",
-      "description": "Tourism revenue decline drives community ecotourism development"
+      "description": "Tourism revenue decline drives community ecotourism development",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W8",
       "to_type": "response",
       "to_id": "RC16",
-      "description": "Loss of cultural heritage triggers community-based ecotourism"
+      "description": "Loss of cultural heritage triggers community-based ecotourism",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "welfare",
       "from_id": "W9",
       "to_type": "response",
       "to_id": "RC18",
-      "description": "Erosion of social trust drives capacity building for better governance"
+      "description": "Erosion of social trust drives capacity building for better governance",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC17",
       "to_type": "driver",
       "to_id": "D2",
-      "description": "Blue economy programs provide sustainable economic development pathway"
+      "description": "Blue economy programs provide sustainable economic development pathway",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC15",
       "to_type": "driver",
       "to_id": "D1",
-      "description": "Livelihood diversification addresses food security through sustainable alternatives"
+      "description": "Livelihood diversification addresses food security through sustainable alternatives",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC15",
       "to_type": "driver",
       "to_id": "D2",
-      "description": "Skills training addresses economic development needs sustainably"
+      "description": "Skills training addresses economic development needs sustainably",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC16",
       "to_type": "driver",
       "to_id": "D3",
-      "description": "Community ecotourism shapes sustainable tourism demand"
+      "description": "Community ecotourism shapes sustainable tourism demand",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC15",
       "to_type": "activity",
       "to_id": "A2",
-      "description": "Livelihood training reduces dependence on intensive fishing"
+      "description": "Livelihood training reduces dependence on intensive fishing",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC16",
       "to_type": "activity",
       "to_id": "A3",
-      "description": "Community ecotourism provides sustainable alternative to mass beach tourism"
+      "description": "Community ecotourism provides sustainable alternative to mass beach tourism",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC16",
       "to_type": "activity",
       "to_id": "A4",
-      "description": "Ecotourism development promotes responsible diving and snorkeling"
+      "description": "Ecotourism development promotes responsible diving and snorkeling",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC14",
       "to_type": "pressure",
       "to_id": "P8",
-      "description": "Community monitoring helps detect and reduce overfishing"
+      "description": "Community monitoring helps detect and reduce overfishing",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC14",
       "to_type": "pressure",
       "to_id": "P1",
-      "description": "Citizen science monitors nutrient pollution and water quality"
+      "description": "Citizen science monitors nutrient pollution and water quality",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "driver",
       "from_id": "D2",
       "to_type": "activity",
       "to_id": "A7",
-      "description": "Economic development needs drive aquaculture expansion"
+      "description": "Economic development needs drive aquaculture expansion",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "driver",
       "from_id": "D2",
       "to_type": "activity",
       "to_id": "A8",
-      "description": "Economic development drives port and marine infrastructure"
+      "description": "Economic development drives port and marine infrastructure",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "driver",
       "from_id": "D7",
       "to_type": "activity",
       "to_id": "A5",
-      "description": "Waste management needs drive wastewater discharge"
+      "description": "Waste management needs drive wastewater discharge",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "driver",
       "from_id": "D4",
       "to_type": "activity",
       "to_id": "A11",
-      "description": "Agricultural production needs drive farming with runoff"
+      "description": "Agricultural production needs drive farming with runoff",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "driver",
       "from_id": "D5",
       "to_type": "activity",
       "to_id": "A9",
-      "description": "Climate adaptation needs drive marine research and monitoring"
+      "description": "Climate adaptation needs drive marine research and monitoring",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "driver",
       "from_id": "D3",
       "to_type": "activity",
       "to_id": "A10",
-      "description": "Tourism demand drives cruise ship and yacht tourism"
+      "description": "Tourism demand drives cruise ship and yacht tourism",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "activity",
       "from_id": "A3",
       "to_type": "pressure",
       "to_id": "P9",
-      "description": "Beach tourism causes physical damage from trampling"
+      "description": "Beach tourism causes physical damage from trampling",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "activity",
       "from_id": "A4",
       "to_type": "pressure",
       "to_id": "P9",
-      "description": "Diving activities cause physical damage to reefs"
+      "description": "Diving activities cause physical damage to reefs",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "activity",
       "from_id": "A10",
       "to_type": "pressure",
       "to_id": "P9",
-      "description": "Cruise ships cause physical disturbance"
+      "description": "Cruise ships cause physical disturbance to marine habitats from anchoring and wake",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "activity",
       "from_id": "A7",
       "to_type": "pressure",
       "to_id": "P1",
-      "description": "Aquaculture operations cause nutrient pollution"
+      "description": "Aquaculture operations cause nutrient pollution",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "activity",
       "from_id": "A8",
       "to_type": "pressure",
       "to_id": "P11",
-      "description": "Port construction causes coastal habitat loss"
-    },
-    {
-      "from_type": "activity",
-      "from_id": "A9",
-      "to_type": "pressure",
-      "to_id": "P9",
-      "description": "Research activities cause minor physical disturbance"
+      "description": "Port construction causes coastal habitat loss",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "activity",
       "from_id": "A10",
       "to_type": "pressure",
       "to_id": "P4",
-      "description": "Cruise ships cause marine debris and plastic pollution"
-    },
-    {
-      "from_type": "activity",
-      "from_id": "A10",
-      "to_type": "pressure",
-      "to_id": "P6",
-      "description": "Cruise ships cause noise pollution"
+      "description": "Cruise ship waste discharge and anchoring increases sedimentation",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "pressure",
       "from_id": "P3",
       "to_type": "state",
       "to_id": "S2",
-      "description": "Sedimentation smothers and stresses coral reefs"
+      "description": "Sedimentation smothers and stresses coral reefs",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "pressure",
       "from_id": "P3",
       "to_type": "state",
       "to_id": "S5",
-      "description": "Sedimentation degrades seagrass meadows"
-    },
-    {
-      "from_type": "pressure",
-      "from_id": "P4",
-      "to_type": "state",
-      "to_id": "S7",
-      "description": "Marine debris damages and pollutes beaches"
+      "description": "Sedimentation degrades seagrass meadows",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "pressure",
       "from_id": "P6",
       "to_type": "state",
       "to_id": "S8",
-      "description": "Noise pollution disrupts marine mammal behavior"
+      "description": "Ocean acidification degrades coastal water quality",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "pressure",
       "from_id": "P7",
       "to_type": "state",
       "to_id": "S1",
-      "description": "Altered ocean currents transport Sargassum to coasts"
+      "description": "Altered ocean currents transport Sargassum to coasts",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "pressure",
       "from_id": "P9",
       "to_type": "state",
       "to_id": "S2",
-      "description": "Physical damage from anchors and trampling breaks corals"
+      "description": "Physical damage from anchors and trampling breaks corals",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "pressure",
       "from_id": "P9",
       "to_type": "state",
       "to_id": "S5",
-      "description": "Physical disturbance damages seagrass beds"
+      "description": "Physical disturbance damages seagrass beds",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "pressure",
       "from_id": "P10",
       "to_type": "state",
       "to_id": "S9",
-      "description": "Invasive species disrupt ecosystem balance"
+      "description": "Physical damage to benthic habitats accelerates coastal erosion",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "pressure",
       "from_id": "P12",
       "to_type": "state",
       "to_id": "S10",
-      "description": "Light pollution disrupts turtle nesting behavior"
+      "description": "Invasive species alter reef structural complexity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "pressure",
       "from_id": "P13",
       "to_type": "state",
       "to_id": "S3",
-      "description": "Chemical pollutants contaminate marine environment"
+      "description": "Chemical pollutants contaminate marine environment",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "state",
       "from_id": "S4",
       "to_type": "impact",
       "to_id": "I1",
-      "description": "Mangrove loss reduces fish nursery habitat"
+      "description": "Mangrove loss reduces fish nursery habitat",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "state",
       "from_id": "S5",
       "to_type": "impact",
       "to_id": "I2",
-      "description": "Seagrass degradation reduces fisheries productivity"
+      "description": "Seagrass degradation reduces fisheries productivity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "state",
       "from_id": "S5",
       "to_type": "impact",
       "to_id": "I1",
-      "description": "Seagrass loss reduces juvenile fish habitat"
+      "description": "Seagrass loss reduces juvenile fish habitat",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "state",
       "from_id": "S7",
       "to_type": "impact",
       "to_id": "I4",
-      "description": "Beach degradation reduces aesthetic value"
+      "description": "Invasive species disrupt ecosystem balance, reducing habitat aesthetic value",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "state",
       "from_id": "S8",
       "to_type": "impact",
       "to_id": "I7",
-      "description": "Disrupted marine life reduces wildlife watching opportunities"
+      "description": "Reduced water quality impairs carbon sequestration capacity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "state",
       "from_id": "S9",
       "to_type": "impact",
       "to_id": "I8",
-      "description": "Ecosystem imbalance reduces overall marine productivity"
+      "description": "Increased coastal erosion degrades water purification capacity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "state",
       "from_id": "S10",
       "to_type": "impact",
       "to_id": "I9",
-      "description": "Turtle decline reduces biodiversity conservation value"
+      "description": "Turtle decline reduces biodiversity conservation value",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "impact",
       "from_id": "I7",
       "to_type": "welfare",
       "to_id": "W1",
-      "description": "Reduced wildlife watching affects tourism revenue"
+      "description": "Reduced wildlife watching affects tourism revenue",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "impact",
       "from_id": "I8",
       "to_type": "welfare",
       "to_id": "W2",
-      "description": "Reduced marine productivity affects fishing income"
+      "description": "Degraded water purification capacity reduces water quality for fisheries, affecting fishing income",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "impact",
       "from_id": "I9",
       "to_type": "welfare",
       "to_id": "W8",
-      "description": "Biodiversity loss erodes natural heritage"
+      "description": "Biodiversity loss erodes natural heritage",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "impact",
       "from_id": "I10",
       "to_type": "welfare",
       "to_id": "W10",
-      "description": "Reduced ecosystem resilience affects quality of life"
+      "description": "Reduced ecosystem resilience affects quality of life",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "impact",
       "from_id": "I2",
       "to_type": "welfare",
       "to_id": "W5",
-      "description": "Reduced fisheries causes job losses"
+      "description": "Reduced fisheries causes job losses",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "impact",
       "from_id": "I4",
       "to_type": "welfare",
       "to_id": "W5",
-      "description": "Degraded beaches cause tourism job losses"
+      "description": "Degraded beaches cause tourism job losses",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "impact",
       "from_id": "I2",
       "to_type": "welfare",
       "to_id": "W4",
-      "description": "Reduced fisheries threatens food security"
+      "description": "Reduced fisheries threatens food security",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC3",
       "to_type": "pressure",
       "to_id": "P8",
-      "description": "MPA network reduces fishing pressure"
+      "description": "MPA network reduces fishing pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC13",
       "to_type": "activity",
       "to_id": "A9",
-      "description": "Research programs guide monitoring activities"
+      "description": "Regional cooperation programmes coordinate Sargassum cleanup operations",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC14",
       "to_type": "driver",
       "to_id": "D5",
-      "description": "Regional cooperation addresses climate adaptation needs"
+      "description": "Regional cooperation addresses climate adaptation needs",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC2",
       "to_type": "pressure",
       "to_id": "P10",
-      "description": "MPA legislation reduces physical damage to habitats"
+      "description": "MPA legislation reduces physical damage to habitats",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC5",
       "to_type": "pressure",
       "to_id": "P8",
-      "description": "Fisheries quotas reduce overfishing pressure"
+      "description": "Fisheries quotas reduce overfishing pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC4",
       "to_type": "activity",
       "to_id": "A5",
-      "description": "Wastewater funding enables infrastructure upgrades"
+      "description": "Wastewater funding enables infrastructure upgrades",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC1",
       "to_type": "activity",
       "to_id": "A9",
-      "description": "Sargassum funding enables cleanup operations"
+      "description": "Sargassum funding enables cleanup operations",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC6",
       "to_type": "pressure",
       "to_id": "P2",
-      "description": "Fishing bans reduce chemical contamination risk"
+      "description": "Fishing bans reduce chemical contamination risk",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC9",
       "to_type": "pressure",
       "to_id": "P12",
-      "description": "Lionfish removal incentives reduce invasive species pressure"
+      "description": "Lionfish removal incentives reduce invasive species pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC13",
       "to_type": "driver",
       "to_id": "D5",
-      "description": "Regional cooperation supports climate adaptation needs"
+      "description": "Regional cooperation supports climate adaptation needs",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC12",
       "to_type": "activity",
       "to_id": "A9",
-      "description": "Education mandate enables research and monitoring"
+      "description": "Education mandate enables research and monitoring",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC17",
       "to_type": "activity",
       "to_id": "A7",
-      "description": "Blue economy fund supports boat traffic innovation"
+      "description": "Blue economy fund supports boat traffic innovation",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC14",
       "to_type": "activity",
       "to_id": "A9",
-      "description": "Community monitoring grants enable Sargassum cleanup"
+      "description": "Community monitoring grants enable Sargassum cleanup",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC15",
       "to_type": "activity",
       "to_id": "A11",
-      "description": "Vocational training supports sustainable agriculture"
+      "description": "Livelihood diversification training supports transition to low-runoff agriculture",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "response",
       "from_id": "RC18",
       "to_type": "driver",
       "to_id": "D7",
-      "description": "Capacity building supports waste management needs"
+      "description": "Capacity building supports waste management needs",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3
     },
     {
       "from_type": "pressure",

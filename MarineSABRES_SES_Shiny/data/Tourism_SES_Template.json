@@ -235,6 +235,20 @@
         "type": "Response",
         "description": "Cystoseira habitat restoration projects"
       }
+    ],
+    "measures": [
+      {
+        "id": "M001",
+        "name": "Visitor carrying capacity limits",
+        "type": "Measure",
+        "description": "Science-based visitor limits for sensitive marine and coastal areas"
+      },
+      {
+        "id": "M002",
+        "name": "Mooring buoy installation",
+        "type": "Measure",
+        "description": "Fixed mooring buoys to prevent anchor damage to benthic habitat within marine reserves"
+      }
     ]
   },
   "connections": [
@@ -597,6 +611,26 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Seafood quality and gastronomic heritage reinforces Sea urchin and shellfish harvesting demand"
+    },
+    {
+      "from_id": "M001",
+      "to_id": "R001",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Carrying capacity limits support no-take marine reserve effectiveness by controlling visitor pressure"
+    },
+    {
+      "from_id": "M002",
+      "to_id": "R001",
+      "from_type": "measure",
+      "to_type": "response",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Mooring buoys protect benthic habitat from anchor damage within marine reserves"
     }
   ]
 }
