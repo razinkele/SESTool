@@ -64,10 +64,11 @@ test_that("Caribbean feedback loops have reinforcing (+) polarity", {
 # ==============================================================================
 # 2. KB habitat coverage
 # ==============================================================================
-test_that("Baltic KB contexts mention seagrass habitat", {
+test_that("Baltic coastal KB contexts mention seagrass habitat", {
   kb <- load_kb()
-  baltic_ctxs <- c("baltic_lagoon", "baltic_estuary", "baltic_offshore",
-                    "baltic_open_coast", "baltic_archipelago", "baltic_island",
+  # Only coastal/island contexts — lagoons, estuaries, and offshore excluded
+  # because Z. marina requires >5 PSU and shallow subtidal substrate
+  baltic_ctxs <- c("baltic_open_coast", "baltic_archipelago", "baltic_island",
                     "baltic_rocky_coast")
   for (ctx_name in baltic_ctxs) {
     ctx <- kb$contexts[[ctx_name]]
@@ -79,14 +80,14 @@ test_that("Baltic KB contexts mention seagrass habitat", {
   }
 })
 
-test_that("Mediterranean lagoon KB context mentions seagrass habitat", {
+test_that("Mediterranean lagoon KB context mentions lagoon seagrass species", {
   kb <- load_kb()
   ctx <- kb$contexts$mediterranean_lagoon
   text <- tolower(jsonlite::toJSON(ctx, auto_unbox = TRUE))
-  # Cymodocea nodosa or Zostera noltei are the correct lagoon species
-  # Posidonia oceanica is stenohaline and only at well-flushed lagoon-sea connections
-  expect_true(grepl("cymodocea|posidonia|seagrass|zostera", text),
-    info = "mediterranean_lagoon should reference lagoon seagrass habitat")
+  # Cymodocea nodosa and Zostera noltei are the correct lagoon species
+  # Posidonia oceanica excluded — stenohaline, not a lagoon species
+  expect_true(grepl("cymodocea|zostera", text),
+    info = "mediterranean_lagoon should reference Cymodocea nodosa or Zostera noltei")
 })
 
 test_that("Caribbean coral reef KB context mentions mangrove and seagrass", {

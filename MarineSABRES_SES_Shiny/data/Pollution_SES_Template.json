@@ -1,5 +1,5 @@
 {
-  "template_name": "Marine Pollution SES Template",
+  "template_name": "Pollution",
   "template_description": "Social-ecological system template for marine pollution, covering chemical and nutrient contamination, habitat degradation, human welfare impacts, and environmental regulation responses. Applicable to estuarine and coastal systems.",
   "complexity": "simple",
   "regional_context": {
@@ -168,12 +168,6 @@
         "name": "Estuarine salinity gradient and mixing zone dynamics",
         "type": "State Change",
         "description": "Estuarine salinity gradient and mixing zone dynamics"
-      },
-      {
-        "id": "MPF007",
-        "name": "Zostera marina (eelgrass/seagrass) meadow coverage in brackish estuarine waters",
-        "type": "State Change",
-        "description": "Zostera marina (eelgrass/seagrass) meadow coverage in brackish estuarine waters"
       }
     ],
     "ecosystem_services": [
@@ -202,12 +196,6 @@
         "name": "Recreational fishing tourism revenue",
         "type": "Welfare",
         "description": "Recreational fishing tourism revenue"
-      },
-      {
-        "id": "GB002",
-        "name": "Port and shipping economic value",
-        "type": "Welfare",
-        "description": "Port and shipping economic value"
       },
       {
         "id": "GB003",
@@ -423,16 +411,6 @@
       "description": "Healthy nursery function sustains fish populations that attract recreational anglers and generate tourism revenue. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits"
     },
     {
-      "from_id": "GB001",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Tourism revenue from recreational fishing reinforces demand for maintaining and enhancing salmon and trout fisheries. Marine tourism generates substantial economic value — reef tourism alone contributes ~USD 36 billion/year globally"
-    },
-    {
       "from_id": "R004",
       "to_id": "A003",
       "from_type": "response",
@@ -497,7 +475,7 @@
       "to_id": "MPF001",
       "from_type": "pressure",
       "to_type": "state",
-      "polarity": "+",
+      "polarity": "-",
       "strength": "medium",
       "confidence": 3,
       "description": "Connection added to complete DAPSI(W)R(M) chain for Altered freshwater flow regime from upstream regulation"
@@ -543,46 +521,6 @@
       "description": "Connection added to complete DAPSI(W)R(M) chain for Nutrient filtration by estuarine wetlands. Marine tourism generates substantial economic value — reef tourism alone contributes ~USD 36 billion/year globally"
     },
     {
-      "from_id": "GB002",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 2,
-      "description": "Port and shipping economic value has no direct causal link to salmon and sea trout fishery demand. These are independent economic sectors. Strength and confidence reduced."
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Flood damage avoidance for riverside communities"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Drinking water quality for downstream users"
-    },
-    {
-      "from_id": "GB005",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Port and navigation accessibility"
-    },
-    {
       "from_id": "R003",
       "to_id": "P001",
       "from_type": "response",
@@ -603,24 +541,44 @@
       "description": "Contaminated sediment remediation targets heavy metals and organic pollutants, not nutrient enrichment. May even temporarily increase nutrient release during disturbance. Strength and confidence reduced."
     },
     {
-      "from_id": "D003",
-      "to_id": "A005",
-      "from_type": "driver",
-      "to_type": "activity",
+      "from_id": "GB001",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
+      "description": "Recreational fishing tourism revenue reinforces Salmon and sea trout fishery demand"
     },
     {
-      "from_id": "P002",
-      "to_id": "P007",
-      "from_type": "pressure",
-      "to_type": "pressure",
+      "from_id": "GB003",
+      "to_id": "D002",
+      "from_type": "welfare",
+      "to_type": "driver",
       "polarity": "+",
-      "strength": "weak",
-      "confidence": 1,
-      "description": "Heavy metal contamination does not causally alter freshwater flow regimes. These are independent pressures acting on estuaries. Strength reduced to weak, confidence to 1 (no scientific basis for causal link)."
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Flood damage avoidance for riverside communities reinforces Port and harbour expansion pressure"
+    },
+    {
+      "from_id": "GB004",
+      "to_id": "D003",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Drinking water quality for downstream users reinforces Flood risk management needs"
+    },
+    {
+      "from_id": "GB005",
+      "to_id": "D004",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Port and navigation accessibility reinforces Industrial water supply demand"
     }
   ]
 }

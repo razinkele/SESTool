@@ -1,5 +1,5 @@
 {
-  "template_name": "Offshore Wind Energy SES Template",
+  "template_name": "Offshore Wind Energy",
   "template_description": "Social-ecological system template for offshore wind energy development, covering construction and operation pressures on marine ecosystems, energy production benefits, and spatial planning responses.",
   "complexity": "complex",
   "regional_context": {
@@ -118,12 +118,6 @@
         "name": "Seabed disturbance from beam trawling",
         "type": "Pressure",
         "description": "Seabed disturbance from beam trawling"
-      },
-      {
-        "id": "P006",
-        "name": "Ship-strike and collision risk for marine mammals",
-        "type": "Pressure",
-        "description": "Ship-strike and collision risk for marine mammals"
       }
     ],
     "marine_processes": [
@@ -485,16 +479,6 @@
       "description": "Chronic hydrocarbon contamination from oil/gas platforms harms sandeel through toxic effects on eggs, larvae, and prey organisms. Polarity corrected from + to - (contamination reduces, not increases, sandeel abundance)."
     },
     {
-      "from_id": "P006",
-      "to_id": "MPF001",
-      "from_type": "pressure",
-      "to_type": "state",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 1,
-      "description": "Ship-strike and collision risk primarily affects marine mammals and is not a meaningful pressure on sandeel stocks. No direct causal pathway. Strength to weak, confidence to 1."
-    },
-    {
       "from_id": "MPF004",
       "to_id": "ES001",
       "from_type": "state",
@@ -593,26 +577,6 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Connection added to complete DAPSI(W)R(M) chain for Platform decommissioning regulations"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D004",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
-    },
-    {
-      "from_id": "A004",
-      "to_id": "P004",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "Beam trawling does not produce hydrocarbon contamination. While trawling may resuspend contaminated sediments near platforms, it is not a source of hydrocarbons. Strength and confidence reduced."
     }
   ]
 }
