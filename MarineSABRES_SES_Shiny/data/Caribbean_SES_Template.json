@@ -2048,6 +2048,46 @@
       "strength": "medium",
       "confidence": 4,
       "description": "Municipal financial burden drives blue economy innovation for cost-effective solutions"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W2",
+      "to_type": "driver",
+      "to_id": "D1",
+      "polarity": "+",
+      "description": "Loss of fishing income reinforces food security needs"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W1",
+      "to_type": "driver",
+      "to_id": "D2",
+      "polarity": "+",
+      "description": "Decline in tourism revenue reinforces economic development aspirations"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W5",
+      "to_type": "driver",
+      "to_id": "D2",
+      "polarity": "+",
+      "description": "Job losses reinforce economic development aspirations"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W6",
+      "to_type": "driver",
+      "to_id": "D5",
+      "polarity": "+",
+      "description": "Coastal flooding reinforces climate change adaptation needs"
+    },
+    {
+      "from_type": "welfare",
+      "from_id": "W10",
+      "to_type": "driver",
+      "to_id": "D6",
+      "polarity": "+",
+      "description": "Reduced quality of life reinforces housing and infrastructure needs"
     }
   ],
   "usage_notes": "This template represents the complex, multi-faceted marine environmental challenges facing Caribbean islands. It can be adapted for other tropical island contexts by adjusting specific regional seas, ecosystem types, and local pollutants. The template emphasizes the interconnected nature of problems (Sargassum, coral bleaching, contamination, overfishing, habitat loss) and the need for integrated coastal zone management approaches."
