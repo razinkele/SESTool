@@ -13514,7 +13514,7 @@
           "relevance": 0.9
         },
         {
-          "name": "Eelgrass (Zostera noltii) bed coverage",
+          "name": "Eelgrass (Zostera noltei) bed coverage",
           "relevance": 0.75
         },
         {
@@ -14062,14 +14062,14 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Eelgrass (Zostera noltii) bed coverage",
+          "from": "Eelgrass (Zostera noltei) bed coverage",
           "from_type": "states",
           "to": "East Atlantic Flyway staging habitat for migratory birds",
           "to_type": "impacts",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
-          "rationale": "Connection added to complete DAPSI(W)R(M) chain for Eelgrass (Zostera noltii) bed coverage",
+          "rationale": "Connection added to complete DAPSI(W)R(M) chain for Eelgrass (Zostera noltei) bed coverage",
           "references": [
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\"",
