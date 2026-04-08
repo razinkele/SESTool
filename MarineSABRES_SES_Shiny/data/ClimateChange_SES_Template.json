@@ -1,5 +1,5 @@
 {
-  "template_name": "Climate Change Marine SES Template",
+  "template_name": "Climate Change",
   "template_description": "Social-ecological system template for climate change impacts on marine ecosystems, covering warming, acidification, sea level rise, species distribution shifts, and adaptation responses.",
   "complexity": "simple",
   "regional_context": {
@@ -68,24 +68,6 @@
         "name": "Arctic oil and gas seismic exploration",
         "type": "Activity",
         "description": "Arctic oil and gas seismic exploration"
-      },
-      {
-        "id": "A004",
-        "name": "Polar expedition cruise tourism",
-        "type": "Activity",
-        "description": "Polar expedition cruise tourism"
-      },
-      {
-        "id": "A005",
-        "name": "Ice-edge fisheries (Arctic cod, polar cod)",
-        "type": "Activity",
-        "description": "Ice-edge fisheries (Arctic cod, polar cod)"
-      },
-      {
-        "id": "A006",
-        "name": "Climate and sea ice monitoring research",
-        "type": "Activity",
-        "description": "Climate and sea ice monitoring research"
       }
     ],
     "pressures": [
@@ -469,36 +451,6 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Connection added to complete DAPSI(W)R(M) chain for Climate change adaptation needs"
-    },
-    {
-      "from_id": "A004",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "Arctic cruise tourism contributes negligible GHG emissions relative to global totals driving sea ice loss. The direct causal contribution is extremely weak."
-    },
-    {
-      "from_id": "A005",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "Ice-edge fisheries do not causally drive sea ice loss. Fishing vessel emissions are negligible relative to global GHG forcing. Causal link is spurious."
-    },
-    {
-      "from_id": "A006",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "Scientific monitoring does not causally accelerate sea ice loss. Research vessels contribute negligible emissions. Connection is spurious."
     },
     {
       "from_id": "P004",

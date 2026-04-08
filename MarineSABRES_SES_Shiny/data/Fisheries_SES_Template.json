@@ -1,5 +1,5 @@
 {
-  "template_name": "Marine Fisheries SES Template",
+  "template_name": "Fisheries",
   "template_description": "Social-ecological system template for marine fisheries, covering fishing activities, stock depletion pressures, ecosystem service impacts, and fisheries management responses. Applicable to temperate offshore systems.",
   "complexity": "simple",
   "regional_context": {
@@ -156,12 +156,6 @@
         "name": "Deep-water hypoxia (dead zones)",
         "type": "State Change",
         "description": "Deep-water hypoxia (dead zones)"
-      },
-      {
-        "id": "MPF007",
-        "name": "Zostera marina (seagrass) distribution in nearshore subtidal zones",
-        "type": "State Change",
-        "description": "Zostera marina (seagrass) distribution in nearshore subtidal zones"
       }
     ],
     "ecosystem_services": [
@@ -208,12 +202,6 @@
         "name": "Renewable energy generation from offshore wind",
         "type": "Welfare",
         "description": "Renewable energy generation from offshore wind"
-      },
-      {
-        "id": "GB006",
-        "name": "Shipping route provision",
-        "type": "Welfare",
-        "description": "Shipping route provision"
       }
     ],
     "responses": [
@@ -411,16 +399,6 @@
       "description": "Deep-water renewal events bring oxygenated water below the halocline, directly controlling benthic macrofauna survival in Baltic basins"
     },
     {
-      "from_id": "GB001",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Fleet economic viability sustains political and industry pressure to maintain fish market demand and quota access"
-    },
-    {
       "from_id": "P001",
       "to_id": "MPF006",
       "from_type": "pressure",
@@ -541,56 +519,6 @@
       "description": "Connection added to complete DAPSI(W)R(M) chain for Climate regulation through carbon cycling"
     },
     {
-      "from_id": "GB002",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Energy security from Baltic wind farms"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Fish processing industry employment"
-    },
-    {
-      "from_id": "GB004",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Maritime trade revenue. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
-    },
-    {
-      "from_id": "GB005",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Renewable energy generation from offshore wind"
-    },
-    {
-      "from_id": "GB006",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Shipping route provision. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
-    },
-    {
       "from_id": "R002",
       "to_id": "P001",
       "from_type": "response",
@@ -629,6 +557,56 @@
       "strength": "medium",
       "confidence": 4,
       "description": "Offshore wind farm development creates trawling exclusion zones, reducing demersal trawling activity in those areas. Multiple North Sea and Baltic studies document fisheries displacement from wind farm areas. Polarity corrected from + to -."
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Fishing fleet economic viability reinforces Demand for Baltic cod and herring"
+    },
+    {
+      "from_id": "GB002",
+      "to_id": "D002",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Energy security from Baltic wind farms reinforces Offshore wind energy expansion targets"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D003",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Fish processing industry employment reinforces Maritime shipping route demand"
+    },
+    {
+      "from_id": "GB004",
+      "to_id": "D004",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Maritime trade revenue reinforces Climate change mitigation goals"
+    },
+    {
+      "from_id": "GB005",
+      "to_id": "D005",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Renewable energy generation from offshore wind reinforces Sand and aggregate resource needs"
     }
   ]
 }

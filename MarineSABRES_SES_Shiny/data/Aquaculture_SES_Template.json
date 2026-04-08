@@ -1,5 +1,5 @@
 {
-  "template_name": "Aquaculture SES Template",
+  "template_name": "Aquaculture",
   "template_description": "Social-ecological system template for coastal aquaculture, covering nutrient enrichment, eutrophication pressures, ecosystem service impacts, and management responses. Applicable to lagoon and sheltered coastal systems.",
   "complexity": "simple",
   "regional_context": {
@@ -64,22 +64,10 @@
         "description": "Reed harvesting for thatching and bioenergy"
       },
       {
-        "id": "A003",
-        "name": "Recreational angling for pike and perch",
-        "type": "Activity",
-        "description": "Recreational angling for pike and perch"
-      },
-      {
         "id": "A004",
         "name": "Agricultural drainage into lagoon",
         "type": "Activity",
         "description": "Agricultural drainage into lagoon"
-      },
-      {
-        "id": "A005",
-        "name": "Bird-watching and nature tourism",
-        "type": "Activity",
-        "description": "Bird-watching and nature tourism"
       },
       {
         "id": "A006",
@@ -162,12 +150,6 @@
         "name": "Round goby and Chinese mitten crab (Neogobius melanostomus, Eriocheir sinensis) invasion",
         "type": "State Change",
         "description": "Round goby and Chinese mitten crab (Neogobius melanostomus, Eriocheir sinensis) invasion"
-      },
-      {
-        "id": "MPF007",
-        "name": "Zostera marina (eelgrass/seagrass) bed extent and condition",
-        "type": "State Change",
-        "description": "Zostera marina (eelgrass/seagrass) bed extent and condition"
       }
     ],
     "ecosystem_services": [
@@ -402,19 +384,9 @@
       "from_type": "driver",
       "to_type": "activity",
       "polarity": "+",
-      "strength": "moderate",
+      "strength": "medium",
       "confidence": 5,
       "description": "Local food security needs directly drive small-scale gillnet fishing effort targeting pike-perch in lagoons"
-    },
-    {
-      "from_id": "GB001",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Fisher income levels influence community investment in and demand for continued local fishery production"
     },
     {
       "from_id": "R005",
@@ -517,26 +489,6 @@
       "description": "Reed harvesting removes nutrient-rich biomass from the lagoon ecosystem, potentially reducing (not increasing) nutrient levels. Reed beds sequester N and P; their harvest exports these nutrients. Polarity corrected from + to -."
     },
     {
-      "from_id": "A003",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "Recreational angling has negligible direct contribution to nutrient enrichment compared to agricultural drainage which is the dominant source. Strength reduced to weak, confidence to 2."
-    },
-    {
-      "from_id": "A005",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "Bird-watching and nature tourism have negligible direct contribution to lagoon nutrient enrichment. Visitor numbers are small relative to agricultural nutrient loads. Strength and confidence reduced."
-    },
-    {
       "from_id": "A006",
       "to_id": "P001",
       "from_type": "activity",
@@ -577,26 +529,6 @@
       "description": "Connection added to complete DAPSI(W)R(M) chain for Flood buffering and coastal protection"
     },
     {
-      "from_id": "GB002",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Recreational value for local communities"
-    },
-    {
-      "from_id": "GB003",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Cultural identity of lagoon fishing villages"
-    },
-    {
       "from_id": "R002",
       "to_id": "P001",
       "from_type": "response",
@@ -607,24 +539,44 @@
       "description": "Connection added to complete DAPSI(W)R(M) chain for Reed bed restoration programmes"
     },
     {
-      "from_id": "R004",
-      "to_id": "D005",
-      "from_type": "response",
+      "from_id": "GB001",
+      "to_id": "D001",
+      "from_type": "welfare",
       "to_type": "driver",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
+      "description": "Fisher household income from pike-perch sales reinforces Food security from local fisheries"
     },
     {
-      "from_id": "ES003",
-      "to_id": "GB003",
-      "from_type": "impact",
-      "to_type": "welfare",
+      "from_id": "GB002",
+      "to_id": "D002",
+      "from_type": "welfare",
+      "to_type": "driver",
       "polarity": "+",
       "strength": "medium",
       "confidence": 3,
-      "description": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
+      "description": "Recreational value for local communities reinforces Recreational demand for nature tourism"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D003",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Cultural identity of lagoon fishing villages reinforces Agricultural production demand in catchment"
+    },
+    {
+      "from_id": "GB004",
+      "to_id": "D004",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Tourism revenue from birdwatching and angling reinforces Urban wastewater management needs"
     }
   ]
 }

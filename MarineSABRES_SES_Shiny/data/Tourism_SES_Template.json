@@ -1,5 +1,5 @@
 {
-  "template_name": "Coastal Tourism SES Template",
+  "template_name": "Tourism",
   "template_description": "Social-ecological system template for coastal tourism impacts, covering recreational activities, habitat disturbance pressures, ecosystem service degradation, and sustainable tourism responses. Applicable to Mediterranean and temperate coastal systems.",
   "complexity": "simple",
   "regional_context": {
@@ -42,12 +42,6 @@
         "name": "Marine biodiversity conservation goals",
         "type": "Driver",
         "description": "Marine biodiversity conservation goals"
-      },
-      {
-        "id": "D005",
-        "name": "Climate change adaptation needs",
-        "type": "Driver",
-        "description": "Climate change adaptation needs"
       }
     ],
     "activities": [
@@ -74,18 +68,6 @@
         "name": "Scuba diving tourism on rocky reefs",
         "type": "Activity",
         "description": "Scuba diving tourism on rocky reefs"
-      },
-      {
-        "id": "A005",
-        "name": "Scientific monitoring and underwater surveys",
-        "type": "Activity",
-        "description": "Scientific monitoring and underwater surveys"
-      },
-      {
-        "id": "A006",
-        "name": "Octopus and cuttlefish pot fishing",
-        "type": "Activity",
-        "description": "Octopus and cuttlefish pot fishing"
       }
     ],
     "pressures": [
@@ -367,16 +349,6 @@
       "description": "High sea urchin density causes barren formation by grazing macroalgal canopies to bare rock, a well-documented trophic cascade on Mediterranean rocky reefs"
     },
     {
-      "from_id": "GB001",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Fisher income viability is a key determinant of whether artisanal fishing traditions persist. Multiple studies document the abandonment of traditional fishing when economic returns decline (Colloca et al. 2017). Upgraded from weak to medium."
-    },
-    {
       "from_id": "MPF001",
       "to_id": "ES001",
       "from_type": "state",
@@ -507,16 +479,6 @@
       "description": "Marine biodiversity conservation goals (MPA designations, EU Habitats Directive) restrict artisanal fishing through spatial closures, gear restrictions, and quotas. The effect is negative (reducing fishing activity), not positive."
     },
     {
-      "from_id": "D005",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "No direct scientific mechanism links climate change adaptation needs to artisanal fishing activity. Structural connection without ecological basis."
-    },
-    {
       "from_id": "A002",
       "to_id": "P001",
       "from_type": "activity",
@@ -525,26 +487,6 @@
       "strength": "medium",
       "confidence": 4,
       "description": "Sea urchin harvesting reduces Paracentrotus lividus density, thereby reducing overgrazing pressure and allowing macroalgal recovery. Large-scale urchin culling has been shown to reduce barren grounds in the Mediterranean (Piazzi & Ceccherelli 2019, Guidetti & Dulcic 2007). Polarity corrected from + to -."
-    },
-    {
-      "from_id": "A005",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "Scientific monitoring and underwater surveys have no causal mechanism leading to sea urchin overgrazing. Observation does not drive ecological processes. Structural connection."
-    },
-    {
-      "from_id": "A006",
-      "to_id": "P001",
-      "from_type": "activity",
-      "to_type": "pressure",
-      "polarity": "+",
-      "strength": "weak",
-      "confidence": 3,
-      "description": "Octopus pot fishing has a negligible direct effect on sea urchin overgrazing. While octopus prey on urchins, pot fishing selectivity and catch levels are insufficient to release significant predation pressure on urchin populations."
     },
     {
       "from_id": "P004",
@@ -607,16 +549,6 @@
       "description": "Connection added to complete DAPSI(W)R(M) chain for Scientific and educational value"
     },
     {
-      "from_id": "GB003",
-      "to_id": "D001",
-      "from_type": "welfare",
-      "to_type": "driver",
-      "polarity": "+",
-      "strength": "medium",
-      "confidence": 3,
-      "description": "Connection added to complete DAPSI(W)R(M) chain for Seafood quality and gastronomic heritage"
-    },
-    {
       "from_id": "R003",
       "to_id": "P001",
       "from_type": "response",
@@ -637,14 +569,34 @@
       "description": "Connection added to complete DAPSI(W)R(M) chain for Lost fishing gear retrieval programmes"
     },
     {
-      "from_id": "D002",
-      "to_id": "A001",
-      "from_type": "driver",
-      "to_type": "activity",
+      "from_id": "GB001",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
       "polarity": "+",
-      "strength": "weak",
+      "strength": "medium",
       "confidence": 3,
-      "description": "Diving tourism demand does not drive artisanal fishing activity. These activities may compete for coastal space, particularly in MPAs. Structural bridge connection without ecological mechanism."
+      "description": "Artisanal fisher income and cultural continuity reinforces Artisanal fishing tradition and cultural demand"
+    },
+    {
+      "from_id": "GB002",
+      "to_id": "D002",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Dive centre and marine tourism revenue reinforces Diving tourism and underwater recreation"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D003",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Seafood quality and gastronomic heritage reinforces Sea urchin and shellfish harvesting demand"
     }
   ]
 }

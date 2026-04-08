@@ -105,10 +105,6 @@
         {
           "name": "Round goby and Chinese mitten crab (Neogobius melanostomus, Eriocheir sinensis) invasion",
           "relevance": 0.75
-        },
-        {
-          "name": "Zostera marina (eelgrass/seagrass) bed extent and condition",
-          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -907,10 +903,6 @@
         {
           "name": "Estuarine salinity gradient and mixing zone dynamics",
           "relevance": 0.85
-        },
-        {
-          "name": "Zostera marina (eelgrass/seagrass) meadow coverage in brackish estuarine waters",
-          "relevance": 0.7
         }
       ],
       "impacts": [
@@ -1684,10 +1676,6 @@
         {
           "name": "Deep-water hypoxia (dead zones)",
           "relevance": 0.95
-        },
-        {
-          "name": "Zostera marina (seagrass) distribution in nearshore subtidal zones",
-          "relevance": 0.6
         }
       ],
       "impacts": [
@@ -3245,7 +3233,7 @@
           "relevance": 0.8
         },
         {
-          "name": "Seagrass (Zostera noltei, Cymodocea) presence",
+          "name": "Cymodocea nodosa and Zostera noltei seagrass coverage in lagoon",
           "relevance": 0.75
         },
         {
@@ -3258,10 +3246,6 @@
         },
         {
           "name": "Invasive Manila clam (Ruditapes philippinarum) spread",
-          "relevance": 0.7
-        },
-        {
-          "name": "Cymodocea nodosa and Zostera noltei seagrass coverage in lagoon, with Posidonia oceanica at lagoon-sea connections",
           "relevance": 0.7
         }
       ],
