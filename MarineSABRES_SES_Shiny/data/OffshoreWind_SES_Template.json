@@ -1,259 +1,618 @@
 {
-  "template_info": {
-    "name": "Offshore Wind Parks",
-    "description": "Offshore wind energy development with environmental and socio-economic impacts",
-    "category": "Energy",
-    "version": "1.0",
-    "created": "2025-11-17"
-  },
+  "template_name": "Offshore Wind Energy SES Template",
+  "template_description": "Social-ecological system template for offshore wind energy development, covering construction and operation pressures on marine ecosystems, energy production benefits, and spatial planning responses.",
   "complexity": "complex",
-  "elements": {
+  "regional_context": {
+    "regional_sea": "north_sea",
+    "habitat": "offshore",
+    "main_issues": [
+      "offshore wind energy ses template"
+    ]
+  },
+  "metadata": {
+    "created_date": "2026-04-08",
+    "version": "2.0",
+    "source": "Rebuilt from ses_knowledge_db.json context: north_sea_offshore",
+    "applicable_regions": [
+      "north_sea"
+    ]
+  },
+  "dapsiwrm_framework": {
     "drivers": [
       {
         "id": "D001",
-        "name": "Energy Demand",
-        "description": "Electricity consumption growth",
-        "type": "Driver"
+        "name": "Offshore wind energy policy targets (EU, UK)",
+        "type": "Driver",
+        "description": "Offshore wind energy policy targets (EU, UK)"
       },
       {
         "id": "D002",
-        "name": "Climate Policy",
-        "description": "Renewable energy targets",
-        "type": "Driver"
+        "name": "Oil and gas production demand (declining)",
+        "type": "Driver",
+        "description": "Oil and gas production demand (declining)"
       },
       {
         "id": "D003",
-        "name": "Economic Development",
-        "description": "Regional economic growth",
-        "type": "Driver"
+        "name": "Sand and gravel resource demand for construction",
+        "type": "Driver",
+        "description": "Sand and gravel resource demand for construction"
+      },
+      {
+        "id": "D004",
+        "name": "Industrial-scale fisheries demand (sandeel, herring)",
+        "type": "Driver",
+        "description": "Industrial-scale fisheries demand (sandeel, herring)"
+      },
+      {
+        "id": "D005",
+        "name": "International shipping and trade growth",
+        "type": "Driver",
+        "description": "International shipping and trade growth"
       }
     ],
     "activities": [
       {
         "id": "A001",
-        "name": "Wind Farm Construction",
-        "description": "Installation of turbines and infrastructure",
-        "type": "Activity"
+        "name": "Offshore wind farm construction (monopile, jacket)",
+        "type": "Activity",
+        "description": "Offshore wind farm construction (monopile, jacket)"
       },
       {
         "id": "A002",
-        "name": "Wind Farm Operation",
-        "description": "Energy generation and maintenance",
-        "type": "Activity"
+        "name": "Oil and gas platform operation and decommissioning",
+        "type": "Activity",
+        "description": "Oil and gas platform operation and decommissioning"
       },
       {
         "id": "A003",
-        "name": "Service Vessel Traffic",
-        "description": "Supply and maintenance vessel operations",
-        "type": "Activity"
+        "name": "Sandeel industrial fishery",
+        "type": "Activity",
+        "description": "Sandeel industrial fishery"
+      },
+      {
+        "id": "A004",
+        "name": "Beam trawling for flatfish (sole, plaice)",
+        "type": "Activity",
+        "description": "Beam trawling for flatfish (sole, plaice)"
+      },
+      {
+        "id": "A005",
+        "name": "Marine aggregate (sand/gravel) dredging",
+        "type": "Activity",
+        "description": "Marine aggregate (sand/gravel) dredging"
+      },
+      {
+        "id": "A006",
+        "name": "Container and tanker shipping traffic",
+        "type": "Activity",
+        "description": "Container and tanker shipping traffic"
       }
     ],
     "pressures": [
       {
         "id": "P001",
-        "name": "Habitat Alteration",
-        "description": "Seabed disturbance and reef effects",
-        "type": "Pressure"
+        "name": "Seabed habitat loss from wind farm foundations",
+        "type": "Pressure",
+        "description": "Seabed habitat loss from wind farm foundations"
       },
       {
         "id": "P002",
-        "name": "Underwater Noise",
-        "description": "Construction and operational noise",
-        "type": "Pressure"
+        "name": "Underwater noise from pile-driving",
+        "type": "Pressure",
+        "description": "Underwater noise from pile-driving"
       },
       {
         "id": "P003",
-        "name": "Electromagnetic Fields",
-        "description": "Cable electromagnetic emissions",
-        "type": "Pressure"
+        "name": "Sandeel stock depletion affecting seabirds",
+        "type": "Pressure",
+        "description": "Sandeel stock depletion affecting seabirds"
       },
       {
         "id": "P004",
-        "name": "Collision Risk",
-        "description": "Bird and bat collisions with turbines",
-        "type": "Pressure"
+        "name": "Chronic hydrocarbon contamination from platforms",
+        "type": "Pressure",
+        "description": "Chronic hydrocarbon contamination from platforms"
+      },
+      {
+        "id": "P005",
+        "name": "Seabed disturbance from beam trawling",
+        "type": "Pressure",
+        "description": "Seabed disturbance from beam trawling"
+      },
+      {
+        "id": "P006",
+        "name": "Ship-strike and collision risk for marine mammals",
+        "type": "Pressure",
+        "description": "Ship-strike and collision risk for marine mammals"
       }
     ],
     "marine_processes": [
       {
         "id": "MPF001",
-        "name": "Benthic Community Change",
-        "description": "Benthic species composition",
+        "name": "Sandeel stock abundance and distribution",
         "type": "State Change",
-        "pressures": ["P001"]
+        "description": "Sandeel stock abundance and distribution"
       },
       {
         "id": "MPF002",
-        "name": "Marine Mammal Behavior",
-        "description": "Marine mammal distribution and behavior",
+        "name": "Seabird breeding success (kittiwake, puffin, tern)",
         "type": "State Change",
-        "pressures": ["P002", "P003"]
+        "description": "Seabird breeding success (kittiwake, puffin, tern)"
       },
       {
         "id": "MPF003",
-        "name": "Seabird Population Dynamics",
-        "description": "Seabird abundance and breeding success",
+        "name": "Harbour porpoise and minke whale abundance",
         "type": "State Change",
-        "pressures": ["P002", "P004"]
+        "description": "Harbour porpoise and minke whale abundance"
+      },
+      {
+        "id": "MPF004",
+        "name": "Benthic community recovery around wind farms",
+        "type": "State Change",
+        "description": "Benthic community recovery around wind farms"
+      },
+      {
+        "id": "MPF005",
+        "name": "North Sea herring stock biomass",
+        "type": "State Change",
+        "description": "North Sea herring stock biomass"
+      },
+      {
+        "id": "MPF006",
+        "name": "Seabird population sustainability",
+        "type": "State Change",
+        "description": "Seabird population sustainability"
       }
     ],
     "ecosystem_services": [
       {
         "id": "ES001",
-        "name": "Renewable Energy Production",
-        "description": "Clean electricity generation",
+        "name": "Fish stock provisioning for human consumption",
         "type": "Provisioning",
-        "marine_processes": ["MPF001"]
+        "description": "Fish stock provisioning for human consumption"
       },
       {
         "id": "ES002",
-        "name": "Commercial Fisheries",
-        "description": "Fish catch potential",
+        "name": "Seabird conservation value (public concern)",
         "type": "Provisioning",
-        "marine_processes": ["MPF001", "MPF002", "MPF003"]
-      },
-      {
-        "id": "ES003",
-        "name": "Marine Biodiversity",
-        "description": "Marine species diversity",
-        "type": "Supporting",
-        "marine_processes": ["MPF001", "MPF002", "MPF003"]
+        "description": "Seabird conservation value (public concern)"
       }
     ],
-    "welfare": [
+    "goods_benefits": [
       {
         "id": "GB001",
-        "name": "Energy Security",
-        "description": "Reliable renewable energy supply",
+        "name": "Fishing industry employment and revenue",
         "type": "Welfare",
-        "ecosystem_services": ["ES001"]
+        "description": "Fishing industry employment and revenue"
       },
       {
         "id": "GB002",
-        "name": "Fishery Livelihoods",
-        "description": "Fishing income and employment",
+        "name": "Energy security and carbon reduction benefits",
         "type": "Welfare",
-        "ecosystem_services": ["ES002"]
+        "description": "Energy security and carbon reduction benefits"
       },
       {
         "id": "GB003",
-        "name": "Environmental Quality",
-        "description": "Marine ecosystem health status",
+        "name": "Decommissioning cost burden (oil sector)",
         "type": "Welfare",
-        "ecosystem_services": ["ES003"]
+        "description": "Decommissioning cost burden (oil sector)"
+      },
+      {
+        "id": "GB004",
+        "name": "Renewable energy generation capacity",
+        "type": "Welfare",
+        "description": "Renewable energy generation capacity"
+      },
+      {
+        "id": "GB005",
+        "name": "Shipping and trade route services",
+        "type": "Welfare",
+        "description": "Shipping and trade route services"
       }
     ],
     "responses": [
       {
         "id": "R001",
-        "name": "Spatial Planning Zones",
-        "description": "Exclusion zones for sensitive areas",
-        "type": "Planning",
-        "stakeholder": "Maritime Authority",
-        "targets": ["A001", "A002", "A003", "P001", "P002", "P004"]
+        "name": "Sandeel fishery closure zones (UK, Denmark)",
+        "type": "Response",
+        "description": "Sandeel fishery closure zones (UK, Denmark)"
       },
       {
         "id": "R002",
-        "name": "Environmental Monitoring",
-        "description": "Pre- and post-construction monitoring programs",
-        "type": "Monitoring",
-        "stakeholder": "Environmental Agency",
-        "targets": ["MPF001", "MPF002", "MPF003"]
+        "name": "Maritime spatial planning (North Sea)",
+        "type": "Response",
+        "description": "Maritime spatial planning (North Sea)"
       },
       {
         "id": "R003",
-        "name": "Mitigation Measures",
-        "description": "Noise reduction and collision prevention technologies",
-        "type": "Technical",
-        "stakeholder": "Wind Energy Operator",
-        "targets": ["A001", "A002", "P001", "P002", "P003", "P004"]
+        "name": "Underwater noise mitigation requirements (bubble curtains)",
+        "type": "Response",
+        "description": "Underwater noise mitigation requirements (bubble curtains)"
       },
       {
         "id": "R004",
-        "name": "Compensation Programs",
-        "description": "Fishery compensation and habitat restoration",
-        "type": "Economic",
-        "stakeholder": "Wind Energy Operator",
-        "targets": ["GB002", "ES002"]
+        "name": "OSPAR regional action plans for marine litter",
+        "type": "Response",
+        "description": "OSPAR regional action plans for marine litter"
+      },
+      {
+        "id": "R005",
+        "name": "Platform decommissioning regulations",
+        "type": "Response",
+        "description": "Platform decommissioning regulations"
       }
     ]
   },
   "connections": [
-    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Energy Demand drives Wind Farm Construction"},
-    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Energy Demand drives Wind Farm Operation"},
-    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Energy Demand drives Service Vessel Traffic"},
-    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Climate Policy drives Wind Farm Construction"},
-    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Climate Policy drives Wind Farm Operation"},
-    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A003", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Climate Policy drives Service Vessel Traffic"},
-    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Economic Development drives Wind Farm Construction"},
-    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Economic Development drives Wind Farm Operation"},
-    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Economic Development drives Service Vessel Traffic"},
-    
-    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Wind Farm Construction creates Habitat Alteration"},
-    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Wind Farm Construction creates Underwater Noise"},
-    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Wind Farm Construction creates Electromagnetic Fields"},
-    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Wind Farm Operation creates Underwater Noise"},
-    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Wind Farm Operation creates Electromagnetic Fields"},
-    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P004", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Wind Farm Operation creates Collision Risk"},
-    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Service Vessel Traffic creates Habitat Alteration"},
-    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Service Vessel Traffic creates Underwater Noise"},
-    
-    {"from_type": "Pressure", "from_id": "P001", "to_type": "MarineProcess", "to_id": "MPF001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Habitat Alteration causes Benthic Community Change"},
-    {"from_type": "Pressure", "from_id": "P002", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Underwater Noise affects Marine Mammal Behavior"},
-    {"from_type": "Pressure", "from_id": "P002", "to_type": "MarineProcess", "to_id": "MPF003", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Underwater Noise affects Seabird Population Dynamics"},
-    {"from_type": "Pressure", "from_id": "P003", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Electromagnetic Fields affect Marine Mammal Behavior"},
-    {"from_type": "Pressure", "from_id": "P004", "to_type": "MarineProcess", "to_id": "MPF003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Collision Risk affects Seabird Population Dynamics"},
-    
-    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Benthic Community Change supports Renewable Energy Production (reef effect)"},
-    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Benthic Community Change affects Commercial Fisheries"},
-    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Benthic Community Change affects Marine Biodiversity"},
-    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Marine Mammal Behavior change affects Commercial Fisheries"},
-    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Marine Mammal Behavior change affects Marine Biodiversity"},
-    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Seabird Population Dynamics affect Commercial Fisheries"},
-    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Seabird Population Dynamics affect Marine Biodiversity"},
-    
-    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Renewable Energy Production supports Energy Security"},
-    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Renewable Energy Production supports Environmental Quality"},
-    {"from_type": "EcosystemService", "from_id": "ES002", "to_type": "Welfare", "to_id": "GB002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Commercial Fisheries support Fishery Livelihoods"},
-    {"from_type": "EcosystemService", "from_id": "ES002", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Commercial Fisheries support Environmental Quality"},
-    {"from_type": "EcosystemService", "from_id": "ES003", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Marine Biodiversity supports Environmental Quality"},
-    
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Energy Security feedback to Energy Demand"},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Energy Security feedback to Climate Policy"},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Energy Security feedback to Economic Development"},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Fishery Livelihoods feedback to Economic Development"},
-    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Environmental Quality feedback to Climate Policy"},
-    
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Energy Security concerns trigger Spatial Planning Zones"},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Energy Security concerns trigger Environmental Monitoring"},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Energy Security concerns trigger Mitigation Measures"},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Energy Security concerns trigger Compensation Programs"},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Fishery Livelihoods impacts trigger Spatial Planning Zones"},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Fishery Livelihoods impacts trigger Environmental Monitoring"},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Fishery Livelihoods impacts trigger Mitigation Measures"},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Fishery Livelihoods impacts trigger Compensation Programs"},
-    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Environmental Quality concerns trigger Spatial Planning Zones"},
-    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Environmental Quality concerns trigger Environmental Monitoring"},
-    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Environmental Quality concerns trigger Mitigation Measures"},
-    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Environmental Quality concerns trigger Compensation Programs"},
-    
-    {"from_type": "Response", "from_id": "R001", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Spatial Planning Zones support Climate Policy"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Mitigation Measures support Climate Policy"},
-    {"from_type": "Response", "from_id": "R004", "to_type": "Driver", "to_id": "D003", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Compensation Programs affect Economic Development"},
-    
-    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Spatial Planning Zones restrict Wind Farm Construction"},
-    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Spatial Planning Zones restrict Wind Farm Operation"},
-    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Spatial Planning Zones restrict Service Vessel Traffic"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Mitigation Measures constrain Wind Farm Construction"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Mitigation Measures constrain Wind Farm Operation"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Mitigation Measures constrain Service Vessel Traffic"},
-    
-    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Spatial Planning Zones reduce Habitat Alteration"},
-    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Spatial Planning Zones reduce Underwater Noise"},
-    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P004", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Spatial Planning Zones reduce Collision Risk"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Mitigation Measures reduce Habitat Alteration"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Mitigation Measures reduce Underwater Noise"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P003", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Mitigation Measures reduce Electromagnetic Fields"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P004", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Mitigation Measures reduce Collision Risk"}
+    {
+      "from_id": "D001",
+      "to_id": "A001",
+      "from_type": "driver",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Government targets directly drive massive investment in offshore wind construction"
+    },
+    {
+      "from_id": "A001",
+      "to_id": "P002",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Monopile installation generates high-intensity impulsive noise harmful to cetaceans"
+    },
+    {
+      "from_id": "A003",
+      "to_id": "P003",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Industrial sandeel fishing reduces prey availability for surface-feeding seabirds. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience"
+    },
+    {
+      "from_id": "P003",
+      "to_id": "MPF002",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "-",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Sandeel shortage causes chick starvation and breeding failure in kittiwakes and puffins"
+    },
+    {
+      "from_id": "P003",
+      "to_id": "MPF001",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "-",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Overfishing directly reduces sandeel biomass in the North Sea. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience"
+    },
+    {
+      "from_id": "P002",
+      "to_id": "MPF003",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Pile-driving noise causes harbour porpoise displacement and potential hearing damage"
+    },
+    {
+      "from_id": "A004",
+      "to_id": "P005",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Beam trawls physically scrape and flatten seabed habitats. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features (e"
+    },
+    {
+      "from_id": "MPF001",
+      "to_id": "ES001",
+      "from_type": "state",
+      "to_type": "impact",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Sandeel abundance supports both direct fishery and prey base for commercial fish. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience"
+    },
+    {
+      "from_id": "R001",
+      "to_id": "P003",
+      "from_type": "response",
+      "to_type": "pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Closure zones protect sandeel spawning and feeding areas from fishing mortality. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience"
+    },
+    {
+      "from_id": "R003",
+      "to_id": "P002",
+      "from_type": "response",
+      "to_type": "pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Bubble curtains reduce noise propagation during pile-driving by 10-20 dB. The negative feedback reflects a trade-off or antagonistic interaction where increases in the source variable suppress or reduce the target through competitive exclusion, resource limitation, or regulatory mechanisms"
+    },
+    {
+      "from_id": "D004",
+      "to_id": "A003",
+      "from_type": "driver",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Industrial demand for fishmeal and fish oil drives sandeel fishery targeting and catch volumes"
+    },
+    {
+      "from_id": "P001",
+      "to_id": "P005",
+      "from_type": "pressure",
+      "to_type": "pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Wind farm exclusion zones preventing beam trawling is well-documented in North Sea. Multiple studies confirm fisheries displacement from wind farm areas. Confidence raised from 3 to 4."
+    },
+    {
+      "from_id": "MPF001",
+      "to_id": "MPF002",
+      "from_type": "state",
+      "to_type": "state",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Sandeel availability is the critical prey resource determining breeding success for most North Sea seabird colonies"
+    },
+    {
+      "from_id": "ES001",
+      "to_id": "GB001",
+      "from_type": "impact",
+      "to_type": "welfare",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Fish stock productivity directly determines fishing fleet revenue and coastal community employment. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience"
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "D004",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Fishing industry employment sustains political lobby for maintaining industrial-scale fishery access and quotas"
+    },
+    {
+      "from_id": "R001",
+      "to_id": "A003",
+      "from_type": "response",
+      "to_type": "activity",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Spatial closure zones directly exclude sandeel fishing from key areas, reducing total industrial catch"
+    },
+    {
+      "from_id": "R002",
+      "to_id": "A004",
+      "from_type": "response",
+      "to_type": "activity",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Maritime spatial planning designates areas for wind energy and nature protection that exclude beam trawling"
+    },
+    {
+      "from_id": "D002",
+      "to_id": "A001",
+      "from_type": "driver",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Oil and gas production demand (declining)"
+    },
+    {
+      "from_id": "D003",
+      "to_id": "A001",
+      "from_type": "driver",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Sand and gravel resource demand for construction"
+    },
+    {
+      "from_id": "D005",
+      "to_id": "A001",
+      "from_type": "driver",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for International shipping and trade growth"
+    },
+    {
+      "from_id": "A002",
+      "to_id": "P001",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Oil and gas platform operation and decommissioning"
+    },
+    {
+      "from_id": "A005",
+      "to_id": "P001",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Marine aggregate (sand/gravel) dredging"
+    },
+    {
+      "from_id": "A006",
+      "to_id": "P001",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Container and tanker shipping traffic"
+    },
+    {
+      "from_id": "P004",
+      "to_id": "MPF001",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Chronic hydrocarbon contamination from oil/gas platforms harms sandeel through toxic effects on eggs, larvae, and prey organisms. Polarity corrected from + to - (contamination reduces, not increases, sandeel abundance)."
+    },
+    {
+      "from_id": "P006",
+      "to_id": "MPF001",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 1,
+      "description": "Ship-strike and collision risk primarily affects marine mammals and is not a meaningful pressure on sandeel stocks. No direct causal pathway. Strength to weak, confidence to 1."
+    },
+    {
+      "from_id": "MPF004",
+      "to_id": "ES001",
+      "from_type": "state",
+      "to_type": "impact",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Benthic community recovery around wind farms. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features (e"
+    },
+    {
+      "from_id": "MPF005",
+      "to_id": "ES001",
+      "from_type": "state",
+      "to_type": "impact",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for North Sea herring stock biomass. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience"
+    },
+    {
+      "from_id": "MPF006",
+      "to_id": "ES001",
+      "from_type": "state",
+      "to_type": "impact",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Seabird population sustainability. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience"
+    },
+    {
+      "from_id": "ES002",
+      "to_id": "GB001",
+      "from_type": "impact",
+      "to_type": "welfare",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Seabird conservation value (public concern)"
+    },
+    {
+      "from_id": "GB002",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Energy security and carbon reduction benefits"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Decommissioning cost burden (oil sector)"
+    },
+    {
+      "from_id": "GB004",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Renewable energy generation capacity"
+    },
+    {
+      "from_id": "GB005",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Shipping and trade route services"
+    },
+    {
+      "from_id": "R004",
+      "to_id": "P001",
+      "from_type": "response",
+      "to_type": "pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for OSPAR regional action plans for marine litter"
+    },
+    {
+      "from_id": "R005",
+      "to_id": "P001",
+      "from_type": "response",
+      "to_type": "pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Platform decommissioning regulations"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D004",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
+    },
+    {
+      "from_id": "A004",
+      "to_id": "P004",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 3,
+      "description": "Beam trawling does not produce hydrocarbon contamination. While trawling may resuspend contaminated sediments near platforms, it is not a source of hydrocarbons. Strength and confidence reduced."
+    }
   ]
 }

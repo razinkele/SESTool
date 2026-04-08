@@ -1,293 +1,604 @@
 {
-  "template_name": "Climate Change Impacts on Marine Ecosystems",
-  "template_description": "Template for analyzing climate change effects on marine ecosystems including ocean warming, acidification, sea level rise, and storm impacts",
-  "complexity": "complex",
+  "template_name": "Climate Change Marine SES Template",
+  "template_description": "Social-ecological system template for climate change impacts on marine ecosystems, covering warming, acidification, sea level rise, species distribution shifts, and adaptation responses.",
+  "complexity": "simple",
   "regional_context": {
-    "region": "Generic marine/coastal",
-    "ecosystem_types": ["Marine ecosystems", "Coral reefs", "Coastal zones"],
-    "main_issues": ["Ocean warming", "Ocean acidification", "Sea level rise", "Extreme weather"]
+    "regional_sea": "arctic",
+    "habitat": "sea_ice",
+    "main_issues": [
+      "climate change marine ses template"
+    ]
   },
   "metadata": {
-    "created_date": "2025-11-17",
-    "version": "1.0",
-    "source": "Standard climate change impacts scenario template",
-    "applicable_regions": ["Global - adaptable to any climate-affected marine system"]
+    "created_date": "2026-04-08",
+    "version": "2.0",
+    "source": "Rebuilt from ses_knowledge_db.json context: arctic_sea_ice",
+    "applicable_regions": [
+      "arctic"
+    ]
   },
   "dapsiwrm_framework": {
     "drivers": [
       {
         "id": "D001",
-        "name": "Greenhouse Gas Emissions",
-        "description": "CO2 emissions",
-        "category": "Climate",
-        "intensity": "Very High"
+        "name": "Arctic shipping route economic viability",
+        "type": "Driver",
+        "description": "Arctic shipping route economic viability"
       },
       {
         "id": "D002",
-        "name": "Land Use Change",
-        "description": "Deforestation rate",
-        "category": "Land use",
-        "intensity": "High"
+        "name": "Hydrocarbon and mineral resource exploration",
+        "type": "Driver",
+        "description": "Hydrocarbon and mineral resource exploration"
       },
       {
         "id": "D003",
-        "name": "Energy Consumption",
-        "description": "Energy use",
-        "category": "Energy",
-        "intensity": "Very High"
+        "name": "Indigenous community food sovereignty",
+        "type": "Driver",
+        "description": "Indigenous community food sovereignty"
+      },
+      {
+        "id": "D004",
+        "name": "Scientific research and monitoring demand",
+        "type": "Driver",
+        "description": "Scientific research and monitoring demand"
+      },
+      {
+        "id": "D005",
+        "name": "Climate change adaptation needs",
+        "type": "Driver",
+        "description": "Climate change adaptation needs"
       }
     ],
     "activities": [
       {
         "id": "A001",
-        "name": "Fossil Fuel Use",
-        "description": "Fuel consumption",
-        "sector": "Energy",
-        "scale": "Global",
-        "drivers": ["D001", "D003"]
+        "name": "Northern Sea Route commercial shipping",
+        "type": "Activity",
+        "description": "Northern Sea Route commercial shipping"
       },
       {
         "id": "A002",
-        "name": "Industrial Production",
-        "description": "Production output",
-        "sector": "Industry",
-        "scale": "Large-scale",
-        "drivers": ["D002", "D003"]
+        "name": "Indigenous subsistence hunting (seal, walrus, whale)",
+        "type": "Activity",
+        "description": "Indigenous subsistence hunting (seal, walrus, whale)"
       },
       {
         "id": "A003",
-        "name": "Transportation",
-        "description": "Vehicle-km",
-        "sector": "Transport",
-        "scale": "Large-scale",
-        "drivers": ["D003"]
+        "name": "Arctic oil and gas seismic exploration",
+        "type": "Activity",
+        "description": "Arctic oil and gas seismic exploration"
+      },
+      {
+        "id": "A004",
+        "name": "Polar expedition cruise tourism",
+        "type": "Activity",
+        "description": "Polar expedition cruise tourism"
+      },
+      {
+        "id": "A005",
+        "name": "Ice-edge fisheries (Arctic cod, polar cod)",
+        "type": "Activity",
+        "description": "Ice-edge fisheries (Arctic cod, polar cod)"
+      },
+      {
+        "id": "A006",
+        "name": "Climate and sea ice monitoring research",
+        "type": "Activity",
+        "description": "Climate and sea ice monitoring research"
       }
     ],
     "pressures": [
       {
         "id": "P001",
-        "name": "Ocean Warming",
-        "description": "Sea surface temperature",
-        "type": "External",
-        "intensity": "High",
-        "activities": ["A001", "A002", "A003"]
+        "name": "Accelerating sea ice extent and thickness loss",
+        "type": "Pressure",
+        "description": "Accelerating sea ice extent and thickness loss"
       },
       {
         "id": "P002",
-        "name": "Ocean Acidification",
-        "description": "pH level",
-        "type": "External",
-        "intensity": "High",
-        "activities": ["A001", "A002", "A003"]
+        "name": "Earlier spring ice breakup disrupting breeding cycles",
+        "type": "Pressure",
+        "description": "Earlier spring ice breakup disrupting breeding cycles"
       },
       {
         "id": "P003",
-        "name": "Sea Level Rise",
-        "description": "Sea level change",
-        "type": "External",
-        "intensity": "Medium",
-        "activities": ["A001", "A002", "A003"]
+        "name": "Oil spill risk in ice-covered waters",
+        "type": "Pressure",
+        "description": "Oil spill risk in ice-covered waters"
       },
       {
         "id": "P004",
-        "name": "Storm Intensity",
-        "description": "Storm frequency",
-        "type": "External",
-        "intensity": "Medium",
-        "activities": ["A001", "A003"]
+        "name": "Underwater noise from increased shipping",
+        "type": "Pressure",
+        "description": "Underwater noise from increased shipping"
+      },
+      {
+        "id": "P005",
+        "name": "Black carbon deposition accelerating ice melt",
+        "type": "Pressure",
+        "description": "Black carbon deposition accelerating ice melt"
+      },
+      {
+        "id": "P006",
+        "name": "Climate change and ocean warming",
+        "type": "Pressure",
+        "description": "Climate change and ocean warming"
+      },
+      {
+        "id": "P007",
+        "name": "Global greenhouse gas emissions",
+        "type": "Pressure",
+        "description": "Global greenhouse gas emissions"
       }
     ],
     "marine_processes": [
       {
         "id": "MPF001",
-        "name": "Species Distribution Shifts",
-        "description": "Range shift distance",
+        "name": "Polar bear population and body condition",
         "type": "State Change",
-        "pressures": ["P001"]
+        "description": "Polar bear population and body condition"
       },
       {
         "id": "MPF002",
-        "name": "Coral Bleaching",
-        "description": "Bleaching extent",
+        "name": "Ringed seal and bearded seal abundance",
         "type": "State Change",
-        "pressures": ["P002"]
+        "description": "Ringed seal and bearded seal abundance"
       },
       {
         "id": "MPF003",
-        "name": "Coastal Erosion",
-        "description": "Erosion rate",
+        "name": "Ice algae and under-ice primary production",
         "type": "State Change",
-        "pressures": ["P003", "P004"]
+        "description": "Ice algae and under-ice primary production"
+      },
+      {
+        "id": "MPF004",
+        "name": "Narwhal and bowhead whale habitat availability",
+        "type": "State Change",
+        "description": "Narwhal and bowhead whale habitat availability"
+      },
+      {
+        "id": "MPF005",
+        "name": "Multi-year ice coverage (critical habitat)",
+        "type": "State Change",
+        "description": "Multi-year ice coverage (critical habitat)"
       }
     ],
     "ecosystem_services": [
       {
         "id": "ES001",
-        "name": "Climate Regulation",
-        "description": "Carbon sequestration",
-        "type": "Regulating",
-        "marine_processes": ["MPF001", "MPF002", "MPF003"]
+        "name": "Indigenous marine mammal harvest provision",
+        "type": "Provisioning",
+        "description": "Indigenous marine mammal harvest provision"
       },
       {
         "id": "ES002",
-        "name": "Coastal Protection",
-        "description": "Storm protection",
-        "type": "Regulating",
-        "marine_processes": ["MPF002", "MPF003"]
+        "name": "Arctic climate regulation (ice-albedo feedback)",
+        "type": "Provisioning",
+        "description": "Arctic climate regulation (ice-albedo feedback)"
       },
       {
         "id": "ES003",
-        "name": "Biodiversity",
-        "description": "Species richness",
-        "type": "Supporting",
-        "marine_processes": ["MPF001", "MPF002", "MPF003"]
+        "name": "Polar ecosystem biodiversity maintenance",
+        "type": "Provisioning",
+        "description": "Polar ecosystem biodiversity maintenance"
+      },
+      {
+        "id": "ES004",
+        "name": "Global climate stability benefit",
+        "type": "Provisioning",
+        "description": "Global climate stability benefit"
       }
     ],
-    "welfare": [
+    "goods_benefits": [
       {
         "id": "GB001",
-        "name": "Climate Stability",
-        "description": "Temperature stability",
+        "name": "Inuit and indigenous community food security",
         "type": "Welfare",
-        "ecosystem_services": ["ES001", "ES003"]
+        "description": "Inuit and indigenous community food security"
       },
       {
         "id": "GB002",
-        "name": "Coastal Safety",
-        "description": "Flood risk",
+        "name": "Cultural continuity of ice-based livelihoods",
         "type": "Welfare",
-        "ecosystem_services": ["ES002"]
+        "description": "Cultural continuity of ice-based livelihoods"
       },
       {
         "id": "GB003",
-        "name": "Ecosystem Resilience",
-        "description": "Resilience index",
+        "name": "Arctic shipping cost savings vs. Suez route",
         "type": "Welfare",
-        "ecosystem_services": ["ES001", "ES002", "ES003"]
+        "description": "Arctic shipping cost savings vs. Suez route"
+      },
+      {
+        "id": "GB004",
+        "name": "Shipping route accessibility in summer",
+        "type": "Welfare",
+        "description": "Shipping route accessibility in summer"
       }
     ],
     "responses": [
       {
         "id": "R001",
-        "name": "Carbon Pricing Policies",
-        "description": "Market-based mechanisms to reduce greenhouse gas emissions",
-        "type": "Economic",
-        "stakeholder": "Climate Ministry",
-        "targets": ["A001", "D001", "P001"]
+        "name": "IMO Polar Code for Arctic shipping",
+        "type": "Response",
+        "description": "IMO Polar Code for Arctic shipping"
       },
       {
         "id": "R002",
-        "name": "Renewable Energy Targets",
-        "description": "Mandates and incentives for renewable energy adoption",
-        "type": "Policy",
-        "stakeholder": "Energy Ministry",
-        "targets": ["A001", "D003", "P001"]
+        "name": "Arctic oil exploration moratoriums",
+        "type": "Response",
+        "description": "Arctic oil exploration moratoriums"
       },
       {
         "id": "R003",
-        "name": "Energy Efficiency Standards",
-        "description": "Regulations requiring energy-efficient technologies and practices",
-        "type": "Regulatory",
-        "stakeholder": "Energy Authority",
-        "targets": ["A002", "A003", "D003", "P001"]
+        "name": "Indigenous co-management of marine resources",
+        "type": "Response",
+        "description": "Indigenous co-management of marine resources"
       },
       {
         "id": "R004",
-        "name": "Coastal Adaptation Plans",
-        "description": "Strategies for adapting coastal infrastructure to climate impacts",
-        "type": "Planning",
-        "stakeholder": "Coastal Management",
-        "targets": ["P003", "MPF003"]
+        "name": "Arctic Council conservation measures",
+        "type": "Response",
+        "description": "Arctic Council conservation measures"
       },
       {
         "id": "R005",
-        "name": "Nature-Based Solutions",
-        "description": "Ecosystem restoration and conservation for climate resilience",
-        "type": "Conservation",
-        "stakeholder": "Environmental Agency",
-        "targets": ["P002", "P003", "P004", "MPF001", "MPF002", "MPF003"]
+        "name": "Black carbon emission reduction agreements",
+        "type": "Response",
+        "description": "Black carbon emission reduction agreements"
       }
     ]
   },
   "connections": [
-    {"from_type": "Driver", "from_id": "D001", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 5},
-    {"from_type": "Driver", "from_id": "D002", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "strong", "confidence": 4},
-    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A001", "polarity": "+", "strength": "strong", "confidence": 5},
-    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A002", "polarity": "+", "strength": "medium", "confidence": 4},
-    {"from_type": "Driver", "from_id": "D003", "to_type": "Activity", "to_id": "A003", "polarity": "+", "strength": "strong", "confidence": 5},
-    
-    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "strong", "confidence": 5},
-    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "strong", "confidence": 5},
-    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "medium", "confidence": 4},
-    {"from_type": "Activity", "from_id": "A001", "to_type": "Pressure", "to_id": "P004", "polarity": "+", "strength": "weak", "confidence": 3},
-    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "weak", "confidence": 3},
-    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "medium", "confidence": 4},
-    {"from_type": "Activity", "from_id": "A002", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "weak", "confidence": 3},
-    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P001", "polarity": "+", "strength": "medium", "confidence": 4},
-    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P002", "polarity": "+", "strength": "weak", "confidence": 3},
-    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P003", "polarity": "+", "strength": "weak", "confidence": 3},
-    {"from_type": "Activity", "from_id": "A003", "to_type": "Pressure", "to_id": "P004", "polarity": "+", "strength": "weak", "confidence": 3},
-    
-    {"from_type": "Pressure", "from_id": "P001", "to_type": "MarineProcess", "to_id": "MPF001", "polarity": "-", "strength": "strong", "confidence": 5},
-    {"from_type": "Pressure", "from_id": "P002", "to_type": "MarineProcess", "to_id": "MPF002", "polarity": "-", "strength": "strong", "confidence": 5},
-    {"from_type": "Pressure", "from_id": "P003", "to_type": "MarineProcess", "to_id": "MPF003", "polarity": "-", "strength": "strong", "confidence": 5},
-    {"from_type": "Pressure", "from_id": "P004", "to_type": "MarineProcess", "to_id": "MPF003", "polarity": "-", "strength": "medium", "confidence": 4},
-    
-    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "weak", "confidence": 3},
-    {"from_type": "MarineProcess", "from_id": "MPF001", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "strong", "confidence": 5},
-    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "medium", "confidence": 4},
-    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "weak", "confidence": 3},
-    {"from_type": "MarineProcess", "from_id": "MPF002", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "strong", "confidence": 5},
-    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES001", "polarity": "-", "strength": "strong", "confidence": 5},
-    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES002", "polarity": "-", "strength": "strong", "confidence": 5},
-    {"from_type": "MarineProcess", "from_id": "MPF003", "to_type": "EcosystemService", "to_id": "ES003", "polarity": "-", "strength": "weak", "confidence": 3},
-    
-    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB001", "polarity": "+", "strength": "strong", "confidence": 5},
-    {"from_type": "EcosystemService", "from_id": "ES001", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "medium", "confidence": 4},
-    {"from_type": "EcosystemService", "from_id": "ES002", "to_type": "Welfare", "to_id": "GB002", "polarity": "+", "strength": "strong", "confidence": 5},
-    {"from_type": "EcosystemService", "from_id": "ES002", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "weak", "confidence": 3},
-    {"from_type": "EcosystemService", "from_id": "ES003", "to_type": "Welfare", "to_id": "GB001", "polarity": "+", "strength": "medium", "confidence": 4},
-    {"from_type": "EcosystemService", "from_id": "ES003", "to_type": "Welfare", "to_id": "GB003", "polarity": "+", "strength": "strong", "confidence": 5},
-    
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D001", "polarity": "+", "strength": "medium", "confidence": 4},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "strong", "confidence": 5},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "weak", "confidence": 3},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "medium", "confidence": 4},
-    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Driver", "to_id": "D001", "polarity": "+", "strength": "weak", "confidence": 3},
-    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Driver", "to_id": "D002", "polarity": "+", "strength": "weak", "confidence": 3},
-    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "medium", "confidence": 4},
-    
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R001", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Climate Stability concerns trigger Carbon Pricing Policies"},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R002", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Climate Stability concerns trigger Renewable Energy Targets"},
-    {"from_type": "Welfare", "from_id": "GB001", "to_type": "Response", "to_id": "R003", "polarity": "+", "strength": "medium", "confidence": 4, "description": "Climate Stability concerns trigger Energy Efficiency Standards"},
-    {"from_type": "Welfare", "from_id": "GB002", "to_type": "Response", "to_id": "R004", "polarity": "+", "strength": "strong", "confidence": 5, "description": "Coastal Safety concerns trigger Coastal Adaptation Plans"},
-    {"from_type": "Welfare", "from_id": "GB003", "to_type": "Response", "to_id": "R005", "polarity": "+", "strength": "strong", "confidence": 4, "description": "Ecosystem Resilience concerns trigger Nature-Based Solutions"},
-    
-    {"from_type": "Response", "from_id": "R001", "to_type": "Driver", "to_id": "D001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Carbon Pricing Policies reduce GHG Emissions"},
-    {"from_type": "Response", "from_id": "R001", "to_type": "Driver", "to_id": "D003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Carbon Pricing Policies affect Energy Demand"},
-    {"from_type": "Response", "from_id": "R002", "to_type": "Driver", "to_id": "D001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Renewable Energy Targets reduce GHG Emissions"},
-    {"from_type": "Response", "from_id": "R002", "to_type": "Driver", "to_id": "D003", "polarity": "+", "strength": "weak", "confidence": 3, "description": "Renewable Energy Targets affect Energy Demand"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Driver", "to_id": "D003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Energy Efficiency Standards reduce Energy Demand"},
-    
-    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Carbon Pricing Policies restrict Fossil Fuel Use"},
-    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Carbon Pricing Policies affect Industrial Activities"},
-    {"from_type": "Response", "from_id": "R001", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Carbon Pricing Policies affect Transportation"},
-    {"from_type": "Response", "from_id": "R002", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Renewable Energy Targets reduce Fossil Fuel Use"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Energy Efficiency Standards reduce Fossil Fuel Use"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Energy Efficiency Standards regulate Industrial Activities"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Activity", "to_id": "A003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Energy Efficiency Standards regulate Transportation"},
-    {"from_type": "Response", "from_id": "R005", "to_type": "Activity", "to_id": "A002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Nature-Based Solutions affect Industrial Activities"},
-    
-    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Carbon Pricing Policies reduce Ocean Warming"},
-    {"from_type": "Response", "from_id": "R001", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Carbon Pricing Policies reduce Ocean Acidification"},
-    {"from_type": "Response", "from_id": "R002", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Renewable Energy Targets reduce Ocean Warming"},
-    {"from_type": "Response", "from_id": "R002", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Renewable Energy Targets reduce Ocean Acidification"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P001", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Energy Efficiency Standards reduce Ocean Warming"},
-    {"from_type": "Response", "from_id": "R003", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Energy Efficiency Standards reduce Ocean Acidification"},
-    {"from_type": "Response", "from_id": "R004", "to_type": "Pressure", "to_id": "P003", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Coastal Adaptation Plans mitigate Sea Level Rise impacts"},
-    {"from_type": "Response", "from_id": "R004", "to_type": "Pressure", "to_id": "P004", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Coastal Adaptation Plans mitigate Storm Intensification impacts"},
-    {"from_type": "Response", "from_id": "R005", "to_type": "Pressure", "to_id": "P002", "polarity": "-", "strength": "weak", "confidence": 3, "description": "Nature-Based Solutions mitigate Ocean Acidification"},
-    {"from_type": "Response", "from_id": "R005", "to_type": "Pressure", "to_id": "P003", "polarity": "-", "strength": "strong", "confidence": 5, "description": "Nature-Based Solutions mitigate Sea Level Rise"},
-    {"from_type": "Response", "from_id": "R005", "to_type": "Pressure", "to_id": "P004", "polarity": "-", "strength": "medium", "confidence": 4, "description": "Nature-Based Solutions mitigate Storm Intensification"}
+    {
+      "from_id": "P001",
+      "to_id": "MPF005",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "-",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Multi-year ice is declining rapidly, replaced by thin first-year ice. The negative feedback reflects a trade-off or antagonistic interaction where increases in the source variable suppress or reduce the target through competitive exclusion, resource limitation, or regulatory mechanisms"
+    },
+    {
+      "from_id": "P001",
+      "to_id": "MPF001",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "-",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Ice loss reduces hunting platform for polar bears, leading to poor body condition"
+    },
+    {
+      "from_id": "P002",
+      "to_id": "MPF002",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "-",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Ringed seals depend on stable ice for pupping lairs; early breakup kills pups. The negative feedback reflects a trade-off or antagonistic interaction where increases in the source variable suppress or reduce the target through competitive exclusion, resource limitation, or regulatory mechanisms"
+    },
+    {
+      "from_id": "MPF002",
+      "to_id": "ES001",
+      "from_type": "state",
+      "to_type": "impact",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Seal populations directly determine the availability of traditional marine foods"
+    },
+    {
+      "from_id": "MPF005",
+      "to_id": "ES002",
+      "from_type": "state",
+      "to_type": "impact",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "White ice surface reflects solar radiation; ice loss triggers warming amplification"
+    },
+    {
+      "from_id": "ES001",
+      "to_id": "GB001",
+      "from_type": "impact",
+      "to_type": "welfare",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Traditional marine foods are nutritionally and culturally irreplaceable for Inuit communities"
+    },
+    {
+      "from_id": "ES001",
+      "to_id": "GB002",
+      "from_type": "impact",
+      "to_type": "welfare",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Hunting practices transmit traditional ecological knowledge across generations. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
+    },
+    {
+      "from_id": "R001",
+      "to_id": "P003",
+      "from_type": "response",
+      "to_type": "pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Polar Code mandates double hulls and oil spill preparedness for Arctic vessels. The negative feedback reflects a trade-off or antagonistic interaction where increases in the source variable suppress or reduce the target through competitive exclusion, resource limitation, or regulatory mechanisms"
+    },
+    {
+      "from_id": "R003",
+      "to_id": "A002",
+      "from_type": "response",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Co-management ensures sustainable harvest levels and protects indigenous hunting rights"
+    },
+    {
+      "from_id": "R002",
+      "to_id": "A003",
+      "from_type": "response",
+      "to_type": "activity",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 5,
+      "description": "Moratoriums directly halt oil exploration activities in protected areas. Well-enforced marine protected areas increase fish biomass by an average of 670%, density by 446%, and species richness by 21% relative to unprotected areas"
+    },
+    {
+      "from_id": "MPF003",
+      "to_id": "ES003",
+      "from_type": "state",
+      "to_type": "impact",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Ice algae form the base of the Arctic marine food web supporting all higher trophic levels. Sea ice loss extends the phytoplankton growing season and increases light availability, but reduces ice-algal production which forms the base of sympagic food webs"
+    },
+    {
+      "from_id": "D003",
+      "to_id": "A002",
+      "from_type": "driver",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5,
+      "description": "Food sovereignty needs directly drive indigenous subsistence marine mammal hunting activities"
+    },
+    {
+      "from_id": "P001",
+      "to_id": "P002",
+      "from_type": "pressure",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Declining ice extent directly causes earlier spring breakup, disrupting the timing of seal and seabird breeding on ice"
+    },
+    {
+      "from_id": "MPF005",
+      "to_id": "MPF003",
+      "from_type": "state",
+      "to_type": "state",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Multi-year ice provides stable substrate for ice algal communities driving under-ice primary production. Sea ice loss extends the phytoplankton growing season and increases light availability, but reduces ice-algal production which forms the base of sympagic food webs"
+    },
+    {
+      "from_id": "GB001",
+      "to_id": "D003",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Food security is a core component of food sovereignty for indigenous communities. This is well-documented in Arctic Human Development Reports and IPCC AR6 CCP6. Confidence and strength upgraded."
+    },
+    {
+      "from_id": "R001",
+      "to_id": "A001",
+      "from_type": "response",
+      "to_type": "activity",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Polar Code safety and environmental requirements increase compliance costs and restrict Arctic commercial shipping operations"
+    },
+    {
+      "from_id": "P006",
+      "to_id": "P007",
+      "from_type": "pressure",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "The driver 'Climate change and ocean warming' is mediated through global greenhouse gas emissions that alter the climate system"
+    },
+    {
+      "from_id": "P007",
+      "to_id": "P001",
+      "from_type": "pressure",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4,
+      "description": "Arctic warming at 2-4x the global average is the primary driver of sea ice loss. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways"
+    },
+    {
+      "from_id": "D001",
+      "to_id": "A001",
+      "from_type": "driver",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Arctic shipping route economic viability"
+    },
+    {
+      "from_id": "D002",
+      "to_id": "A001",
+      "from_type": "driver",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Hydrocarbon and mineral resource exploration"
+    },
+    {
+      "from_id": "D004",
+      "to_id": "A001",
+      "from_type": "driver",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Scientific research and monitoring demand"
+    },
+    {
+      "from_id": "D005",
+      "to_id": "A001",
+      "from_type": "driver",
+      "to_type": "activity",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Climate change adaptation needs"
+    },
+    {
+      "from_id": "A004",
+      "to_id": "P001",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 3,
+      "description": "Arctic cruise tourism contributes negligible GHG emissions relative to global totals driving sea ice loss. The direct causal contribution is extremely weak."
+    },
+    {
+      "from_id": "A005",
+      "to_id": "P001",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 3,
+      "description": "Ice-edge fisheries do not causally drive sea ice loss. Fishing vessel emissions are negligible relative to global GHG forcing. Causal link is spurious."
+    },
+    {
+      "from_id": "A006",
+      "to_id": "P001",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 3,
+      "description": "Scientific monitoring does not causally accelerate sea ice loss. Research vessels contribute negligible emissions. Connection is spurious."
+    },
+    {
+      "from_id": "P004",
+      "to_id": "MPF001",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Increased underwater noise from shipping disturbs marine mammals that polar bears prey on (seals), indirectly reducing prey availability and increasing bear stress. Effect is negative on bear condition. Polarity corrected from + to -."
+    },
+    {
+      "from_id": "P005",
+      "to_id": "MPF001",
+      "from_type": "pressure",
+      "to_type": "state",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 4,
+      "description": "Black carbon deposition accelerates sea ice melt, reducing polar bear hunting habitat and prey access. AMAP (2021) documents this as a significant contributor to Arctic warming. Effect is clearly negative on bear populations. Polarity corrected from + to -."
+    },
+    {
+      "from_id": "MPF004",
+      "to_id": "ES001",
+      "from_type": "state",
+      "to_type": "impact",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Narwhal and bowhead whale habitat availability"
+    },
+    {
+      "from_id": "ES004",
+      "to_id": "GB001",
+      "from_type": "impact",
+      "to_type": "welfare",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Global climate stability benefit"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Arctic shipping cost savings vs. Suez route"
+    },
+    {
+      "from_id": "GB004",
+      "to_id": "D001",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Shipping route accessibility in summer"
+    },
+    {
+      "from_id": "R004",
+      "to_id": "P001",
+      "from_type": "response",
+      "to_type": "pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Arctic Council conservation measures"
+    },
+    {
+      "from_id": "R005",
+      "to_id": "P001",
+      "from_type": "response",
+      "to_type": "pressure",
+      "polarity": "-",
+      "strength": "medium",
+      "confidence": 3,
+      "description": "Connection added to complete DAPSI(W)R(M) chain for Black carbon emission reduction agreements"
+    },
+    {
+      "from_id": "GB003",
+      "to_id": "D003",
+      "from_type": "welfare",
+      "to_type": "driver",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 2,
+      "description": "The relationship between Arctic shipping expansion and indigenous food sovereignty is contested. Increased shipping may bring economic benefits but also disrupts marine mammal migration routes and traditional subsistence patterns. Evidence is mixed."
+    },
+    {
+      "from_id": "A003",
+      "to_id": "P001",
+      "from_type": "activity",
+      "to_type": "pressure",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 3,
+      "description": "Seismic exploration does not directly cause sea ice loss. The link through eventual fossil fuel extraction and GHG emissions is very indirect at the exploration stage."
+    }
   ]
 }
