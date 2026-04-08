@@ -351,9 +351,14 @@ print_success "Translation cache cleared"
 
 # --- Set permissions ---
 print_status "Setting file permissions..."
-chown -R razinka:shiny "$DEPLOY_TARGET"
+if id razinka &>/dev/null; then
+    chown -R razinka:shiny "$DEPLOY_TARGET"
+    print_success "Permissions set (owner: razinka, group: shiny)"
+else
+    chown -R "$USER":shiny "$DEPLOY_TARGET"
+    print_success "Permissions set (owner: $USER, group: shiny)"
+fi
 chmod -R 755 "$DEPLOY_TARGET"
-print_success "Permissions set (owner: razinka, group: shiny)"
 
 # ============================================================================
 # PHASE 4: CONFIGURE AND START SHINY SERVER

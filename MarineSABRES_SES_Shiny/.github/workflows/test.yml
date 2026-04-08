@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        r-version: ['4.2', '4.3', '4.4']
+        r-version: ['4.4']
 
     steps:
       - name: Checkout repository
@@ -50,11 +50,11 @@ jobs:
 
       - name: Install R dependencies
         run: |
-          install.packages(c("testthat", "shiny", "shinydashboard", "shinyWidgets", "shinyjs", "shinyBS", "shinytest2"))
-          install.packages(c("tidyverse", "DT", "openxlsx", "jsonlite"))
+          install.packages(c("testthat", "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS", "shinyFiles", "shinytest2"))
+          install.packages(c("tidyverse", "DT", "openxlsx", "readxl", "httr", "jsonlite", "digest"))
           install.packages(c("igraph", "visNetwork", "ggraph", "tidygraph"))
           install.packages(c("ggplot2", "plotly", "dygraphs", "xts"))
-          install.packages(c("timevis", "rmarkdown", "htmlwidgets", "shiny.i18n"))
+          install.packages(c("timevis", "rmarkdown", "htmlwidgets", "htmltools", "shiny.i18n"))
           install.packages(c("covr", "R6"))
         shell: Rscript {0}
 

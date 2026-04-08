@@ -19,7 +19,7 @@ Use this checklist before deploying to production or updating an existing deploy
 ### 3. Translation Updates
 - [ ] Check `translations/translation.json` is valid JSON
 - [ ] No duplicate entries in translation.json
-- [ ] All 7 languages present (en, es, fr, de, lt, pt, it)
+- [ ] All 9 languages present (en, es, fr, de, lt, pt, it, el, no)
 - [ ] Recent i18n fixes applied (auto-save status, menu items)
 
 ### 4. Clean Up

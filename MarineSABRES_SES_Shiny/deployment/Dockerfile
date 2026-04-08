@@ -65,6 +65,8 @@ RUN R -e "install.packages(c( \
     'timevis', \
     'rmarkdown', \
     'htmlwidgets', \
+    'htmltools', \
+    'httr', \
     'officer', \
     'flextable', \
     'tinytex' \
