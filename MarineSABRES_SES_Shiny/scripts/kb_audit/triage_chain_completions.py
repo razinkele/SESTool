@@ -28,6 +28,14 @@ CHAIN_COMPLETION_MARKERS = [
     "chain completion",
 ]
 
+# Must match audit_kb_quality.py's bridge marker set exactly.
+# If this diverges, the audit and triage will disagree.
+BRIDGE_MARKERS = [
+    "bridge", "connect disconnected",
+    "no scientific basis", "no ecological",
+    "no mechanism", "no causal",
+]
+
 # Connections that MUST be absent (Part B removals). If any are present,
 # the script exits — Part B has not been applied yet.
 PART_B_REMOVAL_CHECKS = [
@@ -90,6 +98,95 @@ def has_path(graph: dict, start: str, end: str, max_depth: int = 10) -> bool:
     return False
 
 
+def is_bridge(conn: dict) -> bool:
+    """True if rationale contains a bridge marker."""
+    rationale = conn.get("rationale", "").lower()
+    return any(marker in rationale for marker in BRIDGE_MARKERS)
+
+
+def count_sccs(connections: list, exclude_conn: tuple = None) -> int:
+    """Count strongly-connected components in the directed graph built
+    from connections. Optionally exclude one connection (by from, to tuple)
+    to measure impact of removal.
+    """
+    try:
+        import networkx as nx
+    except ImportError:
+        print("ERROR: networkx not installed. Run:", file=sys.stderr)
+        print("  micromamba install -n shiny networkx", file=sys.stderr)
+        sys.exit(1)
+
+    G = nx.DiGraph()
+    for c in connections:
+        f = c.get("from", "")
+        t = c.get("to", "")
+        if not f or not t:
+            continue
+        if exclude_conn is not None and (f, t) == exclude_conn:
+            continue
+        G.add_edge(f, t)
+    if G.number_of_nodes() == 0:
+        return 0
+    return nx.number_strongly_connected_components(G)
+
+
+def triage_bridges_in_context(ctx_name: str, ctx: dict) -> list:
+    """Classify bridge connections in a single context using SCC criterion."""
+    connections = ctx.get("connections", [])
+    decisions = []
+
+    base_scc_count = count_sccs(connections)
+
+    for idx, conn in enumerate(connections):
+        if not is_bridge(conn):
+            continue
+        f = conn.get("from", "")
+        t = conn.get("to", "")
+        new_scc_count = count_sccs(connections, exclude_conn=(f, t))
+        if new_scc_count > base_scc_count:
+            verdict = "LOAD_BEARING"
+            reason = f"removal increases SCC count ({base_scc_count} -> {new_scc_count})"
+        else:
+            verdict = "REDUNDANT"
+            reason = "removal does not affect strongly-connected components"
+        decisions.append({
+            "context": ctx_name,
+            "index": idx,
+            "from": f,
+            "to": t,
+            "from_type": conn.get("from_type", ""),
+            "to_type": conn.get("to_type", ""),
+            "verdict": verdict,
+            "reason": reason,
+            "kind": "bridge",
+        })
+    return decisions
+
+
+def improve_bridge_rationale(conn: dict) -> str:
+    """Generate context-specific rationale from element types."""
+    ft = conn.get("from_type", "").lower()
+    tt = conn.get("to_type", "").lower()
+    templates = {
+        ("drivers", "activities"): "Driver motivates the activity as a response to underlying need.",
+        ("activities", "pressures"): "Human activity generates environmental pressure on the marine system.",
+        ("pressures", "states"): "Pressure alters ecosystem state through direct impact mechanism.",
+        ("states", "impacts"): "Ecosystem state change affects ecosystem service delivery.",
+        ("impacts", "welfare"): "Ecosystem service change influences human welfare outcomes.",
+        ("welfare", "drivers"): "Welfare outcomes feed back to drivers via societal response.",
+        ("welfare", "responses"): "Welfare concerns trigger management response.",
+        ("responses", "drivers"): "Response measure modifies underlying driver pressure.",
+        ("responses", "activities"): "Response measure regulates or constrains activity.",
+        ("responses", "pressures"): "Response measure directly reduces pressure intensity.",
+        ("responses", "states"): "Response measure (e.g., restoration) improves ecosystem state.",
+        ("activities", "activities"): "Activities interact via competition, displacement, or facilitation.",
+        ("states", "states"): "Ecosystem state components interact (trophic, habitat, nutrient cycling).",
+        ("pressures", "pressures"): "Pressures cascade or accumulate synergistically.",
+        ("drivers", "pressures"): "Exogenic driver produces pressure without local activity intermediary.",
+    }
+    return templates.get((ft, tt), f"Connection linking {ft} to {tt}.")
+
+
 def triage_context(ctx_name: str, ctx: dict) -> list:
     """Classify chain-completion connections in a single context."""
     connections = ctx.get("connections", [])
@@ -131,24 +228,32 @@ def triage_context(ctx_name: str, ctx: dict) -> list:
 
 
 def apply_removals(kb: dict, decisions: list) -> dict:
-    """Return a new KB dict with REDUNDANT chain-completions removed."""
+    """Return a new KB dict with REDUNDANT chain-completions and bridges
+    removed, and LOAD_BEARING bridges given improved rationales."""
     remove_by_ctx = defaultdict(set)
+
     for d in decisions:
+        key = (d["from"], d["to"])
         if d["verdict"] == "REDUNDANT":
-            remove_by_ctx[d["context"]].add((d["from"], d["to"]))
+            remove_by_ctx[d["context"]].add(key)
 
     cleaned = json.loads(json.dumps(kb))  # deep copy
+
     for ctx_name, ctx in cleaned.get("contexts", {}).items():
-        if ctx_name not in remove_by_ctx:
-            continue
-        removals = remove_by_ctx[ctx_name]
-        ctx["connections"] = [
-            c for c in ctx.get("connections", [])
-            if not (
-                is_chain_completion(c) and
-                (c.get("from", ""), c.get("to", "")) in removals
-            )
-        ]
+        removals = remove_by_ctx.get(ctx_name, set())
+        new_conns = []
+        for c in ctx.get("connections", []):
+            key = (c.get("from", ""), c.get("to", ""))
+            is_cc = is_chain_completion(c)
+            is_br = is_bridge(c)
+            if (is_cc or is_br) and key in removals:
+                continue  # remove
+            # Improve LOAD_BEARING bridge rationale
+            if is_br and key not in removals:
+                new_rationale = improve_bridge_rationale(c)
+                c = {**c, "rationale": new_rationale}
+            new_conns.append(c)
+        ctx["connections"] = new_conns
     return cleaned
 
 
@@ -194,10 +299,11 @@ def main():
 
     preflight_check(kb)
 
-    # Triage all contexts
+    # Triage all contexts — both chain-completions and bridges
     all_decisions = []
     for ctx_name, ctx in kb.get("contexts", {}).items():
         all_decisions.extend(triage_context(ctx_name, ctx))
+        all_decisions.extend(triage_bridges_in_context(ctx_name, ctx))
 
     # Write decisions
     decisions_path = output_dir / "chain_completion_decisions.json"
@@ -214,12 +320,13 @@ def main():
         json.dump(cleaned, f, indent=2, ensure_ascii=False)
 
     total = len(all_decisions)
-    redundant = sum(1 for d in all_decisions if d["verdict"] == "REDUNDANT")
-    load_bearing = total - redundant
+    cc = [d for d in all_decisions if d.get("kind") != "bridge"]
+    br = [d for d in all_decisions if d.get("kind") == "bridge"]
+    cc_redundant = sum(1 for d in cc if d["verdict"] == "REDUNDANT")
+    br_redundant = sum(1 for d in br if d["verdict"] == "REDUNDANT")
     print(f"\nTriage complete:")
-    print(f"  Total chain-completions: {total}")
-    print(f"  REDUNDANT (will be removed in cleaned KB): {redundant}")
-    print(f"  LOAD_BEARING (kept): {load_bearing}")
+    print(f"  Chain-completions: {len(cc)} ({cc_redundant} REDUNDANT, {len(cc)-cc_redundant} LOAD_BEARING)")
+    print(f"  Bridges: {len(br)} ({br_redundant} REDUNDANT, {len(br)-br_redundant} LOAD_BEARING)")
     print(f"\nDecisions: {decisions_path}")
     print(f"Report: {md_path}")
     print(f"Cleaned KB: {cleaned_path}")
