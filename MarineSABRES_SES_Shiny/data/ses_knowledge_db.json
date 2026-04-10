@@ -1360,7 +1360,7 @@
           "from_type": "pressures",
           "to": "Atlantic salmon migration success",
           "to_type": "states",
-          "polarity": "+",
+          "polarity": "-",
           "strength": "medium",
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Altered freshwater flow regime from upstream regulation",
@@ -1377,7 +1377,7 @@
           "from_type": "states",
           "to": "Salmon fishery productivity",
           "to_type": "impacts",
-          "polarity": "+",
+          "polarity": "-",
           "strength": "medium",
           "confidence": 3,
           "rationale": "Connection added to complete DAPSI(W)R(M) chain for Sea lamprey (Petromyzon marinus) population viability. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits",
@@ -1554,23 +1554,6 @@
           "references": [
             "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
             "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Heavy metal contamination from industrial legacy",
-          "from_type": "pressures",
-          "to": "Altered freshwater flow regime from upstream regulation",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Heavy metal contamination does not causally alter freshwater flow regimes. These are independent pressures acting on estuaries. Strength reduced to weak, confidence to 1 (no scientific basis for causal link).",
-          "references": [
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "HELCOM (2018) \"State of the Baltic Sea\"",
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
@@ -3061,40 +3044,6 @@
         {
           "from": "Bathing water quality monitoring (EU BWD)",
           "from_type": "responses",
-          "to": "Coastal erosion from storms and sea level rise",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Bathing water quality monitoring (EU BWD) addresses microbial contamination, not coastal erosion processes. These are independent management domains. No scientific basis for causal link. Strength to weak, confidence to 1.",
-          "references": [
-            "HELCOM (2018) \"State of the Baltic Sea\"",
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Marine litter reduction campaigns",
-          "from_type": "responses",
-          "to": "Coastal erosion from storms and sea level rise",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Marine litter reduction campaigns address waste management, not coastal erosion from storms and sea-level rise. No causal link between these domains. Strength to weak, confidence to 1.",
-          "references": [
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Bathing water quality monitoring (EU BWD)",
-          "from_type": "responses",
           "to": "Beach litter and microplastic pollution",
           "to_type": "pressures",
           "polarity": "-",
@@ -3887,23 +3836,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Lagoon water exchange improvement (inlet management)",
-          "from_type": "responses",
-          "to": "Agricultural drainage and irrigation return flows",
-          "to_type": "activities",
-          "polarity": "-",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Inlet management controls sea-lagoon water exchange but has no mechanism to reduce agricultural drainage from catchment. These are separate hydrological systems. Structural bridge connection with no ecological basis.",
-          "references": [
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Pathogen loading affecting shellfish safety",
           "from_type": "pressures",
           "to": "Anoxic events from decomposing algal biomass",
@@ -4286,23 +4218,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Turbidity increase from coastal works",
-          "from_type": "pressures",
-          "to": "Hypersaline discharge from desalination",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Turbidity from coastal works and desalination brine discharge are independent pressures with separate causal mechanisms. Co-occurrence does not imply causation. No peer-reviewed evidence for a causal link between these pressures.",
-          "references": [
-            "Sanchez-Lizaso et al. 2008",
-            "Telesca et al. 2015 Marine Pollution Bulletin",
-            "Coll et al. 2010 PLoS ONE"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Posidonia oceanica meadow extent and density",
           "from_type": "states",
           "to": "Seagrass-associated fish assemblage",
@@ -4655,23 +4570,6 @@
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "Coll et al. (2012) \"The Mediterranean Sea under siege\"",
             "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Hypersaline discharge from desalination",
-          "from_type": "pressures",
-          "to": "Climate change and ocean warming",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Hypersaline brine discharge has no causal mechanism linking it to climate change or ocean warming. Energy consumption of desalination plants contributes marginally to GHG emissions but the effect is negligible at the local scale. Structural bridge connection.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Viaroli et al. (2008) \"Community shifts in eutrophic coastal lagoons\"",
-            "Telesca et al. 2015 Marine Pollution Bulletin"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -6078,23 +5976,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Ship-strike and collision risk for marine mammals",
-          "from_type": "pressures",
-          "to": "Sandeel stock abundance and distribution",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Ship-strike and collision risk primarily affects marine mammals and is not a meaningful pressure on sandeel stocks. No direct causal pathway. Strength to weak, confidence to 1.",
-          "references": [
-            "Lotze et al. (2011) \"Recovery of marine animal populations\"",
-            "OSPAR (2017) \"Intermediate Assessment\"",
-            "OSPAR 2017 Intermediate Assessment"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Benthic community recovery around wind farms",
           "from_type": "states",
           "to": "Fish stock provisioning for human consumption",
@@ -6875,23 +6756,6 @@
             "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
             "OSPAR (2017) \"Intermediate Assessment\"",
             "Folke et al. 2005 Annual Review of Environment and Resources"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Sediment contaminant levels and bioavailability",
-          "from_type": "states",
-          "to": "Flood protection for low-lying areas",
-          "to_type": "impacts",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Sediment contaminant levels do not contribute to flood protection for low-lying areas. These are independent state-impact pathways. No scientific basis for positive causal link. Strength to weak, confidence to 1.",
-          "references": [
-            "OSPAR (2017) \"Intermediate Assessment\"",
-            "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\"",
-            "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -9838,23 +9702,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Marine litter and microplastic accumulation",
-          "from_type": "pressures",
-          "to": "Nutrient enrichment from sewage and wastewater",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Marine litter and sewage nutrient enrichment are correlated indicators of inadequate waste management but there is no direct causal mechanism between them. Co-occurrence does not imply causation.",
-          "references": [
-            "Jambeck et al. 2015",
-            "Karydis and Kitsiou 2012 Environment International",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Posidonia oceanica meadow extent and health",
           "from_type": "states",
           "to": "Rocky reef fish assemblage composition",
@@ -10059,23 +9906,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Noise and visual disturbance from tourism",
-          "from_type": "pressures",
-          "to": "Posidonia oceanica meadow extent and health",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Posidonia oceanica is a marine plant and is not directly affected by noise or visual disturbance. Any effect would be extremely indirect (e.g., boat traffic causing turbidity). Strength reduced to reflect lack of scientific mechanism.",
-          "references": [
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "UNEP/MAP (2017) \"Mediterranean Quality Status Report\"",
-            "UNEP/MAP 2017 Mediterranean Quality Status Report"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Beach sediment budget and erosion rates",
           "from_type": "states",
           "to": "Tourism and recreation value of beaches",
@@ -10243,23 +10073,6 @@
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Marine litter and microplastic accumulation",
-          "from_type": "pressures",
-          "to": "Anchor damage to Posidonia oceanica meadows",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "No scientific mechanism links marine litter accumulation to anchor damage on Posidonia. These are independent anthropogenic pressures. Structural bridge connection.",
-          "references": [
-            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\"",
-            "UNEP/MAP (2017) \"Mediterranean Quality Status Report\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
         }
       ]
@@ -10883,23 +10696,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Coastal erosion from reduced sediment supply",
-          "from_type": "pressures",
-          "to": "Anchovy and sprat stock biomass",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Coastal erosion from reduced sediment supply has no documented direct effect on pelagic anchovy and sprat stocks. These occupy different ecological niches (coastal geomorphology vs. open water column). Polarity set to negative (increased turbidity could marginally affect larval survival). Very weak link.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Daskalov (2002) \"Overfishing drives a trophic cascade in the Black Sea\"",
-            "BSC 2019 State of the Environment of the Black Sea"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Phyllophora red algae field extent",
           "from_type": "states",
           "to": "Small pelagic fishery productivity",
@@ -11030,23 +10826,6 @@
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
             "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Beach tourism along Bulgarian and Romanian coast",
-          "from_type": "activities",
-          "to": "Bottom trawling for turbot and other demersal species",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Beach tourism and bottom trawling are independent economic activities with no direct causal mechanism. Tourism may indirectly increase demand for local seafood, but does not drive bottom trawling specifically. Structural bridge connection.",
-          "references": [
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
@@ -14130,23 +13909,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "UNESCO World Heritage site management obligations",
-          "from_type": "responses",
-          "to": "Sea level rise from thermal expansion and ice melt",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "UNESCO World Heritage site management obligations cannot reduce sea level rise, which is driven by global climate processes. Local management has no effect on this pressure. Strength to weak, confidence to 1.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\"",
-            "Van Hoey et al. 2010 Marine Pollution Bulletin"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Guided tidal flat walking (mudflat hiking)",
           "from_type": "activities",
           "to": "Bait digging for lugworm (Arenicola marina)",
@@ -16502,40 +16264,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Posidonia oceanica habitat restoration programmes",
-          "from_type": "responses",
-          "to": "Sewage overload during peak tourist season",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Posidonia restoration programmes have no mechanism to reduce sewage overload. Sewage management requires wastewater treatment infrastructure, not seagrass restoration. Structural connection.",
-          "references": [
-            "Lotze et al. (2011) \"Recovery of marine animal populations\"",
-            "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Seasonal fishing closures for spawning protection",
-          "from_type": "responses",
-          "to": "Sewage overload during peak tourist season",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Seasonal fishing closures for spawning protection have no causal mechanism to reduce sewage overload during tourist season. These address different environmental pressures. Structural connection.",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Anchor damage to Posidonia oceanica meadows",
           "from_type": "pressures",
           "to": "Coastal bathing water quality (E. coli, enterococci)",
@@ -16548,23 +16276,6 @@
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\"",
             "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "immediate",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Invasive mammalian predators (rats, feral cats) on native wildlife",
-          "from_type": "pressures",
-          "to": "Anchor damage to Posidonia oceanica meadows",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "No ecological mechanism links terrestrial invasive mammalian predators to underwater anchor damage on Posidonia meadows. These are completely independent pressure pathways. Structural bridge connection.",
-          "references": [
-            "Coll et al. (2010) \"The biodiversity of the Mediterranean Sea\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "UNEP/MAP 2017 Mediterranean Quality Status Report"
           ],
           "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
@@ -20891,23 +20602,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Invasive mammalian predators (American mink, rats) on native wildlife",
-          "from_type": "pressures",
-          "to": "Coastal erosion of limestone and glacial till shores",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Invasive mammalian predators (mink, rats) do not directly cause coastal erosion of limestone and glacial till shorelines. No scientific basis for this causal link. Strength reduced to weak, confidence to 1.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\"",
-            "HELCOM 2018 State of the Baltic Sea"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Cultural identity linked to island maritime heritage",
           "from_type": "welfare",
           "to": "Military and strategic heritage value",
@@ -20954,23 +20648,6 @@
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
             "MEA (2005) \"Millennium Ecosystem Assessment\"",
             "HELCOM 2021 Baltic Sea Action Plan"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Limited waste disposal capacity and landfill pressure",
-          "from_type": "pressures",
-          "to": "Coastal erosion of limestone and glacial till shores",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Limited waste disposal capacity and landfill pressure do not cause coastal erosion of shorelines. These are independent pressures. No scientific basis for causal link. Strength to weak, confidence to 1.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "HELCOM (2018) \"State of the Baltic Sea\"",
-            "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -24108,23 +23785,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Eutrophication-driven filamentous algae overgrowth",
-          "from_type": "pressures",
-          "to": "Antifouling paint contamination (TBT legacy, copper/zinc current)",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Eutrophication-driven algae overgrowth and antifouling paint contamination are independent pressures with no known causal mechanism linking them. Strength to weak, confidence to 1.",
-          "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Coastal erosion awareness and shore protection demand",
           "from_type": "drivers",
           "to": "Blue mussel (Mytilus trossulus) harvesting for feed/nutrient removal",
@@ -24153,23 +23813,6 @@
           "references": [
             "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\"",
             "Ronnback et al. (2007) \"Ecosystem goods and services from Swedish coastal habitats\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Cyanobacteria accumulation on rocky shores in summer",
-          "from_type": "pressures",
-          "to": "Antifouling paint contamination (TBT legacy, copper/zinc current)",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 1,
-          "rationale": "Cyanobacteria accumulation on rocky shores and antifouling paint contamination are independent pressures with no causal mechanism. Strength to weak, confidence to 1.",
-          "references": [
-            "HELCOM (2018) \"State of the Baltic Sea\"",
-            "HELCOM (2023) \"Baltic Sea Action Plan\"",
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",

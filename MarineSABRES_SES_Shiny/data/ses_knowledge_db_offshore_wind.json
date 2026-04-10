@@ -3713,26 +3713,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Mooring and anchor disturbance to deep-sea habitats",
-          "from_type": "pressures",
-          "to": "Biofouling communities on floating structures",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 2,
-          "rationale": "Floating structures and moorings provide novel hard substrate in deep Mediterranean waters, enabling biofouling colonisation",
-          "references": [
-            "Chen et al. 2023",
-            "Cripps & Aabel 2002",
-            "Farr et al. 2021",
-            "Gimpel et al. 2023",
-            "Ivanov et al. 2021",
-            "Serpetti et al. 2021"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Posidonia oceanica meadow extent near cable landfall sites",
           "from_type": "states",
           "to": "Demersal and reef fish assemblages (hake, red mullet, grouper)",
