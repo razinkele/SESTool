@@ -372,6 +372,8 @@ test_that("is_valid_dapsirwrm_transition accepts forward transitions", {
   expect_true(is_valid_dapsirwrm_transition("driver", "activity"))
   expect_true(is_valid_dapsirwrm_transition("activity", "pressure"))
   expect_true(is_valid_dapsirwrm_transition("pressure", "state"))
+  expect_true(is_valid_dapsirwrm_transition("state", "impact"))
+  expect_true(is_valid_dapsirwrm_transition("impact", "welfare"))
   expect_true(is_valid_dapsirwrm_transition("welfare", "response"))
 })
 
@@ -379,18 +381,44 @@ test_that("is_valid_dapsirwrm_transition accepts feedback transitions", {
   expect_true(is_valid_dapsirwrm_transition("response", "driver"))
   expect_true(is_valid_dapsirwrm_transition("response", "activity"))
   expect_true(is_valid_dapsirwrm_transition("response", "pressure"))
+  expect_true(is_valid_dapsirwrm_transition("welfare", "driver"))
+  expect_true(is_valid_dapsirwrm_transition("driver", "welfare"))
+})
+
+test_that("is_valid_dapsirwrm_transition accepts new Rule 12-17 transitions", {
+  expect_true(is_valid_dapsirwrm_transition("response", "state"))
+  expect_true(is_valid_dapsirwrm_transition("responses", "marine_process"))
+  expect_true(is_valid_dapsirwrm_transition("welfare", "measure"))
+  expect_true(is_valid_dapsirwrm_transition("measure", "response"))
+  expect_true(is_valid_dapsirwrm_transition("measures", "responses"))
+  expect_true(is_valid_dapsirwrm_transition("response", "response"))
+  expect_true(is_valid_dapsirwrm_transition("state", "state"))
+  expect_true(is_valid_dapsirwrm_transition("marine_process", "marine_process"))
+  expect_true(is_valid_dapsirwrm_transition("pressure", "pressure"))
+  expect_true(is_valid_dapsirwrm_transition("measure", "driver"))
+  expect_true(is_valid_dapsirwrm_transition("measure", "activity"))
+  expect_true(is_valid_dapsirwrm_transition("measure", "pressure"))
+  expect_true(is_valid_dapsirwrm_transition("measure", "state"))
 })
 
 test_that("is_valid_dapsirwrm_transition rejects invalid transitions", {
   expect_false(is_valid_dapsirwrm_transition("driver", "response"))
   expect_false(is_valid_dapsirwrm_transition("pressure", "driver"))
   expect_false(is_valid_dapsirwrm_transition("impact", "activity"))
+  expect_false(is_valid_dapsirwrm_transition("activity", "driver"))
+  expect_false(is_valid_dapsirwrm_transition("state", "pressure"))
+  expect_false(is_valid_dapsirwrm_transition("pressure", "welfare"))
+  expect_false(is_valid_dapsirwrm_transition("activity", "impact"))
+  expect_false(is_valid_dapsirwrm_transition("impact", "driver"))
+  expect_false(is_valid_dapsirwrm_transition("measure", "measure"))
+  expect_false(is_valid_dapsirwrm_transition("welfare", "welfare"))
 })
 
 test_that("is_valid_dapsirwrm_transition handles case and whitespace", {
   expect_true(is_valid_dapsirwrm_transition("Driver", "Activity"))
   expect_true(is_valid_dapsirwrm_transition("  driver  ", "  activity  "))
   expect_true(is_valid_dapsirwrm_transition("DRIVER", "ACTIVITY"))
+  expect_true(is_valid_dapsirwrm_transition("RESPONSE", "STATE"))
 })
 
 # ============================================================================

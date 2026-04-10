@@ -337,9 +337,13 @@ create_numeric_adjacency_matrix <- function(nodes, edges) {
 
 #' Check if a transition follows valid DAPSIRWRM framework logic
 #'
-#' Valid transitions:
-#' - Forward: D→A, A→P, P→MPF, MPF→ES, ES→GB, GB→R
-#' - Feedback: R→D, R→A, R→P, D→GB
+#' Implements all 17 rules from DAPSIWRM_FRAMEWORK_RULES.md.
+#' Uses an 8-element model (D, A, P, C/S, ES, GB, R, M) with HW collapsed into GB.
+#' GB→D represents the collapsed pathway of Rules 6 (GB→HW) + 7 (HW→D).
+#' M is kept as a distinct type for template-loaded data (template_loader.R).
+#'
+#' Last validated against literature: 2026-04-10
+#' See: .claude/skills/scientific-validation-workspace/codebase-audit/MASTER-REPORT.md
 #'
 #' @param from_type Source node type
 #' @param to_type Target node type
@@ -349,28 +353,54 @@ is_valid_dapsirwrm_transition <- function(from_type, to_type) {
   from <- tolower(trimws(as.character(from_type)))
   to <- tolower(trimws(as.character(to_type)))
 
-  # Define valid transitions (using arrays for flexibility with synonyms)
+  # Type synonym groups (reusable across transitions)
+  drivers <- c("driver", "drivers")
+  activities <- c("activity", "activities")
+  pressures <- c("pressure", "pressures", "enmp")
+  states <- c("state", "states", "state change", "marine_process", "marine_processes", "mpf")
+  impacts <- c("impact", "impacts", "ecosystem_service", "ecosystem_services", "es")
+  welfare <- c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing")
+  responses <- c("response", "responses")
+  measures <- c("measure", "measures")
+
+  # Define valid transitions (Rules 1-17 from DAPSIWRM_FRAMEWORK_RULES.md)
   valid_transitions <- list(
-    # Forward transitions
-    list(from = c("driver", "drivers"), to = c("activity", "activities")),
-    list(from = c("activity", "activities"), to = c("pressure", "pressures", "enmp")),
-    list(from = c("pressure", "pressures", "enmp"),
-         to = c("state", "states", "state change", "marine_process", "marine_processes", "mpf")),
-    list(from = c("state", "states", "state change", "marine_process", "marine_processes", "mpf"),
-         to = c("impact", "impacts", "ecosystem_service", "ecosystem_services", "es")),
-    list(from = c("impact", "impacts", "ecosystem_service", "ecosystem_services", "es"),
-         to = c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing")),
-    list(from = c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing"),
-         to = c("response", "responses")),
+    # Forward chain (Rules 1-5)
+    list(from = drivers, to = activities),         # Rule 1: D → A
+    list(from = activities, to = pressures),        # Rule 2: A → P
+    list(from = pressures, to = states),            # Rule 3: P → C/S
+    list(from = states, to = impacts),              # Rule 4: C/S → ES
+    list(from = impacts, to = welfare),             # Rule 5: ES → GB
 
-    # Feedback transitions (responses back to earlier stages)
-    list(from = c("response", "responses"), to = c("driver", "drivers")),
-    list(from = c("response", "responses"), to = c("activity", "activities")),
-    list(from = c("response", "responses"), to = c("pressure", "pressures", "enmp")),
+    # Welfare to responses/measures (Rule 8: GB/W → R/M)
+    list(from = welfare, to = responses),           # Rule 8: GB/W → R
+    list(from = welfare, to = measures),            # Rule 8: GB/W → M
 
-    # Direct feedback shortcut
-    list(from = c("driver", "drivers"),
-         to = c("welfare", "goods_benefit", "goods_benefits", "gb", "wellbeing"))
+    # Welfare feedback to drivers (collapsed Rules 6+7: GB→HW→D)
+    list(from = welfare, to = drivers),             # Rules 6+7 collapsed
+
+    # Response/Measure interventions (Rules 9-12)
+    list(from = responses, to = drivers),           # Rule 9: R → D
+    list(from = responses, to = activities),        # Rule 10: R → A
+    list(from = responses, to = pressures),         # Rule 11: R → P
+    list(from = responses, to = states),            # Rule 12: R → C/S
+    list(from = measures, to = drivers),            # Rule 9: M → D
+    list(from = measures, to = activities),         # Rule 10: M → A
+    list(from = measures, to = pressures),          # Rule 11: M → P
+    list(from = measures, to = states),             # Rule 12: M → C/S
+
+    # Measure-Response linkage (Rule 13)
+    list(from = measures, to = responses),          # Rule 13: M → R
+
+    # Response-Response interactions (Rule 14)
+    list(from = responses, to = responses),         # Rule 14: R → R
+
+    # Direct shortcut (Rule 15)
+    list(from = drivers, to = welfare),             # Rule 15: D → GB/W
+
+    # Same-type interactions (Rules 16-17)
+    list(from = states, to = states),               # Rule 16: C/S → C/S
+    list(from = pressures, to = pressures)          # Rule 17: P → P
   )
 
   # Check if this transition matches any valid pattern
