@@ -1497,22 +1497,28 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               source_type <- suggestion_sources[suggestion_name]
               kb_badge <- if (!is.null(source_type) && source_type == "knowledge_db") {
                 tags$span(
-                  class = "badge badge-info",
-                  style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
+                  class = "badge badge-info source-badge",
+                  style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px; cursor: help;",
+                  `data-toggle` = "tooltip",
+                  `data-placement` = "top",
                   title = i18n$t("modules.isa.ai_assistant.from_knowledge_database"),
                   "KB"
                 )
               } else if (!is.null(source_type) && source_type == "governance") {
                 tags$span(
-                  class = "badge badge-warning",
-                  style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
+                  class = "badge badge-warning source-badge",
+                  style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px; cursor: help;",
+                  `data-toggle` = "tooltip",
+                  `data-placement` = "top",
                   title = i18n$t("modules.isa.ai_assistant.governance_suggestion_tooltip"),
                   "GOV"
                 )
               } else if (!is.null(source_type) && source_type == "socioeconomic") {
                 tags$span(
-                  class = "badge badge-success",
-                  style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
+                  class = "badge badge-success source-badge",
+                  style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px; cursor: help;",
+                  `data-toggle` = "tooltip",
+                  `data-placement` = "top",
                   title = i18n$t("modules.isa.ai_assistant.socioeconomic_suggestion_tooltip"),
                   "SE"
                 )
@@ -1577,7 +1583,19 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               p(style = "font-size: 0.9em; color: #666; margin-top: 5px;",
                 i18n$t("modules.isa.ai_assistant.click_to_selectdeselect_multiple_selections_allowed")),
               div(style = "margin-top: 10px;", suggestion_buttons, other_button),
-              custom_elements
+              custom_elements,
+              tags$script(HTML("
+  setTimeout(function() {
+    document.querySelectorAll('.source-badge[data-toggle=\"tooltip\"]').forEach(function(el) {
+      if (!bootstrap.Tooltip.getInstance(el)) {
+        new bootstrap.Tooltip(el, {
+          container: 'body',
+          trigger: 'hover click focus'
+        });
+      }
+    });
+  }, 200);
+"))
             ))
           }
         }
