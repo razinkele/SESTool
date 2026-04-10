@@ -400,7 +400,13 @@ is_valid_dapsirwrm_transition <- function(from_type, to_type) {
 
     # Same-type interactions (Rules 16-17)
     list(from = states, to = states),               # Rule 16: C/S → C/S
-    list(from = pressures, to = pressures)          # Rule 17: P → P
+    list(from = pressures, to = pressures),         # Rule 17: P → P
+
+    # Activity interactions (Rule 18)
+    list(from = activities, to = activities),       # Rule 18: A → A
+
+    # Documented exception: Exogenic Unmanaged Pressures (Elliott 2011)
+    list(from = drivers, to = pressures)            # D → P (ExUP)
   )
 
   # Check if this transition matches any valid pattern

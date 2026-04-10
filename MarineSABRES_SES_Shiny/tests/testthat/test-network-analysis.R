@@ -385,31 +385,70 @@ test_that("is_valid_dapsirwrm_transition accepts feedback transitions", {
   expect_true(is_valid_dapsirwrm_transition("driver", "welfare"))
 })
 
-test_that("is_valid_dapsirwrm_transition accepts new Rule 12-17 transitions", {
+test_that("is_valid_dapsirwrm_transition accepts Rules 12-18 + ExUP transitions", {
+  # Rule 12: R/M → C/S (responses restore state)
   expect_true(is_valid_dapsirwrm_transition("response", "state"))
   expect_true(is_valid_dapsirwrm_transition("responses", "marine_process"))
+  # Rule 8 variant: GB/W → M (welfare triggers measures)
   expect_true(is_valid_dapsirwrm_transition("welfare", "measure"))
+  # Rule 13: M → R (measures enable responses)
   expect_true(is_valid_dapsirwrm_transition("measure", "response"))
   expect_true(is_valid_dapsirwrm_transition("measures", "responses"))
+  # Rule 14: R → R (response interactions)
   expect_true(is_valid_dapsirwrm_transition("response", "response"))
+  # Rule 16: C/S → C/S (state interactions)
   expect_true(is_valid_dapsirwrm_transition("state", "state"))
   expect_true(is_valid_dapsirwrm_transition("marine_process", "marine_process"))
+  # Rule 17: P → P (pressure cascades)
   expect_true(is_valid_dapsirwrm_transition("pressure", "pressure"))
+  # Rule 18: A → A (activity interactions) — both singular and plural
+  expect_true(is_valid_dapsirwrm_transition("activity", "activity"))
+  expect_true(is_valid_dapsirwrm_transition("activities", "activities"))
+  # ExUP exception: D → P
+  expect_true(is_valid_dapsirwrm_transition("driver", "pressure"))
+  expect_true(is_valid_dapsirwrm_transition("drivers", "pressures"))
+  # M → D/A/P/C/S (Rules 9-12 for measures)
   expect_true(is_valid_dapsirwrm_transition("measure", "driver"))
   expect_true(is_valid_dapsirwrm_transition("measure", "activity"))
   expect_true(is_valid_dapsirwrm_transition("measure", "pressure"))
   expect_true(is_valid_dapsirwrm_transition("measure", "state"))
 })
 
+test_that("is_valid_dapsirwrm_transition accepts KB plural forms", {
+  # The KB uses plural from_type/to_type values — must be covered
+  expect_true(is_valid_dapsirwrm_transition("drivers", "activities"))
+  expect_true(is_valid_dapsirwrm_transition("activities", "pressures"))
+  expect_true(is_valid_dapsirwrm_transition("pressures", "states"))
+  expect_true(is_valid_dapsirwrm_transition("states", "impacts"))
+  expect_true(is_valid_dapsirwrm_transition("impacts", "welfare"))
+  expect_true(is_valid_dapsirwrm_transition("welfare", "responses"))
+})
+
+test_that("is_valid_dapsirwrm_transition accepts welfare aliases", {
+  # welfare has 5 synonym aliases — make sure they all work
+  expect_true(is_valid_dapsirwrm_transition("welfare", "response"))
+  expect_true(is_valid_dapsirwrm_transition("gb", "response"))
+  expect_true(is_valid_dapsirwrm_transition("goods_benefit", "response"))
+  expect_true(is_valid_dapsirwrm_transition("goods_benefits", "response"))
+  expect_true(is_valid_dapsirwrm_transition("wellbeing", "response"))
+})
+
 test_that("is_valid_dapsirwrm_transition rejects invalid transitions", {
-  expect_false(is_valid_dapsirwrm_transition("driver", "response"))
+  expect_false(is_valid_dapsirwrm_transition("driver", "response"))   # D→R must be reclassified to R→R
   expect_false(is_valid_dapsirwrm_transition("pressure", "driver"))
   expect_false(is_valid_dapsirwrm_transition("impact", "activity"))
   expect_false(is_valid_dapsirwrm_transition("activity", "driver"))
   expect_false(is_valid_dapsirwrm_transition("state", "pressure"))
+  # Common modeling mistakes — skipping chain levels
   expect_false(is_valid_dapsirwrm_transition("pressure", "welfare"))
   expect_false(is_valid_dapsirwrm_transition("activity", "impact"))
   expect_false(is_valid_dapsirwrm_transition("impact", "driver"))
+  # A→W skips ES→GB; not a valid exception
+  expect_false(is_valid_dapsirwrm_transition("activity", "welfare"))
+  expect_false(is_valid_dapsirwrm_transition("activities", "welfare"))
+  # A→S missing pressure intermediary
+  expect_false(is_valid_dapsirwrm_transition("activity", "state"))
+  # No self-loops for non-state/non-pressure/non-activity types
   expect_false(is_valid_dapsirwrm_transition("measure", "measure"))
   expect_false(is_valid_dapsirwrm_transition("welfare", "welfare"))
 })

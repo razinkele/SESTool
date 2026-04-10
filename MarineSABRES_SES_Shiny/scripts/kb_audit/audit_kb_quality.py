@@ -15,7 +15,7 @@ from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
 
-# Valid transitions after the Rule 17 update (21 total)
+# Valid transitions after Rules 17-18 + ExUP exception (23 total)
 VALID_TRANSITIONS = {
     ("drivers", "activities"), ("activities", "pressures"),
     ("pressures", "states"), ("states", "impacts"),
@@ -31,6 +31,8 @@ VALID_TRANSITIONS = {
     ("drivers", "welfare"),  # Rule 15
     ("states", "states"),  # Rule 16
     ("pressures", "pressures"),  # Rule 17
+    ("activities", "activities"),  # Rule 18: A → A
+    ("drivers", "pressures"),  # ExUP exception (Elliott 2011)
 }
 
 
