@@ -643,23 +643,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Eel fishing with fyke nets",
-          "from_type": "activities",
-          "to": "Nutrient enrichment from agricultural sources",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Eel fishing with fyke nets is a passive, low-impact gear that does not contribute meaningfully to nutrient enrichment. No scientific basis for medium-strength link. Strength and confidence reduced.",
-          "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Microplastic accumulation in sediments",
           "from_type": "pressures",
           "to": "Pike-perch population dynamics",
@@ -757,40 +740,6 @@
             "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
             "HELCOM (2018) \"State of the Baltic Sea\"",
             "HELCOM 2018 State of the Baltic Sea"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Agricultural buffer zone requirements",
-          "from_type": "responses",
-          "to": "Cultural heritage of traditional fishing",
-          "to_type": "drivers",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Bird habitat provision (breeding, staging)",
-          "from_type": "impacts",
-          "to": "Cultural identity of lagoon fishing villages",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Ronnback et al. (2007) \"Ecosystem goods and services from Swedish coastal habitats\"",
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -1541,23 +1490,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Flood risk management needs",
-          "from_type": "drivers",
-          "to": "Flood defence construction and maintenance",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -2106,23 +2038,6 @@
           "references": [
             "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\"",
             "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Merchant shipping and ferry traffic",
-          "from_type": "activities",
-          "to": "Overfishing of Eastern Baltic cod",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Merchant shipping and ferry traffic do not cause overfishing of Eastern Baltic cod. These are independent human activities. No scientific basis for causal link. Strength to weak, confidence to 1.",
-          "references": [
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\"",
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
@@ -3040,57 +2955,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Bathing water quality monitoring (EU BWD)",
-          "from_type": "responses",
-          "to": "Beach litter and microplastic pollution",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The negative feedback reflects a trade-off or antagonistic interaction where increases in the source variable suppress or reduce the target through competitive exclusion, resource limitation, or regulatory mechanisms",
-          "references": [
-            "HELCOM (2018) \"State of the Baltic Sea\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Nearshore fish community (flounder, perch)",
-          "from_type": "states",
-          "to": "Aesthetic and cultural landscape value",
-          "to_type": "impacts",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Recreational fishing demand (sea trout, flounder)",
-          "from_type": "drivers",
-          "to": "Beach recreation and bathing",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Tourism-generated wastewater (sewage, greywater) degrades nearshore water quality, particularly during peak season when treatment capacity is exceeded",
-          "references": [
-            "Ronnback et al. (2007) \"Ecosystem goods and services from Swedish coastal habitats\"",
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "reversible"
         }
       ]
     },
@@ -3800,57 +3664,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Coastal housing and infrastructure demand",
-          "from_type": "drivers",
-          "to": "Agricultural drainage and irrigation return flows",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Coastal housing development increases impervious surface runoff but does not directly drive agricultural drainage. The causal pathway is indirect at best. Structural bridge connection with limited ecological basis.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Coll et al. 2010 PLoS ONE"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Ecotourism and flamingo-watching demand",
-          "from_type": "drivers",
-          "to": "Agricultural drainage and irrigation return flows",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "No scientific basis for ecotourism demand driving agricultural drainage. This is a structural bridge connection with no ecological mechanism. Strength and confidence reduced to reflect lack of evidence.",
-          "references": [
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "UNEP/MAP (2017) \"Mediterranean Quality Status Report\"",
-            "UNEP/MAP 2017 Mediterranean Quality Status Report"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Pathogen loading affecting shellfish safety",
-          "from_type": "pressures",
-          "to": "Anoxic events from decomposing algal biomass",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 2,
-          "rationale": "Pathogen loading and anoxic events are co-occurring indicators of poor water quality but pathogen contamination does not cause oxygen depletion. The causal mechanism is absent. Structural bridge connection.",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Micheli et al. (2013) \"Cumulative human impacts on Mediterranean ecosystems\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -4371,23 +4184,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Desalination brine discharge",
-          "from_type": "activities",
-          "to": "Mechanical damage from boat anchoring and mooring",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Desalination brine discharge causes osmotic/chemical stress (salinity >39 PSU reduces Posidonia growth; Sanchez-Lizaso et al. 2008) but has no causal link to mechanical anchoring damage. These are independent pressure pathways.",
-          "references": [
-            "UNEP/MAP (2017) \"Mediterranean Quality Status Report\"",
-            "Coll et al. (2010) \"The biodiversity of the Mediterranean Sea\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "immediate",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Snorkeling and dive tourism over meadows",
           "from_type": "activities",
           "to": "Mechanical damage from boat anchoring and mooring",
@@ -4555,23 +4351,6 @@
             "Telesca et al. 2015 Marine Pollution Bulletin"
           ],
           "temporal_lag": "immediate",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Coastal construction and marina expansion",
-          "from_type": "activities",
-          "to": "Climate change and ocean warming",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Local coastal construction has negligible contribution to global climate change and ocean warming. The GHG emissions from individual construction projects are insignificant at the scale needed to affect sea temperature. Structural bridge connection without scientific basis.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Coll et al. (2012) \"The Mediterranean Sea under siege\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
         }
       ]
@@ -5203,23 +4982,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Scientific monitoring and underwater surveys",
-          "from_type": "activities",
-          "to": "Overgrazing by sea urchins (urchin barrens)",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Scientific monitoring and underwater surveys have no causal mechanism leading to sea urchin overgrazing. Observation does not drive ecological processes. Structural connection.",
-          "references": [
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "UNEP/MAP (2017) \"Mediterranean Quality Status Report\"",
-            "Coll et al. 2010 PLoS ONE"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Octopus and cuttlefish pot fishing",
           "from_type": "activities",
           "to": "Overgrazing by sea urchins (urchin barrens)",
@@ -5384,23 +5146,6 @@
           "references": [
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
             "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Diving tourism and underwater recreation",
-          "from_type": "drivers",
-          "to": "Artisanal trammel net and longline fishing",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Diving tourism demand does not drive artisanal fishing activity. These activities may compete for coastal space, particularly in MPAs. Structural bridge connection without ecological mechanism.",
-          "references": [
-            "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\"",
-            "Lotze et al. (2011) \"Recovery of marine animal populations\"",
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
@@ -6146,23 +5891,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Decommissioning cost burden (oil sector)",
-          "from_type": "welfare",
-          "to": "Industrial-scale fisheries demand (sandeel, herring)",
-          "to_type": "drivers",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Jennings & Kaiser (1998) \"Effects of fishing on marine ecosystems\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Beam trawling for flatfish (sole, plaice)",
           "from_type": "activities",
           "to": "Chronic hydrocarbon contamination from platforms",
@@ -6857,108 +6585,6 @@
           "references": [
             "OSPAR (2017) \"Intermediate Assessment\"",
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Altered freshwater flow regime from upstream regulation",
-          "from_type": "pressures",
-          "to": "Estuarine fish community (smelt, flounder, bass)",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Capital and maintenance dredging for shipping",
-          "from_type": "activities",
-          "to": "Altered freshwater flow regime from upstream regulation",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Estuarine nursery function for marine fish",
-          "from_type": "impacts",
-          "to": "Flood damage avoidance for riverside properties",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Managed realignment and saltmarsh creation",
-          "from_type": "activities",
-          "to": "Altered freshwater flow regime from upstream regulation",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "OSPAR (2017) \"Intermediate Assessment\"",
-            "Folke et al. 2005 Annual Review of Environment and Resources"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Industrial cooling water abstraction and discharge",
-          "from_type": "activities",
-          "to": "Altered freshwater flow regime from upstream regulation",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "OSPAR (2017) \"Intermediate Assessment\"",
-            "Folke et al. 2005 Annual Review of Environment and Resources"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Commercial and recreational eel fishing",
-          "from_type": "activities",
-          "to": "Altered freshwater flow regime from upstream regulation",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
@@ -7756,57 +7382,6 @@
           "references": [
             "Burke et al. (2011) \"Reefs at Risk Revisited\"",
             "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\"",
-            "Burke et al. 2011 Reefs at Risk Revisited"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Lionfish (Pterois volitans/miles) invasion and predation",
-          "from_type": "pressures",
-          "to": "Climate change and ocean warming",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Mora (2008) \"A clear human footprint in the coral reefs of the Caribbean\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Nutrient enrichment from agricultural sources",
-          "from_type": "pressures",
-          "to": "Climate change and ocean warming",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Mora (2008) \"A clear human footprint in the coral reefs of the Caribbean\"",
-            "Burke et al. 2011 Reefs at Risk Revisited",
-            "Hughes et al. 2017 Nature"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Food security from reef protein sources",
-          "from_type": "welfare",
-          "to": "Climate change adaptation needs",
-          "to_type": "drivers",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "Mumby et al. (2006) \"Fishing, trophic cascades, and the process of grazing on coral reefs\"",
             "Burke et al. 2011 Reefs at Risk Revisited"
           ],
           "temporal_lag": "medium-term",
@@ -9331,40 +8906,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Deep-sea bottom trawling on seamounts",
-          "from_type": "activities",
-          "to": "Climate change and ocean warming",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Bottom trawling physically disrupts benthic habitat structure, removing biogenic features (e",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Halpern et al. 2008 Science",
-            "FAO 2020 State of World Fisheries and Aquaculture"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Mesopelagic fish biomass (biological carbon pump)",
-          "from_type": "states",
-          "to": "Atlantic bluefin tuna stock recovery status",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience",
-          "references": [
-            "Spalding et al. (2007) \"Marine ecoregions of the world\"",
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -10036,40 +9577,6 @@
           "references": [
             "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\"",
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Beach sediment budget and erosion rates",
-          "from_type": "states",
-          "to": "Coastal protection by Posidonia banquettes",
-          "to_type": "impacts",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Seagrass canopies reduce wave energy by 20-76% and current velocities by 15-65%, promoting sediment stabilization and reducing coastal erosion",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "UNEP/MAP (2017) \"Mediterranean Quality Status Report\"",
-            "UNEP/MAP 2017 Mediterranean Quality Status Report"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Artisanal fishery provision",
-          "from_type": "impacts",
-          "to": "Coastal property values",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
@@ -10793,40 +10300,6 @@
             "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
             "Oguz et al. (2006) \"Abrupt transition of the northwestern Black Sea shelf ecosystem\"",
             "Kideys 2002 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Marine Protected Areas (Phyllophora, Danube delta)",
-          "from_type": "responses",
-          "to": "Eutrophication from Danube nutrient inputs",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "weak",
-          "confidence": 2,
-          "rationale": "MPAs protect habitats within their boundaries but do not reduce Danube nutrient inputs, which are a basin-wide catchment issue. MPAs have no mechanism to control upstream agricultural runoff. The ICPDR framework addresses nutrient reduction, not MPAs.",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Waycott et al. 2009 PNAS"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Cultural value of traditional fishing communities",
-          "from_type": "impacts",
-          "to": "Coastal community livelihoods",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -11585,57 +11058,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Sediment stabilisation and shoreline protection",
-          "from_type": "impacts",
-          "to": "Artisanal fisher livelihoods from conch and lobster",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\"",
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Green turtle foraging on seagrass beds",
-          "from_type": "pressures",
-          "to": "Agricultural and urban watershed runoff",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\"",
-            "Lotze et al. (2011) \"Recovery of marine animal populations\"",
-            "Burke et al. 2011 Reefs at Risk Revisited"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Coastal construction and marina development",
-          "from_type": "activities",
-          "to": "Agricultural and urban watershed runoff",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -12354,23 +11776,6 @@
           "references": [
             "MEA (2005) \"Millennium Ecosystem Assessment\"",
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Ecotourism and mangrove recreation demand",
-          "from_type": "drivers",
-          "to": "Artisanal mud crab and shellfish collection",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Mangrove prop roots provide critical nursery habitat for >100 fish species, with juvenile densities 2-25 times higher than in adjacent habitats",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
@@ -13128,40 +12533,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Cold-water coral (Lophelia pertusa) reef condition",
-          "from_type": "states",
-          "to": "Benthic oxygen concentration below salmon cages",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Wassmann et al. 2011 Progress in Oceanography"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Coastal community employment needs",
-          "from_type": "drivers",
-          "to": "Kelp harvesting (Laminaria hyperborea)",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Spalding et al. (2007) \"Marine ecoregions of the world\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Arctic cruise tourism growth",
           "from_type": "drivers",
           "to": "Kelp harvesting (Laminaria hyperborea)",
@@ -13174,23 +12545,6 @@
             "MEA (2005) \"Millennium Ecosystem Assessment\"",
             "Spalding et al. (2007) \"Marine ecoregions of the world\"",
             "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Cruise tourism revenue for fjord communities",
-          "from_type": "welfare",
-          "to": "Arctic cruise tourism growth",
-          "to_type": "drivers",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Marine tourism generates substantial economic value — reef tourism alone contributes ~USD 36 billion/year globally",
-          "references": [
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "AMAP (2017) \"Snow, Water, Ice and Permafrost in the Arctic\"",
-            "Davenport and Davenport 2006 Estuarine Coastal and Shelf Science"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -13756,57 +13110,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Offshore wind farm cable landfall through tidal flats",
-          "from_type": "activities",
-          "to": "Sea level rise from thermal expansion and ice melt",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Offshore wind farm cable landfall through tidal flats does not cause sea level rise. These are completely independent processes. No scientific basis. Strength to weak, confidence to 1.",
-          "references": [
-            "Emeis et al. (2015) \"The North Sea - A shelf sea in the Anthropocene\"",
-            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\"",
-            "Van Hoey et al. 2010 Marine Pollution Bulletin"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Bait digging for lugworm (Arenicola marina)",
-          "from_type": "activities",
-          "to": "Sea level rise from thermal expansion and ice melt",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Bait digging for lugworm does not cause sea level rise. These are completely unrelated processes. No scientific basis for causal link. Strength to weak, confidence to 1.",
-          "references": [
-            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\"",
-            "Van Hoey et al. 2010 Marine Pollution Bulletin",
-            "Poloczanska et al. 2013 Nature Climate Change"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Bottom trawling for brown shrimp (Crangon crangon)",
-          "from_type": "activities",
-          "to": "Sea level rise from thermal expansion and ice melt",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Bottom trawling for brown shrimp does not cause sea level rise. These are completely unrelated processes. No scientific basis. Strength to weak, confidence to 1.",
-          "references": [
-            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\"",
-            "Halpern et al. 2008 Science",
-            "Van Hoey et al. 2010 Marine Pollution Bulletin"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Substrate disturbance from cable installation and gas wells",
           "from_type": "pressures",
           "to": "Migratory shorebird numbers (bar-tailed godwit, red knot)",
@@ -13904,40 +13207,6 @@
             "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Guided tidal flat walking (mudflat hiking)",
-          "from_type": "activities",
-          "to": "Bait digging for lugworm (Arenicola marina)",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "OSPAR (2017) \"Intermediate Assessment\"",
-            "Halpern et al. (2015) \"Spatial and temporal changes in cumulative human impacts\"",
-            "OSPAR 2017 Intermediate Assessment"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Coastal flood protection through natural sediment dynamics",
-          "from_type": "impacts",
-          "to": "Coastal community flood safety",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Van Hoey et al. 2010 Marine Pollution Bulletin"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -14685,23 +13954,6 @@
             "HELCOM (2018) \"State of the Baltic Sea\"",
             "HELCOM (2023) \"Baltic Sea Action Plan\"",
             "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Archipelago zoning for nature protection vs recreation",
-          "from_type": "responses",
-          "to": "Antifouling paint leaching (copper, zinc) from boat hulls",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The negative feedback reflects a trade-off or antagonistic interaction where increases in the source variable suppress or reduce the target through competitive exclusion, resource limitation, or regulatory mechanisms",
-          "references": [
-            "Ronnback et al. (2007) \"Ecosystem goods and services from Swedish coastal habitats\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "HELCOM 2018 State of the Baltic Sea"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -15490,57 +14742,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Climate change adaptation needs",
-          "from_type": "drivers",
-          "to": "Artisanal reef fishing (traps, handlines, spearfishing)",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Dive tourism operator and resort employment",
-          "from_type": "welfare",
-          "to": "Artisanal fishing dependence for coastal food security",
-          "to_type": "drivers",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Destructive fishing (dynamite and cyanide use)",
-          "from_type": "activities",
-          "to": "Artisanal reef fishing (traps, handlines, spearfishing)",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -16179,23 +15380,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Artisanal trammel net fishing for demersal species",
-          "from_type": "activities",
-          "to": "Sewage overload during peak tourist season",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Artisanal fishing has no causal mechanism linking it to sewage overload. Sewage is driven by population density during tourist season, not by fishing activities. Structural connection.",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Ferry and cruise ship port operations",
           "from_type": "activities",
           "to": "Sewage overload during peak tourist season",
@@ -16276,57 +15460,6 @@
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\"",
             "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "immediate",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Fish provisioning from artisanal island fisheries",
-          "from_type": "impacts",
-          "to": "Resident quality of life affected by seasonal overcrowding",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "UNEP/MAP (2017) \"Mediterranean Quality Status Report\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Artisanal fishing tradition and cultural heritage",
-          "from_type": "drivers",
-          "to": "Artisanal trammel net fishing for demersal species",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Seawater desalination for freshwater supply",
-          "from_type": "activities",
-          "to": "Anchor damage to Posidonia oceanica meadows",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Desalination brine discharge causes osmotic stress to Posidonia (Sanchez-Lizaso et al. 2008) but has no mechanism to cause mechanical anchor damage. These are independent pressure pathways. Structural bridge connection.",
-          "references": [
-            "UNEP/MAP (2017) \"Mediterranean Quality Status Report\"",
-            "Coll et al. (2010) \"The biodiversity of the Mediterranean Sea\"",
-            "Coll et al. 2010 PLoS ONE"
           ],
           "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
@@ -17123,91 +16256,6 @@
           "references": [
             "Burke et al. (2011) \"Reefs at Risk Revisited\"",
             "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\"",
-            "Burke et al. 2011 Reefs at Risk Revisited"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Hurricane formation and intensification",
-          "from_type": "pressures",
-          "to": "Coral bleaching from marine heatwaves",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\"",
-            "Burke et al. 2011 Reefs at Risk Revisited"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Mangrove fringe extent and condition",
-          "from_type": "states",
-          "to": "Coastal storm protection by coral reefs and mangroves",
-          "to_type": "impacts",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Mangrove forests reduce wave height by 13-66% per 100 m of forest width, depending on tree density and tidal conditions",
-          "references": [
-            "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\"",
-            "Burke et al. 2011 Reefs at Risk Revisited"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Coastal livelihoods and poverty reduction",
-          "from_type": "drivers",
-          "to": "All-inclusive resort tourism operations",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Burke et al. 2011 Reefs at Risk Revisited"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Invasive mammalian predators (rats, mongoose) on native wildlife",
-          "from_type": "pressures",
-          "to": "Coral bleaching from marine heatwaves",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Marine invasive species alter ecosystem structure and function through competition, predation, and habitat modification",
-          "references": [
-            "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "Jackson et al. (2014) \"Status and Trends of Caribbean Coral Reefs\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Cruise ship industry growth",
-          "from_type": "drivers",
-          "to": "All-inclusive resort tourism operations",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Burke et al. (2011) \"Reefs at Risk Revisited\"",
             "Burke et al. 2011 Reefs at Risk Revisited"
           ],
           "temporal_lag": "medium-term",
@@ -18845,74 +17893,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Bycatch of seabirds and sea turtles in longlines",
-          "from_type": "pressures",
-          "to": "Cetacean population abundance (sperm whale, bottlenose dolphin)",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Fishing mortality above sustainable levels reduces spawning stock biomass, lowering reproductive output and population resilience",
-          "references": [
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Ronnback et al. (2007) \"Ecosystem goods and services from Swedish coastal habitats\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Invasive mammalian predators (rats, feral cats, mice) on native wildlife",
-          "from_type": "pressures",
-          "to": "Bycatch of seabirds and sea turtles in longlines",
-          "to_type": "pressures",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Marine invasive species alter ecosystem structure and function through competition, predation, and habitat modification",
-          "references": [
-            "Spalding et al. (2007) \"Marine ecoregions of the world\"",
-            "Halpern et al. 2008 Science",
-            "FAO 2020 State of World Fisheries and Aquaculture"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Intertidal and subtidal volcanic reef community composition",
-          "from_type": "states",
-          "to": "Cetacean population abundance (sperm whale, bottlenose dolphin)",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Burke et al. (2011) \"Reefs at Risk Revisited\"",
-            "Mumby et al. (2006) \"Fishing, trophic cascades, and the process of grazing on coral reefs\"",
-            "OSPAR 2017 Intermediate Assessment"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Community pride in unique natural heritage",
-          "from_type": "welfare",
-          "to": "Deep-water fisheries for tuna and swordfish",
-          "to_type": "drivers",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -19754,23 +18734,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Artisanal fisher community food access",
-          "from_type": "welfare",
-          "to": "Climate change adaptation needs",
-          "to_type": "drivers",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Invasive mammalian predators (rats, cats, tenrecs) on native wildlife",
           "from_type": "pressures",
           "to": "Climate change and ocean warming",
@@ -19783,57 +18746,6 @@
             "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
             "McClanahan et al. (2007) \"Effects of climate and seawater temperature variation on coral bleaching\"",
             "Obura et al. 2017 Marine Pollution Bulletin"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Biodiversity and endemism conservation value",
-          "from_type": "impacts",
-          "to": "Artisanal fisher community food access",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Blue economy diversification strategy",
-          "from_type": "drivers",
-          "to": "Artisanal trap and handline fishing",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Industrial purse seine tuna processing (canning)",
-          "from_type": "activities",
-          "to": "Artisanal trap and handline fishing",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "Worm et al. (2006) \"Impacts of biodiversity loss on ocean ecosystem services\"",
-            "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -20602,23 +19514,6 @@
           "reversibility": "partially_reversible"
         },
         {
-          "from": "Cultural identity linked to island maritime heritage",
-          "from_type": "welfare",
-          "to": "Military and strategic heritage value",
-          "to_type": "drivers",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "HELCOM (2018) \"State of the Baltic Sea\"",
-            "HELCOM 2021 Baltic Sea Action Plan"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "Grey seal haul-out colony sizes",
           "from_type": "states",
           "to": "Coastal erosion of limestone and glacial till shores",
@@ -20631,40 +19526,6 @@
             "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\"",
             "Claudet & Fraschetti (2010) \"Human-driven impacts on marine habitats\"",
             "HELCOM 2021 Baltic Sea Action Plan"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Agricultural production and food supply demand",
-          "from_type": "drivers",
-          "to": "Limestone quarrying (Gotland, Saaremaa)",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "HELCOM 2021 Baltic Sea Action Plan"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Grey seal management plans (population control debate)",
-          "from_type": "responses",
-          "to": "Agricultural production and food supply demand",
-          "to_type": "drivers",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\"",
-            "Borja et al. (2010) \"Marine management towards an integrated implementation\"",
-            "HELCOM 2018 State of the Baltic Sea"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -22263,57 +21124,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Allis shad (Alosa alosa) migration success",
-          "from_type": "states",
-          "to": "Benthic invertebrate diversity in estuarine mud",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Halpern et al. (2008) \"A global map of human impact on marine ecosystems\"",
-            "OSPAR (2010) \"Quality Status Report\"",
-            "OSPAR 2017 Intermediate Assessment"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Agricultural production demand in catchment",
-          "from_type": "drivers",
-          "to": "Aggregate extraction from estuary bed",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "OSPAR (2010) \"Quality Status Report\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Migratory fish exploitation (shad, eel, lamprey)",
-          "from_type": "activities",
-          "to": "Aggregate extraction from estuary bed",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "FAO (2020) \"The State of World Fisheries and Aquaculture\"",
-            "OSPAR (2010) \"Quality Status Report\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -23057,23 +21867,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Atlantic mackerel (Scomber scombrus) stock biomass",
-          "from_type": "states",
-          "to": "Beach recreational and surf tourism amenity",
-          "to_type": "impacts",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "MEA (2005) \"Millennium Ecosystem Assessment\"",
-            "Ronnback et al. (2007) \"Ecosystem goods and services from Swedish coastal habitats\"",
-            "Davenport and Davenport 2006 Estuarine Coastal and Shelf Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -23779,40 +22572,6 @@
           "references": [
             "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
             "HELCOM (2018) \"State of the Baltic Sea\"",
-            "Halpern et al. 2008 Science"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Coastal erosion awareness and shore protection demand",
-          "from_type": "drivers",
-          "to": "Blue mussel (Mytilus trossulus) harvesting for feed/nutrient removal",
-          "to_type": "activities",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. The positive feedback operates through direct resource dependency, where changes in the source variable proportionally affect the target variable through established ecological and socioeconomic pathways",
-          "references": [
-            "Elmgren & Larsson (2001) \"Nitrogen and the Baltic Sea\"",
-            "HELCOM (2018) \"State of the Baltic Sea\"",
-            "Nixon 1995 Ophelia"
-          ],
-          "temporal_lag": "medium-term",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Grey seal predation on coastal fish stocks and gear damage",
-          "from_type": "states",
-          "to": "Archipelago landscape aesthetic and recreational value",
-          "to_type": "impacts",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Bridge connection to integrate isolated subgraph into main DAPSI(W)R(M) network. Fishing mortality exceeding maximum sustainable yield (Fmsy) reduces spawning stock biomass below safe biological limits",
-          "references": [
-            "Snoeijs-Leijonmalm et al. (2017) \"Biological Oceanography of the Baltic Sea\"",
-            "Ronnback et al. (2007) \"Ecosystem goods and services from Swedish coastal habitats\"",
             "Halpern et al. 2008 Science"
           ],
           "temporal_lag": "medium-term",
