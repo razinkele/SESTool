@@ -14,6 +14,7 @@ import sys
 from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
+import re
 
 # Valid transitions after Rules 17-18 + ExUP exception (23 total)
 VALID_TRANSITIONS = {
@@ -35,6 +36,12 @@ VALID_TRANSITIONS = {
     ("drivers", "pressures"),  # ExUP exception (Elliott 2011)
 }
 
+# Part F: Research element detection
+RESEARCH_PATTERN = re.compile(r"\b(research|monitoring|surveys)\b", re.IGNORECASE)
+PHYSICAL_IMPACT_PATTERN = re.compile(
+    r"\b(sediment|sampling|drilling|dredging|coring)\b", re.IGNORECASE
+)
+
 
 def audit_kb(kb_path: str) -> dict:
     """Audit a single KB file and return flags."""
@@ -48,6 +55,7 @@ def audit_kb(kb_path: str) -> dict:
         "duplicate_rationale": [],
         "single_reference": [],
         "non_framework_transitions": [],
+        "research_elements": [],
     }
 
     all_rationales = defaultdict(list)
@@ -137,6 +145,24 @@ def audit_kb(kb_path: str) -> dict:
                 key = rationale.strip()[:200]
                 all_rationales[key].append(entry)
 
+        # Flag 7: Research/monitoring elements typed as activities
+        activities_list = context_data.get("activities", [])
+        if isinstance(activities_list, list):
+            for elem in activities_list:
+                name = elem.get("name", "") if isinstance(elem, dict) else str(elem)
+                if not name:
+                    continue
+                # Must match research/monitoring/surveys
+                if not RESEARCH_PATTERN.search(name):
+                    continue
+                # Skip if element also indicates physical impact
+                if PHYSICAL_IMPACT_PATTERN.search(name):
+                    continue
+                flags["research_elements"].append({
+                    "context": context_name,
+                    "element_name": name,
+                })
+
     # Flag 4: Duplicate rationale (3+ occurrences with different element pairs)
     for rationale_prefix, entries in all_rationales.items():
         if len(entries) >= 3:
@@ -156,6 +182,7 @@ def audit_kb(kb_path: str) -> dict:
         "duplicate_rationale_groups": len(flags["duplicate_rationale"]),
         "single_reference_count": len(flags["single_reference"]),
         "non_framework_transition_count": len(flags["non_framework_transitions"]),
+        "research_element_count": len(flags["research_elements"]),
     }
 
     return {
@@ -186,6 +213,7 @@ def write_markdown(report: dict, output_path: str):
         f"| Duplicate rationale groups | {s['duplicate_rationale_groups']} |",
         f"| Single-reference connections | {s['single_reference_count']} |",
         f"| Non-framework transitions | {s['non_framework_transition_count']} |",
+        f"| Research elements (needs review) | {s['research_element_count']} |",
         f"",
     ]
 
@@ -199,6 +227,10 @@ def write_markdown(report: dict, output_path: str):
                 lines.append(
                     f"- **{item['count']}x** ({item['distinct_pairs']} pairs): "
                     f'"{item["rationale_prefix"][:80]}..."'
+                )
+            elif "element_name" in item:
+                lines.append(
+                    f"- `{item['context']}`: {item['element_name'][:80]}"
                 )
             else:
                 lines.append(
@@ -249,6 +281,7 @@ def main():
         print(f"  Duplicate rationale: {s['duplicate_rationale_groups']}")
         print(f"  Single-reference: {s['single_reference_count']}")
         print(f"  Non-framework: {s['non_framework_transition_count']}")
+        print(f"  Research elements: {s['research_element_count']}")
         print(f"  Reports: {json_out}, {md_out}")
         print()
 
