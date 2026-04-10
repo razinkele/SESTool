@@ -63,6 +63,13 @@ def format_citation(entry):
     """Format short citation: 'FirstAuthor et al. YYYY'"""
     authors = entry.get('authors', 'Unknown')
     first = authors.split(' and ')[0].split(',')[0].strip()
+    # Fix garbled single-letter surnames (e.g., "C, O. Mauricio Hernandez")
+    if len(first) <= 2:
+        parts = authors.split(' and ')[0].split(',')
+        if len(parts) > 1:
+            first = parts[1].strip().split()[-1]  # Take last word of given names
+        if len(first) <= 2:
+            first = authors.split(' and ')[0].replace(',', ' ').strip()
     year = entry.get('year', '????')
     n_authors = len(authors.split(' and '))
     if n_authors > 2:
@@ -596,10 +603,10 @@ def build_kb(papers):
             {
                 "from": "Sediment plume and turbidity during construction",
                 "from_type": "pressures",
-                "to": "Seabed disturbance and habitat alteration from foundations and scour protection",
-                "to_type": "pressures",
-                "polarity": "+", "strength": "medium", "confidence": 4,
-                "rationale": "Construction turbidity compounds seabed alteration; suspended sediments resettle, smothering adjacent benthic habitats beyond the direct footprint",
+                "to": "Seabed sediment characteristics and soft-bottom infauna",
+                "to_type": "states",
+                "polarity": "-", "strength": "medium", "confidence": 4,
+                "rationale": "Suspended sediments resettle beyond the direct construction footprint, smothering soft-bottom infauna and temporarily reducing benthic biomass",
                 "references": refs_for_connection(['pressure_habitat'], ['state_benthos']),
                 "temporal_lag": "immediate", "reversibility": "reversible"
             },
@@ -974,11 +981,11 @@ def build_kb(papers):
             {
                 "from": "Compensation and mitigation funds for displaced fishers",
                 "from_type": "responses",
-                "to": "Exclusion of fishing vessels from wind farm safety zones",
-                "to_type": "pressures",
-                "polarity": "-", "strength": "weak", "confidence": 3,
-                "rationale": "Financial compensation does not directly reduce spatial exclusion but mitigates its economic impact on displaced fishing communities",
-                "references": refs_for_connection(['response_mitigation', 'response_stakeholder'], ['pressure_displacement']),
+                "to": "Commercial demersal trawl fisheries (sole, plaice, cod)",
+                "to_type": "activities",
+                "polarity": "+", "strength": "medium", "confidence": 4,
+                "rationale": "Financial compensation and mitigation funds support continued fishing fleet viability, enabling fishers to adapt to displacement by investing in gear, fuel and alternative grounds",
+                "references": refs_for_connection(['response_mitigation', 'response_stakeholder'], ['activity_fishing']),
                 "temporal_lag": "short-term", "reversibility": "reversible"
             },
             {
@@ -1010,6 +1017,30 @@ def build_kb(papers):
                 "rationale": "EIA visual impact assessment requirements influence turbine siting and distance from shore, reducing landscape impacts",
                 "references": refs_for_connection(['response_eia'], ['pressure_visual']),
                 "temporal_lag": "medium-term", "reversibility": "partially_reversible"
+            },
+
+            # ==========================================
+            # R → C: Responses restore/protect State
+            # ==========================================
+            {
+                "from": "Nature-inclusive design requirements for foundations",
+                "from_type": "responses",
+                "to": "Benthic epifaunal colonisation on turbine foundations",
+                "to_type": "states",
+                "polarity": "+", "strength": "medium", "confidence": 3,
+                "rationale": "Nature-inclusive design features (textured surfaces, reef elements) enhance epifaunal colonisation and biodiversity on foundation structures",
+                "references": refs_for_connection(['response_mitigation', 'measure_habitat_enhancement'], ['state_benthos']),
+                "temporal_lag": "medium-term", "reversibility": "partially_reversible"
+            },
+            {
+                "from": "Biodiversity monitoring programmes (pre- and post-construction)",
+                "from_type": "responses",
+                "to": "Seabird populations (gannet, kittiwake, terns)",
+                "to_type": "states",
+                "polarity": "+", "strength": "weak", "confidence": 3,
+                "rationale": "Monitoring programmes enable adaptive management (e.g., turbine curtailment) that reduces seabird collision mortality and displacement",
+                "references": refs_for_connection(['response_monitoring'], ['state_seabirds', 'pressure_bird_collision']),
+                "temporal_lag": "medium-term", "reversibility": "reversible"
             },
 
             # ==========================================
@@ -1830,6 +1861,30 @@ def build_kb(papers):
                 "references": refs_for_connection(['response_stakeholder', 'response_mitigation'], ['pressure_displacement']),
                 "temporal_lag": "short-term", "reversibility": "reversible"
             },
+
+            # R → C: Responses restore/protect State
+            {
+                "from": "Harbour porpoise bycatch mitigation (pingers, acoustic deterrents)",
+                "from_type": "responses",
+                "to": "Baltic harbour porpoise population (critically low in Baltic Proper)",
+                "to_type": "states",
+                "polarity": "+", "strength": "medium", "confidence": 4,
+                "rationale": "Acoustic deterrents on gillnets directly reduce harbour porpoise bycatch mortality, critical for the ~500-individual Baltic Proper population",
+                "references": refs_for_connection(['response_mitigation'], ['state_marine_mammals']),
+                "temporal_lag": "short-term", "reversibility": "reversible"
+            },
+
+            # R → D: Responses influence Drivers
+            {
+                "from": "EU Renewable Energy Directive Baltic implementation",
+                "from_type": "responses",
+                "to": "EU and national renewable energy targets for Baltic states",
+                "to_type": "drivers",
+                "polarity": "+", "strength": "strong", "confidence": 5,
+                "rationale": "EU RED transposition into national law translates EU climate commitments into binding Baltic state targets that accelerate wind deployment",
+                "references": refs_for_connection(['response_regulation'], ['driver_energy_transition']),
+                "temporal_lag": "short-term", "reversibility": "partially_reversible"
+            },
         ]
     }
 
@@ -2100,14 +2155,14 @@ def build_kb(papers):
                 "temporal_lag": "immediate", "reversibility": "irreversible"
             },
             {
-                "from": "Visual impact on coastal tourism seascapes",
+                "from": "Underwater noise from floating platform operation and installation",
                 "from_type": "pressures",
-                "to": "Coastal water quality and bathing water standards",
+                "to": "Mediterranean cetacean populations (fin whale, sperm whale, bottlenose dolphin)",
                 "to_type": "states",
                 "polarity": "-", "strength": "weak", "confidence": 2,
-                "rationale": "Construction activities near shore may temporarily affect water quality at bathing sites, though operational impacts are minimal",
-                "references": refs_for_connection(['pressure_visual'], ['state_biodiversity']),
-                "temporal_lag": "immediate", "reversibility": "reversible"
+                "rationale": "Continuous low-frequency operational noise from floating platforms and mooring chain may cause chronic disturbance to cetaceans in the vicinity",
+                "references": refs_for_connection(['pressure_noise'], ['state_marine_mammals']),
+                "temporal_lag": "medium-term", "reversibility": "reversible"
             },
             {
                 "from": "Mooring and anchor disturbance to deep-sea habitats",
@@ -2330,6 +2385,40 @@ def build_kb(papers):
                 "rationale": "Post-construction monitoring enables turbine curtailment during peak shearwater migration and collision detection to adapt operations",
                 "references": refs_for_connection(['response_monitoring'], ['pressure_bird_collision']),
                 "temporal_lag": "short-term", "reversibility": "reversible"
+            },
+
+            # R → C: Responses restore/protect State
+            {
+                "from": "Posidonia protection legislation (EU Habitats Directive)",
+                "from_type": "responses",
+                "to": "Posidonia oceanica meadow extent near cable landfall sites",
+                "to_type": "states",
+                "polarity": "+", "strength": "strong", "confidence": 5,
+                "rationale": "EU Habitats Directive priority habitat 1120* designation mandates Posidonia conservation, requiring cable route avoidance and horizontal directional drilling at landfall",
+                "references": refs_for_connection(['response_regulation'], ['state_biodiversity']),
+                "temporal_lag": "medium-term", "reversibility": "partially_reversible"
+            },
+            {
+                "from": "Marine Protected Areas and no-take zones",
+                "from_type": "responses",
+                "to": "Demersal and reef fish assemblages (hake, red mullet, grouper)",
+                "to_type": "states",
+                "polarity": "+", "strength": "strong", "confidence": 5,
+                "rationale": "No-take MPAs in the Mediterranean allow fish assemblage recovery, complementing wind farm exclusion zones as a refuge network",
+                "references": refs_for_connection(['measure_spatial'], ['state_fish']),
+                "temporal_lag": "medium-term", "reversibility": "reversible"
+            },
+
+            # R → D: Responses influence Drivers
+            {
+                "from": "Floating wind environmental consenting (national frameworks)",
+                "from_type": "responses",
+                "to": "EU and national renewable energy targets (REPowerEU, PNIEC)",
+                "to_type": "drivers",
+                "polarity": "+", "strength": "medium", "confidence": 4,
+                "rationale": "Streamlined consenting frameworks remove barriers to floating wind deployment, enabling achievement of REPowerEU Mediterranean targets",
+                "references": refs_for_connection(['response_regulation'], ['driver_energy_transition']),
+                "temporal_lag": "medium-term", "reversibility": "partially_reversible"
             },
         ]
     }

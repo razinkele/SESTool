@@ -34,7 +34,8 @@ Flag any transition not in this list as **CRITICAL**.
 ### 2. Causal Chain Completeness
 
 For each context, verify the complete DAPSIWRM loop exists:
-- D→A→P→C→ES→W→D (at least one complete path through all 6 links)
+- D→A→P→C→ES→GB/HW→D (at least one complete path through all 6 links)
+- Note: In the KB JSON, `impacts` = ES, `welfare` = GB+HW (merged)
 - At least one welfare→drivers feedback connection
 - At least one responses→activities AND one responses→pressures intervention
 
@@ -50,8 +51,8 @@ Review polarity against expected patterns:
 | A→P | + | Activities create pressures |
 | P→C | Usually - | Pressures degrade state (but + is valid for habitat creation) |
 | C→ES | + | State enables services |
-| ES→W | + | Services provide welfare |
-| W→D | + | Welfare reinforces drivers |
+| ES→GB/HW (impacts→welfare) | + | Services provide welfare |
+| GB/HW→D (welfare→drivers) | + | Welfare reinforces drivers |
 | R→A | Usually - | Responses restrict activities (but + for enabling) |
 | R→P | - | Responses mitigate pressures |
 

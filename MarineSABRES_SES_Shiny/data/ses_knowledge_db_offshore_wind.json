@@ -323,7 +323,7 @@
             "Batchelder et al. 2026",
             "Baulaz et al. 2023",
             "Bolwig et al. 2020",
-            "Chung 2021"
+            "Chen et al. 2023"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "irreversible"
@@ -343,7 +343,7 @@
             "Batchelder et al. 2026",
             "Baulaz et al. 2023",
             "Bolwig et al. 2020",
-            "Chung 2021"
+            "Chen et al. 2023"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "irreversible"
@@ -378,8 +378,8 @@
           "confidence": 4,
           "rationale": "Demand for seafood sustains commercial fishing effort in North Sea waters that overlap with wind farm zones",
           "references": [
-            "Qu et al. 2023",
-            "Silva & Coêlho 2025"
+            "Silva & Coêlho 2025",
+            "Yang et al. 2023"
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
@@ -450,8 +450,8 @@
           "confidence": 5,
           "rationale": "Pile driving for monopile foundations produces high-intensity impulsive noise propagating tens of kilometres, affecting marine mammals and fish",
           "references": [
-            "C et al. 2021",
             "Farr et al. 2021",
+            "Hernandez et al. 2021",
             "Skiniti et al. 2026",
             "Watson et al. 2025"
           ],
@@ -470,8 +470,8 @@
           "references": [
             "Borger et al. 2025",
             "Cerdá et al. 2025",
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
-            "Do et al. 2025",
             "Farr et al. 2021",
             "Gasparatos et al. 2017"
           ],
@@ -590,8 +590,8 @@
           "references": [
             "Borger et al. 2025",
             "Cerdá et al. 2025",
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
-            "Do et al. 2025",
             "Farr et al. 2021",
             "Gasparatos et al. 2017"
           ],
@@ -628,10 +628,10 @@
           "confidence": 5,
           "rationale": "Bottom trawling physically disturbs seabed sediments and benthic communities outside wind farm zones",
           "references": [
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
             "Farr et al. 2021",
             "Gimpel et al. 2023",
-            "Li et al. 2023",
             "Serpetti et al. 2021",
             "Watson et al. 2025"
           ],
@@ -641,18 +641,18 @@
         {
           "from": "Sediment plume and turbidity during construction",
           "from_type": "pressures",
-          "to": "Seabed disturbance and habitat alteration from foundations and scour protection",
-          "to_type": "pressures",
-          "polarity": "+",
+          "to": "Seabed sediment characteristics and soft-bottom infauna",
+          "to_type": "states",
+          "polarity": "-",
           "strength": "medium",
           "confidence": 4,
-          "rationale": "Construction turbidity compounds seabed alteration; suspended sediments resettle, smothering adjacent benthic habitats beyond the direct footprint",
+          "rationale": "Suspended sediments resettle beyond the direct construction footprint, smothering soft-bottom infauna and temporarily reducing benthic biomass",
           "references": [
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
             "Farr et al. 2021",
             "Gimpel et al. 2023",
             "Ivanov et al. 2021",
-            "Li et al. 2023",
             "Serpetti et al. 2021"
           ],
           "temporal_lag": "immediate",
@@ -688,9 +688,9 @@
           "confidence": 4,
           "rationale": "Construction noise causes temporary threshold shifts in hearing, behavioural disturbance, and displacement of harbour porpoises from construction zones",
           "references": [
-            "C et al. 2021",
             "Farr et al. 2021",
             "Harris et al. 2025",
+            "Hernandez et al. 2021",
             "Serpetti et al. 2021",
             "Skiniti et al. 2026",
             "Watson et al. 2025"
@@ -708,11 +708,11 @@
           "confidence": 5,
           "rationale": "Introduction of hard substrate in sandy environments creates new habitat, enabling colonisation by epifaunal communities (mussels, anemones, crustaceans)",
           "references": [
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
             "Farr et al. 2021",
             "Gimpel et al. 2023",
             "Ivanov et al. 2021",
-            "Li et al. 2023",
             "Serpetti et al. 2021"
           ],
           "temporal_lag": "short-term",
@@ -729,8 +729,8 @@
           "rationale": "Foundation installation and cable trenching destroy existing soft-bottom infaunal communities within the direct footprint",
           "references": [
             "Borger et al. 2025",
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
-            "Do et al. 2025",
             "Gasparatos et al. 2017",
             "Gimpel et al. 2023",
             "Ivanov et al. 2021"
@@ -748,11 +748,11 @@
           "confidence": 4,
           "rationale": "Foundation structures and scour protection create artificial reef habitat, supporting edible crab, lobster and juvenile fish",
           "references": [
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
             "Farr et al. 2021",
             "Gimpel et al. 2023",
             "Ivanov et al. 2021",
-            "Li et al. 2023",
             "Serpetti et al. 2021"
           ],
           "temporal_lag": "short-term",
@@ -849,9 +849,9 @@
           "rationale": "Beam trawling physically disrupts seabed structure and reduces benthic biomass and species diversity",
           "references": [
             "Borger et al. 2025",
+            "Chen et al. 2023",
             "Coates et al. 2016",
             "Cripps & Aabel 2002",
-            "Do et al. 2025",
             "Fang et al. 2026",
             "Forastiero et al. 2024"
           ],
@@ -870,10 +870,10 @@
           "references": [
             "Baulaz et al. 2023",
             "Borger et al. 2025",
+            "Chen et al. 2023",
             "Coates et al. 2016",
             "Cripps & Aabel 2002",
-            "Farr et al. 2021",
-            "Gimpel et al. 2023"
+            "Farr et al. 2021"
           ],
           "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
@@ -962,11 +962,11 @@
           "rationale": "Established epifaunal communities on foundations provide reef ecosystem services including habitat provision and enhanced local productivity",
           "references": [
             "Baulaz et al. 2023",
+            "Chen et al. 2023",
             "Coates et al. 2016",
             "Cripps & Aabel 2002",
             "Farr et al. 2021",
-            "Gimpel et al. 2023",
-            "Hooper et al. 2017"
+            "Gimpel et al. 2023"
           ],
           "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
@@ -1227,11 +1227,11 @@
           "rationale": "MSP designates wind energy areas, enabling development while attempting to minimise conflicts with other sea uses",
           "references": [
             "Depellegrin et al. 2024",
-            "Do et al. 2025",
             "Gasbarro et al. 2025",
             "Gazos & Vagiona 2024",
             "Josimović et al. 2021",
-            "Krabbe 2025"
+            "Krabbe 2025",
+            "Kruse et al. 2024"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -1306,8 +1306,8 @@
           "confidence": 5,
           "rationale": "Bubble curtains and soft-start procedures reduce peak sound pressure levels by 10-20 dB, significantly lowering noise exposure for marine mammals",
           "references": [
-            "C et al. 2021",
             "Farr et al. 2021",
+            "Hernandez et al. 2021",
             "Skiniti et al. 2026",
             "Watson et al. 2025"
           ],
@@ -1317,19 +1317,19 @@
         {
           "from": "Compensation and mitigation funds for displaced fishers",
           "from_type": "responses",
-          "to": "Exclusion of fishing vessels from wind farm safety zones",
-          "to_type": "pressures",
-          "polarity": "-",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Financial compensation does not directly reduce spatial exclusion but mitigates its economic impact on displaced fishing communities",
+          "to": "Commercial demersal trawl fisheries (sole, plaice, cod)",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Financial compensation and mitigation funds support continued fishing fleet viability, enabling fishers to adapt to displacement by investing in gear, fuel and alternative grounds",
           "references": [
             "Barz et al. 2025",
-            "Díaz & Soares 2021",
-            "Harvey et al. 2025",
-            "Krauland et al. 2023",
-            "Magar et al. 2018",
-            "Safarian et al. 2025"
+            "Bidwell et al. 2023",
+            "Biniek 2017",
+            "Fang et al. 2026",
+            "Farr et al. 2021",
+            "Harvey et al. 2025"
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
@@ -1344,11 +1344,11 @@
           "confidence": 3,
           "rationale": "Nature-inclusive design features (textured surfaces, reef elements) transform habitat alteration pressure into an ecological opportunity by promoting colonisation",
           "references": [
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
             "Farr et al. 2021",
             "Geels & Ayoub 2023",
             "Gimpel et al. 2023",
-            "Li et al. 2023",
             "Stranddorf et al. 2026"
           ],
           "temporal_lag": "medium-term",
@@ -1364,9 +1364,9 @@
           "confidence": 4,
           "rationale": "Restricting pile driving to periods of low marine mammal abundance reduces noise exposure during critical breeding and nursing seasons",
           "references": [
-            "C et al. 2021",
             "Farr et al. 2021",
             "Harris et al. 2025",
+            "Hernandez et al. 2021",
             "Serpetti et al. 2021",
             "Skiniti et al. 2026",
             "Watson et al. 2025"
@@ -1394,6 +1394,46 @@
           "reversibility": "partially_reversible"
         },
         {
+          "from": "Nature-inclusive design requirements for foundations",
+          "from_type": "responses",
+          "to": "Benthic epifaunal colonisation on turbine foundations",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Nature-inclusive design features (textured surfaces, reef elements) enhance epifaunal colonisation and biodiversity on foundation structures",
+          "references": [
+            "Chen et al. 2023",
+            "Coates et al. 2016",
+            "Cripps & Aabel 2002",
+            "Farr et al. 2021",
+            "Gimpel et al. 2023",
+            "Klain et al. 2020"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Biodiversity monitoring programmes (pre- and post-construction)",
+          "from_type": "responses",
+          "to": "Seabird populations (gannet, kittiwake, terns)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Monitoring programmes enable adaptive management (e.g., turbine curtailment) that reduces seabird collision mortality and displacement",
+          "references": [
+            "Acheson & Acheson 2016",
+            "Devine-Wright & Wiersma 2020",
+            "D’Adamo et al. 2025",
+            "Gasbarro et al. 2025",
+            "Gkeka-Serpetsidaki et al. 2022",
+            "Hall et al. 2022"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
           "from": "EU Renewable Energy Directive and national energy targets",
           "from_type": "responses",
           "to": "Renewable energy targets and climate policy (EU Green Deal, national NDCs)",
@@ -1408,7 +1448,7 @@
             "Chung 2021",
             "Deveci et al. 2020",
             "Devine-Wright & Wiersma 2020",
-            "Do et al. 2025"
+            "D’Adamo et al. 2025"
           ],
           "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
@@ -1609,7 +1649,7 @@
             "Batchelder et al. 2026",
             "Baulaz et al. 2023",
             "Bolwig et al. 2020",
-            "Chung 2021"
+            "Chen et al. 2023"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "irreversible"
@@ -1649,7 +1689,7 @@
             "Batchelder et al. 2026",
             "Baulaz et al. 2023",
             "Bolwig et al. 2020",
-            "Chung 2021"
+            "Chen et al. 2023"
           ],
           "temporal_lag": "short-term",
           "reversibility": "irreversible"
@@ -1668,8 +1708,8 @@
             "Barz et al. 2025",
             "Bidwell et al. 2023",
             "Biniek 2017",
-            "Coates et al. 2016",
-            "Cripps & Aabel 2002"
+            "Chen et al. 2023",
+            "Coates et al. 2016"
           ],
           "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
@@ -1723,8 +1763,8 @@
           "references": [
             "Borger et al. 2025",
             "Cerdá et al. 2025",
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
-            "Do et al. 2025",
             "Farr et al. 2021",
             "Gasparatos et al. 2017"
           ],
@@ -1938,11 +1978,11 @@
           "rationale": "MSP designation of deep-water wind energy areas enables floating wind development while managing spatial conflicts",
           "references": [
             "Depellegrin et al. 2024",
-            "Do et al. 2025",
             "Gasbarro et al. 2025",
             "Gazos & Vagiona 2024",
             "Josimović et al. 2021",
-            "Krabbe 2025"
+            "Krabbe 2025",
+            "Kruse et al. 2024"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -1982,7 +2022,7 @@
             "Cisneros-Montemayor et al. 2026",
             "Farr et al. 2021",
             "Geels & Ayoub 2023",
-            "Harris et al. 2025"
+            "Hall et al. 2022"
           ],
           "temporal_lag": "immediate",
           "reversibility": "reversible"
@@ -2273,7 +2313,7 @@
             "Batchelder et al. 2026",
             "Baulaz et al. 2023",
             "Bolwig et al. 2020",
-            "Chung 2021"
+            "Chen et al. 2023"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "irreversible"
@@ -2293,7 +2333,7 @@
             "Batchelder et al. 2026",
             "Baulaz et al. 2023",
             "Bolwig et al. 2020",
-            "Chung 2021"
+            "Chen et al. 2023"
           ],
           "temporal_lag": "short-term",
           "reversibility": "irreversible"
@@ -2308,8 +2348,8 @@
           "confidence": 4,
           "rationale": "Market demand sustains commercial fishing effort despite declining cod stocks and spatial competition from wind farms",
           "references": [
-            "Qu et al. 2023",
-            "Silva & Coêlho 2025"
+            "Silva & Coêlho 2025",
+            "Yang et al. 2023"
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
@@ -2324,8 +2364,8 @@
           "confidence": 5,
           "rationale": "Herring and sprat remain economically important Baltic fisheries sustaining fleet viability",
           "references": [
-            "Qu et al. 2023",
-            "Silva & Coêlho 2025"
+            "Silva & Coêlho 2025",
+            "Yang et al. 2023"
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
@@ -2356,8 +2396,8 @@
           "confidence": 5,
           "rationale": "Pile driving in the shallow Baltic propagates noise efficiently through the water column, critically affecting the small Baltic harbour porpoise population",
           "references": [
-            "C et al. 2021",
             "Farr et al. 2021",
+            "Hernandez et al. 2021",
             "Skiniti et al. 2026",
             "Watson et al. 2025"
           ],
@@ -2376,8 +2416,8 @@
           "references": [
             "Borger et al. 2025",
             "Cerdá et al. 2025",
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
-            "Do et al. 2025",
             "Farr et al. 2021",
             "Gasparatos et al. 2017"
           ],
@@ -2454,10 +2494,10 @@
           "confidence": 5,
           "rationale": "Bottom trawling physically disturbs Baltic seabed sediments and benthic communities",
           "references": [
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
             "Farr et al. 2021",
             "Gimpel et al. 2023",
-            "Li et al. 2023",
             "Serpetti et al. 2021",
             "Watson et al. 2025"
           ],
@@ -2513,9 +2553,9 @@
           "confidence": 5,
           "rationale": "The Baltic Proper harbour porpoise population (~500 individuals) is critically endangered; construction noise causes displacement and hearing damage at population-significant scales",
           "references": [
-            "C et al. 2021",
             "Farr et al. 2021",
             "Harris et al. 2025",
+            "Hernandez et al. 2021",
             "Serpetti et al. 2021",
             "Skiniti et al. 2026",
             "Watson et al. 2025"
@@ -2533,11 +2573,11 @@
           "confidence": 4,
           "rationale": "Hard substrate introduction enables epifaunal colonisation, though Baltic brackish conditions limit diversity compared to marine environments",
           "references": [
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
             "Farr et al. 2021",
             "Gimpel et al. 2023",
             "Ivanov et al. 2021",
-            "Li et al. 2023",
             "Serpetti et al. 2021"
           ],
           "temporal_lag": "short-term",
@@ -2618,7 +2658,7 @@
             "Cisneros-Montemayor et al. 2026",
             "Farr et al. 2021",
             "Geels & Ayoub 2023",
-            "Harris et al. 2025"
+            "Hall et al. 2022"
           ],
           "temporal_lag": "immediate",
           "reversibility": "reversible"
@@ -2634,9 +2674,9 @@
           "rationale": "Repeated trawling reduces benthic biomass and shifts community composition toward opportunistic species",
           "references": [
             "Borger et al. 2025",
+            "Chen et al. 2023",
             "Coates et al. 2016",
             "Cripps & Aabel 2002",
-            "Do et al. 2025",
             "Fang et al. 2026",
             "Forastiero et al. 2024"
           ],
@@ -2730,11 +2770,11 @@
           "rationale": "Epifaunal communities on Baltic wind farm foundations provide rare hard-substrate habitat in a sea naturally dominated by soft sediments",
           "references": [
             "Baulaz et al. 2023",
+            "Chen et al. 2023",
             "Coates et al. 2016",
             "Cripps & Aabel 2002",
             "Farr et al. 2021",
-            "Gimpel et al. 2023",
-            "Hooper et al. 2017"
+            "Gimpel et al. 2023"
           ],
           "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
@@ -2883,11 +2923,11 @@
           "rationale": "HELCOM/VASAB cross-border MSP designates wind energy zones in the Baltic, enabling coordinated multinational development",
           "references": [
             "Depellegrin et al. 2024",
-            "Do et al. 2025",
             "Gasbarro et al. 2025",
             "Gazos & Vagiona 2024",
             "Josimović et al. 2021",
-            "Krabbe 2025"
+            "Krabbe 2025",
+            "Kruse et al. 2024"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -2925,9 +2965,9 @@
             "Barz et al. 2025",
             "Bidwell et al. 2023",
             "Biniek 2017",
+            "Chen et al. 2023",
             "Coates et al. 2016",
-            "Cripps & Aabel 2002",
-            "Forastiero et al. 2024"
+            "Cripps & Aabel 2002"
           ],
           "temporal_lag": "immediate",
           "reversibility": "reversible"
@@ -2942,8 +2982,8 @@
           "confidence": 5,
           "rationale": "Germany and Denmark mandate bubble curtain noise thresholds for Baltic construction, critical for harbour porpoise protection",
           "references": [
-            "C et al. 2021",
             "Farr et al. 2021",
+            "Hernandez et al. 2021",
             "Skiniti et al. 2026",
             "Watson et al. 2025"
           ],
@@ -2965,7 +3005,7 @@
             "Cisneros-Montemayor et al. 2026",
             "Farr et al. 2021",
             "Geels & Ayoub 2023",
-            "Harris et al. 2025"
+            "Hall et al. 2022"
           ],
           "temporal_lag": "immediate",
           "reversibility": "reversible"
@@ -2980,9 +3020,9 @@
           "confidence": 4,
           "rationale": "Seasonal windows restrict pile driving during harbour porpoise calving (May-Aug) and seabird wintering periods",
           "references": [
-            "C et al. 2021",
             "Farr et al. 2021",
             "Harris et al. 2025",
+            "Hernandez et al. 2021",
             "Serpetti et al. 2021",
             "Skiniti et al. 2026",
             "Watson et al. 2025"
@@ -3009,6 +3049,46 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Harbour porpoise bycatch mitigation (pingers, acoustic deterrents)",
+          "from_type": "responses",
+          "to": "Baltic harbour porpoise population (critically low in Baltic Proper)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Acoustic deterrents on gillnets directly reduce harbour porpoise bycatch mortality, critical for the ~500-individual Baltic Proper population",
+          "references": [
+            "Abramic et al. 2022",
+            "Batchelder et al. 2026",
+            "Cisneros-Montemayor et al. 2026",
+            "Farr et al. 2021",
+            "Geels & Ayoub 2023",
+            "Hall et al. 2022"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "EU Renewable Energy Directive Baltic implementation",
+          "from_type": "responses",
+          "to": "EU and national renewable energy targets for Baltic states",
+          "to_type": "drivers",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "EU RED transposition into national law translates EU climate commitments into binding Baltic state targets that accelerate wind deployment",
+          "references": [
+            "Abramic et al. 2022",
+            "Arias et al. 2025",
+            "Chung 2021",
+            "Deveci et al. 2020",
+            "Devine-Wright & Wiersma 2020",
+            "D’Adamo et al. 2025"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -3262,7 +3342,7 @@
             "Batchelder et al. 2026",
             "Baulaz et al. 2023",
             "Bolwig et al. 2020",
-            "Chung 2021"
+            "Chen et al. 2023"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "irreversible"
@@ -3282,7 +3362,7 @@
             "Batchelder et al. 2026",
             "Baulaz et al. 2023",
             "Bolwig et al. 2020",
-            "Chung 2021"
+            "Chen et al. 2023"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "irreversible"
@@ -3297,8 +3377,8 @@
           "confidence": 5,
           "rationale": "Deep-rooted artisanal fishing traditions sustain tens of thousands of small-scale fishers across the Mediterranean coast",
           "references": [
-            "Qu et al. 2023",
-            "Silva & Coêlho 2025"
+            "Silva & Coêlho 2025",
+            "Yang et al. 2023"
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
@@ -3353,8 +3433,8 @@
             "Barz et al. 2025",
             "Bidwell et al. 2023",
             "Biniek 2017",
-            "Coates et al. 2016",
-            "Cripps & Aabel 2002"
+            "Chen et al. 2023",
+            "Coates et al. 2016"
           ],
           "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
@@ -3411,8 +3491,8 @@
           "references": [
             "Borger et al. 2025",
             "Cerdá et al. 2025",
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
-            "Do et al. 2025",
             "Farr et al. 2021",
             "Gasparatos et al. 2017"
           ],
@@ -3547,7 +3627,7 @@
             "Cisneros-Montemayor et al. 2026",
             "Farr et al. 2021",
             "Geels & Ayoub 2023",
-            "Harris et al. 2025"
+            "Hall et al. 2022"
           ],
           "temporal_lag": "immediate",
           "reversibility": "reversible"
@@ -3563,8 +3643,8 @@
           "rationale": "Posidonia meadows are extremely slow to recover (centuries); cable-related damage at landfall sites causes effectively irreversible loss",
           "references": [
             "Borger et al. 2025",
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
-            "Do et al. 2025",
             "Gasparatos et al. 2017",
             "Gimpel et al. 2023",
             "Ivanov et al. 2021"
@@ -3573,23 +3653,23 @@
           "reversibility": "irreversible"
         },
         {
-          "from": "Visual impact on coastal tourism seascapes",
+          "from": "Underwater noise from floating platform operation and installation",
           "from_type": "pressures",
-          "to": "Coastal water quality and bathing water standards",
+          "to": "Mediterranean cetacean populations (fin whale, sperm whale, bottlenose dolphin)",
           "to_type": "states",
           "polarity": "-",
           "strength": "weak",
           "confidence": 2,
-          "rationale": "Construction activities near shore may temporarily affect water quality at bathing sites, though operational impacts are minimal",
+          "rationale": "Continuous low-frequency operational noise from floating platforms and mooring chain may cause chronic disturbance to cetaceans in the vicinity",
           "references": [
-            "Baulaz et al. 2023",
-            "Chomać-Pierzecka 2024",
-            "Hooper et al. 2017",
-            "Kim et al. 2018",
-            "Klain et al. 2020",
-            "Peña et al. 2024"
+            "Farr et al. 2021",
+            "Harris et al. 2025",
+            "Hernandez et al. 2021",
+            "Serpetti et al. 2021",
+            "Skiniti et al. 2026",
+            "Watson et al. 2025"
           ],
-          "temporal_lag": "immediate",
+          "temporal_lag": "medium-term",
           "reversibility": "reversible"
         },
         {
@@ -3602,11 +3682,11 @@
           "confidence": 2,
           "rationale": "Floating structures and moorings provide novel hard substrate in deep Mediterranean waters, enabling biofouling colonisation",
           "references": [
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
             "Farr et al. 2021",
             "Gimpel et al. 2023",
             "Ivanov et al. 2021",
-            "Li et al. 2023",
             "Serpetti et al. 2021"
           ],
           "temporal_lag": "short-term",
@@ -3864,11 +3944,11 @@
           "rationale": "Barcelona Convention and WESTMED initiative coordinate Mediterranean MSP, designating floating wind zones across national boundaries",
           "references": [
             "Depellegrin et al. 2024",
-            "Do et al. 2025",
             "Gasbarro et al. 2025",
             "Gazos & Vagiona 2024",
             "Josimović et al. 2021",
-            "Krabbe 2025"
+            "Krabbe 2025",
+            "Kruse et al. 2024"
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
@@ -3906,9 +3986,9 @@
             "Barz et al. 2025",
             "Bidwell et al. 2023",
             "Biniek 2017",
+            "Chen et al. 2023",
             "Coates et al. 2016",
-            "Cripps & Aabel 2002",
-            "Forastiero et al. 2024"
+            "Cripps & Aabel 2002"
           ],
           "temporal_lag": "immediate",
           "reversibility": "reversible"
@@ -3923,9 +4003,9 @@
           "confidence": 5,
           "rationale": "EIA requirements mandate cable route alternatives and horizontal directional drilling to avoid Posidonia meadows",
           "references": [
+            "Chen et al. 2023",
             "Cripps & Aabel 2002",
             "Gimpel et al. 2023",
-            "Li et al. 2023",
             "Pezy et al. 2020",
             "Skjølsvold et al. 2024",
             "Stranddorf et al. 2026"
@@ -3948,7 +4028,7 @@
             "Cisneros-Montemayor et al. 2026",
             "Farr et al. 2021",
             "Geels & Ayoub 2023",
-            "Harris et al. 2025"
+            "Hall et al. 2022"
           ],
           "temporal_lag": "immediate",
           "reversibility": "reversible"
@@ -3964,11 +4044,11 @@
           "rationale": "EU Habitats Directive strictly protects Posidonia as priority habitat (1120*), requiring avoidance of cable damage through routing constraints",
           "references": [
             "Cripps & Aabel 2002",
-            "Do et al. 2025",
             "Farr et al. 2021",
             "Gasparatos et al. 2017",
             "Geels & Ayoub 2023",
-            "Oliveira 2023"
+            "Oliveira 2023",
+            "Salvador et al. 2018"
           ],
           "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
@@ -3990,6 +4070,66 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Posidonia protection legislation (EU Habitats Directive)",
+          "from_type": "responses",
+          "to": "Posidonia oceanica meadow extent near cable landfall sites",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "EU Habitats Directive priority habitat 1120* designation mandates Posidonia conservation, requiring cable route avoidance and horizontal directional drilling at landfall",
+          "references": [
+            "Abramic et al. 2022",
+            "Brown et al. 2024",
+            "Chomać-Pierzecka 2024",
+            "Château et al. 2012",
+            "Cripps & Aabel 2002",
+            "Doorga et al. 2023"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Marine Protected Areas and no-take zones",
+          "from_type": "responses",
+          "to": "Demersal and reef fish assemblages (hake, red mullet, grouper)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "No-take MPAs in the Mediterranean allow fish assemblage recovery, complementing wind farm exclusion zones as a refuge network",
+          "references": [
+            "Barz et al. 2025",
+            "Cripps & Aabel 2002",
+            "Deveci et al. 2020",
+            "Gimpel et al. 2023",
+            "Paxton et al. 2020",
+            "Serpetti et al. 2021"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Floating wind environmental consenting (national frameworks)",
+          "from_type": "responses",
+          "to": "EU and national renewable energy targets (REPowerEU, PNIEC)",
+          "to_type": "drivers",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Streamlined consenting frameworks remove barriers to floating wind deployment, enabling achievement of REPowerEU Mediterranean targets",
+          "references": [
+            "Abramic et al. 2022",
+            "Arias et al. 2025",
+            "Chung 2021",
+            "Deveci et al. 2020",
+            "Devine-Wright & Wiersma 2020",
+            "D’Adamo et al. 2025"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
         }
       ]
     }
