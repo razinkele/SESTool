@@ -1030,6 +1030,20 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         }
       }
 
+      # Apply swapped directions to final connections
+      swapped_indices <- status$swapped
+      for (swap_idx in swapped_indices) {
+        if (swap_idx <= length(final_connections)) {
+          conn <- final_connections[[swap_idx]]
+          final_connections[[swap_idx]]$from_id <- conn$to_id
+          final_connections[[swap_idx]]$to_id <- conn$from_id
+          final_connections[[swap_idx]]$from_name <- conn$to_name
+          final_connections[[swap_idx]]$to_name <- conn$from_name
+          final_connections[[swap_idx]]$from_type <- conn$to_type
+          final_connections[[swap_idx]]$to_type <- conn$from_type
+        }
+      }
+
       debug_log(sprintf("Finalizing with %d of %d connections (rejected: %d)",
                   length(final_connections),
                   length(rv$template_connections),

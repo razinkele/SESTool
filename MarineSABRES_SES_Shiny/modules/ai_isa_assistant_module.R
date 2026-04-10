@@ -866,7 +866,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
     })
 
     # Call the connection_review_tabbed server module
-    connection_review_tabbed_server(
+    conn_review_status <- connection_review_tabbed_server(
       id = "conn_review",
       connections_reactive = reactive(rv$suggested_connections),
       i18n = i18n,
@@ -954,6 +954,25 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                             i18n$t("modules.isa.these_connections_will_be_included_in_your_saved_i")),
              timestamp = Sys.time())
       ))
+
+      # Apply swapped directions before saving
+      swapped_indices <- conn_review_status()$swapped
+      for (swap_idx in swapped_indices) {
+        if (swap_idx %in% rv$approved_connections && swap_idx <= length(rv$suggested_connections)) {
+          conn <- rv$suggested_connections[[swap_idx]]
+          rv$suggested_connections[[swap_idx]]$from_index <- conn$to_index
+          rv$suggested_connections[[swap_idx]]$to_index <- conn$from_index
+          rv$suggested_connections[[swap_idx]]$from_name <- conn$to_name
+          rv$suggested_connections[[swap_idx]]$to_name <- conn$from_name
+          rv$suggested_connections[[swap_idx]]$from_type <- conn$to_type
+          rv$suggested_connections[[swap_idx]]$to_type <- conn$from_type
+          # Reverse the matrix name (e.g., "d_a" -> "a_d")
+          parts <- strsplit(conn$matrix, "_")[[1]]
+          if (length(parts) == 2) {
+            rv$suggested_connections[[swap_idx]]$matrix <- paste0(parts[2], "_", parts[1])
+          }
+        }
+      }
 
       debug_log("[AI ISA CONNECTIONS] Saving with save_to_project_format()\n")
       current_data <- project_data_reactive()

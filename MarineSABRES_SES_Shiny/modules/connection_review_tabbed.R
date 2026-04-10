@@ -408,7 +408,8 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
       batches_info = list(),  # Store batch categorization info
       active_tab = NULL,  # Track the currently active tab to prevent unwanted navigation
       scroll_to = NULL,  # Target connection card ID to scroll to after re-render
-      show_delay = FALSE  # Whether to show delay inputs on connection cards
+      show_delay = FALSE,  # Whether to show delay inputs on connection cards
+      last_action_time = NULL
     )
 
     # Delay toggle observer
@@ -1045,6 +1046,11 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
           # Swap direction button - toggle the from/to direction
           observeEvent(input[[paste0("swap_direction_", local_idx)]], {
+            # Debounce: ignore if fired within 500ms of last action
+            now <- as.numeric(Sys.time())
+            if (!is.null(rv$last_action_time) && (now - rv$last_action_time) < 0.5) return()
+            rv$last_action_time <- now
+
             # Toggle swapped state for this connection
             if (local_idx %in% rv$swapped) {
               rv$swapped <- setdiff(rv$swapped, local_idx)
@@ -1060,7 +1066,7 @@ connection_review_tabbed_server <- function(id, connections_reactive, i18n,
 
             # Stay on the same card after swap (fires after re-render)
             rv$scroll_to <- ns(paste0("conn_card_", local_idx))
-          })
+          }, ignoreInit = TRUE)
         })
       })
     })
@@ -1111,13 +1117,12 @@ render_connection_card <- function(conn, conn_idx, ns, i18n, rv, batch_indices =
         # From element
         span(style = "font-weight: 500;", uiOutput(ns(paste0("from_name_", conn_idx)), inline = TRUE)),
         # Swap direction button
-        tags$button(
-          id = ns(paste0("swap_direction_", conn_idx)),
-          class = "btn btn-outline-secondary btn-xs",
+        actionButton(
+          inputId = ns(paste0("swap_direction_", conn_idx)),
+          label = icon("exchange-alt"),
+          class = "btn-outline-secondary btn-xs",
           style = "padding: 2px 6px; font-size: 0.75rem; margin: 0 5px;",
-          title = i18n$t("common.misc.swap_connection_direction"),
-          onclick = sprintf("Shiny.setInputValue('%s', Math.random())", ns(paste0("swap_direction_", conn_idx))),
-          icon("exchange-alt")
+          title = i18n$t("common.misc.swap_connection_direction")
         ),
         # Polarity indicator
         uiOutput(ns(paste0("polarity_text_", conn_idx)), inline = TRUE),

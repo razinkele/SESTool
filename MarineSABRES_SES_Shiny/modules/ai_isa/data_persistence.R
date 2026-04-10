@@ -333,6 +333,19 @@ build_adjacency_matrices <- function(elements, suggested_connections,
     # Determine which matrix and fill it (with bounds check)
     mat_name <- conn$matrix
     mat <- matrices[[mat_name]]
+    if (is.null(mat) && !is.null(mat_name) && nzchar(mat_name)) {
+      # Reverse-direction matrix from a swapped connection — initialize it
+      parts <- strsplit(mat_name, "_")[[1]]
+      if (length(parts) == 2) {
+        forward_name <- paste0(parts[2], "_", parts[1])
+        forward_mat <- matrices[[forward_name]]
+        if (!is.null(forward_mat)) {
+          matrices[[mat_name]] <- matrix(0, nrow = ncol(forward_mat), ncol = nrow(forward_mat),
+                                          dimnames = list(colnames(forward_mat), rownames(forward_mat)))
+          mat <- matrices[[mat_name]]
+        }
+      }
+    }
     if (!is.null(mat) &&
         conn$from_index >= 1 && conn$from_index <= nrow(mat) &&
         conn$to_index >= 1 && conn$to_index <= ncol(mat)) {
