@@ -81,10 +81,17 @@ $(document).ready(function() {
     var savedLang = localStorage.getItem('marinesabres_language');
     if (savedLang && savedLang !== 'en') {
       // Redirect with language parameter
-      window.location.search = '?language=' + savedLang;
+      updateQueryParam('language', savedLang);
     }
   }
 });
+
+// Helper: update a single URL query param without destroying others
+function updateQueryParam(key, value) {
+  var params = new URLSearchParams(window.location.search);
+  params.set(key, value);
+  window.location.search = params.toString();
+}
 
 // Function to save project data to sessionStorage before language reload
 // This preserves the user's work (SES creation progress, etc.) across language changes
@@ -117,7 +124,7 @@ Shiny.addCustomMessageHandler('saveLanguageAndReload', function(lang) {
   }
 
   __dbg('[JS] Setting URL to: ?language=' + lang);
-  window.location.search = '?language=' + lang;
+  updateQueryParam('language', lang);
 });
 
 // On Shiny connected, check if we need to restore project data after language change
@@ -236,7 +243,7 @@ Shiny.addCustomMessageHandler('save_user_level', function(message) {
 // Only URL parameter is set for bookmarking support
 function saveUserLevel(level) {
   // localStorage.setItem('marinesabres_user_level', level); // REMOVED
-  window.location.search = '?user_level=' + level;
+  updateQueryParam('user_level', level);
 }
 
 // Custom message handler for sidebar tooltip initialization
