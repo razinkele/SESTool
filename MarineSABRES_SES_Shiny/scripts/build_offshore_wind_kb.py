@@ -1354,6 +1354,30 @@ def build_kb(papers):
                 "references": refs_for_connection(['response_monitoring'], ['pressure_bird_collision']),
                 "temporal_lag": "short-term", "reversibility": "reversible"
             },
+
+            # R → C: Responses restore/protect State
+            {
+                "from": "Entanglement risk mitigation for mooring systems",
+                "from_type": "responses",
+                "to": "Cetacean populations (dolphins, fin whales, sperm whales)",
+                "to_type": "states",
+                "polarity": "+", "strength": "medium", "confidence": 3,
+                "rationale": "Whale-safe mooring design and monitoring protocols reduce entanglement risk, supporting cetacean population viability in deep-water wind zones",
+                "references": refs_for_connection(['response_mitigation'], ['state_marine_mammals']),
+                "temporal_lag": "medium-term", "reversibility": "reversible"
+            },
+
+            # R → D: Responses influence Drivers
+            {
+                "from": "Floating wind environmental consenting frameworks",
+                "from_type": "responses",
+                "to": "National renewable energy and net-zero targets",
+                "to_type": "drivers",
+                "polarity": "+", "strength": "medium", "confidence": 4,
+                "rationale": "Streamlined consenting frameworks reduce permitting delays, enabling faster floating wind deployment and reinforcing national renewable energy ambitions",
+                "references": refs_for_connection(['response_regulation'], ['driver_energy_transition']),
+                "temporal_lag": "medium-term", "reversibility": "partially_reversible"
+            },
         ]
     }
 

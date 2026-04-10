@@ -2044,6 +2044,46 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Entanglement risk mitigation for mooring systems",
+          "from_type": "responses",
+          "to": "Cetacean populations (dolphins, fin whales, sperm whales)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Whale-safe mooring design and monitoring protocols reduce entanglement risk, supporting cetacean population viability in deep-water wind zones",
+          "references": [
+            "Abramic et al. 2022",
+            "Batchelder et al. 2026",
+            "Cisneros-Montemayor et al. 2026",
+            "Farr et al. 2021",
+            "Geels & Ayoub 2023",
+            "Hall et al. 2022"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Floating wind environmental consenting frameworks",
+          "from_type": "responses",
+          "to": "National renewable energy and net-zero targets",
+          "to_type": "drivers",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Streamlined consenting frameworks reduce permitting delays, enabling faster floating wind deployment and reinforcing national renewable energy ambitions",
+          "references": [
+            "Abramic et al. 2022",
+            "Arias et al. 2025",
+            "Chung 2021",
+            "Deveci et al. 2020",
+            "Devine-Wright & Wiersma 2020",
+            "D’Adamo et al. 2025"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
