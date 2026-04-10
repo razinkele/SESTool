@@ -229,6 +229,13 @@ The DAPSIWRM (Drivers-Activities-Pressures-State-Impacts-Welfare-Responses-Measu
     - Logic: Ecosystem components affect each other
     - Example: "Coral health" → "Fish habitat availability" (+)
 
+17. **P → P** (Pressure cascading/cumulative effects)
+    - Polarity: Varies (typically reinforcing)
+    - Logic: One pressure can trigger or amplify another pressure
+    - Example: "Nutrient enrichment" → "Cyanobacteria bloom formation" (+)
+    - References: Halpern et al. 2008 Science; Crain et al. 2008 Ecology Letters
+    - Note: Common in eutrophication chains and cumulative impact scenarios
+
 ## Connection Matrices
 
 The framework uses adjacency matrices to represent connections:
