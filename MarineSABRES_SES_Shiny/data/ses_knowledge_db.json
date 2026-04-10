@@ -23852,10 +23852,6 @@
         {
           "name": "Cultural heritage of island fishing traditions",
           "relevance": 0.8
-        },
-        {
-          "name": "EU Biodiversity Strategy 2030 targets",
-          "relevance": 0.7
         }
       ],
       "activities": [
@@ -23890,6 +23886,11 @@
         {
           "name": "Submarine cable and pipeline installation",
           "relevance": 0.6
+        },
+        {
+          "name": "Coastal urbanization and land reclamation",
+          "relevance": 0.75,
+          "flag": "reclassified-from-pressure-2026-04-11; needs downstream A→P connections"
         }
       ],
       "pressures": [
@@ -23920,10 +23921,6 @@
         {
           "name": "Underwater noise from vessel traffic",
           "relevance": 0.7
-        },
-        {
-          "name": "Coastal urbanization and land reclamation",
-          "relevance": 0.75
         }
       ],
       "states": [
@@ -24031,6 +24028,10 @@
         },
         {
           "name": "OSPAR Convention measures for NE Atlantic",
+          "relevance": 0.7
+        },
+        {
+          "name": "EU Biodiversity Strategy 2030 targets",
           "relevance": 0.7
         }
       ],
@@ -24141,7 +24142,7 @@
           "from": "Population growth on island communities",
           "from_type": "drivers",
           "to": "Coastal urbanization and land reclamation",
-          "to_type": "pressures",
+          "to_type": "activities",
           "polarity": "+",
           "strength": "medium",
           "confidence": 3,
@@ -24631,23 +24632,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Coastal aquaculture (sea bass, sea bream)",
-          "from_type": "activities",
-          "to": "Coastal water quality index",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Fish farm effluents from sea bass and sea bream cage culture in the Canary Islands and Madeira release nutrients and organic matter that reduce water quality in the oligotrophic waters surrounding volcanic islands.",
-          "references": [
-            "Tuya et al. (2014) Biogeography of the Macaronesian region",
-            "Hernandez et al. (2018) Tourism impacts on Canary Islands marine ecosystems",
-            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Coastal water quality index",
           "from_type": "states",
           "to": "Decline in coastal carbon sequestration",
@@ -24700,7 +24684,7 @@
         },
         {
           "from": "EU Biodiversity Strategy 2030 targets",
-          "from_type": "drivers",
+          "from_type": "responses",
           "to": "Azores Marine Park and MPA network expansion",
           "to_type": "responses",
           "polarity": "+",
@@ -24714,40 +24698,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "reversible"
-        },
-        {
-          "from": "Scientific research and monitoring",
-          "from_type": "activities",
-          "to": "Rocky reef community structure and endemism",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "moderate",
-          "confidence": 3,
-          "rationale": "Scientific research expeditions document and monitor endemic rocky reef species in Macaronesian waters, informing conservation priorities for these unique high-endemism assemblages.",
-          "references": [
-            "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\"",
-            "Tuya et al. (2014) \"Biogeography of the Macaronesian region\"",
-            "Hernández et al. (2018) \"Tourism impacts on Canary Islands marine ecosystems\""
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
-          "from": "Submarine cable and pipeline installation",
-          "from_type": "activities",
-          "to": "Cystoseira and Sargassum forest extent and health",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "moderate",
-          "confidence": 3,
-          "rationale": "Installation of submarine cables and pipelines across the Macaronesian seabed causes localised physical disturbance to shallow benthic habitats, including Cystoseira and Sargassum forests important for endemic biodiversity.",
-          "references": [
-            "Tuya et al. (2014) \"Biogeography of the Macaronesian region\"",
-            "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\"",
-            "Hernández et al. (2018) \"Tourism impacts on Canary Islands marine ecosystems\""
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "partially_reversible"
         },
         {
           "from": "Ocean warming and marine heatwaves",
@@ -24765,40 +24715,6 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Recreational diving and whale watching",
-          "from_type": "activities",
-          "to": "Recreational wellbeing from ocean access",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 4,
-          "rationale": "Macaronesian island economies provide extensive marine recreation activities including diving and whale watching; direct ocean access through these activities underpins recreational wellbeing for residents and visitors.",
-          "references": [
-            "Hernández et al. (2018) \"Tourism impacts on Canary Islands marine ecosystems\"",
-            "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\"",
-            "Tuya et al. (2014) \"Biogeography of the Macaronesian region\""
-          ],
-          "temporal_lag": "immediate",
-          "reversibility": "reversible"
-        },
-        {
-          "from": "Ocean warming and marine heatwaves",
-          "from_type": "pressures",
-          "to": "Coastal property values",
-          "to_type": "welfare",
-          "polarity": "-",
-          "strength": "moderate",
-          "confidence": 3,
-          "rationale": "Increasing ocean warming and marine heatwave frequency in Macaronesian island waters amplify coastal erosion and flood risks, progressively reducing the security and market value of coastal properties.",
-          "references": [
-            "Tuya et al. (2014) \"Biogeography of the Macaronesian region\"",
-            "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\"",
-            "Hernández et al. (2018) \"Tourism impacts on Canary Islands marine ecosystems\""
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "irreversible"
         },
         {
           "from": "EU Biodiversity Strategy implementation",
@@ -24860,10 +24776,6 @@
         {
           "name": "Climate change and deep-ocean warming",
           "relevance": 0.75
-        },
-        {
-          "name": "OSPAR and CBD conservation commitments",
-          "relevance": 0.85
         },
         {
           "name": "Submarine cable infrastructure demand",
@@ -25016,6 +24928,10 @@
         {
           "name": "NEAFC bottom fishing closures",
           "relevance": 0.8
+        },
+        {
+          "name": "OSPAR and CBD conservation commitments",
+          "relevance": 0.85
         }
       ],
       "connections": [
@@ -25582,7 +25498,7 @@
         },
         {
           "from": "OSPAR and CBD conservation commitments",
-          "from_type": "drivers",
+          "from_type": "responses",
           "to": "Azores deep-sea MPA designations",
           "to_type": "responses",
           "polarity": "+",
@@ -26475,23 +26391,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Loss of apex predator trophic function",
-          "from_type": "impacts",
-          "to": "Disrupted pelagic food web connectivity",
-          "to_type": "impacts",
-          "polarity": "+",
-          "strength": "medium",
-          "confidence": 3,
-          "rationale": "Removal of sharks and large tuna from Macaronesian pelagic ecosystems triggers mesopredator release and trophic cascades that propagate through the open ocean food web, reducing overall ecosystem stability.",
-          "references": [
-            "Friedlander et al. (2017) Marine biodiversity in the Azores",
-            "Lloret et al. (2008) Fishing as a driver of change in the Macaronesian marine environment",
-            "Halpern et al. (2008) A global map of human impact on marine ecosystems"
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "partially_reversible"
-        },
-        {
           "from": "EU Common Fisheries Policy for pelagic stocks",
           "from_type": "drivers",
           "to": "Industrial tuna purse-seine and pole-and-line fishing",
@@ -26523,91 +26422,6 @@
             "EU (2018) \"Renewable Energy Directive\""
           ],
           "temporal_lag": "medium-term",
-          "reversibility": "reversible"
-        },
-        {
-          "from": "Offshore wind and wave energy development",
-          "from_type": "activities",
-          "to": "Pelagic shark and ray population status",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "moderate",
-          "confidence": 3,
-          "rationale": "Construction noise and electromagnetic fields from offshore energy infrastructure can disturb pelagic elasmobranchs and alter the movement patterns of pelagic sharks and rays in Macaronesian open-coast waters.",
-          "references": [
-            "Tuya et al. (2014) \"Biogeography of the Macaronesian region\"",
-            "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\"",
-            "Hernández et al. (2018) \"Tourism impacts on Canary Islands marine ecosystems\""
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
-          "from": "Marine scientific research expeditions",
-          "from_type": "activities",
-          "to": "Pelagic Sargassum community extent",
-          "to_type": "states",
-          "polarity": "+",
-          "strength": "weak",
-          "confidence": 3,
-          "rationale": "Scientific expeditions monitor Sargassum drift dynamics around Macaronesian open coasts, generating data that guides management responses to increasing Sargassum strandings.",
-          "references": [
-            "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\"",
-            "Tuya et al. (2014) \"Biogeography of the Macaronesian region\"",
-            "Hernández et al. (2018) \"Tourism impacts on Canary Islands marine ecosystems\""
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
-          "from": "Military sonar exercises",
-          "from_type": "activities",
-          "to": "Large cetacean population health (sperm whale, beaked whales)",
-          "to_type": "states",
-          "polarity": "-",
-          "strength": "moderate",
-          "confidence": 3,
-          "rationale": "Military sonar exercises in Macaronesian waters are linked to cetacean strandings, as the Canary Islands and Azores host major naval exercise zones that overlap with sperm whale and beaked whale migration corridors.",
-          "references": [
-            "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\"",
-            "Hernández et al. (2018) \"Tourism impacts on Canary Islands marine ecosystems\"",
-            "Tuya et al. (2014) \"Biogeography of the Macaronesian region\""
-          ],
-          "temporal_lag": "immediate",
-          "reversibility": "partially_reversible"
-        },
-        {
-          "from": "Pelagic Sargassum community extent",
-          "from_type": "states",
-          "to": "Marine ecotourism income from pelagic wildlife",
-          "to_type": "welfare",
-          "polarity": "-",
-          "strength": "moderate",
-          "confidence": 3,
-          "rationale": "Increasing Sargassum strandings on Macaronesian beaches reduce beach attractiveness and marine ecotourism income from pelagic wildlife encounters, affecting island economies dependent on marine recreation.",
-          "references": [
-            "Hernández et al. (2018) \"Tourism impacts on Canary Islands marine ecosystems\"",
-            "Tuya et al. (2014) \"Biogeography of the Macaronesian region\"",
-            "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\""
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
-          "from": "Industrial tuna purse-seine and pole-and-line fishing",
-          "from_type": "activities",
-          "to": "Cultural significance of traditional tuna fishing",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 4,
-          "rationale": "The continuation of traditional and industrial tuna fishing practices in Macaronesian communities directly sustains the cultural significance of tuna fishing as a key element of local cultural identity and intergenerational knowledge transfer.",
-          "references": [
-            "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\"",
-            "Hernández et al. (2018) \"Tourism impacts on Canary Islands marine ecosystems\"",
-            "Tuya et al. (2014) \"Biogeography of the Macaronesian region\""
-          ],
-          "temporal_lag": "long-term",
           "reversibility": "reversible"
         },
         {
