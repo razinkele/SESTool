@@ -1033,6 +1033,39 @@
       "it": "I loop di retroazione sono stati rilevati mediante ricerca in profondità sulla rete diretta DAPSI(W)R(M). I loop sono classificati come di Rinforzo (numero pari di connessioni negative, che amplificano il cambiamento) o di Bilanciamento (numero dispari di connessioni negative, che cercano l'equilibrio).",
       "no": "Tilbakekoblingsløkker ble oppdaget ved hjelp av dybde-først-søk på det rettede DAPSI(W)R(M)-nettverket. Løkker klassifiseres som Forsterkende (partall negative forbindelser, forsterker endring) eller Balanserende (oddetall negative forbindelser, søker likevekt).",
       "el": "Οι βρόχοι ανατροφοδότησης εντοπίστηκαν χρησιμοποιώντας αναζήτηση κατά βάθος στο κατευθυνόμενο δίκτυο DAPSI(W)R(M). Οι βρόχοι ταξινομούνται ως Ενισχυτικοί (ζυγός αριθμός αρνητικών συνδέσεων, ενισχύοντας την αλλαγή) ή Εξισορροπητικοί (μονός αριθμός αρνητικών συνδέσεων, αναζητώντας ισορροπία)."
+    },
+    "modules.analysis.loops.filtered_info": {
+      "en": "Detected %d cycles total. %d were filtered out as they don't follow standard DAPSI(W)R(M) transition rules.",
+      "es": "Se detectaron %d ciclos en total. %d fueron filtrados porque no siguen las reglas de transición estándar DAPSI(W)R(M).",
+      "fr": "Détecté %d cycles au total. %d ont été filtrés car ils ne suivent pas les règles de transition standard DAPSI(W)R(M).",
+      "de": "Insgesamt %d Zyklen erkannt. %d wurden herausgefiltert, da sie nicht den Standard-DAPSI(W)R(M)-Übergangsregeln entsprechen.",
+      "lt": "Iš viso aptikta %d ciklų. %d buvo išfiltruoti, nes neatitinka standartinių DAPSI(W)R(M) perėjimo taisyklių.",
+      "pt": "Detectados %d ciclos no total. %d foram filtrados por não seguirem as regras de transição padrão DAPSI(W)R(M).",
+      "it": "Rilevati %d cicli in totale. %d sono stati filtrati perché non seguono le regole di transizione standard DAPSI(W)R(M).",
+      "no": "Oppdaget %d sykluser totalt. %d ble filtrert ut fordi de ikke følger standard DAPSI(W)R(M)-overgangsregler.",
+      "el": "Εντοπίστηκαν %d κύκλοι συνολικά. %d φιλτραρίστηκαν καθώς δεν ακολουθούν τους κανόνες μετάβασης DAPSI(W)R(M)."
+    },
+    "modules.analysis.loops.show_all_cycles": {
+      "en": "Show all cycles (ignore framework validation)",
+      "es": "Mostrar todos los ciclos (ignorar validación del marco)",
+      "fr": "Afficher tous les cycles (ignorer la validation du cadre)",
+      "de": "Alle Zyklen anzeigen (Framework-Validierung ignorieren)",
+      "lt": "Rodyti visus ciklus (ignoruoti sistemos validavimą)",
+      "pt": "Mostrar todos os ciclos (ignorar validação do framework)",
+      "it": "Mostra tutti i cicli (ignora la validazione del framework)",
+      "no": "Vis alle sykluser (ignorer rammeverksvalidering)",
+      "el": "Εμφάνιση όλων των κύκλων (αγνόηση επικύρωσης πλαισίου)"
+    },
+    "modules.analysis.loops.show_all_cycles_warning": {
+      "en": "Non-standard cycles may not represent meaningful feedback loops in the DAPSI(W)R(M) framework.",
+      "es": "Los ciclos no estándar pueden no representar bucles de retroalimentación significativos en el marco DAPSI(W)R(M).",
+      "fr": "Les cycles non standard peuvent ne pas représenter des boucles de rétroaction significatives dans le cadre DAPSI(W)R(M).",
+      "de": "Nicht-standardmäßige Zyklen stellen möglicherweise keine sinnvollen Rückkopplungsschleifen im DAPSI(W)R(M)-Rahmen dar.",
+      "lt": "Nestandartiniai ciklai gali neatspindėti prasmingų grįžtamojo ryšio kilpų DAPSI(W)R(M) sistemoje.",
+      "pt": "Ciclos não padrão podem não representar loops de retroalimentação significativos no framework DAPSI(W)R(M).",
+      "it": "I cicli non standard potrebbero non rappresentare loop di retroazione significativi nel framework DAPSI(W)R(M).",
+      "no": "Ikke-standardsykluser representerer kanskje ikke meningsfulle tilbakekoblingsløkker i DAPSI(W)R(M)-rammeverket.",
+      "el": "Οι μη τυπικοί κύκλοι μπορεί να μην αντιπροσωπεύουν σημαντικούς βρόχους ανατροφοδότησης στο πλαίσιο DAPSI(W)R(M)."
     }
   }
 }

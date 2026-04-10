@@ -70,6 +70,7 @@ analysis_loops_ui <- function(id, i18n) {
                               step = 50),
                   checkboxInput(ns("include_self_loops"), i18n$t("modules.analysis.loops.include_self_loops"), value = FALSE),
                   checkboxInput(ns("filter_trivial"), i18n$t("modules.analysis.loops.filter_trivial"), value = TRUE),
+                  checkboxInput(ns("show_all_cycles"), i18n$t("modules.analysis.loops.show_all_cycles"), value = FALSE),
                   tags$small(class = "text-muted",
                     i18n$t("modules.analysis.loops.note_lower_values")),
                   br(), br(),
@@ -82,7 +83,8 @@ analysis_loops_ui <- function(id, i18n) {
                   verbatimTextOutput(ns("detection_summary")),
                   hr(),
                   h5(i18n$t("modules.analysis.loops.processing_status")),
-                  textOutput(ns("detection_status"))
+                  textOutput(ns("detection_status")),
+                  uiOutput(ns("filter_info"))
                 )
               )
             ),
@@ -531,7 +533,8 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           incProgress(0.1, detail = i18n$t("modules.analysis.loops.progress_details"))
           Sys.sleep(0.1)
 
-          loop_info <- process_cycles_to_loops(all_loops, nodes, edges, g)
+          loop_info <- process_cycles_to_loops(all_loops, nodes, edges, g,
+                                                validate_dapsirwrm = !isTRUE(input$show_all_cycles))
 
           incProgress(0.2, detail = i18n$t("modules.analysis.loops.progress_finalizing"))
           Sys.sleep(0.1)
@@ -540,6 +543,28 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           loop_data$graph <- g
           loop_data$all_loops <- all_loops
           loop_data$detection_complete <- TRUE
+
+          # Show filter transparency info
+          n_total <- attr(loop_info, "n_total") %||% 0
+          n_filtered <- attr(loop_info, "n_filtered") %||% 0
+          if (n_filtered > 0) {
+            output$filter_info <- renderUI({
+              tagList(
+                div(class = "alert alert-info", style = "margin-top: 10px;",
+                  icon("info-circle"),
+                  sprintf(i18n$t("modules.analysis.loops.filtered_info"), n_total, n_filtered)
+                ),
+                if (isTRUE(input$show_all_cycles)) {
+                  div(class = "alert alert-warning", style = "margin-top: 5px;",
+                    icon("exclamation-triangle"),
+                    i18n$t("modules.analysis.loops.show_all_cycles_warning")
+                  )
+                }
+              )
+            })
+          } else {
+            output$filter_info <- renderUI({ NULL })
+          }
 
           # Save loop results to project_data for CLD visualization
           project_data <- project_data_reactive()
@@ -580,6 +605,73 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
         })
       })
     })
+
+    # Re-filter cached loops when "show all cycles" checkbox changes
+    observeEvent(input$show_all_cycles, {
+      req(loop_data$detection_complete)
+      req(!is.null(loop_data$all_loops))
+      req(!is.null(loop_data$graph))
+
+      all_loops <- loop_data$all_loops
+
+      # Replay user filters (same logic as in detection handler)
+      if (!isTRUE(input$include_self_loops)) {
+        all_loops <- Filter(function(loop) length(loop) > 1, all_loops)
+      }
+      if (isTRUE(input$filter_trivial)) {
+        all_loops <- Filter(function(loop) length(loop) > 2, all_loops)
+      }
+
+      # Apply display cap
+      if (length(all_loops) > 500) {
+        all_loops <- all_loops[1:500]
+      }
+
+      if (length(all_loops) == 0) return()
+
+      # Reuse cached graph data — MUST use isolate() to prevent the observer
+      # from re-firing when project_data changes (build_graph_from_isa reads
+      # project_data_reactive, which would create an unwanted dependency).
+      graph_data <- isolate(build_graph_from_isa())
+      req(!is.null(graph_data))
+      g <- graph_data$graph
+      nodes <- graph_data$nodes
+      edges <- graph_data$edges
+
+      loop_info <- process_cycles_to_loops(all_loops, nodes, edges, g,
+                                            validate_dapsirwrm = !isTRUE(input$show_all_cycles))
+
+      loop_data$loops <- loop_info
+
+      # Update filter info display
+      n_total <- attr(loop_info, "n_total") %||% 0
+      n_filtered <- attr(loop_info, "n_filtered") %||% 0
+      if (n_filtered > 0 || isTRUE(input$show_all_cycles)) {
+        output$filter_info <- renderUI({
+          tagList(
+            if (n_filtered > 0) {
+              div(class = "alert alert-info", style = "margin-top: 10px;",
+                icon("info-circle"),
+                sprintf(i18n$t("modules.analysis.loops.filtered_info"), n_total, n_filtered)
+              )
+            },
+            if (isTRUE(input$show_all_cycles)) {
+              div(class = "alert alert-warning", style = "margin-top: 5px;",
+                icon("exclamation-triangle"),
+                i18n$t("modules.analysis.loops.show_all_cycles_warning")
+              )
+            }
+          )
+        })
+      } else {
+        output$filter_info <- renderUI({ NULL })
+      }
+
+      # Update status text
+      output$detection_status <- renderText(
+        sprintf(i18n$t("modules.analysis.loops.detection_complete_n"), nrow(loop_info))
+      )
+    }, ignoreInit = TRUE)
 
     # Detection Summary ----
     output$detection_summary <- renderText({

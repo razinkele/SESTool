@@ -921,9 +921,8 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm 
     result <- bind_rows(loops_list)
     result$LoopID <- seq_len(nrow(result))
     result$Name <- paste0("Loop_", result$LoopID)
-    return(result)
   } else {
-    return(data.frame(
+    result <- data.frame(
       LoopID = integer(0),
       Name = character(0),
       Type = character(0),
@@ -932,8 +931,14 @@ process_cycles_to_loops <- function(cycles, nodes, edges, g, validate_dapsirwrm 
       NodeIDs = character(0),
       Significance = character(0),
       Story = character(0)
-    ))
+    )
   }
+
+  # Attach filtering metadata for UI transparency
+  attr(result, "n_total") <- length(cycles)
+  attr(result, "n_filtered") <- length(invalid_loops)
+
+  return(result)
 }
 
 # ============================================================================
