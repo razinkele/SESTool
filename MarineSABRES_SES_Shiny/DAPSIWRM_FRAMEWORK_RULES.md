@@ -236,6 +236,23 @@ The DAPSIWRM (Drivers-Activities-Pressures-State-Impacts-Welfare-Responses-Measu
     - References: Halpern et al. 2008 Science; Crain et al. 2008 Ecology Letters
     - Note: Common in eutrophication chains and cumulative impact scenarios
 
+18. **A → A** (Activity interactions)
+    - Polarity: Varies (competition/-, facilitation/+)
+    - Logic: Human activities compete with, displace, or facilitate other activities
+    - Example: "Guided tidal flat walking" → "Bait digging for lugworm" (+)
+    - Reference: Knights et al. 2013 "A step-wise approach for the identification and management of cumulative effects"
+    - Note: Extension rule for Maritime Spatial Planning and cumulative effects analysis. Not part of core Elliott 2014 DAPSI(W)R(M); reserved for MSP contexts.
+
+### Documented Exceptions
+
+**D → P (Exogenic Unmanaged Pressures)**
+
+Climate change and other exogenic drivers can create pressures directly without a locally identifiable activity intermediary. Reference: Elliott 2011 "Exogenic unmanaged pressures."
+
+- Valid use: "Climate change" → "Ocean warming" (the driver produces the pressure without a locally identifiable activity)
+- Invalid use: "Population growth" → "Coastal urbanization" (urbanization is an Activity, not a Pressure)
+- 3 of the 4 D→P connections in the KB are valid ExUP cases (all climate-driven); the fourth was fixed via element reclassification in the KB cleanup.
+
 ## Connection Matrices
 
 The framework uses adjacency matrices to represent connections:
