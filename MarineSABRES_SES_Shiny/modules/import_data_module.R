@@ -414,6 +414,24 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         status <- review_status()
         approved <- status$approved
         rejected <- status$rejected
+        swapped_indices <- status$swapped
+
+        # Apply swapped directions BEFORE rejection filtering to preserve
+        # index alignment. Swap indices correspond to positions in
+        # rv$parsed_connections, which align 1:1 with rv$connections_data rows
+        # (see parse_connections_for_review). Any future edit to that function
+        # that filters or reorders rows will break this invariant.
+        if (length(swapped_indices) > 0) {
+          for (swap_idx in swapped_indices) {
+            if (swap_idx <= nrow(rv$connections_data)) {
+              old_from <- rv$connections_data[swap_idx, "From"]
+              rv$connections_data[swap_idx, "From"] <- rv$connections_data[swap_idx, "To"]
+              rv$connections_data[swap_idx, "To"] <- old_from
+            }
+          }
+          debug_log(sprintf("Applied %d connection direction swaps from review",
+                      length(swapped_indices)), "IMPORT")
+        }
 
         # Filter connections based on review
         if (length(rejected) > 0) {
