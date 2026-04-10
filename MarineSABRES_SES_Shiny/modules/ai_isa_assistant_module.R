@@ -1733,7 +1733,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
                         removeModal()
                         move_to_next_step()
-                      }, ignoreInit = TRUE, once = TRUE)
+                      }, ignoreInit = TRUE)
 
                     } else {
                       # No conflict - proceed normally
@@ -1750,7 +1750,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                       move_to_next_step()
                     }
                   }
-                }, ignoreInit = TRUE, once = TRUE)
+                }, ignoreInit = TRUE)
               })
             })
 
@@ -1758,11 +1758,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
             # Observer for "Other" button - regional sea
             obs_other <- observeEvent(input[[paste0("regional_sea_other_s", current_step)]], {
-              if (rv$current_step == current_step) {
+              if (rv$current_step == current_step && !rv$show_text_input) {
                 debug_log("[AI ISA] Regional sea 'Other' button clicked - showing text input\n")
                 rv$show_text_input <- TRUE
               }
-            }, ignoreInit = TRUE, once = TRUE)
+            }, ignoreInit = TRUE)
             active_observers <<- c(active_observers, list(obs_other))
           }
 
@@ -1792,7 +1792,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
                       move_to_next_step()
                     }
-                  }, ignoreInit = TRUE, once = TRUE)
+                  }, ignoreInit = TRUE)
                 })
               })
 
@@ -1800,11 +1800,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
               # Observer for "Other" button - ecosystem
               obs_other <- observeEvent(input[[paste0("ecosystem_other_s", current_step)]], {
-                if (rv$current_step == current_step) {
+                if (rv$current_step == current_step && !rv$show_text_input) {
                   debug_log("[AI ISA] Ecosystem 'Other' button clicked - showing text input\n")
                   rv$show_text_input <- TRUE
                 }
-              }, ignoreInit = TRUE, once = TRUE)
+              }, ignoreInit = TRUE)
               active_observers <<- c(active_observers, list(obs_other))
             }
           }
@@ -1905,11 +1905,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
               # Observer for "Other" button - issue
               obs_other <- observeEvent(input[[paste0("issue_other_s", current_step)]], {
-                if (rv$current_step == current_step) {
+                if (rv$current_step == current_step && !rv$show_text_input) {
                   debug_log("[AI ISA] Issue 'Other' button clicked - showing text input\n")
                   rv$show_text_input <- TRUE
                 }
-              }, ignoreInit = TRUE, once = TRUE)
+              }, ignoreInit = TRUE)
               active_observers <<- c(active_observers, list(obs_other))
 
               # NOTE: Removed inline continue button observer - now handled by
@@ -1943,7 +1943,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
                       move_to_next_step()
                     }
-                  }, ignoreInit = TRUE, once = TRUE)
+                  }, ignoreInit = TRUE)
                 })
               })
 
@@ -1951,11 +1951,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
               # Observer for "Other" button - issue
               obs_other <- observeEvent(input[[paste0("issue_other_s", current_step)]], {
-                if (rv$current_step == current_step) {
+                if (rv$current_step == current_step && !rv$show_text_input) {
                   debug_log("[AI ISA] Issue 'Other' button clicked - showing text input\n")
                   rv$show_text_input <- TRUE
                 }
-              }, ignoreInit = TRUE, once = TRUE)
+              }, ignoreInit = TRUE)
               active_observers <<- c(active_observers, list(obs_other))
             }
           }
@@ -1969,11 +1969,17 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                 example_text <- step_info$examples[i]
 
                 observeEvent(input[[button_id]], {
-                  # Only process if still on the same step
+                  # Only process if still on the same step and not already added
                   if (rv$current_step == current_step) {
-                    process_answer(example_text)
+                    # Prevent duplicate elements from rapid clicks
+                    step_info <- QUESTION_FLOW[[current_step + 1]]
+                    already_added <- !is.null(step_info$target) &&
+                      example_text %in% names(rv$elements[[step_info$target]])
+                    if (!already_added) {
+                      process_answer(example_text)
+                    }
                   }
-                }, ignoreInit = TRUE, once = TRUE)
+                }, ignoreInit = TRUE)
               })
             })
             active_observers <<- c(active_observers, new_obs)
@@ -2059,11 +2065,11 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
             # Observer for "Other" button - DAPSIWRM elements
             obs_other <- observeEvent(input[["dapsiwrm_other"]], {
-              if (rv$current_step == current_step) {
+              if (rv$current_step == current_step && !rv$show_text_input) {
                 debug_log("[AI ISA] DAPSIWRM 'Other' button clicked - showing text input\n")
                 rv$show_text_input <- TRUE
               }
-            }, ignoreInit = TRUE, once = TRUE)
+            }, ignoreInit = TRUE)
             active_observers <<- c(active_observers, list(obs_other))
           }
         }
