@@ -478,21 +478,17 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
       h5(safe_t("ui.sidebar.quick_actions", i18n_obj = i18n)),
       div(
         style = "display: flex; flex-direction: column; align-items: center; gap: 10px;",
-        tags$button(
-          id = "save_project",
-          class = "btn btn-primary quick-action-btn action-button shiny-bound-input",
-          type = "button",
-          title = safe_t("ui.sidebar.save_your_curr_proj_dat_incl_all_pims_isa_ent_and_", i18n_obj = i18n),
-          icon("save"),
-          tags$span(class = "btn-text", safe_t("common.buttons.save_project", i18n_obj = i18n))
+        actionButton(
+          inputId = "save_project",
+          label = tagList(icon("save"), tags$span(class = "btn-text", safe_t("common.buttons.save_project", i18n_obj = i18n))),
+          class = "btn-primary quick-action-btn",
+          title = safe_t("ui.sidebar.save_your_curr_proj_dat_incl_all_pims_isa_ent_and_", i18n_obj = i18n)
         ),
-        tags$button(
-          id = "load_project",
-          class = "btn btn-secondary quick-action-btn action-button shiny-bound-input",
-          type = "button",
-          title = safe_t("ui.sidebar.load_a_previously_saved_project", i18n_obj = i18n),
-          icon("folder-open"),
-          tags$span(class = "btn-text", safe_t("common.buttons.load_project", i18n_obj = i18n))
+        actionButton(
+          inputId = "load_project",
+          label = tagList(icon("folder-open"), tags$span(class = "btn-text", safe_t("common.buttons.load_project", i18n_obj = i18n))),
+          class = "btn-secondary quick-action-btn",
+          title = safe_t("ui.sidebar.load_a_previously_saved_project", i18n_obj = i18n)
         ),
         # Local storage buttons - visible only when File System Access API is supported
         tags$div(
@@ -502,23 +498,19 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
             style = "color: #666; margin-bottom: 5px; display: block; text-align: center;",
             icon("hdd"), " ", safe_t("ui.sidebar.local_storage", i18n_obj = i18n)
           ),
-          tags$button(
-            id = "save_to_local",
-            class = "btn btn-outline-success btn-sm quick-action-btn action-button shiny-bound-input",
-            type = "button",
+          actionButton(
+            inputId = "save_to_local",
+            label = tagList(icon("download"), tags$span(class = "btn-text", safe_t("common.buttons.save_local", i18n_obj = i18n))),
+            class = "btn-outline-success btn-sm quick-action-btn",
             title = safe_t("ui.sidebar.save_to_local_folder", i18n_obj = i18n),
-            style = "width: 100%; margin-bottom: 5px;",
-            icon("download"),
-            tags$span(class = "btn-text", safe_t("common.buttons.save_local", i18n_obj = i18n))
+            style = "width: 100%; margin-bottom: 5px;"
           ),
-          tags$button(
-            id = "load_from_local",
-            class = "btn btn-outline-info btn-sm quick-action-btn action-button shiny-bound-input",
-            type = "button",
+          actionButton(
+            inputId = "load_from_local",
+            label = tagList(icon("upload"), tags$span(class = "btn-text", safe_t("common.buttons.load_local", i18n_obj = i18n))),
+            class = "btn-outline-info btn-sm quick-action-btn",
             title = safe_t("ui.sidebar.load_from_local_folder", i18n_obj = i18n),
-            style = "width: 100%;",
-            icon("upload"),
-            tags$span(class = "btn-text", safe_t("common.buttons.load_local", i18n_obj = i18n))
+            style = "width: 100%;"
           )
         ),
         # JavaScript to show/hide local storage buttons based on API support and connection
