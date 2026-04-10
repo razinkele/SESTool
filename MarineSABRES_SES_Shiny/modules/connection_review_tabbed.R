@@ -347,23 +347,43 @@ connection_review_tabbed_ui <- function(id, i18n) {
     # Tabbed interface for connection batches (dynamically generated)
     uiOutput(ns("dynamic_tabs")),
 
-    # Initialize Bootstrap tooltips for dynamically generated content
+    # Initialize Bootstrap tooltips using native API (avoids jQuery UI conflict)
     tags$script(HTML("
       $(document).ready(function() {
-        // Initialize tooltips on page load
-        $('[data-toggle=\"tooltip\"]').tooltip({
-          container: 'body',
-          trigger: 'hover'
-        });
+        // Initialize tooltips on page load using Bootstrap native API
+        // IMPORTANT: $.fn.tooltip is jQuery UI's, not Bootstrap's — use native class
+        function initBootstrapTooltips() {
+          document.querySelectorAll('[data-toggle=\"tooltip\"]').forEach(function(el) {
+            if (!bootstrap.Tooltip.getInstance(el)) {
+              new bootstrap.Tooltip(el, {
+                container: 'body',
+                trigger: 'hover click focus'
+              });
+            }
+          });
+        }
+
+        initBootstrapTooltips();
 
         // Re-initialize tooltips when Shiny updates the DOM
-        $(document).on('shiny:value', function(e) {
-          setTimeout(function() {
-            $('[data-toggle=\"tooltip\"]').tooltip({
+        $(document).on('shiny:value shiny:recalculated', function(e) {
+          setTimeout(initBootstrapTooltips, 300);
+        });
+
+        // Event delegation for dynamically added tooltips
+        // Note: Do NOT call .show() manually — let trigger:'hover' handle it
+        // to avoid racing with Bootstrap's internal event binding.
+        // Use both BS4 ($.data) and BS5 (getInstance) checks for compatibility.
+        $(document).on('mouseenter', '[data-toggle=\"tooltip\"]', function() {
+          var el = this;
+          var hasTooltip = $(el).data('bs.tooltip') ||
+            (bootstrap.Tooltip.getInstance && bootstrap.Tooltip.getInstance(el));
+          if (!hasTooltip) {
+            new bootstrap.Tooltip(el, {
               container: 'body',
-              trigger: 'hover'
+              trigger: 'hover focus'
             });
-          }, 100);
+          }
         });
       });
     "))
