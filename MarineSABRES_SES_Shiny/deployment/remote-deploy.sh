@@ -79,25 +79,46 @@ fi
 
 # Build tar excludes
 EXCLUDES=(
+    # Version control and tooling
     --exclude=.git
+    --exclude=.github
     --exclude=.claude
     --exclude=.playwright-mcp
+    --exclude=.remember
+    --exclude=.superpowers
     --exclude=.Rhistory
+    --exclude='*-Dell-PCn.Rhistory'
+    --exclude='*-Dell-PCn.json'
+    --exclude='*-Dell-PCn.*'
     --exclude=.Rproj.user
     --exclude=.gitignore
     --exclude=.dockerignore
     --exclude='*.Rproj'
+    # Runtime artifacts
     --exclude='*.log'
     --exclude='*.tmp'
+    --exclude='*.bak'
+    --exclude='*.backup'
+    --exclude='*.backup-*'
+    --exclude=.RData
+    --exclude=.Rapp.history
+    # Deployment infrastructure
     --exclude=deployment
     --exclude=tests
     --exclude=DTU
     --exclude=Documents
+    --exclude=docs/superpowers
+    # Development/test/debug files
     --exclude=CLEANUP_SCRIPT.R
     --exclude=run_ui_tests.R
     --exclude=fixture_list.txt
     --exclude=abstract.docx
+    --exclude=klaidoos.docx
+    --exclude='__*.py'
     --exclude='*.png'
+    --exclude='*.ipynb'
+    --exclude='test-*.R'
+    --exclude='update_polarities.R'
 )
 
 if [ "$EXCLUDE_MODELS" = true ]; then
