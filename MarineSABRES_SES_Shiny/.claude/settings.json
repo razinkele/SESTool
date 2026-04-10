@@ -1,0 +1,80 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const p=JSON.parse(d).tool_input.file_path||'';if(p.includes('_merged_translations')){console.error('BLOCKED: Do not edit _merged_translations.json directly.\\nEdit source files in translations/common/ or translations/modules/ instead.');process.exit(1)}})\""
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const p=(JSON.parse(d).tool_input.file_path||'').toLowerCase();const blocked=['.rdata','.rhistory','credentials','.env'];if(blocked.some(b=>p.includes(b))){console.error('BLOCKED: Editing sensitive files is not allowed.');process.exit(1)}})\""
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const fp=JSON.parse(d).tool_input.file_path||'';const base=require('path').basename(fp);const blocked=['renv.lock','NAMESPACE','.Rprofile'];if(blocked.includes(base)){console.error('BLOCKED: '+base+' is auto-generated. Do not edit directly.');process.exit(1)}})\""
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const p=(JSON.parse(d).tool_input.file_path||'').split(String.fromCharCode(92)).join('/');const blocked=['deployment/shiny-server.conf','deployment/docker-compose.yml','deployment/remote-deploy-config.txt','deployment/deploy.sh','deployment/deploy-remote.ps1'];if(blocked.some(b=>p.endsWith(b))){console.error('BLOCKED: '+require('path').basename(p)+' is a deployment config file. Edit manually or confirm intent first.');process.exit(1)}})\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const p=(JSON.parse(d).tool_input.file_path||'').split(String.fromCharCode(92)).join('/');if(p.includes('modules/')&&p.endsWith('.R')){console.log('Reminder: If you added user-facing text, ensure it uses i18n$t() and add keys to translations/')}})\""
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const p=(JSON.parse(d).tool_input.file_path||'').split(String.fromCharCode(92)).join('/');if(p.includes('translations/')&&p.endsWith('.json')&&!p.includes('_merged_translations')){const{execSync}=require('child_process');try{execSync('Rscript scripts/translation_workflow.R check',{stdio:'pipe',timeout:30000});console.log('Translation validation passed.')}catch(e){console.error('WARNING: Translation validation found issues:\\n'+(e.stdout?e.stdout.toString():e.message))}}})\""
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const p=(JSON.parse(d).tool_input.file_path||'').split(String.fromCharCode(92)).join('/');const m=p.match(/(?:modules|functions)\\/([^\\/]+)\\.R$/);if(m){const name=m[1];const hyphen=name.replace(/_/g,'-');const fs=require('fs');const candidates=['tests/testthat/test-'+hyphen+'.R','tests/testthat/test-'+name+'.R','tests/testthat/test_'+name+'.R'];const found=candidates.find(c=>fs.existsSync(c));if(found){console.log('Related test file exists: '+found+' — consider running: Rscript -e \\\"testthat::test_file(\\\\\\\"'+found+'\\\\\\\")\\\"')}}})\""
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const p=(JSON.parse(d).tool_input.file_path||'').split(String.fromCharCode(92)).join('/');if(p.includes('ses_knowledge_db')&&p.endsWith('.json')){const fs=require('fs');try{const kb=JSON.parse(fs.readFileSync(p,'utf8'));const valid=new Set(['drivers->activities','activities->pressures','pressures->states','states->impacts','impacts->welfare','welfare->drivers','pressures->pressures','states->states','responses->activities','responses->pressures','responses->drivers','responses->states','activities->activities','activities->states','activities->welfare','drivers->pressures','drivers->responses','drivers->welfare','impacts->impacts','pressures->welfare','states->welfare','welfare->responses','responses->responses']);let errs=[];for(const[cn,ctx]of Object.entries(kb.contexts||{})){for(const c of ctx.connections||[]){const t=c.from_type+'->'+c.to_type;if(!valid.has(t))errs.push(cn+': invalid '+t)}}if(errs.length){console.error('KB VALIDATION FAILED:\\n'+errs.join('\\n'));process.exit(1)}else{console.log('KB validation passed: all transitions valid.')}}catch(e){console.error('KB validation error: '+e.message)}}})\""
+          }
+        ]
+      }
+    ]
+  }
+}
