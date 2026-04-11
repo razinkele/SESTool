@@ -13,7 +13,7 @@ workflow_stepper_ui <- function(id) {
 # --- Server ---
 workflow_stepper_server <- function(id, project_data_reactive, i18n,
                                     parent_session, user_level_reactive,
-                                    sidebar_input) {
+                                    sidebar_input, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

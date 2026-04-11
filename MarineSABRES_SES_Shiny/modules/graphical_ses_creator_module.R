@@ -414,7 +414,8 @@ graphical_ses_creator_ui <- function(id, i18n) {
 #' @return Reactive values
 #' @export
 graphical_ses_creator_server <- function(id, project_data_reactive,
-                                         i18n, parent_session = NULL) {
+                                         i18n, parent_session = NULL,
+                                         event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
