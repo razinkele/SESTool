@@ -130,8 +130,45 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
     })
   })
 
+  # ========== NEW PROJECT ==========
+
+  # New Project — confirmation modal
+  observeEvent(input$new_project, {
+    showModal(modalDialog(
+      title = i18n$t("modules.project_io.new_project_confirm_title"),
+      div(
+        p(i18n$t("modules.project_io.new_project_confirm_body")),
+        tags$strong(i18n$t("modules.project_io.new_project_confirm_warning"))
+      ),
+      footer = tagList(
+        modalButton(i18n$t("common.buttons.cancel")),
+        actionButton("confirm_new_project", i18n$t("common.buttons.new_project"), class = "btn-danger")
+      ),
+      easyClose = TRUE
+    ))
+  })
+
+  # Confirm — reset project_data to an empty project
+  observeEvent(input$confirm_new_project, {
+    tryCatch({
+      empty <- create_empty_project()
+      project_data(empty)
+      removeModal()
+      showNotification(
+        i18n$t("modules.project_io.new_project_created"),
+        type = "message"
+      )
+      debug_log("New empty project created via sidebar button", "PROJECT_IO")
+    }, error = function(e) {
+      showNotification(
+        format_user_error(e, i18n = i18n, context = "creating new project"),
+        type = "error"
+      )
+    })
+  })
+
   # ========== LOCAL STORAGE SAVE/LOAD ==========
-  
+
   # Handle "Save to Local" button click from sidebar
   observeEvent(input$save_to_local, {
     # Trigger local save via JavaScript message

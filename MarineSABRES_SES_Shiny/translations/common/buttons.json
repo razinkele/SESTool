@@ -220,6 +220,17 @@
       "no": "Last inn prosjekt",
       "el": "Φόρτωση Έργου"
     },
+    "common.buttons.new_project": {
+      "en": "New Project",
+      "es": "Nuevo proyecto",
+      "fr": "Nouveau projet",
+      "de": "Neues Projekt",
+      "lt": "Naujas projektas",
+      "pt": "Novo projeto",
+      "it": "Nuovo progetto",
+      "no": "Nytt prosjekt",
+      "el": "Νέο έργο"
+    },
     "common.buttons.next": {
       "en": "Next",
       "es": "Siguiente",

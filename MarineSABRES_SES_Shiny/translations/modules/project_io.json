@@ -1,0 +1,48 @@
+{
+  "translation": {
+    "modules.project_io.new_project_confirm_title": {
+      "en": "Start a new project?",
+      "es": "¿Iniciar un nuevo proyecto?",
+      "fr": "Démarrer un nouveau projet ?",
+      "de": "Neues Projekt starten?",
+      "lt": "Pradėti naują projektą?",
+      "pt": "Iniciar um novo projeto?",
+      "it": "Iniziare un nuovo progetto?",
+      "no": "Starte et nytt prosjekt?",
+      "el": "Έναρξη νέου έργου;"
+    },
+    "modules.project_io.new_project_confirm_body": {
+      "en": "This will clear all current data, including elements, connections, stakeholders, and analyses.",
+      "es": "Esto borrará todos los datos actuales, incluidos elementos, conexiones, partes interesadas y análisis.",
+      "fr": "Cela effacera toutes les données actuelles, y compris les éléments, connexions, parties prenantes et analyses.",
+      "de": "Dies löscht alle aktuellen Daten, einschließlich Elemente, Verbindungen, Stakeholder und Analysen.",
+      "lt": "Tai ištrins visus esamus duomenis, įskaitant elementus, ryšius, suinteresuotąsias šalis ir analizes.",
+      "pt": "Isso apagará todos os dados atuais, incluindo elementos, conexões, partes interessadas e análises.",
+      "it": "Questo cancellerà tutti i dati correnti, inclusi elementi, connessioni, stakeholder e analisi.",
+      "no": "Dette vil fjerne alle gjeldende data, inkludert elementer, tilkoblinger, interessenter og analyser.",
+      "el": "Αυτό θα διαγράψει όλα τα τρέχοντα δεδομένα, συμπεριλαμβανομένων στοιχείων, συνδέσεων, ενδιαφερομένων και αναλύσεων."
+    },
+    "modules.project_io.new_project_confirm_warning": {
+      "en": "Make sure you have saved your work first — this cannot be undone.",
+      "es": "Asegúrate de haber guardado tu trabajo primero — esta acción no se puede deshacer.",
+      "fr": "Assurez-vous d'avoir d'abord sauvegardé votre travail — cette action est irréversible.",
+      "de": "Stellen Sie sicher, dass Sie Ihre Arbeit zuerst gespeichert haben — dies kann nicht rückgängig gemacht werden.",
+      "lt": "Įsitikinkite, kad pirmiausia išsaugojote savo darbą — šio veiksmo negalima atšaukti.",
+      "pt": "Certifique-se de ter salvo seu trabalho primeiro — esta ação não pode ser desfeita.",
+      "it": "Assicurati di aver salvato prima il tuo lavoro — questa azione non può essere annullata.",
+      "no": "Sørg for at du har lagret arbeidet ditt først — dette kan ikke angres.",
+      "el": "Βεβαιωθείτε ότι έχετε αποθηκεύσει πρώτα την εργασία σας — αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
+    },
+    "modules.project_io.new_project_created": {
+      "en": "New project created.",
+      "es": "Nuevo proyecto creado.",
+      "fr": "Nouveau projet créé.",
+      "de": "Neues Projekt erstellt.",
+      "lt": "Sukurtas naujas projektas.",
+      "pt": "Novo projeto criado.",
+      "it": "Nuovo progetto creato.",
+      "no": "Nytt prosjekt opprettet.",
+      "el": "Δημιουργήθηκε νέο έργο."
+    }
+  }
+}

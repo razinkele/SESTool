@@ -198,6 +198,17 @@
       "no": "Last inn et tidligere lagret prosjekt",
       "el": "Φόρτωση ενός προηγουμένως αποθηκευμένου έργου"
     },
+    "ui.sidebar.new_project_tooltip": {
+      "en": "Start a new empty project (current work will be cleared)",
+      "es": "Iniciar un nuevo proyecto vacío (el trabajo actual se borrará)",
+      "fr": "Démarrer un nouveau projet vide (le travail actuel sera effacé)",
+      "de": "Neues leeres Projekt starten (aktuelle Arbeit wird gelöscht)",
+      "lt": "Pradėti naują tuščią projektą (dabartinis darbas bus ištrintas)",
+      "pt": "Iniciar um novo projeto vazio (o trabalho atual será apagado)",
+      "it": "Iniziare un nuovo progetto vuoto (il lavoro corrente sarà cancellato)",
+      "no": "Start et nytt tomt prosjekt (nåværende arbeid vil bli fjernet)",
+      "el": "Έναρξη νέου κενού έργου (η τρέχουσα εργασία θα διαγραφεί)"
+    },
     "ui.sidebar.local_storage": {
       "en": "Local Folder",
       "es": "Carpeta Local",
