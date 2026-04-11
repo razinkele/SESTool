@@ -324,32 +324,6 @@ format_user_error <- function(error, i18n = NULL, context = NULL, show_details =
 # ERROR BOUNDARIES FOR SHINY OUTPUTS
 # ============================================================================
 
-#' Create safe render function wrapper
-#'
-#' @param render_func Render function to wrap
-#' @param error_ui UI to display on error
-#' @return Wrapped render function
-#' @export
-safe_render <- function(render_func, error_ui = NULL) {
-  if (is.null(error_ui)) {
-    error_ui <- function(e) {
-      div(class = "alert alert-danger",
-          icon("exclamation-triangle"), " ",
-          strong("Error: "), e$message)
-    }
-  }
-
-  function(...) {
-    tryCatch(
-      render_func(...),
-      error = function(e) {
-        debug_log(sprintf("Render error: %s", e$message), "ERROR")
-        error_ui(e)
-      }
-    )
-  }
-}
-
 #' Safe renderUI wrapper with error handling
 #'
 #' Wraps renderUI to catch errors and display them gracefully
