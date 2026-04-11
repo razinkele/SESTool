@@ -569,6 +569,22 @@ server <- function(input, output, session) {
 
   debug_log(sprintf("New session started: %s", session_isolation$session_id), "SESSION")
 
+  # ========== SESSION LOGGER (M2 R-side replacement) ==========
+  # Write NDJSON start/end events to /var/log/shiny-server/marinesabres/.
+  # Defensive: session_logger handles its own errors; session_i18n may not
+  # yet be in scope at this exact line, so we use the global i18n object.
+  # Pre-capture session_id and start_time into locals BEFORE registering the
+  # onSessionEnded closure — spec contract says log_session_end must NOT read
+  # session$userData at end time (it may be partially torn down in some
+  # shutdown paths). See docs/superpowers/specs/2026-04-11-session-logger-
+  # design.md "Components: log_session_end" section.
+  sid <- session$userData$session_id
+  session_start_time <- Sys.time()
+  log_session_start(session, i18n)
+  session$onSessionEnded(function() {
+    log_session_end(sid, session_start_time)
+  })
+
   # ========== REACTIVE VALUES ==========
   # NOTE: These must be initialized BEFORE any observe() blocks that use them
 

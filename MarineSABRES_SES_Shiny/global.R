@@ -647,6 +647,7 @@ source("functions/reactive_pipeline.R", local = TRUE)
 
 # Session isolation utilities (for multi-user shiny-server deployments)
 source("functions/session_isolation.R", local = FALSE)  # FALSE = global scope for server access
+source("functions/session_logger.R", local = FALSE)  # FALSE = global scope for logger functions
 
 # Persistent storage utilities (for saving projects to user's Documents folder)
 source("functions/persistent_storage.R", local = FALSE)  # FALSE = global scope for server access
