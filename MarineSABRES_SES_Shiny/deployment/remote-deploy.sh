@@ -161,7 +161,11 @@ fi
 
 # Upload via scp
 echo -e "${BLUE}==>${NC} Uploading archive via scp..."
-scp "$TAR_PATH" "$REMOTE_USER@$REMOTE_HOST:/tmp/$TAR_FILENAME"
+if ! scp "$TAR_PATH" "$REMOTE_USER@$REMOTE_HOST:/tmp/$TAR_FILENAME"; then
+    echo -e "${RED}[FAIL]${NC} scp upload failed — aborting deploy"
+    rm -f "$TAR_PATH"
+    exit 1
+fi
 echo -e "${GREEN}[OK]${NC} Archive uploaded"
 
 # Deploy on remote server
@@ -173,10 +177,14 @@ ssh -t "$REMOTE_USER@$REMOTE_HOST" "\
     rm -rf $REMOTE_TARGET/* && \
     echo '==> Extracting archive...' && \
     tar -xzf /tmp/$TAR_FILENAME -C $REMOTE_TARGET/ && \
+    echo '==> Verifying extraction...' && \
+    EXTRACTED_COUNT=\$(find $REMOTE_TARGET -type f | wc -l) && \
+    if [ \$EXTRACTED_COUNT -lt 100 ]; then echo 'FAIL: only' \$EXTRACTED_COUNT 'files extracted (expected >=100)'; exit 1; fi && \
+    echo '==> Extracted' \$EXTRACTED_COUNT 'files' && \
     echo '==> Setting ownership ($REMOTE_OWNER:$REMOTE_GROUP)...' && \
     chown -R $REMOTE_OWNER:$REMOTE_GROUP $REMOTE_TARGET && \
     chmod -R 755 $REMOTE_TARGET && \
-    rm -f $REMOTE_TARGET/translations/_merged_translations.json 2>/dev/null; \
+    (rm -f $REMOTE_TARGET/translations/_merged_translations.json 2>/dev/null || true) && \
     chmod g+w $REMOTE_TARGET/translations && \
     mkdir -p $REMOTE_TARGET/www/reports && chmod g+w $REMOTE_TARGET/www/reports && \
     echo '==> Cleaning up...' && \
