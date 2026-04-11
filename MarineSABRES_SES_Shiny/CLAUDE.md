@@ -39,7 +39,7 @@ Rscript scripts/add_translation.R
 ├── global.R              # Package loading, PROJECT_ROOT, utility functions
 ├── constants.R           # DAPSIWRM_ELEMENTS, colors, shapes, site configs
 ├── DESCRIPTION           # Package dependency manifest
-├── modules/              # Shiny modules (44 modules)
+├── modules/              # Shiny modules (37 .R files in modules/ + 9 sub-modules in modules/ai_isa/)
 │   ├── *_module.R        # Module pattern: module_name_ui() + module_name_server()
 │   ├── analysis_*.R      # Analysis modules (loops, metrics, boolean, etc.)
 │   └── ai_isa/           # AI-assisted ISA workflow
@@ -53,9 +53,15 @@ Rscript scripts/add_translation.R
 │   ├── cld_interaction_helpers.R  # CLD network interaction helpers
 │   ├── isa_form_builders.R        # ISA form generation per element type
 │   └── isa_export_helpers.R       # ISA Excel/Kumu export logic
-├── server/               # Server-side components
-│   ├── modals.R          # Modal dialogs
-│   └── project_io.R      # Project save/load
+├── server/               # Server-side components (8 files)
+│   ├── bookmarking.R         # URL bookmarking + query params
+│   ├── dashboard.R           # Dashboard observers
+│   ├── event_bus_setup.R     # Event bus initialization
+│   ├── export_handlers.R     # Export download handlers
+│   ├── language_handling.R   # Language change observers
+│   ├── modals.R              # Modal dialogs
+│   ├── project_io.R          # Project save/load
+│   └── session_management.R  # Session lifecycle
 ├── translations/         # Modular i18n system
 │   ├── common/           # Shared translations (buttons, labels, messages)
 │   ├── modules/          # Module-specific translations
@@ -68,7 +74,7 @@ Rscript scripts/add_translation.R
 │   └── ARCHITECTURE.md   # Architecture Decision Records
 ├── scripts/
 │   └── build_offshore_wind_kb.py  # Reproducible KB builder from BibTeX (187 papers)
-└── tests/testthat/       # 63 test files, 4094+ tests
+└── tests/testthat/       # 74 test files
 ```
 
 ## i18n System (CRITICAL)
