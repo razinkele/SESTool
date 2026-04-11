@@ -85,7 +85,7 @@ Field sources:
 - `ts` — `paste0(format(Sys.time(), "%Y-%m-%dT%H:%M:%S", tz = "UTC"), "Z")`. Explicit `"Z"` is appended rather than embedded in the format string to prevent the marker becoming a lie if the `tz` argument is ever changed.
 - `session_id` — **full** `session$userData$session_id` (29 chars). Set by `init_session_isolation()` at `functions/session_isolation.R:64` which runs earlier in the server function (at `app.R:568` approximately). If `session$userData$session_id` is NULL (logger called before `init_session_isolation`), the function early-returns a WARN log and writes nothing.
 - `lang` — `tryCatch(i18n$get_translation_language(), error = function(e) "en")`.
-- `app_version` — `APP_VERSION` constant from `constants.R` (verified at top-level, global scope).
+- `app_version` — `APP_VERSION` constant set at top-level in `global.R:160` via `tryCatch(readLines("VERSION"))`, resolved via `get("APP_VERSION", envir = globalenv())` in the logger.
 
 **Serialization**: built via `jsonlite::toJSON(list(ts = ..., event = ...), auto_unbox = TRUE)` then `paste0(..., "\n")`. NOT hand-rolled `sprintf`. This protects against future fields containing quotes, backslashes, or unicode (e.g., if `lang` ever carries a localized description instead of an ISO code).
 

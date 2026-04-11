@@ -16,7 +16,7 @@
 - `init_session_isolation()` at `functions/session_isolation.R:52-89` sets `session$userData$session_id` at line 64 and registers its own `onSessionEnded` cleanup callback at line 74. Our new `onSessionEnded` from Task 3 will be registered AFTER (during session server function execution) — Shiny chains multiple callbacks in registration order, so cleanup fires first, then our end-log.
 - `session_id` format verified: `"sess_" + 24 hex chars` = 29-char total string. Full value is logged (not truncated).
 - `/var/log/shiny-server/` on laguna is owned `shiny:shiny` mode 755 (verified with `sudo -u shiny mkdir` on 2026-04-11). The shiny worker process can create `marinesabres/` subdir on first call.
-- `APP_VERSION` is defined at global scope in `constants.R` — available anywhere in global env.
+- `APP_VERSION` is defined at top-level in `global.R:160` via `tryCatch(readLines("VERSION"))` and ends up in `globalenv()` at runtime — `get("APP_VERSION", envir = globalenv())` in the logger resolves correctly.
 
 ---
 
@@ -587,10 +587,16 @@ Find the existing block at `app.R:568-572`:
   # Write NDJSON start/end events to /var/log/shiny-server/marinesabres/.
   # Defensive: session_logger handles its own errors; session_i18n may not
   # yet be in scope at this exact line, so we use the global i18n object.
+  # Pre-capture session_id and start_time into locals BEFORE registering the
+  # onSessionEnded closure — spec contract says log_session_end must NOT read
+  # session$userData at end time (it may be partially torn down in some
+  # shutdown paths). See docs/superpowers/specs/2026-04-11-session-logger-
+  # design.md "Components: log_session_end" section.
+  sid <- session$userData$session_id
   session_start_time <- Sys.time()
   log_session_start(session, i18n)
   session$onSessionEnded(function() {
-    log_session_end(session$userData$session_id, session_start_time)
+    log_session_end(sid, session_start_time)
   })
 
   # ========== REACTIVE VALUES ==========
@@ -634,12 +640,16 @@ global.R: source the new functions/session_logger.R file right after
 session_isolation (logical dependency ordering).
 
 app.R: inside the server function, immediately after
-init_session_isolation(session), capture session_start_time and call
-log_session_start(session, i18n). Register a second onSessionEnded
-callback that calls log_session_end(session$userData$session_id,
-session_start_time). Shiny chains multiple onSessionEnded callbacks in
-registration order — the existing cleanup_session_isolation callback
-fires first, our end-log fires second.
+init_session_isolation(session), pre-capture sid and session_start_
+time into locals, then call log_session_start(session, i18n). Register
+a second onSessionEnded callback that calls log_session_end(sid,
+session_start_time) — the locals are closure-captured so the callback
+does NOT read session$userData at end time (which may be partially
+torn down in some shutdown paths, per the spec contract).
+
+Shiny chains multiple onSessionEnded callbacks in registration order
+— the existing cleanup_session_isolation callback fires first, our
+end-log fires second.
 
 Use the global i18n object (not session_i18n, which is constructed
 later in the server function) for log_session_start's lang field.
@@ -702,20 +712,32 @@ bash deployment/remote-deploy.sh --force
 ```
 Expected: `Extracted ~653 files` (roughly unchanged).
 
-- [ ] **Step 7: Restart Shiny Server**
+- [ ] **Step 7: Restart Shiny Server (MANUAL — requires interactive sudo)**
+
+This step cannot be run non-interactively because `sudo systemctl restart` prompts for a password. The executing subagent must STOP here and ask the human operator to run:
 
 ```
-! ssh -t razinka@laguna.ku.lt "sudo systemctl restart shiny-server"
+ssh -t razinka@laguna.ku.lt "sudo systemctl restart shiny-server"
 ```
 
-- [ ] **Step 8: Open the app to generate a session**
+from an interactive shell. After the human confirms completion, the subagent resumes with Step 8.
+
+- [ ] **Step 8: Generate real sessions in a browser (MANUAL)**
+
+`curl` creates a session object but doesn't hold the WebSocket long enough for `onSessionEnded` to fire cleanly, so curl alone will only produce `session_start` events (possibly no events at all because the Shiny server handshake times out). The human operator must:
+
+1. Open `https://laguna.ku.lt/marinesabres/` in a real browser
+2. Wait for the dashboard to fully render
+3. Close the tab
+
+This produces one `session_start` and one `session_end` in the log file.
+
+As a sanity check the subagent CAN run, verify the app is at least HTTP 200:
 
 ```bash
 curl -sSL -o /dev/null -w "HTTP: %{http_code}\n" --max-time 30 "https://laguna.ku.lt/marinesabres/"
 ```
 Expected: `HTTP: 200`
-
-Note: the curl request creates a session, triggering `log_session_start`. The curl finishes before `onSessionEnded` fires, so only the start event will be visible in the log file immediately. Open the URL in a real browser then close the tab to get both events.
 
 - [ ] **Step 9: Verify the log file exists and contains parseable NDJSON**
 
