@@ -363,6 +363,7 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       is_enabled = TRUE,
       recovery_pending = FALSE,  # Prevents auto-save until user handles recovery modal
       data_dirty = FALSE,  # Track if data has changed since last save
+      save_in_progress = FALSE,  # Prevents concurrent saves from overlapping (I1a)
       last_data_hash = NULL,  # Hash of last saved data to detect changes
 
       # Adaptive debouncing - track editing patterns
@@ -582,6 +583,10 @@ auto_save_server <- function(id, project_data_reactive, i18n,
         debug_log("Skipping auto-save - recovery modal pending", "AUTO-SAVE")
         return()
       }
+
+      # Concurrency guard (I1a): clear on every function exit, success or error
+      auto_save$save_in_progress <- TRUE
+      on.exit(auto_save$save_in_progress <- FALSE, add = TRUE)
 
       tryCatch({
         # Update status to saving
@@ -848,6 +853,14 @@ auto_save_server <- function(id, project_data_reactive, i18n,
               # Reset pending flag (stops polling until next change event)
               debounce_state$pending_save <- FALSE
               debounce_state$last_change_time <- NULL
+
+              # Skip this tick if a previous save is still running (I1a).
+              # pending_save stays TRUE — next 2s tick will retry once the flag clears.
+              if (isTRUE(auto_save$save_in_progress)) {
+                debug_log("Save already in progress, will retry on next tick", "AUTO-SAVE ADAPTIVE")
+                # Do NOT clear pending_save or last_change_time — let the next tick re-evaluate
+                return()
+              }
 
               # Only save if enabled and not in recovery mode
               if (auto_save$is_enabled && !auto_save$recovery_pending) {
