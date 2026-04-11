@@ -275,14 +275,122 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
   # Handle file selection from local files modal
   observeEvent(input$local_file_to_load, {
     req(input$local_file_to_load$filename)
-    
+
     filename <- input$local_file_to_load$filename
-    
+
     # Close the modal
     removeModal()
-    
+
     # Trigger load via JavaScript
     session$sendCustomMessage("load_from_local_directory", list(filename = filename))
+  })
+
+  # ========== RECENT AUTOSAVES BROWSER ==========
+
+  # Recent Autosaves browser — show list of persistent autosave files
+  observeEvent(input$recent_autosaves, {
+    # Use existing helper with extended window (30 days) to show older files too
+    autosaves <- tryCatch(
+      find_recoverable_autosaves(max_age_hours = 24 * 30),
+      error = function(e) data.frame()
+    )
+
+    if (nrow(autosaves) == 0) {
+      showModal(modalDialog(
+        title = i18n$t("modules.auto_save.recent_autosaves_title"),
+        i18n$t("modules.auto_save.no_recent_autosaves"),
+        easyClose = TRUE,
+        footer = modalButton(i18n$t("common.buttons.close"))
+      ))
+      return()
+    }
+
+    # Sort newest first
+    autosaves <- autosaves[order(autosaves$modified, decreasing = TRUE), ]
+
+    # Build the list of entries
+    entries <- lapply(seq_len(nrow(autosaves)), function(i) {
+      row <- autosaves[i, ]
+      age_secs <- as.numeric(difftime(Sys.time(), row$modified, units = "secs"))
+      age_text <- if (age_secs < 3600) {
+        sprintf(i18n$t("modules.auto_save.minutes_ago"), round(age_secs / 60))
+      } else if (age_secs < 86400) {
+        sprintf(i18n$t("modules.auto_save.hours_ago"), round(age_secs / 3600))
+      } else {
+        sprintf(i18n$t("modules.auto_save.days_ago"), round(age_secs / 86400))
+      }
+      filename <- basename(row$path)
+      size_text <- sprintf("%.1f KB", row$size_kb)
+      # Use jsonlite to produce a properly-escaped JS string literal
+      js_path <- jsonlite::toJSON(row$path, auto_unbox = TRUE)
+
+      div(
+        class = "autosave-entry",
+        style = "padding: 8px; margin-bottom: 4px; border: 1px solid #ddd; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;",
+        div(
+          tags$strong(age_text),
+          tags$br(),
+          tags$small(style = "color: #666;", paste(filename, "·", size_text))
+        ),
+        tags$button(
+          type = "button",
+          class = "btn btn-sm btn-primary",
+          onclick = sprintf("Shiny.setInputValue('selected_autosave_path', %s, {priority: 'event'})", js_path),
+          i18n$t("common.buttons.load")
+        )
+      )
+    })
+
+    showModal(modalDialog(
+      title = i18n$t("modules.auto_save.recent_autosaves_title"),
+      size = "l",
+      div(
+        p(i18n$t("modules.auto_save.recent_autosaves_description")),
+        do.call(tagList, entries)
+      ),
+      easyClose = TRUE,
+      footer = modalButton(i18n$t("common.buttons.close"))
+    ))
+  })
+
+  # Handle loading a selected autosave file
+  observeEvent(input$selected_autosave_path, {
+    file_path <- input$selected_autosave_path
+    if (is.null(file_path) || !file.exists(file_path)) {
+      showNotification(
+        i18n$t("modules.auto_save.autosave_not_found"),
+        type = "error"
+      )
+      return()
+    }
+
+    tryCatch({
+      loaded_data <- safe_readRDS(file_path, max_size_mb = 50)
+      if (is.null(loaded_data)) {
+        showNotification(
+          i18n$t("modules.auto_save.autosave_load_failed"),
+          type = "error"
+        )
+        return()
+      }
+
+      if (is.list(loaded_data) && !is.null(loaded_data$autosave_metadata)) {
+        loaded_data$autosave_metadata <- NULL
+      }
+
+      project_data(loaded_data)
+
+      removeModal()
+      showNotification(
+        i18n$t("modules.auto_save.autosave_loaded_successfully"),
+        type = "message"
+      )
+    }, error = function(e) {
+      showNotification(
+        format_user_error(e, i18n = i18n, context = "loading autosave"),
+        type = "error"
+      )
+    })
   })
 
 }

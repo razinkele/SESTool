@@ -490,6 +490,12 @@ generate_sidebar_menu <- function(user_level = "intermediate", i18n) {
           class = "btn-secondary quick-action-btn",
           title = safe_t("ui.sidebar.load_a_previously_saved_project", i18n_obj = i18n)
         ),
+        actionButton(
+          inputId = "recent_autosaves",
+          label = tagList(icon("history"), tags$span(class = "btn-text", safe_t("common.buttons.recent_autosaves", i18n_obj = i18n))),
+          class = "btn-outline-primary quick-action-btn",
+          title = safe_t("ui.sidebar.recent_autosaves_tooltip", i18n_obj = i18n)
+        ),
         # Local storage buttons - visible only when File System Access API is supported
         tags$div(
           id = "local_storage_buttons",

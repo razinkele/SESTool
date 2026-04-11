@@ -791,6 +791,17 @@
       "it": "Home",
       "no": "Hjem",
       "el": "Αρχική"
+    },
+    "ui.sidebar.recent_autosaves_tooltip": {
+      "en": "Browse and restore recent automatic saves",
+      "es": "Explorar y restaurar autoguardados recientes",
+      "fr": "Parcourir et restaurer les sauvegardes automatiques récentes",
+      "de": "Aktuelle automatische Speicherungen durchsuchen und wiederherstellen",
+      "lt": "Naršyti ir atkurti naujausius automatinius išsaugojimus",
+      "pt": "Navegar e restaurar salvamentos automáticos recentes",
+      "it": "Sfoglia e ripristina i salvataggi automatici recenti",
+      "no": "Bla gjennom og gjenopprett nylige autolagringer",
+      "el": "Περιήγηση και επαναφορά πρόσφατων αυτόματων αποθηκεύσεων"
     }
   }
 }

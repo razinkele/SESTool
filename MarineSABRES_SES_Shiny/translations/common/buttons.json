@@ -527,6 +527,17 @@
       "it": "Visualizza",
       "no": "Vis",
       "el": "Προβολή"
+    },
+    "common.buttons.recent_autosaves": {
+      "en": "Recent Autosaves",
+      "es": "Autoguardados recientes",
+      "fr": "Sauvegardes automatiques récentes",
+      "de": "Letzte automatische Speicherungen",
+      "lt": "Naujausi automatiniai išsaugojimai",
+      "pt": "Salvamentos automáticos recentes",
+      "it": "Salvataggi automatici recenti",
+      "no": "Nylige autolagringer",
+      "el": "Πρόσφατες αυτόματες αποθηκεύσεις"
     }
   }
 }

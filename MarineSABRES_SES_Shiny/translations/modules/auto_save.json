@@ -21,6 +21,105 @@
       "it": "Clicca per mostrare i dettagli • Salvataggio automatico adattivo: regola il ritardo in base alla velocità di modifica",
       "no": "Klikk for å vise detaljer • Adaptiv autolagring: justerer forsinkelse basert på redigeringshastighet",
       "el": "Κάντε κλικ για εναλλαγή λεπτομερειών • Προσαρμοστική αυτόματη αποθήκευση: προσαρμόζει την καθυστέρηση με βάση την ταχύτητα επεξεργασίας"
+    },
+    "modules.auto_save.recent_autosaves_title": {
+      "en": "Recent Autosaves",
+      "es": "Autoguardados recientes",
+      "fr": "Sauvegardes automatiques récentes",
+      "de": "Letzte automatische Speicherungen",
+      "lt": "Naujausi automatiniai išsaugojimai",
+      "pt": "Salvamentos automáticos recentes",
+      "it": "Salvataggi automatici recenti",
+      "no": "Nylige autolagringer",
+      "el": "Πρόσφατες αυτόματες αποθηκεύσεις"
+    },
+    "modules.auto_save.recent_autosaves_description": {
+      "en": "Select an autosave to restore. Files are sorted newest first.",
+      "es": "Selecciona un autoguardado para restaurar. Los archivos se ordenan del más reciente al más antiguo.",
+      "fr": "Sélectionnez une sauvegarde automatique à restaurer. Les fichiers sont triés du plus récent au plus ancien.",
+      "de": "Wählen Sie eine automatische Speicherung zum Wiederherstellen. Dateien sind nach Neuheit sortiert.",
+      "lt": "Pasirinkite automatinį išsaugojimą atkūrimui. Failai rūšiuojami nuo naujausio.",
+      "pt": "Selecione um salvamento automático para restaurar. Os arquivos são ordenados do mais recente ao mais antigo.",
+      "it": "Seleziona un salvataggio automatico da ripristinare. I file sono ordinati dal più recente al più vecchio.",
+      "no": "Velg en autolagring å gjenopprette. Filer er sortert etter nyeste først.",
+      "el": "Επιλέξτε μια αυτόματη αποθήκευση για επαναφορά. Τα αρχεία ταξινομούνται από τα νεότερα προς τα παλαιότερα."
+    },
+    "modules.auto_save.no_recent_autosaves": {
+      "en": "No recoverable autosaves found. Autosaves are stored in your projects folder's .autosave subdirectory and are only available in local mode.",
+      "es": "No se encontraron autoguardados recuperables. Los autoguardados se almacenan en el subdirectorio .autosave de tu carpeta de proyectos y solo están disponibles en modo local.",
+      "fr": "Aucune sauvegarde automatique récupérable trouvée. Les sauvegardes automatiques sont stockées dans le sous-répertoire .autosave de votre dossier de projets et ne sont disponibles qu'en mode local.",
+      "de": "Keine wiederherstellbaren automatischen Speicherungen gefunden. Autospeicherungen werden im Unterverzeichnis .autosave Ihres Projektordners gespeichert und sind nur im lokalen Modus verfügbar.",
+      "lt": "Atkuriamų automatinių išsaugojimų nerasta. Automatiniai išsaugojimai saugomi jūsų projektų aplanko .autosave pakatalogyje ir galimi tik vietiniu režimu.",
+      "pt": "Nenhum salvamento automático recuperável encontrado. Os salvamentos automáticos são armazenados no subdiretório .autosave da sua pasta de projetos e estão disponíveis apenas no modo local.",
+      "it": "Nessun salvataggio automatico recuperabile trovato. I salvataggi automatici sono archiviati nella sottodirectory .autosave della cartella dei progetti e sono disponibili solo in modalità locale.",
+      "no": "Ingen gjenopprettelige autolagringer funnet. Autolagringer lagres i .autosave-underkatalogen til prosjektmappen din og er bare tilgjengelige i lokal modus.",
+      "el": "Δεν βρέθηκαν ανακτήσιμες αυτόματες αποθηκεύσεις. Οι αυτόματες αποθηκεύσεις αποθηκεύονται στον υποκατάλογο .autosave του φακέλου έργων σας και είναι διαθέσιμες μόνο σε τοπική λειτουργία."
+    },
+    "modules.auto_save.minutes_ago": {
+      "en": "%d minutes ago",
+      "es": "hace %d minutos",
+      "fr": "il y a %d minutes",
+      "de": "vor %d Minuten",
+      "lt": "prieš %d min.",
+      "pt": "há %d minutos",
+      "it": "%d minuti fa",
+      "no": "for %d minutter siden",
+      "el": "%d λεπτά πριν"
+    },
+    "modules.auto_save.hours_ago": {
+      "en": "%d hours ago",
+      "es": "hace %d horas",
+      "fr": "il y a %d heures",
+      "de": "vor %d Stunden",
+      "lt": "prieš %d val.",
+      "pt": "há %d horas",
+      "it": "%d ore fa",
+      "no": "for %d timer siden",
+      "el": "%d ώρες πριν"
+    },
+    "modules.auto_save.days_ago": {
+      "en": "%d days ago",
+      "es": "hace %d días",
+      "fr": "il y a %d jours",
+      "de": "vor %d Tagen",
+      "lt": "prieš %d d.",
+      "pt": "há %d dias",
+      "it": "%d giorni fa",
+      "no": "for %d dager siden",
+      "el": "%d ημέρες πριν"
+    },
+    "modules.auto_save.autosave_not_found": {
+      "en": "Autosave file no longer exists.",
+      "es": "El archivo de autoguardado ya no existe.",
+      "fr": "Le fichier de sauvegarde automatique n'existe plus.",
+      "de": "Die automatische Speicherungsdatei existiert nicht mehr.",
+      "lt": "Automatinio išsaugojimo failas nebeegzistuoja.",
+      "pt": "O arquivo de salvamento automático não existe mais.",
+      "it": "Il file di salvataggio automatico non esiste più.",
+      "no": "Autolagringsfilen eksisterer ikke lenger.",
+      "el": "Το αρχείο αυτόματης αποθήκευσης δεν υπάρχει πλέον."
+    },
+    "modules.auto_save.autosave_load_failed": {
+      "en": "Could not load autosave file. It may be corrupted or incompatible.",
+      "es": "No se pudo cargar el archivo de autoguardado. Puede estar dañado o ser incompatible.",
+      "fr": "Impossible de charger le fichier de sauvegarde automatique. Il peut être corrompu ou incompatible.",
+      "de": "Die automatische Speicherungsdatei konnte nicht geladen werden. Sie ist möglicherweise beschädigt oder inkompatibel.",
+      "lt": "Nepavyko įkelti automatinio išsaugojimo failo. Jis gali būti sugadintas arba nesuderinamas.",
+      "pt": "Não foi possível carregar o arquivo de salvamento automático. Pode estar corrompido ou incompatível.",
+      "it": "Impossibile caricare il file di salvataggio automatico. Potrebbe essere danneggiato o incompatibile.",
+      "no": "Kunne ikke laste autolagringsfilen. Den kan være ødelagt eller inkompatibel.",
+      "el": "Αδυναμία φόρτωσης αρχείου αυτόματης αποθήκευσης. Μπορεί να έχει καταστραφεί ή να μην είναι συμβατό."
+    },
+    "modules.auto_save.autosave_loaded_successfully": {
+      "en": "Autosave loaded successfully.",
+      "es": "Autoguardado cargado correctamente.",
+      "fr": "Sauvegarde automatique chargée avec succès.",
+      "de": "Automatische Speicherung erfolgreich geladen.",
+      "lt": "Automatinis išsaugojimas sėkmingai įkeltas.",
+      "pt": "Salvamento automático carregado com sucesso.",
+      "it": "Salvataggio automatico caricato con successo.",
+      "no": "Autolagring lastet inn.",
+      "el": "Η αυτόματη αποθήκευση φορτώθηκε επιτυχώς."
     }
   }
 }
