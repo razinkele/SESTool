@@ -1151,10 +1151,10 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
         all_node_ids <- setdiff(all_node_ids, modifications$nodes_removed)
 
         if (!(link$from %in% all_node_ids)) {
-          errors <- c(errors, sprintf(i18n$t("Link references non-existent 'from' node: %s"), link$from))
+          errors <- c(errors, sprintf(i18n$t("modules.scenario_builder.link_missing_from_node"), link$from))
         }
         if (!(link$to %in% all_node_ids)) {
-          errors <- c(errors, sprintf(i18n$t("Link references non-existent 'to' node: %s"), link$to))
+          errors <- c(errors, sprintf(i18n$t("modules.scenario_builder.link_missing_to_node"), link$to))
         }
       }
 

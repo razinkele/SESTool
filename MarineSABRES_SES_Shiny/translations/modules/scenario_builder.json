@@ -1264,6 +1264,28 @@
       "it": "[IT] Welfare",
       "no": "Velferd",
       "el": "Ευημερία"
+    },
+    "modules.scenario_builder.link_missing_from_node": {
+      "en": "Link references non-existent 'from' node: %s",
+      "es": "El enlace hace referencia a un nodo 'desde' inexistente: %s",
+      "fr": "Le lien fait référence à un nœud 'de' inexistant : %s",
+      "de": "Verbindung verweist auf nicht vorhandenen 'Von'-Knoten: %s",
+      "lt": "Nuoroda susijusi su neegzistuojančiu 'nuo' mazgu: %s",
+      "pt": "O link referencia um nó 'de' inexistente: %s",
+      "it": "Il collegamento fa riferimento a un nodo 'da' inesistente: %s",
+      "no": "Lenken refererer til en ikke-eksisterende 'fra'-node: %s",
+      "el": "Ο σύνδεσμος αναφέρεται σε ανύπαρκτο κόμβο 'από': %s"
+    },
+    "modules.scenario_builder.link_missing_to_node": {
+      "en": "Link references non-existent 'to' node: %s",
+      "es": "El enlace hace referencia a un nodo 'hacia' inexistente: %s",
+      "fr": "Le lien fait référence à un nœud 'vers' inexistant : %s",
+      "de": "Verbindung verweist auf nicht vorhandenen 'Zu'-Knoten: %s",
+      "lt": "Nuoroda susijusi su neegzistuojančiu 'iki' mazgu: %s",
+      "pt": "O link referencia um nó 'para' inexistente: %s",
+      "it": "Il collegamento fa riferimento a un nodo 'a' inesistente: %s",
+      "no": "Lenken refererer til en ikke-eksisterende 'til'-node: %s",
+      "el": "Ο σύνδεσμος αναφέρεται σε ανύπαρκτο κόμβο 'προς': %s"
     }
   }
 }

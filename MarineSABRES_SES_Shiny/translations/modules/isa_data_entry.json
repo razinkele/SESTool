@@ -374,6 +374,17 @@
       "no": "Økosystemtyper",
       "el": "Οικοσύστημα types"
     },
+    "modules.isa.ai_assistant.eu_member_state": {
+      "en": "EU Member State",
+      "es": "Estado miembro de la UE",
+      "fr": "État membre de l'UE",
+      "de": "EU-Mitgliedstaat",
+      "lt": "ES valstybė narė",
+      "pt": "Estado-Membro da UE",
+      "it": "Stato membro dell'UE",
+      "no": "EU-medlemsland",
+      "el": "Κράτος μέλος της ΕΕ"
+    },
     "modules.isa.ai_assistant.elements_and": {
       "en": "elements and",
       "es": "elementos y",

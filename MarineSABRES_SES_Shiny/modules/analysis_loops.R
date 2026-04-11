@@ -684,7 +684,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
       loops <- loop_data$loops
 
       if (nrow(loops) == 0) {
-        return(i18n$t("modules.analysis.loops.no_loops_found"))
+        return(i18n$t("modules.analysis.loops.analysis_no_loops_found"))
       }
 
       reinforcing <- sum(loops$Type == "Reinforcing")

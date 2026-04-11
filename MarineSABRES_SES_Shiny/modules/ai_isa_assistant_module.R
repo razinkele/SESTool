@@ -1354,7 +1354,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
                   tags$span(
                     class = "badge badge-primary",
                     style = "font-size: 0.65em; vertical-align: super; margin-left: 3px; padding: 1px 4px;",
-                    title = "EU Member State",
+                    title = i18n$t("modules.isa.ai_assistant.eu_member_state"),
                     "EU"
                   )
                 } else {
