@@ -177,6 +177,8 @@ ssh -t "$REMOTE_USER@$REMOTE_HOST" "\
     chown -R $REMOTE_OWNER:$REMOTE_GROUP $REMOTE_TARGET && \
     chmod -R 755 $REMOTE_TARGET && \
     rm -f $REMOTE_TARGET/translations/_merged_translations.json 2>/dev/null; \
+    chmod g+w $REMOTE_TARGET/translations && \
+    mkdir -p $REMOTE_TARGET/www/reports && chmod g+w $REMOTE_TARGET/www/reports && \
     echo '==> Cleaning up...' && \
     rm -f /tmp/$TAR_FILENAME && \
     echo '==> Restarting Shiny Server...' && \
