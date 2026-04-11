@@ -847,7 +847,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               unconnected_warning,
               p(style = "color: #2e7d32; margin-bottom: 10px;",
                 icon("check-circle"),
-                sprintf(" %s %d %s", i18n$t("modules.isa.ai_assistant.youve_approved"), approved_count, i18n$t("modules.isa.ai_assistant.connections"))),
+                sprintf(" %s %d %s", i18n$t("modules.isa.ai_assistant.great_youve_approved"), approved_count, i18n$t("modules.isa.ai_assistant.connections"))),
               actionButton(session$ns("finish_connections"), i18n$t("modules.isa.ai_assistant.finish_continue"),
                           icon = icon("arrow-right"),
                           class = "btn-primary btn-lg",
