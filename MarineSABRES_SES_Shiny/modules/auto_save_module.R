@@ -1073,17 +1073,32 @@ auto_save_server <- function(id, project_data_reactive, i18n,
 
     # Handle recovery dismissal
     observeEvent(input$discard_recovery, {
-      # Clear recovery pending flag to allow auto-save to resume
-      auto_save$recovery_pending <- FALSE
-      debug_log("Recovery discarded - auto-save resumed", "AUTO-SAVE")
-
-      removeModal()
-      # Delete the recovery file from session-scoped temp directory
+      # Derive the file path first (was previously after the flag reset)
       current_temp_dir <- temp_dir()
       latest_file <- file.path(current_temp_dir, "latest_autosave.rds")
-      if (file.exists(latest_file)) {
-        file.remove(latest_file)
+
+      # Attempt removal INSIDE tryCatch BEFORE clearing the flag — I1b.
+      # If removal fails, recovery_pending stays TRUE so the user can retry.
+      removed <- tryCatch({
+        if (file.exists(latest_file)) {
+          file.remove(latest_file)
+        }
+        TRUE  # success, or file already absent
+      }, error = function(e) {
+        debug_log(paste("Discard recovery failed:", conditionMessage(e)), "AUTO-SAVE")
+        showNotification(
+          format_user_error(e, i18n = i18n, context = "discarding recovery"),
+          type = "error"
+        )
+        FALSE
+      })
+
+      if (isTRUE(removed)) {
+        auto_save$recovery_pending <- FALSE
+        debug_log("Recovery discarded - auto-save resumed", "AUTO-SAVE")
+        removeModal()
       }
+      # On failure: modal stays open, flag stays TRUE, user sees the error toast
     })
 
     # Initialize - check for recovery on module load
