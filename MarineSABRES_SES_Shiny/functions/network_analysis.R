@@ -497,12 +497,28 @@ validate_loop_dapsirwrm <- function(loop_node_ids, nodes) {
 
 #' Find all simple cycles in the network
 #'
+#' Enumerates simple cycles in the directed graph defined by `nodes` and
+#' `edges`. Cycles are searched per strongly connected component (SCC):
+#' the graph is partitioned first, then cycle enumeration runs inside
+#' each SCC independently. This avoids a global cartesian walk and keeps
+#' the complexity tractable on sparse social-ecological networks.
+#'
+#' The function is time-bounded. If `timeout_seconds` elapses before all
+#' cycles are enumerated, the function stops and throws an error whose
+#' message contains "timeout". No cycles are returned on timeout — the
+#' caller must handle the error. `max_cycles` is a second hard cap that
+#' truncates the result list and returns normally.
+#'
 #' @param nodes Nodes dataframe
 #' @param edges Edges dataframe
 #' @param max_length Maximum cycle length to detect
-#' @param max_cycles Maximum number of cycles to find (default 1000)
-#' @param timeout_seconds Maximum time allowed for detection (default from constants)
-#' @return List of cycles (vectors of node IDs)
+#' @param max_cycles Maximum number of cycles to find (default 1000).
+#'   Reaching this cap returns the cycles found so far, no error.
+#' @param timeout_seconds Maximum time allowed for detection (default from
+#'   `LOOP_ANALYSIS_TIMEOUT_SECONDS` in constants.R). Exceeding this
+#'   throws an error; the in-progress result is discarded.
+#' @return List of cycles (vectors of node IDs), possibly truncated by
+#'   `max_cycles`. Empty list if `edges` is NULL or empty.
 #' @throws Error with message containing "timeout" if time limit exceeded
 find_all_cycles <- function(nodes, edges, max_length = 10, max_cycles = 1000,
                             timeout_seconds = LOOP_ANALYSIS_TIMEOUT_SECONDS) {
