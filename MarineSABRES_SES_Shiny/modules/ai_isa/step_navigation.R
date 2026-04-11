@@ -123,8 +123,8 @@ setup_step_navigation <- function(rv, session, i18n, QUESTION_FLOW) {
               i18n$t("modules.isa.try_adding_more_elements_to_different_categories_d")
             )
           } else {
-            base_message <- paste0(next_step$question, " ", i18n$t("I've identified"), " ", conn_count,
-                             " ", i18n$t("modules.isa.potential_connections_based_on_the_dapsiwrm_framew"), " ",
+            base_message <- paste0(next_step$question, " ",
+                             sprintf(i18n$t("modules.isa.ai_assistant.identified_connections_count"), conn_count), " ",
                              i18n$t("modules.isa.ai_assistant.review_each_connection_below_and_approve_or_reject_them"))
 
             if (too_many) {

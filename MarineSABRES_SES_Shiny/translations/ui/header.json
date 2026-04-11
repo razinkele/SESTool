@@ -1,5 +1,15 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "ui.header.about_app": {
       "en": "About",
@@ -660,6 +670,17 @@
       "it": "Cancella Sessione e Ricomincia",
       "no": "Fjern Sesjon og Start På Nytt",
       "el": "Εκκαθάριση Συνεδρίας και Νέα Εκκίνηση"
+    },
+    "ui.header.title": {
+      "en": "MarineSABRES SES Toolbox",
+      "es": "Herramientas SES MarineSABRES",
+      "fr": "Boîte à outils SES MarineSABRES",
+      "de": "MarineSABRES SES-Toolbox",
+      "lt": "MarineSABRES SES įrankių rinkinys",
+      "pt": "Caixa de ferramentas SES MarineSABRES",
+      "it": "Toolbox SES MarineSABRES",
+      "no": "MarineSABRES SES-verktøykasse",
+      "el": "Εργαλειοθήκη MarineSABRES SES"
     }
   }
 }

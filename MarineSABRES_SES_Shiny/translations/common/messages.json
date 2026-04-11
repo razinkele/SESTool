@@ -9151,6 +9151,28 @@
       "it": "%d elementi non connessi rimossi dal modello SES",
       "no": "%d ikke-tilkoblede elementer fjernet fra SES-modellen",
       "el": "%d μη συνδεδεμένα στοιχεία αφαιρέθηκαν από το μοντέλο SES"
+    },
+    "common.messages.success": {
+      "en": "Success",
+      "es": "Éxito",
+      "fr": "Succès",
+      "de": "Erfolg",
+      "lt": "Sėkmė",
+      "pt": "Sucesso",
+      "it": "Successo",
+      "no": "Suksess",
+      "el": "Επιτυχία"
+    },
+    "common.messages.error": {
+      "en": "Error",
+      "es": "Error",
+      "fr": "Erreur",
+      "de": "Fehler",
+      "lt": "Klaida",
+      "pt": "Erro",
+      "it": "Errore",
+      "no": "Feil",
+      "el": "Σφάλμα"
     }
   }
 }

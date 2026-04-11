@@ -1,5 +1,15 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "ui.sidebar.ai_assistant": {
       "en": "AI Assistant",
@@ -770,6 +780,17 @@
       "it": "Costruisci la tua rete SES passo dopo passo con la guida dell'IA",
       "no": "Bygg SES-nettverket ditt steg for steg med AI-veiledning",
       "el": "Δημιουργήστε το δίκτυο SES σας βήμα-βήμα με καθοδήγηση AI"
+    },
+    "ui.sidebar.home": {
+      "en": "Home",
+      "es": "Inicio",
+      "fr": "Accueil",
+      "de": "Startseite",
+      "lt": "Pradinis",
+      "pt": "Início",
+      "it": "Home",
+      "no": "Hjem",
+      "el": "Αρχική"
     }
   }
 }

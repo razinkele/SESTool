@@ -301,16 +301,20 @@ i18n$set_translation_language("en")
 #' @return Invisibly returns list of missing keys
 #' @export
 validate_translation_completeness <- function(i18n, required_keys = NULL) {
-  # Define critical keys that must exist
+  # Define critical keys that must exist.
+  # NOTE: Keys use the namespaced form (common.*, ui.*) — the old flat form
+  # (buttons.save, messages.error) was renamed during the modular i18n migration.
+  # If you add keys here, also list them in scripts/_i18n_audit.py's
+  # CRITICAL_VALIDATION_KEYS set so the auditor can track them.
   critical_keys <- c(
     "ui.header.title",
     "ui.header.preloader_title",
     "ui.sidebar.home",
-    "buttons.save",
-    "buttons.cancel",
-    "buttons.delete",
-    "messages.success",
-    "messages.error"
+    "common.buttons.save",
+    "common.buttons.cancel",
+    "common.buttons.delete",
+    "common.messages.success",
+    "common.messages.error"
   )
 
   keys_to_check <- if (!is.null(required_keys)) required_keys else critical_keys

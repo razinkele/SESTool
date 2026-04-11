@@ -4465,6 +4465,17 @@
       "it": "Elenca i principali impatti sul benessere umano che hai osservato...",
       "no": "Liste viktige konsekvenser for menneskers velferd du har observert...",
       "el": "Αναφέρετε τις κύριες επιπτώσεις στην ανθρώπινη ευημερία που έχετε παρατηρήσει..."
+    },
+    "modules.isa.ai_assistant.identified_connections_count": {
+      "en": "I've identified %d potential connections based on the DAPSI(W)R(M) framework.",
+      "es": "He identificado %d conexiones potenciales basadas en el marco DAPSI(W)R(M).",
+      "fr": "J'ai identifié %d connexions potentielles basées sur le cadre DAPSI(W)R(M).",
+      "de": "Ich habe %d potenzielle Verbindungen basierend auf dem DAPSI(W)R(M)-Rahmen identifiziert.",
+      "lt": "Identifikavau %d galimus ryšius, remdamasis DAPSI(W)R(M) sistema.",
+      "pt": "Identifiquei %d conexões potenciais com base no framework DAPSI(W)R(M).",
+      "it": "Ho identificato %d connessioni potenziali basate sul framework DAPSI(W)R(M).",
+      "no": "Jeg har identifisert %d potensielle forbindelser basert på DAPSI(W)R(M)-rammeverket.",
+      "el": "Έχω εντοπίσει %d πιθανές συνδέσεις με βάση το πλαίσιο DAPSI(W)R(M)."
     }
   }
 }
