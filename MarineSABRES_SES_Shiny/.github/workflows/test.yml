@@ -54,7 +54,7 @@ jobs:
           install.packages(c("tidyverse", "DT", "openxlsx", "readxl", "httr", "jsonlite", "digest"))
           install.packages(c("igraph", "visNetwork", "ggraph", "tidygraph"))
           install.packages(c("ggplot2", "plotly", "dygraphs", "xts"))
-          install.packages(c("timevis", "rmarkdown", "htmlwidgets", "htmltools", "shiny.i18n"))
+          install.packages(c("rmarkdown", "htmlwidgets", "htmltools", "shiny.i18n"))
           install.packages(c("covr", "R6"))
         shell: Rscript {0}
 

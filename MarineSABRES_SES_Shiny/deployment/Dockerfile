@@ -62,7 +62,6 @@ RUN R -e "install.packages(c( \
     'plotly', \
     'dygraphs', \
     'xts', \
-    'timevis', \
     'rmarkdown', \
     'htmlwidgets', \
     'htmltools', \

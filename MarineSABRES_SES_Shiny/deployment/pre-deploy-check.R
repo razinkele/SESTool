@@ -227,7 +227,7 @@ required_packages <- c(
   # Network visualization
   "igraph", "visNetwork", "ggraph", "tidygraph",
   # Plotting and time series
-  "ggplot2", "plotly", "dygraphs", "xts", "zoo", "timevis",
+  "ggplot2", "plotly", "dygraphs", "xts", "zoo",
   # Reporting
   "rmarkdown", "htmlwidgets", "knitr"
 )

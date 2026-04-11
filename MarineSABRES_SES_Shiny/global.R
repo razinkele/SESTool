@@ -37,9 +37,6 @@ suppressPackageStartupMessages({
   library(dygraphs)
   library(xts)
 
-  # Project management
-  library(timevis)
-
   # Export/Reporting
   library(rmarkdown)
   library(htmlwidgets)

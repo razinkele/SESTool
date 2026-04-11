@@ -31,7 +31,6 @@ Imports:
     plotly (>= 4.10.0),
     dygraphs,
     xts,
-    timevis,
     rmarkdown,
     htmlwidgets,
     shiny.i18n,

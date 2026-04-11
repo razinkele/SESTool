@@ -69,8 +69,7 @@ cat("------------------------------------------------------------\n")
 viz_packages <- c(
   "ggplot2",
   "plotly",
-  "dygraphs",
-  "timevis"
+  "dygraphs"
 )
 install_if_missing(viz_packages)
 

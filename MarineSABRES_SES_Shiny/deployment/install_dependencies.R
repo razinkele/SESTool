@@ -110,9 +110,6 @@ required_packages <- c(
   "xts",
   "zoo",
 
-  # Project management
-  "timevis",
-
   # Export/Reporting
   "rmarkdown",
   "htmlwidgets",

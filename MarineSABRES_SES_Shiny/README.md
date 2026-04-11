@@ -103,7 +103,7 @@ install.packages(c(
   "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS", "shinyFiles",
   "shiny.i18n", "DT", "jsonlite", "openxlsx", "readxl", "httr", "digest",
   "igraph", "visNetwork", "ggraph", "tidygraph", "ggplot2", "plotly",
-  "dygraphs", "xts", "timevis", "tidyverse",
+  "dygraphs", "xts", "tidyverse",
   "htmltools", "htmlwidgets", "rmarkdown", "knitr",
   "officer", "flextable", "tinytex"
 ))
