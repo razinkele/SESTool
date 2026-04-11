@@ -367,7 +367,7 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
           column(6,
             h5(i18n$t("modules.isa.data_entry.common.initial_complexity_mapping")),
             textAreaInput(ns("welfare_impacts"), i18n$t("modules.isa.data_entry.ex4.identified_welfare_impacts"),
-                         placeholder = i18n$t("List key impacts on human welfare you've observed..."),
+                         placeholder = i18n$t("modules.isa.data_entry.welfare_impacts_prompt"),
                          rows = 4),
             textAreaInput(ns("key_stakeholders"), i18n$t("modules.isa.data_entry.common.key_stakeholders"),
                          placeholder = i18n$t("modules.isa.data_entry.common.who_is_affected_who_makes_decisions"),

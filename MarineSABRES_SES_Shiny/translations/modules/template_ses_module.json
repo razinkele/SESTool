@@ -1,0 +1,48 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
+  "translation": {
+    "modules.template.selected_message": {
+      "en": "Template '%s' selected",
+      "es": "Plantilla '%s' seleccionada",
+      "fr": "Modèle '%s' sélectionné",
+      "de": "Vorlage '%s' ausgewählt",
+      "lt": "Šablonas '%s' pasirinktas",
+      "pt": "Modelo '%s' selecionado",
+      "it": "Modello '%s' selezionato",
+      "no": "Mal '%s' valgt",
+      "el": "Επιλέχθηκε το πρότυπο '%s'"
+    },
+    "modules.template.select_to_preview": {
+      "en": "Select a template and click 'Review' to preview connections",
+      "es": "Selecciona una plantilla y haz clic en 'Revisar' para previsualizar conexiones",
+      "fr": "Sélectionnez un modèle et cliquez sur 'Réviser' pour prévisualiser les connexions",
+      "de": "Wählen Sie eine Vorlage und klicken Sie auf 'Überprüfen', um Verbindungen anzuzeigen",
+      "lt": "Pasirinkite šabloną ir spustelėkite 'Peržiūrėti', kad matytumėte ryšius",
+      "pt": "Selecione um modelo e clique em 'Revisar' para visualizar conexões",
+      "it": "Seleziona un modello e clicca 'Revisione' per visualizzare le connessioni",
+      "no": "Velg en mal og klikk 'Gjennomgå' for å forhåndsvise tilkoblinger",
+      "el": "Επιλέξτε ένα πρότυπο και κάντε κλικ στο 'Αναθεώρηση' για προεπισκόπηση συνδέσεων"
+    },
+    "modules.template.or_load_directly": {
+      "en": "Or click 'Load' to load it as-is without review",
+      "es": "O haz clic en 'Cargar' para cargarlo tal cual sin revisar",
+      "fr": "Ou cliquez sur 'Charger' pour le charger tel quel sans révision",
+      "de": "Oder klicken Sie auf 'Laden', um es ohne Überprüfung zu laden",
+      "lt": "Arba spustelėkite 'Įkelti', kad įkeltumėte tokį, koks yra, be peržiūros",
+      "pt": "Ou clique em 'Carregar' para carregá-lo como está sem revisão",
+      "it": "Oppure clicca 'Carica' per caricarlo così com'è senza revisione",
+      "no": "Eller klikk 'Last inn' for å laste det inn som det er uten gjennomgang",
+      "el": "Ή κάντε κλικ στο 'Φόρτωση' για φόρτωση χωρίς αναθεώρηση"
+    }
+  }
+}

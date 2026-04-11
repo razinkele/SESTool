@@ -87,8 +87,8 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n, event_bus =
           strong(i18n$t("modules.analysis.common.no_cld_data_found")),
           p(i18n$t("modules.analysis.network.please_generate_a_cld_network_first_using"), style = "margin-top: 10px;"),
           tags$ol(
-            tags$li(i18n$t("Navigate to 'ISA Data Entry' and complete your SES model")),
-            tags$li(i18n$t("Go to 'CLD Visualization' and click 'Generate CLD'")),
+            tags$li(i18n$t("modules.analysis.metrics.complete_ses_first")),
+            tags$li(i18n$t("modules.analysis.metrics.generate_cld_first")),
             tags$li(i18n$t("modules.analysis.network.return_here_to_analyze_network_metrics"))
           )
         )
@@ -393,7 +393,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n, event_bus =
                     tags$dd(i18n$t("modules.analysis.importance_based_on_connections_to_other_important")),
 
                     tags$dt(i18n$t("modules.analysis.common.pagerank")),
-                    tags$dd(i18n$t("Google's algorithm: importance based on quality and quantity of incoming connections."))
+                    tags$dd(i18n$t("modules.analysis.metrics.pagerank_description"))
                   )
                 ),
 

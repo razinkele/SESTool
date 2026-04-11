@@ -75,7 +75,7 @@ setup_step_navigation <- function(rv, session, i18n, QUESTION_FLOW) {
         if (total_elements == 0) {
           # No elements - show helpful message
           message <- paste0(
-            i18n$t("I notice you haven't added any elements yet!"), " ",
+            i18n$t("modules.isa.ai_assistant.no_elements_yet"), " ",
             i18n$t("modules.isa.to_create_connections_you_need_to_add_at_least_som"), " ",
             i18n$t("modules.isa.please_go_back_through_the_previous_steps_and_add_")
           )
@@ -119,7 +119,7 @@ setup_step_navigation <- function(rv, session, i18n, QUESTION_FLOW) {
 
           if (conn_count == 0) {
             message <- paste0(
-              i18n$t("I see you've added"), " ", total_elements, " ", i18n$t("elements, but I couldn't generate connections between them."), " ",
+              sprintf(i18n$t("modules.isa.ai_assistant.elements_added_with_count"), total_elements, 0L), " ",
               i18n$t("modules.isa.try_adding_more_elements_to_different_categories_d")
             )
           } else {
@@ -149,7 +149,7 @@ setup_step_navigation <- function(rv, session, i18n, QUESTION_FLOW) {
       # All done
       rv$conversation <- c(rv$conversation, list(
         list(type = "ai",
-             message = i18n$t("Excellent work! You've completed your DAPSI(W)R(M) model with connections. Review the summary on the right, and when ready, click 'Save to ISA Data Entry' to transfer your model to the main ISA module."),
+             message = i18n$t("modules.isa.ai_assistant.completion_message"),
              timestamp = Sys.time())
       ))
     }

@@ -591,7 +591,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
           ),
           tags$li(
             strong("PageRank: "),
-            i18n$t("PageRank: Google's algorithm adapted for network analysis. Measures overall importance considering both direct connections and the importance of connecting nodes.")
+            i18n$t("modules.analysis.leverage.pagerank_description")
           ),
           tags$li(
             strong("Composite Score: "),
@@ -612,7 +612,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
           ),
           tags$li(
             strong("High Eigenvector: "),
-            i18n$t("High Eigenvector: Target nodes that are influential because they're connected to other influential nodes.")
+            i18n$t("modules.analysis.leverage.eigenvector_description")
           ),
           tags$li(
             strong("High PageRank: "),

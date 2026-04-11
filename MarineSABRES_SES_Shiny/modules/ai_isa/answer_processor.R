@@ -56,7 +56,7 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
       debug_log("process_answer: REGIONAL_SEAS is NULL or empty, using 'other'", "AI ISA PROCESS", "WARN")
       rv$context$regional_sea <- "other"
       rv$conversation <- c(rv$conversation, list(
-        list(type = "ai", message = i18n$t("I'll use general marine suggestions for your area."), timestamp = Sys.time())
+        list(type = "ai", message = i18n$t("modules.isa.ai_assistant.general_marine_suggestions"), timestamp = Sys.time())
       ))
       move_to_next_step_fn()
       return()
@@ -81,7 +81,7 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
       # Couldn't match, use "other"
       rv$context$regional_sea <- "other"
       debug_log("Regional sea set to: other (text input not matched)", "AI ISA")
-      ai_response <- i18n$t("I'll use general marine suggestions for your area.")
+      ai_response <- i18n$t("modules.isa.ai_assistant.general_marine_suggestions")
     }
 
     rv$conversation <- c(rv$conversation, list(
@@ -97,10 +97,7 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
     rv$context$ecosystem_type <- answer
     debug_log(sprintf("Ecosystem type set to: %s (text input)", answer), "AI ISA")
 
-    ai_response <- paste0(
-      i18n$t("modules.isa.ai_assistant.perfect"), " ", answer, " ",
-      i18n$t("ecosystems have unique characteristics that I'll consider in my suggestions.")
-    )
+    ai_response <- sprintf(i18n$t("modules.isa.ai_assistant.ecosystem_unique_characteristics"), answer)
 
     rv$conversation <- c(rv$conversation, list(
       list(type = "ai", message = ai_response, timestamp = Sys.time())
@@ -116,8 +113,8 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
     debug_log(sprintf("Main issue set to: %s", answer), "AI ISA")
 
     ai_response <- paste0(
-      i18n$t("Understood. I'll focus suggestions on"), " ", tolower(answer), "-related issues. ",
-      i18n$t("Now let's start building your DAPSI(W)R(M) framework!")
+      sprintf(i18n$t("modules.isa.ai_assistant.focus_on_issue"), tolower(answer)), " ",
+      i18n$t("modules.isa.ai_assistant.start_building_framework")
     )
 
     rv$conversation <- c(rv$conversation, list(

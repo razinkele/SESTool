@@ -4366,6 +4366,105 @@
       "it": "Suggerimento socioeconomico basato sui paesi selezionati",
       "no": "Sosioøkonomisk forslag basert på valgte land",
       "el": "Κοινωνικοοικονομική πρόταση βάσει των επιλεγμένων χωρών"
+    },
+    "modules.isa.ai_assistant.no_elements_yet": {
+      "en": "I notice you haven't added any elements yet!",
+      "es": "¡He notado que aún no has añadido elementos!",
+      "fr": "Je remarque que vous n'avez encore ajouté aucun élément !",
+      "de": "Ich sehe, dass Sie noch keine Elemente hinzugefügt haben!",
+      "lt": "Pastebiu, kad dar nepridėjote jokių elementų!",
+      "pt": "Notei que você ainda não adicionou nenhum elemento!",
+      "it": "Noto che non hai ancora aggiunto alcun elemento!",
+      "no": "Jeg ser at du ikke har lagt til noen elementer ennå!",
+      "el": "Παρατηρώ ότι δεν έχετε προσθέσει ακόμα στοιχεία!"
+    },
+    "modules.isa.ai_assistant.elements_added_with_count": {
+      "en": "I see you've added %d elements, but I couldn't generate connections between them. I've identified %d potential pathways.",
+      "es": "Veo que has añadido %d elementos, pero no pude generar conexiones entre ellos. He identificado %d caminos potenciales.",
+      "fr": "Je vois que vous avez ajouté %d éléments, mais je n'ai pas pu générer de connexions entre eux. J'ai identifié %d voies potentielles.",
+      "de": "Sie haben %d Elemente hinzugefügt, aber ich konnte keine Verbindungen zwischen ihnen erzeugen. Ich habe %d mögliche Pfade identifiziert.",
+      "lt": "Matau, kad pridėjote %d elementų, bet negalėjau sukurti ryšių tarp jų. Identifikavau %d galimus kelius.",
+      "pt": "Vejo que você adicionou %d elementos, mas não consegui gerar conexões entre eles. Identifiquei %d caminhos potenciais.",
+      "it": "Vedo che hai aggiunto %d elementi, ma non sono riuscito a generare connessioni tra di loro. Ho identificato %d percorsi potenziali.",
+      "no": "Jeg ser at du har lagt til %d elementer, men jeg kunne ikke generere forbindelser mellom dem. Jeg har identifisert %d potensielle veier.",
+      "el": "Βλέπω ότι έχετε προσθέσει %d στοιχεία, αλλά δεν μπόρεσα να δημιουργήσω συνδέσεις μεταξύ τους. Έχω εντοπίσει %d πιθανές διαδρομές."
+    },
+    "modules.isa.ai_assistant.general_marine_suggestions": {
+      "en": "I'll use general marine suggestions for your area.",
+      "es": "Usaré sugerencias marinas generales para tu área.",
+      "fr": "J'utiliserai des suggestions marines générales pour votre zone.",
+      "de": "Ich werde allgemeine Meeresvorschläge für Ihre Region verwenden.",
+      "lt": "Naudosiu bendras jūrines nuorodas jūsų vietovei.",
+      "pt": "Usarei sugestões marinhas gerais para sua área.",
+      "it": "Userò suggerimenti marini generali per la tua area.",
+      "no": "Jeg vil bruke generelle marine forslag for området ditt.",
+      "el": "Θα χρησιμοποιήσω γενικές θαλάσσιες προτάσεις για την περιοχή σας."
+    },
+    "modules.isa.ai_assistant.ecosystem_unique_characteristics": {
+      "en": "%s ecosystems have unique characteristics that I'll consider in my suggestions.",
+      "es": "Los ecosistemas %s tienen características únicas que consideraré en mis sugerencias.",
+      "fr": "Les écosystèmes %s ont des caractéristiques uniques que je prendrai en compte dans mes suggestions.",
+      "de": "%s-Ökosysteme haben einzigartige Eigenschaften, die ich in meinen Vorschlägen berücksichtigen werde.",
+      "lt": "%s ekosistemos turi unikalias savybes, į kurias atsižvelgsiu savo pasiūlymuose.",
+      "pt": "Os ecossistemas %s têm características únicas que considerarei em minhas sugestões.",
+      "it": "Gli ecosistemi %s hanno caratteristiche uniche che prenderò in considerazione nei miei suggerimenti.",
+      "no": "%s-økosystemer har unike egenskaper som jeg vil ta hensyn til i forslagene mine.",
+      "el": "Τα οικοσυστήματα %s έχουν μοναδικά χαρακτηριστικά που θα λάβω υπόψη στις προτάσεις μου."
+    },
+    "modules.isa.ai_assistant.focus_on_issue": {
+      "en": "Understood. I'll focus suggestions on %s.",
+      "es": "Entendido. Centraré las sugerencias en %s.",
+      "fr": "Compris. Je concentrerai les suggestions sur %s.",
+      "de": "Verstanden. Ich werde die Vorschläge auf %s konzentrieren.",
+      "lt": "Supratau. Pasiūlymus sutelksiu į %s.",
+      "pt": "Entendido. Focarei as sugestões em %s.",
+      "it": "Capito. Concentrerò i suggerimenti su %s.",
+      "no": "Forstått. Jeg vil fokusere forslagene på %s.",
+      "el": "Κατανοητό. Θα επικεντρώσω τις προτάσεις στο %s."
+    },
+    "modules.isa.ai_assistant.start_building_framework": {
+      "en": "Now let's start building your DAPSI(W)R(M) framework!",
+      "es": "¡Ahora comencemos a construir tu marco DAPSI(W)R(M)!",
+      "fr": "Commençons maintenant à construire votre cadre DAPSI(W)R(M) !",
+      "de": "Lassen Sie uns jetzt Ihren DAPSI(W)R(M)-Rahmen aufbauen!",
+      "lt": "Dabar pradėkime kurti jūsų DAPSI(W)R(M) sistemą!",
+      "pt": "Agora vamos começar a construir seu framework DAPSI(W)R(M)!",
+      "it": "Ora iniziamo a costruire il tuo framework DAPSI(W)R(M)!",
+      "no": "La oss nå begynne å bygge DAPSI(W)R(M)-rammeverket ditt!",
+      "el": "Τώρα ας αρχίσουμε να χτίζουμε το πλαίσιο DAPSI(W)R(M) σας!"
+    },
+    "modules.isa.ai_assistant.work_auto_saved_navigate": {
+      "en": "Your work is already saved automatically. Navigate to 'ISA Data Entry' to see your elements.",
+      "es": "Tu trabajo ya está guardado automáticamente. Navega a 'Entrada de Datos ISA' para ver tus elementos.",
+      "fr": "Votre travail est déjà enregistré automatiquement. Accédez à 'Saisie de données ISA' pour voir vos éléments.",
+      "de": "Ihre Arbeit wird bereits automatisch gespeichert. Navigieren Sie zu 'ISA-Dateneingabe', um Ihre Elemente zu sehen.",
+      "lt": "Jūsų darbas jau automatiškai išsaugotas. Eikite į 'ISA duomenų įvedimas', kad pamatytumėte savo elementus.",
+      "pt": "Seu trabalho já está salvo automaticamente. Navegue para 'Entrada de Dados ISA' para ver seus elementos.",
+      "it": "Il tuo lavoro è già salvato automaticamente. Vai su 'Inserimento Dati ISA' per vedere i tuoi elementi.",
+      "no": "Arbeidet ditt er allerede lagret automatisk. Naviger til 'ISA-dataregistrering' for å se elementene dine.",
+      "el": "Η εργασία σας έχει ήδη αποθηκευτεί αυτόματα. Μεταβείτε στην 'Καταχώρηση Δεδομένων ISA' για να δείτε τα στοιχεία σας."
+    },
+    "modules.isa.ai_assistant.model_saved_navigate": {
+      "en": "Model saved! Navigate to 'ISA Data Entry' to see your elements.",
+      "es": "¡Modelo guardado! Navega a 'Entrada de Datos ISA' para ver tus elementos.",
+      "fr": "Modèle enregistré ! Accédez à 'Saisie de données ISA' pour voir vos éléments.",
+      "de": "Modell gespeichert! Navigieren Sie zu 'ISA-Dateneingabe', um Ihre Elemente zu sehen.",
+      "lt": "Modelis išsaugotas! Eikite į 'ISA duomenų įvedimas', kad pamatytumėte savo elementus.",
+      "pt": "Modelo salvo! Navegue para 'Entrada de Dados ISA' para ver seus elementos.",
+      "it": "Modello salvato! Vai su 'Inserimento Dati ISA' per vedere i tuoi elementi.",
+      "no": "Modell lagret! Naviger til 'ISA-dataregistrering' for å se elementene dine.",
+      "el": "Το μοντέλο αποθηκεύτηκε! Μεταβείτε στην 'Καταχώρηση Δεδομένων ISA' για να δείτε τα στοιχεία σας."
+    },
+    "modules.isa.data_entry.welfare_impacts_prompt": {
+      "en": "List key impacts on human welfare you've observed...",
+      "es": "Enumera los impactos clave en el bienestar humano que has observado...",
+      "fr": "Énumérez les impacts clés sur le bien-être humain que vous avez observés...",
+      "de": "Listen Sie die wichtigsten Auswirkungen auf das menschliche Wohlergehen auf, die Sie beobachtet haben...",
+      "lt": "Išvardykite pagrindinius poveikius žmonių gerovei, kuriuos pastebėjote...",
+      "pt": "Liste os principais impactos no bem-estar humano que você observou...",
+      "it": "Elenca i principali impatti sul benessere umano che hai osservato...",
+      "no": "Liste viktige konsekvenser for menneskers velferd du har observert...",
+      "el": "Αναφέρετε τις κύριες επιπτώσεις στην ανθρώπινη ευημερία που έχετε παρατηρήσει..."
     }
   }
 }

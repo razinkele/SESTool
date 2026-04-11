@@ -110,7 +110,7 @@ setup_action_handlers <- function(input, session, rv, i18n, project_data_reactiv
   observeEvent(input$save_from_preview, {
     removeModal()
     showNotification(
-      i18n$t("Model saved! Navigate to 'ISA Data Entry' to see your elements."),
+      i18n$t("modules.isa.ai_assistant.model_saved_navigate"),
       type = "message",
       duration = 5
     )

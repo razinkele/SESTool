@@ -811,7 +811,7 @@ setup_preview_modal <- function(input, session, rv, i18n) {
     removeModal()
     # Trigger the main save action
     showNotification(
-      i18n$t("Model saved! Navigate to 'ISA Data Entry' to see your elements."),
+      i18n$t("modules.isa.ai_assistant.model_saved_navigate"),
       type = "message",
       duration = 5
     )

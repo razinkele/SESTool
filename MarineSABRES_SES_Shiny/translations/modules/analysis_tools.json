@@ -1759,6 +1759,61 @@
       "it": "Scarica distribuzione (PNG)",
       "no": "Last ned distribusjon (PNG)",
       "el": "Λήψη κατανομής (PNG)"
+    },
+    "modules.analysis.metrics.complete_ses_first": {
+      "en": "Navigate to 'ISA Data Entry' and complete your SES model",
+      "es": "Navega a 'Entrada de Datos ISA' y completa tu modelo SES",
+      "fr": "Accédez à 'Saisie de données ISA' et complétez votre modèle SES",
+      "de": "Navigieren Sie zu 'ISA-Dateneingabe' und vervollständigen Sie Ihr SES-Modell",
+      "lt": "Eikite į 'ISA duomenų įvedimas' ir užbaikite savo SES modelį",
+      "pt": "Navegue para 'Entrada de Dados ISA' e complete seu modelo SES",
+      "it": "Vai su 'Inserimento Dati ISA' e completa il tuo modello SES",
+      "no": "Naviger til 'ISA-dataregistrering' og fullfør SES-modellen din",
+      "el": "Μεταβείτε στην 'Καταχώρηση Δεδομένων ISA' και ολοκληρώστε το μοντέλο SES σας"
+    },
+    "modules.analysis.metrics.generate_cld_first": {
+      "en": "Go to 'CLD Visualization' and click 'Generate CLD'",
+      "es": "Ve a 'Visualización CLD' y haz clic en 'Generar CLD'",
+      "fr": "Allez à 'Visualisation CLD' et cliquez sur 'Générer CLD'",
+      "de": "Gehen Sie zu 'CLD-Visualisierung' und klicken Sie auf 'CLD erzeugen'",
+      "lt": "Eikite į 'CLD vizualizacija' ir spustelėkite 'Generuoti CLD'",
+      "pt": "Vá para 'Visualização CLD' e clique em 'Gerar CLD'",
+      "it": "Vai su 'Visualizzazione CLD' e clicca 'Genera CLD'",
+      "no": "Gå til 'CLD-visualisering' og klikk 'Generer CLD'",
+      "el": "Μεταβείτε στην 'Οπτικοποίηση CLD' και κάντε κλικ στο 'Δημιουργία CLD'"
+    },
+    "modules.analysis.metrics.pagerank_description": {
+      "en": "Google's algorithm: importance based on quality and quantity of incoming connections.",
+      "es": "Algoritmo de Google: importancia basada en la calidad y cantidad de conexiones entrantes.",
+      "fr": "Algorithme de Google : importance basée sur la qualité et la quantité des connexions entrantes.",
+      "de": "Googles Algorithmus: Wichtigkeit basierend auf Qualität und Quantität eingehender Verbindungen.",
+      "lt": "Google algoritmas: svarba pagrįsta įeinančių ryšių kokybe ir kiekiu.",
+      "pt": "Algoritmo do Google: importância baseada na qualidade e quantidade de conexões de entrada.",
+      "it": "Algoritmo di Google: importanza basata sulla qualità e quantità di connessioni in entrata.",
+      "no": "Googles algoritme: viktighet basert på kvalitet og kvantitet av innkommende tilkoblinger.",
+      "el": "Αλγόριθμος της Google: σημασία βάσει ποιότητας και ποσότητας εισερχόμενων συνδέσεων."
+    },
+    "modules.analysis.leverage.pagerank_description": {
+      "en": "PageRank: Google's algorithm adapted for network analysis. Measures overall importance considering both direct connections and the importance of connecting nodes.",
+      "es": "PageRank: Algoritmo de Google adaptado para análisis de redes. Mide la importancia general considerando tanto las conexiones directas como la importancia de los nodos conectados.",
+      "fr": "PageRank : Algorithme de Google adapté pour l'analyse de réseau. Mesure l'importance globale en tenant compte des connexions directes et de l'importance des nœuds de connexion.",
+      "de": "PageRank: Googles Algorithmus angepasst für Netzwerkanalyse. Misst die Gesamtbedeutung unter Berücksichtigung direkter Verbindungen und der Bedeutung verbindender Knoten.",
+      "lt": "PageRank: Google algoritmas pritaikytas tinklo analizei. Matuoja bendrą svarbą atsižvelgiant tiek į tiesioginius ryšius, tiek į jungiančių mazgų svarbą.",
+      "pt": "PageRank: Algoritmo do Google adaptado para análise de rede. Mede a importância geral considerando tanto as conexões diretas quanto a importância dos nós conectores.",
+      "it": "PageRank: Algoritmo di Google adattato per l'analisi di rete. Misura l'importanza complessiva considerando sia le connessioni dirette che l'importanza dei nodi di connessione.",
+      "no": "PageRank: Googles algoritme tilpasset nettverksanalyse. Måler samlet viktighet ved å vurdere både direkte tilkoblinger og viktigheten av tilkoblingsnoder.",
+      "el": "PageRank: Αλγόριθμος της Google προσαρμοσμένος για ανάλυση δικτύου. Μετρά τη συνολική σημασία λαμβάνοντας υπόψη τόσο τις άμεσες συνδέσεις όσο και τη σημασία των συνδετικών κόμβων."
+    },
+    "modules.analysis.leverage.eigenvector_description": {
+      "en": "High Eigenvector: Target nodes that are influential because they're connected to other influential nodes.",
+      "es": "Eigenvector alto: Nodos objetivo que son influyentes porque están conectados a otros nodos influyentes.",
+      "fr": "Vecteur propre élevé : Nœuds cibles influents car connectés à d'autres nœuds influents.",
+      "de": "Hoher Eigenvektor: Zielknoten, die einflussreich sind, weil sie mit anderen einflussreichen Knoten verbunden sind.",
+      "lt": "Aukšta savivektoriaus reikšmė: tiksliniai mazgai, kurie yra įtakingi, nes yra sujungti su kitais įtakingais mazgais.",
+      "pt": "Autovetor alto: Nós alvo que são influentes porque estão conectados a outros nós influentes.",
+      "it": "Autovettore alto: Nodi target che sono influenti perché connessi ad altri nodi influenti.",
+      "no": "Høy egenvektor: Mål-noder som er innflytelsesrike fordi de er koblet til andre innflytelsesrike noder.",
+      "el": "Υψηλός ιδιοδιάνυσμα: Κόμβοι-στόχοι που είναι επιρροής επειδή συνδέονται με άλλους κόμβους επιρροής."
     }
   }
 }

@@ -588,7 +588,7 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         ", ns(paste0("card_", template_id))))
 
         showNotification(
-          sprintf(i18n$t("Template '%s' selected"), i18n$t(ses_templates()[[template_id]]$name_key)),
+          sprintf(i18n$t("modules.template.selected_message"), i18n$t(ses_templates()[[template_id]]$name_key)),
           type = "message",
           duration = 2
         )
@@ -867,8 +867,8 @@ template_ses_server <- function(id, project_data_reactive, i18n, parent_session 
         return(
           div(style = "padding: 40px; text-align: center; color: #999;",
             icon("arrow-left", style = "font-size: 48px; margin-bottom: 20px;"),
-            h5(i18n$t("Select a template and click 'Review' to preview connections")),
-            p(i18n$t("Or click 'Load' to load it as-is without review"))
+            h5(i18n$t("modules.template.select_to_preview")),
+            p(i18n$t("modules.template.or_load_directly"))
           )
         )
       }

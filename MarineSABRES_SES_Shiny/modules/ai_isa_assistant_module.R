@@ -2296,7 +2296,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             # Couldn't match, use "other"
             rv$context$regional_sea <- "other"
             debug_log("[AI ISA] Regional sea set to: other (text input not matched)\n")
-            ai_response <- i18n$t("I'll use general marine suggestions for your area.")
+            ai_response <- i18n$t("modules.isa.ai_assistant.general_marine_suggestions")
           }
 
           rv$conversation <- c(rv$conversation, list(
@@ -2312,10 +2312,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           rv$context$ecosystem_type <- answer
           debug_log(sprintf("[AI ISA] Ecosystem type set to: %s (text input)\n", answer))
 
-          ai_response <- paste0(
-            i18n$t("modules.isa.ai_assistant.perfect"), " ", answer, " ",
-            i18n$t("ecosystems have unique characteristics that I'll consider in my suggestions.")
-          )
+          ai_response <- sprintf(i18n$t("modules.isa.ai_assistant.ecosystem_unique_characteristics"), answer)
 
           rv$conversation <- c(rv$conversation, list(
             list(type = "ai", message = ai_response, timestamp = Sys.time())
@@ -2338,8 +2335,8 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
           debug_log(sprintf("[AI ISA] Main issue set to: %s\n", answer))
 
           ai_response <- paste0(
-            i18n$t("Understood. I'll focus suggestions on"), " ", tolower(answer), "-related issues. ",
-            i18n$t("Now let's start building your DAPSI(W)R(M) framework!")
+            sprintf(i18n$t("modules.isa.ai_assistant.focus_on_issue"), tolower(answer)), " ",
+            i18n$t("modules.isa.ai_assistant.start_building_framework")
           )
 
           rv$conversation <- c(rv$conversation, list(
@@ -2529,7 +2526,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
       # Check if auto-save already saved
       if (isTRUE(rv$auto_saved_step_10)) {
         showNotification(
-          i18n$t("Your work is already saved automatically. Navigate to 'ISA Data Entry' to see your elements."),
+          i18n$t("modules.isa.ai_assistant.work_auto_saved_navigate"),
           type = "message",
           duration = 5
         )
