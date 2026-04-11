@@ -169,3 +169,13 @@ scripts/test_*.R
 scripts/debug_*.R
 scripts/*_README.md
 scripts/QUICK_REFERENCE.md
+
+# Debug screenshots (Playwright MCP and manual test captures)
+*.png
+!www/**/*.png
+!docs/**/*.png
+
+# Agent/MCP caches and workspaces
+.playwright-mcp/
+.superpowers/
+.claude/skills/scientific-validation-workspace/
