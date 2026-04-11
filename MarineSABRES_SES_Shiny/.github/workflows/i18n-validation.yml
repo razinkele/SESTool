@@ -44,12 +44,12 @@ jobs:
           fi
           TOTALS=$(grep -E "^Totals:" "$REPORT" | head -1)
           echo "$TOTALS"
-          if echo "$TOTALS" | grep -qE "missing=[1-9]"; then
+          if echo "$TOTALS" | grep -qE "missing=[1-9][0-9]*"; then
             echo "ERROR: Missing i18n keys detected"
             cat "$REPORT"
             exit 1
           fi
-          if echo "$TOTALS" | grep -qE "hardcoded=[1-9]"; then
+          if echo "$TOTALS" | grep -qE "hardcoded=[1-9][0-9]*"; then
             echo "ERROR: Hardcoded strings detected"
             cat "$REPORT"
             exit 1
