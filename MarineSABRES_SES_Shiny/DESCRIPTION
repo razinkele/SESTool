@@ -35,7 +35,9 @@ Imports:
     rmarkdown,
     htmlwidgets,
     shiny.i18n,
-    htmltools
+    htmltools,
+    officer,
+    flextable
 Suggests:
     torch,
     testthat (>= 3.0.0),
