@@ -807,6 +807,9 @@ server <- function(input, output, session) {
         # Set language in SESSION-LOCAL translator (not global!)
         # This ensures language changes only affect THIS session
         session_i18n$set_translation_language(query$language)
+        if (!is.null(event_bus)) {
+          event_bus$emit_language_changed(new_lang = query$language, source = "query_param")
+        }
         debug_log(sprintf("Session language set. Current: %s", session_i18n$get_translation_language()), "LANGUAGE")
 
         # Use shiny.i18n's built-in update mechanism for elements with data-i18n attributes

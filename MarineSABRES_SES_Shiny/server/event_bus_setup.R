@@ -27,6 +27,7 @@ create_event_bus <- function(session_id = NULL) {
   triggers$project_saved <- shiny::reactiveVal(0)
   triggers$project_loaded <- shiny::reactiveVal(0)
   triggers$navigation_request <- shiny::reactiveVal(NULL)
+  triggers$language_changed <- shiny::reactiveVal(0)
 
   # Per-session event metadata stored as reactiveVals for proper isolation
   last_event_val <- shiny::reactiveVal(NULL)
@@ -137,6 +138,23 @@ create_event_bus <- function(session_id = NULL) {
 
     on_navigation_request = function() {
       triggers$navigation_request()
+    },
+
+    # ========== Language Changed Events ==========
+    # Emitted after the session translator's language is changed.
+    # Modules with cached i18n in reactive() or renderUI() blocks can
+    # observe this and re-render with the new language.
+    emit_language_changed = function(new_lang = "unknown", source = "unknown") {
+      current <- triggers$language_changed()
+      triggers$language_changed(current + 1)
+      last_event_val(list(type = "language_changed", new_lang = new_lang,
+                          source = source, time = Sys.time()))
+      event_count_val(event_count_val() + 1)
+      debug_log(sprintf("Event: language_changed to %s emitted by %s (count: %d)", new_lang, source, current + 1), "EVENT_BUS")
+    },
+
+    on_language_changed = function() {
+      triggers$language_changed()
     },
 
     # ========== Pipeline Control ==========
