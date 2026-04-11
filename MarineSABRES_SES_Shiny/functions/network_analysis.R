@@ -337,7 +337,8 @@ create_numeric_adjacency_matrix <- function(nodes, edges) {
 
 #' Check if a transition follows valid DAPSIRWRM framework logic
 #'
-#' Implements all 17 rules from DAPSIWRM_FRAMEWORK_RULES.md.
+#' Implements all 18 rules from DAPSIWRM_FRAMEWORK_RULES.md plus the ExUP
+#' exception (D → P for exogenic unmanaged pressures like climate change).
 #' Uses an 8-element model (D, A, P, C/S, ES, GB, R, M) with HW collapsed into GB.
 #' GB→D represents the collapsed pathway of Rules 6 (GB→HW) + 7 (HW→D).
 #' M is kept as a distinct type for template-loaded data (template_loader.R).
