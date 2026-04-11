@@ -229,6 +229,16 @@ testthat::test_file("tests/testthat/test-network-analysis.R")
 covr::package_coverage(".", type = "tests")
 ```
 
+### Accessibility (Known Gap)
+
+The `tests/testthat/test-accessibility.R` file was deleted on 2026-04-11
+because it referenced ARIA helper functions that don't exist. ARIA
+accessibility is a real feature that needs proper implementation:
+- `add_aria_attributes()`, `aria_nav()`, `aria_button()`, `aria_status()`, `sr_only()`
+
+This is tracked as a future task. Do NOT recreate the test file until
+the helpers are implemented.
+
 ## Git Workflow
 
 - CI runs i18n validation on all PRs
