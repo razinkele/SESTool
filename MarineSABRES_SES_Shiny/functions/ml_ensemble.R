@@ -51,7 +51,11 @@ load_ensemble <- function(ensemble_dir = "models/ensemble",
     return(FALSE)
   }
 
-  ensemble_env$metadata <- readRDS(metadata_path)
+  ensemble_env$metadata <- safe_readRDS(metadata_path)
+  if (is.null(ensemble_env$metadata)) {
+    warning("ML ensemble metadata could not be loaded from ", metadata_path)
+    return(NULL)
+  }
   n_models <- ensemble_env$metadata$n_models
 
   # Load all models

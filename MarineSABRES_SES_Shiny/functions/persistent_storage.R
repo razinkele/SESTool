@@ -169,6 +169,10 @@ get_configured_projects_folder <- function() {
 
   tryCatch({
     config <- readRDS(config_path)
+    if (!is.list(config)) {
+      debug_log("Invalid config file format, ignoring", "PERSISTENT_STORAGE")
+      return(NULL)
+    }
     if (!is.null(config$projects_folder) && dir.exists(config$projects_folder)) {
       return(normalizePath(config$projects_folder, winslash = "/"))
     }
@@ -447,6 +451,10 @@ load_project_persistent <- function(file_path) {
 
     if (is_rds) {
       project_data <- readRDS(file_path)
+      if (!is.list(project_data)) {
+        debug_log(paste("Invalid project file format:", file_path), "PERSISTENT_STORAGE")
+        return(NULL)
+      }
     } else {
       # JSON format - use safe parser for user-provided files
       json_content <- readLines(file_path, warn = FALSE)

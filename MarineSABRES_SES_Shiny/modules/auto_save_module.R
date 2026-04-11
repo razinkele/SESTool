@@ -1000,6 +1000,14 @@ auto_save_server <- function(id, project_data_reactive, i18n,
 
       tryCatch({
         recovered_data <- safe_readRDS(latest_file)
+        if (is.null(recovered_data) || !is.list(recovered_data)) {
+          showNotification(
+            i18n$t("common.messages.error"),
+            type = "error"
+          )
+          debug_log(paste("Auto-save recovery failed: could not read", latest_file), "AUTO_SAVE")
+          return()
+        }
 
         # Remove auto-save metadata before returning
         recovered_data$autosave_metadata <- NULL

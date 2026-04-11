@@ -132,7 +132,8 @@ load_template_version <- function(filepath) {
     stop("Version file not found: ", filepath)
   }
 
-  metadata <- readRDS(filepath)
+  metadata <- safe_readRDS(filepath)
+  if (is.null(metadata)) return(NULL)
 
   if (!inherits(metadata, "template_version")) {
     warning("File may not be a valid template version")
@@ -185,7 +186,8 @@ get_version_history <- function(template_name,
 
   for (file in files) {
     tryCatch({
-      meta <- readRDS(file)
+      meta <- safe_readRDS(file)
+      if (is.null(meta)) next
 
       # Extract performance metrics
       accuracy <- if (!is.null(meta$performance$accuracy)) {
@@ -369,7 +371,11 @@ delete_version <- function(version_path, confirm = TRUE) {
   }
 
   if (confirm) {
-    meta <- readRDS(version_path)
+    meta <- safe_readRDS(version_path)
+    if (is.null(meta)) {
+      warning("Version file could not be read: ", version_path)
+      return(FALSE)
+    }
     message(sprintf("Delete version %s of template '%s'? (created %s)",
                    meta$version,
                    meta$template_name,

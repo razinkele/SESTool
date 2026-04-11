@@ -456,6 +456,10 @@ check_retrain_trigger <- function(threshold = 50,
 
   feedback_log <- read_feedback_cached()
 
+  if (is.null(feedback_log) || nrow(feedback_log) == 0) {
+    return(list(retrain_needed = FALSE, reason = "no feedback data"))
+  }
+
   # Get last retrain timestamp
   if (file.exists(last_retrain_file)) {
     last_retrain_time <- as.POSIXct(readLines(last_retrain_file)[1])
