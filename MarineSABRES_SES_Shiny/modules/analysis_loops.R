@@ -595,9 +595,14 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           debug_log(sprintf("Loop detection completed: %d loops found", nrow(loop_info)), "LOOP DETECTION")
 
         }, error = function(e) {
-          output$detection_status <- renderText(paste(i18n$t("modules.analysis.loops.error_during_loop_detection"), conditionMessage(e)))
+          # Build user-safe detail via format_user_error with show_details=TRUE so
+          # the sanitized (file-paths-stripped, truncated) message content flows
+          # through. Then prepend the existing translated prefixes so the legacy
+          # i18n keys stay in use and the user-visible wording retains context (I3a).
+          user_detail <- format_user_error(e, i18n = i18n, context = "loop detection", show_details = TRUE)
+          output$detection_status <- renderText(paste(i18n$t("modules.analysis.loops.error_during_loop_detection"), user_detail))
           showNotification(
-            paste(i18n$t("modules.analysis.loops.loop_detection_failed"), conditionMessage(e)),
+            paste(i18n$t("modules.analysis.loops.loop_detection_failed"), user_detail),
             type = "error",
             duration = 10
           )
