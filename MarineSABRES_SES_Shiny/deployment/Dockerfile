@@ -109,10 +109,9 @@ COPY SESModels/ /srv/shiny-server/marinesabres/SESModels/
 # Uncomment if using ML features
 # COPY models/ /srv/shiny-server/marinesabres/models/
 
-# Copy scripts directory (only specific files needed at runtime)
-# Note: Most scripts are development-only, but reverse_key_mapping.json may be needed
-RUN mkdir -p /srv/shiny-server/marinesabres/scripts
-COPY scripts/reverse_key_mapping.json /srv/shiny-server/marinesabres/scripts/ 2>/dev/null || true
+# Note: scripts/ is development-only — the runtime does not need any scripts.
+# The old reverse_key_mapping.json reference was removed in Sprint 4 (M3) after
+# Sprint 1 replaced the R-script i18n validator with scripts/_i18n_audit.py.
 
 # Set permissions
 RUN chown -R shiny:shiny /srv/shiny-server/marinesabres
