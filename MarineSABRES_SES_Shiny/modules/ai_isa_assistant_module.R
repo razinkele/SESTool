@@ -1402,13 +1402,13 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
               div(style = "margin-top: 5px;", select_all_btn, clear_all_btn),
               if (length(eu_buttons) > 0) {
                 tagList(
-                  h6(style = "font-weight: 600; color: #28a745; margin-top: 10px;", "EU Member States"),
+                  h6(style = "font-weight: 600; color: #28a745; margin-top: 10px;", i18n$t("modules.isa.ai_assistant.eu_member_states")),
                   div(style = "margin-top: 5px;", eu_buttons)
                 )
               },
               if (length(non_eu_buttons) > 0) {
                 tagList(
-                  h6(style = "font-weight: 600; color: #6c757d; margin-top: 10px;", "Non-EU Countries"),
+                  h6(style = "font-weight: 600; color: #6c757d; margin-top: 10px;", i18n$t("modules.isa.ai_assistant.non_eu_countries")),
                   div(style = "margin-top: 5px;", non_eu_buttons)
                 )
               }

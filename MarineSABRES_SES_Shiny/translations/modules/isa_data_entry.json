@@ -11,6 +11,28 @@
     "el"
   ],
   "translation": {
+    "modules.isa.ai_assistant.eu_member_states": {
+      "en": "EU Member States",
+      "es": "Estados miembros de la UE",
+      "fr": "États membres de l'UE",
+      "de": "EU-Mitgliedstaaten",
+      "lt": "ES valstybės narės",
+      "pt": "Estados-Membros da UE",
+      "it": "Stati membri dell'UE",
+      "no": "EU-medlemsland",
+      "el": "Κράτη μέλη της ΕΕ"
+    },
+    "modules.isa.ai_assistant.non_eu_countries": {
+      "en": "Non-EU Countries",
+      "es": "Países no pertenecientes a la UE",
+      "fr": "Pays hors UE",
+      "de": "Nicht-EU-Länder",
+      "lt": "Ne ES šalys",
+      "pt": "Países não-UE",
+      "it": "Paesi non UE",
+      "no": "Ikke-EU-land",
+      "el": "Χώρες εκτός ΕΕ"
+    },
     "modules.isa.ai_assistant.ai_assisted_isa_creation": {
       "en": "AI-Assisted SES Creation",
       "es": "Creación SES Asistida por IA",
