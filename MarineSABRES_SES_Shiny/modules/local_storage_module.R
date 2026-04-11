@@ -283,7 +283,9 @@ local_storage_ui <- function(id, i18n) {
         });
       }
 
-      // Helper: Get saved directory handle from IndexedDB
+      // Helper: Get saved directory handle from IndexedDB.
+      // Verifies permission is still granted before returning — this prevents
+      // silently reusing a handle from a previous user on a shared browser.
       async function getSavedDirectoryHandle() {
         return new Promise((resolve, reject) => {
           const request = indexedDB.open("MarineSABRES_LocalStorage", 1);
@@ -295,14 +297,36 @@ local_storage_ui <- function(id, i18n) {
             }
           };
 
-          request.onsuccess = (event) => {
+          request.onsuccess = async (event) => {
             const db = event.target.result;
             const tx = db.transaction("handles", "readonly");
             const store = tx.objectStore("handles");
             const getRequest = store.get("projectDirectory");
 
-            getRequest.onsuccess = () => {
-              resolve(getRequest.result ? getRequest.result.handle : null);
+            getRequest.onsuccess = async () => {
+              const handle = getRequest.result ? getRequest.result.handle : null;
+              if (!handle) {
+                resolve(null);
+                return;
+              }
+              // Verify permission is still granted (non-silent)
+              try {
+                const perm = await handle.queryPermission({mode: "readwrite"});
+                if (perm === "granted") {
+                  resolve(handle);
+                } else {
+                  // Permission revoked or not granted — clear stale handle
+                  // and force the user to re-select the directory
+                  console.log("[local_storage] Stored handle permission not granted, clearing");
+                  const clearTx = db.transaction("handles", "readwrite");
+                  const clearStore = clearTx.objectStore("handles");
+                  clearStore.delete("projectDirectory");
+                  resolve(null);
+                }
+              } catch (err) {
+                console.error("[local_storage] Permission check failed:", err);
+                resolve(null);
+              }
             };
             getRequest.onerror = () => resolve(null);
           };
