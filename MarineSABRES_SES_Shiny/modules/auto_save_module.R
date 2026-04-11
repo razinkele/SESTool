@@ -603,6 +603,16 @@ auto_save_server <- function(id, project_data_reactive, i18n,
           return()
         }
 
+        # Lightweight shape check (I1c): catches outright corruption, not field-level issues.
+        # Access path matches line 602 (current_data$data$isa_data). If the shape is wrong,
+        # abort the save rather than persisting garbage that will fail on next load.
+        if (!is.list(current_data$data) || !is.list(current_data$data$isa_data)) {
+          debug_log("Auto-save skipped: project_data$data$isa_data shape invalid", "AUTO-SAVE")
+          auto_save$save_status <- "initialized"
+          updateSaveIndicator()
+          return()
+        }
+
         # Debug: log what we're about to save
         if (!is.null(current_data$data) && !is.null(current_data$data$isa_data)) {
           isa <- current_data$data$isa_data
