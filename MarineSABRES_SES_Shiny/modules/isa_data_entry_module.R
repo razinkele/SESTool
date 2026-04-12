@@ -778,12 +778,7 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
                 column(4,
                   tags$a(
                     class = "btn btn-info btn-block",
-                    href = local({
-                      lang <- tryCatch(i18n$get_translation_language(), error = function(e) "en")
-                      gf <- paste0("ISA_User_Guide_", lang, ".md")
-                      if (!file.exists(file.path("www", gf))) gf <- "ISA_User_Guide_en.md"
-                      gf
-                    }),
+                    href = "ISA_User_Guide_en.md",
                     target = "_blank",
                     icon("book"),
                     " ", i18n$t("modules.isa.data_entry.common.open_user_guide")
