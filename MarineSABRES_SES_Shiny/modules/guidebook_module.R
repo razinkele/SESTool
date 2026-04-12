@@ -1,6 +1,16 @@
 # modules/guidebook_module.R
 # Guidebook module - displays the user guidebook in-app and provides download links
 
+# Resolve language-specific guidebook Rmd path with English fallback
+resolve_guidebook_rmd <- function(i18n) {
+  lang <- tryCatch(i18n$get_translation_language(), error = function(e) "en")
+  rmd_file <- file.path("guidebook", paste0("guidebook_", lang, ".Rmd"))
+  if (!file.exists(rmd_file)) {
+    rmd_file <- file.path("guidebook", "guidebook_en.Rmd")
+  }
+  rmd_file
+}
+
 guidebook_ui <- function(id, i18n) {
   ns <- NS(id)
   shiny.i18n::usei18n(i18n)
@@ -36,10 +46,11 @@ guidebook_server <- function(id, project_data_reactive, i18n, event_bus = NULL) 
 
     observe({
       html_path <- tryCatch({
-        rmarkdown::render("guidebook/guidebook.Rmd",
+        rmarkdown::render(resolve_guidebook_rmd(i18n),
                          output_format = "html_fragment",
                          output_dir = tempdir(),
                          intermediates_dir = tempdir(),
+                         encoding = "UTF-8",
                          quiet = TRUE)
       }, error = function(e) {
         debug_log(paste("Guidebook render failed:", e$message), "ERROR")
@@ -62,11 +73,12 @@ guidebook_server <- function(id, project_data_reactive, i18n, event_bus = NULL) 
     output$download_pdf <- downloadHandler(
       filename = function() paste0("SES_Toolbox_Guidebook_", Sys.Date(), ".pdf"),
       content = function(file) {
-        withProgress(message = "Generating PDF...", {
-          rmarkdown::render("guidebook/guidebook.Rmd",
-                           output_format = "pdf_document",
+        withProgress(message = i18n$t("modules.guidebook.generating_pdf"), {
+          rmarkdown::render(resolve_guidebook_rmd(i18n),
+                           output_format = rmarkdown::pdf_document(latex_engine = "xelatex"),
                            output_file = file,
                            intermediates_dir = tempdir(),
+                           encoding = "UTF-8",
                            quiet = TRUE)
         })
       }
@@ -75,11 +87,12 @@ guidebook_server <- function(id, project_data_reactive, i18n, event_bus = NULL) 
     output$download_html <- downloadHandler(
       filename = function() paste0("SES_Toolbox_Guidebook_", Sys.Date(), ".html"),
       content = function(file) {
-        withProgress(message = "Generating HTML...", {
-          rmarkdown::render("guidebook/guidebook.Rmd",
+        withProgress(message = i18n$t("modules.guidebook.generating_html"), {
+          rmarkdown::render(resolve_guidebook_rmd(i18n),
                            output_format = "html_document",
                            output_file = file,
                            intermediates_dir = tempdir(),
+                           encoding = "UTF-8",
                            quiet = TRUE)
         })
       }

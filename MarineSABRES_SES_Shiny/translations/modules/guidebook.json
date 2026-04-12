@@ -66,6 +66,28 @@
       "no": "Last ned HTML",
       "el": "Λήψη HTML"
     },
+    "modules.guidebook.generating_pdf": {
+      "en": "Generating PDF...",
+      "es": "Generando PDF...",
+      "fr": "Génération du PDF...",
+      "de": "PDF wird erstellt...",
+      "lt": "Generuojamas PDF...",
+      "pt": "Gerando PDF...",
+      "it": "Generazione PDF...",
+      "no": "Genererer PDF...",
+      "el": "Δημιουργία PDF..."
+    },
+    "modules.guidebook.generating_html": {
+      "en": "Generating HTML...",
+      "es": "Generando HTML...",
+      "fr": "Génération du HTML...",
+      "de": "HTML wird erstellt...",
+      "lt": "Generuojamas HTML...",
+      "pt": "Gerando HTML...",
+      "it": "Generazione HTML...",
+      "no": "Genererer HTML...",
+      "el": "Δημιουργία HTML..."
+    },
     "modules.guidebook.fallback_message": {
       "en": "Guidebook is being prepared. Please download the PDF version.",
       "es": "La guía se está preparando. Por favor, descargue la versión PDF.",
