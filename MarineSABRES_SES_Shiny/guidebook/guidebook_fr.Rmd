@@ -1,0 +1,94 @@
+---
+title: "Boîte à Outils SES MarineSABRES — Guide de l'Utilisateur"
+subtitle: "Un guide étape par étape pour l'analyse des Systèmes Socio-Écologiques"
+author: "MarineSABRES Consortium"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: flatly
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+<div class="alert alert-info" role="alert">
+<strong>Remarque :</strong> Ce guide a été traduit automatiquement de l'anglais à l'aide de Claude AI.
+Si vous remarquez des erreurs, veuillez les signaler à l'équipe du projet MarineSABRES.
+<em>Statut de la traduction : Brouillon (traduction automatique, en attente de révision)</em>
+</div>
+
+# Guide de Démarrage Rapide
+
+## Qu'est-ce que la Boîte à Outils SES ?
+
+La Boîte à Outils des Systèmes Socio-Écologiques (SES) vous aide à comprendre comment les activités humaines et les écosystèmes naturels interagissent. En utilisant le cadre DAPSI(W)R(M), vous cartographiez :
+
+- **Facteurs (Drivers)** — causes profondes (p. ex., besoins en sécurité alimentaire)
+- **Activités (Activities)** — actions humaines (p. ex., pêche, tourisme)
+- **Pressions (Pressures)** — facteurs de stress environnementaux
+- **Changements d'État (State Changes)** — impacts sur les écosystèmes
+- **Impacts (Impacts)** — effets sur les services écosystémiques
+- **Bien-être (Welfare)** — conséquences sur le bien-être humain
+- **Réponses/Mesures (Responses/Measures)** — interventions politiques
+
+## Votre Premier SES en 5 Étapes
+
+1. **Commencer** — Sélectionnez votre rôle et ce dont vous avez besoin de l'outil
+2. **Créer Votre SES** — Saisissez les éléments et les connexions (manuellement, à partir d'un modèle ou assisté par IA)
+3. **Visualiser** — Consultez votre Diagramme de Boucle Causale (CLD)
+4. **Analyser** — Détectez les boucles de rétroaction et les points de levier
+5. **Rapporter** — Exportez vos résultats
+
+# Guide Détaillé du Flux de Travail
+
+## Étape 1 : Commencer
+
+Le Point d'Entrée vous guide dans la sélection de votre rôle, la compréhension de vos besoins en données et la recommandation des outils adaptés à vos objectifs.
+
+## Étape 2 : Créer Votre SES
+
+Vous pouvez créer votre modèle SES de trois façons :
+- **Méthode standard** — Saisissez les éléments et les connexions manuellement
+- **Importation de modèle** — Téléchargez un modèle Excel prérempli
+- **Assisté par IA** — Laissez l'IA vous guider à travers le cadre DAPSI(W)R(M)
+
+## Étape 3 : Visualisation
+
+Le Diagramme de Boucle Causale (CLD) montre votre système sous forme de réseau d'éléments interconnectés.
+Les nœuds représentent les éléments, les arêtes représentent les connexions avec polarité (+/-).
+
+## Étape 4 : Analyse
+
+### Détection des Boucles de Rétroaction
+Identifie les boucles de rétroaction de renforcement et d'équilibrage dans votre système.
+
+### Analyse des Points de Levier
+Trouve les nœuds ayant le plus grand potentiel d'impact à l'échelle du système.
+
+### Métriques de Réseau
+Fournit des statistiques de centralité et de connectivité.
+
+## Étape 5 : Rapports
+
+Exportez vos résultats sous forme de rapports HTML, PDF, Word ou PowerPoint.
+
+# Glossaire
+
+- **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)
+- **CLD** — Diagramme de Boucle Causale (Causal Loop Diagram)
+- **Point de Levier (Leverage Point)** — Un nœud ayant une forte influence sur l'ensemble du système
+- **Boucle de Rétroaction (Feedback Loop)** — Une chaîne circulaire de relations de cause à effet
+
+# Dépannage et FAQ
+
+**Q : Mon téléchargement se déconnecte sans cesse.**
+R : Assurez-vous que votre fichier Excel contient les feuilles « Elements » et « Connections ». Essayez de rafraîchir la page.
+
+**Q : La détection de boucles ne trouve aucune boucle.**
+R : Votre système n'a peut-être pas de boucles de rétroaction. Vérifiez que vous avez des connexions formant des chemins circulaires.
+
+**Q : Que signifient les scores des points de levier ?**
+R : Des scores composites plus élevés indiquent une plus grande influence sur le système. Consultez la section Analyse des Points de Levier.

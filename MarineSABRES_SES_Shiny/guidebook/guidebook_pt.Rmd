@@ -1,0 +1,94 @@
+---
+title: "Caixa de Ferramentas SES MarineSABRES — Guia do Utilizador"
+subtitle: "Um guia passo a passo para a análise de Sistemas Socio-Ecológicos"
+author: "MarineSABRES Consortium"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: flatly
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+<div class="alert alert-info" role="alert">
+<strong>Nota:</strong> Este guia foi traduzido automaticamente do inglês utilizando Claude AI.
+Se detetar erros, comunique-os à equipa do projeto MarineSABRES.
+<em>Estado da tradução: Rascunho (tradução automática, pendente de revisão)</em>
+</div>
+
+# Guia de Início Rápido
+
+## O que é a Caixa de Ferramentas SES?
+
+A Caixa de Ferramentas de Sistemas Socio-Ecológicos (SES) ajuda-o a compreender como as atividades humanas e os ecossistemas naturais interagem. Utilizando a estrutura DAPSI(W)R(M), mapeia:
+
+- **Fatores Impulsionadores (Drivers)** — causas raiz (p. ex., necessidades de segurança alimentar)
+- **Atividades (Activities)** — ações humanas (p. ex., pesca, turismo)
+- **Pressões (Pressures)** — fatores de stress ambiental
+- **Mudanças de Estado (State Changes)** — impactos nos ecossistemas
+- **Impactos (Impacts)** — efeitos nos serviços ecossistémicos
+- **Bem-estar (Welfare)** — consequências para o bem-estar humano
+- **Respostas/Medidas (Responses/Measures)** — intervenções políticas
+
+## O Seu Primeiro SES em 5 Passos
+
+1. **Começar** — Selecione o seu papel e o que necessita da ferramenta
+2. **Criar o Seu SES** — Introduza elementos e conexões (manualmente, a partir de modelo ou com assistência de IA)
+3. **Visualizar** — Veja o seu Diagrama de Ciclo Causal (CLD)
+4. **Analisar** — Detete ciclos de retroação e pontos de alavancagem
+5. **Reportar** — Exporte as suas conclusões
+
+# Guia Detalhado do Fluxo de Trabalho
+
+## Passo 1: Começar
+
+O Ponto de Entrada guia-o na seleção do seu papel, na compreensão das suas necessidades de dados e na recomendação das ferramentas adequadas para os seus objetivos.
+
+## Passo 2: Criar o Seu SES
+
+Pode criar o seu modelo SES de três formas:
+- **Método padrão** — Introduza elementos e conexões manualmente
+- **Importação de modelo** — Carregue um modelo Excel pré-preenchido
+- **Assistido por IA** — Deixe a IA guiá-lo através da estrutura DAPSI(W)R(M)
+
+## Passo 3: Visualização
+
+O Diagrama de Ciclo Causal (CLD) mostra o seu sistema como uma rede de elementos interligados.
+Os nós representam elementos, as arestas representam conexões com polaridade (+/-).
+
+## Passo 4: Análise
+
+### Deteção de Ciclos de Retroação
+Identifica ciclos de retroação de reforço e equilíbrio no seu sistema.
+
+### Análise de Pontos de Alavancagem
+Encontra os nós com maior potencial de impacto a nível do sistema.
+
+### Métricas de Rede
+Fornece estatísticas de centralidade e conectividade.
+
+## Passo 5: Relatórios
+
+Exporte as suas conclusões como relatórios em HTML, PDF, Word ou PowerPoint.
+
+# Glossário
+
+- **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)
+- **CLD** — Diagrama de Ciclo Causal (Causal Loop Diagram)
+- **Ponto de Alavancagem (Leverage Point)** — Um nó com elevada influência em todo o sistema
+- **Ciclo de Retroação (Feedback Loop)** — Uma cadeia circular de relações de causa e efeito
+
+# Resolução de Problemas e FAQ
+
+**P: O meu carregamento desconecta-se constantemente.**
+R: Certifique-se de que o seu ficheiro Excel tem as folhas "Elements" e "Connections". Tente atualizar a página.
+
+**P: A deteção de ciclos não encontra ciclos.**
+R: O seu sistema pode não ter ciclos de retroação. Verifique se tem conexões que formam caminhos circulares.
+
+**P: O que significam as pontuações dos pontos de alavancagem?**
+R: Pontuações compostas mais elevadas indicam maior influência no sistema. Consulte a secção de Análise de Pontos de Alavancagem.

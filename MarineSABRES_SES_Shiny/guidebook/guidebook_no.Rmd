@@ -1,0 +1,94 @@
+---
+title: "MarineSABRES SES Verktøykasse — Brukerhåndbok"
+subtitle: "En trinn-for-trinn-guide til analyse av sosial-økologiske systemer"
+author: "MarineSABRES Consortium"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: flatly
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+<div class="alert alert-info" role="alert">
+<strong>Merk:</strong> Denne håndboken ble maskinoversatt fra engelsk ved hjelp av Claude AI.
+Hvis du oppdager feil, vennligst rapporter dem til MarineSABRES-prosjektteamet.
+<em>Oversettelsesstatus: Utkast (maskinoversatt, venter på gjennomgang)</em>
+</div>
+
+# Hurtigstartguide
+
+## Hva er SES Verktøykassen?
+
+Verktøykassen for sosial-økologiske systemer (SES) hjelper deg å forstå hvordan menneskelige aktiviteter og naturlige økosystemer samhandler. Ved å bruke DAPSI(W)R(M)-rammeverket kartlegger du:
+
+- **Drivkrefter (Drivers)** — grunnleggende årsaker (f.eks. matsikkerhetsbehov)
+- **Aktiviteter (Activities)** — menneskelige handlinger (f.eks. fiske, turisme)
+- **Belastninger (Pressures)** — miljøstressfaktorer
+- **Tilstandsendringer (State Changes)** — påvirkninger på økosystemer
+- **Påvirkninger (Impacts)** — effekter på økosystemtjenester
+- **Velferd (Welfare)** — konsekvenser for menneskelig velvære
+- **Tiltak/Virkemidler (Responses/Measures)** — politiske intervensjoner
+
+## Ditt Første SES på 5 Trinn
+
+1. **Kom i gang** — Velg din rolle og hva du trenger fra verktøyet
+2. **Opprett Ditt SES** — Legg inn elementer og forbindelser (manuelt, fra mal eller AI-assistert)
+3. **Visualiser** — Se ditt årsaksløkkediagram (CLD)
+4. **Analyser** — Oppdag tilbakekoblingsløkker og vippepunkter
+5. **Rapporter** — Eksporter dine funn
+
+# Detaljert Arbeidsflytguide
+
+## Trinn 1: Kom i Gang
+
+Inngangspunktet veileder deg gjennom valg av rolle, forståelse av dine databehov og anbefaling av riktige verktøy for dine mål.
+
+## Trinn 2: Opprett Ditt SES
+
+Du kan opprette din SES-modell på tre måter:
+- **Standardmetode** — Legg inn elementer og forbindelser manuelt
+- **Malimport** — Last opp en ferdigutfylt Excel-mal
+- **AI-assistert** — La AI-en guide deg gjennom DAPSI(W)R(M)-rammeverket
+
+## Trinn 3: Visualisering
+
+Årsaksløkkediagrammet (CLD) viser systemet ditt som et nettverk av sammenkoblede elementer.
+Noder representerer elementer, kanter representerer forbindelser med polaritet (+/-).
+
+## Trinn 4: Analyse
+
+### Oppdagelse av Tilbakekoblingsløkker
+Identifiserer forsterkende og balanserende tilbakekoblingsløkker i systemet ditt.
+
+### Analyse av Vippepunkter
+Finner noder med størst potensial for systemomfattende påvirkning.
+
+### Nettverksmetrikker
+Gir sentralitets- og konnektivitetsstatistikk.
+
+## Trinn 5: Rapportering
+
+Eksporter dine funn som HTML-, PDF-, Word- eller PowerPoint-rapporter.
+
+# Ordliste
+
+- **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)
+- **CLD** — Årsaksløkkediagram (Causal Loop Diagram)
+- **Vippepunkt (Leverage Point)** — En node med høy innflytelse på hele systemet
+- **Tilbakekoblingsløkke (Feedback Loop)** — En sirkulær kjede av årsak-virkning-forhold
+
+# Feilsøking og Vanlige Spørsmål
+
+**S: Opplastingen min kobler seg stadig fra.**
+Sv: Kontroller at Excel-filen din har arkene «Elements» og «Connections». Prøv å oppdatere siden.
+
+**S: Løkkedeteksjonen finner ingen løkker.**
+Sv: Systemet ditt har kanskje ikke tilbakekoblingsløkker. Sjekk at du har forbindelser som danner sirkulære stier.
+
+**S: Hva betyr vippepunktskårene?**
+Sv: Høyere sammensatte skårer indikerer større systeminnflytelse. Se seksjonen for Analyse av Vippepunkter.

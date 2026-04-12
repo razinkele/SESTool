@@ -1,0 +1,94 @@
+---
+title: "Cassetta degli Strumenti SES MarineSABRES — Guida dell'Utente"
+subtitle: "Una guida passo dopo passo per l'analisi dei Sistemi Socio-Ecologici"
+author: "MarineSABRES Consortium"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: flatly
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+<div class="alert alert-info" role="alert">
+<strong>Nota:</strong> Questa guida è stata tradotta automaticamente dall'inglese utilizzando Claude AI.
+Se notate errori, segnalateli al team del progetto MarineSABRES.
+<em>Stato della traduzione: Bozza (traduzione automatica, in attesa di revisione)</em>
+</div>
+
+# Guida Rapida
+
+## Cos'è la Cassetta degli Strumenti SES?
+
+La Cassetta degli Strumenti per i Sistemi Socio-Ecologici (SES) vi aiuta a comprendere come le attività umane e gli ecosistemi naturali interagiscono. Utilizzando il quadro DAPSI(W)R(M), mappate:
+
+- **Fattori trainanti (Drivers)** — cause profonde (es., esigenze di sicurezza alimentare)
+- **Attività (Activities)** — azioni umane (es., pesca, turismo)
+- **Pressioni (Pressures)** — fattori di stress ambientale
+- **Cambiamenti di Stato (State Changes)** — impatti sugli ecosistemi
+- **Impatti (Impacts)** — effetti sui servizi ecosistemici
+- **Benessere (Welfare)** — conseguenze sul benessere umano
+- **Risposte/Misure (Responses/Measures)** — interventi politici
+
+## Il Vostro Primo SES in 5 Passi
+
+1. **Iniziare** — Selezionate il vostro ruolo e ciò di cui avete bisogno dallo strumento
+2. **Creare il Vostro SES** — Inserite elementi e connessioni (manualmente, da modello o assistiti dall'IA)
+3. **Visualizzare** — Consultate il vostro Diagramma di Ciclo Causale (CLD)
+4. **Analizzare** — Rilevate cicli di retroazione e punti di leva
+5. **Reportare** — Esportate i vostri risultati
+
+# Guida Dettagliata al Flusso di Lavoro
+
+## Passo 1: Iniziare
+
+Il Punto di Ingresso vi guida nella selezione del vostro ruolo, nella comprensione delle vostre esigenze di dati e nella raccomandazione degli strumenti adatti ai vostri obiettivi.
+
+## Passo 2: Creare il Vostro SES
+
+Potete creare il vostro modello SES in tre modi:
+- **Metodo standard** — Inserite elementi e connessioni manualmente
+- **Importazione da modello** — Caricate un modello Excel precompilato
+- **Assistito dall'IA** — Lasciate che l'IA vi guidi attraverso il quadro DAPSI(W)R(M)
+
+## Passo 3: Visualizzazione
+
+Il Diagramma di Ciclo Causale (CLD) mostra il vostro sistema come una rete di elementi interconnessi.
+I nodi rappresentano gli elementi, gli archi rappresentano le connessioni con polarità (+/-).
+
+## Passo 4: Analisi
+
+### Rilevamento dei Cicli di Retroazione
+Identifica i cicli di retroazione di rinforzo e bilanciamento nel vostro sistema.
+
+### Analisi dei Punti di Leva
+Trova i nodi con il maggior potenziale di impatto a livello di sistema.
+
+### Metriche di Rete
+Fornisce statistiche di centralità e connettività.
+
+## Passo 5: Reportistica
+
+Esportate i vostri risultati come report in HTML, PDF, Word o PowerPoint.
+
+# Glossario
+
+- **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)
+- **CLD** — Diagramma di Ciclo Causale (Causal Loop Diagram)
+- **Punto di Leva (Leverage Point)** — Un nodo con elevata influenza sull'intero sistema
+- **Ciclo di Retroazione (Feedback Loop)** — Una catena circolare di relazioni causa-effetto
+
+# Risoluzione dei Problemi e FAQ
+
+**D: Il mio caricamento continua a disconnettersi.**
+R: Assicuratevi che il vostro file Excel contenga i fogli "Elements" e "Connections". Provate ad aggiornare la pagina.
+
+**D: Il rilevamento dei cicli non trova cicli.**
+R: Il vostro sistema potrebbe non avere cicli di retroazione. Verificate di avere connessioni che formano percorsi circolari.
+
+**D: Cosa significano i punteggi dei punti di leva?**
+R: Punteggi compositi più elevati indicano una maggiore influenza sul sistema. Consultate la sezione Analisi dei Punti di Leva.

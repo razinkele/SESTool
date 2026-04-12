@@ -1,0 +1,94 @@
+---
+title: "MarineSABRES SES Toolbox — Benutzerhandbuch"
+subtitle: "Eine Schritt-für-Schritt-Anleitung zur Analyse Sozial-Ökologischer Systeme"
+author: "MarineSABRES Consortium"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: flatly
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+<div class="alert alert-info" role="alert">
+<strong>Hinweis:</strong> Dieses Handbuch wurde mit Claude AI maschinell aus dem Englischen übersetzt.
+Wenn Sie Fehler bemerken, melden Sie diese bitte dem MarineSABRES-Projektteam.
+<em>Übersetzungsstatus: Entwurf (maschinell übersetzt, Überprüfung ausstehend)</em>
+</div>
+
+# Schnellstartanleitung
+
+## Was ist die SES Toolbox?
+
+Die Toolbox für Sozial-Ökologische Systeme (SES) hilft Ihnen zu verstehen, wie menschliche Aktivitäten und natürliche Ökosysteme interagieren. Mit dem DAPSI(W)R(M)-Rahmenwerk kartieren Sie:
+
+- **Treiber (Drivers)** — Grundursachen (z. B. Ernährungssicherheit)
+- **Aktivitäten (Activities)** — menschliche Handlungen (z. B. Fischerei, Tourismus)
+- **Belastungen (Pressures)** — Umweltstressoren
+- **Zustandsänderungen (State Changes)** — Auswirkungen auf Ökosysteme
+- **Auswirkungen (Impacts)** — Effekte auf Ökosystemdienstleistungen
+- **Wohlfahrt (Welfare)** — Konsequenzen für das menschliche Wohlbefinden
+- **Reaktionen/Maßnahmen (Responses/Measures)** — politische Interventionen
+
+## Ihr Erstes SES in 5 Schritten
+
+1. **Loslegen** — Wählen Sie Ihre Rolle und was Sie vom Tool benötigen
+2. **Ihr SES Erstellen** — Geben Sie Elemente und Verbindungen ein (manuell, aus Vorlage oder KI-gestützt)
+3. **Visualisieren** — Sehen Sie Ihr Kausalschleifendiagramm (CLD)
+4. **Analysieren** — Erkennen Sie Rückkopplungsschleifen und Hebelpunkte
+5. **Berichten** — Exportieren Sie Ihre Ergebnisse
+
+# Detaillierter Workflow-Leitfaden
+
+## Schritt 1: Loslegen
+
+Der Einstiegspunkt führt Sie durch die Auswahl Ihrer Rolle, das Verständnis Ihrer Datenanforderungen und die Empfehlung der richtigen Werkzeuge für Ihre Ziele.
+
+## Schritt 2: Ihr SES Erstellen
+
+Sie können Ihr SES-Modell auf drei Arten erstellen:
+- **Standardmethode** — Elemente und Verbindungen manuell eingeben
+- **Vorlagenimport** — Eine vorausgefüllte Excel-Vorlage hochladen
+- **KI-gestützt** — Lassen Sie sich von der KI durch das DAPSI(W)R(M)-Rahmenwerk führen
+
+## Schritt 3: Visualisierung
+
+Das Kausalschleifendiagramm (CLD) zeigt Ihr System als Netzwerk miteinander verbundener Elemente.
+Knoten repräsentieren Elemente, Kanten repräsentieren Verbindungen mit Polarität (+/-).
+
+## Schritt 4: Analyse
+
+### Erkennung von Rückkopplungsschleifen
+Identifiziert verstärkende und ausgleichende Rückkopplungsschleifen in Ihrem System.
+
+### Hebelpunktanalyse
+Findet Knoten mit dem höchsten Potenzial für systemweite Auswirkungen.
+
+### Netzwerkmetriken
+Liefert Zentralitäts- und Konnektivitätsstatistiken.
+
+## Schritt 5: Berichterstattung
+
+Exportieren Sie Ihre Ergebnisse als HTML-, PDF-, Word- oder PowerPoint-Berichte.
+
+# Glossar
+
+- **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)
+- **CLD** — Kausalschleifendiagramm (Causal Loop Diagram)
+- **Hebelpunkt (Leverage Point)** — Ein Knoten mit hohem Einfluss auf das gesamte System
+- **Rückkopplungsschleife (Feedback Loop)** — Eine zirkuläre Kette von Ursache-Wirkungs-Beziehungen
+
+# Fehlerbehebung und FAQ
+
+**F: Mein Upload wird ständig unterbrochen.**
+A: Stellen Sie sicher, dass Ihre Excel-Datei die Blätter „Elements" und „Connections" enthält. Versuchen Sie, die Seite zu aktualisieren.
+
+**F: Die Schleifenerkennung findet keine Schleifen.**
+A: Ihr System hat möglicherweise keine Rückkopplungsschleifen. Überprüfen Sie, ob Sie Verbindungen haben, die zirkuläre Pfade bilden.
+
+**F: Was bedeuten die Hebelpunkt-Bewertungen?**
+A: Höhere zusammengesetzte Bewertungen weisen auf einen größeren Systemeinfluss hin. Siehe den Abschnitt Hebelpunktanalyse.

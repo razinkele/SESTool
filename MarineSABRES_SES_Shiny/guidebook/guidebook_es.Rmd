@@ -1,0 +1,94 @@
+---
+title: "Caja de Herramientas SES MarineSABRES — Guía del Usuario"
+subtitle: "Una guía paso a paso para el análisis de Sistemas Socio-Ecológicos"
+author: "MarineSABRES Consortium"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: flatly
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+<div class="alert alert-info" role="alert">
+<strong>Nota:</strong> Esta guía fue traducida automáticamente del inglés utilizando Claude AI.
+Si detecta errores, comuníquelos al equipo del proyecto MarineSABRES.
+<em>Estado de la traducción: Borrador (traducción automática, pendiente de revisión)</em>
+</div>
+
+# Guía de Inicio Rápido
+
+## ¿Qué es la Caja de Herramientas SES?
+
+La Caja de Herramientas de Sistemas Socio-Ecológicos (SES) le ayuda a comprender cómo interactúan las actividades humanas y los ecosistemas naturales. Utilizando el marco DAPSI(W)R(M), usted mapea:
+
+- **Impulsores (Drivers)** — causas raíz (p. ej., necesidades de seguridad alimentaria)
+- **Actividades (Activities)** — acciones humanas (p. ej., pesca, turismo)
+- **Presiones (Pressures)** — factores de estrés ambiental
+- **Cambios de Estado (State Changes)** — impactos en el ecosistema
+- **Impactos (Impacts)** — efectos sobre los servicios ecosistémicos
+- **Bienestar (Welfare)** — consecuencias para el bienestar humano
+- **Respuestas/Medidas (Responses/Measures)** — intervenciones políticas
+
+## Su Primer SES en 5 Pasos
+
+1. **Comenzar** — Seleccione su rol y lo que necesita de la herramienta
+2. **Crear Su SES** — Ingrese elementos y conexiones (manualmente, desde plantilla o con asistencia de IA)
+3. **Visualizar** — Vea su Diagrama de Bucle Causal (CLD)
+4. **Analizar** — Detecte bucles de retroalimentación y puntos de apalancamiento
+5. **Informar** — Exporte sus hallazgos
+
+# Guía Detallada del Flujo de Trabajo
+
+## Paso 1: Comenzar
+
+El Punto de Entrada le guía en la selección de su rol, la comprensión de sus necesidades de datos y la recomendación de las herramientas adecuadas para sus objetivos.
+
+## Paso 2: Crear Su SES
+
+Puede crear su modelo SES de tres formas:
+- **Método estándar** — Ingrese elementos y conexiones manualmente
+- **Importación de plantilla** — Cargue una plantilla Excel prellenada
+- **Asistido por IA** — Deje que la IA le guíe a través del marco DAPSI(W)R(M)
+
+## Paso 3: Visualización
+
+El Diagrama de Bucle Causal (CLD) muestra su sistema como una red de elementos interconectados.
+Los nodos representan elementos, las aristas representan conexiones con polaridad (+/-).
+
+## Paso 4: Análisis
+
+### Detección de Bucles de Retroalimentación
+Identifica bucles de retroalimentación de refuerzo y equilibrio en su sistema.
+
+### Análisis de Puntos de Apalancamiento
+Encuentra los nodos con mayor potencial de impacto a nivel del sistema.
+
+### Métricas de Red
+Proporciona estadísticas de centralidad y conectividad.
+
+## Paso 5: Informes
+
+Exporte sus hallazgos como informes en HTML, PDF, Word o PowerPoint.
+
+# Glosario
+
+- **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)
+- **CLD** — Diagrama de Bucle Causal (Causal Loop Diagram)
+- **Punto de Apalancamiento (Leverage Point)** — Un nodo con alta influencia en todo el sistema
+- **Bucle de Retroalimentación (Feedback Loop)** — Una cadena circular de relaciones causa-efecto
+
+# Solución de Problemas y Preguntas Frecuentes
+
+**P: Mi carga se desconecta continuamente.**
+R: Asegúrese de que su archivo Excel tenga las hojas "Elements" y "Connections". Intente actualizar la página.
+
+**P: La detección de bucles no encuentra bucles.**
+R: Su sistema puede no tener bucles de retroalimentación. Verifique que tenga conexiones formando caminos circulares.
+
+**P: ¿Qué significan las puntuaciones de puntos de apalancamiento?**
+R: Las puntuaciones compuestas más altas indican mayor influencia en el sistema. Consulte la sección de Análisis de Puntos de Apalancamiento.

@@ -1,0 +1,94 @@
+---
+title: "MarineSABRES SES Įrankių Rinkinys — Naudotojo Vadovas"
+subtitle: "Žingsnis po žingsnio vadovas socialinių-ekologinių sistemų analizei"
+author: "MarineSABRES Consortium"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: flatly
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+<div class="alert alert-info" role="alert">
+<strong>Pastaba:</strong> Šis vadovas buvo automatiškai išverstas iš anglų kalbos naudojant Claude AI.
+Jei pastebėjote klaidų, praneškite MarineSABRES projekto komandai.
+<em>Vertimo būsena: Juodraštis (automatinis vertimas, laukiama peržiūros)</em>
+</div>
+
+# Greito Pradžios Vadovas
+
+## Kas yra SES Įrankių Rinkinys?
+
+Socialinių-ekologinių sistemų (SES) įrankių rinkinys padeda suprasti, kaip sąveikauja žmogaus veikla ir natūralios ekosistemos. Naudodami DAPSI(W)R(M) sistemą, jūs žymėsite:
+
+- **Varomosios jėgos (Drivers)** — pagrindinės priežastys (pvz., maisto saugumo poreikiai)
+- **Veiklos (Activities)** — žmogaus veiksmai (pvz., žvejyba, turizmas)
+- **Spaudimai (Pressures)** — aplinkos stresoriai
+- **Būsenos pokyčiai (State Changes)** — poveikis ekosistemoms
+- **Poveikiai (Impacts)** — poveikis ekosistemų paslaugoms
+- **Gerovė (Welfare)** — pasekmės žmogaus gerovei
+- **Atsakai/Priemonės (Responses/Measures)** — politinės intervencijos
+
+## Jūsų Pirmasis SES per 5 Žingsnius
+
+1. **Pradėkite** — Pasirinkite savo vaidmenį ir ko jums reikia iš įrankio
+2. **Sukurkite Savo SES** — Įveskite elementus ir ryšius (rankiniu būdu, iš šablono arba su DI pagalba)
+3. **Vizualizuokite** — Peržiūrėkite savo priežastinių ryšių kilpų diagramą (CLD)
+4. **Analizuokite** — Aptikite grįžtamojo ryšio kilpas ir svertų taškus
+5. **Ataskaitą** — Eksportuokite savo rezultatus
+
+# Išsamus Darbo Eigos Vadovas
+
+## 1 Žingsnis: Pradžia
+
+Įėjimo taškas padeda pasirinkti jūsų vaidmenį, suprasti duomenų poreikius ir rekomenduoja tinkamus įrankius jūsų tikslams.
+
+## 2 Žingsnis: SES Kūrimas
+
+SES modelį galite sukurti trimis būdais:
+- **Standartinis metodas** — Įveskite elementus ir ryšius rankiniu būdu
+- **Šablono importas** — Įkelkite iš anksto užpildytą Excel šabloną
+- **Su DI pagalba** — Leiskite dirbtiniam intelektui vesti jus per DAPSI(W)R(M) sistemą
+
+## 3 Žingsnis: Vizualizacija
+
+Priežastinių ryšių kilpų diagrama (CLD) rodo jūsų sistemą kaip tarpusavyje susijusių elementų tinklą.
+Mazgai reiškia elementus, briaunos reiškia ryšius su poliškumu (+/-).
+
+## 4 Žingsnis: Analizė
+
+### Grįžtamojo Ryšio Kilpų Aptikimas
+Identifikuoja stiprinančias ir balansuojančias grįžtamojo ryšio kilpas jūsų sistemoje.
+
+### Svertų Taškų Analizė
+Randa mazgus su didžiausiu potencialu daryti poveikį visai sistemai.
+
+### Tinklo Metrikos
+Pateikia centralumo ir jungiamumo statistikas.
+
+## 5 Žingsnis: Ataskaitų Rengimas
+
+Eksportuokite savo rezultatus kaip HTML, PDF, Word arba PowerPoint ataskaitas.
+
+# Žodynas
+
+- **DAPSI(W)R(M)** — Drivers, Activities, Pressures, State, Impacts, (Welfare), Responses, (Measures)
+- **CLD** — Priežastinių ryšių kilpų diagrama (Causal Loop Diagram)
+- **Sverto taškas (Leverage Point)** — Mazgas, turintis didelę įtaką visai sistemai
+- **Grįžtamojo ryšio kilpa (Feedback Loop)** — Ciklinė priežasties ir pasekmės ryšių grandinė
+
+# Trikčių Šalinimas ir DUK
+
+**K: Mano įkėlimas nuolat atsijungia.**
+A: Įsitikinkite, kad jūsų Excel faile yra „Elements" ir „Connections" lapai. Pabandykite atnaujinti puslapį.
+
+**K: Kilpų aptikimas neranda kilpų.**
+A: Jūsų sistemoje gali nebūti grįžtamojo ryšio kilpų. Patikrinkite, ar turite ryšių, sudarančių ciklinius kelius.
+
+**K: Ką reiškia svertų taškų balai?**
+A: Aukštesni sudėtiniai balai rodo didesnę įtaką sistemai. Žiūrėkite Svertų Taškų Analizės skyrių.
