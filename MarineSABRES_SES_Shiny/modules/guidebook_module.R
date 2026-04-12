@@ -21,8 +21,8 @@ guidebook_ui <- function(id, i18n) {
         tags$div(
           class = "guidebook-header",
           style = "padding: 20px; background: linear-gradient(135deg, #2c3e50, #3498db); color: white; border-radius: 10px; margin-bottom: 20px;",
-          h3(icon("book"), " ", i18n$t("modules.guidebook.title")),
-          p(i18n$t("modules.guidebook.subtitle")),
+          h3(icon("book"), " ", tags$span(i18n$t("modules.guidebook.title"), `data-i18n` = "modules.guidebook.title")),
+          p(tags$span(i18n$t("modules.guidebook.subtitle"), `data-i18n` = "modules.guidebook.subtitle")),
           downloadButton(ns("download_pdf"), i18n$t("modules.guidebook.download_pdf"),
                         class = "btn btn-light"),
           downloadButton(ns("download_html"), i18n$t("modules.guidebook.download_html"),
