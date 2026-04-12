@@ -147,7 +147,7 @@ MarineSABRES_SES_Shiny/
 │   └── ui/
 ├── data/                       # SES templates & knowledge base
 ├── www/                        # Static assets
-├── tests/                      # Test suite (56 test files, 4,094+ tests)
+├── tests/                      # Test suite (75 test files)
 └── deployment/                 # Deployment scripts
 ```
 
