@@ -53,7 +53,7 @@ install.packages(c(
 
 ## Internationalization (i18n) Requirements
 
-**CRITICAL**: This application supports 7 languages (English, Spanish, French, German, Lithuanian, Portuguese, Italian). All user-facing text MUST be internationalized.
+**CRITICAL**: This application supports 9 languages (English, Spanish, French, German, Lithuanian, Portuguese, Italian, Norwegian, Greek). All user-facing text MUST be internationalized.
 
 ### Core Principles
 
@@ -239,7 +239,7 @@ translations/
    Rscript scripts/translation_workflow.R add
    ```
 
-4. **Ensure all 7 languages are present**:
+4. **Ensure all 9 languages are present**:
    ```json
    {
      "key": "Please enter a valid email address",
@@ -249,7 +249,9 @@ translations/
      "de": "Please enter a valid email address",
      "lt": "Please enter a valid email address",
      "pt": "Please enter a valid email address",
-     "it": "Please enter a valid email address"
+     "it": "Please enter a valid email address",
+     "no": "Please enter a valid email address",
+     "el": "Please enter a valid email address"
    }
    ```
    *Note: Initially, all languages can have the English text - professional translation comes later*
@@ -329,7 +331,7 @@ textInput(ns("email_field"), i18n$t("Email Address:"))
    }
 
    # Server Function - Standard Pattern
-   module_name_server <- function(id, project_data, session, i18n,
+   module_name_server <- function(id, project_data_reactive, i18n,
                                    event_bus = NULL, ...) {
      moduleServer(id, function(input, output, session) {
        # Module logic here
@@ -339,11 +341,10 @@ textInput(ns("email_field"), i18n$t("Email Address:"))
 
    **Parameter Order** (in order of importance):
    1. `id` - Module namespace ID (required)
-   2. `project_data` - Reactive project data (required for data modules)
-   3. `session` - Parent session for navigation (when needed)
-   4. `i18n` - Translation object (required for UI text)
-   5. `event_bus` - Event bus for inter-module communication (optional)
-   6. Additional optional parameters with defaults
+   2. `project_data_reactive` - Reactive project data (required for data modules)
+   3. `i18n` - Translation object (required for UI text)
+   4. `event_bus` - Event bus for inter-module communication (optional, default NULL)
+   5. Additional optional parameters with defaults
 
    **Naming Conventions**:
    - Use `snake_case` for all function names: `module_name_server()`
@@ -465,7 +466,7 @@ Brief description of changes
 - [ ] All user-facing text uses i18n$t()
 - [ ] usei18n(i18n) added to new UI functions
 - [ ] Translation keys added to appropriate files
-- [ ] All 7 languages have entries
+- [ ] All 9 languages have entries
 - [ ] i18n enforcement tests pass
 
 ## Testing
@@ -640,5 +641,5 @@ testthat::test_file("tests/testthat/test-i18n-enforcement.R")
 
 ---
 
-*Last updated: 2025-11-25*
-*i18n Phase 1 Complete - 7 languages supported: en, es, fr, de, lt, pt, it*
+*Last updated: 2026-04-12*
+*i18n Phase 2 Complete - 9 languages supported: en, es, fr, de, lt, pt, it, no, el*
