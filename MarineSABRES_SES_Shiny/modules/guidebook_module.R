@@ -45,29 +45,16 @@ guidebook_server <- function(id, project_data_reactive, i18n, event_bus = NULL) 
     cached_html_path <- reactiveVal(NULL)
 
     output$guidebook_content <- renderUI({
-      # Lazy render: only fires when the Guidebook tab is visible.
-      # The old eager render (bindEvent + once = TRUE on url_search) blocked
-      # the entire session init for 10-30s on cold server/new language files,
-      # causing the "Loading SES Toolbox" screen to hang.
-      html_path <- cached_html_path()
-      if (is.null(html_path)) {
-        html_path <- tryCatch({
-          rmarkdown::render(resolve_guidebook_rmd(i18n),
-                           output_format = "html_fragment",
-                           output_dir = tempdir(),
-                           intermediates_dir = tempdir(),
-                           encoding = "UTF-8",
-                           quiet = TRUE)
-        }, error = function(e) {
-          debug_log(paste("Guidebook render failed:", e$message), "ERROR")
-          NULL
-        })
-        cached_html_path(html_path)
-      }
-
-      if (!is.null(html_path) && file.exists(html_path)) {
+      # Use includeMarkdown (instant) instead of rmarkdown::render (slow).
+      # bs4Dash renders ALL tabs eagerly at session start, so any blocking
+      # call here hangs the entire session initialization — even if the user
+      # never visits the Guidebook tab. rmarkdown::render took 10-30s on
+      # cold server starts with new language files, causing the language-switch
+      # hang that broke production on 2026-04-12.
+      rmd_path <- resolve_guidebook_rmd(i18n)
+      if (file.exists(rmd_path)) {
         tags$div(class = "guidebook-body",
-                includeHTML(html_path))
+                shiny::includeMarkdown(rmd_path))
       } else {
         tags$div(class = "alert alert-info",
                 i18n$t("modules.guidebook.fallback_message"))
