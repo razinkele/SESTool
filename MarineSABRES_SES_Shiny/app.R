@@ -824,7 +824,12 @@ server <- function(input, output, session) {
         # This ensures language changes only affect THIS session
         session_i18n$set_translation_language(query$language)
         if (!is.null(event_bus)) {
-          event_bus$emit_language_changed(new_lang = query$language, source = "query_param")
+          # MUST isolate: emit_language_changed() reads triggers$language_changed()
+          # internally to get the current count, which would create a reactive
+          # dependency inside this observe({}) block. Without isolate, the read +
+          # write cycle creates an infinite reactive loop (the observer invalidates
+          # itself on every emit). Root cause of the 2026-04-12 language-switch hang.
+          isolate(event_bus$emit_language_changed(new_lang = query$language, source = "query_param"))
         }
         debug_log(sprintf("Session language set. Current: %s", session_i18n$get_translation_language()), "LANGUAGE")
 
