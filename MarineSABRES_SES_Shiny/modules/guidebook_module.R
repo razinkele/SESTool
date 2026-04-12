@@ -41,26 +41,30 @@ guidebook_ui <- function(id, i18n) {
 guidebook_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
-    # Render guidebook ONCE on session start, cache the result
+    # Cache: render once per session, reuse on subsequent tab visits
     cached_html_path <- reactiveVal(NULL)
 
-    observe({
-      html_path <- tryCatch({
-        rmarkdown::render(resolve_guidebook_rmd(i18n),
-                         output_format = "html_fragment",
-                         output_dir = tempdir(),
-                         intermediates_dir = tempdir(),
-                         encoding = "UTF-8",
-                         quiet = TRUE)
-      }, error = function(e) {
-        debug_log(paste("Guidebook render failed:", e$message), "ERROR")
-        NULL
-      })
-      cached_html_path(html_path)
-    }) |> bindEvent(session$clientData$url_search, once = TRUE)
-
     output$guidebook_content <- renderUI({
+      # Lazy render: only fires when the Guidebook tab is visible.
+      # The old eager render (bindEvent + once = TRUE on url_search) blocked
+      # the entire session init for 10-30s on cold server/new language files,
+      # causing the "Loading SES Toolbox" screen to hang.
       html_path <- cached_html_path()
+      if (is.null(html_path)) {
+        html_path <- tryCatch({
+          rmarkdown::render(resolve_guidebook_rmd(i18n),
+                           output_format = "html_fragment",
+                           output_dir = tempdir(),
+                           intermediates_dir = tempdir(),
+                           encoding = "UTF-8",
+                           quiet = TRUE)
+        }, error = function(e) {
+          debug_log(paste("Guidebook render failed:", e$message), "ERROR")
+          NULL
+        })
+        cached_html_path(html_path)
+      }
+
       if (!is.null(html_path) && file.exists(html_path)) {
         tags$div(class = "guidebook-body",
                 includeHTML(html_path))
