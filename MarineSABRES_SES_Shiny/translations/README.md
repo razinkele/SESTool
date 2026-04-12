@@ -55,7 +55,7 @@ Rscript scripts/add_translation.R
 
 This tool will:
 - Guide you through selecting/creating a file
-- Prompt for all 7 languages
+- Prompt for all 9 languages
 - Validate before saving
 - Check for duplicates
 
@@ -154,8 +154,8 @@ i18n$t("You selected {count} items", count = length(selected_items))
 
 ### Step 1: Add the Translation Key
 
-1. Open `translations/translation.json`
-2. Add a new object to the `translation` array:
+1. Open the appropriate modular translation file in `translations/common/`, `translations/modules/`, or `translations/ui/`
+2. Add a new key inside the `"translation"` object:
 
 ```json
 {
@@ -184,7 +184,7 @@ h2(i18n$t("New text to translate"))
 
 ## Adding a New Language
 
-### Step 1: Update translation.json
+### Step 1: Update all modular translation files
 
 1. Add the language code to the `languages` array:
 
@@ -291,7 +291,7 @@ Before committing changes:
 
 **Solution**:
 - Check that the text is wrapped in `i18n$t()`
-- Verify the translation key exists in `translation.json`
+- Verify the translation key exists in the appropriate `translations/**/*.json` file
 - Restart the application to reload translations
 
 ### Issue 2: Special Characters Not Displaying
@@ -299,7 +299,7 @@ Before committing changes:
 **Problem**: Accented characters (é, ñ, ü) show as symbols
 
 **Solution**:
-- Ensure `translation.json` is saved with UTF-8 encoding
+- Ensure all translation JSON files are saved with UTF-8 encoding
 - Check console for JSON parsing errors
 
 ### Issue 3: Language Selector Not Updating UI
@@ -317,16 +317,16 @@ Before committing changes:
 
 1. Write UI/Server code in English
 2. Wrap all user-facing text in `i18n$t()`
-3. Add English text to `translation.json`
-4. Request translations from language experts
-5. Update `translation.json` with translations
+3. Add keys to the appropriate modular file in `translations/common/`, `translations/modules/`, or `translations/ui/`
+4. Add all 9 language values (en, es, fr, de, lt, pt, it, no, el)
+5. Run `micromamba run -n shiny python scripts/_i18n_audit.py` to verify no missing keys
 6. Test in all languages
 
 ### For Translators:
 
-1. Open `translations/translation.json`
+1. Open the modular translation files in `translations/common/`, `translations/modules/`, and `translations/ui/`
 2. Find entries where your language is missing or incorrect
-3. Add/update translations
+3. Add/update translations for all 9 languages (en, es, fr, de, lt, pt, it, no, el)
 4. Test in the application
 5. Submit changes via pull request
 
@@ -356,7 +356,7 @@ The Entry Point module (`modules/entry_point_module.R`) is fully internationaliz
 
 **Files to update**:
 - `modules/entry_point_module.R` - UI rendering functions
-- `translations/translation.json` - Translation strings
+- `translations/common/*.json`, `translations/modules/*.json`, `translations/ui/*.json` - Modular translation files
 
 ### Data Entry Modules (Future Work)
 
@@ -391,12 +391,16 @@ For questions or issues with translations:
 ## Version History
 
 - **v1.0** (2025-10-21): Initial internationalization implementation
-- **v1.1** (2026-03-15): Added Norwegian and Greek support
-  - 9 languages supported (en, es, fr, de, lt, pt, it, no, el)
-  - Updated documentation to reflect all supported languages
   - 5 languages supported (en, es, fr, de, pt)
   - Entry Point module fully translated
   - Language selector in header
+- **v1.1** (2026-03-15): Added Norwegian and Greek support
+  - 9 languages supported (en, es, fr, de, lt, pt, it, no, el)
+  - Updated documentation to reflect all supported languages
+- **v1.2** (2026-04-12): Migrated to modular translation system
+  - 34+ modular JSON files in common/, modules/, ui/ subdirectories
+  - Automated i18n audit via scripts/_i18n_audit.py
+  - All developer/translator workflow docs updated
 
 ---
 
