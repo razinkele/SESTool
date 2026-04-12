@@ -40,7 +40,7 @@ build_dashboard_header <- function(i18n) {
           `aria-expanded` = "false",
           `aria-label` = i18n$t("ui.header.language"),
           icon("globe"),
-          tags$span(i18n$t("ui.header.language"), `data-i18n`="Language"),
+          tags$span(i18n$t("ui.header.language"), `data-i18n`="ui.header.language"),
           tags$span(class = "caret", style = "margin-left: 5px;")
         ),
         tags$div(
@@ -50,7 +50,7 @@ build_dashboard_header <- function(i18n) {
             id = "open_language_modal",
             class = "action-button",
             icon("globe"),
-            tags$span(i18n$t("ui.header.change_language"), `data-i18n`="Change Language")
+            tags$span(i18n$t("ui.header.change_language"), `data-i18n`="ui.header.change_language")
           )
         )
       ),
@@ -66,7 +66,7 @@ build_dashboard_header <- function(i18n) {
           `aria-expanded` = "false",
           `aria-label` = i18n$t("ui.header.settings"),
           icon("cog"),
-          tags$span(i18n$t("ui.header.settings"), `data-i18n`="Settings"),
+          tags$span(i18n$t("ui.header.settings"), `data-i18n`="ui.header.settings"),
           tags$span(class = "caret", style = "margin-left: 5px;")
         ),
         tags$div(
@@ -76,21 +76,21 @@ build_dashboard_header <- function(i18n) {
             id = "open_settings_modal",
             class = "action-button",
             icon("cog"),
-            tags$span(i18n$t("ui.header.application_settings"), `data-i18n`="Application Settings")
+            tags$span(i18n$t("ui.header.application_settings"), `data-i18n`="ui.header.application_settings")
           ),
           tags$a(
             href = "#",
             id = "open_user_level_modal",
             class = "action-button",
             icon("user-cog"),
-            tags$span(i18n$t("ui.header.user_experience_level"), `data-i18n`="User Experience Level")
+            tags$span(i18n$t("ui.header.user_experience_level"), `data-i18n`="ui.header.user_experience_level")
           ),
           tags$a(
             href = "#",
             id = "open_manuals_modal",
             class = "action-button",
             icon("download"),
-            tags$span(i18n$t("ui.header.download_manuals"), `data-i18n`="Download Manuals")
+            tags$span(i18n$t("ui.header.download_manuals"), `data-i18n`="ui.header.download_manuals")
           ),
           tags$hr(style = "margin: 5px 0; border-color: #555;"),
           tags$a(
@@ -98,7 +98,7 @@ build_dashboard_header <- function(i18n) {
             id = "clear_session_btn",
             class = "action-button",
             icon("trash-alt"),
-            tags$span(i18n$t("ui.header.clear_session"), `data-i18n`="Clear Session & Start Fresh"),
+            tags$span(i18n$t("ui.header.clear_session"), `data-i18n`="ui.header.clear_session"),
             style = "color: #dc3545;"
           )
         )
@@ -113,7 +113,7 @@ build_dashboard_header <- function(i18n) {
           `aria-label` = i18n$t("ui.header.save_current_state_as_bookmark"),
           role = "button",
           icon("bookmark"),
-          tags$span(i18n$t("ui.header.bookmark"), `data-i18n`="Bookmark"),
+          tags$span(i18n$t("ui.header.bookmark"), `data-i18n`="ui.header.bookmark"),
           style = "cursor: pointer;",
           title = i18n$t("ui.header.save_current_state_as_bookmark"),
           `data-i18n-title`="Save current state as bookmark"
@@ -129,7 +129,7 @@ build_dashboard_header <- function(i18n) {
           `aria-label` = i18n$t("ui.header.app_info"),
           role = "button",
           icon("info-circle"),
-          tags$span(i18n$t("ui.header.app_info"), `data-i18n`="About"),
+          tags$span(i18n$t("ui.header.app_info"), `data-i18n`="ui.header.app_info"),
           style = "cursor: pointer;",
           title = i18n$t("ui.header.app_info"),
           onclick = "Shiny.setInputValue('show_about_modal', Math.random()); return false;"
@@ -145,7 +145,7 @@ build_dashboard_header <- function(i18n) {
           `aria-label` = i18n$t("ui.modals.feedback.button_label"),
           role = "button",
           icon("comment-dots"),
-          tags$span(i18n$t("ui.modals.feedback.button_label"), `data-i18n`="Feedback"),
+          tags$span(i18n$t("ui.modals.feedback.button_label"), `data-i18n`="ui.modals.feedback.button_label"),
           style = "cursor: pointer;",
           title = i18n$t("ui.modals.feedback.button_label"),
           onclick = "Shiny.setInputValue('show_feedback_modal', Math.random()); return false;"
@@ -163,7 +163,7 @@ build_dashboard_header <- function(i18n) {
           `aria-expanded` = "false",
           `aria-label` = i18n$t("ui.header.help"),
           icon("question-circle"),
-          tags$span(i18n$t("ui.header.help"), `data-i18n`="Help"),
+          tags$span(i18n$t("ui.header.help"), `data-i18n`="ui.header.help"),
           tags$span(class = "caret", style = "margin-left: 5px;")
         ),
         tags$div(
@@ -172,19 +172,19 @@ build_dashboard_header <- function(i18n) {
             href = "#",
             onclick = "window.open('beginner_guide.html', '_blank'); return false;",
             icon("graduation-cap"),
-            tags$span(i18n$t("ui.header.beginners_guide"), `data-i18n`="Beginner's Guide")
+            tags$span(i18n$t("ui.header.beginners_guide"), `data-i18n`="ui.header.beginners_guide")
           ),
           tags$a(
             href = "#",
             onclick = "window.open('step_by_step_tutorial.html', '_blank'); return false;",
             icon("list-ol"),
-            tags$span(i18n$t("ui.header.step_by_step_tutorial"), `data-i18n`="Step-by-Step Tutorial")
+            tags$span(i18n$t("ui.header.step_by_step_tutorial"), `data-i18n`="ui.header.step_by_step_tutorial")
           ),
           tags$a(
             href = "#",
             onclick = "window.open('user_guide.html', '_blank'); return false;",
             icon("book"),
-            tags$span(i18n$t("ui.header.quick_reference"), `data-i18n`="Quick Reference")
+            tags$span(i18n$t("ui.header.quick_reference"), `data-i18n`="ui.header.quick_reference")
           ),
           tags$hr(style = "margin: 5px 0; border-color: #eee;"),
           tags$a(
@@ -192,7 +192,7 @@ build_dashboard_header <- function(i18n) {
             id = "open_kb_references_modal",
             class = "action-button",
             icon("book-open"),
-            tags$span(i18n$t("ui.header.kb_references"), `data-i18n`="KB References")
+            tags$span(i18n$t("ui.header.kb_references"), `data-i18n`="ui.header.kb_references")
           )
         )
       ),
