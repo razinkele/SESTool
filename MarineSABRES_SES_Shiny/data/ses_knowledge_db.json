@@ -5267,15 +5267,15 @@
         {
           "from": "Scientific monitoring and underwater surveys",
           "from_type": "activities",
-          "to": "Rocky reef biodiversity index",
-          "to_type": "states",
-          "polarity": "+",
+          "to": "Overharvesting of predatory fish (grouper, dentex)",
+          "to_type": "pressures",
+          "polarity": "-",
           "strength": "weak",
           "confidence": 3,
-          "rationale": "Scientific monitoring informs conservation management, indirectly supporting maintenance of rocky reef biodiversity through early threat detection",
+          "rationale": "Scientific monitoring and survey data inform sustainable harvest limits, reducing overharvesting pressure on predatory fish populations",
           "references": [
-            "Ballesteros 2006",
-            "Thibaut et al. 2015"
+            "Guidetti & Sala 2007",
+            "Coll et al. 2012"
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
@@ -10548,15 +10548,15 @@
         {
           "from": "Coastal erosion from reduced sediment supply",
           "from_type": "pressures",
-          "to": "Beach tourism amenity value",
-          "to_type": "impacts",
+          "to": "Phyllophora red algae field extent",
+          "to_type": "states",
           "polarity": "-",
           "strength": "strong",
           "confidence": 4,
-          "rationale": "Coastal erosion reduces beach width and quality, directly degrading beach tourism amenity value along the Black Sea coast",
+          "rationale": "Coastal erosion from reduced sediment supply increases turbidity and substrate instability, degrading conditions for Phyllophora red algae fields on the northwestern shelf",
           "references": [
-            "Pranzini et al. 2015",
-            "Williams & Micallef 2009"
+            "Zaitsev & Mamaev 1997",
+            "BSC 2019"
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
@@ -15194,6 +15194,10 @@
         {
           "name": "Climate change and ocean warming",
           "relevance": 0.75
+        },
+        {
+          "name": "Overfishing pressure on demersal fish stocks",
+          "description": "Selective removal of demersal fish species through artisanal fishing reduces stock biomass around Mediterranean islands"
         }
       ],
       "states": [
@@ -15836,12 +15840,12 @@
         {
           "from": "Artisanal trammel net fishing for demersal species",
           "from_type": "activities",
-          "to": "Demersal fish stock biomass (Mullus, Diplodus, Sparisoma)",
-          "to_type": "states",
+          "to": "Overfishing pressure on demersal fish stocks",
+          "to_type": "pressures",
           "polarity": "-",
           "strength": "moderate",
           "confidence": 4,
-          "rationale": "Trammel net fishing selectively removes demersal fish species (Mullus, Diplodus), reducing stock biomass around islands",
+          "rationale": "Artisanal trammel net fishing creates fishing mortality pressure on demersal fish stocks around Mediterranean islands",
           "references": [
             "Stergiou et al. 2006",
             "Coll et al. 2006"
@@ -15876,6 +15880,22 @@
           "rationale": "Seasonal closures during spawning periods allow demersal fish stock recovery around islands",
           "references": [
             "Murawski et al. 2005",
+            "Colloca et al. 2004"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Overfishing pressure on demersal fish stocks",
+          "from_type": "pressures",
+          "to": "Demersal fish stock biomass (Mullus, Diplodus, Sparisoma)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "moderate",
+          "confidence": 4,
+          "rationale": "Fishing mortality from trammel net fishing depletes demersal fish stock biomass",
+          "references": [
+            "Stergiou et al. 2006",
             "Colloca et al. 2004"
           ],
           "temporal_lag": "short-term",
@@ -23977,12 +23997,12 @@
         {
           "from": "Scientific research and monitoring",
           "from_type": "activities",
-          "to": "Cystoseira and Sargassum forest extent and health",
-          "to_type": "states",
-          "polarity": "+",
+          "to": "Overfishing of demersal fish stocks",
+          "to_type": "pressures",
+          "polarity": "-",
           "strength": "weak",
           "confidence": 3,
-          "rationale": "Scientific monitoring programmes track and inform conservation of Cystoseira and Sargassum macroalgal forests, indirectly supporting their persistence through early warning of decline",
+          "rationale": "Scientific research and monitoring provide data that informs fishing regulations, reducing overfishing pressure on demersal stocks",
           "references": [
             "Thibaut et al. 2015",
             "Gianni et al. 2013"
@@ -25713,23 +25733,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Marine ecotourism demand (pelagic wildlife)",
-          "from_type": "drivers",
-          "to": "Aesthetic and spiritual value of ocean wilderness",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "moderate",
-          "confidence": 3,
-          "rationale": "Growing marine ecotourism demand centred on pelagic wildlife in Macaronesian waters reflects and reinforces the aesthetic and spiritual value that island residents and visitors place on the region's ocean wilderness.",
-          "references": [
-            "Tuya et al. (2014) \"Biogeography of the Macaronesian region\"",
-            "Hernández et al. (2018) \"Tourism impacts on Canary Islands marine ecosystems\"",
-            "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\""
-          ],
-          "temporal_lag": "long-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Marine spatial planning for offshore activities",
           "from_type": "responses",
           "to": "Offshore wind and wave energy development",
@@ -25749,14 +25752,14 @@
         {
           "from": "Marine scientific research expeditions",
           "from_type": "activities",
-          "to": "Large cetacean population health (sperm whale, beaked whales)",
-          "to_type": "states",
-          "polarity": "+",
+          "to": "Ship strike risk to large cetaceans",
+          "to_type": "pressures",
+          "polarity": "-",
           "strength": "weak",
           "confidence": 3,
-          "rationale": "Marine research expeditions contribute to monitoring cetacean population health, enabling early detection of threats and informing conservation",
+          "rationale": "Marine research expeditions generate population data that informs shipping lane adjustments, reducing ship strike risk to cetaceans",
           "references": [
-            "Whitehead 2003",
+            "Laist et al. 2001",
             "Cañadas et al. 2005"
           ],
           "temporal_lag": "short-term",
@@ -25822,6 +25825,22 @@
           "references": [
             "Chuenpagdee et al. 2003",
             "Goulding et al. 2000"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Reduced marine wildlife encounter rates for ecotourism",
+          "from_type": "impacts",
+          "to": "Aesthetic and spiritual value of ocean wilderness",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Declining wildlife encounters diminish the aesthetic and spiritual value that people derive from ocean wilderness experiences",
+          "references": [
+            "Spalding et al. 2017",
+            "Kenter et al. 2015"
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
