@@ -20,6 +20,11 @@
   "dapsiwrm_framework": {
     "drivers": [
       {
+        "id": "D001",
+        "name": "Global energy demand and fossil fuel dependence",
+        "description": "Worldwide demand for fossil fuels driving Arctic resource extraction and shipping intensification"
+      },
+      {
         "id": "D003",
         "name": "Indigenous community food sovereignty",
         "type": "Driver",
@@ -419,6 +424,26 @@
       "strength": "weak",
       "confidence": 2,
       "description": "Oil spill risk in ice-covered waters connects to Ringed seal and bearded seal abundance"
+    },
+    {
+      "from_type": "driver",
+      "from_id": "D001",
+      "to_type": "activity",
+      "to_id": "A001",
+      "description": "Global energy demand drives Northern Sea Route commercial shipping expansion",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4
+    },
+    {
+      "from_type": "driver",
+      "from_id": "D001",
+      "to_type": "activity",
+      "to_id": "A003",
+      "description": "Fossil fuel dependence drives Arctic oil and gas seismic exploration",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 5
     }
   ]
 }

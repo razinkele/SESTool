@@ -110,6 +110,11 @@
         "name": "Fish stock provisioning for human consumption",
         "type": "Provisioning",
         "description": "Fish stock provisioning for human consumption"
+      },
+      {
+        "id": "ES002",
+        "name": "Marine biodiversity and artificial reef habitat provision",
+        "description": "Habitat creation around turbine foundations supporting marine biodiversity through artificial reef effects"
       }
     ],
     "goods_benefits": [
@@ -407,6 +412,26 @@
       "strength": "weak",
       "confidence": 2,
       "description": "Seabed disturbance from beam trawling connects to Sandeel stock abundance and distribution"
+    },
+    {
+      "from_type": "state",
+      "from_id": "MPF003",
+      "to_type": "impact",
+      "to_id": "ES002",
+      "description": "Harbour porpoise and whale abundance contributes to marine biodiversity provision",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
+    },
+    {
+      "from_type": "impact",
+      "from_id": "ES002",
+      "to_type": "welfare",
+      "to_id": "GB002",
+      "description": "Marine biodiversity around wind farms contributes to environmental and carbon benefits",
+      "polarity": "+",
+      "strength": "weak",
+      "confidence": 2
     }
   ]
 }

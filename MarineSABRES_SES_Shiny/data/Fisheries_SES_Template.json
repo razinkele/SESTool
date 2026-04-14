@@ -128,6 +128,11 @@
         "name": "Commercial fish stock provision (cod, herring, sprat)",
         "type": "Provisioning",
         "description": "Commercial fish stock provision (cod, herring, sprat)"
+      },
+      {
+        "id": "ES002",
+        "name": "Baltic herring recruitment as nursery habitat provision",
+        "description": "Nursery and spawning ground services supporting herring and sprat life cycles in the Baltic Sea"
       }
     ],
     "goods_benefits": [
@@ -465,6 +470,26 @@
       "strength": "medium",
       "confidence": 3,
       "description": "Fish processing industry employment reinforces demand for Baltic cod and herring fisheries"
+    },
+    {
+      "from_type": "state",
+      "from_id": "MPF002",
+      "to_type": "impact",
+      "to_id": "ES002",
+      "description": "Central Baltic herring recruitment sustains nursery habitat provision",
+      "polarity": "+",
+      "strength": "strong",
+      "confidence": 4
+    },
+    {
+      "from_type": "impact",
+      "from_id": "ES002",
+      "to_type": "welfare",
+      "to_id": "GB003",
+      "description": "Nursery habitat provision supports fish processing industry employment",
+      "polarity": "+",
+      "strength": "medium",
+      "confidence": 3
     }
   ]
 }

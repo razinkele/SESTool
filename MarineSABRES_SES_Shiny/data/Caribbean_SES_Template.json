@@ -437,7 +437,7 @@
         "intensity": "Medium to high"
       }
     ],
-    "states": [
+    "marine_processes": [
       {
         "id": "S1",
         "name": "Massive Sargassum seaweed accumulation",
@@ -590,7 +590,7 @@
         "trend": "Declining"
       }
     ],
-    "impacts": [
+    "ecosystem_services": [
       {
         "id": "I1",
         "name": "Loss of nursery and breeding habitat for fish",
@@ -720,7 +720,7 @@
         "vulnerable_groups": "Cleanup workers, coastal residents, asthmatics"
       }
     ],
-    "welfare": [
+    "goods_benefits": [
       {
         "id": "W1",
         "name": "Decline in tourism revenue",
@@ -954,7 +954,8 @@
         "name": "Capacity Building",
         "description": "Environmental management capacity building, training and certification programs"
       }
-    ]
+    ],
+    "measures": []
   },
   "connections": [
     {

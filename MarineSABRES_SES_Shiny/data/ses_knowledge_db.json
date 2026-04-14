@@ -743,6 +743,22 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Eel fishing with fyke nets",
+          "from_type": "activities",
+          "to": "Fishing mortality on pike-perch stock",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "moderate",
+          "confidence": 3,
+          "rationale": "Fyke net fishing for eel contributes to overall fishing mortality through bycatch of pike-perch and other species in lagoon waters",
+          "references": [
+            "ICES WGEEL 2022",
+            "Svedang & Gipperth 2012"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -2280,6 +2296,23 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Merchant shipping and ferry traffic",
+          "from_type": "activities",
+          "to": "Underwater noise from shipping and construction",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Merchant shipping and ferry routes are the primary continuous source of underwater noise in the Baltic offshore environment",
+          "references": [
+            "IMO MEPC.1/Circ.833",
+            "Merchant et al. 2012",
+            "HELCOM 2018"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -2955,6 +2988,38 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Nutrient-driven filamentous algae on shores",
+          "from_type": "pressures",
+          "to": "Seagrass (Zostera marina) bed coverage along brackish open coastline",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Epiphytic filamentous algae smother Zostera marina blades, reducing light availability and causing seagrass decline along Baltic open coasts",
+          "references": [
+            "Boström et al. 2014",
+            "Berglund et al. 2003"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Marine litter reduction campaigns",
+          "from_type": "responses",
+          "to": "Beach litter and microplastic pollution",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "moderate",
+          "confidence": 3,
+          "rationale": "Public awareness campaigns and beach cleanup initiatives reduce litter inputs and accumulation on Baltic open coastlines",
+          "references": [
+            "HELCOM 2021 Marine Litter",
+            "EU MSFD Descriptor 10"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -3192,7 +3257,7 @@
         {
           "from": "Eutrophication and macroalgal blooms (Ulva)",
           "from_type": "pressures",
-          "to": "Seagrass (Zostera noltei, Cymodocea) presence",
+          "to": "Cymodocea nodosa and Zostera noltei seagrass coverage in lagoon",
           "to_type": "states",
           "polarity": "-",
           "strength": "strong",
@@ -3343,7 +3408,7 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Seagrass (Zostera noltei, Cymodocea) presence",
+          "from": "Cymodocea nodosa and Zostera noltei seagrass coverage in lagoon",
           "from_type": "states",
           "to": "Shellfish stock health and condition index",
           "to_type": "states",
@@ -4352,6 +4417,54 @@
           ],
           "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Desalination brine discharge",
+          "from_type": "activities",
+          "to": "Hypersaline discharge from desalination",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Desalination brine discharge is the direct source of hypersaline effluent that impacts Posidonia oceanica meadows",
+          "references": [
+            "Fernandez-Torquemada & Sanchez-Lizaso 2005",
+            "Roberts et al. 2010"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Turbidity increase from coastal works",
+          "from_type": "pressures",
+          "to": "Posidonia oceanica meadow extent and density",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Increased turbidity from coastal construction reduces light penetration, directly causing Posidonia oceanica meadow regression",
+          "references": [
+            "Boudouresque et al. 2009",
+            "Ruiz & Romero 2003"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Hypersaline discharge from desalination",
+          "from_type": "pressures",
+          "to": "Posidonia oceanica meadow extent and density",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Hypersaline brine alters salinity beyond Posidonia tolerance thresholds, causing leaf necrosis and meadow regression",
+          "references": [
+            "Sanchez-Lizaso et al. 2008",
+            "Fernandez-Torquemada et al. 2005"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -5150,6 +5263,22 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Scientific monitoring and underwater surveys",
+          "from_type": "activities",
+          "to": "Rocky reef biodiversity index",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Scientific monitoring informs conservation management, indirectly supporting maintenance of rocky reef biodiversity through early threat detection",
+          "references": [
+            "Ballesteros 2006",
+            "Thibaut et al. 2015"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -5906,6 +6035,22 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Ship-strike and collision risk for marine mammals",
+          "from_type": "pressures",
+          "to": "Harbour porpoise and minke whale abundance",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "moderate",
+          "confidence": 4,
+          "rationale": "Ship-strike mortality reduces harbour porpoise and minke whale abundance, particularly in high-traffic shipping lanes",
+          "references": [
+            "Peltier et al. 2019",
+            "van der Hoop et al. 2013"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -6589,6 +6734,22 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Legacy contaminants in estuarine sediments (PCBs, metals)",
+          "from_type": "pressures",
+          "to": "Sediment contaminant levels and bioavailability",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Legacy contaminants in estuarine sediments directly determine sediment contaminant levels and bioavailability to benthic organisms",
+          "references": [
+            "Spencer et al. 2006",
+            "Förstner & Salomons 2010"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -7386,6 +7547,38 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Adjacent mangrove forest extent and connectivity to reef system",
+          "from_type": "states",
+          "to": "Reef fish species diversity and biomass",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Adjacent mangrove habitat provides critical nursery function for reef fish species, with connectivity enhancing reef fish diversity and biomass",
+          "references": [
+            "Mumby et al. 2004 Nature",
+            "Nagelkerken et al. 2002"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Seagrass bed coverage between reef and shore",
+          "from_type": "states",
+          "to": "Reef fish species diversity and biomass",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Seagrass beds between reef and shore provide nursery habitat and trophic pathways, supporting reef fish diversity and biomass",
+          "references": [
+            "Unsworth et al. 2008",
+            "Nagelkerken et al. 2002"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -9581,6 +9774,54 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Marine litter and microplastic accumulation",
+          "from_type": "pressures",
+          "to": "Beach sediment budget and erosion rates",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Marine litter and microplastics alter beach sediment quality and aesthetic value, indirectly affecting sediment budget assessments",
+          "references": [
+            "Ivar do Sul & Costa 2014",
+            "UNEP/MAP 2015"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Nutrient enrichment from sewage and wastewater",
+          "from_type": "pressures",
+          "to": "Coastal water quality (bathing water standards)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Nutrient enrichment from sewage directly degrades coastal water quality, affecting bathing water standards and triggering algal growth",
+          "references": [
+            "EEA 2019 Bathing Water",
+            "Arheimer et al. 2012"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Noise and visual disturbance from tourism",
+          "from_type": "pressures",
+          "to": "Rocky reef fish assemblage composition",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "moderate",
+          "confidence": 3,
+          "rationale": "Noise and visual disturbance from tourism activities alter fish behaviour and community composition on rocky reefs",
+          "references": [
+            "Guidetti et al. 2014",
+            "Azzurro et al. 2013"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -10303,6 +10544,38 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Coastal erosion from reduced sediment supply",
+          "from_type": "pressures",
+          "to": "Beach tourism amenity value",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Coastal erosion reduces beach width and quality, directly degrading beach tourism amenity value along the Black Sea coast",
+          "references": [
+            "Pranzini et al. 2015",
+            "Williams & Micallef 2009"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Marine Protected Areas (Phyllophora, Danube delta)",
+          "from_type": "responses",
+          "to": "Phyllophora red algae field extent",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Marine Protected Area designation protects the Phyllophora field from bottom trawling and pollution, supporting recovery of red algae extent",
+          "references": [
+            "Zaitsev & Mamaev 1997",
+            "BSC 2019"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -11058,6 +11331,22 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Mangrove-seagrass habitat connectivity and nursery function",
+          "from_type": "states",
+          "to": "Nursery habitat provision for conch and lobster",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Mangrove-seagrass connectivity creates a habitat continuum that enhances nursery function for queen conch and spiny lobster",
+          "references": [
+            "Nagelkerken et al. 2002",
+            "Mumby et al. 2004"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -13227,6 +13516,70 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Offshore wind farm cable landfall through tidal flats",
+          "from_type": "activities",
+          "to": "Substrate disturbance from cable installation and gas wells",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Cable landfall through tidal flats causes direct substrate disturbance during installation, affecting benthic invertebrate communities",
+          "references": [
+            "Bald et al. 2015",
+            "OSPAR 2014"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Bait digging for lugworm (Arenicola marina)",
+          "from_type": "activities",
+          "to": "Disturbance to roosting and foraging wading birds",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "moderate",
+          "confidence": 4,
+          "rationale": "Bait digging on tidal flats directly disturbs wader roosting and foraging habitat through physical sediment disruption",
+          "references": [
+            "Beukema 1995",
+            "Brown & Wilson 1997"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Bottom trawling for brown shrimp (Crangon crangon)",
+          "from_type": "activities",
+          "to": "Shellfish stock depletion from mechanical harvesting",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "moderate",
+          "confidence": 4,
+          "rationale": "Brown shrimp trawling contributes to depletion of shellfish stocks through bycatch and physical disturbance of benthic communities",
+          "references": [
+            "Vorberg 2000",
+            "Hiddink et al. 2006"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "UNESCO World Heritage site management obligations",
+          "from_type": "responses",
+          "to": "Disturbance to roosting and foraging wading birds",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "moderate",
+          "confidence": 4,
+          "rationale": "UNESCO World Heritage management obligations for the Wadden Sea mandate protection measures that reduce human disturbance to wading birds",
+          "references": [
+            "Trilateral Wadden Sea Plan 2010",
+            "CWSS 2017"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -13974,6 +14327,22 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Nutrient enrichment from agricultural sources",
+          "from_type": "pressures",
+          "to": "Zostera marina (seagrass) meadows in brackish archipelago waters",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Nutrient enrichment from agricultural sources drives eutrophication and filamentous algae overgrowth that smothers Zostera marina in shallow brackish archipelago bays",
+          "references": [
+            "Boström et al. 2014",
+            "Baden et al. 2003"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -15463,6 +15832,54 @@
           ],
           "temporal_lag": "immediate",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Artisanal trammel net fishing for demersal species",
+          "from_type": "activities",
+          "to": "Demersal fish stock biomass (Mullus, Diplodus, Sparisoma)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "moderate",
+          "confidence": 4,
+          "rationale": "Trammel net fishing selectively removes demersal fish species (Mullus, Diplodus), reducing stock biomass around islands",
+          "references": [
+            "Stergiou et al. 2006",
+            "Coll et al. 2006"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Posidonia oceanica habitat restoration programmes",
+          "from_type": "responses",
+          "to": "Posidonia oceanica meadow extent around island shelves",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "moderate",
+          "confidence": 3,
+          "rationale": "Restoration programmes using transplanting and seed-based methods aim to recover Posidonia meadow extent around Mediterranean islands",
+          "references": [
+            "Balestri et al. 2011",
+            "Procaccini & Piazzi 2001"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Seasonal fishing closures for spawning protection",
+          "from_type": "responses",
+          "to": "Demersal fish stock biomass (Mullus, Diplodus, Sparisoma)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Seasonal closures during spawning periods allow demersal fish stock recovery around islands",
+          "references": [
+            "Murawski et al. 2005",
+            "Colloca et al. 2004"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -19529,6 +19946,22 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Eutrophication and cyanobacteria washing ashore on island beaches",
+          "from_type": "pressures",
+          "to": "Seagrass (Zostera marina) beds in brackish shallow island waters",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Eutrophication-driven turbidity and cyanobacteria wash reduce light availability for Zostera marina in shallow island waters",
+          "references": [
+            "Krause-Jensen et al. 2008",
+            "Boström et al. 2014"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -22576,6 +23009,22 @@
           ],
           "temporal_lag": "medium-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Eutrophication-driven filamentous algae overgrowth",
+          "from_type": "pressures",
+          "to": "Seagrass (Zostera marina) patches in brackish sheltered bays along rocky coast",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Filamentous algae overgrowth from eutrophication smothers Zostera marina patches in sheltered bays along the rocky coast",
+          "references": [
+            "Krause-Jensen et al. 2008",
+            "Berglund et al. 2003"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
         }
       ]
     },
@@ -23507,6 +23956,86 @@
             "Tuya et al. (2014) \"Biogeography of the Macaronesian region\""
           ],
           "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Coastal aquaculture (sea bass, sea bream)",
+          "from_type": "activities",
+          "to": "Habitat degradation from boat anchoring",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "moderate",
+          "confidence": 3,
+          "rationale": "Aquaculture cage installations and associated vessel traffic contribute to localised habitat degradation around island coastal areas",
+          "references": [
+            "Holmer et al. 2008",
+            "Karakassis et al. 2005"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Scientific research and monitoring",
+          "from_type": "activities",
+          "to": "Cystoseira and Sargassum forest extent and health",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Scientific monitoring programmes track and inform conservation of Cystoseira and Sargassum macroalgal forests, indirectly supporting their persistence through early warning of decline",
+          "references": [
+            "Thibaut et al. 2015",
+            "Gianni et al. 2013"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Submarine cable and pipeline installation",
+          "from_type": "activities",
+          "to": "Habitat degradation from boat anchoring",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "moderate",
+          "confidence": 3,
+          "rationale": "Submarine cable and pipeline installation causes localised seabed disturbance and habitat degradation during laying operations",
+          "references": [
+            "Carter et al. 2009",
+            "OSPAR 2012"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Marine tourism revenue",
+          "from_type": "welfare",
+          "to": "Recreational wellbeing from ocean access",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Marine tourism revenue supports infrastructure and services that enhance recreational wellbeing and ocean access for island communities",
+          "references": [
+            "Uyarra et al. 2009",
+            "Spalding et al. 2017"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Coastal property values",
+          "from_type": "welfare",
+          "to": "Tourism demand for marine recreation",
+          "to_type": "drivers",
+          "polarity": "+",
+          "strength": "moderate",
+          "confidence": 3,
+          "rationale": "Rising coastal property values reflect and reinforce demand for marine recreation, creating a feedback loop driving further tourism development",
+          "references": [
+            "Gopalakrishnan et al. 2011",
+            "Lazrak et al. 2014"
+          ],
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         }
       ]
@@ -25215,6 +25744,86 @@
             "Friedlander et al. (2017) \"Coral reef ecosystems of the Macaronesian Atlantic\""
           ],
           "temporal_lag": "medium-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Marine scientific research expeditions",
+          "from_type": "activities",
+          "to": "Large cetacean population health (sperm whale, beaked whales)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Marine research expeditions contribute to monitoring cetacean population health, enabling early detection of threats and informing conservation",
+          "references": [
+            "Whitehead 2003",
+            "Cañadas et al. 2005"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Military sonar exercises",
+          "from_type": "activities",
+          "to": "Underwater noise from shipping and sonar",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Military sonar exercises are a major acute source of high-intensity underwater noise, directly contributing to noise pollution in pelagic waters",
+          "references": [
+            "Tyack et al. 2011",
+            "Filadelfo et al. 2009"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Pelagic Sargassum community extent",
+          "from_type": "states",
+          "to": "Disrupted pelagic food web connectivity",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "moderate",
+          "confidence": 3,
+          "rationale": "Decline in pelagic Sargassum extent disrupts food web connectivity by reducing nursery habitat for juvenile fish and invertebrates",
+          "references": [
+            "Huffard et al. 2014",
+            "Lapointe et al. 2021"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Loss of apex predator trophic function",
+          "from_type": "impacts",
+          "to": "Disrupted pelagic food web connectivity",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Loss of apex predator function cascades through the pelagic food web, further disrupting trophic connectivity and ecosystem stability",
+          "references": [
+            "Baum & Worm 2009",
+            "Myers et al. 2007"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "reversible"
+        },
+        {
+          "from": "Cultural significance of traditional tuna fishing",
+          "from_type": "welfare",
+          "to": "Global tuna and pelagic fish market demand",
+          "to_type": "drivers",
+          "polarity": "+",
+          "strength": "moderate",
+          "confidence": 3,
+          "rationale": "Cultural attachment to traditional tuna fishing sustains local demand and supports continuation of fishing practices as a livelihood driver",
+          "references": [
+            "Chuenpagdee et al. 2003",
+            "Goulding et al. 2000"
+          ],
+          "temporal_lag": "short-term",
           "reversibility": "reversible"
         }
       ]

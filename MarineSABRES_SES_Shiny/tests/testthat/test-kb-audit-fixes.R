@@ -42,7 +42,7 @@ test_that("Caribbean template has welfare->driver feedback connections", {
     grepl("welfare", ft) && grepl("driver", tt)
   }, d$connections)
 
-  expect_gte(length(feedback), 3,
+  expect_true(length(feedback) >= 3,
     info = "Caribbean should have at least 3 welfare->driver feedback connections")
 })
 
@@ -155,7 +155,7 @@ test_that("All rebuilt templates have feedback loops", {
       tt <- tolower(conn$to_type %||% "")
       grepl("welfare", ft) && grepl("driver", tt)
     }, d$connections)
-    expect_gte(length(feedback), 1,
+    expect_true(length(feedback) >= 1,
       info = paste(tpl_name, "has no welfare->driver feedback"))
   }
 })
