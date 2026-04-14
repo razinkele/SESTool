@@ -89,9 +89,9 @@ This app uses **dual i18n** with `shiny.i18n`. All user-facing text MUST be inte
 ### Required Patterns
 
 ```r
-# EVERY module UI must start with this:
+# EVERY module UI must start with the defensive usei18n wrapper:
 my_module_ui <- function(id, i18n) {
-  shiny.i18n::usei18n(i18n)  # REQUIRED - enables reactive translation updates
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
   # ... UI code
 }

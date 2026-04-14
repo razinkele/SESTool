@@ -155,6 +155,48 @@ setup_reactive_pipeline <- function(project_data, event_bus) {
   })
 
   # ============================================================================
+  # Observer 1b: Build and cache shared igraph from ISA data
+  # ============================================================================
+  # After CLD regeneration, build an igraph object and store it on the event bus.
+  # Analysis modules (loops, leverage) can consume event_bus$get_isa_igraph()
+  # instead of independently reconstructing the graph from ISA data.
+  # ============================================================================
+  observe({
+    event_bus$on_cld_update()
+
+    data <- isolate(project_data())
+    isa_data <- safe_get_nested(data, "data", "isa_data", default = NULL)
+    if (is.null(isa_data)) {
+      event_bus$set_isa_igraph(NULL)
+      return()
+    }
+
+    tryCatch({
+      nodes <- create_nodes_df(isa_data)
+      edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+
+      if (is.null(nodes) || nrow(nodes) == 0 || is.null(edges) || nrow(edges) == 0) {
+        event_bus$set_isa_igraph(NULL)
+        return()
+      }
+
+      g <- igraph::graph_from_data_frame(
+        d = edges[, c("from", "to", "polarity"), drop = FALSE],
+        directed = TRUE,
+        vertices = nodes[, c("id", "label", "group"), drop = FALSE]
+      )
+      igraph::E(g)$polarity <- edges$polarity
+
+      event_bus$set_isa_igraph(list(graph = g, nodes = nodes, edges = edges))
+      debug_log(sprintf("Cached igraph: %d vertices, %d edges",
+                        igraph::vcount(g), igraph::ecount(g)), "PIPELINE")
+    }, error = function(e) {
+      debug_log(sprintf("Failed to cache igraph: %s", e$message), "PIPELINE ERROR")
+      event_bus$set_isa_igraph(NULL)
+    })
+  })
+
+  # ============================================================================
   # Observer 2: CLD updates -> Invalidate analysis
   # ============================================================================
   # Only invalidate analysis when the CLD structure itself changed (e.g., ISA

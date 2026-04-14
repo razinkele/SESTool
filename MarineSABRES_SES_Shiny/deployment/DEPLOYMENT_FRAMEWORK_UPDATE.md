@@ -13,7 +13,6 @@ The deployment framework has been updated to reflect the current application str
 **Changes:**
 - Added missing R packages: `shinyBS`, `shiny.i18n`, `digest`, and expanded tidyverse packages
 - Updated COPY commands to include new directories:
-  - `io.R` - I/O operations
   - `utils.R` - Utility functions
   - `VERSION` and `VERSION_INFO.json` - Version management
   - `version_manager.R` - Version control
@@ -41,7 +40,7 @@ The deployment framework has been updated to reflect the current application str
 ### 4. pre-deploy-check.R
 **Changes:**
 - Added validation for new core files:
-  - `io.R`, `utils.R`, `VERSION`, `VERSION_INFO.json`, `version_manager.R`
+  - `utils.R`, `VERSION`, `VERSION_INFO.json`, `version_manager.R`
 - Added `server/` directory to required directories check
 - Expanded package validation list to include all dependencies
 
@@ -64,7 +63,6 @@ MarineSABRES_SES_Shiny/
 ├── global.R                 # Global variables and package loading
 ├── run_app.R               # App launcher
 ├── constants.R             # Application constants
-├── io.R                    # I/O operations
 ├── utils.R                 # Utility functions
 ├── VERSION                 # Version number
 ├── VERSION_INFO.json       # Version metadata

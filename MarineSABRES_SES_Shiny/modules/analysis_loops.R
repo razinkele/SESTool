@@ -307,10 +307,15 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
     )
 
     # ============================================================================
-    # CACHED REACTIVE: Graph Construction
+    # CACHED REACTIVE: Graph Construction (shared via event bus)
     # ============================================================================
     build_graph_from_isa <- reactive({
-      start_time <- Sys.time()
+      # Prefer the shared cached igraph from the reactive pipeline.
+      # Falls back to local construction if event_bus is unavailable.
+      if (!is.null(event_bus)) {
+        cached <- event_bus$get_isa_igraph()
+        if (!is.null(cached)) return(cached)
+      }
 
       req(project_data_reactive())
 
@@ -318,7 +323,6 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
 
       if(is.null(isa_data)) return(NULL)
 
-      # Use the existing helper functions to build nodes and edges
       nodes <- create_nodes_df(isa_data)
       edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
 
@@ -326,33 +330,15 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
         return(NULL)
       }
 
-      # Create igraph object with both nodes and edges
       g <- graph_from_data_frame(
         d = edges %>% select(from, to, polarity),
         directed = TRUE,
         vertices = nodes %>% select(id, label, group)
       )
-
-      # Add edge attributes
       E(g)$polarity <- edges$polarity
 
-      # Log cache performance
-      elapsed <- as.numeric(Sys.time() - start_time, units = "secs")
-      if (elapsed < 0.01) {
-        debug_log("Graph retrieved from cache (< 10ms)", "CACHE HIT")
-      } else {
-        debug_log(sprintf("Graph constructed in %.3f seconds (%d nodes, %d edges)",
-                         elapsed, vcount(g), ecount(g)), "CACHE MISS")
-      }
-
       return(list(graph = g, edges = edges, nodes = nodes))
-    }) %>% bindCache(
-      digest::digest(
-        project_data_reactive()$data$isa_data,
-        algo = "xxhash64"
-      ),
-      cache = "session"
-    )
+    })
 
     # Detect Loops ----
     observeEvent(input$detect_loops, {

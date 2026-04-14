@@ -78,7 +78,7 @@ else
 fi
 
 # Core files
-files=("app.R" "global.R" "run_app.R" "constants.R" "io.R" "utils.R" "VERSION" "VERSION_INFO.json" "version_manager.R")
+files=("app.R" "global.R" "run_app.R" "constants.R" "utils.R" "VERSION" "VERSION_INFO.json" "version_manager.R")
 for file in "${files[@]}"; do
     if [ -f "$app_dir/$file" ]; then
         # Don't print individual success to reduce noise

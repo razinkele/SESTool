@@ -37,8 +37,8 @@ This document defines the standard conventions for Shiny modules in the MarineSA
 #' @return A Shiny UI element
 #' @export
 module_name_ui <- function(id, i18n) {
-  # REQUIRED: Enable reactive translations
-  shiny.i18n::usei18n(i18n)
+  # REQUIRED: Enable reactive translations (defensive form)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
 
   # UI implementation
@@ -51,7 +51,7 @@ module_name_ui <- function(id, i18n) {
 ```
 
 ### Key Requirements
-1. **Always use `usei18n(i18n)`** as the first line
+1. **Always use the defensive `usei18n()` wrapper** as the first line: `tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)`
 2. **Create namespace** with `ns <- NS(id)`
 3. **Use `i18n$t()`** for all user-facing text
 4. **Use `ns()`** for all input/output IDs
@@ -63,12 +63,12 @@ module_name_ui <- function(id, i18n) {
 #' [Module Name] Server
 #'
 #' @param id Character. Module namespace ID
-#' @param project_data Reactive containing project data
+#' @param project_data_reactive Reactive containing project data
 #' @param i18n Translator object for internationalization
 #' @param event_bus Optional EventBus for cross-module communication
 #' @return NULL or list of reactive values
 #' @export
-module_name_server <- function(id, project_data, i18n, event_bus = NULL, ...) {
+module_name_server <- function(id, project_data_reactive, i18n, event_bus = NULL, ...) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -88,7 +88,7 @@ module_name_server <- function(id, project_data, i18n, event_bus = NULL, ...) {
 
 ### Parameter Order
 1. `id` - Module namespace ID (required)
-2. `project_data` - Main data reactive (required)
+2. `project_data_reactive` - Main data reactive (required)
 3. `i18n` - Translator (required)
 4. `event_bus` - Event bus (optional, default NULL)
 5. Additional parameters as needed
@@ -138,7 +138,7 @@ paste(i18n$t("error_prefix"), e$message)
 ## Event Bus Integration
 
 ```r
-module_name_server <- function(id, project_data, i18n, event_bus = NULL) {
+module_name_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Emit events

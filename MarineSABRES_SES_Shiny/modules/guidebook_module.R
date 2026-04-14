@@ -13,7 +13,7 @@ resolve_guidebook_rmd <- function(i18n) {
 
 guidebook_ui <- function(id, i18n) {
   ns <- NS(id)
-  shiny.i18n::usei18n(i18n)
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
 
   fluidPage(
     fluidRow(

@@ -51,7 +51,6 @@ required_files <- c(
   "global.R",
   "run_app.R",
   "constants.R",
-  "io.R",
   "utils.R",
   "VERSION",
   "VERSION_INFO.json",
@@ -267,7 +266,7 @@ for (pkg in optional_packages) {
 # ============================================================================
 cat("\n[5] Checking R Syntax...\n")
 
-r_files <- c("app.R", "global.R", "run_app.R", "constants.R", "io.R", "utils.R", "version_manager.R")
+r_files <- c("app.R", "global.R", "run_app.R", "constants.R", "utils.R", "version_manager.R")
 
 for (file in r_files) {
   if (file.exists(file)) {

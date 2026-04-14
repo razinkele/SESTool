@@ -39,6 +39,11 @@ create_event_bus <- function(session_id = NULL) {
   # build CLD from connection data). Read and reset by setup_reactive_pipeline().
   skip_cld_regen_val <- shiny::reactiveVal(FALSE)
 
+  # Shared cached igraph built from ISA data. Set by the reactive pipeline
+
+  # after ISA changes; consumed by analysis modules to avoid redundant builds.
+  cached_isa_igraph_val <- shiny::reactiveVal(NULL)
+
   # Create the event bus object
   event_bus <- list(
     # ========== ISA Change Events ==========
@@ -174,6 +179,18 @@ create_event_bus <- function(session_id = NULL) {
         skip_cld_regen_val(FALSE)
       }
       val
+    },
+
+    # ========== Cached ISA igraph ==========
+    # Shared igraph built from ISA data by the reactive pipeline.
+    # Analysis modules should use get_isa_igraph() instead of building
+    # their own graph from ISA data.
+    set_isa_igraph = function(g) {
+      cached_isa_igraph_val(g)
+    },
+
+    get_isa_igraph = function() {
+      cached_isa_igraph_val()
     },
 
     # ========== Utility Functions ==========

@@ -66,12 +66,13 @@ install.packages(c(
 
 #### 1. Module UI Functions
 
-**REQUIRED**: Add `usei18n(i18n)` at the start of every module UI function:
+**REQUIRED**: Add the defensive `usei18n()` wrapper at the start of every module UI function.
+This handles both raw `i18n` objects and the `$translator` sub-object gracefully:
 
 ```r
-# ✅ CORRECT
+# ✅ CORRECT - defensive form (used by all modules)
 myModuleUI <- function(id, i18n) {
-  shiny.i18n::usei18n(i18n)  # REQUIRED - enables reactive translations
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
 
   tagList(
@@ -518,7 +519,7 @@ myModuleUI <- function(id, i18n) {
 ### ✅ Correct:
 ```r
 myModuleUI <- function(id, i18n) {
-  shiny.i18n::usei18n(i18n)  # CRITICAL - must be first
+  tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
   ns <- NS(id)
   tagList(h4(i18n$t("Title")))
 }
@@ -606,8 +607,8 @@ Located in `scripts/`:
 ### Essential i18n Commands
 
 ```r
-# In module UI
-shiny.i18n::usei18n(i18n)  # First line of every module UI
+# In module UI (defensive form)
+tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)
 
 # Wrapping text
 i18n$t("Text to translate")

@@ -70,7 +70,6 @@ sudo cp ../app.R /srv/shiny-server/marinesabres/
 sudo cp ../global.R /srv/shiny-server/marinesabres/
 sudo cp ../run_app.R /srv/shiny-server/marinesabres/
 sudo cp ../constants.R /srv/shiny-server/marinesabres/
-sudo cp ../io.R /srv/shiny-server/marinesabres/
 sudo cp ../utils.R /srv/shiny-server/marinesabres/
 sudo cp ../VERSION /srv/shiny-server/marinesabres/
 sudo cp ../VERSION_INFO.json /srv/shiny-server/marinesabres/

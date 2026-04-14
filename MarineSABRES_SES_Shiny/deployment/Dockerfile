@@ -83,7 +83,6 @@ COPY app.R /srv/shiny-server/marinesabres/
 COPY global.R /srv/shiny-server/marinesabres/
 COPY run_app.R /srv/shiny-server/marinesabres/
 COPY constants.R /srv/shiny-server/marinesabres/
-COPY io.R /srv/shiny-server/marinesabres/
 COPY utils.R /srv/shiny-server/marinesabres/
 COPY VERSION /srv/shiny-server/marinesabres/
 COPY VERSION_INFO.json /srv/shiny-server/marinesabres/

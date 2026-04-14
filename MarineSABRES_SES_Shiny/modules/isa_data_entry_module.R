@@ -41,10 +41,10 @@ isa_data_entry_ui <- function(id, i18n) {
 }
 
 # Module Server ----
-# Standardized signature: (id, project_data, i18n, event_bus)
-isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
+# Standardized signature: (id, project_data_reactive, i18n, event_bus)
+isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   # Legacy alias for backwards compatibility within module
-  global_data <- project_data
+  global_data <- project_data_reactive
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -160,8 +160,8 @@ isa_data_entry_server <- function(id, project_data, i18n, event_bus = NULL) {
       validation = list()
     )
 
-    # Initialize ISA data from project_data if it exists (e.g., from AI Assistant) ----
-    # This observer loads saved data when the module starts or when project_data changes
+    # Initialize ISA data from project_data_reactive if it exists (e.g., from AI Assistant) ----
+    # This observer loads saved data when the module starts or when project_data_reactive changes
     data_initialized <- reactiveVal(FALSE)
 
     # Navigation state ----

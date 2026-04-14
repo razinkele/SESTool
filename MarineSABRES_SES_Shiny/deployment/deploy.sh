@@ -212,7 +212,6 @@ deploy_shiny_server() {
     cp "$APP_DIR/global.R" /srv/shiny-server/marinesabres/
     cp "$APP_DIR/run_app.R" /srv/shiny-server/marinesabres/
     cp "$APP_DIR/constants.R" /srv/shiny-server/marinesabres/
-    cp "$APP_DIR/io.R" /srv/shiny-server/marinesabres/
     cp "$APP_DIR/utils.R" /srv/shiny-server/marinesabres/
     cp "$APP_DIR/VERSION" /srv/shiny-server/marinesabres/
     cp "$APP_DIR/VERSION_INFO.json" /srv/shiny-server/marinesabres/

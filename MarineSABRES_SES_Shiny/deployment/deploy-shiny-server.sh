@@ -117,7 +117,6 @@ required_files=(
     "global.R"
     "run_app.R"
     "constants.R"
-    "io.R"
     "utils.R"
     "VERSION"
     "VERSION_INFO.json"
@@ -191,7 +190,7 @@ print_status "Validating R syntax..."
 
 if command -v Rscript &> /dev/null; then
     syntax_errors=0
-    r_files=("app.R" "global.R" "constants.R" "io.R" "utils.R")
+    r_files=("app.R" "global.R" "constants.R" "utils.R")
 
     for file in "${r_files[@]}"; do
         if [ -f "$APP_DIR/$file" ]; then
@@ -306,7 +305,7 @@ print_success "Deployment directory ready"
 
 # --- Copy core files ---
 print_status "Copying core R files..."
-core_files=("app.R" "global.R" "run_app.R" "constants.R" "io.R" "utils.R" "VERSION" "VERSION_INFO.json" "version_manager.R")
+core_files=("app.R" "global.R" "run_app.R" "constants.R" "utils.R" "VERSION" "VERSION_INFO.json" "version_manager.R")
 for file in "${core_files[@]}"; do
     if [ -f "$APP_DIR/$file" ]; then
         cp "$APP_DIR/$file" "$DEPLOY_TARGET/"

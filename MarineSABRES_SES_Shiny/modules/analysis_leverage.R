@@ -169,9 +169,23 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
         tryCatch({
           incProgress(0.2, detail = i18n$t("modules.analysis.leverage.progress_building"))
 
-          isa_data <- project_data$data$isa_data
-          nodes <- create_nodes_df(isa_data)
-          edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+          # Prefer cached igraph from the reactive pipeline
+          cached_graph <- if (!is.null(event_bus)) event_bus$get_isa_igraph() else NULL
+
+          if (!is.null(cached_graph)) {
+            nodes <- cached_graph$nodes
+            edges <- cached_graph$edges
+            g <- cached_graph$graph
+          } else {
+            isa_data <- project_data$data$isa_data
+            nodes <- create_nodes_df(isa_data)
+            edges <- create_edges_df(isa_data, isa_data$adjacency_matrices)
+            g <- graph_from_data_frame(
+              edges %>% select(from, to, polarity),
+              directed = TRUE,
+              vertices = nodes %>% select(id, label, group)
+            )
+          }
 
           # Guard: need at least some edges for meaningful analysis
           if (is.null(edges) || nrow(edges) == 0) {
@@ -185,13 +199,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
 
           incProgress(0.4, detail = i18n$t("modules.analysis.leverage.progress_creating_graph"))
 
-          all_centralities <- calculate_all_centralities(
-            graph_from_data_frame(
-              edges %>% select(from, to, polarity),
-              directed = TRUE,
-              vertices = nodes %>% select(id, label, group)
-            )
-          )
+          all_centralities <- calculate_all_centralities(g)
 
           # Add composite scores
           all_centralities$Composite_Score <- safe_scale(all_centralities$Betweenness) +

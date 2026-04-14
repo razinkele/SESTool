@@ -63,7 +63,7 @@ template_example_ui <- function(id, i18n) {
 #' [Longer description of the server logic]
 #'
 #' @param id Character. Module namespace ID (must match UI id)
-#' @param project_data Reactive containing project data (reactiveVal or reactive)
+#' @param project_data_reactive Reactive containing project data (reactiveVal or reactive)
 #' @param i18n Translator object for internationalization
 #' @param event_bus Optional EventBus for cross-module communication
 #' @param ... Additional parameters
@@ -83,7 +83,7 @@ template_example_ui <- function(id, i18n) {
 #' }
 #'
 #' @export
-template_example_server <- function(id, project_data, i18n, event_bus = NULL, ...) {
+template_example_server <- function(id, project_data_reactive, i18n, event_bus = NULL, ...) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

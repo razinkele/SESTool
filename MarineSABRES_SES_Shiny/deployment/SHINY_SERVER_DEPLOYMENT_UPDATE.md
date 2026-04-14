@@ -18,7 +18,7 @@ The non-Docker deployment framework has been thoroughly updated and validated fo
 - Added data directory backup/restore during updates
 - Fixed working directory handling for `install_dependencies.R`
 - Selective file copying to exclude development files:
-  - Core files: `app.R`, `global.R`, `run_app.R`, `constants.R`, `io.R`, `utils.R`
+  - Core files: `app.R`, `global.R`, `run_app.R`, `constants.R`, `utils.R`
   - Version files: `VERSION`, `VERSION_INFO.json`, `version_manager.R`
   - Directories: `modules/`, `functions/`, `server/`, `www/`, `data/`, `translations/`
 
@@ -108,7 +108,6 @@ sudo ./validate-deployment.sh
 ├── global.R
 ├── run_app.R
 ├── constants.R
-├── io.R
 ├── utils.R
 ├── VERSION
 ├── VERSION_INFO.json

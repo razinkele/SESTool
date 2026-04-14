@@ -71,7 +71,7 @@ print_header("MarineSABRES Remote Pre-Deployment Validation")
 print_status("Checking core application files...")
 
 # Required core files
-required_files <- c("app.R", "global.R", "VERSION", "VERSION_INFO.json", "constants.R", "io.R", "utils.R")
+required_files <- c("app.R", "global.R", "VERSION", "VERSION_INFO.json", "constants.R", "utils.R")
 
 for (file in required_files) {
   if (file.exists(file)) {

@@ -1,4 +1,15 @@
 {
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "modules.project_io.new_project_confirm_title": {
       "en": "Start a new project?",
