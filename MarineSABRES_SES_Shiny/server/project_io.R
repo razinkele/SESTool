@@ -75,8 +75,8 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
   observeEvent(input$load_project, {
     showModal(modalDialog(
       title = i18n$t("common.buttons.load_project"),
-      fileInput("load_project_file", i18n$t("common.misc.choose_rds_file"),
-               accept = ".rds"),
+      fileInput("load_project_file", i18n$t("common.misc.choose_project_file"),
+               accept = c(".rds", ".json")),
       footer = tagList(
         modalButton(i18n$t("common.buttons.cancel")),
         actionButton("confirm_load", i18n$t("common.buttons.load"))
@@ -88,8 +88,18 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
     req(input$load_project_file)
 
     tryCatch({
-      # Load RDS file safely with size and type validation
-      loaded_data <- safe_readRDS(input$load_project_file$datapath, max_size_mb = 50)
+      file_path <- input$load_project_file$datapath
+      file_name <- tolower(input$load_project_file$name)
+      is_json <- grepl("\\.json$", file_name)
+
+      loaded_data <- if (is_json) {
+        # Load JSON project file
+        json_content <- paste(readLines(file_path, warn = FALSE), collapse = "\n")
+        safe_parse_json(json_content)
+      } else {
+        # Load RDS file safely with size and type validation
+        safe_readRDS(file_path, max_size_mb = 50)
+      }
 
       if (is.null(loaded_data)) {
         showNotification(

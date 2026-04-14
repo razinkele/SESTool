@@ -220,6 +220,17 @@
       "no": "Velg RDS-fil:",
       "el": "Επιλέξτε αρχείο RDS:"
     },
+    "common.misc.choose_project_file": {
+      "en": "Choose Project File (.rds or .json):",
+      "es": "Elegir Archivo de Proyecto (.rds o .json):",
+      "fr": "Choisir le Fichier de Projet (.rds ou .json):",
+      "de": "Projektdatei Wählen (.rds oder .json):",
+      "lt": "Pasirinkti Projekto Failą (.rds arba .json):",
+      "pt": "Escolher Ficheiro de Projeto (.rds ou .json):",
+      "it": "Scegli File di Progetto (.rds o .json):",
+      "no": "Velg Prosjektfil (.rds eller .json):",
+      "el": "Επιλέξτε αρχείο έργου (.rds ή .json):"
+    },
     "common.misc.connections_sheet_columns": {
       "en": "Connections sheet columns:",
       "es": "Columnas de la hoja de Conexiones:",
