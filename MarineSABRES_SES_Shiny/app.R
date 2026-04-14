@@ -682,7 +682,7 @@ server <- function(input, output, session) {
   #
   # 2. Session-local session_i18n (here) - Used for runtime translations
   #    - Created per-session with private language state
-  #    - Used in server functions: xxx_server(id, project_data, session_i18n, ...)
+  #    - Used in server functions: xxx_server(id, project_data_reactive, session_i18n, ...)
   #    - Prevents User A's language change from affecting User B
   #
   # This dual system IS NECESSARY for multi-user shiny-server deployments.
