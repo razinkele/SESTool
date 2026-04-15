@@ -1452,6 +1452,364 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Oil and gas platform operation and decommissioning",
+          "from_type": "activities",
+          "to": "Chronic hydrocarbon contamination from platforms",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Oil and gas operations release chronic low-level hydrocarbons through produced water discharge, minor spills, and legacy contamination around platforms",
+          "references": [
+            "Bakke et al. 2013",
+            "Cordes et al. 2016"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Climate change and ocean warming",
+          "from_type": "drivers",
+          "to": "Commercial demersal trawl fisheries (sole, plaice, cod)",
+          "to_type": "activities",
+          "polarity": "+/-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Ocean warming shifts fish species distributions northward, altering fishing patterns and target species availability for North Sea demersal fleets",
+          "references": [
+            "IPCC 2023",
+            "Hoegh-Guldberg et al. 2018",
+            "Perry et al. 2005",
+            "Pinsky et al. 2013"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Employment in wind farm construction, operation and maintenance",
+          "from_type": "welfare",
+          "to": "Regional employment and industrial transition needs",
+          "to_type": "drivers",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "As coastal communities diversify economically through wind farm employment, the urgency of industrial transition drivers decreases through feedback",
+          "references": [
+            "Bidwell et al. 2022",
+            "Dawley 2014"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Cultural ecosystem services (seascape aesthetics, recreation)",
+          "from_type": "impacts",
+          "to": "Coastal community economic diversification",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Recreation and tourism ecosystem services contribute to coastal economic diversification beyond traditional fishing and energy sectors",
+          "references": [
+            "Jobstvogt et al. 2014",
+            "Börger et al. 2014"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Seabed sediment characteristics and soft-bottom infauna",
+          "from_type": "states",
+          "to": "Coastal flood and wave energy regulation",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Healthy seabed sediment systems and associated biogenic structures contribute to wave attenuation and coastal flood regulation",
+          "references": [
+            "Spalding et al. 2014",
+            "Möller et al. 2014"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Decommissioning regulations and liability frameworks",
+          "from_type": "responses",
+          "to": "Wind farm decommissioning",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Regulatory requirements for decommissioning (OSPAR Decision 98/3, national regulations) mandate removal of foundations and cables at end of operational life",
+          "references": [
+            "Topham & McMillan 2017",
+            "Smyth et al. 2015",
+            "OSPAR Commission 2006"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Carbon emission avoidance through wind energy generation",
+          "from_type": "impacts",
+          "to": "Energy affordability and price stability",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Wind energy displaces volatile fossil fuel pricing, contributing to energy price stability for consumers and industry",
+          "references": [
+            "Hirth 2013",
+            "Wiser et al. 2016"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Sand and gravel resource demand for construction",
+          "from_type": "drivers",
+          "to": "Marine aggregate (sand/gravel) dredging",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Construction demand for sand and gravel directly drives marine aggregate extraction from licensed dredging areas in the North Sea",
+          "references": [
+            "Van Lancker et al. 2010",
+            "ICES 2019"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Marine aggregate (sand/gravel) dredging",
+          "from_type": "activities",
+          "to": "Seabed disturbance and habitat alteration from foundations and scour protection",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Aggregate dredging directly disturbs seabed habitats, removing surface sediment and altering benthic community structure",
+          "references": [
+            "Desprez 2000",
+            "Cooper et al. 2007"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Barrier effects on marine mammal and fish migration routes",
+          "from_type": "pressures",
+          "to": "North Sea herring stock biomass",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Offshore wind farm arrays may create barrier effects for herring migration between spawning and feeding grounds, though evidence is still emerging",
+          "references": [
+            "Slabbekoorn et al. 2010",
+            "Gill & Bartlett 2010"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "North Sea herring stock biomass",
+          "from_type": "states",
+          "to": "Fish stock provisioning for human consumption and fisheries",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "North Sea herring is a major commercial fish stock; its biomass directly determines the provisioning service for human consumption",
+          "references": [
+            "ICES 2023",
+            "Dickey-Collas et al. 2010"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Economic growth and blue economy development",
+          "from_type": "drivers",
+          "to": "Oil and gas platform operation and decommissioning",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Economic growth and energy demand drive continued oil and gas operations, while aging infrastructure drives decommissioning activity",
+          "references": [
+            "Cordes et al. 2016",
+            "Fowler et al. 2018"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Cultural ecosystem services (seascape aesthetics, recreation)",
+          "from_type": "impacts",
+          "to": "Property values and coastal aesthetics perception",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Coastal seascape aesthetics directly influence property values and community perception of coastal living quality",
+          "references": [
+            "Gibbons 2015",
+            "Hevia-Koch & Ladenburg 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Food security from North Sea fisheries",
+          "from_type": "drivers",
+          "to": "Recreational angling near wind farms",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Demand for fish and recreational fishing opportunities drives angling activity near wind farms where fish aggregate around structures",
+          "references": [
+            "Methratta & Dardick 2019",
+            "Reubens et al. 2014",
+            "Hooper et al. 2017"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Sand and gravel resource demand for construction",
+          "from_type": "drivers",
+          "to": "Fixed-bottom offshore wind farm construction and operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Wind farm construction requires seabed preparation and scour protection materials, contributing to aggregate resource demand",
+          "references": [
+            "Van Lancker et al. 2010",
+            "ICES 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Environmental Impact Assessment requirements",
+          "from_type": "responses",
+          "to": "Seabed surveys and environmental monitoring",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "EIA regulations mandate pre- and post-construction environmental surveys including seabed characterisation, marine mammal monitoring, and bird surveys",
+          "references": [
+            "BSH 2013",
+            "Ehler & Douvere 2009"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Fish stock provisioning for human consumption and fisheries",
+          "from_type": "impacts",
+          "to": "Shipping and trade route services",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Fishery products require shipping and trade infrastructure, and safe navigation routes through the North Sea underpin broader trade services",
+          "references": [
+            "Abramic et al. 2022",
+            "Baulaz et al. 2023"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Shipping and trade route services",
+          "from_type": "welfare",
+          "to": "International shipping and trade growth",
+          "to_type": "drivers",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Revenue from shipping services reinforces demand for trade growth, creating a feedback loop between maritime trade welfare and economic drivers",
+          "references": [
+            "Abramic et al. 2022",
+            "Baulaz et al. 2023",
+            "Tournadre 2014"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Stakeholder engagement and fisheries consultation processes",
+          "from_type": "responses",
+          "to": "Exclusion of fishing vessels from wind farm safety zones",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Effective stakeholder engagement and consultation can lead to fisheries co-existence agreements that reduce the displacement impact of safety zones",
+          "references": [
+            "de Groot et al. 2014",
+            "Breen et al. 2015"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Renewable energy targets and climate policy (EU Green Deal, national NDCs)",
+          "from_type": "drivers",
+          "to": "Turbine maintenance and vessel operations",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Operational wind farms require ongoing turbine maintenance and crew transfer vessel operations throughout their 25-30 year lifespan",
+          "references": [
+            "Abramic et al. 2022",
+            "Baulaz et al. 2023",
+            "Carroll et al. 2016"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Turbine maintenance and vessel operations",
+          "from_type": "activities",
+          "to": "Competition for marine space between wind, shipping and fishing",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Maintenance vessel traffic adds to marine spatial competition around wind farm sites, affecting other sea users",
+          "references": [
+            "Ehler & Douvere 2009",
+            "Zaucha & Gee 2019"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Wind farm decommissioning",
+          "from_type": "activities",
+          "to": "Seabed disturbance and habitat alteration from foundations and scour protection",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Decommissioning involves removal of foundations and scour protection, causing temporary but significant seabed disturbance and resuspension of sediments",
+          "references": [
+            "Topham & McMillan 2017",
+            "Smyth et al. 2015"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -2083,6 +2441,377 @@
             "D’Adamo et al. 2025"
           ],
           "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Anchor and mooring seabed disturbance",
+          "from_type": "pressures",
+          "to": "Biofouling communities on floating structures and mooring lines",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Floating structures and mooring lines provide novel hard substrate in the pelagic zone, rapidly colonised by biofouling organisms including mussels, barnacles, and hydroids",
+          "references": [
+            "Langhamer 2012",
+            "De Mesel et al. 2015"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Biofouling communities on floating structures and mooring lines",
+          "from_type": "states",
+          "to": "Stepping-stone habitat for non-native biofouling species",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Biofouling communities on floating structures can serve as stepping stones for non-native species dispersal across previously unconnected deep-water habitats",
+          "references": [
+            "Adams et al. 2014",
+            "Mineur et al. 2012"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Coastal economic regeneration and just transition needs",
+          "from_type": "drivers",
+          "to": "Cetacean watching and marine ecotourism",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Demand for coastal economic diversification drives cetacean watching and marine ecotourism as alternative livelihood activities",
+          "references": [
+            "Hoyt 2001",
+            "O'Connor et al. 2009"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Cetacean watching and marine ecotourism",
+          "from_type": "activities",
+          "to": "Displacement of pelagic fishing effort from wind farm zones",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 2,
+          "rationale": "Increased marine ecotourism vessel traffic contributes to spatial competition with fishing activities in the same offshore areas",
+          "references": [
+            "Parsons 2012"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Climate change mitigation obligations (Paris Agreement)",
+          "from_type": "drivers",
+          "to": "Floating offshore wind farm deployment and operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "International climate commitments under the Paris Agreement are a primary driver of floating wind deployment to access deep-water wind resources",
+          "references": [
+            "IRENA 2019",
+            "IEA 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Anchor and mooring seabed disturbance",
+          "from_type": "pressures",
+          "to": "Deep-sea benthic communities at anchor points",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Anchor installation and chain sweep zones physically disturb deep-sea benthic communities, which are slow to recover due to low temperatures and limited larval supply",
+          "references": [
+            "Ramirez-Llodra et al. 2011",
+            "Clark et al. 2016"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "slowly_reversible"
+        },
+        {
+          "from": "Deep-water wind resource exploitation beyond fixed-bottom limits",
+          "from_type": "drivers",
+          "to": "Floating offshore wind farm deployment and operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "The availability of high-quality deep-water wind resources (>60m depth) that cannot be accessed by fixed-bottom foundations drives floating wind technology development and deployment",
+          "references": [
+            "Bento & Fontes 2019",
+            "Castro-Santos et al. 2022",
+            "IRENA 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "National renewable energy and net-zero targets",
+          "from_type": "drivers",
+          "to": "Dynamic cable installation and maintenance",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Grid connection of floating wind farms requires dynamic cable systems, driven by national energy targets and the need to export generated electricity",
+          "references": [
+            "Bento & Fontes 2019",
+            "Castro-Santos et al. 2022"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Dynamic cable installation and maintenance",
+          "from_type": "activities",
+          "to": "Anchor and mooring seabed disturbance",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Dynamic cable installation involves seabed interaction at cable touchdown points and may require additional anchor points, causing localised disturbance",
+          "references": [
+            "Bento & Fontes 2019",
+            "Castro-Santos et al. 2022"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Carbon emission reduction from floating wind generation",
+          "from_type": "impacts",
+          "to": "Energy price stability for consumers",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Floating wind energy displaces volatile fossil fuel imports, contributing to long-term energy price stability through fixed-price power purchase agreements",
+          "references": [
+            "Hirth 2013",
+            "IRENA 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Energy security through domestic generation",
+          "from_type": "drivers",
+          "to": "Floating offshore wind farm deployment and operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "National energy security concerns drive floating wind deployment to reduce dependence on imported fossil fuels and diversify the domestic energy mix",
+          "references": [
+            "IRENA 2019",
+            "IEA 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Adaptive management and monitoring protocols",
+          "from_type": "responses",
+          "to": "Environmental baseline and monitoring surveys",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Adaptive management frameworks mandate environmental baseline surveys and ongoing monitoring to assess floating wind farm impacts on marine ecosystems",
+          "references": [
+            "Ehler & Douvere 2009",
+            "Zaucha & Gee 2019",
+            "Lindeboom et al. 2011"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "International cooperation on transboundary environmental effects",
+          "from_type": "responses",
+          "to": "Floating offshore wind farm deployment and operation",
+          "to_type": "activities",
+          "polarity": "+/-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "International cooperation frameworks (OSPAR, EU MSP Directive) both enable and constrain floating wind deployment through coordinated environmental assessment requirements",
+          "references": [
+            "OSPAR Commission 2006",
+            "Ehler & Douvere 2009"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Just transition and community benefit funds",
+          "from_type": "responses",
+          "to": "Coastal economic regeneration and just transition needs",
+          "to_type": "drivers",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Community benefit funds and just transition policies address the socioeconomic driver of coastal regeneration by providing direct financial support to affected communities",
+          "references": [
+            "Heffron & McCauley 2018",
+            "Sovacool et al. 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Floating offshore wind farm deployment and operation",
+          "from_type": "activities",
+          "to": "Operational noise from floating platform motion and mooring",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Floating platforms generate operational noise from wave-induced motion, mooring line tension changes, and mechanical vibration transmitted through the water column",
+          "references": [
+            "Bento & Fontes 2019",
+            "Castro-Santos et al. 2022",
+            "Madsen et al. 2006",
+            "Bailey et al. 2014"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Operational noise from floating platform motion and mooring",
+          "from_type": "pressures",
+          "to": "Cetacean populations (dolphins, fin whales, sperm whales)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Chronic low-frequency noise from floating platform operation may cause behavioural disturbance and displacement in cetaceans, particularly deep-diving species sensitive to acoustic habitat degradation",
+          "references": [
+            "Madsen et al. 2006",
+            "Bailey et al. 2014",
+            "Erbe et al. 2019"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic fish stocks (mackerel, horse mackerel, tuna)",
+          "from_type": "states",
+          "to": "Pelagic fish aggregation around floating structures (FAD effect)",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Floating structures act as fish aggregation devices (FADs), concentrating pelagic species around the submerged mooring and platform structures",
+          "references": [
+            "Dempster & Taquet 2004",
+            "Methratta & Dardick 2019"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic fish aggregation around floating structures (FAD effect)",
+          "from_type": "impacts",
+          "to": "Deep-water fishers' livelihood security",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Fish aggregation around floating wind structures may enhance local catch rates for fishers, potentially benefiting livelihood security if co-existence access is granted",
+          "references": [
+            "Methratta & Dardick 2019",
+            "Reubens et al. 2014",
+            "Hooper et al. 2017"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic fishery provisioning from deep waters",
+          "from_type": "impacts",
+          "to": "Regional supply chain development and economic diversification",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Pelagic fisheries provisioning and wind farm supply chain development together contribute to regional economic diversification in coastal port communities",
+          "references": [
+            "Bidwell et al. 2022"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Carbon emission reduction from floating wind generation",
+          "from_type": "impacts",
+          "to": "Social acceptance in coastal communities",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Demonstrated climate benefits from floating wind contribute to public acceptance, though visual impact and fisheries displacement may reduce it",
+          "references": [
+            "Firestone et al. 2012",
+            "Hevia-Koch & Ladenburg 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Stepping-stone habitat for non-native biofouling species",
+          "from_type": "impacts",
+          "to": "Clean energy from deep-water wind resources",
+          "to_type": "welfare",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 2,
+          "rationale": "Invasive species introduction through stepping-stone habitats may trigger regulatory delays and additional environmental mitigation costs, indirectly affecting the clean energy value proposition",
+          "references": [
+            "Adams et al. 2014"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Floating offshore wind farm deployment and operation",
+          "from_type": "activities",
+          "to": "Visual impact from floating structures",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Floating wind structures are visible from shore at distances up to 30-40 km, particularly in clear Atlantic conditions, creating visual impact on coastal seascapes",
+          "references": [
+            "Bishop 2002",
+            "Hevia-Koch & Ladenburg 2019"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Visual impact from floating structures",
+          "from_type": "pressures",
+          "to": "Seabird foraging ecology (shearwaters, petrels, storm-petrels)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 2,
+          "rationale": "Visible structures may cause seabird displacement from foraging areas through avoidance behaviour, particularly for collision-sensitive species like shearwaters",
+          "references": [
+            "Furness et al. 2013",
+            "Dierschke et al. 2016"
+          ],
+          "temporal_lag": "long-term",
           "reversibility": "partially_reversible"
         }
       ]
@@ -3129,6 +3858,436 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Seabed disturbance and habitat alteration from foundations",
+          "from_type": "pressures",
+          "to": "Benthic macrofauna in deep basins",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Foundation installation in deep basins disturbs benthic macrofauna communities already stressed by periodic hypoxia in the Baltic Proper",
+          "references": [
+            "HELCOM 2021",
+            "Korpinen et al. 2012",
+            "Villnäs & Norkko 2011"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "slowly_reversible"
+        },
+        {
+          "from": "Climate change mitigation goals (HELCOM, EU)",
+          "from_type": "drivers",
+          "to": "Fixed-bottom offshore wind farm construction and operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "EU and HELCOM climate targets directly drive Baltic offshore wind development, with ambitious national deployment targets for 2030 and beyond",
+          "references": [
+            "HELCOM 2021",
+            "Korpinen et al. 2012",
+            "EU Commission 2020"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Deep-water hypoxia extent (dead zones)",
+          "from_type": "states",
+          "to": "Climate regulation through carbon cycling",
+          "to_type": "impacts",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Expanding hypoxic dead zones in Baltic deep basins impair carbon sequestration and nutrient cycling, reducing the climate regulation ecosystem service",
+          "references": [
+            "HELCOM 2021",
+            "Korpinen et al. 2012",
+            "Carstensen et al. 2014"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "slowly_reversible"
+        },
+        {
+          "from": "Carbon emission avoidance through Baltic wind energy",
+          "from_type": "impacts",
+          "to": "Coastal community economic diversification",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Wind farm development brings new economic opportunities to Baltic coastal communities through construction, operation, maintenance, and port services",
+          "references": [
+            "Bidwell et al. 2022",
+            "Dawley 2014"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Fixed-bottom offshore wind farm construction and operation",
+          "from_type": "activities",
+          "to": "Contamination from dumped munitions legacy",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Wind farm construction in the Baltic may disturb dumped WWII munitions, releasing toxic compounds (TNT, mustard gas) into the marine environment during seabed preparation",
+          "references": [
+            "HELCOM 2021",
+            "Korpinen et al. 2012",
+            "Beldowski et al. 2016"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Contamination from dumped munitions legacy",
+          "from_type": "pressures",
+          "to": "Seabed sediment and soft-bottom infauna",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Toxic compounds leaking from corroding munitions contaminate sediments and accumulate in benthic organisms, degrading soft-bottom community health",
+          "references": [
+            "Beldowski et al. 2016",
+            "Maser & Strehse 2020"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Exclusion of fishing vessels from wind farm safety zones",
+          "from_type": "pressures",
+          "to": "De facto marine refuge in wind farm exclusion zones",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Fishing exclusion zones around Baltic wind farms create de facto marine refuges where fish stocks and benthic communities can recover from trawling pressure",
+          "references": [
+            "Methratta & Dardick 2019",
+            "Reubens et al. 2014",
+            "Stelzenmüller et al. 2011"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "De facto marine refuge in wind farm exclusion zones",
+          "from_type": "states",
+          "to": "Commercial fish stock provision (cod, herring, sprat)",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Marine refuges in wind farm exclusion zones may enhance fish stock recovery through spillover effects, benefiting adjacent fisheries",
+          "references": [
+            "Stelzenmüller et al. 2011",
+            "Methratta & Dardick 2019"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Submarine cable laying and grid interconnection",
+          "from_type": "activities",
+          "to": "Electromagnetic fields from submarine cables",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "AC and DC submarine power cables emit electromagnetic fields that can be detected by electrosensitive species such as elasmobranchs and flatfish",
+          "references": [
+            "Gill et al. 2012",
+            "Normandeau et al. 2011"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Electromagnetic fields from submarine cables",
+          "from_type": "pressures",
+          "to": "Eastern Baltic cod stock biomass",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 2,
+          "rationale": "EMF from submarine cables may affect orientation and migration behaviour of Baltic cod, though field strength decreases rapidly with distance and population-level effects are uncertain",
+          "references": [
+            "Gill et al. 2012",
+            "Öhman et al. 2007"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Environmental Impact Assessment with cumulative effects",
+          "from_type": "responses",
+          "to": "Fixed-bottom offshore wind farm construction and operation",
+          "to_type": "activities",
+          "polarity": "+/-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Cumulative effects EIA can both delay wind farm projects (through additional assessment requirements) and enable them (through consenting frameworks that address stakeholder concerns)",
+          "references": [
+            "Ehler & Douvere 2009",
+            "Zaucha & Gee 2019",
+            "HELCOM 2021",
+            "Korpinen et al. 2012"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Environmental Impact Assessment with cumulative effects",
+          "from_type": "responses",
+          "to": "Environmental monitoring and baseline surveys",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "EIA regulations mandate comprehensive pre-construction environmental baseline surveys and post-construction monitoring programmes in the Baltic",
+          "references": [
+            "HELCOM 2021",
+            "Korpinen et al. 2012",
+            "Ehler & Douvere 2009",
+            "Zaucha & Gee 2019"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Commercial fish stock provision (cod, herring, sprat)",
+          "from_type": "impacts",
+          "to": "Fish processing industry employment",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Fish landings from Baltic fisheries directly sustain employment in onshore fish processing facilities across Baltic coastal communities",
+          "references": [
+            "HELCOM 2021",
+            "Korpinen et al. 2012",
+            "EU STECF 2021"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "HELCOM Baltic Sea Action Plan",
+          "from_type": "responses",
+          "to": "Overfishing of Eastern Baltic cod",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "HELCOM BSAP sets targets for sustainable fisheries and ecosystem health that support measures to reduce overfishing of Baltic cod stocks",
+          "references": [
+            "HELCOM 2021",
+            "Korpinen et al. 2012"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Seabed disturbance and habitat alteration from foundations",
+          "from_type": "pressures",
+          "to": "Halocline dynamics and deep-water renewal",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 2,
+          "rationale": "Large-scale foundation arrays may locally alter bottom currents and mixing patterns near the halocline, though the effect relative to natural variability is uncertain",
+          "references": [
+            "HELCOM 2021",
+            "Korpinen et al. 2012",
+            "Meier et al. 2006"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Halocline dynamics and deep-water renewal",
+          "from_type": "states",
+          "to": "Deep-water hypoxia extent (dead zones)",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Halocline stability controls deep-water renewal in the Baltic Proper; persistent stratification prevents oxygenation of bottom waters, expanding hypoxic dead zones",
+          "references": [
+            "Carstensen et al. 2014",
+            "Meier et al. 2006"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Commercial fish stock provision (cod, herring, sprat)",
+          "from_type": "impacts",
+          "to": "Maritime trade revenue",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Baltic fish exports and maritime shipping services generate trade revenue for Baltic coastal states",
+          "references": [
+            "HELCOM 2021",
+            "Korpinen et al. 2012"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Regional employment in coastal communities",
+          "from_type": "drivers",
+          "to": "Fixed-bottom offshore wind farm construction and operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Demand for local employment and economic development in Baltic coastal communities drives support for offshore wind farm development",
+          "references": [
+            "Bidwell et al. 2022",
+            "HELCOM 2021"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Carbon emission avoidance through Baltic wind energy",
+          "from_type": "impacts",
+          "to": "Renewable electricity generation capacity",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Each new Baltic wind farm directly increases installed renewable electricity generation capacity, displacing fossil fuel power",
+          "references": [
+            "IRENA 2019",
+            "HELCOM 2021"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Sand and aggregate resource needs",
+          "from_type": "drivers",
+          "to": "Fixed-bottom offshore wind farm construction and operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Wind farm foundations require seabed preparation and scour protection materials, contributing indirectly to aggregate demand in the Baltic",
+          "references": [
+            "Van Lancker et al. 2010"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Fixed-bottom offshore wind farm construction and operation",
+          "from_type": "activities",
+          "to": "Sediment plume and turbidity during construction",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Pile driving and foundation installation resuspend fine sediments, creating turbidity plumes that can reduce light availability for primary producers and affect filter-feeding organisms",
+          "references": [
+            "Baeye & Fettweis 2015",
+            "Wilber & Clarke 2001"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Sediment plume and turbidity during construction",
+          "from_type": "pressures",
+          "to": "Central Baltic herring recruitment",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "weak",
+          "confidence": 3,
+          "rationale": "Construction-phase turbidity plumes may temporarily affect herring larvae survival in shallow spawning areas through reduced feeding efficiency",
+          "references": [
+            "Westerberg et al. 1996",
+            "HELCOM 2021"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "EU and national renewable energy targets for Baltic states",
+          "from_type": "drivers",
+          "to": "Submarine cable and pipeline installation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Cross-border grid interconnection and wind farm export cables are driven by EU energy targets and Baltic energy market integration goals",
+          "references": [
+            "HELCOM 2021",
+            "Korpinen et al. 2012",
+            "EU Commission 2020"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Submarine cable laying and grid interconnection",
+          "from_type": "activities",
+          "to": "Electromagnetic fields from submarine cables",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Grid interconnection cables and wind farm export cables are major sources of EMF in the Baltic marine environment",
+          "references": [
+            "Gill et al. 2012",
+            "Normandeau et al. 2011"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "EU and national renewable energy targets for Baltic states",
+          "from_type": "drivers",
+          "to": "Turbine maintenance and service vessel operations",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Ongoing turbine maintenance is required throughout the operational life of Baltic wind farms, generating continuous vessel traffic and maritime activity",
+          "references": [
+            "Abramic et al. 2022",
+            "Baulaz et al. 2023",
+            "Carroll et al. 2016"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Turbine maintenance and service vessel operations",
+          "from_type": "activities",
+          "to": "Competition for marine space with shipping lanes",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Service vessel operations add to marine traffic density in already congested Baltic shipping routes, increasing spatial competition",
+          "references": [
+            "Ehler & Douvere 2009",
+            "Zaucha & Gee 2019",
+            "HELCOM 2021",
+            "Korpinen et al. 2012"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
         }
       ]
     },
@@ -4149,6 +5308,280 @@
             "D’Adamo et al. 2025"
           ],
           "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Mooring and anchor disturbance to deep-sea habitats",
+          "from_type": "pressures",
+          "to": "Biofouling communities on floating structures",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Floating structures provide novel hard substrate for Mediterranean biofouling communities including invasive species that thrive in warm waters",
+          "references": [
+            "Langhamer 2012",
+            "Ferrario et al. 2017"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Climate change mitigation under Paris Agreement",
+          "from_type": "drivers",
+          "to": "Floating offshore wind farm deployment and operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Mediterranean countries' Paris Agreement commitments and EU REPowerEU targets drive floating wind deployment to access deep-water resources close to demand centres",
+          "references": [
+            "IRENA 2019",
+            "EU Commission 2022"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Tourism and recreation seascape value",
+          "from_type": "impacts",
+          "to": "Coastal property values and aesthetic perception",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Mediterranean coastal seascape aesthetics directly influence property values and tourism attractiveness, with wind farm visibility potentially reducing perceived value",
+          "references": [
+            "Hevia-Koch & Ladenburg 2019",
+            "Gibbons 2015"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Anchor damage to Posidonia oceanica meadows from cable routes",
+          "from_type": "pressures",
+          "to": "Coastal water quality and bathing water standards",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Degradation of Posidonia meadows reduces their capacity for water filtration and sediment stabilisation, potentially affecting coastal bathing water quality",
+          "references": [
+            "Boudouresque et al. 2012",
+            "Micheli et al. 2013"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "slowly_reversible"
+        },
+        {
+          "from": "Coastal water quality and bathing water standards",
+          "from_type": "states",
+          "to": "Tourism and recreation seascape value",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Clean coastal water quality is essential for Mediterranean beach tourism and directly determines bathing water classification under the EU Bathing Water Directive",
+          "references": [
+            "Aragonés et al. 2016",
+            "Micheli et al. 2013"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Displacement of artisanal fishers from wind farm zones",
+          "from_type": "pressures",
+          "to": "De facto marine refuge from fishing exclusion zones",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 4,
+          "rationale": "Fishing exclusion in Mediterranean wind farm zones creates de facto marine refuges that allow overexploited demersal and reef fish populations to recover",
+          "references": [
+            "Stelzenmüller et al. 2011",
+            "Coll et al. 2010"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "De facto marine refuge from fishing exclusion zones",
+          "from_type": "states",
+          "to": "Artisanal fishery provisioning from coastal waters",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Marine refuge zones can produce spillover effects that benefit adjacent artisanal fisheries through increased fish abundance and biomass",
+          "references": [
+            "Harmelin-Vivien et al. 2008",
+            "Goñi et al. 2008"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Deep-water wind resource potential close to Mediterranean coasts",
+          "from_type": "drivers",
+          "to": "Floating offshore wind farm deployment and operation",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Mediterranean bathymetry drops steeply to >100m close to shore, making floating platforms the only viable technology to exploit excellent wind resources",
+          "references": [
+            "Bento & Fontes 2019",
+            "Castro-Santos et al. 2022",
+            "IRENA 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Environmental Impact Assessment with Posidonia protection",
+          "from_type": "responses",
+          "to": "Environmental monitoring and baseline surveys",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Mediterranean EIA frameworks require comprehensive environmental baseline surveys including Posidonia mapping, cetacean monitoring, and seabird census before consenting",
+          "references": [
+            "Ehler & Douvere 2009",
+            "Micheli et al. 2013"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Entanglement risk from mooring lines for cetaceans and turtles",
+          "from_type": "pressures",
+          "to": "Loggerhead sea turtle (Caretta caretta) population",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Loggerhead sea turtles are vulnerable to entanglement in mooring lines and dynamic cables, particularly during migration through Mediterranean floating wind zones",
+          "references": [
+            "Casale & Tucker 2017",
+            "Nelms et al. 2016"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic fish stocks (bluefin tuna, swordfish, anchovy)",
+          "from_type": "states",
+          "to": "Pelagic fish aggregation around floating structures (FAD effect)",
+          "to_type": "impacts",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Floating wind structures function as fish aggregation devices in the Mediterranean, attracting pelagic species including juvenile bluefin tuna and anchovy",
+          "references": [
+            "Dempster & Taquet 2004",
+            "Rountree 1990"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic fish aggregation around floating structures (FAD effect)",
+          "from_type": "impacts",
+          "to": "Artisanal fisher household income and livelihood security",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Fish aggregation near floating structures may enhance catch rates for artisanal fishers if co-existence access agreements allow fishing in adjacent zones",
+          "references": [
+            "Methratta & Dardick 2019",
+            "Reubens et al. 2014",
+            "Hooper et al. 2017"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Overfishing pressure on demersal and reef fish",
+          "from_type": "pressures",
+          "to": "Pelagic fish stocks (bluefin tuna, swordfish, anchovy)",
+          "to_type": "states",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Overfishing of pelagic species (particularly bluefin tuna) combined with bycatch of juvenile pelagic fish in demersal fisheries reduces stock biomass",
+          "references": [
+            "Coll et al. 2010",
+            "ICCAT 2020"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Artisanal fishing tradition and livelihood needs",
+          "from_type": "drivers",
+          "to": "Pelagic longline fishing for tuna and swordfish",
+          "to_type": "activities",
+          "polarity": "+",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Mediterranean pelagic longline fishing for tuna and swordfish is driven by traditional livelihood needs and high market value of target species",
+          "references": [
+            "Coll et al. 2010",
+            "Tudela 2004"
+          ],
+          "temporal_lag": "short-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Pelagic longline fishing for tuna and swordfish",
+          "from_type": "activities",
+          "to": "Entanglement risk from mooring lines for cetaceans and turtles",
+          "to_type": "pressures",
+          "polarity": "+",
+          "strength": "weak",
+          "confidence": 2,
+          "rationale": "Displaced longline fisheries operating near wind farm boundaries may increase interactions between fishing gear, mooring lines, cetaceans and turtles",
+          "references": [
+            "Casale 2011",
+            "Lewison et al. 2004"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Carbon emission reduction from Mediterranean floating wind",
+          "from_type": "impacts",
+          "to": "Social acceptance and public perception of offshore wind",
+          "to_type": "welfare",
+          "polarity": "+",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Climate benefits of floating wind contribute to social acceptance, though visual impact, noise, and fisheries displacement can reduce public support",
+          "references": [
+            "Firestone et al. 2012",
+            "Hevia-Koch & Ladenburg 2019"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Stakeholder engagement with fishing and tourism sectors",
+          "from_type": "responses",
+          "to": "Displacement of artisanal fishers from wind farm zones",
+          "to_type": "pressures",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Effective stakeholder engagement with fishing and tourism sectors can mitigate displacement impacts through co-existence frameworks, compensation, and adaptive zoning",
+          "references": [
+            "de Groot et al. 2014",
+            "Ehler & Douvere 2009"
+          ],
+          "temporal_lag": "short-term",
           "reversibility": "partially_reversible"
         }
       ]
