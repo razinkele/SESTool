@@ -20,6 +20,7 @@
 # ============================================================================
 
 # Initialize counters
+app_dir <- getwd()
 errors <- 0
 warnings <- 0
 checks_passed <- 0

@@ -20,7 +20,8 @@ cat("===========================================================================
 if (basename(getwd()) == "deployment") {
   setwd("..")
 }
-cat(sprintf("Working directory: %s\n", getwd()))
+app_dir <- getwd()
+cat(sprintf("Working directory: %s\n", app_dir))
 
 # Initialize counters
 errors <- 0
