@@ -232,8 +232,14 @@ if (Test-Path $TarPath) {
 }
 
 # Create tar.gz from the app directory
-# --force-local prevents Git Bash tar from interpreting C: as a remote host
-$tarArgs = @("--force-local", "-czf", $TarPath) + $excludes + @("-C", $AppDir, ".")
+# --force-local prevents GNU tar from interpreting C: as a remote host
+# but bsdtar (Windows built-in) does not support it
+$tarVersion = & tar --version 2>&1 | Select-Object -First 1
+if ($tarVersion -match "bsdtar") {
+    $tarArgs = @("-czf", $TarPath) + $excludes + @("-C", $AppDir, ".")
+} else {
+    $tarArgs = @("--force-local", "-czf", $TarPath) + $excludes + @("-C", $AppDir, ".")
+}
 & tar @tarArgs
 
 if ($LASTEXITCODE -ne 0) {
@@ -250,7 +256,11 @@ Write-Success "Archive created: $TarPath ($tarSize MB)"
 
 if ($DryRun) {
     Write-Header "DRY RUN - Archive Contents"
-    & tar --force-local -tzf $TarPath
+    if ($tarVersion -match "bsdtar") {
+        & tar -tzf $TarPath
+    } else {
+        & tar --force-local -tzf $TarPath
+    }
     Write-Host ""
     Write-Warn "DRY RUN - no files were uploaded"
     Write-Host "  Archive size: $tarSize MB"
