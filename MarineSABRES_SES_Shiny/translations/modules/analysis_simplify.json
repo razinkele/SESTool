@@ -913,17 +913,6 @@
       "no": "Fullfører forenkling...",
       "el": "Ολοκλήρωση απλοποίησης..."
     },
-    "modules.analysis.simplify.error_applying": {
-      "en": "Error applying simplification:",
-      "es": "Error al aplicar la simplificación:",
-      "fr": "Erreur lors de l'application de la simplification :",
-      "de": "Fehler beim Anwenden der Vereinfachung:",
-      "lt": "Klaida taikant supaprastinimą:",
-      "pt": "Erro ao aplicar a simplificação:",
-      "it": "Errore nell'applicazione della semplificazione:",
-      "no": "Feil ved bruk av forenkling:",
-      "el": "Σφάλμα κατά την εφαρμογή απλοποίησης:"
-    },
     "modules.analysis.simplify.network_reset": {
       "en": "Network reset to original state",
       "es": "Red restablecida al estado original",

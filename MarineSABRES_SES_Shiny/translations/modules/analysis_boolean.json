@@ -605,39 +605,6 @@
       "no": "Algebraisk konnektivitet (Fiedler-verdi)",
       "el": "Αλγεβρική συνδεσιμότητα (τιμή Fiedler)"
     },
-    "modules.analysis_boolean.stability_high": {
-      "en": "The system shows high structural stability. Perturbations are expected to decay quickly, and the network is well-connected.",
-      "es": "El sistema muestra alta estabilidad estructural. Las perturbaciones se espera que decaigan rápidamente.",
-      "fr": "Le système montre une stabilité structurelle élevée. Les perturbations devraient se dissiper rapidement.",
-      "de": "Das System zeigt hohe strukturelle Stabilität. Störungen sollten schnell abklingen.",
-      "lt": "Sistema rodo aukštą struktūrinį stabilumą. Trikdžiai turėtų greitai nuslopti.",
-      "pt": "O sistema mostra alta estabilidade estrutural. As perturbações devem decair rapidamente.",
-      "it": "Il sistema mostra un'elevata stabilità strutturale. Le perturbazioni dovrebbero decadere rapidamente.",
-      "no": "The system shows high structural stability.",
-      "el": "The system shows high structural stability."
-    },
-    "modules.analysis_boolean.stability_moderate": {
-      "en": "The system shows moderate structural stability. Some perturbations may persist, and certain parts of the network are more loosely connected.",
-      "es": "El sistema muestra estabilidad estructural moderada.",
-      "fr": "Le système montre une stabilité structurelle modérée.",
-      "de": "Das System zeigt mäßige strukturelle Stabilität.",
-      "lt": "Sistema rodo vidutinį struktūrinį stabilumą.",
-      "pt": "O sistema mostra estabilidade estrutural moderada.",
-      "it": "Il sistema mostra una stabilità strutturale moderata.",
-      "no": "The system shows moderate structural stability.",
-      "el": "The system shows moderate structural stability."
-    },
-    "modules.analysis_boolean.stability_low": {
-      "en": "The system shows low structural stability. The network is loosely connected and vulnerable to disruption. Small perturbations may lead to significant changes.",
-      "es": "El sistema muestra baja estabilidad estructural.",
-      "fr": "Le système montre une faible stabilité structurelle.",
-      "de": "Das System zeigt niedrige strukturelle Stabilität.",
-      "lt": "Sistema rodo žemą struktūrinį stabilumą.",
-      "pt": "O sistema mostra baixa estabilidade estrutural.",
-      "it": "Il sistema mostra una bassa stabilità strutturale.",
-      "no": "The system shows low structural stability.",
-      "el": "The system shows low structural stability."
-    },
     "modules.analysis_boolean.boolean_interpretation": {
       "en": "Boolean Network Interpretation",
       "es": "Interpretación de Red Booleana",

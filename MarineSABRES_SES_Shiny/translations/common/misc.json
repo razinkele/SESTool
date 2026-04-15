@@ -44,17 +44,6 @@
       "no": "Godkjenn denne tilkoblingen med gjeldende glidebryterværdier",
       "el": "Έγκριση αυτής της σύνδεσης με τις τρέχουσες τιμές ρυθμιστικών"
     },
-    "common.misc.save_changes_to_strength_confidence_or_polarity_for_this_connection": {
-      "en": "Save changes to strength, confidence, or polarity for this connection",
-      "es": "Guardar cambios en fuerza, confianza o polaridad para esta conexión",
-      "fr": "Enregistrer les modifications de force, confiance ou polarité pour cette connexion",
-      "de": "Änderungen an Stärke, Vertrauen oder Polarität für diese Verbindung speichern",
-      "lt": "Išsaugoti stiprumo, pasitikėjimo ar poliarumo pakeitimus šiam ryšiui",
-      "pt": "Salvar alterações de força, confiança ou polaridade para esta conexão",
-      "it": "Salva le modifiche di forza, fiducia o polarità per questa connessione",
-      "no": "Lagre endringer i styrke, tillit eller polaritet for denne tilkoblingen",
-      "el": "Αποθήκευση αλλαγών σε ένταση, εμπιστοσύνη ή πολικότητα για αυτή τη σύνδεση"
-    },
     "common.misc.reject_this_connection_and_exclude_it_from_your_model": {
       "en": "Reject this connection and exclude it from your model",
       "es": "Rechazar esta conexión y excluirla de su modelo",
@@ -208,17 +197,6 @@
       "it": "Mar dei Caraibi",
       "no": "Karibiske hav",
       "el": "Καραϊβική Θάλασσα"
-    },
-    "common.misc.choose_rds_file": {
-      "en": "Choose RDS File:",
-      "es": "Elegir Archivo RDS:",
-      "fr": "Choisir le Fichier RDS:",
-      "de": "RDS-Datei Wählen:",
-      "lt": "Pasirinkti RDS Failą:",
-      "pt": "Escolher Ficheiro RDS:",
-      "it": "Scegli File RDS:",
-      "no": "Velg RDS-fil:",
-      "el": "Επιλέξτε αρχείο RDS:"
     },
     "common.misc.choose_project_file": {
       "en": "Choose Project File (.rds or .json):",
@@ -594,17 +572,6 @@
       "no": "Vi fant en automatisk lagret versjon av arbeidet ditt fra",
       "el": "Βρήκαμε μια αυτόματα αποθηκευμένη έκδοση της εργασίας σας από"
     },
-    "common.misc.welcome_to_the_computer_assisted_ses_creation_and_analysis_platform": {
-      "en": "Welcome to the computer-assisted SES creation and analysis platform.",
-      "es": "Bienvenido a la plataforma de creación y análisis de SES asistida por computadora.",
-      "fr": "Bienvenue sur la plateforme de création et d'analyse SES assistée par ordinateur.",
-      "de": "Willkommen zur computergestützten SES-Erstellungs- und Analyseplattform.",
-      "lt": "Sveiki atvykę į kompiuterio pagalbą naudojančią SES kūrimo ir analizės platformą.",
-      "pt": "Bem-vindo à plataforma de criação e análise de SES assistida por computador.",
-      "it": "Benvenuto nella piattaforma di creazione e analisi SES assistita da computer.",
-      "no": "Velkommen til den datastøttede plattformen for opprettelse og analyse av SES.",
-      "el": "Καλώς ήρθατε στην πλατφόρμα δημιουργίας και ανάλυσης SES με υποβοήθηση υπολογιστή."
-    },
     "common.misc.would_you_like_to_recover_this_data": {
       "en": "Would you like to recover this data?",
       "es": "¿Desea recuperar estos datos?",
@@ -681,17 +648,6 @@
       "pt": "Erro ao salvar o projeto",
       "el": "Σφάλμα αποθήκευσης έργου",
       "no": "Feil ved lagring av prosjekt"
-    },
-    "common.misc.error_loading_project": {
-      "en": "Error loading project",
-      "lt": "Klaida įkeliant projektą",
-      "es": "Error al cargar el proyecto",
-      "fr": "Erreur lors du chargement du projet",
-      "de": "Fehler beim Laden des Projekts",
-      "it": "Errore nel caricamento del progetto",
-      "pt": "Erro ao carregar o projeto",
-      "el": "Σφάλμα φόρτωσης έργου",
-      "no": "Feil ved lasting av prosjekt"
     },
     "Beginner": {
       "en": "Beginner",

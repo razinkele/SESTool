@@ -44,17 +44,6 @@
       "no": "Velg en modell",
       "el": "Επιλογή a Model"
     },
-    "modules.ses_models.reload_list": {
-      "en": "Reload Models List",
-      "es": "Recargar Lista de Modelos",
-      "fr": "Recharger la Liste des Modèles",
-      "de": "Modellliste neu laden",
-      "lt": "Perkrauti modelių sąrašą",
-      "pt": "Recarregar Lista de Modelos",
-      "it": "Ricarica Elenco Modelli",
-      "no": "Last inn modelliste på nytt",
-      "el": "Επαναφόρτωση Μοντέλα List"
-    },
     "modules.ses_models.load_models": {
       "en": "Load Models",
       "es": "Cargar Modelos",

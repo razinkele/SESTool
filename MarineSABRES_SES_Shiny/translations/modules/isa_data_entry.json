@@ -3619,17 +3619,6 @@
       "no": "Elementer",
       "el": "Στοιχεία"
     },
-    "modules.isa.ai_assistant.error_saving_model": {
-      "en": "Error Saving Model",
-      "es": "[ES] Error Saving Model",
-      "fr": "[FR] Error Saving Model",
-      "de": "[DE] Error Saving Model",
-      "lt": "[LT] Error Saving Model",
-      "pt": "[PT] Error Saving Model",
-      "it": "[IT] Error Saving Model",
-      "no": "Feil ved lagring av modell",
-      "el": "Σφάλμα Saving Model"
-    },
     "modules.isa.ai_assistant.great_you_selected": {
       "en": "Great You Selected",
       "es": "[ES] Great You Selected",
@@ -3816,17 +3805,6 @@
       "it": "[IT] Please Go Back Through The Previous Steps And Add ",
       "no": "Gå tilbake gjennom de forrige trinnene og legg til",
       "el": "Παρακαλώ Go Back Through The Previous Steps And Add "
-    },
-    "modules.isa.potential_connections_based_on_the_dapsiwrm_framew": {
-      "en": "Potential Connections Based On The Dapsiwrm Framew",
-      "es": "[ES] Potential Connections Based On The Dapsiwrm Framew",
-      "fr": "[FR] Potential Connections Based On The Dapsiwrm Framew",
-      "de": "[DE] Potential Connections Based On The Dapsiwrm Framew",
-      "lt": "[LT] Potential Connections Based On The Dapsiwrm Framew",
-      "pt": "[PT] Potential Connections Based On The Dapsiwrm Framew",
-      "it": "[IT] Potential Connections Based On The Dapsiwrm Framew",
-      "no": "Potensielle tilkoblinger basert på DAPSI(W)R(M)-rammeverket",
-      "el": "Πιθανές συνδέσεις βάσει του πλαισίου DAPSI(W)R(M)"
     },
     "modules.isa.this_will_help_me_suggest_relevant_activities_and_": {
       "en": "This Will Help Me Suggest Relevant Activities And ",
@@ -4158,17 +4136,6 @@
       "no": "Gå tilbake til forrige trinn",
       "el": "Επιστροφή στο προηγούμενο βήμα"
     },
-    "modules.isa.ai_assistant.max_elements_beginner": {
-      "en": "Maximum 3 elements allowed per category in Beginner mode",
-      "es": "Máximo 3 elementos permitidos por categoría en modo Principiante",
-      "fr": "Maximum 3 éléments autorisés par catégorie en mode Débutant",
-      "de": "Maximal 3 Elemente pro Kategorie im Anfängermodus erlaubt",
-      "lt": "Pradedančiųjų režime leidžiami maksimaliai 3 elementai kategorijoje",
-      "pt": "Máximo de 3 elementos permitidos por categoria no modo Iniciante",
-      "it": "Massimo 3 elementi consentiti per categoria in modalità Principiante",
-      "no": "Maksimalt 3 elementer tillatt per kategori i nybegynnermodus",
-      "el": "Μέγιστο 3 στοιχεία ανά κατηγορία στη λειτουργία Αρχαρίων"
-    },
     "modules.isa.ai_assistant.max_elements_warning": {
       "en": "You have reached the maximum of 3 elements for this category. This limit helps keep your model manageable and reduces the number of connections to review. Click the continue button to proceed to the next category.",
       "es": "Ha alcanzado el máximo de 3 elementos para esta categoría. Este límite ayuda a mantener su modelo manejable y reduce el número de conexiones a revisar. Haga clic en el botón continuar para pasar a la siguiente categoría.",
@@ -4179,17 +4146,6 @@
       "it": "Hai raggiunto il massimo di 3 elementi per questa categoria. Questo limite aiuta a mantenere il modello gestibile e riduce il numero di connessioni da esaminare. Clicca il pulsante continua per passare alla categoria successiva.",
       "no": "Du har nådd maksimalt 3 elementer for denne kategorien. Denne grensen hjelper med å holde modellen håndterbar og reduserer antall forbindelser å gjennomgå. Klikk på fortsett-knappen for å gå til neste kategori.",
       "el": "Έχετε φτάσει το μέγιστο των 3 στοιχείων για αυτή την κατηγορία. Αυτό το όριο βοηθά να διατηρήσετε το μοντέλο σας διαχειρίσιμο και μειώνει τον αριθμό των συνδέσεων προς επανεξέταση. Κάντε κλικ στο κουμπί συνέχεια για να προχωρήσετε στην επόμενη κατηγορία."
-    },
-    "modules.isa.ai_assistant.min_elements_required": {
-      "en": "At least 2 elements required",
-      "es": "Se requieren al menos 2 elementos",
-      "fr": "Au moins 2 éléments requis",
-      "de": "Mindestens 2 Elemente erforderlich",
-      "lt": "Reikalingi bent 2 elementai",
-      "pt": "Pelo menos 2 elementos necessários",
-      "it": "Richiesti almeno 2 elementi",
-      "no": "Minst 2 elementer kreves",
-      "el": "Απαιτούνται τουλάχιστον 2 στοιχεία"
     },
     "modules.isa.ai_assistant.need_more_elements": {
       "en": "Please add at least 2 elements to this category before continuing. Having only 1 element will prevent the system from detecting feedback loops, which are essential for analysis.",

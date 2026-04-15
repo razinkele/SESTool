@@ -308,28 +308,6 @@
       "no": "Skriv inn elementnavn...",
       "el": "Εισάγετε το όνομα του στοιχείου..."
     },
-    "modules.cld.visualization.controls": {
-      "en": "Controls",
-      "es": "Controles",
-      "fr": "Contrôles",
-      "de": "Steuerung",
-      "lt": "Valdymas",
-      "pt": "Controles",
-      "it": "Controlli",
-      "no": "Kontroller",
-      "el": "Έλεγχοι"
-    },
-    "modules.cld.visualization.visualisation_controls": {
-      "en": "Visualisation Controls",
-      "es": "Controles de Visualización",
-      "fr": "Contrôles de Visualisation",
-      "de": "Visualisierungssteuerung",
-      "lt": "Vizualizacijos valdymas",
-      "pt": "Controles de Visualização",
-      "it": "Controlli di Visualizzazione",
-      "no": "Visualiseringskontroller",
-      "el": "Ρυθμίσεις οπτικοποίησης"
-    },
     "modules.cld.visualization.visualization_controls": {
       "en": "Visualization Controls",
       "es": "Controles de Visualización",

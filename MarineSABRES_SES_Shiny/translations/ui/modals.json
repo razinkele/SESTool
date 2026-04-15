@@ -44,17 +44,6 @@
       "no": "Maksimalt antall elementer per DAPSIWRM-kategori",
       "el": "Μέγιστα στοιχεία ανά κατηγορία DAPSIWRM"
     },
-    "ui.modals.max_elements_hint": {
-      "en": "Controls how many elements can be added per category in beginner mode (AI assistant and templates).",
-      "es": "Controla cuántos elementos se pueden agregar por categoría en modo principiante.",
-      "fr": "Contrôle le nombre d'éléments pouvant être ajoutés par catégorie en mode débutant.",
-      "de": "Steuert, wie viele Elemente pro Kategorie im Anfängermodus hinzugefügt werden können.",
-      "lt": "Kontroliuoja, kiek elementų galima pridėti kiekvienai kategorijai pradedančiojo režime.",
-      "pt": "Controla quantos elementos podem ser adicionados por categoria no modo iniciante.",
-      "it": "Controlla quanti elementi possono essere aggiunti per categoria in modalità principiante.",
-      "no": "Kontrollerer hvor mange elementer som kan legges til per kategori i nybegynnermodus.",
-      "el": "Ελέγχει πόσα στοιχεία μπορούν να προστεθούν ανά κατηγορία σε λειτουργία αρχαρίου."
-    },
     "ui.modals.beginner_friendly_guides": {
       "en": "Beginner-Friendly Guides",
       "es": "Guías para Principiantes",
@@ -76,39 +65,6 @@
       "it": "Manuali Utente Completi",
       "no": "Fullstendige brukermanualer",
       "el": "Πλήρη Εγχειρίδια Χρήστη"
-    },
-    "ui.modals.confirm_start_over": {
-      "en": "Confirm Start Over",
-      "es": "Confirmar empezar de nuevo",
-      "fr": "Confirmer le redémarrage",
-      "de": "Bestätigen Sie „Neu starten“.",
-      "lt": "Patvirtinkite Pradėti iš naujo",
-      "pt": "Confirme o recomeço",
-      "it": "Conferma Ricomincia",
-      "no": "Bekreft start på nytt",
-      "el": "Επιβεβαίωση Νέας Έναρξης"
-    },
-    "ui.modals.confirm_title": {
-      "en": "Confirm Action",
-      "es": "Confirmar Acción",
-      "fr": "Confirmer l'Action",
-      "de": "Aktion Bestätigen",
-      "lt": "Patvirtinti veiksmą",
-      "pt": "Confirmar Ação",
-      "it": "Conferma Azione",
-      "no": "Bekreft handling",
-      "el": "Επιβεβαίωση Ενέργειας"
-    },
-    "ui.modals.delete_confirm_message": {
-      "en": "Are you sure you want to delete this item? This action cannot be undone.",
-      "es": "¿Está seguro de que desea eliminar este elemento? Esta acción no se puede deshacer.",
-      "fr": "Êtes-vous sûr de vouloir supprimer cet élément? Cette action ne peut pas être annulée.",
-      "de": "Sind Sie sicher, dass Sie dieses Element löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
-      "lt": "Ar tikrai norite ištrinti šį elementą? Šio veiksmo negalima atšaukti.",
-      "pt": "Tem certeza de que deseja excluir este item? Esta ação não pode ser desfeita.",
-      "it": "Sei sicuro di voler eliminare questo elemento? Questa azione non può essere annullata.",
-      "no": "Er du sikker på at du vil slette dette elementet? Denne handlingen kan ikke angres.",
-      "el": "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το στοιχείο; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
     },
     "ui.modals.download_user_manuals_guides": {
       "en": "Download User Manuals & Guides",
@@ -143,17 +99,6 @@
       "no": "Engelsk manual",
       "el": "Αγγλικό Εγχειρίδιο"
     },
-    "ui.modals.error_title": {
-      "en": "Error",
-      "es": "Error",
-      "fr": "Erreur",
-      "de": "Fehler",
-      "lt": "Klaida",
-      "pt": "Erro",
-      "it": "Errore",
-      "no": "Feil",
-      "el": "Σφάλμα"
-    },
     "ui.modals.expert": {
       "en": "Expert",
       "es": "Experto",
@@ -187,39 +132,6 @@
       "no": "HTML-versjon",
       "el": "Έκδοση HTML"
     },
-    "ui.modals.info_title": {
-      "en": "Information",
-      "es": "Información",
-      "fr": "Information",
-      "de": "Information",
-      "lt": "Informacija",
-      "pt": "Informação",
-      "it": "Informazione",
-      "no": "Informasjon",
-      "el": "Πληροφορίες"
-    },
-    "ui.modals.load_project_message": {
-      "en": "Load a previously saved project",
-      "es": "Cargar un proyecto guardado anteriormente",
-      "fr": "Charger un projet précédemment enregistré",
-      "de": "Laden Sie ein zuvor gespeichertes Projekt",
-      "lt": "Įkelti anksčiau išsaugotą projektą",
-      "pt": "Carregar um projeto guardado anteriormente",
-      "it": "Carica un progetto salvato in precedenza",
-      "no": "Last inn et tidligere lagret prosjekt",
-      "el": "Φόρτωση ενός προηγουμένως αποθηκευμένου έργου"
-    },
-    "ui.modals.load_project_title": {
-      "en": "Load Project",
-      "es": "Cargar Proyecto",
-      "fr": "Charger le Projet",
-      "de": "Projekt Laden",
-      "lt": "Įkelti projektą",
-      "pt": "Carregar Projeto",
-      "it": "Carica Progetto",
-      "no": "Last inn prosjekt",
-      "el": "Φόρτωση Έργου"
-    },
     "ui.modals.pdf_version": {
       "en": "PDF Version",
       "es": "Versión PDF",
@@ -242,39 +154,6 @@
       "no": "Anbefalt for nye brukere",
       "el": "Συνιστάται για Νέους Χρήστες"
     },
-    "ui.modals.save_project_message": {
-      "en": "Save your current project data, including all PIMS, ISA entries, and analysis results",
-      "es": "Guarde los datos de su proyecto actual, incluidas todas las entradas PIMS, ISA y los resultados de análisis",
-      "fr": "Enregistrez les données de votre projet actuel, y compris toutes les entrées PIMS, ISA et les résultats d'analyse",
-      "de": "Speichern Sie Ihre aktuellen Projektdaten, einschließlich aller PIMS-, ISA-Einträge und Analyseergebnisse",
-      "lt": "Išsaugokite dabartinio projekto duomenis, įskaitant visus PIMS, ISA įrašus ir analizės rezultatus",
-      "pt": "Guarde os dados do seu projeto atual, incluindo todas as entradas PIMS, ISA e resultados de análise",
-      "it": "Salva i dati del progetto corrente, incluse tutte le voci PIMS, ISA e i risultati dell'analisi",
-      "no": "Lagre gjeldende prosjektdata, inkludert alle PIMS-, ISA-oppføringer og analyseresultater",
-      "el": "Αποθηκεύστε τα τρέχοντα δεδομένα του έργου σας, συμπεριλαμβανομένων όλων των καταχωρίσεων PIMS, ISA και των αποτελεσμάτων ανάλυσης"
-    },
-    "ui.modals.save_project_title": {
-      "en": "Save Project",
-      "es": "Guardar Proyecto",
-      "fr": "Enregistrer le Projet",
-      "de": "Projekt Speichern",
-      "lt": "Išsaugoti projektą",
-      "pt": "Salvar Projeto",
-      "it": "Salva Progetto",
-      "no": "Lagre prosjekt",
-      "el": "Αποθήκευση Έργου"
-    },
-    "ui.modals.scenarioconfirmdelete": {
-      "en": "scenario_confirm_delete",
-      "es": "confirmar_eliminar_escenario",
-      "fr": "confirmer_suppression_scénario",
-      "de": "Szenario_Löschen_Bestätigen",
-      "lt": "patvirtinti_scenarijaus_ištrynimą",
-      "pt": "confirmar_exclusão_cenário",
-      "it": "conferma_eliminazione_scenario",
-      "no": "bekreft_sletting_av_scenario",
-      "el": "επιβεβαίωση_διαγραφής_σεναρίου"
-    },
     "ui.modals.select_your_experience_level_with_marine_ecosystem_modeling": {
       "en": "Select your experience level with marine ecosystem modeling:",
       "es": "Seleccione su nivel de experiencia con modelado de ecosistemas marinos:",
@@ -285,28 +164,6 @@
       "it": "Seleziona il tuo livello di esperienza con la modellazione degli ecosistemi marini:",
       "no": "Velg ditt erfaringsnivå med modellering av marine økosystemer:",
       "el": "Επιλέξτε το επίπεδο εμπειρίας σας στη μοντελοποίηση θαλάσσιων οικοσυστημάτων:"
-    },
-    "ui.modals.session_restored_message": {
-      "en": "A previous session was found. Click 'Load Saved' to restore it.",
-      "es": "Se encontró una sesión anterior. Haga clic en 'Cargar Guardado' para restaurarla.",
-      "fr": "Une session précédente a été trouvée. Cliquez sur 'Charger Enregistré' pour la restaurer.",
-      "de": "Eine vorherige Sitzung wurde gefunden. Klicken Sie auf 'Gespeichert Laden', um sie wiederherzustellen.",
-      "lt": "Rasta ankstesnė sesija. Spustelėkite 'Įkelti išsaugotą', kad ją atkurtumėte.",
-      "pt": "Uma sessão anterior foi encontrada. Clique em 'Carregar Salvo' para restaurá-la.",
-      "it": "È stata trovata una sessione precedente. Fai clic su 'Carica Salvato' per ripristinarla.",
-      "no": "En tidligere økt ble funnet. Klikk «Last inn lagret» for å gjenopprette den.",
-      "el": "Βρέθηκε μια προηγούμενη συνεδρία. Κάντε κλικ στο «Φόρτωση αποθηκευμένου» για να την επαναφέρετε."
-    },
-    "ui.modals.session_restored_title": {
-      "en": "Session Restored",
-      "es": "Sesión Restaurada",
-      "fr": "Session Restaurée",
-      "de": "Sitzung Wiederhergestellt",
-      "lt": "Sesija atkurta",
-      "pt": "Sessão Restaurada",
-      "it": "Sessione Ripristinata",
-      "no": "Økt gjenopprettet",
-      "el": "Συνεδρία Επαναφέρθηκε"
     },
     "ui.modals.simplified_interface_for_first_time_users_shows_essential_tools_only": {
       "en": "Simplified interface for first-time users. Shows essential tools only.",
@@ -330,17 +187,6 @@
       "no": "Standard grensesnitt for vanlige brukere. Viser de fleste verktøy og funksjoner.",
       "el": "Τυπική διεπαφή για τακτικούς χρήστες. Εμφανίζει τα περισσότερα εργαλεία και λειτουργίες."
     },
-    "ui.modals.success_title": {
-      "en": "Success",
-      "es": "Éxito",
-      "fr": "Succès",
-      "de": "Erfolg",
-      "lt": "Sėkmė",
-      "pt": "Sucesso",
-      "it": "Successo",
-      "no": "Suksess",
-      "el": "Επιτυχία"
-    },
     "ui.modals.the_application_will_reload_to_apply_the_new_user_experience_level": {
       "en": "The application will reload to apply the new user experience level.",
       "es": "La aplicación se recargará para aplicar el nuevo nivel de experiencia del usuario.",
@@ -352,28 +198,6 @@
       "no": "Applikasjonen vil lastes på nytt for å bruke det nye brukeropplevelsesnivået.",
       "el": "Η εφαρμογή θα επαναφορτωθεί για να εφαρμόσει το νέο επίπεδο εμπειρίας χρήστη."
     },
-    "ui.modals.unsaved_changes_message": {
-      "en": "You have unsaved changes. Do you want to save before proceeding?",
-      "es": "Tiene cambios sin guardar. ¿Desea guardar antes de continuar?",
-      "fr": "Vous avez des modifications non enregistrées. Voulez-vous enregistrer avant de continuer?",
-      "de": "Sie haben nicht gespeicherte Änderungen. Möchten Sie speichern, bevor Sie fortfahren?",
-      "lt": "Turite neišsaugotų pakeitimų. Ar norite išsaugoti prieš tęsiant?",
-      "pt": "Você tem alterações não salvas. Deseja salvar antes de prosseguir?",
-      "it": "Hai modifiche non salvate. Vuoi salvare prima di procedere?",
-      "no": "Du har ulagrede endringer. Vil du lagre før du fortsetter?",
-      "el": "Έχετε μη αποθηκευμένες αλλαγές. Θέλετε να αποθηκεύσετε πριν συνεχίσετε;"
-    },
-    "ui.modals.unsaved_changes_title": {
-      "en": "Unsaved Changes",
-      "es": "Cambios no Guardados",
-      "fr": "Modifications Non Enregistrées",
-      "de": "Nicht Gespeicherte Änderungen",
-      "lt": "Neišsaugoti pakeitimai",
-      "pt": "Alterações Não Salvas",
-      "it": "Modifiche Non Salvate",
-      "no": "Ulagrede endringer",
-      "el": "Μη Αποθηκευμένες Αλλαγές"
-    },
     "ui.modals.view_online": {
       "en": "View online",
       "es": "Ver en línea",
@@ -384,17 +208,6 @@
       "it": "Visualizza online",
       "no": "Se på nett",
       "el": "Προβολή στο διαδίκτυο"
-    },
-    "ui.modals.warning_title": {
-      "en": "Warning",
-      "es": "Advertencia",
-      "fr": "Avertissement",
-      "de": "Warnung",
-      "lt": "Įspėjimas",
-      "pt": "Aviso",
-      "it": "Avviso",
-      "no": "Advarsel",
-      "el": "Προειδοποίηση"
     },
     "ui.modals.local_storage_settings": {
       "en": "Local Storage Settings",
@@ -473,17 +286,6 @@
       "no": "Koble fra",
       "el": "Αποσύνδεση"
     },
-    "ui.modals.connected_to_folder": {
-      "en": "Connected to:",
-      "es": "Conectado a:",
-      "fr": "Connecté à:",
-      "de": "Verbunden mit:",
-      "lt": "Prijungta prie:",
-      "pt": "Conectado a:",
-      "it": "Connesso a:",
-      "no": "Koblet til:",
-      "el": "Συνδεδεμένο σε:"
-    },
     "ui.modals.no_folder_selected": {
       "en": "No folder selected",
       "es": "Ninguna carpeta seleccionada",
@@ -494,17 +296,6 @@
       "it": "Nessuna cartella selezionata",
       "no": "Ingen mappe valgt",
       "el": "Δεν έχει επιλεγεί φάκελος"
-    },
-    "ui.modals.saved_projects": {
-      "en": "Saved Projects",
-      "es": "Proyectos Guardados",
-      "fr": "Projets Enregistrés",
-      "de": "Gespeicherte Projekte",
-      "lt": "Išsaugoti Projektai",
-      "pt": "Projetos Salvos",
-      "it": "Progetti Salvati",
-      "no": "Lagrede Prosjekter",
-      "el": "Αποθηκευμένα Έργα"
     },
     "ui.modals.no_saved_projects": {
       "en": "No saved projects in this folder",

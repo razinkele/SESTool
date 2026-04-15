@@ -11,17 +11,6 @@
     "el"
   ],
   "translation": {
-    "modules.entry_point.browse_tools": {
-      "en": "Browse Tools",
-      "es": "Explorar Herramientas",
-      "fr": "Parcourir les Outils",
-      "de": "Werkzeuge Durchsuchen",
-      "lt": "Naršyti priemones",
-      "pt": "Explorar Ferramentas",
-      "it": "Esplora Strumenti",
-      "no": "Bla gjennom verktøy",
-      "el": "Περιήγηση εργαλείων"
-    },
     "modules.entry_point.build_your_ses_model": {
       "en": "Build your SES model:",
       "es": "Construya su modelo SES:",
@@ -275,17 +264,6 @@
       "no": "Veiledet vei",
       "el": "Καθοδηγούμενη διαδρομή"
     },
-    "modules.entry_point.i_know_what_tool_i_need": {
-      "en": "I know what tool I need",
-      "es": "Sé qué herramienta necesito",
-      "fr": "Je sais quel outil j'ai besoin",
-      "de": "Ich weiß, welches Werkzeug ich brauche",
-      "lt": "Žinau, kokios priemonės man reikia",
-      "pt": "Sei qual ferramenta preciso",
-      "it": "So quale strumento mi serve",
-      "no": "Jeg vet hvilket verktøy jeg trenger",
-      "el": "Ξέρω ποιο εργαλείο χρειάζομαι"
-    },
     "modules.entry_point.navigating_to_s": {
       "en": "Navigating to %s...",
       "es": "Navegando a %s...",
@@ -351,17 +329,6 @@
       "it": "Procedi per specificare attività e rischi",
       "no": "Fortsett for å spesifisere aktiviteter og risikoer",
       "el": "Προχωρήστε για να καθορίσετε δραστηριότητες και κινδύνους"
-    },
-    "modules.entry_point.quick_access": {
-      "en": "Quick Access",
-      "es": "Acceso Rápido",
-      "fr": "Accès Rapide",
-      "de": "Schnellzugriff",
-      "lt": "Greita prieiga",
-      "pt": "Acesso Rápido",
-      "it": "Accesso Rapido",
-      "no": "Hurtigtilgang",
-      "el": "Γρήγορη πρόσβαση"
     },
     "modules.entry_point.quick_start_option": {
       "en": "Quick start option:",
@@ -737,17 +704,6 @@
       "no": "Velg behov",
       "el": "Επιλέξτε ανάγκη"
     },
-    "modules.entry_point.ep_notify_use_main_menu": {
-      "en": "Ep Notify Use Main Menu",
-      "es": "[ES] Ep Notify Use Main Menu",
-      "fr": "[FR] Ep Notify Use Main Menu",
-      "de": "[DE] Ep Notify Use Main Menu",
-      "lt": "[LT] Ep Notify Use Main Menu",
-      "pt": "[PT] Ep Notify Use Main Menu",
-      "it": "[IT] Ep Notify Use Main Menu",
-      "no": "Bruk hovedmenyen",
-      "el": "Χρησιμοποιήστε το κύριο μενού"
-    },
     "modules.entry_point.ep_priority_also_relevant": {
       "en": "Ep Priority Also Relevant",
       "es": "[ES] Ep Priority Also Relevant",
@@ -780,17 +736,6 @@
       "it": "[IT] Ep Priority Start Here",
       "no": "Start her",
       "el": "Ξεκινήστε εδώ"
-    },
-    "modules.entry_point.error_generating_pathway_report": {
-      "en": "Error Generating Pathway Report",
-      "es": "[ES] Error Generating Pathway Report",
-      "fr": "[FR] Error Generating Pathway Report",
-      "de": "[DE] Error Generating Pathway Report",
-      "lt": "[LT] Error Generating Pathway Report",
-      "pt": "[PT] Error Generating Pathway Report",
-      "it": "[IT] Error Generating Pathway Report",
-      "no": "Feil ved generering av veirapport",
-      "el": "Σφάλμα Generating Pathway Report"
     },
     "modules.response.measures.export": {
       "en": "Export Pathway Report",
@@ -1066,28 +1011,6 @@
       "it": "In base alle tue risposte, raccomanderemo gli strumenti e i metodi più appropriati per la tua specifica situazione di gestione marina.",
       "no": "Basert på svarene dine vil vi anbefale de mest passende verktøyene og metodene for din spesifikke marine forvaltningssituasjon.",
       "el": "Με βάση τις απαντήσεις σας, θα προτείνουμε τα πιο κατάλληλα εργαλεία και μεθόδους για τη συγκεκριμένη κατάστασή σας στη θαλάσσια διαχείριση."
-    },
-    "modules.entry_point.faq_started_answer_3": {
-      "en": "If you already know which tool you need, click",
-      "es": "Si ya sabe qué herramienta necesita, haga clic en",
-      "fr": "Si vous savez déjà quel outil vous avez besoin, cliquez sur",
-      "de": "Wenn Sie bereits wissen, welches Werkzeug Sie benötigen, klicken Sie auf",
-      "lt": "Jei jau žinote, kokios priemonės reikia, spustelėkite",
-      "pt": "Se já sabe qual ferramenta precisa, clique em",
-      "it": "Se sai già quale strumento ti serve, clicca su",
-      "no": "Hvis du allerede vet hvilket verktøy du trenger, klikk",
-      "el": "Εάν ξέρετε ήδη ποιο εργαλείο χρειάζεστε, κάντε κλικ"
-    },
-    "modules.entry_point.faq_started_answer_3_suffix": {
-      "en": "to browse all available tools directly.",
-      "es": "para explorar todas las herramientas disponibles directamente.",
-      "fr": "pour parcourir directement tous les outils disponibles.",
-      "de": "um alle verfügbaren Werkzeuge direkt zu durchsuchen.",
-      "lt": "kad tiesiogiai naršytumėte visas prieinamas priemones.",
-      "pt": "para explorar todas as ferramentas disponíveis diretamente.",
-      "it": "per esplorare direttamente tutti gli strumenti disponibili.",
-      "no": "for å bla gjennom alle tilgjengelige verktøy direkte.",
-      "el": "για να περιηγηθείτε απευθείας σε όλα τα διαθέσιμα εργαλεία."
     },
     "modules.entry_point.faq_expertise_question": {
       "en": "Do I need technical expertise?",

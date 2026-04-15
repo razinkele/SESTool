@@ -55,17 +55,6 @@
       "no": "Avbryt",
       "el": "Ακύρωση"
     },
-    "common.buttons.clear": {
-      "en": "Clear",
-      "es": "Limpiar",
-      "fr": "Effacer",
-      "de": "Löschen",
-      "lt": "Išvalyti",
-      "pt": "Limpar",
-      "it": "Cancella",
-      "no": "Tøm",
-      "el": "Καθαρισμός"
-    },
     "common.buttons.close": {
       "en": "Close",
       "es": "Cerrar",
@@ -99,17 +88,6 @@
       "no": "Fortsett",
       "el": "Συνέχεια"
     },
-    "common.buttons.create": {
-      "en": "Create",
-      "es": "Crear",
-      "fr": "Créer",
-      "de": "Erstellen",
-      "lt": "Sukurti",
-      "pt": "Criar",
-      "it": "Crea",
-      "no": "Opprett",
-      "el": "Δημιουργία"
-    },
     "common.buttons.delete": {
       "en": "Delete",
       "es": "Eliminar",
@@ -121,50 +99,6 @@
       "no": "Slett",
       "el": "Διαγραφή"
     },
-    "common.buttons.download": {
-      "en": "Download",
-      "es": "Descargar",
-      "fr": "Télécharger",
-      "de": "Herunterladen",
-      "lt": "Atsisiųsti",
-      "pt": "Descarregar",
-      "it": "Scarica",
-      "no": "Last ned",
-      "el": "Λήψη"
-    },
-    "common.buttons.edit": {
-      "en": "Edit",
-      "es": "Editar",
-      "fr": "Modifier",
-      "de": "Bearbeiten",
-      "lt": "Redaguoti",
-      "pt": "Editar",
-      "it": "Modifica",
-      "no": "Rediger",
-      "el": "Επεξεργασία"
-    },
-    "common.buttons.export": {
-      "en": "Export",
-      "es": "Exportar",
-      "fr": "Exporter",
-      "de": "Exportieren",
-      "lt": "Eksportuoti",
-      "pt": "Exportar",
-      "it": "Esporta",
-      "no": "Eksporter",
-      "el": "Εξαγωγή"
-    },
-    "common.buttons.filter": {
-      "en": "Filter",
-      "es": "Filtrar",
-      "fr": "Filtrer",
-      "de": "Filtern",
-      "lt": "Filtruoti",
-      "pt": "Filtrar",
-      "it": "Filtra",
-      "no": "Filtrer",
-      "el": "Φίλτρο"
-    },
     "common.buttons.finish": {
       "en": "Finish",
       "es": "Finalizar",
@@ -175,28 +109,6 @@
       "it": "Fine",
       "no": "Fullfør",
       "el": "Ολοκλήρωση"
-    },
-    "common.buttons.help": {
-      "en": "Help",
-      "es": "Ayuda",
-      "fr": "Aide",
-      "de": "Hilfe",
-      "lt": "Pagalba",
-      "pt": "Ajuda",
-      "it": "Aiuto",
-      "no": "Hjelp",
-      "el": "Βοήθεια"
-    },
-    "common.buttons.import": {
-      "en": "Import",
-      "es": "Importar",
-      "fr": "Importer",
-      "de": "Importieren",
-      "lt": "Importuoti",
-      "pt": "Importar",
-      "it": "Importa",
-      "no": "Importer",
-      "el": "Εισαγωγή"
     },
     "common.buttons.load": {
       "en": "Load",
@@ -253,17 +165,6 @@
       "no": "Nei",
       "el": "Όχι"
     },
-    "common.buttons.previous": {
-      "en": "Previous",
-      "es": "Anterior",
-      "fr": "Précédent",
-      "de": "Zurück",
-      "lt": "Ankstesnis",
-      "pt": "Anterior",
-      "it": "Precedente",
-      "no": "Forrige",
-      "el": "Προηγούμενο"
-    },
     "common.buttons.refresh": {
       "en": "Refresh",
       "es": "Actualizar",
@@ -274,17 +175,6 @@
       "it": "Aggiorna",
       "no": "Oppdater",
       "el": "Ανανέωση"
-    },
-    "common.buttons.reject": {
-      "en": "Reject",
-      "es": "Rechazar",
-      "fr": "Rejeter",
-      "de": "Ablehnen",
-      "lt": "Atmesti",
-      "pt": "Rejeitar",
-      "it": "Rifiutare",
-      "no": "Avvis",
-      "el": "Απόρριψη"
     },
     "common.buttons.remove": {
       "en": "Remove",
@@ -352,17 +242,6 @@
       "no": "Last fra Lokal",
       "el": "Φόρτωση από Τοπικό"
     },
-    "common.buttons.search": {
-      "en": "Search",
-      "es": "Buscar",
-      "fr": "Rechercher",
-      "de": "Suchen",
-      "lt": "Ieškoti",
-      "pt": "Pesquisar",
-      "it": "Cerca",
-      "no": "Søk",
-      "el": "Αναζήτηση"
-    },
     "common.buttons.skip": {
       "en": "Skip",
       "es": "Saltar",
@@ -384,39 +263,6 @@
       "it": "Inizio",
       "no": "Start",
       "el": "Έναρξη"
-    },
-    "common.buttons.submit": {
-      "en": "Submit",
-      "es": "Enviar",
-      "fr": "Soumettre",
-      "de": "Absenden",
-      "lt": "Pateikti",
-      "pt": "Enviar",
-      "it": "Invia",
-      "no": "Send inn",
-      "el": "Υποβολή"
-    },
-    "common.buttons.update": {
-      "en": "Update",
-      "es": "Actualizar",
-      "fr": "Mettre à jour",
-      "de": "Aktualisieren",
-      "lt": "Atnaujinti",
-      "pt": "Atualizar",
-      "it": "Aggiorna",
-      "no": "Oppdater",
-      "el": "Ενημέρωση"
-    },
-    "common.buttons.upload": {
-      "en": "Upload",
-      "es": "Subir",
-      "fr": "Téléverser",
-      "de": "Hochladen",
-      "lt": "Įkelti",
-      "pt": "Carregar",
-      "it": "Carica",
-      "no": "Last opp",
-      "el": "Μεταφόρτωση"
     },
     "common.buttons.yes": {
       "en": "Yes",

@@ -77,17 +77,6 @@
       "no": "Eksempelfil ikke funnet på:",
       "el": "Το αρχείο παραδείγματος δεν βρέθηκε:"
     },
-    "modules.import.data.error_loading_sample": {
-      "en": "Error loading sample file:",
-      "es": "Error al cargar el archivo de ejemplo:",
-      "fr": "Erreur lors du chargement du fichier d'exemple :",
-      "de": "Fehler beim Laden der Beispieldatei:",
-      "lt": "Klaida įkeliant pavyzdinį failą:",
-      "pt": "Erro ao carregar o arquivo de exemplo:",
-      "it": "Errore nel caricamento del file di esempio:",
-      "no": "Feil ved lasting av eksempelfil:",
-      "el": "Σφάλμα φόρτωσης αρχείου παραδείγματος:"
-    },
     "modules.import.data.invalid_mime_type": {
       "en": "Invalid file type detected: %s - Expected an Excel file (.xlsx or .xls)",
       "es": "Tipo de archivo no válido: %s - Se esperaba un archivo Excel (.xlsx o .xls)",
@@ -120,17 +109,6 @@
       "it": "File caricato con successo!",
       "no": "Fil lastet opp!",
       "el": "Το αρχείο μεταφορτώθηκε επιτυχώς!"
-    },
-    "modules.import.data.error_reading_file": {
-      "en": "Error reading Excel file:",
-      "es": "Error al leer el archivo Excel:",
-      "fr": "Erreur lors de la lecture du fichier Excel :",
-      "de": "Fehler beim Lesen der Excel-Datei:",
-      "lt": "Klaida skaitant Excel failą:",
-      "pt": "Erro ao ler o arquivo Excel:",
-      "it": "Errore nella lettura del file Excel:",
-      "no": "Feil ved lesing av Excel-fil:",
-      "el": "Σφάλμα ανάγνωσης αρχείου Excel:"
     },
     "modules.import.data.validation_warnings": {
       "en": "Validation Warnings:",

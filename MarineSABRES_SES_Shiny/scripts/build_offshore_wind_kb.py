@@ -2489,3 +2489,30 @@ if __name__ == "__main__":
             print(f"  {ctx_name}: INVALID transitions: {set(invalid)}")
         else:
             print(f"  {ctx_name}: All {len(ctx['connections'])} connections valid ✓")
+
+    # Validate orphan elements (elements with no connections)
+    CATEGORY_KEYS = ['drivers', 'activities', 'pressures', 'states', 'impacts', 'welfare', 'responses']
+    print("\nOrphan element validation:")
+    total_orphans = 0
+    for ctx_name, ctx in kb['contexts'].items():
+        all_elements = set()
+        for cat in CATEGORY_KEYS:
+            for elem in ctx.get(cat, []):
+                all_elements.add(elem['name'])
+
+        connected = set()
+        for c in ctx.get('connections', []):
+            connected.add(c['from'])
+            connected.add(c['to'])
+
+        orphans = all_elements - connected
+        total_orphans += len(orphans)
+        if orphans:
+            print(f"  {ctx_name}: {len(orphans)} orphan element(s): {sorted(orphans)}")
+        else:
+            print(f"  {ctx_name}: No orphans ✓")
+
+    if total_orphans > 0:
+        print(f"\n  WARNING: {total_orphans} total orphan element(s) found across all contexts.")
+        print("  Orphan elements appear in categories but have no connections.")
+        print("  Consider adding connections or removing unused elements.")

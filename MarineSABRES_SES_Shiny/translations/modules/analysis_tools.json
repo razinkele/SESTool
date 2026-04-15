@@ -726,17 +726,6 @@
       "no": "Last ned nettverksmetrikker",
       "el": "Λήψη Δίκτυο Μετρικές"
     },
-    "modules.analysis.network.error_calculating_metrics": {
-      "en": "Error calculating metrics:",
-      "es": "Error al calcular métricas:",
-      "fr": "Erreur lors du calcul des métriques:",
-      "de": "Fehler beim Berechnen von Metriken:",
-      "lt": "Klaida skaičiuojant metrikos:",
-      "pt": "Erro ao calcular métricas:",
-      "it": "Errore nel calcolo delle metriche:",
-      "no": "Feil ved beregning av metrikker:",
-      "el": "Σφάλμα calculating metrics:"
-    },
     "modules.analysis.network.metrics_used": {
       "en": "Metrics Used:",
       "es": "Métricas Utilizadas:",
@@ -956,17 +945,6 @@
       "it": "[IT] Analysis Data Cleared",
       "no": "Analysedata slettet",
       "el": "Ανάλυση Δεδομένα Cleared"
-    },
-    "modules.analysis.common.analysis_error_loading_csv": {
-      "en": "Analysis Error Loading Csv",
-      "es": "[ES] Analysis Error Loading Csv",
-      "fr": "[FR] Analysis Error Loading Csv",
-      "de": "[DE] Analysis Error Loading Csv",
-      "lt": "[LT] Analysis Error Loading Csv",
-      "pt": "[PT] Analysis Error Loading Csv",
-      "it": "[IT] Analysis Error Loading Csv",
-      "no": "Feil ved lasting av analyse-CSV",
-      "el": "Ανάλυση Σφάλμα Φόρτωση Csv"
     },
     "modules.analysis.common.analysis_no_graph_data": {
       "en": "Analysis No Graph Data",

@@ -11,61 +11,6 @@
     "el"
   ],
   "translation": {
-    "modules.workflow_stepper.step_get_started": {
-      "en": "Get Started",
-      "es": "Comenzar",
-      "fr": "Commencer",
-      "de": "Loslegen",
-      "lt": "Pradžia",
-      "pt": "Começar",
-      "it": "Inizia",
-      "no": "Kom i gang",
-      "el": "Ξεκινήστε"
-    },
-    "modules.workflow_stepper.step_create_ses": {
-      "en": "Create SES",
-      "es": "Crear SES",
-      "fr": "Créer SES",
-      "de": "SES erstellen",
-      "lt": "Sukurti SES",
-      "pt": "Criar SES",
-      "it": "Crea SES",
-      "no": "Opprett SES",
-      "el": "Δημιουργία SES"
-    },
-    "modules.workflow_stepper.step_visualize": {
-      "en": "Visualize",
-      "es": "Visualizar",
-      "fr": "Visualiser",
-      "de": "Visualisieren",
-      "lt": "Vizualizuoti",
-      "pt": "Visualizar",
-      "it": "Visualizza",
-      "no": "Visualiser",
-      "el": "Οπτικοποίηση"
-    },
-    "modules.workflow_stepper.step_analyze": {
-      "en": "Analyze",
-      "es": "Analizar",
-      "fr": "Analyser",
-      "de": "Analysieren",
-      "lt": "Analizuoti",
-      "pt": "Analisar",
-      "it": "Analizza",
-      "no": "Analyser",
-      "el": "Ανάλυση"
-    },
-    "modules.workflow_stepper.step_report": {
-      "en": "Report",
-      "es": "Informe",
-      "fr": "Rapport",
-      "de": "Bericht",
-      "lt": "Ataskaita",
-      "pt": "Relatório",
-      "it": "Report",
-      "no": "Rapport",
-      "el": "Αναφορά"
-    },
     "modules.workflow_stepper.aria_label": {
       "en": "Workflow progress",
       "es": "Progreso del flujo de trabajo",

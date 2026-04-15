@@ -396,50 +396,6 @@
       "no": "Rapport åpnet i et nytt vindu!",
       "el": "Η αναφορά άνοιξε σε νέο παράθυρο!"
     },
-    "modules.prepare.report.error_generating": {
-      "en": "Error generating report:",
-      "es": "Error al generar el informe:",
-      "fr": "Erreur lors de la génération du rapport:",
-      "de": "Fehler beim Erstellen des Berichts:",
-      "lt": "Klaida generuojant ataskaitą:",
-      "pt": "Erro ao gerar o relatório:",
-      "it": "Errore nella generazione del rapporto:",
-      "no": "Feil ved generering av rapport:",
-      "el": "Σφάλμα κατά τη δημιουργία αναφοράς:"
-    },
-    "modules.prepare.report.error_pdf": {
-      "en": "Error generating PDF report:",
-      "es": "Error al generar el informe PDF:",
-      "fr": "Erreur lors de la génération du rapport PDF:",
-      "de": "Fehler beim Erstellen des PDF-Berichts:",
-      "lt": "Klaida generuojant PDF ataskaitą:",
-      "pt": "Erro ao gerar o relatório PDF:",
-      "it": "Errore nella generazione del rapporto PDF:",
-      "no": "Feil ved generering av PDF-rapport:",
-      "el": "Σφάλμα κατά τη δημιουργία αναφοράς PDF:"
-    },
-    "modules.prepare.report.error_word": {
-      "en": "Error generating Word report:",
-      "es": "Error al generar el informe Word:",
-      "fr": "Erreur lors de la génération du rapport Word:",
-      "de": "Fehler beim Erstellen des Word-Berichts:",
-      "lt": "Klaida generuojant Word ataskaitą:",
-      "pt": "Erro ao gerar o relatório Word:",
-      "it": "Errore nella generazione del rapporto Word:",
-      "no": "Feil ved generering av Word-rapport:",
-      "el": "Σφάλμα κατά τη δημιουργία αναφοράς Word:"
-    },
-    "modules.prepare.report.error_ppt": {
-      "en": "Error generating PowerPoint report:",
-      "es": "Error al generar el informe PowerPoint:",
-      "fr": "Erreur lors de la génération du rapport PowerPoint:",
-      "de": "Fehler beim Erstellen des PowerPoint-Berichts:",
-      "lt": "Klaida generuojant PowerPoint ataskaitą:",
-      "pt": "Erro ao gerar o relatório PowerPoint:",
-      "it": "Errore nella generazione del rapporto PowerPoint:",
-      "no": "Feil ved generering av PowerPoint-rapport:",
-      "el": "Σφάλμα κατά τη δημιουργία αναφοράς PowerPoint:"
-    },
     "modules.prepare.report.pdf_not_available": {
       "en": "PDF Generation Not Available",
       "es": "Generación de PDF No Disponible",

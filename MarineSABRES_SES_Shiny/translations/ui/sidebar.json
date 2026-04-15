@@ -66,17 +66,6 @@
       "no": "Velg metode",
       "el": "Επιλέξτε Method"
     },
-    "ui.sidebar.cld_visualization": {
-      "en": "CLD Visualization",
-      "es": "Visualización CLD",
-      "fr": "Visualisation CLD",
-      "de": "CLD-Visualisierung",
-      "lt": "CLD vizualizacija",
-      "pt": "Visualização CLD",
-      "it": "Visualizzazione CLD",
-      "no": "CLD-visualisering",
-      "el": "CLD Οπτικοποίηση"
-    },
     "ui.sidebar.create_ses": {
       "en": "Create SES",
       "es": "Crear SES",
@@ -110,17 +99,6 @@
       "no": "Dashbord",
       "el": "Πίνακας ελέγχου"
     },
-    "ui.sidebar.entry_point": {
-      "en": "Entry Point",
-      "es": "Punto de Entrada",
-      "fr": "Point d'Entrée",
-      "de": "Einstiegspunkt",
-      "lt": "Įėjimo taškas",
-      "pt": "Ponto de Entrada",
-      "it": "Punto di Ingresso",
-      "no": "Innganspunkt",
-      "el": "Σημείο Εισόδου"
-    },
     "ui.sidebar.evaluation": {
       "en": "Evaluation",
       "es": "Evaluación",
@@ -131,17 +109,6 @@
       "it": "Valutazione",
       "no": "Evaluering",
       "el": "Αξιολόγηση"
-    },
-    "ui.sidebar.export_data": {
-      "en": "Export Data",
-      "es": "Exportar Datos",
-      "fr": "Exporter les Données",
-      "de": "Daten Exportieren",
-      "lt": "Eksportuoti duomenis",
-      "pt": "Exportar Dados",
-      "it": "Esporta Dati",
-      "no": "Eksporter data",
-      "el": "Εξαγωγή Δεδομένων"
     },
     "ui.sidebar.getting_started": {
       "en": "Getting Started",
@@ -164,17 +131,6 @@
       "it": "Punto di ingresso guidato per trovare gli strumenti giusti per le tue esigenze di gestione marina",
       "no": "Veiledet innganspunkt for å finne de rette verktøyene for dine marine forvaltningsbehov",
       "el": "Καθοδηγούμενο σημείο εισόδου για να βρείτε τα κατάλληλα εργαλεία για τις ανάγκες θαλάσσιας διαχείρισής σας"
-    },
-    "ui.sidebar.import_data": {
-      "en": "Import Data",
-      "es": "Importar Datos",
-      "fr": "Importer des Données",
-      "de": "Daten Importieren",
-      "lt": "Importuoti duomenis",
-      "pt": "Importar Dados",
-      "it": "Importa Dati",
-      "no": "Importer data",
-      "el": "Εισαγωγή Δεδομένων"
     },
     "ui.sidebar.leverage_point_analysis": {
       "en": "Leverage Point Analysis",
@@ -252,28 +208,6 @@
       "it": "Rilevamento Cicli",
       "no": "Sløyfedeteksjon",
       "el": "Ανίχνευση βρόχων"
-    },
-    "ui.sidebar.navigate_to_": {
-      "en": "Navigate to ",
-      "es": "Navigate to",
-      "fr": "Navigate to",
-      "de": "Navigate to",
-      "lt": "Navigate to",
-      "pt": "Navigate to",
-      "it": "Navigate to",
-      "no": "Naviger til ",
-      "el": "Μετάβαση σε "
-    },
-    "ui.sidebar.navigating_to_s": {
-      "en": "Navigating to %s...",
-      "es": "Navegando a %s...",
-      "fr": "Navigation vers %s...",
-      "de": "Navigiere zu %s...",
-      "lt": "Naviguojama į %s...",
-      "pt": "Navegando para %s...",
-      "it": "Navigando verso %s...",
-      "no": "Navigerer til %s...",
-      "el": "Μετάβαση σε %s..."
     },
     "ui.sidebar.network_metrics": {
       "en": "Network Metrics",
@@ -484,28 +418,6 @@
       "no": "Validering",
       "el": "Επικύρωση"
     },
-    "ui.sidebar.welcome": {
-      "en": "Welcome",
-      "es": "Bienvenida",
-      "fr": "Bienvenue",
-      "de": "Willkommen",
-      "lt": "Sveiki",
-      "pt": "Bem-vindo",
-      "it": "Benvenuto",
-      "no": "Velkommen",
-      "el": "Καλώς ήρθατε"
-    },
-    "ui.sidebar.tooltip.pims_module": {
-      "en": "Project Information Management System for planning and tracking your marine management initiatives",
-      "es": "Sistema de Gestión de Información de Proyectos para planificar y rastrear sus iniciativas de gestión marina",
-      "fr": "Système de Gestion de l'Information de Projet pour planifier et suivre vos initiatives de gestion marine",
-      "de": "Projektinformationsmanagementsystem zur Planung und Verfolgung Ihrer Meeresmanagement-Initiativen",
-      "lt": "Projekto informacijos valdymo sistema jūrų valdymo iniciatyvų planavimui ir stebėjimui",
-      "pt": "Sistema de Gestão de Informação de Projetos para planeamento e acompanhamento de iniciativas de gestão marinha",
-      "it": "Sistema di Gestione delle Informazioni di Progetto per pianificare e monitorare le iniziative di gestione marina",
-      "no": "Prosjektinformasjonsstyringssystem for planlegging og oppfølging av marine forvaltningsinitiativ",
-      "el": "Σύστημα Διαχείρισης Πληροφοριών Έργου για τον σχεδιασμό και την παρακολούθηση πρωτοβουλιών θαλάσσιας διαχείρισης"
-    },
     "ui.sidebar.tooltip.ai_guided_ses": {
       "en": "Guided question-based SES creation with AI assistance to help you build your model step by step",
       "es": "Creación de SES basada en preguntas guiadas con asistencia de IA para ayudarle a construir su modelo paso a paso",
@@ -528,17 +440,6 @@
       "no": "Start fra forhåndsbygde SES-maler for vanlige marine forvaltningsscenarier (forurensning, overfiske, turisme)",
       "el": "Ξεκινήστε από προκατασκευασμένα πρότυπα SES για κοινά σενάρια θαλάσσιας διαχείρισης (ρύπανση, υπεραλίευση, τουρισμός)"
     },
-    "ui.sidebar.tooltip.create_ses": {
-      "en": "Create your Social-Ecological System using structured methods: standard DAPSI(W)R(M) framework, AI guidance, or templates",
-      "es": "Cree su Sistema Socio-Ecológico utilizando métodos estructurados: marco DAPSI(W)R(M) estándar, orientación de IA o plantillas",
-      "fr": "Créez votre Système Socio-Écologique en utilisant des méthodes structurées : cadre DAPSI(W)R(M) standard, guidage IA ou modèles",
-      "de": "Erstellen Sie Ihr Sozial-Ökologisches System mit strukturierten Methoden: Standard-DAPSI(W)R(M)-Framework, KI-Anleitung oder Vorlagen",
-      "lt": "Sukurkite savo socialinę-ekologinę sistemą naudodami struktūrizuotus metodus: standartinę DAPSI(W)R(M) sistemą, AI vedimą arba šablonus",
-      "pt": "Crie seu Sistema Sócio-Ecológico usando métodos estruturados: estrutura DAPSI(W)R(M) padrão, orientação de IA ou modelos",
-      "it": "Crea il tuo Sistema Socio-Ecologico utilizzando metodi strutturati: framework DAPSI(W)R(M) standard, guida IA o modelli",
-      "no": "Opprett ditt sosial-økologiske system ved hjelp av strukturerte metoder: standard DAPSI(W)R(M)-rammeverk, AI-veiledning eller maler",
-      "el": "Δημιουργήστε το Κοινωνικο-Οικολογικό σας Σύστημα χρησιμοποιώντας δομημένες μεθόδους: τυπικό πλαίσιο DAPSI(W)R(M), καθοδήγηση AI ή πρότυπα"
-    },
     "ui.sidebar.tooltip.ses_visualization": {
       "en": "Interactive visualization of your Social-Ecological System network showing connections, feedback loops, and system structure",
       "es": "Visualización interactiva de su red de Sistema Socio-Ecológico mostrando conexiones, bucles de retroalimentación y estructura del sistema",
@@ -549,39 +450,6 @@
       "it": "Visualizzazione interattiva della rete del tuo Sistema Socio-Ecologico che mostra connessioni, cicli di feedback e struttura del sistema",
       "no": "Interaktiv visualisering av ditt sosial-økologiske systemnettverksom viser forbindelser, tilbakekoblingssløyfer og systemstruktur",
       "el": "Διαδραστική οπτικοποίηση του δικτύου του Κοινωνικο-Οικολογικού σας Συστήματος που δείχνει συνδέσεις, βρόχους ανάδρασης και δομή συστήματος"
-    },
-    "ui.sidebar.tooltip.analysis_tools_beginner": {
-      "en": "Essential network analysis tools for understanding feedback loops and identifying key intervention points in your SES",
-      "es": "Herramientas esenciales de análisis de red para comprender bucles de retroalimentación e identificar puntos clave de intervención en su SES",
-      "fr": "Outils d'analyse de réseau essentiels pour comprendre les boucles de rétroaction et identifier les points d'intervention clés dans votre SES",
-      "de": "Wesentliche Netzwerkanalyse-Tools zum Verständnis von Rückkopplungsschleifen und zur Identifizierung wichtiger Interventionspunkte in Ihrem SES",
-      "lt": "Pagrindiniai tinklo analizės įrankiai grįžtamojo ryšio ciklams suprasti ir svarbiausių intervencijos taškų nustatymui jūsų SES",
-      "pt": "Ferramentas essenciais de análise de rede para compreender ciclos de retroalimentação e identificar pontos-chave de intervenção no seu SES",
-      "it": "Strumenti essenziali di analisi di rete per comprendere i cicli di feedback e identificare i punti chiave di intervento nel tuo SES",
-      "no": "Essensielle nettverksanalyseverktøy for å forstå tilbakekoblingssløyfer og identifisere sentrale intervensjonspunkter i SES-en din",
-      "el": "Βασικά εργαλεία ανάλυσης δικτύου για την κατανόηση βρόχων ανάδρασης και τον εντοπισμό βασικών σημείων παρέμβασης στο SES σας"
-    },
-    "ui.sidebar.tooltip.analysis_tools_advanced": {
-      "en": "Advanced network analysis and metrics tools including centrality measures, BOT analysis, and model simplification techniques",
-      "es": "Herramientas avanzadas de análisis de red y métricas que incluyen medidas de centralidad, análisis BOT y técnicas de simplificación de modelos",
-      "fr": "Outils avancés d'analyse de réseau et de métriques incluant des mesures de centralité, analyse BOT et techniques de simplification de modèle",
-      "de": "Erweiterte Netzwerkanalyse- und Metrik-Tools einschließlich Zentralitätsmaßen, BOT-Analyse und Modellvereinfachungstechniken",
-      "lt": "Pažangūs tinklo analizės ir metrikų įrankiai, įskaitant centralizuotės matavimus, BOT analizę ir modelio supaprastinimo metodus",
-      "pt": "Ferramentas avançadas de análise de rede e métricas, incluindo medidas de centralidade, análise BOT e técnicas de simplificação de modelos",
-      "it": "Strumenti avanzati di analisi di rete e metriche incluse misure di centralità, analisi BOT e tecniche di semplificazione del modello",
-      "no": "Avanserte nettverksanalyse- og metrikkverktøy inkludert sentralitetsmål, BOT-analyse og modellforenklingsteknkker",
-      "el": "Προηγμένα εργαλεία ανάλυσης δικτύου και μετρικών, συμπεριλαμβανομένων μέτρων κεντρικότητας, ανάλυσης BOT και τεχνικών απλοποίησης μοντέλου"
-    },
-    "ui.sidebar.tooltip.response_validation": {
-      "en": "Design response measures, build management scenarios, and validate your model with stakeholder feedback",
-      "es": "Diseñe medidas de respuesta, construya escenarios de gestión y valide su modelo con comentarios de las partes interesadas",
-      "fr": "Concevez des mesures de réponse, construisez des scénarios de gestion et validez votre modèle avec les retours des parties prenantes",
-      "de": "Entwerfen Sie Reaktionsmaßnahmen, erstellen Sie Management-Szenarien und validieren Sie Ihr Modell mit Stakeholder-Feedback",
-      "lt": "Sukurkite atsako priemones, kurkite valdymo scenarijus ir patvirtinkite modelį su suinteresuotųjų šalių grįžtamuoju ryšiu",
-      "pt": "Projete medidas de resposta, construa cenários de gestão e valide seu modelo com feedback das partes interessadas",
-      "it": "Progetta misure di risposta, costruisci scenari di gestione e convalida il tuo modello con il feedback delle parti interessate",
-      "no": "Utform responstiltak, bygg forvaltningsscenarier og valider modellen din med tilbakemelding fra interessenter",
-      "el": "Σχεδιάστε μέτρα απόκρισης, δημιουργήστε σενάρια διαχείρισης και επικυρώστε το μοντέλο σας με ανατροφοδότηση ενδιαφερομένων"
     },
     "ui.sidebar.tooltip.import_data": {
       "en": "Import existing data from Excel files with Elements and Connections sheets to quickly populate your SES model",

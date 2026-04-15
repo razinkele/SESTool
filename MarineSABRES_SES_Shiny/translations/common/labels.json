@@ -99,28 +99,6 @@
       "no": "3. Detaljer:",
       "el": "3. Λεπτομέρειες:"
     },
-    "common.labels.author": {
-      "en": "Author",
-      "es": "Autor",
-      "fr": "Auteur",
-      "de": "Autor",
-      "lt": "Autorius",
-      "pt": "Autor",
-      "it": "Autore",
-      "no": "Forfatter",
-      "el": "Συγγραφέας"
-    },
-    "common.labels.baseline": {
-      "en": "Baseline",
-      "es": "Línea Base",
-      "fr": "Ligne de Base",
-      "de": "Grundlinie",
-      "lt": "Bazinė linija",
-      "pt": "Linha de Base",
-      "it": "Linea di Base",
-      "no": "Grunnlinje",
-      "el": "Βάση Αναφοράς"
-    },
     "common.labels.brief_description": {
       "en": "Brief Description:",
       "es": "Descripción Breve:",
@@ -143,28 +121,6 @@
       "no": "Kasusstudie Navn:",
       "el": "Όνομα Μελέτης Περίπτωσης:"
     },
-    "common.labels.category": {
-      "en": "Category",
-      "es": "Categoría",
-      "fr": "Catégorie",
-      "de": "Kategorie",
-      "lt": "Kategorija",
-      "pt": "Categoria",
-      "it": "Categoria",
-      "no": "Kategori",
-      "el": "Κατηγορία"
-    },
-    "common.labels.comment": {
-      "en": "Comment",
-      "es": "Comentario",
-      "fr": "Commentaire",
-      "de": "Kommentar",
-      "lt": "Komentaras",
-      "pt": "Comentário",
-      "it": "Commento",
-      "no": "Kommentar",
-      "el": "Σχόλιο"
-    },
     "common.labels.confidence": {
       "en": "Confidence",
       "es": "Confianza",
@@ -175,39 +131,6 @@
       "it": "Confidenza",
       "no": "Tillit",
       "el": "Εμπιστοσύνη"
-    },
-    "common.labels.createsesguidemethodstitle": {
-      "en": "SES Creation Methods",
-      "es": "Métodos de Creación SES",
-      "fr": "Méthodes de Création SES",
-      "de": "SES-Erstellungsmethoden",
-      "lt": "SES Kūrimo Metodai",
-      "pt": "Métodos de Criação SES",
-      "it": "Metodi di Creazione SES",
-      "no": "SES-opprettelsesmetoder",
-      "el": "Μέθοδοι Δημιουργίας SES"
-    },
-    "common.labels.current": {
-      "en": "Current",
-      "es": "Actual",
-      "fr": "Actuel",
-      "de": "Aktuell",
-      "lt": "Dabartinis",
-      "pt": "Atual",
-      "it": "Corrente",
-      "no": "Nåværende",
-      "el": "Τρέχουσα"
-    },
-    "common.labels.data_source": {
-      "en": "Data Source",
-      "es": "Fuente de Datos",
-      "fr": "Source de Données",
-      "de": "Datenquelle",
-      "lt": "Duomenų šaltinis",
-      "pt": "Fonte de Dados",
-      "it": "Fonte di Dati",
-      "no": "Datakilde",
-      "el": "Πηγή Δεδομένων"
     },
     "common.labels.date": {
       "en": "Date",
@@ -253,17 +176,6 @@
       "no": "Elementtype:",
       "el": "Τύπος Στοιχείου:"
     },
-    "common.labels.email": {
-      "en": "Email",
-      "es": "Correo Electrónico",
-      "fr": "E-mail",
-      "de": "E-Mail",
-      "lt": "El. paštas",
-      "pt": "E-mail",
-      "it": "Email",
-      "no": "E-post",
-      "el": "Ηλ. ταχυδρομείο"
-    },
     "common.labels.error": {
       "en": "Error",
       "es": "Error",
@@ -297,50 +209,6 @@
       "no": "Endogeniserings-notater:",
       "el": "Σημειώσεις Ενδογενοποίησης:"
     },
-    "common.labels.exportguidedatatitle": {
-      "en": "Export Data",
-      "es": "Exportar Datos",
-      "fr": "Exporter les Données",
-      "de": "Daten Exportieren",
-      "lt": "Eksportuoti Duomenis",
-      "pt": "Exportar Dados",
-      "it": "Esporta Dati",
-      "no": "Eksporter Data",
-      "el": "Εξαγωγή Δεδομένων"
-    },
-    "common.labels.exportguidereportstitle": {
-      "en": "Export Reports",
-      "es": "Exportar Informes",
-      "fr": "Exporter les Rapports",
-      "de": "Berichte Exportieren",
-      "lt": "Eksportuoti Ataskaitas",
-      "pt": "Exportar Relatórios",
-      "it": "Esporta Report",
-      "no": "Eksporter Rapporter",
-      "el": "Εξαγωγή Αναφορών"
-    },
-    "common.labels.exportguideviztitle": {
-      "en": "Export Visualizations",
-      "es": "Exportar Visualizaciones",
-      "fr": "Exporter les Visualisations",
-      "de": "Visualisierungen Exportieren",
-      "lt": "Eksportuoti Vizualizacijas",
-      "pt": "Exportar Visualizações",
-      "it": "Esporta Visualizzazioni",
-      "no": "Eksporter Visualiseringer",
-      "el": "Εξαγωγή Απεικονίσεων"
-    },
-    "common.labels.fastest_setup_time": {
-      "en": "Fastest setup time",
-      "es": "Tiempo de configuración más rápido",
-      "fr": "Temps de configuration le plus rapide",
-      "de": "Schnellste Einrichtungszeit",
-      "lt": "Greičiausias nustatymo laikas",
-      "pt": "Tempo de configuração mais rápido",
-      "it": "Tempo di configurazione più veloce",
-      "no": "Raskeste oppsettid",
-      "el": "Ταχύτερος χρόνος ρύθμισης"
-    },
     "common.labels.implementation_status": {
       "en": "Implementation Status:",
       "es": "Estado de Implementación:",
@@ -351,61 +219,6 @@
       "it": "Stato di Attuazione:",
       "no": "Implementeringsstatus:",
       "el": "Κατάσταση Υλοποίησης:"
-    },
-    "common.labels.indicator": {
-      "en": "Indicator",
-      "es": "Indicador",
-      "fr": "Indicateur",
-      "de": "Indikator",
-      "lt": "Indikatorius",
-      "pt": "Indicador",
-      "it": "Indicatore",
-      "no": "Indikator",
-      "el": "Δείκτης"
-    },
-    "common.labels.isaguidedapsiwrtitle": {
-      "en": "DAPSI(W)R(M) Framework",
-      "es": "Marco DAPSI(W)R(M)",
-      "fr": "Cadre DAPSI(W)R(M)",
-      "de": "DAPSI(W)R(M)-Rahmenwerk",
-      "lt": "DAPSI(W)R(M) Sistema",
-      "pt": "Estrutura DAPSI(W)R(M)",
-      "it": "Framework DAPSI(W)R(M)",
-      "no": "DAPSI(W)R(M)-rammeverk",
-      "el": "Πλαίσιο DAPSI(W)R(M)"
-    },
-    "common.labels.isaguidehowtousetitle": {
-      "en": "How to Use the ISA",
-      "es": "Cómo Usar el ISA",
-      "fr": "Comment Utiliser l'ISA",
-      "de": "Verwendung des ISA",
-      "lt": "Kaip Naudoti ISA",
-      "pt": "Como Usar o ISA",
-      "it": "Come Usare l'ISA",
-      "no": "Hvordan Bruke ISA",
-      "el": "Πώς να Χρησιμοποιήσετε το ISA"
-    },
-    "common.labels.isaguidewhatisisatitle": {
-      "en": "What is ISA?",
-      "es": "¿Qué es ISA?",
-      "fr": "Qu'est-ce que l'ISA ?",
-      "de": "Was ist ISA?",
-      "lt": "Kas yra ISA?",
-      "pt": "O que é ISA?",
-      "it": "Cos'è l'ISA?",
-      "no": "Hva er ISA?",
-      "el": "Τι είναι το ISA;"
-    },
-    "common.labels.location": {
-      "en": "Location",
-      "es": "Ubicación",
-      "fr": "Emplacement",
-      "de": "Standort",
-      "lt": "Vieta",
-      "pt": "Localização",
-      "it": "Posizione",
-      "no": "Plassering",
-      "el": "Τοποθεσία"
     },
     "common.labels.name": {
       "en": "Name",
@@ -418,61 +231,6 @@
       "no": "Navn",
       "el": "Όνομα"
     },
-    "common.labels.no_connections_in_this_category": {
-      "en": "No connections in this category",
-      "es": "Sin conexiones en esta categoría",
-      "fr": "Aucune connexion dans cette catégorie",
-      "de": "Keine Verbindungen in dieser Kategorie",
-      "lt": "Šioje kategorijoje ryšių nėra",
-      "pt": "Sem conexões nesta categoria",
-      "it": "Nessuna connessione in questa categoria",
-      "no": "Ingen forbindelser i denne kategorien",
-      "el": "Δεν υπάρχουν συνδέσεις σε αυτή την κατηγορία"
-    },
-    "common.labels.notes": {
-      "en": "Notes",
-      "es": "Notas",
-      "fr": "Notes",
-      "de": "Notizen",
-      "lt": "Pastabos",
-      "pt": "Notas",
-      "it": "Note",
-      "no": "Notater",
-      "el": "Σημειώσεις"
-    },
-    "common.labels.organization": {
-      "en": "Organization",
-      "es": "Organización",
-      "fr": "Organisation",
-      "de": "Organisation",
-      "lt": "Organizacija",
-      "pt": "Organização",
-      "it": "Organizzazione",
-      "no": "Organisasjon",
-      "el": "Οργανισμός"
-    },
-    "common.labels.polarity": {
-      "en": "Polarity",
-      "es": "Polaridad",
-      "fr": "Polarité",
-      "de": "Polarität",
-      "lt": "Polarumas",
-      "pt": "Polaridade",
-      "it": "Polarità",
-      "no": "Polaritet",
-      "el": "Πολικότητα"
-    },
-    "common.labels.priority": {
-      "en": "Priority",
-      "es": "Prioridad",
-      "fr": "Priorité",
-      "de": "Priorität",
-      "lt": "Prioritetas",
-      "pt": "Prioridade",
-      "it": "Priorità",
-      "no": "Prioritet",
-      "el": "Προτεραιότητα"
-    },
     "common.labels.purpose": {
       "en": "Purpose:",
       "es": "Propósito:",
@@ -483,17 +241,6 @@
       "it": "Scopo:",
       "no": "Formål:",
       "el": "Σκοπός:"
-    },
-    "common.labels.region": {
-      "en": "Region",
-      "es": "Región",
-      "fr": "Région",
-      "de": "Region",
-      "lt": "Regionas",
-      "pt": "Região",
-      "it": "Regione",
-      "no": "Region",
-      "el": "Περιοχή"
     },
     "common.labels.report_type": {
       "en": "Report Type:",
@@ -528,28 +275,6 @@
       "no": "Responstype:",
       "el": "Τύπος Απόκρισης:"
     },
-    "common.labels.role": {
-      "en": "Role",
-      "es": "Rol",
-      "fr": "Rôle",
-      "de": "Rolle",
-      "lt": "Vaidmuo",
-      "pt": "Função",
-      "it": "Ruolo",
-      "no": "Rolle",
-      "el": "Ρόλος"
-    },
-    "common.labels.scale": {
-      "en": "Scale",
-      "es": "Escala",
-      "fr": "Échelle",
-      "de": "Skala",
-      "lt": "Mastas",
-      "pt": "Escala",
-      "it": "Scala",
-      "no": "Skala",
-      "el": "Κλίμακα"
-    },
     "common.labels.select_matrix_type": {
       "en": "Select Matrix Type:",
       "es": "Seleccionar Tipo de Matriz:",
@@ -560,17 +285,6 @@
       "it": "Seleziona Tipo di Matrice:",
       "no": "Velg matrisetype:",
       "el": "Επιλογή Τύπου Μήτρας:"
-    },
-    "common.labels.source": {
-      "en": "Source",
-      "es": "Fuente",
-      "fr": "Source",
-      "de": "Quelle",
-      "lt": "Šaltinis",
-      "pt": "Fonte",
-      "it": "Fonte",
-      "no": "Kilde",
-      "el": "Πηγή"
     },
     "common.labels.status": {
       "en": "Status",
@@ -605,61 +319,6 @@
       "no": "Måldato:",
       "el": "Ημερομηνία Στόχου:"
     },
-    "common.labels.templatesesguidehowtousetitle": {
-      "en": "How to Use SES Templates",
-      "es": "Cómo Usar las Plantillas SES",
-      "fr": "Comment Utiliser les Modèles SES",
-      "de": "Verwendung der SES-Vorlagen",
-      "lt": "Kaip Naudoti SES Šablonus",
-      "pt": "Como Usar os Modelos SES",
-      "it": "Come Usare i Modelli SES",
-      "no": "Hvordan Bruke SES-maler",
-      "el": "Πώς να Χρησιμοποιήσετε Πρότυπα SES"
-    },
-    "common.labels.templatesesguidewhatistitle": {
-      "en": "What are SES Templates?",
-      "es": "¿Qué son las Plantillas SES?",
-      "fr": "Que sont les Modèles SES ?",
-      "de": "Was sind SES-Vorlagen?",
-      "lt": "Kas yra SES Šablonai?",
-      "pt": "O que são Modelos SES?",
-      "it": "Cosa sono i Modelli SES?",
-      "no": "Hva er SES-maler?",
-      "el": "Τι είναι τα Πρότυπα SES;"
-    },
-    "common.labels.time": {
-      "en": "Time",
-      "es": "Tiempo",
-      "fr": "Temps",
-      "de": "Zeit",
-      "lt": "Laikas",
-      "pt": "Tempo",
-      "it": "Tempo",
-      "no": "Tid",
-      "el": "Ώρα"
-    },
-    "common.labels.timeframe": {
-      "en": "Timeframe",
-      "es": "Marco Temporal",
-      "fr": "Période",
-      "de": "Zeitrahmen",
-      "lt": "Laikotarpis",
-      "pt": "Período",
-      "it": "Periodo",
-      "no": "Tidsramme",
-      "el": "Χρονικό Πλαίσιο"
-    },
-    "common.labels.title": {
-      "en": "Title",
-      "es": "Título",
-      "fr": "Titre",
-      "de": "Titel",
-      "lt": "Pavadinimas",
-      "pt": "Título",
-      "it": "Titolo",
-      "no": "Tittel",
-      "el": "Τίτλος"
-    },
     "common.labels.type": {
       "en": "Type",
       "es": "Tipo",
@@ -670,17 +329,6 @@
       "it": "Tipo",
       "no": "Type",
       "el": "Τύπος"
-    },
-    "common.labels.unit": {
-      "en": "Unit",
-      "es": "Unidad",
-      "fr": "Unité",
-      "de": "Einheit",
-      "lt": "Vienetas",
-      "pt": "Unidade",
-      "it": "Unità",
-      "no": "Enhet",
-      "el": "Μονάδα"
     },
     "common.labels.validation_notes": {
       "en": "Validation Notes:",
@@ -703,17 +351,6 @@
       "it": "Valore",
       "no": "Verdi",
       "el": "Τιμή"
-    },
-    "common.labels.version": {
-      "en": "Version",
-      "es": "Versión",
-      "fr": "Version",
-      "de": "Version",
-      "lt": "Versija",
-      "pt": "Versão",
-      "it": "Versione",
-      "no": "Versjon",
-      "el": "Έκδοση"
     },
     "loop connections": {
       "en": "Loop Connections",
@@ -879,127 +516,6 @@
       "it": "Inizializzazione...",
       "no": "Initialiserer...",
       "el": "Αρχικοποίηση..."
-    },
-    "common.labels.delay": {
-      "en": "Delay",
-      "es": "Retardo",
-      "fr": "Délai",
-      "de": "Verzögerung",
-      "lt": "Vėlavimas",
-      "pt": "Atraso",
-      "it": "Ritardo",
-      "no": "Forsinkelse",
-      "el": "Καθυστέρηση"
-    },
-    "common.labels.delay_years": {
-      "en": "years",
-      "es": "años",
-      "fr": "ans",
-      "de": "Jahre",
-      "lt": "metai",
-      "pt": "anos",
-      "it": "anni",
-      "no": "år",
-      "el": "χρόνια"
-    },
-    "common.labels.show_temporal_delay": {
-      "en": "Show temporal delay",
-      "es": "Mostrar retardo temporal",
-      "fr": "Afficher le délai temporel",
-      "de": "Zeitliche Verzögerung anzeigen",
-      "lt": "Rodyti laiko vėlavimą",
-      "pt": "Mostrar atraso temporal",
-      "it": "Mostra ritardo temporale",
-      "no": "Vis tidsforsinkelse",
-      "el": "Εμφάνιση χρονικής καθυστέρησης"
-    },
-    "common.labels.temporal_delay": {
-      "en": "Temporal delay",
-      "es": "Retardo temporal",
-      "fr": "Délai temporel",
-      "de": "Zeitliche Verzögerung",
-      "lt": "Laiko vėlavimas",
-      "pt": "Atraso temporal",
-      "it": "Ritardo temporale",
-      "no": "Tidsforsinkelse",
-      "el": "Χρονική καθυστέρηση"
-    },
-    "common.labels.not_specified": {
-      "en": "Not specified",
-      "es": "No especificado",
-      "fr": "Non spécifié",
-      "de": "Nicht angegeben",
-      "lt": "Nenurodyta",
-      "pt": "Não especificado",
-      "it": "Non specificato",
-      "no": "Ikke spesifisert",
-      "el": "Δεν καθορίστηκε"
-    },
-    "common.labels.delay_immediate": {
-      "en": "Immediate (< 1 month)",
-      "es": "Inmediato (< 1 mes)",
-      "fr": "Immédiat (< 1 mois)",
-      "de": "Sofort (< 1 Monat)",
-      "lt": "Nedelsiant (< 1 mėn.)",
-      "pt": "Imediato (< 1 mês)",
-      "it": "Immediato (< 1 mese)",
-      "no": "Umiddelbar (< 1 måned)",
-      "el": "Άμεσο (< 1 μήνας)"
-    },
-    "common.labels.delay_short_term": {
-      "en": "Short-term (1-6 months)",
-      "es": "Corto plazo (1-6 meses)",
-      "fr": "Court terme (1-6 mois)",
-      "de": "Kurzfristig (1-6 Monate)",
-      "lt": "Trumpalaikis (1-6 mėn.)",
-      "pt": "Curto prazo (1-6 meses)",
-      "it": "Breve termine (1-6 mesi)",
-      "no": "Kortsiktig (1-6 måneder)",
-      "el": "Βραχυπρόθεσμο (1-6 μήνες)"
-    },
-    "common.labels.delay_medium_term": {
-      "en": "Medium-term (6mo - 3y)",
-      "es": "Mediano plazo (6m - 3a)",
-      "fr": "Moyen terme (6m - 3a)",
-      "de": "Mittelfristig (6M - 3J)",
-      "lt": "Vidutinės trukmės (6mėn - 3m)",
-      "pt": "Médio prazo (6m - 3a)",
-      "it": "Medio termine (6m - 3a)",
-      "no": "Mellomlang (6mnd - 3år)",
-      "el": "Μεσοπρόθεσμο (6μ - 3ε)"
-    },
-    "common.labels.delay_long_term": {
-      "en": "Long-term (3+ years)",
-      "es": "Largo plazo (3+ años)",
-      "fr": "Long terme (3+ ans)",
-      "de": "Langfristig (3+ Jahre)",
-      "lt": "Ilgalaikis (3+ metai)",
-      "pt": "Longo prazo (3+ anos)",
-      "it": "Lungo termine (3+ anni)",
-      "no": "Langsiktig (3+ år)",
-      "el": "Μακροπρόθεσμο (3+ έτη)"
-    },
-    "common.labels.delay_tooltip": {
-      "en": "How long before this connection's effect is observed",
-      "es": "Cuánto tiempo antes de observar el efecto",
-      "fr": "Combien de temps avant d'observer l'effet",
-      "de": "Wie lange dauert es bis die Wirkung eintritt",
-      "lt": "Kiek laiko praeina iki ryšio efekto",
-      "pt": "Quanto tempo até o efeito ser observado",
-      "it": "Quanto tempo prima che l'effetto sia osservato",
-      "no": "Hvor lang tid før effekten observeres",
-      "el": "Πόσο χρόνο πριν παρατηρηθεί το αποτέλεσμα"
-    },
-    "common.labels.or": {
-      "en": "or",
-      "es": "o",
-      "fr": "ou",
-      "de": "oder",
-      "lt": "arba",
-      "pt": "ou",
-      "it": "o",
-      "no": "eller",
-      "el": "ή"
     },
     "common.labels.very_weak": {
       "en": "Very Weak",

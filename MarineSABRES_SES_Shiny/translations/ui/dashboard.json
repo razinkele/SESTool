@@ -1,5 +1,15 @@
 {
-  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "lt",
+    "pt",
+    "it",
+    "no",
+    "el"
+  ],
   "translation": {
     "ui.dashboard.title": {
       "en": "MarineSABRES Social-Ecological Systems Analysis Tool",
@@ -330,17 +340,6 @@
       "it": "Stato Dati ISA",
       "no": "ISA-datastatus",
       "el": "Κατάσταση Δεδομένων ISA"
-    },
-    "ui.dashboard.cld_status": {
-      "en": "CLD Status",
-      "es": "Estado del DBC",
-      "fr": "Statut du DBC",
-      "de": "ULS-Status",
-      "lt": "PKD būsena",
-      "pt": "Status do DLC",
-      "it": "Stato DCC",
-      "no": "CLD-status",
-      "el": "Κατάσταση CLD"
     },
     "ui.dashboard.analysis_status": {
       "en": "Analysis Status",

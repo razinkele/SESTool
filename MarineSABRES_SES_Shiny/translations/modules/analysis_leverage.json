@@ -187,17 +187,6 @@
       "no": "Fant %d innflytelsespunkter! Poeng lagret i CLD-noder.",
       "el": "Βρέθηκαν %d σημεία μόχλευσης! Οι βαθμολογίες αποθηκεύτηκαν στους κόμβους CLD."
     },
-    "modules.analysis.leverage.error_analyzing": {
-      "en": "Error analyzing leverage points:",
-      "es": "Error al analizar puntos de apalancamiento:",
-      "fr": "Erreur lors de l'analyse des points de levier :",
-      "de": "Fehler bei der Analyse der Hebelpunkte:",
-      "lt": "Klaida analizuojant svertinius taškus:",
-      "pt": "Erro ao analisar pontos de alavancagem:",
-      "it": "Errore nell'analisi dei punti leva:",
-      "no": "Feil ved analyse av innflytelsespunkter:",
-      "el": "Σφάλμα κατά την ανάλυση σημείων μόχλευσης:"
-    },
     "modules.analysis.leverage.no_network_data": {
       "en": "<strong>No network data available.</strong> Please create your SES network first using the <em>Create SES</em> menu.",
       "es": "<strong>No hay datos de red disponibles.</strong> Primero cree su red SES usando el menú <em>Crear SES</em>.",
