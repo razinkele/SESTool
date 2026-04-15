@@ -791,9 +791,7 @@ analyze_network_topology_for_suggestions <- function(node_id, node_data,
 
   # 1. COMPLETENESS ANALYSIS - Find missing DAPSIWRM types
   existing_types <- unique(existing_network$type)
-  all_dapsiwrm_types <- c("Drivers", "Activities", "Pressures",
-                          "Marine Processes & Functioning", "Ecosystem Services",
-                          "Goods & Benefits", "Responses")
+  all_dapsiwrm_types <- DAPSIWRM_ELEMENTS
 
   missing_types <- setdiff(all_dapsiwrm_types, existing_types)
 
@@ -943,9 +941,7 @@ analyze_causal_chains_for_suggestions <- function(node_id, node_data,
   existing_types <- unique(existing_network$type)
 
   # Define the ideal DAPSIWRM causal chain
-  ideal_chain <- c("Drivers", "Activities", "Pressures",
-                   "Marine Processes & Functioning", "Ecosystem Services",
-                   "Goods & Benefits", "Responses")
+  ideal_chain <- DAPSIWRM_ELEMENTS
 
   # Find the position of current node type in the chain
   current_position <- which(ideal_chain == node_data$type)

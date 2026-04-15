@@ -45,15 +45,7 @@ if (!exists("get_dapsiwrm_connection_rules", mode = "function") &&
 calculate_dapsiwrm_distance <- function(source_type, target_type) {
 
   # Normalize type names to canonical form
-  type_mapping <- c(
-    "Drivers" = 1,
-    "Activities" = 2,
-    "Pressures" = 3,
-    "Marine Processes & Functioning" = 4,
-    "Ecosystem Services" = 5,
-    "Goods & Benefits" = 6,
-    "Responses" = 7
-  )
+  type_mapping <- setNames(seq_along(DAPSIWRM_ELEMENTS), DAPSIWRM_ELEMENTS)
 
   source_idx <- unname(type_mapping[source_type])
   target_idx <- unname(type_mapping[target_type])

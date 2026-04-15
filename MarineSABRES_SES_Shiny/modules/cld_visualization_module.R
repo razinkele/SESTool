@@ -220,15 +220,7 @@ cld_viz_ui <- function(id, i18n) {
         selectInput(
           ns("new_node_type"),
           i18n$t("modules.cld.visualization.element_type"),
-          choices = c(
-            "Drivers" = "Drivers",
-            "Activities" = "Activities",
-            "Pressures" = "Pressures",
-            "Marine Processes & Functioning" = "Marine Processes & Functioning",
-            "Ecosystem Services" = "Ecosystem Services",
-            "Goods & Benefits" = "Goods & Benefits",
-            "Responses" = "Responses"
-          ),
+          choices = setNames(DAPSIWRM_ELEMENTS, DAPSIWRM_ELEMENTS),
           selected = "Activities",
           width = "100%"
         ),

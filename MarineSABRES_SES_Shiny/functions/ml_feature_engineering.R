@@ -22,15 +22,7 @@ if (!requireNamespace("dplyr", quietly = TRUE)) {
 # ==============================================================================
 
 # DAPSI(W)R(M) type list (ordered)
-DAPSIWRM_TYPES <- c(
-  "Drivers",
-  "Activities",
-  "Pressures",
-  "Marine Processes & Functioning",
-  "Ecosystem Services",
-  "Goods & Benefits",
-  "Responses"
-)
+DAPSIWRM_TYPES <- DAPSIWRM_ELEMENTS
 
 # Regional seas (from knowledge base)
 REGIONAL_SEAS <- c(

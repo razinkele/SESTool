@@ -156,6 +156,12 @@ setup_dashboard_rendering <- function(input, output, session, project_data, i18n
     })
   })
 
+  # Ensure value boxes compute even when dashboard tab is hidden
+  outputOptions(output, "total_elements_box", suspendWhenHidden = FALSE)
+  outputOptions(output, "total_connections_box", suspendWhenHidden = FALSE)
+  outputOptions(output, "loops_detected_box", suspendWhenHidden = FALSE)
+  outputOptions(output, "completion_box", suspendWhenHidden = FALSE)
+
   # ========== PROJECT OVERVIEW ==========
 
   output$project_overview_ui <- renderUI({

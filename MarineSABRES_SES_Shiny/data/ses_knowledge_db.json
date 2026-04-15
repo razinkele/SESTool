@@ -3020,6 +3020,23 @@
           ],
           "temporal_lag": "short-term",
           "reversibility": "reversible"
+        },
+        {
+          "from": "Bathing water quality monitoring (EU BWD)",
+          "from_type": "responses",
+          "to": "Bathing water quality",
+          "to_type": "states",
+          "polarity": "+",
+          "strength": "moderate",
+          "confidence": 4,
+          "rationale": "EU Bathing Water Directive monitoring identifies pollution sources and triggers management actions that improve bathing water quality at designated coastal sites",
+          "references": [
+            "EU Directive 2006/7/EC",
+            "EEA 2023 Bathing Water Quality Report",
+            "HELCOM 2018 State of the Baltic Sea"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "reversible"
         }
       ]
     },

@@ -266,7 +266,7 @@ setup_navigation_handler <- function(event_bus, session) {
 
     target_tab <- nav_request$tab
     if (!is.null(target_tab) && nchar(target_tab) > 0) {
-      bs4Dash::updateTabItems(session, "sidebar", target_tab)
+      bs4Dash::updateTabItems(session, "sidebar_menu", target_tab)
       debug_log(sprintf("Navigated to tab: %s", target_tab), "EVENT_BUS")
     }
   })

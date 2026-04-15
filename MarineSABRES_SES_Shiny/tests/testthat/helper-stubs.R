@@ -504,10 +504,7 @@ rbind <- function(..., deparse.level = 1) {
 
 # DAPSIWRM type list used by the classifier
 if (!exists(".DAPSIWRM_TYPES", envir = .GlobalEnv)) {
-  .DAPSIWRM_TYPES <- c("Drivers", "Activities", "Pressures",
-                        "Marine Processes & Functioning", "Ecosystem Services",
-                        "Goods & Benefits", "Responses", "State Changes",
-                        "Impacts")
+  .DAPSIWRM_TYPES <- c(DAPSIWRM_ELEMENTS, "State Changes", "Impacts")
 }
 
 if (!exists("classify_element_with_ai", mode = "function", envir = .GlobalEnv)) {

@@ -980,10 +980,8 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
         req(loop_data$loops, loop_data$graph)
 
         tryCatch({
-          tmp_dir <- tempdir()
-          loop_dir <- file.path(tmp_dir, "loop_diagrams")
-          if (dir.exists(loop_dir)) unlink(loop_dir, recursive = TRUE)
-          dir.create(loop_dir, showWarnings = FALSE)
+          loop_dir <- tempfile(pattern = "loop_diagrams_")
+          dir.create(loop_dir)
 
           g <- loop_data$graph
           loops <- loop_data$loops

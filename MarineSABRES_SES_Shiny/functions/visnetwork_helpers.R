@@ -1236,14 +1236,8 @@ create_ghost_edge_data <- function(suggestion, ghost_index) {
 #' @export
 get_dapsiwrm_level <- function(type) {
   levels <- c(
-    "Drivers" = 1,
-    "Activities" = 2,
-    "Pressures" = 3,
-    "Marine Processes & Functioning" = 4,
-    "Ecosystem Services" = 5,
-    "Goods & Benefits" = 6,
-    "Responses" = 7,
-    "Management" = 8
+    setNames(seq_along(DAPSIWRM_ELEMENTS), DAPSIWRM_ELEMENTS),
+    "Management" = 8L
   )
 
   return(levels[type] %||% 4)

@@ -97,7 +97,8 @@ build_kumu_elements <- function(isa_data) {
 #' @param isa_data Reactive values or list containing ISA element data
 #' @param output_file Path to write the zip file
 create_kumu_export_zip <- function(isa_data, output_file) {
-  temp_dir <- tempdir()
+  temp_dir <- tempfile(pattern = "kumu_")
+  dir.create(temp_dir)
 
   all_elements <- build_kumu_elements(isa_data)
   write.csv(all_elements, file.path(temp_dir, "elements.csv"), row.names = FALSE)

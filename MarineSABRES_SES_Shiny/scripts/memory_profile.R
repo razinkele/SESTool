@@ -222,11 +222,7 @@ time_repeated <- function(expr_fn, n = 3) {
 generate_profiling_network <- function(n_nodes, edge_density = 0.25) {
   set.seed(42)  # Reproducible
 
-  dapsiwrm_types <- c(
-    "Drivers", "Activities", "Pressures",
-    "Marine Processes & Functioning",
-    "Ecosystem Services", "Goods & Benefits", "Responses"
-  )
+  dapsiwrm_types <- DAPSIWRM_ELEMENTS
 
   # Distribute nodes across types (roughly equal, with some variation)
   type_assignments <- sample(dapsiwrm_types, n_nodes, replace = TRUE)

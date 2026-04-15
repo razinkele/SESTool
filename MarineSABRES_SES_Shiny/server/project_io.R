@@ -137,6 +137,7 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
       project_data(loaded_data)
 
       removeModal()
+      updateTabItems(session, "sidebar_menu", "dashboard")
       showNotification(i18n$t("common.messages.project_loaded_successfully"), type = "message")
 
     }, error = function(e) {
