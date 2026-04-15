@@ -91,25 +91,24 @@ restore_session_data <- function(rv, data, i18n = NULL) {
 convert_to_isa_dataframe <- function(elements, element_type, id_prefix, type_label) {
   if (length(elements[[element_type]]) > 0) {
     data.frame(
-      ID = generate_element_id(id_prefix, seq_along(elements[[element_type]])),
-      Name = sapply(elements[[element_type]], function(x) x$name),
-      Type = type_label,
-      Description = sapply(elements[[element_type]], function(x) x$description %||% ""),
-      Stakeholder = "",
-      Importance = "",
-      Trend = ""
+      id = generate_element_id(id_prefix, seq_along(elements[[element_type]])),
+      name = sapply(elements[[element_type]], function(x) x$name),
+      type = type_label,
+      description = sapply(elements[[element_type]], function(x) x$description %||% ""),
+      stakeholder = "",
+      importance = "",
+      trend = ""
       
     )
   } else {
-    # Return empty dataframe with proper structure
     data.frame(
-      ID = character(),
-      Name = character(),
-      Type = character(),
-      Description = character(),
-      Stakeholder = character(),
-      Importance = character(),
-      Trend = character()
+      id = character(),
+      name = character(),
+      type = character(),
+      description = character(),
+      stakeholder = character(),
+      importance = character(),
+      trend = character()
       
     )
   }
@@ -125,16 +124,16 @@ convert_to_isa_dataframe <- function(elements, element_type, id_prefix, type_lab
 convert_responses_to_isa <- function(elements) {
   if (length(elements$responses) > 0) {
     data.frame(
-      Name = sapply(elements$responses, function(x) x$name),
-      Description = sapply(elements$responses, function(x) x$description %||% ""),
-      Indicator = ""
+      name = sapply(elements$responses, function(x) x$name),
+      description = sapply(elements$responses, function(x) x$description %||% ""),
+      indicator = ""
       
     )
   } else {
     data.frame(
-      Name = character(),
-      Description = character(),
-      Indicator = character()
+      name = character(),
+      description = character(),
+      indicator = character()
       
     )
   }

@@ -581,6 +581,8 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
         tryCatch({
           # Parse JSON data safely
           loaded_data <- safe_parse_json(result$data)
+          # Normalize JSON column names/structure to internal format
+          if (!is.null(loaded_data)) loaded_data <- normalize_json_project_data(loaded_data)
 
           if (is.null(loaded_data)) {
             showNotification(

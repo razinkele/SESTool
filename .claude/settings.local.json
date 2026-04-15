@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(Rscript:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(timeout /t 8 /nobreak)",
+      "Bash(set MARINESABRES_DEBUG=TRUE)",
+      "Bash(git stash:*)",
+      "Bash(git checkout:*)",
+      "Bash(git reset:*)",
+      "Skill(frontend-design)",
+      "Bash(timeout:*)",
+      "Bash(cat:*)",
+      "Bash(deploy-remote.cmd:*)",
+      "Bash(cmd /c \"cd /d \"\"C:\\\\Users\\\\DELL\\\\OneDrive - ku.lt\\\\HORIZON_EUROPE\\\\Marine-SABRES\\\\SESToolbox\\\\MarineSABRES_SES_Shiny\\\\deployment\"\" && deploy-remote.cmd --force\")",
+      "Bash(powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\DELL\\\\OneDrive - ku.lt\\\\HORIZON_EUROPE\\\\Marine-SABRES\\\\SESToolbox\\\\MarineSABRES_SES_Shiny\\\\deployment\\\\deploy-remote.ps1\" -Force)",
+      "WebFetch(domain:laguna.ku.lt)"
+    ]
+  }
+}

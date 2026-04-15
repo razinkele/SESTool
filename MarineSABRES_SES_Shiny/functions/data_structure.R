@@ -682,6 +682,78 @@ export_project_rds <- function(project_data, file_path) {
 }
 
 # ============================================================================
+# JSON PROJECT DATA NORMALIZATION
+# ============================================================================
+
+#' Normalize JSON-parsed project data to internal format
+#'
+#' When project data is loaded from JSON (via jsonlite::fromJSON), column names
+#' may be uppercase (ID, Name, Type) and non-data-frame ISA fields (connections,
+#' adjacency_matrices, bot_data) may be nested lists. This function normalizes
+#' everything to the internal convention used by the app.
+#'
+#' @param data Project data list parsed from JSON
+#' @return Normalized project data list, or NULL if input is invalid
+#' @export
+normalize_json_project_data <- function(data) {
+  if (!is.list(data)) return(NULL)
+
+  # ISA element categories that should be data frames with lowercase columns
+  element_types <- c("drivers", "activities", "pressures", "marine_processes",
+                     "ecosystem_services", "goods_benefits", "responses")
+
+  isa <- data$data$isa_data
+  if (!is.null(isa) && is.list(isa)) {
+    for (etype in element_types) {
+      el <- isa[[etype]]
+      if (is.null(el)) next
+
+      # Convert list-of-lists to data frame (happens with simplifyVector = FALSE)
+      if (is.list(el) && !is.data.frame(el) && length(el) > 0) {
+        el <- tryCatch({
+          do.call(rbind, lapply(el, function(x) {
+            as.data.frame(x, stringsAsFactors = FALSE)
+          }))
+        }, error = function(e) {
+          debug_log(paste("Cannot convert", etype, "to data.frame:", e$message), "WARN")
+          NULL
+        })
+      }
+
+      if (is.data.frame(el)) {
+        # Lowercase all column names
+        names(el) <- tolower(names(el))
+
+        # Ensure required columns exist with defaults
+        if (!"id" %in% names(el) && nrow(el) > 0) {
+          prefix <- switch(etype,
+            drivers = "D", activities = "A", pressures = "P",
+            marine_processes = "MPF", ecosystem_services = "ES",
+            goods_benefits = "GB", responses = "R", "X"
+          )
+          el$id <- paste0(prefix, sprintf("%03d", seq_len(nrow(el))))
+        }
+        if (!"name" %in% names(el) && nrow(el) > 0) {
+          el$name <- el$id
+        }
+        if (!"indicator" %in% names(el)) {
+          el$indicator <- NA_character_
+        }
+      }
+
+      isa[[etype]] <- el
+    }
+
+    # Normalize connections: keep as-is (list with suggested/approved)
+    # Downstream code handles both formats
+
+    data$data$isa_data <- isa
+  }
+
+  data
+}
+
+# ============================================================================
 # PROJECT VALIDATION FUNCTIONS
 # ============================================================================
 

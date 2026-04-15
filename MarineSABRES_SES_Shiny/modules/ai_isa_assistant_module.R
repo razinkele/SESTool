@@ -231,24 +231,25 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
 
           # Check if there's actually data to recover
           has_data <- any(
-            !is.null(isa_data$drivers) && nrow(isa_data$drivers) > 0,
-            !is.null(isa_data$activities) && nrow(isa_data$activities) > 0,
-            !is.null(isa_data$pressures) && nrow(isa_data$pressures) > 0,
-            !is.null(isa_data$marine_processes) && nrow(isa_data$marine_processes) > 0,
-            !is.null(isa_data$ecosystem_services) && nrow(isa_data$ecosystem_services) > 0,
-            !is.null(isa_data$goods_benefits) && nrow(isa_data$goods_benefits) > 0,
-            !is.null(isa_data$responses) && nrow(isa_data$responses) > 0
+            is.data.frame(isa_data$drivers) && nrow(isa_data$drivers) > 0,
+            is.data.frame(isa_data$activities) && nrow(isa_data$activities) > 0,
+            is.data.frame(isa_data$pressures) && nrow(isa_data$pressures) > 0,
+            is.data.frame(isa_data$marine_processes) && nrow(isa_data$marine_processes) > 0,
+            is.data.frame(isa_data$ecosystem_services) && nrow(isa_data$ecosystem_services) > 0,
+            is.data.frame(isa_data$goods_benefits) && nrow(isa_data$goods_benefits) > 0,
+            is.data.frame(isa_data$responses) && nrow(isa_data$responses) > 0
           )
 
           # Debug: print each element count
+          .safe_nrow <- function(x) if (is.data.frame(x)) nrow(x) else 0L
           debug_log(sprintf("[AI ISA] Element counts - drivers: %d, activities: %d, pressures: %d, states: %d, impacts: %d, welfare: %d, responses: %d\n",
-            if(!is.null(isa_data$drivers)) nrow(isa_data$drivers) else 0,
-            if(!is.null(isa_data$activities)) nrow(isa_data$activities) else 0,
-            if(!is.null(isa_data$pressures)) nrow(isa_data$pressures) else 0,
-            if(!is.null(isa_data$marine_processes)) nrow(isa_data$marine_processes) else 0,
-            if(!is.null(isa_data$ecosystem_services)) nrow(isa_data$ecosystem_services) else 0,
-            if(!is.null(isa_data$goods_benefits)) nrow(isa_data$goods_benefits) else 0,
-            if(!is.null(isa_data$responses)) nrow(isa_data$responses) else 0
+            .safe_nrow(isa_data$drivers),
+            .safe_nrow(isa_data$activities),
+            .safe_nrow(isa_data$pressures),
+            .safe_nrow(isa_data$marine_processes),
+            .safe_nrow(isa_data$ecosystem_services),
+            .safe_nrow(isa_data$goods_benefits),
+            .safe_nrow(isa_data$responses)
           ))
 
           debug_log(sprintf("[AI ISA] has_data check result: %s\n", has_data))
@@ -257,78 +258,88 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
             debug_log("[AI ISA] Loading recovered data from project_data_reactive\n")
 
             # Convert dataframes back to list format for AI ISA Assistant
+            # Helper: get column value case-insensitively (handles both old uppercase and new lowercase)
+            .get_col <- function(df, col, i) {
+              if (col %in% names(df)) df[[col]][i]
+              else if (toupper(substr(col, 1, 1)) == substr(col, 1, 1)) df[[col]][i]
+              else {
+                uc <- paste0(toupper(substr(col, 1, 1)), substr(col, 2, nchar(col)))
+                if (uc %in% names(df)) df[[uc]][i] else NA_character_
+              }
+            }
+
             # Drivers
-            if (!is.null(isa_data$drivers) && nrow(isa_data$drivers) > 0) {
+            if (!is.null(isa_data$drivers) && is.data.frame(isa_data$drivers) && nrow(isa_data$drivers) > 0) {
               rv$elements$drivers <- lapply(1:nrow(isa_data$drivers), function(i) {
                 list(
-                  name = isa_data$drivers$Name[i],
-                  description = isa_data$drivers$Description[i] %||% "",
+                  name = .get_col(isa_data$drivers, "name", i),
+                  description = .get_col(isa_data$drivers, "description", i) %||% "",
                   timestamp = Sys.time()
                 )
               })
             }
 
             # Activities
-            if (!is.null(isa_data$activities) && nrow(isa_data$activities) > 0) {
+            if (!is.null(isa_data$activities) && is.data.frame(isa_data$activities) && nrow(isa_data$activities) > 0) {
               rv$elements$activities <- lapply(1:nrow(isa_data$activities), function(i) {
                 list(
-                  name = isa_data$activities$Name[i],
-                  description = isa_data$activities$Description[i] %||% "",
+                  name = .get_col(isa_data$activities, "name", i),
+                  description = .get_col(isa_data$activities, "description", i) %||% "",
                   timestamp = Sys.time()
                 )
               })
             }
 
             # Pressures
-            if (!is.null(isa_data$pressures) && nrow(isa_data$pressures) > 0) {
+            if (!is.null(isa_data$pressures) && is.data.frame(isa_data$pressures) && nrow(isa_data$pressures) > 0) {
               rv$elements$pressures <- lapply(1:nrow(isa_data$pressures), function(i) {
                 list(
-                  name = isa_data$pressures$Name[i],
-                  description = isa_data$pressures$Description[i] %||% "",
+                  name = .get_col(isa_data$pressures, "name", i),
+                  description = .get_col(isa_data$pressures, "description", i) %||% "",
                   timestamp = Sys.time()
                 )
               })
             }
 
             # States (marine_processes)
-            if (!is.null(isa_data$marine_processes) && nrow(isa_data$marine_processes) > 0) {
+            if (!is.null(isa_data$marine_processes) && is.data.frame(isa_data$marine_processes) && nrow(isa_data$marine_processes) > 0) {
               rv$elements$states <- lapply(1:nrow(isa_data$marine_processes), function(i) {
                 list(
-                  name = isa_data$marine_processes$Name[i],
-                  description = isa_data$marine_processes$Description[i] %||% "",
+                  name = .get_col(isa_data$marine_processes, "name", i),
+                  description = .get_col(isa_data$marine_processes, "description", i) %||% "",
                   timestamp = Sys.time()
                 )
               })
             }
 
             # Impacts (ecosystem_services)
-            if (!is.null(isa_data$ecosystem_services) && nrow(isa_data$ecosystem_services) > 0) {
+            if (!is.null(isa_data$ecosystem_services) && is.data.frame(isa_data$ecosystem_services) && nrow(isa_data$ecosystem_services) > 0) {
               rv$elements$impacts <- lapply(1:nrow(isa_data$ecosystem_services), function(i) {
                 list(
-                  name = isa_data$ecosystem_services$Name[i],
-                  description = isa_data$ecosystem_services$Description[i] %||% "",
+                  name = .get_col(isa_data$ecosystem_services, "name", i),
+                  description = .get_col(isa_data$ecosystem_services, "description", i) %||% "",
                   timestamp = Sys.time()
                 )
               })
             }
 
             # Welfare (goods_benefits)
-            if (!is.null(isa_data$goods_benefits) && nrow(isa_data$goods_benefits) > 0) {
+            if (!is.null(isa_data$goods_benefits) && is.data.frame(isa_data$goods_benefits) && nrow(isa_data$goods_benefits) > 0) {
               rv$elements$welfare <- lapply(1:nrow(isa_data$goods_benefits), function(i) {
                 list(
-                  name = isa_data$goods_benefits$Name[i],
-                  description = isa_data$goods_benefits$Description[i] %||% "",
+                  name = .get_col(isa_data$goods_benefits, "name", i),
+                  description = .get_col(isa_data$goods_benefits, "description", i) %||% "",
                   timestamp = Sys.time()
                 )
               })
             }
 
             # Responses
-            if (!is.null(isa_data$responses) && nrow(isa_data$responses) > 0) {
+            if (!is.null(isa_data$responses) && is.data.frame(isa_data$responses) && nrow(isa_data$responses) > 0) {
               rv$elements$responses <- lapply(1:nrow(isa_data$responses), function(i) {
                 list(
-                  name = isa_data$responses$Name[i],
-                  description = isa_data$responses$Description[i] %||% "",
+                  name = .get_col(isa_data$responses, "name", i),
+                  description = .get_col(isa_data$responses, "description", i) %||% "",
                   timestamp = Sys.time()
                 )
               })

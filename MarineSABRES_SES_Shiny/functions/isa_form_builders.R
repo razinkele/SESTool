@@ -236,7 +236,9 @@ load_isa_elements_from_saved <- function(isa_data, isa_saved) {
 
   for (key in names(element_map)) {
     saved_df <- isa_saved[[key]]
-    if (!is.null(saved_df) && nrow(saved_df) > 0) {
+    if (is.data.frame(saved_df) && nrow(saved_df) > 0) {
+      # Normalize column names to lowercase for consistency
+      names(saved_df) <- tolower(names(saved_df))
       debug_log(sprintf("Loading %d %s", nrow(saved_df), element_map[[key]]$label), "ISA Module")
       isa_data[[key]] <- saved_df
       isa_data[[element_map[[key]]$counter]] <- nrow(saved_df)

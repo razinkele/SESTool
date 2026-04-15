@@ -649,9 +649,10 @@ server <- function(input, output, session) {
       debug_log("[DIAGNOSTIC] Project data loaded", "DIAGNOSTICS")
       for (etype in c("drivers", "activities", "pressures", "marine_processes", "ecosystem_services", "goods_benefits", "responses")) {
         el <- data$data$isa_data[[etype]]
-        if (!is.null(el) && nrow(el) > 0) {
+        if (is.data.frame(el) && nrow(el) > 0) {
           debug_log(sprintf("%s: %d elements", etype, nrow(el)), "DIAGNOSTICS")
-          debug_log(sprintf("%s IDs: %s", etype, paste(head(el$id, 10), collapse=", ")), "DIAGNOSTICS")
+          id_col <- if ("id" %in% names(el)) el$id else if ("ID" %in% names(el)) el$ID else rep(NA, nrow(el))
+          debug_log(sprintf("%s IDs: %s", etype, paste(head(id_col, 10), collapse=", ")), "DIAGNOSTICS")
         } else {
           debug_log(sprintf("%s: 0 elements", etype), "DIAGNOSTICS")
         }

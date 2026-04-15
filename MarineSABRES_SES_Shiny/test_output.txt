@@ -1,0 +1,1701 @@
+The system cannot find the path specified.
+
+================================================================================
+ MarineSABRES SES Tool - Startup Directory Check
+================================================================================
+
+  Working Directory: C:/Users/DELL/OneDrive - ku.lt/HORIZON_EUROPE/Marine-SABRES/SESToolbox/MarineSABRES_SES_Shiny
+  Project Root:      C:/Users/DELL/OneDrive - ku.lt/HORIZON_EUROPE/Marine-SABRES/SESToolbox/MarineSABRES_SES_Shiny
+
+  Required Directories:
+    [OK] modules
+    [OK] functions
+    [OK] server
+    [OK] www
+    [OK] data
+    [OK] translations
+
+  Optional Directories:
+    [OK] SESModels (29 files)
+    [OK] config (4 files)
+    [OK] docs (238 files)
+
+================================================================================
+
+Marine SES constants loaded successfully
+
+Attaching package: 'magrittr'
+
+The following object is masked from 'package:purrr':
+
+    set_names
+
+The following object is masked from 'package:tidyr':
+
+    extract
+
+The following objects are masked from 'package:testthat':
+
+    equals, is_less_than, not
+
+Marine SES Utility Functions loaded successfully
+Available functions: convert_strength_to_numeric, get_node_colors, get_node_shapes, ensure_edge_attributes, validate_igraph, assign_default_groups, safe_scale
+[INFO] SES Connection Knowledge Base loaded successfully
+       137 curated connections from published marine SES case studies
+       17 synonym groups for fuzzy matching
+[SES KB] Loaded knowledge database v1.0 with 33 contexts
+[Country Gov] Loaded governance database v1.0 with 97 countries across 11 regional seas
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  ML Enhancement: Loading Deep Learning Module
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+Γ£ô torch package loaded
+Γ£ô ML feature engineering functions loaded
+Γ£ô ML explainability module loaded
+Γ£ô ML model architecture loaded
+Γ£ô ML inference API loaded
+Γ£ô ML enhancer module loaded
+Γ£ô ML feedback logger loaded
+Γ£ô ML feature cache loaded
+Γ£ô ML text embeddings loaded
+Γ£ô ML model registry loaded
+
+Γ£ô ML Model Loaded Successfully
+  - Model: Multi-task Neural Network
+  - Version: v1
+  - Input dim: 358
+  - Parameters: 192,646
+  - Size: 0.73 MB
+  - Pipeline: phase1
+  - Status: Ready for predictions
+
+Γ£ù ML Ensemble not loaded: could not find function "safe_readRDS"
+  Using single model predictions
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+
+Production mode - Debug logging disabled
+Set MARINESABRES_DEBUG=TRUE to enable verbose logging
+
+[2026-04-14 22:17:48] INFO: Example ISA data loaded
+[2026-04-14 22:17:48] INFO: Global environment loaded successfully
+[2026-04-14 22:17:48] INFO: Loaded 7 DAPSI(W)R(M) element types
+[2026-04-14 22:17:48] INFO: Application version: 1.11.0
+[2026-04-14 22:17:48] INFO: Version name: Knowledge Base & Template Overhaul
+[2026-04-14 22:17:48] INFO: Release status: stable
+Test helper preloaded 7 SES templates: aquaculture, caribbean, climatechange, fisheries, offshorewind, pollution, tourism
+
+================================================================================
+ MarineSABRES SES Tool - Startup Directory Check
+================================================================================
+
+  Working Directory: C:/Users/DELL/OneDrive - ku.lt/HORIZON_EUROPE/Marine-SABRES/SESToolbox/MarineSABRES_SES_Shiny
+  Project Root:      C:/Users/DELL/OneDrive - ku.lt/HORIZON_EUROPE/Marine-SABRES/SESToolbox/MarineSABRES_SES_Shiny
+
+  Required Directories:
+    [OK] modules
+    [OK] functions
+    [OK] server
+    [OK] www
+    [OK] data
+    [OK] translations
+
+  Optional Directories:
+    [OK] SESModels (29 files)
+    [OK] config (4 files)
+    [OK] docs (238 files)
+
+================================================================================
+
+Marine SES constants loaded successfully
+Marine SES Utility Functions loaded successfully
+Available functions: convert_strength_to_numeric, get_node_colors, get_node_shapes, ensure_edge_attributes, validate_igraph, assign_default_groups, safe_scale
+[INFO] SES Connection Knowledge Base loaded successfully
+       137 curated connections from published marine SES case studies
+       17 synonym groups for fuzzy matching
+[SES KB] Loaded knowledge database v1.0 with 33 contexts
+[Country Gov] Loaded governance database v1.0 with 97 countries across 11 regional seas
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  ML Enhancement: Loading Deep Learning Module
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+Γ£ô torch package loaded
+Γ£ô ML feature engineering functions loaded
+Γ£ô ML explainability module loaded
+Γ£ô ML model architecture loaded
+Γ£ô ML inference API loaded
+Γ£ô ML enhancer module loaded
+Γ£ô ML feedback logger loaded
+Γ£ô ML feature cache loaded
+Γ£ô ML text embeddings loaded
+Γ£ô ML model registry loaded
+
+Γ£ô ML Model Loaded Successfully
+  - Model: Multi-task Neural Network
+  - Version: v1
+  - Input dim: 358
+  - Parameters: 192,646
+  - Size: 0.73 MB
+  - Pipeline: phase1
+  - Status: Ready for predictions
+
+Γ£ô ML Ensemble Loaded Successfully
+  - Path: models/ensemble
+  - Models: 3
+  - Ensemble predictions enabled
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+
+Production mode - Debug logging disabled
+Set MARINESABRES_DEBUG=TRUE to enable verbose logging
+
+[2026-04-14 22:17:50] INFO: Example ISA data loaded
+[2026-04-14 22:17:50] INFO: Global environment loaded successfully
+[2026-04-14 22:17:50] INFO: Loaded 7 DAPSI(W)R(M) element types
+[2026-04-14 22:17:50] INFO: Application version: 1.11.0
+[2026-04-14 22:17:50] INFO: Version name: Knowledge Base & Template Overhaul
+[2026-04-14 22:17:50] INFO: Release status: stable
+Setup: Loaded 7 SES templates for tests: aquaculture, caribbean, climatechange, fisheries, offshorewind, pollution, tourism
+Test environment initialized successfully
+Γ£ö | F W  S  OK | Context
+
+ΓáÅ |          0 | analysis-leverage-clarity                                      
+Γá╣ |      1  12 | analysis-leverage-clarity                                      
+Γá╕ |      1  33 | analysis-leverage-clarity                                      
+Γá┤ |      1  55 | analysis-leverage-clarity                                      
+Γ£ö |      1  72 | analysis-leverage-clarity
+
+ΓáÅ |          0 | analysis-loops                                                 
+Γáª |          7 | analysis-loops                                                 
+Γ£ö |          7 | analysis-loops
+
+ΓáÅ |          0 | app-e2e                                                        
+Γ£ö |      1   0 | app-e2e
+
+ΓáÅ |          0 | auto-save-module                                               
+Γá╝ |         15 | auto-save-module                                               
+Γá╝ |         35 | auto-save-module                                               
+Γá╝ |         55 | auto-save-module                                               
+ΓáÖ |         72 | auto-save-module                                               
+Γáç |         99 | auto-save-module                                               
+Γá╕ |        114 | auto-save-module                                               
+Γáï |        131 | auto-save-module                                               
+Γá╕ |        144 | auto-save-module                                               
+ΓáÖ |        162 | auto-save-module                                               
+ΓáÖ |      1 181 | auto-save-module                                               
+Γá╝ |      1 194 | auto-save-module                                               
+Γáï |      1 210 | auto-save-module                                               
+Γ£ö |      1 216 | auto-save-module [1.4s]
+
+ΓáÅ |          0 | cld-validation                                                 
+Γáº |          8 | cld-validation                                                 
+Γá╣ |         23 | cld-validation                                                 
+Γá╝ |         35 | cld-validation                                                 
+Γ£ö |         49 | cld-validation
+
+ΓáÅ |          0 | confidence                                                     
+Γáº |         48 | confidence                                                     
+Γáï |      1  70 | confidence                                                     
+Γá╣ |      1  72 | confidence                                                     
+ΓáÖ |      1  81 | confidence                                                     
+Γ£ö |      1  81 | confidence
+
+ΓáÅ |          0 | connection-review                                              
+ΓáÅ |          0 | Connection Review - Core Functionality                         
+Γ£ö |         15 | Connection Review - Core Functionality
+
+ΓáÅ |          0 | Connection Review - Amendment Application (Bug Fix Verification)
+Γ£ö |         16 | Connection Review - Amendment Application (Bug Fix Verification)
+
+ΓáÅ |          0 | Connection Review - Regression Tests for Reported Bugs         
+Γ£ö |         12 | Connection Review - Regression Tests for Reported Bugs
+
+ΓáÅ |          0 | Connection Review - Edge Cases                                 
+=============================================================================
+CONNECTION REVIEW TEST SUITE SUMMARY
+=============================================================================
+
+This test suite verifies the fixes for 4 critical bugs:
+
+Γ£ô Bug #1: Amend now saves BOTH strength AND confidence (not just confidence)
+Γ£ô Bug #2: Accept button properly handles on_approve callback
+Γ£ô Bug #3: Amendments persist through finalization to adjacency matrices
+Γ£ô Bug #4: Auto-navigation disabled to prevent unwanted element switching
+
+Test Categories:
+  - Core Functionality (3 tests)
+  - Amendment Application (3 tests)
+  - Regression Tests (4 tests)
+  - Edge Cases (4 tests)
+
+Files Tested:
+  - modules/connection_review_tabbed.R
+  - modules/template_ses_module.R
+
+=============================================================================
+
+Γ£ö |         10 | Connection Review - Edge Cases
+
+ΓáÅ |          0 | create-ses-module                                              
+ΓáÖ |         12 | create-ses-module                                              
+Γ£ö |         17 | create-ses-module
+
+ΓáÅ |          0 | dapsiwrm-connection-rules                                      
+Γá╕ |         14 | dapsiwrm-connection-rules                                      
+ΓáÅ |         40 | dapsiwrm-connection-rules                                      
+Γá╝ |         65 | dapsiwrm-connection-rules                                      
+Γá┤ |         96 | dapsiwrm-connection-rules                                      
+Γáª |        127 | dapsiwrm-connection-rules                                      
+Γáª |        157 | dapsiwrm-connection-rules                                      
+Γá╝ |        185 | dapsiwrm-connection-rules                                      
+Γá╣ |        203 | dapsiwrm-connection-rules                                      
+ΓáÖ |        222 | dapsiwrm-connection-rules                                      
+Γá┤ |        246 | dapsiwrm-connection-rules                                      
+Γáª |        277 | dapsiwrm-connection-rules                                      
+======================================================================
+DAPSIWRM Connection Rules Tests Complete
+====================================================================== 
+
+Γ£ö |        289 | dapsiwrm-connection-rules [1.4s]
+
+ΓáÅ |          0 | data-structure-enhanced                                        
+ΓáÖ |         12 | data-structure-enhanced                                        
+ΓáÅ |         30 | data-structure-enhanced                                        
+Γá╝ |         35 | data-structure-enhanced                                        
+Γá╕ |         54 | data-structure-enhanced                                        
+Γáï |         81 | data-structure-enhanced                                        
+Γá┤ |         96 | data-structure-enhanced                                        
+Γáº |        108 | data-structure-enhanced                                        
+ΓáÖ |        122 | data-structure-enhanced                                        
+Γ£ö |        135 | data-structure-enhanced [1.0s]
+
+ΓáÅ |          0 | data-structure                                                 
+Γá╕ |         14 | data-structure                                                 
+Γ£ö |         14 | data-structure
+
+ΓáÅ |          0 | error-handling                                                 
+Γá╣ |         13 | error-handling                                                 
+Γáº |         28 | error-handling                                                 
+Γá╝ |   1     44 | error-handling                                                 
+Γá┤ |   5     71 | error-handling                                                 
+Γáï |   5  2  84 | error-handling                                                 
+Γ£ö |   5  2  98 | error-handling
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Warning ('test-error-handling.R:315:3'): safe_create_igraph creates valid graph from valid data
+`is.igraph()` was deprecated in igraph 2.0.0.
+Γä╣ Please use `is_igraph()` instead.
+Backtrace:
+    Γûå
+ 1. Γö£ΓöÇtestthat::expect_true(igraph::is.igraph(g)) at test-error-handling.R:315:3
+ 2. Γöé ΓööΓöÇtestthat::quasi_label(enquo(object), label)
+ 3. Γöé   ΓööΓöÇrlang::eval_bare(expr, quo_get_env(quo))
+ 4. ΓööΓöÇigraph::is.igraph(g)
+
+Warning ('test-error-handling.R:340:3'): safe_create_igraph returns NULL for invalid nodes
+Failed to create igraph: Invalid or empty nodes dataframe
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal safe_create_igraph(NULL, data.frame(from = "A", to = "B")) at test-error-handling.R:340:3
+ 2.   ΓööΓöÇglobal safe_execute(...)
+ 3.     ΓööΓöÇbase::tryCatch(...)
+ 4.       ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 5.         ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 6.           ΓööΓöÇvalue[[3L]](cond)
+
+Warning ('test-error-handling.R:348:3'): safe_create_igraph returns NULL for empty nodes
+Failed to create igraph: Invalid or empty nodes dataframe
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal safe_create_igraph(nodes, edges) at test-error-handling.R:348:3
+ 2.   ΓööΓöÇglobal safe_execute(...)
+ 3.     ΓööΓöÇbase::tryCatch(...)
+ 4.       ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 5.         ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 6.           ΓööΓöÇvalue[[3L]](cond)
+
+Warning ('test-error-handling.R:356:3'): safe_create_igraph returns NULL for missing required columns
+Failed to create igraph: Nodes dataframe missing 'id' column
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal safe_create_igraph(nodes, edges) at test-error-handling.R:356:3
+ 2.   ΓööΓöÇglobal safe_execute(...)
+ 3.     ΓööΓöÇbase::tryCatch(...)
+ 4.       ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 5.         ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 6.           ΓööΓöÇvalue[[3L]](cond)
+
+Warning ('test-error-handling.R:373:3'): safe_numeric returns default for invalid input
+NAs introduced by coercion
+Backtrace:
+    Γûå
+ 1. Γö£ΓöÇtestthat::expect_equal(...) at test-error-handling.R:373:3
+ 2. Γöé ΓööΓöÇtestthat::quasi_label(enquo(object), label)
+ 3. Γöé   ΓööΓöÇrlang::eval_bare(expr, quo_get_env(quo))
+ 4. ΓööΓöÇglobal safe_numeric("not a number", default = 99)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ΓáÅ |          0 | excel-import-helpers                                           
+Γáª |          7 | excel-import-helpers                                           
+Γáï |         11 | excel-import-helpers                                           
+Γáç |         29 | excel-import-helpers                                           
+Γá╕ |         44 | excel-import-helpers                                           
+ΓáÖ |         62 | excel-import-helpers                                           
+Γá╕ |         74 | excel-import-helpers                                           
+Γáº |         98 | excel-import-helpers                                           
+======================================================================
+Excel Import Helpers Tests Complete
+====================================================================== 
+
+Γ£ö |        114 | excel-import-helpers
+
+ΓáÅ |          0 | export-functions-enhanced                                      
+Γáï |         11 | export-functions-enhanced                                      
+Γá╝ |         15 | export-functions-enhanced                                      
+Γáç |         19 | export-functions-enhanced                                      
+ΓáÅ |         30 | export-functions-enhanced                                      
+Γá┤ |      1  35 | export-functions-enhanced                                      
+Γáº |      1  37 | export-functions-enhanced                                      
+ΓáÖ |      1  51 | export-functions-enhanced                                      
+ΓáÖ |      2  60 | export-functions-enhanced                                      
+Γ£ö |      2  70 | export-functions-enhanced [1.5s]
+
+ΓáÅ |          0 | export-functions                                               
+Γáª |          7 | export-functions                                               
+Γ£ö |         16 | export-functions
+
+ΓáÅ |          0 | feedback-analyzer                                              
+Γáª |         17 | feedback-analyzer                                              
+Γáç |         39 | feedback-analyzer                                              
+Γáï |      2  59 | feedback-analyzer                                              
+ΓáÖ |      2  90 | feedback-analyzer                                              
+Γá╣ |      2 121 | feedback-analyzer                                              
+Γáï |      2 149 | feedback-analyzer                                              
+Γáç |      2 177 | feedback-analyzer                                              
+Γáç |      2 207 | feedback-analyzer                                              
+Γá┤ |      2 234 | feedback-analyzer                                              
+Γáª |      2 265 | feedback-analyzer                                              
+Γáï |      2 289 | feedback-analyzer                                              
+Γáï |      2 319 | feedback-analyzer                                              
+Γ£ö |      2 341 | feedback-analyzer [1.4s]
+
+ΓáÅ |          0 | feedback-reporter                                              
+Γáï |   2     19 | feedback-reporter                                              
+Γáº |   2  1  35 | feedback-reporter                                              
+Γáª |   2  1  64 | feedback-reporter                                              
+Γáº |   2  1  95 | feedback-reporter                                              
+Γá╝ |   2  1 122 | feedback-reporter                                              
+Γá╝ |   2  1 152 | feedback-reporter                                              
+Γá┤ |   2  1 183 | feedback-reporter                                              
+Γá╝ |   2  1 212 | feedback-reporter                                              
+Γ£ö |   2  1 223 | feedback-reporter
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Warning ('test-feedback-reporter.R:153:3'): save_feedback_local returns FALSE on write error
+cannot create dir 'C:\Users\DELL\AppData\Local\Temp\RtmpuyrWVf\file55f84e225ae6.txt\subdir', reason 'No such file or directory'
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal save_feedback_local(list(x = 1), path = bad_path) at test-feedback-reporter.R:153:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇbase::dir.create(dir_path, recursive = TRUE)
+
+Warning ('test-feedback-reporter.R:153:3'): save_feedback_local returns FALSE on write error
+cannot open file 'C:\Users\DELL\AppData\Local\Temp\RtmpuyrWVf\file55f84e225ae6.txt/subdir/feedback.ndjson': No such file or directory
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal save_feedback_local(list(x = 1), path = bad_path) at test-feedback-reporter.R:153:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇbase::cat(...)
+ 7.     ΓööΓöÇbase::file(file, ifelse(append, "a", "w"))
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ΓáÅ |          0 | global-utils                                                   
+Γá┤ |         36 | global-utils                                                   
+Γá┤ |         96 | global-utils                                                   
+ΓáÅ |        130 | global-utils                                                   
+Γ£ö |        147 | global-utils
+
+ΓáÅ |          0 | graphical-ses-ai-creation                                      
+ΓáÅ |          0 | Graphical SES - AI Element Classification                      
+Γáï |          1 | Graphical SES - AI Element Classification                      
+Γáº |         28 | Graphical SES - AI Element Classification                      
+Γ£ö |         35 | Graphical SES - AI Element Classification
+
+ΓáÅ |          0 | Graphical SES - Network Building                               
+Γáï |          1 | Graphical SES - Network Building                               
+Γ£ö |         11 | Graphical SES - Network Building
+
+ΓáÅ |          0 | Graphical SES Creator - Module Integration                     
+ΓáÅ |         10 | Graphical SES Creator - Module Integration                     
+Γ£ö |      1  21 | Graphical SES Creator - Module Integration
+
+ΓáÅ |          0 | Graphical SES - ISA Export                                     
+Γ£ö |         15 | Graphical SES - ISA Export
+
+ΓáÅ |          0 | Graphical SES - Complete Workflows                             
+Γá╣ |         13 | Graphical SES - Complete Workflows                             
+Γ£ö |         16 | Graphical SES - Complete Workflows
+
+ΓáÅ |          0 | Graphical SES - Error Handling                                 
+Γ£ö |          6 | Graphical SES - Error Handling
+
+ΓáÅ |          0 | guidebook-module                                               
+ΓáÖ |      2  20 | guidebook-module                                               
+Γ£ö |      2  23 | guidebook-module
+
+ΓáÅ |          0 | i18n-enforcement                                               
+ΓáÖ |   1      1 | i18n-enforcement                                               
+Γá╕ |   1      3 | i18n-enforcement                                               
+Γá╝ |   1      4 | i18n-enforcement                                               
+Γá┤ |   1      5 | i18n-enforcement                                               
+Γáº |   1      7 | i18n-enforcement                                               
+Γáç |   1      8 | i18n-enforcement                                               
+Γá╕ |   2     12 | i18n-enforcement                                               
+Γ£ö |   2     12 | i18n-enforcement [6.0s]
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Warning ('test-i18n-enforcement.R:129:5'): showNotification calls use i18n$t() for all user-facing messages
+Found 7 showNotification calls with hardcoded strings:
+cld_visualization_module.R:1005
+cld_visualization_module.R:1212
+cld_visualization_module.R:1218
+export_reports_module.R:409
+import_data_module.R:558
+ses_models_module.R:281
+ses_models_module.R:522
+
+Warning ('test-i18n-enforcement.R:511:5'): Modules that accept i18n parameter actually use i18n$t()
+Found 2 modules with unused i18n parameter:
+_module_template.R, graphical_ses_ai_classifier.R
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ΓáÅ |          0 | import-data-module                                             
+Γá┤ |          6 | import-data-module                                             
+ΓáÖ |         22 | import-data-module                                             
+Γ£ö |         39 | import-data-module
+
+ΓáÅ |          0 | integration                                                    
+Γá╣ |         23 | integration                                                    
+Γá┤ |         46 | integration                                                    
+Γ£ö |         56 | integration
+
+ΓáÅ |          0 | isa-export-helpers                                             
+Γáº |          8 | isa-export-helpers                                             
+Γá╣ |         13 | isa-export-helpers                                             
+ΓáÖ |         22 | isa-export-helpers                                             
+Γá╝ |         25 | isa-export-helpers                                             
+Γáï |         41 | isa-export-helpers                                               adding: Users/DELL/AppData/Local/Temp/RtmpuyrWVf/elements.csv (deflated 40%)
+  adding: Users/DELL/AppData/Local/Temp/RtmpuyrWVf/connections.csv (deflated 18%)
+  adding: Users/DELL/AppData/Local/Temp/RtmpuyrWVf/elements.csv (deflated 40%)
+  adding: Users/DELL/AppData/Local/Temp/RtmpuyrWVf/connections.csv (deflated 18%)
+
+Γá╝ |         45 | isa-export-helpers                                               adding: Users/DELL/AppData/Local/Temp/RtmpuyrWVf/elements.csv (deflated 40%)
+  adding: Users/DELL/AppData/Local/Temp/RtmpuyrWVf/connections.csv (deflated 18%)
+  adding: Users/DELL/AppData/Local/Temp/RtmpuyrWVf/elements.csv (deflated 40%)
+  adding: Users/DELL/AppData/Local/Temp/RtmpuyrWVf/connections.csv (deflated 18%)
+
+Γáï |         51 | isa-export-helpers                                             
+Γ£ö |         55 | isa-export-helpers
+
+ΓáÅ |          0 | kb-audit-fixes                                                 
+ΓáÅ |         10 | kb-audit-fixes                                                 
+Γáç |         19 | kb-audit-fixes                                                 
+Γáº |         38 | kb-audit-fixes                                                 
+Γáç |         69 | kb-audit-fixes                                                 
+Γ£ö |         81 | kb-audit-fixes
+
+ΓáÅ |          0 | kb-report-helpers                                              
+ΓáÖ |         12 | kb-report-helpers                                              
+Γá╕ |         24 | kb-report-helpers                                              
+Γáº |      1  37 | kb-report-helpers                                              
+Γáç |      1  68 | kb-report-helpers                                              
+ΓáÅ |      1  89 | kb-report-helpers                                              
+Γá┤ |      1 115 | kb-report-helpers                                              
+Γá╣ |      1 142 | kb-report-helpers                                              
+Γá╕ |      1 173 | kb-report-helpers                                              
+Γá╕ |      1 203 | kb-report-helpers                                              
+Γá╕ |      1 233 | kb-report-helpers                                              
+Γá╣ |      1 262 | kb-report-helpers                                              
+ΓáÅ |      1 289 | kb-report-helpers                                              
+Γ£ö |      1 314 | kb-report-helpers [1.4s]
+
+ΓáÅ |          0 | knowledge-base                                                 
+Γáª |          7 | knowledge-base                                                 
+Γáç |          9 | knowledge-base                                                 
+Γáï | 1       20 | knowledge-base                                                 
+Γáª | 1       26 | knowledge-base                                                 
+ΓáÖ | 1       41 | knowledge-base                                                 
+Γá┤ | 1       45 | knowledge-base                                                 
+ΓáÅ | 1       49 | knowledge-base                                                 
+Γá╝ | 1       54 | knowledge-base                                                 
+ΓáÅ | 1       59 | knowledge-base                                                 
+Γá╕ | 1       73 | knowledge-base                                                 
+Γá╝ | 1       74 | knowledge-base                                                 
+Γáª | 1       76 | knowledge-base                                                 
+Γáç | 1       78 | knowledge-base                                                 
+ΓáÖ | 1       81 | knowledge-base                                                 
+Γáª | 1       86 | knowledge-base                                                 
+Γáº | 1       87 | knowledge-base                                                 
+Γá╝ | 1      104 | knowledge-base                                                 
+Γá┤ | 1      105 | knowledge-base                                                 
+Γ£û | 1      105 | knowledge-base [3.6s]
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Failure ('test-knowledge-base.R:350:3'): No duplicate connections (same from+to) within any context
+Expected `length(dup_contexts) == 0` to be TRUE.
+Differences:
+`actual`:   FALSE
+`expected`: TRUE 
+
+Duplicate from+to in: macaronesia_open_coast: Marine ecotourism demand (pelagic wildlife) -> Pelagic whale and dolphin watching excursions
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ΓáÅ |          0 | ml-active-learning                                             
+Γá╕ |          4 | ml-active-learning                                             
+ΓáÖ |         12 | ml-active-learning                                             
+Γáç |         19 | ml-active-learning                                             
+Γá╕ |         34 | ml-active-learning                                             
+ΓáÅ |         50 | ml-active-learning                                             
+Γáï |         71 | ml-active-learning                                             
+Γ£ö |         87 | ml-active-learning [1.4s]
+
+ΓáÅ |          0 | ml-context-embeddings                                          
+ΓáÅ |         20 | ml-context-embeddings                                          
+Γáï |         41 | ml-context-embeddings                                          
+Γ£ô All context embedding tests passed!
+
+Γ£ö |         53 | ml-context-embeddings
+
+ΓáÅ |          0 | ml-ensemble                                                    
+Γáª |          7 | ml-ensemble                                                    
+Γáï |         11 | ml-ensemble                                                    
+Γá╣ |         23 | ml-ensemble                                                    
+Γá┤ |         26 | ml-ensemble                                                    
+Γáï |         31 | ml-ensemble                                                    
+ΓáÖ |         42 | ml-ensemble                                                    
+Γáº |         48 | ml-ensemble                                                    
+Γáç |         49 | ml-ensemble                                                    
+Γá╣ |         53 | ml-ensemble                                                    
+Γ£ö |         53 | ml-ensemble [1.5s]
+
+ΓáÅ |          0 | ml-explainability                                              
+Γáº |         18 | ml-explainability                                              
+Γ£ö |         26 | ml-explainability
+
+ΓáÅ |          0 | ml-feature-engineering                                         
+Γá╝ |         45 | ml-feature-engineering                                         
+Γáª |         77 | ml-feature-engineering                                         
+Γáº |         88 | ml-feature-engineering                                         
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |======================================================================| 100%
+
+  |                                                                            
+  |                                                                      |   0%
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |============================                                          |  40%
+  |                                                                            
+  |==========================================                            |  60%
+  |                                                                            
+  |========================================================              |  80%
+  |                                                                            
+  |======================================================================| 100%
+
+Γá╣ |        103 | ml-feature-engineering                                         
+==============================================================
+  ML Feature Engineering Test Summary
+==============================================================
+All feature engineering tests completed successfully!
+
+Functions tested:
+  - encode_dapsiwrm_type()     Γ£ô
+  - encode_regional_sea()      Γ£ô
+  - encode_ecosystem_types()   Γ£ô
+  - encode_focal_issues()      Γ£ô
+  - encode_context()           Γ£ô
+  - tokenize_element_name()    Γ£ô
+  - create_element_embedding() Γ£ô
+  - create_feature_vector()    Γ£ô
+  - create_feature_matrix()    Γ£ô
+  - get_feature_dim()          Γ£ô
+
+Test coverage:
+  - Valid inputs               Γ£ô
+  - Edge cases (NULL, empty)   Γ£ô
+  - Invalid inputs             Γ£ô
+  - Dimension consistency      Γ£ô
+  - End-to-end integration     Γ£ô
+==============================================================
+
+Γ£ö |        108 | ml-feature-engineering
+
+ΓáÅ |          0 | ml-graph-features                                              
+Γáª |         27 | ml-graph-features                                              
+Γáï |   1     40 | ml-graph-features                                              
+Γá┤ |   1     55 | ml-graph-features                                              
+Γáª |   9     58 | ml-graph-features                                              
+Γáç |   16     63 | ml-graph-features                                             
+Γ£ô All graph features tests passed!
+
+Γ£ö |   16     63 | ml-graph-features
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Warning ('test-ml-graph-features.R:184:3'): extract_graph_features handles unreachable nodes
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features("D1", "ISOLATED", graph, network$nodes) at test-ml-graph-features.R:184:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+
+Warning ('test-ml-graph-features.R:353:3'): batch extraction is reasonably fast
+At vendor/cigraph/src/paths/unweighted.c:444 : Couldn't reach some vertices.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal extract_graph_features_batch(source_ids, target_ids, graph, network$nodes) at test-ml-graph-features.R:353:3
+ 2.   ΓööΓöÇbase::lapply(...)
+ 3.     ΓööΓöÇFUN(X[[i]], ...)
+ 4.       Γö£ΓöÇbase::tryCatch(...)
+ 5.       Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 6.       Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 7.       Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 8.       ΓööΓöÇigraph::shortest_paths(...)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ΓáÅ |          0 | ml-inference                                                   
+Γáª |          7 | ml-inference                                                   
+Γáï |     10  11 | ml-inference                                                   
+Γ£ö |     12  15 | ml-inference
+
+ΓáÅ |          0 | ml-model-registry                                              
+Γá╣ |         23 | ml-model-registry                                              
+Γáç |         39 | ml-model-registry                                              
+Γ£ö |         45 | ml-model-registry
+
+ΓáÅ |          0 | ml-models                                                      
+Γá╝ |      1  14 | ml-models                                                      
+Γ£ö |      4  15 | ml-models
+
+ΓáÅ |          0 | ml-text-embeddings                                             
+Γá╣ |         13 | ml-text-embeddings                                             
+Γáï |         31 | ml-text-embeddings                                             
+Γ£ö |         51 | ml-text-embeddings
+
+ΓáÅ |          0 | model-signature                                                
+Γ£ö |      7  11 | model-signature
+
+ΓáÅ |          0 | module-integration                                             
+ΓáÅ |          0 | Module Integration: Data Flow                                  
+Γ£ö |          5 | Module Integration: Data Flow
+
+ΓáÅ |          0 | Module Integration: ISA to CLD                                 
+Γáï |          1 | Module Integration: ISA to CLD                                 
+Γáº |          8 | Module Integration: ISA to CLD                                 
+Γ£ö |         13 | Module Integration: ISA to CLD
+
+ΓáÅ |          0 | Module Integration: Data Accessors                             
+Γ£ö |         17 | Module Integration: Data Accessors
+
+ΓáÅ |          0 | Module Integration: Template Loading                           
+Γ£ö |      2   0 | Module Integration: Template Loading
+
+ΓáÅ |          0 | Module Integration: Cross-Reference Validation                 
+Γ£ö |          3 | Module Integration: Cross-Reference Validation
+
+ΓáÅ |          0 | Module Integration: State Management                           
+Γ£ö |          5 | Module Integration: State Management
+
+ΓáÅ |          0 | Module Integration: Event Bus                                  
+Γ£ö |      1   0 | Module Integration: Event Bus
+
+ΓáÅ |          0 | Module Integration: End-to-End Flow                            
+Γ£ö |          6 | Module Integration: End-to-End Flow
+
+ΓáÅ |          0 | module-signatures                                              
+ΓáÖ |         12 | module-signatures                                              
+Γ£ö |      5  14 | module-signatures
+
+ΓáÅ |          0 | module-validation-helpers                                      
+Γá╕ |         14 | module-validation-helpers                                      
+Γáï |         31 | module-validation-helpers                                      
+Γá┤ |         46 | module-validation-helpers                                      
+Γá╕ |         64 | module-validation-helpers                                      
+Γáç |         79 | module-validation-helpers                                      
+Γáº |         98 | module-validation-helpers                                      
+Γ£ö |        102 | module-validation-helpers
+
+ΓáÅ |          0 | modules-comprehensive                                          
+Γá╣ |     12   1 | modules-comprehensive                                          
+Γá╕ |     27   7 | modules-comprehensive                                          
+Γ£ö |     33   7 | modules-comprehensive
+
+ΓáÅ |          0 | modules                                                        
+Γá╕ |         14 | modules                                                        
+Γá┤ |         26 | modules                                                        
+ΓáÖ |         52 | modules                                                        
+Γá╕ |         84 | modules                                                        
+Γ£ö |         96 | modules
+
+ΓáÅ |          0 | network-analysis-enhanced                                      
+Γáï |         11 | network-analysis-enhanced                                      
+Γáª |         27 | network-analysis-enhanced                                      
+Γáç |   1     38 | network-analysis-enhanced                                      
+Γáª |   2     55 | network-analysis-enhanced                                      
+Γáº |   2     66 | network-analysis-enhanced                                      
+Γá╕ |   2     72 | network-analysis-enhanced                                      
+Γ£ö |   4     88 | network-analysis-enhanced
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Warning ('test-network-analysis-enhanced.R:241:3'): calculate_network_metrics_safe works with nodes/edges input
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+     Γûå
+  1. ΓööΓöÇcalculate_network_metrics_safe(nodes, edges) at test-network-analysis-enhanced.R:241:3
+  2.   Γö£ΓöÇbase::tryCatch(...)
+  3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+  4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+  6.   ΓööΓöÇcalculate_network_metrics(g)
+  7.     Γö£ΓöÇbase::tryCatch(...)
+  8.     Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+  9.     Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 10.     Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 11.     ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 12.       ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-analysis-enhanced.R:268:3'): calculate_network_metrics_safe handles disconnected graph
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+     Γûå
+  1. ΓööΓöÇcalculate_network_metrics_safe(nodes, edges) at test-network-analysis-enhanced.R:268:3
+  2.   Γö£ΓöÇbase::tryCatch(...)
+  3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+  4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+  6.   ΓööΓöÇcalculate_network_metrics(g)
+  7.     Γö£ΓöÇbase::tryCatch(...)
+  8.     Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+  9.     Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 10.     Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 11.     ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 12.       ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-analysis-enhanced.R:527:3'): Complete network analysis workflow with error recovery
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+     Γûå
+  1. ΓööΓöÇcalculate_network_metrics_safe(nodes, edges) at test-network-analysis-enhanced.R:527:3
+  2.   Γö£ΓöÇbase::tryCatch(...)
+  3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+  4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+  6.   ΓööΓöÇcalculate_network_metrics(g)
+  7.     Γö£ΓöÇbase::tryCatch(...)
+  8.     Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+  9.     Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 10.     Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 11.     ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 12.       ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-analysis-enhanced.R:566:3'): Error handling preserves partial results in analysis pipeline
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+     Γûå
+  1. ΓööΓöÇcalculate_network_metrics_safe(nodes, edges) at test-network-analysis-enhanced.R:566:3
+  2.   Γö£ΓöÇbase::tryCatch(...)
+  3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+  4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+  6.   ΓööΓöÇcalculate_network_metrics(g)
+  7.     Γö£ΓöÇbase::tryCatch(...)
+  8.     Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+  9.     Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 10.     Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 11.     ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 12.       ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ΓáÅ |          0 | network-analysis                                               
+ΓáÖ |   2     20 | network-analysis                                               
+Γáç |   2     37 | network-analysis                                               
+Γáç |   2     57 | network-analysis                                               
+Γá┤ |   2     84 | network-analysis                                               
+Γá┤ |   2    104 | network-analysis                                               
+Γáª |   2    115 | network-analysis                                               
+Γ£ö |   2    135 | network-analysis
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Warning ('test-network-analysis.R:89:3'): calculate_network_metrics handles disconnected graph
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal calculate_network_metrics(nodes, edges) at test-network-analysis.R:89:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-analysis.R:105:3'): calculate_network_metrics handles graph with isolated nodes
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal calculate_network_metrics(g) at test-network-analysis.R:105:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ΓáÅ |          0 | network-metrics-module                                         
+ΓáÅ |   2     18 | network-metrics-module                                         
+Γáº |   7     51 | network-metrics-module                                         
+Γáº |   12     66 | network-metrics-module                                        
+Γáº |   15     83 | network-metrics-module                                        
+Γ£ö |   15     87 | network-metrics-module
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Warning ('test-network-metrics-module.R:63:3'): calculate_network_metrics works with nodes and edges
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:63:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:88:3'): network-level metrics have correct values
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:88:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:108:3'): node-level metrics have correct length
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:108:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:123:3'): degree metrics are consistent
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:123:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:142:3'): centrality metrics are in valid range
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:142:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:201:3'): node metrics dataframe is created correctly
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:201:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:242:3'): top nodes by degree are identified correctly
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:242:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:267:3'): top nodes by betweenness are identified correctly
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:267:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:291:3'): top nodes by pagerank are identified correctly
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:291:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:325:3'): network connectivity percentage is calculated correctly
+`is.connected()` was deprecated in igraph 2.0.0.
+Γä╣ Please use `is_connected()` instead.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇigraph::is.connected(g, mode = "weak") at test-network-metrics-module.R:325:3
+
+Warning ('test-network-metrics-module.R:351:3'): metrics calculation handles missing confidence column
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:351:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:400:3'): metrics calculation handles disconnected components
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(nodes, edges) at test-network-metrics-module.R:400:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:475:3'): metrics work with project data structure
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(nodes, edges) at test-network-metrics-module.R:475:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:504:3'): data is prepared correctly for bar plot
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:504:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+
+Warning ('test-network-metrics-module.R:531:3'): data is prepared correctly for comparison plot
+At vendor/cigraph/src/centrality/eigenvector.c:335 : Graph is directed and acyclic; returning eigenvector centralities of 1 in sink vertices, and 0 everywhere else.
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇcalculate_network_metrics(test_data$nodes, test_data$edges) at test-network-metrics-module.R:531:3
+ 2.   Γö£ΓöÇbase::tryCatch(...)
+ 3.   Γöé ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.   Γöé   ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.   Γöé     ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ 6.   ΓööΓöÇigraph::eigen_centrality(g, directed = TRUE)
+ 7.     ΓööΓöÇigraph:::eigenvector_centrality_impl(...)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ΓáÅ |          0 | old-excel-backward-compat                                      
+Γáï |          1 | old-excel-backward-compat                                      
+Γáº |          8 | old-excel-backward-compat                                      
+Γáº |         18 | old-excel-backward-compat                                      
+Γáº |         38 | old-excel-backward-compat                                      
+Γá╣ |         63 | old-excel-backward-compat                                      
+Γá┤ |         96 | old-excel-backward-compat                                      
+Γá╝ |        135 | old-excel-backward-compat                                      
+======================================================================
+Old Excel Backward Compatibility Tests Complete
+====================================================================== 
+
+Γ£ö |        170 | old-excel-backward-compat [1.4s]
+
+ΓáÅ |          0 | p0-fixes                                                       
+Γ£ö |          5 | p0-fixes
+
+ΓáÅ |          0 | P0 Fix 1: Atomic Transaction Wrapper                           
+Γá╝ |         15 | P0 Fix 1: Atomic Transaction Wrapper                           
+Γ£ö |         16 | P0 Fix 1: Atomic Transaction Wrapper
+
+ΓáÅ |          0 | P0 Fix 2: Cross-Reference Validation                           
+Γ£ö |         14 | P0 Fix 2: Cross-Reference Validation
+
+ΓáÅ |          0 | P0 Fix 3: ML Dimension Validation                              
+Γ£ö |      3   0 | P0 Fix 3: ML Dimension Validation
+
+ΓáÅ |          0 | P0 Fix 4: Critical Module Configuration                        
+Γ£ö |      3   0 | P0 Fix 4: Critical Module Configuration
+
+ΓáÅ |          0 | P0 Fixes: Integration                                          
+Γ£ö |          5 | P0 Fixes: Integration
+
+ΓáÅ |          0 | p1-fixes                                                       
+Γ£ö |      1   4 | p1-fixes
+
+ΓáÅ |          0 | P1 Fix: DAPSIWRM Real-Time Validation                          
+Γá╕ |         24 | P1 Fix: DAPSIWRM Real-Time Validation                          
+Γ£ö |         30 | P1 Fix: DAPSIWRM Real-Time Validation
+
+ΓáÅ |          0 | P1 Fix: ML Ensemble Integration                                
+Γ£ö |      2   1 | P1 Fix: ML Ensemble Integration
+
+ΓáÅ |          0 | P1 Fix: Startup Logging                                        
+Γ£ö |          3 | P1 Fix: Startup Logging
+
+ΓáÅ |          0 | P1 Fix: Export Handlers                                        
+Γ£ö |      1   0 | P1 Fix: Export Handlers
+
+ΓáÅ |          0 | P1 Fix: Error Message i18n                                     
+Γ£ö |          2 | P1 Fix: Error Message i18n
+
+ΓáÅ |          0 | P1 Fixes: Integration                                          
+Γ£ö |      1  10 | P1 Fixes: Integration
+
+ΓáÅ |          0 | P1 Fix: Safe Render Error Boundaries                           
+Γ£ö |      2   6 | P1 Fix: Safe Render Error Boundaries
+
+ΓáÅ |          0 | p2-fixes                                                       
+ΓáÅ |          0 | P2 Fixes: i18n System Cleanup                                  
+Γ£ö |         10 | P2 Fixes: i18n System Cleanup
+
+ΓáÅ |          0 | P2 Fixes: Module Signature Standardization                     
+Γ£ö |          5 | P2 Fixes: Module Signature Standardization
+
+ΓáÅ |          0 | P2 Fixes: Data Accessor Functions                              
+Γ£ö |         17 | P2 Fixes: Data Accessor Functions
+
+ΓáÅ |          0 | P2 Fixes: Testing Infrastructure                               
+Γ£ö |          3 | P2 Fixes: Testing Infrastructure
+
+ΓáÅ |          0 | P2 Fixes: Cross-cutting Validation                             
+Γ£ö |          3 | P2 Fixes: Cross-cutting Validation
+
+ΓáÅ |          0 | P2 Fixes: Summary                                              
+Γ£ö |          6 | P2 Fixes: Summary
+
+ΓáÅ |          0 | p3-fixes                                                       
+Γáº |         18 | p3-fixes                                                       
+Γáï |         41 | p3-fixes                                                       
+Γ£ö |      6  49 | p3-fixes
+
+ΓáÅ |          0 | performance                                                    
+Γáª |      3   4 | performance                                                    
+======================================================================
+Performance Regression Tests Complete
+====================================================================== 
+
+Γ£ö |      4   5 | performance
+
+ΓáÅ |          0 | persistent-storage                                             
+Γá╝ |         15 | persistent-storage                                             
+ΓáÅ |         30 | persistent-storage                                             
+Γá┤ |         46 | persistent-storage                                             
+ΓáÖ |         62 | persistent-storage                                             
+Γ£ö |         65 | persistent-storage
+
+ΓáÅ |          0 | pims-module                                                    
+Γáç |         19 | pims-module                                                    
+Γáç |         39 | pims-module                                                    
+Γ£ö |         47 | pims-module
+
+ΓáÅ |          0 | prepare-report-module                                          
+Γá╣ |          3 | prepare-report-module                                          
+Γáç |          9 | prepare-report-module                                          
+Γ£ö |         28 | prepare-report-module
+
+ΓáÅ |          0 | reactive-pipeline                                              
+Γáº |     18   0 | reactive-pipeline                                              
+Γá╣ |     19  14 | reactive-pipeline                                              
+Γáç |     20  29 | reactive-pipeline                                              
+Γá╣ |   2 27  44 | reactive-pipeline                                              
+Γ£ö |   2 30  50 | reactive-pipeline
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Warning ('test-reactive-pipeline.R:786:3'): safe_execute catches errors and returns default
+Test error: Intentional error
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal safe_execute(...) at test-reactive-pipeline.R:786:3
+ 2.   ΓööΓöÇbase::tryCatch(...)
+ 3.     ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.       ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.         ΓööΓöÇvalue[[3L]](cond)
+
+Warning ('test-reactive-pipeline.R:798:5'): safe_execute handles warnings without crashing
+Test warning
+Backtrace:
+    Γûå
+ 1. ΓööΓöÇglobal safe_execute(...) at test-reactive-pipeline.R:797:3
+ 2.   ΓööΓöÇbase::tryCatch(...)
+ 3.     ΓööΓöÇbase (local) tryCatchList(expr, classes, parentenv, handlers)
+ 4.       ΓööΓöÇbase (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 5.         ΓööΓöÇbase (local) doTryCatch(return(expr), name, parentenv, handler)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+
+ΓáÅ |          0 | report-generation                                              
+ΓáÅ |         20 | report-generation                                              
+======================================================================
+Report Generation Tests Complete
+====================================================================== 
+
+Γ£ö |         31 | report-generation
+
+ΓáÅ |          0 | safe-render-factory                                            
+Γá╝ |     11   4 | safe-render-factory                                            
+Γ£ö |     13  11 | safe-render-factory
+
+ΓáÅ |          0 | safe-render                                                    
+Γ£ö |          7 | safe-render
+
+ΓáÅ |          0 | ses-dynamics                                                   
+ΓáÅ |         20 | ses-dynamics                                                   
+Γá┤ |         36 | ses-dynamics                                                   
+ΓáÅ |         60 | ses-dynamics                                                   
+Γá╕ |         74 | ses-dynamics                                                   
+ΓáÖ |         92 | ses-dynamics                                                   
+ΓáÖ |        102 | ses-dynamics                                                   
+Γáº |        118 | ses-dynamics                                                   
+Γá╝ |        135 | ses-dynamics                                                   
+ΓáÅ |        150 | ses-dynamics                                                   
+Γáº |        168 | ses-dynamics                                                   
+Γáº |        178 | ses-dynamics                                                   
+ΓáÅ |        200 | ses-dynamics                                                   
+Γá╣ |        213 | ses-dynamics                                                   
+ΓáÅ |        230 | ses-dynamics                                                   
+Γá╕ |        244 | ses-dynamics                                                   
+ΓáÖ |      1 261 | ses-dynamics                                                   
+Γáº |      1 277 | ses-dynamics                                                   
+Γ£ö |      1 278 | ses-dynamics [2.1s]
+
+ΓáÅ |          0 | ses-models-loader                                              
+ΓáÅ |         10 | ses-models-loader                                              
+Γá┤ |         36 | ses-models-loader                                              
+ΓáÖ |         62 | ses-models-loader                                              
+Γá╣ |         93 | ses-models-loader                                              
+Γáç |         99 | ses-models-loader                                              
+ΓáÅ |        100 | ses-models-loader                                              
+Γáª |        127 | ses-models-loader                                              
+Γáº |        128 | ses-models-loader                                              
+Γá╣ |        143 | ses-models-loader                                              
+Γáï |        161 | ses-models-loader                                              
+Γáï |        171 | ses-models-loader                                              
+ΓáÖ |        172 | ses-models-loader                                              
+Γ£ö |        174 | ses-models-loader [5.2s]
+
+ΓáÅ |          0 | session-isolation                                              
+Γá┤ |         56 | session-isolation                                              
+Γá╝ |         75 | session-isolation                                              
+Γáï |         91 | session-isolation                                              
+Γá╝ |        115 | session-isolation                                              
+Γá┤ |        146 | session-isolation                                              
+Γ£ö |        150 | session-isolation
+
+ΓáÅ |          0 | session-logger                                                 
+Γá╝ |          5 | session-logger                                                 
+Γ£ö |         18 | session-logger
+
+ΓáÅ |          0 | shiny-ui-components                                            
+Γ£ö |     10   0 | shiny-ui-components
+
+ΓáÅ |          0 | template-loading                                               
+Γá╣ |         13 | template-loading                                               
+Γáï |         41 | template-loading                                               
+Γáª |         67 | template-loading                                               
+ΓáÖ |         92 | template-loading                                               
+Γáª |        117 | template-loading                                               
+Γáª |        147 | template-loading                                               
+Γá┤ |        176 | template-loading                                               
+Γá╣ |        203 | template-loading                                               
+Γáº |        218 | template-loading                                               
+Γáï |        241 | template-loading                                               
+Γá┤ |        256 | template-loading                                               
+Γáº |        268 | template-loading                                               
+Γáº |        278 | template-loading                                               
+Γá╣ |        293 | template-loading                                               
+Γáº |        308 | template-loading                                               
+Γ£ö |        316 | template-loading [1.7s]
+
+ΓáÅ |          0 | template-versioning                                            
+Γáç |         19 | template-versioning                                            
+Γáª |         27 | template-versioning                                            
+ΓáÖ |         42 | template-versioning                                            
+Γáï |         51 | template-versioning                                            
+Γ£ö |         54 | template-versioning
+
+ΓáÅ |          0 | tool-recommendations                                           
+Γáº |         18 | tool-recommendations                                           
+Γá╕ |         44 | tool-recommendations                                           
+Γ£ö |         69 | tool-recommendations
+
+ΓáÅ |          0 | translations                                                   
+Γá╣ |     18   5 | translations                                                   
+Γ£ö |     18   5 | translations
+
+ΓáÅ |          0 | ui-components                                                  
+Γáª |          7 | ui-components                                                  
+ΓáÅ |         20 | ui-components                                                  
+Γá┤ |         36 | ui-components                                                  
+Γ£ö |         45 | ui-components
+
+ΓáÅ |          0 | ui-helpers                                                     
+Γ£ö |         14 | ui-helpers
+
+ΓáÅ |          0 | undo-redo                                                      
+Γáº |          8 | undo-redo                                                      
+Γá┤ |         46 | undo-redo                                                      
+Γ£ö |         53 | undo-redo
+
+ΓáÅ |          0 | universal-excel-loader                                         
+Γá╝ |         15 | universal-excel-loader                                         
+Γá╕ |         34 | universal-excel-loader                                         
+Γá╝ |         45 | universal-excel-loader                                         
+ΓáÖ |         52 | universal-excel-loader                                         
+Γ£ö |         73 | universal-excel-loader
+
+ΓáÅ |          0 | visnetwork-helpers                                             
+Γ£ö |          2 | visnetwork-helpers
+
+ΓáÅ |          0 | visual-regression                                              
+Γ£ö |      1   0 | visual-regression
+
+ΓáÅ |          0 | workflow-stepper-module                                        
+Γáº |         18 | workflow-stepper-module                                        
+Γ£ö |         35 | workflow-stepper-module
+
+ΓòÉΓòÉ Results ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+Duration: 54.1 s
+
+ΓöÇΓöÇ Skipped tests (175) ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ΓÇó ai_isa_knowledge_base.R not found (1): 'test-modules-comprehensive.R:291:3'
+ΓÇó All simulations had same outcome - cannot train RF (1):
+  'test-ses-dynamics.R:1246:5'
+ΓÇó analysis_boolean_server function not available (1):
+  'test-modules-comprehensive.R:81:3'
+ΓÇó analysis_boolean_ui function not available (1):
+  'test-modules-comprehensive.R:77:3'
+ΓÇó analysis_bot_server function not available (1):
+  'test-modules-comprehensive.R:73:3'
+ΓÇó analysis_bot_ui function not available (1):
+  'test-modules-comprehensive.R:69:3'
+ΓÇó analysis_intervention_server function not available (1):
+  'test-modules-comprehensive.R:97:3'
+ΓÇó analysis_intervention_ui function not available (1):
+  'test-modules-comprehensive.R:93:3'
+ΓÇó analysis_leverage_server function not available (1):
+  'test-modules-comprehensive.R:105:3'
+ΓÇó analysis_leverage_ui function not available (1):
+  'test-modules-comprehensive.R:101:3'
+ΓÇó analysis_leverage_ui not available (1):
+  'test-analysis-leverage-clarity.R:13:3'
+ΓÇó analysis_simplify_server function not available (1):
+  'test-modules-comprehensive.R:113:3'
+ΓÇó analysis_simplify_ui function not available (1):
+  'test-modules-comprehensive.R:109:3'
+ΓÇó analysis_simulation_server function not available (1):
+  'test-modules-comprehensive.R:89:3'
+ΓÇó analysis_simulation_ui function not available (1):
+  'test-modules-comprehensive.R:85:3'
+ΓÇó cache_ml_features function not loaded (1): 'test-p3-fixes.R:301:3'
+ΓÇó calculate_metrics has different signature: too many indices for tensor of
+  dimension 1 (1): 'test-ml-models.R:152:3'
+ΓÇó connection_review_tabbed.R not found (1):
+  'test-modules-comprehensive.R:267:3'
+ΓÇó ConnectionPredictorV2 class not available (2): 'test-ml-models.R:189:3',
+  'test-ml-models.R:198:3'
+ΓÇó ContextAwarePredictor class not available (1): 'test-ml-models.R:213:3'
+ΓÇó create_empty_project_data function not loaded (1): 'test-performance.R:170:3'
+ΓÇó create_event_bus function not available (27):
+  'test-module-integration.R:415:3', 'test-reactive-pipeline.R:24:3',
+  'test-reactive-pipeline.R:46:3', 'test-reactive-pipeline.R:54:3',
+  'test-reactive-pipeline.R:63:3', 'test-reactive-pipeline.R:78:3',
+  'test-reactive-pipeline.R:89:3', 'test-reactive-pipeline.R:105:3',
+  'test-reactive-pipeline.R:116:3', 'test-reactive-pipeline.R:127:3',
+  'test-reactive-pipeline.R:138:3', 'test-reactive-pipeline.R:151:3',
+  'test-reactive-pipeline.R:164:3', 'test-reactive-pipeline.R:179:3',
+  'test-reactive-pipeline.R:192:3', 'test-reactive-pipeline.R:204:3',
+  'test-reactive-pipeline.R:221:3', 'test-reactive-pipeline.R:229:3',
+  'test-reactive-pipeline.R:239:3', 'test-reactive-pipeline.R:253:3',
+  'test-reactive-pipeline.R:621:3', 'test-reactive-pipeline.R:642:3',
+  'test-reactive-pipeline.R:655:3', 'test-reactive-pipeline.R:681:3',
+  'test-reactive-pipeline.R:700:3', 'test-reactive-pipeline.R:918:3',
+  'test-reactive-pipeline.R:930:3'
+ΓÇó create_event_bus function not loaded (1): 'test-p3-fixes.R:229:3'
+ΓÇó create_safe_render_factory function not available (3):
+  'test-safe-render-factory.R:16:3', 'test-safe-render-factory.R:23:3',
+  'test-safe-render-factory.R:217:3'
+ΓÇó CRITICAL_MODULES not defined (1): 'test-p0-fixes.R:328:3'
+ΓÇó CRITICAL_MODULES not defined (run from app.R context) (1):
+  'test-p0-fixes.R:312:3'
+ΓÇó data directory not found (1): 'test-performance.R:127:3'
+ΓÇó Debug mode is disabled (2): 'test-error-handling.R:452:3',
+  'test-error-handling.R:460:3'
+ΓÇó default_table_error_handler function not available (2):
+  'test-safe-render-factory.R:111:3', 'test-safe-render-factory.R:118:3'
+ΓÇó default_text_error_handler function not available (2):
+  'test-safe-render-factory.R:89:3', 'test-safe-render-factory.R:96:3'
+ΓÇó default_ui_error_handler function not available (3):
+  'test-safe-render-factory.R:46:3', 'test-safe-render-factory.R:53:3',
+  'test-safe-render-factory.R:71:3'
+ΓÇó detect_model_version function not available (2): 'test-ml-inference.R:86:3',
+  'test-ml-inference.R:93:3'
+ΓÇó empty test (3): 'test-auto-save-module.R:1215:1', 'test-confidence.R:214:1',
+  'test-graphical-ses-ai-creation.R:520:1'
+ΓÇó export_reports_server function not available (1):
+  'test-modules-comprehensive.R:181:3'
+ΓÇó export_reports_ui function not available (1):
+  'test-modules-comprehensive.R:177:3'
+ΓÇó File not found: modules/analysis_loops.R (1):
+  'test-module-signatures.R:262:5'
+ΓÇó file.exists(translation_file) is not TRUE (2): 'test-translations.R:22:3',
+  'test-translations.R:290:3'
+ΓÇó Fisheries template not found (1): 'test-performance.R:148:3'
+ΓÇó get_lazy_load_stats function not loaded (1): 'test-p3-fixes.R:285:3'
+ΓÇó get_ml_cache_stats function not loaded (1): 'test-p3-fixes.R:328:3'
+ΓÇó get_ml_model_input_dim function not available (2):
+  'test-ml-inference.R:107:3', 'test-ml-inference.R:114:3'
+ΓÇó get_ml_model_metadata function not available (2):
+  'test-ml-inference.R:124:3', 'test-ml-inference.R:131:3'
+ΓÇó get_prediction_method not available (2): 'test-p1-fixes.R:118:3',
+  'test-p1-fixes.R:242:3'
+ΓÇó guidebook_server not available (1): 'test-guidebook-module.R:30:3'
+ΓÇó guidebook_ui not available (1): 'test-guidebook-module.R:23:3'
+ΓÇó init_lazy_module_registry function not loaded (1): 'test-p3-fixes.R:270:3'
+ΓÇó is_event_bus function not loaded (optional in older implementation) (1):
+  'test-p3-fixes.R:252:3'
+ΓÇó ISA structure doesn't have adjacency_matrices (1):
+  'test-reactive-pipeline.R:974:3'
+ΓÇó load_ses_models function not available (2):
+  'test-module-integration.R:277:3', 'test-module-integration.R:287:3'
+ΓÇó local_storage_server function not available (1):
+  'test-modules-comprehensive.R:232:3'
+ΓÇó local_storage_ui function not available (1):
+  'test-modules-comprehensive.R:228:3'
+ΓÇó ML ensemble functions not loaded (1): 'test-p1-fixes.R:23:3'
+ΓÇó ML inference functions not available (2): 'test-p0-fixes.R:267:3',
+  'test-p0-fixes.R:292:3'
+ΓÇó ML model not loaded (2): 'test-ml-inference.R:160:3',
+  'test-ml-inference.R:187:3'
+ΓÇó ML_MODEL_CONFIGS not available (1): 'test-p0-fixes.R:281:3'
+ΓÇó Module file not found (1): 'test-module-signatures.R:234:3'
+ΓÇó navigation_helpers.R not found (1): 'test-modules-comprehensive.R:248:3'
+ΓÇó No AI classifier functions found (1): 'test-modules-comprehensive.R:142:3'
+ΓÇó No analysis module files found (1): 'test-modules-comprehensive.R:375:3'
+ΓÇó No ML enhancer functions found (1): 'test-modules-comprehensive.R:160:3'
+ΓÇó No module files found (3): 'test-module-signatures.R:285:3',
+  'test-module-signatures.R:318:3', 'test-modules-comprehensive.R:353:3'
+ΓÇó not available (3): 'test-feedback-analyzer.R:386:3',
+  'test-feedback-analyzer.R:393:3', 'test-kb-report-helpers.R:225:3'
+ΓÇó On CRAN (15): 'test-app-e2e.R:14:1',
+  'test-export-functions-enhanced.R:264:3',
+  'test-export-functions-enhanced.R:475:3', 'test-performance.R:320:3',
+  'test-shiny-ui-components.R:18:3', 'test-shiny-ui-components.R:41:3',
+  'test-shiny-ui-components.R:76:3', 'test-shiny-ui-components.R:103:3',
+  'test-shiny-ui-components.R:140:3', 'test-shiny-ui-components.R:179:3',
+  'test-shiny-ui-components.R:210:3', 'test-shiny-ui-components.R:252:3',
+  'test-shiny-ui-components.R:291:3', 'test-shiny-ui-components.R:320:3',
+  'test-visual-regression.R:20:1'
+ΓÇó OPTIONAL_MODULES not defined (run from app.R context) (1):
+  'test-p0-fixes.R:320:3'
+ΓÇó pims_stakeholder_server function not available (1):
+  'test-modules-comprehensive.R:220:3'
+ΓÇó pims_stakeholder_ui function not available (1):
+  'test-modules-comprehensive.R:216:3'
+ΓÇó predict_connection_best not available (1): 'test-p1-fixes.R:126:3'
+ΓÇó prepare_report_server function not available (1):
+  'test-modules-comprehensive.R:189:3'
+ΓÇó prepare_report_ui function not available (1):
+  'test-modules-comprehensive.R:185:3'
+ΓÇó safe_emit_cld_update function not available (1):
+  'test-reactive-pipeline.R:829:3'
+ΓÇó safe_emit_isa_change function not available (2):
+  'test-reactive-pipeline.R:810:3', 'test-reactive-pipeline.R:821:3'
+ΓÇó safe_renderPlotly function not available (1):
+  'test-safe-render-factory.R:179:3'
+ΓÇó safe_renderPlotly not defined (1): 'test-p1-fixes.R:291:3'
+ΓÇó safe_renderPrint function not available (1):
+  'test-safe-render-factory.R:165:3'
+ΓÇó safe_renderText function not available (1):
+  'test-safe-render-factory.R:158:3'
+ΓÇó safe_renderText not defined (1): 'test-p1-fixes.R:303:3'
+ΓÇó scenario_builder_server function not available (1):
+  'test-modules-comprehensive.R:208:3'
+ΓÇó scenario_builder_ui call failed: unused argument (i18n) (1):
+  'test-modules-comprehensive.R:204:3'
+ΓÇó ses_models_server function not available (1):
+  'test-modules-comprehensive.R:319:3'
+ΓÇó ses_models_ui function not available (1):
+  'test-modules-comprehensive.R:315:3'
+ΓÇó setup_export_handlers not defined (load server/export_handlers.R) (1):
+  'test-p1-fixes.R:195:3'
+ΓÇó setup_feedback_modal_handlers not available (1):
+  'test-feedback-reporter.R:271:3'
+ΓÇó Standard document not found (1): 'test-module-signatures.R:352:3'
+ΓÇó Translation file not found (16): 'test-translations.R:33:3',
+  'test-translations.R:42:3', 'test-translations.R:63:3',
+  'test-translations.R:77:3', 'test-translations.R:85:3',
+  'test-translations.R:97:3', 'test-translations.R:111:3',
+  'test-translations.R:137:3', 'test-translations.R:149:3',
+  'test-translations.R:159:3', 'test-translations.R:172:3',
+  'test-translations.R:194:3', 'test-translations.R:215:3',
+  'test-translations.R:254:3', 'test-translations.R:265:3',
+  'test-translations.R:280:3'
+ΓÇó tutorial_system.R not found (1): 'test-modules-comprehensive.R:327:3'
+ΓÇó validate_ml_model function not available (2): 'test-ml-inference.R:67:3',
+  'test-ml-inference.R:74:3'
+ΓÇó verify_model_signature function not available (9):
+  'test-ml-inference.R:288:3', 'test-ml-inference.R:295:3',
+  'test-model-signature.R:17:3', 'test-model-signature.R:24:3',
+  'test-model-signature.R:37:3', 'test-model-signature.R:153:3',
+  'test-model-signature.R:180:3', 'test-model-signature.R:212:3',
+  'test-model-signature.R:231:3'
+ΓÇó workflow_stepper_ui call failed: unused argument (i18n) (1):
+  'test-modules-comprehensive.R:196:3'
+
+ΓöÇΓöÇ Failed tests ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+Failure ('test-knowledge-base.R:350:3'): No duplicate connections (same from+to) within any context
+Expected `length(dup_contexts) == 0` to be TRUE.
+Differences:
+`actual`:   FALSE
+`expected`: TRUE 
+
+Duplicate from+to in: macaronesia_open_coast: Marine ecotourism demand (pelagic wildlife) -> Pelagic whale and dolphin watching excursions
+
+[ FAIL 1 | WARN 48 | SKIP 175 | PASS 5725 ]
+Error:
+! Test failures.
+There were 29 warnings (use warnings() to see them)
+Execution halted

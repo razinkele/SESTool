@@ -93,9 +93,17 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
       is_json <- grepl("\\.json$", file_name)
 
       loaded_data <- if (is_json) {
-        # Load JSON project file
+        # Load JSON project file with simplifyVector = TRUE for data frames
         json_content <- paste(readLines(file_path, warn = FALSE), collapse = "\n")
-        safe_parse_json(json_content)
+        parsed <- tryCatch(
+          jsonlite::fromJSON(json_content, simplifyVector = TRUE),
+          error = function(e) {
+            debug_log(paste("JSON parse error:", e$message), "ERROR")
+            NULL
+          }
+        )
+        # Normalize uppercase column names and list structures to internal format
+        if (!is.null(parsed)) normalize_json_project_data(parsed) else NULL
       } else {
         # Load RDS file safely with size and type validation
         safe_readRDS(file_path, max_size_mb = 50)
