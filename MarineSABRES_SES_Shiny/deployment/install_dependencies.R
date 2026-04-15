@@ -67,59 +67,9 @@ install_versioned <- function(pkg, min_version = NULL) {
   }
 }
 
-# Define required packages
-required_packages <- c(
-  # Core Shiny packages
-  "shiny",
-  "bs4Dash",
-  "shinyWidgets",
-  "shinyjs",
-  "shinyBS",
-  "shinyFiles",
-
-  # Internationalization
-  "shiny.i18n",
-
-  # Data manipulation
-  "tidyverse",
-  "dplyr",
-  "tidyr",
-  "readr",
-  "purrr",
-  "tibble",
-  "stringr",
-  "forcats",
-  "lubridate",
-  "magrittr",
-  "DT",
-  "openxlsx",
-  "readxl",
-  "jsonlite",
-  "digest",
-
-  # Network visualization and analysis
-  "igraph",
-  "visNetwork",
-  "ggraph",
-  "tidygraph",
-
-  # Plotting and time series
-  "ggplot2",
-  "plotly",
-  "dygraphs",
-  "xts",
-  "zoo",
-
-  # Export/Reporting
-  "rmarkdown",
-  "htmlwidgets",
-  "knitr",
-
-  # Document generation (Word, PowerPoint, PDF)
-  "officer",     # Word (.docx) and PowerPoint (.pptx) export
-  "flextable",   # Rich tables in Word/PowerPoint reports
-  "tinytex"      # Lightweight LaTeX for PDF export
-)
+# Define required packages (single source of truth)
+source(file.path(getwd(), "deployment", "required_packages.R"))
+required_packages <- REQUIRED_PACKAGES
 
 cat("Checking for missing packages...\n\n")
 

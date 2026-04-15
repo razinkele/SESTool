@@ -183,3 +183,44 @@ test_that("baltic_open_coast has no orphan elements in main KB", {
   expect_equal(length(orphans), 0,
     info = paste("Orphan elements found:", paste(orphans, collapse = ", ")))
 })
+
+# ============================================================================
+# DEPLOYMENT: Package registry stays in sync with global.R
+# ============================================================================
+
+test_that("deployment/required_packages.R parses all global.R library() calls", {
+  source(file.path(PROJECT_ROOT, "deployment", "required_packages.R"))
+  
+  # Verify the auto-parser found packages
+  expect_true(length(REQUIRED_PACKAGES) >= 20,
+    info = paste("Only found", length(REQUIRED_PACKAGES), "packages"))
+  
+  # Verify key packages that caused server outages are included
+  critical <- c("shiny", "bs4Dash", "httpuv", "later", "tidyverse",
+                 "httr", "shinyBS", "shinyFiles", "dygraphs", "xts")
+  for (pkg in critical) {
+    expect_true(pkg %in% REQUIRED_PACKAGES,
+      info = paste(pkg, "missing from REQUIRED_PACKAGES"))
+  }
+  
+  # torch should be OPTIONAL, not REQUIRED
+  expect_true("torch" %in% OPTIONAL_PACKAGES)
+  expect_false("torch" %in% REQUIRED_PACKAGES)
+})
+
+test_that("pre-deploy-check.R uses shared package registry (no hardcoded list)", {
+  lines <- readLines(file.path(PROJECT_ROOT, "deployment", "pre-deploy-check.R"))
+  # Should source the shared registry
+  expect_true(any(grepl("source.*required_packages\\.R", lines)),
+    info = "pre-deploy-check.R should source deployment/required_packages.R")
+  # Should NOT have a hardcoded required_packages vector definition
+  hardcoded <- grep("^required_packages\\s*<-\\s*c\\(", lines)
+  expect_equal(length(hardcoded), 0,
+    info = "pre-deploy-check.R still has hardcoded package list")
+})
+
+test_that("install_dependencies.R uses shared package registry", {
+  lines <- readLines(file.path(PROJECT_ROOT, "deployment", "install_dependencies.R"))
+  expect_true(any(grepl("source.*required_packages\\.R", lines)),
+    info = "install_dependencies.R should source deployment/required_packages.R")
+})

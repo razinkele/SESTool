@@ -371,6 +371,29 @@ sudo -n systemctl restart shiny-server 2>/dev/null || {
 sleep 2
 
 echo ''
+echo '==> Verifying R packages on server...'
+Rscript -e "
+  source('${RemoteTarget}/deployment/required_packages.R')
+  result <- check_packages(REQUIRED_PACKAGES, verbose = FALSE)
+  if (length(result[['missing']]) > 0) {
+    cat(sprintf('CRITICAL: %d required package(s) missing on server:\n', length(result[['missing']])))
+    cat(paste(' -', result[['missing']], collapse = '\n'), '\n')
+    cat('\nThe app WILL NOT START until these are installed.\n')
+    cat(sprintf('Fix: Rscript -e \"install.packages(c(%s))\"\n',
+        paste0(\"'\", result[['missing']], \"'\", collapse = ', ')))
+    quit(status = 1)
+  } else {
+    cat(sprintf('All %d required packages OK\n', length(result[['installed']])))
+  }
+  opt <- check_packages(c('torch'), verbose = FALSE)
+  if (length(opt[['missing']]) > 0) {
+    cat(sprintf('Note: %d optional package(s) not installed (ML features disabled)\n', length(opt[['missing']])))
+  }
+" 2>&1 || {
+  echo '  WARNING: Package verification script failed — check manually'
+}
+
+echo ''
 echo 'Version:' && cat ${RemoteTarget}/VERSION 2>/dev/null || echo 'unknown'
 echo 'Ownership:' && stat -c '%U:%G' ${RemoteTarget}
 echo 'Shiny Server:' && systemctl is-active shiny-server

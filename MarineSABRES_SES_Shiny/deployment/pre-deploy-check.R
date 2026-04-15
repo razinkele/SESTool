@@ -213,23 +213,9 @@ if (all_subdirs_exist) {
 # ============================================================================
 cat("\n[4] Checking R Package Dependencies...\n")
 
-required_packages <- c(
-  # Core Shiny framework
-  "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS", "shinyFiles",
-  # Internationalization
-  "shiny.i18n",
-  # Data manipulation
-  "tidyverse", "dplyr", "tidyr", "readr", "purrr", "tibble", "stringr",
-  "forcats", "lubridate", "magrittr",
-  # Data tables and I/O
-  "DT", "openxlsx", "readxl", "jsonlite", "digest",
-  # Network visualization
-  "igraph", "visNetwork", "ggraph", "tidygraph",
-  # Plotting and time series
-  "ggplot2", "plotly", "dygraphs", "xts", "zoo",
-  # Reporting
-  "rmarkdown", "htmlwidgets", "knitr"
-)
+# Source the single source of truth for required packages
+source(file.path(app_dir, "deployment", "required_packages.R"))
+required_packages <- REQUIRED_PACKAGES
 
 missing_packages <- c()
 for (pkg in required_packages) {
@@ -252,8 +238,7 @@ if (length(missing_packages) == 0) {
 # Check optional packages (ML features)
 cat("\n[4.1] Checking Optional Packages (ML Features)...\n")
 
-optional_packages <- c("torch")
-for (pkg in optional_packages) {
+for (pkg in OPTIONAL_PACKAGES) {
   if (requireNamespace(pkg, quietly = TRUE)) {
     print_check(paste("Optional:", pkg), "PASS")
   } else {

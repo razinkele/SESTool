@@ -204,17 +204,16 @@ if (dir.exists("translations")) {
 
 print_status("Checking R package dependencies (not installing, only checking)...")
 
-# Core dependencies for remote deployment - these MUST be available
-core_packages <- c("shiny", "bs4Dash", "shinyWidgets", "shinyjs", "DT", "jsonlite", "dplyr", "visNetwork")
+# Source the single source of truth for required packages
+source(file.path(app_dir, "deployment", "required_packages.R"))
 
-# Additional packages used by the application
-additional_packages <- c(
-  "igraph", "readxl", "writexl", "shinyFeedback", "waiter",
-  "shinycssloaders", "shinyalert", "rmarkdown", "knitr",
-  "htmltools", "htmlwidgets", "magrittr", "tidyr", "purrr",
-  "stringr", "lubridate", "ggplot2", "plotly", "scales",
-  "officer", "flextable", "tinytex"
-)
+# Split into core (startup-blocking) and additional (feature packages)
+core_packages <- intersect(REQUIRED_PACKAGES, c(
+  "shiny", "bs4Dash", "shinyWidgets", "shinyjs", "shinyBS", "shinyFiles",
+  "shiny.i18n", "tidyverse", "DT", "jsonlite", "httpuv", "later",
+  "igraph", "visNetwork", "dplyr", "httr", "digest"
+))
+additional_packages <- setdiff(REQUIRED_PACKAGES, core_packages)
 
 # Optional packages (nice to have but not critical)
 optional_packages <- c("torch", "coro", "promises", "future")
