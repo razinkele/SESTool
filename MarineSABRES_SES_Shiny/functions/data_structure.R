@@ -744,8 +744,23 @@ normalize_json_project_data <- function(data) {
       isa[[etype]] <- el
     }
 
-    # Normalize connections: keep as-is (list with suggested/approved)
-    # Downstream code handles both formats
+    # Normalize connections: ensure each connection is a list, not a df row.
+    # simplifyVector = TRUE turns uniform JSON arrays into data frames,
+    # but downstream code (connection_review_tabbed) uses `conn$field` which
+    # requires list elements, not named character vectors from df rows.
+    conn_fields <- c("suggested", "approved")
+    if (!is.null(isa$connections) && is.list(isa$connections)) {
+      for (cf in conn_fields) {
+        cf_data <- isa$connections[[cf]]
+        if (is.data.frame(cf_data) && nrow(cf_data) > 0) {
+          # Convert data frame rows to list-of-lists (unbox each value to scalar)
+          isa$connections[[cf]] <- lapply(seq_len(nrow(cf_data)), function(row_i) {
+            row <- as.list(cf_data[row_i, , drop = FALSE])
+            lapply(row, function(v) if (length(v) == 1) v[[1]] else v)
+          })
+        }
+      }
+    }
 
     data$data$isa_data <- isa
   }

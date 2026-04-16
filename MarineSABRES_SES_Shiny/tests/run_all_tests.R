@@ -2,6 +2,12 @@
 # Master Test Runner for MarineSABRES SES Shiny Application
 # Runs all test suites and generates a summary report
 
+# Ensure user library is on the search path (packages like shinyFiles live here)
+user_lib <- Sys.getenv("R_LIBS_USER")
+if (nzchar(user_lib) && dir.exists(user_lib)) {
+  .libPaths(c(user_lib, .libPaths()))
+}
+
 cat("═══════════════════════════════════════════════════════════════════\n")
 cat("  MarineSABRES SES Application - Comprehensive Test Suite\n")
 cat("═══════════════════════════════════════════════════════════════════\n\n")
@@ -67,7 +73,7 @@ cat(strrep("─", 70), "\n")
 start_time <- Sys.time()
 tryCatch({
   library(testthat)
-  test_results <- test_dir("testthat", reporter = "summary")
+  test_results <- test_dir("tests/testthat", reporter = "summary")
   elapsed <- as.numeric(Sys.time() - start_time, units = "secs")
 
   # Extract test counts from results

@@ -19,6 +19,9 @@ Rscript tests/run_all_tests.R
 # Run testthat suite only
 Rscript -e "testthat::test_dir('tests/testthat')"
 
+# Run JSON project loading tests (standalone, no full app bootstrap needed)
+Rscript tests/run_json_loading_tests.R
+
 # Run specific test file
 Rscript -e "testthat::test_file('tests/testthat/test-i18n-enforcement.R')"
 
@@ -216,6 +219,7 @@ tryCatch({
 
 - **Unit tests**: `test-global-utils.R`, `test-data-structure.R`
 - **Module tests**: `test-modules.R`, `test-*-module.R`
+- **JSON loading**: `test-json-project-loading.R` (standalone runner: `tests/run_json_loading_tests.R`)
 - **Integration**: `test-integration.R`
 - **E2E**: `test-app-e2e.R` (requires Chrome, uses shinytest2)
 - **i18n enforcement**: `test-i18n-enforcement.R` (runs in CI)

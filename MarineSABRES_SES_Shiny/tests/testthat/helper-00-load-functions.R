@@ -2,6 +2,12 @@
 # Load real functions BEFORE helper-stubs.R (alphabetically first)
 # This ensures stubs don't override real implementations
 
+# Ensure user library is on the search path (packages like shinyFiles live here)
+user_lib <- Sys.getenv("R_LIBS_USER")
+if (nzchar(user_lib) && dir.exists(user_lib)) {
+  .libPaths(c(user_lib, .libPaths()))
+}
+
 # Determine project root
 test_dir <- getwd()
 if (basename(test_dir) == "testthat") {
