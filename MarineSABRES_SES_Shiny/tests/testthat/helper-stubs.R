@@ -722,8 +722,9 @@ graphical_ses_creator_ui <- function(id, i18n) {
   )
 }
 
-graphical_ses_creator_server <- function(id, project_data_reactive,
-                                         parent_session = NULL, i18n = NULL) {
+graphical_ses_creator_server <- function(id, project_data_reactive = NULL,
+                                         i18n = NULL, parent_session = NULL,
+                                         event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     rv <- reactiveValues(
       wizard_step = 1,
