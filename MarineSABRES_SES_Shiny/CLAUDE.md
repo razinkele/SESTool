@@ -77,7 +77,7 @@ Rscript scripts/add_translation.R
 │   └── ARCHITECTURE.md   # Architecture Decision Records
 ├── scripts/
 │   └── build_offshore_wind_kb.py  # Reproducible KB builder from BibTeX (187 papers)
-└── tests/testthat/       # 74 test files
+└── tests/testthat/       # 90 test files (21/21 *_module.R files covered)
 ```
 
 ## i18n System (CRITICAL)
@@ -218,13 +218,19 @@ tryCatch({
 ## Testing
 
 - **Unit tests**: `test-global-utils.R`, `test-data-structure.R`
-- **Module tests**: `test-modules.R`, `test-*-module.R`
+- **Module signature-contract tests**: `test-<module-name>-module.R` for every `modules/*_module.R` file (21/21 covered). Each asserts UI returns valid shiny tags, namespaces IDs, server function exists with the conventional `(id, project_data_reactive, i18n, ..., event_bus = NULL)` signature.
+- **Module integration tests**: `test-modules.R` (pre-existing `testServer()` exercises)
 - **JSON loading**: `test-json-project-loading.R` (standalone runner: `tests/run_json_loading_tests.R`)
 - **Integration**: `test-integration.R`
 - **E2E**: `test-app-e2e.R` (requires Chrome, uses shinytest2)
 - **i18n enforcement**: `test-i18n-enforcement.R` (runs in CI)
 - **Visual regression**: `test-visual-regression.R`
 - **Load testing**: `scripts/load_test.R`, `scripts/memory_profile.R`
+
+### Helpers Available to New Tests
+
+- `source_for_test(c("modules/x.R", "server/y.R"))` (defined in `tests/testthat/helper-00-load-functions.R`) — sources production files into `.GlobalEnv` using an absolute path derived from `getwd()`. Use this when your test targets a file NOT in global.R's auto-load chain (modules/*.R, server/*.R, some functions/*.R). See `test-entry-point-module.R` for a minimal example.
+- `helper-stubs.R` provides minimal stubs for module UI/server functions. Stubs mirror the real module signatures (commit `f93135a` aligned them). When writing a new signature-assertion test, the real module source (via `source_for_test`) should override the stub.
 
 ### Running Tests
 
