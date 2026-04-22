@@ -16,6 +16,22 @@
 
 library(testthat)
 
+# Source the files under test (global.R doesn't auto-source server/ or
+# functions/reactive_pipeline.R in all test environments). Follows the same
+# absolute-path helper pattern as test-entry-point-module.R.
+.rp_test_dir <- getwd()
+.rp_root <- if (basename(.rp_test_dir) == "testthat") dirname(dirname(.rp_test_dir)) else .rp_test_dir
+for (.rp_f in c("server/event_bus_setup.R", "functions/reactive_pipeline.R")) {
+  .rp_path <- file.path(.rp_root, .rp_f)
+  if (file.exists(.rp_path)) {
+    tryCatch(
+      sys.source(.rp_path, envir = .GlobalEnv),
+      error = function(e) message("Could not source ", .rp_f, ": ", e$message)
+    )
+  }
+}
+rm(.rp_test_dir, .rp_root, .rp_f, .rp_path)
+
 # ============================================================================
 # EVENT BUS CREATION TESTS
 # ============================================================================
