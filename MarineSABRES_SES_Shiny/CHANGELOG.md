@@ -5,6 +5,43 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.1] - 2026-04-22
+
+### Test Coverage, CI, and Infrastructure Hardening
+
+Patch release focused on internal quality: establishes 100% module signature-contract test coverage, moves CI to a working state, cleans up i18n drift, and extracts test-infrastructure helpers.
+
+### Added
+- **Signature-contract tests for all `*_module.R` files** — went from 8/21 covered to 21/21. 13 new test files following a consistent pattern that asserts UI returns valid shiny tags, IDs are namespaced, and server signatures include the conventional `(id, project_data_reactive, i18n, ..., event_bus = NULL)` params. Plan + execution record committed to `docs/superpowers/plans/2026-04-22-close-deferred-review-items.md`.
+- **`source_for_test()` helper** in `tests/testthat/helper-00-load-functions.R` — sources production files into `.GlobalEnv` using path-aware resolution. 19 test files migrated to use it, removing 154 lines of copy-paste sourcing boilerplate.
+- **CI enabled for the first time** — moved `i18n-validation.yml` from the app subdirectory to repo root `.github/workflows/` so GitHub Actions actually registers it. First-ever green CI run at commit `0a19170`. Gates every push on `missing=0` + `hardcoded=0` via the Python `_i18n_audit.py` script.
+- **8 new `import_data_module.R` translation keys × 9 languages** (63 strings) for Excel column descriptions, using canonical DAPSIWRM element terminology from `common/labels.json` (Impulsor/Facteur/Treiber/Fator/Fattore/Drivkraft/Varomoji jėga/Κινητήρια δύναμη).
+- **Unit tests for `feedback_admin`, `entry_point`, `local_storage` modules** as the pattern-establishing first three signature-contract tests.
+
+### Fixed
+- **Greek translation** `modules.ses.creation.new_to_ses_modeling`: was `"Νέο to SES modeling?"` (mixed EN/EL), now fully Greek `"Νέοι στη μοντελοποίηση SES;"`.
+- **KB integrity**: 3 `"+/-"` polarity edges in offshore wind KB split into clean `+` and `-` pairs; 2 `"De facto marine refuge..."` elements moved from `impacts` to `states` (and mirrored in `build_offshore_wind_kb.py`); 1 tautological W→W edge in `macaronesia_island` deleted; 2 elements in `macaronesia_open_coast` reclassified impacts→states. Strict 19-rule DAPSIWRM validator now passes with zero invalid transitions across both KBs.
+- **Orphan element** in main KB (`macaronesia_island/welfare: Recreational wellbeing from ocean access`) removed after being stranded by the W→W edge delete.
+- **Rule 18 docstring** in `functions/network_analysis.R:367` updated from "Rules 1-17" to "Rules 1-18 + ExUP".
+- **`test-kb-report-helpers.R`** `required_keys` list trimmed from 22 to 4 to match current `report_context.json` after the dead-key prune.
+- **`helper-stubs.R` signature drift**: 8 stubs aligned with real module signatures (`isa_data_entry_server`, `pims_project_server`, `cld_viz_server`, `ai_isa_assistant_server`, `create_ses_server`, `template_ses_server`, `entry_point_server`, `graphical_ses_creator_server`). `test-modules.R` callers updated to use `project_data_reactive = ...` named args matching the real contracts.
+
+### Changed
+- **Test sourcing pattern**: 19 test files switched from inline `local({...source(...)...})` or multi-line `.xxx_test_dir <- getwd(); ...` blocks to single-line `source_for_test(c(...))` calls. Unlocks 32 previously-skipped tests in `test-reactive-pipeline.R` (30 → 6 skips) and `test-modules-comprehensive.R` (29 → 21 skips).
+- **4 module server signatures** updated with trailing `event_bus = NULL` parameter (backward-compatible): `connection_review_tabbed`, `entry_point`, `feedback_admin`, `prepare_report`.
+- **CLAUDE.md** test section updated: "74 test files" → "90 test files", added documentation for the `source_for_test()` helper and signature-contract test pattern.
+- **`.gitignore`** extended: `/analyze_*.py`, `/audit_*.py`, `scripts/kb_{inspect,orphans,reviewer}.py`, `.claude/scheduled_tasks.lock`, `tests/testthat_results.txt` now ignored (agent-session scratch files).
+
+### Removed
+- **23 verified-unused translation keys** across 6 JSON files (`Marine Processes`, `OK`, 6 `common.buttons.*`, 3 `common.labels.*`, 7 `common.messages.*`, 2 `common.misc.*`, `loop connections`, 2 `modules.analysis.leverage.*`) — 264 lines of dead translations. Passed triple-verification: no `i18n$t()` calls, no references in `tests/`, no dynamic `paste0()` construction.
+- **18 dead keys from `report_context.json`** (22 → 4 live keys, covering the regional-context modal only — the report-rendering feature those keys supported was removed earlier).
+- **12 hardcoded English strings** replaced with `i18n$t()` across `feedback_admin`, `create_ses`, `isa_data_entry`, `import_data` modules.
+
+### Test Status at Release
+- **Full testthat suite**: 1882 tests, 1723 passed, 0 failed, 159 skipped (down from 164 pre-session — 32 unlocked via sourcing, 7 removed legacy, 2 fixed regressions, 0 new failures introduced).
+- **New signature-contract tests**: 76 additional passing tests across 13 new test files.
+- **CI (GitHub Actions)**: active at repo-root `.github/workflows/i18n-validation.yml`. Python i18n audit job runs on every push to main / PR to main.
+
 ## [1.11.0] - 2026-04-08
 
 ### Knowledge Base & Template Overhaul
