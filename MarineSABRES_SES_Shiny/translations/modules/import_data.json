@@ -208,6 +208,28 @@
       "it": "Funzione di importazione Excel non disponibile. Assicurarsi che excel_import_helpers.R sia caricato.",
       "no": "Excel-importfunksjon ikke tilgjengelig. Kontroller at excel_import_helpers.R er lastet.",
       "el": "Η λειτουργία εισαγωγής Excel δεν είναι διαθέσιμη. Βεβαιωθείτε ότι excel_import_helpers.R είναι φορτωμένο."
+    },
+    "modules.import.data.elements_sheet_desc": {
+      "en": " - Contains all nodes/elements in your SES",
+      "es": " - Contiene todos los nodos/elementos de su SES",
+      "fr": " - Contient tous les nœuds/éléments de votre SES",
+      "de": " - Enthält alle Knoten/Elemente Ihres SES",
+      "lt": " - Apima visus jūsų SES mazgus/elementus",
+      "pt": " - Contém todos os nós/elementos do seu SES",
+      "it": " - Contiene tutti i nodi/elementi del tuo SES",
+      "no": " - Inneholder alle noder/elementer i SES-en din",
+      "el": " - Περιέχει όλους τους κόμβους/στοιχεία του SES σας"
+    },
+    "modules.import.data.connections_sheet_desc": {
+      "en": " - Contains all relationships/edges between elements",
+      "es": " - Contiene todas las relaciones/aristas entre elementos",
+      "fr": " - Contient toutes les relations/arêtes entre les éléments",
+      "de": " - Enthält alle Beziehungen/Kanten zwischen den Elementen",
+      "lt": " - Apima visus ryšius/briaunas tarp elementų",
+      "pt": " - Contém todas as relações/arestas entre os elementos",
+      "it": " - Contiene tutte le relazioni/archi tra gli elementi",
+      "no": " - Inneholder alle relasjoner/kanter mellom elementer",
+      "el": " - Περιέχει όλες τις σχέσεις/ακμές μεταξύ στοιχείων"
     }
   }
 }

@@ -70,8 +70,8 @@ import_data_ui <- function(id, i18n) {
         tags$ul(
           tags$li(strong(i18n$t("common.misc.two_sheets_required")),
                   tags$ul(
-                    tags$li(strong("Elements"), " - Contains all nodes/elements in your SES"),
-                    tags$li(strong("Connections"), " - Contains all relationships/edges between elements")
+                    tags$li(strong("Elements"), i18n$t("modules.import.data.elements_sheet_desc")),
+                    tags$li(strong("Connections"), i18n$t("modules.import.data.connections_sheet_desc"))
                   )),
           tags$li(strong(i18n$t("common.misc.elements_sheet_columns")),
                   tags$ul(
