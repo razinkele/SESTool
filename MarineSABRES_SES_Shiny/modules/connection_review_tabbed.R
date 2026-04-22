@@ -395,7 +395,8 @@ connection_review_tabbed_ui <- function(id, i18n) {
 # ============================================================================
 
 connection_review_tabbed_server <- function(id, connections_reactive, i18n,
-                                           on_approve = NULL, on_reject = NULL, on_amend = NULL) {
+                                           on_approve = NULL, on_reject = NULL, on_amend = NULL,
+                                           event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

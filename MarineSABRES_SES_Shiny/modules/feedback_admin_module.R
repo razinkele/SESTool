@@ -130,7 +130,7 @@ feedback_admin_ui <- function(id, i18n) {
 }
 
 
-feedback_admin_server <- function(id, i18n) {
+feedback_admin_server <- function(id, i18n, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

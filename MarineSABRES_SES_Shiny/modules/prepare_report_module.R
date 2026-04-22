@@ -123,7 +123,7 @@ prepare_report_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-prepare_report_server <- function(id, project_data_reactive, i18n, parent_session = NULL) {
+prepare_report_server <- function(id, project_data_reactive, i18n, parent_session = NULL, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive values for storing report paths

@@ -80,7 +80,7 @@ entry_point_ui <- function(id, i18n) {
 # SERVER FUNCTION
 # ============================================================================
 
-entry_point_server <- function(id, project_data_reactive, i18n, parent_session = NULL, user_level_reactive = NULL) {
+entry_point_server <- function(id, project_data_reactive, i18n, parent_session = NULL, user_level_reactive = NULL, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive values to track state
