@@ -364,7 +364,7 @@ is_valid_dapsirwrm_transition <- function(from_type, to_type) {
   responses <- c("response", "responses")
   measures <- c("measure", "measures")
 
-  # Define valid transitions (Rules 1-17 from DAPSIWRM_FRAMEWORK_RULES.md)
+  # Define valid transitions (Rules 1-18 + ExUP from DAPSIWRM_FRAMEWORK_RULES.md)
   valid_transitions <- list(
     # Forward chain (Rules 1-5)
     list(from = drivers, to = activities),         # Rule 1: D → A
