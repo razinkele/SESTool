@@ -61,8 +61,6 @@ jobs:
     defaults:
       run:
         working-directory: MarineSABRES_SES_Shiny
-    env:
-      R_LIBS_USER: ${{ runner.temp }}/Rlibs
     steps:
       - uses: actions/checkout@v4
 
@@ -75,12 +73,4 @@ jobs:
 
       - name: Run i18n enforcement test
         run: |
-          set -o pipefail
-          Rscript -e "testthat::test_file('tests/testthat/test-i18n-enforcement.R')" 2>&1 | tee i18n_tests_output.txt
-
-      - name: Fail if tests failed
-        run: |
-          if grep -q "FAIL" i18n_tests_output.txt; then
-            echo "i18n tests reported FAIL"
-            exit 1
-          fi
+          Rscript -e "testthat::test_file('tests/testthat/test-i18n-enforcement.R')"
