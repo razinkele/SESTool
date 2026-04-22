@@ -11,17 +11,6 @@
     "el"
   ],
   "translation": {
-    "common.misc.error_saving_project": {
-      "en": "Error saving project:",
-      "es": "Error al guardar el proyecto:",
-      "fr": "Erreur lors de l'enregistrement du projet:",
-      "de": "Fehler beim Speichern des Projekts:",
-      "lt": "Klaida įrašant projektą:",
-      "pt": "Erro ao salvar o projeto:",
-      "it": "Errore durante il salvataggio del progetto:",
-      "no": "Feil ved lagring av prosjekt:",
-      "el": "Σφάλμα κατά την αποθήκευση του έργου:"
-    },
     "common.messages.error_invalid_proj_file_structure_this_may_not_be_": {
       "en": "Error: Invalid project file structure. This may not be a valid MarineSABRES project file.",
       "es": "Error: Estructura de archivo de proyecto no válida.",

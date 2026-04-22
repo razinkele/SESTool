@@ -11,39 +11,6 @@
     "el"
   ],
   "translation": {
-    "common.messages.added": {
-      "en": "Added",
-      "es": "Agregado",
-      "fr": "Ajouté",
-      "de": "Hinzugefügt",
-      "lt": "Pridėta",
-      "pt": "Adicionado",
-      "it": "Aggiunto",
-      "no": "Lagt til",
-      "el": "Προστέθηκε"
-    },
-    "common.messages.all": {
-      "en": "All",
-      "es": "Todos",
-      "fr": "Tous",
-      "de": "Alle",
-      "lt": "Visi",
-      "pt": "Todos",
-      "it": "Tutti",
-      "no": "Alle",
-      "el": "Όλα"
-    },
-    "common.messages.bookmark": {
-      "en": "Bookmark",
-      "es": "Marcador",
-      "fr": "Marque-page",
-      "de": "Lesezeichen",
-      "lt": "Žymė",
-      "pt": "Marcador",
-      "it": "Segnalibro",
-      "no": "Bokmerke",
-      "el": "Σελιδοδείκτης"
-    },
     "common.messages.bookmark_restored_successfully": {
       "en": "Bookmark restored successfully!",
       "es": "¡Marcador restaurado con éxito!",
@@ -198,39 +165,6 @@
       "no": "Opplastet fil ikke funnet. Vennligst prøv å laste opp igjen.",
       "el": "Το μεταφορτωμένο αρχείο δεν βρέθηκε. Παρακαλώ δοκιμάστε ξανά."
     },
-    "common.messages.i": {
-      "en": "I",
-      "es": "I",
-      "fr": "I",
-      "de": "I",
-      "lt": "I",
-      "pt": "I",
-      "it": "I",
-      "no": "Jeg",
-      "el": "Εγώ"
-    },
-    "common.messages.no": {
-      "en": "No",
-      "es": "No",
-      "fr": "Non",
-      "de": "Nein",
-      "lt": "Ne",
-      "pt": "Não",
-      "it": "No",
-      "no": "Nei",
-      "el": "Όχι"
-    },
-    "common.messages.no_data": {
-      "en": "No data available",
-      "es": "No hay datos disponibles",
-      "fr": "Aucune donnée disponible",
-      "de": "Keine Daten verfügbar",
-      "lt": "Nėra duomenų",
-      "pt": "Nenhum dado disponível",
-      "it": "Nessun dato disponibile",
-      "no": "Ingen data tilgjengelig",
-      "el": "Δεν υπάρχουν διαθέσιμα δεδομένα"
-    },
     "common.messages.no_file_selected": {
       "en": "No file selected",
       "es": "Ningún archivo seleccionado",
@@ -241,17 +175,6 @@
       "it": "Nessun file selezionato",
       "no": "Ingen fil valgt",
       "el": "Δεν επιλέχθηκε αρχείο"
-    },
-    "common.messages.progress": {
-      "en": "Progress",
-      "es": "Progreso",
-      "fr": "Progrès",
-      "de": "Fortschritt",
-      "lt": "Progresas",
-      "pt": "Progresso",
-      "it": "Progresso",
-      "no": "Fremgang",
-      "el": "Πρόοδος"
     },
     "common.messages.project_information": {
       "en": "Project Information",

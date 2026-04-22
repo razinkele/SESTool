@@ -506,17 +506,6 @@
       "no": "Start på nytt",
       "el": "Νέα Έναρξη"
     },
-    "common.misc.step_d": {
-      "en": "Step %d",
-      "es": "Paso %d",
-      "fr": "Étape %d",
-      "de": "Schritt %d",
-      "lt": "Žingsnis %d",
-      "pt": "Passo %d",
-      "it": "Passo %d",
-      "no": "Trinn %d",
-      "el": "Βήμα %d"
-    },
     "common.misc.step_d_of_d": {
       "en": "Step %d of %d",
       "es": "Paso %d de %d",
@@ -637,17 +626,6 @@
       "pt": "Sem dados CLD para exportar. Por favor, crie um CLD primeiro.",
       "el": "Δεν υπάρχουν δεδομένα CLD για εξαγωγή. Παρακαλώ δημιουργήστε πρώτα ένα CLD.",
       "no": "Ingen CLD-data å eksportere. Vennligst opprett en CLD først."
-    },
-    "common.misc.error_saving_project": {
-      "en": "Error saving project",
-      "lt": "Klaida saugant projektą",
-      "es": "Error al guardar el proyecto",
-      "fr": "Erreur lors de l'enregistrement du projet",
-      "de": "Fehler beim Speichern des Projekts",
-      "it": "Errore nel salvataggio del progetto",
-      "pt": "Erro ao salvar o projeto",
-      "el": "Σφάλμα αποθήκευσης έργου",
-      "no": "Feil ved lagring av prosjekt"
     },
     "Beginner": {
       "en": "Beginner",

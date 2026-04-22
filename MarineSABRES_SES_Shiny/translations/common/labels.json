@@ -55,28 +55,6 @@
       "no": "Goder og fordeler",
       "el": "Αγαθά & Οφέλη"
     },
-    "Marine Processes": {
-      "en": "Marine Processes",
-      "es": "Procesos Marinos",
-      "fr": "Processus Marins",
-      "de": "Marine Prozesse",
-      "lt": "Jūriniai procesai",
-      "pt": "Processos Marinhos",
-      "it": "Processi Marini",
-      "no": "Marine prosesser",
-      "el": "Θαλάσσιες Διεργασίες"
-    },
-    "OK": {
-      "en": "OK",
-      "es": "OK",
-      "fr": "OK",
-      "de": "OK",
-      "lt": "OK",
-      "pt": "OK",
-      "it": "OK",
-      "no": "OK",
-      "el": "Εντάξει"
-    },
     "Pressures": {
       "en": "Pressures",
       "es": "Presiones",
@@ -120,17 +98,6 @@
       "it": "Nome del Caso Studio:",
       "no": "Kasusstudie Navn:",
       "el": "Όνομα Μελέτης Περίπτωσης:"
-    },
-    "common.labels.confidence": {
-      "en": "Confidence",
-      "es": "Confianza",
-      "fr": "Confiance",
-      "de": "Vertrauen",
-      "lt": "Pasitikėjimas",
-      "pt": "Confiança",
-      "it": "Confidenza",
-      "no": "Tillit",
-      "el": "Εμπιστοσύνη"
     },
     "common.labels.date": {
       "en": "Date",
@@ -297,17 +264,6 @@
       "no": "Status",
       "el": "Κατάσταση"
     },
-    "common.labels.strength": {
-      "en": "Strength",
-      "es": "Fuerza",
-      "fr": "Force",
-      "de": "Stärke",
-      "lt": "Stiprumas",
-      "pt": "Força",
-      "it": "Forza",
-      "no": "Styrke",
-      "el": "Ένταση"
-    },
     "common.labels.target_date": {
       "en": "Target Date:",
       "es": "Fecha Objetivo:",
@@ -351,17 +307,6 @@
       "it": "Valore",
       "no": "Verdi",
       "el": "Τιμή"
-    },
-    "loop connections": {
-      "en": "Loop Connections",
-      "es": "Conexiones de Bucle",
-      "fr": "Connexions de Boucle",
-      "de": "Schleifenverbindungen",
-      "lt": "Ciklo Jungtys",
-      "pt": "Conexões de Loop",
-      "it": "Connessioni di Loop",
-      "no": "Løkkeforbindelser",
-      "el": "Συνδέσεις Βρόχου"
     },
     "common.labels.es_type": {
       "en": "ES Type",
@@ -505,17 +450,6 @@
       "it": "Home",
       "no": "Hjem",
       "el": "Αρχική"
-    },
-    "common.labels.initializing": {
-      "en": "Initializing...",
-      "es": "Inicializando...",
-      "fr": "Initialisation...",
-      "de": "Wird initialisiert...",
-      "lt": "Inicijuojama...",
-      "pt": "Inicializando...",
-      "it": "Inizializzazione...",
-      "no": "Initialiserer...",
-      "el": "Αρχικοποίηση..."
     },
     "common.labels.very_weak": {
       "en": "Very Weak",

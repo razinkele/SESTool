@@ -1683,28 +1683,6 @@
       "no": "Identifiser og analyser automatisk tilbakemeldingssløyfer i ditt Årsaksløkkediagram.",
       "el": "Αυτόματη αναγνώριση και ανάλυση βρόχων ανατροφοδότησης στο Διάγραμμα Αιτιακών Βρόχων σας."
     },
-    "modules.analysis.leverage.title": {
-      "en": "Leverage Point Analysis",
-      "es": "Análisis de Puntos de Apalancamiento",
-      "fr": "Analyse des Points de Levier",
-      "de": "Analyse von Hebelpunkten",
-      "lt": "Sverto Taškų Analizė",
-      "pt": "Análise de Pontos de Alavancagem",
-      "it": "Analisi dei Punti di Leva",
-      "no": "Analyse av Vippepunkter",
-      "el": "Σημείο μόχλευσης Ανάλυση"
-    },
-    "modules.analysis.leverage.subtitle": {
-      "en": "Identify the most influential nodes in your network that could serve as key intervention points.",
-      "es": "Identifique los nodos más influyentes en su red que podrían servir como puntos clave de intervención.",
-      "fr": "Identifiez les nœuds les plus influents de votre réseau qui pourraient servir de points d'intervention clés.",
-      "de": "Identifizieren Sie die einflussreichsten Knoten in Ihrem Netzwerk, die als Schlüssel-Interventionspunkte dienen könnten.",
-      "lt": "Nustatykite įtakingiausius mazgus savo tinkle, kurie galėtų būti pagrindiniai intervencijos taškai.",
-      "pt": "Identifique os nós mais influentes na sua rede que podem servir como pontos-chave de intervenção.",
-      "it": "Identifica i nodi più influenti nella tua rete che potrebbero servire come punti chiave di intervento.",
-      "no": "Identifiser de mest innflytelsesrike nodene i nettverket ditt som kan tjene som nøkkelintervensjonspunkter.",
-      "el": "Εντοπίστε τους πιο επιδραστικούς κόμβους στο δίκτυό σας που θα μπορούσαν να χρησιμεύσουν ως βασικά σημεία παρέμβασης."
-    },
     "modules.analysis.network.btn_download_barplot": {
       "en": "Download Bar Plot (PNG)",
       "es": "Descargar gráfico de barras (PNG)",
