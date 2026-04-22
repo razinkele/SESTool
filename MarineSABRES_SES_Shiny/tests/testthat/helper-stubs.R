@@ -52,8 +52,12 @@ cld_viz_server <- function(id, project_data = NULL) {
 analysis_metrics_ui <- function(id) minimal_ui(id)
 analysis_loops_ui <- function(id) minimal_ui(id)
 
-entry_point_ui <- function(id) minimal_ui(id)
-entry_point_server <- function(id, project_data = NULL, parent_session = NULL) {
+entry_point_ui <- function(id, i18n = NULL) minimal_ui(id)
+# Signature mirrors modules/entry_point_module.R:83 - includes event_bus
+# (added in commit ff3a282 per the module-signature convention).
+entry_point_server <- function(id, project_data_reactive = NULL, i18n = NULL,
+                               parent_session = NULL, user_level_reactive = NULL,
+                               event_bus = NULL) {
   moduleServer(id, function(input, output, session) minimal_server(input, output, session))
 }
 
