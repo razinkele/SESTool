@@ -1143,10 +1143,11 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     # Exercise 6: Loop closure visualization ----
     output$loop_diagram <- renderPlot({
       # Placeholder for loop closure diagram
-      plot(1:10, 1:10, main = "DAPSI(W)R(M) Loop Closure Diagram",
-           xlab = "System Components", ylab = "Connections",
+      plot(1:10, 1:10, main = i18n$t("modules.isa_data_entry.loop_diagram_title"),
+           xlab = i18n$t("modules.isa_data_entry.loop_diagram_xlab"),
+           ylab = i18n$t("modules.isa_data_entry.loop_diagram_ylab"),
            type = "n")
-      text(5, 5, "Loop diagram will be generated\nfrom your data entries", cex = 1.5)
+      text(5, 5, i18n$t("modules.isa_data_entry.loop_diagram_placeholder"), cex = 1.5)
     })
 
     # Add loop connection ----

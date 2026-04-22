@@ -405,7 +405,7 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
       req(!is.null(df) && nrow(df) >= 2)
 
       withProgress(message = i18n$t("modules.feedback_admin.find_duplicates"), {
-        incProgress(0.3, detail = "Computing similarity...")
+        incProgress(0.3, detail = i18n$t("modules.feedback_admin.computing_similarity"))
         pairs <- tryCatch(
           find_duplicate_pairs(df, threshold = input$similarity_threshold %||% 0.7),
           error = function(e) {
@@ -415,7 +415,7 @@ feedback_admin_server <- function(id, i18n, event_bus = NULL) {
                        similarity = numeric(0), stringsAsFactors = FALSE)
           }
         )
-        incProgress(0.7, detail = "Done")
+        incProgress(0.7, detail = i18n$t("modules.feedback_admin.done"))
         rv$dup_pairs <- pairs
       })
     })

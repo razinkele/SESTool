@@ -331,7 +331,7 @@ create_ses_server <- function(id, project_data_reactive, i18n, parent_session = 
                 " for maximum control and detailed customization."),
               p(tags$strong(i18n$t("modules.ses.creation.working_on_a_time_sensitive_project")), " Try ", tags$strong(i18n$t("ui.sidebar.template_based")),
                 " to jumpstart your analysis with proven structures."),
-              p(strong("Not sure?"), " You can always switch methods later or combine approaches!")
+              p(strong(i18n$t("modules.ses.creation.not_sure_question")), " ", i18n$t("modules.ses.creation.switch_methods_hint"))
             )
           )
         )

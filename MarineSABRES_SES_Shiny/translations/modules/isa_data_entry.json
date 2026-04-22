@@ -4454,6 +4454,50 @@
       "it": "Ho identificato %d connessioni potenziali basate sul framework DAPSI(W)R(M).",
       "no": "Jeg har identifisert %d potensielle forbindelser basert på DAPSI(W)R(M)-rammeverket.",
       "el": "Έχω εντοπίσει %d πιθανές συνδέσεις με βάση το πλαίσιο DAPSI(W)R(M)."
+    },
+    "modules.isa_data_entry.loop_diagram_title": {
+      "en": "DAPSI(W)R(M) Loop Closure Diagram",
+      "es": "Diagrama de Cierre de Bucle DAPSI(W)R(M)",
+      "fr": "Diagramme de Fermeture de Boucle DAPSI(W)R(M)",
+      "de": "DAPSI(W)R(M) Schleifenschluss-Diagramm",
+      "lt": "DAPSI(W)R(M) kilpos užbaigimo diagrama",
+      "pt": "Diagrama de Fechamento de Ciclo DAPSI(W)R(M)",
+      "it": "Diagramma di Chiusura del Ciclo DAPSI(W)R(M)",
+      "no": "DAPSI(W)R(M) Sløyfelukking-diagram",
+      "el": "Διάγραμμα Κλεισίματος Βρόχου DAPSI(W)R(M)"
+    },
+    "modules.isa_data_entry.loop_diagram_xlab": {
+      "en": "System Components",
+      "es": "Componentes del Sistema",
+      "fr": "Composants du Système",
+      "de": "Systemkomponenten",
+      "lt": "Sistemos komponentai",
+      "pt": "Componentes do Sistema",
+      "it": "Componenti del Sistema",
+      "no": "Systemkomponenter",
+      "el": "Στοιχεία Συστήματος"
+    },
+    "modules.isa_data_entry.loop_diagram_ylab": {
+      "en": "Connections",
+      "es": "Conexiones",
+      "fr": "Connexions",
+      "de": "Verbindungen",
+      "lt": "Ryšiai",
+      "pt": "Conexões",
+      "it": "Connessioni",
+      "no": "Forbindelser",
+      "el": "Συνδέσεις"
+    },
+    "modules.isa_data_entry.loop_diagram_placeholder": {
+      "en": "Loop diagram will be generated\nfrom your data entries",
+      "es": "El diagrama de bucle se generará\na partir de sus entradas de datos",
+      "fr": "Le diagramme de boucle sera généré\nà partir de vos entrées de données",
+      "de": "Schleifendiagramm wird aus\nIhren Dateneinträgen generiert",
+      "lt": "Kilpos diagrama bus sugeneruota\niš jūsų duomenų įrašų",
+      "pt": "O diagrama de ciclo será gerado\na partir de suas entradas de dados",
+      "it": "Il diagramma del ciclo sarà generato\ndalle tue voci di dati",
+      "no": "Sløyfediagram genereres\nfra dataoppføringene dine",
+      "el": "Το διάγραμμα βρόχου θα δημιουργηθεί\nαπό τις καταχωρήσεις δεδομένων σας"
     }
   }
 }

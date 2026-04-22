@@ -340,6 +340,28 @@
       "it": "Passaggi per Riprodurre",
       "no": "Steg for å Reprodusere",
       "el": "Βήματα Αναπαραγωγής"
+    },
+    "modules.feedback_admin.computing_similarity": {
+      "en": "Computing similarity...",
+      "es": "Calculando similitud...",
+      "fr": "Calcul de similarité...",
+      "de": "Ähnlichkeit wird berechnet...",
+      "lt": "Skaičiuojamas panašumas...",
+      "pt": "Calculando similaridade...",
+      "it": "Calcolo somiglianza...",
+      "no": "Beregner likhet...",
+      "el": "Υπολογισμός ομοιότητας..."
+    },
+    "modules.feedback_admin.done": {
+      "en": "Done",
+      "es": "Listo",
+      "fr": "Terminé",
+      "de": "Fertig",
+      "lt": "Atlikta",
+      "pt": "Concluído",
+      "it": "Fatto",
+      "no": "Ferdig",
+      "el": "Ολοκληρώθηκε"
     }
   }
 }
