@@ -293,18 +293,14 @@ test_that("all report_context i18n keys exist for all 9 languages", {
   trans_path <- file.path(project_root, "translations/modules/report_context.json")
   skip_if_not(file.exists(trans_path), "report_context.json not found")
   trans <- jsonlite::fromJSON(trans_path, simplifyVector = FALSE)
+  # Commit 919a152 pruned 18 keys that were verified unused in R source after
+  # the report-rendering feature they supported was removed. Remaining 4 keys
+  # are live (used by the regional-context modal); this test guards them.
   required_keys <- c(
-    "modules.report_context.section_title", "modules.report_context.site_description",
-    "modules.report_context.scientific_references", "modules.report_context.confidence_assessment",
-    "modules.report_context.governance_frameworks", "modules.report_context.regional_priorities",
-    "modules.report_context.kb_supported", "modules.report_context.user_defined",
-    "modules.report_context.connection", "modules.report_context.rationale",
-    "modules.report_context.references", "modules.report_context.temporal_lag",
-    "modules.report_context.reversibility", "modules.report_context.confidence",
-    "modules.report_context.relevant_policies", "modules.report_context.regional_sea_label",
-    "modules.report_context.ecosystem_type_label", "modules.report_context.not_set",
-    "modules.report_context.include_context", "modules.report_context.kb_match_summary",
-    "modules.report_context.no_context_available", "modules.report_context.suggested_responses"
+    "modules.report_context.regional_sea_label",
+    "modules.report_context.ecosystem_type_label",
+    "modules.report_context.not_set",
+    "modules.report_context.include_context"
   )
   langs <- c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")
   for (key in required_keys) {
