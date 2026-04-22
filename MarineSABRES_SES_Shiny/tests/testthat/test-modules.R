@@ -20,7 +20,7 @@ test_that("ISA data entry module UI renders", {
 })
 
 test_that("ISA data entry module server initializes", {
-  testServer(isa_data_entry_server, args = list(project_data = reactiveVal(init_session_data())), {
+  testServer(isa_data_entry_server, args = list(project_data_reactive = reactiveVal(init_session_data())), {
     # Module should initialize without errors
     succeed("ISA data entry module server initialized without error")
 
@@ -37,7 +37,7 @@ test_that("PIMS project module UI renders", {
 })
 
 test_that("PIMS project module server initializes", {
-  testServer(pims_project_server, args = list(project_data = reactiveVal(init_session_data())), {
+  testServer(pims_project_server, args = list(project_data_reactive = reactiveVal(init_session_data())), {
     succeed("PIMS project module server initialized without error")
   })
 })
@@ -50,7 +50,7 @@ test_that("CLD visualization module UI renders", {
 })
 
 test_that("CLD visualization module handles empty data", {
-  testServer(cld_viz_server, args = list(project_data = reactiveVal(init_session_data())), {
+  testServer(cld_viz_server, args = list(project_data_reactive = reactiveVal(init_session_data())), {
     # Should handle empty project data without errors
     succeed("CLD visualization module handled empty data without error")
   })
@@ -82,7 +82,7 @@ test_that("Entry point module server initializes", {
 
   testServer(entry_point_server,
     args = list(
-      project_data = reactiveVal(init_session_data()),
+      project_data_reactive = reactiveVal(init_session_data()),
       parent_session = mock_session
     ), {
     succeed("Entry point module server initialized without error")
@@ -97,7 +97,7 @@ test_that("AI ISA assistant module UI renders", {
 })
 
 test_that("AI ISA assistant module server initializes", {
-  testServer(ai_isa_assistant_server, args = list(project_data = reactiveVal(init_session_data())), {
+  testServer(ai_isa_assistant_server, args = list(project_data_reactive = reactiveVal(init_session_data())), {
     succeed("AI ISA assistant module server initialized without error")
   })
 })
@@ -284,7 +284,7 @@ test_that("Template SES module server initializes", {
   mock_session <- MockShinySession$new()
 
   testServer(template_ses_server, args = list(
-    project_data = reactiveVal(init_session_data()),
+    project_data_reactive = reactiveVal(init_session_data()),
     parent_session = mock_session
   ), {
     # Module should initialize without errors

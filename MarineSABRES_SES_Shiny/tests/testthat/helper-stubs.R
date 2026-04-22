@@ -33,19 +33,22 @@ minimal_server <- function(input, output, session, ...) {
   reactiveValues()
 }
 
-# Module stubs
+# Module stubs - signatures mirror the real modules' current contracts so
+# signature assertions in dedicated test files work whether the stub or
+# the real module is active. All added params default to NULL for minimal
+# test-time invocation.
 isa_data_entry_ui <- function(id, i18n = NULL) minimal_ui(id)
-isa_data_entry_server <- function(id, project_data = NULL) {
+isa_data_entry_server <- function(id, project_data_reactive = NULL, i18n = NULL, event_bus = NULL) {
   moduleServer(id, function(input, output, session) minimal_server(input, output, session))
 }
 
-pims_project_ui <- function(id) minimal_ui(id)
-pims_project_server <- function(id, project_data = NULL) {
+pims_project_ui <- function(id, i18n = NULL) minimal_ui(id)
+pims_project_server <- function(id, project_data_reactive = NULL, i18n = NULL, event_bus = NULL) {
   moduleServer(id, function(input, output, session) minimal_server(input, output, session))
 }
 
-cld_viz_ui <- function(id) minimal_ui(id)
-cld_viz_server <- function(id, project_data = NULL) {
+cld_viz_ui <- function(id, i18n = NULL) minimal_ui(id)
+cld_viz_server <- function(id, project_data_reactive = NULL, i18n = NULL, event_bus = NULL) {
   moduleServer(id, function(input, output, session) minimal_server(input, output, session))
 }
 
@@ -61,15 +64,17 @@ entry_point_server <- function(id, project_data_reactive = NULL, i18n = NULL,
   moduleServer(id, function(input, output, session) minimal_server(input, output, session))
 }
 
-ai_isa_assistant_ui <- function(id) minimal_ui(id)
-ai_isa_assistant_server <- function(id, project_data = NULL) {
+ai_isa_assistant_ui <- function(id, i18n = NULL) minimal_ui(id)
+ai_isa_assistant_server <- function(id, project_data_reactive = NULL, i18n = NULL, event_bus = NULL,
+                                    autosave_enabled_reactive = NULL, user_level_reactive = NULL,
+                                    parent_session = NULL, beginner_max_elements_reactive = NULL) {
   moduleServer(id, function(input, output, session) minimal_server(input, output, session))
 }
 
 response_measures_ui <- function(id) minimal_ui(id)
 scenario_builder_ui <- function(id) minimal_ui(id)
 
-create_ses_ui <- function(id) {
+create_ses_ui <- function(id, i18n = NULL) {
   ns <- NS(id)
   tags$div(
     id = ns("create_ses_root"),
@@ -80,7 +85,8 @@ create_ses_ui <- function(id) {
     tags$table(id = ns("comparison_table"))
   )
 }
-create_ses_server <- function(id, project_data_reactive = NULL, parent_session = NULL) {
+create_ses_server <- function(id, project_data_reactive = NULL, i18n = NULL,
+                              parent_session = NULL, event_bus = NULL) {
   moduleServer(id, function(input, output, session) {
     # Provide a minimal comparison table output
     output$comparison_table <- renderTable({
@@ -418,12 +424,14 @@ ses_templates <- .ses_templates_builder()
 rm(.ses_templates_builder)
 
 # Template SES module stubs
-template_ses_ui <- function(id) {
+template_ses_ui <- function(id, i18n = NULL) {
   ns <- NS(id)
   tags$div(id = ns("template_ses_root"), "Template SES UI")
 }
 
-template_ses_server <- function(id, project_data = NULL, parent_session = NULL) {
+template_ses_server <- function(id, project_data_reactive = NULL, i18n = NULL,
+                                parent_session = NULL, event_bus = NULL,
+                                user_level_reactive = NULL) {
   moduleServer(id, function(input, output, session) minimal_server(input, output, session))
 }
 
