@@ -26,6 +26,13 @@ jobs:
           set -e
           python scripts/_i18n_audit.py
 
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: i18n-audit-report
+          path: MarineSABRES_SES_Shiny/.claude/skills/scientific-validation-workspace/codebase-audit/i18n-audit-report.md
+
       - name: Fail on missing or hardcoded keys
         run: |
           set -e
