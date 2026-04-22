@@ -7,14 +7,43 @@ on:
     branches: [ main ]
 
 jobs:
-  smoke-test:
-    name: CI smoke test
+  validate-translations:
+    name: Validate translations and reports
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: MarineSABRES_SES_Shiny
     steps:
       - uses: actions/checkout@v4
-      - name: Echo
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run i18n audit
         run: |
-          echo "Hello from repo-root workflow"
-          ls -la
-          echo "---"
-          ls MarineSABRES_SES_Shiny/ | head -5
+          set -e
+          python scripts/_i18n_audit.py
+
+      - name: Fail on missing or hardcoded keys
+        run: |
+          set -e
+          REPORT=".claude/skills/scientific-validation-workspace/codebase-audit/i18n-audit-report.md"
+          if [ ! -f "$REPORT" ]; then
+            echo "Audit report not found"
+            exit 1
+          fi
+          TOTALS=$(grep -E "^Totals:" "$REPORT" | head -1)
+          echo "$TOTALS"
+          if echo "$TOTALS" | grep -qE "missing=[1-9][0-9]*"; then
+            echo "ERROR: Missing i18n keys detected"
+            cat "$REPORT"
+            exit 1
+          fi
+          if echo "$TOTALS" | grep -qE "hardcoded=[1-9][0-9]*"; then
+            echo "ERROR: Hardcoded strings detected"
+            cat "$REPORT"
+            exit 1
+          fi
+          echo "i18n audit passed: $TOTALS"
