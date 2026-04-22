@@ -5,17 +5,7 @@ library(testthat)
 library(shiny)
 
 # Source the module file to make its functions available
-local({
-  test_dir <- getwd()
-  root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
-  module_path <- file.path(root, "modules", "workflow_stepper_module.R")
-  if (file.exists(module_path)) {
-    tryCatch(source(module_path, local = FALSE), error = function(e) {
-      message("Could not source workflow_stepper_module.R: ", e$message)
-    })
-  }
-})
-
+source_for_test("modules/workflow_stepper_module.R")
 # ============================================================================
 # UI FUNCTION TESTS
 # ============================================================================

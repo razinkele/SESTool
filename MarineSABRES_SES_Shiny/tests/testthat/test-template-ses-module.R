@@ -7,17 +7,7 @@ library(shiny)
 # Source the module under test (modules/ are not auto-loaded by global.R).
 # Using sys.source(envir = .GlobalEnv) to override any outdated stub in
 # helper-stubs.R (see also: test-entry-point-module.R commit 2757e05).
-.tss_test_dir <- getwd()
-.tss_root <- if (basename(.tss_test_dir) == "testthat") dirname(dirname(.tss_test_dir)) else .tss_test_dir
-.tss_module_path <- file.path(.tss_root, "modules", "template_ses_module.R")
-if (file.exists(.tss_module_path)) {
-  tryCatch(
-    sys.source(.tss_module_path, envir = .GlobalEnv),
-    error = function(e) message("Could not source template_ses_module.R: ", e$message)
-  )
-}
-rm(.tss_test_dir, .tss_root, .tss_module_path)
-
+source_for_test("modules/template_ses_module.R")
 i18n <- list(t = function(key) key)
 
 # ============================================================================

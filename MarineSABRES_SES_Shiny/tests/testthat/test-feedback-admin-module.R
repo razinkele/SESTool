@@ -5,19 +5,9 @@ library(testthat)
 library(shiny)
 
 # Source the module under test. Modules are not auto-loaded by global.R
-# (app.R sources them at startup), so we source explicitly here.
-# Follows the absolute-path pattern used in test-create-ses-module.R:133-135.
-local({
-  test_dir <- getwd()
-  root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
-  module_path <- file.path(root, "modules", "feedback_admin_module.R")
-  if (file.exists(module_path)) {
-    tryCatch(
-      source(module_path, local = FALSE),
-      error = function(e) message("Could not source feedback_admin_module.R: ", e$message)
-    )
-  }
-})
+# (app.R sources them at startup). helper-00-load-functions.R provides
+# source_for_test() which handles path resolution + error recovery.
+source_for_test("modules/feedback_admin_module.R")
 
 # Mock i18n
 i18n <- list(t = function(key) key)

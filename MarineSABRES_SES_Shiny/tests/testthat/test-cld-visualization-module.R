@@ -7,17 +7,7 @@ library(shiny)
 # Source the module under test (modules/ are not auto-loaded by global.R).
 # Using sys.source(envir = .GlobalEnv) to override any outdated stub in
 # helper-stubs.R (see also: test-entry-point-module.R commit 2757e05).
-.cldv_test_dir <- getwd()
-.cldv_root <- if (basename(.cldv_test_dir) == "testthat") dirname(dirname(.cldv_test_dir)) else .cldv_test_dir
-.cldv_module_path <- file.path(.cldv_root, "modules", "cld_visualization_module.R")
-if (file.exists(.cldv_module_path)) {
-  tryCatch(
-    sys.source(.cldv_module_path, envir = .GlobalEnv),
-    error = function(e) message("Could not source cld_visualization_module.R: ", e$message)
-  )
-}
-rm(.cldv_test_dir, .cldv_root, .cldv_module_path)
-
+source_for_test("modules/cld_visualization_module.R")
 i18n <- list(t = function(key) key)
 
 # ============================================================================

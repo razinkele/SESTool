@@ -7,17 +7,7 @@ library(shiny)
 # Source the module under test (modules/ are not auto-loaded by global.R).
 # Using sys.source(envir = .GlobalEnv) to override any outdated stub in
 # helper-stubs.R (see also: test-entry-point-module.R commit 2757e05).
-.isade_test_dir <- getwd()
-.isade_root <- if (basename(.isade_test_dir) == "testthat") dirname(dirname(.isade_test_dir)) else .isade_test_dir
-.isade_module_path <- file.path(.isade_root, "modules", "isa_data_entry_module.R")
-if (file.exists(.isade_module_path)) {
-  tryCatch(
-    sys.source(.isade_module_path, envir = .GlobalEnv),
-    error = function(e) message("Could not source isa_data_entry_module.R: ", e$message)
-  )
-}
-rm(.isade_test_dir, .isade_root, .isade_module_path)
-
+source_for_test("modules/isa_data_entry_module.R")
 i18n <- list(t = function(key) key)
 
 # ============================================================================

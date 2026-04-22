@@ -5,17 +5,7 @@ library(testthat)
 library(shiny)
 
 # Source the module file to make its functions available
-local({
-  test_dir <- getwd()
-  root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
-  module_path <- file.path(root, "modules", "import_data_module.R")
-  if (file.exists(module_path)) {
-    tryCatch(source(module_path, local = FALSE), error = function(e) {
-      message("Could not source import_data_module.R: ", e$message)
-    })
-  }
-})
-
+source_for_test("modules/import_data_module.R")
 # Mock i18n
 i18n <- list(t = function(key) key)
 

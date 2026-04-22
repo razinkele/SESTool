@@ -9,17 +9,7 @@ library(shiny)
 # 3-arg signature; we source the real module AFTER helper load to override.
 # Using sys.source() with explicit .GlobalEnv because source(local=FALSE)
 # inside a test file has shown unreliable .GlobalEnv binding in testthat 3.
-.ep_test_dir <- getwd()
-.ep_root <- if (basename(.ep_test_dir) == "testthat") dirname(dirname(.ep_test_dir)) else .ep_test_dir
-.ep_module_path <- file.path(.ep_root, "modules", "entry_point_module.R")
-if (file.exists(.ep_module_path)) {
-  tryCatch(
-    sys.source(.ep_module_path, envir = .GlobalEnv),
-    error = function(e) message("Could not source entry_point_module.R: ", e$message)
-  )
-}
-rm(.ep_test_dir, .ep_root, .ep_module_path)
-
+source_for_test("modules/entry_point_module.R")
 i18n <- list(t = function(key) key)
 
 # ============================================================================

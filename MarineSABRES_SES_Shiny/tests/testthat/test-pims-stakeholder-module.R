@@ -7,17 +7,7 @@ library(shiny)
 # Source the module under test (modules/ are not auto-loaded by global.R).
 # Using sys.source(envir = .GlobalEnv) to override any outdated stub in
 # helper-stubs.R (see also: test-entry-point-module.R commit 2757e05).
-.pst_test_dir <- getwd()
-.pst_root <- if (basename(.pst_test_dir) == "testthat") dirname(dirname(.pst_test_dir)) else .pst_test_dir
-.pst_module_path <- file.path(.pst_root, "modules", "pims_stakeholder_module.R")
-if (file.exists(.pst_module_path)) {
-  tryCatch(
-    sys.source(.pst_module_path, envir = .GlobalEnv),
-    error = function(e) message("Could not source pims_stakeholder_module.R: ", e$message)
-  )
-}
-rm(.pst_test_dir, .pst_root, .pst_module_path)
-
+source_for_test("modules/pims_stakeholder_module.R")
 i18n <- list(t = function(key) key)
 
 # ============================================================================

@@ -7,17 +7,7 @@ library(shiny)
 # Source the module under test (modules/ are not auto-loaded by global.R).
 # Using sys.source(envir = .GlobalEnv) to override any outdated stub in
 # helper-stubs.R (see also: test-entry-point-module.R commit 2757e05).
-.gsc_test_dir <- getwd()
-.gsc_root <- if (basename(.gsc_test_dir) == "testthat") dirname(dirname(.gsc_test_dir)) else .gsc_test_dir
-.gsc_module_path <- file.path(.gsc_root, "modules", "graphical_ses_creator_module.R")
-if (file.exists(.gsc_module_path)) {
-  tryCatch(
-    sys.source(.gsc_module_path, envir = .GlobalEnv),
-    error = function(e) message("Could not source graphical_ses_creator_module.R: ", e$message)
-  )
-}
-rm(.gsc_test_dir, .gsc_root, .gsc_module_path)
-
+source_for_test("modules/graphical_ses_creator_module.R")
 i18n <- list(t = function(key) key)
 
 # ============================================================================

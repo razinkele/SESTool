@@ -7,17 +7,7 @@ library(shiny)
 # Source the module under test (modules/ are not auto-loaded by global.R).
 # Using sys.source(envir = .GlobalEnv) to override any outdated stub in
 # helper-stubs.R (see also: test-entry-point-module.R commit 2757e05).
-.expr_test_dir <- getwd()
-.expr_root <- if (basename(.expr_test_dir) == "testthat") dirname(dirname(.expr_test_dir)) else .expr_test_dir
-.expr_module_path <- file.path(.expr_root, "modules", "export_reports_module.R")
-if (file.exists(.expr_module_path)) {
-  tryCatch(
-    sys.source(.expr_module_path, envir = .GlobalEnv),
-    error = function(e) message("Could not source export_reports_module.R: ", e$message)
-  )
-}
-rm(.expr_test_dir, .expr_root, .expr_module_path)
-
+source_for_test("modules/export_reports_module.R")
 i18n <- list(t = function(key) key)
 
 # ============================================================================

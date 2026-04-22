@@ -12,9 +12,7 @@ library(testthat)
 # (app.R sources them at startup). Follow the absolute-path helper pattern
 # from test-entry-point-module.R. Module files are sourced in dependency
 # order: helper/classifier first, then modules that depend on them.
-.mc_test_dir <- getwd()
-.mc_root <- if (basename(.mc_test_dir) == "testthat") dirname(dirname(.mc_test_dir)) else .mc_test_dir
-for (.mc_f in c(
+source_for_test(c(
   "modules/graphical_ses_ai_classifier.R",
   "modules/graphical_ses_ml_enhancer.R",
   "modules/graphical_ses_network_builder.R",
@@ -31,17 +29,7 @@ for (.mc_f in c(
   "modules/export_reports_module.R",
   "modules/response_module.R",
   "modules/scenario_builder_module.R"
-)) {
-  .mc_path <- file.path(.mc_root, .mc_f)
-  if (file.exists(.mc_path)) {
-    tryCatch(
-      sys.source(.mc_path, envir = .GlobalEnv),
-      error = function(e) message("Could not source ", .mc_f, ": ", e$message)
-    )
-  }
-}
-rm(.mc_test_dir, .mc_root, .mc_f, .mc_path)
-
+))
 # ============================================================================
 # TEST HELPERS
 # ============================================================================

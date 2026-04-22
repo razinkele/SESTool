@@ -51,3 +51,37 @@ tryCatch({
 
 # Restore working directory
 setwd(old_wd)
+
+# ===========================================================================
+# Helper: source_for_test()
+# ---------------------------------------------------------------------------
+# Sources one or more project files into .GlobalEnv, using an absolute path
+# derived from the current working directory (handles both "testthat" cwd
+# when run via test_file() and project-root cwd when run via other entry
+# points). Silently skips missing files and logs any source errors without
+# failing the entire test file.
+#
+# Used by module/feature test files whose targets are NOT in global.R's
+# auto-load chain (e.g., modules/*.R, server/event_bus_setup.R,
+# functions/reactive_pipeline.R).
+#
+# Example:
+#   source_for_test(c(
+#     "modules/entry_point_module.R",
+#     "server/event_bus_setup.R"
+#   ))
+# ===========================================================================
+source_for_test <- function(relative_paths) {
+  td <- getwd()
+  root <- if (basename(td) == "testthat") dirname(dirname(td)) else td
+  for (rel in relative_paths) {
+    full <- file.path(root, rel)
+    if (file.exists(full)) {
+      tryCatch(
+        sys.source(full, envir = .GlobalEnv),
+        error = function(e) message("source_for_test: could not source ", rel, ": ", e$message)
+      )
+    }
+  }
+  invisible(NULL)
+}

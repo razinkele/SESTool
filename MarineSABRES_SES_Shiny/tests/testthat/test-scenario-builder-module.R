@@ -7,17 +7,7 @@ library(shiny)
 # Source the module under test (modules/ are not auto-loaded by global.R).
 # Using sys.source(envir = .GlobalEnv) to override any outdated stub in
 # helper-stubs.R (see also: test-entry-point-module.R commit 2757e05).
-.sb_test_dir <- getwd()
-.sb_root <- if (basename(.sb_test_dir) == "testthat") dirname(dirname(.sb_test_dir)) else .sb_test_dir
-.sb_module_path <- file.path(.sb_root, "modules", "scenario_builder_module.R")
-if (file.exists(.sb_module_path)) {
-  tryCatch(
-    sys.source(.sb_module_path, envir = .GlobalEnv),
-    error = function(e) message("Could not source scenario_builder_module.R: ", e$message)
-  )
-}
-rm(.sb_test_dir, .sb_root, .sb_module_path)
-
+source_for_test("modules/scenario_builder_module.R")
 i18n <- list(t = function(key) key)
 
 # ============================================================================

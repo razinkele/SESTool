@@ -5,17 +5,8 @@ library(testthat)
 library(shiny)
 
 # Source the module under test (modules/ are not auto-loaded by global.R).
-local({
-  test_dir <- getwd()
-  root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
-  module_path <- file.path(root, "modules", "local_storage_module.R")
-  if (file.exists(module_path)) {
-    tryCatch(
-      source(module_path, local = FALSE),
-      error = function(e) message("Could not source local_storage_module.R: ", e$message)
-    )
-  }
-})
+# source_for_test() is defined in helper-00-load-functions.R.
+source_for_test("modules/local_storage_module.R")
 
 i18n <- list(t = function(key) key)
 
