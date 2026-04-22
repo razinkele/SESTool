@@ -1,10 +1,5 @@
 name: i18n validation
 
-# Workflow sources: copied from MarineSABRES_SES_Shiny/.github/workflows/
-# (GitHub only registers workflows at repo-root .github/workflows/, so the
-# copies in the subdirectory were dormant). Uses defaults.run.working-directory
-# to run all commands from MarineSABRES_SES_Shiny/ without rewriting every step.
-
 on:
   push:
     branches: [ main ]
@@ -41,9 +36,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: i18n-audit-report
-          # path is relative to $GITHUB_WORKSPACE (repo root), NOT working-directory
           path: MarineSABRES_SES_Shiny/.claude/skills/scientific-validation-workspace/codebase-audit/i18n-audit-report.md
-          if-no-files-found: warn
 
       - name: Fail on missing or hardcoded keys
         run: |
@@ -101,7 +94,6 @@ jobs:
         with:
           name: i18n-test-logs
           path: MarineSABRES_SES_Shiny/i18n_tests_output.txt
-          if-no-files-found: warn
 
       - name: Fail if tests failed
         run: |
