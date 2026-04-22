@@ -610,3 +610,25 @@ test_that("i18n enforcement summary", {
 
   expect_true(total_keys > 0, info = "Expected at least one translation key to exist")
 })
+
+# ==============================================================================
+# TEST: Greek translation for new_to_ses_modeling is not partially English
+# ==============================================================================
+
+test_that("Greek translation for new_to_ses_modeling is pure Greek", {
+  # Absolute path pattern matches tests/testthat/test-create-ses-module.R:133-135
+  test_dir <- getwd()
+  root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
+  fp <- file.path(root, "translations", "modules", "ses_creation.json")
+  skip_if_not(file.exists(fp), "ses_creation.json not found")
+  d <- jsonlite::fromJSON(fp, simplifyVector = FALSE)
+  el_value <- d$translation$`modules.ses.creation.new_to_ses_modeling`$el
+  expect_false(
+    grepl("to SES modeling", el_value, fixed = TRUE),
+    info = paste0("Greek value still contains English substring: '", el_value, "'")
+  )
+  expect_false(
+    grepl("modeling", el_value, fixed = TRUE),
+    info = "Greek value should not contain English word 'modeling'"
+  )
+})
