@@ -1474,10 +1474,28 @@
           "from_type": "drivers",
           "to": "Commercial demersal trawl fisheries (sole, plaice, cod)",
           "to_type": "activities",
-          "polarity": "+/-",
+          "polarity": "+",
           "strength": "medium",
           "confidence": 4,
-          "rationale": "Ocean warming shifts fish species distributions northward, altering fishing patterns and target species availability for North Sea demersal fleets",
+          "rationale": "Ocean warming expands ranges of northern-migrant species (seabass, red mullet) available to North Sea demersal fleets",
+          "references": [
+            "IPCC 2023",
+            "Hoegh-Guldberg et al. 2018",
+            "Perry et al. 2005",
+            "Pinsky et al. 2013"
+          ],
+          "temporal_lag": "long-term",
+          "reversibility": "irreversible"
+        },
+        {
+          "from": "Climate change and ocean warming",
+          "from_type": "drivers",
+          "to": "Commercial demersal trawl fisheries (sole, plaice, cod)",
+          "to_type": "activities",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 4,
+          "rationale": "Ocean warming reduces availability of traditional cold-water demersal stocks (sole, plaice, cod) for North Sea fleets",
           "references": [
             "IPCC 2023",
             "Hoegh-Guldberg et al. 2018",
@@ -2641,10 +2659,26 @@
           "from_type": "responses",
           "to": "Floating offshore wind farm deployment and operation",
           "to_type": "activities",
-          "polarity": "+/-",
+          "polarity": "+",
           "strength": "medium",
           "confidence": 3,
-          "rationale": "International cooperation frameworks (OSPAR, EU MSP Directive) both enable and constrain floating wind deployment through coordinated environmental assessment requirements",
+          "rationale": "Coordinated frameworks (OSPAR, EU MSP Directive) de-risk floating wind consenting through harmonised environmental standards and cross-border stakeholder alignment",
+          "references": [
+            "OSPAR Commission 2006",
+            "Ehler & Douvere 2009"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "International cooperation on transboundary environmental effects",
+          "from_type": "responses",
+          "to": "Floating offshore wind farm deployment and operation",
+          "to_type": "activities",
+          "polarity": "-",
+          "strength": "medium",
+          "confidence": 3,
+          "rationale": "Coordinated environmental assessment requirements create additional procedural burden that delays floating wind deployment timelines",
           "references": [
             "OSPAR Commission 2006",
             "Ehler & Douvere 2009"
@@ -2966,6 +3000,10 @@
         {
           "name": "Benthic macrofauna in deep basins",
           "relevance": 0.65
+        },
+        {
+          "name": "De facto marine refuge in wind farm exclusion zones",
+          "relevance": 0.68
         }
       ],
       "impacts": [
@@ -2980,10 +3018,6 @@
         {
           "name": "Reef habitat creation on foundations in sediment-dominated sea",
           "relevance": 0.7
-        },
-        {
-          "name": "De facto marine refuge in wind farm exclusion zones",
-          "relevance": 0.68
         },
         {
           "name": "Climate regulation through carbon cycling",
@@ -4029,10 +4063,28 @@
           "from_type": "responses",
           "to": "Fixed-bottom offshore wind farm construction and operation",
           "to_type": "activities",
-          "polarity": "+/-",
+          "polarity": "+",
           "strength": "strong",
           "confidence": 5,
-          "rationale": "Cumulative effects EIA can both delay wind farm projects (through additional assessment requirements) and enable them (through consenting frameworks that address stakeholder concerns)",
+          "rationale": "Cumulative-effects EIA enables consenting by addressing stakeholder concerns up front and providing a defensible assessment record",
+          "references": [
+            "Ehler & Douvere 2009",
+            "Zaucha & Gee 2019",
+            "HELCOM 2021",
+            "Korpinen et al. 2012"
+          ],
+          "temporal_lag": "medium-term",
+          "reversibility": "partially_reversible"
+        },
+        {
+          "from": "Environmental Impact Assessment with cumulative effects",
+          "from_type": "responses",
+          "to": "Fixed-bottom offshore wind farm construction and operation",
+          "to_type": "activities",
+          "polarity": "-",
+          "strength": "strong",
+          "confidence": 5,
+          "rationale": "Cumulative-effects EIA adds procedural requirements that extend consenting timelines for fixed-bottom wind farms",
           "references": [
             "Ehler & Douvere 2009",
             "Zaucha & Gee 2019",
@@ -4425,6 +4477,10 @@
         {
           "name": "Coastal water quality and bathing water standards",
           "relevance": 0.65
+        },
+        {
+          "name": "De facto marine refuge from fishing exclusion zones",
+          "relevance": 0.65
         }
       ],
       "impacts": [
@@ -4435,10 +4491,6 @@
         {
           "name": "Artisanal fishery provisioning from coastal waters",
           "relevance": 0.82
-        },
-        {
-          "name": "De facto marine refuge from fishing exclusion zones",
-          "relevance": 0.65
         },
         {
           "name": "Tourism and recreation seascape value",

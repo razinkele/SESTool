@@ -24044,22 +24044,6 @@
           "reversibility": "reversible"
         },
         {
-          "from": "Marine tourism revenue",
-          "from_type": "welfare",
-          "to": "Recreational wellbeing from ocean access",
-          "to_type": "welfare",
-          "polarity": "+",
-          "strength": "strong",
-          "confidence": 4,
-          "rationale": "Marine tourism revenue supports infrastructure and services that enhance recreational wellbeing and ocean access for island communities",
-          "references": [
-            "Uyarra et al. 2009",
-            "Spalding et al. 2017"
-          ],
-          "temporal_lag": "short-term",
-          "reversibility": "reversible"
-        },
-        {
           "from": "Coastal property values",
           "from_type": "welfare",
           "to": "Tourism demand for marine recreation",
@@ -25056,6 +25040,14 @@
         {
           "name": "Cory's shearwater and other seabird colony size",
           "relevance": 0.75
+        },
+        {
+          "name": "Loss of apex predator trophic function",
+          "relevance": 0.8
+        },
+        {
+          "name": "Disrupted pelagic food web connectivity",
+          "relevance": 0.75
         }
       ],
       "impacts": [
@@ -25064,15 +25056,7 @@
           "relevance": 0.85
         },
         {
-          "name": "Loss of apex predator trophic function",
-          "relevance": 0.8
-        },
-        {
           "name": "Reduced marine wildlife encounter rates for ecotourism",
-          "relevance": 0.75
-        },
-        {
-          "name": "Disrupted pelagic food web connectivity",
           "relevance": 0.75
         },
         {
@@ -25464,7 +25448,7 @@
           "from": "Pelagic shark and ray population status",
           "from_type": "states",
           "to": "Loss of apex predator trophic function",
-          "to_type": "impacts",
+          "to_type": "states",
           "polarity": "-",
           "strength": "strong",
           "confidence": 4,
@@ -25802,7 +25786,7 @@
           "from": "Pelagic Sargassum community extent",
           "from_type": "states",
           "to": "Disrupted pelagic food web connectivity",
-          "to_type": "impacts",
+          "to_type": "states",
           "polarity": "-",
           "strength": "moderate",
           "confidence": 3,
@@ -25816,9 +25800,9 @@
         },
         {
           "from": "Loss of apex predator trophic function",
-          "from_type": "impacts",
+          "from_type": "states",
           "to": "Disrupted pelagic food web connectivity",
-          "to_type": "impacts",
+          "to_type": "states",
           "polarity": "+",
           "strength": "strong",
           "confidence": 4,

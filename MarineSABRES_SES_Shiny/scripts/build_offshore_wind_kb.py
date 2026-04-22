@@ -19,6 +19,19 @@ Valid transitions (matching main KB):
   responses->activities, responses->pressures, responses->drivers  (interventions)
 
 Output: data/ses_knowledge_db_offshore_wind.json
+
+NOTE ON MANUAL POST-GENERATION EDITS
+------------------------------------
+Some connections and element placements in the output JSON may have been
+hand-edited after generation (see commits 72e90c9 "add connections for all 67
+offshore wind KB orphan elements" and later DAPSIWRM fixes). Rerunning this
+script REGENERATES from the in-script definitions and will drop any manual
+additions not mirrored here. Before rebuilding:
+  1. git diff data/ses_knowledge_db_offshore_wind.json against the last commit
+  2. confirm whether the current JSON state is authoritative (keep) or
+     the script is (overwrite)
+  3. if the JSON is authoritative, mirror manual changes into this script
+     before rebuilding, or skip the rebuild entirely.
 """
 
 import re
@@ -1438,13 +1451,13 @@ def build_kb(papers):
             {"name": "Deep-water hypoxia extent (dead zones)", "relevance": 0.80},
             {"name": "Halocline dynamics and deep-water renewal", "relevance": 0.68},
             {"name": "Benthic macrofauna in deep basins", "relevance": 0.65},
+            {"name": "De facto marine refuge in wind farm exclusion zones", "relevance": 0.68},
         ],
 
         "impacts": [
             {"name": "Commercial fish stock provision (cod, herring, sprat)", "relevance": 0.90},
             {"name": "Carbon emission avoidance through Baltic wind energy", "relevance": 0.90},
             {"name": "Reef habitat creation on foundations in sediment-dominated sea", "relevance": 0.70},
-            {"name": "De facto marine refuge in wind farm exclusion zones", "relevance": 0.68},
             # From main KB baltic_offshore:
             {"name": "Climate regulation through carbon cycling", "relevance": 0.55},
         ],
@@ -1963,12 +1976,12 @@ def build_kb(papers):
             {"name": "Biofouling communities on floating structures", "relevance": 0.60},
             # From main KB mediterranean_open_coast:
             {"name": "Coastal water quality and bathing water standards", "relevance": 0.65},
+            {"name": "De facto marine refuge from fishing exclusion zones", "relevance": 0.65},
         ],
 
         "impacts": [
             {"name": "Carbon emission reduction from Mediterranean floating wind", "relevance": 0.95},
             {"name": "Artisanal fishery provisioning from coastal waters", "relevance": 0.82},
-            {"name": "De facto marine refuge from fishing exclusion zones", "relevance": 0.65},
             {"name": "Tourism and recreation seascape value", "relevance": 0.75},
             {"name": "Pelagic fish aggregation around floating structures (FAD effect)", "relevance": 0.55},
             # From main KB mediterranean_open_coast:
