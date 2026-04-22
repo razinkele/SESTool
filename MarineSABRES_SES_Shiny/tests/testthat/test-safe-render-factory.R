@@ -5,6 +5,11 @@
 # 1. Factory creates working render wrappers
 # 2. Error handlers are called correctly
 # 3. Default error handlers work as expected
+#
+# NOTE: Most tests here skip because create_safe_render_factory,
+# default_ui_error_handler, etc. are not implemented in functions/ —
+# they were specified but never shipped. Skips are legitimate; fixing
+# them requires implementing the factory API, not adding a source() call.
 
 library(testthat)
 
