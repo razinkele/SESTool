@@ -75,16 +75,16 @@ import_data_ui <- function(id, i18n) {
                   )),
           tags$li(strong(i18n$t("common.misc.elements_sheet_columns")),
                   tags$ul(
-                    tags$li(code("Label"), " - Name of the element (required)"),
-                    tags$li(code("type"), " - Element type: Driver, Activity, Pressure, Marine Process and Function, Ecosystem Service, Good and Benefit, Response, or Measure (required)")
+                    tags$li(code("Label"), i18n$t("modules.import.data.elements_label_desc")),
+                    tags$li(code("type"), i18n$t("modules.import.data.elements_type_desc"))
                   )),
           tags$li(strong(i18n$t("common.misc.connections_sheet_columns")),
                   tags$ul(
-                    tags$li(code("From"), " - Source element label (required)"),
-                    tags$li(code("To"), " - Target element label (required)"),
-                    tags$li(code("Label"), " - Connection polarity: + or - (required)"),
-                    tags$li(code("Strength"), " - Optional: Weak/Medium/Strong"),
-                    tags$li(code("Confidence"), " - Optional: 1-5 scale")
+                    tags$li(code("From"), i18n$t("modules.import.data.connections_from_desc")),
+                    tags$li(code("To"), i18n$t("modules.import.data.connections_to_desc")),
+                    tags$li(code("Label"), i18n$t("modules.import.data.connections_label_desc")),
+                    tags$li(code("Strength"), i18n$t("modules.import.data.connections_strength_desc")),
+                    tags$li(code("Confidence"), i18n$t("modules.import.data.connections_confidence_desc"))
                   ))
         )
       ),

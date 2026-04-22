@@ -632,3 +632,62 @@ test_that("Greek translation for new_to_ses_modeling is pure Greek", {
     info = "Greek value should not contain English word 'modeling'"
   )
 })
+
+# ==============================================================================
+# TEST: import_data_module has no hardcoded English column descriptions
+# ==============================================================================
+
+test_that("import_data_module has no hardcoded English column descriptions", {
+  test_dir <- getwd()
+  root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
+  fp <- file.path(root, "modules", "import_data_module.R")
+  skip_if_not(file.exists(fp), "import_data_module.R not found")
+  src <- paste(readLines(fp), collapse = "\n")
+
+  # These specific English phrases were flagged by the iter-1 review and
+  # should now be replaced with i18n$t() calls.
+  forbidden <- c(
+    " - Name of the element (required)",
+    " - Element type: Driver, Activity",
+    " - Source element label (required)",
+    " - Target element label (required)",
+    " - Connection polarity: + or - (required)",
+    " - Optional: Weak/Medium/Strong",
+    " - Optional: 1-5 scale"
+  )
+  for (phrase in forbidden) {
+    expect_false(
+      grepl(phrase, src, fixed = TRUE),
+      info = paste0("Hardcoded English phrase still present: '", phrase, "'")
+    )
+  }
+})
+
+test_that("import_data.json has the 7 new column-description keys", {
+  test_dir <- getwd()
+  root <- if (basename(test_dir) == "testthat") dirname(dirname(test_dir)) else test_dir
+  fp <- file.path(root, "translations", "modules", "import_data.json")
+  skip_if_not(file.exists(fp), "import_data.json not found")
+  d <- jsonlite::fromJSON(fp, simplifyVector = FALSE)
+  required_keys <- c(
+    "modules.import.data.elements_label_desc",
+    "modules.import.data.elements_type_desc",
+    "modules.import.data.connections_from_desc",
+    "modules.import.data.connections_to_desc",
+    "modules.import.data.connections_label_desc",
+    "modules.import.data.connections_strength_desc",
+    "modules.import.data.connections_confidence_desc"
+  )
+  expected_langs <- c("en", "es", "fr", "de", "lt", "pt", "it", "no", "el")
+  for (k in required_keys) {
+    expect_true(k %in% names(d$translation), info = paste0("Missing key: ", k))
+    if (k %in% names(d$translation)) {
+      langs_present <- names(d$translation[[k]])
+      expect_true(
+        all(expected_langs %in% langs_present),
+        info = paste0("Key '", k, "' missing languages: ",
+                      paste(setdiff(expected_langs, langs_present), collapse = ","))
+      )
+    }
+  }
+})

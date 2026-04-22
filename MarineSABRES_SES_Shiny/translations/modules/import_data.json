@@ -230,6 +230,83 @@
       "it": " - Contiene tutte le relazioni/archi tra gli elementi",
       "no": " - Inneholder alle relasjoner/kanter mellom elementer",
       "el": " - Περιέχει όλες τις σχέσεις/ακμές μεταξύ στοιχείων"
+    },
+    "modules.import.data.elements_label_desc": {
+      "en": " - Name of the element (required)",
+      "es": " - Nombre del elemento (obligatorio)",
+      "fr": " - Nom de l'élément (obligatoire)",
+      "de": " - Name des Elements (Pflichtfeld)",
+      "lt": " - Elemento pavadinimas (privalomas)",
+      "pt": " - Nome do elemento (obrigatório)",
+      "it": " - Nome dell'elemento (obbligatorio)",
+      "no": " - Navn på elementet (påkrevd)",
+      "el": " - Όνομα του στοιχείου (υποχρεωτικό)"
+    },
+    "modules.import.data.elements_type_desc": {
+      "en": " - Element type: Driver, Activity, Pressure, Marine Process and Function, Ecosystem Service, Good and Benefit, Response, or Measure (required)",
+      "es": " - Tipo de elemento: Impulsor, Actividad, Presión, Proceso y Función Marina, Servicio Ecosistémico, Bien y Beneficio, Respuesta o Medida (obligatorio)",
+      "fr": " - Type d'élément : Facteur, Activité, Pression, Processus et Fonction Marine, Service Écosystémique, Bien et Bénéfice, Réponse ou Mesure (obligatoire)",
+      "de": " - Elementtyp: Treiber, Aktivität, Belastung, Mariner Prozess und Funktion, Ökosystemleistung, Gut und Nutzen, Reaktion oder Maßnahme (Pflichtfeld)",
+      "lt": " - Elemento tipas: Varomoji jėga, Veikla, Spaudimas, Jūros procesas ir funkcija, Ekosistemos paslauga, Gėrybė ir nauda, Atsakas arba Priemonė (privalomas)",
+      "pt": " - Tipo de elemento: Fator, Atividade, Pressão, Processo e Função Marinha, Serviço Ecossistêmico, Bem e Benefício, Resposta ou Medida (obrigatório)",
+      "it": " - Tipo di elemento: Fattore, Attività, Pressione, Processo e Funzione Marina, Servizio Ecosistemico, Bene e Beneficio, Risposta o Misura (obbligatorio)",
+      "no": " - Elementtype: Drivkraft, Aktivitet, Belastning, Marin prosess og funksjon, Økosystemtjeneste, Gode og nytte, Respons eller Tiltak (påkrevd)",
+      "el": " - Τύπος στοιχείου: Κινητήρια δύναμη, Δραστηριότητα, Πίεση, Θαλάσσια διεργασία και λειτουργία, Υπηρεσία οικοσυστήματος, Αγαθό και όφελος, Απόκριση ή Μέτρο (υποχρεωτικό)"
+    },
+    "modules.import.data.connections_from_desc": {
+      "en": " - Source element label (required)",
+      "es": " - Etiqueta del elemento de origen (obligatorio)",
+      "fr": " - Étiquette de l'élément source (obligatoire)",
+      "de": " - Bezeichnung des Quellelements (Pflichtfeld)",
+      "lt": " - Šaltinio elemento žymė (privaloma)",
+      "pt": " - Rótulo do elemento de origem (obrigatório)",
+      "it": " - Etichetta dell'elemento di origine (obbligatorio)",
+      "no": " - Kildeelementets etikett (påkrevd)",
+      "el": " - Ετικέτα στοιχείου προέλευσης (υποχρεωτικό)"
+    },
+    "modules.import.data.connections_to_desc": {
+      "en": " - Target element label (required)",
+      "es": " - Etiqueta del elemento de destino (obligatorio)",
+      "fr": " - Étiquette de l'élément cible (obligatoire)",
+      "de": " - Bezeichnung des Zielelements (Pflichtfeld)",
+      "lt": " - Tikslo elemento žymė (privaloma)",
+      "pt": " - Rótulo do elemento de destino (obrigatório)",
+      "it": " - Etichetta dell'elemento di destinazione (obbligatorio)",
+      "no": " - Målelementets etikett (påkrevd)",
+      "el": " - Ετικέτα στοιχείου προορισμού (υποχρεωτικό)"
+    },
+    "modules.import.data.connections_label_desc": {
+      "en": " - Connection polarity: + or - (required)",
+      "es": " - Polaridad de la conexión: + o - (obligatorio)",
+      "fr": " - Polarité de la connexion : + ou - (obligatoire)",
+      "de": " - Polarität der Verbindung: + oder - (Pflichtfeld)",
+      "lt": " - Ryšio poliškumas: + arba - (privalomas)",
+      "pt": " - Polaridade da conexão: + ou - (obrigatório)",
+      "it": " - Polarità della connessione: + o - (obbligatorio)",
+      "no": " - Forbindelsens polaritet: + eller - (påkrevd)",
+      "el": " - Πολικότητα σύνδεσης: + ή - (υποχρεωτικό)"
+    },
+    "modules.import.data.connections_strength_desc": {
+      "en": " - Optional: Weak/Medium/Strong",
+      "es": " - Opcional: Débil/Medio/Fuerte",
+      "fr": " - Facultatif : Faible/Moyen/Fort",
+      "de": " - Optional: Schwach/Mittel/Stark",
+      "lt": " - Neprivaloma: Silpnas/Vidutinis/Stiprus",
+      "pt": " - Opcional: Fraco/Médio/Forte",
+      "it": " - Opzionale: Debole/Medio/Forte",
+      "no": " - Valgfritt: Svak/Middels/Sterk",
+      "el": " - Προαιρετικό: Αδύναμο/Μέτριο/Ισχυρό"
+    },
+    "modules.import.data.connections_confidence_desc": {
+      "en": " - Optional: 1-5 scale",
+      "es": " - Opcional: escala 1-5",
+      "fr": " - Facultatif : échelle 1-5",
+      "de": " - Optional: Skala 1-5",
+      "lt": " - Neprivaloma: skalė 1-5",
+      "pt": " - Opcional: escala 1-5",
+      "it": " - Opzionale: scala 1-5",
+      "no": " - Valgfritt: skala 1-5",
+      "el": " - Προαιρετικό: κλίμακα 1-5"
     }
   }
 }
