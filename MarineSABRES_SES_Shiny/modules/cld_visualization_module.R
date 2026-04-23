@@ -925,13 +925,18 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         # Update internal state
         rv$nodes <- bind_rows(rv$nodes, node_info$node_df)
 
-        # Sync to project_data for persistence
+        # Sync to project_data for persistence + propagate to isa_data so
+        # Loop detection / Leverage points see the change (the analyses read
+        # project_data$data$isa_data, not $data$cld).
         isolate({
           pd <- project_data_reactive()
           pd$data$cld$nodes <- rv$nodes
-          pd$last_modified <- Sys.time()
+          pd <- sync_cld_to_isa_data(pd)
           project_data_reactive(pd)
-          debug_log(sprintf("Node '%s' added and synced to project_data", node_label), "CLD VIZ")
+          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+            event_bus$emit_isa_change("cld_edit_add_node")
+          }
+          debug_log(sprintf("Node '%s' added and synced to isa_data", node_label), "CLD VIZ")
         })
 
         showNotification(
@@ -958,13 +963,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       new_edge <- create_new_edge_data(input$edge_added$from, input$edge_added$to, nrow(rv$edges))
       rv$edges <- bind_rows(rv$edges, new_edge)
 
-      # Sync to project_data for persistence
+      # Sync to project_data + propagate to isa_data so analyses refresh.
       isolate({
         pd <- project_data_reactive()
         pd$data$cld$edges <- rv$edges
-        pd$last_modified <- Sys.time()
+        pd <- sync_cld_to_isa_data(pd)
         project_data_reactive(pd)
-        debug_log(sprintf("Edge %s -> %s added and synced to project_data",
+        if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+          event_bus$emit_isa_change("cld_edit_add_edge")
+        }
+        debug_log(sprintf("Edge %s -> %s added and synced to isa_data",
                           input$edge_added$from, input$edge_added$to), "CLD VIZ")
       })
 
@@ -985,13 +993,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         rv$nodes$label[node_idx] <- new_label
         rv$nodes$title[node_idx] <- paste0("<b>", htmltools::htmlEscape(new_label), "</b><br><i>", htmltools::htmlEscape(rv$nodes$group[node_idx]), "</i>")
 
-        # Sync to project_data for persistence
+        # Sync to project_data + propagate to isa_data so analyses refresh.
         isolate({
           pd <- project_data_reactive()
           pd$data$cld$nodes <- rv$nodes
-          pd$last_modified <- Sys.time()
+          pd <- sync_cld_to_isa_data(pd)
           project_data_reactive(pd)
-          debug_log(sprintf("Node '%s' label updated and synced to project_data", new_label), "CLD VIZ")
+          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+            event_bus$emit_isa_change("cld_edit_rename_node")
+          }
+          debug_log(sprintf("Node '%s' label updated and synced to isa_data", new_label), "CLD VIZ")
         })
 
         showNotification(
@@ -1102,13 +1113,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           # Update the edge in visNetwork
           runjs(generate_update_edge_js(id, edge_id, edge_props$color, edge_props$width, new_polarity))
 
-          # Sync to project_data for persistence
+          # Sync to project_data + propagate to isa_data so analyses refresh.
           isolate({
             pd <- project_data_reactive()
             pd$data$cld$edges <- rv$edges
-            pd$last_modified <- Sys.time()
+            pd <- sync_cld_to_isa_data(pd)
             project_data_reactive(pd)
-            debug_log("Edge updated and synced to project_data", "CLD VIZ")
+            if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+              event_bus$emit_isa_change("cld_edit_edge_polarity")
+            }
+            debug_log("Edge updated and synced to isa_data", "CLD VIZ")
           })
 
           showNotification(
@@ -1140,14 +1154,17 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       rv$nodes <- rv$nodes %>% filter(!(id %in% deleted_ids))
       rv$edges <- rv$edges %>% filter(!(from %in% deleted_ids | to %in% deleted_ids))
 
-      # Sync to project_data for persistence
+      # Sync to project_data + propagate to isa_data so analyses refresh.
       isolate({
         pd <- project_data_reactive()
         pd$data$cld$nodes <- rv$nodes
         pd$data$cld$edges <- rv$edges
-        pd$last_modified <- Sys.time()
+        pd <- sync_cld_to_isa_data(pd)
         project_data_reactive(pd)
-        debug_log("Deleted nodes synced to project_data", "CLD VIZ")
+        if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+          event_bus$emit_isa_change("cld_edit_delete_nodes")
+        }
+        debug_log("Deleted nodes synced to isa_data", "CLD VIZ")
       })
 
       # Re-enable manipulation mode after a short delay
@@ -1162,13 +1179,16 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
 
       rv$edges <- rv$edges %>% filter(!(id %in% deleted_ids))
 
-      # Sync to project_data for persistence
+      # Sync to project_data + propagate to isa_data so analyses refresh.
       isolate({
         pd <- project_data_reactive()
         pd$data$cld$edges <- rv$edges
-        pd$last_modified <- Sys.time()
+        pd <- sync_cld_to_isa_data(pd)
         project_data_reactive(pd)
-        debug_log("Deleted edges synced to project_data", "CLD VIZ")
+        if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+          event_bus$emit_isa_change("cld_edit_delete_edges")
+        }
+        debug_log("Deleted edges synced to isa_data", "CLD VIZ")
       })
 
       # Re-enable manipulation mode after a short delay

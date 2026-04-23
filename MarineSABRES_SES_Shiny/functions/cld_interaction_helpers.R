@@ -595,3 +595,132 @@ generate_loop_reset_js <- function(network_id) {
     network_id, network_id, network_id, network_id, network_id, network_id, network_id
   )
 }
+
+# ============================================================================
+# CLD <-> ISA SYNC
+# ============================================================================
+
+#' Rebuild isa_data elements + adjacency_matrices from the current CLD state
+#'
+#' Bridges the gap between the CLD editor (which writes project_data$data$cld$*)
+#' and the analysis modules (which read project_data$data$isa_data$*). Call this
+#' after any direct-graph edit so Loop detection, Leverage points, etc. see the
+#' user's latest changes.
+#'
+#' Conversion:
+#'   cld$nodes$group   -> isa_data$<drivers|activities|...>   (one DF per type)
+#'   cld$nodes$label   -> name
+#'   cld$nodes$id      -> id  (preserves D_1, A_2, ... prefix convention)
+#'   existing indicator metadata is preserved by name-match when possible
+#'
+#'   cld$edges         -> isa_data$adjacency_matrices (6 SOURCE x TARGET matrices)
+#'   edge label (+/-) -> cell value
+#'
+#' @param project_data full project reactiveValues list
+#' @return project_data with isa_data regenerated from cld (last_modified bumped)
+#' @export
+sync_cld_to_isa_data <- function(project_data) {
+  if (is.null(project_data) || is.null(project_data$data) ||
+      is.null(project_data$data$cld) ||
+      is.null(project_data$data$cld$nodes) ||
+      is.null(project_data$data$cld$edges)) {
+    return(project_data)
+  }
+
+  nodes <- project_data$data$cld$nodes
+  edges <- project_data$data$cld$edges
+
+  # DAPSIWRM group name -> isa_data element-list key
+  group_to_key <- c(
+    "Drivers" = "drivers",
+    "Activities" = "activities",
+    "Pressures" = "pressures",
+    "Marine Processes & Functioning" = "marine_processes",
+    "Ecosystem Services" = "ecosystem_services",
+    "Goods & Benefits" = "goods_benefits",
+    "Responses" = "responses"
+  )
+
+  isa <- project_data$data$isa_data %||% list()
+
+  # Rebuild each element-type data frame from CLD nodes of that group.
+  # Preserve indicator/description metadata by name-matching against the
+  # pre-sync isa_data where possible.
+  for (grp in names(group_to_key)) {
+    key <- group_to_key[[grp]]
+    subset <- nodes[nodes$group == grp, , drop = FALSE]
+
+    if (nrow(subset) == 0) {
+      isa[[key]] <- data.frame(
+        id = character(0), name = character(0), indicator = character(0),
+        stringsAsFactors = FALSE
+      )
+      next
+    }
+
+    # Preserve indicators by matching on name
+    indicator <- rep(NA_character_, nrow(subset))
+    prev <- isa[[key]]
+    if (is.data.frame(prev) && "name" %in% names(prev) && "indicator" %in% names(prev)) {
+      for (i in seq_len(nrow(subset))) {
+        match_idx <- which(tolower(trimws(prev$name)) == tolower(trimws(subset$label[i])))
+        if (length(match_idx) > 0) indicator[i] <- as.character(prev$indicator[match_idx[1]])
+      }
+    }
+
+    isa[[key]] <- data.frame(
+      id = as.character(subset$id),
+      name = as.character(subset$label),
+      indicator = indicator,
+      stringsAsFactors = FALSE
+    )
+  }
+
+  # Rebuild adjacency matrices from edges
+  # Matrix naming: SOURCE x TARGET (per constants.R + DAPSIWRM_FRAMEWORK_RULES.md)
+  matrix_pairs <- list(
+    d_a = c("Drivers", "Activities"),
+    a_p = c("Activities", "Pressures"),
+    p_mpf = c("Pressures", "Marine Processes & Functioning"),
+    mpf_es = c("Marine Processes & Functioning", "Ecosystem Services"),
+    es_gb = c("Ecosystem Services", "Goods & Benefits"),
+    gb_d = c("Goods & Benefits", "Drivers")
+  )
+
+  adj <- list()
+  for (mat_name in names(matrix_pairs)) {
+    src_grp <- matrix_pairs[[mat_name]][1]
+    tgt_grp <- matrix_pairs[[mat_name]][2]
+    src_nodes <- nodes[nodes$group == src_grp, , drop = FALSE]
+    tgt_nodes <- nodes[nodes$group == tgt_grp, , drop = FALSE]
+
+    if (nrow(src_nodes) == 0 || nrow(tgt_nodes) == 0) {
+      adj[[mat_name]] <- matrix("", nrow = nrow(src_nodes), ncol = nrow(tgt_nodes),
+                                dimnames = list(
+                                  if (nrow(src_nodes) > 0) src_nodes$id else character(0),
+                                  if (nrow(tgt_nodes) > 0) tgt_nodes$id else character(0)
+                                ))
+      next
+    }
+
+    mat <- matrix("", nrow = nrow(src_nodes), ncol = nrow(tgt_nodes),
+                  dimnames = list(src_nodes$id, tgt_nodes$id))
+
+    for (i in seq_len(nrow(edges))) {
+      from_id <- as.character(edges$from[i])
+      to_id <- as.character(edges$to[i])
+      if (from_id %in% src_nodes$id && to_id %in% tgt_nodes$id) {
+        # Edge label holds polarity ("+" or "-"); default to "+" if missing
+        pol <- edges$label[i]
+        if (is.null(pol) || is.na(pol) || !nzchar(as.character(pol))) pol <- "+"
+        mat[from_id, to_id] <- as.character(pol)
+      }
+    }
+    adj[[mat_name]] <- mat
+  }
+
+  isa$adjacency_matrices <- adj
+  project_data$data$isa_data <- isa
+  project_data$last_modified <- Sys.time()
+  project_data
+}
