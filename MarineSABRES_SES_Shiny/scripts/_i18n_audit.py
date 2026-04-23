@@ -13,13 +13,24 @@ used = {}  # key -> list of (file, line)
 #                                      and usage in functions/ui_sidebar.R et al.)
 #   `data-i18n` = "key"              - HTML attribute for client-side lookup
 #   `data-i18n-title` = "key"        - variant for tooltip titles
+#   context_key = "key"              - format_user_error() argument (i18n-translated
+#                                      at call time; added when the `context` param
+#                                      was migrated away from raw English strings)
+#   # i18n-ref: key.name             - explicit sentinel for dynamically-constructed
+#                                      lookups (e.g., paste0(prefix, dynamic_code)
+#                                      where the key can't be matched statically)
 # Missing ANY of these patterns causes the audit to wrongly flag the key as
 # unused — a bug that cost a KB-regression commit/revert cycle earlier.
 patterns = [
     re.compile(r'i18n\$t\(\s*["\']([^"\']+)["\']'),
     re.compile(r'safe_t\(\s*["\']([^"\']+)["\']'),
     re.compile(r'`?data-i18n(?:-\w+)?`?\s*=\s*["\']([^"\']+)["\']'),
+    re.compile(r'context_key\s*=\s*["\']([^"\']+)["\']'),
 ]
+# Sentinel pattern is applied BEFORE comment-skipping — it ONLY matches comments
+# by design, so must run on the raw line or the lstrip-startswith('#') guard below
+# would silently drop every sentinel.
+sentinel_pattern = re.compile(r'#\s*i18n-ref:\s*([a-zA-Z_][a-zA-Z0-9_.]*)')
 targets = []
 for base in ['modules', 'server', 'functions']:
     targets.extend(glob.glob(f'{base}/**/*.R', recursive=True))
@@ -31,8 +42,12 @@ for f in targets:
     try:
         with open(f, 'r', encoding='utf-8') as fh:
             for i, line in enumerate(fh, 1):
-                # Strip R comments (naive — does not respect strings, but R strings
-                # rarely contain '#' before i18n calls)
+                # Sentinel runs on ALL lines (including comment-only) because
+                # the pattern only matches inside a comment by design.
+                for m in sentinel_pattern.finditer(line):
+                    used.setdefault(m.group(1), []).append((f, i))
+                # Strip R comments for the remaining patterns (naive — does not
+                # respect strings, but R strings rarely contain '#' before i18n)
                 if line.lstrip().startswith('#'):
                     continue
                 for pat in patterns:

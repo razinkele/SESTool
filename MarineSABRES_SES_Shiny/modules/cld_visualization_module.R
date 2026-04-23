@@ -1095,6 +1095,12 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       req(length(selected_ids) >= 2, primary_id)
 
       result <- merge_cld_nodes(rv$nodes, rv$edges, selected_ids, primary_id)
+      # The following 4 keys are looked up dynamically via paste0(...) below,
+      # so the static audit scan can't see them. Declare them explicitly here:
+      # i18n-ref: modules.cld.visualization.merge_need_two
+      # i18n-ref: modules.cld.visualization.merge_primary_not_in_selection
+      # i18n-ref: modules.cld.visualization.merge_unknown_ids
+      # i18n-ref: modules.cld.visualization.merge_cross_type
       if (!is.null(result$error_key)) {
         msg <- i18n$t(paste0("modules.cld.visualization.", result$error_key))
         # If the key carries a detail list, format it in via sprintf (%s in the
