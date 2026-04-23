@@ -1018,7 +1018,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           }, error = function(e) {
             debug_log(paste("sync_cld_to_isa_data failed on add_node:", e$message), "ERROR")
             showNotification(
-              format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+              format_user_error(e, i18n = i18n, context_key = "common.messages.context_syncing_cld_edit"),
               type = "error",
               duration = 8
             )
@@ -1132,7 +1132,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         }, error = function(e) {
           debug_log(paste("sync_cld_to_isa_data failed on merge_nodes:", e$message), "ERROR")
           showNotification(
-            format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+            format_user_error(e, i18n = i18n, context_key = "common.messages.context_syncing_cld_edit"),
             type = "error",
             duration = 8
           )
@@ -1212,7 +1212,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         }, error = function(e) {
           debug_log(paste("sync_cld_to_isa_data failed on add_edge:", e$message), "ERROR")
           showNotification(
-            format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+            format_user_error(e, i18n = i18n, context_key = "common.messages.context_syncing_cld_edit"),
             type = "error",
             duration = 8
           )
@@ -1250,7 +1250,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           }, error = function(e) {
             debug_log(paste("sync_cld_to_isa_data failed on rename_node:", e$message), "ERROR")
             showNotification(
-              format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+              format_user_error(e, i18n = i18n, context_key = "common.messages.context_syncing_cld_edit"),
               type = "error",
               duration = 8
             )
@@ -1379,7 +1379,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
             }, error = function(e) {
               debug_log(paste("sync_cld_to_isa_data failed on edit_edge_polarity:", e$message), "ERROR")
               showNotification(
-                format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+                format_user_error(e, i18n = i18n, context_key = "common.messages.context_syncing_cld_edit"),
                 type = "error",
                 duration = 8
               )
@@ -1430,7 +1430,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         }, error = function(e) {
           debug_log(paste("sync_cld_to_isa_data failed on delete_nodes:", e$message), "ERROR")
           showNotification(
-            format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+            format_user_error(e, i18n = i18n, context_key = "common.messages.context_syncing_cld_edit"),
             type = "error",
             duration = 8
           )
@@ -1463,7 +1463,7 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         }, error = function(e) {
           debug_log(paste("sync_cld_to_isa_data failed on delete_edges:", e$message), "ERROR")
           showNotification(
-            format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+            format_user_error(e, i18n = i18n, context_key = "common.messages.context_syncing_cld_edit"),
             type = "error",
             duration = 8
           )

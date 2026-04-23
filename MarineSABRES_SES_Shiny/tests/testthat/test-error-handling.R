@@ -7,8 +7,9 @@
 # ============================================================================
 
 # Source error handling if not already available
-if (!exists("safe_execute", mode = "function")) {
-  source("functions/error_handling.R", local = TRUE)
+if (!exists("safe_execute", mode = "function") ||
+    !exists("format_user_error", mode = "function")) {
+  source_for_test("functions/error_handling.R")
 }
 
 # ============================================================================
@@ -611,12 +612,12 @@ test_that("validation functions work together for complete workflow", {
     nodes = data.frame(
       id = c("D1", "A1", "P1"),
       label = c("Driver 1", "Activity 1", "Pressure 1")
-      
+
     ),
     edges = data.frame(
       from = c("D1", "A1"),
       to = c("A1", "P1")
-      
+
     )
   )
 
@@ -631,4 +632,65 @@ test_that("validation functions work together for complete workflow", {
   # Create graph
   g <- safe_create_igraph(cld$nodes, cld$edges)
   expect_true(igraph::is.igraph(g))
+})
+
+# ============================================================================
+# TESTS: format_user_error() context_key i18n migration
+# ============================================================================
+
+test_that("format_user_error translates context_key via i18n when available", {
+  skip_if_not(exists("format_user_error", mode = "function"),
+              "format_user_error not available")
+  # Fake i18n object
+  fake_i18n <- list(
+    t = function(key) {
+      if (key == "common.messages.error_occurred") return("Oh no")
+      if (key == "my.test.key") return("during the test")
+      return(key)
+    }
+  )
+  e <- tryCatch(stop("boom"), error = identity)
+  msg <- format_user_error(e, i18n = fake_i18n, context_key = "my.test.key")
+  expect_true(grepl("Oh no", msg, fixed = TRUE))
+  expect_true(grepl("during the test", msg, fixed = TRUE))
+  # Must NOT show the raw key
+  expect_false(grepl("my.test.key", msg, fixed = TRUE))
+})
+
+test_that("format_user_error falls back to context_key literal when i18n missing", {
+  skip_if_not(exists("format_user_error", mode = "function"),
+              "format_user_error not available")
+  e <- tryCatch(stop("boom"), error = identity)
+  msg <- format_user_error(e, context_key = "my.test.key")
+  # With no i18n, the key itself is shown (best-effort fallback)
+  expect_true(grepl("my.test.key", msg, fixed = TRUE))
+})
+
+test_that("format_user_error preserves existing context parameter behavior", {
+  skip_if_not(exists("format_user_error", mode = "function"),
+              "format_user_error not available")
+  fake_i18n <- list(t = function(key) {
+    if (key == "common.messages.error_occurred") return("Oh no")
+    return(key)
+  })
+  e <- tryCatch(stop("boom"), error = identity)
+  msg <- format_user_error(e, i18n = fake_i18n, context = "legacy context string")
+  expect_true(grepl("Oh no", msg, fixed = TRUE))
+  expect_true(grepl("legacy context string", msg, fixed = TRUE))
+})
+
+test_that("format_user_error prefers context_key over context when both provided", {
+  skip_if_not(exists("format_user_error", mode = "function"),
+              "format_user_error not available")
+  fake_i18n <- list(t = function(key) {
+    if (key == "common.messages.error_occurred") return("Oh no")
+    if (key == "my.test.key") return("translated")
+    return(key)
+  })
+  e <- tryCatch(stop("boom"), error = identity)
+  msg <- format_user_error(e, i18n = fake_i18n,
+                             context = "raw fallback",
+                             context_key = "my.test.key")
+  expect_true(grepl("translated", msg, fixed = TRUE))
+  expect_false(grepl("raw fallback", msg, fixed = TRUE))
 })

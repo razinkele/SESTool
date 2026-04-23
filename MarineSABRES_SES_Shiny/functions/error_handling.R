@@ -286,14 +286,20 @@ safe_create_igraph <- function(nodes, edges) {
 #'
 #' @param error Error object from tryCatch
 #' @param i18n Translation object (optional). If provided, uses i18n$t() for prefix.
-#' @param context Character. Human-readable context (e.g., "saving project", "loading data")
+#' @param context Character. Human-readable context as raw English (e.g., "saving project").
+#'   Deprecated in favor of `context_key` when i18n is available; kept for backward
+#'   compatibility with untranslated call sites.
+#' @param context_key Character. i18n key (e.g., "common.messages.context_syncing_cld_edit")
+#'   to translate via i18n$t(). Preferred over `context` when the translator is available.
+#'   When both are supplied, `context_key` wins.
 #' @param show_details Logical. If TRUE, appends a sanitized version of the R error. Default FALSE.
 #' @return Character string suitable for showNotification()
 #' @export
-format_user_error <- function(error, i18n = NULL, context = NULL, show_details = FALSE) {
-  # Log full technical details server-side
+format_user_error <- function(error, i18n = NULL, context = NULL, context_key = NULL, show_details = FALSE) {
+  # Log full technical details server-side (prefer context_key for log aggregation)
   detail <- if (inherits(error, "error")) error$message else as.character(error)
-  debug_log(sprintf("User-facing error [%s]: %s", context %||% "unknown", detail), "ERROR")
+  log_ctx <- context_key %||% context %||% "unknown"
+  debug_log(sprintf("User-facing error [%s]: %s", log_ctx, detail), "ERROR")
 
   # Build user message
   prefix <- if (!is.null(i18n) && is.function(i18n$t)) {
@@ -302,8 +308,23 @@ format_user_error <- function(error, i18n = NULL, context = NULL, show_details =
     "An error occurred"
   }
 
-  msg <- if (!is.null(context)) {
-    paste0(prefix, " ", context, ".")
+  # Resolve context: context_key is translated via i18n when available;
+  # falls back to the raw `context` string when context_key is absent.
+  # This is the migration path for turning hardcoded English context args
+  # into i18n keys without breaking the 24 existing call sites that still
+  # use `context`.
+  resolved_context <- if (!is.null(context_key) &&
+                          !is.null(i18n) &&
+                          is.function(i18n$t)) {
+    i18n$t(context_key)
+  } else if (!is.null(context_key)) {
+    context_key  # Fallback: show the key itself if no translator
+  } else {
+    context
+  }
+
+  msg <- if (!is.null(resolved_context)) {
+    paste0(prefix, " ", resolved_context, ".")
   } else {
     paste0(prefix, ".")
   }

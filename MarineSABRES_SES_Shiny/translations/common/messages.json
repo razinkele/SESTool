@@ -813,6 +813,17 @@
       "it": "Errore",
       "no": "Feil",
       "el": "Σφάλμα"
+    },
+    "common.messages.context_syncing_cld_edit": {
+      "en": "syncing CLD edit",
+      "es": "sincronizando edición del CLD",
+      "fr": "synchronisation de la modification du CLD",
+      "de": "Synchronisierung der CLD-Bearbeitung",
+      "lt": "sinchronizuojant CLD redagavimą",
+      "pt": "sincronizando edição do CLD",
+      "it": "sincronizzazione della modifica CLD",
+      "no": "synkroniserer CLD-redigering",
+      "el": "συγχρονισμός επεξεργασίας CLD"
     }
   }
 }
