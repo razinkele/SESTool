@@ -130,3 +130,30 @@ test_that("merge_cld_nodes handles 3-way merge (primary + 2 secondaries)", {
   expect_equal(nrow(result$edges), 1)
   expect_equal(result$removed_ids, c("P_2", "P_3"))
 })
+
+test_that("merge_cld_nodes distinguishes edges with NA labels from polarity-matched edges", {
+  # REGRESSION: original dedupe built key via paste(..., NA, sep='|') which
+  # converts NA to the string 'NA', wrongly collapsing two semantically-
+  # distinct NA-polarity edges into one.
+  skip_if_not(exists("merge_cld_nodes", mode = "function"),
+              "merge_cld_nodes not available")
+  nodes <- data.frame(
+    id = c("D_1", "D_2", "A_1", "A_2"),
+    label = c("d1", "d2", "a1", "a2"),
+    group = c("Drivers", "Drivers", "Activities", "Activities"),
+    stringsAsFactors = FALSE
+  )
+  # Two edges both with NA label but DIFFERENT targets after rewiring — must
+  # NOT be collapsed.  D_1 -> A_1 (NA) and D_2 -> A_2 (NA). After merging
+  # D_1 + D_2 to D_1, you get D_1 -> A_1 (NA) and D_1 -> A_2 (NA). Both
+  # should survive dedupe.
+  edges <- data.frame(
+    id = 1:2,
+    from = c("D_1", "D_2"),
+    to = c("A_1", "A_2"),
+    label = c(NA, NA),
+    stringsAsFactors = FALSE
+  )
+  result <- merge_cld_nodes(nodes, edges, c("D_1", "D_2"), "D_1")
+  expect_equal(nrow(result$edges), 2)  # both preserved
+})

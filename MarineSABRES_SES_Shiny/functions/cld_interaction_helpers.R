@@ -676,9 +676,79 @@ sync_cld_to_isa_data <- function(project_data) {
     )
   }
 
-  # Rebuild adjacency matrices from edges
-  # Matrix naming: SOURCE x TARGET (per constants.R + DAPSIWRM_FRAMEWORK_RULES.md)
-  matrix_pairs <- list(
+  # Rebuild adjacency matrices from edges.
+  # Matrix naming: SOURCE x TARGET. We route each edge DYNAMICALLY to the
+  # correct matrix based on the node groups at both ends — NOT a hardcoded
+  # list of 6 pairs. Real projects include Response-connection matrices
+  # (gb_r, r_d, r_a, r_p) that a hardcoded list would drop on every sync,
+  # erasing the user's response-intervention links. (Review found this bug.)
+  group_to_prefix <- c(
+    "Drivers" = "d",
+    "Activities" = "a",
+    "Pressures" = "p",
+    "Marine Processes & Functioning" = "mpf",
+    "Ecosystem Services" = "es",
+    "Goods & Benefits" = "gb",
+    "Responses" = "r"
+  )
+
+  adj <- list()
+
+  # Handle NULL/non-dataframe edges defensively (empty list, NA, etc.)
+  if (!is.data.frame(edges)) edges <- data.frame()
+
+  # Pre-build an id -> group map for O(1) lookup inside the edge loop
+  id_to_group <- if (nrow(nodes) > 0) setNames(nodes$group, nodes$id) else character(0)
+
+  if (nrow(edges) > 0) {
+    for (i in seq_len(nrow(edges))) {
+      from_id <- as.character(edges$from[i])
+      to_id   <- as.character(edges$to[i])
+      src_grp <- id_to_group[from_id]
+      tgt_grp <- id_to_group[to_id]
+      if (is.na(src_grp) || is.na(tgt_grp)) next
+
+      src_prefix <- group_to_prefix[src_grp]
+      tgt_prefix <- group_to_prefix[tgt_grp]
+      if (is.na(src_prefix) || is.na(tgt_prefix)) next
+
+      mat_name <- paste0(src_prefix, "_", tgt_prefix)
+
+      # Lazily initialize the matrix on first edge that needs it
+      if (is.null(adj[[mat_name]])) {
+        src_nodes <- nodes[nodes$group == src_grp, , drop = FALSE]
+        tgt_nodes <- nodes[nodes$group == tgt_grp, , drop = FALSE]
+        adj[[mat_name]] <- matrix(
+          "",
+          nrow = nrow(src_nodes),
+          ncol = nrow(tgt_nodes),
+          dimnames = list(src_nodes$id, tgt_nodes$id)
+        )
+      }
+
+      # Normalize polarity to "+" / "-" / "" — log & skip corrupted values
+      pol <- edges$label[i]
+      if (is.null(pol) || is.na(pol) || !nzchar(as.character(pol))) {
+        pol <- "+"
+      } else {
+        pol <- as.character(pol)
+        if (!pol %in% c("+", "-")) {
+          # Unknown polarity; coerce to "+" (reinforcing) and log
+          if (exists("debug_log", mode = "function")) {
+            debug_log(sprintf("sync_cld_to_isa_data: unknown polarity '%s' on edge %s->%s; coercing to '+'",
+                              pol, from_id, to_id), "CLD SYNC")
+          }
+          pol <- "+"
+        }
+      }
+      adj[[mat_name]][from_id, to_id] <- pol
+    }
+  }
+
+  # Always ensure the 6 primary-chain matrices exist (even if 0x0) so
+  # downstream code that assumes them (create_edges_df, analysis_loops)
+  # doesn't NPE on a fresh or empty CLD.
+  canonical_pairs <- list(
     d_a = c("Drivers", "Activities"),
     a_p = c("Activities", "Pressures"),
     p_mpf = c("Pressures", "Marine Processes & Functioning"),
@@ -686,37 +756,19 @@ sync_cld_to_isa_data <- function(project_data) {
     es_gb = c("Ecosystem Services", "Goods & Benefits"),
     gb_d = c("Goods & Benefits", "Drivers")
   )
-
-  adj <- list()
-  for (mat_name in names(matrix_pairs)) {
-    src_grp <- matrix_pairs[[mat_name]][1]
-    tgt_grp <- matrix_pairs[[mat_name]][2]
-    src_nodes <- nodes[nodes$group == src_grp, , drop = FALSE]
-    tgt_nodes <- nodes[nodes$group == tgt_grp, , drop = FALSE]
-
-    if (nrow(src_nodes) == 0 || nrow(tgt_nodes) == 0) {
-      adj[[mat_name]] <- matrix("", nrow = nrow(src_nodes), ncol = nrow(tgt_nodes),
-                                dimnames = list(
-                                  if (nrow(src_nodes) > 0) src_nodes$id else character(0),
-                                  if (nrow(tgt_nodes) > 0) tgt_nodes$id else character(0)
-                                ))
-      next
+  for (mat_name in names(canonical_pairs)) {
+    if (is.null(adj[[mat_name]])) {
+      src_grp <- canonical_pairs[[mat_name]][1]
+      tgt_grp <- canonical_pairs[[mat_name]][2]
+      src_nodes <- nodes[nodes$group == src_grp, , drop = FALSE]
+      tgt_nodes <- nodes[nodes$group == tgt_grp, , drop = FALSE]
+      adj[[mat_name]] <- matrix(
+        "",
+        nrow = nrow(src_nodes),
+        ncol = nrow(tgt_nodes),
+        dimnames = list(src_nodes$id, tgt_nodes$id)
+      )
     }
-
-    mat <- matrix("", nrow = nrow(src_nodes), ncol = nrow(tgt_nodes),
-                  dimnames = list(src_nodes$id, tgt_nodes$id))
-
-    for (i in seq_len(nrow(edges))) {
-      from_id <- as.character(edges$from[i])
-      to_id <- as.character(edges$to[i])
-      if (from_id %in% src_nodes$id && to_id %in% tgt_nodes$id) {
-        # Edge label holds polarity ("+" or "-"); default to "+" if missing
-        pol <- edges$label[i]
-        if (is.null(pol) || is.na(pol) || !nzchar(as.character(pol))) pol <- "+"
-        mat[from_id, to_id] <- as.character(pol)
-      }
-    }
-    adj[[mat_name]] <- mat
   }
 
   isa$adjacency_matrices <- adj
@@ -779,11 +831,17 @@ merge_cld_nodes <- function(nodes, edges, node_ids, primary_id) {
   # Drop self-loops created by rewiring (A->B where A and B are merged)
   new_edges <- new_edges[new_edges$from != new_edges$to, , drop = FALSE]
 
-  # Deduplicate edges by (from, to, label/polarity)
+  # Deduplicate edges by (from, to, label/polarity).
+  # ifelse(is.na(...)) swap is critical: paste(NA, ...) produces "NA" string,
+  # which would collide with "|NA" for every NA-labeled edge and wrongly
+  # collapse semantically-distinct edges. Use a sentinel that cannot appear
+  # in real polarity values.
   if (nrow(new_edges) > 0) {
     pol_col <- if ("label" %in% names(new_edges)) "label" else NULL
     dedupe_key <- if (!is.null(pol_col)) {
-      paste(new_edges$from, new_edges$to, new_edges[[pol_col]], sep = "|")
+      pol_vals <- new_edges[[pol_col]]
+      pol_vals <- ifelse(is.na(pol_vals), "__NA_POL__", as.character(pol_vals))
+      paste(new_edges$from, new_edges$to, pol_vals, sep = "|")
     } else {
       paste(new_edges$from, new_edges$to, sep = "|")
     }

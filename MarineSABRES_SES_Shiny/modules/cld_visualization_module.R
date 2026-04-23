@@ -775,8 +775,10 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       # those positions. We check that x/y columns exist and at least one
       # node has a concrete position. When honored: disable physics so
       # the layout engine doesn't overwrite the saved coords on render.
+      # Must be vectorized AND (per row): a node with only x or only y
+      # should NOT disable physics for the whole network.
       has_saved_positions <- "x" %in% names(nodes) && "y" %in% names(nodes) &&
-                             any(!is.na(nodes$x)) && any(!is.na(nodes$y))
+                             any(!is.na(nodes$x) & !is.na(nodes$y))
 
       # Apply INITIAL layout using isolate() to prevent re-render on layout changes
       # Subsequent layout changes are handled by proxy observers below
@@ -799,7 +801,13 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         vis <- apply_circular_layout(vis)
       }
 
-      # Add event handlers
+      # Add event handlers.
+      # IMPORTANT: split into two visEvents() calls because `type = "once"`
+      # applies to EVERY handler in a call — registering dragEnd and select
+      # alongside stabilizationIterationsDone in a single `type = "once"`
+      # call would deregister dragEnd after the first drag. Continuous
+      # handlers (select, dragEnd) live in the persistent call; one-shot
+      # handlers (stabilization) live in the `type = "once"` call.
       vis <- vis %>%
         visEvents(
           select = sprintf(
@@ -810,18 +818,8 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
             session$ns("node_selected"),
             session$ns("edge_selected")
           ),
-          stabilizationIterationsDone = sprintf(
-            "function() {
-              this.setOptions({physics: false});
-              window.network_%s = this;
-              console.log('[CLD VIZ] Network stabilized and stored');
-            }",
-            id
-          ),
           # Capture user-dragged positions so they persist when the project
-          # is saved. dragEnd fires after the user releases a dragged node;
-          # we read all node positions (not just the dragged one, in case
-          # physics rippled) and send back to Shiny.
+          # is saved. Fires after each drag - NOT type='once'.
           dragEnd = sprintf(
             "function(params) {
               if (params.nodes && params.nodes.length > 0) {
@@ -830,8 +828,18 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
               }
             }",
             session$ns("node_positions_dragged")
-          ),
+          )
+        ) %>%
+        visEvents(
           type = "once",
+          stabilizationIterationsDone = sprintf(
+            "function() {
+              this.setOptions({physics: false});
+              window.network_%s = this;
+              console.log('[CLD VIZ] Network stabilized and stored');
+            }",
+            id
+          ),
           stabilized = sprintf(
             "function() {
               window.network_%s = this;
@@ -1132,10 +1140,14 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       if (!"x" %in% names(rv$nodes)) rv$nodes$x <- NA_real_
       if (!"y" %in% names(rv$nodes)) rv$nodes$y <- NA_real_
 
-      # positions is a named list: id -> { x, y }
+      # positions is a named list: id -> { x, y }.
+      # as.character() on the comparison handles the case where rv$nodes$id
+      # is a factor (e.g., from older bind_rows paths) — factor == char
+      # returns NA silently which would make this observer no-op.
+      ids_char <- as.character(rv$nodes$id)
       for (node_id in names(positions)) {
         pos <- positions[[node_id]]
-        idx <- which(rv$nodes$id == node_id)
+        idx <- which(ids_char == node_id)
         if (length(idx) > 0 && !is.null(pos$x) && !is.null(pos$y)) {
           rv$nodes$x[idx] <- as.numeric(pos$x)
           rv$nodes$y[idx] <- as.numeric(pos$y)

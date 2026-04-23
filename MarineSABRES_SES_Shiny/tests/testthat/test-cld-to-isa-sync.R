@@ -138,3 +138,82 @@ test_that("sync_cld_to_isa_data updates last_modified", {
   expect_true(!is.null(result$last_modified))
   expect_true(inherits(result$last_modified, "POSIXt"))
 })
+
+# ============================================================================
+# Regression tests for review-caught bugs
+# ============================================================================
+
+test_that("sync_cld_to_isa_data preserves Response-related matrices (r_a, r_p, gb_r, r_d)", {
+  # REGRESSION: original sync hardcoded 6 matrix pairs, dropping all edges
+  # involving Responses. Real project fixtures use gb_r, r_d, r_a, r_p
+  # for response-intervention links — must survive a sync round-trip.
+  skip_if_not(exists("sync_cld_to_isa_data", mode = "function"),
+              "sync_cld_to_isa_data not available")
+  nodes <- data.frame(
+    id = c("D_1", "A_1", "P_1", "GB_1", "R_1"),
+    label = c("d", "a", "p", "gb", "r"),
+    group = c("Drivers", "Activities", "Pressures", "Goods & Benefits", "Responses"),
+    stringsAsFactors = FALSE
+  )
+  edges <- data.frame(
+    id = 1:4,
+    from = c("R_1", "R_1", "R_1", "GB_1"),
+    to   = c("D_1", "A_1", "P_1", "R_1"),
+    label = c("-", "-", "-", "+"),
+    stringsAsFactors = FALSE
+  )
+  pd <- list(data = list(cld = list(nodes = nodes, edges = edges),
+                         isa_data = list()))
+  result <- sync_cld_to_isa_data(pd)
+  adj <- result$data$isa_data$adjacency_matrices
+
+  expect_true(!is.null(adj$r_d), info = "r_d matrix missing")
+  expect_true(!is.null(adj$r_a), info = "r_a matrix missing")
+  expect_true(!is.null(adj$r_p), info = "r_p matrix missing")
+  expect_true(!is.null(adj$gb_r), info = "gb_r matrix missing")
+
+  expect_equal(adj$r_d["R_1", "D_1"], "-")
+  expect_equal(adj$r_a["R_1", "A_1"], "-")
+  expect_equal(adj$r_p["R_1", "P_1"], "-")
+  expect_equal(adj$gb_r["GB_1", "R_1"], "+")
+})
+
+test_that("sync_cld_to_isa_data handles non-data.frame edges defensively", {
+  # REGRESSION: if cld$edges is NULL or list() (e.g., after delete-all-edges),
+  # the function should not throw — it should produce empty matrices.
+  skip_if_not(exists("sync_cld_to_isa_data", mode = "function"),
+              "sync_cld_to_isa_data not available")
+
+  pd <- make_project_data()
+  pd$data$cld$edges <- list()   # non-data.frame
+  expect_error(sync_cld_to_isa_data(pd), NA)
+
+  pd2 <- make_project_data()
+  pd2$data$cld$edges <- data.frame()   # 0-row data.frame
+  expect_error(sync_cld_to_isa_data(pd2), NA)
+})
+
+test_that("sync_cld_to_isa_data coerces unknown polarity strings to '+'", {
+  # REGRESSION: old sync wrote whatever edges$label contained into the
+  # matrix cell, including corrupt values like '++' or '0' — breaks
+  # downstream polarity-aware analyses that assume binary '+' / '-'.
+  skip_if_not(exists("sync_cld_to_isa_data", mode = "function"),
+              "sync_cld_to_isa_data not available")
+  nodes <- data.frame(
+    id = c("D_1", "A_1"),
+    label = c("d", "a"),
+    group = c("Drivers", "Activities"),
+    stringsAsFactors = FALSE
+  )
+  edges <- data.frame(
+    id = 1,
+    from = "D_1", to = "A_1",
+    label = "uncertain",
+    stringsAsFactors = FALSE
+  )
+  pd <- list(data = list(cld = list(nodes = nodes, edges = edges),
+                         isa_data = list()))
+  result <- sync_cld_to_isa_data(pd)
+  # Coerced to "+"
+  expect_equal(result$data$isa_data$adjacency_matrices$d_a["D_1", "A_1"], "+")
+})
