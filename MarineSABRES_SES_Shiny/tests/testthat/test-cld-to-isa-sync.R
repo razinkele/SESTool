@@ -165,6 +165,33 @@ test_that("sync_cld_to_isa_data preserves all metadata columns by name-match", {
   expect_equal(drivers$trend, "Increasing")
 })
 
+test_that("sync_cld_to_isa_data preserves Date and numeric column types", {
+  skip_if_not(exists("sync_cld_to_isa_data", mode = "function"),
+              "sync_cld_to_isa_data not available")
+  pd <- make_project_data()
+  pd$data$isa_data$drivers <- data.frame(
+    id = "D_1",
+    name = "driver1",
+    indicator = "indicator1",
+    time_horizon_start = as.Date("2026-01-01"),
+    time_horizon_end = as.Date("2030-12-31"),
+    baseline_value = 5.2,
+    current_value = 7.8,
+    stringsAsFactors = FALSE
+  )
+  result <- sync_cld_to_isa_data(pd)
+  drivers <- result$data$isa_data$drivers
+  # Types round-trip unchanged
+  expect_s3_class(drivers$time_horizon_start, "Date")
+  expect_s3_class(drivers$time_horizon_end, "Date")
+  expect_type(drivers$baseline_value, "double")
+  expect_type(drivers$current_value, "double")
+  # Values round-trip unchanged
+  expect_equal(drivers$time_horizon_start, as.Date("2026-01-01"))
+  expect_equal(drivers$baseline_value, 5.2)
+  expect_equal(drivers$current_value, 7.8)
+})
+
 test_that("sync_cld_to_isa_data leaves metadata NA for nodes added via CLD only", {
   skip_if_not(exists("sync_cld_to_isa_data", mode = "function"),
               "sync_cld_to_isa_data not available")

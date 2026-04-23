@@ -669,14 +669,22 @@ sync_cld_to_isa_data <- function(project_data) {
     }
     if (!"indicator" %in% extra_cols) extra_cols <- c(extra_cols, "indicator")
 
-    # Build new frame with id/name plus an NA-filled column for each extra
+    # Build new frame with id/name. Preallocate extra_cols using the pre-sync
+    # column type when available so Date / numeric / logical columns round-trip
+    # without silent coercion to character.
     new_df <- data.frame(
       id = as.character(subset$id),
       name = as.character(subset$label),
       stringsAsFactors = FALSE
     )
+    n <- nrow(new_df)
     for (col in extra_cols) {
-      new_df[[col]] <- NA_character_
+      if (is.data.frame(prev) && col %in% names(prev)) {
+        # Type-safe NA fill: one NA of prev[[col]]'s class, replicated.
+        new_df[[col]] <- rep(prev[[col]][NA_integer_], n)
+      } else {
+        new_df[[col]] <- rep(NA_character_, n)
+      }
     }
 
     # Name-match rows against pre-sync data to preserve metadata
@@ -685,10 +693,11 @@ sync_cld_to_isa_data <- function(project_data) {
       for (i in seq_len(nrow(subset))) {
         match_idx <- which(prev_names_lower == tolower(trimws(subset$label[i])))
         if (length(match_idx) > 0) {
-          j <- match_idx[1]
+          j <- match_idx[1]  # first-match-wins; names expected unique per type
           for (col in extra_cols) {
             if (col %in% names(prev)) {
-              new_df[[col]][i] <- as.character(prev[[col]][j])
+              # No as.character() here — preserve the prev column's type.
+              new_df[[col]][i] <- prev[[col]][j]
             }
           }
         }
