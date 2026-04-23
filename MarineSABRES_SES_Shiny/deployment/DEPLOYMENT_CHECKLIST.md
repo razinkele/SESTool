@@ -170,6 +170,6 @@ After successful deployment:
 
 ---
 
-**Last Updated:** 2026-04-08  
-**Version:** 1.11.0  
+**Last Updated:** 2026-04-23  
+**Version:** 1.11.2  
 **Branch:** main
