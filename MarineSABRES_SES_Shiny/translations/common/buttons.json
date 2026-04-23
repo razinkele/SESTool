@@ -329,6 +329,61 @@
       "it": "Visualizza",
       "no": "Vis",
       "el": "Προβολή"
+    },
+    "common.buttons.dismiss": {
+      "en": "Dismiss",
+      "es": "Descartar",
+      "fr": "Fermer",
+      "de": "Schließen",
+      "lt": "Atmesti",
+      "pt": "Dispensar",
+      "it": "Chiudi",
+      "no": "Avvis",
+      "el": "Απόρριψη"
+    },
+    "common.buttons.load_local": {
+      "en": "Load from Local",
+      "es": "Cargar desde Local",
+      "fr": "Charger depuis Local",
+      "de": "Von Lokal Laden",
+      "lt": "Įkelti iš Vietinės",
+      "pt": "Carregar do Local",
+      "it": "Carica da Locale",
+      "no": "Last fra Lokal",
+      "el": "Φόρτωση από Τοπικό"
+    },
+    "common.buttons.recent_autosaves": {
+      "en": "Recent Autosaves",
+      "es": "Autoguardados recientes",
+      "fr": "Sauvegardes automatiques récentes",
+      "de": "Letzte automatische Speicherungen",
+      "lt": "Naujausi automatiniai išsaugojimai",
+      "pt": "Salvamentos automáticos recentes",
+      "it": "Salvataggi automatici recenti",
+      "no": "Nylige autolagringer",
+      "el": "Πρόσφατες αυτόματες αποθηκεύσεις"
+    },
+    "common.buttons.save_local": {
+      "en": "Save to Local",
+      "es": "Guardar en Local",
+      "fr": "Enregistrer en Local",
+      "de": "Lokal Speichern",
+      "lt": "Išsaugoti Vietoje",
+      "pt": "Guardar Local",
+      "it": "Salva in Locale",
+      "no": "Lagre Lokalt",
+      "el": "Αποθήκευση Τοπικά"
+    },
+    "common.buttons.save_project": {
+      "en": "Save Project",
+      "es": "Guardar Proyecto",
+      "fr": "Enregistrer le Projet",
+      "de": "Projekt Speichern",
+      "lt": "Išsaugoti projektą",
+      "pt": "Guardar Projeto",
+      "it": "Salva Progetto",
+      "no": "Lagre prosjekt",
+      "el": "Αποθήκευση Έργου"
     }
   }
 }

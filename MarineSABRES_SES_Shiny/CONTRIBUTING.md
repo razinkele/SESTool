@@ -598,7 +598,9 @@ Located in `scripts/`:
 
 ### Testing
 - `tests/testthat/test-i18n-enforcement.R` - i18n enforcement suite
-- `tests/testthat/test-translations.R` - Translation structure tests
+  (catalog-wide structure checks; runs in CI)
+- Per-module signature-contract tests: `test-<module-name>-module.R`
+  for every `modules/*_module.R` file (covers 21/21)
 
 ---
 

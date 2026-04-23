@@ -571,6 +571,17 @@
       "it": "1: Molto Basso - Molto incerto\n2: Basso - Incerto con evidenze limitate\n3: Medio - Moderatamente certo\n4: Alto - Sicuro con buone evidenze\n5: Molto Alto - Molto sicuro, ben consolidato",
       "no": "1: Veldig Lav - Svært usikkert\n2: Lav - Usikkert med begrenset evidens\n3: Middels - Moderat sikkert\n4: Høy - Sikker med god evidens\n5: Veldig Høy - Svært sikker, veletablert",
       "el": "1: Πολύ Χαμηλό - Πολύ αβέβαιο\n2: Χαμηλό - Αβέβαιο με περιορισμένα στοιχεία\n3: Μέτριο - Μετρίως βέβαιο\n4: Υψηλό - Σίγουρο με καλά στοιχεία\n5: Πολύ Υψηλό - Πολύ σίγουρο, καλά τεκμηριωμένο"
+    },
+    "common.labels.initializing": {
+      "en": "Initializing...",
+      "es": "Inicializando...",
+      "fr": "Initialisation...",
+      "de": "Wird initialisiert...",
+      "lt": "Inicijuojama...",
+      "pt": "Inicializando...",
+      "it": "Inizializzazione...",
+      "no": "Initialiserer...",
+      "el": "Αρχικοποίηση..."
     }
   }
 }

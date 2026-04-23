@@ -7,7 +7,19 @@ os.chdir(root)
 
 # ---- 1. Collect used keys ----
 used = {}  # key -> list of (file, line)
-pat = re.compile(r'i18n\$t\("([^"]+)"')
+# Patterns that reference an i18n key:
+#   i18n$t("key")                    - direct translator call
+#   safe_t("key", i18n_obj = ...)    - safe wrapper (see functions/error_handling.R
+#                                      and usage in functions/ui_sidebar.R et al.)
+#   `data-i18n` = "key"              - HTML attribute for client-side lookup
+#   `data-i18n-title` = "key"        - variant for tooltip titles
+# Missing ANY of these patterns causes the audit to wrongly flag the key as
+# unused — a bug that cost a KB-regression commit/revert cycle earlier.
+patterns = [
+    re.compile(r'i18n\$t\(\s*["\']([^"\']+)["\']'),
+    re.compile(r'safe_t\(\s*["\']([^"\']+)["\']'),
+    re.compile(r'`?data-i18n(?:-\w+)?`?\s*=\s*["\']([^"\']+)["\']'),
+]
 targets = []
 for base in ['modules', 'server', 'functions']:
     targets.extend(glob.glob(f'{base}/**/*.R', recursive=True))
@@ -20,12 +32,12 @@ for f in targets:
         with open(f, 'r', encoding='utf-8') as fh:
             for i, line in enumerate(fh, 1):
                 # Strip R comments (naive — does not respect strings, but R strings
-                # rarely contain '#' before i18n$t calls)
-                code = line.split('#', 1)[0] if line.lstrip().startswith('#') else line
+                # rarely contain '#' before i18n calls)
                 if line.lstrip().startswith('#'):
                     continue
-                for m in pat.finditer(code):
-                    used.setdefault(m.group(1), []).append((f, i))
+                for pat in patterns:
+                    for m in pat.finditer(line):
+                        used.setdefault(m.group(1), []).append((f, i))
     except Exception as e:
         pass
 

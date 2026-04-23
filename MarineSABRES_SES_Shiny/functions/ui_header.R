@@ -116,7 +116,7 @@ build_dashboard_header <- function(i18n) {
           tags$span(i18n$t("ui.header.bookmark"), `data-i18n`="ui.header.bookmark"),
           style = "cursor: pointer;",
           title = i18n$t("ui.header.save_current_state_as_bookmark"),
-          `data-i18n-title`="Save current state as bookmark"
+          `data-i18n-title`="ui.header.save_current_state_as_bookmark"
         )
       ),
 
