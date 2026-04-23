@@ -5,6 +5,47 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.2] - 2026-04-23
+
+### CLD Sync Hardening + i18n Context Migration
+
+Patch release closing three review-caught gaps in the CLD direct-graph editor, eliminating English-only leaks in 38 error-notification paths, and hardening the i18n audit against dynamic-key false positives.
+
+### Added
+- **`context_key` parameter on `format_user_error`** (`functions/error_handling.R:293`) — when provided alongside an i18n translator, the key is translated via `i18n$t()`; falls back to key literal when no translator, or to the legacy `context` string when neither is set. Replaces raw-English `context` as the project's preferred pattern.
+- **30 new `common.messages.context_*` i18n keys × 9 languages** (270 translation strings) covering every error-notification context used in `modules/*.R` and `server/*.R`: saving_project, loading_project, creating_new_project, loading_autosave, saving_ai_model_to_isa, analyzing_leverage_points, adding_intervention, loading_csv_data, detecting_feedback_loops, loop_detection, loading_ses_model, directory_access, local_save/load/delete, parsing_project_file, loading_sample_data, reading_excel_file, importing_file/data, parsing_connections, generating_report/html_report/pdf_report/word_document/powerpoint_presentation/pathway_report, applying_simplification, discarding_recovery, calculating_network_metrics, syncing_cld_edit.
+- **5 regression tests** for the sync/merge path: `sync_cld_to_isa_data preserves all metadata columns by name-match`, `leaves metadata NA for CLD-only nodes`, `preserves Date and numeric column types`, `does not throw on malformed nodes`, and `merge_cld_nodes errors on unknown node ids` (error-code path). 4 new unit tests for `format_user_error` covering translation/fallback/preference.
+- **Two new i18n audit detection patterns** (`scripts/_i18n_audit.py`):
+  - `context_key = "..."` — catches all 32 migrated call sites automatically.
+  - `# i18n-ref: <key>` sentinel comment — for dynamically-constructed lookups the static scanner can't follow (the CLD merge-error lookup at `cld_visualization_module.R:1097` uses `paste0(prefix, result$error_key)`). Sentinel is applied BEFORE the comment-skip guard so it can match inside R comments by design.
+
+### Fixed
+- **CLD edits were silently dropping element metadata on every save** (`functions/cld_interaction_helpers.R`). `sync_cld_to_isa_data` rebuilt isa_data dataframes with only `id/name/indicator`, wiping `description`, `stakeholder`, `importance`, `trend`, `time_horizon_start/end`, `baseline_value`, `current_value`, and `implementation_cost` columns defined in `data_structure.R:287-320`. Fix: discover extra columns from pre-sync frame and preserve via name-match. NA-fill for CLD-only nodes.
+- **CLD sync coerced Date and numeric columns to character** — the metadata-preservation code used `as.character(prev[[col]][j])`, silently lossy for the `Date` and `numeric` schema fields. Fix: type-safe preallocation via `rep(prev[[col]][NA_integer_], n)` inheriting class; copy no longer coerces. Caught by two-stage code review before landing.
+- **`merge_cld_nodes` error returns were raw English strings** that rendered untranslated via `showNotification(result$error, ...)` on race-condition paths (selection changes between click and confirm). Split code from display text: helper returns `list(error_key = "...", error_detail = ...)`, UI translates at the boundary via `i18n$t(paste0("modules.cld.visualization.", result$error_key))` with `sprintf("%s")` detail interpolation guarded by `grepl`. 4 error codes: `merge_need_two`, `merge_primary_not_in_selection`, `merge_unknown_ids`, `merge_cross_type`. 2 new i18n keys × 9 languages added for the latter two.
+- **7 CLD sync call sites lacked `tryCatch + format_user_error`** (`modules/cld_visualization_module.R`). CLAUDE.md mandates the pattern for user-visible operations; if `sync_cld_to_isa_data` ever throws (malformed state), the uncaught exception would surface a raw Shiny stacktrace. Wrapped all 7 handlers (add_node, add_edge, rename_node, edit_edge_polarity, delete_nodes, delete_edges, merge_nodes) with uniform `debug_log(..., "ERROR")` + localized notification. Race-safe: if sync throws, `project_data_reactive(pd)` on the next line never runs, preserving prior valid state.
+- **38 error-notification `context` strings were untranslated** across 14 files (7 CLD edit handlers + 31 other call sites in `project_io.R`, `import_data_module.R`, `analysis_*.R`, `prepare_report_module.R`, etc.). Lithuanian/Greek/etc. users saw prefix translated but context verbatim English ("Įvyko klaida saving project"). Migrated all 38 sites to `context_key = "common.messages.context_*"`. One site remains: `functions/async_helpers.R:49` has no `i18n` parameter available and is out-of-scope.
+- **i18n audit false-flagged 33 live keys as `unused`** because the static scanner didn't recognize `context_key = "..."` (31 new Phase 2 keys + 1 Phase 1 key) or dynamically-constructed lookups (2 merge error keys). Same class of gap that caused iter-11's incident where a "prune unused keys" pass silently deleted 6 live keys. Audit now recognizes both patterns.
+
+### Changed
+- **`format_user_error` signature** now `(error, i18n = NULL, context = NULL, context_key = NULL, show_details = FALSE)` — backward-compatible addition of `context_key` between `context` and `show_details`. Legacy `context` parameter kept for the one remaining untranslatable call site.
+- **`tests/testthat/test-error-handling.R`** converted from brittle `source("functions/error_handling.R")` to `source_for_test()` for path-aware loading.
+
+### Test Status at Release
+- **CLD sync helpers**: 14/14 tests in `test-cld-to-isa-sync.R` (10 existing + 4 new), 10/10 in `test-merge-cld-nodes.R` (9 existing + 1 new).
+- **Error handling**: 65 assertions across all `test-error-handling.R` cases including the 4 new `context_key` tests.
+- **i18n enforcement**: 13/13 pass, audit reports `missing=0 hardcoded=0 unused=110` (down from 143 pre-audit-fix).
+- **CI**: first green on `47173a1`, no failures.
+
+### 7 Commits in This Release
+- `4dd9cda` Task 1 — i18n-ify merge_cld_nodes error returns
+- `17bde9b` Task 2 — preserve all element metadata in sync_cld_to_isa_data
+- `c762c95` Task 2 fix — preserve Date/numeric column types (caught by code-quality review before landing)
+- `6b72dfb` Task 3 — wrap 7 CLD sync call sites in tryCatch + format_user_error
+- `38849ca` Phase 1 — add context_key parameter, migrate 7 CLD sites
+- `0bf0a6d` Phase 2 — migrate 31 remaining format_user_error call sites
+- `47173a1` Audit — recognize context_key + i18n-ref sentinels
+
 ## [1.11.1] - 2026-04-22
 
 ### Test Coverage, CI, and Infrastructure Hardening
