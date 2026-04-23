@@ -448,6 +448,24 @@ cld_viz_ui <- function(id, i18n) {
           tags$small(class = "text-muted", style = "display: block; margin-top: 4px;",
             i18n$t("modules.cld.visualization.edit_mode_hint"))
         ),
+        # Merge selected elements (edit mode only). Shift-click in the
+        # network selects multiple nodes; this button opens a confirm
+        # dialog that picks which label to keep after merging.
+        conditionalPanel(
+          condition = sprintf("input['%s'] === true", ns("enable_manipulation")),
+          div(
+            style = "padding: 4px 0;",
+            actionButton(
+              inputId = ns("merge_selected"),
+              label = tagList(icon("compress-arrows-alt"),
+                              i18n$t("modules.cld.visualization.merge_selected")),
+              class = "btn btn-sm btn-outline-primary",
+              style = "width: 100%;"
+            ),
+            tags$small(class = "text-muted", style = "display: block; margin-top: 4px;",
+              i18n$t("modules.cld.visualization.merge_selected_hint"))
+          )
+        ),
 
         # Highlight Controls
         hr(style = "margin: 8px 0;"),
@@ -1003,6 +1021,100 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       # Hide modal
       shinyjs::hide("add_node_modal_container")
       rv$pending_node_position <- NULL
+    })
+
+    # Handle "Merge selected" button: merge 2+ same-group nodes.
+    # Workflow: user shift-selects multiple nodes on the network (select
+    # input is wired via visEvents above), clicks the button, gets a
+    # modal to pick the label to keep, then confirms.
+    observeEvent(input$merge_selected, {
+      selected_ids <- input$node_selected
+      if (is.null(selected_ids) || length(selected_ids) < 2) {
+        showNotification(
+          i18n$t("modules.cld.visualization.merge_need_two"),
+          type = "warning", duration = 4
+        )
+        return()
+      }
+
+      # Check same-group (we could call merge_cld_nodes just to get its
+      # error but a pre-flight check is cleaner)
+      groups <- unique(rv$nodes$group[rv$nodes$id %in% selected_ids])
+      if (length(groups) > 1) {
+        showNotification(
+          i18n$t("modules.cld.visualization.merge_cross_type"),
+          type = "error", duration = 5
+        )
+        return()
+      }
+
+      # Build label options for the modal - user picks which one to keep
+      selected_rows <- rv$nodes[rv$nodes$id %in% selected_ids, , drop = FALSE]
+      label_choices <- setNames(selected_rows$id, selected_rows$label)
+
+      showModal(modalDialog(
+        title = i18n$t("modules.cld.visualization.merge_title"),
+        p(i18n$t("modules.cld.visualization.merge_description")),
+        radioButtons(
+          inputId = ns("merge_primary"),
+          label = i18n$t("modules.cld.visualization.merge_keep_label"),
+          choices = label_choices,
+          selected = selected_rows$id[1]
+        ),
+        footer = tagList(
+          modalButton(i18n$t("common.buttons.cancel")),
+          actionButton(ns("merge_confirm"), i18n$t("common.buttons.confirm"),
+                       class = "btn-primary")
+        ),
+        easyClose = TRUE
+      ))
+    })
+
+    # Confirm merge: apply merge_cld_nodes() and sync
+    observeEvent(input$merge_confirm, {
+      removeModal()
+      selected_ids <- input$node_selected
+      primary_id <- input$merge_primary
+      req(length(selected_ids) >= 2, primary_id)
+
+      result <- merge_cld_nodes(rv$nodes, rv$edges, selected_ids, primary_id)
+      if (!is.null(result$error)) {
+        showNotification(result$error, type = "error", duration = 5)
+        return()
+      }
+
+      # Apply to reactive state
+      rv$nodes <- result$nodes
+      rv$edges <- result$edges
+
+      # Remove secondaries from the visNetwork canvas
+      visNetworkProxy(session$ns("network")) %>%
+        visRemoveNodes(id = result$removed_ids)
+
+      # Re-render edges (rewiring may have dropped/changed them)
+      visNetworkProxy(session$ns("network")) %>%
+        visUpdateEdges(edges = rv$edges)
+
+      # Sync + propagate to isa_data for analyses
+      isolate({
+        pd <- project_data_reactive()
+        pd$data$cld$nodes <- rv$nodes
+        pd$data$cld$edges <- rv$edges
+        pd <- sync_cld_to_isa_data(pd)
+        project_data_reactive(pd)
+        if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+          event_bus$emit_isa_change("cld_edit_merge_nodes")
+        }
+      })
+
+      showNotification(
+        sprintf("%s (%d -> 1)",
+                i18n$t("modules.cld.visualization.merge_success"),
+                length(selected_ids)),
+        type = "message", duration = 3
+      )
+      debug_log(sprintf("Merged %d nodes into %s",
+                        length(selected_ids), primary_id), "CLD VIZ")
     })
 
     # Persist node positions after user drags.

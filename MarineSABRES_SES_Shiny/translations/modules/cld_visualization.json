@@ -428,6 +428,94 @@
       "it": "Proprietà della connessione aggiornate",
       "no": "Tilkoblingsegenskaper oppdatert",
       "el": "Οι ιδιότητες σύνδεσης ενημερώθηκαν"
+    },
+    "modules.cld.visualization.merge_selected": {
+      "en": "Merge selected",
+      "es": "Combinar seleccionados",
+      "fr": "Fusionner la sélection",
+      "de": "Auswahl zusammenführen",
+      "lt": "Sujungti pažymėtus",
+      "pt": "Mesclar selecionados",
+      "it": "Unisci selezionati",
+      "no": "Slå sammen valgte",
+      "el": "Συγχώνευση επιλεγμένων"
+    },
+    "modules.cld.visualization.merge_selected_hint": {
+      "en": "Shift-click multiple elements of the same type, then click Merge",
+      "es": "Mantén Shift y haz clic en varios elementos del mismo tipo, luego Combinar",
+      "fr": "Maintenez Shift et cliquez sur plusieurs éléments du même type, puis Fusionner",
+      "de": "Mit gedrückter Umschalttaste mehrere Elemente desselben Typs auswählen, dann Zusammenführen",
+      "lt": "Laikykite Shift ir spauskite kelis to paties tipo elementus, tada Sujungti",
+      "pt": "Shift+clique em vários elementos do mesmo tipo, depois Mesclar",
+      "it": "Shift+clic su più elementi dello stesso tipo, poi Unisci",
+      "no": "Shift+klikk på flere elementer av samme type, så Slå sammen",
+      "el": "Shift+κλικ σε πολλαπλά στοιχεία του ίδιου τύπου, έπειτα Συγχώνευση"
+    },
+    "modules.cld.visualization.merge_need_two": {
+      "en": "Select at least 2 elements to merge",
+      "es": "Selecciona al menos 2 elementos para combinar",
+      "fr": "Sélectionnez au moins 2 éléments à fusionner",
+      "de": "Mindestens 2 Elemente zum Zusammenführen auswählen",
+      "lt": "Pažymėkite bent 2 elementus sujungimui",
+      "pt": "Selecione pelo menos 2 elementos para mesclar",
+      "it": "Seleziona almeno 2 elementi da unire",
+      "no": "Velg minst 2 elementer å slå sammen",
+      "el": "Επιλέξτε τουλάχιστον 2 στοιχεία για συγχώνευση"
+    },
+    "modules.cld.visualization.merge_cross_type": {
+      "en": "Cannot merge elements of different types",
+      "es": "No se pueden combinar elementos de diferentes tipos",
+      "fr": "Impossible de fusionner des éléments de types différents",
+      "de": "Elemente unterschiedlicher Typen können nicht zusammengeführt werden",
+      "lt": "Negalima sujungti skirtingų tipų elementų",
+      "pt": "Não é possível mesclar elementos de tipos diferentes",
+      "it": "Impossibile unire elementi di tipi diversi",
+      "no": "Kan ikke slå sammen elementer av ulik type",
+      "el": "Δεν είναι δυνατή η συγχώνευση στοιχείων διαφορετικών τύπων"
+    },
+    "modules.cld.visualization.merge_title": {
+      "en": "Merge elements",
+      "es": "Combinar elementos",
+      "fr": "Fusionner les éléments",
+      "de": "Elemente zusammenführen",
+      "lt": "Sujungti elementus",
+      "pt": "Mesclar elementos",
+      "it": "Unisci elementi",
+      "no": "Slå sammen elementer",
+      "el": "Συγχώνευση στοιχείων"
+    },
+    "modules.cld.visualization.merge_description": {
+      "en": "Edges from all selected elements will be rewired to the element you keep. Duplicate edges are removed automatically.",
+      "es": "Las conexiones de todos los elementos seleccionados se redirigirán al elemento que conserves. Las duplicadas se eliminan automáticamente.",
+      "fr": "Les arêtes de tous les éléments sélectionnés seront redirigées vers l'élément conservé. Les doublons sont supprimés automatiquement.",
+      "de": "Kanten aller ausgewählten Elemente werden auf das beibehaltene Element umgeleitet. Duplikate werden automatisch entfernt.",
+      "lt": "Visų pažymėtų elementų jungtys bus perkeltos į pasirinktą pasiliekantį elementą. Dublikatai pašalinami automatiškai.",
+      "pt": "As conexões de todos os elementos selecionados serão redirecionadas ao elemento mantido. Duplicatas são removidas automaticamente.",
+      "it": "Gli archi di tutti gli elementi selezionati verranno reindirizzati all'elemento mantenuto. I duplicati vengono rimossi automaticamente.",
+      "no": "Kanter fra alle valgte elementer blir omdirigert til elementet du beholder. Duplikater fjernes automatisk.",
+      "el": "Οι ακμές από όλα τα επιλεγμένα στοιχεία ανακατευθύνονται στο στοιχείο που διατηρείτε. Τα διπλότυπα αφαιρούνται αυτόματα."
+    },
+    "modules.cld.visualization.merge_keep_label": {
+      "en": "Keep label",
+      "es": "Conservar etiqueta",
+      "fr": "Conserver l'étiquette",
+      "de": "Bezeichnung behalten",
+      "lt": "Palikti pavadinimą",
+      "pt": "Manter rótulo",
+      "it": "Mantieni l'etichetta",
+      "no": "Behold etikett",
+      "el": "Διατήρηση ετικέτας"
+    },
+    "modules.cld.visualization.merge_success": {
+      "en": "Elements merged",
+      "es": "Elementos combinados",
+      "fr": "Éléments fusionnés",
+      "de": "Elemente zusammengeführt",
+      "lt": "Elementai sujungti",
+      "pt": "Elementos mesclados",
+      "it": "Elementi uniti",
+      "no": "Elementer slått sammen",
+      "el": "Τα στοιχεία συγχωνεύθηκαν"
     }
   }
 }

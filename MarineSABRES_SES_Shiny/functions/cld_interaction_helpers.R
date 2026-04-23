@@ -724,3 +724,83 @@ sync_cld_to_isa_data <- function(project_data) {
   project_data$last_modified <- Sys.time()
   project_data
 }
+
+# ============================================================================
+# MERGE NODES (pure logic, UI triggers this)
+# ============================================================================
+
+#' Merge a set of nodes into a single primary node
+#'
+#' All edges pointing to/from a secondary node are rewired to point to/from
+#' the primary. Duplicate edges after rewiring (same from+to+polarity) are
+#' collapsed to a single edge. Secondary nodes are removed.
+#'
+#' Validation: all node_ids must share the same group (element type).
+#' You cannot merge a Driver with an Activity - use convert instead.
+#'
+#' @param nodes current rv\$nodes data.frame
+#' @param edges current rv\$edges data.frame
+#' @param node_ids character vector of 2+ ids to merge
+#' @param primary_id character - which id's label/metadata to keep. Must be in node_ids.
+#' @return list(nodes = new_nodes, edges = new_edges, removed_ids = character)
+#'         on success, or list(error = "message") on validation failure
+#' @export
+merge_cld_nodes <- function(nodes, edges, node_ids, primary_id) {
+  if (length(node_ids) < 2) {
+    return(list(error = "Need at least 2 nodes to merge"))
+  }
+  if (!primary_id %in% node_ids) {
+    return(list(error = "primary_id must be one of node_ids"))
+  }
+
+  # Validate all rows exist
+  missing <- setdiff(node_ids, nodes$id)
+  if (length(missing) > 0) {
+    return(list(error = paste0("Unknown node id(s): ", paste(missing, collapse = ", "))))
+  }
+
+  # Validate same group (element type)
+  groups <- unique(nodes$group[nodes$id %in% node_ids])
+  if (length(groups) > 1) {
+    return(list(error = paste0(
+      "Cannot merge different element types: ", paste(groups, collapse = ", ")
+    )))
+  }
+
+  secondary_ids <- setdiff(node_ids, primary_id)
+
+  # Rewire edges: any reference to a secondary becomes a reference to primary
+  new_edges <- edges
+  for (sid in secondary_ids) {
+    new_edges$from[new_edges$from == sid] <- primary_id
+    new_edges$to[new_edges$to == sid] <- primary_id
+  }
+
+  # Drop self-loops created by rewiring (A->B where A and B are merged)
+  new_edges <- new_edges[new_edges$from != new_edges$to, , drop = FALSE]
+
+  # Deduplicate edges by (from, to, label/polarity)
+  if (nrow(new_edges) > 0) {
+    pol_col <- if ("label" %in% names(new_edges)) "label" else NULL
+    dedupe_key <- if (!is.null(pol_col)) {
+      paste(new_edges$from, new_edges$to, new_edges[[pol_col]], sep = "|")
+    } else {
+      paste(new_edges$from, new_edges$to, sep = "|")
+    }
+    new_edges <- new_edges[!duplicated(dedupe_key), , drop = FALSE]
+    # Renumber edge ids to keep them sequential after dedupe
+    if ("id" %in% names(new_edges)) {
+      new_edges$id <- seq_len(nrow(new_edges))
+    }
+  }
+
+  # Drop secondary nodes
+  new_nodes <- nodes[!nodes$id %in% secondary_ids, , drop = FALSE]
+
+  list(
+    nodes = new_nodes,
+    edges = new_edges,
+    removed_ids = secondary_ids,
+    primary_id = primary_id
+  )
+}
