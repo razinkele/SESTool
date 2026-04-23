@@ -658,22 +658,44 @@ sync_cld_to_isa_data <- function(project_data) {
       next
     }
 
-    # Preserve indicators by matching on name
-    indicator <- rep(NA_character_, nrow(subset))
+    # Discover extra columns present on the pre-sync isa_data frame -
+    # we want to preserve ALL of them (description, stakeholder,
+    # importance, trend, etc.), not just the three we hardcoded before.
     prev <- isa[[key]]
-    if (is.data.frame(prev) && "name" %in% names(prev) && "indicator" %in% names(prev)) {
+    extra_cols <- if (is.data.frame(prev)) {
+      setdiff(names(prev), c("id", "name", "group", "label", "x", "y", "color", "shape"))
+    } else {
+      "indicator"  # minimum sensible default
+    }
+    if (!"indicator" %in% extra_cols) extra_cols <- c(extra_cols, "indicator")
+
+    # Build new frame with id/name plus an NA-filled column for each extra
+    new_df <- data.frame(
+      id = as.character(subset$id),
+      name = as.character(subset$label),
+      stringsAsFactors = FALSE
+    )
+    for (col in extra_cols) {
+      new_df[[col]] <- NA_character_
+    }
+
+    # Name-match rows against pre-sync data to preserve metadata
+    if (is.data.frame(prev) && "name" %in% names(prev)) {
+      prev_names_lower <- tolower(trimws(prev$name))
       for (i in seq_len(nrow(subset))) {
-        match_idx <- which(tolower(trimws(prev$name)) == tolower(trimws(subset$label[i])))
-        if (length(match_idx) > 0) indicator[i] <- as.character(prev$indicator[match_idx[1]])
+        match_idx <- which(prev_names_lower == tolower(trimws(subset$label[i])))
+        if (length(match_idx) > 0) {
+          j <- match_idx[1]
+          for (col in extra_cols) {
+            if (col %in% names(prev)) {
+              new_df[[col]][i] <- as.character(prev[[col]][j])
+            }
+          }
+        }
       }
     }
 
-    isa[[key]] <- data.frame(
-      id = as.character(subset$id),
-      name = as.character(subset$label),
-      indicator = indicator,
-      stringsAsFactors = FALSE
-    )
+    isa[[key]] <- new_df
   }
 
   # Rebuild adjacency matrices from edges.

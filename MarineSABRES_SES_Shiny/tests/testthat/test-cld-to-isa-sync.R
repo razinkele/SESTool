@@ -139,6 +139,61 @@ test_that("sync_cld_to_isa_data updates last_modified", {
   expect_true(inherits(result$last_modified, "POSIXt"))
 })
 
+test_that("sync_cld_to_isa_data preserves all metadata columns by name-match", {
+  skip_if_not(exists("sync_cld_to_isa_data", mode = "function"),
+              "sync_cld_to_isa_data not available")
+  pd <- make_project_data()
+  # Pre-populate isa_data$drivers with extra metadata beyond id/name/indicator
+  pd$data$isa_data$drivers <- data.frame(
+    id = "D_1",
+    name = "driver1",
+    indicator = "trend indicator",
+    description = "A driver of systemic change",
+    stakeholder = "Fishermen cooperative",
+    importance = "High",
+    trend = "Increasing",
+    stringsAsFactors = FALSE
+  )
+  result <- sync_cld_to_isa_data(pd)
+  drivers <- result$data$isa_data$drivers
+  # All 7 original columns survive the round trip
+  expect_true(all(c("id", "name", "indicator", "description",
+                     "stakeholder", "importance", "trend") %in% names(drivers)))
+  expect_equal(drivers$description, "A driver of systemic change")
+  expect_equal(drivers$stakeholder, "Fishermen cooperative")
+  expect_equal(drivers$importance, "High")
+  expect_equal(drivers$trend, "Increasing")
+})
+
+test_that("sync_cld_to_isa_data leaves metadata NA for nodes added via CLD only", {
+  skip_if_not(exists("sync_cld_to_isa_data", mode = "function"),
+              "sync_cld_to_isa_data not available")
+  pd <- make_project_data()
+  # Pre-populate one existing driver with rich metadata
+  pd$data$isa_data$drivers <- data.frame(
+    id = "D_1", name = "driver1",
+    indicator = "foo", description = "bar",
+    stringsAsFactors = FALSE
+  )
+  # Then add a NEW driver via CLD that doesn't match any existing name
+  pd$data$cld$nodes <- rbind(
+    pd$data$cld$nodes,
+    data.frame(id = "D_2", label = "new_driver_from_cld",
+               group = "Drivers", stringsAsFactors = FALSE)
+  )
+  result <- sync_cld_to_isa_data(pd)
+  drivers <- result$data$isa_data$drivers
+  expect_equal(nrow(drivers), 2)
+  # Metadata columns still present on both rows
+  expect_true("description" %in% names(drivers))
+  # New row's description is NA (no pre-existing match)
+  new_idx <- which(drivers$id == "D_2")
+  expect_true(is.na(drivers$description[new_idx]))
+  # Existing row's description preserved
+  old_idx <- which(drivers$id == "D_1")
+  expect_equal(drivers$description[old_idx], "bar")
+})
+
 # ============================================================================
 # Regression tests for review-caught bugs
 # ============================================================================
