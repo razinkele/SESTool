@@ -753,10 +753,23 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       vis <- visNetwork(nodes, edges, height = "100%", width = "100%") %>%
         apply_standard_styling()
 
+      # If the user previously dragged nodes and saved the project, honor
+      # those positions. We check that x/y columns exist and at least one
+      # node has a concrete position. When honored: disable physics so
+      # the layout engine doesn't overwrite the saved coords on render.
+      has_saved_positions <- "x" %in% names(nodes) && "y" %in% names(nodes) &&
+                             any(!is.na(nodes$x)) && any(!is.na(nodes$y))
+
       # Apply INITIAL layout using isolate() to prevent re-render on layout changes
       # Subsequent layout changes are handled by proxy observers below
       layout_type <- isolate(input$layout_type)
-      if (layout_type == "hierarchical") {
+      if (has_saved_positions) {
+        # Saved positions win over layout algorithms - user's manual
+        # arrangement is more authoritative than an auto-layout.
+        vis <- vis %>% visPhysics(enabled = FALSE)
+        debug_log(sprintf("Using %d saved node position(s), physics disabled",
+                          sum(!is.na(nodes$x))), "CLD VIZ")
+      } else if (layout_type == "hierarchical") {
         vis <- apply_hierarchical_layout(
           vis,
           isolate(input$hierarchy_direction),
@@ -786,6 +799,19 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
               console.log('[CLD VIZ] Network stabilized and stored');
             }",
             id
+          ),
+          # Capture user-dragged positions so they persist when the project
+          # is saved. dragEnd fires after the user releases a dragged node;
+          # we read all node positions (not just the dragged one, in case
+          # physics rippled) and send back to Shiny.
+          dragEnd = sprintf(
+            "function(params) {
+              if (params.nodes && params.nodes.length > 0) {
+                var positions = this.getPositions(params.nodes);
+                Shiny.setInputValue('%s', positions, {priority: 'event'});
+              }
+            }",
+            session$ns("node_positions_dragged")
           ),
           type = "once",
           stabilized = sprintf(
@@ -977,6 +1003,41 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       # Hide modal
       shinyjs::hide("add_node_modal_container")
       rv$pending_node_position <- NULL
+    })
+
+    # Persist node positions after user drags.
+    # visEvents$dragEnd captures getPositions() for the dragged node(s) and
+    # sends them here. We store x/y into rv$nodes and sync to project_data
+    # (and the CLD half of it) so the layout survives save/load. We DO NOT
+    # emit emit_isa_change here - position is a pure-layout concern and does
+    # not affect Loop/Leverage/analysis results.
+    observeEvent(input$node_positions_dragged, {
+      positions <- input$node_positions_dragged
+      if (is.null(positions) || length(positions) == 0) return()
+      req(rv$nodes)
+
+      # Ensure x, y columns exist on rv$nodes
+      if (!"x" %in% names(rv$nodes)) rv$nodes$x <- NA_real_
+      if (!"y" %in% names(rv$nodes)) rv$nodes$y <- NA_real_
+
+      # positions is a named list: id -> { x, y }
+      for (node_id in names(positions)) {
+        pos <- positions[[node_id]]
+        idx <- which(rv$nodes$id == node_id)
+        if (length(idx) > 0 && !is.null(pos$x) && !is.null(pos$y)) {
+          rv$nodes$x[idx] <- as.numeric(pos$x)
+          rv$nodes$y[idx] <- as.numeric(pos$y)
+        }
+      }
+
+      # Persist positions to project_data (no isa_data sync - layout only)
+      isolate({
+        pd <- project_data_reactive()
+        pd$data$cld$nodes <- rv$nodes
+        pd$last_modified <- Sys.time()
+        project_data_reactive(pd)
+      })
+      debug_log(sprintf("Saved positions for %d node(s)", length(positions)), "CLD VIZ")
     })
 
     # Handle edge addition
