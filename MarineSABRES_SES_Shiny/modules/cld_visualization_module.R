@@ -70,6 +70,31 @@ cld_viz_ui <- function(id, i18n) {
       .cld-network-container div.vis-network div.vis-legend {
         margin-top: 35px !important;
       }
+      /* Auto-fit legend to window height so user doesn't manually
+         resize when it overflows vertically with many DAPSIWRM groups.
+         bottom:20px keeps clearance from the canvas border; overflow-y
+         scrolls if still too tall (e.g., small laptop screens). */
+      .cld-network-container .vis-legend,
+      .cld-network-container div.vis-network div.vis-legend {
+        max-height: calc(100vh - 150px) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+      }
+      /* In fullscreen mode the legend has more room */
+      .network-fullscreen-container.is-fullscreen .vis-legend {
+        max-height: calc(100vh - 80px) !important;
+      }
+      /* Scrollbar styling — subtle so it doesn't draw attention */
+      .cld-network-container .vis-legend::-webkit-scrollbar {
+        width: 6px;
+      }
+      .cld-network-container .vis-legend::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+      }
+      .cld-network-container .vis-legend::-webkit-scrollbar-track {
+        background: transparent;
+      }
       /* Style control sections inside box */
       .cld-controls-box h5 {
         font-weight: 600;
