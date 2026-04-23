@@ -299,3 +299,20 @@ test_that("sync_cld_to_isa_data coerces unknown polarity strings to '+'", {
   # Coerced to "+"
   expect_equal(result$data$isa_data$adjacency_matrices$d_a["D_1", "A_1"], "+")
 })
+
+test_that("sync_cld_to_isa_data does not throw on malformed nodes", {
+  skip_if_not(exists("sync_cld_to_isa_data", mode = "function"),
+              "sync_cld_to_isa_data not available")
+  # Nodes data frame missing expected columns
+  pd <- list(data = list(
+    cld = list(
+      nodes = data.frame(wrong_col = "x", stringsAsFactors = FALSE),
+      edges = data.frame(from = character(), to = character(),
+                          stringsAsFactors = FALSE)
+    ),
+    isa_data = list()
+  ))
+  # Must not throw — sync should either silently produce an empty
+  # isa_data or return pd unchanged
+  expect_error(sync_cld_to_isa_data(pd), NA)
+})

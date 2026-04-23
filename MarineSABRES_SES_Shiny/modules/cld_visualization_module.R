@@ -1008,12 +1008,21 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         isolate({
           pd <- project_data_reactive()
           pd$data$cld$nodes <- rv$nodes
-          pd <- sync_cld_to_isa_data(pd)
-          project_data_reactive(pd)
-          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-            event_bus$emit_isa_change("cld_edit_add_node")
-          }
-          debug_log(sprintf("Node '%s' added and synced to isa_data", node_label), "CLD VIZ")
+          tryCatch({
+            pd <- sync_cld_to_isa_data(pd)
+            project_data_reactive(pd)
+            if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+              event_bus$emit_isa_change("cld_edit_add_node")
+            }
+            debug_log(sprintf("Node '%s' added and synced to isa_data", node_label), "CLD VIZ")
+          }, error = function(e) {
+            debug_log(paste("sync_cld_to_isa_data failed on add_node:", e$message), "ERROR")
+            showNotification(
+              format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+              type = "error",
+              duration = 8
+            )
+          })
         })
 
         showNotification(
@@ -1114,11 +1123,20 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         pd <- project_data_reactive()
         pd$data$cld$nodes <- rv$nodes
         pd$data$cld$edges <- rv$edges
-        pd <- sync_cld_to_isa_data(pd)
-        project_data_reactive(pd)
-        if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-          event_bus$emit_isa_change("cld_edit_merge_nodes")
-        }
+        tryCatch({
+          pd <- sync_cld_to_isa_data(pd)
+          project_data_reactive(pd)
+          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+            event_bus$emit_isa_change("cld_edit_merge_nodes")
+          }
+        }, error = function(e) {
+          debug_log(paste("sync_cld_to_isa_data failed on merge_nodes:", e$message), "ERROR")
+          showNotification(
+            format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+            type = "error",
+            duration = 8
+          )
+        })
       })
 
       showNotification(
@@ -1183,13 +1201,22 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       isolate({
         pd <- project_data_reactive()
         pd$data$cld$edges <- rv$edges
-        pd <- sync_cld_to_isa_data(pd)
-        project_data_reactive(pd)
-        if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-          event_bus$emit_isa_change("cld_edit_add_edge")
-        }
-        debug_log(sprintf("Edge %s -> %s added and synced to isa_data",
-                          input$edge_added$from, input$edge_added$to), "CLD VIZ")
+        tryCatch({
+          pd <- sync_cld_to_isa_data(pd)
+          project_data_reactive(pd)
+          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+            event_bus$emit_isa_change("cld_edit_add_edge")
+          }
+          debug_log(sprintf("Edge %s -> %s added and synced to isa_data",
+                            input$edge_added$from, input$edge_added$to), "CLD VIZ")
+        }, error = function(e) {
+          debug_log(paste("sync_cld_to_isa_data failed on add_edge:", e$message), "ERROR")
+          showNotification(
+            format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+            type = "error",
+            duration = 8
+          )
+        })
       })
 
       # Re-enable manipulation mode after a short delay
@@ -1213,12 +1240,21 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         isolate({
           pd <- project_data_reactive()
           pd$data$cld$nodes <- rv$nodes
-          pd <- sync_cld_to_isa_data(pd)
-          project_data_reactive(pd)
-          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-            event_bus$emit_isa_change("cld_edit_rename_node")
-          }
-          debug_log(sprintf("Node '%s' label updated and synced to isa_data", new_label), "CLD VIZ")
+          tryCatch({
+            pd <- sync_cld_to_isa_data(pd)
+            project_data_reactive(pd)
+            if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+              event_bus$emit_isa_change("cld_edit_rename_node")
+            }
+            debug_log(sprintf("Node '%s' label updated and synced to isa_data", new_label), "CLD VIZ")
+          }, error = function(e) {
+            debug_log(paste("sync_cld_to_isa_data failed on rename_node:", e$message), "ERROR")
+            showNotification(
+              format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+              type = "error",
+              duration = 8
+            )
+          })
         })
 
         showNotification(
@@ -1333,12 +1369,21 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
           isolate({
             pd <- project_data_reactive()
             pd$data$cld$edges <- rv$edges
-            pd <- sync_cld_to_isa_data(pd)
-            project_data_reactive(pd)
-            if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-              event_bus$emit_isa_change("cld_edit_edge_polarity")
-            }
-            debug_log("Edge updated and synced to isa_data", "CLD VIZ")
+            tryCatch({
+              pd <- sync_cld_to_isa_data(pd)
+              project_data_reactive(pd)
+              if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+                event_bus$emit_isa_change("cld_edit_edge_polarity")
+              }
+              debug_log("Edge updated and synced to isa_data", "CLD VIZ")
+            }, error = function(e) {
+              debug_log(paste("sync_cld_to_isa_data failed on edit_edge_polarity:", e$message), "ERROR")
+              showNotification(
+                format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+                type = "error",
+                duration = 8
+              )
+            })
           })
 
           showNotification(
@@ -1375,12 +1420,21 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         pd <- project_data_reactive()
         pd$data$cld$nodes <- rv$nodes
         pd$data$cld$edges <- rv$edges
-        pd <- sync_cld_to_isa_data(pd)
-        project_data_reactive(pd)
-        if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-          event_bus$emit_isa_change("cld_edit_delete_nodes")
-        }
-        debug_log("Deleted nodes synced to isa_data", "CLD VIZ")
+        tryCatch({
+          pd <- sync_cld_to_isa_data(pd)
+          project_data_reactive(pd)
+          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+            event_bus$emit_isa_change("cld_edit_delete_nodes")
+          }
+          debug_log("Deleted nodes synced to isa_data", "CLD VIZ")
+        }, error = function(e) {
+          debug_log(paste("sync_cld_to_isa_data failed on delete_nodes:", e$message), "ERROR")
+          showNotification(
+            format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+            type = "error",
+            duration = 8
+          )
+        })
       })
 
       # Re-enable manipulation mode after a short delay
@@ -1399,12 +1453,21 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       isolate({
         pd <- project_data_reactive()
         pd$data$cld$edges <- rv$edges
-        pd <- sync_cld_to_isa_data(pd)
-        project_data_reactive(pd)
-        if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
-          event_bus$emit_isa_change("cld_edit_delete_edges")
-        }
-        debug_log("Deleted edges synced to isa_data", "CLD VIZ")
+        tryCatch({
+          pd <- sync_cld_to_isa_data(pd)
+          project_data_reactive(pd)
+          if (!is.null(event_bus) && is.function(event_bus$emit_isa_change)) {
+            event_bus$emit_isa_change("cld_edit_delete_edges")
+          }
+          debug_log("Deleted edges synced to isa_data", "CLD VIZ")
+        }, error = function(e) {
+          debug_log(paste("sync_cld_to_isa_data failed on delete_edges:", e$message), "ERROR")
+          showNotification(
+            format_user_error(e, i18n = i18n, context = "syncing CLD edit"),
+            type = "error",
+            duration = 8
+          )
+        })
       })
 
       # Re-enable manipulation mode after a short delay
