@@ -1086,8 +1086,14 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       req(length(selected_ids) >= 2, primary_id)
 
       result <- merge_cld_nodes(rv$nodes, rv$edges, selected_ids, primary_id)
-      if (!is.null(result$error)) {
-        showNotification(result$error, type = "error", duration = 5)
+      if (!is.null(result$error_key)) {
+        msg <- i18n$t(paste0("modules.cld.visualization.", result$error_key))
+        # If the key carries a detail list, format it in via sprintf (%s in the
+        # translated string). Translations that don't use %s just show the msg.
+        if (!is.null(result$error_detail) && grepl("%s", msg, fixed = TRUE)) {
+          msg <- sprintf(msg, paste(result$error_detail, collapse = ", "))
+        }
+        showNotification(msg, type = "error", duration = 5)
         return()
       }
 

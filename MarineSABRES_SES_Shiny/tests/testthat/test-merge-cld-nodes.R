@@ -34,7 +34,7 @@ test_that("merge_cld_nodes errors on fewer than 2 ids", {
               "merge_cld_nodes not available")
   fx <- make_fixture()
   result <- merge_cld_nodes(fx$nodes, fx$edges, "D_1", "D_1")
-  expect_true(!is.null(result$error))
+  expect_equal(result$error_key, "merge_need_two")
 })
 
 test_that("merge_cld_nodes errors when primary_id not in node_ids", {
@@ -42,7 +42,7 @@ test_that("merge_cld_nodes errors when primary_id not in node_ids", {
               "merge_cld_nodes not available")
   fx <- make_fixture()
   result <- merge_cld_nodes(fx$nodes, fx$edges, c("D_1", "D_2"), "A_1")
-  expect_true(!is.null(result$error))
+  expect_equal(result$error_key, "merge_primary_not_in_selection")
 })
 
 test_that("merge_cld_nodes refuses cross-group merges", {
@@ -50,8 +50,17 @@ test_that("merge_cld_nodes refuses cross-group merges", {
               "merge_cld_nodes not available")
   fx <- make_fixture()
   result <- merge_cld_nodes(fx$nodes, fx$edges, c("D_1", "A_1"), "D_1")
-  expect_true(!is.null(result$error))
-  expect_true(grepl("different element types", result$error))
+  expect_equal(result$error_key, "merge_cross_type")
+  expect_true(length(result$error_detail) > 0)  # groups listed
+})
+
+test_that("merge_cld_nodes errors on unknown node ids", {
+  skip_if_not(exists("merge_cld_nodes", mode = "function"),
+              "merge_cld_nodes not available")
+  fx <- make_fixture()
+  result <- merge_cld_nodes(fx$nodes, fx$edges, c("D_1", "X_99"), "D_1")
+  expect_equal(result$error_key, "merge_unknown_ids")
+  expect_true("X_99" %in% result$error_detail)
 })
 
 test_that("merge_cld_nodes removes secondary and keeps primary label", {

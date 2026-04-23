@@ -795,28 +795,30 @@ sync_cld_to_isa_data <- function(project_data) {
 #' @param node_ids character vector of 2+ ids to merge
 #' @param primary_id character - which id's label/metadata to keep. Must be in node_ids.
 #' @return list(nodes = new_nodes, edges = new_edges, removed_ids = character)
-#'         on success, or list(error = "message") on validation failure
+#'         on success, or list(error_key = "...", error_detail = ...) on
+#'         validation failure. error_key is an i18n-lookup code (one of
+#'         "merge_need_two", "merge_primary_not_in_selection",
+#'         "merge_unknown_ids", "merge_cross_type"); error_detail carries any
+#'         data the UI should sprintf into the translated message.
 #' @export
 merge_cld_nodes <- function(nodes, edges, node_ids, primary_id) {
   if (length(node_ids) < 2) {
-    return(list(error = "Need at least 2 nodes to merge"))
+    return(list(error_key = "merge_need_two"))
   }
   if (!primary_id %in% node_ids) {
-    return(list(error = "primary_id must be one of node_ids"))
+    return(list(error_key = "merge_primary_not_in_selection"))
   }
 
   # Validate all rows exist
   missing <- setdiff(node_ids, nodes$id)
   if (length(missing) > 0) {
-    return(list(error = paste0("Unknown node id(s): ", paste(missing, collapse = ", "))))
+    return(list(error_key = "merge_unknown_ids", error_detail = missing))
   }
 
   # Validate same group (element type)
   groups <- unique(nodes$group[nodes$id %in% node_ids])
   if (length(groups) > 1) {
-    return(list(error = paste0(
-      "Cannot merge different element types: ", paste(groups, collapse = ", ")
-    )))
+    return(list(error_key = "merge_cross_type", error_detail = groups))
   }
 
   secondary_ids <- setdiff(node_ids, primary_id)

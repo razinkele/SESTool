@@ -516,6 +516,28 @@
       "it": "Elementi uniti",
       "no": "Elementer slått sammen",
       "el": "Τα στοιχεία συγχωνεύθηκαν"
+    },
+    "modules.cld.visualization.merge_primary_not_in_selection": {
+      "en": "The element you chose to keep is not in the selection",
+      "es": "El elemento que elegiste conservar no está en la selección",
+      "fr": "L'élément que vous avez choisi de conserver ne fait pas partie de la sélection",
+      "de": "Das zu behaltende Element ist nicht in der Auswahl",
+      "lt": "Pasirinktas palikti elementas nėra tarp pažymėtų",
+      "pt": "O elemento que você escolheu manter não está na seleção",
+      "it": "L'elemento che hai scelto di mantenere non è nella selezione",
+      "no": "Elementet du valgte å beholde er ikke i utvalget",
+      "el": "Το στοιχείο που επιλέξατε να διατηρήσετε δεν βρίσκεται στην επιλογή"
+    },
+    "modules.cld.visualization.merge_unknown_ids": {
+      "en": "Unknown element id(s): %s",
+      "es": "Id(s) de elemento desconocidos: %s",
+      "fr": "Identifiant(s) d'élément inconnu(s) : %s",
+      "de": "Unbekannte Element-ID(s): %s",
+      "lt": "Nežinomi elementų ID: %s",
+      "pt": "Id(s) de elemento desconhecido(s): %s",
+      "it": "ID di elemento sconosciuti: %s",
+      "no": "Ukjent(e) element-ID(er): %s",
+      "el": "Άγνωστα αναγνωριστικά στοιχείων: %s"
     }
   }
 }
