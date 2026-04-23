@@ -35,9 +35,10 @@ Patch release closing three review-caught gaps in the CLD direct-graph editor, e
 - **CLD sync helpers**: 14/14 tests in `test-cld-to-isa-sync.R` (10 existing + 4 new), 10/10 in `test-merge-cld-nodes.R` (9 existing + 1 new).
 - **Error handling**: 65 assertions across all `test-error-handling.R` cases including the 4 new `context_key` tests.
 - **i18n enforcement**: 13/13 pass, audit reports `missing=0 hardcoded=0 unused=110` (down from 143 pre-audit-fix).
-- **CI**: first green on `47173a1`, no failures.
+- **Full testthat suite**: 6768 pass, 0 fail, 291 skip (up from 6487 pass, 42 fail, 304 skip at release start — +281 passing assertions, -42 failures, -13 skips thanks to the `6fb7fc2` setup.R fix).
+- **CI**: green through `6fb7fc2`, no failures.
 
-### 7 Commits in This Release
+### 10 Commits in This Release
 - `4dd9cda` Task 1 — i18n-ify merge_cld_nodes error returns
 - `17bde9b` Task 2 — preserve all element metadata in sync_cld_to_isa_data
 - `c762c95` Task 2 fix — preserve Date/numeric column types (caught by code-quality review before landing)
@@ -45,6 +46,9 @@ Patch release closing three review-caught gaps in the CLD direct-graph editor, e
 - `38849ca` Phase 1 — add context_key parameter, migrate 7 CLD sites
 - `0bf0a6d` Phase 2 — migrate 31 remaining format_user_error call sites
 - `47173a1` Audit — recognize context_key + i18n-ref sentinels
+- `0c5304c` Docs — CHANGELOG 1.11.2 release notes
+- `10e011e` Release — version bump DESCRIPTION + CLAUDE.md header
+- `6fb7fc2` Tests — source 3 missing helpers in setup.R, clearing 42 pre-existing test failures (setup cascade from `library(tidyverse)` failing in `global.R:20` meant `functions/utils.R`, `functions/project_transactions.R`, and project-root `utils.R` were never loaded)
 
 ## [1.11.1] - 2026-04-22
 
