@@ -1097,7 +1097,7 @@ auto_save_server <- function(id, project_data_reactive, i18n,
       }, error = function(e) {
         debug_log(paste("Discard recovery failed:", conditionMessage(e)), "AUTO-SAVE")
         showNotification(
-          format_user_error(e, i18n = i18n, context = "discarding recovery"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_discarding_recovery"),
           type = "error"
         )
         FALSE

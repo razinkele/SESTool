@@ -440,7 +440,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
               )
             } else {
               showNotification(
-                format_user_error(e, i18n = i18n, context = "detecting feedback loops"),
+                format_user_error(e, i18n = i18n, context_key = "common.messages.context_detecting_feedback_loops"),
                 type = "error",
                 duration = 10
               )
@@ -585,7 +585,7 @@ analysis_loops_server <- function(id, project_data_reactive, i18n, event_bus = N
           # the sanitized (file-paths-stripped, truncated) message content flows
           # through. Then prepend the existing translated prefixes so the legacy
           # i18n keys stay in use and the user-visible wording retains context (I3a).
-          user_detail <- format_user_error(e, i18n = i18n, context = "loop detection", show_details = TRUE)
+          user_detail <- format_user_error(e, i18n = i18n, context_key = "common.messages.context_loop_detection", show_details = TRUE)
           output$detection_status <- renderText(paste(i18n$t("modules.analysis.loops.error_during_loop_detection"), user_detail))
           showNotification(
             paste(i18n$t("modules.analysis.loops.loop_detection_failed"), user_detail),

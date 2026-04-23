@@ -256,7 +256,7 @@ analysis_intervention_server <- function(id, project_data_reactive, i18n, event_
         updateTextInput(session, "intervention_name", value = "")
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "adding intervention", show_details = TRUE),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_adding_intervention", show_details = TRUE),
           type = "error"
         )
       })

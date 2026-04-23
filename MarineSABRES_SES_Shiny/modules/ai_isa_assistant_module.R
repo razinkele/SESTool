@@ -2601,7 +2601,7 @@ ai_isa_assistant_server <- function(id, project_data_reactive, i18n, event_bus =
         debug_log(sprintf("[AI ISA ERROR] Call stack: %s\n", paste(sys.calls(), collapse = "\n")))
 
         showNotification(
-          format_user_error(e, i18n = i18n, context = "saving AI model to ISA"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_ai_model_to_isa"),
           type = "error",
           duration = 10
         )

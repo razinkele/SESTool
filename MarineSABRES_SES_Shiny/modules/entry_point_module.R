@@ -311,7 +311,7 @@ entry_point_server <- function(id, project_data_reactive, i18n, parent_session =
 
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "generating pathway report"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_generating_pathway_report"),
           type = "error",
           duration = 5
         )

@@ -329,7 +329,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "generating HTML report"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_generating_html_report"),
           type = "error",
           duration = 10
         )
@@ -435,7 +435,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "generating PDF report", show_details = TRUE),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_generating_pdf_report", show_details = TRUE),
           type = "error",
           duration = 10
         )
@@ -504,7 +504,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "generating Word document", show_details = TRUE),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_generating_word_document", show_details = TRUE),
           type = "error",
           duration = 10
         )
@@ -566,7 +566,7 @@ prepare_report_server <- function(id, project_data_reactive, i18n, parent_sessio
 
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "generating PowerPoint presentation", show_details = TRUE),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_generating_powerpoint_presentation", show_details = TRUE),
           type = "error",
           duration = 10
         )

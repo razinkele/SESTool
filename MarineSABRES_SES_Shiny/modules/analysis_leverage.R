@@ -256,7 +256,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
 
         }, error = function(e) {
           showNotification(
-            format_user_error(e, i18n = i18n, context = "analyzing leverage points"),
+            format_user_error(e, i18n = i18n, context_key = "common.messages.context_analyzing_leverage_points"),
             type = "error",
             duration = 10
           )

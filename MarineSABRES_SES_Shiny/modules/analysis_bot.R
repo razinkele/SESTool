@@ -225,7 +225,7 @@ analysis_bot_server <- function(id, project_data_reactive, i18n, event_bus = NUL
           showNotification(i18n$t("modules.analysis.common.analysis_csv_columns_error"), type = "error")
         }
       }, error = function(e) {
-        showNotification(format_user_error(e, i18n = i18n, context = "loading CSV data"), type = "error")
+        showNotification(format_user_error(e, i18n = i18n, context_key = "common.messages.context_loading_csv_data"), type = "error")
       })
     })
 

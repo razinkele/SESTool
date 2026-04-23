@@ -557,7 +557,7 @@ ses_models_server <- function(id, project_data_reactive, i18n, parent_session = 
           debug_log(paste("Traceback:", paste(tb_lines, collapse = "\n")), "SES_MODELS")
         }
         showNotification(
-          format_user_error(e, i18n = i18n, context = "loading SES model"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_loading_ses_model"),
           type = "error",
           duration = 10
         )

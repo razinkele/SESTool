@@ -356,7 +356,7 @@ export_reports_server <- function(id, project_data_reactive, i18n, event_bus = N
         debug_log("ERROR IN REPORT GENERATION", "EXPORT")
         debug_log(paste("Error message:", e$message), "EXPORT")
         debug_log(paste("Error class:", paste(class(e), collapse = ", ")), "EXPORT")
-        showNotification(format_user_error(e, i18n = i18n, context = "generating report"),
+        showNotification(format_user_error(e, i18n = i18n, context_key = "common.messages.context_generating_report"),
                          type = "error", duration = 10)
       })
     })

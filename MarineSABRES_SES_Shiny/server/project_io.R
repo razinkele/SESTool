@@ -62,7 +62,7 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
 
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "saving project"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_saving_project"),
           type = "error",
           duration = 10
         )
@@ -142,7 +142,7 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
 
     }, error = function(e) {
       showNotification(
-        format_user_error(e, i18n = i18n, context = "loading project"),
+        format_user_error(e, i18n = i18n, context_key = "common.messages.context_loading_project"),
         type = "error",
         duration = 10
       )
@@ -180,7 +180,7 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
       debug_log("New empty project created via sidebar button", "PROJECT_IO")
     }, error = function(e) {
       showNotification(
-        format_user_error(e, i18n = i18n, context = "creating new project"),
+        format_user_error(e, i18n = i18n, context_key = "common.messages.context_creating_new_project"),
         type = "error"
       )
     })
@@ -443,7 +443,7 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
       )
     }, error = function(e) {
       showNotification(
-        format_user_error(e, i18n = i18n, context = "loading autosave"),
+        format_user_error(e, i18n = i18n, context_key = "common.messages.context_loading_autosave"),
         type = "error"
       )
     })

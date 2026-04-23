@@ -164,7 +164,7 @@ analysis_metrics_server <- function(id, project_data_reactive, i18n, event_bus =
 
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "calculating network metrics"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_calculating_network_metrics"),
           type = "error",
           duration = 10
         )

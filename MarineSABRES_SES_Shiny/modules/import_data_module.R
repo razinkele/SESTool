@@ -171,7 +171,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         }
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "loading sample data"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_loading_sample_data"),
           type = "error",
           duration = 10
         )
@@ -244,7 +244,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
           readxl::excel_sheets(file_path)
         }, error = function(e) {
           showNotification(
-            format_user_error(e, i18n = i18n, context = "reading Excel file", show_details = TRUE),
+            format_user_error(e, i18n = i18n, context_key = "common.messages.context_reading_excel_file", show_details = TRUE),
             type = "error",
             duration = 10
           )
@@ -283,7 +283,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
         rv$file_loaded <- FALSE
         debug_log(paste("Upload failed:", e$message), "ERROR")
         showNotification(
-          format_user_error(e, i18n = i18n, context = "importing file"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_importing_file"),
           type = "error",
           duration = 10
         )
@@ -379,7 +379,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "parsing connections"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_parsing_connections"),
           type = "error",
           duration = 10
         )
@@ -462,7 +462,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "importing data"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_importing_data"),
           type = "error",
           duration = 10
         )
@@ -492,7 +492,7 @@ import_data_server <- function(id, project_data_reactive, i18n, parent_session =
 
       }, error = function(e) {
         showNotification(
-          format_user_error(e, i18n = i18n, context = "importing data"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_importing_data"),
           type = "error",
           duration = 10
         )

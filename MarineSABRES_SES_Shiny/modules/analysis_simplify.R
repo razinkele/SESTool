@@ -823,7 +823,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
       }, error = function(e) {
         debug_log(paste("Error in simplification:", e$message), "SIMPLIFY")
         showNotification(
-          format_user_error(e, i18n = i18n, context = "applying simplification"),
+          format_user_error(e, i18n = i18n, context_key = "common.messages.context_applying_simplification"),
           type = "error",
           duration = 10
         )

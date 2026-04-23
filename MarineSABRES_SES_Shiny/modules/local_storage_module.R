@@ -536,7 +536,7 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
           showNotification(
             paste(
               i18n$t("common.messages.directory_access_failed"),
-              format_user_error(result$error %||% "", i18n = i18n, context = "directory access", show_details = TRUE)
+              format_user_error(result$error %||% "", i18n = i18n, context_key = "common.messages.context_directory_access", show_details = TRUE)
             ),
             type = "error",
             duration = 5
@@ -565,7 +565,7 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
         showNotification(
           paste(
             i18n$t("common.messages.local_save_failed"),
-            format_user_error(result$error %||% "", i18n = i18n, context = "local save", show_details = TRUE)
+            format_user_error(result$error %||% "", i18n = i18n, context_key = "common.messages.context_local_save", show_details = TRUE)
           ),
           type = "error",
           duration = 5
@@ -609,7 +609,7 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
           
         }, error = function(e) {
           showNotification(
-            format_user_error(e, i18n = i18n, context = "parsing project file", show_details = TRUE),
+            format_user_error(e, i18n = i18n, context_key = "common.messages.context_parsing_project_file", show_details = TRUE),
             type = "error",
             duration = 5
           )
@@ -619,7 +619,7 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
         showNotification(
           paste(
             i18n$t("common.messages.local_load_failed"),
-            format_user_error(result$error %||% "", i18n = i18n, context = "local load", show_details = TRUE)
+            format_user_error(result$error %||% "", i18n = i18n, context_key = "common.messages.context_local_load", show_details = TRUE)
           ),
           type = "error",
           duration = 5
@@ -645,7 +645,7 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
         showNotification(
           paste(
             i18n$t("common.messages.local_delete_failed"),
-            format_user_error(result$error %||% "", i18n = i18n, context = "local delete", show_details = TRUE)
+            format_user_error(result$error %||% "", i18n = i18n, context_key = "common.messages.context_local_delete", show_details = TRUE)
           ),
           type = "error",
           duration = 5
