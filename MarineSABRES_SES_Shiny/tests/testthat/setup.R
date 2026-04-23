@@ -138,6 +138,38 @@ tryCatch({
   message("Warning: Could not load ml_feature_engineering.R")
 })
 
+# functions/utils.R holds generate_id() — used transitively by _safe wrappers
+# in data_structure.R and export_functions.R. Without it, create_empty_project
+# fails inside tryCatch and returns NULL, cascading to ~35 test failures.
+tryCatch({
+  if (file.exists(file.path(project_root, "functions/utils.R"))) {
+    source(file.path(project_root, "functions/utils.R"), local = FALSE)
+  }
+}, error = function(e) {
+  message("Warning: Could not load functions/utils.R")
+})
+
+# functions/project_transactions.R holds with_project_transaction and related
+# atomic-update helpers exercised by test-p0-fixes.R's "required functions exist"
+# setup test.
+tryCatch({
+  if (file.exists(file.path(project_root, "functions/project_transactions.R"))) {
+    source(file.path(project_root, "functions/project_transactions.R"), local = FALSE)
+  }
+}, error = function(e) {
+  message("Warning: Could not load functions/project_transactions.R")
+})
+
+# Project-root utils.R (separate from functions/utils.R) holds validate_igraph
+# and other network-validation helpers used by test-network-analysis-enhanced.R.
+tryCatch({
+  if (file.exists(file.path(project_root, "utils.R"))) {
+    source(file.path(project_root, "utils.R"), local = FALSE)
+  }
+}, error = function(e) {
+  message("Warning: Could not load utils.R")
+})
+
 # Load DAPSIWRM connection rules (needed for connection tests)
 tryCatch({
   if (file.exists(file.path(project_root, "functions/dapsiwrm_connection_rules.R"))) {
