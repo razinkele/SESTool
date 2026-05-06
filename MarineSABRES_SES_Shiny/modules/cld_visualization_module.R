@@ -1116,13 +1116,14 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
       rv$nodes <- result$nodes
       rv$edges <- result$edges
 
-      # Remove secondaries from the visNetwork canvas
-      visNetworkProxy(session$ns("network")) %>%
-        visRemoveNodes(id = result$removed_ids)
-
-      # Re-render edges (rewiring may have dropped/changed them)
-      visNetworkProxy(session$ns("network")) %>%
-        visUpdateEdges(edges = rv$edges)
+      # Force full re-render rather than proxy-patching the canvas. Proxy
+      # updates can't reliably reconcile with merge_cld_nodes()'s edge ID
+      # renumbering (seq_len after dedupe): visUpdateEdges only inserts/
+      # updates by id and never removes, so any old vis.js edge whose id
+      # is higher than the new max becomes a stale duplicate or phantom
+      # edge that visually disconnects parts of the graph. A re-render
+      # rebuilds from rv$nodes/rv$edges, which are the source of truth.
+      rv$layout_render_trigger <- rv$layout_render_trigger + 1
 
       # Sync + propagate to isa_data for analyses
       isolate({

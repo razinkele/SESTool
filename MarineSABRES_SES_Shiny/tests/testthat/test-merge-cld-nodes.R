@@ -140,6 +140,45 @@ test_that("merge_cld_nodes handles 3-way merge (primary + 2 secondaries)", {
   expect_equal(result$removed_ids, c("P_2", "P_3"))
 })
 
+test_that("merge_cld_nodes leaves no node disconnected when its only edge survives dedupe", {
+  # REGRESSION: a downstream node's only inbound edges were two parallel
+  # connections from two soon-to-be-merged secondaries. After rewire +
+  # dedupe, exactly one edge from the primary must remain — otherwise
+  # the downstream node ends up orphaned in rv$nodes/rv$edges.
+  skip_if_not(exists("merge_cld_nodes", mode = "function"),
+              "merge_cld_nodes not available")
+  nodes <- data.frame(
+    id = c("P_5", "P_6", "MPF_1"),
+    label = c("p5", "p6", "mpf1"),
+    group = c("Pressures", "Pressures", "Marine Processes & Functioning"),
+    stringsAsFactors = FALSE
+  )
+  edges <- data.frame(
+    id = 1:2,
+    from = c("P_5", "P_6"),
+    to   = c("MPF_1", "MPF_1"),
+    label = c("-", "-"),
+    stringsAsFactors = FALSE
+  )
+  result <- merge_cld_nodes(nodes, edges, c("P_5", "P_6"), "P_5")
+  expect_equal(nrow(result$edges), 1)
+  expect_true("MPF_1" %in% c(result$edges$from, result$edges$to))
+  # MPF_1 must still be connected after merge — i.e., not an island
+  connected <- unique(c(result$edges$from, result$edges$to))
+  expect_true(all(result$nodes$id %in% connected))
+})
+
+test_that("merge_cld_nodes renumbers edge ids contiguously from 1 (callers depend on this)", {
+  # The cld_visualization module assumes edge ids are seq_len after merge:
+  # the edge-counter for new-edge creation uses nrow(rv$edges), so any gap
+  # would let a new edge collide with an existing id. Lock that contract.
+  skip_if_not(exists("merge_cld_nodes", mode = "function"),
+              "merge_cld_nodes not available")
+  fx <- make_fixture()
+  result <- merge_cld_nodes(fx$nodes, fx$edges, c("D_1", "D_2"), "D_1")
+  expect_equal(result$edges$id, seq_len(nrow(result$edges)))
+})
+
 test_that("merge_cld_nodes distinguishes edges with NA labels from polarity-matched edges", {
   # REGRESSION: original dedupe built key via paste(..., NA, sep='|') which
   # converts NA to the string 'NA', wrongly collapsing two semantically-
