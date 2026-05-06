@@ -56,9 +56,9 @@ test_that("valuation_unit_values block is parsed as numeric", {
               "load_wp5_mechanisms_kb not available")
   db <- load_wp5_mechanisms_kb(WP5_KB_PATH, force_reload = TRUE)
   pos <- db$valuation_unit_values$posidonia_oceanica
-  expect_type(pos$coastal_protection$low, "double")
-  expect_type(pos$coastal_protection$central, "double")
-  expect_type(pos$coastal_protection$high, "double")
+  expect_true(is.numeric(pos$coastal_protection$low))
+  expect_true(is.numeric(pos$coastal_protection$central))
+  expect_true(is.numeric(pos$coastal_protection$high))
   expect_true(pos$coastal_protection$low <= pos$coastal_protection$central)
   expect_true(pos$coastal_protection$central <= pos$coastal_protection$high)
 })
