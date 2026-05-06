@@ -43,12 +43,27 @@
             "Multi-year commitment cycles essential — annual renewals create activity gaps that erode trust",
             "Co-funding from national governments (not just EU) increases political durability"
           ],
-          "applies_to_DAs": ["macaronesia"],
-          "success_metrics": ["C_01", "C_02", "M_01"],
+          "applies_to_DAs": [
+            "macaronesia"
+          ],
+          "success_metrics": [
+            "C_01",
+            "C_02",
+            "M_01"
+          ],
           "risks_and_guardrails": [
-            { "risk": "Mandate creep — facility becomes a generic MPA funding pot", "guardrail": "Founding charter narrows eligible activities to corridor-delivery; annual board review of out-of-scope requests" },
-            { "risk": "Free-riding by one jurisdiction", "guardrail": "Co-funding share required as condition of voting rights" },
-            { "risk": "Political withdrawal during national election cycles", "guardrail": "Multi-year commitments + treaty-level codification (where feasible)" }
+            {
+              "risk": "Mandate creep — facility becomes a generic MPA funding pot",
+              "guardrail": "Founding charter narrows eligible activities to corridor-delivery; annual board review of out-of-scope requests"
+            },
+            {
+              "risk": "Free-riding by one jurisdiction",
+              "guardrail": "Co-funding share required as condition of voting rights"
+            },
+            {
+              "risk": "Political withdrawal during national election cycles",
+              "guardrail": "Multi-year commitments + treaty-level codification (where feasible)"
+            }
           ],
           "use_in_impact_assessment": "Use this mechanism when scoring a Macaronesia scenario where regional coordination capacity is the binding constraint (S3 Coordinated EEZ or S4 Integrated EEZ+ABNJ). Score it positively on EE (enables monitoring) and negatively on PI (requires multi-state agreement). Pair with M_01 vessel-movement indicator for measurable success.",
           "references": [
@@ -69,14 +84,50 @@
   },
   "valuation_unit_values": {
     "posidonia_oceanica": {
-      "coastal_protection":   { "low": 3500,  "central": 10350, "high": 17200, "unit": "EUR/ha/yr", "method": "avoided_cost" },
-      "carbon_sequestration": { "low": 40,    "central": 140,   "high": 240,   "unit": "EUR/ha/yr", "method": "social_cost_of_carbon" },
-      "recreation_tourism":   { "low": 400,   "central": 2500,  "high": 4600,  "unit": "EUR/ha/yr", "method": "travel_cost_or_WTP" },
-      "food_provision":       { "low": 150,   "central": 975,   "high": 1800,  "unit": "EUR/ha/yr", "method": "market_pricing" },
-      "water_purification":   { "low": 350,   "central": 1175,  "high": 2000,  "unit": "EUR/ha/yr", "method": "replacement_cost" }
+      "coastal_protection": {
+        "low": 3500,
+        "central": 10350,
+        "high": 17200,
+        "unit": "EUR/ha/yr",
+        "method": "avoided_cost"
+      },
+      "carbon_sequestration": {
+        "low": 40,
+        "central": 140,
+        "high": 240,
+        "unit": "EUR/ha/yr",
+        "method": "social_cost_of_carbon"
+      },
+      "recreation_tourism": {
+        "low": 400,
+        "central": 2500,
+        "high": 4600,
+        "unit": "EUR/ha/yr",
+        "method": "travel_cost_or_WTP"
+      },
+      "food_provision": {
+        "low": 150,
+        "central": 975,
+        "high": 1800,
+        "unit": "EUR/ha/yr",
+        "method": "market_pricing"
+      },
+      "water_purification": {
+        "low": 350,
+        "central": 1175,
+        "high": 2000,
+        "unit": "EUR/ha/yr",
+        "method": "replacement_cost"
+      }
     },
     "restoration_costs": {
-      "posidonia_oceanica": { "low": 100000, "high": 500000, "unit": "EUR/ha", "early_survival_low": 0.38, "early_survival_high": 0.60 }
+      "posidonia_oceanica": {
+        "low": 100000,
+        "high": 500000,
+        "unit": "EUR/ha",
+        "early_survival_low": 0.38,
+        "early_survival_high": 0.6
+      }
     }
   }
 }
