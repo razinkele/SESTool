@@ -101,15 +101,154 @@ MACARONESIA_MECHANISMS = [
             "MSP4BIO Deliverable 3.2",
         ],
     },
-    # Additional Macaronesia mechanisms appended by Tasks C2, D1
+    # ----- mac_02: MPA tourism-levy fund (partner-pickable default) -----
+    {
+        "id": "mac_02_tourism_levy_fund",
+        "name": "MPA tourism-levy fund",
+        "cost_profile": "recurring",
+        "what_it_funds": "Conservation actions and visitor-management infrastructure in Macaronesian MPAs, financed by a small per-visitor or per-vessel levy on marine tourism operators.",
+        "finance_flow": {
+            "payer": ["marine tourism operators (whale-watching, dive boats, charter vessels)"],
+            "receiver": "MPA management body",
+            "type": "private-to-public",
+        },
+        "design_parameters": [
+            "Levy collected at point of sale (not at the dock) for compliance",
+            "Earmarked spending plan published annually",
+            "Levy adjusts inversely with visitor numbers to smooth revenue",
+        ],
+        "evidence_base": [
+            "Galápagos visitor entry fee (operational precedent)",
+            "Bonaire dive tag programme",
+        ],
+        "transferable_lessons": [
+            "Visible reinvestment in infrastructure (mooring buoys, signage) sustains operator buy-in",
+            "Online point-of-sale collection has lower leakage than on-water enforcement",
+        ],
+        "applies_to_DAs": ["macaronesia"],
+        "success_metrics": ["T_02"],
+        "risks_and_guardrails": [
+            {"risk": "Levy passed entirely to visitors with no operator engagement",
+             "guardrail": "Operator co-governance seat on the spending plan"},
+        ],
+        "use_in_impact_assessment": "Use for any Macaronesia scenario with active marine tourism. Score positively on FF and EC.",
+        "references": ["MarineSABRES D5.2 Blue Corridor toolkit, §x.x"],
+    },
+    # Additional Macaronesia mechanisms appended by Task D1
 ]
 
 TUSCAN_MECHANISMS = [
-    # Filled in by Task C2 (sample) and Task D2 (remainder)
+    # ----- tus_01: Payment for Ecosystem Services (PES) for Posidonia conservation -----
+    {
+        "id": "tus_01_pes_posidonia",
+        "name": "Payment for Ecosystem Services (PES) for Posidonia conservation",
+        "cost_profile": "recurring",
+        "what_it_funds": "Direct compensation to fishers, dive operators, and coastal landowners for verifiable conservation actions protecting Posidonia oceanica meadows (e.g., gear modifications, anchoring restrictions, no-take agreements).",
+        "finance_flow": {
+            "payer": ["regional MPA authority", "EU LIFE / EMFAF co-funding", "tourism operator levies"],
+            "receiver": "individual fishers / cooperatives / landowners",
+            "type": "blended",
+        },
+        "design_parameters": [
+            "Verifiable on-water actions tied to monitoring data (not self-reported)",
+            "Annual payment cycle aligned with fishing season",
+            "Eligibility floor: minimum patch area protected per recipient",
+            "Sunset clause: 5-year cycle with renewal contingent on biophysical outcomes",
+        ],
+        "evidence_base": [
+            "Costa Rica Pago por Servicios Ambientales (operational precedent)",
+            "Mediterranean Posidonia restoration trials (Boudouresque et al., site-specific)",
+        ],
+        "transferable_lessons": [
+            "Self-reported actions reduce political cost but degrade outcomes; tie payments to monitoring data",
+            "Cooperatives administer payments more efficiently than per-vessel transfers",
+            "Tourism levy tolerated when receipts are visibly earmarked for marine conservation",
+        ],
+        "applies_to_DAs": ["tuscan"],
+        "success_metrics": ["POS_density"],
+        "risks_and_guardrails": [
+            {"risk": "Adverse selection — only low-effort fishers enroll",
+             "guardrail": "Eligibility floor + onboarding workshop on actions required"},
+            {"risk": "Greenwashing if monitoring is weak",
+             "guardrail": "Independent verification by MPA scientific staff or contracted institute"},
+        ],
+        "use_in_impact_assessment": "Use when scoring a Tuscan scenario that depends on voluntary fisher cooperation (S2 Light or S3 Coordinated). Score positively on EQ (compensates affected fishers) and EE (when monitoring is robust). Pair with POS_density biophysical indicator.",
+        "references": ["MarineSABRES D5.2 Tuscan DA, §x.x Financial mechanisms"],
+    },
+    # ----- tus_02: Mooring-buoy permit fee (partner-pickable default) -----
+    {
+        "id": "tus_02_mooring_buoy_permit",
+        "name": "Mooring-buoy permit fee",
+        "cost_profile": "recurring",
+        "what_it_funds": "Installation, maintenance, and enforcement of mooring buoys protecting Posidonia meadows from anchor damage, financed by per-vessel permit fees.",
+        "finance_flow": {
+            "payer": ["recreational and commercial vessels operating in Tuscan MPA waters"],
+            "receiver": "MPA management body / contracted maintenance operator",
+            "type": "private-to-public",
+        },
+        "design_parameters": [
+            "Mandatory mooring (anchoring banned) inside designated meadow zones",
+            "Permit price covers maintenance cost + 20% reserve",
+            "Online permit purchase with automated boundary enforcement via AIS",
+        ],
+        "evidence_base": [
+            "Mediterranean MPA mooring-buoy systems (multiple operational precedents)",
+        ],
+        "transferable_lessons": [
+            "Mandatory mooring works only with credible enforcement; voluntary systems fail",
+            "AIS-based boundary enforcement is cheaper than patrol vessels for small MPAs",
+        ],
+        "applies_to_DAs": ["tuscan"],
+        "success_metrics": ["POS_density"],
+        "risks_and_guardrails": [
+            {"risk": "Insufficient buoy density forces anchoring outside designated zones",
+             "guardrail": "Capacity sized to peak summer demand × 1.2"},
+        ],
+        "use_in_impact_assessment": "Use for any Tuscan scenario protecting Posidonia. Score strongly positive on EE.",
+        "references": ["MarineSABRES D5.2 Tuscan DA, §x.x"],
+    },
+    # Additional Tuscan mechanisms appended by Task D2
 ]
 
 ARCTIC_MECHANISMS = [
-    # Filled in by Task C2 (sample) and Task D3 (remainder)
+    # ----- arc_01: Cost-recovery fees on quota holders -----
+    {
+        "id": "arc_01_cost_recovery_fees",
+        "name": "Cost-recovery fees on quota holders",
+        "cost_profile": "recurring",
+        "what_it_funds": "Enforcement, observer programmes, and stock-assessment science in the Arctic Northeast Atlantic, financed by per-tonne or per-vessel fees levied on quota holders.",
+        "finance_flow": {
+            "payer": ["quota holders (commercial fishing operators)"],
+            "receiver": "national fisheries authorities (NO, IS, FO, RU); ICES/NEAFC scientific programmes",
+            "type": "private-to-public",
+        },
+        "design_parameters": [
+            "Fee scaled by landed value, not landed tonnage (better tracks effort to value)",
+            "Earmarked use: science + enforcement; not general treasury",
+            "Annual fee adjustment via published methodology to avoid political volatility",
+            "Reduced fee for vessels carrying observers / electronic monitoring",
+        ],
+        "evidence_base": [
+            "Iceland fisheries fee (operational precedent since 2012)",
+            "OECD Sustainable Fisheries report (2022) on cost-recovery best practice",
+        ],
+        "transferable_lessons": [
+            "Public earmark builds quota-holder political tolerance",
+            "Per-value (not per-tonne) fees survive price-shock years better",
+            "Fee discount for monitoring-equipped vessels accelerates adoption",
+        ],
+        "applies_to_DAs": ["arctic"],
+        "success_metrics": [],
+        "risks_and_guardrails": [
+            {"risk": "Fees become a general revenue grab",
+             "guardrail": "Earmarked use legislated, not just administrative"},
+            {"risk": "Race-to-the-bottom across jurisdictions",
+             "guardrail": "Coordinated minimum fee floor under NEAFC framework"},
+        ],
+        "use_in_impact_assessment": "Use when scoring an Arctic scenario where enforcement and science capacity are the binding constraint (Partial or Full Agreement). Score positively on EC (efficient cost recovery) and FF (sustained funding). Pair with stock-status indicators in later phases.",
+        "references": ["MarineSABRES D5.2 Arctic DA, §x.x Financial mechanisms", "OECD Sustainable Fisheries (2022)"],
+    },
+    # Additional Arctic mechanisms appended by Task D3
 ]
 
 VALUATION_UNIT_VALUES = {
