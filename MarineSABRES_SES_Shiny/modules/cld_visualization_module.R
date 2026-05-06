@@ -1073,14 +1073,14 @@ cld_viz_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
         title = i18n$t("modules.cld.visualization.merge_title"),
         p(i18n$t("modules.cld.visualization.merge_description")),
         radioButtons(
-          inputId = ns("merge_primary"),
+          inputId = session$ns("merge_primary"),
           label = i18n$t("modules.cld.visualization.merge_keep_label"),
           choices = label_choices,
           selected = selected_rows$id[1]
         ),
         footer = tagList(
           modalButton(i18n$t("common.buttons.cancel")),
-          actionButton(ns("merge_confirm"), i18n$t("common.buttons.confirm"),
+          actionButton(session$ns("merge_confirm"), i18n$t("common.buttons.confirm"),
                        class = "btn-primary")
         ),
         easyClose = TRUE
