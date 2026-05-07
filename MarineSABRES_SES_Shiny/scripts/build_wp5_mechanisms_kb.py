@@ -776,6 +776,67 @@ MACARONESIA_MECHANISMS = [
             "OECD fisheries / ocean-finance work on transition design",
         ],
     },
+    # ----- mac_14: Traceability & market access pathway (conditional) -----
+    {
+        "id": "mac_14_traceability_certification",
+        "name": "Traceability & market access pathway (conditional)",
+        "cost_profile": "conditional",
+        "what_it_funds": "A conditional, optional pathway through which corridor-relevant fisheries or tourism-related products/services can strengthen market credibility, buyer acceptance, or sustainability-sensitive market access through traceability, chain-of-custody verification, or corridor-linked sustainability claims. Funds traceability infrastructure, verification protocols, documentation support, limited chain-of-custody preparation, audits, and buyer engagement — without assuming price premiums.",
+        "finance_flow": {
+            "payer": [
+                "public seed funding / corridor implementation support (initially)",
+                "operators / supply-chain partners (later, if commercially viable)",
+            ],
+            "receiver": "participating operators, cooperatives, verification providers, digital-service providers, managing entities",
+            "type": "private-to-public",
+        },
+        "design_parameters": [
+            "Activation checklist: credible buyer pull + practical standard + costed pathway must exist before launch (\"buyer-pull gate\")",
+            "Independent third-party audits and anti-greenwash criteria",
+            "Documented buyer pull and costed uptake plan as a precondition for public seed funding",
+            "Scope boundaries: which products/fleets covered; reporting outputs (verified lots, rejection rates) rather than premium promises",
+            "Treatment of small-scale operators with proportionate requirements and shared support tools",
+            "Alignment with existing legal and buyer requirements first to avoid duplication",
+            "Separation of communication claims from auditable verification standards",
+        ],
+        "evidence_base": [
+            "FAO national seafood traceability guidance — strongest practical analogue",
+            "OECD fisheries/aquaculture certification, chain-of-custody and seafood market literature",
+            "World Bank seafood value-chain and traceability materials",
+            "Trade/ecolabelling literature on opportunities and exclusion risks of certification",
+        ],
+        "transferable_lessons": [
+            "Traceability pathways work only where there is real buyer pull, manageable verification costs, and a credible chain of custody — assumed price premiums are a red flag",
+            "Sources consistently warn against assuming automatic premiums; pathways are stronger on access/reputational security than on revenue",
+            "Poorly designed schemes exclude smaller operators and impose high compliance costs",
+            "Pathway should be conditional and pilot-scale — not a default corridor finance pillar",
+        ],
+        "applies_to_DAs": ["macaronesia"],
+        "success_metrics": ["F_03"],
+        "risks_and_guardrails": [
+            {"risk": "Overpromising premiums or access benefits",
+             "guardrail": "Treat market upside as conditional and evidence-based, not assumed"},
+            {"risk": "Excluding small-scale operators through high documentation costs",
+             "guardrail": "Use proportionate requirements and shared support tools"},
+            {"risk": "Corridor branding used without credible verification",
+             "guardrail": "Separate communication claims from auditable standards"},
+            {"risk": "Duplicating existing traceability/reporting systems",
+             "guardrail": "Align with existing legal and buyer requirements first"},
+            {"risk": "High verification costs with little market payoff",
+             "guardrail": "Only proceed where buyer pull and product/service fit are demonstrable"},
+            {"risk": "Greenwashing",
+             "guardrail": "Independent auditing + published criteria + revocation rules on non-compliance"},
+            {"risk": "Burden with no payoff",
+             "guardrail": "Launch only with documented buyer pull and a costed uptake plan (\"buyer-pull gate\")"},
+        ],
+        "use_in_impact_assessment": "Use under S4 (or as a very targeted S3 pilot) only where actual buyer demand and administrative feasibility can be demonstrated. Score modestly positive on EC (market-access option) and PI (formal pathway exists), with caution on FF (revenue claims unreliable). Treat as an optional, scenario-dependent enhancement — not a baseline assumption. Keep traceability outputs as process metrics (verified lots, rejection rates), separate from ecological-outcome indicators.",
+        "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #14",
+            "FAO national seafood traceability guidance",
+            "OECD seafood certification literature",
+            "World Bank blue-economy / seafood value-chain materials",
+        ],
+    },
     # Additional Macaronesia mechanisms appended by Task D1
 ]
 
