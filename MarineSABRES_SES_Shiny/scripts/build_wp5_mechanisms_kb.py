@@ -474,6 +474,67 @@ MACARONESIA_MECHANISMS = [
             "IUCN ecological corridor governance guidance",
         ],
     },
+    # ----- mac_09: Results-based financing (RBF) for verified behaviours -----
+    {
+        "id": "mac_09_results_based_payments",
+        "name": "Results-based financing (RBF) for verified behaviours",
+        "cost_profile": "time_limited",
+        "what_it_funds": "A small-to-moderate performance payment pool funding verified positive behaviours that support corridor delivery — uptake of mitigation practices, completion of required training/accreditation, complete and timely reporting, participation in shared monitoring — rather than paying for ecological end-states. Auditable, simple proofs are paid out via a tiered ladder; designed as a temporary uptake lever, not a permanent subsidy.",
+        "finance_flow": {
+            "payer": [
+                "public programme funds",
+                "philanthropic donors",
+                "blended-finance sponsors",
+                "corporate contributions (where allowable)",
+            ],
+            "receiver": "verified participating operators, cooperatives, community groups, or service providers via a managing facility / contracted administrator",
+            "type": "blended",
+        },
+        "design_parameters": [
+            "Pay for clearly specified, auditable behaviours or intermediate performance — never claim ecological outcomes",
+            "Simple, risk-tiered verification with random audit sampling (e.g. 5–10%)",
+            "Tiered payment ladder (initial adoption → sustained compliance)",
+            "Eligibility floor + assisted onboarding so small operators can participate",
+            "Anti-gaming rules: repayment + temporary ineligibility for confirmed violations",
+            "Administration burden ceiling (max paperwork per € paid)",
+            "Sunset/phase-out rule: defined exit once behaviour normalises",
+        ],
+        "evidence_base": [
+            "Indonesia Coral Bond — clearest marine RBF analogue",
+            "Ocean-finance and biodiversity-finance literature on outcome-/performance-based instruments",
+            "OECD literature on direct payment schemes and biodiversity-positive incentives",
+            "World Bank blue-finance practice on outcome-based instruments",
+        ],
+        "transferable_lessons": [
+            "RBF works only when paying for behaviours/intermediate performance — not for ecological outcomes that cannot be cleanly attributed",
+            "The harder the verification, the more important it is to avoid promising direct biodiversity recovery",
+            "Should be used selectively and time-bound — long-term RBF without exit becomes dependency",
+            "Small-operator inclusion is the equity gate: tech-heavy verification regimes exclude exactly the actors most worth incentivising",
+        ],
+        "applies_to_DAs": ["macaronesia"],
+        "success_metrics": ["C_02", "F_03", "T_03"],
+        "risks_and_guardrails": [
+            {"risk": "Overclaiming ecological outcomes from behaviour payments",
+             "guardrail": "Pay for auditable implementation behaviours or intermediate performance signals — not recovery claims"},
+            {"risk": "Verification costs exceed programme value",
+             "guardrail": "Use simple, risk-tiered verification and random sampling"},
+            {"risk": "Incentives reward actors who would have complied anyway",
+             "guardrail": "Target behaviours with genuine uptake barriers and require baseline checks"},
+            {"risk": "Gaming or false claims",
+             "guardrail": "Random audits + repayment + temporary ineligibility for violations"},
+            {"risk": "Dependency on payments after sunset",
+             "guardrail": "Define sunset/phase-out rules and use RBF only as a temporary uptake lever"},
+            {"risk": "Inequitable access — small operators excluded",
+             "guardrail": "No expensive-tech prerequisite + assisted onboarding option"},
+        ],
+        "use_in_impact_assessment": "Use under S3–S4 only, and only where target behaviours are clearly observable and verifiable. Score positively on PI (accelerates uptake) and FF (efficient incentive delivery); use with caution on EQ/EC. Treat as an optional, scenario-dependent support mechanism — not a baseline assumption. The instrument's value is in accelerating compliance behaviours, not in claiming ecological recovery.",
+        "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #9",
+            "Indonesia Coral Bond — marine outcome-based instrument analogue",
+            "OECD biodiversity-finance literature",
+            "World Bank blue-finance stocktake materials",
+        ],
+    },
     # Additional Macaronesia mechanisms appended by Task D1
 ]
 
