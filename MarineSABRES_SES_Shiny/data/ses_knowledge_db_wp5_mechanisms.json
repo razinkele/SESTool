@@ -1546,6 +1546,55 @@
             "MarineSABRES D5.2 Arctic DA, §x.x Financial mechanisms",
             "OECD Sustainable Fisheries (2022)"
           ]
+        },
+        {
+          "id": "arc_02_ices_scientific_advice",
+          "name": "Shared public financing of ICES scientific advice",
+          "cost_profile": "recurring",
+          "what_it_funds": "Stock assessments, ecosystem advice, and the long-term shared scientific infrastructure underpinning quota allocation and management decisions in the Arctic Northeast Atlantic. Funded through national contributions and in-kind support from ICES Member Countries, with a top-up contribution from NEAFC's administrative budget.",
+          "finance_flow": {
+            "payer": [
+              "ICES Member Country governments",
+              "NEAFC (top-up contribution from member assessed contributions)"
+            ],
+            "receiver": "ICES Secretariat and the network of ~700 marine institutes / 6,000 scientists delivering advice",
+            "type": "public"
+          },
+          "design_parameters": [
+            "Costed advisory requests: resource implications and feasibility considered at the request-formulation stage",
+            "Stable multi-annual data flows funded through national budgets, not project grants",
+            "In-kind contributions (institute scientist time, vessels) recognised alongside cash contributions",
+            "Transparent advisory framework principles published (ICES Advice 2020, §1.1)"
+          ],
+          "evidence_base": [
+            "ICES (n.d.) About ICES — institutional structure",
+            "ICES (2020) Guide to ICES advisory framework and principles, ICES Advice §1.1",
+            "NEAFC (n.d.b.) Finance and administration rules — confirms NEAFC contribution to ICES"
+          ],
+          "transferable_lessons": [
+            "Pooled national financing of shared science survives political shocks better than project-by-project funding",
+            "Costing advice at request stage prevents scope creep and aligns demand with supply",
+            "In-kind institute contributions multiply the cash budget several-fold and anchor science in member capacity"
+          ],
+          "applies_to_DAs": [
+            "arctic"
+          ],
+          "success_metrics": [],
+          "risks_and_guardrails": [
+            {
+              "risk": "Member states free-ride on contributions or withdraw advisory requests under fiscal pressure",
+              "guardrail": "Mandatory assessed contributions formalised in ICES Convention and topped up by NEAFC budget line"
+            },
+            {
+              "risk": "Advice scope outpaces funding, eroding quality",
+              "guardrail": "Resource-implications screening at the request-formulation stage (per ICES, 2020)"
+            }
+          ],
+          "use_in_impact_assessment": "Use when scoring any Arctic scenario (S1 No Agreement through S3 Full Agreement) — ICES advice is the foundational science layer all other mechanisms presuppose. Score positively on FF (sustained shared funding) and EE (network effect across 700 institutes); flag as continuity risk if any major contributor exits. Treat as enabling precondition rather than scenario-differentiating instrument.",
+          "references": [
+            "MarineSABRES D5.2 Arctic DA, mechanism #2",
+            "ICES (2020) Guide to ICES advisory framework"
+          ]
         }
       ]
     }
