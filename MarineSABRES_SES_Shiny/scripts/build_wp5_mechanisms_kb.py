@@ -1070,6 +1070,43 @@ TUSCAN_MECHANISMS = [
         "use_in_impact_assessment": "Use as baseline financing layer for any Tuscan scenario requiring capital investment (S1 BAU, S2 Light, S3 Coordinated). Score positively on EE for the investment phase but neutral-to-negative on long-run sustainability unless paired with a recurring mechanism (tus_01, tus_02, tus_04). Critical for kicking off any restoration intervention.",
         "references": ["MarineSABRES D5.2 Tuscan DA, mechanism #3", "RESTORE4Cs D1.2 (Kampa et al., 2025)", "Ciravegna (2025) RESTORE4Cs Policy Brief"],
     },
+    # ----- tus_04: Concession fees for commercial operators -----
+    {
+        "id": "tus_04_concession_fees",
+        "name": "Concession fees for commercial operators (diving, excursion, tourism services)",
+        "cost_profile": "recurring",
+        "what_it_funds": "Annual or seasonal concession charges paid by commercial operators (diving schools, excursion boats, marina concessionaires, guided tour providers) for the right to operate within the protected area. Revenue funds monitoring, enforcement, visitor management, and maintenance activities by the MPA management body.",
+        "finance_flow": {
+            "payer": ["diving and snorkelling operators", "excursion and ferry operators", "marina concessionaires", "guided tourism providers"],
+            "receiver": "Tuscan Archipelago National Park / MPA management body",
+            "type": "private-to-public",
+        },
+        "design_parameters": [
+            "Tiered pricing by operator type and intensity of use (vessel size, passenger capacity, dive frequency)",
+            "Multi-year concession contracts with annual fee indexation linked to inflation or visitor pressure",
+            "Revenue earmarking clause channelling fees back to MPA monitoring and enforcement budget",
+            "Performance conditions (training, code of conduct, reporting of incidents) tied to renewal",
+        ],
+        "evidence_base": [
+            "RESTORE4Cs D1.2 (Kampa et al., 2025): user fees and charges identified as key tool for long-term maintenance of restored ecosystems where pressures are linked to specific user groups",
+            "Lago (2025) RESTORE4Cs presentation: concession fees provide stable revenue streams in European MPAs",
+        ],
+        "transferable_lessons": [
+            "Fee acceptance hinges on perceived fairness — link price to visitor pressure or vessel capacity, not flat rates",
+            "Revenue earmarking is essential; fees that disappear into general treasury lose operator support",
+            "Tying renewal to performance (e.g., code of conduct compliance) leverages fees beyond pure revenue",
+        ],
+        "applies_to_DAs": ["tuscan"],
+        "success_metrics": ["POS_density"],
+        "risks_and_guardrails": [
+            {"risk": "Italian / Tuscan legal constraints prevent revenue earmarking back to the MPA",
+             "guardrail": "Confirm legal basis for earmarking before launch; structure as park-managed concession contracts where direct fee earmarking is prohibited"},
+            {"risk": "High fees displace small operators in favour of large incumbents, narrowing local economic base",
+             "guardrail": "Differentiated pricing tiers and reduced rates for small / artisanal operators"},
+        ],
+        "use_in_impact_assessment": "Use for any Tuscan scenario where commercial tourism operators are present (S2 Light, S3 Coordinated). Score positive on EE (recurrent funding for management) and mixed on EQ (depends on whether small operators are protected via tier structure). Complement to tus_02 mooring fees by capturing commercial use distinct from individual recreational vessels.",
+        "references": ["MarineSABRES D5.2 Tuscan DA, mechanism #4", "RESTORE4Cs D1.2 (Kampa et al., 2025)", "Lago (2025) RESTORE4Cs EU Policy Workshop presentation"],
+    },
 ]
 
 ARCTIC_MECHANISMS = [
