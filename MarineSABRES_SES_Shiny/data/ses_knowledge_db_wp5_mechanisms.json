@@ -184,6 +184,76 @@
             "OECD ocean-finance literature on biodiversity finance",
             "MSP4BIO Deliverable 3.2"
           ]
+        },
+        {
+          "id": "mac_04_shared_evidence_services",
+          "name": "Shared evidence & decision-products layer",
+          "cost_profile": "recurring",
+          "what_it_funds": "Production of usable shared corridor evidence rather than raw data dumps: indicator briefs, operator-facing summaries (\"what this means for you\"), harmonised reporting templates, plain-language syntheses, simple dashboards, and translation/layout. The aim is to make corridor evidence operationally usable by authorities, operators, and stakeholders across the Azores–Madeira–Canary Islands rather than letting data sit unused.",
+          "finance_flow": {
+            "payer": [
+              "public corridor-delivery funding",
+              "EU technical-assistance line",
+              "facility/shared-services budget"
+            ],
+            "receiver": "designated technical unit / contracted comms+data product team",
+            "type": "public"
+          },
+          "design_parameters": [
+            "Define a minimum viable product set per year (briefs, decision notes, templates) with named owners and sign-off",
+            "Each product must declare its decision use-case before publication",
+            "Update cadence and version control with documented method changes",
+            "Accessibility: multilingual layout, plain-language operator summary (≤2 pages) plus glossary",
+            "5–10 user test before public release of any new product"
+          ],
+          "evidence_base": [
+            "MSP4BIO Baltic Sea brief on turning cumulative-impact and biodiversity data into planning-relevant outputs",
+            "Marine corridor / connectivity literature reviewed by Podda & Porporato on bridging fragmented data",
+            "MSP / biodiversity planning literature on integrating evidence into decision cycles"
+          ],
+          "transferable_lessons": [
+            "Data availability alone is insufficient — the bottleneck is converting data into audience-specific products that fit decision cycles",
+            "Connectivity-related products gain durability when embedded in formal MSP/MPA cycles, not left as project outputs",
+            "Decision-note format alongside dashboards prevents technical showcase syndrome",
+            "Common metadata + version control across archipelagos is what makes products comparable"
+          ],
+          "applies_to_DAs": [
+            "macaronesia"
+          ],
+          "success_metrics": [
+            "C_01",
+            "C_02",
+            "F_03",
+            "T_03"
+          ],
+          "risks_and_guardrails": [
+            {
+              "risk": "Product layer becomes a technical showcase with no operational uptake",
+              "guardrail": "Define target users and required use-cases at the outset; track adoption metrics"
+            },
+            {
+              "risk": "Over-complex dashboards displace usable decisions",
+              "guardrail": "Require a short decision-note format alongside any dashboard"
+            },
+            {
+              "risk": "Inconsistent definitions undermine cross-archipelago comparability",
+              "guardrail": "Adopt common metadata, update rules and version control"
+            },
+            {
+              "risk": "Shared products are not trusted",
+              "guardrail": "Make methods transparent and link each product to named data sources and update dates"
+            },
+            {
+              "risk": "Too technical to apply",
+              "guardrail": "Enforce a 2-page operator summary + glossary, plus a 5–10 user test before release"
+            }
+          ],
+          "use_in_impact_assessment": "Use whenever scoring requires consistent cross-archipelago evidence interpretation (any S2–S4 scenario). Score positively on C_02 and as an enabler for C_01 connectivity scoring. Treat as an enabling layer underpinning multiple indicators rather than a standalone delivery mechanism. Without this layer, the rest of the toolkit's reporting becomes archipelago-by-archipelago and uninterpretable.",
+          "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #3",
+            "MSP4BIO Baltic Sea brief",
+            "Podda & Porporato — marine corridor connectivity review"
+          ]
         }
       ]
     },
