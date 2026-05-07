@@ -1274,6 +1274,58 @@
           "references": [
             "MarineSABRES D5.2 Tuscan DA, §x.x"
           ]
+        },
+        {
+          "id": "tus_03_public_grants",
+          "name": "Public funding and grants (EU / national / regional)",
+          "cost_profile": "time_limited",
+          "what_it_funds": "Capital expenditure for restoration works, eco-mooring installation, mapping and monitoring infrastructure, and pilot interventions in the Tuscan DA. Drawn from EU programmes (LIFE, EMFAF, Horizon, Interreg), Italian national environmental ministries, and Tuscany regional administrations. Acts as the baseline financing layer for initial investments but does not cover long-term operational costs.",
+          "finance_flow": {
+            "payer": [
+              "EU funding programmes (LIFE, EMFAF, Horizon, Interreg)",
+              "Italian Ministry of Environment",
+              "Tuscany Regional Government"
+            ],
+            "receiver": "Tuscan Archipelago National Park / MPA management bodies / partner research institutes",
+            "type": "public"
+          },
+          "design_parameters": [
+            "Project-cycle financing (typically 3-5 years) requiring co-financing from beneficiaries",
+            "Earmarked for capital expenditure (restoration works, eco-moorings, monitoring infrastructure) rather than recurrent O&M",
+            "Competitive call-based access requiring multi-partner consortia and technical proposals",
+            "Reporting and audit obligations aligned to funder rules (cost eligibility, public procurement)"
+          ],
+          "evidence_base": [
+            "RESTORE4Cs D1.2 (Kampa et al., 2025): EU and national public funds identified as primary source of restoration finance across Europe",
+            "Ciravegna (2025) RESTORE4Cs Policy Brief: documents short funding cycles and limited coverage of long-term operational costs"
+          ],
+          "transferable_lessons": [
+            "Public grants reliably finance capital outlays but leave a financing gap once project ends — design exit strategy at proposal stage",
+            "Stacking multiple grant cycles creates administrative overhead that can exceed staff capacity in small MPAs",
+            "Co-financing requirements push partner authorities to commit budget early, anchoring political ownership"
+          ],
+          "applies_to_DAs": [
+            "tuscan"
+          ],
+          "success_metrics": [
+            "POS_density"
+          ],
+          "risks_and_guardrails": [
+            {
+              "risk": "Funding cliff at project end leaves restored assets unmaintained",
+              "guardrail": "Mandate operational financing plan (fees / PES / PPP) as deliverable in grant proposal"
+            },
+            {
+              "risk": "Mismatch between funder reporting cycles and ecosystem recovery timescales",
+              "guardrail": "Negotiate multi-phase funding or chain successive grants with explicit hand-over"
+            }
+          ],
+          "use_in_impact_assessment": "Use as baseline financing layer for any Tuscan scenario requiring capital investment (S1 BAU, S2 Light, S3 Coordinated). Score positively on EE for the investment phase but neutral-to-negative on long-run sustainability unless paired with a recurring mechanism (tus_01, tus_02, tus_04). Critical for kicking off any restoration intervention.",
+          "references": [
+            "MarineSABRES D5.2 Tuscan DA, mechanism #3",
+            "RESTORE4Cs D1.2 (Kampa et al., 2025)",
+            "Ciravegna (2025) RESTORE4Cs Policy Brief"
+          ]
         }
       ]
     },
