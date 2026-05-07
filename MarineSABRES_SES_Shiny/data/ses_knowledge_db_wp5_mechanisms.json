@@ -1021,6 +1021,84 @@
             "OECD seafood certification literature",
             "World Bank blue-economy / seafood value-chain materials"
           ]
+        },
+        {
+          "id": "mac_15_maritime_transport_routing",
+          "name": "Maritime transport risk-reduction implementation support",
+          "cost_profile": "recurring",
+          "what_it_funds": "Operational rollout of corridor-relevant shipping risk-reduction measures: risk zoning, traffic analysis, AIS-based monitoring, routeing/speed feasibility work, stakeholder consultation with maritime authorities and operators, communication products, mariner guidance, seasonal bulletins, and coordination with competent maritime authorities. Aim is making traffic safer, more predictable, and more targeted in high-risk areas — not stopping traffic.",
+          "finance_flow": {
+            "payer": [
+              "public maritime / biodiversity / corridor implementation budgets",
+              "service contracts (analytics + AIS providers)",
+              "optional regional/EU support"
+            ],
+            "receiver": "competent maritime authorities, contracted technical teams, AIS/monitoring providers, corridor coordination bodies supporting maritime implementation",
+            "type": "public"
+          },
+          "design_parameters": [
+            "Sensitive area definition and buffers agreed for the reporting year",
+            "Instrument choice (recommended vs formal pursuit) made in coordination with competent maritime authorities",
+            "Spatial focus: persistent hotspot vs seasonal risk zone, justified analytically",
+            "Linkage to AIS monitoring built in from the start",
+            "Treatment of different vessel classes proportionate to risk",
+            "Compatibility with IMO-recognised instruments where formal pathway is pursued",
+            "Update governance: how zones change and who signs off",
+            "Separate feasibility track from implementation track to manage IMO expectations"
+          ],
+          "evidence_base": [
+            "IMO guidance and resolutions on minimising ship strikes (routeing, reporting, speed-related operational measures)",
+            "NW Mediterranean PSSA and Strait of Bonifacio PSSA — strong PSSA/routeing analogues",
+            "IWC vessel-strike strategy and guidance",
+            "Whale blue-corridor literature and WWF blue-corridor material on migration vs shipping risk"
+          ],
+          "transferable_lessons": [
+            "Maritime risk-reduction works when spatially targeted, operationally feasible, and channelled through recognised maritime governance tools — not as generic environmental restriction",
+            "Three practical ingredients repeat across analogues: identify recurrent high-risk overlap zones; choose proportionate routeing/reporting/speed measures; communicate via channels mariners actually use",
+            "Broad untargeted slowdowns are less persuasive than targeted measures in clearly justified risk areas",
+            "Awareness products without AIS-linked monitoring or formal review cycles are not used operationally"
+          ],
+          "applies_to_DAs": [
+            "macaronesia"
+          ],
+          "success_metrics": [
+            "C_02",
+            "M_01",
+            "M_02"
+          ],
+          "risks_and_guardrails": [
+            {
+              "risk": "Measures proposed without maritime governance fit or operator buy-in",
+              "guardrail": "Design them with competent maritime authorities and standard maritime communication channels from the outset"
+            },
+            {
+              "risk": "Rules are too broad and create unnecessary friction",
+              "guardrail": "Target recurrent high-risk zones and use proportionate measures"
+            },
+            {
+              "risk": "Awareness products produced but not used operationally",
+              "guardrail": "Link products to AIS monitoring, seasonal bulletins, and formal review cycles"
+            },
+            {
+              "risk": "Corridor claims outrun legal feasibility",
+              "guardrail": "Distinguish clearly between voluntary guidance, national/regional operational measures, and IMO-facing instruments"
+            },
+            {
+              "risk": "Overpromising formal IMO outcomes",
+              "guardrail": "Separate feasibility track from implementation track (implementation only with competent-body agreement)"
+            },
+            {
+              "risk": "Inconsistent/contestable zone definitions",
+              "guardrail": "Agree sensitive-area sets and buffers for the reporting year + publish method note"
+            }
+          ],
+          "use_in_impact_assessment": "Use under S3 and S4 where corridor scenarios assume more operational maritime measures, and under S2 in lighter form (shared risk maps + voluntary guidance). Score positively on EE (concrete risk-reduction), PI (operational implementation), and EC (efficient targeting). Pair with M_01 vessel-flows and M_02 sensitive-area overlap as primary indicator outputs. Grounds the maritime-transport component of the corridor in concrete implementation logic.",
+          "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #15",
+            "IMO ship-strike reduction guidance",
+            "NW Mediterranean / Bonifacio PSSA examples",
+            "IWC vessel-strike strategy"
+          ]
         }
       ]
     },
