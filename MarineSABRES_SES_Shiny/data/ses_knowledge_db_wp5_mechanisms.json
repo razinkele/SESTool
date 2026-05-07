@@ -254,6 +254,84 @@
             "MSP4BIO Baltic Sea brief",
             "Podda & Porporato — marine corridor connectivity review"
           ]
+        },
+        {
+          "id": "mac_05_integrated_monitoring",
+          "name": "Integrated monitoring & data pipeline",
+          "cost_profile": "recurring",
+          "what_it_funds": "A repeatable corridor-scale annual monitoring pipeline producing harmonised indicator outputs: AIS-derived vessel-flow products (M_01), sensitive-area overlap/proximity products (M_02), method documentation, QA/QC routines, and recurring updates of pressure/activity datasets. Moves the DA from fragmented project monitoring to a stable, year-on-year comparable indicator pipeline that feeds the impact assessment.",
+          "finance_flow": {
+            "payer": [
+              "public corridor-delivery funding",
+              "ring-fenced facility share",
+              "service contracts (analytics provider or public agency)"
+            ],
+            "receiver": "designated technical unit / monitoring consortium / contracted analytical support",
+            "type": "public"
+          },
+          "design_parameters": [
+            "Define minimum core indicator set first, extended set later",
+            "Adopt one fixed method per reporting year; freeze definitions and publish a method note",
+            "Data access/rights resolved upfront (AIS sources, confidentiality)",
+            "Definition set for sensitive areas + buffers documented and version-controlled",
+            "Reporting calendar fixed and named delivery owners assigned",
+            "Include implementation/process indicators alongside ecological/pressure metrics"
+          ],
+          "evidence_base": [
+            "MSP4BIO Baltic Sea — strongest cumulative-pressure/impact analogue",
+            "Monitoring and biodiversity-assessment literature on repeatable indicator systems",
+            "Marine corridor literature (Podda & Porporato) on integrated monitoring approaches",
+            "Regional MSP/MPA practice on harmonised monitoring under fragmented competences"
+          ],
+          "transferable_lessons": [
+            "Monitoring becomes management-useful only when method-stable, repeatable, QA'd, and linked to decision cycles",
+            "One-off analyses or project dashboards do not survive into reporting cycles",
+            "Pressure/impact tools work best embedded in planning and review cycles",
+            "Add implementation/process indicators alongside ecological metrics — otherwise the system tracks pressures but not whether measures are happening"
+          ],
+          "applies_to_DAs": [
+            "macaronesia"
+          ],
+          "success_metrics": [
+            "C_02",
+            "M_01",
+            "M_02",
+            "F_02",
+            "F_03",
+            "T_03"
+          ],
+          "risks_and_guardrails": [
+            {
+              "risk": "Monitoring system becomes too broad and collapses under data demands",
+              "guardrail": "Define a minimum core indicator set first; expand only after stable annual delivery"
+            },
+            {
+              "risk": "Indicators are updated inconsistently across archipelagos",
+              "guardrail": "Adopt common metadata, version control and QA/QC procedures"
+            },
+            {
+              "risk": "Annual outputs are delayed and lose management value",
+              "guardrail": "Fix reporting calendar and assign delivery owners"
+            },
+            {
+              "risk": "System tracks pressures but not whether measures are implemented",
+              "guardrail": "Include implementation/process indicators alongside ecological/pressure metrics"
+            },
+            {
+              "risk": "Outputs misread as enforcement proof",
+              "guardrail": "Label as risk/pressure indicators and include coverage/limitations on each release"
+            },
+            {
+              "risk": "Method disputes undermine comparability",
+              "guardrail": "Adopt one fixed method per year; publish method note with definitions frozen for the reporting year"
+            }
+          ],
+          "use_in_impact_assessment": "This is the indicator-engine row. It underpins C_02 (monitoring capacity exists and is repeatable), conditions the credibility of S3 and S4, and supports interpretation of M_01/M_02. Without an integrated monitoring pipeline, scenario-level indicator claims default to one-off project artefacts. Score positively on EE (enables enforcement targeting) and PI; pair with M_01 vessel-flows + M_02 sensitive-area overlap as primary indicator outputs.",
+          "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #4",
+            "MSP4BIO Baltic Sea cumulative-impact assessment work",
+            "Podda & Porporato — marine corridor connectivity review"
+          ]
         }
       ]
     },
