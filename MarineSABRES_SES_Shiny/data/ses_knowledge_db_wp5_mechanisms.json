@@ -1739,6 +1739,54 @@
             "MarineSABRES D5.2 Arctic DA, mechanism #5",
             "Abbott et al. (2022) PNAS 119(2)"
           ]
+        },
+        {
+          "id": "arc_06_msc_ecolabelling",
+          "name": "MSC ecolabelling and market-based incentives",
+          "cost_profile": "recurring",
+          "what_it_funds": "Programme delivery and improvement activities of the Marine Stewardship Council ecolabel — financed through donor contributions and ecolabel licensing fees paid by certified seafood supply-chain actors. Does not fund fisheries management directly; instead, it reinforces compliance and best-practice incentives within rights-based systems by linking access-to-premium-markets to demonstrated sustainability performance.",
+          "finance_flow": {
+            "payer": [
+              "seafood retailers, processors, and brand owners (ecolabel licensing fees)",
+              "philanthropic and institutional donors"
+            ],
+            "receiver": "Marine Stewardship Council (programme delivery, certification standards maintenance, fishery improvement activities)",
+            "type": "blended"
+          },
+          "design_parameters": [
+            "Independent third-party certification against MSC Fisheries Standard, separating standard-setting from auditing",
+            "Chain-of-custody certification linking certified catch through to retail",
+            "Conditions and pre-conditions allow time-bound improvement pathways (Fishery Improvement Projects)",
+            "Public funding/finances disclosure (per MSC, n.d., Our funding and finances) for credibility"
+          ],
+          "evidence_base": [
+            "Marine Stewardship Council (n.d.) Our funding and finances",
+            "MarineSABRES D5.2 Arctic DA — recognised as complementary, not substitute, mechanism"
+          ],
+          "transferable_lessons": [
+            "Market-based labels work best as a layer on top of strong public governance, not as a replacement for it",
+            "Premium-market access is a soft incentive — material only where retailers commit to certified-only sourcing",
+            "Donor-licensee blended funding model insulates the standard-setter from regulatory capture but creates visible conflict-of-interest narratives that need active management"
+          ],
+          "applies_to_DAs": [
+            "arctic"
+          ],
+          "success_metrics": [],
+          "risks_and_guardrails": [
+            {
+              "risk": "Certification of fisheries with unresolved sustainability concerns dilutes the label's credibility",
+              "guardrail": "Conditional certification with binding improvement timelines and independent surveillance audits"
+            },
+            {
+              "risk": "Small-scale or community fishers cannot afford certification cost, creating market exclusion",
+              "guardrail": "Group certification, FIP pathways, and donor-supported assessment for small fisheries"
+            }
+          ],
+          "use_in_impact_assessment": "Use as a complementary mechanism when scoring scenarios that already have functional public governance (S2 Partial, S3 Full) — score modest-positive on FF (private finance leverage) and EE (consumer signal). Do not rely on it under S1 (No Agreement) where governance gaps undermine certification credibility. Treat as reinforcement layer to arc_03 enforcement and arc_04 rights-based management.",
+          "references": [
+            "MarineSABRES D5.2 Arctic DA, mechanism #6",
+            "MSC (n.d.) Our funding and finances"
+          ]
         }
       ]
     }
