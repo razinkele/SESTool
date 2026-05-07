@@ -91,3 +91,73 @@ test_that("get_valuation_unit_values('posidonia_oceanica') returns 5 services", 
   v <- get_valuation_unit_values("posidonia_oceanica")
   expect_setequal(names(v), c("coastal_protection","carbon_sequestration","recreation_tourism","food_provision","water_purification"))
 })
+
+# ==============================================================================
+# Reference-pane render-data tests (Task F3)
+# ==============================================================================
+# These do not exercise the renderUI itself (that requires a Shiny session and
+# would require shinytest2 / testServer machinery). Instead they verify the
+# data the pane reads is well-formed for every DA — the pane will render
+# correctly iff these fields are populated.
+
+test_that("Every Macaronesia mechanism has the fields the reference pane renders", {
+  skip_if_not(file.exists(WP5_KB_PATH), "ses_knowledge_db_wp5_mechanisms.json not found")
+  .ensure_wp5_loader()
+  load_wp5_mechanisms_kb(WP5_KB_PATH, force_reload = TRUE)
+  mechs <- get_mechanisms_for_da("macaronesia")
+  expect_true(length(mechs) >= 1)
+  for (m in mechs) {
+    expect_true(nzchar(m$name %||% ""), info = paste("name empty for", m$id %||% "<no-id>"))
+    expect_true(nzchar(m$cost_profile %||% ""), info = paste("cost_profile empty for", m$id))
+    expect_true(nzchar(m$what_it_funds %||% ""), info = paste("what_it_funds empty for", m$id))
+    expect_true(length(m$finance_flow$payer %||% character(0)) >= 1,
+                info = paste("finance_flow.payer empty for", m$id))
+    expect_true(nzchar(m$finance_flow$receiver %||% ""),
+                info = paste("finance_flow.receiver empty for", m$id))
+    expect_true(nzchar(m$use_in_impact_assessment %||% ""),
+                info = paste("use_in_impact_assessment empty for", m$id))
+  }
+})
+
+test_that("Every Tuscan mechanism has the fields the reference pane renders", {
+  skip_if_not(file.exists(WP5_KB_PATH), "ses_knowledge_db_wp5_mechanisms.json not found")
+  .ensure_wp5_loader()
+  load_wp5_mechanisms_kb(WP5_KB_PATH, force_reload = TRUE)
+  mechs <- get_mechanisms_for_da("tuscan")
+  expect_true(length(mechs) >= 1)
+  for (m in mechs) {
+    expect_true(nzchar(m$name %||% ""), info = paste("name empty for", m$id %||% "<no-id>"))
+    expect_true(nzchar(m$cost_profile %||% ""), info = paste("cost_profile empty for", m$id))
+    expect_true(nzchar(m$what_it_funds %||% ""), info = paste("what_it_funds empty for", m$id))
+    expect_true(length(m$finance_flow$payer %||% character(0)) >= 1,
+                info = paste("finance_flow.payer empty for", m$id))
+    expect_true(nzchar(m$finance_flow$receiver %||% ""),
+                info = paste("finance_flow.receiver empty for", m$id))
+  }
+})
+
+test_that("Every Arctic mechanism has the fields the reference pane renders", {
+  skip_if_not(file.exists(WP5_KB_PATH), "ses_knowledge_db_wp5_mechanisms.json not found")
+  .ensure_wp5_loader()
+  load_wp5_mechanisms_kb(WP5_KB_PATH, force_reload = TRUE)
+  mechs <- get_mechanisms_for_da("arctic")
+  expect_true(length(mechs) >= 1)
+  for (m in mechs) {
+    expect_true(nzchar(m$name %||% ""), info = paste("name empty for", m$id %||% "<no-id>"))
+    expect_true(nzchar(m$cost_profile %||% ""), info = paste("cost_profile empty for", m$id))
+    expect_true(nzchar(m$what_it_funds %||% ""), info = paste("what_it_funds empty for", m$id))
+    expect_true(length(m$finance_flow$payer %||% character(0)) >= 1,
+                info = paste("finance_flow.payer empty for", m$id))
+    expect_true(nzchar(m$finance_flow$receiver %||% ""),
+                info = paste("finance_flow.receiver empty for", m$id))
+  }
+})
+
+test_that("get_mechanisms_for_da('arctic') returns at least the cost-recovery sample", {
+  skip_if_not(file.exists(WP5_KB_PATH), "ses_knowledge_db_wp5_mechanisms.json not found")
+  .ensure_wp5_loader()
+  load_wp5_mechanisms_kb(WP5_KB_PATH, force_reload = TRUE)
+  mechs <- get_mechanisms_for_da("arctic")
+  ids <- vapply(mechs, function(m) m$id %||% "", character(1))
+  expect_true("arc_01_cost_recovery_fees" %in% ids)
+})
