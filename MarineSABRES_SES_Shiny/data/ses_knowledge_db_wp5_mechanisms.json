@@ -1595,6 +1595,53 @@
             "MarineSABRES D5.2 Arctic DA, mechanism #2",
             "ICES (2020) Guide to ICES advisory framework"
           ]
+        },
+        {
+          "id": "arc_03_neafc_governance_enforcement",
+          "name": "National financing of NEAFC governance and enforcement",
+          "cost_profile": "recurring",
+          "what_it_funds": "Two-tier public financing: (i) NEAFC Secretariat operations, meetings, and a contribution to ICES via mandatory assessed contributions from Contracting Parties; and (ii) monitoring, control, surveillance, and enforcement activities financed decentrally through national budgets and operational capacity (vessels, observers, inspection at sea).",
+          "finance_flow": {
+            "payer": [
+              "NEAFC Contracting Parties (national governments: NO, IS, FO, RU, EU, DK-Greenland)"
+            ],
+            "receiver": "NEAFC Secretariat (centrally) and national fisheries control authorities (decentrally)",
+            "type": "public"
+          },
+          "design_parameters": [
+            "Mandatory assessed contributions formula in NEAFC Finance and Administration Rules (not voluntary)",
+            "Strict separation: central budget covers governance + ICES top-up; enforcement remains a national line",
+            "Reserves maintained at Secretariat level to absorb fiscal shocks (per 2014 Performance Review)",
+            "Performance review cycle (independent panel) every ~10 years to recalibrate adequacy"
+          ],
+          "evidence_base": [
+            "NEAFC (n.d.a.) About NEAFC; (n.d.b.) Finance and administration rules",
+            "NEAFC (2014) Performance Review of the North East Atlantic Fisheries Commission"
+          ],
+          "transferable_lessons": [
+            "Decentralised enforcement financing is politically sustainable but creates uneven implementation across parties",
+            "Central reserves de-risk governance continuity but cannot substitute for national enforcement capacity",
+            "Persistent allocation disputes (and unilateral quotas) signal that governance financing alone does not resolve fairness gaps"
+          ],
+          "applies_to_DAs": [
+            "arctic"
+          ],
+          "success_metrics": [],
+          "risks_and_guardrails": [
+            {
+              "risk": "Asymmetric national enforcement capacity creates compliance free-riding",
+              "guardrail": "Joint at-sea inspection scheme and harmonised electronic monitoring standards"
+            },
+            {
+              "risk": "Unilateral quota declarations during prolonged allocation disputes (per 2014 Performance Review)",
+              "guardrail": "Pre-agreed allocation revision triggers and binding dispute resolution within NEAFC framework"
+            }
+          ],
+          "use_in_impact_assessment": "Use when scoring scenarios that depend on coordinated multi-party enforcement (S2 Partial Agreement, S3 Full Agreement). Score neutral-to-positive on FF (proven multi-decade reliability) but flag downside risk on EE under S1 (No Agreement) where unilateral actions undermine adherence to scientific advice. Pair with compliance and unilateral-quota incident indicators.",
+          "references": [
+            "MarineSABRES D5.2 Arctic DA, mechanism #3",
+            "NEAFC (2014) Performance Review"
+          ]
         }
       ]
     }
