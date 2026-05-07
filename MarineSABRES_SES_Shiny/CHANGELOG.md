@@ -5,6 +5,34 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.12.0] - 2026-05-07 — WP5 Phase 1: Financial-mechanism KB
+
+### Added
+- **WP5 mechanism knowledge base** at `data/ses_knowledge_db_wp5_mechanisms.json`. Catalogue of **28 financial and implementation mechanisms** drawn from D5.2 (16 Macaronesia, 6 Tuscan, 6 Arctic), each with the same 13-attribute structure: cost profile, finance flow (payer/receiver/type), design parameters, evidence base, transferable lessons, applies-to-DAs, success metrics, risks/guardrails, use-in-impact-assessment, and references.
+- **Reference pane on the Response Measures module** (`modules/response_module.R` tab 6 "Linked WP5 mechanisms"). DA-keyed mechanism summaries: when the project's Demonstration Area is set to Macaronesia, Tuscan Archipelago, or Arctic Northeast Atlantic, the pane lists relevant mechanisms with name, cost profile, what-it-funds, payer/receiver, use-in-impact-assessment, and references. Pane content is English by design (per spec §9.1 long-form posture); chrome strings are i18n-keyed across all 9 supported locales.
+- **`valuation_unit_values` block** bundled in the KB (Posidonia oceanica benefit-transfer ranges across 5 ecosystem services + restoration cost ranges) for consumption by the Phase 2 valuation calculator.
+- **`min_app_version` migration stamp** on new projects (1.12.0+). Pre-1.12 projects loading in 1.12+ now show a one-time toast on first load explaining new WP5 features. Newer projects loading in older toolbox versions now show a sticky warning before save would discard newer-version data.
+- **Quality audit** at `scripts/kb_audit/audit_wp5_mechanisms.py`. Run via `micromamba run -n shiny python scripts/kb_audit/audit_wp5_mechanisms.py`. Checks: missing required attributes, completeness floor (≥8/9 per spec §5.7), `finance_flow.payer/receiver` non-empty, `applies_to_DAs` canonical, mechanism-id uniqueness, valuation band ordering. Current state: 28 mechanisms, 0 FAIL, 0 WARN.
+- **Reproducible build script** at `scripts/build_wp5_mechanisms_kb.py`. Regenerates the JSON KB from in-script Python definitions; `git diff` after run reveals any manual hand-edits.
+- **R loader** at `functions/wp5_kb_loader.R` with environment-cached state, mirroring `functions/ses_knowledge_db_loader.R`. Lookup helpers: `wp5_kb_available()`, `get_mechanisms_for_da(da)`, `get_mechanism_by_id(id)`, `get_valuation_unit_values(habitat)`. Auto-loaded at startup via `global.R`.
+- **R test suite** at `tests/testthat/test-wp5-kb-loader.R`: 172 assertions covering loader smoke, valuation-block band ordering, lookup-helper edge cases, and per-mechanism field completeness across all 3 DAs.
+- **`WP5_DA_CONTEXTS` constant** in `constants.R` (`c("macaronesia", "tuscan", "arctic")`).
+- **Migration round-trip tests** in `tests/testthat/test-json-project-loading.R`: legacy-project normalization, `min_app_version` stamp on `create_empty_project()`, save/reload round-trip, and `compareVersion` downgrade-detection.
+
+### Changed
+- **i18n audit** (`scripts/_i18n_audit.py`) gains a `--allow-english-fallback=<prefixes>` flag and a new INFO-class report section listing keys present in all 9 locales but where one or more non-EN values match the EN value verbatim. WP5 chrome translations carry English-fallback values during phased delivery (per spec §9.1) and are suppressed from the report via `--allow-english-fallback=wp5`.
+- **VERSION** bumped to `1.12.0`.
+
+### Documentation
+- **WP5 integration roadmap** (covers all four phases 1.12 → 1.15): `docs/superpowers/specs/2026-05-06-wp5-integration-roadmap-design.md`.
+- **WP5 Phase 1 implementation plan**: `docs/superpowers/plans/2026-05-06-wp5-phase-1-kb-ingestion.md`.
+
+### Notes for partners
+- The 28-mechanism KB exited the development cycle with Gate 2 sign-off pending paragraph-by-paragraph verification of the partner-pickable defaults (`mac_02_tourism_levy_fund`, `tus_02_mooring_buoy_permit`) and the inferred `cost_profile` choices flagged in the per-mechanism commit messages (see `git log -p data/ses_knowledge_db_wp5_mechanisms.json`).
+- Translation backfill for 24 WP5 chrome keys × 8 non-EN locales (≈190 strings) is tracked under ticket `WP5-i18n-Phase1`.
+
+---
+
 ## [1.11.2] - 2026-04-23
 
 ### CLD Sync Hardening + i18n Context Migration
