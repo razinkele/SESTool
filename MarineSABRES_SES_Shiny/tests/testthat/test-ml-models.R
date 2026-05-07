@@ -8,6 +8,14 @@
 
 library(testthat)
 
+# torch is an optional dependency (declared in DESCRIPTION Imports but loaded
+# via tryCatch in global.R; see ML_ENABLED logic). When torch is unavailable
+# in the test environment (lean CI runners, fresh checkouts before
+# torch::install_torch()), every test in this file errors on torch_tensor().
+# Skip the whole file cleanly in that case — matches the pattern already used
+# in test-ml-ensemble.R, test-ml-active-learning.R, test-ml-context-embeddings.R.
+skip_if_not_installed("torch")
+
 # ============================================================================
 # LOSS FUNCTION TESTS
 # ============================================================================
