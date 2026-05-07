@@ -134,6 +134,61 @@ MACARONESIA_MECHANISMS = [
         "use_in_impact_assessment": "Use for any Macaronesia scenario with active marine tourism. Score positively on FF and EC.",
         "references": ["MarineSABRES D5.2 Blue Corridor toolkit, §x.x"],
     },
+    # ----- mac_03: Multi-year Delivery & Shared-Services Facility -----
+    {
+        "id": "mac_03_multi_year_delivery_facility",
+        "name": "Multi-year Delivery & Shared-Services Facility",
+        "cost_profile": "recurring",
+        "what_it_funds": "A ring-fenced multi-year facility funding the recurring delivery functions corridor scenarios depend on but cannot sustain through one-off projects: core delivery staff, joint procurement of training and shared tools, maintenance of shared SOPs and reporting templates, indicator-pipeline support, and an optional small contingency window. Disburses against milestones rather than ad-hoc annual allocations.",
+        "finance_flow": {
+            "payer": [
+                "EU seed funding (Horizon Europe successor + EMFAF)",
+                "national governments (PT, ES)",
+                "regional co-finance",
+            ],
+            "receiver": "ring-fenced delivery facility / host entity / contracted implementing partners",
+            "type": "blended",
+        },
+        "design_parameters": [
+            "Ring-fencing + multi-annual commitment (3–5 years) — not annually renewable",
+            "Window structure with explicit % allocations across coordination, monitoring, training, implementation",
+            "Disbursement rule: milestone/KPI-gated rather than block grants",
+            "Narrow corridor-delivery mandate + eligibility rules to prevent mission creep",
+            "Overhead caps and stop/go gates on IT/consultancy spend (MVP-only for shared tools)",
+        ],
+        "evidence_base": [
+            "Conservation trust fund / ring-fenced facility models in protected-area finance guidance",
+            "OECD ocean-finance literature on recurrent delivery needs and financing gaps",
+            "MSP4BIO planning support logic for biodiversity mainstreaming in recurring cycles",
+            "CMAR-style regional cooperation practice on delivery beyond pilot phases",
+        ],
+        "transferable_lessons": [
+            "Pooled finance works best when the facility has a narrow, explicit mandate with transparent allocation rules",
+            "Multi-year commitments are essential — short project cycles destroy delivery continuity",
+            "Distinguish core delivery funding from optional co-financing for rollout to avoid pot-of-money optics",
+            "Tie disbursement to delivered outputs and documented user uptake, not budget execution",
+        ],
+        "applies_to_DAs": ["macaronesia"],
+        "success_metrics": ["C_02", "M_01", "M_02", "F_03", "T_03"],
+        "risks_and_guardrails": [
+            {"risk": "Facility becomes too broad and turns into a generic funding pot",
+             "guardrail": "Define narrow corridor-delivery mandate + eligible cost categories at the founding charter"},
+            {"risk": "Unstable or politically contestable replenishment",
+             "guardrail": "Set multi-year commitments and renewal rules in advance; tie to treaty-level codification where feasible"},
+            {"risk": "Co-financing window rewards opportunistic projects rather than corridor priorities",
+             "guardrail": "Tie any rollout support to agreed corridor work-programme priorities and reporting"},
+            {"risk": "Administrative overhead crowds out delivery",
+             "guardrail": "Cap management costs, require annual public reporting on allocations and outputs, run independent annual audit"},
+            {"risk": "IT/consultancy budget sink",
+             "guardrail": "MVP-only IT scope with stop/go gate tied to delivered outputs and documented uptake"},
+        ],
+        "use_in_impact_assessment": "Use this mechanism when scoring Macaronesia scenarios where delivery continuity is the binding constraint (S3 Coordinated and S4 Integrated). Score positively on FF (sustained funding) and PI (translates declarations into operational delivery); pair with C_02 monitoring-capacity indicator and corridor-wide implementation outputs. Without this mechanism, S3/S4 are paper exercises — with it, sustained capacity becomes plausible.",
+        "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #2",
+            "OECD ocean-finance literature on biodiversity finance",
+            "MSP4BIO Deliverable 3.2",
+        ],
+    },
     # Additional Macaronesia mechanisms appended by Task D1
 ]
 
