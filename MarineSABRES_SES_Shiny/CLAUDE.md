@@ -77,7 +77,7 @@ Rscript scripts/add_translation.R
 │   └── ARCHITECTURE.md   # Architecture Decision Records
 ├── scripts/
 │   └── build_offshore_wind_kb.py  # Reproducible KB builder from BibTeX (187 papers)
-└── tests/testthat/       # 92 test files, 6768 assertions passing (21/21 *_module.R covered)
+└── tests/testthat/       # 90 test files, ~7,280 assertions passing (incl. 172 WP5 Phase 1; 21/21 *_module.R covered)
 ```
 
 ## i18n System (CRITICAL)
