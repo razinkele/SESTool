@@ -1691,6 +1691,54 @@
             "Abbott et al. (2022) PNAS 119(2)",
             "WWF RBM brochure"
           ]
+        },
+        {
+          "id": "arc_05_quota_leasing_trading",
+          "name": "Quota leasing and trading as adjustment mechanism",
+          "cost_profile": "contingent",
+          "what_it_funds": "Acts as a de facto financial instrument allowing economic adjustment between parties without re-opening allocation key negotiations. Quota lessors receive payments from lessees for temporary use of harvesting rights; cross-jurisdictional trades (where permitted) compensate parties as stocks shift across boundaries. Particularly valuable in the Arctic Northeast Atlantic where stock distributions are shifting and allocation disputes are recurrent.",
+          "finance_flow": {
+            "payer": [
+              "quota lessees (vessel operators or jurisdictions short of quota)"
+            ],
+            "receiver": "quota lessors (rights holders or jurisdictions with surplus quota)",
+            "type": "private"
+          },
+          "design_parameters": [
+            "Clear lease/trade authorisation rules within national allocation systems",
+            "Transparency: lease prices and volumes registered to enable market discovery and tax/fee assessment",
+            "Annual or in-season lease windows aligned with stock-assessment cycle",
+            "Optional cross-jurisdictional trading clauses negotiable bilaterally under NEAFC framework"
+          ],
+          "evidence_base": [
+            "Abbott, Leonard & Garber-Yonts (2022) — quota leasing identified as new payment stream in catch-share systems",
+            "WWF (n.d.) Rights-based management — leasing/transfer as flexibility design",
+            "MarineSABRES D5.2 Arctic DA — flagged research gap on formal vs informal operation of leasing in this region"
+          ],
+          "transferable_lessons": [
+            "Leasing reduces transaction cost of stock shifts compared with renegotiating the allocation key",
+            "Markets work poorly without price-and-volume registries — opacity invites informal/grey trading",
+            "Leasing can support cooperation even in the absence of comprehensive allocation agreement, but does not substitute for one"
+          ],
+          "applies_to_DAs": [
+            "arctic"
+          ],
+          "success_metrics": [],
+          "risks_and_guardrails": [
+            {
+              "risk": "Lease markets concentrate quota in absentee owners (rentier dynamic)",
+              "guardrail": "Active-use rules, lease-fraction caps, or owner-operator clauses tied to quota right"
+            },
+            {
+              "risk": "Informal/cross-border leasing escapes oversight and undermines allocation legitimacy",
+              "guardrail": "Mandatory lease registry with NEAFC-level reporting; cross-jurisdictional trades require bilateral protocol"
+            }
+          ],
+          "use_in_impact_assessment": "Use when scoring scenarios where stock distribution is shifting (a defining Arctic stressor) and where allocation renegotiation is politically blocked — particularly S1 (No Agreement) and S2 (Partial Agreement). Score positively on EE (allocation-flexibility cushion) but flag governance-legitimacy risk if used without registry. Mark as research-gap mechanism — formal vs informal operation in the Arctic NEA needs further empirical study.",
+          "references": [
+            "MarineSABRES D5.2 Arctic DA, mechanism #5",
+            "Abbott et al. (2022) PNAS 119(2)"
+          ]
         }
       ]
     }
