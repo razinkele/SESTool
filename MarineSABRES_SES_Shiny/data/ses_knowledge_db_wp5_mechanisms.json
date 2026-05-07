@@ -1642,6 +1642,55 @@
             "MarineSABRES D5.2 Arctic DA, mechanism #3",
             "NEAFC (2014) Performance Review"
           ]
+        },
+        {
+          "id": "arc_04_rights_based_quota",
+          "name": "Rights-based quota allocation and transferability",
+          "cost_profile": "conditional",
+          "what_it_funds": "Not a financial transfer scheme but a rights-allocation framework that converts TAC shares into economically valuable, defined harvesting rights held by individuals, companies, vessels, or communities. By making rights exclusive and tradable (where permitted), it generates investment-grade signals, enables longer-term sustainable harvesting decisions, and creates the economic surplus base that cost-recovery (arc_01) and leasing (arc_05) instruments can monetise.",
+          "finance_flow": {
+            "payer": [
+              "national fisheries authorities allocating quota shares (no direct cash flow)"
+            ],
+            "receiver": "rights holders (individual fishers, vessel owners, fishing companies, communities)",
+            "type": "public"
+          },
+          "design_parameters": [
+            "Clear definition of right scope: where, when, how much, and by whom fishing may occur",
+            "Tenure security: multi-year or perpetual rights attract long-term investment behaviour",
+            "Distributional safeguards (community quotas, owner-operator clauses) to manage concentration",
+            "Coupling with cost-recovery fees so that part of the resource rent accrues to the public (per OECD FSE framework)"
+          ],
+          "evidence_base": [
+            "Abbott, Leonard & Garber-Yonts (2022) Distributional outcomes of rights-based management, PNAS 119(2)",
+            "WWF (n.d.) Rights-based management in fisheries — brochure",
+            "Hardin (1968) Tragedy of the commons — foundational reasoning"
+          ],
+          "transferable_lessons": [
+            "Secure exclusive rights remove the open-access incentive to overharvest, but do not by themselves guarantee equitable distribution",
+            "RBM systems consistently shift surplus toward quota owners; pair with distributional rules upfront, not retroactively",
+            "Rights design (lease-allowed vs lease-restricted; transferable vs non-transferable) determines downstream financial mechanism feasibility"
+          ],
+          "applies_to_DAs": [
+            "arctic"
+          ],
+          "success_metrics": [],
+          "risks_and_guardrails": [
+            {
+              "risk": "Quota concentration in few large holders erodes fishing-community livelihoods",
+              "guardrail": "Ownership caps, owner-operator requirements, and community quota set-asides"
+            },
+            {
+              "risk": "Allocation key disputes (especially under shifting stock distributions) block agreement entirely",
+              "guardrail": "Pre-agreed revision triggers tied to ICES distribution evidence; complement with quota leasing (arc_05) for adjustment"
+            }
+          ],
+          "use_in_impact_assessment": "Use as a precondition for scoring all Arctic agreement scenarios (S2 Partial, S3 Full). Score positively on EC (resource-rent capture potential) and FF (asset-based investment signals); flag distributional-equity risk on social indicators. Treat as the structural backbone that arc_01 fees and arc_05 leasing depend on for traction.",
+          "references": [
+            "MarineSABRES D5.2 Arctic DA, mechanism #4",
+            "Abbott et al. (2022) PNAS 119(2)",
+            "WWF RBM brochure"
+          ]
         }
       ]
     }
