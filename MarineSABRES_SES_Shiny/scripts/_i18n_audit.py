@@ -1,6 +1,36 @@
 #!/usr/bin/env python
-"""One-off i18n audit: find missing, unused, incomplete keys + hardcoded strings."""
-import re, os, json, glob, sys
+"""One-off i18n audit: find missing, unused, incomplete keys + hardcoded strings.
+
+Supports --allow-english-fallback=<prefix1,prefix2> to suppress English-fallback
+warnings for keys whose module name starts with one of the given prefixes.
+This is used during phased i18n delivery (see WP5 spec §9.1) where chrome
+strings ship with English values in non-EN locales until backfill closes.
+"""
+import re, os, json, glob, sys, argparse
+
+# ---- Argument parsing ----
+_ap = argparse.ArgumentParser(description=__doc__)
+_ap.add_argument(
+    "--allow-english-fallback",
+    type=str,
+    default="",
+    help="Comma-separated module-name prefixes for which English-fallback values are accepted (e.g. 'wp5'). The audit's English-fallback report omits matching keys.",
+)
+_args, _unknown = _ap.parse_known_args()
+ENGLISH_FALLBACK_PREFIXES = tuple(p.strip() for p in _args.allow_english_fallback.split(",") if p.strip())
+
+
+def _is_allowlisted_english_fallback(key: str) -> bool:
+    """A key is allowlisted if its module name (second dot segment) starts with
+    one of the --allow-english-fallback prefixes, e.g. 'modules.wp5_*'."""
+    if not ENGLISH_FALLBACK_PREFIXES:
+        return False
+    parts = key.split(".")
+    if len(parts) < 2:
+        return False
+    module = parts[1]
+    return any(module.startswith(p) for p in ENGLISH_FALLBACK_PREFIXES)
+
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(root)
@@ -120,6 +150,30 @@ for k, langs in defined.items():
         incomplete.append((k, sorted(miss)))
 incomplete.sort()
 
+# ---- 5b. English-fallback (key has all locales but non-EN values equal EN) ----
+# Used during phased i18n delivery (see WP5 spec §9.1). Reported separately
+# from "incomplete" because all locales ARE present — they just carry the EN
+# string verbatim. The --allow-english-fallback CLI flag suppresses matching
+# module prefixes from this report (allowing partial-translation milestones
+# to ship without spurious audit noise).
+english_fallback = []
+for k, langs in defined.items():
+    en_val = langs.get('en')
+    if not en_val:
+        continue
+    fallback_locales = sorted([
+        loc for loc in REQ
+        if loc != 'en' and loc in langs and langs[loc] == en_val
+    ])
+    if fallback_locales:
+        english_fallback.append((k, fallback_locales))
+english_fallback.sort()
+# Apply --allow-english-fallback allowlist
+english_fallback_reported = [
+    (k, locs) for (k, locs) in english_fallback
+    if not _is_allowlisted_english_fallback(k)
+]
+
 # ---- 6. Hardcoded strings ----
 # Scan modules/ for suspicious patterns
 hardcoded = []
@@ -168,7 +222,7 @@ for f in glob.glob('modules/**/*.R', recursive=True):
 out = []
 out.append('# i18n Audit Report\n')
 out.append(f'_Generated {os.popen("date /t" if os.name=="nt" else "date").read().strip()}_\n')
-out.append(f'\nTotals: used={len(used)}  defined={len(defined)}  missing={len(missing)}  unused={len(unused)}  incomplete={len(incomplete)}  hardcoded={len(hardcoded)}\n')
+out.append(f'\nTotals: used={len(used)}  defined={len(defined)}  missing={len(missing)}  unused={len(unused)}  incomplete={len(incomplete)}  english_fallback={len(english_fallback_reported)}  hardcoded={len(hardcoded)}\n')
 
 out.append('\n## Missing Keys (MUST FIX)\n')
 for k in missing[:30]:
@@ -182,6 +236,20 @@ for k, miss in incomplete[:30]:
     out.append(f'- `{k}` — missing languages: {", ".join(miss)}')
 if len(incomplete) > 30:
     out.append(f'- ... and {len(incomplete)-30} more')
+
+out.append('\n## English-Fallback Translations (INFO)\n')
+if ENGLISH_FALLBACK_PREFIXES:
+    n_suppressed = len(english_fallback) - len(english_fallback_reported)
+    out.append(
+        f'_Allowlisted module prefixes: {", ".join(ENGLISH_FALLBACK_PREFIXES)} — {n_suppressed} key(s) suppressed from this report._\n'
+    )
+out.append(
+    'Keys present in all 9 locales but where one or more non-EN values match the EN value verbatim. Expected during phased i18n delivery; track in the relevant backfill ticket.\n'
+)
+for k, locs in english_fallback_reported[:30]:
+    out.append(f'- `{k}` — non-EN locales using EN fallback: {", ".join(locs)}')
+if len(english_fallback_reported) > 30:
+    out.append(f'- ... and {len(english_fallback_reported)-30} more')
 
 out.append('\n## Hardcoded Strings (IMPORTANT)\n')
 for f, ln, tag, val in hardcoded[:30]:
