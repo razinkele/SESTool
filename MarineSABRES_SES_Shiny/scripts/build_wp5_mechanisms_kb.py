@@ -594,6 +594,66 @@ MACARONESIA_MECHANISMS = [
             "REDUCE EU project on bycatch reduction",
         ],
     },
+    # ----- mac_11: Fisheries monitoring coverage uplift window -----
+    {
+        "id": "mac_11_fisheries_monitoring",
+        "name": "Fisheries monitoring coverage uplift window (observer / EM / reporting support)",
+        "cost_profile": "time_limited",
+        "what_it_funds": "A targeted, time-bound monitoring-coverage uplift focused on corridor-relevant fisheries interactions: human observer placements, electronic monitoring (EM) hardware and installation, onboard cameras, reporting tools, QA/audit functions, training, data-review capacity, and risk-tiered deployment focused on fleets/gears/seasons of highest corridor relevance. Improves credibility and interpretability of fisheries indicators — not blanket surveillance.",
+        "finance_flow": {
+            "payer": [
+                "public fisheries / biodiversity / corridor implementation budgets",
+                "EU/regional support (EMFAF, control programmes)",
+                "phased operator co-payment (tapering subsidy)",
+            ],
+            "receiver": "observer providers, EM service providers, monitoring authorities, contracted analysts, and participating operators for installation/support",
+            "type": "blended",
+        },
+        "design_parameters": [
+            "Risk-tiered coverage criteria tied to corridor-relevant fleets/gears/areas (not flat coverage)",
+            "Observer/EM mix selected per fleet segment",
+            "QA/audit procedures defined upfront with documented review cycle",
+            "Data ownership, access, privacy, and retention rules agreed before rollout",
+            "Proportionate treatment of small-scale fleets with dedicated support pathways",
+            "Subsidy tapering schedule with later phased operator co-payment",
+            "Disbursement tied to coverage/timeliness/QA outputs (not ecological outcomes)",
+            "Exit/integration pathway from outset so support does not become permanent subsidy",
+        ],
+        "evidence_base": [
+            "FAO electronic monitoring guidance",
+            "REDUCE — EU analogue for bycatch-reduction implementation environments",
+            "RFMO fisheries control and reporting literature",
+            "Peer-reviewed and applied monitoring literature on observer and EM governance",
+        ],
+        "transferable_lessons": [
+            "Monitoring coverage improves credibility only when targeted, reviewable, and governable — technology alone is not enough",
+            "Risk-based deployment + clear QA/audit + proportionate treatment of fleet segments = uptake",
+            "Without explicit data-access/privacy rules, monitoring schemes stall politically",
+            "Fund data review, QA and feedback capacity alongside hardware/coverage — otherwise data is collected but not used",
+        ],
+        "applies_to_DAs": ["macaronesia"],
+        "success_metrics": ["C_02", "F_02", "F_03"],
+        "risks_and_guardrails": [
+            {"risk": "High-cost monitoring deployed without clear priority logic",
+             "guardrail": "Use risk-tiered coverage criteria tied to corridor-relevant fleets/gears/areas"},
+            {"risk": "Data governance disputes undermine uptake",
+             "guardrail": "Define clear rules for data access, privacy, review and use before rollout"},
+            {"risk": "Small-scale fleets excluded or overburdened",
+             "guardrail": "Use proportionate requirements and dedicated support pathways"},
+            {"risk": "Monitoring installed but not reviewed in time",
+             "guardrail": "Fund data review, QA and feedback capacity alongside hardware/coverage"},
+            {"risk": "Support becomes a permanent subsidy without integration into regular systems",
+             "guardrail": "Define tapering or integration pathways from the outset"},
+            {"risk": "Privacy/acceptability resistance",
+             "guardrail": "Data minimisation + retention limits + restricted access + plain-language privacy note"},
+        ],
+        "use_in_impact_assessment": "Use under S3 and S4 where indicator interpretation depends on better fisheries coverage; may also support S2 pilots. Score positively on EE (verifiable implementation), PI (credible reporting), and FF (sustainability via tapering co-payment). Differentiates scenarios that rely on weak self-reporting from those with funded verification. Pair with F_02 CPUE — but interpret cautiously as a coverage/QA signal, not a stock-recovery claim.",
+        "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #11",
+            "FAO electronic monitoring guidance",
+            "REDUCE EU project",
+        ],
+    },
     # Additional Macaronesia mechanisms appended by Task D1
 ]
 
