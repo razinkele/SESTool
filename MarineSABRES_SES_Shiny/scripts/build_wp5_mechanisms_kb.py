@@ -1107,6 +1107,45 @@ TUSCAN_MECHANISMS = [
         "use_in_impact_assessment": "Use for any Tuscan scenario where commercial tourism operators are present (S2 Light, S3 Coordinated). Score positive on EE (recurrent funding for management) and mixed on EQ (depends on whether small operators are protected via tier structure). Complement to tus_02 mooring fees by capturing commercial use distinct from individual recreational vessels.",
         "references": ["MarineSABRES D5.2 Tuscan DA, mechanism #4", "RESTORE4Cs D1.2 (Kampa et al., 2025)", "Lago (2025) RESTORE4Cs EU Policy Workshop presentation"],
     },
+    # ----- tus_05: Public-private partnerships and CSR co-financing -----
+    {
+        "id": "tus_05_ppp_csr",
+        "name": "Public-private partnerships and CSR-based co-financing",
+        "cost_profile": "contingent",
+        "what_it_funds": "Co-financed coastal restoration, eco-mooring deployment, visitor management infrastructure, and monitoring programmes — funded jointly by the MPA management body and private actors (tourism operators, marinas, ferry companies, regional businesses) on a voluntary or negotiated basis. Private contributions motivated by reputational benefits, local environmental responsibility, or mitigation requirements.",
+        "finance_flow": {
+            "payer": ["tourism operators", "marina operators", "ferry and transport companies", "regional CSR programmes", "Tuscan MPA management body (matched share)"],
+            "receiver": "Tuscan Archipelago National Park / contracted infrastructure operators",
+            "type": "blended",
+        },
+        "design_parameters": [
+            "Formal co-financing agreement defining respective responsibilities, contribution shares, and exit terms",
+            "Governance framework with steering committee balancing public and private representation",
+            "Branding and visibility provisions for private contributors (signage, reporting, certification) without compromising MPA neutrality",
+            "Caps on private share to prevent capture of management decisions by funders",
+        ],
+        "evidence_base": [
+            "RESTORE4Cs D1.2 (Kampa et al., 2025): documents EU examples where private actors co-financed coastal restoration motivated by reputational benefits and mitigation requirements",
+            "Ciravegna (2025) RESTORE4Cs Policy Brief: emphasises PPP role in covering operational costs when embedded within clear governance frameworks",
+        ],
+        "transferable_lessons": [
+            "Private contributions cannot replace public funding but reliably cover operational costs when governance is transparent",
+            "Reputational motivation is fragile — design partnerships to survive corporate leadership changes via multi-year contracts",
+            "Stakeholder buy-in strengthens when private partners are involved in steering, not just funding",
+        ],
+        "applies_to_DAs": ["tuscan"],
+        "success_metrics": ["POS_density"],
+        "risks_and_guardrails": [
+            {"risk": "Private capture of MPA management priorities through funding leverage",
+             "guardrail": "Governance framework with hard caps on private decision weight and conflict-of-interest rules"},
+            {"risk": "CSR pull-back during economic downturn leaves committed projects unfunded",
+             "guardrail": "Multi-year binding contracts plus contingency reserves; do not rely on PPP for core enforcement budget"},
+            {"risk": "Greenwashing where private branding outweighs delivered conservation impact",
+             "guardrail": "Independent reporting on outcomes tied to private partner visibility rights"},
+        ],
+        "use_in_impact_assessment": "Use for Tuscan S3 Coordinated scenarios where strong stakeholder engagement is assumed. Score moderate-positive on EE (operational financing supplement) and EQ (stakeholder ownership), but mark as contingent — viability depends on governance maturity that may not exist at S2 Light intensity. Best layered on top of tus_03 and tus_04, not as standalone primary financing.",
+        "references": ["MarineSABRES D5.2 Tuscan DA, mechanism #5", "RESTORE4Cs D1.2 (Kampa et al., 2025)", "Ciravegna (2025) RESTORE4Cs Policy Brief"],
+    },
 ]
 
 ARCTIC_MECHANISMS = [
