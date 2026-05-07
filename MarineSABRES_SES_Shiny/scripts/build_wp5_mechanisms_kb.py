@@ -1146,6 +1146,46 @@ TUSCAN_MECHANISMS = [
         "use_in_impact_assessment": "Use for Tuscan S3 Coordinated scenarios where strong stakeholder engagement is assumed. Score moderate-positive on EE (operational financing supplement) and EQ (stakeholder ownership), but mark as contingent — viability depends on governance maturity that may not exist at S2 Light intensity. Best layered on top of tus_03 and tus_04, not as standalone primary financing.",
         "references": ["MarineSABRES D5.2 Tuscan DA, mechanism #5", "RESTORE4Cs D1.2 (Kampa et al., 2025)", "Ciravegna (2025) RESTORE4Cs Policy Brief"],
     },
+    # ----- tus_06: Blended finance and de-risking instruments -----
+    {
+        "id": "tus_06_blended_finance",
+        "name": "Blended finance and de-risking instruments (guarantees, revolving funds)",
+        "cost_profile": "conditional",
+        "what_it_funds": "Larger-scale infrastructure investments and long-term management systems where financial risks or long payback periods would otherwise deter private investment. Covers loan guarantees, first-loss capital, revolving funds, and similar de-risking tools that catalyse private participation in restoration and management. Best deployed as a supporting instrument layered on top of public funding and user fees, not as a primary funding source.",
+        "finance_flow": {
+            "payer": ["EU financial instruments (e.g., InvestEU, EIB)", "national green investment vehicles", "private investors (catalysed via de-risking)", "Italian / Tuscany regional financial institutions"],
+            "receiver": "Tuscan Archipelago National Park / restoration project special-purpose vehicles / private operators delivering management infrastructure",
+            "type": "blended",
+        },
+        "design_parameters": [
+            "Risk-sharing structure (first-loss capital, partial guarantees) calibrated to private investor risk tolerance",
+            "Revolving fund mechanism that recycles repayments into successive interventions",
+            "Integration with broader financing strategy — never deployed in isolation per RESTORE4Cs guidance",
+            "Institutional capacity threshold (legal, financial, technical) verified before deployment",
+            "Clear measurable revenue stream (e.g., user fees, PES) underpinning repayment",
+        ],
+        "evidence_base": [
+            "RESTORE4Cs D1.2 (Kampa et al., 2025): blended finance instruments identified as facilitators of private participation where risks or payback periods deter investment",
+            "RESTORE4Cs D1.2 (Kampa et al., 2025): explicit caveat that blended finance requires substantial institutional capacity and integrated financing strategy",
+        ],
+        "transferable_lessons": [
+            "Blended finance fails when applied in isolation — pair with operational financing (fees, PES) that generates repayment cashflows",
+            "Institutional capacity is the binding constraint, not capital availability — small MPAs typically lack the legal and financial infrastructure to deploy these tools",
+            "De-risking only catalyses private investment when there is a credible underlying revenue stream; do not use to subsidise non-revenue-generating restoration",
+        ],
+        "applies_to_DAs": ["tuscan"],
+        "success_metrics": ["POS_density"],
+        "risks_and_guardrails": [
+            {"risk": "Institutional capacity gap leaves instruments unused or mis-deployed",
+             "guardrail": "Capacity-building phase preceding deployment; partnership with national green-finance institution"},
+            {"risk": "Private investors capture upside while public partner absorbs losses",
+             "guardrail": "Symmetric upside-sharing clauses; cap on private return tied to delivered conservation outcomes"},
+            {"risk": "Repayment cashflow assumptions fail (e.g., tourism downturn collapses fee revenue)",
+             "guardrail": "Stress-test cashflow projections against multiple scenarios; reserve fund or contingent public top-up"},
+        ],
+        "use_in_impact_assessment": "Use only for Tuscan S3 Coordinated scenarios with substantial infrastructure investment requirements and where institutional partners (regional finance institutions, EIB) are engaged. Score conditional-positive on EE (unlocks scale impossible from public funds alone) but flag as low-feasibility under S1/S2 due to capacity threshold. Treat as enabling instrument, not standalone mechanism.",
+        "references": ["MarineSABRES D5.2 Tuscan DA, mechanism #6", "RESTORE4Cs D1.2 (Kampa et al., 2025)"],
+    },
 ]
 
 ARCTIC_MECHANISMS = [
