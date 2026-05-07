@@ -784,6 +784,82 @@
             "FAO electronic monitoring guidance",
             "REDUCE EU project"
           ]
+        },
+        {
+          "id": "mac_12_seasonal_enforcement",
+          "name": "Seasonal enforcement surge (\"tuna season package\")",
+          "cost_profile": "time_limited",
+          "what_it_funds": "A pre-planned peak-season implementation window for periods when corridor-relevant fisheries activity and associated risks intensify: temporary staffing/overtime, mobile port teams, joint port days, targeted checks, short-notice coordination, anomaly follow-up, seasonal communication to fleets, and minimal seasonal reporting outputs. Activated during defined high-activity windows to stabilise implementation, not to create year-round maximum enforcement.",
+          "finance_flow": {
+            "payer": [
+              "public corridor / fisheries-control budgets",
+              "delivery-facility ops surge window",
+              "regional/national budget contributions"
+            ],
+            "receiver": "competent authorities / port teams / contracted support staff / joint implementation units activated during defined seasonal windows",
+            "type": "public"
+          },
+          "design_parameters": [
+            "Surge window: fixed (tuna season) vs trigger-based",
+            "Risk-based targeting protocol published before the season",
+            "Geographic focus (priority ports / hotspots) named in advance",
+            "Staffing model (mobile team vs local uplift) agreed upfront",
+            "Minimum output logs and standard inspection protocols",
+            "Proportionality safeguards and complaints channel with response time",
+            "End-of-season evaluation and post-season review of repeated needs"
+          ],
+          "evidence_base": [
+            "FAO MCS guidance — main methodological anchor",
+            "ICCAT bluefin compliance and reporting frameworks (tuna-relevant operational analogue)",
+            "ARGOS regional cooperation analogue for shared seasonal control",
+            "Fisheries monitoring/compliance reviews on targeted control efforts"
+          ],
+          "transferable_lessons": [
+            "Fisheries control is more effective when risk- and season-sensitive than when spread thinly across the calendar",
+            "Surges work best when pre-planned, communicated, tied to reporting needs, and embedded in a broader MCS framework — not ad-hoc crackdowns",
+            "Repeated surge needs should be treated as evidence of chronic under-capacity, not a substitute for fixing it",
+            "Standard protocols + short briefings + minimal output templates = repeatability without bureaucracy"
+          ],
+          "applies_to_DAs": [
+            "macaronesia"
+          ],
+          "success_metrics": [
+            "C_02",
+            "F_01",
+            "F_03"
+          ],
+          "risks_and_guardrails": [
+            {
+              "risk": "Surge is used as a symbolic show of control with little analytical targeting",
+              "guardrail": "Define priority fleets, ports, periods and expected outputs in advance"
+            },
+            {
+              "risk": "Activation creates resentment if perceived as selective or punitive",
+              "guardrail": "Communicate clearly that surge is tied to predictable seasonal risk and data demands, not arbitrary scrutiny"
+            },
+            {
+              "risk": "Temporary staff or mobile teams lack consistency",
+              "guardrail": "Use standard protocols, short briefings and minimal output templates"
+            },
+            {
+              "risk": "Seasonal surge compensates for chronic under-capacity without fixing it",
+              "guardrail": "Require post-season review and use repeated surge needs as evidence for wider system adjustment"
+            },
+            {
+              "risk": "Perceived harassment",
+              "guardrail": "Publish targeting rules, apply proportionality safeguards, and provide a complaints channel with response time"
+            },
+            {
+              "risk": "\"Random crackdowns\" narrative",
+              "guardrail": "Written risk-based protocol + minimum output log (checks/findings/resolution times)"
+            }
+          ],
+          "use_in_impact_assessment": "Use under S3 and S4 where corridor scenarios assume more operational fisheries measures and credible peak-period follow-up. Score positively on PI (operational evidence of S3/S4 \"effective implementation\" claims), EE (peak-period gap closure), and EC (efficient seasonal use of capacity). Pair with F_01 (peak-season tuna landings context) and F_03 (capacity/participation). Distinguishes scenarios with funded season-sensitive delivery from those that assume year-round generic enforcement.",
+          "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #12",
+            "FAO MCS guidance",
+            "ICCAT compliance/reporting frameworks"
+          ]
         }
       ]
     },
