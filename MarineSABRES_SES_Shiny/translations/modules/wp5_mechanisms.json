@@ -176,6 +176,28 @@
       "it": "WP5 mechanism KB is unavailable. The reference pane will not be shown.",
       "no": "WP5 mechanism KB is unavailable. The reference pane will not be shown.",
       "el": "WP5 mechanism KB is unavailable. The reference pane will not be shown."
+    },
+    "modules.wp5_mechanisms.migration.forward_load": {
+      "en": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "es": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "fr": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "de": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "lt": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "pt": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "it": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "no": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "el": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged."
+    },
+    "modules.wp5_mechanisms.migration.downgrade_warning": {
+      "en": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "es": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "fr": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "de": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "lt": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "pt": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "it": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "no": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "el": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data."
     }
   }
 }
