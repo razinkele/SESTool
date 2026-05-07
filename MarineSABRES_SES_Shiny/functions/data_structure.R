@@ -33,6 +33,13 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
     last_modified = Sys.time(),
     user = Sys.info()["user"],
     version = ifelse(exists("APP_VERSION"), APP_VERSION, "1.0"),
+    # WP5 Phase 1 (1.12.0): minimum app version required to load this project
+    # without losing data. Older versions silently ignore unknown fields, so
+    # forward-loading is safe; downgrade-saving would discard newer-version
+    # blocks (e.g. Phase 4 impact_assessment). server/project_io.R surfaces a
+    # warning to the user when a loaded project's min_app_version exceeds the
+    # currently running APP_VERSION.
+    min_app_version = "1.12.0",
     
     data = list(
       # Project metadata

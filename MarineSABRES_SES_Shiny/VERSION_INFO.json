@@ -1,7 +1,7 @@
 {
-  "version": "1.11.0",
-  "version_name": "Knowledge Base & Template Overhaul",
-  "release_date": "2026-04-08",
+  "version": "1.12.0",
+  "version_name": "WP5 Phase 1: Financial-mechanism KB",
+  "release_date": "2026-05-07",
   "release_type": "minor",
   "status": "stable",
   "minimum_r_version": "4.4.1",
@@ -76,5 +76,5 @@
     "Template element IDs changed from D1/A1 to D001/A001 format",
     "Caribbean P13 (H2S emissions) removed — health impacts covered by S1→I10→W4 chain"
   ],
-  "previous_version": "1.10.2"
+  "previous_version": "1.11.2"
 }

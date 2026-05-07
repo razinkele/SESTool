@@ -1,0 +1,203 @@
+{
+  "languages": ["en", "es", "fr", "de", "lt", "pt", "it", "no", "el"],
+  "translation": {
+    "modules.wp5_mechanisms.pane.title": {
+      "en": "Linked WP5 mechanisms",
+      "es": "Linked WP5 mechanisms",
+      "fr": "Linked WP5 mechanisms",
+      "de": "Linked WP5 mechanisms",
+      "lt": "Linked WP5 mechanisms",
+      "pt": "Linked WP5 mechanisms",
+      "it": "Linked WP5 mechanisms",
+      "no": "Linked WP5 mechanisms",
+      "el": "Linked WP5 mechanisms"
+    },
+    "modules.wp5_mechanisms.pane.subtitle": {
+      "en": "Financial and implementation mechanisms from Marine SABRES Deliverable 5.2 relevant to this Response or Measure.",
+      "es": "Financial and implementation mechanisms from Marine SABRES Deliverable 5.2 relevant to this Response or Measure.",
+      "fr": "Financial and implementation mechanisms from Marine SABRES Deliverable 5.2 relevant to this Response or Measure.",
+      "de": "Financial and implementation mechanisms from Marine SABRES Deliverable 5.2 relevant to this Response or Measure.",
+      "lt": "Financial and implementation mechanisms from Marine SABRES Deliverable 5.2 relevant to this Response or Measure.",
+      "pt": "Financial and implementation mechanisms from Marine SABRES Deliverable 5.2 relevant to this Response or Measure.",
+      "it": "Financial and implementation mechanisms from Marine SABRES Deliverable 5.2 relevant to this Response or Measure.",
+      "no": "Financial and implementation mechanisms from Marine SABRES Deliverable 5.2 relevant to this Response or Measure.",
+      "el": "Financial and implementation mechanisms from Marine SABRES Deliverable 5.2 relevant to this Response or Measure."
+    },
+    "modules.wp5_mechanisms.pane.no_mechanisms": {
+      "en": "No WP5 mechanisms are linked to this element. Mechanisms are available for Response and Measure elements.",
+      "es": "No WP5 mechanisms are linked to this element. Mechanisms are available for Response and Measure elements.",
+      "fr": "No WP5 mechanisms are linked to this element. Mechanisms are available for Response and Measure elements.",
+      "de": "No WP5 mechanisms are linked to this element. Mechanisms are available for Response and Measure elements.",
+      "lt": "No WP5 mechanisms are linked to this element. Mechanisms are available for Response and Measure elements.",
+      "pt": "No WP5 mechanisms are linked to this element. Mechanisms are available for Response and Measure elements.",
+      "it": "No WP5 mechanisms are linked to this element. Mechanisms are available for Response and Measure elements.",
+      "no": "No WP5 mechanisms are linked to this element. Mechanisms are available for Response and Measure elements.",
+      "el": "No WP5 mechanisms are linked to this element. Mechanisms are available for Response and Measure elements."
+    },
+    "modules.wp5_mechanisms.attr.cost_profile": {
+      "en": "Cost profile",
+      "es": "Cost profile", "fr": "Cost profile", "de": "Cost profile",
+      "lt": "Cost profile", "pt": "Cost profile", "it": "Cost profile",
+      "no": "Cost profile", "el": "Cost profile"
+    },
+    "modules.wp5_mechanisms.attr.what_it_funds": {
+      "en": "What it funds",
+      "es": "What it funds", "fr": "What it funds", "de": "What it funds",
+      "lt": "What it funds", "pt": "What it funds", "it": "What it funds",
+      "no": "What it funds", "el": "What it funds"
+    },
+    "modules.wp5_mechanisms.attr.finance_flow": {
+      "en": "Finance flow",
+      "es": "Finance flow", "fr": "Finance flow", "de": "Finance flow",
+      "lt": "Finance flow", "pt": "Finance flow", "it": "Finance flow",
+      "no": "Finance flow", "el": "Finance flow"
+    },
+    "modules.wp5_mechanisms.attr.payer": {
+      "en": "Payer",
+      "es": "Payer", "fr": "Payer", "de": "Payer", "lt": "Payer",
+      "pt": "Payer", "it": "Payer", "no": "Payer", "el": "Payer"
+    },
+    "modules.wp5_mechanisms.attr.receiver": {
+      "en": "Receiver",
+      "es": "Receiver", "fr": "Receiver", "de": "Receiver", "lt": "Receiver",
+      "pt": "Receiver", "it": "Receiver", "no": "Receiver", "el": "Receiver"
+    },
+    "modules.wp5_mechanisms.attr.design_parameters": {
+      "en": "Design parameters",
+      "es": "Design parameters", "fr": "Design parameters", "de": "Design parameters",
+      "lt": "Design parameters", "pt": "Design parameters", "it": "Design parameters",
+      "no": "Design parameters", "el": "Design parameters"
+    },
+    "modules.wp5_mechanisms.attr.evidence_base": {
+      "en": "Evidence base",
+      "es": "Evidence base", "fr": "Evidence base", "de": "Evidence base",
+      "lt": "Evidence base", "pt": "Evidence base", "it": "Evidence base",
+      "no": "Evidence base", "el": "Evidence base"
+    },
+    "modules.wp5_mechanisms.attr.transferable_lessons": {
+      "en": "Transferable lessons",
+      "es": "Transferable lessons", "fr": "Transferable lessons",
+      "de": "Transferable lessons", "lt": "Transferable lessons",
+      "pt": "Transferable lessons", "it": "Transferable lessons",
+      "no": "Transferable lessons", "el": "Transferable lessons"
+    },
+    "modules.wp5_mechanisms.attr.applies_to_DAs": {
+      "en": "Applies to DAs",
+      "es": "Applies to DAs", "fr": "Applies to DAs", "de": "Applies to DAs",
+      "lt": "Applies to DAs", "pt": "Applies to DAs", "it": "Applies to DAs",
+      "no": "Applies to DAs", "el": "Applies to DAs"
+    },
+    "modules.wp5_mechanisms.attr.success_metrics": {
+      "en": "Success metrics",
+      "es": "Success metrics", "fr": "Success metrics", "de": "Success metrics",
+      "lt": "Success metrics", "pt": "Success metrics", "it": "Success metrics",
+      "no": "Success metrics", "el": "Success metrics"
+    },
+    "modules.wp5_mechanisms.attr.risks_and_guardrails": {
+      "en": "Risks and guardrails",
+      "es": "Risks and guardrails", "fr": "Risks and guardrails",
+      "de": "Risks and guardrails", "lt": "Risks and guardrails",
+      "pt": "Risks and guardrails", "it": "Risks and guardrails",
+      "no": "Risks and guardrails", "el": "Risks and guardrails"
+    },
+    "modules.wp5_mechanisms.attr.use_in_impact_assessment": {
+      "en": "Use in impact assessment",
+      "es": "Use in impact assessment", "fr": "Use in impact assessment",
+      "de": "Use in impact assessment", "lt": "Use in impact assessment",
+      "pt": "Use in impact assessment", "it": "Use in impact assessment",
+      "no": "Use in impact assessment", "el": "Use in impact assessment"
+    },
+    "modules.wp5_mechanisms.attr.references": {
+      "en": "References",
+      "es": "References", "fr": "References", "de": "References",
+      "lt": "References", "pt": "References", "it": "References",
+      "no": "References", "el": "References"
+    },
+    "modules.wp5_mechanisms.action.expand": {
+      "en": "Show full description",
+      "es": "Show full description", "fr": "Show full description",
+      "de": "Show full description", "lt": "Show full description",
+      "pt": "Show full description", "it": "Show full description",
+      "no": "Show full description", "el": "Show full description"
+    },
+    "modules.wp5_mechanisms.action.collapse": {
+      "en": "Hide description",
+      "es": "Hide description", "fr": "Hide description",
+      "de": "Hide description", "lt": "Hide description",
+      "pt": "Hide description", "it": "Hide description",
+      "no": "Hide description", "el": "Hide description"
+    },
+    "modules.wp5_mechanisms.action.view_source": {
+      "en": "View source document",
+      "es": "View source document", "fr": "View source document",
+      "de": "View source document", "lt": "View source document",
+      "pt": "View source document", "it": "View source document",
+      "no": "View source document", "el": "View source document"
+    },
+    "modules.wp5_mechanisms.filter.by_da": {
+      "en": "Filter by Demonstration Area",
+      "es": "Filter by Demonstration Area", "fr": "Filter by Demonstration Area",
+      "de": "Filter by Demonstration Area", "lt": "Filter by Demonstration Area",
+      "pt": "Filter by Demonstration Area", "it": "Filter by Demonstration Area",
+      "no": "Filter by Demonstration Area", "el": "Filter by Demonstration Area"
+    },
+    "modules.wp5_mechanisms.filter.all_das": {
+      "en": "All DAs",
+      "es": "All DAs", "fr": "All DAs", "de": "All DAs", "lt": "All DAs",
+      "pt": "All DAs", "it": "All DAs", "no": "All DAs", "el": "All DAs"
+    },
+    "modules.wp5_mechanisms.da.macaronesia": {
+      "en": "Macaronesia",
+      "es": "Macaronesia", "fr": "Macaronésie", "de": "Makaronesien",
+      "lt": "Makaronezija", "pt": "Macaronésia", "it": "Macaronesia",
+      "no": "Makaronesia", "el": "Μακαρονησία"
+    },
+    "modules.wp5_mechanisms.da.tuscan": {
+      "en": "Tuscan Archipelago",
+      "es": "Archipiélago Toscano", "fr": "Archipel toscan",
+      "de": "Toskanischer Archipel", "lt": "Toskanos salynas",
+      "pt": "Arquipélago Toscano", "it": "Arcipelago Toscano",
+      "no": "Toskanske arkipel", "el": "Τοσκανικό Αρχιπέλαγος"
+    },
+    "modules.wp5_mechanisms.da.arctic": {
+      "en": "Arctic Northeast Atlantic",
+      "es": "Arctic Northeast Atlantic", "fr": "Arctic Northeast Atlantic",
+      "de": "Arctic Northeast Atlantic", "lt": "Arctic Northeast Atlantic",
+      "pt": "Arctic Northeast Atlantic", "it": "Arctic Northeast Atlantic",
+      "no": "Arctic Northeast Atlantic", "el": "Arctic Northeast Atlantic"
+    },
+    "modules.wp5_mechanisms.error.kb_not_loaded": {
+      "en": "WP5 mechanism KB is unavailable. The reference pane will not be shown.",
+      "es": "WP5 mechanism KB is unavailable. The reference pane will not be shown.",
+      "fr": "WP5 mechanism KB is unavailable. The reference pane will not be shown.",
+      "de": "WP5 mechanism KB is unavailable. The reference pane will not be shown.",
+      "lt": "WP5 mechanism KB is unavailable. The reference pane will not be shown.",
+      "pt": "WP5 mechanism KB is unavailable. The reference pane will not be shown.",
+      "it": "WP5 mechanism KB is unavailable. The reference pane will not be shown.",
+      "no": "WP5 mechanism KB is unavailable. The reference pane will not be shown.",
+      "el": "WP5 mechanism KB is unavailable. The reference pane will not be shown."
+    },
+    "modules.wp5_mechanisms.migration.forward_load": {
+      "en": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "es": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "fr": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "de": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "lt": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "pt": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "it": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "no": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged.",
+      "el": "This project was saved with an earlier version. New WP5 features (mechanism reference pane in 1.12, valuation calculator in 1.13, indicator registry in 1.14, impact assessment in 1.15) are available — you can start using them at any time. Existing data is unchanged."
+    },
+    "modules.wp5_mechanisms.migration.downgrade_warning": {
+      "en": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "es": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "fr": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "de": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "lt": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "pt": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "it": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "no": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data.",
+      "el": "This project uses features from a newer version of the toolbox. Saving here will discard newer-version data."
+    }
+  }
+}

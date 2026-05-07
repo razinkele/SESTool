@@ -686,6 +686,11 @@ source("data/ses_connection_knowledge_base.R", local = FALSE)
 # Must be global scope for use by AI ISA knowledge base and connection generator
 source("functions/ses_knowledge_db_loader.R", local = FALSE)
 
+# WP5 Mechanism KB loader (financial mechanisms surfaced in the Response/Measure
+# reference pane and consumed by Phase 2 valuation calculator + Phase 4 impact
+# assessment). Must be global scope.
+source("functions/wp5_kb_loader.R", local = FALSE)
+
 # Country Governance and Socio-Economic Database loader
 # Must be global scope for country-specific governance and socioeconomic element suggestions
 source("functions/country_governance_loader.R", local = FALSE)

@@ -347,3 +347,55 @@ test_that("full load pipeline produces valid connections for connection_review",
     expect_true(nchar(to_type) > 0, info = paste("Connection", i, "has empty to_type"))
   }
 })
+
+# ==============================================================================
+# WP5 Phase 1 — min_app_version migration tests (spec §9.4)
+# ==============================================================================
+
+test_that("Pre-1.12 project (no min_app_version) loads cleanly via normalize_json_project_data", {
+  fixture <- list(
+    project_id = "PROJ_LEGACY",
+    project_name = "Legacy 1.11.2 project",
+    version = "1.11.2",
+    data = list(
+      metadata = list(da_site = "Macaronesia"),
+      isa_data = list(elements = list(), connections = list())
+    )
+  )
+  if (exists("normalize_json_project_data", mode = "function")) {
+    normalized <- normalize_json_project_data(fixture)
+    expect_false(is.null(normalized))
+    # min_app_version may be NULL on read; the load handler stamps it
+    # after the toast — that path is exercised in the running app, not here.
+  } else {
+    skip("normalize_json_project_data not available in this test context")
+  }
+})
+
+test_that("New project from create_empty_project() carries min_app_version 1.12.0", {
+  if (exists("create_empty_project", mode = "function")) {
+    p <- create_empty_project("test")
+    expect_equal(p$min_app_version, "1.12.0")
+  } else {
+    skip("create_empty_project not available")
+  }
+})
+
+test_that("Round-trip: empty project save + reload preserves min_app_version", {
+  if (!exists("create_empty_project", mode = "function")) skip("not available")
+  tmp <- tempfile(fileext = ".rds")
+  on.exit(unlink(tmp))
+  p <- create_empty_project("rt")
+  saveRDS(p, tmp)
+  p2 <- readRDS(tmp)
+  expect_equal(p2$min_app_version, "1.12.0")
+})
+
+test_that("compareVersion correctly identifies downgrade scenarios", {
+  # Simulates the load-handler's downgrade detection logic.
+  # If a future-saved project carries min_app_version > APP_VERSION, the
+  # load handler must surface a sticky warning.
+  expect_equal(utils::compareVersion("1.13.0", "1.12.0"), 1)   # newer required > current
+  expect_equal(utils::compareVersion("1.12.0", "1.12.0"), 0)   # equal — no warning
+  expect_equal(utils::compareVersion("1.11.2", "1.12.0"), -1)  # older required < current — no warning
+})

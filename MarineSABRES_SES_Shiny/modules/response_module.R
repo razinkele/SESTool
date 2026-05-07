@@ -318,6 +318,19 @@ response_measures_ui <- function(id, i18n) {
                 )
               )
             )
+          ),
+
+          # Tab 6: WP5 mechanism reference (Phase 1) ----
+          # Surfaces the WP5 mechanism KB (data/ses_knowledge_db_wp5_mechanisms.json)
+          # filtered by the project's Demonstration Area. Pane content is English
+          # by design (spec §9.1 long-form i18n posture). Chrome strings are
+          # translated via translations/modules/wp5_mechanisms.json.
+          tabPanel(i18n$t("modules.wp5_mechanisms.pane.title"),
+            h4(i18n$t("modules.wp5_mechanisms.pane.title")),
+            tags$small(class = "text-muted",
+                       i18n$t("modules.wp5_mechanisms.pane.subtitle")),
+            hr(),
+            uiOutput(ns("wp5_reference_pane"))
           )
         )
       )
@@ -701,6 +714,58 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         hr(),
         p(em(i18n$t("modules.response.effective_responses_address_feedback_loops_and_lev")))
       ), i18n)
+
+    # ========================================================================
+    # WP5 mechanism reference pane (Phase 1)
+    # ========================================================================
+    # Reads the WP5 mechanism KB and renders DA-keyed mechanism summaries.
+    # Content is English by design (spec §9.1); chrome via i18n.
+    output$wp5_reference_pane <- renderUI({
+      if (!exists("wp5_kb_available", mode = "function") || !wp5_kb_available()) {
+        return(div(class = "alert alert-warning",
+                   i18n$t("modules.wp5_mechanisms.error.kb_not_loaded")))
+      }
+
+      pd <- tryCatch(project_data_reactive(), error = function(e) NULL)
+      da <- if (is.null(pd)) NULL else (pd$data$metadata$da_site %||% pd$metadata$da_site %||% NULL)
+      da_lc <- if (is.null(da)) NULL else tolower(as.character(da))
+      da_key <- if (is.null(da_lc)) NULL
+                else if (grepl("macaron", da_lc)) "macaronesia"
+                else if (grepl("tuscan|toscan", da_lc)) "tuscan"
+                else if (grepl("arctic|nordic|northeast atlantic", da_lc)) "arctic"
+                else NULL
+
+      mechs <- if (is.null(da_key)) list() else tryCatch(get_mechanisms_for_da(da_key), error = function(e) list())
+
+      if (length(mechs) == 0) {
+        return(div(class = "card mt-3",
+          div(class = "card-body",
+              p(i18n$t("modules.wp5_mechanisms.pane.no_mechanisms")))
+        ))
+      }
+
+      lapply(mechs, function(m) {
+        div(class = "card mb-3",
+          div(class = "card-header",
+              strong(m$name %||% "")),
+          div(class = "card-body",
+            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.cost_profile"), ": ")),
+              span(m$cost_profile %||% "")),
+            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.what_it_funds"), ": ")),
+              span(m$what_it_funds %||% "")),
+            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.payer"), ": ")),
+              span(paste(unlist(m$finance_flow$payer %||% character(0)), collapse = "; "))),
+            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.receiver"), ": ")),
+              span(m$finance_flow$receiver %||% "")),
+            p(strong(paste0(i18n$t("modules.wp5_mechanisms.attr.use_in_impact_assessment"), ": ")),
+              span(m$use_in_impact_assessment %||% "")),
+            tags$small(class = "text-muted",
+                       paste(i18n$t("modules.wp5_mechanisms.attr.references"), ":",
+                             paste(unlist(m$references %||% character(0)), collapse = "; ")))
+          )
+        )
+      })
+    })
 
     return(reactive({ response_data }))
   })

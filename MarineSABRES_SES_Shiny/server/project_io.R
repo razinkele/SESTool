@@ -133,6 +133,33 @@ setup_project_io_handlers <- function(input, output, session, project_data, i18n
         return()
       }
 
+      # WP5 Phase 1 migration UX (spec §9.4)
+      tryCatch({
+        loaded_min <- loaded_data$min_app_version %||% NULL
+        current   <- if (exists("APP_VERSION")) APP_VERSION else "1.0.0"
+
+        if (is.null(loaded_min)) {
+          # Pre-1.12 project loading in 1.12+. Show one-time forward-load toast
+          # and stamp min_app_version so re-load doesn't repeat the toast.
+          showNotification(
+            i18n$t("modules.wp5_mechanisms.migration.forward_load"),
+            type = "default", duration = 12
+          )
+          loaded_data$min_app_version <- "1.12.0"
+        } else if (utils::compareVersion(loaded_min, current) > 0) {
+          # Loaded project requires a newer toolbox version than is running.
+          showNotification(
+            paste(i18n$t("modules.wp5_mechanisms.migration.downgrade_warning"),
+                  "Required:", loaded_min, "|  running:", current),
+            type = "warning", duration = NULL  # Sticky until user dismisses
+          )
+        }
+      }, error = function(e) {
+        if (exists("debug_log", mode = "function")) {
+          debug_log(paste("min_app_version check failed:", e$message), "WP5")
+        }
+      })
+
       # Load validated data
       project_data(loaded_data)
 
