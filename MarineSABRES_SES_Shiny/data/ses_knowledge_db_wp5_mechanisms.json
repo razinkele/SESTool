@@ -332,6 +332,82 @@
             "MSP4BIO Baltic Sea cumulative-impact assessment work",
             "Podda & Porporato — marine corridor connectivity review"
           ]
+        },
+        {
+          "id": "mac_06_compliance_support",
+          "name": "Compliance enablement service (\"single front door\")",
+          "cost_profile": "recurring",
+          "what_it_funds": "A visible operator-facing support function that reduces administrative friction and improves implementation consistency: helpdesk staffing, port-side support days, multilingual templates, training sessions, ticketing/CRM, and a living decision tree. One set of templates and interpretations across the three archipelagos, plus onboarding support and rule clarification — focused on making compliance navigable, not on replacing enforcement.",
+          "finance_flow": {
+            "payer": [
+              "public corridor-delivery funding",
+              "facility core services line",
+              "sector support budgets where applicable"
+            ],
+            "receiver": "designated host entity / coordination platform / contracted support provider",
+            "type": "public"
+          },
+          "design_parameters": [
+            "Service scope explicitly bounded (information + case-handling support; not enforcement substitute)",
+            "Service levels defined upfront (response times, port presence schedule)",
+            "One named interpretation owner across archipelagos to prevent conflicting guidance",
+            "Versioned templates with change log",
+            "Multilingual coverage and dedicated outreach to small/dispersed operators",
+            "Feedback loop from helpdesk issues into rule clarification and simplification",
+            "\"No net new burden\" rule: any new step must replace/simplify an old one"
+          ],
+          "evidence_base": [
+            "Compliance and implementation literature on reducing administrative burden",
+            "Whale-watching regulatory guidance and operator handbooks",
+            "Fisheries MCS / reporting guidance and EM/observer rollout practice",
+            "Interreg-style shared-governance projects (e.g. ARGOS) for cross-border operational guidance"
+          ],
+          "transferable_lessons": [
+            "Compliance improves when rules are not only enforceable but also legible, predictable, and usable for operators",
+            "Clear templates + multilingual support + rapid clarification channels reduce rework and low-grade conflict",
+            "Service is most effective when tied to formal authorities and real reporting obligations — not soft outreach",
+            "Track time-to-comply as a service KPI, not just helpdesk volume"
+          ],
+          "applies_to_DAs": [
+            "macaronesia"
+          ],
+          "success_metrics": [
+            "C_02",
+            "F_03",
+            "T_03"
+          ],
+          "risks_and_guardrails": [
+            {
+              "risk": "Service becomes an informal helpdesk with no authority or uptake",
+              "guardrail": "Anchor it formally to the coordination platform and competent authorities"
+            },
+            {
+              "risk": "Operators receive advice that differs from formal enforcement expectations",
+              "guardrail": "Maintain validated templates and written guidance cleared by relevant authorities"
+            },
+            {
+              "risk": "Support is captured by better-organized actors while small/dispersed users remain excluded",
+              "guardrail": "Include targeted outreach days, multilingual formats, and low-barrier access channels"
+            },
+            {
+              "risk": "Service substitutes for enforcement and weakens credibility",
+              "guardrail": "Define clearly that it supports compliance but does not replace inspection, follow-up, or sanctions"
+            },
+            {
+              "risk": "Adds bureaucracy",
+              "guardrail": "\"No net new burden\" rule + track time-to-comply"
+            },
+            {
+              "risk": "Conflicting guidance across archipelagos",
+              "guardrail": "Appoint one interpretation owner, use versioned templates, and maintain a change log"
+            }
+          ],
+          "use_in_impact_assessment": "Use whenever scoring scenarios that tighten reporting/compliance obligations (S3, S4). Score positively on PI (implementation friction lowered), EQ (small operators not pushed to the back of the queue), and FF (efficiency dividend on existing budgets). It conditions whether registry/reporting indicator improvements (F_03, T_03) are plausible. Without this layer, stronger rules under S3/S4 generate conflict rather than compliance.",
+          "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #5",
+            "FAO MCS / fisheries-reporting guidance",
+            "ARGOS Interreg cross-border governance project"
+          ]
         }
       ]
     },
