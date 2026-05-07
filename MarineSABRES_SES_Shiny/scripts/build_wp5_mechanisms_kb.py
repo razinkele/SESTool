@@ -416,6 +416,64 @@ MACARONESIA_MECHANISMS = [
             "Marine connectivity literature on displacement and substitution effects",
         ],
     },
+    # ----- mac_08: Due-process & appeals handling capacity -----
+    {
+        "id": "mac_08_due_process_appeals",
+        "name": "Due-process & appeals handling capacity",
+        "cost_profile": "recurring",
+        "what_it_funds": "A formal procedural layer for handling objections, clarification requests, reviews, and appeals linked to corridor-relevant measures: case-management staff, additional admin/legal FTE, standardised procedures, published timelines, record-keeping, translation, and response coordination. The aim is procedural fairness and predictability — not creating a judicial system, but preventing administrative disputes from escalating into political blockage.",
+        "finance_flow": {
+            "payer": [
+                "public corridor-delivery funding",
+                "facility-eligible administrative budget line",
+            ],
+            "receiver": "designated host authority / secretariat support unit / formally mandated administrative body linked to corridor governance",
+            "type": "public",
+        },
+        "design_parameters": [
+            "Service standards: published median resolution time and backlog thresholds",
+            "Transparency: anonymised performance statistics published periodically",
+            "Independence safeguards (review options, ombudsperson route)",
+            "Clear separation from enforcement incentives",
+            "Multilingual, low-threshold access for affected actors",
+            "Procedural feedback into coordination and measure revision processes",
+            "Defined boundary between corridor-level review and national/regional competences",
+        ],
+        "evidence_base": [
+            "Environmental governance and legitimacy literature",
+            "Marine governance / MSP literature on procedural justice and stakeholder acceptance",
+            "MSP4BIO planning-governance work on co-development and stakeholder dialogue",
+            "IUCN ecological corridor governance guidance as a normative anchor",
+        ],
+        "transferable_lessons": [
+            "Ambitious governance measures stay implementable when actors can see how decisions are made, how objections are handled, and what happens when rules are contested",
+            "Procedural clarity does not remove distributional conflict — but it prevents friction from hardening into distrust or selective non-compliance",
+            "Due-process in corridor terms is a stability mechanism, not a legalism — focus is on legitimacy, not litigation",
+            "Periodic synthesis of cases must feed back into coordination, or procedures become hollow",
+        ],
+        "applies_to_DAs": ["macaronesia"],
+        "success_metrics": ["C_02"],
+        "risks_and_guardrails": [
+            {"risk": "Mechanism becomes opaque or inaccessible and increases frustration rather than trust",
+             "guardrail": "Publish simple procedures, timelines and contact points"},
+            {"risk": "Duplicates existing national procedures and creates institutional confusion",
+             "guardrail": "Define clearly where corridor-level review stops and national/regional competence begins"},
+            {"risk": "Only well-organised actors use it",
+             "guardrail": "Keep access low-threshold, multilingual, and procedurally simple"},
+            {"risk": "Becomes purely formal with no feedback into implementation",
+             "guardrail": "Require periodic synthesis of cases/issues and formal discussion in corridor coordination bodies"},
+            {"risk": "Perceived as state capacity used against operators",
+             "guardrail": "Publish service standards (resolution time targets) and anonymised performance stats"},
+            {"risk": "Procedural bias concerns",
+             "guardrail": "Provide an independent review/ombudsperson route for procedural complaints"},
+        ],
+        "use_in_impact_assessment": "Use when scoring S3+ scenarios where corridor measures create visible winners/losers or visible distributional tension across archipelagos. Strengthens PI (procedural credibility) and EQ (perceived fairness when measures tighten). It is not a financing pillar — it is a procedural safeguard that prevents technical coordination from collapsing under political contestation. Without this, ambitious measures remain politically reversible.",
+        "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #7",
+            "MSP4BIO planning-governance analogue",
+            "IUCN ecological corridor governance guidance",
+        ],
+    },
     # Additional Macaronesia mechanisms appended by Task D1
 ]
 
