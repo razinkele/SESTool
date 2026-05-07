@@ -408,6 +408,78 @@
             "FAO MCS / fisheries-reporting guidance",
             "ARGOS Interreg cross-border governance project"
           ]
+        },
+        {
+          "id": "mac_07_adaptive_contingency_reserve",
+          "name": "Adaptive contingency reserve (displacement / substitution response)",
+          "cost_profile": "contingent",
+          "what_it_funds": "A small ring-fenced trigger-based reserve within the delivery facility, activated only when predefined evidence indicates corridor measures may be displacing rather than reducing pressure. Funds rapid-response monitoring deployments, short analytical work, temporary mitigation pilots, targeted communication, and stakeholder follow-up. Designed as a safety valve, not a standing programme.",
+          "finance_flow": {
+            "payer": [
+              "ring-fenced share of delivery facility / public implementation budget",
+              "philanthropic match (optional, for rapid response)"
+            ],
+            "receiver": "host entity / monitoring team / contracted technical support, activated only when triggers met",
+            "type": "blended"
+          },
+          "design_parameters": [
+            "Pre-defined quantitative triggers (e.g. effort displacement detected via M_01 / F_01)",
+            "Capped maximum drawdown per event; reserve sized as small % of total facility",
+            "Activation authority and decision deadline named in advance",
+            "Mandatory 30-day rapid assessment + 90-day decision (stop/extend/scale)",
+            "Mandatory after-action note published for each activation",
+            "Sunset rule: reserve auto-expires unless renewed",
+            "Stakeholder follow-up and communication included as eligible response costs"
+          ],
+          "evidence_base": [
+            "Adaptive management and implementation literature on dynamic ocean management",
+            "Marine corridor / dynamic management literature on shifting use patterns",
+            "WWF blue-corridor material on displacement/leakage in connectivity conservation",
+            "MSP4BIO-style cumulative-impact and trade-off tools for hotspot identification"
+          ],
+          "transferable_lessons": [
+            "Corridor implementation should not assume that pressure reductions in one place equal net gains overall — pressures shift",
+            "A modest, rule-based reserve activated by triggers prevents \"displacement denial\" while avoiding slush-fund optics",
+            "Communication and stakeholder follow-up must be funded explicitly, not tacked on",
+            "Repeated activation should trigger review of the underlying measure package — not just be paid out repeatedly"
+          ],
+          "applies_to_DAs": [
+            "macaronesia"
+          ],
+          "success_metrics": [
+            "C_02",
+            "M_01",
+            "F_01",
+            "F_03"
+          ],
+          "risks_and_guardrails": [
+            {
+              "risk": "Reserve becomes a discretionary \"miscellaneous\" fund",
+              "guardrail": "Publish strict trigger criteria, eligible uses, and maximum drawdown rules"
+            },
+            {
+              "risk": "Activation is politically delayed until impacts entrench",
+              "guardrail": "Assign a clear activation authority and a deadline for response"
+            },
+            {
+              "risk": "Reserve is used repeatedly because core measures are poorly designed",
+              "guardrail": "Require each activation to produce a short lessons-learned note; if repeated, trigger review of the underlying measure package"
+            },
+            {
+              "risk": "Responses remain technical and do not reach affected actors",
+              "guardrail": "Include communication and stakeholder follow-up as eligible response costs"
+            },
+            {
+              "risk": "Seen as a slush fund",
+              "guardrail": "Activate only via pre-defined triggers, set max spend per event, and publish an activation note (why/what/outcome)"
+            }
+          ],
+          "use_in_impact_assessment": "Use when assessing scenarios where pressure displacement / leakage is plausible (Macaronesia S3+ — fisheries effort transfer, vessel re-routing, tourism pressure shifts). Score positively on EE (handles displacement explicitly), EC (efficient use of small reserves), and PI (operationalises adaptive feedback). Pair with M_01 (port/routing shifts) and F_01 (tuna share shifts). Distinguishes scenarios that merely assume adaptation from those that include a funded mechanism to respond.",
+          "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #6",
+            "WWF blue-corridor material on dynamic management",
+            "Marine connectivity literature on displacement and substitution effects"
+          ]
         }
       ]
     },
