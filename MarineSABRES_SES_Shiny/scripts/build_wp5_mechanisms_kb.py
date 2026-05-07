@@ -898,6 +898,67 @@ MACARONESIA_MECHANISMS = [
             "IWC vessel-strike strategy",
         ],
     },
+    # ----- mac_16: Tourism & wildlife-use standards + oversight coherence -----
+    {
+        "id": "mac_16_tourism_wildlife_standards",
+        "name": "Tourism & wildlife-use standards + oversight coherence",
+        "cost_profile": "recurring",
+        "what_it_funds": "Operational layer that turns corridor-compatible tourism from soft aspiration into managed practice: codes of conduct, operator training, accreditation/certification support, harmonised reporting templates, observer or self-reporting protocols, compliance checks, shared signage/materials, and alignment of minimum oversight standards across the three archipelagos. Pairs standards with training, clear operating rules, reporting, and oversight or incentive structure.",
+        "finance_flow": {
+            "payer": [
+                "public tourism / biodiversity / corridor implementation budgets",
+                "optional earmarked tourism fees",
+                "operator contributions where licensed",
+            ],
+            "receiver": "competent authorities, accredited training providers, oversight bodies, corridor coordination platform, contracted support providers",
+            "type": "blended",
+        },
+        "design_parameters": [
+            "Minimum standard set (distances/time, approach rules) agreed across archipelagos",
+            "Voluntary vs licence-linked uptake: graduated system, not single licensing regime",
+            "Species/interaction focus and training requirements clearly scoped",
+            "Inspection cadence and reporting expectations using simple templates",
+            "Co-design with operators to avoid backlash; phase-in timeline published with rationale",
+            "Cross-archipelago consistency rules (so a Madeira operator and an Azores operator use the same minimum)",
+            "Treatment of small operators with proportionate entry-level requirements + uptake support",
+            "Clear separation between communication claims (corridor branding) and verified practice tiers",
+        ],
+        "evidence_base": [
+            "ACCOBAMS whale-watching guidelines",
+            "IWC whale-watching handbooks/guidance",
+            "Portugal/Azores dolphin- and whale-watching rules and operator handbooks",
+            "Wildlife-watching and tourism governance / certification literature",
+        ],
+        "transferable_lessons": [
+            "Tourism standards become effective only when paired with training, clear operating rules, reporting, and some oversight or incentive — codes of conduct alone are rarely enough",
+            "Uptake improves when operators see commercial or reputational value, but credibility depends on follow-up and not just branding",
+            "Most transferable model is a graduated system: shared minimum rules first, then stronger accreditation/oversight where feasible",
+            "Inconsistent application across archipelagos undermines credibility — adopt shared minimum standards even if licensing remains local",
+        ],
+        "applies_to_DAs": ["macaronesia"],
+        "success_metrics": ["C_02", "T_02", "T_03", "T_04"],
+        "risks_and_guardrails": [
+            {"risk": "Standards remain symbolic and are used mainly for branding",
+             "guardrail": "Link them to training, reporting and at least minimum oversight"},
+            {"risk": "Inconsistent application across archipelagos undermines credibility",
+             "guardrail": "Adopt shared minimum standards and a common reporting core, even if licensing remains local"},
+            {"risk": "Small/local operators are excluded by costly accreditation",
+             "guardrail": "Keep entry-level requirements proportionate and provide support for uptake"},
+            {"risk": "Corridor branding outpaces actual performance",
+             "guardrail": "Separate communication claims from verified practice tiers"},
+            {"risk": "\"Soft aspiration\" without teeth",
+             "guardrail": "Link standards to licensing/accreditation and fund a minimum oversight cadence plus reporting"},
+            {"risk": "Operator backlash to new standards",
+             "guardrail": "Co-design + phase-in timeline + publish \"why this rule exists\" guidance"},
+        ],
+        "use_in_impact_assessment": "Use across all scenarios, escalating intensity from S2 (shared guidance) → S3 (harmonised standards + reporting) → S4 (consistent regional practice with clearer oversight linkages). Score positively on EE (reduces wildlife disturbance), PI (concrete implementation pathway), EQ (small-operator inclusion), and EC (efficient industry-aligned delivery). Pair with T_03 wildlife-watch participation and T_02/T_04 carefully — tourism mechanism changes operator practice, not directly revenue/jobs.",
+        "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #16",
+            "ACCOBAMS whale-watching guidelines",
+            "IWC whale-watching guidance",
+            "Portugal/Azores dolphin- and whale-watching rules",
+        ],
+    },
     # Additional Macaronesia mechanisms appended by Task D1
 ]
 
