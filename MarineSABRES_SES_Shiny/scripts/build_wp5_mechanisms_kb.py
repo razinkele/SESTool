@@ -535,6 +535,65 @@ MACARONESIA_MECHANISMS = [
             "World Bank blue-finance stocktake materials",
         ],
     },
+    # ----- mac_10: Fisheries interaction-risk reduction package fund -----
+    {
+        "id": "mac_10_fisheries_mitigation",
+        "name": "Fisheries interaction-risk reduction package fund",
+        "cost_profile": "recurring",
+        "what_it_funds": "A package fund supporting the operational rollout of fisheries measure families that reduce harmful interactions with corridor-relevant taxa (cetaceans, seabirds, elasmobranchs): mitigation gear/devices, handling/release protocols, training, hotspot/season pilots, gear/practice trials, uptake of reporting tools, fisher co-design processes, and stakeholder engagement. Measures are funded as a package — technical, spatial/seasonal, monitoring, engagement together — not as isolated technology purchases.",
+        "finance_flow": {
+            "payer": [
+                "public fisheries / corridor implementation budgets",
+                "EU/regional co-financing (EMFAF)",
+                "optional sector co-finance",
+            ],
+            "receiver": "fishers / cooperatives / producer organisations / implementing partners / monitoring providers / contracted rollout teams via the delivery facility",
+            "type": "blended",
+        },
+        "design_parameters": [
+            "Tiering by fleet segment and risk; \"equivalent measures\" option for different gear types",
+            "Eligibility scoped by gear type and port, not blanket coverage",
+            "Linkage to monitoring expectations: minimum reporting/verification requirement built in",
+            "Hotspot definition and seasonal focus negotiated with fishers, not imposed",
+            "Dedicated access routes for small-scale fleets and simple application procedures",
+            "3–5 implementation KPIs (training/adoption/coverage/audit-pass) reported alongside indicators",
+            "Safeguards against perverse substitution (explicit exclusions; monitoring)",
+        ],
+        "evidence_base": [
+            "FAO bycatch/discards guidance — normative backbone",
+            "REDUCE — strong EU analogue for bycatch-reduction/selectivity solutions",
+            "RFMO and fisheries monitoring/compliance literature",
+            "Peer-reviewed bycatch mitigation and selective fishing literature",
+        ],
+        "transferable_lessons": [
+            "Fisheries interaction-risk reduction works as a bundle — gear/practice changes alone fail without monitoring, fisher buy-in, operational guidance, and spatial/seasonal targeting",
+            "Uptake improves when fishers are involved early; one-size-fits-all gear mandates fail",
+            "Mitigation support is most effective when it funds rollout capacity (training, testing, support), not just technology purchase",
+            "Tie funding to simple implementation and reporting requirements — otherwise learning is weak",
+        ],
+        "applies_to_DAs": ["macaronesia"],
+        "success_metrics": ["C_02", "F_01", "F_03"],
+        "risks_and_guardrails": [
+            {"risk": "Funding isolated technical fixes that are poorly matched to fleet realities",
+             "guardrail": "Require fisher co-design and gear/fleet-specific tailoring"},
+            {"risk": "Rollout support is not linked to reporting or monitoring, so learning is weak",
+             "guardrail": "Tie funding to simple implementation and reporting requirements"},
+            {"risk": "Benefits captured by better-organised fleets while smaller actors are excluded",
+             "guardrail": "Include dedicated access routes for small-scale fleets and simple application procedures"},
+            {"risk": "Package fund is treated as a substitute for necessary spatial/seasonal management",
+             "guardrail": "Frame it explicitly as complementary to, not a replacement for, broader fisheries governance measures"},
+            {"risk": "One-size-fits-all requirements",
+             "guardrail": "Tiering by fleet/risk + \"equivalent measures\" option for different gear types"},
+            {"risk": "Success not visible in core indicators",
+             "guardrail": "Require 3–5 implementation KPIs (training/adoption/coverage/audit-pass) reported alongside the indicator set"},
+        ],
+        "use_in_impact_assessment": "Strongly relevant for S3 and S4 Macaronesia scenarios. Score positively on EE (reduces interaction risk), PI (concrete rollout pathway), EQ (only if small-fleet access is real), and FF (sectoral co-financing efficient). Pair with F_01 fishing-effort indicators; treat F_02 cautiously as a downstream signal, not a near-term outcome. Distinguishes \"corridor on paper\" scenarios from those with a funded fisheries activation.",
+        "references": [
+            "MarineSABRES D5.2 Blue Corridor toolkit, mechanism #10",
+            "FAO bycatch/discards guidance",
+            "REDUCE EU project on bycatch reduction",
+        ],
+    },
     # Additional Macaronesia mechanisms appended by Task D1
 ]
 
