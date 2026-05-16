@@ -5,6 +5,13 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.5] - 2026-05-17
+
+### Added
+- **Pre-deploy guard against `VERSION` ↔ `VERSION_INFO.json` drift.** `deployment/pre-deploy-check.R` now reads both sources of truth and aborts with a clear error message if they disagree. This prevents recurrence of the v1.11.0-to-v1.13.3 drift that produced the stale "Version: 1.11.0 stable" App Info modal users were seeing on production. Verified both branches: passes cleanly when versions match (1.13.5 == 1.13.5); fails with `"VERSION says '1.13.4' but VERSION_INFO.json$version says '1.99.99'. Update both, then re-run."` when out of sync.
+
+This is a tooling-only patch release; application code is unchanged from v1.13.4.
+
 ## [1.13.4] - 2026-05-17
 
 ### Fixed
