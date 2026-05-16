@@ -528,24 +528,62 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
       showNotification(i18n$t("modules.scenario.builder.scenario_node_marked_for_removal"), type = "message")
     })
 
-    # Add link dialog
+    # Add link dialog ----
+    # Previously used silent req() guards: if any precondition failed (no
+    # project loaded, CLD not built, no active scenario, etc.), the observer
+    # aborted silently and the user perceived the "Add new link" button as
+    # frozen / dead. Replaced with explicit guards that surface a toast so
+    # the user knows what to fix before the modal can open.
     observeEvent(input$add_link, {
-      req(project_data_reactive())
-      data <- project_data_reactive()
-      req(data$data$cld$nodes)
+      pd <- project_data_reactive()
+      if (is.null(pd)) {
+        showNotification(i18n$t("common.messages.error_no_project_data"),
+                         type = "warning", duration = 5)
+        return()
+      }
+
+      if (is.null(pd$data$cld$nodes) || nrow(pd$data$cld$nodes) == 0) {
+        showNotification(i18n$t("modules.scenario.builder.scenario_no_cld_found"),
+                         type = "warning", duration = 5)
+        return()
+      }
+
+      if (is.null(active_scenario_id())) {
+        showNotification(i18n$t("modules.scenario.builder.scenario_no_scenarios_yet"),
+                         type = "warning", duration = 5)
+        return()
+      }
+
+      active_scenario <- tryCatch(get_active_scenario(), error = function(e) NULL)
+      if (is.null(active_scenario)) {
+        showNotification(i18n$t("modules.scenario.builder.scenario_no_scenarios_yet"),
+                         type = "warning", duration = 5)
+        return()
+      }
 
       # Get all available nodes (baseline + added in scenario)
-      active_scenario <- get_active_scenario()
+      data <- pd
       base_nodes <- data$data$cld$nodes$id
-      added_nodes <- sapply(active_scenario$modifications$nodes_added, function(n) n$id)
+      added_nodes <- if (length(active_scenario$modifications$nodes_added) > 0) {
+        vapply(active_scenario$modifications$nodes_added, function(n) n$id, character(1))
+      } else character(0)
       all_nodes <- c(base_nodes, added_nodes)
 
       base_labels <- setNames(data$data$cld$nodes$label, data$data$cld$nodes$id)
-      added_labels <- setNames(
-        sapply(active_scenario$modifications$nodes_added, function(n) n$label),
-        sapply(active_scenario$modifications$nodes_added, function(n) n$id)
-      )
+      added_labels <- if (length(active_scenario$modifications$nodes_added) > 0) {
+        setNames(
+          vapply(active_scenario$modifications$nodes_added, function(n) n$label, character(1)),
+          vapply(active_scenario$modifications$nodes_added, function(n) n$id, character(1))
+        )
+      } else character(0)
       all_labels <- c(base_labels, added_labels)
+
+      # Need at least 2 distinct nodes to form a link
+      if (length(all_labels) < 2) {
+        showNotification(i18n$t("modules.scenario.builder.scenario_need_cld_first"),
+                         type = "warning", duration = 5)
+        return()
+      }
 
       showModal(modalDialog(
         title = i18n$t("modules.scenario.builder.scenario_add_new_link"),
