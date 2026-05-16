@@ -5,6 +5,36 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.0] - 2026-05-16
+
+### ISA Data Entry Persistence — Closes Silent Data Loss + Ghost-Row Duplication
+
+User-reported bug fixes for the Standard Entry (ISA Data Entry) module:
+- **Edits in Standard Entry now actually save to the project file.** Previously the module wrote only to module-local `reactiveValues` and never to `project_data_reactive`, so the user's element entries vanished on session restart and never made it into project save files.
+- **Deleting an element now removes it from the data, not just the DOM.** Previously the Remove button only called `removeUI()`; the stored data.frame row persisted invisibly, then re-rendered as a ghost panel on the next reactive recompute, leading the user to perceive duplicates.
+
+### Added
+- **`sync_to_project_data()` helper in `modules/isa_data_entry_module.R`** — writes all 6 ISA element data frames (goods_benefits, ecosystem_services, marine_processes, pressures, activities, drivers) plus adjacency_matrices, loop_connections, and case_info back to `project_data_reactive()$data$isa_data`. Called after every save_exN observer (8 sites) and from per-panel Remove handlers (6 sites) and the add_loop observer.
+- **`project_id`-keyed load observer** replaces the previous unguarded `observe()`. Module saves preserve `project_id`, so the load doesn't re-fire on every write — same pattern v1.12.0 applied to pims_stakeholder and response_module.
+- **`load_isa_elements_from_saved()` now also restores `loop_connections` and `case_info`** so the full ISA state round-trips through a project save/load.
+
+### Changed
+- **`register_remove_observer()` signature** (in `functions/isa_form_builders.R`) accepts three new optional arguments: `isa_data`, `data_key`, `id_prefix` (for deleting the matching row from the stored data.frame) and `on_remove` (callback, typically `sync_to_project_data`). Backward-compatible — old call sites still work as DOM-only removal.
+
+### Fixed
+- **Bug #2 — Standard Entry changes don't save to the selected project file.** Root cause: zero writes to `project_data_reactive()` in 1352 lines of `modules/isa_data_entry_module.R`. The save_exN observers wrote only to module-local `reactiveValues`. Fix: explicit `sync_to_project_data()` after each save observer. Verified via `test-json-project-loading.R` 1133/1133.
+- **Bug #3 — Delete leaves elements + duplicates appear.** Root cause 1: `register_remove_observer` (functions/isa_form_builders.R:76) only called `removeUI()` — stored data.frame row was never deleted. Root cause 2: an unguarded `observe()` re-loaded `isa_data` from the saved project on every `global_data()` invalidation, resetting counters but leaving stale DOM panels — subsequent Add created duplicate IDs. Fix: row-aware Remove handler + `project_id`-keyed load observer.
+- **Bug #4 — Confusing "Save Exercise N" / missing "Add" button.** Partially addressed: the underlying confusion (Save didn't actually persist) is now fixed. The UI labels remain unchanged; an explicit label/UX refresh can follow if still needed.
+
+### Test Status at Release
+- `test-isa-data-entry-module.R`: 8/8 pass.
+- `test-json-project-loading.R`: 1133/1133 pass (full round-trip through save/load now exercises sync).
+- `test-integration.R`: 56/56 pass.
+- `test-i18n-enforcement.R`: 37/37 pass.
+
+### Cross-Module Architectural Note
+This is the third module to receive the `sync_to_project_data()` + `project_id`-keyed load observer pattern, following pims_stakeholder and response_module in v1.12.0. The architecture is now mature enough to template; see ADR-12 in `docs/ARCHITECTURE.md`. Remaining candidates: `scenario_builder_module` (deferred to follow-up).
+
 ## [1.12.0] - 2026-05-16
 
 ### PIMS + Response-Measure Persistence, Stable-Key i18n Pattern, Event-Bus Hardening
