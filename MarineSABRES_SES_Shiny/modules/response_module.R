@@ -71,11 +71,17 @@ response_measures_ui <- function(id, i18n) {
                 ),
                 column(3,
                   selectInput(ns("rm_effectiveness"), i18n$t("modules.response.measures.expected_effectiveness"),
-                             choices = c("", i18n$t("modules.response.measures.high"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.low"), i18n$t("modules.response.measures.unknown")))
+                             choices = setNames(
+                               c("", "HIGH", "MEDIUM", "LOW", "UNKNOWN"),
+                               c("", i18n$t("modules.response.measures.high"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.low"), i18n$t("modules.response.measures.unknown"))
+                             ))
                 ),
                 column(3,
                   selectInput(ns("rm_feasibility"), i18n$t("modules.response.measures.feasibility"),
-                             choices = c("", i18n$t("modules.response.measures.high"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.low")))
+                             choices = setNames(
+                               c("", "HIGH", "MEDIUM", "LOW"),
+                               c("", i18n$t("modules.response.measures.high"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.low"))
+                             ))
                 ),
                 column(3,
                   numericInput(ns("rm_cost"), i18n$t("modules.response.measures.estimated_cost_relative"),
@@ -329,6 +335,32 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
+    # Translate stable Effectiveness/Feasibility keys ("HIGH"/"MEDIUM"/"LOW"/"UNKNOWN")
+    # back to the user's locale. Internal storage stays locale-independent so
+    # priority scoring (Effectiveness == "HIGH" → 3) keeps working across language
+    # switches.
+    level_label <- function(key) {
+      key <- as.character(key)
+      if (length(key) == 0 || is.na(key) || key == "") return("")
+      switch(key,
+        "HIGH"    = i18n$t("modules.response.measures.high"),
+        "MEDIUM"  = i18n$t("modules.response.measures.medium"),
+        "LOW"     = i18n$t("modules.response.measures.low"),
+        "UNKNOWN" = i18n$t("modules.response.measures.unknown"),
+        key
+      )
+    }
+
+    # Returns a measures data frame with Effectiveness/Feasibility stable keys
+    # translated for display (tables, plots, exports). Internal storage keeps
+    # stable keys for correctness.
+    translate_levels_for_display <- function(df) {
+      if (is.null(df) || nrow(df) == 0) return(df)
+      if ("Effectiveness" %in% names(df)) df$Effectiveness <- vapply(df$Effectiveness, level_label, character(1))
+      if ("Feasibility"   %in% names(df)) df$Feasibility   <- vapply(df$Feasibility,   level_label, character(1))
+      df
+    }
+
     # Reactive values for response data
     response_data <- reactiveValues(
       measures = data.frame(
@@ -367,6 +399,30 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       counter = 0
     )
 
+    # Persist response_data into project_data_reactive after every mutation so
+    # measures, impacts, milestones, and the counter survive session restarts
+    # and get written to project save files.
+    sync_to_project_data <- function() {
+      pd <- project_data_reactive()
+      if (is.null(pd)) return(invisible(NULL))
+      pd$data$response_measures$measures   <- response_data$measures
+      pd$data$response_measures$impacts    <- response_data$impacts
+      pd$data$response_measures$milestones <- response_data$milestones
+      pd$data$response_measures$counter    <- response_data$counter
+      project_data_reactive(pd)
+    }
+
+    # Load response_data from project_data_reactive when a (different) project
+    # becomes active. Keyed on project_id so module saves don't re-trigger a load.
+    observeEvent(project_data_reactive()$project_id, {
+      rm <- project_data_reactive()$data$response_measures
+      if (is.null(rm)) return()
+      if (!is.null(rm$measures))   response_data$measures   <- rm$measures
+      if (!is.null(rm$impacts))    response_data$impacts    <- rm$impacts
+      if (!is.null(rm$milestones)) response_data$milestones <- rm$milestones
+      if (!is.null(rm$counter))    response_data$counter    <- rm$counter
+    }, ignoreNULL = FALSE)
+
     # Add Response Measure ----
     observeEvent(input$add_response, {
       req(input$rm_name, input$rm_type)
@@ -393,6 +449,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       )
 
       response_data$measures <- rbind(response_data$measures, new_row)
+      sync_to_project_data()
 
       # Clear inputs
       updateTextInput(session, "rm_name", value = "")
@@ -407,7 +464,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
 
     # Response Table ----
     output$response_table <- renderDT({
-      datatable(response_data$measures,
+      datatable(translate_levels_for_display(response_data$measures),
                selection = 'multiple',
                options = list(pageLength = 10, scrollX = TRUE),
                rownames = FALSE)
@@ -418,6 +475,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       selected <- input$response_table_rows_selected
       if(!is.null(selected) && length(selected) > 0) {
         response_data$measures <- response_data$measures[-selected, ]
+        sync_to_project_data()
         showNotification(i18n$t("modules.response.measures.deleted_response_measures"), type = "warning")
       }
     })
@@ -450,6 +508,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       )
 
       response_data$impacts <- rbind(response_data$impacts, new_row)
+      sync_to_project_data()
       showNotification(i18n$t("modules.response.measures.impact_linkage_added"), type = "message")
     })
 
@@ -467,13 +526,13 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       measures <- response_data$measures
 
       # Convert to numeric scores
-      measures$EffScore <- ifelse(measures$Effectiveness == "High", 3,
-                                  ifelse(measures$Effectiveness == "Medium", 2,
-                                        ifelse(measures$Effectiveness == "Low", 1, 0)))
+      measures$EffScore <- ifelse(measures$Effectiveness == "HIGH", 3,
+                                  ifelse(measures$Effectiveness == "MEDIUM", 2,
+                                        ifelse(measures$Effectiveness == "LOW", 1, 0)))
 
-      measures$FeasScore <- ifelse(measures$Feasibility == "High", 3,
-                                   ifelse(measures$Feasibility == "Medium", 2,
-                                         ifelse(measures$Feasibility == "Low", 1, 0)))
+      measures$FeasScore <- ifelse(measures$Feasibility == "HIGH", 3,
+                                   ifelse(measures$Feasibility == "MEDIUM", 2,
+                                         ifelse(measures$Feasibility == "LOW", 1, 0)))
 
       measures$CostScore <- (11 - measures$Cost) / 10  # Inverse cost
 
@@ -489,6 +548,10 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       measures <- measures[order(-measures$PriorityScore), ]
       measures$Rank <- 1:nrow(measures)
 
+      # Translate stable Effectiveness/Feasibility keys for the visible table
+      # (scoring already done above against the stable keys).
+      measures <- translate_levels_for_display(measures)
+
       datatable(measures[, c("Rank", "ID", "Name", "Type", "Target",
                             "Effectiveness", "Feasibility", "Cost",
                             "PriorityScore", "Status")],
@@ -503,13 +566,13 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
 
       measures <- response_data$measures
 
-      eff_num <- ifelse(measures$Effectiveness == "High", 3,
-                       ifelse(measures$Effectiveness == "Medium", 2,
-                             ifelse(measures$Effectiveness == "Low", 1, NA)))
+      eff_num <- ifelse(measures$Effectiveness == "HIGH", 3,
+                       ifelse(measures$Effectiveness == "MEDIUM", 2,
+                             ifelse(measures$Effectiveness == "LOW", 1, NA)))
 
-      feas_num <- ifelse(measures$Feasibility == "High", 3,
-                        ifelse(measures$Feasibility == "Medium", 2,
-                              ifelse(measures$Feasibility == "Low", 1, NA)))
+      feas_num <- ifelse(measures$Feasibility == "HIGH", 3,
+                        ifelse(measures$Feasibility == "MEDIUM", 2,
+                              ifelse(measures$Feasibility == "LOW", 1, NA)))
 
       valid <- !is.na(eff_num) & !is.na(feas_num)
 
@@ -555,6 +618,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
       )
 
       response_data$milestones <- rbind(response_data$milestones, new_row)
+      sync_to_project_data()
 
       updateTextInput(session, "impl_milestone", value = "")
       updateTextAreaInput(session, "impl_notes", value = "")
@@ -580,7 +644,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
         addWorksheet(wb, "Impact_Matrix")
         addWorksheet(wb, "Implementation")
 
-        writeData(wb, "Response_Measures", response_data$measures)
+        writeData(wb, "Response_Measures", translate_levels_for_display(response_data$measures))
         writeData(wb, "Impact_Matrix", response_data$impacts)
         writeData(wb, "Implementation", response_data$milestones)
 
@@ -623,7 +687,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
           print(doc, target = file)
         }, error = function(e) {
           debug_log(paste("Priority report export failed:", e$message), "EXPORT")
-          utils::write.csv(response_data$measures, file, row.names = FALSE)
+          utils::write.csv(translate_levels_for_display(response_data$measures), file, row.names = FALSE)
         })
       }
     )
@@ -662,7 +726,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
           print(doc, target = file)
         }, error = function(e) {
           debug_log(paste("Implementation plan export failed:", e$message), "EXPORT")
-          utils::write.csv(response_data$measures, file, row.names = FALSE)
+          utils::write.csv(translate_levels_for_display(response_data$measures), file, row.names = FALSE)
         })
       }
     )

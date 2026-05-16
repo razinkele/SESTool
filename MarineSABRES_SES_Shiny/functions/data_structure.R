@@ -51,19 +51,51 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
       ),
       
       # PIMS data
+      # Stakeholder/engagement/communication slots match the pims_stakeholder_module
+      # schema (TitleCase columns). Power and Interest hold stable categorical
+      # keys "HIGH"/"MEDIUM"/"LOW"/"" — locale-independent so comparisons stay
+      # correct across language switches.
       pims = list(
         stakeholders = data.frame(
-          id = character(),
-          name = character(),
-          organization = character(),
-          type = character(),
-          power = numeric(),
-          interest = numeric(),
-          contact_email = character(),
-          contact_phone = character(),
-          communication_preference = character(),
-          notes = character()
+          ID = character(),
+          Name = character(),
+          Type = character(),
+          Sector = character(),
+          Contact = character(),
+          Interests = character(),
+          Role = character(),
+          Power = character(),
+          Interest = character(),
+          Attitude = character(),
+          EngagementLevel = character(),
+          DateAdded = character()
         ),
+
+        engagements = data.frame(
+          ID = character(),
+          StakeholderID = character(),
+          StakeholderName = character(),
+          Method = character(),
+          Date = character(),
+          Objectives = character(),
+          Outcomes = character(),
+          Status = character(),
+          Facilitator = character()
+        ),
+
+        communications = data.frame(
+          ID = character(),
+          Audience = character(),
+          Type = character(),
+          Date = character(),
+          Frequency = character(),
+          Message = character(),
+          Responsible = character()
+        ),
+
+        stakeholder_counter = 0,
+        engagement_counter = 0,
+        communication_counter = 0,
 
         risks = data.frame(
           id = character(),
@@ -115,7 +147,46 @@ create_empty_project <- function(project_name = "New Project", da_site = NULL) {
           )
         )
       ),
-      
+
+      # Response measures — concrete interventions with effectiveness/feasibility
+      # scoring, impact links, and implementation milestones. Schema matches the
+      # response_module reactiveValues. Effectiveness/Feasibility hold stable
+      # categorical keys "HIGH"/"MEDIUM"/"LOW"/"UNKNOWN"/"" for locale-stable
+      # priority scoring across language switches.
+      response_measures = list(
+        measures = data.frame(
+          ID = character(),
+          Name = character(),
+          Type = character(),
+          Target = character(),
+          Description = character(),
+          Mechanism = character(),
+          TargetElement = character(),
+          Effectiveness = character(),
+          Feasibility = character(),
+          Cost = numeric(),
+          Status = character(),
+          Stakeholders = character(),
+          Barriers = character(),
+          DateAdded = character()
+        ),
+        impacts = data.frame(
+          ResponseID = character(),
+          ProblemType = character(),
+          ProblemElementID = character(),
+          ImpactStrength = character(),
+          Timeframe = character()
+        ),
+        milestones = data.frame(
+          ResponseID = character(),
+          Milestone = character(),
+          TargetDate = character(),
+          Status = character(),
+          Notes = character()
+        ),
+        counter = 0
+      ),
+
       # ISA data
       isa_data = list(
         goods_benefits = create_empty_element_df("Goods & Benefits"),
@@ -493,20 +564,16 @@ validate_pims_data <- function(pims_data) {
   # Validate stakeholders
   if (!is.null(pims_data$stakeholders) && nrow(pims_data$stakeholders) > 0) {
     stakeholders <- pims_data$stakeholders
-    
-    # Check power and interest values
-    if (any(stakeholders$power < 0 | stakeholders$power > 10, na.rm = TRUE)) {
-      errors <- c(errors, "Stakeholder power values must be between 0 and 10")
+    valid_levels <- c("", "HIGH", "MEDIUM", "LOW")
+
+    if ("Power" %in% names(stakeholders) &&
+        !all(stakeholders$Power %in% valid_levels)) {
+      errors <- c(errors, "Stakeholder Power values must be HIGH, MEDIUM, LOW, or empty")
     }
-    
-    if (any(stakeholders$interest < 0 | stakeholders$interest > 10, na.rm = TRUE)) {
-      errors <- c(errors, "Stakeholder interest values must be between 0 and 10")
-    }
-    
-    # Check email format
-    invalid_emails <- !sapply(stakeholders$contact_email, is_valid_email)
-    if (any(invalid_emails, na.rm = TRUE)) {
-      errors <- c(errors, "Some stakeholder emails are invalid")
+
+    if ("Interest" %in% names(stakeholders) &&
+        !all(stakeholders$Interest %in% valid_levels)) {
+      errors <- c(errors, "Stakeholder Interest values must be HIGH, MEDIUM, LOW, or empty")
     }
   }
   
@@ -1157,10 +1224,14 @@ validate_pims_data_safe <- function(pims_data) {
   errs <- c()
   if (is.null(pims_data)) return(errs)
   if (!is.null(pims_data$stakeholders) && nrow(pims_data$stakeholders) > 0) {
-    if ("power" %in% names(pims_data$stakeholders)) {
-      if (any(pims_data$stakeholders$power < 0 | pims_data$stakeholders$power > 10, na.rm = TRUE)) {
-        errs <- c(errs, "power")
-      }
+    valid_levels <- c("", "HIGH", "MEDIUM", "LOW")
+    if ("Power" %in% names(pims_data$stakeholders) &&
+        !all(pims_data$stakeholders$Power %in% valid_levels)) {
+      errs <- c(errs, "Power")
+    }
+    if ("Interest" %in% names(pims_data$stakeholders) &&
+        !all(pims_data$stakeholders$Interest %in% valid_levels)) {
+      errs <- c(errs, "Interest")
     }
   }
   errs

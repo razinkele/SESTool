@@ -4,8 +4,8 @@
 
 # UI Component - Local Storage Controls
 local_storage_ui <- function(id, i18n) {
-  ns <- NS(id)
   tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+  ns <- NS(id)
 
   # Build JavaScript using paste0 to avoid sprintf 8192 character limit
   js_code <- paste0('
@@ -827,8 +827,8 @@ local_storage_server <- function(id, project_data_reactive, i18n, event_bus = NU
 #' @param has_api Reactive indicating if File System Access API is available
 #' @return Shiny UI elements
 local_storage_settings_ui <- function(id, i18n, is_connected, directory_name, has_api) {
-  ns <- NS(id)
   tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+  ns <- NS(id)
 
   tagList(
     tags$h4(icon("folder-open"), " ", i18n$t("ui.modals.local_storage_settings")),

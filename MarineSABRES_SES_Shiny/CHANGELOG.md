@@ -5,6 +5,44 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.11.3] - 2026-05-16
+
+### Silent-Classification Bug Class Eliminated + PIMS/Response Persistence + Event Bus Hardening
+
+Patch release closing two silent-misclassification bugs that mis-ranked stakeholders and response measures in non-English sessions, persisting two previously-ephemeral modules' data into the canonical project state, and fixing 10 pre-existing test failures by isolating event-bus emit-time reads.
+
+### Added
+- **Canonical `data$response_measures` slot** in `create_empty_project()` (`functions/data_structure.R`) — three sub-tables (`measures`, `impacts`, `milestones`) plus a `counter`, matching the response module's reactiveValues schema. `Effectiveness`/`Feasibility` hold stable categorical keys (`"HIGH"`/`"MEDIUM"`/`"LOW"`/`"UNKNOWN"`/`""`) for locale-stable priority scoring.
+- **`engagements` and `communications` slots** under `data$pims` in `create_empty_project()` — matching the pims_stakeholder module schema (TitleCase columns).
+- **`sync_to_project_data()` + `observeEvent(project_data_reactive()$project_id, ...)` LOAD observer** in `modules/pims_stakeholder_module.R` and `modules/response_module.R` — bidirectional sync between in-module reactiveValues and the canonical project store. Project-load keyed on `project_id` change to prevent feedback loops with same-project saves.
+- **`power_interest_label()` + `translate_levels_for_export()` helpers** in `modules/pims_stakeholder_module.R`, and analogous `level_label()` + `translate_levels_for_display()` in `modules/response_module.R` — translate stable keys back to localized labels at display/export boundaries. Internal storage stays locale-independent.
+
+### Fixed
+- **Silent stakeholder misclassification in non-English sessions** (`modules/pims_stakeholder_module.R`). The `sh_power` and `sh_interest` `selectInput`s stored translated labels (e.g., `"Alta"` in Spanish); subsequent comparisons used English literals (`df$Power == "High"`), so Power-Interest grid placement, summary statistics, Word/PNG export labels, and quadrant counts were all wrong outside English. Fix: `setNames(c("", "HIGH", "MEDIUM", "LOW"), c("", i18n$t(...), ...))` for stable stored keys; all 7 comparison sites updated. Persisted data: not applicable (the module's data was ephemeral pre-fix).
+- **Silent response-measure misranking in non-English sessions** (`modules/response_module.R`). Same bug class as stakeholders. `rm_effectiveness`/`rm_feasibility` `selectInput`s stored translated labels; `measures$Effectiveness == "High"` mapped to score 0 in non-English sessions, so the priority table reversed rankings for the highest-impact measures. Fix: stable keys `"HIGH"`/`"MEDIUM"`/`"LOW"`/`"UNKNOWN"` via `setNames()`; all 12 comparison sites updated via `replace_all`. Codebase-wide grep confirms zero remaining `== "(High|Medium|Low|Strong|Weak|Moderate)"` comparisons across `modules/`, `functions/`, `server/`.
+- **PIMS stakeholder data was ephemeral**. The pims_stakeholder module received `project_data_reactive` but never read or wrote it — stakeholders, engagements, communications, and ID counters all lived in module-local reactiveValues and vanished on session restart. Fix: bidirectional sync as described under Added.
+- **Response-measure data was ephemeral** for the same architectural reason. Fix: same pattern.
+- **10 pre-existing failures in `test-reactive-pipeline.R`** (`server/event_bus_setup.R`). Each `emit_*` function read its trigger reactiveVal to compute the increment (`current <- triggers$X(); triggers$X(current + 1)`); the unwrapped read raised "Operation not allowed without an active reactive context" when called from top-level test code. Wrapped all 8 emit bodies in `shiny::isolate({...})`. Side benefit in production: emit no longer registers a reactive dependency on the very event it emits, preventing potential self-firing observer loops.
+- **`ns("stale_data")` references undefined `ns` in two analysis-module server bodies** (`modules/analysis_leverage.R:129`, `modules/analysis_simplify.R:450`). Six other analysis modules correctly assign `ns <- session$ns` at server top; these two did not, so the stale-data notification would have thrown at runtime when ISA changed during a completed analysis. Fix: `session$ns("stale_data")`. Verified the other six analysis modules are clean via per-module subagent audit.
+- **`usei18n` wrapper placed AFTER `ns <- NS(id)` in 11 module UI functions** — `analysis_leverage`, `analysis_intervention`, `analysis_metrics`, `template_ses`, `scenario_builder`, `local_storage` (×2 functions), `create_ses`, `cld_visualization`, `guidebook`, `export_reports`. CLAUDE.md mandates the defensive wrapper as the first statement of every UI function. Reordered all 11. Cosmetic but enforces the convention codebase-wide.
+- **`debug_log()` called with silently-dropped third argument** at `modules/ai_isa/answer_processor.R:32, 37, 42, 56` (passed `"WARN"` as a severity arg; the helper signature is `function(message, context = NULL)` and drops anything beyond). Folded severity into the category string (`"AI ISA PROCESS WARN"`) so the intent appears in actual log output.
+- **Schema validators in `functions/data_structure.R` checked for the wrong stakeholder schema**. `validate_pims_data` and `validate_pims_data_safe` were guarding the old lowercase numeric schema (`stakeholders$power` numeric 0–10) that no UI ever populated. Updated both validators to check the new categorical TitleCase schema (`Power` ∈ {`""`, `"HIGH"`, `"MEDIUM"`, `"LOW"`}); 2 obsolete unit tests in `test-data-structure-enhanced.R` updated to match.
+
+### Changed
+- **`data$pims$stakeholders` canonical schema** replaced — was lowercase numeric (`id`, `name`, `power=numeric()`, `interest=numeric()`, `contact_email`, ...); now TitleCase categorical (`ID`, `Name`, `Type`, `Sector`, `Contact`, `Interests`, `Role`, `Power=character()`, `Interest=character()`, `Attitude`, `EngagementLevel`, `DateAdded`) matching the only UI producer. Existing project files almost certainly have an empty old-schema data frame (no UI ever wrote the old schema), so no migration step is required for typical projects. Validators updated accordingly. Confirmed by re-running `test-integration.R:75-108` which already used the TitleCase schema.
+- **PNG export labels in `modules/pims_stakeholder_module.R`** — 12 hardcoded English strings (axis labels, plot title, quadrant labels, "no data" placeholder) now use the same i18n keys the on-screen plot already used. No new translation keys required.
+- **Excel / Word / CSV exports from `pims_stakeholder_module` and `response_module`** now run `translate_levels_for_export()` / `translate_levels_for_display()` on `Power`/`Interest`/`Effectiveness`/`Feasibility` columns. Users see localized labels in downloads; internal storage keeps stable keys.
+- **`CLAUDE.md` Error Handling example** now shows the canonical `context_key = "common.messages.context_saving_project"` form instead of the deprecated `context = "saving project"`. Verified the key exists in `translations/common/messages.json` and matches the codebase's 38 production call sites (one legacy `context = ...` caller remains at `functions/async_helpers.R:49` with no `i18n` in scope).
+
+### Test Status at Release
+- **Affected suites all green**: `test-pims-module.R` 47/47, `test-response-module.R` 8/8, `test-data-structure-enhanced.R` 135/135 (2 tests updated for new schema), `test-integration.R` 56/56, `test-export-functions-enhanced.R` 72/72, `test-i18n-enforcement.R` 37/37, `test-reactive-pipeline.R` **120/120** (up from 110 pass + 10 errors).
+- **Codebase-wide sweep clean**: `grep '== "(High|Medium|Low|Strong|Weak|Moderate)"'` across `modules/`, `functions/`, `server/` returns zero matches. The silent-misclassification bug class is fully eliminated.
+
+### Not in This Release
+- `scenario_builder_module.R` DAPSI category cross-locale drift (milder — no `==` comparison, just stale stored labels when language switches mid-session) — same `setNames` fix pattern would apply, deferred.
+- Word export English headings in `pims_stakeholder_module` and `response_module` (`"Stakeholder Analysis Summary"`, `"Generated:"`, `"Overview"`, `"Stakeholder Details"`) — need new translation keys across 9 language files, deferred to a docs/i18n release.
+- `init_session_data()` (`functions/utils.R:131`) returning `pims = list()` instead of the structured `create_empty_project()` schema — pre-existing inconsistency, harmless because LOAD observers guard with `is.null()`.
+
 ## [1.11.2] - 2026-04-23
 
 ### CLD Sync Hardening + i18n Context Migration

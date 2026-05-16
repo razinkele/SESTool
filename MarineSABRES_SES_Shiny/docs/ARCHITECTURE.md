@@ -101,3 +101,41 @@ MarineSABRES SES Toolbox - Key design decisions for knowledge transfer.
 **Decision:** Hard-code the 7 DAPSIWRM element categories (Drivers, Activities, Pressures, Marine Processes & Functioning, Ecosystem Services, Goods & Benefits, Responses) as the core domain model in `constants.R`. All ISA data structures, templates, and analyses are organized around these categories.
 
 **Consequences:** The app is purpose-built for DAPSIWRM and cannot easily support alternative SES frameworks. This is intentional -- the Marine-SABRES project requires this specific framework. Element colors, shapes, and ID prefixes are all tied to these 7 categories. The `DAPSIWRM_FRAMEWORK_RULES.md` documents valid connection types between categories.
+
+---
+
+## ADR-11: Stable Categorical Keys for Localized selectInputs
+
+**Context:** Modules with `selectInput(choices = c("", i18n$t("modules.x.high"), i18n$t("modules.x.medium"), ...))` store the *translated* label as the input value. Code that compares those values against English literals (`df$Power == "High"`) then silently mis-classifies records in any non-English session. PIMS Power-Interest grids reversed quadrant counts; response-measure priority scoring inverted rankings; both failed silently.
+
+**Decision:** Where a `selectInput` value is used in logic (comparisons, scoring, filtering), wrap choices with `setNames(c("", "HIGH", "MEDIUM", "LOW"), c("", i18n$t("modules.x.high"), i18n$t("modules.x.medium"), i18n$t("modules.x.low")))`. The names become the display labels (locale-dependent); the values become stable categorical keys (locale-independent). Logic compares against stable keys; display code translates via small `level_label(key)` helpers at the boundary.
+
+**Consequences:** Internal state is locale-independent — a session that started in Spanish and switched to French keeps comparing values correctly. Excel/Word/CSV exports translate at the export boundary via a small `translate_levels_for_export(df)` helper so users still see localized labels in downloads. The pattern is now applied in `pims_stakeholder_module.R` (Power/Interest) and `response_module.R` (Effectiveness/Feasibility); a codebase-wide grep for `== "(High|Medium|Low|Strong|Weak|Moderate)"` confirms no remaining offenders.
+
+---
+
+## ADR-12: Module Data Persistence via `project_id`-Keyed Load Observer
+
+**Context:** Several Shiny modules (initially `pims_stakeholder_module.R` and `response_module.R`) accept `project_data_reactive` as a parameter but operate on module-local `reactiveValues`, never reading from or writing to the canonical project store. Data vanishes on session restart and is missing from project save files. A naive bidirectional `observe()` causes a feedback loop (save → project_data changes → load fires → writes module state → triggers save).
+
+**Decision:** Each persisting module exposes a `sync_to_project_data()` helper called explicitly after every mutation, and a load observer keyed on `project_id`:
+
+```r
+observeEvent(project_data_reactive()$project_id, {
+  # populate module state from project_data
+}, ignoreNULL = FALSE)
+```
+
+`project_id` only changes when a different project is loaded; same-project saves preserve it, so loads don't re-fire on the module's own writes. Mutations call the explicit `sync_to_project_data()`; no implicit observer chain.
+
+**Consequences:** The pattern is a copy-paste template for new modules with their own reactiveValues that need persistence. The trade-off vs. making `project_data` the only source of truth is that each module keeps a local copy — divergence is possible if a third party mutates `project_data` outside the LOAD path. Acceptable because no other code path mutates a module's slot. Validated by `test-pims-module.R` (47/47) and `test-response-module.R` (8/8) after the migration.
+
+---
+
+## ADR-13: `isolate()` All Event-Bus `emit_*` Bodies
+
+**Context:** Event-bus emitters in `server/event_bus_setup.R` compute their increment via `current <- triggers$X(); triggers$X(current + 1)`. Reading a `reactiveVal` registers a dependency on the current reactive context. Two problems followed: (1) the test suite couldn't call `bus$emit_isa_change()` from top-level code without raising "Operation not allowed without an active reactive context", and (2) any observer that emitted an event registered itself as a dependent of the event it just fired, risking self-firing loops if the observer body did anything else reactive.
+
+**Decision:** Wrap each `emit_*` function body in `shiny::isolate({...})`. Emit functions write events; they should not be reactive consumers, ever.
+
+**Consequences:** Tests can construct an event bus and exercise emit/get patterns directly with `shiny::isolate()` only on the *read-side* getters (which need to register dependencies in production). Production observers no longer depend on the events they emit. The fix turned 10 long-standing test errors green in one commit. Applied to all 8 `emit_*` functions: `emit_isa_change`, `emit_cld_update`, `emit_analysis_request`, `emit_template_loaded`, `emit_project_saved`, `emit_project_loaded`, `emit_navigation_request`, `emit_language_changed`.

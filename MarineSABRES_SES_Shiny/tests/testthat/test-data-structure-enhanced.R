@@ -405,19 +405,22 @@ test_that("validate_isa_structure_safe handles invalid element types", {
 })
 
 test_that("validate_pims_data_safe handles invalid stakeholder values", {
+  # Schema uses TitleCase categorical Power/Interest; allowed values are
+  # "", "HIGH", "MEDIUM", "LOW". Anything else should produce a validation key.
   pims_data <- list(
     stakeholders = data.frame(
-      id = "S1",
-      name = "Test",
-      power = 15,  # Out of range (0-10)
-      interest = 5
+      ID = "S1",
+      Name = "Test",
+      Power = "VERY_HIGH",  # Not in {"", "HIGH", "MEDIUM", "LOW"}
+      Interest = "HIGH",
+      stringsAsFactors = FALSE
     )
   )
 
   result <- validate_pims_data_safe(pims_data)
 
   expect_true(length(result) > 0)
-  expect_true(any(grepl("power", result)))
+  expect_true(any(grepl("Power", result)))
 })
 
 # ============================================================================
@@ -636,19 +639,22 @@ test_that("Validation catches multiple errors", {
   project <- create_empty_project_safe("Test")
   expect_false(is.null(project))
 
-  # Add stakeholder with invalid power value
+  # Add stakeholder with invalid categorical Power value.
+  # Schema is TitleCase; valid Power/Interest are "", "HIGH", "MEDIUM", "LOW".
   project$data$pims$stakeholders <- data.frame(
-    id = "S1",
-    name = "Test Stakeholder",
-    organization = "Test Org",
-    type = "Public",
-    power = 20,  # Out of range
-    interest = 5,
-    contact_email = "invalid_email",  # Invalid format
-    contact_phone = "",
-    communication_preference = "",
-    notes = ""
-    
+    ID = "S1",
+    Name = "Test Stakeholder",
+    Type = "Public",
+    Sector = "",
+    Contact = "",
+    Interests = "",
+    Role = "",
+    Power = "EXTREME",   # Not in valid levels
+    Interest = "HIGH",
+    Attitude = "",
+    EngagementLevel = "",
+    DateAdded = "",
+    stringsAsFactors = FALSE
   )
 
   # Validate

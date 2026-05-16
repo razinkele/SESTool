@@ -22,8 +22,8 @@ source("modules/ai_isa/step_navigation.R", local = TRUE)
 # ============================================================================
 
 ai_isa_assistant_ui <- function(id, i18n) {
-  ns <- NS(id)
   tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+  ns <- NS(id)
 
   fluidPage(
     # External CSS (extracted from inline styles)
