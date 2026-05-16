@@ -466,9 +466,19 @@ scenario_builder_server <- function(id, project_data_reactive, i18n, event_bus =
 
         textInput(ns("new_node_label"), i18n$t("modules.scenario.builder.scenario_node_label"),
                  placeholder = i18n$t("modules.scenario.builder.scenario_node_label_placeholder")),
+        # Stable English category values match the baseline CLD's group convention
+        # (DAPSIWRM_ELEMENTS in constants.R + "Measures"). User sees localized labels;
+        # stored value is locale-independent so saved scenarios round-trip correctly
+        # across language switches and stay consistent with baseline node groupings.
         selectInput(ns("new_node_dapsi"), i18n$t("modules.scenario.builder.scenario_dapsi_category"),
-                   choices = c("", i18n$t("modules.scenario.builder.driver"), i18n$t("modules.scenario.builder.activity"), i18n$t("modules.scenario.builder.pressure"), i18n$t("modules.scenario.builder.state"),
-                             i18n$t("modules.scenario.builder.impact"), i18n$t("modules.scenario.builder.welfare"), i18n$t("modules.scenario.builder.response"), i18n$t("modules.scenario.builder.management"))),
+                   choices = setNames(
+                     c("", "Drivers", "Activities", "Pressures", "Marine Processes & Functioning",
+                       "Ecosystem Services", "Goods & Benefits", "Responses", "Measures"),
+                     c("", i18n$t("modules.scenario.builder.driver"), i18n$t("modules.scenario.builder.activity"),
+                       i18n$t("modules.scenario.builder.pressure"), i18n$t("modules.scenario.builder.state"),
+                       i18n$t("modules.scenario.builder.impact"), i18n$t("modules.scenario.builder.welfare"),
+                       i18n$t("modules.scenario.builder.response"), i18n$t("modules.scenario.builder.management"))
+                   )),
         textAreaInput(ns("new_node_description"), i18n$t("modules.scenario.builder.scenario_description"), rows = 3)
       ))
     })
