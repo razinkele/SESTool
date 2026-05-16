@@ -68,6 +68,37 @@ for (file in required_files) {
 }
 
 # ============================================================================
+# Check 1b: VERSION and VERSION_INFO.json agree
+# ============================================================================
+# Background: server/modals.R:1395 reads version_info$version from
+# VERSION_INFO.json for the App Info modal, while the footer reads APP_VERSION
+# from the VERSION file. These drifted apart from v1.11.0 through v1.13.3 — the
+# v1.13.4 fix bumped VERSION_INFO.json to match. This guard prevents recurrence
+# by aborting the deploy if the two sources of truth disagree.
+cat("\n[1b] Checking Version Consistency...\n")
+
+version_file <- tryCatch({
+  trimws(readLines("VERSION", n = 1L, warn = FALSE))
+}, error = function(e) NA_character_)
+
+version_info_value <- tryCatch({
+  jsonlite::fromJSON("VERSION_INFO.json")$version
+}, error = function(e) NA_character_)
+
+if (is.na(version_file) || is.na(version_info_value)) {
+  print_check("Version files readable", "ERROR",
+              "Could not read VERSION or parse VERSION_INFO.json")
+} else if (!identical(version_file, version_info_value)) {
+  print_check(
+    "VERSION ↔ VERSION_INFO.json agree", "ERROR",
+    sprintf("Mismatch — VERSION says '%s' but VERSION_INFO.json$version says '%s'. Update both, then re-run.",
+            version_file, version_info_value)
+  )
+} else {
+  print_check(sprintf("Version consistency (%s)", version_file), "PASS")
+}
+
+# ============================================================================
 # Check 2: Required directories exist
 # ============================================================================
 cat("\n[2] Checking Required Directories...\n")
