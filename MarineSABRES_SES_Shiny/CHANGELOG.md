@@ -5,6 +5,14 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.6] - 2026-05-17
+
+### Fixed
+- **Scenario Builder DAPSI cross-locale drift** (`modules/scenario_builder_module.R:469-477`). The "Add new node" modal's category `selectInput` stored the translated label as the value (e.g., `"Conductor"` in Spanish, `"Driver"` in English) and that value was written into `n$dapsi` + the visNetwork node `group` column. A scenario saved in Spanish would have `group = "Conductor"` while baseline CLD nodes used `group = "Drivers"` — the two never matched, breaking grouping/coloring and round-trips across language switches. Fix: `setNames()` mapping the **stable English** `DAPSIWRM_ELEMENTS` strings (`"Drivers"`, `"Activities"`, `"Pressures"`, `"Marine Processes & Functioning"`, `"Ecosystem Services"`, `"Goods & Benefits"`, `"Responses"`, `"Measures"`) to the localized display labels. New scenario nodes are now consistent with baseline CLD group convention. Closes the cross-locale-drift bug flagged in the Round 1 audit.
+
+### Migration Note
+- Existing scenarios saved before v1.13.6 may contain translated DAPSI strings in `nodes_added[[]]$dapsi`. They still render but won't share visNetwork grouping with baseline. To migrate: delete + recreate the affected nodes via the UI, or hand-edit the saved project file to replace translated labels with the English DAPSIWRM canonical strings.
+
 ## [1.13.5] - 2026-05-17
 
 ### Added
