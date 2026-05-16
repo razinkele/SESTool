@@ -35,8 +35,8 @@ test_that("collect_system_context returns all expected fields", {
               "collect_system_context not available")
 
   mock_input <- list(
-    sidebar              = "cld_visualization",
-    feedback_browser_info = "Mozilla/5.0 (Test)"
+    sidebar          = "cld_visualization",
+    fb_browser_info  = "Mozilla/5.0 (Test)"  # matches server/modals.R:1644 (Shiny.setInputValue)
   )
 
   mock_project <- list(

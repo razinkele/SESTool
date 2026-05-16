@@ -48,8 +48,12 @@ collect_system_context <- function(session     = NULL,
   }) %||% "unknown"
 
   # --- browser_info ----------------------------------------------------------
+  # NOTE: input is `fb_browser_info` (set by tags$script in server/modals.R:1644
+  # after the v0.x ef005fb rename from `feedback_*` to `fb_*`). The previous
+  # value `feedback_browser_info` here meant every submission had
+  # browser_info = "unknown".
   browser_info <- tryCatch({
-    val <- if (!is.null(input)) input$feedback_browser_info else NULL
+    val <- if (!is.null(input)) input$fb_browser_info else NULL
     if (is.null(val) || identical(val, "")) "unknown" else as.character(val)
   }, error = function(e) {
     if (exists("debug_log", mode = "function")) debug_log(paste("collect_system_context browser_info:", e$message), "WARN")
