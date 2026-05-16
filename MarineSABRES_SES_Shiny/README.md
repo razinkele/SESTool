@@ -13,17 +13,19 @@ A comprehensive Shiny application for Social-Ecological Systems (SES) analysis a
 
 ## Screenshots
 
+> Captured from the live application at v1.13.1.
+
 ### Home Page - Guided Workflow
 ![Home Page](docs/images/screenshot-home.png)
-*Choose between a guided step-by-step journey or quick access to specific tools*
+*Workflow stepper (Get Started → Create SES → Visualize → Analyze → Report), guided-pathway entry card with "Start Guided Journey" CTA, and a built-in FAQ section. Sidebar gives one-click access to every tool.*
 
-### Network Visualization
-![Network Visualization](docs/images/screenshot-visualization.png)
-*Interactive Causal Loop Diagram with DAPSI(W)R(M) elements, edit mode, and auto-save*
+### SES Creation
+![SES Creation](docs/images/screenshot-visualization.png)
+*Three paths to build a model: Templates (pre-configured marine SES like Fisheries, Caribbean, Offshore Wind), AI-guided creation, and Standard Entry. The same workflow stepper at the top shows progress through the 5-stage analysis pipeline.*
 
-### Layout Controls
-![Layout Controls](docs/images/screenshot-layout.png)
-*Customize network layout with hierarchical views, spacing, and horizontal spread options*
+### Network Visualization & Layout Controls
+![Visualization Layout](docs/images/screenshot-layout.png)
+*Causal Loop Diagram view with hierarchical (DAPSIWRM-aware) and physics-based layouts, on-screen editing toggle, leverage-point highlighting, and loop highlighting. Auto-save indicator (bottom right) confirms persistence.*
 
 ---
 
