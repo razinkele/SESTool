@@ -5,6 +5,14 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.3] - 2026-05-17
+
+### Fixed
+- **Deploy script `*.png` exclude was stripping the navbar logo.** `deployment/remote-deploy.sh` and `deployment/deploy-remote.ps1` both had `--exclude='*.png'` which was intended to skip `docs/images/screenshot-*.png` but also dropped `www/img/MSabres.png` (referenced at `functions/ui_header.R:21`) and `www/img/01 marinesabres_logo_transparent.png`. A v1.13.2 deploy would have rendered the production navbar with a broken-image placeholder. Tightened the pattern to `docs/images/*.png` so app UI assets ship. Verified via dry-run: `tar -tzf` now lists `./www/img/MSabres.png` and `./www/img/01 marinesabres_logo_transparent.png`.
+- **Deploy script wiped accumulated production data.** Both scripts did `rm -rf $REMOTE_TARGET/*` (bash) or used `*.bak` cleanup (ps1) without preserving any state. Production-only files that get destroyed: `data/ml_training_data.rds` (~42KB of accumulated ML feedback never present in the local repo), `data/ml_feedback_log.{csv,rds}` (production deltas), and any `data/*_backup.json` files (manual saves). Added a tar-based preserve-and-restore step that snapshots matching files to `/tmp/marinesabres-preserve-$$.tgz` before clearing the target and untars them after extraction, idempotent and safe if nothing matches.
+
+This is a deploy-tooling patch release. The application code itself is unchanged from v1.13.2; no module, schema, or i18n changes.
+
 ## [1.13.2] - 2026-05-17
 
 ### Changed

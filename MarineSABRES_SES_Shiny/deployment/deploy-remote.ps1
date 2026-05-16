@@ -216,7 +216,7 @@ $excludes = @(
     "--exclude=run_ui_tests.R",
     "--exclude=fixture_list.txt",
     "--exclude=abstract.docx",
-    "--exclude=*.png"
+    "--exclude=docs/images/*.png"    # README screenshots only; keep www/img/*.png app logos
 )
 
 if ($ExcludeModels) {
@@ -331,6 +331,14 @@ Write-Status "Extracting files and restarting Shiny Server..."
 $remoteScript = @"
 set -e
 
+PRESERVE_TGZ="/tmp/marinesabres-preserve-`$`$.tgz"
+
+echo '==> Preserving accumulated user data (ml_*, *_backup.json)...'
+(cd ${RemoteTarget} && \
+  tar czf `$PRESERVE_TGZ \
+    `$(find data -maxdepth 2 \( -name 'ml_*' -o -name '*_backup.json' \) 2>/dev/null | tr '\n' ' ') \
+    2>/dev/null) || echo '   (no preserve files found, continuing)'
+
 echo '==> Preparing target directory...'
 cd ${RemoteTarget}
 
@@ -347,6 +355,11 @@ find ${RemoteTarget} -maxdepth 1 -type f -user ${RemoteOwner} -delete 2>/dev/nul
 
 echo '==> Extracting archive...'
 tar -xzf /tmp/${TarFilename} -C ${RemoteTarget}/
+
+echo '==> Restoring preserved user data...'
+(test -s `$PRESERVE_TGZ && tar xzf `$PRESERVE_TGZ -C ${RemoteTarget}/ && \
+   echo '   Restored:' && tar tzf `$PRESERVE_TGZ) || echo '   (nothing to restore)'
+rm -f `$PRESERVE_TGZ
 
 echo '==> Setting ownership (${RemoteOwner}:${RemoteGroup})...'
 chown -R ${RemoteOwner}:${RemoteGroup} ${RemoteTarget} 2>/dev/null || true

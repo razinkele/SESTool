@@ -115,7 +115,7 @@ EXCLUDES=(
     --exclude=abstract.docx
     --exclude=klaidoos.docx
     --exclude='__*.py'
-    --exclude='*.png'
+    --exclude='docs/images/*.png'    # README screenshots only; keep www/img/*.png app logos
     --exclude='*.ipynb'
     --exclude='test-*.R'
     --exclude='update_polarities.R'
@@ -171,8 +171,14 @@ echo -e "${GREEN}[OK]${NC} Archive uploaded"
 # Deploy on remote server
 echo ""
 echo -e "${BLUE}==>${NC} Deploying on remote server..."
+PRESERVE_TGZ="/tmp/marinesabres-preserve-$$.tgz"
 ssh -t "$REMOTE_USER@$REMOTE_HOST" "\
     set -e && \
+    echo '==> Preserving accumulated user data (ml_*, *_backup.json)...' && \
+    (cd $REMOTE_TARGET && \
+       tar czf $PRESERVE_TGZ \
+         \$(find data -maxdepth 2 \\( -name 'ml_*' -o -name '*_backup.json' \\) 2>/dev/null | tr '\\n' ' ') \
+         2>/dev/null) || echo '   (no preserve files found, continuing)' && \
     echo '==> Clearing target directory...' && \
     rm -rf $REMOTE_TARGET/* && \
     echo '==> Extracting archive...' && \
@@ -181,6 +187,10 @@ ssh -t "$REMOTE_USER@$REMOTE_HOST" "\
     EXTRACTED_COUNT=\$(find $REMOTE_TARGET -type f | wc -l) && \
     if [ \$EXTRACTED_COUNT -lt 100 ]; then echo 'FAIL: only' \$EXTRACTED_COUNT 'files extracted (expected >=100)'; exit 1; fi && \
     echo '==> Extracted' \$EXTRACTED_COUNT 'files' && \
+    echo '==> Restoring preserved user data...' && \
+    (test -s $PRESERVE_TGZ && tar xzf $PRESERVE_TGZ -C $REMOTE_TARGET/ && \
+       echo '   Restored:' && tar tzf $PRESERVE_TGZ) || echo '   (nothing to restore)' && \
+    rm -f $PRESERVE_TGZ && \
     echo '==> Setting ownership ($REMOTE_OWNER:$REMOTE_GROUP)...' && \
     chown -R $REMOTE_OWNER:$REMOTE_GROUP $REMOTE_TARGET && \
     chmod -R 755 $REMOTE_TARGET && \
