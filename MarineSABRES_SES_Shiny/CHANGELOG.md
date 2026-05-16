@@ -5,6 +5,14 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.2] - 2026-05-17
+
+### Changed
+- **README screenshots refreshed** (`docs/images/screenshot-{home,visualization,layout}.png`). Replaced pre-PR-#17 screenshots with fresh full-page captures from the running v1.13.1 build, taken via headless Playwright on the clean clone. The home-page screenshot now confirms the workflow stepper renders proper translated labels ("Get Started", "Create SES", "Visualize", "Analyze", "Report") instead of the raw i18n keys that were displayed pre-PR-#17.
+- **README image captions rewritten** to describe what's actually visible on screen (no functional or i18n changes).
+
+This is a docs-only patch release; no code, schema, or behavior changes.
+
 ## [1.13.1] - 2026-05-17
 
 ### Fixed
