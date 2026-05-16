@@ -1028,7 +1028,7 @@ auto_save_server <- function(id, project_data_reactive, i18n,
             i18n$t("common.messages.error"),
             type = "error"
           )
-          debug_log(paste("Auto-save recovery failed: could not read", latest_file), "AUTO_SAVE")
+          debug_log(paste("Auto-save recovery failed: could not read", latest_file), "AUTO-SAVE")
           return()
         }
 

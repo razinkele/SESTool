@@ -69,12 +69,18 @@ pims_stakeholder_ui <- function(id, i18n) {
                   fluidRow(
                     column(3,
                       selectInput(ns("sh_power"), i18n$t("modules.pims.stakeholder.powerinfluence"),
-                                 choices = c("", i18n$t("modules.response.measures.high"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.low")),
+                                 choices = setNames(
+                                   c("", "HIGH", "MEDIUM", "LOW"),
+                                   c("", i18n$t("modules.response.measures.high"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.low"))
+                                 ),
                                  selected = "")
                     ),
                     column(3,
                       selectInput(ns("sh_interest"), i18n$t("modules.pims.stakeholder.interestimpact"),
-                                 choices = c("", i18n$t("modules.response.measures.high"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.low")),
+                                 choices = setNames(
+                                   c("", "HIGH", "MEDIUM", "LOW"),
+                                   c("", i18n$t("modules.response.measures.high"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.low"))
+                                 ),
                                  selected = "")
                     ),
                     column(3,
@@ -335,6 +341,30 @@ pims_stakeholder_ui <- function(id, i18n) {
 # Module Server ----
 pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus = NULL) {
   global_data <- project_data_reactive  # Legacy alias for internal code
+
+  # Translate stable Power/Interest keys ("HIGH"/"MEDIUM"/"LOW") back to the
+  # user's locale for display. Stored values are locale-independent so logic
+  # comparisons stay correct across language switches.
+  power_interest_label <- function(key) {
+    key <- as.character(key)
+    if (length(key) == 0 || is.na(key) || key == "") return("")
+    switch(key,
+      "HIGH"   = i18n$t("modules.response.measures.high"),
+      "MEDIUM" = i18n$t("modules.response.measures.medium"),
+      "LOW"    = i18n$t("modules.response.measures.low"),
+      key
+    )
+  }
+
+  # Returns the stakeholders data frame with Power/Interest stable keys
+  # translated to the current locale, suitable for Excel/Word/CSV export.
+  # Internal storage keeps stable keys for correctness; only exports show labels.
+  translate_levels_for_export <- function(df) {
+    if (is.null(df) || nrow(df) == 0) return(df)
+    if ("Power" %in% names(df))    df$Power    <- vapply(df$Power,    power_interest_label, character(1))
+    if ("Interest" %in% names(df)) df$Interest <- vapply(df$Interest, power_interest_label, character(1))
+    df
+  }
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -385,6 +415,35 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       communication_counter = 0
     )
 
+    # Persist module state back into project_data_reactive. Called after every
+    # mutation so stakeholder/engagement/communication data survives session
+    # restarts and gets written to project save files.
+    sync_to_project_data <- function() {
+      pd <- project_data_reactive()
+      if (is.null(pd)) return(invisible(NULL))
+      pd$data$pims$stakeholders         <- stakeholder_data$stakeholders
+      pd$data$pims$engagements          <- stakeholder_data$engagements
+      pd$data$pims$communications       <- stakeholder_data$communications
+      pd$data$pims$stakeholder_counter  <- stakeholder_data$stakeholder_counter
+      pd$data$pims$engagement_counter   <- stakeholder_data$engagement_counter
+      pd$data$pims$communication_counter <- stakeholder_data$communication_counter
+      project_data_reactive(pd)
+    }
+
+    # Load module state from project_data_reactive when a (different) project
+    # becomes active. Keyed on project_id so module saves (which don't change
+    # project_id) don't re-trigger a load and cause a feedback loop.
+    observeEvent(project_data_reactive()$project_id, {
+      pims <- project_data_reactive()$data$pims
+      if (is.null(pims)) return()
+      if (!is.null(pims$stakeholders))         stakeholder_data$stakeholders         <- pims$stakeholders
+      if (!is.null(pims$engagements))          stakeholder_data$engagements          <- pims$engagements
+      if (!is.null(pims$communications))       stakeholder_data$communications       <- pims$communications
+      if (!is.null(pims$stakeholder_counter))  stakeholder_data$stakeholder_counter  <- pims$stakeholder_counter
+      if (!is.null(pims$engagement_counter))   stakeholder_data$engagement_counter   <- pims$engagement_counter
+      if (!is.null(pims$communication_counter)) stakeholder_data$communication_counter <- pims$communication_counter
+    }, ignoreNULL = FALSE)
+
     # Add Stakeholder ----
     observeEvent(input$add_stakeholder, {
       req(input$sh_name, input$sh_type)
@@ -409,6 +468,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       )
 
       stakeholder_data$stakeholders <- rbind(stakeholder_data$stakeholders, new_row)
+      sync_to_project_data()
 
       # Clear inputs
       updateTextInput(session, "sh_name", value = "")
@@ -438,6 +498,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       selected_rows <- input$stakeholder_table_rows_selected
       if (!is.null(selected_rows) && length(selected_rows) > 0) {
         stakeholder_data$stakeholders <- stakeholder_data$stakeholders[-selected_rows, ]
+        sync_to_project_data()
         showNotification(paste(i18n$t("modules.pims.stakeholder.deleted"), length(selected_rows), i18n$t("modules.pims.stakeholder.stakeholders")), type = "warning")
       } else {
         showNotification(i18n$t("modules.pims.stakeholder.no_stakeholders_selected"), type = "error")
@@ -456,12 +517,12 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       req(nrow(stakeholder_data$stakeholders) > 0)
 
       df <- stakeholder_data$stakeholders
-      df$PowerNum <- ifelse(df$Power == "High", 3,
-                           ifelse(df$Power == "Medium", 2,
-                                 ifelse(df$Power == "Low", 1, NA)))
-      df$InterestNum <- ifelse(df$Interest == "High", 3,
-                              ifelse(df$Interest == "Medium", 2,
-                                    ifelse(df$Interest == "Low", 1, NA)))
+      df$PowerNum <- ifelse(df$Power == "HIGH", 3,
+                           ifelse(df$Power == "MEDIUM", 2,
+                                 ifelse(df$Power == "LOW", 1, NA)))
+      df$InterestNum <- ifelse(df$Interest == "HIGH", 3,
+                              ifelse(df$Interest == "MEDIUM", 2,
+                                    ifelse(df$Interest == "LOW", 1, NA)))
 
       df <- df[!is.na(df$PowerNum) & !is.na(df$InterestNum), ]
 
@@ -517,10 +578,10 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       req(nrow(stakeholder_data$stakeholders) > 0)
 
       df <- stakeholder_data$stakeholders
-      key_players <- sum(df$Power == "High" & df$Interest == "High", na.rm = TRUE)
-      keep_satisfied <- sum(df$Power == "High" & df$Interest == "Low", na.rm = TRUE)
-      keep_informed <- sum(df$Power == "Low" & df$Interest == "High", na.rm = TRUE)
-      monitor <- sum(df$Power == "Low" & df$Interest == "Low", na.rm = TRUE)
+      key_players <- sum(df$Power == "HIGH" & df$Interest == "HIGH", na.rm = TRUE)
+      keep_satisfied <- sum(df$Power == "HIGH" & df$Interest == "LOW", na.rm = TRUE)
+      keep_informed <- sum(df$Power == "LOW" & df$Interest == "HIGH", na.rm = TRUE)
+      monitor <- sum(df$Power == "LOW" & df$Interest == "LOW", na.rm = TRUE)
 
       paste0(
         i18n$t("modules.pims.stakeholder.total_stakeholders"), " ", nrow(df), "\n\n",
@@ -536,12 +597,12 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       req(input$plot_click, nrow(stakeholder_data$stakeholders) > 0)
 
       df <- stakeholder_data$stakeholders
-      df$PowerNum <- ifelse(df$Power == "High", 3,
-                           ifelse(df$Power == "Medium", 2,
-                                 ifelse(df$Power == "Low", 1, NA)))
-      df$InterestNum <- ifelse(df$Interest == "High", 3,
-                              ifelse(df$Interest == "Medium", 2,
-                                    ifelse(df$Interest == "Low", 1, NA)))
+      df$PowerNum <- ifelse(df$Power == "HIGH", 3,
+                           ifelse(df$Power == "MEDIUM", 2,
+                                 ifelse(df$Power == "LOW", 1, NA)))
+      df$InterestNum <- ifelse(df$Interest == "HIGH", 3,
+                              ifelse(df$Interest == "MEDIUM", 2,
+                                    ifelse(df$Interest == "LOW", 1, NA)))
 
       df <- df[!is.na(df$PowerNum) & !is.na(df$InterestNum), ]
 
@@ -559,8 +620,8 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
         i18n$t("common.labels.name"), " ", sh$Name, "\n",
         i18n$t("common.labels.type"), " ", sh$Type, "\n",
         i18n$t("modules.isa.data_entry.common.sector"), " ", sh$Sector, "\n",
-        i18n$t("modules.pims.stakeholder.power"), " ", sh$Power, "\n",
-        i18n$t("modules.pims.stakeholder.interest"), " ", sh$Interest, "\n",
+        i18n$t("modules.pims.stakeholder.power"), " ", power_interest_label(sh$Power), "\n",
+        i18n$t("modules.pims.stakeholder.interest"), " ", power_interest_label(sh$Interest), "\n",
         i18n$t("modules.pims.stakeholder.attitude"), " ", sh$Attitude, "\n\n",
         i18n$t("modules.pims.stakeholder.key_interests"), "\n", sh$Interests
       )
@@ -589,6 +650,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       )
 
       stakeholder_data$engagements <- rbind(stakeholder_data$engagements, new_row)
+      sync_to_project_data()
 
       # Clear inputs
       updateTextAreaInput(session, "eng_objectives", value = "")
@@ -624,6 +686,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
       )
 
       stakeholder_data$communications <- rbind(stakeholder_data$communications, new_row)
+      sync_to_project_data()
 
       # Clear inputs
       updateTextAreaInput(session, "comm_message", value = "")
@@ -648,8 +711,8 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
         i18n$t("modules.pims.stakeholder.total_stakeholders"), " ", nrow(df), "\n",
         i18n$t("modules.pims.stakeholder.stakeholder_types"), " ", length(unique(df$Type)), "\n",
         i18n$t("modules.pims.stakeholder.sectors_represented"), " ", length(unique(df$Sector)), "\n",
-        i18n$t("modules.pims.stakeholder.high_power_stakeholders"), " ", sum(df$Power == "High", na.rm = TRUE), "\n",
-        i18n$t("modules.pims.stakeholder.high_interest_stakeholders"), " ", sum(df$Interest == "High", na.rm = TRUE), "\n",
+        i18n$t("modules.pims.stakeholder.high_power_stakeholders"), " ", sum(df$Power == "HIGH", na.rm = TRUE), "\n",
+        i18n$t("modules.pims.stakeholder.high_interest_stakeholders"), " ", sum(df$Interest == "HIGH", na.rm = TRUE), "\n",
         i18n$t("modules.pims.stakeholder.total_engagements"), " ", nrow(stakeholder_data$engagements), "\n",
         i18n$t("modules.pims.stakeholder.total_communications"), " ", nrow(stakeholder_data$communications)
       )
@@ -722,7 +785,7 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
         addWorksheet(wb, "Engagements")
         addWorksheet(wb, "Communications")
 
-        writeData(wb, "Stakeholders", stakeholder_data$stakeholders)
+        writeData(wb, "Stakeholders", translate_levels_for_export(stakeholder_data$stakeholders))
         writeData(wb, "Engagements", stakeholder_data$engagements)
         writeData(wb, "Communications", stakeholder_data$communications)
 
@@ -739,40 +802,44 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
         req(nrow(stakeholder_data$stakeholders) > 0)
 
         df <- stakeholder_data$stakeholders
-        df$PowerNum <- ifelse(df$Power == "High", 3,
-                             ifelse(df$Power == "Medium", 2,
-                                   ifelse(df$Power == "Low", 1, NA)))
-        df$InterestNum <- ifelse(df$Interest == "High", 3,
-                                ifelse(df$Interest == "Medium", 2,
-                                      ifelse(df$Interest == "Low", 1, NA)))
+        df$PowerNum <- ifelse(df$Power == "HIGH", 3,
+                             ifelse(df$Power == "MEDIUM", 2,
+                                   ifelse(df$Power == "LOW", 1, NA)))
+        df$InterestNum <- ifelse(df$Interest == "HIGH", 3,
+                                ifelse(df$Interest == "MEDIUM", 2,
+                                      ifelse(df$Interest == "LOW", 1, NA)))
         df <- df[!is.na(df$PowerNum) & !is.na(df$InterestNum), ]
 
         png(file, width = 800, height = 800, res = 150)
 
         if (nrow(df) == 0) {
-          plot(1, 1, type = "n", xlab = "Interest/Impact", ylab = "Power/Influence",
-               main = "Power-Interest Grid (no data)", xlim = c(0.5, 3.5), ylim = c(0.5, 3.5))
+          plot(1, 1, type = "n",
+               xlab = i18n$t("modules.pims.stakeholder.interestimpact"),
+               ylab = i18n$t("modules.pims.stakeholder.powerinfluence"),
+               main = i18n$t("modules.pims.power_interest_gridnadd_stakeholders_with_power_an"),
+               xlim = c(0.5, 3.5), ylim = c(0.5, 3.5))
         } else {
           df$PowerNum <- jitter(df$PowerNum, amount = 0.15)
           df$InterestNum <- jitter(df$InterestNum, amount = 0.15)
 
           plot(df$InterestNum, df$PowerNum,
                xlim = c(0.5, 3.5), ylim = c(0.5, 3.5),
-               xlab = "Interest/Impact ->", ylab = "Power/Influence ->",
-               main = "Stakeholder Power-Interest Grid",
+               xlab = paste0(i18n$t("modules.pims.stakeholder.interestimpact"), " →"),
+               ylab = paste0(i18n$t("modules.pims.stakeholder.powerinfluence"), " →"),
+               main = i18n$t("modules.pims.stakeholder.stakeholder_power_interest_grid"),
                pch = 19, cex = 2, col = "#2E86AB",
                xaxt = "n", yaxt = "n", cex.lab = 1.2, cex.main = 1.5)
 
           abline(h = 2, v = 2, col = "gray30", lwd = 2, lty = 2)
 
           # Quadrant labels
-          text(1.25, 2.75, "Keep Satisfied\n(High Power, Low Interest)", cex = 0.9, col = "gray30")
-          text(2.75, 2.75, "Key Players\n(High Power, High Interest)", cex = 0.9, col = "gray30", font = 2)
-          text(1.25, 1.25, "Monitor\n(Low Power, Low Interest)", cex = 0.9, col = "gray30")
-          text(2.75, 1.25, "Keep Informed\n(Low Power, High Interest)", cex = 0.9, col = "gray30")
+          text(1.25, 2.75, paste0(i18n$t("modules.pims.stakeholder.keep_satisfied"), "\n(", i18n$t("modules.pims.stakeholder.high_power_low_interest"), ")"), cex = 0.9, col = "gray30")
+          text(2.75, 2.75, paste0(i18n$t("modules.pims.stakeholder.key_players"), "\n(", i18n$t("modules.pims.stakeholder.high_power_high_interest"), ")"), cex = 0.9, col = "gray30", font = 2)
+          text(1.25, 1.25, paste0(i18n$t("modules.pims.stakeholder.monitor"), "\n(", i18n$t("modules.pims.stakeholder.low_power_low_interest"), ")"), cex = 0.9, col = "gray30")
+          text(2.75, 1.25, paste0(i18n$t("modules.pims.stakeholder.keep_informed"), "\n(", i18n$t("modules.pims.stakeholder.low_power_high_interest"), ")"), cex = 0.9, col = "gray30")
 
-          axis(1, at = 1:3, labels = c("Low", "Medium", "High"))
-          axis(2, at = 1:3, labels = c("Low", "Medium", "High"))
+          axis(1, at = 1:3, labels = c(i18n$t("modules.response.measures.low"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.high")))
+          axis(2, at = 1:3, labels = c(i18n$t("modules.response.measures.low"), i18n$t("modules.response.measures.medium"), i18n$t("modules.response.measures.high")))
 
           # Background shading
           rect(0.5, 0.5, 2, 2, col = rgb(0.9, 0.9, 0.9, 0.3), border = NA)
@@ -806,21 +873,22 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
           # Summary statistics
           doc <- officer::body_add_par(doc, "Overview", style = "heading 2")
           doc <- officer::body_add_par(doc, paste("Total Stakeholders:", nrow(df)))
-          key_players <- sum(df$Power == "High" & df$Interest == "High", na.rm = TRUE)
+          key_players <- sum(df$Power == "HIGH" & df$Interest == "HIGH", na.rm = TRUE)
           doc <- officer::body_add_par(doc, paste("Key Players (High Power, High Interest):", key_players))
           doc <- officer::body_add_par(doc, "")
 
-          # Stakeholder table
+          # Stakeholder table (translate Power/Interest stable keys for display)
           doc <- officer::body_add_par(doc, "Stakeholder Details", style = "heading 2")
-          display_cols <- intersect(c("ID", "Name", "Organization", "Role", "Power", "Interest", "Attitude"), names(df))
-          ft <- flextable::flextable(df[, display_cols, drop = FALSE])
+          df_display <- translate_levels_for_export(df)
+          display_cols <- intersect(c("ID", "Name", "Organization", "Role", "Power", "Interest", "Attitude"), names(df_display))
+          ft <- flextable::flextable(df_display[, display_cols, drop = FALSE])
           ft <- flextable::autofit(ft)
           doc <- flextable::body_add_flextable(doc, ft)
 
           print(doc, target = file)
         }, error = function(e) {
           debug_log(paste("Stakeholder summary export failed:", e$message), "EXPORT")
-          utils::write.csv(stakeholder_data$stakeholders, file, row.names = FALSE)
+          utils::write.csv(translate_levels_for_export(stakeholder_data$stakeholders), file, row.names = FALSE)
         })
       }
     )

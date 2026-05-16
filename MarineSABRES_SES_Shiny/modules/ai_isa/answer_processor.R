@@ -29,17 +29,17 @@
 process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, REGIONAL_SEAS) {
   # --- Input validation ---
   if (is.null(answer) || !is.character(answer) || nchar(trimws(answer)) == 0) {
-    debug_log("process_answer: invalid answer (NULL, non-character, or empty)", "AI ISA PROCESS", "WARN")
+    debug_log("process_answer: invalid answer (NULL, non-character, or empty)", "AI ISA PROCESS WARN")
     return(invisible(NULL))
   }
 
   if (is.null(step_info) || !is.list(step_info) || is.null(step_info$target) || is.null(step_info$type)) {
-    debug_log("process_answer: invalid step_info (NULL or missing target/type)", "AI ISA PROCESS", "WARN")
+    debug_log("process_answer: invalid step_info (NULL or missing target/type)", "AI ISA PROCESS WARN")
     return(invisible(NULL))
   }
 
   if (is.null(rv)) {
-    debug_log("process_answer: rv is NULL", "AI ISA PROCESS", "WARN")
+    debug_log("process_answer: rv is NULL", "AI ISA PROCESS WARN")
     return(invisible(NULL))
   }
 
@@ -53,7 +53,7 @@ process_answer <- function(answer, step_info, rv, i18n, move_to_next_step_fn, RE
     # Try to match input to a regional sea
     matched_sea <- NULL
     if (is.null(REGIONAL_SEAS) || length(REGIONAL_SEAS) == 0) {
-      debug_log("process_answer: REGIONAL_SEAS is NULL or empty, using 'other'", "AI ISA PROCESS", "WARN")
+      debug_log("process_answer: REGIONAL_SEAS is NULL or empty, using 'other'", "AI ISA PROCESS WARN")
       rv$context$regional_sea <- "other"
       rv$conversation <- c(rv$conversation, list(
         list(type = "ai", message = i18n$t("modules.isa.ai_assistant.general_marine_suggestions"), timestamp = Sys.time())

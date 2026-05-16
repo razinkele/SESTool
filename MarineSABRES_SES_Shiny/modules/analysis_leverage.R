@@ -7,8 +7,8 @@
 #' @param id Module ID
 #' @return UI elements
 analysis_leverage_ui <- function(id, i18n) {
-  ns <- NS(id)
   tryCatch(shiny.i18n::usei18n(i18n$translator %||% i18n), error = function(e) NULL)  # Enable reactive translation updates
+  ns <- NS(id)
 
   tagList(
     uiOutput(ns("module_header")),
@@ -126,7 +126,7 @@ analysis_leverage_server <- function(id, project_data_reactive, i18n, event_bus 
           i18n$t("modules.analysis.common.data_changed_rerun"),
           type = "warning",
           duration = 5,
-          id = ns("stale_data")
+          id = session$ns("stale_data")
         )
       }
     })

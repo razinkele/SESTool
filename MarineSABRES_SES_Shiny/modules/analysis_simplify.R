@@ -447,7 +447,7 @@ analysis_simplify_server <- function(id, project_data_reactive, i18n, event_bus 
           i18n$t("modules.analysis.common.data_changed_rerun"),
           type = "warning",
           duration = 5,
-          id = ns("stale_data")
+          id = session$ns("stale_data")
         )
       }
     })

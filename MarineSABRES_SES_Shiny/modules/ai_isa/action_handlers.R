@@ -129,7 +129,7 @@ setup_action_handlers <- function(input, session, rv, i18n, project_data_reactiv
   })
 
   observeEvent(input$confirm_start_over, {
-    debug_log("[AI ISA] Starting over - resetting all data")
+    debug_log("[AI ISA] Starting over - resetting all data", "INFO")
 
     rv$current_step <- 0
     rv$auto_saved_step_10 <- FALSE
@@ -165,7 +165,7 @@ setup_action_handlers <- function(input, session, rv, i18n, project_data_reactiv
 
     current_data <- project_data_reactive()
     if (!is.null(current_data$data$isa_data)) {
-      debug_log("[AI ISA] Clearing saved project ISA data")
+      debug_log("[AI ISA] Clearing saved project ISA data", "INFO")
       current_data$data$isa_data <- NULL
       current_data$data$cld <- list(nodes = NULL, edges = NULL)
       current_data$data$metadata$data_source <- NULL
@@ -183,7 +183,7 @@ setup_action_handlers <- function(input, session, rv, i18n, project_data_reactiv
     removeModal()
 
     showNotification(i18n$t("common.messages.all_data_cleared_starting_over"), type = "message", duration = 3)
-    debug_log("[AI ISA] Reset complete")
+    debug_log("[AI ISA] Reset complete", "INFO")
   })
 
   # Framework element link observers - show element details in modal
@@ -281,7 +281,8 @@ setup_action_handlers <- function(input, session, rv, i18n, project_data_reactiv
           strong(conn$to_name),
           tags$br(),
           span(style = "font-size: 0.9em; color: #666;",
-               "Strength: ", conn$strength, ", Confidence: ", conn$confidence %||% 3)
+               i18n$t("modules.isa.data_entry.common.strength"), " ", conn$strength, ", ",
+               i18n$t("modules.isa.data_entry.common.confidence"), " ", conn$confidence %||% 3)
         )
       })
 

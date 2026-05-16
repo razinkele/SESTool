@@ -49,11 +49,16 @@ create_event_bus <- function(session_id = NULL) {
     # ========== ISA Change Events ==========
     # Emitted when ISA data is modified (elements added/removed/updated)
     emit_isa_change = function(source = "unknown") {
-      current <- triggers$isa_change()
-      triggers$isa_change(current + 1)
-      last_event_val(list(type = "isa_change", source = source, time = Sys.time()))
-      event_count_val(event_count_val() + 1)
-      debug_log(sprintf("Event: isa_change emitted by %s (count: %d)", source, current + 1), "EVENT_BUS")
+      # isolate() so emitters never register reactive dependencies on the
+      # very triggers they update — that would self-fire the calling observer
+      # and break callers from outside any reactive context (e.g., tests).
+      shiny::isolate({
+        current <- triggers$isa_change()
+        triggers$isa_change(current + 1)
+        last_event_val(list(type = "isa_change", source = source, time = Sys.time()))
+        event_count_val(event_count_val() + 1)
+        debug_log(sprintf("Event: isa_change emitted by %s (count: %d)", source, current + 1), "EVENT_BUS")
+      })
     },
 
     on_isa_change = function() {
@@ -63,11 +68,13 @@ create_event_bus <- function(session_id = NULL) {
     # ========== CLD Update Events ==========
     # Emitted when CLD visualization needs refresh
     emit_cld_update = function(source = "unknown") {
-      current <- triggers$cld_update()
-      triggers$cld_update(current + 1)
-      last_event_val(list(type = "cld_update", source = source, time = Sys.time()))
-      event_count_val(event_count_val() + 1)
-      debug_log(sprintf("Event: cld_update emitted by %s (count: %d)", source, current + 1), "EVENT_BUS")
+      shiny::isolate({
+        current <- triggers$cld_update()
+        triggers$cld_update(current + 1)
+        last_event_val(list(type = "cld_update", source = source, time = Sys.time()))
+        event_count_val(event_count_val() + 1)
+        debug_log(sprintf("Event: cld_update emitted by %s (count: %d)", source, current + 1), "EVENT_BUS")
+      })
     },
 
     on_cld_update = function() {
@@ -77,12 +84,14 @@ create_event_bus <- function(session_id = NULL) {
     # ========== Analysis Request Events ==========
     # Emitted when an analysis should be run
     emit_analysis_request = function(analysis_type = "all", source = "unknown") {
-      current <- triggers$analysis_request()
-      triggers$analysis_request(current + 1)
-      last_event_val(list(type = "analysis_request", analysis_type = analysis_type,
-                          source = source, time = Sys.time()))
-      event_count_val(event_count_val() + 1)
-      debug_log(sprintf("Event: analysis_request (%s) emitted by %s", analysis_type, source), "EVENT_BUS")
+      shiny::isolate({
+        current <- triggers$analysis_request()
+        triggers$analysis_request(current + 1)
+        last_event_val(list(type = "analysis_request", analysis_type = analysis_type,
+                            source = source, time = Sys.time()))
+        event_count_val(event_count_val() + 1)
+        debug_log(sprintf("Event: analysis_request (%s) emitted by %s", analysis_type, source), "EVENT_BUS")
+      })
     },
 
     on_analysis_request = function() {
@@ -92,12 +101,14 @@ create_event_bus <- function(session_id = NULL) {
     # ========== Template Loaded Events ==========
     # Emitted when a template is loaded
     emit_template_loaded = function(template_name = "unknown", source = "unknown") {
-      current <- triggers$template_loaded()
-      triggers$template_loaded(current + 1)
-      last_event_val(list(type = "template_loaded", template = template_name,
-                          source = source, time = Sys.time()))
-      event_count_val(event_count_val() + 1)
-      debug_log(sprintf("Event: template_loaded (%s) emitted by %s", template_name, source), "EVENT_BUS")
+      shiny::isolate({
+        current <- triggers$template_loaded()
+        triggers$template_loaded(current + 1)
+        last_event_val(list(type = "template_loaded", template = template_name,
+                            source = source, time = Sys.time()))
+        event_count_val(event_count_val() + 1)
+        debug_log(sprintf("Event: template_loaded (%s) emitted by %s", template_name, source), "EVENT_BUS")
+      })
     },
 
     on_template_loaded = function() {
@@ -106,12 +117,14 @@ create_event_bus <- function(session_id = NULL) {
 
     # ========== Project Save/Load Events ==========
     emit_project_saved = function(project_name = "unknown", source = "unknown") {
-      current <- triggers$project_saved()
-      triggers$project_saved(current + 1)
-      last_event_val(list(type = "project_saved", project = project_name,
-                          source = source, time = Sys.time()))
-      event_count_val(event_count_val() + 1)
-      debug_log(sprintf("Event: project_saved (%s) emitted by %s", project_name, source), "EVENT_BUS")
+      shiny::isolate({
+        current <- triggers$project_saved()
+        triggers$project_saved(current + 1)
+        last_event_val(list(type = "project_saved", project = project_name,
+                            source = source, time = Sys.time()))
+        event_count_val(event_count_val() + 1)
+        debug_log(sprintf("Event: project_saved (%s) emitted by %s", project_name, source), "EVENT_BUS")
+      })
     },
 
     on_project_saved = function() {
@@ -119,12 +132,14 @@ create_event_bus <- function(session_id = NULL) {
     },
 
     emit_project_loaded = function(project_name = "unknown", source = "unknown") {
-      current <- triggers$project_loaded()
-      triggers$project_loaded(current + 1)
-      last_event_val(list(type = "project_loaded", project = project_name,
-                          source = source, time = Sys.time()))
-      event_count_val(event_count_val() + 1)
-      debug_log(sprintf("Event: project_loaded (%s) emitted by %s", project_name, source), "EVENT_BUS")
+      shiny::isolate({
+        current <- triggers$project_loaded()
+        triggers$project_loaded(current + 1)
+        last_event_val(list(type = "project_loaded", project = project_name,
+                            source = source, time = Sys.time()))
+        event_count_val(event_count_val() + 1)
+        debug_log(sprintf("Event: project_loaded (%s) emitted by %s", project_name, source), "EVENT_BUS")
+      })
     },
 
     on_project_loaded = function() {
@@ -134,11 +149,13 @@ create_event_bus <- function(session_id = NULL) {
     # ========== Navigation Request Events ==========
     # Emitted to request navigation to a specific tab
     emit_navigation_request = function(target_tab, source = "unknown") {
-      triggers$navigation_request(list(tab = target_tab, time = Sys.time()))
-      last_event_val(list(type = "navigation_request", target = target_tab,
-                          source = source, time = Sys.time()))
-      event_count_val(event_count_val() + 1)
-      debug_log(sprintf("Event: navigation_request to %s emitted by %s", target_tab, source), "EVENT_BUS")
+      shiny::isolate({
+        triggers$navigation_request(list(tab = target_tab, time = Sys.time()))
+        last_event_val(list(type = "navigation_request", target = target_tab,
+                            source = source, time = Sys.time()))
+        event_count_val(event_count_val() + 1)
+        debug_log(sprintf("Event: navigation_request to %s emitted by %s", target_tab, source), "EVENT_BUS")
+      })
     },
 
     on_navigation_request = function() {
@@ -150,12 +167,14 @@ create_event_bus <- function(session_id = NULL) {
     # Modules with cached i18n in reactive() or renderUI() blocks can
     # observe this and re-render with the new language.
     emit_language_changed = function(new_lang = "unknown", source = "unknown") {
-      current <- triggers$language_changed()
-      triggers$language_changed(current + 1)
-      last_event_val(list(type = "language_changed", new_lang = new_lang,
-                          source = source, time = Sys.time()))
-      event_count_val(event_count_val() + 1)
-      debug_log(sprintf("Event: language_changed to %s emitted by %s (count: %d)", new_lang, source, current + 1), "EVENT_BUS")
+      shiny::isolate({
+        current <- triggers$language_changed()
+        triggers$language_changed(current + 1)
+        last_event_val(list(type = "language_changed", new_lang = new_lang,
+                            source = source, time = Sys.time()))
+        event_count_val(event_count_val() + 1)
+        debug_log(sprintf("Event: language_changed to %s emitted by %s (count: %d)", new_lang, source, current + 1), "EVENT_BUS")
+      })
     },
 
     on_language_changed = function() {
