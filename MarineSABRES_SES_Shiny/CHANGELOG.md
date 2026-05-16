@@ -5,6 +5,14 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.4] - 2026-05-17
+
+### Fixed
+- **App Info modal showed stale version "1.11.0 stable".** `VERSION_INFO.json` was last edited at the 1.11.0 release and never bumped through v1.11.2 → v1.13.3, even though `VERSION` and `DESCRIPTION` were kept in sync. The App Info modal (`server/modals.R:1395-1400`) reads `version_info$version` and `version_info$status` from this JSON, so the user-visible version display lagged 6 patch releases behind reality. Updated VERSION_INFO.json to v1.13.4 with the full session's features/fixes/metrics/migration-notes block accurately filled in.
+
+### Notes
+- The "missing version bump on VERSION_INFO.json" failure mode dates back to the v1.11.0 release. Worth adding a pre-deploy guard that compares `VERSION` against `VERSION_INFO.json`'s `version` field and aborts on mismatch (future patch).
+
 ## [1.13.3] - 2026-05-17
 
 ### Fixed
