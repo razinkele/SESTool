@@ -1,58 +1,94 @@
 {
-  "version": "1.11.0",
-  "version_name": "Knowledge Base & Template Overhaul",
-  "release_date": "2026-04-08",
-  "release_type": "minor",
+  "version": "1.13.4",
+  "version_name": "Persistence & i18n Hardening",
+  "release_date": "2026-05-17",
+  "release_type": "patch",
   "status": "stable",
   "minimum_r_version": "4.4.1",
   "changelog_url": "CHANGELOG.md",
-  "documentation_version": "1.11.0",
+  "documentation_version": "1.13.4",
   "api_version": "1.0",
   "database_version": "2.1",
   "breaking_changes": false,
   "security_updates": false,
   "features": [
-    "6 SES templates rebuilt from knowledge base with full DAPSIWRM coverage",
-    "Caribbean template: 87 connections gain polarity, A10 corrected, P13 removed, 5 feedback loops added",
-    "Same-type matrix support (p_p, s_s) for pressure-pressure and state-state connections",
-    "Domain-specific measures added to all 6 rebuilt templates",
-    "KB habitat enrichment: Zostera marina, Cymodocea nodosa, mangrove-seagrass connectivity",
-    "5 new validation tests for template structure, orphans, feedback loops, measures",
-    "Claude Code automations: pre-deploy skill, kb-audit skill, dapsiwrm-validator subagent"
+    "PIMS-style persistence pattern applied to three modules (pims_stakeholder, response_module, isa_data_entry): sync_to_project_data() helper + observeEvent on project_id to load. ADR-12 in docs/ARCHITECTURE.md.",
+    "Stable categorical keys for localized selectInputs (Power/Interest in pims, Effectiveness/Feasibility in response): setNames() so internal comparisons stay locale-independent. ADR-11.",
+    "Event-bus emit_* functions wrapped in shiny::isolate() — closes 10 pre-existing test failures and prevents observers from registering reactive dependencies on events they emit. ADR-13.",
+    "Workflow stepper 5 step-name keys added across all 9 languages (45 translation entries).",
+    "Scenario Builder 'Add new link' silent req() aborts replaced with user-visible toasts.",
+    "Feedback modal browser_info input ID renamed to match the post-ef005fb modal JS.",
+    "Deploy-script hardening: docs/images/*.png exclude (instead of *.png blanket), production user-data preservation around the wipe-and-extract."
   ],
   "fixes": {
     "critical": [
       {
-        "issue": "70+ spurious 'chain completion' connections with no scientific basis",
-        "file": "data/*_SES_Template.json",
-        "impact": "False causal relationships shown to users",
-        "resolution": "Removed all self-documented invalid connections and orphaned elements"
+        "issue": "ISA Data Entry edits never reached the project save file (modules/isa_data_entry_module.R had zero writes to project_data_reactive in 1352 lines).",
+        "file": "modules/isa_data_entry_module.R, functions/isa_form_builders.R",
+        "impact": "Silent data loss — users' Standard Entry work vanished on session restart and never appeared in saved project files.",
+        "resolution": "sync_to_project_data() called after every save_exN observer (8), add_loop, and per-panel Remove (6). project_id-keyed load observer replaces the unguarded observe() that was also re-clobbering in-progress edits."
       },
       {
-        "issue": "Caribbean A10 mislabeled as 'IUU fishing' — all connections described cruise ships",
-        "file": "data/Caribbean_SES_Template.json",
-        "impact": "Element name contradicted every connection description",
-        "resolution": "Renamed to 'Cruise ship and yacht tourism', fixed metadata"
+        "issue": "ISA Data Entry per-panel Remove only deleted the DOM panel, not the stored data.frame row. Ghost rows then re-rendered as visible duplicates.",
+        "file": "functions/isa_form_builders.R:register_remove_observer",
+        "impact": "Deleted elements reappeared with duplicate IDs on the next reactive recompute.",
+        "resolution": "register_remove_observer signature expanded to optionally delete the matching row from the data.frame by ID and invoke a sync callback."
       },
       {
-        "issue": "r_r matrix (measure→response connections) silently dropped in CLD visualization",
-        "file": "modules/template_ses_module.R, modules/ai_isa/connection_generator.R",
-        "impact": "Measures never appeared in causal loop diagrams",
-        "resolution": "Added r_r and r_mpf to all downstream matrix maps"
+        "issue": "Stakeholder Power-Interest classification silently miscategorized records in any non-English session (modules/pims_stakeholder_module.R).",
+        "file": "modules/pims_stakeholder_module.R",
+        "impact": "Power-Interest grid placement, summary statistics, and Word/PNG export labels all wrong outside English.",
+        "resolution": "setNames() with stable HIGH/MEDIUM/LOW keys; all 7 comparison sites updated; export boundary translates back via power_interest_label() helper."
+      },
+      {
+        "issue": "Response measure priority scoring silently inverted rankings in non-English sessions (modules/response_module.R).",
+        "file": "modules/response_module.R",
+        "impact": "Highest-impact response measures appeared at the BOTTOM of the priority table for any non-English user.",
+        "resolution": "Same stable-key pattern; 12 comparison sites updated; export translates via level_label()."
+      },
+      {
+        "issue": "Scenario Builder 'Add new link' button silently aborted when project_data was null, CLD was empty, or no scenario was selected.",
+        "file": "modules/scenario_builder_module.R:532-590",
+        "impact": "Button appeared dead. User perceived a freeze.",
+        "resolution": "Replaced 3 silent req() calls with explicit guards that call showNotification() telling the user what to do."
+      },
+      {
+        "issue": "Workflow stepper at top of dashboard rendered raw i18n keys (modules.workflow_stepper.step_get_started etc.) instead of translated labels.",
+        "file": "translations/modules/workflow_stepper.json",
+        "impact": "Visible regression — labels read like code identifiers, not localized words.",
+        "resolution": "Added the 5 missing keys × 9 languages."
       }
     ],
-    "improvements": [
+    "high": [
       {
-        "issue": "Templates had 1 element per category (8 total, 8 connections)",
-        "resolution": "Rebuilt from KB: 25-36 elements, 23-39 connections, feedback loops, measures per template"
+        "issue": "Two analysis modules called ns('stale_data') from server scope where ns wasn't defined.",
+        "file": "modules/analysis_leverage.R:129, modules/analysis_simplify.R:450",
+        "impact": "Runtime error when an analysis was completed and ISA then changed (stale-data notification path).",
+        "resolution": "Replaced with session$ns('stale_data')."
       },
       {
-        "issue": "3 Baltic habitat entries placed Z. marina in freshwater systems",
-        "resolution": "Removed inaccurate entries, kept 4 scientifically verified coastal contexts"
+        "issue": "10 pre-existing test failures in test-reactive-pipeline.R about emit_* reading reactiveVals outside reactive context.",
+        "file": "server/event_bus_setup.R",
+        "impact": "Tests not green; latent risk of observers self-firing on their own emitted events.",
+        "resolution": "Wrapped each of the 8 emit_* function bodies in shiny::isolate()."
       },
       {
-        "issue": "Deployment scripts hardcoded 'razinka' user",
-        "resolution": "Dynamic user fallback for portability"
+        "issue": "Feedback modal submissions always recorded browser_info as 'unknown' after the ef005fb input rename.",
+        "file": "functions/feedback_reporter.R:52",
+        "impact": "Lost diagnostic context on every feedback submission.",
+        "resolution": "Read input$fb_browser_info to match the modal's setInputValue call."
+      },
+      {
+        "issue": "Deploy script *.png exclude was stripping www/img/MSabres.png (navbar logo).",
+        "file": "deployment/remote-deploy.sh, deployment/deploy-remote.ps1",
+        "impact": "A v1.13.2 deploy would have rendered production with a broken navbar logo.",
+        "resolution": "Tightened exclude to docs/images/*.png. App UI assets ship; README screenshots stay excluded."
+      },
+      {
+        "issue": "Deploy script wiped production-accumulated user data (data/ml_training_data.rds ~42KB, data/*_backup.json) without backup.",
+        "file": "deployment/remote-deploy.sh, deployment/deploy-remote.ps1",
+        "impact": "Every production deploy permanently lost ML feedback accumulated since the previous deploy.",
+        "resolution": "tar-based preserve-and-restore step wrapping the rm-rf + extract."
       }
     ]
   },
@@ -68,13 +104,16 @@
     "cross_ecosystem_links": 20,
     "languages_supported": 9,
     "modules_total": 46,
-    "test_files": 56
+    "test_files": 56,
+    "modules_with_persistence_pattern": 3,
+    "user_reported_bugs_closed_in_release_series": 7,
+    "pre_existing_test_failures_fixed": 10
   },
   "migration_notes": [
-    "No breaking changes — fully backward-compatible with v1.10.x data",
-    "Aquaculture template renamed to 'Coastal Lagoon' — filename unchanged",
-    "Template element IDs changed from D1/A1 to D001/A001 format",
-    "Caribbean P13 (H2S emissions) removed — health impacts covered by S1→I10→W4 chain"
+    "data$pims$stakeholders schema changed from lowercase numeric (id, power=numeric()) to TitleCase categorical (ID, Power=character()) — only takes effect when a stakeholder is saved; existing empty projects unaffected.",
+    "data$response_measures top-level slot added to canonical schema (measures, impacts, milestones, counter).",
+    "data$pims$engagements and data$pims$communications top-level slots added.",
+    "VERSION_INFO.json was stale at 1.11.0 through v1.13.3 — Application Info modal now correctly reflects the running version."
   ],
-  "previous_version": "1.10.2"
+  "previous_version": "1.13.3"
 }
