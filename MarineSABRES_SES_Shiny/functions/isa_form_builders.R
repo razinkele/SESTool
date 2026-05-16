@@ -68,14 +68,42 @@ build_entry_panel_ui <- function(ns, prefix, current_id, fields, i18n) {
 
 #' Register a remove-button observer for an ISA entry panel
 #'
+#' Removes the DOM panel and, if `isa_data` + `data_key` + `id_prefix` are
+#' supplied, also deletes the matching row from the stored data.frame and
+#' invokes the optional `on_remove` callback (e.g. for sync-to-project_data).
+#' Without those arguments the function falls back to DOM-only removal
+#' for backward compatibility with callers that don't yet persist.
+#'
 #' @param input Shiny input object
 #' @param ns Shiny namespace function
-#' @param prefix Element prefix
-#' @param current_id Entry ID
+#' @param prefix Element prefix (e.g. "gb", "es")
+#' @param current_id Entry ID (numeric, matches the panel suffix)
 #' @param i18n Translation object
-register_remove_observer <- function(input, ns, prefix, current_id, i18n) {
+#' @param isa_data Optional reactiveValues containing the stored data.frame
+#' @param data_key Optional character — slot name in `isa_data` (e.g. "goods_benefits")
+#' @param id_prefix Optional character — ELEMENT_ID_PREFIX value (e.g. "GB")
+#' @param on_remove Optional function — called after row deletion (e.g. sync_to_project_data)
+register_remove_observer <- function(input, ns, prefix, current_id, i18n,
+                                     isa_data = NULL, data_key = NULL,
+                                     id_prefix = NULL, on_remove = NULL) {
   observeEvent(input[[paste0(prefix, "_remove_", current_id)]], {
     removeUI(selector = paste0("#", ns(paste0(prefix, "_panel_", current_id))))
+
+    # If the row was already committed via Save Exercise, delete it from the
+    # stored data.frame so the row doesn't ghost back on next render.
+    if (!is.null(isa_data) && !is.null(data_key) && !is.null(id_prefix)) {
+      df <- isa_data[[data_key]]
+      if (is.data.frame(df) && nrow(df) > 0) {
+        id_col <- if ("ID" %in% names(df)) "ID" else if ("id" %in% names(df)) "id" else NULL
+        if (!is.null(id_col)) {
+          target_id <- generate_element_id(id_prefix, current_id)
+          isa_data[[data_key]] <- df[df[[id_col]] != target_id, , drop = FALSE]
+        }
+      }
+    }
+
+    if (is.function(on_remove)) on_remove()
+
     showNotification(i18n$t("modules.isa.data_entry.common.entry_removed"), type = "message", duration = 2)
   }, ignoreInit = TRUE, once = TRUE)
 }
@@ -258,6 +286,19 @@ load_isa_elements_from_saved <- function(isa_data, isa_saved) {
       }
     }
     debug_log(sprintf("Loaded %d connections from adjacency matrices", n_connections), "ISA Module")
+  }
+
+  # Load loop connections (Exercise 6) if they exist — added in v1.13.0 alongside
+  # the project_data round-trip fix.
+  if (is.data.frame(isa_saved$loop_connections) && nrow(isa_saved$loop_connections) > 0) {
+    debug_log(sprintf("Loading %d loop connections", nrow(isa_saved$loop_connections)), "ISA Module")
+    isa_data$loop_connections <- isa_saved$loop_connections
+  }
+
+  # Load case_info (Exercise 0) if present
+  if (!is.null(isa_saved$case_info) && length(isa_saved$case_info) > 0) {
+    debug_log("Loading Exercise 0 case info", "ISA Module")
+    isa_data$case_info <- isa_saved$case_info
   }
 
   invisible(NULL)

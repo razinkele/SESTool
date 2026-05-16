@@ -183,20 +183,50 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
     # Track current exercise (1-indexed, 1 = Exercise 0)
     current_exercise <- reactiveVal(1)
 
-    observe({
-      debug_log("Checking for existing project data", "ISA Module")
+    # Persist module state back into project_data_reactive. Called after every
+    # save_exN observer and after each per-panel remove so ISA edits survive
+    # session restarts and reach the project save file. Mirrors the v1.12.0
+    # pims_stakeholder / response_module persistence pattern.
+    sync_to_project_data <- function() {
+      pd <- project_data_reactive()
+      if (is.null(pd)) return(invisible(NULL))
+      if (is.null(pd$data)) pd$data <- list()
+      if (is.null(pd$data$isa_data)) pd$data$isa_data <- list()
 
-      project <- global_data()
+      pd$data$isa_data$goods_benefits     <- isa_data$goods_benefits
+      pd$data$isa_data$ecosystem_services <- isa_data$ecosystem_services
+      pd$data$isa_data$marine_processes   <- isa_data$marine_processes
+      pd$data$isa_data$pressures          <- isa_data$pressures
+      pd$data$isa_data$activities         <- isa_data$activities
+      pd$data$isa_data$drivers            <- isa_data$drivers
 
+      if (!is.null(isa_data$adjacency_matrices)) {
+        pd$data$isa_data$adjacency_matrices <- isa_data$adjacency_matrices
+      }
+      if (!is.null(isa_data$loop_connections)) {
+        pd$data$isa_data$loop_connections <- isa_data$loop_connections
+      }
+      if (length(isa_data$case_info) > 0) {
+        pd$data$isa_data$case_info <- isa_data$case_info
+      }
+
+      project_data_reactive(pd)
+    }
+
+    # Load saved ISA data when a (different) project becomes active. Keyed on
+    # project_id so module saves — which don't change project_id — don't
+    # re-trigger a load and clobber in-progress edits (this exact loop was the
+    # ghost-row + duplicate-ID source before v1.13.0).
+    observeEvent(project_data_reactive()$project_id, {
+      project <- project_data_reactive()
       if (!is.null(project) && !is.null(project$data) && !is.null(project$data$isa_data)) {
-        debug_log("Found saved ISA data in project", "ISA Module")
+        debug_log("Loading saved ISA data on project change", "ISA Module")
         load_isa_elements_from_saved(isa_data, project$data$isa_data)
-        debug_log("Data loading complete", "ISA Module")
         data_initialized(TRUE)
       } else {
         debug_log("No saved ISA data found - starting fresh", "ISA Module")
       }
-    })
+    }, ignoreNULL = FALSE)
 
     # Render ISA header ----
     output$isa_header <- renderUI({
@@ -874,6 +904,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         welfare_impacts = if (!is.null(validations[[5]]$value)) validations[[5]]$value else "",
         key_stakeholders = if (!is.null(validations[[6]]$value)) validations[[6]]$value else ""
       )
+      sync_to_project_data()
 
       showNotification(i18n$t("modules.isa.data_entry.ex0.exercise_0_saved_successfully"), type = "message")
       debug_log("Exercise 0 case information saved", "INFO")
@@ -890,7 +921,10 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "gb", current_id, isa_fields_gb(i18n), i18n)
       )
 
-      register_remove_observer(input, ns, "gb", current_id, i18n)
+      register_remove_observer(input, ns, "gb", current_id, i18n,
+                              isa_data = isa_data, data_key = "goods_benefits",
+                              id_prefix = ELEMENT_ID_PREFIX$welfare,
+                              on_remove = sync_to_project_data)
     })
 
     output$gb_table <- renderDT({
@@ -918,6 +952,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
 
       isa_data$goods_benefits <- result$df
+      sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex1.exercise_1_saved"), nrow(result$df), i18n$t("modules.isa.data_entry.ex789.goods_benefits")),
                       type = "message", session = session)
       debug_log(paste("Exercise 1 saved with", nrow(result$df), "entries"), "INFO")
@@ -935,7 +970,10 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "es", current_id, isa_fields_es(i18n, linked_choices), i18n)
       )
 
-      register_remove_observer(input, ns, "es", current_id, i18n)
+      register_remove_observer(input, ns, "es", current_id, i18n,
+                              isa_data = isa_data, data_key = "ecosystem_services",
+                              id_prefix = ELEMENT_ID_PREFIX$impacts,
+                              on_remove = sync_to_project_data)
     })
 
     output$es_table <- renderDT({
@@ -963,6 +1001,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       }
 
       isa_data$ecosystem_services <- result$df
+      sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2a.exercise_2a_saved"), nrow(result$df), i18n$t("modules.ses.creation.ecosystem_services")),
                       type = "message", session = session)
       debug_log(paste("Exercise 2a saved with", nrow(result$df), "entries"), "INFO")
@@ -980,7 +1019,10 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "mpf", current_id, isa_fields_mpf(i18n, linked_choices), i18n)
       )
 
-      register_remove_observer(input, ns, "mpf", current_id, i18n)
+      register_remove_observer(input, ns, "mpf", current_id, i18n,
+                              isa_data = isa_data, data_key = "marine_processes",
+                              id_prefix = ELEMENT_ID_PREFIX$states,
+                              on_remove = sync_to_project_data)
     })
 
     output$mpf_table <- renderDT({
@@ -994,6 +1036,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         col_names = c("Name", "Type", "Description", "LinkedES", "Mechanism", "Spatial")
       )
       isa_data$marine_processes <- mpf_df
+      sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex2b.exercise_2b_saved"), nrow(mpf_df), i18n$t("modules.isa.data_entry.common.marine_processes")), type = "message")
     })
 
@@ -1009,7 +1052,10 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "p", current_id, isa_fields_p(i18n, linked_choices), i18n)
       )
 
-      register_remove_observer(input, ns, "p", current_id, i18n)
+      register_remove_observer(input, ns, "p", current_id, i18n,
+                              isa_data = isa_data, data_key = "pressures",
+                              id_prefix = ELEMENT_ID_PREFIX$pressures,
+                              on_remove = sync_to_project_data)
     })
 
     output$p_table <- renderDT({
@@ -1023,6 +1069,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         col_names = c("Name", "Type", "Description", "LinkedMPF", "Intensity", "Spatial", "Temporal")
       )
       isa_data$pressures <- p_df
+      sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex3.exercise_3_saved"), nrow(p_df), i18n$t("modules.response.measures.pressures")), type = "message")
     })
 
@@ -1038,7 +1085,10 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "a", current_id, isa_fields_a(i18n, linked_choices), i18n)
       )
 
-      register_remove_observer(input, ns, "a", current_id, i18n)
+      register_remove_observer(input, ns, "a", current_id, i18n,
+                              isa_data = isa_data, data_key = "activities",
+                              id_prefix = ELEMENT_ID_PREFIX$activities,
+                              on_remove = sync_to_project_data)
     })
 
     output$a_table <- renderDT({
@@ -1052,6 +1102,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         col_names = c("Name", "Sector", "Description", "LinkedP", "Scale", "Frequency")
       )
       isa_data$activities <- a_df
+      sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex4.exercise_4_saved"), nrow(a_df), i18n$t("modules.response.measures.activities")), type = "message")
     })
 
@@ -1067,7 +1118,10 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         ui = build_entry_panel_ui(ns, "d", current_id, isa_fields_d(i18n, linked_choices), i18n)
       )
 
-      register_remove_observer(input, ns, "d", current_id, i18n)
+      register_remove_observer(input, ns, "d", current_id, i18n,
+                              isa_data = isa_data, data_key = "drivers",
+                              id_prefix = ELEMENT_ID_PREFIX$drivers,
+                              on_remove = sync_to_project_data)
     })
 
     output$d_table <- renderDT({
@@ -1081,6 +1135,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         col_names = c("Name", "Type", "Description", "LinkedA", "Trend", "Controllability")
       )
       isa_data$drivers <- d_df
+      sync_to_project_data()
       showNotification(paste(i18n$t("modules.isa.data_entry.ex5.exercise_5_saved"), nrow(d_df), i18n$t("modules.response.measures.drivers")), type = "message")
     })
 
@@ -1164,6 +1219,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
       )
 
       isa_data$loop_connections <- rbind(isa_data$loop_connections, new_connection)
+      sync_to_project_data()
       showNotification(i18n$t("modules.isa.data_entry.ex101112.loop_connection_added"), type = "message")
     })
 
@@ -1217,6 +1273,7 @@ isa_data_entry_server <- function(id, project_data_reactive, i18n, event_bus = N
         }
         isa_data$adjacency_matrices$gb_d <- gb_d_matrix
       }
+      sync_to_project_data()
 
       showNotification(paste(i18n$t("modules.isa.data_entry.ex6.exercise_6_saved"), nrow(isa_data$loop_connections), i18n$t("modules.isa.data_entry.ex101112.loop_connections")),
                       type = "message")
