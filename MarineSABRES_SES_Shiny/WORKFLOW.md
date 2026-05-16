@@ -201,4 +201,4 @@ The remote at `github.com/razinkele/SESTool` is the source of truth. Both device
 
 ---
 
-*Last updated: v1.11.3 — 2026-05-16*
+*Last updated: v1.12.0 — 2026-05-16*
