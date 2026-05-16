@@ -5,11 +5,11 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.11.3] - 2026-05-16
+## [1.12.0] - 2026-05-16
 
-### Silent-Classification Bug Class Eliminated + PIMS/Response Persistence + Event Bus Hardening
+### PIMS + Response-Measure Persistence, Stable-Key i18n Pattern, Event-Bus Hardening
 
-Patch release closing two silent-misclassification bugs that mis-ranked stakeholders and response measures in non-English sessions, persisting two previously-ephemeral modules' data into the canonical project state, and fixing 10 pre-existing test failures by isolating event-bus emit-time reads.
+Minor release adding canonical persistence for PIMS stakeholders/engagements/communications and response measures/impacts/milestones, introducing the stable-categorical-key pattern for localized `selectInput`s (with two reference implementations), and hardening the event bus against reactive-context dependencies. Also closes two silent-misclassification bugs that mis-ranked stakeholders and response measures in non-English sessions, and fixes 10 pre-existing test failures.
 
 ### Added
 - **Canonical `data$response_measures` slot** in `create_empty_project()` (`functions/data_structure.R`) — three sub-tables (`measures`, `impacts`, `milestones`) plus a `counter`, matching the response module's reactiveValues schema. `Effectiveness`/`Feasibility` hold stable categorical keys (`"HIGH"`/`"MEDIUM"`/`"LOW"`/`"UNKNOWN"`/`""`) for locale-stable priority scoring.
