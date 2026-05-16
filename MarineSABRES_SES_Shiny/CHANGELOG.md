@@ -5,6 +5,11 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.1] - 2026-05-17
+
+### Fixed
+- **Workflow stepper showed raw i18n keys instead of translated labels.** User reported seeing `modules.workflow_stepper.step_get_started`, `step_create_ses`, `step_visualize`, `step_analyze`, `step_report` literally rendered as the stepper labels. Code at `modules/workflow_stepper_module.R:279` constructs `i18n$t(paste0("modules.workflow_stepper.", step$key))` dynamically, but the 5 step-name keys were never added to `translations/modules/workflow_stepper.json` — shiny.i18n's missing-key fallback returns the key string verbatim. Added all 5 keys × 9 languages (45 translation entries). Verified visually via Playwright: stepper now renders "Get Started · Create SES · Visualize · Analyze · Report" in English (and analogous in other 8 languages).
+
 ## [1.13.0] - 2026-05-16
 
 ### ISA Data Entry Persistence — Closes Silent Data Loss + Ghost-Row Duplication
