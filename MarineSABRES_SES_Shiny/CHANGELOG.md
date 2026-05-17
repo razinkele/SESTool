@@ -5,6 +5,24 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.0] - 2026-05-17
+
+### Added
+- **Transformer-based text embeddings (Phase 2A).** `functions/ml_text_embeddings.R` gains a fifth strategy, `transformer`, which uses the R `text` package to call a sentence-transformer encoder (default `sentence-transformers/all-MiniLM-L6-v2`, 384-dim). Strategy is selected at startup in `global.R` via `MARINESABRES_EMBEDDING_STRATEGY` env var; if unset and the `text` package is installed, transformer is preferred. Falls back to `vocabulary` if the package isn't available. Caching ensures each unique element name is encoded at most once per session.
+- **Similarity-guided transfer-learning fine-tuning (Phase 2B).** New `scripts/fine_tune_for_template.R` scores a target template's average similarity to the other six templates (via `calculate_template_similarity()` in `ml_template_matching.R`) and selects a learning-rate + freezing schedule: high similarity (≥0.7) → LR=5e-4, no frozen layers; medium (≥0.4) → LR=1e-4, freeze input; low (<0.4) → LR=3e-5, freeze input + hidden1. Outputs to `models/fine_tuned/<template_slug>.pt` + a `.json` metadata sidecar. Ships fine-tuned checkpoints for `coastal_lagoon`, `climate_change`, `fisheries`.
+- **Retrospective validation pipeline.** `scripts/retrospective_validation.R` masks 20% of human-validated positive connections per template, ranks all candidate element pairs with the base model, and computes precision@k and recall@k. Macro-aggregates across the 7 production templates. Outputs `data/retrospective_validation_results.rds` and `docs/RETROSPECTIVE_VALIDATION.md`.
+- **`docs/ML_METHODS.md` — paper-ready ML pipeline documentation.** Describes the 6-component pipeline (feature engineering, graph-structural features, multi-task neural net, ensemble + active learning, transfer learning, transformer text embeddings). Explicitly enumerates what the pipeline is **not** (no GNN message passing, no BERT-from-scratch, no RL, no collaborative filtering).
+- **`docs/RETROSPECTIVE_VALIDATION.md` — measured numbers, not aspirational.** Macro-averaged precision@10 ≈ 0.057 (≈7× the ~0.008 random baseline); recall@20 ≈ 0.153 (≈5× random). Per-template variance is large (Fisheries / Offshore Wind / Caribbean Island carry the result; Climate Change / Pollution collapse to chance).
+
+### Changed
+- ESP 2026 abstract (`MARBEFES/ESP2026/abstract_Razinkovas_et_al_v2.md`) replaces the `[TBD]%` placeholder with the measured retrospective-precision number plus an honest random-baseline comparison.
+
+### Known issues
+- Ensemble checkpoints (`models/ensemble/*.pt`) trained against the v1.13.x base segfault when reloaded via the v1.14.0 retrospective validation script. Base-model retrospective numbers are unaffected; ensemble columns will reappear after retraining the ensemble against the v1.14.0 base.
+
+### Notes
+- The v1.14.0 base predictor (`models/connection_predictor_best.pt`) is a *classification* head over positive-vs-random-negative pairs; it is not optimized for *within-template ranking*. The retrospective precision@10 of ~6% reflects that mismatch and is the natural baseline for the next iteration's within-template ranking objective.
+
 ## [1.13.7] - 2026-05-17
 
 ### Fixed

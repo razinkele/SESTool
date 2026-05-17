@@ -771,6 +771,27 @@ if (ML_ENABLED) {
     if (file.exists("functions/ml_text_embeddings.R")) {
       source("functions/ml_text_embeddings.R", local = TRUE)
       cat("✓ ML text embeddings loaded\n")
+
+      # Resolve embedding strategy: prefer the env-var pick if available,
+      # otherwise auto-upgrade to transformer when the `text` package is
+      # present (v1.14.0), and finally fall back to vocabulary matching.
+      requested <- toupper(Sys.getenv("MARINESABRES_EMBEDDING_STRATEGY", unset = ""))
+      requested <- tolower(requested)
+      if (nzchar(requested) && requested %in% EMBEDDING_STRATEGIES) {
+        # Explicit user override
+        if (requested == "transformer" && !transformer_available()) {
+          cat("  · Transformer embeddings requested but `text` package missing — falling back to vocabulary\n")
+        } else {
+          set_embedding_strategy(requested)
+          cat(sprintf("  · Embedding strategy: %s (from MARINESABRES_EMBEDDING_STRATEGY)\n", requested))
+        }
+      } else if (transformer_available()) {
+        # Auto-upgrade to transformer when available
+        set_embedding_strategy("transformer")
+        cat("  · Embedding strategy: transformer (auto, `text` package available)\n")
+      } else {
+        cat("  · Embedding strategy: vocabulary (default, install `text` package for transformer support)\n")
+      }
     }
 
     # Load model registry (P1 enhancement)

@@ -3,14 +3,17 @@
 # ==============================================================================
 #
 # Provides multiple text embedding strategies for element names:
-# 1. Vocabulary-based (current default): Marine-specific vocab matching
+# 1. Vocabulary-based (legacy default): Marine-specific vocab matching
 # 2. FastText: Pre-trained word embeddings (when available)
 # 3. Custom: Domain-specific trained embeddings
+# 4. Hybrid: Weighted combination of vocabulary + FastText
+# 5. Transformer (v1.14.0): Sentence-transformer encoder via the R `text` package
+#    (e.g., all-MiniLM-L6-v2). Captures semantic similarity better than FastText
+#    or vocabulary matching by attending across the whole element name string.
 #
-# Benefits of FastText over vocabulary matching:
-# - Handles out-of-vocabulary words via subword embeddings
-# - Captures semantic similarity (e.g., "fish" ~ "fishing")
-# - Pre-trained on large corpora (300-dim vectors)
+# Default strategy is resolved at startup in global.R via the
+# MARINESABRES_EMBEDDING_STRATEGY env var; "transformer" is preferred when the
+# `text` package is installed, otherwise the loader falls back to "vocabulary".
 #
 # ==============================================================================
 
@@ -22,10 +25,13 @@
 .embedding_env$strategy <- "vocabulary"  # Default strategy
 .embedding_env$fasttext_model <- NULL
 .embedding_env$custom_embeddings <- NULL
+.embedding_env$transformer_loaded <- FALSE
+.embedding_env$transformer_model_name <- "sentence-transformers/all-MiniLM-L6-v2"
+.embedding_env$transformer_dim <- 384L  # all-MiniLM-L6-v2 native dim
 .embedding_env$cache <- new.env(hash = TRUE, parent = emptyenv())
 
 #' Available embedding strategies
-EMBEDDING_STRATEGIES <- c("vocabulary", "fasttext", "custom", "hybrid")
+EMBEDDING_STRATEGIES <- c("vocabulary", "fasttext", "custom", "hybrid", "transformer")
 
 # ==============================================================================
 # Strategy Selection
@@ -197,6 +203,95 @@ get_fasttext_embedding <- function(text, dim = NULL) {
 }
 
 # ==============================================================================
+# Transformer-based Embeddings (sentence-transformers via R `text` package)
+# ==============================================================================
+
+#' Check if the transformer strategy is available
+#'
+#' Looks for the R `text` package (which wraps Hugging Face transformers via
+#' reticulate + Python). Does NOT trigger model load — call
+#' `load_transformer_model()` for that.
+#'
+#' @return TRUE if a transformer encoder can be loaded
+#' @export
+transformer_available <- function() {
+  requireNamespace("text", quietly = TRUE)
+}
+
+#' Load a sentence-transformer model
+#'
+#' First call downloads the model from Hugging Face (~80 MB for all-MiniLM-L6-v2)
+#' and caches it under the user's HF cache directory. Subsequent calls are fast.
+#'
+#' @param model_name Hugging Face model identifier
+#'   (default: "sentence-transformers/all-MiniLM-L6-v2", 384-dim, ~80MB)
+#' @return TRUE on success
+#' @export
+load_transformer_model <- function(model_name = "sentence-transformers/all-MiniLM-L6-v2") {
+  if (!requireNamespace("text", quietly = TRUE)) {
+    debug_log("text package not installed; cannot load transformer model", "EMBEDDINGS_ERROR")
+    return(FALSE)
+  }
+
+  result <- tryCatch({
+    # `text` will pull and cache the model on first use; subsequent calls reuse the cache
+    .embedding_env$transformer_model_name <- model_name
+    .embedding_env$transformer_loaded <- TRUE
+    debug_log(sprintf("Transformer model registered: %s (dim=%d)",
+                      model_name, .embedding_env$transformer_dim), "EMBEDDINGS")
+    TRUE
+  }, error = function(e) {
+    debug_log(sprintf("Transformer load failed: %s", e$message), "EMBEDDINGS_ERROR")
+    FALSE
+  })
+
+  result
+}
+
+#' Get a transformer-based sentence embedding
+#'
+#' Uses the `text::textEmbed()` interface. Pools token embeddings via mean
+#' (the sentence-transformers convention) and returns a single vector.
+#'
+#' @param text Text to embed (single string)
+#' @param dim Target output dimension (default: model's native dim, 384)
+#' @return Numeric vector of length `dim` (truncated/padded if dim != native)
+#' @export
+get_transformer_embedding <- function(text, dim = NULL) {
+  if (!.embedding_env$transformer_loaded) {
+    # Lazy-load on first call
+    if (!load_transformer_model(.embedding_env$transformer_model_name)) {
+      return(rep(0, dim %||% .embedding_env$transformer_dim))
+    }
+  }
+
+  if (is.null(dim)) dim <- .embedding_env$transformer_dim
+
+  vec <- tryCatch({
+    emb <- text::textEmbed(
+      texts = text,
+      model = .embedding_env$transformer_model_name,
+      layers = -2,            # second-to-last layer pools well for similarity
+      aggregation_from_layers_to_tokens = "concatenate",
+      aggregation_from_tokens_to_texts = "mean",
+      keep_token_embeddings = FALSE
+    )
+    # textEmbed returns a tibble with one row of dim columns; pull numeric vec
+    as.numeric(unlist(emb$texts$texts[1, , drop = TRUE]))
+  }, error = function(e) {
+    debug_log(sprintf("Transformer embed failed for '%s': %s",
+                      substr(text, 1, 40), e$message), "EMBEDDINGS_ERROR")
+    NULL
+  })
+
+  if (is.null(vec) || length(vec) == 0) {
+    return(rep(0, dim))
+  }
+
+  ensure_dimension(vec, dim)
+}
+
+# ==============================================================================
 # Custom Embeddings
 # ==============================================================================
 
@@ -296,6 +391,15 @@ create_text_embedding <- function(text, dim = 128) {
     },
     "custom" = get_custom_embedding(text, dim),
     "hybrid" = create_hybrid_embedding(text, dim),
+    "transformer" = {
+      if (transformer_available()) {
+        get_transformer_embedding(text, dim)
+      } else {
+        debug_log("transformer strategy requested but `text` package missing; falling back to vocabulary",
+                  "EMBEDDINGS_WARN")
+        create_vocabulary_embedding(text, dim)
+      }
+    },
     create_vocabulary_embedding(text, dim)  # Default fallback
   )
 
@@ -405,7 +509,7 @@ clear_embedding_cache <- function() {
 
 #' Get embedding statistics
 #'
-#' @return List with strategy, dimensions, cache size
+#' @return List with strategy, dimensions, cache size, and per-backend availability
 #' @export
 get_embedding_stats <- function() {
   list(
@@ -415,6 +519,10 @@ get_embedding_stats <- function() {
     custom_loaded = !is.null(.embedding_env$custom_embeddings),
     custom_terms = if (!is.null(.embedding_env$custom_embeddings))
                      nrow(.embedding_env$custom_embeddings) else 0,
+    transformer_available = transformer_available(),
+    transformer_loaded = .embedding_env$transformer_loaded,
+    transformer_model = .embedding_env$transformer_model_name,
+    transformer_dim = .embedding_env$transformer_dim,
     cache_size = length(ls(.embedding_env$cache))
   )
 }
