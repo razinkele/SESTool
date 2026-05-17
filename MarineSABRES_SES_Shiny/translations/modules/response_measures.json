@@ -1495,6 +1495,72 @@
       "it": "es., A001, D002",
       "no": "f.eks., A001, D002",
       "el": "π.χ., A001, D002"
+    },
+    "modules.response.measures.priority_report_title": {
+      "en": "Response Measures Priority Report",
+      "es": "Informe de Prioridad de Medidas de Respuesta",
+      "fr": "Rapport de Priorité des Mesures d'Intervention",
+      "de": "Prioritätsbericht der Antwortmaßnahmen",
+      "lt": "Atsako priemonių prioriteto ataskaita",
+      "pt": "Relatório de Prioridade de Medidas de Resposta",
+      "it": "Rapporto di Priorità delle Misure di Risposta",
+      "no": "Prioritetsrapport for Tiltakene",
+      "el": "Έκθεση Προτεραιότητας Μέτρων Αντίδρασης"
+    },
+    "modules.response.measures.total_measures": {
+      "en": "Total Response Measures",
+      "es": "Total de Medidas de Respuesta",
+      "fr": "Total des Mesures d'Intervention",
+      "de": "Antwortmaßnahmen insgesamt",
+      "lt": "Iš viso atsako priemonių",
+      "pt": "Total de Medidas de Resposta",
+      "it": "Totale Misure di Risposta",
+      "no": "Tiltak totalt",
+      "el": "Σύνολο Μέτρων Αντίδρασης"
+    },
+    "modules.response.measures.measures_by_priority": {
+      "en": "Measures by Priority",
+      "es": "Medidas por Prioridad",
+      "fr": "Mesures par Priorité",
+      "de": "Maßnahmen nach Priorität",
+      "lt": "Priemonės pagal prioritetą",
+      "pt": "Medidas por Prioridade",
+      "it": "Misure per Priorità",
+      "no": "Tiltak etter Prioritet",
+      "el": "Μέτρα κατά Προτεραιότητα"
+    },
+    "modules.response.measures.implementation_plan_title": {
+      "en": "Response Measures Implementation Plan",
+      "es": "Plan de Implementación de Medidas de Respuesta",
+      "fr": "Plan de Mise en Œuvre des Mesures d'Intervention",
+      "de": "Umsetzungsplan für Antwortmaßnahmen",
+      "lt": "Atsako priemonių įgyvendinimo planas",
+      "pt": "Plano de Implementação de Medidas de Resposta",
+      "it": "Piano di Attuazione delle Misure di Risposta",
+      "no": "Implementeringsplan for Tiltak",
+      "el": "Σχέδιο Υλοποίησης Μέτρων Αντίδρασης"
+    },
+    "modules.response.measures.response_measures_heading": {
+      "en": "Response Measures",
+      "es": "Medidas de Respuesta",
+      "fr": "Mesures d'Intervention",
+      "de": "Antwortmaßnahmen",
+      "lt": "Atsako priemonės",
+      "pt": "Medidas de Resposta",
+      "it": "Misure di Risposta",
+      "no": "Tiltak",
+      "el": "Μέτρα Αντίδρασης"
+    },
+    "modules.response.measures.implementation_milestones": {
+      "en": "Implementation Milestones",
+      "es": "Hitos de Implementación",
+      "fr": "Jalons de Mise en Œuvre",
+      "de": "Umsetzungsmeilensteine",
+      "lt": "Įgyvendinimo etapai",
+      "pt": "Marcos de Implementação",
+      "it": "Pietre Miliari di Attuazione",
+      "no": "Implementeringsmilepæler",
+      "el": "Ορόσημα Υλοποίησης"
     }
   }
 }

@@ -2045,6 +2045,17 @@
       "it": "[IT] Stakeholders",
       "no": "Interessenter",
       "el": "Ενδιαφερόμενα μέρη"
+    },
+    "modules.pims.stakeholder.stakeholder_details": {
+      "en": "Stakeholder Details",
+      "es": "Detalles del Actor",
+      "fr": "Détails de la Partie Prenante",
+      "de": "Stakeholder-Details",
+      "lt": "Suinteresuotosios šalies informacija",
+      "pt": "Detalhes do Interessado",
+      "it": "Dettagli dello Stakeholder",
+      "no": "Interessentdetaljer",
+      "el": "Λεπτομέρειες Εμπλεκόμενου Μέρους"
     }
   }
 }
