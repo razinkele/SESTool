@@ -5,6 +5,17 @@ All notable changes to the MarineSABRES SES Toolbox will be documented in this f
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.13.7] - 2026-05-17
+
+### Fixed
+- **Word-export hardcoded English headings in pims_stakeholder and response_module.** The three download handlers (`download_summary` in pims, `download_priority_report` and `download_implementation_plan` in response) wrote heading text directly to the `.docx` as English literals — non-English users got Word documents with `"Stakeholder Analysis Summary"`, `"Overview"`, `"Response Measures Priority Report"`, etc. regardless of session language. Added 10 new translation keys × 9 languages (90 entries) and wired the export code to use `i18n$t()`:
+  - `common.messages.generated`, `common.messages.overview`, `common.messages.summary` (shared across modules).
+  - `modules.pims.stakeholder.stakeholder_details` (pims).
+  - `modules.response.measures.priority_report_title`, `total_measures`, `measures_by_priority`, `implementation_plan_title`, `response_measures_heading`, `implementation_milestones` (response).
+  - Existing keys reused where the English value already matched: `modules.pims.stakeholder.stakeholder_analysis_summary`, `total_stakeholders`, `high_power_high_interest_key_players`.
+
+This closes the Round 1 audit finding for Word-export i18n. Tested via `test-i18n-enforcement.R` and JSON validation; no R logic changes — the i18n$t() calls return the original English when no translator overrides are loaded, so default-locale exports look identical to before.
+
 ## [1.13.6] - 2026-05-17
 
 ### Fixed

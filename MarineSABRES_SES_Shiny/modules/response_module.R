@@ -663,13 +663,13 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
           req(nrow(measures) > 0)
 
           doc <- officer::read_docx()
-          doc <- officer::body_add_par(doc, "Response Measures Priority Report", style = "heading 1")
-          doc <- officer::body_add_par(doc, paste("Generated:", Sys.Date()))
+          doc <- officer::body_add_par(doc, i18n$t("modules.response.measures.priority_report_title"), style = "heading 1")
+          doc <- officer::body_add_par(doc, paste0(i18n$t("common.messages.generated"), ": ", Sys.Date()))
           doc <- officer::body_add_par(doc, "")
 
           # Summary
-          doc <- officer::body_add_par(doc, "Summary", style = "heading 2")
-          doc <- officer::body_add_par(doc, paste("Total Response Measures:", nrow(measures)))
+          doc <- officer::body_add_par(doc, i18n$t("common.messages.summary"), style = "heading 2")
+          doc <- officer::body_add_par(doc, paste0(i18n$t("modules.response.measures.total_measures"), ": ", nrow(measures)))
           by_type <- table(measures$Type)
           for (t in names(by_type)) {
             doc <- officer::body_add_par(doc, paste0("  ", t, ": ", by_type[t]))
@@ -677,7 +677,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
           doc <- officer::body_add_par(doc, "")
 
           # Priority table sorted by effectiveness
-          doc <- officer::body_add_par(doc, "Measures by Priority", style = "heading 2")
+          doc <- officer::body_add_par(doc, i18n$t("modules.response.measures.measures_by_priority"), style = "heading 2")
           priority_cols <- intersect(c("ID", "Name", "Type", "Target", "Effectiveness", "Feasibility", "Status"), names(measures))
           priority_df <- measures[, priority_cols, drop = FALSE]
           ft <- flextable::flextable(priority_df)
@@ -704,12 +704,12 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
           req(nrow(measures) > 0)
 
           doc <- officer::read_docx()
-          doc <- officer::body_add_par(doc, "Response Measures Implementation Plan", style = "heading 1")
-          doc <- officer::body_add_par(doc, paste("Generated:", Sys.Date()))
+          doc <- officer::body_add_par(doc, i18n$t("modules.response.measures.implementation_plan_title"), style = "heading 1")
+          doc <- officer::body_add_par(doc, paste0(i18n$t("common.messages.generated"), ": ", Sys.Date()))
           doc <- officer::body_add_par(doc, "")
 
           # Measures detail
-          doc <- officer::body_add_par(doc, "Response Measures", style = "heading 2")
+          doc <- officer::body_add_par(doc, i18n$t("modules.response.measures.response_measures_heading"), style = "heading 2")
           ft <- flextable::flextable(measures)
           ft <- flextable::autofit(ft)
           doc <- flextable::body_add_flextable(doc, ft)
@@ -717,7 +717,7 @@ response_measures_server <- function(id, project_data_reactive, i18n, event_bus 
 
           # Milestones
           if (nrow(milestones) > 0) {
-            doc <- officer::body_add_par(doc, "Implementation Milestones", style = "heading 2")
+            doc <- officer::body_add_par(doc, i18n$t("modules.response.measures.implementation_milestones"), style = "heading 2")
             ft2 <- flextable::flextable(milestones)
             ft2 <- flextable::autofit(ft2)
             doc <- flextable::body_add_flextable(doc, ft2)

@@ -866,19 +866,19 @@ pims_stakeholder_server <- function(id, project_data_reactive, i18n, event_bus =
           req(nrow(df) > 0)
 
           doc <- officer::read_docx()
-          doc <- officer::body_add_par(doc, "Stakeholder Analysis Summary", style = "heading 1")
-          doc <- officer::body_add_par(doc, paste("Generated:", Sys.Date()))
+          doc <- officer::body_add_par(doc, i18n$t("modules.pims.stakeholder.stakeholder_analysis_summary"), style = "heading 1")
+          doc <- officer::body_add_par(doc, paste0(i18n$t("common.messages.generated"), ": ", Sys.Date()))
           doc <- officer::body_add_par(doc, "")
 
           # Summary statistics
-          doc <- officer::body_add_par(doc, "Overview", style = "heading 2")
-          doc <- officer::body_add_par(doc, paste("Total Stakeholders:", nrow(df)))
+          doc <- officer::body_add_par(doc, i18n$t("common.messages.overview"), style = "heading 2")
+          doc <- officer::body_add_par(doc, paste0(i18n$t("modules.pims.stakeholder.total_stakeholders"), ": ", nrow(df)))
           key_players <- sum(df$Power == "HIGH" & df$Interest == "HIGH", na.rm = TRUE)
-          doc <- officer::body_add_par(doc, paste("Key Players (High Power, High Interest):", key_players))
+          doc <- officer::body_add_par(doc, paste0(i18n$t("modules.pims.stakeholder.high_power_high_interest_key_players"), ": ", key_players))
           doc <- officer::body_add_par(doc, "")
 
           # Stakeholder table (translate Power/Interest stable keys for display)
-          doc <- officer::body_add_par(doc, "Stakeholder Details", style = "heading 2")
+          doc <- officer::body_add_par(doc, i18n$t("modules.pims.stakeholder.stakeholder_details"), style = "heading 2")
           df_display <- translate_levels_for_export(df)
           display_cols <- intersect(c("ID", "Name", "Organization", "Role", "Power", "Interest", "Attitude"), names(df_display))
           ft <- flextable::flextable(df_display[, display_cols, drop = FALSE])

@@ -1154,6 +1154,39 @@
       "it": "calcolo delle metriche di rete",
       "no": "beregner nettverksmetrikker",
       "el": "υπολογισμός μετρήσεων δικτύου"
+    },
+    "common.messages.generated": {
+      "en": "Generated",
+      "es": "Generado",
+      "fr": "Généré",
+      "de": "Erstellt",
+      "lt": "Sukurta",
+      "pt": "Gerado",
+      "it": "Generato",
+      "no": "Generert",
+      "el": "Δημιουργήθηκε"
+    },
+    "common.messages.overview": {
+      "en": "Overview",
+      "es": "Resumen general",
+      "fr": "Aperçu",
+      "de": "Übersicht",
+      "lt": "Apžvalga",
+      "pt": "Visão geral",
+      "it": "Panoramica",
+      "no": "Oversikt",
+      "el": "Επισκόπηση"
+    },
+    "common.messages.summary": {
+      "en": "Summary",
+      "es": "Resumen",
+      "fr": "Résumé",
+      "de": "Zusammenfassung",
+      "lt": "Santrauka",
+      "pt": "Resumo",
+      "it": "Riepilogo",
+      "no": "Sammendrag",
+      "el": "Σύνοψη"
     }
   }
 }
